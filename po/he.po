@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-27 22:36+0100\n"
-"PO-Revision-Date: 2024-11-27 22:22\n"
+"POT-Creation-Date: 2024-12-07 13:29+0000\n"
+"PO-Revision-Date: 2024-12-08 18:11\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -14,20 +14,69 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: he\n"
-"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 20\n"
+"X-Crowdin-File: /release-1.2/xournalpp.pot\n"
+"X-Crowdin-File-ID: 36\n"
 
-#: ../src/core/control/XournalMain.cpp:433
-msgid "\n\n"
-"Will now attempt to run without this file."
-msgstr "\n\n"
-"עכשיו יתבצע ניסיון לרוץ ללא הקובץ הנ״ל."
+#: ../src/core/control/AudioController.cpp:118
+msgid "Audio folder not set or invalid! Recording won't work!\n"
+"Please set the recording folder under \"Preferences > Audio recording\""
+msgstr "לא נבחרה תיקיית שמע או שהיא שגויה! הקלטה לא תעבוד!\n"
+"נא לבחור תיקיית שמע תחת „העדפות > הקלטת שמע”"
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:53
-msgid "\n"
-" Do you want to continue?"
-msgstr "\n"
-"להמשיך?"
+#: ../src/core/control/Control.cpp:230
+msgid "Filesystem error: {1}"
+msgstr "שגיאת מערכת קבצים: {1}"
+
+#: ../src/core/control/Control.cpp:242
+msgid "Could not remove old autosave file \"{1}\": {2}"
+msgstr ""
+
+#: ../src/core/control/Control.cpp:992
+msgid "Recorder could not be started."
+msgstr "לא ניתן להתחיל הקלטה."
+
+#: ../src/core/control/Control.cpp:1257
+msgid "You deleted the active toolbar. Falling back to the default toolbar."
+msgstr ""
+
+#: ../src/core/control/Control.cpp:1271
+msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
+msgstr ""
+
+#: ../src/core/control/Control.cpp:1481
+msgid "No pdf pages available to append. You may need to reopen the document first."
+msgstr ""
+
+#: ../src/core/control/Control.cpp:1495
+msgid "Unable to retrieve pdf page."
+msgstr ""
+
+#: ../src/core/control/Control.cpp:2266
+msgid "Do not open Autosave files. They may will be overwritten!\n"
+"Copy the files to another folder.\n"
+"Files from Folder {1} cannot be opened."
+msgstr ""
+
+#: ../src/core/control/Control.cpp:2280
+msgid "file: {1}"
+msgstr ""
+
+#: ../src/core/control/Control.cpp:2304
+msgid "Error opening file \"{1}\""
+msgstr "שגיאה בפתיחת קובץ \"{1}\""
+
+#: ../src/core/control/Control.cpp:2312
+msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
+msgstr ""
+
+#: ../src/core/control/Control.cpp:2439
+msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
+msgstr ""
+
+#: ../src/core/control/Control.cpp:2442
+msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
+"It was last seen at: \"{2}\""
+msgstr ""
 
 #: ../src/core/control/Control.cpp:2452
 msgid "\n"
@@ -35,24 +84,238 @@ msgid "\n"
 msgstr "\n"
 "הקובץ החלופי המוצע: „{1}”"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:37
-msgctxt "Page {pagenumber} \"of {pagecount}\""
-msgid " of {1}"
-msgstr " מתוך {1}"
+#: ../src/core/control/Control.cpp:2462
+msgid "Use proposed PDF"
+msgstr "להשתמש ב־pdf המוצע"
 
-#: ../src/core/control/settings/Settings.cpp:146
-msgid "%F-Note-%H-%M"
-msgstr "%F-פתק-%H-%M"
+#: ../src/core/control/Control.cpp:2464
+msgid "Select another PDF"
+msgstr "בחר קובץ PDF נוסף"
 
-#: ../src/core/control/settings/Settings.cpp:148
-msgid "%{name}_annotated"
+#: ../src/core/control/Control.cpp:2465
+msgid "Remove PDF Background"
+msgstr "הסר רקע מ-PDF"
+
+#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
+#: ../src/core/control/XournalMain.cpp:178
+#: ../src/core/gui/sidebar/Sidebar.cpp:105
+msgid "Cancel"
+msgstr "ביטול"
+
+#: ../src/core/control/Control.cpp:2559
+msgid "Error annotate PDF file \"{1}\"\n"
+"{2}"
+msgstr "שגיאה באנוטציה על קובץ PDF \"{1}\" {2}"
+
+#: ../src/core/control/Control.cpp:2658
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
+msgid "Save File"
+msgstr "שמירת קובץ"
+
+#: ../src/core/control/Control.cpp:2658
+#: ../src/core/control/jobs/BaseExportJob.cpp:24
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
+msgid "_Cancel"
+msgstr "_ביטול"
+
+#: ../src/core/control/Control.cpp:2659
+#: ../src/core/control/jobs/BaseExportJob.cpp:24
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
+msgid "_Save"
+msgstr "_שמירה"
+
+#: ../src/core/control/Control.cpp:2664
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
+msgid "Xournal++ files"
 msgstr ""
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:189
-msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
-msgstr "<b>לא נמצא שום מכשיר. נראה שישנה בעיה - תרצה לדווח על באג?</b>"
+#: ../src/core/control/Control.cpp:2715
+msgid "Unsaved Document"
+msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:428
+#: ../src/core/control/Control.cpp:2825
+msgid "Document file was removed."
+msgstr "קובץ המסמך הוסר."
+
+#: ../src/core/control/Control.cpp:2825
+msgid "This document is not saved yet."
+msgstr "מסמך זה עדיין לא נשמר."
+
+#: ../src/core/control/Control.cpp:2826
+msgid "Save As..."
+msgstr "שמירה בשם..."
+
+#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
+msgid "Save"
+msgstr "שמירה"
+
+#: ../src/core/control/Control.cpp:2831
+msgid "Discard"
+msgstr "התעלמות"
+
+#: ../src/core/control/CrashHandler.cpp:31
+msgid "Trying to emergency save the current open document…"
+msgstr "מנסה לשמור בחירום את המסמך הפתוח הנוכחי…"
+
+#: ../src/core/control/CrashHandler.cpp:40
+msgid "Error: {1}"
+msgstr "שגיאה: {1}"
+
+#: ../src/core/control/CrashHandler.cpp:42
+msgid "Successfully saved document to \"{1}\""
+msgstr "המסמך נשמר בהצלחה ל־„{1}”"
+
+#: ../src/core/control/DeviceListHelper.cpp:95
+msgid "mouse"
+msgstr "עכבר"
+
+#: ../src/core/control/DeviceListHelper.cpp:97
+msgid "pen"
+msgstr "עט"
+
+#: ../src/core/control/DeviceListHelper.cpp:99
+msgid "eraser"
+msgstr "מחק"
+
+#: ../src/core/control/DeviceListHelper.cpp:101
+msgid "cursor"
+msgstr "סמן"
+
+#: ../src/core/control/DeviceListHelper.cpp:104
+msgid "keyboard"
+msgstr "מקלדת"
+
+#: ../src/core/control/DeviceListHelper.cpp:106
+msgid "touchscreen"
+msgstr "מסך מגע"
+
+#: ../src/core/control/DeviceListHelper.cpp:108
+msgid "touchpad"
+msgstr "משטח מגע"
+
+#: ../src/core/control/DeviceListHelper.cpp:111
+msgid "trackpoint"
+msgstr "טראקפוינט"
+
+#: ../src/core/control/DeviceListHelper.cpp:113
+msgid "tablet pad"
+msgstr "לוח טאבלט"
+
+#: ../src/core/control/ExportHelper.cpp:78
+msgid "Image file successfully created"
+msgstr "קובץ תמונה נוצר בהצלחה"
+
+#: ../src/core/control/ExportHelper.cpp:120
+msgid "PDF file successfully created"
+msgstr "קובץ PDF נוצר בהצלחה"
+
+#: ../src/core/control/LatexController.cpp:76
+msgid "Global template file does not exist. Please check your settings."
+msgstr ""
+
+#: ../src/core/control/LatexController.cpp:81
+msgid "Failed to read global template file. Please check your settings."
+msgstr ""
+
+#: ../src/core/control/LatexController.cpp:87
+msgid "Global template file is not a regular file. Please check your settings. "
+msgstr ""
+
+#: ../src/core/control/LatexController.cpp:244
+msgid "Latex generation encountered an error: {1} (exit code: {2})"
+msgstr "יצירת Latex נתקלה בשגיאה: {1} (קוד יציאה: {2})"
+
+#: ../src/core/control/LatexController.cpp:303
+msgid "The formula is empty when rendered or invalid."
+msgstr ""
+
+#: ../src/core/control/LatexController.cpp:335
+msgid "Could not load LaTeX PDF file: {1}"
+msgstr "לא ניתן לטעון את קובץ הLaTeX PDF: {1}"
+
+#: ../src/core/control/LatexController.cpp:341
+msgid "Could not load LaTeX PDF file"
+msgstr "לא ניתן לטעון את קובץ הLaTeX PDF"
+
+#: ../src/core/control/PageBackgroundChangeController.cpp:80
+#: ../src/core/control/xojfile/LoadHandler.cpp:486
+#: ../src/core/control/xojfile/LoadHandler.cpp:502
+msgid "Error reading PDF: {1}"
+msgstr "קריאת קובץ PDF נכשלה: {1}"
+
+#: ../src/core/control/PageBackgroundChangeController.cpp:193
+msgid "This image could not be loaded. Error message: {1}"
+msgstr "תמונה זו לא יכלה להיטען. הודעת שגיאה: {1}"
+
+#: ../src/core/control/PageBackgroundChangeController.cpp:228
+msgid "You don't have any PDF pages to select from. Cancel operation.\n"
+"Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
+msgstr ""
+
+#: ../src/core/control/PdfCache.cpp:123
+msgid "PDF background missing"
+msgstr "רקע PDF לא נמצא"
+
+#: ../src/core/control/XournalMain.cpp:123
+msgid "Failed to delete file: {1}"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:125
+msgid "Please delete the file manually"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:161
+msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:163
+msgid "There are recent errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:166
+msgid "The most recent log file name: {1}"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:168
+msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:174
+msgid "Send Bugreport"
+msgstr "שלח דיווח על באג"
+
+#: ../src/core/control/XournalMain.cpp:175
+msgid "Open Logfile"
+msgstr "פתיחת קובץ לוג"
+
+#: ../src/core/control/XournalMain.cpp:176
+msgid "Open Logfile directory"
+msgstr "פתח תיקייה של קובץ לוג"
+
+#: ../src/core/control/XournalMain.cpp:177
+msgid "Delete Logfile"
+msgstr "מחק קובץ לוג"
+
+#: ../src/core/control/XournalMain.cpp:203
+msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:208
+msgid "Delete file"
+msgstr "מחק קובץ"
+
+#: ../src/core/control/XournalMain.cpp:209
+msgid "Restore file"
+msgstr "שחזר קובץ"
+
+#: ../src/core/control/XournalMain.cpp:235
+msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:397
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -66,242 +329,208 @@ msgstr "<span foreground='red' size='x-large'> </span>קובץ ה-UI הבא לא
 "בנתיב העבודה. \n"
 "לא ב{2}"
 
-#: ../src/core/gui/PageView.cpp:936
-msgid "Add missing page"
-msgstr "הוספת עמוד חסר"
+#: ../src/core/control/XournalMain.cpp:402
+msgid "\n\n"
+"Will now attempt to run without this file."
+msgstr "\n\n"
+"עכשיו יתבצע ניסיון לרוץ ללא הקובץ הנ״ל."
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:525
-msgid "Add/Edit TeX"
-msgstr "הוספת/עריכת TeX"
+#: ../src/core/control/XournalMain.cpp:421
+#: ../src/core/control/XournalMain.cpp:477
+msgid "Sorry, Xournal++ can only open one file at once.\n"
+"Others are ignored."
+msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:699
+#: ../src/core/control/XournalMain.cpp:432
+msgid "File {1} does not exist."
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:436
+#: ../src/core/control/XournalMain.cpp:492
+msgid "Filesystem error: {1}\n"
+"Sorry, Xournal++ cannot open the file: {2}\n"
+"Consider copying the file to a local directory."
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:636
+msgid "Jump to Page (first Page: 1)"
+msgstr "דילוג לדף (דף ראשון: 1)"
+
+#: ../src/core/control/XournalMain.cpp:640
+msgid "Get version of xournalpp"
+msgstr "קבלת הגרסה של xournalpp"
+
+#: ../src/core/control/XournalMain.cpp:642
+msgid "Disable audio for this session"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:651
+msgid "Export FILE as PDF"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:653
+msgid "Export FILE as image files (one per page)\n"
+"                                 Guess the output format from the extension of IMGFILE\n"
+"                                 Supported formats: .png, .svg"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:658
+msgid "Export without background\n"
+"                                 The exported file has transparent or white background,\n"
+"                                 depending on what its format supports\n"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:663
+msgid "Export without ruling\n"
+"                                 The exported file has no paper ruling\n"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:667
+msgid "Export layers progressively\n"
+"                                 In PDF export, Render layers progressively one by one.\n"
+"                                 This results in N export pages per page with N layers,\n"
+"                                 building up the layer stack progressively.\n"
+"                                 The resulting PDF file can be used for a presentation.\n"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:674
+msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
+"                                 No effect without -p/--create-pdf or -i/--create-img"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:678
+msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
+"                                 No effect without -p/--create-pdf or -i/--create-img"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:682
+msgid "Set DPI for PNG exports. Default is 300\n"
+"                                 No effect without -i/--create-img=foo.png"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:686
+msgid "Set page width for PNG exports\n"
+"                                 No effect without -i/--create-img=foo.png\n"
+"                                 Ignored if --export-png-dpi is used"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:692
+msgid "Set page height for PNG exports\n"
+"                                 No effect without -i/--create-img=foo.png\n"
+"                                 Ignored if --export-png-dpi or --export-png-width is used"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:697
 msgid "Advanced export options"
 msgstr "הגדרות יצוא מתקדמות"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:40
-msgid "All files"
-msgstr "כל הקבצים"
+#: ../src/core/control/XournalMain.cpp:698
+msgid "Display advanced export options"
+msgstr "הצג הגדרות יצוא מתקדמות"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:213
-msgid "Apply to all pages"
-msgstr "יישם לכל הדפים"
-
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:200
-msgid "Apply to current page"
-msgstr "יישם לדף הנוכחי"
-
-#: ../src/core/control/tools/EditSelection.cpp:406
-msgid "Arrange"
-msgstr "ארגן"
-
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:32
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:116
-msgid "Attach file to the journal"
-msgstr "הצמד קובץ אל היומן"
-
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:130
-msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr "תכונה \"{1}\" לא יכלה להתפרש כ-Double, ערכה הוא \"{2}\""
-
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:123
-msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr "תכונה \"{1}\" לא יכלה להתפרש כ-Double, ערכה הוא nullptr"
-
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:147
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:166
-msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr "תכונה \"{1}\" לא יכלה להתפרש כ-int, ערכה הוא \"{2}\""
-
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:140
-msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
-msgstr "תכונה \"{1}\" לא יכלה להתפרש כ-int, ערכה הוא nullptr"
-
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:185
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:205
-msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr "תכונה \"{1}\" לא יכלה להתפרש כ-size_t, ערכה הוא \"{2}\""
-
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:178
-msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr "תכונה \"{1}\" לא יכלה להתפרש כ-size_t, ערכה הוא nullptr"
-
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:72
-msgid "Attribute color not set!"
-msgstr "צבע התכונה לא מוגדר!"
-
-#: ../src/core/control/AudioController.cpp:118
-msgid "Audio folder not set or invalid! Recording won't work!\n"
-"Please set the recording folder under \"Preferences > Audio recording\""
-msgstr "לא נבחרה תיקיית שמע או שהיא שגויה! הקלטה לא תעבוד!\n"
-"נא לבחור תיקיית שמע תחת „העדפות > הקלטת שמע”"
+#: ../src/core/control/jobs/AutosaveJob.cpp:21
+msgid "Error while autosaving: {1}"
+msgstr "שגיאה תוך כדי שמירה אוטומטית: {1}"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:46
 msgid "Autosaving to {1}"
 msgstr "שומר אוטומטית ל- {1}"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:570
-msgid "Back"
-msgstr "חזרה"
-
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:197
-#: ../src/core/model/XojPage.cpp:168
-msgid "Background"
-msgstr "רקע"
-
-#: ../src/core/control/tools/EditSelection.cpp:421
-msgid "Bring forward"
-msgstr "הבא שכבה קדימה"
-
-#: ../src/core/control/tools/EditSelection.cpp:411
-msgid "Bring to front"
-msgstr "העבר לחזית"
-
-#: ../src/core/gui/dialog/AboutDialog.cpp:36
-msgid "Built on"
-msgstr "בנוי על"
-
-#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
-#: ../src/core/control/XournalMain.cpp:209
-#: ../src/core/gui/sidebar/Sidebar.cpp:105
-msgid "Cancel"
-msgstr "ביטול"
-
-#: ../src/core/undo/ColorUndoAction.cpp:90
-msgid "Change color"
-msgstr "שנה צבע"
-
-#: ../src/core/undo/FontUndoAction.cpp:110
-msgid "Change font"
-msgstr "שנה גופן"
-
-#: ../src/core/undo/LineStyleUndoAction.cpp:78
-msgid "Change line style"
-msgstr "שנה סגנון שורה"
-
-#: ../src/core/undo/FillUndoAction.cpp:81
-msgid "Change stroke fill"
-msgstr "שינוי מילוי קו המתאר"
-
-#: ../src/core/undo/SizeUndoAction.cpp:106
-msgid "Change stroke width"
-msgstr "שינוי עובי קו המתאר"
-
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:65
-msgid "Clear list"
-msgstr "נקה את הרשימה"
-
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:96
-msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr "צבע ״{1}״ לא ידוע (לא מוגדר ברשימת צבעי ברירת המחדל)!"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:553
-msgid "Compass"
-msgstr "מצפן"
-
-#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:170
-msgid "Contents"
-msgstr "תוכן"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:443
-#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
-#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:81
-msgid "Copy"
-msgstr "העתק"
-
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
-msgid "Copy current"
-msgstr "העתק נוכחי"
-
-#: ../src/core/undo/CopyUndoAction.cpp:62
-msgid "Copy page"
-msgstr "העתק דף"
-
-#: ../src/util/PathUtil.cpp:255
-msgid "Could not create folder: {1}\n"
-"Failed with error: {2}"
-msgstr "יצירת תיקייה נכשלה: {1}\n"
-"כישלון עם שגיאה: {2}"
-
-#: ../src/core/control/LatexController.cpp:341
-msgid "Could not load LaTeX PDF file"
-msgstr "לא ניתן לטעון את קובץ הLaTeX PDF"
-
-#: ../src/core/control/LatexController.cpp:335
-msgid "Could not load LaTeX PDF file: {1}"
-msgstr "לא ניתן לטעון את קובץ הLaTeX PDF: {1}"
-
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:16
-msgid "Could not load pagetemplates.ini file"
-msgstr "לא ניתן לטעון את קובץ pagetemplates.ini"
-
-#: ../src/core/control/xojfile/LoadHandler.cpp:837
-msgid "Could not open attachment: {1}. Error message: Could not read file"
-msgstr "לא ניתן לפתוח את הקובץ המצורף: {1}. שגיאה: לא ניתן לקרוא את הקובץ"
-
-#: ../src/core/control/xojfile/LoadHandler.cpp:846
-msgid "Could not open attachment: {1}. Error message: Could not write file"
-msgstr "לא ניתן לפתוח את הקובץ המצורף: {1}. שגיאה: לא ניתן לכתוב את הקובץ"
-
-#: ../src/core/control/xojfile/LoadHandler.cpp:818
-#: ../src/core/control/xojfile/LoadHandler.cpp:1146
-#: ../src/core/control/xojfile/LoadHandler.cpp:1164
-msgid "Could not open attachment: {1}. Error message: No valid file size provided"
-msgstr "לא ניתן לפתוח את הקובץ המצורף: {1}. שגיאה: לא סופק גודל קובץ מתאים"
-
-#: ../src/core/control/xojfile/LoadHandler.cpp:809
-#: ../src/core/control/xojfile/LoadHandler.cpp:825
-#: ../src/core/control/xojfile/LoadHandler.cpp:1139
-#: ../src/core/control/xojfile/LoadHandler.cpp:1153
-msgid "Could not open attachment: {1}. Error message: {2}"
-msgstr "לא ניתן לפתוח את הקובץ המצורף: {1}. שגיאה: {2}"
-
-#: ../src/core/control/xojfile/LoadHandler.cpp:179
-msgid "Could not open file: \"{1}\""
-msgstr "קובץ \"{1}\" לא ניתן לפתיחה"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:78
-msgid "Could not parse custom toolbar.ini file: {1}\n"
-"Toolbars will not be available"
-msgstr "פענות הקובץ toolbar.ini לא צלח: {1}\n"
-"שורת הכלים לא תהיה זמינה"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:69
-msgid "Could not parse general toolbar.ini file: {1}\n"
-"No Toolbars will be available"
-msgstr "פענות הקובץ toolbar.ini לא צלח: {1}\n"
-"שורת הכלים לא תהיה זמינה"
-
-#: ../src/core/control/xojfile/LoadHandler.cpp:396
-#: ../src/core/control/xojfile/LoadHandler.cpp:424
-msgid "Could not read image: {1}. Error message: {2}"
-msgstr "לא ניתן לקרוא את התמונה: {1}. הודעת שגיאה {2}"
-
-#: ../src/core/control/xojfile/LoadHandler.cpp:434
-msgid "Could not read page number for cloned background image: {1}."
-msgstr "קריאת מספר העמוד לא צלחה עבור תמונת הרקע המשוכפלת: {1}."
-
-#: ../src/core/undo/UndoRedoHandler.cpp:145
-msgid "Could not redo \"{1}\"\n"
-"Something went wrong… Please write a bug report…"
-msgstr "לא ניתן לבטל פעולה \"{1}\"\n"
-"ישנה בעיה…אנא דווח על באג…"
-
-#: ../src/core/control/Control.cpp:242
-msgid "Could not remove old autosave file \"{1}\": {2}"
-msgstr ""
-
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:179
-msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr "הסרת הכלי משורת הכלים {1} במיקום {2} לא צלחה"
-
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:174
-msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr "הסרת הכלי {1} משורת הכלים {2} במיקום {3} לא צלחה"
-
 #: ../src/core/control/jobs/AutosaveJob.cpp:69
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "שינוי שם הקובץ הנשמר אוטומטית לא צלח בשינוי מ \"{1}\" אל \"{2}\":{3}"
+
+#: ../src/core/control/jobs/BaseExportJob.cpp:23
+msgid "Export PDF"
+msgstr "ייצא PDF"
+
+#: ../src/core/control/jobs/BaseExportJob.cpp:46
+msgid "Do not overwrite the background PDF! This will cause errors!"
+msgstr ""
+
+#: ../src/core/control/jobs/BaseExportJob.cpp:52
+msgid "The check for overwriting the background failed with:\n"
+msgstr ""
+
+#: ../src/core/control/jobs/BaseExportJob.cpp:53
+msgid "\n"
+" Do you want to continue?"
+msgstr "\n"
+"להמשיך?"
+
+#: ../src/core/control/jobs/BaseExportJob.cpp:108
+msgid "Failed to resolve path with the following error:\n"
+"{1}"
+msgstr ""
+
+#: ../src/core/control/jobs/CustomExportJob.cpp:24
+msgid "Custom Export"
+msgstr "ייצוא מותאם אישית"
+
+#: ../src/core/control/jobs/CustomExportJob.cpp:26
+#: ../src/core/control/jobs/PdfExportJob.cpp:19
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:47
+msgid "PDF files"
+msgstr "קבצי PDF"
+
+#: ../src/core/control/jobs/CustomExportJob.cpp:27
+msgid "PNG graphics"
+msgstr "גרפיקת PNG"
+
+#: ../src/core/control/jobs/CustomExportJob.cpp:28
+msgid "SVG graphics"
+msgstr ""
+
+#: ../src/core/control/jobs/CustomExportJob.cpp:29
+msgid "Xournal (Compatibility)"
+msgstr ""
+
+#: ../src/core/control/jobs/CustomExportJob.cpp:125
+#: ../src/core/control/jobs/SaveJob.cpp:131
+msgid "Save file error: {1}"
+msgstr "שגיאה בשמירת קובץ: {1}"
+
+#: ../src/core/control/jobs/ImageExport.cpp:108
+msgid "Unsupported graphics format: "
+msgstr ""
+
+#: ../src/core/control/jobs/ImageExport.cpp:168
+msgid "Error save image #1"
+msgstr "שגיאה בשמירת תמונה מס׳ 1"
+
+#: ../src/core/control/jobs/ImageExport.cpp:177
+msgid "Error while exporting the pdf background: I cannot find the pdf page number "
+msgstr ""
+
+#: ../src/core/control/jobs/ImageExport.cpp:197
+msgid "Error save image #2"
+msgstr "שגיאה בשמירת תמונה מס׳ 2"
+
+#: ../src/core/control/jobs/PdfExportJob.cpp:15
+msgid "PDF Export"
+msgstr "ייצוא PDF"
+
+#: ../src/core/control/jobs/SaveJob.cpp:117
+msgid "Save file error, can't backup: {1}"
+msgstr ""
+
+#: ../src/core/control/latex/LatexGenerator.cpp:55
+msgid "Failed to parse LaTeX generator path: {1}"
+msgstr ""
+
+#: ../src/core/control/latex/LatexGenerator.cpp:65
+msgid "Failed to parse LaTeX generator command: {1}"
+msgstr ""
+
+#: ../src/core/control/latex/LatexGenerator.cpp:71
+msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
+"Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
+"$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
+msgstr ""
+
+#: ../src/core/control/latex/LatexGenerator.cpp:76
+msgid "Failed to find LaTeX generator program in PATH: {1}"
+msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:84
 msgid "Could not save .tex file: {1}"
@@ -311,860 +540,17 @@ msgstr "לא ניתן לשמור קובץ ‎.tex:‏ {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "התחלת {1}: {2} לא צלחה (קוד יציאה: {3})"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:116
-msgid "Could not undo \"{1}\"\n"
-"Something went wrong… Please write a bug report…"
-msgstr "לא ניתן לבטל פעולה \"{1}\"\n"
-"ישנה בעיה… אנא דווח על באג…"
-
-#: ../src/core/control/xojfile/SaveHandler.cpp:251
-msgid "Could not write background \"{1}\", {2}"
-msgstr ""
-
-#: ../src/core/control/xojfile/SaveHandler.cpp:367
-msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:88
-msgid "Create new layer"
-msgstr "יצירת שכבה חדשה"
-
-#: ../src/core/gui/dialog/FormatDialog.cpp:71
-msgid "Custom"
-msgstr "מותאם אישית"
-
-#: ../src/core/control/jobs/CustomExportJob.cpp:24
-msgid "Custom Export"
-msgstr "ייצוא מותאם אישית"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:467
-msgid "Customize Toolbars"
-msgstr "התאם אישית את סרגל הכלים"
-
-#: ../src/core/gui/dialog/ToolbarManageDialog.cpp:34
-msgid "Customized"
-msgstr "הותאם אישית"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:442
-msgid "Cut"
-msgstr "חתוך"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:527
-msgid "Default Tool"
-msgstr "כלי ברירת מחדל"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:448
-#: ../src/core/undo/DeleteUndoAction.cpp:64
-msgid "Delete"
-msgstr "מחק"
-
-#: ../src/core/control/XournalMain.cpp:208
-msgid "Delete Logfile"
-msgstr "מחק קובץ לוג"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:501
-msgid "Delete current page"
-msgstr "מחיקת הדף הנוכחי"
-
-#: ../src/core/control/XournalMain.cpp:239
-msgid "Delete file"
-msgstr "מחק קובץ"
-
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
-msgid "Delete layer"
-msgstr "מחק שכבה"
-
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:74
-msgid "Delete this layer"
-msgstr "מחק שכבה זו"
-
-#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:81
-msgid "Delete this page"
-msgstr "מחיקת דף נוכחי"
-
-#: ../src/core/control/XournalMain.cpp:644
-msgid "Disable audio for this session"
-msgstr ""
-
-#: ../src/core/control/Control.cpp:2831
-msgid "Discard"
-msgstr "התעלמות"
-
-#: ../src/core/control/XournalMain.cpp:700
-msgid "Display advanced export options"
-msgstr "הצג הגדרות יצוא מתקדמות"
-
-#: ../src/core/control/Control.cpp:2266
-msgid "Do not open Autosave files. They may will be overwritten!\n"
-"Copy the files to another folder.\n"
-"Files from Folder {1} cannot be opened."
-msgstr ""
-
-#: ../src/core/control/jobs/BaseExportJob.cpp:46
-msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr ""
-
-#: ../src/core/control/Control.cpp:2825
-msgid "Document file was removed."
-msgstr "קובץ המסמך הוסר."
-
-#: ../src/core/control/xojfile/LoadHandler.cpp:263
-msgid "Document is corrupted (no pages found in file)"
-msgstr ""
-
-#: ../src/core/control/xojfile/LoadHandler.cpp:259
-msgid "Document is not complete (maybe the end is cut off?)"
-msgstr ""
-
-#: ../src/core/model/Document.cpp:325 ../src/core/model/Document.cpp:334
-#: ../src/core/model/Document.cpp:337
-msgid "Document not loaded! ({1}), {2}"
-msgstr ""
-
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:25
-msgid "Dotted"
-msgstr "מנוקד"
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:136
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:536
-msgid "Draw Arrow"
-msgstr "צייר חץ"
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:140
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:540
-msgid "Draw Coordinate System"
-msgstr ""
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:138
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:538
-msgid "Draw Double Arrow"
-msgstr ""
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:134
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:535
-msgid "Draw Ellipse"
-msgstr "ציור אליפסה"
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:130
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:41
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:541
-msgid "Draw Line"
-msgstr "צייר קו"
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:132
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:34
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:100
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:103
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:534
-msgid "Draw Rectangle"
-msgstr "צייר מלבן"
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:144
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:46
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:542
-msgid "Draw Spline"
-msgstr ""
-
-#: ../src/core/undo/InsertUndoAction.cpp:33
-msgid "Draw stroke"
-msgstr ""
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:126
-msgid "Drawing Type - don't change"
-msgstr "סוג ציור - לא לשנות"
-
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
-msgid "Drawing Type Combo"
-msgstr ""
-
-#: ../src/core/undo/TextBoxUndoAction.cpp:43
-msgid "Edit text"
-msgstr "ערוך טקסט"
-
-#: ../src/util/ElementRange.cpp:101
-msgid "ElementRange::parse(): element indices start with 1"
-msgstr ""
-
-#: ../src/util/ElementRange.cpp:95
-msgid "ElementRange::parse(): given element index is larger than maximum count."
-msgstr ""
-
-#: ../src/util/ElementRange.cpp:98
-msgid "ElementRange::parse(): interval bounds must be in increasing order."
-msgstr ""
-
-#: ../src/util/ElementRange.cpp:91
-msgid "ElementRange::parse(): invalid element range."
-msgstr ""
-
-#: ../src/core/undo/EmergencySaveRestore.cpp:22
-msgid "Emergency saved document"
-msgstr ""
-
-#: ../src/core/gui/dialog/SettingsDialog.cpp:308
-msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr ""
-
-#: ../src/core/undo/AddUndoAction.cpp:64
-#: ../src/core/undo/DeleteUndoAction.cpp:61
-#: ../src/core/undo/EraseUndoAction.cpp:60
-msgid "Erase stroke"
-msgstr "מחיקת מתאר"
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:327
-msgid "Eraser"
-msgstr "מחק"
-
-#: ../src/core/control/Control.cpp:2559
-msgid "Error annotate PDF file \"{1}\"\n"
-"{2}"
-msgstr "שגיאה באנוטציה על קובץ PDF \"{1}\" {2}"
-
-#: ../src/util/OutputStream.cpp:70
-msgid "Error code {1}"
-msgstr ""
-
-#: ../src/util/OutputStream.cpp:49
-msgid "Error code {1}. Message:"
-msgstr ""
-
-#: ../src/core/gui/GladeGui.cpp:25
-msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr ""
-
-#: ../src/util/OutputStream.cpp:69
-msgid "Error occurred while closing file: \"{1}\""
-msgstr ""
-
-#: ../src/core/control/Control.cpp:2304
-msgid "Error opening file \"{1}\""
-msgstr "שגיאה בפתיחת קובץ \"{1}\""
-
-#: ../src/util/OutputStream.cpp:27
-msgid "Error opening file: \"{1}\""
-msgstr "שגיאה בפתיחת קובץ \"{1}\""
-
-#: ../src/core/control/PageBackgroundChangeController.cpp:80
-#: ../src/core/control/xojfile/LoadHandler.cpp:486
-#: ../src/core/control/xojfile/LoadHandler.cpp:502
-msgid "Error reading PDF: {1}"
-msgstr "קריאת קובץ PDF נכשלה: {1}"
-
-#: ../src/core/control/xojfile/LoadHandler.cpp:555
-msgid "Error reading width of a stroke: {1}"
-msgstr "שגיאה בקריאת עובי המתאר: {1}"
-
-#: ../src/core/control/jobs/ImageExport.cpp:168
-msgid "Error save image #1"
-msgstr "שגיאה בשמירת תמונה מס׳ 1"
-
-#: ../src/core/control/jobs/ImageExport.cpp:197
-msgid "Error save image #2"
-msgstr "שגיאה בשמירת תמונה מס׳ 2"
-
-#: ../src/core/control/jobs/AutosaveJob.cpp:21
-msgid "Error while autosaving: {1}"
-msgstr "שגיאה תוך כדי שמירה אוטומטית: {1}"
-
-#: ../src/core/control/jobs/ImageExport.cpp:177
-msgid "Error while exporting the pdf background: I cannot find the pdf page number "
-msgstr ""
-
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:122
-msgid "Error while finalizing the PDF Cairo surface"
-msgstr ""
-
-#: ../src/util/OutputStream.cpp:48
-msgid "Error writing data to file: \"{1}\""
-msgstr ""
-
-#: ../src/util/Util.cpp:76
-msgid "Error {1} executing system command: {2}"
-msgstr ""
-
-#: ../src/core/control/CrashHandler.cpp:40
-msgid "Error: {1}"
-msgstr "שגיאה: {1}"
-
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
-msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr ""
-
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
-msgid "Error: {1}. Please check the contents of {2}"
-msgstr ""
-
-#: ../src/core/control/XournalMain.cpp:653
-msgid "Export FILE as PDF"
-msgstr ""
-
-#: ../src/core/control/XournalMain.cpp:655
-msgid "Export FILE as image files (one per page)\n"
-"                                 Guess the output format from the extension of IMGFILE\n"
-"                                 Supported formats: .png, .svg"
-msgstr ""
-
-#: ../src/core/control/jobs/BaseExportJob.cpp:23
-msgid "Export PDF"
-msgstr "ייצא PDF"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
-msgid "Export as PDF"
-msgstr "יצא כקובץ PDF"
-
-#: ../src/core/control/XournalMain.cpp:669
-msgid "Export layers progressively\n"
-"                                 In PDF export, Render layers progressively one by one.\n"
-"                                 This results in N export pages per page with N layers,\n"
-"                                 building up the layer stack progressively.\n"
-"                                 The resulting PDF file can be used for a presentation.\n"
-msgstr ""
-
-#: ../src/core/control/XournalMain.cpp:660
-msgid "Export without background\n"
-"                                 The exported file has transparent or white background,\n"
-"                                 depending on what its format supports\n"
-msgstr ""
-
-#: ../src/core/control/XournalMain.cpp:665
-msgid "Export without ruling\n"
-"                                 The exported file has no paper ruling\n"
-msgstr ""
-
-#: ../src/core/control/XournalMain.cpp:154
-msgid "Failed to delete file: {1}"
-msgstr ""
-
-#: ../src/core/control/latex/LatexGenerator.cpp:76
-msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
-
-#: ../src/core/control/latex/LatexGenerator.cpp:71
-msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
-"Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
-"$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
-msgstr ""
-
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:197
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:236
-msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
-
-#: ../src/core/control/tools/ImageHandler.cpp:70
-msgid "Failed to load image, could not determine image size!"
-msgstr ""
-
-#: ../src/core/control/xojfile/LoadHandler.cpp:171
-msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr ""
-
-#: ../src/core/control/latex/LatexGenerator.cpp:65
-msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
-
-#: ../src/core/control/latex/LatexGenerator.cpp:55
-msgid "Failed to parse LaTeX generator path: {1}"
-msgstr ""
-
-#: ../src/core/control/LatexController.cpp:81
-msgid "Failed to read global template file. Please check your settings."
-msgstr ""
-
-#: ../src/core/control/jobs/BaseExportJob.cpp:108
-msgid "Failed to resolve path with the following error:\n"
-"{1}"
-msgstr ""
-
-#: ../src/util/PathUtil.cpp:172
-msgid "File couldn't be opened. You have to do it manually:\n"
-"URL: {1}"
-msgstr ""
-
-#: ../src/core/control/XournalMain.cpp:463
-msgid "File {1} does not exist."
-msgstr ""
-
-#: ../src/core/control/Control.cpp:230
-msgid "Filesystem error: {1}"
-msgstr "שגיאת מערכת קבצים: {1}"
-
-#: ../src/core/control/XournalMain.cpp:467
-#: ../src/core/control/XournalMain.cpp:523
-msgid "Filesystem error: {1}\n"
-"Sorry, Xournal++ cannot open the file: {2}\n"
-"Consider copying the file to a local directory."
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:597
-msgid "Fill"
-msgstr "מילוי"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:598
-msgid "Fill Opacity"
-msgstr "שקיפות מילוי"
-
-#: ../src/core/gui/dialog/SettingsDialog.cpp:312
-msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:617
-msgid "Fine"
-msgstr ""
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:99
-msgid "Floating Toolbox (experimental)"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/FontButton.cpp:65
-msgid "Font"
-msgstr "גופן"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:567
-msgid "Forward"
-msgstr "קדימה"
-
-#: ../src/core/gui/dialog/AboutDialog.cpp:72
-msgid "GNU GPLv2 or later"
-msgstr "GNU GPLv2 ועדכני יותר"
-
-#: ../src/core/gui/dialog/AboutDialog.cpp:39
-msgid "GTK Version"
-msgstr ""
-
-#: ../src/core/control/XournalMain.cpp:642
-msgid "Get version of xournalpp"
-msgstr "קבלת הגרסה של xournalpp"
-
-#: ../src/core/gui/dialog/AboutDialog.cpp:46
-msgid "Git commit"
-msgstr ""
-
-#: ../src/core/control/LatexController.cpp:76
-msgid "Global template file does not exist. Please check your settings."
-msgstr ""
-
-#: ../src/core/control/LatexController.cpp:87
-msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
-msgid "Go to first page"
-msgstr "מעבר לדף הראשון"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
-msgid "Go to last page"
-msgstr "מעבר לדף האחרון"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:486
-msgid "Go to next layer"
-msgstr "עבור לשכבה הבאה"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:481
-msgid "Go to page"
-msgstr "מעבר לדף"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
-msgid "Go to previous layer"
-msgstr "עבור לשכבה הקודמת"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:487
-msgid "Go to top layer"
-msgstr "עבור לשכבה העליונה"
-
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:24
-msgid "Graph"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:453
-msgid "Grid Snapping"
-msgstr ""
-
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
-msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
-msgstr ""
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:98
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:551
-msgid "Hand"
-msgstr "יד"
-
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:82
-msgid "Hide all"
-msgstr "להסתיר הכול"
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:522
-msgid "Highlighter"
-msgstr "מדגיש"
-
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:526
-msgid "Image"
-msgstr "תמונה"
-
-#: ../src/core/control/ExportHelper.cpp:78
-msgid "Image file successfully created"
-msgstr "קובץ תמונה נוצר בהצלחה"
-
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:21
-msgid "Images"
-msgstr "תמונות"
-
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:74
-msgid "Insert a copy of the current layer below"
-msgstr "הוספת עותק של השכבה הנוכחית מתחת"
-
-#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:81
-msgid "Insert a copy of the current page below"
-msgstr "הכנס העתק של הדף הנוכחי מתחת"
-
-#: ../src/core/gui/sidebar/Sidebar.cpp:106
-msgid "Insert after current page"
-msgstr "הוספה אחרי העמוד הנוכחי"
-
-#: ../src/core/gui/sidebar/Sidebar.cpp:107
-msgid "Insert at end"
-msgstr ""
-
-#: ../src/core/undo/InsertUndoAction.cpp:82
-msgid "Insert elements"
-msgstr "הכנס אלמנטים"
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
-#: ../src/core/undo/InsertUndoAction.cpp:37
-msgid "Insert image"
-msgstr "הכנס תמונה"
-
-#: ../src/core/undo/InsertUndoAction.cpp:39
-msgid "Insert latex"
-msgstr "הוספת latex"
-
-#: ../src/core/undo/InsertLayerUndoAction.cpp:29
-msgid "Insert layer"
-msgstr "הכנס שכבה"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:497
-msgid "Insert page"
-msgstr "הוספת דף"
-
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:26
-msgid "Isometric Dotted"
-msgstr "איזומטרי מנוקד"
-
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:27
-msgid "Isometric Graph"
-msgstr "תרשים איזומטרי"
-
-#: ../src/core/control/XournalMain.cpp:638
-msgid "Jump to Page (first Page: 1)"
-msgstr "דילוג לדף (דף ראשון: 1)"
-
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
-msgid "LaTeX editor theme:"
-msgstr ""
-
-#: ../src/core/control/LatexController.cpp:244
-msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr "יצירת Latex נתקלה בשגיאה: {1} (קוד יציאה: {2})"
-
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:251
-msgid "Layer"
-msgstr "שכבה"
-
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:237
-msgid "Layer Combo"
-msgstr ""
-
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:78
-msgid "Layer Preview"
-msgstr "תצוגה מקדימה של שכבה"
-
 #: ../src/core/control/layer/LayerController.cpp:375
 msgid "Layer {1}"
 msgstr "שכבה {1}"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:78
-msgid "Layerstack Preview"
-msgstr ""
-
-#: ../src/core/gui/PageView.cpp:877
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:95
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
-msgid "Loading..."
-msgstr "טוען..."
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:466
-msgid "Manage Toolbars"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:618
-msgid "Medium"
-msgstr ""
-
-#: ../src/core/undo/MergeLayerDownUndoAction.cpp:32
-msgid "Merge layer down"
-msgstr ""
-
-#: ../src/core/undo/MoveUndoAction.cpp:19
-msgid "Move"
-msgstr "העברה"
-
-#: ../src/core/undo/MoveLayerUndoAction.cpp:26
-msgid "Move layer"
-msgstr "העברת שכבה"
-
-#: ../src/core/undo/SwapUndoAction.cpp:68
-msgid "Move page downwards"
-msgstr "הורדת הדף למטה"
-
-#: ../src/core/undo/SwapUndoAction.cpp:68
-msgid "Move page upwards"
-msgstr "העלאת הדף למעלה"
-
-#: ../src/core/gui/dialog/ToolbarManageDialog.cpp:75
-msgid "New"
-msgstr "חדש"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
-msgid "New Xournal"
-msgstr "Xournal חדש"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:482
-msgid "Next"
-msgstr "הבא"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:490
-msgid "Next annotated page"
-msgstr ""
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:68
-msgid "No device"
-msgstr "אין התקן"
-
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:188
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:231
-msgid "No pages to export!"
-msgstr "אין דפים לייצוא!"
-
-#: ../src/core/control/Control.cpp:1481
-msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
-
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:56
-msgid "No recent files"
-msgstr ""
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:128
-msgid "Normal drawing"
-msgstr "ציור רגיל"
-
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:185
-#: ../src/core/plugin/Plugin.cpp:268 ../src/core/plugin/Plugin.cpp:291
-msgid "OK"
-msgstr "אישור"
-
-#: ../src/core/control/XournalMain.cpp:680
-msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
-"                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
-
-#: ../src/core/control/XournalMain.cpp:676
-msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
-"                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
-
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
-msgid "Open Image"
-msgstr "פתיחת תמונה"
-
-#: ../src/core/control/XournalMain.cpp:206
-msgid "Open Logfile"
-msgstr "פתיחת קובץ לוג"
-
-#: ../src/core/control/XournalMain.cpp:207
-msgid "Open Logfile directory"
-msgstr "פתח תיקייה של קובץ לוג"
-
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
-msgid "Open file"
-msgstr "פתח קובץ"
-
-#: ../src/core/control/jobs/PdfExportJob.cpp:15
-msgid "PDF Export"
-msgstr "ייצוא PDF"
-
-#: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:41
-msgid "PDF Page {1}"
-msgstr "דף PDF {1}"
-
-#: ../src/core/control/PdfCache.cpp:123
-msgid "PDF background missing"
-msgstr "רקע PDF לא נמצא"
-
-#: ../src/core/control/ExportHelper.cpp:120
-msgid "PDF file successfully created"
-msgstr "קובץ PDF נוצר בהצלחה"
-
-#: ../src/core/control/jobs/CustomExportJob.cpp:26
-#: ../src/core/control/jobs/PdfExportJob.cpp:19
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:47
-msgid "PDF files"
-msgstr "קבצי PDF"
-
-#: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:47
-msgid "PDF {1}"
-msgstr ""
-
-#: ../src/core/control/jobs/CustomExportJob.cpp:27
-msgid "PNG graphics"
-msgstr "גרפיקת PNG"
-
-#: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:88
-msgid "Page"
-msgstr "דף"
-
-#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:85
-msgid "Page Preview"
-msgstr "תצוגת דף מקדימה"
-
-#: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:84
-msgid "Page background changed"
-msgstr "רקע השתנה"
-
-#: ../src/core/undo/InsertDeletePageUndoAction.cpp:100
-msgid "Page deleted"
-msgstr "דף נמחק"
-
-#: ../src/core/undo/InsertDeletePageUndoAction.cpp:96
-msgid "Page inserted"
-msgstr "דף הוכנס"
-
-#: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:61
-msgid "Page number"
-msgstr "מספר דף"
-
-#: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
-msgid "Page size changed"
-msgstr ""
-
-#: ../src/core/control/xojfile/SaveHandler.cpp:316
-msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
-msgid "Paired pages"
-msgstr ""
-
-#: ../src/core/gui/sidebar/Sidebar.cpp:94
-msgid "Paper B_ackground"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
-#: ../src/core/undo/AddUndoAction.cpp:66
-msgid "Paste"
-msgstr "הדבק"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:561
-msgid "Pause / Play"
-msgstr "השהה / נגן"
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:308
-msgid "Pen"
-msgstr "עט"
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:16
+msgid "Could not load pagetemplates.ini file"
+msgstr "לא ניתן לטעון את קובץ pagetemplates.ini"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:20
 msgid "Plain"
 msgstr "פשוט"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:550
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:29
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:96
-msgid "Play Object"
-msgstr ""
-
-#: ../src/core/control/XournalMain.cpp:156
-msgid "Please delete the file manually"
-msgstr ""
-
-#: ../src/core/gui/dialog/ToolbarManageDialog.cpp:22
-msgid "Predefined"
-msgstr "מוגדר מראש"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:463
-msgid "Presentation mode"
-msgstr "מצב תצוגה"
-
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:66
-msgid "Previously selected language not available anymore!"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
-msgid "Print"
-msgstr "הדפסה"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:559
-msgid "Record Audio / Stop Recording"
-msgstr "הקלט שמע / עצור הקלטה"
-
-#: ../src/core/control/Control.cpp:992
-msgid "Recorder could not be started."
-msgstr "לא ניתן להתחיל הקלטה."
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
-#: ../src/core/undo/UndoRedoHandler.cpp:196
-msgid "Redo"
-msgstr "בצע מחדש"
-
-#: ../src/core/undo/UndoRedoHandler.cpp:191
-msgid "Redo: "
-msgstr "בצע מחדש: "
-
-#: ../src/core/control/Control.cpp:2465
-msgid "Remove PDF Background"
-msgstr "הסר רקע מ-PDF"
-
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:170
-msgid "Removed tool item from Toolbar {1} ID {2}"
-msgstr ""
-
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:168
-msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr ""
-
-#: ../src/core/undo/LayerRenameUndoAction.cpp:20
-msgid "Rename layer"
-msgstr ""
-
-#: ../src/util/XojMsgBox.cpp:87
-msgid "Replace"
-msgstr "החלף"
-
-#: ../src/core/undo/MissingPdfUndoAction.cpp:66
-msgid "Replace missing PDF"
-msgstr ""
-
-#: ../src/core/control/xojfile/LoadHandler.cpp:1183
-msgid "Requested temporary file was not found for attachment {1}"
-msgstr ""
-
-#: ../src/core/control/XournalMain.cpp:240
-msgid "Restore file"
-msgstr "שחזר קובץ"
-
-#: ../src/core/undo/RotateUndoAction.cpp:56
-msgid "Rotation"
-msgstr "סיבוב"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:451
-msgid "Rotation Snapping"
-msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:21
 msgid "Ruled"
@@ -1174,164 +560,107 @@ msgstr ""
 msgid "Ruled with vertical line"
 msgstr ""
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:28
-msgid "SVG graphics"
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:23
+msgid "Staves"
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
-msgid "Sample LaTeX file generated successfully."
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:24
+msgid "Graph"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
-msgid "Save"
-msgstr "שמירה"
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:25
+msgid "Dotted"
+msgstr "מנוקד"
 
-#: ../src/core/control/Control.cpp:2826
-msgid "Save As..."
-msgstr "שמירה בשם..."
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:26
+msgid "Isometric Dotted"
+msgstr "איזומטרי מנוקד"
 
-#: ../src/core/control/Control.cpp:2658
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
-msgid "Save File"
-msgstr "שמירת קובץ"
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:27
+msgid "Isometric Graph"
+msgstr "תרשים איזומטרי"
 
-#: ../src/core/control/jobs/SaveJob.cpp:117
-msgid "Save file error, can't backup: {1}"
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
+msgid "Copy current"
+msgstr "העתק נוכחי"
+
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
+#: ../src/core/gui/sidebar/Sidebar.cpp:95
+msgid "With PDF background"
 msgstr ""
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:125
-#: ../src/core/control/jobs/SaveJob.cpp:131
-msgid "Save file error: {1}"
-msgstr "שגיאה בשמירת קובץ: {1}"
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:526
+msgid "Image"
+msgstr "תמונה"
 
-#: ../src/core/undo/ScaleUndoAction.cpp:60
-msgid "Scale"
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:200
+msgid "Apply to current page"
+msgstr "יישם לדף הנוכחי"
+
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:213
+msgid "Apply to all pages"
+msgstr "יישם לכל הדפים"
+
+#: ../src/core/control/settings/Settings.cpp:146
+msgid "%F-Note-%H-%M"
+msgstr "%F-פתק-%H-%M"
+
+#: ../src/core/control/settings/Settings.cpp:148
+msgid "%{name}_annotated"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:934
-msgid "Scroll to page {1}"
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
+msgid "Open Image"
+msgstr "פתיחת תמונה"
+
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
+msgid "_Open"
+msgstr "_פתח"
+
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:21
+msgid "Images"
+msgstr "תמונות"
+
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:32
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:116
+msgid "Attach file to the journal"
+msgstr "הצמד קובץ אל היומן"
+
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
+msgid "Open file"
+msgstr "פתח קובץ"
+
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:40
+msgid "All files"
+msgstr "כל הקבצים"
+
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:55
+msgid "Xournal files"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
-msgid "Search"
-msgstr "חפש"
-
-#: ../src/core/gui/dialog/AboutDialog.cpp:65
-msgid "See the full list of contributors"
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:69
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:91
+msgid "Xournal++ template"
 msgstr ""
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:101
-msgid "Select Area Text from pdf"
-msgstr ""
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:97
+msgid "Supported files"
+msgstr "קבצים נתמכים"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:555
-msgid "Select Font"
-msgstr "בחר גופן"
+#: ../src/core/control/tools/EditSelection.cpp:406
+msgid "Arrange"
+msgstr "ארגן"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:531
-#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
-#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:22
-msgid "Select Linear PDF Text"
-msgstr ""
+#: ../src/core/control/tools/EditSelection.cpp:411
+msgid "Bring to front"
+msgstr "העבר לחזית"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
-msgid "Select Multi-Layer Rect"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:78
-msgid "Select Multi-Layer Rectangle"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:546
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:26
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:84
-msgid "Select Multi-Layer Region"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:548
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:27
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:90
-msgid "Select Object"
-msgstr "בחר אובייקט"
-
-#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:68
-msgid "Select PDF Area Text"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:61
-msgid "Select PDF Text"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:24
-msgid "Select PDF Text In Rectangle"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:533
-msgid "Select PDF Text in Rectangle"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:83
-msgid "Select Pdf Text"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:545
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:23
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:66
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:111
-msgid "Select Rectangle"
-msgstr "בחר מלבן"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:544
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:24
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:72
-msgid "Select Region"
-msgstr "בחר אזור"
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:100
-msgid "Select Text from pdf"
-msgstr ""
-
-#: ../src/core/control/Control.cpp:2464
-msgid "Select another PDF"
-msgstr "בחר קובץ PDF נוסף"
-
-#: ../src/util/XojMsgBox.cpp:86
-msgid "Select another name"
-msgstr "בחר שם נוסף"
-
-#: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:107
-msgid "Select background color"
-msgstr "בחר צבע רקע"
-
-#: ../src/core/gui/toolbarMenubar/ColorToolItem.cpp:78
-msgid "Select color"
-msgstr "בחירת צבע"
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
-msgid "Select multi layer rect"
-msgstr ""
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
-msgid "Select multi layer region"
-msgstr ""
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:95
-msgid "Select rectangle"
-msgstr "בחר מלבן"
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
-msgid "Select region"
-msgstr "בחר אזור"
-
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
-msgid "Selection Combo"
-msgstr ""
-
-#: ../src/core/control/XournalMain.cpp:205
-msgid "Send Bugreport"
-msgstr "שלח דיווח על באג"
+#: ../src/core/control/tools/EditSelection.cpp:421
+msgid "Bring forward"
+msgstr "הבא שכבה קדימה"
 
 #: ../src/core/control/tools/EditSelection.cpp:432
 msgid "Send backward"
@@ -1341,149 +670,13 @@ msgstr ""
 msgid "Send to back"
 msgstr ""
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:57
-msgid "Separator"
-msgstr "מפריד"
-
-#: ../src/core/control/XournalMain.cpp:684
-msgid "Set DPI for PNG exports. Default is 300\n"
-"                                 No effect without -i/--create-img=foo.png"
+#: ../src/core/control/tools/ImageHandler.cpp:73
+#: ../src/core/model/Image.cpp:163 ../src/core/model/Image.cpp:167
+msgid "Failed to load image"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:694
-msgid "Set page height for PNG exports\n"
-"                                 No effect without -i/--create-img=foo.png\n"
-"                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
-
-#: ../src/core/control/XournalMain.cpp:688
-msgid "Set page width for PNG exports\n"
-"                                 No effect without -i/--create-img=foo.png\n"
-"                                 Ignored if --export-png-dpi is used"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:552
-msgid "Setsquare"
-msgstr ""
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:142
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:47
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:529
-#: ../src/core/undo/RecognizerUndoAction.cpp:76
-msgid "Shape Recognizer"
-msgstr "מזהה צורות"
-
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:77
-msgid "Show all"
-msgstr "להציג הכול"
-
-#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:99
-msgid "Show only not used pages (one unused page)"
-msgstr ""
-
-#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:100
-msgid "Show only not used pages ({1} unused pages)"
-msgstr ""
-
-#: ../src/core/control/XournalMain.cpp:452
-#: ../src/core/control/XournalMain.cpp:508
-msgid "Sorry, Xournal++ can only open one file at once.\n"
-"Others are ignored."
-msgstr ""
-
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:58
-msgid "Spacer"
-msgstr ""
-
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:23
-msgid "Staves"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:564
-msgid "Stop"
-msgstr "עצור"
-
-#: ../src/core/control/CrashHandler.cpp:42
-msgid "Successfully saved document to \"{1}\""
-msgstr "המסמך נשמר בהצלחה ל־„{1}”"
-
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:97
-msgid "Supported files"
-msgstr "קבצים נתמכים"
-
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:72
-msgid "Swap the current layer with the one above"
-msgstr ""
-
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:73
-msgid "Swap the current layer with the one below"
-msgstr ""
-
-#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:79
-msgid "Swap the current page with the one above"
-msgstr "החלף את הדף הנוכחי עם זה שמעליו"
-
-#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:80
-msgid "Swap the current page with the one below"
-msgstr "החלף את הדף הנוכחי עם זה שמתחתיו"
-
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:48
-msgid "System Default"
-msgstr ""
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:524
-msgid "Text"
-msgstr "טקסט"
-
-#: ../src/core/gui/SearchBar.cpp:79
-#, c-format
-msgid "Text %zu times found on this page"
-msgstr ""
-
-#: ../src/core/gui/SearchBar.cpp:77
-msgid "Text found on this page"
-msgstr "טקסט שנמצא בדף זה"
-
-#: ../src/core/gui/SearchBar.cpp:133
-msgid "Text found once on page {1}"
-msgstr "טקסט שנמצא פעם אחת בדף {1}"
-
-#: ../src/core/gui/SearchBar.cpp:134
-msgid "Text found {1} times on page {2}"
-msgstr "טקסט שנמצא {1} פעמים בדף {2}"
-
-#: ../src/core/gui/SearchBar.cpp:84
-msgid "Text not found"
-msgstr "טקסט לא נמצא"
-
-#: ../src/core/gui/SearchBar.cpp:139
-msgid "Text not found, searched on all pages"
-msgstr "טקסט לא נמצא, כל הדפים עברו חיפוש"
-
-#: ../src/core/control/Control.cpp:1271
-msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
-msgstr ""
-
-#: ../src/core/control/Control.cpp:2439
-msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
-msgstr ""
-
-#: ../src/core/control/XournalMain.cpp:266
-msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr ""
-
-#: ../src/core/control/Control.cpp:2442
-msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
-"It was last seen at: \"{2}\""
-msgstr ""
-
-#: ../src/core/control/jobs/BaseExportJob.cpp:52
-msgid "The check for overwriting the background failed with:\n"
-msgstr ""
-
-#: ../src/core/control/Control.cpp:2312
-msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
+#: ../src/core/control/tools/ImageHandler.cpp:74
+msgid "Could not determine image size!"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:132
@@ -1502,82 +695,29 @@ msgstr ""
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr ""
 
-#: ../src/core/control/LatexController.cpp:303
-msgid "The formula is empty when rendered or invalid."
+#: ../src/core/control/xojfile/LoadHandler.cpp:171
+msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:197
-msgid "The most recent log file name: {1}"
+#: ../src/core/control/xojfile/LoadHandler.cpp:179
+msgid "Could not open file: \"{1}\""
+msgstr "קובץ \"{1}\" לא ניתן לפתיחה"
+
+#: ../src/core/control/xojfile/LoadHandler.cpp:245
+msgid "XML Parser error: {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:194
-msgid "There are recent errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
+#: ../src/core/control/xojfile/LoadHandler.cpp:248
+msgid "Unknown parser error"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:192
-msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
+#: ../src/core/control/xojfile/LoadHandler.cpp:259
+msgid "Document is not complete (maybe the end is cut off?)"
 msgstr ""
 
-#: ../src/util/XojMsgBox.cpp:105
-msgid "There was an error displaying help: {1}"
+#: ../src/core/control/xojfile/LoadHandler.cpp:263
+msgid "Document is corrupted (no pages found in file)"
 msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:619
-msgid "Thick"
-msgstr "עבה"
-
-#: ../src/core/control/Control.cpp:2825
-msgid "This document is not saved yet."
-msgstr "מסמך זה עדיין לא נשמר."
-
-#: ../src/core/control/PageBackgroundChangeController.cpp:193
-msgid "This image could not be loaded. Error message: {1}"
-msgstr "תמונה זו לא יכלה להיטען. הודעת שגיאה: {1}"
-
-#: ../src/core/control/XournalMain.cpp:199
-msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
-msgid "Toggle fullscreen"
-msgstr "עבור למסך מלא"
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
-msgid "Tool - don't change"
-msgstr "כלי - אל תשנה"
-
-#: ../src/core/gui/toolbarMenubar/model/ToolbarData.cpp:104
-msgid "Toolbar found: {1}"
-msgstr "נמצא סרגל כלים: {1}"
-
-#: ../src/core/gui/dialog/ToolbarManageDialog.cpp:50
-msgid "Toolbars"
-msgstr "סרגלי כלים"
-
-#: ../src/core/control/CrashHandler.cpp:31
-msgid "Trying to emergency save the current open document…"
-msgstr "מנסה לשמור בחירום את המסמך הפתוח הנוכחי…"
-
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
-msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
-
-#: ../src/core/gui/PageView.cpp:377
-msgid "Unable to play audio recording {1}"
-msgstr "לא ניתן לנגן את הקלטת השמע {1}"
-
-#: ../src/core/control/Control.cpp:1495
-msgid "Unable to retrieve pdf page."
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
-#: ../src/core/undo/UndoRedoHandler.cpp:184
-msgid "Undo"
-msgstr "בטל"
-
-#: ../src/core/undo/UndoRedoHandler.cpp:179
-msgid "Undo: "
-msgstr "בטל: "
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:308
 msgid "Unexpected root tag: {1}"
@@ -1587,25 +727,30 @@ msgstr ""
 msgid "Unexpected tag in document: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:531
-msgid "Unknown background type: {1}"
-msgstr ""
+#: ../src/core/control/xojfile/LoadHandler.cpp:396
+#: ../src/core/control/xojfile/LoadHandler.cpp:424
+msgid "Could not read image: {1}. Error message: {2}"
+msgstr "לא ניתן לקרוא את התמונה: {1}. הודעת שגיאה {2}"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
-msgid "Unknown color value \"{1}\""
+#: ../src/core/control/xojfile/LoadHandler.cpp:434
+msgid "Could not read page number for cloned background image: {1}."
+msgstr "קריאת מספר העמוד לא צלחה עבור תמונת הרקע המשוכפלת: {1}."
+
+#: ../src/core/control/xojfile/LoadHandler.cpp:442
+msgid "Unknown pixmap::domain type: {1}"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:493
 msgid "Unknown domain type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:248
-msgid "Unknown parser error"
+#: ../src/core/control/xojfile/LoadHandler.cpp:531
+msgid "Unknown background type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:442
-msgid "Unknown pixmap::domain type: {1}"
-msgstr ""
+#: ../src/core/control/xojfile/LoadHandler.cpp:555
+msgid "Error reading width of a stroke: {1}"
+msgstr "שגיאה בקריאת עובי המתאר: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:623
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
@@ -1615,88 +760,415 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2715
-msgid "Unsaved Document"
-msgstr ""
+#: ../src/core/control/xojfile/LoadHandler.cpp:809
+#: ../src/core/control/xojfile/LoadHandler.cpp:825
+#: ../src/core/control/xojfile/LoadHandler.cpp:1139
+#: ../src/core/control/xojfile/LoadHandler.cpp:1153
+msgid "Could not open attachment: {1}. Error message: {2}"
+msgstr "לא ניתן לפתוח את הקובץ המצורף: {1}. שגיאה: {2}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:108
-msgid "Unsupported graphics format: "
-msgstr ""
+#: ../src/core/control/xojfile/LoadHandler.cpp:818
+#: ../src/core/control/xojfile/LoadHandler.cpp:1146
+#: ../src/core/control/xojfile/LoadHandler.cpp:1164
+msgid "Could not open attachment: {1}. Error message: No valid file size provided"
+msgstr "לא ניתן לפתוח את הקובץ המצורף: {1}. שגיאה: לא סופק גודל קובץ מתאים"
 
-#: ../src/core/control/Control.cpp:2462
-msgid "Use proposed PDF"
-msgstr "להשתמש ב־pdf המוצע"
+#: ../src/core/control/xojfile/LoadHandler.cpp:837
+msgid "Could not open attachment: {1}. Error message: Could not read file"
+msgstr "לא ניתן לפתוח את הקובץ המצורף: {1}. שגיאה: לא ניתן לקרוא את הקובץ"
 
-#: ../src/core/gui/dialog/AboutDialog.cpp:33
-msgid "Version"
-msgstr "גרסה"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:549
-msgid "Vertical Space"
-msgstr ""
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
-msgid "Vertical space"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:616
-msgid "Very Fine"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:620
-msgid "Very Thick"
-msgstr ""
-
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
-#: ../src/core/gui/sidebar/Sidebar.cpp:95
-msgid "With PDF background"
-msgstr ""
-
-#: ../src/core/undo/InsertUndoAction.cpp:35
-msgid "Write text"
-msgstr ""
+#: ../src/core/control/xojfile/LoadHandler.cpp:846
+msgid "Could not open attachment: {1}. Error message: Could not write file"
+msgstr "לא ניתן לפתוח את הקובץ המצורף: {1}. שגיאה: לא ניתן לכתוב את הקובץ"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1033
 msgid "Wrong count of points ({1})"
+msgstr ""
+
+#: ../src/core/control/xojfile/LoadHandler.cpp:1049
+msgid "xoj-File: {1}"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1050
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:245
-msgid "XML Parser error: {1}"
+#: ../src/core/control/xojfile/LoadHandler.cpp:1183
+msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:29
-msgid "Xournal (Compatibility)"
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:72
+msgid "Attribute color not set!"
+msgstr "צבע התכונה לא מוגדר!"
+
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
+msgid "Unknown color value \"{1}\""
 msgstr ""
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:55
-msgid "Xournal files"
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:96
+msgid "Color \"{1}\" unknown (not defined in default color list)!"
+msgstr "צבע ״{1}״ לא ידוע (לא מוגדר ברשימת צבעי ברירת המחדל)!"
+
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:123
+msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
+msgstr "תכונה \"{1}\" לא יכלה להתפרש כ-Double, ערכה הוא nullptr"
+
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:130
+msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
+msgstr "תכונה \"{1}\" לא יכלה להתפרש כ-Double, ערכה הוא \"{2}\""
+
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:140
+msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
+msgstr "תכונה \"{1}\" לא יכלה להתפרש כ-int, ערכה הוא nullptr"
+
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:147
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:166
+msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
+msgstr "תכונה \"{1}\" לא יכלה להתפרש כ-int, ערכה הוא \"{2}\""
+
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:178
+msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
+msgstr "תכונה \"{1}\" לא יכלה להתפרש כ-size_t, ערכה הוא nullptr"
+
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:185
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:205
+msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
+msgstr "תכונה \"{1}\" לא יכלה להתפרש כ-size_t, ערכה הוא \"{2}\""
+
+#: ../src/core/control/xojfile/SaveHandler.cpp:251
+msgid "Could not write background \"{1}\", {2}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:234
-msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
+#: ../src/core/control/xojfile/SaveHandler.cpp:316
+msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2664
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
-msgid "Xournal++ files"
+#: ../src/core/control/xojfile/SaveHandler.cpp:367
+msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr ""
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:69
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:91
-msgid "Xournal++ template"
+#: ../src/core/gui/GladeGui.cpp:25
+msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1257
-msgid "You deleted the active toolbar. Falling back to the default toolbar."
+#: ../src/core/gui/PageView.cpp:377
+msgid "Unable to play audio recording {1}"
+msgstr "לא ניתן לנגן את הקלטת השמע {1}"
+
+#: ../src/core/gui/PageView.cpp:877
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:95
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
+msgid "Loading..."
+msgstr "טוען..."
+
+#: ../src/core/gui/PageView.cpp:934
+msgid "Scroll to page {1}"
 msgstr ""
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:228
-msgid "You don't have any PDF pages to select from. Cancel operation.\n"
-"Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
+#: ../src/core/gui/PageView.cpp:936
+msgid "Add missing page"
+msgstr "הוספת עמוד חסר"
+
+#: ../src/core/gui/SearchBar.cpp:77
+msgid "Text found on this page"
+msgstr "טקסט שנמצא בדף זה"
+
+#: ../src/core/gui/SearchBar.cpp:79
+#, c-format
+msgid "Text %zu times found on this page"
+msgstr ""
+
+#: ../src/core/gui/SearchBar.cpp:84
+msgid "Text not found"
+msgstr "טקסט לא נמצא"
+
+#: ../src/core/gui/SearchBar.cpp:133
+msgid "Text found once on page {1}"
+msgstr "טקסט שנמצא פעם אחת בדף {1}"
+
+#: ../src/core/gui/SearchBar.cpp:134
+msgid "Text found {1} times on page {2}"
+msgstr "טקסט שנמצא {1} פעמים בדף {2}"
+
+#: ../src/core/gui/SearchBar.cpp:139
+msgid "Text not found, searched on all pages"
+msgstr "טקסט לא נמצא, כל הדפים עברו חיפוש"
+
+#: ../src/core/gui/dialog/AboutDialog.cpp:33
+msgid "Version"
+msgstr "גרסה"
+
+#: ../src/core/gui/dialog/AboutDialog.cpp:36
+msgid "Built on"
+msgstr "בנוי על"
+
+#: ../src/core/gui/dialog/AboutDialog.cpp:39
+msgid "GTK Version"
+msgstr ""
+
+#: ../src/core/gui/dialog/AboutDialog.cpp:46
+msgid "Git commit"
+msgstr ""
+
+#: ../src/core/gui/dialog/AboutDialog.cpp:65
+msgid "See the full list of contributors"
+msgstr ""
+
+#: ../src/core/gui/dialog/AboutDialog.cpp:72
+msgid "GNU GPLv2 or later"
+msgstr "GNU GPLv2 ועדכני יותר"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:68
+msgid "No device"
+msgstr "אין התקן"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
+msgid "Tool - don't change"
+msgstr "כלי - אל תשנה"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:308
+msgid "Pen"
+msgstr "עט"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:327
+msgid "Eraser"
+msgstr "מחק"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:522
+msgid "Highlighter"
+msgstr "מדגיש"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:524
+msgid "Text"
+msgstr "טקסט"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
+#: ../src/core/undo/InsertUndoAction.cpp:37
+msgid "Insert image"
+msgstr "הכנס תמונה"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
+msgid "Vertical space"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
+msgid "Select region"
+msgstr "בחר אזור"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:95
+msgid "Select rectangle"
+msgstr "בחר מלבן"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
+msgid "Select multi layer region"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
+msgid "Select multi layer rect"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:98
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:551
+msgid "Hand"
+msgstr "יד"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:99
+msgid "Floating Toolbox (experimental)"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:100
+msgid "Select Text from pdf"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:101
+msgid "Select Area Text from pdf"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:126
+msgid "Drawing Type - don't change"
+msgstr "סוג ציור - לא לשנות"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:128
+msgid "Normal drawing"
+msgstr "ציור רגיל"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:130
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:41
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:541
+msgid "Draw Line"
+msgstr "צייר קו"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:132
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:34
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:100
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:103
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:534
+msgid "Draw Rectangle"
+msgstr "צייר מלבן"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:134
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:535
+msgid "Draw Ellipse"
+msgstr "ציור אליפסה"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:136
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:38
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:536
+msgid "Draw Arrow"
+msgstr "צייר חץ"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:138
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:538
+msgid "Draw Double Arrow"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:140
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:540
+msgid "Draw Coordinate System"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:142
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:47
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:529
+#: ../src/core/undo/RecognizerUndoAction.cpp:76
+msgid "Shape Recognizer"
+msgstr "מזהה צורות"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:144
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:46
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:542
+msgid "Draw Spline"
+msgstr ""
+
+#: ../src/core/gui/dialog/FormatDialog.cpp:71
+msgid "Custom"
+msgstr "מותאם אישית"
+
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:48
+msgid "System Default"
+msgstr ""
+
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:66
+msgid "Previously selected language not available anymore!"
+msgstr ""
+
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
+msgid "LaTeX editor theme:"
+msgstr ""
+
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
+msgstr ""
+
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
+msgid "Unable to open global template file at {1}. Does it exist?"
+msgstr ""
+
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
+msgid "Sample LaTeX file generated successfully."
+msgstr ""
+
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
+msgid "Error: {1}. Please check the contents of {2}"
+msgstr ""
+
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
+msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
+msgstr ""
+
+#: ../src/core/gui/dialog/PluginDialogEntry.cpp:30
+msgid "default enabled"
+msgstr "ברירת מחדל מופעלת"
+
+#: ../src/core/gui/dialog/PluginDialogEntry.cpp:30
+msgid "default disabled"
+msgstr "ברירת מחדל בוטלה"
+
+#: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:107
+msgid "Select background color"
+msgstr "בחר צבע רקע"
+
+#: ../src/core/gui/dialog/SettingsDialog.cpp:189
+msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
+msgstr "<b>לא נמצא שום מכשיר. נראה שישנה בעיה - תרצה לדווח על באג?</b>"
+
+#: ../src/core/gui/dialog/SettingsDialog.cpp:308
+msgid "Enable pressure sensitivity or pressure inference to change this setting!"
+msgstr ""
+
+#: ../src/core/gui/dialog/SettingsDialog.cpp:312
+msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
+msgstr ""
+
+#: ../src/core/gui/dialog/ToolbarManageDialog.cpp:22
+msgid "Predefined"
+msgstr "מוגדר מראש"
+
+#: ../src/core/gui/dialog/ToolbarManageDialog.cpp:34
+msgid "Customized"
+msgstr "הותאם אישית"
+
+#: ../src/core/gui/dialog/ToolbarManageDialog.cpp:50
+msgid "Toolbars"
+msgstr "סרגלי כלים"
+
+#: ../src/core/gui/dialog/ToolbarManageDialog.cpp:75
+msgid "New"
+msgstr "חדש"
+
+#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:99
+msgid "Show only not used pages (one unused page)"
+msgstr ""
+
+#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:100
+msgid "Show only not used pages ({1} unused pages)"
+msgstr ""
+
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:168
+msgid "Removed tool item {1} from Toolbar {2} ID {3}"
+msgstr ""
+
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:170
+msgid "Removed tool item from Toolbar {1} ID {2}"
+msgstr ""
+
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:174
+msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
+msgstr "הסרת הכלי {1} משורת הכלים {2} במיקום {3} לא צלחה"
+
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:179
+msgid "Could not remove tool item from Toolbar {1} on position {2}"
+msgstr "הסרת הכלי משורת הכלים {1} במיקום {2} לא צלחה"
+
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:57
+msgid "Separator"
+msgstr "מפריד"
+
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:58
+msgid "Spacer"
+msgstr ""
+
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:56
+msgid "No recent files"
+msgstr ""
+
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:65
+msgid "Clear list"
+msgstr "נקה את הרשימה"
+
+#: ../src/core/gui/sidebar/Sidebar.cpp:94
+msgid "_Journal"
+msgstr ""
+
+#: ../src/core/gui/sidebar/Sidebar.cpp:94
+msgid "Paper B_ackground"
 msgstr ""
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:98
@@ -1705,118 +1177,85 @@ msgid "Your current document does not contain PDF Page no {1}\n"
 "Tip: You can select {2} to insert a PDF page."
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:136
-msgid "Zoom Slider"
+#: ../src/core/gui/sidebar/Sidebar.cpp:106
+msgid "Insert after current page"
+msgstr "הוספה אחרי העמוד הנוכחי"
+
+#: ../src/core/gui/sidebar/Sidebar.cpp:107
+msgid "Insert at end"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:471
-msgid "Zoom fit to screen"
+#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:170
+msgid "Contents"
+msgstr "תוכן"
+
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:72
+msgid "Swap the current layer with the one above"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:470
-msgid "Zoom in"
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:73
+msgid "Swap the current layer with the one below"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:469
-msgid "Zoom out"
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:74
+msgid "Insert a copy of the current layer below"
+msgstr "הוספת עותק של השכבה הנוכחית מתחת"
+
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:74
+msgid "Delete this layer"
+msgstr "מחק שכבה זו"
+
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:78
+msgid "Layerstack Preview"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:472
-msgid "Zoom to 100%"
-msgstr "תקריב 100%‏"
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:78
+msgid "Layer Preview"
+msgstr "תצוגה מקדימה של שכבה"
 
-#: ../src/core/control/Control.cpp:2658
-#: ../src/core/control/jobs/BaseExportJob.cpp:24
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
-msgid "_Cancel"
-msgstr "_ביטול"
+#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:79
+msgid "Swap the current page with the one above"
+msgstr "החלף את הדף הנוכחי עם זה שמעליו"
 
-#: ../src/core/gui/sidebar/Sidebar.cpp:94
-msgid "_Journal"
+#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:80
+msgid "Swap the current page with the one below"
+msgstr "החלף את הדף הנוכחי עם זה שמתחתיו"
+
+#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:81
+msgid "Insert a copy of the current page below"
+msgstr "הכנס העתק של הדף הנוכחי מתחת"
+
+#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:81
+msgid "Delete this page"
+msgstr "מחיקת דף נוכחי"
+
+#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:85
+msgid "Page Preview"
+msgstr "תצוגת דף מקדימה"
+
+#: ../src/core/gui/toolbarMenubar/ColorToolItem.cpp:78
+msgid "Select color"
+msgstr "בחירת צבע"
+
+#: ../src/core/gui/toolbarMenubar/FontButton.cpp:65
+msgid "Font"
+msgstr "גופן"
+
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
+msgid "Drawing Type Combo"
 msgstr ""
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
-msgid "_Open"
-msgstr "_פתח"
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:69
+msgid "Could not parse general toolbar.ini file: {1}\n"
+"No Toolbars will be available"
+msgstr "פענות הקובץ toolbar.ini לא צלח: {1}\n"
+"שורת הכלים לא תהיה זמינה"
 
-#: ../src/core/control/Control.cpp:2659
-#: ../src/core/control/jobs/BaseExportJob.cpp:24
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
-msgid "_Save"
-msgstr "_שמירה"
-
-#: ../src/core/control/DeviceListHelper.cpp:101
-msgid "cursor"
-msgstr "סמן"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:316
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:516
-msgid "dash-/ dotted"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:313
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:514
-msgid "dashed"
-msgstr ""
-
-#: ../src/core/gui/dialog/PluginDialogEntry.cpp:30
-msgid "default disabled"
-msgstr "ברירת מחדל בוטלה"
-
-#: ../src/core/gui/dialog/PluginDialogEntry.cpp:30
-msgid "default enabled"
-msgstr "ברירת מחדל מופעלת"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:331
-msgid "delete stroke"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:319
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:517
-msgid "dotted"
-msgstr ""
-
-#: ../src/core/undo/AddUndoAction.cpp:74
-#: ../src/core/undo/DeleteUndoAction.cpp:72
-msgid "elements"
-msgstr "אלמנטים"
-
-#: ../src/core/control/DeviceListHelper.cpp:99
-msgid "eraser"
-msgstr "מחק"
-
-#: ../src/core/control/Control.cpp:2280
-msgid "file: {1}"
-msgstr ""
-
-#: ../src/core/undo/AddUndoAction.cpp:85
-#: ../src/core/undo/DeleteUndoAction.cpp:83
-msgid "image"
-msgstr "תמונה"
-
-#: ../src/core/control/DeviceListHelper.cpp:104
-msgid "keyboard"
-msgstr "מקלדת"
-
-#: ../src/core/undo/AddUndoAction.cpp:88
-#: ../src/core/undo/DeleteUndoAction.cpp:86
-msgid "latex"
-msgstr "לייטקס"
-
-#: ../src/core/control/DeviceListHelper.cpp:95
-msgid "mouse"
-msgstr "עכבר"
-
-#: ../src/core/control/DeviceListHelper.cpp:97
-msgid "pen"
-msgstr "עט"
-
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:154
-msgid "show"
-msgstr "הצג"
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:78
+msgid "Could not parse custom toolbar.ini file: {1}\n"
+"Toolbars will not be available"
+msgstr "פענות הקובץ toolbar.ini לא צלח: {1}\n"
+"שורת הכלים לא תהיה זמינה"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:310
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:329
@@ -1824,62 +1263,644 @@ msgstr "הצג"
 msgid "standard"
 msgstr "סטנדרטי"
 
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:313
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:514
+msgid "dashed"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:316
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:516
+msgid "dash-/ dotted"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:319
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:517
+msgid "dotted"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:330
+msgid "whiteout"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:331
+msgid "delete stroke"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
+msgid "New Xournal"
+msgstr "Xournal חדש"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
+msgid "Export as PDF"
+msgstr "יצא כקובץ PDF"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
+msgid "Print"
+msgstr "הדפסה"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
+#: ../src/core/undo/UndoRedoHandler.cpp:184
+msgid "Undo"
+msgstr "בטל"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
+#: ../src/core/undo/UndoRedoHandler.cpp:196
+msgid "Redo"
+msgstr "בצע מחדש"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:442
+msgid "Cut"
+msgstr "חתוך"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:443
+#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
+#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:81
+msgid "Copy"
+msgstr "העתק"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
+#: ../src/core/undo/AddUndoAction.cpp:66
+msgid "Paste"
+msgstr "הדבק"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
+msgid "Search"
+msgstr "חפש"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:448
+#: ../src/core/undo/DeleteUndoAction.cpp:64
+msgid "Delete"
+msgstr "מחק"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:451
+msgid "Rotation Snapping"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:453
+msgid "Grid Snapping"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
+msgid "Paired pages"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:463
+msgid "Presentation mode"
+msgstr "מצב תצוגה"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
+msgid "Toggle fullscreen"
+msgstr "עבור למסך מלא"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:466
+msgid "Manage Toolbars"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:467
+msgid "Customize Toolbars"
+msgstr "התאם אישית את סרגל הכלים"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:469
+msgid "Zoom out"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:470
+msgid "Zoom in"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:471
+msgid "Zoom fit to screen"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:472
+msgid "Zoom to 100%"
+msgstr "תקריב 100%‏"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
+msgid "Go to first page"
+msgstr "מעבר לדף הראשון"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:570
+msgid "Back"
+msgstr "חזרה"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:481
+msgid "Go to page"
+msgstr "מעבר לדף"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:482
+msgid "Next"
+msgstr "הבא"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
+msgid "Go to last page"
+msgstr "מעבר לדף האחרון"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
+msgid "Go to previous layer"
+msgstr "עבור לשכבה הקודמת"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:486
+msgid "Go to next layer"
+msgstr "עבור לשכבה הבאה"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:487
+msgid "Go to top layer"
+msgstr "עבור לשכבה העליונה"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:490
+msgid "Next annotated page"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:497
+msgid "Insert page"
+msgstr "הוספת דף"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:501
+msgid "Delete current page"
+msgstr "מחיקת הדף הנוכחי"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:525
+msgid "Add/Edit TeX"
+msgstr "הוספת/עריכת TeX"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:527
+msgid "Default Tool"
+msgstr "כלי ברירת מחדל"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:531
+#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
+#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:22
+msgid "Select Linear PDF Text"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:533
+msgid "Select PDF Text in Rectangle"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:544
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:24
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:72
+msgid "Select Region"
+msgstr "בחר אזור"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:545
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:23
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:66
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:111
+msgid "Select Rectangle"
+msgstr "בחר מלבן"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:546
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:26
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:84
+msgid "Select Multi-Layer Region"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
+msgid "Select Multi-Layer Rect"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:548
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:27
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:90
+msgid "Select Object"
+msgstr "בחר אובייקט"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:549
+msgid "Vertical Space"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:550
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:29
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:96
+msgid "Play Object"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:552
+msgid "Setsquare"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:553
+msgid "Compass"
+msgstr "מצפן"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:555
+msgid "Select Font"
+msgstr "בחר גופן"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:559
+msgid "Record Audio / Stop Recording"
+msgstr "הקלט שמע / עצור הקלטה"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:561
+msgid "Pause / Play"
+msgstr "השהה / נגן"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:564
+msgid "Stop"
+msgstr "עצור"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:567
+msgid "Forward"
+msgstr "קדימה"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:597
+msgid "Fill"
+msgstr "מילוי"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:598
+msgid "Fill Opacity"
+msgstr "שקיפות מילוי"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:616
+msgid "Very Fine"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:617
+msgid "Fine"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:618
+msgid "Medium"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:619
+msgid "Thick"
+msgstr "עבה"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:620
+msgid "Very Thick"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:77
+msgid "Show all"
+msgstr "להציג הכול"
+
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:82
+msgid "Hide all"
+msgstr "להסתיר הכול"
+
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:88
+msgid "Create new layer"
+msgstr "יצירת שכבה חדשה"
+
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:154
+msgid "show"
+msgstr "הצג"
+
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:197
+#: ../src/core/model/XojPage.cpp:168
+msgid "Background"
+msgstr "רקע"
+
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:237
+msgid "Layer Combo"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:251
+msgid "Layer"
+msgstr "שכבה"
+
+#: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:37
+msgctxt "Page {pagenumber} \"of {pagecount}\""
+msgid " of {1}"
+msgstr " מתוך {1}"
+
+#: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:41
+msgid "PDF Page {1}"
+msgstr "דף PDF {1}"
+
+#: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:47
+msgid "PDF {1}"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:61
+msgid "Page number"
+msgstr "מספר דף"
+
+#: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:88
+msgid "Page"
+msgstr "דף"
+
+#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:24
+msgid "Select PDF Text In Rectangle"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:61
+msgid "Select PDF Text"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:68
+msgid "Select PDF Area Text"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:83
+msgid "Select Pdf Text"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
+msgid "Selection Combo"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:78
+msgid "Select Multi-Layer Rectangle"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:136
+msgid "Zoom Slider"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:185
+#: ../src/core/plugin/Plugin.cpp:268 ../src/core/plugin/Plugin.cpp:291
+msgid "OK"
+msgstr "אישור"
+
+#: ../src/core/gui/toolbarMenubar/model/ToolbarData.cpp:104
+msgid "Toolbar found: {1}"
+msgstr "נמצא סרגל כלים: {1}"
+
+#: ../src/core/model/Document.cpp:327 ../src/core/model/Document.cpp:336
+#: ../src/core/model/Document.cpp:339
+msgid "Document not loaded! ({1}), {2}"
+msgstr ""
+
+#: ../src/core/model/Image.cpp:163 ../src/core/model/Image.cpp:173
+msgid "Error: "
+msgstr ""
+
+#: ../src/core/model/Image.cpp:167 ../src/core/model/Image.cpp:177
+msgid "Unrecoverable error"
+msgstr ""
+
+#: ../src/core/model/Image.cpp:173 ../src/core/model/Image.cpp:177
+msgid "Failed to close image stream"
+msgstr ""
+
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:122
+msgid "Error while finalizing the PDF Cairo surface"
+msgstr ""
+
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:188
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:231
+msgid "No pages to export!"
+msgstr "אין דפים לייצוא!"
+
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:197
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:236
+msgid "Failed to initialize PDF Cairo surface"
+msgstr ""
+
+#: ../src/core/undo/AddUndoAction.cpp:64
+#: ../src/core/undo/DeleteUndoAction.cpp:61
+#: ../src/core/undo/EraseUndoAction.cpp:60
+msgid "Erase stroke"
+msgstr "מחיקת מתאר"
+
+#: ../src/core/undo/AddUndoAction.cpp:74
+#: ../src/core/undo/DeleteUndoAction.cpp:72
+msgid "elements"
+msgstr "אלמנטים"
+
 #: ../src/core/undo/AddUndoAction.cpp:82
 #: ../src/core/undo/DeleteUndoAction.cpp:80
 msgid "stroke"
 msgstr ""
 
-#: ../src/core/control/DeviceListHelper.cpp:113
-msgid "tablet pad"
-msgstr "לוח טאבלט"
+#: ../src/core/undo/AddUndoAction.cpp:85
+#: ../src/core/undo/DeleteUndoAction.cpp:83
+msgid "image"
+msgstr "תמונה"
+
+#: ../src/core/undo/AddUndoAction.cpp:88
+#: ../src/core/undo/DeleteUndoAction.cpp:86
+msgid "latex"
+msgstr "לייטקס"
 
 #: ../src/core/undo/AddUndoAction.cpp:91
 #: ../src/core/undo/DeleteUndoAction.cpp:89
 msgid "text"
 msgstr "טקסט"
 
-#: ../src/core/control/DeviceListHelper.cpp:108
-msgid "touchpad"
-msgstr "משטח מגע"
+#: ../src/core/undo/ColorUndoAction.cpp:90
+msgid "Change color"
+msgstr "שנה צבע"
 
-#: ../src/core/control/DeviceListHelper.cpp:106
-msgid "touchscreen"
-msgstr "מסך מגע"
+#: ../src/core/undo/CopyUndoAction.cpp:62
+msgid "Copy page"
+msgstr "העתק דף"
 
-#: ../src/core/control/DeviceListHelper.cpp:111
-msgid "trackpoint"
-msgstr "טראקפוינט"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:330
-msgid "whiteout"
+#: ../src/core/undo/EmergencySaveRestore.cpp:22
+msgid "Emergency saved document"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1049
-msgid "xoj-File: {1}"
+#: ../src/core/undo/FillUndoAction.cpp:81
+msgid "Change stroke fill"
+msgstr "שינוי מילוי קו המתאר"
+
+#: ../src/core/undo/FontUndoAction.cpp:110
+msgid "Change font"
+msgstr "שנה גופן"
+
+#: ../src/core/undo/InsertDeletePageUndoAction.cpp:96
+msgid "Page inserted"
+msgstr "דף הוכנס"
+
+#: ../src/core/undo/InsertDeletePageUndoAction.cpp:100
+msgid "Page deleted"
+msgstr "דף נמחק"
+
+#: ../src/core/undo/InsertLayerUndoAction.cpp:29
+msgid "Insert layer"
+msgstr "הכנס שכבה"
+
+#: ../src/core/undo/InsertUndoAction.cpp:33
+msgid "Draw stroke"
+msgstr ""
+
+#: ../src/core/undo/InsertUndoAction.cpp:35
+msgid "Write text"
+msgstr ""
+
+#: ../src/core/undo/InsertUndoAction.cpp:39
+msgid "Insert latex"
+msgstr "הוספת latex"
+
+#: ../src/core/undo/InsertUndoAction.cpp:82
+msgid "Insert elements"
+msgstr "הכנס אלמנטים"
+
+#: ../src/core/undo/LayerRenameUndoAction.cpp:20
+msgid "Rename layer"
+msgstr ""
+
+#: ../src/core/undo/LineStyleUndoAction.cpp:78
+msgid "Change line style"
+msgstr "שנה סגנון שורה"
+
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:32
+msgid "Merge layer down"
+msgstr ""
+
+#: ../src/core/undo/MissingPdfUndoAction.cpp:66
+msgid "Replace missing PDF"
+msgstr ""
+
+#: ../src/core/undo/MoveLayerUndoAction.cpp:26
+msgid "Move layer"
+msgstr "העברת שכבה"
+
+#: ../src/core/undo/MoveUndoAction.cpp:19
+msgid "Move"
+msgstr "העברה"
+
+#: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:84
+msgid "Page background changed"
+msgstr "רקע השתנה"
+
+#: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
+msgid "Page size changed"
+msgstr ""
+
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+msgid "Delete layer"
+msgstr "מחק שכבה"
+
+#: ../src/core/undo/RotateUndoAction.cpp:56
+msgid "Rotation"
+msgstr "סיבוב"
+
+#: ../src/core/undo/ScaleUndoAction.cpp:60
+msgid "Scale"
+msgstr ""
+
+#: ../src/core/undo/SizeUndoAction.cpp:106
+msgid "Change stroke width"
+msgstr "שינוי עובי קו המתאר"
+
+#: ../src/core/undo/SwapUndoAction.cpp:68
+msgid "Move page upwards"
+msgstr "העלאת הדף למעלה"
+
+#: ../src/core/undo/SwapUndoAction.cpp:68
+msgid "Move page downwards"
+msgstr "הורדת הדף למטה"
+
+#: ../src/core/undo/TextBoxUndoAction.cpp:43
+msgid "Edit text"
+msgstr "ערוך טקסט"
+
+#: ../src/core/undo/UndoRedoHandler.cpp:116
+msgid "Could not undo \"{1}\"\n"
+"Something went wrong… Please write a bug report…"
+msgstr "לא ניתן לבטל פעולה \"{1}\"\n"
+"ישנה בעיה… אנא דווח על באג…"
+
+#: ../src/core/undo/UndoRedoHandler.cpp:145
+msgid "Could not redo \"{1}\"\n"
+"Something went wrong… Please write a bug report…"
+msgstr "לא ניתן לבטל פעולה \"{1}\"\n"
+"ישנה בעיה…אנא דווח על באג…"
+
+#: ../src/core/undo/UndoRedoHandler.cpp:179
+msgid "Undo: "
+msgstr "בטל: "
+
+#: ../src/core/undo/UndoRedoHandler.cpp:191
+msgid "Redo: "
+msgstr "בצע מחדש: "
+
+#: ../src/util/ElementRange.cpp:91
+msgid "ElementRange::parse(): invalid element range."
+msgstr ""
+
+#: ../src/util/ElementRange.cpp:95
+msgid "ElementRange::parse(): given element index is larger than maximum count."
+msgstr ""
+
+#: ../src/util/ElementRange.cpp:98
+msgid "ElementRange::parse(): interval bounds must be in increasing order."
+msgstr ""
+
+#: ../src/util/ElementRange.cpp:101
+msgid "ElementRange::parse(): element indices start with 1"
+msgstr ""
+
+#: ../src/util/OutputStream.cpp:27
+msgid "Error opening file: \"{1}\""
+msgstr "שגיאה בפתיחת קובץ \"{1}\""
+
+#: ../src/util/OutputStream.cpp:48
+msgid "Error writing data to file: \"{1}\""
+msgstr ""
+
+#: ../src/util/OutputStream.cpp:49
+msgid "Error code {1}. Message:"
+msgstr ""
+
+#: ../src/util/OutputStream.cpp:69
+msgid "Error occurred while closing file: \"{1}\""
+msgstr ""
+
+#: ../src/util/OutputStream.cpp:70
+msgid "Error code {1}"
+msgstr ""
+
+#: ../src/util/PathUtil.cpp:172
+msgid "File couldn't be opened. You have to do it manually:\n"
+"URL: {1}"
+msgstr ""
+
+#: ../src/util/PathUtil.cpp:245
+msgid "xournalpp-{1}"
+msgstr ""
+
+#: ../src/util/PathUtil.cpp:255
+msgid "Could not create folder: {1}\n"
+"Failed with error: {2}"
+msgstr "יצירת תיקייה נכשלה: {1}\n"
+"כישלון עם שגיאה: {2}"
+
+#: ../src/util/Util.cpp:76
+msgid "Error {1} executing system command: {2}"
+msgstr ""
+
+#: ../src/util/XojMsgBox.cpp:86
+msgid "Select another name"
+msgstr "בחר שם נוסף"
+
+#: ../src/util/XojMsgBox.cpp:87
+msgid "Replace"
+msgstr "החלף"
+
+#: ../src/util/XojMsgBox.cpp:105
+msgid "There was an error displaying help: {1}"
 msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:185
-msgid "xoj-preview-extractor: could not find icon \"{1}\""
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:134
+msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
+msgstr ""
+
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:138
+msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
 msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:142
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:134
-msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr ""
-
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:147
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:138
-msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:185
+msgid "xoj-preview-extractor: could not find icon \"{1}\""
 msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:202
@@ -1890,29 +1911,885 @@ msgstr ""
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:245
-msgid "xournalpp-{1}"
+#: ../ui/about.glade:9
+msgid "About Xournal++"
+msgstr "על Xournal++‎"
+
+#: ../ui/about.glade:117
+msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
+"<i>The next generation</i>"
 msgstr ""
 
-#: ../ui/main.glade:31
-msgid " = Floating Toolbox (experimental) ="
+#: ../ui/about.glade:157
+msgid "Icon Designers"
 msgstr ""
 
-#: ../ui/settings.glade:2730
-msgid "% greater than the initial distance between the two touches."
+#: ../ui/about.glade:210
+msgid "Partially based on Xournal\n"
+"by Denis Auroux"
 msgstr ""
 
-#: ../ui/latexSettings.glade:217
-msgid "%%XPP_TEXT_COLOR%%"
+#: ../ui/about.glade:242
+msgid "Website"
+msgstr ""
+
+#: ../ui/about.glade:270
+msgid "Source Code / Bug Tracker"
+msgstr ""
+
+#: ../ui/about.glade:307
+msgid "With help from the community"
+msgstr "באמצעות עזרה מהקהילה"
+
+#: ../ui/about.glade:335
+msgid "License"
+msgstr "רישיון"
+
+#: ../ui/about.glade:363
+msgid "Authors"
+msgstr ""
+
+#: ../ui/exportSettings.glade:26
+msgid "Resolution"
+msgstr "רזולוציה"
+
+#: ../ui/exportSettings.glade:29
+msgid "Width"
+msgstr "רוחב"
+
+#: ../ui/exportSettings.glade:32
+msgid "Height"
+msgstr "גובה"
+
+#: ../ui/exportSettings.glade:43 ../ui/settings.glade:224
+#: ../ui/settings.glade:241 ../ui/settings.glade:3729
+msgid "None"
+msgstr ""
+
+#: ../ui/exportSettings.glade:46
+msgid "No ruling"
+msgstr ""
+
+#: ../ui/exportSettings.glade:49
+msgid "All"
+msgstr ""
+
+#: ../ui/exportSettings.glade:56
+msgid "Export"
+msgstr ""
+
+#: ../ui/exportSettings.glade:124
+msgid "<b>Document export settings</b>\n"
+"Set export parameters"
+msgstr ""
+
+#: ../ui/exportSettings.glade:147
+msgid "Image quality"
+msgstr ""
+
+#: ../ui/exportSettings.glade:162
+msgid "Range"
+msgstr ""
+
+#: ../ui/exportSettings.glade:176
+msgid "All pages"
+msgstr "כל הדפים"
+
+#: ../ui/exportSettings.glade:192
+msgid "Current page"
+msgstr "דף נוכחי"
+
+#: ../ui/exportSettings.glade:208
+msgid "Pages:"
+msgstr "דפים:"
+
+#: ../ui/exportSettings.glade:242
+msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
+msgstr "<i>לדוגמה:</i> 1-3 או 1,3,5-7 וכו׳."
+
+#: ../ui/exportSettings.glade:312
+msgid "dpi"
+msgstr "dpi"
+
+#. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
+#: ../ui/exportSettings.glade:354
+msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
+msgstr ""
+
+#: ../ui/exportSettings.glade:369
+msgid "Export layers progressively"
+msgstr ""
+
+#: ../ui/exportSettings.glade:373
+msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
+msgstr ""
+
+#: ../ui/fillOpacity.glade:14
+msgid "Opacity settings"
+msgstr ""
+
+#: ../ui/fillOpacity.glade:80
+msgid "<b>Fill opacity settings</b>\n"
+"Select opacity for fill color"
+msgstr ""
+
+#: ../ui/goto.glade:14
+msgid "Go to Page"
+msgstr "מעבר לדף"
+
+#: ../ui/images.glade:8
+msgid "Select Image"
+msgstr "בחירת תמונה"
+
+#: ../ui/images.glade:73
+msgid "Load file"
+msgstr "טען קובץ"
+
+#: ../ui/images.glade:88
+msgid "<b>... or select already used Image:</b>"
+msgstr "<b>... או בחר תמונה שכבר בשימוש:</b>"
+
+#: ../ui/latexSettings.glade:45
+msgid "Always check LaTeX dependencies before running"
+msgstr ""
+
+#: ../ui/latexSettings.glade:49
+msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
+msgstr ""
+
+#: ../ui/latexSettings.glade:87
+msgid "General LaTeX tool settings"
+msgstr ""
+
+#: ../ui/latexSettings.glade:119
+msgid "Default LaTeX Text"
+msgstr ""
+
+#: ../ui/latexSettings.glade:152
+msgid "The LaTeX file to use as a template for the LaTeX tool."
+msgstr ""
+
+#: ../ui/latexSettings.glade:154
+msgid "Global template file path"
+msgstr ""
+
+#: ../ui/latexSettings.glade:166
+msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
 msgstr ""
 
 #: ../ui/latexSettings.glade:180
 msgid "%%XPP_TOOL_INPUT%%"
 msgstr ""
 
-#: ../ui/settings.glade:5627
-msgid "%."
+#: ../ui/latexSettings.glade:192
+msgid "The math mode formula typed in the LaTeX tool."
 msgstr ""
+
+#: ../ui/latexSettings.glade:205
+msgid "Choose a global LaTeX template file"
+msgstr ""
+
+#: ../ui/latexSettings.glade:217
+msgid "%%XPP_TEXT_COLOR%%"
+msgstr ""
+
+#: ../ui/latexSettings.glade:229
+msgid "The current color of the Text Tool, in hex RGB format."
+msgstr ""
+
+#: ../ui/latexSettings.glade:265
+msgid "Template file settings"
+msgstr ""
+
+#: ../ui/latexSettings.glade:297
+msgid "LaTeX generation command"
+msgstr ""
+
+#: ../ui/latexSettings.glade:318
+msgid "Test configuration"
+msgstr ""
+
+#: ../ui/latexSettings.glade:322
+msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
+msgstr ""
+
+#: ../ui/latexSettings.glade:354
+msgid "LaTeX executable settings"
+msgstr ""
+
+#: ../ui/latexSettings.glade:433
+msgid "Line numbers"
+msgstr ""
+
+#: ../ui/latexSettings.glade:447
+msgid "Auto-indent"
+msgstr ""
+
+#: ../ui/latexSettings.glade:461
+msgid "Syntax highlighting"
+msgstr ""
+
+#: ../ui/latexSettings.glade:493
+msgid "Wrap text"
+msgstr ""
+
+#: ../ui/latexSettings.glade:529
+msgid "Use font from system theme."
+msgstr ""
+
+#: ../ui/latexSettings.glade:549
+msgid "Font: "
+msgstr ""
+
+#: ../ui/latexSettings.glade:564
+msgid "Pick the Editor's Font"
+msgstr ""
+
+#: ../ui/latexSettings.glade:606
+msgid "Editor settings"
+msgstr ""
+
+#: ../ui/main.glade:31
+msgid " = Floating Toolbox (experimental) ="
+msgstr ""
+
+#: ../ui/main.glade:110
+msgid "<b>Empty Toolbox</b>\n"
+"            <i>Menu: View/Toolbars</i>"
+msgstr ""
+
+#: ../ui/main.glade:152
+msgid "_File"
+msgstr ""
+
+#: ../ui/main.glade:187
+msgid "Recent _Documents"
+msgstr ""
+
+#: ../ui/main.glade:196
+msgid "_Annotate PDF"
+msgstr ""
+
+#: ../ui/main.glade:237
+msgid "_Export as PDF"
+msgstr ""
+
+#: ../ui/main.glade:247
+msgid "Export as..."
+msgstr ""
+
+#: ../ui/main.glade:292
+msgid "_Edit"
+msgstr ""
+
+#: ../ui/main.glade:312
+msgid "Bring to Front"
+msgstr ""
+
+#: ../ui/main.glade:321
+msgid "Bring Forward"
+msgstr ""
+
+#: ../ui/main.glade:330
+msgid "Send Backward"
+msgstr ""
+
+#: ../ui/main.glade:339
+msgid "Send to Back"
+msgstr ""
+
+#: ../ui/main.glade:480
+msgid "Move Selection Layer Up"
+msgstr ""
+
+#: ../ui/main.glade:490
+msgid "Move Selection Layer Down"
+msgstr ""
+
+#: ../ui/main.glade:532
+msgid "Preferences"
+msgstr ""
+
+#: ../ui/main.glade:546
+msgid "_View"
+msgstr ""
+
+#: ../ui/main.glade:557
+msgid "_Pair Pages"
+msgstr ""
+
+#: ../ui/main.glade:567
+msgid "_Presentation Mode"
+msgstr ""
+
+#: ../ui/main.glade:578 ../ui/settings.glade:4010
+msgid "Fullscreen"
+msgstr ""
+
+#: ../ui/main.glade:589 ../ui/settings.glade:3988 ../ui/settings.glade:4087
+msgid "Show Sidebar"
+msgstr "הצגת סרגל הצד"
+
+#: ../ui/main.glade:605
+msgid "Show Toolbars"
+msgstr ""
+
+#: ../ui/main.glade:621
+msgid "Layout"
+msgstr ""
+
+#: ../ui/main.glade:633
+msgid "_Horizontal"
+msgstr ""
+
+#: ../ui/main.glade:644
+msgid "_Vertical"
+msgstr ""
+
+#: ../ui/main.glade:662
+msgid "_Left to Right"
+msgstr ""
+
+#: ../ui/main.glade:673
+msgid "_Right to Left"
+msgstr ""
+
+#: ../ui/main.glade:691
+msgid "_Top to Bottom"
+msgstr ""
+
+#: ../ui/main.glade:702
+msgid "_Bottom to Top"
+msgstr ""
+
+#: ../ui/main.glade:717
+msgid "_Cols/Rows"
+msgstr ""
+
+#: ../ui/main.glade:730
+msgid "Set Columns"
+msgstr ""
+
+#: ../ui/main.glade:742
+msgid "_1 Column"
+msgstr ""
+
+#: ../ui/main.glade:753
+msgid "_2 Columns"
+msgstr ""
+
+#: ../ui/main.glade:764
+msgid "_3 Columns"
+msgstr ""
+
+#: ../ui/main.glade:775
+msgid "_4 Columns"
+msgstr ""
+
+#: ../ui/main.glade:786
+msgid "_5 Columns"
+msgstr ""
+
+#: ../ui/main.glade:797
+msgid "_6 Columns"
+msgstr ""
+
+#: ../ui/main.glade:808
+msgid "_7 Columns"
+msgstr ""
+
+#: ../ui/main.glade:819
+msgid "_8 Columns"
+msgstr ""
+
+#: ../ui/main.glade:835
+msgid "Set Rows"
+msgstr ""
+
+#: ../ui/main.glade:847
+msgid "_1 Row"
+msgstr ""
+
+#: ../ui/main.glade:858
+msgid "_2 Rows"
+msgstr ""
+
+#: ../ui/main.glade:869
+msgid "_3 Rows"
+msgstr ""
+
+#: ../ui/main.glade:880
+msgid "_4 Rows"
+msgstr ""
+
+#: ../ui/main.glade:891
+msgid "_5 Rows"
+msgstr ""
+
+#: ../ui/main.glade:902
+msgid "_6 Rows"
+msgstr ""
+
+#: ../ui/main.glade:913
+msgid "_7 Rows"
+msgstr ""
+
+#: ../ui/main.glade:924
+msgid "_8 Rows"
+msgstr ""
+
+#: ../ui/main.glade:949
+msgid "T_oolbars"
+msgstr ""
+
+#: ../ui/main.glade:967
+msgid "_Manage"
+msgstr ""
+
+#: ../ui/main.glade:977
+msgid "_Customize"
+msgstr ""
+
+#: ../ui/main.glade:997
+msgid "Hide Menubar"
+msgstr "הסתר סרגל תפריט"
+
+#: ../ui/main.glade:1066
+msgid "_Navigation"
+msgstr ""
+
+#: ../ui/main.glade:1077
+msgid "_First Page"
+msgstr "הדף ה_ראשון"
+
+#: ../ui/main.glade:1088
+msgid "_Previous Page"
+msgstr "הדף ה_קודם"
+
+#: ../ui/main.glade:1099
+msgid "_Goto Page"
+msgstr "מ_עבר לדף"
+
+#: ../ui/main.glade:1110
+msgid "_Next Page"
+msgstr "הדף ה_בא"
+
+#: ../ui/main.glade:1121
+msgid "_Last Page"
+msgstr "הדף ה_קודם"
+
+#: ../ui/main.glade:1138
+msgid "_Previous Layer"
+msgstr ""
+
+#: ../ui/main.glade:1149
+msgid "_Next Layer"
+msgstr ""
+
+#: ../ui/main.glade:1160
+msgid "_Top Layer"
+msgstr ""
+
+#: ../ui/main.glade:1176
+msgid "N_ext Annotated Page"
+msgstr ""
+
+#: ../ui/main.glade:1187
+msgid "P_revious Annotated Page"
+msgstr ""
+
+#: ../ui/main.glade:1213
+msgid "New Page _Before"
+msgstr ""
+
+#: ../ui/main.glade:1223
+msgid "New Page _After"
+msgstr ""
+
+#: ../ui/main.glade:1234
+msgid "New Page at _End"
+msgstr ""
+
+#: ../ui/main.glade:1244
+msgid "Duplicate Page"
+msgstr ""
+
+#: ../ui/main.glade:1254
+msgid "Append New PDF Pages"
+msgstr ""
+
+#: ../ui/main.glade:1264
+msgid "Configure Page Template"
+msgstr ""
+
+#: ../ui/main.glade:1274
+msgid "_Delete Page"
+msgstr ""
+
+#: ../ui/main.glade:1291
+msgid "New _Layer"
+msgstr ""
+
+#: ../ui/main.glade:1302
+msgid "Delete Layer"
+msgstr ""
+
+#: ../ui/main.glade:1313
+msgid "Merge Layer Down"
+msgstr ""
+
+#: ../ui/main.glade:1324
+msgid "Rename Layer"
+msgstr ""
+
+#: ../ui/main.glade:1341
+msgid "Paper _Format"
+msgstr ""
+
+#: ../ui/main.glade:1351
+msgid "Paper _Color"
+msgstr ""
+
+#: ../ui/main.glade:1374
+msgid "_Tools"
+msgstr ""
+
+#: ../ui/main.glade:1385
+msgid "_Pen"
+msgstr ""
+
+#: ../ui/main.glade:1397
+msgid "_Eraser"
+msgstr ""
+
+#: ../ui/main.glade:1409
+msgid "Select Linear Text"
+msgstr ""
+
+#: ../ui/main.glade:1421
+msgid "Select Text In Rectangle"
+msgstr ""
+
+#: ../ui/main.glade:1433
+msgid "_Highlighter"
+msgstr ""
+
+#: ../ui/main.glade:1445
+msgid "_Text"
+msgstr ""
+
+#: ../ui/main.glade:1457
+msgid "_Image"
+msgstr ""
+
+#: ../ui/main.glade:1469
+msgid "_Default Tools"
+msgstr "_כלי ברירת מחדל"
+
+#: ../ui/main.glade:1486
+msgid "_Shape Recognizer"
+msgstr ""
+
+#: ../ui/main.glade:1552
+msgid "Draw _Line"
+msgstr ""
+
+#: ../ui/main.glade:1638
+msgid "_Vertical Space"
+msgstr ""
+
+#: ../ui/main.glade:1662
+msgid "H_and Tool"
+msgstr ""
+
+#: ../ui/main.glade:1700
+msgid "Pen _Options"
+msgstr ""
+
+#: ../ui/main.glade:1711 ../ui/main.glade:1857 ../ui/main.glade:1966
+msgid "_very fine"
+msgstr ""
+
+#: ../ui/main.glade:1722 ../ui/main.glade:1868 ../ui/main.glade:1977
+msgid "_fine"
+msgstr ""
+
+#: ../ui/main.glade:1733 ../ui/main.glade:1879 ../ui/main.glade:1988
+msgid "_medium"
+msgstr ""
+
+#: ../ui/main.glade:1744 ../ui/main.glade:1890 ../ui/main.glade:1999
+msgid "_thick"
+msgstr ""
+
+#: ../ui/main.glade:1755 ../ui/main.glade:1901 ../ui/main.glade:2010
+msgid "ver_y thick"
+msgstr ""
+
+#: ../ui/main.glade:1822 ../ui/main.glade:2027
+msgid "Fi_ll"
+msgstr ""
+
+#: ../ui/main.glade:1832 ../ui/main.glade:2037
+msgid "Fill opacity"
+msgstr ""
+
+#: ../ui/main.glade:1846
+msgid "Eraser Optio_ns"
+msgstr ""
+
+#: ../ui/main.glade:1918
+msgid "_standard"
+msgstr ""
+
+#: ../ui/main.glade:1929
+msgid "_whiteout"
+msgstr ""
+
+#: ../ui/main.glade:1940
+msgid "_delete strokes"
+msgstr ""
+
+#: ../ui/main.glade:1955
+msgid "Highlighter Opti_ons"
+msgstr ""
+
+#: ../ui/main.glade:2051
+msgid "Text Font..."
+msgstr ""
+
+#: ../ui/main.glade:2063
+msgid "Record / Stop"
+msgstr ""
+
+#: ../ui/main.glade:2073
+msgid "Pause"
+msgstr ""
+
+#: ../ui/main.glade:2127
+msgid "_Plugin"
+msgstr "_תוסף"
+
+#: ../ui/main.glade:2138
+msgid "Plugin _Manager"
+msgstr "מ_נהל תוספים"
+
+#: ../ui/main.glade:2152
+msgid "_Help"
+msgstr ""
+
+#: ../ui/main.glade:2554
+msgid "Find previous occurrence of the search string"
+msgstr ""
+
+#: ../ui/main.glade:2576
+msgid "Find next occurrence of the search string"
+msgstr ""
+
+#: ../ui/main.glade:2778
+msgid "Copy selected text"
+msgstr ""
+
+#: ../ui/main.glade:2800
+msgid "Highlight selected text"
+msgstr ""
+
+#: ../ui/main.glade:2820
+msgid "Underline selected text"
+msgstr ""
+
+#: ../ui/main.glade:2840
+msgid "Strikethrough selected text"
+msgstr ""
+
+#: ../ui/main.glade:2860
+msgid "Toggle standard / region text selection"
+msgstr ""
+
+#: ../ui/main.glade:2888 ../ui/main.glade:2963
+msgid "Move Up"
+msgstr "לעלות"
+
+#: ../ui/main.glade:2896 ../ui/main.glade:2971
+msgid "Move Down"
+msgstr "לרדת"
+
+#: ../ui/main.glade:2904
+msgid "Merge Down"
+msgstr ""
+
+#: ../ui/main.glade:2912 ../ui/main.glade:2949
+msgid "Duplicate"
+msgstr "שכפול"
+
+#: ../ui/main.glade:2933
+msgid "Insert Page Before"
+msgstr "הכנס דף לפני"
+
+#: ../ui/main.glade:2941
+msgid "Insert Page After"
+msgstr "הכנס דף אחרי"
+
+#: ../ui/main.glade:2986
+msgid "Edit (not implemented yet)"
+msgstr "עריכה (לא מיושם עדיין)"
+
+#: ../ui/pageTemplate.glade:18
+msgid "Configure new page template"
+msgstr "הגדרת תבנית דף חדשה"
+
+#: ../ui/pageTemplate.glade:40
+msgid "Save to file"
+msgstr ""
+
+#: ../ui/pageTemplate.glade:54
+msgid "Load from file"
+msgstr ""
+
+#: ../ui/pageTemplate.glade:114
+msgid "These settings will be used for new pages"
+msgstr "יהיה שימוש בהגדרות אלה רק בשביל דפים חדשים"
+
+#: ../ui/pageTemplate.glade:135
+msgid "<b>Page size</b>"
+msgstr "<b>גודל דף</b>"
+
+#: ../ui/pageTemplate.glade:160
+msgid "Change"
+msgstr ""
+
+#: ../ui/pageTemplate.glade:177
+msgid "Select Background Color"
+msgstr "בחירת צבע הרקע"
+
+#: ../ui/pageTemplate.glade:187
+msgid "Copy current page background instead"
+msgstr "העתק את רקע הדף הנוכחי במקום"
+
+#: ../ui/pageTemplate.glade:192
+msgid "Copy the background of the current page instead of using the background set above."
+msgstr "העתק את רקע הדף הנוכחי במקום להשתמש ברקע שהוגדר למעלה."
+
+#: ../ui/pageTemplate.glade:245
+msgid "<b>Background Color</b>"
+msgstr "<b>צבע רקע</b>"
+
+#: ../ui/pageTemplate.glade:258
+msgid "<b>Background</b>"
+msgstr "<b>רקע</b>"
+
+#: ../ui/pageTemplate.glade:269
+msgid "Copy current page size instead"
+msgstr "העתקת גודל הדף הנוכחי במקום"
+
+#: ../ui/pageTemplate.glade:274
+msgid "Use the current page size instead of the page size above."
+msgstr "להשתמש בגודל הדף הנוכחי במקום בגודל הדף העליון."
+
+#: ../ui/pagesize.glade:18
+msgid "Paper Format"
+msgstr "סוג הנייר"
+
+#: ../ui/pagesize.glade:101
+msgid "Template:"
+msgstr "תבנית:"
+
+#: ../ui/pagesize.glade:142
+msgid "<b>Pagesize</b>"
+msgstr "<b>גודל דף</b>"
+
+#: ../ui/pagesize.glade:189
+msgid "Width:"
+msgstr "רוחב:"
+
+#: ../ui/pagesize.glade:212
+msgid "Height:"
+msgstr "גובה:"
+
+#: ../ui/pdfpages.glade:8
+msgid "Select PDF Page"
+msgstr "בחירת דף PDF"
+
+#: ../ui/plugin.glade:14
+msgid "Plugin Manager"
+msgstr ""
+
+#: ../ui/plugin.glade:122
+msgid "Plugin changes are only applied after Xournal++ is restarted"
+msgstr ""
+
+#: ../ui/pluginEntry.glade:58
+msgid "Author: "
+msgstr "מחבר: "
+
+#: ../ui/pluginEntry.glade:95
+msgid "Path: "
+msgstr ""
+
+#: ../ui/pluginEntry.glade:132
+msgid "Version: "
+msgstr "גרסה: "
+
+#: ../ui/pluginEntry.glade:168
+msgid "enabled,"
+msgstr "מופעל,"
+
+#: ../ui/renameLayerDialog.glade:8
+msgid "Rename selected layer"
+msgstr ""
+
+#: ../ui/renameLayerDialog.glade:65
+msgid "Sample layer name"
+msgstr "שם שכבת דגימה"
+
+#: ../ui/settings.glade:227
+msgid "Arithmetic mean"
+msgstr ""
+
+#: ../ui/settings.glade:230
+msgid "Velocity based Gaussian weights"
+msgstr ""
+
+#: ../ui/settings.glade:244
+msgid "Deadzone"
+msgstr ""
+
+#: ../ui/settings.glade:247
+msgid "Inertia"
+msgstr ""
+
+#: ../ui/settings.glade:255
+msgid "Xournal++ Preferences"
+msgstr "העדפות Xournal++‎"
+
+#: ../ui/settings.glade:363
+msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
+"If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
+msgstr ""
+
+#: ../ui/settings.glade:382
+msgid "Enable Autosaving"
+msgstr ""
+
+#: ../ui/settings.glade:406
+msgid "every"
+msgstr "כל"
+
+#: ../ui/settings.glade:433
+msgid "minutes"
+msgstr "דקות"
+
+#: ../ui/settings.glade:463
+msgid "Autosaving"
+msgstr "שמירה אוטומטית"
+
+#: ../ui/settings.glade:493
+msgid "<i>This name will be proposed if you save a new document.</i>"
+msgstr "<i>השם הזה יוצע עם שמירת מסמך חדש.</i>"
+
+#: ../ui/settings.glade:526 ../ui/settings.glade:698
+msgid "Default name: "
+msgstr "שם ברירת מחדל: "
 
 #: ../ui/settings.glade:565
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -1939,6 +2816,18 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\t%\n"
 "Illegal characters are replaced with \"_\""
+msgstr ""
+
+#: ../ui/settings.glade:613 ../ui/settings.glade:784
+msgid "Available Placeholders"
+msgstr ""
+
+#: ../ui/settings.glade:639
+msgid "Default Save Name"
+msgstr "שם ברירת המחדל לשמירה"
+
+#: ../ui/settings.glade:665
+msgid "<i>This name will be proposed if you export a document to PDF.</i>"
 msgstr ""
 
 #: ../ui/settings.glade:736
@@ -1969,538 +2858,44 @@ msgid "%{name}\tThe name of the exported document\n"
 "Illegal characters are replaced with \"_\""
 msgstr ""
 
-#: ../ui/settings.glade:3250
-msgid "(this may not work, depending on your system theme)"
+#: ../ui/settings.glade:808
+msgid "Default Pdf export name"
 msgstr ""
 
-#: ../ui/settings.glade:1268
-msgid "0,4"
+#: ../ui/settings.glade:837
+msgid "Enable Autoloading of Journals"
 msgstr ""
 
-#: ../ui/settings.glade:1320
-msgid "0,50"
+#: ../ui/settings.glade:842
+msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
 msgstr ""
 
-#: ../ui/settings.glade:5611
-msgid "0.00"
+#: ../ui/settings.glade:854
+msgid "Enable autoloading of most recent file on application startup"
 msgstr ""
 
-#: ../ui/settings.glade:1913
-msgid "1"
+#: ../ui/settings.glade:859
+msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
 msgstr ""
-
-#: ../ui/settings.glade:6329
-msgid "1,00"
-msgstr ""
-
-#: ../ui/settings.glade:1236
-msgid "1,30"
-msgstr ""
-
-#: ../ui/settings.glade:2715
-msgid "1.0"
-msgstr ""
-
-#: ../ui/settings.glade:1207
-msgid "20"
-msgstr ""
-
-#: ../ui/settings.glade:3514
-msgid "30"
-msgstr ""
-
-#: ../ui/settings.glade:1300
-msgid "5"
-msgstr ""
-
-#: ../ui/images.glade:88
-msgid "<b>... or select already used Image:</b>"
-msgstr "<b>... או בחר תמונה שכבר בשימוש:</b>"
-
-#: ../ui/pageTemplate.glade:245
-msgid "<b>Background Color</b>"
-msgstr "<b>צבע רקע</b>"
-
-#: ../ui/pageTemplate.glade:258
-msgid "<b>Background</b>"
-msgstr "<b>רקע</b>"
-
-#: ../ui/toolbarCustomizeDialog.glade:141
-msgid "<b>Color</b>"
-msgstr "<b>צבע</b>"
-
-#: ../ui/toolbarCustomizeDialog.glade:86
-msgid "<b>Default Tools</b>"
-msgstr "<b>כלי בררת מחדל</b>"
-
-#: ../ui/settings.glade:5804
-msgid "<b>Default</b>"
-msgstr "<b>בררת מחדל</b>"
-
-#: ../ui/exportSettings.glade:124
-msgid "<b>Document export settings</b>\n"
-"Set export parameters"
-msgstr ""
-
-#: ../ui/main.glade:110
-msgid "<b>Empty Toolbox</b>\n"
-"            <i>Menu: View/Toolbars</i>"
-msgstr ""
-
-#: ../ui/fillOpacity.glade:80
-msgid "<b>Fill opacity settings</b>\n"
-"Select opacity for fill color"
-msgstr ""
-
-#: ../ui/pageTemplate.glade:135
-msgid "<b>Page size</b>"
-msgstr "<b>גודל דף</b>"
-
-#: ../ui/pagesize.glade:142
-msgid "<b>Pagesize</b>"
-msgstr "<b>גודל דף</b>"
-
-#: ../ui/toolbarCustomizeDialog.glade:196
-msgid "<b>Separators</b>"
-msgstr ""
-
-#: ../ui/settings.glade:5897
-msgid "<i>\n"
-"Using the checkbox the audio system can be disabled or enabled for future sessions (restart required). \n"
-"Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
-"</i>"
-msgstr ""
-
-#: ../ui/settings.glade:955
-msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
-msgstr ""
-
-#: ../ui/settings.glade:5966
-msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
-msgstr ""
-
-#: ../ui/settings.glade:6384
-msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
-msgstr ""
-
-#: ../ui/settings.glade:1505
-msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
-msgstr ""
-
-#: ../ui/settings.glade:2869
-msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
-msgstr ""
-
-#: ../ui/exportSettings.glade:242
-msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
-msgstr "<i>לדוגמה:</i> 1-3 או 1,3,5-7 וכו׳."
-
-#: ../ui/settings.glade:363
-msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
-"If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
-
-#: ../ui/settings.glade:4632
-msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
-msgstr ""
-
-#: ../ui/settings.glade:2344
-msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
-msgstr ""
-
-#: ../ui/settings.glade:1178
-msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
-msgstr ""
-
-#: ../ui/settings.glade:1683
-msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
-msgstr ""
-
-#: ../ui/settings.glade:4479
-msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
-msgstr ""
-
-#: ../ui/settings.glade:5570
-msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
-"<b>Note:</b> This should not affect print quality.</i>"
-msgstr ""
-
-#: ../ui/settings.glade:6493
-msgid "<i>Select language (requires restart)</i>"
-msgstr "<i>בחירת שפה (דורשת הפעלה מחדש)</i>"
-
-#: ../ui/settings.glade:5750
-msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
-msgstr ""
-
-#: ../ui/settings.glade:1732
-msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
-msgstr ""
-
-#: ../ui/settings.glade:2494
-msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
-msgstr ""
-
-#: ../ui/settings.glade:6077
-msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
-"If available select <small><tt>pulse</tt></small> as input / output device.</i>"
-msgstr ""
-
-#: ../ui/settings.glade:1983
-msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
-msgstr ""
-
-#: ../ui/settings.glade:665
-msgid "<i>This name will be proposed if you export a document to PDF.</i>"
-msgstr ""
-
-#: ../ui/settings.glade:493
-msgid "<i>This name will be proposed if you save a new document.</i>"
-msgstr "<i>השם הזה יוצע עם שמירת מסמך חדש.</i>"
-
-#: ../ui/settings.glade:4458
-msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
-msgstr ""
-
-#: ../ui/settings.glade:3016
-msgid "<i>Toggle visibility of menubar with F10</i>"
-msgstr ""
-
-#: ../ui/settings.glade:2666
-msgid "<i>Use pinch gestures to zoom journal pages.</i>"
-msgstr ""
-
-#: ../ui/settings.glade:2801
-msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
-msgstr ""
-
-#: ../ui/settings.glade:1876
-msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
-msgstr ""
-
-#: ../ui/settings.glade:2278
-msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
-msgstr ""
-
-#: ../ui/about.glade:117
-msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
-"<i>The next generation</i>"
-msgstr ""
-
-#: ../ui/about.glade:9
-msgid "About Xournal++"
-msgstr "על Xournal++‎"
-
-#: ../ui/settings.glade:5539
-msgid "Action on Tool Tap"
-msgstr ""
-
-#: ../ui/settings.glade:4685
-msgid "Add additional horizontal space of"
-msgstr "הוסף רווח אופקי נוסף של"
-
-#: ../ui/settings.glade:4663
-msgid "Add additional vertical space of"
-msgstr "הוסף רווח אנכי נוסף של"
-
-#: ../ui/settings.glade:5066
-msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
-msgstr ""
-
-#: ../ui/exportSettings.glade:49
-msgid "All"
-msgstr ""
-
-#: ../ui/exportSettings.glade:176
-msgid "All pages"
-msgstr "כל הדפים"
-
-#: ../ui/settings.glade:5504
-msgid "All three conditions must be met before stroke is ignored.\n"
-"It must be short in time and length and we can't have ignored another stroke recently."
-msgstr ""
-
-#: ../ui/settings.glade:2170
-msgctxt "eraser is always visible"
-msgid "Always"
-msgstr ""
-
-#: ../ui/latexSettings.glade:45
-msgid "Always check LaTeX dependencies before running"
-msgstr ""
-
-#: ../ui/main.glade:1253
-msgid "Append New PDF Pages"
-msgstr ""
-
-#: ../ui/settings.glade:227
-msgid "Arithmetic mean"
-msgstr ""
-
-#: ../ui/settings.glade:1952
-msgid "Artifact workaround"
-msgstr ""
-
-#: ../ui/settings.glade:6173
-msgid "Audio Devices"
-msgstr "התקני שמע"
-
-#: ../ui/settings.glade:6416
-msgid "Audio Recording"
-msgstr "הקלטת שמע"
-
-#: ../ui/pluginEntry.glade:58
-msgid "Author: "
-msgstr "מחבר: "
-
-#: ../ui/about.glade:363
-msgid "Authors"
-msgstr ""
-
-#: ../ui/latexSettings.glade:447
-msgid "Auto-indent"
-msgstr ""
-
-#: ../ui/settings.glade:2415
-msgid "Autodetect"
-msgstr "איתור אוטומטי"
 
 #: ../ui/settings.glade:877
 msgid "Autoloading"
 msgstr ""
 
-#: ../ui/settings.glade:4931
-msgid "Automatically Add Empty Last Page (excluding PDFs)"
+#: ../ui/settings.glade:905
+msgid "Load / Save"
+msgstr "טען / שמור"
+
+#: ../ui/settings.glade:955
+msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:463
-msgid "Autosaving"
-msgstr "שמירה אוטומטית"
+#: ../ui/settings.glade:991
+msgid "Input Devices"
+msgstr "מכשירי קלט"
 
-#: ../ui/settings.glade:613 ../ui/settings.glade:784
-msgid "Available Placeholders"
-msgstr ""
-
-#: ../ui/settings.glade:1145
-msgid "Averaging method"
-msgstr ""
-
-#: ../ui/settings.glade:3104
-msgid "Background color between pages"
-msgstr "צבע רקע בין דפים"
-
-#: ../ui/settings.glade:3899
-msgid "Base speed"
-msgstr ""
-
-#: ../ui/settings.glade:3730
-msgid "Below preview"
-msgstr ""
-
-#: ../ui/settings.glade:3364
-msgctxt "stylus cursor uses a big pen icon"
-msgid "Big pen icon"
-msgstr ""
-
-#: ../ui/settings.glade:3569
-msgid "Border Color"
-msgstr "צבע גבול"
-
-#: ../ui/settings.glade:3530
-msgid "Border Width"
-msgstr "רוחב הגבול"
-
-#: ../ui/settings.glade:3093
-msgid "Border color"
-msgstr "צבע מסגרת"
-
-#: ../ui/settings.glade:3078
-msgid "Border color for current page and other selections"
-msgstr "צבע הגבול של הדף הנוכחי ובחירות אחרות"
-
-#: ../ui/main.glade:321
-msgid "Bring Forward"
-msgstr ""
-
-#: ../ui/main.glade:312
-msgid "Bring to Front"
-msgstr ""
-
-#: ../ui/settings.glade:1195
-msgid "Buffersize"
-msgstr ""
-
-#: ../ui/settings.glade:2023
-msgid "Button 1"
-msgstr "כפתור 1"
-
-#: ../ui/settings.glade:2061
-msgid "Button 2"
-msgstr "כפתור 2"
-
-#: ../ui/pageTemplate.glade:160
-msgid "Change"
-msgstr ""
-
-#: ../ui/latexSettings.glade:205
-msgid "Choose a global LaTeX template file"
-msgstr ""
-
-#: ../ui/settings.glade:3412 ../ui/settings.glade:3555
-msgid "Choose the color to use for \"Highlight cursor position\""
-msgstr "בחר את הצבע ש\"ידגיש את מיקום הסמן\""
-
-#: ../ui/settings.glade:3426
-msgid "Circle Color"
-msgstr "צבע העיגול"
-
-#: ../ui/settings.glade:3731
-msgid "Circle background"
-msgstr ""
-
-#: ../ui/settings.glade:4223
-msgid "Clear cached paged while scrolling"
-msgstr ""
-
-#: ../ui/settings.glade:3192
-msgid "Color"
-msgstr ""
-
-#: ../ui/settings.glade:3291
-msgid "Colors"
-msgstr "צבעים"
-
-#: ../ui/texdialog.glade:163
-msgid "Command Output"
-msgstr ""
-
-#: ../ui/main.glade:1263
-msgid "Configure Page Template"
-msgstr ""
-
-#: ../ui/pageTemplate.glade:18
-msgid "Configure new page template"
-msgstr "הגדרת תבנית דף חדשה"
-
-#: ../ui/pageTemplate.glade:187
-msgid "Copy current page background instead"
-msgstr "העתק את רקע הדף הנוכחי במקום"
-
-#: ../ui/pageTemplate.glade:269
-msgid "Copy current page size instead"
-msgstr "העתקת גודל הדף הנוכחי במקום"
-
-#: ../ui/main.glade:2777
-msgid "Copy selected text"
-msgstr ""
-
-#: ../ui/pageTemplate.glade:192
-msgid "Copy the background of the current page instead of using the background set above."
-msgstr "העתק את רקע הדף הנוכחי במקום להשתמש ברקע שהוגדר למעלה."
-
-#: ../ui/exportSettings.glade:192
-msgid "Current page"
-msgstr "דף נוכחי"
-
-#: ../ui/settings.glade:3612
-msgid "Cursor"
-msgstr "סמן"
-
-#: ../ui/settings.glade:3346
-msgid "Cursor icon for pen"
-msgstr ""
-
-#: ../ui/settings.glade:1383
-msgid "Cusp detection"
-msgstr ""
-
-#: ../ui/settings.glade:2610
-msgid "Custom Commands (for Method \"Custom\")"
-msgstr ""
-
-#: ../ui/settings.glade:244
-msgid "Deadzone"
-msgstr ""
-
-#: ../ui/settings.glade:1224
-msgid "Deadzone radius"
-msgstr ""
-
-#: ../ui/latexSettings.glade:119
-msgid "Default LaTeX Text"
-msgstr ""
-
-#: ../ui/settings.glade:808
-msgid "Default Pdf export name"
-msgstr ""
-
-#: ../ui/settings.glade:639
-msgid "Default Save Name"
-msgstr "שם ברירת המחדל לשמירה"
-
-#: ../ui/settings.glade:6316
-msgid "Default Seek Time (in seconds)"
-msgstr ""
-
-#: ../ui/settings.glade:526 ../ui/settings.glade:698
-msgid "Default name: "
-msgstr "שם ברירת מחדל: "
-
-#: ../ui/settings.glade:5844
-msgid "Defaults"
-msgstr "ברירות מחדל"
-
-#: ../ui/main.glade:1301
-msgid "Delete Layer"
-msgstr ""
-
-#: ../ui/settingsButtonConfig.glade:132
-msgid "Delete stroke"
-msgstr ""
-
-#: ../ui/settingsButtonConfig.glade:25
-msgid "Device"
-msgstr "מכשיר"
-
-#: ../ui/settings.glade:2529
-msgid "Disable"
-msgstr "השבתה"
-
-#: ../ui/settings.glade:5913
-msgid "Disable Audio"
-msgstr ""
-
-#: ../ui/settings.glade:2883
-msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
-msgstr ""
-
-#: ../ui/settingsButtonConfig.glade:50
-msgid "Disable drawing for this device"
-msgstr "השבת ציור בשביל מכשיר זה"
-
-#: ../ui/settings.glade:3821
-msgid "Disable scrollbar fade out"
-msgstr ""
-
-#: ../ui/settingsDeviceClassConfig.glade:41
-msgid "Disabled"
-msgstr ""
-
-#: ../ui/settings.glade:2389
-msgid "Disabling Method"
-msgstr ""
-
-#: ../ui/settings.glade:4550
-msgid "Display DPI Calibration"
-msgstr ""
-
-#: ../ui/settings.glade:5379
-msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
-msgstr ""
-
-#: ../ui/settings.glade:1255
-msgctxt "Noun: force opposing the movement"
-msgid "Drag"
+#: ../ui/settings.glade:1030
+msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
 msgstr ""
 
 #: ../ui/settings.glade:1049
@@ -2510,19 +2905,46 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    <i>Useful for operating without keyboard.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4966
-msgid "Drag LEFT from start point acts like shift key is being held.\n"
-"Drag UP acts as if Control key is being held.\n\n"
-"Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
-"<i>Useful for operating without keyboard.</i>"
+#: ../ui/settings.glade:1061
+msgid "Merge button events with stylus tip events\n"
+"\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
 msgstr ""
 
-#: ../ui/toolbarCustomizeDialog.glade:57
-msgid "Drag and drop Components fom here to the toolbars and back."
+#: ../ui/settings.glade:1081
+msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
+"<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1266
-msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
+#: ../ui/settings.glade:1090
+msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
+msgstr ""
+
+#: ../ui/settings.glade:1111
+msgid "Options"
+msgstr "אפשרויות"
+
+#: ../ui/settings.glade:1145
+msgid "Averaging method"
+msgstr ""
+
+#: ../ui/settings.glade:1178
+msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
+msgstr ""
+
+#: ../ui/settings.glade:1195
+msgid "Buffersize"
+msgstr ""
+
+#: ../ui/settings.glade:1207
+msgid "20"
+msgstr ""
+
+#: ../ui/settings.glade:1224
+msgid "Deadzone radius"
+msgstr ""
+
+#: ../ui/settings.glade:1236
+msgid "1,30"
 msgstr ""
 
 #: ../ui/settings.glade:1254
@@ -2530,377 +2952,23 @@ msgctxt "Drag = Noun: force opposing the movement"
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr ""
 
-#: ../ui/main.glade:1551
-msgid "Draw _Line"
+#: ../ui/settings.glade:1255
+msgctxt "Noun: force opposing the movement"
+msgid "Drag"
 msgstr ""
 
-#: ../ui/settings.glade:3394
-msgid "Draw a transparent circle around the cursor"
+#: ../ui/settings.glade:1266
+msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr ""
 
-#: ../ui/settings.glade:5699
-msgid "Drawing Area"
+#: ../ui/settings.glade:1268
+msgid "0,4"
 msgstr ""
 
-#: ../ui/settings.glade:5034
-msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
-msgstr ""
-
-#: ../ui/main.glade:2911 ../ui/main.glade:2948
-msgid "Duplicate"
-msgstr "שכפול"
-
-#: ../ui/main.glade:1243
-msgid "Duplicate Page"
-msgstr ""
-
-#: ../ui/main.glade:2985
-msgid "Edit (not implemented yet)"
-msgstr "עריכה (לא מיושם עדיין)"
-
-#: ../ui/latexSettings.glade:606
-msgid "Editor settings"
-msgstr ""
-
-#: ../ui/settings.glade:2517
-msgid "Enable"
-msgstr "הפעלה"
-
-#: ../ui/settings.glade:4961
-msgid "Enable  with determination radius of "
-msgstr ""
-
-#: ../ui/settings.glade:837
-msgid "Enable Autoloading of Journals"
-msgstr ""
-
-#: ../ui/settings.glade:382
-msgid "Enable Autosaving"
-msgstr ""
-
-#: ../ui/settings.glade:1090
-msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
-msgstr ""
-
-#: ../ui/settings.glade:1697
-msgid "Enable Pressure Sensitivity"
-msgstr ""
-
-#: ../ui/settings.glade:5374
-msgctxt "Short taps/clicks will trigger special actions"
-msgid "Enable Tap action"
-msgstr ""
-
-#: ../ui/settings.glade:854
-msgid "Enable autoloading of most recent file on application startup"
-msgstr ""
-
-#: ../ui/settings.glade:1030
-msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
-msgstr ""
-
-#: ../ui/settings.glade:2358
-msgid "Enable internal Hand Recognition"
-msgstr ""
-
-#: ../ui/settings.glade:5935
-msgid "Enable or Disable Audio"
-msgstr ""
-
-#: ../ui/settings.glade:2815
-msgid "Enable touch drawing"
-msgstr ""
-
-#: ../ui/settings.glade:2678
-msgid "Enable zoom gestures (requires restart)"
-msgstr ""
-
-#: ../ui/texdialog.glade:69
-msgid "Enter / edit LaTeX Text"
-msgstr ""
-
-#: ../ui/main.glade:1845
-msgid "Eraser Optio_ns"
-msgstr ""
-
-#: ../ui/settingsButtonConfig.glade:129
-msgid "Eraser Type - don't change"
-msgstr ""
-
-#: ../ui/settings.glade:2196
-msgid "Eraser visibility"
-msgstr ""
-
-#: ../ui/exportSettings.glade:56
-msgid "Export"
-msgstr ""
-
-#: ../ui/main.glade:247
-msgid "Export as..."
-msgstr ""
-
-#: ../ui/exportSettings.glade:369
-msgid "Export layers progressively"
-msgstr ""
-
-#. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
-#: ../ui/exportSettings.glade:354
-msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
-msgstr ""
-
-#: ../ui/main.glade:1821 ../ui/main.glade:2026
-msgid "Fi_ll"
-msgstr ""
-
-#: ../ui/main.glade:1831 ../ui/main.glade:2036
-msgid "Fill opacity"
-msgstr ""
-
-#: ../ui/settings.glade:1400
-msgid "Finalize the stroke"
-msgstr ""
-
-#: ../ui/main.glade:2575
-msgid "Find next occurrence of the search string"
-msgstr ""
-
-#: ../ui/main.glade:2553
-msgid "Find previous occurrence of the search string"
-msgstr ""
-
-#: ../ui/settings.glade:4800
-msgid "First Page Offset "
-msgstr ""
-
-#: ../ui/latexSettings.glade:549
-msgid "Font: "
-msgstr ""
-
-#: ../ui/settings.glade:3237
-msgid "Force dark theme"
-msgstr ""
-
-#: ../ui/settings.glade:3236
-msgid "Force light theme"
-msgstr ""
-
-#: ../ui/settings.glade:5455
-msgid "Frequency limit (ms)"
-msgstr ""
-
-#: ../ui/settings.glade:5467
-msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
-"<i>Recommended: 500ms</i>"
-msgstr ""
-
-#: ../ui/main.glade:578 ../ui/settings.glade:4010
-msgid "Fullscreen"
-msgstr ""
-
-#: ../ui/settings.glade:6218
-msgid "Gain"
-msgstr ""
-
-#: ../ui/settings.glade:1318 ../ui/settings.glade:1338
-msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr ""
-
-#: ../ui/latexSettings.glade:87
-msgid "General LaTeX tool settings"
-msgstr ""
-
-#: ../ui/settings.glade:3309
-msgid "Global"
-msgstr ""
-
-#: ../ui/latexSettings.glade:154
-msgid "Global template file path"
-msgstr ""
-
-#: ../ui/settings.glade:4071
-msgid "Go Fullscreen"
-msgstr ""
-
-#: ../ui/goto.glade:14
-msgid "Go to Page"
-msgstr "מעבר לדף"
-
-#: ../ui/settings.glade:5204
-msgid "Grid size"
-msgstr "גודל רשת"
-
-#: ../ui/settings.glade:5161
-msgid "Grid snapping tolerance"
-msgstr ""
-
-#: ../ui/main.glade:1661
-msgid "H_and Tool"
-msgstr ""
-
-#: ../ui/settings.glade:2635
-msgid "Hand Recognition"
-msgstr "זיהוי יד"
-
-#: ../ui/exportSettings.glade:32
-msgid "Height"
-msgstr "גובה"
-
-#: ../ui/pagesize.glade:212
-msgid "Height:"
-msgstr "גובה:"
-
-#: ../ui/main.glade:997
-msgid "Hide Menubar"
-msgstr "הסתר סרגל תפריט"
-
-#: ../ui/settings.glade:3791
-msgid "Hide the horizontal scrollbar"
-msgstr "הסתר סרגל גלילה אופקי"
-
-#: ../ui/settings.glade:3806
-msgid "Hide the vertical scrollbar"
-msgstr "הסתר סרגל גלילה אנכי"
-
-#: ../ui/settings.glade:3389
-msgid "Highlight cursor position"
-msgstr "הדגש מיקום סמן"
-
-#: ../ui/main.glade:2799
-msgid "Highlight selected text"
-msgstr ""
-
-#: ../ui/main.glade:1954
-msgid "Highlighter Opti_ons"
-msgstr ""
-
-#: ../ui/about.glade:157
-msgid "Icon Designers"
-msgstr ""
-
-#: ../ui/settings.glade:3174
-msgid "Icon Theme:"
-msgstr ""
-
-#: ../ui/settings.glade:5249
-msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
-msgstr ""
-
-#: ../ui/settings.glade:859
-msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
-msgstr ""
-
-#: ../ui/latexSettings.glade:49
-msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
-msgstr ""
-
-#: ../ui/exportSettings.glade:373
-msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
-msgstr ""
-
-#: ../ui/settings.glade:842
-msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
-msgstr ""
-
-#: ../ui/settings.glade:1894
-msgid "Ignore the first"
-msgstr "התעלם מהראשון"
-
-#: ../ui/exportSettings.glade:147
-msgid "Image quality"
-msgstr ""
-
-#: ../ui/settings.glade:247
-msgid "Inertia"
-msgstr ""
-
-#: ../ui/settings.glade:6101
-msgid "Input Device"
-msgstr "מכשיר קלט"
-
-#: ../ui/settings.glade:991
-msgid "Input Devices"
-msgstr "מכשירי קלט"
-
-#: ../ui/settings.glade:1456
-msgid "Input System"
-msgstr "מערכת קלט"
-
-#: ../ui/settings.glade:1425
-msgid "Input stabilization"
-msgstr ""
-
-#: ../ui/settings.glade:1405
-msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr ""
-
-#: ../ui/texdialog.glade:9
-msgid "Insert Latex"
-msgstr ""
-
-#: ../ui/main.glade:2940
-msgid "Insert Page After"
-msgstr "הכנס דף אחרי"
-
-#: ../ui/main.glade:2932
-msgid "Insert Page Before"
-msgstr "הכנס דף לפני"
-
-#: ../ui/latexSettings.glade:354
-msgid "LaTeX executable settings"
-msgstr ""
-
-#: ../ui/latexSettings.glade:297
-msgid "LaTeX generation command"
-msgstr ""
-
-#: ../ui/settings.glade:6530 ../ui/settings.glade:6578
-msgid "Language"
-msgstr "שפה"
-
-#: ../ui/settings.glade:6548
-msgid "Language Settings"
-msgstr "הגדרות שפה"
-
-#: ../ui/main.glade:621
-msgid "Layout"
-msgstr ""
-
-#: ../ui/settings.glade:3679
-msgid "Left / Right-Handed"
-msgstr "ימני/שמאלי"
-
-#: ../ui/settings.glade:5444
-msgid "Length limit (mm)"
-msgstr ""
-
-#: ../ui/settings.glade:5424
-msgid "Length limit: taps moving further away will not trigger a special action\n\n"
-"<i>Recommended: 1 mm</i>"
-msgstr ""
-
-#: ../ui/about.glade:335
-msgid "License"
-msgstr "רישיון"
-
-#: ../ui/latexSettings.glade:433
-msgid "Line numbers"
-msgstr ""
-
-#: ../ui/settings.glade:905
-msgid "Load / Save"
-msgstr "טען / שמור"
-
-#: ../ui/images.glade:73
-msgid "Load file"
-msgstr "טען קובץ"
-
-#: ../ui/pageTemplate.glade:54
-msgid "Load from file"
-msgstr ""
-
-#: ../ui/toolbarManageDialog.glade:9
-msgid "Manage Toolbar"
-msgstr "נהל סרגל כלים"
+#: ../ui/settings.glade:1286
+msgctxt "Mass = Noun: physics term, related to weight"
+msgid "Mass: the higher the mass, the more inertia and the more stabilization"
+msgstr "נפח: ככל שהנפח גדול יותר, ככה יש יותר התמדה ויותר יציבות"
 
 #: ../ui/settings.glade:1287
 msgctxt "Noun: physics term, related to weight"
@@ -2911,453 +2979,121 @@ msgstr "נפח"
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
 msgstr "נפח: ככל שהנפח גדול יותר, ככה יש יותר התמדה ויותר יציבות"
 
-#: ../ui/settings.glade:1286
-msgctxt "Mass = Noun: physics term, related to weight"
-msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr "נפח: ככל שהנפח גדול יותר, ככה יש יותר התמדה ויותר יציבות"
-
-#: ../ui/settings.glade:3912
-msgid "Max multiplier"
-msgstr "מכפיל מרבי"
-
-#: ../ui/main.glade:2903
-msgid "Merge Down"
+#: ../ui/settings.glade:1300
+msgid "5"
 msgstr ""
 
-#: ../ui/main.glade:1312
-msgid "Merge Layer Down"
+#: ../ui/settings.glade:1318 ../ui/settings.glade:1338
+msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
 msgstr ""
 
-#: ../ui/settings.glade:1061
-msgid "Merge button events with stylus tip events\n"
-"\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr ""
-
-#: ../ui/settings.glade:1545
-msgid "Middle Mouse Button"
-msgstr "לחצן העכבר האמצעי"
-
-#: ../ui/settings.glade:1755
-msgid "Minimum Pressure:"
-msgstr ""
-
-#: ../ui/settings.glade:5304
-msgid "Minimum Stroke Size"
-msgstr ""
-
-#: ../ui/settings.glade:1632 ../ui/settingsDeviceClassConfig.glade:42
-msgid "Mouse"
-msgstr "עכבר"
-
-#: ../ui/settings.glade:1601
-msgid "Mouse Buttons"
-msgstr "לחצני עכבר"
-
-#: ../ui/settingsDeviceClassConfig.glade:43
-msgid "Mouse+Keyboard Combo"
-msgstr "שילוב עכבר+מקלדת"
-
-#: ../ui/main.glade:2895 ../ui/main.glade:2970
-msgid "Move Down"
-msgstr "לרדת"
-
-#: ../ui/main.glade:490
-msgid "Move Selection Layer Down"
-msgstr ""
-
-#: ../ui/main.glade:480
-msgid "Move Selection Layer Up"
-msgstr ""
-
-#: ../ui/main.glade:2887 ../ui/main.glade:2962
-msgid "Move Up"
-msgstr "לעלות"
-
-#: ../ui/settings.glade:3910
-msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
-msgstr ""
-
-#: ../ui/main.glade:1175
-msgid "N_ext Annotated Page"
-msgstr ""
-
-#: ../ui/settings.glade:2169
-msgctxt "eraser is never visible"
-msgid "Never"
-msgstr ""
-
-#: ../ui/main.glade:1222
-msgid "New Page _After"
-msgstr ""
-
-#: ../ui/main.glade:1212
-msgid "New Page _Before"
-msgstr ""
-
-#: ../ui/main.glade:1233
-msgid "New Page at _End"
-msgstr ""
-
-#: ../ui/main.glade:1290
-msgid "New _Layer"
-msgstr ""
-
-#: ../ui/settings.glade:3362
-msgctxt "stylus cursor uses no icon"
-msgid "No icon"
-msgstr "אין סמל"
-
-#: ../ui/exportSettings.glade:46
-msgid "No ruling"
-msgstr ""
-
-#: ../ui/exportSettings.glade:43 ../ui/settings.glade:224
-#: ../ui/settings.glade:241 ../ui/settings.glade:3729
-msgid "None"
-msgstr ""
-
-#: ../ui/settings.glade:4799
-msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
-msgstr ""
-
-#: ../ui/fillOpacity.glade:14
-msgid "Opacity settings"
-msgstr ""
-
-#: ../ui/settings.glade:1111
-msgid "Options"
-msgstr "אפשרויות"
-
-#: ../ui/settings.glade:6124
-msgid "Output Device"
-msgstr "מכשיר פלט"
-
-#: ../ui/texdialog.glade:143
-msgid "Output generated by the LaTeX command."
-msgstr ""
-
-#: ../ui/settings.glade:5668
-msgid "PDF Cache"
-msgstr ""
-
-#: ../ui/main.glade:1186
-msgid "P_revious Annotated Page"
-msgstr ""
-
-#: ../ui/settings.glade:3714
-msgid "Page numbering  "
-msgstr ""
-
-#: ../ui/exportSettings.glade:208
-msgid "Pages:"
-msgstr "דפים:"
-
-#: ../ui/settings.glade:4853
-msgid "Paired Pages"
-msgstr "דפים צמודים"
-
-#: ../ui/pagesize.glade:18
-msgid "Paper Format"
-msgstr "סוג הנייר"
-
-#: ../ui/main.glade:1350
-msgid "Paper _Color"
-msgstr ""
-
-#: ../ui/main.glade:1340
-msgid "Paper _Format"
-msgstr ""
-
-#: ../ui/about.glade:210
-msgid "Partially based on Xournal\n"
-"by Denis Auroux"
-msgstr ""
-
-#: ../ui/pluginEntry.glade:95
-msgid "Path: "
-msgstr ""
-
-#: ../ui/main.glade:2072
-msgid "Pause"
-msgstr ""
-
-#: ../ui/main.glade:1699
-msgid "Pen _Options"
-msgstr ""
-
-#: ../ui/settings.glade:4252
-msgid "Performance"
-msgstr "ביצועים"
-
-#: ../ui/latexSettings.glade:564
-msgid "Pick the Editor's Font"
-msgstr ""
-
-#: ../ui/settings.glade:6370
-msgid "Playback Settings"
-msgstr "הגדרות ניגון"
-
-#: ../ui/plugin.glade:14
-msgid "Plugin Manager"
-msgstr ""
-
-#: ../ui/main.glade:2137
-msgid "Plugin _Manager"
-msgstr "מ_נהל תוספים"
-
-#: ../ui/plugin.glade:122
-msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr ""
-
-#: ../ui/settings.glade:4186
-msgid "Pre-load pages after"
-msgstr ""
-
-#: ../ui/settings.glade:4174
-msgid "Pre-load pages before"
-msgstr ""
-
-#: ../ui/main.glade:532
-msgid "Preferences"
+#: ../ui/settings.glade:1320
+msgid "0,50"
 msgstr ""
 
 #: ../ui/settings.glade:1352
 msgid "Preprocessor"
 msgstr ""
 
-#: ../ui/settings.glade:4143
-msgid "Presentation Mode"
+#: ../ui/settings.glade:1383
+msgid "Cusp detection"
 msgstr ""
 
-#: ../ui/settings.glade:5061
-msgid "Preserve line width"
+#: ../ui/settings.glade:1400
+msgid "Finalize the stroke"
+msgstr ""
+
+#: ../ui/settings.glade:1405
+msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
+msgstr ""
+
+#: ../ui/settings.glade:1425
+msgid "Input stabilization"
+msgstr ""
+
+#: ../ui/settings.glade:1456
+msgid "Input System"
+msgstr "מערכת קלט"
+
+#: ../ui/settings.glade:1505
+msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
+msgstr ""
+
+#: ../ui/settings.glade:1545
+msgid "Middle Mouse Button"
+msgstr "לחצן העכבר האמצעי"
+
+#: ../ui/settings.glade:1583
+msgid "Right Mouse Button"
+msgstr "כפתור העכבר הימני"
+
+#: ../ui/settings.glade:1601
+msgid "Mouse Buttons"
+msgstr "לחצני עכבר"
+
+#: ../ui/settings.glade:1632 ../ui/settingsDeviceClassConfig.glade:42
+msgid "Mouse"
+msgstr "עכבר"
+
+#: ../ui/settings.glade:1683
+msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
+msgstr ""
+
+#: ../ui/settings.glade:1697
+msgid "Enable Pressure Sensitivity"
+msgstr ""
+
+#: ../ui/settings.glade:1732
+msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
+msgstr ""
+
+#: ../ui/settings.glade:1755
+msgid "Minimum Pressure:"
 msgstr ""
 
 #: ../ui/settings.glade:1766
 msgid "Pressure Multiplier: "
 msgstr ""
 
-#: ../ui/settings.glade:1845
-msgid "Pressure Sensitivity"
-msgstr ""
-
-#: ../ui/settings.glade:3478
-msgid "Radius"
-msgstr ""
-
-#: ../ui/exportSettings.glade:162
-msgid "Range"
-msgstr ""
-
-#: ../ui/settings.glade:5598
-msgid "Re-render when the page's zoom changes by more than "
-msgstr ""
-
-#: ../ui/main.glade:187
-msgid "Recent _Documents"
-msgstr ""
-
-#: ../ui/main.glade:2062
-msgid "Record / Stop"
-msgstr ""
-
-#: ../ui/settings.glade:6283
-msgid "Recording Quality"
-msgstr ""
-
-#: ../ui/main.glade:1323
-msgid "Rename Layer"
-msgstr ""
-
-#: ../ui/renameLayerDialog.glade:8
-msgid "Rename selected layer"
-msgstr ""
-
-#: ../ui/settings.glade:5108
-msgid "Resizing"
-msgstr ""
-
-#: ../ui/exportSettings.glade:26
-msgid "Resolution"
-msgstr "רזולוציה"
-
-#: ../ui/settings.glade:1583
-msgid "Right Mouse Button"
-msgstr "כפתור העכבר הימני"
-
-#: ../ui/settings.glade:5148
-msgid "Rotation snapping tolerance"
-msgstr ""
-
-#: ../ui/settings.glade:6206
-msgid "Sample Rate"
-msgstr "קצב דגימה"
-
-#: ../ui/renameLayerDialog.glade:65
-msgid "Sample layer name"
-msgstr "שם שכבת דגימה"
-
-#: ../ui/pageTemplate.glade:40
-msgid "Save to file"
-msgstr ""
-
-#: ../ui/settings.glade:3841
-msgid "Scrollbars"
-msgstr "סרגלי גלילה"
-
-#: ../ui/settings.glade:4766
-msgid "Scrolling outside the page"
-msgstr "גלילה אל מחוץ לעמוד"
-
-#: ../ui/pageTemplate.glade:177
-msgid "Select Background Color"
-msgstr "בחירת צבע הרקע"
-
-#: ../ui/settings.glade:6003
-msgid "Select Folder"
-msgstr "בחירת תיקייה"
-
-#: ../ui/images.glade:8
-msgid "Select Image"
-msgstr "בחירת תמונה"
-
-#: ../ui/main.glade:1408
-msgid "Select Linear Text"
-msgstr ""
-
-#: ../ui/pdfpages.glade:8
-msgid "Select PDF Page"
-msgstr "בחירת דף PDF"
-
-#: ../ui/main.glade:1420
-msgid "Select Text In Rectangle"
-msgstr ""
-
-#: ../ui/settings.glade:4108
-msgid "Select toolbar:"
-msgstr "בחירת סרגל כלים:"
-
-#: ../ui/settings.glade:3129
-msgid "Selection Color (Text, Stroke Selection etc.)"
-msgstr "צבע בחירה (טקסט, בחירת מתאר וכו׳)"
-
-#: ../ui/settings.glade:3927
-msgid "Selection Edge Panning"
-msgstr ""
-
-#: ../ui/main.glade:330
-msgid "Send Backward"
-msgstr ""
-
-#: ../ui/main.glade:339
-msgid "Send to Back"
-msgstr ""
-
 #: ../ui/settings.glade:1827
 msgid "Sensitivity Scale"
 msgstr "דירוג רגישות"
 
-#: ../ui/main.glade:730
-msgid "Set Columns"
+#: ../ui/settings.glade:1845
+msgid "Pressure Sensitivity"
 msgstr ""
 
-#: ../ui/main.glade:835
-msgid "Set Rows"
+#: ../ui/settings.glade:1876
+msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5507
-msgid "Settings:"
-msgstr "הגדרות:"
+#: ../ui/settings.glade:1894
+msgid "Ignore the first"
+msgstr "התעלם מהראשון"
 
-#: ../ui/settings.glade:5516
-msgid "Show Floating Toolbox"
-msgstr "הצגת סרגל כלים מרחף"
-
-#: ../ui/settings.glade:3956 ../ui/settings.glade:4039
-msgid "Show Menubar"
+#: ../ui/settings.glade:1913
+msgid "1"
 msgstr ""
 
-#: ../ui/settings.glade:2997
-msgid "Show Menubar on Startup"
-msgstr "הצגת שורת תפריטים עם ההפעלה"
+#: ../ui/settings.glade:1929
+msgid "events"
+msgstr "אירועים"
 
-#: ../ui/main.glade:589 ../ui/settings.glade:3988 ../ui/settings.glade:4087
-msgid "Show Sidebar"
-msgstr "הצגת סרגל הצד"
-
-#: ../ui/settings.glade:3972 ../ui/settings.glade:4055
-msgid "Show Toolbar"
+#: ../ui/settings.glade:1952
+msgid "Artifact workaround"
 msgstr ""
 
-#: ../ui/main.glade:605
-msgid "Show Toolbars"
+#: ../ui/settings.glade:1983
+msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:3034
-msgid "Show filepath in title bar"
-msgstr ""
+#: ../ui/settings.glade:2023
+msgid "Button 1"
+msgstr "כפתור 1"
 
-#: ../ui/settings.glade:3641
-msgid "Show sidebar on the right side"
-msgstr "הצג סרגל צד בצד הימני"
-
-#: ../ui/settings.glade:3657
-msgid "Show vertical scrollbar on the left side"
-msgstr "הצג סרגל צד אנכי בצד השמאלי"
-
-#: ../ui/settings.glade:3761
-msgid "Sidebar"
-msgstr ""
-
-#: ../ui/settings.glade:1081
-msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
-"<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
-msgstr ""
-
-#: ../ui/settings.glade:3363
-msgctxt "stylus cursor uses a small dot"
-msgid "Small dot icon"
-msgstr ""
-
-#: ../ui/settings.glade:5267
-msgid "Snapping"
-msgstr "הצמדה"
-
-#: ../ui/about.glade:270
-msgid "Source Code / Bug Tracker"
-msgstr ""
-
-#: ../ui/settings.glade:4336
-msgid "Speed for Ctrl + Scroll"
-msgstr ""
-
-#: ../ui/settings.glade:4364
-msgid "Speed for a Zoomstep"
-msgstr ""
-
-#: ../ui/settings.glade:3732
-msgid "Square background"
-msgstr ""
-
-#: ../ui/settingsButtonConfig.glade:130
-msgid "Standard"
-msgstr "סטנדרטי"
-
-#: ../ui/settings.glade:2703
-msgid "Start zooming after a distance "
-msgstr ""
-
-#: ../ui/settings.glade:5988 ../ui/settings.glade:6046
-msgid "Storage Folder"
-msgstr "תיקיית אחסון"
-
-#: ../ui/main.glade:2839
-msgid "Strikethrough selected text"
-msgstr ""
-
-#: ../ui/settings.glade:2227
-msgid "Stylus"
-msgstr "עט סטיילוס"
+#: ../ui/settings.glade:2061
+msgid "Button 2"
+msgstr "כפתור 2"
 
 #: ../ui/settings.glade:2117
 msgid "Stylus Buttons"
@@ -3367,168 +3103,14 @@ msgstr "כפתורי עט סטיילוס"
 msgid "Stylus-based eraser is visible"
 msgstr ""
 
-#: ../ui/latexSettings.glade:461
-msgid "Syntax highlighting"
+#: ../ui/settings.glade:2169
+msgctxt "eraser is never visible"
+msgid "Never"
 msgstr ""
 
-#: ../ui/settings.glade:3365
-msgctxt "stylus cursor uses system cursor"
-msgid "System cursor"
-msgstr ""
-
-#: ../ui/main.glade:949
-msgid "T_oolbars"
-msgstr ""
-
-#: ../ui/texdialog.glade:125
-msgid "TeX Source"
-msgstr ""
-
-#: ../ui/latexSettings.glade:265
-msgid "Template file settings"
-msgstr ""
-
-#: ../ui/pagesize.glade:101
-msgid "Template:"
-msgstr "תבנית:"
-
-#: ../ui/settings.glade:2562 ../ui/settings.glade:2575
-msgid "Test"
-msgstr "בדיקה"
-
-#: ../ui/latexSettings.glade:318
-msgid "Test configuration"
-msgstr ""
-
-#: ../ui/latexSettings.glade:322
-msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
-msgstr ""
-
-#: ../ui/main.glade:2050
-msgid "Text Font..."
-msgstr ""
-
-#: ../ui/latexSettings.glade:152
-msgid "The LaTeX file to use as a template for the LaTeX tool."
-msgstr ""
-
-#: ../ui/latexSettings.glade:229
-msgid "The current color of the Text Tool, in hex RGB format."
-msgstr ""
-
-#: ../ui/latexSettings.glade:166
-msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
-msgstr ""
-
-#: ../ui/latexSettings.glade:192
-msgid "The math mode formula typed in the LaTeX tool."
-msgstr ""
-
-#: ../ui/settings.glade:4527
-msgid "The unit of the ruler is cm"
-msgstr "יחידת המידה של הסרגל היא סנטימטרים"
-
-#: ../ui/settings.glade:3217
-msgid "Theme Variant:"
-msgstr ""
-
-#: ../ui/pageTemplate.glade:114
-msgid "These settings will be used for new pages"
-msgstr "יהיה שימוש בהגדרות אלה רק בשביל דפים חדשים"
-
-#: ../ui/settings.glade:5392
-msgid "Time limit (ms)"
-msgstr ""
-
-#: ../ui/settings.glade:5404
-msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
-"<i>Recommended: 150ms</i>"
-msgstr ""
-
-#: ../ui/settings.glade:2400
-msgid "Timeout"
-msgstr ""
-
-#: ../ui/main.glade:2859
-msgid "Toggle standard / region text selection"
-msgstr ""
-
-#: ../ui/settings.glade:2838
-msgid "Touch Drawing"
-msgstr ""
-
-#: ../ui/settings.glade:2906
-msgid "Touch Scrolling"
-msgstr ""
-
-#: ../ui/settings.glade:2313 ../ui/settings.glade:2937
-#: ../ui/settingsDeviceClassConfig.glade:46
-msgid "Touchscreen"
-msgstr "מסך מגע"
-
-#: ../ui/settings.glade:5484
-msgid "Try to select object first."
-msgstr "נסה לבחור אובייקט קודם."
-
-#: ../ui/settings.glade:5489 ../ui/settings.glade:5521
-msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
-msgstr ""
-
-#: ../ui/main.glade:2819
-msgid "Underline selected text"
-msgstr ""
-
-#: ../ui/settings.glade:3152
-msgid "Use available Stock Icons (requires restart)"
-msgstr ""
-
-#: ../ui/latexSettings.glade:529
-msgid "Use font from system theme."
-msgstr ""
-
-#: ../ui/settings.glade:5245
-msgid "Use snapping for recognized shapes"
-msgstr ""
-
-#: ../ui/settings.glade:3235
-msgid "Use system default"
-msgstr ""
-
-#: ../ui/pageTemplate.glade:274
-msgid "Use the current page size instead of the page size above."
-msgstr "להשתמש בגודל הדף הנוכחי במקום בגודל הדף העליון."
-
-#: ../ui/settings.glade:2820 ../ui/settings.glade:2888
-msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
-msgstr ""
-
-#: ../ui/settings.glade:4812
-msgid "Usually 0 or 1"
-msgstr "בד\"כ 0 או 1"
-
-#: ../ui/settings.glade:230
-msgid "Velocity based Gaussian weights"
-msgstr ""
-
-#: ../ui/pluginEntry.glade:132
-msgid "Version: "
-msgstr "גרסה: "
-
-#: ../ui/settings.glade:4283
-msgid "View"
-msgstr "תצוגה"
-
-#: ../ui/about.glade:242
-msgid "Website"
-msgstr ""
-
-#: ../ui/settings.glade:3897
-msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
-msgstr ""
-
-#: ../ui/settings.glade:2697
-msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
-"This setting can make it easier to draw with touch. "
+#: ../ui/settings.glade:2170
+msgctxt "eraser is always visible"
+msgid "Always"
 msgstr ""
 
 #: ../ui/settings.glade:2171
@@ -3541,310 +3123,235 @@ msgctxt "eraser is only visible when touching the screen"
 msgid "When touching"
 msgstr ""
 
-#: ../ui/settings.glade:5595
-msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
-"Set this to 0% to always re-render on zoom."
+#: ../ui/settings.glade:2196
+msgid "Eraser visibility"
 msgstr ""
 
-#: ../ui/settingsButtonConfig.glade:131
-msgid "Whiteout"
+#: ../ui/settings.glade:2227
+msgid "Stylus"
+msgstr "עט סטיילוס"
+
+#: ../ui/settings.glade:2278
+msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
 msgstr ""
 
-#: ../ui/exportSettings.glade:29
-msgid "Width"
-msgstr "רוחב"
+#: ../ui/settings.glade:2313 ../ui/settings.glade:2937
+#: ../ui/settingsDeviceClassConfig.glade:46
+msgid "Touchscreen"
+msgstr "מסך מגע"
 
-#: ../ui/pagesize.glade:189
-msgid "Width:"
-msgstr "רוחב:"
-
-#: ../ui/about.glade:307
-msgid "With help from the community"
-msgstr "באמצעות עזרה מהקהילה"
-
-#: ../ui/latexSettings.glade:493
-msgid "Wrap text"
+#: ../ui/settings.glade:2344
+msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:255
-msgid "Xournal++ Preferences"
-msgstr "העדפות Xournal++‎"
+#: ../ui/settings.glade:2358
+msgid "Enable internal Hand Recognition"
+msgstr ""
 
-#: ../ui/settings.glade:4581
-msgid "Zoom"
-msgstr "תקריב"
+#: ../ui/settings.glade:2389
+msgid "Disabling Method"
+msgstr ""
+
+#: ../ui/settings.glade:2400
+msgid "Timeout"
+msgstr ""
+
+#: ../ui/settings.glade:2415
+msgid "Autodetect"
+msgstr "איתור אוטומטי"
+
+#: ../ui/settings.glade:2444
+msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
+msgstr ""
+
+#: ../ui/settings.glade:2494
+msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
+msgstr ""
+
+#: ../ui/settings.glade:2517
+msgid "Enable"
+msgstr "הפעלה"
+
+#: ../ui/settings.glade:2529
+msgid "Disable"
+msgstr "השבתה"
+
+#: ../ui/settings.glade:2562 ../ui/settings.glade:2575
+msgid "Test"
+msgstr "בדיקה"
+
+#: ../ui/settings.glade:2610
+msgid "Custom Commands (for Method \"Custom\")"
+msgstr ""
+
+#: ../ui/settings.glade:2635
+msgid "Hand Recognition"
+msgstr "זיהוי יד"
+
+#: ../ui/settings.glade:2666
+msgid "<i>Use pinch gestures to zoom journal pages.</i>"
+msgstr ""
+
+#: ../ui/settings.glade:2678
+msgid "Enable zoom gestures (requires restart)"
+msgstr ""
+
+#: ../ui/settings.glade:2697
+msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
+"This setting can make it easier to draw with touch. "
+msgstr ""
+
+#: ../ui/settings.glade:2703
+msgid "Start zooming after a distance "
+msgstr ""
+
+#: ../ui/settings.glade:2715
+msgid "1.0"
+msgstr ""
+
+#: ../ui/settings.glade:2730
+msgid "% greater than the initial distance between the two touches."
+msgstr ""
 
 #: ../ui/settings.glade:2770
 msgid "Zoom Gestures"
 msgstr "מחוות תקריב"
 
-#: ../ui/settings.glade:4427
-msgid "Zoom Speed"
-msgstr "מהירות תקריב"
-
-#: ../ui/main.glade:742
-msgid "_1 Column"
+#: ../ui/settings.glade:2801
+msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
 msgstr ""
 
-#: ../ui/main.glade:847
-msgid "_1 Row"
+#: ../ui/settings.glade:2815
+msgid "Enable touch drawing"
 msgstr ""
 
-#: ../ui/main.glade:753
-msgid "_2 Columns"
+#: ../ui/settings.glade:2820 ../ui/settings.glade:2888
+msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
 msgstr ""
 
-#: ../ui/main.glade:858
-msgid "_2 Rows"
+#: ../ui/settings.glade:2838
+msgid "Touch Drawing"
 msgstr ""
 
-#: ../ui/main.glade:764
-msgid "_3 Columns"
+#: ../ui/settings.glade:2869
+msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
 msgstr ""
 
-#: ../ui/main.glade:869
-msgid "_3 Rows"
+#: ../ui/settings.glade:2883
+msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
 msgstr ""
 
-#: ../ui/main.glade:775
-msgid "_4 Columns"
+#: ../ui/settings.glade:2906
+msgid "Touch Scrolling"
 msgstr ""
 
-#: ../ui/main.glade:880
-msgid "_4 Rows"
+#: ../ui/settings.glade:2997
+msgid "Show Menubar on Startup"
+msgstr "הצגת שורת תפריטים עם ההפעלה"
+
+#: ../ui/settings.glade:3016
+msgid "<i>Toggle visibility of menubar with F10</i>"
 msgstr ""
 
-#: ../ui/main.glade:786
-msgid "_5 Columns"
+#: ../ui/settings.glade:3034
+msgid "Show filepath in title bar"
 msgstr ""
 
-#: ../ui/main.glade:891
-msgid "_5 Rows"
+#: ../ui/settings.glade:3078
+msgid "Border color for current page and other selections"
+msgstr "צבע הגבול של הדף הנוכחי ובחירות אחרות"
+
+#: ../ui/settings.glade:3093
+msgid "Border color"
+msgstr "צבע מסגרת"
+
+#: ../ui/settings.glade:3104
+msgid "Background color between pages"
+msgstr "צבע רקע בין דפים"
+
+#: ../ui/settings.glade:3129
+msgid "Selection Color (Text, Stroke Selection etc.)"
+msgstr "צבע בחירה (טקסט, בחירת מתאר וכו׳)"
+
+#: ../ui/settings.glade:3152
+msgid "Use available Stock Icons (requires restart)"
 msgstr ""
 
-#: ../ui/main.glade:797
-msgid "_6 Columns"
+#: ../ui/settings.glade:3174
+msgid "Icon Theme:"
 msgstr ""
 
-#: ../ui/main.glade:902
-msgid "_6 Rows"
+#: ../ui/settings.glade:3192
+msgid "Color"
 msgstr ""
 
-#: ../ui/main.glade:808
-msgid "_7 Columns"
+#: ../ui/settings.glade:3217
+msgid "Theme Variant:"
 msgstr ""
 
-#: ../ui/main.glade:913
-msgid "_7 Rows"
+#: ../ui/settings.glade:3235
+msgid "Use system default"
 msgstr ""
 
-#: ../ui/main.glade:819
-msgid "_8 Columns"
+#: ../ui/settings.glade:3236
+msgid "Force light theme"
 msgstr ""
 
-#: ../ui/main.glade:924
-msgid "_8 Rows"
+#: ../ui/settings.glade:3237
+msgid "Force dark theme"
 msgstr ""
 
-#: ../ui/main.glade:196
-msgid "_Annotate PDF"
+#: ../ui/settings.glade:3250
+msgid "(this may not work, depending on your system theme)"
 msgstr ""
 
-#: ../ui/main.glade:702
-msgid "_Bottom to Top"
+#: ../ui/settings.glade:3291
+msgid "Colors"
+msgstr "צבעים"
+
+#: ../ui/settings.glade:3309
+msgid "Global"
 msgstr ""
 
-#: ../ui/main.glade:717
-msgid "_Cols/Rows"
+#: ../ui/settings.glade:3346
+msgid "Cursor icon for pen"
 msgstr ""
 
-#: ../ui/main.glade:977
-msgid "_Customize"
+#: ../ui/settings.glade:3362
+msgctxt "stylus cursor uses no icon"
+msgid "No icon"
+msgstr "אין סמל"
+
+#: ../ui/settings.glade:3363
+msgctxt "stylus cursor uses a small dot"
+msgid "Small dot icon"
 msgstr ""
 
-#: ../ui/main.glade:1468
-msgid "_Default Tools"
-msgstr "_כלי ברירת מחדל"
-
-#: ../ui/main.glade:1273
-msgid "_Delete Page"
+#: ../ui/settings.glade:3364
+msgctxt "stylus cursor uses a big pen icon"
+msgid "Big pen icon"
 msgstr ""
 
-#: ../ui/main.glade:292
-msgid "_Edit"
+#: ../ui/settings.glade:3365
+msgctxt "stylus cursor uses system cursor"
+msgid "System cursor"
 msgstr ""
 
-#: ../ui/main.glade:1396
-msgid "_Eraser"
+#: ../ui/settings.glade:3389
+msgid "Highlight cursor position"
+msgstr "הדגש מיקום סמן"
+
+#: ../ui/settings.glade:3394
+msgid "Draw a transparent circle around the cursor"
 msgstr ""
 
-#: ../ui/main.glade:237
-msgid "_Export as PDF"
-msgstr ""
+#: ../ui/settings.glade:3412 ../ui/settings.glade:3555
+msgid "Choose the color to use for \"Highlight cursor position\""
+msgstr "בחר את הצבע ש\"ידגיש את מיקום הסמן\""
 
-#: ../ui/main.glade:152
-msgid "_File"
-msgstr ""
-
-#: ../ui/main.glade:1076
-msgid "_First Page"
-msgstr "הדף ה_ראשון"
-
-#: ../ui/main.glade:1098
-msgid "_Goto Page"
-msgstr "מ_עבר לדף"
-
-#: ../ui/main.glade:2151
-msgid "_Help"
-msgstr ""
-
-#: ../ui/main.glade:1432
-msgid "_Highlighter"
-msgstr ""
-
-#: ../ui/main.glade:633
-msgid "_Horizontal"
-msgstr ""
-
-#: ../ui/main.glade:1456
-msgid "_Image"
-msgstr ""
-
-#: ../ui/main.glade:1120
-msgid "_Last Page"
-msgstr "הדף ה_קודם"
-
-#: ../ui/main.glade:662
-msgid "_Left to Right"
-msgstr ""
-
-#: ../ui/main.glade:967
-msgid "_Manage"
-msgstr ""
-
-#: ../ui/main.glade:1065
-msgid "_Navigation"
-msgstr ""
-
-#: ../ui/main.glade:1148
-msgid "_Next Layer"
-msgstr ""
-
-#: ../ui/main.glade:1109
-msgid "_Next Page"
-msgstr "הדף ה_בא"
-
-#: ../ui/main.glade:557
-msgid "_Pair Pages"
-msgstr ""
-
-#: ../ui/main.glade:1384
-msgid "_Pen"
-msgstr ""
-
-#: ../ui/main.glade:2126
-msgid "_Plugin"
-msgstr "_תוסף"
-
-#: ../ui/main.glade:567
-msgid "_Presentation Mode"
-msgstr ""
-
-#: ../ui/main.glade:1137
-msgid "_Previous Layer"
-msgstr ""
-
-#: ../ui/main.glade:1087
-msgid "_Previous Page"
-msgstr "הדף ה_קודם"
-
-#: ../ui/main.glade:673
-msgid "_Right to Left"
-msgstr ""
-
-#: ../ui/main.glade:1485
-msgid "_Shape Recognizer"
-msgstr ""
-
-#: ../ui/main.glade:1444
-msgid "_Text"
-msgstr ""
-
-#: ../ui/main.glade:1373
-msgid "_Tools"
-msgstr ""
-
-#: ../ui/main.glade:1159
-msgid "_Top Layer"
-msgstr ""
-
-#: ../ui/main.glade:691
-msgid "_Top to Bottom"
-msgstr ""
-
-#: ../ui/main.glade:644
-msgid "_Vertical"
-msgstr ""
-
-#: ../ui/main.glade:1637
-msgid "_Vertical Space"
-msgstr ""
-
-#: ../ui/main.glade:546
-msgid "_View"
-msgstr ""
-
-#: ../ui/main.glade:1939
-msgid "_delete strokes"
-msgstr ""
-
-#: ../ui/main.glade:1721 ../ui/main.glade:1867 ../ui/main.glade:1976
-msgid "_fine"
-msgstr ""
-
-#: ../ui/main.glade:1732 ../ui/main.glade:1878 ../ui/main.glade:1987
-msgid "_medium"
-msgstr ""
-
-#: ../ui/main.glade:1917
-msgid "_standard"
-msgstr ""
-
-#: ../ui/main.glade:1743 ../ui/main.glade:1889 ../ui/main.glade:1998
-msgid "_thick"
-msgstr ""
-
-#: ../ui/main.glade:1710 ../ui/main.glade:1856 ../ui/main.glade:1965
-msgid "_very fine"
-msgstr ""
-
-#: ../ui/main.glade:1928
-msgid "_whiteout"
-msgstr ""
-
-#: ../ui/settings.glade:4911
-msgid "disabled"
-msgstr ""
-
-#: ../ui/exportSettings.glade:312
-msgid "dpi"
-msgstr "dpi"
-
-#: ../ui/pluginEntry.glade:168
-msgid "enabled,"
-msgstr "מופעל,"
-
-#: ../ui/settings.glade:1929
-msgid "events"
-msgstr "אירועים"
-
-#: ../ui/settings.glade:406
-msgid "every"
-msgstr "כל"
-
-#: ../ui/settings.glade:433
-msgid "minutes"
-msgstr "דקות"
+#: ../ui/settings.glade:3426
+msgid "Circle Color"
+msgstr "צבע העיגול"
 
 #: ../ui/settings.glade:3450 ../ui/settings.glade:3501
 #: ../ui/settings.glade:4724 ../ui/settings.glade:4735
@@ -3852,19 +3359,529 @@ msgstr "דקות"
 msgid "pixels"
 msgstr "פיקסלים"
 
-#: ../ui/settings.glade:2444
-msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
+#: ../ui/settings.glade:3478
+msgid "Radius"
 msgstr ""
 
-#: ../ui/main.glade:1754 ../ui/main.glade:1900 ../ui/main.glade:2009
-msgid "ver_y thick"
+#: ../ui/settings.glade:3514
+msgid "30"
+msgstr ""
+
+#: ../ui/settings.glade:3530
+msgid "Border Width"
+msgstr "רוחב הגבול"
+
+#: ../ui/settings.glade:3569
+msgid "Border Color"
+msgstr "צבע גבול"
+
+#: ../ui/settings.glade:3612
+msgid "Cursor"
+msgstr "סמן"
+
+#: ../ui/settings.glade:3641
+msgid "Show sidebar on the right side"
+msgstr "הצג סרגל צד בצד הימני"
+
+#: ../ui/settings.glade:3657
+msgid "Show vertical scrollbar on the left side"
+msgstr "הצג סרגל צד אנכי בצד השמאלי"
+
+#: ../ui/settings.glade:3679
+msgid "Left / Right-Handed"
+msgstr "ימני/שמאלי"
+
+#: ../ui/settings.glade:3714
+msgid "Page numbering  "
+msgstr ""
+
+#: ../ui/settings.glade:3730
+msgid "Below preview"
+msgstr ""
+
+#: ../ui/settings.glade:3731
+msgid "Circle background"
+msgstr ""
+
+#: ../ui/settings.glade:3732
+msgid "Square background"
+msgstr ""
+
+#: ../ui/settings.glade:3761
+msgid "Sidebar"
+msgstr ""
+
+#: ../ui/settings.glade:3791
+msgid "Hide the horizontal scrollbar"
+msgstr "הסתר סרגל גלילה אופקי"
+
+#: ../ui/settings.glade:3806
+msgid "Hide the vertical scrollbar"
+msgstr "הסתר סרגל גלילה אנכי"
+
+#: ../ui/settings.glade:3821
+msgid "Disable scrollbar fade out"
+msgstr ""
+
+#: ../ui/settings.glade:3841
+msgid "Scrollbars"
+msgstr "סרגלי גלילה"
+
+#: ../ui/settings.glade:3897
+msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
+msgstr ""
+
+#: ../ui/settings.glade:3899
+msgid "Base speed"
+msgstr ""
+
+#: ../ui/settings.glade:3910
+msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
+msgstr ""
+
+#: ../ui/settings.glade:3912
+msgid "Max multiplier"
+msgstr "מכפיל מרבי"
+
+#: ../ui/settings.glade:3927
+msgid "Selection Edge Panning"
+msgstr ""
+
+#: ../ui/settings.glade:3956 ../ui/settings.glade:4039
+msgid "Show Menubar"
+msgstr ""
+
+#: ../ui/settings.glade:3972 ../ui/settings.glade:4055
+msgid "Show Toolbar"
+msgstr ""
+
+#: ../ui/settings.glade:4071
+msgid "Go Fullscreen"
+msgstr ""
+
+#: ../ui/settings.glade:4108
+msgid "Select toolbar:"
+msgstr "בחירת סרגל כלים:"
+
+#: ../ui/settings.glade:4143
+msgid "Presentation Mode"
+msgstr ""
+
+#: ../ui/settings.glade:4174
+msgid "Pre-load pages before"
+msgstr ""
+
+#: ../ui/settings.glade:4186
+msgid "Pre-load pages after"
+msgstr ""
+
+#: ../ui/settings.glade:4223
+msgid "Clear cached paged while scrolling"
+msgstr ""
+
+#: ../ui/settings.glade:4252
+msgid "Performance"
+msgstr "ביצועים"
+
+#: ../ui/settings.glade:4283
+msgid "View"
+msgstr "תצוגה"
+
+#: ../ui/settings.glade:4336
+msgid "Speed for Ctrl + Scroll"
+msgstr ""
+
+#: ../ui/settings.glade:4364
+msgid "Speed for a Zoomstep"
+msgstr ""
+
+#: ../ui/settings.glade:4427
+msgid "Zoom Speed"
+msgstr "מהירות תקריב"
+
+#: ../ui/settings.glade:4458
+msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
+msgstr ""
+
+#: ../ui/settings.glade:4479
+msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
+msgstr ""
+
+#: ../ui/settings.glade:4527
+msgid "The unit of the ruler is cm"
+msgstr "יחידת המידה של הסרגל היא סנטימטרים"
+
+#: ../ui/settings.glade:4550
+msgid "Display DPI Calibration"
+msgstr ""
+
+#: ../ui/settings.glade:4581
+msgid "Zoom"
+msgstr "תקריב"
+
+#: ../ui/settings.glade:4632
+msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
+msgstr ""
+
+#: ../ui/settings.glade:4663
+msgid "Add additional vertical space of"
+msgstr "הוסף רווח אנכי נוסף של"
+
+#: ../ui/settings.glade:4685
+msgid "Add additional horizontal space of"
+msgstr "הוסף רווח אופקי נוסף של"
+
+#: ../ui/settings.glade:4766
+msgid "Scrolling outside the page"
+msgstr "גלילה אל מחוץ לעמוד"
+
+#: ../ui/settings.glade:4799
+msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
+msgstr ""
+
+#: ../ui/settings.glade:4800
+msgid "First Page Offset "
+msgstr ""
+
+#: ../ui/settings.glade:4812
+msgid "Usually 0 or 1"
+msgstr "בד\"כ 0 או 1"
+
+#: ../ui/settings.glade:4853
+msgid "Paired Pages"
+msgstr "דפים צמודים"
+
+#: ../ui/settings.glade:4881
+msgid "when scrolling to end of last page"
 msgstr ""
 
 #: ../ui/settings.glade:4896
 msgid "when drawing on last page"
 msgstr ""
 
-#: ../ui/settings.glade:4881
-msgid "when scrolling to end of last page"
+#: ../ui/settings.glade:4911
+msgid "disabled"
 msgstr ""
+
+#: ../ui/settings.glade:4931
+msgid "Automatically Add Empty Last Page (excluding PDFs)"
+msgstr ""
+
+#: ../ui/settings.glade:4961
+msgid "Enable  with determination radius of "
+msgstr ""
+
+#: ../ui/settings.glade:4966
+msgid "Drag LEFT from start point acts like shift key is being held.\n"
+"Drag UP acts as if Control key is being held.\n\n"
+"Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
+"<i>Useful for operating without keyboard.</i>"
+msgstr ""
+
+#: ../ui/settings.glade:5034
+msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
+msgstr ""
+
+#: ../ui/settings.glade:5061
+msgid "Preserve line width"
+msgstr ""
+
+#: ../ui/settings.glade:5066
+msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
+msgstr ""
+
+#: ../ui/settings.glade:5108
+msgid "Resizing"
+msgstr ""
+
+#: ../ui/settings.glade:5148
+msgid "Rotation snapping tolerance"
+msgstr ""
+
+#: ../ui/settings.glade:5161
+msgid "Grid snapping tolerance"
+msgstr ""
+
+#: ../ui/settings.glade:5204
+msgid "Grid size"
+msgstr "גודל רשת"
+
+#: ../ui/settings.glade:5245
+msgid "Use snapping for recognized shapes"
+msgstr ""
+
+#: ../ui/settings.glade:5249
+msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
+msgstr ""
+
+#: ../ui/settings.glade:5267
+msgid "Snapping"
+msgstr "הצמדה"
+
+#: ../ui/settings.glade:5304
+msgid "Minimum Stroke Size"
+msgstr ""
+
+#: ../ui/settings.glade:5374
+msgctxt "Short taps/clicks will trigger special actions"
+msgid "Enable Tap action"
+msgstr ""
+
+#: ../ui/settings.glade:5379
+msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
+msgstr ""
+
+#: ../ui/settings.glade:5392
+msgid "Time limit (ms)"
+msgstr ""
+
+#: ../ui/settings.glade:5404
+msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
+"<i>Recommended: 150ms</i>"
+msgstr ""
+
+#: ../ui/settings.glade:5424
+msgid "Length limit: taps moving further away will not trigger a special action\n\n"
+"<i>Recommended: 1 mm</i>"
+msgstr ""
+
+#: ../ui/settings.glade:5444
+msgid "Length limit (mm)"
+msgstr ""
+
+#: ../ui/settings.glade:5455
+msgid "Frequency limit (ms)"
+msgstr ""
+
+#: ../ui/settings.glade:5467
+msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
+"<i>Recommended: 500ms</i>"
+msgstr ""
+
+#: ../ui/settings.glade:5484
+msgid "Try to select object first."
+msgstr "נסה לבחור אובייקט קודם."
+
+#: ../ui/settings.glade:5489 ../ui/settings.glade:5521
+msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
+msgstr ""
+
+#: ../ui/settings.glade:5504
+msgid "All three conditions must be met before stroke is ignored.\n"
+"It must be short in time and length and we can't have ignored another stroke recently."
+msgstr ""
+
+#: ../ui/settings.glade:5507
+msgid "Settings:"
+msgstr "הגדרות:"
+
+#: ../ui/settings.glade:5516
+msgid "Show Floating Toolbox"
+msgstr "הצגת סרגל כלים מרחף"
+
+#: ../ui/settings.glade:5539
+msgid "Action on Tool Tap"
+msgstr ""
+
+#: ../ui/settings.glade:5570
+msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
+"<b>Note:</b> This should not affect print quality.</i>"
+msgstr ""
+
+#: ../ui/settings.glade:5595
+msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
+"Set this to 0% to always re-render on zoom."
+msgstr ""
+
+#: ../ui/settings.glade:5598
+msgid "Re-render when the page's zoom changes by more than "
+msgstr ""
+
+#: ../ui/settings.glade:5611
+msgid "0.00"
+msgstr ""
+
+#: ../ui/settings.glade:5627
+msgid "%."
+msgstr ""
+
+#: ../ui/settings.glade:5668
+msgid "PDF Cache"
+msgstr ""
+
+#: ../ui/settings.glade:5699
+msgid "Drawing Area"
+msgstr ""
+
+#: ../ui/settings.glade:5750
+msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
+msgstr ""
+
+#: ../ui/settings.glade:5804
+msgid "<b>Default</b>"
+msgstr "<b>בררת מחדל</b>"
+
+#: ../ui/settings.glade:5844
+msgid "Defaults"
+msgstr "ברירות מחדל"
+
+#: ../ui/settings.glade:5897
+msgid "<i>\n"
+"Using the checkbox the audio system can be disabled or enabled for future sessions (restart required). \n"
+"Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
+"</i>"
+msgstr ""
+
+#: ../ui/settings.glade:5913
+msgid "Disable Audio"
+msgstr ""
+
+#: ../ui/settings.glade:5935
+msgid "Enable or Disable Audio"
+msgstr ""
+
+#: ../ui/settings.glade:5966
+msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
+msgstr ""
+
+#: ../ui/settings.glade:5988 ../ui/settings.glade:6046
+msgid "Storage Folder"
+msgstr "תיקיית אחסון"
+
+#: ../ui/settings.glade:6003
+msgid "Select Folder"
+msgstr "בחירת תיקייה"
+
+#: ../ui/settings.glade:6077
+msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
+"If available select <small><tt>pulse</tt></small> as input / output device.</i>"
+msgstr ""
+
+#: ../ui/settings.glade:6101
+msgid "Input Device"
+msgstr "מכשיר קלט"
+
+#: ../ui/settings.glade:6124
+msgid "Output Device"
+msgstr "מכשיר פלט"
+
+#: ../ui/settings.glade:6173
+msgid "Audio Devices"
+msgstr "התקני שמע"
+
+#: ../ui/settings.glade:6206
+msgid "Sample Rate"
+msgstr "קצב דגימה"
+
+#: ../ui/settings.glade:6218
+msgid "Gain"
+msgstr ""
+
+#: ../ui/settings.glade:6283
+msgid "Recording Quality"
+msgstr ""
+
+#: ../ui/settings.glade:6316
+msgid "Default Seek Time (in seconds)"
+msgstr ""
+
+#: ../ui/settings.glade:6329
+msgid "1,00"
+msgstr ""
+
+#: ../ui/settings.glade:6370
+msgid "Playback Settings"
+msgstr "הגדרות ניגון"
+
+#: ../ui/settings.glade:6384
+msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
+msgstr ""
+
+#: ../ui/settings.glade:6416
+msgid "Audio Recording"
+msgstr "הקלטת שמע"
+
+#: ../ui/settings.glade:6493
+msgid "<i>Select language (requires restart)</i>"
+msgstr "<i>בחירת שפה (דורשת הפעלה מחדש)</i>"
+
+#: ../ui/settings.glade:6530 ../ui/settings.glade:6578
+msgid "Language"
+msgstr "שפה"
+
+#: ../ui/settings.glade:6548
+msgid "Language Settings"
+msgstr "הגדרות שפה"
+
+#: ../ui/settingsButtonConfig.glade:25
+msgid "Device"
+msgstr "מכשיר"
+
+#: ../ui/settingsButtonConfig.glade:50
+msgid "Disable drawing for this device"
+msgstr "השבת ציור בשביל מכשיר זה"
+
+#: ../ui/settingsButtonConfig.glade:129
+msgid "Eraser Type - don't change"
+msgstr ""
+
+#: ../ui/settingsButtonConfig.glade:130
+msgid "Standard"
+msgstr "סטנדרטי"
+
+#: ../ui/settingsButtonConfig.glade:131
+msgid "Whiteout"
+msgstr ""
+
+#: ../ui/settingsButtonConfig.glade:132
+msgid "Delete stroke"
+msgstr ""
+
+#: ../ui/settingsDeviceClassConfig.glade:41
+msgid "Disabled"
+msgstr ""
+
+#: ../ui/settingsDeviceClassConfig.glade:43
+msgid "Mouse+Keyboard Combo"
+msgstr "שילוב עכבר+מקלדת"
+
+#: ../ui/texdialog.glade:9
+msgid "Insert Latex"
+msgstr ""
+
+#: ../ui/texdialog.glade:69
+msgid "Enter / edit LaTeX Text"
+msgstr ""
+
+#: ../ui/texdialog.glade:125
+msgid "TeX Source"
+msgstr ""
+
+#: ../ui/texdialog.glade:143
+msgid "Output generated by the LaTeX command."
+msgstr ""
+
+#: ../ui/texdialog.glade:163
+msgid "Command Output"
+msgstr ""
+
+#: ../ui/toolbarCustomizeDialog.glade:57
+msgid "Drag and drop Components fom here to the toolbars and back."
+msgstr ""
+
+#: ../ui/toolbarCustomizeDialog.glade:86
+msgid "<b>Default Tools</b>"
+msgstr "<b>כלי בררת מחדל</b>"
+
+#: ../ui/toolbarCustomizeDialog.glade:141
+msgid "<b>Color</b>"
+msgstr "<b>צבע</b>"
+
+#: ../ui/toolbarCustomizeDialog.glade:196
+msgid "<b>Separators</b>"
+msgstr ""
+
+#: ../ui/toolbarManageDialog.glade:9
+msgid "Manage Toolbar"
+msgstr "נהל סרגל כלים"
 
