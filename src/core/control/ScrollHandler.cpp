@@ -4,17 +4,25 @@
 
 #include <glib.h>  // for g_error
 
-#include "control/zoom/ZoomControl.h"     // for ZoomControl
-#include "gui/MainWindow.h"               // for MainWindow
-#include "gui/XournalView.h"              // for XournalView
+#include "control/settings/Settings.h"
+#include "control/zoom/ZoomControl.h"  // for ZoomControl
+#include "gui/Layout.h"
+#include "gui/MainWindow.h"   // for MainWindow
+#include "gui/XournalView.h"  // for XournalView
+#include "gui/scroll/ScrollHandling.h"
 #include "gui/sidebar/Sidebar.h"          // for Sidebar
 #include "gui/widgets/SpinPageAdapter.h"  // for SpinPageAdapter
-#include "model/Document.h"               // for Document
-#include "model/LinkDestination.h"        // for LinkDestination
-#include "model/XojPage.h"                // for XojPage
-#include "util/Util.h"                    // for npos
+#include "gui/widgets/XournalWidget.h"
+#include "model/Document.h"         // for Document
+#include "model/LinkDestination.h"  // for LinkDestination
+#include "model/XojPage.h"          // for XojPage
+#include "util/Util.h"              // for npos
+#include "util/i18n.h"
 
 #include "Control.h"  // for Control
+
+static constexpr int SCROLL_KEY_SIZE = 30;
+
 
 ScrollHandler::ScrollHandler(Control* control): control(control) {}
 
@@ -66,6 +74,51 @@ void ScrollHandler::scrollToPage(size_t page, XojPdfRectangle rect) {
     win->getXournal()->scrollTo(page, rect);
 }
 
+void ScrollHandler::moveWhileInPresentationMode(ScrollHandler::Direction dir) {
+    if (dir == LEFT || dir == UP) {
+        goToPreviousPage();
+    } else {
+        goToNextPage();
+    }
+}
+
+template <typename ArithmeticType>
+static constexpr xoj::util::Point<ArithmeticType> getScroll(ScrollHandler::Direction dir, ArithmeticType amount) {
+    return dir == ScrollHandler::LEFT  ? xoj::util::Point<ArithmeticType>(-amount, 0.) :
+           dir == ScrollHandler::RIGHT ? xoj::util::Point<ArithmeticType>(amount, 0.) :
+           dir == ScrollHandler::UP    ? xoj::util::Point<ArithmeticType>(0., -amount) :
+                                         xoj::util::Point<ArithmeticType>(0., amount);
+}
+
+void ScrollHandler::scrollByOnePage(Direction dir) {
+    if (control->getSettings()->isPresentationMode()) {
+        moveWhileInPresentationMode(dir);
+    } else {
+        auto scroll = getScroll(dir, 1);
+        control->getWindow()->getXournal()->pageRelativeXY(scroll.x, scroll.y);
+    }
+}
+
+void ScrollHandler::scrollByOneStep(ScrollHandler::Direction dir) {
+    if (control->getSettings()->isPresentationMode()) {
+        moveWhileInPresentationMode(dir);
+    } else {
+        auto scroll = getScroll(dir, SCROLL_KEY_SIZE);
+        control->getWindow()->getLayout()->scrollRelative(scroll.x, scroll.y);
+    }
+}
+
+void ScrollHandler::scrollByVisibleArea(ScrollHandler::Direction dir) {
+    if (control->getSettings()->isPresentationMode()) {
+        moveWhileInPresentationMode(dir);
+    } else {
+        auto* scrollHandling = GTK_XOURNAL(control->getWindow()->getXournal()->getWidget())->scrollHandling;
+        auto* adj = dir == UP || dir == DOWN ? scrollHandling->getVertical() : scrollHandling->getHorizontal();
+        auto scroll = getScroll(dir, gtk_adjustment_get_page_size(adj) - SCROLL_KEY_SIZE);
+        control->getWindow()->getLayout()->scrollRelative(scroll.x, scroll.y);
+    }
+}
+
 void ScrollHandler::scrollToLinkDest(const LinkDestination& dest) {
     size_t pdfPage = dest.getPdfPage();
 
@@ -79,10 +132,10 @@ void ScrollHandler::scrollToLinkDest(const LinkDestination& dest) {
             control->askInsertPdfPage(pdfPage);
         } else {
             if (dest.shouldChangeTop()) {
-                control->getScrollHandler()->scrollToPage(page, {dest.getLeft(), dest.getTop(), -1, -1});
+                scrollToPage(page, {dest.getLeft(), dest.getTop(), -1, -1});
             } else {
                 if (control->getCurrentPageNo() != page) {
-                    control->getScrollHandler()->scrollToPage(page);
+                    scrollToPage(page);
                 }
             }
         }
