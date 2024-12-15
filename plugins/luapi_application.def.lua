@@ -850,6 +850,21 @@ function app.addImages(opts) end
 --- }
 function app.getImages(type) end
 
+--- Get the plugin's folder for writing one of
+--- - config files
+--- - data files
+--- - state files
+--- and forces it to exist.
+--- 
+--- @param type string "config", "data" or "state"
+--- @return string file path
+--- 
+--- Example 1: local configFolder = app.getFolder("config")
+--- 
+--- Example 2: local stateFolder = app.getFolder("state")
+--- 
+function app.getFolder(type) end
+
 --- Clears a selection by releasing its elements to the current layer.
 --- 
 --- Example: app.clearSelection()
