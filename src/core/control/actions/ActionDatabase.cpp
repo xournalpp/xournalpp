@@ -3,6 +3,7 @@
 #include <type_traits>
 #include <utility>
 
+#include <glib.h>
 #include <gobject/gsignal.h>
 
 #include "control/Control.h"
