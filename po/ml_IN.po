@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-07 14:11+0000\n"
-"PO-Revision-Date: 2024-12-07 14:52\n"
+"POT-Creation-Date: 2024-12-13 10:58+0000\n"
+"PO-Revision-Date: 2024-12-15 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Malayalam\n"
 "Language: ml_IN\n"
@@ -172,7 +172,7 @@ msgstr "സേവ് തരം..."
 
 #: ../src/core/control/Control.cpp:2054 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:80
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:285
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:286
 msgid "Save"
 msgstr "സേവ്"
 
@@ -631,7 +631,7 @@ msgid "Isometric Graph"
 msgstr "ഐസോമെട്രിക് ഗ്രാഫ്"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:41
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:398
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:399
 msgid "Image"
 msgstr "ചിത്രം"
 
@@ -912,22 +912,22 @@ msgid "Tool - don't change"
 msgstr "ടൂൾ - മാറ്റരുത്"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:371
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:372
 msgid "Pen"
 msgstr "പേന"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:380
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 msgid "Eraser"
 msgstr "ഇറേസർ"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:394
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
 msgid "Highlighter"
 msgstr "ഹൈലൈറ്റർ"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:397
 msgid "Text"
 msgstr "ടെക്സ്റ്റ്"
 
@@ -957,7 +957,7 @@ msgid "Select multi layer rect"
 msgstr "അനേകം പാളികൾക്ക് മേൽ റെക്ട് തിരഞ്ഞെടുക്കുക"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 msgid "Hand"
 msgstr "കൈ"
 
@@ -983,48 +983,48 @@ msgstr "സാധാരണ വര"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:418
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Draw Line"
 msgstr "ലൈൻ വരയ്ക്കുക"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:411
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Draw Rectangle"
 msgstr "ദീർഘചതുരം വരയ്ക്കുക"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Draw Ellipse"
 msgstr "ദീർഘവൃത്തം വരയ്‌ക്കുക"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Draw Arrow"
 msgstr "അമ്പ് വരയ്ക്കുക"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Draw Double Arrow"
 msgstr "ഇരട്ട തലയുള്ള അമ്പ് വരയ്ക്കുക"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Draw Coordinate System"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:410
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:411
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
 msgstr "ആകൃതി തിരിച്ചറിയുന്നത്"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Draw Spline"
 msgstr "സ്പ്ലൈൻ വരയ്ക്കുക"
 
@@ -1219,7 +1219,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:136
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:197
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:284
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:285
 msgid "Open file"
 msgstr "ഫയൽ തുറക്കുക"
 
@@ -1421,278 +1421,278 @@ msgstr "വരയ്ക്കുന്ന ശൈലി കോംബോ"
 msgid "Font"
 msgstr "ഫോണ്ട്"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:67
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:68
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "പൊതുവായ ടൂൾബാർ.ഐഎൻഐ (toolbar.ini) ഫയൽ വിശകലനം ചെയ്യാൻ സാധിച്ചില്ല: {1}"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:76
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:77
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "ടൂൾബാർ.ഐഎൻഐ (toolbar.ini) ഫയൽ വിശകലനം ചെയ്യാൻ സാധിച്ചില്ല: {1}"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:283
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:284
 msgid "New Xournal"
 msgstr "പുതിയ Xournal"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:286
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:287
 msgid "Export as PDF"
 msgstr "പിഡിഎഫ് ആയി എക്സ്പോർട്ട് ചെയ്യുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:287
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:288
 msgid "Print"
 msgstr "പ്രിൻ്റ് ചെയ്യുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:296
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:297
 #: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo"
 msgstr "പഴയപടിയാക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:299
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:300
 #: ../src/core/undo/UndoRedoHandler.cpp:191
 msgid "Redo"
 msgstr "വീണ്ടും ചെയ്യുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:302
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:303
 msgid "Cut"
 msgstr "കട്ട്"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:303
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:304
 msgid "Copy"
 msgstr "പകർത്തുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:304
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:305
 #: ../src/core/undo/AddUndoAction.cpp:72
 msgid "Paste"
 msgstr "ഒട്ടിക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:306
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:307
 msgid "Search"
 msgstr "തിരയുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:308
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:309
 #: ../src/core/undo/DeleteUndoAction.cpp:74
 msgid "Delete"
 msgstr "നീക്കം ചെയ്യുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:311
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:312
 msgid "Rotation Snapping"
 msgstr "കറക്കൽ സ്നാപ്പിങ്"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:312
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:313
 msgid "Grid Snapping"
 msgstr "ഗ്രിഡ് സ്നാപ്പിങ്"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:320
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:321
 msgid "Paired pages"
 msgstr "ജോഡിയാക്കിയ താളുകൾ"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:322
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:323
 msgid "Presentation mode"
 msgstr "അവതരണ മട്ട്‌"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:323
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:324
 msgid "Toggle fullscreen"
 msgstr "പൂർണ്ണസ്‌ക്രീൻ ടോഗിൾ ചെയ്യുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:325
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:326
 msgid "Manage Toolbars"
 msgstr "ടൂൾബാറുകൾ ക്രമീകരിക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:327
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:328
 msgid "Customize Toolbars"
 msgstr "ടൂൾബാറുകൾ ഇഷ്ടാനുസൃതമാക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:329
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:330
 msgid "Zoom out"
 msgstr "ചെറുതാക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:330
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:331
 msgid "Zoom in"
 msgstr "വലുതാക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:331
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:332
 msgid "Zoom fit to screen"
 msgstr "സ്ക്രീനിന് സമമായി സൂം ചെയ്യുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:332
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:333
 msgid "Zoom to 100%"
 msgstr "100% വലുപ്പത്തിലേക്ക് എത്തിക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:339
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:340
 msgid "Go to first page"
 msgstr "അടുത്ത താളിലേക്ക് പോകുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:340
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:449
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:341
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:450
 msgid "Back"
 msgstr "പിന്നോട്ട്"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:341
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:342
 msgid "Go to page"
 msgstr "താളിലേക്ക് പോകുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:342
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:343
 msgid "Next"
 msgstr "അടുത്തത്"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:343
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:344
 msgid "Go to last page"
 msgstr "അവസാനത്തെ താളിലേക്ക് പോകുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:346
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:347
 msgid "Go to previous layer"
 msgstr "മുൻപത്തെ താളിലേക്ക് പോവുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:347
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:348
 msgid "Go to next layer"
 msgstr "അടുത്ത പാളിയിലേക്ക് പോകുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:348
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:349
 msgid "Go to top layer"
 msgstr "മുകളിലത്തെ പാളിയിലേക്ക് പോവുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:351
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:352
 msgid "Next annotated page"
 msgstr "അടുത്ത വ്യാഖ്യാനിക്കപ്പെട്ട താൾ"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:357
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:358
 msgid "Insert page"
 msgstr "താൾ ചേർക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:359
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:360
 msgid "Delete current page"
 msgstr "നിലവിലുള്ള താൾ നീക്കം ചെയ്യുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:367
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:376
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:384
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:368
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:377
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:385
 msgid "standard"
 msgstr "സാധാരണ"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:368
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:386
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:387
 msgid "dashed"
 msgstr "ഡാഷുകൾ ഉള്ളത്"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:388
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:370
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:389
 msgid "dash-/ dotted"
 msgstr "ഡാഷ്-/ ഡോട്ടുള്ളത്"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:370
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:390
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:371
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:391
 msgid "dotted"
 msgstr "ഡോട്ട് ഇട്ടത്"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:377
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:378
 msgid "whiteout"
 msgstr "വൈറ്റ്ഔട്ട്"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:378
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 msgid "delete stroke"
 msgstr "സ്ട്രോക്ക് നീക്കം ചെയ്യുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:397
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:398
 msgid "Add/Edit TeX"
 msgstr "ടെക്സ് (TeX) ചേർക്കുക/തിരുത്തുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:399
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 msgid "Default Tool"
 msgstr "മൂല ഉപകരണം"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:401
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:402
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:14
 msgid "Select Linear PDF Text"
 msgstr "രേഖീയമായ പിഡിഎഫ് ടെക്സ്റ്റ് തിരഞ്ഞെടുക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Select PDF Text in Rectangle"
 msgstr "ദീർഘചതുരത്തിലെ പിഡിഎഫ് ടെക്സ്റ്റ് തിരഞ്ഞെടുക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:405
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 msgid "Setsquare"
 msgstr "സെറ്റ്സ്‌ക്വയർ"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Compass"
 msgstr "കോമ്പസ്"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:422
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
 msgid "Select Region"
 msgstr "മണ്ഡലം തിരഞ്ഞെടുക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:12
 msgid "Select Rectangle"
 msgstr "ദീർഘചതുരം തിരഞ്ഞെടുക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Select Multi-Layer Region"
 msgstr "അനേകം പാളികൾക്ക് മേൽ മണ്ഡലം തിരഞ്ഞെടുക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:430
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:431
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Select Multi-Layer Rectangle"
 msgstr "അനേകം പാളികൾക്ക് മേൽ ദീർഘചതുരം തിരഞ്ഞെടുക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 msgid "Select Object"
 msgstr "വസ്തു തിരഞ്ഞെടുക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:435
 msgid "Vertical Space"
 msgstr "കുത്തനെയുള്ള വ്യാപ്തി"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:436
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 msgid "Play Object"
 msgstr "വസ്തു പ്രവർത്തിപ്പിക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:442
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:443
 msgid "Record Audio / Stop Recording"
 msgstr "ഓഡിയോ റെക്കോർഡ് ചെയ്യുക/നിറുത്തുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:445
 msgid "Pause / Play"
 msgstr "നിറുത്തുക/തുടരുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:445
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 msgid "Stop"
 msgstr "നിര്‍ത്തുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:447
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:448
 msgid "Forward"
 msgstr "മുന്നോട്ട്"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:482
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Fill"
 msgstr "ഫിൽ"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 msgid "Fill Opacity"
 msgstr "ഫിൽ ഒപാസിറ്റി"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:486
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:487
 msgid "Very Fine"
 msgstr "വളരെ നേർത്ത"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:487
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Fine"
 msgstr "നേർത്ത"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:489
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:490
 msgid "Medium"
 msgstr "ഇടത്തരം"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:490
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
 msgid "Thick"
 msgstr "കനത്തിലുള്ളത്"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:492
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:493
 msgid "Very Thick"
 msgstr "വളരെ കനത്തിലുള്ള"
 
