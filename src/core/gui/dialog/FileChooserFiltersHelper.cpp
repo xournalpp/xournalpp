@@ -1,12 +1,16 @@
 #include "FileChooserFiltersHelper.h"
 
+#include "control/jobs/BaseExportJob.h"
+#include "util/MimeTypes.h"
 #include "util/i18n.h"
 
 namespace xoj {
-static void addMimeTypeFilter(GtkFileChooser* fc, const char* name, const char* mime) {
+static void addMimeTypeFilter(GtkFileChooser* fc, const char* name, const MimeType& mime) {
     GtkFileFilter* filterPdf = gtk_file_filter_new();
     gtk_file_filter_set_name(filterPdf, name);
-    gtk_file_filter_add_mime_type(filterPdf, mime);
+
+    mime.addToFilter(filterPdf);
+
     gtk_file_chooser_add_filter(fc, filterPdf);
 }
 
@@ -20,20 +24,22 @@ void addFilterAllFiles(GtkFileChooser* fc) {
 void addFilterSupported(GtkFileChooser* fc) {
     GtkFileFilter* filterSupported = gtk_file_filter_new();
     gtk_file_filter_set_name(filterSupported, _("Supported files"));
-    gtk_file_filter_add_mime_type(filterSupported, "application/x-xojpp");
-    gtk_file_filter_add_mime_type(filterSupported, "application/x-xopp");
-    gtk_file_filter_add_mime_type(filterSupported, "application/x-xopt");
-    gtk_file_filter_add_mime_type(filterSupported, "application/pdf");
+
+    xoj::Mime::XOJ.addToFilter(filterSupported);
+    xoj::Mime::XOPP.addToFilter(filterSupported);
+    xoj::Mime::XOPT.addToFilter(filterSupported);
+    xoj::Mime::PDF.addToFilter(filterSupported);
+
     gtk_file_filter_add_pattern(filterSupported, "*.moj");  // MrWriter
     gtk_file_chooser_add_filter(fc, filterSupported);
 }
 
-void addFilterPdf(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("PDF files"), "application/pdf"); }
-void addFilterXoj(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("Xournal files"), "application/x-xojpp"); }
-void addFilterXopp(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("Xournal++ files"), "application/x-xopp"); }
-void addFilterXopt(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("Xournal++ template"), "application/x-xopt"); }
-void addFilterSvg(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("SVG graphics"), "image/svg+xml"); }
-void addFilterPng(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("PNG graphics"), "image/png"); }
+void addFilterPdf(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("PDF files"), xoj::Mime::PDF); }
+void addFilterXoj(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("Xournal files"), xoj::Mime::XOJ); }
+void addFilterXopp(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("Xournal++ files"), xoj::Mime::XOPP); }
+void addFilterXopt(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("Xournal++ template"), xoj::Mime::XOPT); }
+void addFilterSvg(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("SVG graphics"), xoj::Mime::SVG); }
+void addFilterPng(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("PNG graphics"), xoj::Mime::PNG); }
 
 void addFilterImages(GtkFileChooser* fc) {
     GtkFileFilter* filter = gtk_file_filter_new();

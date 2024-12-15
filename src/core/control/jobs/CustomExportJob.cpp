@@ -13,11 +13,12 @@
 #include "model/Document.h"                    // for Document
 #include "pdf/base/XojPdfExport.h"             // for XojPdfExport
 #include "pdf/base/XojPdfExportFactory.h"      // for XojPdfExportFactory
-#include "util/PathUtil.h"                     // for clearExtensions
-#include "util/PopupWindowWrapper.h"           // for PopupWindowWrapper
-#include "util/Util.h"                         // for execInUiThread
-#include "util/XojMsgBox.h"                    // for XojMsgBox
-#include "util/i18n.h"                         // for _, FS, _F
+#include "util/MimeTypes.h"
+#include "util/PathUtil.h"            // for clearExtensions
+#include "util/PopupWindowWrapper.h"  // for PopupWindowWrapper
+#include "util/Util.h"                // for execInUiThread
+#include "util/XojMsgBox.h"           // for XojMsgBox
+#include "util/i18n.h"                // for _, FS, _F
 
 #include "ImageExport.h"  // for ImageExport, EXPORT_GR...
 #include "SaveJob.h"      // for SaveJob
@@ -26,10 +27,10 @@
 
 CustomExportJob::CustomExportJob(Control* control): BaseExportJob(control, _("Custom Export")) {
     // Supported filters
-    filters.insert({_("PDF files"), ExportType(".pdf", "application/pdf")});
-    filters.insert({_("PNG graphics"), ExportType(".png", "image/png")});
-    filters.insert({_("SVG graphics"), ExportType(".svg", "image/svg+xml")});
-    filters.insert({_("Xournal (Compatibility)"), ExportType(".xoj", "application/x-xojpp")});
+    filters.insert({_("PDF files"), xoj::Mime::PDF});
+    filters.insert({_("PNG graphics"), xoj::Mime::PNG});
+    filters.insert({_("SVG graphics"), xoj::Mime::SVG});
+    filters.insert({_("Xournal (Compatibility)"), xoj::Mime::XOJ});
 }
 
 CustomExportJob::~CustomExportJob() = default;
@@ -37,7 +38,7 @@ CustomExportJob::~CustomExportJob() = default;
 void CustomExportJob::addFilterToDialog(GtkFileChooser* dialog) {
     // Runs on every filter inside the filters map
     for (auto& filter: filters) {
-        addFileFilterToDialog(dialog, filter.first, filter.second.mimeType);
+        addFileFilterToDialog(dialog, filter.first, filter.second);
     }
 }
 
