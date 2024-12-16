@@ -43,6 +43,26 @@
     ${prefix}/lib/libpoppler-glib*.dylib
   </binary>
 
+  <!-- Lua-lgi and GObject-introspection dependency -->
+  <binary>
+    ${prefix}/lib/lua/5.4/lgi/corelgilua51.so
+  </binary>
+  <binary>
+    ${prefix}/lib/libgirepository*.dylib
+  </binary>
+  <data>
+    ${prefix}/share/lua/5.4/lgi.lua
+  </data>
+  <data>
+    ${prefix}/share/lua/5.4/lgi/*.lua
+  </data>
+  <data>
+    ${prefix}/share/lua/5.4/lgi/override/*.lua
+  </data>
+  <data>
+    ${prefix}/lib/girepository-1.0/*.typelib
+  </data>
+
   <!-- Translation filenames, one for each program or library that you
        want to copy in to the bundle. The "dest" attribute is
        optional, as usual. Bundler will find all translations of that
