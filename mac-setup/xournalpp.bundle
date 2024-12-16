@@ -57,6 +57,9 @@
     ${prefix}/share/lua/5.4/lgi/*.lua
   </data>
   <data>
+    ${prefix}/share/lua/5.4/lgi/override/*.lua
+  </data>
+  <data>
     ${prefix}/lib/girepository-1.0/*.typelib
   </data>
 
