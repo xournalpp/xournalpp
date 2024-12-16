@@ -28,6 +28,8 @@ void setupEnvironment() {
     auto imModuleFile = libPath / "gtk-3.0" / "3.0.0" / "immodules.cache";
     auto pixbufModuleFile = libPath / "gdk-pixbuf-2.0" / "2.10.0" / "loaders.cache";
 
+    auto typelibPath = libPath / "girepository-1.0";
+
     setenv("XDG_CONFIG_DIRS", xdgPath.string().c_str(), 1);
     setenv("XDG_DATA_DIRS", dataPath.string().c_str(), 1);
     setenv("GTK_DATA_PREFIX", base.string().c_str(), 1);
@@ -36,6 +38,9 @@ void setupEnvironment() {
 
     setenv("GTK_IM_MODULE_FILE", imModuleFile.string().c_str(), 0);
     setenv("GDK_PIXBUF_MODULE_FILE", pixbufModuleFile.string().c_str(), 0);
+
+    setenv("GI_TYPELIB_PATH", typelibPath.string().c_str(), 0);
+    setenv("LD_LIBRARY_PATH", libPath.string().c_str(), 0);
 
     auto environ = g_get_environ();
     const char* usedPixbufModuleFile = g_environ_getenv(environ, "GDK_PIXBUF_MODULE_FILE");
