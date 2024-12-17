@@ -315,7 +315,7 @@ TEST(ControlLoadHandler, testText) {
 
     EXPECT_EQ(Color(0xffff0000U), t1->getColor());
     EXPECT_EQ(Color(0xff3333CCU), t2->getColor());
-    EXPECT_EQ(Color(0x00f000U), t3->getColor());
+    EXPECT_EQ(Color(0xff00f000U), t3->getColor());
 }
 
 TEST(ControlLoadHandler, testTextZipped) {
@@ -343,7 +343,7 @@ TEST(ControlLoadHandler, testTextZipped) {
 
     EXPECT_EQ(Color(0xffff0000U), t1->getColor());
     EXPECT_EQ(Color(0xff3333CCU), t2->getColor());
-    EXPECT_EQ(Color(0x00f000U), t3->getColor());
+    EXPECT_EQ(Color(0xff00f000U), t3->getColor());
 }
 
 TEST(ControlLoadHandler, testImageZipped) {
@@ -458,7 +458,7 @@ TEST(ControlLoadHandler, testStrokeWidthRecovery) {
         auto* s = (Stroke*)elts[n].get();
         printf("Testing stroke %zu\n", n);
         EXPECT_EQ(ELEMENT_STROKE, s->getType());
-        EXPECT_EQ(Color(0x0000ff00), s->getColor());
+        EXPECT_EQ(Color(0xff00ff00), s->getColor());
         EXPECT_EQ(1.41, s->getWidth());
         auto pts = s->getPointVector();
         EXPECT_EQ(pts.size(), pressures.size());
