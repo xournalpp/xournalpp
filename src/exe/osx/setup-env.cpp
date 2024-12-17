@@ -30,6 +30,9 @@ void setupEnvironment() {
 
     auto typelibPath = libPath / "girepository-1.0";
 
+    std::string luaPath = dataPath.string() + "/lua/5.4/?.lua";
+    std::string luaCPath = libPath.string() + "/lua/5.4/?.so";
+
     setenv("XDG_CONFIG_DIRS", xdgPath.string().c_str(), 1);
     setenv("XDG_DATA_DIRS", dataPath.string().c_str(), 1);
     setenv("GTK_DATA_PREFIX", base.string().c_str(), 1);
@@ -42,9 +45,21 @@ void setupEnvironment() {
     setenv("GI_TYPELIB_PATH", typelibPath.string().c_str(), 0);
     setenv("LD_LIBRARY_PATH", libPath.string().c_str(), 0);
 
+    setenv("LUA_PATH", luaPath.c_str(), 0);
+    setenv("LUA_CPATH", luaCPath.c_str(), 0);
+
     auto environ = g_get_environ();
     const char* usedPixbufModuleFile = g_environ_getenv(environ, "GDK_PIXBUF_MODULE_FILE");
-    g_message("Continue with GDK_PIXBUF_MODULE_FILE = %s", usedPixbufModuleFile);
+    const char* usedTypelibPath = g_environ_getenv(environ, "GI_TYPELIB_PATH");
+    const char* usedLDLibraryPath = g_environ_getenv(environ, "LD_LIBRARY_PATH");
+    const char* usedLuaPath = g_environ_getenv(environ, "LUA_PATH");
+    const char* usedLuaCPath = g_environ_getenv(environ, "LUA_CPATH");
+    g_message("Continue with GDK_PIXBUF_MODULE_FILE = %s\n"
+              "GI_TYPELIB_PATH = %s\n"
+              "LD_LIBRARY_PATH = %s\n"
+              "LUA_PATH = %s\n"
+              "LUA_CPATH = %s",
+              usedPixbufModuleFile, usedTypelibPath, usedLDLibraryPath, usedLuaPath, usedLuaCPath);
 
     /**
      * set LANG and LC_MESSAGES in order to detect the default language
