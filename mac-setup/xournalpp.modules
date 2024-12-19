@@ -122,6 +122,15 @@
       <patch file="https://github.com/pavouk/lgi/pull/249.patch"
             strip="1"
       />
+      <patch file="https://github.com/pavouk/lgi/pull/331.patch"
+            strip="1"
+      />
+      <patch file="https://github.com/pavouk/lgi/pull/273.patch"
+            strip="1"
+      />
+      <patch file="https://github.com/pavouk/lgi/pull/313.patch"
+            strip="1"
+      />
     </branch>
     <dependencies>
       <dep package="lua"/>
