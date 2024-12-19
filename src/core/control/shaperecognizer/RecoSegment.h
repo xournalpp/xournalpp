@@ -21,7 +21,7 @@ struct RecoSegment final {
     /**
      * Find the geometry of a recognized segment
      */
-    void calcSegmentGeometry(const Point* pt, int start, int end, Inertia* s);
+    void calcSegmentGeometry(const std::vector<Point>& pt, int start, int end, Inertia* s);
 
     Stroke* stroke{nullptr};
     int startpt{0};

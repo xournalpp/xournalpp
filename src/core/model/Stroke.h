@@ -115,7 +115,7 @@ public:
     std::vector<Point> const& getPointVector() const;
     Point getPoint(size_t index) const;
     Point getPoint(PathParameter parameter) const;
-    const Point* getPoints() const;
+    const std::vector<Point>& getPoints() const;
 
     /**
      * @brief Replace the stroke's points by the ones in the provided vector (they will be copied).

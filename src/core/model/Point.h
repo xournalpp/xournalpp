@@ -10,7 +10,7 @@
  */
 
 #pragma once
-
+#include <vector>
 
 namespace xoj::util {
 template <class T>
@@ -53,7 +53,8 @@ public:
     double lineLengthTo(const Point& p) const;
 
     /**
-     * @brief Compute new Point in the direction from this to another Point.
+     * @brief Compute a new Point on the line between this Point and Point 
+     * \p p at a distance of length from this Point.
      * @param p The other Point.
      * @param length The line length or vector length.
      * @return The new Point.
@@ -61,7 +62,8 @@ public:
     Point lineTo(const Point& p, double length) const;
 
     /**
-     * @brief Compute new Point in the direction from this to another Point.
+     * @brief Compute a new Point on the line between this Point and Point 
+     * \p p that splits the line in the ratio of \p ratio.
      * @param p The other Point.
      * @param ratio The line length over the distance between this and the other Point p
      * @return The new Point.

@@ -34,9 +34,9 @@ private:
     auto tryRectangle() -> std::unique_ptr<Stroke>;
     // function Stroke* tryArrow(); removed after commit a3f7a251282dcfea8b4de695f28ce52bf2035da2
 
-    static void optimizePolygonal(const Point* pt, int nsides, int* breaks, Inertia* ss);
+    static void optimizePolygonal(const std::vector<Point>& pt, int nsides, int* breaks, Inertia* ss);
 
-    int findPolygonal(const Point* pt, int start, int end, int nsides, int* breaks, Inertia* ss);
+    int findPolygonal(const std::vector<Point>& pt, int start, int end, int nsides, int* breaks, Inertia* ss);
 
     static bool isStrokeLargeEnough(Stroke* stroke, double strokeMinSize);
 
