@@ -16,7 +16,7 @@ auto RecoSegment::calcEdgeIsect(RecoSegment* r2) const -> Point {
 /**
  * Find the geometry of a recognized segment
  */
-void RecoSegment::calcSegmentGeometry(const Point* pt, int start, int end, Inertia* s) {
+void RecoSegment::calcSegmentGeometry(const std::vector<Point>& pt, int start, int end, Inertia* s) {
     this->xcenter = s->centerX();
     this->ycenter = s->centerY();
     double a = s->xx();
