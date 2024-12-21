@@ -40,8 +40,28 @@
 
   <!-- Poppler -->
   <binary>
-    ${prefix}/lib/libpoppler-glib*.dynlib
+    ${prefix}/lib/libpoppler-glib*.dylib
   </binary>
+
+  <!-- Lua-lgi and GObject-introspection dependency -->
+  <binary>
+    ${prefix}/lib/lua/5.4/lgi/corelgilua51.so
+  </binary>
+  <binary>
+    ${prefix}/lib/libgirepository*.dylib
+  </binary>
+  <data>
+    ${prefix}/share/lua/5.4/lgi.lua
+  </data>
+  <data>
+    ${prefix}/share/lua/5.4/lgi/*.lua
+  </data>
+  <data>
+    ${prefix}/share/lua/5.4/lgi/override/*.lua
+  </data>
+  <data>
+    ${prefix}/lib/girepository-1.0/*.typelib
+  </data>
 
   <!-- Translation filenames, one for each program or library that you
        want to copy in to the bundle. The "dest" attribute is
@@ -67,10 +87,10 @@
   </data -->
 
   <!--
-    Infos on how to structure the .app-file can be found on 
+    Infos on how to structure the .app-file can be found on
     https://developer.apple.com/library/archive/documentation/CoreFoundation/Conceptual/CFBundles/BundleTypes/BundleTypes.html#//apple_ref/doc/uid/20001119-110730
   -->
-   
+
   <!-- Copy in the themes data. You may want to trim this to save space
        in your bundle. -->
   <data>
