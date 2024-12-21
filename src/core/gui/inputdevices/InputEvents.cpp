@@ -1,8 +1,6 @@
-//
-// Created by ulrich on 17.05.19.
-//
-
 #include "InputEvents.h"
+
+#include <gtk/gtk.h>
 
 #include "control/settings/Settings.h"       // for Settings
 #include "control/settings/SettingsEnums.h"  // for InputDeviceTypeOption
@@ -124,3 +122,9 @@ auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings) -> I
 
     return targetEvent;
 }
+
+KeyEvent::KeyEvent(GdkEvent* e):
+        keyval(gdk_key_event_get_keyval(e)),
+        state(static_cast<GdkModifierType>(gdk_event_get_modifier_state(e) & gtk_accelerator_get_default_mod_mask() &
+                                           ~gdk_key_event_get_consumed_modifiers(e))),
+        sourceEvent(e) {}
