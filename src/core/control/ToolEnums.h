@@ -21,11 +21,21 @@ enum ToolSize {
     TOOL_SIZE_MEDIUM,
     TOOL_SIZE_THICK,
     TOOL_SIZE_VERY_THICK,
+    TOOL_SIZE_CUSTOM,
     // None has to be at the end, because this enum is used as memory offset
     TOOL_SIZE_NONE
 };
 std::string toolSizeToString(ToolSize size);
 ToolSize toolSizeFromString(const std::string& size);
+
+enum CustomToolSizeFeature {
+    TOOL_SIZE_CUSTOM_NONE,
+    TOOL_SIZE_CUSTOM_PEN,
+    TOOL_SIZE_CUSTOM_HIGHLIGHTER,
+    TOOL_SIZE_CUSTOM_ERASER,
+};
+std::string customToolSizeFeatureToString(CustomToolSizeFeature feature);
+CustomToolSizeFeature customToolSizeFeatureFromString(const std::string& feature);
 
 
 enum DrawingType {
