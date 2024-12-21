@@ -37,22 +37,35 @@ add_subdirectory(util)
 add_subdirectory(core)
 
 ##############################
+# GResources
+##############################
+
+find_program(GLIB_COMPILE_RESOURCES NAMES glib-compile-resources REQUIRED)
+# GResource resource file and output path
+set (resource_file "${CMAKE_SOURCE_DIR}/xournalpp.gresource.xml")
+set (output_cpp "${CMAKE_CURRENT_BINARY_DIR}/GResources.cpp")
+# Command to compile the resources
+add_custom_command (
+	OUTPUT ${output_cpp}
+	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+	COMMAND ${GLIB_COMPILE_RESOURCES} --generate-source --target=${output_cpp} ${resource_file}
+  MAIN_DEPENDENCY ${resource_file}
+  DEPENDS ${CMAKE_SOURCE_DIR}/gtk/help-overlay.ui
+)
+add_custom_target(xournalpp-gresources DEPENDS ${output_cpp})
+
+
+##############################
 # xournalpp main program
 ##############################
 
-
-add_executable(xournalpp exe/Xournalpp.cpp)
+add_executable(xournalpp exe/Xournalpp.cpp ${output_cpp})
+add_dependencies(xournalpp xournalpp-gresources)
 target_link_libraries(xournalpp PRIVATE xoj::core xoj::util)
 set_target_properties(xournalpp PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
         MACOSX_BUNDLE $<IF:$<PLATFORM_ID:Darwin>,TRUE,${CMAKE_MACOSX_BUNDLE}>
         WIN32_EXECUTABLE $<IF:$<PLATFORM_ID:Windows>,TRUE,${CMAKE_WIN32_EXECUTABLE}>
         )
-
-###############################
-# Generate icons
-# Todo(fabian): move this into an own windows specific cmake script
-# e.g. exe/win32/CMakeLists.txt
-###############################
 
 ###############################
 # Add MacOS specific files
@@ -66,6 +79,12 @@ if (APPLE)
   target_sources(xournalpp PRIVATE ${xournalpp-sources-osx})
   target_include_directories(xournalpp PRIVATE exe)
 endif()
+
+###############################
+# Generate icons
+# Todo(fabian): move this into an own windows specific cmake script
+# e.g. exe/win32/CMakeLists.txt
+###############################
 
 if (WIN32)
   # generate .ico from .png
