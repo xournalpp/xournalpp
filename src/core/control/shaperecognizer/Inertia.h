@@ -10,6 +10,7 @@
  */
 
 #pragma once
+#include <vector>
 
 class Point;
 
@@ -34,13 +35,13 @@ public:
     double getMass() const;
 
     void increase(Point p1, Point p2, int coef);
-    void calc(const Point* pt, int start, int end);
+    void calc(const std::vector<Point>& pt, int start, int end);
 
 private:
     double mass{};
-    double sx{};
-    double sy{};
-    double sxx{};
-    double sxy{};
-    double syy{};
+    double sx{};    // sum of x
+    double sy{};    // sum of y
+    double sxx{};   // sum of x^2
+    double sxy{};   // sum of x*y
+    double syy{};   // sum of y^2
 };

@@ -13,7 +13,7 @@ auto Point::lineLengthTo(const Point& p) const -> double { return std::hypot(thi
 auto Point::lineTo(const Point& p, double length) const -> Point { return relativeLineTo(p, length / lineLengthTo(p)); }
 
 auto Point::relativeLineTo(const Point& p, const double ratio) const -> Point {
-    return Point(x + ratio * (p.x - x), y + ratio * (p.y - y), z + ratio * (p.z - z));
+    return Point(x + ratio * (p.x - x), y + ratio * (p.y - y));
 }
 
 auto Point::equalsPos(const Point& p) const -> bool { return this->x == p.x && this->y == p.y; }
