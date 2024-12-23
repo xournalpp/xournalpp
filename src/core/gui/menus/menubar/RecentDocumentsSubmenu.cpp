@@ -145,6 +145,14 @@ RecentDocumentsSubmenu::~RecentDocumentsSubmenu() {
     }
 }
 
+void RecentDocumentsSubmenu::updateXoppFile(){
+    auto fileList = RecentManager::getRecentFiles();
+
+    xoppFiles.clear();
+    std::transform(fileList.recentXoppFiles.begin(), fileList.recentXoppFiles.end(), std::back_inserter(xoppFiles),
+                   [](auto& info) { return Util::fromUri(gtk_recent_info_get_uri(info.get())).value(); });
+}
+
 void RecentDocumentsSubmenu::updateMenu() {
     auto fileList = RecentManager::getRecentFiles();
 
