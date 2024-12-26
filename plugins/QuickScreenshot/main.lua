@@ -85,7 +85,7 @@ function Go()
   -- installed. Then a screenshot is made with maim and saved to the
   -- clipboard, skipping all other tools
   if existsUtility("maim") and existsUtility("xclip") then
-    os.execute("maim -s | xclip -selection clipboard -t image/png")
+    os.execute("maim -s | xclip -selection clipboard -t image/png &")
     return
   end
   -- This becomes true if at least one screenshot
