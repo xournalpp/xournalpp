@@ -28,8 +28,8 @@ constexpr auto WILDCARD_TIME = "time";  ///< current time - Deprecated: prefer u
 
 class SaveNameUtils {
 public:
-    static std::string parseFilenameFromWildcardString(const std::string& wildcardString, const fs::path& defaultFilePath);
+    static std::string parseFilenameFromWildcardString(const std::string& wildcardString, const fs::path& PdfPath, const fs::path& FilePath);
 
 private:
-    static std::string parseWildcard(const std::string& wildcard, const fs::path& defaultFilePath);
+    static std::string parseWildcard(const std::string& wildcard, const fs::path& PdfPath, const fs::path& FilePath);
 };
