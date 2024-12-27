@@ -152,9 +152,9 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
             return p;
         }
     } else if (!pdfFilepath.empty()) {
-        wildcardString = SaveNameUtils::parseFilenameFromWildcardString(defaultPdfName, this->pdfFilepath.filename());
+        wildcardString = SaveNameUtils::parseFilenameFromWildcardString(defaultPdfName, this->pdfFilepath.filename(), this->filepath.filename());
     } else if (!filepath.empty()) {
-        wildcardString = SaveNameUtils::parseFilenameFromWildcardString(defaultPdfName, this->filepath.filename());
+        wildcardString = SaveNameUtils::parseFilenameFromWildcardString(defaultPdfName, this->filepath.filename(), this->filepath.filename());
     }
 
     auto format_str = wildcardString.empty() ? defaultSaveName : wildcardString;

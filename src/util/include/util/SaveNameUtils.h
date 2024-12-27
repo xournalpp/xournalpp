@@ -19,7 +19,10 @@ constexpr auto DEFAULT_WILDCARD_START = "%{";
 constexpr auto DEFAULT_WILDCARD_END = "}";
 
 // wildcard options
-constexpr auto WILDCARD_NAME = "name";  ///< default store name, e.g. original pdf name
+constexpr auto WILDCARD_PDF_NAME = "name";  ///< default store name, e.g. original pdf name
+
+constexpr auto  WILDCARD_FILE_NAME = "file";  ///< name of the file itself
+
 constexpr auto WILDCARD_DATE = "date";  ///< current date - Deprecated: prefer using %F instead of %{date}
 constexpr auto WILDCARD_TIME = "time";  ///< current time - Deprecated: prefer using %X instead of %{time}
 
