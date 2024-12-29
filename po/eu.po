@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-13 10:58+0000\n"
-"PO-Revision-Date: 2024-12-15 04:26\n"
+"PO-Revision-Date: 2024-12-29 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -1396,7 +1396,7 @@ msgstr "Baztertu dokumentu bakarra"
 
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:165
 msgid "Copy current page"
-msgstr ""
+msgstr "Kopiatu uneko orria"
 
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
 msgid "Copy current background"
@@ -3156,39 +3156,39 @@ msgstr "Globala"
 
 #: ../ui/settings.glade:3278
 msgid "Recolor Drawing Area (might introduce lags when moving selections)"
-msgstr ""
+msgstr "Koloreztatu marrazketa-eremua (atzerapenak sor ditzake hautaketak mugitzean)"
 
 #: ../ui/settings.glade:3283
 msgid "Recolors the drawing area so that white regions get the dark color and black regions get the light color. Other colors are interpolated accordingly."
-msgstr ""
+msgstr "Marrazki-eremua berriro koloreztatzen du, eskualde zuriek kolore iluna eta beltzek kolore argia izan dezaten. Beste kolore batzuk horren arabera interpolatzen dira."
 
 #: ../ui/settings.glade:3293
 msgid "Recolor Previews in the Sidebar"
-msgstr ""
+msgstr "Koloreztatu aurrebistak alboko barran"
 
 #: ../ui/settings.glade:3298
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) so that white regions get the dark color and black regions get the light color. Other colors are interpolated accordingly."
-msgstr ""
+msgstr "Alboko barrako aurrebistak koloreztatzen ditu (Orria/Geruzaren aurrebista), eskualde zuriek kolore iluna eta beltzek kolore argia izan dezaten. Beste kolore batzuk horren arabera interpolatzen dira."
 
 #: ../ui/settings.glade:3312
 msgid "The color black regions are translated to"
-msgstr ""
+msgstr "Kolore beltzeko eskualdeak itzultzen dira"
 
 #: ../ui/settings.glade:3326
 msgid "The color white regions are translated to"
-msgstr ""
+msgstr "Kolore zuriko eskualdeak itzultzen dira"
 
 #: ../ui/settings.glade:3341
 msgid "Dark Color"
-msgstr ""
+msgstr "Kolore Iluna"
 
 #: ../ui/settings.glade:3355
 msgid "Light Color"
-msgstr ""
+msgstr "Kolore argia"
 
 #: ../ui/settings.glade:3368
 msgid "Recoloring / Inverting colors"
-msgstr ""
+msgstr "Koloreak berritzea / Koloreak alderantzikatzea"
 
 #: ../ui/settings.glade:3400
 msgid "Cursor icon for pen"
@@ -4313,7 +4313,7 @@ msgstr "tableta;Wacom;arkatz bidezko sarrera;PDF oharpena;markup"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:8
 msgid "Xournalpp Developers"
-msgstr ""
+msgstr "Xournalpp Garatzaileak"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:10
 msgid "Xournal++ is a hand note-taking software written in C++ with the target of flexibility, functionality and speed. Stroke recognizer and other parts are based on Xournal Code, which you can find at sourceforge. It supports GNU/Linux (e.g. Ubuntu, Debian, Arch, SUSE), macOS and Windows. Supports pen input from devices such as Wacom Tablets."

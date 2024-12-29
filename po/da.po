@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-13 10:58+0000\n"
-"PO-Revision-Date: 2024-12-15 04:26\n"
+"PO-Revision-Date: 2024-12-29 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Danish\n"
 "Language: da_DK\n"
@@ -25,19 +25,19 @@ msgstr "Lydmappen er ikke indstillet eller ugyldig! Optagelse virker ikke!\n"
 
 #: ../src/core/control/Control.cpp:229
 msgid "Filesystem error: {1}"
-msgstr ""
+msgstr "Filsystem fejl: {1}"
 
 #: ../src/core/control/Control.cpp:241
 msgid "Could not remove old autosave file \"{1}\": {2}"
-msgstr ""
+msgstr "Kunne ikke fjerne den gamle autosave fil \"{1}:\"{2}"
 
 #: ../src/core/control/Control.cpp:561
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
-msgstr ""
+msgstr "Du slettede den aktive værktøjslinje. Skifter tilbage til standardværktøjslinjen."
 
 #: ../src/core/control/Control.cpp:581
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
-msgstr ""
+msgstr "Værktøjslinje konfigurationen \"{1}\" er foruddefineret, vil du oprette en kopi til at redigere?"
 
 #: ../src/core/control/Control.cpp:584 ../src/core/control/Control.cpp:1554
 msgid "Yes"
@@ -81,11 +81,11 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:866
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "Ingen PDF-sider tilgængelige til at tilføje, Du skal muligvis genåbne dokumentet først."
 
 #: ../src/core/control/Control.cpp:880
 msgid "Unable to retrieve pdf page."
-msgstr ""
+msgstr "Kan ikke hente PDF-side."
 
 #: ../src/core/control/Control.cpp:1479
 msgid "Do not open Autosave files. They may will be overwritten!\n"
@@ -97,11 +97,11 @@ msgstr "Åben ikke autosave filer. De kan blive overskrevet!\n"
 
 #: ../src/core/control/Control.cpp:1499
 msgid "file: {1}"
-msgstr ""
+msgstr "Fil: {1}"
 
 #: ../src/core/control/Control.cpp:1531
 msgid "Error opening file \"{1}\""
-msgstr ""
+msgstr "Fejl ved åbning af filen \"{1}\""
 
 #: ../src/core/control/Control.cpp:1556
 msgid "File version mismatch"
@@ -109,7 +109,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:1557
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "Filen, der indlæses, har en filformatversion, der er nyere end den, der i øjeblikket understøttes af denne version af Xournal++, så den indlæses måske ikke korrekt. Åbn alligevel?"
 
 #: ../src/core/control/Control.cpp:1580
 msgid "Error reading PDF file \"{1}\"\n"
@@ -118,12 +118,13 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:1701
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "Den vedhæftede baggrundsfil kunne ikke findes. Den er måske blevet flyttet, omdøbt eller slettet."
 
 #: ../src/core/control/Control.cpp:1704
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
-msgstr ""
+msgstr "Baggrundsfilen \"{1}\" kunne ikke findes. Den er måske blevet flyttet, omdøbt eller slettet.\n"
+"Den blev sidst set på: \"{2}\""
 
 #: ../src/core/control/Control.cpp:1714
 msgid "\n"
@@ -133,15 +134,15 @@ msgstr "\n"
 
 #: ../src/core/control/Control.cpp:1719
 msgid "Select another PDF"
-msgstr ""
+msgstr "Vælg en anden PDF"
 
 #: ../src/core/control/Control.cpp:1720
 msgid "Remove PDF Background"
-msgstr ""
+msgstr "Fjern PDF-baggrund"
 
 #: ../src/core/control/Control.cpp:1724
 msgid "Use proposed PDF"
-msgstr ""
+msgstr "Brug foreslået PDF"
 
 #: ../src/core/control/Control.cpp:1727
 msgid "Missing PDF background file"
@@ -158,7 +159,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:1903
 msgid "Unsaved Document"
-msgstr ""
+msgstr "Ikke gemt dokument"
 
 #: ../src/core/control/Control.cpp:2052
 msgid "Document file was removed."
@@ -166,17 +167,17 @@ msgstr "Dokumentfilen blev fjernet."
 
 #: ../src/core/control/Control.cpp:2052
 msgid "This document is not saved yet."
-msgstr ""
+msgstr "Dette dokument er ikke gemt endnu."
 
 #: ../src/core/control/Control.cpp:2054
 msgid "Save As..."
-msgstr ""
+msgstr "Gem som..."
 
 #: ../src/core/control/Control.cpp:2054 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:80
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:286
 msgid "Save"
-msgstr ""
+msgstr "Gem"
 
 #: ../src/core/control/Control.cpp:2057
 msgid "Discard"
@@ -190,47 +191,47 @@ msgstr ""
 #: ../src/core/control/XournalMain.cpp:278
 #: ../src/core/control/XournalMain.cpp:284
 msgid "Error: {1}"
-msgstr ""
+msgstr "Fejl: {1}"
 
 #: ../src/core/control/CrashHandler.cpp:42
 msgid "Successfully saved document to \"{1}\""
-msgstr ""
+msgstr "Dokumentet gemt til \"{1}\""
 
 #: ../src/core/control/DeviceListHelper.cpp:95
 msgid "mouse"
-msgstr ""
+msgstr "mus"
 
 #: ../src/core/control/DeviceListHelper.cpp:97
 msgid "pen"
-msgstr ""
+msgstr "pen"
 
 #: ../src/core/control/DeviceListHelper.cpp:99
 msgid "eraser"
-msgstr ""
+msgstr "viskelæder"
 
 #: ../src/core/control/DeviceListHelper.cpp:101
 msgid "cursor"
-msgstr ""
+msgstr "markør"
 
 #: ../src/core/control/DeviceListHelper.cpp:104
 msgid "keyboard"
-msgstr ""
+msgstr "tastatur"
 
 #: ../src/core/control/DeviceListHelper.cpp:106
 msgid "touchscreen"
-msgstr ""
+msgstr "berøringsskærm"
 
 #: ../src/core/control/DeviceListHelper.cpp:108
 msgid "touchpad"
-msgstr ""
+msgstr "berøringsfelt"
 
 #: ../src/core/control/DeviceListHelper.cpp:111
 msgid "trackpoint"
-msgstr ""
+msgstr "sporpunkt"
 
 #: ../src/core/control/DeviceListHelper.cpp:113
 msgid "tablet pad"
-msgstr ""
+msgstr "tablet-berøringsplade"
 
 #: ../src/core/control/ExportHelper.cpp:78
 msgid "Image file successfully created"
@@ -238,7 +239,7 @@ msgstr "Billedfil blev oprettet"
 
 #: ../src/core/control/ExportHelper.cpp:120
 msgid "PDF file successfully created"
-msgstr ""
+msgstr "PDF blev korrekt oprettet"
 
 #: ../src/core/control/LatexController.cpp:79
 msgid "Global template file does not exist. Please check your settings."
@@ -254,7 +255,7 @@ msgstr "Global skabelonfil er ikke en almindelig fil. Tjek venligst dine indstil
 
 #: ../src/core/control/LatexController.cpp:236
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "Latex generering stødte på en fejl: {1} (exit-kode: {2})"
 
 #: ../src/core/control/LatexController.cpp:302
 msgid "Could not load LaTeX PDF file: {1}"
@@ -268,16 +269,17 @@ msgstr "Kunne ikke indlæse LaTeX PDF-fil"
 #: ../src/core/control/xojfile/LoadHandler.cpp:471
 #: ../src/core/control/xojfile/LoadHandler.cpp:487
 msgid "Error reading PDF: {1}"
-msgstr ""
+msgstr "Fejl ved læsning af PDF: {1}"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:271
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
-msgstr ""
+msgstr "Du har ingen PDF-sider at vælge fra. Annuller operation.\n"
+"Vælg venligst en anden baggrundstype: Menu \"Journal\" → \"Konfigurer sideskabelon\"."
 
 #: ../src/core/control/PdfCache.cpp:124
 msgid "PDF background missing"
-msgstr ""
+msgstr "PDF baggrund mangler"
 
 #: ../src/core/control/PrintHandler.cpp:121
 msgid "Running print operation failed with {1}"
@@ -285,7 +287,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:123
 msgid "Failed to delete file: {1}"
-msgstr ""
+msgstr "Mislykkedes at slette fil: {1}"
 
 #: ../src/core/control/XournalMain.cpp:125
 msgid "Please delete the file manually"
@@ -1034,7 +1036,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:33
 msgid "Xournal++ files"
-msgstr ""
+msgstr "Xournal++ filer"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:119
@@ -1085,17 +1087,17 @@ msgstr ""
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:115
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:79
 msgid "Save File"
-msgstr ""
+msgstr "Gem fil"
 
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:115
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:80
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:19
 msgid "_Cancel"
-msgstr ""
+msgstr "_Annullér"
 
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
 msgid "_Save"
-msgstr ""
+msgstr "_Gem"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:28
 msgid "default enabled"
@@ -1236,7 +1238,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:107
 msgid "This image could not be loaded. Error message: {1}"
-msgstr ""
+msgstr "Dette billede kunne ikke indlæses. Fejlbesked: {1}"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:113
 msgid "This image could not be loaded."
