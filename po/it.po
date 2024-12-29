@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-07 13:29+0000\n"
-"PO-Revision-Date: 2024-12-08 18:11\n"
+"PO-Revision-Date: 2024-12-29 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -704,7 +704,7 @@ msgstr "Impossibile caricare l'immagine"
 
 #: ../src/core/control/tools/ImageHandler.cpp:74
 msgid "Could not determine image size!"
-msgstr ""
+msgstr "Impossibile determinare la dimensione dell'immagine!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:132
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1791,7 +1791,7 @@ msgstr "Sfondo Pagina modificato"
 
 #: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
 msgid "Page size changed"
-msgstr ""
+msgstr "Dimensione pagina modificata"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"

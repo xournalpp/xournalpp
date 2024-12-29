@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-07 13:29+0000\n"
-"PO-Revision-Date: 2024-12-08 18:11\n"
+"PO-Revision-Date: 2024-12-29 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -703,7 +703,7 @@ msgstr "载入图像失败"
 
 #: ../src/core/control/tools/ImageHandler.cpp:74
 msgid "Could not determine image size!"
-msgstr ""
+msgstr "无法确定图像大小！"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:132
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1657,15 +1657,15 @@ msgstr "文档未加载！({1}), {2}"
 
 #: ../src/core/model/Image.cpp:163 ../src/core/model/Image.cpp:173
 msgid "Error: "
-msgstr ""
+msgstr "错误："
 
 #: ../src/core/model/Image.cpp:167 ../src/core/model/Image.cpp:177
 msgid "Unrecoverable error"
-msgstr ""
+msgstr "不可恢复的错误"
 
 #: ../src/core/model/Image.cpp:173 ../src/core/model/Image.cpp:177
 msgid "Failed to close image stream"
-msgstr ""
+msgstr "无法关闭图片流"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:122
 msgid "Error while finalizing the PDF Cairo surface"
