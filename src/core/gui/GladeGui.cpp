@@ -29,8 +29,13 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const std::string& glade, c
             msg += error->message;
             g_error_free(error);
         }
-        XojMsgBox::showErrorAndQuit(msg, -1);
+        //XojMsgBox::showErrorAndQuit(msg, -1);
+       // g_error("%s", msg.c_str());
     }
+
+    //if (!this->window) {
+      //  g_error("Failed to load window from Glade file: %s", mainWnd.c_str());
+    //}
 
     this->window = get(mainWnd);
 }

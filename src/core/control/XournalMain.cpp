@@ -30,7 +30,8 @@
 #include "control/xojfile/LoadHandler.h"     // for LoadHandler
 #include "control/xojfile/SaveHandler.h"     // for SaveHandler
 #include "gui/GladeSearchpath.h"             // for GladeSearchpath
-#include "gui/MainWindow.h"                  // for MainWindow
+#include "gui/HomeWindow.h"                  // for MainWindow
+#include "gui/MainWindow.h"                  // Add this line to include the definition of MainWindow
 #include "gui/XournalView.h"                 // for XournalView
 #include "model/Document.h"                  // for Document
 #include "undo/EmergencySaveRestore.h"       // for EmergencySaveRestore
@@ -346,6 +347,7 @@ struct XournalMainPrivate {
     std::unique_ptr<GladeSearchpath> gladePath;
     std::unique_ptr<Control> control;
     std::unique_ptr<MainWindow> win;
+    std::unique_ptr<HomeWindow> homeWin;
 };
 using XMPtr = XournalMainPrivate*;
 
@@ -466,6 +468,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
     app_data->gladePath = std::make_unique<GladeSearchpath>();
     initResourcePath(app_data->gladePath.get(), "ui/about.glade");
     initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
+    initResourcePath(app_data->gladePath.get(), "ui/homepage.glade", false);
 
     app_data->control = std::make_unique<Control>(application, app_data->gladePath.get(), app_data->disableAudio);
 
@@ -487,9 +490,17 @@ void on_startup(GApplication* application, XMPtr app_data) {
     }
 
     gtk_application_set_menubar(GTK_APPLICATION(application), app_data->win->getMenuModel());
-    // Do we want stuff in gtk_application_set_app_menu?
 
-    app_data->win->show(nullptr);
+    // app_data->win->show(nullptr);
+    //  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //  Both windows are being displayed. Then, in the HomeWindow handler, when clicking the New Document button,
+    // the HomeWindow will be destroyed.
+    app_data->homeWin = std::make_unique<HomeWindow>(app_data->gladePath.get(), app_data->control.get(),
+                                                     GTK_APPLICATION(application), app_data->win.get());
+    app_data->control->initHomeWindow(app_data->homeWin.get());
+
+    app_data->homeWin->show(nullptr);
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     fs::path p;
     if (app_data->optFilename) {
