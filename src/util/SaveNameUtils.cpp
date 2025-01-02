@@ -4,7 +4,8 @@
 #include "util/PathUtil.h"    // for clearExtensions
 
 
-auto SaveNameUtils::parseFilenameFromWildcardString(const std::string& wildcardString, const fs::path& PdfPath, const fs::path& FilePath) -> std::string {
+auto SaveNameUtils::parseFilenameFromWildcardString(const std::string& wildcardString, const fs::path& PdfPath,
+                                                    const fs::path& FilePath) -> std::string {
     std::string saveString = wildcardString;
     size_t pos = saveString.find(DEFAULT_WILDCARD_START);
 
@@ -15,7 +16,8 @@ auto SaveNameUtils::parseFilenameFromWildcardString(const std::string& wildcardS
         if (endPos == std::string::npos) {
             break;
         }
-        std::string parsedWildcard = parseWildcard(saveString.substr(pos + wildcardStartLength, endPos - pos - wildcardStartLength), PdfPath, FilePath);
+        std::string parsedWildcard = parseWildcard(
+                saveString.substr(pos + wildcardStartLength, endPos - pos - wildcardStartLength), PdfPath, FilePath);
         saveString.replace(pos, endPos + 1 - pos, parsedWildcard);
         pos += parsedWildcard.size();
         pos = saveString.find(DEFAULT_WILDCARD_START, pos);
@@ -24,7 +26,8 @@ auto SaveNameUtils::parseFilenameFromWildcardString(const std::string& wildcardS
     return saveString;
 }
 
-auto SaveNameUtils::parseWildcard(const std::string& wildcard, const fs::path& PdfPath, const fs::path& FilePath) -> std::string {
+auto SaveNameUtils::parseWildcard(const std::string& wildcard, const fs::path& PdfPath,
+                                  const fs::path& FilePath) -> std::string {
     if (wildcard == WILDCARD_PDF_NAME) {
         fs::path path = PdfPath;
         Util::clearExtensions(path, ".pdf");
