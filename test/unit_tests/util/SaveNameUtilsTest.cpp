@@ -15,11 +15,14 @@
 #include "util/SaveNameUtils.h"
 
 TEST(SaveNameUtils, testWildcardExpansion) {
-    EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("", "defaultpath"), "");
-    EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("%{name}}%{name}", "x"), "x}x");
-    EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("%{name}", "defaultpath.pdf"), "defaultpath");
-    EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("%{", "defaultpath"), "%{");
-    EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("%{name%{name}}x", ""), "}x");
-    EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("\\%\\{name%{name}}x", ""), "\\%\\{name}x");
-    EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("%{name}", "      %{name}"), "      %{name}");
+    EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("", "defaultpath", ""), "");
+    EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("%{name}}%{name}", "x", ""), "x}x");
+    EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("%{name}", "defaultpath.pdf", ""), "defaultpath");
+
+    EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("%{file}", "pdfpath.pdf", "filepath.xopp"), "filepath");
+
+    EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("%{", "defaultpath", ""), "%{");
+    EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("%{name%{name}}x", "", ""), "}x");
+    EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("\\%\\{name%{name}}x", "", ""), "\\%\\{name}x");
+    EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("%{name}", "      %{name}", ""), "      %{name}");
 }

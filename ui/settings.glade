@@ -706,7 +706,8 @@ Illegal characters are replaced with "_"</property>
                                           <object class="GtkLabel" id="label7">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
-                                            <property name="label" translatable="yes">%{name}	The name of the exported document
+                                            <property name="label" translatable="yes">%{name}	The filename (if any) of the PDF background
+%file			The saved filename of the file
 %a			Abbreviated weekday name (e.g. Thu)
 %A			Full weekday name (e.g. Thursday)
 %b			Abbreviated month name (e.g. Aug)
