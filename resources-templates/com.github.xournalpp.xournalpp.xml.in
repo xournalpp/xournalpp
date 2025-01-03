@@ -2,7 +2,6 @@
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
 	<mime-type type="application/x-xojpp">
 		<comment>Xournal note file</comment>
-  		<comment>Xournal note file</comment>
 		<comment xml:lang="ar">ملف ملاحظات Xournal</comment>
 		<comment xml:lang="be">Файл нататак Xournal</comment>
 		<comment xml:lang="bg">Xournal файл с бележки</comment>
