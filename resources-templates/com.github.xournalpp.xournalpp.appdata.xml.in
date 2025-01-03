@@ -86,6 +86,206 @@
       <li>Multi language support (over 20 languages supported)</li>
       <li>Plugins using Lua scripting</li>
     </ul>
+    <p xml:lang="ar">
+      Xournal++ هو برنامج لتدوين الملاحظات اليدوية يتميز بالمرونة والعملية والسرعة.
+      يعمل على أنظمة GNU/Linux وmacOS وWindows.
+      يدعم Xournal++ إدخال القلم من أجهزة مثل أجهزة Wacom اللوحية.
+    </p>
+    <p xml:lang="be">
+      Xournal++ - гэта гібкае, функцыянальнае і хуткае праграмнае забеспячэнне для ручных нататак.
+      Ён працуе на GNU/Linux, macOS і Windows.
+      Xournal++ падтрымлівае ўвод пяром з такіх прылад, як планшэты Wacom.
+    </p>
+    <p xml:lang="bg">
+      Xournal++ е софтуер за ръчно водене на бележки, който е гъвкав, функционален и бърз.
+      Работи на GNU/Linux, macOS и Windows.
+      Xournal++ поддържа въвеждане с писалка от устройства като таблети Wacom.
+    </p>
+    <p xml:lang="ca">
+      Xournal++ és un programari per prendre notes manualment flexible, funcional i ràpid.
+      S'executa a GNU/Linux, macOS i Windows.
+      Xournal++ admet l'entrada de llapis des de dispositius com ara tauletes Wacom.
+    </p>
+    <p xml:lang="cs">
+      Xournal++ je software pro ruční psaní poznámek, který je flexibilní, funkční a rychlý.
+      Běží na GNU/Linux, macOS a Windows.
+      Xournal++ podporuje vstup perem ze zařízení, jako jsou tablety Wacom.
+    </p>
+    <p xml:lang="de">
+      Xournal++ ist eine flexible, funktionale und schnelle Software zum handschriftlichen Notieren.
+      Sie läuft unter GNU/Linux, macOS und Windows.
+      Xournal++ unterstützt die Stifteingabe von Geräten wie Wacom-Tablets.
+    </p>
+    <p xml:lang="el">
+      Το Xournal++ είναι ένα λογισμικό χειροκίνητης λήψης σημειώσεων που είναι ευέλικτο, λειτουργικό και γρήγορο.
+      Λειτουργεί σε GNU/Linux, macOS και Windows.
+      Το Xournal++ υποστηρίζει την εισαγωγή πένας από συσκευές όπως τα tablet Wacom.
+    </p>
+    <p xml:lang="en_AU">
+      Xournal++ is a hand note-taking software that is flexible, functional, and fast.
+      It runs on GNU/Linux, macOS, and Windows.
+      Xournal++ supports pen input from devices such as Wacom tablets.
+    </p>
+    <p xml:lang="en_GB">
+      Xournal++ is a hand note-taking software that is flexible, functional, and fast.
+      It runs on GNU/Linux, macOS, and Windows.
+      Xournal++ supports pen input from devices such as Wacom tablets.
+    </p>
+    <p xml:lang="en">
+      Xournal++ is a hand note-taking software that is flexible, functional, and fast.
+      It runs on GNU/Linux, macOS, and Windows.
+      Xournal++ supports pen input from devices such as Wacom tablets.
+    </p>
+    <p xml:lang="es">
+      Xournal++ es un software para tomar notas a mano que es flexible, funcional y rápido.
+      Funciona en GNU/Linux, macOS y Windows.
+      Xournal++ admite la entrada de datos con lápiz desde dispositivos como tabletas Wacom.
+    </p>
+    <p xml:lang="fi">
+      Xournal++ on käsin muistiinpanojen ohjelmisto, joka on joustava, toimiva ja nopea.
+      Se toimii GNU/Linuxissa, macOS:ssä ja Windowsissa.
+      Xournal++ tukee kynäsyöttöä laitteista, kuten Wacom-tableteista.
+    </p>
+    <p xml:lang="fr">
+      Xournal++ est un logiciel de prise de notes manuelles flexible, fonctionnel et rapide.
+      Il fonctionne sur GNU/Linux, macOS et Windows.
+      Xournal++ prend en charge la saisie au stylet à partir d'appareils tels que les tablettes Wacom.
+    </p>
+    <p xml:lang="he">
+      Xournal++ היא תוכנה לרישום הערות ידנית שהיא גמישה, פונקציונלית ומהירה.
+      זה פועל על GNU/Linux, macOS ו-Windows.
+      Xournal++ תומך בהזנת עט ממכשירים כגון טאבלטים של Wacom.
+    </p>
+    <p xml:lang="hr">
+      Xournal++ je softver za ručno bilježenje koji je fleksibilan, funkcionalan i brz.
+      Radi na GNU/Linuxu, macOS-u i Windowsima.
+      Xournal++ podržava unos olovkom s uređaja kao što su Wacom tableti.
+    </p>
+    <p xml:lang="hu">
+      A Xournal++ egy kézi jegyzetkészítő szoftver, amely rugalmas, funkcionális és gyors.
+      GNU/Linuxon, macOS-en és Windowson fut.
+      A Xournal++ támogatja a tollbevitelt olyan eszközökről, mint a Wacom táblagépek.
+    </p>
+    <p xml:lang="id">
+      Xournal++ adalah perangkat lunak pencatatan tangan yang fleksibel, fungsional, dan cepat.
+      Perangkat lunak ini berjalan pada GNU/Linux, macOS, dan Windows.
+      Xournal++ mendukung input pena dari perangkat seperti tablet Wacom.
+    </p>
+    <p xml:lang="is">
+      Xournal++ er glósuhugbúnaður sem er sveigjanlegur, hagnýtur og fljótur.
+      Það keyrir á GNU/Linux, macOS og Windows.
+      Xournal++ styður pennainntak frá tækjum eins og Wacom spjaldtölvum.
+    </p>
+    <p xml:lang="it">
+      Xournal++ è un software per prendere appunti a mano flessibile, funzionale e veloce.
+      Funziona su GNU/Linux, macOS e Windows.
+      Xournal++ supporta l'input tramite penna da dispositivi come le tavolette Wacom.
+    </p>
+    <p xml:lang="ja">
+      Xournal++ は、柔軟性、機能性、高速性に優れた手書きメモ作成ソフトウェアです。
+      GNU/Linux、macOS、Windows で動作します。
+      Xournal++ は、Wacom タブレットなどのデバイスからのペン入力をサポートしています。
+    </p>
+    <p xml:lang="kn">
+      Xournal++ ಒಂದು ಹ್ಯಾಂಡ್ ನೋಟ್-ಟೇಕಿಂಗ್ ಸಾಫ್ಟ್‌ವೇರ್ ಆಗಿದ್ದು ಅದು ಹೊಂದಿಕೊಳ್ಳುವ, ಕ್ರಿಯಾತ್ಮಕ ಮತ್ತು ವೇಗವಾಗಿರುತ್ತದೆ.
+      ಇದು GNU/Linux, macOS ಮತ್ತು Windows ನಲ್ಲಿ ಚಲಿಸುತ್ತದೆ.
+      Xournal++ Wacom ಟ್ಯಾಬ್ಲೆಟ್‌ಗಳಂತಹ ಸಾಧನಗಳಿಂದ ಪೆನ್ ಇನ್‌ಪುಟ್ ಅನ್ನು ಬೆಂಬಲಿಸುತ್ತದೆ.
+    </p>
+    <p xml:lang="ko">
+      Xournal++는 유연하고 기능적이며 빠른 핸드 노트 작성 소프트웨어입니다.
+      GNU/Linux, macOS 및 Windows에서 실행됩니다.
+      Xournal++는 Wacom 태블릿과 같은 기기의 펜 입력을 지원합니다.
+    </p>
+    <p xml:lang="lt">
+      „Xournal++“ yra lanksti, funkcionali ir greita programinė įranga, skirta užrašams rašyti rankomis.
+      Jis veikia GNU/Linux, macOS ir Windows.
+      Xournal++ palaiko rašiklio įvestį iš tokių įrenginių kaip Wacom planšetės.
+    </p>
+    <p xml:lang="lv">
+      Xournal++ ir manuāla piezīmju veikšanas programmatūra, kas ir elastīga, funkcionāla un ātra.
+      Tas darbojas uz GNU/Linux, macOS un Windows.
+      Xournal++ atbalsta pildspalvas ievadi no tādām ierīcēm kā Wacom planšetdatori.
+    </p>
+    <p xml:lang="nl">
+      Xournal++ is een software voor het maken van notities die flexibel, functioneel en snel is.
+      Het draait op GNU/Linux, macOS en Windows.
+      Xournal++ ondersteunt peninvoer van apparaten zoals Wacom-tablets.
+    </p>
+    <p xml:lang="pl">
+      Xournal++ to elastyczne, funkcjonalne i szybkie oprogramowanie do robienia notatek.
+      Działa na systemach GNU/Linux, macOS i Windows.
+      Xournal++ obsługuje wprowadzanie danych za pomocą pióra z urządzeń takich jak tablety Wacom.
+    </p>
+    <p xml:lang="pt_BR">
+      Xournal++ é um software de anotações manuais que é flexível, funcional e rápido.
+      Ele roda em GNU/Linux, macOS e Windows.
+      O Xournal++ suporta entrada de caneta de dispositivos como tablets Wacom.
+    </p>
+    <p xml:lang="pt">
+      O Xournal++ é um software de anotações manuais flexível, funcional e rápido.
+      Corre em GNU/Linux, macOS e Windows.
+      O Xournal++ suporta a entrada de caneta de dispositivos como tablets Wacom.
+    </p>
+    <p xml:lang="ro">
+      Xournal++ este un software de luare de note manual, flexibil, funcțional și rapid.
+      Funcționează pe GNU/Linux, macOS și Windows.
+      Xournal++ acceptă introducerea stiloului de pe dispozitive precum tabletele Wacom.
+    </p>
+    <p xml:lang="ru">
+      Xournal++ — это гибкое, функциональное и быстрое программное обеспечение для создания заметок от руки.
+      Оно работает на GNU/Linux, macOS и Windows.
+      Xournal++ поддерживает ввод с помощью пера с таких устройств, как планшеты Wacom.
+    </p>
+    <p xml:lang="sk">
+      Xournal++ je softvér na ručné písanie poznámok, ktorý je flexibilný, funkčný a rýchly.
+      Beží na GNU/Linux, macOS a Windows.
+      Xournal++ podporuje vstup perom zo zariadení, ako sú tablety Wacom.
+    </p>
+    <p xml:lang="sl">
+      Xournal++ je programska oprema za ročno pisanje zapiskov, ki je prilagodljiva, funkcionalna in hitra.
+      Deluje v sistemih GNU/Linux, macOS in Windows.
+      Xournal++ podpira vnos s peresom iz naprav, kot so tablice Wacom.
+    </p>
+    <p xml:lang="sq">
+      Xournal++ është një softuer për mbajtjen e shënimeve me dorë që është fleksibël, funksional dhe i shpejtë.
+      Ai funksionon në GNU/Linux, macOS dhe Windows.
+      Xournal++ mbështet hyrjen e stilolapsit nga pajisje të tilla si tabletët Wacom.
+    </p>
+    <p xml:lang="sr">
+      Ксоурнал++ је софтвер за ручно вођење белешки који је флексибилан, функционалан и брз.
+      Ради на ГНУ/Линук-у, мацОС-у и Виндовс-у.
+      Ксоурнал++ подржава унос оловком са уређаја као што су Вацом таблети.
+    </p>
+    <p xml:lang="ta">
+      Xournal++ என்பது கைக் குறிப்பு எடுக்கும் மென்பொருளாகும், இது நெகிழ்வான, செயல்பாட்டு மற்றும் வேகமானது.
+      இது GNU/Linux, macOS மற்றும் Windows இல் இயங்குகிறது.
+      Xournal++ Wacom மாத்திரைகள் போன்ற சாதனங்களிலிருந்து பேனா உள்ளீட்டை ஆதரிக்கிறது.
+    </p>
+    <p xml:lang="tr">
+      Xournal++ esnek, işlevsel ve hızlı bir el not alma yazılımıdır.
+      GNU/Linux, macOS ve Windows'ta çalışır.
+      Xournal++ Wacom tabletler gibi cihazlardan kalem girişini destekler.
+    </p>
+    <p xml:lang="uk">
+      Xournal++ — це гнучке, функціональне та швидке програмне забезпечення для ручного створення нотаток.
+      Він працює на GNU/Linux, macOS і Windows.
+      Xournal++ підтримує введення пером із таких пристроїв, як планшети Wacom.
+    </p>
+    <p xml:lang="vi">
+      Xournal++ là phần mềm ghi chú bằng tay linh hoạt, có chức năng và nhanh.
+      Phần mềm này chạy trên GNU/Linux, macOS và Windows.
+      Xournal++ hỗ trợ nhập liệu bằng bút từ các thiết bị như máy tính bảng Wacom.
+    </p>
+    <p xml:lang="zh_CN">
+      Xournal++ 是一款灵活、实用且快速的手写笔记软件。
+      它可在 GNU/Linux、macOS 和 Windows 上运行。
+      Xournal++ 支持使用 Wacom 手写板等设备进行手写输入。
+    </p>
+    <p xml:lang="zh_TW">
+      Xournal++是一款靈活、功能齊全、速度快的手寫筆記軟體。
+      它在 GNU/Linux、macOS 和 Windows 上運行。
+      Xournal++ 支援來自 Wacom 平板電腦等裝置的筆輸入。
+    </p>
   </description>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0</project_license>
