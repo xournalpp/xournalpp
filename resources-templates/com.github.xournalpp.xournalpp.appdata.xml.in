@@ -93,15 +93,142 @@
   <url type="help">https://xournalpp.github.io/community/help/</url>
   <url type="homepage">https://xournalpp.github.io/</url>
   <screenshots>
+
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/xournalpp/xournalpp-examples/main/appdata/screenshots/note_taking_1600x900.png</image>
+      <caption>Note taking</caption>
+      <caption xml:lang="ar">تدوين الملاحظات</caption>
+      <caption xml:lang="be">Нататка</caption>
+      <caption xml:lang="bg">Водене на бележки</caption>
+      <caption xml:lang="ca">Presa de notes</caption>
+      <caption xml:lang="cs">Zapisování poznámek</caption>
+      <caption xml:lang="de">Notizen machen</caption>
+      <caption xml:lang="el">Λήψη σημειώσεων</caption>
+      <caption xml:lang="en_AU">Note taking</caption>
+      <caption xml:lang="en_GB">Note taking</caption>
+      <caption xml:lang="en">Note taking</caption>
+      <caption xml:lang="es">Toma de notas</caption>
+      <caption xml:lang="fi">Muistiinpano</caption>
+      <caption xml:lang="fr">Prise de notes</caption>
+      <caption xml:lang="he">רישום הערות</caption>
+      <caption xml:lang="hr">Bilježenje</caption>
+      <caption xml:lang="hu">Jegyzetelés</caption>
+      <caption xml:lang="id">Mencatat</caption>
+      <caption xml:lang="is">Athugasemd</caption>
+      <caption xml:lang="it">Prendere appunti</caption>
+      <caption xml:lang="ja">メモを取る</caption>
+      <caption xml:lang="kn">ಟಿಪ್ಪಣಿ ತೆಗೆದುಕೊಳ್ಳುವುದು</caption>
+      <caption xml:lang="ko">노트테이킹</caption>
+      <caption xml:lang="lt">Užrašų darymas</caption>
+      <caption xml:lang="lv">Piezīmju veikšana</caption>
+      <caption xml:lang="nl">Aantekeningen maken</caption>
+      <caption xml:lang="pl">Robienie notatek</caption>
+      <caption xml:lang="pt_BR">Tomando notas</caption>
+      <caption xml:lang="pt">Anotações</caption>
+      <caption xml:lang="ro">Luarea de note</caption>
+      <caption xml:lang="ru">Заметки</caption>
+      <caption xml:lang="sk">Zapisovanie poznámok</caption>
+      <caption xml:lang="sl">Zapisovanje</caption>
+      <caption xml:lang="sq">Marrja e shënimeve</caption>
+      <caption xml:lang="sr">Белешке</caption>
+      <caption xml:lang="ta">குறிப்பு எடுத்தல்</caption>
+      <caption xml:lang="tr">Not alma</caption>
+      <caption xml:lang="uk">Конспектування</caption>
+      <caption xml:lang="vi">Ghi chú</caption>
+      <caption xml:lang="zh_CN">做笔记</caption>
+      <caption xml:lang="zh_TW">做筆記</caption>
     </screenshot>
+
     <screenshot>
       <image>https://raw.githubusercontent.com/xournalpp/xournalpp-examples/main/appdata/screenshots/pdf_annotation_1600x900.png</image>
+      <caption>PDF annotation</caption>
+      <caption xml:lang="ar">شرح PDF</caption>
+      <caption xml:lang="be">PDF анатацыя</caption>
+      <caption xml:lang="bg">PDF анотация</caption>
+      <caption xml:lang="ca">Anotació PDF</caption>
+      <caption xml:lang="cs">PDF anotace</caption>
+      <caption xml:lang="de">PDF-Anmerkung</caption>
+      <caption xml:lang="el">Σχολιασμός PDF</caption>
+      <caption xml:lang="en_AU">PDF annotation</caption>
+      <caption xml:lang="en_GB">PDF annotation</caption>
+      <caption xml:lang="en">PDF annotation</caption>
+      <caption xml:lang="es">Anotación en PDF</caption>
+      <caption xml:lang="fi">PDF-merkintä</caption>
+      <caption xml:lang="fr">Annotation PDF</caption>
+      <caption xml:lang="he">הערת PDF</caption>
+      <caption xml:lang="hr">PDF komentar</caption>
+      <caption xml:lang="hu">PDF-megjegyzés</caption>
+      <caption xml:lang="id">Anotasi PDF</caption>
+      <caption xml:lang="is">PDF skýring</caption>
+      <caption xml:lang="it">Annotazione PDF</caption>
+      <caption xml:lang="ja">PDF注釈</caption>
+      <caption xml:lang="kn">PDF ಟಿಪ್ಪಣಿ</caption>
+      <caption xml:lang="ko">PDF 주석</caption>
+      <caption xml:lang="lt">PDF anotacija</caption>
+      <caption xml:lang="lv">PDF anotācija</caption>
+      <caption xml:lang="nl">PDF-annotatie</caption>
+      <caption xml:lang="pl">Adnotacja PDF</caption>
+      <caption xml:lang="pt_BR">Anotação em PDF</caption>
+      <caption xml:lang="pt">Anotação PDF</caption>
+      <caption xml:lang="ro">Adnotare PDF</caption>
+      <caption xml:lang="ru">PDF-аннотация</caption>
+      <caption xml:lang="sk">Anotácia PDF</caption>
+      <caption xml:lang="sl">Opomba PDF</caption>
+      <caption xml:lang="sq">Shënim PDF</caption>
+      <caption xml:lang="sr">ПДФ анотација</caption>
+      <caption xml:lang="ta">PDF சிறுகுறிப்பு</caption>
+      <caption xml:lang="tr">PDF açıklaması</caption>
+      <caption xml:lang="uk">PDF анотація</caption>
+      <caption xml:lang="vi">Chú thích PDF</caption>
+      <caption xml:lang="zh_CN">PDF 注释</caption>
+      <caption xml:lang="zh_TW">PDF註釋</caption>
     </screenshot>
+
     <screenshot>
       <image>https://raw.githubusercontent.com/xournalpp/xournalpp-examples/main/appdata/screenshots/LaTeX_with_customized_preamble_1600x900.png</image>
+      <caption>LaTeX with customized preamble</caption>
+      <caption xml:lang="ar">LaTeX مع مقدمة مخصصة</caption>
+      <caption xml:lang="be">LaTeX з індывідуальным увядзеннем</caption>
+      <caption xml:lang="bg">LaTeX с персонализирано въведение</caption>
+      <caption xml:lang="ca">LaTeX amb introducció personalitzada</caption>
+      <caption xml:lang="cs">LaTeX s přizpůsobeným úvodem</caption>
+      <caption xml:lang="de">LaTeX mit maßgeschneiderter Einführung</caption>
+      <caption xml:lang="el">LaTeX με προσαρμοσμένη εισαγωγή</caption>
+      <caption xml:lang="en_AU">LaTeX with customised preamble</caption>
+      <caption xml:lang="en_GB">LaTeX with customised preamble</caption>
+      <caption xml:lang="en">LaTeX with customized preamble</caption>
+      <caption xml:lang="es">LaTeX con introducción personalizada</caption>
+      <caption xml:lang="fi">LaTeX mukautetulla esittelyllä</caption>
+      <caption xml:lang="fr">LaTeX avec introduction personnalisée</caption>
+      <caption xml:lang="he">LaTeX עם הקדמה מותאמת אישית</caption>
+      <caption xml:lang="hr">LaTeX s prilagođenim uvodom</caption>
+      <caption xml:lang="hu">LaTeX testreszabott bevezetővel</caption>
+      <caption xml:lang="id">LaTeX dengan pembukaan yang disesuaikan</caption>
+      <caption xml:lang="is">LaTeX með sérsniðnum formála</caption>
+      <caption xml:lang="it">LaTeX con preambolo personalizzato</caption>
+      <caption xml:lang="ja">カスタマイズされたプリアンブルを持つLaTeX</caption>
+      <caption xml:lang="kn">ಕಸ್ಟಮೈಸ್ ಮಾಡಿದ ಮುನ್ನುಡಿಯೊಂದಿಗೆ LaTeX</caption>
+      <caption xml:lang="ko">사용자 정의 서문이 있는 LaTeX</caption>
+      <caption xml:lang="lt">LaTeX su pritaikyta preambule</caption>
+      <caption xml:lang="lv">LaTeX ar pielāgotu preambulu</caption>
+      <caption xml:lang="nl">LaTeX met aangepaste preambule</caption>
+      <caption xml:lang="pl">LaTeX z niestandardowym wstępem</caption>
+      <caption xml:lang="pt_BR">LaTeX com preâmbulo personalizado</caption>
+      <caption xml:lang="pt">LaTeX com preâmbulo personalizado</caption>
+      <caption xml:lang="ro">LaTeX cu preambul personalizat</caption>
+      <caption xml:lang="ru">LaTeX с настраиваемой преамбулой</caption>
+      <caption xml:lang="sk">LaTeX s prispôsobenou preambulou</caption>
+      <caption xml:lang="sl">LaTeX s prilagojeno preambulo</caption>
+      <caption xml:lang="sq">LaTeX me parathënie të personalizuar</caption>
+      <caption xml:lang="sr">ЛаТеКс са прилагођеном преамбулом</caption>
+      <caption xml:lang="ta">தனிப்பயனாக்கப்பட்ட முன்னுரையுடன் LaTeX</caption>
+      <caption xml:lang="tr">Özelleştirilmiş önsözlü LaTeX</caption>
+      <caption xml:lang="uk">LaTeX із налаштованою преамбулою</caption>
+      <caption xml:lang="vi">LaTeX với phần mở đầu tùy chỉnh</caption>
+      <caption xml:lang="zh_CN">带有自定义序言的 LaTeX</caption>
+      <caption xml:lang="zh_TW">帶有定制序言的 LaTeX</caption>
     </screenshot>
+
   </screenshots>
   <launchable type="desktop-id">com.github.xournalpp.xournalpp.desktop</launchable>
   <provides>
