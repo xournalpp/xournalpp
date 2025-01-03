@@ -4,7 +4,48 @@
   <id>com.github.xournalpp.xournalpp</id>
   <translation type="gettext">xournalpp</translation>
   <name>Xournal++</name>
-  <summary>Take handwritten notes</summary>
+
+  <summary xml:lang="ar">خذ ملاحظات مكتوبة بخط اليد</summary>
+  <summary xml:lang="be">Рабіце рукапісныя нататкі</summary>
+  <summary xml:lang="bg">Водете си ръкописни бележки</summary>
+  <summary xml:lang="ca">Prendre notes escrites a mà</summary>
+  <summary xml:lang="cs">Dělejte si ručně psané poznámky</summary>
+  <summary xml:lang="de">Machen Sie handschriftliche Notizen</summary>
+  <summary xml:lang="el">Κρατήστε χειρόγραφες σημειώσεις</summary>
+  <summary xml:lang="en_AU">Take handwritten notes</summary>
+  <summary xml:lang="en_GB">Take handwritten notes</summary>
+  <summary xml:lang="en">Take handwritten notes</summary>
+  <summary xml:lang="es">Tomar notas escritas a mano</summary>
+  <summary xml:lang="fi">Tee käsinkirjoitettuja muistiinpanoja</summary>
+  <summary xml:lang="fr">Prendre des notes manuscrites</summary>
+  <summary xml:lang="he">רשום הערות בכתב יד</summary>
+  <summary xml:lang="hr">Vodite bilješke pisane rukom</summary>
+  <summary xml:lang="hu">Készítsen kézzel írott jegyzeteket</summary>
+  <summary xml:lang="id">Ambil catatan tulisan tangan</summary>
+  <summary xml:lang="is">Taktu handskrifaðar glósur</summary>
+  <summary xml:lang="it">Prendi appunti scritti a mano</summary>
+  <summary xml:lang="ja">手書きのメモを取る</summary>
+  <summary xml:lang="kn">ಕೈಬರಹದ ಟಿಪ್ಪಣಿಗಳನ್ನು ತೆಗೆದುಕೊಳ್ಳಿ</summary>
+  <summary xml:lang="ko">손으로 쓴 메모를 작성하세요</summary>
+  <summary xml:lang="lt">Paimkite ranka rašytus užrašus</summary>
+  <summary xml:lang="lv">Veikt ar roku rakstītas piezīmes</summary>
+  <summary xml:lang="nl">Maak handgeschreven aantekeningen</summary>
+  <summary xml:lang="pl">Rób notatki odręczne</summary>
+  <summary xml:lang="pt_BR">Faça anotações manuscritas</summary>
+  <summary xml:lang="pt">Faça anotações manuscritas</summary>
+  <summary xml:lang="ro">Luați note scrise de mână</summary>
+  <summary xml:lang="ru">Делайте рукописные заметки</summary>
+  <summary xml:lang="sk">Robte si rukou písané poznámky</summary>
+  <summary xml:lang="sl">Delajte ročno napisane zapiske</summary>
+  <summary xml:lang="sq">Merrni shënime të shkruara me dorë</summary>
+  <summary xml:lang="sr">Водите руком писане белешке</summary>
+  <summary xml:lang="ta">கையால் எழுதப்பட்ட குறிப்புகளை எடுத்துக் கொள்ளுங்கள்</summary>
+  <summary xml:lang="tr">El yazısıyla not alın</summary>
+  <summary xml:lang="uk">Робіть нотатки від руки</summary>
+  <summary xml:lang="vi">Ghi chép bằng tay</summary>
+  <summary xml:lang="zh_CN">手写笔记</summary>
+  <summary xml:lang="zh_TW">手寫筆記</summary>
+
   <developer_name>Xournalpp Developers</developer_name>
   <description>
     <p>
