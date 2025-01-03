@@ -2,6 +2,47 @@
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
 	<mime-type type="application/x-xojpp">
 		<comment>Xournal note file</comment>
+  		<comment>Xournal note file</comment>
+		<comment xml:lang="ar">ملف ملاحظات Xournal</comment>
+		<comment xml:lang="be">Файл нататак Xournal</comment>
+		<comment xml:lang="bg">Xournal файл с бележки</comment>
+		<comment xml:lang="ca">Arxiu de notes Xournal</comment>
+		<comment xml:lang="cs">Soubor poznámky Xournal</comment>
+		<comment xml:lang="de">Xournal-Notizdatei</comment>
+		<comment xml:lang="el">Αρχείο σημειώσεων Xournal</comment>
+		<comment xml:lang="en_AU">Xournal note file</comment>
+		<comment xml:lang="en_GB">Xournal note file</comment>
+		<comment xml:lang="en">Xournal note file</comment>
+		<comment xml:lang="es">Archivo de notas del diario</comment>
+		<comment xml:lang="fi">Xournal muistiinpanotiedosto</comment>
+		<comment xml:lang="fr">Fichier de notes Xournal</comment>
+		<comment xml:lang="he">קובץ הערות Xournal</comment>
+		<comment xml:lang="hr">Xournal bilješka datoteka</comment>
+		<comment xml:lang="hu">Xournal-jegyzetfájl</comment>
+		<comment xml:lang="id">File catatan jurnal</comment>
+		<comment xml:lang="is">Xournal athugasemd skrá</comment>
+		<comment xml:lang="it">File di note di testo</comment>
+		<comment xml:lang="ja">Xournal ノートファイル</comment>
+		<comment xml:lang="kn">Xournal ಟಿಪ್ಪಣಿ ಫೈಲ್</comment>
+		<comment xml:lang="ko">Xournal 노트 파일</comment>
+		<comment xml:lang="lt">Xournal užrašų failas</comment>
+		<comment xml:lang="lv">Xournal piezīmju fails</comment>
+		<comment xml:lang="nl">Xournal notitiebestand</comment>
+		<comment xml:lang="pl">Plik notatek Xournal</comment>
+		<comment xml:lang="pt_BR">Arquivo de notas do Xournal</comment>
+		<comment xml:lang="pt">Arquivo de notas do Xournal</comment>
+		<comment xml:lang="ro">Fișierul notei Xurnal</comment>
+		<comment xml:lang="ru">Файл заметки Xournal</comment>
+		<comment xml:lang="sk">Súbor Xournal Note</comment>
+		<comment xml:lang="sl">Datoteka z dnevniškimi zapiski</comment>
+		<comment xml:lang="sq">Skedari i shënimeve Xournal</comment>
+		<comment xml:lang="sr">Ксоурнал белешка фајл</comment>
+		<comment xml:lang="ta">Xournal குறிப்பு கோப்பு</comment>
+		<comment xml:lang="tr">Xournal not dosyası</comment>
+		<comment xml:lang="uk">Файл нотаток Xournal</comment>
+		<comment xml:lang="vi">Tệp ghi chú Xournal</comment>
+		<comment xml:lang="zh_CN">日记记录文件</comment>
+		<comment xml:lang="zh_TW">Xournal筆記文件</comment>
 		<glob pattern="*.xoj"/>
 	</mime-type>
 	<mime-type type="application/x-xopp">
