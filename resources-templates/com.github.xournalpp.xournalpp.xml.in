@@ -90,6 +90,46 @@
 	</mime-type>
 	<mime-type type="application/x-xopt">
 		<comment>Xournal++ page template file</comment>
+  		<comment xml:lang="ar">ملف قالب صفحة Xournal++</comment>
+		<comment xml:lang="be">Файл шаблона старонкі Xournal++</comment>
+		<comment xml:lang="bg">Файл с шаблон на страница Xournal++</comment>
+		<comment xml:lang="ca">Fitxer de plantilla de pàgina Xournal++</comment>
+		<comment xml:lang="cs">Soubor šablony stránky Xournal++</comment>
+		<comment xml:lang="de">Xournal++-Seitenvorlagendatei</comment>
+		<comment xml:lang="el">Αρχείο προτύπου σελίδας Xournal++</comment>
+		<comment xml:lang="en_AU">Xournal++ page template file</comment>
+		<comment xml:lang="en_GB">Xournal++ page template file</comment>
+		<comment xml:lang="en">Xournal++ page template file</comment>
+		<comment xml:lang="es">Archivo de plantilla de página de Xournal++</comment>
+		<comment xml:lang="fi">Xournal++-sivumallitiedosto</comment>
+		<comment xml:lang="fr">Fichier de modèle de page Xournal++</comment>
+		<comment xml:lang="he">קובץ תבנית עמוד Xournal++</comment>
+		<comment xml:lang="hr">Xournal++ datoteka predloška stranice</comment>
+		<comment xml:lang="hu">Xournal++-oldalsablonfájl</comment>
+		<comment xml:lang="id">File templat halaman Xournal++</comment>
+		<comment xml:lang="is">Xournal++ síðusniðmátsskrá</comment>
+		<comment xml:lang="it">File modello di pagina Xournal++</comment>
+		<comment xml:lang="ja">Xournal++ ページ テンプレート ファイル</comment>
+		<comment xml:lang="kn">Xournal++ ಪುಟ ಟೆಂಪ್ಲೇಟ್ ಫೈಲ್</comment>
+		<comment xml:lang="ko">Xournal++ 페이지 템플릿 파일</comment>
+		<comment xml:lang="lt">Xournal++ puslapio šablono failas</comment>
+		<comment xml:lang="lv">Xournal++ lapas veidnes fails</comment>
+		<comment xml:lang="nl">Xournal++ pagina sjabloonbestand</comment>
+		<comment xml:lang="pl">Plik szablonu strony Xournal++</comment>
+		<comment xml:lang="pt_BR">Arquivo de modelo de página Xournal++</comment>
+		<comment xml:lang="pt">Ficheiro de modelo de página Xournal++</comment>
+		<comment xml:lang="ro">Fișier șablon de pagină Xournal++</comment>
+		<comment xml:lang="ru">Файл шаблона страницы Xournal++</comment>
+		<comment xml:lang="sk">Súbor šablóny stránky Xournal++</comment>
+		<comment xml:lang="sl">Datoteka predloge strani Xournal++</comment>
+		<comment xml:lang="sq">Skedari i shabllonit të faqes Xournal++</comment>
+		<comment xml:lang="sr">Датотека шаблона странице Ксоурнал++</comment>
+		<comment xml:lang="ta">Xournal++ பக்க டெம்ப்ளேட் கோப்பு</comment>
+		<comment xml:lang="tr">Xournal++ sayfa şablonu dosyası</comment>
+		<comment xml:lang="uk">Файл шаблону сторінки Xournal++</comment>
+		<comment xml:lang="vi">Tệp mẫu trang Xournal++</comment>
+		<comment xml:lang="zh_CN">Xournal++页面模板文件</comment>
+		<comment xml:lang="zh_TW">Xournal++頁面範本文件</comment>
 		<glob pattern="*.xopt"/>
 	</mime-type>
 </mime-info>
