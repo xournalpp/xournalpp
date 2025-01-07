@@ -1,0 +1,29 @@
+diff --git a/modulesets-stable/gtk-osx-bootstrap.modules b/modulesets-stable/gtk-osx-bootstrap.modules
+index acb44e1..b6cdcf6 100644
+--- a/modulesets-stable/gtk-osx-bootstrap.modules
++++ b/modulesets-stable/gtk-osx-bootstrap.modules
+@@ -59,20 +59,18 @@
+       <dep package="nasm" />
+     </dependencies>
+   </cmake>
+-  <autotools id="libtiff"
+-             autogen-sh="configure"
+-             autogenargs="--without-x">
++  <cmake id="libtiff" cmakeargs="-Dtiff-tests=off -Dtiff-docs=off">
+     <branch module="libtiff/tiff-4.6.0.tar.xz"
+             version="4.6.0"
+             hash="sha256:e178649607d1e22b51cf361dd20a3753f244f022eefab1f2f218fc62ebaf87d2"
+             repo="libtiff">
+-      <patch file="tiff-nohtml.patch"
+-             strip="1" />
++    <patch file="tiff-nohtml.patch"
++           strip="1" />
+     </branch>
+     <dependencies>
+       <dep package="libjpeg" />
+     </dependencies>
+-  </autotools>
++  </cmake>
+   <meson id="gtk-doc"
+          mesonargs="-Dyelp_manual=false -Dtests=false">
+     <branch module="gtk-doc/1.33/gtk-doc-1.33.2.tar.xz"
