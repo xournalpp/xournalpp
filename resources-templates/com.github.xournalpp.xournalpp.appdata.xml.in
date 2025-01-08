@@ -54,12 +54,15 @@
   <screenshots>
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/xournalpp/xournalpp-examples/main/appdata/screenshots/note_taking_1600x900.png</image>
+      <caption>Note taking</caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/xournalpp/xournalpp-examples/main/appdata/screenshots/pdf_annotation_1600x900.png</image>
+      <caption>PDF annotation</caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/xournalpp/xournalpp-examples/main/appdata/screenshots/LaTeX_with_customized_preamble_1600x900.png</image>
+      <caption>LaTeX with customized preamble</caption>
     </screenshot>
   </screenshots>
   <launchable type="desktop-id">com.github.xournalpp.xournalpp.desktop</launchable>
