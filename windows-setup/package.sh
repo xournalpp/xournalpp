@@ -69,6 +69,9 @@ cp /mingw64/bin/gspawn-win64-helper-console.exe "$setup_dir"/bin
 echo "copy gdbus"
 cp /mingw64/bin/gdbus.exe "$setup_dir"/bin
 
+echo "copy gtk3-demo"
+cp /mingw64/bin/gtk3-demo.exe "$setup_dir"/bin
+
 echo "copy lua-lgi and dependencies"
 cp /mingw64/bin/libgirepository-1.0-1.dll "$setup_dir"/bin
 mkdir -p "$setup_dir"/lib/lua/5.4/lgi
