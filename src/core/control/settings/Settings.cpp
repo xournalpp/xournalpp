@@ -535,10 +535,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("recolor.light")) == 0) {
         this->recolorParameters.recolor =
                 Recolor(ColorU8(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10)),
-                        this->recolorParameters.recolor.getLight());
+                        this->recolorParameters.recolor.getDark());
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("recolor.dark")) == 0) {
         this->recolorParameters.recolor =
-                Recolor(this->recolorParameters.recolor.getDark(),
+                Recolor(this->recolorParameters.recolor.getLight(),
                         ColorU8(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10)));
 
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("backgroundColor")) == 0) {
