@@ -2107,6 +2107,45 @@ void Control::showAbout() {
     popup.show(GTK_WINDOW(this->win->getWindow()));
 }
 
+static void onGtkDemoShown(GObject* proc_object, GAsyncResult* res, gpointer) {
+    gboolean success = g_subprocess_wait_finish(G_SUBPROCESS(proc_object), res, NULL);
+
+    if (success) {
+        g_message("Gtk demo run successfully!\n");
+    } else {
+        g_message("Something went wrong running the Gtk demo!\n");
+    }
+}
+
+void Control::showGtkDemo() {
+    std::string binary = "gtk3-demo";
+#ifdef __APPLE__
+    if (!xoj::util::OwnedCString::assumeOwnership(g_find_program_in_path(binary.c_str()))) {
+        // Try absolute path for binary
+        auto path = Stacktrace::getExePath() / binary;
+
+        binary = path.string();
+    }
+#endif
+    gchar* prog = g_find_program_in_path(binary.c_str());
+    if (!prog) {
+        XojMsgBox::showErrorToUser(getGtkWindow(), "gtk3-demo was not found in path");
+        return;
+    }
+    GError* err = nullptr;
+    GSubprocess* process = g_subprocess_new(G_SUBPROCESS_FLAGS_NONE, &err, prog, nullptr);
+    g_free(prog);
+
+    if (err != nullptr) {
+        std::string message =
+                FS(_F("Creating Gtk demo subprocess failed: {1} (exit code: {2})") % err->message % err->code);
+        XojMsgBox::showErrorToUser(getGtkWindow(), message);
+        g_error_free(err);
+    }
+
+    g_subprocess_wait_async(process, nullptr, reinterpret_cast<GAsyncReadyCallback>(onGtkDemoShown), nullptr);
+}
+
 auto Control::loadViewMode(ViewModeId mode) -> bool {
     if (!settings->loadViewMode(mode)) {
         return false;

@@ -96,6 +96,7 @@ constexpr const char* ACTION_NAMES[] = {  // Action to string conversion map
         "tex",
         "plugin-manager",
         "help",
+        "demo",
         "about",
         "tool-size",
         "tool-fill",

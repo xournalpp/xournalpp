@@ -142,6 +142,7 @@ enum class Action : size_t {
 
     // Menu Help
     HELP,
+    DEMO,
     ABOUT,
 
     // Generic tool config, for the toolbar
