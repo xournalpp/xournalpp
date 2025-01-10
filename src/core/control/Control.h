@@ -364,7 +364,6 @@ protected:
     void setRotationSnapping(bool enable);
     void setGridSnapping(bool enable);
 
-    bool showSaveDialog();
     void showFontDialog();
     void showColorChooserDialog();
 
