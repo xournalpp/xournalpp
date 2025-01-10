@@ -856,6 +856,10 @@
      <attribute name="action">win.help</attribute>
     </item>
     <item>
+     <attribute name="label" translatable="yes">Run Gtk3 demo</attribute>
+     <attribute name="action">win.demo</attribute>
+    </item>
+    <item>
      <attribute name="label" translatable="yes">About</attribute>
      <attribute name="action">app.about</attribute>
      <attribute name="hidden-when">macos-menubar</attribute>

@@ -860,6 +860,12 @@ template <>
 struct ActionProperties<Action::HELP> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { XojMsgBox::showHelp(ctrl->getGtkWindow()); }
 };
+
+template <>
+struct ActionProperties<Action::DEMO> {
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->showGtkDemo(); }
+};
+
 template <>
 struct ActionProperties<Action::ABOUT> {
     using app_namespace = std::true_type;

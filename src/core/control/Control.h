@@ -150,6 +150,7 @@ public:
 
     // Menu Help
     void showAbout();
+    void showGtkDemo();
 
     /**
      * @brief Update the Cursor and the Toolbar based on the active color
