@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-13 10:58+0000\n"
-"PO-Revision-Date: 2024-12-15 04:26\n"
+"POT-Creation-Date: 2025-01-09 07:16+0000\n"
+"PO-Revision-Date: 2025-01-12 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -29,11 +29,11 @@ msgstr "Fájlrendszerhiba: {1}"
 
 #: ../src/core/control/Control.cpp:241
 msgid "Could not remove old autosave file \"{1}\": {2}"
-msgstr ""
+msgstr "Nem sikerült eltávolítani a régi automatikus mentési fájlt „{1}”: {2}"
 
 #: ../src/core/control/Control.cpp:561
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
-msgstr ""
+msgstr "A jelenlegi eszköztár törölve lett. Visszatérés az alapértelmezett eszköztárhoz."
 
 #: ../src/core/control/Control.cpp:581
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
@@ -66,7 +66,7 @@ msgstr "_Napló"
 
 #: ../src/core/control/Control.cpp:819
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "P_apír háttér"
 
 #: ../src/core/control/Control.cpp:820
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:40
@@ -77,7 +77,9 @@ msgstr "PDF-háttérrel"
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
-msgstr ""
+msgstr "Jelenlegi dokumentuma nem tartalmaz PDF-oldalszámot: {1}\n"
+"Szeretné beszúrni ezt az oldalt?\n\n"
+"Tipp: Kijelölheti a(z) {2} elemet egy PDF-oldal beszúrásához."
 
 #: ../src/core/control/Control.cpp:866
 msgid "No pdf pages available to append. You may need to reopen the document first."
@@ -186,7 +188,7 @@ msgstr "Módosítások elvetése"
 
 #: ../src/core/control/CrashHandler.cpp:31
 msgid "Trying to emergency save the current open document..."
-msgstr ""
+msgstr "Megkíséreljük menteni az éppen megnyitott dokumentumot…"
 
 #: ../src/core/control/CrashHandler.cpp:40
 #: ../src/core/control/XournalMain.cpp:278
@@ -404,11 +406,12 @@ msgstr "Hang letiltása ehhez a munkamenethez"
 #: ../src/core/control/XournalMain.cpp:650
 msgid "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
-msgstr ""
+msgstr "PDF fájl megnyitása csatolási módban\n"
+"                                 Figyelmen kívül hagyja, ha nincs megadva PDF-fájl."
 
 #: ../src/core/control/XournalMain.cpp:654
 msgid "Save xopp-file with the background PDF specified as FILE"
-msgstr ""
+msgstr "xopp-fájl mentése a FÁJL-ként megadott háttér PDF-fájllal"
 
 #: ../src/core/control/XournalMain.cpp:663
 msgid "Export FILE as PDF"
@@ -457,7 +460,8 @@ msgstr "Csak az alábbi oldalakat exportálja (pl. \"2-3,5,7-\")\n"
 #: ../src/core/control/XournalMain.cpp:690
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Csak a tartomány szerint meghatározott rétegeket exportálja (pl. „2-3,5,7-”)\n"
+"                                 Nincs hatás -p/--create-pdf vagy -i/--create-img nélkül"
 
 #: ../src/core/control/XournalMain.cpp:694
 msgid "Set DPI for PNG exports. Default is 300\n"
@@ -1230,7 +1234,7 @@ msgstr "_Megnyitás…"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:123
 msgid "Open template file"
-msgstr ""
+msgstr "Sablonfájl megnyitása"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:136
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:197
@@ -1240,7 +1244,7 @@ msgstr "Fájl megnyitása"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:155
 msgid "Annotate Pdf file"
-msgstr ""
+msgstr "PDF-fájl jegyzetének készítése"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:173
 msgid "Choose image file"
@@ -1264,7 +1268,7 @@ msgstr "A kép betöltése nem sikerült. Hibaüzenet: {1}"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:113
 msgid "This image could not be loaded."
-msgstr ""
+msgstr "Nem sikerült betölteni a képet."
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:28
 msgid "Select PDF Page"
@@ -1320,7 +1324,7 @@ msgstr "Fájlok"
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:82
 msgctxt "Item category in toolbar customization dialog"
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Egyéb"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:83
 msgctxt "Item category in toolbar customization dialog"
@@ -1340,7 +1344,7 @@ msgstr "Eszközök"
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:86
 msgctxt "Item category in toolbar customization dialog"
 msgid "Separators"
-msgstr ""
+msgstr "Elválasztók"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:87
 msgctxt "Item category in toolbar customization dialog"
@@ -1380,7 +1384,7 @@ msgstr "Lista törlése"
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:182
 msgctxt "In the submenu for removing recent documents, this will display on top of the list xournal++ files to separate them from PDF files"
 msgid "Xournal++ Files"
-msgstr ""
+msgstr "Xournal++-fájlok"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:191
 msgctxt "In the submenu for removing recent documents, this will display on top of the list PDF files to separate them from xournal++ files"
@@ -1390,11 +1394,11 @@ msgstr "PDF-fájlok"
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:198
 msgctxt "This opens a submenu of the recent files list, and clicking on individual entries in this submenu will remove it from the recent files list"
 msgid "Dismiss a single document"
-msgstr ""
+msgstr "Egyetlen dokumentum elvetése"
 
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:165
 msgid "Copy current page"
-msgstr ""
+msgstr "Jelenlegi oldal másolása"
 
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
 msgid "Copy current background"
@@ -1675,7 +1679,7 @@ msgstr "Hangfelvétel indítása/leállítása"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:445
 msgid "Pause / Play"
-msgstr "Szünet/Lejátszás"
+msgstr "Szüneteltetés/Lejátszás"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 msgid "Stop"
@@ -1756,7 +1760,7 @@ msgstr "Oldalszám"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:13
 msgid "PDF text selection dropdown menu"
-msgstr ""
+msgstr "PDF-szöveg kijelölésének legördülő menü"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:15
 msgid "Select PDF Text In Rectangle"
@@ -1764,7 +1768,7 @@ msgstr "PDF-szöveg kijelölése téglalapban"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:28
 msgid "Selection dropdown menu"
-msgstr ""
+msgstr "Kijelölt legördülő menü"
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:70
 msgid "Zoom Slider"
@@ -1837,15 +1841,15 @@ msgstr "A dokumentum nincs betöltve! ({1}), {2}"
 
 #: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:175
 msgid "Error: "
-msgstr ""
+msgstr "Hiba: "
 
 #: ../src/core/model/Image.cpp:169 ../src/core/model/Image.cpp:179
 msgid "Unrecoverable error"
-msgstr ""
+msgstr "Helyrehozhatatlan hiba"
 
 #: ../src/core/model/Image.cpp:175 ../src/core/model/Image.cpp:179
 msgid "Failed to close image stream"
-msgstr ""
+msgstr "Nem sikerült bezárni a képfolyamot"
 
 #: ../src/core/model/XojPage.cpp:170
 msgid "Background"
@@ -1990,7 +1994,7 @@ msgstr "Vonalvastagság megváltoztatása"
 
 #: ../src/core/undo/SwapUndoAction.cpp:67
 msgid "Move page upwards"
-msgstr "Oldal mozgatása felfelé"
+msgstr "Oldal felfelé mozgatása"
 
 #: ../src/core/undo/SwapUndoAction.cpp:67
 msgid "Move page downwards"
@@ -2526,7 +2530,8 @@ msgstr "Xournal++ beállításai"
 #: ../ui/settings.glade:346
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xopp\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
+msgstr "<i>Ha a dokumentumot már elmentették, akkor ugyanabban a mappában találhatja meg .autosave.xopp kiterjesztéssel\n"
+"Ha a fájl még nem lett elmentve, megtalálhatja a ~/.cache/xournalpp/autosaves könyvtárban</i>"
 
 #: ../ui/settings.glade:365
 msgid "Enable Autosaving"
@@ -2577,7 +2582,30 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\t%\n"
 "Illegal characters are replaced with \"_\""
-msgstr ""
+msgstr "%a\t\tHétköznap rövidített neve (pl. cs)\n"
+"%A\t\tHétköznap teljes neve (pl. csütörtök)\n"
+"%b\t\tHónap rövidített neve (pl. aug)\n"
+"%B\t\tHónap teljes neve (pl. augusztus)\n"
+"%c\t\tDátum és idő megjelenítése (pl. 2001. augusztus 23. csütörtök, 14:55:02)\n"
+"%d\t\tHónap napja (01-31)\n"
+"%F\t\tDátumábrázolás (pl. 2001-08-23)\n"
+"%H\t\tÓra 24 órás formátumban (00-23)\n"
+"%I\t\tÓra 12 órás formátumban (01-12)\n"
+"%j\t\tÉv napja (001-366)\n"
+"%m\t\tHónap decimális számként (01-12)\n"
+"%M\t\tPerc (00-59)\n"
+"%p\t\tDélelőtt vagy délután megjelölés (pl. PM)\n"
+"%S\t\tMásodperc (00-61)\n"
+"%U\t\tHétszám, amelyen az első vasárnap az első hét első napja (00-53)\n"
+"%w\t\tHétköznap tizedes számként, vasárnap pedig 0 (0-6)\n"
+"%W\t\tHétszám, amelyen az első hét első napja az első hétfő (00-53)\n"
+"%x\t\tDátumábrázolás (pl. 08/23/01)\n"
+"%X\t\tIdőábrázolás (pl. 14:55:02)\n"
+"%y\t\tÉv, utolsó két számjegy (00-99)\n"
+"%Y\t\tÉv (pl. 2001)\n"
+"%Z\t\tIdőzóna neve vagy rövidítése (pl. CDT)\n"
+"%%\t\t%\n"
+"Az illegális karakterek helyére „_” kerül"
 
 #: ../ui/settings.glade:588 ../ui/settings.glade:757
 msgid "Available Placeholders"
@@ -2617,7 +2645,31 @@ msgid "%{name}\tThe name of the exported document\n"
 "%Z\t\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\t\t%\n"
 "Illegal characters are replaced with \"_\""
-msgstr ""
+msgstr "%{name}\tExportált dokumentum neve\n"
+"%a\t\t\tHétköznap rövidített neve (pl. cs)\n"
+"%A\t\t\tHétköznap teljes neve (pl. csütörtök)\n"
+"%b\t\t\tHónap rövidített neve (pl. aug)\n"
+"%B\t\t\tHónap teljes neve (pl. augusztus)\n"
+"%c\t\t\tDátum és idő megjelenítése (pl. 2001. augusztus 23. csütörtök, 14:55:02)\n"
+"%d\t\t\tHónap napja (01-31)\n"
+"%F\t\t\tDátumábrázolás (pl. 2001-08-23)\n"
+"%H\t\t\tÓra 24 órás formátumban (00-23)\n"
+"%I\t\t\tÓra 12 órás formátumban (01-12)\n"
+"%j\t\t\tÉv napja (001-366)\n"
+"%m\t\t\tHónap decimális számként (01-12)\n"
+"%M\t\t\tPerc (00-59)\n"
+"%p\t\t\tDélelőtt vagy délután megjelölés (pl. PM)\n"
+"%S\t\t\tMásodperc (00-61)\n"
+"%U\t\t\tHétszám, amelyen az első vasárnap az első hét első napja (00-53)\n"
+"%w\t\t\tHétköznap tizedes számként, vasárnap pedig 0 (0-6)\n"
+"%W\t\t\tHétszám, amelyen az első hét első napja az első hétfő (00-53)\n"
+"%x\t\t\tDátumábrázolás (pl. 08/23/01)\n"
+"%X\t\t\tIdőábrázolás (pl. 14:55:02)\n"
+"%y\t\t\tÉv, utolsó két számjegy (00-99)\n"
+"%Y\t\t\tÉv (pl. 2001)\n"
+"%Z\t\t\tIdőzóna neve vagy rövidítése (pl. CDT)\n"
+"%%\t\t\t%\n"
+"Az illegális karakterek helyére „_” kerül"
 
 #: ../ui/settings.glade:781
 msgid "Default Pdf export name"
@@ -2771,19 +2823,19 @@ msgstr "Bemeneti stabilizálás"
 
 #: ../ui/settings.glade:1396
 msgid "Indent using spaces"
-msgstr ""
+msgstr "Behúzás szóközök használatával"
 
 #: ../ui/settings.glade:1418
 msgid "Number of Spaces : "
-msgstr ""
+msgstr "Szóközök száma: "
 
 #: ../ui/settings.glade:1430
 msgid "Number of spaces inserted with tab."
-msgstr ""
+msgstr "Tabulátorral beszúrt szóközök száma."
 
 #: ../ui/settings.glade:1432
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: ../ui/settings.glade:1460
 msgid "Tab"
@@ -3078,23 +3130,23 @@ msgstr "(újraindítás szükséges)"
 
 #: ../ui/settings.glade:3178
 msgid "Theme Variant:"
-msgstr ""
+msgstr "Témaváltozat:"
 
 #: ../ui/settings.glade:3198
 msgid "Use system default"
-msgstr ""
+msgstr "Rendszer alapértelmezett használata"
 
 #: ../ui/settings.glade:3199
 msgid "Force light theme"
-msgstr ""
+msgstr "Világos téma kényszerítése"
 
 #: ../ui/settings.glade:3200
 msgid "Force dark theme"
-msgstr ""
+msgstr "Sötét téma kényszerítése"
 
 #: ../ui/settings.glade:3213
 msgid "(this may not work, depending on your system theme)"
-msgstr ""
+msgstr "(ez a rendszertémától függően előfordulhat, hogy nem működik)"
 
 #: ../ui/settings.glade:3234
 msgid "Colors"
@@ -3106,39 +3158,39 @@ msgstr "Globális"
 
 #: ../ui/settings.glade:3278
 msgid "Recolor Drawing Area (might introduce lags when moving selections)"
-msgstr ""
+msgstr "Rajzterület újraszínezése (a kijelölések mozgatásakor késéseket okozhat)"
 
 #: ../ui/settings.glade:3283
 msgid "Recolors the drawing area so that white regions get the dark color and black regions get the light color. Other colors are interpolated accordingly."
-msgstr ""
+msgstr "Átszínezi a rajzterületet úgy, hogy a fehér területek sötét, a feketék pedig világos színt kapjanak. A többi szín ennek megfelelően interpolálva van."
 
 #: ../ui/settings.glade:3293
 msgid "Recolor Previews in the Sidebar"
-msgstr ""
+msgstr "Átszínezés előnézete az oldalsávon"
 
 #: ../ui/settings.glade:3298
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) so that white regions get the dark color and black regions get the light color. Other colors are interpolated accordingly."
-msgstr ""
+msgstr "Átszínezi az előnézeteket az oldalsávon (Oldal/Réteg előnézete), így a fehér területek sötét, a fekete területek pedig világos színt kapnak. A többi szín ennek megfelelően interpolálva van."
 
 #: ../ui/settings.glade:3312
 msgid "The color black regions are translated to"
-msgstr ""
+msgstr "A fekete színű régiók a következőkre fordíthatók:"
 
 #: ../ui/settings.glade:3326
 msgid "The color white regions are translated to"
-msgstr ""
+msgstr "A fehér színű régiók a következőkre fordíthatók:"
 
 #: ../ui/settings.glade:3341
 msgid "Dark Color"
-msgstr ""
+msgstr "Sötét szín"
 
 #: ../ui/settings.glade:3355
 msgid "Light Color"
-msgstr ""
+msgstr "Világos szín"
 
 #: ../ui/settings.glade:3368
 msgid "Recoloring / Inverting colors"
-msgstr ""
+msgstr "Színek átszínezése/megfordítása"
 
 #: ../ui/settings.glade:3400
 msgid "Cursor icon for pen"
@@ -3489,12 +3541,14 @@ msgstr "Időkorlát (ms)"
 #: ../ui/settings.glade:5320
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr ""
+msgstr "Időkorlát: a hosszabb ideig tartó érintések nem váltanak ki különleges műveletet\n\n"
+"<i>Javasolt: 150 ms</i>"
 
 #: ../ui/settings.glade:5340
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr ""
+msgstr "Hosszkorlát: a távolabbi érintések nem váltanak ki különleges műveletet\n\n"
+"<i>Javasolt: 1 mm</i>"
 
 #: ../ui/settings.glade:5360
 msgid "Length limit (mm)"
@@ -3507,7 +3561,8 @@ msgstr "Frekvencia korlát (ms)"
 #: ../ui/settings.glade:5383
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
 "<i>Recommended: 500ms</i>"
-msgstr ""
+msgstr "Gyakoriságkorlát: A stroke után ezen időtartamon belüli érintés nem vált ki különleges műveletet.\n\n"
+"<i>Javasolt: 500 ms</i>"
 
 #: ../ui/settings.glade:5400
 msgid "Try to select object first."
@@ -3741,7 +3796,7 @@ msgstr "Parancskimenet"
 
 #: ../ui/toolbarCustomizeDialog.glade:30
 msgid "Drag and drop Components from here to the toolbars and back."
-msgstr ""
+msgstr "Húzza át az összetevőket innen az eszköztárra és vissza."
 
 #: ../ui/toolbarManageDialog.glade:28
 msgid "Manage Toolbar"
@@ -3794,31 +3849,31 @@ msgstr "Keresés"
 
 #: ../ui/mainmenubar.xml:114
 msgid "Arrange Selection"
-msgstr ""
+msgstr "Kijelölés rendezése"
 
 #: ../ui/mainmenubar.xml:117
 msgid "Bring to Front"
-msgstr ""
+msgstr "Előrehozás"
 
 #: ../ui/mainmenubar.xml:122
 msgid "Bring Forward"
-msgstr ""
+msgstr "Előbbre hozás"
 
 #: ../ui/mainmenubar.xml:127
 msgid "Send Backward"
-msgstr ""
+msgstr "Hátrébb küldés"
 
 #: ../ui/mainmenubar.xml:132
 msgid "Send to Back"
-msgstr ""
+msgstr "Hátraküldés"
 
 #: ../ui/mainmenubar.xml:141
 msgid "Move Selection Layer Up"
-msgstr ""
+msgstr "Kijelölési réteg felfelé mozgatása"
 
 #: ../ui/mainmenubar.xml:145
 msgid "Move Selection Layer Down"
-msgstr ""
+msgstr "Kijelölési réteg lefelé mozgatása"
 
 #: ../ui/mainmenubar.xml:161
 msgid "Preferences"
@@ -3842,15 +3897,15 @@ msgstr "_Nézet"
 
 #: ../ui/mainmenubar.xml:184
 msgid "_Pair Pages"
-msgstr ""
+msgstr "Oldalak _párosítása"
 
 #: ../ui/mainmenubar.xml:188
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "_Bemutató mód"
 
 #: ../ui/mainmenubar.xml:200
 msgid "Show Toolbars"
-msgstr ""
+msgstr "Eszköztárak megjelenítése"
 
 #: ../ui/mainmenubar.xml:217
 msgid "Layout"
@@ -3970,11 +4025,11 @@ msgstr "Eredeti méret"
 
 #: ../ui/mainmenubar.xml:369
 msgid "Zoom to Fit"
-msgstr ""
+msgstr "Nagyítás a mérethez"
 
 #: ../ui/mainmenubar.xml:375
 msgid "_Navigation"
-msgstr ""
+msgstr "_Navigáció"
 
 #: ../ui/mainmenubar.xml:378
 msgid "_First Page"
@@ -3998,43 +4053,43 @@ msgstr "_Utolsó oldal"
 
 #: ../ui/mainmenubar.xml:405
 msgid "_Previous Layer"
-msgstr ""
+msgstr "_Előző réteg"
 
 #: ../ui/mainmenubar.xml:410
 msgid "_Next Layer"
-msgstr ""
+msgstr "_Következő réteg"
 
 #: ../ui/mainmenubar.xml:415
 msgid "_Top Layer"
-msgstr ""
+msgstr "_Felső réteg"
 
 #: ../ui/mainmenubar.xml:421
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "Kö_vetkező megjegyzésekkel ellátott oldal"
 
 #: ../ui/mainmenubar.xml:426
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "Elő_ző megjegyzésekkel ellátott oldal"
 
 #: ../ui/mainmenubar.xml:436
 msgid "New Page _Before"
-msgstr ""
+msgstr "Új oldal beszúrása _előtte"
 
 #: ../ui/mainmenubar.xml:440
 msgid "New Page _After"
-msgstr ""
+msgstr "Új oldal beszúrása _utána"
 
 #: ../ui/mainmenubar.xml:445
 msgid "New Page at _End"
-msgstr ""
+msgstr "Új oldal beszúrása a _végére"
 
 #: ../ui/mainmenubar.xml:449
 msgid "Duplicate Page"
-msgstr ""
+msgstr "Oldal megkettőzése"
 
 #: ../ui/mainmenubar.xml:453
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Új PDF-oldalak hozzáfűzése"
 
 #: ../ui/mainmenubar.xml:457
 msgid "Configure Page Template"
@@ -4042,31 +4097,31 @@ msgstr "Oldalsablon beállítása"
 
 #: ../ui/mainmenubar.xml:461
 msgid "_Delete Page"
-msgstr ""
+msgstr "Oldal _törlése"
 
 #: ../ui/mainmenubar.xml:468
 msgid "New _Layer"
-msgstr ""
+msgstr "Új _réteg"
 
 #: ../ui/mainmenubar.xml:473
 msgid "Delete Layer"
-msgstr ""
+msgstr "Réteg törlése"
 
 #: ../ui/mainmenubar.xml:478
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "Rétegek egyesítése lefelé"
 
 #: ../ui/mainmenubar.xml:483
 msgid "Rename Layer"
-msgstr ""
+msgstr "Réteg átnevezése"
 
 #: ../ui/mainmenubar.xml:490
 msgid "Paper _Format"
-msgstr ""
+msgstr "Papír_formátum"
 
 #: ../ui/mainmenubar.xml:494
 msgid "Paper _Color"
-msgstr ""
+msgstr "Papír_szín"
 
 #: ../ui/mainmenubar.xml:503
 msgid "_Tools"
@@ -4082,11 +4137,11 @@ msgstr "_Radír"
 
 #: ../ui/mainmenubar.xml:518
 msgid "Select Linear Text"
-msgstr ""
+msgstr "Lineáris szöveg kijelölése"
 
 #: ../ui/mainmenubar.xml:524
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "Szöveg kijelölése téglalapban"
 
 #: ../ui/mainmenubar.xml:530
 msgid "_Highlighter"
@@ -4106,7 +4161,7 @@ msgstr "_Alapértelmezett eszköz"
 
 #: ../ui/mainmenubar.xml:555
 msgid "Drawing Type"
-msgstr ""
+msgstr "Rajztípus"
 
 #: ../ui/mainmenubar.xml:557
 msgid "_Shape Recognizer"
@@ -4159,35 +4214,35 @@ msgstr "_Kitöltés"
 
 #: ../ui/mainmenubar.xml:712 ../ui/mainmenubar.xml:799
 msgid "Fill opacity"
-msgstr ""
+msgstr "Kitöltés átlátszatlansága"
 
 #: ../ui/mainmenubar.xml:718
 msgid "Eraser Optio_ns"
-msgstr ""
+msgstr "Radír _beállításai"
 
 #: ../ui/mainmenubar.xml:748
 msgid "_standard"
-msgstr ""
+msgstr "_szabványos"
 
 #: ../ui/mainmenubar.xml:753
 msgid "_whiteout"
-msgstr ""
+msgstr "ki_fehéredés"
 
 #: ../ui/mainmenubar.xml:758
 msgid "_delete strokes"
-msgstr ""
+msgstr "vonásírások _törlése"
 
 #: ../ui/mainmenubar.xml:765
 msgid "Highlighter Opti_ons"
-msgstr ""
+msgstr "_Kiemelő beállításai"
 
 #: ../ui/mainmenubar.xml:805
 msgid "Select PDF Text Options"
-msgstr ""
+msgstr "PDF-szövegbeállítások kijelölése"
 
 #: ../ui/mainmenubar.xml:808
 msgid "Marker Opacity"
-msgstr ""
+msgstr "Jelölő átlátszósága"
 
 #: ../ui/mainmenubar.xml:814
 msgid "Text Font..."
@@ -4195,11 +4250,11 @@ msgstr "Szöveg betűkészlete…"
 
 #: ../ui/mainmenubar.xml:819
 msgid "Record / Stop"
-msgstr ""
+msgstr "Felvétel indítása/leállítása"
 
 #: ../ui/mainmenubar.xml:824
 msgid "Pause"
-msgstr ""
+msgstr "Szüneteltetés"
 
 #: ../ui/mainmenubar.xml:851
 msgid "_Help"
@@ -4215,147 +4270,147 @@ msgstr "Névjegy"
 
 #: ../resources-templates/pagetemplates.ini.in:17
 msgid "Ruled with vertical line on the right"
-msgstr ""
+msgstr "Függőleges vonallal a jobb oldalon"
 
 #: ../resources-templates/pagetemplates.ini.in:42
 msgid "Graph with border"
-msgstr ""
+msgstr "Grafikon szegéllyel"
 
 #: ../resources-templates/toolbar.ini.in:50
 msgid "All Tools"
-msgstr ""
+msgstr "Minden eszköz"
 
 #: ../resources-templates/toolbar.ini.in:55
 msgid "Portrait"
-msgstr ""
+msgstr "Álló"
 
 #: ../resources-templates/toolbar.ini.in:61
 msgid "Minimal Left"
-msgstr ""
+msgstr "Minimális bal"
 
 #: ../resources-templates/toolbar.ini.in:65
 msgid "Minimal Top"
-msgstr ""
+msgstr "Minimális felső"
 
 #: ../resources-templates/toolbar.ini.in:69
 msgid "Xournal++"
-msgstr ""
+msgstr "Xournal++"
 
 #: ../resources-templates/toolbar.ini.in:77
 msgid "Right hand Note Taking"
-msgstr ""
+msgstr "Jegyzetelés jobb kézzel"
 
 #: ../resources-templates/toolbar.ini.in:80
 msgid "Toolbar Left"
-msgstr ""
+msgstr "Eszköztár balra"
 
 #: ../resources-templates/toolbar.ini.in:86
 msgid "Toolbar Right"
-msgstr ""
+msgstr "Eszköztár jobbra"
 
 #: ../resources-templates/toolbar.ini.in:101
 msgid "Empty Toolbar"
-msgstr ""
+msgstr "Üres eszköztár"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:6
 msgid "Take handwritten notes"
-msgstr ""
+msgstr "Készítsen kézzel írott jegyzeteket"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:7
 msgid "tablet;Wacom;pen input;PDF Annotation;markup"
-msgstr ""
+msgstr "táblagép;Wacom;toll bemenet;PDF megjegyzés;jelölés"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:8
 msgid "Xournalpp Developers"
-msgstr ""
+msgstr "Xournalpp fejlesztők"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:10
 msgid "Xournal++ is a hand note-taking software written in C++ with the target of flexibility, functionality and speed. Stroke recognizer and other parts are based on Xournal Code, which you can find at sourceforge. It supports GNU/Linux (e.g. Ubuntu, Debian, Arch, SUSE), macOS and Windows. Supports pen input from devices such as Wacom Tablets."
-msgstr ""
+msgstr "A Xournal++ egy kézi jegyzetkészítő szoftver C++ nyelven, a rugalmasság, a funkcionalitás és a gyors cél érdekében. A löketfelismerő és egyéb részek Xournal kódon alapulnak, amelyet a sourceforge oldalon találhat meg. Támogatja a GNU/Linuxot (például Linux Mint, Ubuntu, Debian, Arch, SUSE), macOS-t és Windowst. Támogatja a tollbevitelt olyan eszközökről, mint a Wacom Tablet."
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:17
 msgid "Xournal++ features:"
-msgstr ""
+msgstr "A Xournal++ jellemzői:"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:21
 msgid "Supports pressure-sensitive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)"
-msgstr ""
+msgstr "Támogatja a nyomásérzékeny ceruzákat és digitális tollasztalokat (pl. Wacom, Huion, XP toll stb. táblagépek)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:22
 msgid "Paper backgrounds for note-taking, scratch paper, or whiteboarding"
-msgstr ""
+msgstr "Papírháttér jegyzeteléshez, papírkarcoláshoz vagy táblához"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:23
 msgid "Annotate on top of PDFs"
-msgstr ""
+msgstr "Jegyzetek a PDF-fájlok tetejére"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:24
 msgid "Select text from the background PDF, copy, highlight or underline it or strike it through"
-msgstr ""
+msgstr "Válasszon szöveget a háttér PDF-fájlokból, másolja, jelölje ki vagy húzza alá, vagy húzza át"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:25
 msgid "Follow links from the background PDF"
-msgstr ""
+msgstr "Kövesse a háttérben található PDF-fájlok hivatkozásait"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:26
 msgid "Export to a variety of formats including SVG, PNG and PDF, both from the GUI and command line"
-msgstr ""
+msgstr "Exportálás különféle formátumokba, beleértve az SVG-fájlokat, PNG-fájlokat és PDF-fájlokat, mind a grafikus felhasználói felületről, mind a parancssorból"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:27
 msgid "Different drawing tools (e.g. pen, highlighter) and stroke styles (e.g. solid, dotted)"
-msgstr ""
+msgstr "Különböző rajzeszközök (pl. toll, kiemelő) és körvonalstílusok (pl. tömör, pontozott)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:28
 msgid "Shape drawing (line, arrow, circle, rectangle, spline)"
-msgstr ""
+msgstr "Alakzat rajzolása (vonal, nyíl, kör, téglalap, spline)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:29
 msgid "Use the set-square and compass tools for measurements or as a guide for drawing straight lines, circular arcs and radii"
-msgstr ""
+msgstr "Négyzetbeállító és iránytű eszközök mérésekhez vagy útmutatóként egyenes vonalak, körívek és sugarak rajzolásához"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:30
 msgid "Fill shape functionality"
-msgstr ""
+msgstr "Kitöltési alakzat funkció"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:31
 msgid "Shape resizing and rotation"
-msgstr ""
+msgstr "Alakzat átméretezése és forgatása"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:32
 msgid "Rotation and grid snapping for precise alignment of objects"
-msgstr ""
+msgstr "Forgatás és rácspattintással az objektumok pontos igazítása érdekében"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:33
 msgid "Input stabilization for smoother writing/drawing"
-msgstr ""
+msgstr "Bemeneti stabilizálás a gördülékenyebb írás/rajzolás érdekében"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:34
 msgid "Text tool for adding text in different fonts, colors, and sizes"
-msgstr ""
+msgstr "Szöveg eszköz szövegek hozzáadásához különböző betűtípusokkal, színekkel és méretekkel"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:35
 msgid "Enhanced support for image insertion"
-msgstr ""
+msgstr "Továbbfejlesztett támogatás a képbeillesztéshez"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:36
 msgid "Eraser with multiple configurations"
-msgstr ""
+msgstr "Radír többféle beállítással"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:37
 msgid "LaTeX support (requires a working LaTeX installation) with customizable template and a resizable editor with syntax highlighting"
-msgstr ""
+msgstr "LaTeX támogatás (működő LaTeX telepítés szükséges) testreszabható sablonnal és átméretezhető szerkesztővel szintaktikai kiemeléssel"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:38
 msgid "Sidebar containing page previews with advanced page sorting, PDF bookmarks and layers (can be individually hidden/edited)"
-msgstr ""
+msgstr "Oldalsáv, amely oldal előnézeteket tartalmaz fejlett oldalrendezéssel, PDF könyvjelzőkkel és rétegekkel (egyenként elrejthető/szerkeszthető)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:39
 msgid "Allows mapping different tools/colors etc. to stylus/mouse buttons"
-msgstr ""
+msgstr "Lehetővé teszi a különböző eszközök/színek stb. hozzárendelését a ceruzához/egér gombokhoz"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:40
 msgid "Customizable toolbar with multiple configurations, e.g. to optimize toolbar for portrait/landscape"
-msgstr ""
+msgstr "Testreszabható eszköztár több beállítással, pl. az eszköztárat álló/fekvő nézetekhez optimalizálni"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:41
 msgid "Custom color palette support using the .gpl format"
@@ -4363,15 +4418,15 @@ msgstr "Egyéni színpaletta támogatása a .gpl formátum használatával"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:42
 msgid "Page template definitions"
-msgstr ""
+msgstr "Oldalsablon definíciók"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:43
 msgid "Bug reporting, autosave, and auto backup tools"
-msgstr ""
+msgstr "Hibajelentési, automatikus mentési és automatikus biztonsági mentési eszközök"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:44
 msgid "Audio recording and playback alongside with handwritten notes"
-msgstr ""
+msgstr "Hangfelvétel és lejátszás kézzel írt jegyzetekkel"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:45
 msgid "Multi language support (over 20 languages supported)"
@@ -4381,15 +4436,27 @@ msgstr "Több nyelv támogatása (több mint 20 nyelv támogatott)"
 msgid "Plugins using Lua scripting"
 msgstr "Beépülő modulok Lua parancsfájlok használatával"
 
+#: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:57
+msgid "Note taking"
+msgstr "Jegyzetelés"
+
+#: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:61
+msgid "PDF annotation"
+msgstr "PDF-megjegyzés"
+
+#: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:65
+msgid "LaTeX with customized preamble"
+msgstr "LaTeX testreszabott bevezetővel"
+
 #: ../resources-templates/com.github.xournalpp.xournalpp.xml.in:4
 msgid "Xournal note file"
-msgstr ""
+msgstr "Xournal-jegyzetfájl"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.xml.in:8
 msgid "Xournal++ note file"
-msgstr ""
+msgstr "Xournal++-jegyzetfájl"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.xml.in:12
 msgid "Xournal++ page template file"
-msgstr ""
+msgstr "Xournal++-oldalsablonfájl"
 

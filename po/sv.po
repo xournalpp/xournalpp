@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-13 10:58+0000\n"
-"PO-Revision-Date: 2024-12-15 04:26\n"
+"POT-Creation-Date: 2025-01-09 07:16+0000\n"
+"PO-Revision-Date: 2025-01-12 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -61,7 +61,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:819
 msgid "_Journal"
-msgstr ""
+msgstr "_Journal"
 
 #: ../src/core/control/Control.cpp:819
 msgid "Paper B_ackground"
@@ -628,7 +628,7 @@ msgstr "%F-Anteckning-%H-%M"
 
 #: ../src/core/control/settings/Settings.cpp:153
 msgid "%{name}_annotated"
-msgstr ""
+msgstr "%{name}_annoterad"
 
 #: ../src/core/control/tools/EditSelection.cpp:461
 msgid "Arrange"
@@ -1343,11 +1343,11 @@ msgstr ""
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:100
 msgid "No recent files"
-msgstr ""
+msgstr "Inga nyligen använda filer"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:110
 msgid "Clear list"
-msgstr ""
+msgstr "Rensa lista"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:182
 msgctxt "In the submenu for removing recent documents, this will display on top of the list xournal++ files to separate them from PDF files"
@@ -2427,7 +2427,7 @@ msgstr "Spara till fil"
 
 #: ../ui/pageTemplate.glade:247
 msgid "Load from file"
-msgstr ""
+msgstr "Läs in från fil"
 
 #: ../ui/paletteSettings.glade:76
 msgid "Color Palettes"
@@ -3699,7 +3699,7 @@ msgstr "Hantera verktygsfält"
 
 #: ../ui/mainmenubar.xml:5
 msgid "_File"
-msgstr ""
+msgstr "_Arkiv"
 
 #: ../ui/mainmenubar.xml:13
 msgid "Open"
@@ -3708,11 +3708,11 @@ msgstr ""
 #. Filled dynamically
 #: ../ui/mainmenubar.xml:19
 msgid "Recent _Documents"
-msgstr ""
+msgstr "Senaste _dokument"
 
 #: ../ui/mainmenubar.xml:22
 msgid "_Annotate PDF"
-msgstr ""
+msgstr "_Annotera PDF"
 
 #: ../ui/mainmenubar.xml:31
 msgid "Save As"
@@ -3720,11 +3720,11 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:38
 msgid "_Export as PDF"
-msgstr ""
+msgstr "_Exportera som PDF"
 
 #: ../ui/mainmenubar.xml:42
 msgid "Export as..."
-msgstr ""
+msgstr "Exportera som..."
 
 #: ../ui/mainmenubar.xml:54
 msgid "Quit"
@@ -3732,7 +3732,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:61
 msgid "_Edit"
-msgstr ""
+msgstr "_Redigera"
 
 #: ../ui/mainmenubar.xml:93
 msgid "Select All"
@@ -3788,7 +3788,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:181
 msgid "_View"
-msgstr ""
+msgstr "_Visa"
 
 #: ../ui/mainmenubar.xml:184
 msgid "_Pair Pages"
@@ -3924,7 +3924,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:375
 msgid "_Navigation"
-msgstr ""
+msgstr "_Navigering"
 
 #: ../ui/mainmenubar.xml:378
 msgid "_First Page"
@@ -3960,11 +3960,11 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:421
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "Nästa annot_erade sida"
 
 #: ../ui/mainmenubar.xml:426
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "Fö_regående annoterade sida"
 
 #: ../ui/mainmenubar.xml:436
 msgid "New Page _Before"
@@ -4020,7 +4020,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:503
 msgid "_Tools"
-msgstr ""
+msgstr "V_erktyg"
 
 #: ../ui/mainmenubar.xml:506
 msgid "_Pen"
@@ -4153,7 +4153,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:851
 msgid "_Help"
-msgstr ""
+msgstr "_Hjälp"
 
 #: ../ui/mainmenubar.xml:855
 msgid "Help"
@@ -4329,6 +4329,18 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:46
 msgid "Plugins using Lua scripting"
+msgstr ""
+
+#: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:57
+msgid "Note taking"
+msgstr ""
+
+#: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:61
+msgid "PDF annotation"
+msgstr ""
+
+#: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:65
+msgid "LaTeX with customized preamble"
 msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.xml.in:4
