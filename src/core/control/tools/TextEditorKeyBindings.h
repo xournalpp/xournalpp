@@ -114,12 +114,15 @@ const TextEditor::KeyBindings TextEditor::keyBindings(
           wrap<&TextEditor::deleteFromCursor, GTK_DELETE_PARAGRAPH_ENDS, -1>},
 
          {KeyBindings::hash(CTRL, GDK_KEY_x), wrap<&TextEditor::cutToClipboard>},
+         {KeyBindings::hash(NONE, GDK_KEY_Cut), wrap<&TextEditor::cutToClipboard>},
          {KeyBindings::hash(SHIFT, GDK_KEY_Delete), wrap<&TextEditor::cutToClipboard>},
 
          {KeyBindings::hash(CTRL, GDK_KEY_c), wrap<&TextEditor::copyToClipboard>},
+         {KeyBindings::hash(NONE, GDK_KEY_Copy), wrap<&TextEditor::copyToClipboard>},
          {KeyBindings::hash(CTRL, GDK_KEY_Insert), wrap<&TextEditor::copyToClipboard>},
 
          {KeyBindings::hash(CTRL, GDK_KEY_v), wrap<&TextEditor::pasteFromClipboard>},
+         {KeyBindings::hash(NONE, GDK_KEY_Paste), wrap<&TextEditor::pasteFromClipboard>},
          {KeyBindings::hash(SHIFT, GDK_KEY_Insert), wrap<&TextEditor::pasteFromClipboard>},
 
          {KeyBindings::hash(NONE, GDK_KEY_Insert), wrap<&TextEditor::toggleOverwrite>},
