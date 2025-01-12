@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-07 13:29+0000\n"
-"PO-Revision-Date: 2024-12-08 18:11\n"
+"PO-Revision-Date: 2025-01-12 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -29,7 +29,7 @@ msgstr "Fájlrendszerhiba: {1}"
 
 #: ../src/core/control/Control.cpp:242
 msgid "Could not remove old autosave file \"{1}\": {2}"
-msgstr ""
+msgstr "Nem sikerült eltávolítani a régi automatikus mentési fájlt „{1}”: {2}"
 
 #: ../src/core/control/Control.cpp:992
 msgid "Recorder could not be started."
@@ -37,7 +37,7 @@ msgstr "A felvételt nem sikerült elindítani."
 
 #: ../src/core/control/Control.cpp:1257
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
-msgstr ""
+msgstr "A jelenlegi eszköztár törölve lett. Visszatérés az alapértelmezett eszköztárhoz."
 
 #: ../src/core/control/Control.cpp:1271
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
@@ -419,7 +419,8 @@ msgstr "Csak az alábbi oldalakat exportálja (pl. \"2-3,5,7-\")\n"
 #: ../src/core/control/XournalMain.cpp:678
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Csak a tartomány szerint meghatározott rétegeket exportálja (pl. „2-3,5,7-”)\n"
+"                                 Nincs hatás -p/--create-pdf vagy -i/--create-img nélkül"
 
 #: ../src/core/control/XournalMain.cpp:682
 msgid "Set DPI for PNG exports. Default is 300\n"
@@ -702,7 +703,7 @@ msgstr "Nem sikerült betölteni a képet"
 
 #: ../src/core/control/tools/ImageHandler.cpp:74
 msgid "Could not determine image size!"
-msgstr ""
+msgstr "Nem sikerült meghatározni a kép méretét!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:132
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1194,13 +1195,15 @@ msgstr "_Napló"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:94
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "P_apír háttér"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:98
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
-msgstr ""
+msgstr "Jelenlegi dokumentuma nem tartalmaz PDF-oldalszámot: {1}\n"
+"Szeretné beszúrni ezt az oldalt?\n\n"
+"Tipp: Kijelölheti a(z) {2} elemet egy PDF-oldal beszúrásához."
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:106
 msgid "Insert after current page"
@@ -1521,7 +1524,7 @@ msgstr "Hangfelvétel indítása/leállítása"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:561
 msgid "Pause / Play"
-msgstr "Szünet/Lejátszás"
+msgstr "Szüneteltetés/Lejátszás"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:564
 msgid "Stop"
@@ -1654,15 +1657,15 @@ msgstr "A dokumentum nincs betöltve! ({1}), {2}"
 
 #: ../src/core/model/Image.cpp:163 ../src/core/model/Image.cpp:173
 msgid "Error: "
-msgstr ""
+msgstr "Hiba: "
 
 #: ../src/core/model/Image.cpp:167 ../src/core/model/Image.cpp:177
 msgid "Unrecoverable error"
-msgstr ""
+msgstr "Helyrehozhatatlan hiba"
 
 #: ../src/core/model/Image.cpp:173 ../src/core/model/Image.cpp:177
 msgid "Failed to close image stream"
-msgstr ""
+msgstr "Nem sikerült bezárni a képfolyamot"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:122
 msgid "Error while finalizing the PDF Cairo surface"
@@ -1807,7 +1810,7 @@ msgstr "Vonalvastagság megváltoztatása"
 
 #: ../src/core/undo/SwapUndoAction.cpp:68
 msgid "Move page upwards"
-msgstr "Oldal mozgatása felfelé"
+msgstr "Oldal felfelé mozgatása"
 
 #: ../src/core/undo/SwapUndoAction.cpp:68
 msgid "Move page downwards"
@@ -2215,27 +2218,27 @@ msgstr "S_zerkesztés"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
-msgstr ""
+msgstr "Előrehozás"
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
-msgstr ""
+msgstr "Előbbre hozás"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr ""
+msgstr "Hátrébb küldés"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr ""
+msgstr "Hátraküldés"
 
 #: ../ui/main.glade:480
 msgid "Move Selection Layer Up"
-msgstr ""
+msgstr "Kijelölési réteg felfelé mozgatása"
 
 #: ../ui/main.glade:490
 msgid "Move Selection Layer Down"
-msgstr ""
+msgstr "Kijelölési réteg lefelé mozgatása"
 
 #: ../ui/main.glade:532
 msgid "Preferences"
@@ -2247,11 +2250,11 @@ msgstr "_Nézet"
 
 #: ../ui/main.glade:557
 msgid "_Pair Pages"
-msgstr ""
+msgstr "Oldalak _párosítása"
 
 #: ../ui/main.glade:567
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "_Bemutató mód"
 
 #: ../ui/main.glade:578 ../ui/settings.glade:4010
 msgid "Fullscreen"
@@ -2263,7 +2266,7 @@ msgstr "Oldalsáv megjelenítése"
 
 #: ../ui/main.glade:605
 msgid "Show Toolbars"
-msgstr ""
+msgstr "Eszköztárak megjelenítése"
 
 #: ../ui/main.glade:621
 msgid "Layout"
@@ -2387,7 +2390,7 @@ msgstr "Menüsor elrejtése"
 
 #: ../ui/main.glade:1066
 msgid "_Navigation"
-msgstr ""
+msgstr "_Navigáció"
 
 #: ../ui/main.glade:1077
 msgid "_First Page"
@@ -2411,43 +2414,43 @@ msgstr "_Utolsó oldal"
 
 #: ../ui/main.glade:1138
 msgid "_Previous Layer"
-msgstr ""
+msgstr "_Előző réteg"
 
 #: ../ui/main.glade:1149
 msgid "_Next Layer"
-msgstr ""
+msgstr "_Következő réteg"
 
 #: ../ui/main.glade:1160
 msgid "_Top Layer"
-msgstr ""
+msgstr "_Felső réteg"
 
 #: ../ui/main.glade:1176
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "Kö_vetkező megjegyzésekkel ellátott oldal"
 
 #: ../ui/main.glade:1187
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "Elő_ző megjegyzésekkel ellátott oldal"
 
 #: ../ui/main.glade:1213
 msgid "New Page _Before"
-msgstr ""
+msgstr "Új oldal beszúrása _előtte"
 
 #: ../ui/main.glade:1223
 msgid "New Page _After"
-msgstr ""
+msgstr "Új oldal beszúrása _utána"
 
 #: ../ui/main.glade:1234
 msgid "New Page at _End"
-msgstr ""
+msgstr "Új oldal beszúrása a _végére"
 
 #: ../ui/main.glade:1244
 msgid "Duplicate Page"
-msgstr ""
+msgstr "Oldal megkettőzése"
 
 #: ../ui/main.glade:1254
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Új PDF-oldalak hozzáfűzése"
 
 #: ../ui/main.glade:1264
 msgid "Configure Page Template"
@@ -2455,31 +2458,31 @@ msgstr "Oldalsablon beállítása"
 
 #: ../ui/main.glade:1274
 msgid "_Delete Page"
-msgstr ""
+msgstr "Oldal _törlése"
 
 #: ../ui/main.glade:1291
 msgid "New _Layer"
-msgstr ""
+msgstr "Új _réteg"
 
 #: ../ui/main.glade:1302
 msgid "Delete Layer"
-msgstr ""
+msgstr "Réteg törlése"
 
 #: ../ui/main.glade:1313
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "Rétegek egyesítése lefelé"
 
 #: ../ui/main.glade:1324
 msgid "Rename Layer"
-msgstr ""
+msgstr "Réteg átnevezése"
 
 #: ../ui/main.glade:1341
 msgid "Paper _Format"
-msgstr ""
+msgstr "Papír_formátum"
 
 #: ../ui/main.glade:1351
 msgid "Paper _Color"
-msgstr ""
+msgstr "Papír_szín"
 
 #: ../ui/main.glade:1374
 msgid "_Tools"
@@ -2495,11 +2498,11 @@ msgstr "_Radír"
 
 #: ../ui/main.glade:1409
 msgid "Select Linear Text"
-msgstr ""
+msgstr "Lineáris szöveg kijelölése"
 
 #: ../ui/main.glade:1421
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "Szöveg kijelölése téglalapban"
 
 #: ../ui/main.glade:1433
 msgid "_Highlighter"
@@ -2563,27 +2566,27 @@ msgstr "_Kitöltés"
 
 #: ../ui/main.glade:1832 ../ui/main.glade:2037
 msgid "Fill opacity"
-msgstr ""
+msgstr "Kitöltés átlátszatlansága"
 
 #: ../ui/main.glade:1846
 msgid "Eraser Optio_ns"
-msgstr ""
+msgstr "Radír _beállításai"
 
 #: ../ui/main.glade:1918
 msgid "_standard"
-msgstr ""
+msgstr "_szabványos"
 
 #: ../ui/main.glade:1929
 msgid "_whiteout"
-msgstr ""
+msgstr "ki_fehéredés"
 
 #: ../ui/main.glade:1940
 msgid "_delete strokes"
-msgstr ""
+msgstr "vonásírások _törlése"
 
 #: ../ui/main.glade:1955
 msgid "Highlighter Opti_ons"
-msgstr ""
+msgstr "_Kiemelő beállításai"
 
 #: ../ui/main.glade:2051
 msgid "Text Font..."
@@ -2591,11 +2594,11 @@ msgstr "Szöveg betűkészlete…"
 
 #: ../ui/main.glade:2063
 msgid "Record / Stop"
-msgstr ""
+msgstr "Felvétel indítása/leállítása"
 
 #: ../ui/main.glade:2073
 msgid "Pause"
-msgstr ""
+msgstr "Szüneteltetés"
 
 #: ../ui/main.glade:2127
 msgid "_Plugin"
@@ -2848,7 +2851,30 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\t%\n"
 "Illegal characters are replaced with \"_\""
-msgstr ""
+msgstr "%a\t\tHétköznap rövidített neve (pl. cs)\n"
+"%A\t\tHétköznap teljes neve (pl. csütörtök)\n"
+"%b\t\tHónap rövidített neve (pl. aug)\n"
+"%B\t\tHónap teljes neve (pl. augusztus)\n"
+"%c\t\tDátum és idő megjelenítése (pl. 2001. augusztus 23. csütörtök, 14:55:02)\n"
+"%d\t\tHónap napja (01-31)\n"
+"%F\t\tDátumábrázolás (pl. 2001-08-23)\n"
+"%H\t\tÓra 24 órás formátumban (00-23)\n"
+"%I\t\tÓra 12 órás formátumban (01-12)\n"
+"%j\t\tÉv napja (001-366)\n"
+"%m\t\tHónap decimális számként (01-12)\n"
+"%M\t\tPerc (00-59)\n"
+"%p\t\tDélelőtt vagy délután megjelölés (pl. PM)\n"
+"%S\t\tMásodperc (00-61)\n"
+"%U\t\tHétszám, amelyen az első vasárnap az első hét első napja (00-53)\n"
+"%w\t\tHétköznap tizedes számként, vasárnap pedig 0 (0-6)\n"
+"%W\t\tHétszám, amelyen az első hét első napja az első hétfő (00-53)\n"
+"%x\t\tDátumábrázolás (pl. 08/23/01)\n"
+"%X\t\tIdőábrázolás (pl. 14:55:02)\n"
+"%y\t\tÉv, utolsó két számjegy (00-99)\n"
+"%Y\t\tÉv (pl. 2001)\n"
+"%Z\t\tIdőzóna neve vagy rövidítése (pl. CDT)\n"
+"%%\t\t%\n"
+"Az illegális karakterek helyére „_” kerül"
 
 #: ../ui/settings.glade:613 ../ui/settings.glade:784
 msgid "Available Placeholders"
@@ -2888,7 +2914,31 @@ msgid "%{name}\tThe name of the exported document\n"
 "%Z\t\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\t\t%\n"
 "Illegal characters are replaced with \"_\""
-msgstr ""
+msgstr "%{name}\tExportált dokumentum neve\n"
+"%a\t\t\tHétköznap rövidített neve (pl. cs)\n"
+"%A\t\t\tHétköznap teljes neve (pl. csütörtök)\n"
+"%b\t\t\tHónap rövidített neve (pl. aug)\n"
+"%B\t\t\tHónap teljes neve (pl. augusztus)\n"
+"%c\t\t\tDátum és idő megjelenítése (pl. 2001. augusztus 23. csütörtök, 14:55:02)\n"
+"%d\t\t\tHónap napja (01-31)\n"
+"%F\t\t\tDátumábrázolás (pl. 2001-08-23)\n"
+"%H\t\t\tÓra 24 órás formátumban (00-23)\n"
+"%I\t\t\tÓra 12 órás formátumban (01-12)\n"
+"%j\t\t\tÉv napja (001-366)\n"
+"%m\t\t\tHónap decimális számként (01-12)\n"
+"%M\t\t\tPerc (00-59)\n"
+"%p\t\t\tDélelőtt vagy délután megjelölés (pl. PM)\n"
+"%S\t\t\tMásodperc (00-61)\n"
+"%U\t\t\tHétszám, amelyen az első vasárnap az első hét első napja (00-53)\n"
+"%w\t\t\tHétköznap tizedes számként, vasárnap pedig 0 (0-6)\n"
+"%W\t\t\tHétszám, amelyen az első hét első napja az első hétfő (00-53)\n"
+"%x\t\t\tDátumábrázolás (pl. 08/23/01)\n"
+"%X\t\t\tIdőábrázolás (pl. 14:55:02)\n"
+"%y\t\t\tÉv, utolsó két számjegy (00-99)\n"
+"%Y\t\t\tÉv (pl. 2001)\n"
+"%Z\t\t\tIdőzóna neve vagy rövidítése (pl. CDT)\n"
+"%%\t\t\t%\n"
+"Az illegális karakterek helyére „_” kerül"
 
 #: ../ui/settings.glade:808
 msgid "Default Pdf export name"
@@ -3325,23 +3375,23 @@ msgstr "Szín"
 
 #: ../ui/settings.glade:3217
 msgid "Theme Variant:"
-msgstr ""
+msgstr "Témaváltozat:"
 
 #: ../ui/settings.glade:3235
 msgid "Use system default"
-msgstr ""
+msgstr "Rendszer alapértelmezett használata"
 
 #: ../ui/settings.glade:3236
 msgid "Force light theme"
-msgstr ""
+msgstr "Világos téma kényszerítése"
 
 #: ../ui/settings.glade:3237
 msgid "Force dark theme"
-msgstr ""
+msgstr "Sötét téma kényszerítése"
 
 #: ../ui/settings.glade:3250
 msgid "(this may not work, depending on your system theme)"
-msgstr ""
+msgstr "(ez a rendszertémától függően előfordulhat, hogy nem működik)"
 
 #: ../ui/settings.glade:3291
 msgid "Colors"
@@ -3679,12 +3729,14 @@ msgstr "Időkorlát (ms)"
 #: ../ui/settings.glade:5404
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr ""
+msgstr "Időkorlát: a hosszabb ideig tartó érintések nem váltanak ki különleges műveletet\n\n"
+"<i>Javasolt: 150 ms</i>"
 
 #: ../ui/settings.glade:5424
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr ""
+msgstr "Hosszkorlát: a távolabbi érintések nem váltanak ki különleges műveletet\n\n"
+"<i>Javasolt: 1 mm</i>"
 
 #: ../ui/settings.glade:5444
 msgid "Length limit (mm)"
@@ -3697,7 +3749,8 @@ msgstr "Frekvencia korlát (ms)"
 #: ../ui/settings.glade:5467
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
 "<i>Recommended: 500ms</i>"
-msgstr ""
+msgstr "Gyakoriságkorlát: A stroke után ezen időtartamon belüli érintés nem vált ki különleges műveletet.\n\n"
+"<i>Javasolt: 500 ms</i>"
 
 #: ../ui/settings.glade:5484
 msgid "Try to select object first."
@@ -3774,7 +3827,10 @@ msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required). \n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
 "</i>"
-msgstr ""
+msgstr "<i>\n"
+"A jelölőnégyzet használatával az audiorendszer letiltható vagy engedélyezhető a jövőbeli munkamenetekhez (újraindítás szükséges).\n"
+"A hang egyetlen munkamenetre történő letiltása a parancssorban található <tt>--disable-audio</tt> jelzővel érhető el.\n"
+"</i>"
 
 #: ../ui/settings.glade:5913
 msgid "Disable Audio"

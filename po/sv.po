@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-07 13:29+0000\n"
-"PO-Revision-Date: 2024-12-08 18:11\n"
+"PO-Revision-Date: 2025-01-12 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -608,7 +608,7 @@ msgstr "%F-Anteckning-%H-%M"
 
 #: ../src/core/control/settings/Settings.cpp:148
 msgid "%{name}_annotated"
-msgstr ""
+msgstr "%{name}_annoterad"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 msgid "Open Image"
@@ -1157,15 +1157,15 @@ msgstr ""
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:56
 msgid "No recent files"
-msgstr ""
+msgstr "Inga nyligen använda filer"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:65
 msgid "Clear list"
-msgstr ""
+msgstr "Rensa lista"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:94
 msgid "_Journal"
-msgstr ""
+msgstr "_Journal"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:94
 msgid "Paper B_ackground"
@@ -2160,27 +2160,27 @@ msgstr ""
 
 #: ../ui/main.glade:152
 msgid "_File"
-msgstr ""
+msgstr "_Arkiv"
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
-msgstr ""
+msgstr "Senaste _dokument"
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
-msgstr ""
+msgstr "_Annotera PDF"
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr ""
+msgstr "_Exportera som PDF"
 
 #: ../ui/main.glade:247
 msgid "Export as..."
-msgstr ""
+msgstr "Exportera som..."
 
 #: ../ui/main.glade:292
 msgid "_Edit"
-msgstr ""
+msgstr "_Redigera"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
@@ -2212,7 +2212,7 @@ msgstr ""
 
 #: ../ui/main.glade:546
 msgid "_View"
-msgstr ""
+msgstr "_Visa"
 
 #: ../ui/main.glade:557
 msgid "_Pair Pages"
@@ -2356,7 +2356,7 @@ msgstr "Dölj menyrad"
 
 #: ../ui/main.glade:1066
 msgid "_Navigation"
-msgstr ""
+msgstr "_Navigering"
 
 #: ../ui/main.glade:1077
 msgid "_First Page"
@@ -2392,11 +2392,11 @@ msgstr ""
 
 #: ../ui/main.glade:1176
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "Nästa annot_erade sida"
 
 #: ../ui/main.glade:1187
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "Fö_regående annoterade sida"
 
 #: ../ui/main.glade:1213
 msgid "New Page _Before"
@@ -2452,7 +2452,7 @@ msgstr ""
 
 #: ../ui/main.glade:1374
 msgid "_Tools"
-msgstr ""
+msgstr "V_erktyg"
 
 #: ../ui/main.glade:1385
 msgid "_Pen"
@@ -2576,7 +2576,7 @@ msgstr "Hanterare för insticksprogram"
 
 #: ../ui/main.glade:2152
 msgid "_Help"
-msgstr ""
+msgstr "_Hjälp"
 
 #: ../ui/main.glade:2554
 msgid "Find previous occurrence of the search string"
@@ -2644,7 +2644,7 @@ msgstr "Spara till fil"
 
 #: ../ui/pageTemplate.glade:54
 msgid "Load from file"
-msgstr ""
+msgstr "Läs in från fil"
 
 #: ../ui/pageTemplate.glade:114
 msgid "These settings will be used for new pages"
