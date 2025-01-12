@@ -136,7 +136,7 @@ auto XournalView::onKeyPressEvent(const KeyEvent& event) -> bool {
     auto keyval = event.keyval;
     auto state = event.state;
     if (auto* tool = getControl()->getWindow()->getPdfToolbox(); tool->hasSelection()) {
-        if (keyval == GDK_KEY_c && state == GDK_CONTROL_MASK) {
+        if ((keyval == GDK_KEY_c && state == GDK_CONTROL_MASK) || keyval == GDK_KEY_Copy) {
             // Shortcut to get selected PDF text.
             tool->copyTextToClipboard();
             return true;
