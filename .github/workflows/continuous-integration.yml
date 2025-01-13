@@ -108,22 +108,44 @@ jobs:
     name: 'Test Xournal++ on ${{ matrix.run.displayed_name }}'
     steps:
       - uses: actions/checkout@v4
-      - name: 'Install dependencies'
-        uses: ./.github/actions/install_deps_windows
+      - name: 'Install dependencies (MINGW64)'
+        if: matrix.run.type == 'MINGW64'
+        uses: ./.github/actions/install_deps_windows_MINGW64
+      - name: 'Install dependencies (MSVC)'
+        if: matrix.run.type == 'MSVC'
+        uses: ./.github/actions/install_deps_windows_MSVC
       - name: 'Build Xournal++'
         uses: ./.github/actions/build
         with:
           build_type: ${{env.BUILD_TYPE}}
-          shell: msys2 {0}
-      - name: 'Build tests'
+          cmake_flags: >
+            -DENABLE_GTEST=on
+            -DDOWNLOAD_GTEST=on
+            ${{ env.XOPP_EXTRA_CMAKE_PARAMS }}
+          shell: ${{ matrix.run.shell }}
+      - name: 'Build tests (MINGW64)'
+        if: matrix.run.type == 'MINGW64'
         shell: msys2 {0}
         run: |
           cmake --build . --target test-units
         working-directory: ${{github.workspace}}/build
-      - name: 'Run tests'
+      - name: 'Run tests (MINGW64)'
+        if: matrix.run.type == 'MINGW64'
         shell: msys2 {0}
         run: |
           CI=true ./test/test-units
+        working-directory: ${{github.workspace}}/build
+      - name: 'Build tests (MSVC)'
+        if: matrix.run.type == 'MSVC'
+        shell: pwsh
+        run: |
+          cmake --build . --target test/test-units
+        working-directory: ${{github.workspace}}/build
+      - name: 'Run tests (MSVC)'
+        if: matrix.run.type == 'MSVC'
+        shell: pwsh
+        run: |
+          ./test/Debug/test-units
         working-directory: ${{github.workspace}}/build
   MacOS:
     needs: ['prepare']

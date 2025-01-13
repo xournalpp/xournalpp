@@ -111,7 +111,8 @@ TEST(UtilObjectIOStream, testReadData) {
 TEST(UtilObjectIOStream, testReadImage) {
     // Generate a "random" image and serialize/deserialize it.
     std::mt19937 gen(4242);
-    std::uniform_int_distribution<unsigned char> distrib(0, 255);
+    // MSVC does not support uniform_int_distribution<unsigned char> so we use a longer int
+    std::uniform_int_distribution<unsigned int> distrib(0, 255);
 
     const cairo_format_t format = CAIRO_FORMAT_ARGB32;
     cairo_surface_t* surface = cairo_image_surface_create(format, 800, 800);
@@ -120,7 +121,7 @@ TEST(UtilObjectIOStream, testReadImage) {
     int width = cairo_image_surface_get_width(surface);
     int height = cairo_image_surface_get_height(surface);
 
-    for (int i = 0; i < width * height * 4; ++i) { surfaceData[i] = distrib(gen); }
+    for (int i = 0; i < width * height * 4; ++i) { surfaceData[i] = static_cast<unsigned char>(distrib(gen)); }
 
     std::string strSurface = serializeImage(surface);
 

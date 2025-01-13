@@ -33,8 +33,17 @@
     },
   "windows_targets": {
     "windows": {
-        "displayed_name": "Windows",
+        "displayed_name": "Windows MINGW64",
         "runner": "windows-2019",
+        "type": "MINGW64",
+        "shell": "msys2 {0}",
+        "build_portable": "true"
+      },
+    "windows-msvc": {
+        "displayed_name": "Windows MSVC",
+        "runner": "windows-2022",
+        "type": "MSVC",
+        "shell": "pwsh",
         "build_portable": "true"
       }
     }
