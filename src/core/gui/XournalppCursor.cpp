@@ -436,6 +436,9 @@ auto XournalppCursor::getPenCursor() -> GdkCursor* {
 
 auto XournalppCursor::createHighlighterOrPenCursor(double alpha) -> GdkCursor* {
     auto irgb = control->getToolHandler()->getColor();
+    if (const auto& params = control->getSettings()->getRecolorParameters(); params.recolorizeMainView) {
+        irgb = params.recolor.convertColor(irgb);
+    }
     auto drgb = Util::rgb_to_GdkRGBA(irgb);
     auto cursorType = control->getSettings()->getStylusCursorType();
     auto cursor = (cursorType == STYLUS_CURSOR_NONE) ? CRSR_BLANK_CURSOR : CRSR_PENORHIGHLIGHTER;
