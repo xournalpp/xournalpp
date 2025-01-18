@@ -12,6 +12,7 @@
 #pragma once
 
 #include <cstddef>  // for size_t
+#include <limits>   // for numeric_limits
 #include <memory>   // for unique_ptr
 
 #include "config-features.h"  // for ENABLE_PLUGINS
@@ -24,6 +25,8 @@
 
 #include <gtk/gtk.h>  // for GtkWidget, GtkWindow
 
+#include "util/raii/GObjectSPtr.h"
+
 #include "filesystem.h"  // for path
 
 extern "C" {
@@ -32,24 +35,47 @@ extern "C" {
 
 class Plugin;
 class Control;
+class ToolMenuHandler;
 
 struct MenuEntry final {
     MenuEntry() = default;
-    MenuEntry(Plugin* plugin, std::string menu, std::string callback, long mode, std::string accelerator):
+    MenuEntry(Plugin* plugin, std::string label, std::string callback, ptrdiff_t mode, std::string accelerator):
             plugin(plugin),
-            menu(std::move(menu)),
+            label(std::move(label)),
             callback(std::move(callback)),
             mode(mode),
             accelerator(std::move(accelerator)) {}
 
-    GtkWidget* widget = nullptr;  ///< Menu item
-    Plugin* plugin = nullptr;     ///< The Plugin
-    std::string menu{};           ///< Menu display name
-    std::string callback{};       ///< Callback function name
-    long mode{LONG_MAX};          ///< mode in which the callback function is run
+    Plugin* plugin = nullptr;                               ///< The Plugin
+    std::string label{};                                    ///< Menu display name
+    std::string callback{};                                 ///< Callback function name
+    ptrdiff_t mode{std::numeric_limits<ptrdiff_t>::max()};  ///< mode in which the callback function is run
+    /**
+     * @brief Accelerator key, see
+     *     https://developer.gnome.org/gtk3/stable/gtk3-Keyboard-Accelerators.html#gtk-accelerator-parse
+     */
     std::string accelerator{};
-    ///< Accelerator key, see
-    ///< https://developer.gnome.org/gtk3/stable/gtk3-Keyboard-Accelerators.html#gtk-accelerator-parse
+    /// Action activated when using the menu entry
+    xoj::util::GObjectSPtr<GSimpleAction> action;
+};
+
+struct ToolbarButtonEntry final {
+    ToolbarButtonEntry() = default;
+    ToolbarButtonEntry(Plugin* plugin, std::string description, std::string toolbarId, std::string iconName,
+                       std::string callback, ptrdiff_t mode):
+            plugin(plugin),
+            description(std::move(description)),
+            toolbarId(std::move(toolbarId)),
+            iconName(std::move(iconName)),
+            callback(std::move(callback)),
+            mode(mode) {}
+
+    Plugin* plugin = nullptr;
+    std::string description{};  ///< description displayed on hovering over the toolbar button
+    std::string toolbarId{};    ///< toolbar ID to be used in toolbar.ini
+    std::string iconName{};     ///< name of the icon which should be stored as iconName + ".svg"
+    std::string callback{};     ///< Callback function name
+    ptrdiff_t mode{std::numeric_limits<ptrdiff_t>::max()};  ///< mode in which the callback function is run
 };
 
 struct LuaDeleter {
@@ -70,11 +96,26 @@ public:
     /// Register toolbar item and all other UI stuff
     void registerToolbar();
 
-    /// Register all menu entries to the menu
-    void registerMenu(GtkWindow* mainWindow, GtkWidget* menu);
+    /**
+     * @brief Create a GMenu section for the plugin
+     * @param startId next available id
+     * @return next available id after this menu is populated
+     */
+    size_t populateMenuSection(GtkApplicationWindow* win, size_t startId);
+
+    /// Get a model for the GMenu section for the plugin
+    inline GMenuModel* getMenuSection() const { return G_MENU_MODEL(menuSection.get()); }
+
+    // Register toolbar button
+    void registerToolButton(std::string description, std::string toolbarId, std::string iconName, std::string callback,
+                            ptrdiff_t mode);
+    // Register all toolbar buttons
+    void registerToolButton(ToolMenuHandler* toolMenuHandler);
 
     /// Execute menu entry
     void executeMenuEntry(MenuEntry* entry);
+    // Execute toolbar button
+    void executeToolbarButton(ToolbarButtonEntry* entry);
 
     /// @return the Plugin name
     auto getName() const -> std::string const&;
@@ -105,7 +146,7 @@ public:
 
     /// Register a menu item
     /// @return Internal ID, can e.g. be used to disable the menu
-    auto registerMenu(std::string menu, std::string callback, long mode, std::string accelerator) -> size_t;
+    auto registerMenu(std::string menu, std::string callback, ptrdiff_t mode, std::string accelerator) -> size_t;
 
     ///@return The main controller
     auto getControl() const -> Control*;
@@ -113,9 +154,6 @@ public:
 private:
     /// Load ini file
     void loadIni();
-
-    /// Execute lua function
-    auto callFunction(const std::string& fnc, long mode = LONG_MAX) -> bool;
 
     /// Load custom Lua Libraries
     static void registerXournalppLibs(lua_State* luaPtr);
@@ -127,10 +165,17 @@ public:
     /// Get Plugin from lua engine
     static auto getPluginFromLua(lua_State* lua) -> Plugin*;
 
+    /// Execute lua function
+    auto callFunction(const std::string& fnc, ptrdiff_t mode = std::numeric_limits<ptrdiff_t>::max()) -> bool;
+    auto callFunction(const std::string& fnc, const char* s) -> bool;
+
 private:
-    Control* control;                              ///< The main controller
-    std::unique_ptr<lua_State, LuaDeleter> lua{};  ///< Lua engine
-    std::vector<MenuEntry> menuEntries;            ///< All registered menu entries
+    Control* control;                                      ///< The main controller
+    std::unique_ptr<lua_State, LuaDeleter> lua{};          ///< Lua engine
+    std::vector<MenuEntry> menuEntries;                    ///< All registered menu entries
+    xoj::util::GObjectSPtr<GMenu> menuSection;             ///< Menu section containing the menu entries
+    std::vector<ToolbarButtonEntry> toolbarButtonEntries;  ///< All registered toolbar button entries
+
 
     std::string name;             ///< Plugin name
     std::string description;      ///< Description of the plugin
@@ -142,6 +187,8 @@ private:
     bool defaultEnabled = false;  ///< The plugin is default enabled
     bool inInitUi = false;        ///< Flag to check if init ui is currently running
     bool valid = false;           ///< Flag if the plugin is valid / correct loaded
+
+    static constexpr auto G_ACTION_NAME_PREFIX = "plugins.action-";
 };
 
 #else

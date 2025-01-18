@@ -1,98 +1,148 @@
 #include "ImageHandler.h"
 
 #include <algorithm>  // for min
-#include <memory>     // for __shared_ptr_access, make...
-#include <string>     // for string
-#include <utility>    // for operator==, pair
+#include <fstream>
+#include <memory>  // for __shared_ptr_access, make...
+#include <sstream>
+#include <string>   // for string
+#include <utility>  // for operator==, pair
 
 #include <glib-object.h>  // for g_object_unref
 #include <glib.h>         // for g_error_free, g_free, GError
 
-#include "control/Control.h"                // for Control
-#include "control/stockdlg/ImageOpenDlg.h"  // for ImageOpenDlg
-#include "control/tools/EditSelection.h"    // for EditSelection
-#include "gui/MainWindow.h"                 // for MainWindow
-#include "gui/PageView.h"                   // for XojPageView
-#include "gui/XournalView.h"                // for XournalView
-#include "model/Image.h"                    // for Image, Image::NOSIZE
-#include "model/Layer.h"                    // for Layer
-#include "model/PageRef.h"                  // for PageRef
-#include "model/XojPage.h"                  // for XojPage
-#include "undo/InsertUndoAction.h"          // for InsertUndoAction
-#include "undo/UndoRedoHandler.h"           // for UndoRedoHandler
-#include "util/XojMsgBox.h"                 // for XojMsgBox
-#include "util/i18n.h"                      // for _
+#include "control/Control.h"              // for Control
+#include "control/tools/EditSelection.h"  // for EditSelection
+#include "gui/MainWindow.h"               // for MainWindow
+#include "gui/PageView.h"                 // for XojPageView
+#include "gui/XournalView.h"              // for XournalView
+#include "gui/dialog/XojOpenDlg.h"        // for showOpenImageDialog
+#include "model/Image.h"
+#include "model/Layer.h"            // for Layer
+#include "model/PageRef.h"          // for PageRef
+#include "model/XojPage.h"          // for XojPage
+#include "undo/InsertUndoAction.h"  // for InsertUndoAction
+#include "undo/UndoRedoHandler.h"   // for UndoRedoHandler
+#include "util/XojMsgBox.h"         // for XojMsgBox
+#include "util/i18n.h"              // for _
+#include "util/raii/GObjectSPtr.h"  // for GObjectSPtr.h
 
-ImageHandler::ImageHandler(Control* control, XojPageView* view) {
-    this->control = control;
-    this->view = view;
-}
+ImageHandler::ImageHandler(Control* control): control(control) {}
 
 ImageHandler::~ImageHandler() = default;
 
-auto ImageHandler::insertImage(double x, double y) -> bool {
-    GFile* file = ImageOpenDlg::show(control->getGtkWindow(), control->getSettings());
-    if (file == nullptr) {
-        return false;
-    }
-    bool result = insertImage(file, x, y);
-    g_object_unref(file);
-    return result;
+
+void ImageHandler::chooseAndCreateImage(std::function<void(std::unique_ptr<Image>)> callback) {
+    xoj::OpenDlg::showOpenImageDialog(control->getGtkWindow(), control->getSettings(),
+                                      [cb = std::move(callback), ctrl = control](fs::path p, bool) {
+                                          auto img = ImageHandler::createImageFromFile(p);
+
+                                          if (!img || img->getImageSize() == Image::NOSIZE) {
+                                              XojMsgBox::showErrorToUser(ctrl->getGtkWindow(),
+                                                                         _("Failed to load image"));
+                                              return;
+                                          }
+                                          cb(std::move(img));
+                                      });
 }
 
-auto ImageHandler::insertImage(GFile* file, double x, double y) -> bool {
-    Image* img = nullptr;
-    {
-        // Load the image data from disk
-        GError* err = nullptr;
-        gchar* contents{};
-        gsize length{};
-        if (!g_file_load_contents(file, nullptr, &contents, &length, nullptr, &err)) {
-            g_error_free(err);
-            return false;
-        }
+auto ImageHandler::createImageFromFile(const fs::path& p) -> std::unique_ptr<Image> {
 
-        img = new Image();
-        img->setX(x);
-        img->setY(y);
-        img->setImage(std::string(contents, length));
-        g_free(contents);
+    auto fileToString = [](const fs::path& p) {
+        // This is the faster file dump I could come up with. Faster by 20% than g_file_load_contents (with -O3)
+        std::ifstream stream(p);
+
+        auto pos = stream.tellg();
+        stream.seekg(0, std::ios_base::end);  // Go to the end
+        auto size = stream.tellg() - pos;     // Get the size
+        stream.seekg(pos);                    // Go back
+
+        std::string s(as_unsigned(size), 0);  // Allocate
+        stream.read(&s[0], size);             // Dump
+        return s;
+    };
+
+    auto img = std::make_unique<Image>();
+    try {
+        img->setImage(fileToString(p));
+    } catch (const std::ios_base::failure& e) {
+        std::stringstream msg;
+        msg << _("Error while opening image file: ") << p.string() << '\n'
+            << "Error code: " << e.code() << '\n'
+            << "Explanatory string: " << e.what();
+        XojMsgBox::showErrorToUser(nullptr, msg.str());
+        return nullptr;
+    }
+    // Render the image.
+    if (auto opt = img->renderBuffer(); opt.has_value()) {
+        // An error occurred
+        XojMsgBox::showErrorToUser(nullptr, opt.value());
+        return nullptr;
     }
 
-    // Render the image.
-    // FIXME: this is horrible. We need an ImageView class...
-    (void)img->getImage();
+    return img;
+}
 
-    const auto imgSize = img->getImageSize();
-    auto [width, height] = imgSize;
-    if (imgSize == Image::NOSIZE) {
-        delete img;
-        XojMsgBox::showErrorToUser(this->control->getGtkWindow(),
-                                   _("Failed to load image, could not determine image size!"));
+bool ImageHandler::addImageToDocument(std::unique_ptr<Image> img, PageRef page, Control* control, bool addUndoAction) {
+    Layer* layer = page->getSelectedLayer();
+
+    if (addUndoAction) {
+        control->getUndoRedoHandler()->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, img.get()));
+    }
+
+    XournalView* xournal = control->getWindow()->getXournal();
+    auto pageNr = xournal->getCurrentPage();
+    auto* view = xournal->getViewFor(pageNr);
+
+    if (view->getPage() != page) {
+        g_warning("Active page changed while you selected the image. Aborting.");
         return false;
     }
 
-    double zoom = 1;
+    auto sel = SelectionFactory::createFromFloatingElement(control, page, layer, view, std::move(img));
+    control->getWindow()->getXournal()->setSelection(sel.release());
+    return true;
+}
 
-    PageRef page = view->getPage();
+void ImageHandler::automaticScaling(Image& img, PageRef page) {
+    double zoom = 1;
+    double x = img.getX();
+    double y = img.getY();
+    auto [width, height] = img.getImageSize();
 
     if (x + width > page->getWidth() || y + height > page->getHeight()) {
-        double maxZoomX = (page->getWidth() - x) / width;
-        double maxZoomY = (page->getHeight() - y) / height;
+        double const maxZoomX = (page->getWidth() - x) / width;
+        double const maxZoomY = (page->getHeight() - y) / height;
         zoom = std::min(maxZoomX, maxZoomY);
     }
 
-    img->setWidth(width * zoom);
-    img->setHeight(height * zoom);
+    img.setWidth(width * zoom);
+    img.setHeight(height * zoom);
+}
 
-    page->getSelectedLayer()->addElement(img);
+void ImageHandler::insertImageWithSize(PageRef page, const xoj::util::Rectangle<double>& space) {
+    chooseAndCreateImage([space, page, ctrl = control](std::unique_ptr<Image> img) {
+        xoj_assert(img);
+        img->setX(space.x);
+        img->setY(space.y);
+        auto [width, height] = img->getImageSize();
 
-    control->getUndoRedoHandler()->addUndoAction(
-            std::make_unique<InsertUndoAction>(page, page->getSelectedLayer(), img));
+        if (static_cast<int>(space.width) != 0 && static_cast<int>(space.height) != 0) {
+            // scale down
+            const double scaling = std::min(space.height / height, space.width / width);
+            img->setWidth(scaling * width);
+            img->setHeight(scaling * height);
 
-    view->rerenderElement(img);
-    auto* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
-    control->getWindow()->getXournal()->setSelection(selection);
-
-    return true;
+            // center
+            if (img->getElementHeight() < space.height) {
+                img->setY(img->getY() + ((space.height - img->getElementHeight()) * 0.5));
+            }
+            if (img->getElementWidth() < space.width) {
+                img->setX(img->getX() + ((space.width - img->getElementWidth()) * 0.5));
+            }
+        } else {
+            // zero space is selected, scale original image size down to fit on the page
+            automaticScaling(*img, page);
+        }
+        addImageToDocument(std::move(img), page, ctrl, true);
+    });
 }

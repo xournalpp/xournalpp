@@ -3,22 +3,25 @@
 #include <memory>  // for __shared_ptr_access, __shar...
 #include <vector>  // for vector
 
+#include "control/Control.h"
+#include "model/Document.h"
 #include "model/Layer.h"                  // for Layer
 #include "model/Stroke.h"                 // for Stroke
 #include "model/XojPage.h"                // for XojPage
 #include "model/eraser/ErasableStroke.h"  // for ErasableStroke
-#include "undo/PageLayerPosEntry.h"       // for PageLayerPosEntry, operator<
 #include "undo/UndoAction.h"              // for UndoAction
 #include "util/i18n.h"                    // for _
-
-class Control;
 
 
 EraseUndoAction::EraseUndoAction(const PageRef& page): UndoAction("EraseUndoAction") { this->page = page; }
 
-void EraseUndoAction::addOriginal(Layer* layer, Stroke* element, int pos) { original.emplace(layer, element, pos); }
+void EraseUndoAction::addOriginal(Layer* layer, Stroke* element, Element::Index pos) {
+    original.emplace(layer, element, pos);
+}
 
-void EraseUndoAction::addEdited(Layer* layer, Stroke* element, int pos) { edited.emplace(layer, element, pos); }
+void EraseUndoAction::addEdited(Layer* layer, Stroke* element, Element::Index pos) {
+    edited.emplace(layer, element, pos);
+}
 
 void EraseUndoAction::removeEdited(Stroke* element) {
     for (auto entryIter = edited.begin(); entryIter != edited.end(); ++entryIter) {
@@ -36,15 +39,16 @@ void EraseUndoAction::finalize() {
             continue;
         } else {
             // Remove the original and add the copy
-            int pos = static_cast<int>(entry.layer->removeElement(entry.element, false));
+            auto [own, pos] = entry.layer->removeElement(entry.element);
+            entry.elementOwn = std::move(own);
 
             ErasableStroke* e = entry.element->getErasable();
             std::vector<std::unique_ptr<Stroke>> strokeList = e->getStrokes();
             for (auto& stroke: strokeList) {
                 // TODO (Marmare314): should use unique_ptr in layer
-                Stroke* copy = stroke.release();
-                entry.layer->insertElement(copy, pos);
-                this->addEdited(entry.layer, copy, pos);
+                auto copy = std::move(stroke);
+                this->addEdited(entry.layer, copy.get(), pos);
+                entry.layer->insertElement(std::move(copy), pos);
                 pos++;
             }
 
@@ -60,13 +64,19 @@ void EraseUndoAction::finalize() {
 auto EraseUndoAction::getText() -> std::string { return _("Erase stroke"); }
 
 auto EraseUndoAction::undo(Control* control) -> bool {
+    Document* doc = control->getDocument();
+    doc->lock();
     for (auto const& entry: edited) {
-        entry.layer->removeElement(entry.element, false);
+        entry.elementOwn = entry.layer->removeElement(entry.element).e;
+    }
+    for (auto const& entry: original) {
+        entry.layer->insertElement(std::move(entry.elementOwn), entry.pos);
+    }
+    doc->unlock();
+    for (auto const& entry: edited) {
         this->page->fireElementChanged(entry.element);
     }
-
     for (auto const& entry: original) {
-        entry.layer->insertElement(entry.element, entry.pos);
         this->page->fireElementChanged(entry.element);
     }
 
@@ -75,14 +85,20 @@ auto EraseUndoAction::undo(Control* control) -> bool {
 }
 
 auto EraseUndoAction::redo(Control* control) -> bool {
+    Document* doc = control->getDocument();
+    doc->lock();
     for (auto const& entry: original) {
-        entry.layer->removeElement(entry.element, false);
-        page->fireElementChanged(entry.element);
+        entry.elementOwn = entry.layer->removeElement(entry.element).e;
     }
-
     for (auto const& entry: edited) {
-        entry.layer->insertElement(entry.element, entry.pos);
-        page->fireElementChanged(entry.element);
+        entry.layer->insertElement(std::move(entry.elementOwn), entry.pos);
+    }
+    doc->unlock();
+    for (auto const& entry: original) {
+        this->page->fireElementChanged(entry.element);
+    }
+    for (auto const& entry: edited) {
+        this->page->fireElementChanged(entry.element);
     }
 
     this->undone = false;

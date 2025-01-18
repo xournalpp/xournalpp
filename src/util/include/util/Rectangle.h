@@ -12,7 +12,7 @@
 #pragma once
 
 #include <algorithm>
-#include <cassert>
+#include <iosfwd>
 #include <optional>
 
 #include "util/Range.h"
@@ -22,17 +22,21 @@ namespace xoj::util {  // Rectangle is already defined in windows.h
 template <class T>
 class Rectangle final {
 public:
-    Rectangle() = default;
-    Rectangle(T x, T y, T width, T height): x(x), y(y), width(width), height(height) {}
-    explicit Rectangle(const Range& rect):
+    constexpr Rectangle() = default;
+    constexpr Rectangle(T x, T y, T width, T height): x(x), y(y), width(width), height(height) {}
+    constexpr explicit Rectangle(const Range& rect):
             x(rect.getX()), y(rect.getY()), width(rect.getWidth()), height(rect.getHeight()) {}
+
+    constexpr auto operator==(const Rectangle& other) const -> bool {
+        return x == other.x && y == other.y && width == other.width && height == other.height;
+    }
 
     /**
      * Returns whether this rectangle intersects another and the intersection
      * @param other the other rectangle
      * @return whether the rectangles intersect and if so, the intersection
      */
-    std::optional<Rectangle> intersects(const Rectangle& other) const {
+    constexpr auto intersects(const Rectangle& other) const -> std::optional<Rectangle> {
         auto x1 = std::max(this->x, other.x);
         auto y1 = std::max(this->y, other.y);
         auto x2 = std::min(this->x + this->width, other.x + other.width);
@@ -47,14 +51,14 @@ public:
      * Returns a new Rectangle with an offset specified
      * by the function arguments
      */
-    Rectangle translated(T dx, T dy) const { return Rectangle(this->x + dx, this->y + dy, this->width, this->height); }
+    constexpr auto translated(T dx, T dy) const -> Rectangle {
+        return Rectangle(this->x + dx, this->y + dy, this->width, this->height);
+    }
 
     /**
      * Computes the union of this and the other rectangle
      */
-    void unite(const Rectangle& other) {
-        // assert(other.width > 0 && other.height > 0 && "Rectangle not normalized"); (does not need to be valid for
-        // snappedBounds)
+    constexpr void unite(const Rectangle& other) {
         this->width = std::max(this->x + this->width, other.x + other.width);
         this->height = std::max(this->y + this->height, other.y + other.height);
         this->x = std::min(this->x, other.x);
@@ -66,7 +70,7 @@ public:
     /**
      * Applies a scalar to this rectangle
      */
-    Rectangle& operator*=(T factor) {
+    constexpr auto operator*=(T factor) -> Rectangle& {
         x *= factor;
         y *= factor;
         width *= factor;
@@ -77,7 +81,7 @@ public:
     /**
      * Calculates the area
      */
-    T area() const { return width * height; }
+    constexpr auto area() const -> T { return width * height; }
 
     T x{};
     T y{};

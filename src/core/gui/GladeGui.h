@@ -16,6 +16,8 @@
 #include <gdk/gdk.h>  // for GdkWindow
 #include <gtk/gtk.h>  // for GtkWidget, GtkWindow, GtkBuilder
 
+#include "util/raii/GObjectSPtr.h"
+
 class GladeSearchpath;
 
 class GladeGui {
@@ -24,9 +26,6 @@ public:
     virtual ~GladeGui();
 
     virtual void show(GtkWindow* parent) = 0;
-
-    operator GtkWindow*();
-    operator GdkWindow*();
 
     GtkWidget* get(const std::string& name);
 
@@ -41,7 +40,7 @@ private:
     /**
      * The Glade resources
      */
-    GtkBuilder* builder;
+    xoj::util::GObjectSPtr<GtkBuilder> builder;
 
     /**
      * Our search paths

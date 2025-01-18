@@ -11,8 +11,8 @@
 
 #pragma once
 
+#include <algorithm>
 #include <optional>
-#include <vector>
 
 /**
  * @brief A templated class for (half open) intervals (a,b]

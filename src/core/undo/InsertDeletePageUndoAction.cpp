@@ -9,7 +9,7 @@
 #include "util/Util.h"              // for npos
 #include "util/i18n.h"              // for _
 
-InsertDeletePageUndoAction::InsertDeletePageUndoAction(const PageRef& page, int pagePos, bool inserted):
+InsertDeletePageUndoAction::InsertDeletePageUndoAction(const PageRef& page, size_t pagePos, bool inserted):
         UndoAction("InsertDeletePageUndoAction") {
     this->inserted = inserted;
     this->page = page;
@@ -43,19 +43,14 @@ auto InsertDeletePageUndoAction::insertPage(Control* control) -> bool {
     // we'll clear the selection in redo as well
     control->clearSelectionEndText();
 
-    // see deletePage for why this is done
-    // doc->lock();
+    doc->lock();
     doc->insertPage(this->page, this->pagePos);
     doc->unlock();
 
-    // these are all threadsafe (I think...)
     control->firePageInserted(this->pagePos);
     control->getCursor()->updateCursor();
     control->getScrollHandler()->scrollToPage(this->pagePos);
-    control->updateDeletePageButton();
 
-    // this prevents the double unlock
-    doc->lock();
     return true;
 }
 
@@ -67,27 +62,19 @@ auto InsertDeletePageUndoAction::deletePage(Control* control) -> bool {
     //***This might kill whatever we've got selected
     control->clearSelectionEndText();
 
-    // this was a double lock problem. We can fix it by
-    // unlocking the UndoRedoHandler's lock inside here.
-    // It's not great practise but it works.
-    // doc->lock();
+    doc->lock();
     auto pNr = doc->indexOf(page);
+    doc->unlock();
     if (pNr == npos) {
-        //	doc->unlock();
         // this should not happen
         return false;
     }
 
     // first send event, then delete page...
-    // we need to unlock the document from UndoRedoHandler
-    // because firePageDeleted is threadsafe.
-    doc->unlock();
     control->firePageDeleted(pNr);
     doc->lock();
     doc->deletePage(pNr);
-
-    control->updateDeletePageButton();
-
+    doc->unlock();
     return true;
 }
 

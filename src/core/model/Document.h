@@ -26,6 +26,7 @@
 
 #include "pdf/base/XojPdfDocument.h"  // for XojPdfDocument
 #include "pdf/base/XojPdfPage.h"      // for XojPdfPageSPtr
+#include "util/raii/GObjectSPtr.h"    // for GObjectSptr
 
 #include "PageRef.h"     // for PageRef
 #include "filesystem.h"  // for path
@@ -41,8 +42,10 @@ public:
 public:
     enum DocumentType { XOPP, XOJ, PDF };
 
-    bool readPdf(const fs::path& filename, bool initPages, bool attachToDocument, gpointer data = nullptr,
-                 gsize length = 0);
+    void setPdfAttributes(const fs::path& filename, bool attachToDocument);
+    bool readPdf(const fs::path& filename, bool initPages, bool attachToDocument,
+                 std::unique_ptr<std::string> data = {});
+    void resetPdf();
 
     size_t getPageCount() const;
     size_t getPdfPageCount() const;
@@ -75,7 +78,7 @@ public:
     fs::path getFilepath() const;
     fs::path getPdfFilepath() const;
     fs::path createSaveFolder(fs::path lastSavePath);
-    fs::path createSaveFilename(DocumentType type, const std::string& defaultSaveName);
+    fs::path createSaveFilename(DocumentType type, const std::string& defaultSaveName, const std::string& defaultPfdName = "");
 
     fs::path getEvMetadataFilename() const;
 
@@ -145,7 +148,7 @@ private:
     /**
      * The bookmark contents model
      */
-    GtkTreeModel* contentsModel = nullptr;
+    xoj::util::GObjectSPtr<GtkTreeModel> contentsModel;
 
     /**
      *  create a backup before save

@@ -10,6 +10,7 @@
 #include "audio/AudioQueue.h"           // for AudioQueue
 #include "audio/DeviceInfo.h"           // for DeviceInfo
 #include "control/settings/Settings.h"  // for Settings
+#include "util/safe_casts.h"            // for as_unsigned
 
 #include "AudioPlayer.h"  // for AudioPlayer
 
@@ -17,7 +18,7 @@ constexpr auto FRAMES_PER_BUFFER{64U};
 
 auto PortAudioConsumer::getOutputDevices() const -> std::vector<DeviceInfo> {
     std::vector<DeviceInfo> deviceList;
-    deviceList.reserve(this->sys.deviceCount());
+    deviceList.reserve(as_unsigned(this->sys.deviceCount()));
 
     for (auto i = this->sys.devicesBegin(); i != sys.devicesEnd(); ++i) {
         if (i->isFullDuplexDevice() || i->isOutputOnlyDevice()) {
@@ -31,7 +32,7 @@ auto PortAudioConsumer::getOutputDevices() const -> std::vector<DeviceInfo> {
 auto PortAudioConsumer::getSelectedOutputDevice() const -> DeviceInfo {
     try {
         return DeviceInfo(&sys.deviceByIndex(this->audioPlayer.getSettings().getAudioOutputDevice()), true);
-    } catch (portaudio::PaException& e) {
+    } catch (const portaudio::PaException& e) {
         g_warning("PortAudioConsumer: Selected output device was not found - fallback to default output device\nCaused "
                   "by: %s",
                   e.what());
@@ -58,12 +59,12 @@ auto PortAudioConsumer::startPlaying() -> bool {
     portaudio::Device* device = nullptr;
     try {
         device = &sys.deviceByIndex(getSelectedOutputDevice().getIndex());
-    } catch (portaudio::PaException& e) {
+    } catch (const portaudio::PaException&) {
         g_warning("PortAudioConsumer: Unable to find selected output device");
         return false;
     }
 
-    if (static_cast<unsigned int>(device->maxOutputChannels()) < channels) {
+    if (device->maxOutputChannels() < channels) {
         this->audioQueue.signalEndOfStream();
         g_warning("Output device has not enough channels to play audio file. (Requires at least 2 channels)");
         return false;
@@ -78,7 +79,7 @@ auto PortAudioConsumer::startPlaying() -> bool {
     try {
         this->outputStream = std::make_unique<portaudio::MemFunCallbackStream<PortAudioConsumer>>(
                 params, *this, &PortAudioConsumer::playCallback);
-    } catch (portaudio::PaException& e) {
+    } catch (const portaudio::PaException& e) {
         this->audioQueue.signalEndOfStream();
         g_warning("PortAudioConsumer: Unable to open stream to device\nCaused by: %s", e.what());
         return false;
@@ -86,7 +87,7 @@ auto PortAudioConsumer::startPlaying() -> bool {
     // Start the recording
     try {
         this->outputStream->start();
-    } catch (portaudio::PaException& e) {
+    } catch (const portaudio::PaException& e) {
         this->audioQueue.signalEndOfStream();
         g_warning("PortAudioConsumer: Unable to start stream\nCaused by: %s", e.what());
         this->outputStream.reset();
@@ -103,8 +104,8 @@ auto PortAudioConsumer::playCallback(const void* /*inputBuffer*/, void* outputBu
 
     if (outputBuffer != nullptr) {
         auto begI = static_cast<float*>(outputBuffer);
-        auto midI = this->audioQueue.pop(begI, framesPerBuffer * this->outputChannels);
-        auto endI = std::next(begI, framesPerBuffer * this->outputChannels);
+        auto midI = this->audioQueue.pop(begI, framesPerBuffer * as_unsigned(this->outputChannels));
+        auto endI = std::next(begI, as_signed(framesPerBuffer) * this->outputChannels);
         // Fill buffer to requested length if necessary
 
         if (midI != endI) {
@@ -146,7 +147,7 @@ void PortAudioConsumer::stopPlaying() {
             if (this->outputStream->isActive()) {
                 this->outputStream->stop();
             }
-        } catch (portaudio::PaException& e) {
+        } catch (const portaudio::PaException&) {
             /*
              * We try closing the stream but this->outputStream might be an invalid object at this time if the stream
              * was previously closed by the backend. Just ignore this as the stream is closed either way.

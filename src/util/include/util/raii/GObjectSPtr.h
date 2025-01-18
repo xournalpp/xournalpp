@@ -27,7 +27,7 @@ template <class object_type>
 class GObjectHandler {
 public:
     static object_type* ref(object_type* p) { return static_cast<object_type*>(g_object_ref(p)); }
-    constexpr static auto unref = g_object_unref;
+    constexpr static auto unref = [](object_type* p) { g_object_unref(p); };
     static object_type* ref_sink(object_type* p) { return static_cast<object_type*>(g_object_ref_sink(p)); }
     static object_type* adopt(object_type* p) {
 #if (GLIB_MAJOR_VERSION > 2 || (GLIB_MAJOR_VERSION == 2 && GLIB_MINOR_VERSION >= 70))

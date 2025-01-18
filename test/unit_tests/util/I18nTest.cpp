@@ -64,3 +64,18 @@ TEST(UtilI18n, test3) {
     string msg = FS(FORMAT_STR(" of {1}{2}") % 5 % 6);
     EXPECT_EQ(std::string(" of 56"), msg);
 }
+
+TEST(UtilI18n, test16bit) {
+    string msg = FS(FORMAT_STR("{1} = {2} and {3}") % 60123 % 60123U % -65536);
+    EXPECT_EQ(std::string("60123 = 60123 and -65536"), msg);
+}
+
+TEST(UtilI18n, test32bit) {
+    string msg = FS(FORMAT_STR("{1} and {2}") % 4294967295U % -12345678);
+    EXPECT_EQ(std::string("4294967295 and -12345678"), msg);
+}
+
+TEST(UtilI18n, test64bit) {
+    string msg = FS(FORMAT_STR("{1} and {2}") % 1234567890123456789U % -1234567890123456789);
+    EXPECT_EQ(std::string("1234567890123456789 and -1234567890123456789"), msg);
+}

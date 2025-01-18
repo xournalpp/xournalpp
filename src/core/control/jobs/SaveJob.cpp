@@ -1,6 +1,5 @@
 #include "SaveJob.h"
 
-#include <cmath>   // for ceil
 #include <memory>  // for __shared_ptr_access
 
 #include <cairo.h>  // for cairo_create, cairo_destroy
@@ -22,7 +21,8 @@
 #include "filesystem.h"  // for path, filesystem_error, remove
 
 
-SaveJob::SaveJob(Control* control): BlockingJob(control, _("Save")) {}
+SaveJob::SaveJob(Control* control, std::function<void(bool)> callback):
+        BlockingJob(control, _("Save")), callback(std::move(callback)) {}
 
 SaveJob::~SaveJob() = default;
 
@@ -37,8 +37,10 @@ void SaveJob::run() {
 void SaveJob::afterRun() {
     if (!this->lastError.empty()) {
         XojMsgBox::showErrorToUser(control->getGtkWindow(), this->lastError);
+        callback(false);
     } else {
         this->control->resetSavedStatus();
+        callback(true);
     }
 }
 
@@ -65,11 +67,13 @@ void SaveJob::updatePreview(Control* control) {
         width *= zoom;
         height *= zoom;
 
-        cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int>(std::ceil(width)),
-                                                               static_cast<int>(std::ceil(height)));
+        cairo_surface_t* crBuffer =
+                cairo_image_surface_create(CAIRO_FORMAT_ARGB32, ceil_cast<int>(width), ceil_cast<int>(height));
 
         cairo_t* cr = cairo_create(crBuffer);
         cairo_scale(cr, zoom, zoom);
+
+        xoj::view::BackgroundFlags flags = xoj::view::BACKGROUND_SHOW_ALL;
 
         // We don't have access to a PdfCache on which DocumentView relies for PDF backgrounds.
         // We thus print the PDF background by hand.
@@ -79,10 +83,13 @@ void SaveJob::updatePreview(Control* control) {
             if (popplerPage) {
                 popplerPage->render(cr);
             }
+            flags.showPDF = xoj::view::HIDE_PDF_BACKGROUND;  // Already printed (if any)
+        } else {
+            flags.forceBackgroundColor = xoj::view::FORCE_AT_LEAST_BACKGROUND_COLOR;
         }
 
         DocumentView view;
-        view.drawPage(page, cr, true /* don't render erasable */, true /* Don't rerender the pdf background */);
+        view.drawPage(page, cr, true /* don't render erasable */, flags);
         cairo_destroy(cr);
         doc->setPreview(crBuffer);
         cairo_surface_destroy(crBuffer);
@@ -112,8 +119,12 @@ auto SaveJob::save() -> bool {
             // Note: The backup must be created for the target as this is the filepath
             // which will be written to. Do not use the `filepath` variable!
             Util::safeRenameFile(target, fs::path{target} += "~");
-        } catch (fs::filesystem_error const& fe) {
+        } catch (const fs::filesystem_error& fe) {
             g_warning("Could not create backup! Failed with %s", fe.what());
+            this->lastError = FS(_F("Save file error, can't backup: {1}") % std::string(fe.what()));
+            if (!control->getWindow()) {
+                g_error("%s", this->lastError.c_str());
+            }
             return false;
         }
     }
@@ -133,7 +144,9 @@ auto SaveJob::save() -> bool {
         try {
             // If a backup was created it can be removed now since no error occured during the save
             fs::remove(fs::path{target} += "~");
-        } catch (fs::filesystem_error const& fe) { g_warning("Could not delete backup! Failed with %s", fe.what()); }
+        } catch (const fs::filesystem_error& fe) {
+            g_warning("Could not delete backup! Failed with %s", fe.what());
+        }
     } else {
         doc->setCreateBackupOnSave(true);
     }

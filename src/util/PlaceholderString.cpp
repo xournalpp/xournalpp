@@ -1,52 +1,16 @@
 #include "util/PlaceholderString.h"
 
-#include <cstddef>    // for size_t
 #include <exception>  // for exception
-#include <utility>    // for move
 
 #include <glib.h>  // for g_error
 
-/**
- * Format String
- */
-class PlaceholderElementString: public PlaceholderElement {
-public:
-    explicit PlaceholderElementString(std::string text): text(std::move(text)) {}
-
-    auto format(std::string format) const -> std::string override { return text; }
-
-private:
-    std::string text;
-};
-
-/**
- * Format int
- */
-class PlaceholderElementInt: public PlaceholderElement {
-public:
-    explicit PlaceholderElementInt(int64_t value): value(value) {}
-
-    auto format(std::string format) const -> std::string override { return std::to_string(value); }
-
-private:
-    int64_t value;
-};
+#include "util/safe_casts.h"  // for as_unsigned
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
 PlaceholderString::PlaceholderString(std::string text): text(std::move(text)) {}
-
-auto PlaceholderString::operator%(int64_t value) -> PlaceholderString& {
-    data.emplace_back(std::make_unique<PlaceholderElementInt>(value));
-    return *this;
-}
-
-auto PlaceholderString::operator%(std::string value) -> PlaceholderString& {
-    data.emplace_back(std::make_unique<PlaceholderElementString>(std::move(value)));
-    return *this;
-}
 
 auto PlaceholderString::formatPart(std::string format) const -> std::string {
     std::string formatDef;
@@ -74,7 +38,7 @@ auto PlaceholderString::formatPart(std::string format) const -> std::string {
         return notFound;
     }
 
-    auto const& pe = data[index];
+    auto const& pe = data[as_unsigned(index)];
 
     return pe->format(formatDef);
 }

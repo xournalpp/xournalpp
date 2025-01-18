@@ -6,11 +6,18 @@
 
 #include "model/Layer.h"     // for Layer, Layer::Index
 #include "model/PageType.h"  // for PageType, PageTypeFormat, PageTypeForma...
+#include "util/Assert.h"     // for xoj_assert
 #include "util/i18n.h"       // for _
 
 #include "BackgroundImage.h"  // for BackgroundImage
 
-XojPage::XojPage(double width, double height): width(width), height(height), bgType(PageTypeFormat::Lined) {}
+XojPage::XojPage(double width, double height, bool suppressLayerCreation): width(width), height(height), bgType(PageTypeFormat::Lined) {
+    if (!suppressLayerCreation) {
+        // ensure at least one valid layer exists
+        this->addLayer(new Layer());
+        this->currentLayer = 1;
+    }
+}
 
 XojPage::~XojPage() {
     for (Layer* l: this->layer) { delete l; }
@@ -52,6 +59,10 @@ void XojPage::removeLayer(Layer* l) {
         this->layer.erase(it);
     }
     this->currentLayer = npos;
+    // ensure at least one valid layer exists
+    if (layer.empty()) {
+        addLayer(new Layer());
+    }
 }
 
 void XojPage::setSelectedLayerId(Layer::Index id) { this->currentLayer = id; }
@@ -146,9 +157,7 @@ auto XojPage::getBackgroundImage() -> BackgroundImage& { return this->background
 void XojPage::setBackgroundImage(BackgroundImage img) { this->backgroundImage = std::move(img); }
 
 auto XojPage::getSelectedLayer() -> Layer* {
-    if (this->layer.empty()) {
-        addLayer(new Layer());
-    }
+    xoj_assert(!layer.empty());
     size_t layer = getSelectedLayerId();
 
     if (layer > 0) {

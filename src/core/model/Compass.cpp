@@ -6,7 +6,7 @@
 #include "gui/inputdevices/CompassInputHandler.h"
 #include "view/CompassView.h"
 
-Compass::Compass(): Compass(INITIAL_HEIGHT, .0, INITIAL_X, INITIAL_Y) {}
+Compass::Compass(): Compass(INITIAL_HEIGHT, .0, 0., 0.) {}
 
 Compass::Compass(double height, double rotation, double x, double y): GeometryTool(height, rotation, x, y) {
     this->lastRepaintRange = getToolRange(true);
@@ -24,7 +24,11 @@ auto Compass::getToolRange(bool transformed) const -> Range {
         rg.addPoint(-h, -h);
         rg.addPoint(h, h);
     }
-    rg.addPadding(.5 * xoj::view::CompassView::LINE_WIDTH_IN_CM * CM);  // account for line width
+
+    // Padding required to fully render the boundary red lines and last blue digit
+    constexpr double RENDER_PADDING = 2.0;
+
+    rg.addPadding(RENDER_PADDING + .5 * xoj::view::CompassView::LINE_WIDTH_IN_CM * CM);  // account for line width
     return rg;
 }
 

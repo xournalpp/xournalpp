@@ -11,7 +11,9 @@
 
 #pragma once
 
-#include <iosfwd>  // for ptrdiff_t
+#include <cstddef>  // for ptrdiff_t
+#include <memory>   // for unique_ptr
+#include <vector>   // for vector
 
 #include <gdk/gdk.h>  // for GdkRectangle
 
@@ -31,12 +33,15 @@ public:
     virtual ~ShapeContainer() = default;
 };
 
+class Element;
+using ElementPtr = std::unique_ptr<Element>;
+
 class Element: public Serializable {
 protected:
     Element(ElementType type);
 
 public:
-    ~Element() override;
+    ~Element() override = default;
 
     using Index = std::ptrdiff_t;
     static constexpr auto InvalidIndex = static_cast<Index>(-1);
@@ -74,7 +79,7 @@ public:
     /**
      * Take 1:1 copy of this element
      */
-    virtual Element* clone() const = 0;
+    virtual auto clone() const -> ElementPtr = 0;
 
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;
@@ -108,3 +113,9 @@ private:
      */
     Color color{0U};
 };
+
+namespace xoj {
+
+auto refElementContainer(const std::vector<ElementPtr>& elements) -> std::vector<Element*>;
+
+}  // namespace xoj

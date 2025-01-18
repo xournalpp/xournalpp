@@ -3,6 +3,8 @@
 #include <memory>   // for allocator, __shared_ptr_access, __share...
 #include <utility>  // for move
 
+#include "control/Control.h"
+#include "model/Document.h"
 #include "model/Element.h"    // for Element, ELEMENT_IMAGE, ELEMENT_STROKE
 #include "model/Layer.h"      // for Layer
 #include "model/PageRef.h"    // for PageRef
@@ -10,22 +12,12 @@
 #include "undo/UndoAction.h"  // for UndoAction
 #include "util/i18n.h"        // for _
 
-class Control;
-
 InsertUndoAction::InsertUndoAction(const PageRef& page, Layer* layer, Element* element):
-        UndoAction("InsertUndoAction") {
+        UndoAction("InsertUndoAction"), layer(layer), element(element), elementOwn(nullptr) {
     this->page = page;
-    this->layer = layer;
-    this->element = element;
 }
 
-InsertUndoAction::~InsertUndoAction() {
-    if (this->undone) {
-        // Insert was undone, so this is not needed anymore
-        delete this->element;
-    }
-    this->element = nullptr;
-}
+InsertUndoAction::~InsertUndoAction() = default;
 
 auto InsertUndoAction::getText() -> std::string {
     switch (element->getType()) {
@@ -43,7 +35,10 @@ auto InsertUndoAction::getText() -> std::string {
 }
 
 auto InsertUndoAction::undo(Control* control) -> bool {
-    this->layer->removeElement(this->element, false);
+    Document* doc = control->getDocument();
+    doc->lock();
+    this->elementOwn = this->layer->removeElement(this->element).e;
+    doc->unlock();
 
     this->page->fireElementChanged(this->element);
 
@@ -53,7 +48,10 @@ auto InsertUndoAction::undo(Control* control) -> bool {
 }
 
 auto InsertUndoAction::redo(Control* control) -> bool {
-    this->layer->addElement(this->element);
+    Document* doc = control->getDocument();
+    doc->lock();
+    this->layer->addElement(std::move(this->elementOwn));
+    doc->unlock();
 
     this->page->fireElementChanged(this->element);
 
@@ -63,27 +61,24 @@ auto InsertUndoAction::redo(Control* control) -> bool {
 }
 
 InsertsUndoAction::InsertsUndoAction(const PageRef& page, Layer* layer, std::vector<Element*> elements):
-        UndoAction("InsertsUndoAction") {
+        UndoAction("InsertsUndoAction"), layer(layer), elements(std::move(elements)), elementsOwn(0) {
     this->page = page;
-    this->layer = layer;
-    this->elements = std::move(elements);
 }
 
-InsertsUndoAction::~InsertsUndoAction() {
-    if (this->undone) {
-        // Insert was undone, so this is not needed anymore
-        for (Element* e: this->elements) {
-            delete e;
-            e = nullptr;
-        }
-    }
-}
+InsertsUndoAction::~InsertsUndoAction() = default;
 
 auto InsertsUndoAction::getText() -> std::string { return _("Insert elements"); }
 
 auto InsertsUndoAction::undo(Control* control) -> bool {
+    this->elementsOwn.reserve(this->elements.size());
+
+    Document* doc = control->getDocument();
+    doc->lock();
     for (Element* elem: this->elements) {
-        this->layer->removeElement(elem, false);
+        this->elementsOwn.emplace_back(this->layer->removeElement(elem).e);
+    }
+    doc->unlock();
+    for (Element* elem: this->elements) {
         this->page->fireElementChanged(elem);
     }
 
@@ -93,8 +88,15 @@ auto InsertsUndoAction::undo(Control* control) -> bool {
 }
 
 auto InsertsUndoAction::redo(Control* control) -> bool {
-    for (Element* elem: this->elements) {
-        this->layer->addElement(elem);
+    Document* doc = control->getDocument();
+    doc->lock();
+    for (auto&& elem: this->elementsOwn) {
+        this->layer->addElement(std::move(elem));
+    }
+    doc->unlock();
+    this->elementsOwn = std::vector<ElementPtr>(0);
+
+    for (auto&& elem: this->elements) {
         this->page->fireElementChanged(elem);
     }
 

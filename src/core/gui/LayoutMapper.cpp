@@ -110,13 +110,13 @@ void calculate(LayoutSettings& data, size_t numRows, size_t numCols, bool useRow
     if (data.orientation == LayoutSettings::Vertical) {
         // Vertical Layout
         if (data.showPairedPages) {
-            data.offset = firstPageOffset % (2 * data.rows);
+            data.offset = firstPageOffset % static_cast<uint32_t>(2 * data.rows);
         } else {
-            data.offset = firstPageOffset % data.rows;
+            data.offset = firstPageOffset % static_cast<uint32_t>(data.rows);
         }
     } else {
         // Horizontal Layout
-        data.offset = firstPageOffset % data.cols;
+        data.offset = firstPageOffset % static_cast<uint32_t>(data.cols);
     }
 }
 

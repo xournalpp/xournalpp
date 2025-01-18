@@ -12,6 +12,7 @@
 #pragma once
 
 #include <cstddef>      // for size_t
+#include <optional>     // for optional
 #include <string>       // for string
 #include <string_view>  // for string_view
 #include <utility>      // for pair, make_pair
@@ -51,15 +52,17 @@ public:
     /// FIXME: remove this method. Currently, it is used by Control::clipboardPasteImage.
     [[deprecated]] void setImage(GdkPixbuf* img);
 
+    /// The image is rendered lazily by default; call this method to render it.
+    /// Returns std::nullopt on success, an error message on failure
+    std::optional<std::string> renderBuffer() const;
+
     /// Returns the internal surface that contains the rendered image data.
-    ///
-    /// Note that the image is rendered lazily by default; call this method to render it.
     cairo_surface_t* getImage() const;
 
     void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
     void rotate(double x0, double y0, double th) override;
 
-    Element* clone() const override;
+    auto clone() const -> ElementPtr override;
 
     bool hasData() const;
 
@@ -72,7 +75,7 @@ public:
     /// Return the size of the raw image, or (-1, -1) if the image has not been rendered yet.
     std::pair<int, int> getImageSize() const;
 
-    GdkPixbufFormat* getImageFormat() const;
+    [[maybe_unused]] GdkPixbufFormat* getImageFormat() const;
 
     static constexpr std::pair<int, int> NOSIZE = std::make_pair(-1, -1);
 

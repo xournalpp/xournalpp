@@ -1,17 +1,23 @@
 #include "BaseShapeOrSplineToolView.h"
 
-#include <cassert>
-
 #include "control/tools/InputHandler.h"
 #include "model/LineStyle.h"
 #include "model/Stroke.h"
+#include "util/Assert.h"
 #include "util/Color.h"
+#include "util/Util.h"  // for cairo_set_dash_from_vector
 
 using namespace xoj::view;
 
+/**
+ * @brief To avoid rendering artefact (due to antialiasing?) we add a padding when clearing out the mask (for filled
+ * highlighter only)
+ */
+constexpr double MASK_CLEARANCE_PADDING = 1;
+
 static const Stroke& safeGetStroke(const InputHandler* h) {
-    assert(h);
-    assert(h->getStroke());
+    xoj_assert(h);
+    xoj_assert(h->getStroke());
     return *h->getStroke();
 }
 
@@ -35,15 +41,15 @@ cairo_t* BaseShapeOrSplineToolView::prepareContext(cairo_t* cr) const {
         // https://github.com/xournalpp/xournalpp/issues/3709
         if (!mask.isInitialized()) {
             mask = createMask(cr);
-            const double* dashes = nullptr;
-            int dashCount = 0;
-            this->lineStyle.getDashes(dashes, dashCount);
-            cairo_set_dash(mask.get(), dashes, dashCount, 0.0);
+            const auto& dashes = this->lineStyle.getDashes();
+            Util::cairo_set_dash_from_vector(mask.get(), dashes, 0);
             cairo_set_line_width(mask.get(), this->strokeWidth);
             // operator is already set by createMask().
         } else {
             // Clear the mask
-            mask.wipe();
+            maskWipeExtent.addPadding(MASK_CLEARANCE_PADDING);
+            mask.wipeRange(maskWipeExtent);
+            maskWipeExtent = Range();
         }
         return mask.get();
     } else {
@@ -51,11 +57,8 @@ cairo_t* BaseShapeOrSplineToolView::prepareContext(cairo_t* cr) const {
         cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
         cairo_set_line_width(cr, this->strokeWidth);
 
-        const double* dashes = nullptr;
-        int dashCount = 0;
-        this->lineStyle.getDashes(dashes, dashCount);
-        assert((dashCount == 0 && dashes == nullptr) || (dashCount != 0 && dashes != nullptr));
-        cairo_set_dash(cr, dashes, dashCount, 0.0);
+        const auto& dashes = this->lineStyle.getDashes();
+        Util::cairo_set_dash_from_vector(cr, dashes, 0.0);
         return cr;
     }
 }

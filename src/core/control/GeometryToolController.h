@@ -30,7 +30,7 @@ class Stroke;
 class GeometryToolController {
 public:
     GeometryToolController(XojPageView* view, GeometryTool* geometryTool);
-    ~GeometryToolController();
+    virtual ~GeometryToolController();
 
 public:
     /**

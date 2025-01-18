@@ -12,52 +12,40 @@
 #pragma once
 
 #include <cstddef>  // for size_t
-#include <list>     // for list
+#include <memory>   // for unique_ptr
+#include <vector>   // for vector
 
 #include <gtk/gtk.h>  // for GtkWidget, Gtk...
 
-#include "gui/sidebar/previews/base/SidebarToolbar.h"  // for SidebarActions
 #include "model/DocumentChangeType.h"                  // for DocumentChange...
 #include "model/DocumentListener.h"                    // for DocumentListener
 
 class AbstractSidebarPage;
 class Control;
 class GladeGui;
-class SidebarPageButton;
+class SidebarTabButton;
 
-class Sidebar: public DocumentListener, public SidebarToolbarActionListener {
+class Sidebar: public DocumentListener {
 public:
     Sidebar(GladeGui* gui, Control* control);
     ~Sidebar() override;
 
 private:
-    void initPages(GtkWidget* sidebarContents, GladeGui* gui);
-    void addPage(AbstractSidebarPage* page);
+    void initTabs(GtkWidget* sidebarContents);
+    void addTab(std::unique_ptr<AbstractSidebarPage> tab);
 
-    // SidebarToolbarActionListener
 public:
     /**
-     * Called when an action is performed
+     * Layout sidebar
      */
-    void actionPerformed(SidebarActions action) override;
+    void layout();
 
-public:
     /**
      * A page was selected, so also select this page in the sidebar
      */
     void selectPageNr(size_t page, size_t pdfPage);
 
     Control* getControl();
-
-    /**
-     * Sets the current selected page
-     */
-    void setSelectedPage(size_t page);
-
-    /**
-     * Show/hide tabs based on whether they have content. Select first active tab (page).
-     */
-    void updateVisibleTabs();
 
     /**
      * Temporary disable Sidebar (e.g. while saving)
@@ -70,15 +58,25 @@ public:
     void saveSize();
 
     /**
-     * Gets the sidebar toolbar
+     * Get how many pages are contained in this sidebar
+     *
+     * Todo: it makes no sense to expose this, as the caller has no way of knowing what those pages correspond to
      */
-    SidebarToolbar* getToolbar();
+    [[deprecated]] size_t getNumberOfTabs() const;
 
     /**
-     * Ask the user whether a page with the given id
-     * should be added to the document.
+     * Get index of the currently selected page
+     *
+     * Todo: it makes no sense to expose this, as the caller has no way of knowing what this number corresponds to
      */
-    void askInsertPdfPage(size_t pdfPage);
+    [[deprecated]] size_t getSelectedTab() const;
+
+    /**
+     * Sets the current selected tab
+     *
+     * Todo: this should be private
+     */
+    void setSelectedTab(size_t tab);
 
 public:
     // DocumentListener interface
@@ -88,22 +86,26 @@ private:
     /**
      * Page selected
      */
-    static void buttonClicked(GtkToolButton* toolbutton, SidebarPageButton* buttonData);
+    static void buttonClicked(GtkButton* button, SidebarTabButton* buttonData);
+
+    /**
+     * Show/hide tabs based on whether they have content. Select first active tab (page).
+     */
+    void updateVisibleTabs();
+
 
 private:
     Control* control = nullptr;
 
-    GladeGui* gui = nullptr;
-
     /**
      * The sidebar pages
      */
-    std::list<AbstractSidebarPage*> pages;
+    std::vector<std::unique_ptr<AbstractSidebarPage>> tabs;
 
     /**
-     * The Toolbar with the pages
+     * The bar with the tab selection
      */
-    GtkToolbar* tbSelectPage = nullptr;
+    GtkBox* tbSelectTab = nullptr;
 
     /**
      * The close button of the sidebar
@@ -113,30 +115,25 @@ private:
     /**
      * The current visible page in the sidebar
      */
-    GtkWidget* visiblePage = nullptr;
+    GtkWidget* visibleTab = nullptr;
 
     /**
      * Current active page
      */
-    AbstractSidebarPage* currentPage = nullptr;
+    size_t currentTabIdx{0};
 
     /**
      * The sidebarContents widget
      */
     GtkWidget* sidebarContents = nullptr;
-
-    /**
-     * Sidebar toolbar
-     */
-    SidebarToolbar toolbar;
 };
 
-class SidebarPageButton {
+class SidebarTabButton {
 public:
-    SidebarPageButton(Sidebar* sidebar, int index, AbstractSidebarPage* page);
+    SidebarTabButton(Sidebar* sidebar, size_t index, AbstractSidebarPage* page);
 
 public:
     Sidebar* sidebar = nullptr;
-    int index = 0;
+    size_t index = 0;
     AbstractSidebarPage* page = nullptr;
 };

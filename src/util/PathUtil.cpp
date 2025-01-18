@@ -1,5 +1,6 @@
 #include "util/PathUtil.h"
 
+#include <algorithm>
 #include <cstdlib>      // for system
 #include <fstream>      // for ifstream, char_traits, basic_ist...
 #include <iterator>     // for begin
@@ -15,6 +16,7 @@
 #include "util/Util.h"               // for getPid, execInUiThread
 #include "util/XojMsgBox.h"          // for XojMsgBox
 #include "util/i18n.h"               // for FS, _F, FORMAT_STR
+#include "util/safe_casts.h"         // for as_signed
 
 #include "config.h"  // for PROJECT_NAME
 
@@ -54,17 +56,19 @@ auto Util::getLongPath(const fs::path& path) -> fs::path { return path; }
  *
  * @param path Path to read
  * @param showErrorToUser Show an error to the user, if the file could not be read
+ * @param openmode Mode to open the file
  *
  * @return contents if the file was read, std::nullopt if not
  */
-auto Util::readString(fs::path const& path, bool showErrorToUser) -> std::optional<std::string> {
+auto Util::readString(fs::path const& path, bool showErrorToUser, std::ios_base::openmode openmode)
+        -> std::optional<std::string> {
     try {
         std::string s;
-        std::ifstream ifs{path};
+        std::ifstream ifs{path, openmode};
         s.resize(fs::file_size(path));
-        ifs.read(s.data(), s.size());
+        ifs.read(s.data(), as_signed(s.size()));
         return {std::move(s)};
-    } catch (fs::filesystem_error const& e) {
+    } catch (const fs::filesystem_error& e) {
         if (showErrorToUser) {
             XojMsgBox::showErrorToUser(nullptr, e.what());
         }
@@ -149,14 +153,20 @@ auto Util::fromGFile(GFile* file) -> fs::path {
     return ret;
 }
 
-auto Util::toGFile(fs::path const& path) -> GFile* { return g_file_new_for_path(path.u8string().c_str()); }
+auto Util::toGFile(fs::path const& path) -> xoj::util::GObjectSPtr<GFile> {
+    return xoj::util::GObjectSPtr<GFile>(g_file_new_for_path(path.u8string().c_str()), xoj::util::adopt);
+}
 
 
 void Util::openFileWithDefaultApplication(const fs::path& filename) {
 #ifdef __APPLE__
     constexpr auto const OPEN_PATTERN = "open \"{1}\"";
 #elif _WIN32  // note the underscore: without it, it's not msdn official!
-    constexpr auto const OPEN_PATTERN = "start \"{1}\"";
+    constexpr auto const OPEN_PATTERN = "start \"\" \"{1}\"";
+    /**
+     * start command requires a (possibly empty) title when there are quotes around the command
+     * https://stackoverflow.com/questions/27261692/how-do-i-use-quotes-in-cmd-start
+     */
 #else         // linux, unix, ...
     constexpr auto const OPEN_PATTERN = "xdg-open \"{1}\"";
 #endif
@@ -170,38 +180,22 @@ void Util::openFileWithDefaultApplication(const fs::path& filename) {
     }
 }
 
-void Util::openFileWithFilebrowser(const fs::path& filename) {
-#ifdef __APPLE__
-    constexpr auto const OPEN_PATTERN = "open \"{1}\"";
-#elif _WIN32
-    constexpr auto const OPEN_PATTERN = "explorer.exe /n,/e,\"{1}\"";
-#else  // linux, unix, ...
-    constexpr auto const OPEN_PATTERN = R"(nautilus "file://{1}" || dolphin "file://{1}" || konqueror "file://{1}" &)";
-#endif
-    std::string command = FS(FORMAT_STR(OPEN_PATTERN) % Util::getEscapedPath(filename));
-    if (system(command.c_str()) != 0) {
-        std::string msg = FS(_F("File couldn't be opened. You have to do it manually:\n"
-                                "URL: {1}") %
-                             filename.u8string());
-        XojMsgBox::showErrorToUser(nullptr, msg);
-    }
-}
-
-auto Util::getGettextFilepath(const char* localeDir) -> fs::path {
+auto Util::getGettextFilepath(fs::path const& localeDir) -> fs::path {
+    /// documentation of g_getenv is wrong, its UTF-8, see #5640
     const char* gettextEnv = g_getenv("TEXTDOMAINDIR");
     // Only consider first path in environment variable
-    std::string directories;
+    std::string_view directories;
     if (gettextEnv) {
-        directories = std::string(gettextEnv);
+        directories = gettextEnv;
         size_t firstDot = directories.find(G_SEARCHPATH_SEPARATOR);
         if (firstDot != std::string::npos) {
             directories = directories.substr(0, firstDot);
         }
     }
-    const char* dir = (gettextEnv) ? directories.c_str() : localeDir;
-    g_message("TEXTDOMAINDIR = %s, Platform-specific locale dir = %s, chosen directory = %s", gettextEnv, localeDir,
-              dir);
-    return fs::path(dir);
+    auto dir = (gettextEnv) ? fs::u8path(directories) : localeDir;
+    g_debug("TEXTDOMAINDIR = %s, Platform-specific locale dir = %s, chosen directory = %s", gettextEnv,
+            localeDir.string().c_str(), dir.string().c_str());
+    return dir;
 }
 
 auto Util::getAutosaveFilepath() -> fs::path {
@@ -238,6 +232,43 @@ auto Util::getDataSubfolder(const fs::path& subfolder) -> fs::path {
     return Util::ensureFolderExists(p);
 }
 
+static auto buildUserStateDir() -> fs::path {
+#if _WIN32
+    // Windows: state directory is same as data directory
+    return fs::u8path(g_get_user_data_dir());
+#else
+    // Unix: $XDG_STATE_HOME or ~/.local/state
+    const char* xdgStateHome = std::getenv("XDG_STATE_HOME");
+    if (xdgStateHome && xdgStateHome[0]) {
+        // environment variable exists and is non-empty
+        return fs::u8path(xdgStateHome);
+    }
+
+    auto path = fs::u8path(g_get_home_dir());
+    return path / ".local/state";
+#endif
+}
+
+static auto getUserStateDir() -> const fs::path& {
+    // The GLib function g_get_user_state_dir is not supported on GLib < 2.72,
+    // so we implement our version here.
+
+    // Cache fs::path so it is only computed once.
+    static std::optional<const fs::path> userStateDir;
+    if (!userStateDir.has_value()) {
+        userStateDir.emplace(buildUserStateDir());
+    }
+    return *userStateDir;
+}
+
+auto Util::getStateSubfolder(const fs::path& subfolder) -> fs::path {
+    auto p = getUserStateDir();
+    p /= CONFIG_FOLDER_NAME;
+    p /= subfolder;
+
+    return Util::ensureFolderExists(p);
+}
+
 auto Util::getConfigFile(const fs::path& relativeFileName) -> fs::path {
     fs::path p = getConfigSubfolder(relativeFileName.parent_path());
     p /= relativeFileName.filename();
@@ -260,10 +291,9 @@ auto Util::getTmpDirSubfolder(const fs::path& subfolder) -> fs::path {
 auto Util::ensureFolderExists(const fs::path& p) -> fs::path {
     try {
         fs::create_directories(p);
-    } catch (fs::filesystem_error const& fe) {
+    } catch (const fs::filesystem_error& fe) {
         Util::execInUiThread([=]() {
             std::string msg = FS(_F("Could not create folder: {1}\nFailed with error: {2}") % p.u8string() % fe.what());
-            g_warning("%s %s", msg.c_str(), fe.what());
             XojMsgBox::showErrorToUser(nullptr, msg);
         });
     }
@@ -274,7 +304,7 @@ auto Util::isChildOrEquivalent(fs::path const& path, fs::path const& base) -> bo
     auto safeCanonical = [](fs::path const& p) {
         try {
             return fs::weakly_canonical(p);
-        } catch (fs::filesystem_error const& fe) {
+        } catch (const fs::filesystem_error& fe) {
             g_warning("Util::isChildOrEquivalent: Error resolving paths, failed with %s.\nFalling back to "
                       "lexicographical path",
                       fe.what());
@@ -302,7 +332,7 @@ bool Util::safeRenameFile(fs::path const& from, fs::path const& to) {
     try {
         fs::remove(to);
         fs::rename(from, to);
-    } catch (fs::filesystem_error const& fe) {
+    } catch (const fs::filesystem_error& fe) {
         // Attempt copy and delete
         g_warning("Renaming file %s to %s failed with %s. This may happen when source and target are on different "
                   "filesystems. Attempt to copy the file.",
@@ -326,6 +356,9 @@ auto Util::getDataPath() -> fs::path {
     fs::path p = Stacktrace::getExePath().parent_path();
     if (fs::exists(p / "Resources")) {
         p = p / "Resources";
+    } else {
+        p = PACKAGE_DATA_DIR;
+        p /= PROJECT_NAME;
     }
     return p;
 #else
@@ -336,11 +369,30 @@ auto Util::getDataPath() -> fs::path {
 }
 
 auto Util::getLocalePath() -> fs::path {
-#ifdef _WIN32
-    return getDataPath() / ".." / "locale";
-#elif defined(__APPLE__)
-    return getDataPath() / "share" / "locale";
-#else
-    return getDataPath() / ".." / "locale";
+#ifdef __APPLE__
+    fs::path p = Stacktrace::getExePath().parent_path();
+    if (fs::exists(p / "Resources")) {
+        return p / "Resources" / "share" / "locale";
+    }
 #endif
+
+    return getDataPath() / ".." / "locale";
+}
+
+auto Util::getBuiltInPaletteDirectoryPath() -> fs::path { return getDataPath() / "palettes"; }
+
+auto Util::getCustomPaletteDirectoryPath() -> fs::path { return getConfigSubfolder("palettes"); }
+
+auto Util::listFilesSorted(fs::path directory) -> std::vector<fs::path> {
+    std::vector<fs::path> filePaths{};
+    if (!exists(directory)) {
+        g_warning("Directory %s does not exist.", directory.u8string().c_str());
+        return filePaths;
+    }
+
+    for (const fs::directory_entry& p: fs::directory_iterator(directory)) {
+        filePaths.push_back(p.path());
+    }
+    std::sort(filePaths.begin(), filePaths.end());
+    return filePaths;
 }

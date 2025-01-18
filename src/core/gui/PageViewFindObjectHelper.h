@@ -14,14 +14,20 @@
 // No include needed, this is included after PageView.h
 
 #include <limits>
+#include <mutex>
 #include <optional>
 
 #include "control/AudioController.h"
+#include "control/Control.h"
+#include "control/layer/LayerController.h"
+#include "control/settings/Settings.h"
 #include "control/tools/EditSelection.h"
-#include "util/PathUtil.h"
+#include "gui/PageView.h"
+#include "model/Layer.h"
+#include "model/XojPage.h"
+#include "util/safe_casts.h"
 
 #include "XournalView.h"
-#include "filesystem.h"
 
 class BaseSelectObject {
 public:
@@ -30,15 +36,34 @@ public:
     virtual ~BaseSelectObject() = default;
 
 public:
-    virtual bool at(double x, double y) {
+    bool findAt(double x, double y, bool multiLayer = false, bool clearSelection = true) {
         this->x = x;
         this->y = y;
 
-        // clear old selection anyway
-        view->xournal->getControl()->clearSelection();
+        Control* ctrl = this->view->getXournal()->getControl();
 
-        Layer* layer = this->view->getPage()->getSelectedLayer();
-        return checkLayer(layer);
+        if (clearSelection) {
+            ctrl->clearSelection();
+        }
+
+        std::lock_guard lock(*ctrl->getDocument());
+        if (multiLayer) {
+            size_t initialLayer = this->view->getPage()->getSelectedLayerId();
+            auto* layers = this->view->getPage()->getLayers();
+            for (auto it = layers->rbegin(); it != layers->rend(); it++) {
+                Layer* layer = *it;
+                Layer::Index index = layers->size() - as_unsigned(std::distance(layers->rbegin(), it));
+                ctrl->getLayerController()->switchToLay(index);
+                if (checkLayer(layer)) {
+                    return true;
+                }
+            }
+            ctrl->getLayerController()->switchToLay(initialLayer);
+            return false;
+        } else {
+            Layer* layer = this->view->getPage()->getSelectedLayer();
+            return checkLayer(layer);
+        }
     }
 
 protected:
@@ -48,7 +73,8 @@ protected:
          */
         bool found = false;
         double minDistSq = std::numeric_limits<double>::max();
-        for (Element* e: l->getElements()) {
+        Element::Index pos = 0;
+        for (auto&& e: l->getElements()) {
             const double eX = e->getX() + e->getElementWidth() / 2.0;
             const double eY = e->getY() + e->getElementHeight() / 2.0;
             const double dx = eX - this->x;
@@ -56,16 +82,17 @@ protected:
             const double distSq = dx * dx + dy * dy;
             const GdkRectangle matchRect = {gint(x - 10), gint(y - 10), 20, 20};
             if (e->intersectsArea(&matchRect) && distSq < minDistSq) {
-                if (this->checkElement(e)) {
+                if (this->checkElement(e.get(), pos)) {
                     minDistSq = distSq;
                     found = true;
                 }
             }
+            pos++;
         }
         return found;
     }
 
-    virtual bool checkElement(Element* e) = 0;
+    virtual bool checkElement(Element* e, Element::Index pos) = 0;
 
 protected:
     XojPageView* view{};
@@ -80,16 +107,18 @@ public:
 
     ~SelectObject() override = default;
 
-    bool at(double x, double y) override {
-        BaseSelectObject::at(x, y);
+    bool at(double x, double y, bool multiLayer = false) {
+        findAt(x, y, multiLayer);
 
         if (strokeMatch) {
             elementMatch = strokeMatch;
         }
 
         if (elementMatch) {
-            view->xournal->setSelection(new EditSelection(view->xournal->getControl()->getUndoRedoHandler(),
-                                                          elementMatch, view, view->page));
+            Control* ctrl = view->getXournal()->getControl();
+            auto sel = SelectionFactory::createFromElementOnActiveLayer(ctrl, view->getPage(), view, elementMatch,
+                                                                        matchIndex);
+            view->xournal->setSelection(sel.release());
 
             view->repaintPage();
 
@@ -99,18 +128,41 @@ public:
         return false;
     }
 
+    bool atAggregate(double x, double y) {
+        EditSelection* previousSelection = view->getXournal()->getSelection();
+        xoj_assert(previousSelection);
+
+        findAt(x, y, false, false);
+        if (strokeMatch) {
+            elementMatch = strokeMatch;
+        }
+
+        if (elementMatch) {
+            auto sel = SelectionFactory::addElementFromActiveLayer(view->getXournal()->getControl(), previousSelection,
+                                                                   elementMatch, matchIndex);
+            view->getXournal()->setSelection(sel.release());
+
+            view->repaintPage();
+
+            return true;
+        }
+        return false;
+    }
+
 protected:
-    bool checkElement(Element* e) override {
+    bool checkElement(Element* e, Element::Index pos) override {
         if (e->getType() == ELEMENT_STROKE) {
             Stroke* s = (Stroke*)e;
             double tmpGap = 0;
             if ((s->intersects(x, y, 5, &tmpGap)) && (gap > tmpGap)) {
                 gap = tmpGap;
                 strokeMatch = s;
+                matchIndex = pos;
                 return true;
             }
         } else {
             elementMatch = e;
+            matchIndex = pos;
             return true;
         }
 
@@ -120,6 +172,7 @@ protected:
 private:
     Stroke* strokeMatch;
     Element* elementMatch;
+    Element::Index matchIndex;
     double gap;
 };
 
@@ -137,10 +190,10 @@ public:
     std::optional<Status> playbackStatus;
 
 public:
-    bool at(double x, double y) override { return BaseSelectObject::at(x, y); }
+    bool at(double x, double y, bool multiLayer = false) { return findAt(x, y, multiLayer); }
 
 protected:
-    bool checkElement(Element* e) override {
+    bool checkElement(Element* e, Element::Index) override {
         if (e->getType() != ELEMENT_STROKE && e->getType() != ELEMENT_TEXT) {
             return false;
         }
@@ -156,8 +209,12 @@ protected:
                     // Assume path exists
                     fn = path / fn;
                 }
-                auto* ac = view->getXournal()->getControl()->getAudioController();
-                bool success = ac->startPlayback(fn, (unsigned int)ts);
+                auto* audioController = view->getXournal()->getControl()->getAudioController();
+                if (!audioController) {
+                    g_warning("Audio has been disabled");
+                    return false;
+                }
+                bool success = audioController->startPlayback(fn, (unsigned int)ts);
                 playbackStatus = {success, std::move(fn)};
                 return success;
             }

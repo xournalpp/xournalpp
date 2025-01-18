@@ -12,11 +12,13 @@
 #pragma once
 
 #include <algorithm>
-#include <cassert>
 #include <condition_variable>
 #include <deque>
 #include <limits>
 #include <mutex>
+
+#include "util/Assert.h"
+#include "util/safe_casts.h"  // for as_signed
 
 template <typename T>
 class AudioQueue {
@@ -65,7 +67,7 @@ public:
         auto queueSize = internalQueue.size();
         auto returnBufferLength = std::min<size_t>(nSamples, queueSize - queueSize % this->channels);
         auto begI = rbegin(internalQueue);
-        auto endI = std::next(begI, returnBufferLength);
+        auto endI = std::next(begI, as_signed(returnBufferLength));
 
         auto ret = std::move(begI, endI, insertIter);
         internalQueue.erase(endI.base(), begI.base());
@@ -86,14 +88,14 @@ public:
 
     void waitForProducer(std::unique_lock<std::mutex>& lock) {
         // static_assert(lock.mutex() == &this->queueLock);
-        assert(lock.mutex() == &this->queueLock);
+        xoj_assert(lock.mutex() == &this->queueLock);
         while (!this->pushNotified && !hasStreamEnded()) { this->pushLockCondition.wait(lock); }
         this->pushNotified = false;
     }
 
     void waitForConsumer(std::unique_lock<std::mutex>& lock) {
         // static_assert(lock.mutex() == &this->queueLock);
-        assert(lock.mutex() == &this->queueLock);
+        xoj_assert(lock.mutex() == &this->queueLock);
         while (!this->popNotified && !hasStreamEnded()) { this->popLockCondition.wait(lock); }
         this->popNotified = false;
     }
@@ -106,7 +108,7 @@ public:
     [[nodiscard]] std::unique_lock<std::mutex> acquire_lock() {
         std::unique_lock retLock{this->queueLock, std::defer_lock};
         std::lock(retLock, this->internalLock);
-        std::lock_guard{this->internalLock, std::adopt_lock};
+        std::lock_guard lock{this->internalLock, std::adopt_lock};
         return retLock;
     }
 
@@ -122,7 +124,7 @@ public:
      * Todo (readability, type-safety): create a struct AudioAttributes; remove this comment
      */
 
-    [[nodiscard]] std::pair<double, uint32_t> getAudioAttributes() {
+    [[nodiscard]] std::pair<double, int> getAudioAttributes() {
         std::lock_guard<std::mutex> lock(internalLock);
         return {this->sampleRate, this->channels};
     }

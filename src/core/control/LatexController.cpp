@@ -3,6 +3,7 @@
 #include <cstdlib>   // for free
 #include <fstream>   // for ifstream, basic_istream
 #include <iterator>  // for istreambuf_iterator, ope...
+#include <limits>    // for numeric_limits
 #include <memory>    // for unique_ptr, allocator
 #include <optional>  // for optional
 #include <utility>   // for move
@@ -30,25 +31,27 @@
 #include "model/XojPage.h"                   // for XojPage
 #include "undo/InsertUndoAction.h"           // for InsertUndoAction
 #include "undo/UndoRedoHandler.h"            // for UndoRedoHandler
+#include "util/Assert.h"                     // for xoj_assert
 #include "util/Color.h"                      // for Color, get_color_contrast
 #include "util/PathUtil.h"                   // for ensureFolderExists, getT...
 #include "util/PlaceholderString.h"          // for PlaceholderString
+#include "util/PopupWindowWrapper.h"         // for PopupWindowWrapper
 #include "util/Rectangle.h"                  // for Rectangle
 #include "util/Util.h"                       // for npos
 #include "util/XojMsgBox.h"                  // for XojMsgBox
 #include "util/i18n.h"                       // for FS, _, _F, N_
+#include "util/safe_casts.h"                 // for round_cast
 
 #include "Control.h"  // for Control
 
 using std::string;
 
-const Color LIGHT_PREVIEW_BACKGROUND = Colors::white;
-const Color DARK_PREVIEW_BACKGROUND = Colors::black;
+constexpr Color LIGHT_PREVIEW_BACKGROUND = Colors::white;
+constexpr Color DARK_PREVIEW_BACKGROUND = Colors::black;
 
 LatexController::LatexController(Control* control):
         control(control),
         settings(control->getSettings()->latexSettings),
-        dlg(control->getGladeSearchPath(), settings),
         doc(control->getDocument()),
         texTmpDir(Util::getTmpDirSubfolder("tex")),
         generator(settings) {
@@ -120,6 +123,8 @@ void LatexController::findSelectedTexElement() {
 
         if (auto* img = dynamic_cast<TexImage*>(this->selectedElem)) {
             this->initialTex = img->getText();
+            this->temporaryRender = img->cloneTexImage();
+            this->isValidTex = true;
         } else if (auto* txt = dynamic_cast<Text*>(this->selectedElem)) {
             this->initialTex = "\\text{" + txt->getText() + "}";
         }
@@ -135,40 +140,28 @@ void LatexController::findSelectedTexElement() {
         const double centerX = visibleBounds.x + 0.5 * visibleBounds.width;
         const double centerY = visibleBounds.y + 0.5 * visibleBounds.height;
 
-        if (layout->getPageViewAt(centerX, centerY) == this->view) {
+        if (layout->getPageViewAt(round_cast<int>(centerX), round_cast<int>(centerY)) == this->view) {
             // Pick the center of the visible area (converting from screen to page coordinates)
-            this->posx = static_cast<int>((centerX - this->view->getX()) / zoom);
-            this->posy = static_cast<int>((centerY - this->view->getY()) / zoom);
+            this->posx = (centerX - this->view->getX()) / zoom;
+            this->posy = (centerY - this->view->getY()) / zoom;
         } else {
             // No better location, so just center it on the page (possibly out of viewport)
-            this->posx = static_cast<int>(this->page->getWidth() / 2);
-            this->posy = static_cast<int>(this->page->getHeight() / 2);
+            this->posx = this->page->getWidth() / 2;
+            this->posy = this->page->getHeight() / 2;
         }
     }
     this->doc->unlock();
 }
 
-auto LatexController::showTexEditDialog() -> string {
-    // Attach the signal handler before setting the buffer text so that the
-    // callback is triggered
-    gulong signalHandler = g_signal_connect(dlg.getTextBuffer(), "changed", G_CALLBACK(handleTexChanged), this);
-    bool isNewFormula = this->initialTex.empty();
-    this->dlg.setFinalTex(isNewFormula ? this->settings.defaultText : this->initialTex);
+void LatexController::showTexEditDialog(std::unique_ptr<LatexController> ctrl) {
+    LatexController* texCtrl = ctrl.get();
+    xoj::popup::PopupWindowWrapper<LatexDialog> popup(texCtrl->control->getGladeSearchPath(), std::move(ctrl));
 
-    if (this->temporaryRender != nullptr) {
-        this->dlg.setTempRender(this->temporaryRender->getPdf());
-    }
-
-    this->dlg.show(GTK_WINDOW(control->getWindow()->getWindow()), isNewFormula);
-    g_signal_handler_disconnect(dlg.getTextBuffer(), signalHandler);
-
-    string result = this->dlg.getFinalTex();
-    // If the user cancelled, there is no change in the latex string.
-    result = result.empty() ? initialTex : result;
-    return result;
+    popup.show(GTK_WINDOW(texCtrl->control->getWindow()->getWindow()));
 }
 
 void LatexController::triggerImageUpdate(const string& texString) {
+    xoj_assert(this->dlg);
     if (this->isUpdating()) {
         return;
     }
@@ -177,9 +170,9 @@ void LatexController::triggerImageUpdate(const string& texString) {
 
     // Determine a background color that has enough contrast with the text color:
     if (Util::get_color_contrast(textColor, LIGHT_PREVIEW_BACKGROUND) > 0.5) {
-        this->dlg.setPreviewBackgroundColor(LIGHT_PREVIEW_BACKGROUND);
+        this->dlg->setPreviewBackgroundColor(LIGHT_PREVIEW_BACKGROUND);
     } else {
-        this->dlg.setPreviewBackgroundColor(DARK_PREVIEW_BACKGROUND);
+        this->dlg->setPreviewBackgroundColor(DARK_PREVIEW_BACKGROUND);
     }
 
     this->lastPreviewedTex = texString;
@@ -207,8 +200,8 @@ void LatexController::triggerImageUpdate(const string& texString) {
  * method inside small methods in 'self'. To improve performance, we render the
  * text asynchronously.
  */
-void LatexController::handleTexChanged(GtkTextBuffer* buffer, LatexController* self) {
-    self->triggerImageUpdate(self->dlg.getBufferContents());
+void LatexController::handleTexChanged(LatexController* self) {
+    self->triggerImageUpdate(self->dlg->getBufferContents());
 }
 
 void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, LatexController* self) {
@@ -241,7 +234,6 @@ void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, L
             // The error was not caused by invalid LaTeX.
             string message =
                     FS(_F("Latex generation encountered an error: {1} (exit code: {2})") % err->message % err->code);
-            g_warning("latex: %s", message.c_str());
             XojMsgBox::showErrorToUser(self->control->getGtkWindow(), message);
         }
 
@@ -261,12 +253,12 @@ void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, L
         fs::remove(pdfPath);
     }
 
-    const string currentTex = self->dlg.getBufferContents();
+    const string currentTex = self->dlg->getBufferContents();
     bool shouldUpdate = self->lastPreviewedTex != currentTex;
     if (self->isValidTex) {
         self->temporaryRender = self->loadRendered(currentTex);
         if (self->temporaryRender != nullptr) {
-            self->dlg.setTempRender(self->temporaryRender->getPdf());
+            self->dlg->setTempRender(self->temporaryRender->getPdf());
         }
     }
 
@@ -281,36 +273,12 @@ void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, L
 
 bool LatexController::isUpdating() { return updating_cancellable; }
 
-void LatexController::updateStatus() {
-    GtkWidget* okButton = this->dlg.get("texokbutton");
-    bool buttonEnabled = true;
-    // Disable LatexDialog OK button while updating. This is a workaround
-    // for the fact that 1) the LatexController only lives while the dialog
-    // is open; 2) the preview is generated asynchronously; and 3) the `run`
-    // method that inserts the TexImage object is called synchronously after
-    // the dialog is closed with the OK button.
-    buttonEnabled = !this->isUpdating();
-
-    // Invalid LaTeX will generate an invalid PDF, so disable the OK button if
-    // needed.
-    buttonEnabled = buttonEnabled && this->isValidTex;
-
-    gtk_widget_set_sensitive(okButton, buttonEnabled);
-
-    // Show error warning only if LaTeX is invalid.
-    GtkLabel* errorLabel = GTK_LABEL(this->dlg.get("texErrorLabel"));
-    gtk_label_set_text(errorLabel, this->isValidTex ? "" : N_("The formula is empty when rendered or invalid."));
-
-    // Update the output pane.
-    GtkTextView* commandOutputDisplay = GTK_TEXT_VIEW(this->dlg.get("texCommandOutputText"));
-    GtkTextBuffer* commandOutputBuffer = gtk_text_view_get_buffer(commandOutputDisplay);
-    gtk_text_buffer_set_text(commandOutputBuffer, this->texProcessOutput.c_str(), -1);
-}
+void LatexController::updateStatus() { this->dlg->setCompilationStatus(isValidTex, !isUpdating(), texProcessOutput); }
 
 void LatexController::deleteOldImage() {
     if (this->selectedElem) {
-        EditSelection selection(control->getUndoRedoHandler(), selectedElem, view, page);
-        this->view->getXournal()->deleteSelection(&selection);
+        auto sel = SelectionFactory::createFromElementOnActiveLayer(control, page, view, selectedElem);
+        this->view->getXournal()->deleteSelection(sel.release());
         this->selectedElem = nullptr;
     }
 }
@@ -321,7 +289,7 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
     }
 
     fs::path pdfPath = texTmpDir / "tex.pdf";
-    auto contents = Util::readString(pdfPath, true);
+    auto contents = Util::readString(pdfPath, true, std::ios::binary);
     if (!contents) {
         return nullptr;
     }
@@ -332,7 +300,6 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
 
     if (err != nullptr) {
         string message = FS(_F("Could not load LaTeX PDF file: {1}") % err->message);
-        g_message("%s", message.c_str());
         XojMsgBox::showErrorToUser(control->getGtkWindow(), message);
         g_error_free(err);
         return nullptr;
@@ -344,7 +311,7 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
     img->setX(posx);
     img->setY(posy);
     img->setText(std::move(renderedTex));
-    if (imgheight) {
+    if (std::abs(imgheight) > 1024 * std::numeric_limits<double>::epsilon()) {
         double ratio = img->getElementWidth() / img->getElementHeight();
         if (ratio == 0) {
             img->setWidth(imgwidth == 0 ? 10 : imgwidth);
@@ -358,35 +325,34 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
 }
 
 void LatexController::insertTexImage() {
-    g_assert(this->temporaryRender != nullptr);
-    TexImage* img = this->temporaryRender.release();
+    xoj_assert(this->isValidTex);
+    xoj_assert(this->temporaryRender != nullptr);
 
     this->control->clearSelectionEndText();
     this->deleteOldImage();
 
-    doc->lock();
-    layer->addElement(img);
-    view->rerenderElement(img);
-    doc->unlock();
-    control->getUndoRedoHandler()->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, img));
+    control->getUndoRedoHandler()->addUndoAction(
+            std::make_unique<InsertUndoAction>(page, layer, this->temporaryRender.get()));
 
     // Select element
-    auto* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
-    view->getXournal()->setSelection(selection);
+    auto selection =
+            SelectionFactory::createFromFloatingElement(control, page, layer, view, std::move(this->temporaryRender));
+    view->getXournal()->setSelection(selection.release());
 }
 
-void LatexController::run() {
-    auto depStatus = this->findTexDependencies();
+void LatexController::cancelEditing() {
+    // The original element is currently selected. This drops it back onto the page
+    this->control->clearSelectionEndText();
+}
+
+void LatexController::run(Control* ctrl) {
+    auto self = std::make_unique<LatexController>(ctrl);
+    auto depStatus = self->findTexDependencies();
     if (!depStatus.success) {
-        XojMsgBox::showErrorToUser(control->getGtkWindow(), depStatus.errorMsg);
+        XojMsgBox::showErrorToUser(ctrl->getGtkWindow(), depStatus.errorMsg);
         return;
     }
 
-    this->findSelectedTexElement();
-    const string newTex = this->showTexEditDialog();
-
-    if (this->initialTex != newTex) {
-        g_assert(this->isValidTex);
-        this->insertTexImage();
-    }
+    self->findSelectedTexElement();
+    showTexEditDialog(std::move(self));
 }

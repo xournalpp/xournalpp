@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk+" version="3.24"/>
+    <object class="GtkBox" id="PreviewPagesToolbar">
+        <style>
+            <class name="toolbar"/>
+            <class name="linked"/>
+        </style>
+        <child>
+            <object class="GtkButton">
+                <property name="action-name">win.move-page-towards-beginning</property>
+<child><object class="GtkImage"><property name="visible">1</property><property name="can-focus">0</property><property name="icon-name">go-up</property></object></child>
+                <property name="tooltip-text">Swap the current page with the one above</property>
+            </object>
+        </child>
+        <child>
+            <object class="GtkButton">
+                <property name="action-name">win.move-page-towards-end</property>
+<child><object class="GtkImage"><property name="visible">1</property><property name="can-focus">0</property><property name="icon-name">go-down</property></object></child>
+                <property name="tooltip-text">Swap the current page with the one below</property>
+            </object>
+        </child>
+        <child>
+            <object class="GtkButton">
+                <property name="action-name">win.duplicate-page</property>
+<child><object class="GtkImage"><property name="visible">1</property><property name="can-focus">0</property><property name="icon-name">edit-copy</property></object></child>
+                <property name="tooltip-text">Insert a copy of the current page below</property>
+            </object>
+        </child>
+        <child>
+            <object class="GtkButton">
+                <property name="action-name">win.delete-page</property>
+<child><object class="GtkImage"><property name="visible">1</property><property name="can-focus">0</property><property name="icon-name">delete</property></object></child>
+                <property name="tooltip-text">Delete this page</property>
+            </object>
+        </child>
+    </object>
+    <menu id="PreviewPagesContextMenu">
+        <section>
+            <item>
+                <attribute name="label" translatable="yes">Insert Page Before</attribute>
+                <attribute name="action">win.new-page-before</attribute>
+            </item>
+            <item>
+                <attribute name="label" translatable="yes">Insert Page After</attribute>
+                <attribute name="action">win.new-page-after</attribute>
+            </item>
+            <item>
+                <attribute name="label" translatable="yes">Duplicate</attribute>
+                <attribute name="action">win.duplicate-page</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name="label" translatable="yes">Move Up</attribute>
+                <attribute name="action">win.move-page-towards-beginning</attribute>
+            </item>
+            <item>
+                <attribute name="label" translatable="yes">Move Down</attribute>
+                <attribute name="action">win.move-page-towards-end</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name="label" translatable="yes">Delete</attribute>
+                <attribute name="action">win.delete-page</attribute>
+            </item>
+        </section>
+    </menu>
+    <object class="GtkBox" id="PreviewLayersToolbar">
+        <style>
+            <class name="toolbar"/>
+        </style>
+        <child>
+            <object class="GtkButton">
+                <property name="action-name">win.layer-move-up</property>
+                <child>
+                    <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="icon-name">go-up</property>
+                    </object>
+                </child>
+                <property name="tooltip-text">Swap the current layer with the one above</property>
+            </object>
+        </child>
+        <child>
+            <object class="GtkButton">
+                <property name="action-name">win.layer-move-down</property>
+                <child>
+                    <object class="GtkImage">
+                        <property name="visible">1</property>
+                        <property name="can-focus">0</property>
+                        <property name="icon-name">go-down</property>
+                    </object>
+                </child>
+                <property name="tooltip-text">Swap the current layer with the one below</property>
+            </object>
+        </child>
+        <child>
+            <object class="GtkButton">
+                <property name="action-name">win.layer-copy</property>
+                <child>
+                    <object class="GtkImage">
+                        <property name="visible">1</property>
+                        <property name="can-focus">0</property>
+                        <property name="icon-name">edit-copy</property>
+                    </object>
+                </child>
+                <property name="tooltip-text">Insert a copy of the current layer below</property>
+            </object>
+        </child>
+        <child>
+            <object class="GtkButton">
+                <property name="action-name">win.layer-delete</property>
+<child><object class="GtkImage"><property name="visible">1</property><property name="can-focus">0</property><property name="icon-name">delete</property></object></child>
+                <property name="tooltip-text">Delete this layer</property>
+            </object>
+        </child>
+    </object>
+    <menu id="PreviewLayersContextMenu">
+        <section>
+            <item>
+                <attribute name="label" translatable="yes">Move Up</attribute>
+                <attribute name="action">win.layer-move-up</attribute>
+            </item>
+            <item>
+                <attribute name="label" translatable="yes">Move Down</attribute>
+                <attribute name="action">win.layer-move-down</attribute>
+            </item>
+            <item>
+                <attribute name="label" translatable="yes">Merge Down</attribute>
+                <attribute name="action">win.layer-merge-down</attribute>
+            </item>
+            <item>
+                <attribute name="label" translatable="yes">Duplicate</attribute>
+                <attribute name="action">win.layer-copy</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
+                <attribute name="label" translatable="yes">Delete</attribute>
+                <attribute name="action">win.layer-delete</attribute>
+            </item>
+        </section>
+    </menu>
+</interface>

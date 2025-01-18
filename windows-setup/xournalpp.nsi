@@ -15,6 +15,17 @@ Unicode true
 !include nsDialogs.nsh
 !include "xournalpp_version.nsh"
 
+; Options for MultiUser plugin
+!define MULTIUSER_INSTALLMODE_INSTDIR "Xournal++"
+!define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_KEY "Software\Xournal++"
+
+!define MULTIUSER_EXECUTIONLEVEL Highest ; Mixed-mode installer that can both be per-machine or per-user
+!define MULTIUSER_MUI
+!define MULTIUSER_INSTALLMODE_COMMANDLINE
+!define MULTIUSER_USE_PROGRAMFILES64
+!include MultiUser.nsh
+
+
 ;--------------------------------
 ; Initialization
 
@@ -27,23 +38,29 @@ Function .onInit
 		MessageBox MB_OK "Xournal++ requires 64-bit Windows. Sorry!"
 		Abort
 	${EndIf}
+
+	!insertmacro MULTIUSER_INIT
+FunctionEnd
+
+Function un.onInit
+	${If} ${RunningX64}
+		# 64 bit code
+		SetRegView 64
+	${Else}
+		# 32 bit code
+		MessageBox MB_OK "Xournal++ requires 64-bit Windows. Sorry!"
+		Abort
+	${EndIf}
+
+    !insertmacro MULTIUSER_UNINIT
 FunctionEnd
 
 ; Name and file
 Name "Xournal++ ${XOURNALPP_VERSION}"
 OutFile "xournalpp-setup.exe"
 
-; Default installation folder
-InstallDir $PROGRAMFILES64\Xournal++
-
-; Get installation folder from registry if available
-InstallDirRegKey HKLM "Software\Xournal++" ""
-
-; Request admin privileges for installation
-RequestExecutionLevel admin
-
 ;--------------------------------
-; Variables
+; Global Variables
 
 Var StartMenuFolder
 
@@ -55,13 +72,13 @@ Var StartMenuFolder
 ;--------------------------------
 ; Pages
 !insertmacro MUI_PAGE_WELCOME
-Page custom InstallScopePage InstallScopePageLeave
 !insertmacro MUI_PAGE_LICENSE "..\LICENSE"
+!insertmacro MULTIUSER_PAGE_INSTALLMODE
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
 
 ;Start Menu Folder Page Configuration
-!define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKLM"
+!define MUI_STARTMENUPAGE_REGISTRY_ROOT "SHCTX"
 !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\Xournal++"
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "StartMenuEntry"
 !define MUI_STARTMENUPAGE_DEFAULTFOLDER "Xournal++"
@@ -77,45 +94,6 @@ Page custom InstallScopePage InstallScopePageLeave
 ; Languages
 
 !insertmacro MUI_LANGUAGE "English"
-
-;--------------------------------
-; Prompt for user or system-wide installation
-Var ScopeDialog
-Var ScopeAdminInstallRadio
-Function InstallScopePage
-	nsDialogs::Create 1018
-	Pop $ScopeDialog
-	${If} $ScopeDialog == error
-		Abort
-	${EndIf}
-
-	${NSD_CreateRadioButton} 0 0 100% 12u "Install for all users"
-	Pop $ScopeAdminInstallRadio
-	${NSD_SetState} $ScopeAdminInstallRadio ${BST_CHECKED}
-
-	; ${NSD_CreateRadioButton} 0 12u 100% 12u "Install for current user (beta)"
-	; Pop $0
-
-	nsDialogs::Show
-FunctionEnd
-
-Var IsUserInstall
-Function InstallScopePageLeave
-	${NSD_GetState} $ScopeAdminInstallRadio $0
-
-	${If} $0 == 1
-		SetShellVarContext all
-		StrCpy $IsUserInstall ""
-	${Else}
-		SetShellVarContext current
-		StrCpy $IsUserInstall 1
-		; Set default install location
-		ReadRegStr $INSTDIR HKCU "Software\Xournal++" ""
-		${IF} $INSTDIR == ""
-			StrCpy $INSTDIR "$LOCALAPPDATA\Programs\Xournal++"
-		${ENDIF}
-	${EndIf}
-FunctionEnd
 
 ;-------------------------------
 ; Uninstall previous version
@@ -145,16 +123,11 @@ Section "" SecUninstallPrevious
 
 			; delete old start menu entry
 			DetailPrint "Removing old start menu entries"
-			${If} "$IsUserInstall" == ""
-				SetShellVarContext current
-			${EndIf}
+
 			!insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
 			Delete "$SMPROGRAMS\$StartMenuFolder\Xournal++.lnk"
 			Delete "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk"
 			RMDir "$SMPROGRAMS\$StartMenuFolder"
-			${If} "$IsUserInstall" == ""
-				SetShellVarContext all
-			${EndIf}
 			
 			DetailPrint "Removing old registry keys"
 			DeleteRegKey HKLM "Software\Classes\Xournal++ file"
@@ -200,11 +173,6 @@ SectionEnd
 !define SHCNF_IDLIST 0x0
 !define SHCNF_PATH 0x1
 !define SHCNF_FLUSH 0x1000
-!macro RefreshShellIcons
-	; Refresh shell icons. See https://nsis.sourceforge.io/Refresh_shell_icons
-	DetailPrint "Refreshing shell file associations"
-	System::Call "shell32::SHChangeNotify(i ${SHCNE_ASSOCCHANGED}, i ${SHCNF_FLUSH} | ${SHCNF_IDLIST}, i 0, i 0)"
-!macroend
 
 !macro RefreshShellIconCreate FILEPATH
 	DetailPrint "Refreshing shell icon create ${FILEPATH}"

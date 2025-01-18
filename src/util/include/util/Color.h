@@ -11,12 +11,12 @@
 
 #pragma once
 
-#include <cstdint>      // for uint32_t, uint8_t, uint16_t
-#include <cstring>      // for size_t
-#include <iostream>     // for istream, ostream, basic_istream<>::__istream_...
-#include <limits>       // for numeric_limits
-#include <string>       // for string
-#include <string_view>  // for hash
+#include <cstdint>     // for uint32_t, uint8_t, uint16_t
+#include <cstring>     // for size_t
+#include <functional>  // for hash
+#include <iostream>    // for istream, ostream, basic_istream<>::__istream_...
+#include <limits>      // for numeric_limits
+#include <string>      // for string
 
 #include <cairo.h>    // for cairo_t
 #include <gdk/gdk.h>  // for GdkRGBA
@@ -29,7 +29,7 @@ struct ColorU8 {
     uint8_t alpha{};
 
     constexpr ColorU8() = default;
-    constexpr ColorU8(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 0): red(r), green(g), blue(b), alpha(a) {}
+    constexpr ColorU8(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 0xffU): red(r), green(g), blue(b), alpha(a) {}
     constexpr explicit ColorU8(uint32_t val):
             // Legacy ordering for serdes: 0xAARRGGBB
             red(uint8_t((val >> 16U) & 0xffU)),
@@ -128,7 +128,7 @@ float as_grayscale_color(Color color);
 float get_color_contrast(Color color1, Color color2);
 
 /**
- * @param rgb Color to get a representation for.
+ * @param rgb Color to get a representation for, while ignoring the alpha channel.
  * @return a CSS-style representation of the color, in hex. For example,
  *          red might be #ff0000, green, #00ff00, and blue, #0000ff.
  */
@@ -204,44 +204,44 @@ constexpr auto Util::GdkRGBA_to_ColorU16(const GdkRGBA& color) -> ColorU16 {
 }
 
 namespace Colors {
-    /*
-     * A palette of predefined colors. The names are the relevant CSS4 named
-     * color, if exists, else the name of the named color with the smallest
-     * distance from it as an (r, g, b) vector with the prefix "xopp_",
-     * see https://www.w3.org/TR/css-color-4/#named-colors
-     */
-    constexpr Color black{0x000000U};
-    constexpr Color gray{0x808080U};
-    constexpr Color green{0x008000U};
-    constexpr Color lime{0x00ff00U};
-    constexpr Color magenta{0xff00ffU};
-    constexpr Color red{0xff0000U};
-    constexpr Color silver{0xc0c0c0};
-    constexpr Color white{0xffffffU};
-    constexpr Color yellow{0xffff00U};
-    constexpr Color xopp_antiquewhite{0xf8ead3U};
-    constexpr Color xopp_aquamarine{0x80ffc0U};
-    constexpr Color xopp_bisque{0xfee7c4U};
-    constexpr Color xopp_cornflowerblue{0x729fcfU};
-    constexpr Color xopp_darkorange{0xff8000U};
-    constexpr Color xopp_darkslategray{0x434343U};
-    constexpr Color xopp_deeppink{0xff0080U};
-    constexpr Color xopp_deepskyblue{0x00c0ffU};
-    constexpr Color xopp_dodgerblue{0x40a0ffU};
-    constexpr Color xopp_gainsboro{0xdadcdaU};
-    constexpr Color xopp_gainsboro02{0xdcdad5U};
-    constexpr Color xopp_gainsboro03{0xe6d8e4U};
-    constexpr Color xopp_khaki{0xffff80U};
-    constexpr Color xopp_lavender{0xd4e2f0U};
-    constexpr Color xopp_lemonchifon{0xfef8c9U};
-    constexpr Color xopp_lightpink{0xfabebeU};
-    constexpr Color xopp_lightsalmon{0xffc080U};
-    constexpr Color xopp_midnightblue{0x220080U};
-    constexpr Color xopp_palegoldenrod{0xdcf6c1U};
-    constexpr Color xopp_paleturqoise{0xa0e8ffU};
-    constexpr Color xopp_pink{0xffc0d4U};
-    constexpr Color xopp_royalblue{0x3333ccU};
-    constexpr Color xopp_silver{0xbdbdbdU};
-    constexpr Color xopp_snow{0xfafaf9U};
-} // namespace Colors
-
+/*
+ * A palette of predefined colors. The names are the relevant CSS4 named
+ * color, if exists, else the name of the named color with the smallest
+ * distance from it as an (r, g, b) vector with the prefix "xopp_",
+ * see https://www.w3.org/TR/css-color-4/#named-colors
+ */
+constexpr Color black{0xff000000U};
+constexpr Color gray{0xff808080U};
+constexpr Color green{0xff008000U};
+constexpr Color lawngreen(0xff7cfc00U);
+constexpr Color lime{0xff00ff00U};
+constexpr Color magenta{0xffff00ffU};
+constexpr Color red{0xffff0000U};
+constexpr Color silver{0xffc0c0c0};
+constexpr Color white{0xffffffffU};
+constexpr Color yellow{0xffffff00U};
+constexpr Color xopp_antiquewhite{0xfff8ead3U};
+constexpr Color xopp_aquamarine{0xff80ffc0U};
+constexpr Color xopp_bisque{0xfffee7c4U};
+constexpr Color xopp_cornflowerblue{0xff729fcfU};
+constexpr Color xopp_darkorange{0xffff8000U};
+constexpr Color xopp_darkslategray{0xff434343U};
+constexpr Color xopp_deeppink{0xffff0080U};
+constexpr Color xopp_deepskyblue{0xff00c0ffU};
+constexpr Color xopp_dodgerblue{0xff40a0ffU};
+constexpr Color xopp_gainsboro{0xffdadcdaU};
+constexpr Color xopp_gainsboro02{0xffdcdad5U};
+constexpr Color xopp_gainsboro03{0xffe6d8e4U};
+constexpr Color xopp_khaki{0xffffff80U};
+constexpr Color xopp_lavender{0xffd4e2f0U};
+constexpr Color xopp_lemonchifon{0xfffef8c9U};
+constexpr Color xopp_lightpink{0xfffabebeU};
+constexpr Color xopp_lightsalmon{0xffffc080U};
+constexpr Color xopp_midnightblue{0xff220080U};
+constexpr Color xopp_palegoldenrod{0xffdcf6c1U};
+constexpr Color xopp_paleturqoise{0xffa0e8ffU};
+constexpr Color xopp_pink{0xffffc0d4U};
+constexpr Color xopp_royalblue{0xff3333ccU};
+constexpr Color xopp_silver{0xffbdbdbdU};
+constexpr Color xopp_snow{0xfffafaf9U};
+}  // namespace Colors

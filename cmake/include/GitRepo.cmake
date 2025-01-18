@@ -3,7 +3,8 @@
 #
 # Variables:
 #   GIT_ORIGIN_URL    origin URL of current git repo
-#   GIT_ORIGIN_OWNER  origin repo owner
+#   GIT_ORIGIN_OWNER  origin repo owner 
+#                     (for local clones it is the name of the directory from which xournalpp was cloned)
 #   GIT_ORIGIN_REPO   origin repo name
 #   GIT_BRANCH        current git branch
 #
@@ -45,11 +46,8 @@ if (EXISTS "${PROJECT_SOURCE_DIR}/.git" AND PATH_GIT)
     set (GIT_ORIGIN_OWNER "xournalpp")
     set (GIT_ORIGIN_REPO "xournalpp")
   endif ()
-
-  set (PROJECT_BUGREPORT "https://github.com/${GIT_ORIGIN_OWNER}/${GIT_ORIGIN_REPO}/issues/new")
-
-else ()
-
-  set (PROJECT_BUGREPORT "https://github.com/xournalpp/xournalpp/issues/new")
-
 endif ()
+
+# Hardcode bugreport address instead of using ${GIT_ORIGIN_OWNER} which is just a directory name for local clones
+set (PROJECT_BUGREPORT "https://github.com/xournalpp/xournalpp/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml")
+

@@ -13,47 +13,25 @@
 
 #include <string>  // for string
 
-#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
-#include <gdk/gdk.h>                // for GdkEvent
-#include <gtk/gtk.h>                // for GtkWidget, GtkToolItem, GtkMenuItem
+#include <gtk/gtk.h>  // for GtkWidget
 
-#include "enums/ActionType.enum.h"  // for ActionType
-#include "model/Font.h"             // for XojFont
+#include "control/actions/ActionRef.h"
 
-#include "AbstractToolItem.h"  // for AbstractToolItem
+#include "AbstractToolItem.h"
 
-class ActionHandler;
-class GladeGui;
-
+class ActionDatabase;
 
 class FontButton: public AbstractToolItem {
 public:
-    FontButton(ActionHandler* handler, GladeGui* gui, std::string id, ActionType type, std::string description,
-               GtkWidget* menuitem = nullptr);
-    ~FontButton() override;
+    FontButton(std::string id, ActionDatabase& db);
+    ~FontButton() override = default;
 
 public:
-    void activated(GtkMenuItem* menuitem, GtkToolButton* toolbutton) override;
-    void setFont(XojFont& font);
-    XojFont getFont() const;
-    std::string getToolDisplayName() const override;
-    void showFontDialog();
-
-protected:
-    GtkToolItem* createItem(bool horizontal) override;
-    GtkToolItem* createTmpItem(bool horizontal) override;
-    GtkToolItem* newItem() override;
-
-    static GtkWidget* newFontButton();
-    static void setFontFontButton(GtkWidget* fontButton, XojFont& font);
-
     GtkWidget* getNewToolIcon() const override;
-    GdkPixbuf* getNewToolPixbuf() const override;
+    std::string getToolDisplayName() const override;
+
+    xoj::util::WidgetSPtr createItem(bool horizontal) override;
 
 private:
-    GtkWidget* fontButton = nullptr;
-    GladeGui* gui = nullptr;
-    std::string description;
-
-    XojFont font;
+    ActionRef gAction;  ///< Points to the GAction corresponding to Action::FONT
 };

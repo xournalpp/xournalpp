@@ -1,0 +1,69 @@
+# Template for running MacOS release jobs
+
+on:
+  workflow_call:
+    inputs:
+      runner:
+        type: string
+        required: true
+      displayed_name:
+        type: string
+        required: true
+      head_sha:         # SHA of the commit to build. Defaults to the head of the triggering event (cf github doc.)
+        type: string
+        default: ''
+      build_type:
+        type: string
+        default: 'RelWithDebInfo'
+      artifact_version_suffix:  # Additional version string appended to 1.2.3+dev (for instance) in artifacts names
+        type: string
+        default: ''
+    outputs:
+      link:
+        description: URL of the produced installer
+        value: ${{ jobs.release-macos.outputs.link }}
+
+jobs:
+  release-macos:
+    name: Create installer for ${{ inputs.displayed_name }}
+    runs-on: ${{ inputs.runner }}
+    outputs:
+      link: ${{ steps.publish.outputs.artifact-url }}
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.head_sha }}
+      - name: 'Install dependencies'
+        uses: ./.github/actions/install_deps_mac
+        with:
+          install_path: $HOME
+      - name: 'Build Xournal++'
+        uses: ./.github/actions/build
+        with:
+          build_type: ${{ inputs.build_type }}
+          cmake_flags: >-
+            -DCMAKE_INSTALL_PREFIX="$HOME/gtk/inst"
+      - name: 'Create installer'
+        id: create-installer
+        shell: bash
+        run: |
+          which pkg-config
+          pkg-config --version
+          (cd build && cmake --build . --target install)
+          (cd mac-setup && ./build-app.sh $HOME/gtk)                    # populates a folder mac-setup/Xournal++.app
+
+          export VERSION=$(cat build/VERSION | sed '1q;d')
+          export OUTPUT="xournalpp-$VERSION${{ inputs.artifact_version_suffix }}-macOS-${{runner.arch}}.dmg"
+
+          (cd mac-setup && ./build-dmg.sh Xournal++.app $OUTPUT)  # makes an installer out of this folder
+
+          echo "artifact=$OUTPUT" >> $GITHUB_OUTPUT
+      - name: 'Publish package'
+        id: publish
+        uses: actions/upload-artifact@v4
+        with:
+          name: "MacOS package ${{runner.os}}-${{runner.arch}}"
+          compression-level: 0
+          path: "${{github.workspace}}/mac-setup/${{ steps.create-installer.outputs.artifact }}"
+          if-no-files-found: error

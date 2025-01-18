@@ -12,12 +12,15 @@
 #pragma once
 
 #include "gui/inputdevices/InputEvents.h"  // for InputEvent
+#include "util/Point.h"
 
 #include "AbstractInputHandler.h"  // for AbstractInputHandler
 
 class InputContext;
 class PositionInputData;
 class XojPageView;
+
+enum class PressureMode { NO_PRESSURE, DEVICE_PRESSURE, INFERRED_PRESSURE };
 
 class PenInputHandler: public AbstractInputHandler {
 protected:
@@ -36,8 +39,10 @@ protected:
      */
     InputEvent lastEvent{};
 
+    PressureMode pressureMode{PressureMode::NO_PRESSURE};
+
     /**
-     * Last pressure inferred.
+     * Last pressure measured or inferred.
      */
     double lastPressure{0.0};
 
@@ -71,6 +76,13 @@ protected:
      * Page a selection started at as we require this for motion updates
      */
     XojPageView* sequenceStartPage = nullptr;
+
+    /**
+     * For tap event filtering. See Preferences->Drawing Area->Action on Tool Tap
+     */
+    guint32 lastActionEndTimeStamp = 0U;
+    guint32 lastActionStartTimeStamp = 0U;
+    xoj::util::Point<double> sequenceStartPosition;
 
 public:
     explicit PenInputHandler(InputContext* inputContext);
@@ -132,7 +144,7 @@ protected:
      * @param page The page the event is relative to.
      * @return The filtered pressure.
      */
-    double inferPressureIfEnabled(PositionInputData const& pos, XojPageView* page);
+    double inferPressureValue(PositionInputData const& pos, XojPageView* page);
 
     /**
      * @brief Apply filters (e.g. minimum pressure, pressure inference, etc.) to
@@ -143,4 +155,10 @@ protected:
      * @return The filtered pressure.
      */
     double filterPressure(PositionInputData const& pos, XojPageView* page);
+
+    /**
+     * @brief Detects whether the current input event is to be used as a selection
+     * rather than drawing
+     */
+    bool isCurrentTapSelection(InputEvent const& event) const;
 };

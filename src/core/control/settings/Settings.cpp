@@ -22,17 +22,19 @@
 #include "util/Color.h"
 #include "util/PathUtil.h"  // for getConfigFile
 #include "util/Util.h"      // for PRECISION_FORMAT_...
-#include "util/i18n.h"      // for _
+#include "util/i18n.h"      // for _#include "util/safe_casts.h"  // for as_unsigned
 
 #include "ButtonConfig.h"  // for ButtonConfig
 #include "config-dev.h"    // for PALETTE_FILE
-#include "filesystem.h"    // for path, u8path, exists
+#include "config-dev.h"
+#include "filesystem.h"  // for path, u8path, exists
 
 
 using std::string;
 
 constexpr auto const* DEFAULT_FONT = "Sans";
 constexpr auto DEFAULT_FONT_SIZE = 12;
+constexpr auto DEFAULT_TOOLBAR = "Portrait";
 
 #define SAVE_BOOL_PROP(var) xmlNode = saveProperty((const char*)#var, (var) ? "true" : "false", root)
 #define SAVE_STRING_PROP(var) xmlNode = saveProperty((const char*)#var, (var).empty() ? "" : (var).c_str(), root)
@@ -46,12 +48,7 @@ constexpr auto DEFAULT_FONT_SIZE = 12;
 
 Settings::Settings(fs::path filepath): filepath(std::move(filepath)) { loadDefault(); }
 
-Settings::~Settings() {
-    for (auto& i: this->buttonConfig) {
-        delete i;
-        i = nullptr;
-    }
-}
+Settings::~Settings() = default;
 
 void Settings::loadDefault() {
     this->pressureSensitivity = true;
@@ -90,10 +87,14 @@ void Settings::loadDefault() {
     this->mainWndWidth = 800;
     this->mainWndHeight = 600;
 
+    this->fullscreenActive = false;
+
     this->showSidebar = true;
     this->sidebarWidth = 150;
+    this->sidebarNumberingStyle = SidebarNumberingStyle::DEFAULT;
 
     this->showToolbar = true;
+    this->selectedToolbar = DEFAULT_TOOLBAR;
 
     this->sidebarOnRight = false;
 
@@ -105,25 +106,31 @@ void Settings::loadDefault() {
     this->autoloadPdfXoj = true;
 
     this->stylusCursorType = STYLUS_CURSOR_DOT;
+    this->eraserVisibility = ERASER_VISIBILITY_ALWAYS;
     this->iconTheme = ICON_THEME_COLOR;
+    this->themeVariant = THEME_VARIANT_USE_SYSTEM;
     this->highlightPosition = false;
     this->cursorHighlightColor = 0x80FFFF00;  // Yellow with 50% opacity
     this->cursorHighlightRadius = 30.0;
     this->cursorHighlightBorderColor = 0x800000FF;  // Blue with 50% opacity
     this->cursorHighlightBorderWidth = 0.0;
-    this->darkTheme = false;
     this->useStockIcons = false;
     this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
     this->disableScrollbarFadeout = false;
+    this->disableAudio = false;
 
     // Set this for autosave frequency in minutes.
     this->autosaveTimeout = 3;
     this->autosaveEnabled = true;
 
     this->addHorizontalSpace = false;
-    this->addHorizontalSpaceAmount = 150;
+    this->addHorizontalSpaceAmountRight = 150;
+    this->addHorizontalSpaceAmountLeft = 150;
     this->addVerticalSpace = false;
-    this->addVerticalSpaceAmount = 150;
+    this->addVerticalSpaceAmountAbove = 150;
+    this->addVerticalSpaceAmountBelow = 150;
+
+    this->unlimitedScrolling = false;
 
     // Drawing direction emulates modifier keys
     this->drawDirModsRadius = 50;
@@ -143,30 +150,34 @@ void Settings::loadDefault() {
 
     this->defaultSaveName = _("%F-Note-%H-%M");
 
-    // Eraser
-    this->buttonConfig[BUTTON_ERASER] =
-            new ButtonConfig(TOOL_ERASER, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
-    // Middle button
-    this->buttonConfig[BUTTON_MOUSE_MIDDLE] =
-            new ButtonConfig(TOOL_HAND, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
-    // Right button
-    this->buttonConfig[BUTTON_MOUSE_RIGHT] =
-            new ButtonConfig(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
-    // Touch
-    this->buttonConfig[BUTTON_TOUCH] =
-            new ButtonConfig(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
-    // Default config
-    this->buttonConfig[BUTTON_DEFAULT] =
-            new ButtonConfig(TOOL_PEN, Colors::black, TOOL_SIZE_FINE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
-    // Pen button 1
-    this->buttonConfig[BUTTON_STYLUS_ONE] =
-            new ButtonConfig(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
-    // Pen button 2
-    this->buttonConfig[BUTTON_STYLUS_TWO] =
-            new ButtonConfig(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->defaultPdfExportName = _("%{name}_annotated");
 
-    this->fullscreenHideElements = "mainMenubar";
-    this->presentationHideElements = "mainMenubar,sidebarContents";
+    // Eraser
+    this->buttonConfig[BUTTON_ERASER] = std::make_unique<ButtonConfig>(TOOL_ERASER, Colors::black, TOOL_SIZE_NONE,
+                                                                       DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    // Middle button
+    this->buttonConfig[BUTTON_MOUSE_MIDDLE] = std::make_unique<ButtonConfig>(TOOL_HAND, Colors::black, TOOL_SIZE_NONE,
+                                                                             DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    // Right button
+    this->buttonConfig[BUTTON_MOUSE_RIGHT] = std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE,
+                                                                            DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    // Touch
+    this->buttonConfig[BUTTON_TOUCH] = std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE,
+                                                                      DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    // Default config
+    this->buttonConfig[BUTTON_DEFAULT] = std::make_unique<ButtonConfig>(TOOL_PEN, Colors::black, TOOL_SIZE_FINE,
+                                                                        DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    // Pen button 1
+    this->buttonConfig[BUTTON_STYLUS_ONE] = std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE,
+                                                                           DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    // Pen button 2
+    this->buttonConfig[BUTTON_STYLUS_TWO] = std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE,
+                                                                           DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+
+    // default view modes
+    this->activeViewMode = PresetViewModeIds::VIEW_MODE_DEFAULT;
+    this->viewModes =
+            std::vector<ViewMode>{VIEW_MODE_STRUCT_DEFAULT, VIEW_MODE_STRUCT_FULLSCREEN, VIEW_MODE_STRUCT_PRESENTATION};
 
     this->touchZoomStartThreshold = 0.0;
 
@@ -178,6 +189,9 @@ void Settings::loadDefault() {
 
     this->selectionBorderColor = Colors::red;
     this->selectionMarkerColor = Colors::xopp_cornflowerblue;
+    this->activeSelectionColor = Colors::lawngreen;
+
+    this->recolorParameters = {false, false, Recolor(ColorU8{198, 208, 245}, ColorU8{48, 52, 70})};
 
     this->backgroundColor = Colors::xopp_gainsboro02;
 
@@ -186,8 +200,8 @@ void Settings::loadDefault() {
     // clang-format on
 
     this->audioSampleRate = 44100.0;
-    this->audioInputDevice = -1;
-    this->audioOutputDevice = -1;
+    this->audioInputDevice = AUDIO_INPUT_SYSTEM_DEFAULT;
+    this->audioOutputDevice = AUDIO_OUTPUT_SYSTEM_DEFAULT;
     this->audioGain = 1.0;
     this->defaultSeekTime = 5;
 
@@ -224,7 +238,29 @@ void Settings::loadDefault() {
     this->stabilizerMass = 5.0;
     this->stabilizerFinalizeStroke = true;
     /**/
+
+    this->useSpacesForTab = false;
+    this->numberOfSpacesForTab = 4;
+
+    this->colorPaletteSetting = Util::getBuiltInPaletteDirectoryPath() / DEFAULT_PALETTE_FILE;
 }
+
+auto Settings::loadViewMode(ViewModeId mode) -> bool {
+    if (mode < 0 || mode >= viewModes.size()) {
+        return false;
+    }
+    auto viewMode = viewModes.at(mode);
+    fullscreenActive = viewMode.goFullscreen;
+    menubarVisible = viewMode.showMenubar;
+    showToolbar = viewMode.showToolbar;
+    showSidebar = viewMode.showSidebar;
+    this->activeViewMode = mode;
+    return true;
+}
+
+auto Settings::getViewModes() const -> const std::vector<ViewMode>& { return this->viewModes; }
+
+auto Settings::getActiveViewMode() const -> ViewModeId { return this->activeViewMode; }
 
 /**
  * tempg_ascii_strtod
@@ -339,7 +375,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     xmlChar* value = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("value"));
     if (value == nullptr) {
         xmlFree(name);
-        g_warning("No value property!\n");
+        g_warning("Settings::No value property!\n");
         return;
     }
 
@@ -350,7 +386,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pressureSensitivity")) == 0) {
         this->pressureSensitivity = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("minimumPressure")) == 0) {
-        this->minimumPressure = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+        // std::max is for backwards compatibility for users who might have set this value too small
+        this->minimumPressure = std::max(0.01, g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pressureMultiplier")) == 0) {
         this->pressureMultiplier = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomGesturesEnabled")) == 0) {
@@ -383,8 +420,17 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->showToolbar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("filepathShownInTitlebar")) == 0) {
         this->filepathShownInTitlebar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pageNumberShownInTitlebar")) == 0) {
+        this->pageNumberShownInTitlebar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("showSidebar")) == 0) {
         this->showSidebar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sidebarNumberingStyle")) == 0) {
+        int num = std::stoi(reinterpret_cast<char*>(value));
+        if (num < static_cast<int>(SidebarNumberingStyle::MIN) || static_cast<int>(SidebarNumberingStyle::MAX) < num) {
+            num = static_cast<int>(SidebarNumberingStyle::DEFAULT);
+            g_warning("Settings::Invalid sidebarNumberingStyle value. Reset to default.");
+        }
+        this->sidebarNumberingStyle = static_cast<SidebarNumberingStyle>(num);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sidebarWidth")) == 0) {
         this->sidebarWidth = std::max<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10), 50);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sidebarOnRight")) == 0) {
@@ -417,8 +463,12 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->autoloadPdfXoj = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stylusCursorType")) == 0) {
         this->stylusCursorType = stylusCursorTypeFromString(reinterpret_cast<const char*>(value));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("eraserVisibility")) == 0) {
+        this->eraserVisibility = eraserVisibilityFromString(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("iconTheme")) == 0) {
         this->iconTheme = iconThemeFromString(reinterpret_cast<const char*>(value));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("themeVariant")) == 0) {
+        this->themeVariant = themeVariantFromString(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("highlightPosition")) == 0) {
         this->highlightPosition = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("cursorHighlightColor")) == 0) {
@@ -429,12 +479,12 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->cursorHighlightBorderColor = g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("cursorHighlightBorderWidth")) == 0) {
         this->cursorHighlightBorderWidth = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("darkTheme")) == 0) {
-        this->darkTheme = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("useStockIcons")) == 0) {
         this->useStockIcons = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultSaveName")) == 0) {
         this->defaultSaveName = reinterpret_cast<const char*>(value);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultPdfExportName")) == 0) {
+        this->defaultPdfExportName = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginEnabled")) == 0) {
         this->pluginEnabled = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginDisabled")) == 0) {
@@ -449,10 +499,15 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->autosaveEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveTimeout")) == 0) {
         this->autosaveTimeout = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("fullscreenHideElements")) == 0) {
-        this->fullscreenHideElements = reinterpret_cast<const char*>(value);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("presentationHideElements")) == 0) {
-        this->presentationHideElements = reinterpret_cast<const char*>(value);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultViewModeAttributes")) == 0) {
+        this->viewModes.at(PresetViewModeIds::VIEW_MODE_DEFAULT) =
+                settingsStringToViewMode(reinterpret_cast<const char*>(value));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("fullscreenViewModeAttributes")) == 0) {
+        this->viewModes.at(PresetViewModeIds::VIEW_MODE_FULLSCREEN) =
+                settingsStringToViewMode(reinterpret_cast<const char*>(value));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("presentationViewModeAttributes")) == 0) {
+        this->viewModes.at(PresetViewModeIds::VIEW_MODE_PRESENTATION) =
+                settingsStringToViewMode(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchZoomStartThreshold")) == 0) {
         this->touchZoomStartThreshold = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pageRerenderThreshold")) == 0) {
@@ -469,16 +524,53 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->selectionBorderColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectionMarkerColor")) == 0) {
         this->selectionMarkerColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("activeSelectionColor")) == 0) {
+        this->activeSelectionColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
+
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("recolor.enabled")) == 0) {
+        this->recolorParameters.recolorizeMainView = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("recolor.sidebar")) == 0) {
+        this->recolorParameters.recolorizeSidebarMiniatures =
+                xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("recolor.light")) == 0) {
+        this->recolorParameters.recolor =
+                Recolor(ColorU8(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10)),
+                        this->recolorParameters.recolor.getDark());
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("recolor.dark")) == 0) {
+        this->recolorParameters.recolor =
+                Recolor(this->recolorParameters.recolor.getLight(),
+                        ColorU8(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10)));
+
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("backgroundColor")) == 0) {
         this->backgroundColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpace")) == 0) {
         this->addHorizontalSpace = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpaceAmount")) == 0) {
-        this->addHorizontalSpaceAmount = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+        const int oldHorizontalAmount =
+                static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
+        this->addHorizontalSpaceAmountLeft = oldHorizontalAmount;
+        this->addHorizontalSpaceAmountRight = oldHorizontalAmount;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpaceAmountRight")) == 0) {
+        this->addHorizontalSpaceAmountRight =
+                static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addVerticalSpace")) == 0) {
         this->addVerticalSpace = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addVerticalSpaceAmount")) == 0) {
-        this->addVerticalSpaceAmount = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+        const int oldVerticalAmount =
+                static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
+        this->addHorizontalSpaceAmountLeft = oldVerticalAmount;
+        this->addHorizontalSpaceAmountRight = oldVerticalAmount;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addVerticalSpaceAmountAbove")) == 0) {
+        this->addVerticalSpaceAmountAbove =
+                static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpaceAmountLeft")) == 0) {
+        this->addHorizontalSpaceAmountLeft =
+                static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addVerticalSpaceAmountBelow")) == 0) {
+        this->addVerticalSpaceAmountBelow =
+                static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("unlimitedScrolling")) == 0) {
+        this->unlimitedScrolling = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("drawDirModsEnabled")) == 0) {
         this->drawDirModsEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("drawDirModsRadius")) == 0) {
@@ -513,6 +605,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         }
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("disableScrollbarFadeout")) == 0) {
         this->disableScrollbarFadeout = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("disableAudio")) == 0) {
+        this->disableAudio = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioSampleRate")) == 0) {
         this->audioSampleRate = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioGain")) == 0) {
@@ -573,6 +667,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->restoreLineWidthEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("preferredLocale")) == 0) {
         this->preferredLocale = reinterpret_cast<char*>(value);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("useSpacesForTab")) == 0) {
+        this->setUseSpacesAsTab(xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("numberOfSpacesForTab")) == 0) {
+        this->setNumberOfSpacesForTab(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
         /**
          * Stabilizer related settings
          */
@@ -596,6 +694,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->stabilizerCuspDetection = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerFinalizeStroke")) == 0) {
         this->stabilizerFinalizeStroke = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("colorPalette")) == 0) {
+        std::string paletteConfig = std::string{reinterpret_cast<const char*>(value)};
+        if (!paletteConfig.empty()) {
+            this->colorPaletteSetting = paletteConfig;
+        }
     }
     /**/
 
@@ -621,12 +724,18 @@ void Settings::loadButtonConfig() {
 
     for (int i = 0; i < BUTTON_COUNT; i++) {
         SElement& e = s.child(buttonToString(static_cast<Button>(i)));
-        ButtonConfig* cfg = buttonConfig[i];
+        const auto& cfg = buttonConfig[i];
 
         string sType;
         if (e.getString("tool", sType)) {
             ToolType type = toolTypeFromString(sType);
             cfg->action = type;
+
+            if (type == TOOL_PEN) {
+                string strokeType;
+                cfg->strokeType =
+                        e.getString("strokeType", strokeType) ? strokeTypeFromString(strokeType) : STROKE_TYPE_NONE;
+            }
 
             if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER) {
                 string drawingType;
@@ -645,7 +754,7 @@ void Settings::loadButtonConfig() {
 
             if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER || type == TOOL_TEXT) {
                 if (int iColor; e.getInt("color", iColor)) {
-                    cfg->color = Color(iColor);
+                    cfg->color = Color(as_unsigned(iColor));
                 }
             }
 
@@ -685,8 +794,8 @@ auto Settings::load() -> bool {
     xmlKeepBlanksDefault(0);
 
     if (!fs::exists(filepath)) {
-        g_warning("configfile does not exist %s\n", filepath.string().c_str());
-        return false;
+        g_warning("Settings file %s does not exist. Regenerating. ", filepath.string().c_str());
+        save();
     }
 
     xmlDocPtr doc = xmlParseFile(filepath.u8string().c_str());
@@ -725,23 +834,12 @@ auto Settings::load() -> bool {
     loadButtonConfig();
     loadDeviceClasses();
 
-    /*
-     * load Color Palette
-     *  - if path does not exist create default palette file
-     *  - if error during parsing load default, but do not overwrite
-     *    existing palette file (would be annoying for users)
-     */
-    auto paletteFile = Util::getConfigFile(PALETTE_FILE);
-    if (!fs::exists(paletteFile)) {
-        Palette::create_default(paletteFile);
-    }
-    this->palette = std::make_unique<Palette>(std::move(paletteFile));
-    try {
-        this->palette->load();
-    } catch (const std::exception& e) {
-        this->palette->parseErrorDialog(e);
-        this->palette->load_default();
-    }
+    // This must be done before the color palette to ensure the color names are translated properly
+#ifdef _WIN32
+    _putenv_s("LANGUAGE", this->preferredLocale.c_str());
+#else
+    setenv("LANGUAGE", this->preferredLocale.c_str(), 1);
+#endif
 
     return true;
 }
@@ -797,15 +895,19 @@ void Settings::saveButtonConfig() {
 
     for (int i = 0; i < BUTTON_COUNT; i++) {
         SElement& e = s.child(buttonToString(static_cast<Button>(i)));
-        ButtonConfig* cfg = buttonConfig[i];
+        const auto& cfg = buttonConfig[i];
 
-        ToolType type = cfg->action;
+        ToolType const type = cfg->action;
         e.setString("tool", toolTypeToString(type));
+
+        if (type == TOOL_PEN) {
+            e.setString("strokeType", strokeTypeToString(cfg->strokeType));
+        }
 
         if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER) {
             e.setString("drawingType", drawingTypeToString(cfg->drawingType));
             e.setString("size", toolSizeToString(cfg->size));
-        }  // end if pen or highlighter
+        }
 
         if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER || type == TOOL_TEXT) {
             e.setIntHex("color", int32_t(uint32_t(cfg->color)));
@@ -893,11 +995,13 @@ void Settings::save() {
 
     SAVE_BOOL_PROP(showSidebar);
     SAVE_INT_PROP(sidebarWidth);
+    xmlNode = saveProperty("sidebarNumberingStyle", static_cast<int>(sidebarNumberingStyle), root);
 
     SAVE_BOOL_PROP(sidebarOnRight);
     SAVE_BOOL_PROP(scrollbarOnLeft);
     SAVE_BOOL_PROP(menubarVisible);
     SAVE_BOOL_PROP(filepathShownInTitlebar);
+    SAVE_BOOL_PROP(pageNumberShownInTitlebar);
     SAVE_INT_PROP(numColumns);
     SAVE_INT_PROP(numRows);
     SAVE_BOOL_PROP(viewFixedRows);
@@ -910,27 +1014,39 @@ void Settings::save() {
     ATTACH_COMMENT("The icon theme, allowed values are \"disabled\", \"onDrawOfLastPage\", and \"onScrollOfLastPage\"");
     SAVE_BOOL_PROP(presentationMode);
 
-    SAVE_STRING_PROP(fullscreenHideElements);
-    ATTACH_COMMENT("Which gui elements are hidden if you are in Fullscreen mode, separated by a colon (,)");
-
-    SAVE_STRING_PROP(presentationHideElements);
-    ATTACH_COMMENT("Which gui elements are hidden if you are in Presentation mode, separated by a colon (,)");
+    auto defaultViewModeAttributes = viewModeToSettingsString(viewModes.at(PresetViewModeIds::VIEW_MODE_DEFAULT));
+    auto fullscreenViewModeAttributes = viewModeToSettingsString(viewModes.at(PresetViewModeIds::VIEW_MODE_FULLSCREEN));
+    auto presentationViewModeAttributes =
+            viewModeToSettingsString(viewModes.at(PresetViewModeIds::VIEW_MODE_PRESENTATION));
+    SAVE_STRING_PROP(defaultViewModeAttributes);
+    ATTACH_COMMENT("Which GUI elements are shown in default view mode, separated by a colon (,)");
+    SAVE_STRING_PROP(fullscreenViewModeAttributes);
+    ATTACH_COMMENT("Which GUI elements are shown in fullscreen view mode, separated by a colon (,)");
+    SAVE_STRING_PROP(presentationViewModeAttributes);
+    ATTACH_COMMENT("Which GUI elements are shown in presentation view mode, separated by a colon (,)");
 
     xmlNode = saveProperty("stylusCursorType", stylusCursorTypeToString(this->stylusCursorType), root);
     ATTACH_COMMENT("The cursor icon used with a stylus, allowed values are \"none\", \"dot\", \"big\", \"arrow\"");
 
+    xmlNode = saveProperty("eraserVisibility", eraserVisibilityToString(this->eraserVisibility), root);
+    ATTACH_COMMENT("The eraser cursor visibility used with a stylus, allowed values are \"never\", \"always\", "
+                   "\"hover\", \"touch\"");
+
     xmlNode = saveProperty("iconTheme", iconThemeToString(this->iconTheme), root);
     ATTACH_COMMENT("The icon theme, allowed values are \"iconsColor\", \"iconsLucide\"");
+
+    xmlNode = saveProperty("themeVariant", themeVariantToString(this->themeVariant), root);
+    ATTACH_COMMENT("Dark/light mode, allowed values are \"useSystem\", \"forceLight\", \"forceDark\"");
 
     SAVE_BOOL_PROP(highlightPosition);
     xmlNode = savePropertyUnsigned("cursorHighlightColor", uint32_t(cursorHighlightColor), root);
     xmlNode = savePropertyUnsigned("cursorHighlightBorderColor", uint32_t(cursorHighlightBorderColor), root);
     SAVE_DOUBLE_PROP(cursorHighlightRadius);
     SAVE_DOUBLE_PROP(cursorHighlightBorderWidth);
-    SAVE_BOOL_PROP(darkTheme);
     SAVE_BOOL_PROP(useStockIcons);
 
     SAVE_BOOL_PROP(disableScrollbarFadeout);
+    SAVE_BOOL_PROP(disableAudio);
 
     if (this->scrollbarHideType == SCROLLBAR_HIDE_BOTH) {
         xmlNode = saveProperty("scrollbarHideType", "both", root);
@@ -947,14 +1063,19 @@ void Settings::save() {
     SAVE_BOOL_PROP(autoloadMostRecent);
     SAVE_BOOL_PROP(autoloadPdfXoj);
     SAVE_STRING_PROP(defaultSaveName);
+    SAVE_STRING_PROP(defaultPdfExportName);
 
     SAVE_BOOL_PROP(autosaveEnabled);
     SAVE_INT_PROP(autosaveTimeout);
 
     SAVE_BOOL_PROP(addHorizontalSpace);
-    SAVE_INT_PROP(addHorizontalSpaceAmount);
+    SAVE_INT_PROP(addHorizontalSpaceAmountRight);
+    SAVE_INT_PROP(addHorizontalSpaceAmountLeft);
     SAVE_BOOL_PROP(addVerticalSpace);
-    SAVE_INT_PROP(addVerticalSpaceAmount);
+    SAVE_INT_PROP(addVerticalSpaceAmountAbove);
+    SAVE_INT_PROP(addVerticalSpaceAmountBelow);
+
+    SAVE_BOOL_PROP(unlimitedScrolling);
 
     SAVE_BOOL_PROP(drawDirModsEnabled);
     SAVE_INT_PROP(drawDirModsRadius);
@@ -972,9 +1093,15 @@ void Settings::save() {
     SAVE_BOOL_PROP(gtkTouchInertialScrolling);
     SAVE_BOOL_PROP(pressureGuessing);
 
+    xmlNode = saveProperty("recolor.enabled", recolorParameters.recolorizeMainView ? "true" : "false", root);
+    xmlNode = saveProperty("recolor.sidebar", recolorParameters.recolorizeSidebarMiniatures ? "true" : "false", root);
+    xmlNode = savePropertyUnsigned("recolor.dark", uint32_t(recolorParameters.recolor.getDark()), root);
+    xmlNode = savePropertyUnsigned("recolor.light", uint32_t(recolorParameters.recolor.getLight()), root);
+
     xmlNode = savePropertyUnsigned("selectionBorderColor", uint32_t(selectionBorderColor), root);
     xmlNode = savePropertyUnsigned("backgroundColor", uint32_t(backgroundColor), root);
     xmlNode = savePropertyUnsigned("selectionMarkerColor", uint32_t(selectionMarkerColor), root);
+    xmlNode = savePropertyUnsigned("activeSelectionColor", uint32_t(activeSelectionColor), root);
 
     SAVE_DOUBLE_PROP(touchZoomStartThreshold);
     SAVE_DOUBLE_PROP(pageRerenderThreshold);
@@ -1019,6 +1146,9 @@ void Settings::save() {
 
     SAVE_STRING_PROP(preferredLocale);
 
+    SAVE_BOOL_PROP(useSpacesForTab);
+    SAVE_UINT_PROP(numberOfSpacesForTab);
+
     /**
      * Stabilizer related settings
      */
@@ -1031,6 +1161,11 @@ void Settings::save() {
     SAVE_DOUBLE_PROP(stabilizerMass);
     SAVE_BOOL_PROP(stabilizerCuspDetection);
     SAVE_BOOL_PROP(stabilizerFinalizeStroke);
+
+    if (!this->colorPaletteSetting.empty()) {
+        saveProperty("colorPalette", this->colorPaletteSetting.u8string().c_str(), root);
+    }
+
     /**/
 
     SAVE_BOOL_PROP(latexSettings.autoCheckDependencies);
@@ -1192,6 +1327,18 @@ void Settings::setFilepathInTitlebarShown(const bool shown) {
     save();
 }
 
+const bool Settings::isPageNumberInTitlebarShown() const { return this->pageNumberShownInTitlebar; }
+
+void Settings::setPageNumberInTitlebarShown(const bool shown) {
+    if (this->pageNumberShownInTitlebar == shown) {
+        return;
+    }
+
+    this->pageNumberShownInTitlebar = shown;
+
+    save();
+}
+
 auto Settings::getAutosaveTimeout() const -> int { return this->autosaveTimeout; }
 
 void Settings::setAutosaveTimeout(int autosave) {
@@ -1220,15 +1367,24 @@ auto Settings::getAddVerticalSpace() const -> bool { return this->addVerticalSpa
 
 void Settings::setAddVerticalSpace(bool space) { this->addVerticalSpace = space; }
 
-auto Settings::getAddVerticalSpaceAmount() const -> int { return this->addVerticalSpaceAmount; }
+auto Settings::getAddVerticalSpaceAmountAbove() const -> int { return this->addVerticalSpaceAmountAbove; }
 
-void Settings::setAddVerticalSpaceAmount(int pixels) {
-    if (this->addVerticalSpaceAmount == pixels) {
+void Settings::setAddVerticalSpaceAmountAbove(int pixels) {
+    if (this->addVerticalSpaceAmountAbove == pixels) {
         return;
     }
 
-    this->addVerticalSpaceAmount = pixels;
-    save();
+    this->addVerticalSpaceAmountAbove = pixels;
+}
+
+auto Settings::getAddVerticalSpaceAmountBelow() const -> int { return this->addVerticalSpaceAmountBelow; }
+
+void Settings::setAddVerticalSpaceAmountBelow(int pixels) {
+    if (this->addVerticalSpaceAmountBelow == pixels) {
+        return;
+    }
+
+    this->addVerticalSpaceAmountBelow = pixels;
 }
 
 
@@ -1236,17 +1392,35 @@ auto Settings::getAddHorizontalSpace() const -> bool { return this->addHorizonta
 
 void Settings::setAddHorizontalSpace(bool space) { this->addHorizontalSpace = space; }
 
-auto Settings::getAddHorizontalSpaceAmount() const -> int { return this->addHorizontalSpaceAmount; }
+auto Settings::getAddHorizontalSpaceAmountRight() const -> int { return this->addHorizontalSpaceAmountRight; }
 
-void Settings::setAddHorizontalSpaceAmount(int pixels) {
-    if (this->addHorizontalSpaceAmount == pixels) {
+void Settings::setAddHorizontalSpaceAmountRight(int pixels) {
+    if (this->addHorizontalSpaceAmountRight == pixels) {
         return;
     }
 
-    this->addHorizontalSpaceAmount = pixels;
-    save();
+    this->addHorizontalSpaceAmountRight = pixels;
 }
 
+auto Settings::getAddHorizontalSpaceAmountLeft() const -> int { return this->addHorizontalSpaceAmountLeft; }
+
+void Settings::setAddHorizontalSpaceAmountLeft(int pixels) {
+    if (this->addHorizontalSpaceAmountLeft == pixels) {
+        return;
+    }
+
+    this->addHorizontalSpaceAmountLeft = pixels;
+}
+
+auto Settings::getUnlimitedScrolling() const -> bool { return this->unlimitedScrolling; }
+
+void Settings::setUnlimitedScrolling(bool enable) {
+    if (enable == this->unlimitedScrolling) {
+        return;
+    }
+
+    this->unlimitedScrolling = enable;
+}
 
 auto Settings::getDrawDirModsEnabled() const -> bool { return this->drawDirModsEnabled; }
 
@@ -1275,6 +1449,18 @@ void Settings::setStylusCursorType(StylusCursorType type) {
     save();
 }
 
+auto Settings::getEraserVisibility() const -> EraserVisibility { return this->eraserVisibility; }
+
+void Settings::setEraserVisibility(EraserVisibility eraserVisibility) {
+    if (this->eraserVisibility == eraserVisibility) {
+        return;
+    }
+
+    this->eraserVisibility = eraserVisibility;
+
+    save();
+}
+
 auto Settings::getIconTheme() const -> IconTheme { return this->iconTheme; }
 
 void Settings::setIconTheme(IconTheme iconTheme) {
@@ -1283,6 +1469,28 @@ void Settings::setIconTheme(IconTheme iconTheme) {
     }
 
     this->iconTheme = iconTheme;
+
+    save();
+}
+
+auto Settings::getThemeVariant() const -> ThemeVariant { return this->themeVariant; }
+
+void Settings::setThemeVariant(ThemeVariant theme) {
+    if (this->themeVariant == theme) {
+        return;
+    }
+    this->themeVariant = theme;
+    save();
+}
+
+auto Settings::getSidebarNumberingStyle() const -> SidebarNumberingStyle { return this->sidebarNumberingStyle; };
+
+void Settings::setSidebarNumberingStyle(SidebarNumberingStyle numberingStyle) {
+    if (this->sidebarNumberingStyle == numberingStyle) {
+        return;
+    }
+
+    this->sidebarNumberingStyle = numberingStyle;
 
     save();
 }
@@ -1484,6 +1692,18 @@ void Settings::setDefaultSaveName(const string& name) {
     save();
 }
 
+auto Settings::getDefaultPdfExportName() const -> string const& { return this->defaultPdfExportName; }
+
+void Settings::setDefaultPdfExportName(const string& name) {
+    if (this->defaultPdfExportName == name) {
+        return;
+    }
+
+    this->defaultPdfExportName = name;
+
+    save();
+}
+
 auto Settings::getPageTemplate() const -> string const& { return this->pageTemplate; }
 
 void Settings::setPageTemplate(const string& pageTemplate) {
@@ -1561,12 +1781,16 @@ void Settings::setPresentationMode(bool presentationMode) {
     if (this->presentationMode == presentationMode) {
         return;
     }
-
+    if (presentationMode) {
+        this->activeViewMode = PresetViewModeIds::VIEW_MODE_PRESENTATION;
+    }
     this->presentationMode = presentationMode;
     save();
 }
 
-auto Settings::isPresentationMode() const -> bool { return this->presentationMode; }
+auto Settings::isPresentationMode() const -> bool {
+    return this->activeViewMode == PresetViewModeIds::VIEW_MODE_PRESENTATION;
+}
 
 void Settings::setPressureSensitivity(gboolean presureSensitivity) {
     if (this->pressureSensitivity == presureSensitivity) {
@@ -1740,16 +1964,6 @@ void Settings::setDisplayDpi(int dpi) {
 
 auto Settings::getDisplayDpi() const -> int { return this->displayDpi; }
 
-void Settings::setDarkTheme(bool dark) {
-    if (this->darkTheme == dark) {
-        return;
-    }
-    this->darkTheme = dark;
-    save();
-}
-
-auto Settings::isDarkTheme() const -> bool { return this->darkTheme; }
-
 void Settings::setAreStockIconsUsed(bool use) {
     if (this->useStockIcons == use) {
         return;
@@ -1759,6 +1973,8 @@ void Settings::setAreStockIconsUsed(bool use) {
 }
 
 auto Settings::areStockIconsUsed() const -> bool { return this->useStockIcons; }
+
+auto Settings::isFullscreen() const -> bool { return this->fullscreenActive; }
 
 auto Settings::isSidebarVisible() const -> bool { return this->showSidebar; }
 
@@ -1805,7 +2021,13 @@ auto Settings::getMainWndHeight() const -> int { return this->mainWndHeight; }
 
 auto Settings::isMainWndMaximized() const -> bool { return this->maximized; }
 
-void Settings::setMainWndMaximized(bool max) { this->maximized = max; }
+void Settings::setMainWndMaximized(bool max) {
+    if (this->maximized == max) {
+        return;
+    }
+    this->maximized = max;
+    save();
+}
 
 void Settings::setSelectedToolbar(const string& name) {
     if (this->selectedToolbar == name) {
@@ -1821,25 +2043,19 @@ auto Settings::getCustomElement(const string& name) -> SElement& { return this->
 
 void Settings::customSettingsChanged() { save(); }
 
-auto Settings::getButtonConfig(int id) -> ButtonConfig* {
-    if (id < 0 || id >= BUTTON_COUNT) {
+auto Settings::getButtonConfig(unsigned int id) -> ButtonConfig* {
+    if (id >= this->buttonConfig.size()) {
         g_error("Settings::getButtonConfig try to get id=%i out of range!", id);
         return nullptr;
     }
-    return this->buttonConfig[id];
+    return this->buttonConfig[id].get();
 }
 
-auto Settings::getFullscreenHideElements() const -> string const& { return this->fullscreenHideElements; }
-
-void Settings::setFullscreenHideElements(string elements) {
-    this->fullscreenHideElements = std::move(elements);
-    save();
-}
-
-auto Settings::getPresentationHideElements() const -> string const& { return this->presentationHideElements; }
-
-void Settings::setPresentationHideElements(string elements) {
-    this->presentationHideElements = std::move(elements);
+void Settings::setViewMode(ViewModeId mode, ViewMode viewMode) {
+    if (this->viewModes[mode] == viewMode) {
+        return;
+    }
+    this->viewModes.at(mode) = viewMode;
     save();
 }
 
@@ -1921,6 +2137,26 @@ void Settings::setSelectionColor(Color color) {
         return;
     }
     this->selectionMarkerColor = color;
+    save();
+}
+
+auto Settings::getActiveSelectionColor() const -> Color { return this->activeSelectionColor; }
+
+void Settings::setActiveSelectionColor(Color color) {
+    if (this->activeSelectionColor == color) {
+        return;
+    }
+    this->activeSelectionColor = color;
+    save();
+}
+
+auto Settings::getRecolorParameters() const -> const RecolorParameters& { return this->recolorParameters; }
+
+void Settings::setRecolorParameters(RecolorParameters&& recolor) {
+    if (this->recolorParameters == recolor) {
+        return;
+    }
+    this->recolorParameters = recolor;
     save();
 }
 
@@ -2158,6 +2394,16 @@ void Settings::setScrollbarFadeoutDisabled(bool disable) {
     save();
 }
 
+auto Settings::isAudioDisabled() const -> bool { return disableAudio; }
+
+void Settings::setAudioDisabled(bool disable) {
+    if (disableAudio == disable) {
+        return;
+    }
+    disableAudio = disable;
+    save();
+}
+
 //////////////////////////////////////////////////
 
 SAttribute::SAttribute() {
@@ -2370,9 +2616,28 @@ void Settings::setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preproce
     save();
 }
 
-/**
- * @brief Get Color Palette used for Tools
- *
- * @return Palette&
- */
-auto Settings::getColorPalette() -> const Palette& { return *(this->palette); }
+
+auto Settings::getColorPaletteSetting() -> fs::path const& { return this->colorPaletteSetting; }
+
+void Settings::setColorPaletteSetting(fs::path palettePath) { this->colorPaletteSetting = palettePath; }
+
+
+void Settings::setUseSpacesAsTab(bool useSpaces) { this->useSpacesForTab = useSpaces; }
+bool Settings::getUseSpacesAsTab() const { return this->useSpacesForTab; }
+
+void Settings::setNumberOfSpacesForTab(unsigned int numberOfSpaces) {
+    if (this->numberOfSpacesForTab == numberOfSpaces) {
+        return;
+    }
+
+    // For performance reasons the number of spaces for a tab should be limited
+    // if this limit is exceeded use a default value
+    if (numberOfSpaces < 0 || numberOfSpaces > MAX_SPACES_FOR_TAB) {
+        g_warning("Settings::Invalid number of spaces for tab. Reset to default!");
+        numberOfSpaces = 4;
+    }
+    this->numberOfSpacesForTab = numberOfSpaces;
+    save();
+}
+
+unsigned int Settings::getNumberOfSpacesForTab() const { return this->numberOfSpacesForTab; }

@@ -14,23 +14,27 @@ cd xournalpp
 ```
 
 ## Compile
+For testing purposes, install in a subdirectory:
 
 ```sh
 mkdir build
 cd build
 
-cmake ..
+cmake .. -DCMAKE_INSTALL_PREFIX=install
 
 cmake --build . # For a faster build, set the flag -DCMAKE_BUILD_TYPE=RelWithDebInfo
+cmake --build . --target install
 ```
 
 - Use `cmake-gui ..` to graphically configure CMake
+- Running without building the `install` target will most likely not work, as
+some resources need to be generated and located in the right directories.
 
 ## Run
 
 ```sh
 # Before running this command, ensure you're in the './build' directory
-./xournalpp
+./install/bin/xournalpp
 ```
 
 ## Test

@@ -5,10 +5,11 @@
 #include <stdexcept>  // for invalid_argument
 #include <utility>    // for move
 
-#include <glib.h>     // for g_warning, g_error
-#include <gtk/gtk.h>  // for gtk_dialog_add_button, gtk_dialog_run
+#include <glib.h>  // for g_warning, g_error
 
-#include "util/StringUtils.h"   // for StringUtils
+#include "util/StringUtils.h"  // for StringUtils
+#include "util/Util.h"
+#include "util/XojMsgBox.h"
 #include "util/i18n.h"          // for FORMAT_STR, FS, _
 #include "util/serdesstream.h"  // for serdes_stream
 
@@ -19,29 +20,26 @@ void Palette::load() {
     if (!fs::exists(this->filepath))
         throw std::invalid_argument(
                 FS(FORMAT_STR("The palette file {1} does not exist.") % this->filepath.filename().u8string()));
-    int lineNumber{};
     header.clear();
     namedColors.clear();
 
 
     auto gplFile = serdes_stream<std::ifstream>(filepath);
-    std::string line;
+    gplFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
-    if (gplFile.is_open()) {
-        getline(gplFile, line);
+    std::string line;
+    getline(gplFile, line);
+    int lineNumber{1};
+    // parse standard header line
+    parseFirstGimpPaletteLine(line);
+    // attempt parsing line by line as either header, color, or fallback
+    while (!gplFile.eof() && gplFile.peek() != EOF && getline(gplFile, line)) {
         lineNumber++;
-        // parse standard header line
-        parseFirstGimpPaletteLine(line);
-        /*
-         * attempt parsing line by line as
-         * either header, color, or fallback
-         */
-        while (getline(gplFile, line)) {
-            lineNumber++;
-            parseCommentLine(line) || parseHeaderLine(line) || parseColorLine(line) || parseLineFallback(lineNumber);
-        }
-        if (namedColors.size() < 1)
-            throw std::invalid_argument("Your Palettefile has no parsable color. It needs at least one!");
+        parseCommentLine(line) || parseHeaderLine(line) || parseColorLine(line) || parseEmptyLine(line) ||
+                parseLineFallback(lineNumber);
+    }
+    if (namedColors.size() < 1) {
+        throw std::invalid_argument("Your Palettefile has no parsable color. It needs at least one!");
     }
 }
 
@@ -52,7 +50,16 @@ auto Palette::load_default() -> void {
     getline(defaultFile, line);
     if (!parseFirstGimpPaletteLine(line))
         g_error("The default file was mallformed. This should never happen!");
-    while (getline(defaultFile, line)) { parseHeaderLine(line) || parseColorLine(line); }
+    while (getline(defaultFile, line)) {
+        parseHeaderLine(line) || parseColorLine(line);
+    }
+}
+
+auto Palette::getHeader(const std::string& attr) const -> std::string {
+    if (header.find(attr) == header.end()) {
+        return std::string{};
+    }
+    return header.at(attr);
 }
 
 auto Palette::parseFirstGimpPaletteLine(const std::string& line) const -> bool {
@@ -85,6 +92,8 @@ auto Palette::parseColorLine(const std::string& line) -> bool {
 
 auto Palette::parseCommentLine(const std::string& line) const -> bool { return line.front() == '#'; }
 
+auto Palette::parseEmptyLine(const std::string& line) const -> bool { return line.empty(); }
+
 auto Palette::parseLineFallback(int lineNumber) const -> const bool {
     throw std::invalid_argument(FS(FORMAT_STR("The line {1} is malformed.") % lineNumber));
 }
@@ -105,30 +114,19 @@ auto Palette::size() const -> size_t { return namedColors.size(); }
 auto Palette::default_palette() -> const std::string {
     auto d = serdes_stream<std::stringstream>();
     d << "GIMP Palette\n"
-      << "Name: Xournal Default Palette\n"
+      << "Name: Xournal Palette\n"
       << "#\n"
-      << 0 << " " << 0 << " " << 0 << " "
-      << "Black\n"
-      << 0 << " " << 128 << " " << 0 << " "
-      << "Green\n"
-      << 0 << " " << 192 << " " << 255 << " "
-      << "Light Blue\n"
-      << 0 << " " << 255 << " " << 0 << " "
-      << "Light Green\n"
-      << 51 << " " << 51 << " " << 204 << " "
-      << "Blue\n"
-      << 128 << " " << 128 << " " << 128 << " "
-      << "Gray\n"
-      << 255 << " " << 0 << " " << 0 << " "
-      << "Red\n"
-      << 255 << " " << 0 << " " << 255 << " "
-      << "Magenta\n"
-      << 255 << " " << 128 << " " << 0 << " "
-      << "Orange\n"
-      << 255 << " " << 255 << " " << 0 << " "
-      << "Yellow\n"
-      << 255 << " " << 255 << " " << 255 << " "
-      << "White" << std::endl;
+      << 0 << " " << 0 << " " << 0 << " " << NC_("Color", "Black") << "\n"
+      << 0 << " " << 128 << " " << 0 << " " << NC_("Color", "Green") << "\n"
+      << 0 << " " << 192 << " " << 255 << " " << NC_("Color", "Light Blue") << "\n"
+      << 0 << " " << 255 << " " << 0 << " " << NC_("Color", "Light Green") << "\n"
+      << 51 << " " << 51 << " " << 204 << " " << NC_("Color", "Blue") << "\n"
+      << 128 << " " << 128 << " " << 128 << " " << NC_("Color", "Gray") << "\n"
+      << 255 << " " << 0 << " " << 0 << " " << NC_("Color", "Red") << "\n"
+      << 255 << " " << 0 << " " << 255 << " " << NC_("Color", "Magenta") << "\n"
+      << 255 << " " << 128 << " " << 0 << " " << NC_("Color", "Orange") << "\n"
+      << 255 << " " << 255 << " " << 0 << " " << NC_("Color", "Yellow") << "\n"
+      << 255 << " " << 255 << " " << 255 << " " << NC_("Color", "White") << std::endl;
     return d.str();
 }
 
@@ -139,7 +137,7 @@ void Palette::create_default(fs::path filepath) {
 
 auto Header::getAttribute() const -> std::string { return this->attribute; };
 auto Header::getValue() const -> std::string { return this->value; };
-
+auto Palette::getFilePath() const -> fs::path const& { return this->filepath; };
 
 auto operator>>(std::istream& str, Header& header) -> std::istream& {
     /*
@@ -169,22 +167,14 @@ auto operator>>(std::istream& str, Header& header) -> std::istream& {
 }
 
 auto Palette::parseErrorDialog(const std::exception& e) const -> void {
-
     std::stringstream msg_stream{};
     msg_stream << "There has been a problem parsing the color palette file at " << filepath.c_str() << "\n\n";
     msg_stream << "What happened:\n" << e.what() << std::endl;
     msg_stream << "What to do:\n";
     msg_stream << "Please fix your palette file, or rename it so xournalpp creates a new default palette file "
                   "for you. This file can then be used as a template.\n";
-    msg_stream << "What will happen now:\nThe application will start with the default color palette.";
+    msg_stream << "Until this is fixed, the application will use the default color palette.";
 
-    GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
-                                               msg_stream.str().c_str());
-
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("OK"), 1);
-
-    gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
-
-    g_warning("%s", msg_stream.str().c_str());
+    // Call later, to make sure the main window has been set up, so the popup is displayed in front of it (and modal)
+    Util::execInUiThread([msg = msg_stream.str()]() { XojMsgBox::showErrorToUser(nullptr, msg); });
 }

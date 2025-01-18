@@ -11,6 +11,12 @@
 #pragma once
 
 class Range;
+class ZoomControl;
+
+namespace xoj::util {
+template <typename T>
+class Rectangle;
+};
 
 namespace xoj::view {
 class OverlayView;
@@ -30,14 +36,16 @@ public:
      */
     virtual Range getVisiblePart() const = 0;
 
-    virtual int getDPIScaling() const = 0;
-
     // Get the current zoom.
     virtual double getZoom() const = 0;
+    virtual ZoomControl* getZoomControl() const = 0;
 
     // Width and height, in local coordinates
     virtual double getWidth() const = 0;
     virtual double getHeight() const = 0;
+
+    // Convert a rectangle from local coordinates to global coordinates
+    virtual xoj::util::Rectangle<double> toWindowCoordinates(const xoj::util::Rectangle<double>& r) const = 0;
 
     /**
      * @brief Flag a region as dirty. Dirty regions will get redrawn at the next screen refresh.

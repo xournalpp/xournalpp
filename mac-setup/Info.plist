@@ -16,9 +16,9 @@
     <string>Xournal++</string>
 
     <key>CFBundleShortVersionString</key>
-    <string>1.1.3+dev</string>
+    <string>1.2.5+dev</string>
     <key>CFBundleVersion</key>
-    <string>1.1.3+dev.0</string>
+    <string>1.2.5+dev.0</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>NSHumanReadableCopyright</key>
@@ -55,14 +55,142 @@
     <key>NSRemovableVolumesUsageDescription</key>
     <string>Required to enable the internal file chooser to choose files from removable devices.</string>
 
+    <key>CFBundleDocumentTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleTypeExtensions</key>
+        <array>
+          <string>xopp</string>
+        </array>
+        <key>CFBundleTypeIconFile</key>
+	        <string>xournalpp.icns</string>
+        <key>CFBundleTypeName</key>
+        <string>Xournal++ Document</string>
+        <key>CFBundleTypeMIMETypes</key>
+        <array>
+          <string>application/x-xopp</string>
+        </array>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+      </dict>
+      <dict>
+        <key>CFBundleTypeExtensions</key>
+        <array>
+          <string>xopt</string>
+        </array>
+        <key>CFBundleTypeIconFile</key>
+	        <string>xournalpp.icns</string>
+        <key>CFBundleTypeName</key>
+        <string>Xournal++ Template</string>
+        <key>CFBundleTypeMIMETypes</key>
+        <array>
+          <string>application/x-xopt</string>
+        </array>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+      </dict>
+      <dict>
+        <key>CFBundleTypeExtensions</key>
+        <array>
+          <string>xoj</string>
+        </array>
+        <key>CFBundleTypeIconFile</key>
+	        <string>xournalpp.icns</string>
+        <key>CFBundleTypeName</key>
+        <string>Xournal Document</string>
+        <key>CFBundleTypeMIMETypes</key>
+        <array>
+          <string>application/x-xojpp</string>
+        </array>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+      </dict>
+    </array>
+
+    <key>UTExportedTypeDeclarations</key>
+    <array>
+      <dict>
+        <key>UTTypeIdentifier</key>
+        <string>com.github.xournalpp.xopp</string>
+        <key>UTTypeConformsTo</key>
+        <array>
+          <string>public.data</string>
+          <string>org.gnu.gnu-zip-archive</string>
+        </array>
+        <key>UTTypeDescription</key>
+        <string>Xournal++ Document</string>
+        <key>UTTypeTagSpecification</key>
+        <dict>
+          <key>public.mime-type</key>
+          <array>
+            <string>application/x-xopp</string>
+          </array>
+          <key>public.filename-extension</key>
+          <array>
+            <string>xopp</string>
+          </array>
+        </dict>
+      </dict>
+      <dict>
+        <key>UTTypeIdentifier</key>
+        <string>com.github.xournalpp.xopt</string>
+        <key>UTTypeConformsTo</key>
+        <array>
+          <string>public.data</string>
+          <string>public.text</string>
+        </array>
+        <key>UTTypeDescription</key>
+        <string>Xournal++ Template</string>
+        <key>UTTypeTagSpecification</key>
+        <dict>
+          <key>public.mime-type</key>
+          <array>
+            <string>application/x-xopt</string>
+          </array>
+          <key>public.filename-extension</key>
+          <array>
+            <string>xopt</string>
+          </array>
+        </dict>
+      </dict>
+      <dict>
+        <key>UTTypeIdentifier</key>
+        <string>net.sourceforge.xournal.xoj</string>
+        <key>UTTypeConformsTo</key>
+        <array>
+          <string>public.data</string>
+          <string>org.gnu.gnu-zip-archive</string>
+        </array>
+        <key>UTTypeDescription</key>
+        <string>Xournal Document</string>
+        <key>UTTypeTagSpecification</key>
+        <dict>
+          <key>public.mime-type</key>
+          <array>
+            <string>application/x-xojpp</string>
+          </array>
+          <key>public.filename-extension</key>
+          <array>
+            <string>xoj</string>
+          </array>
+        </dict>
+      </dict>
+    </array>
+
     <key>LSSupportsOpeningDocumentsInPlace</key>
     <true />
     <key>NSDownloadsUbiquitousContents</key>
     <true />
 
+    <key>LSEnvironment</key>
+    <dict>
+        <key>DYLD_FALLBACK_LIBRARY_PATH</key>
+        <string>/Applications/Xournal++.app/Contents/Resources/lib</string>
+    </dict>
+
     <key>NSHighResolutionCapable</key>
     <true />
     <key>NSRequiresAquaSystemAppearance</key>
-    <true />
+    <false />
   </dict>
 </plist>

@@ -1,24 +1,33 @@
 #include "RenderJob.h"
 
-#include <cmath>    // for ceil, floor
 #include <mutex>    // for mutex
 #include <utility>  // for move
 #include <vector>   // for vector
 
 #include <cairo.h>  // for cairo_create, cairo_destroy, cairo_...
-#include "gui/widgets/XournalWidget.h"  // for gtk_xournal_repaint_area
 
-#include "control/Control.h"          // for Control
-#include "control/ToolEnums.h"        // for TOOL_PLAY_OBJECT
-#include "control/ToolHandler.h"      // for ToolHandler
-#include "control/jobs/Job.h"         // for JOB_TYPE_RENDER, JobType
-#include "gui/PageView.h"             // for XojPageView
-#include "gui/XournalView.h"          // for XournalView
-#include "model/Document.h"           // for Document
-#include "util/Rectangle.h"           // for Rectangle
-#include "util/Util.h"                // for execInUiThread
-#include "util/raii/CairoWrappers.h"  // for CairoSurfaceSPtr, CairoSPtr
-#include "view/DocumentView.h"        // for DocumentView
+#include "control/Control.h"            // for Control
+#include "control/ToolEnums.h"          // for TOOL_PLAY_OBJECT
+#include "control/ToolHandler.h"        // for ToolHandler
+#include "control/jobs/Job.h"           // for JOB_TYPE_RENDER, JobType
+#include "gui/PageView.h"               // for XojPageView
+#include "gui/XournalView.h"            // for XournalView
+#include "gui/widgets/XournalWidget.h"  // for gtk_xournal_repaint_area
+#include "model/Document.h"             // for Document
+#include "model/XojPage.h"              // for Page
+#include "util/Assert.h"                // for xoj_assert
+#include "util/Rectangle.h"             // for Rectangle
+#include "util/Util.h"                  // for execInUiThread
+#include "util/raii/CairoWrappers.h"    // for CairoSurfaceSPtr, CairoSPtr
+#include "util/safe_casts.h"            // for strict_cast, as_signed, as_si...
+#include "view/DocumentView.h"          // for DocumentView
+#include "view/Mask.h"                  // for Mask
+
+#if defined(__has_cpp_attribute) && __has_cpp_attribute(likely)
+#define XOJ_CPP20_UNLIKELY [[unlikely]]
+#else
+#define XOJ_CPP20_UNLIKELY
+#endif
 
 using xoj::util::Rectangle;
 
@@ -27,62 +36,55 @@ RenderJob::RenderJob(XojPageView* view): view(view) {}
 auto RenderJob::getSource() -> void* { return this->view; }
 
 void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
-    const double ratio = view->xournal->getZoom() * this->view->xournal->getDpiScaleFactor();
-
     /**
-     * The +1 makes sure the mask is big enough
-     * For example, if rect.x = m + 0.9, rect.width = n + 0.2 and ratio = 1 and m and n are integers
-     * We need a mask of width n+2 pixels for that...
+     * Padding seems to be necessary to prevent artefacts of most strokes.
+     * These artefacts are most pronounced when using the stroke deletion
+     * tool on ellipses, but also occur occasionally when removing regular
+     * strokes.
      **/
-    const auto x = std::floor(rect.x * ratio);
-    const auto y = std::floor(rect.y * ratio);
-    const auto width = int(std::ceil(rect.width * ratio)) + 1;
-    const auto height = int(std::ceil(rect.height * ratio)) + 1;
+    constexpr int RENDER_PADDING = 1;
 
-    xoj::util::CairoSurfaceSPtr rectBuffer(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height),
-                                           xoj::util::adopt);
-    cairo_surface_set_device_offset(rectBuffer.get(), -x, -y);
-    cairo_surface_set_device_scale(rectBuffer.get(), ratio, ratio);
+    Range maskRange(rect);
+    maskRange.addPadding(RENDER_PADDING);
+    xoj::view::Mask newMask(view->xournal->getDpiScaleFactor(), maskRange, view->xournal->getZoom(),
+                            CAIRO_CONTENT_COLOR_ALPHA);
 
-    renderToBuffer(rectBuffer.get());
+    renderToBuffer(newMask.get());
 
     std::lock_guard lock(this->view->drawingMutex);
-    xoj::util::CairoSPtr crPageBuffer(cairo_create(view->crBuffer.get()), xoj::util::adopt);
-
-    cairo_set_operator(crPageBuffer.get(), CAIRO_OPERATOR_SOURCE);
-    cairo_set_source_surface(crPageBuffer.get(), rectBuffer.get(), 0, 0);
-    cairo_rectangle(crPageBuffer.get(), rect.x, rect.y, rect.width, rect.height);
-    cairo_fill(crPageBuffer.get());
+    if (!view->buffer.isInitialized()) {
+        // Todo: the buffer must not be uninitializable here, either by moving it into the job or by locking it at job
+        // creation a shared prt may also be suffice.
+        XOJ_CPP20_UNLIKELY return;
+    }
+    newMask.paintTo(view->buffer.get());
 }
 
 void RenderJob::run() {
     this->view->repaintRectMutex.lock();
 
-    bool rerenderComplete = this->view->rerenderComplete;
+    bool rerenderComplete = std::exchange(this->view->rerenderComplete, false);
+    bool sizeChanged = std::exchange(this->view->sizeChanged, false);
     auto rerenderRects = std::move(this->view->rerenderRects);
-
-    this->view->rerenderComplete = false;
 
     this->view->repaintRectMutex.unlock();
 
-    const int dpiScaleFactor = this->view->xournal->getDpiScaleFactor();
-
     if (rerenderComplete) {
-        const int dispWidth = this->view->getDisplayWidth() * dpiScaleFactor;
-        const int dispHeight = this->view->getDisplayHeight() * dpiScaleFactor;
-        const double ratio = this->view->xournal->getZoom() * dpiScaleFactor;
+        xoj::view::Mask newMask(view->xournal->getDpiScaleFactor(),
+                                Range(0, 0, view->page->getWidth(), view->page->getHeight()), view->xournal->getZoom(),
+                                CAIRO_CONTENT_COLOR_ALPHA);
 
-        xoj::util::CairoSurfaceSPtr newBuffer(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth, dispHeight),
-                                              xoj::util::adopt);
-        cairo_surface_set_device_scale(newBuffer.get(), ratio, ratio);
-
-        renderToBuffer(newBuffer.get());
-
+        renderToBuffer(newMask.get());
         {
             std::lock_guard lock(this->view->drawingMutex);
-            std::swap(this->view->crBuffer, newBuffer);
+            std::swap(this->view->buffer, newMask);
         }
-        repaintPage();
+        if (sizeChanged) {
+            // We do not have any control on what portion of the widget needs to be redrawn. Redraw it all.
+            Util::execInUiThread([w = view->xournal->getWidget()]() { gtk_widget_queue_draw(w); });
+        } else {
+            repaintPage();
+        }
     } else {
         for (Rectangle<double> const& rect: rerenderRects) {
             rerenderRectangle(rect);
@@ -95,27 +97,24 @@ static void repaintWidgetArea(GtkWidget* widget, int x1, int y1, int x2, int y2)
     Util::execInUiThread([=]() { gtk_xournal_repaint_area(widget, x1, y1, x2, y2); });
 }
 
-void RenderJob::repaintPage() const {
-    repaintPageArea(0, 0, view->getWidth(), view->getHeight());
-}
+void RenderJob::repaintPage() const { repaintPageArea(0, 0, view->getWidth(), view->getHeight()); }
 
 void RenderJob::repaintPageArea(double x1, double y1, double x2, double y2) const {
     double zoom = view->xournal->getZoom();
     int x = view->getX();
     int y = view->getY();
-    repaintWidgetArea(view->xournal->getWidget(), x + std::floor(zoom * x1), y + std::floor(zoom * y1), x + std::ceil(zoom * x2), y + std::ceil(zoom * y2));
+    repaintWidgetArea(view->xournal->getWidget(), x + floor_cast<int>(zoom * x1), y + floor_cast<int>(zoom * y1),
+                      x + ceil_cast<int>(zoom * x2), y + ceil_cast<int>(zoom * y2));
 }
 
-void RenderJob::renderToBuffer(cairo_surface_t* buffer) const {
-    xoj::util::CairoSPtr crRect(cairo_create(buffer), xoj::util::adopt);
-
+void RenderJob::renderToBuffer(cairo_t* cr) const {
     DocumentView localView;
     localView.setMarkAudioStroke(this->view->getXournal()->getControl()->getToolHandler()->getToolType() ==
                                  TOOL_PLAY_OBJECT);
     localView.setPdfCache(this->view->xournal->getCache());
 
     std::lock_guard<Document> lock(*this->view->xournal->getDocument());
-    localView.drawPage(this->view->page, crRect.get(), false);
+    localView.drawPage(this->view->page, cr, false);
 }
 
 auto RenderJob::getType() -> JobType { return JOB_TYPE_RENDER; }

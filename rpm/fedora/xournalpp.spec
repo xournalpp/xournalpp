@@ -1,25 +1,21 @@
 # Force out of source build
-%global         __cmake_in_source_build 0
+%global __cmake_in_source_build 0
 
 #This spec file is intended for daily development snapshot release
-%global	build_repo https://github.com/xournalpp/xournalpp/
-%global	build_branch master
-%global	version_string 1.1.3+dev
-%define	build_commit %(git ls-remote %{build_repo} | grep "refs/heads/%{build_branch}" | cut -c1-41)
-%define	build_shortcommit %(c=%{build_commit}; echo ${c:0:7})
-%global	build_timestamp %(date +"%Y%m%d")
-%global	rel_build %{build_timestamp}git%{build_shortcommit}
+%global build_shortcommit {{{ git rev-parse --short HEAD }}}
+%global version_string {{{ git describe --tags --match 'v[0-9]*' | sed -e 's/^v\(.*\)-\([0-9]*\)-g\(.*\)$/\1^\2.g\3/' }}}
 %global _gtest 1
 
 Name:           xournalpp
 # See https://docs.fedoraproject.org/en-US/packaging-guidelines/Versioning/#_examples
-Version:        %{version_string}^%{rel_build}
+Version:        %{version_string}
 Release:        1%{dist}
 Summary:        Handwriting note-taking software with PDF annotation support
 
 License:        GPLv2+
-URL:            %{build_repo}
-Source:         %{url}/archive/%{build_branch}.tar.gz
+URL:            https://xournalpp.github.io
+VCS:            {{{ git_cwd_vcs }}}
+Source:         {{{ git_cwd_pack }}}
 
 BuildRequires:  cmake >= 3.10
 BuildRequires:  desktop-file-utils
@@ -71,7 +67,7 @@ The %{name}-ui package contains a graphical user interface for  %{name}.
 
 
 %prep
-%autosetup -n %{name}-%{build_branch}
+%autosetup -n %{name}
 
 %build
 %cmake \
@@ -105,7 +101,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/com.github.%{n
 %files -f %{name}.lang
 %license LICENSE
 %doc README.md AUTHORS
-%{_bindir}/xournalpp-thumbnailer
+%{_bindir}/%{name}-thumbnailer
 %{_bindir}/%{name}
 %{_datadir}/applications/com.github.%{name}.%{name}.desktop
 %{_datadir}/icons/hicolor/scalable/apps/com.github.%{name}.%{name}.svg
@@ -113,6 +109,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/com.github.%{n
 %{_datadir}/mime/packages/com.github.%{name}.%{name}.xml
 %{_datadir}/thumbnailers/com.github.%{name}.%{name}.thumbnailer
 %dir %{_datadir}/%{name}
+%{_datadir}/%{name}/palettes/{xournal,xournalpp}.gpl
 %{_datadir}/%{name}/resources/{default,legacy}_template.tex
 %{_mandir}/man1/%{name}*.gz
 %{_metainfodir}/com.github.%{name}.%{name}.appdata.xml
@@ -124,10 +121,16 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/com.github.%{n
 %{_datadir}/%{name}/ui
 
 %changelog
+* Mon Sep 9 2024 Luya Tshimbalanga <luya@fedoraproject.org>
+- Add color palettes support
+
+* Fri Apr 1 2022 Michael J Gruber <mjg@fedoraproject.org>
+- Switch spec file to rpkg format
+
 * Sun Mar 6 2022 Luya Tshimbalanga <luya@fedoraproject.org>
 - Port enhanced spec file from Michael J Gruber version
 
-* Thu Oct 20 2021 Ulrich Huber <ulrich@huberulrich.de>
+* Thu Oct 21 2021 Ulrich Huber <ulrich@huberulrich.de>
 - See https://github.com/%{name}/%{name}/CHANGELOG.md
 
 * Sat Feb 20 2021 Luya Tshimbalanga <luya@fedoraproject.org>

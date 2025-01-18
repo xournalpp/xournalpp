@@ -176,18 +176,24 @@ void ImageExport::exportImagePage(size_t pageId, size_t id, double zoomRatio, Ex
         if (!popplerPage) {
             this->lastError = _("Error while exporting the pdf background: I cannot find the pdf page number ");
             this->lastError += std::to_string(pgNo);
+        } else if (format == EXPORT_GRAPHICS_PNG) {
+            popplerPage->render(cr);
         } else {
             popplerPage->renderForPrinting(cr);
         }
     }
 
+    xoj::view::BackgroundFlags flags;
+    flags.showPDF = xoj::view::HIDE_PDF_BACKGROUND;  // Already exported (if any)
+    flags.showImage = exportBackground == EXPORT_BACKGROUND_NONE ? xoj::view::HIDE_IMAGE_BACKGROUND :
+                                                                   xoj::view::SHOW_IMAGE_BACKGROUND;
+    flags.showRuling = exportBackground <= EXPORT_BACKGROUND_UNRULED ? xoj::view::HIDE_RULING_BACKGROUND :
+                                                                       xoj::view::SHOW_RULING_BACKGROUND;
+
     if (layerRange) {
-        view.drawLayersOfPage(*layerRange, page, this->cr, true /* dont render eraseable */,
-                              true /* don't rerender the pdf background */, exportBackground == EXPORT_BACKGROUND_NONE,
-                              exportBackground <= EXPORT_BACKGROUND_UNRULED);
+        view.drawLayersOfPage(*layerRange, page, this->cr, true /* dont render eraseable */, flags);
     } else {
-        view.drawPage(page, this->cr, true /* dont render eraseable */, true /* don't rerender the pdf background */,
-                      exportBackground == EXPORT_BACKGROUND_NONE, exportBackground <= EXPORT_BACKGROUND_UNRULED);
+        view.drawPage(page, this->cr, true /* dont render eraseable */, flags);
     }
 
     if (!freeSurface(id)) {
@@ -228,7 +234,7 @@ void ImageExport::exportGraphics(ProgressListener* stateListener) {
     }
 
     DocumentView view;
-    int current = 0;
+    size_t current = 0;
 
     for (size_t i = 0; i < count; i++) {
         auto id = i + 1;
@@ -237,9 +243,8 @@ void ImageExport::exportGraphics(ProgressListener* stateListener) {
         }
 
         if (selectedPages[i]) {
-            stateListener->setCurrentState(current++);
-
-            exportImagePage(i, id, zoomRatio, format, view);  // Todo(narrowing): remove cast
+            exportImagePage(i, id, zoomRatio, format, view);
+            stateListener->setCurrentState(++current);
         }
     }
 }

@@ -10,11 +10,13 @@
 #include "audio/AudioQueue.h"           // for AudioQueue
 #include "audio/DeviceInfo.h"           // for DeviceInfo
 #include "control/settings/Settings.h"  // for Settings
+#include "util/safe_casts.h"            // for as_unsigned
+
 
 constexpr auto FRAMES_PER_BUFFER{64U};
 
 auto PortAudioProducer::getInputDevices() const -> std::vector<DeviceInfo> {
-    auto devCount = this->sys.deviceCount();
+    auto devCount = as_unsigned(this->sys.deviceCount());
     std::vector<DeviceInfo> deviceList;
     deviceList.reserve(devCount);
 
@@ -31,7 +33,7 @@ auto PortAudioProducer::getInputDevices() const -> std::vector<DeviceInfo> {
 auto PortAudioProducer::getSelectedInputDevice() const -> DeviceInfo {
     try {
         return DeviceInfo(&sys.deviceByIndex(this->settings.getAudioInputDevice()), true);
-    } catch (portaudio::PaException& e) {
+    } catch (const portaudio::PaException& e) {
         g_message(
                 "PortAudioProducer: Selected input device not found - fallback to default input device\nCaused by: %s",
                 e.what());
@@ -51,7 +53,7 @@ auto PortAudioProducer::startRecording() -> bool {
     portaudio::Device* device = nullptr;
     try {
         device = &sys.deviceByIndex(getSelectedInputDevice().getIndex());
-    } catch (portaudio::PaException& e) {
+    } catch (const portaudio::PaException&) {
         g_message("PortAudioProducer: Unable to find selected input device");
         return false;
     }
@@ -70,7 +72,7 @@ auto PortAudioProducer::startRecording() -> bool {
     try {
         this->inputStream = std::make_unique<portaudio::MemFunCallbackStream<PortAudioProducer>>(
                 params, *this, &PortAudioProducer::recordCallback);
-    } catch (portaudio::PaException& e) {
+    } catch (const portaudio::PaException&) {
         g_message("PortAudioProducer: Unable to open stream");
         return false;
     }
@@ -78,7 +80,7 @@ auto PortAudioProducer::startRecording() -> bool {
     // Start the recording
     try {
         this->inputStream->start();
-    } catch (portaudio::PaException& e) {
+    } catch (const portaudio::PaException&) {
         g_message("PortAudioProducer: Unable to start stream");
         this->inputStream.reset();
         return false;
@@ -94,9 +96,9 @@ auto PortAudioProducer::recordCallback(const void* inputBuffer, void* /*outputBu
     }
 
     if (inputBuffer != nullptr) {
-        size_t providedFrames = framesPerBuffer * this->inputChannels;
+        size_t providedFrames = framesPerBuffer * as_unsigned(this->inputChannels);
         auto begI = static_cast<float const*>(inputBuffer);
-        this->audioQueue.emplace(begI, std::next(begI, providedFrames));
+        this->audioQueue.emplace(begI, std::next(begI, as_signed(providedFrames)));
     }
     return paContinue;
 }
@@ -108,7 +110,9 @@ void PortAudioProducer::stopRecording() {
             if (this->inputStream->isActive()) {
                 this->inputStream->stop();
             }
-        } catch (portaudio::PaException& e) { g_message("PortAudioProducer: Closing stream failed"); }
+        } catch (const portaudio::PaException&) {
+            g_message("PortAudioProducer: Closing stream failed");
+        }
     }
 
     // Notify the consumer at the other side that there will be no more data

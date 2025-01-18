@@ -80,6 +80,9 @@ public:
         return *this;
     }
 
+    bool operator==(std::nullptr_t) { return p == nullptr; }
+    bool operator!=(std::nullptr_t) { return p != nullptr; }
+
     explicit CLibrariesSPtr(T* p, Adopt): p(safeAdopt(p)) {}
     explicit CLibrariesSPtr(T* p, Ref): p(safeRef(p)) {}
     explicit CLibrariesSPtr(T* p, RefSink): p(safeRefSink(p)) {}

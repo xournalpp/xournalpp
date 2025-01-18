@@ -12,9 +12,11 @@
 #pragma once
 
 #include <algorithm>
-#include <cassert>
 #include <memory>
+#include <utility>
 #include <vector>
+
+#include "util/Assert.h"
 
 namespace xoj::util {
 
@@ -34,7 +36,7 @@ template <class ListenerT>
 class DispatchPool final {
 public:
     using listener_type = ListenerT;
-    
+
     /**
      * @brief Invokes the `on()` method of all registered `ListenerT`s.
      */
@@ -65,13 +67,14 @@ public:
      * The listener must not already be registered.
      */
     void add(listener_type* v) {
-        assert(v != nullptr && "Adding nullptr listener");
-        assert(std::find(this->pool.begin(), this->pool.end(), v) == this->pool.end() && "Listener is already listed");
+        xoj_assert_message(v != nullptr, "Adding nullptr listener");
+        xoj_assert_message(std::find(this->pool.begin(), this->pool.end(), v) == this->pool.end(),
+                           "Listener is already listed");
         this->pool.emplace_back(v);
     }
 
     void remove(listener_type* v) {
-        assert(v != nullptr && "Removing nullptr listener");
+        xoj_assert_message(v != nullptr, "Removing nullptr listener");
         auto it = std::find(this->pool.begin(), this->pool.end(), v);
         if (it != this->pool.end()) {
             this->pool.erase(it);
@@ -79,6 +82,7 @@ public:
     }
 
     [[nodiscard]] bool empty() const { return pool.empty(); }
+    [[nodiscard]] const listener_type& front() const { return *pool.front(); }
 
 private:
     std::vector<listener_type*> pool;

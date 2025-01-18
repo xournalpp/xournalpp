@@ -1,8 +1,8 @@
 #include "PlainBackgroundView.h"
 
 #include <algorithm>  // for max, min
-#include <cmath>      // for ceil, floor
 
+#include "util/safe_casts.h"                 // for ceil_cast, floor_cast
 #include "view/background/BackgroundView.h"  // for BackgroundView, view
 
 using namespace xoj::view;
@@ -17,6 +17,5 @@ void PlainBackgroundView::draw(cairo_t* cr) const {
 
 std::pair<int, int> PlainBackgroundView::getIndexBounds(double min, double max, double step, double margin,
                                                         double length) {
-    return {static_cast<int>(std::ceil(std::max(min, margin) / step)),
-            static_cast<int>(std::floor(std::min(max, margin + length) / step))};
+    return {ceil_cast<int>(std::max(min, margin) / step), floor_cast<int>(std::min(max, margin + length) / step)};
 }

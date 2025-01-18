@@ -30,9 +30,12 @@ Xournal++ features:
 - Supports pressure-sensitive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)
 - Paper backgrounds for note-taking, scratch paper, or whiteboarding
 - Annotate on top of PDFs
+- Select text from the background PDF, copy, highlight or underline it or strike it through
+- Follow links from the background PDF
 - Export to a variety of formats including SVG, PNG and PDF, both from the GUI and command line
 - Different drawing tools (e.g. pen, highlighter) and stroke styles (e.g. solid, dotted)
 - Shape drawing (line, arrow, circle, rectangle, spline)
+- Use the set-square and compass tools for measurements or as a guide for drawing straight lines, circular arcs and radii
 - Fill shape functionality
 - Shape resizing and rotation
 - Rotation and grid snapping for precise alignment of objects
@@ -40,10 +43,11 @@ Xournal++ features:
 - Text tool for adding text in different fonts, colors, and sizes
 - Enhanced support for image insertion
 - Eraser with multiple configurations
-- LaTeX support (requires a working LaTeX installation) with customizable template
+- LaTeX support (requires a working LaTeX installation) with customizable template and a resizable editor with syntax highlighting
 - Sidebar containing page previews with advanced page sorting, PDF bookmarks and layers (can be individually hidden/edited)
 - Allows mapping different tools/colors etc. to stylus/mouse buttons
 - Customizable toolbar with multiple configurations, e.g. to optimize toolbar for portrait/landscape
+- Custom color palette support using the .gpl format
 - Page template definitions
 - Bug reporting, auto-save, and auto backup tools
 - Audio recording and playback alongside with handwritten notes
@@ -52,15 +56,12 @@ Xournal++ features:
 
 ## Mobile & web app
 
-Since mid 2020, there is a Flutter-written mobile app for **Android**, **Chrome OS** and **iOS** (coming soon) as well as a **web app** available. Even though it is not perfectly stable nor are all of Xournal++'s features fully supported yet, you may check it out and open your Xournal++ notebooks on your mobile devices. You can get in touch in its [separate repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile).
-
+From mid 2020 to May 2021, a Flutter-written mobile app for **Android**, **Chrome OS** and **iOS** (unreleased) and the **web**
+has been developed, which supports the file format and most of the basic features of Xournal++.
+Unfortunately development has stalled and we have lost contact to the (single) developer. The web app is no longer available.
+You can still check out the [separate repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile) or
 [Get it on Google Play](https://play.google.com/store/apps/details?id=online.xournal.mobile)
 
-The web app is available at [xournal.online](https://xournal.online).
-
-_Why is the iOS app not published yet?_
-
-According to the Apple App Store guidelines, it is prohibited to publish unstable or beta apps. Hence we wait until Xournal++ Mobile works more stable and offers more complete feature compatibility to Xournal++.
 
 <table>
 <tr>
@@ -241,8 +242,8 @@ master on a weekly basis are available from
 
 ### Arch Linux
 
-The latest stable release is available [in the [community]
-repository](https://www.archlinux.org/packages/community/x86_64/xournalpp/).
+The latest stable release is available [in the [extra]
+repository](https://www.archlinux.org/packages/extra/x86_64/xournalpp/).
 
 To build the latest state of the master branch yourself, use [this AUR
 package](https://aur.archlinux.org/packages/xournalpp-git/).

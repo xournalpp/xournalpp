@@ -9,6 +9,8 @@
 #include "gui/inputdevices/touchdisable/TouchDisableCustom.h"     // for Tou...
 #include "gui/inputdevices/touchdisable/TouchDisableInterface.h"  // for Tou...
 #include "gui/inputdevices/touchdisable/TouchDisableX11.h"        // for Tou...
+#include "util/glib_casts.h"                                      // for wrap_v
+#include "util/safe_casts.h"                                      // for as_unsigned
 
 #include "InputContext.h"  // for Inp...
 
@@ -114,9 +116,9 @@ auto HandRecognition::enableTimeout(HandRecognition* self) -> bool {
         return false;
     }
 
-    auto nextTime = now - self->lastPenAction + self->disableTimeout;
+    auto nextTime = static_cast<guint>(now - self->lastPenAction + self->disableTimeout);
 
-    g_timeout_add(nextTime, reinterpret_cast<GSourceFunc>(enableTimeout), self);
+    g_timeout_add(nextTime, xoj::util::wrap_v<enableTimeout>, self);
 
     // Do not call again, a new time is scheduled
     return false;
@@ -133,7 +135,7 @@ void HandRecognition::penEvent() {
         if (enabled) {
             disableTouch();
         }
-        g_timeout_add(disableTimeout, reinterpret_cast<GSourceFunc>(enableTimeout), this);
+        g_timeout_add(as_unsigned(disableTimeout), xoj::util::wrap_v<enableTimeout>, this);
     }
 }
 

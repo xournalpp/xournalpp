@@ -3,17 +3,21 @@ function initUi()
   app.registerUi({["menu"] = "Migrate font sizes with factor displayDPI / 72", ["callback"] = "migrate"});
   app.registerUi({["menu"] = "Show font size migration dialog", ["callback"] = "showDialog"});
 
-  sourcePath = debug.getinfo(1).source:match("@?(.*/)")
+  local sep = package.config:sub(1, 1) -- path separator depends on OS
+  sourcePath = debug.getinfo(1).source:match("@?(.*" .. sep .. ")")
 end
 
 function migrate()
   local displayDpi = app.getDisplayDpi()
   local dpiNormalizationFactor = 72
-  local factor = displayDpi / dpiNormalizationFactor
+  dpiFactor = displayDpi / dpiNormalizationFactor   -- global, since needed in callback
   -- print("Display DPI is " .. displayDpi .. " => scaling by factor " .. displayDpi .. "/72 = " .. factor)
-  local result = app.msgbox("Display DPI is " .. displayDpi .. ". By proceeding the font sizes of all text elements will be scaled by the factor " .. displayDpi .. "/72 = " .. factor, {[1]="Cancel", [2]="OK"})
-  if result == 2 then 
-    resize(factor)
+  app.openDialog("Display DPI is " .. displayDpi .. ". By proceeding the font sizes of all text elements will be scaled by the factor " .. displayDpi .. "/72 = " .. dpiFactor, {"Cancel", "OK"}, "migrateDialogCallback")
+end
+
+function migrateDialogCallback(result)
+  if result == 2 then
+    resize(dpiFactor)
   end
 end
 
@@ -22,7 +26,7 @@ local currDpi
 function showDialog()
   local hasLgi, lgi = pcall(require, "lgi")
   if not hasLgi then
-    app.msgbox("You need to have the Lua lgi-module installed and included in your Lua package path in order to use the GUI for migrating font sizes. \n\n", {[1]="OK"})
+    app.openDialog("You need to have the Lua lgi-module installed and included in your Lua package path in order to use the GUI for migrating font sizes. \n\n", {"OK"}, "", true)
     return
   end
 
@@ -35,7 +39,7 @@ function showDialog()
   local ui = builder.objects
   local dialog = ui.dlgMigrateFontSizes
 
-  if not currDpi then 
+  if not currDpi then
     currDpi = app.getDisplayDpi()
   end
   ui.spbtOldDpi:set_value(currDpi)
@@ -71,7 +75,7 @@ function resize(factor)
   local numPages = #docStructure["pages"]
   local page = docStructure["currentPage"]
   local layer = docStructure["pages"][page]["currentLayer"]
-  
+
   for i=1, numPages do
     app.setCurrentPage(i)
     local numLayers = #docStructure["pages"][page]["layers"]
@@ -79,6 +83,7 @@ function resize(factor)
       app.setCurrentLayer(j)
       app.scaleTextElements(factor)
     end
+    app.refreshPage()
   end
   app.setCurrentPage(page)
   app.setCurrentLayer(layer)

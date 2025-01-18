@@ -32,7 +32,7 @@ public:
     bool undo(Control* control) override;
     bool redo(Control* control) override;
 
-    void addElement(Layer* layer, Element* e, int pos);
+    void addElement(Layer* layer, Element* e, Element::Index pos);
 
     std::string getText() override;
 

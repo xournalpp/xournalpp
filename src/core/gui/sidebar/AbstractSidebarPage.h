@@ -16,19 +16,20 @@
 
 #include <gtk/gtk.h>  // for GtkToolItem
 
-#include "gui/sidebar/previews/base/SidebarToolbar.h"  // for SidebarToolbar...
 #include "model/DocumentListener.h"                    // for DocumentListener
 
 class Control;
 
-class AbstractSidebarPage: public DocumentListener, public SidebarToolbarActionListener {
+class AbstractSidebarPage: public DocumentListener {
 public:
-    AbstractSidebarPage(Control* control, SidebarToolbar* toolbar);
+    AbstractSidebarPage(Control* control);
     ~AbstractSidebarPage() override;
 
 public:
     virtual void enableSidebar() = 0;
     virtual void disableSidebar() = 0;
+
+    virtual void layout() = 0;
 
     /**
      * The name of this sidebar page
@@ -72,14 +73,9 @@ protected:
      */
     Control* control = nullptr;
 
-    /**
-     * The Toolbar to move, copy & delete pages
-     */
-    SidebarToolbar* toolbar = nullptr;
-
 public:
     /**
      * The Sidebar button
      */
-    GtkToolItem* tabButton = nullptr;
+    GtkWidget* tabButton = nullptr;
 };

@@ -11,22 +11,25 @@
 
 #pragma once
 
+#include <functional>
+
 #include <glib.h>     // for gchar
 #include <gtk/gtk.h>  // for GtkButton, GtkCellRendererText, GtkListStore
 
-#include "gui/GladeGui.h"  // for GladeGui
+#include "util/raii/GObjectSPtr.h"
+#include "util/raii/GtkWindowUPtr.h"
 
 class ToolbarData;
 class ToolbarModel;
 class GladeSearchpath;
 
-class ToolbarManageDialog: public GladeGui {
+class ToolbarManageDialog {
 public:
-    ToolbarManageDialog(GladeSearchpath* gladeSearchPath, ToolbarModel* model);
-    ~ToolbarManageDialog() override;
+    ToolbarManageDialog(GladeSearchpath* gladeSearchPath, ToolbarModel* model, std::function<void()> callback);
+    ~ToolbarManageDialog();
 
 public:
-    void show(GtkWindow* parent) override;
+    inline GtkWindow* getWindow() const { return window.get(); }
 
 private:
     static void treeSelectionChangedCallback(GtkTreeSelection* selection, ToolbarManageDialog* dlg);
@@ -37,7 +40,7 @@ private:
     static void buttonDeleteCallback(GtkButton* button, ToolbarManageDialog* dlg);
     static void buttonCopyCallback(GtkButton* button, ToolbarManageDialog* dlg);
 
-    void addToolbarData(ToolbarData* data);
+    void addToolbarData(std::unique_ptr<ToolbarData> tbd);
     void entrySelected(ToolbarData* data);
 
     void updateSelectionData();
@@ -46,5 +49,12 @@ private:
 
 private:
     ToolbarModel* tbModel;
-    GtkListStore* model;
+    xoj::util::GObjectSPtr<GtkListStore> model;
+
+    GtkTreeView* tree;
+    GtkWidget* copyButton;
+    GtkWidget* deleteButton;
+
+    xoj::util::GtkWindowUPtr window;
+    std::function<void()> callback;
 };

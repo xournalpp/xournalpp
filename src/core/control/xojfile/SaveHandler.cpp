@@ -1,6 +1,7 @@
 #include "SaveHandler.h"
 
-#include <cinttypes>   // for PRIx32, uint32_t
+#include <cinttypes>   // for PRIx32
+#include <cstdint>     // for uint32_t
 #include <cstdio>      // for sprintf, size_t
 #include <filesystem>  // for exists
 
@@ -77,7 +78,7 @@ void SaveHandler::prepareSave(Document* doc) {
 void SaveHandler::writeHeader() {
     this->root->setAttrib("creator", PROJECT_STRING);
     this->root->setAttrib("fileversion", FILE_FORMAT_VERSION);
-    this->root->addChild(new XmlTextNode("title", std::string{"Xournal++ document - see "} + PROJECT_URL));
+    this->root->addChild(new XmlTextNode("title", std::string{"Xournal++ document - see "} + PROJECT_HOMEPAGE_URL));
 }
 
 auto SaveHandler::getColorStr(Color c, unsigned char alpha) -> std::string {
@@ -88,9 +89,11 @@ auto SaveHandler::getColorStr(Color c, unsigned char alpha) -> std::string {
 }
 
 void SaveHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode) {
-    /** set stroke timestamp value to the XmlPointNode */
-    xmlAudioNode->setAttrib("ts", audioElement->getTimestamp());
-    xmlAudioNode->setAttrib("fn", audioElement->getAudioFilename().u8string());
+    if (!audioElement->getAudioFilename().empty()) {
+        /** set stroke timestamp value to the XmlPointNode */
+        xmlAudioNode->setAttrib("ts", audioElement->getTimestamp());
+        xmlAudioNode->setAttrib("fn", audioElement->getAudioFilename().u8string());
+    }
 }
 
 void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {
@@ -113,20 +116,16 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {
 
     stroke->setAttrib("color", getColorStr(s->getColor(), alpha).c_str());
 
-    int pointCount = s->getPointCount();
+    const auto& pts = s->getPointVector();
 
-    for (int i = 0; i < pointCount; i++) {
-        stroke->addPoint(s->getPoint(i));
-    }
+    stroke->setPoints(pts);
 
     if (s->hasPressure()) {
-        auto* values = new double[pointCount + 1];
-        values[0] = s->getWidth();
-        for (int i = 0; i < pointCount; i++) {
-            values[i + 1] = s->getPoint(i).z;
-        }
-
-        stroke->setAttrib("width", values, pointCount);
+        std::vector<double> values;
+        values.reserve(pts.size() + 1);
+        values.emplace_back(s->getWidth());
+        std::transform(pts.begin(), pts.end() - 1, std::back_inserter(values), [](const Point& p) { return p.z; });
+        stroke->setAttrib("width", std::move(values));
     } else {
         stroke->setAttrib("width", s->getWidth());
     }
@@ -166,14 +165,14 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
         layer->setAttrib("name", l->getName().c_str());
     }
 
-    for (Element* e: l->getElements()) {
+    for (auto&& e: l->getElements()) {
         if (e->getType() == ELEMENT_STROKE) {
-            auto* s = dynamic_cast<Stroke*>(e);
+            auto* s = dynamic_cast<Stroke*>(e.get());
             auto* stroke = new XmlPointNode("stroke");
             layer->addChild(stroke);
             visitStroke(stroke, s);
         } else if (e->getType() == ELEMENT_TEXT) {
-            Text* t = dynamic_cast<Text*>(e);
+            Text* t = dynamic_cast<Text*>(e.get());
             auto* text = new XmlTextNode("text", t->getText());
             layer->addChild(text);
 
@@ -187,7 +186,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
 
             writeTimestamp(t, text);
         } else if (e->getType() == ELEMENT_IMAGE) {
-            auto* i = dynamic_cast<Image*>(e);
+            auto* i = dynamic_cast<Image*>(e.get());
             auto* image = new XmlImageNode("image");
             layer->addChild(image);
 
@@ -198,7 +197,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
             image->setAttrib("right", i->getX() + i->getElementWidth());
             image->setAttrib("bottom", i->getY() + i->getElementHeight());
         } else if (e->getType() == ELEMENT_TEXIMAGE) {
-            auto* i = dynamic_cast<TexImage*>(e);
+            auto* i = dynamic_cast<TexImage*>(e.get());
             auto* image = new XmlTexNode("teximage", std::string(i->getBinaryData()));
             layer->addChild(image);
 
@@ -255,7 +254,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
                 }
             } else {
                 background->setAttrib("domain", "absolute");
-                background->setAttrib("filename", doc->getPdfFilepath().string());
+                background->setAttrib("filename", doc->getPdfFilepath().u8string());
             }
         }
         background->setAttrib("pageno", p->getPdfPageNr() + 1);
@@ -280,7 +279,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
             p->getBackgroundImage().setCloneId(id);
         } else {
             background->setAttrib("domain", "absolute");
-            background->setAttrib("filename", p->getBackgroundImage().getFilepath().string());
+            background->setAttrib("filename", p->getBackgroundImage().getFilepath().u8string());
             p->getBackgroundImage().setCloneId(id);
         }
     } else {
@@ -301,26 +300,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
 void SaveHandler::writeSolidBackground(XmlNode* background, PageRef p) {
     background->setAttrib("type", "solid");
     background->setAttrib("color", getColorStr(p->getBackgroundColor()));
-
-    if (auto fmt = p->getBackgroundType().format; fmt == PageTypeFormat::Copy) {
-        /*
-         * PageTypeFormat::Copy is just a placeholder for the various background related menus, indicating that the
-         * background should be copied from another page.
-         * IT SHOULD NEVER APPEAR IN AN ACTUAL PAGE MODEL OR A FORTIORI IN A SAVED FILE
-         *
-         * A page with background type PageTypeFormat::Copy is unwanted.
-         * To avoid creating corrupted files, we replace the format with PageTypeFormat::Plain
-         */
-        if (!this->errorMessage.empty()) {
-            this->errorMessage += "\n";
-        }
-        this->errorMessage += _("Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to "
-                                "avoid corrupted file");
-
-        background->setAttrib("style", PageTypeHandler::getStringForPageTypeFormat(PageTypeFormat::Plain));
-    } else {
-        background->setAttrib("style", PageTypeHandler::getStringForPageTypeFormat(fmt));
-    }
+    background->setAttrib("style", PageTypeHandler::getStringForPageTypeFormat(p->getBackgroundType().format));
 
     // Not compatible with Xournal, so the background needs
     // to be changed to a basic one!

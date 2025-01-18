@@ -15,6 +15,10 @@ end
 
 -- Callback if the menu item is executed
 function exampleCallback()
-  result = app.msgbox("Test123", {[1] = "Yes", [2] = "No"});
+  app.openDialog("Test123", {"Yes", "No"}, "dialogCallback");
+end
+
+-- Callback for when the user click one of the dialog's button
+function dialogCallback(result)
   print("result = " .. result)
 end

@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <vector>
+
 #include "util/serializing/Serializable.h"  // for Serializable
 
 class ObjectInputStream;
@@ -20,23 +22,21 @@ class ObjectOutputStream;
 class LineStyle: public Serializable {
 public:
     LineStyle();
-    LineStyle(const LineStyle& other);
     ~LineStyle() override;
 
-    void operator=(const LineStyle& other);
+    bool operator==(const LineStyle& other) const;
 
 public:
     // Serialize interface
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;
 
-public:
     /**
-     * Get dash array and count
+     * Get dash vector
      *
-     * @return true if dashed
+     * @return dashes
      */
-    bool getDashes(const double*& dashes, int& dashCount) const;
+    const std::vector<double>& getDashes() const;
 
     /**
      * @return true if dashed
@@ -44,21 +44,12 @@ public:
     bool hasDashes() const;
 
     /**
-     * Set the dash array and count
+     * Set the dash vector and count
      *
-     * @param dashes Dash data, will be copied
-     * @param dashCount Count of entries
+     * @param dashes Dash data, will be moved, and continuous use from caller invalid
      */
-    void setDashes(const double* dashes, int dashCount);
+    void setDashes(std::vector<double>&& dashes);
 
 private:
-    /**
-     * Dash definition (nullptr for no Dash)
-     */
-    double* dashes = nullptr;
-
-    /**
-     * Dash count (0 for no dash)
-     */
-    int dashCount = 0;
+    std::vector<double> dashes;
 };

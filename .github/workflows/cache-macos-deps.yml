@@ -1,0 +1,42 @@
+name: Create and cache MacOS dependency blobs
+
+on:
+  workflow_dispatch:  # trigger from Github's Action tab (or via API)
+
+env:
+  build-targets-json: '.github/available-build-targets.json'
+
+jobs:
+  prepare:
+    name: Prepare jobs
+    runs-on: ubuntu-latest
+    outputs:
+      macos_builds: ${{ steps.parse.outputs.macos_builds }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:  # Get the build targets **from the master branch**
+          sparse-checkout: '${{ env.build-targets-json }}'
+          sparse-checkout-cone-mode: false
+      - id: parse
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const available_targets = require('${{ env.build-targets-json }}')
+            core.setOutput('macos_builds', Object.values(available_targets.macos_targets))
+  blob-macos:
+    name: Create and cache MacOS dependency blobs
+    needs: ['prepare']
+    strategy:
+      fail-fast: false
+      matrix:
+        run: ${{fromJSON(needs.prepare.outputs.macos_builds)}}
+    runs-on: ${{ matrix.run.runner }}
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v4
+      - name: 'Build dependencies'
+        uses: ./.github/actions/install_deps_mac
+        with:
+          install_path: $HOME

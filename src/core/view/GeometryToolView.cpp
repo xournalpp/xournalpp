@@ -47,9 +47,8 @@ void GeometryToolView::drawTemporaryStroke(cairo_t* cr) const {
 
 auto GeometryToolView::createMask(cairo_t* targetCr) const -> Mask {
     const double zoom = this->parent->getZoom();
-    const int dpiScaling = this->parent->getDPIScaling();
     Range rg = geometryTool->getToolRange(false);
-    return Mask(cairo_get_target(targetCr), rg, zoom, dpiScaling, CAIRO_CONTENT_COLOR_ALPHA);
+    return Mask(cairo_get_target(targetCr), rg, zoom, CAIRO_CONTENT_COLOR_ALPHA);
 }
 
 void GeometryToolView::on(ResetMaskRequest) { mask.reset(); }

@@ -33,8 +33,9 @@ public:
 public:
     virtual bool save(fs::path const& file, GError** error) const = 0;
     virtual bool load(fs::path const& file, std::string password, GError** error) = 0;
-    virtual bool load(gpointer data, gsize length, std::string password, GError** error) = 0;
+    virtual bool load(std::unique_ptr<std::string> data, std::string password, GError** error) = 0;
     virtual bool isLoaded() const = 0;
+    virtual void reset() = 0;
 
     virtual XojPdfPageSPtr getPage(size_t page) const = 0;
     virtual size_t getPageCount() const = 0;

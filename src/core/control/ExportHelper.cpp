@@ -5,7 +5,6 @@
 #include <string>     // for string
 
 #include <gio/gio.h>      // for g_file_new_for_commandlin...
-#include <glib-object.h>  // for g_object_unref
 #include <glib.h>         // for g_message, g_error
 
 #include "control/jobs/ImageExport.h"       // for ImageExport, EXPORT_GRAPH...
@@ -15,6 +14,7 @@
 #include "pdf/base/XojPdfExportFactory.h"   // for XojPdfExportFactory
 #include "util/ElementRange.h"              // for parse, PageRangeVector
 #include "util/i18n.h"                      // for _
+#include "util/raii/GObjectSPtr.h"          // for GObjectSPtr
 
 #include "filesystem.h"  // for operator==, path, u8path
 
@@ -94,12 +94,11 @@ auto exportImg(Document* doc, const char* output, const char* range, const char*
 auto exportPdf(Document* doc, const char* output, const char* range, const char* layerRange,
                ExportBackgroundType exportBackground, bool progressiveMode) -> int {
 
-    GFile* file = g_file_new_for_commandline_arg(output);
+    xoj::util::GObjectSPtr<GFile> file(g_file_new_for_commandline_arg(output), xoj::util::adopt);
 
     std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, nullptr);
     pdfe->setExportBackground(exportBackground);
-    auto path = fs::u8path(g_file_peek_path(file));
-    g_object_unref(file);
+    auto path = fs::u8path(g_file_peek_path(file.get()));
 
     bool exportSuccess = 0;  // Return of the export job
 

@@ -12,6 +12,7 @@
 #pragma once
 
 #include <cairo.h>
+#include <gdk/gdk.h>
 
 #include "util/raii/CairoWrappers.h"
 
@@ -32,11 +33,20 @@ public:
      * @param extent The extent of the mask, in local coordinates (i.e. in the coordinates of the cairo context(s) on
      * which the mask will be used).
      * @param zoom The local zoom ratio (zoom ratio of the cairo context(s) on which the mask will be used).
-     * @param DPIScaling The targeted screen DPI scaling
      * @param contentType The intended content of the mask
      */
-    Mask(cairo_surface_t* target, const Range& extent, double zoom, int DPIScaling,
-         cairo_content_t contentType = CAIRO_CONTENT_ALPHA);
+    Mask(cairo_surface_t* target, const Range& extent, double zoom, cairo_content_t contentType = CAIRO_CONTENT_ALPHA);
+
+    /**
+     * @brief Create a mask tailored for the specified target
+     * @param DPIScaling The DPI scaling of the targeted use monitor
+     * @param extent The extent of the mask, in local coordinates (i.e. in the coordinates of the cairo context(s) on
+     * which the mask will be used).
+     * @param zoom The local zoom ratio (zoom ratio of the cairo context(s) on which the mask will be used).
+     * @param contentType The intended content of the mask
+     */
+    Mask(int DPIScaling, const Range& extent, double zoom, cairo_content_t contentType = CAIRO_CONTENT_ALPHA);
+
     cairo_t* get();
     bool isInitialized() const;
     /**
@@ -53,11 +63,25 @@ public:
     void wipe();
 
     /**
+     * @brief Erase part the surface's content
+     * @param rg The part to erase, in Page coordinates
+     */
+    void wipeRange(const Range& rg);
+
+    /**
      * @brief Delete the mask
      */
     void reset();
 
+    inline double getZoom() const { return zoom; }
+
 private:
+    template <typename DPIInfoType>
+    void constructorImpl(DPIInfoType dpiInfo, const Range& extent, double zoom, cairo_content_t contentType);
+
     xoj::util::CairoSPtr cr;
+    int xOffset = 0;
+    int yOffset = 0;
+    double zoom = 1.0;
 };
 };  // namespace xoj::view

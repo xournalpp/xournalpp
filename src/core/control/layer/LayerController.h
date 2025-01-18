@@ -15,7 +15,6 @@
 #include <list>     // for list
 #include <string>   // for string
 
-#include "enums/ActionType.enum.h"     // for ActionType
 #include "model/DocumentChangeType.h"  // for DocumentChangeType
 #include "model/DocumentListener.h"    // for DocumentListener
 #include "model/Layer.h"               // for Layer, Layer::Index
@@ -45,10 +44,11 @@ public:
 
 protected:
     void fireLayerVisibilityChanged();
+    void fireSelectedLayerChanged();
+
+    void updateActions();
 
 public:
-    bool actionPerformed(ActionType type);
-
     /**
      * Show all layer on the current page
      */
@@ -62,7 +62,7 @@ public:
     /**
      * Show / Hide all layer on the current page
      */
-    void hideOrHideAllLayer(bool show);
+    void showOrHideAllLayer(bool show);
 
     void addNewLayer();
     void deleteCurrentLayer();
@@ -99,11 +99,6 @@ public:
      * Sets current layer name
      */
     void setCurrentLayerName(const std::string& newName);
-
-    /**
-     * Make sure there is at least one layer on the page
-     */
-    void ensureLayerExists(PageRef page);
 
 private:
     Control* control;

@@ -13,16 +13,15 @@
 
 #include <utility>  // for pair
 
-#include <cairo.h>  // for cairo_t, cairo_surface_t
+#include <cairo.h>  // for cairo_t
 
 class ErasableStroke;
-namespace xoj::util {
-template <class T>
-class Rectangle;
-}  // namespace xoj::util
+class Range;
 
 namespace xoj {
 namespace view {
+class Mask;
+
 class ErasableStrokeView {
 public:
     ErasableStrokeView(const ErasableStroke& erasableStroke);
@@ -50,11 +49,11 @@ public:
 private:
     /**
      * @brief Create a cairo mask for a given rectangle and sets up a context for drawing on it
-     * @param box The rectangle delimiting the mask
-     * @param scaling A scaling ratio to apply to the mask
-     * @return Pointers to the newly created cairo context and surface (mask)
+     * @param target A cairo context on which the mask would be used
+     * @param box The range delimiting the mask
+     * @param zoom A zoom ratio to apply to the mask
      */
-    std::pair<cairo_t*, cairo_surface_t*> createMask(const xoj::util::Rectangle<double>& box, double scaling) const;
+    xoj::view::Mask createMask(cairo_t* target, const Range& box, double zoom) const;
 
 private:
     const ErasableStroke& erasableStroke;

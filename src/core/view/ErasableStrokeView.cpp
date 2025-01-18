@@ -1,6 +1,5 @@
 #include "ErasableStrokeView.h"
 
-#include <cassert>   // for assert
 #include <cmath>     // for ceil
 #include <iosfwd>    // for ptrdiff_t
 #include <iterator>  // for next
@@ -12,10 +11,13 @@
 #include "model/Point.h"                  // for Point
 #include "model/Stroke.h"                 // for Stroke, StrokeTool::HIGHLIG...
 #include "model/eraser/ErasableStroke.h"  // for ErasableStroke, ErasableStr...
+#include "util/Assert.h"                  // for xoj_assert
 #include "util/Color.h"                   // for cairo_set_source_rgbi
 #include "util/Interval.h"                // for Interval
 #include "util/Rectangle.h"               // for Rectangle
+#include "util/Util.h"                    // for cairo_set_dash_from_vector
 
+#include "Mask.h"          // for Mask
 #include "StrokeView.h"    // for StrokeView, StrokeView::CAI...
 #include "config-debug.h"  // for DEBUG_ERASABLE_STROKE_BOXES
 
@@ -33,14 +35,11 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
 
     const Stroke& stroke = this->erasableStroke.stroke;
 
-    const double* dashes = nullptr;
-    int dashCount = 0;
-    stroke.getLineStyle().getDashes(dashes, dashCount);
-    assert((dashCount == 0 && dashes == nullptr) || (dashCount != 0 && dashes != nullptr));
+    const auto& dashes = stroke.getLineStyle().getDashes();
 
     const std::vector<Point>& data = stroke.getPointVector();
 
-    cairo_save(cr);
+    xoj::util::CairoSaveGuard guard(cr);
 
     if (stroke.hasPressure()) {
         double dashOffset = 0;
@@ -53,8 +52,8 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
 
             auto endIt = std::next(data.cbegin(), (std::ptrdiff_t)interval.max.index + 1);
             for (auto it = std::next(data.cbegin(), (std::ptrdiff_t)interval.min.index + 1); it != endIt; ++it) {
-                if (dashes) {
-                    cairo_set_dash(cr, dashes, dashCount, dashOffset);
+                if (!dashes.empty()) {
+                    Util::cairo_set_dash_from_vector(cr, dashes, dashOffset);
                     dashOffset += lastPoint->lineLengthTo(*it);
                     lastPoint = &(*it);
                 }
@@ -64,8 +63,8 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
                 cairo_move_to(cr, it->x, it->y);
             }
 
-            if (dashes) {
-                cairo_set_dash(cr, dashes, dashCount, dashOffset);
+            if (!dashes.empty()) {
+                Util::cairo_set_dash_from_vector(cr, dashes, dashOffset);
             }
 
             Point q = stroke.getPoint(interval.max);
@@ -74,7 +73,7 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
         }
     } else {
         cairo_set_line_width(cr, stroke.getWidth());
-        cairo_set_dash(cr, dashes, dashCount, 0);
+        Util::cairo_set_dash_from_vector(cr, dashes, 0);
 
         bool mergeFirstAndLast = this->erasableStroke.isClosedStroke() &&
                                  stroke.getToolType() == StrokeTool::HIGHLIGHTER && sections.size() >= 2 &&
@@ -125,33 +124,19 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
     }
 
 #ifdef DEBUG_ERASABLE_STROKE_BOXES
-    if (this->erasableStroke.crDebug == nullptr) {
+    if (!this->erasableStroke.debugMask.isInitialized()) {
         cairo_matrix_t matrix;
         cairo_get_matrix(cr, &matrix);
-        double ratio = matrix.xx;
 
-        // We add a padding
-        const double padding = 5 * stroke.getWidth();
-        const int width = static_cast<int>(std::ceil((stroke.getElementWidth() + padding) * ratio));
-        const int height = static_cast<int>(std::ceil((stroke.getElementHeight() + padding) * ratio));
-
-        this->erasableStroke.surfDebug = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
-
-        cairo_surface_set_device_offset(this->erasableStroke.surfDebug, (0.5 * padding - stroke.getX()) * ratio,
-                                        (0.5 * padding - stroke.getY()) * ratio);
-        cairo_surface_set_device_scale(this->erasableStroke.surfDebug, ratio, ratio);
-
-        this->erasableStroke.crDebug = cairo_create(this->erasableStroke.surfDebug);
-
-        cairo_set_line_width(this->erasableStroke.crDebug, 2);
+        Range extents(0, 0, stroke.getElementWidth(), stroke.getElementHeight());
+        extents.addPadding(5 * stroke.getWidth());
+        erasableStroke.debugMask = Mask(cairo_get_target(cr), extents, matrix.xx, CAIRO_CONTENT_COLOR_ALPHA);
+        cairo_set_line_width(this->erasableStroke.debugMask.get(), 2);
     } else {
         cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-
-        cairo_set_source_surface(cr, this->erasableStroke.surfDebug, 0, 0);
-        cairo_paint(cr);
+        this->erasableStroke.debugMask.paintTo(cr);
     }
 #endif
-    cairo_restore(cr);
 }
 
 void ErasableStrokeView::drawFilling(cairo_t* cr) const {
@@ -219,7 +204,7 @@ void ErasableStrokeView::paintFilledHighlighter(cairo_t* cr) const {
         return;
     }
 
-    cairo_save(cr);
+    xoj::util::CairoSaveGuard guard(cr);
 
     const auto linecap = StrokeView::CAIRO_LINE_CAP[stroke.getStrokeCapStyle()];
 
@@ -231,7 +216,7 @@ void ErasableStrokeView::paintFilledHighlighter(cairo_t* cr) const {
     cairo_matrix_t matrix;
     cairo_get_matrix(cr, &matrix);
     // We assume the matrix is an homothety
-    assert(matrix.xx == matrix.yy && matrix.xy == 0 && matrix.yx == 0);
+    xoj_assert(matrix.xx == matrix.yy && matrix.xy == 0 && matrix.yx == 0);
 
     // Initialise the cairo context
     cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
@@ -256,10 +241,10 @@ void ErasableStrokeView::paintFilledHighlighter(cairo_t* cr) const {
         /**
          * Create a mask tailored to the union of the sections' bounding boxes
          */
-        Rectangle<double> box = erasableStroke.getSubSectionBoundingBox(first);
-        box.unite(erasableStroke.getSubSectionBoundingBox(last));
+        Range box = erasableStroke.getSubSectionBoundingBox(first).unite(erasableStroke.getSubSectionBoundingBox(last));
 
-        auto [crMask, surfMask] = createMask(box, matrix.xx);
+        Mask mask = createMask(cr, box, matrix.xx);
+        cairo_t* crMask = mask.get();
         cairo_set_line_cap(crMask, linecap);
 
         // Paint to the mask
@@ -279,14 +264,7 @@ void ErasableStrokeView::paintFilledHighlighter(cairo_t* cr) const {
         cairo_fill_preserve(crMask);
         cairo_stroke(crMask);
 
-        cairo_destroy(crMask);
-        crMask = nullptr;
-
-        // Blit the mask
-        cairo_mask_surface(cr, surfMask, 0, 0);
-
-        cairo_surface_destroy(surfMask);
-        surfMask = nullptr;
+        mask.blitTo(cr);
 
         // Avoid drawing those sections again
         ++sectionIt;
@@ -295,7 +273,8 @@ void ErasableStrokeView::paintFilledHighlighter(cairo_t* cr) const {
 
     for (; sectionIt != sectionEndIt; ++sectionIt) {
         // Create a mask
-        auto [crMask, surfMask] = createMask(erasableStroke.getSubSectionBoundingBox(*sectionIt), matrix.xx);
+        Mask mask = createMask(cr, erasableStroke.getSubSectionBoundingBox(*sectionIt), matrix.xx);
+        cairo_t* crMask = mask.get();
         cairo_set_line_cap(crMask, linecap);
 
         // Paint to the mask
@@ -313,37 +292,18 @@ void ErasableStrokeView::paintFilledHighlighter(cairo_t* cr) const {
         cairo_fill_preserve(crMask);
         cairo_stroke(crMask);
 
-        cairo_destroy(crMask);
-        crMask = nullptr;
-
-        // Blit the mask
-        cairo_mask_surface(cr, surfMask, 0, 0);
-
-        cairo_surface_destroy(surfMask);
-        surfMask = nullptr;
+        mask.blitTo(cr);
     }
-
-    cairo_restore(cr);
 }
 
-std::pair<cairo_t*, cairo_surface_t*> ErasableStrokeView::createMask(const Rectangle<double>& box,
-                                                                     double scaling) const {
-    const int width = static_cast<int>(std::ceil(box.width * scaling));
-    const int height = static_cast<int>(std::ceil(box.height * scaling));
+auto ErasableStrokeView::createMask(cairo_t* target, const Range& box, double zoom) const -> Mask {
+    Mask mask(cairo_get_target(target), box, zoom);
 
-    cairo_surface_t* surfMask = cairo_image_surface_create(CAIRO_FORMAT_A8, width, height);
-
-    // Apply offset and scaling
-    cairo_surface_set_device_offset(surfMask, -box.x * scaling, -box.y * scaling);
-    cairo_surface_set_device_scale(surfMask, scaling, scaling);
-
-    // Get a context to draw on our mask
-    cairo_t* crMask = cairo_create(surfMask);
-
+    cairo_t* crMask = mask.get();
     cairo_set_line_join(crMask, CAIRO_LINE_JOIN_ROUND);
     cairo_set_source_rgba(crMask, 1, 1, 1, 1);
     cairo_set_operator(crMask, CAIRO_OPERATOR_SOURCE);
     cairo_set_line_width(crMask, this->erasableStroke.stroke.getWidth());
 
-    return std::make_pair(crMask, surfMask);
+    return mask;
 }

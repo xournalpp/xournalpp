@@ -1,19 +1,18 @@
 #include "Element.h"
 
 #include <algorithm>  // for max, min
-#include <cinttypes>  // for uint32_t
 #include <cmath>      // for ceil, floor, NAN
+#include <cstdint>    // for uint32_t
 
 #include <glib.h>  // for gint
 
+#include "util/safe_casts.h"                      // for as_unsigned
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
 using xoj::util::Rectangle;
 
 Element::Element(ElementType type): type(type) {}
-
-Element::~Element() = default;
 
 auto Element::getType() const -> ElementType { return this->type; }
 
@@ -130,7 +129,7 @@ void Element::serialize(ObjectOutputStream& out) const {
 
     out.writeDouble(this->x);
     out.writeDouble(this->y);
-    out.writeInt(int(uint32_t(this->color)));
+    out.writeUInt(uint32_t(this->color));
 
     out.endObject();
 }
@@ -140,7 +139,17 @@ void Element::readSerialized(ObjectInputStream& in) {
 
     this->x = in.readDouble();
     this->y = in.readDouble();
-    this->color = Color(in.readInt());
+    this->color = Color(in.readUInt());
 
     in.endObject();
 }
+
+namespace xoj {
+
+auto refElementContainer(const std::vector<ElementPtr>& elements) -> std::vector<Element*> {
+    std::vector<Element*> result(elements.size());
+    std::transform(elements.begin(), elements.end(), result.begin(), [](auto const& e) { return e.get(); });
+    return result;
+}
+
+}  // namespace xoj

@@ -12,21 +12,22 @@
 
 #pragma once
 
-#include <deque>    // for deque
+#include <memory>  // for unique_ptr
 #include <utility>  // for pair
 #include <vector>   // for vector
 
 #include <cairo.h>  // for cairo_t, cairo_matrix_t
 #include <glib.h>   // for GSource
 
-#include "control/ToolEnums.h"              // for ToolSize
-#include "model/Element.h"                  // for Element, Element::Index
-#include "model/ElementContainer.h"         // for ElementContainer
-#include "model/PageRef.h"                  // for PageRef
-#include "undo/UndoAction.h"                // for UndoAction (ptr only)
-#include "util/Color.h"                     // for Color
-#include "util/Rectangle.h"                 // for Rectangle
-#include "util/serializing/Serializable.h"  // for Serializable
+#include "control/ToolEnums.h"               // for ToolSize
+#include "model/Element.h"                   // for Element, Element::Index
+#include "model/ElementContainer.h"          // for ElementContainer
+#include "model/ElementInsertionPosition.h"  // for InsertionOrder
+#include "model/PageRef.h"                   // for PageRef
+#include "undo/UndoAction.h"                 // for UndoAction (ptr only)
+#include "util/Color.h"                      // for Color
+#include "util/Rectangle.h"                  // for Rectangle
+#include "util/serializing/Serializable.h"   // for Serializable
 
 #include "CursorSelectionType.h"     // for CursorSelectionType, CURS...
 #include "SnapToGridInputHandler.h"  // for SnapToGridInputHandler
@@ -41,26 +42,43 @@ class LineStyle;
 class ObjectInputStream;
 class ObjectOutputStream;
 class XojFont;
+class Document;
+class EditSelection;
+
+namespace SelectionFactory {
+auto createFromFloatingElement(Control* ctrl, const PageRef& page, Layer* layer, XojPageView* view, ElementPtr e)
+        -> std::unique_ptr<EditSelection>;
+auto createFromFloatingElements(Control* ctrl, const PageRef& page, Layer* layer, XojPageView* view,
+                                InsertionOrder elts)  //
+        -> std::pair<std::unique_ptr<EditSelection>, Range>;
+auto createFromElementOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view, Element* e,
+                                    Element::Index pos = Element::InvalidIndex)  //
+        -> std::unique_ptr<EditSelection>;
+auto createFromElementsOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view, InsertionOrderRef elts)
+        -> std::unique_ptr<EditSelection>;
+/**
+ * @brief Creates a new instance containing base->getElements() and *e. The content of *base is cleared but *base is not
+ * destroyed.
+ */
+auto addElementFromActiveLayer(Control* ctrl, EditSelection* base, Element* e, Element::Index pos)
+        -> std::unique_ptr<EditSelection>;
+/**
+ * @brief Creates a new instance containing base->getElements() and the content of elts. The content of *base is cleared
+ * but *base is not destroyed.
+ */
+auto addElementsFromActiveLayer(Control* ctrl, EditSelection* base, const InsertionOrderRef& elts)
+        -> std::unique_ptr<EditSelection>;
+};  // namespace SelectionFactory
 
 class EditSelection: public ElementContainer, public Serializable {
 public:
-    EditSelection(UndoRedoHandler* undo, const PageRef& page, XojPageView* view);
-    EditSelection(UndoRedoHandler* undo, Selection* selection, XojPageView* view);
-    EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* view, const PageRef& page);
-    EditSelection(UndoRedoHandler* undo, const std::vector<Element*>& elements, XojPageView* view, const PageRef& page);
-    EditSelection(UndoRedoHandler* undo, XojPageView* view, const PageRef& page, Layer* layer);
+    EditSelection(Control* ctrl, InsertionOrder elts, const PageRef& page, Layer* layer, XojPageView* view,
+                  const Range& bounds, const Range& snappingBounds);
+
+    /// Construct an empty selection
+    EditSelection(Control* ctrl, const PageRef& page, Layer* layer, XojPageView* view);
+
     ~EditSelection() override;
-
-private:
-    /**
-     * Our internal constructor
-     */
-    void construct(UndoRedoHandler* undo, XojPageView* view, const PageRef& sourcePage);
-
-    /**
-     * Calculate the size from the element list
-     */
-    void calcSizeFromElements(std::vector<Element*> elements);
 
 public:
     /**
@@ -125,30 +143,32 @@ public:
     /**
      * Get the source page (where the selection was done)
      */
-    PageRef getSourcePage();
+    PageRef getSourcePage() const;
 
     /**
      * Get the source layer (form where the Elements come)
      */
-    Layer* getSourceLayer();
+    Layer* getSourceLayer() const;
 
     /**
      * Get the X coordinate in View coordinates (absolute)
      */
-    int getXOnViewAbsolute();
+    int getXOnViewAbsolute() const;
 
     /**
      * Get the Y coordinate in View coordinates (absolute)
      */
-    int getYOnViewAbsolute();
+    int getYOnViewAbsolute() const;
+
+    inline XojPageView* getView() const { return view; }
 
 public:
     /**
      * Sets the tool size for pen or eraser, returns an undo action
      * (or nullptr if nothing is done)
      */
-    UndoAction* setSize(ToolSize size, const double* thicknessPen, const double* thicknessHighlighter,
-                        const double* thicknessEraser);
+    UndoActionPtr setSize(ToolSize size, const double* thicknessPen, const double* thicknessHighlighter,
+                          const double* thicknessEraser);
 
     /**
      * Set the line style of all strokes, return an undo action
@@ -160,13 +180,13 @@ public:
      * Set the color of all elements, return an undo action
      * (Or nullptr if nothing done, e.g. because there is only an image)
      */
-    UndoAction* setColor(Color color);
+    UndoActionPtr setColor(Color color);
 
     /**
      * Sets the font of all containing text elements, return an undo action
      * (or nullptr if there are no Text elements)
      */
-    UndoAction* setFont(XojFont& font);
+    UndoActionPtr setFont(const XojFont& font);
 
     /**
      * Fills the undo item if the selection is deleted
@@ -178,26 +198,27 @@ public:
      * Fills the stroke, return an undo action
      * (Or nullptr if nothing done, e.g. because there is only an image)
      */
-    UndoAction* setFill(int alphaPen, int alphaHighligther);
+    UndoActionPtr setFill(int alphaPen, int alphaHighligther);
 
 public:
     /**
      * Add an element to the this selection
-     * @param order: specifies the index of the element from the source layer,
+     * @param pos: specifies the index of the element from the source layer,
      * in case we want to replace it back where it came from.
-     * 'InvalidLayerIndex' is a special value that says it has no source layer index (e.g, from clipboard)
      */
-    void addElement(Element* e, Element::Index order = Element::InvalidIndex);
+    void addElement(ElementPtr e, Element::Index pos);
 
     /**
      * Returns all containing elements of this selection
      */
-    const std::vector<Element*>& getElements() const override;
+    auto getElements() const -> std::vector<Element*> const&;
+
+    void forEachElement(std::function<void(Element*)> f) const override;
 
     /**
      * Returns the insert order of this selection
      */
-    std::deque<std::pair<Element*, Element::Index>> const& getInsertOrder() const;
+    auto getInsertionOrder() const -> InsertionOrder const&;
 
     enum class OrderChange {
         BringToFront,
@@ -209,7 +230,7 @@ public:
     /**
      * Change the insert order of this selection.
      */
-    UndoActionPtr rearrangeInsertOrder(const OrderChange change);
+    auto rearrangeInsertionOrder(const OrderChange change) -> UndoActionPtr;
 
     /**
      * Finish the current movement
@@ -220,7 +241,7 @@ public:
     /**
      * Move the selection
      */
-    void moveSelection(double dx, double dy);
+    void moveSelection(double dx, double dy, bool addMoveUndo = false);
 
     /**
      * Get the cursor type for the current position (if 0 then the default cursor should be used)
@@ -269,6 +290,10 @@ public:
     // Serialize interface
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;
+
+
+    /// Applies the transformation to the selected elements, empties the selection and return the modified elements
+    InsertionOrder makeMoveEffective();
 
 private:
     /**
@@ -329,11 +354,6 @@ private:
 
 private:  // DATA
     /**
-     * Support rotation
-     */
-    bool supportRotation = true;
-
-    /**
      * The position (and rotation) relative to the current view
      */
     double x{};
@@ -346,7 +366,7 @@ private:  // DATA
     cairo_matrix_t cmatrix{};
 
     /**
-     * The size
+     * The size, including the padding and frame
      */
     double width{};
     double height{};
@@ -368,19 +388,23 @@ private:  // DATA
 
     /**
      * If both scale axes should have the same scale factor, e.g. for Text
-     * (we cannot only set the font size for text)
+     * (we can only set the font size for text)
      */
-    bool aspectRatio{};
+    bool preserveAspectRatio = false;
 
     /**
      * If mirrors are allowed e.g. for strokes
      */
-    bool mirror{};
+    bool supportMirroring = true;
+
+    /**
+     * Support rotation
+     */
+    bool supportRotation = true;
 
     /**
      * Size of the editing handles
      */
-
     int btnWidth{8};
 
     /**
@@ -396,7 +420,7 @@ private:  // DATA
     /**
      * The contents of the selection
      */
-    EditSelectionContents* contents{};
+    std::unique_ptr<EditSelectionContents> contents;
 
 private:  // HANDLER
     /**

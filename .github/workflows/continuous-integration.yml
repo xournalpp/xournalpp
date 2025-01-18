@@ -1,0 +1,163 @@
+name: Build
+
+on:
+  pull_request:
+    branches: [ "master", "release-*" ]
+    ignores-paths:
+      - 'po/xournalpp.pot'
+      - 'po/*.po'
+
+env:
+  build-targets-json: '.github/available-build-targets.json'
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Debug
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    name: 'Prepare jobs'
+    outputs:
+      linux_builds: ${{ steps.parse.outputs.linux_builds }}
+      macos_builds: ${{ steps.parse.outputs.macos_builds }}
+      windows_builds: ${{ steps.parse.outputs.windows_builds }}
+    steps:
+      - uses: actions/checkout@v4
+        with:  # Get the build targets
+          sparse-checkout: '${{ env.build-targets-json }}'
+          sparse-checkout-cone-mode: false
+      - name: 'Parse list of targets'
+        id: parse
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const available_targets = require('${{ env.build-targets-json }}')
+
+            for (const tgt in available_targets.linux_targets) {
+              // No need to run the CI on all ubuntu versions - pick the one we build the AppImage with
+              if (available_targets.linux_targets[tgt].build_appimage === 'true') {
+                core.setOutput('linux_builds', [available_targets.linux_targets[tgt]])
+                break
+              }
+            }
+            core.setOutput('macos_builds', Object.values(available_targets.macos_targets))
+            core.setOutput('windows_builds', Object.values(available_targets.windows_targets))
+  ubuntu:
+    needs: ['prepare']
+    strategy:
+      matrix:
+        run: ${{fromJSON(needs.prepare.outputs.linux_builds)}}
+    runs-on: ${{ matrix.run.runner }}
+    container:
+      image: ${{ matrix.run.container_image }}
+    name: 'Test Xournal++ on ${{ matrix.run.displayed_name }}'
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'Install dependencies'
+        uses: ./.github/actions/install_deps_ubuntu
+        with:
+          gcc_version: ${{ matrix.run.gcc_version }}
+          extra_packages: ${{ matrix.run.extra_packages }}
+      - name: 'Build Xournal++'
+        uses: ./.github/actions/build
+        with:
+          build_type: ${{env.BUILD_TYPE}}
+      - name: 'Build tests'
+        id: build-test
+        run: |
+          cmake --build . --target test-units
+        working-directory: ${{github.workspace}}/build
+      - name: 'Run tests'
+        if: always() && steps.build-test.outcome == 'success'  # Run the test in every locale even if it failed in another
+        run: |
+          CI=true ./test/test-units
+        working-directory: ${{github.workspace}}/build
+      - name: 'Run tests FR' # fr_FR checks for missing imbue() in numerical in/out (floating point = ',' thousand separator = ' ')
+        if: always() && steps.build-test.outcome == 'success'  # Run the test in every locale even if it failed in another
+        run: |
+          echo "fr_FR.UTF-8 UTF-8" | sudo tee /etc/locale.gen
+          sudo locale-gen
+          LC_ALL=fr_FR.UTF-8 CI=true ./test/test-units
+        working-directory: ${{github.workspace}}/build
+      - name: 'Run tests JP.utf-8' # ja_JP tests std::put_time's UTF-8 support
+        if: always() && steps.build-test.outcome == 'success'  # Run the test in every locale even if it failed in another
+        run: |
+          echo "ja_JP.UTF-8 UTF-8" | sudo tee /etc/locale.gen
+          sudo locale-gen
+          LC_ALL=ja_JP.UTF-8 CI=true ./test/test-units
+        working-directory: ${{github.workspace}}/build
+      - name: 'Run tests JP-eucJP' # Test for non-UTF-8 locales
+        if: always() && steps.build-test.outcome == 'success'  # Run the test in every locale even if it failed in another
+        run: |
+          echo "ja_JP.EUC-JP EUC-JP" | sudo tee /etc/locale.gen
+          sudo locale-gen
+          LC_ALL=ja_JP.eucjp CI=true ./test/test-units
+        working-directory: ${{github.workspace}}/build
+      - name: 'Run tests zh_CN.GB18030' # Test for non-UTF-8 locales
+        if: always() && steps.build-test.outcome == 'success'  # Run the test in every locale even if it failed in another
+        run: |
+          echo "zh_CN.GB18030 GB18030" | sudo tee /etc/locale.gen
+          sudo locale-gen
+          LC_ALL=zh_CN.GB18030 CI=true ./test/test-units
+        working-directory: ${{github.workspace}}/build
+      - name: 'Run gtk-integration tests'
+        # Todo: Port this to MacOS and Windows
+        run: |
+          sudo apt install xvfb
+          cmake .. -DCMAKE_INSTALL_PREFIX=install
+          cmake --build . --target install
+          cmake --build . --target test-gtk-integration
+          CI=true xvfb-run -a ./test/test-gtk-integration
+        working-directory: ${{github.workspace}}/build
+  Windows:
+    needs: ['prepare']
+    strategy:
+      matrix:
+        run: ${{fromJSON(needs.prepare.outputs.windows_builds)}}
+    runs-on: ${{ matrix.run.runner }}
+    name: 'Test Xournal++ on ${{ matrix.run.displayed_name }}'
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'Install dependencies'
+        uses: ./.github/actions/install_deps_windows
+      - name: 'Build Xournal++'
+        uses: ./.github/actions/build
+        with:
+          build_type: ${{env.BUILD_TYPE}}
+          shell: msys2 {0}
+      - name: 'Build tests'
+        shell: msys2 {0}
+        run: |
+          cmake --build . --target test-units
+        working-directory: ${{github.workspace}}/build
+      - name: 'Run tests'
+        shell: msys2 {0}
+        run: |
+          CI=true ./test/test-units
+        working-directory: ${{github.workspace}}/build
+  MacOS:
+    needs: ['prepare']
+    strategy:
+      matrix:
+        run: ${{fromJSON(needs.prepare.outputs.macos_builds)}}
+    runs-on: ${{ matrix.run.runner }}
+    name: 'Test Xournal++ on ${{ matrix.run.displayed_name }}'
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'Install dependencies'
+        uses: ./.github/actions/install_deps_mac
+        with:
+          install_path: $HOME
+      - name: 'Build Xournal++'
+        uses: ./.github/actions/build
+        with:
+          build_type: ${{env.BUILD_TYPE}}
+      - name: 'Build tests'
+        shell: bash
+        run: |
+          cmake --build . --target test-units
+        working-directory: ${{github.workspace}}/build
+      - name: 'Run tests'
+        shell: bash
+        run: |
+          CI=true ./test/test-units
+        working-directory: ${{github.workspace}}/build

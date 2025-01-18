@@ -21,16 +21,20 @@
 #include <gdk/gdk.h>  // for GdkEventKey, GdkRGBA, GdkRectangle
 #include <gtk/gtk.h>  // for GtkWidget
 
+#include "gui/inputdevices/DeviceId.h"
+#include "gui/inputdevices/InputEvents.h"
 #include "model/PageListener.h"       // for PageListener
 #include "model/PageRef.h"            // for PageRef
 #include "util/Rectangle.h"           // for Rectangle
 #include "util/raii/CairoWrappers.h"  // for CairoSurfaceSPtr
+#include "view/Mask.h"                // for Mask
 #include "view/Repaintable.h"         // for Repaintable
 
 #include "Layout.h"            // for Layout
 #include "LegacyRedrawable.h"  // for LegacyRedrawable
 
 class EraseHandler;
+class ImageSizeSelection;
 class InputHandler;
 class SearchControl;
 class Selection;
@@ -49,7 +53,7 @@ class XojPdfPage;
 namespace xoj::view {
 class OverlayView;
 class ToolView;
-}
+}  // namespace xoj::view
 
 class XojPageView: public LegacyRedrawable, public PageListener, public xoj::view::Repaintable {
 public:
@@ -58,7 +62,7 @@ public:
 
 public:
     void addOverlayView(std::unique_ptr<xoj::view::OverlayView>);
-    void rerenderPage() override;
+    void rerenderPage(bool sizeChanged = false) override;
     void rerenderRect(double x, double y, double width, double height) override;
 
     void repaintPage() const override;
@@ -77,13 +81,15 @@ public:
      */
     void deleteOverlayView(xoj::view::OverlayView* v, const Range& rg) override;
 
-    int getDPIScaling() const override;
     double getZoom() const override;
+    ZoomControl* getZoomControl() const override;
     Range getVisiblePart() const override;
 
     double getWidth() const override;
     double getHeight() const override;
     // End of Repaintable interface
+
+    xoj::util::Rectangle<double> toWindowCoordinates(const xoj::util::Rectangle<double>& r) const override;
 
 
     void setSelected(bool selected);
@@ -91,13 +97,16 @@ public:
     void setIsVisible(bool visible);
 
     bool isSelected() const;
+    inline bool isVisible() const { return visible; }
 
     void endText();
 
-    bool searchTextOnPage(const std::string& text, size_t* occurrences, double* yOfUpperMostMatch);
+    void endSpline();
 
-    bool onKeyPressEvent(GdkEventKey* event);
-    bool onKeyReleaseEvent(GdkEventKey* event);
+    bool searchTextOnPage(const std::string& text, size_t index, size_t* occurrences, XojPdfRectangle* matchRect);
+
+    bool onKeyPressEvent(const KeyEvent& event);
+    bool onKeyReleaseEvent(const KeyEvent& event);
 
     bool cut();
     bool copy();
@@ -124,14 +133,8 @@ public:
     int getMappedCol() const;
 
     GdkRGBA getSelectionColor() override;
-    int getBufferPixels();
+    bool hasBuffer() const;
 
-    /**
-     * 0 if currently visible
-     * -1 if no image is saved (never visible or cleanup)
-     * else the time in Seconds
-     */
-    int getLastVisibleTime();
     TextEditor* getTextEditor();
 
     /**
@@ -178,7 +181,8 @@ public:  // event handler
     bool onButtonDoublePressEvent(const PositionInputData& pos);
     bool onButtonTriplePressEvent(const PositionInputData& pos);
     bool onMotionNotifyEvent(const PositionInputData& pos);
-    void onSequenceCancelEvent();
+    void onSequenceCancelEvent(DeviceId id);
+    void onTapEvent(const PositionInputData& pos);
 
     /**
      * This event fires after onButtonPressEvent and also
@@ -201,8 +205,6 @@ public:  // listener
 
 private:
     void startText(double x, double y);
-
-    void addRerenderRect(double x, double y, double width, double height);
 
     void drawLoadingPage(cairo_t* cr);
 
@@ -247,8 +249,8 @@ private:
     PageRef page;
     XournalView* xournal = nullptr;
     Settings* settings = nullptr;
-    EraseHandler* eraser = nullptr;
-    InputHandler* inputHandler = nullptr;
+    std::unique_ptr<EraseHandler> eraser;
+    std::unique_ptr<InputHandler> inputHandler;
 
     std::vector<std::unique_ptr<xoj::view::OverlayView>> overlayViews;
 
@@ -258,18 +260,24 @@ private:
     std::unique_ptr<Selection> selection;
 
     /**
-     * The text editor View
+     * The text editor
      */
-    TextEditor* textEditor = nullptr;
+    std::unique_ptr<TextEditor> textEditor;
+
+    /**
+     * For image insertion with size (selects the size)
+     */
+    std::unique_ptr<ImageSizeSelection> imageSizeSelection;
 
     /**
      * For keeping old text changes to undo!
      */
     Text* oldtext;
 
+    bool visible = true;
     bool selected = false;
 
-    xoj::util::CairoSurfaceSPtr crBuffer;
+    xoj::view::Mask buffer;
     std::mutex drawingMutex;
 
     bool inEraser = false;
@@ -284,14 +292,10 @@ private:
      */
     std::unique_ptr<SearchControl> search;
 
-    /**
-     * Unixtimestam when the page was last time in the visible area
-     */
-    long int lastVisibleTime = -1;
-
     std::mutex repaintRectMutex;
     std::vector<xoj::util::Rectangle<double>> rerenderRects;
     bool rerenderComplete = false;
+    bool sizeChanged = false;
 
     int dispX{};  // position on display - set in Layout::layoutPages
     int dispY{};
@@ -299,6 +303,8 @@ private:
 
     int mappedRow{};
     int mappedCol{};
+
+    DeviceId currentSequenceDeviceId;
 
 
     friend class RenderJob;

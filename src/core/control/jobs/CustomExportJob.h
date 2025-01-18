@@ -34,19 +34,19 @@ public:
     void run() override;
 
 public:
-    bool showFilechooser() override;
+    void showDialogAndRun();
 
 protected:
     void afterRun() override;
 
-    void addFilterToDialog() override;
+    void addFilterToDialog(GtkFileChooser* dialog) override;
 
     /**
      * Create one Graphics file per page
      */
     void exportGraphics();
 
-    bool testAndSetFilepath(fs::path file) override;
+    bool testAndSetFilepath(const fs::path& file, const char* filterName = nullptr) override;
 
 private:
     /**
@@ -83,5 +83,5 @@ private:
 
     std::string chosenFilterName;
 
-    std::map<std::string, ExportType*> filters;
+    std::map<std::string, ExportType> filters;
 };

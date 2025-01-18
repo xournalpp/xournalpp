@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <set>
+
 #include <gdk/gdk.h>  // for GdkEventSequence
 
 #include "util/Point.h"  // for Point
@@ -22,17 +24,23 @@ struct InputEvent;
 
 class TouchInputHandler: public AbstractInputHandler {
 private:
+    bool zooming = false;
+    std::set<GdkEventSequence*> invalidActive;
+
     GdkEventSequence* primarySequence{};
     GdkEventSequence* secondarySequence{};
 
     double startZoomDistance = 0.0;
-    utl::Point<double> lastZoomScrollCenter{};
+    xoj::util::Point<double> lastZoomScrollCenter{};
 
-    utl::Point<double> priLastAbs{-1.0, -1.0};
-    utl::Point<double> secLastAbs{-1.0, -1.0};
+    xoj::util::Point<double> priLastAbs{-1.0, -1.0};
+    xoj::util::Point<double> secLastAbs{-1.0, -1.0};
 
-    utl::Point<double> priLastRel{-1.0, -1.0};
-    utl::Point<double> secLastRel{-1.0, -1.0};
+    xoj::util::Point<double> priLastRel{-1.0, -1.0};
+    xoj::util::Point<double> secLastRel{-1.0, -1.0};
+
+    // True, if a zoom sequence may be started by a motion event.
+    bool startZoomReady{false};
 
     bool canBlockZoom{false};
 
@@ -48,5 +56,6 @@ public:
     ~TouchInputHandler() override = default;
 
     bool handleImpl(InputEvent const& event) override;
+    void onBlock() override;
     void onUnblock() override;
 };

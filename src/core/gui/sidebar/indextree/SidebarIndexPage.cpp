@@ -5,15 +5,18 @@
 #include <glib-object.h>  // for g_object_unref
 #include <pango/pango.h>  // for PangoLogAttr
 
-#include "control/Control.h"                           // for Control
-#include "control/ScrollHandler.h"                     // for ScrollHandler
-#include "gui/sidebar/previews/base/SidebarToolbar.h"  // for SidebarToolbar
-#include "model/Document.h"                            // for Document
-#include "model/LinkDestination.h"                     // for XojLinkDest
-#include "util/i18n.h"                                 // for _
+#include "control/Control.h"        // for Control
+#include "control/ScrollHandler.h"  // for ScrollHandler
+#include "model/Document.h"         // for Document
+#include "model/LinkDestination.h"  // for XojLinkDest
+#include "util/Assert.h"            // for xoj_assert
+#include "util/glib_casts.h"        // for wrap_v
+#include "util/gtk4_helper.h"       //
+#include "util/i18n.h"              // for _
+#include "util/safe_casts.h"        // for as_unsigned
 
-SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar):
-        AbstractSidebarPage(control, toolbar), iconNameHelper(control->getSettings()) {
+SidebarIndexPage::SidebarIndexPage(Control* control):
+        AbstractSidebarPage(control), iconNameHelper(control->getSettings()) {
     this->treeViewBookmarks = gtk_tree_view_new();
     g_object_ref(this->treeViewBookmarks);
 
@@ -23,16 +26,15 @@ SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar):
                                         reinterpret_cast<GtkTreeViewSearchEqualFunc>(treeSearchFunction), this,
                                         nullptr);
 
-    this->scrollBookmarks = gtk_scrolled_window_new(nullptr, nullptr);
+    this->scrollBookmarks = gtk_scrolled_window_new();
     g_object_ref(this->scrollBookmarks);
 
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollBookmarks), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrollBookmarks), GTK_SHADOW_IN);
 
     GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeViewBookmarks));
     gtk_tree_selection_set_mode(selection, GTK_SELECTION_SINGLE);
     gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeViewBookmarks), false);
-    gtk_container_add(GTK_CONTAINER(scrollBookmarks), treeViewBookmarks);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scrollBookmarks), treeViewBookmarks);
 
 
     GtkTreeViewColumn* column = gtk_tree_view_column_new();
@@ -52,7 +54,7 @@ SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar):
     g_object_set(G_OBJECT(renderer), "style", PANGO_STYLE_ITALIC, nullptr);
 
     this->selectHandler = g_signal_connect(treeViewBookmarks, "cursor-changed", G_CALLBACK(treeBookmarkSelected), this);
-    g_assert(this->selectHandler != 0);
+    xoj_assert(this->selectHandler != 0);
 
     gtk_widget_show(this->treeViewBookmarks);
 
@@ -69,7 +71,7 @@ SidebarIndexPage::~SidebarIndexPage() {
     g_object_unref(this->scrollBookmarks);
 }
 
-void SidebarIndexPage::enableSidebar() { toolbar->setHidden(true); }
+void SidebarIndexPage::enableSidebar() {}
 
 void SidebarIndexPage::disableSidebar() {
     // Nothing to do at the moment
@@ -119,8 +121,8 @@ auto SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, cons
         g_source_remove(sidebar->searchTimeout);
         sidebar->searchTimeout = 0;
     }
-    sidebar->searchTimeout = g_timeout_add_seconds_full(
-            G_PRIORITY_DEFAULT_IDLE, 2, reinterpret_cast<GSourceFunc>(searchTimeoutFunc), sidebar, nullptr);
+    sidebar->searchTimeout = g_timeout_add_seconds_full(G_PRIORITY_DEFAULT_IDLE, 2,
+                                                        xoj::util::wrap_v<searchTimeoutFunc>, sidebar, nullptr);
 
     // Source: Pidgin
     gchar* text = nullptr;
@@ -144,10 +146,11 @@ auto SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, cons
     }
 
     /* Use Pango to separate by words. */
-    size_t len = g_utf8_strlen(normalized, -1);
+    size_t len = as_unsigned(g_utf8_strlen(normalized, -1));
     PangoLogAttr* log_attrs = g_new(PangoLogAttr, len + 1);
 
-    pango_get_log_attrs(normalized, strlen(normalized), -1, nullptr, log_attrs, len + 1);
+    pango_get_log_attrs(normalized, static_cast<int>(strlen(normalized)), -1, nullptr, log_attrs,
+                        static_cast<int>(len + 1));
 
     gchar* word = normalized;
     gboolean result = true;
@@ -301,3 +304,5 @@ void SidebarIndexPage::documentChanged(DocumentChangeType type) {
         hasContents = (count != 0);
     }
 }
+
+void SidebarIndexPage::layout() {}

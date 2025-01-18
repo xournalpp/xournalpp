@@ -1,0 +1,58 @@
+name: Install dependencies
+
+inputs:
+  install_path:
+    required: true
+    type: string
+
+runs:
+  using: composite
+  steps:
+  - name: 'Attempt to pull blob from cache'
+    id: restore-blob
+    uses: actions/cache/restore@v4
+    with:
+      path: "${{github.workspace}}/blob"
+      key: ${{ runner.os }}-${{ runner.arch }}-blob-${{ hashFiles('mac-setup/CI_jhbuild.sh', 'mac-setup/jhbuild-version.lock', 'mac-setup/xournalpp.modules') }}
+  - name: 'Install Perl XML::Parser' # Needed for compilation of Intltool in the blob
+    if: steps.restore-blob.outputs.cache-hit != 'true'
+    uses: perl-actions/install-with-cpm@v1
+    with:
+      install: XML::Parser
+  - name: 'Compile blob'
+    if: steps.restore-blob.outputs.cache-hit != 'true'
+    shell: bash
+    run: |
+      mkdir "${{github.workspace}}/blob"
+      bash "${{github.workspace}}/mac-setup/CI_jhbuild.sh"
+      mv xournalpp-binary-blob.tar.gz "${{github.workspace}}/blob/"
+  - name: 'Push blob to cache'
+    if: steps.restore-blob.outputs.cache-hit != 'true'
+    uses: actions/cache/save@v4
+    with:
+      key: ${{ steps.restore-blob.outputs.cache-primary-key }}
+      path: "${{github.workspace}}/blob"
+  # - uses: actions/upload-artifact@v4
+  #   with:
+  #     name: my-artifact
+  #     path: "${{github.workspace}}/blob/xournalpp-binary-blob.tar.gz"
+  - name: 'Extract blob'
+    shell: bash
+    run: |
+      mkdir -p "${{inputs.install_path}}"
+      (cd "${{inputs.install_path}}" && tar xf "${{github.workspace}}/blob/xournalpp-binary-blob.tar.gz")
+  - name: 'Install ninja'
+    shell: bash
+    run: |
+      curl -L -o ninja-mac.zip https://github.com/ninja-build/ninja/releases/download/v1.11.1/ninja-mac.zip
+      unzip ninja-mac.zip -d "${{inputs.install_path}}/gtk/inst/bin"
+      rm ninja-mac.zip
+  - name: 'Setup ENV for future steps'
+    shell: bash
+    run: |
+      # GITHUB_PATH is the path of a file whose content populates PATH for the rest of the workflow
+      echo "$HOME/.local/bin:${{inputs.install_path}}/gtk/inst/bin:$(cat $GITHUB_PATH)" > $GITHUB_PATH
+      # Based on $PKG_CONFIG_PATH in the jhbuild shell
+      # There is also a pyenv Python pkgconfig path, but we don't need it...right?
+      echo "PKG_CONFIG_PATH=${{inputs.install_path}}/gtk/inst/lib/pkgconfig:${{inputs.install_path}}/gtk/inst/share/pkgconfig" >> $GITHUB_ENV
+      echo "PREFIX=${{inputs.install_path}}/gtk/inst" >> $GITHUB_ENV

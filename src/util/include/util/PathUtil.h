@@ -14,12 +14,16 @@
 #include <cstring>   // for strlen, size_t
 #include <optional>  // for optional
 #include <string>    // for string, allocator, basic_string
+#include <vector>    // for vector
 
-#include <gio/gio.h>    // for GFile
-#include <glib.h>       // for g_free, GError, g_error_free, g_filename_fro...
-#include <sys/types.h>  // for ssize_t
+#include <gio/gio.h>  // for GFile
+#include <glib.h>     // for g_free, GError, g_error_free, g_filename_fro...
+
+#include "util/raii/GObjectSPtr.h"
+#include "util/safe_casts.h"  // for as_signed
 
 #include "filesystem.h"  // for path, u8path
+
 
 namespace Util {
 /**
@@ -27,10 +31,12 @@ namespace Util {
  *
  * @param path Path to read
  * @param showErrorToUser Show an error to the user, if the file could not be read
+ * @param openmode Mode to open the file
  *
  * @return contents if the file was read, std::nullopt if not
  */
-[[maybe_unused]] [[nodiscard]] std::optional<std::string> readString(fs::path const& path, bool showErrorToUser = true);
+[[maybe_unused]] [[nodiscard]] std::optional<std::string> readString(fs::path const& path, bool showErrorToUser = true,
+                                                                     std::ios_base::openmode openmode = std::ios::in);
 
 /**
  * Get escaped path, all " and \ are escaped
@@ -62,7 +68,7 @@ void clearExtensions(fs::path& path, const std::string& ext = "");
 
 
 [[maybe_unused]] [[nodiscard]] fs::path fromGFile(GFile* file);
-[[maybe_unused]] [[nodiscard]] GFile* toGFile(fs::path const& path);
+[[maybe_unused]] [[nodiscard]] xoj::util::GObjectSPtr<GFile> toGFile(fs::path const& path);
 
 [[maybe_unused]] [[nodiscard]] inline fs::path fromGFilename(char* path, bool owned = true) {
     auto deleter = [path, owned]() {
@@ -74,9 +80,9 @@ void clearExtensions(fs::path& path, const std::string& ext = "");
     if (path == nullptr) {
         return {};
     }
-    size_t pSize{0};
+    gsize pSize{0};
     GError* err{};
-    auto* u8Path = g_filename_to_utf8(path, std::strlen(path), nullptr, &pSize, &err);
+    auto* u8Path = g_filename_to_utf8(path, as_signed(std::strlen(path)), nullptr, &pSize, &err);
     if (err) {
         g_message("Failed to convert g_filename to utf8 with error code: %d\n%s", err->code, err->message);
         g_error_free(err);
@@ -91,9 +97,9 @@ void clearExtensions(fs::path& path, const std::string& ext = "");
 
 [[maybe_unused]] [[nodiscard]] inline std::string toGFilename(fs::path const& path) {
     auto u8path = path.u8string();
-    size_t pSize{0};
+    gsize pSize{0};
     GError* err{};
-    auto* local = g_filename_from_utf8(u8path.c_str(), ssize_t(u8path.size()), nullptr, &pSize, &err);
+    auto* local = g_filename_from_utf8(u8path.c_str(), as_signed(u8path.size()), nullptr, &pSize, &err);
     if (err) {
         g_message("Failed to convert g_filename from utf8 with error code: %d\n%s", err->code, err->message);
         g_error_free(err);
@@ -106,7 +112,6 @@ void clearExtensions(fs::path& path, const std::string& ext = "");
 
 
 void openFileWithDefaultApplication(const fs::path& filename);
-void openFileWithFilebrowser(const fs::path& filename);
 
 [[maybe_unused]] [[nodiscard]] bool isChildOrEquivalent(fs::path const& path, fs::path const& base);
 
@@ -130,12 +135,23 @@ auto system_single_byte_filename(const fs::path& path) -> std::string;
 [[maybe_unused]] [[nodiscard]] fs::path getConfigSubfolder(const fs::path& subfolder = "");
 [[maybe_unused]] [[nodiscard]] fs::path getCacheSubfolder(const fs::path& subfolder = "");
 [[maybe_unused]] [[nodiscard]] fs::path getDataSubfolder(const fs::path& subfolder = "");
+[[maybe_unused]] [[nodiscard]] fs::path getStateSubfolder(const fs::path& subfolder = "");
 [[maybe_unused]] [[nodiscard]] fs::path getConfigFile(const fs::path& relativeFileName = "");
 [[maybe_unused]] [[nodiscard]] fs::path getCacheFile(const fs::path& relativeFileName = "");
 [[maybe_unused]] [[nodiscard]] fs::path getTmpDirSubfolder(const fs::path& subfolder = "");
 [[maybe_unused]] [[nodiscard]] fs::path getAutosaveFilepath();
-[[maybe_unused]] [[nodiscard]] fs::path getGettextFilepath(const char* localeDir);
+[[maybe_unused]] [[nodiscard]] fs::path getGettextFilepath(fs::path const& localeDir);
 [[maybe_unused]] [[nodiscard]] fs::path getDataPath();
 [[maybe_unused]] [[nodiscard]] fs::path getLocalePath();
+fs::path getBuiltInPaletteDirectoryPath();
+fs::path getCustomPaletteDirectoryPath();
 
+/**
+ * List all files in a directory sorted alphabetically
+ *
+ * If the directory does not exist it returns an empty list.
+ * @param directory to search
+ * @return files in directory
+ */
+std::vector<fs::path> listFilesSorted(fs::path directory);
 }  // namespace Util

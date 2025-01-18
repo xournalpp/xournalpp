@@ -1,0 +1,234 @@
+name: Create Installers in PR
+
+on:
+  issue_comment:
+    types: [created]
+
+env:
+  build-targets-json: '.github/available-build-targets.json'
+
+jobs:
+  ack:
+    name: Acknowledge order
+    if: |
+      github.event.issue.pull_request &&
+      startsWith(github.event.comment.body, '\action create-installers')
+    runs-on: ubuntu-latest
+    outputs:
+      head_sha: ${{ steps.get-sha.outputs.head_sha }}
+      check_id: ${{ steps.parse.outputs.check_id }}
+      linux_builds: ${{ steps.parse.outputs.linux_builds }}
+      macos_builds: ${{ steps.parse.outputs.macos_builds }}
+      windows_builds: ${{ steps.parse.outputs.windows_builds }}
+      artifact_version_suffix: ${{ steps.parse.outputs.artifact_version_suffix }}
+      run_details_url: ${{ steps.parse.outputs.run_details_url }}
+    permissions:
+      checks: write         # To create the check in the PR
+      pull-requests: write  # Write: To post a comment acknowledging the run + Read: To get the head_sha
+    steps:
+      - name: 'Check user permission'
+        # To circumvent a security issue, only members/owners of the xournalpp team can run this CI.
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const perm = await github.rest.repos.getCollaboratorPermissionLevel({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              username: context.payload.comment.user.login
+            })
+
+            if (!perm || !perm.data || !perm.data.permission) {
+              core.setFailed(`No user permission found in payload`)
+            }
+            if ( (perm.data.permission != 'write' && perm.data.permission != 'admin') || (context.payload.comment.author_association != "OWNER" && context.payload.comment.author_association != "MEMBER" && context.payload.comment.author_association != "COLLABORATOR" )) {
+              core.setFailed('User ' + context.payload.comment.user.login + ' with author_association ' + context.payload.comment.author_association + ' is not allowed to run this CI')
+            }
+      - name: 'Get pull request HEAD_SHA'
+        id: get-sha
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Get the SHA of the PR's top commit so we build the right thing
+            console.log('PR number: ' + ${{ github.event.issue.number }});
+            const pr = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: ${{ github.event.issue.number }}
+            });
+            console.log('PR Head sha: ' + pr.data.head.sha)
+            core.setOutput('head_sha', pr.data.head.sha)
+      - uses: actions/checkout@v4
+        with:  # Get the build targets **from the master branch**
+          sparse-checkout: '${{ env.build-targets-json }}'
+          sparse-checkout-cone-mode: false
+      - name: 'Parse command and acknowledge order'
+        id: parse
+        uses: actions/github-script@v7
+        env:
+          body: ${{ github.event.comment.body }} # Hardened security against code injection
+        with:
+          script: |
+            const available_targets = require('${{ env.build-targets-json }}')
+            const run_details_url = String.raw`https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+            core.setOutput('run_details_url', run_details_url)
+
+            var linux_builds = []
+            var macos_builds = []
+            var windows_builds = []
+            var unknown = []
+
+            const cmd = process.env['body']  // Injects github.event.comment.body as a string - no code injection possible
+            var re = /\s+/
+            const targets = new Set(cmd.split(re).slice(2))  // Drop the "\action" and "create-installers"
+                                                             // and possible duplicates
+            console.log('required targets: ' + JSON.stringify([...targets]))
+
+            if (targets.has("all")) {
+              linux_builds = Object.values(available_targets.linux_targets)
+              macos_builds = Object.values(available_targets.macos_targets)
+              windows_builds = Object.values(available_targets.windows_targets)
+            } else {
+              for (const tgt of targets) {
+                if (Object.hasOwn(available_targets.linux_targets, tgt)) {
+                  linux_builds.push(available_targets.linux_targets[tgt])
+                } else if (Object.hasOwn(available_targets.macos_targets, tgt)) {
+                  macos_builds.push(available_targets.macos_targets[tgt])
+                } else if (Object.hasOwn(available_targets.windows_targets, tgt)) {
+                  windows_builds.push(available_targets.windows_targets[tgt])
+                } else {
+                  unknown.push(tgt)
+                }
+              }
+            }
+            core.setOutput('linux_builds', linux_builds)
+            core.setOutput('macos_builds', macos_builds)
+            core.setOutput('windows_builds', windows_builds)
+
+            console.log('linux_builds: ' + JSON.stringify(linux_builds))
+            console.log('macos_builds: ' + JSON.stringify(macos_builds))
+            console.log('windows_builds: ' + JSON.stringify(windows_builds))
+            console.log('unknown: ' + JSON.stringify(unknown))
+
+            var message = ""
+            var failed = false
+            if ( unknown.length === 0 && linux_builds.length + macos_builds.length + windows_builds.length > 0 ) {
+              message = "Started " + (linux_builds.length + macos_builds.length + windows_builds.length) + ` build(s) (see [details](${run_details_url}))`
+            } else {
+              var sentence = ""
+              if ( unknown.length ) {
+                sentence = "The following targets are invalid: " + JSON.stringify(unknown)
+              } else {
+                sentence = "No targets provided"
+              }
+              message = `> [!CAUTION]
+              > ${sentence}. Usage is \`\\action create-installers target1 target2...\`
+              > Available targets are:`
+              for (const tgts in available_targets) {
+                for (const tgt in available_targets[tgts]) {
+                  message += " " + `\`${tgt}\``
+                }
+              }
+              message += " or \`all\`"
+              failed = true
+            }
+
+            // Post on the PR thread
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: message
+            })
+
+            if (failed) {
+              core.setFailed('Command not recognized')
+              return
+            }
+
+            core.setOutput('artifact_version_suffix', '-PR-${{ github.event.issue.number }}-' + "${{ steps.get-sha.outputs.head_sha }}".substring(0, 8))
+
+            // Add the CI to the PR's checks, so it appears on the webpage
+            const resp = await github.rest.checks.create({
+              name: 'Create installers',
+              head_sha: "${{ steps.get-sha.outputs.head_sha }}",
+              status: 'in_progress',
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              details_url: run_details_url
+            })
+            core.setOutput('check_id', resp.data.id)  // We'll need this id to update the check's status once the run is over
+
+  run-ci:
+    name: Create installers
+    needs: ack
+    permissions:
+      contents: read  # This CI will call action scripts from PRs. It must not be granted any write access to avoid
+                      # privilege escalation security risks
+    uses: ./.github/workflows/create-installers.yml
+    with:
+      linux_builds: ${{ needs.ack.outputs.linux_builds }}
+      macos_builds: ${{ needs.ack.outputs.macos_builds }}
+      windows_builds: ${{ needs.ack.outputs.windows_builds }}
+      head_sha: ${{ needs.ack.outputs.head_sha }}
+      artifact_version_suffix: ${{ needs.ack.outputs.artifact_version_suffix }}
+
+  publish-result:
+    name: Publish results to PR
+    needs: [run-ci, ack]
+    if: ${{ always() && needs.ack.result == 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write  # To post a comment with the results
+      checks: write         # To update the check status
+    steps:
+      - run: npm i @actions/artifact
+      - name: 'Publish on PR page'
+        id: publish
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const {DefaultArtifactClient} = require('@actions/artifact')
+            const artifactclient = new DefaultArtifactClient()
+            const artifacts = await artifactclient.listArtifacts()
+
+            console.log('artifacts: ' + JSON.stringify(artifacts))
+
+            var message = ""
+            if ('${{ needs.run-ci.result }}' === 'success') {
+              message = "CI successful!"
+            } else {
+              message = `> [!CAUTION]
+              > At least one run failed
+              > See details at ${{ needs.ack.outputs.run_details_url }}
+              `
+            }
+            message += `
+            Available artifacts:`
+
+            for (const a of artifacts.artifacts) {
+              message += String.raw`
+              - [${a.name}](${{ needs.ack.outputs.run_details_url }}/artifacts/${a.id})`
+            }
+            console.log(message)
+
+            // Post on the PR thread
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: message
+            })
+
+            // Update the check run
+            github.rest.checks.update({
+              check_run_id: ${{ needs.ack.outputs.check_id }},
+              status: 'completed',
+              conclusion: '${{ needs.run-ci.result }}',
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              output: {
+                title: 'Create Installers',
+                summary: '',
+                text: message
+              }
+            })

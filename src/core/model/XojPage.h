@@ -26,7 +26,7 @@
 
 class XojPage: public PageHandler {
 public:
-    XojPage(double width, double height);
+    XojPage(double width, double height, bool suppressLayerCreation = false);
     ~XojPage() override;
     XojPage(const XojPage& page);
     void operator=(const XojPage& p) = delete;

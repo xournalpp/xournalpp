@@ -24,7 +24,7 @@ class Element;
 
 class MoveUndoAction: public UndoAction {
 public:
-    MoveUndoAction(Layer* sourceLayer, const PageRef& sourcePage, std::vector<Element*>* selected, double mx, double my,
+    MoveUndoAction(Layer* sourceLayer, const PageRef& sourcePage, std::vector<Element*> selected, double mx, double my,
                    Layer* targetLayer, PageRef targetPage);
     ~MoveUndoAction() override;
 

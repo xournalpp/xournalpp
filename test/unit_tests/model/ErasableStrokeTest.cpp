@@ -134,16 +134,16 @@ TEST(ErasableStroke, testGetStrokes) {
     std::array<std::vector<std::vector<Point>>, 3> resultingPaths;
     resultingPaths[0] = std::vector<std::vector<Point>>(3);
     resultingPaths[0][0] = {{0, 0, 2}, {2, 2, 2.5}, {3.5, 2}};
-    resultingPaths[0][1] = {{6, 3, 2.75}, {7, 4, 2.5}, {5, 5}};
-    resultingPaths[0][2] = {{2.5, 7, 1.75}, {2, 8, 1.5}, {5, 11, 1}, {7, 10, 1.5},
-                            {7, 6, 2},      {6, 7, 2.5}, {4, 4, 3},  {1, 3}};
+    resultingPaths[0][1] = {{6, 3, 3}, {7, 4, 2.5}, {5, 5}};
+    resultingPaths[0][2] = {{2.5, 7, 2}, {2, 8, 1.5}, {5, 11, 1}, {7, 10, 1.5},
+                            {7, 6, 2},   {6, 7, 2.5}, {4, 4, 3},  {1, 3}};
 
     resultingPaths[1] = std::vector<std::vector<Point>>(2);
     resultingPaths[1][0] = {{1.5, 3, 2}, {0, 0, 2}, {2, 2, 2.5}, {3.5, 2}};
-    resultingPaths[1][1] = {{3, 3, 2.75}, {1, 4, 2.5}, {2, 5}};
+    resultingPaths[1][1] = {{3, 3, 3}, {1, 4, 2.5}, {2, 5}};
 
     resultingPaths[2] = std::vector<std::vector<Point>>(1);
-    resultingPaths[2][0] = {{3, 3, 2.75}, {1, 4, 2.5}, {2, 5}};
+    resultingPaths[2][0] = {{3, 3, 3}, {1, 4, 2.5}, {2, 5}};
 
     unsigned int i = 0;
     for (auto& erasable: erasables) {

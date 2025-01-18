@@ -1,12 +1,14 @@
 #include "MergeLayerDownUndoAction.h"
 
 #include <memory>  // for __shared_ptr_access
+#include <utility>
 #include <vector>  // for vector
 
 #include "control/Control.h"                // for Control
 #include "control/layer/LayerController.h"  // for LayerController
 #include "gui/MainWindow.h"                 // for MainWindow
 #include "gui/XournalView.h"                // for XournalView
+#include "model/Document.h"
 #include "model/Layer.h"                    // for Layer, Layer::Index
 #include "model/PageRef.h"                  // for PageRef
 #include "model/XojPage.h"                  // for XojPage
@@ -15,15 +17,21 @@
 
 class Element;
 
+namespace xoj {
+
+auto refElementContainer(const std::vector<ElementPtr>& elements) -> std::vector<Element*>;
+
+}  // namespace xoj
+
 MergeLayerDownUndoAction::MergeLayerDownUndoAction(LayerController* layerController, const PageRef& page,
-                                                   Layer* upperLayer, Layer* lowerLayer, Layer::Index upperLayerPos,
+                                                   Layer* upperLayer, Layer::Index upperLayerPos, Layer* lowerLayer,
                                                    size_t selectedPage):
         UndoAction("MergeLayerDownUndoAction"),
-        upperLayerPos(upperLayerPos),
         layerController(layerController),
         upperLayer(upperLayer),
-        lowerLayer(lowerLayer),
+        upperLayerPos(upperLayerPos),
         upperLayerID(upperLayerPos + 1),
+        lowerLayer(lowerLayer),
         lowerLayerID(upperLayerPos),
         selectedPage(selectedPage) {
     this->page = page;
@@ -32,13 +40,19 @@ MergeLayerDownUndoAction::MergeLayerDownUndoAction(LayerController* layerControl
 auto MergeLayerDownUndoAction::getText() -> std::string { return _("Merge layer down"); }
 
 auto MergeLayerDownUndoAction::undo(Control* control) -> bool {
+    Document* doc = control->getDocument();
+    doc->lock();
     // remove all elements present in the upper layer from the lower layer again
-    const bool free_elems = false;  // don't free the elems, they're still used
-    for (Element* elem: this->upperLayer->getElements()) { this->lowerLayer->removeElement(elem, free_elems); }
+    for (Element* elem: upperLayerElements) {
+        this->upperLayer->addElement(this->lowerLayer->removeElement(elem).e);
+    }
+
     // add the upper layer back at its old pos
     layerController->insertLayer(this->page, this->upperLayer, upperLayerPos);
     // set the selected layer back to the ID of the upper layer
     this->page->setSelectedLayerId(this->upperLayerID);
+
+    doc->unlock();
 
     this->undone = true;
 
@@ -48,12 +62,21 @@ auto MergeLayerDownUndoAction::undo(Control* control) -> bool {
 }
 
 auto MergeLayerDownUndoAction::redo(Control* control) -> bool {
+    Document* doc = control->getDocument();
+    doc->lock();
     // remove the upper layer
     layerController->removeLayer(this->page, this->upperLayer);
+
+    this->upperLayerElements = xoj::refElementContainer(this->upperLayer->getElements());
+    auto elements = this->upperLayer->clearNoFree();
     // add all elements back to the lower layer
-    for (Element* elem: this->upperLayer->getElements()) { this->lowerLayer->addElement(elem); }
+    for (auto&& elem: elements) {
+        this->lowerLayer->addElement(std::move(elem));
+    }
     // set the selected layer back to the ID of the lower layer
     this->page->setSelectedLayerId(this->lowerLayerID);
+
+    doc->unlock();
 
     this->undone = false;
 

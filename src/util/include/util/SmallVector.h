@@ -11,8 +11,15 @@
 
 #pragma once
 
-#include <cassert>
+#include <algorithm>
+#include <cstddef>
+#include <initializer_list>
+#include <iterator>
+#include <memory>
+#include <utility>
 #include <vector>
+
+#include "util/Assert.h"
 
 #include "BasePointerIterator.h"
 #include "TinyVector.h"
@@ -131,7 +138,7 @@ public:
         if (nb < N) {
             ::new (&dataArray[nb]) T(std::forward<Args>(args)...);
         } else if (nb == N) {
-            assert(end() == begin() + N);
+            xoj_assert(end() == begin() + N);
             dataVector.reserve(N + 1);
             std::move(dataArrayBegin(), dataArrayEnd(), std::back_inserter(dataVector));
             dataArrayClear();
@@ -153,7 +160,7 @@ public:
                 dataVector.pop_back();
             }
         } else {
-            assert(nb != 0);
+            xoj_assert(nb != 0);
             std::destroy_at(dataArray.data() + nb - 1);
         }
         --nb;
@@ -202,7 +209,7 @@ public:
 private:
     iterator dataArrayBegin() { return dataArray.data(); }
     iterator dataArrayEnd() {
-        assert(nb <= N);
+        xoj_assert(nb <= N);
         return dataArray.data() + nb;
     }
     void dataArrayClear() { std::destroy(dataArrayBegin(), dataArrayEnd()); }

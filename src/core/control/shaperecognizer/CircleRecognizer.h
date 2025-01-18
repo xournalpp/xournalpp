@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <memory>
 class Stroke;
 class Inertia;
 
@@ -20,9 +21,9 @@ private:
     virtual ~CircleRecognizer();
 
 public:
-    static Stroke* recognize(Stroke* s);
+    static auto recognize(Stroke* s) -> std::unique_ptr<Stroke>;
 
 private:
-    static Stroke* makeCircleShape(Stroke* originalStroke, Inertia& inertia);
-    static double scoreCircle(Stroke* s, Inertia& inertia);
+    static auto makeCircleShape(Stroke* originalStroke, Inertia& inertia) -> std::unique_ptr<Stroke>;
+    static auto scoreCircle(Stroke* s, Inertia& inertia) -> double;
 };

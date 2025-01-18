@@ -1,5 +1,7 @@
 #include "ToolEnums.h"
 
+#include "model/StrokeStyle.h"
+
 auto toolSizeToString(ToolSize size) -> std::string {
     switch (size) {
         case TOOL_SIZE_NONE:
@@ -54,7 +56,7 @@ auto drawingTypeToString(DrawingType type) -> std::string {
             return "arrow";
         case DRAWING_TYPE_DOUBLE_ARROW:
             return "doubleArrow";
-        case DRAWING_TYPE_STROKE_RECOGNIZER:
+        case DRAWING_TYPE_SHAPE_RECOGNIZER:
             return "strokeRecognizer";
         case DRAWING_TYPE_COORDINATE_SYSTEM:
             return "drawCoordinateSystem";
@@ -85,7 +87,7 @@ auto drawingTypeFromString(const std::string& type) -> DrawingType {
         return DRAWING_TYPE_DOUBLE_ARROW;
     }
     if (type == "strokeRecognizer") {
-        return DRAWING_TYPE_STROKE_RECOGNIZER;
+        return DRAWING_TYPE_SHAPE_RECOGNIZER;
     }
     if (type == "drawCoordinateSystem") {
         return DRAWING_TYPE_COORDINATE_SYSTEM;
@@ -97,9 +99,18 @@ auto drawingTypeFromString(const std::string& type) -> DrawingType {
 }
 
 auto isSelectToolType(ToolType type) -> bool {
-    return type == TOOL_SELECT_RECT
-            || type == TOOL_SELECT_REGION
-            || type == TOOL_SELECT_OBJECT;
+    return type == TOOL_SELECT_RECT || type == TOOL_SELECT_REGION || type == TOOL_SELECT_MULTILAYER_RECT ||
+           type == TOOL_SELECT_MULTILAYER_REGION || type == TOOL_SELECT_OBJECT;
+}
+
+auto isSelectToolTypeSingleLayer(ToolType type) -> bool {
+    return type == TOOL_SELECT_RECT || type == TOOL_SELECT_REGION || type == TOOL_SELECT_OBJECT;
+}
+
+auto requiresClearedSelection(ToolType type) -> bool {
+    return type == TOOL_PEN || type == TOOL_HIGHLIGHTER || type == TOOL_ERASER || type == TOOL_TEXT ||
+           type == TOOL_IMAGE || type == TOOL_SELECT_PDF_TEXT_RECT || type == TOOL_SELECT_PDF_TEXT_RECT ||
+           type == TOOL_VERTICAL_SPACE;
 }
 
 auto toolTypeToString(ToolType type) -> std::string {
@@ -120,6 +131,10 @@ auto toolTypeToString(ToolType type) -> std::string {
             return "selectRect";
         case TOOL_SELECT_REGION:
             return "selectRegion";
+        case TOOL_SELECT_MULTILAYER_RECT:
+            return "selectMultiLayerRect";
+        case TOOL_SELECT_MULTILAYER_REGION:
+            return "selectMultiLayerRegion";
         case TOOL_SELECT_OBJECT:
             return "selectObject";
         case TOOL_PLAY_OBJECT:
@@ -174,6 +189,12 @@ auto toolTypeFromString(const std::string& type) -> ToolType {
     if (type == "selectRegion") {
         return TOOL_SELECT_REGION;
     }
+    if (type == "selectMultiLayerRect") {
+        return TOOL_SELECT_MULTILAYER_RECT;
+    }
+    if (type == "selectMultiLayerRegion") {
+        return TOOL_SELECT_MULTILAYER_REGION;
+    }
     if (type == "selectObject") {
         return TOOL_SELECT_OBJECT;
     }
@@ -217,6 +238,37 @@ auto toolTypeFromString(const std::string& type) -> ToolType {
     return TOOL_NONE;
 }
 
+auto opacityFeatureToString(OpacityFeature feature) -> std::string {
+    switch (feature) {
+        case OPACITY_NONE:
+            return "none";
+        case OPACITY_FILL_PEN:
+            return "opacityFillPen";
+        case OPACITY_FILL_HIGHLIGHTER:
+            return "opacityFillHighlighter";
+        case OPACITY_SELECT_PDF_TEXT_MARKER:
+            return "opacitySelectPdfTextMarker";
+        default:
+            return "";
+    }
+}
+
+auto opacityFeatureFromString(const std::string& feature) -> OpacityFeature {
+    if (feature == "none") {
+        return OPACITY_NONE;
+    }
+    if (feature == "opacityFillPen") {
+        return OPACITY_FILL_PEN;
+    }
+    if (feature == "opacityFillHighlighter") {
+        return OPACITY_FILL_HIGHLIGHTER;
+    }
+    if (feature == "opacitySelectPdfTextMarker") {
+        return OPACITY_SELECT_PDF_TEXT_MARKER;
+    }
+    return OPACITY_NONE;
+}
+
 auto eraserTypeToString(EraserType type) -> std::string {
     switch (type) {
         case ERASER_TYPE_NONE:
@@ -245,6 +297,49 @@ auto eraserTypeFromString(const std::string& type) -> EraserType {
     return ERASER_TYPE_NONE;
 }
 
+auto strokeTypeToLineStyle(StrokeType type) -> LineStyle {
+    switch (type) {
+        case STROKE_TYPE_STANDARD:
+            return {};
+        case STROKE_TYPE_DASHED:
+            return StrokeStyle::parseStyle("dash");
+        case STROKE_TYPE_DASHDOTTED:
+            return StrokeStyle::parseStyle("dashdot");
+        case STROKE_TYPE_DOTTED:
+            return StrokeStyle::parseStyle("dot");
+        default:
+            return {};
+    }
+}
+
+auto strokeTypeToString(StrokeType type) -> std::string {
+    switch (type) {
+        case STROKE_TYPE_NONE:
+            return "none";
+        case STROKE_TYPE_STANDARD:
+            return "standard";
+        case STROKE_TYPE_DASHED:
+            return "dash";
+        case STROKE_TYPE_DASHDOTTED:
+            return "dashdot";
+        case STROKE_TYPE_DOTTED:
+            return "dot";
+        default:
+            return "";
+    }
+}
+auto strokeTypeFromString(const std::string& type) -> StrokeType {
+    if (type == "standard")
+        return STROKE_TYPE_STANDARD;
+    if (type == "dash")
+        return STROKE_TYPE_DASHED;
+    if (type == "dashdot")
+        return STROKE_TYPE_DASHDOTTED;
+    if (type == "dot")
+        return STROKE_TYPE_DOTTED;
+
+    return STROKE_TYPE_NONE;
+}
 
 bool xoj::tool::isPdfSelectionTool(ToolType toolType) {
     return toolType == TOOL_SELECT_PDF_TEXT_LINEAR || toolType == TOOL_SELECT_PDF_TEXT_RECT;

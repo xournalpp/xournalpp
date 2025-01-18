@@ -4,6 +4,8 @@
 
 #include <glib.h>  // for g_warning
 
+#include "control/Control.h"
+#include "model/Document.h"
 #include "model/Element.h"           // for Element, ELEMENT_IMAGE, ELEMENT_...
 #include "model/Layer.h"             // for Layer
 #include "model/PageRef.h"           // for PageRef
@@ -11,9 +13,6 @@
 #include "undo/PageLayerPosEntry.h"  // for PageLayerPosEntry, operator<
 #include "undo/UndoAction.h"         // for UndoAction
 #include "util/i18n.h"               // for _
-
-class Control;
-
 
 MoveSelectionToLayerUndoAction::MoveSelectionToLayerUndoAction(const PageRef& page, LayerController* layerController, Layer* oldLayer, size_t oldLayerNo, size_t newLayerNo):
         UndoAction("MoveSelectionToLayerUndoAction"),
@@ -34,12 +33,14 @@ auto MoveSelectionToLayerUndoAction::undo(Control* control) -> bool {
         return false;
     }
 
+    Document* doc = control->getDocument();
+    doc->lock();
     for (const auto& elem: elements) {
-        elem.layer->removeElement(elem.element, false);
-        this->oldLayer->addElement(elem.element);
+        this->oldLayer->addElement(elem.layer->removeElement(elem.element).e);
     }
 
     this->layerController->switchToLay(oldLayerNo + 1);
+    doc->unlock();
     this->undone = false;
     return true;
 }
@@ -50,16 +51,18 @@ auto MoveSelectionToLayerUndoAction::redo(Control* control) -> bool {
         return false;
     }
 
+    Document* doc = control->getDocument();
+    doc->lock();
     for (const auto& elem: elements) {
-        this->oldLayer->removeElement(elem.element, false);
-        elem.layer->insertElement(elem.element, elem.pos);
+        elem.layer->insertElement(this->oldLayer->removeElement(elem.element).e, elem.pos);
     }
 
     this->layerController->switchToLay(newLayerNo + 1);
+    doc->unlock();
     this->undone = true;
     return true;
 }
 
-void MoveSelectionToLayerUndoAction::addElement(Layer* layer, Element* e, int pos) {
+void MoveSelectionToLayerUndoAction::addElement(Layer* layer, Element* e, Element::Index pos) {
     elements.emplace(layer, e, pos);
 }

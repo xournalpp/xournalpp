@@ -127,6 +127,10 @@ struct Palette {
      */
     NamedColor const& getColorAt(size_t i) const;
 
+    fs::path const& getFilePath() const;
+
+    std::string getHeader(const std::string& attr) const;
+
 
 private:
     /**
@@ -185,6 +189,16 @@ private:
      * @return false else
      */
     bool parseCommentLine(const std::string& line) const;
+
+    /**
+     * @brief Parse an empty line
+     * Empty lines do not contain any characters and are ignored
+     *
+     * @param line
+     * @return true if line is empty
+     * @return false otherwise
+     */
+    bool parseEmptyLine(const std::string& line) const;
 
     /**
      * @brief Fallback for line parsing

@@ -52,14 +52,13 @@ auto GeometryToolInputHandler::handle(InputEvent const& event) -> bool {
 
     switch (device) {
         case INPUT_DEVICE_KEYBOARD:
-            return this->handleKeyboard(event);
+            return false;  // Handled via GtkEventControllerKey in InputContext
         case INPUT_DEVICE_TOUCHSCREEN:
             return this->handleTouchscreen(event);
         case INPUT_DEVICE_PEN:
         case INPUT_DEVICE_MOUSE:
-            return this->handlePointer(event);
         case INPUT_DEVICE_MOUSE_KEYBOARD_COMBO:
-            return this->handlePointer(event) || this->handleKeyboard(event);
+            return this->handlePointer(event);
         default:
             g_warning("Device class %d not handled by geometry tool", event.deviceClass);
             return false;
@@ -82,7 +81,7 @@ auto GeometryToolInputHandler::handleTouchscreen(InputEvent const& event) -> boo
     if (event.type == BUTTON_PRESS_EVENT) {
         // Start scrolling when a sequence starts and we currently have none other
         if (this->primarySequence == nullptr && this->secondarySequence == nullptr) {
-            const utl::Point<double> coords = getCoords(event);
+            const xoj::util::Point<double> coords = getCoords(event);
 
             if (controller->isInsideGeometryTool(coords.x, coords.y, 0)) {
                 // Set sequence data
@@ -132,75 +131,66 @@ auto GeometryToolInputHandler::handleTouchscreen(InputEvent const& event) -> boo
     return false;
 }
 
-auto GeometryToolInputHandler::handleKeyboard(InputEvent const& event) -> bool {
-    GdkEvent* gdkEvent = event.sourceEvent;
-    if (gdk_event_get_event_type(gdkEvent) == GDK_KEY_PRESS) {
-        double xdir = 0;
-        double ydir = 0;
-        double angle = 0.0;
-        double scale = 1.0;
-        guint key;
-        if (!gdk_event_get_keyval(gdkEvent, &key)) {
-            return false;
-        }
-        switch (key) {
-            case GDK_KEY_Left:
-                xdir = -1;
-                break;
-            case GDK_KEY_Up:
-                ydir = -1;
-                break;
-            case GDK_KEY_Right:
-                xdir = 1;
-                break;
-            case GDK_KEY_Down:
-                ydir = 1;
-                break;
-            case GDK_KEY_r:
-            case GDK_KEY_R: {  // r like "rotate"
-                angle = (event.state & GDK_MOD1_MASK) ? ROTATE_AMOUNT_SMALL : ROTATE_AMOUNT;
-                angle = (event.state & GDK_SHIFT_MASK) ? angle : -angle;
-                break;
-            }
-            case GDK_KEY_s:
-            case GDK_KEY_S: {
-                scale = (event.state & GDK_MOD1_MASK) ? SCALE_AMOUNT_SMALL : SCALE_AMOUNT;
-                scale = (event.state & GDK_SHIFT_MASK) ? 1.0 / scale : scale;
-                const double h = height * scale;
-                if (h > getMaxHeight() || h < getMinHeight()) {
-                    scale = 1.0;
-                }
-                break;
-            }
-            case GDK_KEY_m: {
-                controller->markPoint(translationX, translationY);
-                return true;
-            }
-        }
-
-        if (xdir != 0 || ydir != 0) {
-            const double c = std::cos(rotation);
-            const double s = std::sin(rotation);
-            double xshift{0.0};
-            double yshift{0.0};
-            const double amount = (event.state & GDK_MOD1_MASK) ? MOVE_AMOUNT_SMALL : MOVE_AMOUNT;
-            if (event.state & GDK_SHIFT_MASK) {
-                xshift = amount * (c * xdir - s * ydir);
-                yshift = amount * (s * xdir + c * ydir);
-            } else {
-                xshift = amount * xdir;
-                yshift = amount * ydir;
-            }
-            controller->translate(xshift, yshift);
+auto GeometryToolInputHandler::keyPressed(KeyEvent const& event) -> bool {
+    double xdir = 0;
+    double ydir = 0;
+    double angle = 0.0;
+    double scale = 1.0;
+    switch (event.keyval) {
+        case GDK_KEY_Left:
+            xdir = -1;
+            break;
+        case GDK_KEY_Up:
+            ydir = -1;
+            break;
+        case GDK_KEY_Right:
+            xdir = 1;
+            break;
+        case GDK_KEY_Down:
+            ydir = 1;
+            break;
+        case GDK_KEY_r:
+            angle = (event.state & GDK_MOD1_MASK) ? -ROTATE_AMOUNT_SMALL : -ROTATE_AMOUNT;
+            break;
+        case GDK_KEY_R:  // r like "rotate"
+            angle = (event.state & GDK_MOD1_MASK) ? ROTATE_AMOUNT_SMALL : ROTATE_AMOUNT;
+            break;
+        case GDK_KEY_s:
+            scale = (event.state & GDK_MOD1_MASK) ? SCALE_AMOUNT_SMALL : SCALE_AMOUNT;
+            break;
+        case GDK_KEY_S:
+            scale = (event.state & GDK_MOD1_MASK) ? 1. / SCALE_AMOUNT_SMALL : 1. / SCALE_AMOUNT;
+            break;
+        case GDK_KEY_m:
+            controller->markPoint(translationX, translationY);
             return true;
-        }
+    }
 
-        auto p = utl::Point(translationX, translationY);
-        if (angle != 0) {
-            controller->rotate(angle, p.x, p.y);
-            return true;
+    if (xdir != 0 || ydir != 0) {
+        const double c = std::cos(rotation);
+        const double s = std::sin(rotation);
+        double xshift{0.0};
+        double yshift{0.0};
+        const double amount = (event.state & GDK_MOD1_MASK) ? MOVE_AMOUNT_SMALL : MOVE_AMOUNT;
+        if (event.state & GDK_SHIFT_MASK) {
+            xshift = amount * (c * xdir - s * ydir);
+            yshift = amount * (s * xdir + c * ydir);
+        } else {
+            xshift = amount * xdir;
+            yshift = amount * ydir;
         }
-        if (scale != 1.0) {
+        controller->translate(xshift, yshift);
+        return true;
+    }
+
+    auto p = xoj::util::Point(translationX, translationY);
+    if (angle != 0) {
+        controller->rotate(angle, p.x, p.y);
+        return true;
+    }
+    if (scale != 1.0) {
+        const double h = height * scale;
+        if (h <= getMaxHeight() && h >= getMinHeight()) {
             controller->scale(scale, p.x, p.y);
             return true;
         }
@@ -224,7 +214,7 @@ void GeometryToolInputHandler::sequenceStart(InputEvent const& event) {
     // time a finger has been put onto the screen
     for (const auto& e: layer->getElements()) {
         if (e->getType() == ELEMENT_STROKE) {
-            Stroke* s = dynamic_cast<Stroke*>(e);
+            auto* s = dynamic_cast<Stroke*>(e.get());
             if (s->getPointCount() == 2) {
                 lines.push_back(s);
             }
@@ -236,13 +226,13 @@ void GeometryToolInputHandler::sequenceStart(InputEvent const& event) {
 void GeometryToolInputHandler::scrollMotion(InputEvent const& event) {
     // Will only be called if there is a single sequence (rotation/zooming handles two sequences)
     auto offset = [&]() {
-        utl::Point<double> coords = this->getCoords(event);
+        xoj::util::Point<double> coords = this->getCoords(event);
         if (event.sequence == this->primarySequence) {
-            const utl::Point<double> offset = coords - this->priLastPageRel;
+            const xoj::util::Point<double> offset = coords - this->priLastPageRel;
             this->priLastPageRel = coords;
             return offset;
         } else {
-            const utl::Point<double> offset = coords - this->secLastPageRel;
+            const xoj::util::Point<double> offset = coords - this->secLastPageRel;
             this->secLastPageRel = coords;
             return offset;
         }
@@ -275,7 +265,7 @@ void GeometryToolInputHandler::rotateAndZoomStart() {
     this->canBlockZoom = true;
 
     this->lastZoomScrollCenter = (this->priLastPageRel + this->secLastPageRel) / 2.0;
-    const utl::Point<double> shift = this->secLastPageRel - this->priLastPageRel;
+    const xoj::util::Point<double> shift = this->secLastPageRel - this->priLastPageRel;
     this->lastAngle = atan2(shift.y, shift.x);
     this->lastDist = this->startZoomDistance;
 }
@@ -298,14 +288,14 @@ void GeometryToolInputHandler::rotateAndZoomMotion(InputEvent const& event) {
         this->canBlockZoom = false;
     }
 
-    const utl::Point<double> center = (this->priLastPageRel + this->secLastPageRel) / 2;
-    const utl::Point<double> shift = this->secLastPageRel - this->priLastPageRel;
+    const xoj::util::Point<double> center = (this->priLastPageRel + this->secLastPageRel) / 2;
+    const xoj::util::Point<double> shift = this->secLastPageRel - this->priLastPageRel;
     const double angle = atan2(shift.y, shift.x);
 
-    const utl::Point<double> offset = center - lastZoomScrollCenter;
+    const xoj::util::Point<double> offset = center - lastZoomScrollCenter;
     controller->translate(offset.x, offset.y);
     const double angleIncrease = angle - lastAngle;
-    const utl::Point<double> centerRel = (this->priLastPageRel + this->secLastPageRel) / 2.0;
+    const xoj::util::Point<double> centerRel = (this->priLastPageRel + this->secLastPageRel) / 2.0;
     if (controller->isInsideGeometryTool(secLastPageRel.x, secLastPageRel.y, 0.0)) {
         controller->rotate(angleIncrease, centerRel.x, centerRel.y);
     }  // allow moving without accidental rotation
@@ -321,12 +311,12 @@ void GeometryToolInputHandler::rotateAndZoomMotion(InputEvent const& event) {
     this->lastDist = dist;
 }
 
-auto GeometryToolInputHandler::getCoords(InputEvent const& event) -> utl::Point<double> {
+auto GeometryToolInputHandler::getCoords(InputEvent const& event) -> xoj::util::Point<double> {
     const double zoom = xournal->getZoom();
     const auto view = controller->getView();
     const double posX = event.relativeX - static_cast<double>(view->getX());
     const double posY = event.relativeY - static_cast<double>(view->getY());
-    return utl::Point<double>(posX / zoom, posY / zoom);
+    return xoj::util::Point<double>(posX / zoom, posY / zoom);
 }
 
 void GeometryToolInputHandler::blockDevice(InputContext::DeviceType deviceType) { isBlocked[deviceType] = true; }

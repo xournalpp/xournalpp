@@ -1,9 +1,11 @@
 #include "Scheduler.h"
 
-#include <cassert>    // for assert
-#include <cinttypes>  // for PRId64, uint64_t
+#include <cinttypes>  // for PRId64
+#include <cstdint>    // for uint64_t
 
 #include "control/jobs/Job.h"  // for Job, JOB_TYPE_RENDER
+#include "util/Assert.h"       // for xoj_assert
+#include "util/glib_casts.h"   // for wrap_for_once_v
 
 #include "config-debug.h"  // for DEBUG_SHEDULER
 
@@ -79,7 +81,7 @@ void Scheduler::addJob(Job* job, JobPriority priority) {
 auto Scheduler::getNextJobUnlocked(bool onlyNotRender, bool* hasRenderJobs) -> Job* {
     Job* job = nullptr;
 
-    for (int i = JOB_PRIORITY_URGENT; i < JOB_N_PRIORITIES; i++) {
+    for (size_t i = JOB_PRIORITY_URGENT; i < JOB_N_PRIORITIES; i++) {
         std::deque<Job*>& queue = *this->jobQueue[i];
 
         if (onlyNotRender) {
@@ -98,7 +100,7 @@ auto Scheduler::getNextJobUnlocked(bool onlyNotRender, bool* hasRenderJobs) -> J
         } else if (!queue.empty()) {
             job = queue.front();
             queue.pop_front();
-            assert(job != nullptr);
+            xoj_assert(job != nullptr);
 
             return job;
         }
@@ -158,8 +160,8 @@ void Scheduler::unblockRerenderZoom() {
  * Time difference in microseconds
  */
 auto g_time_val_diff(GTimeVal* t1, GTimeVal* t2) -> glong {
-    g_assert(t1);
-    g_assert(t2);
+    xoj_assert(t1);
+    xoj_assert(t2);
     return ((t1->tv_sec - t2->tv_sec) * G_USEC_PER_SEC + (t1->tv_usec - t2->tv_usec)) / 1000;
 }
 
@@ -230,7 +232,7 @@ auto Scheduler::jobThreadCallback(Scheduler* scheduler) -> gpointer {
                         g_source_remove(scheduler->jobRenderThreadTimerId);
                     }
                     scheduler->jobRenderThreadTimerId = g_timeout_add(
-                            static_cast<guint>(diff), reinterpret_cast<GSourceFunc>(jobRenderThreadTimer), scheduler);
+                            static_cast<guint>(diff), xoj::util::wrap_for_once_v<jobRenderThreadTimer>, scheduler);
                 }
 
                 scheduler->jobQueueCond.wait(jobLock);

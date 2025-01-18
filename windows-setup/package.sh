@@ -19,27 +19,29 @@ mkdir "$setup_dir"
 mkdir "$setup_dir"/lib
 
 echo "copy installed files"
-(cd ../build && cmake .. -DCMAKE_INSTALL_PREFIX= && DESTDIR=../windows-setup/"$setup_dir" cmake --build . --target install)
+(cd ../build && cmake --install . --prefix ../windows-setup/"$setup_dir")
 
 echo "copy libraries"
 ldd ../build/xournalpp.exe | grep '\/mingw.*\.dll' -o | sort -u | xargs -I{} cp "{}" "$setup_dir"/bin/
 # CI workaround: copy libcrypto and libssl in case they are not already copied.
 ldd ../build/xournalpp.exe | grep -E 'lib(ssl|crypto)[^\.]*\.dll' -o | sort -u | xargs -I{} cp "/mingw64/bin/{}" "$setup_dir"/bin/
 
+echo "Installing GTK/Glib translations"
 # Copy system locale files
 for trans in ../build/po/*.gmo; do
     # Bail if there are no translations at all
     [ -f "$trans" ] || break;
 
-	# Retrieve locale from name of translation file
-	locale=$(basename -s .gmo $trans)
+    # Retrieve locale from name of translation file
+    locale=$(basename -s .gmo $trans)
+    locale_no_country=$(echo $locale | sed 's/_.*//')
 
-	# GTK / GLib Translation
-	cp -r /usr/share/locale/$locale/LC_MESSAGES/glib20.mo "$setup_dir"/share/locale/$locale/LC_MESSAGES/glib20.mo
-
-	cp -r /mingw64/share/locale/$locale/LC_MESSAGES/gdk-pixbuf.mo "$setup_dir"/share/locale/$locale/LC_MESSAGES/gdk-pixbuf.mo
-	cp -r /mingw64/share/locale/$locale/LC_MESSAGES/gtk30.mo "$setup_dir"/share/locale/$locale/LC_MESSAGES/gtk30.mo
-	cp -r /mingw64/share/locale/$locale/LC_MESSAGES/gtk30-properties.mo	"$setup_dir"/share/locale/$locale/LC_MESSAGES/gtk30-properties.mo
+    # GTK / GLib Translation
+    for f in "glib20.mo" "gdk-pixbuf.mo" "gtk30.mo" "gtk30-properties.mo"; do
+        install -Dvm644 /mingw64/share/locale/$locale/LC_MESSAGES/$f "$setup_dir"/share/locale/$locale/LC_MESSAGES/$f \
+          || ([ "$locale" != "$locale_no_country" ] \
+              && install -Dvm644 /mingw64/share/locale/$locale_no_country/LC_MESSAGES/$f "$setup_dir"/share/locale/$locale_no_country/LC_MESSAGES/$f)
+    done
 done
 
 echo "copy pixbuf libs"
@@ -66,6 +68,20 @@ cp /mingw64/bin/gspawn-win64-helper-console.exe "$setup_dir"/bin
 
 echo "copy gdbus"
 cp /mingw64/bin/gdbus.exe "$setup_dir"/bin
+
+echo "copy gtk3-demo"
+cp /mingw64/bin/gtk3-demo.exe "$setup_dir"/bin
+
+echo "copy lua-lgi and dependencies"
+cp /mingw64/bin/libgirepository-1.0-1.dll "$setup_dir"/bin
+mkdir -p "$setup_dir"/lib/lua/5.4/lgi
+cp /mingw64/lib/lua/5.4/lgi/corelgilua51.dll "$setup_dir"/lib/lua/5.4/lgi
+cp /mingw64/lib/libgirepository-1.0.dll.a "$setup_dir"/lib
+mkdir "$setup_dir"/lib/girepository-1.0
+cp /mingw64/lib/girepository-1.0/*.typelib "$setup_dir"/lib/girepository-1.0
+mkdir -p "$setup_dir"/share/lua/5.4
+cp /mingw64/share/lua/5.4/lgi.lua "$setup_dir"/share/lua/5.4
+cp -r /mingw64/share/lua/5.4/lgi/ "$setup_dir"/share/lua/5.4
 
 echo "create installer"
 bash make_version_nsh.sh

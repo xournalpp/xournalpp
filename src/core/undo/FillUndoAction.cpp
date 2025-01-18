@@ -2,13 +2,14 @@
 
 #include <memory>  // for allocator, __shared_ptr_access, __share...
 
+#include "control/Control.h"
+#include "model/Document.h"
 #include "model/Stroke.h"     // for Stroke
 #include "model/XojPage.h"    // for XojPage
 #include "undo/UndoAction.h"  // for UndoAction
 #include "util/Range.h"       // for Range
 #include "util/i18n.h"        // for _
 
-class Control;
 
 class FillUndoActionEntry {
 public:
@@ -43,6 +44,8 @@ auto FillUndoAction::undo(Control* control) -> bool {
         return true;
     }
 
+    Document* doc = control->getDocument();
+    doc->lock();
     FillUndoActionEntry* e = this->data.front();
     Range range(e->s->getX(), e->s->getY());
 
@@ -53,6 +56,7 @@ auto FillUndoAction::undo(Control* control) -> bool {
         range.addPoint(e->s->getX() + e->s->getElementWidth(), e->s->getY() + e->s->getElementHeight());
     }
 
+    doc->unlock();
     this->page->fireRangeChanged(range);
 
     return true;
@@ -63,6 +67,8 @@ auto FillUndoAction::redo(Control* control) -> bool {
         return true;
     }
 
+    Document* doc = control->getDocument();
+    doc->lock();
     FillUndoActionEntry* e = this->data.front();
     Range range(e->s->getX(), e->s->getY());
 
@@ -73,6 +79,7 @@ auto FillUndoAction::redo(Control* control) -> bool {
         range.addPoint(e->s->getX() + e->s->getElementWidth(), e->s->getY() + e->s->getElementHeight());
     }
 
+    doc->unlock();
     this->page->fireRangeChanged(range);
 
     return true;

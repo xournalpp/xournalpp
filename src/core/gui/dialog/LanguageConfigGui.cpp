@@ -12,6 +12,7 @@
 #include "util/StringUtils.h"           // for StringUtils
 #include "util/XojMsgBox.h"             // for XojMsgBox
 #include "util/i18n.h"                  // for _
+#include "util/safe_casts.h"            // for as_unsigned
 
 #include "config.h"      // for GETTEXT_PACKAGE
 #include "filesystem.h"  // for directory_iterator, operator/
@@ -27,13 +28,15 @@ LanguageConfigGui::LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget
 
     // Fetch available locales
     try {
-        fs::path baseLocaleDir = Util::getGettextFilepath(Util::getLocalePath().u8string().c_str());
+        fs::path baseLocaleDir = Util::getGettextFilepath(Util::getLocalePath());
         for (auto const& d: fs::directory_iterator(baseLocaleDir)) {
-            if (fs::exists(d.path() / "LC_MESSAGES" / (std::string(GETTEXT_PACKAGE) + ".mo"))) {
+            if (auto mofile = (d.path() / "LC_MESSAGES" / GETTEXT_PACKAGE) += ".mo"; fs::exists(mofile)) {
                 availableLocales.push_back(d.path().filename().u8string());
             }
         }
-    } catch (fs::filesystem_error const& e) { g_warning("%s", e.what()); }
+    } catch (const fs::filesystem_error& e) {
+        g_warning("%s", e.what());
+    }
     std::sort(availableLocales.begin(), availableLocales.end());
 
     // No pot file for English
@@ -55,23 +58,25 @@ LanguageConfigGui::LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget
 
 
     // Set the current locale if previously selected
-    auto prefPos = availableLocales.begin();
-    if (auto preferred = settings->getPreferredLocale(); !preferred.empty()) {
-        prefPos = std::find(availableLocales.begin(), availableLocales.end(), preferred);
-        if (*prefPos != preferred) {
+    auto prefPos = [&]() {
+        if (auto preferred = settings->getPreferredLocale(); !preferred.empty()) {
+            if (auto &&endi = availableLocales.end(), prefPos = std::find(availableLocales.begin(), endi, preferred);
+                prefPos != endi) {
+                return prefPos;
+            }
             XojMsgBox::showErrorToUser(nullptr, _("Previously selected language not available anymore!"));
-
-            // Use system default
-            prefPos = availableLocales.begin();
         }
-    }
-    gtk_combo_box_set_active(GTK_COMBO_BOX(dropdown), prefPos - availableLocales.begin());
+        // Use system default
+        return availableLocales.begin();
+    }();
+    gtk_combo_box_set_active(GTK_COMBO_BOX(dropdown),
+                             static_cast<gint>(std::distance(availableLocales.begin(), prefPos)));
 }
 
 
 void LanguageConfigGui::saveSettings() {
     gint pos = gtk_combo_box_get_active(GTK_COMBO_BOX(get("languageSettingsDropdown")));
-    auto pref = (pos == 0) ? "" : availableLocales[pos];
+    auto pref = (pos == 0) ? "" : availableLocales[as_unsigned(pos)];
 
     settings->setPreferredLocale(pref);
     settings->customSettingsChanged();

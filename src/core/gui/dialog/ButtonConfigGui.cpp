@@ -10,10 +10,15 @@
 #include "control/DeviceListHelper.h"       // for InputDevice, getDeviceList
 #include "control/settings/ButtonConfig.h"  // for ButtonConfig
 #include "control/settings/Settings.h"      // for Settings
-#include "util/Color.h"                     // for GdkRGBA_to_argb, rgb_to_G...
-#include "util/i18n.h"                      // for _
+#include "gui/Builder.h"
+#include "util/Color.h"  // for GdkRGBA_to_argb, rgb_to_G...
+#include "util/gtk4_helper.h"
+#include "util/i18n.h"  // for _
 
 class GladeSearchpath;
+
+constexpr auto UI_FILE = "settingsButtonConfig.glade";
+constexpr auto UI_WIDGET_NAME = "mainBox";
 
 ButtonConfigGui::ToolSizeIndexMap ButtonConfigGui::toolSizeIndexMap = {{0, TOOL_SIZE_NONE},  {1, TOOL_SIZE_VERY_FINE},
                                                                        {2, TOOL_SIZE_FINE},  {3, TOOL_SIZE_MEDIUM},
@@ -48,21 +53,15 @@ void addToolToList(GtkListStore* typeModel, const char* icon, const char* name, 
     gtk_list_store_set(typeModel, &iter, 1, name, 2, action, -1);
 }
 
-ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, int button,
+ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkBox* box, Settings* settings, unsigned int button,
                                  bool withDevice):
-        GladeGui(gladeSearchPath, "settingsButtonConfig.glade", "offscreenwindow"),
-        settings(settings),
-        button(button),
-        withDevice(withDevice),
-        iconNameHelper(settings) {
+        settings(settings), button(button), withDevice(withDevice), iconNameHelper(settings) {
+    Builder builder(gladeSearchPath, UI_FILE);
 
-    GtkWidget* mainGrid = get("mainGrid");
-    gtk_container_remove(GTK_CONTAINER(getWindow()), mainGrid);
-    gtk_container_add(GTK_CONTAINER(w), mainGrid);
-    gtk_widget_show_all(mainGrid);
+    gtk_box_append(box, builder.get(UI_WIDGET_NAME));  // box takes ownership of it all!
 
-    this->cbDevice = get("labelDevice");
-    this->cbDisableDrawing = get("cbDisableDrawing");
+    this->cbDevice = builder.get("labelDevice");
+    this->cbDisableDrawing = builder.get("cbDisableDrawing");
 
     if (withDevice) {
         gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), _("No device"));
@@ -73,7 +72,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
             gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), txt.c_str());
         }
     } else {
-        gtk_widget_hide(get("lbDevice"));
+        gtk_widget_hide(builder.get("lbDevice"));
         gtk_widget_hide(this->cbDevice);
         gtk_widget_hide(this->cbDisableDrawing);
     }
@@ -93,12 +92,14 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
     addTypeCB("spacer", _("Vertical space"), TOOL_VERTICAL_SPACE);
     addTypeCB("select-lasso", _("Select region"), TOOL_SELECT_REGION);
     addTypeCB("select-rect", _("Select rectangle"), TOOL_SELECT_RECT);
+    addTypeCB("select-multilayer-lasso", _("Select multi layer region"), TOOL_SELECT_MULTILAYER_REGION);
+    addTypeCB("select-multilayer-rect", _("Select multi layer rect"), TOOL_SELECT_MULTILAYER_RECT);
     addTypeCB("hand", _("Hand"), TOOL_HAND);
     addTypeCB("floating-toolbox", _("Floating Toolbox (experimental)"), TOOL_FLOATING_TOOLBOX);
     addTypeCB("select-pdf-text-head-tail", _("Select Text from pdf"), TOOL_SELECT_PDF_TEXT_LINEAR);
     addTypeCB("select-pdf-text-area", _("Select Area Text from pdf"), TOOL_SELECT_PDF_TEXT_RECT);
 
-    this->cbTool = get("cbTool");
+    this->cbTool = builder.get("cbTool");
     gtk_combo_box_set_model(GTK_COMBO_BOX(this->cbTool), GTK_TREE_MODEL(typeModel));
     g_signal_connect(cbTool, "changed", G_CALLBACK(&cbSelectCallback), this);
 
@@ -110,16 +111,16 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
     gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(this->cbTool), renderer, true);
     gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->cbTool), renderer, "text", 1, nullptr);
 
-    this->cbThickness = get("cbThickness");
+    this->cbThickness = builder.get("cbThickness");
     for (auto const& size: toolSizeIndexMap) {
         gtk_combo_box_text_insert_text(GTK_COMBO_BOX_TEXT(cbThickness), size.first,
                                        toolSizeToLabel(size.second).c_str());
     }
     gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 0);
 
-    this->colorButton = get("colorButton");
+    this->colorButton = builder.get("colorButton");
 
-    this->cbDrawingType = get("cbDrawingType");
+    this->cbDrawingType = builder.get("cbDrawingType");
     // DRAWING_TYPE_DONT_CHANGE
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Drawing Type - don't change"));
     // DRAWING_TYPE_DEFAULT
@@ -132,21 +133,24 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Ellipse"));
     // DRAWING_TYPE_ARROW
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Arrow"));
+    // DRAWING_TYPE_DOUBLE_ARROW
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Double Arrow"));
     // DRAWING_TYPE_COORDINATE_SYSTEM
-    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw coordinate system"));
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Coordinate System"));
     // DRAWING_TYPE_STROKE_RECOGNIZER
-    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Stroke recognizer"));
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Shape Recognizer"));
     // DRAWING_TYPE_SPLINE
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Spline"));
 
 
     // Values in glade GUI!
-    this->cbEraserType = get("cbEraserType");
+    this->cbEraserType = builder.get("cbEraserType");
+
+    // Possible values are defined in the .glade file
+    this->cbStrokeType = builder.get("cbStrokeType");
 
     loadSettings();
 }
-
-ButtonConfigGui::~ButtonConfigGui() = default;
 
 void ButtonConfigGui::loadSettings() {
     ButtonConfig* cfg = settings->getButtonConfig(button);
@@ -200,6 +204,8 @@ void ButtonConfigGui::loadSettings() {
         gtk_combo_box_set_active(GTK_COMBO_BOX(cbEraserType), 0);
     }
 
+    gtk_combo_box_set_active(GTK_COMBO_BOX(cbStrokeType), cfg->strokeType);
+
     if (withDevice) {
         gtk_combo_box_set_active(GTK_COMBO_BOX(cbDevice), 0);
 
@@ -215,10 +221,6 @@ void ButtonConfigGui::loadSettings() {
 
         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cbDisableDrawing), cfg->disableDrawing);
     }
-}
-
-void ButtonConfigGui::show(GtkWindow*) {
-    // Not implemented! This is not a dialog!
 }
 
 void ButtonConfigGui::saveSettings() {
@@ -258,8 +260,10 @@ void ButtonConfigGui::saveSettings() {
         cfg->eraserMode = ERASER_TYPE_NONE;
     }
 
+    cfg->strokeType = static_cast<StrokeType>(gtk_combo_box_get_active(GTK_COMBO_BOX(this->cbStrokeType)));
+
     if (this->withDevice) {
-        int dev = gtk_combo_box_get_active(GTK_COMBO_BOX(cbDevice)) - 1;
+        size_t dev = static_cast<size_t>(gtk_combo_box_get_active(GTK_COMBO_BOX(cbDevice)) - 1);
         cfg->device = (dev < 0 || this->deviceList.size() <= dev) ? "" : this->deviceList[dev].getName();
         cfg->disableDrawing = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbDisableDrawing));
     }
@@ -280,6 +284,12 @@ void ButtonConfigGui::enableDisableTools() {
 
     switch (action) {
         case TOOL_PEN:
+            gtk_widget_set_visible(cbThickness, true);
+            gtk_widget_set_visible(colorButton, true);
+            gtk_widget_set_visible(cbDrawingType, true);
+            gtk_widget_set_visible(cbEraserType, false);
+            gtk_widget_set_visible(cbStrokeType, true);
+            break;
         case TOOL_HIGHLIGHTER:
         case TOOL_SELECT_PDF_TEXT_LINEAR:
         case TOOL_SELECT_PDF_TEXT_RECT:
@@ -287,6 +297,7 @@ void ButtonConfigGui::enableDisableTools() {
             gtk_widget_set_visible(colorButton, true);
             gtk_widget_set_visible(cbDrawingType, true);
             gtk_widget_set_visible(cbEraserType, false);
+            gtk_widget_set_visible(cbStrokeType, false);
             break;
 
         case TOOL_ERASER:
@@ -294,6 +305,7 @@ void ButtonConfigGui::enableDisableTools() {
             gtk_widget_set_visible(colorButton, false);
             gtk_widget_set_visible(cbDrawingType, false);
             gtk_widget_set_visible(cbEraserType, true);
+            gtk_widget_set_visible(cbStrokeType, false);
             break;
 
         case TOOL_TEXT:
@@ -301,6 +313,7 @@ void ButtonConfigGui::enableDisableTools() {
             gtk_widget_set_visible(colorButton, true);
             gtk_widget_set_visible(cbDrawingType, false);
             gtk_widget_set_visible(cbEraserType, false);
+            gtk_widget_set_visible(cbStrokeType, false);
             break;
 
         case TOOL_NONE:
@@ -309,12 +322,15 @@ void ButtonConfigGui::enableDisableTools() {
             // case TOOL_DRAW_ELLIPSE:
         case TOOL_SELECT_RECT:
         case TOOL_SELECT_REGION:
+        case TOOL_SELECT_MULTILAYER_RECT:
+        case TOOL_SELECT_MULTILAYER_REGION:
         case TOOL_VERTICAL_SPACE:
         case TOOL_HAND:
             gtk_widget_set_visible(cbThickness, false);
             gtk_widget_set_visible(colorButton, false);
             gtk_widget_set_visible(cbDrawingType, false);
             gtk_widget_set_visible(cbEraserType, false);
+            gtk_widget_set_visible(cbStrokeType, false);
             break;
         default:
             break;

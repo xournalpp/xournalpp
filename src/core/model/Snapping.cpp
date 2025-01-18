@@ -60,22 +60,4 @@ double distanceLine(Point const& pos, Point const& first, Point const& second) {
     }
 }
 
-Point snapToLine(Point const& pos, Point const& first, Point const& second, double tolerance) {
-    if (first.x == second.x && first.y == second.y) {
-        return distance(pos, first) > tolerance ? pos : first;
-    }
-    const double dist = distanceLine(pos, first, second);
-    const double dist1 = distance(pos, first);
-    const double dist2 = distance(pos, second);
-    const double distance = std::min({dist, dist1, dist2});
-    if (distance > tolerance) {
-        return pos;
-    } else if (distance == dist1) {
-        return first;
-    } else if (distance == dist2) {
-        return second;
-    } else {
-        return projToLine(pos, first, second);
-    }
-}
 }  // namespace Snapping

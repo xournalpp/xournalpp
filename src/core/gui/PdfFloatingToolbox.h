@@ -1,6 +1,6 @@
 #pragma once
 
-#include <cinttypes>  // for uint8_t
+#include <cstdint>    // for uint8_t
 #include <memory>     // for unique_ptr
 
 #include <gdk/gdk.h>  // for GdkRectangle
@@ -62,6 +62,9 @@ public:
     /// Track selection style used for unfinalized selections
     XojPdfPageSelectionStyle selectionStyle = XojPdfPageSelectionStyle::Linear;
 
+    /// Copy Selection to the Clipboard.
+    void copyTextToClipboard();
+
 private:
     void show();
 
@@ -74,7 +77,6 @@ private:
     static void copyTextCb(GtkButton* button, PdfFloatingToolbox* pft);
     static void highlightCb(GtkButton* button, PdfFloatingToolbox* pft);
 
-    void copyTextToClipboard();
     void createStrokes(PdfMarkerStyle position, PdfMarkerStyle width, int markerOpacity);
 
 private:

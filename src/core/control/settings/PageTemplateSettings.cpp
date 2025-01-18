@@ -1,8 +1,6 @@
 #include "PageTemplateSettings.h"
 
-#include <cinttypes>  // for PRIx32, uint32_t
-#include <cstdio>     // for snprintf, size_t
-#include <sstream>    // for basic_istream, strings...
+#include <sstream>  // for basic_istream, strings...
 
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeHandler
 
@@ -44,9 +42,9 @@ void PageTemplateSettings::setBackgroundColor(Color backgroundColor) { this->bac
 
 auto PageTemplateSettings::getBackgroundType() -> PageType { return backgroundType; }
 
-auto PageTemplateSettings::getPageInsertType() -> PageType {
+auto PageTemplateSettings::getPageInsertType() -> std::optional<PageType> {
     if (copyLastPageSettings) {
-        return PageType(PageTypeFormat::Copy);
+        return std::nullopt;
     }
 
     return backgroundType;
@@ -89,7 +87,7 @@ auto PageTemplateSettings::parse(const std::string& tpl) -> bool {
             pageWidth = std::stod(value.substr(0, pos));
             pageHeight = std::stod(value.substr(pos + 1));
         } else if (key == "backgroundColor") {
-            backgroundColor = Color(std::stoul(value.substr(1), nullptr, 16));
+            backgroundColor = Color(static_cast<uint32_t>(std::stoul(value.substr(1), nullptr, 16)));
         } else if (key == "backgroundType") {
             this->backgroundType.format = PageTypeHandler::getPageTypeFormatForString(value);
         } else if (key == "backgroundTypeConfig") {
@@ -115,9 +113,7 @@ auto PageTemplateSettings::toString() const -> string {
         str += string("backgroundTypeConfig=") + backgroundType.config + "\n";
     }
 
-    char buffer[64];
-    snprintf(buffer, sizeof(buffer), "#%06" PRIx32, uint32_t{this->backgroundColor});
-    str += string("backgroundColor=") + buffer + "\n";
+    str += string("backgroundColor=") + Util::rgb_to_hex_string(this->backgroundColor) + "\n";
 
     return str;
 }

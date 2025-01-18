@@ -4,9 +4,9 @@
 #include <cstdlib>  // for system
 #include <string>   // for allocator, string
 #include <utility>  // for move
+#include <vector>   // for vector
 
 #include <gdk/gdk.h>  // for gdk_cairo_set_source_rgba, gdk_t...
-#include <unistd.h>   // for getpid, pid_t
 
 #include "util/Color.h"              // for argb_to_GdkRGBA, rgb_to_GdkRGBA
 #include "util/OutputStream.h"       // for OutputStream
@@ -14,33 +14,12 @@
 #include "util/XojMsgBox.h"          // for XojMsgBox
 #include "util/i18n.h"               // for FS, _F
 
-struct CallbackUiData {
-    explicit CallbackUiData(std::function<void()> callback): callback(std::move(callback)) {}
+#if defined(_MSC_VER)
+#include <windows.h>
+#else
+#include <unistd.h>  // for getpid, pid_t
+#endif
 
-    std::function<void()> callback;  // NOLINT
-};
-
-/**
- * This method is called in the GTK UI Thread
- */
-static auto execInUiThreadCallback(CallbackUiData* cb) -> bool {
-    cb->callback();
-
-    delete cb;
-    // Do not call again
-    return false;
-}
-
-/**
- * Execute the callback in the UI Thread.
- *
- * Make sure the container class is not deleted before the UI stuff is finished!
- */
-void Util::execInUiThread(std::function<void()>&& callback, gint priority) {
-    // Note: nullptr = GDestroyNotify notify.
-    gdk_threads_add_idle_full(priority, reinterpret_cast<GSourceFunc>(execInUiThreadCallback),
-                              new CallbackUiData(std::move(callback)), nullptr);
-}
 
 void Util::cairo_set_source_rgbi(cairo_t* cr, Color color, double alpha) {
     auto rgba = argb_to_GdkRGBA(color, alpha);
@@ -52,8 +31,13 @@ void Util::cairo_set_source_argb(cairo_t* cr, Color color) {
     gdk_cairo_set_source_rgba(cr, &rgba);
 }
 
-auto Util::getPid() -> pid_t { return ::getpid(); }
-
+auto Util::getPid() -> PID {
+#if defined(_MSC_VER)
+    return GetCurrentProcessId();
+#else
+    return ::getpid();
+#endif
+}
 
 auto Util::paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void*) -> gboolean {
     GtkAllocation alloc;
@@ -62,6 +46,20 @@ auto Util::paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void*) -> gboole
     cairo_rectangle(cr, 0, 0, alloc.width, alloc.height);
     cairo_fill(cr);
     return false;
+}
+
+xoj::util::Point<double> Util::toWidgetCoords(GtkWidget* widget, xoj::util::Point<double> absolute_coords) {
+    int rx, ry;
+    // X11 uses absolute screen coordinates while Wayland uses absolute window coordinates.
+    // Converting them to widget-local coordinates will cancel out this difference.
+    // `gtk_widget_get_window` doesn't return the actual window, but the local widget-window.
+    // GTK4 renames `gdk_window_get_root_coords()` to `gdk_surface_get_root_coords()`
+    gdk_window_get_root_coords(gtk_widget_get_window(widget), 0, 0, &rx, &ry);
+    return xoj::util::Point<double>{absolute_coords.x - rx, absolute_coords.y - ry};
+}
+
+void Util::cairo_set_dash_from_vector(cairo_t* cr, const std::vector<double>& dashes, double offset) {
+    cairo_set_dash(cr, dashes.data(), static_cast<int>(dashes.size()), offset);
 }
 
 void Util::writeCoordinateString(OutputStream* out, double xVal, double yVal) {

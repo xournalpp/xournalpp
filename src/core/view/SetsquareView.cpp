@@ -1,7 +1,6 @@
 #include "SetsquareView.h"
 
 #include <algorithm>  // for max, min
-#include <cassert>    // for assert
 #include <cmath>      // for isnan, sqrt, cos, sin, atan2
 #include <iomanip>
 #include <sstream>
@@ -11,7 +10,9 @@
 
 #include "model/Setsquare.h"          // for Setsquare
 #include "model/Stroke.h"             // for Stroke
+#include "util/Assert.h"              // for xoj_assert
 #include "util/raii/CairoWrappers.h"  // for CairoSaveGuard
+#include "util/safe_casts.h"          // for floor_cast
 #include "view/Repaintable.h"         // for Repaintable
 #include "view/View.h"                // for Context
 
@@ -47,7 +48,7 @@ SetsquareView::~SetsquareView() noexcept { this->unregisterFromPool(); };
 void SetsquareView::on(FlagDirtyRegionRequest, const Range& rg) { this->parent->flagDirtyRegion(rg); }
 
 void SetsquareView::on(UpdateValuesRequest, double h, double rot, cairo_matrix_t m) {
-    assert(h > 0 && "Non-positive setsquare height");
+    xoj_assert_message(h > 0, "Non-positive setsquare height");
     height = h;
     rotation = rot;
     matrix = m;
@@ -57,7 +58,7 @@ void SetsquareView::on(UpdateValuesRequest, double h, double rot, cairo_matrix_t
     minVmark = (std::abs(horPosVmarks - HMARK_POS - TICK_SMALL / 2.) < MIN_DIST_FROM_HMARK - TICK_SMALL / 2.) ?
                        MIN_VMARK_LARGE :
                        MIN_VMARK_SMALL;
-    maxVmark = static_cast<int>(std::floor(cathete(radius, horPosVmarks) * 10.0)) - OFFSET_FROM_SEMICIRCLE;
+    maxVmark = floor_cast<int>(cathete(radius, horPosVmarks) * 10.0) - OFFSET_FROM_SEMICIRCLE;
 
     // The following computation of the angular marks offset is based on experimentation.
     offset = std::max(MIN_OFFSET_ANG_MARKS,
@@ -65,7 +66,7 @@ void SetsquareView::on(UpdateValuesRequest, double h, double rot, cairo_matrix_t
     if (std ::abs(radius - std::round(radius)) < .2) {  // larger offset when semicircle comes close to big hmarks
         offset = std::max(offset, static_cast<int>(24.0 / radius));
     }
-    maxHmark = static_cast<int>(std::floor(height * 10.0)) - SKIPPED_HMARKS;
+    maxHmark = floor_cast<int>(height * 10.0) - SKIPPED_HMARKS;
 }
 
 void SetsquareView::deleteOn(SetsquareView::FinalizationRequest, const Range& rg) {

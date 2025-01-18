@@ -16,37 +16,23 @@
 
 ToolbarDragDropHandler::ToolbarDragDropHandler(Control* control): control(control) {}
 
-ToolbarDragDropHandler::~ToolbarDragDropHandler() { clearToolbarsFromDragAndDrop(); }
+ToolbarDragDropHandler::~ToolbarDragDropHandler() = default;
 
 void ToolbarDragDropHandler::prepareToolbarsForDragAndDrop() {
-    int len = 0;
     MainWindow* win = control->getWindow();
-    GtkWidget** widgets = win->getToolbarWidgets(len);
 
-    this->toolbars = new ToolbarAdapter*[len + 1];
-    this->toolbars[len] = nullptr;
+    this->toolbars.clear();
 
-    for (int i = 0; i < len; i++) {
-        GtkWidget* w = widgets[i];
-        this->toolbars[i] = new ToolbarAdapter(w, win->getToolbarName(GTK_TOOLBAR(w)),
-                                               control->getWindow()->getToolMenuHandler(), control->getWindow());
+    for (auto w: win->getToolbarWidgets()) {
+        this->toolbars.emplace_back(std::make_unique<ToolbarAdapter>(w.get(), win->getToolbarName(GTK_TOOLBAR(w.get())),
+                                                                     control->getWindow()->getToolMenuHandler(), win));
     }
 }
 
-void ToolbarDragDropHandler::clearToolbarsFromDragAndDrop() {
-    if (this->toolbars == nullptr) {
-        return;
-    }
-
-    for (int i = 0; this->toolbars[i]; i++) { delete this->toolbars[i]; }
-    delete[] this->toolbars;
-
-    this->toolbars = nullptr;
-}
+void ToolbarDragDropHandler::clearToolbarsFromDragAndDrop() { this->toolbars.clear(); }
 
 void ToolbarDragDropHandler::toolbarConfigDialogClosed() {
-    delete this->customizeDialog;
-    this->customizeDialog = nullptr;
+    this->customizeDialog.reset();
 
     MainWindow* win = control->getWindow();
 
@@ -54,20 +40,18 @@ void ToolbarDragDropHandler::toolbarConfigDialogClosed() {
 
     auto file = Util::getConfigFile(TOOLBAR_CONFIG);
     win->getToolbarModel()->save(file);
-    win->floatingToolbox->hide();
+    win->getFloatingToolbox()->hide();
 }
 
 void ToolbarDragDropHandler::configure() {
     MainWindow* win = control->getWindow();
 
 
-    win->floatingToolbox->showForConfiguration();
+    win->getFloatingToolbox()->showForConfiguration();
 
     this->prepareToolbarsForDragAndDrop();
 
-    this->customizeDialog = new ToolbarCustomizeDialog(control->getGladeSearchPath(), win, this);
+    this->customizeDialog = std::make_unique<ToolbarCustomizeDialog>(control->getGladeSearchPath(), win, this);
 
     this->customizeDialog->show(GTK_WINDOW(win->getWindow()));
 }
-
-auto ToolbarDragDropHandler::isInDragAndDrop() -> bool { return this->toolbars != nullptr; }

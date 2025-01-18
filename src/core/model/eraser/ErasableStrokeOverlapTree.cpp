@@ -1,7 +1,6 @@
 #include "ErasableStrokeOverlapTree.h"
 
 #include <algorithm>  // for max, min, minmax
-#include <cassert>    // for assert
 #include <optional>   // for optional
 #include <tuple>      // for tie, tuple
 
@@ -9,6 +8,7 @@
 #include "model/Point.h"                  // for Point
 #include "model/Stroke.h"                 // for Stroke
 #include "model/eraser/ErasableStroke.h"  // for ErasableStroke::SubSection
+#include "util/Assert.h"                  // for xoj_assert
 #include "util/Range.h"                   // for Range
 
 using xoj::util::Rectangle;
@@ -28,7 +28,7 @@ void ErasableStroke::OverlapTree::addOverlapsToRange(const ErasableStroke::Overl
 void ErasableStroke::OverlapTree::addOverlapsToRange(const ErasableStroke::OverlapTree& other, double halfWidth,
                                                      Range& range) const {
 #endif
-    assert(this->isPopulated() && other.isPopulated());
+    xoj_assert(this->isPopulated() && other.isPopulated());
 
 #ifdef DEBUG_ERASABLE_STROKE_BOXES
     this->root.addOverlapsToRange(other.root, halfWidth, range, cr);
@@ -38,7 +38,7 @@ void ErasableStroke::OverlapTree::addOverlapsToRange(const ErasableStroke::Overl
 }
 
 void ErasableStroke::OverlapTree::Populator::populate(const SubSection& section, Node& root) {
-    assert(section.min.index <= section.max.index && section.max.index < stroke.getPointCount());
+    xoj_assert(section.min.index <= section.max.index && section.max.index < stroke.getPointCount());
 
     size_t nbLeaves = section.max.index - section.min.index + 1;
     this->data.resize(nbLeaves - 1);
@@ -77,13 +77,13 @@ void ErasableStroke::OverlapTree::Populator::populate(const SubSection& section,
 }
 
 auto ErasableStroke::OverlapTree::Populator::getNextFreeSlot() -> std::pair<Node, Node>* {
-    assert(nextFreeSlot < data.end());
+    xoj_assert(nextFreeSlot < data.end());
     return &*(nextFreeSlot++);
 }
 
 void ErasableStroke::OverlapTree::Populator::populateNode(Node& node, const Point& firstPoint, size_t min, size_t max,
                                                           const Point& lastPoint, const std::vector<Point>& pts) {
-    assert(min <= max && max < pts.size());
+    xoj_assert(min <= max && max < pts.size());
     /**
      * Split in two in the middle
      */
@@ -98,7 +98,7 @@ void ErasableStroke::OverlapTree::Populator::populateNode(Node& node, const Poin
 
 void ErasableStroke::OverlapTree::Populator::populateNode(Node& node, const Point& firstPoint, size_t min, size_t max,
                                                           const std::vector<Point>& pts) {
-    assert(min <= max && max < pts.size());
+    xoj_assert(min <= max && max < pts.size());
     if (min == max) {
         // The node corresponds to a single segment
         node.initializeOnSegment(firstPoint, pts[min]);
@@ -108,7 +108,7 @@ void ErasableStroke::OverlapTree::Populator::populateNode(Node& node, const Poin
      * Split in two
      */
     size_t middle = (min + max) / 2;
-    assert(middle >= min && middle < max);
+    xoj_assert(middle >= min && middle < max);
 
     node.children = getNextFreeSlot();
 
@@ -119,7 +119,7 @@ void ErasableStroke::OverlapTree::Populator::populateNode(Node& node, const Poin
 
 void ErasableStroke::OverlapTree::Populator::populateNode(Node& node, size_t min, size_t max, const Point& lastPoint,
                                                           const std::vector<Point>& pts) {
-    assert(min <= max && max < pts.size());
+    xoj_assert(min <= max && max < pts.size());
     if (min == max) {
         // The node corresponds to a single segment
         node.initializeOnSegment(pts[min], lastPoint);
@@ -129,7 +129,7 @@ void ErasableStroke::OverlapTree::Populator::populateNode(Node& node, size_t min
      * Split in two
      */
     size_t middle = (min + max + 1) / 2;
-    assert(middle > min && middle <= max);
+    xoj_assert(middle > min && middle <= max);
 
     node.children = getNextFreeSlot();
 
@@ -140,7 +140,7 @@ void ErasableStroke::OverlapTree::Populator::populateNode(Node& node, size_t min
 
 void ErasableStroke::OverlapTree::Populator::populateNode(Node& node, size_t min, size_t max,
                                                           const std::vector<Point>& pts) {
-    assert(max > min);
+    xoj_assert(max > min);
     if (min + 1 == max) {
         // The node corresponds to a single segment
         node.initializeOnSegment(pts[min], pts[max]);
@@ -150,7 +150,7 @@ void ErasableStroke::OverlapTree::Populator::populateNode(Node& node, size_t min
      * Split in two
      */
     size_t middle = (min + max) / 2;
-    assert(middle > min && middle < max);
+    xoj_assert(middle > min && middle < max);
 
     node.children = getNextFreeSlot();
 
@@ -165,7 +165,7 @@ void ErasableStroke::OverlapTree::Node::initializeOnSegment(const Point& p1, con
 }
 
 void ErasableStroke::OverlapTree::Node::computeBoxFromChildren() {
-    assert(children != nullptr);
+    xoj_assert(children != nullptr);
     minX = std::min(children->first.minX, children->second.minX);
     maxX = std::max(children->first.maxX, children->second.maxX);
     minY = std::min(children->first.minY, children->second.minY);
@@ -216,7 +216,7 @@ void ErasableStroke::OverlapTree::Node::addOverlapsToRange(const Node& other, do
     auto rectOther = other.toRectangle(halfWidth);
     auto inter = rectThis.intersects(rectOther);
 
-    assert(inter);
+    xoj_assert(inter);
 
     const Rectangle<double>& rect = inter.value();
 #ifdef DEBUG_ERASABLE_STROKE_BOXES

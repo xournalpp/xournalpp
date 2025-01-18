@@ -10,9 +10,9 @@
  */
 #pragma once
 
-#include <cinttypes>  // for uint64_t
-#include <string>     // for string
-#include <vector>     // for vector
+#include <cstddef>  // for size_t
+#include <string>   // for string
+#include <vector>   // for vector
 
 #include <cairo.h>  // for cairo_region_t, cairo_t
 
@@ -64,7 +64,7 @@ public:
     /// Returns true iff the final selections bounds are known.
     bool isFinalized() const;
 
-    uint64_t getSelectionPageNr() const;
+    size_t getSelectionPageNr() const;
     void setToolType(ToolType toolType);
 
     const cairo_region_t* getSelectedRegion() const { return selectedTextRegion.get(); }
@@ -96,7 +96,7 @@ private:
     /// The PDF selection tool used for the selection.
     ToolType toolType;
 
-    long unsigned int selectionPageNr = npos;
+    size_t selectionPageNr = npos;
 
     /// The selection bounds. Note that this does not necessarily correspond to
     /// a rectangle--it may also indicate start and end positions of a linear

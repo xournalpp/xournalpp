@@ -1,46 +1,78 @@
 #include "Selection.h"
 
 #include <algorithm>  // for max, min
-#include <cfloat>     // for DBL_MAX
 #include <cmath>      // for abs, NAN
 #include <memory>     // for __shared_ptr_access
 
 #include <gdk/gdk.h>  // for GdkRGBA, gdk_cairo_set_source_rgba
 
 #include "gui/LegacyRedrawable.h"  // for Redrawable
-#include "model/Layer.h"     // for Layer
-#include "model/XojPage.h"   // for XojPage
+#include "model/Document.h"        // for Document
+#include "model/Layer.h"           // for Layer
+#include "model/XojPage.h"         // for XojPage
+#include "util/safe_casts.h"       // for as_unsigned
 
-Selection::Selection(): viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::SelectionView>>()) {}
+Selection::Selection(bool multiLayer): multiLayer(multiLayer), viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::SelectionView>>()) {
+}
 
 Selection::~Selection() = default;
 
-//////////////////////////////////////////////////////////
-
-RectSelection::RectSelection(double x, double y) {
-    bbox.addPoint(x, y);
-    this->sx = x;
-    this->sy = y;
-    this->ex = x;
-    this->ey = y;
-}
-
-RectSelection::~RectSelection() = default;
-
-auto RectSelection::finalize(PageRef page) -> bool {
+auto Selection::finalize(PageRef page, bool disableMultilayer, Document* doc) -> size_t {
     this->page = page;
+    size_t layerId = 0;
 
-    Layer* l = page->getSelectedLayer();
-    for (Element* e: l->getElements()) {
-        if (e->isInSelection(this)) {
-            this->selectedElements.push_back(e);
+    if (multiLayer && !disableMultilayer) {
+        std::lock_guard lock(*doc);
+        for (auto it = page->getLayers()->rbegin(); it != page->getLayers()->rend(); it++) {
+            Layer* l = *it;
+            if (!l->isVisible()) {
+                continue;
+            }
+            bool selectionOnLayer = false;
+            Element::Index pos = 0;
+            for (auto&& e: l->getElements()) {
+                if (e->isInSelection(this)) {
+                    this->selectedElements.emplace_back(e.get(), pos);
+                    selectionOnLayer = true;
+                }
+                pos++;
+            }
+            if (selectionOnLayer) {
+                layerId = page->getLayers()->size() - as_unsigned(std::distance(page->getLayers()->rbegin(), it));
+                break;
+            }
+        }
+    } else {
+        std::lock_guard lock(*doc);
+        Layer* l = page->getSelectedLayer();
+        Element::Index pos = 0;
+        for (auto&& e: l->getElements()) {
+            if (e->isInSelection(this)) {
+                this->selectedElements.emplace_back(e.get(), pos);
+                layerId = page->getSelectedLayerId();
+            }
+            pos++;
         }
     }
 
     this->viewPool->dispatchAndClear(xoj::view::SelectionView::DELETE_VIEWS_REQUEST, this->bbox);
 
-    return !this->selectedElements.empty();
+    return layerId;
 }
+
+auto Selection::isMultiLayerSelection() -> bool {
+    return this->multiLayer;
+}
+
+auto Selection::releaseElements() -> InsertionOrderRef { return std::move(this->selectedElements); }
+
+//////////////////////////////////////////////////////////
+
+RectSelection::RectSelection(double x, double y, bool multiLayer): Selection(multiLayer), sx(x), sy(y), ex(x), ey(y) {
+    bbox.addPoint(x, y);
+}
+
+RectSelection::~RectSelection() = default;
 
 auto RectSelection::contains(double x, double y) const -> bool { return bbox.contains(x, y); }
 
@@ -67,7 +99,9 @@ auto RectSelection::getBoundary() const -> const std::vector<BoundaryPoint>& { r
 
 //////////////////////////////////////////////////////////
 
-RegionSelect::RegionSelect(double x, double y) { currentPos(x, y); }
+RegionSelect::RegionSelect(double x, double y, bool multiLayer): Selection(multiLayer) {
+    currentPos(x, y);
+}
 
 void RegionSelect::currentPos(double x, double y) {
     boundaryPoints.emplace_back(x, y);
@@ -151,21 +185,6 @@ auto RegionSelect::contains(double x, double y) const -> bool {
     }
 
     return (hits & 1) != 0;
-}
-
-auto RegionSelect::finalize(PageRef page) -> bool {
-    this->page = page;
-
-    Layer* l = page->getSelectedLayer();
-    for (Element* e: l->getElements()) {
-        if (e->isInSelection(this)) {
-            this->selectedElements.push_back(e);
-        }
-    }
-
-    this->viewPool->dispatchAndClear(xoj::view::SelectionView::DELETE_VIEWS_REQUEST, this->bbox);
-
-    return !this->selectedElements.empty();
 }
 
 auto RegionSelect::userTapped(double zoom) const -> bool {

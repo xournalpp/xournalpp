@@ -35,7 +35,10 @@ void ShapeToolView::draw(cairo_t* cr) const {
 
 bool ShapeToolView::isViewOf(const OverlayBase* overlay) const { return overlay == this->toolHandler; }
 
-void ShapeToolView::on(ShapeToolView::FlagDirtyRegionRequest, const Range& rg) { this->parent->flagDirtyRegion(rg); }
+void ShapeToolView::on(ShapeToolView::FlagDirtyRegionRequest, const Range& rg) {
+    maskWipeExtent = maskWipeExtent.unite(rg);
+    this->parent->flagDirtyRegion(rg);
+}
 
 void ShapeToolView::deleteOn(ShapeToolView::FinalizationRequest, const Range& rg) {
     this->parent->drawAndDeleteToolView(this, rg);

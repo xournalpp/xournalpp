@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <functional>
 #include <string>  // for string
 
 #include <gtk/gtk.h>  // for GtkWidget
@@ -38,20 +39,16 @@ public:
     void afterRun() override;
 
 public:
-    virtual bool showFilechooser();
-    std::string getFilterName() const;
+    virtual void showFileChooser(std::function<void()> onFileSelected, std::function<void()> onCancel);
 
 protected:
-    void initDialog();
-    virtual void addFilterToDialog() = 0;
-    void addFileFilterToDialog(const std::string& name, const std::string& pattern);
+    virtual void addFilterToDialog(GtkFileChooser* dialog) = 0;
+    static void addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const std::string& mimetype);
     bool checkOverwriteBackgroundPDF(fs::path const& file) const;
-    virtual bool testAndSetFilepath(fs::path file);
+    virtual bool testAndSetFilepath(const fs::path& file, const char* filterName = nullptr);
 
 private:
 protected:
-    GtkWidget* dialog = nullptr;
-
     fs::path filepath;
 
     /**
@@ -62,7 +59,8 @@ protected:
     class ExportType {
     public:
         std::string extension;
+        std::string mimeType;
 
-        ExportType(std::string ext): extension(ext) {}
+        ExportType(std::string ext, std::string mime): extension(std::move(ext)), mimeType(std::move(mime)) {}
     };
 };

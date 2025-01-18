@@ -17,7 +17,7 @@
 class ToolbarItem {
 public:
     ToolbarItem(std::string name);
-    ToolbarItem();
+    ToolbarItem() = default;
 
 public:
     std::string getName() const;

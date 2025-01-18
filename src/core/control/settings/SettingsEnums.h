@@ -72,9 +72,37 @@ enum StylusCursorType {
     STYLUS_CURSOR_ARROW = 3,
 };
 
+enum EraserVisibility {
+    ERASER_VISIBILITY_NEVER = 0,
+    ERASER_VISIBILITY_ALWAYS = 1,
+    ERASER_VISIBILITY_HOVER = 2,
+    ERASER_VISIBILITY_TOUCH = 3,
+};
+
 enum IconTheme {
     ICON_THEME_COLOR = 0,
     ICON_THEME_LUCIDE = 1,
+};
+
+enum ThemeVariant { THEME_VARIANT_USE_SYSTEM, THEME_VARIANT_FORCE_LIGHT, THEME_VARIANT_FORCE_DARK };
+
+/**
+ * The user-selectable Page Preview Decoration style
+ */
+enum class SidebarNumberingStyle {
+    /* No page numbers are displayed */
+    NONE = 0,
+    /* Page numbers are displayed below previews */
+    NUMBER_BELOW_PREVIEW = 1,
+    /* Page numbers are displayed in a circle in the lower right corner */
+    NUMBER_WITH_CIRCULAR_BACKGROUND = 2,
+    /* Page numbers are displayed in a square in the lower right corner */
+    NUMBER_WITH_SQUARE_BACKGROUND = 3,
+
+    /* MIN, MAX and Default values. Need to be updated when new style is added. */
+    MIN = SidebarNumberingStyle::NONE,
+    MAX = SidebarNumberingStyle::NUMBER_WITH_SQUARE_BACKGROUND,
+    DEFAULT = SidebarNumberingStyle::NUMBER_BELOW_PREVIEW
 };
 
 constexpr auto buttonToString(Button button) -> const char* {
@@ -113,12 +141,40 @@ constexpr auto stylusCursorTypeToString(StylusCursorType stylusCursorType) -> co
     }
 }
 
+constexpr auto eraserVisibilityToString(EraserVisibility eraserVisibility) -> const char* {
+    switch (eraserVisibility) {
+        case ERASER_VISIBILITY_NEVER:
+            return "never";
+        case ERASER_VISIBILITY_ALWAYS:
+            return "always";
+        case ERASER_VISIBILITY_HOVER:
+            return "hover";
+        case ERASER_VISIBILITY_TOUCH:
+            return "touch";
+        default:
+            return "unknown";
+    }
+}
+
 constexpr auto iconThemeToString(IconTheme iconTheme) -> const char* {
     switch (iconTheme) {
         case ICON_THEME_COLOR:
             return "iconsColor";
         case ICON_THEME_LUCIDE:
             return "iconsLucide";
+        default:
+            return "unknown";
+    }
+}
+
+constexpr auto themeVariantToString(ThemeVariant variant) -> const char* {
+    switch (variant) {
+        case THEME_VARIANT_USE_SYSTEM:
+            return "useSystem";
+        case THEME_VARIANT_FORCE_LIGHT:
+            return "forceLight";
+        case THEME_VARIANT_FORCE_DARK:
+            return "forceDark";
         default:
             return "unknown";
     }
@@ -138,5 +194,7 @@ constexpr auto emptyLastPageAppendToString(EmptyLastPageAppendType appendType) -
 }
 
 StylusCursorType stylusCursorTypeFromString(const std::string& stylusCursorTypeStr);
+EraserVisibility eraserVisibilityFromString(const std::string& eraserVisibilityStr);
 IconTheme iconThemeFromString(const std::string& iconThemeStr);
+ThemeVariant themeVariantFromString(const std::string& themeVariantStr);
 EmptyLastPageAppendType emptyLastPageAppendFromString(const std::string& str);

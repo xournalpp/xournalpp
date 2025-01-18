@@ -19,6 +19,10 @@
 #define _(msg) gettext(msg)
 #define C_(context, msg) g_dpgettext2(nullptr, context, msg)
 
+/// The string is not looked for by xgettext and should be added to the .po files another way (e.g. with N_ below)
+#define fetch_translation(msg) gettext(msg)
+#define fetch_translation_context(context, msg) g_dpgettext2(nullptr, context, msg)
+
 // Formatted Translation
 #define _F(msg) PlaceholderString(_(msg))
 #define C_F(context, msg) PlaceholderString(C_(context, msg))

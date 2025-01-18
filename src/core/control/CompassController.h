@@ -35,7 +35,7 @@ class Stroke;
 class CompassController: public GeometryToolController {
 public:
     CompassController(XojPageView* view, Compass* compass);
-    ~CompassController();
+    ~CompassController() override;
 
 public:
     GeometryToolType getType() const override;
@@ -47,7 +47,7 @@ public:
      * @param x the x-coordinate of the point (in document coordinates)
      * @param y the y-coordinate of the point (in document coordinates)
      */
-    utl::Point<double> posRelToSide(double x, double y) const;
+    xoj::util::Point<double> posRelToSide(double x, double y) const;
 
     /**
      * @brief checks whether a point with given coordinates lies in the geometry tool with an additional
@@ -62,14 +62,14 @@ public:
      * @brief the point (in document coordinates) for a given angle on the outline of the compass
      * @param a the angle with respect to the distinguished compass axis of the point
      */
-    utl::Point<double> getPointForAngle(double a) const;
+    xoj::util::Point<double> getPointForAngle(double a) const;
 
     /**
      * @brief the point (in document coordinates) for a given radius on the marked radius of the compass
      * @param r the x-coordinate with respect to a coordinate system, in which the positive x-axis
      * coincides with the marked radius and the origin lies in the center of the compass
      */
-    utl::Point<double> getPointForRadius(double r) const;
+    xoj::util::Point<double> getPointForRadius(double r) const;
 
     /**
      * @brief creates a stroke starting at the given angle of the outline of the compass

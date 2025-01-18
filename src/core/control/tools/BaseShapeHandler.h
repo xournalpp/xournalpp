@@ -15,9 +15,7 @@
 #include <utility>  // for pair
 #include <vector>   // for vector
 
-#include <cairo.h>    // for cairo_t
 #include <gdk/gdk.h>  // for GdkEventKey
-#include <glib.h>     // for guint32
 
 #include "model/PageRef.h"  // for PageRef
 #include "model/Point.h"    // for Point
@@ -34,6 +32,8 @@ class DispatchPool;
 }
 
 namespace xoj::view {
+class OverlayView;
+class Repaintable;
 class ShapeToolView;
 };
 
@@ -46,15 +46,15 @@ public:
 
     ~BaseShapeHandler() override;
 
-    // Legacy function, to be removed in #4159
-    void draw(cairo_t*) override {}
-
     void onSequenceCancelEvent() override;
     bool onMotionNotifyEvent(const PositionInputData& pos, double zoom) override;
     void onButtonReleaseEvent(const PositionInputData& pos, double zoom) override;
     void onButtonPressEvent(const PositionInputData& pos, double zoom) override;
     void onButtonDoublePressEvent(const PositionInputData& pos, double zoom) override;
-    bool onKeyEvent(GdkEventKey* event) override;
+    bool onKeyPressEvent(const KeyEvent& event) override;
+    bool onKeyReleaseEvent(const KeyEvent& event) override;
+
+    std::unique_ptr<xoj::view::OverlayView> createView(xoj::view::Repaintable* parent) const override;
 
     const std::shared_ptr<xoj::util::DispatchPool<xoj::view::ShapeToolView>>& getViewPool() const;
 
@@ -82,6 +82,8 @@ private:
      */
     void cancelStroke();
 
+    bool onKeyEvent(const KeyEvent& event, bool pressed);
+
 protected:
     /**
      * modifyModifiersByDrawDir
@@ -105,10 +107,6 @@ protected:
     bool modShift = false;
     bool modControl = false;
     SnapToGridInputHandler snappingHandler;
-
-    // to filter out short strokes (usually the user tapping on the page to select it)
-    guint32 startStrokeTime{};
-    static guint32 lastStrokeTime;  // persist across strokes - allow us to not ignore persistent dotting.
 
     Point currPoint;
     Point buttonDownPoint;  // used for tapSelect and filtering - never snapped to grid.

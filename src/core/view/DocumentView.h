@@ -15,6 +15,7 @@
 
 #include "model/PageRef.h"  // for PageRef
 #include "util/ElementRange.h"
+#include "view/background/BackgroundFlags.h"
 
 class PdfCache;
 
@@ -33,12 +34,10 @@ public:
      * @param page The page to draw
      * @param cr Draw to thgis context
      * @param dontRenderEditingStroke false to draw currently drawing stroke
-     * @param hidePdfBackground true to hide the PDF background
-     * @param hideImageBackground true to hide the PDF background
-     * @param hideRulingBacground true to hide the ruling background
+     * @param flags show/hide various background components
      */
-    void drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke, bool hidePdfBackground = false,
-                  bool hideImageBackground = false, bool hideRulingBackground = false);
+    void drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke,
+                  xoj::view::BackgroundFlags flags = xoj::view::BACKGROUND_SHOW_ALL);
 
     /**
      * Only draws the prescribed layers of the given page, regardless of the layer's current visibility.
@@ -46,13 +45,10 @@ public:
      * @param page The page to draw
      * @param cr Draw to this context
      * @param dontRenderEditingStroke false to draw currently drawing stroke
-     * @param hidePdfBackground true to hide the PDF background
-     * @param hideImageBackground true to hide the PDF background
-     * @param hideRulingBacground true to hide the ruling background
+     * @param flags show/hide various background components
      */
     void drawLayersOfPage(const LayerRangeVector& layerRange, PageRef page, cairo_t* cr, bool dontRenderEditingStroke,
-                          bool hidePdfBackground = false, bool hideImageBackground = false,
-                          bool hideRulingBackground = false);
+                          xoj::view::BackgroundFlags flags = xoj::view::BACKGROUND_SHOW_ALL);
 
     /**
      * Mark stroke with Audio

@@ -17,8 +17,6 @@
 #include <utility>  // for pair
 #include <vector>   // for vector
 
-#include <cairo.h>  // for cairo_t, cairo_surface_t
-
 #include "model/PathParameter.h"    // for PathParameter
 #include "model/Stroke.h"           // for Stroke (ptr only), IntersectionPa...
 #include "util/Interval.h"          // for Interval
@@ -26,6 +24,12 @@
 #include "util/UnionOfIntervals.h"  // for UnionOfIntervals
 
 #include "config-debug.h"  // for DEBUG_ERASABLE_STROKE_BOXES
+
+#ifdef DEBUG_ERASABLE_STROKE_BOXES
+#include <cairo.h>  // for cairo_t
+
+#include "view/Mask.h"
+#endif
 
 class Range;
 struct PaddedBox;
@@ -83,12 +87,16 @@ public:
      * @brief Get the bounding box of a subsection.
      * The bounding box is either pulled from cache or computed and added to cache
      * @return The bounding box.
-     * NB: The bounding boxes obtained here are imprecise: they do not take pressure into account but use the stroke's
-     * width instead.
      */
-    xoj::util::Rectangle<double> getSubSectionBoundingBox(const SubSection& section) const;
+    const Range& getSubSectionBoundingBox(const SubSection& section) const;
 
 protected:
+    /**
+     * @brief Compute the bounding box of a subsection.
+     * @return The bounding box.
+     */
+    Range computeSubSectionBoundingBox(const SubSection& section) const;
+
     /**
      * @brief Given a vector of subsections, compute (coarsely) where those subsections overlap.
      * @param subsections The input subsections
@@ -115,7 +123,7 @@ protected:
      * Usually pretty small (< 10): std::vector is faster than std::map
      * Protected by the associated mutex
      */
-    mutable std::vector<std::pair<SubSection, xoj::util::Rectangle<double>>> boundingBoxes;
+    mutable std::vector<std::pair<SubSection, Range>> boundingBoxes;
     mutable std::mutex boxesMutex;
 
     /**
@@ -131,8 +139,7 @@ protected:
 
 #ifdef DEBUG_ERASABLE_STROKE_BOXES
 public:
-    mutable cairo_surface_t* surfDebug = nullptr;
-    mutable cairo_t* crDebug = nullptr;
+    mutable xoj::view::Mask debugMask;
 
     static void paintDebugRect(const xoj::util::Rectangle<double>& rect, char color, cairo_t* cr);
 #endif

@@ -4,15 +4,17 @@
 #include <utility>  // for move
 #include <vector>   // for vector
 
-#include <cairo-svg.h>    // for cairo_svg_surface_c...
-#include <cairo.h>        // for cairo_create, cairo...
-#include <glib-object.h>  // for g_object_unref, g_s...
+#include <cairo-svg.h>      // for cairo_svg_surface_c...
+#include <cairo.h>          // for cairo_create, cairo...
+#include <gdk/gdkpixbuf.h>  // for gdk_pixbuf_get_from_surface
+#include <glib-object.h>    // for g_object_unref, g_s...
 
 #include "control/tools/EditSelection.h"          // for EditSelection
 #include "model/Element.h"                        // for Element, ELEMENT_TEXT
 #include "model/Text.h"                           // for Text
 #include "util/Util.h"                            // for DPI_NORMALIZATION_F...
-#include "util/pixbuf-utils.h"                    // for xoj_pixbuf_get_from...
+#include "util/gtk4_helper.h"                     // for gtk_widget_get_clipboard
+#include "util/safe_casts.h"                      // for as_unsigned
 #include "util/serializing/BinObjectEncoding.h"   // for BinObjectEncoding
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
@@ -27,9 +29,9 @@ ClipboardListener::~ClipboardListener() = default;
 
 ClipboardHandler::ClipboardHandler(ClipboardListener* listener, GtkWidget* widget) {
     this->listener = listener;
-    this->clipboard = gtk_widget_get_clipboard(widget, GDK_SELECTION_CLIPBOARD);
+    this->clipboard = gtk_widget_get_clipboard(widget);
 
-    this->hanlderId = g_signal_connect(this->clipboard, "owner-change", G_CALLBACK(&ownerChangedCallback), this);
+    this->handlerId = g_signal_connect(this->clipboard, "owner-change", G_CALLBACK(&ownerChangedCallback), this);
 
     this->listener->clipboardCutCopyEnabled(false);
 
@@ -37,7 +39,7 @@ ClipboardHandler::ClipboardHandler(ClipboardListener* listener, GtkWidget* widge
                                    reinterpret_cast<GtkClipboardReceivedFunc>(receivedClipboardContents), this);
 }
 
-ClipboardHandler::~ClipboardHandler() { g_signal_handler_disconnect(this->clipboard, this->hanlderId); }
+ClipboardHandler::~ClipboardHandler() { g_signal_handler_disconnect(this->clipboard, this->handlerId); }
 
 static GdkAtom atomXournal = gdk_atom_intern_static_string("application/xournal");
 
@@ -187,7 +189,7 @@ auto ClipboardHandler::copy() -> bool {
 
     cairo_destroy(crPng);
 
-    GdkPixbuf* image = xoj_pixbuf_get_from_surface(surfacePng, 0, 0, width, height);
+    GdkPixbuf* image = gdk_pixbuf_get_from_surface(surfacePng, 0, 0, width, height);
 
     cairo_surface_destroy(surfacePng);
 
@@ -281,7 +283,7 @@ void ClipboardHandler::pasteClipboardContents(GtkClipboard* clipboard, GtkSelect
     ObjectInputStream in;
 
     if (in.read(reinterpret_cast<const char*>(gtk_selection_data_get_data(selectionData)),
-                gtk_selection_data_get_length(selectionData))) {
+                as_unsigned(gtk_selection_data_get_length(selectionData)))) {
         handler->listener->clipboardPasteXournal(in);
     }
 }

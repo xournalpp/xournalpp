@@ -8,104 +8,89 @@
 #include "control/jobs/BlockingJob.h"   // for BlockingJob
 #include "control/settings/Settings.h"  // for Settings
 #include "gui/MainWindow.h"             // for MainWindow
+#include "gui/dialog/XojSaveDlg.h"
 #include "model/Document.h"             // for Document, Document::PDF
 #include "util/PathUtil.h"              // for toGFilename, clearExtensions
+#include "util/PopupWindowWrapper.h"    // for PopupWindowWrapper
 #include "util/XojMsgBox.h"             // for XojMsgBox
+#include "util/glib_casts.h"            // for wrap_for_g_callback_v
 #include "util/i18n.h"                  // for _, FS, _F
 
-using std::string;
-
-BaseExportJob::BaseExportJob(Control* control, const string& name): BlockingJob(control, name) {}
+BaseExportJob::BaseExportJob(Control* control, const std::string& name): BlockingJob(control, name) {}
 
 BaseExportJob::~BaseExportJob() = default;
 
-void BaseExportJob::initDialog() {
-    dialog = gtk_file_chooser_dialog_new(_("Export PDF"), control->getGtkWindow(), GTK_FILE_CHOOSER_ACTION_SAVE,
-                                         _("_Cancel"), GTK_RESPONSE_CANCEL, _("_Save"), GTK_RESPONSE_OK, nullptr);
-
-    gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
-}
-
-void BaseExportJob::addFileFilterToDialog(const string& name, const string& pattern) {
+void BaseExportJob::addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const std::string& mime) {
     GtkFileFilter* filter = gtk_file_filter_new();
     gtk_file_filter_set_name(filter, name.c_str());
-    gtk_file_filter_add_pattern(filter, pattern.c_str());
-    gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
+    gtk_file_filter_add_mime_type(filter, mime.c_str());
+    gtk_file_chooser_add_filter(dialog, filter);
 }
 
 auto BaseExportJob::checkOverwriteBackgroundPDF(fs::path const& file) const -> bool {
     auto backgroundPDF = control->getDocument()->getPdfFilepath();
-    // If there is no background, we can return
     try {
-        if (!fs::exists(backgroundPDF)) {
+        if (backgroundPDF.empty() || !fs::exists(backgroundPDF)) {
+            // If there is no background, we can return
             return true;
         }
-        // If the new file name (with the selected extension) is the previously selected pdf, warn the user
 
         if (fs::weakly_canonical(file) == fs::weakly_canonical(backgroundPDF)) {
-            string msg = _("Do not overwrite the background PDF! This will cause errors!");
+            // If the new file name (with the selected extension) is the previously selected pdf, warn the user
+            std::string msg = _("Do not overwrite the background PDF! This will cause errors!");
             XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
             return false;
         }
-    } catch (fs::filesystem_error const& fe) {
+    } catch (const fs::filesystem_error& fe) {
         g_warning("%s", fe.what());
-        auto msg = std::string(_("The check for overwriting the background failed with:\n")) + fe.what() +
-                   _("\n Do you want to continue?");
-        return XojMsgBox::replaceFileQuestion(control->getGtkWindow(), msg) == GTK_RESPONSE_OK;
+        auto msg = std::string(_("The check for overwriting the background failed with:\n")) + fe.what();
+        XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
+        return false;
     }
     return true;
 }
 
-auto BaseExportJob::getFilterName() const -> string {
-    GtkFileFilter* filter = gtk_file_chooser_get_filter(GTK_FILE_CHOOSER(dialog));
-    return gtk_file_filter_get_name(filter);
-}
-
-auto BaseExportJob::showFilechooser() -> bool {
-    initDialog();
-    addFilterToDialog();
-
+void BaseExportJob::showFileChooser(std::function<void()> onFileSelected, std::function<void()> onCancel) {
     Settings* settings = control->getSettings();
     Document* doc = control->getDocument();
     doc->lock();
-    fs::path folder = doc->createSaveFolder(settings->getLastSavePath());
-    fs::path name = doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName());
+    fs::path suggestedPath = doc->createSaveFolder(settings->getLastSavePath());
+    suggestedPath /=
+            doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName(), settings->getDefaultPdfExportName());
     doc->unlock();
 
-    gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFilename(folder).c_str());
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), Util::toGFilename(name).c_str());
+    auto pathValidation = [job = this](fs::path& p, const char* filterName) {
+        return job->testAndSetFilepath(p, filterName);
+    };
 
-    gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
-
-    while (true) {
-        if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
-            gtk_widget_destroy(dialog);
-            return false;
+    auto callback = [settings, onFileSelected = std::move(onFileSelected),
+                     onCancel = std::move(onCancel)](std::optional<fs::path> p) {
+        if (p && !p->empty()) {
+            settings->setLastSavePath(p->parent_path());
+            onFileSelected();
+        } else {
+            onCancel();
         }
-        auto file = Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
-        Util::clearExtensions(file);
-        // Since we add the extension after the OK button, we have to check manually on existing files
-        if (testAndSetFilepath(std::move(file)) && control->askToReplace(this->filepath)) {
-            break;
-        }
-    }
+    };
 
-    settings->setLastSavePath(this->filepath.parent_path());
+    auto popup = xoj::popup::PopupWindowWrapper<xoj::SaveExportDialog>(control->getSettings(), std::move(suggestedPath),
+                                                                       _("Export File"), _("Export"),
+                                                                       std::move(pathValidation), std::move(callback));
 
-    gtk_widget_destroy(dialog);
+    auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getWindow());
+    addFilterToDialog(fc);
 
-    return true;
+    popup.show(GTK_WINDOW(this->control->getWindow()->getWindow()));
 }
 
-auto BaseExportJob::testAndSetFilepath(fs::path file) -> bool {
+auto BaseExportJob::testAndSetFilepath(const fs::path& file, const char* /*filterName*/) -> bool {
     try {
-        if (fs::is_directory(file.parent_path())) {
-            this->filepath = std::move(file);
+        if (!file.empty() && fs::is_directory(file.parent_path())) {
+            this->filepath = file;
             return true;
         }
-    } catch (fs::filesystem_error const& e) {
-        string msg = FS(_F("Failed to resolve path with the following error:\n{1}") % e.what());
+    } catch (const fs::filesystem_error& e) {
+        std::string msg = FS(_F("Failed to resolve path with the following error:\n{1}") % e.what());
         XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
     }
     return false;

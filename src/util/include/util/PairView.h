@@ -12,6 +12,7 @@
 
 #include <array>
 #include <iterator>
+#include <type_traits>
 
 #include "TypeIfThenElse.h"
 

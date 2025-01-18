@@ -15,6 +15,8 @@
 #include <memory>   // for unique_ptr
 #include <vector>   // for vector
 
+#include "model/Element.h"
+
 #include "AudioElement.h"  // for AudioElement
 #include "LineStyle.h"     // for LineStyle
 #include "Point.h"         // for Point
@@ -64,8 +66,8 @@ public:
     ~Stroke() override;
 
 public:
-    Stroke* cloneStroke() const;
-    Element* clone() const override;
+    auto cloneStroke() const -> std::unique_ptr<Stroke>;
+    auto clone() const -> ElementPtr override;
 
     /**
      * @brief Create a partial clone whose points are those of parameters between lowerBound and upperBound
@@ -108,13 +110,10 @@ public:
     void setFill(int fill);
 
     void addPoint(const Point& p);
-    void setLastPoint(double x, double y);
-    void setFirstPoint(double x, double y);
-    void setLastPoint(const Point& p);
-    int getPointCount() const;
+    size_t getPointCount() const;
     void freeUnusedPointItems();
     std::vector<Point> const& getPointVector() const;
-    Point getPoint(int index) const;
+    Point getPoint(size_t index) const;
     Point getPoint(PathParameter parameter) const;
     const Point* getPoints() const;
 
@@ -132,7 +131,6 @@ private:
     void setPointVectorInternal(const Range* const snappingBox);
 
 public:
-    void deletePoint(int index);
     void deletePointsFrom(size_t index);
 
     void setToolType(StrokeTool type);
@@ -166,6 +164,11 @@ public:
     void setSecondToLastPressure(double pressure);
     void clearPressure();
     void scalePressure(double factor);
+
+    /**
+     * @brief Update the stroke's bounding box using the second-to-last point's pressure value and the last two points.
+     */
+    void updateBoundsLastTwoPressures();
 
     bool hasPressure() const;
     double getAvgPressure() const;

@@ -14,9 +14,6 @@ void LayerCtrlListener::registerListener(LayerController* handler) {
 void LayerCtrlListener::unregisterListener() {
     if (this->handler) {
         this->handler->removeListener(this);
+        this->handler = nullptr;
     }
 }
-
-void LayerCtrlListener::rebuildLayerMenu() {}
-
-void LayerCtrlListener::layerVisibilityChanged() {}

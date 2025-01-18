@@ -1,5 +1,6 @@
 #include "TexImage.h"
 
+#include <memory>
 #include <utility>  // for move
 
 #include <poppler-document.h>  // for poppler_document_ge...
@@ -7,6 +8,7 @@
 
 #include "model/Element.h"                        // for Element, ELEMENT_TE...
 #include "util/Rectangle.h"                       // for Rectangle
+#include "util/raii/GObjectSPtr.h"                // for GObjectSPtr
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
@@ -22,14 +24,12 @@ void TexImage::freeImageAndPdf() {
         this->image = nullptr;
     }
 
-    if (this->pdf) {
-        g_object_unref(this->pdf);
-        this->pdf = nullptr;
-    }
+    this->pdf.reset();
 }
 
-auto TexImage::clone() const -> Element* {
-    auto* img = new TexImage();
+auto TexImage::cloneTexImage() const -> std::unique_ptr<TexImage> {
+
+    auto img = std::make_unique<TexImage>();
     img->x = this->x;
     img->y = this->y;
     img->setColor(this->getColor());
@@ -41,7 +41,6 @@ auto TexImage::clone() const -> Element* {
 
     // Clone has a copy of our PDF.
     img->pdf = this->pdf;
-    g_object_ref(this->pdf);
 
     // Load a copy of our data (must be called after
     // giving the clone a copy of our PDF -- it may change
@@ -50,6 +49,8 @@ auto TexImage::clone() const -> Element* {
 
     return img;
 }
+
+auto TexImage::clone() const -> ElementPtr { return cloneTexImage(); }
 
 void TexImage::setWidth(double width) {
     this->width = width;
@@ -66,7 +67,7 @@ auto TexImage::cairoReadFunction(TexImage* image, unsigned char* data, unsigned 
         if (image->read >= image->binaryData.length()) {
             return CAIRO_STATUS_READ_ERROR;
         }
-        data[i] = image->binaryData[image->read];
+        data[i] = static_cast<unsigned char>(image->binaryData[image->read]);
     }
 
     return CAIRO_STATUS_SUCCESS;
@@ -91,14 +92,14 @@ auto TexImage::loadData(std::string&& bytes, GError** err) -> bool {
     const std::string type = binaryData.substr(1, 3);
     if (type == "PDF") {
         // Note: binaryData must not be modified while pdf is live.
-        this->pdf = poppler_document_new_from_data(this->binaryData.data(), this->binaryData.size(), nullptr, err);
-        if (!pdf || poppler_document_get_n_pages(this->pdf) < 1) {
+        this->pdf.reset(poppler_document_new_from_data(this->binaryData.data(), this->binaryData.size(), nullptr, err),
+                        xoj::util::adopt);
+        if (!pdf.get() || poppler_document_get_n_pages(this->pdf.get()) < 1) {
             return false;
         }
-        if (!this->width && !this->height) {
-            PopplerPage* page = poppler_document_get_page(this->pdf, 0);
-            poppler_page_get_size(page, &this->width, &this->height);
-            g_object_unref(page);
+        if (std::abs(this->width * this->height) <= std::numeric_limits<double>::epsilon()) {
+            xoj::util::GObjectSPtr<PopplerPage> page(poppler_document_get_page(this->pdf.get(), 0), xoj::util::adopt);
+            poppler_page_get_size(page.get(), &this->width, &this->height);
         }
     } else if (type == "PNG") {
         this->image = cairo_image_surface_create_from_png_stream(
@@ -112,7 +113,7 @@ auto TexImage::loadData(std::string&& bytes, GError** err) -> bool {
 
 auto TexImage::getImage() const -> cairo_surface_t* { return this->image; }
 
-auto TexImage::getPdf() const -> PopplerDocument* { return this->pdf; }
+auto TexImage::getPdf() const -> PopplerDocument* { return this->pdf.get(); }
 
 void TexImage::scale(double x0, double y0, double fx, double fy, double rotation,
                      bool) {  // line width scaling option is not used
@@ -138,7 +139,7 @@ void TexImage::serialize(ObjectOutputStream& out) const {
     out.writeDouble(this->height);
     out.writeString(this->text);
 
-    out.writeData(this->binaryData.c_str(), this->binaryData.length(), 1);
+    out.writeString(this->binaryData);
 
     out.endObject();
 }
@@ -154,11 +155,8 @@ void TexImage::readSerialized(ObjectInputStream& in) {
 
     freeImageAndPdf();
 
-    char* data = nullptr;
-    int len = 0;
-    in.readData(reinterpret_cast<void**>(&data), &len);
-
-    this->loadData(std::string(data, len), nullptr);
+    std::string data = in.readString();
+    this->loadData(std::move(data), nullptr);
 
     in.endObject();
     this->calcSize();

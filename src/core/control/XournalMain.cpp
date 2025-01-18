@@ -2,6 +2,7 @@
 
 #include <algorithm>  // for copy, sort, max
 #include <array>      // for array
+#include <chrono>     // for time_point, duration, hours...
 #include <clocale>    // for setlocale, LC_NUMERIC
 #include <cstdio>     // for printf
 #include <cstdlib>    // for exit, size_t
@@ -10,6 +11,7 @@
 #include <locale>     // for locale
 #include <memory>     // for unique_ptr, allocator
 #include <optional>   // for optional, nullopt
+#include <sstream>    // for stringstream
 #include <stdexcept>  // for runtime_error
 #include <string>     // for string, basic_string
 #include <vector>     // for vector
@@ -17,7 +19,6 @@
 #include <gio/gio.h>      // for GApplication, G_APPLICATION
 #include <glib-object.h>  // for G_CALLBACK, g_signal_con...
 #include <glib.h>         // for GOptionEntry, gchar, G_O...
-#include <gtk/gtk.h>      // for gtk_dialog_add_button
 #include <libintl.h>      // for bindtextdomain, textdomain
 
 #include "control/RecentManager.h"           // for RecentManager
@@ -27,6 +28,7 @@
 #include "control/settings/Settings.h"       // for Settings
 #include "control/settings/SettingsEnums.h"  // for ICON_THEME_COLOR, ICON_T...
 #include "control/xojfile/LoadHandler.h"     // for LoadHandler
+#include "control/xojfile/SaveHandler.h"     // for SaveHandler
 #include "gui/GladeSearchpath.h"             // for GladeSearchpath
 #include "gui/MainWindow.h"                  // for MainWindow
 #include "gui/XournalView.h"                 // for XournalView
@@ -49,7 +51,8 @@
 
 namespace {
 
-constexpr auto APP_FLAGS = GApplicationFlags(G_APPLICATION_SEND_ENVIRONMENT | G_APPLICATION_NON_UNIQUE);
+constexpr auto APP_FLAGS =
+        GApplicationFlags(G_APPLICATION_SEND_ENVIRONMENT | G_APPLICATION_NON_UNIQUE | G_APPLICATION_HANDLES_OPEN);
 
 /// Configuration migration status.
 enum class MigrateStatus {
@@ -80,36 +83,11 @@ void initCAndCoutLocales() {
     std::cout.imbue(std::locale());
 }
 
-void initLocalisation() {
-#ifdef ENABLE_NLS
-    fs::path localeDir = Util::getGettextFilepath(Util::getLocalePath().u8string().c_str());
-    bindtextdomain(GETTEXT_PACKAGE, localeDir.u8string().c_str());
-    textdomain(GETTEXT_PACKAGE);
-
-#ifdef _WIN32
-    bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
-#endif
-
-#endif  // ENABLE_NLS
-
-    // Not working on GNU g++(mingww) forWindows! Only working on Linux/macOS and with msvc
-    try {
-        std::locale::global(std::locale(""));  // "" - system default locale
-    } catch (std::runtime_error& e) {
-        g_warning("XournalMain: System default locale could not be set.\n - Caused by: %s\n - Note that it is not "
-                  "supported to set the locale using mingw-w64 on windows.\n - This could be solved by compiling "
-                  "xournalpp with msvc",
-                  e.what());
-    }
-
-    initCAndCoutLocales();
-}
-
 auto migrateSettings() -> MigrateResult {
-    fs::path newConfigPath = Util::getConfigFolder();
+    const fs::path newConfigPath = Util::getConfigFolder();
 
     if (!fs::exists(newConfigPath)) {
-        std::array oldPaths = {
+        const std::array oldPaths = {
                 Util::getConfigFolder().parent_path() /= "com.github.xournalpp.xournalpp",
                 Util::getConfigFolder().parent_path() /= "com.github.xournalpp.xournalpp.exe",
                 fs::u8path(g_get_home_dir()) /= ".xournalpp",
@@ -126,30 +104,53 @@ auto migrateSettings() -> MigrateResult {
                 constexpr auto msg = "Due to a recent update, Xournal++ has changed where its configuration files are "
                                      "stored.\nThey have been automatically copied from\n\t{1}\nto\n\t{2}";
                 return {MigrateStatus::Success, FS(_F(msg) % oldPath.u8string() % newConfigPath.u8string())};
-            } catch (fs::filesystem_error const& except) {
+            } catch (const fs::filesystem_error& e) {
                 constexpr auto msg =
                         "Due to a recent update, Xournal++ has changed where its configuration files are "
                         "stored.\nHowever, when attempting to copy\n\t{1}\nto\n\t{2}\nmigration failed:\n{3}";
-                g_message("Migration failed: %s", except.what());
-                return {MigrateStatus::Failure,
-                        FS(_F(msg) % oldPath.u8string() % newConfigPath.u8string() % except.what())};
+                g_message("Migration failed: %s", e.what());
+                return {MigrateStatus::Failure, FS(_F(msg) % oldPath.u8string() % newConfigPath.u8string() % e.what())};
             }
         }
     }
     return {MigrateStatus::NotNeeded, ""};
 }
 
-void checkForErrorlog() {
-    fs::path errorDir = Util::getCacheSubfolder(ERRORLOG_DIR);
-    if (!fs::exists(errorDir)) {
-        return;
+static void deleteFile(const fs::path& file) {
+    std::error_code error;
+    if (!fs::remove(file, error)) {
+        std::stringstream msg;
+        msg << FS(_F("Failed to delete file: {1}") % file.u8string()) << std::endl;
+        msg << error << std::endl << error.message() << std::endl;
+        msg << FS(_F("Please delete the file manually"));
+        XojMsgBox::showErrorToUser(nullptr, msg.str());
     }
+}
 
+void checkForErrorlog() {
     std::vector<fs::path> errorList;
-    for (auto const& f: fs::directory_iterator(errorDir)) {
-        if (f.is_regular_file() && f.path().stem() == "errorlog") {
-            errorList.emplace_back(f);
+
+    try {
+        const fs::path errorDir = Util::getCacheSubfolder(ERRORLOG_DIR);
+        if (!fs::exists(errorDir)) {
+            return;
         }
+
+        // Todo(cpp20): replace std::chrono::hours(168) with std::chrono::weeks(1)
+        const auto oldestModificationDate = fs::file_time_type::clock::now() - std::chrono::hours(168);
+        for (auto const& f: fs::directory_iterator(errorDir)) {
+            if (f.is_regular_file() && f.path().filename().string().substr(0, 8) == "errorlog") {
+                if (f.last_write_time() > oldestModificationDate) {
+                    errorList.emplace_back(f);
+                }
+            }
+        }
+    } catch (fs::filesystem_error& e) {
+        g_warning("Filesystem error while looking for crash logs:\n"
+                  "   %s\n"
+                  "   %s\n",
+                  e.path1().u8string().c_str(), e.what());
+        return;
     }
 
     if (errorList.empty()) {
@@ -157,50 +158,34 @@ void checkForErrorlog() {
     }
 
     std::sort(errorList.begin(), errorList.end());
-    std::string msg =
-            errorList.size() == 1 ?
-                    _("There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed.") :
-                    _("There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed.");
-    msg += "\n";
-    msg += FS(_F("You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker.") %
-              GIT_ORIGIN_OWNER % GIT_BRANCH);
+    std::string msg = errorList.size() == 1 ? _("There is a recent errorlogfile from Xournal++. Please file a "
+                                                "Bugreport, so the bug may be fixed.") :
+                                              _("There are recent errorlogfiles from Xournal++. Please file a "
+                                                "Bugreport, so the bug may be fixed.");
     msg += "\n";
     msg += FS(_F("The most recent log file name: {1}") % errorList[0].string());
+    msg += "\n\n";
+    msg += FS(_F("To prevent this popup from reappearing, simply delete the errorlogfiles."));
 
-    GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
-                                               msg.c_str());
-
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Send Bugreport"), 1);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile"), 2);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile directory"), 3);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete Logfile"), 4);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 5);
-
-    int res = gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
-
-    auto const& errorlogPath = Util::getCacheSubfolder(ERRORLOG_DIR) / errorList[0];
-    if (res == 1)  // Send Bugreport
-    {
-        Util::openFileWithDefaultApplication(PROJECT_BUGREPORT);
-        Util::openFileWithDefaultApplication(errorlogPath);
-    } else if (res == 2)  // Open Logfile
-    {
-        Util::openFileWithDefaultApplication(errorlogPath);
-    } else if (res == 3)  // Open Logfile directory
-    {
-        Util::openFileWithFilebrowser(errorlogPath.parent_path());
-    } else if (res == 4)  // Delete Logfile
-    {
-        if (!fs::exists(errorlogPath)) {
-            msg = FS(_F("Errorlog cannot be deleted. You have to do it manually.\nLogfile: {1}") %
-                     errorlogPath.u8string());
-            XojMsgBox::showErrorToUser(nullptr, msg);
-        }
-    } else if (res == 5)  // Cancel
-    {
-        // Nothing to do
-    }
+    enum Responses { FILE_REPORT = 1, OPEN_FILE, OPEN_DIR, DELETE_FILE, CANCEL };
+    std::vector<XojMsgBox::Button> buttons = {{_("File Bug Report"), FILE_REPORT},
+                                              {_("Open Logfile"), OPEN_FILE},
+                                              {_("Open Logfile directory"), OPEN_DIR},
+                                              {_("Delete Logfile"), DELETE_FILE},
+                                              {_("Cancel"), CANCEL}};
+    XojMsgBox::askQuestion(nullptr, _("Crash log"), msg, buttons,
+                           [errorlogPath = fs::path(errorList.front())](int response) {
+                               if (response == FILE_REPORT) {
+                                   Util::openFileWithDefaultApplication(PROJECT_BUGREPORT);
+                                   Util::openFileWithDefaultApplication(errorlogPath);
+                               } else if (response == OPEN_FILE) {
+                                   Util::openFileWithDefaultApplication(errorlogPath);
+                               } else if (response == OPEN_DIR) {
+                                   Util::openFileWithDefaultApplication(errorlogPath.parent_path());
+                               } else if (response == DELETE_FILE) {
+                                   deleteFile(errorlogPath);
+                               }
+                           });
 }
 
 void checkForEmergencySave(Control* control) {
@@ -210,33 +195,39 @@ void checkForEmergencySave(Control* control) {
         return;
     }
 
-    std::string msg = _("Xournal++ crashed last time. Would you like to restore the last edited file?");
+    const std::string msg = _("Xournal++ crashed last time. Would you like to restore the last edited file?");
 
-    GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
-                                               msg.c_str());
+    enum { DELETE_FILE = 1, RESTORE_FILE };
+    XojMsgBox::askQuestion(
+            nullptr, _("Recovery file detected"), msg,
+            {{_("Delete file"), DELETE_FILE}, {_("Restore file"), RESTORE_FILE}},
+            [file = std::move(file), ctrl = control](int response) mutable {
+                if (response == DELETE_FILE) {
+                    deleteFile(file);
+                } else if (response == RESTORE_FILE) {
+                    ctrl->openFileWithoutSavingTheCurrentDocument(file, false, -1, [ctrl, file](bool) {
+                        ctrl->getDocument()->setFilepath("");
 
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete file"), 1);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Restore file"), 2);
-
-    int res = gtk_dialog_run(GTK_DIALOG(dialog));
-
-    if (res == 1)  // Delete file
-    {
-        fs::remove(file);
-    } else if (res == 2)  // Open File
-    {
-        if (control->openFile(file, -1, true)) {
-            control->getDocument()->setFilepath("");
-
-            // Make sure the document is changed, there is a question to ask for save
-            control->getUndoRedoHandler()->addUndoAction(std::make_unique<EmergencySaveRestore>());
-            control->updateWindowTitle();
-            fs::remove(file);
-        }
-    }
-
-    gtk_widget_destroy(dialog);
+                        // Todo Make sure the document is changed + ask for saving
+                        ctrl->getUndoRedoHandler()->addUndoAction(std::make_unique<EmergencySaveRestore>());
+                        deleteFile(file);
+                    });
+                }
+            });
 }
+
+namespace {
+void exitOnMissingPdfFileName(const LoadHandler& loader) {
+    if (!loader.getMissingPdfFilename().empty()) {
+        auto msg =
+                FS(_F("The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.") %
+                   loader.getMissingPdfFilename());
+        std::cerr << msg << std::endl;
+        exit(-2);
+    }
+}
+}  // namespace
+
 
 /**
  * @brief Export the input file as a bunch of image files (one per page)
@@ -258,13 +249,41 @@ void checkForEmergencySave(Control* control) {
 auto exportImg(const char* input, const char* output, const char* range, const char* layerRange, int pngDpi,
                int pngWidth, int pngHeight, ExportBackgroundType exportBackground) -> int {
     LoadHandler loader;
-
-    Document* doc = loader.loadDocument(input);
+    auto doc = loader.loadDocument(input);
     if (doc == nullptr) {
         g_error("%s", loader.getLastError().c_str());
     }
 
-    return ExportHelper::exportImg(doc, output, range, layerRange, pngDpi, pngWidth, pngHeight, exportBackground);
+    exitOnMissingPdfFileName(loader);
+
+    return ExportHelper::exportImg(doc.get(), output, range, layerRange, pngDpi, pngWidth, pngHeight, exportBackground);
+}
+
+/**
+ * @brief Save a xopp-file with given pdf-background
+ *
+ * @param input Path to the input .pdf file
+ * @param output Path to the output .xopp file
+ * @return int 0 on success
+ */
+auto saveDoc(const char* input, const char* output) -> int {
+    // LoadHandler loader;
+    SaveHandler saver;
+    char* inputFilename = (char*)input;
+    const fs::path p = Util::fromGFilename(inputFilename, false);
+    auto handler = std::make_unique<DocumentHandler>();
+    auto newDoc = std::make_unique<Document>(handler.get());
+    const bool res = newDoc->readPdf(p, /*initPages=*/true, false);
+    if (!res) {
+        g_error("%s", FC(_F("Error: {1}") % newDoc->getLastErrorMsg().c_str()));
+    }
+    saver.prepareSave(newDoc.get());
+    saver.saveTo(output);
+
+    if (!saver.getErrorMessage().empty()) {
+        g_error("%s", FC(_F("Error: {1}") % saver.getErrorMessage()));
+    }
+    return 0;
 }
 
 /**
@@ -284,12 +303,14 @@ auto exportImg(const char* input, const char* output, const char* range, const c
 auto exportPdf(const char* input, const char* output, const char* range, const char* layerRange,
                ExportBackgroundType exportBackground, bool progressiveMode) -> int {
     LoadHandler loader;
-
-    Document* doc = loader.loadDocument(input);
+    auto doc = loader.loadDocument(input);
     if (doc == nullptr) {
         g_error("%s", loader.getLastError().c_str());
     }
-    return ExportHelper::exportPdf(doc, output, range, layerRange, exportBackground, progressiveMode);
+
+    exitOnMissingPdfFileName(loader);
+
+    return ExportHelper::exportPdf(doc.get(), output, range, layerRange, exportBackground, progressiveMode);
 }
 
 struct XournalMainPrivate {
@@ -303,11 +324,13 @@ struct XournalMainPrivate {
         g_strfreev(optFilename);
         g_free(pdfFilename);
         g_free(imgFilename);
+        g_free(docFilename);
     }
 
     gchar** optFilename{};
     gchar* pdfFilename{};
     gchar* imgFilename{};
+    gchar* docFilename{};
     gboolean showVersion = false;
     int openAtPageNumber = 0;  // when no --page is used, the document opens at the page specified in the metadata file
     gchar* exportRange{};
@@ -318,6 +341,8 @@ struct XournalMainPrivate {
     gboolean exportNoBackground = false;
     gboolean exportNoRuling = false;
     gboolean progressiveMode = false;
+    gboolean disableAudio = false;
+    gboolean attachMode = false;
     std::unique_ptr<GladeSearchpath> gladePath;
     std::unique_ptr<Control> control;
     std::unique_ptr<MainWindow> win;
@@ -328,7 +353,7 @@ using XMPtr = XournalMainPrivate*;
 void ensure_input_model_compatibility() {
     const char* imModule = g_getenv("GTK_IM_MODULE");
     if (imModule != nullptr) {
-        std::string imModuleString{imModule};
+        const std::string imModuleString{imModule};
         if (imModuleString == "xim") {
             g_warning("Unsupported input method: %s", imModule);
         }
@@ -393,11 +418,9 @@ void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFi
 
     if (!failIfNotFound) {
         msg += _("\n\nWill now attempt to run without this file.");
-    }
-    XojMsgBox::showErrorToUser(nullptr, msg);
-
-    if (failIfNotFound) {
-        exit(12);
+        XojMsgBox::showErrorToUser(nullptr, msg);
+    } else {
+        XojMsgBox::showErrorAndQuit(msg, 12);
     }
 }
 
@@ -409,55 +432,42 @@ void on_command_line(GApplication*, GApplicationCommandLine*, XMPtr) {
     // Todo: implement this, if someone files the bug report
 }
 
-void on_open_files(GApplication*, gpointer, gint, gchar*, XMPtr) {
-    g_message("XournalMain::on_open_files: This should never happen, please file a bugreport with a detailed "
-              "description how to reproduce this message");
-    // Todo: implement this, if someone files the bug report
+void on_open_files(GApplication* application, GFile** files, gint numFiles, gchar* hint, XMPtr app_data) {
+    if (numFiles != 1) {
+        const std::string msg = _("Sorry, Xournal++ can only open one file at once.\n"
+                                  "Others are ignored.");
+        XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
+    }
+
+    const fs::path p = Util::fromGFilename(g_file_get_path(files[0]), false);
+
+    try {
+        if (fs::exists(p)) {
+            app_data->control->openFile(p);
+        } else {
+            const std::string msg = FS(_F("File {1} does not exist.") % p.u8string());
+            XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
+        }
+    } catch (const fs::filesystem_error& e) {
+        const std::string msg = FS(_F("Filesystem error: {1}\n"
+                                      "Sorry, Xournal++ cannot open the file: {2}\n"
+                                      "Consider copying the file to a local directory.") %
+                                   e.what() % p.u8string());
+        XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
+    }
+    gtk_window_present(GTK_WINDOW(app_data->win->getWindow()));
 }
 
 void on_startup(GApplication* application, XMPtr app_data) {
-    initLocalisation();
+    XournalMain::initLocalisation();
     ensure_input_model_compatibility();
-    MigrateResult migrateResult = migrateSettings();
+    const MigrateResult migrateResult = migrateSettings();
 
     app_data->gladePath = std::make_unique<GladeSearchpath>();
     initResourcePath(app_data->gladePath.get(), "ui/about.glade");
     initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
 
-    app_data->control = std::make_unique<Control>(application, app_data->gladePath.get());
-
-    // Set up icons
-    {
-        const auto uiPath = app_data->gladePath->getFirstSearchPath();
-        const auto lightColorIcons = (uiPath / "iconsColor-light").u8string();
-        const auto darkColorIcons = (uiPath / "iconsColor-dark").u8string();
-        const auto lightLucideIcons = (uiPath / "iconsLucide-light").u8string();
-        const auto darkLucideIcons = (uiPath / "iconsLucide-dark").u8string();
-
-        // icon load order from lowest priority to highest priority
-        std::vector<std::string> iconLoadOrder = {};
-        const auto chosenTheme = app_data->control->getSettings()->getIconTheme();
-        switch (chosenTheme) {
-            case ICON_THEME_COLOR:
-                iconLoadOrder = {darkLucideIcons, lightLucideIcons, darkColorIcons, lightColorIcons};
-                break;
-            case ICON_THEME_LUCIDE:
-                iconLoadOrder = {darkColorIcons, lightColorIcons, darkLucideIcons, lightLucideIcons};
-                break;
-            default:
-                g_message("Unknown icon theme!");
-        }
-        const auto darkTheme = app_data->control->getSettings()->isDarkTheme();
-        if (darkTheme) {
-            for (size_t i = 0; 2 * i + 1 < iconLoadOrder.size(); ++i) {
-                std::swap(iconLoadOrder[2 * i], iconLoadOrder[2 * i + 1]);
-            }
-        }
-
-        for (auto& p: iconLoadOrder) {
-            gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), p.c_str());
-        }
-    }
+    app_data->control = std::make_unique<Control>(application, app_data->gladePath.get(), app_data->disableAudio);
 
     auto& globalLatexTemplatePath = app_data->control->getSettings()->latexSettings.globalTemplatePath;
     if (globalLatexTemplatePath.empty()) {
@@ -466,62 +476,51 @@ void on_startup(GApplication* application, XMPtr app_data) {
         app_data->control->getSettings()->save();
     }
 
-    app_data->win = std::make_unique<MainWindow>(app_data->gladePath.get(), app_data->control.get());
+    app_data->win = std::make_unique<MainWindow>(app_data->gladePath.get(), app_data->control.get(),
+                                                 GTK_APPLICATION(application));
     app_data->control->initWindow(app_data->win.get());
+    app_data->win->populate(app_data->gladePath.get());
 
     if (migrateResult.status != MigrateStatus::NotNeeded) {
         Util::execInUiThread(
                 [=]() { XojMsgBox::showErrorToUser(app_data->control->getGtkWindow(), migrateResult.message); });
     }
 
+    gtk_application_set_menubar(GTK_APPLICATION(application), app_data->win->getMenuModel());
+    // Do we want stuff in gtk_application_set_app_menu?
+
     app_data->win->show(nullptr);
 
-    bool opened = false;
+    fs::path p;
     if (app_data->optFilename) {
         if (g_strv_length(app_data->optFilename) != 1) {
-            std::string msg = _("Sorry, Xournal++ can only open one file at once.\n"
-                                "Others are ignored.");
-            XojMsgBox::showErrorToUser(static_cast<GtkWindow*>(*app_data->win), msg);
+            const std::string msg = _("Sorry, Xournal++ can only open one file at once.\n"
+                                      "Others are ignored.");
+            XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
         }
 
-        fs::path p = Util::fromGFilename(app_data->optFilename[0], false);
-
-        try {
-            if (fs::exists(p)) {
-                opened = app_data->control->openFile(p,
-                                                     app_data->openAtPageNumber - 1);  // First page for user is page 1
-            } else {
-                opened = app_data->control->newFile("", p);
-            }
-        } catch (fs::filesystem_error const& e) {
-            std::string msg = FS(_F("Sorry, Xournal++ cannot open remote files at the moment.\n"
-                                    "You have to copy the file to a local directory.") %
-                                 p.u8string() % e.what());
-            XojMsgBox::showErrorToUser(static_cast<GtkWindow*>(*app_data->win), msg);
-            opened = app_data->control->newFile("", p);
-        }
+        p = Util::fromGFilename(app_data->optFilename[0], false);
     } else if (app_data->control->getSettings()->isAutoloadMostRecent()) {
-        auto most_recent = app_data->control->getRecentManager()->getMostRecent();
-        if (most_recent != nullptr) {
-            if (auto p = Util::fromUri(gtk_recent_info_get_uri(most_recent))) {
-                opened = app_data->control->openFile(*p);
+        auto most_recent = RecentManager::getMostRecent();
+        if (most_recent) {
+            if (auto opt = Util::fromUri(gtk_recent_info_get_uri(most_recent.get()))) {
+                p = opt.value();
             }
         }
     }
+    app_data->control->openFileWithoutSavingTheCurrentDocument(
+            std::move(p), app_data->attachMode, app_data->openAtPageNumber - 1,
+            [ctrl = app_data->control.get(), app = GTK_APPLICATION(application)](bool) {
+                ctrl->getScheduler()->start();
 
-    app_data->control->getScheduler()->start();
+                checkForErrorlog();
+                checkForEmergencySave(ctrl);
 
-    if (!opened) {
-        app_data->control->newFile();
-    }
-
-    checkForErrorlog();
-    checkForEmergencySave(app_data->control.get());
-
-    // There is a timing issue with the layout
-    // This fixes it, see #405
-    Util::execInUiThread([=]() { app_data->control->getWindow()->getXournal()->layoutPages(); });
-    gtk_application_add_window(GTK_APPLICATION(application), GTK_WINDOW(app_data->win->getWindow()));
+                // There is a timing issue with the layout
+                // This fixes it, see #405
+                Util::execInUiThread([=]() { ctrl->getWindow()->getXournal()->layoutPages(); });
+                gtk_application_add_window(app, ctrl->getGtkWindow());
+            });
 }
 
 auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gint {
@@ -540,9 +539,8 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
 
     auto exec_guarded = [&](auto&& fun, auto&& s) {
         try {
-            printf("trying\n");
             return fun();
-        } catch (std::exception const& e) {
+        } catch (const std::exception& e) {
             std::cerr << "Error: " << e.what() << std::endl;
             std::cerr << "In: " << s << std::endl;
             print_version();
@@ -584,6 +582,9 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
                 },
                 "exportImg");
     }
+    if (app_data->docFilename && app_data->optFilename && *app_data->optFilename) {
+        return exec_guarded([&] { return saveDoc(*app_data->optFilename, app_data->docFilename); }, "saveDocument");
+    }
     return -1;
 }
 
@@ -595,10 +596,41 @@ void on_shutdown(GApplication*, XMPtr app_data) {
 
 }  // namespace
 
+
+void XournalMain::initLocalisation() {
+#ifdef ENABLE_NLS
+    fs::path localeDir = Util::getGettextFilepath(Util::getLocalePath());
+
+#ifdef _WIN32
+    wbindtextdomain(GETTEXT_PACKAGE, localeDir.wstring().c_str());
+#else
+    bindtextdomain(GETTEXT_PACKAGE, localeDir.u8string().c_str());
+#endif
+
+    textdomain(GETTEXT_PACKAGE);
+    bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+
+#endif  // ENABLE_NLS
+
+    // Not working on GNU g++(mingww) forWindows! Only working on Linux/macOS and with msvc
+    try {
+        std::locale::global(std::locale(""));  // "" - system default locale
+    } catch (const std::runtime_error& e) {
+        g_warning("XournalMain: System default locale could not be set.\n - Caused by: %s\n - Note that it is not "
+                  "supported to set the locale using mingw-w64 on windows.\n - This could be solved by compiling "
+                  "xournalpp with msvc",
+                  e.what());
+    }
+
+    initCAndCoutLocales();
+}
+
 auto XournalMain::run(int argc, char** argv) -> int {
 
     XournalMainPrivate app_data;
     GtkApplication* app = gtk_application_new("com.github.xournalpp.xournalpp", APP_FLAGS);
+    g_object_set(G_OBJECT(app), "register-session", true, nullptr);  // Needed for opening files on MacOS from Finder
+    g_set_prgname("com.github.xournalpp.xournalpp");
     g_signal_connect(app, "activate", G_CALLBACK(&on_activate), &app_data);
     g_signal_connect(app, "command-line", G_CALLBACK(&on_command_line), &app_data);
     g_signal_connect(app, "open", G_CALLBACK(&on_open_files), &app_data);
@@ -612,6 +644,14 @@ auto XournalMain::run(int argc, char** argv) -> int {
                                        "<input>", nullptr},
                           GOptionEntry{"version", 0, 0, G_OPTION_ARG_NONE, &app_data.showVersion,
                                        _("Get version of xournalpp"), nullptr},
+                          GOptionEntry{"disable-audio", 0, 0, G_OPTION_ARG_NONE, &app_data.disableAudio,
+                                       _("Disable audio for this session"), nullptr},
+                          GOptionEntry{"attach-mode", 0, 0, G_OPTION_ARG_NONE, &app_data.attachMode,
+                                       _("Open PDF in attach mode\n"
+                                         "                                 Ignored if no PDF file is specified."),
+                                       nullptr},
+                          GOptionEntry{"save", 's', 0, G_OPTION_ARG_FILENAME, &app_data.docFilename,
+                                       _("Save xopp-file with the background PDF specified as FILE"), "XOPPFILE"},
                           GOptionEntry{nullptr}};  // Must be terminated by a nullptr. See gtk doc
     g_application_add_main_option_entries(G_APPLICATION(app), options.data());
 
@@ -647,7 +687,7 @@ auto XournalMain::run(int argc, char** argv) -> int {
                            "                                 No effect without -p/--create-pdf or -i/--create-img"),
                          "RANGE"},
             GOptionEntry{"export-layer-range", 0, 0, G_OPTION_ARG_STRING, &app_data.exportLayerRange,
-                         _("On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
+                         _("Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
                            "                                 No effect without -p/--create-pdf or -i/--create-img"),
                          "RANGE"},
             GOptionEntry{"export-png-dpi", 0, 0, G_OPTION_ARG_INT, &app_data.exportPngDpi,

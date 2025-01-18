@@ -12,13 +12,17 @@
 #pragma once
 
 #include <cstddef>  // for size_t
-#include <list>     // for list, list<>::size_type
+#include <deque>    // for deque
 #include <mutex>    // for mutex
 
 #include <cairo.h>  // for cairo_t, cairo_surface_t
 
 #include "pdf/base/XojPdfDocument.h"  // for XojPdfDocument
 #include "pdf/base/XojPdfPage.h"      // for XojPdfPageSPtr
+
+namespace xoj::view {
+class Mask;
+};
 
 class PdfCacheEntry;
 class Settings;
@@ -41,13 +45,8 @@ public:
      * @param pageWidth/pageHeight Xournal++ page dimensions
      */
     void render(cairo_t* cr, size_t pdfPageNo, double zoom, double pageWidth, double pageHeight);
-    /**
-     * @brief Empty the cache
-     */
-    void clearCache();
 
 public:
-
     /**
      * @brief Set the maximum tolerable zoom difference, as a percentage.
      *
@@ -70,19 +69,19 @@ private:
     /**
      * @brief Look up for a cache entry for the page with number pdfPgeNo in the PDF.
      */
-    PdfCacheEntry* lookup(size_t pdfPageNo) const;
+    const PdfCacheEntry* lookup(size_t pdfPageNo) const;
     /**
      * @brief Push a cache entry
      */
-    PdfCacheEntry* cache(XojPdfPageSPtr popplerPage, cairo_surface_t* img, double zoom);
+    const PdfCacheEntry* cache(XojPdfPageSPtr popplerPage, xoj::view::Mask&& buffer);
 
 private:
     XojPdfDocument pdfDocument;
 
     std::mutex renderMutex;
 
-    std::list<PdfCacheEntry*> data;
-    std::list<PdfCacheEntry*>::size_type size = 0;
+    std::deque<std::unique_ptr<PdfCacheEntry>> data;
+    decltype(data)::size_type maxSize = 0;
 
     double zoomRefreshThreshold;
 };

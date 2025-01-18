@@ -1,6 +1,395 @@
 # Changelog
 
-## 1.1.3+dev (Unreleased)
+## 1.2.5+dev (Unreleased)
+
+## 1.2.5
+
+Bugfixes from various community contributors.
+
+* Fixed a regression causing "Out of memory" error when exporting some PDF files on Windows (#6124)
+* Fixed a regression causing a crash when exporting on Linux (#6084)
+* Allow undo/redo for changes of page size (#6096)
+* Add Ctrl+= as a shortcut for zomming in (#6076)
+* Fixed a crash when importing some SVG images (#6087)
+* Make the geometry tools appear in the middle of the view (#6012)
+* Fixed labels in plugin manager (#5992)
+* Fixed missing translations in Windows releases (#5973)
+* Fixed many issues with Windows installer (#5988)
+* Updated translations
+
+## 1.2.4
+
+Bugfixes from various community contributors.
+
+* Fixed various dark/light theme inconsistencies (#5583)
+* Improved edge panning for large selections (#5578)
+* Made the "do you want to replace" dialog to stay on top (#5550, #3253)
+* Made the OK button default in the PDF Export settings dialog (#5558, #5557) 
+* Allow missing terminating newlines and empty lines in .gpl files (#5728, #5724) 
+* Fixed thumbnailer previews not always showing up (#5551, #5534)
+* Fixed potential issues with sliders and LaTeX preview (#5864)
+* Fixed an issue with the list of recent files (#5894)
+* Fixed crashes related to undo/redo with page transitioning elements (#5936, #5931 #5910, #1232)
+* Fixed a potential crash when entering the presentation mode (#5922,  #2943)
+* Fixed a crash in the crash handler (#5622, #5618)
+* Fixed a drawing related crash (#5662, #5659)
+* Fixed some memory leaks (#5597)
+* Windows: Fixed conversion problems with paths (#5640, #5638, #5606)
+* MacOS: Fixed titlebar color (#5651)
+* MacOS: Added support for opening xopp-files from Finder (#5950)
+* Appimage: Added universal input method data (#5603)
+* Added Ubuntu 24.04 and MacOS ARM builds (#5898, #5783)
+* Fixed inconsistencies in tool names (#5961)
+* Updated translations
+
+## 1.2.3
+
+Bugfixes from various community contributors.
+
+* Fixed spline live segment display (#5240, #5237)
+* Allowed pulling spline tangents outside of page (#5298, #5277)
+* Fixed redundant negative pressure values (#5241, #5238)
+* Fixed asymmetrical fill of arrow shapes (#5258)
+* Fixed zoom jumping and zoom steps (#5108, #4678)
+* Fixed touchpad+trackpad combo (#5288, #5287)
+* Fixed long text being truncated in LaTeX tool (#5264, #3293)
+* Fixed background color in the LaTeX editor (#5307)
+* Fixed window maximize state saving (#5302, #5245)
+* Fixed project homepage url not being written into xopp-file (#5322)
+* Improved backtrace that now prints source files and line numbers (#5312)
+* Made .deb packages being built using the RelWithDebInfo build type (#5344)
+* Fixed a bugs with empty repaint regions during PDF text selection, text search
+  and while using the vertical tool (#5348, #5343, #5393)
+* Fixed stroke replacement preventing a crash while the app is hanging (#5366, #5362)
+* Fixed wrongly sized loading pages (#5399, #5102)
+* Improved error checks for saving operations avoiding corrupt autosave files (#5361, #4934)
+* Fixed OK button sensitivity in the PDF page selecction dialog (#5441)
+* Added undo handler for missing PDF replacement (#5443, #5435)
+* Fixed a filesystem error on MacOS when a document is autosaved the first time (#5485)
+* Fixed the PDF filter in the Export as PDF dialog (#5490)
+* Fixed toolbar management segfault and out of date menu (#5510)
+* Fixed a bug with corrupt PDF exports when exporting only part of a document with an 
+  outline (#5512)
+* Enabled font hint metrics in PDF export to improve text alignment (#5454, #5405)
+* Added IME support to AppImage (#5520, #5493)
+
+## 1.2.2
+
+Bugfixes from various community contributors.
+
+* Fix undefined behaviour due to signal callbacks wrong type (#5057)
+* Fix reference handling of sidebar widgets, fixing crashes and warning (#5083,
+  #5074, #4026)
+* Default build type is now "RelWithDebInfo" (#5118)
+* Fix error message when trying to open an autosave file (#5140)
+* Fix empty toolbars being shown (#5160, #5051)
+* Add a device id check for input sequences, so devices don't interfere with one
+  another anymore (#5170, #5116, #5087)
+* Fix a bunch of memory leaks (#5164, #5216)
+* Properly read PDF files as binary, fixing some reading issues (#5174, #4740)
+* Remove unsafe symbols from document name generation (#5144, #5123)
+* Fix crash when a modification happens outside of the cached pages (#5144, 
+  #5178, #5162, #5046, #5126)
+* Fix audio output settings being off by 1 (#5205)
+* Clarify CrashLog message: deleting the crashlog will stop the message from popping up (#5214)
+* Fix a crash when pressing both mouse buttons at once (#5210, #5149)
+
+## 1.2.1
+
+Bugfixes from various community contributors.
+
+* Added a default toolbar, so that the app does not start without toolbar on
+  new installations (#4997, #5011, #5015).
+* Added exception handling to color palettes loading to prevent a possible
+  crash (#4994, #5016).
+* Added an age filter on crash logs reported at startup. Now only crash logs
+  no older than one week will be considered relevant (#5022).
+* Fixed opening crash logs and opening the directory containing the crash logs.
+  This affected the Windows build and (only for directories) the flatpak and
+  snap packages on Linux (#4976).
+* Changed the link address when sending a bugreport about a recent crash log
+  such that the appropriate template from the xournalpp/xournalpp repository
+  is used (#5032, #4910, #5084).
+* Added a missing double arrow preference to the button configuration dialog,
+  therewith also fixing selections below "Draw Arrow" (#4989).
+* Fixed occurring negative pressure values that previously resulted in a crash
+  due to a failing assertion (#5025, #5028).
+* Added options to the command line and preferences to disable the audio system
+  used for audio recording (#3905, #3531, #5020, #5068).
+* The official release builds are now built in "RelWithDeb" mode as intended
+  before. In particular they will not crash on failing asserts any more (#5042).
+* Linux: The official release builds are now compiled with the gtksourceview
+  styling for the LaTeX tool (#4996).
+* Updated the package description with the new features from v1.2.0 (#5056).
+
+## 1.2.0
+
+This is a new major version of Xournal++ with many new features, improvements,
+and bug fixes thanks to contributions from the community.
+
+* **Breaking Changes**:
+  * Linux: support for Ubuntu 18.04 has been dropped. Dependency versions are
+    now pinned to those used in Ubuntu 20.04.
+  * Linux: added an optional dependency on gtksourceview4
+* Added PDF text selection tools (#1745, #3326, #4362)
+  * Two new tools have been introduced, "Select Linear PDF Text" and "Select PDF
+    Text In Rectangle", used for selecting text on background PDFs. The tools
+    support "linear" and "area" selection modes. Double/triple clicking enables
+    line and paragraph selection, respectively.
+  * The toolbox has buttons that allow a user to: 1) copy the selected text,
+    2) generate a highlight stroke over the selected text; 3) generate a stroke
+    to strike-through the text; 4) generate a stroke to underline the text;
+    and 5) toggle between linear and rectangle selection.
+  * Clicking on a link with one of the text selection tools will open a popup
+    that can be used to navigate to the corresponding PDF page (if it exists) or
+    display a clickable URL (#1027, #4412, #4673).
+  * Pressing `Ctrl+C` will copy the selected text to the clipboard (#4436,
+    #4784).
+* Added Setsquare Tool and Compass Tool
+  * The Setsquare Tool toggles a virtual setsquare, which can be used for
+    measurements and as a guide for drawing straight lines (#3082, #3882,
+    #4211, #4532, #4422).
+  * The Compass Tool toggles a virtual compass, which can be used for drawing
+    circles, arcs, and radial line segments (#4443, #4422).
+  * Mouse, stylus, and touchscreen input can be used to interact with the
+    Setsquare and Compass Tools.
+  * See the website for more information.
+* Colors
+  * Added new custom color palette support (#2379). A custom color palette can
+    be created in `.gpl` format in the Xournal++ config folder. See the website
+    guide for information on how to create a `.gpl` file.
+  * Changed the color picker so that it opens with the currently selected color
+    by default (#4569, #4575).
+  * Fixed the color picker dialog appearing on a different screen in
+    multi-screen setups (#4519, #4543).
+* Image Tool
+  * Added support for loading any image format supported by GDK Pixbuf (#3782).
+    For backwards compatibility, images are still saved in PNG format.
+  * Fixed some bugs with copying and pasting images (#4466).
+  * Fixed image orientation data not being handled properly (#4577, #4583).
+* Text Tool
+  * Added functionality to automatically select the currently editing text if
+    switching to a selection tool (#1169, #4315).
+  * Fixed some bugs when handling IM input, improving compatibility for some
+    IMEs such as `gcin` (#3841, #4937).
+  * Fixed text input remaining active after changing pages (#4027).
+  * Fixed bold toggle also removing italics (#4417).
+  * Fixed pasted text not using the color of the text tool (#4466).
+  * Fixed an issue where `Ctrl+Alt+Left` (or right) would cause the layer to
+    change instead of selecting the previous (or next) word (#977, #4797).
+* Hand Tool
+  * Changed selections to hide the controls when the Hand Tool is selected (
+    #4419).
+  * Added capability to interact with links on the background PDF (#1027,
+    #4412, #4673)
+* Stroke and eraser tools
+  * Added a system cursor option (#3540).
+  * Added stroke cap styles to the file format (#3326).
+  * Added a "double ended arrow" stroke style (#2362, #3946).
+  * Added a Preferences setting for setting the minimum size of the shape
+    recognizer (#4283).
+  * Added a toolbar item for changing fill opacity (#4263).
+  * Added each line style as a new, individual toolbar item that can be added
+    in toolbar customization (#4565).
+  * Added a Preferences setting to set the visibility of a stylus-activated
+    eraser (#4665).
+  * Improved minor graphical aspects of the fill opacity dialog (#3515).
+  * Improved performance by rendering strokes with integer coordinates (#4080).
+  * Improved the arrow stroke style by scaling the arrow head by line length
+    for small arrows (#4055).
+  * Rewrote the stroke rendering code to fix bugs and improve performance
+    (#3480, #3580, #4304).
+  * Rewrote the Eraser tool to be faster and more reliable (#3532, #997, #949,
+    #3537).
+  * Rewrote the ellipse stroke type to reduce the number of points while
+    (roughly) maintaining the same look (#4137, #4320).
+  * Fixed a bug where stroke stabilization could produce NaN pressure values,
+    causing them to become invisible when exported to PDF (#4381, #4401).
+  * Fixed issues involving documents that contain strokes with negative or NaN
+    pressure values (#4354, #4401). When such documents are now loaded, points
+    with NaN pressure values will automatically be removed.
+  * Fixed a bug in the stroke stabilizer where the stroke pressure value may
+    sometimes not be set on the last point (#4676).
+* Toolbars
+  * Added new "Export as PDF" toolbar item (#3508). It and the "Print" toolbar
+    item have also been added to the default layouts.
+  * Added "Spacer" and "Separator" toolbar items for creating extra space in
+    toolbars (#4644, #4674).
+  * Fixed a crash that occurs if the application is closed while toolbar
+    customization is open (#4559).
+  * Updated the default `toolbar.ini` (#4670).
+* Layers
+  * Added a context menu for the layer sidebar preview (#3204).
+  * Added a feature for merging layers down. This can be accessed via the
+    `Journal`menu or the new layer preview context menu (#2784, #3204).
+  * Added `Edit > Move Layer Up/Down` menu items for moving layers up/down
+    (#4352).
+  * Added a CLI flag to choose which layer(s) to export (#4143).
+  * Added two new tools, "Select Multi-Layer Rectangle" and "Select Multi-Layer
+    Region", which are like the existing rectangle/region select tools but can
+    be used to select objects on a different layer than the active one (#4413).
+* Plugins
+  * Added new plugin APIs, including export options, getting page info, adding
+    strokes, adding images etc. (#3677, #3566, #3688, #4359, #4397, #4858).
+  * Added a new plugin "Export" used to export the current document to PDF, SVG,
+    or PNG format with `<Shift><Alt>p/s/n`, respectively (#3566).
+  * Added a new plugin "HighlightPosition" used to toggle the cursor highlight
+    (#3023).
+  * Added support for additional plugin loading paths (#1155, #2422). Notably,
+    plugins will also be searched for in the `plugins` folder contained in the
+    user's config directory (see the "File Locations" section of the
+    website/guide for where to find this folder).
+  * Added an `ACTION_TOGGLE_PAIRS_PARITY` used for programmatically changing
+    between single and paired page mode. This is currently only accessible
+    through the plugin API (#4424).
+  * Added a new feature to `app.registerUI` to register custom toolbar items
+    (#2431, #2936, #4669, #4671).
+  * QuickScreenshot plugin: added `maim` and `xclip` program support (#3718).
+  * Improved error handling so that the plugin API returns actual Lua errors
+    (#4652).
+  * Fixed several issues with plugin-disabled builds (#4726, #4728, #4746).
+* Audio recordings
+  * All elements without audio now become faded when the Play Object tool is
+    used (#2874).
+  * Windows: fixed issues with saving/loading audio files with unicode
+    characters in their names (#3783).
+* Vertical Spacing Tool
+  * Added capability to move elements above the line by holding Ctrl (#3334).
+  * Improved performance (#3334, #4306).
+* TeX Tool
+  * Reimplemented the LaTeX editor using the gtksourceview library (#2809),
+    enabling multiline input, syntax highlighting, undo/redo, word wrap, and a
+    resizable code editor.
+  * Added a tab for viewing the output of the TeX command (#2809).
+  * Added Preferences settings for changing the syntax highlighting theme, word
+    wrap settings, font, default formula, and other settings (#2809, #4264).
+  * Changed the TeX background color to become dark when a light font color is
+    selected (#2809).
+  * Fixed a bug where editing existing TeX will cause its position to change
+    (#4415, #4430).
+  * Fixed a memory leak (#4088)
+* PDF support
+  * Added "Xournal++" as the "Creator" in exported PDF metadata (#3523).
+  * Added button to propose replacement background PDF if it is missing and a
+    file with a similar name is found in the same folder as the `.xopp` file
+    (#4165)
+  * Added a "default PDF export name" setting that is used when exporting PDFs
+    to support wildcards/placeholders for name, date, and time (#2897, #4599,
+    #4854).
+  * Minor performance improvements (#4004, #4704).
+  * Fixed a crash that occurs when exporting to PDF from the command line, but
+    the background PDF does not exist (#4584, #4681).
+* Floating toolbox
+  * Added capability to open the floating toolbox with a secondary button
+    (#3270).
+* View modes (#4514)
+  * The individual default, fullscreen, and presentation modes have been
+    reorganized into a "View Modes" setting in Preferences.
+  * The "Hide menu bar" and "Hide sidebar" settings now work correctly
+    with these view modes (#2773).
+  * Changed the `F5` shortcut so that it can also be used to leave presentation
+    mode. Removed the `ESC` shortcut to leave presentation mode, which
+    conflicts with cancelling a selection (#4480).
+* Optimizations
+  * Refactored the rendering system, leading to performance improvements, bug
+    fixes, and code that is easier to extend with new features (#1795, #4051,
+    #3480, #3503, #3969, #3985, #3990, #4304, #4137, #4417, #4158, #4159,
+    #4687, #4442, #4271).
+  * Improved rendering performance by eliminating unnecessary redrawing
+    (#4502, #4493, #4659, #4611, #4637, #4672).
+  * macOS: significantly improved performance due to GTK version upgrade to
+    3.24.38.
+* Packaging
+  * Added build flags to force or disable X11 linking (#4146).
+  * AppImage: added support for AppImageUpdate (#1915, #4265, #4781, #4793).
+  * Windows: the installer will now record the installed version in the
+    Windows registry (#4548).
+    macOS: added a script to build a .dmg for Xournal++ (#4371).
+* Miscellaneous
+  * Improved file size of documents with large amounts of stroke data by up to
+    15% (#4065).
+  * Improved the page range validation UX in the export menu (#3390).
+  * Added a `Journal > Duplicate Page` menu item (#3831, #4313).
+  * Added code to detect and fix documents with pages that have the corrupt page
+    type "Copy" (#4139).
+  * Added built-in support for the existing Lucide Light and Lucide Dark icon
+    themes (#4039, #4063).
+  * Added an action for toggling the cursor highlight (#3023).
+  * Added a Preferences setting for choosing whether to show the file path in
+    the titlebar (#3921, #3934).
+  * Added an `Edit > Select All` menu option for selecting all elements on the
+    current layer (#1917, #4024).
+  * Added margin width and line spacing parameters to be used for
+    `pagetemplates.ini`, allowing the vertical margin lines to be moved and the
+    line spacing to change (#1713, #3542, #3969).
+  * Added a keyboard shortcut `Ctrl+Shift+Z` for redo (#1323, #4292).
+  * Added a menu item to the bottom of the recent files list for clearing the
+    recent files list (#4410, #4440).
+  * Added keybindings for switching to the first 10 colors in the palette to
+    keys 0-9 (#2007, #4416).
+  * Added vim keybindings `Shift+j` and `Shift+k` for page scrolling (#4573).
+  * Refactored key event handling such that key-press and key-release events
+    are first propogated to the focus window and up the focus chain container,
+    thus allowing for plugins using keyboard shortcuts that would otherwise
+    conflict with the text tool (#4797, #4811).
+  * Added a new setting for automatically appending a new page to the document
+    when scrolling to the last page (#1343, #4311).
+  * Added page numbers to the sidebar page previews, which can be configured
+    in the Preferences (#4624, #4693).
+  * Changed version numbers in About window to be selectable text (#4152).
+  * Changed the About dialog to hide the Git commit info if it is not found
+    (#4537).
+  * Changed the autosave directory from the user config folder to the user cache
+    folder (#3587).
+  * Changed the "Apply to current page" button so that it is disabled in the
+    page type dropdown menu when "Copy current page" is selected (#4142, #4255).
+    This helps to ensure that the corrupt "Copy" page background type cannot
+    actually be produced in a document (see #4127).
+  * Fixed the cursor highlight clipping when the sum of the radius and border
+    width exceed 60 pixels (#3023).
+  * Fixed the cursor highlight not showing with "None" cursor type (#3023).
+  * Fixed the cursor not immediately changing when activating the vertical space
+    tool (#4851, #4864).
+  * Fixed a scrolling bug when undoing page insertion (#2757, #4875).
+  * Linux: fixed Hand Recognition not working on X11 (#4043).
+  * Fixed a bug where floating point values would not be parsed correctly in
+    `pagetemplates.ini` (#3655, #3676).
+  * Fixed several memory leaks and other issues (#3748, #4554, #4679, #4680).
+  * Fixed a bug where grid backgrounds with borders would not be rendered
+    correctly (#3969).
+  * Fixed the line style toolbar item not being updated correctly when selecting
+    existing stroke elements (#3793, #4089).
+  * Fixed a crash that occurs when using Annotate PDF to open a non-PDF file
+    (#3368, #4526).
+  * Fixed potential race conditions (#4533).
+  * Fixed a potential crash that can occur when adding a color selection
+    toolbar item to a side toolbar (#4505, #4535).
+  * Fixed an issue where failing to create a backup during saving would silently
+    abort saving instead of informing the user (#4675, #4715).
+  * Fixed a bug where undo/redo would not deselect the current selection (#4609,
+    #4725).
+  * Added undo/redo for selections moved via keyboard (#4835, #4842).
+  * Fixed a bug with changing linestyle via toolbar or plugins not working
+    properly (#4831, #4827, #4823).
+  * Fixed a "File Bug Report" dialog that has never been shown but should now be
+    shown when an error log is detected on startup (#4808).
+  * Improved the CrashLog by adding the Xournal++ and Gtk versions as well as
+    every log message issued via g_message, g_critical, g_debug and so on (#4848).
+  * Fixed a mismatch between the app id the window sets and the name of the desktop
+    file, leading to the Wayland icon being shown instead of the Xournal++ icon.
+    The program name and StarupWMClass were therefore changed from xournalpp to
+    com.github.xournalpp.xournalpp (#4870, #4887).
+  * Replaced deprecated icons, which are missing on newer versions of GNOME as
+    well as Windows and macOS builds (#3945, #4544).
+  * macOS: fixed clipboard image paste not working (#3455, #4489).
+  * macOS: fixed audio recording by compiling libsndfile with external libraries
+    (#4656, #4371).
+  * Removed old MIME types from XDG desktop metadata files (#4130).
+  * Fixed header includes for compiling with GCC 13 (#4912).
+  * Define MAX_PATH if undefined to address Hurd build failure (#4962).
+  * Other minor code cleanup and improvements.
+  * Initial preparatory work to migrate to GTK4 (#4441, #4448).
+  * Updated translations.
 
 ## 1.1.3
 

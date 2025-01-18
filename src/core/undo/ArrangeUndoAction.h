@@ -17,6 +17,7 @@
 #include <vector>   // for vector
 
 #include "model/Element.h"  // for Element::Index, Element
+#include "model/ElementInsertionPosition.h"  // for InsertionOrder
 #include "model/PageRef.h"  // for PageRef
 
 #include "UndoAction.h"  // for UndoAction
@@ -26,9 +27,8 @@ class Layer;
 
 class ArrangeUndoAction: public UndoAction {
 public:
-    using InsertOrder = std::deque<std::pair<Element*, Element::Index>>;
-
-    ArrangeUndoAction(const PageRef& page, Layer* layer, std::string desc, InsertOrder oldOrder, InsertOrder newOrder);
+    ArrangeUndoAction(const PageRef& page, Layer* layer, std::string desc, InsertionOrderRef oldOrder,
+                      InsertionOrderRef newOrder);
     ~ArrangeUndoAction() override;
 
 public:
@@ -37,16 +37,15 @@ public:
     std::string getText() override;
 
 private:
-    void applyRearrange();
+    void applyRearrange(Control* control);
 
 private:
-    std::vector<Element*> elements;
     Layer* layer;
 
     /** Description of the ordering action. */
     std::string description;
 
     // These track the ordering of elements
-    InsertOrder oldOrder;
-    InsertOrder newOrder;
+    InsertionOrderRef oldOrder;
+    InsertionOrderRef newOrder;
 };

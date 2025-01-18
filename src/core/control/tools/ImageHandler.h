@@ -11,21 +11,42 @@
 
 #pragma once
 
-#include <gio/gio.h>  // for GFile
+#include <functional>
+#include <memory>
+
+#include "model/PageRef.h"
+#include "util/Rectangle.h"
+
+#include "filesystem.h"
 
 class Control;
-class XojPageView;
+class Image;
 
-class ImageHandler {
+class ImageHandler final {
 public:
-    ImageHandler(Control* control, XojPageView* view);
-    virtual ~ImageHandler();
+    ImageHandler(Control* control);
+    ~ImageHandler();
 
 public:
-    bool insertImage(double x, double y);
-    bool insertImage(GFile* file, double x, double y);
+    /**
+     * inserts an image scaled to the given size
+     */
+    void insertImageWithSize(PageRef page, const xoj::util::Rectangle<double>& space);
+
+    /// Creates the image from the given file
+    [[nodiscard]] static auto createImageFromFile(const fs::path& path) -> std::unique_ptr<Image>;
+
+    static bool addImageToDocument(std::unique_ptr<Image> img, PageRef page, Control* ctrl, bool addUndoAction);
+
+    /**
+     * scale down (only if necessary) the image so that it then fits on the page
+     * applies (potentially adjusted) width/height to the image
+     */
+    static void automaticScaling(Image& img, PageRef page);
+
+    /// lets the user choose an image file, creates the image and calls the callback
+    void chooseAndCreateImage(std::function<void(std::unique_ptr<Image>)> callback);
 
 private:
     Control* control;
-    XojPageView* view;
 };

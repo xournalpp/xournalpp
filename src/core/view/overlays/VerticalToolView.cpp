@@ -63,9 +63,9 @@ void VerticalToolView::on(VerticalToolView::SetVerticalShiftRequest, double shif
     // Padding for taking into account the drawing aid line width
     const double padding = 0.5 * BORDER_WIDTH_IN_PIXELS / this->parent->getZoom();
     if (side == VerticalToolHandler::Side::Above) {
-        rg.maxY = std::min(std::max(shift, this->lastShift) + padding, rg.maxY);
+        rg.maxY = std::clamp(std::max(shift, this->lastShift) + padding, rg.minY, rg.maxY);
     } else {
-        rg.minY = std::max(std::min(shift, this->lastShift) - padding, rg.minY);
+        rg.minY = std::clamp(std::min(shift, this->lastShift) - padding, rg.minY, rg.maxY);
     }
     this->parent->flagDirtyRegion(rg);
     this->lastShift = shift;
@@ -77,7 +77,9 @@ void VerticalToolView::on(VerticalToolView::SwitchDirectionRequest) {
 }
 
 void VerticalToolView::deleteOn(VerticalToolView::FinalizationRequest) {
-    auto [minY, maxY] = std::minmax(toolHandler->getStartY(), toolHandler->getEndY());
+    double startY = toolHandler->getStartY();
+    double endY = toolHandler->getEndY();
+    auto [minY, maxY] = std::minmax(startY, endY);
 
     // Padding for taking into account the drawing aid line width
     const double padding = 0.5 * BORDER_WIDTH_IN_PIXELS / this->parent->getZoom();
@@ -107,7 +109,6 @@ Mask VerticalToolView::createMask(cairo_t* tgtcr) const {
      *                      (the entire page is not an option for infinite pages...)
      */
     const double zoom = this->parent->getZoom();
-    const int dpiScaling = this->parent->getDPIScaling();
     Range range = this->parent->getVisiblePart();
 
     if (side == VerticalToolHandler::Side::Above) {
@@ -116,7 +117,7 @@ Mask VerticalToolView::createMask(cairo_t* tgtcr) const {
         range.translate(0, startY - range.minY);
     }
 
-    return Mask(cairo_get_target(tgtcr), range, zoom, dpiScaling, CAIRO_CONTENT_COLOR_ALPHA);
+    return Mask(cairo_get_target(tgtcr), range, zoom, CAIRO_CONTENT_COLOR_ALPHA);
 }
 
 void VerticalToolView::zoomChanged() {

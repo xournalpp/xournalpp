@@ -7,6 +7,7 @@
 
 #include <glib-object.h>
 
+#include "gui/dialog/XojOpenDlg.h"  // for showOpenImageDialog
 #include "gui/dialog/backgroundSelect/BackgroundSelectDialogBase.h"
 #include "gui/dialog/backgroundSelect/BaseElementView.h"
 #include "model/BackgroundImage.h"
@@ -14,24 +15,53 @@
 #include "model/PageRef.h"
 #include "model/PageType.h"
 #include "model/XojPage.h"
+#include "util/PathUtil.h"
+#include "util/Util.h"  // for npos
+#include "util/XojMsgBox.h"
+#include "util/i18n.h"
 
 #include "ImageElementView.h"
 
 class GladeSearchpath;
 class Settings;
 
-
-ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings):
-        BackgroundSelectDialogBase(gladeSearchPath, doc, settings, "images.glade", "ImagesDialog") {
+ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings,
+                           std::function<void(BackgroundImage)> callback):
+        BackgroundSelectDialogBase(gladeSearchPath, doc, settings, _("Select Image")), callback(std::move(callback)) {
     loadImagesFromPages();
 
-    g_signal_connect(get("buttonOk"), "clicked", G_CALLBACK(okButtonCallback), this);
-    g_signal_connect(get("btFilechooser"), "clicked", G_CALLBACK(filechooserButtonCallback), this);
+    GtkWidget* lbl = gtk_label_new(_("<b>... or select already used Image:</b>"));
+    gtk_label_set_use_markup(GTK_LABEL(lbl), true);
+    gtk_box_prepend(vbox, lbl);
+
+    fileChooserButton = GTK_BUTTON(gtk_button_new_with_label(_("Load file")));
+    gtk_box_prepend(vbox, GTK_WIDGET(fileChooserButton));
+
+#if GTK_MAJOR_VERSION == 3
+    gtk_widget_show_all(GTK_WIDGET(vbox));
+#endif
+
+    g_signal_connect(fileChooserButton, "clicked", G_CALLBACK(filechooserButtonCallback), this);
+
+    g_signal_connect_swapped(
+            okButton, "clicked", G_CALLBACK(+[](ImagesDialog* self) {
+                if (self->selected < self->entries.size()) {
+                    auto img = (static_cast<ImageElementView*>(self->entries[self->selected].get()))->backgroundImage;
+                    if (!img.isEmpty()) {
+                        self->callback(std::move(img));
+                    }
+                }
+                gtk_window_close(self->window.get());
+            }),
+            this);
+
+    populate();
 }
 
 ImagesDialog::~ImagesDialog() = default;
 
 void ImagesDialog::loadImagesFromPages() {
+    doc->lock();
     for (size_t i = 0; i < doc->getPageCount(); i++) {
         PageRef p = doc->getPage(i);
 
@@ -48,15 +78,16 @@ void ImagesDialog::loadImagesFromPages() {
             continue;
         }
 
-        auto* iv = new ImageElementView(this->elements.size(), this);
+        auto* iv = new ImageElementView(this->entries.size(), this);
         iv->backgroundImage = p->getBackgroundImage();
-        this->elements.push_back(iv);
+        this->entries.emplace_back(iv);
     }
+    doc->unlock();
 }
 
 auto ImagesDialog::isImageAlreadyInTheList(BackgroundImage& image) -> bool {
-    for (BaseElementView* v: this->elements) {
-        auto* iv = dynamic_cast<ImageElementView*>(v);
+    for (const auto& v: this->entries) {
+        auto* iv = static_cast<ImageElementView*>(v.get());
         if (iv->backgroundImage == image) {
             return true;
         }
@@ -65,33 +96,25 @@ auto ImagesDialog::isImageAlreadyInTheList(BackgroundImage& image) -> bool {
     return false;
 }
 
-void ImagesDialog::okButtonCallback(GtkButton* button, ImagesDialog* dlg) {
-    dlg->confirmed = true;
-    gtk_widget_hide(dlg->window);
-}
+void ImagesDialog::filechooserButtonCallback(GtkButton*, ImagesDialog* dlg) {
+    xoj::OpenDlg::showOpenImageDialog(dlg->window.get(), dlg->settings, [dlg](fs::path p, bool attach) {
+        BackgroundImage img;
+        GError* err = nullptr;
+        img.loadFile(p, &err);
+        img.setAttach(attach);
+        if (err) {
+            XojMsgBox::showErrorToUser(dlg->window.get(),
+                                       FS(_F("This image could not be loaded. Error message: {1}") % err->message));
+            g_error_free(err);
+            return;
+        }
 
-void ImagesDialog::filechooserButtonCallback(GtkButton* button, ImagesDialog* dlg) {
-    dlg->selected = -2;
-    dlg->confirmed = true;
-    gtk_widget_hide(dlg->window);
-}
+        if (img.isEmpty()) {
+            XojMsgBox::showErrorToUser(dlg->window.get(), _("This image could not be loaded."));
+            return;
+        }
 
-auto ImagesDialog::shouldShowFilechooser() -> bool { return selected == -2 && confirmed; }
-
-auto ImagesDialog::getSelectedImage() -> BackgroundImage {
-    if (confirmed && selected >= 0 && selected < static_cast<int>(elements.size())) {
-        return (dynamic_cast<ImageElementView*>(elements[selected]))->backgroundImage;
-    }
-
-
-    return BackgroundImage();
-}
-
-void ImagesDialog::show(GtkWindow* parent) {
-    if (this->elements.empty()) {
-        this->selected = -2;
-        this->confirmed = true;
-    } else {
-        BackgroundSelectDialogBase::show(parent);
-    }
+        dlg->callback(std::move(img));
+        gtk_window_close(dlg->window.get());
+    });
 }

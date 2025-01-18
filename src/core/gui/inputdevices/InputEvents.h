@@ -19,6 +19,8 @@
 
 #include "model/Point.h"  // for Point, Point::NO_PRESSURE
 
+#include "DeviceId.h"
+
 class Settings;
 
 enum InputEventType {
@@ -74,7 +76,7 @@ struct InputEvent final {
 
     InputEventType type{UNKNOWN};
     InputDeviceClass deviceClass{INPUT_DEVICE_IGNORE};
-    gchar* deviceName{};
+    const gchar* deviceName{};
 
     gdouble absoluteX{0};
     gdouble absoluteY{0};
@@ -87,6 +89,15 @@ struct InputEvent final {
 
     GdkEventSequence* sequence{};
     guint32 timestamp{0};
+
+    DeviceId deviceId;
+};
+
+struct KeyEvent final {
+    guint keyval{0};
+    GdkModifierType state{};  ///< Consumed modifiers have been masked out
+
+    GdkEventGuard sourceEvent;  ///< Original GdkEvent. Avoid using if possible.
 };
 
 class InputEvents {

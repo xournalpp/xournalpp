@@ -1,10 +1,9 @@
 #include "PdfBackgroundView.h"
 
-#include <cassert>  // for assert
-
 #include <glib.h>  // for g_warning
 
 #include "control/PdfCache.h"                // for PdfCache
+#include "util/Assert.h"                     // for xoj_assert
 #include "view/background/BackgroundView.h"  // for BackgroundView, view
 
 using namespace xoj::view;
@@ -17,11 +16,11 @@ void PdfBackgroundView::draw(cairo_t* cr) const {
         // get zoom from cairo
         cairo_matrix_t matrix = {0};
         cairo_get_matrix(cr, &matrix);
-        assert(matrix.xx == matrix.yy && matrix.xy == 0.0 && matrix.yx == 0.0);  // Homothety matrix
+        xoj_assert(matrix.xx == matrix.yy && matrix.xy == 0.0 && matrix.yx == 0.0);  // Homothety matrix
         double scaleX;
         double scaleY;
         cairo_surface_get_device_scale(cairo_get_target(cr), &scaleX, &scaleY);
-        assert(scaleX == scaleY);
+        xoj_assert(scaleX == scaleY);
         double pixelsPerPageUnit = matrix.xx * scaleX;
         pdfCache->render(cr, pageNo, pixelsPerPageUnit, pageWidth, pageHeight);
     } else {

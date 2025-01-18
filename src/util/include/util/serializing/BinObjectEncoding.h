@@ -19,7 +19,7 @@ public:
     ~BinObjectEncoding() override;
 
 public:
-    void addData(const void* data, int len) override;
+    void addData(const void* data, size_t len) override;
 
 private:
 };

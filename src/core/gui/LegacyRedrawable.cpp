@@ -14,5 +14,5 @@ void LegacyRedrawable::repaintRect(double x, double y, double width, double heig
 void LegacyRedrawable::rerenderRange(const Range& r) { rerenderRect(r.getX(), r.getY(), r.getWidth(), r.getHeight()); }
 
 void LegacyRedrawable::rerenderElement(Element* e) {
-    rerenderRect(e->getX() - 1, e->getY() - 1, e->getElementWidth() + 2, e->getElementHeight() + 2);
+    rerenderRect(e->getX(), e->getY(), e->getElementWidth(), e->getElementHeight());
 }

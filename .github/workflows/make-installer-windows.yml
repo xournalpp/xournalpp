@@ -1,0 +1,88 @@
+# Template for running Windows release jobs
+
+on:
+  workflow_call:
+    inputs:
+      runner:
+        type: string
+        required: true
+      displayed_name:
+        type: string
+        required: true
+      publish_portable_version:
+        type: boolean
+        required: false
+        default: false
+      head_sha:          # SHA of the commit to build. Defaults to the head of the triggering event (cf github doc.)
+        type: string
+        default: ''
+      build_type:
+        type: string
+        default: 'RelWithDebInfo'
+      artifact_version_suffix:  # Additional version string appended to 1.2.3+dev (for instance) in artifacts names
+        type: string
+        default: ''
+    outputs:
+      link:
+        description: URL of the produced installer
+        value: ${{ jobs.release-windows.outputs.link }}
+      link_portable:
+        description: URL of the portable version (if produced)
+        value: ${{ jobs.release-windows.outputs.link_portable }}
+
+jobs:
+  release-windows:
+    name: Create installer for ${{ inputs.displayed_name }}
+    runs-on: ${{ inputs.runner }}
+    outputs:
+      link: ${{ steps.publish.outputs.artifact-url }}
+      link_portable: ${{ steps.publish-portable.outputs.artifact-url }}
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.head_sha }}
+      - name: 'Install dependencies'
+        uses: ./.github/actions/install_deps_windows
+      - name: 'Build Xournal++'
+        uses: ./.github/actions/build
+        with:
+          build_type: ${{ inputs.build_type }}
+          shell: msys2 {0}
+          cmake_flags: >-
+            -DCMAKE_CXX_FLAGS="-Os -s"
+      - name: 'Create installer'
+        id: create-installer
+        working-directory: ${{github.workspace}}/windows-setup
+        shell: msys2 {0}
+        run: |
+          bash -lc "./package.sh"
+
+          export VERSION=$(cat ../build/VERSION | sed '1q;d')
+          export ARCH=$(cat ../build/VERSION | sed '4q;d')
+          export FULL_VERSION_STRING="$VERSION${{ inputs.artifact_version_suffix }}"
+          export INSTALLER_FILENAME="xournalpp-$FULL_VERSION_STRING-windows-setup-$ARCH.exe"
+
+          mv xournalpp-setup.exe "$INSTALLER_FILENAME"
+          echo "artifact=$INSTALLER_FILENAME" >> $GITHUB_OUTPUT
+
+          if [ ${{ inputs.publish_portable_version }} ]; then
+            mkdir portable_content/
+            mv dist "portable_content/xournalpp-$FULL_VERSION_STRING-windows-portable-$ARCH"
+          fi
+      - name: 'Publish package'
+        id: publish
+        uses: actions/upload-artifact@v4
+        with:
+          name: "Windows package"
+          path: "${{github.workspace}}/windows-setup/${{ steps.create-installer.outputs.artifact }}"
+          compression-level: 0
+          if-no-files-found: error
+      - name: 'Publish portable version'
+        id: publish-portable
+        if: ${{ inputs.publish_portable_version }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: "Windows package (portable version)"
+          path: "${{github.workspace}}/windows-setup/portable_content"
+          if-no-files-found: error

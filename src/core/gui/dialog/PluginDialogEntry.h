@@ -11,30 +11,30 @@
 
 #pragma once
 
+#include "config-features.h"
+
+#ifdef ENABLE_PLUGINS
 #include <string>  // for string
 
-#include <gtk/gtk.h>  // for GtkWidget, GtkWindow
-
-#include "gui/GladeGui.h"  // for GladeGui
+#include <gtk/gtk.h>
 
 class Plugin;
 class GladeSearchpath;
 
-class PluginDialogEntry: public GladeGui {
+class PluginDialogEntry {
 public:
-    PluginDialogEntry(Plugin* plugin, GladeSearchpath* gladeSearchPath, GtkWidget* w);
-    ~PluginDialogEntry() override = default;
+    PluginDialogEntry(Plugin* plugin, GladeSearchpath* gladeSearchPath, GtkBox* box);
 
 public:
-    void loadSettings();
     void saveSettings(std::string& pluginEnabled, std::string& pluginDisabled);
 
-    // Not implemented! This is not a dialog!
-    void show(GtkWindow* parent) override;
 
 private:
     /**
      * Plugin instance
      */
     Plugin* plugin;
+
+    GtkCheckButton* stateButton;
 };
+#endif

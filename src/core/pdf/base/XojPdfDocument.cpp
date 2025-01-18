@@ -36,11 +36,13 @@ auto XojPdfDocument::load(fs::path const& file, std::string password, GError** e
     return doc->load(file, password, error);
 }
 
-auto XojPdfDocument::load(gpointer data, gsize length, std::string password, GError** error) -> bool {
-    return doc->load(data, length, password, error);
+auto XojPdfDocument::load(std::unique_ptr<std::string> data, std::string password, GError** error) -> bool {
+    return doc->load(std::move(data), password, error);
 }
 
 auto XojPdfDocument::isLoaded() const -> bool { return doc->isLoaded(); }
+
+void XojPdfDocument::reset() { doc->reset(); }
 
 auto XojPdfDocument::getPage(size_t page) const -> XojPdfPageSPtr { return doc->getPage(page); }
 

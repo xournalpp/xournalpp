@@ -15,6 +15,7 @@
 
 #include "model/Compass.h"  // for Compass
 #include "util/DispatchPool.h"
+#include "util/safe_casts.h"  // for floor_cast
 #include "view/overlays/BaseStrokeToolView.h"
 
 #include "GeometryToolView.h"
@@ -55,7 +56,7 @@ private:
 
     double height = Compass::INITIAL_HEIGHT;
     double rotation = 0.;
-    cairo_matrix_t matrix{CM, 0., 0., CM, Compass::INITIAL_X, Compass::INITIAL_Y};
+    cairo_matrix_t matrix{CM, 0., 0., CM, 0., 0.};
 
     /**
      * @brief the distance of the circle containing the rotation angle display from the center
@@ -71,7 +72,7 @@ private:
     /**
      * @brief the index of the last horizontal mark to be drawn
      */
-    int maxHmark = 10 * Compass::INITIAL_HEIGHT;
+    int maxHmark = floor_cast<int>(10. * Compass::INITIAL_HEIGHT);
 
     /**
      * @brief after how many degrees should a new small angular mark be drawn

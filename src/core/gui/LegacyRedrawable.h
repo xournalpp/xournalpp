@@ -46,21 +46,22 @@ public:
      * for refreshing the view buffer (if you have changed the document) call rerender.
      */
     virtual void repaintArea(double x1, double y1, double x2, double y2) const = 0;
-    void repaintRect(double x, double y, double width, double height) const;
+    [[maybe_unused]] void repaintRect(double x, double y, double width, double height) const;
     [[maybe_unused]] void repaintElement(Element* e) const;
 
     /**
-     * Call this if you only need to readraw the view, this means the buffer will be painted again,
-     * and all selections, text edtiors etc. are drawn again, but the view buffer is not refreshed.
+     * Call this if you only need to redraw the view, this means the buffer will be painted again,
+     * and all selections, text editors etc. are drawn again, but the view buffer is not refreshed.
      *
-     * for refreshing the view buffer (if you have changed the document) call repaint.
+     * for refreshing the view buffer (if you have changed the document) call rerender.
      */
     virtual void repaintPage() const = 0;
 
     /**
-     * Repaint our buffer, then redraw the widget
+     * Rerender our buffer, then redraw the widget
+     * @param sizeChanged whether or not this rerendering is caused by the size of the page changing
      */
-    virtual void rerenderPage() = 0;
+    virtual void rerenderPage(bool sizeChanged = false) = 0;
 
     /**
      * Call this if you add an element, remove an element etc.

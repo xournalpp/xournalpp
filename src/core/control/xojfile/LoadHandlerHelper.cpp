@@ -10,7 +10,7 @@
  */
 #include "LoadHandlerHelper.h"
 
-#include <cinttypes>  // for uint32_t
+#include <cstdint>    // for uint32_t
 #include <cstdlib>    // for strtol, strtoull
 #include <cstring>    // for strcmp, size_t, strlen
 #include <string>     // for allocator, string
@@ -142,7 +142,7 @@ auto LoadHandlerHelper::getAttribInt(const char* name, LoadHandler* loadHandler)
     }
 
     char* ptr = nullptr;
-    int val = strtol(attrib, &ptr, 10);
+    int val = static_cast<int>(strtol(attrib, &ptr, 10));
     if (ptr == attrib) {
         error("%s", FC(_F("Attribute \"{1}\" could not be parsed as int, the value is \"{2}\"") % name % attrib));
     }
@@ -161,7 +161,7 @@ auto LoadHandlerHelper::getAttribInt(const char* name, bool optional, LoadHandle
     }
 
     char* ptr = nullptr;
-    int val = strtol(attrib, &ptr, 10);
+    int val = static_cast<int>(strtol(attrib, &ptr, 10));
     if (ptr == attrib) {
         error("%s", FC(_F("Attribute \"{1}\" could not be parsed as int, the value is \"{2}\"") % name % attrib));
     }

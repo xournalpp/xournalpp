@@ -1,6 +1,70 @@
-xournalpp (1.1.3+dev-1) UNRELEASED; urgency=medium
+xournalpp (1.2.5+dev-1) UNRELEASED; urgency=medium
 
-  *
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Wed, 04 Dec 2024 16:17:08 +0100
+
+xournalpp (1.2.5-1) unstable; urgency=medium
+
+  * Fixed regressions when exporting to PDF
+  * Fixed crash when importing some SVG files
+  * Have geometry tools appear in the middle of the view
+  * Fixed issues with Windows installer
+  * Fixed missing translations on Windows
+
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Wed, 04 Dec 2024 16:17:08 +0100
+
+xournalpp (1.2.4-1) unstable; urgency=medium
+
+  * Fixed various dark/light theme inconsistencies
+  * Improved edge panning for large selections
+  * Fixed various crashes, freezes and memory leaks
+  * MacOS: Added support for opening xopp-files from Finder
+  * Added builds for Ubuntu 24.04 and MacOS ARM
+
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Sun, 20 Oct 2024 08:02:11 +0200
+
+xournalpp (1.2.3-1) unstable; urgency=medium
+
+  * Fixed background color and truncated text in LaTeX tool
+  * Fixed zoom jumping and zoom steps
+  * Fixed various segfaults and rendering issues
+  * Fixed pressure values and project URL when saving documents
+  * Enabled font hint metrics in PDF export to improve text alignment
+
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Thu, 29 Feb 2024 13:22:42 +0100
+
+xournalpp (1.2.2-1) unstable; urgency=medium
+
+  * Fix various memory leaks and segmentation faults.
+  * Fix some issues with input sequences mixing up devices and buttons
+  * Fix Latex tool failing to open some pdf files
+  * Fix audio output device selection
+
+ -- Benjamin Hennion <benjamin.hennion@wanadoo.fr>  Sun, 08 Oct 2023 15:53:47 +0200
+
+xournalpp (1.2.1-1) unstable; urgency=medium
+
+  * Added a default toolbar so that the app does not start without toolbar on new installations
+  * Fixed some crashes and various issues with the crash log handling
+  * Added options to the command line and preferences to disable the audio system used for audio recording
+  * The official release builds are now all built with gtksourceview styling for the LaTeX tool and in "RelWithDeb" mode. Thus failing asserts do not result in a crash anymore.
+
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Thu, 24 Aug 2023 17:22:54 +0200
+
+xournalpp (1.2.0-1) unstable; urgency=medium
+
+  * This is a new major version of Xournal++ with a lot of new features, improvements, and
+    bug fixes thanks to almost two year's worth of contributions from the community.
+  * Most notably a PDF text selection tool for interacting with the background PDF,
+    geometry tools (setsquare and compass) for geometric constructions and measurements,
+    and custom color palette support have been added. The LaTeX editor has been reimplemented
+    using the gtksourceview library, enabling multiline input, syntax highlighting, undo/redo,
+    word wrap, and a resizable code editor. Moreover the eraser has been rewritten to be much
+    faster and more reliable and the rendering system has been optimized heavily, too. The file
+    size of documents with lots of stroke data has been reduced by up to 15%. MacOS users will
+    notice a large performance boost when drawing/writing thanks to an updated Gtk version.
+  * See the full changelog located on GitHub
+
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Sat, 29 Jul 2023 23:27:45 +0100
 
 xournalpp (1.1.3-1) unstable; urgency=medium
 

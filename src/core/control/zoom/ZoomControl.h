@@ -43,7 +43,7 @@ public:
      * @param direction direction to zoom in or out
      * @param zoomCenter position of zoom focus
      */
-    void zoomOneStep(ZoomDirection direction, utl::Point<double> zoomCenter);
+    void zoomOneStep(ZoomDirection direction, xoj::util::Point<double> zoomCenter);
     void zoomOneStep(ZoomDirection direction);
 
     /**
@@ -52,7 +52,7 @@ public:
      * @param direction to zoom in or out
      * @param zoomCenter position of zoom focus
      */
-    void zoomScroll(ZoomDirection direction, utl::Point<double> zoomCenter);
+    void zoomScroll(ZoomDirection direction, xoj::util::Point<double> zoomCenter);
 
     /**
      * Zoom so that the page fits the current size of the window
@@ -125,10 +125,11 @@ public:
     /**
      * Call this before any zoom is done, it saves the current page and position
      *
-     * @param zoomCenter position of zoom focus
+     * @param zoomCenter position of zoom focus in widget pixel coordinates. That
+     * is, absolute coordinates (not scaling with the document) translated to the
+     * top left corner of the drawing area.
      */
-
-    void startZoomSequence(utl::Point<double> zoomCenter);
+    void startZoomSequence(xoj::util::Point<double> zoomCenter);
 
     /**
      * Call this before any zoom is done, it saves the current page and position
@@ -144,17 +145,30 @@ public:
      */
     void zoomSequenceChange(double zoom, bool relative);
 
+    /**
+     * Change the zoom and zoomCenter within a Zoom sequence (startZoomSequence() / endZoomSequence())
+     * Used while touch pinch event
+     *
+     * @param zoom Current zoom value
+     * @param relative If the zoom is relative to the start value (for Gesture)
+     * @param scrollVector relative zoom center movement in pixels since last call
+     */
+    void zoomSequenceChange(double zoom, bool relative, xoj::util::Point<double> scrollVector);
+
     /// Clear all stored data from startZoomSequence()
     void endZoomSequence();
 
     /// Revert and end the current zoom sequence
     void cancelZoomSequence();
 
-    /// Update the scroll position manually
-    void setScrollPositionAfterZoom(utl::Point<double> scrollPos);
+    /// Check if we are between calls to `startZoomSequence()` and `endZoomSequence()`
+    bool isZoomSequenceActive() const;
 
-    /// Zoom to correct position on zooming
-    utl::Point<double> getScrollPositionAfterZoom() const;
+    /**
+     * Zoom to correct position on zooming.
+     * This function should only be called during a zoom sequence.
+     */
+    xoj::util::Point<double> getScrollPositionAfterZoom() const;
 
     /// Get visible rect on xournal view, for Zoom Gesture
     xoj::util::Rectangle<double> getVisibleRect();
@@ -208,18 +222,15 @@ private:
     /// Base zoom on start, for relative zoom (Gesture)
     double zoomSequenceStart = -1;
 
-    /// Zoom center pos on view, will not be zoomed!
-    utl::Point<double> zoomWidgetPos;
+    /// Zoom center position in widget coordinate space, will not be zoomed!
+    xoj::util::Point<double> zoomWidgetPos;
 
     /// Scroll position (top left corner of view) to scale
-    utl::Point<double> scrollPosition;
-
-    /// Cursorposition x for Ctrl + Scroll
-    utl::Point<double> scrollCursorPosition;
+    xoj::util::Point<double> scrollPosition;
 
     /// Size {x, y} of the pixels before the current page that
     /// do not scale.
-    utl::Point<double> unscaledPixels;
+    xoj::util::Point<double> unscaledPixels;
 
     /**
      * Zoomstep value for Ctrl - and Zoom In and Out Button

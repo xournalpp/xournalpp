@@ -1,0 +1,44 @@
+## Page Background Config
+
+[predefinedPlain]
+name=Plain
+format=plain
+
+[predefinedRuled]
+name=Ruled
+format=ruled
+
+[predefinedLined]
+name=Ruled with vertical line
+format=lined
+
+[predefinedRightLined]
+name=Ruled with vertical line on the right
+format=lined
+config=m1=-72
+
+[predefinedStaves]
+name=Staves
+format=staves
+
+[predefinedGraph]
+name=Graph
+format=graph
+
+[predefinedDotted]
+name=Dotted
+format=dotted
+
+[predefinedIsoDotted]
+name=Isometric Dotted
+format=isodotted
+
+[predefinedIsoGraph]
+name=Isometric Graph
+format=isograph
+
+[graphWithBorder]
+name=Graph with border
+format=graph
+config=m1=40,rm=1
+

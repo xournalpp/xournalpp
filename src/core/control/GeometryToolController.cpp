@@ -1,5 +1,7 @@
 #include "GeometryToolController.h"
 
+#include <memory>
+
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
 #include "gui/XournalView.h"
@@ -50,7 +52,7 @@ void GeometryToolController::scale(double f, double cx, double cy) {
 void GeometryToolController::markPoint(double x, double y) {
     const auto control = view->getXournal()->getControl();
     const auto h = control->getToolHandler();
-    Stroke* cross = new Stroke();
+    auto cross = std::make_unique<Stroke>();
     cross->setWidth(h->getToolThickness(TOOL_PEN)[TOOL_SIZE_FINE]);
     cross->setColor(h->getTool(TOOL_PEN).getColor());
     cross->addPoint(Point(x + MARK_SIZE, y + MARK_SIZE));
@@ -59,18 +61,19 @@ void GeometryToolController::markPoint(double x, double y) {
     cross->addPoint(Point(x + MARK_SIZE, y - MARK_SIZE));
     cross->addPoint(Point(x - MARK_SIZE, y + MARK_SIZE));
 
+    auto* ptr = cross.get();
     const auto doc = control->getDocument();
     const auto page = view->getPage();
     doc->lock();
-    control->getLayerController()->ensureLayerExists(page);
     const auto layer = page->getSelectedLayer();
-    layer->addElement(cross);
+    layer->addElement(std::move(cross));
     doc->unlock();
 
     const auto undo = control->getUndoRedoHandler();
-    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, cross));
+    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, ptr));
 
-    const Rectangle<double> rect{cross->getX(), cross->getY(), cross->getElementWidth(), cross->getElementHeight()};
+
+    const Rectangle<double> rect{ptr->getX(), ptr->getY(), ptr->getElementWidth(), ptr->getElementHeight()};
     view->rerenderRect(rect.x, rect.y, rect.width, rect.height);
 }
 
@@ -80,16 +83,16 @@ void GeometryToolController::addStrokeToLayer() {
     const auto doc = control->getDocument();
     const auto page = view->getPage();
 
+    auto ptr = stroke.get();
     doc->lock();
-    control->getLayerController()->ensureLayerExists(page);
     const auto layer = page->getSelectedLayer();
-    layer->addElement(stroke.get());
+    layer->addElement(std::move(this->stroke));
     doc->unlock();
+
     const auto undo = control->getUndoRedoHandler();
-    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke.get()));
-    const Rectangle<double> rect{stroke->getX(), stroke->getY(), stroke->getElementWidth(), stroke->getElementHeight()};
+    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, ptr));
+    const Rectangle<double> rect{ptr->getX(), ptr->getY(), ptr->getElementWidth(), ptr->getElementHeight()};
     view->rerenderRect(rect.x, rect.y, rect.width, rect.height);
-    stroke.release();
     geometryTool->setStroke(nullptr);
     xournal->getCursor()->updateCursor();
 }

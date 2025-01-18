@@ -1,0 +1,120 @@
+name: Download translated strings from Crowdin
+
+on:
+  workflow_dispatch:  # This can be triggered from the Github Action tab on the website
+  schedule:
+    - cron: '18 4 * * sun'  # Run automatically every week (Sunday at 4:18 - this is arbitrary but avoids being in the peek CI usage on round hours
+                            # cf https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule
+
+jobs:
+  Translations:
+    name: Download translated strings from Crowdin
+    strategy:
+      matrix:
+        branch: ['master', 'release-1.2']
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.branch }}
+      - name: 'Pull translations from Crowdin'
+        uses: crowdin/github-action@v2
+        with:
+          upload_sources: false
+          upload_translations: false
+          download_translations: true
+          crowdin_branch_name: ${{ matrix.branch }}
+          create_pull_request: false
+          push_translations: false
+          push_sources: false
+          skip_ref_checkout: true
+        env:
+          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+      - name: 'Compute changes'
+        id: compute-changes
+        shell: bash
+        env:
+          localization-branch: "l10n-${{ matrix.branch }}"
+        run: |
+          echo "localization-branch=${{ env.localization-branch }}" >> "$GITHUB_OUTPUT"
+
+          FETCH_RETURN=$(git fetch origin ${{ env.localization-branch }}:${{ env.localization-branch }} 2> fetch_error; echo $?)
+          if [ $FETCH_RETURN -eq 128 ]; then
+            # The distant branch does not exist
+            echo "The distant localization branch does not exist. We will create it."
+            git branch ${{ env.localization-branch }}
+          elif [ $FETCH_RETURN -ne 0 ]; then
+            cat fetch_error
+            exit 1
+          fi
+          rm fetch_error
+
+          echo "Branches:"
+          git branch -a
+
+          if git diff ${{ env.localization-branch }} --quiet -I'POT-Creation-Date: [0-9:+-]*' -I'PO-Revision-Date: [0-9:+-]*' -- po/*.po; then
+            echo "Translations have not changed. Nothing else to do."
+          else
+            echo "update-translations=true" >> "$GITHUB_OUTPUT"
+            echo "Translations have changed. We will commit and push them to a PR."
+          fi
+      - name: 'Install dependencies for updating local .pot file'
+        if: steps.compute-changes.outputs.update-translations == 'true'
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gettext
+          # Download the last .its/loc files for gettext - Cheaper than installing all of gtk + dependencies
+          sudo wget https://raw.githubusercontent.com/GNOME/gtk/gtk-3-24/gtk/gtkbuilder.{its,loc} -P /usr/share/gettext/its/
+      - name: 'Update local translation template'
+        if: steps.compute-changes.outputs.update-translations == 'true'
+        shell: bash
+        run: |
+          mkdir build
+          cd build
+          cmake .. -DONLY_CONFIGURE_FOR_TARGET_POT=on
+          cmake --build . --target pot
+      - name: 'Push local translation template'
+        if: steps.compute-changes.outputs.update-translations == 'true'
+        shell: bash
+        env:
+          localization-branch: ${{ steps.compute-changes.outputs.localization-branch }}
+          commit-message: '[skip ci] Update translation files'
+          pr-title: "Update translations for ${{ matrix.branch }} branch"
+          pr-body: 'New translations. When merging this PR, use \"Squash and Merge\"'
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config --global user.name "Github Action"
+          git config --global user.email "github-action@users.noreply.github.com"
+
+          PR_URL="$(gh pr list --head "${{ env.localization-branch }}" --base "${{ matrix.branch }}" --state open --json url --jq .[].url)"
+          if [ -z "${PR_URL}" ] && [ -n "$(git branch -r --list origin/${{ env.localization-branch }})" ]; then
+            echo "The remote branch exists but there is no open PR: removing the remote branch to avoid merge conflicts."
+            git branch -D ${{ env.localization-branch }}
+            git push origin -d ${{ env.localization-branch }}
+            git switch -c ${{ env.localization-branch }}
+          else
+            echo "Switching to localization branch"
+            RET=$(git switch ${{ env.localization-branch }} 2> /dev/null; echo $?)
+            if [ $RET -ne 0 ]; then
+              git commit -am tmp
+              git switch ${{ env.localization-branch }}
+              git restore --source ${{ matrix.branch }} -- po/*.po po/xournalpp.pot
+            fi
+          fi
+
+          git add -- po/*.po po/xournalpp.pot
+          git status
+          git commit -m "${{ env.commit-message }}"
+          git push origin ${{ env.localization-branch }}:${{ env.localization-branch }}
+
+          if [[ -n "${PR_URL}" ]]; then
+            echo "PR already exists -> ${PR_URL}"
+            exit 0
+          else
+            gh pr create --head "${{ env.localization-branch }}" --base "${{ matrix.branch }}" --title "${{ env.pr-title }}" --body "${{ env.pr-body }}"
+          fi

@@ -7,17 +7,54 @@
 #include <sstream>    // for istringstream
 #include <string>     // for char_traits, string, getline, operator!=
 
-#include <glib.h>  // for g_get_real_time, g_warning, gint64
+#include <glib.h>  // for g_get_real_time, g_message, g_warning, gint64
 
-#include "util/PathUtil.h"   // for getConfigSubfolder
+#include "util/PathUtil.h"   // for getConfigSubfolder, getStateSubfolder
 #include "util/XojMsgBox.h"  // for XojMsgBox
 
 using namespace std;
 
+/**
+ * Get directory to store metadata files to
+ */
+static fs::path getMetadataDirectory() { return Util::getStateSubfolder("metadata"); }
+
+/**
+ * Migrate metadata directory from legacy location
+ */
+static void migrateMetadataDirectory() {
+    // do not pass "metadata" to getConfigSubfolder() to avoid creating directory if it doesn't exist
+    auto legacyDir = Util::getConfigSubfolder() / "metadata";
+
+    if (!fs::is_directory(legacyDir)) {
+        // nothing to do
+        return;
+    }
+
+    // move all files to the new directory
+    auto newDir = getMetadataDirectory();
+
+    if (fs::equivalent(legacyDir, newDir)) {  // Happens on Windows by default
+        // nothing to do
+        return;
+    }
+
+    for (auto const& e: fs::directory_iterator(legacyDir)) {
+        auto newPath = newDir / e.path().filename();
+        Util::safeRenameFile(e, newPath);
+    }
+
+    // remove legacy directory
+    try {
+        fs::remove(legacyDir);
+    } catch (const fs::filesystem_error&) {
+        g_warning("Could not delete legacy metadata directory %s", legacyDir.c_str());
+    }
+
+    g_message("Migrated metadata directory from %s to %s", legacyDir.c_str(), newDir.c_str());
+}
+
 MetadataEntry::MetadataEntry(): valid(false), zoom(1), page(0), time(0) {}
-
-
-MetadataManager::MetadataManager(): metadata(nullptr) {}
 
 MetadataManager::~MetadataManager() { documentChanged(); }
 
@@ -33,24 +70,25 @@ void MetadataManager::deleteMetadataFile(fs::path const& path) {
 
     try {
         fs::remove(path);
-    } catch (fs::filesystem_error const&) { g_warning("Could not delete metadata file %s", path.string().c_str()); }
+    } catch (const fs::filesystem_error&) {
+        g_warning("Could not delete metadata file %s", path.string().c_str());
+    }
 }
 
 /**
  * Document was closed, a new document was opened etc.
  */
 void MetadataManager::documentChanged() {
+    // take ownership of metadata
     this->mutex.lock();
-    MetadataEntry* m = metadata;
-    metadata = nullptr;
+    auto m = std::move(this->metadata);
     this->mutex.unlock();
 
     if (m == nullptr) {
         return;
     }
 
-    storeMetadata(m);
-    delete m;
+    storeMetadata(*m);
 }
 
 auto sortMetadata(MetadataEntry& a, MetadataEntry& b) -> bool { return a.time > b.time; }
@@ -59,7 +97,8 @@ auto sortMetadata(MetadataEntry& a, MetadataEntry& b) -> bool { return a.time > 
  * Load the metadata list (sorted)
  */
 auto MetadataManager::loadList() -> vector<MetadataEntry> {
-    auto folder = Util::getConfigSubfolder("metadata");
+    migrateMetadataDirectory();
+    auto folder = getMetadataDirectory();
 
     vector<MetadataEntry> data;
     try {
@@ -72,7 +111,7 @@ auto MetadataManager::loadList() -> vector<MetadataEntry> {
                 data.push_back(entry);
             }
         }
-    } catch (fs::filesystem_error& e) {
+    } catch (const fs::filesystem_error& e) {
         XojMsgBox::showErrorToUser(nullptr, e.what());
         return data;
     }
@@ -114,7 +153,7 @@ auto MetadataManager::loadMetadataFile(fs::path const& path, fs::path const& fil
         // Not valid
         return entry;
     }
-    entry.page = strtoll(line.substr(5).c_str(), nullptr, 10);
+    entry.page = static_cast<int>(strtoll(line.substr(5).c_str(), nullptr, 10));
 
     if (!getline(infile, line) || line.length() < 6 || line.substr(0, 5) != "zoom=") {
         deleteMetadataFile(path);
@@ -141,7 +180,7 @@ auto MetadataManager::getForFile(fs::path const& file) -> MetadataEntry {
         }
     }
 
-    for (int i = 20; i < static_cast<int>(files.size()); i++) {
+    for (size_t i = 20; i < files.size(); i++) {
         auto path = files[i].metadataFile;
         deleteMetadataFile(path);
     }
@@ -152,25 +191,25 @@ auto MetadataManager::getForFile(fs::path const& file) -> MetadataEntry {
 /**
  * Store metadata to file
  */
-void MetadataManager::storeMetadata(MetadataEntry* m) {
+void MetadataManager::storeMetadata(const MetadataEntry& m) {
     vector<MetadataEntry> files = loadList();
     for (const MetadataEntry& e: files) {
-        if (e.path == m->path) {
+        if (e.path == m.path) {
             // This is an old entry with the same path
             deleteMetadataFile(e.metadataFile);
         }
     }
 
-    auto path = Util::getConfigSubfolder("metadata");
+    auto path = getMetadataDirectory();
     gint64 time = g_get_real_time();
     path /= std::to_string(time);
     path += ".metadata";
 
     ofstream out(path);
     out << "XOJ-METADATA/1.0\n";
-    out << m->path << "\n";
-    out << "page=" << m->page << "\n";
-    out << "zoom=" << m->zoom << "\n";
+    out << m.path << "\n";
+    out << "page=" << m.page << "\n";
+    out << "zoom=" << m.zoom << "\n";
     out.close();
 }
 
@@ -184,7 +223,7 @@ void MetadataManager::storeMetadata(fs::path const& file, int page, double zoom)
 
     this->mutex.lock();
     if (metadata == nullptr) {
-        metadata = new MetadataEntry();
+        metadata = std::make_unique<MetadataEntry>();
     }
 
     metadata->valid = true;

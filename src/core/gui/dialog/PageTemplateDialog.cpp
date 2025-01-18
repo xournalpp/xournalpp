@@ -12,39 +12,68 @@
 
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeInfo, PageType...
 #include "control/settings/Settings.h"         // for Settings
-#include "control/stockdlg/XojOpenDlg.h"       // for XojOpenDlg
-#include "gui/widgets/PopupMenuButton.h"       // for PopupMenuButton
-#include "model/FormatDefinitions.h"           // for FormatUnits, XOJ_UNITS
-#include "util/Color.h"                        // for GdkRGBA_to_argb, rgb_t...
-#include "util/PathUtil.h"                     // for fromGFilename, readString
-#include "util/i18n.h"                         // for _
+#include "gui/Builder.h"                       // for Builder
+#include "gui/dialog/XojOpenDlg.h"             // for XojOpenDlg
+#include "gui/menus/popoverMenus/PageTypeSelectionPopoverGridOnly.h"
+#include "gui/toolbarMenubar/ToolMenuHandler.h"
+#include "model/FormatDefinitions.h"  // for FormatUnits, XOJ_UNITS
+#include "model/PageType.h"           // for PageType
+#include "util/Color.h"               // for GdkRGBA_to_argb, rgb_t...
+#include "util/PathUtil.h"            // for fromGFilename, readString
+#include "util/PopupWindowWrapper.h"  // for PopupWindowWrapper
+#include "util/XojMsgBox.h"           // for XojMsgBox
+#include "util/i18n.h"                // for _
 
 #include "FormatDialog.h"  // for FormatDialog
 #include "filesystem.h"    // for path
 
 class GladeSearchpath;
 
-PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, PageTypeHandler* types):
-        GladeGui(gladeSearchPath, "pageTemplate.glade", "templateDialog"),
-        settings(settings),
-        pageMenu(new PageTypeMenu(types, settings, true, false)),
-        popupMenuButton(new PopupMenuButton(get("btBackgroundDropdown"), pageMenu->getMenu())) {
+constexpr auto UI_FILE = "pageTemplate.glade";
+constexpr auto UI_DIALOG_NAME = "templateDialog";
+
+using namespace xoj::popup;
+
+PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, ToolMenuHandler* toolmenu,
+                                       PageTypeHandler* types):
+        gladeSearchPath(gladeSearchPath), settings(settings), toolMenuHandler(toolmenu), types(types) {
     model.parse(settings->getPageTemplate());
 
-    pageMenu->setListener(this);
+    Builder builder(gladeSearchPath, UI_FILE);
+    window.reset(GTK_WINDOW(builder.get(UI_DIALOG_NAME)));
 
-    g_signal_connect(
-            get("btChangePaperSize"), "clicked",
-            G_CALLBACK(+[](GtkToggleButton* togglebutton, PageTemplateDialog* self) { self->showPageSizeDialog(); }),
-            this);
+    // Needs to be initialized after this->window
+    pageTypeSelectionMenu = std::make_unique<PageTypeSelectionPopoverGridOnly>(types, settings, this);
+    gtk_menu_button_set_popup(GTK_MENU_BUTTON(builder.get("btBackgroundDropdown")),
+                              pageTypeSelectionMenu->getPopover());
 
-    g_signal_connect(get("btLoad"), "clicked",
-                     G_CALLBACK(+[](GtkToggleButton* togglebutton, PageTemplateDialog* self) { self->loadFromFile(); }),
-                     this);
+    pageSizeLabel = GTK_LABEL(builder.get("lbPageSize"));
+    backgroundTypeLabel = GTK_LABEL(builder.get("lbBackgroundType"));
+    backgroundColorChooser = GTK_COLOR_CHOOSER(builder.get("cbBackgroundButton"));
+    copyLastPageButton = GTK_TOGGLE_BUTTON(builder.get("cbCopyLastPage"));
+    copyLastPageSizeButton = GTK_TOGGLE_BUTTON(builder.get("cbCopyLastPageSize"));
 
-    g_signal_connect(get("btSave"), "clicked",
-                     G_CALLBACK(+[](GtkToggleButton* togglebutton, PageTemplateDialog* self) { self->saveToFile(); }),
-                     this);
+
+    g_signal_connect_swapped(builder.get("btChangePaperSize"), "clicked",
+                             G_CALLBACK(+[](PageTemplateDialog* self) { self->showPageSizeDialog(); }), this);
+
+    g_signal_connect_swapped(builder.get("btLoad"), "clicked",
+                             G_CALLBACK(+[](PageTemplateDialog* self) { self->loadFromFile(); }), this);
+
+    g_signal_connect_swapped(builder.get("btSave"), "clicked",
+                             G_CALLBACK(+[](PageTemplateDialog* self) { self->saveToFile(); }), this);
+
+    g_signal_connect_swapped(builder.get("btCancel"), "clicked", G_CALLBACK(gtk_window_close), this->getWindow());
+    g_signal_connect_swapped(builder.get("btOk"), "clicked", G_CALLBACK(+[](PageTemplateDialog* self) {
+                                 self->saveToModel();
+                                 self->settings->setPageTemplate(self->model.toString());
+                                 self->toolMenuHandler->setDefaultNewPageType(self->model.getPageInsertType());
+                                 self->toolMenuHandler->setDefaultNewPaperSize(
+                                         self->model.isCopyLastPageSize() ? std::nullopt :
+                                                                            std::optional(PaperSize(self->model)));
+                                 gtk_window_close(self->getWindow());
+                             }),
+                             this);
 
     updateDataFromModel();
 }
@@ -53,28 +82,29 @@ PageTemplateDialog::~PageTemplateDialog() = default;
 
 void PageTemplateDialog::updateDataFromModel() {
     GdkRGBA color = Util::rgb_to_GdkRGBA(model.getBackgroundColor());
-    gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("cbBackgroundButton")), &color);
+    gtk_color_chooser_set_rgba(backgroundColorChooser, &color);
 
     updatePageSize();
 
-    pageMenu->setSelected(model.getBackgroundType());
+    pageTypeSelectionMenu->setSelectedPT(model.getBackgroundType());
+    changeCurrentPageBackground(types->getInfoOn(model.getBackgroundType()));
 
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("cbCopyLastPage")), model.isCopyLastPageSettings());
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("cbCopyLastPageSize")), model.isCopyLastPageSize());
+    gtk_toggle_button_set_active(copyLastPageButton, model.isCopyLastPageSettings());
+    gtk_toggle_button_set_active(copyLastPageSizeButton, model.isCopyLastPageSize());
 }
 
-void PageTemplateDialog::changeCurrentPageBackground(PageTypeInfo* info) {
+void PageTemplateDialog::changeCurrentPageBackground(const PageTypeInfo* info) {
     model.setBackgroundType(info->page);
 
-    gtk_label_set_text(GTK_LABEL(get("lbBackgroundType")), info->name.c_str());
+    gtk_label_set_text(backgroundTypeLabel, info->name.c_str());
 }
 
 void PageTemplateDialog::saveToModel() {
-    model.setCopyLastPageSettings(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("cbCopyLastPage"))));
-    model.setCopyLastPageSize(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("cbCopyLastPageSize"))));
+    model.setCopyLastPageSettings(gtk_toggle_button_get_active(copyLastPageButton));
+    model.setCopyLastPageSize(gtk_toggle_button_get_active(copyLastPageSizeButton));
 
     GdkRGBA color;
-    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("cbBackgroundButton")), &color);
+    gtk_color_chooser_get_rgba(backgroundColorChooser, &color);
     model.setBackgroundColor(Util::GdkRGBA_to_argb(color));
 }
 
@@ -82,19 +112,17 @@ void PageTemplateDialog::saveToFile() {
     saveToModel();
 
     GtkWidget* dialog =
-            gtk_file_chooser_dialog_new(_("Save File"), GTK_WINDOW(this->getWindow()), GTK_FILE_CHOOSER_ACTION_SAVE,
-                                        _("_Cancel"), GTK_RESPONSE_CANCEL, _("_Save"), GTK_RESPONSE_OK, nullptr);
-
-    gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
+            gtk_file_chooser_dialog_new(_("Save File"), this->getWindow(), GTK_FILE_CHOOSER_ACTION_SAVE, _("_Cancel"),
+                                        GTK_RESPONSE_CANCEL, _("_Save"), GTK_RESPONSE_OK, nullptr);
 
     GtkFileFilter* filterXoj = gtk_file_filter_new();
     gtk_file_filter_set_name(filterXoj, _("Xournal++ template"));
-    gtk_file_filter_add_pattern(filterXoj, "*.xopt");
+    gtk_file_filter_add_mime_type(filterXoj, "application/x-xopt");
     gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 
     if (!settings->getLastSavePath().empty()) {
-        gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog),
-                                            Util::toGFilename(settings->getLastSavePath()).c_str());
+        gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFile(settings->getLastSavePath()).get(),
+                                            nullptr);
     }
 
     time_t curtime = time(nullptr);
@@ -103,33 +131,62 @@ void PageTemplateDialog::saveToFile() {
     std::string saveFilename = stime;
 
     gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), saveFilename.c_str());
-    gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
 
-    gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()));
-    if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
-        gtk_widget_destroy(dialog);
-        return;
-    }
+    class FileDlg final {
+    public:
+        FileDlg(GtkDialog* dialog, PageTemplateDialog* parent): window(GTK_WINDOW(dialog)), parent(parent) {
+            this->signalId = g_signal_connect(
+                    dialog, "response", G_CALLBACK((+[](GtkDialog* dialog, int response, gpointer data) {
+                        FileDlg* self = static_cast<FileDlg*>(data);
+                        if (response == GTK_RESPONSE_OK) {
+                            auto file = Util::fromGFile(
+                                    xoj::util::GObjectSPtr<GFile>(gtk_file_chooser_get_file(GTK_FILE_CHOOSER(dialog)),
+                                                                  xoj::util::adopt)
+                                            .get());
 
-    auto filepath = Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
-    settings->setLastSavePath(filepath.parent_path());
-    gtk_widget_destroy(dialog);
+                            auto saveTemplate = [self, dialog](const fs::path& file) {
+                                // Closing the window causes another "response" signal, which we want to ignore
+                                g_signal_handler_disconnect(dialog, self->signalId);
+                                gtk_window_close(GTK_WINDOW(dialog));
+                                self->parent->settings->setLastSavePath(file.parent_path());
 
-    std::ofstream out{filepath};
-    out << model.toString();
+                                std::ofstream out{file};
+                                out << self->parent->model.toString();
+                            };
+                            XojMsgBox::replaceFileQuestion(GTK_WINDOW(dialog), std::move(file),
+                                                           std::move(saveTemplate));
+                        } else {
+                            // Closing the window causes another "response" signal, which we want to ignore
+                            g_signal_handler_disconnect(dialog, self->signalId);
+                            gtk_window_close(GTK_WINDOW(dialog));  // Deletes self, don't do anything after this
+                        }
+                    })),
+                    this);
+        }
+        ~FileDlg() = default;
+
+        inline GtkWindow* getWindow() const { return window.get(); }
+
+    private:
+        xoj::util::GtkWindowUPtr window;
+        PageTemplateDialog* parent;
+        gulong signalId;
+    };
+
+    auto popup = xoj::popup::PopupWindowWrapper<FileDlg>(GTK_DIALOG(dialog), this);
+    popup.show(GTK_WINDOW(this->getWindow()));
 }
 
 void PageTemplateDialog::loadFromFile() {
-    XojOpenDlg dlg(GTK_WINDOW(this->getWindow()), this->settings);
-    fs::path file = dlg.showOpenTemplateDialog();
+    xoj::OpenDlg::showOpenTemplateDialog(this->getWindow(), settings, [this](fs::path path) {
+        auto contents = Util::readString(path);
+        if (!contents.has_value()) {
+            return;
+        }
+        model.parse(*contents);
 
-    auto contents = Util::readString(file);
-    if (!contents.has_value()) {
-        return;
-    }
-    model.parse(*contents);
-
-    updateDataFromModel();
+        updateDataFromModel();
+    });
 }
 
 void PageTemplateDialog::updatePageSize() {
@@ -145,41 +202,22 @@ void PageTemplateDialog::updatePageSize() {
     pageSize += buffer;
     pageSize += formatUnit->name;
 
-    gtk_label_set_text(GTK_LABEL(get("lbPageSize")), pageSize.c_str());
+    gtk_label_set_text(pageSizeLabel, pageSize.c_str());
 }
 
 void PageTemplateDialog::showPageSizeDialog() {
-    auto dlg =
-            std::make_unique<FormatDialog>(getGladeSearchPath(), settings, model.getPageWidth(), model.getPageHeight());
-    dlg->show(GTK_WINDOW(this->window));
+    auto popup = xoj::popup::PopupWindowWrapper<xoj::popup::FormatDialog>(gladeSearchPath, settings,
+                                                                          model.getPageWidth(), model.getPageHeight(),
+                                                                          [dlg = this](double width, double height) {
+                                                                              dlg->model.setPageWidth(width);
+                                                                              dlg->model.setPageHeight(height);
 
-    const double width = dlg->getWidth();
-    const double height = dlg->getHeight();
-
-    if (width > 0) {
-        model.setPageWidth(width);
-        model.setPageHeight(height);
-
-        updatePageSize();
-    }
+                                                                              dlg->updatePageSize();
+                                                                          });
+    popup.show(this->getWindow());
 }
 
 /**
  * The dialog was confirmed / saved
  */
 auto PageTemplateDialog::isSaved() const -> bool { return saved; }
-
-void PageTemplateDialog::show(GtkWindow* parent) {
-    gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
-    int ret = gtk_dialog_run(GTK_DIALOG(this->window));
-
-    if (ret == 1)  // OK
-    {
-        saveToModel();
-        settings->setPageTemplate(model.toString());
-
-        this->saved = true;
-    }
-
-    gtk_widget_hide(this->window);
-}

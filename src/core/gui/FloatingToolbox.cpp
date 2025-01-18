@@ -55,7 +55,7 @@ auto FloatingToolbox::floatingToolboxActivated() -> bool {
     ButtonConfig* cfg = nullptr;
 
     // check if any buttons assigned to bring up toolbox
-    for (int id = 0; id < BUTTON_COUNT; id++) {
+    for (unsigned int id = 0; id < BUTTON_COUNT; id++) {
         cfg = settings->getButtonConfig(id);
 
         if (cfg->getAction() == TOOL_FLOATING_TOOLBOX) {

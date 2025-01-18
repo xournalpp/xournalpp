@@ -19,6 +19,7 @@
 #include "UndoAction.h"  // for UndoAction
 
 class Control;
+class Document;
 class Element;
 
 class RotateUndoAction: public UndoAction {
@@ -32,7 +33,7 @@ public:
     std::string getText() override;
 
 private:
-    void applyRotation(double rotation);
+    void applyRotation(double rotation, Document* doc);
 
 private:
     std::vector<Element*> elements;

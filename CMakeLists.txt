@@ -3,10 +3,15 @@ cmake_policy(VERSION ${CMAKE_VERSION})
 ## The CMAKE_OSX_DEPLOYMENT_TARGET must be set before project(), so don't move the following line further down.
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15" CACHE STRING "Minimum OS X deployment version" FORCE)
 
+if(NOT CMAKE_BUILD_TYPE)
+    # set default build type to RelWithDebInfo, we never supported multi config generators, therefore this is fine
+    set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)
+endif()
+
 ## Project related Variables
 ## Also update changelog in debian folder!
 project(xournalpp
-        VERSION 1.1.3
+        VERSION 1.2.5
         DESCRIPTION "Xournal++ - Open source hand note-taking program"
         HOMEPAGE_URL "https://xournalpp.github.io/"
         LANGUAGES CXX C)
@@ -47,6 +52,20 @@ string(TIMESTAMP PACKAGE_TIMESTAMP "%Y%m%d.%H%M" UTC)
 
 include(TargetArch)
 target_architecture(PACKAGE_ARCH)
+
+
+if (UNIX AND NOT APPLE AND NOT CYGWIN)
+    set(INSTALL_DESKTOP_FILES true)
+endif()
+
+## I18n ##
+add_subdirectory(po)
+option (ONLY_CONFIGURE_FOR_TARGET_POT "Only configure the pot target" OFF)
+if (ONLY_CONFIGURE_FOR_TARGET_POT)
+    # We dont need anything else for just generating the .pot file.
+    # This avoids having to install all the dependencies in the CI runs updating the translation files
+    return()
+endif ()
 
 configure_file(cmake/VERSION.in VERSION)
 
@@ -116,34 +135,22 @@ endif (ENABLE_PROFILING)
 
 pkg_check_modules(ExternalModules REQUIRED IMPORTED_TARGET ${pkg-module-spec})
 
-if (#[[${CMAKE_VERSION} VERSION_LESS "3.18" AND]] ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    # bugfix for old pkg_config versions
-    get_target_property(libs PkgConfig::ExternalModules INTERFACE_LINK_LIBRARIES)
-    # message(STATUS "PkgConfig::ExternalModules::INTERFACE_LINK_LIBRARIES: ${libs}")
-    string(REPLACE "-framework;" "-framework " libs "${libs}")
-    # message(STATUS "PkgConfig::ExternalModules::INTERFACE_LINK_LIBRARIES fixed: ${libs}")
-    set_target_properties(PkgConfig::ExternalModules PROPERTIES INTERFACE_LINK_LIBRARIES "${libs}")
-
-
-    if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.13")
-        # fix broken framework flags from pkgconfig
-        get_target_property(opts PkgConfig::ExternalModules INTERFACE_LINK_OPTIONS)
-        string(REPLACE "-framework;" "SHELL:-framework " opts "${opts}")
-        set_target_properties(PkgConfig::ExternalModules PROPERTIES INTERFACE_LINK_OPTIONS "${opts}")
-    endif ()
-endif ()
-
 find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
-find_package(Lua 5.3) # Lua 5.4 is only supported with cmake >=3.18
-if (Lua_FOUND)
+
+option(ENABLE_PLUGINS "Compile with plugin support" ON)
+find_package(Lua) # Lua 5.4 is only supported with cmake >=3.18
+message(STATUS "Found Lua: ${Lua_FOUND}")
+if (Lua_FOUND AND ENABLE_PLUGINS)
     # currently not fully supported by cmake
-    message("Enable Xournal++ Plugins")
+    message(STATUS "Enable Xournal++ Plugins")
     add_library(lua INTERFACE)
     target_link_libraries(lua INTERFACE ${LUA_LIBRARIES})
     target_include_directories(lua INTERFACE ${LUA_INCLUDE_DIR})
-    target_compile_definitions(lua INTERFACE ENABLE_PLUGINS)
     add_library(Lua::lua ALIAS lua)
+else ()
+    message(STATUS "Disable Xournal++ Plugins")
+    set(ENABLE_PLUGINS OFF)
 endif ()
 
 if (GtkSourceView_FOUND)
@@ -188,7 +195,7 @@ target_link_libraries(external_modules INTERFACE
         )
 
 target_compile_definitions(external_modules INTERFACE
-        GLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_32
+        GLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_40
         GDK_VERSION_MIN_REQUIRED=GDK_VERSION_3_18
         $<$<TARGET_EXISTS:X11::X11>:X11_ENABLED>
         )
@@ -209,13 +216,11 @@ configure_file(
         src/filesystem.h
 )
 
-## I18n ##
-add_subdirectory(po)
-
 ## Configuration headers and development options ##
 
 # Development options
 option(DEV_CALL_LOG "Call log" OFF)
+add_compile_definitions(G_LOG_DOMAIN="xopp")
 
 # Debug options
 option(DEBUG_INPUT "Input debugging, e.g. eraser events etc" OFF)
@@ -233,7 +238,7 @@ mark_as_advanced(FORCE
 # Advanced development config
 set(DEV_TOOLBAR_CONFIG "toolbar.ini" CACHE STRING "Toolbar config file name")
 set(DEV_SETTINGS_XML_FILE "settings.xml" CACHE STRING "Settings file name")
-set(DEV_PALETTE_FILE "palette.gpl" CACHE STRING "Color Palette")
+set(DEV_DEFAULT_PALETTE_FILE "xournal.gpl" CACHE STRING "Default Color Palette")
 set(DEV_PRINT_CONFIG_FILE "print-config.ini" CACHE STRING "Print config file name")
 set(DEV_METADATA_FILE "metadata.ini" CACHE STRING "Metadata file name")
 set(DEV_ERRORLOG_DIR "errorlogs" CACHE STRING "Directory where errorlogfiles will be placed")
@@ -316,9 +321,13 @@ install(DIRECTORY resources
         DESTINATION "share/xournalpp"
         COMPONENT xournalpp
         )
+install(DIRECTORY palettes
+        DESTINATION "share/xournalpp"
+        COMPONENT xournalpp
+        )
 
 # Install desktop shortcuts for Linux
-if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+if (${INSTALL_DESKTOP_FILES})
     message("Installing desktop files")
 
     # Install icons
@@ -334,13 +343,11 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
             DESTINATION share/icons/hicolor/scalable/mimetypes/)
     install(FILES ui/pixmaps/gnome-mime-application-x-xopt.svg
             DESTINATION share/icons/hicolor/scalable/mimetypes/)
-    install(FILES desktop/com.github.xournalpp.xournalpp.xml
+    install(FILES ${CMAKE_BINARY_DIR}/generated/com.github.xournalpp.xournalpp.xml
             DESTINATION share/mime/packages)
-    install(FILES desktop/com.github.xournalpp.xournalpp.desktop
-            DESTINATION share/applications)
     install(FILES desktop/com.github.xournalpp.xournalpp.thumbnailer
             DESTINATION share/thumbnailers)
-    install(FILES desktop/com.github.xournalpp.xournalpp.appdata.xml
+    install(FILES ${CMAKE_BINARY_DIR}/generated/com.github.xournalpp.xournalpp.appdata.xml
             DESTINATION share/metainfo)
 endif ()
 
@@ -366,9 +373,6 @@ Configuration:
     Filesystem library:         ${CXX_FILESYSTEM_NAMESPACE}
     Profiling enabled:          ${ENABLE_PROFILING}
 ")
-
-option(CMAKE_DEBUG_INCLUDES_LDFLAGS "List include dirs and ldflags for xournalpp target" OFF)
-mark_as_advanced(FORCE CMAKE_DEBUG_INCLUDES_LDFLAGS)
 
 ##############################
 # Packaging options

@@ -4,10 +4,10 @@
 #include <utility>  // for move
 #include <vector>   // for vector
 
-#include "control/Control.h"                // for Control
-#include "gui/MainWindow.h"                 // for MainWindow
-#include "gui/XournalView.h"                // for XournalView
-#include "gui/dialog/RenameLayerDialog.h"   // for RenameLayerDialog
+#include "control/Control.h"                 // for Control
+#include "control/actions/ActionDatabase.h"  // for ActionDatabase
+#include "gui/MainWindow.h"                  // for MainWindow
+#include "gui/XournalView.h"                 // for XournalView
 #include "model/Document.h"                 // for Document
 #include "model/XojPage.h"                  // for XojPage
 #include "undo/InsertLayerUndoAction.h"     // for InsertLayerUndoAction
@@ -52,86 +52,60 @@ void LayerController::addListener(LayerCtrlListener* listener) { this->listener.
 
 void LayerController::removeListener(LayerCtrlListener* listener) { this->listener.remove(listener); }
 
+void LayerController::updateActions() {
+    auto layer = getCurrentLayerId();
+    auto maxLayer = getLayerCount();
+
+    auto* actionDB = control->getActionDatabase();
+
+    actionDB->enableAction(Action::LAYER_DELETE, layer > 0);
+    actionDB->enableAction(Action::LAYER_MERGE_DOWN, layer > 1);
+    actionDB->enableAction(Action::MOVE_SELECTION_LAYER_UP, layer < maxLayer);
+    actionDB->enableAction(Action::MOVE_SELECTION_LAYER_DOWN, layer > 1);
+    actionDB->enableAction(Action::LAYER_GOTO_NEXT, layer < maxLayer);
+    actionDB->enableAction(Action::LAYER_GOTO_PREVIOUS, layer > 0);
+    actionDB->enableAction(Action::LAYER_GOTO_TOP, layer < maxLayer);
+
+    actionDB->setActionState(Action::LAYER_ACTIVE, layer);
+}
+
 void LayerController::fireRebuildLayerMenu() {
     for (LayerCtrlListener* l: this->listener) { l->rebuildLayerMenu(); }
+    updateActions();
 }
 
 void LayerController::fireLayerVisibilityChanged() {
     for (LayerCtrlListener* l: this->listener) { l->layerVisibilityChanged(); }
+
+    // Rerenders the page - Todo: make this another listener
+    control->getWindow()->getXournal()->layerChanged(selectedPage);
 }
 
-auto LayerController::actionPerformed(ActionType type) -> bool {
-    switch (type) {
-        case ACTION_NEW_LAYER:
-            addNewLayer();
-            return true;
-
-        case ACTION_DELETE_LAYER:
-            deleteCurrentLayer();
-            return true;
-
-        case ACTION_MERGE_LAYER_DOWN:
-            mergeCurrentLayerDown();
-            return true;
-
-        case ACTION_FOOTER_LAYER:
-            // This event is not fired anymore
-            // This controller is called directly
-            return true;
-
-        case ACTION_GOTO_NEXT_LAYER: {
-            PageRef p = getCurrentPage();
-            auto layer = p->getSelectedLayerId();
-            if (layer < p->getLayerCount()) {
-                switchToLay(layer + 1, true);
-            }
-        }
-            return true;
-
-        case ACTION_GOTO_PREVIOUS_LAYER: {
-            PageRef p = getCurrentPage();
-            auto layer = p->getSelectedLayerId();
-            if (layer > 0) {
-                switchToLay(layer - 1, true);
-            }
-        }
-            return true;
-
-        case ACTION_GOTO_TOP_LAYER: {
-            PageRef p = getCurrentPage();
-            switchToLay(p->getLayerCount(), true);
-        }
-            return true;
-        case ACTION_RENAME_LAYER: {
-            RenameLayerDialog dialog(control->getGladeSearchPath(), control->getUndoRedoHandler(), this,
-                                     getCurrentPage()->getSelectedLayer());
-            dialog.show(control->getGtkWindow());
-        }
-            return true;
-        default:
-            return false;
+void LayerController::fireSelectedLayerChanged() {
+    for (LayerCtrlListener* l: this->listener) {
+        l->updateSelectedLayer();
     }
+    updateActions();
 }
 
 /**
  * Show all layer on the current page
  */
-void LayerController::showAllLayer() { hideOrHideAllLayer(true); }
+void LayerController::showAllLayer() { showOrHideAllLayer(true); }
 
 /**
  * Hide all layer on the current page
  */
-void LayerController::hideAllLayer() { hideOrHideAllLayer(false); }
+void LayerController::hideAllLayer() { showOrHideAllLayer(false); }
 
 /**
  * Show / Hide all layer on the current page
  */
-void LayerController::hideOrHideAllLayer(bool show) {
+void LayerController::showOrHideAllLayer(bool show) {
     PageRef page = getCurrentPage();
     for (Layer::Index i = 1; i <= page->getLayerCount(); i++) { page->setLayerVisible(i, show); }
 
     fireLayerVisibilityChanged();
-    control->getWindow()->getXournal()->layerChanged(selectedPage);
 }
 
 void LayerController::addNewLayer() {
@@ -262,10 +236,12 @@ void LayerController::mergeCurrentLayerDown() {
     Layer* layerBelow = (*page->getLayers())[layerBelowIndex];
 
     UndoActionPtr undo_redo_action =
-            std::make_unique<MergeLayerDownUndoAction>(this, page, currentLayer, layerBelow, layerID - 1, pageID);
+            std::make_unique<MergeLayerDownUndoAction>(this, page, currentLayer, layerID - 1, layerBelow, pageID);
     undo_redo_action->redo(this->control);
 
     control->getUndoRedoHandler()->addUndoAction(std::move(undo_redo_action));
+
+    fireRebuildLayerMenu();
 }
 
 void LayerController::copyCurrentLayer() {
@@ -303,8 +279,6 @@ auto LayerController::getCurrentPageId() const -> size_t { return selectedPage; 
 void LayerController::setLayerVisible(Layer::Index layerId, bool visible) {
     getCurrentPage()->setLayerVisible(layerId, visible);
     fireLayerVisibilityChanged();
-
-    control->getWindow()->getXournal()->layerChanged(selectedPage);
 }
 
 /**
@@ -325,14 +299,13 @@ void LayerController::switchToLay(Layer::Index layerId, bool hideShow, bool clea
     }
 
     p->setSelectedLayerId(layerId);
+    fireSelectedLayerChanged();
 
     if (hideShow) {
         for (Layer::Index i = 1; i <= p->getLayerCount(); i++) { p->setLayerVisible(i, i <= layerId); }
-    }
 
-    // Repaint page
-    control->getWindow()->getXournal()->layerChanged(selectedPage);
-    fireLayerVisibilityChanged();
+        fireLayerVisibilityChanged();
+    }
 }
 
 /**
@@ -412,19 +385,4 @@ std::string LayerController::getLayerNameById(Layer::Index id) const {
     page->setSelectedLayerId(previousId);
 
     return name;
-}
-
-/**
- * Make sure there is at least one layer on the page
- */
-void LayerController::ensureLayerExists(PageRef page) {
-    if (page->getSelectedLayerId() > 0) {
-        return;
-    }
-
-    // This creates a layer if none exists
-    page->getSelectedLayer();
-    page->setSelectedLayerId(1);
-
-    fireRebuildLayerMenu();
 }

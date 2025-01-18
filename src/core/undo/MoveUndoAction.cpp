@@ -1,7 +1,10 @@
 #include "MoveUndoAction.h"
 
 #include <memory>  // for allocator, operator!=, __shared_ptr_access
+#include <utility>
 
+#include "control/Control.h"
+#include "model/Document.h"
 #include "model/Element.h"    // for Element
 #include "model/Layer.h"      // for Layer
 #include "model/PageRef.h"    // for PageRef
@@ -9,22 +12,18 @@
 #include "undo/UndoAction.h"  // for UndoAction
 #include "util/i18n.h"        // for _
 
-class Control;
-
-MoveUndoAction::MoveUndoAction(Layer* sourceLayer, const PageRef& sourcePage, std::vector<Element*>* selected,
-                               double mx, double my, Layer* targetLayer, PageRef targetPage):
-        UndoAction("MoveUndoAction") {
+MoveUndoAction::MoveUndoAction(Layer* sourceLayer, const PageRef& sourcePage, std::vector<Element*> selected, double mx,
+                               double my, Layer* targetLayer, PageRef targetPage):
+        UndoAction("MoveUndoAction"),
+        elements(std::move(selected)),
+        sourceLayer(sourceLayer),
+        text(_("Move")),
+        dx(mx),
+        dy(my) {
     this->page = sourcePage;
-    this->sourceLayer = sourceLayer;
-    this->text = _("Move");
-
-    this->dx = mx;
-    this->dy = my;
-
-    this->elements = *selected;
 
     if (this->page != targetPage) {
-        this->targetPage = targetPage;
+        this->targetPage = std::move(targetPage);
         this->targetLayer = targetLayer;
     }
 }
@@ -40,11 +39,14 @@ void MoveUndoAction::move() {
 }
 
 auto MoveUndoAction::undo(Control* control) -> bool {
+    Document* doc = control->getDocument();
+    doc->lock();
     if (this->sourceLayer != this->targetLayer && this->targetLayer != nullptr) {
         switchLayer(&this->elements, this->targetLayer, this->sourceLayer);
     }
 
     move();
+    doc->unlock();
     repaint();
     this->undone = true;
 
@@ -52,11 +54,14 @@ auto MoveUndoAction::undo(Control* control) -> bool {
 }
 
 auto MoveUndoAction::redo(Control* control) -> bool {
+    Document* doc = control->getDocument();
+    doc->lock();
     if (this->sourceLayer != this->targetLayer && this->targetLayer != nullptr) {
         switchLayer(&this->elements, this->sourceLayer, this->targetLayer);
     }
 
     move();
+    doc->unlock();
     repaint();
     this->undone = false;
 
@@ -65,8 +70,7 @@ auto MoveUndoAction::redo(Control* control) -> bool {
 
 void MoveUndoAction::switchLayer(std::vector<Element*>* entries, Layer* oldLayer, Layer* newLayer) {
     for (Element* e: this->elements) {
-        oldLayer->removeElement(e, false);
-        newLayer->addElement(e);
+        newLayer->addElement(oldLayer->removeElement(e).e);
     }
 }
 

@@ -45,7 +45,7 @@ TEST(UtilElementRange, testInvalid) {
         try {
             auto actual = ElementRange::parse(bad_input, maxCount);
             FAIL() << "std::invalid_argument not thrown for bad input.";
-        } catch (const std::invalid_argument& e) {
+        } catch (const std::invalid_argument&) {
             // good, exception is thrown as it should
         } catch (const std::exception& e) { FAIL() << e.what(); } catch (...) {
             FAIL() << "Unexpected exception caught.";
@@ -57,7 +57,7 @@ TEST(UtilElementRange, testPageCountIsZero) {
     try {
         auto actual = ElementRange::parse("", 0);
         FAIL() << "std::logic_error not thrown when maxCount equals 0.";
-    } catch (const std::logic_error& e) {
+    } catch (const std::logic_error&) {
         // good, exception is thrown as it should
     } catch (const std::exception& e) { FAIL() << e.what(); } catch (...) {
         FAIL() << "Unexpected exception caught.";

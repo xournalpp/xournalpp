@@ -22,7 +22,7 @@
 
 #include "gui/IconNameHelper.h"                            // for IconNameHe...
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"  // for SidebarPre...
-#include "gui/sidebar/previews/base/SidebarToolbar.h"      // for SidebarAct...
+#include "util/raii/GObjectSPtr.h"
 
 class Control;
 class GladeGui;
@@ -30,15 +30,10 @@ class GladeGui;
 
 class SidebarPreviewPages: public SidebarPreviewBase {
 public:
-    SidebarPreviewPages(Control* control, GladeGui* gui, SidebarToolbar* toolbar);
+    SidebarPreviewPages(Control* control);
     ~SidebarPreviewPages() override;
 
 public:
-    /**
-     * Called when an action is performed
-     */
-    void actionPerformed(SidebarActions action) override;
-
     void enableSidebar() override;
 
     /**
@@ -57,12 +52,6 @@ public:
      */
     void updatePreviews() override;
 
-    /**
-     * Opens the page preview context menu, at the current cursor position, for
-     * the given page.
-     */
-    void openPreviewContextMenu() override;
-
 public:
     // DocumentListener interface (only the part which is not handled by SidebarPreviewBase)
     void pageSizeChanged(size_t page) override;
@@ -78,27 +67,9 @@ private:
     void unselectPage();
 
     /**
-     * The context menu to display when a page is right-clicked.
+     * Updates the indices of the pages
      */
-    GtkWidget* const contextMenu = nullptr;
-
-    GtkWidget* contextMenuMoveUp = nullptr;
-    GtkWidget* contextMenuMoveDown = nullptr;
-
-    /**
-     * The data passed to the menu item callbacks.
-     */
-    struct ContextMenuData {
-        SidebarToolbar* toolbar;
-        SidebarActions actions;
-    };
-
-
-    /**
-     * The signals connected to the context menu items. This must be kept track
-     * of so the data can be deallocated safely.
-     */
-    std::vector<std::tuple<GtkWidget*, gulong, std::unique_ptr<ContextMenuData>>> contextMenuSignals;
+    void updateIndices();
 
 private:
     IconNameHelper iconNameHelper;

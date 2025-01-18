@@ -14,6 +14,7 @@
 #include <vector>  // for vector
 
 #include "model/Element.h"  // for Element (ptr only), ShapeContainer
+#include "model/ElementInsertionPosition.h"
 #include "model/OverlayBase.h"
 #include "model/PageRef.h"  // for PageRef
 #include "util/DispatchPool.h"
@@ -21,28 +22,42 @@
 #include "util/Range.h"
 #include "view/overlays/SelectionView.h"
 
+class Document;
+
 class Selection: public ShapeContainer, public OverlayBase {
 public:
-    Selection();
+    Selection(bool multiLayer);
     ~Selection() override;
 
-    using BoundaryPoint = utl::Point<double>;
+    using BoundaryPoint = xoj::util::Point<double>;
 
 public:
-    virtual bool finalize(PageRef page) = 0;
+    /**
+     * @return layerId of selected objects, 0 if there is nothing in RectSelection
+    */
+    size_t finalize(PageRef page, bool disableMultilayer, Document* doc);
+
     virtual void currentPos(double x, double y) = 0;
     virtual bool userTapped(double zoom) const = 0;
     virtual const std::vector<BoundaryPoint>& getBoundary() const = 0;
 
-    inline const std::shared_ptr<xoj::util::DispatchPool<xoj::view::SelectionView>>& getViewPool() const {
+    inline auto getViewPool() const -> const std::shared_ptr<xoj::util::DispatchPool<xoj::view::SelectionView>>& {
         return viewPool;
     }
+
+    auto isMultiLayerSelection() -> bool;
+    /**
+     * Get the selected elements and clears them (std::move)
+     */
+    auto releaseElements() -> InsertionOrderRef;
 
 private:
 protected:
     std::vector<BoundaryPoint> boundaryPoints;
 
-    std::vector<Element*> selectedElements;
+    bool multiLayer;
+
+    InsertionOrderRef selectedElements;
     PageRef page;
 
     Range bbox;
@@ -54,11 +69,10 @@ protected:
 
 class RectSelection: public Selection {
 public:
-    RectSelection(double x, double y);
+    RectSelection(double x, double y, bool multiLayer = false);
     ~RectSelection() override;
 
 public:
-    bool finalize(PageRef page) override;
     void currentPos(double x, double y) override;
     bool contains(double x, double y) const override;
     bool userTapped(double zoom) const override;
@@ -74,10 +88,9 @@ private:
 
 class RegionSelect: public Selection {
 public:
-    RegionSelect(double x, double y);
+    RegionSelect(double x, double y, bool multiLayer = false);
 
 public:
-    bool finalize(PageRef page) override;
     void currentPos(double x, double y) override;
     bool contains(double x, double y) const override;
     bool userTapped(double zoom) const override;

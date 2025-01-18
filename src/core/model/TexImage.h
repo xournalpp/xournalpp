@@ -11,11 +11,14 @@
 
 #pragma once
 
+#include <memory>
 #include <string>  // for string
 
 #include <cairo.h>    // for cairo_surface_t, cairo_status_t
 #include <glib.h>     // for GError
 #include <poppler.h>  // for PopplerDocument
+
+#include "util/raii/GObjectSPtr.h"  // for GObjectSPtr
 
 #include "Element.h"  // for Element
 
@@ -60,7 +63,8 @@ public:
     void setText(std::string text);
     std::string getText() const;
 
-    Element* clone() const override;
+    auto cloneTexImage() const -> std::unique_ptr<TexImage>;
+    auto clone() const -> ElementPtr override;
 
     /**
      * @return true if the binary data (PNG or PDF) was loaded successfully.
@@ -86,7 +90,7 @@ private:
     /**
      * Tex PDF Document, if rendered as PDF
      */
-    PopplerDocument* pdf = nullptr;
+    xoj::util::GObjectSPtr<PopplerDocument> pdf;
 
     /**
      * Tex image, if rendered as image. Note: this is deprecated and subject to removal in a later version.

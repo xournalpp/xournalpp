@@ -11,6 +11,7 @@
 
 #include "pdf/base/XojPdfAction.h"     // for XojPdfAction
 #include "pdf/base/XojPdfPage.h"       // for XojPdfRectangle, XojPdfPage::Link
+#include "util/Assert.h"               // for xoj_assert
 #include "util/GListView.h"            // for GListView, GListView<>::GListV...
 #include "util/raii/CLibrariesSPtr.h"  // for adopt
 #include "util/raii/CairoWrappers.h"   // for CairoRegionSPtr
@@ -84,13 +85,20 @@ void PopplerGlibPage::renderForPrinting(cairo_t* cr) const { poppler_page_render
 
 auto PopplerGlibPage::getPageId() const -> int { return poppler_page_get_index(page); }
 
+auto PopplerGlibPage::getPageLabel() const -> std::string {
+    gchar* label{poppler_page_get_label(page)};
+    std::string cpp_label{label};
+    g_free(label);
+    return cpp_label;
+}
+
 auto PopplerGlibPage::findText(const std::string& text) -> std::vector<XojPdfRectangle> {
     std::vector<XojPdfRectangle> findings;
 
     double height = getHeight();
     GList* matches = poppler_page_find_text(page, text.c_str());
     for (auto& rect: GListView<PopplerRectangle>(matches)) {
-        findings.emplace_back(rect.x1, height - rect.y1, rect.x2, height - rect.y2);
+        findings.emplace_back(rect.x1, height - rect.y2, rect.x2, height - rect.y1);
         poppler_rectangle_free(&rect);
     }
     g_list_free(matches);
@@ -108,7 +116,7 @@ auto getPopplerSelectionStyle(XojPdfPageSelectionStyle style) -> PopplerSelectio
         case XojPdfPageSelectionStyle::Area:
             return POPPLER_SELECTION_GLYPH;
         default:
-            g_assert(false && "unimplemented");
+            xoj_assert_message(false, "unimplemented");
     }
 }
 
@@ -122,7 +130,7 @@ auto PopplerGlibPage::selectText(const XojPdfRectangle& rect, XojPdfPageSelectio
             return "";
         }
         char* textBytes = poppler_page_get_text_for_area(page, &pRect);
-        g_assert_nonnull(textBytes);
+        xoj_assert(textBytes);
 
         double y = rectArray[0].y2;
         std::ostringstream ss;
@@ -197,11 +205,11 @@ auto PopplerGlibPage::selectTextLines(const XojPdfRectangle& selectRect, XojPdfP
         // We always want to select in the "proper" rectangle.
         PopplerRectangle area{rect.x1, rect.y1, rect.x2, rect.y2};
         if (!poppler_page_get_text_layout_for_area(this->page, &area, &rectArray, &numRects)) {
-            return {.region = xoj::util::CairoRegionSPtr(cairo_region_create(), xoj::util::adopt), .rects = textRects};
+            return {xoj::util::CairoRegionSPtr(cairo_region_create(), xoj::util::adopt), textRects};
         }
     } else {
         if (!poppler_page_get_text_layout(this->page, &rectArray, &numRects)) {
-            return {.region = xoj::util::CairoRegionSPtr(cairo_region_create(), xoj::util::adopt), .rects = textRects};
+            return {xoj::util::CairoRegionSPtr(cairo_region_create(), xoj::util::adopt), textRects};
         }
     }
 
@@ -294,8 +302,8 @@ auto PopplerGlibPage::selectTextLines(const XojPdfRectangle& selectRect, XojPdfP
         addTextRectsInRegion(prevRect);
     }
 
-    g_assert_nonnull(region);
-    return {.region = xoj::util::CairoRegionSPtr(region, xoj::util::adopt), .rects = textRects};
+    xoj_assert(region);
+    return {xoj::util::CairoRegionSPtr(region, xoj::util::adopt), textRects};
 }
 
 auto PopplerGlibPage::getLinks() -> std::vector<Link> {

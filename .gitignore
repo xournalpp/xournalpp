@@ -2,11 +2,9 @@
 .deps
 .dirstamp
 .libs
-*.DS_Store
 *.o
 *.lo
 *.la
-*~
 Makefile
 Makefile.in
 libtool
@@ -30,7 +28,7 @@ stamp-h1
 ppa-build
 
 # CMake
-build/
+build*/
 desktop/desktop_install.sh
 
 # NetBeans
@@ -38,18 +36,14 @@ nbproject/
 
 # Visual Studio Code
 .vscode/
-*/.vscode/
 
 # CLion
-.idea
+.idea/
 cmake-build-*
 
 # API Documentation
 doc/html
 doc/latex
-
-src/core/view/.DS_Store
-src/core/view/background/.DS_Store
 
 # Flatpak
 repo/
@@ -60,8 +54,12 @@ flatpak-build/
 # Lua
 lua-*
 
-# Clangd 
+# Clangd
 compile_commands.json
 .clangd
-.cache
+.cache/
 Debug
+
+# Miscellaneous
+.DS_STORE
+*~
