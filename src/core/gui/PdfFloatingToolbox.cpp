@@ -138,7 +138,7 @@ void PdfFloatingToolbox::show() {
 
 void PdfFloatingToolbox::copyTextToClipboard() {
     GtkClipboard* clipboard = gtk_widget_get_clipboard(this->theMainWindow->getWindow(), GDK_SELECTION_CLIPBOARD);
-    if (std::string text = this->pdfElemSelection->getSelectedText(); !text.empty()) {
+    if (const std::string& text = this->pdfElemSelection->getSelectedText(); !text.empty()) {
         gtk_clipboard_set_text(clipboard, text.c_str(), -1);
     }
 }
