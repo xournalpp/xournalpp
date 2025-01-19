@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.2.5+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-12 04:26+0000\n"
+"POT-Creation-Date: 2025-01-19 04:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -192,6 +192,10 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2057
 msgid "Discard"
+msgstr ""
+
+#: ../src/core/control/Control.cpp:2141
+msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
 #: ../src/core/control/CrashHandler.cpp:31
@@ -4365,6 +4369,10 @@ msgid "Help"
 msgstr ""
 
 #: ../ui/mainmenubar.xml:859
+msgid "Run Gtk3 demo"
+msgstr ""
+
+#: ../ui/mainmenubar.xml:863
 msgid "About"
 msgstr ""
 

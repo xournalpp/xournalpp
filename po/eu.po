@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-09 07:16+0000\n"
-"PO-Revision-Date: 2025-01-12 04:25\n"
+"POT-Creation-Date: 2025-01-18 14:15+0000\n"
+"PO-Revision-Date: 2025-01-19 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -183,6 +183,10 @@ msgstr "Gorde"
 #: ../src/core/control/Control.cpp:2057
 msgid "Discard"
 msgstr "Baztertu"
+
+#: ../src/core/control/Control.cpp:2141
+msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
+msgstr ""
 
 #: ../src/core/control/CrashHandler.cpp:31
 msgid "Trying to emergency save the current open document..."
@@ -4256,6 +4260,10 @@ msgid "Help"
 msgstr "Laguntza"
 
 #: ../ui/mainmenubar.xml:859
+msgid "Run Gtk3 demo"
+msgstr ""
+
+#: ../ui/mainmenubar.xml:863
 msgid "About"
 msgstr "Honi buruz"
 
