@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-07 13:29+0000\n"
-"PO-Revision-Date: 2024-12-08 18:11\n"
+"PO-Revision-Date: 2025-01-19 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -418,7 +418,8 @@ msgstr "Експорт тільки сторінок вказаних у про�
 #: ../src/core/control/XournalMain.cpp:678
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Експортувати тільки шари у зазначеному діапазоні (наприклад, \"2-3,5,7-\")\n"
+"                                 Не матиме ефекту без -p/--create-pdf або -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:682
 msgid "Set DPI for PNG exports. Default is 300\n"
@@ -698,11 +699,11 @@ msgstr "На задній план"
 #: ../src/core/control/tools/ImageHandler.cpp:73
 #: ../src/core/model/Image.cpp:163 ../src/core/model/Image.cpp:167
 msgid "Failed to load image"
-msgstr ""
+msgstr "Не вдалося завантажити зображення"
 
 #: ../src/core/control/tools/ImageHandler.cpp:74
 msgid "Could not determine image size!"
-msgstr ""
+msgstr "Не вдалося визначити розмір зображення!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:132
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -759,11 +760,11 @@ msgstr "Не вдалося прочитати зображення: {1}. Пов
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:434
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "Не вдалося прочитати номер сторінки для клонованого фонового зображення: {1}."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:442
 msgid "Unknown pixmap::domain type: {1}"
-msgstr ""
+msgstr "Невідомий pixmap::domain: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:493
 msgid "Unknown domain type: {1}"
@@ -771,19 +772,19 @@ msgstr "Невідомий тип домену: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:531
 msgid "Unknown background type: {1}"
-msgstr ""
+msgstr "Невідомий тип фону: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:555
 msgid "Error reading width of a stroke: {1}"
-msgstr ""
+msgstr "Помилка при зчитуванні ширини лінії: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:623
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "Невідомий тип обведення: \"{1}\", ймовірно округлий"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:641
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr ""
+msgstr "Невідомий тип ліній: \"{1}\", ймовірно перо"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:809
 #: ../src/core/control/xojfile/LoadHandler.cpp:825
@@ -853,12 +854,12 @@ msgstr "Атрибут \"{1}\" має бути у форматі цілого ч
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:178
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr ""
+msgstr "Атрибут \"{1}\" має бути у форматі size_t, поточне значення: nullptr"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:185
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:205
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr ""
+msgstr "Атрибут \"{1}\" має бути у форматі size_t, поточне значення: \"{2}\""
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:251
 msgid "Could not write background \"{1}\", {2}"
@@ -901,7 +902,7 @@ msgstr "Текст, знайдений на цій сторінці"
 #: ../src/core/gui/SearchBar.cpp:79
 #, c-format
 msgid "Text %zu times found on this page"
-msgstr ""
+msgstr "Текст знайдено %zu раз(-и/-ів) на цій сторінці"
 
 #: ../src/core/gui/SearchBar.cpp:84
 msgid "Text not found"
@@ -913,7 +914,7 @@ msgstr "Текст знайдено один раз на сторінці {1}"
 
 #: ../src/core/gui/SearchBar.cpp:134
 msgid "Text found {1} times on page {2}"
-msgstr ""
+msgstr "Текст знайдено {1} раз(-и/-ів) на сторінці {2}"
 
 #: ../src/core/gui/SearchBar.cpp:139
 msgid "Text not found, searched on all pages"
@@ -1166,11 +1167,11 @@ msgstr "Інструмент видалено з Панелі інструмен
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:174
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr ""
+msgstr "Не вдалось видалити елемент інструмента {1} з Панелі інструментів {2} на позиції {3}"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:179
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr ""
+msgstr "Не вдалось видалити інструмент з Панелі інструментів {1} на позиції {2}"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:57
 msgid "Separator"
@@ -1178,7 +1179,7 @@ msgstr "Розділювач"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:58
 msgid "Spacer"
-msgstr ""
+msgstr "Роздільник"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:56
 msgid "No recent files"
@@ -1200,7 +1201,9 @@ msgstr "_Тло паперу"
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
-msgstr ""
+msgstr "У поточному PDF документі відсутня сторінка № {1}\n"
+"Бажаєте вставити цю сторінку?\n\n"
+"Підказка: Можна обрати {2} для додавання PDF сторінки."
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:106
 msgid "Insert after current page"
@@ -1383,7 +1386,7 @@ msgstr "Керування панелями інструментів"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Customize Toolbars"
-msgstr "Налаштовування панелі інструментів"
+msgstr "Налаштування панелі інструментів"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:469
 msgid "Zoom out"
@@ -1462,7 +1465,7 @@ msgstr "Виберіть лінійний PDF-текст"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:533
 msgid "Select PDF Text in Rectangle"
-msgstr ""
+msgstr "Виділити PDF текст всередині прямокутної області"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:544
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:24
@@ -1481,7 +1484,7 @@ msgstr "Прямокутне виділення"
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:26
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:84
 msgid "Select Multi-Layer Region"
-msgstr ""
+msgstr "Обрати багатошарову область"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Select Multi-Layer Rect"
@@ -1505,7 +1508,7 @@ msgstr "Відтворити Об'єкт"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:552
 msgid "Setsquare"
-msgstr ""
+msgstr "Косинець-транспортир"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:553
 msgid "Compass"
@@ -1611,7 +1614,7 @@ msgstr "Сторінка"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:24
 msgid "Select PDF Text In Rectangle"
-msgstr ""
+msgstr "Виділити PDF текст всередині прямокутної області"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:61
 msgid "Select PDF Text"
@@ -1632,7 +1635,7 @@ msgstr "Комбо виділення"
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:78
 msgid "Select Multi-Layer Rectangle"
-msgstr ""
+msgstr "Вибрати багатошаровий прямокутник"
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:136
 msgid "Zoom Slider"
@@ -1654,19 +1657,19 @@ msgstr "Документ не завантажений! ({1}), {2}"
 
 #: ../src/core/model/Image.cpp:163 ../src/core/model/Image.cpp:173
 msgid "Error: "
-msgstr ""
+msgstr "Помилка: "
 
 #: ../src/core/model/Image.cpp:167 ../src/core/model/Image.cpp:177
 msgid "Unrecoverable error"
-msgstr ""
+msgstr "Критична помилка"
 
 #: ../src/core/model/Image.cpp:173 ../src/core/model/Image.cpp:177
 msgid "Failed to close image stream"
-msgstr ""
+msgstr "Не вдалося закрити stream зображення"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:122
 msgid "Error while finalizing the PDF Cairo surface"
-msgstr ""
+msgstr "Помилка при завершенні поверхні PDF Cairo"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:188
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:231
@@ -1676,7 +1679,7 @@ msgstr "Відсутні сторінки для експорту!"
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:197
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:236
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "Не вдалося ініціалізувати поверхню PDF Cairo"
 
 #: ../src/core/undo/AddUndoAction.cpp:64
 #: ../src/core/undo/DeleteUndoAction.cpp:61
@@ -1771,7 +1774,7 @@ msgstr "Об'єднати з наступним шаром"
 
 #: ../src/core/undo/MissingPdfUndoAction.cpp:66
 msgid "Replace missing PDF"
-msgstr ""
+msgstr "Замінити відсутні PDF"
 
 #: ../src/core/undo/MoveLayerUndoAction.cpp:26
 msgid "Move layer"
@@ -1787,7 +1790,7 @@ msgstr "Фон сторінки змінений"
 
 #: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
 msgid "Page size changed"
-msgstr ""
+msgstr "Розмір сторінки було змінено"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
@@ -1826,7 +1829,8 @@ msgstr "Не вдалось скасувати \"{1}\"\n"
 #: ../src/core/undo/UndoRedoHandler.cpp:145
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "Не вдалось повторити \"{1}\"\n"
+"Щось пішло не так… Будь ласка, напишіть звіт про помилку…"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo: "
@@ -1838,19 +1842,19 @@ msgstr "Повторити: "
 
 #: ../src/util/ElementRange.cpp:91
 msgid "ElementRange::parse(): invalid element range."
-msgstr ""
+msgstr "ElementRange::parse(): неприпустимий діапазон елемента."
 
 #: ../src/util/ElementRange.cpp:95
 msgid "ElementRange::parse(): given element index is larger than maximum count."
-msgstr ""
+msgstr "ElementRange::parse(): індекс заданого елемента більше за максимальну кількість."
 
 #: ../src/util/ElementRange.cpp:98
 msgid "ElementRange::parse(): interval bounds must be in increasing order."
-msgstr ""
+msgstr "ElementRange::parse(): границі інтервалу мають бути у порядку зростання."
 
 #: ../src/util/ElementRange.cpp:101
 msgid "ElementRange::parse(): element indices start with 1"
-msgstr ""
+msgstr "ElementRange::parse(): індекси елемента починаються з 1"
 
 #: ../src/util/OutputStream.cpp:27
 msgid "Error opening file: \"{1}\""
@@ -1947,7 +1951,7 @@ msgstr ""
 
 #: ../ui/about.glade:157
 msgid "Icon Designers"
-msgstr ""
+msgstr "Дизайнери іконок"
 
 #: ../ui/about.glade:210
 msgid "Partially based on Xournal\n"
@@ -1994,7 +1998,7 @@ msgstr "Нема"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
-msgstr ""
+msgstr "Без лініювання"
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
@@ -2007,7 +2011,8 @@ msgstr "Експорт"
 #: ../ui/exportSettings.glade:124
 msgid "<b>Document export settings</b>\n"
 "Set export parameters"
-msgstr ""
+msgstr "<b>Налаштування експорту документа</b>\n"
+"Параметри експорту"
 
 #: ../ui/exportSettings.glade:147
 msgid "Image quality"
@@ -2040,7 +2045,7 @@ msgstr "dpi"
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:354
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
-msgstr ""
+msgstr "Експортувати документ без будь-якого тла (Нема) або тільки з фоном PDF та зображень (Без лініювання) або з усіма типами фону (Всі)."
 
 #: ../ui/exportSettings.glade:369
 msgid "Export layers progressively"
@@ -2090,7 +2095,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:119
 msgid "Default LaTeX Text"
-msgstr ""
+msgstr "Текст LaTeX за замовчуванням"
 
 #: ../ui/latexSettings.glade:152
 msgid "The LaTeX file to use as a template for the LaTeX tool."
@@ -2102,7 +2107,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:166
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
-msgstr ""
+msgstr "Наступні рядки будуть замінені в глобальному файлі шаблону під час запуску інструменту LaTeX:"
 
 #: ../ui/latexSettings.glade:180
 msgid "%%XPP_TOOL_INPUT%%"
@@ -2793,7 +2798,7 @@ msgstr "Налаштування Xournal++"
 #: ../ui/settings.glade:363
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr "<i>, якщо документ вже був збережений, ви можете знайти його в тій же папці з розширенням .autosave. oj\n"
+msgstr "<i>Якщо документ вже був збережений, ви можете знайти його в тій же теці з розширенням .autosave.xoj\n"
 "Якщо файл ще не був збережений, ви можете знайти його в ~/.cache/xournalpp/autosaves</i>"
 
 #: ../ui/settings.glade:382
@@ -2913,11 +2918,11 @@ msgstr "%{name}\tІм'я документу\n"
 
 #: ../ui/settings.glade:808
 msgid "Default Pdf export name"
-msgstr ""
+msgstr "Ім'я PDF файлу при експорті"
 
 #: ../ui/settings.glade:837
 msgid "Enable Autoloading of Journals"
-msgstr ""
+msgstr "Увімкнути автозавантаження журналів"
 
 #: ../ui/settings.glade:842
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
@@ -2925,7 +2930,7 @@ msgstr ""
 
 #: ../ui/settings.glade:854
 msgid "Enable autoloading of most recent file on application startup"
-msgstr ""
+msgstr "Ввімкнути автозавантаження останнього файлу при запуску програми"
 
 #: ../ui/settings.glade:859
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
@@ -2945,7 +2950,7 @@ msgstr ""
 
 #: ../ui/settings.glade:991
 msgid "Input Devices"
-msgstr ""
+msgstr "Пристрої вводу"
 
 #: ../ui/settings.glade:1030
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
@@ -2966,7 +2971,8 @@ msgstr ""
 #: ../ui/settings.glade:1081
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
-msgstr ""
+msgstr "Повільнішим штрихам присвоюється значення більшого натиску, якщо інші параметри натиску не визначено.\n\n"
+"<i>Ця функція може бути корисною для пристроїв, у яких немає чутливості тиску. Наприклад, для мишки або сенсорного екрану.</i>"
 
 #: ../ui/settings.glade:1090
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
@@ -3038,7 +3044,7 @@ msgstr "5"
 
 #: ../ui/settings.glade:1318 ../ui/settings.glade:1338
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr ""
+msgstr "Гаусовий параметр: чим вище, тим краща стабілізація, але і більша затримка між рухами курсора та інструмента."
 
 #: ../ui/settings.glade:1320
 msgid "0,50"
@@ -3050,7 +3056,7 @@ msgstr "Препроцесор"
 
 #: ../ui/settings.glade:1383
 msgid "Cusp detection"
-msgstr ""
+msgstr "Виявлення виступів"
 
 #: ../ui/settings.glade:1400
 msgid "Finalize the stroke"
@@ -3098,7 +3104,7 @@ msgstr "Увімкнути чутливість до натиску"
 
 #: ../ui/settings.glade:1732
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
-msgstr ""
+msgstr "<i>Деякі пристрої повідомляють про неочікувано малу/велику силу натискання. Це може бути виправлено шляхом встановлення значень мінімальної сили натискання або масштабуванням сили натискання, що поступає від пристрою.</i>"
 
 #: ../ui/settings.glade:1755
 msgid "Minimum Pressure:"
@@ -3138,7 +3144,7 @@ msgstr "Обробка артефактів"
 
 #: ../ui/settings.glade:1983
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
-msgstr ""
+msgstr "<i>Вкажіть інструменти, які буде обрано при натисненні кнопки стилуса або використанні гумки. При відпусканні кнопки, буде обрано попередній інструмент.</i>"
 
 #: ../ui/settings.glade:2023
 msgid "Button 1"
@@ -3154,7 +3160,7 @@ msgstr "Кнопки стилуса"
 
 #: ../ui/settings.glade:2153
 msgid "Stylus-based eraser is visible"
-msgstr ""
+msgstr "Видимість гумки стилусу"
 
 #: ../ui/settings.glade:2169
 msgctxt "eraser is never visible"
@@ -3169,16 +3175,16 @@ msgstr "Завжди"
 #: ../ui/settings.glade:2171
 msgctxt "eraser is only visible when floating"
 msgid "When floating"
-msgstr ""
+msgstr "Під час руху"
 
 #: ../ui/settings.glade:2172
 msgctxt "eraser is only visible when touching the screen"
 msgid "When touching"
-msgstr ""
+msgstr "При натисненні"
 
 #: ../ui/settings.glade:2196
 msgid "Eraser visibility"
-msgstr ""
+msgstr "Видимість гумки"
 
 #: ../ui/settings.glade:2227
 msgid "Stylus"
@@ -3186,7 +3192,7 @@ msgstr "Стилус"
 
 #: ../ui/settings.glade:2278
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
-msgstr ""
+msgstr "<i>Ви можете налаштувати пристрої, що не розпізнаються GTK як сенсорний екран, поводитись так, ніби вони ним є.</i>"
 
 #: ../ui/settings.glade:2313 ../ui/settings.glade:2937
 #: ../ui/settingsDeviceClassConfig.glade:46
@@ -3195,15 +3201,15 @@ msgstr "Сенсорний екран"
 
 #: ../ui/settings.glade:2344
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
-msgstr ""
+msgstr "<i>Якщо ваше обладнання не підтримує розпізнавання рук, Xournal++ може вимкнути сенсорний екран, коли перо знаходиться біля екрану.</i>"
 
 #: ../ui/settings.glade:2358
 msgid "Enable internal Hand Recognition"
-msgstr ""
+msgstr "Увімкнути внутрішнє розпізнавання рук"
 
 #: ../ui/settings.glade:2389
 msgid "Disabling Method"
-msgstr ""
+msgstr "Метод деактивації"
 
 #: ../ui/settings.glade:2400
 msgid "Timeout"
@@ -3215,11 +3221,11 @@ msgstr "Автовизначення"
 
 #: ../ui/settings.glade:2444
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
-msgstr ""
+msgstr "s <i>(після чого сенсорний екран буде знову активовано)</i>"
 
 #: ../ui/settings.glade:2494
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
-msgstr ""
+msgstr "<i>Вкажіть команди, які будуть викликані щойно відбудеться розпізнавання руки. Команди будуть виконані у UI (графічному) потоці, тому запевніться, що вони не блокуються!</i>"
 
 #: ../ui/settings.glade:2517
 msgid "Enable"
@@ -3235,11 +3241,11 @@ msgstr "Перевірити"
 
 #: ../ui/settings.glade:2610
 msgid "Custom Commands (for Method \"Custom\")"
-msgstr ""
+msgstr "Користувацькі команди (для методу \"Користувацька\")"
 
 #: ../ui/settings.glade:2635
 msgid "Hand Recognition"
-msgstr ""
+msgstr "Розпізнавання рук"
 
 #: ../ui/settings.glade:2666
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
@@ -3247,7 +3253,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2678
 msgid "Enable zoom gestures (requires restart)"
-msgstr ""
+msgstr "Увімкнути масштабування жестами (потрібен перезапуск)"
 
 #: ../ui/settings.glade:2697
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
@@ -3277,15 +3283,15 @@ msgstr ""
 
 #: ../ui/settings.glade:2815
 msgid "Enable touch drawing"
-msgstr ""
+msgstr "Увімкнути малювання за допомогою дотику"
 
 #: ../ui/settings.glade:2820 ../ui/settings.glade:2888
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
-msgstr ""
+msgstr "Використовувати два пальці для переміщення/масштабування та один палець для використання вибраного інструменту."
 
 #: ../ui/settings.glade:2838
 msgid "Touch Drawing"
-msgstr ""
+msgstr "Сенсорне малювання"
 
 #: ../ui/settings.glade:2869
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
@@ -3293,19 +3299,19 @@ msgstr ""
 
 #: ../ui/settings.glade:2883
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
-msgstr ""
+msgstr "Вимкнути вбудоване інерційне прокручування GTK (потрібен перезапуск)."
 
 #: ../ui/settings.glade:2906
 msgid "Touch Scrolling"
-msgstr ""
+msgstr "Сенсорна прокрутка"
 
 #: ../ui/settings.glade:2997
 msgid "Show Menubar on Startup"
-msgstr ""
+msgstr "Показувати панель меню під час запуску"
 
 #: ../ui/settings.glade:3016
 msgid "<i>Toggle visibility of menubar with F10</i>"
-msgstr ""
+msgstr "<i>Керуйте видимістю панелі меню за допомогою F10</i>"
 
 #: ../ui/settings.glade:3034
 msgid "Show filepath in title bar"
@@ -3325,11 +3331,11 @@ msgstr "Колір тла між сторінками"
 
 #: ../ui/settings.glade:3129
 msgid "Selection Color (Text, Stroke Selection etc.)"
-msgstr ""
+msgstr "Колір виділення (тексту, ліній і т.д.)"
 
 #: ../ui/settings.glade:3152
 msgid "Use available Stock Icons (requires restart)"
-msgstr ""
+msgstr "Використовувати доступні стандартні іконки (потрібен перезапуск)"
 
 #: ../ui/settings.glade:3174
 msgid "Icon Theme:"
@@ -3341,19 +3347,19 @@ msgstr "Колір"
 
 #: ../ui/settings.glade:3217
 msgid "Theme Variant:"
-msgstr ""
+msgstr "Варіант теми:"
 
 #: ../ui/settings.glade:3235
 msgid "Use system default"
-msgstr ""
+msgstr "Як у системі"
 
 #: ../ui/settings.glade:3236
 msgid "Force light theme"
-msgstr ""
+msgstr "Світла тема"
 
 #: ../ui/settings.glade:3237
 msgid "Force dark theme"
-msgstr ""
+msgstr "Темна тема"
 
 #: ../ui/settings.glade:3250
 msgid "(this may not work, depending on your system theme)"
@@ -3523,15 +3529,15 @@ msgstr "Режим презентації"
 
 #: ../ui/settings.glade:4174
 msgid "Pre-load pages before"
-msgstr ""
+msgstr "Попереднє завантаження сторінок до"
 
 #: ../ui/settings.glade:4186
 msgid "Pre-load pages after"
-msgstr ""
+msgstr "Попереднє завантаження сторінок після"
 
 #: ../ui/settings.glade:4223
 msgid "Clear cached paged while scrolling"
-msgstr ""
+msgstr "Очистити кешовані сторінки під час прокручування"
 
 #: ../ui/settings.glade:4252
 msgid "Performance"
@@ -3555,7 +3561,7 @@ msgstr "Швидкість масштабування"
 
 #: ../ui/settings.glade:4458
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
-msgstr ""
+msgstr "<i>Щоб переконатися, що при 100% масштабі, розмір елементів правильний. (потрібен перезапуск)</i>"
 
 #: ../ui/settings.glade:4479
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
@@ -3567,7 +3573,7 @@ msgstr "Одиниця виміру лінійки - см"
 
 #: ../ui/settings.glade:4550
 msgid "Display DPI Calibration"
-msgstr ""
+msgstr "Калібрування DPI дисплея"
 
 #: ../ui/settings.glade:4581
 msgid "Zoom"
@@ -3575,7 +3581,7 @@ msgstr "Масштаб"
 
 #: ../ui/settings.glade:4632
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
-msgstr ""
+msgstr "<i>Якщо ви додасте додаткове місце біля сторінок, ви зможете вибрати область екрану, на якій ви хотіли б працювати.</i>"
 
 #: ../ui/settings.glade:4663
 msgid "Add additional vertical space of"
@@ -3587,7 +3593,7 @@ msgstr "Додати додатковий горизонтальний прос�
 
 #: ../ui/settings.glade:4766
 msgid "Scrolling outside the page"
-msgstr ""
+msgstr "Прокрутка за межами сторінки"
 
 #: ../ui/settings.glade:4799
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -3599,7 +3605,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4812
 msgid "Usually 0 or 1"
-msgstr ""
+msgstr "Зазвичай 0 або 1"
 
 #: ../ui/settings.glade:4853
 msgid "Paired Pages"
@@ -3638,11 +3644,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5061
 msgid "Preserve line width"
-msgstr ""
+msgstr "Зберігати ширину лінії"
 
 #: ../ui/settings.glade:5066
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
-msgstr ""
+msgstr "Після зміни розміру виділеної області, ширина усіх ліній залишатиметься такою ж, як і до зміни розміру. "
 
 #: ../ui/settings.glade:5108
 msgid "Resizing"
@@ -3679,7 +3685,7 @@ msgstr "Мінімальний розмір штриха"
 #: ../ui/settings.glade:5374
 msgctxt "Short taps/clicks will trigger special actions"
 msgid "Enable Tap action"
-msgstr ""
+msgstr "Увімкнути дії по дотику"
 
 #: ../ui/settings.glade:5379
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
@@ -3687,7 +3693,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5392
 msgid "Time limit (ms)"
-msgstr ""
+msgstr "Часовий ліміт (мс)"
 
 #: ../ui/settings.glade:5404
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
@@ -3701,11 +3707,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5444
 msgid "Length limit (mm)"
-msgstr ""
+msgstr "Ліміт довжини (мм)"
 
 #: ../ui/settings.glade:5455
 msgid "Frequency limit (ms)"
-msgstr ""
+msgstr "Обмеження частоти (мс)"
 
 #: ../ui/settings.glade:5467
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
@@ -3740,7 +3746,8 @@ msgstr ""
 #: ../ui/settings.glade:5570
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr ""
+msgstr "<i>Перемальовувати тло PDF частіше під час зміни масштабу для більшої якості.\n"
+"<b>Примітка:</b> Це не впливає на якість друку.</i>"
 
 #: ../ui/settings.glade:5595
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
@@ -3785,7 +3792,10 @@ msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required). \n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
 "</i>"
-msgstr ""
+msgstr "<i>\n"
+"За допомогою прапорця, аудіосистему можна вимкнути або ввімкнути для майбутніх сесій (потрібен перезапуск). \n"
+"Для вимкнення аудіо для однієї сесії необхідно задати параметр <tt>--disable-audio</tt> у командному рядку.\n"
+"</i>"
 
 #: ../ui/settings.glade:5913
 msgid "Disable Audio"
@@ -3797,7 +3807,7 @@ msgstr "Увімкнути або вимкнути звук"
 
 #: ../ui/settings.glade:5966
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
-msgstr ""
+msgstr "<i>Аудіозаписи зберігаються в окремій теці, а в журналі записані посилання на них.</i>"
 
 #: ../ui/settings.glade:5988 ../ui/settings.glade:6046
 msgid "Storage Folder"
@@ -3805,12 +3815,13 @@ msgstr "Місце зберігання"
 
 #: ../ui/settings.glade:6003
 msgid "Select Folder"
-msgstr ""
+msgstr "Вибрати теку"
 
 #: ../ui/settings.glade:6077
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
-msgstr ""
+msgstr "<i>Вкажіть аудіо пристрої, що використовуються для запису або відтворення аудіовкладень.\n"
+"Якщо доступно оберіть <small><tt>pulse</tt></small> в ролі пристрою входу/виходу.</i>"
 
 #: ../ui/settings.glade:6101
 msgid "Input Device"
@@ -3878,7 +3889,7 @@ msgstr "Вимкнути введення для цього пристрою"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
-msgstr ""
+msgstr "Тип гумки - не змінювати"
 
 #: ../ui/settingsButtonConfig.glade:130
 msgid "Standard"
@@ -3886,7 +3897,7 @@ msgstr "Стандартний"
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
-msgstr ""
+msgstr "Забілювання"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -3902,23 +3913,23 @@ msgstr "Клавіатура+мишка"
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
-msgstr ""
+msgstr "Вставити LaTeX"
 
 #: ../ui/texdialog.glade:69
 msgid "Enter / edit LaTeX Text"
-msgstr ""
+msgstr "Ввести / редагувати LaTeX текст"
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
-msgstr ""
+msgstr "Код TeX"
 
 #: ../ui/texdialog.glade:143
 msgid "Output generated by the LaTeX command."
-msgstr ""
+msgstr "Результат, згенерований командою LaTeX."
 
 #: ../ui/texdialog.glade:163
 msgid "Command Output"
-msgstr ""
+msgstr "Виведення команди"
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
