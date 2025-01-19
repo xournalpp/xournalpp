@@ -19,7 +19,7 @@ option(MAN_COMPRESS "Compress man pages using gzip" ON)
 
 set(MAN_INCLUDE "${PROJECT_SOURCE_DIR}/man/extra.groff")
 set(MAN_PAGE "${CMAKE_CURRENT_BINARY_DIR}/xournalpp.1")
-set(MAN_PAGE_THUMBNAILER "${CMAKE_CURRENT_BINARY_DIR}/xournalpp-thumbnailer.1")
+set(MAN_PAGE_THUMB "${CMAKE_CURRENT_BINARY_DIR}/xournalpp-thumbnailer.1")
 
 add_custom_command(
   OUTPUT ${MAN_PAGE}
@@ -28,24 +28,24 @@ add_custom_command(
 )
 
 add_custom_command(
-  OUTPUT ${MAN_PAGE_THUMBNAILER}
-  COMMAND ${HELP2MAN} --no-info  --no-discard-stderr -o ${MAN_PAGE_THUMBNAILER} --version-string=${PROJECT_VERSION} --name="creates thumbnails" ${CMAKE_BINARY_DIR}/src/xoj-preview-extractor/xournalpp-thumbnailer
+  OUTPUT ${MAN_PAGE_THUMB}
+  COMMAND ${HELP2MAN} --no-info  --no-discard-stderr -o ${MAN_PAGE_THUMB} --version-string=${PROJECT_VERSION} --name="creates thumbnails" ${CMAKE_BINARY_DIR}/src/xoj-preview-extractor/xournalpp-thumbnailer
   DEPENDS ${CMAKE_BINARY_DIR}/src/xoj-preview-extractor/xournalpp-thumbnailer
 )
 
 if (NOT MAN_COMPRESS)
-  add_custom_target(manpage ALL DEPENDS ${MAN_PAGE} ${MAN_PAGE_THUMBNAILER})
-  install(FILES ${MAN_PAGE} ${MAN_PAGE_THUMBNAILER} DESTINATION "share/man/man1")
+  add_custom_target(manpage ALL DEPENDS ${MAN_PAGE} ${MAN_PAGE_THUMB})
+  install(FILES ${MAN_PAGE} ${MAN_PAGE_THUMB} DESTINATION "share/man/man1")
 else()
   set(MAN_FILE "${MAN_PAGE}.gz")
-  set(MAN_FILE_THUMBNAILER "${MAN_PAGE_THUMBNAILER}.gz")
+  set(MAN_FILE_THUMB "${MAN_PAGE_THUMB}.gz")
 
   add_custom_command(
-    OUTPUT ${MAN_FILE} ${MAN_FILE_THUMBNAILER}
-    COMMAND gzip -n -f -9 ${MAN_PAGE} ${MAN_PAGE_THUMBNAILER}
-    DEPENDS ${MAN_PAGE} ${MAN_PAGE_THUMBNAILER}
+    OUTPUT ${MAN_FILE} ${MAN_FILE_THUMB}
+    COMMAND gzip -n -f -9 ${MAN_PAGE} ${MAN_PAGE_THUMB}
+    DEPENDS ${MAN_PAGE} ${MAN_PAGE_THUMB}
   )
 
-  add_custom_target(manpage ALL DEPENDS ${MAN_FILE} ${MAN_FILE_THUMBNAILER})
-  install(FILES ${MAN_FILE} ${MAN_FILE_THUMBNAILER} DESTINATION "share/man/man1")
+  add_custom_target(manpage ALL DEPENDS ${MAN_FILE} ${MAN_FILE_THUMB})
+  install(FILES ${MAN_FILE} ${MAN_FILE_THUMB} DESTINATION "share/man/man1")
 endif()
