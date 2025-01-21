@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.12)
 cmake_policy(VERSION 3.12)
 
-if (WIN32)
+if (WIN32 OR APPLE)
   # Windows does not support man pages and has no thumbnailer like this
+  # MacOS does not have help2man so no man pages can be generated
   return ()
 endif ()
 
