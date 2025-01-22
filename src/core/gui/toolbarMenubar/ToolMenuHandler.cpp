@@ -12,7 +12,6 @@
 #include "gui/GladeSearchpath.h"
 #include "gui/menus/popoverMenus/PageTypeSelectionPopover.h"
 #include "gui/toolbarMenubar/icon/ColorIcon.h"
-#include "gui/toolbarMenubar/icon/ToolbarSeparatorImage.h"
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "gui/toolbarMenubar/model/ToolbarData.h"   // for ToolbarData
 #include "gui/toolbarMenubar/model/ToolbarEntry.h"  // for ToolbarEntry
@@ -25,6 +24,7 @@
 #include "util/NamedColor.h"  // for NamedColor
 #include "util/PathUtil.h"
 #include "util/StringUtils.h"  // for StringUtils
+#include "util/Util.h"         // for npos
 #include "util/XojMsgBox.h"
 #include "util/glib_casts.h"
 #include "util/i18n.h"  // for _
@@ -36,17 +36,18 @@
 #include "FontButton.h"                  // for FontButton
 #include "PluginPlaceholderLabel.h"      // for PluginPlaceholderLabel
 #include "PluginToolButton.h"            // for PluginToolButton
-#include "StylePopoverFactory.h"         // for ToolButtonWithStylePopover
-#include "ToolButton.h"                  // for ToolButton
-#include "ToolPageLayer.h"               // for ToolPageLayer
-#include "ToolPageSpinner.h"             // for ToolPageSpinner
-#include "ToolPdfCombocontrol.h"         // for ToolPdfCombocontrol
-#include "ToolSelectCombocontrol.h"      // for ToolSelectComboc...
-#include "ToolZoomSlider.h"              // for ToolZoomSlider
-#include "TooltipToolButton.h"           // for TooltipToolButton
-#include "config-dev.h"                  // for TOOLBAR_CONFIG
-#include "config-features.h"             // for ENABLE_PLUGINS
-#include "filesystem.h"                  // for exists
+#include "SeparatorSpacer.h"
+#include "StylePopoverFactory.h"     // for ToolButtonWithStylePopover
+#include "ToolButton.h"              // for ToolButton
+#include "ToolPageLayer.h"           // for ToolPageLayer
+#include "ToolPageSpinner.h"         // for ToolPageSpinner
+#include "ToolPdfCombocontrol.h"     // for ToolPdfCombocontrol
+#include "ToolSelectCombocontrol.h"  // for ToolSelectComboc...
+#include "ToolZoomSlider.h"          // for ToolZoomSlider
+#include "TooltipToolButton.h"       // for TooltipToolButton
+#include "config-dev.h"              // for TOOLBAR_CONFIG
+#include "config-features.h"         // for ENABLE_PLUGINS
+#include "filesystem.h"              // for exists
 
 using std::string;
 
@@ -99,31 +100,8 @@ static void setWidgetId(GtkWidget* item, const std::string_view& name) {
                            xoj::util::destroy_cb<std::string>);
 }
 
-auto ToolMenuHandler::createItem(const char* id,
-                                 ToolbarSide side) const -> std::pair<xoj::util::WidgetSPtr, xoj::util::WidgetSPtr> {
-    auto name = std::string_view(id);
-    if (name == "SEPARATOR") {
-        auto* it = gtk_separator_new(to_Orientation(side) == GTK_ORIENTATION_HORIZONTAL ? GTK_ORIENTATION_VERTICAL :
-                                                                                          GTK_ORIENTATION_HORIZONTAL);
-        auto* proxy = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
-        gtk_widget_add_css_class(proxy, "model");
-        setWidgetId(it, name);
-        return {xoj::util::WidgetSPtr(it, xoj::util::adopt), xoj::util::WidgetSPtr(proxy, xoj::util::adopt)};
-    }
 
-    if (name == "SPACER") {
-        GtkWidget* it;
-        if (to_Orientation(side) == GTK_ORIENTATION_HORIZONTAL) {
-            it = gtk_separator_new(GTK_ORIENTATION_VERTICAL);
-            gtk_widget_set_hexpand(it, true);
-        } else {
-            it = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
-            gtk_widget_set_vexpand(it, true);
-        }
-        gtk_widget_add_css_class(it, "spacer");
-        setWidgetId(it, name);
-        return {xoj::util::WidgetSPtr(it, xoj::util::adopt), nullptr};
-    }
+static size_t parseColorNumber(std::string_view name) {
     if (StringUtils::startsWith(name, "COLOR(") && StringUtils::endsWith(name, ")")) {
         std::string arg(name.substr(6, name.length() - 7));
 
@@ -132,11 +110,21 @@ auto ToolMenuHandler::createItem(const char* id,
         colorStream >> paletteIndex;
         if (!colorStream.eof() || colorStream.fail()) {
             g_warning("Toolbar:COLOR(N) has wrong format: %s", name.data());
-            return {nullptr, nullptr};
+            return npos;
         }
+        return paletteIndex;
+    }
+    return npos;
+}
 
-        const NamedColor& namedColor = this->control->getPalette().getColorAt(paletteIndex);
-        auto it = std::make_unique<ColorToolItem>(namedColor)->createItem(side);
+auto ToolMenuHandler::createItem(const char* id, ToolbarSide side) const
+        -> std::pair<xoj::util::WidgetSPtr, xoj::util::WidgetSPtr> {
+    auto name = std::string_view(id);
+    if (size_t N = parseColorNumber(name); N != npos) {
+        const auto& r = this->control->getSettings()->getRecolorParameters();
+        auto recolor = r.recolorizeMainView ? std::make_optional(r.recolor) : std::nullopt;
+
+        auto it = ColorToolItem(this->control->getPalette().getColorAt(N), recolor).createItem(side);
         setWidgetId(it.item.get(), name);
         return {std::move(it.item), std::move(it.proxy)};
     }
@@ -154,31 +142,14 @@ auto ToolMenuHandler::createItem(const char* id,
 
 auto ToolMenuHandler::createIcon(const char* id, GdkSurface* target) const -> xoj::util::GObjectSPtr<GdkPaintable> {
     auto name = std::string_view(id);
-    if (name == "SEPARATOR") {
-        return ToolbarSeparatorImage::newGdkPaintable(SeparatorType::SEPARATOR);
-    }
 
-    if (name == "SPACER") {
-        return ToolbarSeparatorImage::newGdkPaintable(SeparatorType::SPACER);
-    }
-    if (StringUtils::startsWith(name, "COLOR(") && StringUtils::endsWith(name, ")")) {
-        std::string arg(name.substr(6, name.length() - 7));
-
-        size_t paletteIndex{};
-        std::istringstream colorStream(arg.data());
-        colorStream >> paletteIndex;
-        if (!colorStream.eof() || colorStream.fail()) {
-            g_warning("Toolbar:COLOR(N) has wrong format: %s", name.data());
-            return nullptr;
-        }
-
-        const NamedColor& namedColor = this->control->getPalette().getColorAt(paletteIndex);
-        return ColorIcon::newGdkPaintable(namedColor.getColor(), true);
+    if (size_t N = parseColorNumber(name); N != npos) {
+        return ColorIcon::newGdkPaintable(this->control->getPalette().getColorAt(N).getColor(), true);
     }
 
     if (target == nullptr) {
-        g_warning("ToolMenuHandler::createIcon() for \"%s\" but not target surface is provided.", name.data());
-        xoj_assert_message(false, "ToolMenuHandler::createIcon() but not target surface is provided.");
+        g_warning("ToolMenuHandler::createIcon() for \"%s\" but no target surface is provided.", name.data());
+        xoj_assert_message(false, "ToolMenuHandler::createIcon() but no target surface is provided.");
         return nullptr;
     }
     for (auto& item: this->toolItems) {
@@ -211,68 +182,24 @@ void ToolMenuHandler::load(const ToolbarData* d, ToolbarBox& toolbar) {
                     continue;
                 }
 
-                if (name == "SEPARATOR") {
-                    auto* it = gtk_separator_new(to_Orientation(side) == GTK_ORIENTATION_HORIZONTAL ?
-                                                         GTK_ORIENTATION_VERTICAL :
-                                                         GTK_ORIENTATION_HORIZONTAL);
-                    auto* proxy = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
-                    gtk_widget_add_css_class(proxy, "model");
-                    setWidgetId(it, name);
-                    toolbar.append(xoj::util::WidgetSPtr(it, xoj::util::adopt),
-                                   xoj::util::WidgetSPtr(proxy, xoj::util::adopt));
-                    continue;
-                }
-
-                if (name == "SPACER") {
-                    GtkWidget* it;
-                    if (to_Orientation(side) == GTK_ORIENTATION_HORIZONTAL) {
-                        it = gtk_separator_new(GTK_ORIENTATION_VERTICAL);
-                        gtk_widget_set_hexpand(it, true);
-                    } else {
-                        it = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
-                        gtk_widget_set_vexpand(it, true);
-                    }
-                    gtk_widget_add_css_class(it, "spacer");
-                    setWidgetId(it, name);
-                    toolbar.append(xoj::util::WidgetSPtr(it, xoj::util::adopt), nullptr);
-                    continue;
-                }
-                if (StringUtils::startsWith(name, "COLOR(") && StringUtils::endsWith(name, ")")) {
-                    std::string arg = name.substr(6, name.length() - 7);
-
-                    size_t paletteIndex{};
-                    std::istringstream colorStream(arg);
-                    colorStream >> paletteIndex;
-                    if (!colorStream.eof() || colorStream.fail()) {
-                        g_warning("Toolbar:COLOR(N) has wrong format: %s", arg.c_str());
-                        continue;
-                    }
-
-                    count++;
-                    const NamedColor& namedColor = palette.getColorAt(paletteIndex);
-                    auto& item =
-                            this->toolbarColorItems.emplace_back(std::make_unique<ColorToolItem>(namedColor, recolor));
+                // Handle colors separately in order to populate toolbarColorItems
+                if (size_t N = parseColorNumber(name); N != npos) {
+                    auto& item = this->toolbarColorItems.emplace_back(
+                            std::make_unique<ColorToolItem>(palette.getColorAt(N), recolor));
 
                     auto it = item->createItem(side);
                     setWidgetId(it.item.get(), name);
                     toolbar.append(std::move(it.item), std::move(it.proxy));
+                    count++;
                     continue;
                 }
 
-                bool found = false;
-                for (auto& item: this->toolItems) {
-                    if (name == item->getId()) {
-                        count++;
-                        auto it = item->createItem(side);
-                        setWidgetId(it.item.get(), name);
-                        toolbar.append(std::move(it.item), std::move(it.proxy));
-
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) {
+                auto&& [it, proxy] = createItem(name.c_str(), side);
+                if (!it) {
                     g_warning("Toolbar item \"%s\" not found!", name.c_str());
+                } else {
+                    count++;
+                    toolbar.append(std::move(it), std::move(proxy));
                 }
             }
 
@@ -602,6 +529,10 @@ void ToolMenuHandler::initToolItems() {
     emplaceCustomItemWithTarget("THICK", Cat::TOOLS, Action::TOOL_SIZE, TOOL_SIZE_THICK, "thickness-thick", _("Thick"));
     emplaceCustomItemWithTarget("VERY_THICK", Cat::TOOLS, Action::TOOL_SIZE, TOOL_SIZE_VERY_THICK, "thickness-thicker",
                                 _("Very Thick"));
+
+    /* Separators */
+    emplaceItem<SeparatorItem>();
+    emplaceItem<Spacer>();
 }
 
 void ToolMenuHandler::setPageInfo(size_t currentPage, size_t pageCount, size_t pdfpage) {
