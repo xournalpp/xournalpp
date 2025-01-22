@@ -96,9 +96,6 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
         addEntry(namedColor.getName(), ColorIcon::newGtkImage(namedColor.getColor(), true), id.c_str(), Cat::COLORS);
     }
 
-    addEntry(_("Separator"), ToolbarSeparatorImage::newImage(SeparatorType::SEPARATOR), "SEPARATOR", Cat::SEPARATORS);
-    addEntry(_("Spacer"), ToolbarSeparatorImage::newImage(SeparatorType::SPACER), "SPACER", Cat::SEPARATORS);
-
 
     GtkDropTarget* target = gtk_drop_target_new(xoj::dnd::get_tool_item_gtype(), GDK_ACTION_MOVE);
     g_signal_connect(target, "drop", G_CALLBACK(+[](GtkDropTarget* t, const GValue* v, double, double, gpointer) {
