@@ -75,17 +75,17 @@
     <item>
      <attribute name="label" translatable="yes">Cut</attribute>
      <attribute name="action">win.cut</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;x</attribute>
+     <!-- Cut accelerators are defined in control/actions/ActionProperties.h -->
     </item>
     <item>
      <attribute name="label" translatable="yes">Copy</attribute>
      <attribute name="action">win.copy</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;c</attribute>
+     <!-- Copy accelerators are defined in control/actions/ActionProperties.h -->
     </item>
     <item>
      <attribute name="label" translatable="yes">Paste</attribute>
      <attribute name="action">win.paste</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;v</attribute>
+     <!-- Paste accelerators are defined in control/actions/ActionProperties.h -->
     </item>
    </section>
    <section>
