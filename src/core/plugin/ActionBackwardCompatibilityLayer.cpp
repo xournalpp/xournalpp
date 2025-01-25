@@ -132,6 +132,7 @@ static const std::map<std::string_view, Action> BOOLEAN_ACTION_MAP = {
         {"ACTION_VIEW_PAIRED_PAGES"sv, Action::PAIRED_PAGES_MODE},
         {"ACTION_VIEW_PRESENTATION_MODE"sv, Action::PRESENTATION_MODE},
         {"ACTION_FULLSCREEN"sv, Action::FULLSCREEN},
+        {"ACTION_SHOW_SIDEBAR"sv, Action::SHOW_SIDEBAR},
         {"ACTION_AUDIO_PAUSE_PLAYBACK"sv, Action::AUDIO_PAUSE_PLAYBACK},
         {"ACTION_AUDIO_RECORD"sv, Action::AUDIO_RECORD},
         {"ACTION_GRID_SNAPPING"sv, Action::GRID_SNAPPING},
