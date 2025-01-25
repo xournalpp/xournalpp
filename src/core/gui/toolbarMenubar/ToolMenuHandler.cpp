@@ -322,6 +322,7 @@ void ToolMenuHandler::initToolItems() {
     emplaceCustomItemTgl("PRESENTATION_MODE", Cat::NAVIGATION, Action::PRESENTATION_MODE, "presentation-mode",
                          _("Presentation mode"));
     emplaceCustomItemTgl("FULLSCREEN", Cat::NAVIGATION, Action::FULLSCREEN, "fullscreen", _("Toggle fullscreen"));
+    emplaceCustomItemTgl("SHOW_SIDEBAR", Cat::NAVIGATION, Action::SHOW_SIDEBAR, "sidebar-show", _("Toggle sidebar"));
 
     emplaceCustomItem("MANAGE_TOOLBAR", Cat::MISC, Action::MANAGE_TOOLBAR, "toolbars-manage", _("Manage Toolbars"));
     emplaceCustomItem("CUSTOMIZE_TOOLBAR", Cat::MISC, Action::CUSTOMIZE_TOOLBAR, "toolbars-customize",
