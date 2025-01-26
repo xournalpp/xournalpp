@@ -18,14 +18,14 @@ The minimum required CMake version is 3.13, but we recommend using >=3.15. Also,
 ```sh
 sudo pacman -S cmake gtk3 base-devel libxml2 portaudio libsndfile \
   poppler-glib texlive-bin texlive-pictures gettext libzip lua53 lua53-lgi \
-  gtksourceview4
+  gtksourceview4 help2man
 ```
 
 #### For Fedora:
 ```sh
 sudo dnf install gcc-c++ cmake gtk3-devel libxml2-devel portaudio-devel libsndfile-devel \
   poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext libzip-devel \
-  librsvg2-devel lua-devel lua-lgi gtksourceview4-devel
+  librsvg2-devel lua-devel lua-lgi gtksourceview4-devel help2man
 ```
 
 #### For CentOS/RHEL:
@@ -39,14 +39,14 @@ sudo dnf install gcc-c++ cmake gtk3-devel libxml2-devel cppunit-devel portaudio-
 ```sh
 sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev \
   dvipng texlive libxml2-dev liblua5.3-dev libzip-dev librsvg2-dev gettext lua-lgi \
-  libgtksourceview-4-dev
+  libgtksourceview-4-dev help2man
 ```
 
 #### For openSUSE:
 ```sh
-sudo zypper install cmake gtk3-devel portaudio-devel libsndfile-devel \
+sudo zypper install gcc-c++ cmake gtk3-devel portaudio-devel libsndfile-devel \
   texlive-dvipng texlive libxml2-devel libpoppler-glib-devel libzip-devel librsvg-devel lua-devel lua-lgi \
-  gtksourceview4-devel
+  gtksourceview4-devel lsb-release help2man
 ```
 
 #### For Solus:
