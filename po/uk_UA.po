@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-07 13:29+0000\n"
-"PO-Revision-Date: 2025-01-19 04:25\n"
+"PO-Revision-Date: 2025-01-26 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -813,15 +813,15 @@ msgstr "Невірна кількість крапок ({1})"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1049
 msgid "xoj-File: {1}"
-msgstr ""
+msgstr "Файл xoj: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1050
 msgid "Wrong number of pressure values, got {1}, expected {2}"
-msgstr ""
+msgstr "Невірна кількість значень натиску, отримано {1}, очікувалось {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1183
 msgid "Requested temporary file was not found for attachment {1}"
-msgstr ""
+msgstr "Запитаний тимчасовий файл не знайдено для вкладення {1}"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:72
 msgid "Attribute color not set!"
@@ -1095,7 +1095,7 @@ msgstr "GtkSourceView був вимкнений під час збирання X
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "Неможливо відкрити файл глобального шаблону з {1}. Чи існує він?"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
 msgid "Sample LaTeX file generated successfully."
@@ -1862,7 +1862,7 @@ msgstr "Помилка відкриття файлу: \"{1}\""
 
 #: ../src/util/OutputStream.cpp:48
 msgid "Error writing data to file: \"{1}\""
-msgstr ""
+msgstr "Помилка запису даних у файл: \"{1}\""
 
 #: ../src/util/OutputStream.cpp:49
 msgid "Error code {1}. Message:"
@@ -1910,35 +1910,35 @@ msgstr "Виникла помилка при відображенні допом
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
-msgstr ""
+msgstr "xoj-preview-extractor: формат виклику INPUT.xoj OUTPUT.png"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:134
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr ""
+msgstr "xoj-preview-extractor: файл \"{1}\" не є .xoj файлом"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:138
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
-msgstr ""
+msgstr "xoj-preview-extractor: не вдалося відкрити вхідний файл \"{1}\""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:142
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
-msgstr ""
+msgstr "xoj-preview-extractor: файл \"{1}\" не містить попереднього перегляду"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:147
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
-msgstr ""
+msgstr "xoj-preview-extractor: попередній перегляд та сторінка не знайдені, можливо невірний файл?"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:185
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
-msgstr ""
+msgstr "xoj-preview-extractor: не вдалося знайти іконку \"{1}\""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:202
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
-msgstr ""
+msgstr "xoj-preview-extractor: не вдалося відкрити вихідний файл \"{1}\""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:209
 msgid "xoj-preview-extractor: successfully extracted"
-msgstr ""
+msgstr "xoj-preview-extractor: успішно видобутий"
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
@@ -1947,7 +1947,8 @@ msgstr "Про Xournal++"
 #: ../ui/about.glade:117
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
-msgstr ""
+msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
+"<i>Наступне покоління</i>"
 
 #: ../ui/about.glade:157
 msgid "Icon Designers"
@@ -2049,11 +2050,11 @@ msgstr "Експортувати документ без будь-якого т�
 
 #: ../ui/exportSettings.glade:369
 msgid "Export layers progressively"
-msgstr ""
+msgstr "Експортувати шари послідовно"
 
 #: ../ui/exportSettings.glade:373
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
-msgstr ""
+msgstr "Якщо увімкнено, шари кожної сторінки будуть додані один за одним. Отриманий PDF файл може бути використаний для презентації."
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
@@ -2083,15 +2084,15 @@ msgstr "<b>... або оберіть раніше використане зоб�
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
-msgstr ""
+msgstr "Завжди перевіряти залежності LaTeX перед запуском"
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
-msgstr ""
+msgstr "Якщо увімкнено, перед запуском LaTeX, буде виконано перевірку чи встановлені усі необхідні пакунки LaTeX і чи доступні команди LaTeX."
 
 #: ../ui/latexSettings.glade:87
 msgid "General LaTeX tool settings"
-msgstr ""
+msgstr "Загальні налаштування LaTeX"
 
 #: ../ui/latexSettings.glade:119
 msgid "Default LaTeX Text"
@@ -2099,11 +2100,11 @@ msgstr "Текст LaTeX за замовчуванням"
 
 #: ../ui/latexSettings.glade:152
 msgid "The LaTeX file to use as a template for the LaTeX tool."
-msgstr ""
+msgstr "Файл LaTeX для використання в якості шаблону для інструменту LaTeX."
 
 #: ../ui/latexSettings.glade:154
 msgid "Global template file path"
-msgstr ""
+msgstr "Шлях до файлу глобального шаблону"
 
 #: ../ui/latexSettings.glade:166
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
@@ -2115,11 +2116,11 @@ msgstr "%%XPP_TOOL_INPUT%%"
 
 #: ../ui/latexSettings.glade:192
 msgid "The math mode formula typed in the LaTeX tool."
-msgstr ""
+msgstr "Математична формула, введена в LaTeX."
 
 #: ../ui/latexSettings.glade:205
 msgid "Choose a global LaTeX template file"
-msgstr ""
+msgstr "Оберіть файл глобального шаблону LaTeX"
 
 #: ../ui/latexSettings.glade:217
 msgid "%%XPP_TEXT_COLOR%%"
@@ -2127,7 +2128,7 @@ msgstr "%%XPP_TEXT_COLOR%%"
 
 #: ../ui/latexSettings.glade:229
 msgid "The current color of the Text Tool, in hex RGB format."
-msgstr ""
+msgstr "Поточний колір інструменту \"Текст\" у hex форматі RGB."
 
 #: ../ui/latexSettings.glade:265
 msgid "Template file settings"
@@ -2135,7 +2136,7 @@ msgstr "Налаштування файлу шаблону"
 
 #: ../ui/latexSettings.glade:297
 msgid "LaTeX generation command"
-msgstr ""
+msgstr "Команда генерації LaTeX"
 
 #: ../ui/latexSettings.glade:318
 msgid "Test configuration"
@@ -2143,11 +2144,11 @@ msgstr "Перевірити конфігурацію"
 
 #: ../ui/latexSettings.glade:322
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
-msgstr ""
+msgstr "Перевірити чи валідна поточна конфігурація, за допомогою запуску команди генерації LaTeX на глобальному файлі шаблону з тестовою формулою."
 
 #: ../ui/latexSettings.glade:354
 msgid "LaTeX executable settings"
-msgstr ""
+msgstr "Налаштування виконуваного файлу LaTeX"
 
 #: ../ui/latexSettings.glade:433
 msgid "Line numbers"
@@ -2167,7 +2168,7 @@ msgstr "Переносити текст"
 
 #: ../ui/latexSettings.glade:529
 msgid "Use font from system theme."
-msgstr ""
+msgstr "Використовувати шрифт системної теми."
 
 #: ../ui/latexSettings.glade:549
 msgid "Font: "
@@ -2233,11 +2234,11 @@ msgstr "Перемістити на задній план"
 
 #: ../ui/main.glade:480
 msgid "Move Selection Layer Up"
-msgstr ""
+msgstr "Перемістити обраний шар вгору"
 
 #: ../ui/main.glade:490
 msgid "Move Selection Layer Down"
-msgstr ""
+msgstr "Перемістити обраний шар вниз"
 
 #: ../ui/main.glade:532
 msgid "Preferences"
@@ -2533,11 +2534,11 @@ msgstr "_Вертикальний відступ"
 
 #: ../ui/main.glade:1662
 msgid "H_and Tool"
-msgstr "Р_ука"
+msgstr "Ру_ка"
 
 #: ../ui/main.glade:1700
 msgid "Pen _Options"
-msgstr "Параметри _пера"
+msgstr "Параметри п_ера"
 
 #: ../ui/main.glade:1711 ../ui/main.glade:1857 ../ui/main.glade:1966
 msgid "_very fine"
@@ -2569,7 +2570,7 @@ msgstr "Прозорість заливки"
 
 #: ../ui/main.glade:1846
 msgid "Eraser Optio_ns"
-msgstr "Параметри _гумки"
+msgstr "Параметри г_умки"
 
 #: ../ui/main.glade:1918
 msgid "_standard"
@@ -2585,7 +2586,7 @@ msgstr "_видалення штрихів"
 
 #: ../ui/main.glade:1955
 msgid "Highlighter Opti_ons"
-msgstr ""
+msgstr "Параметри м_аркера"
 
 #: ../ui/main.glade:2051
 msgid "Text Font..."
@@ -2637,7 +2638,7 @@ msgstr "Закреслити виділений текст"
 
 #: ../ui/main.glade:2860
 msgid "Toggle standard / region text selection"
-msgstr ""
+msgstr "Стандартне / регіональне виділення тексту"
 
 #: ../ui/main.glade:2888 ../ui/main.glade:2963
 msgid "Move Up"
@@ -2669,7 +2670,7 @@ msgstr "Редагування (не реалізовано ще)"
 
 #: ../ui/pageTemplate.glade:18
 msgid "Configure new page template"
-msgstr ""
+msgstr "Налаштувати шаблон нової сторінки"
 
 #: ../ui/pageTemplate.glade:40
 msgid "Save to file"
@@ -2681,7 +2682,7 @@ msgstr "Завантажити з файлу"
 
 #: ../ui/pageTemplate.glade:114
 msgid "These settings will be used for new pages"
-msgstr ""
+msgstr "Ці налаштування будуть застосовані для нових сторінок"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
@@ -2697,11 +2698,11 @@ msgstr "Оберіть колір тла"
 
 #: ../ui/pageTemplate.glade:187
 msgid "Copy current page background instead"
-msgstr ""
+msgstr "Копіювати тло поточної сторінки"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
-msgstr ""
+msgstr "Копіювати тло поточної сторінки замість використання тла, встановленого вище."
 
 #: ../ui/pageTemplate.glade:245
 msgid "<b>Background Color</b>"
@@ -2713,11 +2714,11 @@ msgstr "<b>Тло</b>"
 
 #: ../ui/pageTemplate.glade:269
 msgid "Copy current page size instead"
-msgstr ""
+msgstr "Копіювати розмір поточної сторінки"
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
-msgstr ""
+msgstr "Використовувати розмір поточної сторінки замість розміру, встановленого вище."
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -2781,7 +2782,7 @@ msgstr "Середнє арифметичне"
 
 #: ../ui/settings.glade:230
 msgid "Velocity based Gaussian weights"
-msgstr ""
+msgstr "Гаусові ваги, розраховані від швидкості"
 
 #: ../ui/settings.glade:244
 msgid "Deadzone"
@@ -2789,7 +2790,7 @@ msgstr "Мертва зона"
 
 #: ../ui/settings.glade:247
 msgid "Inertia"
-msgstr ""
+msgstr "Інерція"
 
 #: ../ui/settings.glade:255
 msgid "Xournal++ Preferences"
@@ -2850,7 +2851,30 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\t%\n"
 "Illegal characters are replaced with \"_\""
-msgstr ""
+msgstr "%a\t\tСкорочена назва дня тижня (напр. чт)\n"
+"%A\t\tПовн назва дня тижня (напр. четвер)\n"
+"%b\t\tСкорочена назва місяця (напр. сер)\n"
+"%B\t\tПовна назва місяця (напр. серпеня)\n"
+"%c\t\tВідображення дати і часу (напр. чт, 23-сер-2001 14:55:02 +0200)\n"
+"%d\t\tДень місяця (01-31)\n"
+"%F\t\tВідображення дати (напр. 2001-08-23)\n"
+"%H\t\tГодини в 24h форматі (00-23)\n"
+"%I\t\tГодини в 12h форматі (01-12)\n"
+"%j\t\tНомер дня в році (001-366)\n"
+"%m\t\tНомер місяця (01-12)\n"
+"%M\t\tХвилини (00-59)\n"
+"%p\t\tAM або PM позначки (напр. PM)\n"
+"%S\t\tСекунди (00-61)\n"
+"%U\t\tНомер тижня, де перший тиждень розпочинається з першої неділі року (00-53)\n"
+"%w\t\tНомер дня тижня, де неділя дорівнює 0 (0-6)\n"
+"%W\t\tНомер тижня, де перший тиждень розпочинається з першого понеділка року (00-53)\n"
+"%x\t\tВідображення дати (напр. 23.08.01)\n"
+"%X\t\tВідображення часу (напр. 14:55:02 або 2:55:02 PM)\n"
+"%y\t\tРік, останні дві цифри (00-99)\n"
+"%Y\t\tРік (напр. 2001)\n"
+"%Z\t\tЧасова зона чи її скорочення (напр. CDT)\n"
+"%%\t\t%\n"
+"Неприпустимі для імені файлу символи замінюються на \"_\""
 
 #: ../ui/settings.glade:613 ../ui/settings.glade:784
 msgid "Available Placeholders"
@@ -2891,9 +2915,9 @@ msgid "%{name}\tThe name of the exported document\n"
 "%%\t\t\t%\n"
 "Illegal characters are replaced with \"_\""
 msgstr "%{name}\tІм'я документу\n"
-"%a\t\t\tАбревіація дня тижня (напр. чт)\n"
+"%a\t\t\tСкорочена назва дня тижня (напр. чт)\n"
 "%A\t\t\tПовна назва дня тижня (напр. четвер)\n"
-"%b\t\t\tАбревіація місяця (напр. сер)\n"
+"%b\t\t\tСкорочена назва місяця (напр. сер)\n"
 "%B\t\t\tПовна назва місяця (напр. серпня)\n"
 "%c\t\t\tВідображення дати і часу (напр. чт, 23-сер-2001 14:55:02 +0200)\n"
 "%d\t\t\tДень місяця (01-31)\n"
@@ -2912,7 +2936,7 @@ msgstr "%{name}\tІм'я документу\n"
 "%X\t\t\tВідображення часу (напр. 14:55:02 або 2:55:02 PM)\n"
 "%y\t\t\tРік, останні дві цифри (00-99)\n"
 "%Y\t\t\tРік (напр. 2001)\n"
-"%Z\t\t\tЧасова зона чи її абревіація (напр. CDT)\n"
+"%Z\t\t\tЧасова зона чи її скорочення (напр. CDT)\n"
 "%%\t\t\t%\n"
 "Неприпустимі для імені файлу символи замінюються на \"_\""
 
@@ -2926,7 +2950,7 @@ msgstr "Увімкнути автозавантаження журналів"
 
 #: ../ui/settings.glade:842
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
-msgstr ""
+msgstr "Якщо при відкритті PDF файлу у теці буде присутній файл Xournal з таким самим ім'ям, то буде відкрито файл xoj."
 
 #: ../ui/settings.glade:854
 msgid "Enable autoloading of most recent file on application startup"
@@ -3263,7 +3287,7 @@ msgstr "При малюванні за допомогою дотику, жест
 
 #: ../ui/settings.glade:2703
 msgid "Start zooming after a distance "
-msgstr ""
+msgstr "Почати масштабування після відстані у "
 
 #: ../ui/settings.glade:2715
 msgid "1.0"
@@ -3601,7 +3625,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4800
 msgid "First Page Offset "
-msgstr ""
+msgstr "Відступ першої сторінки "
 
 #: ../ui/settings.glade:4812
 msgid "Usually 0 or 1"
@@ -3617,7 +3641,7 @@ msgstr "при прокручуванні до кінця останньої с�
 
 #: ../ui/settings.glade:4896
 msgid "when drawing on last page"
-msgstr ""
+msgstr "при малюванні на останній сторінці"
 
 #: ../ui/settings.glade:4911
 msgid "disabled"
@@ -3629,7 +3653,7 @@ msgstr "Автоматично додавати в кінці порожню с�
 
 #: ../ui/settings.glade:4961
 msgid "Enable  with determination radius of "
-msgstr ""
+msgstr "Увімкнути з радіусом визначення "
 
 #: ../ui/settings.glade:4966
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -3777,7 +3801,7 @@ msgstr "Область малювання"
 
 #: ../ui/settings.glade:5750
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
-msgstr ""
+msgstr "<i>Оберіть інструмент та його налаштування, які активуються по основній кнопці</i>"
 
 #: ../ui/settings.glade:5804
 msgid "<b>Default</b>"
