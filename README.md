@@ -336,6 +336,7 @@ We support building on three operating systems:
 - [Linux](readme/LinuxBuild.md)
 - [MacOS](readme/MacBuild.md)
 - [Windows](readme/WindowsBuild.md)
+- [Windows on ARM](readme/WindowsBuildArm.md)
 
 ## Contributing
 
