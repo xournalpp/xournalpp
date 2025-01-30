@@ -198,7 +198,12 @@ void ActionDatabase::setShortcuts(const ShortcutConfiguration& config) {
             g_free(name);
 #endif
         }
+#if GLIB_CHECK_VERSION(2, 82, 0)
         GStrv accs = g_strv_builder_unref_to_strv(builder);
+#else
+        GStrv accs = g_strv_builder_end(builder);
+        g_strv_builder_unref(builder);
+#endif
         std::string act = this->entries[a.first.action].namespacedName;
         if (a.first.parameter) {
             act += "(uint64 " + std::to_string(a.first.parameter.value()) + ")";
