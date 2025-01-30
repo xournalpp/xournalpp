@@ -123,7 +123,7 @@ endif (Backtrace_FOUND)
 ##############################
 
 set(pkg-module-spec "")
-list(APPEND pkg-module-spec "glib-2.0 >= 2.32.0")
+list(APPEND pkg-module-spec "glib-2.0 >= 2.68.0")
 list(APPEND pkg-module-spec "gtk+-3.0 >= 3.18.9")
 list(APPEND pkg-module-spec "poppler-glib >= 0.41.0")
 if (APPLE)
@@ -223,7 +223,7 @@ target_link_libraries(external_modules INTERFACE
         )
 
 target_compile_definitions(external_modules INTERFACE
-        GLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_40
+        GLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_68
         GDK_VERSION_MIN_REQUIRED=GDK_VERSION_3_18
         $<$<TARGET_EXISTS:X11::X11>:X11_ENABLED>
         )
@@ -428,7 +428,7 @@ set(CPACK_DEBIAN_PACKAGE_RELEASE 2)
 set(CPACK_DEBIAN_PACKAGE_VERSION "${CPACK_PROJECT_VERSION}")
 set(CPACK_DEBIAN_PACKAGE_SECTION "graphics")
 set(CPACK_DEBIAN_PACKAGE_DEPENDS
-        "libglib2.0-0 (>= 2.32), libgtk-3-0 (>= 3.18), libpoppler-glib8 (>= 0.41.0), libxml2 (>= 2.0.0), libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0, libzip4 (>= 1.0.1) | libzip5, zlib1g, libc6, qpdf (>= 10.6.0)")
+        "libglib2.0-0 (>= 2.68), libgtk-3-0 (>= 3.18), libpoppler-glib8 (>= 0.41.0), libxml2 (>= 2.0.0), libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0, libzip4 (>= 1.0.1) | libzip5, zlib1g, libc6, qpdf (>= 10.6.0)")
 set(CPACK_DEBIAN_PACKAGE_SUGGESTS "texlive-base, texlive-latex-extra")  # Latex tool
 # Use debian's arch scheme; we only care about x86/amd64 for now but feel free to add more
 if (${PACKAGE_ARCH} STREQUAL "x86_64")
