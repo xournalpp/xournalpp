@@ -138,29 +138,14 @@ struct ActionProperties<Action::REDO> {
 };
 template <>
 struct ActionProperties<Action::CUT> {
-#ifdef __APPLE__
-    static constexpr const char* accelerators[] = {"<Meta>X", "Cut", nullptr};
-#else
-    static constexpr const char* accelerators[] = {"<Ctrl>X", "Cut", nullptr};
-#endif
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->cut(); }
 };
 template <>
 struct ActionProperties<Action::COPY> {
-#ifdef __APPLE__
-    static constexpr const char* accelerators[] = {"<Meta>C", "Copy", nullptr};
-#else
-    static constexpr const char* accelerators[] = {"<Ctrl>C", "Copy", nullptr};
-#endif
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->copy(); }
 };
 template <>
 struct ActionProperties<Action::PASTE> {
-#ifdef __APPLE__
-    static constexpr const char* accelerators[] = {"<Meta>V", "Paste", nullptr};
-#else
-    static constexpr const char* accelerators[] = {"<Ctrl>V", "Paste", nullptr};
-#endif
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->paste(); }
 };
 template <>
