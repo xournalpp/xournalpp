@@ -190,7 +190,13 @@ void ActionDatabase::setShortcuts(const ShortcutConfiguration& config) {
     for (auto&& a: shortcuts) {
         GStrvBuilder* builder = g_strv_builder_new();
         for (auto&& s: a.second) {
+#if GLIB_CHECK_VERSION(2, 80, 0)
             g_strv_builder_take(builder, gtk_accelerator_name(s.keyval, s.mod.mod));
+#else
+            gchar* name = gtk_accelerator_name(s.keyval, s.mod.mod);
+            g_strv_builder_add(builder, name);
+            g_free(name);
+#endif
         }
         GStrv accs = g_strv_builder_unref_to_strv(builder);
         std::string act = this->entries[a.first.action].namespacedName;
