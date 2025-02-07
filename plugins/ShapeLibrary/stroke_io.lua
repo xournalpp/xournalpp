@@ -3,11 +3,14 @@ local _M = {} -- functions to export
 -- Function to read and provide formatted stroke data from a shape-file
 function _M.read_strokes_from_file(filepath)
     if filepath == nil then return end
-    local hasFile, content = pcall(dofile, filepath)
-    if not hasFile then print("Error: " .. content) return end
+    local sandbox = {} -- No access to global variables in order to safely read the file
+    setmetatable(sandbox, {__index = function() error("Forbidden function in file " .. filepath, 2) end})
+
+    local f, err = loadfile(filepath, "t", sandbox)
+    if not f or err then print("Error loading the strokes from " .. filepath .. ": " .. (err or "")) return end
     local strokesToAdd = {}
 
-    for _, stroke in ipairs(content) do
+    for _, stroke in ipairs(f()) do
         if type(stroke) == "table" and stroke.x and stroke.y then
             local newStroke = {
                 x = stroke.x,
