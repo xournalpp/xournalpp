@@ -68,25 +68,10 @@ if (APPLE)
 endif()
 
 if (WIN32)
-  # generate .ico from .png
-  find_package(ImageMagick REQUIRED COMPONENTS magick)
-  set (ICON_SIZES 16 32 48 256)
-  foreach (SIZE IN LISTS ICON_SIZES)
-    set (RESIZED_ICON ${PROJECT_BINARY_DIR}/xournalpp-icon-${SIZE}.png)
-    add_custom_command (
-                OUTPUT ${RESIZED_ICON}
-                COMMAND rsvg-convert ${PROJECT_SOURCE_DIR}/ui/pixmaps/com.github.xournalpp.xournalpp.svg --width=${SIZE} --height=${SIZE} -o ${RESIZED_ICON}
-	)
-  set (ICON_DEPS ${ICON_DEPS} ${RESIZED_ICON})
-  unset (RESIZED_ICON)
-  endforeach()
   add_custom_command (
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/win32/xournalpp.ico
-                COMMAND magick convert ${ICON_DEPS} ${CMAKE_CURRENT_BINARY_DIR}/win32/xournalpp.ico
-                DEPENDS ${ICON_DEPS}
+                COMMAND cp ${PROJECT_SOURCE_DIR}/ui/pixmaps/raster/xournalpp.ico ${CMAKE_CURRENT_BINARY_DIR}/win32/xournalpp.ico
   )
-  unset(ICON_SIZES)
-  unset(ICON_DEPS)
   add_custom_target(xournalpp_icon DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/win32/xournalpp.ico)
   add_dependencies(xournalpp xournalpp_icon)
   

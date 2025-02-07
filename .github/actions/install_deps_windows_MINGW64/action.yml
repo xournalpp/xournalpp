@@ -1,6 +1,6 @@
 # Template for setting up an MSYS2 environment on Windows
 
-name: Install dependencies for Windows build
+name: Install dependencies for Windows MingW64 build
 
 runs:
   using: composite
