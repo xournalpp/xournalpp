@@ -13,10 +13,10 @@ Quick Shape Library for inserting predefined shapes into a Xournal++ document vi
    - `C:\Users\<user>\AppData\Local\share\icons\hicolor\scalable\actions` on Windows,
    - `~/.local/share/icons/hicolor/scalable/actions/` on Linux or MacOS
 
-2. **In the Xournal++ app**:
-  Open menu `Edit > Toolbars > Customize`. You will find the copied icons in the `Plugins` section. Place them at a suitable location in the toolbar.
+2. **Activate the plugin** in menu `Plugins > Plugin Manager`
 
-3. **Activate the plugin** in menu `Plugins > Plugin Manager`
+3. **In the Xournal++ app**:
+  Open menu `Edit > Toolbars > Customize`. You will find the copied icons in the `Plugins` section. Place them at a suitable location in the toolbar.
 
 4. **Use the plugin** as needed
 
@@ -24,7 +24,7 @@ Quick Shape Library for inserting predefined shapes into a Xournal++ document vi
 ## Add Your Own Shape with "Extract_Stroke_Info"
 
 1. **Draw your own shape** in Xournal++ and place it at the top left corner of the page.
-  *Note: The shape will be inserted at the same position. When you want to insert the sape if the page is smaller than the current one, you may not be able to see the inserted shapes.*
+  *Note: The shape will be inserted at the same position. When you want to insert the shape if the page is smaller than the current one, you may not be able to see the inserted shapes.*
 
 2. **Select your shape** and click the `ESI` icon or select the `ESI` action from the `Plugin` menu.
 
