@@ -14,7 +14,7 @@ local _M = {
             [4] = { name = "Right Angle Triangle", shapeName = "rightAngleTriangle" },
             [5] = { name = "Parallelogram", shapeName = "Parallelogram" },
             [6] = { name = "Hexagon", shapeName = "hexagon" },
-            --  [7] = { name = "My Shape", shapeName = "myShape" },  -- Add your won shape like this
+            --  [7] = { name = "My Shape", shapeName = "myShape" },  -- Add your own shape like this
         },
     },
     [2] = {
@@ -69,7 +69,7 @@ local _M = {
     --          [2] = { name = "My Shape2", shapeName = "myShape2" },
     --          [3] = { name = "My Shape3", shapeName = "myShape3" },
     --          [4] = { name = "My Shape4", shapeName = "myShape4" },
-    --      --  [5] = { name = "My Shape5", shapeName = "myShape5" },  -- Add your won shape like this
+    --      --  [5] = { name = "My Shape5", shapeName = "myShape5" },  -- Add your own shape like this
     --      },
     --
     --  }
