@@ -26,41 +26,58 @@ local index = 1 -- the index is set when one of the shapes is selected
 function _M.showMainShapeDialog()
     local window = Gtk.Window {
         title = 'Insert shapes',
-        default_width = 500,
+        default_width = 600,
         default_height = 500,
 
         Gtk.Box {
-            orientation = "VERTICAL",
-            spacing = 12,
-            Gtk.StackSwitcher {
-                id = 'switcher',
-            },
-            Gtk.Stack {
-                id = 'stack',
-            },
-            Gtk.Button {
-                id = 'insert_button',
-                hexpand = false,
-                halign = "CENTER",
-                label = "Insert shape into document",
+            orientation = "HORIZONTAL",
+            Gtk.ScrolledWindow {
+                margin_bottom = 24,
+                margin_top = 24,
+                propagate_natural_width = true,
+                Gtk.Box {
+                    orientation = "VERTICAL",
+                    spacing=24,
+                    Gtk.Label {
+                        use_markup=true,
+                        label = "<b>Category</b>",
+                    },
+                    Gtk.StackSidebar {
+                    height_request = 400,
+                    id = 'switcher',
+                    }
+                },
             },
             Gtk.Box {
-                orientation = "HORIZONTAL",
+                orientation = "VERTICAL",
                 spacing = 12,
-                margin_top = 24,
-                halign = "CENTER",
-
-                Gtk.Label {
-                    label = "Name: ",
-                },
-                Gtk.Entry {
-                    id = 'add_entry',
-                    placeholder_text = "MyShape",
+                Gtk.Stack {
+                    id = 'stack',
                 },
                 Gtk.Button {
-                    id = 'add_button',
-                    label = "Add shape from selection",
+                    id = 'insert_button',
+                    hexpand = false,
+                    halign = "CENTER",
+                    label = "Insert shape into document",
                 },
+                Gtk.Box {
+                    orientation = "HORIZONTAL",
+                    spacing = 12,
+                    margin_top = 24,
+                    halign = "CENTER",
+
+                    Gtk.Label {
+                        label = "Name: ",
+                    },
+                    Gtk.Entry {
+                        id = 'add_entry',
+                        placeholder_text = "MyShape",
+                    },
+                    Gtk.Button {
+                        id = 'add_button',
+                        label = "Add shape from selection",
+                    },
+                }
             }
         }
     }
