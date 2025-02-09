@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-23 09:18+0000\n"
-"PO-Revision-Date: 2025-01-26 04:25\n"
+"POT-Creation-Date: 2025-01-27 08:42+0000\n"
+"PO-Revision-Date: 2025-02-09 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -186,7 +186,7 @@ msgstr "Descarta"
 
 #: ../src/core/control/Control.cpp:2141
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
-msgstr ""
+msgstr "No s'ha progut crear el subproceś de demostració de Gtk: {1} (codi d'error: {2})"
 
 #: ../src/core/control/CrashHandler.cpp:31
 msgid "Trying to emergency save the current open document..."
@@ -2649,7 +2649,31 @@ msgid "%{name}\tThe filename (if any) of the PDF background\n"
 "%Z\t\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\t\t%\n"
 "Illegal characters are replaced with \"_\""
-msgstr ""
+msgstr "%{name}\tEl nom del document de fons (si n'hi ha algun)\n"
+"%a\t\t\tNom abreviat del dia de la setmana (com ara Thu)\n"
+"%A\t\t\tNom del dia de la setmana sencer (com ara Thursday)\n"
+"%b\t\t\tNom abreviat del mes (com ara Aug)\n"
+"%B\t\t\tNom sencer del mes (com ara August)\n"
+"%c\t\t\tRepresentació de la data i hora (com ara Thu Aug 23 14:55:02 2001)\n"
+"%d\t\t\tDia del mes (01-31)\n"
+"%F\t\t\tRepresentació any-mes-dia (com ara 2001-08-23)\n"
+"%H\t\t\tHora en format 24 hores (00-23)\n"
+"%I\t\t\tHora en format 12 hores (01-12)\n"
+"%j\t\t\tDia de l'any (001-366)\n"
+"%m\t\t\tNúmero del mes (01-12)\n"
+"%M\t\t\tMinut (00-59)\n"
+"%p\t\t\tDessignació AM o PM (com ara PM)\n"
+"%S\t\t\tSegon (00-61)\n"
+"%U\t\t        Número de setmana amb el primer diumenge com a primer dia de la setmana 1 (00-53)\n"
+"%W\t\t        Número de setmana amb el primer dilluns com a primer dia de la setmana 1 (00-53)\n"
+"%w\t\t        Número del dia de la setmana on el diumenge és el dia 0 (0-6)\n"
+"%x\t\t\tRepresentació de la data (com ara 08/23/01)\n"
+"%X\t\t\tRepresentació de l'hora (com ara 14:55:02 o 2:55:02 PM)\n"
+"%y\t\t\tDos últims dígits de l'any (00-99)\n"
+"%Y\t\t\tAnys (com ara 2001)\n"
+"%Z\t\t\tNom de la zona horària o abreviació (com ara CDT)\n"
+"%%\t\t\t%\n"
+"Els caràcters no vàlids es reemplaçaran amb «_»."
 
 #: ../ui/settings.glade:782
 msgid "Default Pdf export name"
@@ -4244,7 +4268,7 @@ msgstr "Ajuda"
 
 #: ../ui/mainmenubar.xml:859
 msgid "Run Gtk3 demo"
-msgstr ""
+msgstr "Executa la demostració Gtk3"
 
 #: ../ui/mainmenubar.xml:863
 msgid "About"
@@ -4420,15 +4444,15 @@ msgstr "Complements que fan servir scripts LUA"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:57
 msgid "Note taking"
-msgstr ""
+msgstr "Prendre notes"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:61
 msgid "PDF annotation"
-msgstr ""
+msgstr "Anotació de PDF"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:65
 msgid "LaTeX with customized preamble"
-msgstr ""
+msgstr "LaTeX amb preàmbul personalitzat"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.xml.in:4
 msgid "Xournal note file"
