@@ -57,10 +57,16 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
         return true;
     }
 
-    if (event.type == MOTION_EVENT && this->primarySequence) {
-        if (this->primarySequence && this->secondarySequence && (zoomGesturesEnabled || undoGestureEnabled)) {
+    if (event.type == MOTION_EVENT) {
+        // NOTE: the first MOTION_EVENT from x11 touch input has sequence ID 0
+        if (primarySequence == event.sequence && !secondarySequence) {
+            scrollMotion(event);
+            return true;
+        } else if (event.sequence && (zoomGesturesEnabled || undoGestureEnabled) &&
+                   (primarySequence == event.sequence || secondarySequence == event.sequence)) {
             if (zoomGesturesEnabled) {
-                if (this->startZoomReady) {
+                xoj_assert(primarySequence);
+                if (startZoomReady) {
                     if (this->primarySequence == event.sequence) {
                         sequenceStart(event);
                         zoomStart();
@@ -69,7 +75,6 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
                     zoomMotion(event);
                 }
             }
-
             if (undoGestureEnabled) {
                 undoGestureMotion(event);
             }
@@ -213,6 +218,7 @@ void TouchInputHandler::onBlock() {
     if (this->zooming) {
         zoomEnd();
     }
+    undoGestureCancel();
 }
 
 void TouchInputHandler::onUnblock() {
@@ -252,7 +258,7 @@ void TouchInputHandler::undoGestureMotion(InputEvent const& event) {
         }
 
         // If the distance from the start is greater than 5 pixels cancel the undo gesture
-        if (distance > 5.0) {
+        if (distance > 5.0 || priStartAbs.x < 0.0 || secStartAbs.x < 0.0) {
             undoGestureCancel();
         }
     }

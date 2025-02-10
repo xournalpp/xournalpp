@@ -45,8 +45,8 @@ private:
     bool canBlockZoom{false};
 
     bool detectingUndo = false;
-    utl::Point<double> priStartAbs{-1.0, -1.0};
-    utl::Point<double> secStartAbs{-1.0, -1.0};
+    xoj::util::Point<double> priStartAbs{-1.0, -1.0};
+    xoj::util::Point<double> secStartAbs{-1.0, -1.0};
 
 private:
     void sequenceStart(InputEvent const& event);
