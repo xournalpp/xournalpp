@@ -3787,7 +3787,7 @@ This setting can make it easier to draw with touch. </property>
                               <object class="GtkFrame" id="grpSidebarSettings">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label-xalign">0</property>
+                                <property name="label-xalign">0.009999999776482582</property>
                                 <child>
                                   <object class="GtkBox">
                                     <property name="visible">True</property>
@@ -3924,7 +3924,7 @@ This setting can make it easier to draw with touch. </property>
                               <object class="GtkFrame">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label-xalign">0</property>
+                                <property name="label-xalign">0.009999999776482582</property>
                                 <child>
                                   <!-- n-columns=2 n-rows=2 -->
                                   <object class="GtkGrid">
@@ -5138,62 +5138,6 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame" id="strokeRecognizerFrrame">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label_xalign">0.0099999997764825821</property>
-                                <child>
-                                  <object class="GtkBox">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="margin_start">12</property>
-                                    <property name="margin_end">12</property>
-                                    <property name="margin_bottom">8</property>
-                                    <child>
-                                      <object class="GtkLabel">
-                                        <property name="name">lbStrokeRecognizerMinSize</property>
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
-                                        <property name="margin_end">6</property>
-                                        <property name="label" translatable="yes">Minimum Stroke Size</property>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">0</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkSpinButton" id="spStrokeRecognizerMinSize">
-                                        <property name="name">spStrokeRecognizerMinSize</property>
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">True</property>
-                                        <property name="adjustment">adjustmentStrokeRecognizerMinSize</property>
-                                        <property name="climb_rate">2</property>
-                                        <property name="value">25</property>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">1</property>
-                                      </packing>
-                                    </child>
-                                  </object>
-                                </child>
-                                <child type="label">
-                                  <object class="GtkLabel">
-                                    <property name="visible">True</property>
-                                    <property name="can-focus">False</property>
-                                  </object>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">5</property>
-                              </packing>
-                            </child>
-                            <child>
                               <object class="GtkFrame" id="sid146">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
@@ -5364,7 +5308,6 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         <property name="name">spStrokeRecognizerMinSize</property>
                                         <property name="visible">True</property>
                                         <property name="can-focus">True</property>
-                                        <property name="text" translatable="yes">0.20</property>
                                         <property name="adjustment">adjustmentStrokeRecognizerMinSize</property>
                                         <property name="climb-rate">2</property>
                                         <property name="value">25</property>
@@ -5381,7 +5324,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                   <object class="GtkLabel">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
-                                    <property name="label" translatable="yes">Stroke Recognizer</property>
+                                    <property name="label" translatable="yes">Shape Recognizer</property>
                                   </object>
                                 </child>
                               </object>
