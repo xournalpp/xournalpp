@@ -24,7 +24,7 @@ echo "copy installed files"
 echo "copy libraries"
 ldd ../build/xournalpp.exe | grep '\/mingw.*\.dll' -o | sort -u | xargs -I{} cp "{}" "$setup_dir"/bin/
 # CI workaround: copy libcrypto and libssl in case they are not already copied.
-ldd ../build/xournalpp.exe | grep -E 'lib(ssl|crypto)[^\.]*\.dll' -o | sort -u | xargs -I{} cp "/mingw64/bin/{}" "$setup_dir"/bin/
+ldd ../build/xournalpp.exe | grep -E 'lib(ssl|crypto)[^\.]*\.dll' -o | sort -u | xargs -I{} cp "/clangarm64/bin/{}" "$setup_dir"/bin/
 
 echo "Installing GTK/Glib translations"
 # Copy system locale files
@@ -38,50 +38,50 @@ for trans in ../build/po/*.gmo; do
 
     # GTK / GLib Translation
     for f in "glib20.mo" "gdk-pixbuf.mo" "gtk30.mo" "gtk30-properties.mo"; do
-        install -Dvm644 /mingw64/share/locale/$locale/LC_MESSAGES/$f "$setup_dir"/share/locale/$locale/LC_MESSAGES/$f \
+        install -Dvm644 /clangarm64/share/locale/$locale/LC_MESSAGES/$f "$setup_dir"/share/locale/$locale/LC_MESSAGES/$f \
           || ([ "$locale" != "$locale_no_country" ] \
-              && install -Dvm644 /mingw64/share/locale/$locale_no_country/LC_MESSAGES/$f "$setup_dir"/share/locale/$locale_no_country/LC_MESSAGES/$f)
+              && install -Dvm644 /clangarm64/share/locale/$locale_no_country/LC_MESSAGES/$f "$setup_dir"/share/locale/$locale_no_country/LC_MESSAGES/$f)
     done
 done
 
 echo "copy pixbuf libs"
-cp -r /mingw64/lib/gdk-pixbuf-2.0 "$setup_dir"/lib/
+cp -r /clangarm64/lib/gdk-pixbuf-2.0 "$setup_dir"/lib/
 
 echo "copy pixbuf lib dependencies"
-ldd /mingw64/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.dll | grep '\/mingw.*\.dll' -o | xargs -I{} cp "{}" "$setup_dir"/bin/
+ldd /clangarm64/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.dll | grep '\/mingw.*\.dll' -o | xargs -I{} cp "{}" "$setup_dir"/bin/
 
 echo "copy icons"
-cp -r /mingw64/share/icons "$setup_dir"/share/
+cp -r /clangarm64/share/icons "$setup_dir"/share/
 
 echo "copy glib shared"
-cp -r /mingw64/share/glib-2.0 "$setup_dir"/share/
+cp -r /clangarm64/share/glib-2.0 "$setup_dir"/share/
 
 echo "copy poppler shared"
-cp -r /mingw64/share/poppler "$setup_dir"/share/
+cp -r /clangarm64/share/poppler "$setup_dir"/share/
 
 echo "copy gtksourceview shared"
-cp -r /mingw64/share/gtksourceview-4 "$setup_dir"/share
+cp -r /clangarm64/share/gtksourceview-4 "$setup_dir"/share
 
 echo "copy gspawn-win64-helper"
-cp /mingw64/bin/gspawn-win64-helper.exe "$setup_dir"/bin
-cp /mingw64/bin/gspawn-win64-helper-console.exe "$setup_dir"/bin
+cp /clangarm64/bin/gspawn-win64-helper.exe "$setup_dir"/bin
+cp /clangarm64/bin/gspawn-win64-helper-console.exe "$setup_dir"/bin
 
 echo "copy gdbus"
-cp /mingw64/bin/gdbus.exe "$setup_dir"/bin
+cp /clangarm64/bin/gdbus.exe "$setup_dir"/bin
 
 echo "copy gtk3-demo"
-cp /mingw64/bin/gtk3-demo.exe "$setup_dir"/bin
+cp /clangarm64/bin/gtk3-demo.exe "$setup_dir"/bin
 
 echo "copy lua-lgi and dependencies"
-cp /mingw64/bin/libgirepository-1.0-1.dll "$setup_dir"/bin
+cp /clangarm64/bin/libgirepository-1.0-1.dll "$setup_dir"/bin
 mkdir -p "$setup_dir"/lib/lua/5.4/lgi
-cp /mingw64/lib/lua/5.4/lgi/corelgilua51.dll "$setup_dir"/lib/lua/5.4/lgi
-cp /mingw64/lib/libgirepository-1.0.dll.a "$setup_dir"/lib
+cp /clangarm64/lib/lua/5.4/lgi/corelgilua51.dll "$setup_dir"/lib/lua/5.4/lgi
+cp /clangarm64/lib/libgirepository-1.0.dll.a "$setup_dir"/lib
 mkdir "$setup_dir"/lib/girepository-1.0
-cp /mingw64/lib/girepository-1.0/*.typelib "$setup_dir"/lib/girepository-1.0
+cp /clangarm64/lib/girepository-1.0/*.typelib "$setup_dir"/lib/girepository-1.0
 mkdir -p "$setup_dir"/share/lua/5.4
-cp /mingw64/share/lua/5.4/lgi.lua "$setup_dir"/share/lua/5.4
-cp -r /mingw64/share/lua/5.4/lgi/ "$setup_dir"/share/lua/5.4
+cp /clangarm64/share/lua/5.4/lgi.lua "$setup_dir"/share/lua/5.4
+cp -r /clangarm64/share/lua/5.4/lgi/ "$setup_dir"/share/lua/5.4
 
 echo "create installer"
 bash make_version_nsh.sh
