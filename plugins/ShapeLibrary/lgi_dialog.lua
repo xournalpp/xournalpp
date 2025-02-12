@@ -20,10 +20,16 @@ end
 
 --lgi module has been found
 local Gtk = lgi.require("Gtk", "3.0")
+local assert = lgi.assert
 local drawing = require "drawing"
 local index = 1 -- the index is set when one of the shapes is selected
 
 function _M.showMainShapeDialog()
+    local provider = Gtk.CssProvider()
+    assert(provider:load_from_path(sourcePath .. sep .. "main.css"), "ERROR: main.css not found")
+    -- local screen = Gdk.Display.get_default_screen(Gdk.Display:get_default())
+    -- Gtk.StyleContext.add_provider_for_screen(screen, provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
+
     local window = Gtk.Window {
         title = 'Insert shapes',
         default_width = 600,
@@ -37,50 +43,93 @@ function _M.showMainShapeDialog()
                 propagate_natural_width = true,
                 Gtk.Box {
                     orientation = "VERTICAL",
-                    spacing=24,
+                    spacing = 24,
                     Gtk.Label {
-                        use_markup=true,
-                        label = "<b>Category</b>",
+                        id = 'lbl_category',
+                        label = "Category",
                     },
                     Gtk.StackSidebar {
-                    height_request = 400,
-                    id = 'switcher',
-                    }
+                        height_request = 300,
+                        id = 'switcher',
+                    },
+                    Gtk.Box {
+                        orientation = "HORIZONTAL",
+                        hexpand = true,
+                        halign = "CENTER",
+                        spacing = 12,
+                        Gtk.Button {
+                            id = 'add_category_button',
+                            hexpand = false,
+                            label = '+',
+                            tooltip_text = 'Add new category',
+                        },
+                        Gtk.Button {
+                            id = 'remove_category_button',
+                            hexpand = false,
+                            label = '-',
+                            tooltip_text = 'Remove selected category',
+                        },
+                    },
                 },
             },
             Gtk.Box {
                 orientation = "VERTICAL",
                 spacing = 12,
+                margin_bottom = 24,
+                margin_top = 24,
+                Gtk.Label {
+                    id = 'lbl_shape',
+                    label = "Shape",
+                },
                 Gtk.Stack {
                     id = 'stack',
-                },
-                Gtk.Button {
-                    id = 'insert_button',
-                    hexpand = false,
-                    halign = "CENTER",
-                    label = "Insert shape into document",
+                    width_request = 400,
                 },
                 Gtk.Box {
                     orientation = "HORIZONTAL",
-                    spacing = 12,
-                    margin_top = 24,
-                    halign = "CENTER",
-
-                    Gtk.Label {
-                        label = "Name: ",
-                    },
-                    Gtk.Entry {
-                        id = 'add_entry',
-                        placeholder_text = "MyShape",
-                    },
+                    spacing = 96,
+                    margin_bottom = 6,
+                    margin_top = 6,
+                    margin_left = 6,
+                    margin_right = 6,
+                    hexpand = true,
                     Gtk.Button {
-                        id = 'add_button',
-                        label = "Add shape from selection",
+                        id = 'insert_button',
+                        halign = "CENTER",
+                        label = "Insert",
+                        tooltip_text = "Insert shape into document",
+                    },
+                    Gtk.Box {
+                        orientation = "HORIZONTAL",
+                        halign = "END",
+                        spacing = 12,
+                        Gtk.Button {
+                            id = 'update_shape_button',
+                            hexpand = false,
+                            label = "Update",
+                            tooltip_text = "Update selected shape",
+                        },
+                        Gtk.Button {
+                            id = 'add_shape_button',
+                            hexpand = false,
+                            label = "+",
+                            tooltip_text = "Add shape from selection",
+                        },
+                        Gtk.Button {
+                            id = 'remove_shape_button',
+                            hexpand = false,
+                            label = "-",
+                            tooltip_text = "Remove selected shape",
+                        },
                     },
                 }
             }
         }
     }
+    local lbl_category = window.child['lbl_category']
+    lbl_category:get_style_context():add_provider(provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
+    local lbl_shape = window.child['lbl_shape']
+    lbl_shape:get_style_context():add_provider(provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
 
     local insert_button = window.child['insert_button']
     insert_button.on_button_press_event = function(event)
@@ -88,6 +137,32 @@ function _M.showMainShapeDialog()
         local shape_name = shapes_dict[category].shapes[index].shapeName
         insertion_helper.insert_stroke(shape_name)
     end
+
+    local add_category_button = window.child['add_category_button']
+    add_category_button.on_button_press_event = function(event)
+        print("Add category")
+    end
+
+    local remove_category_button = window.child['remove_category_button']
+    remove_category_button.on_button_press_event = function(event)
+        print("Remove category")
+    end
+
+    local update_shape_button = window.child['update_shape_button']
+    update_shape_button.on_button_press_event = function(event)
+        print("Update shape")
+    end
+
+    local add_shape_button = window.child['add_shape_button']
+    add_shape_button.on_button_press_event = function(event)
+        print("Add shape")
+    end
+
+    local remove_shape_button = window.child['remove_shape_button']
+    remove_shape_button.on_button_press_event = function(event)
+        print("Remove shape")
+    end
+
 
     local stack = window.child['stack']
     local switcher = window.child['switcher']
