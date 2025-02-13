@@ -31,7 +31,7 @@ function _M.showMainShapeDialog()
     -- Gtk.StyleContext.add_provider_for_screen(screen, provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
 
     local window = Gtk.Window {
-        title = 'Insert shapes',
+        title = 'Manage and Insert Shapes',
         default_width = 600,
         default_height = 500,
 
@@ -126,47 +126,205 @@ function _M.showMainShapeDialog()
             }
         }
     }
-    local lbl_category = window.child['lbl_category']
-    lbl_category:get_style_context():add_provider(provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
-    local lbl_shape = window.child['lbl_shape']
-    lbl_shape:get_style_context():add_provider(provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
-
-    local insert_button = window.child['insert_button']
-    insert_button.on_button_press_event = function(event)
-        local category = tonumber(window.child['stack']:get_visible_child_name())
+    window.child.lbl_category:get_style_context():add_provider(provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
+    window.child.lbl_shape:get_style_context():add_provider(provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
+    window.child.insert_button.on_button_press_event = function(event)
+        local category = tonumber(window.child.stack:get_visible_child_name())
         local shape_name = shapes_dict[category].shapes[index].shapeName
         insertion_helper.insert_stroke(shape_name)
     end
 
-    local add_category_button = window.child['add_category_button']
-    add_category_button.on_button_press_event = function(event)
-        print("Add category")
+    -- Dialogs --
+
+    window.child.add_category_button.on_button_press_event = function(event)
+        local dialog = Gtk.Dialog {
+            title = "Add Category",
+            transient_for = window,
+            modal = true,
+            destroy_with_parent = true,
+            buttons = {
+                { Gtk.STOCK_OK, Gtk.ResponseType.OK },
+                { "_Cancel",    Gtk.ResponseType.CANCEL },
+            },
+        }
+        local hbox = Gtk.Box {
+            orientation = 'HORIZONTAL',
+            spacing = 8,
+            border_width = 8,
+            Gtk.Label {
+                label = 'Category name',
+            },
+            Gtk.Entry {
+                id = 'name_entry',
+                placeholder_text = 'MyCategory',
+            },
+
+        }
+        dialog:get_content_area():add(hbox)
+        hbox:show_all()
+
+        function dialog:on_response(response)
+            if response == Gtk.ResponseType.OK then
+                print("Add code for adding category: " .. hbox.child.name_entry.text)
+            end
+            dialog:destroy()
+        end
+
+        dialog:show()
+    end
+    window.child.remove_category_button.on_button_press_event = function(event)
+        local category = tonumber(window.child.stack:get_visible_child_name())
+        local category_name = shapes_dict[category].name
+
+        local dialog = Gtk.Dialog {
+            width_request = 300,
+            title = "Remove Category",
+            transient_for = window,
+            modal = true,
+            destroy_with_parent = true,
+            buttons = {
+                { Gtk.STOCK_OK, Gtk.ResponseType.OK },
+                { "_Cancel",    Gtk.ResponseType.CANCEL },
+            },
+        }
+        local vbox = Gtk.Box {
+            orientation = 'VERTICAL',
+            Gtk.Label {
+                use_markup = true,
+                wrap = true,
+                label = 'Remove category <b>' .. category_name .. '</b> and all shapes in it.'
+            },
+        }
+        dialog:get_content_area():add(vbox)
+        vbox:show_all()
+
+        function dialog:on_response(response)
+            if response == Gtk.ResponseType.OK then
+                print("Add code for removing category: " .. category_name)
+            end
+            dialog:destroy()
+        end
+
+        dialog:show()
     end
 
-    local remove_category_button = window.child['remove_category_button']
-    remove_category_button.on_button_press_event = function(event)
-        print("Remove category")
+    window.child.update_shape_button.on_button_press_event = function(event)
+        local category = tonumber(window.child.stack:get_visible_child_name())
+        local name = shapes_dict[category].shapes[index].name
+
+        local dialog = Gtk.Dialog {
+            width_request = 300,
+            title = "Update Shape",
+            transient_for = window,
+            modal = true,
+            destroy_with_parent = true,
+            buttons = {
+                { Gtk.STOCK_OK, Gtk.ResponseType.OK },
+                { "_Cancel",    Gtk.ResponseType.CANCEL },
+            },
+        }
+        local vbox = Gtk.Box {
+            orientation = 'VERTICAL',
+            Gtk.Label {
+                use_markup = true,
+                wrap = true,
+                label = 'Replace shape <b>' .. name .. '</b> by the strokes in the selection.'
+            },
+        }
+        dialog:get_content_area():add(vbox)
+        vbox:show_all()
+
+        function dialog:on_response(response)
+            if response == Gtk.ResponseType.OK then
+                print("Add code for updating shape: " .. name)
+            end
+            dialog:destroy()
+        end
+
+        dialog:show()
     end
 
-    local update_shape_button = window.child['update_shape_button']
-    update_shape_button.on_button_press_event = function(event)
-        print("Update shape")
+    window.child.add_shape_button.on_button_press_event = function(event)
+        local dialog = Gtk.Dialog {
+            title = "Add Shape",
+            transient_for = window,
+            modal = true,
+            destroy_with_parent = true,
+            buttons = {
+                { Gtk.STOCK_OK, Gtk.ResponseType.OK },
+                { "_Cancel",    Gtk.ResponseType.CANCEL },
+            },
+        }
+        local vbox = Gtk.Box {
+            orientation = 'VERTICAL',
+            spacing = 8,
+            Gtk.Label {
+                label = 'Insert selected strokes as new shape',
+            },
+            Gtk.Box {
+                orientation = 'HORIZONTAL',
+                spacing = 8,
+                border_width = 8,
+                Gtk.Label {
+                    label = 'Shape name',
+                },
+                Gtk.Entry {
+                    id = 'name_entry',
+                    placeholder_text = 'MyShape',
+                },
+            },
+        }
+        dialog:get_content_area():add(vbox)
+        vbox:show_all()
+
+        function dialog:on_response(response)
+            if response == Gtk.ResponseType.OK then
+                print("Add code for adding shape: " .. vbox.child.name_entry.text)
+            end
+            dialog:destroy()
+        end
+
+        dialog:show()
     end
 
-    local add_shape_button = window.child['add_shape_button']
-    add_shape_button.on_button_press_event = function(event)
-        print("Add shape")
+    window.child.remove_shape_button.on_button_press_event = function(event)
+        local category = tonumber(window.child.stack:get_visible_child_name())
+        local name = shapes_dict[category].shapes[index].name
+
+        local dialog = Gtk.Dialog {
+            width_request = 300,
+            title = "Remove Shape",
+            transient_for = window,
+            modal = true,
+            destroy_with_parent = true,
+            buttons = {
+                { Gtk.STOCK_OK, Gtk.ResponseType.OK },
+                { "_Cancel",    Gtk.ResponseType.CANCEL },
+            },
+        }
+        local vbox = Gtk.Box {
+            orientation = 'VERTICAL',
+            Gtk.Label {
+                use_markup = true,
+                wrap = true,
+                label = 'Remove shape <b>' .. name .. '</b>'
+            },
+        }
+        dialog:get_content_area():add(vbox)
+        vbox:show_all()
+
+        function dialog:on_response(response)
+            if response == Gtk.ResponseType.OK then
+                print("Add code for removing shape: " .. name)
+            end
+            dialog:destroy()
+        end
+
+        dialog:show()
     end
 
-    local remove_shape_button = window.child['remove_shape_button']
-    remove_shape_button.on_button_press_event = function(event)
-        print("Remove shape")
-    end
 
-
-    local stack = window.child['stack']
-    local switcher = window.child['switcher']
-    switcher:set_stack(stack)
+    window.child.switcher:set_stack(window.child.stack)
 
     for i, category in ipairs(shapes_dict) do
         local scrolled_window = Gtk.ScrolledWindow {
@@ -186,8 +344,6 @@ function _M.showMainShapeDialog()
                 on_child_activated = function(_, child) index = child:get_index() + 1 end
             }
         }
-        local flow_box = scrolled_window.child['flow_box']
-
         for j, shape in ipairs(category.shapes) do
             local shape_box = Gtk.Box {
                 orientation = "VERTICAL",
@@ -205,17 +361,16 @@ function _M.showMainShapeDialog()
                     }
                 }
             }
-            local drawing_area = shape_box.child['drawing_area']
             local strokes = get_strokes(i, j)
-            function drawing_area:on_draw(cr)
+            function shape_box.child.drawing_area:on_draw(cr)
                 drawing.draw_strokes(strokes)(self, cr)
                 return true
             end
 
-            flow_box:add(shape_box)
+            scrolled_window.child.flow_box:add(shape_box)
         end
 
-        stack:add_titled(scrolled_window, i, category.name)
+        window.child.stack:add_titled(scrolled_window, i, category.name)
     end
 
     window:show_all()
