@@ -1,4 +1,4 @@
-# Windows on ARM Build
+# Windows on ARM Build (not officially supported)
 
 ![Screenshot](./main-win.png?raw=true "Xournal++ Screenshot on Win10")
 
