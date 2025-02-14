@@ -9,15 +9,15 @@ function initUi()
         ["iconName"] = "shapes_symbolic"
     })
     app.registerUi({
-        ["menu"] = "Insert Shapes (lgi)",
-        ["callback"] = "Show_lgi_dialog",
-    })
-    app.registerUi({
-        ["menu"] = "Extract_Stroke_Info",
+        ["menu"] = "Extract_Stroke_Info (simple)",
         ["callback"] = "Store_stroke_info",
         ["toolbarId"] =
         "StrInfo",
         ["iconName"] = "extract-info-symbolic"
+    })
+    app.registerUi({
+        ["menu"] = "Manage and Insert Shapes (lgi)",
+        ["callback"] = "Show_lgi_dialog",
     })
 end
 
