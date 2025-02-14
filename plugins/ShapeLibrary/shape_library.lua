@@ -22,7 +22,7 @@ function initUi()
 end
 
 function Store_stroke_info()
-        local stroke_io = require "stroke_info"
+        local stroke_io = require "stroke_io"
         local strokes = app.getStrokes("selection")
         stroke_io.store_strokes_info_in_file(strokes)
 end
