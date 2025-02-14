@@ -104,10 +104,10 @@ function _M.showMainShapeDialog()
                         halign = "END",
                         spacing = 12,
                         Gtk.Button {
-                            id = 'update_shape_button',
+                            id = 'replace_shape_button',
                             hexpand = false,
-                            label = "Update",
-                            tooltip_text = "Update selected shape",
+                            label = "Replace",
+                            tooltip_text = "Replace selected shape",
                         },
                         Gtk.Button {
                             id = 'add_shape_button',
@@ -208,13 +208,13 @@ function _M.showMainShapeDialog()
         dialog:show()
     end
 
-    window.child.update_shape_button.on_button_press_event = function(event)
+    window.child.replace_shape_button.on_button_press_event = function(event)
         local category = tonumber(window.child.stack:get_visible_child_name())
         local name = shapes_dict[category].shapes[index].name
 
         local dialog = Gtk.Dialog {
             width_request = 300,
-            title = "Update Shape",
+            title = "Replace Shape",
             transient_for = window,
             modal = true,
             destroy_with_parent = true,
