@@ -4,7 +4,7 @@ local filePath = sourcePath .. "config.lua"
 
 local _M = {} -- functions to export
 
-local function getShapesData()
+function _M.getShapesData()
     local sandbox = {} -- No access to global variables in order to safely read the file
     setmetatable(sandbox, { __index = function() error("Forbidden function in file " .. filePath, 2) end })
 
@@ -57,7 +57,7 @@ function _M.addCategory(newCategoryName)
     if not newCategoryName then print("No category name to add!") return end
 
     -- Step 1: Load the shapes data from the config file
-    local shapesData = getShapesData() or {}
+    local shapesData = _M.getShapesData() or {}
 
     -- Step 2: Add the new category
     local newCategory = { name = newCategoryName, shapes = {} }
@@ -68,21 +68,50 @@ function _M.addCategory(newCategoryName)
     writeConfig(shapesData)
 end
 
+function _M.removeCategory(categoryName)
+    if not categoryName then print("No category name to remove!") return end
+
+    -- Step 1: Load the shapes data from the config file
+    local shapesData = _M.getShapesData() or {}
+
+    -- Step 2: Add the new category
+    for _, category in ipairs(shapesData) do
+        if category.name == categoryName then
+            for _, shape in ipairs(category) do
+                local filename = shape.shapeName .. ".lua"
+                print("Removing shape .. " .. filename)
+            end
+            category = nil
+            break
+        end
+    end
+
+    -- Step 3: Write the modified shapes data back into the config file
+    writeConfig(shapesData)
+end
+
 -- Function to read, modify, and write back to the shapes file
-function _M.updateShape(categoryName, shapeName, shapeFileName)
+function _M.renameShape(categoryName, oldName, newName, oldShapeName, newShapeName)
     if not categoryName then print("Error: No category name to update!") return end
 
     -- Step 1: Load the shapes data from the config file
-    local shapesData = getShapesData() or {}
+    local shapesData = _M.getShapesData() or {}
 
     -- Step 2: Modify the shapes data
-    local categoryFound = false
+    local categoryFound, nameFound = false, false
     for _, category in ipairs(shapesData) do
         if category.name == categoryName then
-            table.insert(category.shapes, { name = shapeName, shapeName = shapeFileName })
-            print("Shape added: " .. shapeName .. " in category " .. category.name)
             categoryFound = true
-            break
+            print("Category " .. categoryName .. " found")
+            for _, shape in ipairs(category.shapes) do
+                if shape.name == oldName and shape.shapeName == oldShapeName then
+                    shape = { name = newName, shapeName = newShapeName }
+                    print("Renamed shape " .. oldName .. " in category " .. category.name .. " by " .. newName)
+                    nameFound = true
+                    break
+                end
+                if nameFound then break end
+            end
         end
     end
     if not categoryFound then print("Error: Category ".. categoryName .. " not found!") return end
