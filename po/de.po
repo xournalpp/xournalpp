@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-27 08:42+0000\n"
-"PO-Revision-Date: 2025-02-02 04:25\n"
+"PO-Revision-Date: 2025-02-16 04:25\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1400,7 +1400,7 @@ msgstr "Ein einziges Dokument verwerfen"
 
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:165
 msgid "Copy current page"
-msgstr ""
+msgstr "Kopiere aktuelle Seite"
 
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
 msgid "Copy current background"

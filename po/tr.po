@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-27 08:42+0000\n"
-"PO-Revision-Date: 2025-02-02 04:25\n"
+"PO-Revision-Date: 2025-02-16 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -3508,7 +3508,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5372
 msgid "Frequency limit (ms)"
-msgstr ""
+msgstr "Frekans sınırı (ms)"
 
 #: ../ui/settings.glade:5384
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"

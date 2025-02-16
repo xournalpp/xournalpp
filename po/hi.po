@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-27 08:42+0000\n"
-"PO-Revision-Date: 2025-02-02 04:25\n"
+"PO-Revision-Date: 2025-02-16 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -20,15 +20,16 @@ msgstr ""
 #: ../src/core/control/AudioController.cpp:120
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "ऑडियो फोल्डर चुना नहीं गया है या अमान्य है!! रिकॉर्डिंग काम नहीं करेगी!\n"
+"कृपया \"वरीयताएँ > ऑडियो रिकॉर्डिंग\" के तहत रिकॉर्डिंग फ़ोल्डर का चुनाव करें |"
 
 #: ../src/core/control/Control.cpp:229
 msgid "Filesystem error: {1}"
-msgstr ""
+msgstr "फ़ाइल सिस्टम एरर: {1}"
 
 #: ../src/core/control/Control.cpp:241
 msgid "Could not remove old autosave file \"{1}\": {2}"
-msgstr ""
+msgstr "पुरानी खुद बा खुद सहज हुई फाइल \"{1}\" को नहीं हटाया जा सका: {2}"
 
 #: ../src/core/control/Control.cpp:561
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
@@ -204,11 +205,11 @@ msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:97
 msgid "pen"
-msgstr ""
+msgstr "कलम"
 
 #: ../src/core/control/DeviceListHelper.cpp:99
 msgid "eraser"
-msgstr ""
+msgstr "मिटानेकारबर"
 
 #: ../src/core/control/DeviceListHelper.cpp:101
 msgid "cursor"
@@ -216,11 +217,11 @@ msgstr "कर्सर"
 
 #: ../src/core/control/DeviceListHelper.cpp:104
 msgid "keyboard"
-msgstr ""
+msgstr "कीबोर्ड"
 
 #: ../src/core/control/DeviceListHelper.cpp:106
 msgid "touchscreen"
-msgstr ""
+msgstr "टचस्क्रीन"
 
 #: ../src/core/control/DeviceListHelper.cpp:108
 msgid "touchpad"
