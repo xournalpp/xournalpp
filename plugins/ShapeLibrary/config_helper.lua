@@ -91,6 +91,60 @@ function _M.removeCategory(categoryName)
 end
 
 -- Function to read, modify, and write back to the shapes file
+function _M.renameCategory(oldCategoryName, newCategoryName)
+    if not oldCategoryName then print("Error: No category to rename from!") return end
+    if not newCategoryName then print("Error: No category to rename to!") return end
+
+    -- Step 1: Load the shapes data from the config file
+    local shapesData = _M.getShapesData() or {}
+
+    -- Step 2: Modify the shapes data
+    local categoryFound = false
+    for _, category in ipairs(shapesData) do
+        if category.name == oldCategoryName then
+            categoryFound = true
+            print("Category " .. oldCategoryName .. " found")
+            category.name = newCategoryName
+            break
+        end
+    end
+    if not categoryFound then print("Error: Category ".. oldCategoryName .. " not found!") return end
+
+    -- Step 3: Write the modified shapes data back into the config file
+    writeConfig(shapesData)
+end
+
+function _M.removeShape(categoryName, shapeName)
+    if not categoryName then print("No category name from which to remove!") return end
+    if not shapeName then print("No shape name to remove!") return end
+
+    -- Step 1: Load the shapes data from the config file
+    local shapesData = _M.getShapesData() or {}
+
+    -- Step 2: Add the new category
+    local found = false
+    for _, category in ipairs(shapesData) do
+        if category.name == categoryName then
+            for j, shape in ipairs(category) do
+                if shape.name == shapeName then
+                    table.remove(category, j)
+                    local filename = shape.shapeName .. ".lua"
+                    print("Removing shape .. " .. filename)
+                    found = true
+                    break
+                end
+            end
+        end
+        if found then break end
+    end
+
+    if not found then print("error: Did not find shape " .. shapeName .. " in category " .. categoryName) end
+
+    -- Step 3: Write the modified shapes data back into the config file
+    writeConfig(shapesData)
+end
+
+-- Function to read, modify, and write back to the shapes file
 function _M.renameShape(categoryName, oldName, newName, oldShapeName, newShapeName)
     if not categoryName then print("Error: No category name to update!") return end
 
@@ -103,18 +157,19 @@ function _M.renameShape(categoryName, oldName, newName, oldShapeName, newShapeNa
         if category.name == categoryName then
             categoryFound = true
             print("Category " .. categoryName .. " found")
-            for _, shape in ipairs(category.shapes) do
+            for j, shape in ipairs(category.shapes) do
                 if shape.name == oldName and shape.shapeName == oldShapeName then
-                    shape = { name = newName, shapeName = newShapeName }
-                    print("Renamed shape " .. oldName .. " in category " .. category.name .. " by " .. newName)
+                    category.shapes[j] = { name = newName, shapeName = newShapeName }
+                    print("Renamed shape " .. oldName .. " in category " .. category.name .. " to " .. newName)
                     nameFound = true
                     break
                 end
                 if nameFound then break end
             end
+            if categoryFound then break end
         end
     end
-    if not categoryFound then print("Error: Category ".. categoryName .. " not found!") return end
+    if not nameFound then print("Error: Shape ".. oldName .. " not found!") return end
 
     -- Step 3: Write the modified shapes data back into the config file
     writeConfig(shapesData)

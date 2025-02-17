@@ -283,6 +283,55 @@ function _M.showMainShapeDialog()
         function dialog:on_response(response)
             if response == Gtk.ResponseType.OK then
                 config_helper.removeCategory(category_name)
+                shapes_dict = config_helper.getShapesData()
+                loadShapesFromDict(shapes_dict, window, true)
+            end
+            dialog:destroy()
+        end
+
+        dialog:show()
+    end
+
+    window.child.rename_category_button.on_button_press_event = function(event)
+        local category = tonumber(window.child.stack:get_visible_child_name())
+        local category_name = shapes_dict[category].name
+
+        local dialog = Gtk.Dialog {
+            width_request = 300,
+            title = "Rename Category",
+            transient_for = window,
+            modal = true,
+            destroy_with_parent = true,
+            buttons = {
+                { Gtk.STOCK_OK, Gtk.ResponseType.OK },
+                { "_Cancel",    Gtk.ResponseType.CANCEL },
+            },
+        }
+        local vbox = Gtk.Box {
+            orientation = 'VERTICAL',
+            Gtk.Label {
+                use_markup = true,
+                wrap = true,
+                label = 'Rename category <b>' .. category_name .. '</b>'
+            },
+            Gtk.Box {
+                Gtk.Label {
+                    label = 'New category name',
+                },
+                Gtk.Entry {
+                    id = 'new_category_name_entry',
+                    placeholder_text = 'My New Category',
+                }
+            },
+        }
+        dialog:get_content_area():add(vbox)
+        vbox:show_all()
+
+        function dialog:on_response(response)
+            if response == Gtk.ResponseType.OK then
+                config_helper.renameCategory(category_name, vbox.child.new_category_name_entry.text)
+                shapes_dict = config_helper.getShapesData()
+                loadShapesFromDict(shapes_dict, window, true)
             end
             dialog:destroy()
         end
@@ -329,6 +378,7 @@ function _M.showMainShapeDialog()
     end
 
     window.child.add_shape_button.on_button_press_event = function(event)
+        print("Adding shape")
         local dialog = Gtk.Dialog {
             title = "Add Shape",
             transient_for = window,
@@ -345,17 +395,31 @@ function _M.showMainShapeDialog()
             Gtk.Label {
                 label = 'Insert selected strokes as new shape',
             },
-            Gtk.Box {
+            Gtk.Grid {
                 orientation = 'HORIZONTAL',
-                spacing = 8,
                 border_width = 8,
-                Gtk.Label {
-                    label = 'Shape name',
+                { left_attach = 0, top_attach = 0,
+                    Gtk.Label {
+                        label = 'Shape name',
+                    },
                 },
-                Gtk.Entry {
-                    id = 'name_entry',
-                    placeholder_text = 'MyShape',
+                { left_attach = 1, top_attach = 0,
+                    Gtk.Entry {
+                        id = 'name_entry',
+                        placeholder_text = 'MyShape',
+                    },
                 },
+                { left_attach = 0, top_attach = 1,
+                    Gtk.Label {
+                        label = 'File name',
+                    },
+                },
+                { left_attach = 1, top_attach = 1,
+                    Gtk.Entry {
+                        id = 'filename_entry',
+                        placeholder_text = 'myshape.lua',
+                    },
+                }
             },
         }
         dialog:get_content_area():add(vbox)
@@ -374,6 +438,7 @@ function _M.showMainShapeDialog()
     window.child.remove_shape_button.on_button_press_event = function(event)
         local category = tonumber(window.child.stack:get_visible_child_name())
         local name = shapes_dict[category].shapes[index].name
+        local category_name = shapes_dict[category].name
 
         local dialog = Gtk.Dialog {
             width_request = 300,
@@ -399,13 +464,63 @@ function _M.showMainShapeDialog()
 
         function dialog:on_response(response)
             if response == Gtk.ResponseType.OK then
-                print("Add code for removing shape: " .. name)
+                config_helper.removeShape(category_name, name)
             end
             dialog:destroy()
         end
 
         dialog:show()
     end
+
+    window.child.rename_shape_button.on_button_press_event = function(event)
+        local category = tonumber(window.child.stack:get_visible_child_name())
+        local category_name = shapes_dict[category].name
+        local name = shapes_dict[category].shapes[index].name
+        local shapeName = shapes_dict[category].shapes[index].shapeName
+
+        local dialog = Gtk.Dialog {
+            width_request = 300,
+            title = "Rename Shape",
+            transient_for = window,
+            modal = true,
+            destroy_with_parent = true,
+            buttons = {
+                { Gtk.STOCK_OK, Gtk.ResponseType.OK },
+                { "_Cancel",    Gtk.ResponseType.CANCEL },
+            },
+        }
+        local vbox = Gtk.Box {
+            orientation = 'VERTICAL',
+            Gtk.Label {
+                use_markup = true,
+                wrap = true,
+                label = 'Rename shape <b>' .. name .. '</b>'
+            },
+            Gtk.Box {
+                Gtk.Label {
+                    label = 'New shape name',
+                },
+                Gtk.Entry {
+                    id = 'new_shape_name_entry',
+                    placeholder_text = 'My New Shape',
+                }
+            },
+        }
+        dialog:get_content_area():add(vbox)
+        vbox:show_all()
+
+        function dialog:on_response(response)
+            if response == Gtk.ResponseType.OK then
+                config_helper.renameShape(category_name, name, vbox.child.new_shape_name_entry.text, shapeName, shapeName)
+                shapes_dict = config_helper.getShapesData()
+                loadShapesFromDict(shapes_dict, window, true)
+            end
+            dialog:destroy()
+        end
+
+        dialog:show()
+    end
+
 end
 
 return _M
