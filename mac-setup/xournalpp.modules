@@ -30,6 +30,7 @@
             version="25.01.0"
             module="poppler-25.01.0.tar.xz"/>
     <dependencies>
+      <dep package="poppler-data"/>
       <dep package="openjpeg"/>
     </dependencies>
   </cmake>

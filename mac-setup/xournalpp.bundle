@@ -40,7 +40,7 @@
 
   <!-- Poppler -->
   <binary>
-    ${prefix}/lib/libpoppler-glib*.dynlib
+    ${prefix}/lib/libpoppler-glib*.dylib
   </binary>
 
   <!-- Translation filenames, one for each program or library that you
@@ -67,10 +67,10 @@
   </data -->
 
   <!--
-    Infos on how to structure the .app-file can be found on 
+    Infos on how to structure the .app-file can be found on
     https://developer.apple.com/library/archive/documentation/CoreFoundation/Conceptual/CFBundles/BundleTypes/BundleTypes.html#//apple_ref/doc/uid/20001119-110730
   -->
-   
+
   <!-- Copy in the themes data. You may want to trim this to save space
        in your bundle. -->
   <data>
@@ -83,6 +83,10 @@
 
   <data>
     ${prefix}/share/gtksourceview-4
+  </data>
+
+  <data>
+    ${prefix}/share/poppler
   </data>
 
   <data dest="${bundle}/Contents/Resources/plugins">
