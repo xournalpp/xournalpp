@@ -31,10 +31,10 @@ end
 
 -- All codes for Extract stroke information (the file is saved in plugin folder, you have to rename it and place it in "shapes" folder, also add the name in shape dictionary)
 -- Function to store stroke information in a file
-function _M.store_stroke_info_in_file(strokes)
+function _M.store_stroke_info_in_file(strokes, filepath)
 
     -- Open a file for writing in the folder path
-    local file = assert(io.open(sourcePath .. "giveMeName_and_placeMe_in_shapesFolder.lua", "w"))
+    local file = assert(io.open(filepath, "w"))
     -- Start writing the Lua table format
     file:write("local strokesData = {\n")
     -- Iterate over each stroke and collect information
