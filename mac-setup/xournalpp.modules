@@ -25,7 +25,7 @@
   </cmake>
 
   <!-- For poppler-glib -->
-  <cmake id="poppler" cmakeargs="-DENABLE_NSS3=off -DENABLE_GPGME=off -DENABLE_QT5=OFF -DENABLE_QT6=OFF -DBUILD_QT5_TESTS=off -DBUILD_QT6_TESTS=off -DBUILD_CPP_TESTS=off -DENABLE_LCMS=off -DENABLE_LIBCURL=off -DENABLE_BOOST=OFF -DENABLE_CPP=OFF -DENABLE_CMS=none -DENABLE_LIBTIFF=off -DCMAKE_INSTALL_NAME_DIR='&#36;&lt;INSTALL_PREFIX&gt;/lib'">
+  <cmake id="poppler" cmakeargs="-DENABLE_NSS3=off -DENABLE_GPGME=off -DENABLE_QT5=OFF -DENABLE_QT6=OFF -DBUILD_QT5_TESTS=off -DBUILD_QT6_TESTS=off -DBUILD_CPP_TESTS=off -DENABLE_LCMS=off -DENABLE_LIBCURL=off -DENABLE_BOOST=OFF -DENABLE_CPP=ON -DENABLE_CMS=none -DENABLE_LIBTIFF=off -DCMAKE_INSTALL_NAME_DIR='&#36;&lt;INSTALL_PREFIX&gt;/lib'">
     <branch repo="poppler"
             version="25.01.0"
             module="poppler-25.01.0.tar.xz"/>
