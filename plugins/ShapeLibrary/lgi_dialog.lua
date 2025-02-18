@@ -247,6 +247,7 @@ function _M.showMainShapeDialog()
                 config_helper.addCategory(hbox.child.name_entry.text)
                 shapes_dict = config_helper.getShapesData()
                 loadShapesFromDict(shapes_dict, window, true)
+                window.child.stack:set_visible_child_name(tostring(#shapes_dict))
             end
             dialog:destroy()
         end
@@ -331,6 +332,7 @@ function _M.showMainShapeDialog()
                 config_helper.renameCategory(category_name, vbox.child.new_category_name_entry.text)
                 shapes_dict = config_helper.getShapesData()
                 loadShapesFromDict(shapes_dict, window, true)
+                window.child.stack:set_visible_child_name(tostring(category))
             end
             dialog:destroy()
         end
@@ -372,6 +374,7 @@ function _M.showMainShapeDialog()
                 local filePath = sourcePath .. "Shapes" .. sep .. shapeName .. ".lua"
                 stroke_io.store_stroke_info_in_file(strokes, filePath)
                 loadShapesFromDict(shapes_dict, window, true)
+                window.child.stack:set_visible_child_name(tostring(category))
             end
             dialog:destroy()
         end
@@ -439,6 +442,7 @@ function _M.showMainShapeDialog()
                 config_helper.addShape(category_name, name, shapeName)
                 shapes_dict = config_helper.getShapesData()
                 loadShapesFromDict(shapes_dict, window, true)
+                window.child.stack:set_visible_child_name(tostring(category))
             end
             dialog:destroy()
         end
@@ -478,6 +482,7 @@ function _M.showMainShapeDialog()
                 config_helper.removeShape(category_name, name)
                 shapes_dict = config_helper.getShapesData()
                 loadShapesFromDict(shapes_dict, window, true)
+                window.child.stack:set_visible_child_name(tostring(category))
             end
             dialog:destroy()
         end
@@ -527,6 +532,7 @@ function _M.showMainShapeDialog()
                 config_helper.renameShape(category_name, name, vbox.child.new_shape_name_entry.text, shapeName, shapeName)
                 shapes_dict = config_helper.getShapesData()
                 loadShapesFromDict(shapes_dict, window, true)
+                window.child.stack:set_visible_child_name(tostring(category))
             end
             dialog:destroy()
         end
