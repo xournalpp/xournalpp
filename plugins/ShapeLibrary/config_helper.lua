@@ -47,7 +47,7 @@ local function writeConfig(shapesData)
     if file then
         file:write(serializedData)
         file:close()
-        print("File updated successfully!")
+        print("Config file updated successfully!")
     else
         print("Error: Could not write to file!")
     end
@@ -75,13 +75,13 @@ function _M.removeCategory(categoryName)
     local shapesData = _M.getShapesData() or {}
 
     -- Step 2: Add the new category
-    for _, category in ipairs(shapesData) do
+    for i, category in ipairs(shapesData) do
         if category.name == categoryName then
-            for _, shape in ipairs(category) do
+            for _, shape in ipairs(category.shapes) do
                 local filename = shape.shapeName .. ".lua"
-                print("Removing shape .. " .. filename)
+                print("Removing shape: " .. filename)
             end
-            category = nil
+            table.remove(shapesData, i)
             break
         end
     end
@@ -114,6 +114,34 @@ function _M.renameCategory(oldCategoryName, newCategoryName)
     writeConfig(shapesData)
 end
 
+function _M.addShape(categoryName, shapeName, fileName)
+    if not categoryName then print("No category name to which to add!") return end
+    if not shapeName then print("No shape name to add!") return end
+
+    if not fileName then print("No file name to add!") return end
+
+        -- Step 1: Load the shapes data from the config file
+        local shapesData = _M.getShapesData() or {}
+
+        -- Step 2: Add the shape
+        local found = false
+        for _, category in ipairs(shapesData) do
+            if category.name == categoryName then
+                found = true
+                table.insert(category.shapes, { name = shapeName, shapeName = fileName })
+                print("Adding shape: " .. shapeName)
+                break
+            end
+            if found then break end
+        end
+
+        if not found then print("error: Did not find category " .. categoryName) end
+
+        -- Step 3: Write the modified shapes data back into the config file
+        writeConfig(shapesData)
+
+end
+
 function _M.removeShape(categoryName, shapeName)
     if not categoryName then print("No category name from which to remove!") return end
     if not shapeName then print("No shape name to remove!") return end
@@ -125,11 +153,10 @@ function _M.removeShape(categoryName, shapeName)
     local found = false
     for _, category in ipairs(shapesData) do
         if category.name == categoryName then
-            for j, shape in ipairs(category) do
+            for j, shape in ipairs(category.shapes) do
                 if shape.name == shapeName then
-                    table.remove(category, j)
-                    local filename = shape.shapeName .. ".lua"
-                    print("Removing shape .. " .. filename)
+                    table.remove(category.shapes, j)
+                    print("Removing shape: " .. shapeName)
                     found = true
                     break
                 end
