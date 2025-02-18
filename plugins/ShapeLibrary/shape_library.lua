@@ -24,7 +24,7 @@ end
 function Store_stroke_info()
         local stroke_io = require "stroke_io"
         local strokes = app.getStrokes("selection")
-        stroke_io.store_strokes_info_in_file(strokes)
+        stroke_io.store_stroke_info_in_file(strokes, sourcePath .. "giveMeName_and_placeMe_in_shapesFolder.lua")
 end
 
 function Show_simple_dialog()
