@@ -83,10 +83,11 @@ function _M.store_stroke_info_in_file(strokes, filepath)
     end
     file:write("}\n")
     file:write("return strokesData")
-    file:write("   -- Return the strokesData table") -- End of strokesData table
+    file:write("   -- Return the strokesData table\n") -- End of strokesData table
 
     -- Close the file
     file:close()
+    print("Wrote shape successfully to " .. filepath)
 end
 
 return _M

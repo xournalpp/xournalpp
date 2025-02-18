@@ -90,7 +90,7 @@ function _M.showMainShapeDialog()
 
     local window = Gtk.Window {
         title = 'Manage and Insert Shapes',
-        default_width = 600,
+        default_width = 650,
         default_height = 500,
 
         Gtk.Box {
@@ -155,51 +155,50 @@ function _M.showMainShapeDialog()
                 },
                 Gtk.Box {
                     orientation = "HORIZONTAL",
-                    spacing = 96,
+                    spacing = 12,
                     margin_bottom = 6,
                     margin_top = 6,
                     margin_left = 6,
                     margin_right = 6,
                     hexpand = true,
+                    halign = "CENTER",
                     Gtk.Button {
                         id = 'insert_button',
                         halign = "CENTER",
                         label = "Insert",
                         tooltip_text = "Insert shape into document",
                     },
-                    Gtk.Box {
-                        orientation = "HORIZONTAL",
-                        halign = "END",
-                        spacing = 12,
-                        Gtk.Button {
-                            id = 'replace_shape_button',
-                            hexpand = false,
-                            label = "Replace",
-                            tooltip_text = "Replace selected shape",
-                        },
-                        Gtk.Button {
-                            id = 'add_shape_button',
-                            hexpand = false,
-                            label = "+",
-                            tooltip_text = "Add shape from selection",
-                        },
-                        Gtk.Button {
-                            id = 'remove_shape_button',
-                            hexpand = false,
-                            label = "-",
-                            tooltip_text = "Remove selected shape",
-                        },
-                        Gtk.Button {
-                            id = 'rename_shape_button',
-                            hexpand = false,
-                            label = "Rename",
-                            tooltip_text = "Rename selected shape"
-                        }
+                    Gtk.Button {
+                        id = 'replace_shape_button',
+                        hexpand = false,
+                        label = "Replace",
+                        tooltip_text = "Replace selected shape",
                     },
-                }
+                    Gtk.Button {
+                        id = 'add_shape_button',
+                        hexpand = false,
+                        label = "+",
+                        tooltip_text = "Add shape from selection",
+                    },
+                    Gtk.Button {
+                        id = 'remove_shape_button',
+                        hexpand = false,
+                        label = "-",
+                        tooltip_text = "Remove selected shape",
+                    },
+                    Gtk.Button {
+                        id = 'rename_shape_button',
+                        hexpand = false,
+                        label = "Rename",
+                        tooltip_text = "Rename selected shape"
+                    }
+                },
             }
         }
     }
+
+    window:set_position(Gtk.WindowPosition.CENTER)
+
     window.child.lbl_category:get_style_context():add_provider(provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
     window.child.lbl_shape:get_style_context():add_provider(provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
     window.child.insert_button.on_button_press_event = function(event)
@@ -369,7 +368,10 @@ function _M.showMainShapeDialog()
 
         function dialog:on_response(response)
             if response == Gtk.ResponseType.OK then
-                config_helper.replaceShape(category_name, name, name, shapeName, shapeName)
+                local strokes = app.getStrokes("selection")
+                local filePath = sourcePath .. "Shapes" .. sep .. shapeName .. ".lua"
+                stroke_io.store_stroke_info_in_file(strokes, filePath)
+                loadShapesFromDict(shapes_dict, window, true)
             end
             dialog:destroy()
         end
@@ -378,7 +380,8 @@ function _M.showMainShapeDialog()
     end
 
     window.child.add_shape_button.on_button_press_event = function(event)
-        print("Adding shape")
+        local category = tonumber(window.child.stack:get_visible_child_name())
+        local category_name = shapes_dict[category].name
         local dialog = Gtk.Dialog {
             title = "Add Shape",
             transient_for = window,
@@ -427,7 +430,15 @@ function _M.showMainShapeDialog()
 
         function dialog:on_response(response)
             if response == Gtk.ResponseType.OK then
-                print("Add code for adding shape: " .. vbox.child.name_entry.text)
+                local strokes = app.getStrokes("selection")
+                local name = vbox.child.name_entry.text
+                local fileName = vbox.child.filename_entry.text
+                local shapeName = string.sub(fileName, 1, -5)
+                local filePath = sourcePath .. "Shapes" .. sep .. fileName
+                stroke_io.store_stroke_info_in_file(strokes, filePath)
+                config_helper.addShape(category_name, name, shapeName)
+                shapes_dict = config_helper.getShapesData()
+                loadShapesFromDict(shapes_dict, window, true)
             end
             dialog:destroy()
         end
@@ -465,6 +476,8 @@ function _M.showMainShapeDialog()
         function dialog:on_response(response)
             if response == Gtk.ResponseType.OK then
                 config_helper.removeShape(category_name, name)
+                shapes_dict = config_helper.getShapesData()
+                loadShapesFromDict(shapes_dict, window, true)
             end
             dialog:destroy()
         end
@@ -520,7 +533,6 @@ function _M.showMainShapeDialog()
 
         dialog:show()
     end
-
 end
 
 return _M
