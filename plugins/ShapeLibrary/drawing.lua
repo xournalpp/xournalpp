@@ -1,6 +1,6 @@
 _M = {}
 
-local function compute_bounds(strokes)
+local function computeBounds(strokes)
     local min_x, min_y, max_x, max_y = math.huge, math.huge, -math.huge, -math.huge
     for _, stroke in ipairs(strokes) do
         for _, x in ipairs(stroke.x) do
@@ -15,7 +15,7 @@ local function compute_bounds(strokes)
     return { x = min_x, width = max_x - min_x, y = min_y, height = max_y - min_y }
 end
 
-local function decimal_to_rgb(color)
+local function decimalToRgb(color)
     local r = (color >> 16) & 0xFF   -- Extract the red component
     local g = (color >> 8) & 0xFF    -- Extract the green component
     local b = color & 0xFF           -- Extract the blue component
@@ -28,8 +28,8 @@ local dashes_table = {
     dashdot = { 10, 5, 2, 5 },
 }
 setmetatable(dashes_table, { __index = function(self, index) return {} end }) -- default value
-function _M.draw_strokes(strokes)
-    local bounds = compute_bounds(strokes)
+function _M.drawStrokes(strokes)
+    local bounds = computeBounds(strokes)
     return function(self, cr)
         cr:save()
         -- transform coordinate system
@@ -59,7 +59,7 @@ function _M.draw_strokes(strokes)
         -- Draw the strokes
         for _, stroke in ipairs(strokes) do
             if #stroke.x > 0 then
-                local r, g, b = decimal_to_rgb(stroke.color)
+                local r, g, b = decimalToRgb(stroke.color)
                 cr:set_source_rgb(r, g, b)
 
                 -- Define line type (dashed/dotted)

@@ -4,35 +4,35 @@ function initUi()
 
     app.registerUi({
         ["menu"] = "Insert Shapes (simple)",
-        ["callback"] = "Show_simple_dialog",
+        ["callback"] = "ShowSimpleDialog",
         ["toolbarId"] = "shapedialog",
         ["iconName"] = "shapes_symbolic"
     })
     app.registerUi({
-        ["menu"] = "Extract_Stroke_Info (simple)",
-        ["callback"] = "Store_stroke_info",
+        ["menu"] = "Extract Stroke Info (simple)",
+        ["callback"] = "StoreStrokeInfo",
         ["toolbarId"] =
         "StrInfo",
         ["iconName"] = "extract-info-symbolic"
     })
     app.registerUi({
         ["menu"] = "Manage and Insert Shapes (lgi)",
-        ["callback"] = "Show_lgi_dialog",
+        ["callback"] = "ShowLgiDialog",
     })
 end
 
-function Store_stroke_info()
-        local stroke_io = require "stroke_io"
+function StoreStrokeInfo()
+        local stroke_io = require("stroke_io")
         local strokes = app.getStrokes("selection")
-        stroke_io.store_stroke_info_in_file(strokes, sourcePath .. "giveMeName_and_placeMe_in_shapesFolder.lua")
+        stroke_io.storeStrokeInfoInFile(strokes, sourcePath .. "giveMeName_and_placeMe_in_shapesFolder.lua")
 end
 
-function Show_simple_dialog()
-    local simple_dialog = require "simple_dialog"
+function ShowSimpleDialog()
+    local simple_dialog = require("simple_dialog")
     simple_dialog.showMainShapeDialog()
 end
 
-function Show_lgi_dialog()
-    local lgi_dialog = require "lgi_dialog"
+function ShowLgiDialog()
+    local lgi_dialog = require("lgi_dialog")
     lgi_dialog.showMainShapeDialog()
 end

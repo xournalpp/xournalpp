@@ -1,8 +1,8 @@
 local sep = package.config:sub(1, 1) -- path separator depends on OS
 local sourcePath = debug.getinfo(1).source:match("@?(.*" .. sep .. ")")
-local stroke_io = require "stroke_io"
-local insertion_helper = require "insertion_helper"
-local config_helper = require "config_helper"
+local stroke_io = require("stroke_io")
+local insertion_helper = require("insertion_helper")
+local config_helper = require("config_helper")
 
 local shapes_dict = config_helper.getShapesData() or {}
 
@@ -14,16 +14,16 @@ if not hasLgi then
         { "OK" }, "", true)
     return
 end
-local function get_strokes(category, i)
-    local shape_name = shapes_dict[category].shapes[i].shapeName
-    local filepath = sourcePath .. "Shapes" .. sep .. shape_name .. ".lua"
-    return stroke_io.read_strokes_from_file(filepath)
+local function getStrokes(category, i)
+    local filename = shapes_dict[category].shapes[i].filename
+    local filepath = sourcePath .. "Shapes" .. sep .. filename
+    return stroke_io.readStrokesFromFile(filepath)
 end
 
 --lgi module has been found
 local Gtk = lgi.require("Gtk", "3.0")
 local assert = lgi.assert
-local drawing = require "drawing"
+local drawing = require("drawing")
 local index = 1 -- the index is set when one of the shapes is selected
 
 local function loadShapesFromDict(dict, window, reset)
@@ -68,9 +68,9 @@ local function loadShapesFromDict(dict, window, reset)
                     }
                 }
             }
-            local strokes = get_strokes(i, j)
+            local strokes = getStrokes(i, j)
             function shape_box.child.drawing_area:on_draw(cr)
-                drawing.draw_strokes(strokes)(self, cr)
+                drawing.drawStrokes(strokes)(self, cr)
                 return true
             end
 
@@ -207,8 +207,8 @@ function _M.showMainShapeDialog()
             print("Select shape first")
             return
         end
-        local shape_name = shapes_dict[category].shapes[index].shapeName
-        insertion_helper.insert_stroke(shape_name)
+        local filename = shapes_dict[category].shapes[index].filename
+        insertion_helper.insertStroke(filename)
     end
 
     window.child.switcher:set_stack(window.child.stack)
@@ -344,7 +344,7 @@ function _M.showMainShapeDialog()
         local category = tonumber(window.child.stack:get_visible_child_name())
         local category_name = shapes_dict[category].name
         local name = shapes_dict[category].shapes[index].name
-        local shapeName = shapes_dict[category].shapes[index].shapeName
+        local filename = shapes_dict[category].shapes[index].filename
 
         local dialog = Gtk.Dialog {
             width_request = 300,
@@ -371,8 +371,8 @@ function _M.showMainShapeDialog()
         function dialog:on_response(response)
             if response == Gtk.ResponseType.OK then
                 local strokes = app.getStrokes("selection")
-                local filePath = sourcePath .. "Shapes" .. sep .. shapeName .. ".lua"
-                stroke_io.store_stroke_info_in_file(strokes, filePath)
+                local filePath = sourcePath .. "Shapes" .. sep .. filename
+                stroke_io.storeStrokeInfoInFile(strokes, filePath)
                 loadShapesFromDict(shapes_dict, window, true)
                 window.child.stack:set_visible_child_name(tostring(category))
             end
@@ -435,11 +435,10 @@ function _M.showMainShapeDialog()
             if response == Gtk.ResponseType.OK then
                 local strokes = app.getStrokes("selection")
                 local name = vbox.child.name_entry.text
-                local fileName = vbox.child.filename_entry.text
-                local shapeName = string.sub(fileName, 1, -5)
-                local filePath = sourcePath .. "Shapes" .. sep .. fileName
-                stroke_io.store_stroke_info_in_file(strokes, filePath)
-                config_helper.addShape(category_name, name, shapeName)
+                local filename = vbox.child.filename_entry.text
+                local filepath = sourcePath .. "Shapes" .. sep .. filename
+                stroke_io.storeStrokeInfoInFile(strokes, filepath)
+                config_helper.addShape(category_name, name, filename)
                 shapes_dict = config_helper.getShapesData()
                 loadShapesFromDict(shapes_dict, window, true)
                 window.child.stack:set_visible_child_name(tostring(category))
@@ -494,7 +493,7 @@ function _M.showMainShapeDialog()
         local category = tonumber(window.child.stack:get_visible_child_name())
         local category_name = shapes_dict[category].name
         local name = shapes_dict[category].shapes[index].name
-        local shapeName = shapes_dict[category].shapes[index].shapeName
+        local filename = shapes_dict[category].shapes[index].filename
 
         local dialog = Gtk.Dialog {
             width_request = 300,
@@ -529,7 +528,7 @@ function _M.showMainShapeDialog()
 
         function dialog:on_response(response)
             if response == Gtk.ResponseType.OK then
-                config_helper.renameShape(category_name, name, vbox.child.new_shape_name_entry.text, shapeName, shapeName)
+                config_helper.renameShape(category_name, name, vbox.child.new_shape_name_entry.text, filename, filename)
                 shapes_dict = config_helper.getShapesData()
                 loadShapesFromDict(shapes_dict, window, true)
                 window.child.stack:set_visible_child_name(tostring(category))
