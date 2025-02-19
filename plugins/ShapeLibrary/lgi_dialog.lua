@@ -1,3 +1,5 @@
+local _M = {}
+
 local sep = package.config:sub(1, 1) -- path separator depends on OS
 local sourcePath = debug.getinfo(1).source:match("@?(.*" .. sep .. ")")
 local stroke_io = require("stroke_io")
@@ -6,18 +8,10 @@ local config_helper = require("config_helper")
 
 local shapes_dict = config_helper.getShapesData() or {}
 
-local _M = {}
 local hasLgi, lgi = pcall(require, "lgi")
 if not hasLgi then
-    app.openDialog(
-        "You need to have the Lua lgi-module installed and included in your Lua package path in order to use the GUI for migrating font sizes. \n\n",
-        { "OK" }, "", true)
+    app.openDialog("You need to have the Lua lgi-module installed and included in your Lua package path for using this plugin. \n\n", { "OK" }, "", true)
     return
-end
-local function getStrokes(category, i)
-    local filename = shapes_dict[category].shapes[i].filename
-    local filepath = sourcePath .. "Shapes" .. sep .. filename
-    return stroke_io.readStrokesFromFile(filepath)
 end
 
 --lgi module has been found
@@ -25,6 +19,12 @@ local Gtk = lgi.require("Gtk", "3.0")
 local assert = lgi.assert
 local drawing = require("drawing")
 local index = 1 -- the index is set when one of the shapes is selected
+
+local function getStrokes(category, i)
+    local filename = shapes_dict[category].shapes[i].filename
+    local filepath = sourcePath .. "Shapes" .. sep .. filename
+    return stroke_io.readStrokesFromFile(filepath)
+end
 
 local function loadShapesFromDict(dict, window, reset)
     if reset then
