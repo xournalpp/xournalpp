@@ -4,6 +4,8 @@ function initUi()
         menu = "Manage and Insert Shapes",
         callback = "ShowLgiDialog",
         accelerator = "s",
+        toolbarID = "SHAPE_LIBRARY",
+        iconName = "shapes_symbolic.svg"
     }
 end
 function ShowLgiDialog()
