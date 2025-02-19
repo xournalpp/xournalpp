@@ -1,3 +1,9 @@
+xournalpp (1.2.7~dev-1) UNRELEASED; urgency=medium
+
+  * 
+
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Wed, 19 Feb 2025 10:59:27 +0100
+
 xournalpp (1.2.6-1) unstable; urgency=medium
 
   * Fixed compass outline drawing
