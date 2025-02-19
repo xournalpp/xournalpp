@@ -2,6 +2,11 @@
 
 ## 1.2.6~dev (Unreleased)
 
+* Fixed a weird behaviour when drawing the outline of the compass multiple times (#6265, #6256)
+* Exposed selected text to the windowing system for accessibility purposes (#6221, #6215)
+* MacOS: Fixed loading of jpeg images from the PDF background (#6184, #6167)
+* MacOS: Fixed CJK and Cyrillic font rendering (#6285, #3474)
+
 ## 1.2.5
 
 Bugfixes from various community contributors.

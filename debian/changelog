@@ -1,8 +1,10 @@
 xournalpp (1.2.6~dev-1) UNRELEASED; urgency=medium
 
-  * 
+  * Fixed compass outline drawing
+  * Exposed selected text to the windowing system
+  * Fixed loading of jpeg images and CJK and Cyrillic font rendering on MacOS
 
- -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Wed, 04 Dec 2024 16:17:09 +0100
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Wed, 19 Feb 2025 10:56:35 +0100
 
 xournalpp (1.2.5-1) unstable; urgency=medium
 
