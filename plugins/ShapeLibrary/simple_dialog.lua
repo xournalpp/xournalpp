@@ -1,9 +1,9 @@
-local shapes_dict = require "config"
-local insertion_helper = require "insertion_helper"
+local shapes_dict = require("config")
+local insertion_helper = require("insertion_helper")
 
 local _M = {} -- functions to export
 
--- All functions for "Option Selection" and provide the name of the shape to the "insert_stroke" function
+-- All functions for "Option Selection" and provide the name of the shape to the "insertStroke" function
 
 -- Showing Main dialog for selecting shape categories (gives the primary options for the Shape-Catagory)
 function _M.showMainShapeDialog()
@@ -50,7 +50,7 @@ function ShapeDialogCallback(result)
         _M.showMainShapeDialog() -- When "Back" option is selected the secondary dialog closes and main dialog reopens
     elseif result >= 1 and result <= numShapesInCategory then
         local shapeName = shapes_dict[currentCategory].shapes[result].shapeName
-        insertion_helper.insert_stroke(shapeName) -- Shape name is provided to {function insert_stroke(shape_name)} for inserting the strokes of a shape
+        insertion_helper.insertStroke(shapeName) -- Shape name is provided to {function insertStroke(shape_name)} for inserting the strokes of a shape
     end
 end
 
