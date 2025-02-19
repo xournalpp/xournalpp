@@ -1,7 +1,7 @@
 local _M = {} -- functions to export
 
 -- Function to read and provide formatted stroke data from a shape-file
-function _M.read_strokes_from_file(filepath)
+function _M.readStrokesFromFile(filepath)
     if filepath == nil then return end
     local sandbox = {} -- No access to global variables in order to safely read the file
     setmetatable(sandbox, {__index = function() error("Forbidden function in file " .. filepath, 2) end})
@@ -31,7 +31,7 @@ end
 
 -- All codes for Extract stroke information (the file is saved in plugin folder, you have to rename it and place it in "shapes" folder, also add the name in shape dictionary)
 -- Function to store stroke information in a file
-function _M.store_stroke_info_in_file(strokes, filepath)
+function _M.storeStrokeInfoInFile(strokes, filepath)
 
     -- Open a file for writing in the folder path
     local file = assert(io.open(filepath, "w"))

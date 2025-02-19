@@ -28,7 +28,7 @@ local function serializeTable(tbl)
         for j, shape in ipairs(v.shapes) do
             result = result .. "        [" .. j .. "] = {"
             result = result .. " name = \"" .. shape.name .. "\","
-            result = result .. " shapeName = \"" .. shape.shapeName .. "\""
+            result = result .. " filename = \"" .. shape.filename .. "\""
             result = result .. " },\n"
         end
 
@@ -74,14 +74,11 @@ function _M.removeCategory(categoryName)
     -- Step 1: Load the shapes data from the config file
     local shapesData = _M.getShapesData() or {}
 
-    -- Step 2: Add the new category
+    -- Step 2: Remove the category
     for i, category in ipairs(shapesData) do
         if category.name == categoryName then
-            for _, shape in ipairs(category.shapes) do
-                local filename = shape.shapeName .. ".lua"
-                print("Removing shape: " .. filename)
-            end
             table.remove(shapesData, i)
+            print("Removing category: " .. categoryName)
             break
         end
     end
@@ -103,7 +100,7 @@ function _M.renameCategory(oldCategoryName, newCategoryName)
     for _, category in ipairs(shapesData) do
         if category.name == oldCategoryName then
             categoryFound = true
-            print("Category " .. oldCategoryName .. " found")
+            print("Renaming category " .. oldCategoryName .. " to " .. newCategoryName)
             category.name = newCategoryName
             break
         end
@@ -114,11 +111,11 @@ function _M.renameCategory(oldCategoryName, newCategoryName)
     writeConfig(shapesData)
 end
 
-function _M.addShape(categoryName, shapeName, fileName)
+function _M.addShape(categoryName, shapeName, filename)
     if not categoryName then print("No category name to which to add!") return end
     if not shapeName then print("No shape name to add!") return end
 
-    if not fileName then print("No file name to add!") return end
+    if not filename then print("No file name to add!") return end
 
         -- Step 1: Load the shapes data from the config file
         local shapesData = _M.getShapesData() or {}
@@ -128,14 +125,14 @@ function _M.addShape(categoryName, shapeName, fileName)
         for _, category in ipairs(shapesData) do
             if category.name == categoryName then
                 found = true
-                table.insert(category.shapes, { name = shapeName, shapeName = fileName })
+                table.insert(category.shapes, { name = shapeName, filename = filename })
                 print("Adding shape: " .. shapeName)
                 break
             end
             if found then break end
         end
 
-        if not found then print("error: Did not find category " .. categoryName) end
+        if not found then print("Error: Did not find category " .. categoryName) end
 
         -- Step 3: Write the modified shapes data back into the config file
         writeConfig(shapesData)
@@ -149,7 +146,7 @@ function _M.removeShape(categoryName, shapeName)
     -- Step 1: Load the shapes data from the config file
     local shapesData = _M.getShapesData() or {}
 
-    -- Step 2: Add the new category
+    -- Step 2: Remove shape
     local found = false
     for _, category in ipairs(shapesData) do
         if category.name == categoryName then
@@ -165,14 +162,14 @@ function _M.removeShape(categoryName, shapeName)
         if found then break end
     end
 
-    if not found then print("error: Did not find shape " .. shapeName .. " in category " .. categoryName) end
+    if not found then print("Error: Did not find shape " .. shapeName .. " in category " .. categoryName) end
 
     -- Step 3: Write the modified shapes data back into the config file
     writeConfig(shapesData)
 end
 
 -- Function to read, modify, and write back to the shapes file
-function _M.renameShape(categoryName, oldName, newName, oldShapeName, newShapeName)
+function _M.renameShape(categoryName, oldName, newName, oldFilename, newFilename)
     if not categoryName then print("Error: No category name to update!") return end
 
     -- Step 1: Load the shapes data from the config file
@@ -183,11 +180,10 @@ function _M.renameShape(categoryName, oldName, newName, oldShapeName, newShapeNa
     for _, category in ipairs(shapesData) do
         if category.name == categoryName then
             categoryFound = true
-            print("Category " .. categoryName .. " found")
             for j, shape in ipairs(category.shapes) do
-                if shape.name == oldName and shape.shapeName == oldShapeName then
-                    category.shapes[j] = { name = newName, shapeName = newShapeName }
-                    print("Renamed shape " .. oldName .. " in category " .. category.name .. " to " .. newName)
+                if shape.name == oldName and shape.filename == oldFilename then
+                    category.shapes[j] = { name = newName, filename = newFilename }
+                    print("Renaming shape " .. oldName .. " in category " .. category.name .. " to " .. newName)
                     nameFound = true
                     break
                 end
