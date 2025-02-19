@@ -12,6 +12,7 @@
 
 #include "control/Control.h"                       // for Control
 #include "control/layer/LayerController.h"         // for LayerController
+#include "control/KeyBindingsGroup.h"              // for KeyBinding, KeyBindingsGroup
 #include "control/tools/InputHandler.h"            // for InputHandler
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
 #include "control/zoom/ZoomControl.h"
@@ -43,88 +44,86 @@ std::unique_ptr<xoj::view::OverlayView> SplineHandler::createView(xoj::view::Rep
     return std::make_unique<xoj::view::SplineToolView>(this, parent);
 }
 
-constexpr double SHIFT_AMOUNT = 1.0;
-constexpr double ROTATE_AMOUNT = 5.0;
+constexpr int SHIFT_AMOUNT = 1;
+constexpr int ROTATE_AMOUNT = 5;
 constexpr double SCALE_AMOUNT = 1.05;
 constexpr double MAX_TANGENT_LENGTH = 2000.0;
 constexpr double MIN_TANGENT_LENGTH = 1.0;
+
+class SplineHandler::KeyBindingCallbacks {
+public:
+    template<int ANGLE>
+    static void rotate(SplineHandler* self) {
+        Range rg = self->computeLastSegmentRepaintRange();
+        double xOld = self->tangents.back().x;
+        double yOld = self->tangents.back().y;
+        double xNew = std::cos(ANGLE * M_PI / 180) * xOld + std::sin(ANGLE * M_PI / 180) * yOld;
+        double yNew = -std::sin(ANGLE * M_PI / 180) * xOld + std::cos(ANGLE * M_PI / 180) * yOld;
+        self->modifyLastTangent(Point(xNew, yNew));
+        rg = rg.unite(self->computeLastSegmentRepaintRange());
+        self->viewPool->dispatch(xoj::view::SplineToolView::FLAG_DIRTY_REGION, rg);
+    }
+    template<int SHIFT_X, int SHIFT_Y>
+    static void move(SplineHandler* self) {
+        Range rg = self->computeLastSegmentRepaintRange();
+        self->movePoint(SHIFT_X, SHIFT_Y);
+        rg = rg.unite(self->computeLastSegmentRepaintRange());
+        self->viewPool->dispatch(xoj::view::SplineToolView::FLAG_DIRTY_REGION, rg);
+    }
+
+    template<bool DOWN>
+    static void scale(SplineHandler* self) {
+        double xOld = self->tangents.back().x;
+        double yOld = self->tangents.back().y;
+        double length = 2 * std::hypot(xOld, yOld);
+        double factor = 1;
+        if constexpr (DOWN) {
+            if (length >= MIN_TANGENT_LENGTH) {
+                factor = 1 / SCALE_AMOUNT;
+            }
+        } else if (length <= MAX_TANGENT_LENGTH) {
+            factor = SCALE_AMOUNT;
+        }
+        Range rg = self->computeLastSegmentRepaintRange();
+        self->modifyLastTangent(Point(xOld * factor, yOld * factor));
+        rg = rg.unite(self->computeLastSegmentRepaintRange());
+        self->viewPool->dispatch(xoj::view::SplineToolView::FLAG_DIRTY_REGION, rg);
+    }
+
+    static void removeLastPoint(SplineHandler* self) {
+        if (self->knots.size() == 1) {
+            return;
+        }
+        Range rg = self->computeLastSegmentRepaintRange();
+        self->deleteLastKnotWithTangent();
+        xoj_assert(!self->knots.empty() && self->knots.size() == self->tangents.size());
+        const Point& p = self->knots.back();
+        const Point& t = self->tangents.back();
+        rg.addPoint(p.x - t.x, p.y - t.y);  // Ensure the tangent vector gets its color updated
+        self->viewPool->dispatch(xoj::view::SplineToolView::FLAG_DIRTY_REGION, rg);
+    }
+};
 
 auto SplineHandler::onKeyPressEvent(const KeyEvent& event) -> bool {
     if (!stroke) {
         return false;
     }
-
     xoj_assert(!this->knots.empty() && this->knots.size() == this->tangents.size());
-    Range rg = this->computeLastSegmentRepaintRange();
 
-    switch (event.keyval) {
-        case GDK_KEY_BackSpace: {
-            if (this->knots.size() == 1) {
-                return true;
-            }
-            this->deleteLastKnotWithTangent();
-            xoj_assert(!this->knots.empty() && this->knots.size() == this->tangents.size());
-            const Point& p = this->knots.back();
-            const Point& t = this->tangents.back();
-            rg.addPoint(p.x - t.x, p.y - t.y);  // Ensure the tangent vector gets its color updated
-            break;
-        }
-        case GDK_KEY_Right: {
-            this->movePoint(SHIFT_AMOUNT, 0);
-            rg = rg.unite(this->computeLastSegmentRepaintRange());
-            break;
-        }
-        case GDK_KEY_Left: {
-            this->movePoint(-SHIFT_AMOUNT, 0);
-            rg = rg.unite(this->computeLastSegmentRepaintRange());
-            break;
-        }
-        case GDK_KEY_Up: {
-            this->movePoint(0, -SHIFT_AMOUNT);
-            rg = rg.unite(this->computeLastSegmentRepaintRange());
-            break;
-        }
-        case GDK_KEY_Down: {
-            this->movePoint(0, SHIFT_AMOUNT);
-            rg = rg.unite(this->computeLastSegmentRepaintRange());
-            break;
-        }
-        case GDK_KEY_r:
-        case GDK_KEY_R: {  // r like "rotate"
-            double angle = (event.keyval == GDK_KEY_R) ? -ROTATE_AMOUNT : ROTATE_AMOUNT;
-            double xOld = this->tangents.back().x;
-            double yOld = this->tangents.back().y;
-            double xNew = cos(angle * M_PI / 180) * xOld + sin(angle * M_PI / 180) * yOld;
-            double yNew = -sin(angle * M_PI / 180) * xOld + cos(angle * M_PI / 180) * yOld;
-            this->modifyLastTangent(Point(xNew, yNew));
-            rg = rg.unite(this->computeLastSegmentRepaintRange());
-            break;
-        }
-        case GDK_KEY_s:
-        case GDK_KEY_S: {  // s like "scale"
-            double xOld = this->tangents.back().x;
-            double yOld = this->tangents.back().y;
-            double length = 2 * sqrt(pow(xOld, 2) + pow(yOld, 2));
-            double factor = 1;
-            if (event.keyval == GDK_KEY_S) {
-                if (length >= MIN_TANGENT_LENGTH) {
-                    factor = 1 / SCALE_AMOUNT;
-                }
-            } else if (length <= MAX_TANGENT_LENGTH) {
-                factor = SCALE_AMOUNT;
-            }
-            double xNew = xOld * factor;
-            double yNew = yOld * factor;
-            this->modifyLastTangent(Point(xNew, yNew));
-            rg = rg.unite(this->computeLastSegmentRepaintRange());
-            break;
-        }
-        default:
-            return false;
-    }
-
-    this->viewPool->dispatch(xoj::view::SplineToolView::FLAG_DIRTY_REGION, rg);
-    return true;
+    // clang-format off
+    static const KeyBindingsGroup<SplineHandler> keyBindings({
+        {{NONE,  GDK_KEY_r},            KeyBindingCallbacks::rotate< ROTATE_AMOUNT>},
+        {{NONE,  GDK_KEY_R},            KeyBindingCallbacks::rotate<-ROTATE_AMOUNT>},
+        {{NONE,  GDK_KEY_BackSpace},    KeyBindingCallbacks::removeLastPoint},
+        {{NONE,  GDK_KEY_Left},         KeyBindingCallbacks::move<-SHIFT_AMOUNT,             0>},
+        {{NONE,  GDK_KEY_Right},        KeyBindingCallbacks::move< SHIFT_AMOUNT,             0>},
+        {{NONE,  GDK_KEY_Up},           KeyBindingCallbacks::move<            0, -SHIFT_AMOUNT>},
+        {{NONE,  GDK_KEY_Down},         KeyBindingCallbacks::move<            0,  SHIFT_AMOUNT>},
+        {{NONE,  GDK_KEY_s},            KeyBindingCallbacks::scale<false>},
+        {{NONE,  GDK_KEY_S},            KeyBindingCallbacks::scale<true>}
+    });
+    // clang-format on
+    return keyBindings.processEvent(this, event);  // May destroy *this - Never do anything after.
 }
 
 bool SplineHandler::onKeyReleaseEvent(const KeyEvent& event) {
