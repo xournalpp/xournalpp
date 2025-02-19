@@ -1,6 +1,14 @@
-xournalpp (1.2.5+dev-1) UNRELEASED; urgency=medium
+xournalpp (1.2.6+dev-1) UNRELEASED; urgency=medium
 
- -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Wed, 04 Dec 2024 16:17:08 +0100
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Wed, 19 Feb 2025 10:59:27 +0100
+
+xournalpp (1.2.6-1) unstable; urgency=medium
+
+  * Fixed compass outline drawing
+  * Exposed selected text to the windowing system
+  * Fixed loading of jpeg images and CJK and Cyrillic font rendering on MacOS
+
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Wed, 19 Feb 2025 10:59:27 +0100
 
 xournalpp (1.2.5-1) unstable; urgency=medium
 

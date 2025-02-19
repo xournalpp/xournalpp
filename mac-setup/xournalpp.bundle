@@ -113,6 +113,10 @@
     ${prefix}/share/xournalpp/palettes
   </data>
 
+  <data>
+    ${prefix}/share/poppler
+  </data>
+
   <data dest="${bundle}/Contents/Resources/plugins">
     ${prefix}/share/xournalpp/plugins
   </data>

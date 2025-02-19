@@ -4,11 +4,11 @@
 
 #include <CoreFoundation/CoreFoundation.h>
 #include <glib.h>
+#include <poppler-global.h>
 
 #include "util/Stacktrace.h"
 
 #include "filesystem.h"
-
 
 void setupEnvironment() {
     /**
@@ -19,6 +19,9 @@ void setupEnvironment() {
 
     if (fs::exists(base / "Resources")) {  // app-bundle
         base = base / "Resources";
+        // Set poppler data directory for (relocatable) app bundles. Otherwise a compile time value is used.
+        auto popplerDataDir = base / "share" / "poppler";
+        poppler::set_data_dir(popplerDataDir.string().c_str());
     }  // Now base is Xournal++.app/Contents/Resources or $HOME/gtk/inst
 
     auto libPath = base / "lib";
@@ -74,11 +77,11 @@ void setupEnvironment() {
         if (langCode) {
             char buffer[128];
             if (CFStringGetCString(langCode, buffer, sizeof(buffer), kCFStringEncodingUTF8)) {
-                std::string lang = buffer;             // e.g. "de-DE"
+                std::string lang = buffer;  // e.g. "de-DE"
                 if (auto pos = lang.find("-"); pos != std::string::npos) {
                     lang.replace(pos, 1, "_");  // e.g. "de_DE"
                 }
-                lang += ".UTF-8";                      // e.g. "de_DE.UTF-8"
+                lang += ".UTF-8";  // e.g. "de_DE.UTF-8"
                 g_message("Setting LANG and LC_MESSAGES to %s", lang.c_str());
                 setenv("LANG", lang.c_str(), 0);
                 setenv("LC_MESSAGES", lang.c_str(), 0);

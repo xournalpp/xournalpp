@@ -11,7 +11,7 @@ endif()
 ## Project related Variables
 ## Also update changelog in debian folder!
 project(xournalpp
-        VERSION 1.2.5
+        VERSION 1.2.6
         DESCRIPTION "Xournal++ - Open source hand note-taking program"
         HOMEPAGE_URL "https://xournalpp.github.io/"
         LANGUAGES CXX C)
@@ -117,6 +117,9 @@ set(pkg-module-spec "")
 list(APPEND pkg-module-spec "glib-2.0 >= 2.32.0")
 list(APPEND pkg-module-spec "gtk+-3.0 >= 3.18.9")
 list(APPEND pkg-module-spec "poppler-glib >= 0.41.0")
+if (APPLE)
+  list(APPEND pkg-module-spec "poppler-cpp >= 0.41.0")
+endif (APPLE)
 list(APPEND pkg-module-spec "gthread-2.0 >= 2.4.0")
 list(APPEND pkg-module-spec "libxml-2.0 >= 2.0.0")
 list(APPEND pkg-module-spec "libzip >= 1.0.1")

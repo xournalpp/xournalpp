@@ -88,7 +88,7 @@ void CompassController::updateOutlineStroke(double x) {
     }
     for (auto i = 0; i <= 100; i++) {
         const xoj::util::Point<double> p =
-                getPointForAngle(angleMin + static_cast<double>(i) / 100.0 * (angleMax - angleMin));
+                getPointForAngle(angleMin + static_cast<double>(i) / 100.0 * std::min(angleMax - angleMin, 2 * M_PI));
         stroke->addPoint(Point(p.x, p.y));
     }
     if (filled && angleMax < angleMin + 2 * M_PI) {

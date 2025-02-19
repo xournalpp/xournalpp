@@ -127,6 +127,8 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
         imContext(gtk_im_multicontext_new(), xoj::util::adopt),
         buffer(gtk_text_buffer_new(nullptr), xoj::util::adopt),
         viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::TextEditionView>>()) {
+    // Informs the windowing system of the selection -- i.e. for accessibility purposes
+    gtk_text_buffer_add_selection_clipboard(buffer.get(), gtk_clipboard_get(GDK_SELECTION_PRIMARY));
 
     this->initializeEditionAt(x, y);
 
