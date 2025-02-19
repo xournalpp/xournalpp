@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.2.6~dev (Unreleased)
+## 1.2.6
 
 * Fixed a weird behaviour when drawing the outline of the compass multiple times (#6265, #6256)
 * Exposed selected text to the windowing system for accessibility purposes (#6221, #6215)
