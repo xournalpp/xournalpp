@@ -47,7 +47,7 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
             }
         } else {
             invalidActive.insert(event.sequence);
-            g_debug("Add touch as invalid. %d touches are invalid now.", invalidActive.size());
+            g_debug("Add touch as invalid. %zu touches are invalid now.", invalidActive.size());
         }
         return true;
     }
@@ -89,7 +89,7 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
             secondarySequence = nullptr;
         } else {
             invalidActive.erase(event.sequence);
-            g_debug("Removing sequence from invalid list, %d inputs remain invalid.", invalidActive.size());
+            g_debug("Removing sequence from invalid list, %zu inputs remain invalid.", invalidActive.size());
         }
         return true;
     }

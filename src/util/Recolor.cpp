@@ -19,18 +19,15 @@ void Recolor::recalcDiffAndOff() {
 
 ColorU8 Recolor::convertColor(const ColorU8& other) const {
     return ColorU8{
-            static_cast<uint8_t>(
-                    std::min<int16_t>(255, std::min<int16_t>(255, (255 - static_cast<int16_t>(other.red)) *
-                                                                          static_cast<int16_t>(difference.red) / 255) +
-                                                   offset.red)),
-            static_cast<uint8_t>(std::min<int16_t>(
-                    255, std::min<int16_t>(255, (255 - static_cast<int16_t>(other.green)) *
-                                                        static_cast<int16_t>(difference.green) / 255) +
-                                 offset.green)),
-            static_cast<uint8_t>(
-                    std::min<int16_t>(255, std::min<int16_t>(255, (255 - static_cast<int16_t>(other.blue)) *
-                                                                          static_cast<int16_t>(difference.blue) / 255) +
-                                                   offset.blue)),
+            static_cast<uint8_t>(std::min(
+                    255, std::min(255, (255 - static_cast<int>(other.red)) * static_cast<int>(difference.red) / 255) +
+                                 offset.red)),
+            static_cast<uint8_t>(std::min(255, std::min(255, (255 - static_cast<int>(other.green)) *
+                                                                     static_cast<int>(difference.green) / 255) +
+                                                       offset.green)),
+            static_cast<uint8_t>(std::min(
+                    255, std::min(255, (255 - static_cast<int>(other.blue)) * static_cast<int>(difference.blue) / 255) +
+                                 offset.blue)),
     };
 }
 
