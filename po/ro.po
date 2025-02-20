@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-09 07:16+0000\n"
-"PO-Revision-Date: 2025-01-12 04:25\n"
+"POT-Creation-Date: 2025-01-27 08:42+0000\n"
+"PO-Revision-Date: 2025-02-02 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -185,6 +185,10 @@ msgstr "Salvează"
 #: ../src/core/control/Control.cpp:2057
 msgid "Discard"
 msgstr "Nu salva"
+
+#: ../src/core/control/Control.cpp:2141
+msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
+msgstr "Crearea subprocesului demonstrativ Gtk a eșuat: {1} (cod rezultat: {2})"
 
 #: ../src/core/control/CrashHandler.cpp:31
 msgid "Trying to emergency save the current open document..."
@@ -1835,8 +1839,8 @@ msgctxt "as a noun: a copy of"
 msgid "Copy"
 msgstr "Copiază"
 
-#: ../src/core/model/Document.cpp:328 ../src/core/model/Document.cpp:337
-#: ../src/core/model/Document.cpp:340
+#: ../src/core/model/Document.cpp:330 ../src/core/model/Document.cpp:339
+#: ../src/core/model/Document.cpp:342
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Documentul nu a fost încărcat! ({1}), {2}"
 
@@ -2173,7 +2177,7 @@ msgstr "Închide"
 #: ../ui/backgroundSelection.glade:49 ../ui/exportSettings.glade:425
 #: ../ui/goto.glade:108 ../ui/pageFormat.glade:346 ../ui/pageTemplate.glade:278
 #: ../ui/plugin.glade:114 ../ui/renameLayerDialog.glade:71
-#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6404
+#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6405
 #: ../ui/texdialog.glade:203
 msgid "Ok"
 msgstr "Aprobă"
@@ -2191,7 +2195,7 @@ msgid "Height"
 msgstr "Înălțime"
 
 #: ../ui/exportSettings.glade:53 ../ui/settings.glade:254
-#: ../ui/settings.glade:271 ../ui/settings.glade:3754
+#: ../ui/settings.glade:271 ../ui/settings.glade:3755
 msgid "None"
 msgstr "Niciunul"
 
@@ -2609,7 +2613,7 @@ msgstr "%a\t\tDenumirea prescurtată a zilei săptămânii (de ex. Mie)\n"
 "%%\t\tSemnul %\n"
 "Caracterele neacceptate vor fi înlocuite cu „ _”"
 
-#: ../ui/settings.glade:588 ../ui/settings.glade:757
+#: ../ui/settings.glade:588 ../ui/settings.glade:758
 msgid "Available Placeholders"
 msgstr "Înlocuitori disponibili"
 
@@ -2622,7 +2626,8 @@ msgid "<i>This name will be proposed if you export a document to PDF.</i>"
 msgstr "<i>Acest nume va fi propus la exportarea unui document în format PDF.</i>"
 
 #: ../ui/settings.glade:709
-msgid "%{name}\tThe name of the exported document\n"
+msgid "%{name}\tThe filename (if any) of the PDF background\n"
+"%{file}\t\tThe saved filename of the file\n"
 "%a\t\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%A\t\t\tFull weekday name (e.g. Thursday)\n"
 "%b\t\t\tAbbreviated month name (e.g. Aug)\n"
@@ -2647,7 +2652,8 @@ msgid "%{name}\tThe name of the exported document\n"
 "%Z\t\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\t\t%\n"
 "Illegal characters are replaced with \"_\""
-msgstr "%{name}\tNumele documentului exportat\n"
+msgstr "%{name}\tNumele fișierului fondului PDF (dacă există)\n"
+"%{file}\t\tNumele salvat al fișierului\n"
 "%a\t\t\tDenumirea prescurtată a zilei săptămânii (de ex. Mie)\n"
 "%A\t\t\tDenumirea completă a zilei săptămânii (de ex. Miercuri)\n"
 "%b\t\t\tDenumire prescurtată a lunii (de ex. Aug)\n"
@@ -2673,47 +2679,47 @@ msgstr "%{name}\tNumele documentului exportat\n"
 "%%\t\t\tSemnul %\n"
 "Caracterele neacceptate vor fi înlocuite cu „ _”"
 
-#: ../ui/settings.glade:781
+#: ../ui/settings.glade:782
 msgid "Default Pdf export name"
 msgstr "Nume prestabilit pentru PDF"
 
-#: ../ui/settings.glade:806
+#: ../ui/settings.glade:807
 msgid "Enable Autoloading of Journals"
 msgstr "Activează încărcarea automată a documentelor"
 
-#: ../ui/settings.glade:811
+#: ../ui/settings.glade:812
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
 msgstr "Dacă deschizi un PDF și există un fișier Xournal cu același nume, se va deschide fișierul xoj."
 
-#: ../ui/settings.glade:822
+#: ../ui/settings.glade:823
 msgid "Enable autoloading of most recent file on application startup"
 msgstr "Activează încărcarea automată a celui mai recent fișier la pornirea aplicației"
 
-#: ../ui/settings.glade:827
+#: ../ui/settings.glade:828
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
 msgstr "Dacă această opțiune este activată, Xournal++ va deschide automat cel mai recent document pentru a putea continua scrierea ultimului document salvat."
 
-#: ../ui/settings.glade:842
+#: ../ui/settings.glade:843
 msgid "Autoloading"
 msgstr "Încărcare automată"
 
-#: ../ui/settings.glade:870
+#: ../ui/settings.glade:871
 msgid "Load / Save"
 msgstr "Încarcă / Salvează"
 
-#: ../ui/settings.glade:916
+#: ../ui/settings.glade:917
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
 msgstr "<i>Atribuie o categorie fiecărui dispozitiv conectat la sistem. Schimbă aceste valori numai dacă dispozitivele tale nu sunt identificate corect. (de exemplu: creionul tău apare ca ecran tactil)</i>"
 
-#: ../ui/settings.glade:950
+#: ../ui/settings.glade:951
 msgid "Input Devices"
 msgstr "Dispozitive de intrare"
 
-#: ../ui/settings.glade:984
+#: ../ui/settings.glade:985
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
 msgstr "Activează desenarea în afara ferestrei <i>(Nu trebuie să te oprești din desenat dacă ai ajuns la marginea ferestrei)</i>"
 
-#: ../ui/settings.glade:1002
+#: ../ui/settings.glade:1003
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "            Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
@@ -2723,757 +2729,757 @@ msgstr "Tragerea spre stânga din punctul de pornire acționează ca și cum tas
 "            Raza de acțiune: Raza în care modificatorii se blochează până la terminarea desenului.\n\n"
 "\t    <i>Util pentru lucrul fără tastatură.</i>"
 
-#: ../ui/settings.glade:1013
+#: ../ui/settings.glade:1014
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
 msgstr "Unește evenimentele butoanelor cu cele ale vârfului creionului electronic\n"
 "\t    <i>(Bifează aici dacă</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>restituie</i> \"<tt>on</tt>\"<i>)</i>"
 
-#: ../ui/settings.glade:1032
+#: ../ui/settings.glade:1033
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
 msgstr "Dacă nu există informații privind apăsarea, se atribuie o apăsare mai puternică mișcărilor mai lente decât mișcărilor mai rapide.\n\n"
 "<i>Această caracteristică poate fi utilă pentru dispozitivele care nu au sensibilitate la apăsare. De exemplu, un maus sau un ecran tactil.</i>"
 
-#: ../ui/settings.glade:1040
+#: ../ui/settings.glade:1041
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
 msgstr "Activează estimarea forței de apăsare <i>(Ghicește forța de apăsare din viteza de desenare atunci când apăsarea furnizată de dispozitiv nu este disponibilă)</i>"
 
-#: ../ui/settings.glade:1058
+#: ../ui/settings.glade:1059
 msgid "Options"
 msgstr "Opțiuni"
 
-#: ../ui/settings.glade:1088
+#: ../ui/settings.glade:1089
 msgid "Averaging method"
 msgstr "Metoda mediei"
 
-#: ../ui/settings.glade:1121
+#: ../ui/settings.glade:1122
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
 msgstr "<i>Alege un algoritm de stabilizare și parametrii acestuia</i>"
 
-#: ../ui/settings.glade:1137
+#: ../ui/settings.glade:1138
 msgid "Buffersize"
 msgstr "Dimensiune buffer"
 
-#: ../ui/settings.glade:1149
+#: ../ui/settings.glade:1150
 msgid "20"
 msgstr "20"
 
-#: ../ui/settings.glade:1166
+#: ../ui/settings.glade:1167
 msgid "Deadzone radius"
 msgstr "Raza zonei moarte"
 
-#: ../ui/settings.glade:1178
+#: ../ui/settings.glade:1179
 msgid "1,30"
 msgstr "1,30"
 
-#: ../ui/settings.glade:1196 ../ui/settings.glade:1208
+#: ../ui/settings.glade:1197 ../ui/settings.glade:1209
 msgctxt "Drag = Noun: force opposing the movement"
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr "Trage: Dacă valoarea este prea mică, pot apărea oscilații nedorite. Dacă valoarea este prea mare, nu va exista stabilizare."
 
-#: ../ui/settings.glade:1197
+#: ../ui/settings.glade:1198
 msgctxt "Noun: force opposing the movement"
 msgid "Drag"
 msgstr "Trage"
 
-#: ../ui/settings.glade:1210
+#: ../ui/settings.glade:1211
 msgid "0,4"
 msgstr "0,4"
 
-#: ../ui/settings.glade:1228 ../ui/settings.glade:1240
+#: ../ui/settings.glade:1229 ../ui/settings.glade:1241
 msgctxt "Mass = Noun: physics term, related to weight"
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
 msgstr "Greutatea: cu cât greutatea este mai mare, cu atât inerția și stabilizarea vor fi mai mari"
 
-#: ../ui/settings.glade:1229
+#: ../ui/settings.glade:1230
 msgctxt "Noun: physics term, related to weight"
 msgid "Mass"
 msgstr "Greutatea"
 
-#: ../ui/settings.glade:1242
+#: ../ui/settings.glade:1243
 msgid "5"
 msgstr "5"
 
-#: ../ui/settings.glade:1260 ../ui/settings.glade:1280
+#: ../ui/settings.glade:1261 ../ui/settings.glade:1281
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
 msgstr "Parametrul lui Gauss: creșterea valorii sale îmbunătățește stabilizarea, dar mărește întârzierea dintre cursor și punctul desenat."
 
-#: ../ui/settings.glade:1262
+#: ../ui/settings.glade:1263
 msgid "0,50"
 msgstr "0,50"
 
-#: ../ui/settings.glade:1294
+#: ../ui/settings.glade:1295
 msgid "Preprocessor"
 msgstr "Preprocesor"
 
-#: ../ui/settings.glade:1325
+#: ../ui/settings.glade:1326
 msgid "Cusp detection"
 msgstr "Detectarea vârfurilor"
 
-#: ../ui/settings.glade:1342
+#: ../ui/settings.glade:1343
 msgid "Finalize the stroke"
 msgstr "Termină linia"
 
-#: ../ui/settings.glade:1347
+#: ../ui/settings.glade:1348
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
 msgstr "Stabilizarea poate crea un gol la sfârșitul liniei trasate. Dacă bifezi aici, acest gol este umplut."
 
-#: ../ui/settings.glade:1365
+#: ../ui/settings.glade:1366
 msgid "Input stabilization"
 msgstr "Stabilizare"
 
-#: ../ui/settings.glade:1396
+#: ../ui/settings.glade:1397
 msgid "Indent using spaces"
 msgstr "Alineat folosind spații"
 
-#: ../ui/settings.glade:1418
+#: ../ui/settings.glade:1419
 msgid "Number of Spaces : "
 msgstr "Numărul de spații : "
 
-#: ../ui/settings.glade:1430
+#: ../ui/settings.glade:1431
 msgid "Number of spaces inserted with tab."
 msgstr "Numărul de spații introduse cu Tab."
 
-#: ../ui/settings.glade:1432
+#: ../ui/settings.glade:1433
 msgid "4"
 msgstr "4"
 
-#: ../ui/settings.glade:1460
+#: ../ui/settings.glade:1461
 msgid "Tab"
 msgstr "Tab"
 
-#: ../ui/settings.glade:1491
+#: ../ui/settings.glade:1492
 msgid "Input System"
 msgstr "Sistem de intrare"
 
-#: ../ui/settings.glade:1536
+#: ../ui/settings.glade:1537
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
 msgstr "<i>Stabilește ce instrument va fi ales dacă apeși un buton al mausului. După ce lași butonul, instrumentul ales anterior va fi selecționat.</i>"
 
-#: ../ui/settings.glade:1570
+#: ../ui/settings.glade:1571
 msgid "Middle Mouse Button"
 msgstr "Buton-mijloc al mausului"
 
-#: ../ui/settings.glade:1602
+#: ../ui/settings.glade:1603
 msgid "Right Mouse Button"
 msgstr "Buton-dreapta al mausului"
 
-#: ../ui/settings.glade:1618
+#: ../ui/settings.glade:1619
 msgid "Mouse Buttons"
 msgstr "Butoanele mausului"
 
-#: ../ui/settings.glade:1649 ../ui/settingsDeviceClassConfig.glade:35
+#: ../ui/settings.glade:1650 ../ui/settingsDeviceClassConfig.glade:35
 msgid "Mouse"
 msgstr "Maus"
 
-#: ../ui/settings.glade:1696
+#: ../ui/settings.glade:1697
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
 msgstr "<i>Sensibilitatea la apăsare permite trasarea de linii cu lățimi diferite în funcție de presiunea exercitată de creion. Dacă tableta nu acceptă această caracteristică, această reglare nu are niciun efect.</i>"
 
-#: ../ui/settings.glade:1710
+#: ../ui/settings.glade:1711
 msgid "Enable Pressure Sensitivity"
 msgstr "Activează sensibilitatea la apăsare"
 
-#: ../ui/settings.glade:1740
+#: ../ui/settings.glade:1741
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
 msgstr "<i>Unele dispozitive raportează apăsări neașteptat de mici sau mari. Acest lucru poate fi rezolvat prin stabilirea unei apăsări minime sau prin ajustarea apăsării raportate de dispozitiv.</i>"
 
-#: ../ui/settings.glade:1762
+#: ../ui/settings.glade:1763
 msgid "Minimum Pressure:"
 msgstr "Apăsarea minimă:"
 
-#: ../ui/settings.glade:1773
+#: ../ui/settings.glade:1774
 msgid "Pressure Multiplier: "
 msgstr "Multiplicatorul forței de apăsare: "
 
-#: ../ui/settings.glade:1832
+#: ../ui/settings.glade:1833
 msgid "Sensitivity Scale"
 msgstr "Scala de sensibilitate"
 
-#: ../ui/settings.glade:1848
+#: ../ui/settings.glade:1849
 msgid "Pressure Sensitivity"
 msgstr "Sensibilitatea la apăsare"
 
-#: ../ui/settings.glade:1872
+#: ../ui/settings.glade:1873
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
 msgstr "<i>Cu anumite reglări, unele creioane lasă imprecizii la începutul scrierii. Acest lucru poate fi evitat prin ignorarea primelor evenimente/„puncte ale liniei” atunci când creionul începe să scrie.</i>"
 
-#: ../ui/settings.glade:1890
+#: ../ui/settings.glade:1891
 msgid "Ignore the first"
 msgstr "Ignoră primele"
 
-#: ../ui/settings.glade:1908
+#: ../ui/settings.glade:1909
 msgid "1"
 msgstr "1"
 
-#: ../ui/settings.glade:1924
+#: ../ui/settings.glade:1925
 msgid "events"
 msgstr "evenimente"
 
-#: ../ui/settings.glade:1945
+#: ../ui/settings.glade:1946
 msgid "Artifact workaround"
 msgstr "Eliminare imprecizii"
 
-#: ../ui/settings.glade:1972
+#: ../ui/settings.glade:1973
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
 msgstr "<i>Specifică instrumentul care va fi ales dacă se apasă un buton al creionului electronic sau vei folosi guma de șters. După ce se eliberează butonul, va fi ales instrumentul anterior.</i>"
 
-#: ../ui/settings.glade:2006
+#: ../ui/settings.glade:2007
 msgid "Button 1"
 msgstr "Butonul 1"
 
-#: ../ui/settings.glade:2038
+#: ../ui/settings.glade:2039
 msgid "Button 2"
 msgstr "Butonul 2"
 
-#: ../ui/settings.glade:2086
+#: ../ui/settings.glade:2087
 msgid "Stylus Buttons"
 msgstr "Butoanele creionului electronic"
 
-#: ../ui/settings.glade:2118
+#: ../ui/settings.glade:2119
 msgid "Stylus-based eraser is visible"
 msgstr "Guma creionului este vizibilă"
 
-#: ../ui/settings.glade:2133
+#: ../ui/settings.glade:2134
 msgctxt "eraser is never visible"
 msgid "Never"
 msgstr "Niciodată"
 
-#: ../ui/settings.glade:2134
+#: ../ui/settings.glade:2135
 msgctxt "eraser is always visible"
 msgid "Always"
 msgstr "Mereu"
 
-#: ../ui/settings.glade:2135
+#: ../ui/settings.glade:2136
 msgctxt "eraser is only visible when floating"
 msgid "When floating"
 msgstr "La apropiere"
 
-#: ../ui/settings.glade:2136
+#: ../ui/settings.glade:2137
 msgctxt "eraser is only visible when touching the screen"
 msgid "When touching"
 msgstr "La atingere"
 
-#: ../ui/settings.glade:2158
+#: ../ui/settings.glade:2159
 msgid "Eraser visibility"
 msgstr "Vizibilitatea gumei de șters"
 
-#: ../ui/settings.glade:2189
+#: ../ui/settings.glade:2190
 msgid "Stylus"
 msgstr "Creion electronic"
 
-#: ../ui/settings.glade:2236
+#: ../ui/settings.glade:2237
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
 msgstr "<i>Poți configura dispozitivele neidentificate de GTK ca fiind ecran tactil, pentru a se comporta ca și cum ar fi.</i>"
 
-#: ../ui/settings.glade:2269 ../ui/settings.glade:2857
+#: ../ui/settings.glade:2270 ../ui/settings.glade:2858
 #: ../ui/settingsDeviceClassConfig.glade:39
 msgid "Touchscreen"
 msgstr "Ecran tactil"
 
-#: ../ui/settings.glade:2296
+#: ../ui/settings.glade:2297
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
 msgstr "<i>Dacă aparatul este incompatibil cu recunoașterea palmei, Xournal++ poate dezactiva ecranul tactil atunci când creionul se află lângă ecran.</i>"
 
-#: ../ui/settings.glade:2310
+#: ../ui/settings.glade:2311
 msgid "Enable internal Hand Recognition"
 msgstr "Activează recunoașterea palmei"
 
-#: ../ui/settings.glade:2340
+#: ../ui/settings.glade:2341
 msgid "Disabling Method"
 msgstr "Metoda de dezactivare"
 
-#: ../ui/settings.glade:2351
+#: ../ui/settings.glade:2352
 msgid "Timeout"
 msgstr "Timp"
 
-#: ../ui/settings.glade:2365
+#: ../ui/settings.glade:2366
 msgid "Autodetect"
 msgstr "Detectare automată"
 
-#: ../ui/settings.glade:2394
+#: ../ui/settings.glade:2395
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "s <i>(după care ecranul tactil va fi reactivat)</i>"
 
-#: ../ui/settings.glade:2439
+#: ../ui/settings.glade:2440
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
 msgstr "<i>Stabilește comenzile care vor fi executate atunci când este activată recunoașterea palmei. Comenzile vor fi executate în interfața grafică. Asigură-te că nu sunt blocate!</i>"
 
-#: ../ui/settings.glade:2462
+#: ../ui/settings.glade:2463
 msgid "Enable"
 msgstr "Activează"
 
-#: ../ui/settings.glade:2473
+#: ../ui/settings.glade:2474
 msgid "Disable"
 msgstr "Dezactivare"
 
-#: ../ui/settings.glade:2506 ../ui/settings.glade:2519
+#: ../ui/settings.glade:2507 ../ui/settings.glade:2520
 msgid "Test"
 msgstr "Testează"
 
-#: ../ui/settings.glade:2552
+#: ../ui/settings.glade:2553
 msgid "Custom Commands (for Method \"Custom\")"
 msgstr "Comenzi personalizate (pentru metoda „Personalizată”)"
 
-#: ../ui/settings.glade:2575
+#: ../ui/settings.glade:2576
 msgid "Hand Recognition"
 msgstr "Recunoașterea palmei"
 
-#: ../ui/settings.glade:2602
+#: ../ui/settings.glade:2603
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
 msgstr "<i>Folosește degetele pentru a face zoom paginilor documentului.</i>"
 
-#: ../ui/settings.glade:2616
+#: ../ui/settings.glade:2617
 msgid "Enable zoom gestures (requires restart)"
 msgstr "Activează gesturile pentru zoom (trebuie repornit programul)"
 
-#: ../ui/settings.glade:2634
+#: ../ui/settings.glade:2635
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues.\n"
 "This setting can make it easier to draw with touch. "
 msgstr "Când desenezi cu ajutorul atingerii, gesturile cu două degete menite să miște zona vizibilă pot provoca în schimb zoom, ceea ce provoacă neplăceri. \n"
 "Această opțiune poate facilita desenarea prin atingere. "
 
-#: ../ui/settings.glade:2640
+#: ../ui/settings.glade:2641
 msgid "Start zooming after a distance "
 msgstr "Începe zoomul după o anumită distanță "
 
-#: ../ui/settings.glade:2652
+#: ../ui/settings.glade:2653
 msgid "1.0"
 msgstr "1.0"
 
-#: ../ui/settings.glade:2667
+#: ../ui/settings.glade:2668
 msgid "% greater than the initial distance between the two touches."
 msgstr "% mai mare decât distanța inițială dintre cele două atingeri."
 
-#: ../ui/settings.glade:2705
+#: ../ui/settings.glade:2706
 msgid "Zoom Gestures"
 msgstr "Gesturi pentru zoom"
 
-#: ../ui/settings.glade:2732
+#: ../ui/settings.glade:2733
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
 msgstr "<i>Folosește ecranul tactil ca și cum ai avea un creion electronic.</i>"
 
-#: ../ui/settings.glade:2746
+#: ../ui/settings.glade:2747
 msgid "Enable touch drawing"
 msgstr "Activează desenarea prin atingere"
 
-#: ../ui/settings.glade:2751
+#: ../ui/settings.glade:2752
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
 msgstr "Folosește două degete pentru a mișca/zoom și un deget pentru instrumentul ales."
 
-#: ../ui/settings.glade:2766
+#: ../ui/settings.glade:2767
 msgid "Touch Drawing"
 msgstr "Desenare prin atingere"
 
-#: ../ui/settings.glade:2793
+#: ../ui/settings.glade:2794
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
 msgstr "<i>Dezactivarea funcției de răsfoire din GTK, a ecranului tactil, poate rezolva problemele de răsfoire de pe unele platforme. Dezactiveaz-o dacă observi salturi/schimbări bruște ale poziției de răsfoire atunci când răsfoiești paginile cu un ecran tactil.</i>"
 
-#: ../ui/settings.glade:2807
+#: ../ui/settings.glade:2808
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
 msgstr "Dezactivează funcția de răsfoire inerțială din GTK (trebuie repornit programul)."
 
-#: ../ui/settings.glade:2826
+#: ../ui/settings.glade:2827
 msgid "Touch Scrolling"
 msgstr "Răsfoire prin atingere"
 
-#: ../ui/settings.glade:2913
+#: ../ui/settings.glade:2914
 msgid "Show Menubar on Startup"
 msgstr "Arată opțiunile la pornire"
 
-#: ../ui/settings.glade:2931
+#: ../ui/settings.glade:2932
 msgid "<i>Toggle visibility of menubar with F10</i>"
 msgstr "<i>Activează/Dezactivează vizibilitatea opțiunilor cu F10</i>"
 
-#: ../ui/settings.glade:2949
+#: ../ui/settings.glade:2950
 msgid "Show filepath in title bar"
 msgstr "Arată calea și numele fișierului în banda de sus"
 
-#: ../ui/settings.glade:2964
+#: ../ui/settings.glade:2965
 msgid "Show page number in title bar"
 msgstr "Arată numărul paginii în banda de sus"
 
-#: ../ui/settings.glade:3004
+#: ../ui/settings.glade:3005
 msgid "Border color for current page and other selections"
 msgstr "Culoarea chenarului pentru pagina actuală și alte selecții"
 
-#: ../ui/settings.glade:3018
+#: ../ui/settings.glade:3019
 msgid "Border color"
 msgstr "Culoare chenar"
 
-#: ../ui/settings.glade:3031
+#: ../ui/settings.glade:3032
 msgid "Background color between pages"
 msgstr "Culoarea fondului între pagini"
 
-#: ../ui/settings.glade:3057
+#: ../ui/settings.glade:3058
 msgid "Selection Color (Text, Stroke Selection etc.)"
 msgstr "Culoarea selecției (Text, Contur etc.)"
 
-#: ../ui/settings.glade:3083
+#: ../ui/settings.glade:3084
 msgid "Active Selection Color (Search Results etc.)"
 msgstr "Culoarea selecției active (Rezultatele căutării etc.)"
 
-#: ../ui/settings.glade:3105
+#: ../ui/settings.glade:3106
 msgid "Use available Stock Icons (requires restart)"
 msgstr "Folosește simbolurile Stock disponibile (trebuie repornit programul)"
 
-#: ../ui/settings.glade:3126
+#: ../ui/settings.glade:3127
 msgid "Icon Theme"
 msgstr "Aspectul simbolurilor"
 
-#: ../ui/settings.glade:3141
+#: ../ui/settings.glade:3142
 msgid "Color"
 msgstr "Culoare"
 
-#: ../ui/settings.glade:3155
+#: ../ui/settings.glade:3156
 msgid "(requires restart)"
 msgstr "(trebuie repornit programul)"
 
-#: ../ui/settings.glade:3178
+#: ../ui/settings.glade:3179
 msgid "Theme Variant:"
 msgstr "Aspect:"
 
-#: ../ui/settings.glade:3198
+#: ../ui/settings.glade:3199
 msgid "Use system default"
 msgstr "Aspectul sistemului"
 
-#: ../ui/settings.glade:3199
+#: ../ui/settings.glade:3200
 msgid "Force light theme"
 msgstr "Aspect luminos"
 
-#: ../ui/settings.glade:3200
+#: ../ui/settings.glade:3201
 msgid "Force dark theme"
 msgstr "Aspect întunecos"
 
-#: ../ui/settings.glade:3213
+#: ../ui/settings.glade:3214
 msgid "(this may not work, depending on your system theme)"
 msgstr "(este posibil să nu funcționeze, depinde de aspectul sistemului)"
 
-#: ../ui/settings.glade:3234
+#: ../ui/settings.glade:3235
 msgid "Colors"
 msgstr "Culori"
 
-#: ../ui/settings.glade:3250
+#: ../ui/settings.glade:3251
 msgid "Global"
 msgstr "Global"
 
-#: ../ui/settings.glade:3278
+#: ../ui/settings.glade:3279
 msgid "Recolor Drawing Area (might introduce lags when moving selections)"
 msgstr "Recolorează zona de desen (ar putea introduce întârzieri la mutarea selecțiilor)"
 
-#: ../ui/settings.glade:3283
+#: ../ui/settings.glade:3284
 msgid "Recolors the drawing area so that white regions get the dark color and black regions get the light color. Other colors are interpolated accordingly."
 msgstr "Recolorează zona de desen astfel încât regiunile albe să capete culoare închisă și regiunile negre să capete culoare deschisă. Alte culori vor fi intercalate corespunzător."
 
-#: ../ui/settings.glade:3293
+#: ../ui/settings.glade:3294
 msgid "Recolor Previews in the Sidebar"
 msgstr "Recolorează miniaturile din panoul lateral"
 
-#: ../ui/settings.glade:3298
+#: ../ui/settings.glade:3299
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) so that white regions get the dark color and black regions get the light color. Other colors are interpolated accordingly."
 msgstr "Recolorează miniaturile din panoul lateral (Miniatură pagină/strat) astfel încât regiunile albe să capete culoare închisă și regiunile negre să capete culoare deschisă. Alte culori vor fi intercalate corespunzător."
 
-#: ../ui/settings.glade:3312
+#: ../ui/settings.glade:3313
 msgid "The color black regions are translated to"
 msgstr "Regiunile de culoare neagră vor deveni"
 
-#: ../ui/settings.glade:3326
+#: ../ui/settings.glade:3327
 msgid "The color white regions are translated to"
 msgstr "Regiunile de culoare albă vor deveni"
 
-#: ../ui/settings.glade:3341
+#: ../ui/settings.glade:3342
 msgid "Dark Color"
 msgstr "Culoare închisă"
 
-#: ../ui/settings.glade:3355
+#: ../ui/settings.glade:3356
 msgid "Light Color"
 msgstr "Culoare deschisă"
 
-#: ../ui/settings.glade:3368
+#: ../ui/settings.glade:3369
 msgid "Recoloring / Inverting colors"
 msgstr "Recolorare / Culori inversate"
 
-#: ../ui/settings.glade:3400
+#: ../ui/settings.glade:3401
 msgid "Cursor icon for pen"
 msgstr "Simbolul cursorului creionului"
 
-#: ../ui/settings.glade:3415
+#: ../ui/settings.glade:3416
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
 msgstr "Niciun simbol"
 
-#: ../ui/settings.glade:3416
+#: ../ui/settings.glade:3417
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
 msgstr "Punct mic"
 
-#: ../ui/settings.glade:3417
+#: ../ui/settings.glade:3418
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
 msgstr "Creion mare"
 
-#: ../ui/settings.glade:3418
+#: ../ui/settings.glade:3419
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
 msgstr "Cursorul sistemului"
 
-#: ../ui/settings.glade:3443
+#: ../ui/settings.glade:3444
 msgid "Highlight cursor position"
 msgstr "Evidențiază poziția cursorului"
 
-#: ../ui/settings.glade:3448
+#: ../ui/settings.glade:3449
 msgid "Draw a transparent circle around the cursor"
 msgstr "Desenează un cerc transparent în jurul cursorului"
 
-#: ../ui/settings.glade:3466 ../ui/settings.glade:3609
+#: ../ui/settings.glade:3467 ../ui/settings.glade:3610
 msgid "Choose the color to use for \"Highlight cursor position\""
 msgstr "Alege culoarea de folosit pentru „Evidențiază poziția cursorului”"
 
-#: ../ui/settings.glade:3480
+#: ../ui/settings.glade:3481
 msgid "Circle Color"
 msgstr "Culoarea cercului"
 
-#: ../ui/settings.glade:3504 ../ui/settings.glade:3555
-#: ../ui/settings.glade:5021
+#: ../ui/settings.glade:3505 ../ui/settings.glade:3556
+#: ../ui/settings.glade:5022
 msgid "pixels"
 msgstr "pixeli"
 
-#: ../ui/settings.glade:3532
+#: ../ui/settings.glade:3533
 msgid "Radius"
 msgstr "Rază"
 
-#: ../ui/settings.glade:3568
+#: ../ui/settings.glade:3569
 msgid "30"
 msgstr "30"
 
-#: ../ui/settings.glade:3584
+#: ../ui/settings.glade:3585
 msgid "Border Width"
 msgstr "Lățime chenar"
 
-#: ../ui/settings.glade:3623
+#: ../ui/settings.glade:3624
 msgid "Border Color"
 msgstr "Culoare chenar"
 
-#: ../ui/settings.glade:3655
+#: ../ui/settings.glade:3656
 msgid "Cursor"
 msgstr "Cursor"
 
-#: ../ui/settings.glade:3680
+#: ../ui/settings.glade:3681
 msgid "Show sidebar on the right side"
 msgstr "Arată panoul lateral în dreaptă"
 
-#: ../ui/settings.glade:3695
+#: ../ui/settings.glade:3696
 msgid "Show vertical scrollbar on the left side"
 msgstr "Arată bara verticală de răsfoire în stânga"
 
-#: ../ui/settings.glade:3714
+#: ../ui/settings.glade:3715
 msgid "Left / Right-Handed"
 msgstr "Stângaci / Dreptaci"
 
-#: ../ui/settings.glade:3739
+#: ../ui/settings.glade:3740
 msgid "Page numbering  "
 msgstr "Numărul paginii  "
 
-#: ../ui/settings.glade:3755
+#: ../ui/settings.glade:3756
 msgid "Below preview"
 msgstr "Sub miniatură"
 
-#: ../ui/settings.glade:3756
+#: ../ui/settings.glade:3757
 msgid "Circle background"
 msgstr "Într-un cerc"
 
-#: ../ui/settings.glade:3757
+#: ../ui/settings.glade:3758
 msgid "Square background"
 msgstr "Într-un pătrat"
 
-#: ../ui/settings.glade:3777
+#: ../ui/settings.glade:3778
 msgid "Sidebar"
 msgstr "Panoul lateral"
 
-#: ../ui/settings.glade:3803
+#: ../ui/settings.glade:3804
 msgid "Hide the horizontal scrollbar"
 msgstr "Ascunde bara orizontală de răsfoire"
 
-#: ../ui/settings.glade:3818
+#: ../ui/settings.glade:3819
 msgid "Hide the vertical scrollbar"
 msgstr "Ascunde bara verticală de răsfoire"
 
-#: ../ui/settings.glade:3833
+#: ../ui/settings.glade:3834
 msgid "Disable scrollbar fade out"
 msgstr "Dezactivează dispariția barei de răsfoire"
 
-#: ../ui/settings.glade:3851
+#: ../ui/settings.glade:3852
 msgid "Scrollbars"
 msgstr "Bare de răsfoire"
 
-#: ../ui/settings.glade:3905
+#: ../ui/settings.glade:3906
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
 msgstr "Când un element este ales și deplasat dincolo de partea vizibilă a zonei de desenare, mișcă zona cu o valoare egală cu acest procent din partea vizibilă a zonei de desenare. "
 
-#: ../ui/settings.glade:3907
+#: ../ui/settings.glade:3908
 msgid "Base speed"
 msgstr "Viteza de deplasare"
 
-#: ../ui/settings.glade:3918
+#: ../ui/settings.glade:3919
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
 msgstr "Înmulțește viteza de deplasare cu până la această valoare, în funcție de cât de mult din elementul ales nu este vizibil."
 
-#: ../ui/settings.glade:3920
+#: ../ui/settings.glade:3921
 msgid "Max multiplier"
 msgstr "Multiplicator maxim"
 
-#: ../ui/settings.glade:3933
+#: ../ui/settings.glade:3934
 msgid "Selection Edge Panning"
 msgstr "Stabilește deplasarea în margine"
 
-#: ../ui/settings.glade:3958 ../ui/settings.glade:4032
+#: ../ui/settings.glade:3959 ../ui/settings.glade:4033
 #: ../ui/mainmenubar.xml:205
 msgid "Show Menubar"
 msgstr "Arată opțiunile"
 
-#: ../ui/settings.glade:3973 ../ui/settings.glade:4047
+#: ../ui/settings.glade:3974 ../ui/settings.glade:4048
 msgid "Show Toolbar"
 msgstr "Arată banda cu instrumente"
 
-#: ../ui/settings.glade:3988 ../ui/settings.glade:4077
+#: ../ui/settings.glade:3989 ../ui/settings.glade:4078
 #: ../ui/mainmenubar.xml:210
 msgid "Show Sidebar"
 msgstr "Arată Panoul lateral"
 
-#: ../ui/settings.glade:4007 ../ui/mainmenubar.xml:193
+#: ../ui/settings.glade:4008 ../ui/mainmenubar.xml:193
 msgid "Fullscreen"
 msgstr "Pe tot ecranul"
 
-#: ../ui/settings.glade:4062
+#: ../ui/settings.glade:4063
 msgid "Go Fullscreen"
 msgstr "Pe tot ecranul"
 
-#: ../ui/settings.glade:4097
+#: ../ui/settings.glade:4098
 msgid "Select toolbar:"
 msgstr "Alege banda cu instrumente:"
 
-#: ../ui/settings.glade:4130
+#: ../ui/settings.glade:4131
 msgid "Presentation Mode"
 msgstr "Prezentare"
 
-#: ../ui/settings.glade:4159
+#: ../ui/settings.glade:4160
 msgid "Pre-load pages before"
 msgstr "Pagini preîncărcate înainte"
 
-#: ../ui/settings.glade:4171
+#: ../ui/settings.glade:4172
 msgid "Pre-load pages after"
 msgstr "Pagini preîncărcate după"
 
-#: ../ui/settings.glade:4208
+#: ../ui/settings.glade:4209
 msgid "Clear cached paged while scrolling"
 msgstr "Șterge memoria cache în timpul răsfoirii"
 
-#: ../ui/settings.glade:4235
+#: ../ui/settings.glade:4236
 msgid "Performance"
 msgstr "Performanță"
 
-#: ../ui/settings.glade:4266
+#: ../ui/settings.glade:4267
 msgid "View"
 msgstr "Vizualizare"
 
-#: ../ui/settings.glade:4315
+#: ../ui/settings.glade:4316
 msgid "Speed for Ctrl + Scroll"
 msgstr "Viteza pentru Ctrl + Răsfoire"
 
-#: ../ui/settings.glade:4342
+#: ../ui/settings.glade:4343
 msgid "Speed for a Zoomstep"
 msgstr "Viteza pentru un pas de zoom"
 
-#: ../ui/settings.glade:4402
+#: ../ui/settings.glade:4403
 msgid "Zoom Speed"
 msgstr "Viteza de zoom"
 
-#: ../ui/settings.glade:4429
+#: ../ui/settings.glade:4430
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
 msgstr "<i>Pentru a garanta că mărimea elementelor este naturală la un zoom de 100%. (trebuie repornit programul)</i>"
 
-#: ../ui/settings.glade:4449
+#: ../ui/settings.glade:4450
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
 msgstr "<i>Pune o riglă pe ecran și deplasează cursorul până când ambele rigle se potrivesc.</i>"
 
-#: ../ui/settings.glade:4496
+#: ../ui/settings.glade:4497
 msgid "The unit of the ruler is cm"
 msgstr "Unitatea de măsură a riglei este cm"
 
-#: ../ui/settings.glade:4517
+#: ../ui/settings.glade:4518
 msgid "Display DPI Calibration"
 msgstr "Calibrarea DPI a ecranului"
 
-#: ../ui/settings.glade:4548
+#: ../ui/settings.glade:4549
 msgid "Zoom"
 msgstr "Zoom"
 
-#: ../ui/settings.glade:4597
+#: ../ui/settings.glade:4598
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
 msgstr "<i>Dacă adaugi spațiu suplimentar lângă pagini, poți alege zona de pe ecran în care vrei să lucrezi.</i>"
 
-#: ../ui/settings.glade:4720
+#: ../ui/settings.glade:4721
 msgid "Add additional horizontal space"
 msgstr "Adaugă un spațiu orizontal suplimentar"
 
-#: ../ui/settings.glade:4736
+#: ../ui/settings.glade:4737
 msgid "Add additional vertical space"
 msgstr "Adaugă un spațiu vertical suplimentar"
 
-#: ../ui/settings.glade:4754
+#: ../ui/settings.glade:4755
 msgid "<i>or</i>"
 msgstr "<i>sau</i>"
 
-#: ../ui/settings.glade:4766
+#: ../ui/settings.glade:4767
 msgid "Unlimited scrolling"
 msgstr "Răsfoire nelimitată"
 
-#: ../ui/settings.glade:4790
+#: ../ui/settings.glade:4791
 msgid "<i>The amount is specified in pixels.</i>"
 msgstr "<i>Valoarea este specificată în pixeli.</i>"
 
-#: ../ui/settings.glade:4822
+#: ../ui/settings.glade:4823
 msgid "Scrolling outside the page"
 msgstr "Deplasare în afara paginii"
 
-#: ../ui/settings.glade:4849
+#: ../ui/settings.glade:4850
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr "Mută prima pagină cu acest număr de pagini când este activată opțiunea <b>Pagini alăturate</b>"
 
-#: ../ui/settings.glade:4850
+#: ../ui/settings.glade:4851
 msgid "First Page Offset "
 msgstr "Mutarea primei pagini "
 
-#: ../ui/settings.glade:4863
+#: ../ui/settings.glade:4864
 msgid "Usually 0 or 1"
 msgstr "De obicei 0 sau 1"
 
-#: ../ui/settings.glade:4882
+#: ../ui/settings.glade:4883
 msgid "Paired Pages"
 msgstr "Pagini alăturate"
 
-#: ../ui/settings.glade:4908
+#: ../ui/settings.glade:4909
 msgid "when scrolling to end of last page"
 msgstr "când se răsfoiește până la sfârșitul ultimei pagini"
 
-#: ../ui/settings.glade:4923
+#: ../ui/settings.glade:4924
 msgid "when drawing on last page"
 msgstr "când se desenează pe ultima pagină"
 
-#: ../ui/settings.glade:4938
+#: ../ui/settings.glade:4939
 msgid "disabled"
 msgstr "dezactivat"
 
-#: ../ui/settings.glade:4956
+#: ../ui/settings.glade:4957
 msgid "Automatically Add Empty Last Page (excluding PDFs)"
 msgstr "Adaugă automat ultima pagină goală (cu excepția PDF-urilor)"
 
-#: ../ui/settings.glade:4980
+#: ../ui/settings.glade:4981
 msgid "Enable  with determination radius of "
 msgstr "Activează cu raza de acțiune de "
 
-#: ../ui/settings.glade:4985
+#: ../ui/settings.glade:4986
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
@@ -3483,160 +3489,160 @@ msgstr "Tragerea spre stânga din punctul de pornire acționează ca și cum tas
 "Raza de acțiune: Raza în care modificatorii se blochează până la terminarea desenului.\n\n"
 "<i>Util pentru lucrul fără tastatură.</i>"
 
-#: ../ui/settings.glade:5035
+#: ../ui/settings.glade:5036
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Instrumente de desenare - Stabilește modificatori în funcție de direcția de desenare (Experimental)"
 
-#: ../ui/settings.glade:5052
+#: ../ui/settings.glade:5053
 msgid "Preserve line width"
 msgstr "Păstrează lățimea liniei"
 
-#: ../ui/settings.glade:5057
+#: ../ui/settings.glade:5058
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
 msgstr "După redimensionarea unei selecții, lățimea tuturor liniilor va fi aceeași ca înainte de redimensionare. "
 
-#: ../ui/settings.glade:5068
+#: ../ui/settings.glade:5069
 msgid "Resizing"
 msgstr "Redimensionare"
 
-#: ../ui/settings.glade:5104
+#: ../ui/settings.glade:5105
 msgid "Rotation snapping tolerance"
 msgstr "Toleranța rotirii forțate"
 
-#: ../ui/settings.glade:5116
+#: ../ui/settings.glade:5117
 msgid "Grid snapping tolerance"
 msgstr "Toleranța ancorării la grilă"
 
-#: ../ui/settings.glade:5158
+#: ../ui/settings.glade:5159
 msgid "Grid size"
 msgstr "Mărimea grilei"
 
-#: ../ui/settings.glade:5189
+#: ../ui/settings.glade:5190
 msgid "Use snapping for recognized shapes"
 msgstr "Folosește ancorarea pentru formele recunoscute"
 
-#: ../ui/settings.glade:5193
+#: ../ui/settings.glade:5194
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
 msgstr "Dacă este activată, formele care au fost recunoscute de instrumentul „Recunoaște forma” vor fi ancorate automat la grilă. Acest lucru poate duce la rezultate neașteptate dacă ai activat „Recunoaște forma” în timpul scrierii."
 
-#: ../ui/settings.glade:5208
+#: ../ui/settings.glade:5209
 msgid "Snapping"
 msgstr "Ancorare"
 
-#: ../ui/settings.glade:5236
+#: ../ui/settings.glade:5237
 msgid "Minimum Stroke Size"
 msgstr "Mărimea minimă a formei"
 
-#: ../ui/settings.glade:5291
+#: ../ui/settings.glade:5292
 msgctxt "Short taps/clicks will trigger special actions"
 msgid "Enable Tap action"
 msgstr "Activează acțiunea la atingere"
 
-#: ../ui/settings.glade:5296
+#: ../ui/settings.glade:5297
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr "Nu desena ceva rapid și scurt, decât dacă este în succesiune rapidă. În schimb, arată caseta cu instrumente mobilă."
 
-#: ../ui/settings.glade:5308
+#: ../ui/settings.glade:5309
 msgid "Time limit (ms)"
 msgstr "Limita de timp (ms)"
 
-#: ../ui/settings.glade:5320
+#: ../ui/settings.glade:5321
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
 msgstr "Limita de timp: atingerile care durează mai mult nu vor declanșa o acțiune specială\n\n"
 "<i>Recomandat: 150ms</i>"
 
-#: ../ui/settings.glade:5340
+#: ../ui/settings.glade:5341
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
 msgstr "Limita de lungime: atingerile care depășesc această limită nu vor declanșa o acțiune specială\n\n"
 "<i>Recomandat: 1 mm</i>"
 
-#: ../ui/settings.glade:5360
+#: ../ui/settings.glade:5361
 msgid "Length limit (mm)"
 msgstr "Limita de lungime (mm)"
 
-#: ../ui/settings.glade:5371
+#: ../ui/settings.glade:5372
 msgid "Frequency limit (ms)"
 msgstr "Limita de frecvență (ms)"
 
-#: ../ui/settings.glade:5383
+#: ../ui/settings.glade:5384
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
 "<i>Recommended: 500ms</i>"
 msgstr "Limita de frecvență: O atingere care are loc în această perioadă, după ce a fost desenată o linie, nu va declanșa o acțiune specială.\n\n"
 "<i>Recomandat: 500ms</i>"
 
-#: ../ui/settings.glade:5400
+#: ../ui/settings.glade:5401
 msgid "Try to select object first."
 msgstr "Încearcă mai întâi să alegi obiectul."
 
-#: ../ui/settings.glade:5405 ../ui/settings.glade:5435
+#: ../ui/settings.glade:5406 ../ui/settings.glade:5436
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "Încearcă mai întâi să alegi obiectul; dacă nu este ales nimic, atunci arată caseta cu instrumente mobilă dacă este activată."
 
-#: ../ui/settings.glade:5418
+#: ../ui/settings.glade:5419
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr "Toate cele trei condiții trebuie îndeplinite înainte ca linia să fie ignorată.\n"
 "Trebuie să fie scurtă ca timp și lungime și nu trebuie să fi ignorat recent o altă linie."
 
-#: ../ui/settings.glade:5421
+#: ../ui/settings.glade:5422
 msgid "Settings:"
 msgstr "Reglări:"
 
-#: ../ui/settings.glade:5430
+#: ../ui/settings.glade:5431
 msgid "Show Floating Toolbox"
 msgstr "Arată caseta cu instrumente mobilă"
 
-#: ../ui/settings.glade:5449
+#: ../ui/settings.glade:5450
 msgid "Action on Tool Tap"
 msgstr "Acțiune la atingerea instrumentului"
 
-#: ../ui/settings.glade:5477
+#: ../ui/settings.glade:5478
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality.\n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr "<i>Reîncarcă mai des fondurile PDF în timp ce se face zoom pentru o calitate mai bună a redării. \n"
 "<b>Aviz:</b> Acest lucru nu ar trebui să afecteze calitatea tipăririi.</i>"
 
-#: ../ui/settings.glade:5499
+#: ../ui/settings.glade:5500
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr "Când se face zoom pe un PDF de înaltă rezoluție, fiecare reîncărcare poate dura mult timp. Stabilind aceasta la o valoare mare, aceste reîncărcări se întâmplă mai rar.\n\n"
 "Pune această valoare la 0% pentru a reîncărca mereu la zoom."
 
-#: ../ui/settings.glade:5502
+#: ../ui/settings.glade:5503
 msgid "Re-render when the page's zoom changes by more than "
 msgstr "Reîncarcă atunci când zoomul paginii se schimbă cu mai mult de "
 
-#: ../ui/settings.glade:5515
+#: ../ui/settings.glade:5516
 msgid "0.00"
 msgstr "0.00"
 
-#: ../ui/settings.glade:5532
+#: ../ui/settings.glade:5533
 msgid "%."
 msgstr "%."
 
-#: ../ui/settings.glade:5553
+#: ../ui/settings.glade:5554
 msgid "PDF Cache"
 msgstr "Cache PDF"
 
-#: ../ui/settings.glade:5584
+#: ../ui/settings.glade:5585
 msgid "Drawing Area"
 msgstr "Zona de desenare"
 
-#: ../ui/settings.glade:5631
+#: ../ui/settings.glade:5632
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
 msgstr "<i>Alege instrumentul și reglările dacă se apasă butonul „Prestabilit”.</i>"
 
-#: ../ui/settings.glade:5683
+#: ../ui/settings.glade:5684
 msgid "<b>Default</b>"
 msgstr "<b>Prestabilit</b>"
 
-#: ../ui/settings.glade:5723
+#: ../ui/settings.glade:5724
 msgid "Defaults"
 msgstr "Prestabilite"
 
-#: ../ui/settings.glade:5776
+#: ../ui/settings.glade:5777
 msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required).\n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
@@ -3646,89 +3652,89 @@ msgstr "<i>\n"
 "Dezactivarea sunetului pentru o singură sesiune poate fi realizată cu ajutorul <tt>--disable-audio</tt> din linia de comandă.\n"
 "</i>"
 
-#: ../ui/settings.glade:5792
+#: ../ui/settings.glade:5793
 msgid "Disable Audio"
 msgstr "Dezactivează audio"
 
-#: ../ui/settings.glade:5814
+#: ../ui/settings.glade:5815
 msgid "Enable or Disable Audio"
 msgstr "Activează sau dezactivează audio"
 
-#: ../ui/settings.glade:5841
+#: ../ui/settings.glade:5842
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr "<i>În prezent, înregistrările audio sunt stocate într-un dosar separat și sunt menționate în document.</i>"
 
-#: ../ui/settings.glade:5860 ../ui/settings.glade:5896
+#: ../ui/settings.glade:5861 ../ui/settings.glade:5897
 msgid "Storage Folder"
 msgstr "Alege dosarul"
 
-#: ../ui/settings.glade:5875
+#: ../ui/settings.glade:5876
 msgid "Select Folder"
 msgstr "Alege dosarul"
 
-#: ../ui/settings.glade:5923
+#: ../ui/settings.glade:5924
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr "<i>Specifică dispozitivele audio utilizate pentru înregistrarea și redarea fișierelor audio.\n"
 "Dacă este disponibil, alege <small><tt>pulse</tt></small> ca dispozitiv de intrare/ieșire.</i>"
 
-#: ../ui/settings.glade:5947
+#: ../ui/settings.glade:5948
 msgid "Input Device"
 msgstr "Dispozitiv de intrare"
 
-#: ../ui/settings.glade:5969
+#: ../ui/settings.glade:5970
 msgid "Output Device"
 msgstr "Dispozitiv de ieșire"
 
-#: ../ui/settings.glade:6000
+#: ../ui/settings.glade:6001
 msgid "Audio Devices"
 msgstr "Dispozitive audio"
 
-#: ../ui/settings.glade:6029
+#: ../ui/settings.glade:6030
 msgid "Sample Rate"
 msgstr "Frecvența de eșantionare"
 
-#: ../ui/settings.glade:6040
+#: ../ui/settings.glade:6041
 msgid "Gain"
 msgstr "Amplificare"
 
-#: ../ui/settings.glade:6087
+#: ../ui/settings.glade:6088
 msgid "Recording Quality"
 msgstr "Calitatea înregistrării"
 
-#: ../ui/settings.glade:6113
+#: ../ui/settings.glade:6114
 msgid "Default Seek Time (in seconds)"
 msgstr "Timp de căutare prestabilit (în secunde)"
 
-#: ../ui/settings.glade:6126
+#: ../ui/settings.glade:6127
 msgid "1,00"
 msgstr "1,00"
 
-#: ../ui/settings.glade:6145
+#: ../ui/settings.glade:6146
 msgid "Playback Settings"
 msgstr "Reglări de redare"
 
-#: ../ui/settings.glade:6159
+#: ../ui/settings.glade:6160
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr "<i>Modificările au efect numai asupra noilor înregistrări și redări.</i>"
 
-#: ../ui/settings.glade:6190
+#: ../ui/settings.glade:6191
 msgid "Audio Recording"
 msgstr "Înregistrare audio"
 
-#: ../ui/settings.glade:6263
+#: ../ui/settings.glade:6264
 msgid "<i>Select language (requires restart)</i>"
 msgstr "<i>Alege limba (trebuie repornit programul)</i>"
 
-#: ../ui/settings.glade:6295 ../ui/settings.glade:6341
+#: ../ui/settings.glade:6296 ../ui/settings.glade:6342
 msgid "Language"
 msgstr "Limba"
 
-#: ../ui/settings.glade:6311
+#: ../ui/settings.glade:6312
 msgid "Language Settings"
 msgstr "Alege limba"
 
-#: ../ui/settings.glade:6365
+#: ../ui/settings.glade:6366
 msgid "Palette"
 msgstr "Paleta"
 
@@ -4267,6 +4273,10 @@ msgid "Help"
 msgstr "Ajutor"
 
 #: ../ui/mainmenubar.xml:859
+msgid "Run Gtk3 demo"
+msgstr "Pornește Gtk3 demo"
+
+#: ../ui/mainmenubar.xml:863
 msgid "About"
 msgstr "Despre"
 
@@ -4440,15 +4450,15 @@ msgstr "Extensii care utilizează limbajul de programare Lua"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:57
 msgid "Note taking"
-msgstr ""
+msgstr "Notițe"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:61
 msgid "PDF annotation"
-msgstr ""
+msgstr "Notițe PDF"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:65
 msgid "LaTeX with customized preamble"
-msgstr ""
+msgstr "LaTeX cu introducere personalizată"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.xml.in:4
 msgid "Xournal note file"
