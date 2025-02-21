@@ -147,6 +147,7 @@ enum class Action : size_t {
 
     // Generic tool config, for the toolbar
     TOOL_SIZE,
+    TOOL_SELECT_CUSTOM_SIZE,
     TOOL_FILL,
     TOOL_FILL_OPACITY,
     TOOL_COLOR,    ///< Action whose state is the current color with alpha set to 0xff (in ARGB as a uint32_t)

@@ -16,6 +16,8 @@ auto toolSizeToString(ToolSize size) -> std::string {
             return "thick";
         case TOOL_SIZE_VERY_THICK:
             return "veryThick";
+        case TOOL_SIZE_CUSTOM:
+            return "custom";
         default:
             return "";
     }
@@ -37,7 +39,41 @@ auto toolSizeFromString(const std::string& size) -> ToolSize {
     if (size == "veryThick") {
         return TOOL_SIZE_VERY_THICK;
     }
+    if (size == "custom") {
+        return TOOL_SIZE_CUSTOM;
+    }
     return TOOL_SIZE_NONE;
+}
+
+auto customToolSizeFeatureToString(CustomToolSizeFeature feature) -> std::string {
+    switch (feature) {
+        case TOOL_SIZE_CUSTOM_NONE:
+            return "none";
+        case TOOL_SIZE_CUSTOM_PEN:
+            return "customSizePen";
+        case TOOL_SIZE_CUSTOM_HIGHLIGHTER:
+            return "customSizeHighlighter";
+        case TOOL_SIZE_CUSTOM_ERASER:
+            return "customSizeEraser";
+        default:
+            return "";
+    }
+}
+
+auto customToolSizeFeatureFromString(const std::string& feature) -> CustomToolSizeFeature {
+    if (feature == "none") {
+        return TOOL_SIZE_CUSTOM_NONE;
+    }
+    if (feature == "customSizePen") {
+        return TOOL_SIZE_CUSTOM_PEN;
+    }
+    if (feature == "customSizeHighlighter") {
+        return TOOL_SIZE_CUSTOM_HIGHLIGHTER;
+    }
+    if (feature == "customSizeEraser") {
+        return TOOL_SIZE_CUSTOM_ERASER;
+    }
+    return TOOL_SIZE_CUSTOM_NONE;
 }
 
 auto drawingTypeToString(DrawingType type) -> std::string {
