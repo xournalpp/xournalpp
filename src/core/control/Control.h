@@ -70,6 +70,7 @@ class XojFont;
 class XojPdfRectangle;
 class Callback;
 class ActionDatabase;
+class ShortcutConfiguration;
 
 class Control:
         public ToolListener,
@@ -319,6 +320,7 @@ public:
     PluginController* getPluginController() const;
     const Palette& getPalette() const;
 
+    const ShortcutConfiguration& getShortcuts() const;
 
     bool copy();
     bool cut();
@@ -548,4 +550,6 @@ private:
     std::unique_ptr<ActionDatabase> actionDB;
     template <Action a>
     friend struct ActionProperties;
+
+    std::unique_ptr<ShortcutConfiguration> shortcuts;
 };

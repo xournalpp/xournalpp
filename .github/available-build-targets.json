@@ -1,14 +1,9 @@
 {
   "linux_targets": {
-    "ubuntu-20": {
-        "displayed_name": "Ubuntu 20.04",
-        "runner": "ubuntu-20.04",
-        "gcc_version": 10,
-        "build_appimage": "true"
-      },
     "ubuntu-22": {
         "displayed_name": "Ubuntu 22.04",
-        "runner": "ubuntu-22.04"
+        "runner": "ubuntu-22.04",
+        "build_appimage": "true"
       },
     "ubuntu-24": {
         "displayed_name": "Ubuntu 24.04",

@@ -40,8 +40,6 @@
  *      * (optional) a member type state_type. If a state_type is provided, there must be a static member function
  *              static state_type initialState(Control* ctrl);
  *      * (optional) a member type parameter_type. If both are provided, parameter_type and state_type must agree.
- *      * (optional) a member static constexpr const char* accelerators[] = {"accel1", "accel2", nullptr} for
- *          accelerators that need to be set in the code rather than in the .xml files
  *      * (optional) a static member function
  *              static bool initiallyEnabled(Control*);
  *          Defaults to [](Control*){return true;}
@@ -120,11 +118,6 @@ struct ActionProperties<Action::PRINT> {
 template <>
 struct ActionProperties<Action::QUIT> {
     using app_namespace = std::true_type;
-#ifdef __APPLE__
-    static constexpr const char* accelerators[] = {"<Meta>Q", nullptr};
-#else
-    static constexpr const char* accelerators[] = {"<Ctrl>Q", nullptr};
-#endif
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->quit(); }
 };
 
@@ -132,21 +125,11 @@ struct ActionProperties<Action::QUIT> {
 /** Edit Menu **/
 template <>
 struct ActionProperties<Action::UNDO> {
-#ifdef __APPLE__
-    static constexpr const char* accelerators[] = {"<Meta>Z", nullptr};
-#else
-    static constexpr const char* accelerators[] = {"<Ctrl>Z", nullptr};
-#endif
     static bool initiallyEnabled(Control* ctrl) { return ctrl->undoRedo->canUndo(); }
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { UndoRedoController::undo(ctrl); }
 };
 template <>
 struct ActionProperties<Action::REDO> {
-#ifdef __APPLE__
-    static constexpr const char* accelerators[] = {"<Meta><Shift>Z", "<Meta>Y", nullptr};
-#else
-    static constexpr const char* accelerators[] = {"<Ctrl><Shift>Z", "<Ctrl>Y", nullptr};
-#endif
     static bool initiallyEnabled(Control* ctrl) { return ctrl->undoRedo->canRedo(); }
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
         ctrl->clearSelectionEndText();
@@ -155,29 +138,14 @@ struct ActionProperties<Action::REDO> {
 };
 template <>
 struct ActionProperties<Action::CUT> {
-#ifdef __APPLE__
-    static constexpr const char* accelerators[] = {"<Meta>X", "Cut", nullptr};
-#else
-    static constexpr const char* accelerators[] = {"<Ctrl>X", "Cut", nullptr};
-#endif
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->cut(); }
 };
 template <>
 struct ActionProperties<Action::COPY> {
-#ifdef __APPLE__
-    static constexpr const char* accelerators[] = {"<Meta>C", "Copy", nullptr};
-#else
-    static constexpr const char* accelerators[] = {"<Ctrl>C", "Copy", nullptr};
-#endif
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->copy(); }
 };
 template <>
 struct ActionProperties<Action::PASTE> {
-#ifdef __APPLE__
-    static constexpr const char* accelerators[] = {"<Meta>V", "Paste", nullptr};
-#else
-    static constexpr const char* accelerators[] = {"<Ctrl>V", "Paste", nullptr};
-#endif
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->paste(); }
 };
 template <>
@@ -397,11 +365,6 @@ struct ActionProperties<Action::SHOW_MENUBAR> {
  */
 template <>
 struct ActionProperties<Action::ZOOM_IN> {
-#ifdef __APPLE__
-    static constexpr const char* accelerators[] = {"<Meta>plus", "<Meta>KP_Add", "<Meta>equal", nullptr};
-#else
-    static constexpr const char* accelerators[] = {"<Ctrl>plus", "<Ctrl>KP_Add", "<Ctrl>equal", nullptr};
-#endif
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
         Util::execInUiThread([zoom = ctrl->getZoomControl()]() { zoom->zoomOneStep(ZOOM_IN); });
     }
@@ -409,11 +372,6 @@ struct ActionProperties<Action::ZOOM_IN> {
 
 template <>
 struct ActionProperties<Action::ZOOM_OUT> {
-#ifdef __APPLE__
-    static constexpr const char* accelerators[] = {"<Meta>minus", "<Meta>KP_Subtract", nullptr};
-#else
-    static constexpr const char* accelerators[] = {"<Ctrl>minus", "<Ctrl>KP_Subtract", nullptr};
-#endif
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
         Util::execInUiThread([zoom = ctrl->getZoomControl()]() { zoom->zoomOneStep(ZOOM_OUT); });
     }
@@ -464,7 +422,7 @@ struct ActionProperties<Action::ZOOM> {
 /** Navigation menu **/
 template <>
 struct ActionProperties<Action::GOTO_FIRST> {
-    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getScrollHandler()->scrollToPage(0); }
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getScrollHandler()->goToFirstPage(); }
 };
 template <>
 struct ActionProperties<Action::GOTO_PREVIOUS> {
@@ -481,9 +439,7 @@ struct ActionProperties<Action::GOTO_NEXT> {
 };
 template <>
 struct ActionProperties<Action::GOTO_LAST> {
-    static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
-        ctrl->getScrollHandler()->scrollToPage(ctrl->getDocument()->getPageCount() - 1);
-    }
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getScrollHandler()->goToLastPage(); }
 };
 
 template <>

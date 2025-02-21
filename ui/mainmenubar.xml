@@ -7,12 +7,10 @@
     <item>
      <attribute name="label" translatable="true">New</attribute>
      <attribute name="action">win.new-file</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;n</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">Open</attribute>
      <attribute name="action">win.open</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;o</attribute>
     </item>
     <submenu id="menuFileRecent">
      <!-- Filled dynamically -->
@@ -25,12 +23,10 @@
     <item>
      <attribute name="label" translatable="yes">Save</attribute>
      <attribute name="action">win.save</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;s</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">Save As</attribute>
      <attribute name="action">win.save-as</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;s</attribute>
     </item>
    </section>
    <section>
@@ -41,14 +37,12 @@
     <item>
      <attribute name="label" translatable="yes">Export as...</attribute>
      <attribute name="action">win.export-as</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;e</attribute>
     </item>
    </section>
    <section>
     <item>
      <attribute name="label" translatable="yes">Print</attribute>
      <attribute name="action">win.print</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;p</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">Quit</attribute>
@@ -75,38 +69,32 @@
     <item>
      <attribute name="label" translatable="yes">Cut</attribute>
      <attribute name="action">win.cut</attribute>
-     <!-- Cut accelerators are defined in control/actions/ActionProperties.h -->
     </item>
     <item>
      <attribute name="label" translatable="yes">Copy</attribute>
      <attribute name="action">win.copy</attribute>
-     <!-- Copy accelerators are defined in control/actions/ActionProperties.h -->
     </item>
     <item>
      <attribute name="label" translatable="yes">Paste</attribute>
      <attribute name="action">win.paste</attribute>
-     <!-- Paste accelerators are defined in control/actions/ActionProperties.h -->
     </item>
    </section>
    <section>
     <item>
      <attribute name="label" translatable="yes">Select All</attribute>
      <attribute name="action">win.select-all</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;a</attribute>
     </item>
    </section>
    <section>
     <item>
      <attribute name="label" translatable="yes">Find</attribute>
      <attribute name="action">win.search</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;f</attribute>
     </item>
    </section>
    <section>
     <item>
      <attribute name="label" translatable="yes">Delete</attribute>
      <attribute name="action">win.delete</attribute>
-     <attribute name="accel">Delete</attribute>
     </item>
    </section>
    <section>
@@ -187,29 +175,24 @@
     <item>
      <attribute name="label" translatable="yes">_Presentation Mode</attribute>
      <attribute name="action">win.presentation-mode</attribute>
-     <attribute name="accel">F5</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">Fullscreen</attribute>
      <attribute name="action">win.fullscreen</attribute>
-     <attribute name="accel">F11</attribute>
     </item>
    </section>
    <section>
     <item>
      <attribute name="label" translatable="yes">Show Toolbars</attribute>
      <attribute name="action">win.show-toolbar</attribute>
-     <attribute name="accel">F9</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">Show Menubar</attribute>
      <attribute name="action">win.show-menubar</attribute>
-     <attribute name="accel">F10</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">Show Sidebar</attribute>
      <attribute name="action">win.show-sidebar</attribute>
-     <attribute name="accel">F12</attribute>
     </item>
    </section>
    <section>
@@ -376,40 +359,33 @@
    <section id="menu6">
     <item>
      <attribute name="label" translatable="yes">_First Page</attribute>
-     <attribute name="action">win.goto-first</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;Home</attribute>
+     <attribute name="action">win.nav-goto-first</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">_Previous Page</attribute>
-     <attribute name="action">win.goto-previous</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;Page_Up</attribute>
+     <attribute name="action">win.nav-goto-previous</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">_Goto Page</attribute>
-     <attribute name="action">win.goto-page</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;g</attribute>
+     <attribute name="action">win.nav-goto-page</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">_Next Page</attribute>
-     <attribute name="action">win.goto-next</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;Page_Down</attribute>
+     <attribute name="action">win.nav-goto-next</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">_Last Page</attribute>
-     <attribute name="action">win.goto-last</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;End</attribute>
+     <attribute name="action">win.nav-goto-last</attribute>
     </item>
    </section>
    <section>
     <item>
      <attribute name="label" translatable="yes">_Previous Layer</attribute>
      <attribute name="action">win.layer-goto-previous</attribute>
-     <attribute name="accel">&lt;Shift&gt;Page_Down</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">_Next Layer</attribute>
      <attribute name="action">win.layer-goto-next</attribute>
-     <attribute name="accel">&lt;Shift&gt;Page_Up</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">_Top Layer</attribute>
@@ -419,13 +395,11 @@
    <section>
     <item>
      <attribute name="label" translatable="yes">N_ext Annotated Page</attribute>
-     <attribute name="action">win.goto-next-annotated-page</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;Page_Down</attribute>
+     <attribute name="action">win.nav-goto-next-annotated-page</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">P_revious Annotated Page</attribute>
-     <attribute name="action">win.goto-previous-annotated-page</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;Page_Up</attribute>
+     <attribute name="action">win.nav-goto-previous-annotated-page</attribute>
     </item>
    </section>
   </submenu>
@@ -439,7 +413,6 @@
     <item>
      <attribute name="label" translatable="yes">New Page _After</attribute>
      <attribute name="action">win.new-page-after</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;d</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">New Page at _End</attribute>
@@ -460,29 +433,24 @@
     <item>
      <attribute name="label" translatable="yes">_Delete Page</attribute>
      <attribute name="action">win.delete-page</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;Delete</attribute>
     </item>
    </section>
    <section>
     <item>
      <attribute name="label" translatable="yes">New _Layer</attribute>
      <attribute name="action">win.layer-new</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;l</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">Delete Layer</attribute>
      <attribute name="action">win.layer-delete</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;l</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">Merge Layer Down</attribute>
      <attribute name="action">win.merge-layer-down</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;m</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">Rename Layer</attribute>
      <attribute name="action">win.layer-rename</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;r</attribute>
     </item>
    </section>
    <section>
@@ -506,48 +474,40 @@
      <attribute name="label" translatable="yes">_Pen</attribute>
      <attribute name="action">win.select-tool</attribute>
      <attribute name="target" type="t">1</attribute> <!-- TOOL_PEN -->
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;p</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">_Eraser</attribute>
      <attribute name="action">win.select-tool</attribute>
      <attribute name="target" type="t">2</attribute> <!-- TOOL_ERASER -->
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;e</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">Select Linear Text</attribute>
      <attribute name="action">win.select-tool</attribute>
      <attribute name="target" type="t">21</attribute> <!-- TOOL_SELECT_PDF_TEXT_LINEAR -->
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;w</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">Select Text In Rectangle</attribute>
      <attribute name="action">win.select-tool</attribute>
      <attribute name="target" type="t">22</attribute> <!-- TOOL_SELECT_PDF_TEXT_RECT -->
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;y</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">_Highlighter</attribute>
      <attribute name="action">win.select-tool</attribute>
      <attribute name="target" type="t">3</attribute> <!-- TOOL_HIGHLIGHTER -->
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;h</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">_Text</attribute>
      <attribute name="action">win.select-tool</attribute>
      <attribute name="target" type="t">4</attribute> <!-- TOOL_TEXT -->
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;t</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">_Image</attribute>
      <attribute name="action">win.select-tool</attribute>
      <attribute name="target" type="t">5</attribute> <!-- TOOL_IMAGE -->
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;i</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">_Default Tool</attribute>
      <attribute name="action">win.select-default-tool</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;d</attribute>
     </item>
    </section>
    <section>
@@ -556,42 +516,34 @@
      <item>
       <attribute name="label" translatable="yes">_Shape Recognizer</attribute>
       <attribute name="action">win.tool-draw-shape-recognizer</attribute>
-      <attribute name="accel">&lt;Ctrl&gt;1</attribute>
      </item>
      <item>
       <attribute name="label" translatable="yes">Draw Rectangle</attribute>
       <attribute name="action">win.tool-draw-rectangle</attribute>
-      <attribute name="accel">&lt;Ctrl&gt;2</attribute>
      </item>
      <item>
       <attribute name="label" translatable="yes">Draw Ellipse</attribute>
       <attribute name="action">win.tool-draw-ellipse</attribute>
-      <attribute name="accel">&lt;Ctrl&gt;3</attribute>
      </item>
      <item>
       <attribute name="label" translatable="yes">Draw Arrow</attribute>
       <attribute name="action">win.tool-draw-arrow</attribute>
-      <attribute name="accel">&lt;Ctrl&gt;4</attribute>
      </item>
      <item>
       <attribute name="label" translatable="yes">Draw Double Arrow</attribute>
       <attribute name="action">win.tool-draw-double-arrow</attribute>
-      <attribute name="accel">&lt;Ctrl&gt;5</attribute>
      </item>
      <item>
       <attribute name="label" translatable="yes">Draw Coordinate System</attribute>
       <attribute name="action">win.tool-draw-coordinate-system</attribute>
-      <attribute name="accel">&lt;Ctrl&gt;6</attribute>
      </item>
      <item>
       <attribute name="label" translatable="yes">Draw _Line</attribute>
       <attribute name="action">win.tool-draw-line</attribute>
-      <attribute name="accel">&lt;Ctrl&gt;7</attribute>
      </item>
      <item>
       <attribute name="label" translatable="yes">Draw Spline</attribute>
       <attribute name="action">win.tool-draw-spline</attribute>
-      <attribute name="accel">&lt;Ctrl&gt;8</attribute>
      </item>
     </submenu>
    </section>
@@ -600,13 +552,11 @@
      <attribute name="label" translatable="yes">Select Rectangle</attribute>
      <attribute name="action">win.select-tool</attribute>
      <attribute name="target" type="t">6</attribute> <!-- TOOL_SELECT_RECT -->
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;r</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">Select Region</attribute>
      <attribute name="action">win.select-tool</attribute>
      <attribute name="target" type="t">7</attribute> <!-- TOOL_SELECT_REGION -->
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;g</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">Select Multi-Layer Rectangle</attribute>
@@ -622,13 +572,11 @@
      <attribute name="label" translatable="yes">Select Object</attribute>
      <attribute name="action">win.select-tool</attribute>
      <attribute name="target" type="t">10</attribute> <!-- TOOL_SELECT_OBJECT -->
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;o</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">_Vertical Space</attribute>
      <attribute name="action">win.select-tool</attribute>
      <attribute name="target" type="t">12</attribute> <!-- TOOL_VERTICAL_SPACE -->
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;v</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">Play Object</attribute>
@@ -640,7 +588,6 @@
      <attribute name="label" translatable="yes">H_and Tool</attribute>
      <attribute name="action">win.select-tool</attribute>
      <attribute name="target" type="t">13</attribute> <!-- TOOL_HAND -->
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;a</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">Setsquare</attribute>
@@ -813,7 +760,6 @@
     <item>
      <attribute name="label" translatable="yes">Text Font...</attribute>
      <attribute name="action">win.select-font</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;f</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">Record / Stop</attribute>
@@ -843,13 +789,11 @@
     <item>
      <attribute name="label" translatable="yes">Add/Edit TeX</attribute>
      <attribute name="action">win.tex</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;x</attribute>
     </item>
    </section>
   </submenu>
   <submenu>
    <attribute name="label" translatable="yes">_Help</attribute>
-   <attribute name="accel">&lt;Ctrl&gt;h</attribute>
    <section id="menu3">
     <item>
      <attribute name="label" translatable="yes">Help</attribute>

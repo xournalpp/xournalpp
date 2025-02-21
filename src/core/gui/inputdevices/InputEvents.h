@@ -94,6 +94,9 @@ struct InputEvent final {
 };
 
 struct KeyEvent final {
+    KeyEvent() = default;
+    explicit KeyEvent(GdkEvent* e);
+
     guint keyval{0};
     GdkModifierType state{};  ///< Consumed modifiers have been masked out
 

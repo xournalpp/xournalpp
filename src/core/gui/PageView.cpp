@@ -743,6 +743,10 @@ auto XojPageView::onKeyPressEvent(const KeyEvent& event) -> bool {
         if (this->textEditor->onKeyPressEvent(event)) {
             return true;
         }
+        if (event.keyval == GDK_KEY_Escape) {
+            endText();
+            return true;
+        }
     } else if (this->inputHandler) {
         if (this->inputHandler->onKeyPressEvent(event)) {
             return true;
@@ -751,16 +755,6 @@ auto XojPageView::onKeyPressEvent(const KeyEvent& event) -> bool {
         if (this->verticalSpace->onKeyPressEvent(event)) {
             return true;
         }
-    }
-
-    // Esc leaves text edition
-    if (event.keyval == GDK_KEY_Escape) {
-        if (this->textEditor) {
-            endText();
-            return true;
-        }
-
-        return false;
     }
 
     return false;
