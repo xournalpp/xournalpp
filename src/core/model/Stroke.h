@@ -11,8 +11,11 @@
 
 #pragma once
 
+#include <array>    // for array
 #include <cstddef>  // for size_t
+#include <istream>  // for istream
 #include <memory>   // for unique_ptr
+#include <ostream>  // for ostream
 #include <vector>   // for vector
 
 #include "model/Element.h"
@@ -29,6 +32,8 @@ class ShapeContainer;
 class StrokeTool {
 public:
     enum Value { PEN, ERASER, HIGHLIGHTER };
+    static constexpr std::array<const char*, 3> NAMES = {"pen", "eraser", "highlighter"};
+    StrokeTool(): value(Value::PEN) {}
     StrokeTool(Value v): value(v) {}
 
     [[nodiscard]] bool isPressureSensitive() const { return value == PEN; }
@@ -40,12 +45,20 @@ private:
     Value value = PEN;
 };
 
+std::ostream& operator<<(std::ostream& stream, const StrokeTool tool);
+std::istream& operator>>(std::istream& stream, StrokeTool& tool);
+
 enum StrokeCapStyle {
     ROUND = 0,
     BUTT = 1,
     SQUARE = 2
 };  // Must match the indices in StrokeView::CAIRO_LINE_CAP
     // and in EraserHandler::PADDING_COEFFICIENT_CAP
+
+constexpr std::array<const char*, 3> STROKE_CAP_STYLE_NAMES = {"round", "butt", "square"};
+
+std::ostream& operator<<(std::ostream& stream, const StrokeCapStyle style);
+std::istream& operator>>(std::istream& stream, StrokeCapStyle& style);
 
 class ErasableStroke;
 struct PaddedBox;
