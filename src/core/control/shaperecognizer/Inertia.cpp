@@ -1,6 +1,7 @@
 #include "Inertia.h"
 
 #include <cmath>
+#include <vector>
 
 #include "model/Point.h"
 
@@ -68,7 +69,10 @@ auto Inertia::det() const -> double {
 
 auto Inertia::getMass() const -> double { return mass; }
 
-void Inertia::increase(Point p1, Point p2, int coef) {
+void Inertia::increase(const Point& p1, const Point& p2, int coef) {
+    // dm is defined to be a small element of mass making up the stroke (length between two points * mass per unit
+    // length). It is assumed that the mass is uniformly distributed along the stroke and exhibits a density of coef,
+    // which is regularly 1 for adding a point and -1 for removing a point.
     double dm = coef * hypot(p2.x - p1.x, p2.y - p1.y);
     this->mass += dm;
     this->sx += dm * p1.x;
@@ -78,7 +82,9 @@ void Inertia::increase(Point p1, Point p2, int coef) {
     this->sxy += dm * p1.x * p1.y;
 }
 
-void Inertia::calc(const Point* pt, int start, int end) {
-    this->mass = this->sx = this->sy = this->sxx = this->sxy = this->syy = 0.;
-    for (int i = start; i < end - 1; i++) { this->increase(pt[i], pt[i + 1], 1); }
+void Inertia::calc(vector<Point>::const_iterator start, vector<Point>::const_iterator end) {
+    this->mass = this->sx = this->sy = this->sxx = this->sxy = this->syy = 0.0f;
+    for (auto i = start; i != end; ++i) {
+        this->increase(*i, *(i + 1), 1);
+    }
 }

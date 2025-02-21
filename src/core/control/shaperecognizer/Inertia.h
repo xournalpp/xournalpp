@@ -10,7 +10,8 @@
  */
 
 #pragma once
-
+#include <vector>
+using std::vector;
 class Point;
 
 class Inertia {
@@ -20,6 +21,8 @@ public:
     virtual ~Inertia();
 
 public:
+/* compute normalized quantities */
+// Center of mass (COM) of the stroke
     double centerX() const;
     double centerY() const;
 
@@ -27,20 +30,30 @@ public:
     double xy() const;
     double yy() const;
 
+/**
+    * @brief: Compute the radius of the circle if the stroke is a circle.
+    * @return: The radius of the circle.
+*/
     double rad() const;
 
     double det() const;
 
     double getMass() const;
 
-    void increase(Point p1, Point p2, int coef);
-    void calc(const Point* pt, int start, int end);
+    /**
+    * @brief: accomulate the mass and moments of the stroke by adding a new point or removing a point.
+    */
+    void increase(const Point& p1, const Point& p2, int coef);
+    /**
+    * @brief: calculate the mass and moments of the stroke from \p start to \p end.
+    */
+    void calc(vector<Point>::const_iterator start, vector<Point>::const_iterator end);
 
 private:
-    double mass{};
-    double sx{};
-    double sy{};
-    double sxx{};
-    double sxy{};
-    double syy{};
+    double mass{};  // length of the stroke (the sum of legths between its points)
+    double sx{};    // sum of weighted x
+    double sy{};    // sum of weighted y
+    double sxx{};   // sum of weighted x^2
+    double sxy{};   // sum of weighted x*y
+    double syy{};   // sum of weighted y^2
 };
