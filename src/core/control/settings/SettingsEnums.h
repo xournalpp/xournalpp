@@ -86,6 +86,11 @@ enum IconTheme {
 
 enum ThemeVariant { THEME_VARIANT_USE_SYSTEM, THEME_VARIANT_FORCE_LIGHT, THEME_VARIANT_FORCE_DARK };
 
+enum LayoutType {
+    LAYOUT_TYPE_GRID = 0,
+    LAYOUT_TYPE_CONST_PADDING = 1,
+};
+
 /**
  * The user-selectable Page Preview Decoration style
  */
@@ -180,6 +185,17 @@ constexpr auto themeVariantToString(ThemeVariant variant) -> const char* {
     }
 }
 
+constexpr auto LayoutTypeToString(LayoutType layoutType) -> const char* {
+    switch (layoutType) {
+        case LAYOUT_TYPE_GRID:
+            return "grid";
+        case LAYOUT_TYPE_CONST_PADDING:
+            return "constantPadding";
+        default:
+            return "unknown";
+    }
+}
+
 constexpr auto emptyLastPageAppendToString(EmptyLastPageAppendType appendType) -> const char* {
     switch (appendType) {
         case EmptyLastPageAppendType::Disabled:
@@ -197,4 +213,5 @@ StylusCursorType stylusCursorTypeFromString(const std::string& stylusCursorTypeS
 EraserVisibility eraserVisibilityFromString(const std::string& eraserVisibilityStr);
 IconTheme iconThemeFromString(const std::string& iconThemeStr);
 ThemeVariant themeVariantFromString(const std::string& themeVariantStr);
+LayoutType layoutTypeFromString(const std::string& layoutTypeStr);
 EmptyLastPageAppendType emptyLastPageAppendFromString(const std::string& str);

@@ -18,7 +18,8 @@
 
 #include <gtk/gtk.h>  // for GtkAdjustment
 
-#include "util/Rectangle.h"  // for Rectangle
+#include "control/settings/SettingsEnums.h"  // for LayoutType
+#include "util/Rectangle.h"                  // for Rectangle
 
 #include "LayoutMapper.h"  // for LayoutMapper
 
@@ -150,6 +151,24 @@ protected:
 private:
     void recalculate_int() const;
 
+    /**
+     * Get the static padding above all pages.
+     * This includes the default padding, plus the user-defined additional space
+     * above the page area or the widget's size for "infinite scrolling"
+     */
+    int getPaddingAboveAll() const;
+    /**
+     * Get the static padding left of all pages.
+     * This includes the default padding, plus the user-defined additional space
+     * left of the page area or the widget's size for "infinite scrolling"
+     */
+    int getPaddingLeftOfAll() const;
+
+    /**
+     * Get the grid position of the page at coordinates
+     */
+    GridPosition getGridPositionAt(int x, int y);
+
     void maybeAddLastPage(Layout* layout);
 
     // Todo(Fabian): move to ScrollHandling also it must not depend on Layout
@@ -176,6 +195,18 @@ private:
      */
     mutable LayoutMapper mapper;
     mutable PreCalculated pc{};
-    mutable std::vector<unsigned> colXStart;
-    mutable std::vector<unsigned> rowYStart;
+    LayoutType layoutType;
+
+    /**
+     * If in grid mode or the layout orientation is horizontal, the end x-coordinate of each layout column.
+     * If in constant padding mode and orientation is vertical, the end x-coordinate of each grid cell for all rows
+     * and columns, since they could all be different. Stored in row-major order.
+     */
+    std::vector<unsigned int> colXEnd;
+    /**
+     * If in grid mode or the layout orientation is vertical, the end y-coordinate of each layout row.
+     * If in constant padding mode and orientation is horizontal, the end y-coordinate of each grid cell for all rows
+     * and columns, since they could all be different. Stored in column-major order.
+     */
+    std::vector<unsigned int> rowYEnd;
 };

@@ -304,6 +304,7 @@ void Control::initWindow(MainWindow* win) {
         setViewColumns(settings->getViewColumns());
     }
 
+    setViewLayoutType(settings->getViewLayoutType());
     setViewLayoutVert(settings->getViewLayoutVert());
     setViewLayoutR2L(settings->getViewLayoutR2L());
     setViewLayoutB2T(settings->getViewLayoutB2T());
@@ -1019,6 +1020,7 @@ void Control::setViewPresentationMode(bool enabled) {
             setViewColumns(settings->getViewColumns());
         }
 
+        setViewLayoutType(settings->getViewLayoutType());
         setViewLayoutVert(settings->getViewLayoutVert());
         setViewLayoutR2L(settings->getViewLayoutR2L());
         setViewLayoutB2T(settings->getViewLayoutB2T());
@@ -1065,6 +1067,12 @@ void Control::setViewColumns(int numColumns) {
 void Control::setViewRows(int numRows) {
     settings->setViewRows(numRows);
     settings->setViewFixedRows(true);
+    win->getXournal()->layoutPages();
+    scrollHandler->scrollToPage(getCurrentPageNo());
+}
+
+void Control::setViewLayoutType(LayoutType type) {
+    settings->setViewLayoutType(type);
     win->getXournal()->layoutPages();
     scrollHandler->scrollToPage(getCurrentPageNo());
 }
