@@ -48,10 +48,10 @@ static void migrateMetadataDirectory() {
     try {
         fs::remove(legacyDir);
     } catch (const fs::filesystem_error&) {
-        g_warning("Could not delete legacy metadata directory %s", legacyDir.c_str());
+        g_warning("Could not delete legacy metadata directory %s", legacyDir.u8string().c_str());
     }
 
-    g_message("Migrated metadata directory from %s to %s", legacyDir.c_str(), newDir.c_str());
+    g_message("Migrated metadata directory from %s to %s", legacyDir.u8string().c_str(), newDir.u8string().c_str());
 }
 
 MetadataEntry::MetadataEntry(): valid(false), zoom(1), page(0), time(0) {}
@@ -64,14 +64,14 @@ MetadataManager::~MetadataManager() { documentChanged(); }
 void MetadataManager::deleteMetadataFile(fs::path const& path) {
     // be careful, delete the Metadata file, NOT the Document!
     if (path.extension() != ".metadata") {
-        g_warning("Try to delete non-metadata file: %s", path.string().c_str());
+        g_warning("Try to delete non-metadata file: %s", path.u8string().c_str());
         return;
     }
 
     try {
         fs::remove(path);
     } catch (const fs::filesystem_error&) {
-        g_warning("Could not delete metadata file %s", path.string().c_str());
+        g_warning("Could not delete metadata file %s", path.u8string().c_str());
     }
 }
 

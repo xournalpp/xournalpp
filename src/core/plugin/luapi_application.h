@@ -706,7 +706,7 @@ static void refsHelper(lua_State* L, std::vector<Element*> elements) {
     lua_newtable(L);
     size_t count = 0;
     for (Element* element: elements) {
-        lua_pushinteger(L, ++count);                            // index
+        lua_pushinteger(L, strict_cast<lua_Integer>(++count));  // index
         lua_pushlightuserdata(L, static_cast<void*>(element));  // value
         lua_settable(L, -3);                                    // insert
     }
@@ -3069,7 +3069,6 @@ static int applib_getImages(lua_State* L) {
  */
 static int applib_getFolder(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
-    Control* control = plugin->getControl();
     auto pluginName = plugin->getName();
 
     // Discard any extra arguments passed in

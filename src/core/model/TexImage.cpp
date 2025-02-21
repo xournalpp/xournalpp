@@ -92,8 +92,10 @@ auto TexImage::loadData(std::string&& bytes, GError** err) -> bool {
     const std::string type = binaryData.substr(1, 3);
     if (type == "PDF") {
         // Note: binaryData must not be modified while pdf is live.
-        this->pdf.reset(poppler_document_new_from_data(this->binaryData.data(), this->binaryData.size(), nullptr, err),
-                        xoj::util::adopt);
+        auto* bytes = g_bytes_new_with_free_func(this->binaryData.data(), this->binaryData.size(), nullptr, nullptr);
+        this->pdf.reset(poppler_document_new_from_bytes(bytes, nullptr, err), xoj::util::adopt);
+        g_bytes_unref(bytes);
+
         if (!pdf.get() || poppler_document_get_n_pages(this->pdf.get()) < 1) {
             return false;
         }
