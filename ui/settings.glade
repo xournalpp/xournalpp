@@ -2834,6 +2834,67 @@ This setting can make it easier to draw with touch. </property>
                                 <property name="position">4</property>
                               </packing>
                             </child>
+                            <child>
+                              <object class="GtkFrame" id="frameUndoGesture">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label-xalign">0.0099999997764825821</property>
+                                <child>
+                                  <object class="GtkBox" id="boxUndoGesture">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="margin-left">12</property>
+                                    <property name="margin-right">12</property>
+                                    <property name="margin-start">12</property>
+                                    <property name="margin-end">12</property>
+                                    <property name="margin-bottom">8</property>
+                                    <property name="orientation">vertical</property>
+                                    <child>
+                                      <object class="GtkLabel" id="lblUndoGestureDescription">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="label" translatable="yes">&lt;i&gt;Quickly tap the touchscreen with two fingers to undo the last change.&lt;/i&gt;</property>
+                                        <property name="use-markup">True</property>
+                                        <property name="wrap">True</property>
+                                        <property name="max-width-chars">85</property>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkCheckButton" id="cbUndoGesture">
+                                        <property name="label" translatable="yes">Enable undo gesture</property>
+                                        <property name="name">cbUndoGesture</property>
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="receives-default">False</property>
+                                        <property name="draw-indicator">True</property>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkLabel" id="headerUndoGesture">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Undo Gesture</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">5</property>
+                              </packing>
+                            </child>
                           </object>
                         </child>
                       </object>

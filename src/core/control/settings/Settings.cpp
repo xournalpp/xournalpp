@@ -56,6 +56,7 @@ void Settings::loadDefault() {
     this->pressureMultiplier = 1.0;
     this->pressureGuessing = false;
     this->zoomGesturesEnabled = true;
+    this->undoGestureEnabled = false;
 
     this->maximized = false;
     this->showPairedPages = false;
@@ -392,6 +393,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->pressureMultiplier = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomGesturesEnabled")) == 0) {
         this->zoomGesturesEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("undoGestureEnabled")) == 0) {
+        this->undoGestureEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectedToolbar")) == 0) {
         this->selectedToolbar = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastSavePath")) == 0) {
@@ -973,6 +976,8 @@ void Settings::save() {
 
     SAVE_BOOL_PROP(zoomGesturesEnabled);
 
+    SAVE_BOOL_PROP(undoGestureEnabled);
+
     SAVE_STRING_PROP(selectedToolbar);
 
     auto lastSavePath = this->lastSavePath.u8string();
@@ -1276,6 +1281,16 @@ void Settings::setZoomGesturesEnabled(bool enable) {
         return;
     }
     this->zoomGesturesEnabled = enable;
+    save();
+}
+
+auto Settings::isUndoGestureEnabled() const -> bool { return this->undoGestureEnabled; }
+
+void Settings::setUndoGestureEnabled(bool enable) {
+    if (this->undoGestureEnabled == enable) {
+        return;
+    }
+    this->undoGestureEnabled = enable;
     save();
 }
 
