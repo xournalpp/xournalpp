@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-27 08:42+0000\n"
-"PO-Revision-Date: 2025-02-02 04:25\n"
+"POT-Creation-Date: 2025-02-20 08:50+0000\n"
+"PO-Revision-Date: 2025-02-23 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -653,7 +653,7 @@ msgid "Isometric Graph"
 msgstr "Griglia isometrica"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:41
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:399
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 msgid "Image"
 msgstr "Immagine"
 
@@ -934,22 +934,22 @@ msgid "Tool - don't change"
 msgstr "Strumento - non cambiare"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:372
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:373
 msgid "Pen"
 msgstr "Penna"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:381
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:382
 msgid "Eraser"
 msgstr "Gomma"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Highlighter"
 msgstr "Evidenziatore"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:397
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:398
 msgid "Text"
 msgstr "Testo"
 
@@ -979,7 +979,7 @@ msgid "Select multi layer rect"
 msgstr "Seleziona rettangolo multilivello"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
 msgid "Hand"
 msgstr "Mano"
 
@@ -1005,48 +1005,48 @@ msgstr "Disegno normale"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Draw Line"
 msgstr "Disegna linea retta"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Draw Rectangle"
 msgstr "Disegna Rettangolo"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Draw Ellipse"
 msgstr "Disegna ellisse"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Draw Arrow"
 msgstr "Disegna Freccia"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Draw Double Arrow"
 msgstr "Disegna Doppia Freccia"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:418
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Draw Coordinate System"
 msgstr "Disegna il sistema di coordinate"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:411
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
 msgstr "Riconoscitore di Forme"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw Spline"
 msgstr "Disegna Spline"
 
@@ -1403,7 +1403,7 @@ msgstr "Rimuovi un singolo documento"
 
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:165
 msgid "Copy current page"
-msgstr ""
+msgstr "Copia questa pagina"
 
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
 msgid "Copy current background"
@@ -1521,204 +1521,208 @@ msgstr "Modalità presentazione"
 msgid "Toggle fullscreen"
 msgstr "Attiva Schermo intero"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:326
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:325
+msgid "Toggle sidebar"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:327
 msgid "Manage Toolbars"
 msgstr "Gestisci barre degli strumenti"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:328
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Customize Toolbars"
 msgstr "Personalizza barra degli strumenti"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:330
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:331
 msgid "Zoom out"
 msgstr "Diminuisci Zoom"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:331
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:332
 msgid "Zoom in"
 msgstr "Aumenta Zoom"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:332
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:333
 msgid "Zoom fit to screen"
 msgstr "Zoom Adatta allo schermo"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:333
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:334
 msgid "Zoom to 100%"
 msgstr "Zoom 100%"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:340
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:341
 msgid "Go to first page"
 msgstr "Vai alla prima pagina"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:341
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:450
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:342
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:451
 msgid "Back"
 msgstr "Indietro"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:342
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:343
 msgid "Go to page"
 msgstr "Vai a pagina"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:343
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:344
 msgid "Next"
 msgstr "Prossima"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:344
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:345
 msgid "Go to last page"
 msgstr "Vai all'ultima pagina"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:347
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:348
 msgid "Go to previous layer"
 msgstr "Vai al livello precedente"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:348
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:349
 msgid "Go to next layer"
 msgstr "Vai al prossimo livello"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:349
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:350
 msgid "Go to top layer"
 msgstr "Vai al livello più alto"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:352
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:353
 msgid "Next annotated page"
 msgstr "Prossima pagina annotata"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:358
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:359
 msgid "Insert page"
 msgstr "Inserisci pagina"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:360
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:361
 msgid "Delete current page"
 msgstr "Cancella pagina corrente"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:368
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:377
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:385
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:378
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:386
 msgid "standard"
 msgstr "standard"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:387
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:370
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:388
 msgid "dashed"
 msgstr "tratteggiato"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:370
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:389
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:371
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:390
 msgid "dash-/ dotted"
 msgstr "tratteggiato-/ puntinato"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:371
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:391
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:372
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:392
 msgid "dotted"
 msgstr "puntinato"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:378
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 msgid "whiteout"
 msgstr "sbianca"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:379
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 msgid "delete stroke"
 msgstr "cancella tratto"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:398
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:399
 msgid "Add/Edit TeX"
 msgstr "Aggiungi/Modifica TeX"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:400
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Default Tool"
 msgstr "Strumento predefinito"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:402
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:14
 msgid "Select Linear PDF Text"
 msgstr "Seleziona testo PDF lineare"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 msgid "Select PDF Text in Rectangle"
 msgstr "Seleziona il testo PDF dal rettangolo"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Setsquare"
 msgstr "Squadretta"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Compass"
 msgstr "Compasso"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
 msgid "Select Region"
 msgstr "Seleziona Regione"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:12
 msgid "Select Rectangle"
 msgstr "Seleziona Rettangolo"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Select Multi-Layer Region"
 msgstr "Seleziona regione multilivello"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:431
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Select Multi-Layer Rectangle"
 msgstr "Seleziona rettangolo multilivello"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:433
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 msgid "Select Object"
 msgstr "Seleziona Oggetto"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:435
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 msgid "Vertical Space"
 msgstr "Spazio Verticale"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 msgid "Play Object"
 msgstr "Riproduci Oggetto"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:443
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Record Audio / Stop Recording"
 msgstr "Registrazione Audio / Ferma registrazione"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:445
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 msgid "Pause / Play"
 msgstr "Pausa / Riproduci"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:447
 msgid "Stop"
 msgstr "Stop"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:448
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:449
 msgid "Forward"
 msgstr "Avanti"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 msgid "Fill"
 msgstr "Riempi"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Fill Opacity"
 msgstr "Opacità del riempimento"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:487
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Very Fine"
 msgstr "Molto sottile"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Fine"
 msgstr "Sottile"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:490
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
 msgid "Medium"
 msgstr "Medio"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:492
 msgid "Thick"
 msgstr "Spesso"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:493
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:494
 msgid "Very Thick"
 msgstr "Molto spesso"
 
@@ -3148,7 +3152,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3284
 msgid "Recolors the drawing area so that white regions get the dark color and black regions get the light color. Other colors are interpolated accordingly."
-msgstr ""
+msgstr "Ricolora l'area di disegno in modo che le regioni di colore bianco ottengano i colori scuri e le regioni di colore nero ottengano i colori chiari. Gli altri colori verranno interpolati di conseguenza."
 
 #: ../ui/settings.glade:3294
 msgid "Recolor Previews in the Sidebar"
@@ -3160,23 +3164,23 @@ msgstr ""
 
 #: ../ui/settings.glade:3313
 msgid "The color black regions are translated to"
-msgstr ""
+msgstr "Il colore nelle quali le regioni scure vengono tradotte"
 
 #: ../ui/settings.glade:3327
 msgid "The color white regions are translated to"
-msgstr ""
+msgstr "Il colore nelle quali le regioni chiare vengono tradotte"
 
 #: ../ui/settings.glade:3342
 msgid "Dark Color"
-msgstr ""
+msgstr "Colore Scuro"
 
 #: ../ui/settings.glade:3356
 msgid "Light Color"
-msgstr ""
+msgstr "Colore Chiaro"
 
 #: ../ui/settings.glade:3369
 msgid "Recoloring / Inverting colors"
-msgstr ""
+msgstr "Ricolorazione / Inversione colori"
 
 #: ../ui/settings.glade:3401
 msgid "Cursor icon for pen"
@@ -4313,7 +4317,7 @@ msgstr "tablet;Wacom;input penna;annotazione PDF;markup"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:8
 msgid "Xournalpp Developers"
-msgstr ""
+msgstr "Gli sviluppatori di Xournalpp"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:10
 msgid "Xournal++ is a hand note-taking software written in C++ with the target of flexibility, functionality and speed. Stroke recognizer and other parts are based on Xournal Code, which you can find at sourceforge. It supports GNU/Linux (e.g. Ubuntu, Debian, Arch, SUSE), macOS and Windows. Supports pen input from devices such as Wacom Tablets."
