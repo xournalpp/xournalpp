@@ -28,6 +28,7 @@
 #include "model/DocumentListener.h"        // for DocumentListener
 #include "pdf/base/XojPdfPage.h"           // for XojPdfRectangle
 #include "util/Util.h"                     // for npos
+#include "util/raii/GObjectSPtr.h"
 
 class Control;
 class XournalppCursor;
@@ -47,7 +48,7 @@ class Rectangle;
 
 class XournalView: public DocumentListener, public ZoomListener {
 public:
-    XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling);
+    XournalView(GtkScrolledWindow* parent, Control* control, ScrollHandling* scrollHandling);
     ~XournalView() override;
 
 public:
@@ -151,8 +152,6 @@ public:
     bool onKeyPressEvent(const KeyEvent& event);
     bool onKeyReleaseEvent(const KeyEvent& event);
 
-    static void onRealized(GtkWidget* widget, XournalView* view);
-
     void onSettingsChanged();
 
 private:
@@ -170,7 +169,7 @@ private:
      */
     ScrollHandling* scrollHandling = nullptr;
 
-    GtkWidget* widget = nullptr;
+    xoj::util::WidgetSPtr widget;
 
     std::vector<std::unique_ptr<XojPageView>> viewPages;
 

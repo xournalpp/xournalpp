@@ -18,7 +18,6 @@
 
 #include <cairo.h>               // for cairo_t
 #include <gtk/gtk.h>             // for GtkWidget, GtkTextBuffer, GtkWindow
-#include <gtk/gtkcssprovider.h>  // for GtkCssProvider
 #include <poppler.h>             // for PopplerDocument, PopplerPage
 
 #include "util/Color.h"

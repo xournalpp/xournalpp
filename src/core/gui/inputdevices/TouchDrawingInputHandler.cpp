@@ -112,7 +112,7 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
     if (this->deviceClassPressed && event.type == MOTION_EVENT && toolHandler->getToolType() != TOOL_HAND) {
         GtkXournal* xournal = inputContext->getXournal();
 
-        this->inputContext->getView()->getCursor()->setRotationAngle(event.relativeX);
+        this->inputContext->getView()->getCursor()->setRotationAngle(event.relative.x);
 
         this->actionMotion(event);
         XournalppCursor* cursor = xournal->view->getCursor();

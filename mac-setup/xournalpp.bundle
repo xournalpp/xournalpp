@@ -14,7 +14,7 @@
          not needed. If the source path is left out, the default
          script will be used.
     -->
-    <gtk>gtk+-3.0</gtk>
+    <gtk>gtk4</gtk>
   </meta>
 
   <plist>${project}/Info.plist</plist>
@@ -22,14 +22,7 @@
   <main-binary>${prefix}/bin/xournalpp</main-binary>
 
   <binary dest="${bundle}/Contents/MacOS">
-    ${prefix}/bin/gtk3-demo
-  </binary>
-
-  <!-- Copy in the input methods. Dunno if they actually work with
-       OSX. Note the ${gtkdir} macro, which expands to the correct
-       library subdirectory for the specified gtk version. -->
-  <binary>
-    ${prefix}/lib/${gtkdir}/${pkg:${gtk}:gtk_binary_version}/immodules/*.so
+      ${prefix}/bin/gtk4-demo
   </binary>
 
 <!-- And the print backends -->
@@ -71,7 +64,7 @@
        want to copy in to the bundle. The "dest" attribute is
        optional, as usual. Bundler will find all translations of that
        library/program under the indicated directory and copy them.-->
-  <translations  name="gtk30">
+  <translations  name="gtk40">
     ${prefix}/share/locale
   </translations>
 
@@ -79,34 +72,17 @@
     ${prefix}/share/locale
   </translations>
 
-
-  <!-- Data to copy in, usually Glade/UI files, images, sounds files
-       etc. The destination inside the bundle can be specified if the
-       files should end up at a different location, by using the
-       "dest" property. The destination must then start with the macro
-       "${bundle}", which refers to the bundle root directory.
-  -->
-  <!-- data>
-    ${prefix}/share/gtk3-demo
-  </data -->
-
   <!--
     Infos on how to structure the .app-file can be found on
     https://developer.apple.com/library/archive/documentation/CoreFoundation/Conceptual/CFBundles/BundleTypes/BundleTypes.html#//apple_ref/doc/uid/20001119-110730
   -->
-
-  <!-- Copy in the themes data. You may want to trim this to save space
-       in your bundle. -->
-  <data>
-    ${prefix}/share/themes
-  </data>
 
   <data>
     ${prefix}/share/icons
   </data>
 
   <data>
-    ${prefix}/share/gtksourceview-4
+    ${prefix}/share/gtksourceview-5
   </data>
 
   <data dest="${bundle}/Contents/Resources/palettes">

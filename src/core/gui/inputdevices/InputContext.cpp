@@ -21,9 +21,7 @@
 #include "gui/inputdevices/TouchDrawingInputHandler.h"  // for TouchDrawingI...
 #include "gui/inputdevices/TouchInputHandler.h"         // for TouchInputHan...
 #include "util/Assert.h"                                // for xoj_assert
-#include "util/gdk4_helper.h"
-#include "util/glib_casts.h"  // for wrap_for_g_callback
-#include "util/gtk4_helper.h"
+#include "util/glib_casts.h"                            // for wrap_for_g_callback
 
 #include "InputEvents.h"   // for InputEvent
 #include "config-debug.h"  // for DEBUG_INPUT
@@ -31,16 +29,14 @@
 class ScrollHandling;
 class ToolHandler;
 
-InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling) {
-    this->view = view;
-    this->scrollHandling = scrollHandling;
-
-    this->stylusHandler = new StylusInputHandler(this);
-    this->touchHandler = new TouchInputHandler(this);
-    this->touchDrawingHandler = new TouchDrawingInputHandler(this);
-    this->mouseHandler = new MouseInputHandler(this);
-    this->keyboardHandler = new KeyboardInputHandler(this);
-
+InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling):
+        view(view),
+        scrollHandling(scrollHandling),
+        stylusHandler(std::make_unique<StylusInputHandler>(this)),
+        mouseHandler(std::make_unique<MouseInputHandler>(this)),
+        touchDrawingHandler(std::make_unique<TouchDrawingInputHandler>(this)),
+        keyboardHandler(std::make_unique<KeyboardInputHandler>(this)),
+        touchHandler(std::make_unique<TouchInputHandler>(this)) {
     for (const InputDevice& savedDevices: this->view->getControl()->getSettings()->getKnownInputDevices()) {
         this->knownDevices.insert(savedDevices.getName());
     }
@@ -53,100 +49,131 @@ static gboolean keyboardCallback(GtkEventControllerKey* self, guint keyval, guin
     e.keyval = keyval;
     e.state = static_cast<GdkModifierType>(state & gtk_accelerator_get_default_mod_mask() &
                                            ~gdk_key_event_get_consumed_modifiers(gdkEvent));
-    e.sourceEvent = gdkEvent;
-    return (static_cast<KeyboardInputHandler*>(d)->*handler)(e);
+    e.sourceEvent.reset(gdkEvent, xoj::util::ref);
+    return (static_cast<KeyboardInputHandler*>(d)->*handler)(std::move(e));
 }
 
 InputContext::~InputContext() {
     // Destructor is called in xournal_widget_dispose, so it can still accept events
-    g_signal_handler_disconnect(this->widget, signal_id);
-
-    delete this->stylusHandler;
-    this->stylusHandler = nullptr;
-
-    delete this->touchHandler;
-    this->touchHandler = nullptr;
-
-    delete this->touchDrawingHandler;
-    this->touchDrawingHandler = nullptr;
-
-    delete this->mouseHandler;
-    this->mouseHandler = nullptr;
-
-    delete this->keyboardHandler;
-    this->keyboardHandler = nullptr;
+    for (auto* ctrl: eventControllers) {
+        gtk_widget_remove_controller(this->widget, ctrl);
+    }
 }
 
 void InputContext::connect(GtkWidget* pWidget) {
     xoj_assert(!this->widget && pWidget);
     this->widget = pWidget;
-    gtk_widget_set_support_multidevice(widget, true);
 
-#if GTK_MAJOR_VERSION == 3
-    auto* keyCtrl = gtk_event_controller_key_new(widget);
-#else
+    auto addCtrl = [this](GtkEventController* ctrl) {
+        gtk_event_controller_set_propagation_phase(ctrl, GTK_PHASE_TARGET);
+        gtk_widget_add_controller(this->widget, ctrl);
+        this->eventControllers.push_back(ctrl);
+    };
+
+    // The first added GtkEventController gets called last: the GtkEventControllerLegacy only receives what the others
+    // did not handle
+    auto* legCtrl = gtk_event_controller_legacy_new();
+    g_signal_connect(legCtrl, "event", xoj::util::wrap_for_g_callback_v<eventCallback>, this);
+    addCtrl(legCtrl);
+
     auto* keyCtrl = gtk_event_controller_key_new();
-    gtk_widget_add_controller(keyCtrl);
-#endif
-
     g_signal_connect(keyCtrl, "key-pressed", G_CALLBACK(keyboardCallback<&KeyboardInputHandler::keyPressed>),
-                     keyboardHandler);
+                     keyboardHandler.get());
     g_signal_connect(keyCtrl, "key-released", G_CALLBACK(keyboardCallback<&KeyboardInputHandler::keyReleased>),
-                     keyboardHandler);
+                     keyboardHandler.get());
+    addCtrl(keyCtrl);
 
-    int mask =
-            // Allow scrolling
-            GDK_SCROLL_MASK |
+    auto* clickCtrl = gtk_gesture_click_new();
+    gtk_gesture_single_set_exclusive(GTK_GESTURE_SINGLE(clickCtrl), true);  // Only handle pointer or pointer emulated
+    gtk_gesture_single_set_button(GTK_GESTURE_SINGLE(clickCtrl), 0);        // Take any button into account
+    g_signal_connect(clickCtrl, "pressed",
+                     G_CALLBACK(+[](GtkGestureClick* ctrl, gint n_press, gdouble, gdouble, gpointer d) {
+                         auto* self = static_cast<InputContext*>(d);
+                         GdkEvent* event = gtk_event_controller_get_current_event(GTK_EVENT_CONTROLLER(ctrl));
+                         if (gdk_event_get_device(event) == NULL) {
+                             return;
+                         }
 
-            // Touch / Pen / Mouse
-            GDK_TOUCH_MASK | GDK_POINTER_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
-            GDK_SMOOTH_SCROLL_MASK | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK | GDK_PROXIMITY_IN_MASK |
-            GDK_PROXIMITY_OUT_MASK;
-
-    gtk_widget_add_events(pWidget, mask);
-
-
-    signal_id = g_signal_connect(pWidget, "event", xoj::util::wrap_for_g_callback_v<eventCallback>, this);
+                         // Only handle double/triple clicks of the primary button
+                         if (gtk_gesture_single_get_current_button(GTK_GESTURE_SINGLE(ctrl)) == GDK_BUTTON_PRIMARY) {
+                             self->nbPress = n_press <= 3 ? n_press : 1;
+                         } else {
+                             self->nbPress = 1;
+                         }
+                     }),
+                     this);
+    addCtrl(GTK_EVENT_CONTROLLER(clickCtrl));
 }
 
-auto InputContext::eventCallback(GtkWidget* widget, GdkEvent* event, InputContext* self) -> bool {
-    return self->handle(event);
-}
 
-auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
-    printDebug(sourceEvent);
+static constexpr bool HANDLE_EVENT_TYPE[] = {
+        false,  // GDK_DELETE
+        true,   // GDK_MOTION_NOTIFY
+        true,   // GDK_BUTTON_PRESS
+        true,   // GDK_BUTTON_RELEASE
+        false,  // GDK_KEY_PRESS       -- Handled by the GtkEventControllerKey
+        false,  // GDK_KEY_RELEASE     -- Handled by the GtkEventControllerKey
+        true,   // GDK_ENTER_NOTIFY
+        true,   // GDK_LEAVE_NOTIFY
+        false,  // GDK_FOCUS_CHANGE
+        true,   // GDK_PROXIMITY_IN
+        true,   // GDK_PROXIMITY_OUT
+        false,  // GDK_DRAG_ENTER
+        false,  // GDK_DRAG_LEAVE
+        false,  // GDK_DRAG_MOTION
+        false,  // GDK_DROP_START
+        false,  // GDK_SCROLL          -- Handled by GTK's default handler or in ZoomControl's GtkEventControllerScroll
+        true,   // GDK_GRAB_BROKEN
+        true,   // GDK_TOUCH_BEGIN
+        true,   // GDK_TOUCH_UPDATE
+        true,   // GDK_TOUCH_END
+        true,   // GDK_TOUCH_CANCEL
+        false,  // GDK_TOUCHPAD_SWIPE
+        false,  // GDK_TOUCHPAD_PINCH
+        false,  // GDK_PAD_BUTTON_PRESS
+        false,  // GDK_PAD_BUTTON_RELEASE
+        false,  // GDK_PAD_RING
+        false,  // GDK_PAD_STRIP
+        false,  // GDK_PAD_GROUP_MODE
+#ifdef GDK_VERSION_4_6
+        false,  // GDK_TOUCHPAD_HOLD
+#endif
+};
+static_assert(GDK_EVENT_LAST == G_N_ELEMENTS(HANDLE_EVENT_TYPE));
+static bool shouldHandleEvent(GdkEvent* e) { return e && HANDLE_EVENT_TYPE[gdk_event_get_event_type(e)]; }
 
-    GdkDevice* sourceDevice = gdk_event_get_source_device(sourceEvent);
-    if (sourceDevice == NULL) {
+auto InputContext::eventCallback(GtkEventControllerLegacy*, GdkEvent* event, InputContext* self) -> bool {
+    if (!shouldHandleEvent(event)) {
         return false;
     }
 
-    InputEvent event = InputEvents::translateEvent(sourceEvent, this->getSettings());
+    if (gdk_event_get_device(event) == NULL) {
+        return false;
+    }
 
+    auto evs = InputEvents::translateEvent(event, self->getSettings(), self->widget, self->nbPress);
+    for (auto it = evs.begin(); it < std::prev(evs.end()); it++) {
+        self->handle(*it);
+    }
+    return self->handle(evs.back());
+}
+
+auto InputContext::handle(const InputEvent& event) -> bool {
     // Add the device to the list of known devices if it is currently unknown
-    GdkInputSource inputSource = gdk_device_get_source(sourceDevice);
-    if (inputSource != GDK_SOURCE_KEYBOARD && gdk_device_get_device_type(sourceDevice) != GDK_DEVICE_TYPE_MASTER &&
+    GdkInputSource inputSource = gdk_device_get_source(event.device);
+    if (inputSource != GDK_SOURCE_KEYBOARD &&
         this->knownDevices.find(std::string(event.deviceName)) == this->knownDevices.end()) {
 
         this->knownDevices.insert(std::string(event.deviceName));
         this->getSettings()->transactionStart();
         auto deviceClassOption =
                 this->getSettings()->getDeviceClassForDevice(std::string(event.deviceName), inputSource);
-        this->getSettings()->setDeviceClassForDevice(sourceDevice, deviceClassOption);
+        this->getSettings()->setDeviceClassForDevice(event.device, deviceClassOption);
         this->getSettings()->transactionEnd();
-    }
-
-    // We do not handle scroll events manually but let GTK do it for us
-    if (event.type == SCROLL_EVENT) {
-        // Hand over to standard GTK Scroll / Zoom handling
-        return false;
     }
 
     // Deactivate touchscreen when a pen event occurs
     this->getView()->getHandRecognition()->event(event.deviceClass);
-
-    // Get the state of all modifiers
-    this->modifierState = event.state;
 
     // separate events to appropriate handlers
     // handle geometry tool
@@ -181,9 +208,7 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     }
 
 #ifdef DEBUG_INPUT
-    if (event.deviceClass != INPUT_DEVICE_KEYBOARD) {  // Keyboard event are handled via the GtkEventControllerKey
-        g_message("We received an event we do not have a handler for");
-    }
+    g_message("We received an event we do not have a handler for");
 #endif
     return false;
 }
@@ -207,8 +232,6 @@ auto InputContext::getGeometryToolInputHandler() const -> GeometryToolInputHandl
 }
 
 void InputContext::resetGeometryToolInputHandler() { this->geometryToolInputHandler.reset(); }
-
-auto InputContext::getModifierState() -> GdkModifierType { return this->modifierState; }
 
 /**
  * Focus the widget
@@ -265,102 +288,4 @@ auto InputContext::isBlocked(InputContext::DeviceType deviceType) -> bool {
             return this->touchDrawingHandler->isBlocked();
     }
     return false;
-}
-
-void InputContext::printDebug(GdkEvent* event) {
-#ifdef DEBUG_INPUT_GDK_PRINT_EVENTS
-    gdk_set_show_events(true);
-#else
-#ifdef DEBUG_INPUT
-    std::string message = "Event\n";
-    std::string gdkEventTypes[] = {"GDK_NOTHING",
-                                   "GDK_DELETE",
-                                   "GDK_DESTROY",
-                                   "GDK_EXPOSE",
-                                   "GDK_MOTION_NOTIFY",
-                                   "GDK_BUTTON_PRESS",
-                                   "GDK_DOUBLE_BUTTON_PRESS",
-                                   "GDK_TRIPLE_BUTTON_PRESS",
-                                   "GDK_BUTTON_RELEASE",
-                                   "GDK_KEY_PRESS",
-                                   "GDK_KEY_RELEASE",
-                                   "GDK_ENTER_NOTIFY",
-                                   "GDK_LEAVE_NOTIFY",
-                                   "GDK_FOCUS_CHANGE",
-                                   "GDK_CONFIGURE",
-                                   "GDK_MAP",
-                                   "GDK_UNMAP",
-                                   "GDK_PROPERTY_NOTIFY",
-                                   "GDK_SELECTION_CLEAR",
-                                   "GDK_SELECTION_REQUEST",
-                                   "GDK_SELECTION_NOTIFY",
-                                   "GDK_PROXIMITY_IN",
-                                   "GDK_PROXIMITY_OUT",
-                                   "GDK_DRAG_ENTER",
-                                   "GDK_DRAG_LEAVE",
-                                   "GDK_DRAG_MOTION",
-                                   "GDK_DRAG_STATUS",
-                                   "GDK_DROP_START",
-                                   "GDK_DROP_FINISHED",
-                                   "GDK_CLIENT_EVENT",
-                                   "GDK_VISIBILITY_NOTIFY",
-                                   "",
-                                   "GDK_SCROLL",
-                                   "GDK_WINDOW_STATE",
-                                   "GDK_SETTING",
-                                   "GDK_OWNER_CHANGE",
-                                   "GDK_GRAB_BROKEN",
-                                   "GDK_DAMAGE",
-                                   "GDK_TOUCH_BEGIN",
-                                   "GDK_TOUCH_UPDATE",
-                                   "GDK_TOUCH_END",
-                                   "GDK_TOUCH_CANCEL",
-                                   "GDK_TOUCHPAD_SWIPE",
-                                   "GDK_TOUCHPAD_PINCH",
-                                   "GDK_PAD_BUTTON_PRESS",
-                                   "GDK_PAD_BUTTON_RELEASE",
-                                   "GDK_PAD_RING",
-                                   "GDK_PAD_STRIP",
-                                   "GDK_PAD_GROUP_MODE",
-                                   "GDK_EVENT_LAST"};
-    message += "Event type:\t" + gdkEventTypes[gdk_event_get_event_type(event) + 1] + "\n";
-
-    std::string gdkInputSources[] = {"GDK_SOURCE_MOUSE",    "GDK_SOURCE_PEN",        "GDK_SOURCE_ERASER",
-                                     "GDK_SOURCE_CURSOR",   "GDK_SOURCE_KEYBOARD",   "GDK_SOURCE_TOUCHSCREEN",
-                                     "GDK_SOURCE_TOUCHPAD", "GDK_SOURCE_TRACKPOINT", "GDK_SOURCE_TABLET_PAD"};
-    GdkDevice* device = gdk_event_get_source_device(event);
-    message += "Source device:\t" + gdkInputSources[gdk_device_get_source(device)] + "\n";
-    std::string gdkInputClasses[] = {"INPUT_DEVICE_MOUSE",    "INPUT_DEVICE_PEN",
-                                     "INPUT_DEVICE_ERASER",   "INPUT_DEVICE_TOUCHSCREEN",
-                                     "INPUT_DEVICE_KEYBOARD", "INPUT_DEVICE_MOUSE_KEYBOARD_COMBO",
-                                     "INPUT_DEVICE_IGNORE"};
-    InputDeviceClass deviceClass = InputEvents::translateDeviceType(device, this->getSettings());
-    message += "Device Class:\t" + gdkInputClasses[deviceClass] + "\n";
-
-    if (gdk_event_get_event_type(event) == GDK_BUTTON_PRESS ||
-        gdk_event_get_event_type(event) == GDK_DOUBLE_BUTTON_PRESS ||
-        gdk_event_get_event_type(event) == GDK_TRIPLE_BUTTON_PRESS ||
-        gdk_event_get_event_type(event) == GDK_BUTTON_RELEASE) {
-        guint button;
-        if (gdk_event_get_button(event, &button)) {
-            message += "Button:\t" + std::to_string(button) + "\n";
-        }
-    }
-
-#ifndef DEBUG_INPUT_PRINT_ALL_MOTION_EVENTS
-    static bool motionEventBlock = false;
-    if (gdk_event_get_event_type(event) == GDK_MOTION_NOTIFY) {
-        if (!motionEventBlock) {
-            motionEventBlock = true;
-            g_message("%s", message.c_str());
-        }
-    } else {
-        motionEventBlock = false;
-        g_message("%s", message.c_str());
-    }
-#else
-    g_message("%s", message.c_str());
-#endif  // DEBUG_INPUT_PRINT_ALL_MOTION_EVENTS
-#endif  // DEBUG_INPUT
-#endif  // DEBUG_INPUT_PRINT_EVENTS
 }

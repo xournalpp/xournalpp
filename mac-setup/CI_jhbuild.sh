@@ -7,7 +7,7 @@ set -o pipefail
 
 LOCKFILE="$(dirname "$0")"/jhbuild-version.lock
 MODULEFILE="$(dirname "$0")"/xournalpp.modules
-GTK_MODULES="meta-gtk-osx-gtk3 gtksourceview3"
+GTK_MODULES="gtk-4 gtksourceview4 librsvg adwaita-icon-theme hicolor-icon-theme"
 
 get_lockfile_entry() {
     local key="$1"

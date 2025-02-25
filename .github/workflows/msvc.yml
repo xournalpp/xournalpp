@@ -1,0 +1,131 @@
+name: MSVC
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+
+env:
+  deps: >-
+    gtk3
+    gtksourceview4
+    hicolor-icon-theme
+    adwaita-icon-theme
+    portaudio
+    libzip
+    zlib
+    poppler
+    libsndfile
+
+jobs:
+  build:
+    runs-on: windows-2022
+
+    steps:
+      - name: Hash deps list
+        uses: actions/github-script@v7
+        id: hash-string
+        with:
+          script: |
+            const input = '${{ env.deps }}';
+            var hash = 0;
+            for (var i = 0; i < input.length; i++) {
+                var chr = input.charCodeAt(i);
+                hash = ((hash << 5) - hash) + chr;
+                hash = hash & hash;
+            }
+            console.log("hash is ", hash.toString(16));
+            core.setOutput('hash', hash.toString(16));
+      - name: 'Attempt to pull blob from cache'
+        id: restore-blob
+        uses: actions/cache/restore@v4
+        with:
+          path: "${{github.workspace}}/gtk-blob/"
+          key: "${{ runner.os }}-${{ runner.arch }}-blob-${{ steps.hash-string.outputs.hash }}"
+      - name: Install boost  # Needed to compile poppler
+        if: steps.restore-blob.outputs.cache-hit != 'true'
+        uses: MarkusJx/install-boost@v2.4.5
+        id: install-boost
+        with:
+            # REQUIRED: Specify the required boost version
+            # A list of supported versions can be found here:
+            # https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json
+            boost_version: 1.86.0
+            platform_version: 2022
+            toolset: msvc
+      - uses: actions/checkout@v4
+        if: steps.restore-blob.outputs.cache-hit != 'true'
+        with:
+          path: gvsbuild
+          repository: bhennion/gvsbuild
+          ref: add-xournalpp-deps
+      - name: Install gvsbuild and deps
+        if: steps.restore-blob.outputs.cache-hit != 'true'
+        run: |
+          python -m pip install wheel build
+          python -m pip install .
+        working-directory: gvsbuild
+      - name: Move git binary
+        if: steps.restore-blob.outputs.cache-hit != 'true'
+        # Temporarily move preinstalled git to prevent errors.
+        run: Rename-Item "C:\Program Files\Git\usr\bin" notbin
+      - name: Build
+        if: steps.restore-blob.outputs.cache-hit != 'true'
+        run: >
+          gvsbuild build
+          --build-dir=D:\gtk-build
+          --patches-root-dir=${{ github.workspace }}\gvsbuild\gvsbuild\patches
+          ${{ env.deps }}
+        working-directory: gvsbuild
+        env:
+          BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
+      - name: Restore git binary
+        if: steps.restore-blob.outputs.cache-hit != 'true'
+        run: Rename-Item  "C:\Program Files\Git\usr\notbin" bin
+      - name: Zip Bundle
+        if: steps.restore-blob.outputs.cache-hit != 'true'
+        run: |
+          New-Item ${{ github.workspace }}\gtk-blob -ItemType Directory
+          7z a ${{ github.workspace }}\gtk-blob\gtk-blob.zip "D:\gtk-build\gtk\x64\release"
+      - name: 'Push blob to cache'
+        if: steps.restore-blob.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          key: ${{ steps.restore-blob.outputs.cache-primary-key }}
+          path: "${{github.workspace}}/gtk-blob/"
+      # - uses: actions/upload-artifact@v4
+      #   with:
+      #     name: my-artifact
+      #     path: "${{github.workspace}}/gtk-blob/gtk-blob.zip"
+      - name: 'Extract blob'
+        run: 7z x ${{github.workspace}}/gtk-blob/gtk-blob.zip -oD:\gtk -y
+      - name: Set up env
+        env:
+          extra_cmake_flags: >
+            -DCMAKE_C_COMPILER=cl
+            -DCMAKE_CXX_COMPILER=cl
+            -DZLIB_ROOT=D:/gtk/release/
+            -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDLL
+        run: |
+          Write-Output "PKG_CONFIG=D:\gtk\release\bin\pkgconf.exe" >> $env:GITHUB_ENV
+          Write-Output "XDG_DATA_HOME=$HOME\.local\share" >> $env:GITHUB_ENV
+          Write-Output "XOPP_EXTRA_CMAKE_PARAMS=${{ env.extra_cmake_flags }}" >> $env:GITHUB_ENV
+          Write-Output "D:\gtk\release\bin" >> $env:GITHUB_PATH
+      - uses: actions/checkout@v4
+      - name: 'Build Xournal++'
+        uses: ./.github/actions/build
+        with:
+          build_type: RelWithDebInfo
+          cmake_flags: >
+            -DENABLE_GTEST=on
+            -DDOWNLOAD_GTEST=on
+            -DCMAKE_C_COMPILER=cl
+            -DCMAKE_CXX_COMPILER=cl
+            -DZLIB_ROOT=D:/gtk/release/
+            -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDLL
+          shell: pwsh
+      - name: 'Run tests'
+        shell: bash
+        run: |
+          cmake --build . --target test/test-units
+          CI=true ./test/Debug/test-units
+        working-directory: ${{github.workspace}}/build

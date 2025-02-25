@@ -15,6 +15,7 @@
 #include <memory>  // for unique_ptr
 #include <set>     // for set
 #include <string>  // for string
+#include <vector>
 
 #include <gdk/gdk.h>  // for GdkEvent, GdkModifierType
 #include <glib.h>     // for gulong
@@ -33,22 +34,26 @@ class TouchDrawingInputHandler;
 class TouchInputHandler;
 class XournalView;
 
+struct InputEvent;
+
 class InputContext final {
 
 private:
-    gulong signal_id{0};
-    StylusInputHandler* stylusHandler;
-    MouseInputHandler* mouseHandler;
-    TouchDrawingInputHandler* touchDrawingHandler;
-    KeyboardInputHandler* keyboardHandler;
-    TouchInputHandler* touchHandler;
-    std::unique_ptr<GeometryToolInputHandler> geometryToolInputHandler;
-
-    GtkWidget* widget = nullptr;
     XournalView* view;
     ScrollHandling* scrollHandling;
 
-    GdkModifierType modifierState = (GdkModifierType)0;
+    std::unique_ptr<StylusInputHandler> stylusHandler;
+    std::unique_ptr<MouseInputHandler> mouseHandler;
+    std::unique_ptr<TouchDrawingInputHandler> touchDrawingHandler;
+    std::unique_ptr<KeyboardInputHandler> keyboardHandler;
+    std::unique_ptr<TouchInputHandler> touchHandler;
+    std::unique_ptr<GeometryToolInputHandler> geometryToolInputHandler;
+
+    GtkWidget* widget = nullptr;
+    /// Event controllers added to the main widget. Used to remove them on ~InputContext() to stop signals
+    std::vector<GtkEventController*> eventControllers;
+
+    int nbPress = 0;  ///< Number of consecutive clicks (1 for first)
 
     std::set<std::string> knownDevices;
 
@@ -71,19 +76,16 @@ private:
      * @param self A pointer to our handler
      * @return Whether the event was handled
      */
-    static bool eventCallback(GtkWidget* widget, GdkEvent* event, InputContext* self);
+    static bool eventCallback(GtkEventControllerLegacy* widget, GdkEvent* event, InputContext* self);
+
+    // static void stylusMotionCallback(GtkGestureStylus* ctrl, gdouble x, gdouble y, InputContext* self);
 
     /**
      * Handle the events
      * @param event The event to handle
      * @return Whether the event was handled
      */
-    bool handle(GdkEvent* event);
-
-    /**
-     * Print debug output
-     */
-    void printDebug(GdkEvent* event);
+    bool handle(const InputEvent& event);
 
 public:
     /**
@@ -100,7 +102,6 @@ public:
     GeometryToolInputHandler* getGeometryToolInputHandler() const;
     void resetGeometryToolInputHandler();
 
-    GdkModifierType getModifierState();
     void focusWidget();
     void blockDevice(DeviceType deviceType);
     void unblockDevice(DeviceType deviceType);

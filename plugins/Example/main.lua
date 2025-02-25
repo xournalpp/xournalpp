@@ -6,7 +6,8 @@ var_dump = require "var_dump"
 function initUi()
   print("Hello from Example: Plugin initUi called\n");
 
-  ref = app.registerUi({["menu"] = "Test123", ["callback"] = "exampleCallback", ["accelerator"] = "<Control>t"});
+  ref = app.registerUi({["menu"] = "Test123", ["callback"] = "exampleCallback", ["accelerator"] = "<Control>t",
+                        ["toolbarId"] = "ExamplePlugin", ["iconName"] = "mail-attachment"});
   print("Menu reference:");
   var_dump(ref);
 

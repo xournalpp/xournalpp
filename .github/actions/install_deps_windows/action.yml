@@ -17,12 +17,12 @@ runs:
           mingw-w64-x86_64-gettext
           patch
           mingw-w64-x86_64-poppler
-          mingw-w64-x86_64-gtk3
+          mingw-w64-x86_64-gtk4
           mingw-w64-x86_64-libsndfile
           mingw-w64-x86_64-libzip
           mingw-w64-x86_64-portaudio
           mingw-w64-x86_64-lua
-          mingw-w64-x86_64-gtksourceview4
+          mingw-w64-x86_64-gtksourceview5
           mingw-w64-x86_64-imagemagick
           mingw-w64-x86_64-lua-lgi
     - shell: msys2 {0}
