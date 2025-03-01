@@ -10,7 +10,9 @@ local shapes_dict = config_helper.getShapesData() or {}
 
 local hasLgi, lgi = pcall(require, "lgi")
 if not hasLgi then
-    app.openDialog("You need to have the Lua lgi-module installed and included in your Lua package path for using this plugin. \n\n", { "OK" }, "", true)
+    app.openDialog(
+        "You need to have the Lua lgi-module installed and included in your Lua package path for using this plugin. \n\n",
+        { "OK" }, "", true)
     return
 end
 
@@ -38,7 +40,7 @@ local function loadShapesFromDict(dict, window, reset)
             margin_bottom = 24,
             margin_top = 24,
             propagate_natural_height = true,
-            max_content_height = 400,
+            max_content_height = 450,
             Gtk.FlowBox {
                 id = 'flow_box',
                 orientation = "HORIZONTAL",
@@ -63,7 +65,7 @@ local function loadShapesFromDict(dict, window, reset)
                     expand = true,
                     Gtk.DrawingArea {
                         id = 'drawing_area',
-                        width = 100,
+                        width = 120,
                         height = 100,
                     }
                 }
@@ -90,46 +92,64 @@ function _M.showMainShapeDialog()
 
     local window = Gtk.Window {
         title = 'Manage and Insert Shapes',
-        default_width = 650,
+        default_width = 700,
         default_height = 500,
 
         Gtk.Box {
             orientation = "HORIZONTAL",
-            Gtk.ScrolledWindow {
+            Gtk.Box {
+                orientation = "VERTICAL",
+                spacing = 24,
                 margin_bottom = 24,
                 margin_top = 24,
-                propagate_natural_width = true,
-                Gtk.Box {
-                    orientation = "VERTICAL",
-                    spacing = 24,
-                    Gtk.Label {
-                        id = 'lbl_category',
-                        label = "Category",
-                    },
+                Gtk.Label {
+                    id = 'lbl_category',
+                    label = "Category",
+                },
+                Gtk.ScrolledWindow {
+                    margin_bottom = 24,
+                    margin_top = 24,
+                    propagate_natural_width = true,
+                    height_request = 300,
                     Gtk.StackSidebar {
                         height_request = 300,
                         id = 'switcher',
                     },
+                },
+                Gtk.Box {
+                    orientation = "VERTICAL",
+                    spacing = 12,
                     Gtk.Box {
-                        orientation = "VERTICAL",
+                        orientation = "HORIZONTAL",
+                        hexpand = true,
+                        halign = "CENTER",
                         spacing = 12,
-                        Gtk.Box {
-                            orientation = "HORIZONTAL",
-                            hexpand = true,
-                            halign = "CENTER",
-                            spacing = 12,
-                            Gtk.Button {
-                                id = 'add_category_button',
-                                hexpand = false,
-                                label = '+',
-                                tooltip_text = 'Add new category',
-                            },
-                            Gtk.Button {
-                                id = 'remove_category_button',
-                                hexpand = false,
-                                label = '-',
-                                tooltip_text = 'Remove selected category',
-                            },
+                        Gtk.CheckButton {
+                            id = 'system_check_button',
+                            label = "System cat.",
+                            active = true,
+                        },
+                        Gtk.CheckButton {
+                            id = 'user_check_button',
+                            label = "User cat.",
+                            active = true,
+                        },
+                    },
+                    Gtk.Box {
+                        orientation = "HORIZONTAL",
+                        halign = "CENTER",
+                        spacing = 12,
+                        Gtk.Button {
+                            id = 'add_category_button',
+                            hexpand = false,
+                            label = '+',
+                            tooltip_text = 'Add new category',
+                        },
+                        Gtk.Button {
+                            id = 'remove_category_button',
+                            hexpand = false,
+                            label = '-',
+                            tooltip_text = 'Remove selected category',
                         },
                         Gtk.Button {
                             id = 'rename_category_button',
@@ -139,6 +159,7 @@ function _M.showMainShapeDialog()
                         },
                     },
                 },
+
             },
             Gtk.Box {
                 orientation = "VERTICAL",
