@@ -98,8 +98,6 @@ end
 function _M.showMainShapeDialog()
     local provider = Gtk.CssProvider()
     assert(provider:load_from_path(sourcePath .. sep .. "main.css"), "ERROR: main.css not found")
-    -- local screen = Gdk.Display.get_default_screen(Gdk.Display:get_default())
-    -- Gtk.StyleContext.add_provider_for_screen(screen, provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
 
     local window = Gtk.Window {
         title = "Manage and Insert Shapes",
@@ -229,7 +227,6 @@ function _M.showMainShapeDialog()
         }
     }
 
-    window:set_position(Gtk.WindowPosition.CENTER)
     function window.child.stack:on_notify(param)
         if param:get_name() == "visible-child-name" then
             local category = tonumber(self:get_visible_child_name())
@@ -257,9 +254,7 @@ function _M.showMainShapeDialog()
         end
     end
 
-    window.child.lbl_category:get_style_context():add_provider(provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
-    window.child.lbl_shape:get_style_context():add_provider(provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
-    window.child.insert_button.on_button_press_event = function(event)
+    function window.child.insert_button:on_button_press_event()
         local category = tonumber(window.child.stack:get_visible_child_name())
         local systemMode = category <= #system_shapes_dict
         local shapes_dict = systemMode and system_shapes_dict or user_shapes_dict
@@ -274,12 +269,16 @@ function _M.showMainShapeDialog()
         insertion_helper.insertStroke(filename, systemMode)
     end
 
+    window:set_position(Gtk.WindowPosition.CENTER)
+    window.child.lbl_category:get_style_context():add_provider(provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
+    window.child.lbl_shape:get_style_context():add_provider(provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
     window.child.switcher:set_stack(window.child.stack)
-    loadShapes(window, true) -- system shapes
-    loadShapes(window, false) -- user shapes
+
+    loadShapes(window, Mode.SYSTEM)
+    loadShapes(window, Mode.USER)
 
     -- Dialogs --
-    window.child.add_category_button.on_button_press_event = function(event)
+    function window.child.add_category_button:on_button_press_event()
         local dialog = Gtk.Dialog {
             title = "Add Category",
             transient_for = window,
@@ -318,7 +317,7 @@ function _M.showMainShapeDialog()
 
         dialog:show()
     end
-    window.child.remove_category_button.on_button_press_event = function(event)
+    function window.child.remove_category_button:on_button_press_event()
         local category = tonumber(window.child.stack:get_visible_child_name()) - #system_shapes_dict
         local category_name = user_shapes_dict[category].name
 
@@ -356,7 +355,7 @@ function _M.showMainShapeDialog()
         dialog:show()
     end
 
-    window.child.rename_category_button.on_button_press_event = function(event)
+    function window.child.rename_category_button.on_button_press_event()
         local category = tonumber(window.child.stack:get_visible_child_name()) - #system_shapes_dict
         local category_name = user_shapes_dict[category].name
 
@@ -404,7 +403,7 @@ function _M.showMainShapeDialog()
         dialog:show()
     end
 
-    window.child.replace_shape_button.on_button_press_event = function(event)
+    function window.child.replace_shape_button:on_button_press_event()
         local category = tonumber(window.child.stack:get_visible_child_name()) - #system_shapes_dict
         local category_name = user_shapes_dict[category].name
         local name = user_shapes_dict[category].shapes[index].name
@@ -446,7 +445,7 @@ function _M.showMainShapeDialog()
         dialog:show()
     end
 
-    window.child.add_shape_button.on_button_press_event = function(event)
+    function window.child.add_shape_button:on_button_press_event()
         local category = tonumber(window.child.stack:get_visible_child_name()) - #system_shapes_dict
         local category_name = user_shapes_dict[category].name
         local dialog = Gtk.Dialog {
@@ -513,7 +512,7 @@ function _M.showMainShapeDialog()
         dialog:show()
     end
 
-    window.child.remove_shape_button.on_button_press_event = function(event)
+    function window.child.remove_shape_button:on_button_press_event()
         local category = tonumber(window.child.stack:get_visible_child_name()) - #system_shapes_dict
         local name = user_shapes_dict[category].shapes[index].name
         local category_name = user_shapes_dict[category].name
@@ -553,7 +552,7 @@ function _M.showMainShapeDialog()
         dialog:show()
     end
 
-    window.child.rename_shape_button.on_button_press_event = function(event)
+    function window.child.rename_shape_button:on_button_press_event()
         local category = tonumber(window.child.stack:get_visible_child_name()) - #system_shapes_dict
         local category_name = user_shapes_dict[category].name
         local name = user_shapes_dict[category].shapes[index].name
