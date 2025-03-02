@@ -1,7 +1,7 @@
 local sep = package.config:sub(1, 1) -- path separator depends on OS
 local sourcePath = debug.getinfo(1).source:match("@?(.*" .. sep .. ")")
 local systemFilePath = sourcePath .. "config.lua"
-local userFilePath = app.getFolder("data") .. sep .. "config.lua"
+local userFilePath = app.getFolder("config") .. sep .. "config.lua"
 
 local _M = {} -- functions to export
 
