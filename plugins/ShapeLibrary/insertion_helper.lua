@@ -4,8 +4,8 @@ local stroke_io = require("stroke_io")
 
 local _M = {}
 -- Function to insert strokes for a shape (need to extract the shape name from the dictionary)
-function _M.insertStroke(filename)
-    local filepath = sourcePath .. "Shapes" .. sep .. filename
+function _M.insertStroke(filename, systemMode)
+    local filepath = systemMode and sourcePath .. "Shapes" .. sep .. filename or app.getFolder("data") .. sep .. filename
     local strokes = stroke_io.readStrokesFromFile(filepath)
     if strokes and #strokes > 0 then
         local refs = app.addStrokes({ strokes = strokes , allowUndoRedoAction = "grouped" })
