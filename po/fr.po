@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-20 08:50+0000\n"
-"PO-Revision-Date: 2025-02-23 04:25\n"
+"PO-Revision-Date: 2025-03-02 04:25\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2351,7 +2351,7 @@ msgstr "Utiliser la police à partir du thème système."
 
 #: ../ui/latexSettings.glade:454
 msgid "Font: "
-msgstr "Police :"
+msgstr "Police : "
 
 #: ../ui/latexSettings.glade:469
 msgid "Pick the Editor's Font"
@@ -2594,9 +2594,9 @@ msgstr "%a Nom abrégé du jour de la semaine (p.ex. jeu.)\n"
 "%A Nom complet du jour de la semaine (p.ex. jeudi)\n"
 "%b Nom abrégé du mois (p.ex. juil.)\n"
 "%B Nom complet du mois (p.ex. juillet)\n"
-"%c Représentation de la date et de l’heure (p.ex. ven. 21 juil. 2023 09:31:46)\n"
+"%c Représentation de la date et de l’heure (p.ex. ven. 23 août. 2001 14:55:02)\n"
 "%d Jour du mois (01-31)\n"
-"%F Représentation de la date (par exemple 2023-07-21)\n"
+"%F Représentation de la date (par exemple 2001-08-23)\n"
 "%H Heure au format 24h (00-23)\n"
 "%I Heure au format 12h (01-12)\n"
 "%j Jour de l'année (001-366)\n"
@@ -2604,7 +2604,7 @@ msgstr "%a Nom abrégé du jour de la semaine (p.ex. jeu.)\n"
 "%M Minute (00-59)\n"
 "%p Désignation AM ou PM (par exemple, PM)\n"
 "%S seconde (00-60)\n"
-"%U Numéro de semaine avec le premier dimanche comme premier jour de la première semaine (00-52)\n"
+"%U Numéro de semaine avec le premier dimanche comme premier jour de la première semaine (00-53)\n"
 "%w Jour de la semaine sous forme de nombre décimal avec dimanche comme 0 (0-6)\n"
 "%W Numéro de semaine avec le premier lundi comme premier jour de la première semaine (00-53)\n"
 "%x Représentation de la date (par exemple, 23/08/01)\n"
@@ -2690,11 +2690,11 @@ msgstr "Activer le chargement automatique des journaux"
 
 #: ../ui/settings.glade:812
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
-msgstr "Quand vous ouvrez un fichier PDF et qu'il y a déja un fichier Xournal (. xoj) ayant le même nom, ce dernier sera ouvert."
+msgstr "Quand vous ouvrez un fichier PDF et qu'il y a déjà un fichier Xournal (. xoj) ayant le même nom, ce dernier sera ouvert."
 
 #: ../ui/settings.glade:823
 msgid "Enable autoloading of most recent file on application startup"
-msgstr "Activer la chargement automatique du fichier le plus récent lorsque l'application démarre"
+msgstr "Activer le chargement automatique du fichier le plus récent lorsque l'application démarre"
 
 #: ../ui/settings.glade:828
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
@@ -2772,7 +2772,7 @@ msgstr "Angle de la zone aveugle"
 
 #: ../ui/settings.glade:1179
 msgid "1,30"
-msgstr "1,30"
+msgstr "1.30"
 
 #: ../ui/settings.glade:1197 ../ui/settings.glade:1209
 msgctxt "Drag = Noun: force opposing the movement"
@@ -2786,7 +2786,7 @@ msgstr "Faire glisser"
 
 #: ../ui/settings.glade:1211
 msgid "0,4"
-msgstr "0,4"
+msgstr "0.4"
 
 #: ../ui/settings.glade:1229 ../ui/settings.glade:1241
 msgctxt "Mass = Noun: physics term, related to weight"
@@ -2808,7 +2808,7 @@ msgstr "Paramètre de Gauss : augmenter sa valeur améliore la stabilisation, ma
 
 #: ../ui/settings.glade:1263
 msgid "0,50"
-msgstr "0,50"
+msgstr "0.50"
 
 #: ../ui/settings.glade:1295
 msgid "Preprocessor"

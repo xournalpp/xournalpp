@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-20 08:50+0000\n"
-"PO-Revision-Date: 2025-02-23 04:25\n"
+"PO-Revision-Date: 2025-03-02 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -1521,7 +1521,7 @@ msgstr "Commuta la pantalla completa"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:325
 msgid "Toggle sidebar"
-msgstr ""
+msgstr "Commuta la barra lateral"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:327
 msgid "Manage Toolbars"
