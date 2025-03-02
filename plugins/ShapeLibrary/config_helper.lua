@@ -1,20 +1,9 @@
 local sep = package.config:sub(1, 1) -- path separator depends on OS
 local sourcePath = debug.getinfo(1).source:match("@?(.*" .. sep .. ")")
-local filePath = sourcePath .. "config.lua"
+local systemFilePath = sourcePath .. "config.lua"
+local userFilePath = app.getFolder("data") .. sep .. "config.lua"
 
 local _M = {} -- functions to export
-
-function _M.getShapesData()
-    local sandbox = {} -- No access to global variables in order to safely read the file
-    setmetatable(sandbox, { __index = function() error("Forbidden function in file " .. filePath, 2) end })
-
-    local f, err = loadfile(filePath, "t", sandbox)
-    if not f or err then
-        print("Error loading config file: " .. (err or ""))
-        return
-    end
-    return f()
-end
 
 local function serializeTable(tbl)
     local result = ""
@@ -43,7 +32,7 @@ local function writeConfig(shapesData)
     local serializedData = "return {\n" .. serializeTable(shapesData) .. "}\n"
 
     -- Step 4: Write the updated data back to the file
-    local file = io.open(filePath, "w")
+    local file = io.open(userFilePath, "w")
     if file then
         file:write(serializedData)
         file:close()
@@ -51,6 +40,31 @@ local function writeConfig(shapesData)
     else
         print("Error: Could not write to file!")
     end
+end
+
+local function ensureUserConfigExists()
+    local f = io.open(userFilePath, "r")
+    if f == nil then -- file cannot be opened
+        print("Create fresh user config file in " .. userFilePath)
+        writeConfig({})
+    end
+end
+
+function _M.getShapesData(systemMode) -- systemMode defaults to nil, i.e. user mode
+    local sandbox = {} -- No access to global variables in order to safely read the file
+    local filePath = systemMode and systemFilePath or userFilePath
+    if not systemMode then
+        ensureUserConfigExists()
+    end
+    setmetatable(sandbox, { __index = function() error("Forbidden function in file " .. filePath, 2) end })
+
+
+    local f, err = loadfile(filePath, "t", sandbox)
+    if not f or err then
+        print("Error loading config file: " .. (err or ""))
+        return
+    end
+    return f()
 end
 
 function _M.addCategory(newCategoryName)
