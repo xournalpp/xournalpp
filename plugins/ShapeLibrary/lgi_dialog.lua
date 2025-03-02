@@ -27,6 +27,7 @@ local Gtk = lgi.require("Gtk", "3.0")
 local assert = lgi.assert
 local drawing = require("drawing")
 local index = 1 -- the index is set when one of the shapes is selected
+local window -- main window
 
 local function getStrokes(category, i, systemMode)
     local shapes_dict = systemMode and system_shapes_dict or user_shapes_dict
@@ -92,10 +93,9 @@ local function loadShapes(window, systemMode)
         local name = systemMode and category.name or category.name .. " (*)"
         window.child.stack:add_titled(scrolled_window, ind, name)
     end
-    window:show_all()
 end
 
-function _M.showMainShapeDialog()
+local function createWindow()
     local provider = Gtk.CssProvider()
     assert(provider:load_from_path(sourcePath .. sep .. "main.css"), "ERROR: main.css not found")
 
@@ -601,6 +601,16 @@ function _M.showMainShapeDialog()
 
         dialog:show()
     end
+    window.on_delete_event = Gtk.Widget.hide_on_delete
+    return window
+end
+
+function _M.showMainShapeDialog()
+    if not window then
+        window = createWindow()
+    end
+
+    window:show_all()
 end
 
 return _M
