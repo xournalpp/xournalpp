@@ -6,32 +6,32 @@ local Mode = {
 }
 
 local sep = package.config:sub(1, 1) -- path separator depends on OS
-local sourcePath = debug.getinfo(1).source:match('@?(.*' .. sep .. ')')
-local stroke_io = require('stroke_io')
-local insertion_helper = require('insertion_helper')
-local config_helper = require('config_helper')
+local sourcePath = debug.getinfo(1).source:match("@?(.*" .. sep .. ")")
+local stroke_io = require("stroke_io")
+local insertion_helper = require("insertion_helper")
+local config_helper = require("config_helper")
 
 local system_shapes_dict = config_helper.getShapesData(Mode.SYSTEM) or {}
 local user_shapes_dict = config_helper.getShapesData(Mode.USER) or {}
 
-local hasLgi, lgi = pcall(require, 'lgi')
+local hasLgi, lgi = pcall(require, "lgi")
 if not hasLgi then
     app.openDialog(
-        'You need to have the Lua lgi-module installed and included in your Lua package path for using this plugin. \n\n',
-        { 'OK' }, '', true)
+        "You need to have the Lua lgi-module installed and included in your Lua package path for using this plugin. \n\n",
+        { "OK" }, "", true)
     return
 end
 
 --lgi module has been found
-local Gtk = lgi.require('Gtk', '3.0')
+local Gtk = lgi.require("Gtk", "3.0")
 local assert = lgi.assert
-local drawing = require('drawing')
+local drawing = require("drawing")
 local index = 1 -- the index is set when one of the shapes is selected
 
 local function getStrokes(category, i, systemMode)
     local shapes_dict = systemMode and system_shapes_dict or user_shapes_dict
     local filename = shapes_dict[category].shapes[i].filename
-    local filepath = systemMode and sourcePath .. 'Shapes' .. sep .. filename or app.getFolder("data") .. sep .. filename
+    local filepath = systemMode and sourcePath .. "Shapes" .. sep .. filename or app.getFolder("data") .. sep .. filename
     return stroke_io.readStrokesFromFile(filepath)
 end
 
@@ -53,29 +53,29 @@ local function loadShapes(window, systemMode)
             propagate_natural_height = true,
             max_content_height = 450,
             Gtk.FlowBox {
-                id = 'flow_box',
-                orientation = 'HORIZONTAL',
+                id = "flow_box",
+                orientation = "HORIZONTAL",
                 max_children_per_line = 6,
                 min_children_per_line = 3,
                 column_spacing = 12,
                 row_spacing = 12,
                 homogeneous = true,
-                selection_mode = 'SINGLE',
+                selection_mode = "SINGLE",
                 on_child_activated = function(_, child) index = child:get_index() + 1 end
             }
         }
         for j, shape in ipairs(category.shapes) do
             local shape_box = Gtk.Box {
-                orientation = 'VERTICAL',
+                orientation = "VERTICAL",
                 spacing = 12,
                 Gtk.Label {
                     label = shape.name,
                 },
                 Gtk.Frame {
-                    shadow_type = 'IN',
+                    shadow_type = "IN",
                     expand = true,
                     Gtk.DrawingArea {
-                        id = 'drawing_area',
+                        id = "drawing_area",
                         width = 120,
                         height = 100,
                     }
@@ -98,25 +98,25 @@ end
 
 function _M.showMainShapeDialog()
     local provider = Gtk.CssProvider()
-    assert(provider:load_from_path(sourcePath .. sep .. 'main.css'), 'ERROR: main.css not found')
+    assert(provider:load_from_path(sourcePath .. sep .. "main.css"), "ERROR: main.css not found")
     -- local screen = Gdk.Display.get_default_screen(Gdk.Display:get_default())
     -- Gtk.StyleContext.add_provider_for_screen(screen, provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
 
     local window = Gtk.Window {
-        title = 'Manage and Insert Shapes',
+        title = "Manage and Insert Shapes",
         default_width = 700,
         default_height = 500,
 
         Gtk.Box {
-            orientation = 'HORIZONTAL',
+            orientation = "HORIZONTAL",
             Gtk.Box {
-                orientation = 'VERTICAL',
+                orientation = "VERTICAL",
                 spacing = 24,
                 margin_bottom = 24,
                 margin_top = 24,
                 Gtk.Label {
-                    id = 'lbl_category',
-                    label = 'Category',
+                    id = "lbl_category",
+                    label = "Category",
                 },
                 Gtk.ScrolledWindow {
                     margin_bottom = 24,
@@ -125,105 +125,105 @@ function _M.showMainShapeDialog()
                     height_request = 300,
                     Gtk.StackSidebar {
                         height_request = 300,
-                        id = 'switcher',
+                        id = "switcher",
                     },
                 },
                 Gtk.Box {
-                    orientation = 'VERTICAL',
+                    orientation = "VERTICAL",
                     spacing = 12,
                     Gtk.Box {
-                        orientation = 'HORIZONTAL',
+                        orientation = "HORIZONTAL",
                         hexpand = true,
-                        halign = 'CENTER',
+                        halign = "CENTER",
                         spacing = 12,
                         Gtk.CheckButton {
-                            id = 'system_check_button',
-                            label = 'System cat.',
+                            id = "system_check_button",
+                            label = "System cat.",
                             active = true,
                         },
                         Gtk.CheckButton {
-                            id = 'user_check_button',
-                            label = 'User cat.',
+                            id = "user_check_button",
+                            label = "User cat.",
                             active = true,
                         },
                     },
                     Gtk.Box {
-                        orientation = 'HORIZONTAL',
-                        halign = 'CENTER',
+                        orientation = "HORIZONTAL",
+                        halign = "CENTER",
                         spacing = 12,
                         Gtk.Button {
-                            id = 'add_category_button',
+                            id = "add_category_button",
                             hexpand = false,
-                            label = '+',
-                            tooltip_text = 'Add new category',
+                            label = "+",
+                            tooltip_text = "Add new category",
                         },
                         Gtk.Button {
-                            id = 'remove_category_button',
+                            id = "remove_category_button",
                             hexpand = false,
-                            label = '-',
-                            tooltip_text = 'Remove selected category',
+                            label = "-",
+                            tooltip_text = "Remove selected category",
                         },
                         Gtk.Button {
-                            id = 'rename_category_button',
+                            id = "rename_category_button",
                             hexpand = false,
-                            label = 'Rename',
-                            tooltip_text = 'Rename selected category',
+                            label = "Rename",
+                            tooltip_text = "Rename selected category",
                         },
                     },
                 },
 
             },
             Gtk.Box {
-                orientation = 'VERTICAL',
+                orientation = "VERTICAL",
                 spacing = 12,
                 margin_bottom = 24,
                 margin_top = 24,
                 Gtk.Label {
-                    id = 'lbl_shape',
-                    label = 'Shape',
+                    id = "lbl_shape",
+                    label = "Shape",
                 },
                 Gtk.Stack {
-                    id = 'stack',
+                    id = "stack",
                     width_request = 400,
                 },
                 Gtk.Box {
-                    orientation = 'HORIZONTAL',
+                    orientation = "HORIZONTAL",
                     spacing = 12,
                     margin_bottom = 6,
                     margin_top = 6,
                     margin_left = 6,
                     margin_right = 6,
                     hexpand = true,
-                    halign = 'CENTER',
+                    halign = "CENTER",
                     Gtk.Button {
-                        id = 'insert_button',
-                        halign = 'CENTER',
-                        label = 'Insert',
-                        tooltip_text = 'Insert shape into document',
+                        id = "insert_button",
+                        halign = "CENTER",
+                        label = "Insert",
+                        tooltip_text = "Insert shape into document",
                     },
                     Gtk.Button {
-                        id = 'replace_shape_button',
+                        id = "replace_shape_button",
                         hexpand = false,
-                        label = 'Replace',
-                        tooltip_text = 'Replace selected shape',
+                        label = "Replace",
+                        tooltip_text = "Replace selected shape",
                     },
                     Gtk.Button {
-                        id = 'add_shape_button',
+                        id = "add_shape_button",
                         hexpand = false,
-                        label = '+',
-                        tooltip_text = 'Add shape from selection',
+                        label = "+",
+                        tooltip_text = "Add shape from selection",
                     },
                     Gtk.Button {
-                        id = 'remove_shape_button',
+                        id = "remove_shape_button",
                         hexpand = false,
-                        label = '-',
-                        tooltip_text = 'Remove selected shape',
+                        label = "-",
+                        tooltip_text = "Remove selected shape",
                     },
                     Gtk.Button {
-                        id = 'rename_shape_button',
+                        id = "rename_shape_button",
                         hexpand = false,
-                        label = 'Rename',
-                        tooltip_text = 'Rename selected shape'
+                        label = "Rename",
+                        tooltip_text = "Rename selected shape"
                     }
                 },
             }
@@ -232,7 +232,7 @@ function _M.showMainShapeDialog()
 
     window:set_position(Gtk.WindowPosition.CENTER)
     function window.child.stack:on_notify(param)
-        if param:get_name() == 'visible-child-name' then
+        if param:get_name() == "visible-child-name" then
             local category = tonumber(self:get_visible_child_name())
             local userCat = category > #system_shapes_dict
             window.child.remove_category_button:set_sensitive(userCat)
@@ -268,7 +268,7 @@ function _M.showMainShapeDialog()
             category = category - #system_shapes_dict
         end
         if not shapes_dict[category].shapes[index] then
-            print('Select shape first')
+            print("Select shape first")
             return
         end
         local filename = shapes_dict[category].shapes[index].filename
@@ -282,25 +282,25 @@ function _M.showMainShapeDialog()
     -- Dialogs --
     window.child.add_category_button.on_button_press_event = function(event)
         local dialog = Gtk.Dialog {
-            title = 'Add Category',
+            title = "Add Category",
             transient_for = window,
             modal = true,
             destroy_with_parent = true,
             buttons = {
                 { Gtk.STOCK_OK, Gtk.ResponseType.OK },
-                { '_Cancel',    Gtk.ResponseType.CANCEL },
+                { "_Cancel",    Gtk.ResponseType.CANCEL },
             },
         }
         local hbox = Gtk.Box {
-            orientation = 'HORIZONTAL',
+            orientation = "HORIZONTAL",
             spacing = 8,
             border_width = 8,
             Gtk.Label {
-                label = 'Category name',
+                label = "Category name",
             },
             Gtk.Entry {
-                id = 'name_entry',
-                placeholder_text = 'MyCategory',
+                id = "name_entry",
+                placeholder_text = "MyCategory",
             },
 
         }
@@ -325,21 +325,21 @@ function _M.showMainShapeDialog()
 
         local dialog = Gtk.Dialog {
             width_request = 300,
-            title = 'Remove Category',
+            title = "Remove Category",
             transient_for = window,
             modal = true,
             destroy_with_parent = true,
             buttons = {
                 { Gtk.STOCK_OK, Gtk.ResponseType.OK },
-                { '_Cancel',    Gtk.ResponseType.CANCEL },
+                { "_Cancel",    Gtk.ResponseType.CANCEL },
             },
         }
         local vbox = Gtk.Box {
-            orientation = 'VERTICAL',
+            orientation = "VERTICAL",
             Gtk.Label {
                 use_markup = true,
                 wrap = true,
-                label = 'Remove category <b>' .. category_name .. '</b> and all shapes in it.'
+                label = "Remove category <b>" .. category_name .. "</b> and all shapes in it."
             },
         }
         dialog:get_content_area():add(vbox)
@@ -363,29 +363,29 @@ function _M.showMainShapeDialog()
 
         local dialog = Gtk.Dialog {
             width_request = 300,
-            title = 'Rename Category',
+            title = "Rename Category",
             transient_for = window,
             modal = true,
             destroy_with_parent = true,
             buttons = {
                 { Gtk.STOCK_OK, Gtk.ResponseType.OK },
-                { '_Cancel',    Gtk.ResponseType.CANCEL },
+                { "_Cancel",    Gtk.ResponseType.CANCEL },
             },
         }
         local vbox = Gtk.Box {
-            orientation = 'VERTICAL',
+            orientation = "VERTICAL",
             Gtk.Label {
                 use_markup = true,
                 wrap = true,
-                label = 'Rename category <b>' .. category_name .. '</b>'
+                label = "Rename category <b>" .. category_name .. "</b>"
             },
             Gtk.Box {
                 Gtk.Label {
-                    label = 'New category name',
+                    label = "New category name",
                 },
                 Gtk.Entry {
-                    id = 'new_category_name_entry',
-                    placeholder_text = 'My New Category',
+                    id = "new_category_name_entry",
+                    placeholder_text = "My New Category",
                 }
             },
         }
@@ -413,21 +413,21 @@ function _M.showMainShapeDialog()
 
         local dialog = Gtk.Dialog {
             width_request = 300,
-            title = 'Replace Shape',
+            title = "Replace Shape",
             transient_for = window,
             modal = true,
             destroy_with_parent = true,
             buttons = {
                 { Gtk.STOCK_OK, Gtk.ResponseType.OK },
-                { '_Cancel',    Gtk.ResponseType.CANCEL },
+                { "_Cancel",    Gtk.ResponseType.CANCEL },
             },
         }
         local vbox = Gtk.Box {
-            orientation = 'VERTICAL',
+            orientation = "VERTICAL",
             Gtk.Label {
                 use_markup = true,
                 wrap = true,
-                label = 'Replace shape <b>' .. name .. '</b> by the strokes in the selection.'
+                label = "Replace shape <b>" .. name .. "</b> by the strokes in the selection."
             },
         }
         dialog:get_content_area():add(vbox)
@@ -435,7 +435,7 @@ function _M.showMainShapeDialog()
 
         function dialog:on_response(response)
             if response == Gtk.ResponseType.OK then
-                local strokes = app.getStrokes('selection')
+                local strokes = app.getStrokes("selection")
                 local filePath = app.getFolder("data") .. sep .. filename
                 stroke_io.storeStrokeInfoInFile(strokes, filePath)
                 loadShapes(window, false)
@@ -451,44 +451,44 @@ function _M.showMainShapeDialog()
         local category = tonumber(window.child.stack:get_visible_child_name()) - #system_shapes_dict
         local category_name = user_shapes_dict[category].name
         local dialog = Gtk.Dialog {
-            title = 'Add Shape',
+            title = "Add Shape",
             transient_for = window,
             modal = true,
             destroy_with_parent = true,
             buttons = {
                 { Gtk.STOCK_OK, Gtk.ResponseType.OK },
-                { '_Cancel',    Gtk.ResponseType.CANCEL },
+                { "_Cancel",    Gtk.ResponseType.CANCEL },
             },
         }
         local vbox = Gtk.Box {
-            orientation = 'VERTICAL',
+            orientation = "VERTICAL",
             spacing = 8,
             Gtk.Label {
-                label = 'Insert selected strokes as new shape',
+                label = "Insert selected strokes as new shape",
             },
             Gtk.Grid {
-                orientation = 'HORIZONTAL',
+                orientation = "HORIZONTAL",
                 border_width = 8,
                 { left_attach = 0, top_attach = 0,
                     Gtk.Label {
-                        label = 'Shape name',
+                        label = "Shape name",
                     },
                 },
                 { left_attach = 1, top_attach = 0,
                     Gtk.Entry {
-                        id = 'name_entry',
-                        placeholder_text = 'MyShape',
+                        id = "name_entry",
+                        placeholder_text = "MyShape",
                     },
                 },
                 { left_attach = 0, top_attach = 1,
                     Gtk.Label {
-                        label = 'File name',
+                        label = "File name",
                     },
                 },
                 { left_attach = 1, top_attach = 1,
                     Gtk.Entry {
-                        id = 'filename_entry',
-                        placeholder_text = 'myshape.lua',
+                        id = "filename_entry",
+                        placeholder_text = "myshape.lua",
                     },
                 }
             },
@@ -498,7 +498,7 @@ function _M.showMainShapeDialog()
 
         function dialog:on_response(response)
             if response == Gtk.ResponseType.OK then
-                local strokes = app.getStrokes('selection')
+                local strokes = app.getStrokes("selection")
                 local name = vbox.child.name_entry.text
                 local filename = vbox.child.filename_entry.text
                 local filepath = app.getFolder("data") .. sep .. filename
@@ -521,21 +521,21 @@ function _M.showMainShapeDialog()
 
         local dialog = Gtk.Dialog {
             width_request = 300,
-            title = 'Remove Shape',
+            title = "Remove Shape",
             transient_for = window,
             modal = true,
             destroy_with_parent = true,
             buttons = {
                 { Gtk.STOCK_OK, Gtk.ResponseType.OK },
-                { '_Cancel',    Gtk.ResponseType.CANCEL },
+                { "_Cancel",    Gtk.ResponseType.CANCEL },
             },
         }
         local vbox = Gtk.Box {
-            orientation = 'VERTICAL',
+            orientation = "VERTICAL",
             Gtk.Label {
                 use_markup = true,
                 wrap = true,
-                label = 'Remove shape <b>' .. name .. '</b>'
+                label = "Remove shape <b>" .. name .. "</b>"
             },
         }
         dialog:get_content_area():add(vbox)
@@ -562,29 +562,29 @@ function _M.showMainShapeDialog()
 
         local dialog = Gtk.Dialog {
             width_request = 300,
-            title = 'Rename Shape',
+            title = "Rename Shape",
             transient_for = window,
             modal = true,
             destroy_with_parent = true,
             buttons = {
                 { Gtk.STOCK_OK, Gtk.ResponseType.OK },
-                { '_Cancel',    Gtk.ResponseType.CANCEL },
+                { "_Cancel",    Gtk.ResponseType.CANCEL },
             },
         }
         local vbox = Gtk.Box {
-            orientation = 'VERTICAL',
+            orientation = "VERTICAL",
             Gtk.Label {
                 use_markup = true,
                 wrap = true,
-                label = 'Rename shape <b>' .. name .. '</b>'
+                label = "Rename shape <b>" .. name .. "</b>"
             },
             Gtk.Box {
                 Gtk.Label {
-                    label = 'New shape name',
+                    label = "New shape name",
                 },
                 Gtk.Entry {
-                    id = 'new_shape_name_entry',
-                    placeholder_text = 'My New Shape',
+                    id = "new_shape_name_entry",
+                    placeholder_text = "My New Shape",
                 }
             },
         }
