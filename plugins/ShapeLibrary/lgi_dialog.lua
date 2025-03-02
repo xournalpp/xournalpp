@@ -73,7 +73,6 @@ local function loadShapes(window, systemMode)
                 },
                 Gtk.Frame {
                     shadow_type = "IN",
-                    expand = true,
                     Gtk.DrawingArea {
                         id = "drawing_area",
                         width = 120,
