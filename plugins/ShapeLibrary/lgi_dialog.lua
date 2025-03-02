@@ -140,13 +140,11 @@ function _M.showMainShapeDialog()
                             id = 'system_check_button',
                             label = 'System cat.',
                             active = true,
-                            on_toggled = function(self) print("User: ", self:get_active()) end
                         },
                         Gtk.CheckButton {
                             id = 'user_check_button',
                             label = 'User cat.',
                             active = true,
-                            on_toggled = function(self) print("System: ", self:get_active()) end
                         },
                     },
                     Gtk.Box {
@@ -243,6 +241,20 @@ function _M.showMainShapeDialog()
             window.child.remove_shape_button:set_sensitive(userCat)
             window.child.replace_shape_button:set_sensitive(userCat)
             window.child.rename_shape_button:set_sensitive(userCat)
+        end
+    end
+
+    function window.child.system_check_button:on_toggled()
+        for i=1, #system_shapes_dict do
+            local page = window.child.stack:get_child_by_name(tostring(i))
+            page:set_visible(self:get_active())
+        end
+    end
+
+    function window.child.user_check_button:on_toggled()
+        for i=1, #user_shapes_dict do
+            local page = window.child.stack:get_child_by_name(tostring(i + #system_shapes_dict))
+            page:set_visible(self:get_active())
         end
     end
 
