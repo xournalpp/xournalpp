@@ -233,6 +233,18 @@ function _M.showMainShapeDialog()
     }
 
     window:set_position(Gtk.WindowPosition.CENTER)
+    function window.child.stack:on_notify(param)
+        if param:get_name() == 'visible-child-name' then
+            local category = tonumber(self:get_visible_child_name())
+            local userCat = category > #system_shapes_dict
+            window.child.remove_category_button:set_sensitive(userCat)
+            window.child.rename_category_button:set_sensitive(userCat)
+            window.child.add_shape_button:set_sensitive(userCat)
+            window.child.remove_shape_button:set_sensitive(userCat)
+            window.child.replace_shape_button:set_sensitive(userCat)
+            window.child.rename_shape_button:set_sensitive(userCat)
+        end
+    end
 
     window.child.lbl_category:get_style_context():add_provider(provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
     window.child.lbl_shape:get_style_context():add_provider(provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
