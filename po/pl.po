@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-07 13:29+0000\n"
-"PO-Revision-Date: 2024-12-08 18:11\n"
+"POT-Creation-Date: 2025-02-19 11:17+0000\n"
+"PO-Revision-Date: 2025-03-02 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -25,7 +25,7 @@ msgstr "Nie ustawiono folderu pliku dźwiękowego! Nagrywanie nie będzie dział
 
 #: ../src/core/control/Control.cpp:230
 msgid "Filesystem error: {1}"
-msgstr ""
+msgstr "Błąd systemu plików: {1}"
 
 #: ../src/core/control/Control.cpp:242
 msgid "Could not remove old autosave file \"{1}\": {2}"
@@ -2240,7 +2240,7 @@ msgstr ""
 
 #: ../ui/main.glade:546
 msgid "_View"
-msgstr ""
+msgstr "_Widok"
 
 #: ../ui/main.glade:557
 msgid "_Pair Pages"
