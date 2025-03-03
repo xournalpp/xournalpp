@@ -93,6 +93,7 @@ local function loadShapes(window, systemMode)
         local name = systemMode and category.name or category.name .. " (*)"
         window.child.stack:add_titled(scrolled_window, ind, name)
     end
+    window:show_all()
 end
 
 local function createWindow()
