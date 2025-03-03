@@ -2,12 +2,11 @@ return {
 [1] = {
     name = "Page Decoration",
     shapes = {
-        [1] = { name = "Border Booklet", filename = "borderBooklet.lua" },
-        [2] = { name = "Star (wire)", filename = "hollowStar.lua" },
-        [3] = { name = "Star (solid)", filename = "solidStar.lua" },
-        [4] = { name = "Curly Arrow", filename = "curlyArrow.lua" },
-        [5] = { name = "Comment Box", filename = "commentBoxRectangular.lua" },
-        [6] = { name = "Comment Box", filename = "commentBoxOval.lua" },
+        [1] = { name = "Star (wire)", filename = "hollowStar.lua" },
+        [2] = { name = "Star (solid)", filename = "solidStar.lua" },
+        [3] = { name = "Curly Arrow", filename = "curlyArrow.lua" },
+        [4] = { name = "Comment Box", filename = "commentBoxRectangular.lua" },
+        [5] = { name = "Comment Box", filename = "commentBoxOval.lua" },
     },
 },
 [2] = {
