@@ -230,7 +230,7 @@ local function createWindow()
 
     function window.child.stack:on_notify(param)
         if param:get_name() == "visible-child-name" then
-            local category = tonumber(self:get_visible_child_name())
+            local category = tonumber(self:get_visible_child_name()) or 0
             local userCat = category > #system_shapes_dict
             window.child.remove_category_button:set_sensitive(userCat)
             window.child.rename_category_button:set_sensitive(userCat)
