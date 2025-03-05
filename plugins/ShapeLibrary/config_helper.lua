@@ -89,13 +89,17 @@ function _M.removeCategory(categoryName)
     local shapesData = _M.getShapesData() or {}
 
     -- Step 2: Remove the category
+    local categoryFound = false
     for i, category in ipairs(shapesData) do
         if category.name == categoryName then
+            categoryFound = true
             table.remove(shapesData, i)
             print("Removing category: " .. categoryName)
             break
         end
     end
+
+    if not categoryFound then print("Error: Category ".. categoryName .. " not found!") return end
 
     -- Step 3: Write the modified shapes data back into the config file
     writeConfig(shapesData)
@@ -146,7 +150,7 @@ function _M.addShape(categoryName, shapeName, filename)
             if found then break end
         end
 
-        if not found then print("Error: Did not find category " .. categoryName) end
+        if not found then print("Error: Did not find category " .. categoryName) return end
 
         -- Step 3: Write the modified shapes data back into the config file
         writeConfig(shapesData)
@@ -176,7 +180,7 @@ function _M.removeShape(categoryName, shapeName)
         if found then break end
     end
 
-    if not found then print("Error: Did not find shape " .. shapeName .. " in category " .. categoryName) end
+    if not found then print("Error: Did not find shape " .. shapeName .. " in category " .. categoryName) return end
 
     -- Step 3: Write the modified shapes data back into the config file
     writeConfig(shapesData)
