@@ -611,7 +611,7 @@ function _M.showMainShapeDialog()
         window = createWindow()
     end
 
-    window:show_all()
+    window:present()
 end
 
 return _M
