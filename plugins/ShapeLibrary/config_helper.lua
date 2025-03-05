@@ -5,41 +5,35 @@ local userFilePath = app.getFolder("config") .. sep .. "config.lua"
 
 local _M = {} -- functions to export
 
-local function serializeTable(tbl)
-    local result = ""
-    for i, v in ipairs(tbl) do
+
+local function writeConfig(shapesData)
+
+    -- Write the updated data back to the file
+    local file = io.open(userFilePath, "w")
+    if not file then print("Error: Could not write to file!") return end
+
+    file:write("return {\n")
+    for i, v in ipairs(shapesData) do
         -- Start each category block
-        result = result .. "[" .. i .. "] = {\n"
-        result = result .. "    name = \"" .. v.name .. "\",\n"
-        result = result .. "    shapes = {\n"
+        file:write("[" .. i .. "] = {\n")
+        file:write("    name = \"" .. v.name .. "\",\n")
+        file:write("    shapes = {\n")
 
         -- Serialize the shapes within the category
         for j, shape in ipairs(v.shapes) do
-            result = result .. "        [" .. j .. "] = {"
-            result = result .. " name = \"" .. shape.name .. "\","
-            result = result .. " filename = \"" .. shape.filename .. "\""
-            result = result .. " },\n"
+            file:write("        [" .. j .. "] = {")
+            file:write(" name = \"" .. shape.name .. "\",")
+            file:write(" filename = \"" .. shape.filename .. "\"")
+            file:write(" },\n")
         end
 
-        result = result .. "    },\n"
-        result = result .. "},\n"
+        file:write("    },\n")
+        file:write("},\n")
     end
-    return result
-end
 
-local function writeConfig(shapesData)
-    -- Wrap the serialized table in a return statement
-    local serializedData = "return {\n" .. serializeTable(shapesData) .. "}\n"
-
-    -- Step 4: Write the updated data back to the file
-    local file = io.open(userFilePath, "w")
-    if file then
-        file:write(serializedData)
-        file:close()
-        print("Config file updated successfully!")
-    else
-        print("Error: Could not write to file!")
-    end
+    file:write("}\n")
+    file:close()
+    print("Config file updated successfully!")
 end
 
 local function ensureUserConfigExists()
