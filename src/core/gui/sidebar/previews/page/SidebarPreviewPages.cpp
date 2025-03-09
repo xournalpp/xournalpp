@@ -65,7 +65,7 @@ SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, Sideba
 SidebarPreviewPages::~SidebarPreviewPages() {
     for (const auto& signalTuple: this->contextMenuSignals) {
         GtkWidget* const widget = std::get<0>(signalTuple);
-        const guint handlerId = std::get<1>(signalTuple);
+        const gulong handlerId = std::get<1>(signalTuple);
         if (g_signal_handler_is_connected(widget, handlerId)) {
             g_signal_handler_disconnect(widget, handlerId);
         }

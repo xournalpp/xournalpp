@@ -38,7 +38,7 @@ protected:
     void layout();
 
 private:
-    static void sizeAllocate(GtkWidget* widget, GtkRequisition* requisition, BackgroundSelectDialogBase* dlg);
+    static void sizeAllocate(GtkWidget* widget, GtkAllocation* alloc, BackgroundSelectDialogBase* dlg);
 
 private:
 protected:

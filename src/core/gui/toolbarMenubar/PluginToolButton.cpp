@@ -23,8 +23,10 @@ auto PluginToolButton::createItem(bool horizontal) -> GtkToolItem* {
     g_object_ref(this->item);
 
     // Connect signal
-    g_signal_connect(item, "clicked",
-                     G_CALLBACK(+[](GtkWidget* bt, ToolbarButtonEntry* te) { te->plugin->executeToolbarButton(te); }),
+    g_signal_connect(GTK_TOOL_BUTTON(item), "clicked", G_CALLBACK(+[](GtkToolButton* bt, gpointer te) {
+                         auto* self = static_cast<ToolbarButtonEntry*>(te);
+                         self->plugin->executeToolbarButton(self);
+                     }),
                      this->t);
 
     return this->item;

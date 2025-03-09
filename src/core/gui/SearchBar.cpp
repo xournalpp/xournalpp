@@ -32,7 +32,7 @@ SearchBar::SearchBar(Control* control): control(control) {
     g_signal_connect(searchTextField, "search-changed", G_CALLBACK(searchTextChangedCallback), this);
     // Enable next/previous search when pressing Enter / Shift+Enter
     g_signal_connect(searchTextField, "key-press-event",
-                     G_CALLBACK(+[](GtkWidget* entry, GdkEventKey* event, SearchBar* self) {
+                     G_CALLBACK(+[](GtkWidget* entry, GdkEventKey* event, SearchBar* self) -> gboolean {
                          if (event->keyval == GDK_KEY_Return) {
                              if (event->state & GDK_SHIFT_MASK) {
                                  self->searchPrevious();

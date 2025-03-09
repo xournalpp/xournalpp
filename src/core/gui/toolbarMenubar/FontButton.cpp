@@ -77,7 +77,6 @@ auto FontButton::createItem(bool horizontal) -> GtkToolItem* {
 
     this->item = newItem();
     g_object_ref(this->item);
-    g_signal_connect(fontButton, "font_set", G_CALLBACK(&toolButtonCallback), this);
     return this->item;
 }
 
@@ -126,7 +125,10 @@ auto FontButton::newItem() -> GtkToolItem* {
     gtk_tool_item_set_tooltip_text(it, this->description.c_str());
     gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(it), false);
 
-    g_signal_connect(this->fontButton, "font_set", G_CALLBACK(&toolButtonCallback), this);
+    g_signal_connect(GTK_FONT_BUTTON(this->fontButton), "font-set", G_CALLBACK(+[](GtkFontButton*, gpointer s) {
+                         static_cast<FontButton*>(s)->activated(nullptr, nullptr);
+                     }),
+                     this);
 
     if (!this->font.getName().empty()) {
         setFont(this->font);

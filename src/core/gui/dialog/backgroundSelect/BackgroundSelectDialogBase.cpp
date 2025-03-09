@@ -34,14 +34,12 @@ BackgroundSelectDialogBase::~BackgroundSelectDialogBase() {
     elements.clear();
 }
 
-void BackgroundSelectDialogBase::sizeAllocate(GtkWidget* widget, GtkRequisition* requisition,
+void BackgroundSelectDialogBase::sizeAllocate(GtkWidget* widget, GtkAllocation* alloc,
                                               BackgroundSelectDialogBase* dlg) {
-    GtkAllocation alloc = {0};
-    gtk_widget_get_allocation(dlg->scrollPreview, &alloc);
-    if (dlg->lastWidth == alloc.width) {
+    if (dlg->lastWidth == alloc->width) {
         return;
     }
-    dlg->lastWidth = alloc.width;
+    dlg->lastWidth = alloc->width;
     dlg->layout();
 }
 

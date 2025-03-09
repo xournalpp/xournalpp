@@ -80,7 +80,7 @@ private:
     /**
      * A bookmark was selected
      */
-    static auto treeBookmarkSelected(GtkWidget* treeview, SidebarIndexPage* sidebar) -> bool;
+    static void treeBookmarkSelected(GtkTreeView* treeview, SidebarIndexPage* sidebar);
 
     /**
      * The function which is called after a search timeout

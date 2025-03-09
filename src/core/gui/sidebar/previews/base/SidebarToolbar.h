@@ -60,13 +60,6 @@ public:
     void runAction(SidebarActions actions);
 
 private:
-private:
-    static void btUpClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
-    static void btDownClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
-    static void btCopyClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
-    static void btDeleteClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
-
-private:
     /**
      * Listener for actions
      */

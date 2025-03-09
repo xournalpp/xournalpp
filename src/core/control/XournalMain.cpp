@@ -410,13 +410,18 @@ void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFi
 
 void on_activate(GApplication*, XMPtr) {}
 
-void on_command_line(GApplication*, GApplicationCommandLine*, XMPtr) {
+gint on_command_line(GApplication*, GApplicationCommandLine*, XMPtr) {
     g_message("XournalMain::on_command_line: This should never happen, please file a bugreport with a detailed "
               "description how to reproduce this message");
     // Todo: implement this, if someone files the bug report
+    return 0;
 }
 
-void on_open_files(GApplication* application, GFile** files, gint numFiles, gchar* hint, XMPtr app_data) {
+void on_open_files(GApplication* application, gpointer f, gint numFiles, gchar* hint, XMPtr app_data) {
+    if (numFiles <= 0) {
+        return;
+    }
+    auto* files = (GFile**)f;
     if (numFiles != 1) {
         const std::string msg = _("Sorry, Xournal++ can only open one file at once.\n"
                                   "Others are ignored.");
