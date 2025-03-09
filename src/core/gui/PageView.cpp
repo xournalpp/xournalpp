@@ -937,21 +937,18 @@ bool XojPageView::displayLinkPopover(std::shared_ptr<XojPdfPage> page, double pa
             }
             gtk_box_append(GTK_BOX(box), button);
 
-            g_signal_connect(
-                    button, "clicked",
-                    G_CALLBACK(+[](GtkButton* bt,
-                                   std::tuple<XojPageView*, std::shared_ptr<LinkDestination>, GtkWidget*>* state) {
-                        XojPageView* self;
-                        std::shared_ptr<LinkDestination> dest;
-                        GtkWidget* popover;
-                        std::tie(self, dest, popover) = *state;
+            using State = std::tuple<XojPageView*, std::shared_ptr<const LinkDestination>, GtkWidget*>;
+            g_signal_connect_data(GTK_BUTTON(button), "clicked", G_CALLBACK(+[](GtkButton* bt, gpointer state) {
+                                      XojPageView* self;
+                                      std::shared_ptr<const LinkDestination> dest;
+                                      GtkWidget* popover;
+                                      std::tie(self, dest, popover) = *static_cast<State*>(state);
 
-                        self->getXournal()->getControl()->getScrollHandler()->scrollToLinkDest(*dest);
-                        gtk_popover_popdown(GTK_POPOVER(popover));
-
-                        delete state;
-                    }),
-                    new std::tuple(std::make_tuple(this, dest, popover)));
+                                      self->getXournal()->getControl()->getScrollHandler()->scrollToLinkDest(*dest);
+                                      gtk_popover_popdown(GTK_POPOVER(popover));
+                                  }),
+                                  new State(this, dest, popover), xoj::util::closure_notify_cb<State>,
+                                  (GConnectFlags)0);
         }
 
         gtk_widget_show_all(popover);
