@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-19 11:17+0000\n"
-"PO-Revision-Date: 2025-02-23 04:25\n"
+"PO-Revision-Date: 2025-03-09 04:24\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -545,7 +545,7 @@ msgstr "Impossibile analizzare il percorso del generatore LaTeX: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:65
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr "Errore nell'analisi del comando generatore di LaTeX: {1}"
+msgstr "Impossibile analizzare il comando generatore di LaTeX: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:71
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
@@ -1196,7 +1196,7 @@ msgstr "_Documento"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:94
 msgid "Paper B_ackground"
-msgstr "Sfondo C_arta"
+msgstr "Sfondo c_arta"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:98
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -1204,7 +1204,7 @@ msgid "Your current document does not contain PDF Page no {1}\n"
 "Tip: You can select {2} to insert a PDF page."
 msgstr "Il documento attuale non contiene la pagina PDF n. {1}\n"
 "Vuoi inserire questa pagina?\n\n"
-"Consiglio: Puoi selezionare {2} per inserire una Pagina PDF."
+"Consiglio: puoi selezionare {2} per inserire una pagina PDF."
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:106
 msgid "Insert after current page"
@@ -1586,7 +1586,7 @@ msgstr "Sfondo"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:237
 msgid "Layer Combo"
-msgstr "Integrazione di Livelli"
+msgstr "Integrazione di livelli"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:251
 msgid "Layer"
@@ -1662,11 +1662,11 @@ msgstr "Errore: "
 
 #: ../src/core/model/Image.cpp:167 ../src/core/model/Image.cpp:177
 msgid "Unrecoverable error"
-msgstr ""
+msgstr "Errore non recuperabile"
 
 #: ../src/core/model/Image.cpp:173 ../src/core/model/Image.cpp:177
 msgid "Failed to close image stream"
-msgstr ""
+msgstr "Chiusura del flusso dell'immagine non riuscita"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:122
 msgid "Error while finalizing the PDF Cairo surface"
@@ -1895,7 +1895,7 @@ msgstr "Impossibile creare la cartella: {1}\n"
 
 #: ../src/util/Util.cpp:76
 msgid "Error {1} executing system command: {2}"
-msgstr "Errore {1} Processando il comando di sistema: {2}"
+msgstr "Errore {1} elaborando il comando di sistema: {2}"
 
 #: ../src/util/XojMsgBox.cpp:86
 msgid "Select another name"
@@ -1967,7 +1967,7 @@ msgstr "Sito web"
 
 #: ../ui/about.glade:270
 msgid "Source Code / Bug Tracker"
-msgstr "Codice Sorgente / Bug Tracker"
+msgstr "Codice sorgente / Bug Tracker"
 
 #: ../ui/about.glade:307
 msgid "With help from the community"
@@ -2199,7 +2199,7 @@ msgstr "_File"
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
-msgstr "_Documenti Recenti"
+msgstr "_Documenti recenti"
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
@@ -2227,7 +2227,7 @@ msgstr "Porta avanti"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr "Porta Indietro"
+msgstr "Porta indietro"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
@@ -2255,7 +2255,7 @@ msgstr "_Pagine accoppiate"
 
 #: ../ui/main.glade:567
 msgid "_Presentation Mode"
-msgstr "Modalità _Presentazione"
+msgstr "Modalità _presentazione"
 
 #: ../ui/main.glade:578 ../ui/settings.glade:4010
 msgid "Fullscreen"
@@ -2263,7 +2263,7 @@ msgstr "Schermo intero"
 
 #: ../ui/main.glade:589 ../ui/settings.glade:3988 ../ui/settings.glade:4087
 msgid "Show Sidebar"
-msgstr "Mostra Pannello laterale"
+msgstr "Mostra pannello laterale"
 
 #: ../ui/main.glade:605
 msgid "Show Toolbars"
@@ -2307,35 +2307,35 @@ msgstr "Imposta colonne"
 
 #: ../ui/main.glade:742
 msgid "_1 Column"
-msgstr "_1 Colonna"
+msgstr "_1 colonna"
 
 #: ../ui/main.glade:753
 msgid "_2 Columns"
-msgstr "_2 Colonne"
+msgstr "_2 colonne"
 
 #: ../ui/main.glade:764
 msgid "_3 Columns"
-msgstr "_3 Colonne"
+msgstr "_3 colonne"
 
 #: ../ui/main.glade:775
 msgid "_4 Columns"
-msgstr "_4 Colonne"
+msgstr "_4 colonne"
 
 #: ../ui/main.glade:786
 msgid "_5 Columns"
-msgstr "_5 Colonne"
+msgstr "_5 colonne"
 
 #: ../ui/main.glade:797
 msgid "_6 Columns"
-msgstr "_6 Colonne"
+msgstr "_6 colonne"
 
 #: ../ui/main.glade:808
 msgid "_7 Columns"
-msgstr "_7 Colonne"
+msgstr "_7 colonne"
 
 #: ../ui/main.glade:819
 msgid "_8 Columns"
-msgstr "_8 Colonne"
+msgstr "_8 colonne"
 
 #: ../ui/main.glade:835
 msgid "Set Rows"
@@ -2343,39 +2343,39 @@ msgstr "Imposta righe"
 
 #: ../ui/main.glade:847
 msgid "_1 Row"
-msgstr "_1 Riga"
+msgstr "_1 riga"
 
 #: ../ui/main.glade:858
 msgid "_2 Rows"
-msgstr "_2 Righe"
+msgstr "_2 righe"
 
 #: ../ui/main.glade:869
 msgid "_3 Rows"
-msgstr "_3 Righe"
+msgstr "_3 righe"
 
 #: ../ui/main.glade:880
 msgid "_4 Rows"
-msgstr "_4 Righe"
+msgstr "_4 righe"
 
 #: ../ui/main.glade:891
 msgid "_5 Rows"
-msgstr "_5 Righe"
+msgstr "_5 righe"
 
 #: ../ui/main.glade:902
 msgid "_6 Rows"
-msgstr "_6 Righe"
+msgstr "_6 righe"
 
 #: ../ui/main.glade:913
 msgid "_7 Rows"
-msgstr "_7 Righe"
+msgstr "_7 righe"
 
 #: ../ui/main.glade:924
 msgid "_8 Rows"
-msgstr "_8 Righe"
+msgstr "_8 righe"
 
 #: ../ui/main.glade:949
 msgid "T_oolbars"
-msgstr "_Barre degli Strumenti"
+msgstr "_Barre degli strumenti"
 
 #: ../ui/main.glade:967
 msgid "_Manage"
@@ -2435,19 +2435,19 @@ msgstr "Pagina annotata p_recedente"
 
 #: ../ui/main.glade:1213
 msgid "New Page _Before"
-msgstr "Nuova Pagina _Prima"
+msgstr "Nuova pagina _prima"
 
 #: ../ui/main.glade:1223
 msgid "New Page _After"
-msgstr "Nuova Pagina _Dopo"
+msgstr "Nuova pagina _dopo"
 
 #: ../ui/main.glade:1234
 msgid "New Page at _End"
-msgstr "Nuova Pagina alla _Fine"
+msgstr "Nuova pagina alla _fine"
 
 #: ../ui/main.glade:1244
 msgid "Duplicate Page"
-msgstr "Duplica Pagina"
+msgstr "Duplica pagina"
 
 #: ../ui/main.glade:1254
 msgid "Append New PDF Pages"
@@ -2455,19 +2455,19 @@ msgstr "Aggiungi nuove pagine PDF"
 
 #: ../ui/main.glade:1264
 msgid "Configure Page Template"
-msgstr "Configura Modello Pagina"
+msgstr "Configura modello pagina"
 
 #: ../ui/main.glade:1274
 msgid "_Delete Page"
-msgstr "_Elimina Pagina"
+msgstr "_Elimina pagina"
 
 #: ../ui/main.glade:1291
 msgid "New _Layer"
-msgstr "Nuovo _Livello"
+msgstr "Nuovo _livello"
 
 #: ../ui/main.glade:1302
 msgid "Delete Layer"
-msgstr "Elimina Livello"
+msgstr "Elimina livello"
 
 #: ../ui/main.glade:1313
 msgid "Merge Layer Down"
@@ -2475,15 +2475,15 @@ msgstr "Unisci al livello sottostante"
 
 #: ../ui/main.glade:1324
 msgid "Rename Layer"
-msgstr "Rinomina Livello"
+msgstr "Rinomina livello"
 
 #: ../ui/main.glade:1341
 msgid "Paper _Format"
-msgstr "_Formato Carta"
+msgstr "_Formato carta"
 
 #: ../ui/main.glade:1351
 msgid "Paper _Color"
-msgstr "_Colore Carta"
+msgstr "_Colore carta"
 
 #: ../ui/main.glade:1374
 msgid "_Tools"
@@ -2523,23 +2523,23 @@ msgstr "_Strumento predefinito"
 
 #: ../ui/main.glade:1486
 msgid "_Shape Recognizer"
-msgstr "Riconoscitore di _Forme"
+msgstr "Riconoscitore di _forme"
 
 #: ../ui/main.glade:1552
 msgid "Draw _Line"
-msgstr "Disegna _Linea retta"
+msgstr "Disegna _linea retta"
 
 #: ../ui/main.glade:1638
 msgid "_Vertical Space"
-msgstr "Spazio _Verticale"
+msgstr "Spazio _verticale"
 
 #: ../ui/main.glade:1662
 msgid "H_and Tool"
-msgstr "Strumento M_ano"
+msgstr "Strumento m_ano"
 
 #: ../ui/main.glade:1700
 msgid "Pen _Options"
-msgstr "_Opzioni Penna"
+msgstr "_Opzioni penna"
 
 #: ../ui/main.glade:1711 ../ui/main.glade:1857 ../ui/main.glade:1966
 msgid "_very fine"
@@ -2571,7 +2571,7 @@ msgstr "Opacità del riempimento"
 
 #: ../ui/main.glade:1846
 msgid "Eraser Optio_ns"
-msgstr "Opzio_ni Gomma"
+msgstr "Opzio_ni gomma"
 
 #: ../ui/main.glade:1918
 msgid "_standard"
@@ -2587,7 +2587,7 @@ msgstr "_elimina tratti"
 
 #: ../ui/main.glade:1955
 msgid "Highlighter Opti_ons"
-msgstr "Opzi_oni Evidenziatore"
+msgstr "Opzi_oni evidenziatore"
 
 #: ../ui/main.glade:2051
 msgid "Text Font..."
@@ -2603,7 +2603,7 @@ msgstr "Pausa"
 
 #: ../ui/main.glade:2127
 msgid "_Plugin"
-msgstr "_Plugin"
+msgstr "_Estensioni"
 
 #: ../ui/main.glade:2138
 msgid "Plugin _Manager"
@@ -2747,11 +2747,11 @@ msgstr "Seleziona Pagina PDF"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr "Gestore Plugin"
+msgstr "Gestore estensioni"
 
 #: ../ui/plugin.glade:122
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr "Le modifiche dei plugin sono applicate solo dopo il riavvio di Xournal++"
+msgstr "Le modifiche delle estensioni sono applicate solo dopo il riavvio di Xournal++"
 
 #: ../ui/pluginEntry.glade:58
 msgid "Author: "
@@ -2783,7 +2783,7 @@ msgstr "Media aritmetica"
 
 #: ../ui/settings.glade:230
 msgid "Velocity based Gaussian weights"
-msgstr "Valori Gaussiani basati sulla velocità"
+msgstr "Valori gaussiani basati sulla velocità"
 
 #: ../ui/settings.glade:244
 msgid "Deadzone"
@@ -2963,7 +2963,7 @@ msgstr "Se abilitato, Xournal++ aprirà automaticamente il documento più recent
 
 #: ../ui/settings.glade:877
 msgid "Autoloading"
-msgstr "Caricamento Automatico"
+msgstr "Caricamento automatico"
 
 #: ../ui/settings.glade:905
 msgid "Load / Save"
@@ -2987,8 +2987,8 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "            Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
 msgstr "Trascinare a SINISTRA dal punto iniziale è equivalente a tenere premuto SHIFT.\n"
-"Trascinare verso l'ALTO è equivalente a tenere premuto CTRL.\n\n"
-"Raggio di determinazione: raggio a cui i modificatori si bloccano fino a quando si è finito di disegnare. \n\n"
+"\t    Trascinare verso l'ALTO è equivalente a tenere premuto CTRL.\n\n"
+"            Raggio di determinazione: raggio a cui i modificatori si bloccano fino a quando si è finito di disegnare. \n\n"
 "<i>Utile per operare senza tastiera.</i>"
 
 #: ../ui/settings.glade:1061
@@ -3021,7 +3021,7 @@ msgstr "<i>Scegli un algoritmo di stabilizzazione per l'input e i suoi parametri
 
 #: ../ui/settings.glade:1195
 msgid "Buffersize"
-msgstr "Dimensione del Buffer"
+msgstr "Dimensione del buffer"
 
 #: ../ui/settings.glade:1207
 msgid "20"
@@ -3038,7 +3038,7 @@ msgstr "1,30"
 #: ../ui/settings.glade:1254
 msgctxt "Drag = Noun: force opposing the movement"
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
-msgstr "Trascina: Se il valore è troppo piccolo potrebbero comparire oscillazioni indesiderate. Se il valore è troppo alto non ci sarà stabilizzazione."
+msgstr "Trascina: se il valore è troppo piccolo potrebbero comparire oscillazioni indesiderate. Se il valore è troppo alto non ci sarà stabilizzazione."
 
 #: ../ui/settings.glade:1255
 msgctxt "Noun: force opposing the movement"
@@ -3047,7 +3047,7 @@ msgstr "Trascina"
 
 #: ../ui/settings.glade:1266
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
-msgstr "Trascina: Se il valore è troppo piccolo potrebbero comparire oscillazioni indesiderate. Se il valore è troppo alto non ci sarà stabilizzazione."
+msgstr "Trascina: se il valore è troppo piccolo potrebbero comparire oscillazioni indesiderate. Se il valore è troppo alto non ci sarà stabilizzazione."
 
 #: ../ui/settings.glade:1268
 msgid "0,4"
@@ -3089,7 +3089,7 @@ msgstr "Rilevamento vertici"
 
 #: ../ui/settings.glade:1400
 msgid "Finalize the stroke"
-msgstr "Finalizza il tratto"
+msgstr "Completa il tratto"
 
 #: ../ui/settings.glade:1405
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
@@ -3147,7 +3147,7 @@ msgstr "Moltiplicatore di pressione: "
 
 #: ../ui/settings.glade:1827
 msgid "Sensitivity Scale"
-msgstr "Scala Di Sensibilità"
+msgstr "Scala di sensibilità"
 
 #: ../ui/settings.glade:1845
 msgid "Pressure Sensitivity"
@@ -3558,7 +3558,7 @@ msgstr "Seleziona barra degli strumenti:"
 
 #: ../ui/settings.glade:4143
 msgid "Presentation Mode"
-msgstr "Modalità Presentazione"
+msgstr "Modalità presentazione"
 
 #: ../ui/settings.glade:4174
 msgid "Pre-load pages before"
@@ -3878,7 +3878,7 @@ msgstr "Dispositivi audio"
 
 #: ../ui/settings.glade:6206
 msgid "Sample Rate"
-msgstr "Frequenza di Campionamento"
+msgstr "Frequenza di campionamento"
 
 #: ../ui/settings.glade:6218
 msgid "Gain"
@@ -3950,7 +3950,7 @@ msgstr "Disabilitato"
 
 #: ../ui/settingsDeviceClassConfig.glade:43
 msgid "Mouse+Keyboard Combo"
-msgstr "Tastiera e Mouse Integrati"
+msgstr "Tastiera e mouse Integrati"
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
