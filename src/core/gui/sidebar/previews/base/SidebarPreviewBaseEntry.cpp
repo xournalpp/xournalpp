@@ -26,17 +26,16 @@ SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, co
 
     g_signal_connect(this->button.get(), "clicked", G_CALLBACK(+[](GtkButton*, gpointer self) {
                          static_cast<SidebarPreviewBaseEntry*>(self)->mouseButtonPressCallback();
-                         return true;
                      }),
                      this);
 
-    const auto clickCallback = G_CALLBACK(+[](GtkWidget*, GdkEvent* event, SidebarPreviewBaseEntry* self) {
+    const auto clickCallback = G_CALLBACK(+[](GtkWidget*, GdkEvent* event, gpointer self) {
         // Open context menu on right mouse click
         if (event->type == GDK_BUTTON_PRESS) {
             auto mouseEvent = reinterpret_cast<GdkEventButton*>(event);
             if (mouseEvent->button == 3) {
-                self->mouseButtonPressCallback();
-                self->sidebar->openPreviewContextMenu(event);
+                static_cast<SidebarPreviewBaseEntry*>(self)->mouseButtonPressCallback();
+                static_cast<SidebarPreviewBaseEntry*>(self)->sidebar->openPreviewContextMenu(event);
                 return true;
             }
         }

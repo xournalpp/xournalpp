@@ -11,6 +11,7 @@
 #include "control/settings/ButtonConfig.h"   // for ButtonConfig
 #include "control/settings/Settings.h"       // for Settings
 #include "control/settings/SettingsEnums.h"  // for BUTTON_COUNT
+#include "util/glib_casts.h"
 
 #include "MainWindow.h"          // for MainWindow
 #include "ToolbarDefinitions.h"  // for ToolbarEntryDefintion
@@ -26,9 +27,10 @@ FloatingToolbox::FloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay)
     gtk_overlay_add_overlay(overlay, this->floatingToolbox);
     gtk_overlay_set_overlay_pass_through(overlay, this->floatingToolbox, true);
     gtk_widget_add_events(this->floatingToolbox, GDK_LEAVE_NOTIFY_MASK);
-    g_signal_connect(this->floatingToolbox, "leave-notify-event", G_CALLBACK(handleLeaveFloatingToolbox), this);
+    g_signal_connect(this->floatingToolbox, "leave-notify-event",
+                     xoj::util::wrap_for_g_callback_v<handleLeaveFloatingToolbox>, this);
     // position overlay widgets
-    g_signal_connect(overlay, "get-child-position", G_CALLBACK(this->getOverlayPosition), this);
+    g_signal_connect(overlay, "get-child-position", xoj::util::wrap_for_g_callback_v<getOverlayPosition>, this);
 }
 
 
@@ -141,7 +143,7 @@ void FloatingToolbox::flagRecalculateSizeRequired() { this->floatingToolboxState
  *
  */
 auto FloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget, GdkRectangle* allocation,
-                                         FloatingToolbox* self) -> gboolean {
+                                         FloatingToolbox* self) -> bool {
     if (widget == self->floatingToolbox) {
         gtk_widget_get_allocation(widget, allocation);  // get existing width and height
 
@@ -178,10 +180,12 @@ auto FloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget,
 }
 
 
-void FloatingToolbox::handleLeaveFloatingToolbox(GtkWidget* floatingToolbox, GdkEvent* event, FloatingToolbox* self) {
+bool FloatingToolbox::handleLeaveFloatingToolbox(GtkWidget* floatingToolbox, GdkEvent* event, FloatingToolbox* self) {
     if (floatingToolbox == self->floatingToolbox) {
         if (self->floatingToolboxState != configuration) {
             self->hide();
         }
+        return true;
     }
+    return false;
 }

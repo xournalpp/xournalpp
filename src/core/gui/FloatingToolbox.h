@@ -56,13 +56,12 @@ private:
     /**
      * Callback for positioning overlayed floating menu
      */
-    static gboolean getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget, GdkRectangle* allocation,
-                                       FloatingToolbox* self);
+    static bool getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget, GdkRectangle* alloc, FloatingToolbox* self);
 
     /**
      * Callback to hide floating Toolbar when mouse leaves it
      */
-    static void handleLeaveFloatingToolbox(GtkWidget* floatingToolbox, GdkEvent* event, FloatingToolbox* self);
+    static bool handleLeaveFloatingToolbox(GtkWidget* floatingToolbox, GdkEvent* event, FloatingToolbox* self);
 
     /**
      * Show the Floating Toolbox

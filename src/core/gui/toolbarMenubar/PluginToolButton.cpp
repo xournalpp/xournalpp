@@ -26,7 +26,7 @@ auto PluginToolButton::createItem(bool) -> xoj::util::WidgetSPtr {
     gtk_widget_set_tooltip_text(GTK_WIDGET(btn), t->description.c_str());
 
     // Connect signal
-    g_signal_connect(item.get(), "clicked", G_CALLBACK(+[](GtkWidget*, gpointer d) {
+    g_signal_connect(item.get(), "clicked", G_CALLBACK(+[](GtkButton*, gpointer d) {
                          auto* te = static_cast<ToolbarButtonEntry*>(d);
                          te->plugin->executeToolbarButton(te);
                      }),
