@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-20 08:50+0000\n"
-"PO-Revision-Date: 2025-02-23 04:25\n"
+"PO-Revision-Date: 2025-03-16 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -186,7 +186,7 @@ msgstr "Baztertu"
 
 #: ../src/core/control/Control.cpp:2141
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
-msgstr ""
+msgstr "Gtk demo azpiprozesua sortzeak huts egin du: {1} (irteera kodea: {2})"
 
 #: ../src/core/control/CrashHandler.cpp:31
 msgid "Trying to emergency save the current open document..."
@@ -1520,7 +1520,7 @@ msgstr "Aldatu pantaila osora"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:325
 msgid "Toggle sidebar"
-msgstr ""
+msgstr "Txandakatu alboko barra"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:327
 msgid "Manage Toolbars"
@@ -2652,7 +2652,31 @@ msgid "%{name}\tThe filename (if any) of the PDF background\n"
 "%Z\t\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\t\t%\n"
 "Illegal characters are replaced with \"_\""
-msgstr ""
+msgstr "%{name} PDF atzeko planoaren fitxategiaren izena (bada)\n"
+"%{file} fitxategiaren gordetako fitxategi-izena\n"
+"%a Asteko egunaren izen laburtua (adib. Og)\n"
+"%A Asteko egunaren izen osoa (adib. Osteguna)\n"
+"%b Hilabeteko Izen laburtua (adib. Abuztua)\n"
+"%B Hilabeteko izen osoa (adib. abuztua)\n"
+"%c Data eta orduaren formatua (adib. 2001ko abuztuak 23 14:55:02)\n"
+"%d Hilabeteko eguna (01-31)\n"
+"%F Dataren formatua (adib. 2001-08-23)\n"
+"%H Ordua 24h formatuan (00-23)\n"
+"%I Ordua 12h formatuan (01-12)\n"
+"%j Urteko eguna (001-366)\n"
+"%m Hilabetea zenbaki hamartar gisa (01-12)\n"
+"%M Minutua (00-59)\n"
+"%p am edo pm izendapena (adib. pm)\n"
+"%S Segundoa (00-61)\n"
+"%U Asteko zenbakia lehen igandea lehenengo asteko lehen egun gisa (00-53)\n"
+"%w Asteko eguna zenbaki hamartar gisa igandea 0 dela (0-6)\n"
+"%W Asteko zenbakia lehen astelehena lehenengo asteko lehen egun gisa (00-53)\n"
+"%x Data formatua (adib. 23/08/01)\n"
+"%X Ordu formatua (14:55:02 edo 2:55:02 pm)\n"
+"%y Urtea, azken bi digituak (00-99)\n"
+"%Y Urtea (adib. 2001)\n"
+"%Z Ordu zonaren izena edo laburdura (adib. CDT)\n"
+"%% % Legez kanpoko karaktereak \"_\" rekin ordezkatzen dira"
 
 #: ../ui/settings.glade:782
 msgid "Default Pdf export name"
@@ -4242,7 +4266,7 @@ msgstr "Laguntza"
 
 #: ../ui/mainmenubar.xml:859
 msgid "Run Gtk3 demo"
-msgstr ""
+msgstr "Korritu GTK3 demoa"
 
 #: ../ui/mainmenubar.xml:863
 msgid "About"
@@ -4418,15 +4442,15 @@ msgstr "Lua scripting-a erabiltzen duten pluginak"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:57
 msgid "Note taking"
-msgstr ""
+msgstr "Oharrak hartzea"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:61
 msgid "PDF annotation"
-msgstr ""
+msgstr "PDF oharrak"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:65
 msgid "LaTeX with customized preamble"
-msgstr ""
+msgstr "LaTeX hitzaurre pertsonalizatuarekin"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.xml.in:4
 msgid "Xournal note file"

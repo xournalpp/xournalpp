@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-20 08:50+0000\n"
-"PO-Revision-Date: 2025-02-23 04:26\n"
+"PO-Revision-Date: 2025-03-16 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -80,7 +80,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:866
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "Inga tillgängliga PDF-sidor att lägga till. Du kan behöva öppna dokumentet på nytt först."
 
 #: ../src/core/control/Control.cpp:880
 msgid "Unable to retrieve pdf page."
@@ -640,20 +640,20 @@ msgstr "Ordna"
 
 #: ../src/core/control/tools/EditSelection.cpp:476
 msgid "Bring forward"
-msgstr "Skicka framåt"
+msgstr "Flytta framåt"
 
 #: ../src/core/control/tools/EditSelection.cpp:487
 msgid "Send backward"
-msgstr "Skicka bakåt"
+msgstr "Flytta bakåt"
 
 #: ../src/core/control/tools/EditSelection.cpp:494
 msgid "Send to back"
-msgstr "Lägg längst bak"
+msgstr "Flytta längst bak"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
 #: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:169
 msgid "Failed to load image"
-msgstr ""
+msgstr "Kunde inte läsa in bild"
 
 #: ../src/core/control/tools/ImageHandler.cpp:69
 msgid "Error while opening image file: "
@@ -880,11 +880,11 @@ msgstr "Byggdes"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:47
 msgid "GTK Version"
-msgstr ""
+msgstr "GTK-version"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:54
 msgid "Git commit"
-msgstr ""
+msgstr "Git-incheckning"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:61
 msgid "See the full list of contributors"
@@ -910,12 +910,12 @@ msgstr "Penna"
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:382
 msgid "Eraser"
-msgstr "Radergummi"
+msgstr "Suddgummi"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Highlighter"
-msgstr "Överstrykningspenna"
+msgstr "Ö_verstrykningspenna"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:398
@@ -941,11 +941,11 @@ msgstr "Markera rektangel"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:95
 msgid "Select multi layer region"
-msgstr ""
+msgstr "Markera region över flera lager"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
 msgid "Select multi layer rect"
-msgstr ""
+msgstr "Markera rektangel över flera lager"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
@@ -1000,18 +1000,18 @@ msgstr "Rita pil"
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Draw Double Arrow"
-msgstr ""
+msgstr "Rita dubbelpil"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Rita koordinatsystem"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
-msgstr ""
+msgstr "Identifiera former"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
@@ -1186,7 +1186,7 @@ msgstr "Fördefinierad"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:39
 msgid "Customized"
-msgstr ""
+msgstr "Anpassad"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:65
 msgid "Toolbars"
@@ -1334,7 +1334,7 @@ msgstr "Tillämpa på alla sidor"
 
 #: ../src/core/gui/menus/menubar/PluginsSubmenu.cpp:15
 msgid "Plugin Manager"
-msgstr ""
+msgstr "Hantera insticksprogram"
 
 #: ../src/core/gui/menus/menubar/PluginsSubmenu.cpp:32
 msgid "Plugin"
@@ -1468,15 +1468,15 @@ msgstr "Ta bort"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:312
 msgid "Rotation Snapping"
-msgstr ""
+msgstr "Fäst vid rotation"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:313
 msgid "Grid Snapping"
-msgstr "Snäppning till rutnät"
+msgstr "Fäst mot rutnät"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:321
 msgid "Paired pages"
-msgstr "Parkopplade sidor"
+msgstr "Dubbla sidor"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:323
 msgid "Presentation mode"
@@ -1508,7 +1508,7 @@ msgstr "Zooma in"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:333
 msgid "Zoom fit to screen"
-msgstr ""
+msgstr "Zooma till skärmbredd"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:334
 msgid "Zoom to 100%"
@@ -1573,20 +1573,20 @@ msgstr "streckad"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:371
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:390
 msgid "dash-/ dotted"
-msgstr ""
+msgstr "Streckad/prickad"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:372
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:392
 msgid "dotted"
-msgstr ""
+msgstr "prickad"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 msgid "whiteout"
-msgstr ""
+msgstr "täck med vitt"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 msgid "delete stroke"
-msgstr "ta bort streck"
+msgstr "radera objekt"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:399
 msgid "Add/Edit TeX"
@@ -1607,11 +1607,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Setsquare"
-msgstr ""
+msgstr "Triangulär gradskiva"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Compass"
-msgstr ""
+msgstr "Cirkulär gradskiva"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
@@ -1626,12 +1626,12 @@ msgstr "Markera rektangel"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Select Multi-Layer Region"
-msgstr ""
+msgstr "Markera region över flera lager"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Select Multi-Layer Rectangle"
-msgstr ""
+msgstr "Markera rektangel över flera lager"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
@@ -1645,7 +1645,7 @@ msgstr "Vertikalt utrymme"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 msgid "Play Object"
-msgstr "Spela objekt"
+msgstr "Spela upp objekt"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Record Audio / Stop Recording"
@@ -1669,27 +1669,27 @@ msgstr "Fyll"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Fill Opacity"
-msgstr ""
+msgstr "Genomskinlighet för fyllning"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Very Fine"
-msgstr "Mycket fint"
+msgstr "Mycket tunn"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Fine"
-msgstr ""
+msgstr "Tunn"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
 msgid "Medium"
-msgstr ""
+msgstr "Medium"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:492
 msgid "Thick"
-msgstr ""
+msgstr "Tjock"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:494
 msgid "Very Thick"
-msgstr "Väldigt tjock"
+msgstr "Mycket tjock"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:175
 msgid "Show all"
@@ -2121,7 +2121,7 @@ msgstr "Webbplats"
 
 #: ../ui/about.glade:246
 msgid "Source Code / Bug Tracker"
-msgstr ""
+msgstr "Källkod/felrapportering"
 
 #: ../ui/about.glade:283
 msgid "With help from the community"
@@ -2205,7 +2205,7 @@ msgstr "<i>Exempel:</i> 1-3 eller 1,3,5-7 etc."
 
 #: ../ui/exportSettings.glade:279
 msgid "dpi"
-msgstr ""
+msgstr "dpi"
 
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:321
@@ -2266,7 +2266,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:170
 msgid "%%XPP_TEXT_COLOR%%"
-msgstr ""
+msgstr "%%XPP_TEXT_COLOR%%"
 
 #: ../ui/latexSettings.glade:182
 msgid "The current color of the Text Tool, in hex RGB format."
@@ -2310,15 +2310,15 @@ msgstr "Radbryt text"
 
 #: ../ui/latexSettings.glade:434
 msgid "Use font from system theme."
-msgstr ""
+msgstr "Använd typsnitt från systemtema."
 
 #: ../ui/latexSettings.glade:454
 msgid "Font: "
-msgstr "Teckensnitt: "
+msgstr "Typsnitt: "
 
 #: ../ui/latexSettings.glade:469
 msgid "Pick the Editor's Font"
-msgstr ""
+msgstr "Välj typsnitt för editorn"
 
 #: ../ui/latexSettings.glade:507
 msgid "Editor settings"
@@ -2467,15 +2467,15 @@ msgstr "aktiverad,"
 
 #: ../ui/renameLayerDialog.glade:17
 msgid "Rename selected layer"
-msgstr ""
+msgstr "Byt namn på markerat lager"
 
 #: ../ui/renameLayerDialog.glade:38
 msgid "Sample layer name"
-msgstr ""
+msgstr "Exempelnamn på lager"
 
 #: ../ui/selectOpacity.glade:23
 msgid "Opacity settings"
-msgstr ""
+msgstr "Inställningar för genomskinlighet"
 
 #: ../ui/settings.glade:257
 msgid "Arithmetic mean"
@@ -2495,7 +2495,7 @@ msgstr ""
 
 #: ../ui/settings.glade:285
 msgid "Xournal++ Preferences"
-msgstr "Xournal++-inställningar"
+msgstr "Inställningar för Xournal++"
 
 #: ../ui/settings.glade:346
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xopp\n"
@@ -2559,7 +2559,7 @@ msgstr ""
 
 #: ../ui/settings.glade:612
 msgid "Default Save Name"
-msgstr ""
+msgstr "Standardnamn att spara som"
 
 #: ../ui/settings.glade:638
 msgid "<i>This name will be proposed if you export a document to PDF.</i>"
@@ -3366,7 +3366,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4883
 msgid "Paired Pages"
-msgstr ""
+msgstr "Dubbla sidor"
 
 #: ../ui/settings.glade:4909
 msgid "when scrolling to end of last page"
@@ -3413,11 +3413,11 @@ msgstr "Storleksändring"
 
 #: ../ui/settings.glade:5105
 msgid "Rotation snapping tolerance"
-msgstr ""
+msgstr "Tolerans för rotationsfästning"
 
 #: ../ui/settings.glade:5117
 msgid "Grid snapping tolerance"
-msgstr "Tolerans för snäppning till rutnät"
+msgstr "Tolerans för fästning mot rutnät"
 
 #: ../ui/settings.glade:5159
 msgid "Grid size"
@@ -3425,7 +3425,7 @@ msgstr "Rutnätsstorlek"
 
 #: ../ui/settings.glade:5190
 msgid "Use snapping for recognized shapes"
-msgstr ""
+msgstr "Använd fästning för identifierade former"
 
 #: ../ui/settings.glade:5194
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -3433,7 +3433,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5209
 msgid "Snapping"
-msgstr "Snäppning"
+msgstr "Fäst mot objekt"
 
 #: ../ui/settings.glade:5237
 msgid "Minimum Stroke Size"
@@ -3648,15 +3648,15 @@ msgstr "Typ av radergummi - ändra inte"
 
 #: ../ui/settingsButtonConfig.glade:126 ../ui/settingsButtonConfig.glade:144
 msgid "Standard"
-msgstr ""
+msgstr "Standard"
 
 #: ../ui/settingsButtonConfig.glade:127
 msgid "Whiteout"
-msgstr ""
+msgstr "Täck med vitt"
 
 #: ../ui/settingsButtonConfig.glade:128
 msgid "Delete stroke"
-msgstr "Ta bort streck"
+msgstr "Radera objekt"
 
 #: ../ui/settingsButtonConfig.glade:143
 msgid "Stroke Type - don't change"
@@ -3757,31 +3757,31 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:117
 msgid "Bring to Front"
-msgstr ""
+msgstr "Flytta längst fram"
 
 #: ../ui/mainmenubar.xml:122
 msgid "Bring Forward"
-msgstr ""
+msgstr "Flytta framåt"
 
 #: ../ui/mainmenubar.xml:127
 msgid "Send Backward"
-msgstr ""
+msgstr "Flytta bakåt"
 
 #: ../ui/mainmenubar.xml:132
 msgid "Send to Back"
-msgstr ""
+msgstr "Flytta längst bak"
 
 #: ../ui/mainmenubar.xml:141
 msgid "Move Selection Layer Up"
-msgstr ""
+msgstr "Flytta markering ett lager uppåt"
 
 #: ../ui/mainmenubar.xml:145
 msgid "Move Selection Layer Down"
-msgstr ""
+msgstr "Flytta markering ett lager nedåt"
 
 #: ../ui/mainmenubar.xml:161
 msgid "Preferences"
-msgstr ""
+msgstr "Inställningar"
 
 #: ../ui/mainmenubar.xml:166
 msgid "T_oolbars"
@@ -3789,7 +3789,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:169
 msgid "_Manage"
-msgstr ""
+msgstr "_Hantera"
 
 #: ../ui/mainmenubar.xml:173
 msgid "_Customize"
@@ -3801,51 +3801,51 @@ msgstr "_Visa"
 
 #: ../ui/mainmenubar.xml:184
 msgid "_Pair Pages"
-msgstr ""
+msgstr "_Dubbla sidor"
 
 #: ../ui/mainmenubar.xml:188
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "_Presentationsläge"
 
 #: ../ui/mainmenubar.xml:200
 msgid "Show Toolbars"
-msgstr ""
+msgstr "Visa verktygsfält"
 
 #: ../ui/mainmenubar.xml:217
 msgid "Layout"
-msgstr ""
+msgstr "Layout"
 
 #: ../ui/mainmenubar.xml:220
 msgid "_Horizontal"
-msgstr ""
+msgstr "_Horisontell"
 
 #: ../ui/mainmenubar.xml:225
 msgid "_Vertical"
-msgstr ""
+msgstr "_Vertikal"
 
 #: ../ui/mainmenubar.xml:232
 msgid "_Left to Right"
-msgstr ""
+msgstr "Vänster ti_ll höger"
 
 #: ../ui/mainmenubar.xml:237
 msgid "_Right to Left"
-msgstr ""
+msgstr "Höge_r till vänster"
 
 #: ../ui/mainmenubar.xml:244
 msgid "_Top to Bottom"
-msgstr ""
+msgstr "Övers_t till underst"
 
 #: ../ui/mainmenubar.xml:249
 msgid "_Bottom to Top"
-msgstr ""
+msgstr "_Underst till överst"
 
 #: ../ui/mainmenubar.xml:256
 msgid "_Cols/Rows"
-msgstr ""
+msgstr "_Kolumner/rader"
 
 #: ../ui/mainmenubar.xml:259
 msgid "Set Columns"
-msgstr ""
+msgstr "Ställ in kolumner"
 
 #: ../ui/mainmenubar.xml:263
 msgid "_1 Column"
@@ -3853,35 +3853,35 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:268
 msgid "_2 Columns"
-msgstr ""
+msgstr "_2 kolumner"
 
 #: ../ui/mainmenubar.xml:273
 msgid "_3 Columns"
-msgstr ""
+msgstr "_3 kolumner"
 
 #: ../ui/mainmenubar.xml:278
 msgid "_4 Columns"
-msgstr ""
+msgstr "_4 kolumner"
 
 #: ../ui/mainmenubar.xml:283
 msgid "_5 Columns"
-msgstr ""
+msgstr "_5 kolumner"
 
 #: ../ui/mainmenubar.xml:288
 msgid "_6 Columns"
-msgstr ""
+msgstr "_6 kolumner"
 
 #: ../ui/mainmenubar.xml:293
 msgid "_7 Columns"
-msgstr ""
+msgstr "_7 kolumner"
 
 #: ../ui/mainmenubar.xml:298
 msgid "_8 Columns"
-msgstr ""
+msgstr "_8 kolumner"
 
 #: ../ui/mainmenubar.xml:305
 msgid "Set Rows"
-msgstr ""
+msgstr "Ställ in rader"
 
 #: ../ui/mainmenubar.xml:309
 msgid "_1 Row"
@@ -3889,31 +3889,31 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:314
 msgid "_2 Rows"
-msgstr ""
+msgstr "_2 rader"
 
 #: ../ui/mainmenubar.xml:319
 msgid "_3 Rows"
-msgstr ""
+msgstr "_3 rader"
 
 #: ../ui/mainmenubar.xml:324
 msgid "_4 Rows"
-msgstr ""
+msgstr "_4 rader"
 
 #: ../ui/mainmenubar.xml:329
 msgid "_5 Rows"
-msgstr ""
+msgstr "_5 rader"
 
 #: ../ui/mainmenubar.xml:334
 msgid "_6 Rows"
-msgstr ""
+msgstr "_6 rader"
 
 #: ../ui/mainmenubar.xml:339
 msgid "_7 Rows"
-msgstr ""
+msgstr "_7 rader"
 
 #: ../ui/mainmenubar.xml:344
 msgid "_8 Rows"
-msgstr ""
+msgstr "_8 rader"
 
 #: ../ui/mainmenubar.xml:355
 msgid "Zoom In"
@@ -3937,35 +3937,35 @@ msgstr "_Navigering"
 
 #: ../ui/mainmenubar.xml:378
 msgid "_First Page"
-msgstr ""
+msgstr "_Första sidan"
 
 #: ../ui/mainmenubar.xml:383
 msgid "_Previous Page"
-msgstr ""
+msgstr "_Föregående sida"
 
 #: ../ui/mainmenubar.xml:388
 msgid "_Goto Page"
-msgstr ""
+msgstr "_Gå till sida"
 
 #: ../ui/mainmenubar.xml:393
 msgid "_Next Page"
-msgstr ""
+msgstr "_Nästa sida"
 
 #: ../ui/mainmenubar.xml:398
 msgid "_Last Page"
-msgstr ""
+msgstr "_Sista sidan"
 
 #: ../ui/mainmenubar.xml:405
 msgid "_Previous Layer"
-msgstr ""
+msgstr "_Föregående lager"
 
 #: ../ui/mainmenubar.xml:410
 msgid "_Next Layer"
-msgstr ""
+msgstr "_Nästa lager"
 
 #: ../ui/mainmenubar.xml:415
 msgid "_Top Layer"
-msgstr ""
+msgstr "_Översta lagret"
 
 #: ../ui/mainmenubar.xml:421
 msgid "N_ext Annotated Page"
@@ -3977,31 +3977,31 @@ msgstr "Fö_regående annoterade sida"
 
 #: ../ui/mainmenubar.xml:436
 msgid "New Page _Before"
-msgstr ""
+msgstr "Ny sida _före"
 
 #: ../ui/mainmenubar.xml:440
 msgid "New Page _After"
-msgstr ""
+msgstr "Ny sida ef_ter"
 
 #: ../ui/mainmenubar.xml:445
 msgid "New Page at _End"
-msgstr ""
+msgstr "Ny sida i slut_et"
 
 #: ../ui/mainmenubar.xml:449
 msgid "Duplicate Page"
-msgstr ""
+msgstr "Duplicera sida"
 
 #: ../ui/mainmenubar.xml:453
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Lägg till nya PDF-sidor"
 
 #: ../ui/mainmenubar.xml:457
 msgid "Configure Page Template"
-msgstr ""
+msgstr "Konfigurera sidmall"
 
 #: ../ui/mainmenubar.xml:461
 msgid "_Delete Page"
-msgstr ""
+msgstr "Ra_dera sida"
 
 #: ../ui/mainmenubar.xml:468
 msgid "New _Layer"
@@ -4009,23 +4009,23 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:473
 msgid "Delete Layer"
-msgstr ""
+msgstr "Radera lager"
 
 #: ../ui/mainmenubar.xml:478
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "Slå ihop lager nedåt"
 
 #: ../ui/mainmenubar.xml:483
 msgid "Rename Layer"
-msgstr ""
+msgstr "Byt namn på lager"
 
 #: ../ui/mainmenubar.xml:490
 msgid "Paper _Format"
-msgstr ""
+msgstr "Pappers_format"
 
 #: ../ui/mainmenubar.xml:494
 msgid "Paper _Color"
-msgstr ""
+msgstr "Pappersfä_rg"
 
 #: ../ui/mainmenubar.xml:503
 msgid "_Tools"
@@ -4033,19 +4033,19 @@ msgstr "V_erktyg"
 
 #: ../ui/mainmenubar.xml:506
 msgid "_Pen"
-msgstr ""
+msgstr "_Penna"
 
 #: ../ui/mainmenubar.xml:512
 msgid "_Eraser"
-msgstr ""
+msgstr "S_uddgummi"
 
 #: ../ui/mainmenubar.xml:518
 msgid "Select Linear Text"
-msgstr ""
+msgstr "Markera linjär text"
 
 #: ../ui/mainmenubar.xml:524
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "Markera text i rektangel"
 
 #: ../ui/mainmenubar.xml:530
 msgid "_Highlighter"
@@ -4053,11 +4053,11 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:536
 msgid "_Text"
-msgstr ""
+msgstr "_Text"
 
 #: ../ui/mainmenubar.xml:542
 msgid "_Image"
-msgstr ""
+msgstr "B_ild"
 
 #: ../ui/mainmenubar.xml:548
 msgid "_Default Tool"
@@ -4073,44 +4073,44 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:587
 msgid "Draw _Line"
-msgstr ""
+msgstr "Rita _linje"
 
 #: ../ui/mainmenubar.xml:628
 msgid "_Vertical Space"
-msgstr ""
+msgstr "_Vertikalt utrymme"
 
 #: ../ui/mainmenubar.xml:640
 msgid "H_and Tool"
-msgstr ""
+msgstr "H_andverktyg"
 
 #: ../ui/mainmenubar.xml:656
 msgid "Pen _Options"
-msgstr ""
+msgstr "P_ennalternativ"
 
 #: ../ui/mainmenubar.xml:659 ../ui/mainmenubar.xml:721
 #: ../ui/mainmenubar.xml:768
 msgid "_very fine"
-msgstr ""
+msgstr "my_cket tunn"
 
 #: ../ui/mainmenubar.xml:664 ../ui/mainmenubar.xml:726
 #: ../ui/mainmenubar.xml:773
 msgid "_fine"
-msgstr ""
+msgstr "t_unn"
 
 #: ../ui/mainmenubar.xml:669 ../ui/mainmenubar.xml:731
 #: ../ui/mainmenubar.xml:778
 msgid "_medium"
-msgstr ""
+msgstr "_medium"
 
 #: ../ui/mainmenubar.xml:674 ../ui/mainmenubar.xml:736
 #: ../ui/mainmenubar.xml:783
 msgid "_thick"
-msgstr ""
+msgstr "_tjock"
 
 #: ../ui/mainmenubar.xml:679 ../ui/mainmenubar.xml:741
 #: ../ui/mainmenubar.xml:788
 msgid "ver_y thick"
-msgstr ""
+msgstr "m_ycket tjock"
 
 #: ../ui/mainmenubar.xml:708 ../ui/mainmenubar.xml:795
 msgid "Fi_ll"
@@ -4118,19 +4118,19 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:712 ../ui/mainmenubar.xml:799
 msgid "Fill opacity"
-msgstr ""
+msgstr "Genomskinlighet för fyllning"
 
 #: ../ui/mainmenubar.xml:718
 msgid "Eraser Optio_ns"
-msgstr ""
+msgstr "Suddgummialter_nativ"
 
 #: ../ui/mainmenubar.xml:748
 msgid "_standard"
-msgstr ""
+msgstr "_standard"
 
 #: ../ui/mainmenubar.xml:753
 msgid "_whiteout"
-msgstr ""
+msgstr "tä_ck med vitt"
 
 #: ../ui/mainmenubar.xml:758
 msgid "_delete strokes"
@@ -4138,7 +4138,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:765
 msgid "Highlighter Opti_ons"
-msgstr ""
+msgstr "Alte_rnativ för överstrykningspenna"
 
 #: ../ui/mainmenubar.xml:805
 msgid "Select PDF Text Options"
@@ -4150,15 +4150,15 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:814
 msgid "Text Font..."
-msgstr ""
+msgstr "Typsnitt..."
 
 #: ../ui/mainmenubar.xml:819
 msgid "Record / Stop"
-msgstr ""
+msgstr "Spela in / stoppa"
 
 #: ../ui/mainmenubar.xml:824
 msgid "Pause"
-msgstr ""
+msgstr "Pausa"
 
 #: ../ui/mainmenubar.xml:851
 msgid "_Help"
