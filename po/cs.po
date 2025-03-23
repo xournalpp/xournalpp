@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 08:50+0000\n"
-"PO-Revision-Date: 2025-02-23 04:25\n"
+"POT-Creation-Date: 2025-03-16 11:23+0000\n"
+"PO-Revision-Date: 2025-03-23 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -375,18 +375,18 @@ msgid "\n\n"
 msgstr "\n\n"
 "Nyní se pokusí o spuštění bez tohoto souboru."
 
-#: ../src/core/control/XournalMain.cpp:437
-#: ../src/core/control/XournalMain.cpp:497
+#: ../src/core/control/XournalMain.cpp:442
+#: ../src/core/control/XournalMain.cpp:502
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Promiň, Xournal++ může otevřít pouze jeden soubor najednou.\n"
 "Ostatní jsou ignorovány."
 
-#: ../src/core/control/XournalMain.cpp:448
+#: ../src/core/control/XournalMain.cpp:453
 msgid "File {1} does not exist."
 msgstr "Soubor {1} neexistuje."
 
-#: ../src/core/control/XournalMain.cpp:452
+#: ../src/core/control/XournalMain.cpp:457
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -394,33 +394,33 @@ msgstr "Chyba souborového systému: {1}\n"
 "Omlouváme se, Xournal++ nemůže otevřít soubor: {2}\n"
 "Zvažte zkopírování souboru do místního adresáře."
 
-#: ../src/core/control/XournalMain.cpp:642
+#: ../src/core/control/XournalMain.cpp:647
 msgid "Jump to Page (first Page: 1)"
 msgstr "Přejít na stránku (první stránka: 1)"
 
-#: ../src/core/control/XournalMain.cpp:646
+#: ../src/core/control/XournalMain.cpp:651
 msgid "Get version of xournalpp"
 msgstr "Získat verzi xournalpp"
 
-#: ../src/core/control/XournalMain.cpp:648
+#: ../src/core/control/XournalMain.cpp:653
 msgid "Disable audio for this session"
 msgstr "Vypnutí zvuku pro tuto relaci"
 
-#: ../src/core/control/XournalMain.cpp:650
+#: ../src/core/control/XournalMain.cpp:655
 msgid "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
 msgstr "Otevření PDF v režimu přílohy\n"
 "                                 Ignorováno, pokud není zadán žádný soubor PDF."
 
-#: ../src/core/control/XournalMain.cpp:654
+#: ../src/core/control/XournalMain.cpp:659
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "Uložit xopp-soubor s pozadím PDF zadaným jako SOUBOR"
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:668
 msgid "Export FILE as PDF"
 msgstr "Exportovat soubor jako PDF"
 
-#: ../src/core/control/XournalMain.cpp:665
+#: ../src/core/control/XournalMain.cpp:670
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -428,7 +428,7 @@ msgstr "Uložit FILE jako obrázek (jeden na stránku)\n"
 "                                 Uhodnout výstupní formát podle přípony IMGFILE\n"
 "                                 Podporované formáty: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:670
+#: ../src/core/control/XournalMain.cpp:675
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -436,13 +436,13 @@ msgstr "Export bez pozadí\n"
 "                                 Exportovaný soubor má průhledné nebo bílé pozadí,\n"
 "                                 v závislosti na tom, jaký formát podporuje\n"
 
-#: ../src/core/control/XournalMain.cpp:675
+#: ../src/core/control/XournalMain.cpp:680
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Exportovat bez pravítka\n"
 "                                 Exportovaný soubor nemá pravítko\n"
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:684
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -454,25 +454,25 @@ msgstr "Exportovat vrstvy postupně\n"
 "                                 v pořadí od spodní po vrchní.\n"
 "                                 Vzniklé PDF je možné použít pro prezentaci.\n"
 
-#: ../src/core/control/XournalMain.cpp:686
+#: ../src/core/control/XournalMain.cpp:691
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Exportovat pouze stránky specifikované příkazem RANGE (např. \"2-3,5,7-\")\n"
 "                                 Nemá efekt bez -p/--create-pdf nebo -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:690
+#: ../src/core/control/XournalMain.cpp:695
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Exportovat pouze vrstvy specifikované pomocí RANGE (např. \"2-3,5,7-\")\n"
 "                                 Nemá efekt bez -p/--create-pdf nebo -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:694
+#: ../src/core/control/XournalMain.cpp:699
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Nastavte DPI pro export do PNG. Výchozí hodnota je 300\n"
 "                                 Nemá efekt bez -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:698
+#: ../src/core/control/XournalMain.cpp:703
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -480,7 +480,7 @@ msgstr "Nastavte šířku stránky pro export do PNG\n"
 "                                 Nemá efekt bez -i/--create-img=foo.png\n"
 "                                 Ignorováno při použit --export-png-dpi"
 
-#: ../src/core/control/XournalMain.cpp:704
+#: ../src/core/control/XournalMain.cpp:709
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -488,11 +488,11 @@ msgstr "Nastavte výšku stránky pro export do PNG\n"
 "                                 Nemá efekt bez -i/--create-img=foo.png\n"
 "                                 Ignorováno při použití --export-png-dpi nebo --export-png-width"
 
-#: ../src/core/control/XournalMain.cpp:709
+#: ../src/core/control/XournalMain.cpp:714
 msgid "Advanced export options"
 msgstr "Pokročilé možnosti exportu"
 
-#: ../src/core/control/XournalMain.cpp:710
+#: ../src/core/control/XournalMain.cpp:715
 msgid "Display advanced export options"
 msgstr "Zobrazit pokročilé možnosti exportu"
 
@@ -862,7 +862,7 @@ msgid "Unable to play audio recording {1}"
 msgstr "Nebylo možno přehrát zvukovou nahrávku {1}"
 
 #: ../src/core/gui/PageView.cpp:922
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:82
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
 msgid "Loading..."
 msgstr "Načítání..."
@@ -1410,7 +1410,7 @@ msgstr ""
 msgid "Apply to current page"
 msgstr "Použít na aktuální stránku"
 
-#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:172
+#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:169
 msgid "Contents"
 msgstr "Obsah"
 

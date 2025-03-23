@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 08:50+0000\n"
-"PO-Revision-Date: 2025-02-23 04:26\n"
+"POT-Creation-Date: 2025-03-16 11:23+0000\n"
+"PO-Revision-Date: 2025-03-23 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -375,18 +375,18 @@ msgid "\n\n"
 msgstr "\n\n"
 "Se intentará ejecutar sin este archivo."
 
-#: ../src/core/control/XournalMain.cpp:437
-#: ../src/core/control/XournalMain.cpp:497
+#: ../src/core/control/XournalMain.cpp:442
+#: ../src/core/control/XournalMain.cpp:502
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Xournal++ solo puede abrir un archivo a la vez.\n"
 "El resto se ignora."
 
-#: ../src/core/control/XournalMain.cpp:448
+#: ../src/core/control/XournalMain.cpp:453
 msgid "File {1} does not exist."
 msgstr "El archivo {1} no existe."
 
-#: ../src/core/control/XournalMain.cpp:452
+#: ../src/core/control/XournalMain.cpp:457
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -394,33 +394,33 @@ msgstr "Error del sistema de archivos: {1}\n"
 "Lo sentimos, Xournal++ no puede abrir el archivo: {2}\n"
 "Considere copiar el archivo a un directorio local."
 
-#: ../src/core/control/XournalMain.cpp:642
+#: ../src/core/control/XournalMain.cpp:647
 msgid "Jump to Page (first Page: 1)"
 msgstr "Ir a la página (primera página: 1)"
 
-#: ../src/core/control/XournalMain.cpp:646
+#: ../src/core/control/XournalMain.cpp:651
 msgid "Get version of xournalpp"
 msgstr "Obtener la versión de xournalpp"
 
-#: ../src/core/control/XournalMain.cpp:648
+#: ../src/core/control/XournalMain.cpp:653
 msgid "Disable audio for this session"
 msgstr "Deshabilitar audio para esta sesión"
 
-#: ../src/core/control/XournalMain.cpp:650
+#: ../src/core/control/XournalMain.cpp:655
 msgid "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
 msgstr "Abrir PDF en modo adjunto\n"
 "ignorado si no se especifica un archivo PDF."
 
-#: ../src/core/control/XournalMain.cpp:654
+#: ../src/core/control/XournalMain.cpp:659
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "Guardar el archivo xopp con el PDF de fondo especificado como ARCHIVO"
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:668
 msgid "Export FILE as PDF"
 msgstr "Exportar FILE como PDF"
 
-#: ../src/core/control/XournalMain.cpp:665
+#: ../src/core/control/XournalMain.cpp:670
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -428,7 +428,7 @@ msgstr "Exportar FILE como archivos de imagen (uno por página)\n"
 "                                 Adivina el formato de salida en base a la extensión de IMGFILE\n"
 "                                 Formatos soportados: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:670
+#: ../src/core/control/XournalMain.cpp:675
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -436,13 +436,13 @@ msgstr "Exportar sin fondo\n"
 "                                 El archivo exportado tiene un fondo blanco o transparente,\n"
 "                                 dependiendo de lo que soporte su formato\n"
 
-#: ../src/core/control/XournalMain.cpp:675
+#: ../src/core/control/XournalMain.cpp:680
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Exportar sin lineas\n"
 "                                 El archivo exportado no tiene lineas en el papel (una hoja lisa)\n"
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:684
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -454,25 +454,25 @@ msgstr "Exporta capas progresivamente\n"
 "                                 construyendo progresivamente la pila de capas.\n"
 "                                 El archivo PDF resultante puede ser utilizado para una presentación.\n"
 
-#: ../src/core/control/XournalMain.cpp:686
+#: ../src/core/control/XournalMain.cpp:691
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Solo exportar las páginas especificadas por INTERVALO (p. ej: \"2-3,5,7-\")\n"
 "                                 No tiene efecto sin -p/--create-pdf o -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:690
+#: ../src/core/control/XournalMain.cpp:695
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Sólo exportar las capas especificadas por RANGE (p.e. \"2-3,5,7-\")\n"
 "                                 Sin efecto sin -p/--create-pdf o -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:694
+#: ../src/core/control/XournalMain.cpp:699
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Establecer DPI para exportar a PNG. Valor predeterminado: 300\n"
 "                                 Sin efecto sin -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:698
+#: ../src/core/control/XournalMain.cpp:703
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -480,18 +480,18 @@ msgstr "Establece la anchura de la página para exportaciones PNG\n"
 "                                 No tiene efecto sin -i/--create-img=foo.png\n"
 "                                 Se ignora si se usa --export-png-dpi"
 
-#: ../src/core/control/XournalMain.cpp:704
+#: ../src/core/control/XournalMain.cpp:709
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
 msgstr "Establecer la altura de la página para las exportaciones PNG\n"
 "                                 No tiene efecto si no se usa --export-png-dpi o --export-png-width"
 
-#: ../src/core/control/XournalMain.cpp:709
+#: ../src/core/control/XournalMain.cpp:714
 msgid "Advanced export options"
 msgstr "Opciones avanzadas de exportación"
 
-#: ../src/core/control/XournalMain.cpp:710
+#: ../src/core/control/XournalMain.cpp:715
 msgid "Display advanced export options"
 msgstr "Mostrar opciones avanzadas de exportación"
 
@@ -861,7 +861,7 @@ msgid "Unable to play audio recording {1}"
 msgstr "No se puede reproducir la grabación de audio {1}"
 
 #: ../src/core/gui/PageView.cpp:922
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:82
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
 msgid "Loading..."
 msgstr "Cargando…"
@@ -1411,7 +1411,7 @@ msgstr "Copiar fondo actual"
 msgid "Apply to current page"
 msgstr "Aplicar a la página actual"
 
-#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:172
+#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:169
 msgid "Contents"
 msgstr "Sumario"
 

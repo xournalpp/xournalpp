@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 08:50+0000\n"
-"PO-Revision-Date: 2025-02-23 04:26\n"
+"POT-Creation-Date: 2025-03-16 11:23+0000\n"
+"PO-Revision-Date: 2025-03-23 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -373,18 +373,18 @@ msgid "\n\n"
 msgstr "\n\n"
 "Θα προσπαθήσουμε να εκτελέσουμε χωρίς αυτό το αρχείο."
 
-#: ../src/core/control/XournalMain.cpp:437
-#: ../src/core/control/XournalMain.cpp:497
+#: ../src/core/control/XournalMain.cpp:442
+#: ../src/core/control/XournalMain.cpp:502
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Συγγνώμη το Xournal++ μπορεί να ανοίξει μόνο ένα αρχείο την φορά.\n"
 "Τα υπόλοιπα θα αγνοηθούν."
 
-#: ../src/core/control/XournalMain.cpp:448
+#: ../src/core/control/XournalMain.cpp:453
 msgid "File {1} does not exist."
 msgstr "Το αρχείο {1} δεν υπάρχει."
 
-#: ../src/core/control/XournalMain.cpp:452
+#: ../src/core/control/XournalMain.cpp:457
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -392,33 +392,33 @@ msgstr "Σφάλμα συστήματος αρχείων: {1}\n"
 "Λυπούμαστε, το Xournal++ δεν μπορεί να ανοίξει το αρχείο: {2}\n"
 "Εξετάζει την αντιγραφή του αρχείου σε τοπικό κατάλογο."
 
-#: ../src/core/control/XournalMain.cpp:642
+#: ../src/core/control/XournalMain.cpp:647
 msgid "Jump to Page (first Page: 1)"
 msgstr "Μετάβαση στη σελίδα (πρώτη σελίδα: 1)"
 
-#: ../src/core/control/XournalMain.cpp:646
+#: ../src/core/control/XournalMain.cpp:651
 msgid "Get version of xournalpp"
 msgstr "Δείτε την έκδοση του xournalpp"
 
-#: ../src/core/control/XournalMain.cpp:648
+#: ../src/core/control/XournalMain.cpp:653
 msgid "Disable audio for this session"
 msgstr "Απενεργοποίηση ήχου για την υπόλοιπη διάρκεια εκτέλεσης του προγράμματος"
 
-#: ../src/core/control/XournalMain.cpp:650
+#: ../src/core/control/XournalMain.cpp:655
 msgid "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
 msgstr "Ανοίξτε PDF σε λειτουργία επισύναψης\n"
 "                                 Αγνοείται αν δεν έχει καθοριστεί αρχείο PDF."
 
-#: ../src/core/control/XournalMain.cpp:654
+#: ../src/core/control/XournalMain.cpp:659
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "Αποθήκευση αρχείου xopp-με το PDF φόντου που ορίζεται ως FILE"
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:668
 msgid "Export FILE as PDF"
 msgstr "Εξαγωγή σε αρχείο PDF"
 
-#: ../src/core/control/XournalMain.cpp:665
+#: ../src/core/control/XournalMain.cpp:670
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -426,7 +426,7 @@ msgstr "Εξαγωγή FILE ως αρχεία εικόνας (ένα ανά σε
 "                                 Μαντέψτε τη μορφή εξόδου από την επέκταση IMGFILE\n"
 "                                 Υποστηριζόμενες μορφές: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:670
+#: ../src/core/control/XournalMain.cpp:675
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -434,13 +434,13 @@ msgstr "Εξαγωγή χωρίς φόντο\n"
 "                                 Το εξαγόμενο αρχείο έχει διαφανές ή λευκό φόντο,\n"
 "                                 ανάλογα με τη μορφή που υποστηρίζει\n"
 
-#: ../src/core/control/XournalMain.cpp:675
+#: ../src/core/control/XournalMain.cpp:680
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Εξαγωγή χωρίς απόφαση\n"
 "                                 Το εξαγόμενο αρχείο δεν έχει καμία έντυπη απόφαση\n"
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:684
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -448,24 +448,24 @@ msgid "Export layers progressively\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:686
+#: ../src/core/control/XournalMain.cpp:691
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Εξαγωγή μόνο των σελίδων που καθορίζονται από το RANGE (π.χ. \"2-3,5,7-\")\n"
 "                                 Χωρίς εφέ χωρίς -p/--create-pdf ή -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:690
+#: ../src/core/control/XournalMain.cpp:695
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:694
+#: ../src/core/control/XournalMain.cpp:699
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Θέσε DPI για εξαγωγές PNG. Το σύνηθες είναι 300\n"
 "                                 Κανένα αποτέλεσμα χωρίς -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:698
+#: ../src/core/control/XournalMain.cpp:703
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -473,7 +473,7 @@ msgstr "Θέσε το πλάτος σελίδας για εξαγωγές PNG\n"
 "                                 Κανένα αποτέλεσμα χωρίς -i/--create-img=foo.png\n"
 "                                 Παραλείπεται αν χρησιμοποιείται το --export-png-dpi"
 
-#: ../src/core/control/XournalMain.cpp:704
+#: ../src/core/control/XournalMain.cpp:709
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -481,11 +481,11 @@ msgstr "Θέσε το μήκος σελίδας για εξαγωγές PNG\n"
 "                                 Κανένα αποτέλεσμα χωρίς -i/--create-img=foo.png\n"
 "                                 Παραλείπεται αν χρησιμοποιηθεί το --export-png-dpi ή το --export-png-width"
 
-#: ../src/core/control/XournalMain.cpp:709
+#: ../src/core/control/XournalMain.cpp:714
 msgid "Advanced export options"
 msgstr "Σύνθετες επιλογές εξαγωγής"
 
-#: ../src/core/control/XournalMain.cpp:710
+#: ../src/core/control/XournalMain.cpp:715
 msgid "Display advanced export options"
 msgstr "Εμφάνιση επιλογών προχωρημένης εξαγωγής"
 
@@ -855,7 +855,7 @@ msgid "Unable to play audio recording {1}"
 msgstr "Αδυναμία αναπαραγωγής ηχητικής εγγραφής {1}"
 
 #: ../src/core/gui/PageView.cpp:922
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:82
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
 msgid "Loading..."
 msgstr "Φόρτωση..."
@@ -1403,7 +1403,7 @@ msgstr "Αντιγραφή του τρέχοντος φόντου"
 msgid "Apply to current page"
 msgstr "Εφαρμογή στην τρέχουσα σελίδα"
 
-#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:172
+#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:169
 msgid "Contents"
 msgstr "Περιεχόμενα"
 

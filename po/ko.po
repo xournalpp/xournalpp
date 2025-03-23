@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 08:50+0000\n"
-"PO-Revision-Date: 2025-02-23 04:26\n"
+"POT-Creation-Date: 2025-03-16 11:23+0000\n"
+"PO-Revision-Date: 2025-03-23 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -374,18 +374,18 @@ msgid "\n\n"
 msgstr "\n\n"
 "이 파일 없이 실행해보겠습니다."
 
-#: ../src/core/control/XournalMain.cpp:437
-#: ../src/core/control/XournalMain.cpp:497
+#: ../src/core/control/XournalMain.cpp:442
+#: ../src/core/control/XournalMain.cpp:502
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Xournal++은 한번에 한 개의 파일만 열 수 있습니다.\n"
 "다른 파일들을 무시합니다."
 
-#: ../src/core/control/XournalMain.cpp:448
+#: ../src/core/control/XournalMain.cpp:453
 msgid "File {1} does not exist."
 msgstr "{1} 파일이 존재하지 않습니다."
 
-#: ../src/core/control/XournalMain.cpp:452
+#: ../src/core/control/XournalMain.cpp:457
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -393,33 +393,33 @@ msgstr "파일시스템 오류: {1}\n"
 "Xournal++에서 파일을 열 수 없습니다: {2}\n"
 "해당 파일을 로컬 디렉토리로 복사해 보십시오."
 
-#: ../src/core/control/XournalMain.cpp:642
+#: ../src/core/control/XournalMain.cpp:647
 msgid "Jump to Page (first Page: 1)"
 msgstr "페이지로 이동 (첫 페이지: 1)"
 
-#: ../src/core/control/XournalMain.cpp:646
+#: ../src/core/control/XournalMain.cpp:651
 msgid "Get version of xournalpp"
 msgstr "xournalpp 버전 가져오기"
 
-#: ../src/core/control/XournalMain.cpp:648
+#: ../src/core/control/XournalMain.cpp:653
 msgid "Disable audio for this session"
 msgstr "현재 세션에서 오디오 비활성화"
 
-#: ../src/core/control/XournalMain.cpp:650
+#: ../src/core/control/XournalMain.cpp:655
 msgid "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
 msgstr "첨부모드로 PDF 열기\n"
 "                                 PDF 파일이 지정되어 있으면 무시"
 
-#: ../src/core/control/XournalMain.cpp:654
+#: ../src/core/control/XournalMain.cpp:659
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "지정된 PDF 파일의 배경과 함께 xopp 파일 저장"
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:668
 msgid "Export FILE as PDF"
 msgstr "파일을 PDF로 내보내기"
 
-#: ../src/core/control/XournalMain.cpp:665
+#: ../src/core/control/XournalMain.cpp:670
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -427,7 +427,7 @@ msgstr "이미지 파일로 내보내기(1페이지 당 개별 파일)\n"
 "                                 IMGFILE의 확장자로 이미지 포맷을 유추합니다.\n"
 "                                 지원되는 포맷: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:670
+#: ../src/core/control/XournalMain.cpp:675
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -435,13 +435,13 @@ msgstr "배경없이 내보내기\n"
 "                                 내보내기 된 파일은 파일 포맷의 지원여부에 따라\n"
 "                                 투명 또는 하얀 배경을 갖게 됩니다.\n"
 
-#: ../src/core/control/XournalMain.cpp:675
+#: ../src/core/control/XournalMain.cpp:680
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "노트의 줄 없이 내보내기\n"
 "                                 내보내기 된 파일의 노트에서 가로줄이 빠지게 됩니다.\n"
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:684
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -449,38 +449,38 @@ msgid "Export layers progressively\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:686
+#: ../src/core/control/XournalMain.cpp:691
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:690
+#: ../src/core/control/XournalMain.cpp:695
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:694
+#: ../src/core/control/XournalMain.cpp:699
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:698
+#: ../src/core/control/XournalMain.cpp:703
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:704
+#: ../src/core/control/XournalMain.cpp:709
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:709
+#: ../src/core/control/XournalMain.cpp:714
 msgid "Advanced export options"
 msgstr "고급 내보내기 옵션"
 
-#: ../src/core/control/XournalMain.cpp:710
+#: ../src/core/control/XournalMain.cpp:715
 msgid "Display advanced export options"
 msgstr "고급 내보내기 옵션 표시"
 
@@ -850,7 +850,7 @@ msgid "Unable to play audio recording {1}"
 msgstr "오디오 녹음 {1} 을 재생할 수 없습니다."
 
 #: ../src/core/gui/PageView.cpp:922
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:82
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
 msgid "Loading..."
 msgstr "로딩중..."
@@ -1400,7 +1400,7 @@ msgstr "현재 배경 복사"
 msgid "Apply to current page"
 msgstr "현재 페이지에 적용"
 
-#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:172
+#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:169
 msgid "Contents"
 msgstr "내용"
 

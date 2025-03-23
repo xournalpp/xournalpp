@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 08:50+0000\n"
-"PO-Revision-Date: 2025-03-02 04:25\n"
+"POT-Creation-Date: 2025-03-16 11:23+0000\n"
+"PO-Revision-Date: 2025-03-23 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -374,18 +374,18 @@ msgid "\n\n"
 msgstr "\n\n"
 "S'intentarà executar sense aquest fitxer."
 
-#: ../src/core/control/XournalMain.cpp:437
-#: ../src/core/control/XournalMain.cpp:497
+#: ../src/core/control/XournalMain.cpp:442
+#: ../src/core/control/XournalMain.cpp:502
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "El Xournal++ només pot tenir un fitxer obert.\n"
 "Els altres s'ignoraran."
 
-#: ../src/core/control/XournalMain.cpp:448
+#: ../src/core/control/XournalMain.cpp:453
 msgid "File {1} does not exist."
 msgstr "El fitxer {1} no existeix."
 
-#: ../src/core/control/XournalMain.cpp:452
+#: ../src/core/control/XournalMain.cpp:457
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -393,33 +393,33 @@ msgstr "Error del sistema de fitxers: {1}\n"
 "El Xournal++ no pot obrir el fitxer: {2}\n"
 "Potser ho podrà fer si copieu el fitxer a una carpeta local."
 
-#: ../src/core/control/XournalMain.cpp:642
+#: ../src/core/control/XournalMain.cpp:647
 msgid "Jump to Page (first Page: 1)"
 msgstr "Vés a la pàgina (primera pàgina: 1)"
 
-#: ../src/core/control/XournalMain.cpp:646
+#: ../src/core/control/XournalMain.cpp:651
 msgid "Get version of xournalpp"
 msgstr "Obté la versió del xournalapp"
 
-#: ../src/core/control/XournalMain.cpp:648
+#: ../src/core/control/XournalMain.cpp:653
 msgid "Disable audio for this session"
 msgstr "Desactiva el so durant aquesta sessió"
 
-#: ../src/core/control/XournalMain.cpp:650
+#: ../src/core/control/XournalMain.cpp:655
 msgid "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
 msgstr "Obre el PDF en mode adjunt\n"
 "                                 S'ignora si no s'especifica un fitxer PDF."
 
-#: ../src/core/control/XournalMain.cpp:654
+#: ../src/core/control/XournalMain.cpp:659
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "Desa el fitxer xopp amb el fons PDF especificat com a FITXER"
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:668
 msgid "Export FILE as PDF"
 msgstr "Exporta el FITXER com a PDF"
 
-#: ../src/core/control/XournalMain.cpp:665
+#: ../src/core/control/XournalMain.cpp:670
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -427,7 +427,7 @@ msgstr "Exporta el FITXER com a fitxers d'imatge (un per pàgina)\n"
 "                                 Determina el format de sortida en base a l'extensió del fitxer de la imatge.\n"
 "                                 Formats suportats: .png i .svg"
 
-#: ../src/core/control/XournalMain.cpp:670
+#: ../src/core/control/XournalMain.cpp:675
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -435,13 +435,13 @@ msgstr "Exporta sense fons\n"
 "                                 El fitxer exportat té un fons transparent o blanc,\n"
 "                                 depenent del que suporti el seu format.\n"
 
-#: ../src/core/control/XournalMain.cpp:675
+#: ../src/core/control/XournalMain.cpp:680
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Exporta sense línies\n"
 "                                 El fitxer exportat no té les línies de quadrícula.\n"
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:684
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -453,25 +453,25 @@ msgstr "Exporta les capes progresivament\n"
 "                                 augmentant progressivament la pila de capes.\n"
 "                                 El fitxer PDF resultant es pot fer servir per a presentacions.\n"
 
-#: ../src/core/control/XournalMain.cpp:686
+#: ../src/core/control/XournalMain.cpp:691
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Exporta només les pàgines especificades per l'INTERVAL (p. ex: «2-3,5,7-»)\n"
 "                                 No té efecte sense -p/--create-pdf o -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:690
+#: ../src/core/control/XournalMain.cpp:695
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Exporta només les capes especificades per  l'INTERVAL (p. ex: «2-3,5,7-»)\n"
 "                                 No té efecte sense -p/--create-pdf o -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:694
+#: ../src/core/control/XournalMain.cpp:699
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Estableix els ppp per a exportar a PNG. El valor per defecte és 300.\n"
 "                                 No té efecte sense -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:698
+#: ../src/core/control/XournalMain.cpp:703
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -479,7 +479,7 @@ msgstr "Estableix l'ample de pàgina per a l'exportació a PNG.\n"
 "                                 No té efecte sense -i/--create-img=foo.png\n"
 "                                 S'ignora si es fa servir --export-png-dpi"
 
-#: ../src/core/control/XournalMain.cpp:704
+#: ../src/core/control/XournalMain.cpp:709
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -487,11 +487,11 @@ msgstr "Estableix l'alçària de pàgina per a l'exportació a PNG.\n"
 "                                 No té efecte sense -i/--create-img=foo.png\n"
 "                                 S'ignora si es fa servir --export-png-dpi o --export-png-width"
 
-#: ../src/core/control/XournalMain.cpp:709
+#: ../src/core/control/XournalMain.cpp:714
 msgid "Advanced export options"
 msgstr "Opcions avançades d'exportació"
 
-#: ../src/core/control/XournalMain.cpp:710
+#: ../src/core/control/XournalMain.cpp:715
 msgid "Display advanced export options"
 msgstr "Mostra les opcions d'exportació avançades"
 
@@ -861,7 +861,7 @@ msgid "Unable to play audio recording {1}"
 msgstr "No es pot reproduir la gravació de so {1}"
 
 #: ../src/core/gui/PageView.cpp:922
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:82
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
 msgid "Loading..."
 msgstr "Es carrega..."
@@ -1411,7 +1411,7 @@ msgstr "Copia el fons actual"
 msgid "Apply to current page"
 msgstr "Aplica a la pàgina actual"
 
-#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:172
+#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:169
 msgid "Contents"
 msgstr "Contingut"
 

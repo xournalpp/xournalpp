@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 08:50+0000\n"
-"PO-Revision-Date: 2025-02-23 04:26\n"
+"POT-Creation-Date: 2025-03-16 11:23+0000\n"
+"PO-Revision-Date: 2025-03-23 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -373,18 +373,18 @@ msgid "\n\n"
 msgstr "\n\n"
 "Şimdi bu dosya olmadan çalıştırma denenecek."
 
-#: ../src/core/control/XournalMain.cpp:437
-#: ../src/core/control/XournalMain.cpp:497
+#: ../src/core/control/XournalMain.cpp:442
+#: ../src/core/control/XournalMain.cpp:502
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Üzgünüz, Xournal++ bir kerede yalnızca bir dosyayı açabilir.\n"
 "Diğerleri yok sayılır."
 
-#: ../src/core/control/XournalMain.cpp:448
+#: ../src/core/control/XournalMain.cpp:453
 msgid "File {1} does not exist."
 msgstr "{1} dosyası yok."
 
-#: ../src/core/control/XournalMain.cpp:452
+#: ../src/core/control/XournalMain.cpp:457
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -392,33 +392,33 @@ msgstr "Dosya sistemi hatası: {1}\n"
 "Xournal++ dosyayı açamadı: {2}\n"
 "Dosyayı yerel dizine kopyalamayı düşünün."
 
-#: ../src/core/control/XournalMain.cpp:642
+#: ../src/core/control/XournalMain.cpp:647
 msgid "Jump to Page (first Page: 1)"
 msgstr "Sayfaya Git (ilk Sayfa: 1)"
 
-#: ../src/core/control/XournalMain.cpp:646
+#: ../src/core/control/XournalMain.cpp:651
 msgid "Get version of xournalpp"
 msgstr "Xournalpp sürümünü edinin"
 
-#: ../src/core/control/XournalMain.cpp:648
+#: ../src/core/control/XournalMain.cpp:653
 msgid "Disable audio for this session"
 msgstr "Bu oturum için sesi devre dışı bırak"
 
-#: ../src/core/control/XournalMain.cpp:650
+#: ../src/core/control/XournalMain.cpp:655
 msgid "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
 msgstr "PDF'yi ekleme modunda aç\n"
 "                                 Herhangi bir PDF dosyası belirtilmemişse yoksay."
 
-#: ../src/core/control/XournalMain.cpp:654
+#: ../src/core/control/XournalMain.cpp:659
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:668
 msgid "Export FILE as PDF"
 msgstr "Dosyayı PDF Olarak Dışa Aktar"
 
-#: ../src/core/control/XournalMain.cpp:665
+#: ../src/core/control/XournalMain.cpp:670
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -426,7 +426,7 @@ msgstr "Resim/Fotoğraf olarak dışa aktar (sayfa başına)\n"
 "                                 Dosya uzantısından resim/fotoğraf türünü tahmin et.\n"
 "                                 Desteklenen uzantılar: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:670
+#: ../src/core/control/XournalMain.cpp:675
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -434,13 +434,13 @@ msgstr "Arka plan olmadan dışa aktar\n"
 "                                 Dışa aktarılan dosyanın arka planı,\n"
 "                                 biçiminin desteklediğine bağlı olarak saydam veya beyazdır\n"
 
-#: ../src/core/control/XournalMain.cpp:675
+#: ../src/core/control/XournalMain.cpp:680
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Çizgiler olmadan dışa aktar\n"
 "                                 Aktarılan dosyada kağıt çizgileri bulunmaz\n"
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:684
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -452,24 +452,24 @@ msgstr "Katmanları kademeli olarak dışa aktar\n"
 "                                 sayfayla sonuçlanır ve katman yığınlarınıı kademeli olarak oluşturur.\n"
 "                                 Ortaya çıkan PDF dosyası sunum yapmak için kullanılabilir.\n"
 
-#: ../src/core/control/XournalMain.cpp:686
+#: ../src/core/control/XournalMain.cpp:691
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Yalnızca ARALIK kısmında belirtilen sayfaları dışa aktarın (ör. \"2-3,5,7-\")\n"
 "                                  -p/--create-pdf veya -i/-create-img olmadan etkisi yoktur"
 
-#: ../src/core/control/XournalMain.cpp:690
+#: ../src/core/control/XournalMain.cpp:695
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:694
+#: ../src/core/control/XournalMain.cpp:699
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "PNG çıktısı için DPI ayarlayın. Varsayılan olarak 300\n"
 "                                   -i/--create-img=foo.png olmadan etkisi yoktur"
 
-#: ../src/core/control/XournalMain.cpp:698
+#: ../src/core/control/XournalMain.cpp:703
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -477,7 +477,7 @@ msgstr "PNG dışarı aktarmaları için sayfa genişliği belirtin\n"
 "                                 -i/--create-img=foo.png şeklinde ise etkisizdir\n"
 "                                 --export-png-dpi şeklinde ise bu ayar gözardı edilir"
 
-#: ../src/core/control/XournalMain.cpp:704
+#: ../src/core/control/XournalMain.cpp:709
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -485,11 +485,11 @@ msgstr "PNG dışarı aktarmaları için sayfa yüksekliği belirtin\n"
 "                                 -i/--create-img=foo.png şeklinde ise etkisizdir\n"
 "                                 --export-png-dpi yada --export-png-width şeklinde ise bu ayar gözardı edilir"
 
-#: ../src/core/control/XournalMain.cpp:709
+#: ../src/core/control/XournalMain.cpp:714
 msgid "Advanced export options"
 msgstr "Gelişmiş dışa aktarma seçenekleri"
 
-#: ../src/core/control/XournalMain.cpp:710
+#: ../src/core/control/XournalMain.cpp:715
 msgid "Display advanced export options"
 msgstr "Gelişmiş dışa aktarma seçeneklerini görüntüle"
 
@@ -859,7 +859,7 @@ msgid "Unable to play audio recording {1}"
 msgstr "Ses kaydı oynatılamıyor {1}"
 
 #: ../src/core/gui/PageView.cpp:922
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:82
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
 msgid "Loading..."
 msgstr "Yükleniyor..."
@@ -1408,7 +1408,7 @@ msgstr "Geçerli arka planı kopyala"
 msgid "Apply to current page"
 msgstr "Geçerli sayfaya uygula"
 
-#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:172
+#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:169
 msgid "Contents"
 msgstr "İçindekiler"
 

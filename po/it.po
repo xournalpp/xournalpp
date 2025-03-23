@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 08:50+0000\n"
-"PO-Revision-Date: 2025-03-16 04:25\n"
+"POT-Creation-Date: 2025-03-16 11:23+0000\n"
+"PO-Revision-Date: 2025-03-23 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -188,7 +188,7 @@ msgstr "Non salvare"
 
 #: ../src/core/control/Control.cpp:2141
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
-msgstr ""
+msgstr "La creazione del sottoprocesso della demo Gtk è fallita: {1} (codice di uscita: {2})"
 
 #: ../src/core/control/CrashHandler.cpp:31
 msgid "Trying to emergency save the current open document..."
@@ -376,18 +376,18 @@ msgid "\n\n"
 msgstr "\n\n"
 "Il programma tenterà di avviarsi senza questo file."
 
-#: ../src/core/control/XournalMain.cpp:437
-#: ../src/core/control/XournalMain.cpp:497
+#: ../src/core/control/XournalMain.cpp:442
+#: ../src/core/control/XournalMain.cpp:502
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Ci dispiace, Xournal++ può aprire solo un file alla volta.\n"
 "Gli altri saranno ignorati."
 
-#: ../src/core/control/XournalMain.cpp:448
+#: ../src/core/control/XournalMain.cpp:453
 msgid "File {1} does not exist."
 msgstr "Il file {1} non esiste."
 
-#: ../src/core/control/XournalMain.cpp:452
+#: ../src/core/control/XournalMain.cpp:457
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -395,33 +395,33 @@ msgstr "Errore del filesystem: {1}\n"
 "Xournal++ non può aprire il file: {2}\n"
 "Considera di copiare il file in una cartella locale."
 
-#: ../src/core/control/XournalMain.cpp:642
+#: ../src/core/control/XournalMain.cpp:647
 msgid "Jump to Page (first Page: 1)"
 msgstr "Vai a Pagina (prima Pagina: 1)"
 
-#: ../src/core/control/XournalMain.cpp:646
+#: ../src/core/control/XournalMain.cpp:651
 msgid "Get version of xournalpp"
 msgstr "Ottieni la versione di xournalpp"
 
-#: ../src/core/control/XournalMain.cpp:648
+#: ../src/core/control/XournalMain.cpp:653
 msgid "Disable audio for this session"
 msgstr "Disattiva l'audio per questa sessione"
 
-#: ../src/core/control/XournalMain.cpp:650
+#: ../src/core/control/XournalMain.cpp:655
 msgid "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
 msgstr "Apri PDF in modalità allegata\n"
 "                                 Ignorato se non è specificato alcun file PDF."
 
-#: ../src/core/control/XournalMain.cpp:654
+#: ../src/core/control/XournalMain.cpp:659
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "Salva il file xopp con lo sfondo PDF specificato come FILE"
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:668
 msgid "Export FILE as PDF"
 msgstr "Esporta FILE come PDF"
 
-#: ../src/core/control/XournalMain.cpp:665
+#: ../src/core/control/XournalMain.cpp:670
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -429,7 +429,7 @@ msgstr "Esporta FILE come file immagine (uno per pagina)\n"
 "                                 Stima il formato di uscita dall'estensione di IMGFILE\n"
 "                                 Formati supportati: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:670
+#: ../src/core/control/XournalMain.cpp:675
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -437,13 +437,13 @@ msgstr "Esporta senza sfondo\n"
 "                                 Il file esportato ha sfondo trasparente o bianco,\n"
 "                                 a seconda di ciò che il suo formato supporta\n"
 
-#: ../src/core/control/XournalMain.cpp:675
+#: ../src/core/control/XournalMain.cpp:680
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Esporta senza rigatura\n"
 "                                 Il file esportato non ha nessuna rigatura\n"
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:684
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -455,25 +455,25 @@ msgstr "Esporta progressivamente i livelli\n"
 "                                 costruire progressivamente la pila dei livelli.\n"
 "                                 Il file PDF risultante può essere utilizzato per una presentazione.\n"
 
-#: ../src/core/control/XournalMain.cpp:686
+#: ../src/core/control/XournalMain.cpp:691
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Esporta solo le pagine specificate dall'intervallo (ad esempio \"2-3,5,7-\")\n"
 "                                 Nessun effetto senza -p/--create-pdf o -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:690
+#: ../src/core/control/XournalMain.cpp:695
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Esporta solo i livelli specificati dall'intervallo (ad esempio \"2-3,5,7-\")\n"
 "                                 Nessun effetto senza -p/--create-pdf o -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:694
+#: ../src/core/control/XournalMain.cpp:699
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Imposta DPI per le esportazioni PNG. Il valore predefinito è 300\n"
 "                                 Nessun effetto senza -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:698
+#: ../src/core/control/XournalMain.cpp:703
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -481,7 +481,7 @@ msgstr "Imposta la larghezza della pagina per le esportazioni PNG\n"
 "                                 Nessun effetto senza -i/--create-img=foo.png\n"
 "                                 Ignorato se viene usato --export-png-dpi"
 
-#: ../src/core/control/XournalMain.cpp:704
+#: ../src/core/control/XournalMain.cpp:709
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -489,11 +489,11 @@ msgstr "Imposta l'altezza della pagina per le esportazioni PNG\n"
 "                                 Nessun effetto senza -i/--create-img=foo.png\n"
 "                                 Ignorato se si usa --export-png-dpi o --export-png-width"
 
-#: ../src/core/control/XournalMain.cpp:709
+#: ../src/core/control/XournalMain.cpp:714
 msgid "Advanced export options"
 msgstr "Opzioni avanzate di esportazione"
 
-#: ../src/core/control/XournalMain.cpp:710
+#: ../src/core/control/XournalMain.cpp:715
 msgid "Display advanced export options"
 msgstr "Visualizza opzioni avanzate di esportazione"
 
@@ -863,7 +863,7 @@ msgid "Unable to play audio recording {1}"
 msgstr "Impossibile riprodurre la registrazione audio {1}"
 
 #: ../src/core/gui/PageView.cpp:922
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:82
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
 msgid "Loading..."
 msgstr "Caricamento..."
@@ -1413,7 +1413,7 @@ msgstr "Copia lo sfondo attuale"
 msgid "Apply to current page"
 msgstr "Applica alla pagina corrente"
 
-#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:172
+#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:169
 msgid "Contents"
 msgstr "Contenuti"
 
@@ -2655,7 +2655,44 @@ msgid "%{name}\tThe filename (if any) of the PDF background\n"
 "%Z\t\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\t\t%\n"
 "Illegal characters are replaced with \"_\""
-msgstr ""
+msgstr "%{name} Il nome del file (se presente) dello sfondo PDF \n"
+"%{file} Il nome del file salvato \n"
+"%a Nome abbreviato del giorno della settimana (es. Thu) \n"
+"%A Nome completo del giorno della settimana (es. Thursday) \n"
+"%b Nome abbreviato del mese (es. Aug) \n"
+"%B Nome completo del mese (es. August) \n"
+"%c Rappresentazione della data e ora (es. Thu Aug 23 14:55:02 2001) \n"
+"%d Giorno del mese (01-31) \n"
+"%F Rappresentazione della data (es. 2001-08-23) \n"
+"%H Ora in formato 24h (00-23) \n"
+"%I Ora in formato 12h (01-12) \n"
+"%j Giorno dell'anno (001-366) \n"
+"%m Mese come numero decimale (01-12) \n"
+"%M Minuto (00-59) \n"
+"%p Designazione AM o PM (es. PM) \n"
+"%S Secondo (00-61) \n"
+"%U Numero della settimana con la prima domenica come primo giorno della settimana (00-53) \n"
+"%w Giorno della settimana come numero decimale con la domenica come 0 (0-6) \n"
+"%W Numero della settimana con il primo lunedì come primo giorno della settimana (00-53) \n"
+"%x Rappresentazione della data (es. 08/23/01) \n"
+"%X Rappresentazione dell'ora (es. 14:55:02 o 2:55:02 PM) \n"
+"%y Anno, ultime due cifre (00-99) \n"
+"%Y Anno (es. 2001) \n"
+"%Z Nome o abbreviazione del fuso orario (es. CDT) \n"
+"%% %\n\n"
+"%{name} Il nome del file (se presente) dello sfondo PDF \n"
+"%{file} Il nome del file salvato \n"
+"%a Nome abbreviato del giorno della settimana (es. Thu) \n"
+"%A Nome completo del giorno della settimana (es. Thursday) \n"
+"%b Nome abbreviato del mese (es. Aug) \n"
+"%B Nome completo del mese (es. August) \n"
+"%c Rappresentazione della data e ora (es. Thu Aug 23 14:55:02 2001) \n"
+"%d Giorno del mese (01-31) \n"
+"%F Rappresentazione della data (es. 2001-08-23) \n"
+"%H Ora in formato 24h (00-23) \n"
+"%I Ora in formato 12h (01-12) \n"
+"%j Giorno dell'anno (001-366) \n"
+"%m Mese come numero decimale (01-12)"
 
 #: ../ui/settings.glade:782
 msgid "Default Pdf export name"
@@ -3148,7 +3185,7 @@ msgstr "Globale"
 
 #: ../ui/settings.glade:3279
 msgid "Recolor Drawing Area (might introduce lags when moving selections)"
-msgstr ""
+msgstr "Ricolora l'area di disegno (potrebbe causare ritardo durante lo spostamento delle selezioni)"
 
 #: ../ui/settings.glade:3284
 msgid "Recolors the drawing area so that white regions get the dark color and black regions get the light color. Other colors are interpolated accordingly."
@@ -3160,7 +3197,7 @@ msgstr "Ricolora anteprime nella barra laterale"
 
 #: ../ui/settings.glade:3299
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) so that white regions get the dark color and black regions get the light color. Other colors are interpolated accordingly."
-msgstr ""
+msgstr "Ricolora le anteprime nella barra laterale (Anteprima Pagina/Livello) in modo che le aree bianche assumano il colore scuro e le aree nere quello chiaro. Gli altri colori vengono interpolati di conseguenza."
 
 #: ../ui/settings.glade:3313
 msgid "The color black regions are translated to"
@@ -4257,7 +4294,7 @@ msgstr "Aiuto"
 
 #: ../ui/mainmenubar.xml:859
 msgid "Run Gtk3 demo"
-msgstr ""
+msgstr "Esegui la demo di Gtk3"
 
 #: ../ui/mainmenubar.xml:863
 msgid "About"
@@ -4433,7 +4470,7 @@ msgstr "Estensioni che utilizzano lo script Lua"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:57
 msgid "Note taking"
-msgstr ""
+msgstr "Prendi Nota"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:61
 msgid "PDF annotation"
@@ -4441,7 +4478,7 @@ msgstr "Annotazione PDF"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:65
 msgid "LaTeX with customized preamble"
-msgstr ""
+msgstr "LaTeX con preambolo personalizzato"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.xml.in:4
 msgid "Xournal note file"
