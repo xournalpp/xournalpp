@@ -15,6 +15,8 @@
 #include <glib.h>     // for gint64
 #include <gtk/gtk.h>  // for GtkWidget
 
+#include "util/raii/GSourceURef.h"
+
 #include "InputEvents.h"  // for InputDeviceClass
 
 class Settings;
@@ -85,6 +87,8 @@ private:
      * Timeout in ms
      */
     int disableTimeout = 500;
+
+    xoj::util::GSourceURef timer;
 
     /**
      * True if an X11 session is running

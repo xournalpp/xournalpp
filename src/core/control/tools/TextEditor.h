@@ -24,6 +24,7 @@
 #include "util/Range.h"
 #include "util/raii/CStringWrapper.h"
 #include "util/raii/GObjectSPtr.h"
+#include "util/raii/GSourceURef.h"
 #include "util/raii/PangoSPtr.h"
 
 class Text;
@@ -142,6 +143,8 @@ private:
 
     void updateTextElementContent();
 
+    static bool blinkCallback(TextEditor* te);
+
 private:
     Control* control;
     PageRef page;
@@ -194,29 +197,7 @@ private:
     // cursor blinking timings. In millisecond.
     unsigned int cursorBlinkingTimeOn = 0;
     unsigned int cursorBlinkingTimeOff = 0;
-    struct BlinkTimer {
-        BlinkTimer(unsigned int id = 0): id(id) {}
-        BlinkTimer(const BlinkTimer&) = delete;
-        BlinkTimer(BlinkTimer&&) = delete;
-        BlinkTimer& operator=(const BlinkTimer&) = delete;
-        BlinkTimer& operator=(BlinkTimer&&) = delete;
-        BlinkTimer& operator=(unsigned int newId) {
-            if (id) {
-                g_source_remove(id);
-            }
-            id = newId;
-            return *this;
-        }
-        ~BlinkTimer() {
-            if (id) {
-                g_source_remove(id);
-            }
-        }
-        static bool callback(TextEditor* te);
-
-    private:
-        unsigned int id = 0;  // handler id
-    } blinkTimer;
+    xoj::util::GSourceURef blinkTimer;
     bool cursorBlink = true;
 
     bool needImReset = false;
