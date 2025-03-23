@@ -20,6 +20,11 @@
 TouchInputHandler::TouchInputHandler(InputContext* inputContext): AbstractInputHandler(inputContext) {}
 
 auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
+    if (!event.sequence) {
+        // On x11, a GDK_MOTION_EVENT with sequence == nullptr is emitted before TOUCH_BEGIN: Ignore it
+        // In general, every valid touch event must have a sequence
+        return false;
+    }
     bool zoomGesturesEnabled = inputContext->getSettings()->isZoomGesturesEnabled();
 
     if (event.type == BUTTON_PRESS_EVENT) {
@@ -53,7 +58,6 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
     }
 
     if (event.type == MOTION_EVENT) {
-        // NOTE: the first MOTION_EVENT from x11 touch input has sequence ID 0
         if (primarySequence == event.sequence && !secondarySequence) {
             scrollMotion(event);
             return true;
