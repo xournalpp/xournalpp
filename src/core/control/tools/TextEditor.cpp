@@ -158,7 +158,7 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
         // If editing a preexisting text, put the cursor at the right location
         this->mousePressed(x - textElement->getX(), y - textElement->getY());
     } else if (this->cursorBlink) {
-        BlinkTimer::callback(this);
+        blinkCallback(this);
     } else {
         this->cursorVisible = true;
     }
@@ -680,7 +680,7 @@ void TextEditor::moveCursor(const GtkTextIter* newLocation, gboolean extendSelec
     if (this->cursorBlink) {
         // Whenever the cursor moves, the blinking cycle restarts from the start (i.e. the cursor is first shown).
         this->cursorVisible = false;  // Will be toggled to true by BlinkTimer::callback before the repaint
-        BlinkTimer::callback(this);
+        blinkCallback(this);
     }
 
     if (selectionChanged) {
@@ -893,10 +893,10 @@ void TextEditor::resetImContext() {
 /*
  * Blink!
  */
-auto TextEditor::BlinkTimer::callback(TextEditor* te) -> bool {
+auto TextEditor::blinkCallback(TextEditor* te) -> bool {
     te->cursorVisible = !te->cursorVisible;
     auto time = te->cursorVisible ? te->cursorBlinkingTimeOn : te->cursorBlinkingTimeOff;
-    te->blinkTimer = gdk_threads_add_timeout(time, xoj::util::wrap_for_once_v<callback>, te);
+    te->blinkTimer = gdk_threads_add_timeout(time, xoj::util::wrap_for_once_v<blinkCallback>, te);
 
     Range dirtyRange = te->cursorBox;
     dirtyRange.translate(te->textElement->getX(), te->textElement->getY());
