@@ -20,6 +20,7 @@
 #include "util/PathUtil.h"                   // for fromGFilename, getTmpDir...
 #include "util/PlaceholderString.h"          // for PlaceholderString
 #include "util/i18n.h"                       // for FS, _F, _
+#include "util/raii/CStringWrapper.h"
 
 #include "filesystem.h"  // for path, is_regular_file
 
@@ -121,8 +122,8 @@ void LatexSettingsPanel::save(LatexSettings& settings) {
             gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(this->get("cbSyntaxHighlight")));
 
     GtkFontChooser* fontSelector = GTK_FONT_CHOOSER(this->get("selBtnEditorFont"));
-    std::string fontDescription{gtk_font_chooser_get_font(fontSelector)};
-    settings.editorFont = fontDescription;
+    auto fontDescription = xoj::util::OwnedCString::assumeOwnership(gtk_font_chooser_get_font(fontSelector));
+    settings.editorFont = std::string(fontDescription.get());
     settings.useCustomEditorFont = !gtk_toggle_button_get_active(this->cbUseSystemFont);
 
     settings.editorWordWrap = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(this->get("cbWordWrap")));
