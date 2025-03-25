@@ -29,7 +29,6 @@ function _M.readStrokesFromFile(filepath)
     return strokesToAdd -- formatted strokes data for adding
 end
 
--- All codes for Extract stroke information (the file is saved in plugin folder, you have to rename it and place it in "shapes" folder, also add the name in shape dictionary)
 -- Function to store stroke information in a file
 function _M.storeStrokeInfoInFile(strokes, filepath)
 
