@@ -26,7 +26,7 @@ void UndoRedoController::before() {
     EditSelection* selection = control->getWindow()->getXournal()->getSelection();
     if (selection != nullptr) {
         layer = selection->getSourceLayer();
-        elements = selection->getElements();
+        elements = selection->getElementsView().clone();
     }
 
     control->clearSelectionEndText();
@@ -53,7 +53,7 @@ void UndoRedoController::after() {
     }
 
     InsertionOrderRef remainingElements;
-    for (Element* e: elements) {
+    for (const Element* e: elements) {
         // Test, if the element has been removed since
         if (auto pos = layer->indexOf(e); pos != -1) {
             remainingElements.emplace_back(e, pos);

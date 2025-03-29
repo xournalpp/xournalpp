@@ -17,7 +17,9 @@
 #include <string>    // for string
 #include <vector>    // for vector
 
-#include "Element.h"  // for Element, Element::Index
+#include "util/PointerContainerView.h"
+
+#include "Element.h"                   // for Element, Element::Index
 #include "ElementInsertionPosition.h"  // for InsertionOrder
 
 template <class T>
@@ -48,20 +50,20 @@ public:
     /**
      * Returns the index of the given Element with respect to the internal list
      */
-    auto indexOf(Element* e) const -> Element::Index;
+    auto indexOf(const Element* e) const -> Element::Index;
 
     /**
      * Removes an Element from the Layer and optionally deletes it
      * @return the position the element occupied
      */
-    auto removeElement(Element* e) -> InsertionPosition;
+    auto removeElement(const Element* e) -> InsertionPosition;
 
     /**
      * Removes the Element. If e is not at index pos, tries to find it elsewhere (this could happen is the layer was
      * modified between now and when pos was computed)
      * @return The actual position of the removed element
      */
-    auto removeElementAt(Element* e, Element::Index pos) -> InsertionPosition;
+    auto removeElementAt(const Element* e, Element::Index pos) -> InsertionPosition;
 
     /**
      * Removes the Elements. If an element cannot be found at its designated position, it is search through the layer
@@ -74,9 +76,11 @@ public:
     auto clearNoFree() -> std::vector<ElementPtr>;
 
     /**
-     * Returns an iterator over the Element%s contained in this Layer
+     * Returns an iteratable over the Element%s contained in this Layer
      */
-    auto getElements() const -> std::vector<ElementPtr> const&;
+    auto getElements() -> std::vector<ElementPtr>&;
+
+    auto getElementsView() const -> xoj::util::PointerContainerView<std::vector<ElementPtr>>;
 
     /**
      * Returns whether or not the Layer is empty

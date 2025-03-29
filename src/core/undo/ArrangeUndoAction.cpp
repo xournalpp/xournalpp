@@ -39,7 +39,7 @@ void ArrangeUndoAction::applyRearrange(Control* control) {
     const auto& srcOrder = this->undone ? this->newOrder : this->oldOrder;
     const auto& tgtOrder = this->undone ? this->oldOrder : this->newOrder;
 
-    std::unordered_map<Element*, ElementPtr> removedElements;
+    std::unordered_map<const Element*, ElementPtr> removedElements;
     removedElements.reserve(srcOrder.size());
 
     Document* doc = control->getDocument();

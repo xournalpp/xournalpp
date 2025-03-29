@@ -113,8 +113,10 @@ void LatexController::findSelectedTexElement() {
     this->page = this->doc->getPage(pageNr);
     this->layer = page->getSelectedLayer();
 
-    this->selectedElem = view->getSelectedTex() != nullptr ? static_cast<Element*>(view->getSelectedTex()) :
-                                                             static_cast<Element*>(view->getSelectedText());
+    auto* tex = view->getSelectedTex();
+    this->selectedElem =
+            tex != nullptr ? static_cast<const Element*>(tex) : static_cast<const Element*>(view->getSelectedText());
+
     if (this->selectedElem) {
         // this will get the position of the Latex properly
         EditSelection* theSelection = control->getWindow()->getXournal()->getSelection();
@@ -122,11 +124,11 @@ void LatexController::findSelectedTexElement() {
         this->posx = rect.x;
         this->posy = rect.y;
 
-        if (auto* img = dynamic_cast<TexImage*>(this->selectedElem)) {
+        if (auto* img = dynamic_cast<const TexImage*>(this->selectedElem)) {
             this->initialTex = img->getText();
             this->temporaryRender = img->cloneTexImage();
             this->isValidTex = true;
-        } else if (auto* txt = dynamic_cast<Text*>(this->selectedElem)) {
+        } else if (auto* txt = dynamic_cast<const Text*>(this->selectedElem)) {
             this->initialTex = "\\text{" + txt->getText() + "}";
         }
         this->imgwidth = this->selectedElem->getElementWidth();

@@ -165,18 +165,18 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
         layer->setAttrib("name", l->getName().c_str());
     }
 
-    for (auto&& e: l->getElements()) {
+    for (const auto& e: l->getElementsView()) {
         if (e->getType() == ELEMENT_STROKE) {
-            auto* s = dynamic_cast<Stroke*>(e.get());
+            auto* s = dynamic_cast<const Stroke*>(e);
             auto* stroke = new XmlPointNode("stroke");
             layer->addChild(stroke);
             visitStroke(stroke, s);
         } else if (e->getType() == ELEMENT_TEXT) {
-            Text* t = dynamic_cast<Text*>(e.get());
+            const Text* t = dynamic_cast<const Text*>(e);
             auto* text = new XmlTextNode("text", t->getText());
             layer->addChild(text);
 
-            XojFont& f = t->getFont();
+            const XojFont& f = t->getFont();
 
             text->setAttrib("font", f.getName().c_str());
             text->setAttrib("size", f.getSize());
@@ -186,7 +186,7 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
 
             writeTimestamp(text, t);
         } else if (e->getType() == ELEMENT_IMAGE) {
-            auto* i = dynamic_cast<Image*>(e.get());
+            auto* i = dynamic_cast<const Image*>(e);
             auto* image = new XmlImageNode("image");
             layer->addChild(image);
 
@@ -197,7 +197,7 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
             image->setAttrib("right", i->getX() + i->getElementWidth());
             image->setAttrib("bottom", i->getY() + i->getElementHeight());
         } else if (e->getType() == ELEMENT_TEXIMAGE) {
-            auto* i = dynamic_cast<TexImage*>(e.get());
+            auto* i = dynamic_cast<const TexImage*>(e);
             auto* image = new XmlTexNode("teximage", std::string(i->getBinaryData()));
             layer->addChild(image);
 

@@ -75,8 +75,8 @@ public:
 
     virtual bool isInSelection(ShapeContainer* container) const;
 
-    virtual bool rescaleOnlyAspectRatio();
-    virtual bool rescaleWithMirror();
+    virtual bool rescaleOnlyAspectRatio() const;
+    virtual bool rescaleWithMirror() const;
 
     /**
      * Take 1:1 copy of this element

@@ -39,7 +39,7 @@ private:
     LayerController* layerController;
 
     Layer* upperLayer;
-    std::vector<Element*> upperLayerElements;
+    std::vector<const Element*> upperLayerElements;
     Layer::Index upperLayerPos;
     Layer::Index upperLayerID;
 

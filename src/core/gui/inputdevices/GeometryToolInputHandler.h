@@ -105,7 +105,7 @@ protected:
      * @brief the line segments (strokes with two points) of the current layer, that are used for rotation snapping the
      * geometry tool
      */
-    std::vector<Stroke*> lines;
+    std::vector<const Stroke*> lines;
 
 protected:
     /**

@@ -27,7 +27,7 @@ using ElementPtr = std::unique_ptr<Element>;
 
 class InsertUndoAction: public UndoAction {
 public:
-    InsertUndoAction(const PageRef& page, Layer* layer, Element* element);
+    InsertUndoAction(const PageRef& page, Layer* layer, const Element* element);
     ~InsertUndoAction() override;
 
 public:
@@ -38,13 +38,13 @@ public:
 
 private:
     Layer* layer;
-    Element* element;
+    const Element* element;
     ElementPtr elementOwn;
 };
 
 class InsertsUndoAction: public UndoAction {
 public:
-    InsertsUndoAction(const PageRef& page, Layer* layer, std::vector<Element*> elements);
+    InsertsUndoAction(const PageRef& page, Layer* layer, std::vector<const Element*> elements);
     ~InsertsUndoAction() override;
 
 public:
@@ -55,6 +55,6 @@ public:
 
 private:
     Layer* layer;
-    std::vector<Element*> elements;
+    std::vector<const Element*> elements;
     std::vector<ElementPtr> elementsOwn;
 };

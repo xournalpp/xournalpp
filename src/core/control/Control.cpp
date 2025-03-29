@@ -1272,7 +1272,7 @@ auto Control::getLineStyleToSelect() -> std::optional<string> const {
     std::optional<std::string> previous_style;
 
     // Todo(cpp20) Replace with std::ranges::filter_view and for_first_then_for_each
-    for (const Element* e: sel->getElements()) {
+    for (const Element* e: sel->getElementsView()) {
         if (e->getType() == ELEMENT_STROKE) {
             const auto* s = dynamic_cast<const Stroke*>(e);
 
@@ -2396,7 +2396,7 @@ void Control::moveSelectionToLayer(size_t layerNo) {
     auto* newLayer = currentP->getLayers().at(layerNo);
     auto moveSelUndo = std::make_unique<MoveSelectionToLayerUndoAction>(currentP, getLayerController(), oldLayer,
                                                                         currentP->getSelectedLayerId() - 1, layerNo);
-    for (auto* e: selection->getElements()) {
+    for (const auto* e: selection->getElementsView()) {
         moveSelUndo->addElement(newLayer, e, newLayer->indexOf(e));
     }
     undoRedo->addUndoAction(std::move(moveSelUndo));

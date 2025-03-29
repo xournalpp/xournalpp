@@ -12,7 +12,7 @@
 #include "undo/UndoAction.h"  // for UndoAction
 #include "util/i18n.h"        // for _
 
-InsertUndoAction::InsertUndoAction(const PageRef& page, Layer* layer, Element* element):
+InsertUndoAction::InsertUndoAction(const PageRef& page, Layer* layer, const Element* element):
         UndoAction("InsertUndoAction"), layer(layer), element(element), elementOwn(nullptr) {
     this->page = page;
 }
@@ -60,7 +60,7 @@ auto InsertUndoAction::redo(Control* control) -> bool {
     return true;
 }
 
-InsertsUndoAction::InsertsUndoAction(const PageRef& page, Layer* layer, std::vector<Element*> elements):
+InsertsUndoAction::InsertsUndoAction(const PageRef& page, Layer* layer, std::vector<const Element*> elements):
         UndoAction("InsertsUndoAction"), layer(layer), elements(std::move(elements)), elementsOwn(0) {
     this->page = page;
 }
@@ -74,11 +74,11 @@ auto InsertsUndoAction::undo(Control* control) -> bool {
 
     Document* doc = control->getDocument();
     doc->lock();
-    for (Element* elem: this->elements) {
+    for (const Element* elem: this->elements) {
         this->elementsOwn.emplace_back(this->layer->removeElement(elem).e);
     }
     doc->unlock();
-    for (Element* elem: this->elements) {
+    for (const Element* elem: this->elements) {
         this->page->fireElementChanged(elem);
     }
 

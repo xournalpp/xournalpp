@@ -76,7 +76,7 @@ auto ClipboardHandler::cut() -> bool {
     return result;
 }
 
-auto ElementCompareFunc(Element* a, Element* b) -> bool {
+auto ElementCompareFunc(const Element* a, const Element* b) -> bool {
     if (a->getY() == b->getY()) {
         return (a->getX() - b->getX()) < 0;
     }
@@ -154,16 +154,16 @@ auto ClipboardHandler::copy() -> bool {
     // prepare text contents
     /////////////////////////////////////////////////////////////////
 
-    std::multiset<Text*, decltype(&ElementCompareFunc)> textElements(ElementCompareFunc);
+    std::multiset<const Text*, decltype(&ElementCompareFunc)> textElements(ElementCompareFunc);
 
-    for (Element* e: this->selection->getElements()) {
+    for (const Element* e: this->selection->getElementsView()) {
         if (e->getType() == ELEMENT_TEXT) {
-            textElements.insert(dynamic_cast<Text*>(e));
+            textElements.insert(dynamic_cast<const Text*>(e));
         }
     }
 
     string text{};
-    for (Text* t: textElements) {
+    for (const Text* t: textElements) {
         if (!text.empty()) {
             text += "\n";
         }

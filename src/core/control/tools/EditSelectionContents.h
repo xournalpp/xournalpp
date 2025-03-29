@@ -24,6 +24,7 @@
 #include "model/PageRef.h"                   // for PageRef
 #include "undo/UndoAction.h"                 // for UndoAction (ptr only)
 #include "util/Color.h"                      // for Color
+#include "util/PointerContainerView.h"       // for PointerContainerView
 #include "util/Rectangle.h"                  // for Rectangle
 #include "util/serializing/Serializable.h"   // for Serializable
 
@@ -93,9 +94,9 @@ public:
     /**
      * Returns all containing elements of this selection
      */
-    auto getElements() const -> std::vector<Element*> const&;
+    auto getElementsView() const -> xoj::util::PointerContainerView<std::vector<Element*>>;
 
-    void forEachElement(std::function<void(Element*)> f) const override;
+    void forEachElement(std::function<void(const Element*)> f) const override;
 
     /**
      * Returns the insert order of this selection

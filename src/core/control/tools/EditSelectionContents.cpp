@@ -89,9 +89,11 @@ auto EditSelectionContents::stealInsertionOrder() -> InsertionOrder { return std
 /**
  * Returns all containing elements of this selection
  */
-auto EditSelectionContents::getElements() const -> std::vector<Element*> const& { return this->selected; }
+auto EditSelectionContents::getElementsView() const -> xoj::util::PointerContainerView<std::vector<Element*>> {
+    return this->selected;
+}
 
-void EditSelectionContents::forEachElement(std::function<void(Element*)> f) const {
+void EditSelectionContents::forEachElement(std::function<void(const Element*)> f) const {
     for (auto const& e: this->selected) {
         f(e);
     }

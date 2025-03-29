@@ -32,12 +32,12 @@ public:
     bool undo(Control* control) override;
     bool redo(Control* control) override;
 
-    void addElement(Layer* layer, Element* e, Element::Index pos);
+    void addElement(Layer* layer, const Element* e, Element::Index pos);
 
     std::string getText() override;
 
 private:
-    std::multiset<PageLayerPosEntry<Element>> elements{};
+    std::multiset<PageLayerPosEntry<const Element>> elements{};
     LayerController* layerController;
     Layer* oldLayer;
     size_t oldLayerNo;

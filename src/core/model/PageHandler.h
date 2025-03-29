@@ -32,13 +32,13 @@ public:
 public:
     void fireRectChanged(xoj::util::Rectangle<double>& rect);
     void fireRangeChanged(Range& range);
-    void fireElementChanged(Element* elem);
+    void fireElementChanged(const Element* elem);
     /**
      * @brief The listed elements have been changed
      * @param range (optional) if provided, the Range must contain the bounding boxes of the changed elements, both
      * before and after they were changed
      */
-    void fireElementsChanged(const std::vector<Element*>& elements, Range range = Range());
+    void fireElementsChanged(const std::vector<const Element*>& elements, Range range = Range());
     void firePageChanged();
 
 private:

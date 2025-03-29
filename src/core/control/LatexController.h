@@ -218,7 +218,7 @@ private:
     /**
      * The element that is currently being edited.
      */
-    Element* selectedElem = nullptr;
+    const Element* selectedElem = nullptr;
 
     /**
      * The controller owns the rendered preview in order to be able to delete it

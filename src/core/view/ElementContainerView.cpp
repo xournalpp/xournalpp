@@ -13,7 +13,7 @@ using namespace xoj::view;
 ElementContainerView::ElementContainerView(const ElementContainer* container): container(container) {}
 
 void ElementContainerView::draw(const Context& ctx) const {
-    container->forEachElement([&ctx](Element* e) {
+    container->forEachElement([&ctx](const Element* e) {
         auto elementView = ElementView::createFromElement(e);
         elementView->draw(ctx);
     });

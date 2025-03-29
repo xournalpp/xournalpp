@@ -446,12 +446,12 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
         // original coordinates of the selection.
         double origx = x - (selection->getXOnView() - selection->getOriginalXOnView());
         double origy = y - (selection->getYOnView() - selection->getOriginalYOnView());
-        const std::vector<Element*>& elems = selection->getElements();
+        auto elems = selection->getElementsView();
         auto it = std::find_if(elems.begin(), elems.end(),
-                               [&](Element* elem) { return elem->intersectsArea(origx - 5, origy - 5, 5, 5); });
+                               [&](const Element* elem) { return elem->intersectsArea(origx - 5, origy - 5, 5, 5); });
         if (it != elems.end()) {
             // Enter editing mode on the selected object
-            Element* object = *it;
+            const Element* object = *it;
             ElementType elemType = object->getType();
             if (elemType == ELEMENT_TEXT) {
                 this->xournal->clearSelection();
@@ -1108,29 +1108,29 @@ auto XojPageView::getDisplayHeightDouble() const -> double {
     return this->page->getHeight() * this->xournal->getZoom();
 }
 
-auto XojPageView::getSelectedTex() -> TexImage* {
+auto XojPageView::getSelectedTex() const -> const TexImage* {
     EditSelection* theSelection = this->xournal->getSelection();
     if (!theSelection) {
         return nullptr;
     }
 
-    for (Element* e: theSelection->getElements()) {
+    for (const Element* e: theSelection->getElementsView()) {
         if (e->getType() == ELEMENT_TEXIMAGE) {
-            return dynamic_cast<TexImage*>(e);
+            return dynamic_cast<const TexImage*>(e);
         }
     }
     return nullptr;
 }
 
-auto XojPageView::getSelectedText() -> Text* {
+auto XojPageView::getSelectedText() const -> const Text* {
     EditSelection* theSelection = this->xournal->getSelection();
     if (!theSelection) {
         return nullptr;
     }
 
-    for (Element* e: theSelection->getElements()) {
+    for (const Element* e: theSelection->getElementsView()) {
         if (e->getType() == ELEMENT_TEXT) {
-            return dynamic_cast<Text*>(e);
+            return dynamic_cast<const Text*>(e);
         }
     }
     return nullptr;
@@ -1146,7 +1146,7 @@ void XojPageView::rangeChanged(Range& range) { rerenderRange(range); }
 
 void XojPageView::pageChanged() { rerenderPage(); }
 
-void XojPageView::elementChanged(Element* elem) {
+void XojPageView::elementChanged(const Element* elem) {
     /*
      * The input handlers issue an elementChanged event when creating an element.
      * There is however no need to redraw the element in this case: the element was already painted to the buffer via a
@@ -1164,7 +1164,7 @@ void XojPageView::elementChanged(Element* elem) {
     }
 }
 
-void XojPageView::elementsChanged(const std::vector<Element*>& elements, const Range& range) {
+void XojPageView::elementsChanged(const std::vector<const Element*>& elements, const Range& range) {
     if (!range.empty()) {
         rerenderRange(range);
     }

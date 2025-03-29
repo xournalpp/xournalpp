@@ -683,7 +683,7 @@ void XournalView::setSelection(EditSelection* selection) {
     bool canChangeFill = false;
     bool canChangeLineStyle = false;
 
-    for (const Element* e: selection->getElements()) {
+    for (const Element* e: selection->getElementsView()) {
         switch (e->getType()) {
             case ELEMENT_TEXT:
                 canChangeColor = true;
