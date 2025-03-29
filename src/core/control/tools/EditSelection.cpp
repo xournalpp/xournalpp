@@ -83,7 +83,7 @@ auto createFromFloatingElements(Control* ctrl, const PageRef& page, Layer* layer
             std::make_unique<EditSelection>(ctrl, std::move(elts), page, layer, view, bounds, snappingBounds), bounds);
 }
 
-auto createFromElementOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view, Element* e,
+auto createFromElementOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view, const Element* e,
                                     Element::Index pos) -> std::unique_ptr<EditSelection> {
     Document* doc = ctrl->getDocument();
     Layer* layer = nullptr;
@@ -116,7 +116,7 @@ auto createFromElementsOnActiveLayer(Control* ctrl, const PageRef& page, XojPage
     return std::make_unique<EditSelection>(ctrl, std::move(ownedElts), page, layer, view, bounds, snappingBounds);
 }
 
-auto addElementFromActiveLayer(Control* ctrl, EditSelection* base, Element* e, Element::Index pos)
+auto addElementFromActiveLayer(Control* ctrl, EditSelection* base, const Element* e, Element::Index pos)
         -> std::unique_ptr<EditSelection> {
     Document* doc = ctrl->getDocument();
     Layer* layer = base->getSourceLayer();
@@ -232,7 +232,7 @@ EditSelection::EditSelection(Control* ctrl, InsertionOrder elts, const PageRef& 
     this->view->getXournal()->getCursor()->setRotationAngle(0);
     this->view->getXournal()->getCursor()->setMirror(false);
 
-    for (auto&& e: contents->getElements()) {
+    for (const auto& e: contents->getElementsView()) {
         this->preserveAspectRatio = this->preserveAspectRatio || e->rescaleOnlyAspectRatio();
         this->supportMirroring = this->supportMirroring && e->rescaleWithMirror();
         this->supportRotation = this->supportRotation && e->getType() == ELEMENT_STROKE;
@@ -457,9 +457,11 @@ void EditSelection::addElement(ElementPtr eOwned, Element::Index order) {
 /**
  * Returns all containing elements of this selection
  */
-auto EditSelection::getElements() const -> std::vector<Element*> const& { return this->contents->getElements(); }
+auto EditSelection::getElementsView() const -> xoj::util::PointerContainerView<std::vector<Element*>> {
+    return this->contents->getElementsView();
+}
 
-void EditSelection::forEachElement(std::function<void(Element*)> f) const {
+void EditSelection::forEachElement(std::function<void(const Element*)> f) const {
     this->contents->forEachElement(std::move(f));
 }
 
@@ -810,7 +812,7 @@ void EditSelection::copySelection() {
     // add undo action
     PageRef page = this->view->getPage();
     Layer* layer = page->getSelectedLayer();
-    undo->addUndoAction(std::make_unique<InsertsUndoAction>(page, layer, getElements()));
+    undo->addUndoAction(std::make_unique<InsertsUndoAction>(page, layer, getElementsView().clone()));
 }
 
 /**
@@ -1222,8 +1224,8 @@ void EditSelection::serialize(ObjectOutputStream& out) const {
     this->contents->serialize(out);
     out.endObject();
 
-    out.writeInt(static_cast<int>(this->getElements().size()));
-    for (Element* e: this->getElements()) {
+    out.writeInt(static_cast<int>(this->getInsertionOrder().size()));
+    for (const Element* e: this->getElementsView()) {
         e->serialize(out);
     }
 }

@@ -63,6 +63,6 @@ auto MoveSelectionToLayerUndoAction::redo(Control* control) -> bool {
     return true;
 }
 
-void MoveSelectionToLayerUndoAction::addElement(Layer* layer, Element* e, Element::Index pos) {
+void MoveSelectionToLayerUndoAction::addElement(Layer* layer, const Element* e, Element::Index pos) {
     elements.emplace(layer, e, pos);
 }

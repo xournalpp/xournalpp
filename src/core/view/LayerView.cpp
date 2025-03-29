@@ -27,7 +27,7 @@ void LayerView::draw(const Context& ctx) const {
     double maxY;
     cairo_clip_extents(ctx.cr, &minX, &minY, &maxX, &maxY);
 
-    for (auto const& e: layer->getElements()) {
+    for (auto const& e: layer->getElementsView()) {
 
         IF_DEBUG_REPAINT({
             auto cr = ctx.cr;
@@ -39,7 +39,7 @@ void LayerView::draw(const Context& ctx) const {
         });
 
         if (e->intersectsArea(minX, minY, maxX - minX, maxY - minY)) {
-            ElementView::createFromElement(e.get())->draw(ctx);
+            ElementView::createFromElement(e)->draw(ctx);
             IF_DEBUG_REPAINT(drawn++;);
         }
         IF_DEBUG_REPAINT(else { notDrawn++; });

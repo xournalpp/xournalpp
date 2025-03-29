@@ -196,7 +196,7 @@ public:
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;
 
-    bool rescaleWithMirror() override;
+    bool rescaleWithMirror() const override;
 
 protected:
     void calcSize() const override;

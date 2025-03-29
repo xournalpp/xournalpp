@@ -43,7 +43,7 @@ auto MergeLayerDownUndoAction::undo(Control* control) -> bool {
     Document* doc = control->getDocument();
     doc->lock();
     // remove all elements present in the upper layer from the lower layer again
-    for (Element* elem: upperLayerElements) {
+    for (const Element* elem: upperLayerElements) {
         this->upperLayer->addElement(this->lowerLayer->removeElement(elem).e);
     }
 
@@ -67,7 +67,7 @@ auto MergeLayerDownUndoAction::redo(Control* control) -> bool {
     // remove the upper layer
     layerController->removeLayer(this->page, this->upperLayer);
 
-    this->upperLayerElements = xoj::refElementContainer(this->upperLayer->getElements());
+    this->upperLayerElements = this->upperLayer->getElementsView().clone();
     auto elements = this->upperLayer->clearNoFree();
     // add all elements back to the lower layer
     for (auto&& elem: elements) {

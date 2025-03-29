@@ -23,17 +23,17 @@ auto Selector::finalize(PageRef page, bool disableMultilayer, Document* doc) -> 
 
     if (multiLayer && !disableMultilayer) {
         std::lock_guard lock(*doc);
-        const auto layers = page->getLayers();
+        const auto layers = page->getLayersView();
         for (auto it = layers.rbegin(); it != layers.rend(); it++) {
-            Layer* l = *it;
+            const Layer* l = *it;
             if (!l->isVisible()) {
                 continue;
             }
             bool selectionOnLayer = false;
             Element::Index pos = 0;
-            for (auto&& e: l->getElements()) {
+            for (const auto& e: l->getElementsView()) {
                 if (e->isInSelection(this)) {
-                    this->selectedElements.emplace_back(e.get(), pos);
+                    this->selectedElements.emplace_back(e, pos);
                     selectionOnLayer = true;
                 }
                 pos++;
@@ -45,11 +45,11 @@ auto Selector::finalize(PageRef page, bool disableMultilayer, Document* doc) -> 
         }
     } else {
         std::lock_guard lock(*doc);
-        Layer* l = page->getSelectedLayer();
+        const Layer* l = page->getSelectedLayer();
         Element::Index pos = 0;
-        for (auto&& e: l->getElements()) {
+        for (const auto& e: l->getElementsView()) {
             if (e->isInSelection(this)) {
-                this->selectedElements.emplace_back(e.get(), pos);
+                this->selectedElements.emplace_back(e, pos);
                 layerId = page->getSelectedLayerId();
             }
             pos++;

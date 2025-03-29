@@ -26,6 +26,7 @@
 #include "model/PageRef.h"                   // for PageRef
 #include "undo/UndoAction.h"                 // for UndoAction (ptr only)
 #include "util/Color.h"                      // for Color
+#include "util/PointerContainerView.h"       // for PointerContainerView
 #include "util/Rectangle.h"                  // for Rectangle
 #include "util/serializing/Serializable.h"   // for Serializable
 
@@ -51,7 +52,7 @@ auto createFromFloatingElement(Control* ctrl, const PageRef& page, Layer* layer,
 auto createFromFloatingElements(Control* ctrl, const PageRef& page, Layer* layer, XojPageView* view,
                                 InsertionOrder elts)  //
         -> std::pair<std::unique_ptr<EditSelection>, Range>;
-auto createFromElementOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view, Element* e,
+auto createFromElementOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view, const Element* e,
                                     Element::Index pos = Element::InvalidIndex)  //
         -> std::unique_ptr<EditSelection>;
 auto createFromElementsOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view, InsertionOrderRef elts)
@@ -60,7 +61,7 @@ auto createFromElementsOnActiveLayer(Control* ctrl, const PageRef& page, XojPage
  * @brief Creates a new instance containing base->getElements() and *e. The content of *base is cleared but *base is not
  * destroyed.
  */
-auto addElementFromActiveLayer(Control* ctrl, EditSelection* base, Element* e, Element::Index pos)
+auto addElementFromActiveLayer(Control* ctrl, EditSelection* base, const Element* e, Element::Index pos)
         -> std::unique_ptr<EditSelection>;
 /**
  * @brief Creates a new instance containing base->getElements() and the content of elts. The content of *base is cleared
@@ -211,9 +212,9 @@ public:
     /**
      * Returns all containing elements of this selection
      */
-    auto getElements() const -> std::vector<Element*> const&;
+    auto getElementsView() const -> xoj::util::PointerContainerView<std::vector<Element*>>;
 
-    void forEachElement(std::function<void(Element*)> f) const override;
+    void forEachElement(std::function<void(const Element*)> f) const override;
 
     /**
      * Returns the insert order of this selection

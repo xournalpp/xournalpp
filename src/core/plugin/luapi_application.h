@@ -69,19 +69,19 @@ extern "C" {
 }
 
 
-static std::tuple<std::optional<std::string>, std::vector<Element*>> getElementsFromHelper(Control* control,
-                                                                                           const std::string& type) {
-    std::vector<Element*> elements = {};
+static std::tuple<std::optional<std::string>, std::vector<const Element*>> getElementsFromHelper(
+        Control* control, const std::string& type) {
+    std::vector<const Element*> elements = {};
     if (type == "layer") {
         auto sel = control->getWindow()->getXournal()->getSelection();
         if (sel) {
             control->clearSelection();  // otherwise texts in the selection won't be recognized
         }
-        elements = xoj::refElementContainer(control->getCurrentPage()->getSelectedLayer()->getElements());
+        elements = control->getCurrentPage()->getSelectedLayer()->getElementsView().clone();
     } else if (type == "selection") {
         auto sel = control->getWindow()->getXournal()->getSelection();
         if (sel) {
-            elements = sel->getElements();
+            elements = sel->getElementsView().clone();
         } else {
             return std::make_tuple(std::make_optional("There is no selection"), elements);
         }
@@ -671,7 +671,7 @@ static int applib_layerAction(lua_State* L) {
  * If there are no elements emits a warning and does not add an UndoAction.
  */
 static int handleUndoRedoActionHelper(lua_State* L, Control* control, const char* allowUndoRedoAction,
-                                      const std::vector<Element*>& elements) {
+                                      const std::vector<const Element*>& elements) {
     if (elements.empty()) {
         g_warning("No elements, therefore not adding an undo action");
         return 0;
@@ -685,7 +685,7 @@ static int handleUndoRedoActionHelper(lua_State* L, Control* control, const char
         PageRef const& page = control->getCurrentPage();
         Layer* layer = page->getSelectedLayer();
         UndoRedoHandler* undo = control->getUndoRedoHandler();
-        for (Element* element: elements) {
+        for (const Element* element: elements) {
             undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, element));
         }
     } else if (strcmp("none", allowUndoRedoAction) == 0) {
@@ -701,13 +701,13 @@ static int handleUndoRedoActionHelper(lua_State* L, Control* control, const char
  * Helper function for API adding elements. Empties the stack and then pushes the pointers
  * to all elements in the given vector into a table on the stack.
  */
-static void refsHelper(lua_State* L, std::vector<Element*> elements) {
+static void refsHelper(lua_State* L, std::vector<const Element*> elements) {
     lua_settop(L, 0);
     lua_newtable(L);
     size_t count = 0;
-    for (Element* element: elements) {
+    for (const Element* element: elements) {
         lua_pushinteger(L, strict_cast<lua_Integer>(++count));  // index
-        lua_pushlightuserdata(L, static_cast<void*>(element));  // value
+        lua_pushlightuserdata(L, const_cast<void*>(static_cast<const void*>(element)));  // value
         lua_settable(L, -3);                                    // insert
     }
 }
@@ -870,7 +870,7 @@ static void addStrokeHelper(lua_State* L, std::unique_ptr<Stroke> stroke) {
 static int applib_addSplines(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* ctrl = plugin->getControl();
-    std::vector<Element*> strokes;
+    std::vector<const Element*> strokes;
     const char* allowUndoRedoAction;
 
     // Discard any extra arguments passed in
@@ -1020,7 +1020,7 @@ static int applib_addSplines(lua_State* L) {
 static int applib_addStrokes(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* ctrl = plugin->getControl();
-    std::vector<Element*> strokes;
+    std::vector<const Element*> strokes;
     const char* allowUndoRedoAction;
 
     // Discard any extra arguments passed in
@@ -1141,7 +1141,7 @@ static int applib_addStrokes(lua_State* L) {
         PageRef const& page = ctrl->getCurrentPage();
         Layer* layer = page->getSelectedLayer();
         UndoRedoHandler* undo = ctrl->getUndoRedoHandler();
-        for (Element* element: strokes) {
+        for (const Element* element: strokes) {
             undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, element));
         }
     } else if (strcmp("none", allowUndoRedoAction) == 0)
@@ -1198,7 +1198,7 @@ static int applib_addTexts(lua_State* L) {
     Layer* layer = page->getSelectedLayer();
     Settings* settings = control->getSettings();
 
-    std::vector<Element*> texts;
+    std::vector<const Element*> texts;
 
     // Discard any extra arguments passed in
     lua_settop(L, 1);
@@ -1380,9 +1380,9 @@ static int applib_getTexts(lua_State* L) {
     //  1 = type (string)
     // -1 = table of texts (to be returned)
 
-    for (Element* e: elements) {
+    for (const Element* e: elements) {
         if (e->getType() == ELEMENT_TEXT) {
-            auto* t = static_cast<Text*>(e);
+            auto* t = static_cast<const Text*>(e);
             lua_pushinteger(L, ++currTextNo);  // index for later (settable)
             lua_newtable(L);                   // create text table
 
@@ -1417,7 +1417,7 @@ static int applib_getTexts(lua_State* L) {
             lua_pushnumber(L, t->getElementHeight());
             lua_setfield(L, -2, "height");  // add height to text
 
-            lua_pushlightuserdata(L, static_cast<void*>(t));
+            lua_pushlightuserdata(L, const_cast<void*>(static_cast<const void*>(t)));
             lua_setfield(L, -2, "ref");
 
             lua_settable(L, -3);  // add text to elements
@@ -1497,9 +1497,9 @@ static int applib_getStrokes(lua_State* L) {
     //  1 = type (string)
     // -1 = table of strokes (to be returned)
 
-    for (Element* e: elements) {
+    for (const Element* e: elements) {
         if (e->getType() == ELEMENT_STROKE) {
-            auto* s = static_cast<Stroke*>(e);
+            auto* s = static_cast<const Stroke*>(e);
             lua_pushinteger(L, ++currStrokeNo);  // index for later (settable)
             lua_newtable(L);                     // create stroke table
 
@@ -1568,7 +1568,7 @@ static int applib_getStrokes(lua_State* L) {
             lua_pushstring(L, StrokeStyle::formatStyle(s->getLineStyle()).c_str());
             lua_setfield(L, -2, "lineStyle");  // add linestyle to stroke
 
-            lua_pushlightuserdata(L, static_cast<void*>(s));
+            lua_pushlightuserdata(L, const_cast<void*>(static_cast<const void*>(s)));
             lua_setfield(L, -2, "ref");
 
             lua_settable(L, -3);  // add stroke to returned table
@@ -2769,7 +2769,8 @@ static int applib_addImages(lua_State* L) {
 
     auto cntParams = static_cast<int>(lua_rawlen(L, -1));
 
-    std::vector<Element*> images{};
+    std::vector<const Element*> images{};
+
     for (int imgParam{1}; imgParam <= cntParams; imgParam++) {
         lua_pushinteger(L, imgParam);
         lua_gettable(L, -2);
@@ -2974,9 +2975,9 @@ static int applib_getImages(lua_State* L) {
     lua_newtable(L);  // create table of all images
     int currImageNo = 0;
 
-    for (Element* e: elements) {
+    for (const Element* e: elements) {
         if (e->getType() == ELEMENT_IMAGE) {
-            auto* im = static_cast<Image*>(e);
+            auto* im = static_cast<const Image*>(e);
             lua_pushinteger(L, ++currImageNo);  // index for later (settable)
             lua_newtable(L);                    // create table for current image
 
@@ -3012,7 +3013,7 @@ static int applib_getImages(lua_State* L) {
             lua_pushinteger(L, imageSize.second);
             lua_setfield(L, -2, "imageHeight");
 
-            lua_pushlightuserdata(L, static_cast<void*>(im));
+            lua_pushlightuserdata(L, const_cast<void*>(static_cast<const void*>(im)));
             lua_setfield(L, -2, "ref");
 
             lua_settable(L, -3);  // add image to table
@@ -3110,9 +3111,9 @@ static int applib_addToSelection(lua_State* L) {
     InsertionOrderRef insertionOrder;
     insertionOrder.reserve(refs.size());
     Element::Index n = 0;
-    for (auto&& e: page->getSelectedLayer()->getElements()) {
-        if (refs.count(e.get())) {
-            insertionOrder.emplace_back(e.get(), n++);
+    for (auto&& e: page->getSelectedLayer()->getElementsView()) {
+        if (refs.count(const_cast<void*>(static_cast<const void*>(e)))) {
+            insertionOrder.emplace_back(e, n++);
         }
     }
 

@@ -46,7 +46,7 @@ void VerticalToolHandler::adoptElements(const Side side) {
     this->elements.clear();
 
     // Add new elements based on position
-    for (Element* e: xoj::refElementContainer(this->layer->getElements())) {
+    for (const Element* e: this->layer->getElementsView()) {
         if ((side == Side::Below && e->getY() >= this->startY) ||
             (side == Side::Above && e->getY() + e->getElementHeight() <= this->startY)) {
             this->elements.push_back(this->layer->removeElement(e).e);
@@ -95,7 +95,7 @@ auto VerticalToolHandler::refElements() const -> std::vector<Element*> {
     return result;
 }
 
-void VerticalToolHandler::forEachElement(std::function<void(Element*)> f) const {
+void VerticalToolHandler::forEachElement(std::function<void(const Element*)> f) const {
     for (auto const& e: this->elements) {
         f(e.get());
     }

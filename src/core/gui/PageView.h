@@ -170,8 +170,8 @@ public:
      */
     int getY() const override;
 
-    TexImage* getSelectedTex();
-    Text* getSelectedText();
+    const TexImage* getSelectedTex() const;
+    const Text* getSelectedText() const;
 
     xoj::util::Rectangle<double> getRect() const;
 
@@ -200,8 +200,8 @@ public:  // listener
     void rectChanged(xoj::util::Rectangle<double>& rect) override;
     void rangeChanged(Range& range) override;
     void pageChanged() override;
-    void elementChanged(Element* elem) override;
-    void elementsChanged(const std::vector<Element*>& elements, const Range& range) override;
+    void elementChanged(const Element* elem) override;
+    void elementsChanged(const std::vector<const Element*>& elements, const Range& range) override;
 
 private:
     void startText(double x, double y);

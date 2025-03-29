@@ -16,13 +16,12 @@
 
 #include "Element.h"
 
-
 struct InsertionPositionRef {
     constexpr InsertionPositionRef() = default;
-    constexpr explicit InsertionPositionRef(Element* e,
+    constexpr explicit InsertionPositionRef(const Element* e,
                                             Element::Index pos = std::numeric_limits<Element::Index>::max()):
             e(e), pos(pos) {}
-    Element* e{};
+    const Element* e{};
     Element::Index pos{};
 
     constexpr friend auto operator<(const InsertionPositionRef& p1, const InsertionPositionRef& p2) -> bool {

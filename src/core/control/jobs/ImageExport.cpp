@@ -158,7 +158,7 @@ auto ImageExport::getFilenameWithNumber(size_t no) const -> fs::path {
 void ImageExport::exportImagePage(size_t pageId, size_t id, double zoomRatio, ExportGraphicsFormat format,
                                   DocumentView& view) {
     doc->lock();
-    PageRef page = doc->getPage(pageId);
+    ConstPageRef page = doc->getPage(pageId);
     doc->unlock();
 
     zoomRatio = createSurface(page->getWidth(), page->getHeight(), id, zoomRatio);

@@ -67,7 +67,7 @@ public:
 
     std::unique_ptr<MoveUndoAction> finalize();
 
-    void forEachElement(std::function<void(Element*)> f) const override;
+    void forEachElement(std::function<void(const Element*)> f) const override;
 
     auto createView(xoj::view::Repaintable* parent, ZoomControl* zoomControl, const Settings* settings) const
             -> std::unique_ptr<xoj::view::OverlayView>;
