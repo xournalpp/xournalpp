@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-16 08:34+0000\n"
-"PO-Revision-Date: 2025-03-23 04:25\n"
+"POT-Creation-Date: 2025-03-25 09:07+0000\n"
+"PO-Revision-Date: 2025-03-30 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -98,7 +98,7 @@ msgstr "Vybrat jiné PDF"
 msgid "Remove PDF Background"
 msgstr "Odstranit PDF pozadí"
 
-#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
+#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2836
 #: ../src/core/control/XournalMain.cpp:178
 #: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
@@ -138,24 +138,24 @@ msgstr "Soubory Xournalu++"
 msgid "Unsaved Document"
 msgstr "Neuložený dokument"
 
-#: ../src/core/control/Control.cpp:2825
+#: ../src/core/control/Control.cpp:2827
 msgid "Document file was removed."
 msgstr "Soubor s dokumentem byl odstraněn."
 
-#: ../src/core/control/Control.cpp:2825
+#: ../src/core/control/Control.cpp:2827
 msgid "This document is not saved yet."
 msgstr "Tento dokument ještě nebyl uložen."
 
-#: ../src/core/control/Control.cpp:2826
+#: ../src/core/control/Control.cpp:2828
 msgid "Save As..."
 msgstr "Uložit jako..."
 
-#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2828 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Save"
 msgstr "Uložit"
 
-#: ../src/core/control/Control.cpp:2831
+#: ../src/core/control/Control.cpp:2833
 msgid "Discard"
 msgstr "Zahodit"
 
@@ -1085,27 +1085,27 @@ msgstr "Výchozí nastavení systému"
 msgid "Previously selected language not available anymore!"
 msgstr "Dříve vybraný jazyk již není k dispozici!"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:49
 msgid "LaTeX editor theme:"
 msgstr "Téma LaTeX editoru:"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:54
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "GtkSourceView byl zakázan během tvorby Xournal++! Některé možnosti budou nedostupné."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:143
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Nepodařilo se otevřít soubor globální šablony {1}. Existuje?"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
 msgid "Sample LaTeX file generated successfully."
 msgstr "Vzorový LaTeX soubor úspěšně vygenerován."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Chyba: {1}. Zkontrolujte prosím obsah {2}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:165
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Chyba: {1} není obvyklý soubor. Prosím, zkontrolujte si nastavení šablony LaTeXu pro soubory. "
 
@@ -1683,7 +1683,7 @@ msgstr "Selhala inicializace PDF Cairo"
 
 #: ../src/core/undo/AddUndoAction.cpp:64
 #: ../src/core/undo/DeleteUndoAction.cpp:61
-#: ../src/core/undo/EraseUndoAction.cpp:60
+#: ../src/core/undo/EraseUndoAction.cpp:67
 msgid "Erase stroke"
 msgstr "Vymazat čáru"
 

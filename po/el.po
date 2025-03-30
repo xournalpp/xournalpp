@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-16 08:34+0000\n"
-"PO-Revision-Date: 2025-03-23 04:25\n"
+"POT-Creation-Date: 2025-03-25 09:07+0000\n"
+"PO-Revision-Date: 2025-03-30 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -98,7 +98,7 @@ msgstr "Επιλέξτε άλλο PDF"
 msgid "Remove PDF Background"
 msgstr "Αφαίρεση φόντου PDF"
 
-#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
+#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2836
 #: ../src/core/control/XournalMain.cpp:178
 #: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
@@ -138,24 +138,24 @@ msgstr "Αρχεία Xournal++"
 msgid "Unsaved Document"
 msgstr "Μη Αποθηκευμένο Έγγραφο"
 
-#: ../src/core/control/Control.cpp:2825
+#: ../src/core/control/Control.cpp:2827
 msgid "Document file was removed."
 msgstr "Το έγγραφο αφαιρέθηκε."
 
-#: ../src/core/control/Control.cpp:2825
+#: ../src/core/control/Control.cpp:2827
 msgid "This document is not saved yet."
 msgstr "Το αρχείο δεν έχει αποθηκευτεί ακόμα."
 
-#: ../src/core/control/Control.cpp:2826
+#: ../src/core/control/Control.cpp:2828
 msgid "Save As..."
 msgstr "Αποθήκευση Ως..."
 
-#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2828 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Save"
 msgstr "Αποθήκευση"
 
-#: ../src/core/control/Control.cpp:2831
+#: ../src/core/control/Control.cpp:2833
 msgid "Discard"
 msgstr "Απόρριψη"
 
@@ -1080,27 +1080,27 @@ msgstr "Προεπιλογή Συστήματος"
 msgid "Previously selected language not available anymore!"
 msgstr "Η προηγούμενη επιλεγμένη γλώσσα δεν είναι διαθέσιμη πια!"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:49
 msgid "LaTeX editor theme:"
 msgstr "Θέμα επεξεργαστή LaTeX:"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:54
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "Το GtkSourceView απενεργοποιήθηκε κατά την οικοδόμηση του Xournal++! Ορισμένες επιλογές δεν θα είναι διαθέσιμες."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:143
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
 msgid "Sample LaTeX file generated successfully."
 msgstr "Το δείγμα αρχείου LaTeX δημιουργήθηκε επιτυχώς."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Σφάλμα: {1}. Ελέγξτε τα περιεχόμενα του {2}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:165
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Σφάλμα: Το {1} δεν είναι κανονικό. Παρακαλώ ελέγξτε τις ρυθμίσεις του προτύπου LaTeX. "
 
@@ -1676,7 +1676,7 @@ msgstr "Αποτυχία αρχικοποίησης PDF επιφάνειας τ�
 
 #: ../src/core/undo/AddUndoAction.cpp:64
 #: ../src/core/undo/DeleteUndoAction.cpp:61
-#: ../src/core/undo/EraseUndoAction.cpp:60
+#: ../src/core/undo/EraseUndoAction.cpp:67
 msgid "Erase stroke"
 msgstr "Διαγραφή μολυβιάς"
 

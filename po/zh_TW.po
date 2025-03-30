@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-16 08:34+0000\n"
-"PO-Revision-Date: 2025-03-23 04:25\n"
+"POT-Creation-Date: 2025-03-25 09:07+0000\n"
+"PO-Revision-Date: 2025-03-30 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -96,7 +96,7 @@ msgstr "選擇其他PDF"
 msgid "Remove PDF Background"
 msgstr "去掉PDF背景"
 
-#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
+#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2836
 #: ../src/core/control/XournalMain.cpp:178
 #: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
@@ -136,24 +136,24 @@ msgstr "Xournal++ 檔案"
 msgid "Unsaved Document"
 msgstr "未保存文檔"
 
-#: ../src/core/control/Control.cpp:2825
+#: ../src/core/control/Control.cpp:2827
 msgid "Document file was removed."
 msgstr "文檔已刪除。"
 
-#: ../src/core/control/Control.cpp:2825
+#: ../src/core/control/Control.cpp:2827
 msgid "This document is not saved yet."
 msgstr "此文件尚未存檔"
 
-#: ../src/core/control/Control.cpp:2826
+#: ../src/core/control/Control.cpp:2828
 msgid "Save As..."
 msgstr "另存為..."
 
-#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2828 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Save"
 msgstr "保存"
 
-#: ../src/core/control/Control.cpp:2831
+#: ../src/core/control/Control.cpp:2833
 msgid "Discard"
 msgstr "丟棄"
 
@@ -1077,27 +1077,27 @@ msgstr "系統預設"
 msgid "Previously selected language not available anymore!"
 msgstr "以前選擇的語言不再可用！"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:49
 msgid "LaTeX editor theme:"
 msgstr "LaTeX 編輯器主題："
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:54
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "建立 Xournal++ 時已關閉 GtkSourceView！有些選項可能會無法使用。"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:143
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "無法打開全域模板檔案{1}。它存在嘛？"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
 msgid "Sample LaTeX file generated successfully."
 msgstr "產生範例 LaTeX file 成功。"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "錯誤:{1}, 請檢查{2} 的內容"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:165
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "錯誤:{1} 並不是正規檔案. 請檢查LaTex範本檔案之設定 "
 
@@ -1673,7 +1673,7 @@ msgstr "初始化 PDF Cairo surface 失敗"
 
 #: ../src/core/undo/AddUndoAction.cpp:64
 #: ../src/core/undo/DeleteUndoAction.cpp:61
-#: ../src/core/undo/EraseUndoAction.cpp:60
+#: ../src/core/undo/EraseUndoAction.cpp:67
 msgid "Erase stroke"
 msgstr "擦除筆劃"
 

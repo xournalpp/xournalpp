@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-16 08:34+0000\n"
-"PO-Revision-Date: 2025-03-23 04:25\n"
+"POT-Creation-Date: 2025-03-25 09:07+0000\n"
+"PO-Revision-Date: 2025-03-30 04:26\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -99,7 +99,7 @@ msgstr "Andere PDF-Datei auswählen"
 msgid "Remove PDF Background"
 msgstr "PDF-Hintergrund entfernen"
 
-#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
+#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2836
 #: ../src/core/control/XournalMain.cpp:178
 #: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
@@ -139,24 +139,24 @@ msgstr "Xournal++ Dateien"
 msgid "Unsaved Document"
 msgstr "Ungespeichertes Dokument"
 
-#: ../src/core/control/Control.cpp:2825
+#: ../src/core/control/Control.cpp:2827
 msgid "Document file was removed."
 msgstr "Datei des Dokuments wurde entfernt."
 
-#: ../src/core/control/Control.cpp:2825
+#: ../src/core/control/Control.cpp:2827
 msgid "This document is not saved yet."
 msgstr "Dieses Dokument wurde noch nicht gespeichert."
 
-#: ../src/core/control/Control.cpp:2826
+#: ../src/core/control/Control.cpp:2828
 msgid "Save As..."
 msgstr "Speichern unter..."
 
-#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2828 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Save"
 msgstr "Speichern"
 
-#: ../src/core/control/Control.cpp:2831
+#: ../src/core/control/Control.cpp:2833
 msgid "Discard"
 msgstr "Verwerfen"
 
@@ -703,7 +703,7 @@ msgstr "Das Bild konnte nicht geladen werden"
 
 #: ../src/core/control/tools/ImageHandler.cpp:74
 msgid "Could not determine image size!"
-msgstr ""
+msgstr "Die Bildgröße konnte nicht bestimmt werden!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:132
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1085,27 +1085,27 @@ msgstr "Systemstandard"
 msgid "Previously selected language not available anymore!"
 msgstr "Die zuvor ausgewählte Sprache ist nicht mehr verfügbar!"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:49
 msgid "LaTeX editor theme:"
 msgstr "LaTeX-Editor-Theme:"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:54
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "GtkSourceView wurde beim Kompilieren von Xournal++ deaktiviert, wodurch manche Optionen nicht verfügbar sind."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:143
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Globale Vorlagen-Datei kann in {1} nicht geöffnet werden. Existiert sie?"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
 msgid "Sample LaTeX file generated successfully."
 msgstr "Beispiel-LaTeX-Datei erfolgreich erzeugt."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Fehler: {1}. Bitte überprüfen Sie den Inhalt von {2}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:165
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Fehler: {1} ist keine reguläre Datei. Bitte überprüfen Sie Ihre Einstellungen in der LaTeX-Vorlagen-Datei. "
 
@@ -1201,7 +1201,9 @@ msgstr "Seitenhintergrund"
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
-msgstr ""
+msgstr "Dein aktuelles Dokument enthält keine PDF-Seite {1}\n"
+"Möchtest du diese Seite einfügen?\n\n"
+"Tipp: Du kannst {2} auswählen, um eine PDF-Seite einzufügen."
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:106
 msgid "Insert after current page"
@@ -1655,7 +1657,7 @@ msgstr "Dokument nicht geladen! ({1}), {2}"
 
 #: ../src/core/model/Image.cpp:163 ../src/core/model/Image.cpp:173
 msgid "Error: "
-msgstr ""
+msgstr "Fehler: "
 
 #: ../src/core/model/Image.cpp:167 ../src/core/model/Image.cpp:177
 msgid "Unrecoverable error"
@@ -1681,7 +1683,7 @@ msgstr "Fehler beim Initialisieren der PDF-Kairo-Oberfläche"
 
 #: ../src/core/undo/AddUndoAction.cpp:64
 #: ../src/core/undo/DeleteUndoAction.cpp:61
-#: ../src/core/undo/EraseUndoAction.cpp:60
+#: ../src/core/undo/EraseUndoAction.cpp:67
 msgid "Erase stroke"
 msgstr "Linie löschen"
 
@@ -1788,7 +1790,7 @@ msgstr "Seitenhintergrund geändert"
 
 #: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
 msgid "Page size changed"
-msgstr ""
+msgstr "Seitengröße geändert"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
@@ -3720,7 +3722,7 @@ msgstr "Ignoriere Eingaben mit kurzer Länge (zeitlich und räumlich), sofern si
 
 #: ../ui/settings.glade:5392
 msgid "Time limit (ms)"
-msgstr ""
+msgstr "Zeitbegrenzung (ms)"
 
 #: ../ui/settings.glade:5404
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
@@ -3734,11 +3736,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5444
 msgid "Length limit (mm)"
-msgstr ""
+msgstr "Längenbegrenzung (mm)"
 
 #: ../ui/settings.glade:5455
 msgid "Frequency limit (ms)"
-msgstr ""
+msgstr "Frequenzbegrenzung (ms)"
 
 #: ../ui/settings.glade:5467
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"

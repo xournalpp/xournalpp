@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-16 08:34+0000\n"
-"PO-Revision-Date: 2025-03-23 04:25\n"
+"POT-Creation-Date: 2025-03-25 09:07+0000\n"
+"PO-Revision-Date: 2025-03-30 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -29,7 +29,7 @@ msgstr "Błąd systemu plików: {1}"
 
 #: ../src/core/control/Control.cpp:242
 msgid "Could not remove old autosave file \"{1}\": {2}"
-msgstr ""
+msgstr "Nie można usunąć starego pliku autozapisu \"{1}\": {2}"
 
 #: ../src/core/control/Control.cpp:992
 msgid "Recorder could not be started."
@@ -99,7 +99,7 @@ msgstr "Wybierz inny PDF"
 msgid "Remove PDF Background"
 msgstr "Usuń PDF w tle"
 
-#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
+#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2836
 #: ../src/core/control/XournalMain.cpp:178
 #: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
@@ -139,24 +139,24 @@ msgstr "Pliki Xournal++"
 msgid "Unsaved Document"
 msgstr "Niezapisany dokument"
 
-#: ../src/core/control/Control.cpp:2825
+#: ../src/core/control/Control.cpp:2827
 msgid "Document file was removed."
 msgstr "Dokument został usunięty."
 
-#: ../src/core/control/Control.cpp:2825
+#: ../src/core/control/Control.cpp:2827
 msgid "This document is not saved yet."
 msgstr "Dokument nie został jeszcze zapisany."
 
-#: ../src/core/control/Control.cpp:2826
+#: ../src/core/control/Control.cpp:2828
 msgid "Save As..."
 msgstr "Zapisz jako..."
 
-#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2828 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Save"
 msgstr "Zapisz"
 
-#: ../src/core/control/Control.cpp:2831
+#: ../src/core/control/Control.cpp:2833
 msgid "Discard"
 msgstr "Odrzuć"
 
@@ -1055,7 +1055,7 @@ msgstr "Rysuj podwójną strzałkę"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:540
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Rysuj układ współrzędnych"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:142
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:47
@@ -1082,27 +1082,27 @@ msgstr "Domyślne ustawienie systemowe"
 msgid "Previously selected language not available anymore!"
 msgstr "Poprzednio wybrany język nie jest już dostępny!"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:49
 msgid "LaTeX editor theme:"
 msgstr "Motyw edytora LaTeX:"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:54
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "GtkSourceView został wyłączony podczas budowania Xournal++! Niektóre opcje nie będą dostępne."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:143
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Nie można otworzyć pliku szablonu globalnego w {1}. Czy istnieje?"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
 msgid "Sample LaTeX file generated successfully."
 msgstr "Przykładowy plik LaTeX został wygenerowany pomyślnie."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Błąd: {1}. Proszę sprawdzić zawartość {2}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:165
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Błąd: {1} nie jest zwykłym plikiem. Sprawdź ustawienia pliku szablonu LaTeX. "
 
@@ -1198,7 +1198,9 @@ msgstr ""
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
-msgstr ""
+msgstr "Aktualny dokument nie ma strony nr {1} z pliku PDF\n"
+"Chciałbyś ją wstawić?\n\n"
+"Wskazówka: Możesz wybrać {2} żeby wstawić stronę PDF."
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:106
 msgid "Insert after current page"
@@ -1652,7 +1654,7 @@ msgstr "Dokument nie został załadowany! ({1}), {2}"
 
 #: ../src/core/model/Image.cpp:163 ../src/core/model/Image.cpp:173
 msgid "Error: "
-msgstr ""
+msgstr "Błąd: "
 
 #: ../src/core/model/Image.cpp:167 ../src/core/model/Image.cpp:177
 msgid "Unrecoverable error"
@@ -1678,7 +1680,7 @@ msgstr "Nie udało się zainicjować powierzchni PDF Cairo"
 
 #: ../src/core/undo/AddUndoAction.cpp:64
 #: ../src/core/undo/DeleteUndoAction.cpp:61
-#: ../src/core/undo/EraseUndoAction.cpp:60
+#: ../src/core/undo/EraseUndoAction.cpp:67
 msgid "Erase stroke"
 msgstr "Wymaż kreskę"
 
@@ -1785,7 +1787,7 @@ msgstr "Zmienione tło strony"
 
 #: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
 msgid "Page size changed"
-msgstr ""
+msgstr "Zmieniono rozmiar strony"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
@@ -1857,7 +1859,7 @@ msgstr "Błąd przy otwieraniu pliku \"{1}\""
 
 #: ../src/util/OutputStream.cpp:48
 msgid "Error writing data to file: \"{1}\""
-msgstr ""
+msgstr "Błąd zapisu danych do pliku: \"{1}\""
 
 #: ../src/util/OutputStream.cpp:49
 msgid "Error code {1}. Message:"
@@ -1865,11 +1867,11 @@ msgstr "Kod błędu {1}. Komunikat:"
 
 #: ../src/util/OutputStream.cpp:69
 msgid "Error occurred while closing file: \"{1}\""
-msgstr ""
+msgstr "Wystąpił błąd podczas zamykania pliku: \"{1}\""
 
 #: ../src/util/OutputStream.cpp:70
 msgid "Error code {1}"
-msgstr ""
+msgstr "Kod błędu {1}"
 
 #: ../src/util/PathUtil.cpp:172
 msgid "File couldn't be opened. You have to do it manually:\n"
@@ -2188,7 +2190,7 @@ msgstr "<b>Pusty Przybornik</b>\n"
 
 #: ../ui/main.glade:152
 msgid "_File"
-msgstr ""
+msgstr "_Plik"
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
@@ -2200,15 +2202,15 @@ msgstr "_Komentuj plik PDF"
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr ""
+msgstr "_Eksportuj jako PDF"
 
 #: ../ui/main.glade:247
 msgid "Export as..."
-msgstr ""
+msgstr "Eksportuj jako..."
 
 #: ../ui/main.glade:292
 msgid "_Edit"
-msgstr ""
+msgstr "_Edytuj"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
@@ -2236,7 +2238,7 @@ msgstr ""
 
 #: ../ui/main.glade:532
 msgid "Preferences"
-msgstr ""
+msgstr "Preferencje"
 
 #: ../ui/main.glade:546
 msgid "_View"
@@ -2244,7 +2246,7 @@ msgstr "_Widok"
 
 #: ../ui/main.glade:557
 msgid "_Pair Pages"
-msgstr ""
+msgstr "_Paruj strony"
 
 #: ../ui/main.glade:567
 msgid "_Presentation Mode"
@@ -2428,39 +2430,39 @@ msgstr ""
 
 #: ../ui/main.glade:1213
 msgid "New Page _Before"
-msgstr ""
+msgstr "Nowa strona _przed"
 
 #: ../ui/main.glade:1223
 msgid "New Page _After"
-msgstr ""
+msgstr "Nowa strona _po"
 
 #: ../ui/main.glade:1234
 msgid "New Page at _End"
-msgstr ""
+msgstr "Nowa strona na _końcu"
 
 #: ../ui/main.glade:1244
 msgid "Duplicate Page"
-msgstr ""
+msgstr "Duplikuj stronę"
 
 #: ../ui/main.glade:1254
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Dołącz nowe strony PDF"
 
 #: ../ui/main.glade:1264
 msgid "Configure Page Template"
-msgstr ""
+msgstr "Konfiguruj szablon strony"
 
 #: ../ui/main.glade:1274
 msgid "_Delete Page"
-msgstr ""
+msgstr "_Usuń stronę"
 
 #: ../ui/main.glade:1291
 msgid "New _Layer"
-msgstr ""
+msgstr "Nowa _warstwa"
 
 #: ../ui/main.glade:1302
 msgid "Delete Layer"
-msgstr ""
+msgstr "Usuń warstwę"
 
 #: ../ui/main.glade:1313
 msgid "Merge Layer Down"
@@ -2845,7 +2847,29 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\t%\n"
 "Illegal characters are replaced with \"_\""
-msgstr ""
+msgstr "%a\t\tSkrócona nazwa dnia tygodnia (np. Thu)\n"
+"%A\t\tPełna nazwa dnia tygodnia (np. Thursday)\n"
+"%b\t\tSkrócona nazwa miesiąca (np. Aug)\n"
+"%B\t\tPełna nazwa miesiąca (np. August)\n"
+"%c\t\tReprezentacja daty oraz czasu (np. Thu Aug 23 14:55:02 2001)\n"
+"%d\t\tDzień miesiąca (01-31)\n"
+"%F\t\tData (np. 2001-08-23)\n"
+"%H\t\tGodzina w formacie 24h (00-23)\n"
+"%I\t\tGodzina w formacie 12h (01-12)\n"
+"%j\t\tDzień roku (001-366)\n"
+"%m\t\tMiesiąc jako liczba dziesiętna (01-12)\n"
+"%M\t\tMinuta (00-59)\n"
+"%p\t\tAM lub oznaczenie PM (np. PM)\n"
+"%S\t\tSekundy (00-61)\n"
+"%U\t\tNumer tygodnia w pierwszą niedzielę jako pierwszy dzień tygodnia pierwszego (00-53)\n"
+"%w\t\tDni tygodnia jako liczba dziesiętna z niedzielą jako 0 (0-6)\n"
+"%W\t\tTydzień jako liczba dziesiętna z pierwszym poniedziałkiem jako pierwszy dzień pierwszego tygodnia (00-53)\n"
+"%x\t\tSkrócona data (np. 08/23/01)\n"
+"%X\t\tGodzina (np. 14:55:02)\n"
+"%y\t\tDwie ostatnie cyfry roku (00-99)\n"
+"%Y\t\tRok (np. 2001)\n"
+"%Z\t\tNazwa lub skrót strefy czasowej (np. CDT)\n"
+"%%\t\tZnak %"
 
 #: ../ui/settings.glade:613 ../ui/settings.glade:784
 msgid "Available Placeholders"

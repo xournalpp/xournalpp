@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-16 08:34+0000\n"
-"PO-Revision-Date: 2025-03-23 04:25\n"
+"POT-Creation-Date: 2025-03-25 09:07+0000\n"
+"PO-Revision-Date: 2025-03-30 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -20,11 +20,12 @@ msgstr ""
 #: ../src/core/control/AudioController.cpp:118
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Geen of ongeldige audio map ingesteld; opname is niet mogelijk!\n"
+"Stel de opname map in via 'Voorkeuren > Audio-opname'"
 
 #: ../src/core/control/Control.cpp:230
 msgid "Filesystem error: {1}"
-msgstr ""
+msgstr "Fout in bestandssysteem: {1}"
 
 #: ../src/core/control/Control.cpp:242
 msgid "Could not remove old autosave file \"{1}\": {2}"
@@ -96,7 +97,7 @@ msgstr "Ander PDF-bestand kiezen"
 msgid "Remove PDF Background"
 msgstr "PDF-achtergrond verwijderen"
 
-#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
+#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2836
 #: ../src/core/control/XournalMain.cpp:178
 #: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
@@ -136,24 +137,24 @@ msgstr "Xournal++-bestanden"
 msgid "Unsaved Document"
 msgstr "Niet-opgeslagen document"
 
-#: ../src/core/control/Control.cpp:2825
+#: ../src/core/control/Control.cpp:2827
 msgid "Document file was removed."
 msgstr "Het documentbestand is verwijderd."
 
-#: ../src/core/control/Control.cpp:2825
+#: ../src/core/control/Control.cpp:2827
 msgid "This document is not saved yet."
 msgstr "Dit document is nog niet opgeslagen."
 
-#: ../src/core/control/Control.cpp:2826
+#: ../src/core/control/Control.cpp:2828
 msgid "Save As..."
 msgstr "Opslaan als..."
 
-#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2828 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Save"
 msgstr "Opslaan"
 
-#: ../src/core/control/Control.cpp:2831
+#: ../src/core/control/Control.cpp:2833
 msgid "Discard"
 msgstr "Verwerpen"
 
@@ -528,7 +529,7 @@ msgstr "PDF-bestand exporteren"
 
 #: ../src/core/control/jobs/SaveJob.cpp:117
 msgid "Save file error, can't backup: {1}"
-msgstr ""
+msgstr "Fout tijdens het opslaan, kan geen back-up maken: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:55
 msgid "Failed to parse LaTeX generator path: {1}"
@@ -879,7 +880,7 @@ msgstr "Bezig met laden..."
 
 #: ../src/core/gui/PageView.cpp:934
 msgid "Scroll to page {1}"
-msgstr ""
+msgstr "Scroll naar pagina {1}"
 
 #: ../src/core/gui/PageView.cpp:936
 msgid "Add missing page"
@@ -920,7 +921,7 @@ msgstr "Gebouwd op"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:39
 msgid "GTK Version"
-msgstr ""
+msgstr "GTK versie"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:46
 msgid "Git commit"
@@ -1042,13 +1043,13 @@ msgstr "Pijl tekenen"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:538
 msgid "Draw Double Arrow"
-msgstr ""
+msgstr "Teken een dikke pijl"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:140
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:540
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Teken coördinatiesysteem"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:142
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:47
@@ -1075,27 +1076,27 @@ msgstr "Standaard systeeminstelling"
 msgid "Previously selected language not available anymore!"
 msgstr "De eerder geselecteerde taal is niet meer beschikbaar!"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:49
 msgid "LaTeX editor theme:"
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:54
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:143
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
 msgid "Sample LaTeX file generated successfully."
 msgstr "Voorbeeld LaTeX-bestand succesvol gegenereerd."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Fout: {1}. Controleer de inhoud van {2}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:165
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Fout: {1} is geen normaal bestand. Controleer uw LaTeX template bestand instellingen. "
 
@@ -1173,15 +1174,15 @@ msgstr ""
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:56
 msgid "No recent files"
-msgstr ""
+msgstr "Geen recente bestanden"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:65
 msgid "Clear list"
-msgstr ""
+msgstr "Maak lijst leeg"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:94
 msgid "_Journal"
-msgstr ""
+msgstr "_Journal"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:94
 msgid "Paper B_ackground"
@@ -1671,7 +1672,7 @@ msgstr "Kan PDF Cairo oppervlak niet initialiseren"
 
 #: ../src/core/undo/AddUndoAction.cpp:64
 #: ../src/core/undo/DeleteUndoAction.cpp:61
-#: ../src/core/undo/EraseUndoAction.cpp:60
+#: ../src/core/undo/EraseUndoAction.cpp:67
 msgid "Erase stroke"
 msgstr "Penseelstreek verwijderen"
 
