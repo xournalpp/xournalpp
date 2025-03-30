@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-16 11:23+0000\n"
-"PO-Revision-Date: 2025-03-23 04:25\n"
+"PO-Revision-Date: 2025-03-30 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -29,7 +29,7 @@ msgstr "Błąd systemu plików: {1}"
 
 #: ../src/core/control/Control.cpp:241
 msgid "Could not remove old autosave file \"{1}\": {2}"
-msgstr ""
+msgstr "Nie można usunąć starego pliku autozapisu \"{1}\": {2}"
 
 #: ../src/core/control/Control.cpp:561
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
@@ -77,7 +77,9 @@ msgstr "Z PDF w tle"
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
-msgstr ""
+msgstr "Aktualny dokument nie ma strony nr {1} z pliku PDF\n"
+"Chciałbyś ją wstawić?\n\n"
+"Wskazówka: Możesz wybrać {2} żeby wstawić stronę PDF."
 
 #: ../src/core/control/Control.cpp:866
 msgid "No pdf pages available to append. You may need to reopen the document first."
@@ -1028,7 +1030,7 @@ msgstr "Rysuj podwójną strzałkę"
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Rysuj układ współrzędnych"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
@@ -1840,7 +1842,7 @@ msgstr "Dokument nie został załadowany! ({1}), {2}"
 
 #: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:175
 msgid "Error: "
-msgstr ""
+msgstr "Błąd: "
 
 #: ../src/core/model/Image.cpp:169 ../src/core/model/Image.cpp:179
 msgid "Unrecoverable error"
@@ -1973,7 +1975,7 @@ msgstr "Zmienione tło strony"
 
 #: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
 msgid "Page size changed"
-msgstr ""
+msgstr "Zmieniono rozmiar strony"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
@@ -2045,7 +2047,7 @@ msgstr "Błąd przy otwieraniu pliku \"{1}\""
 
 #: ../src/util/OutputStream.cpp:48
 msgid "Error writing data to file: \"{1}\""
-msgstr ""
+msgstr "Błąd zapisu danych do pliku: \"{1}\""
 
 #: ../src/util/OutputStream.cpp:49
 msgid "Error code {1}. Message:"
@@ -2053,11 +2055,11 @@ msgstr "Kod błędu {1}. Komunikat:"
 
 #: ../src/util/OutputStream.cpp:69
 msgid "Error occurred while closing file: \"{1}\""
-msgstr ""
+msgstr "Wystąpił błąd podczas zamykania pliku: \"{1}\""
 
 #: ../src/util/OutputStream.cpp:70
 msgid "Error code {1}"
-msgstr ""
+msgstr "Kod błędu {1}"
 
 #: ../src/util/PathUtil.cpp:176
 msgid "File couldn't be opened. You have to do it manually:\n"
@@ -2579,7 +2581,29 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\t%\n"
 "Illegal characters are replaced with \"_\""
-msgstr ""
+msgstr "%a\t\tSkrócona nazwa dnia tygodnia (np. Thu)\n"
+"%A\t\tPełna nazwa dnia tygodnia (np. Thursday)\n"
+"%b\t\tSkrócona nazwa miesiąca (np. Aug)\n"
+"%B\t\tPełna nazwa miesiąca (np. August)\n"
+"%c\t\tReprezentacja daty oraz czasu (np. Thu Aug 23 14:55:02 2001)\n"
+"%d\t\tDzień miesiąca (01-31)\n"
+"%F\t\tData (np. 2001-08-23)\n"
+"%H\t\tGodzina w formacie 24h (00-23)\n"
+"%I\t\tGodzina w formacie 12h (01-12)\n"
+"%j\t\tDzień roku (001-366)\n"
+"%m\t\tMiesiąc jako liczba dziesiętna (01-12)\n"
+"%M\t\tMinuta (00-59)\n"
+"%p\t\tAM lub oznaczenie PM (np. PM)\n"
+"%S\t\tSekundy (00-61)\n"
+"%U\t\tNumer tygodnia w pierwszą niedzielę jako pierwszy dzień tygodnia pierwszego (00-53)\n"
+"%w\t\tDni tygodnia jako liczba dziesiętna z niedzielą jako 0 (0-6)\n"
+"%W\t\tTydzień jako liczba dziesiętna z pierwszym poniedziałkiem jako pierwszy dzień pierwszego tygodnia (00-53)\n"
+"%x\t\tSkrócona data (np. 08/23/01)\n"
+"%X\t\tGodzina (np. 14:55:02)\n"
+"%y\t\tDwie ostatnie cyfry roku (00-99)\n"
+"%Y\t\tRok (np. 2001)\n"
+"%Z\t\tNazwa lub skrót strefy czasowej (np. CDT)\n"
+"%%\t\tZnak %"
 
 #: ../ui/settings.glade:588 ../ui/settings.glade:758
 msgid "Available Placeholders"
@@ -3747,7 +3771,7 @@ msgstr "Zarządzaj paskiem narzędzi"
 
 #: ../ui/mainmenubar.xml:5
 msgid "_File"
-msgstr ""
+msgstr "_Plik"
 
 #: ../ui/mainmenubar.xml:13
 msgid "Open"
@@ -3768,11 +3792,11 @@ msgstr "Zapisz jako"
 
 #: ../ui/mainmenubar.xml:38
 msgid "_Export as PDF"
-msgstr ""
+msgstr "_Eksportuj jako PDF"
 
 #: ../ui/mainmenubar.xml:42
 msgid "Export as..."
-msgstr ""
+msgstr "Eksportuj jako..."
 
 #: ../ui/mainmenubar.xml:54
 msgid "Quit"
@@ -3780,7 +3804,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:61
 msgid "_Edit"
-msgstr ""
+msgstr "_Edytuj"
 
 #: ../ui/mainmenubar.xml:93
 msgid "Select All"
@@ -3820,7 +3844,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:161
 msgid "Preferences"
-msgstr ""
+msgstr "Preferencje"
 
 #: ../ui/mainmenubar.xml:166
 msgid "T_oolbars"
@@ -3840,7 +3864,7 @@ msgstr "_Widok"
 
 #: ../ui/mainmenubar.xml:184
 msgid "_Pair Pages"
-msgstr ""
+msgstr "_Paruj strony"
 
 #: ../ui/mainmenubar.xml:188
 msgid "_Presentation Mode"
@@ -4016,39 +4040,39 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:436
 msgid "New Page _Before"
-msgstr ""
+msgstr "Nowa strona _przed"
 
 #: ../ui/mainmenubar.xml:440
 msgid "New Page _After"
-msgstr ""
+msgstr "Nowa strona _po"
 
 #: ../ui/mainmenubar.xml:445
 msgid "New Page at _End"
-msgstr ""
+msgstr "Nowa strona na _końcu"
 
 #: ../ui/mainmenubar.xml:449
 msgid "Duplicate Page"
-msgstr ""
+msgstr "Duplikuj stronę"
 
 #: ../ui/mainmenubar.xml:453
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Dołącz nowe strony PDF"
 
 #: ../ui/mainmenubar.xml:457
 msgid "Configure Page Template"
-msgstr ""
+msgstr "Konfiguruj szablon strony"
 
 #: ../ui/mainmenubar.xml:461
 msgid "_Delete Page"
-msgstr ""
+msgstr "_Usuń stronę"
 
 #: ../ui/mainmenubar.xml:468
 msgid "New _Layer"
-msgstr ""
+msgstr "Nowa _warstwa"
 
 #: ../ui/mainmenubar.xml:473
 msgid "Delete Layer"
-msgstr ""
+msgstr "Usuń warstwę"
 
 #: ../ui/mainmenubar.xml:478
 msgid "Merge Layer Down"

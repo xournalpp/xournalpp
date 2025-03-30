@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-16 11:23+0000\n"
-"PO-Revision-Date: 2025-03-23 04:25\n"
+"PO-Revision-Date: 2025-03-30 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -20,11 +20,12 @@ msgstr ""
 #: ../src/core/control/AudioController.cpp:120
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Geen of ongeldige audio map ingesteld; opname is niet mogelijk!\n"
+"Stel de opname map in via 'Voorkeuren > Audio-opname'"
 
 #: ../src/core/control/Control.cpp:229
 msgid "Filesystem error: {1}"
-msgstr ""
+msgstr "Fout in bestandssysteem: {1}"
 
 #: ../src/core/control/Control.cpp:241
 msgid "Could not remove old autosave file \"{1}\": {2}"
@@ -61,7 +62,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:819
 msgid "_Journal"
-msgstr ""
+msgstr "_Journal"
 
 #: ../src/core/control/Control.cpp:819
 msgid "Paper B_ackground"
@@ -569,7 +570,7 @@ msgstr "PDF-bestand exporteren"
 
 #: ../src/core/control/jobs/SaveJob.cpp:124
 msgid "Save file error, can't backup: {1}"
-msgstr ""
+msgstr "Fout tijdens het opslaan, kan geen back-up maken: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:55
 msgid "Failed to parse LaTeX generator path: {1}"
@@ -855,7 +856,7 @@ msgstr "Bezig met laden..."
 
 #: ../src/core/gui/PageView.cpp:979
 msgid "Scroll to page {1}"
-msgstr ""
+msgstr "Scroll naar pagina {1}"
 
 #: ../src/core/gui/PageView.cpp:981
 msgid "Add missing page"
@@ -896,7 +897,7 @@ msgstr "Gebouwd op"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:47
 msgid "GTK Version"
-msgstr ""
+msgstr "GTK versie"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:54
 msgid "Git commit"
@@ -1016,12 +1017,12 @@ msgstr "Pijl tekenen"
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Draw Double Arrow"
-msgstr ""
+msgstr "Teken een dikke pijl"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Teken coördinatiesysteem"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
@@ -1363,11 +1364,11 @@ msgstr ""
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:100
 msgid "No recent files"
-msgstr ""
+msgstr "Geen recente bestanden"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:110
 msgid "Clear list"
-msgstr ""
+msgstr "Maak lijst leeg"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:182
 msgctxt "In the submenu for removing recent documents, this will display on top of the list xournal++ files to separate them from PDF files"
