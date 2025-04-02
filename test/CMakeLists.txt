@@ -18,7 +18,7 @@ if (${DOWNLOAD_GTEST})
   include(FetchContent)
   FetchContent_Declare(
       googletest
-      URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
+      URL https://github.com/google/googletest/archive/refs/tags/v1.16.0.zip
   )
   # Prevent reloading if already downloaed
   set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
