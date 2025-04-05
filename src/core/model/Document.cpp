@@ -309,6 +309,7 @@ auto Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTre
 }
 
 void Document::updateIndexPageNumbers() {
+    indexPdfPages();
     if (this->contentsModel) {
         gtk_tree_model_foreach(this->contentsModel.get(), xoj::util::wrap_v<fillPageLabels>, this);
     }
