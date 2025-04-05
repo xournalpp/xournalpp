@@ -18,6 +18,7 @@
 #include <gtk/gtk.h>  // for GtkWidget, GtkSpinButton
 
 #include "util/raii/GObjectSPtr.h"  // for WidgetSPtr
+#include "util/raii/GSourceURef.h"
 
 class SpinPageListener;
 
@@ -50,7 +51,7 @@ private:
     gulong pageNrSpinChangedHandlerId = 0;
     size_t page = 0;
 
-    guint lastTimeoutId = 0;
+    xoj::util::GSourceURef timeout;
     SpinPageListener* listener;
 
     size_t min = 0;

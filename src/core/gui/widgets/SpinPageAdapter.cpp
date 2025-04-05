@@ -9,10 +9,11 @@
 #include "util/safe_casts.h"
 
 auto SpinPageAdapter::pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter) -> bool {
-    adapter->lastTimeoutId = 0;
-    adapter->page = static_cast<size_t>(gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(adapter->widget.get())));
+    adapter->page = strict_cast<size_t>(gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(adapter->widget.get())));
 
     adapter->firePageChanged();
+
+    adapter->timeout.consume();
     return false;
 }
 
@@ -22,12 +23,8 @@ void SpinPageAdapter::pageNrSpinChangedCallback(GtkSpinButton* spinbutton, SpinP
         return;
     }
 
-    if (adapter->lastTimeoutId) {
-        g_source_remove(adapter->lastTimeoutId);
-    }
-
     // Give the spin button some time to release, if we don't do he will send new events...
-    adapter->lastTimeoutId = g_timeout_add(100, xoj::util::wrap_for_once_v<pageNrSpinChangedTimerCallback>, adapter);
+    adapter->timeout = g_timeout_add(100, xoj::util::wrap_for_once_v<pageNrSpinChangedTimerCallback>, adapter);
 }
 
 void SpinPageAdapter::setWidget(GtkWidget* widget) {
@@ -38,7 +35,6 @@ void SpinPageAdapter::setWidget(GtkWidget* widget) {
     this->widget.reset(widget, xoj::util::refsink);
     this->pageNrSpinChangedHandlerId =
             g_signal_connect(widget, "value-changed", G_CALLBACK(pageNrSpinChangedCallback), this);
-    this->lastTimeoutId = 0;
 
     gtk_spin_button_set_range(GTK_SPIN_BUTTON(widget), static_cast<double>(this->min), static_cast<double>(this->max));
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(widget), static_cast<double>(this->page));

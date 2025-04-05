@@ -58,9 +58,10 @@ jobs:
             console.log('PR Head sha: ' + pr.data.head.sha)
             core.setOutput('head_sha', pr.data.head.sha)
       - uses: actions/checkout@v4
-        with:  # Get the build targets **from the master branch**
+        with:  # Get the build targets **from the PR branch**
           sparse-checkout: '${{ env.build-targets-json }}'
           sparse-checkout-cone-mode: false
+          ref: ${{ steps.get-sha.outputs.head_sha }}
       - name: 'Parse command and acknowledge order'
         id: parse
         uses: actions/github-script@v7

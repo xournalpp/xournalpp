@@ -23,6 +23,7 @@
 #include "util/XojMsgBox.h"
 #include "util/gtk4_helper.h"
 #include "util/i18n.h"  // for FS, _F, _
+#include "util/raii/CStringWrapper.h"
 
 #include "filesystem.h"  // for path, is_regular_file
 
@@ -121,10 +122,8 @@ void LatexSettingsPanel::save(LatexSettings& settings) {
             gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get("cbSyntaxHighlight")));
 
     GtkFontChooser* fontSelector = GTK_FONT_CHOOSER(builder.get("selBtnEditorFont"));
-    std::string fontDescription{gtk_font_chooser_get_font(fontSelector)};
-    settings.editorFont = fontDescription;
+    settings.editorFont = xoj::util::OwnedCString::assumeOwnership(gtk_font_chooser_get_font(fontSelector)).get();
     settings.useCustomEditorFont = !gtk_check_button_get_active(this->cbUseSystemFont);
-
     settings.editorWordWrap = gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get("cbWordWrap")));
 }
 

@@ -2015,8 +2015,10 @@ void Control::resetSavedStatus() {
 }
 
 void Control::quit(bool allowCancel) {
+    g_message("Quitting");
     auto afterClosed = [this, allowCancel](bool closed) {
         if (!closed) {
+            g_message("Closing document failed or cancelled");
             if (!allowCancel) {
                 // Cancel is not allowed, and the user close or did not save
                 // This is probably called from macOS, where the Application
