@@ -59,7 +59,7 @@ void BackgroundImage::loadFile(GInputStream* stream, fs::path const& path, GErro
     this->img = std::make_shared<Content>(stream, path, error);
 }
 
-auto BackgroundImage::getCloneId() -> int { return this->img ? this->img->pageId : -1; }
+auto BackgroundImage::getCloneId() const -> int { return this->img ? this->img->pageId : -1; }
 
 void BackgroundImage::setCloneId(int id) {
     if (this->img) {
@@ -88,6 +88,7 @@ void BackgroundImage::setAttach(bool attach) {
     this->img->attach = attach;
 }
 
-auto BackgroundImage::getPixbuf() const -> GdkPixbuf* { return this->img ? this->img->pixbuf : nullptr; }
+auto BackgroundImage::getPixbuf() -> GdkPixbuf* { return this->img ? this->img->pixbuf : nullptr; }
+auto BackgroundImage::getPixbuf() const -> const GdkPixbuf* { return this->img ? this->img->pixbuf : nullptr; }
 
 auto BackgroundImage::isEmpty() const -> bool { return !this->img; }

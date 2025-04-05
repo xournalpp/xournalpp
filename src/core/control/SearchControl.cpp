@@ -36,7 +36,7 @@ auto SearchControl::search(const std::string& text, size_t index, size_t* occurr
             this->results = this->pdf->findText(text);
         }
 
-        for (Layer* l: *this->page->getLayers()) {
+        for (Layer* l: this->page->getLayers()) {
             if (!l->isVisible()) {
                 continue;
             }

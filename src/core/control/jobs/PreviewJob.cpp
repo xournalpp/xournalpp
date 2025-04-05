@@ -52,7 +52,7 @@ void PreviewJob::finishPaint() {
 }
 
 void PreviewJob::drawPage() {
-    PageRef page = this->sidebarPreview->page;
+    ConstPageRef page = this->sidebarPreview->page;
     Document* doc = this->sidebarPreview->sidebar->getControl()->getDocument();
     DocumentView view;
     view.setPdfCache(this->sidebarPreview->sidebar->getCache());
@@ -83,7 +83,7 @@ void PreviewJob::drawPage() {
                 view.drawBackground(flags);
             } else {
                 view.drawBackground(xoj::view::BACKGROUND_FORCE_PAINT_BACKGROUND_COLOR_ONLY);
-                Layer* drawLayer = (*page->getLayers())[layer - 1];
+                const Layer* drawLayer = page->getLayersView()[layer - 1];
                 xoj::view::LayerView layerView(drawLayer);
                 layerView.draw(context);
             }
@@ -96,8 +96,9 @@ void PreviewJob::drawPage() {
             auto flags = xoj::view::BACKGROUND_SHOW_ALL;
             flags.forceVisible = xoj::view::FORCE_VISIBLE;
             view.drawBackground(flags);
+            const auto layers = page->getLayersView();
             for (Layer::Index i = 0; i < layer; i++) {
-                Layer* drawLayer = (*page->getLayers())[i];
+                const Layer* drawLayer = layers[i];
                 xoj::view::LayerView layerView(drawLayer);
                 layerView.draw(context);
             }

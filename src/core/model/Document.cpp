@@ -16,6 +16,7 @@
 #include "model/PageType.h"                   // for PageType
 #include "pdf/base/XojPdfAction.h"            // for XojPdfAction
 #include "pdf/base/XojPdfBookmarkIterator.h"  // for XojPdfBookmarkIterator
+#include "util/Assert.h"                      // for xoj_assert
 #include "util/PathUtil.h"                    // for clearExtensions
 #include "util/PlaceholderString.h"           // for PlaceholderString
 #include "util/SaveNameUtils.h"               // for parseFilename
@@ -123,7 +124,7 @@ auto Document::getFilepath() const -> fs::path { return filepath; }
 
 auto Document::getPdfFilepath() const -> fs::path { return pdfFilepath; }
 
-auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
+auto Document::createSaveFoldername(const fs::path& lastSavePath) const -> fs::path {
     if (!filepath.empty()) {
         return filepath.parent_path();
     }
@@ -136,7 +137,7 @@ auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
 }
 
 auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName,
-                                  const std::string& defaultPdfName) -> fs::path {
+                                  const std::string& defaultPdfName) const -> fs::path {
     constexpr static std::wstring_view forbiddenChars = {L"\\/:*?\"<>|"};
     std::string wildcardString;
     if (type != Document::PDF) {
@@ -208,10 +209,9 @@ auto Document::getEvMetadataFilename() const -> fs::path {
 
 auto Document::isAttachPdf() const -> bool { return this->attachPdf; }
 
-auto Document::findPdfPage(size_t pdfPage) -> size_t {
+auto Document::findPdfPage(size_t pdfPage) const -> size_t {
     // Create a page index if not already indexed.
-    if (!this->pageIndex)
-        indexPdfPages();
+    xoj_assert(this->pageIndex);
     auto pos = this->pageIndex->find(pdfPage);
     if (pos == this->pageIndex->end()) {
         return npos;
