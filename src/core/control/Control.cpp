@@ -2015,25 +2015,14 @@ void Control::resetSavedStatus() {
 }
 
 void Control::quit(bool allowCancel) {
-    auto afterClosed = [this, allowCancel](bool closed) {
-        if (!closed) {
-            if (!allowCancel) {
-                // Cancel is not allowed, and the user close or did not save
-                // This is probably called from macOS, where the Application
-                // now will be killed - therefore do an emergency save.
-                emergencySave();
-            }
-        } else {
-            if (audioController) {
-                audioController->stopRecording();
-            }
-            this->scheduler->lock();
-            this->scheduler->removeAllJobs();
-            this->scheduler->unlock();
-            this->scheduler->stop();  // Finish current task. Must be called to finish pending saves.
-            this->closeDocument();    // Must be done after all jobs has finished (Segfault on save/export)
-            settings->save();
-            g_application_quit(G_APPLICATION(gtkApp));
+    g_message("Quitting");
+    if (!this->close(false, allowCancel)) {
+        g_message("Closing document failed or cancelled");
+        if (!allowCancel) {
+            // Cancel is not allowed, and the user close or did not save
+            // This is probably called from macOS, where the Application
+            // now will be killed - therefore do an emergency save.
+            emergencySave();
         }
     };
 

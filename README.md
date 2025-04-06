@@ -142,10 +142,10 @@ Here are a few under development that you can play with now:
 
 The official releases of Xournal++ can be found on the
 [Releases](https://github.com/xournalpp/xournalpp/releases) page. We provide
-binaries for Debian (Buster), Ubuntu (16.04), MacOS (10.15 and newer), and
-Windows. For other GNU/Linux distributions (or older/newer ones), we also provide an
+binaries for Debian, Ubuntu, MacOS and Windows.
+For other GNU/Linux distributions (or older/newer ones), we also provide an
 AppImage that is binary compatible with any distribution released around or
-after Ubuntu 16.04. For installing Xournal++ Mobile on handheld devices, please check out [Xournal++ Mobile's instructions](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#try-it-out)
+after Ubuntu 22.04. For installing Xournal++ Mobile on handheld devices, please check out [Xournal++ Mobile's instructions](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#try-it-out)
 
 **A note for Ubuntu/Debian users**: The official binaries that we provide are
 only compatible with the _specific version of Debian or Ubuntu_ indicated by the
@@ -336,6 +336,7 @@ We support building on three operating systems:
 - [Linux](readme/LinuxBuild.md)
 - [MacOS](readme/MacBuild.md)
 - [Windows](readme/WindowsBuild.md)
+- [Windows on ARM (not officially supported)](readme/WindowsBuildArm.md)
 
 ## Contributing
 

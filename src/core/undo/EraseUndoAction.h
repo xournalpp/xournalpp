@@ -26,6 +26,7 @@ class Layer;
 class EraseUndoAction: public UndoAction {
 public:
     EraseUndoAction(const PageRef& page);
+    ~EraseUndoAction() override;
 
 public:
     bool undo(Control* control) override;

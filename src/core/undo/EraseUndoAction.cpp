@@ -15,9 +15,14 @@
 
 EraseUndoAction::EraseUndoAction(const PageRef& page): UndoAction("EraseUndoAction") { this->page = page; }
 
-void EraseUndoAction::addOriginal(Layer* layer, Stroke* element, Element::Index pos) {
-    original.emplace(layer, element, pos);
+EraseUndoAction::~EraseUndoAction() {
+    auto& notInDoc = undone ? edited : original;
+    for (auto& s: notInDoc) {
+        delete s.element;
+    }
 }
+
+void EraseUndoAction::addOriginal(Layer* layer, Stroke* element, int pos) { original.emplace(layer, element, pos); }
 
 void EraseUndoAction::addEdited(Layer* layer, Stroke* element, Element::Index pos) {
     edited.emplace(layer, element, pos);

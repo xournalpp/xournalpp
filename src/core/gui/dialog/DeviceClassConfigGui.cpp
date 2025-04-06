@@ -35,7 +35,7 @@ void DeviceClassConfigGui::loadSettings() {
             this->settings->getDeviceClassForDevice(this->device.getName(), this->device.getSource());
     // Use the ID of each option in case the combo box options get rearranged in the future
     gtk_combo_box_set_active_id(GTK_COMBO_BOX(this->cbDeviceClass),
-                                g_strdup_printf("%i", static_cast<int>(deviceType)));
+                                std::to_string(static_cast<int>(deviceType)).c_str());
 }
 
 void DeviceClassConfigGui::saveSettings() {

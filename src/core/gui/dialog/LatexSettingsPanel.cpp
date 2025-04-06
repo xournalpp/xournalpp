@@ -15,14 +15,12 @@
 
 #include "control/latex/LatexGenerator.h"    // for LatexGenerator::GenError
 #include "control/settings/LatexSettings.h"  // for LatexSettings
-#include "gui/Builder.h"
-#include "model/Font.h"              // for XojFont
-#include "util/Color.h"              // for Color
-#include "util/PathUtil.h"           // for fromGFilename, getTmpDir...
-#include "util/PlaceholderString.h"  // for PlaceholderString
-#include "util/XojMsgBox.h"
-#include "util/gtk4_helper.h"
-#include "util/i18n.h"  // for FS, _F, _
+#include "model/Font.h"                      // for XojFont
+#include "util/Color.h"                      // for Color
+#include "util/PathUtil.h"                   // for fromGFilename, getTmpDir...
+#include "util/PlaceholderString.h"          // for PlaceholderString
+#include "util/i18n.h"                       // for FS, _F, _
+#include "util/raii/CStringWrapper.h"
 
 #include "filesystem.h"  // for path, is_regular_file
 
@@ -120,10 +118,10 @@ void LatexSettingsPanel::save(LatexSettings& settings) {
     settings.sourceViewSyntaxHighlight =
             gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get("cbSyntaxHighlight")));
 
-    GtkFontChooser* fontSelector = GTK_FONT_CHOOSER(builder.get("selBtnEditorFont"));
-    std::string fontDescription{gtk_font_chooser_get_font(fontSelector)};
-    settings.editorFont = fontDescription;
-    settings.useCustomEditorFont = !gtk_check_button_get_active(this->cbUseSystemFont);
+    GtkFontChooser* fontSelector = GTK_FONT_CHOOSER(this->get("selBtnEditorFont"));
+    auto fontDescription = xoj::util::OwnedCString::assumeOwnership(gtk_font_chooser_get_font(fontSelector));
+    settings.editorFont = std::string(fontDescription.get());
+    settings.useCustomEditorFont = !gtk_toggle_button_get_active(this->cbUseSystemFont);
 
     settings.editorWordWrap = gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get("cbWordWrap")));
 }

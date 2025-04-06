@@ -1,4 +1,4 @@
-# Windows Build
+# Windows on ARM Build (not officially supported)
 
 ![Screenshot](./main-win.png?raw=true "Xournal++ Screenshot on Win10")
 
@@ -11,7 +11,7 @@ Xournal++ requires the following software to build:
 
 ### Update MSYS2
 
-Open a MSYS2 console (**not** the MINGW64 console) and run the following command twice. Reopen the MSYS2 console each time you run the command.
+Open a MSYS2 console (**not** the CLANGARM64 console) and run the following command twice. Reopen the MSYS2 console each time you run the command.
 
 ```sh
 pacman -Syuu
@@ -19,17 +19,17 @@ pacman -Syuu
 
 ### Install Build tools
 
-Open a MINGW64 console (Always check if it says **MINGW64** - not 32bit and not MSYS2)
+Open a CLANGARM64 console. (Always check if it says **CLANGARM64** - not MSYS2)
 
 All following steps in this document happen in this console, unless specified otherwise.
 
 ```sh
 pacman -S \
-  mingw-w64-x86_64-toolchain \
-  mingw-w64-x86_64-cmake \
-  mingw-w64-x86_64-ninja \
-  mingw-w64-x86_64-imagemagick \
-  mingw-w64-x86_64-gettext \
+  mingw-w64-clang-aarch64-toolchain \
+  mingw-w64-clang-aarch64-cmake \
+  mingw-w64-clang-aarch64-ninja \
+  mingw-w64-clang-aarch64-imagemagick \
+  mingw-w64-clang-aarch64-gettext \
   patch \
   make \
   git
@@ -41,12 +41,12 @@ If prompted, confirm or use all default values.
 
 ```sh
 pacman -S \
-  mingw-w64-x86_64-poppler \
-  mingw-w64-x86_64-gtk3 \
-  mingw-w64-x86_64-libsndfile \
-  mingw-w64-x86_64-libzip \
-  mingw-w64-x86_64-lua \
-  mingw-w64-x86_64-portaudio
+  mingw-w64-clang-aarch64-poppler \
+  mingw-w64-clang-aarch64-gtk3 \
+  mingw-w64-clang-aarch64-libsndfile \
+  mingw-w64-clang-aarch64-libzip \
+  mingw-w64-clang-aarch64-lua \
+  mingw-w64-clang-aarch64-portaudio
 ```
 
 If prompted, confirm or use all default values.
@@ -57,7 +57,7 @@ See [Compile.md](./Compile.md)
 
 ## Modify Path Environment Variable
 
-Add `C:\msys64\mingw64\bin` and `C:\msys64\usr\bin` to the top of 
+Add `C:\msys64\clangarm64\bin` and `C:\msys64\usr\bin` to the top of 
 your PATH environment variable in the Windows Advanced system 
 settings (assuming default installation folder for MSYS2). 
 
