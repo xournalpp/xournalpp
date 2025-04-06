@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-16 11:23+0000\n"
-"PO-Revision-Date: 2025-03-23 04:25\n"
+"POT-Creation-Date: 2025-04-05 10:55+0000\n"
+"PO-Revision-Date: 2025-04-06 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -849,7 +849,7 @@ msgstr "Атрибут \"{1}\" має бути у форматі size_t, пот�
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Не вдалося записати тло \"{1}\", {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:348
+#: ../src/core/control/xojfile/SaveHandler.cpp:363
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Не вдалося записати тло \"{1}\". Проте, роботу продовжено."
 
@@ -1842,8 +1842,8 @@ msgctxt "as a noun: a copy of"
 msgid "Copy"
 msgstr "Копіювати"
 
-#: ../src/core/model/Document.cpp:330 ../src/core/model/Document.cpp:339
-#: ../src/core/model/Document.cpp:342
+#: ../src/core/model/Document.cpp:331 ../src/core/model/Document.cpp:340
+#: ../src/core/model/Document.cpp:343
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Документ не завантажений! ({1}), {2}"
 
@@ -1859,7 +1859,7 @@ msgstr "Критична помилка"
 msgid "Failed to close image stream"
 msgstr "Не вдалося закрити stream зображення"
 
-#: ../src/core/model/XojPage.cpp:170
+#: ../src/core/model/XojPage.cpp:173
 msgid "Background"
 msgstr "Тло"
 

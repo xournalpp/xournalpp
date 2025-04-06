@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-16 11:23+0000\n"
-"PO-Revision-Date: 2025-03-23 04:25\n"
+"POT-Creation-Date: 2025-04-05 10:55+0000\n"
+"PO-Revision-Date: 2025-04-06 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -850,7 +850,7 @@ msgstr "Valoarea „{1}” nu a putut fi analizată ca size_t, valoarea este „
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Nu s-a putut scrie fondul „{1}”, {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:348
+#: ../src/core/control/xojfile/SaveHandler.cpp:363
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Nu s-a putut scrie fondul „{1}”. Continuă oricum."
 
@@ -1843,8 +1843,8 @@ msgctxt "as a noun: a copy of"
 msgid "Copy"
 msgstr "Copiază"
 
-#: ../src/core/model/Document.cpp:330 ../src/core/model/Document.cpp:339
-#: ../src/core/model/Document.cpp:342
+#: ../src/core/model/Document.cpp:331 ../src/core/model/Document.cpp:340
+#: ../src/core/model/Document.cpp:343
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Documentul nu a fost încărcat! ({1}), {2}"
 
@@ -1860,7 +1860,7 @@ msgstr "Eroare nerecuperabilă"
 msgid "Failed to close image stream"
 msgstr "Nu s-a reușit închiderea fluxului imaginii"
 
-#: ../src/core/model/XojPage.cpp:170
+#: ../src/core/model/XojPage.cpp:173
 msgid "Background"
 msgstr "Fond"
 

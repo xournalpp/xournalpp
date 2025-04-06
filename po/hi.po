@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-16 11:23+0000\n"
-"PO-Revision-Date: 2025-03-23 04:25\n"
+"POT-Creation-Date: 2025-04-05 10:55+0000\n"
+"PO-Revision-Date: 2025-04-06 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -828,7 +828,7 @@ msgstr "अग्रदूत \"{1}\" को size_t के रूप में �
 msgid "Could not write background \"{1}\", {2}"
 msgstr "पृष्ठभूमि नहीं लिख सकता है {1}: {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:348
+#: ../src/core/control/xojfile/SaveHandler.cpp:363
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "पृष्ठभूमि {1} नहीं लिखा जा सकता। वैसे भी जारी रहना।"
 
@@ -1819,8 +1819,8 @@ msgctxt "as a noun: a copy of"
 msgid "Copy"
 msgstr "प्रतिलिपि बनाएँ"
 
-#: ../src/core/model/Document.cpp:330 ../src/core/model/Document.cpp:339
-#: ../src/core/model/Document.cpp:342
+#: ../src/core/model/Document.cpp:331 ../src/core/model/Document.cpp:340
+#: ../src/core/model/Document.cpp:343
 msgid "Document not loaded! ({1}), {2}"
 msgstr ""
 
@@ -1836,7 +1836,7 @@ msgstr ""
 msgid "Failed to close image stream"
 msgstr ""
 
-#: ../src/core/model/XojPage.cpp:170
+#: ../src/core/model/XojPage.cpp:173
 msgid "Background"
 msgstr "पृष्ठभूमि"
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-16 11:23+0000\n"
-"PO-Revision-Date: 2025-03-30 04:26\n"
+"POT-Creation-Date: 2025-04-05 10:55+0000\n"
+"PO-Revision-Date: 2025-04-06 04:26\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -77,9 +77,9 @@ msgstr "Mit PDF-Hintergrund"
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
-msgstr "Dein aktuelles Dokument enthält keine PDF-Seite {1}\n"
-"Möchtest du diese Seite einfügen?\n\n"
-"Tipp: Du kannst {2} auswählen, um eine PDF-Seite einzufügen."
+msgstr "Das aktuelle Dokument enthält keine PDF-Seite {1}\n"
+"Möchten Sie diese Seite einfügen?\n\n"
+"Tipp: Wählen Sie {2} aus, um eine PDF-Seite einzufügen."
 
 #: ../src/core/control/Control.cpp:866
 msgid "No pdf pages available to append. You may need to reopen the document first."
@@ -188,7 +188,7 @@ msgstr "Verwerfen"
 
 #: ../src/core/control/Control.cpp:2141
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
-msgstr ""
+msgstr "GTK Demo-Subprozess konnte nicht erstellt werden: {1} (Exit-Code: {2})"
 
 #: ../src/core/control/CrashHandler.cpp:31
 msgid "Trying to emergency save the current open document..."
@@ -464,7 +464,8 @@ msgstr "Exportiere nur die durch den Bereich angegebenen Seiten (z.B. \"2-3,5,7-
 #: ../src/core/control/XournalMain.cpp:695
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Nur Ebenen durch RANGE angegeben exportieren (z.B. \"2-3,5,7-\").\n"
+"Kein Effekt ohne -p/--create-pdf oder -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:699
 msgid "Set DPI for PNG exports. Default is 300\n"
@@ -849,7 +850,7 @@ msgstr "Attribut \"{1}\" konnte nicht als size_t ausgelesen werden, der Wert ist
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Konnte Hintergrund \"{1}\" nicht speichern, {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:348
+#: ../src/core/control/xojfile/SaveHandler.cpp:363
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Konnte Hintergrund nicht speichern \"{1}\". Fahre trotzdem fort."
 
@@ -1842,8 +1843,8 @@ msgctxt "as a noun: a copy of"
 msgid "Copy"
 msgstr "Kopieren"
 
-#: ../src/core/model/Document.cpp:330 ../src/core/model/Document.cpp:339
-#: ../src/core/model/Document.cpp:342
+#: ../src/core/model/Document.cpp:331 ../src/core/model/Document.cpp:340
+#: ../src/core/model/Document.cpp:343
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Dokument nicht geladen! ({1}), {2}"
 
@@ -1853,13 +1854,13 @@ msgstr "Fehler: "
 
 #: ../src/core/model/Image.cpp:169 ../src/core/model/Image.cpp:179
 msgid "Unrecoverable error"
-msgstr ""
+msgstr "Unbehebbarer Fehler"
 
 #: ../src/core/model/Image.cpp:175 ../src/core/model/Image.cpp:179
 msgid "Failed to close image stream"
-msgstr ""
+msgstr "Fehler beim Schließen des Bild-Streams"
 
-#: ../src/core/model/XojPage.cpp:170
+#: ../src/core/model/XojPage.cpp:173
 msgid "Background"
 msgstr "Hintergrund"
 
@@ -2653,7 +2654,32 @@ msgid "%{name}\tThe filename (if any) of the PDF background\n"
 "%Z\t\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\t\t%\n"
 "Illegal characters are replaced with \"_\""
-msgstr ""
+msgstr "%{name}\tDer Dateiname (wenn verfügbar) des PDF-Hintergrundes\n"
+"%{file}\t\tDer gespeicherte Dateiname der Datei\n"
+"%a\t\t\tAbgekürzter Wochentag (z.B. Mit)\n"
+"%A\t\t\tGanzer Wochentag (z.B. Mittwoch)\n"
+"%b\t\t\tAbgekürzter Monat (z.B. Aug)\n"
+"%B\t\t\tGanzer Monat (z.B. August)\n"
+"%c\t\t\tDatum und Zeit (z.B. Mit Aug 23 14:55:02 2001)\n"
+"%d\t\t\tTag des Monats (01-31)\n"
+"%F\t\t\tDatum, mit Bindestrichen getrennt (z.B. 2001-08-23)\n"
+"%H\t\t\tZeit im 24-Stunden Format (00-23)\n"
+"%I\t\t\tZeit im 12-Stunden Format (01-12)\n"
+"%j\t\t\tTag des Jahres (001-366)\n"
+"%m\t\t\tMonat als Dezimalzahl (01-12)\n"
+"%M\t\t\tMinute (00-59)\n"
+"%p\t\t\tAM oder PM (z.B. PM)\n"
+"%S\t\t\tSekunde (00-59)\n"
+"%U\t\t\tWochennummer mit dem ersten Sonntag als erstem Tag der ersten Kalenderwoche (00-53)\n"
+"%w\t\t\tWochentag als Dezimalzahl mit Sonntag als 0 (0-6)\n"
+"%W\t\t\tWochennummer mit dem ersten Montag als erstem Tag der ersten Kalenderwoche (00-53)\n"
+"%x\t\t\tDatum, mit Unterstrichen getrennt (z.B. 08_23_01)\n"
+"%X\t\t\tZeit (z.B. 14:55:02 oder 2:55:02 PM)\n"
+"%y\t\t\tJahr, letzte zwei Ziffern (00-99)\n"
+"%Y\t\t\tJahr (z.B. 2001)\n"
+"%Z\t\t\tZeitzone oder Abkürzung (z.B. CDT)\n"
+"%%\t\t\t%\n"
+"Ungültige Zeichen werden mit \"_\" ersetzt"
 
 #: ../ui/settings.glade:782
 msgid "Default Pdf export name"
@@ -3142,27 +3168,27 @@ msgstr "Global"
 
 #: ../ui/settings.glade:3279
 msgid "Recolor Drawing Area (might introduce lags when moving selections)"
-msgstr ""
+msgstr "Zeichenfläche neu einfärben (kann zu Verzögerungen beim Schieben von Auswahlen führen)"
 
 #: ../ui/settings.glade:3284
 msgid "Recolors the drawing area so that white regions get the dark color and black regions get the light color. Other colors are interpolated accordingly."
-msgstr ""
+msgstr "Zeichenfläche wird so eingefärbt, dass weiße Regionen dunklere Farben, und schwarze Regionen hellere Farben bekommen. Andere Farben werden entsprechend interpoliert."
 
 #: ../ui/settings.glade:3294
 msgid "Recolor Previews in the Sidebar"
-msgstr ""
+msgstr "Vorschau in der Seitenleiste neu einfärben"
 
 #: ../ui/settings.glade:3299
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) so that white regions get the dark color and black regions get the light color. Other colors are interpolated accordingly."
-msgstr ""
+msgstr "Färbt die Vorschau in der Seitenleiste (Seite/Ebene Vorschau) so ein, dass weiße Regionen dunklere Farben, und schwarze Regionen hellere Farben bekommen. Andere Farben werden entsprechend interpoliert."
 
 #: ../ui/settings.glade:3313
 msgid "The color black regions are translated to"
-msgstr ""
+msgstr "Die schwarzen Regionen werden übersetzt zu"
 
 #: ../ui/settings.glade:3327
 msgid "The color white regions are translated to"
-msgstr ""
+msgstr "Die weißen Regionen werden übersetzt zu"
 
 #: ../ui/settings.glade:3342
 msgid "Dark Color"
@@ -3174,7 +3200,7 @@ msgstr "Helle Farbe"
 
 #: ../ui/settings.glade:3369
 msgid "Recoloring / Inverting colors"
-msgstr ""
+msgstr "Neu einfärben / Farben invertieren"
 
 #: ../ui/settings.glade:3401
 msgid "Cursor icon for pen"
@@ -3525,12 +3551,14 @@ msgstr "Zeitbegrenzung (ms)"
 #: ../ui/settings.glade:5321
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr ""
+msgstr "Zeit-Limit: Länger tippen führt keine spezielle Aktion aus\n\n"
+"<i>Empfohlen: 150ms</i>"
 
 #: ../ui/settings.glade:5341
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr ""
+msgstr "Längen-Limit: Weiter weg tippen führt keine spezielle Aktion aus\n\n"
+"<i>Empfohlen: 1 mm</i>"
 
 #: ../ui/settings.glade:5361
 msgid "Length limit (mm)"
@@ -3543,7 +3571,8 @@ msgstr "Frequenzbegrenzung (ms)"
 #: ../ui/settings.glade:5384
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
 "<i>Recommended: 500ms</i>"
-msgstr ""
+msgstr "Frequenz-Limit: Ein Tippen während dieses Zeitraums nach einem Strich führt keine spezielle Aktion aus.\n\n"
+"<i>Empfohlen: 500ms</i>"
 
 #: ../ui/settings.glade:5401
 msgid "Try to select object first."
@@ -4247,7 +4276,7 @@ msgstr "Hilfe"
 
 #: ../ui/mainmenubar.xml:859
 msgid "Run Gtk3 demo"
-msgstr ""
+msgstr "GTK3 Demo ausführen"
 
 #: ../ui/mainmenubar.xml:863
 msgid "About"
@@ -4423,7 +4452,7 @@ msgstr "Plugins mit Lua-Skripten"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:57
 msgid "Note taking"
-msgstr ""
+msgstr "Notizen nehmen"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:61
 msgid "PDF annotation"
