@@ -28,7 +28,5 @@ public:
 
 protected:
     void addFilterToDialog(GtkFileChooser* dialog) override;
-    bool testAndSetFilepath(const fs::path& file, const char* filterName = nullptr) override;
-
-private:
+    void setExtensionFromFilter(fs::path& p, const char* filterName) const override;
 };
