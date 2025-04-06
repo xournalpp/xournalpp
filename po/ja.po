@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-25 09:07+0000\n"
-"PO-Revision-Date: 2025-03-30 04:26\n"
+"PO-Revision-Date: 2025-04-06 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -418,7 +418,7 @@ msgstr "エクスポート時、RANGEで指定されたレイヤーのみをエ�
 #: ../src/core/control/XournalMain.cpp:683
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "指定した範囲のレイヤーのみエクスポート (例: \"2-3,5,7-\")"
 
 #: ../src/core/control/XournalMain.cpp:687
 msgid "Set DPI for PNG exports. Default is 300\n"
@@ -651,7 +651,7 @@ msgstr "画像"
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:32
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:116
 msgid "Attach file to the journal"
-msgstr "日記にファイルを取り付ける"
+msgstr "ジャーナルにファイルを添付"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
@@ -702,7 +702,7 @@ msgstr "画像の読み込みに失敗しました"
 
 #: ../src/core/control/tools/ImageHandler.cpp:74
 msgid "Could not determine image size!"
-msgstr ""
+msgstr "画像サイズを決定できません"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:132
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""

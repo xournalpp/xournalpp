@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-25 09:07+0000\n"
-"PO-Revision-Date: 2025-03-30 04:26\n"
+"PO-Revision-Date: 2025-04-06 04:26\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -419,7 +419,8 @@ msgstr "Exportiere nur die durch den Bereich angegebenen Seiten (z.B. \"2-3,5,7-
 #: ../src/core/control/XournalMain.cpp:683
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Nur Ebenen durch RANGE angegeben exportieren (z.B. \"2-3,5,7-\").\n"
+"Kein Effekt ohne -p/--create-pdf oder -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:687
 msgid "Set DPI for PNG exports. Default is 300\n"
@@ -1201,9 +1202,9 @@ msgstr "Seitenhintergrund"
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
-msgstr "Dein aktuelles Dokument enthält keine PDF-Seite {1}\n"
-"Möchtest du diese Seite einfügen?\n\n"
-"Tipp: Du kannst {2} auswählen, um eine PDF-Seite einzufügen."
+msgstr "Das aktuelle Dokument enthält keine PDF-Seite {1}\n"
+"Möchten Sie diese Seite einfügen?\n\n"
+"Tipp: Wählen Sie {2} aus, um eine PDF-Seite einzufügen."
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:106
 msgid "Insert after current page"
@@ -1661,11 +1662,11 @@ msgstr "Fehler: "
 
 #: ../src/core/model/Image.cpp:167 ../src/core/model/Image.cpp:177
 msgid "Unrecoverable error"
-msgstr ""
+msgstr "Unbehebbarer Fehler"
 
 #: ../src/core/model/Image.cpp:173 ../src/core/model/Image.cpp:177
 msgid "Failed to close image stream"
-msgstr ""
+msgstr "Fehler beim Schließen des Bild-Streams"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:122
 msgid "Error while finalizing the PDF Cairo surface"
@@ -3727,12 +3728,14 @@ msgstr "Zeitbegrenzung (ms)"
 #: ../ui/settings.glade:5404
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr ""
+msgstr "Zeit-Limit: Länger tippen führt keine spezielle Aktion aus\n\n"
+"<i>Empfohlen: 150ms</i>"
 
 #: ../ui/settings.glade:5424
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr ""
+msgstr "Längen-Limit: Weiter weg tippen führt keine spezielle Aktion aus\n\n"
+"<i>Empfohlen: 1 mm</i>"
 
 #: ../ui/settings.glade:5444
 msgid "Length limit (mm)"
@@ -3745,7 +3748,8 @@ msgstr "Frequenzbegrenzung (ms)"
 #: ../ui/settings.glade:5467
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
 "<i>Recommended: 500ms</i>"
-msgstr ""
+msgstr "Frequenz-Limit: Ein Tippen während dieses Zeitraums nach einem Strich führt keine spezielle Aktion aus.\n\n"
+"<i>Empfohlen: 500ms</i>"
 
 #: ../ui/settings.glade:5484
 msgid "Try to select object first."
