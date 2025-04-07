@@ -711,16 +711,6 @@ function app.setCurrentLayerName(name) end
 --- Changes background name to "Custom name 1"
 function app.setBackgroundName(name) end
 
---- Scales all text elements of the current layer by the given scale factor.
---- This means the font sizes get scaled, wheras the position of the left upper corner
---- of the bounding box remains unchanged
---- 
---- @param factor number
---- 
---- Example: app.scaleTextElements(2.3)
---- scales all text elements on the current layer with factor 2.3
-function app.scaleTextElements(factor) end
-
 --- Gets the display DPI.
 --- 
 --- @return integer displayDpi dpi of the display
