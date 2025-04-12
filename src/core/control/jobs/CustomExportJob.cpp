@@ -41,61 +41,57 @@ void CustomExportJob::addFilterToDialog(GtkFileChooser* dialog) {
     }
 }
 
-auto CustomExportJob::testAndSetFilepath(const fs::path& file, const char* filterName) -> bool {
-    if (!BaseExportJob::testAndSetFilepath(std::move(file))) {
-        return false;
-    }
-
+void CustomExportJob::setExtensionFromFilter(fs::path& file, const char* filterName) const {
     // Extract the file filter selected
     const auto& chosenFilter = filters.at(filterName);
 
     // Remove any pre-existing extension and adds the chosen one
-    Util::clearExtensions(filepath, chosenFilter.extension);
-    filepath += chosenFilter.extension;
-
-    return checkOverwriteBackgroundPDF(filepath);
+    Util::clearExtensions(file, chosenFilter.extension);
+    file += chosenFilter.extension;
 }
 
 void CustomExportJob::showDialogAndRun() {
 
     auto onFileSelected = [job = this]() {
-        if (job->filepath.extension() == ".xoj") {
-            job->exportTypeXoj = true;
-            job->control->getScheduler()->addJob(job, JOB_PRIORITY_NONE);
-            return;
-        }
+        Util::execInUiThread([job]() {
+            if (job->filepath.extension() == ".xoj") {
+                job->exportTypeXoj = true;
+                job->control->getScheduler()->addJob(job, JOB_PRIORITY_NONE);
+                return;
+            }
 
-        if (auto ext = job->filepath.extension(); ext == ".pdf") {
-            job->format = EXPORT_GRAPHICS_PDF;
-        } else if (ext == ".svg") {
-            job->format = EXPORT_GRAPHICS_SVG;
-        } else if (ext == ".png") {
-            job->format = EXPORT_GRAPHICS_PNG;
-        } else {
-            g_warning("Unknown extension");
-        }
+            if (auto ext = job->filepath.extension(); ext == ".pdf") {
+                job->format = EXPORT_GRAPHICS_PDF;
+            } else if (ext == ".svg") {
+                job->format = EXPORT_GRAPHICS_SVG;
+            } else if (ext == ".png") {
+                job->format = EXPORT_GRAPHICS_PNG;
+            } else {
+                g_warning("Unknown extension");
+            }
 
-        xoj::popup::PopupWindowWrapper<xoj::popup::ExportDialog> popup(
-                job->control->getGladeSearchPath(), job->format, job->control->getCurrentPageNo() + 1,
-                job->control->getDocument()->getPageCount(), [job](const xoj::popup::ExportDialog& dialog) {
-                    if (dialog.isConfirmed()) {
-                        job->exportRange = dialog.getRange();
-                        job->progressiveMode = dialog.progressiveModeSelected();
-                        job->exportBackground = dialog.getBackgroundType();
+            xoj::popup::PopupWindowWrapper<xoj::popup::ExportDialog> popup(
+                    job->control->getGladeSearchPath(), job->format, job->control->getCurrentPageNo() + 1,
+                    job->control->getDocument()->getPageCount(), [job](const xoj::popup::ExportDialog& dialog) {
+                        if (dialog.isConfirmed()) {
+                            job->exportRange = dialog.getRange();
+                            job->progressiveMode = dialog.progressiveModeSelected();
+                            job->exportBackground = dialog.getBackgroundType();
 
-                        if (job->format == EXPORT_GRAPHICS_PNG) {
-                            job->pngQualityParameter = dialog.getPngQualityParameter();
+                            if (job->format == EXPORT_GRAPHICS_PNG) {
+                                job->pngQualityParameter = dialog.getPngQualityParameter();
+                            }
+
+                            job->control->getScheduler()->addJob(job, JOB_PRIORITY_NONE);
+                        } else {
+                            // The job blocked, so we have to unblock, because the job
+                            // unblocks only after run
+                            job->control->unblock();
                         }
-
-                        job->control->getScheduler()->addJob(job, JOB_PRIORITY_NONE);
-                    } else {
-                        // The job blocked, so we have to unblock, because the job
-                        // unblocks only after run
-                        job->control->unblock();
-                    }
-                    job->unref();
-                });
-        popup.show(GTK_WINDOW(job->control->getWindow()->getWindow()));
+                        job->unref();
+                    });
+            popup.show(GTK_WINDOW(job->control->getWindow()->getWindow()));
+        });
     };
 
     auto onCancel = [job = this]() {

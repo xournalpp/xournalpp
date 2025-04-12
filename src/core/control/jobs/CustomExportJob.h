@@ -40,13 +40,13 @@ protected:
     void afterRun() override;
 
     void addFilterToDialog(GtkFileChooser* dialog) override;
+    void setExtensionFromFilter(fs::path& p, const char* filterName) const override;
 
     /**
      * Create one Graphics file per page
      */
     void exportGraphics();
 
-    bool testAndSetFilepath(const fs::path& file, const char* filterName = nullptr) override;
 
 private:
     /**

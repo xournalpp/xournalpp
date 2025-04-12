@@ -20,18 +20,11 @@ void PdfExportJob::addFilterToDialog(GtkFileChooser* dialog) {
     addFileFilterToDialog(dialog, _("PDF files"), "application/pdf");
 }
 
-auto PdfExportJob::testAndSetFilepath(const fs::path& file, const char* /*filterName*/) -> bool {
-    if (!BaseExportJob::testAndSetFilepath(file)) {
-        return false;
-    }
-
+void PdfExportJob::setExtensionFromFilter(fs::path& file, const char* /*filterName*/) const {
     // Remove any pre-existing extension and adds .pdf
-    Util::clearExtensions(filepath, ".pdf");
-    filepath += ".pdf";
-
-    return checkOverwriteBackgroundPDF(filepath);
+    Util::clearExtensions(file, ".pdf");
+    file += ".pdf";
 }
-
 
 void PdfExportJob::run() {
     Document* doc = control->getDocument();

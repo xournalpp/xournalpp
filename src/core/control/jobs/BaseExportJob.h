@@ -45,7 +45,15 @@ protected:
     virtual void addFilterToDialog(GtkFileChooser* dialog) = 0;
     static void addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const std::string& mimetype);
     bool checkOverwriteBackgroundPDF(fs::path const& file) const;
-    virtual bool testAndSetFilepath(const fs::path& file, const char* filterName = nullptr);
+
+    virtual void setExtensionFromFilter(fs::path& p, const char* filterName) const = 0;
+
+    /**
+     * Test if the given path is valid and records the path for the instance's later export tasks.
+     *
+     * Returns true if the path is validated.
+     */
+    bool testAndSetFilepath(const fs::path& file);
 
 private:
 protected:
