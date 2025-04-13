@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-05 10:55+0000\n"
-"PO-Revision-Date: 2025-04-06 04:26\n"
+"POT-Creation-Date: 2025-04-12 14:42+0000\n"
+"PO-Revision-Date: 2025-04-13 04:39\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -48,7 +48,7 @@ msgid "No"
 msgstr "Nu"
 
 #: ../src/core/control/Control.cpp:814 ../src/core/control/Control.cpp:1721
-#: ../src/core/control/Control.cpp:2059 ../src/core/control/XournalMain.cpp:175
+#: ../src/core/control/Control.cpp:2061 ../src/core/control/XournalMain.cpp:175
 msgid "Cancel"
 msgstr "Renunță"
 
@@ -164,29 +164,29 @@ msgstr "Alege culoarea"
 msgid "Unsaved Document"
 msgstr "Document nesalvat"
 
-#: ../src/core/control/Control.cpp:2052
+#: ../src/core/control/Control.cpp:2054
 msgid "Document file was removed."
 msgstr "Fișierul documentului a fost eliminat."
 
-#: ../src/core/control/Control.cpp:2052
+#: ../src/core/control/Control.cpp:2054
 msgid "This document is not saved yet."
 msgstr "Acest document nu este salvat încă."
 
-#: ../src/core/control/Control.cpp:2054
+#: ../src/core/control/Control.cpp:2056
 msgid "Save As..."
 msgstr "Salvează ca..."
 
-#: ../src/core/control/Control.cpp:2054 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2056 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:80
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:286
 msgid "Save"
 msgstr "Salvează"
 
-#: ../src/core/control/Control.cpp:2057
+#: ../src/core/control/Control.cpp:2059
 msgid "Discard"
 msgstr "Nu salva"
 
-#: ../src/core/control/Control.cpp:2141
+#: ../src/core/control/Control.cpp:2143
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr "Crearea subprocesului demonstrativ Gtk a eșuat: {1} (cod rezultat: {2})"
 
@@ -517,15 +517,15 @@ msgstr "Nu înlocui fondul PDF! Acest lucru va provoca erori!"
 msgid "The check for overwriting the background failed with:\n"
 msgstr "Verificarea pentru înlocuirea fondului a eșuat cu:\n"
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:77
+#: ../src/core/control/jobs/BaseExportJob.cpp:78
 msgid "Export File"
 msgstr "Exportă fișierul"
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:77
+#: ../src/core/control/jobs/BaseExportJob.cpp:78
 msgid "Export"
 msgstr "Exportă"
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:93
+#: ../src/core/control/jobs/BaseExportJob.cpp:94
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
 msgstr "Calea nu a putut fi găsită cu următoarea eroare:\n"
@@ -555,7 +555,7 @@ msgstr "Grafică SVG"
 msgid "Xournal (Compatibility)"
 msgstr "Xournal (Compatibilitate)"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:133
+#: ../src/core/control/jobs/CustomExportJob.cpp:129
 #: ../src/core/control/jobs/SaveJob.cpp:138
 msgid "Save file error: {1}"
 msgstr "Eroare la salvarea fișierului: {1}"
@@ -1089,27 +1089,27 @@ msgstr "Limba sistemului"
 msgid "Previously selected language not available anymore!"
 msgstr "Limba aleasă anterior nu mai este valabilă!"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:52
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "LaTeX editor theme:"
 msgstr "Aspectul elaboratorului LaTeX:"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:62
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "GtkSourceView a fost dezactivat la crearea Xournal++! Unele opțiuni nu vor fi disponibile."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:141
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:140
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Fișierul modelului global de la {1} nu poate fi deschis. Sigur există?"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:151
 msgid "Sample LaTeX file generated successfully."
 msgstr "Exemplu de fișier LaTeX generat cu succes."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Eroare: {1}. Te rugăm să verifici conținutul {2}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:166
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:165
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Eroare: {1} nu este un fișier obișnuit. Controlează configurarea modelului tău LaTeX. "
 

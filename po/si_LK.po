@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-05 10:55+0000\n"
-"PO-Revision-Date: 2025-04-06 04:26\n"
+"POT-Creation-Date: 2025-04-12 14:42+0000\n"
+"PO-Revision-Date: 2025-04-13 04:39\n"
 "Last-Translator: \n"
 "Language-Team: Sinhala\n"
 "Language: si_LK\n"
@@ -47,7 +47,7 @@ msgid "No"
 msgstr ""
 
 #: ../src/core/control/Control.cpp:814 ../src/core/control/Control.cpp:1721
-#: ../src/core/control/Control.cpp:2059 ../src/core/control/XournalMain.cpp:175
+#: ../src/core/control/Control.cpp:2061 ../src/core/control/XournalMain.cpp:175
 msgid "Cancel"
 msgstr "අවලංගු කරන්න"
 
@@ -156,29 +156,29 @@ msgstr ""
 msgid "Unsaved Document"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2052
+#: ../src/core/control/Control.cpp:2054
 msgid "Document file was removed."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2052
+#: ../src/core/control/Control.cpp:2054
 msgid "This document is not saved yet."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2054
+#: ../src/core/control/Control.cpp:2056
 msgid "Save As..."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2054 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2056 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:80
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:286
 msgid "Save"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2057
+#: ../src/core/control/Control.cpp:2059
 msgid "Discard"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2141
+#: ../src/core/control/Control.cpp:2143
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -482,15 +482,15 @@ msgstr ""
 msgid "The check for overwriting the background failed with:\n"
 msgstr ""
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:77
+#: ../src/core/control/jobs/BaseExportJob.cpp:78
 msgid "Export File"
 msgstr ""
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:77
+#: ../src/core/control/jobs/BaseExportJob.cpp:78
 msgid "Export"
 msgstr ""
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:93
+#: ../src/core/control/jobs/BaseExportJob.cpp:94
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
 msgstr ""
@@ -519,7 +519,7 @@ msgstr ""
 msgid "Xournal (Compatibility)"
 msgstr ""
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:133
+#: ../src/core/control/jobs/CustomExportJob.cpp:129
 #: ../src/core/control/jobs/SaveJob.cpp:138
 msgid "Save file error: {1}"
 msgstr ""
@@ -1051,27 +1051,27 @@ msgstr ""
 msgid "Previously selected language not available anymore!"
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:52
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "LaTeX editor theme:"
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:62
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:141
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:140
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:151
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:166
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:165
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr ""
 
