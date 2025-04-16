@@ -35,6 +35,7 @@
 #include "control/tools/ImageHandler.h"             // for ImageHandler
 #include "control/tools/ImageSizeSelection.h"       // for ImageSizeSelection
 #include "control/tools/InputHandler.h"             // for InputHandler
+#include "control/tools/LaserPointerHandler.h"      // for LaserPointerHandler
 #include "control/tools/PdfElemSelection.h"         // for PdfElemSelection
 #include "control/tools/RectangleHandler.h"         // for RectangleHandler
 #include "control/tools/RulerHandler.h"             // for RulerHandler
@@ -211,6 +212,11 @@ void XojPageView::endSpline() {
     }
 }
 
+void XojPageView::deleteLaserPointerHandler() {
+    xoj_assert(hasNoViewOf(overlayViews, laserPointer.get()));
+    laserPointer.reset();
+}
+
 auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     if (currentSequenceDeviceId) {
         // An input sequence is already under way from another device
@@ -294,6 +300,14 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     } else if (h->getToolType() == TOOL_ERASER) {
         this->eraser->erase(x, y);
         this->inEraser = true;
+    } else if (h->getToolType() == TOOL_LASER_POINTER_PEN || h->getToolType() == TOOL_LASER_POINTER_HIGHLIGHTER) {
+        if (!this->laserPointer) {
+            this->laserPointer = std::make_unique<LaserPointerHandler>(this, control, getPage());
+            this->laserPointer->onButtonPressEvent(pos, zoom);
+            this->overlayViews.emplace_back(this->laserPointer->createView(this));
+        } else {
+            this->laserPointer->onButtonPressEvent(pos, zoom);
+        }
     } else if (h->getToolType() == TOOL_VERTICAL_SPACE) {
         if (this->verticalSpace) {
             control->getUndoRedoHandler()->addUndoAction(this->verticalSpace->finalize());
@@ -546,6 +560,8 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
 
         const Text* text = this->textEditor->getTextElement();
         this->textEditor->mouseMoved(x - text->getX(), y - text->getY());
+    } else if (this->laserPointer && this->laserPointer->onMotionNotifyEvent(pos, zoom)) {
+        // used this event
     } else if (h->getToolType() == TOOL_ERASER && h->getEraserType() != ERASER_TYPE_WHITEOUT && this->inEraser) {
         this->eraser->erase(x, y);
     }
@@ -573,6 +589,8 @@ void XojPageView::onSequenceCancelEvent(DeviceId deviceId) {
             xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
             this->inputHandler.reset();
         }
+    } else if (this->laserPointer) {
+        this->laserPointer->onSequenceCancelEvent();
     }
 }
 
@@ -658,6 +676,9 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
             xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
             this->inputHandler.reset();
         }
+    } else if (auto tt = control->getToolHandler()->getToolType();
+               this->laserPointer && (tt == TOOL_LASER_POINTER_PEN || tt == TOOL_LASER_POINTER_HIGHLIGHTER)) {
+        this->laserPointer->onButtonReleaseEvent(pos, xournal->getZoom());
     }
 
     if (this->inEraser) {

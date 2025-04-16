@@ -85,9 +85,14 @@ protected:
 
     void strokeRecognizerDetected(std::unique_ptr<Stroke> recognized, Layer* layer);
 
+    /// Finalizes the stroke using the provided pressure as last point
+    void finalizeStroke(double pressure);
+
 protected:
     Point buttonDownPoint;  // used for tapSelect and filtering - never snapped to grid.
     SnapToGridInputHandler snappingHandler;
+
+    bool hasPressure;
 
 private:
     /**
@@ -96,8 +101,6 @@ private:
     std::unique_ptr<StrokeStabilizer::Base> stabilizer;
 
     std::shared_ptr<xoj::util::DispatchPool<xoj::view::StrokeToolView>> viewPool;
-
-    bool hasPressure;
 
     friend class StrokeStabilizer::Active;
 

@@ -117,6 +117,14 @@ void Mask::paintTo(cairo_t* targetCr) const {
     cairo_paint(targetCr);
 }
 
+void Mask::paintToWithAlpha(cairo_t* targetCr, uint8_t alpha) const {
+    xoj_assert(isInitialized());
+    xoj::util::CairoSaveGuard guard(targetCr);
+    cairo_scale(targetCr, 1. / zoom, 1. / zoom);
+    cairo_set_source_surface(targetCr, cairo_get_target(const_cast<cairo_t*>(cr.get())), xOffset, yOffset);
+    cairo_paint_with_alpha(targetCr, alpha / 255.0);
+}
+
 void Mask::wipe() {
     xoj_assert(isInitialized());
     xoj::util::CairoSaveGuard saveGuard(cr.get());

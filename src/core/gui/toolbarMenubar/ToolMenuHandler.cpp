@@ -480,6 +480,13 @@ void ToolMenuHandler::initToolItems() {
     emplaceItem<DrawingTypeComboToolButton>("DRAW", this->iconNameHelper, *this->control->getActionDatabase());
     emplaceItem<ToolPdfCombocontrol>("PDF_TOOL", this->iconNameHelper, *this->control->getActionDatabase());
 
+    auto laserIcon = this->iconNameHelper.iconName("laser-pointer");
+    emplaceItem<ComboToolButton>(
+            "LASER_POINTER", Cat::TOOLS, laserIcon, _("Laser pointer"),
+            ComboToolButton::Entries{{_("Pen"), laserIcon, TOOL_LASER_POINTER_PEN},
+                                     {_("Highlighter"), laserIcon, TOOL_LASER_POINTER_HIGHLIGHTER}},
+            this->control->getActionDatabase()->getAction(Action::SELECT_TOOL));
+
     // General tool configuration - working for every tool which support it
     emplaceCustomItemTgl("TOOL_FILL", Cat::TOOLS, Action::TOOL_FILL, "fill", _("Fill"));
     emplaceCustomItem("FILL_OPACITY", Cat::TOOLS, Action::TOOL_FILL_OPACITY, "fill-opacity", _("Fill Opacity"));

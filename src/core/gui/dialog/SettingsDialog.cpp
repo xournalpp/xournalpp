@@ -376,6 +376,10 @@ void SettingsDialog::load() {
     gtk_spin_button_set_value(sbNumberOfSpacesForTab, settings->getNumberOfSpacesForTab());
     gtk_widget_set_sensitive(GTK_WIDGET(builder.get("numberOfSpacesContainer")), settings->getUseSpacesAsTab());
 
+    // Laser pointer
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(builder.get("sbLaserFadeOutTime")),
+                              settings->getLaserPointerFadeOutTime());
+
     /**
      * Stabilizer related settings
      */
@@ -769,6 +773,9 @@ void SettingsDialog::save() {
     settings->setUseSpacesAsTab(getCheckbox("cbUseSpacesAsTab"));
     settings->setNumberOfSpacesForTab(static_cast<unsigned int>(
             gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(builder.get("sbNumberOfSpacesForTab")))));
+
+    settings->setLaserPointerFadeOutTime(static_cast<unsigned int>(
+            gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(builder.get("sbLaserFadeOutTime")))));
 
     /**
      * Stabilizer related settings

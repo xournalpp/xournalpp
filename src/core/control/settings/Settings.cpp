@@ -249,6 +249,8 @@ void Settings::loadDefault() {
     this->useSpacesForTab = false;
     this->numberOfSpacesForTab = 4;
 
+    this->laserPointerFadeOutTime = 500;
+
     this->colorPaletteSetting = Util::getBuiltInPaletteDirectoryPath() / DEFAULT_PALETTE_FILE;
 }
 
@@ -685,7 +687,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("useSpacesForTab")) == 0) {
         this->setUseSpacesAsTab(xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("numberOfSpacesForTab")) == 0) {
-        this->setNumberOfSpacesForTab(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
+        this->setNumberOfSpacesForTab(
+                static_cast<unsigned int>(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10)));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("laserPointerFadeOutTime")) == 0) {
+        this->laserPointerFadeOutTime =
+                static_cast<unsigned int>(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
         /**
          * Stabilizer related settings
          */
@@ -1163,6 +1169,8 @@ void Settings::save() {
 
     SAVE_BOOL_PROP(useSpacesForTab);
     SAVE_UINT_PROP(numberOfSpacesForTab);
+
+    SAVE_UINT_PROP(laserPointerFadeOutTime);
 
     /**
      * Stabilizer related settings
@@ -2660,3 +2668,13 @@ void Settings::setNumberOfSpacesForTab(unsigned int numberOfSpaces) {
 }
 
 unsigned int Settings::getNumberOfSpacesForTab() const { return this->numberOfSpacesForTab; }
+
+void Settings::setLaserPointerFadeOutTime(unsigned int timeInMs) {
+    if (this->laserPointerFadeOutTime == timeInMs) {
+        return;
+    }
+    this->laserPointerFadeOutTime = timeInMs;
+    save();
+}
+
+unsigned int Settings::getLaserPointerFadeOutTime() const { return this->laserPointerFadeOutTime; }

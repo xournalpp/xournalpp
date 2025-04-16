@@ -55,6 +55,12 @@
     <property name="step-increment">1</property>
     <property name="page-increment">10</property>
   </object>
+  <object class="GtkAdjustment" id="adjustmentLaserFadeOutTime">
+    <property name="upper">4000</property>
+    <property name="value">500</property>
+    <property name="step-increment">10</property>
+    <property name="page-increment">100</property>
+  </object>
   <object class="GtkAdjustment" id="adjustmentMinimumPressure">
     <property name="lower">0.01</property>
     <property name="upper">1</property>
@@ -5616,7 +5622,7 @@ Set this to 0% to always re-render on zoom.</property>
               </packing>
             </child>
             <child>
-              <object class="GtkBox" id="defaultTabBox">
+              <object class="GtkBox" id="toolsTabBox">
                 <property name="name">defaultTabBox</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
@@ -5707,7 +5713,7 @@ Set this to 0% to always re-render on zoom.</property>
                                       <object class="GtkLabel" id="label8">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
-                                        <property name="label" translatable="yes">&lt;b&gt;Default&lt;/b&gt;</property>
+                                        <property name="label" translatable="yes">&lt;b&gt;Default tool&lt;/b&gt;</property>
                                         <property name="use-markup">True</property>
                                       </object>
                                       <packing>
@@ -5724,6 +5730,115 @@ Set this to 0% to always re-render on zoom.</property>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
                                 <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkFrame" id="sid1">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label-xalign">0.009999999776482582</property>
+                                <child>
+                                  <object class="GtkBox" id="sid2">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="margin-start">12</property>
+                                    <property name="margin-end">12</property>
+                                    <property name="margin-bottom">8</property>
+                                    <property name="orientation">vertical</property>
+                                    <child>
+                                      <object class="GtkLabel" id="label12">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="label" translatable="yes">&lt;i&gt;The laser pointer allows to write strokes that will fade out after a short while.&lt;/i&gt;</property>
+                                        <property name="use-markup">True</property>
+                                        <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="padding">5</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkBox">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="spacing">8</property>
+                                        <child>
+                                          <object class="GtkLabel">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="label" translatable="yes">Fade out delay (in ms)</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkSpinButton" id="sbLaserFadeOutTime">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="adjustment">adjustmentLaserFadeOutTime</property>
+                                            <property name="snap-to-ticks">True</property>
+                                            <property name="numeric">True</property>
+                                            <property name="value">500</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkBox" id="box4">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <child>
+                                      <object class="GtkImage" id="image4">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="pixbuf">iconsLucide-dark/hicolor/scalable/actions/xopp-laser-pointer.svg</property>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="label14">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="label" translatable="yes">&lt;b&gt;Laser pointer&lt;/b&gt;</property>
+                                        <property name="use-markup">True</property>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="padding">5</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
                               </packing>
                             </child>
                           </object>
@@ -5743,11 +5858,11 @@ Set this to 0% to always re-render on zoom.</property>
               </packing>
             </child>
             <child type="tab">
-              <object class="GtkLabel" id="defaultTabLabel">
+              <object class="GtkLabel" id="toolsTabLabel">
                 <property name="name">defaultTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Defaults</property>
+                <property name="label" translatable="yes">Tools</property>
               </object>
               <packing>
                 <property name="position">8</property>
