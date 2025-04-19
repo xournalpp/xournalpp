@@ -106,6 +106,10 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range& r
                 return;
             }
 
+            if (this->handler->getEraserType() == ERASER_TYPE_DELETE_HIGHLIGHTER && s->getToolType() != StrokeTool::HIGHLIGHTER) {
+                return;
+            }
+
             if (this->eraseUndoAction == nullptr) {
                 auto eraseUndo = std::make_unique<EraseUndoAction>(this->page);
                 // Todo check dangerous: this->eraseDeleteUndoAction could be a dangling reference

@@ -105,7 +105,7 @@ enum OpacityFeature {
 std::string opacityFeatureToString(OpacityFeature feature);
 OpacityFeature opacityFeatureFromString(const std::string& feature);
 
-enum EraserType { ERASER_TYPE_NONE = 0, ERASER_TYPE_DEFAULT, ERASER_TYPE_WHITEOUT, ERASER_TYPE_DELETE_STROKE };
+enum EraserType { ERASER_TYPE_NONE = 0, ERASER_TYPE_DEFAULT, ERASER_TYPE_WHITEOUT, ERASER_TYPE_DELETE_STROKE, ERASER_TYPE_DELETE_HIGHLIGHTER };
 std::string eraserTypeToString(EraserType type);
 EraserType eraserTypeFromString(const std::string& type);
 

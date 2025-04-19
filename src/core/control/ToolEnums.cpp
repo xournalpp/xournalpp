@@ -279,6 +279,8 @@ auto eraserTypeToString(EraserType type) -> std::string {
             return "whiteout";
         case ERASER_TYPE_DELETE_STROKE:
             return "deleteStroke";
+        case ERASER_TYPE_DELETE_HIGHLIGHTER:
+            return "deleteHighlighter";
         default:
             return "";
     }
@@ -293,6 +295,9 @@ auto eraserTypeFromString(const std::string& type) -> EraserType {
     }
     if (type == "deleteStroke") {
         return ERASER_TYPE_DELETE_STROKE;
+    }
+    if (type == "deleteHighlighter") {
+        return ERASER_TYPE_DELETE_HIGHLIGHTER;
     }
     return ERASER_TYPE_NONE;
 }

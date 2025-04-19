@@ -200,6 +200,8 @@ void ButtonConfigGui::loadSettings() {
         gtk_combo_box_set_active(GTK_COMBO_BOX(cbEraserType), 2);
     } else if (cfg->eraserMode == ERASER_TYPE_DELETE_STROKE) {
         gtk_combo_box_set_active(GTK_COMBO_BOX(cbEraserType), 3);
+    } else if (cfg->eraserMode == ERASER_TYPE_DELETE_HIGHLIGHTER) {
+        gtk_combo_box_set_active(GTK_COMBO_BOX(cbEraserType), 4);
     } else {
         gtk_combo_box_set_active(GTK_COMBO_BOX(cbEraserType), 0);
     }
@@ -256,6 +258,8 @@ void ButtonConfigGui::saveSettings() {
         cfg->eraserMode = ERASER_TYPE_WHITEOUT;
     } else if (eraserMode == 3) {
         cfg->eraserMode = ERASER_TYPE_DELETE_STROKE;
+    } else if (eraserMode == 4) {
+        cfg->eraserMode = ERASER_TYPE_DELETE_HIGHLIGHTER;
     } else {
         cfg->eraserMode = ERASER_TYPE_NONE;
     }

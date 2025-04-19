@@ -538,6 +538,8 @@ void ToolHandler::loadSettings() {
                 if (st.getString("type", type)) {
                     if (type == "deleteStroke") {
                         setEraserType(ERASER_TYPE_DELETE_STROKE);
+                    } else if (type == "deleteHighlighter") {
+                        setEraserType(ERASER_TYPE_DELETE_HIGHLIGHTER);
                     } else if (type == "whiteout") {
                         setEraserType(ERASER_TYPE_WHITEOUT);
                     } else {

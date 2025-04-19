@@ -377,7 +377,8 @@ void ToolMenuHandler::initToolItems() {
             Action::TOOL_ERASER_TYPE,
             std::vector<StylePopoverFactory::Entry>{{_("standard"), ERASER_TYPE_DEFAULT},
                                                     {_("whiteout"), ERASER_TYPE_WHITEOUT},
-                                                    {_("delete stroke"), ERASER_TYPE_DELETE_STROKE}});
+                                                    {_("delete stroke"), ERASER_TYPE_DELETE_STROKE},
+                                                    {_("delete highlighter"), ERASER_TYPE_DELETE_HIGHLIGHTER}});
     emplaceCustomItemWithTargetAndMenu("ERASER", Cat::TOOLS, Action::SELECT_TOOL, TOOL_ERASER, "tool-eraser",
                                        _("Eraser"), this->eraserTypePopover.get());
 

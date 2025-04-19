@@ -759,6 +759,11 @@
        <attribute name="action">win.tool-eraser-type</attribute>
        <attribute name="target" type="t">3</attribute> <!-- ERASER_TYPE_DELETE_STROKE -->
       </item>
+      <item>
+       <attribute name="label" translatable="yes">_delete highlighter</attribute>
+       <attribute name="action">win.tool-eraser-type</attribute>
+       <attribute name="target" type="t">4</attribute> <!-- ERASER_TYPE_DELETE_HIGHLIGHTER -->
+      </item>
      </section>
     </submenu>
     <submenu>

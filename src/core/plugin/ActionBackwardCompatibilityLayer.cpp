@@ -147,7 +147,8 @@ static const std::map<std::string_view, const char*> LINE_STYLE_MAP = {{"ACTION_
 static const std::map<std::string_view, EraserType> ERASER_TYPE_MAP = {
         {"ACTION_TOOL_ERASER_STANDARD"sv, ERASER_TYPE_DEFAULT},
         {"ACTION_TOOL_ERASER_DELETE_STROKE"sv, ERASER_TYPE_DELETE_STROKE},
-        {"ACTION_TOOL_ERASER_WHITEOUT"sv, ERASER_TYPE_WHITEOUT}};
+        {"ACTION_TOOL_ERASER_WHITEOUT"sv, ERASER_TYPE_WHITEOUT},
+        {"ACTION_TOOL_ERASER_DELETE_HIGHLIGHTER", ERASER_TYPE_DELETE_HIGHLIGHTER}};
 
 static const std::map<std::string_view, int> COL_ROWS_MAP = {
         {"ACTION_SET_COLUMNS_1"sv, 1}, {"ACTION_SET_COLUMNS_2"sv, 2}, {"ACTION_SET_COLUMNS_3"sv, 3},
