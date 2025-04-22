@@ -1,4 +1,4 @@
--- Register all Toolbar actions and intialize all UI stuff
+-- Register all Toolbar actions and initialize all UI stuff
 function initUi()
   app.registerUi({["menu"] = "Migrate font sizes with factor displayDPI / 72", ["callback"] = "migrate"});
   app.registerUi({["menu"] = "Show font size migration dialog", ["callback"] = "showDialog"});

@@ -42,7 +42,7 @@ function findOS()
   end
 end
 
--- Register all Toolbar actions and intialize all UI stuff
+-- Register all Toolbar actions and initialize all UI stuff
 function initUi()
   ref = app.registerUi({["menu"] = "QuickScreenshot", ["callback"] = "go", ["accelerator"] = "<Shift><Alt>t"});
   operatingSystem = findOS() -- What's the operating system?

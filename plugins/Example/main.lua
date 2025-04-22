@@ -2,7 +2,7 @@
 
 var_dump = require "var_dump"
 
--- Register all Toolbar actions and intialize all UI stuff
+-- Register all Toolbar actions and initialize all UI stuff
 function initUi()
   print("Hello from Example: Plugin initUi called\n");
 
