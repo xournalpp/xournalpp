@@ -48,15 +48,15 @@ auto LatexGenerator::templateSub(const std::string& input, const std::string& te
 auto LatexGenerator::asyncRun(const fs::path& texDir, const std::string& texFileContents) -> Result {
     std::string cmd = this->settings.genCmd;
     GErrorGuard err{};
-    std::string texFilePathOSEncoding;
+    std::string texFilePathUtf8;
     try {
-        texFilePathOSEncoding = (Util::getLongPath(texDir) / "tex.tex").string();
+        texFilePathUtf8 = (Util::getLongPath(texDir) / "tex.tex").u8string();
     } catch (const fs::filesystem_error& e) {
         GenError res{FS(_F("Failed to parse LaTeX generator path: {1}") % e.what())};
     }
 
-    for (auto i = cmd.find(u8"{}"); i != std::string::npos; i = cmd.find(u8"{}", i + texFilePathOSEncoding.length())) {
-        cmd.replace(i, 2, texFilePathOSEncoding);
+    for (auto i = cmd.find(u8"{}"); i != std::string::npos; i = cmd.find(u8"{}", i + texFilePathUtf8.length())) {
+        cmd.replace(i, 2, texFilePathUtf8);
     }
     // Todo (rolandlo): is this a todo?
     // Windows note: g_shell_parse_argv assumes POSIX paths, so Windows paths need to be escaped.
@@ -79,7 +79,8 @@ auto LatexGenerator::asyncRun(const fs::path& texDir, const std::string& texFile
     g_free(argv.get()[0]);
     argv.get()[0] = prog;
 
-    if (!g_file_set_contents(texFilePathOSEncoding.c_str(), texFileContents.c_str(), as_signed(texFileContents.size()),
+    auto texFilePathGfn = Util::toGFilename(texFilePathUtf8);
+    if (!g_file_set_contents(texFilePathGfn.c_str(), texFileContents.c_str(), as_signed(texFileContents.size()),
                              out_ptr(err))) {
         return GenError({FS(_F("Could not save .tex file: {1}") % err->message)});
     }

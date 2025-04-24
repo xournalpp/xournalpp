@@ -13,46 +13,60 @@
 
 #include <cstddef>  // for size_t
 #include <string_view>
+#include <utility>
+
+#include <glib.h>
 
 namespace xoj::util {
 inline namespace raii {
-class OwnedCString final {
+
+template <class CharT = char>
+class BasicOwnedCString final {
 public:
-    OwnedCString() = default;
-    OwnedCString(const OwnedCString&) = delete;
-    OwnedCString(OwnedCString&& s);
-    OwnedCString& operator=(const OwnedCString&) = delete;
-    OwnedCString& operator=(OwnedCString&& s);
-    ~OwnedCString();
+    BasicOwnedCString() = default;
+    BasicOwnedCString(const BasicOwnedCString&) = delete;
+    BasicOwnedCString(BasicOwnedCString&& s): data_(std::exchange(s.data_, nullptr)){};
+    BasicOwnedCString& operator=(const BasicOwnedCString&) = delete;
+    BasicOwnedCString& operator=(BasicOwnedCString&& s) {
+        g_free(data_);
+        data_ = std::exchange(s.data_, nullptr);
+        return *this;
+    }
+    ~BasicOwnedCString() { g_free(data_); }
 
     /**
      * @brief Assume ownership
      */
-    static OwnedCString assumeOwnership(char* s);
+    template <class CharT2>
+    static auto assumeOwnership(CharT2* s) -> BasicOwnedCString<CharT2> {
+        BasicOwnedCString<CharT2> res;
+        res.data_ = s;
+        return res;
+    }
 
-    const char* get() const;
-    operator bool() const;
-    explicit operator std::string_view() const;
+    auto get() const -> CharT const* { return data_; }
+    auto c_str() const -> CharT const* { return data_; }
+    auto data() const -> CharT const* { return data_; }
 
-    /*
-     * Why is this class implicitly convertible to const char& without this line?
-     * In any case: this is dangerous, as it makes
-     *   CString bar = "blob";
-     *   std::string foo = bar;
-     * compile without having the expected behaviour
-     */
-    operator const char&() const = delete;
+    explicit operator bool() const { return data_ != nullptr && data_[0] != '\0'; }
+    explicit operator std::basic_string_view<CharT>() const { return data_ ? data_ : std::string_view(); }
 
-    const char& operator[](size_t n) const;
+    const CharT& operator[](size_t n) const { return data_[n]; }
 
     /**
      * @brief Safely delete the content and return a pointer to the private data pointer
      *      Use to set the data with some C-libraries functions taking a char** as argument
      */
-    char** contentReplacer();
+    CharT** contentReplacer() {
+        g_free(std::exchange(data_, nullptr));
+        return &data_;
+    }
 
 private:
-    char* data = nullptr;
+    CharT* data_ = nullptr;
 };
+
+using OwnedCString = BasicOwnedCString<char>;
+
 };  // namespace raii
 };  // namespace xoj::util

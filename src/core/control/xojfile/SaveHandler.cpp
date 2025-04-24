@@ -359,7 +359,7 @@ void SaveHandler::saveTo(OutputStream* out, const fs::path& filepath, ProgressLi
 
     for (BackgroundImage const& img: backgroundImages) {
         auto tmpfn = (fs::path(filepath) += ".") += img.getFilepath();
-        if (!gdk_pixbuf_save(img.getPixbuf(), tmpfn.u8string().c_str(), "png", nullptr, nullptr)) {
+        if (!gdk_pixbuf_save(img.getPixbuf(), Util::toGFilename(tmpfn).c_str(), "png", nullptr, nullptr)) {
             if (!this->errorMessage.empty()) {
                 this->errorMessage += "\n";
             }
