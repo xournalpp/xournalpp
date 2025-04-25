@@ -1600,6 +1600,16 @@ bool Control::openPngFile(fs::path filepath, bool attachToDocument, int scrollTo
     GError* error = nullptr;
     img.loadFile(imagePath, &error);
 
+    if (error) {
+        std::string msg = FS(_F("Error reading PNG file \"{1}\"\n{2}") % imagePath.u8string() % doc->getLastErrorMsg());
+        XojMsgBox::showErrorToUser(this->getGtkWindow(), msg);
+        g_error_free(error);
+        
+        this->doc->unlock();
+        this->getCursor()->setCursorBusy(false);
+        return false;
+    }
+
     page->setBackgroundImage(std::move(img));
     page->setBackgroundType(PageType(PageTypeFormat::Image));
 
@@ -1642,8 +1652,7 @@ void Control::openFileWithoutSavingTheCurrentDocument(fs::path filepath, bool at
     }
 
     if (Util::hasPngFileExt(filepath)) {
-        openPngFile(fs::path(filepath), attachToDocument, scrollToPage);
-        callback(true);
+        callback(openPngFile(fs::path(filepath), attachToDocument, scrollToPage));
         return;
     }
 
