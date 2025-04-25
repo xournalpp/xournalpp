@@ -1652,7 +1652,7 @@ void Control::openFileWithoutSavingTheCurrentDocument(fs::path filepath, bool at
     }
 
     if (Util::hasPngFileExt(filepath)) {
-        callback(openPngFile(fs::path(filepath), attachToDocument, scrollToPage));
+        callback(this->openPngFile(std::move(filepath), attachToDocument, scrollToPage));
         return;
     }
 
