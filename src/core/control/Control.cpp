@@ -3,6 +3,7 @@
 #include <algorithm>   // for max
 #include <cstdlib>     // for size_t
 #include <exception>   // for exce...
+#include <filesystem>  // for pngOpen
 #include <functional>  // for bind
 #include <iterator>    // for end
 #include <locale>
@@ -65,6 +66,7 @@
 #include "gui/toolbarMenubar/ToolMenuHandler.h"                  // for Tool...
 #include "gui/toolbarMenubar/model/ToolbarData.h"                // for Tool...
 #include "gui/toolbarMenubar/model/ToolbarModel.h"               // for Tool...
+#include "model/BackgroundImage.h"                               // for pngOpen
 #include "model/Compass.h"                                       // for Comp...
 #include "model/Document.h"                                      // for Docu...
 #include "model/DocumentChangeType.h"                            // for DOCU...
@@ -1584,6 +1586,37 @@ bool Control::openPdfFile(fs::path filepath, bool attachToDocument, int scrollTo
     return success;
 }
 
+bool Control::openPngFile(fs::path filepath, bool attachToDocument, int scrollToPage) {
+    fs::path imagePath(filepath);
+    this->getCursor()->setCursorBusy(true);
+    auto doc = std::make_unique<Document>(this);
+    this->replaceDocument(createNewDocument(this, std::move(filepath), std::nullopt), -1);
+
+    // Put a png file directly in the page
+    this->doc->lock();
+    const size_t pageNr = this->getCurrentPageNo();
+    PageRef page = this->doc->getPage(pageNr);
+    BackgroundImage img;
+    GError* error = nullptr;
+    img.loadFile(imagePath, &error);
+
+    page->setBackgroundImage(std::move(img));
+    page->setBackgroundType(PageType(PageTypeFormat::Image));
+
+    // Apply correct page size
+    GdkPixbuf* pixbuf = page->getBackgroundImage().getPixbuf();
+    if (pixbuf) {
+        page->setSize(gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf));
+    } else {
+        g_warning("PageBackgroundChangeController::setPageImageBackground(): Page with image background but nullptr "
+                  "pixbuf");
+    }
+
+    this->doc->unlock();
+    this->getCursor()->setCursorBusy(false);
+    return true;
+}
+
 bool Control::openXoptFile(fs::path filepath) {
     auto pageTemplate = Util::readString(filepath);
     if (!pageTemplate) {
@@ -1604,6 +1637,12 @@ void Control::openFileWithoutSavingTheCurrentDocument(fs::path filepath, bool at
 
     if (filepath.extension() == ".xopt") {
         this->openXoptFile(std::move(filepath));
+        callback(true);
+        return;
+    }
+
+    if (Util::hasPngFileExt(filepath)) {
+        openPngFile(fs::path(filepath), attachToDocument, scrollToPage);
         callback(true);
         return;
     }
