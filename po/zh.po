@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-12 14:42+0000\n"
-"PO-Revision-Date: 2025-04-13 04:39\n"
+"PO-Revision-Date: 2025-04-27 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1522,7 +1522,7 @@ msgstr "全屏"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:325
 msgid "Toggle sidebar"
-msgstr ""
+msgstr "切换侧边栏"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:327
 msgid "Manage Toolbars"
