@@ -20,28 +20,28 @@
 #include "util/DispatchPool.h"
 #include "util/Point.h"
 #include "util/Range.h"
-#include "view/overlays/SelectionView.h"
+#include "view/overlays/SelectorView.h"
 
 class Document;
 
-class Selection: public ShapeContainer, public OverlayBase {
+class Selector: public ShapeContainer, public OverlayBase {
 public:
-    Selection(bool multiLayer);
-    ~Selection() override;
+    Selector(bool multiLayer);
+    ~Selector() override;
 
     using BoundaryPoint = xoj::util::Point<double>;
 
 public:
     /**
      * @return layerId of selected objects, 0 if there is nothing in RectSelection
-    */
+     */
     size_t finalize(PageRef page, bool disableMultilayer, Document* doc);
 
     virtual void currentPos(double x, double y) = 0;
     virtual bool userTapped(double zoom) const = 0;
     virtual const std::vector<BoundaryPoint>& getBoundary() const = 0;
 
-    inline auto getViewPool() const -> const std::shared_ptr<xoj::util::DispatchPool<xoj::view::SelectionView>>& {
+    inline auto getViewPool() const -> const std::shared_ptr<xoj::util::DispatchPool<xoj::view::SelectorView>>& {
         return viewPool;
     }
 
@@ -62,15 +62,15 @@ protected:
 
     Range bbox;
 
-    std::shared_ptr<xoj::util::DispatchPool<xoj::view::SelectionView>> viewPool;
+    std::shared_ptr<xoj::util::DispatchPool<xoj::view::SelectorView>> viewPool;
 
     friend class EditSelection;
 };
 
-class RectSelection: public Selection {
+class RectangularSelector: public Selector {
 public:
-    RectSelection(double x, double y, bool multiLayer = false);
-    ~RectSelection() override;
+    RectangularSelector(double x, double y, bool multiLayer = false);
+    ~RectangularSelector() override;
 
 public:
     void currentPos(double x, double y) override;
@@ -86,9 +86,9 @@ private:
     double maxDist = 0;
 };
 
-class RegionSelect: public Selection {
+class LassoSelector: public Selector {
 public:
-    RegionSelect(double x, double y, bool multiLayer = false);
+    LassoSelector(double x, double y, bool multiLayer = false);
 
 public:
     void currentPos(double x, double y) override;

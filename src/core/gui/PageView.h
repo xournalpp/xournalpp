@@ -37,7 +37,7 @@ class EraseHandler;
 class ImageSizeSelection;
 class InputHandler;
 class SearchControl;
-class Selection;
+class Selector;
 class Settings;
 class Text;
 class TextEditor;
@@ -257,7 +257,7 @@ private:
     /**
      * The selected (while selection)
      */
-    std::unique_ptr<Selection> selection;
+    std::unique_ptr<Selector> selector;
 
     /**
      * The text editor

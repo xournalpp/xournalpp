@@ -38,7 +38,7 @@
 #include "control/tools/PdfElemSelection.h"         // for PdfElemSelection
 #include "control/tools/RectangleHandler.h"         // for RectangleHandler
 #include "control/tools/RulerHandler.h"             // for RulerHandler
-#include "control/tools/Selection.h"                // for RectSelection
+#include "control/tools/Selector.h"                 // for RectangularSelector
 #include "control/tools/SplineHandler.h"            // for SplineHandler
 #include "control/tools/StrokeHandler.h"            // for StrokeHandler
 #include "control/tools/TextEditor.h"               // for TextEditor, TextE...
@@ -80,7 +80,7 @@
 #include "view/overlays/OverlayView.h"              // for OverlayView, Tool...
 #include "view/overlays/PdfElementSelectionView.h"  // for PdfElementSelecti...
 #include "view/overlays/SearchResultView.h"         // for SearchResultView
-#include "view/overlays/SelectionView.h"            // for SelectionView
+#include "view/overlays/SelectorView.h"             // for SelectionView
 #include "view/overlays/TextEditionView.h"          // for TextEditionView
 
 #include "PageViewFindObjectHelper.h"  // for SelectObject, Pla...
@@ -307,10 +307,10 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
                h->getToolType() == TOOL_PLAY_OBJECT || h->getToolType() == TOOL_SELECT_OBJECT ||
                h->getToolType() == TOOL_SELECT_PDF_TEXT_LINEAR || h->getToolType() == TOOL_SELECT_PDF_TEXT_RECT) {
         if (h->getToolType() == TOOL_SELECT_RECT) {
-            if (!selection) {
-                this->selection = std::make_unique<RectSelection>(x, y);
-                this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
-                        this->selection.get(), this, this->settings->getSelectionColor()));
+            if (!selector) {
+                this->selector = std::make_unique<RectangularSelector>(x, y);
+                this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectorView>(
+                        this->selector.get(), this, this->settings->getSelectionColor()));
             } else {
                 xoj_assert_message(
                         settings->getInputSystemTPCButtonEnabled(),
@@ -318,10 +318,10 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
                         "hovering!");
             }
         } else if (h->getToolType() == TOOL_SELECT_REGION) {
-            if (!selection) {
-                this->selection = std::make_unique<RegionSelect>(x, y);
-                this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
-                        this->selection.get(), this, this->settings->getSelectionColor()));
+            if (!selector) {
+                this->selector = std::make_unique<LassoSelector>(x, y);
+                this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectorView>(
+                        this->selector.get(), this, this->settings->getSelectionColor()));
             } else {
                 xoj_assert_message(
                         settings->getInputSystemTPCButtonEnabled(),
@@ -329,10 +329,10 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
                         "hovering!");
             }
         } else if (h->getToolType() == TOOL_SELECT_MULTILAYER_RECT) {
-            if (!selection) {
-                this->selection = std::make_unique<RectSelection>(x, y, /*multiLayer*/ true);
-                this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
-                        this->selection.get(), this, this->settings->getSelectionColor()));
+            if (!selector) {
+                this->selector = std::make_unique<RectangularSelector>(x, y, /*multiLayer*/ true);
+                this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectorView>(
+                        this->selector.get(), this, this->settings->getSelectionColor()));
             } else {
                 xoj_assert_message(
                         settings->getInputSystemTPCButtonEnabled(),
@@ -340,10 +340,10 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
                         "hovering!");
             }
         } else if (h->getToolType() == TOOL_SELECT_MULTILAYER_REGION) {
-            if (!selection) {
-                this->selection = std::make_unique<RegionSelect>(x, y, /*multiLayer*/ true);
-                this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
-                        this->selection.get(), this, this->settings->getSelectionColor()));
+            if (!selector) {
+                this->selector = std::make_unique<LassoSelector>(x, y, /*multiLayer*/ true);
+                this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectorView>(
+                        this->selector.get(), this, this->settings->getSelectionColor()));
             } else {
                 xoj_assert_message(
                         settings->getInputSystemTPCButtonEnabled(),
@@ -533,8 +533,8 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
         // input handler used this event
     } else if (this->imageSizeSelection) {
         this->imageSizeSelection->updatePosition(x, y);
-    } else if (this->selection) {
-        this->selection->currentPos(x, y);
+    } else if (this->selector) {
+        this->selector->currentPos(x, y);
     } else if (auto* selection = pdfToolbox->getSelection(); selection && !selection->isFinalized()) {
         selection->currentPos(x, y, pdfToolbox->selectionStyle);
     } else if (this->verticalSpace) {
@@ -695,32 +695,32 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         }
     }
 
-    if (this->selection) {
+    if (this->selector) {
         const bool aggregate = pos.isShiftDown() && xournal->getSelection();
-        size_t layerOfFinalizedSel = this->selection->finalize(this->page, aggregate, control->getDocument());
+        size_t layerOfFinalizedSel = this->selector->finalize(this->page, aggregate, control->getDocument());
 
         if (layerOfFinalizedSel) {
             xournal->setSelection([&]() {
                 if (aggregate) {
                     // Aggregate selection
-                    auto sel = selection->releaseElements();
+                    auto sel = selector->releaseElements();
                     return SelectionFactory::addElementsFromActiveLayer(control, xournal->getSelection(), sel);
                 } else {
                     // if selection->multiLayer == true, the selected objects might be on another layer
                     xournal->getControl()->getLayerController()->switchToLay(layerOfFinalizedSel);
                     return SelectionFactory::createFromElementsOnActiveLayer(control, page, this,
-                                                                             selection->releaseElements());
+                                                                             selector->releaseElements());
                 }
             }()
                                           .release());
-        } else if (const double zoom = xournal->getZoom(); selection->userTapped(zoom)) {
+        } else if (const double zoom = xournal->getZoom(); selector->userTapped(zoom)) {
             if (aggregate) {
                 SelectObject(this).atAggregate(pos.x / zoom, pos.y / zoom);
             } else {
-                SelectObject(this).at(pos.x / zoom, pos.y / zoom, this->selection->isMultiLayerSelection());
+                SelectObject(this).at(pos.x / zoom, pos.y / zoom, this->selector->isMultiLayerSelection());
             }
         }
-        this->selection.reset();
+        this->selector.reset();
     } else if (this->textEditor) {
         this->textEditor->mouseReleased();
     }
