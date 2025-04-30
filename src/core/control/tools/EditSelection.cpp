@@ -39,7 +39,6 @@
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
 #include "EditSelectionContents.h"  // for EditSelectionConte...
-#include "Selection.h"              // for Selection
 
 class XojFont;
 

@@ -1,8 +1,8 @@
-#include "SelectionView.h"
+#include "SelectorView.h"
 
 #include <vector>
 
-#include "control/tools/Selection.h"
+#include "control/tools/Selector.h"
 #include "util/Color.h"
 #include "util/LoopUtil.h"
 #include "util/Range.h"
@@ -11,15 +11,15 @@
 
 using namespace xoj::view;
 
-SelectionView::SelectionView(const Selection* selection, Repaintable* parent, Color selectionColor):
-        OverlayView(parent), selection(selection), selectionColor(selectionColor) {
-    this->registerToPool(selection->getViewPool());
+SelectorView::SelectorView(const Selector* selector, Repaintable* parent, Color selectorColor):
+        OverlayView(parent), selector(selector), selectorColor(selectorColor) {
+    this->registerToPool(selector->getViewPool());
 }
 
-SelectionView::~SelectionView() noexcept { this->unregisterFromPool(); }
+SelectorView::~SelectorView() noexcept { this->unregisterFromPool(); }
 
-void SelectionView::draw(cairo_t* cr) const {
-    auto pts = this->selection->getBoundary();
+void SelectorView::draw(cairo_t* cr) const {
+    auto pts = this->selector->getBoundary();
     if (pts.size() < 3) {
         // To few points to draw
         return;
@@ -30,7 +30,7 @@ void SelectionView::draw(cairo_t* cr) const {
     // set the line always the same size on display
     cairo_set_line_width(cr, BORDER_WIDTH_IN_PIXELS / this->parent->getZoom());
 
-    Util::cairo_set_source_rgbi(cr, selectionColor);
+    Util::cairo_set_source_rgbi(cr, selectorColor);
 
     cairo_new_path(cr);
     for (auto& p: pts) {
@@ -39,18 +39,18 @@ void SelectionView::draw(cairo_t* cr) const {
     cairo_close_path(cr);
 
     cairo_stroke_preserve(cr);
-    Util::cairo_set_source_rgbi(cr, selectionColor, FILLING_OPACITY);
+    Util::cairo_set_source_rgbi(cr, selectorColor, FILLING_OPACITY);
     cairo_fill(cr);
 }
 
-bool SelectionView::isViewOf(const OverlayBase* overlay) const { return overlay == this->selection; }
+bool SelectorView::isViewOf(const OverlayBase* overlay) const { return overlay == this->selector; }
 
-void SelectionView::on(SelectionView::FlagDirtyRegionRequest, Range rg) {
+void SelectorView::on(SelectorView::FlagDirtyRegionRequest, Range rg) {
     rg.addPadding(BORDER_WIDTH_IN_PIXELS / this->parent->getZoom());
     this->parent->flagDirtyRegion(rg);
 }
 
-void xoj::view::SelectionView::deleteOn(xoj::view::SelectionView::DeleteViewsRequest, Range rg) {
+void xoj::view::SelectorView::deleteOn(xoj::view::SelectorView::DeleteViewsRequest, Range rg) {
     rg.addPadding(BORDER_WIDTH_IN_PIXELS / this->parent->getZoom());
     this->parent->deleteOverlayView(this, rg);
 }

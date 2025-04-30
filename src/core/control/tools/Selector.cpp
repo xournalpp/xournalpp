@@ -1,4 +1,4 @@
-#include "Selection.h"
+#include "Selector.h"
 
 #include <algorithm>  // for max, min
 #include <cmath>      // for abs, NAN
@@ -12,12 +12,12 @@
 #include "model/XojPage.h"         // for XojPage
 #include "util/safe_casts.h"       // for as_unsigned
 
-Selection::Selection(bool multiLayer): multiLayer(multiLayer), viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::SelectionView>>()) {
-}
+Selector::Selector(bool multiLayer):
+        multiLayer(multiLayer), viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::SelectorView>>()) {}
 
-Selection::~Selection() = default;
+Selector::~Selector() = default;
 
-auto Selection::finalize(PageRef page, bool disableMultilayer, Document* doc) -> size_t {
+auto Selector::finalize(PageRef page, bool disableMultilayer, Document* doc) -> size_t {
     this->page = page;
     size_t layerId = 0;
 
@@ -56,28 +56,27 @@ auto Selection::finalize(PageRef page, bool disableMultilayer, Document* doc) ->
         }
     }
 
-    this->viewPool->dispatchAndClear(xoj::view::SelectionView::DELETE_VIEWS_REQUEST, this->bbox);
+    this->viewPool->dispatchAndClear(xoj::view::SelectorView::DELETE_VIEWS_REQUEST, this->bbox);
 
     return layerId;
 }
 
-auto Selection::isMultiLayerSelection() -> bool {
-    return this->multiLayer;
-}
+auto Selector::isMultiLayerSelection() -> bool { return this->multiLayer; }
 
-auto Selection::releaseElements() -> InsertionOrderRef { return std::move(this->selectedElements); }
+auto Selector::releaseElements() -> InsertionOrderRef { return std::move(this->selectedElements); }
 
 //////////////////////////////////////////////////////////
 
-RectSelection::RectSelection(double x, double y, bool multiLayer): Selection(multiLayer), sx(x), sy(y), ex(x), ey(y) {
+RectangularSelector::RectangularSelector(double x, double y, bool multiLayer):
+        Selector(multiLayer), sx(x), sy(y), ex(x), ey(y) {
     bbox.addPoint(x, y);
 }
 
-RectSelection::~RectSelection() = default;
+RectangularSelector::~RectangularSelector() = default;
 
-auto RectSelection::contains(double x, double y) const -> bool { return bbox.contains(x, y); }
+auto RectangularSelector::contains(double x, double y) const -> bool { return bbox.contains(x, y); }
 
-void RectSelection::currentPos(double x, double y) {
+void RectangularSelector::currentPos(double x, double y) {
     bbox = Range(sx, sy);
     bbox.addPoint(x, y);
 
@@ -89,22 +88,20 @@ void RectSelection::currentPos(double x, double y) {
 
     boundaryPoints = {{sx, sy}, {sx, ey}, {ex, ey}, {ex, sy}};
 
-    this->viewPool->dispatch(xoj::view::SelectionView::FLAG_DIRTY_REGION, rg);
+    this->viewPool->dispatch(xoj::view::SelectorView::FLAG_DIRTY_REGION, rg);
 
     this->maxDist = std::max({this->maxDist, x - this->sx, this->sx - x, y - this->sy, this->sy - y});
 }
 
-auto RectSelection::userTapped(double zoom) const -> bool { return this->maxDist < 10 / zoom; }
+auto RectangularSelector::userTapped(double zoom) const -> bool { return this->maxDist < 10 / zoom; }
 
-auto RectSelection::getBoundary() const -> const std::vector<BoundaryPoint>& { return boundaryPoints; }
+auto RectangularSelector::getBoundary() const -> const std::vector<BoundaryPoint>& { return boundaryPoints; }
 
 //////////////////////////////////////////////////////////
 
-RegionSelect::RegionSelect(double x, double y, bool multiLayer): Selection(multiLayer) {
-    currentPos(x, y);
-}
+LassoSelector::LassoSelector(double x, double y, bool multiLayer): Selector(multiLayer) { currentPos(x, y); }
 
-void RegionSelect::currentPos(double x, double y) {
+void LassoSelector::currentPos(double x, double y) {
     boundaryPoints.emplace_back(x, y);
     bbox.addPoint(x, y);
 
@@ -117,11 +114,11 @@ void RegionSelect::currentPos(double x, double y) {
         // add the first point to make sure the filling is painted correctly
         rg.addPoint(boundaryPoints.front().x, boundaryPoints.front().y);
 
-        this->viewPool->dispatch(xoj::view::SelectionView::FLAG_DIRTY_REGION, rg);
+        this->viewPool->dispatch(xoj::view::SelectorView::FLAG_DIRTY_REGION, rg);
     }
 }
 
-auto RegionSelect::contains(double x, double y) const -> bool {
+auto LassoSelector::contains(double x, double y) const -> bool {
     if (boundaryPoints.size() <= 2 || !this->bbox.contains(x, y)) {
         return false;
     }
@@ -188,7 +185,7 @@ auto RegionSelect::contains(double x, double y) const -> bool {
     return (hits & 1) != 0;
 }
 
-auto RegionSelect::userTapped(double zoom) const -> bool {
+auto LassoSelector::userTapped(double zoom) const -> bool {
     double maxDist = 10 / zoom;
     const BoundaryPoint& r0 = boundaryPoints.front();
     for (const BoundaryPoint& p: boundaryPoints) {
@@ -199,4 +196,4 @@ auto RegionSelect::userTapped(double zoom) const -> bool {
     return true;
 }
 
-auto RegionSelect::getBoundary() const -> const std::vector<BoundaryPoint>& { return boundaryPoints; }
+auto LassoSelector::getBoundary() const -> const std::vector<BoundaryPoint>& { return boundaryPoints; }
