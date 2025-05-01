@@ -3,7 +3,6 @@
 #include <algorithm>   // for max
 #include <cstdlib>     // for size_t
 #include <exception>   // for exce...
-#include <filesystem>  // for pngOpen
 #include <functional>  // for bind
 #include <iterator>    // for end
 #include <locale>
