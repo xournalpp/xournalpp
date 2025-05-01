@@ -1601,7 +1601,7 @@ bool Control::openPngFile(fs::path filepath, bool attachToDocument, int scrollTo
     img.loadFile(imagePath, &error);
 
     if (error) {
-        std::string msg = FS(_F("Error reading PNG file \"{1}\"\n{2}") % imagePath.u8string() % doc->getLastErrorMsg());
+        std::string msg = FS(_F("Error reading PNG file \"{1}\"") % imagePath.u8string());
         XojMsgBox::showErrorToUser(this->getGtkWindow(), msg);
         g_error_free(error);
         this->doc->unlock();
