@@ -52,6 +52,14 @@ namespace Util {
 bool hasPdfFileExt(const fs::path& path);
 
 /**
+ * Check if a path is absolute.
+ *
+ * Use this over fs::path::is_absolute to avoid a bug in libstdc++
+ * regarding UNC paths on Windows.
+ */
+[[nodiscard]] bool isAbsolute(const fs::path& path);
+
+/**
  * Clear the xournal extensions ignoring case (.xoj, .xopp)
  *
  * @param ext An extension to clear additionally, eg .pdf (would also clear
