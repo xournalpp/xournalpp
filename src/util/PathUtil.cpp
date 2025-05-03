@@ -91,6 +91,10 @@ auto Util::hasPdfFileExt(const fs::path& path) -> bool {
     return StringUtils::toLowerCase(path.extension().string()) == ".pdf";
 }
 
+auto Util::hasPngFileExt(const fs::path& path) -> bool {
+    return StringUtils::toLowerCase(path.extension().string()) == ".png";
+}
+
 auto Util::clearExtensions(fs::path& path, const std::string& ext) -> void {
     auto rm_ext = [&path](const std::string ext) {
         if (StringUtils::toLowerCase(path.extension().string()) == StringUtils::toLowerCase(ext)) {

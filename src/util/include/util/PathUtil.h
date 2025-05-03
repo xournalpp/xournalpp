@@ -54,6 +54,11 @@ namespace Util {
 bool hasPdfFileExt(const fs::path& path);
 
 /**
+ * @return true if this file has a png extension
+ */
+bool hasPngFileExt(const fs::path& path);
+
+/**
  * Clear the xournal extensions ignoring case (.xoj, .xopp)
  *
  * @param ext An extension to clear additionally, eg .pdf (would also clear

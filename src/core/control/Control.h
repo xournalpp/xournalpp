@@ -447,6 +447,15 @@ private:
     bool openPdfFile(fs::path filepath, bool attachToDocument, int scrollToPage);
 
     /**
+     * Opens the provided path and parse it as a PNG file. Then forcibly replaces the currently opened document with a
+     * new one based on the PNG. WARNING: Be sure the active document has been saved (or discarded) before calling
+     * openPngFile()
+     *
+     * @return true on success
+     */
+    bool openPngFile(fs::path filepath, bool attachToDocument, int scrollToPage);
+
+    /**
      * Opens the provided path and parse it as a .xopt template  file. Then forcibly replaces the currently opened
      * document with a new one based on the template. WARNING: Be sure the active document has been saved (or discarded)
      * before calling openXoptFile()

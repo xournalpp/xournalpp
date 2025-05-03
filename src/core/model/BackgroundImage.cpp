@@ -24,8 +24,10 @@ struct BackgroundImage::Content {
             path(std::move(path)), pixbuf(gdk_pixbuf_new_from_stream(stream, nullptr, error)) {}
 
     ~Content() {
-        g_object_unref(this->pixbuf);
-        this->pixbuf = nullptr;
+        if (this->pixbuf) {
+            g_object_unref(this->pixbuf);
+            this->pixbuf = nullptr;
+        }
     };
 
     Content(const Content&) = delete;
