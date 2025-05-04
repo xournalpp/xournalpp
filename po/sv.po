@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-25 09:07+0000\n"
-"PO-Revision-Date: 2025-03-30 04:26\n"
+"PO-Revision-Date: 2025-05-04 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -20,15 +20,16 @@ msgstr ""
 #: ../src/core/control/AudioController.cpp:118
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Ljudmapp är ogiltig eller inte angiven! Inspelning kommer inte fungera!\n"
+"Ange inspelningsmapp i \"Inställningar\" > \"Ljudinspelning\""
 
 #: ../src/core/control/Control.cpp:230
 msgid "Filesystem error: {1}"
-msgstr ""
+msgstr "Filsystemfel: {1}"
 
 #: ../src/core/control/Control.cpp:242
 msgid "Could not remove old autosave file \"{1}\": {2}"
-msgstr ""
+msgstr "Kunde inte ta bort autosparad fil \"{1}\": {2}"
 
 #: ../src/core/control/Control.cpp:992
 msgid "Recorder could not be started."
@@ -36,7 +37,7 @@ msgstr "Inspelaren kunde inte startas."
 
 #: ../src/core/control/Control.cpp:1257
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
-msgstr ""
+msgstr "Du raderade det aktiva verktygsfältet. Återgår till standardverktygsfältet."
 
 #: ../src/core/control/Control.cpp:1271
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
@@ -66,16 +67,17 @@ msgstr "Fel vid öppning av fil \"{1}\""
 
 #: ../src/core/control/Control.cpp:2312
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "Filen som läses in har en nyare filformatversion än den som stöds av denna version av Xournal++, så filen kanske inte läses in korrekt. Öppna ändå?"
 
 #: ../src/core/control/Control.cpp:2439
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "Den bifogade bakgrundsfilen hittades inte. Den kan ha flyttats, tilldelats ett nytt namn eller raderats."
 
 #: ../src/core/control/Control.cpp:2442
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
-msgstr ""
+msgstr "Bakgrundsfilen \"{1}\" hittades inte. Den kan ha flyttats, tilldelats ett nytt namn eller raderats.\n"
+"Den sågs senast i: \"{2}\""
 
 #: ../src/core/control/Control.cpp:2452
 msgid "\n"
@@ -136,7 +138,7 @@ msgstr "Osparat dokument"
 
 #: ../src/core/control/Control.cpp:2827
 msgid "Document file was removed."
-msgstr ""
+msgstr "Dokumentfilen har tagits bort."
 
 #: ../src/core/control/Control.cpp:2827
 msgid "This document is not saved yet."
@@ -260,11 +262,11 @@ msgstr "PDF-bakgrund saknas"
 
 #: ../src/core/control/XournalMain.cpp:123
 msgid "Failed to delete file: {1}"
-msgstr ""
+msgstr "Kunde inte radera filen: {1}"
 
 #: ../src/core/control/XournalMain.cpp:125
 msgid "Please delete the file manually"
-msgstr ""
+msgstr "Vänligen radera filen manuellt"
 
 #: ../src/core/control/XournalMain.cpp:161
 msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
@@ -343,14 +345,16 @@ msgstr "Tyvärr kan Xournal++ bara öppna en fil åt gången.\n"
 
 #: ../src/core/control/XournalMain.cpp:437
 msgid "File {1} does not exist."
-msgstr ""
+msgstr "Filen {1} existerar inte."
 
 #: ../src/core/control/XournalMain.cpp:441
 #: ../src/core/control/XournalMain.cpp:497
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
-msgstr ""
+msgstr "Filsystemfel: {1}\n"
+"Tyvärr, Xournal++ kan inte öppna filen: {2}\n"
+"Överväg att kopiera filen till en lokal katalog."
 
 #: ../src/core/control/XournalMain.cpp:641
 msgid "Jump to Page (first Page: 1)"
@@ -366,7 +370,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:656
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "Exportera FIL som PDF"
 
 #: ../src/core/control/XournalMain.cpp:658
 msgid "Export FILE as image files (one per page)\n"
