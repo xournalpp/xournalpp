@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-12 14:42+0000\n"
-"PO-Revision-Date: 2025-04-13 04:39\n"
+"POT-Creation-Date: 2025-05-03 17:14+0000\n"
+"PO-Revision-Date: 2025-05-04 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -23,57 +23,57 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 msgstr "Dosarul audio nu este stabilit sau e greșit! Înregistrarea nu va funcționa!\n"
 "Alege dosarul de înregistrare în „Preferințe > Înregistrare audio”"
 
-#: ../src/core/control/Control.cpp:229
+#: ../src/core/control/Control.cpp:230
 msgid "Filesystem error: {1}"
 msgstr "Eroare a sistemului de fișiere: {1}"
 
-#: ../src/core/control/Control.cpp:241
+#: ../src/core/control/Control.cpp:242
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "Nu s-a putut elimina vechiul fișier salvat automat „{1}”: {2}"
 
-#: ../src/core/control/Control.cpp:561
+#: ../src/core/control/Control.cpp:562
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "Ai șters banda cu instrumente activă. Se revine la banda cu instrumente prestabilită."
 
-#: ../src/core/control/Control.cpp:581
+#: ../src/core/control/Control.cpp:582
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Configurarea benzii cu instrumente „{1}” este predefinită. Vrei să modifici o copie?"
 
-#: ../src/core/control/Control.cpp:584 ../src/core/control/Control.cpp:1554
+#: ../src/core/control/Control.cpp:585 ../src/core/control/Control.cpp:1555
 msgid "Yes"
 msgstr "Da"
 
-#: ../src/core/control/Control.cpp:584 ../src/core/control/Control.cpp:1554
+#: ../src/core/control/Control.cpp:585 ../src/core/control/Control.cpp:1555
 msgid "No"
 msgstr "Nu"
 
-#: ../src/core/control/Control.cpp:814 ../src/core/control/Control.cpp:1721
-#: ../src/core/control/Control.cpp:2061 ../src/core/control/XournalMain.cpp:175
+#: ../src/core/control/Control.cpp:815 ../src/core/control/Control.cpp:1767
+#: ../src/core/control/Control.cpp:2107 ../src/core/control/XournalMain.cpp:175
 msgid "Cancel"
 msgstr "Renunță"
 
-#: ../src/core/control/Control.cpp:815
+#: ../src/core/control/Control.cpp:816
 msgid "Insert after current page"
 msgstr "Introdu după pagina actuală"
 
-#: ../src/core/control/Control.cpp:816
+#: ../src/core/control/Control.cpp:817
 msgid "Insert at end"
 msgstr "Introdu la sfârșit"
 
-#: ../src/core/control/Control.cpp:819
+#: ../src/core/control/Control.cpp:820
 msgid "_Journal"
 msgstr "_Document"
 
-#: ../src/core/control/Control.cpp:819
+#: ../src/core/control/Control.cpp:820
 msgid "Paper B_ackground"
 msgstr "Fo_ndul hârtiei"
 
-#: ../src/core/control/Control.cpp:820
+#: ../src/core/control/Control.cpp:821
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:40
 msgid "With PDF background"
 msgstr "Cu fond PDF"
 
-#: ../src/core/control/Control.cpp:823
+#: ../src/core/control/Control.cpp:824
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
@@ -81,15 +81,15 @@ msgstr "Documentul tău actual nu conține pagina PDF nr. {1}\n"
 "Vrei să introduci această pagină?\n\n"
 "Sfat: Poți alege {2} pentru a introduce o pagină PDF."
 
-#: ../src/core/control/Control.cpp:866
+#: ../src/core/control/Control.cpp:867
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Nu există pagini PDF disponibile pentru a fi adăugate. Poate că trebuie redeschis mai întâi documentul."
 
-#: ../src/core/control/Control.cpp:880
+#: ../src/core/control/Control.cpp:881
 msgid "Unable to retrieve pdf page."
 msgstr "Nu s-a putut afișa pagina pdf."
 
-#: ../src/core/control/Control.cpp:1479
+#: ../src/core/control/Control.cpp:1480
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -97,96 +97,100 @@ msgstr "Nu deschide fișierele salvate automat. Acestea pot fi înlocuite!\n"
 "Copiază fișierele în alt dosar.\n"
 "Fișierele din dosarul {1} nu pot fi deschise."
 
-#: ../src/core/control/Control.cpp:1499
+#: ../src/core/control/Control.cpp:1500
 msgid "file: {1}"
 msgstr "fișier: {1}"
 
-#: ../src/core/control/Control.cpp:1531
+#: ../src/core/control/Control.cpp:1532
 msgid "Error opening file \"{1}\""
 msgstr "Eroare la deschiderea fișierului „{1}”"
 
-#: ../src/core/control/Control.cpp:1556
+#: ../src/core/control/Control.cpp:1557
 msgid "File version mismatch"
 msgstr "Versiunea fișierului nu corespunde"
 
-#: ../src/core/control/Control.cpp:1557
+#: ../src/core/control/Control.cpp:1558
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Fișierul în curs de încărcare are o versiune de format mai nouă decât cea acceptată în prezent de această versiune de Xournal++, deci este posibil să nu se încarce în mod corespunzător. Deschizi oricum?"
 
-#: ../src/core/control/Control.cpp:1580
+#: ../src/core/control/Control.cpp:1581
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr "Eroare la citirea fișierului PDF „{1}”\n"
 "{2}"
 
-#: ../src/core/control/Control.cpp:1701
+#: ../src/core/control/Control.cpp:1603
+msgid "Error reading PNG file \"{1}\""
+msgstr ""
+
+#: ../src/core/control/Control.cpp:1747
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Fișierul fondului atașat nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau eliminat."
 
-#: ../src/core/control/Control.cpp:1704
+#: ../src/core/control/Control.cpp:1750
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Fișierul fondului „{1}” nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau eliminat.\n"
 "A fost văzut ultima dată în: „{2}”"
 
-#: ../src/core/control/Control.cpp:1714
+#: ../src/core/control/Control.cpp:1760
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Fișierul de înlocuire propus: „{1}”"
 
-#: ../src/core/control/Control.cpp:1719
+#: ../src/core/control/Control.cpp:1765
 msgid "Select another PDF"
 msgstr "Alege un alt PDF"
 
-#: ../src/core/control/Control.cpp:1720
+#: ../src/core/control/Control.cpp:1766
 msgid "Remove PDF Background"
 msgstr "Elimină fondul PDF"
 
-#: ../src/core/control/Control.cpp:1724
+#: ../src/core/control/Control.cpp:1770
 msgid "Use proposed PDF"
 msgstr "Folosește fișierul PDF propus"
 
-#: ../src/core/control/Control.cpp:1727
+#: ../src/core/control/Control.cpp:1773
 msgid "Missing PDF background file"
 msgstr "Lipsește fișierul fondului PDF"
 
-#: ../src/core/control/Control.cpp:1859
+#: ../src/core/control/Control.cpp:1905
 msgid "Select font"
 msgstr "Alege tipul de litere"
 
-#: ../src/core/control/Control.cpp:1878
+#: ../src/core/control/Control.cpp:1924
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Alege culoarea"
 
-#: ../src/core/control/Control.cpp:1903
+#: ../src/core/control/Control.cpp:1949
 msgid "Unsaved Document"
 msgstr "Document nesalvat"
 
-#: ../src/core/control/Control.cpp:2054
+#: ../src/core/control/Control.cpp:2100
 msgid "Document file was removed."
 msgstr "Fișierul documentului a fost eliminat."
 
-#: ../src/core/control/Control.cpp:2054
+#: ../src/core/control/Control.cpp:2100
 msgid "This document is not saved yet."
 msgstr "Acest document nu este salvat încă."
 
-#: ../src/core/control/Control.cpp:2056
+#: ../src/core/control/Control.cpp:2102
 msgid "Save As..."
 msgstr "Salvează ca..."
 
-#: ../src/core/control/Control.cpp:2056 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2102 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:80
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:286
 msgid "Save"
 msgstr "Salvează"
 
-#: ../src/core/control/Control.cpp:2059
+#: ../src/core/control/Control.cpp:2105
 msgid "Discard"
 msgstr "Nu salva"
 
-#: ../src/core/control/Control.cpp:2143
+#: ../src/core/control/Control.cpp:2189
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr "Crearea subprocesului demonstrativ Gtk a eșuat: {1} (cod rezultat: {2})"
 
@@ -665,19 +669,19 @@ msgstr "%F-Notițe-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_adnotat"
 
-#: ../src/core/control/tools/EditSelection.cpp:461
+#: ../src/core/control/tools/EditSelection.cpp:460
 msgid "Arrange"
 msgstr "Aranjare"
 
-#: ../src/core/control/tools/EditSelection.cpp:476
+#: ../src/core/control/tools/EditSelection.cpp:475
 msgid "Bring forward"
 msgstr "Adu mai aproape"
 
-#: ../src/core/control/tools/EditSelection.cpp:487
+#: ../src/core/control/tools/EditSelection.cpp:486
 msgid "Send backward"
 msgstr "Trimite în plan secundar"
 
-#: ../src/core/control/tools/EditSelection.cpp:494
+#: ../src/core/control/tools/EditSelection.cpp:493
 msgid "Send to back"
 msgstr "Trimite în ultimul plan"
 
@@ -2069,17 +2073,17 @@ msgstr "A apărut o eroare la închiderea fișierului: „{1}”"
 msgid "Error code {1}"
 msgstr "Cod de eroare {1}"
 
-#: ../src/util/PathUtil.cpp:176
+#: ../src/util/PathUtil.cpp:180
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Fișierul nu a putut fi deschis. Trebuie deschis manual:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:286
+#: ../src/util/PathUtil.cpp:290
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:296
+#: ../src/util/PathUtil.cpp:300
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Nu s-a putut crea dosarul: {1}\n"
