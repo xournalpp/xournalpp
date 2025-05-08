@@ -42,6 +42,15 @@ void TexImageView::draw(const Context& ctx) const {
         cairo_translate(cr, texImage->getX(), texImage->getY());
         cairo_scale(cr, xFactor, yFactor);
 
+        auto surfType = cairo_surface_get_type(cairo_get_target(cr));
+        auto pageRenderFunction =
+                surfType == CAIRO_SURFACE_TYPE_PDF || surfType == CAIRO_SURFACE_TYPE_PS ||
+                                surfType == CAIRO_SURFACE_TYPE_SVG || surfType == CAIRO_SURFACE_TYPE_SCRIPT ||
+                                surfType == CAIRO_SURFACE_TYPE_WIN32_PRINTING || surfType == CAIRO_SURFACE_TYPE_XML ||
+                                surfType == CAIRO_SURFACE_TYPE_RECORDING ?
+                        poppler_page_render_for_printing :
+                        poppler_page_render;
+
         // Make TeX images translucent when highlighting audio strokes as they can not have audio
         if (ctx.fadeOutNonAudio) {
             /**
@@ -49,13 +58,13 @@ void TexImageView::draw(const Context& ctx) const {
              * This sets the current pattern to the temporary surface.
              */
             cairo_push_group(cr);
-            poppler_page_render(page, cr);
+            pageRenderFunction(page, cr);
             cairo_pop_group_to_source(cr);
 
             // paint the temporary surface with opacity level
             cairo_paint_with_alpha(cr, OPACITY_NO_AUDIO);
         } else {
-            poppler_page_render(page, cr);
+            pageRenderFunction(page, cr);
         }
 
         g_clear_object(&page);
