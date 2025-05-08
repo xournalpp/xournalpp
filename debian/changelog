@@ -1,8 +1,13 @@
-xournalpp (1.2.7~dev-1) UNRELEASED; urgency=medium
+xournalpp (1.2.7-1) unstable; urgency=medium
 
-  * 
+  * Improved error logs
+  * Fixed some undefined behaviours and memory leaks
+  * Fixed handling of linebreaks in latex tool
+  * Linux: forward crash signals to system handler after emergency save
+  * Fixed wrong glyph spacing in texts using small fonts
+  * Fixed rasterization of Tex elements on PDF/SVG export or printing
 
- -- Roland Lötscher <roland_loetscher@hotmail.com>  Wed, 19 Feb 2025 10:59:27 +0100
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Thu, 08 May 2025 15:20:59 +0200
 
 xournalpp (1.2.6-1) unstable; urgency=medium
 

@@ -1,8 +1,24 @@
 # Changelog
 
-## 1.2.7~dev (Unreleased)
+## 1.2.7
+
+The support for Ubuntu 20 LTS is dropped.
+This release also includes bugfixes from various community contributors:
+
+* Improved error logs (#6319)
+* Fixed some undefined behaviours that may have caused crashes (#6326)
+* Fixed some memory leaks (#6356)
+* Ensured timers are cancelled on exit (#6351)
+* Fixed handling of linebreaks in latex tool (#6374)
+* Linux: forward crash signals to system handler after emergency save (#6392)
+* Fixed wrong glyph spacing in texts using small fonts (#6393)
+* Windows: Fixed opening of UNC paths (#6409)
+* Fixed rasterization of Tex elements on PDF/SVG export or printing (#6395)
+* Updated translations
 
 ## 1.2.6
+
+Bugfixes from various community contributors.
 
 * Fixed a weird behaviour when drawing the outline of the compass multiple times (#6265, #6256)
 * Exposed selected text to the windowing system for accessibility purposes (#6221, #6215)
