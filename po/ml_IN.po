@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-07 13:29+0000\n"
-"PO-Revision-Date: 2024-12-08 18:11\n"
+"POT-Creation-Date: 2025-05-05 12:49+0000\n"
+"PO-Revision-Date: 2025-05-08 13:27\n"
 "Last-Translator: \n"
 "Language-Team: Malayalam\n"
 "Language: ml_IN\n"
@@ -96,7 +96,7 @@ msgstr "മറ്റൊരു പിഡിഎഫ് തിരഞ്ഞെടു�
 msgid "Remove PDF Background"
 msgstr "പിഡിഎഫ് പശ്ചാത്തലം നീക്കം ചെയ്യുക"
 
-#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
+#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2836
 #: ../src/core/control/XournalMain.cpp:178
 #: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
@@ -136,24 +136,24 @@ msgstr "Xournal++ ഫയലുകൾ"
 msgid "Unsaved Document"
 msgstr "സേവ് ചെയ്യാത്ത ഡോക്യുമെന്റ്"
 
-#: ../src/core/control/Control.cpp:2825
+#: ../src/core/control/Control.cpp:2827
 msgid "Document file was removed."
 msgstr "ഡോക്യുമെന്റ് ഫയൽ നീക്കം ചെയ്യപ്പെട്ടു."
 
-#: ../src/core/control/Control.cpp:2825
+#: ../src/core/control/Control.cpp:2827
 msgid "This document is not saved yet."
 msgstr "ഈ ഡോക്യുമെന്റ് ഇത് വരെ സേവ് ചെയ്യപ്പെട്ടിട്ടില്ല."
 
-#: ../src/core/control/Control.cpp:2826
+#: ../src/core/control/Control.cpp:2828
 msgid "Save As..."
 msgstr "സേവ് തരം..."
 
-#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2828 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Save"
 msgstr "സേവ്"
 
-#: ../src/core/control/Control.cpp:2831
+#: ../src/core/control/Control.cpp:2833
 msgid "Discard"
 msgstr "ഒഴിവാക്കുക"
 
@@ -335,41 +335,41 @@ msgid "\n\n"
 msgstr "\n\n"
 "ഈ ഫൈൽ ഇല്ലാതെ പ്രവർത്തിക്കാൻ ഇപ്പോൾ ശ്രമിക്കും."
 
-#: ../src/core/control/XournalMain.cpp:421
-#: ../src/core/control/XournalMain.cpp:477
+#: ../src/core/control/XournalMain.cpp:426
+#: ../src/core/control/XournalMain.cpp:482
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "ക്ഷമിക്കണം, Xournal++-നു ഒരു സമയം ഒറ്റ ഫയൽ മാത്രമേ തുറക്കാൻ സാധിക്കുകയുള്ളൂ.\n"
 "മറ്റുള്ളവ തിരസ്കരിക്കപ്പെടും."
 
-#: ../src/core/control/XournalMain.cpp:432
+#: ../src/core/control/XournalMain.cpp:437
 msgid "File {1} does not exist."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:436
-#: ../src/core/control/XournalMain.cpp:492
+#: ../src/core/control/XournalMain.cpp:441
+#: ../src/core/control/XournalMain.cpp:497
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:636
+#: ../src/core/control/XournalMain.cpp:641
 msgid "Jump to Page (first Page: 1)"
 msgstr "താളിലേക്ക് ചാടുക (ആദ്യത്തെ താൾ: 1)"
 
-#: ../src/core/control/XournalMain.cpp:640
+#: ../src/core/control/XournalMain.cpp:645
 msgid "Get version of xournalpp"
 msgstr "Xournalpp-യുടെ പതിപ്പ് ലഭിക്കുക"
 
-#: ../src/core/control/XournalMain.cpp:642
+#: ../src/core/control/XournalMain.cpp:647
 msgid "Disable audio for this session"
 msgstr "ഈ സെഷനിൽ ഓഡിയോ പ്രവർത്തനരഹിതമാക്കുക"
 
-#: ../src/core/control/XournalMain.cpp:651
+#: ../src/core/control/XournalMain.cpp:656
 msgid "Export FILE as PDF"
 msgstr "ഫയൽ പിഡിഎഫ് ആയി എക്സ്പോർട്ട് ചെയ്യുക"
 
-#: ../src/core/control/XournalMain.cpp:653
+#: ../src/core/control/XournalMain.cpp:658
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -377,7 +377,7 @@ msgstr "ഫയൽ ചിത്രങ്ങളുടെ ഫയലുകളായ�
 "                                 അനന്തര ഫയലിന്റെ ഫോർമാറ്റ് IMGFILE-ന്റെ എക്സ്റ്റൻഷണിന്റെ അടിസ്ഥാനത്തിൽ തീരുമാനിക്കുക\n"
 "                                 പിന്തുണയ്ക്കപ്പെട്ട ഫോർമാറ്റുകൾ: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:658
+#: ../src/core/control/XournalMain.cpp:663
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -385,13 +385,13 @@ msgstr "പശ്ചാത്തല രഹിത എക്സ്പോർട്�
 "                                 എക്സ്പോർട്ട് ചെയ്യപ്പെടുന്ന ഫയലിന് രശ്‌മീപാരകമായ/വെള്ള പശ്ചാത്തലം ഉണ്ടണ്ടാകും\n"
 "                                 അത് ഫയലിന്റെ തരത്തിന്റെ അടിസ്ഥാനത്തിലായിരിക്കും തീരുമാനിക്കുക\n"
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:668
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "റൂളിംഗ് ഇല്ലാതെ എക്സ്പോർട്ട് ചെയ്യുക\n"
 "                                 എക്സ്പോർട്ട് ചെയ്ത ഫയലിന് പേപ്പർ റൂളിംഗ് ഉണ്ടാകില്ല\n"
 
-#: ../src/core/control/XournalMain.cpp:667
+#: ../src/core/control/XournalMain.cpp:672
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -403,39 +403,39 @@ msgstr "പാളികൾ ഒന്നൊന്നായി എക്സ്പ�
 "                                 ഒന്നൊന്നായി പാളികളുടെ കൂന നിർമിക്കുന്നു\n"
 "                                 ഇങ്ങനെ ലഭിക്കുന്ന പിഡിഎഫ് ഫയൽ ഒരു പ്രസന്റേഷൻ അവതരിപ്പിക്കുന്നതിനായി ഉപയോഗിക്കാം.\n"
 
-#: ../src/core/control/XournalMain.cpp:674
+#: ../src/core/control/XournalMain.cpp:679
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:678
+#: ../src/core/control/XournalMain.cpp:683
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:682
+#: ../src/core/control/XournalMain.cpp:687
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "പിഎൻജി എക്സ്പോർട്ടിന് വേണ്ടി ഡിപിഐ തീരുമാനിക്കുക. സ്ഥിരമൂല്യം 300 ആണ്\n"
 "                                 -i/--create-img=foo.png ഉപയോഗിക്കാതെ ഒരു ഫലവും ലഭിക്കില്ല"
 
-#: ../src/core/control/XournalMain.cpp:686
+#: ../src/core/control/XournalMain.cpp:691
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:692
+#: ../src/core/control/XournalMain.cpp:697
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:697
+#: ../src/core/control/XournalMain.cpp:702
 msgid "Advanced export options"
 msgstr "വിപുലമായ എക്സ്പോർട്ട് സംവിധാനങ്ങൾ"
 
-#: ../src/core/control/XournalMain.cpp:698
+#: ../src/core/control/XournalMain.cpp:703
 msgid "Display advanced export options"
 msgstr "വിപുലമായ എക്സ്പോർട്ട് സംവിധാനങ്ങൾ കാണിക്കുക"
 
@@ -869,7 +869,7 @@ msgid "Unable to play audio recording {1}"
 msgstr "ഓഡിയോ റെക്കോർഡിങ് പ്രവർത്തിപ്പിക്കാൻ സാധിക്കുന്നില്ല {1}"
 
 #: ../src/core/gui/PageView.cpp:877
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:95
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:94
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
 msgid "Loading..."
 msgstr "ലോഡ് ചെയ്യുന്നു..."
@@ -1072,27 +1072,27 @@ msgstr "സിസ്റ്റം സ്ഥിരസ്ഥിതി"
 msgid "Previously selected language not available anymore!"
 msgstr "മുൻപ് തിരഞ്ഞെടുത്ത ഭാഷ ഇനി മുതൽ ലഭ്യമല്ല!"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:49
 msgid "LaTeX editor theme:"
 msgstr "ലാറ്റെക് (LaTeX) എഡിറ്ററിന്റെ തീം:"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:54
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "ജിടികെ സോഴ്സ് വ്യൂ (GtkSourceView) Xournal++ നിർമിക്കുന്ന സമയം പ്രവർത്തനരഹിതമാക്കിയിരുന്നു! അതിനാൽ ചില സംവിധാനങ്ങൾ ലഭ്യമാവില്ല."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:143
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "{1}-ലുള്ള ആഗോള ടെമ്പ്ലേറ്റ് ഫയൽ തുറക്കാൻ സാധിക്കുന്നില്ല. ആ ഫയൽ നിലവിലുണ്ടോ?"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
 msgid "Sample LaTeX file generated successfully."
 msgstr "ഉദാഹരണ (ലാറ്റെക്) LaTeX ഫയൽ വിജയകരമായി ഉത്പാദിപ്പിച്ചു."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "പിശക്: {1}. ദയവായി {2}-ന്റെ ഉള്ളടക്കം പരിശോധിക്കുക"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:165
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "പിശക്: {1} ശരിയായ ഫയൽ അല്ല. ദയവായി നിങ്ങളുടെ ലാറ്റെക് (LaTeX) ടെമ്പ്ലേറ്റ് ഫയൽ ക്രമീകരങ്ങൾ പരിശോധിക്കുക. "
 
@@ -1198,7 +1198,7 @@ msgstr "നിലവിലുള്ള താളിനു ശേഷം ചേർ
 msgid "Insert at end"
 msgstr "അവസാനം ചേർക്കുക"
 
-#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:170
+#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:167
 msgid "Contents"
 msgstr "ഉള്ളടക്കം"
 
@@ -1666,7 +1666,7 @@ msgstr "പിഡിഎഫ് കെയ്റോ പ്രതലം ഇനിഷ
 
 #: ../src/core/undo/AddUndoAction.cpp:64
 #: ../src/core/undo/DeleteUndoAction.cpp:61
-#: ../src/core/undo/EraseUndoAction.cpp:60
+#: ../src/core/undo/EraseUndoAction.cpp:67
 msgid "Erase stroke"
 msgstr "സ്ട്രോക്ക് മായ്ക്കുക"
 
@@ -1859,17 +1859,17 @@ msgstr ""
 msgid "Error code {1}"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:172
+#: ../src/util/PathUtil.cpp:191
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "ഫയൽ തുറക്കാൻ സാധിച്ചില്ല. നിങ്ങൾക്ക് സ്വമേധയാ അത് ചെയ്യേണ്ടി വരും:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:245
+#: ../src/util/PathUtil.cpp:264
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:255
+#: ../src/util/PathUtil.cpp:274
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "ഫോൾഡർ നിർമിക്കാൻ സാധിച്ചില്ല: {1}\n"

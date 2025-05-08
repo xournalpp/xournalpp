@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-07 13:29+0000\n"
-"PO-Revision-Date: 2025-01-26 04:25\n"
+"POT-Creation-Date: 2025-05-05 12:49+0000\n"
+"PO-Revision-Date: 2025-05-08 13:26\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -99,7 +99,7 @@ msgstr "Sélectionnez un autre PDF"
 msgid "Remove PDF Background"
 msgstr "Supprimer l'arrière-plan du PDF"
 
-#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
+#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2836
 #: ../src/core/control/XournalMain.cpp:178
 #: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
@@ -139,24 +139,24 @@ msgstr "Fichiers Xournal++"
 msgid "Unsaved Document"
 msgstr "Document non enregistré"
 
-#: ../src/core/control/Control.cpp:2825
+#: ../src/core/control/Control.cpp:2827
 msgid "Document file was removed."
 msgstr "Le fichier du document a été supprimé."
 
-#: ../src/core/control/Control.cpp:2825
+#: ../src/core/control/Control.cpp:2827
 msgid "This document is not saved yet."
 msgstr "Ce document n'est pas encore enregistré."
 
-#: ../src/core/control/Control.cpp:2826
+#: ../src/core/control/Control.cpp:2828
 msgid "Save As..."
 msgstr "Enregistrer sous..."
 
-#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2828 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: ../src/core/control/Control.cpp:2831
+#: ../src/core/control/Control.cpp:2833
 msgid "Discard"
 msgstr "Fermer sans enregistrer"
 
@@ -340,19 +340,19 @@ msgid "\n\n"
 msgstr "\n\n"
 "Essai de démarrage sans fichier."
 
-#: ../src/core/control/XournalMain.cpp:421
-#: ../src/core/control/XournalMain.cpp:477
+#: ../src/core/control/XournalMain.cpp:426
+#: ../src/core/control/XournalMain.cpp:482
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Désolé, Xournal++ ne peut ouvrir qu'un seul fichier à la fois.\n"
 "Les autres sont ignorés."
 
-#: ../src/core/control/XournalMain.cpp:432
+#: ../src/core/control/XournalMain.cpp:437
 msgid "File {1} does not exist."
 msgstr "Le fichier {1} n’existe pas."
 
-#: ../src/core/control/XournalMain.cpp:436
-#: ../src/core/control/XournalMain.cpp:492
+#: ../src/core/control/XournalMain.cpp:441
+#: ../src/core/control/XournalMain.cpp:497
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -360,23 +360,23 @@ msgstr "Erreur de système de fichiers : {1}\n"
 "Désolé, Xournal++ ne peut pas ouvrir le fichier : {2}\n"
 "Il peut être nécessaire de copier le fichier dans un répertoire local."
 
-#: ../src/core/control/XournalMain.cpp:636
+#: ../src/core/control/XournalMain.cpp:641
 msgid "Jump to Page (first Page: 1)"
 msgstr "Aller à la page (première page : 1)"
 
-#: ../src/core/control/XournalMain.cpp:640
+#: ../src/core/control/XournalMain.cpp:645
 msgid "Get version of xournalpp"
 msgstr "Récupérer la version de Xournal++"
 
-#: ../src/core/control/XournalMain.cpp:642
+#: ../src/core/control/XournalMain.cpp:647
 msgid "Disable audio for this session"
 msgstr "Désactiver l'audio pour cette session"
 
-#: ../src/core/control/XournalMain.cpp:651
+#: ../src/core/control/XournalMain.cpp:656
 msgid "Export FILE as PDF"
 msgstr "Exporter le fichier FILE en PDF"
 
-#: ../src/core/control/XournalMain.cpp:653
+#: ../src/core/control/XournalMain.cpp:658
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -384,7 +384,7 @@ msgstr "Exporter le FICHIER en tant que fichiers image (une par page)\n"
 "                                 Devine le format de sortie à partir de l'extension de IMGFILE\n"
 "                                 Formats pris en charge : .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:658
+#: ../src/core/control/XournalMain.cpp:663
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -392,13 +392,13 @@ msgstr "Exporter sans arrière-plan\n"
 "                                 Le fichier exporté a un arrière-plan transparent ou blanc,\n"
 "                                 selon ce qui est supporté par son format\n"
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:668
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Exporter sans les lignes\n"
 "                                 Le fichier exporté n'a ni lignes ni carreaux sur le papier\n"
 
-#: ../src/core/control/XournalMain.cpp:667
+#: ../src/core/control/XournalMain.cpp:672
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -410,25 +410,25 @@ msgstr "Exporter progressivement les calques\n"
 "                                 construisant progressivement la pile de calques.\n"
 "                                 Le fichier PDF généré peut être utilisé pour une présentation.\n"
 
-#: ../src/core/control/XournalMain.cpp:674
+#: ../src/core/control/XournalMain.cpp:679
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Exporter uniquement les pages spécifiées par INTERVALLE (par exemple \"2-3,5,7-\")\n"
 "                                 Aucun effet sans -p/--create-pdf ou -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:678
+#: ../src/core/control/XournalMain.cpp:683
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Exporter uniquement les claques spécifiés par INTERVALLE (par exemple \"2-3,5,7-\")\n"
 "                                 Aucun effet sans -p/--create-pdf ou -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:682
+#: ../src/core/control/XournalMain.cpp:687
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Définir le DPI pour les exportations PNG. La valeur par défaut est 300\n"
 "                                 Pas d'effet sans -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:686
+#: ../src/core/control/XournalMain.cpp:691
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -436,7 +436,7 @@ msgstr "Définir la largeur de page pour les exports PNG\n"
 "                                 Aucun effet sans -i/--create-img=foo.png\n"
 "                                 Ignoré si --export-png-dpi est utilisé"
 
-#: ../src/core/control/XournalMain.cpp:692
+#: ../src/core/control/XournalMain.cpp:697
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -444,11 +444,11 @@ msgstr "Définir la hauteur de page pour les exports PNG\n"
 "                                 Aucun effet sans -i/--create-img=foo.png\n"
 "                                 Ignoré si --export-png-dpi ou --export-png-width est utilisé"
 
-#: ../src/core/control/XournalMain.cpp:697
+#: ../src/core/control/XournalMain.cpp:702
 msgid "Advanced export options"
 msgstr "Options d'exportation avancées"
 
-#: ../src/core/control/XournalMain.cpp:698
+#: ../src/core/control/XournalMain.cpp:703
 msgid "Display advanced export options"
 msgstr "Afficher les options d'exportation avancées"
 
@@ -883,7 +883,7 @@ msgid "Unable to play audio recording {1}"
 msgstr "Impossible de lire l'enregistrement audio {1}"
 
 #: ../src/core/gui/PageView.cpp:877
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:95
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:94
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
 msgid "Loading..."
 msgstr "Chargement en cours..."
@@ -1086,27 +1086,27 @@ msgstr "Valeur par défaut du système"
 msgid "Previously selected language not available anymore!"
 msgstr "La langue sélectionnée précédemment n'est plus disponible !"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:49
 msgid "LaTeX editor theme:"
 msgstr "Thème de l'éditeur LaTeX :"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:54
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "GtkSourceView a été désactivé lors de la compilation de Xournal++ ! Certaines options ne seront pas disponibles."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:143
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Impossible d'ouvrir le fichier de modèle global à {1}. Existe-t-il ?"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
 msgid "Sample LaTeX file generated successfully."
 msgstr "Fichier LaTeX d'exemple généré avec succès."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Erreur : {1}. Veuillez vérifier le contenu de {2}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:165
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Erreur : {1} n'est pas un fichier normal. Veuillez vérifier les paramètres de votre fichier de modèle LaTeX. "
 
@@ -1214,7 +1214,7 @@ msgstr "Insérer après la page courante"
 msgid "Insert at end"
 msgstr "Insérer à la fin"
 
-#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:170
+#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:167
 msgid "Contents"
 msgstr "Contenus"
 
@@ -1684,7 +1684,7 @@ msgstr "Échec de l'initialisation de la surface PDF Cairo"
 
 #: ../src/core/undo/AddUndoAction.cpp:64
 #: ../src/core/undo/DeleteUndoAction.cpp:61
-#: ../src/core/undo/EraseUndoAction.cpp:60
+#: ../src/core/undo/EraseUndoAction.cpp:67
 msgid "Erase stroke"
 msgstr "Effacer le trait"
 
@@ -1877,17 +1877,17 @@ msgstr "Une erreur s'est produite lors de la fermeture du fichier : \"{1}\""
 msgid "Error code {1}"
 msgstr "Code d'erreur {1}"
 
-#: ../src/util/PathUtil.cpp:172
+#: ../src/util/PathUtil.cpp:191
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Le fichier n'a pas pu être ouvert. Vous devez le faire manuellement :\n"
 "URL : {1}"
 
-#: ../src/util/PathUtil.cpp:245
+#: ../src/util/PathUtil.cpp:264
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:255
+#: ../src/util/PathUtil.cpp:274
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Impossible de créer le dossier : {1}\n"
@@ -2173,7 +2173,7 @@ msgstr "Utiliser la police à partir du thème système."
 
 #: ../ui/latexSettings.glade:549
 msgid "Font: "
-msgstr "Police :"
+msgstr "Police : "
 
 #: ../ui/latexSettings.glade:564
 msgid "Pick the Editor's Font"
@@ -2856,9 +2856,9 @@ msgstr "%a Nom abrégé du jour de la semaine (p.ex. jeu.)\n"
 "%A Nom complet du jour de la semaine (p.ex. jeudi)\n"
 "%b Nom abrégé du mois (p.ex. juil.)\n"
 "%B Nom complet du mois (p.ex. juillet)\n"
-"%c Représentation de la date et de l’heure (p.ex. ven. 21 juil. 2023 09:31:46)\n"
+"%c Représentation de la date et de l’heure (p.ex. ven. 23 août. 2001 14:55:02)\n"
 "%d Jour du mois (01-31)\n"
-"%F Représentation de la date (par exemple 2023-07-21)\n"
+"%F Représentation de la date (par exemple 2001-08-23)\n"
 "%H Heure au format 24h (00-23)\n"
 "%I Heure au format 12h (01-12)\n"
 "%j Jour de l'année (001-366)\n"
@@ -2866,7 +2866,7 @@ msgstr "%a Nom abrégé du jour de la semaine (p.ex. jeu.)\n"
 "%M Minute (00-59)\n"
 "%p Désignation AM ou PM (par exemple, PM)\n"
 "%S seconde (00-60)\n"
-"%U Numéro de semaine avec le premier dimanche comme premier jour de la première semaine (00-52)\n"
+"%U Numéro de semaine avec le premier dimanche comme premier jour de la première semaine (00-53)\n"
 "%w Jour de la semaine sous forme de nombre décimal avec dimanche comme 0 (0-6)\n"
 "%W Numéro de semaine avec le premier lundi comme premier jour de la première semaine (00-53)\n"
 "%x Représentation de la date (par exemple, 23/08/01)\n"
@@ -2950,11 +2950,11 @@ msgstr "Activer le chargement automatique des journaux"
 
 #: ../ui/settings.glade:842
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
-msgstr "Quand vous ouvrez un fichier PDF et qu'il y a déja un fichier Xournal (. xoj) ayant le même nom, ce dernier sera ouvert."
+msgstr "Quand vous ouvrez un fichier PDF et qu'il y a déjà un fichier Xournal (. xoj) ayant le même nom, ce dernier sera ouvert."
 
 #: ../ui/settings.glade:854
 msgid "Enable autoloading of most recent file on application startup"
-msgstr "Activer la chargement automatique du fichier le plus récent lorsque l'application démarre"
+msgstr "Activer le chargement automatique du fichier le plus récent lorsque l'application démarre"
 
 #: ../ui/settings.glade:859
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
@@ -3032,7 +3032,7 @@ msgstr "Angle de la zone aveugle"
 
 #: ../ui/settings.glade:1236
 msgid "1,30"
-msgstr "1,30"
+msgstr "1.30"
 
 #: ../ui/settings.glade:1254
 msgctxt "Drag = Noun: force opposing the movement"
@@ -3050,7 +3050,7 @@ msgstr "Glisser: Si la valeur est trop petite, des oscillations indésirables pe
 
 #: ../ui/settings.glade:1268
 msgid "0,4"
-msgstr "0,4"
+msgstr "0.4"
 
 #: ../ui/settings.glade:1286
 msgctxt "Mass = Noun: physics term, related to weight"
@@ -3076,7 +3076,7 @@ msgstr "Paramètre de Gauss : augmenter sa valeur améliore la stabilisation, ma
 
 #: ../ui/settings.glade:1320
 msgid "0,50"
-msgstr "0,50"
+msgstr "0.50"
 
 #: ../ui/settings.glade:1352
 msgid "Preprocessor"

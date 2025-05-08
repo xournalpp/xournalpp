@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-07 13:29+0000\n"
-"PO-Revision-Date: 2024-12-08 18:11\n"
+"POT-Creation-Date: 2025-05-05 12:49+0000\n"
+"PO-Revision-Date: 2025-05-08 13:27\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -25,11 +25,11 @@ msgstr "Nie ustawiono folderu pliku dźwiękowego! Nagrywanie nie będzie dział
 
 #: ../src/core/control/Control.cpp:230
 msgid "Filesystem error: {1}"
-msgstr ""
+msgstr "Błąd systemu plików: {1}"
 
 #: ../src/core/control/Control.cpp:242
 msgid "Could not remove old autosave file \"{1}\": {2}"
-msgstr ""
+msgstr "Nie można usunąć starego pliku autozapisu \"{1}\": {2}"
 
 #: ../src/core/control/Control.cpp:992
 msgid "Recorder could not be started."
@@ -99,7 +99,7 @@ msgstr "Wybierz inny PDF"
 msgid "Remove PDF Background"
 msgstr "Usuń PDF w tle"
 
-#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
+#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2836
 #: ../src/core/control/XournalMain.cpp:178
 #: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
@@ -139,24 +139,24 @@ msgstr "Pliki Xournal++"
 msgid "Unsaved Document"
 msgstr "Niezapisany dokument"
 
-#: ../src/core/control/Control.cpp:2825
+#: ../src/core/control/Control.cpp:2827
 msgid "Document file was removed."
 msgstr "Dokument został usunięty."
 
-#: ../src/core/control/Control.cpp:2825
+#: ../src/core/control/Control.cpp:2827
 msgid "This document is not saved yet."
 msgstr "Dokument nie został jeszcze zapisany."
 
-#: ../src/core/control/Control.cpp:2826
+#: ../src/core/control/Control.cpp:2828
 msgid "Save As..."
 msgstr "Zapisz jako..."
 
-#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2828 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Save"
 msgstr "Zapisz"
 
-#: ../src/core/control/Control.cpp:2831
+#: ../src/core/control/Control.cpp:2833
 msgid "Discard"
 msgstr "Odrzuć"
 
@@ -340,41 +340,41 @@ msgid "\n\n"
 msgstr "\n\n"
 "Podjęta zostanie próba działania bez tego pliku."
 
-#: ../src/core/control/XournalMain.cpp:421
-#: ../src/core/control/XournalMain.cpp:477
+#: ../src/core/control/XournalMain.cpp:426
+#: ../src/core/control/XournalMain.cpp:482
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Przepraszamy, Xournal++ może mieć otwarty tylko jeden plik na raz.\n"
 "Pozostałe są pominijane."
 
-#: ../src/core/control/XournalMain.cpp:432
+#: ../src/core/control/XournalMain.cpp:437
 msgid "File {1} does not exist."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:436
-#: ../src/core/control/XournalMain.cpp:492
+#: ../src/core/control/XournalMain.cpp:441
+#: ../src/core/control/XournalMain.cpp:497
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:636
+#: ../src/core/control/XournalMain.cpp:641
 msgid "Jump to Page (first Page: 1)"
 msgstr "Skocz do strony (pierwsza strona: 1)"
 
-#: ../src/core/control/XournalMain.cpp:640
+#: ../src/core/control/XournalMain.cpp:645
 msgid "Get version of xournalpp"
 msgstr "Pokaż wersję xournalpp"
 
-#: ../src/core/control/XournalMain.cpp:642
+#: ../src/core/control/XournalMain.cpp:647
 msgid "Disable audio for this session"
 msgstr "Wyłącz dźwięk dla tej sesji"
 
-#: ../src/core/control/XournalMain.cpp:651
+#: ../src/core/control/XournalMain.cpp:656
 msgid "Export FILE as PDF"
 msgstr "Eksportuj PLIK jako PDF"
 
-#: ../src/core/control/XournalMain.cpp:653
+#: ../src/core/control/XournalMain.cpp:658
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -382,7 +382,7 @@ msgstr "Eksportuj PLIK jako pliki obrazów (jeden na stronę)\n"
 "                                 Odgadnij format wyjścia z rozszerzenia IMGFILE\n"
 "                                 Obsługiwane formaty: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:658
+#: ../src/core/control/XournalMain.cpp:663
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -390,13 +390,13 @@ msgstr "Eksport bez tła\n"
 "                                 Eksportowany plik ma przezroczyste lub białe tło,\n"
 "                                 zależnie od tego, co obsługuje format pliku\n"
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:668
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Eksport bez linii\n"
 "                                 Eksportowany plik pozbawiony jest linii\n"
 
-#: ../src/core/control/XournalMain.cpp:667
+#: ../src/core/control/XournalMain.cpp:672
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -408,24 +408,24 @@ msgstr "Eksport warstw stopniowo\n"
 "                                 stopniowiowo budując stos warstwy.\n"
 "                                 Wynikowy plik PDF może zostać użyty do prezentacji.\n"
 
-#: ../src/core/control/XournalMain.cpp:674
+#: ../src/core/control/XournalMain.cpp:679
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Eksportuj tylko strony określone przez ZAKRES (np. \"2-3,5,7-\")\n"
 "                                 Działa jedynie z -p/--create-pdf lub -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:678
+#: ../src/core/control/XournalMain.cpp:683
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:682
+#: ../src/core/control/XournalMain.cpp:687
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Ustaw DPI eksportu PNG. Domyślnie: 300\n"
 "                                 Działa jedynie z -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:686
+#: ../src/core/control/XournalMain.cpp:691
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -433,7 +433,7 @@ msgstr "Ustaw szerokość strony eksportu PNG\n"
 "                                 Działa jedynie z -i/--create-img=foo.png\n"
 "                                 Ignorowane dla --export-png-dpi"
 
-#: ../src/core/control/XournalMain.cpp:692
+#: ../src/core/control/XournalMain.cpp:697
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -441,11 +441,11 @@ msgstr "Ustaw wysokość strony eksportu PNG\n"
 "                                 Działa jedynie z -i/--create-img=foo.png\n"
 "                                 Ignorowane dla --export-png-dpi lub --export-png-width"
 
-#: ../src/core/control/XournalMain.cpp:697
+#: ../src/core/control/XournalMain.cpp:702
 msgid "Advanced export options"
 msgstr "Zaawansowane opcje eksportu"
 
-#: ../src/core/control/XournalMain.cpp:698
+#: ../src/core/control/XournalMain.cpp:703
 msgid "Display advanced export options"
 msgstr "Wyświetl zaawansowane opcje eksportu"
 
@@ -879,7 +879,7 @@ msgid "Unable to play audio recording {1}"
 msgstr "Nie można odtworzyć nagrania audio: {1}"
 
 #: ../src/core/gui/PageView.cpp:877
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:95
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:94
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
 msgid "Loading..."
 msgstr "Ładowanie..."
@@ -1055,7 +1055,7 @@ msgstr "Rysuj podwójną strzałkę"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:540
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Rysuj układ współrzędnych"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:142
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:47
@@ -1082,27 +1082,27 @@ msgstr "Domyślne ustawienie systemowe"
 msgid "Previously selected language not available anymore!"
 msgstr "Poprzednio wybrany język nie jest już dostępny!"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:49
 msgid "LaTeX editor theme:"
 msgstr "Motyw edytora LaTeX:"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:54
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "GtkSourceView został wyłączony podczas budowania Xournal++! Niektóre opcje nie będą dostępne."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:143
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Nie można otworzyć pliku szablonu globalnego w {1}. Czy istnieje?"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
 msgid "Sample LaTeX file generated successfully."
 msgstr "Przykładowy plik LaTeX został wygenerowany pomyślnie."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Błąd: {1}. Proszę sprawdzić zawartość {2}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:165
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Błąd: {1} nie jest zwykłym plikiem. Sprawdź ustawienia pliku szablonu LaTeX. "
 
@@ -1198,7 +1198,9 @@ msgstr ""
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
-msgstr ""
+msgstr "Aktualny dokument nie ma strony nr {1} z pliku PDF\n"
+"Chciałbyś ją wstawić?\n\n"
+"Wskazówka: Możesz wybrać {2} żeby wstawić stronę PDF."
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:106
 msgid "Insert after current page"
@@ -1208,7 +1210,7 @@ msgstr "Wstaw po bieżącej stronie"
 msgid "Insert at end"
 msgstr "Wstaw na końcu"
 
-#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:170
+#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:167
 msgid "Contents"
 msgstr "Zawartość"
 
@@ -1652,7 +1654,7 @@ msgstr "Dokument nie został załadowany! ({1}), {2}"
 
 #: ../src/core/model/Image.cpp:163 ../src/core/model/Image.cpp:173
 msgid "Error: "
-msgstr ""
+msgstr "Błąd: "
 
 #: ../src/core/model/Image.cpp:167 ../src/core/model/Image.cpp:177
 msgid "Unrecoverable error"
@@ -1678,7 +1680,7 @@ msgstr "Nie udało się zainicjować powierzchni PDF Cairo"
 
 #: ../src/core/undo/AddUndoAction.cpp:64
 #: ../src/core/undo/DeleteUndoAction.cpp:61
-#: ../src/core/undo/EraseUndoAction.cpp:60
+#: ../src/core/undo/EraseUndoAction.cpp:67
 msgid "Erase stroke"
 msgstr "Wymaż kreskę"
 
@@ -1785,7 +1787,7 @@ msgstr "Zmienione tło strony"
 
 #: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
 msgid "Page size changed"
-msgstr ""
+msgstr "Zmieniono rozmiar strony"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
@@ -1857,7 +1859,7 @@ msgstr "Błąd przy otwieraniu pliku \"{1}\""
 
 #: ../src/util/OutputStream.cpp:48
 msgid "Error writing data to file: \"{1}\""
-msgstr ""
+msgstr "Błąd zapisu danych do pliku: \"{1}\""
 
 #: ../src/util/OutputStream.cpp:49
 msgid "Error code {1}. Message:"
@@ -1865,23 +1867,23 @@ msgstr "Kod błędu {1}. Komunikat:"
 
 #: ../src/util/OutputStream.cpp:69
 msgid "Error occurred while closing file: \"{1}\""
-msgstr ""
+msgstr "Wystąpił błąd podczas zamykania pliku: \"{1}\""
 
 #: ../src/util/OutputStream.cpp:70
 msgid "Error code {1}"
-msgstr ""
+msgstr "Kod błędu {1}"
 
-#: ../src/util/PathUtil.cpp:172
+#: ../src/util/PathUtil.cpp:191
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Nie da się otworzyć dokumentu. Musisz to zrobić ręcznie:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:245
+#: ../src/util/PathUtil.cpp:264
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:255
+#: ../src/util/PathUtil.cpp:274
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Nie można utworzyć folderu: {1}\n"
@@ -2188,7 +2190,7 @@ msgstr "<b>Pusty Przybornik</b>\n"
 
 #: ../ui/main.glade:152
 msgid "_File"
-msgstr ""
+msgstr "_Plik"
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
@@ -2200,15 +2202,15 @@ msgstr "_Komentuj plik PDF"
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr ""
+msgstr "_Eksportuj jako PDF"
 
 #: ../ui/main.glade:247
 msgid "Export as..."
-msgstr ""
+msgstr "Eksportuj jako..."
 
 #: ../ui/main.glade:292
 msgid "_Edit"
-msgstr ""
+msgstr "_Edytuj"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
@@ -2236,15 +2238,15 @@ msgstr ""
 
 #: ../ui/main.glade:532
 msgid "Preferences"
-msgstr ""
+msgstr "Preferencje"
 
 #: ../ui/main.glade:546
 msgid "_View"
-msgstr ""
+msgstr "_Widok"
 
 #: ../ui/main.glade:557
 msgid "_Pair Pages"
-msgstr ""
+msgstr "_Paruj strony"
 
 #: ../ui/main.glade:567
 msgid "_Presentation Mode"
@@ -2428,39 +2430,39 @@ msgstr ""
 
 #: ../ui/main.glade:1213
 msgid "New Page _Before"
-msgstr ""
+msgstr "Nowa strona _przed"
 
 #: ../ui/main.glade:1223
 msgid "New Page _After"
-msgstr ""
+msgstr "Nowa strona _po"
 
 #: ../ui/main.glade:1234
 msgid "New Page at _End"
-msgstr ""
+msgstr "Nowa strona na _końcu"
 
 #: ../ui/main.glade:1244
 msgid "Duplicate Page"
-msgstr ""
+msgstr "Duplikuj stronę"
 
 #: ../ui/main.glade:1254
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Dołącz nowe strony PDF"
 
 #: ../ui/main.glade:1264
 msgid "Configure Page Template"
-msgstr ""
+msgstr "Konfiguruj szablon strony"
 
 #: ../ui/main.glade:1274
 msgid "_Delete Page"
-msgstr ""
+msgstr "_Usuń stronę"
 
 #: ../ui/main.glade:1291
 msgid "New _Layer"
-msgstr ""
+msgstr "Nowa _warstwa"
 
 #: ../ui/main.glade:1302
 msgid "Delete Layer"
-msgstr ""
+msgstr "Usuń warstwę"
 
 #: ../ui/main.glade:1313
 msgid "Merge Layer Down"
@@ -2845,7 +2847,29 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\t%\n"
 "Illegal characters are replaced with \"_\""
-msgstr ""
+msgstr "%a\t\tSkrócona nazwa dnia tygodnia (np. Thu)\n"
+"%A\t\tPełna nazwa dnia tygodnia (np. Thursday)\n"
+"%b\t\tSkrócona nazwa miesiąca (np. Aug)\n"
+"%B\t\tPełna nazwa miesiąca (np. August)\n"
+"%c\t\tReprezentacja daty oraz czasu (np. Thu Aug 23 14:55:02 2001)\n"
+"%d\t\tDzień miesiąca (01-31)\n"
+"%F\t\tData (np. 2001-08-23)\n"
+"%H\t\tGodzina w formacie 24h (00-23)\n"
+"%I\t\tGodzina w formacie 12h (01-12)\n"
+"%j\t\tDzień roku (001-366)\n"
+"%m\t\tMiesiąc jako liczba dziesiętna (01-12)\n"
+"%M\t\tMinuta (00-59)\n"
+"%p\t\tAM lub oznaczenie PM (np. PM)\n"
+"%S\t\tSekundy (00-61)\n"
+"%U\t\tNumer tygodnia w pierwszą niedzielę jako pierwszy dzień tygodnia pierwszego (00-53)\n"
+"%w\t\tDni tygodnia jako liczba dziesiętna z niedzielą jako 0 (0-6)\n"
+"%W\t\tTydzień jako liczba dziesiętna z pierwszym poniedziałkiem jako pierwszy dzień pierwszego tygodnia (00-53)\n"
+"%x\t\tSkrócona data (np. 08/23/01)\n"
+"%X\t\tGodzina (np. 14:55:02)\n"
+"%y\t\tDwie ostatnie cyfry roku (00-99)\n"
+"%Y\t\tRok (np. 2001)\n"
+"%Z\t\tNazwa lub skrót strefy czasowej (np. CDT)\n"
+"%%\t\tZnak %"
 
 #: ../ui/settings.glade:613 ../ui/settings.glade:784
 msgid "Available Placeholders"
