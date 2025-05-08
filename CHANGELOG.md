@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.2.8~dev (Unreleased)
+
 ## 1.2.7
 
 The support for Ubuntu 20 LTS is dropped.
