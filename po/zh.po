@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-03 17:14+0000\n"
-"PO-Revision-Date: 2025-05-04 04:25\n"
+"PO-Revision-Date: 2025-05-08 13:26\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -121,7 +121,7 @@ msgstr "读取 PDF 文件 \"{1}\" 时出错\n"
 
 #: ../src/core/control/Control.cpp:1603
 msgid "Error reading PNG file \"{1}\""
-msgstr ""
+msgstr "读取 PNG 文件“{1}”时出错"
 
 #: ../src/core/control/Control.cpp:1747
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
