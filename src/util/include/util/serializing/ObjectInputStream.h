@@ -28,6 +28,8 @@ public:
 
 public:
     bool read(const char* data, size_t len);
+    /// @param length of the stream
+    bool read(std::stringstream istream, size_t length);
 
     void readObject(const char* name);
     std::string readObject();
@@ -55,7 +57,7 @@ private:
     T readType();
 
 private:
-    std::istringstream istream;
+    std::stringstream istream;
     size_t pos();
     size_t len = 0;
 };
