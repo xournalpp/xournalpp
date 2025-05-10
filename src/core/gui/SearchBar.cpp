@@ -23,10 +23,10 @@ SearchBar::SearchBar(Control* control): control(control) {
 
     GtkWidget* next = win->get("btSearchForward");
     GtkWidget* previous = win->get("btSearchBack");
-    g_signal_connect(next, "clicked", G_CALLBACK(+[](GtkButton* button, SearchBar* self) { self->searchNext(); }),
-                     this);
+    g_signal_connect(next, "clicked",
+                     G_CALLBACK(+[](GtkButton*, gpointer d) { static_cast<SearchBar*>(d)->searchNext(); }), this);
     g_signal_connect(previous, "clicked",
-                     G_CALLBACK(+[](GtkButton* button, SearchBar* self) { self->searchPrevious(); }), this);
+                     G_CALLBACK(+[](GtkButton*, gpointer d) { static_cast<SearchBar*>(d)->searchPrevious(); }), this);
 
     // TODO(fabian): When keybindings are implemented, handle previous search keybinding properly
     GtkWidget* searchTextField = win->get("searchTextField");
@@ -98,8 +98,8 @@ void SearchBar::search(const char* text) {
     }
 }
 
-void SearchBar::searchTextChangedCallback(GtkEntry* entry, SearchBar* searchBar) {
-    const char* text = gtk_entry_get_text(entry);
+void SearchBar::searchTextChangedCallback(GtkSearchEntry* entry, SearchBar* searchBar) {
+    const char* text = gtk_entry_get_text(GTK_ENTRY(entry));
     searchBar->search(text);
 }
 
