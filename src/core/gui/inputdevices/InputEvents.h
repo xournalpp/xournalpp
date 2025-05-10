@@ -17,7 +17,8 @@
 #include <gdk/gdk.h>  // for GdkEvent, gdk_event_free, gdk_event_copy
 #include <glib.h>     // for gdouble, gchar, guint, guint32
 
-#include "model/Point.h"  // for Point, Point::NO_PRESSURE
+#include "model/Point.h"  // for Point::NO_PRESSURE
+#include "util/Point.h"
 
 #include "DeviceId.h"
 
@@ -78,10 +79,8 @@ struct InputEvent final {
     InputDeviceClass deviceClass{INPUT_DEVICE_IGNORE};
     const gchar* deviceName{};
 
-    gdouble absoluteX{0};
-    gdouble absoluteY{0};
-    gdouble relativeX{0};
-    gdouble relativeY{0};
+    xoj::util::Point<double> absolute;  ///< In GdkSurface coordinates
+    xoj::util::Point<double> relative;  ///< In XournalWidget coordinates
 
     guint button{0};
     GdkModifierType state{};
