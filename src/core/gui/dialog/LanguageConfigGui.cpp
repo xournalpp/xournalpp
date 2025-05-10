@@ -17,14 +17,12 @@
 #include "config.h"      // for GETTEXT_PACKAGE
 #include "filesystem.h"  // for directory_iterator, operator/
 
-class GladeSearchpath;
-
-LanguageConfigGui::LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings):
-        GladeGui(gladeSearchPath, "settingsLanguageConfig.glade", "offscreenwindow"), settings(settings) {
-    auto dropdown = get("languageSettingsDropdown");
-    gtk_container_remove(GTK_CONTAINER(getWindow()), dropdown);
-    gtk_container_add(GTK_CONTAINER(w), dropdown);
-    gtk_widget_show_all(dropdown);
+LanguageConfigGui::LanguageConfigGui(GtkBox* parent, Settings* settings):
+        comboBox(gtk_combo_box_text_new(), xoj::util::adopt), settings(settings) {
+    gtk_box_append(parent, comboBox.get());
+#if GTK_MAJOR_VERSION == 3
+    gtk_widget_show_all(comboBox.get());
+#endif
 
     // Fetch available locales
     try {
@@ -35,7 +33,7 @@ LanguageConfigGui::LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget
             }
         }
     } catch (const fs::filesystem_error& e) {
-        g_warning("%s", e.what());
+        g_warning("Failed to fetch available locales:\n%s", e.what());
     }
     std::sort(availableLocales.begin(), availableLocales.end());
 
@@ -54,7 +52,7 @@ LanguageConfigGui::LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget
         gtk_list_store_append(gtkAvailableLocales, &iter);
         gtk_list_store_set(gtkAvailableLocales, &iter, 0, i.c_str(), -1);
     }
-    gtk_combo_box_set_model(GTK_COMBO_BOX(dropdown), GTK_TREE_MODEL(gtkAvailableLocales));
+    gtk_combo_box_set_model(GTK_COMBO_BOX(comboBox.get()), GTK_TREE_MODEL(gtkAvailableLocales));
 
 
     // Set the current locale if previously selected
@@ -69,13 +67,13 @@ LanguageConfigGui::LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget
         // Use system default
         return availableLocales.begin();
     }();
-    gtk_combo_box_set_active(GTK_COMBO_BOX(dropdown),
+    gtk_combo_box_set_active(GTK_COMBO_BOX(comboBox.get()),
                              static_cast<gint>(std::distance(availableLocales.begin(), prefPos)));
 }
 
 
 void LanguageConfigGui::saveSettings() {
-    gint pos = gtk_combo_box_get_active(GTK_COMBO_BOX(get("languageSettingsDropdown")));
+    gint pos = gtk_combo_box_get_active(GTK_COMBO_BOX(comboBox.get()));
     auto pref = (pos == 0) ? "" : availableLocales[as_unsigned(pos)];
 
     settings->setPreferredLocale(pref);
