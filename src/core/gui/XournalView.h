@@ -28,6 +28,8 @@
 #include "model/DocumentListener.h"        // for DocumentListener
 #include "pdf/base/XojPdfPage.h"           // for XojPdfRectangle
 #include "util/Util.h"                     // for npos
+#include "util/raii/GObjectSPtr.h"
+#include "util/raii/GSourceURef.h"
 
 class Control;
 class XournalppCursor;
@@ -48,7 +50,7 @@ class Rectangle;
 
 class XournalView: public DocumentListener, public ZoomListener {
 public:
-    XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling);
+    XournalView(GtkScrolledWindow* parent, Control* control, ScrollHandling* scrollHandling);
     ~XournalView() override;
 
 public:
@@ -170,7 +172,7 @@ private:
      */
     ScrollHandling* scrollHandling = nullptr;
 
-    GtkWidget* widget = nullptr;
+    xoj::util::WidgetSPtr widget;
 
     std::vector<std::unique_ptr<XojPageView>> viewPages;
 
@@ -189,7 +191,7 @@ private:
     /**
      * Memory cleanup timeout
      */
-    guint cleanupTimeout = std::numeric_limits<guint>::max();
+    xoj::util::GSourceURef cleanupTimeout;
 
     friend class Layout;
 };
