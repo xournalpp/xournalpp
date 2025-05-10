@@ -31,16 +31,14 @@
 class ScrollHandling;
 class ToolHandler;
 
-InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling) {
-    this->view = view;
-    this->scrollHandling = scrollHandling;
-
-    this->stylusHandler = new StylusInputHandler(this);
-    this->touchHandler = new TouchInputHandler(this);
-    this->touchDrawingHandler = new TouchDrawingInputHandler(this);
-    this->mouseHandler = new MouseInputHandler(this);
-    this->keyboardHandler = new KeyboardInputHandler(this);
-
+InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling):
+        view(view),
+        scrollHandling(scrollHandling),
+        stylusHandler(std::make_unique<StylusInputHandler>(this)),
+        mouseHandler(std::make_unique<MouseInputHandler>(this)),
+        touchDrawingHandler(std::make_unique<TouchDrawingInputHandler>(this)),
+        keyboardHandler(std::make_unique<KeyboardInputHandler>(this)),
+        touchHandler(std::make_unique<TouchInputHandler>(this)) {
     for (const InputDevice& savedDevices: this->view->getControl()->getSettings()->getKnownInputDevices()) {
         this->knownDevices.insert(savedDevices.getName());
     }
@@ -60,21 +58,6 @@ static gboolean keyboardCallback(GtkEventControllerKey* self, guint keyval, guin
 InputContext::~InputContext() {
     // Destructor is called in xournal_widget_dispose, so it can still accept events
     g_signal_handler_disconnect(this->widget, signal_id);
-
-    delete this->stylusHandler;
-    this->stylusHandler = nullptr;
-
-    delete this->touchHandler;
-    this->touchHandler = nullptr;
-
-    delete this->touchDrawingHandler;
-    this->touchDrawingHandler = nullptr;
-
-    delete this->mouseHandler;
-    this->mouseHandler = nullptr;
-
-    delete this->keyboardHandler;
-    this->keyboardHandler = nullptr;
 }
 
 void InputContext::connect(GtkWidget* pWidget) {
@@ -90,9 +73,9 @@ void InputContext::connect(GtkWidget* pWidget) {
 #endif
 
     g_signal_connect(keyCtrl, "key-pressed", G_CALLBACK(keyboardCallback<&KeyboardInputHandler::keyPressed>),
-                     keyboardHandler);
+                     keyboardHandler.get());
     g_signal_connect(keyCtrl, "key-released", G_CALLBACK(keyboardCallback<&KeyboardInputHandler::keyReleased>),
-                     keyboardHandler);
+                     keyboardHandler.get());
 
     int mask =
             // Allow scrolling
@@ -144,9 +127,6 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
 
     // Deactivate touchscreen when a pen event occurs
     this->getView()->getHandRecognition()->event(event.deviceClass);
-
-    // Get the state of all modifiers
-    this->modifierState = event.state;
 
     // separate events to appropriate handlers
     // handle geometry tool
@@ -207,8 +187,6 @@ auto InputContext::getGeometryToolInputHandler() const -> GeometryToolInputHandl
 }
 
 void InputContext::resetGeometryToolInputHandler() { this->geometryToolInputHandler.reset(); }
-
-auto InputContext::getModifierState() -> GdkModifierType { return this->modifierState; }
 
 /**
  * Focus the widget

@@ -82,7 +82,7 @@ auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, 
         pos.pressure = event.pressure;
     }
 
-    pos.state = this->inputContext->getModifierState();
+    pos.state = event.state;
     pos.timestamp = event.timestamp;
 
     pos.deviceId = event.deviceId;

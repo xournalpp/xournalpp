@@ -36,19 +36,18 @@ class XournalView;
 class InputContext final {
 
 private:
-    gulong signal_id{0};
-    StylusInputHandler* stylusHandler;
-    MouseInputHandler* mouseHandler;
-    TouchDrawingInputHandler* touchDrawingHandler;
-    KeyboardInputHandler* keyboardHandler;
-    TouchInputHandler* touchHandler;
-    std::unique_ptr<GeometryToolInputHandler> geometryToolInputHandler;
-
-    GtkWidget* widget = nullptr;
     XournalView* view;
     ScrollHandling* scrollHandling;
 
-    GdkModifierType modifierState = (GdkModifierType)0;
+    gulong signal_id{0};
+    std::unique_ptr<StylusInputHandler> stylusHandler;
+    std::unique_ptr<MouseInputHandler> mouseHandler;
+    std::unique_ptr<TouchDrawingInputHandler> touchDrawingHandler;
+    std::unique_ptr<KeyboardInputHandler> keyboardHandler;
+    std::unique_ptr<TouchInputHandler> touchHandler;
+    std::unique_ptr<GeometryToolInputHandler> geometryToolInputHandler;
+
+    GtkWidget* widget = nullptr;
 
     std::set<std::string> knownDevices;
 
@@ -100,7 +99,6 @@ public:
     GeometryToolInputHandler* getGeometryToolInputHandler() const;
     void resetGeometryToolInputHandler();
 
-    GdkModifierType getModifierState();
     void focusWidget();
     void blockDevice(DeviceType deviceType);
     void unblockDevice(DeviceType deviceType);
