@@ -22,8 +22,8 @@ public:
     static std::string toLowerCase(const std::string& input);
     static void replaceAllChars(std::string& input, const std::vector<replace_pair>& replaces);
     static std::vector<std::string> split(const std::string& input, char delimiter);
-    static bool startsWith(const std::string& str, const std::string& start);
-    static bool endsWith(const std::string& str, const std::string& end);
+    static bool startsWith(std::string_view str, std::string_view start);
+    static bool endsWith(std::string_view str, std::string_view end);
     static std::string ltrim(std::string str);
     static std::string rtrim(std::string str);
     static std::string trim(std::string str);
