@@ -60,6 +60,8 @@ void LayerController::updateActions() {
 
     actionDB->enableAction(Action::LAYER_DELETE, layer > 0);
     actionDB->enableAction(Action::LAYER_MERGE_DOWN, layer > 1);
+    actionDB->enableAction(Action::LAYER_MOVE_UP, layer < maxLayer);
+    actionDB->enableAction(Action::LAYER_MOVE_DOWN, layer > 1);
     actionDB->enableAction(Action::MOVE_SELECTION_LAYER_UP, layer < maxLayer);
     actionDB->enableAction(Action::MOVE_SELECTION_LAYER_DOWN, layer > 1);
     actionDB->enableAction(Action::LAYER_GOTO_NEXT, layer < maxLayer);
