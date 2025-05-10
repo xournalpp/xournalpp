@@ -146,7 +146,7 @@ private:
 
     void updateTextElementContent();
 
-    static bool blinkCallback(TextEditor* te);
+    static void blinkCallback(TextEditor* te);
 
 private:
     Control* control;
