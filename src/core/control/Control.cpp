@@ -1509,7 +1509,7 @@ void Control::replaceDocument(std::unique_ptr<Document> doc, int scrollToPage) {
     fs::path filepath = doc->getFilepath();
 
     this->doc->lock();
-    *this->doc = *doc;
+    *this->doc = *doc;  // This calls fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE). No need to fire it again
     this->doc->unlock();
 
     // Set folder as last save path, so the next save will be at the current document location
@@ -1519,7 +1519,6 @@ void Control::replaceDocument(std::unique_ptr<Document> doc, int scrollToPage) {
         settings->setLastSavePath(filepath.parent_path());
     }
 
-    fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
     fileLoaded(scrollToPage);
 }
 
@@ -2213,7 +2212,7 @@ void Control::clipboardPasteEnabled(bool enabled) { this->actionDB->enableAction
 
 void Control::clipboardPasteText(string text) {
     auto t = std::make_unique<Text>();
-    t->setText(text);
+    t->setText(std::move(text));
     t->setFont(settings->getFont());
     t->setColor(toolHandler->getTool(TOOL_TEXT).getColor());
 
