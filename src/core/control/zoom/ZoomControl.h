@@ -140,8 +140,8 @@ public:
     /**
      * Change the zoom within a Zoom sequence (startZoomSequence() / endZoomSequence())
      *
-     * @param zoom Current zoom value
-     * @param relative If the zoom is relative to the start value (for Gesture)
+     * @param zoom Zoom value
+     * @param relative If true, multiplies the current zoom value by `zoom`. Otherwise replaces it with `zoom`.
      */
     void zoomSequenceChange(double zoom, bool relative);
 
