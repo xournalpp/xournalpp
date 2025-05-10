@@ -14,27 +14,24 @@
 #include <string>  // for string, basic_string
 #include <vector>  // for vector
 
-#include <gtk/gtk.h>  // for GtkWidget, GtkWindow
+#include <gtk/gtk.h>  // for GtkWidget, GtkBox
 
-#include "gui/GladeGui.h"  // for GladeGui
+#include "util/raii/GObjectSPtr.h"
 
 class Settings;
 class GladeSearchpath;
 
-class LanguageConfigGui: public GladeGui {
+class LanguageConfigGui {
 public:
-    LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings);
+    LanguageConfigGui(GtkBox* parent, Settings* settings);
 
 public:
-    void loadSettings(){};
     void saveSettings();
-
-    // Not implemented! This is not a dialog!
-    void show(GtkWindow* parent) override{};
 
 private:
     std::vector<std::string> availableLocales;
 
+    xoj::util::WidgetSPtr comboBox;
 
     Settings* settings;
 };
