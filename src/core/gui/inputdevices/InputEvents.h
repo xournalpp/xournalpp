@@ -62,7 +62,7 @@ struct GdkEventGuard {
         return *this;
     }
 
-    operator GdkEvent*() const { return event.get(); }
+    GdkEvent* get() const { return event.get(); }
 
     // it's more performant to manage the GdkEvent over C++ than over gdk
     // Since the gdk_copy is extreme expansive
@@ -70,9 +70,9 @@ struct GdkEventGuard {
 };
 
 struct InputEvent final {
-    /*explicit(false)*/ explicit operator bool() const { return !!sourceEvent.event; }
+    /*explicit(false)*/ explicit operator bool() const { return device; }
 
-    GdkEventGuard sourceEvent;
+    GdkDevice* device{nullptr};  ///< Source device. Avoid using if possible.
 
     InputEventType type{UNKNOWN};
     InputDeviceClass deviceClass{INPUT_DEVICE_IGNORE};
@@ -100,11 +100,7 @@ struct KeyEvent final {
     GdkEventGuard sourceEvent;  ///< Original GdkEvent. Avoid using if possible.
 };
 
-class InputEvents {
-
-    static InputEventType translateEventType(GdkEventType type);
-
-public:
+struct InputEvents {
     static InputDeviceClass translateDeviceType(GdkDevice* device, Settings* settings);
     static InputDeviceClass translateDeviceType(const std::string& name, GdkInputSource source, Settings* settings);
 

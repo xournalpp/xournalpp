@@ -152,6 +152,10 @@ void gtk_label_set_wrap_mode(GtkLabel* label, PangoWrapMode wrap_mode) {
 void gtk_im_context_set_client_widget(GtkIMContext* context, GtkWidget* widget) {
     gtk_im_context_set_client_window(context, widget ? gtk_widget_get_parent_window(widget) : nullptr);
 }
+gboolean gtk_im_context_filter_keypress(GtkIMContext* context, GdkEvent* event) {
+    return gtk_im_context_filter_keypress(context, (GdkEventKey*)event);
+}
+
 
 /**** GtkFileChooserDialog ****/
 gboolean gtk_file_chooser_add_shortcut_folder(GtkFileChooser* chooser, GFile* file, GError** error) {
