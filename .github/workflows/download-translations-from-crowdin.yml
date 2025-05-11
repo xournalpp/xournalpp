@@ -12,6 +12,7 @@ jobs:
     strategy:
       matrix:
         branch: ['master', 'release-1.2']
+    if: github.repository == 'xournalpp/xournalpp'
     runs-on: ubuntu-latest
     permissions:
       contents: write

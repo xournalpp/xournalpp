@@ -11,6 +11,7 @@ on:
 jobs:
   Translations:
     name: Upload translatable strings to Crowdin
+    if: github.repository == 'xournalpp/xournalpp'
     runs-on: ubuntu-latest
     permissions:
       contents: read
