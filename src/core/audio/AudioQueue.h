@@ -106,7 +106,7 @@ public:
     [[nodiscard]] std::unique_lock<std::mutex> acquire_lock() {
         std::unique_lock retLock{this->queueLock, std::defer_lock};
         std::lock(retLock, this->internalLock);
-        std::lock_guard{this->internalLock, std::adopt_lock};
+        std::lock_guard guard{this->internalLock, std::adopt_lock};
         return retLock;
     }
 
