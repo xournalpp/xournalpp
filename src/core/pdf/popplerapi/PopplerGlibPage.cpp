@@ -110,6 +110,7 @@ auto getPopplerSelectionStyle(XojPdfPageSelectionStyle style) -> PopplerSelectio
         default:
             g_assert(false && "unimplemented");
     }
+    return POPPLER_SELECTION_GLYPH;
 }
 
 auto PopplerGlibPage::selectText(const XojPdfRectangle& rect, XojPdfPageSelectionStyle style) -> std::string {
