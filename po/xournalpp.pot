@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: xournalpp 1.2.6+dev\n"
+"Project-Id-Version: xournalpp 1.2.7+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-08 13:27+0000\n"
+"POT-Creation-Date: 2025-05-11 04:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2110,17 +2110,17 @@ msgstr ""
 msgid "Error code {1}"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:180
+#: ../src/util/PathUtil.cpp:199
 msgid ""
 "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:290
+#: ../src/util/PathUtil.cpp:309
 msgid "xournalpp-{1}"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:300
+#: ../src/util/PathUtil.cpp:319
 msgid ""
 "Could not create folder: {1}\n"
 "Failed with error: {2}"

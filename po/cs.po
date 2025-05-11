@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-03 17:14+0000\n"
-"PO-Revision-Date: 2025-05-04 04:25\n"
+"POT-Creation-Date: 2025-05-10 06:23+0000\n"
+"PO-Revision-Date: 2025-05-11 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -2070,17 +2070,17 @@ msgstr ""
 msgid "Error code {1}"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:180
+#: ../src/util/PathUtil.cpp:199
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Soubor se nepodařilo otevřít. Udělejte to prosím ručně:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:290
+#: ../src/util/PathUtil.cpp:309
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:300
+#: ../src/util/PathUtil.cpp:319
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Nelze vytvořit složku: {1}\n"
