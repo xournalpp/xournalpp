@@ -17,7 +17,20 @@ env:
   nightly-build-branch: 'master'
 
 jobs:
+  check-if-main-repo:
+    runs-on: ubuntu-latest
+    outputs:
+      is_main: ${{ steps.check.outputs.is_main }}
+    steps:
+      - id: check
+        run: |
+          if [ "${{ github.repository }}" = "xournalpp/xournalpp" ]; then
+            echo "is_main=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_main=false" >> $GITHUB_OUTPUT
+          fi  
   prepare:
+    if: github.repository == 'xournalpp/xournalpp'
     runs-on: ubuntu-latest
     name: 'Prepare jobs'
     outputs:
@@ -79,6 +92,7 @@ jobs:
               core.setFailed('Run does not match triggering parameters')
             }
   run-ci:
+    if: github.repository == 'xournalpp/xournalpp'
     name: Create installers
     needs: prepare
     if: ${{ needs.prepare.outputs.should_run == 'true' }}
@@ -93,6 +107,7 @@ jobs:
       build_type: ${{ needs.prepare.outputs.build_type }}
 
   publish-result:
+    if: github.repository == 'xournalpp/xournalpp'
     name: Publish
     needs: [run-ci, prepare]
     if: ${{ needs.prepare.outputs.should_run == 'true' }}
