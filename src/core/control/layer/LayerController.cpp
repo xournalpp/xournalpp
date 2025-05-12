@@ -108,7 +108,7 @@ void LayerController::showOrHideAllLayer(bool show) {
     fireLayerVisibilityChanged();
 }
 
-void LayerController::addNewLayer() {
+void LayerController::addNewLayer(bool belowCurrentLayer) {
     control->clearSelectionEndText();
     PageRef p = getCurrentPage();
     if (!p) {
@@ -116,7 +116,8 @@ void LayerController::addNewLayer() {
     }
 
     auto* l = new Layer();
-    auto layerPos = p->getSelectedLayerId();
+    xoj_assert(p->getSelectedLayerId() > 0);
+    auto layerPos = belowCurrentLayer ? p->getSelectedLayerId() - 1 : p->getSelectedLayerId();
     p->insertLayer(l, layerPos);
 
     control->getUndoRedoHandler()->addUndoAction(std::make_unique<InsertLayerUndoAction>(this, p, l, layerPos));

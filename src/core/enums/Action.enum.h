@@ -155,7 +155,8 @@ enum class Action : size_t {
     // Layer handling
     LAYER_SHOW_ALL,
     LAYER_HIDE_ALL,
-    LAYER_NEW,
+    LAYER_NEW_ABOVE_CURRENT,
+    LAYER_NEW_BELOW_CURRENT,
     LAYER_COPY,
     LAYER_MOVE_UP,
     LAYER_MOVE_DOWN,
