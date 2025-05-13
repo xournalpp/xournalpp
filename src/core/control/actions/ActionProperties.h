@@ -967,8 +967,13 @@ struct ActionProperties<Action::LAYER_HIDE_ALL> {
 };
 
 template <>
-struct ActionProperties<Action::LAYER_NEW> {
-    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getLayerController()->addNewLayer(); }
+struct ActionProperties<Action::LAYER_NEW_ABOVE_CURRENT> {
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getLayerController()->addNewLayer(false); }
+};
+
+template <>
+struct ActionProperties<Action::LAYER_NEW_BELOW_CURRENT> {
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getLayerController()->addNewLayer(true); }
 };
 
 template <>

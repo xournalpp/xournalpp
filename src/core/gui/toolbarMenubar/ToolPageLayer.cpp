@@ -175,7 +175,8 @@ static GtkBox* makePopoverContent() {
     addSpecialButton(box, _("Show all"), Action::LAYER_SHOW_ALL);
     addSpecialButton(box, _("Hide all"), Action::LAYER_HIDE_ALL);
     gtk_box_append(box, gtk_separator_new(GTK_ORIENTATION_HORIZONTAL));
-    addSpecialButton(box, _("Create new layer"), Action::LAYER_NEW);
+    addSpecialButton(box, _("Add a layer above the active layer"), Action::LAYER_NEW_ABOVE_CURRENT);
+    addSpecialButton(box, _("Add a layer below the active layer"), Action::LAYER_NEW_BELOW_CURRENT);
     gtk_box_append(box, gtk_separator_new(GTK_ORIENTATION_HORIZONTAL));
     gtk_widget_show_all(GTK_WIDGET(box));
     return box;
