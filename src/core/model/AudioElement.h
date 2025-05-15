@@ -33,9 +33,6 @@ public:
     void setAudioFilename(fs::path fn);
     auto getAudioFilename() const -> fs::path const&;
 
-    virtual bool intersects(double x, double y, double halfSize) const = 0;
-    virtual bool intersects(double x, double y, double halfSize, double* gap) const = 0;
-
 protected:
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;

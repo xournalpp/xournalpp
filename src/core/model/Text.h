@@ -59,9 +59,6 @@ public:
      */
     Text* clone() const override;
 
-    bool intersects(double x, double y, double halfEraserSize) const override;
-    bool intersects(double x, double y, double halfEraserSize, double* gap) const override;
-
 public:
     // Serialize interface
     void serialize(ObjectOutputStream& out) const override;

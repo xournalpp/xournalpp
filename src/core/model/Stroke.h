@@ -137,8 +137,12 @@ public:
     const LineStyle& getLineStyle() const;
     void setLineStyle(const LineStyle& style);
 
-    bool intersects(double x, double y, double halfEraserSize) const override;
-    bool intersects(double x, double y, double halfEraserSize, double* gap) const override;
+    bool intersects(double x, double y, double halfEraserSize) const;
+    /**
+     * Computes the actual distance between (x,y) and the stroke, taking thickness into account
+     * If (x,y) is within the painted area corresponding to the stroke, the return value will be 0.
+     */
+    double distanceTo(double x, double y) const override;
 
     /**
      * @brief Find the parameters within a certain interval corresponding to the points where the stroke crosses in
