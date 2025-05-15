@@ -258,7 +258,12 @@ public:
     /**
      * If the user is currently moving the selection.
      */
-    bool isMoving();
+    bool isMoving() const;
+
+    /**
+     * If the user started pressing the delete button
+     */
+    bool isDeleting() const;
 
     void copySelection();
 

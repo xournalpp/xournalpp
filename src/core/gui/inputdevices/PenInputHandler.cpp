@@ -350,6 +350,7 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
     GtkXournal* xournal = inputContext->getXournal();
     XournalppCursor* cursor = xournal->view->getCursor();
     ToolHandler* toolHandler = inputContext->getToolHandler();
+    EditSelection* selection = xournal->view->getSelection();
 
     cursor->setMouseDown(false);
 
@@ -368,8 +369,10 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
             const bool noMovement = dist < tapMaxDistance * dpmm;
             const bool fastEnoughTap = event.timestamp - this->lastActionStartTimeStamp < tapMaxDuration;
             const bool notAnAftershock = event.timestamp - this->lastActionEndTimeStamp > filterRepetitionTime;
+            // Tapping/Clicking in the selection delete button should still delete the selection
+            const bool notInSelectionDeleteButton = !selection || !selection->isDeleting();
 
-            if (noMovement && fastEnoughTap && notAnAftershock) {
+            if (noMovement && fastEnoughTap && notAnAftershock && notInSelectionDeleteButton) {
                 // Cancel the sequence and trigger the necessary action
                 XojPageView* pageUnderTap =
                         this->sequenceStartPage ? this->sequenceStartPage : getPageAtCurrentPosition(event);
@@ -387,9 +390,8 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
     }
     this->lastActionEndTimeStamp = event.timestamp;
 
-    EditSelection* sel = xournal->view->getSelection();
-    if (sel) {
-        sel->mouseUp();
+    if (selection) {
+        selection->mouseUp();
     }
 
     // Selections and single-page elements will always work on one page so we need to handle them differently
