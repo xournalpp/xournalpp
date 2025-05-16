@@ -743,7 +743,10 @@ void EditSelection::copySelection() {
 /**
  * If the selection should moved (or rescaled)
  */
-auto EditSelection::isMoving() -> bool { return this->mouseDownType != CURSOR_SELECTION_NONE; }
+auto EditSelection::isMoving() const -> bool { return this->mouseDownType != CURSOR_SELECTION_NONE; }
+
+auto EditSelection::isDeleting() const -> bool { return this->mouseDownType == CURSOR_SELECTION_DELETE; }
+
 
 /**
  * Move the selection
