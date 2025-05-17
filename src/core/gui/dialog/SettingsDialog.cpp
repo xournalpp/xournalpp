@@ -103,17 +103,17 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                              this);
 
 
-    g_signal_connect_swapped(
-            builder.get("btTestEnable"), "clicked", G_CALLBACK(+[](SettingsDialog* self) {
-                Util::systemWithMessage(gtk_entry_get_text(GTK_ENTRY(self->builder.get("txtEnableTouchCommand"))));
-            }),
-            this);
+    g_signal_connect_swapped(builder.get("btTestEnable"), "clicked", G_CALLBACK(+[](SettingsDialog* self) {
+                                 Util::systemWithMessage(gtk_editable_get_text(
+                                         GTK_EDITABLE(self->builder.get("txtEnableTouchCommand"))));
+                             }),
+                             this);
 
-    g_signal_connect_swapped(
-            builder.get("btTestDisable"), "clicked", G_CALLBACK(+[](SettingsDialog* self) {
-                Util::systemWithMessage(gtk_entry_get_text(GTK_ENTRY(self->builder.get("txtDisableTouchCommand"))));
-            }),
-            this);
+    g_signal_connect_swapped(builder.get("btTestDisable"), "clicked", G_CALLBACK(+[](SettingsDialog* self) {
+                                 Util::systemWithMessage(gtk_editable_get_text(
+                                         GTK_EDITABLE(self->builder.get("txtDisableTouchCommand"))));
+                             }),
+                             this);
 
     g_signal_connect_swapped(builder.get("cbAddVerticalSpace"), "toggled", G_CALLBACK(+[](SettingsDialog* self) {
                                  self->enableWithCheckbox("cbAddVerticalSpace", "spAddVerticalSpaceAbove");
@@ -405,10 +405,10 @@ void SettingsDialog::load() {
     gtk_combo_box_set_active(cbSidebarNumberingStyle, static_cast<int>(settings->getSidebarNumberingStyle()));
 
     GtkWidget* txtDefaultSaveName = builder.get("txtDefaultSaveName");
-    gtk_entry_set_text(GTK_ENTRY(txtDefaultSaveName), settings->getDefaultSaveName().c_str());
+    gtk_editable_set_text(GTK_EDITABLE(txtDefaultSaveName), settings->getDefaultSaveName().c_str());
 
     GtkWidget* txtDefaultPdfName = builder.get("txtDefaultPdfName");
-    gtk_entry_set_text(GTK_ENTRY(txtDefaultPdfName), settings->getDefaultPdfExportName().c_str());
+    gtk_editable_set_text(GTK_EDITABLE(txtDefaultPdfName), settings->getDefaultPdfExportName().c_str());
 
     gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(builder.get("fcAudioPath")),
                                         Util::toGFilename(settings->getAudioFolder()).c_str());
@@ -643,11 +643,11 @@ void SettingsDialog::load() {
 
     string cmd;
     touch.getString("cmdEnable", cmd);
-    gtk_entry_set_text(GTK_ENTRY(builder.get("txtEnableTouchCommand")), cmd.c_str());
+    gtk_editable_set_text(GTK_EDITABLE(builder.get("txtEnableTouchCommand")), cmd.c_str());
 
     cmd = "";
     touch.getString("cmdDisable", cmd);
-    gtk_entry_set_text(GTK_ENTRY(builder.get("txtDisableTouchCommand")), cmd.c_str());
+    gtk_editable_set_text(GTK_EDITABLE(builder.get("txtDisableTouchCommand")), cmd.c_str());
 
     int timeoutMs = 1000;
     touch.getInt("timeout", timeoutMs);
@@ -886,8 +886,8 @@ void SettingsDialog::save() {
     settings->setPreloadPagesBefore(preloadPagesBefore);
     settings->setEagerPageCleanup(getCheckbox("cbEagerPageCleanup"));
 
-    settings->setDefaultSaveName(gtk_entry_get_text(GTK_ENTRY(builder.get("txtDefaultSaveName"))));
-    settings->setDefaultPdfExportName(gtk_entry_get_text(GTK_ENTRY(builder.get("txtDefaultPdfName"))));
+    settings->setDefaultSaveName(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultSaveName"))));
+    settings->setDefaultPdfExportName(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultPdfName"))));
     // Todo(fabian): use Util::fromGFilename!
     auto file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(builder.get("fcAudioPath")));
     auto path = Util::fromGFile(file);
@@ -1000,8 +1000,8 @@ void SettingsDialog::save() {
         default:
             touch.setString("method", "auto");
     }
-    touch.setString("cmdEnable", gtk_entry_get_text(GTK_ENTRY(builder.get("txtEnableTouchCommand"))));
-    touch.setString("cmdDisable", gtk_entry_get_text(GTK_ENTRY(builder.get("txtDisableTouchCommand"))));
+    touch.setString("cmdEnable", gtk_editable_get_text(GTK_EDITABLE(builder.get("txtEnableTouchCommand"))));
+    touch.setString("cmdDisable", gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDisableTouchCommand"))));
 
     touch.setInt(
             "timeout",

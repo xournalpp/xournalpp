@@ -176,3 +176,13 @@ GtkWidget* gtk_list_box_row_get_child(GtkListBoxRow* row) { return gtk_bin_get_c
 
 /**** GtkEventController ****/
 GdkEvent* gtk_event_controller_get_current_event(GtkEventController*) { return gtk_get_current_event(); }
+
+/**** GtkEditable ****/
+const char* gtk_editable_get_text(GtkEditable* e) {
+    xoj_assert(GTK_IS_ENTRY(e));
+    return gtk_entry_get_text(GTK_ENTRY(e));
+}
+void gtk_editable_set_text(GtkEditable* e, const char* text) {
+    xoj_assert(GTK_IS_ENTRY(e));
+    return gtk_entry_set_text(GTK_ENTRY(e), text);
+}

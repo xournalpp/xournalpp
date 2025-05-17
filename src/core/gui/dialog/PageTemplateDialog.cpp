@@ -44,8 +44,8 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
 
     // Needs to be initialized after this->window
     pageTypeSelectionMenu = std::make_unique<PageTypeSelectionPopoverGridOnly>(types, settings, this);
-    gtk_menu_button_set_popup(GTK_MENU_BUTTON(builder.get("btBackgroundDropdown")),
-                              pageTypeSelectionMenu->getPopover());
+    gtk_menu_button_set_popover(GTK_MENU_BUTTON(builder.get("btBackgroundDropdown")),
+                                pageTypeSelectionMenu->getPopover());
 
     pageSizeLabel = GTK_LABEL(builder.get("lbPageSize"));
     backgroundTypeLabel = GTK_LABEL(builder.get("lbBackgroundType"));

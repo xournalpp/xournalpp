@@ -94,3 +94,7 @@ GtkWidget* gtk_list_box_row_get_child(GtkListBoxRow* row);
 
 /**** GtkEventController ****/
 GdkEvent* gtk_event_controller_get_current_event(GtkEventController*);
+
+/**** GtkEditable ****/
+const char* gtk_editable_get_text(GtkEditable* editable);
+void gtk_editable_set_text(GtkEditable* editable, const char* text);
