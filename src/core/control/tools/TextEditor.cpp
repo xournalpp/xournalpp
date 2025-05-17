@@ -871,7 +871,7 @@ void TextEditor::resetImContext() {
 void TextEditor::blinkCallback(TextEditor* te) {
     te->cursorVisible = !te->cursorVisible;
     auto time = te->cursorVisible ? te->cursorBlinkingTimeOn : te->cursorBlinkingTimeOff;
-    te->blinkTimer = gdk_threads_add_timeout(time, xoj::util::wrap_for_once_v<blinkCallback>, te);
+    te->blinkTimer = g_timeout_add(time, xoj::util::wrap_for_once_v<blinkCallback>, te);
 
     Range dirtyRange = te->cursorBox;
     dirtyRange.translate(te->textElement->getX(), te->textElement->getY());
