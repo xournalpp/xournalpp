@@ -77,7 +77,7 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, ExportGraphicsForma
     // and sets the sensitivity of the OK button to FALSE. These actions are
     // reversed when the text form contains a valid page range.
     auto changedHandler = G_CALLBACK(+[](GtkEditable* txtPages, ExportDialog* self) {
-        const std::string text_form(gtk_editable_get_chars(txtPages, 0, -1));
+        const std::string text_form(gtk_editable_get_text(txtPages));
         auto btOk = self->builder.get("btOk");
         try {
             ElementRange::parse(text_form, self->pageCount);
@@ -147,7 +147,8 @@ void ExportDialog::onSuccessCallback(ExportDialog* self) {
         GtkWidget* rdRangePages = self->builder.get("rdRangePages");
 
         if (gtk_check_button_get_active(GTK_CHECK_BUTTON(rdRangePages))) {
-            return ElementRange::parse(gtk_entry_get_text(GTK_ENTRY(self->builder.get("txtPages"))), self->pageCount);
+            return ElementRange::parse(gtk_editable_get_text(GTK_EDITABLE(self->builder.get("txtPages"))),
+                                       self->pageCount);
         }
         if (gtk_check_button_get_active(GTK_CHECK_BUTTON(rdRangeCurrent))) {
             PageRangeVector range;
