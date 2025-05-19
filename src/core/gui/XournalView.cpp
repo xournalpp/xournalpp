@@ -40,6 +40,7 @@
 #include "util/Rectangle.h"                      // for Rectangle
 #include "util/Util.h"                           // for npos
 #include "util/glib_casts.h"                     // for wrap_v
+#include "util/gtk4_helper.h"                    // for gtk_scrolled_window_set_child
 #include "util/safe_casts.h"                     // for round_cast
 
 #include "Layout.h"           // for Layout
@@ -61,7 +62,7 @@ std::pair<size_t, size_t> XournalView::preloadPageBounds(size_t page, size_t max
     return {lower, upper};
 }
 
-XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling):
+XournalView::XournalView(GtkScrolledWindow* parent, Control* control, ScrollHandling* scrollHandling):
         scrollHandling(scrollHandling), control(control) {
     Document* doc = control->getDocument();
     doc->lock();
@@ -76,10 +77,18 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
     this->widget = gtk_xournal_new(this, inputContext);
     g_object_ref_sink(this->widget);  // take ownership without increasing the ref count
 
-    gtk_container_add(GTK_CONTAINER(parent), this->widget);
-    gtk_widget_show(this->widget);
+    gtk_scrolled_window_set_child(parent, this->widget);
 
-    g_signal_connect(getWidget(), "realize", G_CALLBACK(onRealized), this);
+
+    g_signal_connect(getWidget(), "realize", G_CALLBACK(+[](GtkWidget* widget, gpointer) {
+                         // Disable event compression
+                         if (gtk_widget_get_realized(widget)) {
+                             gdk_window_set_event_compression(gtk_widget_get_window(widget), false);
+                         } else {
+                             g_warning("could not disable event compression");
+                         }
+                     }),
+                     nullptr);
 
     this->repaintHandler = std::make_unique<RepaintHandler>(this);
     this->handRecognition = std::make_unique<HandRecognition>(this->widget, inputContext, control->getSettings());
@@ -104,7 +113,7 @@ XournalView::~XournalView() {
 
 auto XournalView::clearMemoryTimer(XournalView* widget) -> gboolean {
     widget->cleanupBufferCache();
-    return true;
+    return G_SOURCE_CONTINUE;
 }
 
 auto XournalView::cleanupBufferCache() -> void {
@@ -327,15 +336,6 @@ auto XournalView::onKeyReleaseEvent(const KeyEvent& event) -> bool {
     }
 
     return false;
-}
-
-void XournalView::onRealized(GtkWidget* widget, XournalView* view) {
-    // Disable event compression
-    if (gtk_widget_get_realized(view->getWidget())) {
-        gdk_window_set_event_compression(gtk_widget_get_window(view->getWidget()), false);
-    } else {
-        g_warning("could not disable event compression");
-    }
 }
 
 void XournalView::onSettingsChanged() {

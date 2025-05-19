@@ -47,7 +47,7 @@ class Rectangle;
 
 class XournalView: public DocumentListener, public ZoomListener {
 public:
-    XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling);
+    XournalView(GtkScrolledWindow* parent, Control* control, ScrollHandling* scrollHandling);
     ~XournalView() override;
 
 public:
@@ -150,8 +150,6 @@ public:
 public:
     bool onKeyPressEvent(const KeyEvent& event);
     bool onKeyReleaseEvent(const KeyEvent& event);
-
-    static void onRealized(GtkWidget* widget, XournalView* view);
 
     void onSettingsChanged();
 

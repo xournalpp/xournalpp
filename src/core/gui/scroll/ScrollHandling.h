@@ -18,7 +18,7 @@ class Layout;
 class ScrollHandling {
 public:
     ScrollHandling(GtkAdjustment* adjHorizontal, GtkAdjustment* adjVertical);
-    ScrollHandling(GtkScrollable* scrollable);
+    ScrollHandling(GtkScrolledWindow* scrollable);
     ~ScrollHandling();
 
 public:
