@@ -7,8 +7,8 @@ ScrollHandling::ScrollHandling(GtkAdjustment* adjHorizontal, GtkAdjustment* adjV
         adjHorizontal(adjHorizontal), adjVertical(adjVertical) {}
 
 
-ScrollHandling::ScrollHandling(GtkScrollable* scrollable):
-        ScrollHandling(gtk_scrollable_get_hadjustment(scrollable), gtk_scrollable_get_vadjustment(scrollable)) {}
+ScrollHandling::ScrollHandling(GtkScrolledWindow* win):
+        ScrollHandling(gtk_scrolled_window_get_hadjustment(win), gtk_scrolled_window_get_vadjustment(win)) {}
 
 
 ScrollHandling::~ScrollHandling() = default;

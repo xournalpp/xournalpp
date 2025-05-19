@@ -295,13 +295,9 @@ void MainWindow::initXournalWidget() {
 
     gtk_box_append(GTK_BOX(get("boxContents")), winXournal);
 
-    GtkWidget* vpXournal = gtk_viewport_new(nullptr, nullptr);
+    scrollHandling = std::make_unique<ScrollHandling>(GTK_SCROLLED_WINDOW(winXournal));
 
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(winXournal), vpXournal);
-
-    scrollHandling = std::make_unique<ScrollHandling>(GTK_SCROLLABLE(vpXournal));
-
-    this->xournal = std::make_unique<XournalView>(vpXournal, control, scrollHandling.get());
+    this->xournal = std::make_unique<XournalView>(GTK_SCROLLED_WINDOW(winXournal), control, scrollHandling.get());
 
     control->getZoomControl()->initZoomHandler(this->window, winXournal, xournal.get(), control);
     gtk_widget_show_all(winXournal);
