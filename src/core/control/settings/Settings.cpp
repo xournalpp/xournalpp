@@ -735,7 +735,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 }
 
 void Settings::loadDeviceClasses() {
-    SElement& s = getCustomElement("deviceClasses");
+    SElement& s = getCustomElement("deviceClassesGTK4");
     for (auto device: s.children()) {
         SElement& deviceNode = device.second;
         int deviceClass = 0;
@@ -752,7 +752,7 @@ void Settings::loadDeviceClasses() {
 }
 
 void Settings::loadButtonConfig() {
-    SElement& s = getCustomElement("buttonConfig");
+    SElement& s = getCustomElement("buttonConfigGTK4");
 
     for (int i = 0; i < BUTTON_COUNT; i++) {
         SElement& e = s.child(buttonToString(static_cast<Button>(i)));
@@ -909,7 +909,7 @@ auto Settings::saveProperty(const gchar* key, const gchar* value, xmlNodePtr par
 }
 
 void Settings::saveDeviceClasses() {
-    SElement& s = getCustomElement("deviceClasses");
+    SElement& s = getCustomElement("deviceClassesGTK4");
 
     for (auto& device: inputDeviceClasses) {
         const std::string& name = device.first;
@@ -922,7 +922,7 @@ void Settings::saveDeviceClasses() {
 }
 
 void Settings::saveButtonConfig() {
-    SElement& s = getCustomElement("buttonConfig");
+    SElement& s = getCustomElement("buttonConfigGTK4");
     s.clear();
 
     for (int i = 0; i < BUTTON_COUNT; i++) {
