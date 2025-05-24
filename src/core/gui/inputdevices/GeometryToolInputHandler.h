@@ -35,7 +35,7 @@ struct KeyEvent;
  *
  * The touch handling part is adopted from the TouchInputHandler class
  */
-class GeometryToolInputHandler: public xoj::util::Listener<GeometryToolInputHandler> {
+class GeometryToolInputHandler {
 
 protected:
     /**
@@ -48,11 +48,6 @@ protected:
      *
      */
     GeometryToolController* controller;
-
-    double height;
-    double rotation = 0.;
-    double translationX;
-    double translationY;
 
     /**
      * @brief saves which devices are blocked, so they don't need to be handled
@@ -157,8 +152,7 @@ protected:
     virtual double getMaxHeight() const = 0;
 
 public:
-    explicit GeometryToolInputHandler(XournalView* xournalView, GeometryToolController* controller, double h, double tx,
-                                      double ty);
+    explicit GeometryToolInputHandler(XournalView* xournalView, GeometryToolController* controller);
     virtual ~GeometryToolInputHandler();
 
     bool handle(InputEvent const& event);
@@ -167,11 +161,4 @@ public:
 
     bool keyPressed(KeyEvent const& event);
     // bool keyReleased(KeyEvent const& event); // Implement if needed
-
-    /**
-     * Listener interface
-     */
-    static constexpr struct UpdateValuesRequest {
-    } UPDATE_VALUES = {};
-    void on(UpdateValuesRequest, double h, double rot, double tx, double ty);
 };

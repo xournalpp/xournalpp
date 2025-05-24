@@ -16,6 +16,7 @@
 #include "model/OverlayBase.h"
 #include "model/Stroke.h"
 #include "util/DispatchPool.h"
+#include "util/Point.h"
 
 constexpr static double HALF_CM = 14.17;
 constexpr static double CM = 2. * HALF_CM;
@@ -57,10 +58,8 @@ public:
     double getHeight() const;
     void setRotation(double rotation);
     double getRotation() const;
-    void setTranslationX(double x);
-    double getTranslationX() const;
-    void setTranslationY(double y);
-    double getTranslationY() const;
+    const xoj::util::Point<double>& getOrigin() const;
+    void setOrigin(const xoj::util::Point<double>& o);
 
     cairo_matrix_t getMatrix() const;
 
@@ -91,19 +90,13 @@ protected:
     double rotation;
 
     /**
-     * @brief the x-coordinate (in pt) of the rotation center
+     * @brief the tool's origin
      */
-    double translationX;
-
-    /**
-     * @brief the y-coordinate (in pt) of the rotation center
-     */
-    double translationY;
+    xoj::util::Point<double> origin;
 
     Stroke* stroke = nullptr;
 
     std::shared_ptr<xoj::util::DispatchPool<xoj::view::GeometryToolView>> viewPool;
-    std::shared_ptr<xoj::util::DispatchPool<GeometryToolInputHandler>> handlerPool;
 
     /**
      * @brief Bounding box of the geometry tool and stroke after its last update

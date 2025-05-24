@@ -391,16 +391,15 @@ bool Control::toggleGeometryTool() {
     view->addOverlayView(std::make_unique<ViewClass>(tool, view, zoom));
     this->geometryTool = std::unique_ptr<GeometryTool>(tool);
     this->geometryToolController = std::make_unique<ControllerClass>(view, tool);
-    std::unique_ptr<InputHandlerClass> geometryToolInputHandler =
+    auto geometryToolInputHandler =
             std::make_unique<InputHandlerClass>(this->win->getXournal(), geometryToolController.get());
-    geometryToolInputHandler->registerToPool(tool->getHandlerPool());
     Range range = view->getVisiblePart();
     if (range.isValid()) {
         double originX = (range.minX + range.maxX) * .5;
         double originY = (range.minY + range.maxY) * .5;
-        geometryToolController->translate(originX, originY);
+        geometryToolController->translate({originX, originY});
     } else {
-        geometryToolController->translate(view->getWidth() * .5, view->getHeight() * .5);
+        geometryToolController->translate({view->getWidth() * .5, view->getHeight() * .5});
     }
     xournal->input->setGeometryToolInputHandler(std::move(geometryToolInputHandler));
     geometryTool->notify();

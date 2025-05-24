@@ -27,7 +27,7 @@ void GeometryToolView::draw(cairo_t* cr) const {
         mask = createMask(cr);
         this->drawGeometryTool(mask.get());
     }
-    cairo_translate(cr, geometryTool->getTranslationX(), geometryTool->getTranslationY());
+    cairo_translate(cr, geometryTool->getOrigin().x, geometryTool->getOrigin().y);
     cairo_rotate(cr, geometryTool->getRotation());
     mask.paintTo(cr);
     cairo_restore(cr);

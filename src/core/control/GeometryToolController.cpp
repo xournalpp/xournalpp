@@ -21,40 +21,41 @@ GeometryToolController::GeometryToolController(XojPageView* view, GeometryTool* 
 
 GeometryToolController::~GeometryToolController() = default;
 
-void GeometryToolController::translate(double x, double y) {
-    geometryTool->setTranslationX(geometryTool->getTranslationX() + x);
-    geometryTool->setTranslationY(geometryTool->getTranslationY() + y);
+void GeometryToolController::translate(const xoj::util::Point<double>& offset) {
+    geometryTool->setOrigin(geometryTool->getOrigin() + offset);
     geometryTool->notify();
 }
 
-void GeometryToolController::rotate(double da, double cx, double cy) {
+void GeometryToolController::rotate(double da, const xoj::util::Point<double>& center) {
+    const auto offset = geometryTool->getOrigin() - center;
+    geometryTool->setOrigin(center + xoj::util::Point<double>(offset.x * std::cos(da) - offset.y * std::sin(da),
+                                                              offset.x * std::sin(da) + offset.y * std::cos(da)));
+    this->rotate(da);
+}
+void GeometryToolController::rotate(double da) {
     geometryTool->setRotation(geometryTool->getRotation() + da);
-    const auto offsetX = geometryTool->getTranslationX() - cx;
-    const auto offsetY = geometryTool->getTranslationY() - cy;
-    const auto mx = offsetX * cos(da) - offsetY * sin(da);
-    const auto my = offsetX * sin(da) + offsetY * cos(da);
-    geometryTool->setTranslationX(cx + mx);
-    geometryTool->setTranslationY(cy + my);
     geometryTool->notify();
 }
 
-void GeometryToolController::scale(double f, double cx, double cy) {
+
+void GeometryToolController::scale(double f, const xoj::util::Point<double>& center) {
+    geometryTool->setOrigin(center + (geometryTool->getOrigin() - center) * f);
+    this->scale(f);
+}
+void GeometryToolController::scale(double f) {
     geometryTool->setHeight(geometryTool->getHeight() * f);
-    const auto offsetX = geometryTool->getTranslationX() - cx;
-    const auto offsetY = geometryTool->getTranslationY() - cy;
-    const auto mx = offsetX * f;
-    const auto my = offsetY * f;
-    geometryTool->setTranslationX(cx + mx);
-    geometryTool->setTranslationY(cy + my);
     geometryTool->notify(true);
 }
 
-void GeometryToolController::markPoint(double x, double y) {
+
+void GeometryToolController::markOrigin() {
     const auto control = view->getXournal()->getControl();
     const auto h = control->getToolHandler();
     auto cross = std::make_unique<Stroke>();
     cross->setWidth(h->getToolThickness(TOOL_PEN)[TOOL_SIZE_FINE]);
     cross->setColor(h->getTool(TOOL_PEN).getColor());
+    const double x = geometryTool->getOrigin().x;
+    const double y = geometryTool->getOrigin().y;
     cross->addPoint(Point(x + MARK_SIZE, y + MARK_SIZE));
     cross->addPoint(Point(x - MARK_SIZE, y - MARK_SIZE));
     cross->addPoint(Point(x, y));
