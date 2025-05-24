@@ -340,6 +340,7 @@ void SettingsDialog::showStabilizerPreprocessorOptions(StrokeStabilizer::Preproc
 void SettingsDialog::load() {
     loadCheckbox("cbSettingPresureSensitivity", settings->isPressureSensitivity());
     loadCheckbox("cbEnableZoomGestures", settings->isZoomGesturesEnabled());
+    loadCheckbox("cbUndoGesture", settings->isUndoGestureEnabled());
     loadCheckbox("cbShowSidebarRight", settings->isSidebarOnRight());
     loadCheckbox("cbShowScrollbarLeft", settings->isScrollbarOnLeft());
     loadCheckbox("cbAutoloadMostRecent", settings->isAutoloadMostRecent());
@@ -711,6 +712,7 @@ void SettingsDialog::save() {
     settings->setMinimumPressure(getSlider("scaleMinimumPressure"));
     settings->setPressureMultiplier(getSlider("scalePressureMultiplier"));
     settings->setZoomGesturesEnabled(getCheckbox("cbEnableZoomGestures"));
+    settings->setUndoGestureEnabled(getCheckbox("cbUndoGesture"));
     settings->setSidebarOnRight(getCheckbox("cbShowSidebarRight"));
     settings->setScrollbarOnLeft(getCheckbox("cbShowScrollbarLeft"));
     settings->setAutoloadMostRecent(getCheckbox("cbAutoloadMostRecent"));
