@@ -3,10 +3,10 @@
 #include <algorithm>  // for max, max_element
 #include <cmath>      // for pow, M_PI, cos, sin
 #include <cstddef>    // for size_t
-#include <list>       // for list, operator!=
 #include <memory>     // for allocator_traits<>...
 #include <optional>   // for optional
 #include <utility>    // for move
+#include <vector>     // for vector
 
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_Escape
 
@@ -23,6 +23,7 @@
 #include "model/SplineSegment.h"                 // for SplineSegment
 #include "model/Stroke.h"                        // for Stroke
 #include "model/XojPage.h"                       // for XojPage
+#include "model/path/Spline.h"                   // for Spline
 #include "undo/InsertUndoAction.h"               // for InsertUndoAction
 #include "undo/UndoRedoHandler.h"                // for UndoRedoHandler
 #include "util/Assert.h"                         // for xoj_assert
@@ -266,8 +267,16 @@ void SplineHandler::finalizeSpline() {
         return;
     }
 
-    stroke->setPointVector(linearizeSpline(data));
-    stroke->freeUnusedPointItems();
+    // Reserve the right size
+    std::shared_ptr<Spline> spline = std::make_shared<Spline>(this->knots[0], this->knots.size() - 1);
+    for (size_t i = 0; i < this->knots.size() - 1; i++) {
+        Point cp1 = Point(this->knots[i].x + this->tangents[i].x, this->knots[i].y + this->tangents[i].y);
+        Point cp2 =
+                Point(this->knots[i + 1].x - this->tangents[i + 1].x, this->knots[i + 1].y - this->tangents[i + 1].y);
+        spline->addCubicSegment(cp1, cp2, this->knots[i + 1]);
+    }
+    xoj_assert(spline->nbSegments() == this->knots.size() - 1);
+    stroke->setPath(std::move(spline));
 
     Layer* layer = page->getSelectedLayer();
 
@@ -381,25 +390,4 @@ auto SplineHandler::getData() const -> std::optional<Data> {
     }
     return Data{this->knots, this->tangents, this->currPoint, this->knotsAttractionRadius,
                 this->inFirstKnotAttractionZone};
-}
-
-auto SplineHandler::linearizeSpline(const SplineHandler::Data& data) -> std::vector<Point> {
-    xoj_assert(!data.knots.empty() && data.knots.size() == data.tangents.size());
-
-    std::vector<Point> result;
-
-    auto itKnot1 = data.knots.begin();
-    auto itKnot2 = std::next(itKnot1);
-    auto itTgt1 = data.tangents.begin();
-    auto itTgt2 = std::next(itTgt1);
-    auto end = data.knots.end();
-    for (; itKnot2 != end; ++itKnot1, ++itKnot2, ++itTgt1, ++itTgt2) {
-        SplineSegment seg(*itKnot1, Point(itKnot1->x + itTgt1->x, itKnot1->y + itTgt1->y),
-                          Point(itKnot2->x - itTgt2->x, itKnot2->y - itTgt2->y), *itKnot2);
-        auto pts = seg.toPointSequence();
-        std::move(pts.begin(), pts.end(), std::back_inserter(result));
-    }
-    result.emplace_back(data.knots.back());
-
-    return result;
 }

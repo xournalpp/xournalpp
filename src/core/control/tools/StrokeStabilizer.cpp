@@ -1,9 +1,9 @@
 #include "StrokeStabilizer.h"
 
 #include <algorithm>  // for min
+#include <cmath>      // for hypot, sqrt, abs, exp
 #include <iterator>   // for begin, end
 #include <limits>     // for numeric_limits
-#include <list>       // for list, operator!=
 #include <numeric>    // for accumulate
 #include <vector>     // for vector
 
@@ -11,6 +11,7 @@
 #include "control/tools/StrokeStabilizerEnum.h"  // for Preprocessor, Averag...
 #include "model/SplineSegment.h"                 // for SplineSegment
 #include "model/Stroke.h"                        // for Stroke
+#include "model/path/PiecewiseLinearPath.h"
 
 /**
  * StrokeStabilizer::get
@@ -86,31 +87,29 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
     /**
      * Using the last two points of the stroke, draw a spline quadratic segment to the coordinates of ev.
      */
-    Stroke* stroke = strokeHandler->getStroke();
-    size_t pointCount = stroke->getPointCount();
-    if (pointCount <= 0) {
+    const Stroke& stroke = *strokeHandler->getStroke();
+    const Path& path = stroke.getPath();
+
+    if (path.empty()) {
         return;
     }
 
-    if (pointCount == 1) {
-        /**
-         * Draw a line segment
-         */
+    if (path.getType() == Path::SPLINE || path.nbSegments() == 0) {
         drawEvent(ev);
         return;
     }
 
+    xoj_assert(path.getData().size() >= 2);
     /**
      * Draw a quadratic spline segment, with first tangent vector parallel to AB
      */
-    Point B = stroke->getPoint(pointCount - 1);
-    const Point A = stroke->getPoint(pointCount - 2);
+    Point B = path.getLastKnot();
+    const Point A = path.getData()[path.getData().size() - 2];
+    const bool usePressure = ev.pressure != Point::NO_PRESSURE && stroke.getToolType().isPressureSensitive();
+    const Point C(ev.x / zoom, ev.y / zoom, usePressure ? ev.pressure * stroke.getWidth() : Point::NO_PRESSURE);
 
-    const bool usePressure = ev.pressure != Point::NO_PRESSURE && stroke->getToolType().isPressureSensitive();
-    const Point C(ev.x / zoom, ev.y / zoom, usePressure ? ev.pressure * stroke->getWidth() : Point::NO_PRESSURE);
-
-    MathVect vAB = {B.x - A.x, B.y - A.y};
-    MathVect vBC = {C.x - B.x, C.y - B.y};
+    MathVect2 vAB(A, B);
+    MathVect2 vBC(B, C);
     const double squaredNormBC = vBC.dx * vBC.dx + vBC.dy * vBC.dy;
     const double normBC = std::sqrt(squaredNormBC);
     const double normAB = vAB.norm();
@@ -128,16 +127,7 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
      * The first argument of std::min would give a symmetric quadratic spline segment.
      * The std::min and its second argument ensure the spline segment stays reasonably close to its nodes
      */
-    double distance = std::min(std::abs(squaredNormBC * normAB / (2 * MathVect::scalarProduct(vAB, vBC))), normBC);
-
-    /**
-     * Rebalance the pressure values.
-     */
-    if (usePressure) {
-        double coeff = normBC / 2 + distance;  // Very rough estimation of the spline's length
-        B.z = (coeff * A.z + normAB * C.z) / (normAB + coeff);
-        stroke->setLastPressure(B.z);
-    }
+    double distance = std::min(std::abs(squaredNormBC * normAB / (2 * MathVect2::scalarProduct(vAB, vBC))), normBC);
 
     // Quadratic control point
     Point Q = B.lineTo(A, -distance);
@@ -152,12 +142,12 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
     /**
      * TODO Add support for spline segments in Stroke and replace this point sequence by a single spline segment
      */
-    std::list<Point> pointsToPaint = spline.toPointSequence(usePressure);
+    std::vector<Point> pointsToPaint;
+    spline.toPoints(pointsToPaint);
 
-    pointsToPaint.pop_front();  // Point B has already been painted
-
-    for (auto&& point: pointsToPaint) {
-        strokeHandler->drawSegmentTo(point);
+    // Do not add the first point (B): it is already painted
+    for (auto it = pointsToPaint.cbegin() + 1; it != pointsToPaint.cend(); ++it) {
+        strokeHandler->drawSegmentTo(*it);
     }
     strokeHandler->drawSegmentTo(C);
 }
@@ -178,7 +168,7 @@ void StrokeStabilizer::Deadzone::processEvent(const PositionInputData& pos) {
      */
     lastEvent = Event(pos);
 
-    MathVect movement = {lastEvent.x - lastPaintedEvent.x, lastEvent.y - lastPaintedEvent.y};
+    MathVect2 movement = {lastEvent.x - lastPaintedEvent.x, lastEvent.y - lastPaintedEvent.y};
     double ratio = deadzoneRadius / movement.norm();
 
     if (ratio >= 1) {
@@ -190,7 +180,7 @@ void StrokeStabilizer::Deadzone::processEvent(const PositionInputData& pos) {
         return;
     }
 
-    if (cuspDetection && (MathVect::scalarProduct(movement, lastLiveDirection) < 0)) {
+    if (cuspDetection && (MathVect2::scalarProduct(movement, lastLiveDirection) < 0)) {
         /**
          * lastLiveDirection != 0 and the angle between movement and lastLiveDirection is greater than 90°
          * We have a clear change of direction. This is a cusp. Draw the entire cusp
@@ -206,12 +196,11 @@ void StrokeStabilizer::Deadzone::processEvent(const PositionInputData& pos) {
          * Paint the way back from the tip of the cusp
          * To do so, we create an artificial point between lastEvent and lastLiveEvent
          */
-        MathVect diff = {lastEvent.x - lastLiveEvent.x, lastEvent.y - lastLiveEvent.y};
+        MathVect2 diff = {lastEvent.x - lastLiveEvent.x, lastEvent.y - lastLiveEvent.y};
         double diffNorm = diff.norm();
         double coeff = deadzoneRadius / diffNorm;
 
-        lastLiveDirection.dx = coeff * diff.dx;
-        lastLiveDirection.dy = coeff * diff.dy;
+        lastLiveDirection = coeff * diff;
 
         lastPaintedEvent.x = lastEvent.x - lastLiveDirection.dx;
         lastPaintedEvent.y = lastEvent.y - lastLiveDirection.dy;
@@ -237,13 +226,11 @@ void StrokeStabilizer::Deadzone::processEvent(const PositionInputData& pos) {
 }
 
 void StrokeStabilizer::Deadzone::rebalanceStrokePressures() {
-    Stroke* stroke = strokeHandler->getStroke();
-    size_t pointCount = stroke->getPointCount();
-    if (pointCount >= 3) {
-        /**
-         * Smoothen a little bit the pressure variations
-         */
-        stroke->setSecondToLastPressure((stroke->getPoint(pointCount - 2).z + stroke->getPoint(pointCount - 3).z) / 2);
+    if (strokeHandler->path) {  // Live spline approximation does not need any rebalancing
+        PiecewiseLinearPath& path = *strokeHandler->path;
+        if (auto n = path.nbSegments(); n >= 2) {
+            path.setSecondToLastPressure((path.getPoint(n - 1).z + path.getPoint(n - 2).z) / 2);
+        }
     }
 }
 
@@ -266,11 +253,10 @@ void StrokeStabilizer::Inertia::processEvent(const PositionInputData& pos) {
     /**
      * Compute the acceleration due to the spring action
      */
-    MathVect springAcceleration = {(lastEvent.x - lastPaintedEvent.x) / mass,
-                                   (lastEvent.y - lastPaintedEvent.y) / mass};
+    MathVect2 springAcceleration = {(lastEvent.x - lastPaintedEvent.x) / mass,
+                                    (lastEvent.y - lastPaintedEvent.y) / mass};
 
-    speed.dx = speed.dx * oneMinusDrag + springAcceleration.dx;
-    speed.dy = speed.dy * oneMinusDrag + springAcceleration.dy;
+    speed = oneMinusDrag * speed + springAcceleration;
 
     Event ev(lastPaintedEvent.x + speed.dx, lastPaintedEvent.y + speed.dy, lastEvent.pressure);
 
@@ -278,13 +264,11 @@ void StrokeStabilizer::Inertia::processEvent(const PositionInputData& pos) {
 }
 
 void StrokeStabilizer::Inertia::rebalanceStrokePressures() {
-    Stroke* stroke = strokeHandler->getStroke();
-    size_t pointCount = stroke->getPointCount();
-    if (pointCount >= 3) {
-        /**
-         * Smoothen a little bit the pressure variations
-         */
-        stroke->setSecondToLastPressure((stroke->getPoint(pointCount - 2).z + stroke->getPoint(pointCount - 3).z) / 2);
+    if (strokeHandler->path) {  // Live spline approximation does not need any rebalancing
+        PiecewiseLinearPath& path = *strokeHandler->path;
+        if (auto n = path.nbSegments(); n >= 2) {
+            path.setSecondToLastPressure((path.getPoint(n - 1).z + path.getPoint(n - 2).z) / 2);
+        }
     }
 }
 

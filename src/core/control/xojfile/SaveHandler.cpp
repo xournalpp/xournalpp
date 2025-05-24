@@ -37,7 +37,10 @@
 #include "util/PlaceholderString.h"            // for PlaceholderString
 #include "util/i18n.h"                         // for FS, _F
 
+#include "FormatConstants.h"
 #include "config.h"  // for FILE_FORMAT_VERSION
+
+using namespace Format;
 
 SaveHandler::SaveHandler() {
     this->firstPdfPageVisited = false;
@@ -116,15 +119,29 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, const Stroke* s) {
 
     stroke->setAttrib("color", getColorStr(s->getColor(), alpha).c_str());
 
-    const auto& pts = s->getPointVector();
+    const Path& path = s->getPath();
+    switch (path.getType()) {
+        case Path::SPLINE:
+            stroke->setAttrib(PATH::ATTRIBUTE_NAME, PATH::TYPE_SPLINE);
+            break;
+        case Path::PIECEWISE_LINEAR:
+            stroke->setAttrib(PATH::ATTRIBUTE_NAME, PATH::TYPE_PL);
+            break;
+        default:
+            g_warning("Unknown path type: %i", path.getType());
+    }
 
-    stroke->setPoints(pts);
+    const std::vector<Point>& pathData = path.getData();
+
+    stroke->setPoints(pathData);
 
     if (s->hasPressure()) {
         std::vector<double> values;
-        values.reserve(pts.size() + 1);
+        values.reserve(pathData.size() + 1);
         values.emplace_back(s->getWidth());
-        std::transform(pts.begin(), pts.end() - 1, std::back_inserter(values), [](const Point& p) { return p.z; });
+        // Only splines need to pressure value of the last point
+        auto end = std::prev(pathData.end(), path.getType() == Path::SPLINE ? 0 : 1);
+        std::transform(pathData.begin(), end, std::back_inserter(values), [](const Point& p) { return p.z; });
         stroke->setAttrib("width", std::move(values));
     } else {
         stroke->setAttrib("width", s->getWidth());

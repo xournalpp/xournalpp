@@ -12,8 +12,10 @@
 #pragma once
 
 #include <memory>
-class Stroke;
+
 class Inertia;
+class PiecewiseLinearPath;
+class Spline;
 
 class CircleRecognizer {
 private:
@@ -21,9 +23,8 @@ private:
     virtual ~CircleRecognizer();
 
 public:
-    static auto recognize(Stroke* s) -> std::unique_ptr<Stroke>;
+    static std::shared_ptr<Spline> recognize(const PiecewiseLinearPath& path);
 
 private:
-    static auto makeCircleShape(Stroke* originalStroke, Inertia& inertia) -> std::unique_ptr<Stroke>;
-    static auto scoreCircle(Stroke* s, Inertia& inertia) -> double;
+    static double scoreCircle(const PiecewiseLinearPath& path, Inertia& inertia);
 };

@@ -17,7 +17,6 @@
 
 #include "BaseShapeHandler.h"  // for BaseShapeHandler
 
-class Point;
 class Control;
 
 class RectangleHandler: public BaseShapeHandler {
@@ -27,5 +26,5 @@ public:
 
 private:
     auto createShape(bool isAltDown, bool isShiftDown, bool isControlDown)
-            -> std::pair<std::vector<Point>, Range> override;
+            -> std::pair<std::shared_ptr<Path>, Range> override;
 };

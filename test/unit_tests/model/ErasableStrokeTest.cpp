@@ -7,6 +7,7 @@
 #include "model/eraser/ErasableStroke.h"
 #include "model/eraser/ErasableStrokeOverlapTree.h"
 #include "model/eraser/PaddedBox.h"
+#include "model/path/PiecewiseLinearPath.h"
 #include "util/Rectangle.h"
 #include "util/SmallVector.h"
 
@@ -22,13 +23,12 @@ void assertRangesEq(const Range& r1, const Range& r2) {
 TEST(ErasableStroke, testOverlapTree) {
 
     // clang format off
-    std::vector<Point> testPath = {{0, 0},  {2, 2},  {5, 2}, {7, 4}, {3, 6}, {2, 8},
-                                   {5, 11}, {7, 10}, {7, 6}, {6, 7}, {4, 4}, {1, 3}};
+    auto testPath = std::make_shared<PiecewiseLinearPath>();
+    *testPath = {{0, 0}, {2, 2}, {5, 2}, {7, 4}, {3, 6}, {2, 8}, {5, 11}, {7, 10}, {7, 6}, {6, 7}, {4, 4}, {1, 3}};
     // clang format on
 
     Stroke stroke;
-    std::vector<Point>& strokePoints = const_cast<std::vector<Point>&>(stroke.getPointVector());
-    strokePoints.swap(testPath);
+    stroke.setPath(testPath);
 
     stroke.setWidth(2);
     stroke.setFill(-1);
@@ -81,69 +81,75 @@ TEST(ErasableStroke, testOverlapTree) {
 TEST(ErasableStroke, testGetStrokes) {
     std::array<Stroke, 3> strokes;
 
-    // Normal stroke
-    strokes[0].addPoint({0, 0, 2});
-    strokes[0].addPoint({2, 2, 2.5});
-    strokes[0].addPoint({5, 2, 3});
-    strokes[0].addPoint({7, 4, 2.5});
-    strokes[0].addPoint({3, 6, 2});
-    strokes[0].addPoint({2, 8, 1.5});
-    strokes[0].addPoint({5, 11, 1});
-    strokes[0].addPoint({7, 10, 1.5});
-    strokes[0].addPoint({7, 6, 2});
-    strokes[0].addPoint({6, 7, 2.5});
-    strokes[0].addPoint({4, 4, 3});
-    strokes[0].addPoint({1, 3});
-    strokes[0].setWidth(3);
-    strokes[0].setFill(-1);
-    strokes[0].setToolType(StrokeTool::PEN);
+    {  // Normal stroke
+        auto path = std::make_shared<PiecewiseLinearPath>(Point(0, 0, 2));
+        path->addLineSegmentTo(2, 2, 2.5);
+        path->addLineSegmentTo(5, 2, 3);
+        path->addLineSegmentTo(7, 4, 2.5);
+        path->addLineSegmentTo(3, 6, 2);
+        path->addLineSegmentTo(2, 8, 1.5);
+        path->addLineSegmentTo(5, 11, 1);
+        path->addLineSegmentTo(7, 10, 1.5);
+        path->addLineSegmentTo(7, 6, 2);
+        path->addLineSegmentTo(6, 7, 2.5);
+        path->addLineSegmentTo(4, 4, 3);
+        path->addLineSegmentTo(1, 3, 2);
+        strokes[0].setPath(path);
+        strokes[0].setWidth(3);
+        strokes[0].setFill(-1);
+        strokes[0].setToolType(StrokeTool::PEN);
+    }
 
-    // Closed stroke. Filled. Audio
-    strokes[1].addPoint({0, 0, 2});
-    strokes[1].addPoint({2, 2, 2.5});
-    strokes[1].addPoint({5, 2, 3});
-    strokes[1].addPoint({1, 4, 2.5});
-    strokes[1].addPoint({3, 6, 2});
-    strokes[1].addPoint({0, 0});
-    strokes[1].setWidth(3);
-    strokes[1].setFill(123);
-    strokes[1].setToolType(StrokeTool::PEN);
-    strokes[1].setAudioFilename("assets/bar.mp3");
+    {  // Closed stroke. Filled. Audio
+        auto path = std::make_shared<PiecewiseLinearPath>(Point(0, 0, 2));
+        path->addLineSegmentTo(2, 2, 2.5);
+        path->addLineSegmentTo(5, 2, 3);
+        path->addLineSegmentTo(1, 4, 2.5);
+        path->addLineSegmentTo(3, 6, 2);
+        path->addLineSegmentTo(0, 0, 1);
+        strokes[1].setPath(path);
+        strokes[1].setWidth(3);
+        strokes[1].setFill(123);
+        strokes[1].setToolType(StrokeTool::PEN);
+        strokes[1].setAudioFilename("assets/bar.mp3");
+    }
 
-    // Closed stroke. Highlighter.
-    strokes[2].addPoint({0, 0, 2});
-    strokes[2].addPoint({2, 2, 2.5});
-    strokes[2].addPoint({5, 2, 3});
-    strokes[2].addPoint({1, 4, 2.5});
-    strokes[2].addPoint({3, 6, 2});
-    strokes[2].addPoint({0, 0});
-    strokes[2].setWidth(3);
-    strokes[2].setFill(-1);
-    strokes[2].setToolType(StrokeTool::HIGHLIGHTER);
+    {  // Closed stroke. Highlighter.
+        auto path = std::make_shared<PiecewiseLinearPath>(Point(0, 0, 2));
+        path->addLineSegmentTo(2, 2, 2.5);
+        path->addLineSegmentTo(5, 2, 3);
+        path->addLineSegmentTo(1, 4, 2.5);
+        path->addLineSegmentTo(3, 6, 2);
+        path->addLineSegmentTo(0, 0, 1);
+        strokes[2].setPath(path);
+        strokes[2].setWidth(3);
+        strokes[2].setFill(-1);
+        strokes[2].setToolType(StrokeTool::HIGHLIGHTER);
+    }
 
     std::array<ErasableStroke, 3> erasables = {ErasableStroke(strokes[0]), ErasableStroke(strokes[1]),
                                                ErasableStroke(strokes[2])};
 
     std::array<bool, 3> areClosed = {false, true, true};
 
-    std::array<IntersectionParametersContainer, 3> fakeIntersections;
+    std::array<Path::IntersectionParametersContainer, 3> fakeIntersections;
     fakeIntersections[0] = {{1U, 0.5}, {2U, 0.5}, {3U, 0.5}, {4U, 0.5}};
     fakeIntersections[1] = {{1U, 0.5}, {2U, 0.5}, {3U, 0.5}, {4U, 0.5}};
     fakeIntersections[2] = {{0U, 0.0}, {2U, 0.5}, {3U, 0.5}, {4U, 1.0}};
 
     std::array<std::vector<std::vector<Point>>, 3> resultingPaths;
     resultingPaths[0] = std::vector<std::vector<Point>>(3);
-    resultingPaths[0][0] = {{0, 0, 2}, {2, 2, 2.5}, {3.5, 2}};
-    resultingPaths[0][1] = {{6, 3, 3}, {7, 4, 2.5}, {5, 5}};
-    resultingPaths[0][2] = {{2.5, 7, 2}, {2, 8, 1.5}, {5, 11, 1}, {7, 10, 1.5},
-                            {7, 6, 2},   {6, 7, 2.5}, {4, 4, 3},  {1, 3}};
+    resultingPaths[0][0] = {{0, 0, 2}, {2, 2, 2.5}, {3.5, 2, 2.75}};
+    resultingPaths[0][1] = {{6, 3, 2.75}, {7, 4, 2.5}, {5, 5, 2.25}};
+    resultingPaths[0][2] = {{2.5, 7, 1.75}, {2, 8, 1.5}, {5, 11, 1}, {7, 10, 1.5},
+                            {7, 6, 2},      {6, 7, 2.5}, {4, 4, 3},  {1, 3, 2}};
 
     resultingPaths[1] = std::vector<std::vector<Point>>(2);
-    resultingPaths[1][0] = {{1.5, 3, 2}, {0, 0, 2}, {2, 2, 2.5}, {3.5, 2}};
-    resultingPaths[1][1] = {{3, 3, 3}, {1, 4, 2.5}, {2, 5}};
+    resultingPaths[1][0] = {{1.5, 3, 1.5}, {0, 0, 2}, {2, 2, 2.5}, {3.5, 2, 2.75}};
+    resultingPaths[1][1] = {{3, 3, 2.75}, {1, 4, 2.5}, {2, 5, 2.25}};
 
     resultingPaths[2] = std::vector<std::vector<Point>>(1);
-    resultingPaths[2][0] = {{3, 3, 3}, {1, 4, 2.5}, {2, 5}};
+    resultingPaths[2][0] = {{3, 3, 2.75}, {1, 4, 2.5}, {2, 5, 2.25}};
 
     unsigned int i = 0;
     for (auto& erasable: erasables) {
@@ -158,7 +164,7 @@ TEST(ErasableStroke, testGetStrokes) {
             ASSERT_EQ(res[j]->getFill(), strokes[i].getFill());
             ASSERT_EQ(res[j]->getToolType(), strokes[i].getToolType());
             ASSERT_EQ(res[j]->getAudioFilename(), strokes[i].getAudioFilename());
-            const auto& pts1 = res[j]->getPointVector();
+            const auto& pts1 = res[j]->getPath().getData();
             const auto& pts2 = resultingPaths[i][j];
             ASSERT_EQ(pts1.size(), pts2.size());
             for (unsigned int k = 0; k < pts1.size(); ++k) {
@@ -173,25 +179,22 @@ TEST(ErasableStroke, testGetStrokes) {
 
 
 TEST(ErasableStroke, testIntersectWithPaddedBox) {
-    Stroke stroke;
-    stroke.addPoint({0, 0, 2});     // 0
-    stroke.addPoint({2, 2, 2.5});   // 1
-    stroke.addPoint({5, 2, 3});     // 2
-    stroke.addPoint({7, 4, 2.5});   // 3
-    stroke.addPoint({3, 6, 2});     // 4
-    stroke.addPoint({2, 8, 1.5});   // 5
-    stroke.addPoint({5, 11, 1});    // 6
-    stroke.addPoint({7, 10, 1.5});  // 7
-    stroke.addPoint({7, 6, 2});     // 8
-    stroke.addPoint({6, 7, 2.5});   // 9
-    stroke.addPoint({4, 4, 3});     // 10
-    stroke.addPoint({1, 3});        // 11 = (10, 1.0)
-    stroke.setWidth(3);
-    stroke.setFill(-1);
-    stroke.setToolType(StrokeTool::PEN);
+    PiecewiseLinearPath path({0, 0, 2});
+    path.addLineSegmentTo(2, 2, 2.5);
+    path.addLineSegmentTo(5, 2, 3);
+    path.addLineSegmentTo(7, 4, 2.5);
+    path.addLineSegmentTo(3, 6, 2);
+    path.addLineSegmentTo(2, 8, 1.5);
+    path.addLineSegmentTo(5, 11, 1);
+    path.addLineSegmentTo(7, 10, 1.5);
+    path.addLineSegmentTo(7, 6, 2);
+    path.addLineSegmentTo(6, 7, 2.5);
+    path.addLineSegmentTo(4, 4, 3);
+    path.addLineSegmentTo(1, 3, 2);
 
-    std::array<PaddedBox, 10> boxes;
-    std::array<IntersectionParametersContainer, 10> expectedResult;
+    std::array<PaddedBox, 9> boxes;
+    std::array<Path::IntersectionParametersContainer, 9> expectedResult;
+
     // Start in padding. Pass by inner box. End in padding, not going toward inner box.
     boxes[0] = {Point(1, 1), 0.5, 3};
     expectedResult[0] = {{0, 0.0}, {1, 2.0 / 3.0}};
@@ -216,13 +219,11 @@ TEST(ErasableStroke, testIntersectWithPaddedBox) {
 
     boxes[7] = {Point(6, 6), 1.1, 2};
     expectedResult[7] = {{2, 1.0}, {3, .75}, {7, 0.5}, {9, 1.0}};
-    boxes[8] = {Point(7, 7.5), 1, 1.5};
-    expectedResult[8] = {{7, .25}, {9, 0.25}};
-    boxes[9] = {Point(6, 8), 0.5, 1};
-    expectedResult[9] = {};
+    boxes[8] = {Point(6, 8), 0.5, 1};
+    expectedResult[8] = {};
 
     for (unsigned int i = 0; i < boxes.size(); ++i) {
-        auto res = stroke.intersectWithPaddedBox(boxes[i]);
+        auto res = path.Path::intersectWithPaddedBox(boxes[i]);
         printf("Test box %u: ", i);
         for (auto p: res) { printf("(%zu, %4.2f) ", p.index, p.t); }
         printf("\n");

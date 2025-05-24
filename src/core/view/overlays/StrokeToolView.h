@@ -14,6 +14,7 @@
 
 #include <cairo.h>
 
+#include "model/path/PiecewiseLinearPath.h"
 #include "util/DispatchPool.h"
 #include "view/Mask.h"
 
@@ -69,15 +70,13 @@ protected:
      */
     auto getRepaintRange(const Point& lastPoint, const Point& addedPoint) const -> Range;
 
-    void drawDot(cairo_t* cr, const Point& p) const;
-
     /**
      * @brief (Thread-safe) Flush the communication buffer and returns its content.
      */
-    std::vector<Point> flushBuffer() const;
+    PiecewiseLinearPath flushBuffer() const;
 
     // Nothing in the base class
-    virtual void drawFilling(cairo_t*, const std::vector<Point>&) const {}
+    virtual void drawFilling(cairo_t*, const PiecewiseLinearPath&) const {}
 
 protected:
     const StrokeHandler* strokeHandler;
@@ -93,9 +92,8 @@ protected:
 
     /**
      * @brief Controller/View communication buffer
-     *      Those are in the same thread. Add mutex protection if this changes
      */
-    mutable std::vector<Point> pointBuffer;  // Todo: implement a lock-free fifo?
+    mutable PiecewiseLinearPath pointBuffer;
 
     /**
      * @brief Drawing mask.

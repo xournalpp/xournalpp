@@ -23,6 +23,7 @@
 #include "model/Point.h"            // for Point
 #include "model/Stroke.h"           // for Stroke, BUTT, StrokeTool::HIGHLIG...
 #include "model/XojPage.h"          // for XojPage
+#include "model/path/PiecewiseLinearPath.h"
 #include "undo/GroupUndoAction.h"   // for GroupUndoAction
 #include "undo/InsertUndoAction.h"  // for InsertUndoAction
 #include "undo/UndoAction.h"        // for UndoAction
@@ -196,8 +197,8 @@ void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle w
         stroke->setFill(markerOpacity);
         stroke->setToolType(StrokeTool::HIGHLIGHTER);
         stroke->setWidth(w);
-        stroke->addPoint(Point(rect.x1, h, -1));
-        stroke->addPoint(Point(rect.x2, h, -1));
+        auto path = std::make_shared<PiecewiseLinearPath>(Point(rect.x1, h), Point(rect.x2, h));
+        stroke->setPath(path);
         stroke->setStrokeCapStyle(StrokeCapStyle::BUTT);
 
         dirtyRange.addPoint(rect.x1, h - 0.5 * w);
