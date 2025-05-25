@@ -80,8 +80,7 @@ void CompassController::updateOutlineStroke(double x) {
     stroke->deletePointsFrom(0);
     const auto h = view->getXournal()->getControl()->getToolHandler();
     const bool filled = (h->getFill() != -1);
-    const xoj::util::Point<double> c =
-            xoj::util::Point<double>{geometryTool->getTranslationX(), geometryTool->getTranslationY()};
+    const xoj::util::Point<double>& c = this->getGeometryTool()->getOrigin();
 
     if (filled && angleMax < angleMin + 2 * M_PI) {
         stroke->addPoint(Point(c.x, c.y));

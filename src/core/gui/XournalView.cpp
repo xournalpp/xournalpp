@@ -22,6 +22,7 @@
 #include "control/zoom/ZoomControl.h"            // for ZoomControl
 #include "gui/MainWindow.h"                      // for MainWindow
 #include "gui/PdfFloatingToolbox.h"              // for PdfFloatingToolbox
+#include "gui/inputdevices/GeometryToolInputHandler.h"  // for GeometryToolInputHandler
 #include "gui/inputdevices/HandRecognition.h"    // for HandRecognition
 #include "gui/inputdevices/InputContext.h"       // for InputContext
 #include "gui/toolbarMenubar/ColorToolItem.h"    // for ColorToolItem
@@ -172,6 +173,10 @@ auto XournalView::onKeyPressEvent(const KeyEvent& event) -> bool {
             selection->ensureWithinVisibleArea();
             return true;
         }
+    }
+
+    if (auto* geom = GTK_XOURNAL(widget)->input->getGeometryToolInputHandler(); geom && geom->keyPressed(event)) {
+        return true;
     }
 
     Layout* layout = gtk_xournal_get_layout(this->widget);
