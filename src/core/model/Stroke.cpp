@@ -21,7 +21,9 @@
 #include "util/BasePointerIterator.h"             // for BasePointerIterator
 #include "util/Interval.h"                        // for Interval
 #include "util/PairView.h"                        // for PairView<>::BaseIte...
+#include "util/PairView.h"                        // for PairView
 #include "util/PlaceholderString.h"               // for PlaceholderString
+#include "util/Point.h"                           // for utl::Point<>
 #include "util/Rectangle.h"                       // for Rectangle
 #include "util/SmallVector.h"                     // for SmallVector
 #include "util/TinyVector.h"                      // for TinyVector
@@ -437,13 +439,6 @@ void Stroke::setPressure(const std::vector<double>& pressure) {
  * checks if the stroke is intersected by the eraser rectangle
  */
 auto Stroke::intersects(double x, double y, double halfEraserSize) const -> bool {
-    return intersects(x, y, halfEraserSize, nullptr);
-}
-
-/**
- * checks if the stroke is intersected by the eraser rectangle
- */
-auto Stroke::intersects(double x, double y, double halfEraserSize, double* gap) const -> bool {
     if (this->points.empty()) {
         return false;
     }
@@ -460,9 +455,6 @@ auto Stroke::intersects(double x, double y, double halfEraserSize, double* gap) 
         double py = point.y;
 
         if (px >= x1 && py >= y1 && px <= x2 && py <= y2) {
-            if (gap) {
-                *gap = 0;
-            }
             return true;
         }
 
@@ -491,9 +483,6 @@ auto Stroke::intersects(double x, double y, double halfEraserSize, double* gap) 
                 constexpr double PADDING = 0.1;
 
                 if (distance <= len / 2 + PADDING) {
-                    if (gap) {
-                        *gap = distance;
-                    }
                     return true;
                 }
             }
@@ -506,6 +495,18 @@ auto Stroke::intersects(double x, double y, double halfEraserSize, double* gap) 
     return false;
 }
 
+double Stroke::distanceTo(double x, double y) const {
+    double distance = std::numeric_limits<double>::max();
+    for (auto&& [p1, p2]: PairView(this->points)) {
+        utl::Point<double> v(p2.x - p1.x, p2.y - p1.y);
+        double ratio = std::clamp(((x - p1.x) * v.x + (y - p1.y) * v.y) / (v.x * v.x + v.y * v.y), 0., 1.);
+        /// Projection of (x,y) onto the segment [p1,p2]
+        utl::Point<double> projection(p1.x + ratio * v.x, p1.y + ratio * v.y);
+        double width = p1.z == Point::NO_PRESSURE ? this->width : p1.z;
+        distance = std::clamp(std::hypot(x - projection.x, y - projection.y) - .5 * width, 0., distance);
+    }
+    return distance;
+}
 
 /**
  * @brief Get the interval of length parameters where the line (pq) is in the rectangle.
