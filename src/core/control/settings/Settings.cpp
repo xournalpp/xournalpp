@@ -65,6 +65,7 @@ void Settings::loadDefault() {
     this->numRows = 1;
     this->viewFixedRows = false;
 
+    this->layoutType = LAYOUT_TYPE_GRID;
     this->layoutVertical = false;
     this->layoutRightToLeft = false;
     this->layoutBottomToTop = false;
@@ -445,6 +446,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->numRows = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("viewFixedRows")) == 0) {
         this->viewFixedRows = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("layoutType")) == 0) {
+        this->layoutType = layoutTypeFromString(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("layoutVertical")) == 0) {
         this->layoutVertical = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("layoutRightToLeft")) == 0) {
@@ -1006,6 +1009,8 @@ void Settings::save() {
     SAVE_INT_PROP(numRows);
     SAVE_BOOL_PROP(viewFixedRows);
     SAVE_BOOL_PROP(showPairedPages);
+    xmlNode = saveProperty("layoutType", LayoutTypeToString(this->layoutType), root);
+    ATTACH_COMMENT("The page layout type, allowed values are \"grid\", \"constantPadding\"");
     SAVE_BOOL_PROP(layoutVertical);
     SAVE_BOOL_PROP(layoutRightToLeft);
     SAVE_BOOL_PROP(layoutBottomToTop);
@@ -1856,6 +1861,17 @@ void Settings::setViewFixedRows(bool viewFixedRows) {
 }
 
 auto Settings::isViewFixedRows() const -> bool { return this->viewFixedRows; }
+
+void Settings::setViewLayoutType(LayoutType type) {
+    if (this->layoutType == type) {
+        return;
+    }
+
+    this->layoutType = type;
+    save();
+}
+
+auto Settings::getViewLayoutType() const -> LayoutType { return this->layoutType; }
 
 void Settings::setViewLayoutVert(bool vert) {
     if (this->layoutVertical == vert) {
