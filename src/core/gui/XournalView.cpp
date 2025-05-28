@@ -62,7 +62,7 @@ std::pair<size_t, size_t> XournalView::preloadPageBounds(size_t page, size_t max
     return {lower, upper};
 }
 
-XournalView::XournalView(GtkScrolledWindow* parent, Control* control, ScrollHandling* scrollHandling):
+XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling):
         scrollHandling(scrollHandling), control(control) {
     Document* doc = control->getDocument();
     doc->lock();
@@ -77,7 +77,8 @@ XournalView::XournalView(GtkScrolledWindow* parent, Control* control, ScrollHand
     this->widget = gtk_xournal_new(this, inputContext);
     g_object_ref_sink(this->widget);  // take ownership without increasing the ref count
 
-    gtk_scrolled_window_set_child(parent, this->widget);
+    gtk_container_add(GTK_CONTAINER(parent), this->widget);
+    gtk_widget_show(this->widget);
 
 
     g_signal_connect(getWidget(), "realize", G_CALLBACK(+[](GtkWidget* widget, gpointer) {
