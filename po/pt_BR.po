@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-05 12:49+0000\n"
-"PO-Revision-Date: 2025-05-08 13:27\n"
+"POT-Creation-Date: 2025-05-09 08:01+0000\n"
+"PO-Revision-Date: 2025-06-01 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -1790,7 +1790,7 @@ msgstr "Plano de fundo da página alterado"
 
 #: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
 msgid "Page size changed"
-msgstr ""
+msgstr "O tamanho da página foi alterado"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
