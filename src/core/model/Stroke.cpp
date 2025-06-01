@@ -222,7 +222,10 @@ auto Stroke::getFill() const -> int { return fill; }
  */
 void Stroke::setFill(int fill) { this->fill = fill; }
 
-void Stroke::setWidth(double width) { this->width = width; }
+void Stroke::setWidth(double width) {
+    this->width = width;
+    this->sizeCalculated = false;
+}
 
 auto Stroke::getWidth() const -> double { return this->width; }
 

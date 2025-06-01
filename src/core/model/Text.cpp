@@ -44,7 +44,10 @@ auto Text::clone() const -> Text* {
 
 auto Text::getFont() -> XojFont& { return font; }
 
-void Text::setFont(const XojFont& font) { this->font = font; }
+void Text::setFont(const XojFont& font) {
+    this->font = font;
+    sizeCalculated = false;
+}
 
 auto Text::getFontSize() const -> double { return font.getSize(); }
 
