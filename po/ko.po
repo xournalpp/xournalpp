@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 15:08+0000\n"
-"PO-Revision-Date: 2025-05-25 04:26\n"
+"POT-Creation-Date: 2025-05-25 16:22+0000\n"
+"PO-Revision-Date: 2025-06-01 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -31,63 +31,63 @@ msgstr "파일시스템 오류: {1}"
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "이전 자동저장 파일 \"{1}\"을 삭제할 수 없습니다: {2}"
 
-#: ../src/core/control/Control.cpp:562
+#: ../src/core/control/Control.cpp:561
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "현재 활성화된 툴바를 삭제했습니다. 기본 툴바를 사용합니다."
 
-#: ../src/core/control/Control.cpp:582
+#: ../src/core/control/Control.cpp:581
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "툴바설정 \"{1}\"은 수정할 수 없습니다. 수정을 위해 이 툴바설정의 복사본을 만들겠습니까?"
 
-#: ../src/core/control/Control.cpp:585 ../src/core/control/Control.cpp:1555
+#: ../src/core/control/Control.cpp:584 ../src/core/control/Control.cpp:1553
 msgid "Yes"
 msgstr "예"
 
-#: ../src/core/control/Control.cpp:585 ../src/core/control/Control.cpp:1555
+#: ../src/core/control/Control.cpp:584 ../src/core/control/Control.cpp:1553
 msgid "No"
 msgstr "아니오"
 
-#: ../src/core/control/Control.cpp:815 ../src/core/control/Control.cpp:1767
-#: ../src/core/control/Control.cpp:2107 ../src/core/control/XournalMain.cpp:175
+#: ../src/core/control/Control.cpp:814 ../src/core/control/Control.cpp:1765
+#: ../src/core/control/Control.cpp:2105 ../src/core/control/XournalMain.cpp:172
 msgid "Cancel"
 msgstr "취소"
 
-#: ../src/core/control/Control.cpp:816
+#: ../src/core/control/Control.cpp:815
 msgid "Insert after current page"
 msgstr "현재 페이지 다음에 추가"
 
-#: ../src/core/control/Control.cpp:817
+#: ../src/core/control/Control.cpp:816
 msgid "Insert at end"
 msgstr "마지막에 추가"
 
-#: ../src/core/control/Control.cpp:820
+#: ../src/core/control/Control.cpp:819
 msgid "_Journal"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:820
+#: ../src/core/control/Control.cpp:819
 msgid "Paper B_ackground"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:821
+#: ../src/core/control/Control.cpp:820
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:40
 msgid "With PDF background"
 msgstr "PDF를 배경으로 사용"
 
-#: ../src/core/control/Control.cpp:824
+#: ../src/core/control/Control.cpp:823
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:867
+#: ../src/core/control/Control.cpp:866
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "추가할 PDF 페이지가 없습니다. 우선 문서를 다시 열어야 할 수 있습니다."
 
-#: ../src/core/control/Control.cpp:881
+#: ../src/core/control/Control.cpp:880
 msgid "Unable to retrieve pdf page."
 msgstr "PDF 페이지를 가져 올 수 없습니다."
 
-#: ../src/core/control/Control.cpp:1480
+#: ../src/core/control/Control.cpp:1479
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -95,100 +95,100 @@ msgstr "자동 저장 파일을 열지 마십시오. 덮어쓰기 될 수 있습
 "해당 파일을 다른 폴더로 복사하십시오.\n"
 "{1} 폴더로부터 파일을 열 수 없습니다."
 
-#: ../src/core/control/Control.cpp:1500
+#: ../src/core/control/Control.cpp:1499
 msgid "file: {1}"
 msgstr "파일: {1}"
 
-#: ../src/core/control/Control.cpp:1532
+#: ../src/core/control/Control.cpp:1530
 msgid "Error opening file \"{1}\""
 msgstr "\"{1}\" 파일 열기 오류"
 
-#: ../src/core/control/Control.cpp:1557
+#: ../src/core/control/Control.cpp:1555
 msgid "File version mismatch"
 msgstr "파일 버전 불일치"
 
-#: ../src/core/control/Control.cpp:1558
+#: ../src/core/control/Control.cpp:1556
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "지금 불러오는 파일이 더 최신 버전의 Xournal++ 파일 포맷을 사용하기 때문에, 파일이 정상적으로 열리지 않을 수 있습니다. 그래도 파일을 불러옵니까?"
 
-#: ../src/core/control/Control.cpp:1581
+#: ../src/core/control/Control.cpp:1579
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr "\"{1}\" PDF 파일 읽기 오류\n"
 "{2}"
 
-#: ../src/core/control/Control.cpp:1603
+#: ../src/core/control/Control.cpp:1601
 msgid "Error reading PNG file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1747
+#: ../src/core/control/Control.cpp:1745
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "첨부된 배경 파일을 찾을 수 없습니다. 파일 이름이 바뀌었거나 파일이 이동, 삭제되었을 수 있습니다."
 
-#: ../src/core/control/Control.cpp:1750
+#: ../src/core/control/Control.cpp:1748
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "\"{1}\" 배경 파일을 찾을 수 없습니다. 파일 이름이 바뀌었거나 파일이 이동, 삭제되었을 수 있습니다.\n"
 "파일의 최근 위치: \"{2}\""
 
-#: ../src/core/control/Control.cpp:1760
+#: ../src/core/control/Control.cpp:1758
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "제안하는 대체 파일: \"{1}\""
 
-#: ../src/core/control/Control.cpp:1765
+#: ../src/core/control/Control.cpp:1763
 msgid "Select another PDF"
 msgstr "다른 PDF 선택"
 
-#: ../src/core/control/Control.cpp:1766
+#: ../src/core/control/Control.cpp:1764
 msgid "Remove PDF Background"
 msgstr "PDF 백그라운드 제거"
 
-#: ../src/core/control/Control.cpp:1770
+#: ../src/core/control/Control.cpp:1768
 msgid "Use proposed PDF"
 msgstr "제안된 PDF를 사용하십시오."
 
-#: ../src/core/control/Control.cpp:1773
+#: ../src/core/control/Control.cpp:1771
 msgid "Missing PDF background file"
 msgstr "PDF 배경 파일이 없습니다."
 
-#: ../src/core/control/Control.cpp:1905
+#: ../src/core/control/Control.cpp:1903
 msgid "Select font"
 msgstr "글꼴 선택"
 
-#: ../src/core/control/Control.cpp:1924
+#: ../src/core/control/Control.cpp:1922
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "색상 선택"
 
-#: ../src/core/control/Control.cpp:1949
+#: ../src/core/control/Control.cpp:1947
 msgid "Unsaved Document"
 msgstr "저장되지 않은 문서"
 
-#: ../src/core/control/Control.cpp:2100
+#: ../src/core/control/Control.cpp:2098
 msgid "Document file was removed."
 msgstr "문서 파일 삭제됨."
 
-#: ../src/core/control/Control.cpp:2100
+#: ../src/core/control/Control.cpp:2098
 msgid "This document is not saved yet."
 msgstr "문서가 아직 저장되지 않았습니다"
 
-#: ../src/core/control/Control.cpp:2102
+#: ../src/core/control/Control.cpp:2100
 msgid "Save As..."
 msgstr "다른 이름으로 저장..."
 
-#: ../src/core/control/Control.cpp:2102 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2100 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:80
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:286
 msgid "Save"
 msgstr "저장"
 
-#: ../src/core/control/Control.cpp:2105
+#: ../src/core/control/Control.cpp:2103
 msgid "Discard"
 msgstr "버리기"
 
-#: ../src/core/control/Control.cpp:2189
+#: ../src/core/control/Control.cpp:2187
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -197,8 +197,8 @@ msgid "Trying to emergency save the current open document..."
 msgstr "현재 열려있는 문서의 긴급 저장을 시도 중입니다."
 
 #: ../src/core/control/CrashHandler.cpp:40
-#: ../src/core/control/XournalMain.cpp:278
-#: ../src/core/control/XournalMain.cpp:284
+#: ../src/core/control/XournalMain.cpp:273
+#: ../src/core/control/XournalMain.cpp:279
 msgid "Error: {1}"
 msgstr "오류: {1}"
 
@@ -294,71 +294,71 @@ msgstr "PDF 백그라운드 누락됨"
 msgid "Running print operation failed with {1}"
 msgstr "{1} 에 의한 인쇄 작업 실패"
 
-#: ../src/core/control/XournalMain.cpp:123
+#: ../src/core/control/XournalMain.cpp:120
 msgid "Failed to delete file: {1}"
 msgstr "파일을 삭제하지 못했습니다: {1}"
 
-#: ../src/core/control/XournalMain.cpp:125
+#: ../src/core/control/XournalMain.cpp:122
 msgid "Please delete the file manually"
 msgstr "직접 파일을 삭제해주세요"
 
-#: ../src/core/control/XournalMain.cpp:161
+#: ../src/core/control/XournalMain.cpp:158
 msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr "Xournal++의 새로운 오류 로그 파일이 존재합니다. 버그를 고칠 수 있도록 버그 리포트를 보내주시기 바랍니다."
 
-#: ../src/core/control/XournalMain.cpp:163
+#: ../src/core/control/XournalMain.cpp:160
 msgid "There are recent errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr "Xournal++의 새로운 오류 로그 파일이 다수 존재합니다. 버그를 고칠 수 있도록 버그 리포트를 보내주시기 바랍니다."
 
-#: ../src/core/control/XournalMain.cpp:166
+#: ../src/core/control/XournalMain.cpp:163
 msgid "The most recent log file name: {1}"
 msgstr "가장 최근 로그 파일 이름: {1}"
 
-#: ../src/core/control/XournalMain.cpp:168
+#: ../src/core/control/XournalMain.cpp:165
 msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
 msgstr "이 창이 다시 뜨는 것을 방지하려면 errorlogfiles를 삭제하세요"
 
-#: ../src/core/control/XournalMain.cpp:171
+#: ../src/core/control/XournalMain.cpp:168
 msgid "File Bug Report"
 msgstr "파일 버그 제보"
 
-#: ../src/core/control/XournalMain.cpp:172
+#: ../src/core/control/XournalMain.cpp:169
 msgid "Open Logfile"
 msgstr "로그 파일 열기"
 
-#: ../src/core/control/XournalMain.cpp:173
+#: ../src/core/control/XournalMain.cpp:170
 msgid "Open Logfile directory"
 msgstr "로그 파일 디렉토리 열기"
 
-#: ../src/core/control/XournalMain.cpp:174
+#: ../src/core/control/XournalMain.cpp:171
 msgid "Delete Logfile"
 msgstr "로그 파일 삭제"
 
-#: ../src/core/control/XournalMain.cpp:176
+#: ../src/core/control/XournalMain.cpp:173
 msgid "Crash log"
 msgstr "충돌 로그"
 
-#: ../src/core/control/XournalMain.cpp:198
+#: ../src/core/control/XournalMain.cpp:194
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "마지막 사용 중 Xournal++이 강제 종료 되었습니다. 마지막에 작업 중이던 파일을 복구합니까?"
 
-#: ../src/core/control/XournalMain.cpp:202
+#: ../src/core/control/XournalMain.cpp:197
 msgid "Recovery file detected"
 msgstr "복구 파일 발견"
 
-#: ../src/core/control/XournalMain.cpp:203
+#: ../src/core/control/XournalMain.cpp:198
 msgid "Delete file"
 msgstr "파일 삭제"
 
-#: ../src/core/control/XournalMain.cpp:203
+#: ../src/core/control/XournalMain.cpp:198
 msgid "Restore file"
 msgstr "파일 복구하기"
 
-#: ../src/core/control/XournalMain.cpp:223
+#: ../src/core/control/XournalMain.cpp:218
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "\"{1}\" 배경 파일을 찾을 수 없습니다. 파일 이름이 바뀌었거나 파일이 이동, 삭제되었을 수 있습니다."
 
-#: ../src/core/control/XournalMain.cpp:415
+#: ../src/core/control/XournalMain.cpp:410
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -372,24 +372,24 @@ msgstr "<span foreground='red' size='x-large'>다음 필수 UI 파일이 존재�
 "  현재 주소에 없음\n"
 "  {2} 에 없음"
 
-#: ../src/core/control/XournalMain.cpp:420
+#: ../src/core/control/XournalMain.cpp:415
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "이 파일 없이 실행해보겠습니다."
 
-#: ../src/core/control/XournalMain.cpp:442
-#: ../src/core/control/XournalMain.cpp:502
+#: ../src/core/control/XournalMain.cpp:437
+#: ../src/core/control/XournalMain.cpp:497
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Xournal++은 한번에 한 개의 파일만 열 수 있습니다.\n"
 "다른 파일들을 무시합니다."
 
-#: ../src/core/control/XournalMain.cpp:453
+#: ../src/core/control/XournalMain.cpp:448
 msgid "File {1} does not exist."
 msgstr "{1} 파일이 존재하지 않습니다."
 
-#: ../src/core/control/XournalMain.cpp:457
+#: ../src/core/control/XournalMain.cpp:452
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -397,33 +397,33 @@ msgstr "파일시스템 오류: {1}\n"
 "Xournal++에서 파일을 열 수 없습니다: {2}\n"
 "해당 파일을 로컬 디렉토리로 복사해 보십시오."
 
-#: ../src/core/control/XournalMain.cpp:647
+#: ../src/core/control/XournalMain.cpp:642
 msgid "Jump to Page (first Page: 1)"
 msgstr "페이지로 이동 (첫 페이지: 1)"
 
-#: ../src/core/control/XournalMain.cpp:651
+#: ../src/core/control/XournalMain.cpp:646
 msgid "Get version of xournalpp"
 msgstr "xournalpp 버전 가져오기"
 
-#: ../src/core/control/XournalMain.cpp:653
+#: ../src/core/control/XournalMain.cpp:648
 msgid "Disable audio for this session"
 msgstr "현재 세션에서 오디오 비활성화"
 
-#: ../src/core/control/XournalMain.cpp:655
+#: ../src/core/control/XournalMain.cpp:650
 msgid "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
 msgstr "첨부모드로 PDF 열기\n"
 "                                 PDF 파일이 지정되어 있으면 무시"
 
-#: ../src/core/control/XournalMain.cpp:659
+#: ../src/core/control/XournalMain.cpp:654
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "지정된 PDF 파일의 배경과 함께 xopp 파일 저장"
 
-#: ../src/core/control/XournalMain.cpp:668
+#: ../src/core/control/XournalMain.cpp:663
 msgid "Export FILE as PDF"
 msgstr "파일을 PDF로 내보내기"
 
-#: ../src/core/control/XournalMain.cpp:670
+#: ../src/core/control/XournalMain.cpp:665
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -431,7 +431,7 @@ msgstr "이미지 파일로 내보내기(1페이지 당 개별 파일)\n"
 "                                 IMGFILE의 확장자로 이미지 포맷을 유추합니다.\n"
 "                                 지원되는 포맷: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:675
+#: ../src/core/control/XournalMain.cpp:670
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -439,13 +439,13 @@ msgstr "배경없이 내보내기\n"
 "                                 내보내기 된 파일은 파일 포맷의 지원여부에 따라\n"
 "                                 투명 또는 하얀 배경을 갖게 됩니다.\n"
 
-#: ../src/core/control/XournalMain.cpp:680
+#: ../src/core/control/XournalMain.cpp:675
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "노트의 줄 없이 내보내기\n"
 "                                 내보내기 된 파일의 노트에서 가로줄이 빠지게 됩니다.\n"
 
-#: ../src/core/control/XournalMain.cpp:684
+#: ../src/core/control/XournalMain.cpp:679
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -453,38 +453,38 @@ msgid "Export layers progressively\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:691
+#: ../src/core/control/XournalMain.cpp:686
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:695
+#: ../src/core/control/XournalMain.cpp:690
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:699
+#: ../src/core/control/XournalMain.cpp:694
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:703
+#: ../src/core/control/XournalMain.cpp:698
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:709
+#: ../src/core/control/XournalMain.cpp:704
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:714
+#: ../src/core/control/XournalMain.cpp:709
 msgid "Advanced export options"
 msgstr "고급 내보내기 옵션"
 
-#: ../src/core/control/XournalMain.cpp:715
+#: ../src/core/control/XournalMain.cpp:710
 msgid "Display advanced export options"
 msgstr "고급 내보내기 옵션 표시"
 
@@ -603,7 +603,7 @@ msgstr ".tex 파일을 저장하지 못했습니다: {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "{1} 을 시작할 수 없습니다:{2} (exit code {3})"
 
-#: ../src/core/control/layer/LayerController.cpp:349
+#: ../src/core/control/layer/LayerController.cpp:351
 msgid "Layer {1}"
 msgstr "{1} 레이어"
 
@@ -673,7 +673,7 @@ msgid "Send to back"
 msgstr "맨 뒤로 보내기"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
-#: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:169
+#: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:165
 msgid "Failed to load image"
 msgstr "이미지 불러오기 실패"
 
@@ -867,28 +867,28 @@ msgstr "페이지로 스크롤 {1}"
 msgid "Add missing page"
 msgstr "누락된 페이지 추가"
 
-#: ../src/core/gui/SearchBar.cpp:80
+#: ../src/core/gui/SearchBar.cpp:89
 msgid "Text found once on this page"
 msgstr "해당 페이지에서 텍스트 1개 찾음"
 
-#: ../src/core/gui/SearchBar.cpp:82
+#: ../src/core/gui/SearchBar.cpp:91
 #, c-format
 msgid "Text found %zu times on this page"
 msgstr "해당 페이지에서 텍스트 %zu 개 찾음"
 
-#: ../src/core/gui/SearchBar.cpp:87
+#: ../src/core/gui/SearchBar.cpp:96
 msgid "Text not found"
 msgstr "텍스트 없음"
 
-#: ../src/core/gui/SearchBar.cpp:130
+#: ../src/core/gui/SearchBar.cpp:139
 msgid "Text found once on page {1}"
 msgstr "{1} 페이지에서 텍스트 1개 찾음"
 
-#: ../src/core/gui/SearchBar.cpp:131
+#: ../src/core/gui/SearchBar.cpp:140
 msgid "Text found {1} times on page {2} ({3} of {1})"
 msgstr "{2} 페이지에서 텍스트 {1} 개 찾음 ({1} 개 중 {3})"
 
-#: ../src/core/gui/SearchBar.cpp:136
+#: ../src/core/gui/SearchBar.cpp:145
 msgid "Text not found, searched on all pages"
 msgstr "모든 페이지 검색 결과, 텍스트 없음"
 
@@ -916,126 +916,152 @@ msgstr "전체 기여자 리스트 보기"
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 또는 더 최신 라이센스"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:67
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:30
+msgid "Thickness - don't change"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:32
+msgid "Very thin"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:34
+msgid "Thin"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:36
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
+msgid "Medium"
+msgstr "중간"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:38
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:492
+msgid "Thick"
+msgstr "두꺼운"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:40
+msgid "Very thick"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:57
 msgid "No device"
 msgstr "장치 없음"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:78
 msgid "Tool - don't change"
 msgstr "도구 - 바꾸지 않기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:79
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:373
 msgid "Pen"
 msgstr "펜"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:80
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:382
 msgid "Eraser"
 msgstr "지우개"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Highlighter"
 msgstr "형광펜"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:82
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:398
 msgid "Text"
 msgstr "텍스트"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/core/undo/InsertUndoAction.cpp:29
 msgid "Insert image"
 msgstr "이미지 추가"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 msgid "Vertical space"
 msgstr "수직 공간"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 msgid "Select region"
 msgstr "영역 선택"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 msgid "Select rectangle"
 msgstr "직사각형 선택"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:95
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
 msgid "Select multi layer region"
 msgstr "다중 레이어 영역 선택"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
 msgid "Select multi layer rect"
 msgstr "다중 레이어 사각형 선택"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
 msgid "Hand"
 msgstr "핸드"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:98
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
 msgid "Floating Toolbox (experimental)"
 msgstr "플로팅 도구상자 (테스트중)"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:99
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 msgid "Select Text from pdf"
 msgstr "PDF에서 텍스트 선택"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:100
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
 msgid "Select Area Text from pdf"
 msgstr "PDF로부터 영역 텍스트 선택"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:117
 msgid "Drawing Type - don't change"
 msgstr "그리기 타입 - 바꾸지 않기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Normal drawing"
 msgstr "일반 그리기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Draw Line"
 msgstr "선 그리기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Draw Rectangle"
 msgstr "직사각형 그리기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Draw Ellipse"
 msgstr "타원 그리기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Draw Arrow"
 msgstr "화살표 그리기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Draw Double Arrow"
 msgstr "양쪽 화살표 그리기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Draw Coordinate System"
 msgstr ""
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
 msgstr "도형 자동인식"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw Spline"
@@ -1072,11 +1098,11 @@ msgstr "이미지 파일"
 msgid "Custom"
 msgstr "사용자 정의"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:49
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:47
 msgid "System Default"
 msgstr "시스템 기본 설정"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:67
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:65
 msgid "Previously selected language not available anymore!"
 msgstr "이전에 선택된 언어를 더 이상 사용할 수 없습니다!"
 
@@ -1088,19 +1114,19 @@ msgstr "LaTeX 에디터 테마:"
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "Xournal++ 빌드 중 GtkSourceView가 비활성화 되었습니다! 몇몇 설정은 사용할 수 없게 됩니다."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:140
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "{1} 에서 글로벌 템플릿 파일을 열 수 없습니다. 파일이 존재합니까?"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:151
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
 msgid "Sample LaTeX file generated successfully."
 msgstr "샘플 LaTeX 파일이 성공적으로 생성되었습니다."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "오류: {1}. {2} 의 내용을 확인 하십시오."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:165
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:167
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "오류: {1} 는 정상적인 파일이 아닙니다. LaTeX 템플릿 파일 설정을 확인 하십시오. "
 
@@ -1705,14 +1731,6 @@ msgstr "매우 가늘게"
 msgid "Fine"
 msgstr "부드럽게"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
-msgid "Medium"
-msgstr "중간"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:492
-msgid "Thick"
-msgstr "두꺼운"
-
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:494
 msgid "Very Thick"
 msgstr "매우 두껍게"
@@ -1843,15 +1861,15 @@ msgstr "복사"
 msgid "Document not loaded! ({1}), {2}"
 msgstr "문서가 로드되지 않았습니다! ({1}), {2}"
 
-#: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:175
+#: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:171
 msgid "Error: "
 msgstr ""
 
-#: ../src/core/model/Image.cpp:169 ../src/core/model/Image.cpp:179
+#: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:175
 msgid "Unrecoverable error"
 msgstr ""
 
-#: ../src/core/model/Image.cpp:175 ../src/core/model/Image.cpp:179
+#: ../src/core/model/Image.cpp:171 ../src/core/model/Image.cpp:175
 msgid "Failed to close image stream"
 msgstr ""
 
@@ -2074,7 +2092,7 @@ msgstr "파일을 열 수 없습니다. 수동으로 직접 파일을 열어야 
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:319
+#: ../src/util/PathUtil.cpp:318
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "다음 폴더를 생성할 수 없음: {1}\n"

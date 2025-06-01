@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 15:08+0000\n"
-"PO-Revision-Date: 2025-05-25 04:26\n"
+"POT-Creation-Date: 2025-05-25 16:22+0000\n"
+"PO-Revision-Date: 2025-06-01 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -30,63 +30,63 @@ msgstr "Lỗi tập tin hệ thống: {1}"
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "Không thể xóa tập tin tự động lưu cũ \"{1}\": {2}"
 
-#: ../src/core/control/Control.cpp:562
+#: ../src/core/control/Control.cpp:561
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "Bạn đã xóa thanh công cụ đang hoạt động. Trở về thanh công cụ mặc định."
 
-#: ../src/core/control/Control.cpp:582
+#: ../src/core/control/Control.cpp:581
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Cấu hình thanh công cụ \"{1}\" đã được xác định, bạn có muốn tạo một bản sao để chỉnh sửa?"
 
-#: ../src/core/control/Control.cpp:585 ../src/core/control/Control.cpp:1555
+#: ../src/core/control/Control.cpp:584 ../src/core/control/Control.cpp:1553
 msgid "Yes"
 msgstr "Có"
 
-#: ../src/core/control/Control.cpp:585 ../src/core/control/Control.cpp:1555
+#: ../src/core/control/Control.cpp:584 ../src/core/control/Control.cpp:1553
 msgid "No"
 msgstr "Không"
 
-#: ../src/core/control/Control.cpp:815 ../src/core/control/Control.cpp:1767
-#: ../src/core/control/Control.cpp:2107 ../src/core/control/XournalMain.cpp:175
+#: ../src/core/control/Control.cpp:814 ../src/core/control/Control.cpp:1765
+#: ../src/core/control/Control.cpp:2105 ../src/core/control/XournalMain.cpp:172
 msgid "Cancel"
 msgstr "Huỷ"
 
-#: ../src/core/control/Control.cpp:816
+#: ../src/core/control/Control.cpp:815
 msgid "Insert after current page"
 msgstr "Chèn sau trang hiện tại"
 
-#: ../src/core/control/Control.cpp:817
+#: ../src/core/control/Control.cpp:816
 msgid "Insert at end"
 msgstr "Chèn ở cuối"
 
-#: ../src/core/control/Control.cpp:820
+#: ../src/core/control/Control.cpp:819
 msgid "_Journal"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:820
+#: ../src/core/control/Control.cpp:819
 msgid "Paper B_ackground"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:821
+#: ../src/core/control/Control.cpp:820
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:40
 msgid "With PDF background"
 msgstr "Với nền PDF"
 
-#: ../src/core/control/Control.cpp:824
+#: ../src/core/control/Control.cpp:823
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:867
+#: ../src/core/control/Control.cpp:866
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Không có trang pdf nào hiện sẵn để gắn vào. Bạn có thể cần phải mở lại tài liệu trước."
 
-#: ../src/core/control/Control.cpp:881
+#: ../src/core/control/Control.cpp:880
 msgid "Unable to retrieve pdf page."
 msgstr "Không thể truy xuất trang pdf."
 
-#: ../src/core/control/Control.cpp:1480
+#: ../src/core/control/Control.cpp:1479
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -94,100 +94,100 @@ msgstr "Không mở các tệp tin lưu tự động. Chúng sẽ có thể bị
 "Sao chép các tệp tin vào một thư mục khác.\n"
 "Các tệp tin từ Thư mục {1} không mở được."
 
-#: ../src/core/control/Control.cpp:1500
+#: ../src/core/control/Control.cpp:1499
 msgid "file: {1}"
 msgstr "tệp tin: {1}"
 
-#: ../src/core/control/Control.cpp:1532
+#: ../src/core/control/Control.cpp:1530
 msgid "Error opening file \"{1}\""
 msgstr "Lỗi khi mở tập tin \"{1}\""
 
-#: ../src/core/control/Control.cpp:1557
+#: ../src/core/control/Control.cpp:1555
 msgid "File version mismatch"
 msgstr "Phiên bản tệp tin không khớp"
 
-#: ../src/core/control/Control.cpp:1558
+#: ../src/core/control/Control.cpp:1556
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Tệp tin đang được tải có định dạng tệp mới hơn định dạng tệp đang được hỗ trợ bởi phiên bản Xournal++ này, vì vậy nó có thể không được tải đúng cách. Vẫn mở?"
 
-#: ../src/core/control/Control.cpp:1581
+#: ../src/core/control/Control.cpp:1579
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr "Lỗi khi đọc tệp tin PDF \"{1}\"\n"
 "{2}"
 
-#: ../src/core/control/Control.cpp:1603
+#: ../src/core/control/Control.cpp:1601
 msgid "Error reading PNG file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1747
+#: ../src/core/control/Control.cpp:1745
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Tệp tin nền đính kèm không thể được tìm thấy. Nó có thể đã bị di chuyển, đổi tên hoặc bị xóa."
 
-#: ../src/core/control/Control.cpp:1750
+#: ../src/core/control/Control.cpp:1748
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Tệp tin nền \"{1}\" không thể được tìm thấy. Nó có thể đã bị di chuyển, đổi tên hoặc bị xóa.\n"
 "Lần cuối tìm thấy ở: \"{2}\""
 
-#: ../src/core/control/Control.cpp:1760
+#: ../src/core/control/Control.cpp:1758
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Tập tin thay thế được đề xuất: \"{1}\""
 
-#: ../src/core/control/Control.cpp:1765
+#: ../src/core/control/Control.cpp:1763
 msgid "Select another PDF"
 msgstr "Chọn tập tin PDF khác"
 
-#: ../src/core/control/Control.cpp:1766
+#: ../src/core/control/Control.cpp:1764
 msgid "Remove PDF Background"
 msgstr "Xóa nền PDF"
 
-#: ../src/core/control/Control.cpp:1770
+#: ../src/core/control/Control.cpp:1768
 msgid "Use proposed PDF"
 msgstr "Sử dụng PDF được đề xuất"
 
-#: ../src/core/control/Control.cpp:1773
+#: ../src/core/control/Control.cpp:1771
 msgid "Missing PDF background file"
 msgstr "Thiếu tệp tin nền PDF"
 
-#: ../src/core/control/Control.cpp:1905
+#: ../src/core/control/Control.cpp:1903
 msgid "Select font"
 msgstr "Chọn phông chữ"
 
-#: ../src/core/control/Control.cpp:1924
+#: ../src/core/control/Control.cpp:1922
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Chọn màu"
 
-#: ../src/core/control/Control.cpp:1949
+#: ../src/core/control/Control.cpp:1947
 msgid "Unsaved Document"
 msgstr "Tài liệu chưa được lưu"
 
-#: ../src/core/control/Control.cpp:2100
+#: ../src/core/control/Control.cpp:2098
 msgid "Document file was removed."
 msgstr "Tập tin tài liệu đã bị gỡ."
 
-#: ../src/core/control/Control.cpp:2100
+#: ../src/core/control/Control.cpp:2098
 msgid "This document is not saved yet."
 msgstr "Tài liệu này chưa được lưu."
 
-#: ../src/core/control/Control.cpp:2102
+#: ../src/core/control/Control.cpp:2100
 msgid "Save As..."
 msgstr "Lưu dưới dạng..."
 
-#: ../src/core/control/Control.cpp:2102 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2100 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:80
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:286
 msgid "Save"
 msgstr "Lưu"
 
-#: ../src/core/control/Control.cpp:2105
+#: ../src/core/control/Control.cpp:2103
 msgid "Discard"
 msgstr "Bỏ"
 
-#: ../src/core/control/Control.cpp:2189
+#: ../src/core/control/Control.cpp:2187
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -196,8 +196,8 @@ msgid "Trying to emergency save the current open document..."
 msgstr "Thử lưu khẩn cấp tệp tin hiện tại đang mở..."
 
 #: ../src/core/control/CrashHandler.cpp:40
-#: ../src/core/control/XournalMain.cpp:278
-#: ../src/core/control/XournalMain.cpp:284
+#: ../src/core/control/XournalMain.cpp:273
+#: ../src/core/control/XournalMain.cpp:279
 msgid "Error: {1}"
 msgstr "Lỗi: {1}"
 
@@ -293,71 +293,71 @@ msgstr "Nền PDF đang thiếu"
 msgid "Running print operation failed with {1}"
 msgstr "In không thành công với {1}"
 
-#: ../src/core/control/XournalMain.cpp:123
+#: ../src/core/control/XournalMain.cpp:120
 msgid "Failed to delete file: {1}"
 msgstr "Không xóa được tập tin: {1}"
 
-#: ../src/core/control/XournalMain.cpp:125
+#: ../src/core/control/XournalMain.cpp:122
 msgid "Please delete the file manually"
 msgstr "Vui lòng xóa tệp tin thủ công"
 
-#: ../src/core/control/XournalMain.cpp:161
+#: ../src/core/control/XournalMain.cpp:158
 msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr "Có một nhật ký lỗi gần đây từ Xournal++. Vui lòng gửi một báo cáo lỗi, để có thể sửa được lỗi."
 
-#: ../src/core/control/XournalMain.cpp:163
+#: ../src/core/control/XournalMain.cpp:160
 msgid "There are recent errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr "Có một số nhật ký lỗi gần đây từ Xournal++. Vui lòng gửi một báo cáo lỗi, để có thể sửa được lỗi."
 
-#: ../src/core/control/XournalMain.cpp:166
+#: ../src/core/control/XournalMain.cpp:163
 msgid "The most recent log file name: {1}"
 msgstr "Tên tệp tin nhật ký gần đây nhất: {1}"
 
-#: ../src/core/control/XournalMain.cpp:168
+#: ../src/core/control/XournalMain.cpp:165
 msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
 msgstr "Để ngăn chặn cửa sổ bật lên này xuất hiện một lần nữa, đơn giản chỉ cần xóa tệp tin nhật ký lỗi."
 
-#: ../src/core/control/XournalMain.cpp:171
+#: ../src/core/control/XournalMain.cpp:168
 msgid "File Bug Report"
 msgstr "Gửi báo cáo lỗi"
 
-#: ../src/core/control/XournalMain.cpp:172
+#: ../src/core/control/XournalMain.cpp:169
 msgid "Open Logfile"
 msgstr "Mở Tệp nhật ký"
 
-#: ../src/core/control/XournalMain.cpp:173
+#: ../src/core/control/XournalMain.cpp:170
 msgid "Open Logfile directory"
 msgstr "Mở thư mục Tệp nhật ký"
 
-#: ../src/core/control/XournalMain.cpp:174
+#: ../src/core/control/XournalMain.cpp:171
 msgid "Delete Logfile"
 msgstr "Xoá Tệp nhật ký"
 
-#: ../src/core/control/XournalMain.cpp:176
+#: ../src/core/control/XournalMain.cpp:173
 msgid "Crash log"
 msgstr "Nhật ký sự cố"
 
-#: ../src/core/control/XournalMain.cpp:198
+#: ../src/core/control/XournalMain.cpp:194
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ lần trước đã bị sự cố. Bạn có muốn khôi phục tệp tin đã được chỉnh sửa lần trước?"
 
-#: ../src/core/control/XournalMain.cpp:202
+#: ../src/core/control/XournalMain.cpp:197
 msgid "Recovery file detected"
 msgstr "Tệp tin khôi phục được tìm thấy"
 
-#: ../src/core/control/XournalMain.cpp:203
+#: ../src/core/control/XournalMain.cpp:198
 msgid "Delete file"
 msgstr "Xóa tệp tin"
 
-#: ../src/core/control/XournalMain.cpp:203
+#: ../src/core/control/XournalMain.cpp:198
 msgid "Restore file"
 msgstr "Khôi phục tệp tin"
 
-#: ../src/core/control/XournalMain.cpp:223
+#: ../src/core/control/XournalMain.cpp:218
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "Tệp tin nền \"{1}\" không thể được tìm thấy. Nó có thể đã bị di chuyển, đổi tên hoặc bị xóa."
 
-#: ../src/core/control/XournalMain.cpp:415
+#: ../src/core/control/XournalMain.cpp:410
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -371,24 +371,24 @@ msgstr "<span foreground='red' size='x-large'>Thiếu tệp giao diện người
 "  Không có trong Lộ trình làm việc\n"
 "  Không có trong {2}"
 
-#: ../src/core/control/XournalMain.cpp:420
+#: ../src/core/control/XournalMain.cpp:415
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "Giờ sẽ chạy thử mà không có tệp này."
 
-#: ../src/core/control/XournalMain.cpp:442
-#: ../src/core/control/XournalMain.cpp:502
+#: ../src/core/control/XournalMain.cpp:437
+#: ../src/core/control/XournalMain.cpp:497
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Xin lỗi, Xournal++ chỉ có thể mở một tập tin một lúc.\n"
 "Các tập tin khác sẽ bị loại bỏ."
 
-#: ../src/core/control/XournalMain.cpp:453
+#: ../src/core/control/XournalMain.cpp:448
 msgid "File {1} does not exist."
 msgstr "Tệp tin {1} không tồn tại."
 
-#: ../src/core/control/XournalMain.cpp:457
+#: ../src/core/control/XournalMain.cpp:452
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -396,33 +396,33 @@ msgstr "Lỗi tệp tin hệ thống: {1}\n"
 "Xin lỗi, Xournal++ không thể mở tệp tin: {2}\n"
 "Hãy cân nhắc việc sao chép tệp tin vào một thư mục cục bộ."
 
-#: ../src/core/control/XournalMain.cpp:647
+#: ../src/core/control/XournalMain.cpp:642
 msgid "Jump to Page (first Page: 1)"
 msgstr "Nhảy đến Trang (Trang đầu tiên: 1)"
 
-#: ../src/core/control/XournalMain.cpp:651
+#: ../src/core/control/XournalMain.cpp:646
 msgid "Get version of xournalpp"
 msgstr "Tải phiên bản của xournalpp"
 
-#: ../src/core/control/XournalMain.cpp:653
+#: ../src/core/control/XournalMain.cpp:648
 msgid "Disable audio for this session"
 msgstr "Tắt âm thanh cho phiên này"
 
-#: ../src/core/control/XournalMain.cpp:655
+#: ../src/core/control/XournalMain.cpp:650
 msgid "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
 msgstr "Mở PDF trong chế độ đính kèm\n"
 "                                 Bỏ qua nếu như không tệp tin PDF nào được chỉ định."
 
-#: ../src/core/control/XournalMain.cpp:659
+#: ../src/core/control/XournalMain.cpp:654
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "Lưu tệp tin xopp với nền PDF được chỉ định là FILE"
 
-#: ../src/core/control/XournalMain.cpp:668
+#: ../src/core/control/XournalMain.cpp:663
 msgid "Export FILE as PDF"
 msgstr "Xuất TỆP TIN dưới dạng PDF"
 
-#: ../src/core/control/XournalMain.cpp:670
+#: ../src/core/control/XournalMain.cpp:665
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -430,7 +430,7 @@ msgstr "Xuất TỆP TIN dưới dạng hình ảnh (mỗi tệp một trang)\n"
 "                                 Đoán định dạng đầu ra từ phần mở rộng của TỆP IMG\n"
 "                                 Các định dạng được hỗ trợ: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:675
+#: ../src/core/control/XournalMain.cpp:670
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -438,13 +438,13 @@ msgstr "Xuất không nền\n"
 "                                 Tệp được xuất có nền trong suốt hoặc trắng,\n"
 "                                 tùy thuộc vào những gì định dạng của nó hỗ trợ\n"
 
-#: ../src/core/control/XournalMain.cpp:680
+#: ../src/core/control/XournalMain.cpp:675
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Xuất không quy định\n"
 "                                 Tệp đã xuất không có quy định về giấy tờ\n"
 
-#: ../src/core/control/XournalMain.cpp:684
+#: ../src/core/control/XournalMain.cpp:679
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -456,24 +456,24 @@ msgstr "Xuất dần dần các lớp\n"
 "                                 tăng dần lớp chồng lên nhau.\n"
 "                                 Kết quả của tệp PDF có thể được sử dụng cho một bản trình bày.\n"
 
-#: ../src/core/control/XournalMain.cpp:691
+#: ../src/core/control/XournalMain.cpp:686
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Chỉ xuất các trang được chỉ định theo PHẠM VI (ví dụ: \"2-3,5,7-\")\n"
 "                                 Không có hiệu ứng nếu thiếu -p / - create-pdf hay -i / - create-img"
 
-#: ../src/core/control/XournalMain.cpp:695
+#: ../src/core/control/XournalMain.cpp:690
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:699
+#: ../src/core/control/XournalMain.cpp:694
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Đặt DPI cho xuất ảnh PNG. Mặc định là 300\n"
 "                                 Không có tác dụng nếu thiếu -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:703
+#: ../src/core/control/XournalMain.cpp:698
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -481,7 +481,7 @@ msgstr "Đặt độ rộng trang cho xuất ảnh PNG\n"
 "                                 Không có tác dụng nếu thiếu -i/--create-img=foo.png\n"
 "                                 Bỏ qua nếu đã sử dụng --export-png-dpi"
 
-#: ../src/core/control/XournalMain.cpp:709
+#: ../src/core/control/XournalMain.cpp:704
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -489,11 +489,11 @@ msgstr "Đặt độ dài trang cho xuất ảnh PNG\n"
 "                                 Không có tác dụng nếu thiếu -i/--create-img=foo.png\n"
 "                                 Bỏ qua nếu đã sử dụng --export-png-dpi hoặc --export-png-width"
 
-#: ../src/core/control/XournalMain.cpp:714
+#: ../src/core/control/XournalMain.cpp:709
 msgid "Advanced export options"
 msgstr "Các tùy chọn xuất nâng cao"
 
-#: ../src/core/control/XournalMain.cpp:715
+#: ../src/core/control/XournalMain.cpp:710
 msgid "Display advanced export options"
 msgstr "Hiển thị các tùy chọn xuất nâng cao"
 
@@ -612,7 +612,7 @@ msgstr "Không thể lưu tệp .tex: {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Không thể khởi động {1}: {2} (mã lỗi: {3})"
 
-#: ../src/core/control/layer/LayerController.cpp:349
+#: ../src/core/control/layer/LayerController.cpp:351
 msgid "Layer {1}"
 msgstr "Lớp {1}"
 
@@ -682,7 +682,7 @@ msgid "Send to back"
 msgstr "Đưa về sau cùng"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
-#: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:169
+#: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:165
 msgid "Failed to load image"
 msgstr "Tải hình ảnh thất bại"
 
@@ -876,28 +876,28 @@ msgstr "Cuộn đến trang {1}"
 msgid "Add missing page"
 msgstr "Thêm trang đang thiếu"
 
-#: ../src/core/gui/SearchBar.cpp:80
+#: ../src/core/gui/SearchBar.cpp:89
 msgid "Text found once on this page"
 msgstr "Văn bản được tìm thấy một lần trên trang này"
 
-#: ../src/core/gui/SearchBar.cpp:82
+#: ../src/core/gui/SearchBar.cpp:91
 #, c-format
 msgid "Text found %zu times on this page"
 msgstr "Văn bản được tìm thấy %zu lần trên trang này"
 
-#: ../src/core/gui/SearchBar.cpp:87
+#: ../src/core/gui/SearchBar.cpp:96
 msgid "Text not found"
 msgstr "Không tìm thấy văn bản"
 
-#: ../src/core/gui/SearchBar.cpp:130
+#: ../src/core/gui/SearchBar.cpp:139
 msgid "Text found once on page {1}"
 msgstr "Văn bản được tìm thấy một lần trên trang {1}"
 
-#: ../src/core/gui/SearchBar.cpp:131
+#: ../src/core/gui/SearchBar.cpp:140
 msgid "Text found {1} times on page {2} ({3} of {1})"
 msgstr "Văn bản được tìm thấy {1} lần trên trang {2} ({3} trên {1})"
 
-#: ../src/core/gui/SearchBar.cpp:136
+#: ../src/core/gui/SearchBar.cpp:145
 msgid "Text not found, searched on all pages"
 msgstr "Không tìm thấy văn bản, đã tìm kiếm trên tất cả các trang"
 
@@ -925,126 +925,152 @@ msgstr "Xem toàn bộ danh sách người đóng góp"
 msgid "GNU GPLv2 or later"
 msgstr "Giấy phép Công cộng Chung GNU phiên bản 2 trở lên"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:67
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:30
+msgid "Thickness - don't change"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:32
+msgid "Very thin"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:34
+msgid "Thin"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:36
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
+msgid "Medium"
+msgstr "Trung bình"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:38
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:492
+msgid "Thick"
+msgstr "Dày"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:40
+msgid "Very thick"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:57
 msgid "No device"
 msgstr "Không có thiết bị"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:78
 msgid "Tool - don't change"
 msgstr "Công cụ - không thay đổi"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:79
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:373
 msgid "Pen"
 msgstr "Bút"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:80
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:382
 msgid "Eraser"
 msgstr "Tẩy"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Highlighter"
 msgstr "Bút dạ quang"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:82
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:398
 msgid "Text"
 msgstr "Văn bản"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/core/undo/InsertUndoAction.cpp:29
 msgid "Insert image"
 msgstr "Chèn ảnh"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 msgid "Vertical space"
 msgstr "Khoảng cách dọc"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 msgid "Select region"
 msgstr "Chọn vùng"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 msgid "Select rectangle"
 msgstr "Chọn tam giác"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:95
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
 msgid "Select multi layer region"
 msgstr ""
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
 msgid "Select multi layer rect"
 msgstr ""
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
 msgid "Hand"
 msgstr "Tay"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:98
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
 msgid "Floating Toolbox (experimental)"
 msgstr "Hộp công cụ Nổi (thử nghiệm)"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:99
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 msgid "Select Text from pdf"
 msgstr "Chọn văn bản từ pdf"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:100
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
 msgid "Select Area Text from pdf"
 msgstr "Chọn vùng văn bản từ pdf"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:117
 msgid "Drawing Type - don't change"
 msgstr "Kiểu Bản vẽ - không thay đổi"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Normal drawing"
 msgstr "Bản vẽ thường"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Draw Line"
 msgstr "Vẽ Đường thẳng"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Draw Rectangle"
 msgstr "Vẽ Tam giác"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Draw Ellipse"
 msgstr "Vẽ hình Elip"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Draw Arrow"
 msgstr "Vẽ Mũi tên"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Draw Double Arrow"
 msgstr "Vẽ cặp múi tên"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Draw Coordinate System"
 msgstr ""
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
 msgstr ""
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw Spline"
@@ -1081,11 +1107,11 @@ msgstr "Các tệp hình ảnh"
 msgid "Custom"
 msgstr "Tuỳ chỉnh"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:49
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:47
 msgid "System Default"
 msgstr "Mặc định hệ thống"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:67
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:65
 msgid "Previously selected language not available anymore!"
 msgstr "Ngôn ngữ được chọn trước đây không còn nữa!"
 
@@ -1097,19 +1123,19 @@ msgstr "Chủ đề trình chỉnh sửa LaTeX:"
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "GtkSourceView đã bị vô hiệu hóa khi build Xournal++! Một số tùy chọn sẽ không khả dụng."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:140
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Không thể đọc được tệp mẫu chung tại {1}. Tệp có tồn tại không?"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:151
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
 msgid "Sample LaTeX file generated successfully."
 msgstr "Tệp LaTeX mẫu được tạo thành công."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Lỗi: {1}. Vui lòng kiểm tra nội dung của {2}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:165
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:167
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Lỗi: {1} không phải là một tệp thông thường. Vui lòng kiểm tra cài đặt tệp mẫu LaTeX của bạn. "
 
@@ -1712,14 +1738,6 @@ msgstr ""
 msgid "Fine"
 msgstr "Mịn"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
-msgid "Medium"
-msgstr "Trung bình"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:492
-msgid "Thick"
-msgstr "Dày"
-
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:494
 msgid "Very Thick"
 msgstr "Rất dày"
@@ -1850,15 +1868,15 @@ msgstr "Sao chép"
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Tài liệu không nạp được! ({1}), {2}"
 
-#: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:175
+#: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:171
 msgid "Error: "
 msgstr ""
 
-#: ../src/core/model/Image.cpp:169 ../src/core/model/Image.cpp:179
+#: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:175
 msgid "Unrecoverable error"
 msgstr ""
 
-#: ../src/core/model/Image.cpp:175 ../src/core/model/Image.cpp:179
+#: ../src/core/model/Image.cpp:171 ../src/core/model/Image.cpp:175
 msgid "Failed to close image stream"
 msgstr ""
 
@@ -2081,7 +2099,7 @@ msgstr "Không thể mở tệp. Bạn phải làm điều đó theo cách thủ
 msgid "xournalpp-{1}"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:319
+#: ../src/util/PathUtil.cpp:318
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Không thể tạo thư mục: {1}\n"
