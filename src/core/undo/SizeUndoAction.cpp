@@ -1,5 +1,6 @@
 #include "SizeUndoAction.h"
 
+#include <cassert>
 #include <memory>   // for allocator, __shared_ptr_access, __share...
 #include <utility>  // for move
 
@@ -48,9 +49,12 @@ SizeUndoAction::~SizeUndoAction() {
 
 auto SizeUndoAction::getPressure(Stroke* s) -> vector<double> {
     int count = s->getPointCount();
+    assert(count >= 2);
     vector<double> data;
     data.reserve(count);
-    for (int i = 0; i < count; i++) { data.push_back(s->getPoint(i).z); }
+    for (int i = 0; i < count - 1; i++) {
+        data.push_back(s->getPoint(i).z);
+    }
 
     return data;
 }
@@ -66,15 +70,15 @@ auto SizeUndoAction::undo(Control* control) -> bool {
         return true;
     }
 
-    SizeUndoActionEntry* e = this->data.front();
-    Range range(e->s->getX(), e->s->getY());
+    Range range;
 
     for (SizeUndoActionEntry* e: this->data) {
+        range = range.unite(Range(e->s->boundingRect()));
+
         e->s->setWidth(e->originalWidth);
         e->s->setPressure(e->originalPressure);
 
-        range.addPoint(e->s->getX(), e->s->getY());
-        range.addPoint(e->s->getX() + e->s->getElementWidth(), e->s->getY() + e->s->getElementHeight());
+        range = range.unite(Range(e->s->boundingRect()));
     }
 
     this->page->fireRangeChanged(range);
@@ -87,15 +91,15 @@ auto SizeUndoAction::redo(Control* control) -> bool {
         return true;
     }
 
-    SizeUndoActionEntry* e = this->data.front();
-    Range range(e->s->getX(), e->s->getY());
+    Range range;
 
     for (SizeUndoActionEntry* e: this->data) {
+        range = range.unite(Range(e->s->boundingRect()));
+
         e->s->setWidth(e->newWidth);
         e->s->setPressure(e->newPressure);
 
-        range.addPoint(e->s->getX(), e->s->getY());
-        range.addPoint(e->s->getX() + e->s->getElementWidth(), e->s->getY() + e->s->getElementHeight());
+        range = range.unite(Range(e->s->boundingRect()));
     }
 
     this->page->fireRangeChanged(range);
