@@ -189,10 +189,5 @@ private:
      */
     guint cleanupTimeout = std::numeric_limits<guint>::max();
 
-    /**
-     * Helper class for Touch specific fixes
-     */
-    std::unique_ptr<HandRecognition> handRecognition;
-
     friend class Layout;
 };

@@ -20,15 +20,18 @@ class GladeSearchpath;
 
 class DeviceClassConfigGui {
 public:
-    DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, GtkBox* box, Settings* settings, const InputDevice& device);
+    DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, GtkBox* box, Settings* settings, bool showApplyBtn = false);
+    ~DeviceClassConfigGui();
 
 public:
     void loadSettings();
     void saveSettings();
 
-private:
-    static void cbSelectCallback(GtkComboBox* widget, DeviceClassConfigGui* gui);
-    void enableDisableTools();
+    /// Set the device represented by the entry.
+    /// Please call saveSettings() beforehand if the settings of the previous device need to be saved.
+    void setDevice(const InputDevice& device);
+
+    inline bool representsDevice(const InputDevice& dev) const { return dev == device; }
 
 private:
     Settings* settings;

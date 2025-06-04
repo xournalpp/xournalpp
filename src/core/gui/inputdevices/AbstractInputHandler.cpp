@@ -42,7 +42,9 @@ auto AbstractInputHandler::isBlocked() const -> bool { return this->blocked; }
 
 auto AbstractInputHandler::handle(InputEvent const& event) -> bool {
     if (!this->blocked) {
-        this->inputContext->getXournal()->view->getCursor()->setInputDeviceClass(event.deviceClass);
+        if (auto* v = this->inputContext->getView(); v) {
+            v->getCursor()->setInputDeviceClass(event.deviceClass);
+        }
         return this->handleImpl(event);
     }
     return true;

@@ -92,7 +92,6 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
                      nullptr);
 
     this->repaintHandler = std::make_unique<RepaintHandler>(this);
-    this->handRecognition = std::make_unique<HandRecognition>(this->widget, inputContext, control->getSettings());
 
     control->getZoomControl()->addZoomListener(this);
 
@@ -536,7 +535,9 @@ void XournalView::recreatePdfCache() {
 /**
  * @return Helper class for Touch specific fixes
  */
-auto XournalView::getHandRecognition() const -> HandRecognition* { return handRecognition.get(); }
+auto XournalView::getHandRecognition() const -> HandRecognition* {
+    return GTK_XOURNAL(widget)->input->getHandRecognition();
+}
 
 /**
  * @return Scrollbars

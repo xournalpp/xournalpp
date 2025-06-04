@@ -9,7 +9,9 @@ namespace {
 void set_child(GtkContainer* c, GtkWidget* child) {
     gtk_container_foreach(
             c, +[](GtkWidget* child, gpointer c) { gtk_container_remove(GTK_CONTAINER(c), child); }, c);
-    gtk_container_add(c, child);
+    if (child) {
+        gtk_container_add(c, child);
+    }
 }
 };  // namespace
 
@@ -124,6 +126,12 @@ bool gtk_check_button_get_active(GtkCheckButton* bt) { return gtk_toggle_button_
 
 void gtk_check_button_set_active(GtkCheckButton* bt, bool state) {
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(bt), state);
+}
+
+/**** GtkMenuButton ****/
+
+void gtk_menu_button_set_label(GtkMenuButton* button, const char* label) {
+    set_child(GTK_CONTAINER(button), gtk_label_new(label));
 }
 
 /**** GtkButton ****/

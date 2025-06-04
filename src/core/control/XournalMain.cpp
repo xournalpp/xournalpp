@@ -38,6 +38,7 @@
 #include "util/PathUtil.h"                   // for getConfigFolder, openFil...
 #include "util/PlaceholderString.h"          // for PlaceholderString
 #include "util/Util.h"                       // for execInUiThread
+#include "util/VersionInfo.h"                // for getVersionInfo
 #include "util/XojMsgBox.h"                  // for XojMsgBox
 #include "util/i18n.h"                       // for _, FS, _F
 
@@ -470,16 +471,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
 auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gint {
     initCAndCoutLocales();
 
-    auto print_version = [&] {
-        if (!std::string(GIT_COMMIT_ID).empty()) {
-            std::cout << PROJECT_NAME << " " << PROJECT_VERSION << " (" << GIT_COMMIT_ID << ")" << std::endl;
-        } else {
-            std::cout << PROJECT_NAME << " " << PROJECT_VERSION << std::endl;
-        }
-        std::cout << "└──libgtk: " << gtk_get_major_version() << "."  //
-                  << gtk_get_minor_version() << "."                   //
-                  << gtk_get_micro_version() << std::endl;            //
-    };
+    auto print_version = [&] { std::cout << xoj::util::getVersionInfo() << std::endl; };
 
     auto exec_guarded = [&](auto&& fun, auto&& s) {
         try {
