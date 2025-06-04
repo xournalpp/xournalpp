@@ -32,6 +32,8 @@ struct GSourceURef {
         }
     }
 
+    operator bool() const { return id != 0; }
+
     /// When the GSource is run
     void consume() { id = 0; }
     /// To cancel the callback

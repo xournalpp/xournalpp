@@ -56,6 +56,8 @@ enum class EmptyLastPageAppendType {
 
 /**
  * The user-selectable device types
+ *
+ *  Those values are stored as integers in settings.xml. DO NOT ALTER THE VALUES!
  */
 enum class InputDeviceTypeOption {
     Disabled = 0,

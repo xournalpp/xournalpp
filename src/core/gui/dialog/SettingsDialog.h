@@ -23,7 +23,6 @@
 #include "util/raii/GtkWindowUPtr.h"
 
 #include "ButtonConfigGui.h"
-#include "DeviceClassConfigGui.h"
 #include "LanguageConfigGui.h"
 #include "LatexSettingsPanel.h"
 #include "SettingsDialogPaletteTab.h"
@@ -31,6 +30,7 @@
 
 class Control;
 class Settings;
+class DeviceTestingArea;
 
 struct Palette;
 
@@ -38,6 +38,7 @@ class SettingsDialog {
 public:
     SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control,
                    const std::vector<fs::path>& paletteDirectories, std::function<void()> callback);
+    ~SettingsDialog();
 
     inline GtkWindow* getWindow() const { return window.get(); }
 
@@ -88,9 +89,10 @@ private:
     Builder builder;
     xoj::util::GtkWindowUPtr window;
 
+    std::unique_ptr<DeviceTestingArea> deviceTestingArea;
+
     LanguageConfigGui languageConfig;
     std::vector<std::unique_ptr<ButtonConfigGui>> buttonConfigs;
-    std::vector<DeviceClassConfigGui> deviceClassConfigs;
 
     LatexSettingsPanel latexPanel;
     SettingsDialogPaletteTab paletteTab;

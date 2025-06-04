@@ -604,6 +604,8 @@ public:
 
     LatexSettings latexSettings{};
 
+    inline const fs::path& getSettingsFile() const { return filepath; }
+
 private:
     /**
      *  The config filepath

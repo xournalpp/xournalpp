@@ -66,7 +66,7 @@ auto MouseInputHandler::handleImpl(InputEvent const& event) -> bool {
     }
     if (event.type == LEAVE_EVENT) {
         // this->inputContext->unblockDevice(InputContext::TOUCHSCREEN);
-        // this->inputContext->getView()->getHandRecognition()->unblock();
+        // this->inputContext->getHandRecognition()->unblock();
         this->actionLeaveWindow(event);
     }
 

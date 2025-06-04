@@ -14,7 +14,7 @@
 class InputContext;
 struct KeyEvent;
 
-class KeyboardInputHandler final {
+class KeyboardInputHandler {
 private:
 public:
     explicit KeyboardInputHandler(InputContext* inputContext);

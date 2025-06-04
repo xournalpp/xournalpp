@@ -19,11 +19,16 @@ static GtkWindow* makeWindow(Settings* settings, fs::path suggestedPath, const c
     GtkWidget* dialog = gtk_file_chooser_dialog_new(windowTitle, nullptr, GTK_FILE_CHOOSER_ACTION_SAVE, _("_Cancel"),
                                                     GTK_RESPONSE_CANCEL, buttonLabel, GTK_RESPONSE_OK, nullptr);
 
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFile(suggestedPath.parent_path()).get(),
-                                        nullptr);
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), Util::toGFilename(suggestedPath.filename()).c_str());
-    gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog), Util::toGFile(settings->getLastOpenPath()).get(),
-                                         nullptr);
+    if (!suggestedPath.empty()) {
+        gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFile(suggestedPath.parent_path()).get(),
+                                            nullptr);
+        gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog),
+                                          Util::toGFilename(suggestedPath.filename()).c_str());
+    }
+    if (settings) {
+        gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog), Util::toGFile(settings->getLastOpenPath()).get(),
+                                             nullptr);
+    }
 
     return GTK_WINDOW(dialog);
 }

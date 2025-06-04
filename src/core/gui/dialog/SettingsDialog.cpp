@@ -9,7 +9,6 @@
 
 #include "control/AudioController.h"             // for AudioController
 #include "control/Control.h"                     // for Control
-#include "control/DeviceListHelper.h"            // for getDeviceList, Input...
 #include "control/settings/Settings.h"           // for Settings, SElement
 #include "control/settings/SettingsEnums.h"      // for STYLUS_CURSOR_ARROW
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
@@ -31,7 +30,7 @@
 #include "util/safe_casts.h"                        // for round_cast
 
 #include "ButtonConfigGui.h"       // for ButtonConfigGui
-#include "DeviceClassConfigGui.h"  // for DeviceClassConfigGui
+#include "DeviceTestingArea.h"     // for DeviceTestingArea
 #include "LanguageConfigGui.h"     // for LanguageConfigGui
 #include "LatexSettingsPanel.h"    // for LatexSettingsPanel
 #include "filesystem.h"            // for is_directory
@@ -65,19 +64,8 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 
     initMouseButtonEvents(gladeSearchPath);
 
-    vector<InputDevice> deviceList = DeviceListHelper::getDeviceList(this->settings);
     GtkBox* container = GTK_BOX(builder.get("hboxInputDeviceClasses"));
-    for (const InputDevice& inputDevice: deviceList) {
-        // Only add real devices (core pointers have vendor and product id nullptr)
-        this->deviceClassConfigs.emplace_back(gladeSearchPath, container, settings, inputDevice);
-    }
-    if (deviceList.empty()) {
-        GtkWidget* label = gtk_label_new("");
-        gtk_label_set_markup(GTK_LABEL(label),
-                             _("<b>No devices were found. This seems wrong - maybe file a bug report?</b>"));
-        gtk_box_append(GTK_BOX(container), label);
-        gtk_widget_show(label);
-    }
+    deviceTestingArea = std::make_unique<DeviceTestingArea>(gladeSearchPath, container, this->settings);
 
     gtk_box_append(GTK_BOX(builder.get("latexTabBox")), this->latexPanel.getPanel());
     gtk_box_append(GTK_BOX(builder.get("paletteTabBox")), this->paletteTab.getPanel());
@@ -207,6 +195,8 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 
     load();
 }
+
+SettingsDialog::~SettingsDialog() = default;
 
 void SettingsDialog::initMouseButtonEvents(GladeSearchpath* gladeSearchPath) {
     auto emplaceButton = [gladeSearchPath, &btns = buttonConfigs, settings = settings, &bld = builder](
@@ -366,7 +356,6 @@ void SettingsDialog::load() {
     loadCheckbox("cbDisableGtkInertialScroll", !settings->getGtkTouchInertialScrollingEnabled());
     const bool ignoreStylusEventsEnabled = settings->getIgnoredStylusEvents() != 0;  // 0 means disabled, >0 enabled
     loadCheckbox("cbIgnoreFirstStylusEvents", ignoreStylusEventsEnabled);
-    loadCheckbox("cbInputSystemTPCButton", settings->getInputSystemTPCButtonEnabled());
     loadCheckbox("cbInputSystemDrawOutsideWindow", settings->getInputSystemDrawOutsideWindowEnabled());
 
     /**
@@ -763,7 +752,6 @@ void SettingsDialog::save() {
     settings->setPressureGuessingEnabled(getCheckbox("cbEnablePressureInference"));
     settings->setTouchDrawingEnabled(getCheckbox("cbTouchDrawing"));
     settings->setGtkTouchInertialScrollingEnabled(!getCheckbox("cbDisableGtkInertialScroll"));
-    settings->setInputSystemTPCButtonEnabled(getCheckbox("cbInputSystemTPCButton"));
     settings->setInputSystemDrawOutsideWindowEnabled(getCheckbox("cbInputSystemDrawOutsideWindow"));
     settings->setScrollbarFadeoutDisabled(getCheckbox("cbDisableScrollbarFadeout"));
     settings->setAudioDisabled(getCheckbox("cbDisableAudio"));
@@ -1095,9 +1083,7 @@ void SettingsDialog::save() {
         settings->setColorPaletteSetting(selectedPalette.value());
     }
 
-    for (auto& deviceClassConfigGui: this->deviceClassConfigs) {
-        deviceClassConfigGui.saveSettings();
-    }
+    this->deviceTestingArea->saveSettings();
 
     this->latexPanel.save(settings->latexSettings);
 

@@ -320,7 +320,7 @@
                   <object class="GtkScrolledWindow" id="sid01">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <property name="min-content-width">500</property>
+                    <property name="min-content-width">900</property>
                     <property name="min-content-height">450</property>
                     <child>
                       <object class="GtkViewport" id="sid02">
@@ -909,7 +909,8 @@ Illegal characters are replaced with "_"</property>
                                 <property name="can-focus">False</property>
                                 <property name="label-xalign">0.009999999776482582</property>
                                 <child>
-                                  <object class="GtkBox">
+                                  <object class="GtkBox" id="hboxInputDeviceClasses">
+                                    <property name="name">hboxInputDeviceClasses</property>
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
                                     <property name="margin-start">12</property>
@@ -917,36 +918,7 @@ Illegal characters are replaced with "_"</property>
                                     <property name="margin-bottom">8</property>
                                     <property name="orientation">vertical</property>
                                     <child>
-                                      <object class="GtkLabel">
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">False</property>
-                                        <property name="label" translatable="yes">&lt;i&gt;Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)&lt;/i&gt;</property>
-                                        <property name="use-markup">True</property>
-                                        <property name="wrap">True</property>
-                                        <property name="max-width-chars">85</property>
-                                        <property name="xalign">0</property>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">0</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkBox" id="hboxInputDeviceClasses">
-                                        <property name="name">hboxInputDeviceClasses</property>
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">False</property>
-                                        <property name="orientation">vertical</property>
-                                        <child>
-                                          <placeholder/>
-                                        </child>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">1</property>
-                                      </packing>
+                                      <placeholder/>
                                     </child>
                                   </object>
                                 </child>
@@ -997,37 +969,7 @@ Illegal characters are replaced with "_"</property>
                                       <packing>
                                         <property name="expand">False</property>
                                         <property name="fill">True</property>
-                                        <property name="position">1</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkCheckButton" id="cbInputSystemTPCButton">
-                                        <property name="name">cbInputSystemTPCButton</property>
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">True</property>
-                                        <property name="receives-default">False</property>
-                                        <property name="tooltip-markup" translatable="yes">Drag LEFT from start point acts like shift key is being held.
-	    Drag UP acts as if Control key is being held.
-
-            Determination Radius: Radius at which modifiers will lock in until finished drawing.
-
-	    &lt;i&gt;Useful for operating without keyboard.&lt;/i&gt;</property>
-                                        <property name="draw-indicator">True</property>
-                                        <child>
-                                          <object class="GtkLabel" id="sid93">
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">False</property>
-                                            <property name="label" translatable="yes">Merge button events with stylus tip events
-	    &lt;i&gt;(Check this if&lt;/i&gt; "&lt;tt&gt;xsetwacom get *deviceId* TabletPCButton&lt;/tt&gt;" &lt;i&gt;returns&lt;/i&gt; "&lt;tt&gt;on&lt;/tt&gt;"&lt;i&gt;)&lt;/i&gt;</property>
-                                            <property name="use-markup">True</property>
-                                            <property name="wrap">True</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">2</property>
+                                        <property name="position">0</property>
                                       </packing>
                                     </child>
                                     <child>
@@ -1053,7 +995,7 @@ Illegal characters are replaced with "_"</property>
                                       <packing>
                                         <property name="expand">False</property>
                                         <property name="fill">True</property>
-                                        <property name="position">3</property>
+                                        <property name="position">1</property>
                                       </packing>
                                     </child>
                                   </object>
@@ -1553,10 +1495,10 @@ Illegal characters are replaced with "_"</property>
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkFrame" id="sid1">
+                                      <object class="GtkFrame">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
-                                        <property name="label-xalign">0.009999999776482582</property>
+                                        <property name="label-xalign">0.01</property>
                                         <child>
                                           <object class="GtkBox" id="hboxLeftMouse">
                                             <property name="name">hboxLeftMouse</property>
@@ -1571,7 +1513,7 @@ Illegal characters are replaced with "_"</property>
                                           </object>
                                         </child>
                                         <child type="label">
-                                          <object class="GtkLabel" id="sid2">
+                                          <object class="GtkLabel">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
                                             <property name="label" translatable="yes">Left Mouse Button</property>
