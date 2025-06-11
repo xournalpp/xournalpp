@@ -4,6 +4,7 @@
 #include <cstdlib>      // for system
 #include <fstream>      // for ifstream, char_traits, basic_ist...
 #include <iterator>     // for begin
+#include <sstream>      // for stringstream
 #include <string_view>  // for basic_string_view, operator""sv
 #include <type_traits>  // for remove_reference<>::type
 #include <utility>      // for move
@@ -63,11 +64,10 @@ auto Util::getLongPath(const fs::path& path) -> fs::path { return path; }
 auto Util::readString(fs::path const& path, bool showErrorToUser, std::ios_base::openmode openmode)
         -> std::optional<std::string> {
     try {
-        std::string s;
+        std::stringstream buffer;
         std::ifstream ifs{path, openmode};
-        s.resize(fs::file_size(path));
-        ifs.read(s.data(), as_signed(s.size()));
-        return {std::move(s)};
+        buffer << ifs.rdbuf();
+        return buffer.str();
     } catch (const fs::filesystem_error& e) {
         if (showErrorToUser) {
             XojMsgBox::showErrorToUser(nullptr, e.what());
