@@ -59,7 +59,8 @@ auto GeometryToolInputHandler::handle(InputEvent const& event) -> bool {
         case INPUT_DEVICE_MOUSE:
             return this->handlePointer(event);
         case INPUT_DEVICE_MOUSE_KEYBOARD_COMBO:
-            return this->handlePointer(event) || this->handleKeyboard(event);
+            return (!isBlocked[InputContext::DeviceType::MOUSE] && this->handlePointer(event)) ||
+                   this->handleKeyboard(event);
         default:
             g_warning("Device class %d not handled by geometry tool", event.deviceClass);
             return false;
