@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-05 12:49+0000\n"
-"PO-Revision-Date: 2025-05-08 13:27\n"
+"POT-Creation-Date: 2025-06-02 13:27+0000\n"
+"PO-Revision-Date: 2025-06-08 04:27\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -1802,7 +1802,7 @@ msgstr "Döndür"
 msgid "Scale"
 msgstr "Ölçek"
 
-#: ../src/core/undo/SizeUndoAction.cpp:106
+#: ../src/core/undo/SizeUndoAction.cpp:110
 msgid "Change stroke width"
 msgstr "Kontur genişliğini değiştir"
 
