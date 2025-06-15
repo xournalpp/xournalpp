@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-02 13:27+0000\n"
-"PO-Revision-Date: 2025-06-08 04:27\n"
+"PO-Revision-Date: 2025-06-15 04:27\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1544,11 +1544,11 @@ msgstr "填充不透明度"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:616
 msgid "Very Fine"
-msgstr "非常精细"
+msgstr "极细"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:617
 msgid "Fine"
-msgstr "精细"
+msgstr "细"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:618
 msgid "Medium"

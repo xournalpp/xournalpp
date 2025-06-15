@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-02 13:27+0000\n"
-"PO-Revision-Date: 2025-06-08 04:27\n"
+"PO-Revision-Date: 2025-06-15 04:27\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -20,7 +20,7 @@ msgstr ""
 #: ../src/core/control/AudioController.cpp:118
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr "未設置音訊存放目錄或目錄位置不合法, 無法錄製聲音, 請到\"偏好設置 > 音訊錄製\"設定音訊存放目錄"
+msgstr "未設置音訊存放目錄, 無法錄製聲音, 請到\"偏好設置 > 音訊錄製\"設定"
 
 #: ../src/core/control/Control.cpp:230
 msgid "Filesystem error: {1}"
