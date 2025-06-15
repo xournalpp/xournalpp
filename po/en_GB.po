@@ -5,22 +5,22 @@ msgstr ""
 "POT-Creation-Date: 2025-05-25 16:22+0000\n"
 "PO-Revision-Date: 2025-06-15 04:27\n"
 "Last-Translator: \n"
-"Language-Team: Chinese Traditional\n"
-"Language: zh_TW\n"
+"Language-Team: English, United Kingdom\n"
+"Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
-"X-Crowdin-Language: zh-TW\n"
+"X-Crowdin-Language: en-GB\n"
 "X-Crowdin-File: /master/xournalpp.pot\n"
 "X-Crowdin-File-ID: 38\n"
 
 #: ../src/core/control/AudioController.cpp:120
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr "未設置音訊存放目錄, 無法錄製聲音, 請到\"偏好設置 > 音訊錄製\"設定"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:230
 msgid "Filesystem error: {1}"
@@ -36,7 +36,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:581
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
-msgstr "工具條配置\"{1}\"是預置的，要產生一個拷貝到編輯?"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:584 ../src/core/control/Control.cpp:1553
 msgid "Yes"
@@ -49,15 +49,15 @@ msgstr ""
 #: ../src/core/control/Control.cpp:814 ../src/core/control/Control.cpp:1765
 #: ../src/core/control/Control.cpp:2105 ../src/core/control/XournalMain.cpp:172
 msgid "Cancel"
-msgstr "取消"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:815
 msgid "Insert after current page"
-msgstr "在目前頁面後插入"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:816
 msgid "Insert at end"
-msgstr "在結尾插入"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:819
 msgid "_Journal"
@@ -70,7 +70,7 @@ msgstr ""
 #: ../src/core/control/Control.cpp:820
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:40
 msgid "With PDF background"
-msgstr "使用PDF背景"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:823
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -80,27 +80,25 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:866
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr "沒有可以添加的PDF頁面。您可能需要重新開啟文件檔。"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:880
 msgid "Unable to retrieve pdf page."
-msgstr "無法獲取PDF頁面。"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:1479
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr "請勿開啟自動保存檔案，否則它們可能會被覆寫！\n"
-"請將這些檔案複製到另一個檔案夾。\n"
-"檔案夾 {1} 內的檔案無法開啟。"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:1499
 msgid "file: {1}"
-msgstr "檔案: {1}"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:1530
 msgid "Error opening file \"{1}\""
-msgstr "打開檔案\"{1}\"出錯"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:1555
 msgid "File version mismatch"
@@ -108,7 +106,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:1556
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr "正在開啟的檔案格式版本筆目前Xournal++支持的文件格式版本更新， 可能無法正確開啟，仍要開啟？"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:1579
 msgid "Error reading PDF file \"{1}\"\n"
@@ -135,15 +133,15 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:1763
 msgid "Select another PDF"
-msgstr "選擇其他PDF"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:1764
 msgid "Remove PDF Background"
-msgstr "去掉PDF背景"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:1768
 msgid "Use proposed PDF"
-msgstr "使用建議的PDF"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:1771
 msgid "Missing PDF background file"
@@ -156,33 +154,33 @@ msgstr ""
 #: ../src/core/control/Control.cpp:1922
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
-msgstr "選色"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:1947
 msgid "Unsaved Document"
-msgstr "未保存文檔"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:2098
 msgid "Document file was removed."
-msgstr "文檔已刪除。"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:2098
 msgid "This document is not saved yet."
-msgstr "此文件尚未存檔"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:2100
 msgid "Save As..."
-msgstr "另存為..."
+msgstr ""
 
 #: ../src/core/control/Control.cpp:2100 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:80
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:286
 msgid "Save"
-msgstr "保存"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:2103
 msgid "Discard"
-msgstr "丟棄"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:2187
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
@@ -196,95 +194,94 @@ msgstr ""
 #: ../src/core/control/XournalMain.cpp:273
 #: ../src/core/control/XournalMain.cpp:279
 msgid "Error: {1}"
-msgstr "錯誤：{1}"
+msgstr ""
 
 #: ../src/core/control/CrashHandler.cpp:42
 msgid "Successfully saved document to \"{1}\""
-msgstr "文檔已經保存為\"{1}\""
+msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:95
 msgid "mouse"
-msgstr "滑鼠"
+msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:97
 msgid "pen"
-msgstr "畫筆"
+msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:99
 msgid "eraser"
-msgstr "橡皮"
+msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:101
 msgid "cursor"
-msgstr "光標"
+msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:104
 msgid "keyboard"
-msgstr "鍵盤"
+msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:106
 msgid "touchscreen"
-msgstr "觸控螢幕"
+msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:108
 msgid "touchpad"
-msgstr "觸控板"
+msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:111
 msgid "trackpoint"
-msgstr "追蹤點"
+msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:113
 msgid "tablet pad"
-msgstr "繪圖板"
+msgstr ""
 
 #: ../src/core/control/ExportHelper.cpp:78
 msgid "Image file successfully created"
-msgstr "圖片檔案成功建立"
+msgstr ""
 
 #: ../src/core/control/ExportHelper.cpp:120
 msgid "PDF file successfully created"
-msgstr "PDF檔案成功建立"
+msgstr ""
 
 #: ../src/core/control/LatexController.cpp:79
 msgid "Global template file does not exist. Please check your settings."
-msgstr "全局模板檔案不存在，請檢查設定。"
+msgstr ""
 
 #: ../src/core/control/LatexController.cpp:84
 msgid "Failed to read global template file. Please check your settings."
-msgstr "無法讀取全局模板檔案。請檢查設定。"
+msgstr ""
 
 #: ../src/core/control/LatexController.cpp:90
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr "全局模板檔案格式不正確，請檢查設定。 "
+msgstr ""
 
 #: ../src/core/control/LatexController.cpp:236
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr "LaTeX 產生遇到錯誤: {1} (退出代碼: {2})"
+msgstr ""
 
 #: ../src/core/control/LatexController.cpp:302
 msgid "Could not load LaTeX PDF file: {1}"
-msgstr "無法加載LaTeX PDF文檔: {1}"
+msgstr ""
 
 #: ../src/core/control/LatexController.cpp:307
 msgid "Could not load LaTeX PDF file"
-msgstr "無法加載LaTeX PDF文檔"
+msgstr ""
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:110
 #: ../src/core/control/xojfile/LoadHandler.cpp:471
 #: ../src/core/control/xojfile/LoadHandler.cpp:487
 msgid "Error reading PDF: {1}"
-msgstr "讀入PDF出錯：{1}"
+msgstr ""
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:271
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
-msgstr "您没有任何可以選擇的 PDF 頁面。操作取消。\n"
-"請選擇另一個背景類型：點擊“日记”菜單 → “配置頁面模板”。"
+msgstr ""
 
 #: ../src/core/control/PdfCache.cpp:124
 msgid "PDF background missing"
-msgstr "PDF背景丟失"
+msgstr ""
 
 #: ../src/core/control/PrintHandler.cpp:121
 msgid "Running print operation failed with {1}"
@@ -308,7 +305,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:163
 msgid "The most recent log file name: {1}"
-msgstr "最近的日誌檔案名：{1}"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:165
 msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
@@ -320,15 +317,15 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:169
 msgid "Open Logfile"
-msgstr "打開日誌檔案"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:170
 msgid "Open Logfile directory"
-msgstr "打開日誌檔案目錄"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:171
 msgid "Delete Logfile"
-msgstr "刪除日誌檔案"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:173
 msgid "Crash log"
@@ -336,7 +333,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:194
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr "Xournal++ 上次崩溃了。您想恢復最後一個编辑的文件？"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:197
 msgid "Recovery file detected"
@@ -344,11 +341,11 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:198
 msgid "Delete file"
-msgstr "刪除檔案"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:198
 msgid "Restore file"
-msgstr "還原檔案"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:218
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
@@ -361,25 +358,18 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not relative\n"
 "  Not in the Working Path\n"
 "  Not in {2}"
-msgstr "<span foreground='red' size='x-large'>遺失必須的使用者界面檔案：\n"
-"<b>{1}</b></span>\n"
-"無法在任何位置找到他們。\n"
-"  不在相對位置\n"
-"  不在工作目錄\n"
-"  不在 {2}"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:415
 msgid "\n\n"
 "Will now attempt to run without this file."
-msgstr "\n\n"
-"現在將嘗試在沒有此檔案的情況下執行。"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:437
 #: ../src/core/control/XournalMain.cpp:497
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
-msgstr "抱歉，Xournal++ 一次只能開啟一個檔案。\n"
-"其餘已被忽略。"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:448
 msgid "File {1} does not exist."
@@ -393,11 +383,11 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:642
 msgid "Jump to Page (first Page: 1)"
-msgstr "跳到頁面(第一頁:1)"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:646
 msgid "Get version of xournalpp"
-msgstr "獲取 xournalpp 版本資訊"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:648
 msgid "Disable audio for this session"
@@ -414,29 +404,24 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:663
 msgid "Export FILE as PDF"
-msgstr "匯出為 PDF 檔"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:665
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
-msgstr "將檔案輸出成圖片檔 (每頁一個)\n"
-"                                 從 IMGFILE 的擴展推測輸出檔格式\n"
-"                                 支援格式：.png, .svg"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:670
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr "無背景輸出\n"
-"                                 取決於所支援的檔案格式，\n"
-"                                 輸出的檔案將會有透明或全白背景。\n"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:675
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr "無格線輸出\n"
-"                                 輸出的檔案不會有紙張格線\n"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:679
 msgid "Export layers progressively\n"
@@ -444,17 +429,12 @@ msgid "Export layers progressively\n"
 "                                 This results in N export pages per page with N layers,\n"
 "                                 building up the layer stack progressively.\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
-msgstr "漸進式輸出圖層\n"
-"                                 在 PDF 檔的輸出中，圖層會被一個個地漸進式處理\n"
-"                                 這將產生 N 張輸出頁面，每頁有 N 個圖層，\n"
-"                                 並且將圖層疊漸進式堆疊。\n"
-"                                 最後輸出的 PDF 檔成品可用於現場簡報。\n"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:686
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr "只從範圍輸出特定頁面(e.g. \"2-3,5,7-\")\n"
-"                                 No effect without -p/--create-pdf or -i/--create-img"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:690
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -464,52 +444,47 @@ msgstr ""
 #: ../src/core/control/XournalMain.cpp:694
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr "設定PNG輸出的DPI. 預設值是300\n"
-"                                 No effect without -i/--create-img=foo.pn"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:698
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr "設定PNG導出頁面的寬度\n"
-"                                 No effect without -i/--create-img=foo.png\n"
-"                                 Ignored if --export-png-dpi is used"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:704
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr "設定PNG輸出頁面的高度\n"
-"                                 No effect without -i/--create-img=foo.png\n"
-"                                 Ignored if --export-png-dpi or --export-png-width is used"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:709
 msgid "Advanced export options"
-msgstr "進階匯出選項"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:710
 msgid "Display advanced export options"
-msgstr "顯示進階輸出選項"
+msgstr ""
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:21
 msgid "Error while autosaving: {1}"
-msgstr "自動儲存時發生錯誤：{1}"
+msgstr ""
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:45
 msgid "Autosaving to {1}"
-msgstr "自動儲存到 {1}"
+msgstr ""
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:68
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr "無法將自動儲存檔案 \"{1}\" 重新命名至 \"{2}\"： {3}"
+msgstr ""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:40
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr "請勿覆寫背景 PDF 檔！這樣可能導致錯誤！"
+msgstr ""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "The check for overwriting the background failed with:\n"
-msgstr "覆蓋背景失敗：\n"
+msgstr ""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
 msgid "Export File"
@@ -517,61 +492,61 @@ msgstr ""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
 msgid "Export"
-msgstr "輸出"
+msgstr ""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:94
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr "解析路徑失敗，錯誤訊息: {1}"
+msgstr ""
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:27
 msgid "Custom Export"
-msgstr "自訂匯出"
+msgstr ""
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:29
 #: ../src/core/control/jobs/PdfExportJob.cpp:20
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:31
 msgid "PDF files"
-msgstr "PDF檔案"
+msgstr ""
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:30
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:36
 msgid "PNG graphics"
-msgstr "PNG圖檔"
+msgstr ""
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:31
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:35
 msgid "SVG graphics"
-msgstr "svg圖形"
+msgstr ""
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:32
 msgid "Xournal (Compatibility)"
-msgstr "Xournal (兼容)"
+msgstr ""
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:129
 #: ../src/core/control/jobs/SaveJob.cpp:138
 msgid "Save file error: {1}"
-msgstr "保存文件錯誤: {1}"
+msgstr ""
 
 #: ../src/core/control/jobs/ImageExport.cpp:108
 msgid "Unsupported graphics format: "
-msgstr "不支援的圖像格式: "
+msgstr ""
 
 #: ../src/core/control/jobs/ImageExport.cpp:168
 msgid "Error save image #1"
-msgstr "保存圖片錯誤 #1"
+msgstr ""
 
 #: ../src/core/control/jobs/ImageExport.cpp:177
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
-msgstr "PDF 背景匯出錯誤：找不到頁碼 "
+msgstr ""
 
 #: ../src/core/control/jobs/ImageExport.cpp:201
 msgid "Error save image #2"
-msgstr "保存圖片錯誤 #2"
+msgstr ""
 
 #: ../src/core/control/jobs/PdfExportJob.cpp:15
 msgid "PDF Export"
-msgstr "輸出為PDF"
+msgstr ""
 
 #: ../src/core/control/jobs/SaveJob.cpp:124
 msgid "Save file error, can't backup: {1}"
@@ -579,11 +554,11 @@ msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:55
 msgid "Failed to parse LaTeX generator path: {1}"
-msgstr "無法剖析 LaTeX 產生器路徑: {1}"
+msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:65
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr "無法剖析 LaTeX 產生器指令: {1}"
+msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:71
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
@@ -593,64 +568,64 @@ msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:76
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr "無法從 PATH: {1} 中找到 LaTeX 產生格式"
+msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:84
 msgid "Could not save .tex file: {1}"
-msgstr "無法儲存 .tex 檔案： {1}"
+msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:99
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr "無法啟動 {1}: {2} (退出代碼: {3})"
+msgstr ""
 
 #: ../src/core/control/layer/LayerController.cpp:351
 msgid "Layer {1}"
-msgstr "{1}圖層"
+msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:25
 msgid "Could not load pagetemplates.ini file"
-msgstr "無法加載 pagetemplates.ini 文檔"
+msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:29
 msgid "Plain"
-msgstr "空白"
+msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:30
 msgid "Ruled"
-msgstr "定標"
+msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Ruled with vertical line"
-msgstr "橫紋信紙"
+msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "Staves"
-msgstr "五線譜"
+msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 msgid "Graph"
-msgstr "圖形"
+msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:34
 msgid "Dotted"
-msgstr "虛線"
+msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:35
 msgid "Isometric Dotted"
-msgstr "等距點陣"
+msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:36
 msgid "Isometric Graph"
-msgstr "等距圖表"
+msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:41
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 msgid "Image"
-msgstr "圖片"
+msgstr ""
 
 #: ../src/core/control/settings/Settings.cpp:151
 msgid "%F-Note-%H-%M"
-msgstr "%F-筆記-%H-%M"
+msgstr ""
 
 #: ../src/core/control/settings/Settings.cpp:153
 msgid "%{name}_annotated"
@@ -658,19 +633,19 @@ msgstr ""
 
 #: ../src/core/control/tools/EditSelection.cpp:460
 msgid "Arrange"
-msgstr "排序"
+msgstr ""
 
 #: ../src/core/control/tools/EditSelection.cpp:475
 msgid "Bring forward"
-msgstr "往前移動"
+msgstr ""
 
 #: ../src/core/control/tools/EditSelection.cpp:486
 msgid "Send backward"
-msgstr "下移一層"
+msgstr ""
 
 #: ../src/core/control/tools/EditSelection.cpp:493
 msgid "Send to back"
-msgstr "置於底層"
+msgstr ""
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
 #: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:165
@@ -683,113 +658,113 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:133
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr "文件不是有效的 .xopp 文件 (Mimetype missing): \"{1}\""
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:141
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
-msgstr "文件不是有效的 .xopp 文件 (Mimetype wrong): \"{1}\""
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:150
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
-msgstr "文件不是有效的 .xopp 文件 (Version missing): \"{1}\""
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:163
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
-msgstr "文件不是有效的 .xopp 文件 (Version string corrupted): \"{1}\""
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:172
 msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr "從壓縮檔開啟 content.xml 失敗: \"{1}\""
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:180
 msgid "Could not open file: \"{1}\""
-msgstr "不能打開檔案\"{1}\""
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:247
 msgid "XML Parser error: {1}"
-msgstr "XML 分析错误：{1}"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:250
 msgid "Unknown parser error"
-msgstr "未知解析器的錯誤"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:261
 msgid "Document is not complete (maybe the end is cut off?)"
-msgstr "文檔檔案不完整"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:265
 msgid "Document is corrupted (no pages found in file)"
-msgstr "檔案損毀 (檔案中找不到頁面)"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:310
 msgid "Unexpected root tag: {1}"
-msgstr "意外的根標籤: {1}"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:331
 msgid "Unexpected tag in document: \"{1}\""
-msgstr "文件中中意外的標籤: \"{1}\""
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:380
 #: ../src/core/control/xojfile/LoadHandler.cpp:409
 msgid "Could not read image: {1}. Error message: {2}"
-msgstr "未能讀入圖像：{1}。錯誤提示為：{2}"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:419
 msgid "Could not read page number for cloned background image: {1}."
-msgstr "無法讀取複製背景圖像的頁數: {1}."
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:427
 msgid "Unknown pixmap::domain type: {1}"
-msgstr "未知的 pixmap::domain 類型: {1}"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:478
 msgid "Unknown domain type: {1}"
-msgstr "未知domain類型: {1}"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:516
 msgid "Unknown background type: {1}"
-msgstr "未知的背景類型{1}"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:541
 msgid "Error reading width of a stroke: {1}"
-msgstr "讀入筆劃粗細出錯：{1}"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:609
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr "未知的筆觸類型：“{1}“，設為圓形"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:627
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr "未知的筆類別： \"{1}\"，假設爲畫筆"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:798
 #: ../src/core/control/xojfile/LoadHandler.cpp:814
 #: ../src/core/control/xojfile/LoadHandler.cpp:1127
 #: ../src/core/control/xojfile/LoadHandler.cpp:1141
 msgid "Could not open attachment: {1}. Error message: {2}"
-msgstr "無法開啟附件: {1}. 錯誤訊息: {2}"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:807
 #: ../src/core/control/xojfile/LoadHandler.cpp:1134
 #: ../src/core/control/xojfile/LoadHandler.cpp:1152
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
-msgstr "無法開啟附件: {1}. 錯誤訊息：未提供有效檔案大小"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:826
 msgid "Could not open attachment: {1}. Error message: Could not read file"
-msgstr "無法打開附件: {1}。錯誤消息: 無法讀取文檔"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:835
 msgid "Could not open attachment: {1}. Error message: Could not write file"
-msgstr "無法開啟附件: {1}. 錯誤訊息：無法寫入文檔"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1022
 msgid "Wrong count of points ({1})"
-msgstr "點數錯誤 ({1})"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1038
 msgid "xoj-File: {1}"
-msgstr "xoj-File: {1}"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1039
 msgid "Wrong number of pressure values, got {1}, expected {2}"
@@ -797,67 +772,67 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1171
 msgid "Requested temporary file was not found for attachment {1}"
-msgstr "找不到附件所需的暫存檔{1}"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:72
 msgid "Attribute color not set!"
-msgstr "顏色未設置"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Unknown color value \"{1}\""
-msgstr "未知的顏色值\"{1}\""
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:96
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr "色彩\"{1}\"未定義！"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:123
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr "屬性值\"{1}\" 不能轉為浮點數，其值為空值"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:130
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr "變數\"{1\"}不能為浮點數，其值為\"{2}\""
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:140
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
-msgstr "屬性值\"{1}\" 不能轉為整數，其值為空值"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:147
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:166
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr "變數\"{1\"}不能為整數，其值為\"{2}\""
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:178
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr "屬性值\"{1}\"不能轉為size_t，其值為空值"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:185
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:205
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr "屬性值\"{1}\"不能轉為size_t，其值為\"{2}\""
+msgstr ""
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:251
 msgid "Could not write background \"{1}\", {2}"
-msgstr "未能寫上背景\"{1}\", {2}"
+msgstr ""
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:363
 msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr "未能寫上背景\"{1}\"，不管啦繼續哦..."
+msgstr ""
 
 #: ../src/core/gui/GladeGui.cpp:25
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr "加載glade檔案\"{1}\"出錯(嘗試加載\"{2}\")"
+msgstr ""
 
 #: ../src/core/gui/PageView.cpp:388
 msgid "Unable to play audio recording {1}"
-msgstr "無法播放錄音{1}"
+msgstr ""
 
 #: ../src/core/gui/PageView.cpp:922
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
 msgid "Loading..."
-msgstr "加載中..."
+msgstr ""
 
 #: ../src/core/gui/PageView.cpp:979
 msgid "Scroll to page {1}"
@@ -865,7 +840,7 @@ msgstr ""
 
 #: ../src/core/gui/PageView.cpp:981
 msgid "Add missing page"
-msgstr "新增遺失的頁面"
+msgstr ""
 
 #: ../src/core/gui/SearchBar.cpp:89
 msgid "Text found once on this page"
@@ -878,11 +853,11 @@ msgstr ""
 
 #: ../src/core/gui/SearchBar.cpp:96
 msgid "Text not found"
-msgstr "文本未找到"
+msgstr ""
 
 #: ../src/core/gui/SearchBar.cpp:139
 msgid "Text found once on page {1}"
-msgstr "文本在第{1}頁上找到"
+msgstr ""
 
 #: ../src/core/gui/SearchBar.cpp:140
 msgid "Text found {1} times on page {2} ({3} of {1})"
@@ -890,31 +865,31 @@ msgstr ""
 
 #: ../src/core/gui/SearchBar.cpp:145
 msgid "Text not found, searched on all pages"
-msgstr "找遍所有頁面未找到文本"
+msgstr ""
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:41
 msgid "Version"
-msgstr "版本"
+msgstr ""
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:44
 msgid "Built on"
-msgstr "基於"
+msgstr ""
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:47
 msgid "GTK Version"
-msgstr "GTK 版本"
+msgstr ""
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:54
 msgid "Git commit"
-msgstr "Git提交"
+msgstr ""
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:61
 msgid "See the full list of contributors"
-msgstr "查看完整的貢獻者列表"
+msgstr ""
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:63
 msgid "GNU GPLv2 or later"
-msgstr "GNU 公用授權條款第 2 版或較後版本"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:30
 msgid "Thickness - don't change"
@@ -931,12 +906,12 @@ msgstr ""
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
 msgid "Medium"
-msgstr "中"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:38
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:492
 msgid "Thick"
-msgstr "粗"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:40
 msgid "Very thick"
@@ -944,48 +919,48 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:57
 msgid "No device"
-msgstr "沒有設備"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:78
 msgid "Tool - don't change"
-msgstr "工具 - 請勿更改"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:79
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:373
 msgid "Pen"
-msgstr "畫筆"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:80
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:382
 msgid "Eraser"
-msgstr "橡皮"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Highlighter"
-msgstr "高亮"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:82
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:398
 msgid "Text"
-msgstr "文本"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/core/undo/InsertUndoAction.cpp:29
 msgid "Insert image"
-msgstr "插入圖片"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 msgid "Vertical space"
-msgstr "垂直間距"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 msgid "Select region"
-msgstr "選擇區域"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 msgid "Select rectangle"
-msgstr "選擇矩形"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
 msgid "Select multi layer region"
@@ -998,57 +973,57 @@ msgstr ""
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
 msgid "Hand"
-msgstr "手形工具"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
 msgid "Floating Toolbox (experimental)"
-msgstr "浮動工具箱 (實驗功能)"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 msgid "Select Text from pdf"
-msgstr "從PDF中選擇文字"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
 msgid "Select Area Text from pdf"
-msgstr "從PDF中選取區域的文字"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:117
 msgid "Drawing Type - don't change"
-msgstr "繪製類別 - 不修改"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Normal drawing"
-msgstr "正常繪圖"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Draw Line"
-msgstr "繪製直線"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Draw Rectangle"
-msgstr "繪製矩形"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Draw Ellipse"
-msgstr "繪製橢圓"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Draw Arrow"
-msgstr "繪製箭頭"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Draw Double Arrow"
-msgstr "繪製雙箭頭"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
@@ -1059,35 +1034,35 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
-msgstr "識別形狀"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw Spline"
-msgstr "繪製樣條"
+msgstr ""
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:15
 msgid "All files"
-msgstr "所有檔案"
+msgstr ""
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:22
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:203
 msgid "Supported files"
-msgstr "支撐檔案"
+msgstr ""
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:32
 msgid "Xournal files"
-msgstr "Xournal檔案"
+msgstr ""
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:33
 msgid "Xournal++ files"
-msgstr "Xournal++ 檔案"
+msgstr ""
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:119
 msgid "Xournal++ template"
-msgstr "Xournal++ 樣本"
+msgstr ""
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:40
 msgid "Image files"
@@ -1096,66 +1071,66 @@ msgstr ""
 #: ../src/core/gui/dialog/FormatDialog.cpp:50
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:163
 msgid "Custom"
-msgstr "設置"
+msgstr ""
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:47
 msgid "System Default"
-msgstr "系統預設"
+msgstr ""
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:65
 msgid "Previously selected language not available anymore!"
-msgstr "以前選擇的語言不再可用！"
+msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "LaTeX editor theme:"
-msgstr "LaTeX 編輯器主題："
+msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
-msgstr "建立 Xournal++ 時已關閉 GtkSourceView！有些選項可能會無法使用。"
+msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr "無法打開全域模板檔案{1}。它存在嘛？"
+msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
 msgid "Sample LaTeX file generated successfully."
-msgstr "產生範例 LaTeX file 成功。"
+msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr "錯誤:{1}, 請檢查{2} 的內容"
+msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:167
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr "錯誤:{1} 並不是正規檔案. 請檢查LaTex範本檔案之設定 "
+msgstr ""
 
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:115
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:79
 msgid "Save File"
-msgstr "保存檔案"
+msgstr ""
 
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:115
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:80
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:19
 msgid "_Cancel"
-msgstr "取消 (_C)"
+msgstr ""
 
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
 msgid "_Save"
-msgstr "儲存 (_S)"
+msgstr ""
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:28
 msgid "default enabled"
-msgstr "預設啟用"
+msgstr ""
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:28
 msgid "default disabled"
-msgstr "默認禁用"
+msgstr ""
 
 #: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:62
 msgid "Select background color"
-msgstr "選擇背景顏色"
+msgstr ""
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:27
 msgid "Select opacity for: "
@@ -1189,15 +1164,15 @@ msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:76
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
-msgstr "<b>沒有找到任何裝置。這可能是錯的 - 要回報錯誤嗎？</b>"
+msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:282
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr "請先啟用筆觸壓力感測或壓力提示以修改此設定！"
+msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:286
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr "過濾壓力值輸入。將壓力值乘以壓力乘數。若小於最低值，則採用最低壓力值。"
+msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:30
 msgid "Built-in palettes"
@@ -1230,27 +1205,27 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:27
 msgid "Predefined"
-msgstr "預定"
+msgstr ""
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:39
 msgid "Customized"
-msgstr "設置過"
+msgstr ""
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:65
 msgid "Toolbars"
-msgstr "工具條"
+msgstr ""
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:87
 msgid "New"
-msgstr "新建"
+msgstr ""
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:49
 msgid "Attach file to the journal"
-msgstr "將檔案附加到日記"
+msgstr ""
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:81
 msgid "_Open"
-msgstr "開啟 (_O)"
+msgstr ""
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:123
 msgid "Open template file"
@@ -1260,7 +1235,7 @@ msgstr ""
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:197
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:285
 msgid "Open file"
-msgstr "打開檔案"
+msgstr ""
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:155
 msgid "Annotate Pdf file"
@@ -1272,19 +1247,19 @@ msgstr ""
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:30
 msgid "Select Image"
-msgstr "選擇圖片"
+msgstr ""
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:33
 msgid "<b>... or select already used Image:</b>"
-msgstr "<b>...或者選擇已用圖片：</b>"
+msgstr ""
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:37
 msgid "Load file"
-msgstr "加載檔案"
+msgstr ""
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:107
 msgid "This image could not be loaded. Error message: {1}"
-msgstr "無法加載此圖像。錯誤訊息: {1}"
+msgstr ""
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:113
 msgid "This image could not be loaded."
@@ -1292,35 +1267,35 @@ msgstr ""
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:28
 msgid "Select PDF Page"
-msgstr "選擇PDF頁面"
+msgstr ""
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:56
 msgid "Show only not used pages (one unused page)"
-msgstr "只顯示未使用頁面(一個未使用頁面)"
+msgstr ""
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:57
 msgid "Show only not used pages ({1} unused pages)"
-msgstr "只顯示未使用頁面({1}個未使用頁面)"
+msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:162
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr "從工具列 {2} ID {3} 移除工具 {1}"
+msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:164
 msgid "Removed tool item from Toolbar {1} ID {2}"
-msgstr "從工具列移除工具 {1} ID {2}"
+msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:168
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr "無法移除於工具列 {2}，位置為 {3} 的工具項目：{1}"
+msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:173
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr "無法移除於 {1} 工具列，位置為 {2} 的工具項目"
+msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:61
 msgid "Separator"
-msgstr "分割線"
+msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
 msgid "Spacer"
@@ -1334,7 +1309,7 @@ msgstr ""
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:80
 msgctxt "Item category in toolbar customization dialog"
 msgid "Colors"
-msgstr "顏色"
+msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:81
 msgctxt "Item category in toolbar customization dialog"
@@ -1378,7 +1353,7 @@ msgstr ""
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:369
 msgid "Apply to all pages"
-msgstr "套用到所有頁面"
+msgstr ""
 
 #: ../src/core/gui/menus/menubar/PluginsSubmenu.cpp:15
 msgid "Plugin Manager"
@@ -1395,11 +1370,11 @@ msgstr ""
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:100
 msgid "No recent files"
-msgstr "沒有最近的檔案"
+msgstr ""
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:110
 msgid "Clear list"
-msgstr "清空列表"
+msgstr ""
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:182
 msgctxt "In the submenu for removing recent documents, this will display on top of the list xournal++ files to separate them from PDF files"
@@ -1426,115 +1401,113 @@ msgstr ""
 
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:303
 msgid "Apply to current page"
-msgstr "套用到目前的頁面"
+msgstr ""
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:169
 msgid "Contents"
-msgstr "內容"
+msgstr ""
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:37
 msgid "Layerstack Preview"
-msgstr "圖層疊預覽"
+msgstr ""
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:37
 msgid "Layer Preview"
-msgstr "圖層預覽"
+msgstr ""
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:36
 msgid "Page Preview"
-msgstr "頁面預覽"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
 msgid "Draw coordinate system"
-msgstr "繪製坐標系統"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
 msgid "Stroke recognizer"
-msgstr "筆劃識別"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:58
 msgid "Drawing Type Combo"
-msgstr "繪製類型組合"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/FontButton.cpp:74
 msgid "Font"
-msgstr "字型"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:68
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
-msgstr "未能解析一般檔案toolbar.ini: {1}\n"
-"工具條將不可用"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:77
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
-msgstr "未能解析配置檔案toolbar.ini: {1}\n"
-"工具條將不可用"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:284
 msgid "New Xournal"
-msgstr "新建日記"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:287
 msgid "Export as PDF"
-msgstr "匯出成 PDF"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:288
 msgid "Print"
-msgstr "列印"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:297
 #: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo"
-msgstr "撤銷"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:300
 #: ../src/core/undo/UndoRedoHandler.cpp:191
 msgid "Redo"
-msgstr "重複"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:303
 msgid "Cut"
-msgstr "剪切"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:304
 msgid "Copy"
-msgstr "拷貝"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:305
 #: ../src/core/undo/AddUndoAction.cpp:72
 msgid "Paste"
-msgstr "粘貼"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:307
 msgid "Search"
-msgstr "搜索"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:309
 #: ../src/core/undo/DeleteUndoAction.cpp:74
 msgid "Delete"
-msgstr "刪除"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:312
 msgid "Rotation Snapping"
-msgstr "旋轉選取區域"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:313
 msgid "Grid Snapping"
-msgstr "網格固定"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:321
 msgid "Paired pages"
-msgstr "雙頁模式"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:323
 msgid "Presentation mode"
-msgstr "演講模式"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:324
 msgid "Toggle fullscreen"
-msgstr "全屏"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:325
 msgid "Toggle sidebar"
@@ -1542,122 +1515,122 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:327
 msgid "Manage Toolbars"
-msgstr "管理工具列"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Customize Toolbars"
-msgstr "自訂工具列"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:331
 msgid "Zoom out"
-msgstr "縮小"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:332
 msgid "Zoom in"
-msgstr "放大"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:333
 msgid "Zoom fit to screen"
-msgstr "適合屏幕"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:334
 msgid "Zoom to 100%"
-msgstr "原始尺寸"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:341
 msgid "Go to first page"
-msgstr "首頁"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:342
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:451
 msgid "Back"
-msgstr "後退"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:343
 msgid "Go to page"
-msgstr "跳轉到頁面"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:344
 msgid "Next"
-msgstr "下一個"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:345
 msgid "Go to last page"
-msgstr "末頁"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:348
 msgid "Go to previous layer"
-msgstr "回到上一層"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:349
 msgid "Go to next layer"
-msgstr "前往下一圖層"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:350
 msgid "Go to top layer"
-msgstr "前往最上層"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:353
 msgid "Next annotated page"
-msgstr "下一個標註頁面"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:359
 msgid "Insert page"
-msgstr "插入頁面"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:361
 msgid "Delete current page"
-msgstr "刪除當前頁"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:378
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:386
 msgid "standard"
-msgstr "標準"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:388
 msgid "dashed"
-msgstr "橫虛線"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:371
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:390
 msgid "dash-/ dotted"
-msgstr "點橫虛線"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:372
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:392
 msgid "dotted"
-msgstr "虛線"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 msgid "whiteout"
-msgstr "涂白"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 msgid "delete stroke"
-msgstr "刪除筆劃"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:399
 msgid "Add/Edit TeX"
-msgstr "插入/編輯TeX"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Default Tool"
-msgstr "預設工具"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:14
 msgid "Select Linear PDF Text"
-msgstr "從 PDF 中的行中選擇文本"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 msgid "Select PDF Text in Rectangle"
-msgstr "選擇矩形中的 PDF 文本"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Setsquare"
-msgstr "三角板"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Compass"
@@ -1666,12 +1639,12 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
 msgid "Select Region"
-msgstr "選擇區域"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:12
 msgid "Select Rectangle"
-msgstr "選擇矩形"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
@@ -1686,60 +1659,60 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 msgid "Select Object"
-msgstr "選擇對象"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 msgid "Vertical Space"
-msgstr "垂直間距"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 msgid "Play Object"
-msgstr "Play 物件"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Record Audio / Stop Recording"
-msgstr "錄製音訊 / 停止錄製音訊"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 msgid "Pause / Play"
-msgstr "暫停 / 播放"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:447
 msgid "Stop"
-msgstr "停止"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:449
 msgid "Forward"
-msgstr "下一頁"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 msgid "Fill"
-msgstr "填色"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Fill Opacity"
-msgstr "填充不透明度"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Very Fine"
-msgstr "極細"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Fine"
-msgstr "細"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:494
 msgid "Very Thick"
-msgstr "極粗"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:175
 msgid "Show all"
-msgstr "顯示全部"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:176
 msgid "Hide all"
-msgstr "隱藏全部"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:178
 msgid "Add a layer above the active layer"
@@ -1751,32 +1724,32 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:206
 msgid "Layer"
-msgstr "圖層"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:303
 msgid "Layer Combo"
-msgstr "圖層組合"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:26
 msgid "Page"
-msgstr "頁面"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:82
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr " 頁，共{1} 頁"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:85
 msgid "PDF Page {1}"
-msgstr "PDF頁碼{1}"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:87
 msgid "PDF {1}"
-msgstr "PDF {1}"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:109
 msgid "Page number"
-msgstr "頁碼"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:13
 msgid "PDF text selection dropdown menu"
@@ -1784,7 +1757,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:15
 msgid "Select PDF Text In Rectangle"
-msgstr "選擇矩形中的 PDF 文本"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:28
 msgid "Selection dropdown menu"
@@ -1792,7 +1765,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:70
 msgid "Zoom Slider"
-msgstr "縮放游標"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:119
 msgctxt "Color"
@@ -1852,12 +1825,12 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
 msgctxt "as a noun: a copy of"
 msgid "Copy"
-msgstr "拷貝"
+msgstr ""
 
 #: ../src/core/model/Document.cpp:331 ../src/core/model/Document.cpp:340
 #: ../src/core/model/Document.cpp:343
 msgid "Document not loaded! ({1}), {2}"
-msgstr "文檔未加載！({1}), {2}"
+msgstr ""
 
 #: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:171
 msgid "Error: "
@@ -1873,7 +1846,7 @@ msgstr ""
 
 #: ../src/core/model/XojPage.cpp:173
 msgid "Background"
-msgstr "背景"
+msgstr ""
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:123
 msgid "Error while finalizing the PDF Cairo surface"
@@ -1882,99 +1855,99 @@ msgstr ""
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:193
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:239
 msgid "No pages to export!"
-msgstr "沒有頁面可以匯出！"
+msgstr ""
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:202
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:244
 msgid "Failed to initialize PDF Cairo surface"
-msgstr "初始化 PDF Cairo surface 失敗"
+msgstr ""
 
 #: ../src/core/undo/AddUndoAction.cpp:70
 #: ../src/core/undo/DeleteUndoAction.cpp:71
 #: ../src/core/undo/EraseUndoAction.cpp:64
 msgid "Erase stroke"
-msgstr "擦除筆劃"
+msgstr ""
 
 #: ../src/core/undo/AddUndoAction.cpp:80
 #: ../src/core/undo/DeleteUndoAction.cpp:82
 msgid "elements"
-msgstr "元素"
+msgstr ""
 
 #: ../src/core/undo/AddUndoAction.cpp:88
 #: ../src/core/undo/DeleteUndoAction.cpp:90
 msgid "stroke"
-msgstr "筆劃"
+msgstr ""
 
 #: ../src/core/undo/AddUndoAction.cpp:91
 #: ../src/core/undo/DeleteUndoAction.cpp:93
 msgid "image"
-msgstr "圖片"
+msgstr ""
 
 #: ../src/core/undo/AddUndoAction.cpp:94
 #: ../src/core/undo/DeleteUndoAction.cpp:96
 msgid "latex"
-msgstr "latex"
+msgstr ""
 
 #: ../src/core/undo/AddUndoAction.cpp:97
 #: ../src/core/undo/DeleteUndoAction.cpp:99
 msgid "text"
-msgstr "文本"
+msgstr ""
 
 #: ../src/core/undo/ColorUndoAction.cpp:97
 msgid "Change color"
-msgstr "改變顏色"
+msgstr ""
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
-msgstr "緊急保存檔案"
+msgstr ""
 
 #: ../src/core/undo/FillUndoAction.cpp:88
 msgid "Change stroke fill"
-msgstr "改變筆劃粗細"
+msgstr ""
 
 #: ../src/core/undo/FontUndoAction.cpp:118
 msgid "Change font"
-msgstr "改變字型"
+msgstr ""
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:83
 msgid "Page inserted"
-msgstr "頁面插入"
+msgstr ""
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:87
 msgid "Page deleted"
-msgstr "頁面刪除"
+msgstr ""
 
 #: ../src/core/undo/InsertLayerUndoAction.cpp:29
 msgid "Insert layer"
-msgstr "插入層"
+msgstr ""
 
 #: ../src/core/undo/InsertUndoAction.cpp:25
 msgid "Draw stroke"
-msgstr "繪製筆劃"
+msgstr ""
 
 #: ../src/core/undo/InsertUndoAction.cpp:27
 msgid "Write text"
-msgstr "寫文本"
+msgstr ""
 
 #: ../src/core/undo/InsertUndoAction.cpp:31
 msgid "Insert latex"
-msgstr "插入LaTeX"
+msgstr ""
 
 #: ../src/core/undo/InsertUndoAction.cpp:70
 msgid "Insert elements"
-msgstr "插入元素"
+msgstr ""
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:20
 msgid "Rename layer"
-msgstr "重新命名圖層"
+msgstr ""
 
 #: ../src/core/undo/LineStyleUndoAction.cpp:86
 msgid "Change line style"
-msgstr "變更線條格式"
+msgstr ""
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
 msgid "Merge layer down"
-msgstr "向下合併圖層"
+msgstr ""
 
 #: ../src/core/undo/MissingPdfUndoAction.cpp:66
 msgid "Replace missing PDF"
@@ -1982,15 +1955,15 @@ msgstr ""
 
 #: ../src/core/undo/MoveLayerUndoAction.cpp:28
 msgid "Move layer"
-msgstr "移動圖層"
+msgstr ""
 
 #: ../src/core/undo/MoveUndoAction.cpp:20
 msgid "Move"
-msgstr "移動"
+msgstr ""
 
 #: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:97
 msgid "Page background changed"
-msgstr "頁面背景改變"
+msgstr ""
 
 #: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
 msgid "Page size changed"
@@ -1998,71 +1971,69 @@ msgstr ""
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
-msgstr "刪除層"
+msgstr ""
 
 #: ../src/core/undo/RotateUndoAction.cpp:58
 msgid "Rotation"
-msgstr "旋轉"
+msgstr ""
 
 #: ../src/core/undo/ScaleUndoAction.cpp:62
 msgid "Scale"
-msgstr "縮放"
+msgstr ""
 
 #: ../src/core/undo/SizeUndoAction.cpp:118
 msgid "Change stroke width"
-msgstr "改變筆劃粗細"
+msgstr ""
 
 #: ../src/core/undo/SwapUndoAction.cpp:67
 msgid "Move page upwards"
-msgstr "向前移動頁面"
+msgstr ""
 
 #: ../src/core/undo/SwapUndoAction.cpp:67
 msgid "Move page downwards"
-msgstr "向後移動頁面"
+msgstr ""
 
 #: ../src/core/undo/TextBoxUndoAction.cpp:26
 msgid "Edit text"
-msgstr "編輯文本"
+msgstr ""
 
 #: ../src/core/undo/UndoRedoHandler.cpp:114
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr "未能撤銷操作\"{1}\"\n"
-"有錯誤發生***請提交一個錯誤報告***"
+msgstr ""
 
 #: ../src/core/undo/UndoRedoHandler.cpp:140
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr "未能重複操作\"{1}\"\n"
-"有錯誤發生***請提交一個錯誤報告***"
+msgstr ""
 
 #: ../src/core/undo/UndoRedoHandler.cpp:174
 msgid "Undo: "
-msgstr "撤銷："
+msgstr ""
 
 #: ../src/core/undo/UndoRedoHandler.cpp:186
 msgid "Redo: "
-msgstr "重複："
+msgstr ""
 
 #: ../src/util/ElementRange.cpp:91
 msgid "ElementRange::parse(): invalid element range."
-msgstr "PageRange::parse(): 無效的頁面範圍"
+msgstr ""
 
 #: ../src/util/ElementRange.cpp:95
 msgid "ElementRange::parse(): given element index is larger than maximum count."
-msgstr "PageRange::parse(): 指定頁碼已超出最大頁碼。"
+msgstr ""
 
 #: ../src/util/ElementRange.cpp:98
 msgid "ElementRange::parse(): interval bounds must be in increasing order."
-msgstr "PageRange::parse(): 區段間隔必須使用遞增形式。"
+msgstr ""
 
 #: ../src/util/ElementRange.cpp:101
 msgid "ElementRange::parse(): element indices start with 1"
-msgstr "ElementRange::parse(): 元素索引從 1 開始"
+msgstr ""
 
 #: ../src/util/OutputStream.cpp:27
 msgid "Error opening file: \"{1}\""
-msgstr "打開檔案\"{1}\"出錯"
+msgstr ""
 
 #: ../src/util/OutputStream.cpp:48
 msgid "Error writing data to file: \"{1}\""
@@ -2083,105 +2054,102 @@ msgstr ""
 #: ../src/util/PathUtil.cpp:199
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
-msgstr "未能打開檔案，請手動操作：\n"
-"URL: {1}"
+msgstr ""
 
 #: ../src/util/PathUtil.cpp:309
 msgid "xournalpp-{1}"
-msgstr "xournalpp-{1}"
+msgstr ""
 
 #: ../src/util/PathUtil.cpp:318
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr "無法新增目錄:{1} 錯誤:{2}"
+msgstr ""
 
 #: ../src/util/Util.cpp:76
 msgid "Error {1} executing system command: {2}"
-msgstr "指令 {1} 執行錯誤: {2}"
+msgstr ""
 
 #: ../src/util/XojMsgBox.cpp:191
 msgid "Select another name"
-msgstr "選擇另一個名稱"
+msgstr ""
 
 #: ../src/util/XojMsgBox.cpp:192
 msgid "Replace"
-msgstr "替換"
+msgstr ""
 
 #: ../src/util/XojMsgBox.cpp:215
 msgid "There was an error displaying help: {1}"
-msgstr "顯示說明文件時發生錯誤。{1}"
+msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
-msgstr "xoj-preview-extractor: 調用 INPUT.xoj OUTPUT.png"
+msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:134
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr "xoj-preview-extractor: 檔案 \"{1}\" 不是 .xoj 檔案"
+msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:138
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
-msgstr "xoj-preview-extractor: 打開輸入檔案 \"{1}\" 失敗"
+msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:142
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
-msgstr "xoj-preview-extractor: 檔案 \"{1}\" 没有預覽"
+msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:147
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
-msgstr "xoj-preview-extractor: 沒有預覽及頁面，可能是無效的文件？"
+msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:187
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
-msgstr "xoj-preview-extractor: 找不到圖標 \"{1}\""
+msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:205
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
-msgstr "xoj-preview-extractor: 打開輸出檔案 \"{1}\" 失敗"
+msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:212
 msgid "xoj-preview-extractor: successfully extracted"
-msgstr "xoj-preview-extractor: 成功提取"
+msgstr ""
 
 #: ../ui/about.glade:12
 msgid "About Xournal++"
-msgstr "關於Xournal++"
+msgstr ""
 
 #: ../ui/about.glade:93
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
-msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
-"<i>浴火重生</i>"
+msgstr ""
 
 #: ../ui/about.glade:133
 msgid "Icon Designers"
-msgstr "Icon Designer"
+msgstr ""
 
 #: ../ui/about.glade:186
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
-msgstr "部分基於 Xournal\n"
-"by Denis Auroux"
+msgstr ""
 
 #: ../ui/about.glade:218
 msgid "Website"
-msgstr "網站"
+msgstr ""
 
 #: ../ui/about.glade:246
 msgid "Source Code / Bug Tracker"
-msgstr "原始碼 / 錯誤追蹤"
+msgstr ""
 
 #: ../ui/about.glade:283
 msgid "With help from the community"
-msgstr "来自社區的幫忙"
+msgstr ""
 
 #: ../ui/about.glade:311
 msgid "License"
-msgstr "授權條款"
+msgstr ""
 
 #: ../ui/about.glade:339
 msgid "Authors"
-msgstr "作者群"
+msgstr ""
 
 #: ../ui/about.glade:397 ../ui/toolbarCustomizeDialog.glade:73
 #: ../ui/toolbarManageDialog.glade:134
@@ -2198,91 +2166,90 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:36
 msgid "Resolution"
-msgstr "解析度"
+msgstr ""
 
 #: ../ui/exportSettings.glade:39
 msgid "Width"
-msgstr "寬度"
+msgstr ""
 
 #: ../ui/exportSettings.glade:42
 msgid "Height"
-msgstr "高度"
+msgstr ""
 
 #: ../ui/exportSettings.glade:53 ../ui/settings.glade:254
 #: ../ui/settings.glade:271 ../ui/settings.glade:3755
 msgid "None"
-msgstr "無"
+msgstr ""
 
 #: ../ui/exportSettings.glade:56
 msgid "No ruling"
-msgstr "無規則"
+msgstr ""
 
 #: ../ui/exportSettings.glade:59
 msgid "All"
-msgstr "全部"
+msgstr ""
 
 #: ../ui/exportSettings.glade:91
 msgid "<b>Document export settings</b>\n"
 "Set export parameters"
-msgstr "<b>文件輸出設定</b>\n"
-"設定輸出參數"
+msgstr ""
 
 #: ../ui/exportSettings.glade:114
 msgid "Image quality"
-msgstr "圖片品質"
+msgstr ""
 
 #: ../ui/exportSettings.glade:129
 msgid "Range"
-msgstr "範圍"
+msgstr ""
 
 #: ../ui/exportSettings.glade:143
 msgid "All pages"
-msgstr "所有頁面"
+msgstr ""
 
 #: ../ui/exportSettings.glade:159
 msgid "Current page"
-msgstr "當前頁"
+msgstr ""
 
 #: ../ui/exportSettings.glade:175
 msgid "Pages:"
-msgstr "頁碼："
+msgstr ""
 
 #: ../ui/exportSettings.glade:209
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
-msgstr "<i>比如：</i> 1-3 或者 1,3,5-7 等。"
+msgstr ""
 
 #: ../ui/exportSettings.glade:279
 msgid "dpi"
-msgstr "DPI"
+msgstr ""
 
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:321
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
-msgstr "導出文件時不帶任何背景（無）或僅具有PDF和圖像背景（無規則）或全部背景類別。"
+msgstr ""
 
 #: ../ui/exportSettings.glade:336
 msgid "Export layers progressively"
-msgstr "逐步導出圖層"
+msgstr ""
 
 #: ../ui/exportSettings.glade:340
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
-msgstr "如果啟用，每個頁面的圖層將被一層一層添加。 生成的 PDF 文件可用於演示。"
+msgstr ""
 
 #: ../ui/goto.glade:23
 msgid "Go to Page"
-msgstr "轉到頁"
+msgstr ""
 
 #: ../ui/latexSettings.glade:36
 msgid "Always check LaTeX dependencies before running"
-msgstr "執行前總是检查 LaTeX 依賴關係"
+msgstr ""
 
 #: ../ui/latexSettings.glade:40
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
-msgstr "如果啟用，請在運行 LaTeX 工具之前檢查是否安裝了所需的 LaTeX 包以及 LaTeX 命令是否可用。"
+msgstr ""
 
 #: ../ui/latexSettings.glade:48
 msgid "General LaTeX tool settings"
-msgstr "一般 LaTeX 工具設定"
+msgstr ""
 
 #: ../ui/latexSettings.glade:76
 msgid "Default LaTeX Text"
@@ -2290,145 +2257,144 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:105
 msgid "The LaTeX file to use as a template for the LaTeX tool."
-msgstr "LaTeX 文件用作 LaTeX 工具的模板。"
+msgstr ""
 
 #: ../ui/latexSettings.glade:107
 msgid "Global template file path"
-msgstr "全域範本檔案路徑"
+msgstr ""
 
 #: ../ui/latexSettings.glade:119
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
-msgstr "運行 LaTeX 工具時，將在全局模板文件中替換以下字符串："
+msgstr ""
 
 #: ../ui/latexSettings.glade:133
 msgid "%%XPP_TOOL_INPUT%%"
-msgstr "%%XPP_TOOL_INPUT%%"
+msgstr ""
 
 #: ../ui/latexSettings.glade:145
 msgid "The math mode formula typed in the LaTeX tool."
-msgstr "在 LaTeX 工具中鍵入的數學模式公式。"
+msgstr ""
 
 #: ../ui/latexSettings.glade:158
 msgid "Choose a global LaTeX template file"
-msgstr "選擇LaTex全局模板文件"
+msgstr ""
 
 #: ../ui/latexSettings.glade:170
 msgid "%%XPP_TEXT_COLOR%%"
-msgstr "%%XPP_TEXT_COLOR%%"
+msgstr ""
 
 #: ../ui/latexSettings.glade:182
 msgid "The current color of the Text Tool, in hex RGB format."
-msgstr "當前文字工具的顏色格式為16進制。"
+msgstr ""
 
 #: ../ui/latexSettings.glade:195
 msgid "Template file settings"
-msgstr "樣本檔案設定"
+msgstr ""
 
 #: ../ui/latexSettings.glade:224
 msgid "LaTeX generation command"
-msgstr "LaTeX 生成命令"
+msgstr ""
 
 #: ../ui/latexSettings.glade:245
 msgid "Test configuration"
-msgstr "測試配置"
+msgstr ""
 
 #: ../ui/latexSettings.glade:249
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
-msgstr "通過使用測試公式對全局模板文件運行 LaTeX 生成命令來測試當前配置是否有效。"
+msgstr ""
 
 #: ../ui/latexSettings.glade:265
 msgid "LaTeX executable settings"
-msgstr "LaTeX 執行设置"
+msgstr ""
 
 #: ../ui/latexSettings.glade:340
 msgid "Line numbers"
-msgstr "行號"
+msgstr ""
 
 #: ../ui/latexSettings.glade:354
 msgid "Auto-indent"
-msgstr "自動縮排"
+msgstr ""
 
 #: ../ui/latexSettings.glade:368
 msgid "Syntax highlighting"
-msgstr "標示語法"
+msgstr ""
 
 #: ../ui/latexSettings.glade:400
 msgid "Wrap text"
-msgstr "文字折行"
+msgstr ""
 
 #: ../ui/latexSettings.glade:434
 msgid "Use font from system theme."
-msgstr "使用系統主題的字型"
+msgstr ""
 
 #: ../ui/latexSettings.glade:454
 msgid "Font: "
-msgstr "字型： "
+msgstr ""
 
 #: ../ui/latexSettings.glade:469
 msgid "Pick the Editor's Font"
-msgstr "選擇編輯器字體"
+msgstr ""
 
 #: ../ui/latexSettings.glade:507
 msgid "Editor settings"
-msgstr "編輯器設定"
+msgstr ""
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
-msgstr " = 浮動工具箱 (實驗功能) ="
+msgstr ""
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "            <i>Menu: View/Toolbars</i>"
-msgstr "<b>空工具箱</b>\n"
-"            <i>菜單：查看/工具列</i>"
+msgstr ""
 
 #: ../ui/main.glade:421
 msgid "Find previous occurrence of the search string"
-msgstr "向上查找搜索字串"
+msgstr ""
 
 #: ../ui/main.glade:443
 msgid "Find next occurrence of the search string"
-msgstr "向下查找搜索字串"
+msgstr ""
 
 #: ../ui/main.glade:645
 msgid "Copy selected text"
-msgstr "複製已選取文字"
+msgstr ""
 
 #: ../ui/main.glade:667
 msgid "Highlight selected text"
-msgstr "高亮選擇的文字"
+msgstr ""
 
 #: ../ui/main.glade:687
 msgid "Underline selected text"
-msgstr "將所選文字加上底線"
+msgstr ""
 
 #: ../ui/main.glade:707
 msgid "Strikethrough selected text"
-msgstr "為選中文字添加刪除線"
+msgstr ""
 
 #: ../ui/main.glade:727
 msgid "Toggle standard / region text selection"
-msgstr "切換標準/區域文本選擇"
+msgstr ""
 
 #: ../ui/pageFormat.glade:28
 msgid "Paper Format"
-msgstr "紙張樣式"
+msgstr ""
 
 #: ../ui/pageFormat.glade:57
 msgid "Template:"
-msgstr "模板："
+msgstr ""
 
 #: ../ui/pageFormat.glade:98
 msgid "<b>Pagesize</b>"
-msgstr "<b>頁面尺寸</b>"
+msgstr ""
 
 #: ../ui/pageFormat.glade:146
 msgid "Width:"
-msgstr "寬度："
+msgstr ""
 
 #: ../ui/pageFormat.glade:169
 msgid "Height:"
-msgstr "高度："
+msgstr ""
 
 #: ../ui/pageFormat.glade:315
 msgid "Reset"
@@ -2436,55 +2402,55 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:27
 msgid "Configure new page template"
-msgstr "設定新頁面模板"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:45
 msgid "These settings will be used for new pages"
-msgstr "這些設定將應用於新頁面"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:67
 msgid "<b>Page size</b>"
-msgstr "<b>頁面尺寸</b>"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:92
 msgid "Change"
-msgstr "變更"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:109
 msgid "Select Background Color"
-msgstr "選擇背景顏色"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:119
 msgid "Copy current page background instead"
-msgstr "複製當前頁面背景"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:124
 msgid "Copy the background of the current page instead of using the background set above."
-msgstr "複製當前頁面的背景，而不是使用上面設置的背景。"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:179
 msgid "<b>Background Color</b>"
-msgstr "<b>背景顏色</b>"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:192
 msgid "<b>Background</b>"
-msgstr "<b>背景</b>"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:203
 msgid "Copy current page size instead"
-msgstr "複製當前頁面尺寸"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:208
 msgid "Use the current page size instead of the page size above."
-msgstr "使用當前頁面大小而不是上面的頁面大小。"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:233
 msgid "Save to file"
-msgstr "儲存到檔案"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:247
 msgid "Load from file"
-msgstr "從檔案載入"
+msgstr ""
 
 #: ../ui/paletteSettings.glade:76
 msgid "Color Palettes"
@@ -2496,55 +2462,55 @@ msgstr ""
 
 #: ../ui/plugin.glade:81
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr "插件僅在Xournal++重新啟動後生效"
+msgstr ""
 
 #: ../ui/pluginEntry.glade:51
 msgid "Author: "
-msgstr "作者： "
+msgstr ""
 
 #: ../ui/pluginEntry.glade:88
 msgid "Path: "
-msgstr "路徑: "
+msgstr ""
 
 #: ../ui/pluginEntry.glade:124
 msgid "Version: "
-msgstr "版本： "
+msgstr ""
 
 #: ../ui/pluginEntry.glade:159
 msgid "enabled,"
-msgstr "已啟用,"
+msgstr ""
 
 #: ../ui/renameLayerDialog.glade:17
 msgid "Rename selected layer"
-msgstr "將選定的圖層重新命名"
+msgstr ""
 
 #: ../ui/renameLayerDialog.glade:38
 msgid "Sample layer name"
-msgstr "範例圖層名稱"
+msgstr ""
 
 #: ../ui/selectOpacity.glade:23
 msgid "Opacity settings"
-msgstr "透明度設定"
+msgstr ""
 
 #: ../ui/settings.glade:257
 msgid "Arithmetic mean"
-msgstr "算術平均"
+msgstr ""
 
 #: ../ui/settings.glade:260
 msgid "Velocity based Gaussian weights"
-msgstr "基於速度的高斯權重"
+msgstr ""
 
 #: ../ui/settings.glade:274
 msgid "Deadzone"
-msgstr "盲區"
+msgstr ""
 
 #: ../ui/settings.glade:277
 msgid "Inertia"
-msgstr "慣性"
+msgstr ""
 
 #: ../ui/settings.glade:285
 msgid "Xournal++ Preferences"
-msgstr "Xournal++偏好設置"
+msgstr ""
 
 #: ../ui/settings.glade:346
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xopp\n"
@@ -2553,27 +2519,27 @@ msgstr ""
 
 #: ../ui/settings.glade:365
 msgid "Enable Autosaving"
-msgstr "啟用自動儲存"
+msgstr ""
 
 #: ../ui/settings.glade:388
 msgid "every"
-msgstr "每"
+msgstr ""
 
 #: ../ui/settings.glade:415
 msgid "minutes"
-msgstr "分鐘"
+msgstr ""
 
 #: ../ui/settings.glade:443
 msgid "Autosaving"
-msgstr "自動儲存中"
+msgstr ""
 
 #: ../ui/settings.glade:469
 msgid "<i>This name will be proposed if you save a new document.</i>"
-msgstr "<i>如果您保存新文檔，系統會建議使用此名稱。</i>"
+msgstr ""
 
 #: ../ui/settings.glade:502 ../ui/settings.glade:671
 msgid "Default name: "
-msgstr "預設名稱："
+msgstr ""
 
 #: ../ui/settings.glade:541
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -2604,11 +2570,11 @@ msgstr ""
 
 #: ../ui/settings.glade:588 ../ui/settings.glade:758
 msgid "Available Placeholders"
-msgstr "可用的佔位符"
+msgstr ""
 
 #: ../ui/settings.glade:612
 msgid "Default Save Name"
-msgstr "預設儲存名稱"
+msgstr ""
 
 #: ../ui/settings.glade:638
 msgid "<i>This name will be proposed if you export a document to PDF.</i>"
@@ -2649,149 +2615,144 @@ msgstr ""
 
 #: ../ui/settings.glade:807
 msgid "Enable Autoloading of Journals"
-msgstr "啟用日誌的自動加載"
+msgstr ""
 
 #: ../ui/settings.glade:812
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
-msgstr "如果您打開 PDF 並且有一個同名的 Xournal 文件，它將打開 xoj 文件。"
+msgstr ""
 
 #: ../ui/settings.glade:823
 msgid "Enable autoloading of most recent file on application startup"
-msgstr "啟動時自動讀取上次打開的文件"
+msgstr ""
 
 #: ../ui/settings.glade:828
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
-msgstr "如果啟用， Xournal++ 將自動打開最近的文檔，您可以繼續編輯上次保存的文檔。"
+msgstr ""
 
 #: ../ui/settings.glade:843
 msgid "Autoloading"
-msgstr "自動載入"
+msgstr ""
 
 #: ../ui/settings.glade:871
 msgid "Load / Save"
-msgstr "加載/保存"
+msgstr ""
 
 #: ../ui/settings.glade:917
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
-msgstr "<i>將系統每個輸入裝置分類。 只有當您的裝置沒有配對時才更改這些數值。(例如當您的手寫筆顯示為觸控板)</i>"
+msgstr ""
 
 #: ../ui/settings.glade:951
 msgid "Input Devices"
-msgstr "輸入裝置"
+msgstr ""
 
 #: ../ui/settings.glade:985
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
-msgstr "啟用窗口外繪圖<i>（繪圖不會在窗口邊界處停止）</i>"
+msgstr ""
 
 #: ../ui/settings.glade:1003
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "            Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
-msgstr "從起點向左拖動就像按住 shift 鍵一樣。\n"
-"向上拖動就像按住 Control 鍵一樣。\n\n"
-"             確定半徑：修改器在繪製完成之前鎖定的半徑。\n\n"
-"<i>適用於無鍵盤操作。</i>"
+msgstr ""
 
 #: ../ui/settings.glade:1014
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr "將按鈕事件與觸控筆點擊事件合併\n"
-"<i>(如果</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>返回</i> \"<tt>on</tt>\"<i> ，請勾選這一向)</i>"
+msgstr ""
 
 #: ../ui/settings.glade:1033
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
-msgstr "如果缺少壓力訊息，緩速筆劃的壓力要大於更快的筆劃。\n\n"
-"<i>此功能可能對缺乏筆壓感應的設備有用。例如，滑鼠或觸控螢幕。</i>"
+msgstr ""
 
 #: ../ui/settings.glade:1041
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
-msgstr "啟用壓力推斷<i>（當設備提供的壓力不可用時，根據繪圖速度猜測壓力）</i>"
+msgstr ""
 
 #: ../ui/settings.glade:1059
 msgid "Options"
-msgstr "選項"
+msgstr ""
 
 #: ../ui/settings.glade:1089
 msgid "Averaging method"
-msgstr "平均方法"
+msgstr ""
 
 #: ../ui/settings.glade:1122
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
-msgstr "<i>選擇輸入穩定算法及其參數</i>"
+msgstr ""
 
 #: ../ui/settings.glade:1138
 msgid "Buffersize"
-msgstr "緩衝大小"
+msgstr ""
 
 #: ../ui/settings.glade:1150
 msgid "20"
-msgstr "20"
+msgstr ""
 
 #: ../ui/settings.glade:1167
 msgid "Deadzone radius"
-msgstr "盲區半徑"
+msgstr ""
 
 #: ../ui/settings.glade:1179
 msgid "1,30"
-msgstr "1,30"
+msgstr ""
 
 #: ../ui/settings.glade:1197 ../ui/settings.glade:1209
 msgctxt "Drag = Noun: force opposing the movement"
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
-msgstr "拖動：如果值太小，可能會出現不需要的振盪。 如果該值太高，則不會有穩定性。"
+msgstr ""
 
 #: ../ui/settings.glade:1198
 msgctxt "Noun: force opposing the movement"
 msgid "Drag"
-msgstr "拖曳"
+msgstr ""
 
 #: ../ui/settings.glade:1211
 msgid "0,4"
-msgstr "0,4"
+msgstr ""
 
 #: ../ui/settings.glade:1229 ../ui/settings.glade:1241
 msgctxt "Mass = Noun: physics term, related to weight"
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr "質量：質量越大，慣性越大，越穩定。"
+msgstr ""
 
 #: ../ui/settings.glade:1230
 msgctxt "Noun: physics term, related to weight"
 msgid "Mass"
-msgstr "質量"
+msgstr ""
 
 #: ../ui/settings.glade:1243
 msgid "5"
-msgstr "5"
+msgstr ""
 
 #: ../ui/settings.glade:1261 ../ui/settings.glade:1281
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr "高斯参数：值越大，線條月穩定，光標到筆劃末端的缺口也越大。"
+msgstr ""
 
 #: ../ui/settings.glade:1263
 msgid "0,50"
-msgstr "0,50"
+msgstr ""
 
 #: ../ui/settings.glade:1295
 msgid "Preprocessor"
-msgstr "前置處理器"
+msgstr ""
 
 #: ../ui/settings.glade:1326
 msgid "Cusp detection"
-msgstr "尖端檢測"
+msgstr ""
 
 #: ../ui/settings.glade:1343
 msgid "Finalize the stroke"
-msgstr "筆劃補全"
+msgstr ""
 
 #: ../ui/settings.glade:1348
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr "抖動處理會在筆劃末端產生一個缺口。句選此像可以填補缺口。"
+msgstr ""
 
 #: ../ui/settings.glade:1366
 msgid "Input stabilization"
-msgstr "抖動處理（輸入穩定化）"
+msgstr ""
 
 #: ../ui/settings.glade:1397
 msgid "Indent using spaces"
@@ -2815,91 +2776,91 @@ msgstr ""
 
 #: ../ui/settings.glade:1492
 msgid "Input System"
-msgstr "輸入系統"
+msgstr ""
 
 #: ../ui/settings.glade:1537
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
-msgstr "<i>定義按下滑鼠按鍵時選擇哪個工具。 鬆開按鍵後，將恢復先前的工具。</i>"
+msgstr ""
 
 #: ../ui/settings.glade:1571
 msgid "Middle Mouse Button"
-msgstr "滑鼠中鍵"
+msgstr ""
 
 #: ../ui/settings.glade:1603
 msgid "Right Mouse Button"
-msgstr "滑鼠右鍵"
+msgstr ""
 
 #: ../ui/settings.glade:1619
 msgid "Mouse Buttons"
-msgstr "滑鼠按鍵"
+msgstr ""
 
 #: ../ui/settings.glade:1650 ../ui/settingsDeviceClassConfig.glade:35
 msgid "Mouse"
-msgstr "滑鼠"
+msgstr ""
 
 #: ../ui/settings.glade:1697
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
-msgstr "<i>筆壓感應 允許您繪製不同寬度的線條，具體取決於您對筆施加的壓力。 如果您的平板電腦不支持此功能，則此設置無效。</i>"
+msgstr ""
 
 #: ../ui/settings.glade:1711
 msgid "Enable Pressure Sensitivity"
-msgstr "啟用筆壓感應"
+msgstr ""
 
 #: ../ui/settings.glade:1741
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
-msgstr "<i>一些設備報告出乎意料的小或大壓力。 這可以通過設置最小壓力或縮放設備報告的壓力來解決。</i>"
+msgstr ""
 
 #: ../ui/settings.glade:1763
 msgid "Minimum Pressure:"
-msgstr "最小壓力"
+msgstr ""
 
 #: ../ui/settings.glade:1774
 msgid "Pressure Multiplier: "
-msgstr "壓力倍增器 ： "
+msgstr ""
 
 #: ../ui/settings.glade:1833
 msgid "Sensitivity Scale"
-msgstr "壓感設定"
+msgstr ""
 
 #: ../ui/settings.glade:1849
 msgid "Pressure Sensitivity"
-msgstr "筆壓感應"
+msgstr ""
 
 #: ../ui/settings.glade:1873
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
-msgstr "<i>通過一些設置，筆劃在開始時會出現偽影。 這可以通過忽略筆觸摸屏幕時的前幾個事件/筆劃點來避免。</i>"
+msgstr ""
 
 #: ../ui/settings.glade:1891
 msgid "Ignore the first"
-msgstr "忽略第一個"
+msgstr ""
 
 #: ../ui/settings.glade:1909
 msgid "1"
-msgstr "1"
+msgstr ""
 
 #: ../ui/settings.glade:1925
 msgid "events"
-msgstr "事件"
+msgstr ""
 
 #: ../ui/settings.glade:1946
 msgid "Artifact workaround"
-msgstr "修復工件"
+msgstr ""
 
 #: ../ui/settings.glade:1973
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
-msgstr "<i>指定在按下觸控筆的按鈕或使用橡皮擦時將選擇的工具。 鬆開按鈕後，將選擇上一個工具。</i>"
+msgstr ""
 
 #: ../ui/settings.glade:2007
 msgid "Button 1"
-msgstr "按鈕 1"
+msgstr ""
 
 #: ../ui/settings.glade:2039
 msgid "Button 2"
-msgstr "按鈕 2"
+msgstr ""
 
 #: ../ui/settings.glade:2087
 msgid "Stylus Buttons"
-msgstr "觸控筆按鈕"
+msgstr ""
 
 #: ../ui/settings.glade:2119
 msgid "Stylus-based eraser is visible"
@@ -2931,72 +2892,72 @@ msgstr ""
 
 #: ../ui/settings.glade:2190
 msgid "Stylus"
-msgstr "手寫筆"
+msgstr ""
 
 #: ../ui/settings.glade:2237
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
-msgstr "<i>您可以配置未被 GTK 識別為觸摸屏的設備，使其表現得像一個設備。</i>"
+msgstr ""
 
 #: ../ui/settings.glade:2270 ../ui/settings.glade:2858
 #: ../ui/settingsDeviceClassConfig.glade:39
 msgid "Touchscreen"
-msgstr "觸控螢幕"
+msgstr ""
 
 #: ../ui/settings.glade:2297
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
-msgstr "<i>如果您的硬件不支持手部識別，當您的筆靠近屏幕時，Xournal++ 可以禁用您的觸摸屏。</i>"
+msgstr ""
 
 #: ../ui/settings.glade:2311
 msgid "Enable internal Hand Recognition"
-msgstr "啟用手勢感知"
+msgstr ""
 
 #: ../ui/settings.glade:2341
 msgid "Disabling Method"
-msgstr "禁用方法"
+msgstr ""
 
 #: ../ui/settings.glade:2352
 msgid "Timeout"
-msgstr "逾時"
+msgstr ""
 
 #: ../ui/settings.glade:2366
 msgid "Autodetect"
-msgstr "自動偵測"
+msgstr ""
 
 #: ../ui/settings.glade:2395
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
-msgstr "s <i>(在此之後觸控螢幕將被重新激活)</i>"
+msgstr ""
 
 #: ../ui/settings.glade:2440
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
-msgstr "<i>指定一旦觸發手部識別就調用的命令。 命令將在 UI 線程中執行，請確保它們沒有阻塞！</i>"
+msgstr ""
 
 #: ../ui/settings.glade:2463
 msgid "Enable"
-msgstr "啟用"
+msgstr ""
 
 #: ../ui/settings.glade:2474
 msgid "Disable"
-msgstr "停用"
+msgstr ""
 
 #: ../ui/settings.glade:2507 ../ui/settings.glade:2520
 msgid "Test"
-msgstr "測試"
+msgstr ""
 
 #: ../ui/settings.glade:2553
 msgid "Custom Commands (for Method \"Custom\")"
-msgstr "自定義命令（用於自定義方法）"
+msgstr ""
 
 #: ../ui/settings.glade:2576
 msgid "Hand Recognition"
-msgstr "手勢識別"
+msgstr ""
 
 #: ../ui/settings.glade:2603
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
-msgstr "<i>使用捏合手勢縮放日誌頁面。</i>"
+msgstr ""
 
 #: ../ui/settings.glade:2617
 msgid "Enable zoom gestures (requires restart)"
-msgstr "啟用手勢縮放 (需要重新啟動)"
+msgstr ""
 
 #: ../ui/settings.glade:2635
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues.\n"
@@ -3005,59 +2966,59 @@ msgstr ""
 
 #: ../ui/settings.glade:2641
 msgid "Start zooming after a distance "
-msgstr "開始縮放的距離 "
+msgstr ""
 
 #: ../ui/settings.glade:2653
 msgid "1.0"
-msgstr "1.0"
+msgstr ""
 
 #: ../ui/settings.glade:2668
 msgid "% greater than the initial distance between the two touches."
-msgstr "%兩次觸碰大於初始距離。"
+msgstr ""
 
 #: ../ui/settings.glade:2706
 msgid "Zoom Gestures"
-msgstr "縮放手勢"
+msgstr ""
 
 #: ../ui/settings.glade:2733
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
-msgstr "<i>像使用多點觸控筆一樣使用觸摸屏。</i>"
+msgstr ""
 
 #: ../ui/settings.glade:2747
 msgid "Enable touch drawing"
-msgstr "啟用觸控繪圖"
+msgstr ""
 
 #: ../ui/settings.glade:2752
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
-msgstr "用兩根手指平移/縮放，用一根手指使用所選工具。"
+msgstr ""
 
 #: ../ui/settings.glade:2767
 msgid "Touch Drawing"
-msgstr "觸控繪圖"
+msgstr ""
 
 #: ../ui/settings.glade:2794
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
-msgstr "<i>禁用 GTK 的內置觸摸屏滾動可以解決某些平台上的滾動錯誤。 如果您在嘗試使用觸摸屏滾動時遇到滾動位置跳躍/突然變化，請考慮更改此設置。</i>"
+msgstr ""
 
 #: ../ui/settings.glade:2808
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
-msgstr "禁用 GTK 内置的管性滾動功能。（需要重啟）"
+msgstr ""
 
 #: ../ui/settings.glade:2827
 msgid "Touch Scrolling"
-msgstr "觸控滾動"
+msgstr ""
 
 #: ../ui/settings.glade:2914
 msgid "Show Menubar on Startup"
-msgstr "在啟動時顯示選單列"
+msgstr ""
 
 #: ../ui/settings.glade:2932
 msgid "<i>Toggle visibility of menubar with F10</i>"
-msgstr "<i>使用 F10 切換菜單欄的可見性</i>"
+msgstr ""
 
 #: ../ui/settings.glade:2950
 msgid "Show filepath in title bar"
-msgstr "在標題列內顯示檔案位置"
+msgstr ""
 
 #: ../ui/settings.glade:2965
 msgid "Show page number in title bar"
@@ -3065,19 +3026,19 @@ msgstr ""
 
 #: ../ui/settings.glade:3005
 msgid "Border color for current page and other selections"
-msgstr "當前頁面和其他選擇的邊框顏色"
+msgstr ""
 
 #: ../ui/settings.glade:3019
 msgid "Border color"
-msgstr "邊界顏色"
+msgstr ""
 
 #: ../ui/settings.glade:3032
 msgid "Background color between pages"
-msgstr "頁面間背景顏色"
+msgstr ""
 
 #: ../ui/settings.glade:3058
 msgid "Selection Color (Text, Stroke Selection etc.)"
-msgstr "選擇顏色（文字，筆劃等）"
+msgstr ""
 
 #: ../ui/settings.glade:3084
 msgid "Active Selection Color (Search Results etc.)"
@@ -3085,19 +3046,19 @@ msgstr ""
 
 #: ../ui/settings.glade:3106
 msgid "Use available Stock Icons (requires restart)"
-msgstr "使用可用的原生圖示 (需要重啟)"
+msgstr ""
 
 #: ../ui/settings.glade:3127
 msgid "Icon Theme"
-msgstr "佈景主題"
+msgstr ""
 
 #: ../ui/settings.glade:3142
 msgid "Color"
-msgstr "顏色"
+msgstr ""
 
 #: ../ui/settings.glade:3156
 msgid "(requires restart)"
-msgstr "(需要重新啟動)"
+msgstr ""
 
 #: ../ui/settings.glade:3179
 msgid "Theme Variant:"
@@ -3121,11 +3082,11 @@ msgstr ""
 
 #: ../ui/settings.glade:3235
 msgid "Colors"
-msgstr "顏色"
+msgstr ""
 
 #: ../ui/settings.glade:3251
 msgid "Global"
-msgstr "全域"
+msgstr ""
 
 #: ../ui/settings.glade:3279
 msgid "Recolor Drawing Area (might introduce lags when moving selections)"
@@ -3165,80 +3126,80 @@ msgstr ""
 
 #: ../ui/settings.glade:3401
 msgid "Cursor icon for pen"
-msgstr "筆的鼠標圖案"
+msgstr ""
 
 #: ../ui/settings.glade:3416
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
-msgstr "沒有圖示"
+msgstr ""
 
 #: ../ui/settings.glade:3417
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
-msgstr "小圖示"
+msgstr ""
 
 #: ../ui/settings.glade:3418
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
-msgstr "粗筆圖示"
+msgstr ""
 
 #: ../ui/settings.glade:3419
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
-msgstr "系統游標"
+msgstr ""
 
 #: ../ui/settings.glade:3444
 msgid "Highlight cursor position"
-msgstr "高亮鼠標位置"
+msgstr ""
 
 #: ../ui/settings.glade:3449
 msgid "Draw a transparent circle around the cursor"
-msgstr "在光標周圍畫一個透明的圓圈"
+msgstr ""
 
 #: ../ui/settings.glade:3467 ../ui/settings.glade:3610
 msgid "Choose the color to use for \"Highlight cursor position\""
-msgstr "選擇 “高亮鼠標位置” 所使用的颜色"
+msgstr ""
 
 #: ../ui/settings.glade:3481
 msgid "Circle Color"
-msgstr "圓圈顏色"
+msgstr ""
 
 #: ../ui/settings.glade:3505 ../ui/settings.glade:3556
 #: ../ui/settings.glade:5022
 msgid "pixels"
-msgstr "畫素"
+msgstr ""
 
 #: ../ui/settings.glade:3533
 msgid "Radius"
-msgstr "半徑"
+msgstr ""
 
 #: ../ui/settings.glade:3569
 msgid "30"
-msgstr "30"
+msgstr ""
 
 #: ../ui/settings.glade:3585
 msgid "Border Width"
-msgstr "邊框寬度"
+msgstr ""
 
 #: ../ui/settings.glade:3624
 msgid "Border Color"
-msgstr "邊框顏色"
+msgstr ""
 
 #: ../ui/settings.glade:3656
 msgid "Cursor"
-msgstr "游標"
+msgstr ""
 
 #: ../ui/settings.glade:3681
 msgid "Show sidebar on the right side"
-msgstr "側邊欄右置"
+msgstr ""
 
 #: ../ui/settings.glade:3696
 msgid "Show vertical scrollbar on the left side"
-msgstr "垂直捲動條左置"
+msgstr ""
 
 #: ../ui/settings.glade:3715
 msgid "Left / Right-Handed"
-msgstr "左/右-慣用手"
+msgstr ""
 
 #: ../ui/settings.glade:3740
 msgid "Page numbering  "
@@ -3262,125 +3223,125 @@ msgstr ""
 
 #: ../ui/settings.glade:3804
 msgid "Hide the horizontal scrollbar"
-msgstr "隱藏水平捲軸列"
+msgstr ""
 
 #: ../ui/settings.glade:3819
 msgid "Hide the vertical scrollbar"
-msgstr "隱藏垂直捲軸"
+msgstr ""
 
 #: ../ui/settings.glade:3834
 msgid "Disable scrollbar fade out"
-msgstr "禁用滾動條淡出"
+msgstr ""
 
 #: ../ui/settings.glade:3852
 msgid "Scrollbars"
-msgstr "滾動條"
+msgstr ""
 
 #: ../ui/settings.glade:3906
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
-msgstr "當一個被選中元素移出畫布可見部份時，已這個百分比數值滾動畫布。"
+msgstr ""
 
 #: ../ui/settings.glade:3908
 msgid "Base speed"
-msgstr "基本速度"
+msgstr ""
 
 #: ../ui/settings.glade:3919
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
-msgstr "根據當前視野被選中元素將滾動數量翻倍，並以此數值為上限。"
+msgstr ""
 
 #: ../ui/settings.glade:3921
 msgid "Max multiplier"
-msgstr "最大倍率"
+msgstr ""
 
 #: ../ui/settings.glade:3934
 msgid "Selection Edge Panning"
-msgstr "選擇邊緣平移"
+msgstr ""
 
 #: ../ui/settings.glade:3959 ../ui/settings.glade:4033
 #: ../ui/mainmenubar.xml:205
 msgid "Show Menubar"
-msgstr "顯示選單列"
+msgstr ""
 
 #: ../ui/settings.glade:3974 ../ui/settings.glade:4048
 msgid "Show Toolbar"
-msgstr "顯示工具列"
+msgstr ""
 
 #: ../ui/settings.glade:3989 ../ui/settings.glade:4078
 #: ../ui/mainmenubar.xml:210
 msgid "Show Sidebar"
-msgstr "顯示側邊欄"
+msgstr ""
 
 #: ../ui/settings.glade:4008 ../ui/mainmenubar.xml:193
 msgid "Fullscreen"
-msgstr "全屏"
+msgstr ""
 
 #: ../ui/settings.glade:4063
 msgid "Go Fullscreen"
-msgstr "切換為全螢幕"
+msgstr ""
 
 #: ../ui/settings.glade:4098
 msgid "Select toolbar:"
-msgstr "選擇工具條："
+msgstr ""
 
 #: ../ui/settings.glade:4131
 msgid "Presentation Mode"
-msgstr "展示模式"
+msgstr ""
 
 #: ../ui/settings.glade:4160
 msgid "Pre-load pages before"
-msgstr "預載頁面前"
+msgstr ""
 
 #: ../ui/settings.glade:4172
 msgid "Pre-load pages after"
-msgstr "預載頁面後"
+msgstr ""
 
 #: ../ui/settings.glade:4209
 msgid "Clear cached paged while scrolling"
-msgstr "滾動時清除快取頁面"
+msgstr ""
 
 #: ../ui/settings.glade:4236
 msgid "Performance"
-msgstr "效能"
+msgstr ""
 
 #: ../ui/settings.glade:4267
 msgid "View"
-msgstr "視圖"
+msgstr ""
 
 #: ../ui/settings.glade:4316
 msgid "Speed for Ctrl + Scroll"
-msgstr "Ctrl + Scroll 速度設定"
+msgstr ""
 
 #: ../ui/settings.glade:4343
 msgid "Speed for a Zoomstep"
-msgstr "縮放速度"
+msgstr ""
 
 #: ../ui/settings.glade:4403
 msgid "Zoom Speed"
-msgstr "縮放速度"
+msgstr ""
 
 #: ../ui/settings.glade:4430
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
-msgstr "<i>確保 100% 縮放元素的大小是自然的。 （需要重啟）</i>"
+msgstr ""
 
 #: ../ui/settings.glade:4450
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
-msgstr "<i>將尺放在屏幕上並移動滑塊，直到兩個尺匹配。</i>"
+msgstr ""
 
 #: ../ui/settings.glade:4497
 msgid "The unit of the ruler is cm"
-msgstr "標尺的單位是釐米"
+msgstr ""
 
 #: ../ui/settings.glade:4518
 msgid "Display DPI Calibration"
-msgstr "顯示器校準"
+msgstr ""
 
 #: ../ui/settings.glade:4549
 msgid "Zoom"
-msgstr "縮放"
+msgstr ""
 
 #: ../ui/settings.glade:4598
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
-msgstr "<i>如果您在頁面旁邊添加額外的空間，您可以選擇您想要處理的屏幕區域。</i>"
+msgstr ""
 
 #: ../ui/settings.glade:4721
 msgid "Add additional horizontal space"
@@ -3404,23 +3365,23 @@ msgstr ""
 
 #: ../ui/settings.glade:4823
 msgid "Scrolling outside the page"
-msgstr "在頁面外滾動"
+msgstr ""
 
 #: ../ui/settings.glade:4850
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
-msgstr "當啟用 <b>雙頁</b> 顯示時，偏移多個頁面中的第一頁"
+msgstr ""
 
 #: ../ui/settings.glade:4851
 msgid "First Page Offset "
-msgstr "第一頁偏移 "
+msgstr ""
 
 #: ../ui/settings.glade:4864
 msgid "Usually 0 or 1"
-msgstr "通常為 0 或 1"
+msgstr ""
 
 #: ../ui/settings.glade:4883
 msgid "Paired Pages"
-msgstr "雙頁模式"
+msgstr ""
 
 #: ../ui/settings.glade:4909
 msgid "when scrolling to end of last page"
@@ -3440,70 +3401,67 @@ msgstr ""
 
 #: ../ui/settings.glade:4981
 msgid "Enable  with determination radius of "
-msgstr "啟用並將半徑設為 "
+msgstr ""
 
 #: ../ui/settings.glade:4986
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "<i>Useful for operating without keyboard.</i>"
-msgstr "從起點向左拖動就像按住 shift 鍵一樣。\n"
-"向上拖動就像按住 Control 鍵一樣。\n\n"
-" 確定半徑：修改器在繪製完成之前鎖定的半徑。\n\n"
-"<i>適用於無鍵盤操作。</i>"
+msgstr ""
 
 #: ../ui/settings.glade:5036
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
-msgstr "繪圖工具 - 按繪製方向設置修改器（實驗性）"
+msgstr ""
 
 #: ../ui/settings.glade:5053
 msgid "Preserve line width"
-msgstr "保留線寬"
+msgstr ""
 
 #: ../ui/settings.glade:5058
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
-msgstr "調整所選區域大小後，所有筆劃將保持操作前的相同寬度。 "
+msgstr ""
 
 #: ../ui/settings.glade:5069
 msgid "Resizing"
-msgstr "縮放"
+msgstr ""
 
 #: ../ui/settings.glade:5105
 msgid "Rotation snapping tolerance"
-msgstr "旋轉捕捉範圍"
+msgstr ""
 
 #: ../ui/settings.glade:5117
 msgid "Grid snapping tolerance"
-msgstr "網格捕捉範圍"
+msgstr ""
 
 #: ../ui/settings.glade:5159
 msgid "Grid size"
-msgstr "網格尺寸"
+msgstr ""
 
 #: ../ui/settings.glade:5190
 msgid "Use snapping for recognized shapes"
-msgstr "對已識別的形狀使用捕捉"
+msgstr ""
 
 #: ../ui/settings.glade:5194
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
-msgstr "如果激活，已被形狀識別器識別的形狀將自動捕捉到網格。 如果您在書寫時打開了形狀識別器，這可能會導致意外結果。"
+msgstr ""
 
 #: ../ui/settings.glade:5209
 msgid "Snapping"
-msgstr "對齊"
+msgstr ""
 
 #: ../ui/settings.glade:5237
 msgid "Minimum Stroke Size"
-msgstr "最小筆刷尺寸"
+msgstr ""
 
 #: ../ui/settings.glade:5292
 msgctxt "Short taps/clicks will trigger special actions"
 msgid "Enable Tap action"
-msgstr "啟用點擊動作"
+msgstr ""
 
 #: ../ui/settings.glade:5297
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
-msgstr "不要為短時間和長度的輸入畫圖，而是顯示浮動工具箱，除非它是連續短時間出現的。"
+msgstr ""
 
 #: ../ui/settings.glade:5309
 msgid "Time limit (ms)"
@@ -3534,29 +3492,28 @@ msgstr ""
 
 #: ../ui/settings.glade:5401
 msgid "Try to select object first."
-msgstr "請先選擇物件"
+msgstr ""
 
 #: ../ui/settings.glade:5406 ../ui/settings.glade:5436
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
-msgstr "嘗試先選擇對象； 如果未選擇任何內容，則如果啟用則顯示浮動工具箱。"
+msgstr ""
 
 #: ../ui/settings.glade:5419
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
-msgstr "在忽略筆劃之前，必須滿足三個條件。\n"
-"它必須是短時間、短距離，且最近没有可忽略的另一条筆劃。"
+msgstr ""
 
 #: ../ui/settings.glade:5422
 msgid "Settings:"
-msgstr "設定："
+msgstr ""
 
 #: ../ui/settings.glade:5431
 msgid "Show Floating Toolbox"
-msgstr "顯示浮動工具箱"
+msgstr ""
 
 #: ../ui/settings.glade:5450
 msgid "Action on Tool Tap"
-msgstr "點擊工具時的動作"
+msgstr ""
 
 #: ../ui/settings.glade:5478
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality.\n"
@@ -3566,40 +3523,39 @@ msgstr ""
 #: ../ui/settings.glade:5500
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
-msgstr "當PDF放大至高分辨率时，每次重新渲染都可能需要很長時間，設置該值可以减少重新渲染的次數。\n"
-"設置为0時，縮放總是重新渲染。"
+msgstr ""
 
 #: ../ui/settings.glade:5503
 msgid "Re-render when the page's zoom changes by more than "
-msgstr "重新渲染，當頁面縮放超過時 "
+msgstr ""
 
 #: ../ui/settings.glade:5516
 msgid "0.00"
-msgstr "0.00"
+msgstr ""
 
 #: ../ui/settings.glade:5533
 msgid "%."
-msgstr "%."
+msgstr ""
 
 #: ../ui/settings.glade:5554
 msgid "PDF Cache"
-msgstr "PDF 快取"
+msgstr ""
 
 #: ../ui/settings.glade:5585
 msgid "Drawing Area"
-msgstr "繪圖區域"
+msgstr ""
 
 #: ../ui/settings.glade:5632
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
-msgstr "<i>選擇按下預設按鍵的設定及工具</i>"
+msgstr ""
 
 #: ../ui/settings.glade:5684
 msgid "<b>Default</b>"
-msgstr "<b>預設</b>"
+msgstr ""
 
 #: ../ui/settings.glade:5724
 msgid "Defaults"
-msgstr "預設"
+msgstr ""
 
 #: ../ui/settings.glade:5777
 msgid "<i>\n"
@@ -3618,77 +3574,76 @@ msgstr ""
 
 #: ../ui/settings.glade:5842
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
-msgstr "<i>錄音現在儲存在獨立的資料夾裏, 並可以在您的日記中引用.</i>"
+msgstr ""
 
 #: ../ui/settings.glade:5861 ../ui/settings.glade:5897
 msgid "Storage Folder"
-msgstr "儲存資料夾位置"
+msgstr ""
 
 #: ../ui/settings.glade:5876
 msgid "Select Folder"
-msgstr "選擇資料夾"
+msgstr ""
 
 #: ../ui/settings.glade:5924
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
-msgstr "<i>指定用於錄製和播放音頻附件的音頻設備。\n"
-"如果可用，請選擇 <small><tt>pulse</tt></small> 作為輸入/輸出設備。</i>"
+msgstr ""
 
 #: ../ui/settings.glade:5948
 msgid "Input Device"
-msgstr "輸入設備"
+msgstr ""
 
 #: ../ui/settings.glade:5970
 msgid "Output Device"
-msgstr "輸出裝置"
+msgstr ""
 
 #: ../ui/settings.glade:6001
 msgid "Audio Devices"
-msgstr "音訊裝置"
+msgstr ""
 
 #: ../ui/settings.glade:6030
 msgid "Sample Rate"
-msgstr "採樣率"
+msgstr ""
 
 #: ../ui/settings.glade:6041
 msgid "Gain"
-msgstr "增益"
+msgstr ""
 
 #: ../ui/settings.glade:6088
 msgid "Recording Quality"
-msgstr "錄製品質"
+msgstr ""
 
 #: ../ui/settings.glade:6114
 msgid "Default Seek Time (in seconds)"
-msgstr "預設搜尋時間（秒）"
+msgstr ""
 
 #: ../ui/settings.glade:6127
 msgid "1,00"
-msgstr "1,00"
+msgstr ""
 
 #: ../ui/settings.glade:6146
 msgid "Playback Settings"
-msgstr "播放設定"
+msgstr ""
 
 #: ../ui/settings.glade:6160
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
-msgstr "<i>更改只會在新的錄製和播放時生效。</i>"
+msgstr ""
 
 #: ../ui/settings.glade:6191
 msgid "Audio Recording"
-msgstr "音訊錄製"
+msgstr ""
 
 #: ../ui/settings.glade:6264
 msgid "<i>Select language (requires restart)</i>"
-msgstr "<i>選擇語言（需要重啟）</i>"
+msgstr ""
 
 #: ../ui/settings.glade:6296 ../ui/settings.glade:6342
 msgid "Language"
-msgstr "語言"
+msgstr ""
 
 #: ../ui/settings.glade:6312
 msgid "Language Settings"
-msgstr "語言設定"
+msgstr ""
 
 #: ../ui/settings.glade:6366
 msgid "Palette"
@@ -3696,27 +3651,27 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:20
 msgid "Device"
-msgstr "設備"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:44
 msgid "Disable drawing for this device"
-msgstr "取消此設備繪製"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:125
 msgid "Eraser Type - don't change"
-msgstr "擦除類別 - 不修改"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:126 ../ui/settingsButtonConfig.glade:144
 msgid "Standard"
-msgstr "標準"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:127
 msgid "Whiteout"
-msgstr "涂白"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:128
 msgid "Delete stroke"
-msgstr "刪除筆劃"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:143
 msgid "Stroke Type - don't change"
@@ -3732,23 +3687,23 @@ msgstr ""
 
 #: ../ui/settingsDeviceClassConfig.glade:34
 msgid "Disabled"
-msgstr "已停用"
+msgstr ""
 
 #: ../ui/settingsDeviceClassConfig.glade:36
 msgid "Mouse+Keyboard Combo"
-msgstr "滑鼠+键盘结合"
+msgstr ""
 
 #: ../ui/texdialog.glade:18
 msgid "Insert Latex"
-msgstr "插入LaTeX"
+msgstr ""
 
 #: ../ui/texdialog.glade:37
 msgid "Enter / edit LaTeX Text"
-msgstr "輸入/编辑 LaTeX 文本"
+msgstr ""
 
 #: ../ui/texdialog.glade:98
 msgid "TeX Source"
-msgstr "TeX源碼"
+msgstr ""
 
 #: ../ui/texdialog.glade:116
 msgid "Output generated by the LaTeX command."
@@ -3756,7 +3711,7 @@ msgstr ""
 
 #: ../ui/texdialog.glade:136
 msgid "Command Output"
-msgstr "指令輸出"
+msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:30
 msgid "Drag and drop Components from here to the toolbars and back."
@@ -3764,7 +3719,7 @@ msgstr ""
 
 #: ../ui/toolbarManageDialog.glade:28
 msgid "Manage Toolbar"
-msgstr "定製工具條"
+msgstr ""
 
 #: ../ui/mainmenubar.xml:5
 msgid "_File"
