@@ -65,6 +65,7 @@
 #include "gui/toolbarMenubar/ToolMenuHandler.h"                  // for Tool...
 #include "gui/toolbarMenubar/model/ToolbarData.h"                // for Tool...
 #include "gui/toolbarMenubar/model/ToolbarModel.h"               // for Tool...
+#include "model/BackgroundImage.h"                               // for Back...
 #include "model/Compass.h"                                       // for Comp...
 #include "model/Document.h"                                      // for Docu...
 #include "model/DocumentChangeType.h"                            // for DOCU...
@@ -390,16 +391,15 @@ bool Control::toggleGeometryTool() {
     view->addOverlayView(std::make_unique<ViewClass>(tool, view, zoom));
     this->geometryTool = std::unique_ptr<GeometryTool>(tool);
     this->geometryToolController = std::make_unique<ControllerClass>(view, tool);
-    std::unique_ptr<InputHandlerClass> geometryToolInputHandler =
+    auto geometryToolInputHandler =
             std::make_unique<InputHandlerClass>(this->win->getXournal(), geometryToolController.get());
-    geometryToolInputHandler->registerToPool(tool->getHandlerPool());
     Range range = view->getVisiblePart();
     if (range.isValid()) {
         double originX = (range.minX + range.maxX) * .5;
         double originY = (range.minY + range.maxY) * .5;
-        geometryToolController->translate(originX, originY);
+        geometryToolController->translate({originX, originY});
     } else {
-        geometryToolController->translate(view->getWidth() * .5, view->getHeight() * .5);
+        geometryToolController->translate({view->getWidth() * .5, view->getHeight() * .5});
     }
     xournal->input->setGeometryToolInputHandler(std::move(geometryToolInputHandler));
     geometryTool->notify();
@@ -1509,7 +1509,7 @@ void Control::replaceDocument(std::unique_ptr<Document> doc, int scrollToPage) {
     fs::path filepath = doc->getFilepath();
 
     this->doc->lock();
-    *this->doc = *doc;
+    *this->doc = *doc;  // This calls fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE). No need to fire it again
     this->doc->unlock();
 
     // Set folder as last save path, so the next save will be at the current document location
@@ -1519,7 +1519,6 @@ void Control::replaceDocument(std::unique_ptr<Document> doc, int scrollToPage) {
         settings->setLastSavePath(filepath.parent_path());
     }
 
-    fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
     fileLoaded(scrollToPage);
 }
 
@@ -1584,6 +1583,46 @@ bool Control::openPdfFile(fs::path filepath, bool attachToDocument, int scrollTo
     return success;
 }
 
+bool Control::openPngFile(fs::path filepath, bool attachToDocument, int scrollToPage) {
+    fs::path imagePath(filepath);
+    this->getCursor()->setCursorBusy(true);
+    auto doc = std::make_unique<Document>(this);
+    this->replaceDocument(createNewDocument(this, std::move(filepath), std::nullopt), -1);
+
+    // Put a png file directly in the page
+    this->doc->lock();
+    const size_t pageNr = this->getCurrentPageNo();
+    PageRef page = this->doc->getPage(pageNr);
+    BackgroundImage img;
+    GError* error = nullptr;
+    img.loadFile(imagePath, &error);
+
+    if (error) {
+        std::string msg = FS(_F("Error reading PNG file \"{1}\"") % imagePath.u8string());
+        XojMsgBox::showErrorToUser(this->getGtkWindow(), msg);
+        g_error_free(error);
+        this->doc->unlock();
+        this->getCursor()->setCursorBusy(false);
+        return false;
+    }
+
+    page->setBackgroundImage(std::move(img));
+    page->setBackgroundType(PageType(PageTypeFormat::Image));
+
+    // Apply correct page size
+    GdkPixbuf* pixbuf = page->getBackgroundImage().getPixbuf();
+    if (pixbuf) {
+        page->setSize(gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf));
+    } else {
+        g_warning("PageBackgroundChangeController::setPageImageBackground(): Page with image background but nullptr "
+                  "pixbuf");
+    }
+
+    this->doc->unlock();
+    this->getCursor()->setCursorBusy(false);
+    return true;
+}
+
 bool Control::openXoptFile(fs::path filepath) {
     auto pageTemplate = Util::readString(filepath);
     if (!pageTemplate) {
@@ -1605,6 +1644,11 @@ void Control::openFileWithoutSavingTheCurrentDocument(fs::path filepath, bool at
     if (filepath.extension() == ".xopt") {
         this->openXoptFile(std::move(filepath));
         callback(true);
+        return;
+    }
+
+    if (Util::hasPngFileExt(filepath)) {
+        callback(this->openPngFile(std::move(filepath), attachToDocument, scrollToPage));
         return;
     }
 
@@ -2168,7 +2212,7 @@ void Control::clipboardPasteEnabled(bool enabled) { this->actionDB->enableAction
 
 void Control::clipboardPasteText(string text) {
     auto t = std::make_unique<Text>();
-    t->setText(text);
+    t->setText(std::move(text));
     t->setFont(settings->getFont());
     t->setColor(toolHandler->getTool(TOOL_TEXT).getColor());
 

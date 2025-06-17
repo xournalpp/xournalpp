@@ -51,7 +51,20 @@ namespace Util {
 /**
  * @return true if this file has a pdf extension
  */
-bool hasPdfFileExt(const fs::path& path);
+[[nodiscard]] bool hasPdfFileExt(const fs::path& path);
+
+/**
+ * @return true if this file has a png extension
+ */
+[[nodiscard]] bool hasPngFileExt(const fs::path& path);
+
+/**
+ * Check if a path is absolute.
+ *
+ * Use this over fs::path::is_absolute to avoid a bug in libstdc++
+ * regarding UNC paths on Windows.
+ */
+[[nodiscard]] bool isAbsolute(const fs::path& path);
 
 /**
  * Clear the xournal extensions ignoring case (.xoj, .xopp)

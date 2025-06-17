@@ -299,7 +299,7 @@ void MainWindow::initXournalWidget() {
 
     gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(winXournal), vpXournal);
 
-    scrollHandling = std::make_unique<ScrollHandling>(GTK_SCROLLABLE(vpXournal));
+    scrollHandling = std::make_unique<ScrollHandling>(GTK_SCROLLED_WINDOW(winXournal));
 
     this->xournal = std::make_unique<XournalView>(vpXournal, control, scrollHandling.get());
 
@@ -487,18 +487,18 @@ void MainWindow::updateScrollbarSidebarPosition() {
         gtk_paned_set_end_child(paned, nullptr);
         if (sidebarRight) {
             gtk_paned_set_start_child(paned, mainContent);
-            gtk_paned_set_start_resize(paned, true);
-            gtk_paned_set_start_shrink(paned, false);
+            gtk_paned_set_resize_start_child(paned, true);
+            gtk_paned_set_shrink_start_child(paned, false);
             gtk_paned_set_end_child(paned, sidebar);
-            gtk_paned_set_end_resize(paned, false);
-            gtk_paned_set_end_shrink(paned, false);
+            gtk_paned_set_resize_end_child(paned, false);
+            gtk_paned_set_shrink_end_child(paned, false);
         } else {
             gtk_paned_set_end_child(paned, mainContent);
-            gtk_paned_set_end_resize(paned, true);
-            gtk_paned_set_end_shrink(paned, false);
+            gtk_paned_set_resize_end_child(paned, true);
+            gtk_paned_set_shrink_end_child(paned, false);
             gtk_paned_set_start_child(paned, sidebar);
-            gtk_paned_set_start_resize(paned, false);
-            gtk_paned_set_start_shrink(paned, false);
+            gtk_paned_set_resize_start_child(paned, false);
+            gtk_paned_set_shrink_start_child(paned, false);
         }
 #endif
     }

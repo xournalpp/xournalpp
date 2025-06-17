@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 08:50+0000\n"
-"PO-Revision-Date: 2025-03-02 04:25\n"
+"POT-Creation-Date: 2025-05-25 16:22+0000\n"
+"PO-Revision-Date: 2025-06-01 04:28\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -23,11 +23,11 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 msgstr "Dossier audio non défini ou invalide ! L'enregistrement ne fonctionnera pas !\n"
 "Veuillez définir le dossier d'enregistrement sous \"Préférences > Enregistrement audio\""
 
-#: ../src/core/control/Control.cpp:229
+#: ../src/core/control/Control.cpp:230
 msgid "Filesystem error: {1}"
 msgstr "Erreur du système de fichiers : {1}"
 
-#: ../src/core/control/Control.cpp:241
+#: ../src/core/control/Control.cpp:242
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "Impossible de supprimer l'ancien fichier de sauvegarde automatique \"{1}\" : {2}"
 
@@ -39,16 +39,16 @@ msgstr "Vous avez supprimé la barre d’outils active. Retour à la barre d’o
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "La configuration de l'outil \"{1}\" est prédéfinie, voulez-vous créer une copie à modifier ?"
 
-#: ../src/core/control/Control.cpp:584 ../src/core/control/Control.cpp:1554
+#: ../src/core/control/Control.cpp:584 ../src/core/control/Control.cpp:1553
 msgid "Yes"
 msgstr "Oui"
 
-#: ../src/core/control/Control.cpp:584 ../src/core/control/Control.cpp:1554
+#: ../src/core/control/Control.cpp:584 ../src/core/control/Control.cpp:1553
 msgid "No"
 msgstr "Non"
 
-#: ../src/core/control/Control.cpp:814 ../src/core/control/Control.cpp:1721
-#: ../src/core/control/Control.cpp:2059 ../src/core/control/XournalMain.cpp:175
+#: ../src/core/control/Control.cpp:814 ../src/core/control/Control.cpp:1765
+#: ../src/core/control/Control.cpp:2105 ../src/core/control/XournalMain.cpp:172
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -101,91 +101,95 @@ msgstr "Ne pas ouvrir les fichiers de sauvegarde automatique. Ils peuvent être 
 msgid "file: {1}"
 msgstr "fichier : {1}"
 
-#: ../src/core/control/Control.cpp:1531
+#: ../src/core/control/Control.cpp:1530
 msgid "Error opening file \"{1}\""
 msgstr "Erreur lors de l'ouverture du fichier \"{1}\""
 
-#: ../src/core/control/Control.cpp:1556
+#: ../src/core/control/Control.cpp:1555
 msgid "File version mismatch"
 msgstr "La version du fichier ne correspond pas"
 
-#: ../src/core/control/Control.cpp:1557
+#: ../src/core/control/Control.cpp:1556
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Le fichier en cours de chargement utilise une version du format de fichier plus récente que celle actuellement supportée par cette version de Xournal++, il pourrait par conséquent ne pas se charger correctement. L'ouvrir quand même ?"
 
-#: ../src/core/control/Control.cpp:1580
+#: ../src/core/control/Control.cpp:1579
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr "Erreur de lecture du fichier PDF \"{1}\" {2}"
 
-#: ../src/core/control/Control.cpp:1701
+#: ../src/core/control/Control.cpp:1601
+msgid "Error reading PNG file \"{1}\""
+msgstr "Erreur lors de la lecture du fichier PNG \"{1}\""
+
+#: ../src/core/control/Control.cpp:1745
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Le fichier d'arrière-plan attaché est introuvable. Il a peut-être été déplacé, renommé ou supprimé."
 
-#: ../src/core/control/Control.cpp:1704
+#: ../src/core/control/Control.cpp:1748
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Le fichier d'arrière-plan \"{1}\" n'a pas pu être trouvé. Il a peut-être été déplacé, renommé ou supprimé.\n"
 "Il a été vu pour la dernière fois ici : \"{2}\""
 
-#: ../src/core/control/Control.cpp:1714
+#: ../src/core/control/Control.cpp:1758
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Fichier de remplacement proposé : \"{1}\""
 
-#: ../src/core/control/Control.cpp:1719
+#: ../src/core/control/Control.cpp:1763
 msgid "Select another PDF"
 msgstr "Sélectionnez un autre PDF"
 
-#: ../src/core/control/Control.cpp:1720
+#: ../src/core/control/Control.cpp:1764
 msgid "Remove PDF Background"
 msgstr "Supprimer l'arrière-plan du PDF"
 
-#: ../src/core/control/Control.cpp:1724
+#: ../src/core/control/Control.cpp:1768
 msgid "Use proposed PDF"
 msgstr "Utiliser le PDF proposé"
 
-#: ../src/core/control/Control.cpp:1727
+#: ../src/core/control/Control.cpp:1771
 msgid "Missing PDF background file"
 msgstr "Fichier d'arrière-plan PDF manquant"
 
-#: ../src/core/control/Control.cpp:1859
+#: ../src/core/control/Control.cpp:1903
 msgid "Select font"
 msgstr "Choisir la police"
 
-#: ../src/core/control/Control.cpp:1878
+#: ../src/core/control/Control.cpp:1922
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Choisir la couleur"
 
-#: ../src/core/control/Control.cpp:1903
+#: ../src/core/control/Control.cpp:1947
 msgid "Unsaved Document"
 msgstr "Document non enregistré"
 
-#: ../src/core/control/Control.cpp:2052
+#: ../src/core/control/Control.cpp:2098
 msgid "Document file was removed."
 msgstr "Le fichier du document a été supprimé."
 
-#: ../src/core/control/Control.cpp:2052
+#: ../src/core/control/Control.cpp:2098
 msgid "This document is not saved yet."
 msgstr "Ce document n'est pas encore enregistré."
 
-#: ../src/core/control/Control.cpp:2054
+#: ../src/core/control/Control.cpp:2100
 msgid "Save As..."
 msgstr "Enregistrer sous..."
 
-#: ../src/core/control/Control.cpp:2054 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2100 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:80
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:286
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: ../src/core/control/Control.cpp:2057
+#: ../src/core/control/Control.cpp:2103
 msgid "Discard"
 msgstr "Fermer sans enregistrer"
 
-#: ../src/core/control/Control.cpp:2141
+#: ../src/core/control/Control.cpp:2187
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr "La création du sous-processus de démo Gtk a échoué : {1} (code de sortie : {2})"
 
@@ -194,8 +198,8 @@ msgid "Trying to emergency save the current open document..."
 msgstr "Essai d'un enregistrement d'urgence du document ouvert..."
 
 #: ../src/core/control/CrashHandler.cpp:40
-#: ../src/core/control/XournalMain.cpp:278
-#: ../src/core/control/XournalMain.cpp:284
+#: ../src/core/control/XournalMain.cpp:273
+#: ../src/core/control/XournalMain.cpp:279
 msgid "Error: {1}"
 msgstr "Erreur : {1}"
 
@@ -291,71 +295,71 @@ msgstr "Fond PDF manquant"
 msgid "Running print operation failed with {1}"
 msgstr "L'opération d'impression en cours a échoué avec {1}"
 
-#: ../src/core/control/XournalMain.cpp:123
+#: ../src/core/control/XournalMain.cpp:120
 msgid "Failed to delete file: {1}"
 msgstr "Impossible de supprimer le fichier : {1}"
 
-#: ../src/core/control/XournalMain.cpp:125
+#: ../src/core/control/XournalMain.cpp:122
 msgid "Please delete the file manually"
 msgstr "Veuillez supprimer le fichier manuellement"
 
-#: ../src/core/control/XournalMain.cpp:161
+#: ../src/core/control/XournalMain.cpp:158
 msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr "Il y a un journal d'erreurs récent pour Xournal++. S'il vous plaît remplissez un rapport de bogue, afin que le bogue puisse être corrigé."
 
-#: ../src/core/control/XournalMain.cpp:163
+#: ../src/core/control/XournalMain.cpp:160
 msgid "There are recent errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr "Il y a des journaux d'erreurs récents pour Xournal++. S'il vous plaît remplissez un rapport de bogue, afin que le bogue puisse être corrigé."
 
-#: ../src/core/control/XournalMain.cpp:166
+#: ../src/core/control/XournalMain.cpp:163
 msgid "The most recent log file name: {1}"
 msgstr "Le nom de fichier journal le plus récent : {1}"
 
-#: ../src/core/control/XournalMain.cpp:168
+#: ../src/core/control/XournalMain.cpp:165
 msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
 msgstr "Pour empêcher ce popup de réapparaître, il suffit de supprimer les fichiers journaux d'erreurs."
 
-#: ../src/core/control/XournalMain.cpp:171
+#: ../src/core/control/XournalMain.cpp:168
 msgid "File Bug Report"
 msgstr "Envoyer un rapport de bug"
 
-#: ../src/core/control/XournalMain.cpp:172
+#: ../src/core/control/XournalMain.cpp:169
 msgid "Open Logfile"
 msgstr "Ouvrir un fichier journal"
 
-#: ../src/core/control/XournalMain.cpp:173
+#: ../src/core/control/XournalMain.cpp:170
 msgid "Open Logfile directory"
 msgstr "Ouvrir le répertoire des fichiers journaux"
 
-#: ../src/core/control/XournalMain.cpp:174
+#: ../src/core/control/XournalMain.cpp:171
 msgid "Delete Logfile"
 msgstr "Supprimer le fichier journal"
 
-#: ../src/core/control/XournalMain.cpp:176
+#: ../src/core/control/XournalMain.cpp:173
 msgid "Crash log"
 msgstr "Journal d'erreurs"
 
-#: ../src/core/control/XournalMain.cpp:198
+#: ../src/core/control/XournalMain.cpp:194
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ a échoué la dernière fois. Voulez-vous restaurer le dernier fichier modifié ?"
 
-#: ../src/core/control/XournalMain.cpp:202
+#: ../src/core/control/XournalMain.cpp:197
 msgid "Recovery file detected"
 msgstr "Fichier de récupération détecté"
 
-#: ../src/core/control/XournalMain.cpp:203
+#: ../src/core/control/XournalMain.cpp:198
 msgid "Delete file"
 msgstr "Supprimer le fichier"
 
-#: ../src/core/control/XournalMain.cpp:203
+#: ../src/core/control/XournalMain.cpp:198
 msgid "Restore file"
 msgstr "Restaurer le fichier"
 
-#: ../src/core/control/XournalMain.cpp:223
+#: ../src/core/control/XournalMain.cpp:218
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "Le fichier d'arrière-plan \"{1}\" n'a pas pu être trouvé. Il a peut-être été déplacé, renommé ou supprimé."
 
-#: ../src/core/control/XournalMain.cpp:415
+#: ../src/core/control/XournalMain.cpp:410
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -369,7 +373,7 @@ msgstr "<span foreground='red' size='x-large'>Le fichier UI requis est manquant 
 "  Pas dans le chemin de travail\n"
 "  Pas dans {2}"
 
-#: ../src/core/control/XournalMain.cpp:420
+#: ../src/core/control/XournalMain.cpp:415
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
@@ -516,15 +520,15 @@ msgstr "Ne pas écraser le PDF d'arrière-plan ! Cela causera des erreurs !"
 msgid "The check for overwriting the background failed with:\n"
 msgstr "La vérification pour le remplacement de l'arrière-plan a échoué avec :\n"
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:77
+#: ../src/core/control/jobs/BaseExportJob.cpp:78
 msgid "Export File"
 msgstr "Exporter le fichier"
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:77
+#: ../src/core/control/jobs/BaseExportJob.cpp:78
 msgid "Export"
 msgstr "Exporter"
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:93
+#: ../src/core/control/jobs/BaseExportJob.cpp:94
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
 msgstr "Impossible de résoudre le chemin avec l'erreur suivante :\n"
@@ -554,7 +558,7 @@ msgstr "Graphiques SVG"
 msgid "Xournal (Compatibility)"
 msgstr "Xournal (Compatibilité)"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:133
+#: ../src/core/control/jobs/CustomExportJob.cpp:129
 #: ../src/core/control/jobs/SaveJob.cpp:138
 msgid "Save file error: {1}"
 msgstr "Erreur d'enregistrement du fichier : {1}"
@@ -611,7 +615,7 @@ msgstr "Impossible d'enregistrer le fichier .tex : {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Impossible de démarrer {1} : {2} (code de sortie : {3})"
 
-#: ../src/core/control/layer/LayerController.cpp:348
+#: ../src/core/control/layer/LayerController.cpp:351
 msgid "Layer {1}"
 msgstr "Calque {1}"
 
@@ -664,24 +668,24 @@ msgstr "%F-Note-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_annoté"
 
-#: ../src/core/control/tools/EditSelection.cpp:461
+#: ../src/core/control/tools/EditSelection.cpp:460
 msgid "Arrange"
 msgstr "Classer par"
 
-#: ../src/core/control/tools/EditSelection.cpp:476
+#: ../src/core/control/tools/EditSelection.cpp:475
 msgid "Bring forward"
 msgstr "Mettre en avant"
 
-#: ../src/core/control/tools/EditSelection.cpp:487
+#: ../src/core/control/tools/EditSelection.cpp:486
 msgid "Send backward"
 msgstr "Mettre en arrière"
 
-#: ../src/core/control/tools/EditSelection.cpp:494
+#: ../src/core/control/tools/EditSelection.cpp:493
 msgid "Send to back"
 msgstr "Mettre en arrière-plan"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
-#: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:169
+#: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:165
 msgid "Failed to load image"
 msgstr "Échec du chargement de l'image"
 
@@ -849,7 +853,7 @@ msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre entier (size_t
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Impossible d'écrire l'arrière-plan \"{1}\", {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:348
+#: ../src/core/control/xojfile/SaveHandler.cpp:363
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Impossible d'écrire l'arrière-plan \"{1}\". Poursuite."
 
@@ -862,7 +866,7 @@ msgid "Unable to play audio recording {1}"
 msgstr "Impossible de lire l'enregistrement audio {1}"
 
 #: ../src/core/gui/PageView.cpp:922
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:82
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
 msgid "Loading..."
 msgstr "Chargement en cours..."
@@ -875,28 +879,28 @@ msgstr "Défiler vers la page {1}"
 msgid "Add missing page"
 msgstr "Ajouter la page manquante"
 
-#: ../src/core/gui/SearchBar.cpp:80
+#: ../src/core/gui/SearchBar.cpp:89
 msgid "Text found once on this page"
 msgstr "Texte trouvé une fois sur la page"
 
-#: ../src/core/gui/SearchBar.cpp:82
+#: ../src/core/gui/SearchBar.cpp:91
 #, c-format
 msgid "Text found %zu times on this page"
 msgstr "Texte trouvé %zu fois sur la page"
 
-#: ../src/core/gui/SearchBar.cpp:87
+#: ../src/core/gui/SearchBar.cpp:96
 msgid "Text not found"
 msgstr "Texte introuvable"
 
-#: ../src/core/gui/SearchBar.cpp:130
+#: ../src/core/gui/SearchBar.cpp:139
 msgid "Text found once on page {1}"
 msgstr "Texte trouvé une fois dans la page {1}"
 
-#: ../src/core/gui/SearchBar.cpp:131
+#: ../src/core/gui/SearchBar.cpp:140
 msgid "Text found {1} times on page {2} ({3} of {1})"
 msgstr "Texte trouvé {1} fois sur la page {2} ({3} de {1})"
 
-#: ../src/core/gui/SearchBar.cpp:136
+#: ../src/core/gui/SearchBar.cpp:145
 msgid "Text not found, searched on all pages"
 msgstr "Texte introuvable, recherché sur toutes les pages"
 
@@ -924,126 +928,152 @@ msgstr "Voir la liste complète des contributeurs"
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 ou supérieur"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:67
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:30
+msgid "Thickness - don't change"
+msgstr "Épaisseur - Ne pas changer"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:32
+msgid "Very thin"
+msgstr "Très fin"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:34
+msgid "Thin"
+msgstr "Fin"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:36
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
+msgid "Medium"
+msgstr "Moyen"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:38
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:492
+msgid "Thick"
+msgstr "Gras"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:40
+msgid "Very thick"
+msgstr "Très épais"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:57
 msgid "No device"
 msgstr "Aucun appareil"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:78
 msgid "Tool - don't change"
 msgstr "Outil - ne pas changer"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:79
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:373
 msgid "Pen"
 msgstr "Stylo"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:80
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:382
 msgid "Eraser"
 msgstr "Gomme"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Highlighter"
 msgstr "Surligneur"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:82
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:398
 msgid "Text"
 msgstr "Texte"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/core/undo/InsertUndoAction.cpp:29
 msgid "Insert image"
 msgstr "Insérer une image"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 msgid "Vertical space"
 msgstr "Espace vertical"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 msgid "Select region"
 msgstr "Sélectionner une région"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 msgid "Select rectangle"
 msgstr "Sélectionner un rectangle"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:95
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
 msgid "Select multi layer region"
 msgstr "Sélectionner la région multi-couches"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
 msgid "Select multi layer rect"
 msgstr "Sélectionner le rectangle multi-couches"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
 msgid "Hand"
 msgstr "Main"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:98
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
 msgid "Floating Toolbox (experimental)"
 msgstr "Boîte à outils flottante (expérimental)"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:99
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 msgid "Select Text from pdf"
 msgstr "Sélectionner le texte du PDF"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:100
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
 msgid "Select Area Text from pdf"
 msgstr "Sélectionner une Zone de Texte à partir d'un pdf"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:117
 msgid "Drawing Type - don't change"
 msgstr "Type de dessin - ne pas changer"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Normal drawing"
 msgstr "Dessin normal"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Draw Line"
 msgstr "Tracer une ligne"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Draw Rectangle"
 msgstr "Dessiner un rectangle"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Draw Ellipse"
 msgstr "Dessiner une ellipse"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Draw Arrow"
 msgstr "Dessiner une flèche"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Draw Double Arrow"
 msgstr "Dessiner une double flèche"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Draw Coordinate System"
 msgstr "Dessiner un système de coordonnées"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
 msgstr "Identificateur de forme"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw Spline"
@@ -1080,35 +1110,35 @@ msgstr "Fichiers image"
 msgid "Custom"
 msgstr "Personnalisé"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:49
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:47
 msgid "System Default"
 msgstr "Valeur par défaut du système"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:67
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:65
 msgid "Previously selected language not available anymore!"
 msgstr "La langue sélectionnée précédemment n'est plus disponible !"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:52
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "LaTeX editor theme:"
 msgstr "Thème de l'éditeur LaTeX :"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:62
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "GtkSourceView a été désactivé lors de la compilation de Xournal++ ! Certaines options ne seront pas disponibles."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:141
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Impossible d'ouvrir le fichier de modèle global à {1}. Existe-t-il ?"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
 msgid "Sample LaTeX file generated successfully."
 msgstr "Fichier LaTeX d'exemple généré avec succès."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Erreur : {1}. Veuillez vérifier le contenu de {2}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:166
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:167
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Erreur : {1} n'est pas un fichier normal. Veuillez vérifier les paramètres de votre fichier de modèle LaTeX. "
 
@@ -1412,7 +1442,7 @@ msgstr "Copier l'arrière-plan actuel"
 msgid "Apply to current page"
 msgstr "Appliquer à la page actuelle"
 
-#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:172
+#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:169
 msgid "Contents"
 msgstr "Contenus"
 
@@ -1713,14 +1743,6 @@ msgstr "Très Fin"
 msgid "Fine"
 msgstr "Fin"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
-msgid "Medium"
-msgstr "Moyen"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:492
-msgid "Thick"
-msgstr "Gras"
-
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:494
 msgid "Very Thick"
 msgstr "Très Épais"
@@ -1734,14 +1756,18 @@ msgid "Hide all"
 msgstr "Masquer tout"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:178
-msgid "Create new layer"
-msgstr "Créer un nouveau calque"
+msgid "Add a layer above the active layer"
+msgstr "Ajouter un calque au-dessus du calque actif"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:205
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:179
+msgid "Add a layer below the active layer"
+msgstr "Ajouter un calque en-dessous du calque actif"
+
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:206
 msgid "Layer"
 msgstr "Calque"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:302
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:303
 msgid "Layer Combo"
 msgstr "Combinaison du calque"
 
@@ -1842,24 +1868,24 @@ msgctxt "as a noun: a copy of"
 msgid "Copy"
 msgstr "Copier"
 
-#: ../src/core/model/Document.cpp:330 ../src/core/model/Document.cpp:339
-#: ../src/core/model/Document.cpp:342
+#: ../src/core/model/Document.cpp:331 ../src/core/model/Document.cpp:340
+#: ../src/core/model/Document.cpp:343
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Document non chargé ! ({1}), {2}"
 
-#: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:175
+#: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:171
 msgid "Error: "
 msgstr "Erreur: "
 
-#: ../src/core/model/Image.cpp:169 ../src/core/model/Image.cpp:179
+#: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:175
 msgid "Unrecoverable error"
 msgstr "Erreur irrécupérable"
 
-#: ../src/core/model/Image.cpp:175 ../src/core/model/Image.cpp:179
+#: ../src/core/model/Image.cpp:171 ../src/core/model/Image.cpp:175
 msgid "Failed to close image stream"
 msgstr "Impossible de fermer le flux de l'image"
 
-#: ../src/core/model/XojPage.cpp:170
+#: ../src/core/model/XojPage.cpp:173
 msgid "Background"
 msgstr "Arrière-plan"
 
@@ -2068,17 +2094,17 @@ msgstr "Une erreur s'est produite lors de la fermeture du fichier : \"{1}\""
 msgid "Error code {1}"
 msgstr "Code d'erreur {1}"
 
-#: ../src/util/PathUtil.cpp:176
+#: ../src/util/PathUtil.cpp:199
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Le fichier n'a pas pu être ouvert. Vous devez le faire manuellement :\n"
 "URL : {1}"
 
-#: ../src/util/PathUtil.cpp:286
+#: ../src/util/PathUtil.cpp:309
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:296
+#: ../src/util/PathUtil.cpp:318
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Impossible de créer le dossier : {1}\n"
@@ -4109,175 +4135,175 @@ msgid "_Delete Page"
 msgstr "_Supprimer la page"
 
 #: ../ui/mainmenubar.xml:468
-msgid "New _Layer"
-msgstr "Nouveau _Calque"
+msgid "Add a _Layer above the active layer"
+msgstr "Ajouter un _Calque au-dessus du calque actif"
 
-#: ../ui/mainmenubar.xml:473
+#: ../ui/mainmenubar.xml:477
 msgid "Delete Layer"
 msgstr "Supprimer le calque"
 
-#: ../ui/mainmenubar.xml:478
+#: ../ui/mainmenubar.xml:482
 msgid "Merge Layer Down"
 msgstr "Fusionner avec le calque inférieur"
 
-#: ../ui/mainmenubar.xml:483
+#: ../ui/mainmenubar.xml:487
 msgid "Rename Layer"
 msgstr "Renommer le Calque"
 
-#: ../ui/mainmenubar.xml:490
+#: ../ui/mainmenubar.xml:494
 msgid "Paper _Format"
 msgstr "_Format de papier"
 
-#: ../ui/mainmenubar.xml:494
+#: ../ui/mainmenubar.xml:498
 msgid "Paper _Color"
 msgstr "_Couleur du papier"
 
-#: ../ui/mainmenubar.xml:503
+#: ../ui/mainmenubar.xml:507
 msgid "_Tools"
 msgstr "_Outils"
 
-#: ../ui/mainmenubar.xml:506
+#: ../ui/mainmenubar.xml:510
 msgid "_Pen"
 msgstr "_Stylo"
 
-#: ../ui/mainmenubar.xml:512
+#: ../ui/mainmenubar.xml:516
 msgid "_Eraser"
 msgstr "_Gomme"
 
-#: ../ui/mainmenubar.xml:518
+#: ../ui/mainmenubar.xml:522
 msgid "Select Linear Text"
 msgstr "Sélectionner des lignes de texte PDF"
 
-#: ../ui/mainmenubar.xml:524
+#: ../ui/mainmenubar.xml:528
 msgid "Select Text In Rectangle"
 msgstr "Sélectionner un rectangle de texte PDF"
 
-#: ../ui/mainmenubar.xml:530
+#: ../ui/mainmenubar.xml:534
 msgid "_Highlighter"
 msgstr "_Surligneur"
 
-#: ../ui/mainmenubar.xml:536
+#: ../ui/mainmenubar.xml:540
 msgid "_Text"
 msgstr "_Texte"
 
-#: ../ui/mainmenubar.xml:542
+#: ../ui/mainmenubar.xml:546
 msgid "_Image"
 msgstr "_Image"
 
-#: ../ui/mainmenubar.xml:548
+#: ../ui/mainmenubar.xml:552
 msgid "_Default Tool"
 msgstr "_Outil par défaut"
 
-#: ../ui/mainmenubar.xml:555
+#: ../ui/mainmenubar.xml:559
 msgid "Drawing Type"
 msgstr "Type de dessin"
 
-#: ../ui/mainmenubar.xml:557
+#: ../ui/mainmenubar.xml:561
 msgid "_Shape Recognizer"
 msgstr "_Reconnaissance de forme"
 
-#: ../ui/mainmenubar.xml:587
+#: ../ui/mainmenubar.xml:591
 msgid "Draw _Line"
 msgstr "Tracer une _ligne"
 
-#: ../ui/mainmenubar.xml:628
+#: ../ui/mainmenubar.xml:632
 msgid "_Vertical Space"
 msgstr "Espace _vertical"
 
-#: ../ui/mainmenubar.xml:640
+#: ../ui/mainmenubar.xml:644
 msgid "H_and Tool"
 msgstr "Main"
 
-#: ../ui/mainmenubar.xml:656
+#: ../ui/mainmenubar.xml:660
 msgid "Pen _Options"
 msgstr "_Option du stylo"
 
-#: ../ui/mainmenubar.xml:659 ../ui/mainmenubar.xml:721
-#: ../ui/mainmenubar.xml:768
+#: ../ui/mainmenubar.xml:663 ../ui/mainmenubar.xml:725
+#: ../ui/mainmenubar.xml:772
 msgid "_very fine"
 msgstr "_Très Fin"
 
-#: ../ui/mainmenubar.xml:664 ../ui/mainmenubar.xml:726
-#: ../ui/mainmenubar.xml:773
+#: ../ui/mainmenubar.xml:668 ../ui/mainmenubar.xml:730
+#: ../ui/mainmenubar.xml:777
 msgid "_fine"
 msgstr "Fin"
 
-#: ../ui/mainmenubar.xml:669 ../ui/mainmenubar.xml:731
-#: ../ui/mainmenubar.xml:778
+#: ../ui/mainmenubar.xml:673 ../ui/mainmenubar.xml:735
+#: ../ui/mainmenubar.xml:782
 msgid "_medium"
 msgstr "_Moyen"
 
-#: ../ui/mainmenubar.xml:674 ../ui/mainmenubar.xml:736
-#: ../ui/mainmenubar.xml:783
+#: ../ui/mainmenubar.xml:678 ../ui/mainmenubar.xml:740
+#: ../ui/mainmenubar.xml:787
 msgid "_thick"
 msgstr "É_pais"
 
-#: ../ui/mainmenubar.xml:679 ../ui/mainmenubar.xml:741
-#: ../ui/mainmenubar.xml:788
+#: ../ui/mainmenubar.xml:683 ../ui/mainmenubar.xml:745
+#: ../ui/mainmenubar.xml:792
 msgid "ver_y thick"
 msgstr "Trè_s épais"
 
-#: ../ui/mainmenubar.xml:708 ../ui/mainmenubar.xml:795
+#: ../ui/mainmenubar.xml:712 ../ui/mainmenubar.xml:799
 msgid "Fi_ll"
 msgstr "Remp_lir"
 
-#: ../ui/mainmenubar.xml:712 ../ui/mainmenubar.xml:799
+#: ../ui/mainmenubar.xml:716 ../ui/mainmenubar.xml:803
 msgid "Fill opacity"
 msgstr "Opacité du remplissage"
 
-#: ../ui/mainmenubar.xml:718
+#: ../ui/mainmenubar.xml:722
 msgid "Eraser Optio_ns"
 msgstr "Optio_ns de la gomme"
 
-#: ../ui/mainmenubar.xml:748
+#: ../ui/mainmenubar.xml:752
 msgid "_standard"
 msgstr "_standard"
 
-#: ../ui/mainmenubar.xml:753
+#: ../ui/mainmenubar.xml:757
 msgid "_whiteout"
 msgstr "_blanc"
 
-#: ../ui/mainmenubar.xml:758
+#: ../ui/mainmenubar.xml:762
 msgid "_delete strokes"
 msgstr "_suppression de traits"
 
-#: ../ui/mainmenubar.xml:765
+#: ../ui/mainmenubar.xml:769
 msgid "Highlighter Opti_ons"
 msgstr "_Options de surligneur"
 
-#: ../ui/mainmenubar.xml:805
+#: ../ui/mainmenubar.xml:809
 msgid "Select PDF Text Options"
 msgstr "Options du sélecteur de texte PDF"
 
-#: ../ui/mainmenubar.xml:808
+#: ../ui/mainmenubar.xml:812
 msgid "Marker Opacity"
 msgstr "Opacité du marqueur"
 
-#: ../ui/mainmenubar.xml:814
+#: ../ui/mainmenubar.xml:818
 msgid "Text Font..."
 msgstr "Police du texte..."
 
-#: ../ui/mainmenubar.xml:819
+#: ../ui/mainmenubar.xml:823
 msgid "Record / Stop"
 msgstr "Enregistrer / Arrêter"
 
-#: ../ui/mainmenubar.xml:824
+#: ../ui/mainmenubar.xml:828
 msgid "Pause"
 msgstr "Pause"
 
-#: ../ui/mainmenubar.xml:851
+#: ../ui/mainmenubar.xml:855
 msgid "_Help"
 msgstr "_Aide"
 
-#: ../ui/mainmenubar.xml:855
+#: ../ui/mainmenubar.xml:859
 msgid "Help"
 msgstr "Aide"
 
-#: ../ui/mainmenubar.xml:859
+#: ../ui/mainmenubar.xml:863
 msgid "Run Gtk3 demo"
 msgstr "Exécuter la démo Gtk3"
 
-#: ../ui/mainmenubar.xml:863
+#: ../ui/mainmenubar.xml:867
 msgid "About"
 msgstr "À propos"
 
@@ -4326,10 +4352,14 @@ msgid "Empty Toolbar"
 msgstr "Vide"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:6
+msgid "Note-taking application"
+msgstr "Application de prise de notes"
+
+#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:7
 msgid "Take handwritten notes"
 msgstr "Prendre des notes manuscrites"
 
-#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:7
+#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:8
 msgid "tablet;Wacom;pen input;PDF Annotation;markup"
 msgstr "tablette;Wacom;pen input;PDF Annotation;markup"
 

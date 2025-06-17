@@ -78,6 +78,7 @@ void gtk_label_set_wrap_mode(GtkLabel* label, PangoWrapMode wrap_mode);
 
 /**** GtkIMContext ****/
 void gtk_im_context_set_client_widget(GtkIMContext* context, GtkWidget* widget);
+gboolean gtk_im_context_filter_keypress(GtkIMContext* context, GdkEvent* event);
 
 /**** GtkFileChooserDialog ****/
 gboolean gtk_file_chooser_add_shortcut_folder(GtkFileChooser* chooser, GFile* file, GError** error);
@@ -93,3 +94,7 @@ GtkWidget* gtk_list_box_row_get_child(GtkListBoxRow* row);
 
 /**** GtkEventController ****/
 GdkEvent* gtk_event_controller_get_current_event(GtkEventController*);
+
+/**** GtkEditable ****/
+const char* gtk_editable_get_text(GtkEditable* editable);
+void gtk_editable_set_text(GtkEditable* editable, const char* text);

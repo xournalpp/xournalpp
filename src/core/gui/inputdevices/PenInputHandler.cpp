@@ -57,26 +57,24 @@ void PenInputHandler::handleScrollEvent(InputEvent const& event) {
 
     // GTK handles event compression/filtering differently between versions - this may be needed on certain hardware/GTK
     // combinations.
-    if (std::abs((this->scrollStartX - event.absoluteX)) < 0.1 &&
-        std::abs((this->scrollStartY - event.absoluteY)) < 0.1) {
+    if (std::abs((this->scrollStartPosition.x - event.absolute.x)) < 0.1 &&
+        std::abs((this->scrollStartPosition.y - event.absolute.y)) < 0.1) {
         return;
     }
 
-    if (this->scrollOffsetX == 0 && this->scrollOffsetY == 0) {
-        this->scrollOffsetX = this->scrollStartX - event.absoluteX;
-        this->scrollOffsetY = this->scrollStartY - event.absoluteY;
+    if (this->scrollOffsetVector == xoj::util::Point<double>(0., 0.)) {
+        this->scrollOffsetVector = this->scrollStartPosition - event.absolute;
 
         Util::execInUiThread([&]() {
-            this->inputContext->getXournal()->layout->scrollRelative(this->scrollOffsetX, this->scrollOffsetY);
+            this->inputContext->getXournal()->layout->scrollRelative(this->scrollOffsetVector.x,
+                                                                     this->scrollOffsetVector.y);
 
             // Scrolling done, so reset our counters
-            this->scrollOffsetX = 0;
-            this->scrollOffsetY = 0;
+            this->scrollOffsetVector = xoj::util::Point<double>(0., 0.);
         });
 
         // Update the reference for the scroll-offset
-        this->scrollStartX = event.absoluteX;
-        this->scrollStartY = event.absoluteY;
+        this->scrollStartPosition = event.absolute;
     }
 }
 
@@ -84,7 +82,7 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     this->inputContext->focusWidget();
 
     this->lastActionStartTimeStamp = event.timestamp;
-    this->sequenceStartPosition = {event.absoluteX, event.absoluteY};
+    this->sequenceStartPosition = event.absolute;
 
     XojPageView* currentPage = this->getPageAtCurrentPosition(event);
     // set reference data for handling of entering/leaving page
@@ -118,8 +116,7 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
 
     // Save the starting offset when hand-tool is selected to get a reference for the scroll-offset
     if (toolType == TOOL_HAND) {
-        this->scrollStartX = event.absoluteX;
-        this->scrollStartY = event.absoluteY;
+        this->scrollStartPosition = event.absolute;
     }
 
     this->sequenceStartPage = currentPage;
@@ -251,8 +248,7 @@ bool PenInputHandler::isCurrentTapSelection(InputEvent const& event) const {
     settings->getStrokeFilter(&tapMaxDuration, &tapMaxDistance, &filterRepetitionTime);
 
     const double dpmm = settings->getDisplayDpi() / 25.4;
-    const double dist = std::hypot(this->sequenceStartPosition.x - event.absoluteX,
-                                   this->sequenceStartPosition.y - event.absoluteY);
+    const double dist = this->sequenceStartPosition.distance(event.absolute);
 
     const bool noMovement = dist < tapMaxDistance * dpmm;
     const bool fastEnoughTap = event.timestamp - this->lastActionStartTimeStamp < as_unsigned(tapMaxDuration);
@@ -268,8 +264,8 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
      * Workaround for misbehaving devices where Enter events are not published every time
      * This is required to disable outside scrolling again
      */
-    gdouble eventX = event.relativeX;
-    gdouble eventY = event.relativeY;
+    gdouble eventX = event.relative.x;
+    gdouble eventY = event.relative.y;
 
     GtkAdjustment* adjHorizontal = this->inputContext->getScrollHandling()->getHorizontal();
     GtkAdjustment* adjVertical = this->inputContext->getScrollHandling()->getVertical();
@@ -522,8 +518,8 @@ void PenInputHandler::actionLeaveWindow(InputEvent const& event) {
         }
     } else if (this->deviceClassPressed) {
         // scroll if we have an active selection
-        gdouble eventX = event.relativeX;
-        gdouble eventY = event.relativeY;
+        gdouble eventX = event.relative.x;
+        gdouble eventY = event.relative.y;
 
         GtkAdjustment* adjHorizontal = this->inputContext->getScrollHandling()->getHorizontal();
         GtkAdjustment* adjVertical = this->inputContext->getScrollHandling()->getVertical();

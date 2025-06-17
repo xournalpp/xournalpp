@@ -22,6 +22,7 @@
 #include "control/zoom/ZoomControl.h"            // for ZoomControl
 #include "gui/MainWindow.h"                      // for MainWindow
 #include "gui/PdfFloatingToolbox.h"              // for PdfFloatingToolbox
+#include "gui/inputdevices/GeometryToolInputHandler.h"  // for GeometryToolInputHandler
 #include "gui/inputdevices/HandRecognition.h"    // for HandRecognition
 #include "gui/inputdevices/InputContext.h"       // for InputContext
 #include "gui/toolbarMenubar/ColorToolItem.h"    // for ColorToolItem
@@ -39,6 +40,7 @@
 #include "util/Rectangle.h"                      // for Rectangle
 #include "util/Util.h"                           // for npos
 #include "util/glib_casts.h"                     // for wrap_v
+#include "util/gtk4_helper.h"                    // for gtk_scrolled_window_set_child
 #include "util/safe_casts.h"                     // for round_cast
 
 #include "Layout.h"           // for Layout
@@ -78,7 +80,16 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
     gtk_container_add(GTK_CONTAINER(parent), this->widget);
     gtk_widget_show(this->widget);
 
-    g_signal_connect(getWidget(), "realize", G_CALLBACK(onRealized), this);
+
+    g_signal_connect(getWidget(), "realize", G_CALLBACK(+[](GtkWidget* widget, gpointer) {
+                         // Disable event compression
+                         if (gtk_widget_get_realized(widget)) {
+                             gdk_window_set_event_compression(gtk_widget_get_window(widget), false);
+                         } else {
+                             g_warning("could not disable event compression");
+                         }
+                     }),
+                     nullptr);
 
     this->repaintHandler = std::make_unique<RepaintHandler>(this);
     this->handRecognition = std::make_unique<HandRecognition>(this->widget, inputContext, control->getSettings());
@@ -103,7 +114,7 @@ XournalView::~XournalView() {
 
 auto XournalView::clearMemoryTimer(XournalView* widget) -> gboolean {
     widget->cleanupBufferCache();
-    return true;
+    return G_SOURCE_CONTINUE;
 }
 
 auto XournalView::cleanupBufferCache() -> void {
@@ -172,6 +183,10 @@ auto XournalView::onKeyPressEvent(const KeyEvent& event) -> bool {
             selection->ensureWithinVisibleArea();
             return true;
         }
+    }
+
+    if (auto* geom = GTK_XOURNAL(widget)->input->getGeometryToolInputHandler(); geom && geom->keyPressed(event)) {
+        return true;
     }
 
     Layout* layout = gtk_xournal_get_layout(this->widget);
@@ -322,15 +337,6 @@ auto XournalView::onKeyReleaseEvent(const KeyEvent& event) -> bool {
     }
 
     return false;
-}
-
-void XournalView::onRealized(GtkWidget* widget, XournalView* view) {
-    // Disable event compression
-    if (gtk_widget_get_realized(view->getWidget())) {
-        gdk_window_set_event_compression(gtk_widget_get_window(view->getWidget()), false);
-    } else {
-        g_warning("could not disable event compression");
-    }
 }
 
 void XournalView::onSettingsChanged() {

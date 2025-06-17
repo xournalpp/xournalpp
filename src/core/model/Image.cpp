@@ -105,31 +105,27 @@ void Image::setImage(std::string&& data) {
 }
 
 void Image::setImage(GdkPixbuf* img) {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    setImage(gdk_cairo_surface_create_from_pixbuf(img, 0, nullptr));
-#pragma GCC diagnostic pop
-}
-
-void Image::setImage(cairo_surface_t* image) {
     if (this->image) {
         cairo_surface_destroy(this->image);
         this->image = nullptr;
     }
+    this->imageSize = {gdk_pixbuf_get_width(img), gdk_pixbuf_get_height(img)};
 
-    struct {
-        std::string buffer;
-        std::string readbuf;
-    } closure_;
-    const cairo_write_func_t writeFunc = [](void* closurePtr, const unsigned char* data,
+    this->image = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->imageSize.first, this->imageSize.second);
+    xoj_assert(this->image != nullptr);
+
+    // Paint the pixbuf on to the surface
+    cairo_t* cr = cairo_create(this->image);
+    gdk_cairo_set_source_pixbuf(cr, img, 0, 0);
+    cairo_paint(cr);
+    cairo_destroy(cr);
+
+    const cairo_write_func_t writeFunc = [](void* bufferPtr, const unsigned char* data,
                                             unsigned int length) -> cairo_status_t {
-        auto& closure = *reinterpret_cast<decltype(&closure_)>(closurePtr);
-        closure.buffer.append(reinterpret_cast<const char*>(data), length);
+        reinterpret_cast<decltype(Image::data)*>(bufferPtr)->append(reinterpret_cast<const char*>(data), length);
         return CAIRO_STATUS_SUCCESS;
     };
-    cairo_surface_write_to_png_stream(image, writeFunc, &closure_);
-
-    data = std::move(closure_.buffer);
+    cairo_surface_write_to_png_stream(image, writeFunc, &data);
 }
 
 auto Image::renderBuffer() const -> std::optional<std::string> {

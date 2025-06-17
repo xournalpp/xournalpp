@@ -17,7 +17,7 @@ class Settings;
 class SnapToGridInputHandler final {
 
 public:
-    SnapToGridInputHandler(Settings* settings);
+    SnapToGridInputHandler(const Settings* settings);
 
 protected:
     const Settings* settings;
@@ -29,7 +29,7 @@ public:
      * @param y the value
      * @param alt indicates whether snapping mode is altered (via the Alt key)
      */
-    [[nodiscard]] double snapVertically(double y, bool alt);
+    [[nodiscard]] double snapVertically(double y, bool alt) const;
 
     /**
      * @brief If a value is near enough to the x-coordinate of a grid point, it returns the nearest x-coordinate of the
@@ -37,7 +37,7 @@ public:
      * @param x the value
      * @param alt indicates whether snapping mode is altered (via the Alt key)
      */
-    [[nodiscard]] double snapHorizontally(double x, bool alt);
+    [[nodiscard]] double snapHorizontally(double x, bool alt) const;
 
     /**
      * @brief If a points distance to the nearest grid point is under a certain tolerance, it returns the nearest
@@ -45,7 +45,7 @@ public:
      * @param pos the position
      * @param alt indicates whether snapping mode is altered (via the Alt key)
      */
-    [[nodiscard]] Point snapToGrid(Point const& pos, bool alt);
+    [[nodiscard]] Point snapToGrid(Point const& pos, bool alt) const;
 
     /**
      * @brief if the angles distance to a multiple quarter of PI is under a certain tolerance, it returns the latter.
@@ -53,7 +53,7 @@ public:
      * @param radian the angle (in radian)
      * @param alt indicates whether snapping mode is altered (via the Alt key)
      */
-    [[nodiscard]] double snapAngle(double radian, bool alt);
+    [[nodiscard]] double snapAngle(double radian, bool alt) const;
 
     /**
      * @brief Snaps the angle between the horizontal axis and the line between the given point and center
@@ -62,7 +62,7 @@ public:
      * @param center the center of rotation
      * @param alt indicates whether snapping mode is altered (via the Alt key)
      */
-    [[nodiscard]] Point snapRotation(Point const& pos, Point const& center, bool alt);
+    [[nodiscard]] Point snapRotation(Point const& pos, Point const& center, bool alt) const;
 
     /**
      * @brief Does rotation snapping followed by snapping to grid
@@ -70,5 +70,5 @@ public:
      * @param center the center of rotation
      * @param alt indicates whether snapping mode is altered (via the Alt key)
      */
-    [[nodiscard]] Point snap(Point const& pos, Point const& center, bool alt);
+    [[nodiscard]] Point snap(Point const& pos, Point const& center, bool alt) const;
 };

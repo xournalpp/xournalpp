@@ -54,18 +54,12 @@ protected:
     /**
      * Start position to reference scroll offset
      */
-    double scrollStartX = 0;
-    double scrollStartY = 0;
+    xoj::util::Point<double> scrollStartPosition{0., 0.};
 
     /**
-     * The offset to scroll in x-direction
+     * The scroll offset vector
      */
-    double scrollOffsetX = 0;
-
-    /**
-     * The offset to scroll in y-direction
-     */
-    double scrollOffsetY = 0;
+    xoj::util::Point<double> scrollOffsetVector{0., 0.};
 
     /**
      * Flag whether pen is within the widget

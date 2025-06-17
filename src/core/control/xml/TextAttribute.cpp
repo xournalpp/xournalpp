@@ -18,7 +18,8 @@ void TextAttribute::writeOut(OutputStream* out) {
                                             replace_pair('\"', "&quot;"),
                                             replace_pair('<', "&lt;"),
                                             replace_pair('>', "&gt;"),
-                                            replace_pair('\n', "&#13;"),
+                                            replace_pair('\n', "&#10;"),
+                                            replace_pair('\r', "&#13;"),
                                     });
     out->write(v);
 }

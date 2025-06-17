@@ -10,9 +10,6 @@ KeyboardInputHandler::KeyboardInputHandler(InputContext* inputContext): inputCon
 
 KeyboardInputHandler::~KeyboardInputHandler() = default;
 
-bool KeyboardInputHandler::keyPressed(KeyEvent e) const {
-    auto* geom = inputContext->getGeometryToolInputHandler();
-    return (geom && geom->keyPressed(e)) || inputContext->getView()->onKeyPressEvent(e);
-}
+bool KeyboardInputHandler::keyPressed(KeyEvent e) const { return inputContext->getView()->onKeyPressEvent(e); }
 
 bool KeyboardInputHandler::keyReleased(KeyEvent e) const { return inputContext->getView()->onKeyReleaseEvent(e); }

@@ -33,9 +33,8 @@ constexpr double SNAPPING_DISTANCE_TOLERANCE = 5.0;                 // pt
 constexpr double SNAPPING_ROTATION_TOLERANCE = 3.0 * M_PI / 180.0;  // rad
 constexpr double ZOOM_DISTANCE_MIN = 0.01;
 
-GeometryToolInputHandler::GeometryToolInputHandler(XournalView* xournal, GeometryToolController* controller, double h,
-                                                   double tx, double ty):
-        xournal(xournal), controller(controller), height(h), translationX(tx), translationY(ty) {}
+GeometryToolInputHandler::GeometryToolInputHandler(XournalView* xournal, GeometryToolController* controller):
+        xournal(xournal), controller(controller) {}
 
 GeometryToolInputHandler::~GeometryToolInputHandler() = default;
 
@@ -63,13 +62,6 @@ auto GeometryToolInputHandler::handle(InputEvent const& event) -> bool {
             g_warning("Device class %d not handled by geometry tool", event.deviceClass);
             return false;
     }
-}
-
-void GeometryToolInputHandler::on(UpdateValuesRequest, double h, double rot, double tx, double ty) {
-    height = h;
-    rotation = rot;
-    translationX = tx;
-    translationY = ty;
 }
 
 auto GeometryToolInputHandler::handleTouchscreen(InputEvent const& event) -> bool {
@@ -162,36 +154,33 @@ auto GeometryToolInputHandler::keyPressed(KeyEvent const& event) -> bool {
             scale = (event.state & GDK_MOD1_MASK) ? 1. / SCALE_AMOUNT_SMALL : 1. / SCALE_AMOUNT;
             break;
         case GDK_KEY_m:
-            controller->markPoint(translationX, translationY);
+            controller->markOrigin();
             return true;
     }
 
     if (xdir != 0 || ydir != 0) {
-        const double c = std::cos(rotation);
-        const double s = std::sin(rotation);
-        double xshift{0.0};
-        double yshift{0.0};
+        xoj::util::Point<double> offset;
         const double amount = (event.state & GDK_MOD1_MASK) ? MOVE_AMOUNT_SMALL : MOVE_AMOUNT;
         if (event.state & GDK_SHIFT_MASK) {
-            xshift = amount * (c * xdir - s * ydir);
-            yshift = amount * (s * xdir + c * ydir);
+            double angle = controller->getGeometryTool()->getRotation();
+            const double c = std::cos(angle);
+            const double s = std::sin(angle);
+            offset = {amount * (c * xdir - s * ydir), amount * (s * xdir + c * ydir)};
         } else {
-            xshift = amount * xdir;
-            yshift = amount * ydir;
+            offset = {amount * xdir, amount * ydir};
         }
-        controller->translate(xshift, yshift);
+        controller->translate(offset);
         return true;
     }
 
-    auto p = xoj::util::Point(translationX, translationY);
     if (angle != 0) {
-        controller->rotate(angle, p.x, p.y);
+        controller->rotate(angle);
         return true;
     }
     if (scale != 1.0) {
-        const double h = height * scale;
+        const double h = controller->getGeometryTool()->getHeight() * scale;
         if (h <= getMaxHeight() && h >= getMinHeight()) {
-            controller->scale(scale, p.x, p.y);
+            controller->scale(scale);
             return true;
         }
     }
@@ -237,7 +226,8 @@ void GeometryToolInputHandler::scrollMotion(InputEvent const& event) {
             return offset;
         }
     }();
-    const auto pos = Point(translationX + offset.x, translationY + offset.y);
+    const auto& origin = controller->getGeometryTool()->getOrigin();
+    const auto pos = Point(origin.x + offset.x, origin.y + offset.y);
     double minDist = SNAPPING_DISTANCE_TOLERANCE;
     double diffAngle{NAN};
     for (const auto& l: lines) {
@@ -245,16 +235,16 @@ void GeometryToolInputHandler::scrollMotion(InputEvent const& event) {
         const Point second = l->getPoint(1);
         const double dist = Snapping::distanceLine(pos, first, second);
         const double angleLine = std::atan2(second.y - first.y, second.x - first.x);
-        const double diff = std::remainder(angleLine - rotation, M_PI_2);
+        const double diff = std::remainder(angleLine - controller->getGeometryTool()->getRotation(), M_PI_2);
         if (dist < minDist && std::abs(diff) <= SNAPPING_ROTATION_TOLERANCE) {
             minDist = dist;
             diffAngle = diff;
         }
     }
     if (!std::isnan(diffAngle)) {
-        controller->rotate(diffAngle, pos.x, pos.y);
+        controller->rotate(diffAngle, xoj::util::Point<double>(pos.x, pos.y));
     }
-    controller->translate(offset.x, offset.y);
+    controller->translate(offset);
 }
 
 void GeometryToolInputHandler::rotateAndZoomStart() {
@@ -293,17 +283,17 @@ void GeometryToolInputHandler::rotateAndZoomMotion(InputEvent const& event) {
     const double angle = atan2(shift.y, shift.x);
 
     const xoj::util::Point<double> offset = center - lastZoomScrollCenter;
-    controller->translate(offset.x, offset.y);
+    controller->translate(offset);
     const double angleIncrease = angle - lastAngle;
     const xoj::util::Point<double> centerRel = (this->priLastPageRel + this->secLastPageRel) / 2.0;
     if (controller->isInsideGeometryTool(secLastPageRel.x, secLastPageRel.y, 0.0)) {
-        controller->rotate(angleIncrease, centerRel.x, centerRel.y);
+        controller->rotate(angleIncrease, centerRel);
     }  // allow moving without accidental rotation
     const double scaleFactor = dist / lastDist;
-    const double h = height * scaleFactor;
+    const double h = controller->getGeometryTool()->getHeight() * scaleFactor;
 
     if (!canBlockZoom && h <= getMaxHeight() && h >= getMinHeight()) {
-        controller->scale(scaleFactor, centerRel.x, centerRel.y);
+        controller->scale(scaleFactor, centerRel);
     }
 
     this->lastZoomScrollCenter = center;
@@ -314,9 +304,7 @@ void GeometryToolInputHandler::rotateAndZoomMotion(InputEvent const& event) {
 auto GeometryToolInputHandler::getCoords(InputEvent const& event) -> xoj::util::Point<double> {
     const double zoom = xournal->getZoom();
     const auto view = controller->getView();
-    const double posX = event.relativeX - static_cast<double>(view->getX());
-    const double posY = event.relativeY - static_cast<double>(view->getY());
-    return xoj::util::Point<double>(posX / zoom, posY / zoom);
+    return (event.relative - xoj::util::Point<double>(view->getX(), view->getY())) / zoom;
 }
 
 void GeometryToolInputHandler::blockDevice(InputContext::DeviceType deviceType) { isBlocked[deviceType] = true; }

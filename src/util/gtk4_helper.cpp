@@ -152,6 +152,10 @@ void gtk_label_set_wrap_mode(GtkLabel* label, PangoWrapMode wrap_mode) {
 void gtk_im_context_set_client_widget(GtkIMContext* context, GtkWidget* widget) {
     gtk_im_context_set_client_window(context, widget ? gtk_widget_get_parent_window(widget) : nullptr);
 }
+gboolean gtk_im_context_filter_keypress(GtkIMContext* context, GdkEvent* event) {
+    return gtk_im_context_filter_keypress(context, (GdkEventKey*)event);
+}
+
 
 /**** GtkFileChooserDialog ****/
 gboolean gtk_file_chooser_add_shortcut_folder(GtkFileChooser* chooser, GFile* file, GError** error) {
@@ -172,3 +176,13 @@ GtkWidget* gtk_list_box_row_get_child(GtkListBoxRow* row) { return gtk_bin_get_c
 
 /**** GtkEventController ****/
 GdkEvent* gtk_event_controller_get_current_event(GtkEventController*) { return gtk_get_current_event(); }
+
+/**** GtkEditable ****/
+const char* gtk_editable_get_text(GtkEditable* e) {
+    xoj_assert(GTK_IS_ENTRY(e));
+    return gtk_entry_get_text(GTK_ENTRY(e));
+}
+void gtk_editable_set_text(GtkEditable* e, const char* text) {
+    xoj_assert(GTK_IS_ENTRY(e));
+    return gtk_entry_set_text(GTK_ENTRY(e), text);
+}

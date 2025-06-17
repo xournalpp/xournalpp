@@ -465,9 +465,13 @@
    </section>
    <section>
     <item>
-     <attribute name="label" translatable="yes">New _Layer</attribute>
-     <attribute name="action">win.layer-new</attribute>
+     <attribute name="label" translatable="yes">Add a _Layer above the active layer</attribute>
+     <attribute name="action">win.layer-new-above-current</attribute>
      <attribute name="accel">&lt;Ctrl&gt;l</attribute>
+    </item>
+    <item>
+     <attribute name="label" translatable="yes">Add a layer below the active layer</attribute>
+     <attribute name="action">win.layer-new-below-current</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">Delete Layer</attribute>

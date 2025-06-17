@@ -18,8 +18,8 @@ auto Compass::getToolRange(bool transformed) const -> Range {
     const auto h = height * CM;
     Range rg;
     if (transformed) {
-        rg.addPoint(translationX - h, translationY - h);
-        rg.addPoint(translationX + h, translationY + h);
+        rg.addPoint(origin.x - h, origin.y - h);
+        rg.addPoint(origin.x + h, origin.y + h);
     } else {
         rg.addPoint(-h, -h);
         rg.addPoint(h, h);
@@ -41,6 +41,4 @@ void Compass::notify(bool resetMask) const {
                        this->getMatrix());
     Range rg = this->getToolRange(true);
     viewPool->dispatch(xoj::view::CompassView::FLAG_DIRTY_REGION, this->computeRepaintRange(rg));
-    handlerPool->dispatch(CompassInputHandler::UPDATE_VALUES, this->getHeight(), this->getRotation(),
-                          this->getTranslationX(), this->getTranslationY());
 }

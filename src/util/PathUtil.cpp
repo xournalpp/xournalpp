@@ -91,6 +91,29 @@ auto Util::hasPdfFileExt(const fs::path& path) -> bool {
     return StringUtils::toLowerCase(path.extension().string()) == ".pdf";
 }
 
+auto Util::hasPngFileExt(const fs::path& path) -> bool {
+    return StringUtils::toLowerCase(path.extension().string()) == ".png";
+}
+
+auto Util::isAbsolute(const fs::path& path) -> bool {
+#if defined(__GLIBCXX__) && defined(_WIN32)
+    if (path.is_absolute()) {
+        return true;
+    }
+
+    // Check for UNC paths like \\server\foo\bar.
+    // This works around a libstdc++ bug: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99333
+    const auto& str = path.native();
+    if (str.size() < 3) {
+        return false;
+    }
+    // support both forward and backward slashes
+    return (str[0] == '\\' || str[0] == '/') && (str[1] == '\\' || str[1] == '/');
+#else
+    return path.is_absolute();
+#endif
+}
+
 auto Util::clearExtensions(fs::path& path, const std::string& ext) -> void {
     auto rm_ext = [&path](const std::string ext) {
         if (StringUtils::toLowerCase(path.extension().string()) == StringUtils::toLowerCase(ext)) {
@@ -124,7 +147,7 @@ auto Util::fromUri(const std::string& uri) -> std::optional<fs::path> {
 auto Util::toUri(const fs::path& path) -> std::optional<std::string> {
     GError* error{};
     char* uri = [&] {
-        if (path.is_absolute()) {
+        if (isAbsolute(path)) {
             return g_filename_to_uri(path.u8string().c_str(), nullptr, &error);
         }
         return g_filename_to_uri(fs::absolute(path).u8string().c_str(), nullptr, &error);
@@ -292,10 +315,8 @@ auto Util::ensureFolderExists(const fs::path& p) -> fs::path {
     try {
         fs::create_directories(p);
     } catch (const fs::filesystem_error& fe) {
-        Util::execInUiThread([=]() {
-            std::string msg = FS(_F("Could not create folder: {1}\nFailed with error: {2}") % p.u8string() % fe.what());
-            XojMsgBox::showErrorToUser(nullptr, msg);
-        });
+        std::string msg = FS(_F("Could not create folder: {1}\nFailed with error: {2}") % p.u8string() % fe.what());
+        Util::execInUiThread([msg = std::move(msg)]() { XojMsgBox::showErrorToUser(nullptr, msg); });
     }
     return p;
 }

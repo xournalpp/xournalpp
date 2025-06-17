@@ -151,8 +151,6 @@ public:
     bool onKeyPressEvent(const KeyEvent& event);
     bool onKeyReleaseEvent(const KeyEvent& event);
 
-    static void onRealized(GtkWidget* widget, XournalView* view);
-
     void onSettingsChanged();
 
 private:

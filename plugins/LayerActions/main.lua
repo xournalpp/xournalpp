@@ -1,4 +1,4 @@
--- Register all Toolbar actions and intialize all UI stuff
+-- Register all Toolbar actions and initialize all UI stuff
 function initUi()
   app.registerUi({["menu"] = "Clone non-background layers to next page", ["callback"] = "clone", ["accelerator"]="<Control><Shift>c"});
   app.registerUi({["menu"] = "Hide all layers except first layers and backgrounds", ["callback"] = "hide"});

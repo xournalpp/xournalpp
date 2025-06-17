@@ -793,10 +793,8 @@ struct ActionProperties<Action::AUDIO_RECORD> {
             g_simple_action_set_state(ga, p);
         } else {
             g_simple_action_set_state(ga, g_variant_new_boolean(!enabled));
-            Util::execInUiThread([=]() {
-                std::string msg = _("Recorder could not be started.");
-                g_warning("%s", msg.c_str());
-                XojMsgBox::showErrorToUser(ctrl->getGtkWindow(), msg);
+            Util::execInUiThread([win = ctrl->getGtkWindow()]() {
+                XojMsgBox::showErrorToUser(win, _("Recorder could not be started."));
             });
         }
     }
@@ -967,8 +965,13 @@ struct ActionProperties<Action::LAYER_HIDE_ALL> {
 };
 
 template <>
-struct ActionProperties<Action::LAYER_NEW> {
-    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getLayerController()->addNewLayer(); }
+struct ActionProperties<Action::LAYER_NEW_ABOVE_CURRENT> {
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getLayerController()->addNewLayer(false); }
+};
+
+template <>
+struct ActionProperties<Action::LAYER_NEW_BELOW_CURRENT> {
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getLayerController()->addNewLayer(true); }
 };
 
 template <>

@@ -104,6 +104,9 @@ void installCrashHandlers() {
 static void crashHandler(int sig) {
     if (alreadyCrashed)  // crasehd again on emergency save
     {
+        // Forward the signal for the system's default handling
+        signal(sig, SIG_DFL);
+        kill(getpid(), sig);
         exit(2);
     }
     alreadyCrashed = true;
@@ -162,6 +165,10 @@ static void crashHandler(int sig) {
     }
 
     emergencySave();
+
+    // Forward the signal for the system's default handling
+    signal(sig, SIG_DFL);
+    kill(getpid(), sig);
 
     exit(1);
 }

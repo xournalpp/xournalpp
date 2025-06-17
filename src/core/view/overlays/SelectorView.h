@@ -16,16 +16,16 @@
 #include "OverlayView.h"
 #include "cairo.h"
 
-class Selection;
+class Selector;
 class Range;
 
 namespace xoj::view {
 class Repaintable;
 
-class SelectionView: public OverlayView, public xoj::util::Listener<SelectionView> {
+class SelectorView: public OverlayView, public xoj::util::Listener<SelectorView> {
 public:
-    SelectionView(const Selection* selection, Repaintable* parent, Color selectionColor);
-    virtual ~SelectionView() noexcept;
+    SelectorView(const Selector* selector, Repaintable* parent, Color selectorColor);
+    virtual ~SelectorView() noexcept;
 
     /**
      * @brief Draws the container to the given context
@@ -42,8 +42,8 @@ public:
     void deleteOn(DeleteViewsRequest, Range rg);
 
 private:
-    const Selection* selection;
-    Color selectionColor;
+    const Selector* selector;
+    Color selectorColor;
 
     static constexpr double BORDER_WIDTH_IN_PIXELS = 1;
     static constexpr double FILLING_OPACITY = 0.3;

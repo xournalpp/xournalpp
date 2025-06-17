@@ -22,6 +22,7 @@
 #include "model/Image.h"
 #include "model/PageRef.h"
 #include "model/Stroke.h"
+#include "model/TexImage.h"
 #include "model/Text.h"
 #include "model/XojPage.h"
 #include "util/PathUtil.h"
@@ -424,6 +425,41 @@ TEST(ControlLoadHandler, imageSaveJpegBackwardCompat) {
     Image* img = dynamic_cast<Image*>(layer->getElements()[0].get());
     ASSERT_TRUE(img) << "element should be an image";
     checkImageFormat(img, "png");
+}
+
+TEST(ControlLoadHandler, linebreaksLatex) {
+    // FIXME: use a path in CMAKE_BINARY_DIR or CMAKE_CURRENT_BINARY_DIR
+    const fs::path outPath =
+            fs::temp_directory_path() / "xournalpp-test-units_ControlLoaderHandler_linebreaksLatex.xopp";
+
+    // save journal containing latex object with linebreaks.
+    {
+        LoadHandler handler;
+        auto doc = handler.loadDocument(GET_TESTFILE("load/linebreaksLatex.xopp"));
+        ASSERT_TRUE(doc) << "latex objects with linebreaks";
+
+        SaveHandler saver;
+        saver.prepareSave(doc.get());
+        saver.saveTo(outPath);
+    }
+
+    // check that the saved latex objects have correct linebreaks.
+    LoadHandler handler;
+    auto doc = handler.loadDocument(outPath);
+    ASSERT_TRUE(doc) << "saved latex objects should have correct linebreaks";
+    ASSERT_EQ(1U, doc->getPageCount());
+    PageRef page = doc->getPage(0);
+    ASSERT_EQ(1U, page->getLayerCount());
+    Layer* layer = page->getLayers()[0];
+
+    auto* teximage = static_cast<const TexImage*>(layer->getElements()[0].get());
+    EXPECT_EQ("{.\n}", teximage->getText());
+
+    teximage = static_cast<const TexImage*>(layer->getElements()[1].get());
+    EXPECT_EQ("{.\r}", teximage->getText());
+
+    teximage = static_cast<const TexImage*>(layer->getElements()[2].get());
+    EXPECT_EQ("{.\r\n}", teximage->getText());
 }
 
 TEST(ControlLoadHandler, testLoadStoreLoadDefault) {

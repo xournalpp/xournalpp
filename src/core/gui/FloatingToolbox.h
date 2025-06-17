@@ -75,10 +75,10 @@ private:
     bool floatingToolboxActivated();
 
     /**
-     * Return number of widgets in toolbox.
+     * Whether there are items in the toolbox.
      * Note this includes non-tools such as spacers and separators.
      */
-    int countWidgets();
+    bool hasWidgets();
 
 
 private:

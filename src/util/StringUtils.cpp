@@ -47,11 +47,11 @@ auto StringUtils::split(const string& input, char delimiter) -> vector<string> {
     return tokens;
 }
 
-auto StringUtils::startsWith(const string& str, const string& start) -> bool {
+auto StringUtils::startsWith(std::string_view str, std::string_view start) -> bool {
     return str.compare(0, start.length(), start) == 0;
 }
 
-auto StringUtils::endsWith(const string& str, const string& end) -> bool {
+auto StringUtils::endsWith(std::string_view str, std::string_view end) -> bool {
     if (end.size() > str.size()) {
         return false;
     }

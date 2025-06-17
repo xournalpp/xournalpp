@@ -6,9 +6,10 @@
 
 #include "control/settings/Settings.h"       // for Settings
 #include "control/settings/SettingsEnums.h"  // for InputDeviceTypeOption
+#include "util/Point.h"
 #include "util/gdk4_helper.h"
 
-auto InputEvents::translateEventType(GdkEventType type) -> InputEventType {
+static auto translateEventType(GdkEventType type) -> InputEventType {
     switch (type) {
         case GDK_MOTION_NOTIFY:
         case GDK_TOUCH_UPDATE:
@@ -79,21 +80,19 @@ auto InputEvents::translateDeviceType(GdkDevice* device, Settings* settings) -> 
 auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings) -> InputEvent {
     InputEvent targetEvent{};
 
-    targetEvent.sourceEvent = sourceEvent;
-
     // Map the event type to our internal ones
     GdkEventType sourceEventType = gdk_event_get_event_type(sourceEvent);
     targetEvent.type = translateEventType(sourceEventType);
 
-    GdkDevice* device = gdk_event_get_source_device(sourceEvent);
-    targetEvent.deviceClass = translateDeviceType(device, settings);
+    targetEvent.device = gdk_event_get_source_device(sourceEvent);
+    targetEvent.deviceClass = translateDeviceType(targetEvent.device, settings);
 
-    targetEvent.deviceName = gdk_device_get_name(device);
-    targetEvent.deviceId = DeviceId(device);
+    targetEvent.deviceName = gdk_device_get_name(targetEvent.device);
+    targetEvent.deviceId = DeviceId(targetEvent.device);
 
     // Copy both coordinates of the event
-    gdk_event_get_root_coords(sourceEvent, &targetEvent.absoluteX, &targetEvent.absoluteY);
-    gdk_event_get_coords(sourceEvent, &targetEvent.relativeX, &targetEvent.relativeY);
+    gdk_event_get_root_coords(sourceEvent, &targetEvent.absolute.x, &targetEvent.absolute.y);
+    gdk_event_get_coords(sourceEvent, &targetEvent.relative.x, &targetEvent.relative.y);
 
     // Copy the event button if there is any
     if (targetEvent.type == BUTTON_PRESS_EVENT || targetEvent.type == BUTTON_RELEASE_EVENT) {
