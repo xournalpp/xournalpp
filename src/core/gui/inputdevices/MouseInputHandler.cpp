@@ -131,17 +131,23 @@ auto MouseInputHandler::changeTool(InputEvent const& event) -> bool {
     bool isClickOnSelection = this->inputContext->getXournal()->selection;
     bool toolChanged = false;
 
-    if (modifier2 && !isClickOnSelection)
-        toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_MOUSE_MIDDLE);
-    else if (modifier3 && !isClickOnSelection)
-        toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_MOUSE_RIGHT);
-    else
+    if (!isClickOnSelection) {
+        if (modifier2) {
+            toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_MOUSE_MIDDLE);
+        } else if (modifier3) {
+            toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_MOUSE_RIGHT);
+        } else {
+            toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_MOUSE_LEFT);
+        }
+    } else {
         toolChanged = toolHandler->pointActiveToolToToolbarTool();
+    }
 
     if (toolChanged) {
         ToolType toolType = toolHandler->getToolType();
-        if (toolType == TOOL_TEXT)
+        if (toolType == TOOL_TEXT) {
             toolHandler->selectTool(toolType);
+        }
         toolHandler->fireToolChanged();
     }
 

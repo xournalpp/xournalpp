@@ -1553,6 +1553,38 @@ Illegal characters are replaced with "_"</property>
                                       </packing>
                                     </child>
                                     <child>
+                                      <object class="GtkFrame" id="sid1">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="label-xalign">0.009999999776482582</property>
+                                        <child>
+                                          <object class="GtkBox" id="hboxLeftMouse">
+                                            <property name="name">hboxLeftMouse</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="margin-start">12</property>
+                                            <property name="margin-end">12</property>
+                                            <property name="margin-bottom">8</property>
+                                            <child>
+                                              <placeholder/>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child type="label">
+                                          <object class="GtkLabel" id="sid2">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="label" translatable="yes">Left Mouse Button</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                    <child>
                                       <object class="GtkFrame" id="sid23">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
@@ -1581,7 +1613,7 @@ Illegal characters are replaced with "_"</property>
                                       <packing>
                                         <property name="expand">False</property>
                                         <property name="fill">True</property>
-                                        <property name="position">1</property>
+                                        <property name="position">2</property>
                                       </packing>
                                     </child>
                                     <child>
@@ -1613,7 +1645,7 @@ Illegal characters are replaced with "_"</property>
                                       <packing>
                                         <property name="expand">False</property>
                                         <property name="fill">True</property>
-                                        <property name="position">2</property>
+                                        <property name="position">3</property>
                                       </packing>
                                     </child>
                                   </object>

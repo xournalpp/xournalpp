@@ -215,6 +215,7 @@ void SettingsDialog::initMouseButtonEvents(GladeSearchpath* gladeSearchPath) {
                                                             withDevice));
     };
 
+    emplaceButton("hboxLeftMouse", BUTTON_MOUSE_LEFT);
     emplaceButton("hboxMiddleMouse", BUTTON_MOUSE_MIDDLE);
     emplaceButton("hboxRightMouse", BUTTON_MOUSE_RIGHT);
     emplaceButton("hboxEraser", BUTTON_ERASER);
