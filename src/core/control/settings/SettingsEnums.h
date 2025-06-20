@@ -21,6 +21,7 @@
  */
 enum Button {
     BUTTON_ERASER,
+    BUTTON_MOUSE_LEFT,
     BUTTON_MOUSE_MIDDLE,
     BUTTON_MOUSE_RIGHT,
     BUTTON_TOUCH,
@@ -109,6 +110,8 @@ constexpr auto buttonToString(Button button) -> const char* {
     switch (button) {
         case BUTTON_ERASER:
             return "eraser";
+        case BUTTON_MOUSE_LEFT:
+            return "left";
         case BUTTON_MOUSE_MIDDLE:
             return "middle";
         case BUTTON_MOUSE_RIGHT:

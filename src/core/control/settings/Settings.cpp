@@ -155,6 +155,9 @@ void Settings::loadDefault() {
     // Eraser
     this->buttonConfig[BUTTON_ERASER] = std::make_unique<ButtonConfig>(TOOL_ERASER, Colors::black, TOOL_SIZE_NONE,
                                                                        DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    // Left button
+    this->buttonConfig[BUTTON_MOUSE_LEFT] = std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE,
+                                                                           DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Middle button
     this->buttonConfig[BUTTON_MOUSE_MIDDLE] = std::make_unique<ButtonConfig>(TOOL_HAND, Colors::black, TOOL_SIZE_NONE,
                                                                              DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
