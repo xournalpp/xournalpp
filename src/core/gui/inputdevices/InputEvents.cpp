@@ -37,12 +37,8 @@ static auto translateEventType(GdkEventType type) -> InputEventType {
             return SCROLL_EVENT;
         case GDK_GRAB_BROKEN:
             return GRAB_BROKEN_EVENT;
-        case GDK_KEY_PRESS:
-            return KEY_PRESS_EVENT;
-        case GDK_KEY_RELEASE:
-            return KEY_RELEASE_EVENT;
         default:
-            // Events we do not care about
+            // Events we do not care about or handle otherwise (e.g. key events)
             return UNKNOWN;
     }
 }
@@ -51,14 +47,10 @@ auto InputEvents::translateDeviceType(const std::string& name, GdkInputSource so
         -> InputDeviceClass {
     InputDeviceTypeOption deviceType = settings->getDeviceClassForDevice(name, source);
     switch (deviceType) {
-        case InputDeviceTypeOption::Disabled: {
-            // Keyboards are not matched in their own class - do this here manually
-            if (source == GDK_SOURCE_KEYBOARD) {
-                return INPUT_DEVICE_KEYBOARD;
-            }
+        case InputDeviceTypeOption::Disabled:
             return INPUT_DEVICE_IGNORE;
-        }
         case InputDeviceTypeOption::Mouse:
+        case InputDeviceTypeOption::MouseKeyboardCombo:
             return INPUT_DEVICE_MOUSE;
         case InputDeviceTypeOption::Pen:
             return INPUT_DEVICE_PEN;
@@ -66,8 +58,6 @@ auto InputEvents::translateDeviceType(const std::string& name, GdkInputSource so
             return INPUT_DEVICE_ERASER;
         case InputDeviceTypeOption::Touchscreen:
             return INPUT_DEVICE_TOUCHSCREEN;
-        case InputDeviceTypeOption::MouseKeyboardCombo:
-            return INPUT_DEVICE_MOUSE_KEYBOARD_COMBO;
         default:
             return INPUT_DEVICE_IGNORE;
     }
@@ -103,10 +93,6 @@ auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings) -> I
         targetEvent.button = 1;
     }
     targetEvent.state = gdk_event_get_modifier_state(sourceEvent);
-    if (targetEvent.deviceClass == INPUT_DEVICE_KEYBOARD) {
-        targetEvent.button = gdk_key_event_get_keyval(sourceEvent);
-    }
-
 
     // Copy the timestamp
     targetEvent.timestamp = gdk_event_get_time(sourceEvent);
