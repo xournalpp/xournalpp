@@ -50,14 +50,11 @@ auto GeometryToolInputHandler::handle(InputEvent const& event) -> bool {
     }
 
     switch (device) {
-        case INPUT_DEVICE_KEYBOARD:
-            return false;  // Handled via GtkEventControllerKey in InputContext
         case INPUT_DEVICE_TOUCHSCREEN:
             return this->handleTouchscreen(event);
         case INPUT_DEVICE_PEN:
         case INPUT_DEVICE_MOUSE:
-        case INPUT_DEVICE_MOUSE_KEYBOARD_COMBO:
-            return (!isBlocked[InputContext::DeviceType::MOUSE] && this->handlePointer(event));
+            return this->handlePointer(event);
         default:
             g_warning("Device class %d not handled by geometry tool", event.deviceClass);
             return false;

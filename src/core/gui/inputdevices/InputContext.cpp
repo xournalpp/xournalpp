@@ -104,11 +104,16 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
         return false;
     }
 
+    GdkInputSource inputSource = gdk_device_get_source(sourceDevice);
+    if (inputSource == GDK_SOURCE_KEYBOARD) {
+        // Keyboard events are handled via the GtkEventControllerKey instance
+        return false;
+    }
+
     InputEvent event = InputEvents::translateEvent(sourceEvent, this->getSettings());
 
     // Add the device to the list of known devices if it is currently unknown
-    GdkInputSource inputSource = gdk_device_get_source(sourceDevice);
-    if (inputSource != GDK_SOURCE_KEYBOARD && gdk_device_get_device_type(sourceDevice) != GDK_DEVICE_TYPE_MASTER &&
+    if (gdk_device_get_device_type(sourceDevice) != GDK_DEVICE_TYPE_MASTER &&
         this->knownDevices.find(std::string(event.deviceName)) == this->knownDevices.end()) {
 
         this->knownDevices.insert(std::string(event.deviceName));
@@ -140,7 +145,7 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     }
 
     // handle mouse devices
-    if (event.deviceClass == INPUT_DEVICE_MOUSE || event.deviceClass == INPUT_DEVICE_MOUSE_KEYBOARD_COMBO) {
+    if (event.deviceClass == INPUT_DEVICE_MOUSE) {
         return this->mouseHandler->handle(event);
     }
 
@@ -159,12 +164,6 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     if (event.deviceClass == INPUT_DEVICE_IGNORE) {
         return true;
     }
-
-#ifdef DEBUG_INPUT
-    if (event.deviceClass != INPUT_DEVICE_KEYBOARD) {  // Keyboard event are handled via the GtkEventControllerKey
-        g_message("We received an event we do not have a handler for");
-    }
-#endif
     return false;
 }
 
@@ -308,10 +307,8 @@ void InputContext::printDebug(GdkEvent* event) {
                                      "GDK_SOURCE_TOUCHPAD", "GDK_SOURCE_TRACKPOINT", "GDK_SOURCE_TABLET_PAD"};
     GdkDevice* device = gdk_event_get_source_device(event);
     message += "Source device:\t" + gdkInputSources[gdk_device_get_source(device)] + "\n";
-    std::string gdkInputClasses[] = {"INPUT_DEVICE_MOUSE",    "INPUT_DEVICE_PEN",
-                                     "INPUT_DEVICE_ERASER",   "INPUT_DEVICE_TOUCHSCREEN",
-                                     "INPUT_DEVICE_KEYBOARD", "INPUT_DEVICE_MOUSE_KEYBOARD_COMBO",
-                                     "INPUT_DEVICE_IGNORE"};
+    std::string gdkInputClasses[] = {"INPUT_DEVICE_MOUSE", "INPUT_DEVICE_PEN", "INPUT_DEVICE_ERASER",
+                                     "INPUT_DEVICE_TOUCHSCREEN", "INPUT_DEVICE_IGNORE"};
     InputDeviceClass deviceClass = InputEvents::translateDeviceType(device, this->getSettings());
     message += "Device Class:\t" + gdkInputClasses[deviceClass] + "\n";
 

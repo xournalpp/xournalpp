@@ -735,8 +735,12 @@ void Settings::loadDeviceClasses() {
         int deviceSource = 0;
         deviceNode.getInt("deviceClass", deviceClass);
         deviceNode.getInt("deviceSource", deviceSource);
-        inputDeviceClasses.emplace(device.first, std::make_pair(static_cast<InputDeviceTypeOption>(deviceClass),
-                                                                static_cast<GdkInputSource>(deviceSource)));
+        auto devClass = static_cast<InputDeviceTypeOption>(deviceClass);
+        if (devClass == InputDeviceTypeOption::MouseKeyboardCombo) {
+            // This extra class is no longer handled differently from Mouse. Merge them.
+            devClass = InputDeviceTypeOption::Mouse;
+        }
+        inputDeviceClasses.emplace(device.first, std::make_pair(devClass, static_cast<GdkInputSource>(deviceSource)));
     }
 }
 
