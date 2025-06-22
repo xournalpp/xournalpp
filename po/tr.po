@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-25 16:22+0000\n"
-"PO-Revision-Date: 2025-06-01 04:28\n"
+"PO-Revision-Date: 2025-06-22 04:27\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -3114,19 +3114,19 @@ msgstr "(yeniden başlatma gerektirir)"
 
 #: ../ui/settings.glade:3179
 msgid "Theme Variant:"
-msgstr ""
+msgstr "Tema Biçimleri:"
 
 #: ../ui/settings.glade:3199
 msgid "Use system default"
-msgstr ""
+msgstr "Sistem Varsayılanı Kullan"
 
 #: ../ui/settings.glade:3200
 msgid "Force light theme"
-msgstr ""
+msgstr "Aydınlık temasını zorla"
 
 #: ../ui/settings.glade:3201
 msgid "Force dark theme"
-msgstr ""
+msgstr "Karanlık temaya zorla"
 
 #: ../ui/settings.glade:3214
 msgid "(this may not work, depending on your system theme)"
