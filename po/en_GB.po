@@ -1,25 +1,24 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the xournalpp package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: xournalpp 1.2.8~dev\n"
+"Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-15 07:54+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2025-06-02 13:27+0000\n"
+"PO-Revision-Date: 2025-06-15 04:27\n"
+"Last-Translator: \n"
+"Language-Team: English, United Kingdom\n"
+"Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: xournalpp\n"
+"X-Crowdin-Project-ID: 363247\n"
+"X-Crowdin-Language: en-GB\n"
+"X-Crowdin-File: /release-1.2/xournalpp.pot\n"
+"X-Crowdin-File-ID: 36\n"
 
 #: ../src/core/control/AudioController.cpp:118
-msgid ""
-"Audio folder not set or invalid! Recording won't work!\n"
+msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
 msgstr ""
 
@@ -40,14 +39,11 @@ msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1271
-msgid ""
-"The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to "
-"edit?"
+msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1481
-msgid ""
-"No pdf pages available to append. You may need to reopen the document first."
+msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1495
@@ -55,8 +51,7 @@ msgid "Unable to retrieve pdf page."
 msgstr ""
 
 #: ../src/core/control/Control.cpp:2266
-msgid ""
-"Do not open Autosave files. They may will be overwritten!\n"
+msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
 msgstr ""
@@ -70,28 +65,20 @@ msgid "Error opening file \"{1}\""
 msgstr ""
 
 #: ../src/core/control/Control.cpp:2312
-msgid ""
-"The file being loaded has a file format version newer than the one currently "
-"supported by this version of Xournal++, so it may not load properly. Open "
-"anyways?"
+msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr ""
 
 #: ../src/core/control/Control.cpp:2439
-msgid ""
-"The attached background file could not be found. It might have been moved, "
-"renamed or deleted."
+msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
 #: ../src/core/control/Control.cpp:2442
-msgid ""
-"The background file \"{1}\" could not be found. It might have been moved, "
-"renamed or deleted.\n"
+msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
 
 #: ../src/core/control/Control.cpp:2452
-msgid ""
-"\n"
+msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr ""
 
@@ -114,8 +101,7 @@ msgid "Cancel"
 msgstr ""
 
 #: ../src/core/control/Control.cpp:2559
-msgid ""
-"Error annotate PDF file \"{1}\"\n"
+msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
 
@@ -233,8 +219,7 @@ msgid "Failed to read global template file. Please check your settings."
 msgstr ""
 
 #: ../src/core/control/LatexController.cpp:87
-msgid ""
-"Global template file is not a regular file. Please check your settings. "
+msgid "Global template file is not a regular file. Please check your settings. "
 msgstr ""
 
 #: ../src/core/control/LatexController.cpp:244
@@ -264,10 +249,8 @@ msgid "This image could not be loaded. Error message: {1}"
 msgstr ""
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:228
-msgid ""
-"You don't have any PDF pages to select from. Cancel operation.\n"
-"Please select another background type: Menu \"Journal\" → \"Configure Page "
-"Template\"."
+msgid "You don't have any PDF pages to select from. Cancel operation.\n"
+"Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
 msgstr ""
 
 #: ../src/core/control/PdfCache.cpp:123
@@ -283,15 +266,11 @@ msgid "Please delete the file manually"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:161
-msgid ""
-"There is a recent errorlogfile from Xournal++. Please file a Bugreport, so "
-"the bug may be fixed."
+msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:163
-msgid ""
-"There are recent errorlogfiles from Xournal++. Please file a Bugreport, so "
-"the bug may be fixed."
+msgid "There are recent errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:166
@@ -299,8 +278,7 @@ msgid "The most recent log file name: {1}"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:168
-msgid ""
-"To prevent this popup from reappearing, simply delete the errorlogfiles."
+msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:174
@@ -320,8 +298,7 @@ msgid "Delete Logfile"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:203
-msgid ""
-"Xournal++ crashed last time. Would you like to restore the last edited file?"
+msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:208
@@ -333,14 +310,11 @@ msgid "Restore file"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:235
-msgid ""
-"The background file \"{1}\" could not be found. It might have been moved, "
-"renamed or deleted."
+msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:397
-msgid ""
-"<span foreground='red' size='x-large'>Missing the needed UI file:\n"
+msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
 "  Not relative\n"
@@ -349,16 +323,13 @@ msgid ""
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:402
-msgid ""
-"\n"
-"\n"
+msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:426
 #: ../src/core/control/XournalMain.cpp:482
-msgid ""
-"Sorry, Xournal++ can only open one file at once.\n"
+msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr ""
 
@@ -368,8 +339,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:441
 #: ../src/core/control/XournalMain.cpp:497
-msgid ""
-"Filesystem error: {1}\n"
+msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
 msgstr ""
@@ -391,72 +361,55 @@ msgid "Export FILE as PDF"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:658
-msgid ""
-"Export FILE as image files (one per page)\n"
-"                                 Guess the output format from the extension "
-"of IMGFILE\n"
+msgid "Export FILE as image files (one per page)\n"
+"                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:663
-msgid ""
-"Export without background\n"
-"                                 The exported file has transparent or white "
-"background,\n"
+msgid "Export without background\n"
+"                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:668
-msgid ""
-"Export without ruling\n"
+msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:672
-msgid ""
-"Export layers progressively\n"
-"                                 In PDF export, Render layers progressively "
-"one by one.\n"
-"                                 This results in N export pages per page "
-"with N layers,\n"
+msgid "Export layers progressively\n"
+"                                 In PDF export, Render layers progressively one by one.\n"
+"                                 This results in N export pages per page with N layers,\n"
 "                                 building up the layer stack progressively.\n"
-"                                 The resulting PDF file can be used for a "
-"presentation.\n"
+"                                 The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:679
-msgid ""
-"Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
-"                                 No effect without -p/--create-pdf or -i/--"
-"create-img"
+msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
+"                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:683
-msgid ""
-"Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
-"                                 No effect without -p/--create-pdf or -i/--"
-"create-img"
+msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
+"                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:687
-msgid ""
-"Set DPI for PNG exports. Default is 300\n"
+msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:691
-msgid ""
-"Set page width for PNG exports\n"
+msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:697
-msgid ""
-"Set page height for PNG exports\n"
+msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
-"                                 Ignored if --export-png-dpi or --export-png-"
-"width is used"
+"                                 Ignored if --export-png-dpi or --export-png-width is used"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:702
@@ -492,14 +445,12 @@ msgid "The check for overwriting the background failed with:\n"
 msgstr ""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:53
-msgid ""
-"\n"
+msgid "\n"
 " Do you want to continue?"
 msgstr ""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:108
-msgid ""
-"Failed to resolve path with the following error:\n"
+msgid "Failed to resolve path with the following error:\n"
 "{1}"
 msgstr ""
 
@@ -539,8 +490,7 @@ msgid "Error save image #1"
 msgstr ""
 
 #: ../src/core/control/jobs/ImageExport.cpp:177
-msgid ""
-"Error while exporting the pdf background: I cannot find the pdf page number "
+msgid "Error while exporting the pdf background: I cannot find the pdf page number "
 msgstr ""
 
 #: ../src/core/control/jobs/ImageExport.cpp:197
@@ -564,12 +514,8 @@ msgid "Failed to parse LaTeX generator command: {1}"
 msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:71
-msgid ""
-"Failed to find LaTeX generator program in PATH: {1}\n"
-"\n"
-"Since installation is detected within Flatpak, you need to install the "
-"Flatpak freedesktop Tex Live extension. For example, by running:\n"
-"\n"
+msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
+"Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 msgstr ""
 
@@ -815,8 +761,7 @@ msgstr ""
 #: ../src/core/control/xojfile/LoadHandler.cpp:818
 #: ../src/core/control/xojfile/LoadHandler.cpp:1146
 #: ../src/core/control/xojfile/LoadHandler.cpp:1164
-msgid ""
-"Could not open attachment: {1}. Error message: No valid file size provided"
+msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:837
@@ -886,9 +831,7 @@ msgid "Could not write background \"{1}\", {2}"
 msgstr ""
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
-msgid ""
-"Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::"
-"Plain to avoid corrupted file"
+msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr ""
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:367
@@ -1112,9 +1055,7 @@ msgid "LaTeX editor theme:"
 msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:54
-msgid ""
-"GtkSourceView was disabled when building Xournal++! Some options will not be "
-"available."
+msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:143
@@ -1130,9 +1071,7 @@ msgid "Error: {1}. Please check the contents of {2}"
 msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:165
-msgid ""
-"Error: {1} is not a regular file. Please check your LaTeX template file "
-"settings. "
+msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr ""
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:30
@@ -1148,19 +1087,15 @@ msgid "Select background color"
 msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:189
-msgid ""
-"<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
+msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:308
-msgid ""
-"Enable pressure sensitivity or pressure inference to change this setting!"
+msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:312
-msgid ""
-"Filter input pressure. Multiply the pressure by the pressure multiplier. If "
-"less than the minimum, use the minimum pressure."
+msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr ""
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:22
@@ -1228,10 +1163,8 @@ msgid "Paper B_ackground"
 msgstr ""
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:98
-msgid ""
-"Your current document does not contain PDF Page no {1}\n"
-"Would you like to insert this page?\n"
-"\n"
+msgid "Your current document does not contain PDF Page no {1}\n"
+"Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
 msgstr ""
 
@@ -1304,14 +1237,12 @@ msgid "Drawing Type Combo"
 msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:69
-msgid ""
-"Could not parse general toolbar.ini file: {1}\n"
+msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:78
-msgid ""
-"Could not parse custom toolbar.ini file: {1}\n"
+msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr ""
 
@@ -1851,14 +1782,12 @@ msgid "Edit text"
 msgstr ""
 
 #: ../src/core/undo/UndoRedoHandler.cpp:116
-msgid ""
-"Could not undo \"{1}\"\n"
+msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr ""
 
 #: ../src/core/undo/UndoRedoHandler.cpp:145
-msgid ""
-"Could not redo \"{1}\"\n"
+msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr ""
 
@@ -1875,8 +1804,7 @@ msgid "ElementRange::parse(): invalid element range."
 msgstr ""
 
 #: ../src/util/ElementRange.cpp:95
-msgid ""
-"ElementRange::parse(): given element index is larger than maximum count."
+msgid "ElementRange::parse(): given element index is larger than maximum count."
 msgstr ""
 
 #: ../src/util/ElementRange.cpp:98
@@ -1908,8 +1836,7 @@ msgid "Error code {1}"
 msgstr ""
 
 #: ../src/util/PathUtil.cpp:191
-msgid ""
-"File couldn't be opened. You have to do it manually:\n"
+msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr ""
 
@@ -1918,8 +1845,7 @@ msgid "xournalpp-{1}"
 msgstr ""
 
 #: ../src/util/PathUtil.cpp:274
-msgid ""
-"Could not create folder: {1}\n"
+msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr ""
 
@@ -1956,8 +1882,7 @@ msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
 msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:147
-msgid ""
-"xoj-preview-extractor: no preview and page found, maybe an invalid file?"
+msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:185
@@ -1977,8 +1902,7 @@ msgid "About Xournal++"
 msgstr ""
 
 #: ../ui/about.glade:117
-msgid ""
-"<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
+msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
 msgstr ""
 
@@ -1987,8 +1911,7 @@ msgid "Icon Designers"
 msgstr ""
 
 #: ../ui/about.glade:210
-msgid ""
-"Partially based on Xournal\n"
+msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr ""
 
@@ -2042,8 +1965,7 @@ msgid "Export"
 msgstr ""
 
 #: ../ui/exportSettings.glade:124
-msgid ""
-"<b>Document export settings</b>\n"
+msgid "<b>Document export settings</b>\n"
 "Set export parameters"
 msgstr ""
 
@@ -2077,9 +1999,7 @@ msgstr ""
 
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:354
-msgid ""
-"Export the document without any background (None) or with PDF and image "
-"backgrounds only (No ruling) or with all background types (All)."
+msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
 msgstr ""
 
 #: ../ui/exportSettings.glade:369
@@ -2087,9 +2007,7 @@ msgid "Export layers progressively"
 msgstr ""
 
 #: ../ui/exportSettings.glade:373
-msgid ""
-"If enabled, the layers of each page will be added one by one. The resulting "
-"PDF file can be used for a presentation."
+msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
 msgstr ""
 
 #: ../ui/fillOpacity.glade:14
@@ -2097,8 +2015,7 @@ msgid "Opacity settings"
 msgstr ""
 
 #: ../ui/fillOpacity.glade:80
-msgid ""
-"<b>Fill opacity settings</b>\n"
+msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
 msgstr ""
 
@@ -2123,9 +2040,7 @@ msgid "Always check LaTeX dependencies before running"
 msgstr ""
 
 #: ../ui/latexSettings.glade:49
-msgid ""
-"If enabled, check that required LaTeX packages are installed and that the "
-"LaTeX commands are available before running the LaTeX tool."
+msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
 msgstr ""
 
 #: ../ui/latexSettings.glade:87
@@ -2145,9 +2060,7 @@ msgid "Global template file path"
 msgstr ""
 
 #: ../ui/latexSettings.glade:166
-msgid ""
-"The following strings will be substituted in the global template file when "
-"running the LaTeX tool:"
+msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
 msgstr ""
 
 #: ../ui/latexSettings.glade:180
@@ -2183,9 +2096,7 @@ msgid "Test configuration"
 msgstr ""
 
 #: ../ui/latexSettings.glade:322
-msgid ""
-"Test if the current configuration is valid by running the LaTeX generation "
-"command on the global template file with a test formula."
+msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr ""
 
 #: ../ui/latexSettings.glade:354
@@ -2229,8 +2140,7 @@ msgid " = Floating Toolbox (experimental) ="
 msgstr ""
 
 #: ../ui/main.glade:110
-msgid ""
-"<b>Empty Toolbox</b>\n"
+msgid "<b>Empty Toolbox</b>\n"
 "            <i>Menu: View/Toolbars</i>"
 msgstr ""
 
@@ -2743,9 +2653,7 @@ msgid "Copy current page background instead"
 msgstr ""
 
 #: ../ui/pageTemplate.glade:192
-msgid ""
-"Copy the background of the current page instead of using the background set "
-"above."
+msgid "Copy the background of the current page instead of using the background set above."
 msgstr ""
 
 #: ../ui/pageTemplate.glade:245
@@ -2841,11 +2749,8 @@ msgid "Xournal++ Preferences"
 msgstr ""
 
 #: ../ui/settings.glade:363
-msgid ""
-"<i>If the document already was saved you can find it in the same folder with "
-"the extension .autosave.xoj\n"
-"If the file was not yet saved you can find it in ~/.cache/xournalpp/"
-"autosaves</i>"
+msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
+"If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
 msgstr ""
 
 #: ../ui/settings.glade:382
@@ -2873,8 +2778,7 @@ msgid "Default name: "
 msgstr ""
 
 #: ../ui/settings.glade:565
-msgid ""
-"%a\t\tAbbreviated weekday name (e.g. Thu)\n"
+msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%A\t\tFull weekday name (e.g. Thursday)\n"
 "%b\t\tAbbreviated month name (e.g. Aug)\n"
 "%B\t\tFull month name (e.g. August)\n"
@@ -2888,11 +2792,9 @@ msgid ""
 "%M\t\tMinute (00-59)\n"
 "%p\t\tAM or PM designation (e.g. PM)\n"
 "%S\t\tSecond (00-61)\n"
-"%U\t\tWeek number with the first Sunday as the first day of week one "
-"(00-53)\n"
+"%U\t\tWeek number with the first Sunday as the first day of week one (00-53)\n"
 "%w\t\tWeekday as a decimal number with Sunday as 0 (0-6)\n"
-"%W\t\tWeek number with the first Monday as the first day of week one "
-"(00-53)\n"
+"%W\t\tWeek number with the first Monday as the first day of week one (00-53)\n"
 "%x\t\tDate representation (e.g. 08/23/01)\n"
 "%X\t\tTime representation (e.g. 14:55:02)\n"
 "%y\t\tYear, last two digits (00-99)\n"
@@ -2915,8 +2817,7 @@ msgid "<i>This name will be proposed if you export a document to PDF.</i>"
 msgstr ""
 
 #: ../ui/settings.glade:736
-msgid ""
-"%{name}\tThe name of the exported document\n"
+msgid "%{name}\tThe name of the exported document\n"
 "%a\t\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%A\t\t\tFull weekday name (e.g. Thursday)\n"
 "%b\t\t\tAbbreviated month name (e.g. Aug)\n"
@@ -2931,11 +2832,9 @@ msgid ""
 "%M\t\t\tMinute (00-59)\n"
 "%p\t\t\tAM or PM designation (e.g. PM)\n"
 "%S\t\t\tSecond (00-61)\n"
-"%U\t\t\tWeek number with the first Sunday as the first day of week one "
-"(00-53)\n"
+"%U\t\t\tWeek number with the first Sunday as the first day of week one (00-53)\n"
 "%w\t\t\tWeekday as a decimal number with Sunday as 0 (0-6)\n"
-"%W\t\t\tWeek number with the first Monday as the first day of week one "
-"(00-53)\n"
+"%W\t\t\tWeek number with the first Monday as the first day of week one (00-53)\n"
 "%x\t\t\tDate representation (e.g. 08/23/01)\n"
 "%X\t\t\tTime representation (e.g. 14:55:02 or 2:55:02 PM)\n"
 "%y\t\t\tYear, last two digits (00-99)\n"
@@ -2954,9 +2853,7 @@ msgid "Enable Autoloading of Journals"
 msgstr ""
 
 #: ../ui/settings.glade:842
-msgid ""
-"If you open a PDF and there is a Xournal file with the same name it will "
-"open the xoj file."
+msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
 msgstr ""
 
 #: ../ui/settings.glade:854
@@ -2964,9 +2861,7 @@ msgid "Enable autoloading of most recent file on application startup"
 msgstr ""
 
 #: ../ui/settings.glade:859
-msgid ""
-"If enabled Xournal++ will open the most recent document automatically that "
-"you can continue editing your last saved document."
+msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
 msgstr ""
 
 #: ../ui/settings.glade:877
@@ -2978,10 +2873,7 @@ msgid "Load / Save"
 msgstr ""
 
 #: ../ui/settings.glade:955
-msgid ""
-"<i>Assign device classes to each input device of your system. Only change "
-"these values if your devices are not correctly matched. (e.g. your pen shows "
-"up as touchscreen)</i>"
+msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
 msgstr ""
 
 #: ../ui/settings.glade:991
@@ -2989,42 +2881,28 @@ msgid "Input Devices"
 msgstr ""
 
 #: ../ui/settings.glade:1030
-msgid ""
-"Enable drawing outside of window <i>(Drawing will not stop at the border of "
-"the window)</i>"
+msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
 msgstr ""
 
 #: ../ui/settings.glade:1049
-msgid ""
-"Drag LEFT from start point acts like shift key is being held.\n"
-"\t    Drag UP acts as if Control key is being held.\n"
-"\n"
-"            Determination Radius: Radius at which modifiers will lock in "
-"until finished drawing.\n"
-"\n"
+msgid "Drag LEFT from start point acts like shift key is being held.\n"
+"\t    Drag UP acts as if Control key is being held.\n\n"
+"            Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
 msgstr ""
 
 #: ../ui/settings.glade:1061
-msgid ""
-"Merge button events with stylus tip events\n"
-"\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</"
-"tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
+msgid "Merge button events with stylus tip events\n"
+"\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
 msgstr ""
 
 #: ../ui/settings.glade:1081
-msgid ""
-"Slower strokes are assigned a greater pressure than faster strokes, if "
-"pressure information is absent.\n"
-"\n"
-"<i>This feature may be useful for devices that lack pressure sensitivity. "
-"For example, a mouse or touchscreen.</i>"
+msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
+"<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
 msgstr ""
 
 #: ../ui/settings.glade:1090
-msgid ""
-"Enable Pressure Inference <i>(Guess pressure from drawing speed when device-"
-"supplied pressure is not available)</i>"
+msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
 msgstr ""
 
 #: ../ui/settings.glade:1111
@@ -3057,9 +2935,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1254
 msgctxt "Drag = Noun: force opposing the movement"
-msgid ""
-"Drag: If the value is too small, unwanted oscillations may appear. If the "
-"value is too high, there will be no stabilization."
+msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr ""
 
 #: ../ui/settings.glade:1255
@@ -3068,9 +2944,7 @@ msgid "Drag"
 msgstr ""
 
 #: ../ui/settings.glade:1266
-msgid ""
-"Drag: If the value is too small, unwanted oscillations may appear. If the "
-"value is too high, there will be no stabilization."
+msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr ""
 
 #: ../ui/settings.glade:1268
@@ -3096,9 +2970,7 @@ msgid "5"
 msgstr ""
 
 #: ../ui/settings.glade:1318 ../ui/settings.glade:1338
-msgid ""
-"Gaussian parameter: the higher, the more stabilization and the more lag "
-"between your cursor and the painting tip."
+msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
 msgstr ""
 
 #: ../ui/settings.glade:1320
@@ -3118,9 +2990,7 @@ msgid "Finalize the stroke"
 msgstr ""
 
 #: ../ui/settings.glade:1405
-msgid ""
-"Input stabilization can create a gap at the end of your stroke. If enabled, "
-"this gap is filled."
+msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
 msgstr ""
 
 #: ../ui/settings.glade:1425
@@ -3132,9 +3002,7 @@ msgid "Input System"
 msgstr ""
 
 #: ../ui/settings.glade:1505
-msgid ""
-"<i>Define which tools will be selected if you press a mouse button. After "
-"you release the button the previously selected tool will be selected.</i>"
+msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
 msgstr ""
 
 #: ../ui/settings.glade:1545
@@ -3154,10 +3022,7 @@ msgid "Mouse"
 msgstr ""
 
 #: ../ui/settings.glade:1683
-msgid ""
-"<i>Pressure Sensitivity allows you to draw lines with different widths, "
-"depending on how much pressure you apply to the pen. If your tablet does not "
-"support this feature this setting has no effect.</i>"
+msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
 msgstr ""
 
 #: ../ui/settings.glade:1697
@@ -3165,10 +3030,7 @@ msgid "Enable Pressure Sensitivity"
 msgstr ""
 
 #: ../ui/settings.glade:1732
-msgid ""
-"<i>Some devices report unexpectedly small or large pressures. This can be "
-"fixed by setting a minimum pressure or scaling the pressure reported by the "
-"device.</i>"
+msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
 msgstr ""
 
 #: ../ui/settings.glade:1755
@@ -3188,10 +3050,7 @@ msgid "Pressure Sensitivity"
 msgstr ""
 
 #: ../ui/settings.glade:1876
-msgid ""
-"<i>With some setup, pen strokes have artifacts at their beginning. This can "
-"be avoided by ignoring the first few events/stroke-points when the pen "
-"touches the screen.</i>"
+msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
 msgstr ""
 
 #: ../ui/settings.glade:1894
@@ -3211,10 +3070,7 @@ msgid "Artifact workaround"
 msgstr ""
 
 #: ../ui/settings.glade:1983
-msgid ""
-"<i>Specify the tools that will be selected if a button of the stylus is "
-"pressed or the eraser is used. After releasing the button, the previous tool "
-"will be selected.</i>"
+msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
 msgstr ""
 
 #: ../ui/settings.glade:2023
@@ -3262,9 +3118,7 @@ msgid "Stylus"
 msgstr ""
 
 #: ../ui/settings.glade:2278
-msgid ""
-"<i>You can configure devices, not identified by GTK as touchscreen, to "
-"behave as if they were one.</i>"
+msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
 msgstr ""
 
 #: ../ui/settings.glade:2313 ../ui/settings.glade:2937
@@ -3273,9 +3127,7 @@ msgid "Touchscreen"
 msgstr ""
 
 #: ../ui/settings.glade:2344
-msgid ""
-"<i>If your hardware does not support hand recognition, Xournal++ can disable "
-"your touchscreen when your pen is near the screen.</i>"
+msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
 msgstr ""
 
 #: ../ui/settings.glade:2358
@@ -3299,10 +3151,7 @@ msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr ""
 
 #: ../ui/settings.glade:2494
-msgid ""
-"<i>Specify commands that are called once Hand Recognition triggers. The "
-"commands will be executed in the UI Thread, make sure they are not blocking!"
-"</i>"
+msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
 msgstr ""
 
 #: ../ui/settings.glade:2517
@@ -3334,9 +3183,7 @@ msgid "Enable zoom gestures (requires restart)"
 msgstr ""
 
 #: ../ui/settings.glade:2697
-msgid ""
-"When drawing with touch, two-finger gestures intended to pan the view can "
-"instead cause it to zoom, causing performance issues. \n"
+msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
 msgstr ""
 
@@ -3373,16 +3220,11 @@ msgid "Touch Drawing"
 msgstr ""
 
 #: ../ui/settings.glade:2869
-msgid ""
-"<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling "
-"bugs on some platforms. Consider changing this setting if you experience "
-"jumps/sudden changes in scroll position when attempting to scroll with a "
-"touchscreen.</i>"
+msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
 msgstr ""
 
 #: ../ui/settings.glade:2883
-msgid ""
-"Disable GTK's built-in inertial scroll functionality (requires restart)."
+msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
 msgstr ""
 
 #: ../ui/settings.glade:2906
@@ -3572,10 +3414,7 @@ msgid "Scrollbars"
 msgstr ""
 
 #: ../ui/settings.glade:3897
-msgid ""
-"When an element is selected and moved past the visible portion of the "
-"canvas, pan the screen by an amount equal to this percentage of the visible "
-"part of the canvas. "
+msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
 msgstr ""
 
 #: ../ui/settings.glade:3899
@@ -3583,9 +3422,7 @@ msgid "Base speed"
 msgstr ""
 
 #: ../ui/settings.glade:3910
-msgid ""
-"Multiply the panning speed by up to this amount, based on how much of the "
-"selected element is out of view."
+msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
 msgstr ""
 
 #: ../ui/settings.glade:3912
@@ -3649,15 +3486,11 @@ msgid "Zoom Speed"
 msgstr ""
 
 #: ../ui/settings.glade:4458
-msgid ""
-"<i>To make sure on 100% zoom the size of elements is natural. (requires "
-"restart)</i>"
+msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
 msgstr ""
 
 #: ../ui/settings.glade:4479
-msgid ""
-"<i>Put a ruler on your screen and move the slider until both rulers match.</"
-"i>"
+msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
 msgstr ""
 
 #: ../ui/settings.glade:4527
@@ -3673,9 +3506,7 @@ msgid "Zoom"
 msgstr ""
 
 #: ../ui/settings.glade:4632
-msgid ""
-"<i>If you add additional space beside the pages you can choose the area of "
-"the screen you would like to work on.</i>"
+msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
 msgstr ""
 
 #: ../ui/settings.glade:4663
@@ -3727,13 +3558,9 @@ msgid "Enable  with determination radius of "
 msgstr ""
 
 #: ../ui/settings.glade:4966
-msgid ""
-"Drag LEFT from start point acts like shift key is being held.\n"
-"Drag UP acts as if Control key is being held.\n"
-"\n"
-"Determination Radius: Radius at which modifiers will lock in until finished "
-"drawing.\n"
-"\n"
+msgid "Drag LEFT from start point acts like shift key is being held.\n"
+"Drag UP acts as if Control key is being held.\n\n"
+"Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "<i>Useful for operating without keyboard.</i>"
 msgstr ""
 
@@ -3746,9 +3573,7 @@ msgid "Preserve line width"
 msgstr ""
 
 #: ../ui/settings.glade:5066
-msgid ""
-"After resizing a selection, the line width of all strokes will be the same "
-"as before the resizing operation. "
+msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
 msgstr ""
 
 #: ../ui/settings.glade:5108
@@ -3772,10 +3597,7 @@ msgid "Use snapping for recognized shapes"
 msgstr ""
 
 #: ../ui/settings.glade:5249
-msgid ""
-"If activated, shapes that have been recognized by the shape recognizer will "
-"be snapped to the grid automatically. This may lead to unexpected results if "
-"you have the shape recognizer turned on while writing."
+msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
 msgstr ""
 
 #: ../ui/settings.glade:5267
@@ -3792,9 +3614,7 @@ msgid "Enable Tap action"
 msgstr ""
 
 #: ../ui/settings.glade:5379
-msgid ""
-"Do not draw for inputs of short time and length unless it comes in short "
-"succession. Instead, show floating toolbox."
+msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr ""
 
 #: ../ui/settings.glade:5392
@@ -3802,16 +3622,12 @@ msgid "Time limit (ms)"
 msgstr ""
 
 #: ../ui/settings.glade:5404
-msgid ""
-"Time limit: taps lasting longer will not trigger a special action\n"
-"\n"
+msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
 msgstr ""
 
 #: ../ui/settings.glade:5424
-msgid ""
-"Length limit: taps moving further away will not trigger a special action\n"
-"\n"
+msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
 msgstr ""
 
@@ -3824,10 +3640,7 @@ msgid "Frequency limit (ms)"
 msgstr ""
 
 #: ../ui/settings.glade:5467
-msgid ""
-"Frequency limit: A tap happening within this time period after a stroke will "
-"not trigger a special action.\n"
-"\n"
+msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
 "<i>Recommended: 500ms</i>"
 msgstr ""
 
@@ -3836,16 +3649,12 @@ msgid "Try to select object first."
 msgstr ""
 
 #: ../ui/settings.glade:5489 ../ui/settings.glade:5521
-msgid ""
-"Try to select object first; if nothing selected then show floating toolbox "
-"if enabled."
+msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr ""
 
 #: ../ui/settings.glade:5504
-msgid ""
-"All three conditions must be met before stroke is ignored.\n"
-"It must be short in time and length and we can't have ignored another stroke "
-"recently."
+msgid "All three conditions must be met before stroke is ignored.\n"
+"It must be short in time and length and we can't have ignored another stroke recently."
 msgstr ""
 
 #: ../ui/settings.glade:5507
@@ -3861,18 +3670,12 @@ msgid "Action on Tool Tap"
 msgstr ""
 
 #: ../ui/settings.glade:5570
-msgid ""
-"<i>Re-render PDF backgrounds more often while zooming for better render "
-"quality. \n"
+msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr ""
 
 #: ../ui/settings.glade:5595
-msgid ""
-"When zoomed in on a high-resolution PDF, each re-render can take a long "
-"time. Setting this to a large value causes these re-renders to happen less "
-"often.\n"
-"\n"
+msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr ""
 
@@ -3909,12 +3712,9 @@ msgid "Defaults"
 msgstr ""
 
 #: ../ui/settings.glade:5897
-msgid ""
-"<i>\n"
-"Using the checkbox the audio system can be disabled or enabled for future "
-"sessions (restart required). \n"
-"Disabling audio for a single session can be achieved using the <tt>--disable-"
-"audio</tt> flag on the command line.\n"
+msgid "<i>\n"
+"Using the checkbox the audio system can be disabled or enabled for future sessions (restart required). \n"
+"Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
 "</i>"
 msgstr ""
 
@@ -3927,9 +3727,7 @@ msgid "Enable or Disable Audio"
 msgstr ""
 
 #: ../ui/settings.glade:5966
-msgid ""
-"<i>Audio recordings are currently stored in a separate folder and referenced "
-"from the journal.</i>"
+msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr ""
 
 #: ../ui/settings.glade:5988 ../ui/settings.glade:6046
@@ -3941,11 +3739,8 @@ msgid "Select Folder"
 msgstr ""
 
 #: ../ui/settings.glade:6077
-msgid ""
-"<i>Specify the audio devices used for recording and playback of audio "
-"attachments.\n"
-"If available select <small><tt>pulse</tt></small> as input / output device.</"
-"i>"
+msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
+"If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr ""
 
 #: ../ui/settings.glade:6101
@@ -4075,3 +3870,4 @@ msgstr ""
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
 msgstr ""
+
