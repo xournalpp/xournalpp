@@ -124,6 +124,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: 'Install dependencies'
         uses: ./.github/actions/install_deps_windows
+        with:
+          msystem: ${{ matrix.run.msystem }}
+          msys_package_env: ${{ matrix.run.msys_package_env }}
       - name: 'Build Xournal++'
         uses: ./.github/actions/build
         with:

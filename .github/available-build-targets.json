@@ -46,6 +46,16 @@
     "windows": {
         "displayed_name": "Windows x86_64",
         "runner": "windows-latest",
+        "msystem": "mingw64",
+        "msys_package_env": "x86_64",
+        "build_portable": "true",
+        "run_ci": "true"
+      },
+    "windows-arm": {
+        "displayed_name": "Windows ARM",
+        "runner": "windows-11-arm",
+        "msystem": "clangarm64",
+        "msys_package_env": "clang-aarch64",
         "build_portable": "true",
         "run_ci": "true"
       }

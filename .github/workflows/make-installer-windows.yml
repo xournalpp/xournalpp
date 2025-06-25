@@ -9,6 +9,12 @@ on:
       displayed_name:
         type: string
         required: true
+      msystem:
+        type: string
+        required: true
+      msys_package_env:
+        type: string
+        required: true
       publish_portable_version:
         type: boolean
         required: false
@@ -44,6 +50,9 @@ jobs:
           ref: ${{ inputs.head_sha }}
       - name: 'Install dependencies'
         uses: ./.github/actions/install_deps_windows
+        with:
+          msystem: ${{ inputs.msystem }}
+          msys_package_env: ${{ inputs.msys_package_env }}
       - name: 'Build Xournal++'
         uses: ./.github/actions/build
         with:
@@ -74,7 +83,7 @@ jobs:
         id: publish
         uses: actions/upload-artifact@v4
         with:
-          name: "Windows package"
+          name: "Windows package ${{ runner.arch }} ${{ inputs.msys_package_env }}"
           path: "${{github.workspace}}/windows-setup/${{ steps.create-installer.outputs.artifact }}"
           compression-level: 0
           if-no-files-found: error
@@ -83,6 +92,6 @@ jobs:
         if: ${{ inputs.publish_portable_version }}
         uses: actions/upload-artifact@v4
         with:
-          name: "Windows package (portable version)"
+          name: "Windows package ${{ runner.arch }} ${{ inputs.msys_package_env }} (portable version)"
           path: "${{github.workspace}}/windows-setup/portable_content"
           if-no-files-found: error
