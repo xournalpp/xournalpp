@@ -67,6 +67,11 @@
     ${prefix}/lib/girepository-1.0/*.typelib
   </data>
 
+  <!-- QPDF -->
+  <binary>
+    ${prefix}/lib/libqpdf*.dylib
+  </binary>
+
   <!-- Translation filenames, one for each program or library that you
        want to copy in to the bundle. The "dest" attribute is
        optional, as usual. Bundler will find all translations of that
