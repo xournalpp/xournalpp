@@ -13,11 +13,11 @@
 
 
 #include "control/jobs/BaseExportJob.h"  // for ExportBackgroundType
+#include "pdf/base/PdfExportBackend.h"
 
 class Document;
 
 namespace ExportHelper {
-
 /**
  * @brief Export the input file as a bunch of image files (one per page)
  * @param doc Document to export
@@ -53,7 +53,8 @@ int exportImg(Document* doc, const char* output, const char* range, const char* 
  * @return 0 on success, -2 on failure opening the input file, -3 on export failure
  */
 int exportPdf(Document* doc, const char* output, const char* range, const char* layerRange,
-              ExportBackgroundType exportBackground, bool progressiveMode);
+              ExportBackgroundType exportBackground, bool progressiveMode,
+              ExportBackend backend = ExportBackend::DEFAULT);
 
 
 }  // namespace ExportHelper

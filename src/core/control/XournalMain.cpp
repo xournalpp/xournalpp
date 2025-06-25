@@ -292,11 +292,12 @@ auto saveDoc(const char* input, const char* output) -> int {
  * @param exportBackground If EXPORT_BACKGROUND_NONE, the exported pdf file has white background
  * @param progressiveMode If true, then for each xournalpp page, instead of rendering one PDF page, the page layers are
  * rendered one by one to produce as many pages as there are layers.
+ * @param backend The requested backend
  *
  * @return 0 on success, -2 on failure opening the input file, -3 on export failure
  */
 auto exportPdf(const char* input, const char* output, const char* range, const char* layerRange,
-               ExportBackgroundType exportBackground, bool progressiveMode) -> int {
+               ExportBackgroundType exportBackground, bool progressiveMode, ExportBackend backend) -> int {
     LoadHandler loader;
     auto doc = loader.loadDocument(input);
     if (doc == nullptr) {
@@ -305,7 +306,7 @@ auto exportPdf(const char* input, const char* output, const char* range, const c
 
     exitOnMissingPdfFileName(loader);
 
-    return ExportHelper::exportPdf(doc.get(), output, range, layerRange, exportBackground, progressiveMode);
+    return ExportHelper::exportPdf(doc.get(), output, range, layerRange, exportBackground, progressiveMode, backend);
 }
 
 struct XournalMainPrivate {
@@ -338,6 +339,7 @@ struct XournalMainPrivate {
     gboolean progressiveMode = false;
     gboolean disableAudio = false;
     gboolean attachMode = false;
+    gchar* exportPdfBackend{};
     std::unique_ptr<GladeSearchpath> gladePath;
     std::unique_ptr<Control> control;
     std::unique_ptr<MainWindow> win;
@@ -566,7 +568,7 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
                                      app_data->exportNoBackground ? EXPORT_BACKGROUND_NONE :
                                      app_data->exportNoRuling     ? EXPORT_BACKGROUND_UNRULED :
                                                                     EXPORT_BACKGROUND_ALL,
-                                     app_data->progressiveMode);
+                                     app_data->progressiveMode, ExportBackend::fromString(app_data->exportPdfBackend));
                 },
                 "exportPdf");
     }
@@ -648,63 +650,76 @@ auto XournalMain::run(int argc, char** argv) -> int {
                                        _("Disable audio for this session"), nullptr},
                           GOptionEntry{"attach-mode", 0, 0, G_OPTION_ARG_NONE, &app_data.attachMode,
                                        _("Open PDF in attach mode\n"
-                                         "                                 Ignored if no PDF file is specified."),
+                                         "                                       Ignored if no PDF file is specified."),
                                        nullptr},
                           GOptionEntry{"save", 's', 0, G_OPTION_ARG_FILENAME, &app_data.docFilename,
                                        _("Save xopp-file with the background PDF specified as FILE"), "XOPPFILE"},
                           GOptionEntry{nullptr}};  // Must be terminated by a nullptr. See gtk doc
     g_application_add_main_option_entries(G_APPLICATION(app), options.data());
 
+    std::string pdfbackendMessage =
+            FS(_F("Use the provided backend for PDF exports.\n"
+                  "                                       Available backends: {1}\n"
+                  "                                       No effect without -p/--create-pdf=foo.pdf") %
+               ExportBackend::listAvailableBackends());
     /**
      * Export related options
      */
     std::array exportOptions = {
             GOptionEntry{"create-pdf", 'p', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_FILENAME, &app_data.pdfFilename,
                          _("Export FILE as PDF"), "PDFFILE"},
-            GOptionEntry{"create-img", 'i', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_FILENAME, &app_data.imgFilename,
-                         _("Export FILE as image files (one per page)\n"
-                           "                                 Guess the output format from the extension of IMGFILE\n"
-                           "                                 Supported formats: .png, .svg"),
-                         "IMGFILE"},
-            GOptionEntry{"export-no-background", 0, 0, G_OPTION_ARG_NONE, &app_data.exportNoBackground,
-                         _("Export without background\n"
-                           "                                 The exported file has transparent or white background,\n"
-                           "                                 depending on what its format supports\n"),
-                         0},
+            GOptionEntry{
+                    "create-img", 'i', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_FILENAME, &app_data.imgFilename,
+                    _("Export FILE as image files (one per page)\n"
+                      "                                       Guess the output format from the extension of IMGFILE\n"
+                      "                                       Supported formats: .png, .svg"),
+                    "IMGFILE"},
+            GOptionEntry{
+                    "export-no-background", 0, 0, G_OPTION_ARG_NONE, &app_data.exportNoBackground,
+                    _("Export without background\n"
+                      "                                       The exported file has transparent or white background,\n"
+                      "                                       depending on what its format supports\n"),
+                    0},
             GOptionEntry{"export-no-ruling", 0, 0, G_OPTION_ARG_NONE, &app_data.exportNoRuling,
                          _("Export without ruling\n"
-                           "                                 The exported file has no paper ruling\n"),
+                           "                                       The exported file has no paper ruling\n"),
                          0},
-            GOptionEntry{"export-layers-progressively", 0, 0, G_OPTION_ARG_NONE, &app_data.progressiveMode,
-                         _("Export layers progressively\n"
-                           "                                 In PDF export, Render layers progressively one by one.\n"
-                           "                                 This results in N export pages per page with N layers,\n"
-                           "                                 building up the layer stack progressively.\n"
-                           "                                 The resulting PDF file can be used for a presentation.\n"),
-                         0},
-            GOptionEntry{"export-range", 0, 0, G_OPTION_ARG_STRING, &app_data.exportRange,
-                         _("Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
-                           "                                 No effect without -p/--create-pdf or -i/--create-img"),
-                         "RANGE"},
-            GOptionEntry{"export-layer-range", 0, 0, G_OPTION_ARG_STRING, &app_data.exportLayerRange,
-                         _("Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
-                           "                                 No effect without -p/--create-pdf or -i/--create-img"),
-                         "RANGE"},
+            GOptionEntry{
+                    "export-layers-progressively", 0, 0, G_OPTION_ARG_NONE, &app_data.progressiveMode,
+                    _("Export layers progressively\n"
+                      "                                       In PDF export, Render layers progressively one by one.\n"
+                      "                                       This results in N export pages per page with N layers,\n"
+                      "                                       building up the layer stack progressively.\n"
+                      "                                       The resulting PDF file can be used for a "
+                      "presentation.\n"),
+                    0},
+            GOptionEntry{
+                    "export-range", 0, 0, G_OPTION_ARG_STRING, &app_data.exportRange,
+                    _("Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
+                      "                                       No effect without -p/--create-pdf or -i/--create-img"),
+                    "RANGE"},
+            GOptionEntry{
+                    "export-layer-range", 0, 0, G_OPTION_ARG_STRING, &app_data.exportLayerRange,
+                    _("Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
+                      "                                       No effect without -p/--create-pdf or -i/--create-img"),
+                    "RANGE"},
             GOptionEntry{"export-png-dpi", 0, 0, G_OPTION_ARG_INT, &app_data.exportPngDpi,
                          _("Set DPI for PNG exports. Default is 300\n"
-                           "                                 No effect without -i/--create-img=foo.png"),
+                           "                                       No effect without -i/--create-img=foo.png"),
                          "N"},
             GOptionEntry{"export-png-width", 0, 0, G_OPTION_ARG_INT, &app_data.exportPngWidth,
                          _("Set page width for PNG exports\n"
-                           "                                 No effect without -i/--create-img=foo.png\n"
-                           "                                 Ignored if --export-png-dpi is used"),
+                           "                                       No effect without -i/--create-img=foo.png\n"
+                           "                                       Ignored if --export-png-dpi is used"),
                          "N"},
-            GOptionEntry{
-                    "export-png-height", 0, 0, G_OPTION_ARG_INT, &app_data.exportPngHeight,
-                    _("Set page height for PNG exports\n"
-                      "                                 No effect without -i/--create-img=foo.png\n"
-                      "                                 Ignored if --export-png-dpi or --export-png-width is used"),
-                    "N"},
+            GOptionEntry{"export-png-height", 0, 0, G_OPTION_ARG_INT, &app_data.exportPngHeight,
+                         _("Set page height for PNG exports\n"
+                           "                                       No effect without -i/--create-img=foo.png\n"
+                           "                                       Ignored if --export-png-dpi or --export-png-width "
+                           "is used"),
+                         "N"},
+            GOptionEntry{"export-pdf-backend", 0, 0, G_OPTION_ARG_STRING, &app_data.exportPdfBackend,
+                         pdfbackendMessage.c_str(), "BACKEND"},
             GOptionEntry{nullptr}};  // Must be terminated by a nullptr. See gtk doc
     GOptionGroup* exportGroup = g_option_group_new("export", _("Advanced export options"),
                                                    _("Display advanced export options"), nullptr, nullptr);

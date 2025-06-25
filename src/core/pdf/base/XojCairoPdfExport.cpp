@@ -55,14 +55,17 @@ auto XojCairoPdfExport::startPdf(const fs::path& file, bool exportOutline) -> bo
         this->populatePdfOutline();
     }
 #endif
+    configureCairoFontOptions();
 
+    return cairo_surface_status(this->surface) == CAIRO_STATUS_SUCCESS;
+}
+
+void XojCairoPdfExport::configureCairoFontOptions() {
     // Turn on font hint metrics, for consistency with text display in the app
     cairo_font_options_t* fontOptions = cairo_font_options_create();
     cairo_font_options_set_hint_metrics(fontOptions, CAIRO_HINT_METRICS_ON);
     cairo_set_font_options(cr, fontOptions);
     cairo_font_options_destroy(fontOptions);
-
-    return cairo_surface_status(this->surface) == CAIRO_STATUS_SUCCESS;
 }
 
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
@@ -131,7 +134,7 @@ bool XojCairoPdfExport::endPdf() {
     return success;
 }
 
-void XojCairoPdfExport::exportPage(size_t page) {
+void XojCairoPdfExport::exportPage(size_t page, bool exportPdfBackground) {
     PageRef p = doc->getPage(page);
 
     cairo_pdf_surface_set_size(this->surface, p->getWidth(), p->getHeight());
@@ -141,7 +144,7 @@ void XojCairoPdfExport::exportPage(size_t page) {
     cairo_save(this->cr);
 
     // For a better pdf quality, we use a dedicated pdf rendering
-    if (p->getBackgroundType().isPdfPage() && (exportBackground != EXPORT_BACKGROUND_NONE)) {
+    if (exportPdfBackground && p->getBackgroundType().isPdfPage() && (exportBackground != EXPORT_BACKGROUND_NONE)) {
         auto pgNo = p->getPdfPageNr();
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
