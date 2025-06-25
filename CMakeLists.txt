@@ -1,7 +1,17 @@
 cmake_minimum_required(VERSION 3.12)
 cmake_policy(VERSION ${CMAKE_VERSION})
-## The CMAKE_OSX_DEPLOYMENT_TARGET must be set before project(), so don't move the following line further down.
-set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15" CACHE STRING "Minimum OS X deployment version" FORCE)
+
+## The CMAKE_OSX_DEPLOYMENT_TARGET must be set before project(), so don't move the following lines further down.
+if(APPLE)
+    if (NOT CMAKE_OSX_DEPLOYMENT_TARGET)
+        # Use the same target as the dependencies shipped by the CI
+        file(STRINGS mac-setup/jhbuild-version.lock _DEPLOY_TARGET REGEX "^deployment_target=.*")
+        string(REGEX REPLACE "^[^=]*=" "" _DEPLOY_TARGET_VALUE ${_DEPLOY_TARGET})
+        set(CMAKE_OSX_DEPLOYMENT_TARGET "${_DEPLOY_TARGET_VALUE}" CACHE STRING "Minimum OS X deployment version" FORCE)
+    endif()
+    message(STATUS "MacOS X Deployment target: ${CMAKE_OSX_DEPLOYMENT_TARGET}")
+endif()
+
 
 if(NOT CMAKE_BUILD_TYPE)
     # set default build type to RelWithDebInfo, we never supported multi config generators, therefore this is fine

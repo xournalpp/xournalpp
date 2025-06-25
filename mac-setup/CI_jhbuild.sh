@@ -72,7 +72,7 @@ configure_jhbuild_envvars() {
 
 setup_custom_modulesets() {
     # Set osx deployment target
-    sed -i '' -e 's/^setup_sdk()/setup_sdk(target="11.7")/' ~/.config/jhbuildrc-custom
+    sed -i '' -e "s/^setup_sdk()/setup_sdk(target=\"$(get_lockfile_entry deployment_target)\")/" ~/.config/jhbuildrc-custom
 
     # Enable custom jhbuild configuration
     cat <<EOF >> ~/.config/jhbuildrc-custom
@@ -101,6 +101,10 @@ EOF
     sed -i '' -e 's/^\(module_cmakeargs\["freetype-no-harfbuzz"\]\) =/module_cmakeargs.setdefault("freetype-no-harfbuzz", ""); \1 +=/' ~/.config/jhbuildrc
 
     echo "interact = False" >> ~/.config/jhbuildrc
+    echo "exit_on_error = True" >> ~/.config/jhbuildrc
+    echo "shallow_clone = True" >> ~/.config/jhbuildrc
+    echo "use_local_modulesets = True" >> ~/.config/jhbuildrc
+    echo "disable_Werror = False" >> ~/.config/jhbuildrc
 }
 
 echo "::group::Setup jhbuild"
