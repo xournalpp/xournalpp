@@ -24,3 +24,4 @@ runs:
           mingw-w64-x86_64-gtksourceview4
           mingw-w64-x86_64-imagemagick
           mingw-w64-x86_64-lua-lgi
+          mingw-w64-x86_64-qpdf

@@ -85,6 +85,10 @@ mkdir -p "$setup_dir"/share/lua/5.4
 cp "$prefix"/share/lua/5.4/lgi.lua "$setup_dir"/share/lua/5.4
 cp -r "$prefix"/share/lua/5.4/lgi/ "$setup_dir"/share/lua/5.4
 
+echo "copy qpdf"
+cp "$prefix"/bin/libqpdf*.dll "$setup_dir"/bin
+cp "$prefix"/lib/libqpdf* "$setup_dir"/lib
+
 echo "create installer"
 bash make_version_nsh.sh
 "/c/Program Files (x86)/NSIS/Bin/makensis.exe" xournalpp.nsi

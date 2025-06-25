@@ -38,6 +38,7 @@ runs:
           help2man
           libgtest-dev
           libgtksourceview-4-dev
+          libqpdf-dev
       run: |
         sudo apt-get update
         sudo apt-get install -y ${{env.packages}}
