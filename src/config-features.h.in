@@ -19,6 +19,8 @@
 
 #cmakedefine ENABLE_PLUGINS
 
+#cmakedefine ENABLE_QPDF
+
 // Example: #cmakedefine NAME_FROM_Cmake_list
 // in CMakeFile.txt:
 // option (NAME_FROM_Cmake_list "Description" OFF)

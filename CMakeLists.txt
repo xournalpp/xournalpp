@@ -141,6 +141,21 @@ pkg_check_modules(ExternalModules REQUIRED IMPORTED_TARGET ${pkg-module-spec})
 find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
 
+option(ENABLE_QPDF "Compile with QPDF export support" OFf)
+if (ENABLE_QPDF)
+    find_package(qpdf)
+    if (NOT qpdf_FOUND)
+        # Before version 11.0 (e.g. for ubuntu 22.04 LTS), qpdf did not provide qpdfConfig.cmake (and friends)
+        # We cannot only use pkg_search_module() though: it fails to link on MacOS
+        pkg_search_module(qpdf REQUIRED libqpdf)
+        add_library(qpdf_tgt INTERFACE)
+        target_link_libraries(qpdf_tgt INTERFACE ${qpdf_LIBRARIES})
+        target_include_directories(qpdf_tgt INTERFACE ${qpdf_INCLUDE_DIRS})
+        add_library(qpdf::libqpdf ALIAS qpdf_tgt)
+    endif ()
+    message(STATUS "Found qpdf: ${qpdf_VERSION}")
+endif ()
+
 option(ENABLE_PLUGINS "Compile with plugin support" ON)
 find_package(Lua) # Lua 5.4 is only supported with cmake >=3.18
 message(STATUS "Found Lua: ${Lua_FOUND}")
@@ -193,6 +208,7 @@ target_link_libraries(external_modules INTERFACE
         $<$<TARGET_EXISTS:X11::Xi>:X11::Xi>
         $<$<TARGET_EXISTS:X11::X11>:X11::X11>
         $<$<TARGET_EXISTS:Backtrace::backtrace>:Backtrace::backtrace>
+        $<$<TARGET_EXISTS:qpdf::libqpdf>:qpdf::libqpdf>
         ZLIB::ZLIB
         Threads::Threads
         )

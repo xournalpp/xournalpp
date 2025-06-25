@@ -14,6 +14,7 @@
 #include <map>     // for map
 #include <string>  // for string
 
+#include "pdf/base/PdfExportBackend.h"
 #include "util/ElementRange.h"  // for PageRangeVector
 
 #include "BaseExportJob.h"  // for BaseExportJob, EXPORT_BACKGROUND_ALL
@@ -73,6 +74,9 @@ private:
      * Background export type
      */
     ExportBackgroundType exportBackground = EXPORT_BACKGROUND_ALL;
+
+    /// Backend used for exporting the PDF background to PDF
+    ExportBackend pdfExportBackend = ExportBackend::DEFAULT;
 
     /**
      * Export all Layers progressively

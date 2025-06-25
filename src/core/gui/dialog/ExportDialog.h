@@ -19,6 +19,7 @@
 #include "control/jobs/BaseExportJob.h"  // for ExportBackgroundType
 #include "control/jobs/ImageExport.h"    // for RasterImageQualityParameter
 #include "gui/Builder.h"
+#include "pdf/base/PdfExportBackend.h"
 #include "util/ElementRange.h"  // for PageRangeVector
 #include "util/raii/GtkWindowUPtr.h"
 
@@ -28,7 +29,7 @@ namespace xoj::popup {
 class ExportDialog {
 public:
     ExportDialog(GladeSearchpath* gladeSearchPath, ExportGraphicsFormat format, size_t currentPage, size_t pageCount,
-                 std::function<void(const ExportDialog&)> callbackFun);
+                 bool hasPdfBackground, std::function<void(const ExportDialog&)> callbackFun);
     ~ExportDialog();
 
 public:
@@ -36,6 +37,7 @@ public:
     const PageRangeVector& getRange() const;
     bool progressiveModeSelected() const;
     ExportBackgroundType getBackgroundType() const;
+    inline ExportBackend getPdfExportBackend() const { return pdfExportBackend; }
 
     /**
      * @brief Reads the quality parameter from the dialog
@@ -63,6 +65,7 @@ private:
     bool confirmed = false;
     bool progressiveMode;
     ExportBackgroundType backgroundType;
+    ExportBackend pdfExportBackend;
     RasterImageQualityParameter qualityParameter;
     PageRangeVector pageRanges;
 
