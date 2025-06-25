@@ -50,8 +50,7 @@ include(Version)
 core_find_git_rev(RELEASE_IDENTIFIER)
 string(TIMESTAMP PACKAGE_TIMESTAMP "%Y%m%d.%H%M" UTC)
 
-include(TargetArch)
-target_architecture(PACKAGE_ARCH)
+set(PACKAGE_ARCH ${CMAKE_SYSTEM_PROCESSOR})
 
 
 ## I18n ##
