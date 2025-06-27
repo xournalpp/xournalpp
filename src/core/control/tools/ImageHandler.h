@@ -38,10 +38,10 @@ public:
 
     static bool addImageToDocument(std::unique_ptr<Image> img, PageRef page, Control* ctrl, bool addUndoAction);
 
-    /**
-     * scale down (only if necessary) the image so that it then fits on the page
-     * applies (potentially adjusted) width/height to the image
-     */
+    /// applies (potentially adjusted) width/height to the image: scale down (only if necessary) the image so that it
+    /// then fits on the page
+    static void automaticScaling(Image& img, PageRef page, int width, int height);
+    /// Same as above, but width and height are inferred from the image file.
     static void automaticScaling(Image& img, PageRef page);
 
     /// lets the user choose an image file, creates the image and calls the callback

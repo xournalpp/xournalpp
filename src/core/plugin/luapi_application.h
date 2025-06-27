@@ -2904,7 +2904,7 @@ static int applib_addImages(lua_State* L) {
         // scale down keeping the current aspect ratio after the manual scaling to fit the image on the page
         // if the image already fits on the screen, no other scaling is applied here
         // already sets width/height in the image
-        ImageHandler::automaticScaling(*img, page);
+        ImageHandler::automaticScaling(*img, page, width, height);
 
         // store the image to later build the undo/redo action chain
         images.push_back(img.get());

@@ -103,11 +103,10 @@ bool ImageHandler::addImageToDocument(std::unique_ptr<Image> img, PageRef page, 
     return true;
 }
 
-void ImageHandler::automaticScaling(Image& img, PageRef page) {
+void ImageHandler::automaticScaling(Image& img, PageRef page, int width, int height) {
     double zoom = 1;
     double x = img.getX();
     double y = img.getY();
-    auto [width, height] = img.getImageSize();
 
     if (x + width > page->getWidth() || y + height > page->getHeight()) {
         double const maxZoomX = (page->getWidth() - x) / width;
@@ -118,6 +117,12 @@ void ImageHandler::automaticScaling(Image& img, PageRef page) {
     img.setWidth(width * zoom);
     img.setHeight(height * zoom);
 }
+
+void ImageHandler::automaticScaling(Image& img, PageRef page) {
+    auto [width, height] = img.getImageSize();
+    automaticScaling(img, page, width, height);
+}
+
 
 void ImageHandler::insertImageWithSize(PageRef page, const xoj::util::Rectangle<double>& space) {
     chooseAndCreateImage([space, page, ctrl = control](std::unique_ptr<Image> img) {
