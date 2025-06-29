@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-25 16:22+0000\n"
-"PO-Revision-Date: 2025-06-01 04:28\n"
+"PO-Revision-Date: 2025-06-29 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -402,7 +402,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:648
 msgid "Disable audio for this session"
-msgstr ""
+msgstr "Inaktivera ljud för den här sessionen"
 
 #: ../src/core/control/XournalMain.cpp:650
 msgid "Open PDF in attach mode\n"
@@ -532,7 +532,7 @@ msgstr "SVG-grafik"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:32
 msgid "Xournal (Compatibility)"
-msgstr ""
+msgstr "Xournal (Kompatibilitet)"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:129
 #: ../src/core/control/jobs/SaveJob.cpp:138
@@ -1510,7 +1510,7 @@ msgstr "Fäst mot rutnät"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:321
 msgid "Paired pages"
-msgstr "Dubbla sidor"
+msgstr "Uppslag"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:323
 msgid "Presentation mode"
@@ -2244,7 +2244,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:336
 msgid "Export layers progressively"
-msgstr ""
+msgstr "Exportera lager progressivt"
 
 #: ../ui/exportSettings.glade:340
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
@@ -3396,7 +3396,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4883
 msgid "Paired Pages"
-msgstr "Dubbla sidor"
+msgstr "Uppslag"
 
 #: ../ui/settings.glade:4909
 msgid "when scrolling to end of last page"
@@ -3771,7 +3771,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:61
 msgid "_Edit"
-msgstr "_Redigera"
+msgstr "R_edigera"
 
 #: ../ui/mainmenubar.xml:93
 msgid "Select All"
@@ -3831,7 +3831,7 @@ msgstr "_Visa"
 
 #: ../ui/mainmenubar.xml:184
 msgid "_Pair Pages"
-msgstr "_Dubbla sidor"
+msgstr "U_ppslag"
 
 #: ../ui/mainmenubar.xml:188
 msgid "_Presentation Mode"
@@ -4059,7 +4059,7 @@ msgstr "Pappersfä_rg"
 
 #: ../ui/mainmenubar.xml:507
 msgid "_Tools"
-msgstr "V_erktyg"
+msgstr "Verk_tyg"
 
 #: ../ui/mainmenubar.xml:510
 msgid "_Pen"
@@ -4079,7 +4079,7 @@ msgstr "Markera text i rektangel"
 
 #: ../ui/mainmenubar.xml:534
 msgid "_Highlighter"
-msgstr ""
+msgstr "Över_strykningspenna"
 
 #: ../ui/mainmenubar.xml:540
 msgid "_Text"
@@ -4099,7 +4099,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:561
 msgid "_Shape Recognizer"
-msgstr ""
+msgstr "_Identifiera former"
 
 #: ../ui/mainmenubar.xml:591
 msgid "Draw _Line"
