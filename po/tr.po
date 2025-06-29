@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-02 13:27+0000\n"
-"PO-Revision-Date: 2025-06-22 04:27\n"
+"PO-Revision-Date: 2025-06-29 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -419,7 +419,8 @@ msgstr "Yalnızca ARALIK kısmında belirtilen sayfaları dışa aktarın (ör. 
 #: ../src/core/control/XournalMain.cpp:683
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Yalnızca RANGE ile belirtilen katmanlar dışa aktarılır (örn. \"2-3,5,7-\")  \n"
+"                                 -p/--create-pdf veya -i/--create-img kullanılmadıkça etkili değildir"
 
 #: ../src/core/control/XournalMain.cpp:687
 msgid "Set DPI for PNG exports. Default is 300\n"
@@ -469,7 +470,7 @@ msgstr "PDF olarak dışa aktar"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr "Arka plan PDF'sinin üzerine yazmayın! Bu hatalara neden olur!"
+msgstr "Arka plan PDF' sinin üzerine yazmayın! Bu hatalara neden olur!"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:52
 msgid "The check for overwriting the background failed with:\n"
@@ -699,11 +700,11 @@ msgstr "En arkaya gönder"
 #: ../src/core/control/tools/ImageHandler.cpp:73
 #: ../src/core/model/Image.cpp:163 ../src/core/model/Image.cpp:167
 msgid "Failed to load image"
-msgstr ""
+msgstr "Görsel yüklenemedi"
 
 #: ../src/core/control/tools/ImageHandler.cpp:74
 msgid "Could not determine image size!"
-msgstr ""
+msgstr "Görsel boyutu belirlenemedi!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:132
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1201,7 +1202,8 @@ msgstr "Kağıt Ark_a Planı"
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
-msgstr ""
+msgstr "Mevcut belgenizde {1} numaralı PDF sayfası bulunmuyor\n\n"
+"İpucu: {2} Bu sayfayı eklemek ister misiniz."
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:106
 msgid "Insert after current page"
@@ -1655,15 +1657,15 @@ msgstr "Belge yüklenmedi! ({1}), {2}"
 
 #: ../src/core/model/Image.cpp:163 ../src/core/model/Image.cpp:173
 msgid "Error: "
-msgstr ""
+msgstr "Hata: "
 
 #: ../src/core/model/Image.cpp:167 ../src/core/model/Image.cpp:177
 msgid "Unrecoverable error"
-msgstr ""
+msgstr "Geri alınamaz hata"
 
 #: ../src/core/model/Image.cpp:173 ../src/core/model/Image.cpp:177
 msgid "Failed to close image stream"
-msgstr ""
+msgstr "Görsel akışı kapatılamadı"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:122
 msgid "Error while finalizing the PDF Cairo surface"
@@ -1688,7 +1690,7 @@ msgstr "Kontur sil"
 #: ../src/core/undo/AddUndoAction.cpp:74
 #: ../src/core/undo/DeleteUndoAction.cpp:72
 msgid "elements"
-msgstr "öğeler"
+msgstr "ögeler"
 
 #: ../src/core/undo/AddUndoAction.cpp:82
 #: ../src/core/undo/DeleteUndoAction.cpp:80
@@ -1772,7 +1774,7 @@ msgstr "Altındaki Katmanla Birleştir"
 
 #: ../src/core/undo/MissingPdfUndoAction.cpp:66
 msgid "Replace missing PDF"
-msgstr "Kayıp PDF'yi değiştir"
+msgstr "Kayıp PDF' yi değiştir"
 
 #: ../src/core/undo/MoveLayerUndoAction.cpp:26
 msgid "Move layer"
@@ -1788,7 +1790,7 @@ msgstr "Sayfa arka planı değişti"
 
 #: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
 msgid "Page size changed"
-msgstr ""
+msgstr "Sayfa boyutu değiştirildi"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
@@ -1950,7 +1952,7 @@ msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 
 #: ../ui/about.glade:157
 msgid "Icon Designers"
-msgstr "Simge Tararımcısı"
+msgstr "Simge Tasarımcısı"
 
 #: ../ui/about.glade:210
 msgid "Partially based on Xournal\n"
@@ -2432,15 +2434,15 @@ msgstr "_Önceki Açıklamalı Sayfa"
 
 #: ../ui/main.glade:1213
 msgid "New Page _Before"
-msgstr "Ön_cesine Yeni Sayfa"
+msgstr "_Öncesine Yeni Sayfa"
 
 #: ../ui/main.glade:1223
 msgid "New Page _After"
-msgstr "Sonr_asına Yeni Sayfa"
+msgstr "_Sonrasına Yeni Sayfa"
 
 #: ../ui/main.glade:1234
 msgid "New Page at _End"
-msgstr "Sonun_da Yeni Sayfa"
+msgstr "_Sonuna Yeni Sayfa"
 
 #: ../ui/main.glade:1244
 msgid "Duplicate Page"
@@ -2849,7 +2851,30 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\t%\n"
 "Illegal characters are replaced with \"_\""
-msgstr ""
+msgstr "%a Haftanın kısaltılmış adı (örn. Per)\n"
+"%A Haftanın tam adı (örn. Perşembe)\n"
+"%b Ayın kısaltılmış adı (örn. Ağu)\n"
+"%B Ayın tam adı (örn. Ağustos)\n"
+"%c Tarih ve saat gösterimi (örn. Per Ağu 23 14:55:02 2001)\n"
+"%d Ayın günü (01-31)\n"
+"%F Tarih biçimi (örn. 2001-08-23)\n"
+"%H 24 saatlik saat biçimi (00-23)\n"
+"%I 12 saatlik saat biçimi (01-12)\n"
+"%j Yılın günü (001-366)\n"
+"%m Ondalık ay numarası (01-12)\n"
+"%M Dakika (00-59)\n"
+"%p ÖÖ/ÖS belirtimi (örn. ÖS)\n"
+"%S Saniye (00-61)\n"
+"%U Haftanın numarası, ilk Pazar hafta başı (00-53)\n"
+"%w Haftanın günü, Pazar = 0 (0-6)\n"
+"%W Haftanın numarası, ilk Pazartesi hafta başı (00-53)\n"
+"%x Tarih gösterimi (örn. 23.08.01)\n"
+"%X Saat gösterimi (örn. 14:55:02)\n"
+"%y Yıl, son iki hane (00-99)\n"
+"%Y Yıl (örn. 2001)\n"
+"%Z Zaman dilimi adı veya kısaltması (örn. GMT)\n"
+"%% %\n"
+"Geçersiz karakterler \"_\" ile değiştirilir"
 
 #: ../ui/settings.glade:613 ../ui/settings.glade:784
 msgid "Available Placeholders"
@@ -3127,11 +3152,11 @@ msgstr "<i>Kalemin bir düğmesine basılırsa veya silgi kullanılırsa seçile
 
 #: ../ui/settings.glade:2023
 msgid "Button 1"
-msgstr "Düğme 1"
+msgstr "Buton 1 "
 
 #: ../ui/settings.glade:2061
 msgid "Button 2"
-msgstr "Düğme 2"
+msgstr "Buton 2"
 
 #: ../ui/settings.glade:2117
 msgid "Stylus Buttons"
@@ -3342,7 +3367,7 @@ msgstr "Karanlık temaya zorla"
 
 #: ../ui/settings.glade:3250
 msgid "(this may not work, depending on your system theme)"
-msgstr ""
+msgstr "(sistem temanıza bağlı olarak çalışmayabilir)"
 
 #: ../ui/settings.glade:3291
 msgid "Colors"
@@ -3675,21 +3700,23 @@ msgstr "Kısa süre ve uzunluktaki girişler için art arda gelmedikçe çizim y
 
 #: ../ui/settings.glade:5392
 msgid "Time limit (ms)"
-msgstr ""
+msgstr "Zaman sınırı (ms)"
 
 #: ../ui/settings.glade:5404
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr ""
+msgstr "Zaman sınırı: Bu süreden uzun süren dokunuşlar özel bir işlemi tetiklemez\n\n"
+"<i>Önerilen: 150ms</i>"
 
 #: ../ui/settings.glade:5424
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr ""
+msgstr "Mesafe sınırı: Bu mesafeden fazla hareket eden dokunuşlar özel bir işlemi tetiklemez\n\n"
+"<i>Önerilen: 1 mm</i>"
 
 #: ../ui/settings.glade:5444
 msgid "Length limit (mm)"
-msgstr ""
+msgstr "Mesafe sınırı (mm)"
 
 #: ../ui/settings.glade:5455
 msgid "Frequency limit (ms)"
@@ -3698,7 +3725,8 @@ msgstr "Frekans sınırı (ms)"
 #: ../ui/settings.glade:5467
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
 "<i>Recommended: 500ms</i>"
-msgstr ""
+msgstr "Frekans sınırı: Bir çizimden hemen sonra bu süre içinde yapılan dokunuşlar özel bir işlemi tetiklemez\n\n"
+"<i>Önerilen: 500ms</i>"
 
 #: ../ui/settings.glade:5484
 msgid "Try to select object first."
@@ -3775,7 +3803,10 @@ msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required). \n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
 "</i>"
-msgstr ""
+msgstr "<i>\n"
+"Bu onay kutusu ile ses sistemi gelecekteki oturumlar için etkinleştirilebilir veya devre dışı bırakılabilir (yeniden başlatma gereklidir).\n"
+"Tek bir oturum için sesi devre dışı bırakmak, komut satırında <tt>--disable-audio</tt> parametresi kullanılarak mümkündür.\n"
+"</i>"
 
 #: ../ui/settings.glade:5913
 msgid "Disable Audio"

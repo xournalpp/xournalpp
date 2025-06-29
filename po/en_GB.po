@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-02 13:27+0000\n"
-"PO-Revision-Date: 2025-06-15 04:27\n"
+"PO-Revision-Date: 2025-06-29 04:28\n"
 "Last-Translator: \n"
 "Language-Team: English, United Kingdom\n"
 "Language: en_GB\n"
@@ -790,15 +790,15 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:72
 msgid "Attribute color not set!"
-msgstr ""
+msgstr "Attribute colour not set!"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Unknown color value \"{1}\""
-msgstr ""
+msgstr "Unknown colour value \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:96
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr ""
+msgstr "Colour \"{1}\" unknown (not defined in default colour list)!"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:123
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
@@ -1030,7 +1030,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:529
 #: ../src/core/undo/RecognizerUndoAction.cpp:76
 msgid "Shape Recognizer"
-msgstr ""
+msgstr "Shape Recogniser"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:144
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:46
@@ -1084,7 +1084,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:107
 msgid "Select background color"
-msgstr ""
+msgstr "Select background colour"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:189
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -1104,7 +1104,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:34
 msgid "Customized"
-msgstr ""
+msgstr "Customised"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:50
 msgid "Toolbars"
@@ -1226,7 +1226,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ColorToolItem.cpp:78
 msgid "Select color"
-msgstr ""
+msgstr "Select colour"
 
 #: ../src/core/gui/toolbarMenubar/FontButton.cpp:65
 msgid "Font"
@@ -1347,7 +1347,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Customize Toolbars"
-msgstr ""
+msgstr "Customise Toolbars"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:469
 msgid "Zoom out"
@@ -1605,7 +1605,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:185
 #: ../src/core/plugin/Plugin.cpp:268 ../src/core/plugin/Plugin.cpp:291
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: ../src/core/gui/toolbarMenubar/model/ToolbarData.cpp:104
 msgid "Toolbar found: {1}"
@@ -1630,7 +1630,7 @@ msgstr ""
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:122
 msgid "Error while finalizing the PDF Cairo surface"
-msgstr ""
+msgstr "Error while finalising the PDF Cairo surface"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:188
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:231
@@ -1640,7 +1640,7 @@ msgstr ""
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:197
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:236
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "Failed to initialise PDF Cairo surface"
 
 #: ../src/core/undo/AddUndoAction.cpp:64
 #: ../src/core/undo/DeleteUndoAction.cpp:61
@@ -1675,7 +1675,7 @@ msgstr ""
 
 #: ../src/core/undo/ColorUndoAction.cpp:90
 msgid "Change color"
-msgstr ""
+msgstr "Change colour"
 
 #: ../src/core/undo/CopyUndoAction.cpp:62
 msgid "Copy page"
@@ -2017,7 +2017,8 @@ msgstr ""
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr ""
+msgstr "<b>Fill opacity settings</b>\n"
+"Select opacity for fill colour"
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
@@ -2081,7 +2082,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:229
 msgid "The current color of the Text Tool, in hex RGB format."
-msgstr ""
+msgstr "The current colour of the Text Tool, in hex RGB format."
 
 #: ../ui/latexSettings.glade:265
 msgid "Template file settings"
@@ -2334,7 +2335,7 @@ msgstr ""
 
 #: ../ui/main.glade:977
 msgid "_Customize"
-msgstr ""
+msgstr "_Customise"
 
 #: ../ui/main.glade:997
 msgid "Hide Menubar"
@@ -2434,7 +2435,7 @@ msgstr ""
 
 #: ../ui/main.glade:1351
 msgid "Paper _Color"
-msgstr ""
+msgstr "Paper _Colour"
 
 #: ../ui/main.glade:1374
 msgid "_Tools"
@@ -2474,7 +2475,7 @@ msgstr ""
 
 #: ../ui/main.glade:1486
 msgid "_Shape Recognizer"
-msgstr ""
+msgstr "_Shape Recogniser"
 
 #: ../ui/main.glade:1552
 msgid "Draw _Line"
@@ -2646,7 +2647,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:177
 msgid "Select Background Color"
-msgstr ""
+msgstr "Select Background Colour"
 
 #: ../ui/pageTemplate.glade:187
 msgid "Copy current page background instead"
@@ -2658,7 +2659,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:245
 msgid "<b>Background Color</b>"
-msgstr ""
+msgstr "<b>Background Colour</b>"
 
 #: ../ui/pageTemplate.glade:258
 msgid "<b>Background</b>"
@@ -2915,7 +2916,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1178
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
-msgstr ""
+msgstr "<i>Pick an input stabilisation algorithm and its parameters</i>"
 
 #: ../ui/settings.glade:1195
 msgid "Buffersize"
@@ -2936,7 +2937,7 @@ msgstr ""
 #: ../ui/settings.glade:1254
 msgctxt "Drag = Noun: force opposing the movement"
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
-msgstr ""
+msgstr "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilisation."
 
 #: ../ui/settings.glade:1255
 msgctxt "Noun: force opposing the movement"
@@ -2945,7 +2946,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1266
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
-msgstr ""
+msgstr "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilisation."
 
 #: ../ui/settings.glade:1268
 msgid "0,4"
@@ -2954,7 +2955,7 @@ msgstr ""
 #: ../ui/settings.glade:1286
 msgctxt "Mass = Noun: physics term, related to weight"
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "Mass: the higher the mass, the more inertia and the more stabilisation"
 
 #: ../ui/settings.glade:1287
 msgctxt "Noun: physics term, related to weight"
@@ -2963,7 +2964,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1298
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "Mass: the higher the mass, the more inertia and the more stabilisation"
 
 #: ../ui/settings.glade:1300
 msgid "5"
@@ -2971,7 +2972,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1318 ../ui/settings.glade:1338
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr ""
+msgstr "Gaussian parameter: the higher, the more stabilisation and the more lag between your cursor and the painting tip."
 
 #: ../ui/settings.glade:1320
 msgid "0,50"
@@ -2987,15 +2988,15 @@ msgstr ""
 
 #: ../ui/settings.glade:1400
 msgid "Finalize the stroke"
-msgstr ""
+msgstr "Finalise the stroke"
 
 #: ../ui/settings.glade:1405
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr ""
+msgstr "Input stabilisation can create a gap at the end of your stroke. If enabled, this gap is filled."
 
 #: ../ui/settings.glade:1425
 msgid "Input stabilization"
-msgstr ""
+msgstr "Input stabilisation"
 
 #: ../ui/settings.glade:1456
 msgid "Input System"
@@ -3245,19 +3246,19 @@ msgstr ""
 
 #: ../ui/settings.glade:3078
 msgid "Border color for current page and other selections"
-msgstr ""
+msgstr "Border colour for current page and other selections"
 
 #: ../ui/settings.glade:3093
 msgid "Border color"
-msgstr ""
+msgstr "Border colour"
 
 #: ../ui/settings.glade:3104
 msgid "Background color between pages"
-msgstr ""
+msgstr "Background colour between pages"
 
 #: ../ui/settings.glade:3129
 msgid "Selection Color (Text, Stroke Selection etc.)"
-msgstr ""
+msgstr "Selection Colour (Text, Stroke Selection etc.)"
 
 #: ../ui/settings.glade:3152
 msgid "Use available Stock Icons (requires restart)"
@@ -3269,7 +3270,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3192
 msgid "Color"
-msgstr ""
+msgstr "Colour"
 
 #: ../ui/settings.glade:3217
 msgid "Theme Variant:"
@@ -3293,7 +3294,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3291
 msgid "Colors"
-msgstr ""
+msgstr "Colours"
 
 #: ../ui/settings.glade:3309
 msgid "Global"
@@ -3333,11 +3334,11 @@ msgstr ""
 
 #: ../ui/settings.glade:3412 ../ui/settings.glade:3555
 msgid "Choose the color to use for \"Highlight cursor position\""
-msgstr ""
+msgstr "Choose the colour to use for \"Highlight cursor position\""
 
 #: ../ui/settings.glade:3426
 msgid "Circle Color"
-msgstr ""
+msgstr "Circle Colour"
 
 #: ../ui/settings.glade:3450 ../ui/settings.glade:3501
 #: ../ui/settings.glade:4724 ../ui/settings.glade:4735
@@ -3359,7 +3360,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3569
 msgid "Border Color"
-msgstr ""
+msgstr "Border Colour"
 
 #: ../ui/settings.glade:3612
 msgid "Cursor"
@@ -3594,11 +3595,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5245
 msgid "Use snapping for recognized shapes"
-msgstr ""
+msgstr "Use snapping for recognised shapes"
 
 #: ../ui/settings.glade:5249
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
-msgstr ""
+msgstr "If activated, shapes that have been recognised by the shape recogniser will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recogniser turned on while writing."
 
 #: ../ui/settings.glade:5267
 msgid "Snapping"
@@ -3853,7 +3854,7 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
-msgstr ""
+msgstr "Drag and drop Components from here to the toolbars and back."
 
 #: ../ui/toolbarCustomizeDialog.glade:86
 msgid "<b>Default Tools</b>"
@@ -3861,7 +3862,7 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:141
 msgid "<b>Color</b>"
-msgstr ""
+msgstr "<b>Colour</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separators</b>"

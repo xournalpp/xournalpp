@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-02 13:27+0000\n"
-"PO-Revision-Date: 2025-06-08 04:27\n"
+"PO-Revision-Date: 2025-06-29 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -366,7 +366,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:647
 msgid "Disable audio for this session"
-msgstr ""
+msgstr "Inaktivera ljud för den här sessionen"
 
 #: ../src/core/control/XournalMain.cpp:656
 msgid "Export FILE as PDF"
@@ -487,7 +487,7 @@ msgstr "SVG-grafik"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:29
 msgid "Xournal (Compatibility)"
-msgstr ""
+msgstr "Xournal (Kompatibilitet)"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:125
 #: ../src/core/control/jobs/SaveJob.cpp:131
@@ -1344,7 +1344,7 @@ msgstr "Fäst mot rutnät"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Paired pages"
-msgstr "Dubbla sidor"
+msgstr "Uppslag"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:463
 msgid "Presentation mode"
@@ -2021,7 +2021,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:369
 msgid "Export layers progressively"
-msgstr ""
+msgstr "Exportera lager progressivt"
 
 #: ../ui/exportSettings.glade:373
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
@@ -2184,7 +2184,7 @@ msgstr "Exportera som..."
 
 #: ../ui/main.glade:292
 msgid "_Edit"
-msgstr "_Redigera"
+msgstr "R_edigera"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
@@ -2220,7 +2220,7 @@ msgstr "_Visa"
 
 #: ../ui/main.glade:557
 msgid "_Pair Pages"
-msgstr "_Dubbla sidor"
+msgstr "U_ppslag"
 
 #: ../ui/main.glade:567
 msgid "_Presentation Mode"
@@ -2432,7 +2432,7 @@ msgstr "Ra_dera sida"
 
 #: ../ui/main.glade:1291
 msgid "New _Layer"
-msgstr ""
+msgstr "Nytt _Lager"
 
 #: ../ui/main.glade:1302
 msgid "Delete Layer"
@@ -2456,7 +2456,7 @@ msgstr "Pappersfä_rg"
 
 #: ../ui/main.glade:1374
 msgid "_Tools"
-msgstr "V_erktyg"
+msgstr "Verk_tyg"
 
 #: ../ui/main.glade:1385
 msgid "_Pen"
@@ -2476,7 +2476,7 @@ msgstr "Markera text i rektangel"
 
 #: ../ui/main.glade:1433
 msgid "_Highlighter"
-msgstr ""
+msgstr "Över_strykningspenna"
 
 #: ../ui/main.glade:1445
 msgid "_Text"
@@ -2492,7 +2492,7 @@ msgstr "Stan_dardverktyg"
 
 #: ../ui/main.glade:1486
 msgid "_Shape Recognizer"
-msgstr ""
+msgstr "_Identifiera former"
 
 #: ../ui/main.glade:1552
 msgid "Draw _Line"
@@ -3555,7 +3555,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4853
 msgid "Paired Pages"
-msgstr "Dubbla sidor"
+msgstr "Uppslag"
 
 #: ../ui/settings.glade:4881
 msgid "when scrolling to end of last page"
