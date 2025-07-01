@@ -47,7 +47,10 @@ auto Text::clone() const -> ElementPtr { return cloneText(); }
 
 auto Text::getFont() -> XojFont& { return font; }
 
-void Text::setFont(const XojFont& font) { this->font = font; }
+void Text::setFont(const XojFont& font) {
+    this->font = font;
+    sizeCalculated = false;
+}
 
 auto Text::getFontSize() const -> double { return font.getSize(); }
 
@@ -132,19 +135,6 @@ void Text::rotate(double x0, double y0, double th) {}
 auto Text::isInEditing() const -> bool { return this->inEditing; }
 
 auto Text::rescaleOnlyAspectRatio() -> bool { return true; }
-
-auto Text::intersects(double x, double y, double halfEraserSize) const -> bool {
-    return intersects(x, y, halfEraserSize, nullptr);
-}
-
-auto Text::intersects(double x, double y, double halfEraserSize, double* gap) const -> bool {
-    double x1 = this->x - halfEraserSize;
-    double x2 = this->x + this->getElementWidth() + halfEraserSize;
-    double y1 = this->y - halfEraserSize;
-    double y2 = this->y + this->getElementHeight() + halfEraserSize;
-
-    return x >= x1 && x <= x2 && y >= y1 && y <= y2;
-}
 
 void Text::serialize(ObjectOutputStream& out) const {
     out.writeObject("Text");

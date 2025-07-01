@@ -9,6 +9,7 @@
 #include "model/Stroke.h"     // for Stroke
 #include "model/XojPage.h"    // for XojPage
 #include "undo/UndoAction.h"  // for UndoAction
+#include "util/Assert.h"      // for xoj_assert
 #include "util/Range.h"       // for Range
 #include "util/i18n.h"        // for _
 
@@ -48,6 +49,7 @@ SizeUndoAction::~SizeUndoAction() {
 
 auto SizeUndoAction::getPressure(Stroke* s) -> vector<double> {
     size_t count = s->getPointCount();
+    xoj_assert(count >= 2);
     vector<double> data;
     data.reserve(count);
     for (size_t i = 0; i < count; i++) {
@@ -71,15 +73,14 @@ auto SizeUndoAction::undo(Control* control) -> bool {
     Document* doc = control->getDocument();
     doc->lock();
 
-    SizeUndoActionEntry* e = this->data.front();
-    Range range(e->s->getX(), e->s->getY());
-
+    Range range;
     for (SizeUndoActionEntry* e: this->data) {
+        range = range.unite(Range(e->s->boundingRect()));
+
         e->s->setWidth(e->originalWidth);
         e->s->setPressure(e->originalPressure);
 
-        range.addPoint(e->s->getX(), e->s->getY());
-        range.addPoint(e->s->getX() + e->s->getElementWidth(), e->s->getY() + e->s->getElementHeight());
+        range = range.unite(Range(e->s->boundingRect()));
     }
 
     doc->unlock();
@@ -97,15 +98,14 @@ auto SizeUndoAction::redo(Control* control) -> bool {
     Document* doc = control->getDocument();
     doc->lock();
 
-    SizeUndoActionEntry* e = this->data.front();
-    Range range(e->s->getX(), e->s->getY());
-
+    Range range;
     for (SizeUndoActionEntry* e: this->data) {
+        range = range.unite(Range(e->s->boundingRect()));
+
         e->s->setWidth(e->newWidth);
         e->s->setPressure(e->newPressure);
 
-        range.addPoint(e->s->getX(), e->s->getY());
-        range.addPoint(e->s->getX() + e->s->getElementWidth(), e->s->getY() + e->s->getElementHeight());
+        range = range.unite(Range(e->s->boundingRect()));
     }
 
     doc->unlock();

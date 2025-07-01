@@ -58,9 +58,6 @@ public:
     auto cloneText() const -> std::unique_ptr<Text>;
     auto clone() const -> ElementPtr override;
 
-    bool intersects(double x, double y, double halfEraserSize) const override;
-    bool intersects(double x, double y, double halfEraserSize, double* gap) const override;
-
 public:
     // Serialize interface
     void serialize(ObjectOutputStream& out) const override;

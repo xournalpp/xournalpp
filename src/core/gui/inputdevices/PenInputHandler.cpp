@@ -124,8 +124,8 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     // hand tool don't change the selection, so you can scroll e.g. with your touchscreen without remove the selection
     bool changeSelection = xournal->selection && toolHandler->getToolType() != TOOL_HAND;
     if ((event.state & GDK_SHIFT_MASK)) {
-        // When tap single selection is enabled, selections can happen with the Pen tool
-        if (toolHandler->getToolType() == TOOL_PEN && isCurrentTapSelection(event)) {
+        // When tap single selection is enabled
+        if (toolHandler->supportsTapFilter() && inputContext->getSettings()->getStrokeFilterEnabled()) {
             changeSelection = false;
         }
         // Selection tools does not change selection with Shift pressed
@@ -155,8 +155,9 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
         xournal->view->clearSelection();
         changeTool(event);
         // stop early to prevent drawing when clicking outside of the selection with the intention of deselecting
-        if (toolHandler->isDrawingTool())
+        if (toolHandler->isDrawingTool()) {
             return true;
+        }
     }
 
     // Forward event to page
@@ -231,9 +232,7 @@ double PenInputHandler::filterPressure(PositionInputData const& pos, XojPageView
 }
 
 bool PenInputHandler::isCurrentTapSelection(InputEvent const& event) const {
-
-    ToolHandler* toolHandler = inputContext->getToolHandler();
-    if (!toolHandler->supportsTapFilter()) {
+    if (!inputContext->getToolHandler()->supportsTapFilter()) {
         return false;
     }
 
@@ -253,10 +252,11 @@ bool PenInputHandler::isCurrentTapSelection(InputEvent const& event) const {
     const bool noMovement = dist < tapMaxDistance * dpmm;
     const bool fastEnoughTap = event.timestamp - this->lastActionStartTimeStamp < as_unsigned(tapMaxDuration);
     const bool notAnAftershock = event.timestamp - this->lastActionEndTimeStamp > as_unsigned(filterRepetitionTime);
-    if (noMovement && fastEnoughTap && notAnAftershock) {
-        return true;
-    }
-    return false;
+
+    auto* selection = inputContext->getView()->getSelection();
+    const bool notInSelectionDeleteButton = !selection || !selection->isDeleting();
+
+    return noMovement && fastEnoughTap && notAnAftershock && notInSelectionDeleteButton;
 }
 
 auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
@@ -401,6 +401,7 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
     GtkXournal* xournal = inputContext->getXournal();
     XournalppCursor* cursor = xournal->view->getCursor();
     ToolHandler* toolHandler = inputContext->getToolHandler();
+    EditSelection* selection = xournal->view->getSelection();
 
     cursor->setMouseDown(false);
 
@@ -408,9 +409,9 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
 
     // Holding shift (with selections) also does not imply drawing
     if (toolHandler->supportsTapFilter()) {
-        auto* settings = inputContext->getSettings();
-        if (settings->getStrokeFilterEnabled()) {
-            cancelAction |= (event.state & GDK_SHIFT_MASK) && xournal->selection != nullptr;
+        if (inputContext->getSettings()->getStrokeFilterEnabled()) {
+            // Tapping/Clicking in the selection delete button should still delete the selection
+            cancelAction |= (event.state & GDK_SHIFT_MASK) && xournal->selection != nullptr && !selection->isDeleting();
         }
     }
 
@@ -429,9 +430,8 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
     }
     this->lastActionEndTimeStamp = event.timestamp;
 
-    EditSelection* sel = xournal->view->getSelection();
-    if (sel) {
-        sel->mouseUp();
+    if (selection) {
+        selection->mouseUp();
     }
 
     // Selections and single-page elements will always work on one page so we need to handle them differently
