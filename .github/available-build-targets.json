@@ -29,7 +29,7 @@
   "windows_targets": {
     "windows": {
         "displayed_name": "Windows",
-        "runner": "windows-2019",
+        "runner": "windows-latest",
         "build_portable": "true"
       }
     }
