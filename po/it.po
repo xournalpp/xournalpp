@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-25 16:22+0000\n"
-"PO-Revision-Date: 2025-06-01 04:28\n"
+"PO-Revision-Date: 2025-07-06 04:27\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -931,15 +931,15 @@ msgstr "GNU GPLv2 o sucessivo"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:30
 msgid "Thickness - don't change"
-msgstr ""
+msgstr "Spessore - non cambiare"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:32
 msgid "Very thin"
-msgstr ""
+msgstr "Molto sottile"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:34
 msgid "Thin"
-msgstr ""
+msgstr "Sottile"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
@@ -953,7 +953,7 @@ msgstr "Spesso"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:40
 msgid "Very thick"
-msgstr ""
+msgstr "Molto spessa"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:57
 msgid "No device"
@@ -1758,11 +1758,11 @@ msgstr "Nascondi tutto"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:178
 msgid "Add a layer above the active layer"
-msgstr ""
+msgstr "Aggiunge un livello sopra il livello attivo"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:179
 msgid "Add a layer below the active layer"
-msgstr ""
+msgstr "Aggiunge un livello sotto il livello attivo"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:206
 msgid "Layer"
@@ -4155,7 +4155,7 @@ msgstr "_Elimina pagina"
 
 #: ../ui/mainmenubar.xml:468
 msgid "Add a _Layer above the active layer"
-msgstr ""
+msgstr "Aggiunge un _Livello sopra il livello attivo"
 
 #: ../ui/mainmenubar.xml:477
 msgid "Delete Layer"
@@ -4372,7 +4372,7 @@ msgstr "Senza strumenti"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:6
 msgid "Note-taking application"
-msgstr ""
+msgstr "Applicazione per prendere appunti"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:7
 msgid "Take handwritten notes"

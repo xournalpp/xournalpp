@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-25 16:22+0000\n"
-"PO-Revision-Date: 2025-06-01 04:28\n"
+"PO-Revision-Date: 2025-07-06 04:27\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -931,15 +931,15 @@ msgstr "GNU GPLv2 sau o versiune ulterioară"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:30
 msgid "Thickness - don't change"
-msgstr ""
+msgstr "Grosime - nu se modifică"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:32
 msgid "Very thin"
-msgstr ""
+msgstr "Foarte subțire"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:34
 msgid "Thin"
-msgstr ""
+msgstr "Subțire"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
@@ -953,7 +953,7 @@ msgstr "Gros"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:40
 msgid "Very thick"
-msgstr ""
+msgstr "Foarte groasă"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:57
 msgid "No device"
@@ -1758,11 +1758,11 @@ msgstr "Ascunde tot"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:178
 msgid "Add a layer above the active layer"
-msgstr ""
+msgstr "Adaugă un strat deasupra stratului activ"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:179
 msgid "Add a layer below the active layer"
-msgstr ""
+msgstr "Adaugă un strat sub stratul activ"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:206
 msgid "Layer"
@@ -4139,7 +4139,7 @@ msgstr "_Elimină pagina"
 
 #: ../ui/mainmenubar.xml:468
 msgid "Add a _Layer above the active layer"
-msgstr ""
+msgstr "Adaugă un strat _deasupra stratului activ"
 
 #: ../ui/mainmenubar.xml:477
 msgid "Delete Layer"
@@ -4356,7 +4356,7 @@ msgstr "Fără instrumente"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:6
 msgid "Note-taking application"
-msgstr ""
+msgstr "Aplicație de luat notițe"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:7
 msgid "Take handwritten notes"

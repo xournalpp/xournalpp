@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-25 16:22+0000\n"
-"PO-Revision-Date: 2025-06-01 04:28\n"
+"PO-Revision-Date: 2025-07-06 04:27\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -121,7 +121,7 @@ msgstr "Hiba történt a(z) „{1}” PDF-fájl olvasása közben\n"
 
 #: ../src/core/control/Control.cpp:1601
 msgid "Error reading PNG file \"{1}\""
-msgstr ""
+msgstr "Hiba történt a(z) „{1}” PNG-fájl olvasása közben"
 
 #: ../src/core/control/Control.cpp:1745
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -930,15 +930,15 @@ msgstr "GNU GPLv2 vagy újabb"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:30
 msgid "Thickness - don't change"
-msgstr ""
+msgstr "Vastagság - ne változzon"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:32
 msgid "Very thin"
-msgstr ""
+msgstr "Nagyon vékony"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:34
 msgid "Thin"
-msgstr ""
+msgstr "Vékony"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
@@ -952,7 +952,7 @@ msgstr "Vastag"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:40
 msgid "Very thick"
-msgstr ""
+msgstr "Nagyon vastag"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:57
 msgid "No device"
@@ -1757,11 +1757,11 @@ msgstr "Összes elrejtése"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:178
 msgid "Add a layer above the active layer"
-msgstr ""
+msgstr "Réteg hozzáadása az aktív réteg fölé"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:179
 msgid "Add a layer below the active layer"
-msgstr ""
+msgstr "Réteg hozzáadása az aktív réteg alá"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:206
 msgid "Layer"
@@ -4137,7 +4137,7 @@ msgstr "Oldal _törlése"
 
 #: ../ui/mainmenubar.xml:468
 msgid "Add a _Layer above the active layer"
-msgstr ""
+msgstr "_Réteg hozzáadása az aktív réteg fölé"
 
 #: ../ui/mainmenubar.xml:477
 msgid "Delete Layer"
@@ -4354,7 +4354,7 @@ msgstr "Üres eszköztár"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:6
 msgid "Note-taking application"
-msgstr ""
+msgstr "Jegyzetkészítő alkalmazás"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:7
 msgid "Take handwritten notes"
