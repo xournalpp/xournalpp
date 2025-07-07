@@ -30,3 +30,10 @@ runs:
           mingw-w64-${{inputs.msys_package_env}}-lua
           mingw-w64-${{inputs.msys_package_env}}-gtksourceview4
           mingw-w64-${{inputs.msys_package_env}}-imagemagick
+    - shell: msys2 {0}
+      run: |
+        # Downgrade gtk to avoid https://github.com/xournalpp/xournalpp/issues/6315
+        wget -q https://repo.msys2.org/mingw/${{inputs.msystem}}/mingw-w64-${{inputs.msys_package_env}}-gtk3-3.24.43-1-any.pkg.tar.zst
+        wget -q https://repo.msys2.org/mingw/${{inputs.msystem}}/mingw-w64-${{inputs.msys_package_env}}-gtk3-3.24.43-1-any.pkg.tar.zst.sig
+
+        pacman -U --noconfirm mingw-w64-${{inputs.msys_package_env}}-gtk3-3.24.43-1-any.pkg.tar.zst
