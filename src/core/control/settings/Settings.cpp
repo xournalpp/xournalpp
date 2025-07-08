@@ -202,7 +202,14 @@ void Settings::loadDefault() {
 
     this->numIgnoredStylusEvents = 0;
 
+#ifdef _WIN32
+    // This option should be on on Windows:
+    // GTK (at least until 3.24.49) only creates GDK_BUTTON_PRESS events on mouse-events or stylus-down-events
+    this->inputSystemTPCButton = true;
+#else
     this->inputSystemTPCButton = false;
+#endif
+
     this->inputSystemDrawOutsideWindow = true;
 
     this->strokeFilterIgnoreTime = 150;
