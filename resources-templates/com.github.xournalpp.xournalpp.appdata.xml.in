@@ -65,6 +65,10 @@
       <caption>LaTeX with customized preamble</caption>
     </screenshot>
   </screenshots>
+  <branding>
+    <color type="primary" scheme_preference="light">#77767b</color>
+    <color type="primary" scheme_preference="dark">#241f31</color>
+  </branding>
   <launchable type="desktop-id">com.github.xournalpp.xournalpp.desktop</launchable>
   <provides>
     <id>xournalpp.desktop</id>
