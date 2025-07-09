@@ -116,8 +116,16 @@ void ExtEdLatexDialog::openEditor() {
         return;
     }
 
+    xoj::util::GObjectSPtr<GSubprocessLauncher> launcher(g_subprocess_launcher_new(G_SUBPROCESS_FLAGS_NONE),
+                                                         xoj::util::adopt);
+
+    Color textColor = texCtrl->control->getToolHandler()->getTool(TOOL_TEXT).getColor();
+    std::string colorStr = Util::rgb_to_hex_string(textColor).substr(1);
+
+    g_subprocess_launcher_setenv(launcher.get(), "XPP_TEXT_COLOR", colorStr.c_str(), TRUE);
+
     xoj::util::GObjectSPtr<GSubprocess> process(
-            g_subprocess_newv(argv.get(), G_SUBPROCESS_FLAGS_NONE, xoj::util::out_ptr(err)), xoj::util::adopt);
+            g_subprocess_launcher_spawnv(launcher.get(), argv.get(), xoj::util::out_ptr(err)), xoj::util::adopt);
 
     if (err) {
         XojMsgBox::showErrorToUser(getWindow(), FS(_F("Could not spawn editor: {1}") % err->message));
