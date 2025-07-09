@@ -661,6 +661,14 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->latexSettings.sourceViewSyntaxHighlight = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.sourceViewShowLineNumbers")) == 0) {
         this->latexSettings.sourceViewShowLineNumbers = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.useExternalEditor")) == 0) {
+        this->latexSettings.useExternalEditor = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.externalEditorAutoConfirm")) == 0) {
+        this->latexSettings.externalEditorAutoConfirm = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.externalEditorCmd")) == 0) {
+        this->latexSettings.externalEditorCmd = std::string{reinterpret_cast<char*>(value)};
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.temporaryFileExt")) == 0) {
+        this->latexSettings.temporaryFileExt = std::string{reinterpret_cast<char*>(value)};
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapRecognizedShapesEnabled")) == 0) {
         this->snapRecognizedShapesEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("restoreLineWidthEnabled")) == 0) {
@@ -1183,6 +1191,10 @@ void Settings::save() {
     SAVE_BOOL_PROP(latexSettings.sourceViewAutoIndent);
     SAVE_BOOL_PROP(latexSettings.sourceViewSyntaxHighlight);
     SAVE_BOOL_PROP(latexSettings.sourceViewShowLineNumbers);
+    SAVE_BOOL_PROP(latexSettings.useExternalEditor);
+    SAVE_BOOL_PROP(latexSettings.externalEditorAutoConfirm);
+    SAVE_STRING_PROP(latexSettings.externalEditorCmd);
+    SAVE_STRING_PROP(latexSettings.temporaryFileExt);
 
     xmlNodePtr xmlFont = nullptr;
     xmlFont = xmlNewChild(root, nullptr, reinterpret_cast<const xmlChar*>("property"), nullptr);

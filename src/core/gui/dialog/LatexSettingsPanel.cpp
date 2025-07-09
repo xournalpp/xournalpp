@@ -44,6 +44,8 @@ LatexSettingsPanel::LatexSettingsPanel(GladeSearchpath* gladeSearchPath):
                              G_CALLBACK(+[](LatexSettingsPanel* self) { self->checkDeps(); }), this);
     g_signal_connect_swapped(this->cbUseSystemFont, "toggled",
                              G_CALLBACK(+[](LatexSettingsPanel* self) { self->updateWidgetSensitivity(); }), this);
+    g_signal_connect_swapped(builder.get("cbUseExternalEditor"), "toggled",
+                             G_CALLBACK(+[](LatexSettingsPanel* self) { self->updateWidgetSensitivity(); }), this);
 
 #ifdef USE_GTK_SOURCEVIEW
     GtkBox* themeSelectionBox = GTK_BOX(builder.get("bxThemeSelectionContainer"));
@@ -100,6 +102,13 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
     // Editor word wrap.
     gtk_check_button_set_active(GTK_CHECK_BUTTON(builder.get("cbWordWrap")), settings.editorWordWrap);
 
+    // External editor
+    gtk_check_button_set_active(GTK_CHECK_BUTTON(builder.get("cbUseExternalEditor")), settings.useExternalEditor);
+    gtk_check_button_set_active(GTK_CHECK_BUTTON(builder.get("cbExternalEditorAutoConfirm")),
+                                settings.externalEditorAutoConfirm);
+    gtk_editable_set_text(GTK_EDITABLE(builder.get("latexExternalEditorCmd")), settings.externalEditorCmd.c_str());
+    gtk_editable_set_text(GTK_EDITABLE(builder.get("latexTemporaryFileExt")), settings.temporaryFileExt.c_str());
+
     this->updateWidgetSensitivity();
 }
 
@@ -127,6 +136,12 @@ void LatexSettingsPanel::save(LatexSettings& settings) {
     settings.editorFont = xoj::util::OwnedCString::assumeOwnership(gtk_font_chooser_get_font(fontSelector)).get();
     settings.useCustomEditorFont = !gtk_check_button_get_active(this->cbUseSystemFont);
     settings.editorWordWrap = gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get("cbWordWrap")));
+
+    settings.useExternalEditor = gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get("cbUseExternalEditor")));
+    settings.externalEditorAutoConfirm =
+            gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get("cbExternalEditorAutoConfirm")));
+    settings.externalEditorCmd = gtk_editable_get_text(GTK_EDITABLE(builder.get("latexExternalEditorCmd")));
+    settings.temporaryFileExt = gtk_editable_get_text(GTK_EDITABLE(builder.get("latexTemporaryFileExt")));
 }
 
 void LatexSettingsPanel::checkDeps() {
@@ -182,4 +197,9 @@ void LatexSettingsPanel::updateWidgetSensitivity() {
 #ifndef USE_GTK_SOURCEVIEW
     gtk_widget_set_sensitive(builder.get("bxGtkSourceviewSettings"), false);
 #endif
+
+    auto useExternalEditor = gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get("cbUseExternalEditor")));
+    gtk_widget_set_sensitive(builder.get("cbExternalEditorAutoConfirm"), useExternalEditor);
+    gtk_widget_set_sensitive(builder.get("latexExternalEditorCmd"), useExternalEditor);
+    gtk_widget_set_sensitive(builder.get("latexTemporaryFileExt"), useExternalEditor);
 }

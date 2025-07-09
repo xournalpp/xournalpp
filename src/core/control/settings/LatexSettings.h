@@ -43,4 +43,9 @@ public:
     bool useCustomEditorFont{false};
 
     bool editorWordWrap{true};
+
+    bool useExternalEditor{false};
+    bool externalEditorAutoConfirm{false};
+    std::string externalEditorCmd{};
+    std::string temporaryFileExt{"tex"};
 };
