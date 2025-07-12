@@ -484,9 +484,11 @@ void on_startup(GApplication* application, XMPtr app_data) {
             XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
         }
 
-        const fs::path p = Util::fromGFilename(app_data->optFilename[0], false);
+        fs::path p = Util::fromGFilename(app_data->optFilename[0], false);
+
 
         try {
+            p = fs::absolute(p);
             if (fs::exists(p)) {
                 opened = app_data->control->openFile(p,
                                                      app_data->openAtPageNumber - 1);  // First page for user is page 1
