@@ -41,6 +41,9 @@ void setToggleButtonUnreleasable(GtkToggleButton* btn) {
     // "hierarchy-change" is emitted when the widget is added to/removed from a toplevel's descendance
     // We use this to connect to the suitable GAction signals once the widget has been added to the toolbar
     g_signal_connect(btn, "hierarchy-changed", G_CALLBACK(+[](GtkWidget* btn, GtkWidget*, gpointer) {
+                         if (!GTK_IS_WINDOW(gtk_widget_get_toplevel(btn))) {
+                             return;  // The widget was removed from the hierarchy
+                         }
                          GAction* action = findAction(GTK_ACTIONABLE(btn));
                          if (!action) {
                              return;
@@ -79,10 +82,13 @@ void setRadioButtonActionName(GtkRadioButton* btn, const char* actionNamespace, 
     };
     g_signal_connect_data(
             btn, "hierarchy-changed", G_CALLBACK(+[](GtkWidget* btn, GtkWidget*, gpointer d) {
+                if (!GTK_IS_WINDOW(gtk_widget_get_toplevel(btn))) {
+                    return;  // The widget was removed from the hierarchy
+                }
                 Data* data = static_cast<Data*>(d);
                 GActionGroup* win = gtk_widget_get_action_group(btn, data->actionNamespace.c_str());
                 if (!win) {
-                    // Most likely the widget just got removed from the toplevel
+                    g_warning("Could not find action group \"%s\"", data->actionNamespace.c_str());
                     return;
                 }
                 xoj_assert(G_IS_ACTION_MAP(win));
@@ -134,11 +140,12 @@ void setRadioButtonActionName(GtkRadioButton* btn, const char* actionNamespace, 
 
 void fixActionableInitialSensitivity(GtkActionable* w) {
     g_signal_connect(w, "hierarchy-changed", G_CALLBACK(+[](GtkWidget* w, GtkWidget*, gpointer) {
-                         GAction* action = findAction(GTK_ACTIONABLE(w));
-                         if (!action) {
-                             return;
+                         if (!GTK_IS_WINDOW(gtk_widget_get_toplevel(w))) {
+                             return;  // The widget was removed from the hierarchy
                          }
-                         gtk_widget_set_sensitive(w, g_action_get_enabled(action));
+                         if (GAction* action = findAction(GTK_ACTIONABLE(w)); action) {
+                             gtk_widget_set_sensitive(w, g_action_get_enabled(action));
+                         }
                      }),
                      nullptr);
 }
