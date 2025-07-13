@@ -384,7 +384,11 @@ void LoadHandler::parseBgPixmap() {
             fileToLoad += ".";
             fileToLoad += filepath;
         } else {
-            fileToLoad = filepath;
+            if (filepath.is_relative()) {
+                fileToLoad = xournalFilepath.remove_filename() / filepath;
+            } else {
+                fileToLoad = filepath;
+            }
         }
 
         GError* error = nullptr;
