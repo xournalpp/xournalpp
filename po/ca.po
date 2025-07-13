@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-25 16:22+0000\n"
-"PO-Revision-Date: 2025-06-15 04:27\n"
+"POT-Creation-Date: 2025-07-09 16:08+0000\n"
+"PO-Revision-Date: 2025-07-13 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -250,27 +250,27 @@ msgstr "S'ha creat el fitxer d'imatge."
 msgid "PDF file successfully created"
 msgstr "S'ha creat l'arxiu PDF correctament."
 
-#: ../src/core/control/LatexController.cpp:79
+#: ../src/core/control/LatexController.cpp:80
 msgid "Global template file does not exist. Please check your settings."
 msgstr "El fitxer de plantilla global no existeix. Reviseu la configuració."
 
-#: ../src/core/control/LatexController.cpp:84
+#: ../src/core/control/LatexController.cpp:85
 msgid "Failed to read global template file. Please check your settings."
 msgstr "El fitxer de plantilla global no s'ha pogut llegir. Reviseu la configuració."
 
-#: ../src/core/control/LatexController.cpp:90
+#: ../src/core/control/LatexController.cpp:91
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "El fitxer de plantilla global no és un fitxer regular. Reviseu la configuració."
 
-#: ../src/core/control/LatexController.cpp:236
+#: ../src/core/control/LatexController.cpp:242
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "La generació LaTeX ha trobat un error: {1} (codi de sortida: {2})"
 
-#: ../src/core/control/LatexController.cpp:302
+#: ../src/core/control/LatexController.cpp:311
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "El fitxer PDF de LaTeX no s'ha pogut carregar: {1}"
 
-#: ../src/core/control/LatexController.cpp:307
+#: ../src/core/control/LatexController.cpp:316
 msgid "Could not load LaTeX PDF file"
 msgstr "El fitxer PDF de LaTeX no s'ha pogut carregar."
 
@@ -1078,6 +1078,22 @@ msgstr "Reconeixedor de traços"
 msgid "Draw Spline"
 msgstr "Dibuixa corbes spline"
 
+#: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:115
+msgid "Failed to parse external editor command: {1}"
+msgstr "No s'ha pogut analitzar l'ordre de l'editor extern: {1}"
+
+#: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:131
+msgid "Could not spawn editor: {1}"
+msgstr "No s'ha pogut iniciar l'editor: {1}"
+
+#: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:162
+msgid "Could not wait for editor: {1}"
+msgstr "No s'ha pogut esperar a l'editor: {1}"
+
+#: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:171
+msgid "Editor exited with bad status {1}"
+msgstr "L'editor ha sortit i ha generat un estat dolent de {1}"
+
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:15
 msgid "All files"
 msgstr "Tots els fitxers"
@@ -1117,27 +1133,27 @@ msgstr "Predeterminat del sistema"
 msgid "Previously selected language not available anymore!"
 msgstr "L'idioma seleccionat anteriorment ja no està disponible!"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:55
 msgid "LaTeX editor theme:"
 msgstr "Tema d'editor LaTeX:"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:63
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "GtkSourceView no estava activat quan es va compilar aquesta versió del Xournal++! Algunes opcions no estaran disponibles."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:157
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "No es pot obrir el fitxer de plantilla global a {1}. Existeix?"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:168
 msgid "Sample LaTeX file generated successfully."
 msgstr "Fitxer LaTeX d'exemple generat amb èxit."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:170
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Error: {1}. Comproveu els continguts de {2}."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:167
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:182
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Error: {1} no és un fitxer regular. Comproveu la configuració del fitxer de plantilla LaTeX. "
 
@@ -2203,10 +2219,11 @@ msgid "Close"
 msgstr "Tanca"
 
 #: ../ui/backgroundSelection.glade:49 ../ui/exportSettings.glade:425
-#: ../ui/goto.glade:108 ../ui/pageFormat.glade:346 ../ui/pageTemplate.glade:278
-#: ../ui/plugin.glade:114 ../ui/renameLayerDialog.glade:71
-#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6405
-#: ../ui/texdialog.glade:203
+#: ../ui/extEdTexDialog.glade:168 ../ui/goto.glade:108
+#: ../ui/intEdTexDialog.glade:203 ../ui/pageFormat.glade:346
+#: ../ui/pageTemplate.glade:278 ../ui/plugin.glade:114
+#: ../ui/renameLayerDialog.glade:71 ../ui/selectOpacity.glade:134
+#: ../ui/settings.glade:6405
 msgid "Ok"
 msgstr "D'acord"
 
@@ -2282,9 +2299,37 @@ msgstr "Exporta les capes progressivament"
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
 msgstr "Si s'activa les capes de cada pàgina s'afegiran una a una. El resultat és un fitxer PDF que es pot fer servir per a presentacions."
 
+#: ../ui/extEdTexDialog.glade:23 ../ui/intEdTexDialog.glade:18
+msgid "Insert Latex"
+msgstr "Afegeix text LaTeX"
+
+#: ../ui/extEdTexDialog.glade:42
+msgid "Enter / edit LaTeX Text in external Editor"
+msgstr "Escriviu/Editeu text LaTeX a l'editor extern"
+
+#: ../ui/extEdTexDialog.glade:86 ../ui/intEdTexDialog.glade:116
+msgid "Output generated by the LaTeX command."
+msgstr "Sortida generada per la comanda LaTeX."
+
+#: ../ui/extEdTexDialog.glade:138
+msgid "Continue Editing"
+msgstr "Continua l'edició"
+
 #: ../ui/goto.glade:23
 msgid "Go to Page"
 msgstr "Vés a la pàgina"
+
+#: ../ui/intEdTexDialog.glade:37
+msgid "Enter / edit LaTeX Text"
+msgstr "Escriu/Edita text LaTeX"
+
+#: ../ui/intEdTexDialog.glade:98
+msgid "TeX Source"
+msgstr "Font TeX"
+
+#: ../ui/intEdTexDialog.glade:136
+msgid "Command Output"
+msgstr "Sortida de la comanda"
 
 #: ../ui/latexSettings.glade:36
 msgid "Always check LaTeX dependencies before running"
@@ -2382,7 +2427,31 @@ msgstr "Tipus de lletra: "
 msgid "Pick the Editor's Font"
 msgstr "Tria el tipus de lletra de l'editor"
 
-#: ../ui/latexSettings.glade:507
+#: ../ui/latexSettings.glade:516
+msgid "You can optionally use an external editor program instead of the built-in editor. If you enable the option below, the provided editor command (defaulting to $EDITOR) will start with a popup that only shows a preview and potential error message instead of the normal one with a built-in editor. The environment variable XPP_TEXT_COLOR is set to the current Text Tool color in hex RGB format."
+msgstr "Podeu fer servir un programa d'edició extern en lloc de l'editor inclòs al programa. Si activeu l'opció de sota, l'ordre d'editor que es doni (per defecte a $EDITOR) s'executarà amb un missatge emergent que mostrarà només una previsualització o els missatges d'errors potencials en lloc de la interfície de l'editor inclòs. La variable d'entorn XPP_TEXT_COLOR s'estableix com al color actual de l'eina Text en format RGB hexadecimal."
+
+#: ../ui/latexSettings.glade:532
+msgid "Use external Editor"
+msgstr "Fes servir un editor extern"
+
+#: ../ui/latexSettings.glade:549
+msgid "Editor command"
+msgstr "Ordre de l'editor"
+
+#: ../ui/latexSettings.glade:574
+msgid "Extension of temporary file"
+msgstr "Extensió del fitxer temporal"
+
+#: ../ui/latexSettings.glade:595
+msgid "Automatically confirm on editor exit"
+msgstr "Confirma automàticament quan se surti de l'editor"
+
+#: ../ui/latexSettings.glade:625
+msgid "External Editor (Expert user only)"
+msgstr "Editor extern (només per a usuaris experts)"
+
+#: ../ui/latexSettings.glade:641
 msgid "Editor settings"
 msgstr "Configuració de l'editor"
 
@@ -3805,26 +3874,6 @@ msgstr "Desactivat"
 #: ../ui/settingsDeviceClassConfig.glade:36
 msgid "Mouse+Keyboard Combo"
 msgstr "Combinació ratolí+teclat"
-
-#: ../ui/texdialog.glade:18
-msgid "Insert Latex"
-msgstr "Afegeix text LaTeX"
-
-#: ../ui/texdialog.glade:37
-msgid "Enter / edit LaTeX Text"
-msgstr "Escriu/Edita text LaTeX"
-
-#: ../ui/texdialog.glade:98
-msgid "TeX Source"
-msgstr "Font TeX"
-
-#: ../ui/texdialog.glade:116
-msgid "Output generated by the LaTeX command."
-msgstr "Sortida generada per la comanda LaTeX."
-
-#: ../ui/texdialog.glade:136
-msgid "Command Output"
-msgstr "Sortida de la comanda"
 
 #: ../ui/toolbarCustomizeDialog.glade:30
 msgid "Drag and drop Components from here to the toolbars and back."
