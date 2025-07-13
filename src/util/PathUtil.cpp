@@ -181,6 +181,38 @@ auto Util::toGFile(fs::path const& path) -> xoj::util::GObjectSPtr<GFile> {
     return xoj::util::GObjectSPtr<GFile>(g_file_new_for_path(path.u8string().c_str()), xoj::util::adopt);
 }
 
+auto Util::fromGFilename(const char* path) -> fs::path {
+    if (path == nullptr) {
+        return {};
+    }
+    gsize pSize{0};
+    GError* err{};
+    auto* u8Path = g_filename_to_utf8(path, as_signed(std::strlen(path)), nullptr, &pSize, &err);
+    if (err) {
+        g_message("Failed to convert g_filename to utf8 with error code: %d\n%s", err->code, err->message);
+        g_error_free(err);
+        return {};
+    }
+    auto ret = fs::u8path(u8Path, u8Path + pSize);
+    g_free(u8Path);
+    return ret;
+}
+
+auto Util::toGFilename(fs::path const& path) -> std::string {
+    auto u8path = path.u8string();
+    gsize pSize{0};
+    GError* err{};
+    auto* local = g_filename_from_utf8(u8path.c_str(), as_signed(u8path.size()), nullptr, &pSize, &err);
+    if (err) {
+        g_message("Failed to convert g_filename from utf8 with error code: %d\n%s", err->code, err->message);
+        g_error_free(err);
+        return {};
+    }
+    auto ret = std::string{local, pSize};
+    g_free(local);
+    return ret;
+}
+
 
 void Util::openFileWithDefaultApplication(const fs::path& filename) {
 #ifdef __APPLE__
@@ -322,10 +354,17 @@ auto Util::ensureFolderExists(const fs::path& p) -> fs::path {
     return p;
 }
 
-auto Util::normalizeAssetPath(const fs::path& asset, const fs::path& base) -> std::string {
+auto Util::normalizeAssetPath(const fs::path& asset, const fs::path& base, PathStorageMode mode) -> std::string {
     try {
-        return fs::proximate(asset, base).generic_u8string();
-    } catch (...) {
+        if (mode == PathStorageMode::AS_RELATIVE_PATH) {
+            fs::path basenormal = base.empty() ? fs::current_path() : fs::absolute(base).lexically_normal();
+            return fs::absolute(asset).lexically_proximate(basenormal).lexically_normal().generic_u8string();
+        } else {
+            xoj_assert(mode == PathStorageMode::AS_ABSOLUTE_PATH);
+            return fs::absolute(asset).lexically_normal().generic_u8string();
+        }
+    } catch (const fs::filesystem_error& fe) {
+        g_warning("Could not normalize path: %s\nFailed with error: %s", asset.u8string().c_str(), fe.what());
         return asset.generic_u8string();
     }
 }

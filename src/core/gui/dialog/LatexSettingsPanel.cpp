@@ -18,7 +18,7 @@
 #include "gui/Builder.h"
 #include "model/Font.h"              // for XojFont
 #include "util/Color.h"              // for Color
-#include "util/PathUtil.h"           // for fromGFilename, getTmpDir...
+#include "util/PathUtil.h"           // for fromGFile, getTmpDir...
 #include "util/PlaceholderString.h"  // for PlaceholderString
 #include "util/XojMsgBox.h"
 #include "util/gtk4_helper.h"

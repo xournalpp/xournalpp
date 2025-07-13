@@ -253,9 +253,11 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
                     g_error_free(error);
                 }
             } else {
+                // "absolute" just means path. For backward compatibility, it is hard to change the word
                 background->setAttrib("domain", "absolute");
-                auto normalizedPath = Util::normalizeAssetPath(doc->getPdfFilepath(), target.parent_path());
-                background->setAttrib("filename", normalizedPath);
+                auto normalizedPath = Util::normalizeAssetPath(doc->getPdfFilepath(), target.parent_path(),
+                                                               doc->getPathStorageMode());
+                background->setAttrib("filename", std::move(normalizedPath));
             }
         }
         background->setAttrib("pageno", p->getPdfPageNr() + 1);
@@ -285,9 +287,12 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
 
             g_free(filename);
         } else {
+            // "absolute" just means path. For backward compatibility, it is hard to change the word
             background->setAttrib("domain", "absolute");
-            auto normalizedPath = Util::normalizeAssetPath(p->getBackgroundImage().getFilepath(), target.parent_path());
-            background->setAttrib("filename", normalizedPath);
+            auto normalizedPath = Util::normalizeAssetPath(p->getBackgroundImage().getFilepath(), target.parent_path(),
+                                                           doc->getPathStorageMode());
+            background->setAttrib("filename", std::move(normalizedPath));
+
             BackgroundImage img = p->getBackgroundImage();
 
             /*

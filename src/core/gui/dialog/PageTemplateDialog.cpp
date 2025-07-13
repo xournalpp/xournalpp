@@ -19,7 +19,7 @@
 #include "model/FormatDefinitions.h"  // for FormatUnits, XOJ_UNITS
 #include "model/PageType.h"           // for PageType
 #include "util/Color.h"               // for GdkRGBA_to_argb, rgb_t...
-#include "util/PathUtil.h"            // for fromGFilename, readString
+#include "util/PathUtil.h"            // for fromGFile, readString
 #include "util/PopupWindowWrapper.h"  // for PopupWindowWrapper
 #include "util/XojMsgBox.h"           // for XojMsgBox
 #include "util/i18n.h"                // for _

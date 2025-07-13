@@ -460,6 +460,8 @@ TEST(ControlLoadHandler, linebreaksLatex) {
 
     teximage = static_cast<const TexImage*>(layer->getElements()[2].get());
     EXPECT_EQ("{.\r\n}", teximage->getText());
+
+    fs::remove(outPath);
 }
 
 TEST(ControlLoadHandler, testLoadStoreLoadDefault) {
@@ -553,4 +555,46 @@ TEST(ControlLoadHandler, testLoadStoreCJK) {
     check_element(0, u8"Test");
     check_element(1, u8"测试");
     check_element(2, u8"テスト");
+}
+
+TEST(ControlLoadHandler, testRelativePath) {
+    auto doc = LoadHandler().loadDocument(GET_TESTFILE("load/relativePaths.xopp"));
+    ASSERT_TRUE(doc) << "Unable to load test file \"load/relativePaths.xopp\"";
+    const auto& pdffile = doc->getPdfFilepath();
+
+    auto check = [&pdffile](const fs::path& file, Util::PathStorageMode mode) {
+        const auto doc = LoadHandler().loadDocument(file);
+        ASSERT_TRUE(doc) << "Unable to load " << file.u8string();
+        EXPECT_TRUE(fs::equivalent(doc->getPdfFilepath().lexically_normal(), pdffile.lexically_normal()))
+                << "Paths \"" << doc->getPdfFilepath().u8string() << "\" and \"" << pdffile.u8string()
+                << "\" are not equivalent";
+        EXPECT_EQ(doc->getPathStorageMode(), mode);
+    };
+
+    auto saveReloadTest = [&](const fs::path& dir) {
+        std::cout << "Test saving in " << dir.u8string() << std::endl;
+        const fs::path outPath = dir / "xournalpp-test-units_ControlLoaderHandler_testRelativePath.xopp";
+        ASSERT_TRUE(!fs::exists(outPath));
+
+        SaveHandler saver;
+        saver.prepareSave(doc.get(), outPath);
+        saver.saveTo(outPath);
+        EXPECT_TRUE(saver.getErrorMessage().empty());
+
+        check(outPath, doc->getPathStorageMode());
+
+        fs::remove(outPath);
+    };
+
+    doc->setPathStorageMode(Util::PathStorageMode::AS_ABSOLUTE_PATH);
+    std::cout << "Mode PathStorageMode::AS_ABSOLUTE_PATH" << std::endl;
+
+    saveReloadTest(fs::temp_directory_path());
+    saveReloadTest(fs::current_path());
+
+    doc->setPathStorageMode(Util::PathStorageMode::AS_RELATIVE_PATH);
+    std::cout << "Mode PathStorageMode::AS_RELATIVE_PATH" << std::endl;
+
+    saveReloadTest(fs::temp_directory_path());
+    saveReloadTest(fs::current_path());
 }
