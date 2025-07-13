@@ -888,7 +888,7 @@ void SettingsDialog::save() {
 
     settings->setDefaultSaveName(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultSaveName"))));
     settings->setDefaultPdfExportName(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultPdfName"))));
-    // Todo(fabian): use Util::fromGFilename!
+
     auto file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(builder.get("fcAudioPath")));
     auto path = Util::fromGFile(file);
     g_object_unref(file);

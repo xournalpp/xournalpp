@@ -263,15 +263,14 @@ auto exportImg(const char* input, const char* output, const char* range, const c
  */
 auto saveDoc(const char* input, const char* output) -> int {
     SaveHandler saver;
-    char* inputFilename = (char*)input;
-    const fs::path in = Util::fromGFilename(inputFilename, false);
+    const fs::path in = Util::fromGFilename(input);
     auto handler = std::make_unique<DocumentHandler>();
     auto newDoc = std::make_unique<Document>(handler.get());
     const bool res = newDoc->readPdf(in, /*initPages=*/true, false);
     if (!res) {
         g_error("%s", FC(_F("Error: {1}") % newDoc->getLastErrorMsg().c_str()));
     }
-    fs::path out = Util::fromGFilename((char*)output, false);
+    const fs::path out = fs::absolute(Util::fromGFilename(output));
     saver.prepareSave(newDoc.get(), out);
     saver.saveTo(out);
 
@@ -441,7 +440,7 @@ void on_open_files(GApplication* application, gpointer f, gint numFiles, gchar* 
         XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
     }
 
-    fs::path p = Util::fromGFilename(g_file_get_path(files[0]), false);
+    const fs::path p = Util::fromGFile(files[0]);
 
     try {
         if (fs::exists(p)) {
@@ -500,8 +499,12 @@ void on_startup(GApplication* application, XMPtr app_data) {
                                       "Others are ignored.");
             XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
         }
-
-        p = Util::fromGFilename(app_data->optFilename[0], false);
+        p = Util::fromGFilename(app_data->optFilename[0]);
+        try {
+            p = fs::absolute(p);
+        } catch (const fs::filesystem_error& e) {
+            g_warning("Unable to convert path %s to absolute path: %s", app_data->optFilename[0], e.what());
+        }
     } else if (app_data->control->getSettings()->isAutoloadMostRecent()) {
         auto most_recent = RecentManager::getMostRecent();
         if (most_recent) {

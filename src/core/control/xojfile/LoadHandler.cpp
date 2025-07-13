@@ -454,10 +454,13 @@ void LoadHandler::parseBgPdf() {
             pdfFilename = fs::u8path(sFilename);
         }
 
-        if (!strcmp("absolute", domain))  // Absolute OR relative path
-        {
+        if (!strcmp("absolute", domain)) {
+            // "absolute" just means path. For backward compatibility, it is hard to change the word.
             if (pdfFilename.is_relative()) {
+                this->doc->setPathStorageMode(Util::PathStorageMode::AS_RELATIVE_PATH);
                 pdfFilename = xournalFilepath.remove_filename() / pdfFilename;
+            } else {
+                this->doc->setPathStorageMode(Util::PathStorageMode::AS_ABSOLUTE_PATH);
             }
         } else if (!strcmp("attach", domain)) {
             attachToDocument = true;

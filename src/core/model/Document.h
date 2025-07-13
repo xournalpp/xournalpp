@@ -26,6 +26,7 @@
 
 #include "pdf/base/XojPdfDocument.h"  // for XojPdfDocument
 #include "pdf/base/XojPdfPage.h"      // for XojPdfPageSPtr
+#include "util/PathUtil.h"            // for PathStorageMode
 #include "util/raii/GObjectSPtr.h"    // for GObjectSptr
 
 #include "PageRef.h"     // for PageRef
@@ -99,6 +100,9 @@ public:
     void unlock();
     bool tryLock();
 
+    inline Util::PathStorageMode getPathStorageMode() const { return pathStorageMode; }
+    inline void setPathStorageMode(Util::PathStorageMode m) { pathStorageMode = m; }
+
 private:
     void buildContentsModel();
     void freeTreeContentModel();
@@ -116,6 +120,8 @@ private:
     fs::path filepath;
     fs::path pdfFilepath;
     bool attachPdf = false;
+
+    Util::PathStorageMode pathStorageMode = Util::PathStorageMode::AS_RELATIVE_PATH;
 
     /**
      *  Password: not handled yet

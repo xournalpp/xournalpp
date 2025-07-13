@@ -451,6 +451,7 @@ auto Document::operator=(const Document& doc) -> Document& {
     this->filepath = doc.filepath;
     this->pages = doc.pages;
     this->attachPdf = doc.attachPdf;
+    this->pathStorageMode = doc.pathStorageMode;
 
     indexPdfPages();
     buildContentsModel();
