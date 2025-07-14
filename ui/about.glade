@@ -404,7 +404,7 @@ Henry Heino</property>
             <property name="halign">center</property>
             <property name="margin-top">5</property>
             <property name="image">iconClose</property>
-            <accelerator key="Escape" signal="clicked"/>
+            <accelerator key="Escape" signal="activate"/>
           </object>
           <packing>
             <property name="expand">False</property>

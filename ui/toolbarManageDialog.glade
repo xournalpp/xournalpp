@@ -137,7 +137,7 @@
             <property name="receives-default">True</property>
             <property name="halign">end</property>
             <property name="image">iconClose</property>
-            <accelerator key="Escape" signal="clicked"/>
+            <accelerator key="Escape" signal="activate"/>
           </object>
           <packing>
             <property name="expand">False</property>
