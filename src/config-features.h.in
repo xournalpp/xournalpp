@@ -13,13 +13,13 @@
 
 /* --- Stable features --- */
 
-// Currently none
+#cmakedefine ENABLE_PLUGINS
 
 /* --- Testing features --- */
 
-#cmakedefine ENABLE_PLUGINS
-
 #cmakedefine ENABLE_QPDF
+
+#cmakedefine ENABLE_CPPTRACE
 
 // Example: #cmakedefine NAME_FROM_Cmake_list
 // in CMakeFile.txt:

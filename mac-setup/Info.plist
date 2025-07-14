@@ -36,7 +36,7 @@
     <true />
 
     <key>CFBundleExecutable</key>
-    <string>xournalpp</string>
+    <string>xournalpp-wrapper</string>
     <key>LSArchitecturePriority</key>
     <array>
       <string>x86_64</string>

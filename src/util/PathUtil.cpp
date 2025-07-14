@@ -21,6 +21,18 @@
 
 #include "config.h"  // for PROJECT_NAME
 
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>  // for readlink, ssize_t
+#ifdef __APPLE__
+#include <glib.h>
+#include <mach-o/dyld.h>
+#else
+#include <climits>  // for PATH_MAX
+#endif
+#endif
+
 #ifdef GHC_FILESYSTEM
 // Fix of ghc::filesystem bug (path::operator/=() won't support string_views)
 constexpr auto const* CONFIG_FOLDER_NAME = "xournalpp";
@@ -30,8 +42,6 @@ constexpr auto CONFIG_FOLDER_NAME = "xournalpp"sv;
 #endif
 
 #ifdef _WIN32
-#include <windows.h>
-
 auto Util::getLongPath(const fs::path& path) -> fs::path {
     auto asWString = path.wstring();
     DWORD wLongPathSz = GetLongPathNameW(asWString.c_str(), nullptr, 0);
@@ -49,9 +59,49 @@ auto Util::getLongPath(const fs::path& path) -> fs::path {
 auto Util::getLongPath(const fs::path& path) -> fs::path { return path; }
 #endif
 
+
+#ifdef _WIN32
+fs::path Util::getExePath() {
+    char szFileName[MAX_PATH + 1];
+    GetModuleFileNameA(nullptr, szFileName, MAX_PATH + 1);
+
+    return fs::path{szFileName}.parent_path();
+}
+#else
 #ifdef __APPLE__
-#include "util/Stacktrace.h"
+fs::path Util::getExePath() {
+    char c;
+    uint32_t size = 0;
+    _NSGetExecutablePath(&c, &size);
+
+    char* path = new char[size + 1];
+    if (_NSGetExecutablePath(path, &size) == 0) {
+        fs::path p(path);
+        delete[] path;
+        return p.parent_path();
+    }
+
+    g_error("Could not get executable path!");
+
+    delete[] path;
+    return "";
+}
+#else
+auto Util::getExePath() -> fs::path {
+#ifndef PATH_MAX
+    // This is because PATH_MAX is (per posix) not defined if there is
+    // no limit, e.g., on GNU Hurd. The "right" workaround is to not use
+    // PATH_MAX, instead stat the link and use stat.st_size for
+    // allocating the buffer.
+#define PATH_MAX 4096
 #endif
+    std::array<char, PATH_MAX> result{};
+    ssize_t count = readlink("/proc/self/exe", result.data(), PATH_MAX);
+    return fs::path{std::string(result.data(), as_unsigned(std::max(ssize_t{0}, count)))}.parent_path();
+}
+#endif
+#endif
+
 
 /**
  * Read a file to a string
@@ -430,7 +480,7 @@ auto Util::getDataPath() -> fs::path {
     p = p / ".." / "share" / PROJECT_NAME;
     return p;
 #elif defined(__APPLE__)
-    fs::path p = Stacktrace::getExePath().parent_path();
+    fs::path p = getExePath().parent_path();
     if (fs::exists(p / "Resources")) {
         p = p / "Resources";
     } else {
@@ -447,7 +497,7 @@ auto Util::getDataPath() -> fs::path {
 
 auto Util::getLocalePath() -> fs::path {
 #ifdef __APPLE__
-    fs::path p = Stacktrace::getExePath().parent_path();
+    fs::path p = getExePath().parent_path();
     if (fs::exists(p / "Resources")) {
         return p / "Resources" / "share" / "locale";
     }

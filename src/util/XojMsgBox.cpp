@@ -202,17 +202,19 @@ void XojMsgBox::replaceFileQuestion(GtkWindow* win, fs::path file,
 
 constexpr auto* XOJ_HELP = "https://xournalpp.github.io/community/help/";
 
-void XojMsgBox::showHelp(GtkWindow* win) {
+void XojMsgBox::showHelp(GtkWindow* win) { openURL(win, XOJ_HELP); }
+
+void XojMsgBox::openURL(GtkWindow* win, const char* url) {
 #ifdef _WIN32
     // gvfs is not in MSYS repositories, so we can't use gtk_show_uri.
-    // Instead, we use the native API instead.
-    ShellExecute(nullptr, "open", XOJ_HELP, nullptr, nullptr, SW_SHOW);
+    // Instead, we use the native API.
+    ShellExecute(nullptr, "open", url, nullptr, nullptr, SW_SHOW);
 #else
     GError* error = nullptr;
-    gtk_show_uri(gtk_window_get_screen(win), XOJ_HELP, gtk_get_current_event_time(), &error);
+    gtk_show_uri(gtk_window_get_screen(win), url, gtk_get_current_event_time(), &error);
 
     if (error) {
-        std::string msg = FS(_F("There was an error displaying help: {1}") % error->message);
+        std::string msg = FS(_F("Unable to open the link: {1}\n{2}") % url % error->message);
         XojMsgBox::showErrorToUser(win, msg);
 
         g_error_free(error);
