@@ -6392,7 +6392,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                 <property name="can-default">True</property>
                 <property name="receives-default">True</property>
                 <property name="image">iconCancel</property>
-                <accelerator key="Escape" signal="clicked"/>
+                <accelerator key="Escape" signal="activate"/>
               </object>
               <packing>
                 <property name="expand">False</property>

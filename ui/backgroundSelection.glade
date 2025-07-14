@@ -36,7 +36,7 @@
                 <property name="label" translatable="yes">Cancel</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <accelerator key="Escape" signal="clicked"/>
+                <accelerator key="Escape" signal="activate"/>
               </object>
               <packing>
                 <property name="expand">False</property>
