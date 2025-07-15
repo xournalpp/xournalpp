@@ -141,7 +141,7 @@ pkg_check_modules(ExternalModules REQUIRED IMPORTED_TARGET ${pkg-module-spec})
 find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
 
-option(ENABLE_QPDF "Compile with QPDF export support" OFf)
+option(ENABLE_QPDF "Compile with QPDF export support" ON)
 if (ENABLE_QPDF)
     find_package(qpdf)
     if (NOT qpdf_FOUND)
