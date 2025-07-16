@@ -3,34 +3,61 @@
     "ubuntu-22": {
         "displayed_name": "Ubuntu 22.04",
         "runner": "ubuntu-22.04",
-        "build_appimage": "true"
+        "build_appimage": "true",
+        "run_ci": "true"
       },
     "ubuntu-24": {
         "displayed_name": "Ubuntu 24.04",
-        "runner": "ubuntu-24.04"
+        "runner": "ubuntu-24.04",
+        "run_ci": "false"
       },
     "debian": {
         "displayed_name": "Debian",
         "runner": "ubuntu-latest",
         "extra_packages": "build-essential lsb-release",
-        "container_image": "ghcr.io/xournalpp/debian-latest-sudo:master"
+        "container_image": "ghcr.io/xournalpp/debian-latest-sudo:master",
+        "run_ci": "false"
+      },
+    "ubuntu-22-arm": {
+        "displayed_name": "Ubuntu 22.04 ARM",
+        "runner": "ubuntu-22.04-arm",
+        "build_appimage": "true",
+        "run_ci": "true"
+      },
+    "ubuntu-24-arm": {
+        "displayed_name": "Ubuntu 24.04 ARM",
+        "runner": "ubuntu-24.04-arm",
+        "run_ci": "false"
       }
     },
   "macos_targets": {
     "mac-x64": {
         "displayed_name": "MacOS x64",
-        "runner": "macos-13"
+        "runner": "macos-13",
+        "run_ci": "true"
       },
     "mac-arm": {
         "displayed_name": "MacOS ARM",
-        "runner": "macos-14"
+        "runner": "macos-14",
+        "run_ci": "true"
       }
     },
   "windows_targets": {
     "windows": {
-        "displayed_name": "Windows",
+        "displayed_name": "Windows x86_64",
         "runner": "windows-latest",
-        "build_portable": "true"
+        "msystem": "mingw64",
+        "msys_package_env": "x86_64",
+        "build_portable": "true",
+        "run_ci": "true"
+      },
+    "windows-arm": {
+        "displayed_name": "Windows ARM",
+        "runner": "windows-11-arm",
+        "msystem": "clangarm64",
+        "msys_package_env": "clang-aarch64",
+        "build_portable": "true",
+        "run_ci": "true"
       }
     }
 }

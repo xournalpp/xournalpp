@@ -441,11 +441,11 @@ void on_open_files(GApplication* application, gpointer f, gint numFiles, gchar* 
         XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
     }
 
-    const fs::path p = Util::fromGFilename(g_file_get_path(files[0]), false);
+    fs::path p = Util::fromGFilename(g_file_get_path(files[0]), false);
 
     try {
         if (fs::exists(p)) {
-            app_data->control->openFile(p);
+            app_data->control->openFile(fs::absolute(p));
         } else {
             const std::string msg = FS(_F("File {1} does not exist.") % p.u8string());
             XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);

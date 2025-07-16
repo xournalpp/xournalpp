@@ -50,7 +50,8 @@ echo "copy pixbuf libs"
 cp -r "$prefix"/lib/gdk-pixbuf-2.0 "$setup_dir"/lib/
 
 echo "copy pixbuf lib dependencies"
-ldd "$prefix"/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.dll | grep "${prefix}.*\.dll" -o | xargs -I{} cp "{}" "$setup_dir"/bin/
+# most of the dependencies are not linked directly, using strings to find them
+find "$prefix/lib/gdk-pixbuf-2.0" -type f -name "*.dll" -exec strings {} \; | grep "^lib.*\.dll$" | grep -v "libpixbufloader" | sort | uniq | xargs -I{} cp "$prefix/bin/{}" "$setup_dir/bin/"
 
 echo "copy icons"
 cp -r "$prefix"/share/icons "$setup_dir"/share/

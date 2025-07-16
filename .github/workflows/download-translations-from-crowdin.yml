@@ -8,6 +8,7 @@ on:
 
 jobs:
   Translations:
+    if: github.repository == 'xournalpp/xournalpp'
     name: Download translated strings from Crowdin
     strategy:
       matrix:

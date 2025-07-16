@@ -90,13 +90,13 @@ TODO
 ### AppImage
 
 The quickest way to generate an AppImage is to first generate the `.tar.gz`
-package and then use that with the `azure-pipelines/util/build_appimage.sh`
+package and then use that with the `linux-setup/build_appimage.sh`
 script.
 
 ```sh
 cmake .. -DCPACK_GENERATOR="TGZ"
 cmake --build . --target package
-../azure-pipelines/util/build_appimage.sh
+../linux-setup/build_appimage.sh
 ```
 
 The `build_appimage.sh` script will automatically download LinuxDeploy, copy the

@@ -129,6 +129,7 @@ void openFileWithDefaultApplication(const fs::path& filename);
 [[maybe_unused]] [[nodiscard]] bool isChildOrEquivalent(fs::path const& path, fs::path const& base);
 
 [[maybe_unused]] bool safeRenameFile(fs::path const& from, fs::path const& to);
+[[maybe_unused]] void safeReplaceExtension(fs::path& p, const char* nexExtension);
 
 [[maybe_unused]] fs::path ensureFolderExists(const fs::path& p);
 
