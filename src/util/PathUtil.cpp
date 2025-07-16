@@ -322,6 +322,14 @@ bool Util::safeRenameFile(fs::path const& from, fs::path const& to) {
     return true;
 }
 
+void Util::safeReplaceExtension(fs::path& p, const char* newExtension) {
+    try {
+        p.replace_extension(newExtension);
+    } catch (const fs::filesystem_error& fe) {
+        g_warning("Could not replace extension of file \"%s\"! Failed with %s", p.u8string().c_str(), fe.what());
+    }
+}
+
 auto Util::getDataPath() -> fs::path {
 #ifdef _WIN32
     TCHAR szFileName[MAX_PATH];
