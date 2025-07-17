@@ -19,6 +19,7 @@
 
 #include "gui/toolbarMenubar/model/ColorPalette.h"
 #include "util/PathUtil.h"
+#include "util/i18n.h"
 
 
 std::string helper_read_file(fs::path path) {
@@ -101,7 +102,7 @@ TEST(ColorPalette, testAttributesLoad) {
 
     Palette palette2 = Palette{GET_TESTFILE("palettes/not_broken_attribute.gpl")};
     palette2.load();
-    EXPECT_EQ(std::string{"Gray"}, palette2.getColorAt(0).getName());
+    EXPECT_EQ(std::string(fetch_translation_context("Color", "Gray")), palette2.getColorAt(0).getName());
 }
 
 TEST(ColorPalette, testWrongColor) {
