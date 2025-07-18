@@ -11,9 +11,8 @@ Unicode true
 
 !include "MUI2.nsh"
 !include x64.nsh
-!include "FileAssociation.nsh"
+!include "${SCRIPT_DIR}\FileAssociation.nsh"
 !include nsDialogs.nsh
-!include "xournalpp_version.nsh"
 
 ; Options for MultiUser plugin
 !define MULTIUSER_INSTALLMODE_INSTDIR "Xournal++"
@@ -57,7 +56,7 @@ FunctionEnd
 
 ; Name and file
 Name "Xournal++ ${XOURNALPP_VERSION}"
-OutFile "xournalpp-setup.exe"
+OutFile "${OUTPUT_INSTALLER_FILE}"
 
 ;--------------------------------
 ; Global Variables
@@ -72,7 +71,7 @@ Var StartMenuFolder
 ;--------------------------------
 ; Pages
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE "..\LICENSE"
+!insertmacro MUI_PAGE_LICENSE "${SCRIPT_DIR}\..\LICENSE"
 !insertmacro MULTIUSER_PAGE_INSTALLMODE
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
@@ -206,7 +205,7 @@ Section "Xournal++" SecXournalpp
 	SetOutPath "$INSTDIR"
 
 	; Files to put into the setup
-	File /r "dist\*"
+	File /r ${SETUP_DIR}\*
 
 	; Set install information
 	WriteRegStr SHCTX "Software\Xournal++" "" '"$INSTDIR"'

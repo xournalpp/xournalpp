@@ -62,13 +62,13 @@ jobs:
             -DCMAKE_CXX_FLAGS="-Os -s"
       - name: 'Create installer'
         id: create-installer
-        working-directory: ${{github.workspace}}/windows-setup
+        working-directory: ${{github.workspace}}/build
         shell: msys2 {0}
         run: |
-          bash -lc "./package.sh"
+          bash -lc "../windows-setup/package.sh"
 
-          export VERSION=$(cat ../build/VERSION | sed '1q;d')
-          export ARCH=$(cat ../build/VERSION | sed '4q;d')
+          export VERSION=$(cat VERSION | sed '1q;d')
+          export ARCH=$(cat VERSION | sed '4q;d')
           export FULL_VERSION_STRING="$VERSION${{ inputs.artifact_version_suffix }}"
           export INSTALLER_FILENAME="xournalpp-$FULL_VERSION_STRING-windows-setup-$ARCH.exe"
 
@@ -84,7 +84,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: "Windows package ${{ runner.arch }} ${{ inputs.msys_package_env }}"
-          path: "${{github.workspace}}/windows-setup/${{ steps.create-installer.outputs.artifact }}"
+          path: "${{github.workspace}}/build/${{ steps.create-installer.outputs.artifact }}"
           compression-level: 0
           if-no-files-found: error
       - name: 'Publish portable version'
@@ -93,5 +93,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: "Windows package ${{ runner.arch }} ${{ inputs.msys_package_env }} (portable version)"
-          path: "${{github.workspace}}/windows-setup/portable_content"
+          path: "${{github.workspace}}/build/portable_content"
           if-no-files-found: error
