@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-02 13:27+0000\n"
-"PO-Revision-Date: 2025-06-08 04:27\n"
+"POT-Creation-Date: 2025-07-13 08:13+0000\n"
+"PO-Revision-Date: 2025-07-20 04:31\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -244,8 +244,8 @@ msgid "Could not load LaTeX PDF file"
 msgstr "Ne eblis ŝargi la LaTeX-PDF-dosieron"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:80
-#: ../src/core/control/xojfile/LoadHandler.cpp:486
-#: ../src/core/control/xojfile/LoadHandler.cpp:502
+#: ../src/core/control/xojfile/LoadHandler.cpp:490
+#: ../src/core/control/xojfile/LoadHandler.cpp:506
 msgid "Error reading PDF: {1}"
 msgstr "Eraro legante dosieron: {1}"
 
@@ -351,29 +351,29 @@ msgid "File {1} does not exist."
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:441
-#: ../src/core/control/XournalMain.cpp:497
+#: ../src/core/control/XournalMain.cpp:499
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:641
+#: ../src/core/control/XournalMain.cpp:643
 msgid "Jump to Page (first Page: 1)"
 msgstr "Salti al paĝo (unua paĝo: 1)"
 
-#: ../src/core/control/XournalMain.cpp:645
+#: ../src/core/control/XournalMain.cpp:647
 msgid "Get version of xournalpp"
 msgstr "Havigi version de xournalpp"
 
-#: ../src/core/control/XournalMain.cpp:647
+#: ../src/core/control/XournalMain.cpp:649
 msgid "Disable audio for this session"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:656
+#: ../src/core/control/XournalMain.cpp:658
 msgid "Export FILE as PDF"
 msgstr "Elporti dosieron kiel PDF"
 
-#: ../src/core/control/XournalMain.cpp:658
+#: ../src/core/control/XournalMain.cpp:660
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -381,7 +381,7 @@ msgstr "Elporti FILE kiel bildojn (po unu por ĉiu paĝo)\n"
 "                                 Determini la dosierformon laŭ la dosiersufikso de IMGFILE\n"
 "                                 Subtenataj dosierformoj: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:665
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -389,13 +389,13 @@ msgstr "Elporti sen fono\n"
 "                                 La elportota dosiero havos travideblan aŭ blankan fonon,\n"
 "                                 depende de la kapabloj de la dosierformo\n"
 
-#: ../src/core/control/XournalMain.cpp:668
+#: ../src/core/control/XournalMain.cpp:670
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Elporti sen linioj\n"
 "                                 La paĝoj de la elportota dosiero ne estos liniitaj\n"
 
-#: ../src/core/control/XournalMain.cpp:672
+#: ../src/core/control/XournalMain.cpp:674
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -407,24 +407,24 @@ msgstr "Elporti tavolojn progrese\n"
 "                                 konstruante la tavolan stakon progrese.\n"
 "                                 La rezulta PDF-dosiero estas uzebla por prezento.\n"
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:681
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Nur elporti la paĝojn specifitajn de RANGE (ekz. «2-3,5,7-»)\n"
 "                                 Senefika sen «-p»/«--create-pdf» aŭ «-i»/«--create-img»"
 
-#: ../src/core/control/XournalMain.cpp:683
+#: ../src/core/control/XournalMain.cpp:685
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:687
+#: ../src/core/control/XournalMain.cpp:689
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Agordi la bilderdenson (bilderojn en colo) por elporti kiel PNG-bildon. Implicite 300\n"
 "                                 Senefika sen «-i»/«--create-img=foo.png»"
 
-#: ../src/core/control/XournalMain.cpp:691
+#: ../src/core/control/XournalMain.cpp:693
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -432,7 +432,7 @@ msgstr "Agordi la larĝon de bildo por elporti kiel PNG-bildon\n"
 "                                 Senefika sen «-i»/«--create-img=foo.png»\n"
 "                                 Ignorota se «--export-png-dpi» estas uzata"
 
-#: ../src/core/control/XournalMain.cpp:697
+#: ../src/core/control/XournalMain.cpp:699
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -440,11 +440,11 @@ msgstr "Agordi la alton de bildo por elporti kiel PNG-bildon\n"
 "                                 Senefika sen «-i»/«--create-img=foo.png»\n"
 "                                 Ignorota se «--export-png-dpi» aŭ «--export-png-width» estas uzata"
 
-#: ../src/core/control/XournalMain.cpp:702
+#: ../src/core/control/XournalMain.cpp:704
 msgid "Advanced export options"
 msgstr "Altnivelaj opcioj pri elportado"
 
-#: ../src/core/control/XournalMain.cpp:703
+#: ../src/core/control/XournalMain.cpp:705
 msgid "Display advanced export options"
 msgstr "Montri komplikajn opciojn pri elportado"
 
@@ -748,74 +748,74 @@ msgstr "Neatendata radika elemento: {1}"
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Neatendata elemento en dokumento: «{1}»"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:396
-#: ../src/core/control/xojfile/LoadHandler.cpp:424
+#: ../src/core/control/xojfile/LoadHandler.cpp:400
+#: ../src/core/control/xojfile/LoadHandler.cpp:428
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Malsukcesis legi bildon: {1}.\n"
 "Erarmesaĝo: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:434
+#: ../src/core/control/xojfile/LoadHandler.cpp:438
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "Ne eblis legi la paĝan numeron de la klonita fona bildo: {1}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:442
+#: ../src/core/control/xojfile/LoadHandler.cpp:446
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Nekonata tipo de «pixmap::domain»: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:493
+#: ../src/core/control/xojfile/LoadHandler.cpp:497
 msgid "Unknown domain type: {1}"
 msgstr "Nekonata tipo de adreso: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:531
+#: ../src/core/control/xojfile/LoadHandler.cpp:535
 msgid "Unknown background type: {1}"
 msgstr "Nekonata speco de fono: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:555
+#: ../src/core/control/xojfile/LoadHandler.cpp:559
 msgid "Error reading width of a stroke: {1}"
 msgstr "Eraro legante la larĝon de streko: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:623
+#: ../src/core/control/xojfile/LoadHandler.cpp:627
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "Nekonata strekopinta tipo: «{1}», supozante «ronda»"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:641
+#: ../src/core/control/xojfile/LoadHandler.cpp:645
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Nekonata tipo de streko: «{1}», supozante plumon"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:809
-#: ../src/core/control/xojfile/LoadHandler.cpp:825
-#: ../src/core/control/xojfile/LoadHandler.cpp:1139
-#: ../src/core/control/xojfile/LoadHandler.cpp:1153
+#: ../src/core/control/xojfile/LoadHandler.cpp:813
+#: ../src/core/control/xojfile/LoadHandler.cpp:829
+#: ../src/core/control/xojfile/LoadHandler.cpp:1143
+#: ../src/core/control/xojfile/LoadHandler.cpp:1157
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Malsukcesis malfermi alkroĉaĵon: {1}. Erarmesaĝo: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:818
-#: ../src/core/control/xojfile/LoadHandler.cpp:1146
-#: ../src/core/control/xojfile/LoadHandler.cpp:1164
+#: ../src/core/control/xojfile/LoadHandler.cpp:822
+#: ../src/core/control/xojfile/LoadHandler.cpp:1150
+#: ../src/core/control/xojfile/LoadHandler.cpp:1168
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Malsukcesis malfermi alkroĉaĵon: {1}. Erarmesaĝo: valida grando de dosiero ne estas provizita"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:837
+#: ../src/core/control/xojfile/LoadHandler.cpp:841
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Malsukcesis malfermi alkroĉaĵon: {1}. Erarmesaĝo: ne eblas legi dosieron"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:846
+#: ../src/core/control/xojfile/LoadHandler.cpp:850
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Malsukcesis malfermi alkroĉaĵon: {1}. Erarmesaĝo: ne eblas skribi sur dosieron"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1033
+#: ../src/core/control/xojfile/LoadHandler.cpp:1037
 msgid "Wrong count of points ({1})"
 msgstr "Malĝusta nombro de punktoj ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1049
+#: ../src/core/control/xojfile/LoadHandler.cpp:1053
 msgid "xoj-File: {1}"
 msgstr "xoj-Dosiero: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1050
+#: ../src/core/control/xojfile/LoadHandler.cpp:1054
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1183
+#: ../src/core/control/xojfile/LoadHandler.cpp:1187
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Postulita portempa dosiero ne estis trovita por alkroĉo {1}"
 
