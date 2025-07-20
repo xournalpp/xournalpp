@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-09 16:08+0000\n"
-"PO-Revision-Date: 2025-07-13 04:28\n"
+"POT-Creation-Date: 2025-07-19 06:24+0000\n"
+"PO-Revision-Date: 2025-07-20 04:31\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -197,8 +197,8 @@ msgid "Trying to emergency save the current open document..."
 msgstr "S'intenta fer una desada d'emergència del document obert actual..."
 
 #: ../src/core/control/CrashHandler.cpp:40
-#: ../src/core/control/XournalMain.cpp:273
-#: ../src/core/control/XournalMain.cpp:279
+#: ../src/core/control/XournalMain.cpp:271
+#: ../src/core/control/XournalMain.cpp:278
 msgid "Error: {1}"
 msgstr "Error: {1}"
 
@@ -275,8 +275,8 @@ msgid "Could not load LaTeX PDF file"
 msgstr "El fitxer PDF de LaTeX no s'ha pogut carregar."
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:110
-#: ../src/core/control/xojfile/LoadHandler.cpp:471
-#: ../src/core/control/xojfile/LoadHandler.cpp:487
+#: ../src/core/control/xojfile/LoadHandler.cpp:478
+#: ../src/core/control/xojfile/LoadHandler.cpp:494
 msgid "Error reading PDF: {1}"
 msgstr "S'ha produït un error al llegir el PDF: {1}"
 
@@ -358,7 +358,7 @@ msgstr "Restaura el fitxer"
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "El fitxer de fons «{1}» no s'ha trobat. Potser s'ha mogut, se li ha canviat el nom o s'ha esborrat."
 
-#: ../src/core/control/XournalMain.cpp:410
+#: ../src/core/control/XournalMain.cpp:411
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -372,24 +372,24 @@ msgstr "<span foreground='red' size='x-large'>Falta el fitxer d'interfície grà
 "  ni a la ruta de treball,\n"
 "  ni a {2}."
 
-#: ../src/core/control/XournalMain.cpp:415
+#: ../src/core/control/XournalMain.cpp:416
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "S'intentarà executar sense aquest fitxer."
 
-#: ../src/core/control/XournalMain.cpp:437
-#: ../src/core/control/XournalMain.cpp:497
+#: ../src/core/control/XournalMain.cpp:438
+#: ../src/core/control/XournalMain.cpp:498
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "El Xournal++ només pot tenir un fitxer obert.\n"
 "Els altres s'ignoraran."
 
-#: ../src/core/control/XournalMain.cpp:448
+#: ../src/core/control/XournalMain.cpp:449
 msgid "File {1} does not exist."
 msgstr "El fitxer {1} no existeix."
 
-#: ../src/core/control/XournalMain.cpp:452
+#: ../src/core/control/XournalMain.cpp:453
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -397,105 +397,94 @@ msgstr "Error del sistema de fitxers: {1}\n"
 "El Xournal++ no pot obrir el fitxer: {2}\n"
 "Potser ho podrà fer si copieu el fitxer a una carpeta local."
 
-#: ../src/core/control/XournalMain.cpp:642
+#: ../src/core/control/XournalMain.cpp:647
 msgid "Jump to Page (first Page: 1)"
 msgstr "Vés a la pàgina (primera pàgina: 1)"
 
-#: ../src/core/control/XournalMain.cpp:646
+#: ../src/core/control/XournalMain.cpp:651
 msgid "Get version of xournalpp"
 msgstr "Obté la versió del xournalapp"
 
-#: ../src/core/control/XournalMain.cpp:648
+#: ../src/core/control/XournalMain.cpp:653
 msgid "Disable audio for this session"
 msgstr "Desactiva el so durant aquesta sessió"
 
-#: ../src/core/control/XournalMain.cpp:650
+#: ../src/core/control/XournalMain.cpp:655
 msgid "Open PDF in attach mode\n"
-"                                 Ignored if no PDF file is specified."
-msgstr "Obre el PDF en mode adjunt\n"
-"                                 S'ignora si no s'especifica un fitxer PDF."
+"                                       Ignored if no PDF file is specified."
+msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:654
+#: ../src/core/control/XournalMain.cpp:659
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "Desa el fitxer xopp amb el fons PDF especificat com a FITXER"
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:664
+msgid "Use the provided backend for PDF exports.\n"
+"                                       Available backends: {1}\n"
+"                                       No effect without -p/--create-pdf=foo.pdf"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:673
 msgid "Export FILE as PDF"
 msgstr "Exporta el FITXER com a PDF"
 
-#: ../src/core/control/XournalMain.cpp:665
+#: ../src/core/control/XournalMain.cpp:676
 msgid "Export FILE as image files (one per page)\n"
-"                                 Guess the output format from the extension of IMGFILE\n"
-"                                 Supported formats: .png, .svg"
-msgstr "Exporta el FITXER com a fitxers d'imatge (un per pàgina)\n"
-"                                 Determina el format de sortida en base a l'extensió del fitxer de la imatge.\n"
-"                                 Formats suportats: .png i .svg"
+"                                       Guess the output format from the extension of IMGFILE\n"
+"                                       Supported formats: .png, .svg"
+msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:670
+#: ../src/core/control/XournalMain.cpp:682
 msgid "Export without background\n"
-"                                 The exported file has transparent or white background,\n"
-"                                 depending on what its format supports\n"
-msgstr "Exporta sense fons\n"
-"                                 El fitxer exportat té un fons transparent o blanc,\n"
-"                                 depenent del que suporti el seu format.\n"
+"                                       The exported file has transparent or white background,\n"
+"                                       depending on what its format supports\n"
+msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:675
+#: ../src/core/control/XournalMain.cpp:687
 msgid "Export without ruling\n"
-"                                 The exported file has no paper ruling\n"
-msgstr "Exporta sense línies\n"
-"                                 El fitxer exportat no té les línies de quadrícula.\n"
+"                                       The exported file has no paper ruling\n"
+msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:692
 msgid "Export layers progressively\n"
-"                                 In PDF export, Render layers progressively one by one.\n"
-"                                 This results in N export pages per page with N layers,\n"
-"                                 building up the layer stack progressively.\n"
-"                                 The resulting PDF file can be used for a presentation.\n"
-msgstr "Exporta les capes progresivament\n"
-"                                 A l'exportar a PDF, es renderitzen les capes progressivament una a una.\n"
-"                                 Així, s'exporten N pàgines per pàgina amb N capes,\n"
-"                                 augmentant progressivament la pila de capes.\n"
-"                                 El fitxer PDF resultant es pot fer servir per a presentacions.\n"
+"                                       In PDF export, Render layers progressively one by one.\n"
+"                                       This results in N export pages per page with N layers,\n"
+"                                       building up the layer stack progressively.\n"
+"                                       The resulting PDF file can be used for a presentation.\n"
+msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:686
+#: ../src/core/control/XournalMain.cpp:701
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
-"                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr "Exporta només les pàgines especificades per l'INTERVAL (p. ex: «2-3,5,7-»)\n"
-"                                 No té efecte sense -p/--create-pdf o -i/--create-img"
+"                                       No effect without -p/--create-pdf or -i/--create-img"
+msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:690
+#: ../src/core/control/XournalMain.cpp:706
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
-"                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr "Exporta només les capes especificades per  l'INTERVAL (p. ex: «2-3,5,7-»)\n"
-"                                 No té efecte sense -p/--create-pdf o -i/--create-img"
+"                                       No effect without -p/--create-pdf or -i/--create-img"
+msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:694
+#: ../src/core/control/XournalMain.cpp:710
 msgid "Set DPI for PNG exports. Default is 300\n"
-"                                 No effect without -i/--create-img=foo.png"
-msgstr "Estableix els ppp per a exportar a PNG. El valor per defecte és 300.\n"
-"                                 No té efecte sense -i/--create-img=foo.png"
+"                                       No effect without -i/--create-img=foo.png"
+msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:698
+#: ../src/core/control/XournalMain.cpp:714
 msgid "Set page width for PNG exports\n"
-"                                 No effect without -i/--create-img=foo.png\n"
-"                                 Ignored if --export-png-dpi is used"
-msgstr "Estableix l'ample de pàgina per a l'exportació a PNG.\n"
-"                                 No té efecte sense -i/--create-img=foo.png\n"
-"                                 S'ignora si es fa servir --export-png-dpi"
+"                                       No effect without -i/--create-img=foo.png\n"
+"                                       Ignored if --export-png-dpi is used"
+msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:704
+#: ../src/core/control/XournalMain.cpp:719
 msgid "Set page height for PNG exports\n"
-"                                 No effect without -i/--create-img=foo.png\n"
-"                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr "Estableix l'alçària de pàgina per a l'exportació a PNG.\n"
-"                                 No té efecte sense -i/--create-img=foo.png\n"
-"                                 S'ignora si es fa servir --export-png-dpi o --export-png-width"
+"                                       No effect without -i/--create-img=foo.png\n"
+"                                       Ignored if --export-png-dpi or --export-png-width is used"
+msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:709
+#: ../src/core/control/XournalMain.cpp:727
 msgid "Advanced export options"
 msgstr "Opcions avançades d'exportació"
 
-#: ../src/core/control/XournalMain.cpp:710
+#: ../src/core/control/XournalMain.cpp:728
 msgid "Display advanced export options"
 msgstr "Mostra les opcions d'exportació avançades"
 
@@ -503,11 +492,11 @@ msgstr "Mostra les opcions d'exportació avançades"
 msgid "Error while autosaving: {1}"
 msgstr "S'ha produït un error durant la desada automàtica: {1}"
 
-#: ../src/core/control/jobs/AutosaveJob.cpp:45
+#: ../src/core/control/jobs/AutosaveJob.cpp:46
 msgid "Autosaving to {1}"
 msgstr "Es crea una desada automàtica a {1}"
 
-#: ../src/core/control/jobs/AutosaveJob.cpp:68
+#: ../src/core/control/jobs/AutosaveJob.cpp:69
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "No s'ha pogut canviar el nom del fitxer de desada automàtic de «{1}» a «{2}»: {3}"
 
@@ -557,7 +546,7 @@ msgstr "Gràfics SVG"
 msgid "Xournal (Compatibility)"
 msgstr "Xournal (Compatibilitat)"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:129
+#: ../src/core/control/jobs/CustomExportJob.cpp:132
 #: ../src/core/control/jobs/SaveJob.cpp:138
 msgid "Save file error: {1}"
 msgstr "S'ha produït un error al desar el fitxer: {1}"
@@ -740,73 +729,73 @@ msgstr "Etiqueta «root» inesperada: {1}"
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Etiqueta inesperada al document: «{1}»"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:380
-#: ../src/core/control/xojfile/LoadHandler.cpp:409
+#: ../src/core/control/xojfile/LoadHandler.cpp:384
+#: ../src/core/control/xojfile/LoadHandler.cpp:413
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "No s'ha pogut llegir la imatge: {1}. Missatge d'error: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:419
+#: ../src/core/control/xojfile/LoadHandler.cpp:423
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "No s'ha pogut llegir el número de pàgina de la imatge de fons clonada: {1}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:427
+#: ../src/core/control/xojfile/LoadHandler.cpp:431
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "El tipus pixmap::domain és desconegut: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:478
+#: ../src/core/control/xojfile/LoadHandler.cpp:485
 msgid "Unknown domain type: {1}"
 msgstr "El tipus de domini és desconegut: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:516
+#: ../src/core/control/xojfile/LoadHandler.cpp:523
 msgid "Unknown background type: {1}"
 msgstr "Tipus de fons desconegut: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:541
+#: ../src/core/control/xojfile/LoadHandler.cpp:548
 msgid "Error reading width of a stroke: {1}"
 msgstr "Error al llegir l'amplada d'un traç: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:609
+#: ../src/core/control/xojfile/LoadHandler.cpp:616
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "El tipus d'extrem de traç «{1}» és desconegut. Es canvia a rodó."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:627
+#: ../src/core/control/xojfile/LoadHandler.cpp:634
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "El tipus de traç «{1}» és desconegut. Es canvia a llapis."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:798
-#: ../src/core/control/xojfile/LoadHandler.cpp:814
-#: ../src/core/control/xojfile/LoadHandler.cpp:1127
-#: ../src/core/control/xojfile/LoadHandler.cpp:1141
+#: ../src/core/control/xojfile/LoadHandler.cpp:805
+#: ../src/core/control/xojfile/LoadHandler.cpp:821
+#: ../src/core/control/xojfile/LoadHandler.cpp:1134
+#: ../src/core/control/xojfile/LoadHandler.cpp:1148
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:807
-#: ../src/core/control/xojfile/LoadHandler.cpp:1134
-#: ../src/core/control/xojfile/LoadHandler.cpp:1152
+#: ../src/core/control/xojfile/LoadHandler.cpp:814
+#: ../src/core/control/xojfile/LoadHandler.cpp:1141
+#: ../src/core/control/xojfile/LoadHandler.cpp:1159
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: No s'ha proporcionat una mida de fitxer vàlida."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:826
+#: ../src/core/control/xojfile/LoadHandler.cpp:833
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: No s'ha pogut llegir el fitxer."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:835
+#: ../src/core/control/xojfile/LoadHandler.cpp:842
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: El fitxer no s'ha pogut escriure."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1022
+#: ../src/core/control/xojfile/LoadHandler.cpp:1029
 msgid "Wrong count of points ({1})"
 msgstr "Recompte de punts incorrecte ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1038
+#: ../src/core/control/xojfile/LoadHandler.cpp:1045
 msgid "xoj-File: {1}"
 msgstr "Fitxer xoj: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1039
+#: ../src/core/control/xojfile/LoadHandler.cpp:1046
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr "Nombre de valors de pressió incorrecte. N'hi ha {1} i se n'esperaven {2}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1171
+#: ../src/core/control/xojfile/LoadHandler.cpp:1178
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "El fitxer temporal sol·licitat per a l'adjunt {1} no s'ha pogut trobar."
 
@@ -852,7 +841,7 @@ msgstr "No s'ha pogut processar l'atribut «{1}» com a «size_t». El valor és
 msgid "Could not write background \"{1}\", {2}"
 msgstr "No s'ha pogut escriure el fons «{1}», {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:363
+#: ../src/core/control/xojfile/SaveHandler.cpp:370
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "No s'ha pogut escriure el fons «{1}». Es continua de totes maneres."
 
@@ -1904,19 +1893,37 @@ msgstr "No s'ha pogut tancar el flux de la imatge."
 msgid "Background"
 msgstr "Fons"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:123
-msgid "Error while finalizing the PDF Cairo surface"
-msgstr "S'ha produït un error al finalitzar la PDF Cairo Surface."
-
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:193
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:239
+#: ../src/core/pdf/base/HybridPdfExport.cpp:46
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:196
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:242
 msgid "No pages to export!"
 msgstr "No hi ha cap pàgina per a exportar!"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:202
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:244
+#: ../src/core/pdf/base/HybridPdfExport.cpp:54
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:205
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:247
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "La PDF Cairo Surface no s'ha pogut inicialitzar."
+
+#: ../src/core/pdf/base/HybridPdfExport.cpp:110
+msgid "PDF page number is out of range"
+msgstr ""
+
+#: ../src/core/pdf/base/PdfExportBackend.cpp:21
+msgid "Unknown pdf backend: {1}. Available backends are: {2}. Using default backend."
+msgstr ""
+
+#: ../src/core/pdf/base/PdfExportBackend.cpp:39
+msgid "Default"
+msgstr ""
+
+#: ../src/core/pdf/base/QPdfExport.cpp:172
+msgid "Error with overlay or final export:"
+msgstr ""
+
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:126
+msgid "Error while finalizing the PDF Cairo surface"
+msgstr "S'ha produït un error al finalitzar la PDF Cairo Surface."
 
 #: ../src/core/undo/AddUndoAction.cpp:70
 #: ../src/core/undo/DeleteUndoAction.cpp:71
@@ -2109,17 +2116,17 @@ msgstr "S'ha produïut un error mentre es tancava el fitxer «{1}»."
 msgid "Error code {1}"
 msgstr "Codi d'error {1}"
 
-#: ../src/util/PathUtil.cpp:199
+#: ../src/util/PathUtil.cpp:232
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "El fitxer no s'ha pogut obrir. Caldrà que ho feu manualment:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:309
+#: ../src/util/PathUtil.cpp:342
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:318
+#: ../src/util/PathUtil.cpp:351
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "No s'ha pogut crear la carpeta: {1}\n"
@@ -2218,7 +2225,7 @@ msgstr "Autors"
 msgid "Close"
 msgstr "Tanca"
 
-#: ../ui/backgroundSelection.glade:49 ../ui/exportSettings.glade:425
+#: ../ui/backgroundSelection.glade:49 ../ui/exportSettings.glade:457
 #: ../ui/extEdTexDialog.glade:168 ../ui/goto.glade:108
 #: ../ui/intEdTexDialog.glade:203 ../ui/pageFormat.glade:346
 #: ../ui/pageTemplate.glade:278 ../ui/plugin.glade:114
@@ -2298,6 +2305,10 @@ msgstr "Exporta les capes progressivament"
 #: ../ui/exportSettings.glade:340
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
 msgstr "Si s'activa les capes de cada pàgina s'afegiran una a una. El resultat és un fitxer PDF que es pot fer servir per a presentacions."
+
+#: ../ui/exportSettings.glade:379
+msgid "Backend"
+msgstr ""
 
 #: ../ui/extEdTexDialog.glade:23 ../ui/intEdTexDialog.glade:18
 msgid "Insert Latex"
