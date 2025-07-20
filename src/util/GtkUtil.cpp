@@ -1,5 +1,6 @@
 #include "util/GtkUtil.h"
 
+#include <algorithm>
 #include <string>
 #include <string_view>
 
@@ -71,6 +72,28 @@ void setWidgetFollowActionEnabled(GtkWidget* w, GAction* a) {
                             w, GConnectFlags(0));
     gtk_widget_set_sensitive(w, g_action_get_enabled(a));
 }
+
+std::optional<double> getWidgetDPI(GtkWidget* w) {
+    GdkWindow* win = gtk_widget_get_window(w);
+    GdkDisplay* disp = gtk_widget_get_display(w);
+    if (win && disp) {
+        GdkMonitor* mon = gdk_display_get_monitor_at_window(disp, win);
+        if (mon) {
+            int h = gdk_monitor_get_height_mm(mon);
+            GdkRectangle r;
+            gdk_monitor_get_geometry(mon, &r);
+            auto res = static_cast<double>(r.height) * 25.4 / static_cast<double>(h);
+            g_debug("Automatic DPI conf: monitor height %d mm - DPI = %f", h, res);
+            // I assume some monitors may not return the right value: clamp to avoid wild values that could cause very
+            // bad performances. Not sure what good clamping values should be here.
+            // DPI > 720 should use HiDPI scaling but smaller devices (tablet/phone) can have high DPI values
+            res = std::clamp(res, 36., 720.);
+            return res;
+        }
+    }
+    return std::nullopt;
+}
+
 
 #if GTK_MAJOR_VERSION == 3
 void setRadioButtonActionName(GtkRadioButton* btn, const char* actionNamespace, const char* actionName) {

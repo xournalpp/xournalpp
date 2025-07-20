@@ -788,9 +788,9 @@ private:
     double zoomStepScroll{};
 
     /**
-     * The display resolution, in pixels per inch
+     * The display resolution, in pixels per inch. -1 for automatic detection
      */
-    gint displayDpi{};
+    int displayDpi{};
 
     /**
      *  If the window is maximized

@@ -22,6 +22,7 @@
 #include "gui/widgets/ZoomCallib.h"                 // for zoomcallib_new, zoom...
 #include "model/PageType.h"                         // for PageType
 #include "util/Color.h"                             // for GdkRGBA_to_argb, rgb...
+#include "util/GtkUtil.h"                           // for getWidgetDPI
 #include "util/PathUtil.h"                          // for fromGFile, toGFilename
 #include "util/Util.h"                              // for systemWithMessage
 #include "util/gtk4_helper.h"                       //
@@ -487,8 +488,36 @@ void SettingsDialog::load() {
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeSuccessiveTime), successive);
     }
 
-    this->setDpi(settings->getDisplayDpi());
-    loadSlider("zoomCallibSlider", dpi);
+
+    auto* zoomCallibAutomaticCb = GTK_CHECK_BUTTON(builder.get("zoomCallibAutomaticCb"));
+    auto* zoomCallibSlider = GTK_RANGE(builder.get("zoomCallibSlider"));
+
+    g_signal_connect_object(
+            zoomCallibAutomaticCb, "notify::active", G_CALLBACK(+[](GObject* btn, GParamSpec*, gpointer slider) {
+                bool active = gtk_check_button_get_active(GTK_CHECK_BUTTON(btn));
+                gtk_widget_set_sensitive(GTK_WIDGET(slider), !active);
+                if (active) {
+                    auto dpi = xoj::util::gtk::getWidgetDPI(GTK_WIDGET(slider));
+                    gtk_range_set_value(GTK_RANGE(slider), dpi.value_or(Util::DPI_NORMALIZATION_FACTOR));
+                }
+            }),
+            zoomCallibSlider, GConnectFlags(0));
+
+    if (auto dpi = settings->getDisplayDpi(); dpi == -1) {
+        gtk_check_button_set_active(GTK_CHECK_BUTTON(builder.get("zoomCallibAutomaticCb")), true);
+        g_signal_connect(zoomCallibSlider, "realize", G_CALLBACK(+[](GtkWidget* slider, gpointer) {
+                             auto dpi = xoj::util::gtk::getWidgetDPI(slider);
+                             gtk_range_set_value(GTK_RANGE(slider), dpi.value_or(Util::DPI_NORMALIZATION_FACTOR));
+                         }),
+                         nullptr);
+        this->setDpi(72);
+    } else {
+        gtk_check_button_set_active(GTK_CHECK_BUTTON(builder.get("zoomCallibAutomaticCb")), false);
+        this->setDpi(dpi);
+    }
+    gtk_range_set_value(zoomCallibSlider, this->dpi);
+
+
     loadSlider("scaleMinimumPressure", settings->getMinimumPressure());
     loadSlider("scalePressureMultiplier", settings->getPressureMultiplier());
 
@@ -976,8 +1005,8 @@ void SettingsDialog::save() {
     double rerenderThreshold = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spReRenderThreshold));
     settings->setPDFPageRerenderThreshold(rerenderThreshold);
 
-
-    settings->setDisplayDpi(dpi);
+    settings->setDisplayDpi(gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get("zoomCallibAutomaticCb"))) ? -1 :
+                                                                                                                  dpi);
 
     for (auto&& bcg: this->buttonConfigs) {
         bcg->saveSettings();

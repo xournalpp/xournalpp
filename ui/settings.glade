@@ -4427,7 +4427,7 @@ This setting can make it easier to draw with touch. </property>
                                       <object class="GtkLabel" id="sid132">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
-                                        <property name="label" translatable="yes">&lt;i&gt;To make sure on 100% zoom the size of elements is natural. (requires restart)&lt;/i&gt;</property>
+                                        <property name="label" translatable="yes">&lt;i&gt;To make sure on 100% zoom the size of elements is natural.&lt;/i&gt;</property>
                                         <property name="use-markup">True</property>
                                         <property name="max-width-chars">85</property>
                                       </object>
@@ -4458,15 +4458,41 @@ This setting can make it easier to draw with touch. </property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkScale" id="zoomCallibSlider">
-                                            <property name="name">zoomCallibSlider</property>
+                                          <object class="GtkBox">
                                             <property name="visible">True</property>
-                                            <property name="can-focus">True</property>
-                                            <property name="margin-top">10</property>
-                                            <property name="margin-bottom">20</property>
-                                            <property name="adjustment">adjustmentZoom</property>
-                                            <property name="round-digits">0</property>
-                                            <property name="digits">0</property>
+                                            <property name="can-focus">False</property>
+                                            <child>
+                                              <object class="GtkCheckButton" id="zoomCallibAutomaticCb">
+                                                <property name="label" translatable="yes">Automatic</property>
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">True</property>
+                                                <property name="receives-default">False</property>
+                                                <property name="draw-indicator">True</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkScale" id="zoomCallibSlider">
+                                                <property name="name">zoomCallibSlider</property>
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">True</property>
+                                                <property name="margin-top">10</property>
+                                                <property name="margin-bottom">20</property>
+                                                <property name="hexpand">True</property>
+                                                <property name="adjustment">adjustmentZoom</property>
+                                                <property name="round-digits">0</property>
+                                                <property name="digits">0</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">1</property>
+                                              </packing>
+                                            </child>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>

@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include <optional>
+
 #include <gtk/gtk.h>
 
 namespace xoj::util::gtk {
@@ -25,6 +27,12 @@ void setToggleButtonUnreleasable(GtkToggleButton* btn);
  * @brief Make so a widget is automatically enabled/disabled whenever the given action is
  */
 void setWidgetFollowActionEnabled(GtkWidget* w, GAction* a);
+
+/**
+ * @brief returns the user-space DPI (i.e. scaled by HiDPI scaling) of the monitor the widget is on.
+ * Return std::nullopt if the widget is not realized
+ */
+std::optional<double> getWidgetDPI(GtkWidget* w);
 
 #if GTK_MAJOR_VERSION == 3
 /**
