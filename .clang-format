@@ -174,3 +174,6 @@ TabWidth:        4
 #UseCRLF:         false #cf-10
 UseTab:          Never
 ...
+---
+Language: Json
+BasedOnStyle: GNU
