@@ -22,8 +22,8 @@ inline namespace raii {
 namespace specialization {
 class PangoAttrListHandler {
 public:
-    constexpr static auto ref = pango_attr_list_ref;
-    constexpr static auto unref = pango_attr_list_unref;
+    constexpr static auto ref = [](PangoAttrList* p) { return pango_attr_list_ref(p); };
+    constexpr static auto unref = [](PangoAttrList* p) { pango_attr_list_unref(p); };
     constexpr static auto adopt = identity<PangoAttrList>;
 };
 };  // namespace specialization
