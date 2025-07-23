@@ -15,6 +15,7 @@
 
 #include "util/TinyVector.h"
 #include "util/raii/CLibrariesSPtr.h"
+#include "util/raii/IdentityFunction.h"
 
 #include "filesystem.h"  // for path
 
@@ -46,10 +47,10 @@ void clearRecentFiles();
 
 class GtkRecentInfoHandler {
 public:
-    constexpr static auto ref = gtk_recent_info_ref;
-    constexpr static auto unref = gtk_recent_info_unref;
+    constexpr static auto ref = [](GtkRecentInfo* p) { return gtk_recent_info_ref(p); };
+    constexpr static auto unref = [](GtkRecentInfo* p) { gtk_recent_info_unref(p); };
     // Todo(cpp20): replace with std:identity()
-    constexpr static auto adopt = [](GtkRecentInfo* p) { return p; };
+    constexpr static auto adopt = xoj::util::specialization::identity<GtkRecentInfo>;
 };
 using GtkRecentInfoSPtr = xoj::util::CLibrariesSPtr<GtkRecentInfo, GtkRecentInfoHandler>;
 
