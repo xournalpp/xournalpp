@@ -17,14 +17,15 @@
 #include "undo/MoveUndoAction.h"                   // for MoveUndoAction
 #include "util/DispatchPool.h"
 #include "view/overlays/VerticalToolView.h"
+#include "control/Control.h"  // for Control
+#include "model/Document.h"  // for Document
 
-class Settings;
-
-VerticalToolHandler::VerticalToolHandler(const PageRef& page, Settings* settings, double y, bool initiallyReverse):
+VerticalToolHandler::VerticalToolHandler(const PageRef& page, Control* control, double y, bool initiallyReverse):
         page(page),
         layer(this->page->getSelectedLayer()),
+        control(control),
         spacingSide(initiallyReverse ? Side::Above : Side::Below),
-        snappingHandler(settings),
+        snappingHandler(control->getSettings()),
         viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::VerticalToolView>>()) {
     double ySnapped = snappingHandler.snapVertically(y, false);
     this->startY = ySnapped;
@@ -38,6 +39,8 @@ VerticalToolHandler::~VerticalToolHandler() = default;
 void VerticalToolHandler::adoptElements(const Side side) {
     this->spacingSide = side;
 
+    auto* doc = this->control->getDocument();
+    doc->lock();
     // Return current elements back to page
     for (Element* e: this->elements) { this->layer->addElement(e); }
     this->elements.clear();
@@ -51,6 +54,7 @@ void VerticalToolHandler::adoptElements(const Side side) {
     }
 
     for (Element* e: this->elements) { this->layer->removeElement(e, false); }
+    doc->unlock();
 
     Range rg = this->ownedElementsOriginalBoundingBox;
     this->ownedElementsOriginalBoundingBox = this->computeElementsBoundingBox();

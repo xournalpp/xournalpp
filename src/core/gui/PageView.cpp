@@ -297,7 +297,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
             this->verticalSpace.reset();
         }
         auto* zoomControl = this->getXournal()->getControl()->getZoomControl();
-        this->verticalSpace = std::make_unique<VerticalToolHandler>(this->page, this->settings, y, pos.isControlDown());
+        this->verticalSpace = std::make_unique<VerticalToolHandler>(this->page, this->getXournal()->getControl(), y, pos.isControlDown());
         this->overlayViews.emplace_back(this->verticalSpace->createView(this, zoomControl, this->settings));
     } else if (h->getToolType() == TOOL_SELECT_RECT || h->getToolType() == TOOL_SELECT_REGION ||
                h->getToolType() == TOOL_SELECT_MULTILAYER_RECT || h->getToolType() == TOOL_SELECT_MULTILAYER_REGION ||
