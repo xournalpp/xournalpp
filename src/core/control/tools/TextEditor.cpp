@@ -27,6 +27,7 @@
 #include "view/overlays/TextEditionView.h"
 
 #include "TextEditorWidget.h"  // for gtk_xoj_int_txt_new
+#include "model/Document.h"  // for Document
 
 class UndoAction;
 
@@ -1024,7 +1025,8 @@ void TextEditor::repaintCursorAfterChange() {
 }
 
 void TextEditor::finalizeEdition() {
-    Layer* layer = this->page->getSelectedLayer();
+
+    auto* doc = this->control->getDocument();
     UndoRedoHandler* undo = this->control->getUndoRedoHandler();
 
     this->control->setFontSelected(this->control->getSettings()->getFont());
@@ -1033,11 +1035,14 @@ void TextEditor::finalizeEdition() {
         // Delete the edited element from layer
         if (originalTextElement) {
             auto eraseDeleteUndoAction = std::make_unique<DeleteUndoAction>(page, true);
-            auto elementIndex = layer->indexOf(originalTextElement);
-            layer->removeElement(originalTextElement, false);
-            assert(elementIndex != Element::InvalidIndex);
-            eraseDeleteUndoAction->addElement(layer, originalTextElement, elementIndex);
-            undo->addUndoAction(std::move(eraseDeleteUndoAction));
+            doc->lock();
+            Layer* layer = this->page->getSelectedLayer();
+            auto elementIndex = layer->removeElement(originalTextElement, false);
+            doc->unlock();
+            if (elementIndex != Element::InvalidIndex) [[likely]] {
+                eraseDeleteUndoAction->addElement(layer, originalTextElement, elementIndex);
+                undo->addUndoAction(std::move(eraseDeleteUndoAction));
+            }  // A warning has already been issued otherwise
             originalTextElement = nullptr;
         }
         this->viewPool->dispatchAndClear(xoj::view::TextEditionView::FINALIZATION_REQUEST, this->previousBoundingBox);
@@ -1049,19 +1054,29 @@ void TextEditor::finalizeEdition() {
         // Modifying a preexisting element
         this->viewPool->dispatchAndClear(xoj::view::TextEditionView::FINALIZATION_REQUEST, this->previousBoundingBox);
 
-        this->originalTextElement->setInEditing(false);
-
-        layer->removeElement(this->originalTextElement, false);
+        doc->lock();
+        Layer* layer = this->page->getSelectedLayer();
+        auto index = layer->removeElement(this->originalTextElement, false);
         layer->addElement(this->textElement.get());
+        doc->unlock();
 
         this->page->fireElementChanged(this->textElement.get());
 
-        undo->addUndoAction(std::make_unique<TextBoxUndoAction>(this->page, layer, this->textElement.release(),
+        if (index != Element::InvalidIndex) [[likely]] {
+            this->originalTextElement->setInEditing(false);
+            undo->addUndoAction(std::make_unique<TextBoxUndoAction>(this->page, layer, this->textElement.release(),
                                                                 this->originalTextElement));
+        } else {
+            // A warning has already been issued
+            undo->addUndoAction(std::make_unique<InsertUndoAction>(this->page, layer, this->textElement.release()));
+        }
         originalTextElement = nullptr;
     } else {
         // Creating a new element
+        doc->lock();
+        Layer* layer = this->page->getSelectedLayer();
         layer->addElement(textElement.get());
+        doc->unlock();
         this->viewPool->dispatchAndClear(xoj::view::TextEditionView::FINALIZATION_REQUEST, this->previousBoundingBox);
         this->page->fireElementChanged(textElement.get());
         undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, textElement.release()));
