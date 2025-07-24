@@ -368,11 +368,12 @@ void LatexController::insertTexImage() {
     doc->lock();
     layer->addElement(img);
     view->rerenderElement(img);
+    auto* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
     doc->unlock();
+
     control->getUndoRedoHandler()->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, img));
 
     // Select element
-    auto* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
     view->getXournal()->setSelection(selection);
 }
 

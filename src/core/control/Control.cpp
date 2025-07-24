@@ -3006,10 +3006,10 @@ void Control::clipboardPaste(Element* e) {
     e->setY(y);
     layer->addElement(e);
 
+    auto* selection = new EditSelection(this->undoRedo, e, view, page);
     this->doc->unlock();
 
     undoRedo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, e));
-    auto* selection = new EditSelection(this->undoRedo, e, view, page);
 
     win->getXournal()->setSelection(selection);
 }

@@ -22,6 +22,7 @@
 #include "util/XojMsgBox.h"                 // for XojMsgBox
 #include "util/i18n.h"                      // for _
 #include "util/raii/GObjectSPtr.h"          // for GObjectSPtr.h
+#include "model/Document.h"  // for Document
 
 ImageHandler::ImageHandler(Control* control, XojPageView* view) {
     this->control = control;
@@ -81,7 +82,12 @@ auto ImageHandler::createImage(GFile* file, double x, double y) -> std::tuple<Im
 auto ImageHandler::addImageToDocument(Image* img, bool addUndoAction) -> bool {
     PageRef page = view->getPage();
 
+    auto* doc = control->getDocument();
+    doc->lock();
     page->getSelectedLayer()->addElement(img);
+    auto* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
+    control->getWindow()->getXournal()->setSelection(selection);
+    doc->unlock();
 
     if (addUndoAction) {
         control->getUndoRedoHandler()->addUndoAction(
@@ -89,8 +95,6 @@ auto ImageHandler::addImageToDocument(Image* img, bool addUndoAction) -> bool {
     }
 
     view->rerenderElement(img);
-    auto* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
-    control->getWindow()->getXournal()->setSelection(selection);
 
     return true;
 }

@@ -347,7 +347,7 @@ void EditSelectionContents::deleteViewBuffer() {
  * The contents of the selection
  */
 void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangle<double> snappedBounds,
-                                              bool aspectRatio, Layer* destinationLayer) {
+                                              bool aspectRatio) {
     double fx = bounds.width / this->originalBounds.width;
     double fy = bounds.height / this->originalBounds.height;
 
@@ -375,12 +375,6 @@ void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangl
         if (rotate) {
             e->rotate(snappedBounds.x + this->lastSnappedBounds.width / 2,
                       snappedBounds.y + this->lastSnappedBounds.height / 2, this->rotation);
-        }
-        if (index == Element::InvalidIndex) {
-            // if the element didn't have a source layer (e.g, clipboard)
-            destinationLayer->addElement(e);
-        } else {
-            destinationLayer->insertElement(e, index);
         }
     }
 }
