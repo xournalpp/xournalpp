@@ -52,6 +52,7 @@ void UndoRedoController::after() {
         return;
     }
 
+    doc->lock();
     std::vector<Element*> visibleElements;
     for (Element* e: elements) {
         if (layer->indexOf(e) == -1) {
@@ -65,6 +66,7 @@ void UndoRedoController::after() {
         auto* selection = new EditSelection(control->getUndoRedoHandler(), visibleElements, view, page);
         control->getWindow()->getXournal()->setSelection(selection);
     }
+    doc->unlock();
 }
 
 void UndoRedoController::undo(Control* control) {

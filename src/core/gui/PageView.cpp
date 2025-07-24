@@ -449,7 +449,10 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
             } else if (elemType == ELEMENT_TEXIMAGE) {
                 Control* control = this->xournal->getControl();
                 this->xournal->clearSelection();
+                auto* doc = this->xournal->getControl()->getDocument();
+                doc->lock();
                 auto* sel = new EditSelection(control->getUndoRedoHandler(), object, this, this->getPage());
+                doc->unlock();
                 this->xournal->setSelection(sel);
                 control->runLatex();
             }
@@ -675,7 +678,10 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         size_t layerOfFinalizedSel = this->selection->finalize(this->page);
         if (layerOfFinalizedSel) {
             xournal->getControl()->getLayerController()->switchToLay(layerOfFinalizedSel);
+            auto* doc = this->xournal->getControl()->getDocument();
+            doc->lock();
             xournal->setSelection(new EditSelection(control->getUndoRedoHandler(), this->selection.get(), this));
+            doc->unlock();
         } else {
             const double zoom = xournal->getZoom();
             if (this->selection->userTapped(zoom)) {

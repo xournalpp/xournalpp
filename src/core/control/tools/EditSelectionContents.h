@@ -114,7 +114,7 @@ public:
      * Finish the editing
      */
     void finalizeSelection(xoj::util::Rectangle<double> bounds, xoj::util::Rectangle<double> snappedBounds,
-                           bool aspectRatio, Layer* destinationLayer);
+                           bool aspectRatio);
 
     void updateContent(xoj::util::Rectangle<double> bounds, xoj::util::Rectangle<double> snappedBounds, double rotation,
                        bool aspectRatio, Layer* layer, const PageRef& targetPage, UndoRedoHandler* undo,
