@@ -96,12 +96,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
                      this);
 #endif
 
-    g_signal_connect(this->window, "realize",
-                     G_CALLBACK(+[](GtkWidget*, gpointer self) { static_cast<MainWindow*>(self)->setDPI(); }), this);
-    g_signal_connect(
-            this->window, "screen-changed",
-            G_CALLBACK(+[](GtkWidget*, GdkScreen*, gpointer self) { static_cast<MainWindow*>(self)->setDPI(); }), this);
-
     // "watch over" all key events
     auto keyPropagate = +[](GtkWidget* w, GdkEvent* e, gpointer) {
         return gtk_window_propagate_key_event(GTK_WINDOW(w), (GdkEventKey*)(e));
