@@ -32,6 +32,7 @@
 #include "gui/widgets/SpinPageAdapter.h"                // for SpinPageAdapter
 #include "gui/widgets/XournalWidget.h"                  // for gtk_xournal_get_l...
 #include "util/GListView.h"                             // for GListView, GListV...
+#include "util/GtkUtil.h"                               // for getWidgetDPI
 #include "util/PathUtil.h"                              // for getConfigFile
 #include "util/Util.h"                                  // for execInUiThread, npos
 #include "util/XojMsgBox.h"                             // for XojMsgBox
@@ -742,3 +743,13 @@ void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssF
 PdfFloatingToolbox* MainWindow::getPdfToolbox() const { return this->pdfFloatingToolBox.get(); }
 
 FloatingToolbox* MainWindow::getFloatingToolbox() const { return this->floatingToolbox.get(); }
+
+void MainWindow::setDPI() const {
+    if (auto dpi = this->getControl()->getSettings()->getDisplayDpi(); dpi == -1) {
+        auto res = xoj::util::gtk::getWidgetDPI(this->window);
+        this->getControl()->getZoomControl()->setZoom100Value(res.value_or(Util::DPI_NORMALIZATION_FACTOR) /
+                                                              Util::DPI_NORMALIZATION_FACTOR);
+    } else {
+        this->getControl()->getZoomControl()->setZoom100Value(dpi / Util::DPI_NORMALIZATION_FACTOR);
+    }
+}

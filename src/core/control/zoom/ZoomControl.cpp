@@ -10,6 +10,7 @@
 #include "control/settings/Settings.h"  // for Settings
 #include "control/zoom/ZoomListener.h"  // for ZoomListener
 #include "gui/Layout.h"                 // for Layout
+#include "gui/MainWindow.h"
 #include "gui/PageView.h"               // for XojPageView
 #include "gui/XournalView.h"            // for XournalView
 #include "gui/widgets/XournalWidget.h"  // for gtk_xournal_get_layout
@@ -88,6 +89,16 @@ auto onWindowSizeChangedEvent(GtkWidget* widget, GdkEvent* event, ZoomControl* z
         zoom->updateZoomFitValue();
         layout->recalculate();
     });
+
+    GdkWindow* gdkWindow = gtk_widget_get_window(widget);
+    GdkDisplay* display = gdkWindow ? gdk_window_get_display(gdkWindow) : nullptr;
+    GdkMonitor* monitor = display ? gdk_display_get_monitor_at_window(display, gdkWindow) : nullptr;
+    if (monitor && monitor != zoom->lastMonitor) {
+        zoom->lastMonitor = monitor;
+        const char* monitorName = gdk_monitor_get_model(monitor);
+        g_debug("Window moved to monitor \"%s\"", monitorName);
+        zoom->control->getWindow()->setDPI();
+    }
     return false;
 }
 

@@ -151,7 +151,6 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     this->zoom = new ZoomControl();
     this->zoom->setZoomStep(this->settings->getZoomStep() / 100.0);
     this->zoom->setZoomStepScroll(this->settings->getZoomStepScroll() / 100.0);
-    this->zoom->setZoom100Value(this->settings->getDisplayDpi() / Util::DPI_NORMALIZATION_FACTOR);
 
     this->toolHandler = new ToolHandler(this, this->actionDB.get(), this->settings);
     this->toolHandler->loadSettings();
@@ -1437,7 +1436,7 @@ void Control::showSettings() {
 
                 ctrl->zoom->setZoomStep(settings->getZoomStep() / 100.0);
                 ctrl->zoom->setZoomStepScroll(settings->getZoomStepScroll() / 100.0);
-                ctrl->zoom->setZoom100Value(settings->getDisplayDpi() / Util::DPI_NORMALIZATION_FACTOR);
+                ctrl->win->setDPI();
 
                 if (settingsBeforeDialog.sidebarStyle != settings->getSidebarNumberingStyle()) {
                     ctrl->getSidebar()->layout();

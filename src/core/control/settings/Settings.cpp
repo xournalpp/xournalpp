@@ -79,7 +79,7 @@ void Settings::loadDefault() {
     this->zoomStep = 10.0;
     this->zoomStepScroll = 2.0;
 
-    this->displayDpi = 72;
+    this->displayDpi = -1;  // Automatic detection
 
     this->font.setName(DEFAULT_FONT);
     this->font.setSize(DEFAULT_FONT_SIZE);
