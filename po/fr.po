@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-13 08:13+0000\n"
-"PO-Revision-Date: 2025-07-20 04:31\n"
+"PO-Revision-Date: 2025-07-27 04:32\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2651,7 +2651,7 @@ msgstr "Descendre"
 
 #: ../ui/main.glade:2904
 msgid "Merge Down"
-msgstr "Descendre"
+msgstr "Fusionner vers le bas"
 
 #: ../ui/main.glade:2912 ../ui/main.glade:2949
 msgid "Duplicate"
