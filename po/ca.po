@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-19 06:24+0000\n"
-"PO-Revision-Date: 2025-07-20 04:31\n"
+"POT-Creation-Date: 2025-07-26 14:20+0000\n"
+"PO-Revision-Date: 2025-07-27 04:32\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -23,57 +23,57 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 msgstr "No s'ha establert una carpeta d'àudio o bé no és vàlida! La gravació no funcionarà!\n"
 "Configureu la carpeta d'enregistrament a «Configuració → Gravació d'àudio»."
 
-#: ../src/core/control/Control.cpp:230
+#: ../src/core/control/Control.cpp:229
 msgid "Filesystem error: {1}"
 msgstr "Error del sistema de fitxers: {1}"
 
-#: ../src/core/control/Control.cpp:242
+#: ../src/core/control/Control.cpp:241
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "El fitxer d'autodesada «{1}» no s'ha pogut esborrar: {2}"
 
-#: ../src/core/control/Control.cpp:561
+#: ../src/core/control/Control.cpp:560
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "Heu esborrat la barra d'eines activa. S'aplica la barra d'eines per defecte."
 
-#: ../src/core/control/Control.cpp:581
+#: ../src/core/control/Control.cpp:580
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "La configuració de barres d'eines predefinida «{1}» no es pot modificar. En voleu fer una còpia i editar-la?"
 
-#: ../src/core/control/Control.cpp:584 ../src/core/control/Control.cpp:1553
+#: ../src/core/control/Control.cpp:583 ../src/core/control/Control.cpp:1552
 msgid "Yes"
 msgstr "Sí"
 
-#: ../src/core/control/Control.cpp:584 ../src/core/control/Control.cpp:1553
+#: ../src/core/control/Control.cpp:583 ../src/core/control/Control.cpp:1552
 msgid "No"
 msgstr "No"
 
-#: ../src/core/control/Control.cpp:814 ../src/core/control/Control.cpp:1765
-#: ../src/core/control/Control.cpp:2105 ../src/core/control/XournalMain.cpp:172
+#: ../src/core/control/Control.cpp:813 ../src/core/control/Control.cpp:1764
+#: ../src/core/control/Control.cpp:2104 ../src/core/control/XournalMain.cpp:172
 msgid "Cancel"
 msgstr "Cancel·la"
 
-#: ../src/core/control/Control.cpp:815
+#: ../src/core/control/Control.cpp:814
 msgid "Insert after current page"
 msgstr "Afegeix després de la pàgina actual"
 
-#: ../src/core/control/Control.cpp:816
+#: ../src/core/control/Control.cpp:815
 msgid "Insert at end"
 msgstr "Afegeix al final"
 
-#: ../src/core/control/Control.cpp:819
+#: ../src/core/control/Control.cpp:818
 msgid "_Journal"
 msgstr "_Quadern"
 
-#: ../src/core/control/Control.cpp:819
+#: ../src/core/control/Control.cpp:818
 msgid "Paper B_ackground"
 msgstr "_Fons del paper"
 
-#: ../src/core/control/Control.cpp:820
+#: ../src/core/control/Control.cpp:819
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:40
 msgid "With PDF background"
 msgstr "Amb fons de PDF"
 
-#: ../src/core/control/Control.cpp:823
+#: ../src/core/control/Control.cpp:822
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
@@ -81,15 +81,15 @@ msgstr "El document actual no té pàgina PDF número {1}.\n"
 "Voleu afegir aquesta pàgina?\n\n"
 "Consell: Podeu seleccionar {2} per a afegir una pàgina PDF."
 
-#: ../src/core/control/Control.cpp:866
+#: ../src/core/control/Control.cpp:865
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "No hi ha pàgines PDF disponibles per a afegir. És possible que primer calgui reobrir el document."
 
-#: ../src/core/control/Control.cpp:880
+#: ../src/core/control/Control.cpp:879
 msgid "Unable to retrieve pdf page."
 msgstr "La pagina del pdf no es pot recuperar."
 
-#: ../src/core/control/Control.cpp:1479
+#: ../src/core/control/Control.cpp:1478
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -97,98 +97,98 @@ msgstr "No obriu els fitxers de desada automàtica. Es poden sobreescriure!\n"
 "Copieu els fitxers a una altra carpeta.\n"
 "Els fitxers de la carpeta {1} no es poden obrir."
 
-#: ../src/core/control/Control.cpp:1499
+#: ../src/core/control/Control.cpp:1498
 msgid "file: {1}"
 msgstr "fitxer: {1}"
 
-#: ../src/core/control/Control.cpp:1530
+#: ../src/core/control/Control.cpp:1529
 msgid "Error opening file \"{1}\""
 msgstr "S'ha produït un error a l'obrir el fitxer «{1}»."
 
-#: ../src/core/control/Control.cpp:1555
+#: ../src/core/control/Control.cpp:1554
 msgid "File version mismatch"
 msgstr "La versió del fitxer és incompatible."
 
-#: ../src/core/control/Control.cpp:1556
+#: ../src/core/control/Control.cpp:1555
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "El fitxer que s'ha carregat té un format de fitxer amb una versió posterior a la que suporta aquesta versió del Xournal++ i potser no es pugui carregar bé. Voleu obrir-lo igualment?"
 
-#: ../src/core/control/Control.cpp:1579
+#: ../src/core/control/Control.cpp:1578
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr "S'ha produït un error al llegir el fitxer PDF «{1}»."
 
-#: ../src/core/control/Control.cpp:1601
+#: ../src/core/control/Control.cpp:1600
 msgid "Error reading PNG file \"{1}\""
 msgstr "S'ha produït un error al llegir el fitxer PNG «{1}»."
 
-#: ../src/core/control/Control.cpp:1745
+#: ../src/core/control/Control.cpp:1744
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "El fitxer de fons adjunt no s'ha pogut trobar. Potser s'ha mogut, se li ha canviat el nom o s'ha esborrat."
 
-#: ../src/core/control/Control.cpp:1748
+#: ../src/core/control/Control.cpp:1747
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "El fitxer de fons «1» no s'ha pogut trobar. Potser s'ha mogut, se li ha canviat el nom o s'ha esborrat. L'última ubicació on es va veure és «{2}»."
 
-#: ../src/core/control/Control.cpp:1758
+#: ../src/core/control/Control.cpp:1757
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Arxiu de recanvi proposat: «{1}»"
 
-#: ../src/core/control/Control.cpp:1763
+#: ../src/core/control/Control.cpp:1762
 msgid "Select another PDF"
 msgstr "Tria un altre PDF"
 
-#: ../src/core/control/Control.cpp:1764
+#: ../src/core/control/Control.cpp:1763
 msgid "Remove PDF Background"
 msgstr "Elimina el fons PDF"
 
-#: ../src/core/control/Control.cpp:1768
+#: ../src/core/control/Control.cpp:1767
 msgid "Use proposed PDF"
 msgstr "Fes servir el PDF proposat"
 
-#: ../src/core/control/Control.cpp:1771
+#: ../src/core/control/Control.cpp:1770
 msgid "Missing PDF background file"
 msgstr "Falta el fitxer PDF de fons."
 
-#: ../src/core/control/Control.cpp:1903
+#: ../src/core/control/Control.cpp:1902
 msgid "Select font"
 msgstr "Tria una font"
 
-#: ../src/core/control/Control.cpp:1922
+#: ../src/core/control/Control.cpp:1921
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Tria un color"
 
-#: ../src/core/control/Control.cpp:1947
+#: ../src/core/control/Control.cpp:1946
 msgid "Unsaved Document"
 msgstr "Document sense desar"
 
-#: ../src/core/control/Control.cpp:2098
+#: ../src/core/control/Control.cpp:2097
 msgid "Document file was removed."
 msgstr "S'ha eliminat el fitxer del document."
 
-#: ../src/core/control/Control.cpp:2098
+#: ../src/core/control/Control.cpp:2097
 msgid "This document is not saved yet."
 msgstr "Aquest document encara no s'ha desat."
 
-#: ../src/core/control/Control.cpp:2100
+#: ../src/core/control/Control.cpp:2099
 msgid "Save As..."
 msgstr "Anomena i desa..."
 
-#: ../src/core/control/Control.cpp:2100 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2099 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:80
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:286
 msgid "Save"
 msgstr "Desa"
 
-#: ../src/core/control/Control.cpp:2103
+#: ../src/core/control/Control.cpp:2102
 msgid "Discard"
 msgstr "Descarta"
 
-#: ../src/core/control/Control.cpp:2187
+#: ../src/core/control/Control.cpp:2186
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr "No s'ha progut crear el subproceś de demostració de Gtk: {1} (codi d'error: {2})"
 
@@ -1204,15 +1204,15 @@ msgid "<b>{1}</b>\n"
 msgstr "<b>{1}</b>\n"
 "{2}{3}"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:76
+#: ../src/core/gui/dialog/SettingsDialog.cpp:77
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>No s'ha trobat cap dispositiu. Això no és normal i recomanem que envieu un informe d'error.</b>"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:282
+#: ../src/core/gui/dialog/SettingsDialog.cpp:283
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Per a canviar aquesta opció, cal activar prèviament la sensibilitat o inferència de pressió."
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:286
+#: ../src/core/gui/dialog/SettingsDialog.cpp:287
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Filtre de la pressió d'entrada. Multiplica la pressió pel valor especificat. Si és menor que el mínim, fa servir la pressió mínima."
 
@@ -2230,7 +2230,7 @@ msgstr "Tanca"
 #: ../ui/intEdTexDialog.glade:203 ../ui/pageFormat.glade:346
 #: ../ui/pageTemplate.glade:278 ../ui/plugin.glade:114
 #: ../ui/renameLayerDialog.glade:71 ../ui/selectOpacity.glade:134
-#: ../ui/settings.glade:6405
+#: ../ui/settings.glade:6431
 msgid "Ok"
 msgstr "D'acord"
 
@@ -3347,7 +3347,7 @@ msgid "Circle Color"
 msgstr "Color del cercle"
 
 #: ../ui/settings.glade:3505 ../ui/settings.glade:3556
-#: ../ui/settings.glade:5022
+#: ../ui/settings.glade:5048
 msgid "pixels"
 msgstr "píxels"
 
@@ -3502,90 +3502,94 @@ msgid "Zoom Speed"
 msgstr "Variació del zoom"
 
 #: ../ui/settings.glade:4430
-msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
-msgstr "<i>Per a assegurar que a un zoom del 100 % la mida dels elements és natural. (cal reiniciar)</i>"
+msgid "<i>To make sure on 100% zoom the size of elements is natural.</i>"
+msgstr ""
 
 #: ../ui/settings.glade:4450
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
 msgstr "<i>Poseu un regle a la pantalla i moveu el botó lliscant fins que coincideixin les mesures.</i>"
 
-#: ../ui/settings.glade:4497
+#: ../ui/settings.glade:4466
+msgid "Automatic"
+msgstr ""
+
+#: ../ui/settings.glade:4523
 msgid "The unit of the ruler is cm"
 msgstr "La unitat del regle és el cm."
 
-#: ../ui/settings.glade:4518
+#: ../ui/settings.glade:4544
 msgid "Display DPI Calibration"
 msgstr "Calibració dels ppp de la pantalla"
 
-#: ../ui/settings.glade:4549
+#: ../ui/settings.glade:4575
 msgid "Zoom"
 msgstr "Zoom"
 
-#: ../ui/settings.glade:4598
+#: ../ui/settings.glade:4624
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
 msgstr "<i>Si afegiu espai addicional al costat de les pàgines, podeu escollir l'àrea de la pantalla on voleu treballar.</i>"
 
-#: ../ui/settings.glade:4721
+#: ../ui/settings.glade:4747
 msgid "Add additional horizontal space"
 msgstr "Afegeix espai horitzontal addicional"
 
-#: ../ui/settings.glade:4737
+#: ../ui/settings.glade:4763
 msgid "Add additional vertical space"
 msgstr "Afegeix espai vertical addicional"
 
-#: ../ui/settings.glade:4755
+#: ../ui/settings.glade:4781
 msgid "<i>or</i>"
 msgstr "<i>o</i>"
 
-#: ../ui/settings.glade:4767
+#: ../ui/settings.glade:4793
 msgid "Unlimited scrolling"
 msgstr "Desplaçament il·limitat"
 
-#: ../ui/settings.glade:4791
+#: ../ui/settings.glade:4817
 msgid "<i>The amount is specified in pixels.</i>"
 msgstr "<i>La quantitat s'especifica en píxels.</i>"
 
-#: ../ui/settings.glade:4823
+#: ../ui/settings.glade:4849
 msgid "Scrolling outside the page"
 msgstr "Desplaçament fora de la pàgina"
 
-#: ../ui/settings.glade:4850
+#: ../ui/settings.glade:4876
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr "Desfassa la primera pàgina aquest nombre de pàgines quan l'opció <b>Pàgines emparellades</b> estigui activada."
 
-#: ../ui/settings.glade:4851
+#: ../ui/settings.glade:4877
 msgid "First Page Offset "
 msgstr "Òfset de la primera pàgina "
 
-#: ../ui/settings.glade:4864
+#: ../ui/settings.glade:4890
 msgid "Usually 0 or 1"
 msgstr "Normalment 0 o 1"
 
-#: ../ui/settings.glade:4883
+#: ../ui/settings.glade:4909
 msgid "Paired Pages"
 msgstr "Pàgines emparellades"
 
-#: ../ui/settings.glade:4909
+#: ../ui/settings.glade:4935
 msgid "when scrolling to end of last page"
 msgstr "Quan es desplaça fins al final de l'última pàgina"
 
-#: ../ui/settings.glade:4924
+#: ../ui/settings.glade:4950
 msgid "when drawing on last page"
 msgstr "Quan es dibuixa a l'última pàgina"
 
-#: ../ui/settings.glade:4939
+#: ../ui/settings.glade:4965
 msgid "disabled"
 msgstr "Desactivat"
 
-#: ../ui/settings.glade:4957
+#: ../ui/settings.glade:4983
 msgid "Automatically Add Empty Last Page (excluding PDFs)"
 msgstr "Afegeix automàticament una pàgina buida al final (excepte als PDF)"
 
-#: ../ui/settings.glade:4981
+#: ../ui/settings.glade:5007
 msgid "Enable  with determination radius of "
 msgstr "Activa amb un radi de determinació de "
 
-#: ../ui/settings.glade:4986
+#: ../ui/settings.glade:5012
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
@@ -3595,159 +3599,159 @@ msgstr "Arrossegar a l'ESQUERRA des del punt inicial actua com si es premés la 
 "Radi de determinació: Radi en el qual els modificadors estaran blocats fins que s'acabi de dibuixar.\n\n"
 "<i>Útil si es vol operar sense teclat.</i>"
 
-#: ../ui/settings.glade:5036
+#: ../ui/settings.glade:5062
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Eines de dibuix ‒ Estableix els modificadors amb la direcció de dibuix (experimental)"
 
-#: ../ui/settings.glade:5053
+#: ../ui/settings.glade:5079
 msgid "Preserve line width"
 msgstr "Mantén el gruix de la línia"
 
-#: ../ui/settings.glade:5058
+#: ../ui/settings.glade:5084
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
 msgstr "Després de redimensionar una selecció, el gruix dels traços serà el mateix que abans de l'operació de redimensionament. "
 
-#: ../ui/settings.glade:5069
+#: ../ui/settings.glade:5095
 msgid "Resizing"
 msgstr "Redimensionament"
 
-#: ../ui/settings.glade:5105
+#: ../ui/settings.glade:5131
 msgid "Rotation snapping tolerance"
 msgstr "Tolerància de l'ajust a la rotació"
 
-#: ../ui/settings.glade:5117
+#: ../ui/settings.glade:5143
 msgid "Grid snapping tolerance"
 msgstr "Tolerància de l'ajust a la graella"
 
-#: ../ui/settings.glade:5159
+#: ../ui/settings.glade:5185
 msgid "Grid size"
 msgstr "Mida de la graella"
 
-#: ../ui/settings.glade:5190
+#: ../ui/settings.glade:5216
 msgid "Use snapping for recognized shapes"
 msgstr "Fes servir l'ajustament per a formes reconegudes"
 
-#: ../ui/settings.glade:5194
+#: ../ui/settings.glade:5220
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
 msgstr "Si s'activa, les formes que es reconeguin amb el reconeixedor de formes s'ajustaran a la graella automàticament. Això pot provocar resultats inesperats si teniu el reconeixedor activat mentre escriviu."
 
-#: ../ui/settings.glade:5209
+#: ../ui/settings.glade:5235
 msgid "Snapping"
 msgstr "Ajustament"
 
-#: ../ui/settings.glade:5237
+#: ../ui/settings.glade:5263
 msgid "Minimum Stroke Size"
 msgstr "Mida mínima del traç"
 
-#: ../ui/settings.glade:5292
+#: ../ui/settings.glade:5318
 msgctxt "Short taps/clicks will trigger special actions"
 msgid "Enable Tap action"
 msgstr "Activa l'acció per toc"
 
-#: ../ui/settings.glade:5297
+#: ../ui/settings.glade:5323
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr "No dibuixis entrades amb temps i llargada curtes excepte si es produeixen en successions en breus intervals de temps. En el seu lloc, mostra la caixa d'eines flotant."
 
-#: ../ui/settings.glade:5309
+#: ../ui/settings.glade:5335
 msgid "Time limit (ms)"
 msgstr "Límit de temps (ms)"
 
-#: ../ui/settings.glade:5321
+#: ../ui/settings.glade:5347
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
 msgstr "Temps límit: els tocs que durin més no activaran l'acció especial.\n\n"
 "<i>Valor recomanat: 150ms</i>"
 
-#: ../ui/settings.glade:5341
+#: ../ui/settings.glade:5367
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
 msgstr "Límit de llargada: els tocs que es moguin més d'aquesta distància no activaran l'acció especial.\n\n"
 "<i>Valor recomanat: 1 mm</i>"
 
-#: ../ui/settings.glade:5361
+#: ../ui/settings.glade:5387
 msgid "Length limit (mm)"
 msgstr "Límit de llargada (mm)"
 
-#: ../ui/settings.glade:5372
+#: ../ui/settings.glade:5398
 msgid "Frequency limit (ms)"
 msgstr "Límit de freqüència (ms)"
 
-#: ../ui/settings.glade:5384
+#: ../ui/settings.glade:5410
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
 "<i>Recommended: 500ms</i>"
 msgstr "Límit de freqüència: Els tocs que succeixin en aquest període de temps després d'un traç no activaran l'acció especial.\n\n"
 "<i>Valor recomanat: 500 ms</i>"
 
-#: ../ui/settings.glade:5401
+#: ../ui/settings.glade:5427
 msgid "Try to select object first."
 msgstr "Intenta seleccionar primer l'objecte"
 
-#: ../ui/settings.glade:5406 ../ui/settings.glade:5436
+#: ../ui/settings.glade:5432 ../ui/settings.glade:5462
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "Intenteu seleccionar primer l'element; si no se selecciona res i s'ha activat l'acció corresponent, es mostrarà la caixa d'eines flotant."
 
-#: ../ui/settings.glade:5419
+#: ../ui/settings.glade:5445
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr "S'han de complir totes tres condicions per tal d'ignorar el traç.\n"
 "Ha de ser curt en temps i llargada i no es pot haver ignorat un traç recentment."
 
-#: ../ui/settings.glade:5422
+#: ../ui/settings.glade:5448
 msgid "Settings:"
 msgstr "Configuració:"
 
-#: ../ui/settings.glade:5431
+#: ../ui/settings.glade:5457
 msgid "Show Floating Toolbox"
 msgstr "Mostra la caixa d'eines flotant"
 
-#: ../ui/settings.glade:5450
+#: ../ui/settings.glade:5476
 msgid "Action on Tool Tap"
 msgstr "Acció amb l'eina de toc"
 
-#: ../ui/settings.glade:5478
+#: ../ui/settings.glade:5504
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality.\n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr "<i>Torna a renderitzar els fons de PDF més sovint quan es fa zoom per a millorar-ne la qualitat.\n"
 "<b>Avís:</b> Aquesta opció no afecta a la qualitat d'impressió.</i>"
 
-#: ../ui/settings.glade:5500
+#: ../ui/settings.glade:5526
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr "Quan es fa zoom en un PDF d'alta resolució, cada nova renderització pot trigar bastant temps. Si s'estableix aquest valor a un nombre gran, les renderitzacions es faran menys sovint."
 
-#: ../ui/settings.glade:5503
+#: ../ui/settings.glade:5529
 msgid "Re-render when the page's zoom changes by more than "
 msgstr "Torna a renderitzar quan el zoom de la pàgina canvia més d'un "
 
-#: ../ui/settings.glade:5516
+#: ../ui/settings.glade:5542
 msgid "0.00"
 msgstr "0,00"
 
-#: ../ui/settings.glade:5533
+#: ../ui/settings.glade:5559
 msgid "%."
 msgstr " %"
 
-#: ../ui/settings.glade:5554
+#: ../ui/settings.glade:5580
 msgid "PDF Cache"
 msgstr "Memòria cau del PDF"
 
-#: ../ui/settings.glade:5585
+#: ../ui/settings.glade:5611
 msgid "Drawing Area"
 msgstr "Àrea de dibuix"
 
-#: ../ui/settings.glade:5632
+#: ../ui/settings.glade:5658
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
 msgstr "<i>Selecciona l'eina i la seva configuració si premeu el botó per defecte.</i>"
 
-#: ../ui/settings.glade:5684
+#: ../ui/settings.glade:5710
 msgid "<b>Default</b>"
 msgstr "<b>Predeterminat</b>"
 
-#: ../ui/settings.glade:5724
+#: ../ui/settings.glade:5750
 msgid "Defaults"
 msgstr "Valors per defecte"
 
-#: ../ui/settings.glade:5777
+#: ../ui/settings.glade:5803
 msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required).\n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
@@ -3756,89 +3760,89 @@ msgstr "<i>\n"
 "Amb la casella de selecció, el sistema d'àudio es pot activar o desactivar per a sessions posteriors (cal reiniciar). Si es vol desactivar l'àudio només per a una sessió, es pot fer amb <tt>--disable-audio</tt> a la línia d'ordres.\n"
 "</i>"
 
-#: ../ui/settings.glade:5793
+#: ../ui/settings.glade:5819
 msgid "Disable Audio"
 msgstr "Desactiva l'àudio"
 
-#: ../ui/settings.glade:5815
+#: ../ui/settings.glade:5841
 msgid "Enable or Disable Audio"
 msgstr "Activa o desactiva el so"
 
-#: ../ui/settings.glade:5842
+#: ../ui/settings.glade:5868
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr "<i>Els enregistraments d'àudio actualment s'emmagatzemen en una carpeta per separat i que el quadern té com a referència.</i>"
 
-#: ../ui/settings.glade:5861 ../ui/settings.glade:5897
+#: ../ui/settings.glade:5887 ../ui/settings.glade:5923
 msgid "Storage Folder"
 msgstr "Carpeta d'emmagatzematge"
 
-#: ../ui/settings.glade:5876
+#: ../ui/settings.glade:5902
 msgid "Select Folder"
 msgstr "Tria una carpeta"
 
-#: ../ui/settings.glade:5924
+#: ../ui/settings.glade:5950
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr "<i>Especifica els dispositius de so que es fan servir per a enregistrar i reproduir els adjunts de so.\n"
 "Si està disponible, trieu <small><tt>pulse</tt></small> com a dispositiu d'entrada/sortida.</i>"
 
-#: ../ui/settings.glade:5948
+#: ../ui/settings.glade:5974
 msgid "Input Device"
 msgstr "Dispositiu d'entrada"
 
-#: ../ui/settings.glade:5970
+#: ../ui/settings.glade:5996
 msgid "Output Device"
 msgstr "Dispositiu de sortida"
 
-#: ../ui/settings.glade:6001
+#: ../ui/settings.glade:6027
 msgid "Audio Devices"
 msgstr "Dispositius d'àudio"
 
-#: ../ui/settings.glade:6030
+#: ../ui/settings.glade:6056
 msgid "Sample Rate"
 msgstr "Freqüència de mostreig"
 
-#: ../ui/settings.glade:6041
+#: ../ui/settings.glade:6067
 msgid "Gain"
 msgstr "Guany"
 
-#: ../ui/settings.glade:6088
+#: ../ui/settings.glade:6114
 msgid "Recording Quality"
 msgstr "Qualitat de l'enregistrament"
 
-#: ../ui/settings.glade:6114
+#: ../ui/settings.glade:6140
 msgid "Default Seek Time (in seconds)"
 msgstr "Temps de cerca per defecte (en segons)"
 
-#: ../ui/settings.glade:6127
+#: ../ui/settings.glade:6153
 msgid "1,00"
 msgstr "1,00"
 
-#: ../ui/settings.glade:6146
+#: ../ui/settings.glade:6172
 msgid "Playback Settings"
 msgstr "Configuració de reproducció"
 
-#: ../ui/settings.glade:6160
+#: ../ui/settings.glade:6186
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr "<i>Els canvis s'apliquen només a enregistraments i reproduccions noves.</i>"
 
-#: ../ui/settings.glade:6191
+#: ../ui/settings.glade:6217
 msgid "Audio Recording"
 msgstr "Enregistrament d'àudio"
 
-#: ../ui/settings.glade:6264
+#: ../ui/settings.glade:6290
 msgid "<i>Select language (requires restart)</i>"
 msgstr "<i>Trieu un idioma (cal reiniciar)</i>"
 
-#: ../ui/settings.glade:6296 ../ui/settings.glade:6342
+#: ../ui/settings.glade:6322 ../ui/settings.glade:6368
 msgid "Language"
 msgstr "Idioma"
 
-#: ../ui/settings.glade:6312
+#: ../ui/settings.glade:6338
 msgid "Language Settings"
 msgstr "Opcions d'idioma"
 
-#: ../ui/settings.glade:6366
+#: ../ui/settings.glade:6392
 msgid "Palette"
 msgstr "Paleta"
 
