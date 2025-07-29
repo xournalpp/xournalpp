@@ -1,2 +1,3 @@
-gtk-osx=7560afb065b7fc0b0c086f2c6d41c548fe64b79b
+gtk-osx=60b034689933384a3b6d6a45560b64a43f442f6e
 xournalpp-pipeline-dependencies=42b0fc7991d36dad6e9aa73a3fe26ef2eb1535c7
+deployment_target=11.0

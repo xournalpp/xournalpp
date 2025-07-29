@@ -283,9 +283,23 @@ void EditSelection::finalizeSelection() {
 
     this->view = v;
 
-    PageRef page = this->view->getPage();
-    Layer* layer = page->getSelectedLayer();
-    this->contents->finalizeSelection(this->getRect(), this->snappedBounds, this->preserveAspectRatio, layer);
+    auto insertOrder =
+            this->contents->makeMoveEffective(this->getRect(), this->snappedBounds, this->preserveAspectRatio);
+
+
+    auto* doc = view->getXournal()->getControl()->getDocument();
+    doc->lock();
+
+    Layer* destinationLayer = this->view->getPage()->getSelectedLayer();
+    for (auto&& [e, index]: insertOrder) {
+        if (index == Element::InvalidIndex) {
+            // if the element didn't have a source layer (e.g, clipboard)
+            destinationLayer->addElement(std::move(e));
+        } else {
+            destinationLayer->insertElement(std::move(e), index);
+        }
+    }
+    doc->unlock();
 
 
     // Calculate new clip region delta due to rotation:
