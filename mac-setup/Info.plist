@@ -184,7 +184,7 @@
 
     <key>LSEnvironment</key>
     <dict>
-        <key>DYLD_FALLBACK_LIBRARY_PATH</key>
+        <key>DYLD_LIBRARY_PATH</key>
         <string>/Applications/Xournal++.app/Contents/Resources/lib</string>
     </dict>
 

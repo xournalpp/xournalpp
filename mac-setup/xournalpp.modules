@@ -133,27 +133,16 @@
             checkoutdir="lua-5.4.8"/>
   </autotools>
 
-  <autotools id="lua-lgi"
+  <autotools id="lua-gobject"
              skip-autogen="true"
              supports-non-srcdir-builds="no"
              makeinstallargs='LUA_VERSION=5.4 PREFIX="${prefix}" install'
   >
     <branch repo="github-tarball"
-            module="lgi-devs/lgi/archive/refs/tags/0.9.2.tar.gz"
-            version="0.9.2"
-            checkoutdir="lgi-0.9.2">
-      <patch file="https://github.com/pavouk/lgi/pull/249.patch"
-            strip="1"
-      />
-      <patch file="https://github.com/pavouk/lgi/pull/331.patch"
-            strip="1"
-      />
-      <patch file="https://github.com/pavouk/lgi/pull/273.patch"
-            strip="1"
-      />
-      <patch file="https://github.com/pavouk/lgi/pull/313.patch"
-            strip="1"
-      />
+            module="vtrlx/LuaGObject/archive/refs/tags/0.10.0.tar.gz"
+            hash="sha256:0b94b6d254a92827cc2efc80fbf40cc237ae7f1c4e1677f8f658c8d4fe393d0c"
+            version="0.10.0"
+            checkoutdir="LuaGObject-0.10.0">
     </branch>
     <dependencies>
       <dep package="lua"/>
@@ -167,7 +156,7 @@
       <dep package="libzip"/>
       <dep package="portaudio"/>
       <dep package="libsndfile"/>
-      <dep package="lua-lgi"/>
+      <dep package="lua-gobject"/>
     </dependencies>
   </metamodule>
 
