@@ -53,17 +53,17 @@ void setupEnvironment() {
     auto environ = g_get_environ();
     const char* usedPixbufModuleFile = g_environ_getenv(environ, "GDK_PIXBUF_MODULE_FILE");
     const char* usedTypelibPath = g_environ_getenv(environ, "GI_TYPELIB_PATH");
-    // The DYLD_FALLBACK_LIBRARY_PATH is only read when the process is started, so it can't be set here. It is set in
+    // The DYLD_LIBRARY_PATH is only read when the process is started, so it can't be set here. It is set in
     // the Info.plist therefore, which only takes effect when running the App from Finder or using the "open" command.
-    const char* usedDYLDFallbackLibraryPath = g_environ_getenv(environ, "DYLD_FALLBACK_LIBRARY_PATH");
+    const char* usedDYLDLibraryPath = g_environ_getenv(environ, "DYLD_LIBRARY_PATH");
     const char* usedLuaPath = g_environ_getenv(environ, "LUA_PATH");
     const char* usedLuaCPath = g_environ_getenv(environ, "LUA_CPATH");
     g_message("Continue with GDK_PIXBUF_MODULE_FILE = %s\n"
               "GI_TYPELIB_PATH = %s\n"
-              "DYLD_FALLBACK_LIBRARY_PATH = %s\n"
+              "DYLD_LIBRARY_PATH = %s\n"
               "LUA_PATH = %s\n"
               "LUA_CPATH = %s",
-              usedPixbufModuleFile, usedTypelibPath, usedDYLDFallbackLibraryPath, usedLuaPath, usedLuaCPath);
+              usedPixbufModuleFile, usedTypelibPath, usedDYLDLibraryPath, usedLuaPath, usedLuaCPath);
 
     /**
      * set LANG and LC_MESSAGES in order to detect the default language
