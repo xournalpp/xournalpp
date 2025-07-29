@@ -30,8 +30,14 @@ runs:
           mingw-w64-${{inputs.msys_package_env}}-lua
           mingw-w64-${{inputs.msys_package_env}}-gtksourceview4
           mingw-w64-${{inputs.msys_package_env}}-imagemagick
-          mingw-w64-${{inputs.msys_package_env}}-lua-lgi
+          make
+          mingw-w64-${{inputs.msys_package_env}}-gobject-introspection-runtime
+          mingw-w64-${{inputs.msys_package_env}}-lua-luarocks
           mingw-w64-${{inputs.msys_package_env}}-qpdf
+    - shell: msys2 {0}
+      run: |
+        # install LuaGObject via luarocks as long as there is no MinGW package
+        luarocks install --lua-version=5.4 LuaGObject
     - shell: msys2 {0}
       run: |
         # Downgrade gtk to avoid https://github.com/xournalpp/xournalpp/issues/6315
