@@ -146,12 +146,16 @@ static void gtk_xournal_init(GtkXournal* xournal) {
 }
 
 static void gtk_xournal_get_preferred_width(GtkWidget* widget, gint* minimal_width, gint* natural_width) {
+    g_return_if_fail(GTK_IS_XOURNAL(widget));
     GtkXournal* xournal = GTK_XOURNAL(widget);
+    g_return_if_fail(xournal->layout);
     *minimal_width = *natural_width = xournal->layout->getMinimalWidth();
 }
 
 static void gtk_xournal_get_preferred_height(GtkWidget* widget, gint* minimal_height, gint* natural_height) {
+    g_return_if_fail(GTK_IS_XOURNAL(widget));
     GtkXournal* xournal = GTK_XOURNAL(widget);
+    g_return_if_fail(xournal->layout);
     *minimal_height = *natural_height = xournal->layout->getMinimalHeight();
 }
 
