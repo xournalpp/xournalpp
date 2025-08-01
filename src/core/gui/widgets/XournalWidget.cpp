@@ -24,45 +24,22 @@
 
 using xoj::util::Rectangle;
 
-static void gtk_xournal_class_init(GtkXournalClass* klass);
-static void gtk_xournal_init(GtkXournal* xournal);
+/*
+ * Declares:
+ *      static void gtk_xournal_class_init(GtkXournalClass*);
+ *      static void gtk_xournal_init(GtkXournal*);
+ * Defines
+ *      gtk_xournal_parent_class (pointer to GtkWidgetClass instance)
+ *      GType gtk_xournal_get_type();
+ */
+G_DEFINE_TYPE(GtkXournal, gtk_xournal, GTK_TYPE_WIDGET)
+
 static void gtk_xournal_get_preferred_width(GtkWidget* widget, gint* minimal_width, gint* natural_width);
 static void gtk_xournal_get_preferred_height(GtkWidget* widget, gint* minimal_height, gint* natural_height);
 static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocation);
 static void gtk_xournal_realize(GtkWidget* widget);
 static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean;
 static void gtk_xournal_dispose(GObject* object);
-
-auto gtk_xournal_get_type(void) -> GType {
-    static GType gtk_xournal_type = 0;
-
-    if (!gtk_xournal_type) {
-        static const GTypeInfo gtk_xournal_info = {sizeof(GtkXournalClass),
-                                                   // base initialize
-                                                   nullptr,
-                                                   // base finalize
-                                                   nullptr,
-                                                   // class initialize
-                                                   reinterpret_cast<GClassInitFunc>(gtk_xournal_class_init),
-                                                   // class finalize
-                                                   nullptr,
-                                                   // class data,
-                                                   nullptr,
-                                                   // instance size
-                                                   sizeof(GtkXournal),
-                                                   // n_preallocs
-                                                   0,
-                                                   // instance init
-                                                   reinterpret_cast<GInstanceInitFunc>(gtk_xournal_init),
-                                                   // value table
-                                                   nullptr};
-
-        gtk_xournal_type =
-                g_type_register_static(GTK_TYPE_WIDGET, "GtkXournal", &gtk_xournal_info, static_cast<GTypeFlags>(0));
-    }
-
-    return gtk_xournal_type;
-}
 
 auto gtk_xournal_new(XournalView* view, InputContext* inputContext) -> GtkWidget* {
     GtkXournal* xoj = GTK_XOURNAL(g_object_new(gtk_xournal_get_type(), nullptr));
@@ -87,7 +64,7 @@ static void gtk_xournal_class_init(GtkXournalClass* cptr) {
 
     widget_class->draw = gtk_xournal_draw;
 
-    reinterpret_cast<GObjectClass*>(widget_class)->dispose = gtk_xournal_dispose;
+    G_OBJECT_CLASS(cptr)->dispose = gtk_xournal_dispose;
 }
 
 auto gtk_xournal_get_visible_area(GtkWidget* widget, const XojPageView* p) -> Rectangle<double>* {
@@ -310,4 +287,6 @@ static void gtk_xournal_dispose(GObject* object) {
 
     delete xournal->input;
     xournal->input = nullptr;
+
+    G_OBJECT_CLASS(gtk_xournal_parent_class)->dispose(object);
 }
