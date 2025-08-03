@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-13 08:13+0000\n"
-"PO-Revision-Date: 2025-07-20 04:31\n"
+"POT-Creation-Date: 2025-07-27 10:36+0000\n"
+"PO-Revision-Date: 2025-08-03 04:36\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -665,32 +665,32 @@ msgstr "Xournal++ 템플릿"
 msgid "Supported files"
 msgstr "지원되는 파일"
 
-#: ../src/core/control/tools/EditSelection.cpp:406
+#: ../src/core/control/tools/EditSelection.cpp:418
 msgid "Arrange"
 msgstr "정렬"
 
-#: ../src/core/control/tools/EditSelection.cpp:411
+#: ../src/core/control/tools/EditSelection.cpp:423
 msgid "Bring to front"
 msgstr "맨 앞으로 보내기"
 
-#: ../src/core/control/tools/EditSelection.cpp:421
+#: ../src/core/control/tools/EditSelection.cpp:433
 msgid "Bring forward"
 msgstr "앞으로 보내기"
 
-#: ../src/core/control/tools/EditSelection.cpp:432
+#: ../src/core/control/tools/EditSelection.cpp:444
 msgid "Send backward"
 msgstr "뒤로 보내기"
 
-#: ../src/core/control/tools/EditSelection.cpp:440
+#: ../src/core/control/tools/EditSelection.cpp:452
 msgid "Send to back"
 msgstr "맨 뒤로 보내기"
 
-#: ../src/core/control/tools/ImageHandler.cpp:73
+#: ../src/core/control/tools/ImageHandler.cpp:74
 #: ../src/core/model/Image.cpp:163 ../src/core/model/Image.cpp:167
 msgid "Failed to load image"
 msgstr "이미지 불러오기 실패"
 
-#: ../src/core/control/tools/ImageHandler.cpp:74
+#: ../src/core/control/tools/ImageHandler.cpp:75
 msgid "Could not determine image size!"
 msgstr ""
 
@@ -870,17 +870,17 @@ msgstr "글레이드 파일 \"{1}\"을 불러오는 중 오류 발생 (\"{2}\"�
 msgid "Unable to play audio recording {1}"
 msgstr "오디오 녹음 {1} 을 재생할 수 없습니다."
 
-#: ../src/core/gui/PageView.cpp:877
+#: ../src/core/gui/PageView.cpp:883
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:94
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
 msgid "Loading..."
 msgstr "로딩중..."
 
-#: ../src/core/gui/PageView.cpp:934
+#: ../src/core/gui/PageView.cpp:940
 msgid "Scroll to page {1}"
 msgstr "페이지로 스크롤 {1}"
 
-#: ../src/core/gui/PageView.cpp:936
+#: ../src/core/gui/PageView.cpp:942
 msgid "Add missing page"
 msgstr "누락된 페이지 추가"
 
