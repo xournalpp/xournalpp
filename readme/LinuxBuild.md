@@ -17,7 +17,7 @@ The minimum required CMake version is 3.13, but we recommend using >=3.15. Also,
 #### For Arch Linux:
 ```sh
 sudo pacman -S cmake gtk3 base-devel libxml2 portaudio libsndfile \
-  poppler-glib texlive-bin texlive-pictures gettext libzip lua53 lua53-lgi \
+  poppler-glib texlive-bin texlive-pictures gettext libzip lua53 \
   gtksourceview4 help2man qpdf
 ```
 
@@ -25,7 +25,7 @@ sudo pacman -S cmake gtk3 base-devel libxml2 portaudio libsndfile \
 ```sh
 sudo dnf install gcc-c++ cmake gtk3-devel libxml2-devel portaudio-devel libsndfile-devel \
   poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext libzip-devel \
-  librsvg2-devel lua-devel lua-lgi gtksourceview4-devel help2man qpdf-devel
+  librsvg2-devel lua-devel gtksourceview4-devel help2man qpdf-devel
 ```
 
 #### For CentOS/RHEL:
@@ -38,14 +38,14 @@ sudo dnf install gcc-c++ cmake gtk3-devel libxml2-devel cppunit-devel portaudio-
 #### For Ubuntu/Debian and Raspberry Pi OS:
 ```sh
 sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev \
-  dvipng texlive libxml2-dev liblua5.3-dev libzip-dev librsvg2-dev gettext lua-lgi \
+  dvipng texlive libxml2-dev liblua5.3-dev libzip-dev librsvg2-dev gettext \
   libgtksourceview-4-dev help2man libqpdf-dev
 ```
 
 #### For openSUSE:
 ```sh
 sudo zypper install gcc-c++ cmake gtk3-devel portaudio-devel libsndfile-devel \
-  texlive-dvipng texlive libxml2-devel libpoppler-glib-devel libzip-devel librsvg-devel lua-devel lua-lgi \
+  texlive-dvipng texlive libxml2-devel libpoppler-glib-devel libzip-devel librsvg-devel lua-devel \
   gtksourceview4-devel lsb-release help2man qpdf-devel
 ```
 

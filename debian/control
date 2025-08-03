@@ -10,7 +10,6 @@ Package: xournalpp
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libglib2.0-0 (>= 2.32), libgtk-3-0 (>= 3.18), libpoppler-glib8 (>= 0.41.0), libxml2 (>= 2.0.0), libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0, libzip4 (>= 1.0.1) | libzip5, zlib1g, libc6, librsvg2-2 (>= 2.40), libgtksourceview-4-0, qpdf (>= 10.6)
 Suggests: texlive-base, texlive-latex-extra
-Recommends: lua-lgi
 Description: Xournal++ - Open source hand note-taking program
  Xournal++ is a hand note-taking software written in C++ with the target of
  flexibility, functionality and speed. Stroke recognizer and other parts are
