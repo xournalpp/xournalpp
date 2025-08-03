@@ -62,6 +62,11 @@ private:
      * GTK defines default bindings (arrow keys, Page_Up/Down, Tab and so on). We want to grab those before GTK does.
      * The key bindings in this group will be caught in XournalView and forwarded to the Action shortcut management.
      *
+     * Notes:
+     *  1- The other shortcuts for the ActionDatabase are triggered by GTK (see ActionDatabase::setShortcuts), but only
+     *    once every widget has had the possibility of claiming the Key event.
+     *  2- ActionDatabase::setShortcuts is still required, as it allows GTK to display the accelerators in the menus
+     *
      * This group is generated from
      *  1- A (static) list of GTK bindings to overrule
      *  2- The above actionsShortcuts

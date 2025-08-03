@@ -154,6 +154,10 @@ auto XournalView::onKeyPressEvent(const KeyEvent& event) -> bool {
         return true;
     }
 
+    /*
+     * Shortcuts for actions in the ActionDatabase are evaluated by GTK after every widget-specific accelerators.
+     * We want to shunt those widget-specific accelerators
+     */
     return shortcuts.getShunt().processEvent(control->getActionDatabase(), event);
 }
 

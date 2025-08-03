@@ -11,8 +11,8 @@
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_Escape
 
 #include "control/Control.h"                       // for Control
-#include "control/layer/LayerController.h"         // for LayerController
 #include "control/KeyBindingsGroup.h"              // for KeyBinding, KeyBindingsGroup
+#include "control/layer/LayerController.h"         // for LayerController
 #include "control/tools/InputHandler.h"            // for InputHandler
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
 #include "control/zoom/ZoomControl.h"
@@ -52,7 +52,7 @@ constexpr double MIN_TANGENT_LENGTH = 1.0;
 
 class SplineHandler::KeyBindingCallbacks {
 public:
-    template<int ANGLE>
+    template <int ANGLE>
     static void rotate(SplineHandler* self) {
         Range rg = self->computeLastSegmentRepaintRange();
         double xOld = self->tangents.back().x;
@@ -63,7 +63,7 @@ public:
         rg = rg.unite(self->computeLastSegmentRepaintRange());
         self->viewPool->dispatch(xoj::view::SplineToolView::FLAG_DIRTY_REGION, rg);
     }
-    template<int SHIFT_X, int SHIFT_Y>
+    template <int SHIFT_X, int SHIFT_Y>
     static void move(SplineHandler* self) {
         Range rg = self->computeLastSegmentRepaintRange();
         self->movePoint(SHIFT_X, SHIFT_Y);
@@ -71,7 +71,7 @@ public:
         self->viewPool->dispatch(xoj::view::SplineToolView::FLAG_DIRTY_REGION, rg);
     }
 
-    template<bool DOWN>
+    template <bool DOWN>
     static void scale(SplineHandler* self) {
         double xOld = self->tangents.back().x;
         double yOld = self->tangents.back().y;
