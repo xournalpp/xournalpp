@@ -580,6 +580,9 @@ public:
     void setUseSpacesAsTab(bool useSpaces);
     bool getUseSpacesAsTab() const;
 
+    void setLaserPointerFadeOutTime(unsigned int timeInMs);
+    unsigned int getLaserPointerFadeOutTime() const;
+
 public:
     // Custom settings
     SElement& getCustomElement(const std::string& name);
@@ -1166,4 +1169,6 @@ private:
      */
     bool useSpacesForTab{};
     unsigned int numberOfSpacesForTab{};
+
+    unsigned int laserPointerFadeOutTime{};  ///< Time in ms before the laser pointer strokes start fading out
 };

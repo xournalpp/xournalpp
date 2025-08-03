@@ -33,7 +33,7 @@ static GtkWidget* createPopoverEntry(GSimpleAction* a, const ComboToolButton::En
 }
 
 ComboToolButton::ComboToolButton(std::string id, Category cat, std::string iconName, std::string description,
-                                 std::vector<Entry> entries, ActionRef gAction):
+                                 Entries entries, ActionRef gAction):
         AbstractToolItem(std::move(id), cat),
         entries(std::move(entries)),
         gAction(std::move(gAction)),

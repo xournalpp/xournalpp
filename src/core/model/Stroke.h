@@ -166,7 +166,6 @@ public:
     void setPressure(const std::vector<double>& pressure);
     void setLastPressure(double pressure);
     void setSecondToLastPressure(double pressure);
-    void clearPressure();
     void scalePressure(double factor);
 
     /**

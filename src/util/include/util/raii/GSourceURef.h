@@ -34,6 +34,8 @@ struct GSourceURef {
 
     /// When the GSource is run
     void consume() { id = 0; }
+    /// To cancel the callback
+    void cancel() { *this = 0; }
 
 private:
     unsigned int id = 0;  // handler id
