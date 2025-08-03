@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-26 14:20+0000\n"
-"PO-Revision-Date: 2025-07-27 04:32\n"
+"POT-Creation-Date: 2025-07-31 19:39+0000\n"
+"PO-Revision-Date: 2025-08-03 04:35\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -262,15 +262,15 @@ msgstr "El fitxer de plantilla global no s'ha pogut llegir. Reviseu la configura
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "El fitxer de plantilla global no és un fitxer regular. Reviseu la configuració."
 
-#: ../src/core/control/LatexController.cpp:242
+#: ../src/core/control/LatexController.cpp:244
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "La generació LaTeX ha trobat un error: {1} (codi de sortida: {2})"
 
-#: ../src/core/control/LatexController.cpp:311
+#: ../src/core/control/LatexController.cpp:313
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "El fitxer PDF de LaTeX no s'ha pogut carregar: {1}"
 
-#: ../src/core/control/LatexController.cpp:316
+#: ../src/core/control/LatexController.cpp:318
 msgid "Could not load LaTeX PDF file"
 msgstr "El fitxer PDF de LaTeX no s'ha pogut carregar."
 
@@ -656,19 +656,19 @@ msgstr "%F‒Nota‒%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_comentat"
 
-#: ../src/core/control/tools/EditSelection.cpp:460
+#: ../src/core/control/tools/EditSelection.cpp:476
 msgid "Arrange"
 msgstr "Ordena"
 
-#: ../src/core/control/tools/EditSelection.cpp:475
+#: ../src/core/control/tools/EditSelection.cpp:491
 msgid "Bring forward"
 msgstr "Porta al davant"
 
-#: ../src/core/control/tools/EditSelection.cpp:486
+#: ../src/core/control/tools/EditSelection.cpp:502
 msgid "Send backward"
 msgstr "Envia avall"
 
-#: ../src/core/control/tools/EditSelection.cpp:493
+#: ../src/core/control/tools/EditSelection.cpp:509
 msgid "Send to back"
 msgstr "Envia al fons"
 
@@ -849,21 +849,21 @@ msgstr "No s'ha pogut escriure el fons «{1}». Es continua de totes maneres."
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Error al carregar el fitxer de glade «{1}» (s'intentarà carregar \"{2}\")."
 
-#: ../src/core/gui/PageView.cpp:388
+#: ../src/core/gui/PageView.cpp:389
 msgid "Unable to play audio recording {1}"
 msgstr "No es pot reproduir la gravació de so {1}"
 
-#: ../src/core/gui/PageView.cpp:922
+#: ../src/core/gui/PageView.cpp:923
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
 msgid "Loading..."
 msgstr "Es carrega..."
 
-#: ../src/core/gui/PageView.cpp:979
+#: ../src/core/gui/PageView.cpp:980
 msgid "Scroll to page {1}"
 msgstr "Desplaça fins a la pàgina {1}"
 
-#: ../src/core/gui/PageView.cpp:981
+#: ../src/core/gui/PageView.cpp:982
 msgid "Add missing page"
 msgstr "Afegeix la pàgina que falta"
 
@@ -1915,7 +1915,7 @@ msgstr ""
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:39
 msgid "Default"
-msgstr ""
+msgstr "Predeterminat"
 
 #: ../src/core/pdf/base/QPdfExport.cpp:172
 msgid "Error with overlay or final export:"
@@ -3511,7 +3511,7 @@ msgstr "<i>Poseu un regle a la pantalla i moveu el botó lliscant fins que coinc
 
 #: ../ui/settings.glade:4466
 msgid "Automatic"
-msgstr ""
+msgstr "Automàtic"
 
 #: ../ui/settings.glade:4523
 msgid "The unit of the ruler is cm"

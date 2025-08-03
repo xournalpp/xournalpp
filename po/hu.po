@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-26 14:20+0000\n"
-"PO-Revision-Date: 2025-07-27 04:32\n"
+"POT-Creation-Date: 2025-07-31 19:39+0000\n"
+"PO-Revision-Date: 2025-08-03 04:35\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -264,15 +264,15 @@ msgstr "Nem sikerült beolvasni a globális sablonfájlt. Kérjük, ellenőrizze
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "A globális sablonfájl nem szabályos. Kérjük, ellenőrizze a beállításokat! "
 
-#: ../src/core/control/LatexController.cpp:242
+#: ../src/core/control/LatexController.cpp:244
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "A LaTeX-létrehozó közben a következő hiba lépett fel: {1} (visszatérési érték: {2})"
 
-#: ../src/core/control/LatexController.cpp:311
+#: ../src/core/control/LatexController.cpp:313
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "Nem sikerült a LaTeX PDF-fájl betöltése: {1}"
 
-#: ../src/core/control/LatexController.cpp:316
+#: ../src/core/control/LatexController.cpp:318
 msgid "Could not load LaTeX PDF file"
 msgstr "Nem sikerült a LaTeX PDF-fájl betöltése"
 
@@ -425,7 +425,9 @@ msgstr "xopp-fájl mentése a FÁJL-ként megadott háttér PDF-fájllal"
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
-msgstr ""
+msgstr "Használja a mellékelt háttérprogramot a PDF-exportáláshoz.\n"
+"                                       Rendelkezésre álló háttérrendszerek: {1}\n"
+"                                       A -p/--create-pdf=foo.pdf nélkül nincs hatása"
 
 #: ../src/core/control/XournalMain.cpp:673
 msgid "Export FILE as PDF"
@@ -435,18 +437,23 @@ msgstr "FILE exportálása PDF-fájlként"
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
-msgstr ""
+msgstr "FÁJL exportálása képfájlként (oldalanként egy)\n"
+"                                       A kimeneti formátum kitalálása a KÉPFÁJL kiterjesztése alapján\n"
+"                                       Támogatott formátumok: .png, .svg"
 
 #: ../src/core/control/XournalMain.cpp:682
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
-msgstr ""
+msgstr "Exportálás háttér nélkül\n"
+"                                       Az exportált fájl átlátszó vagy fehér háttérrel rendelkezik,\n"
+"                                       attól függően, hogy mit támogat a formátuma\n"
 
 #: ../src/core/control/XournalMain.cpp:687
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
-msgstr ""
+msgstr "Exportálás vonalzó nélkül\n"
+"                                       Az exportált fájl nem tartalmaz papír vonalzót\n"
 
 #: ../src/core/control/XournalMain.cpp:692
 msgid "Export layers progressively\n"
@@ -454,34 +461,45 @@ msgid "Export layers progressively\n"
 "                                       This results in N export pages per page with N layers,\n"
 "                                       building up the layer stack progressively.\n"
 "                                       The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "Rétegek fokozatos exportálása\n"
+"                                       A PDF-exportálás során a rétegeket fokozatosan, egyenként rendereli le.\n"
+"                                       Ez oldalanként szám export oldalt eredményez szám rétegekkel,\n"
+"                                       fokozatosan építve fel a rétegsort.\n"
+"                                       Az így kapott PDF-fájlt bemutatóhoz lehet használni.\n"
 
 #: ../src/core/control/XournalMain.cpp:701
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Csak a TARTOMÁNY által megadott oldalak exportálása (pl. \"2-3,5,7-\")\n"
+"                                       Nincs hatás a -p/--create-pdf vagy -i/--create-img kapcsolók nélkül"
 
 #: ../src/core/control/XournalMain.cpp:706
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Csak a TARTOMÁNY által megadott rétegek exportálása (pl. \"2-3,5,7-\")\n"
+"                                       Nincs hatás a -p/--create-pdf vagy -i/--create-img kapcsolók nélkül"
 
 #: ../src/core/control/XournalMain.cpp:710
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "DPI beállítása PNG exportáláshoz. Az alapértelmezett érték szintén 300.\n"
+"                                       Nincs hatás a -i/--create-img=foo.png kapcsoló nélkül"
 
 #: ../src/core/control/XournalMain.cpp:714
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "PNG exportáláshoz oldalszélesség beállítása\n"
+"                                       Nincs hatása a -i/--create-img=foo.png kapcsoló nélkül\n"
+"                                       Figyelmen kívül hagyja, ha a --export-png-dpi paramétert használja"
 
 #: ../src/core/control/XournalMain.cpp:719
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "PNG exportok oldalmagasságának beállítása\n"
+"                                       Nincs hatása a -i/--create-img=foo.png nélkül\n"
+"                                       Figyelmen kívül hagyja, ha a --export-png-dpi vagy a --export-png-width van használatban"
 
 #: ../src/core/control/XournalMain.cpp:727
 msgid "Advanced export options"
@@ -658,19 +676,19 @@ msgstr "%F-Jegyzet-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_jegyzetekkel_ellátva"
 
-#: ../src/core/control/tools/EditSelection.cpp:460
+#: ../src/core/control/tools/EditSelection.cpp:476
 msgid "Arrange"
 msgstr "Elrendezés"
 
-#: ../src/core/control/tools/EditSelection.cpp:475
+#: ../src/core/control/tools/EditSelection.cpp:491
 msgid "Bring forward"
 msgstr "Előbbre hozás"
 
-#: ../src/core/control/tools/EditSelection.cpp:486
+#: ../src/core/control/tools/EditSelection.cpp:502
 msgid "Send backward"
 msgstr "Hátrébb küldés"
 
-#: ../src/core/control/tools/EditSelection.cpp:493
+#: ../src/core/control/tools/EditSelection.cpp:509
 msgid "Send to back"
 msgstr "Hátraküldés"
 
@@ -851,21 +869,21 @@ msgstr "A(z) \"{1}\" háttér nem írható. Folytatás ettől függetlenül."
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Hiba a(z) „{1}” glade-fájl betöltése közben (próbálja meg betölteni a(z) „{2}” fájlt)"
 
-#: ../src/core/gui/PageView.cpp:388
+#: ../src/core/gui/PageView.cpp:389
 msgid "Unable to play audio recording {1}"
 msgstr "Nem sikerült a hangfelvétel lejátszása: {1}"
 
-#: ../src/core/gui/PageView.cpp:922
+#: ../src/core/gui/PageView.cpp:923
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
 msgid "Loading..."
 msgstr "Betöltés…"
 
-#: ../src/core/gui/PageView.cpp:979
+#: ../src/core/gui/PageView.cpp:980
 msgid "Scroll to page {1}"
 msgstr "Görgessen a(z) {1}. oldalra"
 
-#: ../src/core/gui/PageView.cpp:981
+#: ../src/core/gui/PageView.cpp:982
 msgid "Add missing page"
 msgstr "Hiányzó oldal hozzáadása"
 
@@ -3506,7 +3524,7 @@ msgstr "Nagyítás sebessége"
 
 #: ../ui/settings.glade:4430
 msgid "<i>To make sure on 100% zoom the size of elements is natural.</i>"
-msgstr ""
+msgstr "<i>A tényleges méret megtekintésekor az elemek mérete természetes.</i>"
 
 #: ../ui/settings.glade:4450
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
@@ -3514,7 +3532,7 @@ msgstr "<i>Helyezzen egy vonalzót a képernyőre, és mozgassa a csúszkát, am
 
 #: ../ui/settings.glade:4466
 msgid "Automatic"
-msgstr ""
+msgstr "Automatikus"
 
 #: ../ui/settings.glade:4523
 msgid "The unit of the ruler is cm"
