@@ -49,8 +49,7 @@ enum { PROP_0, PROP_MENU };
 
 static gint signals[LAST_SIGNAL];
 
-G_DEFINE_TYPE(GtkMenuToolToggleButton, gtk_menu_tool_toggle_button,  // @suppress("Unused static function")
-              GTK_TYPE_TOGGLE_TOOL_BUTTON)
+G_DEFINE_TYPE(GtkMenuToolToggleButton, gtk_menu_tool_toggle_button, GTK_TYPE_TOGGLE_TOOL_BUTTON)
 
 static void gtk_menu_tool_toggle_button_construct_contents(GtkMenuToolToggleButton* button) {
     GtkMenuToolToggleButtonPrivate* priv = button->priv;
@@ -338,6 +337,8 @@ static void gtk_menu_tool_toggle_button_dispose(GObject* object) {
         g_signal_handlers_disconnect_by_func(button->priv->arrow_button,
                                              (gpointer)G_CALLBACK(arrow_button_button_press_event_cb), button);
     }
+
+    G_OBJECT_CLASS(gtk_menu_tool_toggle_button_parent_class)->dispose(object);
 }
 
 /**
