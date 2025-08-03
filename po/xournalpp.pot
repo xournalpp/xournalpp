@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.2.8~dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-15 07:54+0000\n"
+"POT-Creation-Date: 2025-08-03 04:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -254,8 +254,8 @@ msgid "Could not load LaTeX PDF file"
 msgstr ""
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:80
-#: ../src/core/control/xojfile/LoadHandler.cpp:486
-#: ../src/core/control/xojfile/LoadHandler.cpp:502
+#: ../src/core/control/xojfile/LoadHandler.cpp:490
+#: ../src/core/control/xojfile/LoadHandler.cpp:506
 msgid "Error reading PDF: {1}"
 msgstr ""
 
@@ -367,30 +367,30 @@ msgid "File {1} does not exist."
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:441
-#: ../src/core/control/XournalMain.cpp:497
+#: ../src/core/control/XournalMain.cpp:499
 msgid ""
 "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:641
+#: ../src/core/control/XournalMain.cpp:643
 msgid "Jump to Page (first Page: 1)"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:645
+#: ../src/core/control/XournalMain.cpp:647
 msgid "Get version of xournalpp"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:647
+#: ../src/core/control/XournalMain.cpp:649
 msgid "Disable audio for this session"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:656
+#: ../src/core/control/XournalMain.cpp:658
 msgid "Export FILE as PDF"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:658
+#: ../src/core/control/XournalMain.cpp:660
 msgid ""
 "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension "
@@ -398,7 +398,7 @@ msgid ""
 "                                 Supported formats: .png, .svg"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:665
 msgid ""
 "Export without background\n"
 "                                 The exported file has transparent or white "
@@ -406,13 +406,13 @@ msgid ""
 "                                 depending on what its format supports\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:668
+#: ../src/core/control/XournalMain.cpp:670
 msgid ""
 "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:672
+#: ../src/core/control/XournalMain.cpp:674
 msgid ""
 "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively "
@@ -424,34 +424,34 @@ msgid ""
 "presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:681
 msgid ""
 "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--"
 "create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:683
+#: ../src/core/control/XournalMain.cpp:685
 msgid ""
 "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--"
 "create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:687
+#: ../src/core/control/XournalMain.cpp:689
 msgid ""
 "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:691
+#: ../src/core/control/XournalMain.cpp:693
 msgid ""
 "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:697
+#: ../src/core/control/XournalMain.cpp:699
 msgid ""
 "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
@@ -459,11 +459,11 @@ msgid ""
 "width is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:702
+#: ../src/core/control/XournalMain.cpp:704
 msgid "Advanced export options"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:703
+#: ../src/core/control/XournalMain.cpp:705
 msgid "Display advanced export options"
 msgstr ""
 
@@ -695,32 +695,32 @@ msgstr ""
 msgid "Supported files"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:406
+#: ../src/core/control/tools/EditSelection.cpp:418
 msgid "Arrange"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:411
+#: ../src/core/control/tools/EditSelection.cpp:423
 msgid "Bring to front"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:421
+#: ../src/core/control/tools/EditSelection.cpp:433
 msgid "Bring forward"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:432
+#: ../src/core/control/tools/EditSelection.cpp:444
 msgid "Send backward"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:440
+#: ../src/core/control/tools/EditSelection.cpp:452
 msgid "Send to back"
 msgstr ""
 
-#: ../src/core/control/tools/ImageHandler.cpp:73
+#: ../src/core/control/tools/ImageHandler.cpp:74
 #: ../src/core/model/Image.cpp:163 ../src/core/model/Image.cpp:167
 msgid "Failed to load image"
 msgstr ""
 
-#: ../src/core/control/tools/ImageHandler.cpp:74
+#: ../src/core/control/tools/ImageHandler.cpp:75
 msgid "Could not determine image size!"
 msgstr ""
 
@@ -772,74 +772,74 @@ msgstr ""
 msgid "Unexpected tag in document: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:396
-#: ../src/core/control/xojfile/LoadHandler.cpp:424
+#: ../src/core/control/xojfile/LoadHandler.cpp:400
+#: ../src/core/control/xojfile/LoadHandler.cpp:428
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:434
+#: ../src/core/control/xojfile/LoadHandler.cpp:438
 msgid "Could not read page number for cloned background image: {1}."
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:442
+#: ../src/core/control/xojfile/LoadHandler.cpp:446
 msgid "Unknown pixmap::domain type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:493
+#: ../src/core/control/xojfile/LoadHandler.cpp:497
 msgid "Unknown domain type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:531
+#: ../src/core/control/xojfile/LoadHandler.cpp:535
 msgid "Unknown background type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:555
+#: ../src/core/control/xojfile/LoadHandler.cpp:559
 msgid "Error reading width of a stroke: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:623
+#: ../src/core/control/xojfile/LoadHandler.cpp:627
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:641
+#: ../src/core/control/xojfile/LoadHandler.cpp:645
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:809
-#: ../src/core/control/xojfile/LoadHandler.cpp:825
-#: ../src/core/control/xojfile/LoadHandler.cpp:1139
-#: ../src/core/control/xojfile/LoadHandler.cpp:1153
+#: ../src/core/control/xojfile/LoadHandler.cpp:813
+#: ../src/core/control/xojfile/LoadHandler.cpp:829
+#: ../src/core/control/xojfile/LoadHandler.cpp:1143
+#: ../src/core/control/xojfile/LoadHandler.cpp:1157
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:818
-#: ../src/core/control/xojfile/LoadHandler.cpp:1146
-#: ../src/core/control/xojfile/LoadHandler.cpp:1164
+#: ../src/core/control/xojfile/LoadHandler.cpp:822
+#: ../src/core/control/xojfile/LoadHandler.cpp:1150
+#: ../src/core/control/xojfile/LoadHandler.cpp:1168
 msgid ""
 "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:837
+#: ../src/core/control/xojfile/LoadHandler.cpp:841
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:846
+#: ../src/core/control/xojfile/LoadHandler.cpp:850
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1033
+#: ../src/core/control/xojfile/LoadHandler.cpp:1037
 msgid "Wrong count of points ({1})"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1049
+#: ../src/core/control/xojfile/LoadHandler.cpp:1053
 msgid "xoj-File: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1050
+#: ../src/core/control/xojfile/LoadHandler.cpp:1054
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1183
+#: ../src/core/control/xojfile/LoadHandler.cpp:1187
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
@@ -903,17 +903,17 @@ msgstr ""
 msgid "Unable to play audio recording {1}"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:877
+#: ../src/core/gui/PageView.cpp:883
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:94
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
 msgid "Loading..."
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:934
+#: ../src/core/gui/PageView.cpp:940
 msgid "Scroll to page {1}"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:936
+#: ../src/core/gui/PageView.cpp:942
 msgid "Add missing page"
 msgstr ""
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-02 13:27+0000\n"
-"PO-Revision-Date: 2025-06-15 04:27\n"
+"POT-Creation-Date: 2025-07-27 10:36+0000\n"
+"PO-Revision-Date: 2025-08-03 04:35\n"
 "Last-Translator: \n"
 "Language-Team: English, United Kingdom\n"
 "Language: en_GB\n"
@@ -239,8 +239,8 @@ msgid "Could not load LaTeX PDF file"
 msgstr ""
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:80
-#: ../src/core/control/xojfile/LoadHandler.cpp:486
-#: ../src/core/control/xojfile/LoadHandler.cpp:502
+#: ../src/core/control/xojfile/LoadHandler.cpp:490
+#: ../src/core/control/xojfile/LoadHandler.cpp:506
 msgid "Error reading PDF: {1}"
 msgstr ""
 
@@ -338,46 +338,46 @@ msgid "File {1} does not exist."
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:441
-#: ../src/core/control/XournalMain.cpp:497
+#: ../src/core/control/XournalMain.cpp:499
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:641
+#: ../src/core/control/XournalMain.cpp:643
 msgid "Jump to Page (first Page: 1)"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:645
+#: ../src/core/control/XournalMain.cpp:647
 msgid "Get version of xournalpp"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:647
+#: ../src/core/control/XournalMain.cpp:649
 msgid "Disable audio for this session"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:656
+#: ../src/core/control/XournalMain.cpp:658
 msgid "Export FILE as PDF"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:658
+#: ../src/core/control/XournalMain.cpp:660
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:665
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:668
+#: ../src/core/control/XournalMain.cpp:670
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:672
+#: ../src/core/control/XournalMain.cpp:674
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -385,38 +385,38 @@ msgid "Export layers progressively\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:681
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:683
+#: ../src/core/control/XournalMain.cpp:685
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:687
+#: ../src/core/control/XournalMain.cpp:689
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:691
+#: ../src/core/control/XournalMain.cpp:693
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:697
+#: ../src/core/control/XournalMain.cpp:699
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:702
+#: ../src/core/control/XournalMain.cpp:704
 msgid "Advanced export options"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:703
+#: ../src/core/control/XournalMain.cpp:705
 msgid "Display advanced export options"
 msgstr ""
 
@@ -641,32 +641,32 @@ msgstr ""
 msgid "Supported files"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:406
+#: ../src/core/control/tools/EditSelection.cpp:418
 msgid "Arrange"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:411
+#: ../src/core/control/tools/EditSelection.cpp:423
 msgid "Bring to front"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:421
+#: ../src/core/control/tools/EditSelection.cpp:433
 msgid "Bring forward"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:432
+#: ../src/core/control/tools/EditSelection.cpp:444
 msgid "Send backward"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:440
+#: ../src/core/control/tools/EditSelection.cpp:452
 msgid "Send to back"
 msgstr ""
 
-#: ../src/core/control/tools/ImageHandler.cpp:73
+#: ../src/core/control/tools/ImageHandler.cpp:74
 #: ../src/core/model/Image.cpp:163 ../src/core/model/Image.cpp:167
 msgid "Failed to load image"
 msgstr ""
 
-#: ../src/core/control/tools/ImageHandler.cpp:74
+#: ../src/core/control/tools/ImageHandler.cpp:75
 msgid "Could not determine image size!"
 msgstr ""
 
@@ -718,87 +718,87 @@ msgstr ""
 msgid "Unexpected tag in document: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:396
-#: ../src/core/control/xojfile/LoadHandler.cpp:424
+#: ../src/core/control/xojfile/LoadHandler.cpp:400
+#: ../src/core/control/xojfile/LoadHandler.cpp:428
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:434
+#: ../src/core/control/xojfile/LoadHandler.cpp:438
 msgid "Could not read page number for cloned background image: {1}."
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:442
+#: ../src/core/control/xojfile/LoadHandler.cpp:446
 msgid "Unknown pixmap::domain type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:493
+#: ../src/core/control/xojfile/LoadHandler.cpp:497
 msgid "Unknown domain type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:531
+#: ../src/core/control/xojfile/LoadHandler.cpp:535
 msgid "Unknown background type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:555
+#: ../src/core/control/xojfile/LoadHandler.cpp:559
 msgid "Error reading width of a stroke: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:623
+#: ../src/core/control/xojfile/LoadHandler.cpp:627
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:641
+#: ../src/core/control/xojfile/LoadHandler.cpp:645
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:809
-#: ../src/core/control/xojfile/LoadHandler.cpp:825
-#: ../src/core/control/xojfile/LoadHandler.cpp:1139
-#: ../src/core/control/xojfile/LoadHandler.cpp:1153
+#: ../src/core/control/xojfile/LoadHandler.cpp:813
+#: ../src/core/control/xojfile/LoadHandler.cpp:829
+#: ../src/core/control/xojfile/LoadHandler.cpp:1143
+#: ../src/core/control/xojfile/LoadHandler.cpp:1157
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:818
-#: ../src/core/control/xojfile/LoadHandler.cpp:1146
-#: ../src/core/control/xojfile/LoadHandler.cpp:1164
+#: ../src/core/control/xojfile/LoadHandler.cpp:822
+#: ../src/core/control/xojfile/LoadHandler.cpp:1150
+#: ../src/core/control/xojfile/LoadHandler.cpp:1168
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:837
+#: ../src/core/control/xojfile/LoadHandler.cpp:841
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:846
+#: ../src/core/control/xojfile/LoadHandler.cpp:850
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1033
+#: ../src/core/control/xojfile/LoadHandler.cpp:1037
 msgid "Wrong count of points ({1})"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1049
+#: ../src/core/control/xojfile/LoadHandler.cpp:1053
 msgid "xoj-File: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1050
+#: ../src/core/control/xojfile/LoadHandler.cpp:1054
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1183
+#: ../src/core/control/xojfile/LoadHandler.cpp:1187
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:72
 msgid "Attribute color not set!"
-msgstr ""
+msgstr "Attribute colour not set!"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Unknown color value \"{1}\""
-msgstr ""
+msgstr "Unknown colour value \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:96
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr ""
+msgstr "Colour \"{1}\" unknown (not defined in default colour list)!"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:123
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
@@ -846,17 +846,17 @@ msgstr ""
 msgid "Unable to play audio recording {1}"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:877
+#: ../src/core/gui/PageView.cpp:883
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:94
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
 msgid "Loading..."
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:934
+#: ../src/core/gui/PageView.cpp:940
 msgid "Scroll to page {1}"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:936
+#: ../src/core/gui/PageView.cpp:942
 msgid "Add missing page"
 msgstr ""
 
@@ -1030,7 +1030,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:529
 #: ../src/core/undo/RecognizerUndoAction.cpp:76
 msgid "Shape Recognizer"
-msgstr ""
+msgstr "Shape Recogniser"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:144
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:46
@@ -1084,7 +1084,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:107
 msgid "Select background color"
-msgstr ""
+msgstr "Select background colour"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:189
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -1104,7 +1104,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:34
 msgid "Customized"
-msgstr ""
+msgstr "Customised"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:50
 msgid "Toolbars"
@@ -1226,7 +1226,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ColorToolItem.cpp:78
 msgid "Select color"
-msgstr ""
+msgstr "Select colour"
 
 #: ../src/core/gui/toolbarMenubar/FontButton.cpp:65
 msgid "Font"
@@ -1347,7 +1347,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Customize Toolbars"
-msgstr ""
+msgstr "Customise Toolbars"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:469
 msgid "Zoom out"
@@ -1605,7 +1605,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:185
 #: ../src/core/plugin/Plugin.cpp:268 ../src/core/plugin/Plugin.cpp:291
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: ../src/core/gui/toolbarMenubar/model/ToolbarData.cpp:104
 msgid "Toolbar found: {1}"
@@ -1630,7 +1630,7 @@ msgstr ""
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:122
 msgid "Error while finalizing the PDF Cairo surface"
-msgstr ""
+msgstr "Error while finalising the PDF Cairo surface"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:188
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:231
@@ -1640,7 +1640,7 @@ msgstr ""
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:197
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:236
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "Failed to initialise PDF Cairo surface"
 
 #: ../src/core/undo/AddUndoAction.cpp:64
 #: ../src/core/undo/DeleteUndoAction.cpp:61
@@ -1675,7 +1675,7 @@ msgstr ""
 
 #: ../src/core/undo/ColorUndoAction.cpp:90
 msgid "Change color"
-msgstr ""
+msgstr "Change colour"
 
 #: ../src/core/undo/CopyUndoAction.cpp:62
 msgid "Copy page"
@@ -2017,7 +2017,8 @@ msgstr ""
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr ""
+msgstr "<b>Fill opacity settings</b>\n"
+"Select opacity for fill colour"
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
@@ -2081,7 +2082,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:229
 msgid "The current color of the Text Tool, in hex RGB format."
-msgstr ""
+msgstr "The current colour of the Text Tool, in hex RGB format."
 
 #: ../ui/latexSettings.glade:265
 msgid "Template file settings"
@@ -2334,7 +2335,7 @@ msgstr ""
 
 #: ../ui/main.glade:977
 msgid "_Customize"
-msgstr ""
+msgstr "_Customise"
 
 #: ../ui/main.glade:997
 msgid "Hide Menubar"
@@ -2434,7 +2435,7 @@ msgstr ""
 
 #: ../ui/main.glade:1351
 msgid "Paper _Color"
-msgstr ""
+msgstr "Paper _Colour"
 
 #: ../ui/main.glade:1374
 msgid "_Tools"
@@ -2474,7 +2475,7 @@ msgstr ""
 
 #: ../ui/main.glade:1486
 msgid "_Shape Recognizer"
-msgstr ""
+msgstr "_Shape Recogniser"
 
 #: ../ui/main.glade:1552
 msgid "Draw _Line"
@@ -2646,7 +2647,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:177
 msgid "Select Background Color"
-msgstr ""
+msgstr "Select Background Colour"
 
 #: ../ui/pageTemplate.glade:187
 msgid "Copy current page background instead"
@@ -2658,7 +2659,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:245
 msgid "<b>Background Color</b>"
-msgstr ""
+msgstr "<b>Background Colour</b>"
 
 #: ../ui/pageTemplate.glade:258
 msgid "<b>Background</b>"
@@ -2915,7 +2916,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1178
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
-msgstr ""
+msgstr "<i>Pick an input stabilisation algorithm and its parameters</i>"
 
 #: ../ui/settings.glade:1195
 msgid "Buffersize"
@@ -2936,7 +2937,7 @@ msgstr ""
 #: ../ui/settings.glade:1254
 msgctxt "Drag = Noun: force opposing the movement"
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
-msgstr ""
+msgstr "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilisation."
 
 #: ../ui/settings.glade:1255
 msgctxt "Noun: force opposing the movement"
@@ -2945,7 +2946,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1266
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
-msgstr ""
+msgstr "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilisation."
 
 #: ../ui/settings.glade:1268
 msgid "0,4"
@@ -2954,7 +2955,7 @@ msgstr ""
 #: ../ui/settings.glade:1286
 msgctxt "Mass = Noun: physics term, related to weight"
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "Mass: the higher the mass, the more inertia and the more stabilisation"
 
 #: ../ui/settings.glade:1287
 msgctxt "Noun: physics term, related to weight"
@@ -2963,7 +2964,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1298
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "Mass: the higher the mass, the more inertia and the more stabilisation"
 
 #: ../ui/settings.glade:1300
 msgid "5"
@@ -2971,7 +2972,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1318 ../ui/settings.glade:1338
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr ""
+msgstr "Gaussian parameter: the higher, the more stabilisation and the more lag between your cursor and the painting tip."
 
 #: ../ui/settings.glade:1320
 msgid "0,50"
@@ -2987,15 +2988,15 @@ msgstr ""
 
 #: ../ui/settings.glade:1400
 msgid "Finalize the stroke"
-msgstr ""
+msgstr "Finalise the stroke"
 
 #: ../ui/settings.glade:1405
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr ""
+msgstr "Input stabilisation can create a gap at the end of your stroke. If enabled, this gap is filled."
 
 #: ../ui/settings.glade:1425
 msgid "Input stabilization"
-msgstr ""
+msgstr "Input stabilisation"
 
 #: ../ui/settings.glade:1456
 msgid "Input System"
@@ -3245,19 +3246,19 @@ msgstr ""
 
 #: ../ui/settings.glade:3078
 msgid "Border color for current page and other selections"
-msgstr ""
+msgstr "Border colour for current page and other selections"
 
 #: ../ui/settings.glade:3093
 msgid "Border color"
-msgstr ""
+msgstr "Border colour"
 
 #: ../ui/settings.glade:3104
 msgid "Background color between pages"
-msgstr ""
+msgstr "Background colour between pages"
 
 #: ../ui/settings.glade:3129
 msgid "Selection Color (Text, Stroke Selection etc.)"
-msgstr ""
+msgstr "Selection Colour (Text, Stroke Selection etc.)"
 
 #: ../ui/settings.glade:3152
 msgid "Use available Stock Icons (requires restart)"
@@ -3269,7 +3270,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3192
 msgid "Color"
-msgstr ""
+msgstr "Colour"
 
 #: ../ui/settings.glade:3217
 msgid "Theme Variant:"
@@ -3293,7 +3294,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3291
 msgid "Colors"
-msgstr ""
+msgstr "Colours"
 
 #: ../ui/settings.glade:3309
 msgid "Global"
@@ -3333,11 +3334,11 @@ msgstr ""
 
 #: ../ui/settings.glade:3412 ../ui/settings.glade:3555
 msgid "Choose the color to use for \"Highlight cursor position\""
-msgstr ""
+msgstr "Choose the colour to use for \"Highlight cursor position\""
 
 #: ../ui/settings.glade:3426
 msgid "Circle Color"
-msgstr ""
+msgstr "Circle Colour"
 
 #: ../ui/settings.glade:3450 ../ui/settings.glade:3501
 #: ../ui/settings.glade:4724 ../ui/settings.glade:4735
@@ -3359,7 +3360,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3569
 msgid "Border Color"
-msgstr ""
+msgstr "Border Colour"
 
 #: ../ui/settings.glade:3612
 msgid "Cursor"
@@ -3594,11 +3595,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5245
 msgid "Use snapping for recognized shapes"
-msgstr ""
+msgstr "Use snapping for recognised shapes"
 
 #: ../ui/settings.glade:5249
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
-msgstr ""
+msgstr "If activated, shapes that have been recognised by the shape recogniser will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recogniser turned on while writing."
 
 #: ../ui/settings.glade:5267
 msgid "Snapping"
@@ -3853,7 +3854,7 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
-msgstr ""
+msgstr "Drag and drop Components from here to the toolbars and back."
 
 #: ../ui/toolbarCustomizeDialog.glade:86
 msgid "<b>Default Tools</b>"
@@ -3861,7 +3862,7 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:141
 msgid "<b>Color</b>"
-msgstr ""
+msgstr "<b>Colour</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separators</b>"

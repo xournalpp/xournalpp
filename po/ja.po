@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-02 13:27+0000\n"
-"PO-Revision-Date: 2025-06-08 04:27\n"
+"POT-Creation-Date: 2025-07-27 10:36+0000\n"
+"PO-Revision-Date: 2025-08-03 04:36\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -244,8 +244,8 @@ msgid "Could not load LaTeX PDF file"
 msgstr "LaTeX PDFファイルを読み込めませんでした"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:80
-#: ../src/core/control/xojfile/LoadHandler.cpp:486
-#: ../src/core/control/xojfile/LoadHandler.cpp:502
+#: ../src/core/control/xojfile/LoadHandler.cpp:490
+#: ../src/core/control/xojfile/LoadHandler.cpp:506
 msgid "Error reading PDF: {1}"
 msgstr "PDF読み込みエラー: {1}"
 
@@ -351,7 +351,7 @@ msgid "File {1} does not exist."
 msgstr "ファイル {1} は存在しません。"
 
 #: ../src/core/control/XournalMain.cpp:441
-#: ../src/core/control/XournalMain.cpp:497
+#: ../src/core/control/XournalMain.cpp:499
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -359,23 +359,23 @@ msgstr "ファイルシステムエラー: {1}\n"
 "申し訳ございません、Xournal++はファイル {2} を開くことができません。\n"
 "ローカルディレクトリにファイルをコピーすることを検討してください。"
 
-#: ../src/core/control/XournalMain.cpp:641
+#: ../src/core/control/XournalMain.cpp:643
 msgid "Jump to Page (first Page: 1)"
 msgstr "ページ移動 (最初のページが1)"
 
-#: ../src/core/control/XournalMain.cpp:645
+#: ../src/core/control/XournalMain.cpp:647
 msgid "Get version of xournalpp"
 msgstr "xournalppのバージョンを取得"
 
-#: ../src/core/control/XournalMain.cpp:647
+#: ../src/core/control/XournalMain.cpp:649
 msgid "Disable audio for this session"
 msgstr "このセッションのオーディオを無効にする"
 
-#: ../src/core/control/XournalMain.cpp:656
+#: ../src/core/control/XournalMain.cpp:658
 msgid "Export FILE as PDF"
 msgstr "ファイルをPDFとしてエクスポート"
 
-#: ../src/core/control/XournalMain.cpp:658
+#: ../src/core/control/XournalMain.cpp:660
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -383,7 +383,7 @@ msgstr "ファイルを画像ファイルとしてエクスポート (1ページ
 "                                 IMGFILE の拡張子から出力フォーマットを推測します。\n"
 "                                 サポートされているフォーマット: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:665
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -391,13 +391,13 @@ msgstr "背景なしでエクスポート\n"
 "                                 エクスポートされたファイルはフォーマットがサポートする形式によって,\n"
 "                                 透明や白背景になります。\n"
 
-#: ../src/core/control/XournalMain.cpp:668
+#: ../src/core/control/XournalMain.cpp:670
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "罫線なしでエクスポート\n"
 "                                 エクスポートされたファイルには紙の罫線がありません\n"
 
-#: ../src/core/control/XournalMain.cpp:672
+#: ../src/core/control/XournalMain.cpp:674
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -409,24 +409,24 @@ msgstr "レイヤーを段階的にエクスポート\n"
 "                                 レイヤースタックを徐々に積み上げます。\n"
 "                                 出来上がったPDFファイルはプレゼンテーションに使用することができます。\n"
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:681
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "エクスポート時、RANGEで指定されたレイヤーのみをエクスポートします(例: \"2-3,5,7-\")\n"
 "                                 -p/-create-pdf または -i/-create-imgを使用しない場合は適用されません。"
 
-#: ../src/core/control/XournalMain.cpp:683
+#: ../src/core/control/XournalMain.cpp:685
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "指定した範囲のレイヤーのみエクスポート (例: \"2-3,5,7-\")"
 
-#: ../src/core/control/XournalMain.cpp:687
+#: ../src/core/control/XournalMain.cpp:689
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "PNGエクスポートにDPIを設定します。デフォルトは300\n"
 "                                 -i/-create-img=foo.png なしでは効果がありません。"
 
-#: ../src/core/control/XournalMain.cpp:691
+#: ../src/core/control/XournalMain.cpp:693
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -434,7 +434,7 @@ msgstr "PNGエクスポート時にページ幅を設定する\n"
 "                                 -i/-create-img=foo.png無しに効果はありません\n"
 "                                 -export-png-dpiが使用されると無視されます"
 
-#: ../src/core/control/XournalMain.cpp:697
+#: ../src/core/control/XournalMain.cpp:699
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -442,11 +442,11 @@ msgstr "PNGエクスポートにページの高さを設定する\n"
 "                                 -i/-create-img=foo.png無しに効果はありません\n"
 "                                 --export-png-dpi または --export-png-width 使用されると無視されます"
 
-#: ../src/core/control/XournalMain.cpp:702
+#: ../src/core/control/XournalMain.cpp:704
 msgid "Advanced export options"
 msgstr "アドバンスドエクスポートのオプション"
 
-#: ../src/core/control/XournalMain.cpp:703
+#: ../src/core/control/XournalMain.cpp:705
 msgid "Display advanced export options"
 msgstr "高度なエクスポートオプションを表示"
 
@@ -675,32 +675,32 @@ msgstr "Xournal++テンプレート"
 msgid "Supported files"
 msgstr "サポートされたファイル"
 
-#: ../src/core/control/tools/EditSelection.cpp:406
+#: ../src/core/control/tools/EditSelection.cpp:418
 msgid "Arrange"
 msgstr "並べ替える"
 
-#: ../src/core/control/tools/EditSelection.cpp:411
+#: ../src/core/control/tools/EditSelection.cpp:423
 msgid "Bring to front"
 msgstr "前景に持って来る"
 
-#: ../src/core/control/tools/EditSelection.cpp:421
+#: ../src/core/control/tools/EditSelection.cpp:433
 msgid "Bring forward"
 msgstr "繰り上げる"
 
-#: ../src/core/control/tools/EditSelection.cpp:432
+#: ../src/core/control/tools/EditSelection.cpp:444
 msgid "Send backward"
 msgstr "背面に移動"
 
-#: ../src/core/control/tools/EditSelection.cpp:440
+#: ../src/core/control/tools/EditSelection.cpp:452
 msgid "Send to back"
 msgstr "最背面に移動"
 
-#: ../src/core/control/tools/ImageHandler.cpp:73
+#: ../src/core/control/tools/ImageHandler.cpp:74
 #: ../src/core/model/Image.cpp:163 ../src/core/model/Image.cpp:167
 msgid "Failed to load image"
 msgstr "画像の読み込みに失敗しました"
 
-#: ../src/core/control/tools/ImageHandler.cpp:74
+#: ../src/core/control/tools/ImageHandler.cpp:75
 msgid "Could not determine image size!"
 msgstr "画像サイズを決定できません"
 
@@ -752,73 +752,73 @@ msgstr ""
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "ドキュメント内の予期しないタグ: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:396
-#: ../src/core/control/xojfile/LoadHandler.cpp:424
+#: ../src/core/control/xojfile/LoadHandler.cpp:400
+#: ../src/core/control/xojfile/LoadHandler.cpp:428
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "画像を読み込めませんでした: {1}。エラーメッセージ: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:434
+#: ../src/core/control/xojfile/LoadHandler.cpp:438
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "クローンされた背景画像のページ番号を読み取ることができませんでした: {1}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:442
+#: ../src/core/control/xojfile/LoadHandler.cpp:446
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "不明なpixmap::domainタイプ:{1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:493
+#: ../src/core/control/xojfile/LoadHandler.cpp:497
 msgid "Unknown domain type: {1}"
 msgstr "不明なドメインタイプ: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:531
+#: ../src/core/control/xojfile/LoadHandler.cpp:535
 msgid "Unknown background type: {1}"
 msgstr "不明な背景タイプ: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:555
+#: ../src/core/control/xojfile/LoadHandler.cpp:559
 msgid "Error reading width of a stroke: {1}"
 msgstr "ストロークの幅を読み取る際にエラーが発生しました: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:623
+#: ../src/core/control/xojfile/LoadHandler.cpp:627
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:641
+#: ../src/core/control/xojfile/LoadHandler.cpp:645
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "未知のストロークタイプ: \"{1}\", ペンを仮定する"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:809
-#: ../src/core/control/xojfile/LoadHandler.cpp:825
-#: ../src/core/control/xojfile/LoadHandler.cpp:1139
-#: ../src/core/control/xojfile/LoadHandler.cpp:1153
+#: ../src/core/control/xojfile/LoadHandler.cpp:813
+#: ../src/core/control/xojfile/LoadHandler.cpp:829
+#: ../src/core/control/xojfile/LoadHandler.cpp:1143
+#: ../src/core/control/xojfile/LoadHandler.cpp:1157
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "添付ファイルを開くことができませんでした：{1}。エラーメッセージ：{2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:818
-#: ../src/core/control/xojfile/LoadHandler.cpp:1146
-#: ../src/core/control/xojfile/LoadHandler.cpp:1164
+#: ../src/core/control/xojfile/LoadHandler.cpp:822
+#: ../src/core/control/xojfile/LoadHandler.cpp:1150
+#: ../src/core/control/xojfile/LoadHandler.cpp:1168
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "添付ファイルを開けませんでした: {1}. エラーメッセージ: 有効なファイルサイズが指定されていません"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:837
+#: ../src/core/control/xojfile/LoadHandler.cpp:841
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "添付ファイルを開くことができませんでした: {1}. エラーメッセージ: ファイルを読み込めませんでした"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:846
+#: ../src/core/control/xojfile/LoadHandler.cpp:850
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "添付ファイルを開くことができませんでした: {1}. エラーメッセージ: ファイルを書き込めませんでした"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1033
+#: ../src/core/control/xojfile/LoadHandler.cpp:1037
 msgid "Wrong count of points ({1})"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1049
+#: ../src/core/control/xojfile/LoadHandler.cpp:1053
 msgid "xoj-File: {1}"
 msgstr "xoj-File: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1050
+#: ../src/core/control/xojfile/LoadHandler.cpp:1054
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr "筆圧の値が間違っています。 {1} が設定されましたが、期待値は {2} です"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1183
+#: ../src/core/control/xojfile/LoadHandler.cpp:1187
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "リクエストされた一時ファイルが添付ファイル {1} に見つかりませんでした"
 
@@ -880,17 +880,17 @@ msgstr "Gladeファイル\"{1}\" の読み込みエラー (\"{2}\" を読み込�
 msgid "Unable to play audio recording {1}"
 msgstr "録音した音声 {1} を再生できません"
 
-#: ../src/core/gui/PageView.cpp:877
+#: ../src/core/gui/PageView.cpp:883
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:94
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
 msgid "Loading..."
 msgstr "読み込み中…"
 
-#: ../src/core/gui/PageView.cpp:934
+#: ../src/core/gui/PageView.cpp:940
 msgid "Scroll to page {1}"
 msgstr "ページ {1} までスクロール"
 
-#: ../src/core/gui/PageView.cpp:936
+#: ../src/core/gui/PageView.cpp:942
 msgid "Add missing page"
 msgstr "不足しているページを追加"
 
