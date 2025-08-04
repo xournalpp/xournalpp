@@ -868,6 +868,10 @@
      <attribute name="action">app.about</attribute>
      <attribute name="hidden-when">macos-menubar</attribute>
     </item>
+    <item>
+      <attribute name="label" translatable="yes">Shortcuts...</attribute>
+      <attribute name="action">win.show-help-overlay</attribute>
+    </item>
    </section>
   </submenu>
  </menu>
