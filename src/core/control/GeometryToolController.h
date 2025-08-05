@@ -88,6 +88,9 @@ public:
 
     virtual GeometryToolType getType() const = 0;
 
+    virtual double getMinHeight() const = 0;
+    virtual double getMaxHeight() const = 0;
+
 protected:
     XojPageView* view;
 

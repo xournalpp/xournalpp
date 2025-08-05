@@ -10,9 +10,6 @@
 #include "gui/inputdevices/InputEvents.h"  // for InputEvent
 #include "model/Setsquare.h"               // for Setsquare::INITIAL_HEIGHT,...
 
-constexpr double MIN_HEIGHT = 4.5;
-constexpr double MAX_HEIGHT = 15.0;
-
 SetsquareInputHandler::SetsquareInputHandler(XournalView* xournal, GeometryToolController* controller):
         GeometryToolInputHandler(xournal, controller) {}
 
@@ -85,6 +82,3 @@ auto SetsquareInputHandler::handlePointer(InputEvent const& event) -> bool {
             return false;
     }
 }
-
-auto SetsquareInputHandler::getMinHeight() const -> double { return MIN_HEIGHT; }
-auto SetsquareInputHandler::getMaxHeight() const -> double { return MAX_HEIGHT; }

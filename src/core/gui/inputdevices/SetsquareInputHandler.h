@@ -34,7 +34,4 @@ private:
      * @brief handles input from mouse and stylus for the setsquare
      */
     bool handlePointer(InputEvent const& event) override;
-
-    double getMinHeight() const override;
-    double getMaxHeight() const override;
 };

@@ -8,6 +8,9 @@
 #include "model/Stroke.h"
 #include "model/XojPage.h"
 
+constexpr double MIN_HEIGHT = 4.5;
+constexpr double MAX_HEIGHT = 15.0;
+
 using xoj::util::Rectangle;
 SetsquareController::SetsquareController(XojPageView* view, Setsquare* setsquare):
         GeometryToolController(view, setsquare) {}
@@ -118,3 +121,6 @@ void SetsquareController::finalizeRadialStroke() {
 auto SetsquareController::existsEdgeStroke() -> bool { return hypotenuseMax != std::numeric_limits<double>::lowest(); }
 
 auto SetsquareController::existsRadialStroke() -> bool { return !std::isnan(strokeAngle); }
+
+auto SetsquareController::getMinHeight() const -> double { return MIN_HEIGHT; }
+auto SetsquareController::getMaxHeight() const -> double { return MAX_HEIGHT; }

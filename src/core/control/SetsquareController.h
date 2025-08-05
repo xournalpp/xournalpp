@@ -114,6 +114,9 @@ public:
      */
     bool existsRadialStroke();
 
+    double getMinHeight() const override;
+    double getMaxHeight() const override;
+
 private:
     /**
      * @brief when a stroke aligned to the longest side (hypotenuse) of the setsquare is drawn, the minimal and maximal
