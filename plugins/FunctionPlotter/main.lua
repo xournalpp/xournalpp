@@ -13,13 +13,22 @@ function showDialog()
     return
   end
 
-  local hasLgi, lgi = pcall(require, "lgi")
-  if not hasLgi then
-    app.openDialog("You should have the Lua lgi-module installed and included in your Lua package path.", {"OK"}, "", true)
-    return
+  local hasLuaGObject, lgi = pcall(require, "LuaGObject")
+
+  if not hasLuaGObject then
+    local hasLgi
+    hasLgi, lgi = pcall(require, "lgi")
+    if not hasLgi then
+      app.openDialog(
+        "You need to have the LuaGObject module or the lgi module installed and included in your Lua package path for using this plugin. \n\n",
+        { "OK" }, "", true)
+      return
+    else
+      print("Use lgi instead of LuaGObject")
+    end
   end
 
-  --lgi module has been found
+  --LuaGObject/lgi module has been found
   local Gtk = lgi.require("Gtk", "3.0")
   local Gdk = lgi.Gdk
   local assert = lgi.assert
