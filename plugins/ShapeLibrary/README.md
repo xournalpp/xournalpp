@@ -2,6 +2,22 @@
 
 Insert and manage shapes via this plugin.
 
+## Dependencies
+
+The plugin uses the LuaGObject module, which is a recent fork of the lgi module (whose last release was in 2017), and serves for creating the graphical user interface.
+
+LuaGObject comes bundled with Xournal++ on Windows and MacOS. On Linux (outside of flatpak and snap packages) you
+are advised to install LuaGObject via luarocks:
+```term
+luarocks install --lua-version=5.x LuaGObject
+```
+where 5.x is the Lua version used by `xournalpp`. It can be seen from the output of
+
+```term
+ldd xournalpp | grep lua
+```
+If LuaGObject is not found, the plugin will use the lgi-module, if the latter is found.
+
 ## First Steps
 
 1. **Activate the plugin** (`Shape Library`) in menu `Plugins > Plugin Manager`

@@ -14,15 +14,22 @@ local config_helper = require("config_helper")
 local system_shapes_dict = config_helper.getShapesData(Mode.SYSTEM) or {}
 local user_shapes_dict = config_helper.getShapesData(Mode.USER) or {}
 
-local hasLgi, lgi = pcall(require, "lgi")
-if not hasLgi then
-    app.openDialog(
-        "You need to have the Lua lgi-module installed and included in your Lua package path for using this plugin. \n\n",
-        { "OK" }, "", true)
-    return
+local hasLuaGObject, lgi = pcall(require, "LuaGObject")
+
+if not hasLuaGObject then
+    local hasLgi
+    hasLgi, lgi = pcall(require, "lgi")
+    if not hasLgi then
+        app.openDialog(
+            "You need to have the LuaGObject module or the lgi module installed and included in your Lua package path for using this plugin. \n\n",
+            { "OK" }, "", true)
+        return
+    else
+        print("Use lgi instead of LuaGObject")
+    end
 end
 
---lgi module has been found
+--LuaGObject/lgi module has been found
 local Gtk = lgi.require("Gtk", "3.0")
 local assert = lgi.assert
 local drawing = require("drawing")
