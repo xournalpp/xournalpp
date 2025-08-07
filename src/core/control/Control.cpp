@@ -136,8 +136,11 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
 
     this->pageTypes = new PageTypeHandler(gladeSearchPath);
 
-    this->audioController =
-            (disableAudio || this->settings->isAudioDisabled()) ? nullptr : new AudioController(this->settings, this);
+#ifdef ENABLE_AUDIO
+    if (!(disableAudio || this->settings->isAudioDisabled())) {
+        this->audioController = std::make_unique<AudioController>(this->settings, this);
+    }
+#endif
 
     this->scrollHandler = new ScrollHandler(this);
 
@@ -211,8 +214,6 @@ Control::~Control() {
     this->scheduler = nullptr;
     delete this->dragDropHandler;
     this->dragDropHandler = nullptr;
-    delete this->audioController;
-    this->audioController = nullptr;
     delete this->layerController;
     this->layerController = nullptr;
 }
@@ -2074,9 +2075,11 @@ void Control::quit(bool allowCancel) {
                 emergencySave();
             }
         } else {
+#ifdef ENABLE_AUDIO
             if (audioController) {
                 audioController->stopRecording();
             }
+#endif
             this->scheduler->lock();
             this->scheduler->removeAllJobs();
             this->scheduler->unlock();
@@ -2555,7 +2558,7 @@ auto Control::getSidebar() const -> Sidebar* { return this->sidebar; }
 
 auto Control::getSearchBar() const -> SearchBar* { return this->searchBar; }
 
-auto Control::getAudioController() const -> AudioController* { return this->audioController; }
+auto Control::getAudioController() const -> AudioController* { return this->audioController.get(); }
 
 auto Control::getPageTypes() const -> PageTypeHandler* { return this->pageTypes; }
 
