@@ -54,10 +54,10 @@ function proceed()
 
   app.changeBackgroundPdfPageNr(nextPdfPage, false);
   app.refreshPage()
-  app.uiAction({["action"]="ACTION_GOTO_NEXT"})
-  app.uiAction({["action"]="ACTION_DELETE_PAGE"})
+  app.activateAction("goto-next")
+  app.activateAction("delete-page")
   if currentPage < numPages -1 then
-    app.uiAction({["action"]="ACTION_GOTO_BACK"})
+    app.activateAction("goto-previous")
   end
 end
 

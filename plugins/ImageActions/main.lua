@@ -112,7 +112,7 @@ function Cb(mode)
   end
   app.clearSelection()
   app.addToSelection(refs)
-  app.uiAction({ action = "ACTION_DELETE" })
+  app.activateAction("delete")
   app.addImages({ images = imdata, allowUndoRedoAction = "grouped" })
 end
 
@@ -213,6 +213,6 @@ function Split(mode)
   end
   app.clearSelection()
   app.addToSelection(refs)
-  app.uiAction({ action = "ACTION_DELETE" })
+  app.activateAction("delete")
   app.addImages({ images = imdata, allowUndoRedoAction = "grouped" })
 end
