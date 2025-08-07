@@ -23,7 +23,8 @@
 #include <poppler-document.h>  // for poppler_document_get_n_p...
 #include <poppler-page.h>      // for poppler_page_get_size
 
-#ifdef USE_GTK_SOURCEVIEW
+#include "config-features.h"  // for ENABLE_GTK_SOURCEVIEW
+#ifdef ENABLE_GTK_SOURCEVIEW
 #include <gtksourceview/gtksource.h>  // for GTK_SOURCE_VIEW, gtk_sou...
 #endif
 
@@ -52,7 +53,7 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& 
     GtkContainer* texBoxContainer = GTK_CONTAINER(get("texBoxContainer"));
 
     this->cssProvider = gtk_css_provider_new();
-#ifdef USE_GTK_SOURCEVIEW
+#ifdef ENABLE_GTK_SOURCEVIEW
     this->texBox = gtk_source_view_new();
 #else
     this->texBox = gtk_text_view_new();
@@ -67,7 +68,7 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& 
     this->texTempRender = get("texImage");
     gtk_widget_set_name(GTK_WIDGET(this->texTempRender), "texImage");
 
-#ifdef USE_GTK_SOURCEVIEW
+#ifdef ENABLE_GTK_SOURCEVIEW
     // We own neither the languageManager, the styleSchemeManager, nor the sourceLanguage.
     // Do not attempt to free them.
     GtkSourceStyleSchemeManager* styleSchemeManager = gtk_source_style_scheme_manager_get_default();

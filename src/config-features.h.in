@@ -13,7 +13,7 @@
 
 /* --- Stable features --- */
 
-// Currently none
+#cmakedefine ENABLE_GTK_SOURCEVIEW
 
 /* --- Testing features --- */
 
