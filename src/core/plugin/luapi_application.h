@@ -678,6 +678,9 @@ static int applib_uiAction(lua_State* L) {
 }
 
 /**
+ * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_activateAction instead.
+ *
+ * @deprecated
  * Execute action from sidebar menu
  *
  * @param action string the desired action
@@ -727,6 +730,9 @@ static int applib_sidebarAction(lua_State* L) {
 }
 
 /**
+ * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. No substitute needed.
+ *
+ * @deprecated
  * Get the index of the currently active sidebar-page.
  *
  * @return integer pageNr pageNr of the sidebar page
@@ -741,6 +747,9 @@ static int applib_getSidebarPageNo(lua_State* L) {
 }
 
 /**
+ * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. No substitute needed.
+ *
+ * @deprecated
  * Set the currently active sidebar-page by its index.
  *
  * @param pageNr integer pageNr of the sidebar page
@@ -3300,58 +3309,58 @@ static int applib_setPlaceholderValue(lua_State* L) {
 }
 
 
-static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remove this deprecated function
-                                  {"openDialog", applib_openDialog},
-                                  {"changeActionState", applib_changeActionState},
-                                  {"activateAction", applib_activateAction},
-                                  {"getPageLabel", applib_getPageLabel},
-                                  {"glib_rename", applib_glib_rename},
-                                  {"saveAs", applib_saveAs},  // Todo(gtk4) remove this deprecated function
-                                  {"fileDialogSave", applib_fileDialogSave},
-                                  {"registerUi", applib_registerUi},
-                                  {"uiAction", applib_uiAction},  // Todo(gtk4) remove this deprecated function
-                                  {"sidebarAction", applib_sidebarAction},
-                                  {"layerAction", applib_layerAction},  // Todo(gtk4) remove this deprecated function
-                                  {"changeToolColor", applib_changeToolColor},
-                                  {"getColorPalette", applib_getColorPalette},
-                                  {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
-                                  {"changeBackgroundPdfPageNr", applib_changeBackgroundPdfPageNr},
-                                  {"getToolInfo", applib_getToolInfo},
-                                  {"getFolder", applib_getFolder},
-                                  {"getSidebarPageNo", applib_getSidebarPageNo},
-                                  {"setSidebarPageNo", applib_setSidebarPageNo},
-                                  {"getDocumentStructure", applib_getDocumentStructure},
-                                  {"scrollToPage", applib_scrollToPage},
-                                  {"scrollToPos", applib_scrollToPos},
-                                  {"setCurrentPage", applib_setCurrentPage},
-                                  {"setPageSize", applib_setPageSize},
-                                  {"setCurrentLayer", applib_setCurrentLayer},
-                                  {"setLayerVisibility", applib_setLayerVisibility},
-                                  {"setCurrentLayerName", applib_setCurrentLayerName},
-                                  {"setBackgroundName", applib_setBackgroundName},
-                                  {"getDisplayDpi", applib_getDisplayDpi},
-                                  {"getZoom", applib_getZoom},
-                                  {"setZoom", applib_setZoom},
-                                  {"export", applib_export},
-                                  {"addStrokes", applib_addStrokes},
-                                  {"addSplines", applib_addSplines},
-                                  {"addImages", applib_addImages},
-                                  {"addTexts", applib_addTexts},
-                                  {"addToSelection", applib_addToSelection},
-                                  {"clearSelection", applib_clearSelection},
-                                  {"getFilePath", applib_getFilePath},  // Todo(gtk4) remove this deprecated function
-                                  {"fileDialogOpen", applib_fileDialogOpen},
-                                  {"refreshPage", applib_refreshPage},
-                                  {"getStrokes", applib_getStrokes},
-                                  {"getImages", applib_getImages},
-                                  {"getTexts", applib_getTexts},
-                                  {"openFile", applib_openFile},
-                                  {"registerPlaceholder", applib_registerPlaceholder},
-                                  {"setPlaceholderValue", applib_setPlaceholderValue},
-                                  // Placeholder
-                                  // {"MSG_BT_OK", nullptr},
-
-                                  {nullptr, nullptr}};
+static const luaL_Reg applib[] = {
+        {"msgbox", applib_msgbox},  // Todo(gtk4) remove this deprecated function
+        {"openDialog", applib_openDialog},
+        {"changeActionState", applib_changeActionState},
+        {"activateAction", applib_activateAction},
+        {"getPageLabel", applib_getPageLabel},
+        {"glib_rename", applib_glib_rename},
+        {"saveAs", applib_saveAs},  // Todo(gtk4) remove this deprecated function
+        {"fileDialogSave", applib_fileDialogSave},
+        {"registerUi", applib_registerUi},
+        {"uiAction", applib_uiAction},            // Todo(gtk4) remove this deprecated function
+        {"sidebarAction", applib_sidebarAction},  // Todo(gtk4) remove this deprecated function
+        {"layerAction", applib_layerAction},      // Todo(gtk4) remove this deprecated function
+        {"changeToolColor", applib_changeToolColor},
+        {"getColorPalette", applib_getColorPalette},
+        {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
+        {"changeBackgroundPdfPageNr", applib_changeBackgroundPdfPageNr},
+        {"getToolInfo", applib_getToolInfo},
+        {"getFolder", applib_getFolder},
+        {"getSidebarPageNo", applib_getSidebarPageNo},  // Todo(gtk4) remove this deprecated function
+        {"setSidebarPageNo", applib_setSidebarPageNo},  // Todo(gtk4) remove this deprecated function
+        {"getDocumentStructure", applib_getDocumentStructure},
+        {"scrollToPage", applib_scrollToPage},
+        {"scrollToPos", applib_scrollToPos},
+        {"setCurrentPage", applib_setCurrentPage},
+        {"setPageSize", applib_setPageSize},
+        {"setCurrentLayer", applib_setCurrentLayer},
+        {"setLayerVisibility", applib_setLayerVisibility},
+        {"setCurrentLayerName", applib_setCurrentLayerName},
+        {"setBackgroundName", applib_setBackgroundName},
+        {"getDisplayDpi", applib_getDisplayDpi},
+        {"getZoom", applib_getZoom},
+        {"setZoom", applib_setZoom},
+        {"export", applib_export},
+        {"addStrokes", applib_addStrokes},
+        {"addSplines", applib_addSplines},
+        {"addImages", applib_addImages},
+        {"addTexts", applib_addTexts},
+        {"addToSelection", applib_addToSelection},
+        {"clearSelection", applib_clearSelection},
+        {"getFilePath", applib_getFilePath},  // Todo(gtk4) remove this deprecated function
+        {"fileDialogOpen", applib_fileDialogOpen},
+        {"refreshPage", applib_refreshPage},
+        {"getStrokes", applib_getStrokes},
+        {"getImages", applib_getImages},
+        {"getTexts", applib_getTexts},
+        {"openFile", applib_openFile},
+        {"registerPlaceholder", applib_registerPlaceholder},
+        {"setPlaceholderValue", applib_setPlaceholderValue},
+        // Placeholder
+        // {"MSG_BT_OK", nullptr},
+        {nullptr, nullptr}};
 
 /**
  * Open application Library

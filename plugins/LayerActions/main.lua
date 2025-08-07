@@ -47,10 +47,7 @@ function proceed()
 
   local nextPdfPage = docStructure["pages"][nextPage]["pdfBackgroundPageNo"]
 
-  local sidebarPage = app.getSidebarPageNo()
-  app.setSidebarPageNo(2)
-  app.sidebarAction("COPY");
-  app.setSidebarPageNo(sidebarPage)
+  app.activateAction("duplicate-page")
 
   app.changeBackgroundPdfPageNr(nextPdfPage, false);
   app.refreshPage()
