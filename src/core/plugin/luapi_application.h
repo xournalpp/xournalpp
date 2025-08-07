@@ -634,6 +634,10 @@ static int applib_activateAction(lua_State* L) {
 
 
 /**
+ * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_changeActionState or
+ * applib_activateAction instead.
+ *
+ * @deprecated
  * Execute an UI action (usually internally called from Toolbar / Menu)
  * The argument consists of a Lua table with 3 keys: "action", "group" and "enabled"
  * The key "group" is currently only used for debugging purpose and can safely be omitted.
@@ -3302,7 +3306,7 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remo
                                   {"saveAs", applib_saveAs},  // Todo(gtk4) remove this deprecated function
                                   {"fileDialogSave", applib_fileDialogSave},
                                   {"registerUi", applib_registerUi},
-                                  {"uiAction", applib_uiAction},
+                                  {"uiAction", applib_uiAction},  // Todo(gtk4) remove this deprecated function
                                   {"sidebarAction", applib_sidebarAction},
                                   {"layerAction", applib_layerAction},
                                   {"changeToolColor", applib_changeToolColor},
