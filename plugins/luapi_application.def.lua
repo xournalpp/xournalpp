@@ -136,6 +136,10 @@ function app.changeActionState(action, state) end
 --- Example 3: app.activateAction("tool-fill")
 function app.activateAction(action, state) end
 
+--- THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_changeActionState or
+--- applib_activateAction instead.
+--- 
+--- @deprecated
 --- Execute an UI action (usually internally called from Toolbar / Menu)
 --- The argument consists of a Lua table with 3 keys: "action", "group" and "enabled"
 --- The key "group" is currently only used for debugging purpose and can safely be omitted.
