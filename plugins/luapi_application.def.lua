@@ -154,6 +154,9 @@ function app.activateAction(action, state) end
 --- turns off the Ellipse drawing type
 function app.uiAction(opts) end
 
+--- THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_activateAction instead.
+--- 
+--- @deprecated
 --- Execute action from sidebar menu
 --- 
 --- @param action string the desired action
@@ -162,6 +165,9 @@ function app.uiAction(opts) end
 --- moves down the current page or layer, depending on which sidebar tab is selected
 function app.sidebarAction(action) end
 
+--- THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. No substitute needed.
+--- 
+--- @deprecated
 --- Get the index of the currently active sidebar-page.
 --- 
 --- @return integer pageNr pageNr of the sidebar page
@@ -169,6 +175,9 @@ function app.sidebarAction(action) end
 --- Example: app.getSidebarPageNo() -- returns e.g. 1
 function app.getSidebarPageNo() end
 
+--- THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. No substitute needed.
+--- 
+--- @deprecated
 --- Set the currently active sidebar-page by its index.
 --- 
 --- @param pageNr integer pageNr of the sidebar page
