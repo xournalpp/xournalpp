@@ -19,7 +19,11 @@
 
   <plist>${project}/Info.plist</plist>
 
-  <main-binary>${prefix}/bin/xournalpp</main-binary>
+  <main-binary>${prefix}/bin/xournalpp-wrapper</main-binary>
+
+  <binary dest="${bundle}/Contents/MacOS">
+    ${prefix}/bin/xournalpp
+  </binary>
 
   <binary dest="${bundle}/Contents/MacOS">
     ${prefix}/bin/gtk3-demo

@@ -147,6 +147,15 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
 
     // for crashhandling
     setEmergencyDocument(this->doc);
+    this->interrupt = g_idle_add(
+            +[](gpointer data) -> gboolean {
+                if (interrupted()) {
+                    static_cast<Control*>(data)->quit();
+                }
+                return G_SOURCE_CONTINUE;
+            },
+            static_cast<gpointer>(this));
+
 
     this->zoom = new ZoomControl();
     this->zoom->setZoomStep(this->settings->getZoomStep() / 100.0);
@@ -190,6 +199,8 @@ Control::~Control() {
     this->toolHandler = nullptr;
     delete this->sidebar;
     this->sidebar = nullptr;
+
+    setEmergencyDocument(nullptr);
     delete this->doc;
     this->doc = nullptr;
     delete this->searchBar;
@@ -1511,6 +1522,8 @@ void Control::replaceDocument(std::unique_ptr<Document> doc, int scrollToPage) {
     *this->doc = *doc;  // This calls fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE). No need to fire it again
     this->doc->unlock();
 
+    setEmergencyDocument(this->doc);
+
     // Set folder as last save path, so the next save will be at the current document location
     // This is important because of the new .xopp format, where Xournal .xoj handled as import,
     // not as file to load
@@ -2167,7 +2180,7 @@ void Control::showGtkDemo() {
 #ifdef __APPLE__
     if (!xoj::util::OwnedCString::assumeOwnership(g_find_program_in_path(binary.c_str()))) {
         // Try absolute path for binary
-        auto path = Stacktrace::getExePath() / binary;
+        auto path = Util::getExePath() / binary;
 
         binary = path.string();
     }

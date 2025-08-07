@@ -15,13 +15,12 @@
 
 #include "filesystem.h"
 
-class Stacktrace {
+class Stacktrace final {
 private:
     Stacktrace();
-    virtual ~Stacktrace();
+    ~Stacktrace();
 
 public:
-    static fs::path getExePath();
     static void printStacktrace();
     static void printStacktrace(std::ostream& stream);
 };

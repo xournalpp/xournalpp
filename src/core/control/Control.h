@@ -33,6 +33,7 @@
 #include "model/GeometryTool.h"                     // for GeometryTool
 #include "model/PageRef.h"                          // for PageRef
 #include "undo/UndoRedoHandler.h"                   // for UndoRedoHandler (ptr only)
+#include "util/raii/GSourceURef.h"                  // for GSourceURef
 
 #include "ClipboardHandler.h"  // for ClipboardListener
 #include "ToolHandler.h"       // for ToolListener
@@ -493,6 +494,7 @@ private:
     ToolbarDragDropHandler* dragDropHandler = nullptr;
 
     GApplication* gtkApp = nullptr;
+    xoj::util::GSourceURef interrupt;  ///< Handle interruption signals
 
     /**
      * The cursor handler

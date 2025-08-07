@@ -84,7 +84,7 @@ configure_file(
         @ONLY
 )
 
-include(FindPkgConfig)
+find_package(PkgConfig REQUIRED)
 
 set(PACKAGE_DATA_DIR "${CMAKE_INSTALL_PREFIX}/share")
 
@@ -103,19 +103,34 @@ include(GitRepo)
 find_package(CXX17 REQUIRED COMPONENTS optional)
 find_package(Filesystem REQUIRED COMPONENTS ghc Final Experimental)
 
-find_package(Backtrace)
-if (Backtrace_FOUND)
-    ##############################
-    # stacktrace library
-    # Todo use platform independent stacktrace library
-    # Currently this works only for linux systems
-    ##############################
-    add_library(backtrace INTERFACE)
-    target_include_directories(backtrace INTERFACE ${Backtrace_INCLUDE_DIRS})
-    target_link_libraries(backtrace INTERFACE ${Backtrace_LIBRARIES})
-    target_link_options(backtrace INTERFACE $<$<AND:$<NOT:$<PLATFORM_ID:Windows>>,$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>>:-rdynamic>)
-    add_library(Backtrace::backtrace ALIAS backtrace)
-endif (Backtrace_FOUND)
+if (NOT CMAKE_BUILD_TYPE STREQUAL "Release")
+    include(FetchContent)
+    FetchContent_Declare(
+        cpptrace
+        GIT_REPOSITORY https://github.com/jeremy-rifkin/cpptrace.git
+        GIT_TAG        v1.0.4 # <HASH or TAG>
+        EXCLUDE_FROM_ALL
+    )
+    set(FETCHCONTENT_UPDATES_DISCONNECTED ON) # Prevent reloading if already downloaded
+    set(CPPTRACE_BUILD_SHARED OFF)
+    set(CPPTRACE_USE_EXTERNAL_ZSTD ON)
+    if (UNIX)
+        # Otherwise uses libdwarf - adding yet another dependency
+        set(CPPTRACE_GET_SYMBOLS_WITH_LIBDL ON)
+    endif()
+    if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.28")
+        FetchContent_MakeAvailable(cpptrace)
+    else()
+        # FetchContent_Declare option EXCLUDE_FROM_ALL was only introduced in cmake 3.28
+        # Workaround it for older versions (ubuntu 22 has cmake 3.22)
+        FetchContent_GetProperties(cpptrace)
+        if(NOT cpptrace_POPULATED)
+            FetchContent_Populate(cpptrace)
+            add_subdirectory(${cpptrace_SOURCE_DIR} ${cpptrace_BINARY_DIR} EXCLUDE_FROM_ALL)
+        endif()
+    endif()
+    set(ENABLE_CPPTRACE ON)
+endif()
 
 
 ##############################
@@ -216,7 +231,7 @@ target_link_libraries(external_modules INTERFACE
         $<$<TARGET_EXISTS:PkgConfig::GtkSourceView>:PkgConfig::GtkSourceView>
         $<$<TARGET_EXISTS:X11::Xi>:X11::Xi>
         $<$<TARGET_EXISTS:X11::X11>:X11::X11>
-        $<$<TARGET_EXISTS:Backtrace::backtrace>:Backtrace::backtrace>
+        $<$<TARGET_EXISTS:cpptrace::cpptrace>:cpptrace::cpptrace>
         $<$<TARGET_EXISTS:qpdf::libqpdf>:qpdf::libqpdf>
         ZLIB::ZLIB
         Threads::Threads

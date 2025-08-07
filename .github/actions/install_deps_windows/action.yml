@@ -34,6 +34,7 @@ runs:
           mingw-w64-${{inputs.msys_package_env}}-gobject-introspection-runtime
           mingw-w64-${{inputs.msys_package_env}}-lua-luarocks
           mingw-w64-${{inputs.msys_package_env}}-qpdf
+          mingw-w64-${{inputs.msys_package_env}}-zstd
     - shell: msys2 {0}
       run: |
         # install LuaGObject via luarocks as long as there is no MinGW package
@@ -45,3 +46,4 @@ runs:
         wget -q https://repo.msys2.org/mingw/${{inputs.msystem}}/mingw-w64-${{inputs.msys_package_env}}-gtk3-3.24.43-1-any.pkg.tar.zst.sig
 
         pacman -U --noconfirm mingw-w64-${{inputs.msys_package_env}}-gtk3-3.24.43-1-any.pkg.tar.zst
+

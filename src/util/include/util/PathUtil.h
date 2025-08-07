@@ -133,6 +133,7 @@ auto system_single_byte_filename(const fs::path& path) -> std::string;
 [[maybe_unused]] [[nodiscard]] fs::path getGettextFilepath(fs::path const& localeDir);
 [[maybe_unused]] [[nodiscard]] fs::path getDataPath();
 [[maybe_unused]] [[nodiscard]] fs::path getLocalePath();
+[[maybe_unused]] [[nodiscard]] fs::path getExePath();  ///< folder containing the executable
 fs::path getBuiltInPaletteDirectoryPath();
 fs::path getCustomPaletteDirectoryPath();
 

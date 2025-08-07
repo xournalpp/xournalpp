@@ -37,7 +37,6 @@
 #include "undo/UndoRedoHandler.h"            // for UndoRedoHandler
 #include "util/PathUtil.h"                   // for getConfigFolder, openFil...
 #include "util/PlaceholderString.h"          // for PlaceholderString
-#include "util/Stacktrace.h"                 // for Stacktrace
 #include "util/Util.h"                       // for execInUiThread
 #include "util/XojMsgBox.h"                  // for XojMsgBox
 #include "util/i18n.h"                       // for _, FS, _F
@@ -122,66 +121,6 @@ static void deleteFile(const fs::path& file, GtkWindow* win) {
         msg << FS(_F("Please delete the file manually"));
         XojMsgBox::showErrorToUser(win, msg.str());
     }
-}
-
-void checkForErrorlog(GtkWindow* win) {
-    std::vector<fs::path> errorList;
-
-    try {
-        const fs::path errorDir = Util::getCacheSubfolder(ERRORLOG_DIR);
-        if (!fs::exists(errorDir)) {
-            return;
-        }
-
-        // Todo(cpp20): replace std::chrono::hours(168) with std::chrono::weeks(1)
-        const auto oldestModificationDate = fs::file_time_type::clock::now() - std::chrono::hours(168);
-        for (auto const& f: fs::directory_iterator(errorDir)) {
-            if (f.is_regular_file() && f.path().filename().string().substr(0, 8) == "errorlog") {
-                if (f.last_write_time() > oldestModificationDate) {
-                    errorList.emplace_back(f);
-                }
-            }
-        }
-    } catch (fs::filesystem_error& e) {
-        g_warning("Filesystem error while looking for crash logs:\n"
-                  "   %s\n"
-                  "   %s\n",
-                  e.path1().u8string().c_str(), e.what());
-        return;
-    }
-
-    if (errorList.empty()) {
-        return;
-    }
-
-    std::sort(errorList.begin(), errorList.end());
-    std::string msg = errorList.size() == 1 ? _("There is a recent errorlogfile from Xournal++. Please file a "
-                                                "Bugreport, so the bug may be fixed.") :
-                                              _("There are recent errorlogfiles from Xournal++. Please file a "
-                                                "Bugreport, so the bug may be fixed.");
-    msg += "\n";
-    msg += FS(_F("The most recent log file name: {1}") % errorList[0].string());
-    msg += "\n\n";
-    msg += FS(_F("To prevent this popup from reappearing, simply delete the errorlogfiles."));
-
-    enum Responses { FILE_REPORT = 1, OPEN_FILE, OPEN_DIR, DELETE_FILE, CANCEL };
-    std::vector<XojMsgBox::Button> buttons = {{_("File Bug Report"), FILE_REPORT},
-                                              {_("Open Logfile"), OPEN_FILE},
-                                              {_("Open Logfile directory"), OPEN_DIR},
-                                              {_("Delete Logfile"), DELETE_FILE},
-                                              {_("Cancel"), CANCEL}};
-    XojMsgBox::askQuestion(win, _("Crash log"), msg, buttons, [errorlogPath = errorList.front(), win](int response) {
-        if (response == FILE_REPORT) {
-            Util::openFileWithDefaultApplication(PROJECT_BUGREPORT);
-            Util::openFileWithDefaultApplication(errorlogPath);
-        } else if (response == OPEN_FILE) {
-            Util::openFileWithDefaultApplication(errorlogPath);
-        } else if (response == OPEN_DIR) {
-            Util::openFileWithDefaultApplication(errorlogPath.parent_path());
-        } else if (response == DELETE_FILE) {
-            deleteFile(errorlogPath, win);
-        }
-    });
 }
 
 void checkForEmergencySave(Control* control) {
@@ -382,7 +321,7 @@ auto findResourcePath(const fs::path& searchFile) -> fs::path {
             return *path;
         }*/
     /// real execution path
-    if (auto path = search_for(Stacktrace::getExePath().parent_path()); path) {
+    if (auto path = search_for(Util::getExePath().parent_path()); path) {
         return *path;
     }
     // Not found
@@ -467,6 +406,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
     app_data->gladePath = std::make_unique<GladeSearchpath>();
     initResourcePath(app_data->gladePath.get(), "ui/about.glade");
     initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
+    initResourcePath(app_data->gladePath.get(), "ui/toolbar.ini", false);
 
     app_data->control = std::make_unique<Control>(application, app_data->gladePath.get(), app_data->disableAudio);
 
@@ -518,7 +458,6 @@ void on_startup(GApplication* application, XMPtr app_data) {
             [ctrl = app_data->control.get(), app = GTK_APPLICATION(application)](bool) {
                 ctrl->getScheduler()->start();
 
-                checkForErrorlog(ctrl->getGtkWindow());
                 checkForEmergencySave(ctrl);
 
                 // There is a timing issue with the layout

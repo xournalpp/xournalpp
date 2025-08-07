@@ -18,8 +18,6 @@ BEGIN
 			VALUE "FileVersion", "${PROJECT_VERSION}\0"
 			VALUE "ProductVersion", "${PROJECT_VERSION}\0"
 			VALUE "ProductName", "Xournal++\0"
-			VALUE "OriginalFilename", "xournalpp.exe\0"
-			VALUE "InternalName", "xournalpp\0"
 			VALUE "LegalCopyright", "\0"
 			VALUE "LegalTrademarks", "\0"
 			VALUE "Comments", "\0"

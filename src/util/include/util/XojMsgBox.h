@@ -82,7 +82,9 @@ public:
     [[deprecated("Will be removed when porting to gtk4")]] static int askPluginQuestion(
             const std::string& pluginName, const std::string& msg, const std::vector<Button>& buttons,
             bool error = false);
+
     static void showHelp(GtkWindow* win);
+    static void openURL(GtkWindow* win, const char* url);
 
     /**
      * @brief Calls writeToFile(file) if either file is not already present in the filesystem, or is the user answers

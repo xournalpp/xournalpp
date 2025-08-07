@@ -58,8 +58,6 @@ jobs:
         with:
           build_type: ${{ inputs.build_type }}
           shell: msys2 {0}
-          cmake_flags: >-
-            -DCMAKE_CXX_FLAGS="-Os -s"
       - name: 'Create installer'
         id: create-installer
         working-directory: ${{github.workspace}}/build
