@@ -58,6 +58,13 @@ struct GVariantWrapperImpl<double> {
     static inline GVariant* make(double v) { return g_variant_new_double(v); }
 };
 
+template <>
+struct GVariantWrapperImpl<GVariant*> {
+    static inline GVariant* getValue(GVariant* v) { return v; }
+    static inline const GVariantType* getType() { return G_VARIANT_TYPE_VARIANT; }
+    static inline GVariant* make(GVariant* v) { return v; }
+};
+
 template <class T>
 struct GVariantWrapperImpl<T, std::enable_if_t<match_gint32<T>(), void>> {
     static inline T getValue(GVariant* v) { return g_variant_get_int32(v); }
