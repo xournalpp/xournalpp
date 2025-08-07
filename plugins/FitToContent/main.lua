@@ -50,7 +50,7 @@ local function fit_to_layer_or_selection(type)
 
     -- make the current layer invisible and add the moved strokes to a new layer
     app.setLayerVisibility(false)
-    app.layerAction("ACTION_NEW_LAYER")
+    app.activateAction("layer-new-above-current")
     app.setCurrentLayerName("moved for fitting")
     app.addStrokes{strokes=strokes}
 

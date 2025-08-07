@@ -81,8 +81,8 @@ function add()
 
   for i=1, numPages do
     app.setCurrentPage(i)
-    app.layerAction("ACTION_GOTO_TOP_LAYER")
-    app.layerAction("ACTION_NEW_LAYER")
+    app.activateAction("layer-goto-top")
+    app.activateAction("layer-new-above-current")
   end
 
   app.setCurrentPage(page)
