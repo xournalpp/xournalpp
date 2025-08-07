@@ -6,5 +6,5 @@ local toggleState = false;
 
 function laser()
   toggleState = not toggleState
-  app.uiAction({["action"] = "ACTION_HIGHLIGHT_POSITION", ["enabled"] = toggleState});
+  app.changeActionState("highlight-position", toggleState);
 end
