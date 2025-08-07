@@ -777,6 +777,9 @@ static int applib_setSidebarPageNo(lua_State* L) {
 }
 
 /**
+ * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_activateAction instead.
+ *
+ * @deprecated
  * Execute action from layer controller
  *
  * @param action string the desired action
@@ -3308,7 +3311,7 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remo
                                   {"registerUi", applib_registerUi},
                                   {"uiAction", applib_uiAction},  // Todo(gtk4) remove this deprecated function
                                   {"sidebarAction", applib_sidebarAction},
-                                  {"layerAction", applib_layerAction},
+                                  {"layerAction", applib_layerAction},  // Todo(gtk4) remove this deprecated function
                                   {"changeToolColor", applib_changeToolColor},
                                   {"getColorPalette", applib_getColorPalette},
                                   {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
