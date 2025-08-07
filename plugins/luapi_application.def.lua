@@ -179,6 +179,9 @@ function app.getSidebarPageNo() end
 --- Example: app.setSidebarPageNo(3) -- sets the sidebar-page to preview Layer
 function app.setSidebarPageNo(pageNr) end
 
+--- THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_activateAction instead.
+--- 
+--- @deprecated
 --- Execute action from layer controller
 --- 
 --- @param action string the desired action
