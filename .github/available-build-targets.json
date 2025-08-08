@@ -14,7 +14,7 @@
     "debian": {
       "displayed_name": "Debian",
       "runner": "ubuntu-latest",
-      "extra_packages": "build-essential lsb-release",
+      "extra_packages": "build-essential lsb-release git",
       "container_image": "ghcr.io/xournalpp/debian-latest-sudo:master",
       "run_ci": "false"
     },
