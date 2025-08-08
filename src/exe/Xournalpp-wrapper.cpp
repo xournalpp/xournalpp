@@ -28,14 +28,13 @@
 #include "util/VersionInfo.h"
 #include "util/XojMsgBox.h"
 #include "util/glib_casts.h"
-#include "util/gtk4_helper.h"
 #include "util/raii/CStringWrapper.h"
 #include "util/raii/GObjectSPtr.h"
 
 #include "config.h"
 #include "filesystem.h"
 
-static constexpr const char* UI_RESOURCE = "/org/xournalpp/wrapper/ui/crashDialog.glade";
+static constexpr const char* UI_RESOURCE = "/org/xournalpp/wrapper/ui/crashDialog.ui";
 
 // See CrashHandler::emergencySave()
 static constexpr const char* EMERGENCY_SAVE_MSG_REGEX = "Successfully saved document to \"(.*)\"";
@@ -71,7 +70,7 @@ static std::string makeCrashReportURL() {
 #endif
 
     str << "&version=" << escape(xoj::util::getXournalppVersion()).get();
-    str << "&gtk=" << gtk_major_version << "." << gtk_minor_version << "." << gtk_micro_version;
+    str << "&gtk=" << gtk_get_major_version() << "." << gtk_get_minor_version() << "." << gtk_get_micro_version();
 
     return str.str();
 }
