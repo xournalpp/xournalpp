@@ -11,35 +11,35 @@
 #include "config.h"
 
 #ifdef GDK_WINDOWING_X11
-#include <gdk/gdkx.h>
+#include <gdk/x11/gdkx.h>
 static bool isX11() { return GDK_IS_X11_DISPLAY(gdk_display_get_default()); }
 #else
 static bool isX11() { return false; }
 #endif
 
 #ifdef GDK_WINDOWING_WAYLAND
-#include <gdk/gdkwayland.h>
+#include <gdk/wayland/gdkwayland.h>
 static bool isWayland() { return GDK_IS_WAYLAND_DISPLAY(gdk_display_get_default()); }
 #else
 static bool isWayland() { return false; }
 #endif
 
 #ifdef GDK_WINDOWING_QUARTZ
-#include <gdk/gdkquartz.h>
+#include <gdk/quartz/gdkquartz.h>
 static bool isQuartz() { return GDK_IS_QUARTZ_DISPLAY(gdk_display_get_default()); }
 #else
 static bool isQuartz() { return false; }
 #endif
 
 #ifdef GDK_WINDOWING_BROADWAY
-#include <gdk/gdkbroadway.h>
+#include <gdk/broadway/gdkbroadway.h>
 static bool isBroadway() { return GDK_IS_BROADWAY_DISPLAY(gdk_display_get_default()); }
 #else
 static bool isBroadway() { return false; }
 #endif
 
 #ifdef GDK_WINDOWING_WIN32
-#include <gdk/gdkwin32.h>
+#include <gdk/win32/gdkwin32.h>
 static bool isWin32() { return GDK_IS_WIN32_DISPLAY(gdk_display_get_default()); }
 #else
 static bool isWin32() { return false; }
