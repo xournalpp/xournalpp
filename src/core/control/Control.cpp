@@ -2170,7 +2170,7 @@ static void onGtkDemoShown(GObject* proc_object, GAsyncResult* res, gpointer) {
 }
 
 void Control::showGtkDemo() {
-    std::string binary = "gtk3-demo";
+    std::string binary = "gtk4-demo";
 #ifdef __APPLE__
     if (!xoj::util::OwnedCString::assumeOwnership(g_find_program_in_path(binary.c_str()))) {
         // Try absolute path for binary
