@@ -147,14 +147,6 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
 
     // for crashhandling
     setEmergencyDocument(this->doc);
-    this->interrupt = g_idle_add(
-            +[](gpointer data) -> gboolean {
-                if (interrupted()) {
-                    static_cast<Control*>(data)->quit();
-                }
-                return G_SOURCE_CONTINUE;
-            },
-            static_cast<gpointer>(this));
 
 
     this->zoom = new ZoomControl();

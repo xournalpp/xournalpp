@@ -15,4 +15,3 @@ class Document;
 void setEmergencyDocument(const Document* doc);
 void installCrashHandlers();
 void emergencySave();
-bool interrupted();

@@ -14,30 +14,12 @@
 
 static std::atomic<const Document*> document = nullptr;
 static std::atomic<int> alreadyCrashed = 0;
-static std::atomic<bool> sigint = false;
 
 extern "C" void forceClose(int sig) {
     g_warning("Force close requested with signal %i", sig);
     emergencySave();
     exit(1);
 }
-
-extern "C" void gracefullyClose(int sig) {
-    // Do not add more code here, because this function is called from a signal handler
-    // Therefore only async-signal-safe functions are allowed here
-    // To prevent corruption of the document, we only set a flag here and do the actual work in the main (eventloop)
-    // thread. See Control::Control() where the flag is handled.
-
-    // The signal handlers are defaulted after a signal is caught, so we have to set them again
-    std::signal(SIGINT, gracefullyClose);
-    if (sigint.exchange(true)) {
-        g_warning("Ignored second gracefully close request with signal %i, force closing...", sig);
-        forceClose(sig);
-    }
-    g_warning("Gracefully close requested with signal %i", sig);
-}
-
-auto interrupted() -> bool { return sigint.exchange(false); }
 
 void setEmergencyDocument(const Document* doc) { document = doc; }
 
@@ -90,7 +72,7 @@ extern "C" void crashHandler(int sig) {
 
 void installCrashHandlers() {
     std::signal(SIGTERM, forceClose);
-    std::signal(SIGINT, gracefullyClose);
+    std::signal(SIGINT, forceClose);
     std::signal(SIGSEGV, crashHandler);
     std::signal(SIGFPE, crashHandler);
     std::signal(SIGILL, crashHandler);
