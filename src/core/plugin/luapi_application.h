@@ -24,6 +24,7 @@
 #include "control/PageBackgroundChangeController.h"
 #include "control/ScrollHandler.h"
 #include "control/Tool.h"
+#include "control/ToolEnums.h"               // for ToolSize, ToolType
 #include "control/actions/ActionDatabase.h"  // for ActionDatabase
 #include "control/actions/ActionProperties.h"
 #include "control/layer/LayerController.h"
@@ -3367,7 +3368,41 @@ static const luaL_Reg applib[] = {
  */
 inline int luaopen_app(lua_State* L) {
     luaL_newlib(L, applib);
-    // lua_pushnumber(L, MSG_BT_OK);
-    // lua_setfield(L, -2, "MSG_BT_OK");
+
+    lua_newtable(L);  // table of constants
+    // ToolType enum
+    for (unsigned int i = 0; i < TOOL_END_ENTRY; i++) {
+        auto toolType = static_cast<ToolType>(i);
+        std::string s = toolTypeToString(toolType);
+        std::string key = "Tool_" + s;
+        lua_pushinteger(L, i);  // value
+        lua_setfield(L, -2, key.c_str());
+    }
+    // ToolSize enum
+    for (unsigned int i = 0; i <= TOOL_SIZE_NONE; i++) {
+        auto toolSize = static_cast<ToolSize>(i);
+        std::string s = toolSizeToString(toolSize);
+        std::string key = "ToolSize_" + s;
+        lua_pushinteger(L, i);  // value
+        lua_setfield(L, -2, key.c_str());
+    }
+    // EraserType enum
+    for (unsigned int i = 0; i <= ERASER_TYPE_DELETE_STROKE; i++) {
+        auto eraserType = static_cast<EraserType>(i);
+        std::string s = eraserTypeToString(eraserType);
+        std::string key = "EraserType_" + s;
+        lua_pushinteger(L, i);  // value
+        lua_setfield(L, -2, key.c_str());
+    }
+    // EditSelection::OrderChange enum
+    for (auto change: EditSelection::allChanges) {
+        std::string s = EditSelection::orderChangeToString(change);
+        std::string key = "OrderChange_" + s;
+        lua_pushinteger(L, static_cast<int>(change));  // value
+        lua_setfield(L, -2, key.c_str());
+    }
+
+    lua_setfield(L, -2, "C");
+
     return 1;
 }

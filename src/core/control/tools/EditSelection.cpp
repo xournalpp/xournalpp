@@ -518,6 +518,21 @@ auto EditSelection::rearrangeInsertionOrder(const OrderChange change) -> UndoAct
                                                std::move(newOrd));
 }
 
+auto EditSelection::orderChangeToString(const OrderChange change) -> std::string {
+    switch (change) {
+        case OrderChange::BringToFront:
+            return "bringToFront";
+        case OrderChange::BringForward:
+            return "bringForward";
+        case OrderChange::SendBackward:
+            return "sendBackward";
+        case OrderChange::SendToBack:
+            return "sendToBack";
+        default:
+            return "";
+    }
+}
+
 /**
  * Finish the current movement
  * (should be called in the mouse-button-released event handler)
