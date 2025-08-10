@@ -581,7 +581,7 @@ GVariant* lua_to_gvariant(lua_State* L, int idx, const GVariantType* typeHint) {
  * Change the action's state, triggering callbacks. Actions with state from an enum
  * (like ToolType, ToolSize, EraserSize, OrderChange) should be accessed via the app.C
  * table of constants for consistency between different versions of Xournal++
- * @param action string
+ * @param action Action
  * @param state any
  *
  * Example 1: app.changeActionState("select-tool",  app.C.Tool_text)
@@ -611,8 +611,8 @@ static int applib_changeActionState(lua_State* L) {
  * Activate the action, triggering callbacks. Actions with state from an enum
  * (like ToolType, ToolSize, EraserSize, OrderChange) should be accessed via the app.C
  * table of constants for consistency between different versions of Xournal++
- * @param action string
- * @param state nilt | any
+ * @param action Action
+ * @param state nil | any
  *
  * Example 1: app.activateAction("arrange-selection-order", app.C.OrderChange.bringForward)
  * Example 2: app.activateAction("setsquare")
