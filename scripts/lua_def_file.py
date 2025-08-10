@@ -156,6 +156,51 @@ def fmt_luaLS_def(file, function_name, comments = [], params = []):
         print("\n".join(comments), file=file)
     print(f"function app.{function_name}({', '.join(params)}) end\n", file=file)
 
+def insertActions(file_name):
+    start_pattern = re.compile(r'constexpr\s+const\s+char\*\s+ACTION_NAMES\[\]\s*=\s*{')
+
+    with open(file_name, 'r') as file:
+        inside_array = False
+        for line in file:
+            line = line.strip()
+
+            if not inside_array:
+                if re.match(start_pattern, line):
+                    inside_array = True
+            else:
+                if '}' in line:
+                    content = line[:line.find('}')]
+                    print(f"---| {re.search(r'(".*?")', content).group(1)}", file=f_out)
+                    break
+                else:
+                    print(f"---| {re.search(r'(".*?")', line).group(1)}", file=f_out)
+
+def insertValuesForEnum(name, prefix, file_name):
+    with open(file_name, 'r') as f:
+        content = f.read()
+
+        # Pattern to match the following two forms (with word boundaries):
+        # 1. name{"string1", ...};
+        # 2. name = { "string1", ...};
+        pattern = rf'\b{re.escape(name)}\s*(?:=\s*)?\{{([^}}]*)\}}\s*;'
+        match = re.search(pattern, content, re.MULTILINE | re.DOTALL)
+
+        if not match:
+            raise Exception (f"Enum {name} not found")
+
+        # Extract the inside of the braces
+        inside = match.group(1)
+
+        # Find all string literals inside the braces
+        string_pattern = r'"([^"]*)"'
+        matches = re.findall(string_pattern, inside)
+
+        count = 0
+        for match in matches:
+            print(f"    {prefix}_{match} = {count},", file=f_out)
+            count += 1
+
+
 
 if __name__ == "__main__":
     # argument handling
@@ -194,3 +239,17 @@ if __name__ == "__main__":
             if i not in funcs_emitted:
                 print(f"Warning: Did not find doc-comments for API function {i}")
                 fmt_luaLS_def(f_out, i)
+
+        # Add alias for actions
+        print("---@alias Action", file=f_out)
+        insertActions("src/core/enums/generated/Action.NameMap.generated.h")
+        print("", file=f_out)
+
+        # Add enum values
+        print("---@enum", file=f_out)
+        print("app.C = {", file=f_out)
+        insertValuesForEnum("toolSizeNames", "ToolSize", "src/core/control/ToolEnums.h")
+        insertValuesForEnum("toolNames", "Tool", "src/core/control/ToolEnums.h")
+        insertValuesForEnum("eraserTypeNames", "EraserType", "src/core/control/ToolEnums.h")
+        insertValuesForEnum("orderChangeNames", "OrderChange", "src/core/control/tools/EditSelection.h")
+        print("}", file=f_out)

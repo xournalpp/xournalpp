@@ -24,7 +24,7 @@
 TEST(ToolEnumsTest, testToolSizeSerialization) {
     for (unsigned int i = 0; i <= TOOL_SIZE_NONE; i++) {
         auto toolSize = static_cast<ToolSize>(i);
-        std::string s = toolSizeToString(toolSize);
+        std::string s = toolSizeToString(toolSize).data();
         EXPECT_FALSE(s.empty());
         EXPECT_EQ(toolSize, toolSizeFromString(s));
     }
@@ -38,7 +38,7 @@ TEST(ToolEnumsTest, testToolSizeSerialization) {
 TEST(ToolEnumsTest, testToolTypeSerialization) {
     for (unsigned int i = 0; i < TOOL_END_ENTRY; i++) {
         auto toolType = static_cast<ToolType>(i);
-        std::string s = toolTypeToString(toolType);
+        std::string s = toolTypeToString(toolType).data();
         EXPECT_FALSE(s.empty());
         EXPECT_EQ(toolType, toolTypeFromString(s));
     }

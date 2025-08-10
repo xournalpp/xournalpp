@@ -444,7 +444,7 @@ void ToolHandler::saveSettings() const {
             st.setIntHex("color", int(uint32_t(tool->getColor())));
         }
 
-        st.setString("drawingType", drawingTypeToString(tool->getDrawingType()));
+        st.setString("drawingType", drawingTypeToString(tool->getDrawingType()).data());
 
         if (tool->hasCapability(TOOL_CAP_SIZE)) {
             std::string value;

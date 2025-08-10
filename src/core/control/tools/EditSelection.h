@@ -12,7 +12,9 @@
 
 #pragma once
 
+#include <array>
 #include <memory>  // for unique_ptr
+#include <string>
 #include <utility>  // for pair
 #include <vector>   // for vector
 
@@ -228,10 +230,14 @@ public:
         SendToBack,
     };
 
+    static constexpr std::array<std::string_view, 4> orderChangeNames{"bringToFront", "bringForward", "sendBackward",
+                                                                      "sendToBack"};
     static constexpr std::array<OrderChange, 4> allChanges = {OrderChange::BringToFront, OrderChange::BringForward,
                                                               OrderChange::SendBackward, OrderChange::SendToBack};
 
-    static auto orderChangeToString(const OrderChange change) -> std::string;
+    static constexpr auto orderChangeToString(const OrderChange change) -> std::string_view {
+        return orderChangeNames.at(static_cast<size_t>(change));
+    }
 
     /**
      * Change the insert order of this selection.

@@ -1853,7 +1853,7 @@ static int applib_changeToolColor(lua_State* L) {
     if (toolType == TOOL_NONE) {
         lua_pop(L, 3);
         return luaL_error(L, "tool \"%s\" is not valid or no tool has been selected",
-                          toolTypeToString(toolType).c_str());
+                          toolTypeToString(toolType).data());
     }
 
     uint32_t color = 0x000000;
@@ -1879,7 +1879,7 @@ static int applib_changeToolColor(lua_State* L) {
             ctrl->changeColorOfSelection();
         }
     } else {
-        return luaL_error(L, "tool \"%s\" has no color capability", toolTypeToString(toolType).c_str());
+        return luaL_error(L, "tool \"%s\" has no color capability", toolTypeToString(toolType).data());
     }
 
     return 0;
@@ -2098,23 +2098,23 @@ static int applib_getToolInfo(lua_State* L) {
     //   -1 = table to be returned
 
     if (strcmp(mode, "active") == 0) {
-        std::string toolType = toolTypeToString(toolHandler->getToolType());
+        auto toolType = toolTypeToString(toolHandler->getToolType());
 
-        std::string toolSize = toolSizeToString(toolHandler->getSize());
+        auto toolSize = toolSizeToString(toolHandler->getSize());
         double thickness = toolHandler->getThickness();
 
         Color color = toolHandler->getColor();
         int fillOpacity = toolHandler->getFill();
-        std::string drawingType = drawingTypeToString(toolHandler->getDrawingType());
-        std::string lineStyle = StrokeStyle::formatStyle(toolHandler->getLineStyle());
+        auto drawingType = drawingTypeToString(toolHandler->getDrawingType());
+        auto lineStyle = StrokeStyle::formatStyle(toolHandler->getLineStyle());
 
 
-        lua_pushstring(L, toolType.c_str());  // value
+        lua_pushstring(L, toolType.data());   // value
         lua_setfield(L, -2, "type");          // insert
 
         lua_newtable(L);  // beginning of "size" table
 
-        lua_pushstring(L, toolSize.c_str());  // value
+        lua_pushstring(L, toolSize.data());   // value
         lua_setfield(L, -2, "name");          // insert
 
         lua_pushnumber(L, thickness);  // value
@@ -2128,26 +2128,26 @@ static int applib_getToolInfo(lua_State* L) {
         lua_pushinteger(L, fillOpacity);     // value
         lua_setfield(L, -2, "fillOpacity");  // insert
 
-        lua_pushstring(L, drawingType.c_str());  // value
+        lua_pushstring(L, drawingType.data());   // value
         lua_setfield(L, -2, "drawingType");      // insert
 
-        lua_pushstring(L, lineStyle.c_str());  // value
+        lua_pushstring(L, lineStyle.data());   // value
         lua_setfield(L, -2, "lineStyle");      // insert
     } else if (strcmp(mode, "pen") == 0) {
-        std::string size = toolSizeToString(toolHandler->getPenSize());
-        double thickness = toolHandler->getToolThickness(TOOL_PEN)[toolSizeFromString(size)];
+        auto size = toolSizeToString(toolHandler->getPenSize());
+        double thickness = toolHandler->getToolThickness(TOOL_PEN)[toolSizeFromString(size.data())];
 
         int fillOpacity = toolHandler->getPenFill();
         bool filled = toolHandler->getPenFillEnabled();
 
         Tool& tool = toolHandler->getTool(TOOL_PEN);
         Color color = tool.getColor();
-        std::string drawingType = drawingTypeToString(tool.getDrawingType());
+        auto drawingType = drawingTypeToString(tool.getDrawingType());
         std::string lineStyle = StrokeStyle::formatStyle(tool.getLineStyle());
 
         lua_newtable(L);  // beginning of "size" table
 
-        lua_pushstring(L, size.c_str());  // value
+        lua_pushstring(L, size.data());   // value
         lua_setfield(L, -2, "name");      // insert
 
         lua_pushnumber(L, thickness);  // value
@@ -2158,7 +2158,7 @@ static int applib_getToolInfo(lua_State* L) {
         lua_pushinteger(L, as_signed(uint32_t(color) & 0xffffffU));  // value
         lua_setfield(L, -2, "color");                                // insert
 
-        lua_pushstring(L, drawingType.c_str());  // value
+        lua_pushstring(L, drawingType.data());   // value
         lua_setfield(L, -2, "drawingType");      // insert
 
         lua_pushstring(L, lineStyle.c_str());  // value
@@ -2170,19 +2170,19 @@ static int applib_getToolInfo(lua_State* L) {
         lua_pushinteger(L, fillOpacity);     // value
         lua_setfield(L, -2, "fillOpacity");  // insert
     } else if (strcmp(mode, "highlighter") == 0) {
-        std::string size = toolSizeToString(toolHandler->getHighlighterSize());
-        double thickness = toolHandler->getToolThickness(TOOL_HIGHLIGHTER)[toolSizeFromString(size)];
+        auto size = toolSizeToString(toolHandler->getHighlighterSize());
+        double thickness = toolHandler->getToolThickness(TOOL_HIGHLIGHTER)[toolSizeFromString(size.data())];
 
         int fillOpacity = toolHandler->getHighlighterFill();
         bool filled = toolHandler->getHighlighterFillEnabled();
 
         Tool& tool = toolHandler->getTool(TOOL_HIGHLIGHTER);
         Color color = tool.getColor();
-        std::string drawingType = drawingTypeToString(tool.getDrawingType());
+        auto drawingType = drawingTypeToString(tool.getDrawingType());
 
         lua_newtable(L);  // beginning of "size" table
 
-        lua_pushstring(L, size.c_str());  // value
+        lua_pushstring(L, size.data());   // value
         lua_setfield(L, -2, "name");      // insert
 
         lua_pushnumber(L, thickness);  // value
@@ -2193,7 +2193,7 @@ static int applib_getToolInfo(lua_State* L) {
         lua_pushinteger(L, as_signed(uint32_t(color) & 0xffffffU));  // value
         lua_setfield(L, -2, "color");                                // insert
 
-        lua_pushstring(L, drawingType.c_str());  // value
+        lua_pushstring(L, drawingType.data());   // value
         lua_setfield(L, -2, "drawingType");      // insert
 
         lua_pushboolean(L, filled);     // value
@@ -2202,17 +2202,17 @@ static int applib_getToolInfo(lua_State* L) {
         lua_pushinteger(L, fillOpacity);     // value
         lua_setfield(L, -2, "fillOpacity");  // insert
     } else if (strcmp(mode, "eraser") == 0) {
-        std::string type = eraserTypeToString(toolHandler->getEraserType());
+        auto type = eraserTypeToString(toolHandler->getEraserType());
 
-        std::string size = toolSizeToString(toolHandler->getEraserSize());
-        double thickness = toolHandler->getToolThickness(ToolType::TOOL_ERASER)[toolSizeFromString(size)];
+        auto size = toolSizeToString(toolHandler->getEraserSize());
+        double thickness = toolHandler->getToolThickness(ToolType::TOOL_ERASER)[toolSizeFromString(size.data())];
 
-        lua_pushstring(L, type.c_str());  // value
+        lua_pushstring(L, type.data());   // value
         lua_setfield(L, -2, "type");      // insert
 
         lua_newtable(L);  // beginning of "size" table
 
-        lua_pushstring(L, size.c_str());  // value
+        lua_pushstring(L, size.data());   // value
         lua_setfield(L, -2, "name");      // insert
 
         lua_pushnumber(L, thickness);  // value
@@ -3373,7 +3373,7 @@ inline int luaopen_app(lua_State* L) {
     // ToolType enum
     for (unsigned int i = 0; i < TOOL_END_ENTRY; i++) {
         auto toolType = static_cast<ToolType>(i);
-        std::string s = toolTypeToString(toolType);
+        std::string s = toolTypeToString(toolType).data();
         std::string key = "Tool_" + s;
         lua_pushinteger(L, i);  // value
         lua_setfield(L, -2, key.c_str());
@@ -3381,7 +3381,7 @@ inline int luaopen_app(lua_State* L) {
     // ToolSize enum
     for (unsigned int i = 0; i <= TOOL_SIZE_NONE; i++) {
         auto toolSize = static_cast<ToolSize>(i);
-        std::string s = toolSizeToString(toolSize);
+        std::string s = toolSizeToString(toolSize).data();
         std::string key = "ToolSize_" + s;
         lua_pushinteger(L, i);  // value
         lua_setfield(L, -2, key.c_str());
@@ -3389,14 +3389,14 @@ inline int luaopen_app(lua_State* L) {
     // EraserType enum
     for (unsigned int i = 0; i <= ERASER_TYPE_DELETE_STROKE; i++) {
         auto eraserType = static_cast<EraserType>(i);
-        std::string s = eraserTypeToString(eraserType);
+        std::string s = eraserTypeToString(eraserType).data();
         std::string key = "EraserType_" + s;
         lua_pushinteger(L, i);  // value
         lua_setfield(L, -2, key.c_str());
     }
     // EditSelection::OrderChange enum
     for (auto change: EditSelection::allChanges) {
-        std::string s = EditSelection::orderChangeToString(change);
+        std::string s = EditSelection::orderChangeToString(change).data();
         std::string key = "OrderChange_" + s;
         lua_pushinteger(L, static_cast<int>(change));  // value
         lua_setfield(L, -2, key.c_str());
