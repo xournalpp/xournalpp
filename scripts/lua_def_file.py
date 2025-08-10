@@ -228,6 +228,8 @@ if __name__ == "__main__":
     with open(fn_out, 'w') as f_out:
         print("---@meta", file=f_out)
         print("app = {}", file=f_out)
+
+        # Add functions
         funcs = dict(gather_functions(file_name))
         funcs_emitted = set()
         for x in docs_for_functions(file_name, funcs):
