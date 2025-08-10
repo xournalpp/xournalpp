@@ -20,24 +20,9 @@ static constexpr uint8_t FADEOUT_ALPHA_STEP = 25;
 
 class TemporaryStrokeHandler: public StrokeHandler {
 public:
-    TemporaryStrokeHandler(Control* control, const PageRef& page);
-    ~TemporaryStrokeHandler() override;
     using StrokeHandler::finalizeStroke;
-
-    void onButtonPressEvent(const PositionInputData& pos, double zoom) override {
-        StrokeHandler::onButtonPressEvent(pos, zoom);
-        if (auto tt = control->getToolHandler()->getToolType(); tt == TOOL_LASER_POINTER_PEN) {
-            this->stroke->setToolType(StrokeTool::PEN);
-        } else if (tt == TOOL_LASER_POINTER_HIGHLIGHTER) {
-            this->stroke->setToolType(StrokeTool::HIGHLIGHTER);
-            this->stroke->setLastPressure(Point::NO_PRESSURE);
-            this->hasPressure = false;
-        }
-    }
+    using StrokeHandler::StrokeHandler;
 };
-
-TemporaryStrokeHandler::TemporaryStrokeHandler(Control* control, const PageRef& page): StrokeHandler(control, page) {}
-TemporaryStrokeHandler::~TemporaryStrokeHandler() = default;
 
 LaserPointerHandler::LaserPointerHandler(XojPageView* pageView, Control* control, const PageRef& page):
         viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::LaserPointerView>>()),

@@ -46,6 +46,10 @@ auto InputHandler::createStroke(Control* control) -> std::unique_ptr<Stroke> {
     } else if (h->getToolType() == TOOL_ERASER) {
         s->setToolType(StrokeTool::ERASER);
         s->setColor(Colors::white);
+    } else if (h->getToolType() == TOOL_LASER_POINTER_PEN) {
+        s->setToolType(StrokeTool::PEN);
+    } else if (h->getToolType() == TOOL_LASER_POINTER_HIGHLIGHTER) {
+        s->setToolType(StrokeTool::HIGHLIGHTER);
     }
 
     return s;
