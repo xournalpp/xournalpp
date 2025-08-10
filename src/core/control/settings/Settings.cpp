@@ -930,15 +930,15 @@ void Settings::saveButtonConfig() {
         const auto& cfg = buttonConfig[i];
 
         ToolType const type = cfg->action;
-        e.setString("tool", toolTypeToString(type));
+        e.setString("tool", toolTypeToString(type).data());
 
         if (type == TOOL_PEN) {
-            e.setString("strokeType", strokeTypeToString(cfg->strokeType));
+            e.setString("strokeType", strokeTypeToString(cfg->strokeType).data());
         }
 
         if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER) {
-            e.setString("drawingType", drawingTypeToString(cfg->drawingType));
-            e.setString("size", toolSizeToString(cfg->size));
+            e.setString("drawingType", drawingTypeToString(cfg->drawingType).data());
+            e.setString("size", toolSizeToString(cfg->size).data());
         }
 
         if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER || type == TOOL_TEXT) {
@@ -946,8 +946,8 @@ void Settings::saveButtonConfig() {
         }
 
         if (type == TOOL_ERASER) {
-            e.setString("eraserMode", eraserTypeToString(cfg->eraserMode));
-            e.setString("size", toolSizeToString(cfg->size));
+            e.setString("eraserMode", eraserTypeToString(cfg->eraserMode).data());
+            e.setString("size", toolSizeToString(cfg->size).data());
         }
 
         // Touch device

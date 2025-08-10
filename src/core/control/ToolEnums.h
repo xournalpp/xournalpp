@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <array>
 #include <string>  // for string
 
 #include "model/LineStyle.h"
@@ -24,7 +25,13 @@ enum ToolSize {
     // None has to be at the end, because this enum is used as memory offset
     TOOL_SIZE_NONE
 };
-std::string toolSizeToString(ToolSize size);
+
+static constexpr std::array<std::string_view, 6> toolSizeNames{"veryThin", "thin",      "medium",
+                                                               "thick",    "veryThick", "none"};
+
+static constexpr std::string_view toolSizeToString(ToolSize size) {
+    return toolSizeNames.at(static_cast<size_t>(size));
+}
 ToolSize toolSizeFromString(const std::string& size);
 
 
@@ -47,11 +54,15 @@ enum DrawingType {
     DRAWING_TYPE_SHAPE_RECOGNIZER,
     DRAWING_TYPE_SPLINE
 };
-std::string drawingTypeToString(DrawingType type);
+static constexpr std::array<std::string_view, 10> drawingTypeNames{
+        "dontChange",           "default",          "line",  "rectangle", "ellipse", "arrow", "doubleArrow",
+        "drawCoordinateSystem", "strokeRecognizer", "spline"};
+
+static constexpr std::string_view drawingTypeToString(DrawingType type) {
+    return drawingTypeNames.at(static_cast<size_t>(type));
+}
 DrawingType drawingTypeFromString(const std::string& type);
 
-
-// Has to be in the same order as in Action.h: ActionType!
 // The numbers must agree with the action's targets in ui/mainmenubar.xml
 enum ToolType {
     TOOL_NONE = 0,
@@ -84,6 +95,32 @@ enum ToolType {
 
     TOOL_END_ENTRY
 };
+static constexpr std::array<std::string_view, 25> toolNames{"none",
+                                                            "pen",
+                                                            "eraser",
+                                                            "highlighter",
+                                                            "text",
+                                                            "image",
+                                                            "selectRect",
+                                                            "selectRegion",
+                                                            "selectMultiLayerRect",
+                                                            "selectMultiLayerRegion",
+                                                            "selectObject",
+                                                            "playObject",
+                                                            "verticalSpace",
+                                                            "hand",
+                                                            "drawRect",
+                                                            "drawEllipse",
+                                                            "drawArrow",
+                                                            "drawDoubleArrow",
+                                                            "drawCoordinateSystem",
+                                                            "showFloatingToolbox",
+                                                            "drawSpline",
+                                                            "selectPdfTextLinear",
+                                                            "selectPdfTextRect",
+                                                            "laserPointerPen",
+                                                            "laserPointerHighlighter"};
+
 auto isSelectToolType(ToolType type) -> bool;
 auto isSelectToolTypeSingleLayer(ToolType type) -> bool;
 
@@ -95,8 +132,9 @@ auto requiresClearedSelection(ToolType type) -> bool;
 // The count of tools
 #define TOOL_COUNT (TOOL_END_ENTRY - 1)
 
-std::string toolTypeToString(ToolType type);
+static constexpr std::string_view toolTypeToString(ToolType type) { return toolNames.at(static_cast<size_t>(type)); }
 ToolType toolTypeFromString(const std::string& type);
+
 
 enum OpacityFeature {
     OPACITY_NONE,
@@ -104,11 +142,20 @@ enum OpacityFeature {
     OPACITY_FILL_HIGHLIGHTER,
     OPACITY_SELECT_PDF_TEXT_MARKER,
 };
-std::string opacityFeatureToString(OpacityFeature feature);
+static constexpr std::array<std::string_view, 4> opacityFeatureNames{"none", "opacityFillPen", "opacityFillHighlighter",
+                                                                     "opacitySelectPdfTextMarker"};
+
+static constexpr std::string_view opacityFeatureToString(OpacityFeature feature) {
+    return opacityFeatureNames.at(static_cast<size_t>(feature));
+}
 OpacityFeature opacityFeatureFromString(const std::string& feature);
 
 enum EraserType { ERASER_TYPE_NONE = 0, ERASER_TYPE_DEFAULT, ERASER_TYPE_WHITEOUT, ERASER_TYPE_DELETE_STROKE };
-std::string eraserTypeToString(EraserType type);
+static constexpr std::array<std::string_view, 4> eraserTypeNames{"none", "default", "whiteout", "deleteStroke"};
+
+static constexpr std::string_view eraserTypeToString(EraserType type) {
+    return eraserTypeNames.at(static_cast<size_t>(type));
+}
 EraserType eraserTypeFromString(const std::string& type);
 
 
@@ -136,9 +183,14 @@ enum StrokeType {
     STROKE_TYPE_DASHDOTTED = 3,
     STROKE_TYPE_DOTTED = 4
 };
+
+static constexpr std::array<std::string_view, 5> strokeTypeNames{"none", "standard", "dashed", "dashdot", "dot"};
+
 auto strokeTypeFromString(const std::string& type) -> StrokeType;
 auto strokeTypeToLineStyle(StrokeType type) -> LineStyle;
-auto strokeTypeToString(StrokeType type) -> std::string;
+static constexpr auto strokeTypeToString(StrokeType type) -> std::string_view {
+    return strokeTypeNames.at(static_cast<size_t>(type));
+}
 
 namespace xoj::tool {
 /// \return Whether the provided tool is used for selecting objects on a PDF.
