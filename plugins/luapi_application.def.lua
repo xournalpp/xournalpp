@@ -117,7 +117,7 @@ function app.registerUi(opts) end
 --- Change the action's state, triggering callbacks. Actions with state from an enum
 --- (like ToolType, ToolSize, EraserSize, OrderChange) should be accessed via the app.C
 --- table of constants for consistency between different versions of Xournal++
---- @param action string
+--- @param action Action
 --- @param state any
 --- 
 --- Example 1: app.changeActionState("select-tool",  app.C.Tool_text)
@@ -132,8 +132,8 @@ function app.changeActionState(action, state) end
 --- Activate the action, triggering callbacks. Actions with state from an enum
 --- (like ToolType, ToolSize, EraserSize, OrderChange) should be accessed via the app.C
 --- table of constants for consistency between different versions of Xournal++
---- @param action string
---- @param state nilt | any
+--- @param action Action
+--- @param state nil | any
 --- 
 --- Example 1: app.activateAction("arrange-selection-order", app.C.OrderChange.bringForward)
 --- Example 2: app.activateAction("setsquare")
@@ -935,6 +935,121 @@ function app.registerPlaceholder(id, description) end
 --- Example: app.setPlaceholderValue("vi-mode", "Current mode")
 --- Updates the toolbar placeholder with the given value.
 function app.setPlaceholderValue(id, value) end
+
+---@alias Action
+---| "new-file"
+---| "open"
+---| "annotate-pdf"
+---| "save"
+---| "save-as"
+---| "export-as-pdf"
+---| "export-as"
+---| "print"
+---| "quit"
+---| "arrange-selection-order"
+---| "undo"
+---| "redo"
+---| "cut"
+---| "copy"
+---| "paste"
+---| "search"
+---| "select-all"
+---| "delete"
+---| "move-selection-layer-up"
+---| "move-selection-layer-down"
+---| "rotation-snapping"
+---| "grid-snapping"
+---| "preferences"
+---| "paired-pages-mode"
+---| "paired-pages-offset"
+---| "presentation-mode"
+---| "fullscreen"
+---| "show-sidebar"
+---| "show-toolbar"
+---| "set-layout-vertical"
+---| "set-layout-right-to-left"
+---| "set-layout-bottom-to-top"
+---| "set-columns-or-rows"
+---| "manage-toolbar"
+---| "customize-toolbar"
+---| "show-menubar"
+---| "zoom-in"
+---| "zoom-out"
+---| "zoom-100"
+---| "zoom-fit"
+---| "zoom"
+---| "goto-first"
+---| "goto-previous"
+---| "goto-page"
+---| "goto-next"
+---| "goto-last"
+---| "goto-next-annotated-page"
+---| "goto-previous-annotated-page"
+---| "new-page-before"
+---| "new-page-after"
+---| "new-page-at-end"
+---| "duplicate-page"
+---| "move-page-towards-beginning"
+---| "move-page-towards-end"
+---| "append-new-pdf-pages"
+---| "configure-page-template"
+---| "delete-page"
+---| "paper-format"
+---| "paper-background-color"
+---| "select-tool"
+---| "select-default-tool"
+---| "tool-draw-shape-recognizer"
+---| "tool-draw-rectangle"
+---| "tool-draw-ellipse"
+---| "tool-draw-arrow"
+---| "tool-draw-double-arrow"
+---| "tool-draw-coordinate-system"
+---| "tool-draw-line"
+---| "tool-draw-spline"
+---| "setsquare"
+---| "compass"
+---| "tool-pen-size"
+---| "tool-pen-line-style"
+---| "tool-pen-fill"
+---| "tool-pen-fill-opacity"
+---| "tool-eraser-size"
+---| "tool-eraser-type"
+---| "tool-highlighter-size"
+---| "tool-highlighter-fill"
+---| "tool-highlighter-fill-opacity"
+---| "tool-select-pdf-text-marker-opacity"
+---| "audio-record"
+---| "audio-pause-playback"
+---| "audio-stop-playback"
+---| "audio-seek-forwards"
+---| "audio-seek-backwards"
+---| "select-font"
+---| "font"
+---| "tex"
+---| "plugin-manager"
+---| "help"
+---| "demo"
+---| "about"
+---| "tool-size"
+---| "tool-fill"
+---| "tool-fill-opacity"
+---| "tool-color"
+---| "select-color"
+---| "layer-show-all"
+---| "layer-hide-all"
+---| "layer-new-above-current"
+---| "layer-new-below-current"
+---| "layer-copy"
+---| "layer-move-up"
+---| "layer-move-down"
+---| "layer-delete"
+---| "layer-merge-down"
+---| "layer-rename"
+---| "layer-goto-next"
+---| "layer-goto-previous"
+---| "layer-goto-top"
+---| "layer-active"
+---| "position-highlighting"
 
 ---@enum
 app.C = {
