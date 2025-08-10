@@ -114,24 +114,28 @@ function app.openDialog(message, options, cb, error) end
 function app.registerUi(opts) end
 
 --- *
---- Change the action's state, triggering callbacks
+--- Change the action's state, triggering callbacks. Actions with state from an enum
+--- (like ToolType, ToolSize, EraserSize, OrderChange) should be accessed via the app.C
+--- table of constants for consistency between different versions of Xournal++
 --- @param action string
 --- @param state any
 --- 
---- Example 1: app.changeActionState("select-tool", 4)  -- but what does 4 mean?
+--- Example 1: app.changeActionState("select-tool",  app.C.Tool_text)
 --- Example 2: app.changeActionState("set-layout-vertical", false)
---- Example 3: app.changeActionState("set-columns-or-rows", -3)
---- Example 4: app.changeActionState("tool-color", 0xff0000)
+--- Example 3: app.changeActionState("set-columns-or-rows", -3)      # 3 rows
+--- Example 4: app.changeActionState("tool-color", 0xff0000)         # red color
 --- Example 5: app.changeActionState("zoom", 2.25)
 --- Example 6: app.changeActionState("tool-pen-line-style", "cust: 1 5 3 5")
 function app.changeActionState(action, state) end
 
 --- *
---- Activate the action, triggering callbacks
+--- Activate the action, triggering callbacks. Actions with state from an enum
+--- (like ToolType, ToolSize, EraserSize, OrderChange) should be accessed via the app.C
+--- table of constants for consistency between different versions of Xournal++
 --- @param action string
 --- @param state nilt | any
 --- 
---- Example 1: app.activateAction("arrange-selection-order", 1) -- but what does 1 mean?
+--- Example 1: app.activateAction("arrange-selection-order", app.C.OrderChange.bringForward)
 --- Example 2: app.activateAction("setsquare")
 --- Example 3: app.activateAction("tool-fill")
 function app.activateAction(action, state) end
@@ -932,3 +936,45 @@ function app.registerPlaceholder(id, description) end
 --- Updates the toolbar placeholder with the given value.
 function app.setPlaceholderValue(id, value) end
 
+---@enum
+app.C = {
+    ToolSize_veryThin = 0,
+    ToolSize_thin = 1,
+    ToolSize_medium = 2,
+    ToolSize_thick = 3,
+    ToolSize_veryThick = 4,
+    ToolSize_none = 5,
+    Tool_none = 0,
+    Tool_pen = 1,
+    Tool_eraser = 2,
+    Tool_highlighter = 3,
+    Tool_text = 4,
+    Tool_image = 5,
+    Tool_selectRect = 6,
+    Tool_selectRegion = 7,
+    Tool_selectMultiLayerRect = 8,
+    Tool_selectMultiLayerRegion = 9,
+    Tool_selectObject = 10,
+    Tool_playObject = 11,
+    Tool_verticalSpace = 12,
+    Tool_hand = 13,
+    Tool_drawRect = 14,
+    Tool_drawEllipse = 15,
+    Tool_drawArrow = 16,
+    Tool_drawDoubleArrow = 17,
+    Tool_drawCoordinateSystem = 18,
+    Tool_showFloatingToolbox = 19,
+    Tool_drawSpline = 20,
+    Tool_selectPdfTextLinear = 21,
+    Tool_selectPdfTextRect = 22,
+    Tool_laserPointerPen = 23,
+    Tool_laserPointerHighlighter = 24,
+    EraserType_none = 0,
+    EraserType_default = 1,
+    EraserType_whiteout = 2,
+    EraserType_deleteStroke = 3,
+    OrderChange_bringToFront = 0,
+    OrderChange_bringForward = 1,
+    OrderChange_sendBackward = 2,
+    OrderChange_sendToBack = 3,
+}

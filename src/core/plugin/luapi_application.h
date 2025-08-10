@@ -578,14 +578,16 @@ GVariant* lua_to_gvariant(lua_State* L, int idx, const GVariantType* typeHint) {
 }
 
 /***
- * Change the action's state, triggering callbacks
+ * Change the action's state, triggering callbacks. Actions with state from an enum
+ * (like ToolType, ToolSize, EraserSize, OrderChange) should be accessed via the app.C
+ * table of constants for consistency between different versions of Xournal++
  * @param action string
  * @param state any
  *
- * Example 1: app.changeActionState("select-tool", 4)  -- but what does 4 mean?
+ * Example 1: app.changeActionState("select-tool",  app.C.Tool_text)
  * Example 2: app.changeActionState("set-layout-vertical", false)
- * Example 3: app.changeActionState("set-columns-or-rows", -3)
- * Example 4: app.changeActionState("tool-color", 0xff0000)
+ * Example 3: app.changeActionState("set-columns-or-rows", -3)      # 3 rows
+ * Example 4: app.changeActionState("tool-color", 0xff0000)         # red color
  * Example 5: app.changeActionState("zoom", 2.25)
  * Example 6: app.changeActionState("tool-pen-line-style", "cust: 1 5 3 5")
  */
@@ -606,11 +608,13 @@ static int applib_changeActionState(lua_State* L) {
 }
 
 /***
- * Activate the action, triggering callbacks
+ * Activate the action, triggering callbacks. Actions with state from an enum
+ * (like ToolType, ToolSize, EraserSize, OrderChange) should be accessed via the app.C
+ * table of constants for consistency between different versions of Xournal++
  * @param action string
  * @param state nilt | any
  *
- * Example 1: app.activateAction("arrange-selection-order", 1) -- but what does 1 mean?
+ * Example 1: app.activateAction("arrange-selection-order", app.C.OrderChange.bringForward)
  * Example 2: app.activateAction("setsquare")
  * Example 3: app.activateAction("tool-fill")
  */
