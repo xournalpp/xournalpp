@@ -519,16 +519,12 @@ auto EditSelection::rearrangeInsertionOrder(const OrderChange change) -> UndoAct
                                                std::move(newOrd));
 }
 
+#define HANDLE_CASE(name, str, ...) \
+    case OrderChange::name:         \
+        return str;
 auto EditSelection::orderChangeToString(const OrderChange change) -> std::string {
     switch (change) {
-        case OrderChange::BringToFront:
-            return "bringToFront";
-        case OrderChange::BringForward:
-            return "bringForward";
-        case OrderChange::SendBackward:
-            return "sendBackward";
-        case OrderChange::SendToBack:
-            return "sendToBack";
+        FOR_ORDERCHANGE(HANDLE_CASE)
         default:
             return "";
     }

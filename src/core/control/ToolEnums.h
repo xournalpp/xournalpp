@@ -15,75 +15,67 @@
 
 #include "model/LineStyle.h"
 
-enum ToolSize {
-    TOOL_SIZE_VERY_FINE = 0,
-    TOOL_SIZE_FINE,
-    TOOL_SIZE_MEDIUM,
-    TOOL_SIZE_THICK,
-    TOOL_SIZE_VERY_THICK,
-    // None has to be at the end, because this enum is used as memory offset
-    TOOL_SIZE_NONE
-};
+#define FOR_TOOLSIZE(DO)                  \
+    DO(TOOL_SIZE_VERY_FINE, "veryThin")   \
+    DO(TOOL_SIZE_FINE, "thin")            \
+    DO(TOOL_SIZE_MEDIUM, "medium")        \
+    DO(TOOL_SIZE_THICK, "thick")          \
+    DO(TOOL_SIZE_VERY_THICK, "veryThick") \
+    DO(TOOL_SIZE_NONE, "none")
+
+#define DEFINE_ENUMERATION(name, str, ...) name,
+
+enum ToolSize { FOR_TOOLSIZE(DEFINE_ENUMERATION) };
 std::string toolSizeToString(ToolSize size);
 ToolSize toolSizeFromString(const std::string& size);
 
+#define FOR_DRAWINGTYPE(DO)                                    \
+    DO(DRAWING_TYPE_DONT_CHANGE, "dontChange")                 \
+    DO(DRAWING_TYPE_DEFAULT, "default")                        \
+    DO(DRAWING_TYPE_LINE, "line")                              \
+    DO(DRAWING_TYPE_RECTANGLE, "rectangle")                    \
+    DO(DRAWING_TYPE_ELLIPSE, "ellipse")                        \
+    DO(DRAWING_TYPE_ARROW, "arrow")                            \
+    DO(DRAWING_TYPE_DOUBLE_ARROW, "doubleArrow")               \
+    DO(DRAWING_TYPE_COORDINATE_SYSTEM, "drawCoordinateSystem") \
+    DO(DRAWING_TYPE_SHAPE_RECOGNIZER, "strokeRecognizer")      \
+    DO(DRAWING_TYPE_SPLINE, "spline")
 
-enum DrawingType {
-    /**
-     * For config entry, don't change value
-     */
-    DRAWING_TYPE_DONT_CHANGE = 0,
-
-    /**
-     * Default drawing, nothing special
-     */
-    DRAWING_TYPE_DEFAULT,
-    DRAWING_TYPE_LINE,
-    DRAWING_TYPE_RECTANGLE,
-    DRAWING_TYPE_ELLIPSE,
-    DRAWING_TYPE_ARROW,
-    DRAWING_TYPE_DOUBLE_ARROW,
-    DRAWING_TYPE_COORDINATE_SYSTEM,
-    DRAWING_TYPE_SHAPE_RECOGNIZER,
-    DRAWING_TYPE_SPLINE
-};
+enum DrawingType { FOR_DRAWINGTYPE(DEFINE_ENUMERATION) };
 std::string drawingTypeToString(DrawingType type);
 DrawingType drawingTypeFromString(const std::string& type);
 
 
-// Has to be in the same order as in Action.h: ActionType!
 // The numbers must agree with the action's targets in ui/mainmenubar.xml
-enum ToolType {
-    TOOL_NONE = 0,
+#define FOR_TOOLTYPE(DO)                                           \
+    DO(TOOL_NONE, "none", 0)                                       \
+    DO(TOOL_PEN, "pen", 1)                                         \
+    DO(TOOL_ERASER, "eraser", 2)                                   \
+    DO(TOOL_HIGHLIGHTER, "highlighter", 3)                         \
+    DO(TOOL_TEXT, "text", 4)                                       \
+    DO(TOOL_IMAGE, "image", 5)                                     \
+    DO(TOOL_SELECT_RECT, "selectRect", 6)                          \
+    DO(TOOL_SELECT_REGION, "selectRegion", 7)                      \
+    DO(TOOL_SELECT_MULTILAYER_RECT, "selectMultiLayerRect", 8)     \
+    DO(TOOL_SELECT_MULTILAYER_REGION, "selectMultiLayerRegion", 9) \
+    DO(TOOL_SELECT_OBJECT, "selectObject", 10)                     \
+    DO(TOOL_PLAY_OBJECT, "playObject", 11)                         \
+    DO(TOOL_VERTICAL_SPACE, "verticalSpace", 12)                   \
+    DO(TOOL_HAND, "hand", 13)                                      \
+    DO(TOOL_DRAW_RECT, "drawRect", 14)                             \
+    DO(TOOL_DRAW_ELLIPSE, "drawEllipse", 15)                       \
+    DO(TOOL_DRAW_ARROW, "drawArrow", 16)                           \
+    DO(TOOL_DRAW_DOUBLE_ARROW, "drawDoubleArrow", 17)              \
+    DO(TOOL_DRAW_COORDINATE_SYSTEM, "drawCoordinateSystem", 18)    \
+    DO(TOOL_FLOATING_TOOLBOX, "showFloatingToolbox", 19)           \
+    DO(TOOL_DRAW_SPLINE, "drawSpline", 20)                         \
+    DO(TOOL_SELECT_PDF_TEXT_LINEAR, "selectPdfTextLinear", 21)     \
+    DO(TOOL_SELECT_PDF_TEXT_RECT, "selectPdfTextRect", 22)         \
+    DO(TOOL_LASER_POINTER_PEN, "laserPointerPen", 23)              \
+    DO(TOOL_LASER_POINTER_HIGHLIGHTER, "laserPointerHighlighter", 24)
 
-    // First valid tool, often used starting Index 0
-    TOOL_PEN = 1,
-    TOOL_ERASER = 2,
-    TOOL_HIGHLIGHTER = 3,
-    TOOL_TEXT = 4,
-    TOOL_IMAGE = 5,
-    TOOL_SELECT_RECT = 6,
-    TOOL_SELECT_REGION = 7,
-    TOOL_SELECT_MULTILAYER_RECT = 8,
-    TOOL_SELECT_MULTILAYER_REGION = 9,
-    TOOL_SELECT_OBJECT = 10,
-    TOOL_PLAY_OBJECT = 11,
-    TOOL_VERTICAL_SPACE = 12,
-    TOOL_HAND = 13,
-    TOOL_DRAW_RECT = 14,
-    TOOL_DRAW_ELLIPSE = 15,
-    TOOL_DRAW_ARROW = 16,
-    TOOL_DRAW_DOUBLE_ARROW = 17,
-    TOOL_DRAW_COORDINATE_SYSTEM = 18,
-    TOOL_FLOATING_TOOLBOX = 19,
-    TOOL_DRAW_SPLINE = 20,
-    TOOL_SELECT_PDF_TEXT_LINEAR = 21,
-    TOOL_SELECT_PDF_TEXT_RECT = 22,
-    TOOL_LASER_POINTER_PEN = 23,
-    TOOL_LASER_POINTER_HIGHLIGHTER = 24,
-
-    TOOL_END_ENTRY
-};
+#define ASSIGN_ENUM_VALUES(name, str, ind) name = ind,
+enum ToolType { FOR_TOOLTYPE(ASSIGN_ENUM_VALUES) TOOL_END_ENTRY };
 auto isSelectToolType(ToolType type) -> bool;
 auto isSelectToolTypeSingleLayer(ToolType type) -> bool;
 
@@ -98,16 +90,23 @@ auto requiresClearedSelection(ToolType type) -> bool;
 std::string toolTypeToString(ToolType type);
 ToolType toolTypeFromString(const std::string& type);
 
-enum OpacityFeature {
-    OPACITY_NONE,
-    OPACITY_FILL_PEN,
-    OPACITY_FILL_HIGHLIGHTER,
-    OPACITY_SELECT_PDF_TEXT_MARKER,
-};
+#define FOR_OPACITYFEATURE(DO)                             \
+    DO(OPACITY_NONE, "none")                               \
+    DO(OPACITY_FILL_PEN, "opacityFillPen")                 \
+    DO(OPACITY_FILL_HIGHLIGHTER, "opacityFillHighlighter") \
+    DO(OPACITY_SELECT_PDF_TEXT_MARKER, "opacitySelectPdfTextMarker")
+
+enum OpacityFeature { FOR_OPACITYFEATURE(DEFINE_ENUMERATION) };
 std::string opacityFeatureToString(OpacityFeature feature);
 OpacityFeature opacityFeatureFromString(const std::string& feature);
 
-enum EraserType { ERASER_TYPE_NONE = 0, ERASER_TYPE_DEFAULT, ERASER_TYPE_WHITEOUT, ERASER_TYPE_DELETE_STROKE };
+#define FOR_ERASERTYPE(DO)               \
+    DO(ERASER_TYPE_NONE, "none")         \
+    DO(ERASER_TYPE_DEFAULT, "default")   \
+    DO(ERASER_TYPE_WHITEOUT, "whiteout") \
+    DO(ERASER_TYPE_DELETE_STROKE, "deleteStroke")
+
+enum EraserType { FOR_ERASERTYPE(DEFINE_ENUMERATION) };
 std::string eraserTypeToString(EraserType type);
 EraserType eraserTypeFromString(const std::string& type);
 
@@ -129,13 +128,14 @@ enum ToolCapabilities : unsigned int {
     TOOL_CAP_LINE_STYLE = 1 << 12
 };
 
-enum StrokeType {
-    STROKE_TYPE_NONE = 0,
-    STROKE_TYPE_STANDARD = 1,
-    STROKE_TYPE_DASHED = 2,
-    STROKE_TYPE_DASHDOTTED = 3,
-    STROKE_TYPE_DOTTED = 4
-};
+#define FOR_STROKETYPE(DO)                \
+    DO(STROKE_TYPE_NONE, "none")          \
+    DO(STROKE_TYPE_STANDARD, "standard")  \
+    DO(STROKE_TYPE_DASHED, "dashed")      \
+    DO(STROKE_TYPE_DASHDOTTED, "dashdot") \
+    DO(STROKE_TYPE_DOTTED, "dot")
+
+enum StrokeType { FOR_STROKETYPE(DEFINE_ENUMERATION) };
 auto strokeTypeFromString(const std::string& type) -> StrokeType;
 auto strokeTypeToLineStyle(StrokeType type) -> LineStyle;
 auto strokeTypeToString(StrokeType type) -> std::string;
