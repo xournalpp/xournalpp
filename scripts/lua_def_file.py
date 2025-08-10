@@ -156,6 +156,24 @@ def fmt_luaLS_def(file, function_name, comments = [], params = []):
         print("\n".join(comments), file=file)
     print(f"function app.{function_name}({', '.join(params)}) end\n", file=file)
 
+def insertActions(file_name):
+    start_pattern = re.compile(r'constexpr\s+const\s+char\*\s+ACTION_NAMES\[\]\s*=\s*{')
+
+    with open(file_name, 'r') as file:
+        inside_array = False
+        for line in file:
+            line = line.strip()
+
+            if not inside_array:
+                if re.match(start_pattern, line):
+                    inside_array = True
+            else:
+                if '}' in line:
+                    content = line[:line.find('}')]
+                    print(f"---| {re.search(r'(".*?")', content).group(1)}", file=f_out)
+                    break
+                else:
+                    print(f"---| {re.search(r'(".*?")', line).group(1)}", file=f_out)
 
 def insertValuesForEnum(macro_name, prefix, file_name):
     found_macro = False
@@ -233,6 +251,11 @@ if __name__ == "__main__":
             if i not in funcs_emitted:
                 print(f"Warning: Did not find doc-comments for API function {i}")
                 fmt_luaLS_def(f_out, i)
+
+        # Add alias for actions
+        print("---@alias Action", file=f_out)
+        insertActions("src/core/enums/generated/Action.NameMap.generated.h")
+        print("", file=f_out)
 
         # Add enum values
         print("---@enum", file=f_out)
