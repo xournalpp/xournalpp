@@ -9,7 +9,8 @@
 #include <glib-object.h>  // for g_object_unref, g_object...
 #include <glib.h>         // for g_error_free, GError
 
-#ifdef USE_GTK_SOURCEVIEW
+#include "config-features.h"  // for ENABLE_GTK_SOURCEVIEW
+#ifdef ENABLE_GTK_SOURCEVIEW
 #include <gtksourceview/gtksource.h>  // for gtk_source_style_scheme_...
 #endif
 
@@ -42,7 +43,7 @@ LatexSettingsPanel::LatexSettingsPanel(GladeSearchpath* gladeSearchPath):
 
     GtkContainer* themeSelectionBoxContainer = GTK_CONTAINER(this->get("bxThemeSelectionContainer"));
 
-#ifdef USE_GTK_SOURCEVIEW
+#ifdef ENABLE_GTK_SOURCEVIEW
     this->sourceViewThemeSelector = gtk_source_style_scheme_chooser_button_new();
     gtk_container_add(themeSelectionBoxContainer, sourceViewThemeSelector);
 
@@ -76,7 +77,7 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
 
     std::string themeId = settings.sourceViewThemeId;
 
-#ifdef USE_GTK_SOURCEVIEW
+#ifdef ENABLE_GTK_SOURCEVIEW
     GtkSourceStyleSchemeManager* themeManager = gtk_source_style_scheme_manager_get_default();
     GtkSourceStyleScheme* theme = gtk_source_style_scheme_manager_get_scheme(themeManager, themeId.c_str());
 
@@ -109,7 +110,7 @@ void LatexSettingsPanel::save(LatexSettings& settings) {
     settings.globalTemplatePath = Util::fromGFilename(gtk_file_chooser_get_filename(this->globalTemplateChooser));
     settings.genCmd = gtk_entry_get_text(GTK_ENTRY(this->get("latexSettingsGenCmd")));
 
-#ifdef USE_GTK_SOURCEVIEW
+#ifdef ENABLE_GTK_SOURCEVIEW
     GtkSourceStyleScheme* theme = gtk_source_style_scheme_chooser_get_style_scheme(
             GTK_SOURCE_STYLE_SCHEME_CHOOSER(this->sourceViewThemeSelector));
     settings.sourceViewThemeId = gtk_source_style_scheme_get_id(theme);
@@ -177,7 +178,7 @@ void LatexSettingsPanel::updateWidgetSensitivity() {
     // Only select a custom font if we're not using the system's.
     gtk_widget_set_sensitive(this->get("boxCustomFontOptions"), !useSystemFont);
 
-#ifndef USE_GTK_SOURCEVIEW
+#ifndef ENABLE_GTK_SOURCEVIEW
     gtk_widget_set_sensitive(this->get("bxGtkSourceviewSettings"), false);
 #endif
 }

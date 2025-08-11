@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.18)
 cmake_policy(VERSION ${CMAKE_VERSION})
 
 ## The CMAKE_OSX_DEPLOYMENT_TARGET must be set before project(), so don't move the following lines further down.
@@ -132,8 +132,6 @@ list(APPEND pkg-module-spec "portaudiocpp >= 12")
 list(APPEND pkg-module-spec "sndfile >= 1.0.25")
 list(APPEND pkg-module-spec "librsvg-2.0 >= 2.40")
 
-pkg_check_modules(GtkSourceView IMPORTED_TARGET "gtksourceview-4 >= 4.0.0")
-
 # Profiling
 option (ENABLE_PROFILING "Link with gperftools" OFF)
 if (ENABLE_PROFILING)
@@ -147,23 +145,23 @@ find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
 
 option(ENABLE_PLUGINS "Compile with plugin support" ON)
-find_package(Lua) # Lua 5.4 is only supported with cmake >=3.18
-message(STATUS "Found Lua: ${Lua_FOUND}")
-if (Lua_FOUND AND ENABLE_PLUGINS)
-    # currently not fully supported by cmake
+if (ENABLE_PLUGINS)
     message(STATUS "Enable Xournal++ Plugins")
+    find_package(Lua REQUIRED)
     add_library(lua INTERFACE)
     target_link_libraries(lua INTERFACE ${LUA_LIBRARIES})
     target_include_directories(lua INTERFACE ${LUA_INCLUDE_DIR})
     add_library(Lua::lua ALIAS lua)
 else ()
     message(STATUS "Disable Xournal++ Plugins")
-    set(ENABLE_PLUGINS OFF)
 endif ()
 
-if (GtkSourceView_FOUND)
-    message("Enable GtkSourceView TeX syntax highlighting")
-    add_compile_definitions(USE_GTK_SOURCEVIEW)
+option(ENABLE_GTK_SOURCEVIEW "Enable syntax highlighting in TeX editor" ON)
+if (ENABLE_GTK_SOURCEVIEW)
+    pkg_check_modules(GtkSourceView REQUIRED IMPORTED_TARGET "gtksourceview-4 >= 4.0.0")
+    message(STATUS "Enable GtkSourceView TeX syntax highlighting")
+else ()
+    message(STATUS "Disable GtkSourceView TeX syntax highlighting")
 endif ()
 
 # X11 link settings
