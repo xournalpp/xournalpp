@@ -58,7 +58,7 @@ add_custom_command(
     VERBATIM
     MAIN_DEPENDENCY ${XOURNAL_WRAPPER_GRESOURCE_XML}
     DEPENDS
-        ${CMAKE_SOURCE_DIR}/ui/crashDialog.glade
+        ${CMAKE_SOURCE_DIR}/ui/crashDialog.ui
 )
 
 add_custom_target(

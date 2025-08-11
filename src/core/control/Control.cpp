@@ -271,9 +271,9 @@ auto Control::checkChangedDocument(Control* control) -> bool {
 void Control::saveSettings() {
     this->toolHandler->saveSettings();
 
-    gint width = 0;
-    gint height = 0;
-    gtk_window_get_size(getGtkWindow(), &width, &height);
+    int width = 0;
+    int height = 0;
+    gtk_window_get_default_size(getGtkWindow(), &width, &height);
 
     if (!this->win->isMaximized()) {
         this->settings->setMainWndSize(width, height);
@@ -669,7 +669,9 @@ void Control::addDefaultPage(const std::optional<std::string>& pageTemplate, Doc
         this->doc->addPage(std::move(page));
         this->doc->unlock();
     } else {
+        this->doc->lock();
         doc->addPage(std::move(page));
+        this->doc->unlock();
     }
 }
 
@@ -1442,7 +1444,7 @@ void Control::showSettings() {
                 ctrl->win->setDPI();
 
                 if (settingsBeforeDialog.sidebarStyle != settings->getSidebarNumberingStyle()) {
-                    ctrl->getSidebar()->layout();
+                    ctrl->getSidebar()->updatePageNumberingStyle();
                 }
 
                 xournal->getHandRecognition()->reload();
@@ -2168,7 +2170,7 @@ static void onGtkDemoShown(GObject* proc_object, GAsyncResult* res, gpointer) {
 }
 
 void Control::showGtkDemo() {
-    std::string binary = "gtk3-demo";
+    std::string binary = "gtk4-demo";
 #ifdef __APPLE__
     if (!xoj::util::OwnedCString::assumeOwnership(g_find_program_in_path(binary.c_str()))) {
         // Try absolute path for binary

@@ -7,7 +7,7 @@ set -o pipefail
 
 LOCKFILE="$(dirname "$0")"/jhbuild-version.lock
 MODULEFILE="$(dirname "$0")"/xournalpp.modules
-GTK_MODULES="meta-gtk-osx-gtk3 gtksourceview3"
+GTK_MODULES="gtk-4 gtksourceview4 librsvg adwaita-icon-theme hicolor-icon-theme"
 
 get_lockfile_entry() {
     local key="$1"
@@ -82,9 +82,6 @@ use_local_modulesets = True
 moduleset = "gtk-osx.modules"
 modulesets_dir = os.path.expanduser("~/gtk-osx-custom/modulesets-stable")
 
-# Workaround for https://gitlab.gnome.org/GNOME/glib/-/issues/2759
-module_mesonargs['glib'] = mesonargs + ' -Dobjc_args=-Wno-error=declaration-after-statement'
-
 # Fix freetype build finding brotli installed through brew or ports, causing the
 # harfbuzz build to fail when jhbuild's pkg-config cannot find brotli.
 module_cmakeargs['freetype-no-harfbuzz'] = ' -DFT_DISABLE_BROTLI=TRUE '
@@ -92,6 +89,15 @@ module_cmakeargs['freetype'] = ' -DFT_DISABLE_BROTLI=TRUE '
 
 # portaudio may fail with parallel build, so disable parallel building.
 module_makeargs['portaudio'] = ' -j1 '
+
+# Disable gtksourceview 5 (for GTK 4) vapi
+module_mesonargs['gtksourceview4'] = mesonargs + ' -Dvapi=false -Dbuild-testsuite=false'
+
+module_mesonargs['gtk-4'] = mesonargs + ' -Dbuild-testsuite=false -Dbuild-examples=false -Dbuild-tests=false'
+
+module_mesonargs['glib-no-introspection'] = mesonargs + ' -Dglib_debug=disabled'
+module_mesonargs['glib'] = mesonargs + ' -Dglib_debug=disabled'
+
 
 ### END
 EOF

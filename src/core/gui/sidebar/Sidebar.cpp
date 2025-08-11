@@ -21,7 +21,6 @@
 #include "previews/page/SidebarPreviewPages.h"       // for SidebarPreviewP...
 #include "util/Util.h"                               // for npos
 #include "util/glib_casts.h"                         // for closure_notify_cb
-#include "util/gtk4_helper.h"                        //
 #include "util/i18n.h"                               // for _, FC, _F
 
 Sidebar::Sidebar(GladeGui* gui, Control* control): control(control) {
@@ -31,6 +30,13 @@ Sidebar::Sidebar(GladeGui* gui, Control* control): control(control) {
     this->sidebarContents = gui->get("sidebarContents");
 
     this->initTabs(sidebarContents);
+
+    GtkPaned* paned = GTK_PANED(gui->get("panedMainContents"));
+    // For some reason, putting those in the .ui file doesn't work
+    gtk_paned_set_shrink_start_child(paned, false);
+    gtk_paned_set_shrink_end_child(paned, false);
+    gtk_paned_set_resize_start_child(paned, false);
+    gtk_paned_set_resize_end_child(paned, true);
 
     registerListener(control);
 }
@@ -155,8 +161,10 @@ void Sidebar::documentChanged(DocumentChangeType type) {
 SidebarTabButton::SidebarTabButton(Sidebar* sidebar, size_t index, AbstractSidebarPage* page):
         sidebar(sidebar), index(index), page(page) {}
 
-void Sidebar::layout() {
-    for (auto&& tab: this->tabs) {
-        tab->layout();
+void Sidebar::updatePageNumberingStyle() {
+    auto it = std::find_if(tabs.begin(), tabs.end(),
+                           [](const auto& t) { return dynamic_cast<SidebarPreviewPages*>(t.get()); });
+    if (it != tabs.end()) {
+        static_cast<SidebarPreviewPages*>(it->get())->updatePageNumberingStyle();
     }
 }

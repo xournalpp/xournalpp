@@ -50,7 +50,7 @@ void BaseShapeHandler::cancelStroke() {
 }
 
 auto BaseShapeHandler::onKeyEvent(const KeyEvent& event, bool pressed) -> bool {
-    bool isAltDown = event.state & GDK_MOD1_MASK;
+    bool isAltDown = event.state & GDK_ALT_MASK;
     bool isShiftDown = event.state & GDK_SHIFT_MASK;
     bool isControlDown = event.state & GDK_CONTROL_MASK;
     // event->state contains the modifiers' states BEFORE the current event

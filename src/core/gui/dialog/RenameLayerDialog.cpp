@@ -9,12 +9,11 @@
 #include "gui/Builder.h"
 #include "undo/LayerRenameUndoAction.h"  // for LayerRenameUndoAction
 #include "undo/UndoRedoHandler.h"        // for UndoRedoHandler
-#include "util/gtk4_helper.h"
 
 class GladeSearchpath;
 class Layer;
 
-constexpr auto UI_FILE = "renameLayerDialog.glade";
+constexpr auto UI_FILE = "renameLayerDialog.ui";
 constexpr auto UI_DIALOG_NAME = "renameLayerDialog";
 
 RenameLayerDialog::RenameLayerDialog(GladeSearchpath* gladeSearchPath, UndoRedoHandler* undo, LayerController* lc,
