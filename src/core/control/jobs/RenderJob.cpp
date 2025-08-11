@@ -21,7 +21,13 @@
 #include "util/raii/CairoWrappers.h"    // for CairoSurfaceSPtr, CairoSPtr
 #include "util/safe_casts.h"            // for strict_cast, as_signed, as_si...
 #include "view/DocumentView.h"          // for DocumentView
-#include "view/Mask.h"                  // for Mask
+#include "view/Tiling.h"                // for Tiling
+
+#include "config-features.h"  // for ENABLE_STD_EXECUTION_PARALLEL_POLICY
+
+#ifdef ENABLE_STD_EXECUTION_PARALLEL_POLICY
+#include <execution>
+#endif
 
 #if defined(__has_cpp_attribute) && __has_cpp_attribute(likely)
 #define XOJ_CPP20_UNLIKELY [[unlikely]]
@@ -44,51 +50,94 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
      **/
     constexpr int RENDER_PADDING = 1;
 
+    const double zoom = view->xournal->getZoom();
     Range maskRange(rect);
     maskRange.addPadding(RENDER_PADDING);
-    xoj::view::Mask newMask(view->xournal->getDpiScaleFactor(), maskRange, view->xournal->getZoom(),
-                            CAIRO_CONTENT_COLOR_ALPHA);
+    xoj::view::Mask newMask(view->xournal->getDpiScaleFactor(), maskRange, zoom, CAIRO_CONTENT_COLOR_ALPHA);
 
-    renderToBuffer(newMask.get());
+    {
+        std::shared_lock<Document> lock(*this->view->xournal->getDocument());
+        renderToBuffer(newMask.get());
+    }
 
     std::lock_guard lock(this->view->drawingMutex);
-    if (!view->buffer.isInitialized()) {
-        // Todo: the buffer must not be uninitializable here, either by moving it into the job or by locking it at job
-        // creation a shared prt may also be suffice.
-        XOJ_CPP20_UNLIKELY return;
+    for (auto& t: view->tiles.getTilesFor(Range(0, 0, view->page->getWidth(), view->page->getHeight()))) {
+        newMask.paintTo(t->get());
     }
-    newMask.paintTo(view->buffer.get());
 }
 
 void RenderJob::run() {
-    this->view->repaintRectMutex.lock();
+    this->view->rerenderDataMutex.lock();
 
-    bool rerenderComplete = std::exchange(this->view->rerenderComplete, false);
-    bool sizeChanged = std::exchange(this->view->sizeChanged, false);
-    auto rerenderRects = std::move(this->view->rerenderRects);
+    bool rerenderComplete = std::exchange(this->view->rerenderData.rerenderComplete, false);
+    bool sizeChanged = std::exchange(this->view->rerenderData.sizeChanged, false);
+    auto rerenderRects = std::move(this->view->rerenderData.rerenderRects);
+    auto retiling = std::move(this->view->rerenderData.retiling);
+    auto center = this->view->rerenderData.centerOfVisibleArea;  // Do not move out - it may still be used.
 
-    this->view->repaintRectMutex.unlock();
+    this->view->rerenderDataMutex.unlock();
 
-    if (rerenderComplete) {
-        xoj::view::Mask newMask(view->xournal->getDpiScaleFactor(),
-                                Range(0, 0, view->page->getWidth(), view->page->getHeight()), view->xournal->getZoom(),
-                                CAIRO_CONTENT_COLOR_ALPHA);
+    if (!rerenderComplete) {
+        for (Rectangle<double> const& rect: rerenderRects) {
+            // The number of rectangles is typically very small (1 or 2) so no need to optimize/parallelize this loop
+            rerenderRectangle(rect);
+            repaintPageArea(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height);
+        }
+        if (!retiling.missingTiles.empty()) {
+            xoj::view::Tiling newTiles;
+            newTiles.setZoom(view->xournal->getZoom());
+            newTiles.createTiles(view->xournal->getDpiScaleFactor(), std::move(retiling));
+            std::vector<xoj::util::Rectangle<int>> toRepaint;
+            toRepaint.reserve(newTiles.getTiles().size());
 
-        renderToBuffer(newMask.get());
+            {
+                std::shared_lock<Document> lock(*this->view->xournal->getDocument());
+#ifdef ENABLE_STD_EXECUTION_PARALLEL_POLICY
+                // We lock the document only once and render the tiles in parallel. This is safe because rendering the
+                // document does not modify it and never invalidates any iterators
+                std::for_each(std::execution::par, newTiles.getTiles().begin(), newTiles.getTiles().end(),
+                              [this](auto&& t) { renderToBuffer(t->get()); });
+#else
+                std::for_each(newTiles.getTiles().begin(), newTiles.getTiles().end(),
+                              [this](auto&& t) { renderToBuffer(t->get()); });
+#endif
+            }
+            for (auto&& t: newTiles.getTiles()) {
+                toRepaint.emplace_back(t->getExtent());
+            }
+            {
+                std::lock_guard lock(this->view->drawingMutex);
+                this->view->tiles.append(newTiles);
+            }
+            for (auto&& t: toRepaint) {
+                repaintTile(t);
+            }
+        }
+    } else {
+        xoj::view::Tiling newTiles;
+        newTiles.populate(view->xournal->getDpiScaleFactor(), center,
+                          Range(0, 0, view->page->getWidth(), view->page->getHeight()), view->xournal->getZoom());
+        {
+            std::lock_guard<Document> lock(*this->view->xournal->getDocument());
+#ifdef ENABLE_STD_EXECUTION_PARALLEL_POLICY
+            // We lock the document only once and render the tiles in parallel. This is safe because rendering the
+            // document does not modify it and never invalidates any iterators
+            std::for_each(std::execution::par, newTiles.getTiles().begin(), newTiles.getTiles().end(),
+                          [this](auto&& t) { renderToBuffer(t->get()); });
+#else
+            std::for_each(newTiles.getTiles().begin(), newTiles.getTiles().end(),
+                          [this](auto&& t) { renderToBuffer(t->get()); });
+#endif
+        }
         {
             std::lock_guard lock(this->view->drawingMutex);
-            std::swap(this->view->buffer, newMask);
+            std::swap(this->view->tiles, newTiles);
         }
         if (sizeChanged) {
             // We do not have any control on what portion of the widget needs to be redrawn. Redraw it all.
             Util::execInUiThread([w = view->xournal->getWidget()]() { gtk_widget_queue_draw(w); });
         } else {
             repaintPage();
-        }
-    } else {
-        for (Rectangle<double> const& rect: rerenderRects) {
-            rerenderRectangle(rect);
-            repaintPageArea(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height);
         }
     }
 }
@@ -107,13 +156,20 @@ void RenderJob::repaintPageArea(double x1, double y1, double x2, double y2) cons
                       x + ceil_cast<int>(zoom * x2), y + ceil_cast<int>(zoom * y2));
 }
 
+void RenderJob::repaintTile(const xoj::util::Rectangle<int>& area) const {
+    int x = view->getX();
+    int y = view->getY();
+    repaintWidgetArea(view->xournal->getWidget(), x + area.x, y + area.y, x + area.x + area.width,
+                      y + area.y + area.height);
+}
+
+
 void RenderJob::renderToBuffer(cairo_t* cr) const {
     DocumentView localView;
     localView.setMarkAudioStroke(this->view->getXournal()->getControl()->getToolHandler()->getToolType() ==
                                  TOOL_PLAY_OBJECT);
     localView.setPdfCache(this->view->xournal->getCache());
 
-    std::lock_guard<Document> lock(*this->view->xournal->getDocument());
     localView.drawPage(this->view->page, cr, false);
 }
 
