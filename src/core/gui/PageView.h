@@ -29,6 +29,7 @@
 #include "util/raii/CairoWrappers.h"  // for CairoSurfaceSPtr
 #include "view/Mask.h"                // for Mask
 #include "view/Repaintable.h"         // for Repaintable
+#include "view/Tiling.h"              // for Tiling
 
 #include "Layout.h"            // for Layout
 #include "LegacyRedrawable.h"  // for LegacyRedrawable
@@ -96,6 +97,7 @@ public:
     void setSelected(bool selected);
 
     void setIsVisible(bool visible);
+    void setCenterOfVisibleArea(const xoj::util::Point<double>& c);  ///< In Page coordinates. May be out of the page.
 
     bool isSelected() const;
     inline bool isVisible() const { return visible; }
@@ -282,8 +284,8 @@ private:
     bool visible = true;
     bool selected = false;
 
-    xoj::view::Mask buffer;
-    std::mutex drawingMutex;
+    xoj::view::Tiling tiles;
+    std::mutex drawingMutex;  ///< Protects tiles
 
     bool inEraser = false;
 
@@ -297,10 +299,15 @@ private:
      */
     std::unique_ptr<SearchControl> search;
 
-    std::mutex repaintRectMutex;
-    std::vector<xoj::util::Rectangle<double>> rerenderRects;
-    bool rerenderComplete = false;
-    bool sizeChanged = false;
+    std::mutex rerenderDataMutex;
+    struct {
+        std::vector<xoj::util::Rectangle<double>> rerenderRects;
+        std::vector<xoj::util::Rectangle<int>> missingTiles;
+        bool rerenderComplete = false;
+        bool sizeChanged = false;
+        xoj::util::Point<double> centerOfVisibleArea{};  ///< In page coordinates. May be outside the page.
+    } rerenderData;
+
 
     int dispX{};  // position on display - set in Layout::layoutPages
     int dispY{};

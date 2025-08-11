@@ -21,7 +21,7 @@
 #include "util/raii/CairoWrappers.h"    // for CairoSurfaceSPtr, CairoSPtr
 #include "util/safe_casts.h"            // for strict_cast, as_signed, as_si...
 #include "view/DocumentView.h"          // for DocumentView
-#include "view/Mask.h"                  // for Mask
+#include "view/Tiling.h"                // for Tiling
 
 #if defined(__has_cpp_attribute) && __has_cpp_attribute(likely)
 #define XOJ_CPP20_UNLIKELY [[unlikely]]
@@ -44,53 +44,72 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
      **/
     constexpr int RENDER_PADDING = 1;
 
+    const double zoom = view->xournal->getZoom();
     Range maskRange(rect);
     maskRange.addPadding(RENDER_PADDING);
-    xoj::view::Mask newMask(view->xournal->getDpiScaleFactor(), maskRange, view->xournal->getZoom(),
-                            CAIRO_CONTENT_COLOR_ALPHA);
+    xoj::view::Mask newMask(view->xournal->getDpiScaleFactor(), maskRange, zoom, CAIRO_CONTENT_COLOR_ALPHA);
 
     renderToBuffer(newMask.get());
 
     std::lock_guard lock(this->view->drawingMutex);
-    if (!view->buffer.isInitialized()) {
-        // Todo: the buffer must not be uninitializable here, either by moving it into the job or by locking it at job
-        // creation a shared prt may also be suffice.
-        XOJ_CPP20_UNLIKELY return;
+    for (auto& t: view->tiles.getTilesFor(Range(0, 0, view->page->getWidth(), view->page->getHeight()))) {
+        newMask.paintTo(t->get());
     }
-    newMask.paintTo(view->buffer.get());
 }
 
 void RenderJob::run() {
-    this->view->repaintRectMutex.lock();
+    this->view->rerenderDataMutex.lock();
 
-    bool rerenderComplete = std::exchange(this->view->rerenderComplete, false);
-    bool sizeChanged = std::exchange(this->view->sizeChanged, false);
-    auto rerenderRects = std::move(this->view->rerenderRects);
+    bool rerenderComplete = std::exchange(this->view->rerenderData.rerenderComplete, false);
+    auto rerenderRects = std::move(this->view->rerenderData.rerenderRects);
+    bool sizeChanged = std::exchange(this->view->rerenderData.sizeChanged, false);
+    auto missingTiles = std::move(this->view->rerenderData.missingTiles);
+    auto center = this->view->rerenderData.centerOfVisibleArea;  // Do not move out - it may still be used.
 
-    this->view->repaintRectMutex.unlock();
+    this->view->rerenderDataMutex.unlock();
 
-    if (rerenderComplete) {
-        xoj::view::Mask newMask(view->xournal->getDpiScaleFactor(),
-                                Range(0, 0, view->page->getWidth(), view->page->getHeight()), view->xournal->getZoom(),
-                                CAIRO_CONTENT_COLOR_ALPHA);
-
-        renderToBuffer(newMask.get());
-        {
-            std::lock_guard lock(this->view->drawingMutex);
-            std::swap(this->view->buffer, newMask);
-        }
-        if (sizeChanged) {
-            // We do not have any control on what portion of the widget needs to be redrawn. Redraw it all.
-            Util::execInUiThread([w = view->xournal->getWidget()]() { gtk_widget_queue_draw(w); });
-        } else {
-            repaintPage();
-        }
-    } else {
+    if (!rerenderComplete) {
         for (Rectangle<double> const& rect: rerenderRects) {
             rerenderRectangle(rect);
-            repaintPageArea(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height);
+            // repaintPageArea(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height);
         }
+        if (!missingTiles.empty()) {
+            xoj::view::Tiling newTiles;
+            newTiles.setZoom(view->xournal->getZoom());
+            newTiles.createTiles(view->xournal->getDpiScaleFactor(), missingTiles);
+            std::vector<xoj::util::Rectangle<int>> toRepaint;
+            toRepaint.reserve(newTiles.getTiles().size());
+            for (auto&& t: newTiles.getTiles()) {
+                renderToBuffer(t->get());
+                toRepaint.emplace_back(t->getExtent());
+            }
+            {
+                std::lock_guard lock(this->view->drawingMutex);
+                this->view->tiles.append(newTiles);
+            }
+            // for (auto&& t: toRepaint) {
+            //     repaintTile(t);
+            // }
+        }
+    } else {
+        xoj::view::Tiling newTiles;
+        newTiles.populate(view->xournal->getDpiScaleFactor(), center,
+                          Range(0, 0, view->page->getWidth(), view->page->getHeight()), view->xournal->getZoom());
+        for (auto&& t: newTiles.getTiles()) {
+            renderToBuffer(t->get());
+        }
+        {
+            std::lock_guard lock(this->view->drawingMutex);
+            std::swap(this->view->tiles, newTiles);
+        }
+        // if (sizeChanged) {
+        //     // We do not have any control on what portion of the widget needs to be redrawn. Redraw it all.
+        //     Util::execInUiThread([w = view->xournal->getWidget()]() { gtk_widget_queue_draw(w); });
+        // } else {
+        //     repaintPage();
+        // }
     }
+    Util::execInUiThread([w = view->xournal->getWidget()]() { gtk_widget_queue_draw(w); });
 }
 
 static void repaintWidgetArea(GtkWidget* widget, int x1, int y1, int x2, int y2) {
@@ -106,6 +125,14 @@ void RenderJob::repaintPageArea(double x1, double y1, double x2, double y2) cons
     repaintWidgetArea(view->xournal->getWidget(), x + floor_cast<int>(zoom * x1), y + floor_cast<int>(zoom * y1),
                       x + ceil_cast<int>(zoom * x2), y + ceil_cast<int>(zoom * y2));
 }
+
+void RenderJob::repaintTile(const xoj::util::Rectangle<int>& area) const {
+    int x = view->getX();
+    int y = view->getY();
+    repaintWidgetArea(view->xournal->getWidget(), x + area.x, y + area.y, x + area.x + area.width,
+                      y + area.y + area.height);
+}
+
 
 void RenderJob::renderToBuffer(cairo_t* cr) const {
     DocumentView localView;

@@ -88,6 +88,7 @@ void Layout::checkScroll(GtkAdjustment* adjustment, double& lastScroll) {
 
 void Layout::updateVisibility() {
     Rectangle visRect = getVisibleRect();
+    xoj::util::Point<double> center(visRect.x + .5 * visRect.width, visRect.y + .5 * visRect.height);
 
     // step through every possible page position and update using p->setIsVisible()
     // Using initial grid aprox speeds things up by a factor of 5.  See previous git check-in for specifics.
@@ -115,6 +116,8 @@ void Layout::updateVisibility() {
                     auto const& pageRect = pageView->getRect();
                     if (auto intersection = pageRect.intersects(visRect); intersection) {
                         pageView->setIsVisible(true);
+                        pageView->setCenterOfVisibleArea((center - xoj::util::Point<double>(pageRect.x, pageRect.y)) /
+                                                         this->view->getZoom());
                         // Set the selected page
                         double percent = intersection->area() / pageRect.area();
 
