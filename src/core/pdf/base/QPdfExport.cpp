@@ -64,7 +64,7 @@ static void reorderBackgrounds(QPDF& background, const std::vector<HybridPdfExpo
                 backgroundPages[n] = backgroundPages[n].shallowCopyPage();
                 pageHelper.addPage(backgroundPages[n], false);  // Append the copy
 #if QPDF_MAJOR_VERSION >= 11
-                xoj_assert(background.getAllPages().back().isSameObjectAs(backgroundPages[n]));
+                xoj_assert(background.getAllPages().back().isSameObjectAs(backgroundPages[n].getObjectHandle()));
 #endif
             }
             nbValidPages++;
