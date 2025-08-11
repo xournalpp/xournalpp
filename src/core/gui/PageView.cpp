@@ -122,10 +122,35 @@ void XojPageView::addOverlayView(std::unique_ptr<xoj::view::OverlayView> overlay
 
 void XojPageView::setIsVisible(bool visible) { this->visible = visible; }
 
+void XojPageView::setCenterOfVisibleArea(xoj::util::Point<int> c) {
+    c = c - xoj::util::Point<int>(getX(), getY());
+    this->drawingMutex.lock();
+    auto retiling = this->tiles.computeRetiling(c, Range(0., 0., this->page->getWidth(), this->page->getHeight()),
+                                                this->getZoom());
+    this->drawingMutex.unlock();
+
+    bool rerender = !retiling.missingTiles.empty();
+
+    this->rerenderDataMutex.lock();
+    this->rerenderData.centerOfVisibleArea = c;
+    this->rerenderData.retiling.merge(std::move(retiling));
+    this->rerenderDataMutex.unlock();
+
+    if (rerender) {
+        this->xournal->getControl()->getScheduler()->addRerenderPage(this);
+    }
+}
+
 void XojPageView::deleteViewBuffer() {
     std::lock_guard lock(this->drawingMutex);
-    this->buffer.reset();
+    this->tiles.clear();
 }
+
+auto XojPageView::getCacheSize() const -> CacheSize {
+    auto s = tiles.getTiles().size();
+    return {s, s * xoj::view::Tiling::getEstimatedMemUsageForOneTile(this->xournal->getDpiScaleFactor()) >> 20};
+}
+
 
 auto XojPageView::containsPoint(int x, int y, bool local) const -> bool {
     if (!local) {
@@ -813,8 +838,10 @@ auto XojPageView::onKeyReleaseEvent(const KeyEvent& event) -> bool {
 }
 
 void XojPageView::rerenderPage(bool sizeChanged) {
-    this->rerenderComplete = true;
-    this->sizeChanged = sizeChanged;
+    this->rerenderDataMutex.lock();
+    this->rerenderData.rerenderComplete = true;
+    this->rerenderData.sizeChanged = sizeChanged;
+    this->rerenderDataMutex.unlock();
     this->xournal->getControl()->getScheduler()->addRerenderPage(this);
 }
 
@@ -829,12 +856,16 @@ void XojPageView::repaintArea(double x1, double y1, double x2, double y2) const 
 void XojPageView::flagDirtyRegion(const Range& rg) const { repaintArea(rg.minX, rg.minY, rg.maxX, rg.maxY); }
 
 void XojPageView::drawAndDeleteToolView(xoj::view::ToolView* v, const Range& rg) {
-    if (v->isViewOf(this->inputHandler.get()) || v->isViewOf(this->verticalSpace.get()) ||
-        v->isViewOf(this->textEditor.get())) {
+    if (!rg.empty() && (v->isViewOf(this->inputHandler.get()) || v->isViewOf(this->verticalSpace.get()) ||
+                        v->isViewOf(this->textEditor.get()))) {
         // Draw the inputHandler's view onto the page buffer.
         std::lock_guard lock(this->drawingMutex);
-        if (auto cr = buffer.get(); cr) {
-            v->drawWithoutDrawingAids(cr);
+        if (!this->tiles.empty()) {
+            auto ts = this->tiles.getTilesFor(rg);
+            printf("pasting to %zu tiles\n", ts.size());
+            for (const auto& tile: ts) {
+                v->drawWithoutDrawingAids(tile->get());
+            }
         } else {
             rerenderPage();
         }
@@ -872,27 +903,27 @@ auto XojPageView::toWindowCoordinates(const xoj::util::Rectangle<double>& r) con
 }
 
 void XojPageView::rerenderRect(double x, double y, double width, double height) {
-    if (this->rerenderComplete) {
+    if (this->rerenderData.rerenderComplete) {
         return;
     }
 
     auto rect = Rectangle<double>{x, y, width, height};
 
-    this->repaintRectMutex.lock();
+    this->rerenderDataMutex.lock();
 
-    for (auto&& r: this->rerenderRects) {
+    for (auto&& r: this->rerenderData.rerenderRects) {
         // its faster to redraw only one rect than repaint twice the same area
         // so loop through the rectangles to be redrawn, if new rectangle
         // intersects any of them, replace it by the union with the new one
         if (r.intersects(rect)) {
             r.unite(rect);
-            this->repaintRectMutex.unlock();
+            this->rerenderDataMutex.unlock();
             return;
         }
     }
 
-    this->rerenderRects.push_back(rect);
-    this->repaintRectMutex.unlock();
+    this->rerenderData.rerenderRects.push_back(rect);
+    this->rerenderDataMutex.unlock();
 
     this->xournal->getControl()->getScheduler()->addRerenderPage(this);
 }
@@ -1053,18 +1084,18 @@ auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
     {
         std::lock_guard lock(this->drawingMutex);  // Lock the mutex first
         xoj::util::CairoSaveGuard saveGuard(cr);   // see comment at the end of the scope
-        if (!this->hasBuffer()) {
+        if (this->tiles.empty()) {
             drawLoadingPage(cr);
             return true;
         }
 
-        if (this->buffer.getZoom() != zoom) {
+        if (this->tiles.getZoom() != zoom) {
             rerenderPage();
             cairo_pattern_set_filter(cairo_get_source(cr), CAIRO_FILTER_FAST);
         }
-        this->buffer.paintTo(cr);
+        this->tiles.paintTo(cr);
     }  // Restore the state of cr and then release the mutex
-       // restoring the state of cr ensures this->buffer.surface is not longer referenced as the source in cr.
+       // restoring the state of cr ensures the tiles can no longer be referenced as the source in cr.
 
     /**
      * All the overlay painters below follow the assumption:
@@ -1085,7 +1116,7 @@ auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
 
 auto XojPageView::isSelected() const -> bool { return selected; }
 
-auto XojPageView::hasBuffer() const -> bool { return this->buffer.isInitialized(); }
+auto XojPageView::hasBuffer() const -> bool { return !this->tiles.empty(); }
 
 auto XojPageView::getSelectionColor() -> GdkRGBA { return Util::rgb_to_GdkRGBA(settings->getSelectionColor()); }
 

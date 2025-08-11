@@ -23,6 +23,8 @@
 
 #cmakedefine ENABLE_QPDF
 
+#cmakedefine ENABLE_STD_EXECUTION_PARALLEL_POLICY
+
 #cmakedefine ENABLE_CPPTRACE
 
 // Example: #cmakedefine NAME_FROM_Cmake_list
