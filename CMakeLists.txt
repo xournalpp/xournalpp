@@ -103,6 +103,10 @@ include(GitRepo)
 find_package(CXX17 REQUIRED COMPONENTS optional)
 find_package(Filesystem REQUIRED COMPONENTS ghc Final Experimental)
 
+##############################
+# backtrace
+##############################
+
 if (NOT CMAKE_BUILD_TYPE STREQUAL "Release")
     include(FetchContent)
     FetchContent_Declare(
@@ -160,6 +164,22 @@ pkg_check_modules(ExternalModules REQUIRED IMPORTED_TARGET ${pkg-module-spec})
 
 find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
+
+# std::execution parallel policy
+option(ENABLE_STD_EXECUTION_PARALLEL_POLICY "Use std::execution::parallel policy" ON)
+if (ENABLE_STD_EXECUTION_PARALLEL_POLICY)
+    include(CheckCXXSymbolExists)
+    # TODO(cpp20) replace `ciso646` by `version`
+    check_cxx_symbol_exists(__GLIBCXX__ ciso646 GLIBCXX)
+    if(GLIBCXX) # Using libstdc++
+        find_package(TBB REQUIRED)  # for libstdc++ <execution>
+    endif()
+    check_cxx_symbol_exists(_LIBCPP_VERSION ciso646 LIBCPP)
+    if(LIBCPP) # Using libc++
+        # c++17 execution policies are still in the experimental lib (at least in clang 20)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexperimental-library")
+    endif()
+endif()
 
 option(ENABLE_AUDIO "Compile with Audio recording/playing support" ON)
 if (ENABLE_AUDIO)
@@ -240,6 +260,7 @@ target_link_libraries(external_modules INTERFACE
         $<$<TARGET_EXISTS:qpdf::libqpdf>:qpdf::libqpdf>
         ZLIB::ZLIB
         Threads::Threads
+        $<$<TARGET_EXISTS:TBB::tbb>:TBB::tbb>
         )
 
 target_compile_definitions(external_modules INTERFACE
@@ -293,10 +314,6 @@ set(DEV_ERRORLOG_DIR "errorlogs" CACHE STRING "Directory where errorlogfiles wil
 set(DEV_FILE_FORMAT_VERSION 4 CACHE STRING "File format version" FORCE)
 
 option(DEV_ENABLE_GCOV "Build with gcov support" OFF) # Enabel gcov support – expanded in src/
-option(DEV_CHECK_GTK3_COMPAT "Adds a few compiler flags to check basic GTK3 upgradeability support (still compiles for GTK2!)")
-if (DEV_CHECK_GTK3_COMPAT)
-    add_definitions(-DGTK_DISABLE_SINGLE_INCLUDES -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGSEAL_ENABLE)
-endif ()
 
 mark_as_advanced(FORCE
         DEV_TOOLBAR_CONFIG DEV_SETTINGS_XML_FILE DEV_PRINT_CONFIG_FILE DEV_METADATA_FILE
