@@ -61,13 +61,17 @@ void GraphBackgroundView::draw(cairo_t* cr) const {
         maxY = std::min(maxY, squareSize * pageIndexMaxY);
     }
 
-    for (int i = indexMinX; i <= indexMaxX; ++i) {
-        cairo_move_to(cr, i * squareSize, minY);
-        cairo_line_to(cr, i * squareSize, maxY);
+    if (minY < maxY) {  // Can fail when rendering a mask contained in the bottom margin
+        for (int i = indexMinX; i <= indexMaxX; ++i) {
+            cairo_move_to(cr, i * squareSize, minY);
+            cairo_line_to(cr, i * squareSize, maxY);
+        }
     }
-    for (int i = indexMinY; i <= indexMaxY; ++i) {
-        cairo_move_to(cr, minX, i * squareSize);
-        cairo_line_to(cr, maxX, i * squareSize);
+    if (minX < maxX) {  // Can fail when rendering a mask contained in the right margin
+        for (int i = indexMinY; i <= indexMaxY; ++i) {
+            cairo_move_to(cr, minX, i * squareSize);
+            cairo_line_to(cr, maxX, i * squareSize);
+        }
     }
 
     cairo_save(cr);
