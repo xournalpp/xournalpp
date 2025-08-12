@@ -226,9 +226,10 @@ void ToolMenuHandler::initToolItems() {
     using Cat = AbstractToolItem::Category;
 
     // Add placeholder tools from config
-    if (g_textPlaceholderConfig) {
-        for (const auto& kv : g_textPlaceholderConfig->getPlaceholders()) {
-            auto* placeholderTool = new TextPlaceholderTool(kv.first, g_textPlaceholderConfig);
+    if (control && control->getTextPlaceholderConfig()) {
+        auto* config = control->getTextPlaceholderConfig();
+        for (const auto& kv : config->getPlaceholders()) {
+            auto* placeholderTool = new TextPlaceholderTool(kv.first, config);
             emplaceItem<TextPlaceholderToolItem>(kv.first, placeholderTool);
         }
     }
