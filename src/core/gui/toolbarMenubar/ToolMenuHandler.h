@@ -50,6 +50,7 @@ class Recolor;
 
 class ToolMenuHandler {
 public:
+    void refreshPlaceholderToolItems();
     ToolMenuHandler(Control* control, GladeGui* gui);
     virtual ~ToolMenuHandler();
 

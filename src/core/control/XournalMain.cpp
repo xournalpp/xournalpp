@@ -21,6 +21,7 @@
 #include <glib.h>         // for GOptionEntry, gchar, G_O...
 #include <libintl.h>      // for bindtextdomain, textdomain
 
+#include "config/TextPlaceholderConfig.h"
 #include "control/RecentManager.h"           // for RecentManager
 #include "control/jobs/BaseExportJob.h"      // for ExportBackgroundType
 #include "control/jobs/XournalScheduler.h"   // for XournalScheduler
@@ -33,6 +34,7 @@
 #include "gui/MainWindow.h"                  // for MainWindow
 #include "gui/XournalView.h"                 // for XournalView
 #include "model/Document.h"                  // for Document
+#include "plugin/luapi_application.h"
 #include "undo/EmergencySaveRestore.h"       // for EmergencySaveRestore
 #include "undo/UndoRedoHandler.h"            // for UndoRedoHandler
 #include "util/PathUtil.h"                   // for getConfigFolder, openFil...
@@ -48,6 +50,12 @@
 #include "config-git.h"    // for GIT_BRANCH, GIT_ORIGIN_O...
 #include "config.h"        // for GETTEXT_PACKAGE, ENABLE_NLS
 #include "filesystem.h"    // for path, operator/, exists
+
+// Global config instance for text placeholders
+TextPlaceholderConfig* g_textPlaceholderConfig = nullptr;
+
+// Global Control instance for Lua API and other modules
+Control* g_control = nullptr;
 
 namespace {
 
@@ -404,12 +412,18 @@ void on_startup(GApplication* application, XMPtr app_data) {
     ensure_input_model_compatibility();
     const MigrateResult migrateResult = migrateSettings();
 
+    // Initialize global text placeholder config
+    fs::path placeholderConfigPath = Util::getConfigFile("placeholders.ini");
+    g_textPlaceholderConfig = new TextPlaceholderConfig(placeholderConfigPath.string());
+
     app_data->gladePath = std::make_unique<GladeSearchpath>();
     initResourcePath(app_data->gladePath.get(), "ui/about.glade");
     initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
     initResourcePath(app_data->gladePath.get(), "ui/toolbar.ini", false);
 
     app_data->control = std::make_unique<Control>(application, app_data->gladePath.get(), app_data->disableAudio);
+    // Ensure global g_control points to the running Control instance
+    g_control = app_data->control.get();
 
     auto& globalLatexTemplatePath = app_data->control->getSettings()->latexSettings.globalTemplatePath;
     if (globalLatexTemplatePath.empty()) {
