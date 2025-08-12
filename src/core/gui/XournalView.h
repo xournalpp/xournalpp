@@ -156,7 +156,7 @@ public:
 private:
     void fireZoomChanged();
 
-    std::pair<size_t, size_t> preloadPageBounds(size_t page, size_t maxPage);
+    std::pair<size_t, size_t> computePreloadedPageInterval(size_t page, size_t maxPage);
 
     static auto clearMemoryTimer(XournalView* widget) -> gboolean;
 

@@ -67,10 +67,13 @@ public:
 
     const auto& getExtent() const { return extent; }
 
-private:
-    template <typename DPIInfoType>
-    void constructorImpl(DPIInfoType dpiInfo, cairo_content_t contentType);
+    /**
+     * Repurpose the already allocated tile to this extent and zoom
+     * Assumes extent.{width,height} == this->extent.{width,height}
+     */
+    void repurpose(const xoj::util::Rectangle<int>& extent, double zoom);
 
+private:
     xoj::util::CairoSPtr cr;
     xoj::util::Rectangle<int> extent;
 };

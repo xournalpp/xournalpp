@@ -23,6 +23,15 @@ std::string getSurfaceTypeName(cairo_surface_t*);
 #define IF_DBG_MASKS(f)
 #endif
 
+/// Create a cairo context which takes ownership of surf
+static auto createOwingContext(cairo_surface_t* surf, double offsetX, double offsetY, double zoom) {
+    cairo_t* cr = cairo_create(surf);
+    cairo_surface_destroy(surf);  // now owned by cr
+    cairo_translate(cr, -offsetX, -offsetY);
+    cairo_scale(cr, zoom, zoom);
+    return xoj::util::CairoSPtr(cr, xoj::util::adopt);;
+}
+
 template <typename DPIInfoType>
 static xoj::util::CairoSPtr makeContext(DPIInfoType dpiInfo, const xoj::util::Rectangle<int>& extent, double zoom,
                                         cairo_content_t content) {
@@ -46,8 +55,6 @@ static xoj::util::CairoSPtr makeContext(DPIInfoType dpiInfo, const xoj::util::Re
         }
     }();
 
-    // SurfaceCreator<DPIInfoType>::create(dpiInfo, content, extent.width, extent.height);
-
     IF_DBG_MASKS({
         std::cout << "Creating surface of type: " << getSurfaceTypeName(surf) << std::endl;
         std::cout << "  Its size: " << width << " x " << height << " (in device space)" << std::endl;
@@ -57,43 +64,16 @@ static xoj::util::CairoSPtr makeContext(DPIInfoType dpiInfo, const xoj::util::Re
         std::cout << "  Its DPI scaling: " << x << " x " << y << std::endl;
     });
 
-    cairo_t* cr = cairo_create(surf);
-    cairo_surface_destroy(surf);  // now owned by cr
-    cairo_translate(cr, -extent.x, -extent.y);
-    cairo_scale(cr, zoom, zoom);
+    auto cr = createOwingContext(surf, extent.x, extent.y, zoom);  // surf is now owned by cr
 
     IF_DBG_MASKS({
         xoj::util::CairoSaveGuard saveGuard(cr.get());
-        cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-        cairo_set_source_rgba(cr, 1.0, 0.0, 0.0, 0.3);
-        cairo_paint(cr);
+        cairo_set_operator(cr.get(), CAIRO_OPERATOR_OVER);
+        cairo_set_source_rgba(cr.get(), 1.0, 0.0, 0.0, 0.3);
+        cairo_paint(cr.get());
     });
-    return xoj::util::CairoSPtr(cr, xoj::util::adopt);
+    return cr;
 }
-
-
-// template <typename DPIInfoType>
-// class SurfaceCreator {};
-// template <>
-// class SurfaceCreator<cairo_surface_t*> {
-// public:
-//     static constexpr auto create = [](cairo_surface_t* other, cairo_content_t content, int width,
-//                                       int height) -> cairo_surface_t* {
-//         return cairo_surface_create_similar(other, content, width, height);
-//     };
-// };
-// template <>
-// class SurfaceCreator<int> {
-// public:
-//     static cairo_surface_t* create(int DPIScaling, cairo_content_t contentType, int width, int height) {
-//         cairo_surface_t* surf =
-//                 cairo_image_surface_create(contentType == CAIRO_CONTENT_ALPHA ? CAIRO_FORMAT_A8 :
-//                 CAIRO_FORMAT_ARGB32,
-//                                            width * DPIScaling, height * DPIScaling);
-//         cairo_surface_set_device_scale(surf, DPIScaling, DPIScaling);
-//         return surf;
-//     }
-// };
 
 
 Tile::Tile(int DPIScaling, const xoj::util::Rectangle<int>& extent, double zoom, cairo_content_t contentType):
@@ -116,6 +96,12 @@ void Tile::paintToWithAlpha(cairo_t* targetCr, uint8_t alpha) const {
     xoj_assert(cr);
     cairo_set_source_surface(targetCr, cairo_get_target(cr.get()), extent.x, extent.y);
     cairo_paint_with_alpha(targetCr, alpha / 255.0);
+}
+
+void Tile::repurpose(const xoj::util::Rectangle<int>& extent, double zoom) {
+    xoj_assert(extent.width == this->extent.width && extent.height == this->extent.height);
+    this->cr = createOwingContext(cairo_surface_reference(cairo_get_target(this->cr.get())), extent.x, extent.y, zoom);
+    this->extent = extent;
 }
 
 static xoj::util::Rectangle<int> computePixelExtent(const Range& extent, double zoom) {

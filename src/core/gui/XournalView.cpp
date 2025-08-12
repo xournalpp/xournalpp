@@ -54,11 +54,12 @@ constexpr int REGULAR_MOVE_AMOUNT = 3;
 constexpr int SMALL_MOVE_AMOUNT = 1;
 constexpr int LARGE_MOVE_AMOUNT = 10;
 
-std::pair<size_t, size_t> XournalView::preloadPageBounds(size_t page, size_t maxPage) {
+std::pair<size_t, size_t> XournalView::computePreloadedPageInterval(size_t page, size_t maxPage) {
     const size_t preloadBefore = this->control->getSettings()->getPreloadPagesBefore();
     const size_t preloadAfter = this->control->getSettings()->getPreloadPagesAfter();
     const size_t lower = page > preloadBefore ? page - preloadBefore : 0;
     const size_t upper = std::min(maxPage, page + preloadAfter);
+    xoj_assert(lower <= upper);
     return {lower, upper};
 }
 
@@ -118,8 +119,7 @@ auto XournalView::clearMemoryTimer(XournalView* widget) -> gboolean {
 }
 
 auto XournalView::cleanupBufferCache() -> void {
-    const auto& [pagesLower, pagesUpper] = this->preloadPageBounds(this->currentPage, this->viewPages.size());
-    xoj_assert(pagesLower <= pagesUpper);
+    const auto& [pagesLower, pagesUpper] = computePreloadedPageInterval(this->currentPage, this->viewPages.size());
 
     for (size_t i = 0; i < this->viewPages.size(); i++) {
         auto&& page = this->viewPages[i];
@@ -413,8 +413,7 @@ void XournalView::pageSelected(size_t page) {
     }
 
     // Load surrounding pages if they are not
-    const auto& [pagesLower, pagesUpper] = preloadPageBounds(page, this->viewPages.size());
-    xoj_assert(pagesLower <= pagesUpper);
+    const auto& [pagesLower, pagesUpper] = computePreloadedPageInterval(page, this->viewPages.size());
     for (size_t i = pagesLower; i < pagesUpper; i++) {
         if (!this->viewPages[i]->hasBuffer()) {
             this->viewPages[i]->rerenderPage();

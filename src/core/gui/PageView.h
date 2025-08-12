@@ -302,7 +302,7 @@ private:
     std::mutex rerenderDataMutex;
     struct {
         std::vector<xoj::util::Rectangle<double>> rerenderRects;
-        std::vector<xoj::util::Rectangle<int>> missingTiles;
+        xoj::view::Tiling::RetilingData retiling;
         bool rerenderComplete = false;
         bool sizeChanged = false;
         xoj::util::Point<double> centerOfVisibleArea{};  ///< In page coordinates. May be outside the page.

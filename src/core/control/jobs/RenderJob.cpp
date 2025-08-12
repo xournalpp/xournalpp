@@ -61,9 +61,9 @@ void RenderJob::run() {
     this->view->rerenderDataMutex.lock();
 
     bool rerenderComplete = std::exchange(this->view->rerenderData.rerenderComplete, false);
-    auto rerenderRects = std::move(this->view->rerenderData.rerenderRects);
     bool sizeChanged = std::exchange(this->view->rerenderData.sizeChanged, false);
-    auto missingTiles = std::move(this->view->rerenderData.missingTiles);
+    auto rerenderRects = std::move(this->view->rerenderData.rerenderRects);
+    auto retiling = std::move(this->view->rerenderData.retiling);
     auto center = this->view->rerenderData.centerOfVisibleArea;  // Do not move out - it may still be used.
 
     this->view->rerenderDataMutex.unlock();
@@ -71,12 +71,12 @@ void RenderJob::run() {
     if (!rerenderComplete) {
         for (Rectangle<double> const& rect: rerenderRects) {
             rerenderRectangle(rect);
-            // repaintPageArea(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height);
+            repaintPageArea(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height);
         }
-        if (!missingTiles.empty()) {
+        if (!retiling.missingTiles.empty()) {
             xoj::view::Tiling newTiles;
             newTiles.setZoom(view->xournal->getZoom());
-            newTiles.createTiles(view->xournal->getDpiScaleFactor(), missingTiles);
+            newTiles.createTiles(view->xournal->getDpiScaleFactor(), std::move(retiling));
             std::vector<xoj::util::Rectangle<int>> toRepaint;
             toRepaint.reserve(newTiles.getTiles().size());
             for (auto&& t: newTiles.getTiles()) {
@@ -87,9 +87,9 @@ void RenderJob::run() {
                 std::lock_guard lock(this->view->drawingMutex);
                 this->view->tiles.append(newTiles);
             }
-            // for (auto&& t: toRepaint) {
-            //     repaintTile(t);
-            // }
+            for (auto&& t: toRepaint) {
+                repaintTile(t);
+            }
         }
     } else {
         xoj::view::Tiling newTiles;
@@ -102,14 +102,14 @@ void RenderJob::run() {
             std::lock_guard lock(this->view->drawingMutex);
             std::swap(this->view->tiles, newTiles);
         }
-        // if (sizeChanged) {
-        //     // We do not have any control on what portion of the widget needs to be redrawn. Redraw it all.
-        //     Util::execInUiThread([w = view->xournal->getWidget()]() { gtk_widget_queue_draw(w); });
-        // } else {
-        //     repaintPage();
-        // }
+        if (sizeChanged) {
+            // We do not have any control on what portion of the widget needs to be redrawn. Redraw it all.
+            Util::execInUiThread([w = view->xournal->getWidget()]() { gtk_widget_queue_draw(w); });
+        } else {
+            repaintPage();
+        }
     }
-    Util::execInUiThread([w = view->xournal->getWidget()]() { gtk_widget_queue_draw(w); });
+    // Util::execInUiThread([w = view->xournal->getWidget()]() { gtk_widget_queue_draw(w); });
 }
 
 static void repaintWidgetArea(GtkWidget* widget, int x1, int y1, int x2, int y2) {

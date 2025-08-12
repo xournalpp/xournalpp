@@ -56,18 +56,24 @@ public:
     /// Compute what tiles are necessary to cover an area centered at c (and within rg) and creates the tiles
     void populate(int DPIscaling, const xoj::util::Point<double>& c, const Range& rg, double zoom);
 
-    /// Create tiles. Set zoom before calling this.
-    void createTiles(int DPIscaling, const std::vector<xoj::util::Rectangle<int>>& extents);
+    struct RetilingData {
+        std::vector<xoj::util::Rectangle<int>> missingTiles;  ///< Sorted lexicographically with respect to (x,y)
+        std::vector<std::unique_ptr<Tile>> unusedTiles;       ///< Allocated tiles not currently in use
 
-    /// Adds the tiles from other. other with then be empty.
-    void append(Tiling& other);
+        void merge(RetilingData other);
+    };
 
     /**
      * Get the extents of missing tiles to cover the intersection of extent and an elliptic area around p
      * The result vector is sorted for the lexicographic order of the rectangle's (x,y)
      */
-    std::vector<xoj::util::Rectangle<int>> recenterAndGetMissingTiles(const xoj::util::Point<double>& p,
-                                                                      const Range& extent);
+    RetilingData computeRetiling(const xoj::util::Point<double>& p, const Range& extent);
+
+    /// Create tiles. Set zoom before calling this.
+    void createTiles(int DPIscaling, RetilingData retiling);
+
+    /// Adds the tiles from other. other with then be empty.
+    void append(Tiling& other);
 
     /// Get the tiles intersecting the given range
     std::vector<Tile*> getTilesFor(const Range& rg);
@@ -75,8 +81,9 @@ public:
     inline auto& getTiles() { return tiles; }
 
 private:
-    std::vector<std::unique_ptr<Tile>> tiles;
     double zoom = 1.0;
     xoj::util::Point<int> center;
+
+    std::vector<std::unique_ptr<Tile>> tiles;
 };
 };  // namespace xoj::view

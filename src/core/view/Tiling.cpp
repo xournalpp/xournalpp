@@ -1,5 +1,6 @@
 #include "Tiling.h"
 
+#include <algorithm>
 #include <cairo.h>
 
 #include "util/Point.h"
@@ -15,13 +16,12 @@
 // static constexpr int ELLIPSE_VERTICAL_RADIUS = 400;    ///< In pixels
 // static constexpr int ELLIPSE_HORIZONTAL_RADIUS = 300;  ///< In pixels
 
-static constexpr int MAX_TILE_SIZE = 2000;              ///< Each tile has width/height <= MAX_TILE_SIZE
-static constexpr int ELLIPSE_VERTICAL_RADIUS = 6000;    ///< In pixels
-static constexpr int ELLIPSE_HORIZONTAL_RADIUS = 4000;  ///< In pixels
+static constexpr int MAX_TILE_SIZE = 2048;                           ///< Each tile has width/height <= MAX_TILE_SIZE
+static constexpr int ELLIPSE_VERTICAL_RADIUS = 3 * MAX_TILE_SIZE;    ///< In pixels
+static constexpr int ELLIPSE_HORIZONTAL_RADIUS = 2 * MAX_TILE_SIZE;  ///< In pixels
 
-static constexpr int RETILE_THRESHOLD =
-        MAX_TILE_SIZE / 10;  ///< Smaller movements do not trigger an update of the tiles. In pixels
-
+/// Smaller movements do not trigger an update of the tiles. In pixels
+static constexpr int RETILE_THRESHOLD = MAX_TILE_SIZE / 10;
 
 #ifdef DEBUG_TILING
 #define IF_DBG_TILING(f) f
@@ -32,15 +32,16 @@ static void printTilingSize(const std::vector<std::unique_ptr<xoj::view::Tile>>&
     }
     sizeInMem *= 4;  // 4 bytes per pixel
 
+    auto s = static_cast<double>(sizeInMem);
     if (!tiles.empty()) {
         // Multiply by DPI scaling if any
         auto* surf = cairo_get_target(tiles.front()->get());
         double sx, sy;
         cairo_surface_get_device_scale(surf, &sx, &sy);
-        sizeInMem *= round_cast<size_t>(sx) * round_cast<size_t>(sy);
+        s *= sx * sy;
     }
 
-    printf("tiles: %zu - mem %f MB\n", tiles.size(), static_cast<double>(sizeInMem) / 1e6);
+    printf("tiles: %zu - mem %f MB\n", tiles.size(), s / 1e6);
 }
 #else
 #define IF_DBG_TILING(f)
@@ -90,24 +91,29 @@ static bool isTileWithinEllipse(int x, int y, const xoj::util::Point<int>& cente
 
 void Tiling::populate(int DPIscaling, const xoj::util::Point<double>& c, const Range& extent, double zoom) {
     this->zoom = zoom;
-    this->createTiles(DPIscaling, this->recenterAndGetMissingTiles(c, extent));
+    this->createTiles(DPIscaling, this->computeRetiling(c, extent));
     IF_DBG_TILING(printTilingSize(this->tiles));
 }
 
-auto Tiling::recenterAndGetMissingTiles(const xoj::util::Point<double>& p, const Range& extent)
-        -> std::vector<xoj::util::Rectangle<int>> {
+auto Tiling::computeRetiling(const xoj::util::Point<double>& p, const Range& extent) -> RetilingData {
     xoj::util::Point<int> c(round_cast<int>(p.x * this->zoom), round_cast<int>(p.y * this->zoom));
 
     if (!this->tiles.empty() && this->center.distance(c) < RETILE_THRESHOLD) {
         return {};
     }
 
-    this->tiles.erase(std::remove_if(this->tiles.begin(), this->tiles.end(),
+    auto firstUnused = std::partition(this->tiles.begin(), this->tiles.end(),
                                      [&](auto&& t) {
                                          const auto& ext = t->getExtent();
-                                         return !isTileWithinEllipse(ext.x, ext.y, c);
-                                     }),
-                      this->tiles.end());
+                                         return isTileWithinEllipse(ext.x, ext.y, c);
+                                     });
+
+    RetilingData res;
+    // Discarded tiles are kept to avoid reallocation. They may be reused elsewhere. See Tiling::createTiles()
+    res.unusedTiles.reserve(as_unsigned(std::distance(firstUnused, this->tiles.end())));
+    std::move(firstUnused, this->tiles.end(), std::back_inserter(res.unusedTiles));
+
+    this->tiles.erase(firstUnused, this->tiles.end());
 
     auto box = Range(p.x - ELLIPSE_HORIZONTAL_RADIUS / this->zoom, p.y - ELLIPSE_VERTICAL_RADIUS / this->zoom,
                      p.x + ELLIPSE_HORIZONTAL_RADIUS / this->zoom, p.y + ELLIPSE_VERTICAL_RADIUS / this->zoom)
@@ -128,26 +134,32 @@ auto Tiling::recenterAndGetMissingTiles(const xoj::util::Point<double>& p, const
     int maxXplusWidth = ceil_cast<int>(extent.maxX * this->zoom);
     int maxYplusHeight = ceil_cast<int>(extent.maxY * this->zoom);
 
-    std::vector<xoj::util::Rectangle<int>> newTilesExtents;
     for (int x = minX; x <= maxX; x += MAX_TILE_SIZE) {
         for (int y = minY; y <= maxY; y += MAX_TILE_SIZE) {
             if (isTileWithinEllipse(x, y, c) &&
                 std::none_of(this->tiles.begin(), this->tiles.end(),
                              [&](const auto& t) { return t->getExtent().x == x && t->getExtent().y == y; })) {
-                newTilesExtents.emplace_back(x, y,
+                res.missingTiles.emplace_back(x, y,
                                              x + MAX_TILE_SIZE > maxXplusWidth ? maxXplusWidth - x : MAX_TILE_SIZE,
                                              y + MAX_TILE_SIZE > maxYplusHeight ? maxYplusHeight - y : MAX_TILE_SIZE);
             }
         }
     }
     this->center = c;
-    return newTilesExtents;
+    return res;
 }
 
-void Tiling::createTiles(int DPIscaling, const std::vector<xoj::util::Rectangle<int>>& extents) {
-    tiles.reserve(tiles.size() + extents.size());
-    for (auto&& e: extents) {
-        tiles.emplace_back(std::make_unique<Tile>(DPIscaling, e, this->zoom, CAIRO_CONTENT_COLOR_ALPHA));
+void Tiling::createTiles(int DPIscaling, RetilingData retiling) {
+    tiles.reserve(tiles.size() + retiling.missingTiles.size());
+    for (auto&& e: retiling.missingTiles) {
+        // We try to find an already allocated tile to avoid the cost of huge allocation
+        auto it = std::find_if(retiling.unusedTiles.begin(), retiling.unusedTiles.end(), [&](const auto& t) { return t && t->getExtent().width == e.width && t->getExtent().height == e.height; });
+        if (it != retiling.unusedTiles.end()) {
+            tiles.emplace_back(std::move(*it));
+            tiles.back()->repurpose(e, this->zoom);
+        } else {
+            tiles.emplace_back(std::make_unique<Tile>(DPIscaling, e, this->zoom, CAIRO_CONTENT_COLOR_ALPHA));
+        }
     }
 }
 
@@ -169,3 +181,19 @@ std::vector<Tile*> Tiling::getTilesFor(const Range& rg) {
     }
     return res;
 }
+
+void Tiling::RetilingData::merge(RetilingData other) {
+    auto comp = [](const auto& t1, const auto& t2) { return t1.x < t2.x || (t1.x == t2.x && t1.y < t2.y); };
+    xoj_assert(std::is_sorted(this->missingTiles.begin(), this->missingTiles.end(), comp));
+    xoj_assert(std::is_sorted(other.missingTiles.begin(), other.missingTiles.end(), comp));
+
+    std::vector<xoj::util::Rectangle<int>> merged;
+    merged.reserve(this->missingTiles.size() + other.missingTiles.size());
+    std::set_union(this->missingTiles.begin(), this->missingTiles.end(), other.missingTiles.begin(),
+                       other.missingTiles.end(), std::back_inserter(merged), comp);
+    std::swap(this->missingTiles, merged);
+
+    this->unusedTiles.reserve(this->unusedTiles.size() + other.unusedTiles.size());
+    std::move(other.unusedTiles.begin(), other.unusedTiles.end(), std::back_inserter(this->unusedTiles));
+}
+

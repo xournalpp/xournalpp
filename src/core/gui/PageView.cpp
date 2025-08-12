@@ -124,24 +124,17 @@ void XojPageView::setIsVisible(bool visible) { this->visible = visible; }
 
 void XojPageView::setCenterOfVisibleArea(const xoj::util::Point<double>& c) {
     this->drawingMutex.lock();
-    auto missing =
-            this->tiles.recenterAndGetMissingTiles(c, Range(0., 0., this->page->getWidth(), this->page->getHeight()));
+    auto retiling = this->tiles.computeRetiling(c, Range(0., 0., this->page->getWidth(), this->page->getHeight()));
     this->drawingMutex.unlock();
 
-    if (!missing.empty()) {
-        auto comp = [](const auto& t1, const auto& t2) { return t1.x < t2.x || (t1.x == t2.x && t1.y < t2.y); };
-        xoj_assert(std::is_sorted(missing.begin(), missing.end(), comp));
+    bool rerender = !retiling.missingTiles.empty();
 
-        this->rerenderDataMutex.lock();
-        this->rerenderData.centerOfVisibleArea = c;
+    this->rerenderDataMutex.lock();
+    this->rerenderData.centerOfVisibleArea = c;
+    this->rerenderData.retiling.merge(std::move(retiling));
+    this->rerenderDataMutex.unlock();
 
-        std::vector<xoj::util::Rectangle<int>> merged;
-        merged.reserve(missing.size() + this->rerenderData.missingTiles.size());
-        std::set_union(this->rerenderData.missingTiles.begin(), this->rerenderData.missingTiles.end(), missing.begin(),
-                       missing.end(), std::back_inserter(merged), comp);
-        std::swap(this->rerenderData.missingTiles, merged);
-
-        this->rerenderDataMutex.unlock();
+    if (rerender) {
         this->xournal->getControl()->getScheduler()->addRerenderPage(this);
     }
 }
