@@ -13,7 +13,7 @@
 #include <cairo.h>    // for cairo_set_source_rgb, cairo_fill, cairo_move_to
 #include <gdk/gdk.h>  // for GdkWindowAttr, gdk_window_move_resize, gdk_wind...
 
-G_DEFINE_TYPE(ZoomCallib, zoomcallib, GTK_TYPE_WIDGET);  // NOLINT // @suppress("Unused static function")
+G_DEFINE_TYPE(ZoomCallib, zoomcallib, GTK_TYPE_WIDGET);
 
 static void zoomcallib_get_preferred_width(GtkWidget* widget, gint* minimal_width, gint* natural_width);
 static void zoomcallib_get_preferred_height(GtkWidget* widget, gint* minimal_height, gint* natural_height);
@@ -21,7 +21,6 @@ static void zoomcallib_get_preferred_height(GtkWidget* widget, gint* minimal_hei
 static void zoomcallib_size_allocate(GtkWidget* widget, GtkAllocation* allocation);
 static void zoomcallib_realize(GtkWidget* widget);
 static auto zoomcallib_draw(GtkWidget* widget, cairo_t* cr) -> gboolean;
-// static void zoomcallib_destroy(GtkObject* object);
 
 void zoomcallib_set_val(ZoomCallib* callib, gint val) {
     callib->val = val;

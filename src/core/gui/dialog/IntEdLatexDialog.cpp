@@ -22,7 +22,7 @@
 
 #include "AbstractLatexDialog.h"
 
-#ifdef USE_GTK_SOURCEVIEW
+#ifdef ENABLE_GTK_SOURCEVIEW
 #include <gtksourceview/gtksource.h>  // for GTK_SOURCE_VIEW, gtk_sou...
 #endif
 
@@ -48,7 +48,7 @@ IntEdLatexDialog::IntEdLatexDialog(GladeSearchpath* gladeSearchPath, std::unique
 
     populateStandardWidgetsFromBuilder(builder);
 
-#ifdef USE_GTK_SOURCEVIEW
+#ifdef ENABLE_GTK_SOURCEVIEW
     this->texBox = gtk_source_view_new();
 #else
     this->texBox = gtk_text_view_new();
@@ -77,7 +77,7 @@ IntEdLatexDialog::IntEdLatexDialog(GladeSearchpath* gladeSearchPath, std::unique
     gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(builder.get("texBoxContainer")), this->texBox);
 
 
-#ifdef USE_GTK_SOURCEVIEW
+#ifdef ENABLE_GTK_SOURCEVIEW
     // We own neither the languageManager, the styleSchemeManager, nor the sourceLanguage.
     // Do not attempt to free them.
     GtkSourceStyleSchemeManager* styleSchemeManager = gtk_source_style_scheme_manager_get_default();

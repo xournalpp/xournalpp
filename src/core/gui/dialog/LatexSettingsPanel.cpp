@@ -9,7 +9,8 @@
 #include <glib-object.h>  // for g_object_unref, g_object...
 #include <glib.h>         // for g_error_free, GError
 
-#ifdef USE_GTK_SOURCEVIEW
+#include "config-features.h"  // for ENABLE_GTK_SOURCEVIEW
+#ifdef ENABLE_GTK_SOURCEVIEW
 #include <gtksourceview/gtksource.h>  // for gtk_source_style_scheme_...
 #endif
 
@@ -47,7 +48,7 @@ LatexSettingsPanel::LatexSettingsPanel(GladeSearchpath* gladeSearchPath):
     g_signal_connect_swapped(builder.get("cbUseExternalEditor"), "toggled",
                              G_CALLBACK(+[](LatexSettingsPanel* self) { self->updateWidgetSensitivity(); }), this);
 
-#ifdef USE_GTK_SOURCEVIEW
+#ifdef ENABLE_GTK_SOURCEVIEW
     GtkBox* themeSelectionBox = GTK_BOX(builder.get("bxThemeSelectionContainer"));
     this->sourceViewThemeSelector = gtk_source_style_scheme_chooser_button_new();
     gtk_box_append(themeSelectionBox, sourceViewThemeSelector);
@@ -77,7 +78,7 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
     gtk_editable_set_text(GTK_EDITABLE(builder.get("latexSettingsGenCmd")), settings.genCmd.c_str());
 
 
-#ifdef USE_GTK_SOURCEVIEW
+#ifdef ENABLE_GTK_SOURCEVIEW
     std::string themeId = settings.sourceViewThemeId;
     GtkSourceStyleSchemeManager* themeManager = gtk_source_style_scheme_manager_get_default();
     GtkSourceStyleScheme* theme = gtk_source_style_scheme_manager_get_scheme(themeManager, themeId.c_str());
@@ -120,7 +121,7 @@ void LatexSettingsPanel::save(LatexSettings& settings) {
                     .get());
     settings.genCmd = gtk_editable_get_text(GTK_EDITABLE(builder.get("latexSettingsGenCmd")));
 
-#ifdef USE_GTK_SOURCEVIEW
+#ifdef ENABLE_GTK_SOURCEVIEW
     GtkSourceStyleScheme* theme = gtk_source_style_scheme_chooser_get_style_scheme(
             GTK_SOURCE_STYLE_SCHEME_CHOOSER(this->sourceViewThemeSelector));
     settings.sourceViewThemeId = gtk_source_style_scheme_get_id(theme);
@@ -194,7 +195,7 @@ void LatexSettingsPanel::updateWidgetSensitivity() {
     // Only select a custom font if we're not using the system's.
     gtk_widget_set_sensitive(builder.get("boxCustomFontOptions"), !useSystemFont);
 
-#ifndef USE_GTK_SOURCEVIEW
+#ifndef ENABLE_GTK_SOURCEVIEW
     gtk_widget_set_sensitive(builder.get("bxGtkSourceviewSettings"), false);
 #endif
 
