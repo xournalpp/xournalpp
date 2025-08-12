@@ -1,5 +1,8 @@
 // TextPlaceholderTool.cpp
+#include <algorithm>
+
 #include "TextPlaceholderTool.h"
+
 
 TextPlaceholderTool::TextPlaceholderTool(const std::string& name, TextPlaceholderConfig* config)
     : name(name), config(config) {}

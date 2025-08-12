@@ -51,11 +51,6 @@
 #include "config.h"        // for GETTEXT_PACKAGE, ENABLE_NLS
 #include "filesystem.h"    // for path, operator/, exists
 
-// Global config instance for text placeholders
-TextPlaceholderConfig* g_textPlaceholderConfig = nullptr;
-
-// Global Control instance for Lua API and other modules
-Control* g_control = nullptr;
 
 namespace {
 
@@ -412,18 +407,14 @@ void on_startup(GApplication* application, XMPtr app_data) {
     ensure_input_model_compatibility();
     const MigrateResult migrateResult = migrateSettings();
 
-    // Initialize global text placeholder config
-    fs::path placeholderConfigPath = Util::getConfigFile("placeholders.ini");
-    g_textPlaceholderConfig = new TextPlaceholderConfig(placeholderConfigPath.string());
-
     app_data->gladePath = std::make_unique<GladeSearchpath>();
     initResourcePath(app_data->gladePath.get(), "ui/about.glade");
     initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
     initResourcePath(app_data->gladePath.get(), "ui/toolbar.ini", false);
 
+    fs::path placeholderConfigPath = Util::getConfigFile("placeholders.ini");
     app_data->control = std::make_unique<Control>(application, app_data->gladePath.get(), app_data->disableAudio);
-    // Ensure global g_control points to the running Control instance
-    g_control = app_data->control.get();
+    app_data->control->setTextPlaceholderConfig(new TextPlaceholderConfig(placeholderConfigPath.string()));
 
     auto& globalLatexTemplatePath = app_data->control->getSettings()->latexSettings.globalTemplatePath;
     if (globalLatexTemplatePath.empty()) {

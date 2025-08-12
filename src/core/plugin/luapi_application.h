@@ -3126,14 +3126,32 @@ static int applib_addToSelection(lua_State* L) {
     return 0;
 }
 
+/**
+ * Set the value of a text placeholder shown in the toolbar.
+ *
+ * @param name string: The placeholder name
+ * @param value string: The value to display
+ *
+ * Example: app.setPlaceholderValue("myPlaceholder", "Hello World")
+ * Updates the toolbar placeholder with the given value.
+ */
+static int applib_setPlaceholderValue(lua_State* L) {
+    // Get Control instance from Lua plugin context
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    if (!plugin) return 0;
+    Control* control = plugin->getControl();
+    if (!control) return 0;
+    TextPlaceholderConfig* config = control->getTextPlaceholderConfig();
+    if (!config) return 0;
+    return luapi_textplaceholder::set_placeholder_value(L, config, control);
+}
+
 /*
  * The full Lua Plugin API.
  * See above for example usage of each function.
  */
 static int applib_setPlaceholderValue(lua_State* L);
 
-// Global config instance for text placeholders
-extern TextPlaceholderConfig* g_textPlaceholderConfig;
 
 static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remove this deprecated function
                                   {"openDialog", applib_openDialog},
@@ -3193,10 +3211,4 @@ inline int luaopen_app(lua_State* L) {
     // lua_pushnumber(L, MSG_BT_OK);
     // lua_setfield(L, -2, "MSG_BT_OK");
     return 1;
-}
-
-// Wrapper for Lua API function
-static int applib_setPlaceholderValue(lua_State* L) {
-    // Use the global config instance
-    return luapi_textplaceholder::set_placeholder_value(L, g_textPlaceholderConfig);
 }

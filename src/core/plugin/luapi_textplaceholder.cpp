@@ -7,10 +7,9 @@
 #include "gui/toolbarMenubar/ToolMenuHandler.h"
 #include <string>
 
-extern Control* g_control;
 
 namespace luapi_textplaceholder {
-    int set_placeholder_value(lua_State* L, TextPlaceholderConfig* config) {
+    int set_placeholder_value(lua_State* L, TextPlaceholderConfig* config, Control* control) {
         // Args: name, value
         const char* name = luaL_checkstring(L, 1);
         const char* value = luaL_checkstring(L, 2);
@@ -18,11 +17,13 @@ namespace luapi_textplaceholder {
         config->save();
 
         // Live update toolbar
-        auto* mainWindow = g_control ? g_control->getWindow() : nullptr;
-        if (mainWindow) {
-            auto* handler = mainWindow->getToolMenuHandler();
-            if (handler) {
-                handler->refreshPlaceholderToolItems();
+        if (control) {
+            auto* mainWindow = control->getWindow();
+            if (mainWindow) {
+                auto* handler = mainWindow->getToolMenuHandler();
+                if (handler) {
+                    handler->refreshPlaceholderToolItems();
+                }
             }
         }
         return 0;
