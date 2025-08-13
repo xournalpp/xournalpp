@@ -12,4 +12,4 @@ override_dh_dwz:
 	dh_dwz --no-dwz-multifile
 
 override_dh_auto_configure:
-	dh_auto_configure -- -DCMAKE_BUILD_TYPE=RelWithDebInfo
+	dh_auto_configure -- -DCMAKE_BUILD_TYPE=RelWithDebInfo -DFETCHCONTENT_FULLY_DISCONNECTED=OFF
