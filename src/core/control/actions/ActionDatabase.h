@@ -23,6 +23,7 @@
 #include "config-debug.h"  // for DEBUG_ACTION_DB
 
 class Control;
+class ShortcutConfiguration;
 
 #ifdef DEBUG_ACTION_DB
 #include <iomanip>
@@ -74,13 +75,15 @@ public:
     /// Set the actions enabled flag depending on ActionProperties::initiallyEnabled()
     void resetEnableStatus();
 
+    void setShortcuts(const ShortcutConfiguration& config);
+
     /**
      * @brief Set the action's state, without triggering callbacks
      */
     template <typename state_type>
     inline void setActionState(Action a, state_type state) {
-        xoj_assert(gActions[a]);
-        g_simple_action_set_state(gActions[a].get(), makeGVariant(state));
+        xoj_assert(entries[a].action);
+        g_simple_action_set_state(entries[a].action.get(), makeGVariant(state));
         ACTIONDB_PRINT_DEBUG("Set action \"" << Action_toString(a) << "\" state to " << to_stream(state));
     }
 
@@ -89,8 +92,8 @@ public:
      */
     template <typename state_type>
     inline void fireChangeActionState(Action a, state_type state) {
-        xoj_assert(gActions[a]);
-        g_action_change_state(G_ACTION(gActions[a].get()), makeGVariant(state));
+        xoj_assert(entries[a].action);
+        g_action_change_state(G_ACTION(entries[a].action.get()), makeGVariant(state));
         ACTIONDB_PRINT_DEBUG("Fire action \"" << Action_toString(a) << "\" state change to " << to_stream(state));
     }
 
@@ -98,20 +101,24 @@ public:
      * @brief Activate the action, triggering callbacks
      */
     inline void fireActivateAction(Action a) {
-        xoj_assert(gActions[a]);
-        g_action_activate(G_ACTION(gActions[a].get()), nullptr);
+        xoj_assert(entries[a].action);
+        g_action_activate(G_ACTION(entries[a].action.get()), nullptr);
         ACTIONDB_PRINT_DEBUG("Fire action \"" << Action_toString(a) << "\" activate");
     }
     template <typename param_type>
     inline void fireActivateAction(Action a, param_type param) {
-        xoj_assert(gActions[a]);
-        g_action_activate(G_ACTION(gActions[a].get()), makeGVariant(param));
+        xoj_assert(entries[a].action);
+        g_action_activate(G_ACTION(entries[a].action.get()), makeGVariant(param));
         ACTIONDB_PRINT_DEBUG("Fire action \"" << Action_toString(a) << "\" activate with param " << to_stream(param));
     }
 
 private:
-    EnumIndexedArray<ActionRef, Action> gActions;
-    EnumIndexedArray<gulong, Action> signalIds;
+    struct Entry {
+        ActionRef action;
+        gulong signalId;
+        std::string namespacedName;
+    };
+    EnumIndexedArray<Entry, Action> entries;
     Control* control;
     GtkApplicationWindow* win;
 

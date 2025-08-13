@@ -148,9 +148,6 @@ protected:
      */
     xoj::util::Point<double> getCoords(InputEvent const& event);
 
-    virtual double getMinHeight() const = 0;
-    virtual double getMaxHeight() const = 0;
-
 public:
     explicit GeometryToolInputHandler(XournalView* xournalView, GeometryToolController* controller);
     virtual ~GeometryToolInputHandler();

@@ -43,8 +43,13 @@ void GeometryToolController::scale(double f, const xoj::util::Point<double>& cen
     this->scale(f);
 }
 void GeometryToolController::scale(double f) {
-    geometryTool->setHeight(geometryTool->getHeight() * f);
-    geometryTool->notify(true);
+    const double h = geometryTool->getHeight() * f;
+    if (h <= getMaxHeight() && h >= getMinHeight()) {
+        geometryTool->setHeight(h);
+        geometryTool->notify(true);
+    } else {
+        geometryTool->notify(false);
+    }
 }
 
 

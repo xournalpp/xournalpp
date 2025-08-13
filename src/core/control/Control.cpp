@@ -35,6 +35,7 @@
 #include "control/settings/PageTemplateSettings.h"               // for Page...
 #include "control/settings/Settings.h"                           // for Sett...
 #include "control/settings/SettingsEnums.h"                      // for Button
+#include "control/settings/ShortcutConfiguration.h"              // for ShortcutConfiguration
 #include "control/settings/ViewModes.h"                          // for ViewM..
 #include "control/tools/TextEditor.h"                            // for Text...
 #include "control/xojfile/LoadHandler.h"                         // for Load...
@@ -287,6 +288,8 @@ void Control::initWindow(MainWindow* win) {
     this->win = win;
 
     this->actionDB = std::make_unique<ActionDatabase>(this);
+    this->shortcuts = std::make_unique<ShortcutConfiguration>();
+    this->actionDB->setShortcuts(*this->shortcuts);
 
     selectTool(toolHandler->getToolType());
     this->sidebar = new Sidebar(win, this);
@@ -417,6 +420,10 @@ void Control::resetGeometryTool() {
 
 auto Control::copy() -> bool {
     if (this->win && this->win->getXournal()->copy()) {
+        return true;
+    }
+    if (auto* tool = getWindow()->getPdfToolbox(); tool->hasSelection()) {
+        tool->copyTextToClipboard();
         return true;
     }
     return this->clipboardHandler->copy();
@@ -2567,6 +2574,8 @@ auto Control::getLayerController() const -> LayerController* { return this->laye
 auto Control::getPluginController() const -> PluginController* { return this->pluginController; }
 
 auto Control::getPalette() const -> const Palette& { return *(this->palette); }
+
+auto Control::getShortcuts() const -> const ShortcutConfiguration& { return *this->shortcuts; }
 
 auto Control::loadPaletteFromSettings() -> void {
     const auto palettePath = this->settings->getColorPaletteSetting();

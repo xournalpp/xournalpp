@@ -8,6 +8,9 @@
 #include "model/Stroke.h"
 #include "model/XojPage.h"
 
+constexpr double MIN_HEIGHT = 0.5;
+constexpr double MAX_HEIGHT = 10.0;
+
 CompassController::CompassController(XojPageView* view, Compass* compass): GeometryToolController(view, compass) {}
 
 CompassController::~CompassController() = default;
@@ -123,3 +126,6 @@ void CompassController::finalizeRadialStroke() {
 auto CompassController::existsOutlineStroke() -> bool { return angleMax != std::numeric_limits<double>::lowest(); }
 
 auto CompassController::existsRadialStroke() -> bool { return radiusMax != std::numeric_limits<double>::lowest(); }
+
+auto CompassController::getMinHeight() const -> double { return MIN_HEIGHT; }
+auto CompassController::getMaxHeight() const -> double { return MAX_HEIGHT; }

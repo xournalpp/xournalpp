@@ -116,6 +116,9 @@ public:
      */
     bool existsRadialStroke();
 
+    double getMinHeight() const override;
+    double getMaxHeight() const override;
+
 private:
     /**
      * @brief when a stroke near the radius with the measuring marks

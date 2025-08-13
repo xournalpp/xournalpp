@@ -47,12 +47,7 @@ InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling):
 template <bool (KeyboardInputHandler::*handler)(KeyEvent) const>
 static gboolean keyboardCallback(GtkEventControllerKey* self, guint keyval, guint, GdkModifierType state, gpointer d) {
     auto* gdkEvent = gtk_event_controller_get_current_event(GTK_EVENT_CONTROLLER(self));
-    KeyEvent e;
-    e.keyval = keyval;
-    e.state = static_cast<GdkModifierType>(state & gtk_accelerator_get_default_mod_mask() &
-                                           ~gdk_key_event_get_consumed_modifiers(gdkEvent));
-    e.sourceEvent = gdkEvent;
-    return (static_cast<KeyboardInputHandler*>(d)->*handler)(e);
+    return (static_cast<KeyboardInputHandler*>(d)->*handler)(KeyEvent(gdkEvent));
 }
 
 InputContext::~InputContext() {
@@ -69,7 +64,7 @@ void InputContext::connect(GtkWidget* pWidget) {
     auto* keyCtrl = gtk_event_controller_key_new(widget);
 #else
     auto* keyCtrl = gtk_event_controller_key_new();
-    gtk_widget_add_controller(keyCtrl);
+    gtk_widget_add_controller(widget, keyCtrl);
 #endif
 
     g_signal_connect(keyCtrl, "key-pressed", G_CALLBACK(keyboardCallback<&KeyboardInputHandler::keyPressed>),

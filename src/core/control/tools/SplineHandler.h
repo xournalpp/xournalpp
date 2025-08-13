@@ -126,4 +126,6 @@ private:
     std::shared_ptr<xoj::util::DispatchPool<xoj::view::SplineToolView>> viewPool;
 
     static constexpr double KNOTS_ATTRACTION_RADIUS_IN_PIXELS = 10.0;  // for circling the spline's knots
+
+    class KeyBindingCallbacks;
 };

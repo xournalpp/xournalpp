@@ -10,9 +10,6 @@
 #include "gui/inputdevices/InputEvents.h"
 #include "model/Compass.h"
 
-constexpr double MIN_HEIGHT = 0.5;
-constexpr double MAX_HEIGHT = 10.0;
-
 CompassInputHandler::CompassInputHandler(XournalView* xournal, GeometryToolController* controller):
         GeometryToolInputHandler(xournal, controller) {}
 
@@ -85,6 +82,3 @@ auto CompassInputHandler::handlePointer(InputEvent const& event) -> bool {
             return false;
     }
 }
-
-auto CompassInputHandler::getMinHeight() const -> double { return MIN_HEIGHT; }
-auto CompassInputHandler::getMaxHeight() const -> double { return MAX_HEIGHT; }

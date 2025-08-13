@@ -9,6 +9,7 @@
 
 #include "control/Control.h"                 // for Control
 #include "control/GeometryToolController.h"  // for GeometryToolController
+#include "control/KeyBindingsGroup.h"        // for KeyBinding, KeyBindingsGroup
 #include "control/ToolEnums.h"               // for TOOL_HAND, TOOL_HIGHLIGHTER
 #include "control/ToolHandler.h"             // for ToolHandler
 #include "control/settings/Settings.h"       // for Settings
@@ -25,10 +26,10 @@
 
 constexpr double MOVE_AMOUNT = HALF_CM / 2.0;
 constexpr double MOVE_AMOUNT_SMALL = HALF_CM / 20.0;
-constexpr double ROTATE_AMOUNT = M_PI * 5.0 / 180.0;
-constexpr double ROTATE_AMOUNT_SMALL = M_PI * 0.2 / 180.0;
-constexpr double SCALE_AMOUNT = 1.1;
-constexpr double SCALE_AMOUNT_SMALL = 1.01;
+constexpr int ROTATE_AMOUNT = 50;                                   ///< in 0.1 degrees
+constexpr int ROTATE_AMOUNT_SMALL = 2;                              ///< in 0.1 degrees
+constexpr int SCALE_AMOUNT = 110;                                   ///< in %
+constexpr int SCALE_AMOUNT_SMALL = 101;                             ///< in %
 constexpr double SNAPPING_DISTANCE_TOLERANCE = 5.0;                 // pt
 constexpr double SNAPPING_ROTATION_TOLERANCE = 3.0 * M_PI / 180.0;  // rad
 constexpr double ZOOM_DISTANCE_MIN = 0.01;
@@ -123,68 +124,65 @@ auto GeometryToolInputHandler::handleTouchscreen(InputEvent const& event) -> boo
     return false;
 }
 
-auto GeometryToolInputHandler::keyPressed(KeyEvent const& event) -> bool {
-    double xdir = 0;
-    double ydir = 0;
-    double angle = 0.0;
-    double scale = 1.0;
-    switch (event.keyval) {
-        case GDK_KEY_Left:
-            xdir = -1;
-            break;
-        case GDK_KEY_Up:
-            ydir = -1;
-            break;
-        case GDK_KEY_Right:
-            xdir = 1;
-            break;
-        case GDK_KEY_Down:
-            ydir = 1;
-            break;
-        case GDK_KEY_r:
-            angle = (event.state & GDK_MOD1_MASK) ? -ROTATE_AMOUNT_SMALL : -ROTATE_AMOUNT;
-            break;
-        case GDK_KEY_R:  // r like "rotate"
-            angle = (event.state & GDK_MOD1_MASK) ? ROTATE_AMOUNT_SMALL : ROTATE_AMOUNT;
-            break;
-        case GDK_KEY_s:
-            scale = (event.state & GDK_MOD1_MASK) ? SCALE_AMOUNT_SMALL : SCALE_AMOUNT;
-            break;
-        case GDK_KEY_S:
-            scale = (event.state & GDK_MOD1_MASK) ? 1. / SCALE_AMOUNT_SMALL : 1. / SCALE_AMOUNT;
-            break;
-        case GDK_KEY_m:
-            controller->markOrigin();
-            return true;
-    }
 
-    if (xdir != 0 || ydir != 0) {
-        xoj::util::Point<double> offset;
-        const double amount = (event.state & GDK_MOD1_MASK) ? MOVE_AMOUNT_SMALL : MOVE_AMOUNT;
-        if (event.state & GDK_SHIFT_MASK) {
-            double angle = controller->getGeometryTool()->getRotation();
+template <int ANGLE_IN_DECIDEGREES>
+static void rotate(GeometryToolController* ctrl) {
+    ctrl->rotate(ANGLE_IN_DECIDEGREES * M_PI / 1800.);
+}
+
+template <bool DOWN, int AMOUNT>
+static void scale(GeometryToolController* ctrl) {
+    ctrl->scale(DOWN ? 100. / AMOUNT : AMOUNT / 100.);
+}
+
+static std::function<void(GeometryToolController*)> getMoveCb(bool alongAxis, double dx, double dy) {
+    if (alongAxis) {
+        return [dx, dy](GeometryToolController* ctrl) {
+            double angle = ctrl->getGeometryTool()->getRotation();
             const double c = std::cos(angle);
             const double s = std::sin(angle);
-            offset = {amount * (c * xdir - s * ydir), amount * (s * xdir + c * ydir)};
-        } else {
-            offset = {amount * xdir, amount * ydir};
-        }
-        controller->translate(offset);
-        return true;
+            ctrl->translate({c * dx - s * dy, s * dx + c * dy});
+        };
+    } else {
+        return [dx, dy](GeometryToolController* ctrl) { ctrl->translate({dx, dy}); };
     }
+}
 
-    if (angle != 0) {
-        controller->rotate(angle);
-        return true;
-    }
-    if (scale != 1.0) {
-        const double h = controller->getGeometryTool()->getHeight() * scale;
-        if (h <= getMaxHeight() && h >= getMinHeight()) {
-            controller->scale(scale);
-            return true;
-        }
-    }
-    return false;
+auto GeometryToolInputHandler::keyPressed(KeyEvent const& event) -> bool {
+    // clang-format off
+    static const KeyBindingsGroup<GeometryToolController> geometryKeyBindings({
+        // Move
+        {{NONE,        GDK_KEY_Left},  getMoveCb(false,       -MOVE_AMOUNT,                  0)},
+        {{ALT,         GDK_KEY_Left},  getMoveCb(false, -MOVE_AMOUNT_SMALL,                  0)},
+        {{SHIFT,       GDK_KEY_Left},  getMoveCb(true,        -MOVE_AMOUNT,                  0)},
+        {{ALT & SHIFT, GDK_KEY_Left},  getMoveCb(true,  -MOVE_AMOUNT_SMALL,                  0)},
+        {{NONE,        GDK_KEY_Right}, getMoveCb(false,        MOVE_AMOUNT,                  0)},
+        {{ALT,         GDK_KEY_Right}, getMoveCb(false,  MOVE_AMOUNT_SMALL,                  0)},
+        {{SHIFT,       GDK_KEY_Right}, getMoveCb(true,         MOVE_AMOUNT,                  0)},
+        {{ALT & SHIFT, GDK_KEY_Right}, getMoveCb(true,   MOVE_AMOUNT_SMALL,                  0)},
+        {{NONE,        GDK_KEY_Up},    getMoveCb(false,                  0,       -MOVE_AMOUNT)},
+        {{ALT,         GDK_KEY_Up},    getMoveCb(false,                  0, -MOVE_AMOUNT_SMALL)},
+        {{SHIFT,       GDK_KEY_Up},    getMoveCb(true,                   0,       -MOVE_AMOUNT)},
+        {{ALT & SHIFT, GDK_KEY_Up},    getMoveCb(true,                   0, -MOVE_AMOUNT_SMALL)},
+        {{NONE,        GDK_KEY_Down},  getMoveCb(false,                  0,        MOVE_AMOUNT)},
+        {{ALT,         GDK_KEY_Down},  getMoveCb(false,                  0,  MOVE_AMOUNT_SMALL)},
+        {{SHIFT,       GDK_KEY_Down},  getMoveCb(true,                   0,        MOVE_AMOUNT)},
+        {{ALT & SHIFT, GDK_KEY_Down},  getMoveCb(true,                   0,  MOVE_AMOUNT_SMALL)},
+        // Rotate
+        {{NONE,        GDK_KEY_R},     rotate<       ROTATE_AMOUNT>},
+        {{ALT,         GDK_KEY_R},     rotate< ROTATE_AMOUNT_SMALL>},
+        {{NONE,        GDK_KEY_r},     rotate<      -ROTATE_AMOUNT>},
+        {{ALT,         GDK_KEY_r},     rotate<-ROTATE_AMOUNT_SMALL>},
+        // Scale
+        {{NONE,        GDK_KEY_S},     scale<true,        SCALE_AMOUNT>},
+        {{ALT,         GDK_KEY_S},     scale<true,  SCALE_AMOUNT_SMALL>},
+        {{NONE,        GDK_KEY_s},     scale<false,       SCALE_AMOUNT>},
+        {{ALT,         GDK_KEY_s},     scale<false, SCALE_AMOUNT_SMALL>},
+        // Other
+        {{NONE,        GDK_KEY_m},     KeyBindingsUtil::wrap<&GeometryToolController::markOrigin>}
+    });
+    // clang-format on
+    return geometryKeyBindings.processEvent(controller, event);
 }
 
 void GeometryToolInputHandler::sequenceStart(InputEvent const& event) {
@@ -289,11 +287,9 @@ void GeometryToolInputHandler::rotateAndZoomMotion(InputEvent const& event) {
     if (controller->isInsideGeometryTool(secLastPageRel.x, secLastPageRel.y, 0.0)) {
         controller->rotate(angleIncrease, centerRel);
     }  // allow moving without accidental rotation
-    const double scaleFactor = dist / lastDist;
-    const double h = controller->getGeometryTool()->getHeight() * scaleFactor;
 
-    if (!canBlockZoom && h <= getMaxHeight() && h >= getMinHeight()) {
-        controller->scale(scaleFactor, centerRel);
+    if (!canBlockZoom) {
+        controller->scale(dist / lastDist, centerRel);
     }
 
     this->lastZoomScrollCenter = center;

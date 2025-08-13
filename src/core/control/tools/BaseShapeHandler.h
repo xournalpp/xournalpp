@@ -37,8 +37,6 @@ class Repaintable;
 class ShapeToolView;
 };
 
-enum DIRSET_MODIFIERS { NONE = 0, SET = 1, SHIFT = 1 << 1, CONTROL = 1 << 2 };
-
 
 class BaseShapeHandler: public InputHandler {
 public:
@@ -100,6 +98,7 @@ protected:
      */
     Range lastSnappingRange;
 
+    enum DIRSET_MODIFIERS { NONE = 0, SET = 1, SHIFT = 1 << 1, CONTROL = 1 << 2 };
     DIRSET_MODIFIERS drawModifierFixed = NONE;
     bool flipShift =
             false;  // use to reverse Shift key modifier action. i.e.  for separate Rectangle and Square Tool buttons.
