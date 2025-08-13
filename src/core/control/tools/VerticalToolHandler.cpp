@@ -46,7 +46,7 @@ void VerticalToolHandler::adoptElements(const Side side) {
     this->elements.clear();
 
     // Add new elements based on position
-    for (const Element* e: this->layer->getElementsView()) {
+    for (const Element* e: this->layer->getElementsView().clone()) {
         if ((side == Side::Below && e->getY() >= this->startY) ||
             (side == Side::Above && e->getY() + e->getElementHeight() <= this->startY)) {
             this->elements.push_back(this->layer->removeElement(e).e);
