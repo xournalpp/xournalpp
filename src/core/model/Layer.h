@@ -113,9 +113,26 @@ public:
     auto getName() const -> std::string;
 
     /**
+     * @brief Clears the name of this layer.
+     *
+     * This is not the same as 'setName("")'.
+     * @post Method @ref hasName() returns 'false'.
+     */
+    void clearName();
+
+    /**
      * Sets custom name for the layer
      */
     void setName(const std::string& newName);
+
+    void incrementPageCount() noexcept { ++numPages; }
+    void decrementPageCount() noexcept { --numPages; }
+    std::size_t getPageCount() const noexcept { return numPages; }
+
+    void setFirstPage(std::size_t p) noexcept { firstPage = p; }
+    std::size_t getFirstPage() const noexcept { return firstPage; }
+    void setLastPage(std::size_t p) noexcept { lastPage = p; }
+    std::size_t getLastPage() const noexcept { return lastPage; }
 
 private:
     std::vector<ElementPtr> elements;
@@ -123,4 +140,8 @@ private:
     bool visible = true;
 
     std::optional<std::string> name;
+
+    std::size_t numPages = 1;
+    std::size_t firstPage = 0;
+    std::size_t lastPage = 0;
 };
