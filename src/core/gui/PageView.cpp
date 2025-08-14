@@ -122,9 +122,11 @@ void XojPageView::addOverlayView(std::unique_ptr<xoj::view::OverlayView> overlay
 
 void XojPageView::setIsVisible(bool visible) { this->visible = visible; }
 
-void XojPageView::setCenterOfVisibleArea(const xoj::util::Point<double>& c) {
+void XojPageView::setCenterOfVisibleArea(xoj::util::Point<int> c) {
+    c = c - xoj::util::Point<int>(getX(), getY());
     this->drawingMutex.lock();
-    auto retiling = this->tiles.computeRetiling(c, Range(0., 0., this->page->getWidth(), this->page->getHeight()));
+    auto retiling = this->tiles.computeRetiling(c, Range(0., 0., this->page->getWidth(), this->page->getHeight()),
+                                                this->getZoom());
     this->drawingMutex.unlock();
 
     bool rerender = !retiling.missingTiles.empty();
@@ -143,6 +145,12 @@ void XojPageView::deleteViewBuffer() {
     std::lock_guard lock(this->drawingMutex);
     this->tiles.clear();
 }
+
+auto XojPageView::getCacheSize() const -> CacheSize {
+    auto s = tiles.getTiles().size();
+    return {s, s * xoj::view::Tiling::getEstimatedMemUsageForOneTile(this->xournal->getDpiScaleFactor()) >> 20};
+}
+
 
 auto XojPageView::containsPoint(int x, int y, bool local) const -> bool {
     if (!local) {

@@ -47,6 +47,7 @@
 #include "PageView.h"         // for XojPageView
 #include "RepaintHandler.h"   // for RepaintHandler
 #include "XournalppCursor.h"  // for XournalppCursor
+#include "config-debug.h"     // for DEBUG_TILING
 
 using xoj::util::Rectangle;
 
@@ -112,23 +113,43 @@ XournalView::~XournalView() {
     this->widget = nullptr;
 }
 
-
 auto XournalView::clearMemoryTimer(XournalView* widget) -> gboolean {
     widget->cleanupBufferCache();
     return G_SOURCE_CONTINUE;
 }
 
+#ifdef DEBUG_TILING
+#define IF_DBG_TILING(f) f
+#else
+#define IF_DBG_TILING(f)
+#endif
+
 auto XournalView::cleanupBufferCache() -> void {
     const auto& [pagesLower, pagesUpper] = computePreloadedPageInterval(this->currentPage, this->viewPages.size());
 
+    auto rect = gtk_xournal_get_layout(this->getWidget())->getVisibleRect();
+    xoj::util::Point<int> center(round_cast<int>(rect.x + .5 * rect.width), round_cast<int>(rect.y + .5 * rect.height));
+
+    IF_DBG_TILING(size_t s = 0; printf("Stats:\n"););
     for (size_t i = 0; i < this->viewPages.size(); i++) {
         auto&& page = this->viewPages[i];
         const size_t pageNum = i + 1;
         const bool isPreload = pagesLower <= pageNum && pageNum <= pagesUpper;
-        if (!isPreload && !page->isVisible() && page->hasBuffer()) {
-            page->deleteViewBuffer();
+        if (!isPreload && !page->isVisible()) {
+            if (page->hasBuffer()) {
+                IF_DBG_TILING(printf("  page: %2zu del\n", pageNum));
+                page->deleteViewBuffer();
+            }
+        } else {
+            page->setCenterOfVisibleArea(center);
+            IF_DBG_TILING({
+                auto cache = page->getCacheSize();
+                printf("  page: %4zu buf  -> %3zu tiles (~ %4zu MB)\n", pageNum, cache.nbTiles, cache.estMemUsage);
+                s += cache.nbTiles;
+            });
         }
     }
+    IF_DBG_TILING(printf("  = %zu tiles\n\n", s));
 }
 
 auto XournalView::getCurrentPage() const -> size_t { return currentPage; }

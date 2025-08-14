@@ -1,6 +1,8 @@
 #include "Tiling.h"
 
 #include <algorithm>
+#include <functional>
+
 #include <cairo.h>
 
 #include "util/Point.h"
@@ -20,29 +22,20 @@ static constexpr int MAX_TILE_SIZE = 2048;                           ///< Each t
 static constexpr int ELLIPSE_VERTICAL_RADIUS = 3 * MAX_TILE_SIZE;    ///< In pixels
 static constexpr int ELLIPSE_HORIZONTAL_RADIUS = 2 * MAX_TILE_SIZE;  ///< In pixels
 
+/*
+ * Each tile takes MAX_TILE_SIZE * MAX_TILE_SIZE * DPIScaling^2 * 4 bytes (=8M or 32M for DPIScaling=2) of memory,
+ * so we avoid to reallocate them all the time.
+ */
+size_t xoj::view::Tiling::getEstimatedMemUsageForOneTile(int DPIScaling) {
+    return as_unsigned(MAX_TILE_SIZE) * as_unsigned(MAX_TILE_SIZE) * 4 * as_unsigned(DPIScaling * DPIScaling);
+}
+
+
 /// Smaller movements do not trigger an update of the tiles. In pixels
 static constexpr int RETILE_THRESHOLD = MAX_TILE_SIZE / 10;
 
 #ifdef DEBUG_TILING
 #define IF_DBG_TILING(f) f
-static void printTilingSize(const std::vector<std::unique_ptr<xoj::view::Tile>>& tiles) {
-    size_t sizeInMem = 0;
-    for (auto&& t: tiles) {
-        sizeInMem += strict_cast<size_t>(t->getExtent().width) * strict_cast<size_t>(t->getExtent().height);
-    }
-    sizeInMem *= 4;  // 4 bytes per pixel
-
-    auto s = static_cast<double>(sizeInMem);
-    if (!tiles.empty()) {
-        // Multiply by DPI scaling if any
-        auto* surf = cairo_get_target(tiles.front()->get());
-        double sx, sy;
-        cairo_surface_get_device_scale(surf, &sx, &sy);
-        s *= sx * sy;
-    }
-
-    printf("tiles: %zu - mem %f MB\n", tiles.size(), s / 1e6);
-}
 #else
 #define IF_DBG_TILING(f)
 #endif
@@ -89,24 +82,43 @@ static bool isTileWithinEllipse(int x, int y, const xoj::util::Point<int>& cente
                       (y + MAX_TILE_SIZE / 2 - center.y) / static_cast<double>(ELLIPSE_VERTICAL_RADIUS)) <= 1;
 }
 
-void Tiling::populate(int DPIscaling, const xoj::util::Point<double>& c, const Range& extent, double zoom) {
+void Tiling::populate(int DPIscaling, const xoj::util::Point<int>& c, const Range& extent, double zoom) {
     this->zoom = zoom;
-    this->createTiles(DPIscaling, this->computeRetiling(c, extent));
-    IF_DBG_TILING(printTilingSize(this->tiles));
+    this->createTiles(DPIscaling, this->computeRetiling(c, extent, zoom));
 }
 
-auto Tiling::computeRetiling(const xoj::util::Point<double>& p, const Range& extent) -> RetilingData {
-    xoj::util::Point<int> c(round_cast<int>(p.x * this->zoom), round_cast<int>(p.y * this->zoom));
-
-    if (!this->tiles.empty() && this->center.distance(c) < RETILE_THRESHOLD) {
+auto Tiling::computeRetiling(const xoj::util::Point<int>& c, const Range& extent, double zoom) -> RetilingData {
+    if (this->zoom == zoom && !this->tiles.empty() && this->center.distance(c) < RETILE_THRESHOLD) {
         return {};
     }
 
-    auto firstUnused = std::partition(this->tiles.begin(), this->tiles.end(),
-                                     [&](auto&& t) {
-                                         const auto& ext = t->getExtent();
-                                         return isTileWithinEllipse(ext.x, ext.y, c);
-                                     });
+    auto box = Range((c.x - ELLIPSE_HORIZONTAL_RADIUS) / zoom, (c.y - ELLIPSE_VERTICAL_RADIUS) / zoom,
+                     (c.x + ELLIPSE_HORIZONTAL_RADIUS) / zoom, (c.y + ELLIPSE_VERTICAL_RADIUS) / zoom)
+                       .intersect(extent);
+
+    if (box.empty()) {
+        // The ellipse is entirely out of the page - none of the tiles are useful anymore
+        return {{}, std::move(this->tiles)};
+    }
+
+    bool zoomChanged = this->zoom != zoom;
+
+    auto partitionFun = [&]() {
+        if (zoomChanged) {
+            // Keep the old tiles until the new ones have been rendered but some may still be too far away to be of use
+            return std::function<bool(const std::unique_ptr<Tile>&)>([&, zoomRatio = zoom / this->zoom](const auto& t) {
+                const auto& ext = t->getExtent();
+                return isTileWithinEllipse(round_cast<int>(ext.x * zoomRatio), round_cast<int>(ext.y * zoomRatio), c);
+            });
+        } else {
+            return std::function<bool(const std::unique_ptr<Tile>&)>([&](const auto& t) {
+                const auto& ext = t->getExtent();
+                return isTileWithinEllipse(ext.x, ext.y, c);
+            });
+        }
+    }();
+
+    auto firstUnused = std::partition(this->tiles.begin(), this->tiles.end(), partitionFun);
 
     RetilingData res;
     // Discarded tiles are kept to avoid reallocation. They may be reused elsewhere. See Tiling::createTiles()
@@ -115,30 +127,22 @@ auto Tiling::computeRetiling(const xoj::util::Point<double>& p, const Range& ext
 
     this->tiles.erase(firstUnused, this->tiles.end());
 
-    auto box = Range(p.x - ELLIPSE_HORIZONTAL_RADIUS / this->zoom, p.y - ELLIPSE_VERTICAL_RADIUS / this->zoom,
-                     p.x + ELLIPSE_HORIZONTAL_RADIUS / this->zoom, p.y + ELLIPSE_VERTICAL_RADIUS / this->zoom)
-                       .intersect(extent);
-
-    if (box.empty()) [[unlikely]] {
-        // The ellipse is entirely out of the page
-        return {};
-    }
-
     // Find the range of tile positions that may be missing
     // Using simple integer division may not give the right results if coordinates are non-positives.
-    int minX = floor_cast<int>(box.minX * this->zoom / MAX_TILE_SIZE) * MAX_TILE_SIZE;
-    int maxX = floor_cast<int>(box.maxX * this->zoom / MAX_TILE_SIZE) * MAX_TILE_SIZE;
-    int minY = floor_cast<int>(box.minY * this->zoom / MAX_TILE_SIZE) * MAX_TILE_SIZE;
-    int maxY = floor_cast<int>(box.maxY * this->zoom / MAX_TILE_SIZE) * MAX_TILE_SIZE;
+    int minX = floor_cast<int>(box.minX * zoom / MAX_TILE_SIZE) * MAX_TILE_SIZE;
+    int maxX = floor_cast<int>(box.maxX * zoom / MAX_TILE_SIZE) * MAX_TILE_SIZE;
+    int minY = floor_cast<int>(box.minY * zoom / MAX_TILE_SIZE) * MAX_TILE_SIZE;
+    int maxY = floor_cast<int>(box.maxY * zoom / MAX_TILE_SIZE) * MAX_TILE_SIZE;
 
-    int maxXplusWidth = ceil_cast<int>(extent.maxX * this->zoom);
-    int maxYplusHeight = ceil_cast<int>(extent.maxY * this->zoom);
+    int maxXplusWidth = ceil_cast<int>(extent.maxX * zoom);
+    int maxYplusHeight = ceil_cast<int>(extent.maxY * zoom);
 
     for (int x = minX; x <= maxX; x += MAX_TILE_SIZE) {
         for (int y = minY; y <= maxY; y += MAX_TILE_SIZE) {
             if (isTileWithinEllipse(x, y, c) &&
-                std::none_of(this->tiles.begin(), this->tiles.end(),
-                             [&](const auto& t) { return t->getExtent().x == x && t->getExtent().y == y; })) {
+                (zoomChanged || std::none_of(this->tiles.begin(), this->tiles.end(), [&](const auto& t) {
+                     return t->getExtent().x == x && t->getExtent().y == y;
+                 }))) {
                 res.missingTiles.emplace_back(x, y,
                                              x + MAX_TILE_SIZE > maxXplusWidth ? maxXplusWidth - x : MAX_TILE_SIZE,
                                              y + MAX_TILE_SIZE > maxYplusHeight ? maxYplusHeight - y : MAX_TILE_SIZE);
@@ -164,8 +168,12 @@ void Tiling::createTiles(int DPIscaling, RetilingData retiling) {
 }
 
 void Tiling::append(Tiling& o) {
-    tiles.insert(tiles.end(), std::make_move_iterator(o.tiles.begin()), std::make_move_iterator(o.tiles.end()));
-    IF_DBG_TILING(printTilingSize(this->tiles));
+    if (this->zoom != o.zoom) {
+        // Discard old zoom tiles
+        std::swap(*this, o);
+    } else {
+        tiles.insert(tiles.end(), std::make_move_iterator(o.tiles.begin()), std::make_move_iterator(o.tiles.end()));
+    }
 }
 
 std::vector<Tile*> Tiling::getTilesFor(const Range& rg) {

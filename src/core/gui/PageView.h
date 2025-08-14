@@ -97,7 +97,7 @@ public:
     void setSelected(bool selected);
 
     void setIsVisible(bool visible);
-    void setCenterOfVisibleArea(const xoj::util::Point<double>& c);  ///< In Page coordinates. May be out of the page.
+    void setCenterOfVisibleArea(xoj::util::Point<int> c);  ///< In widget coordinates. May be out of the page.
 
     bool isSelected() const;
     inline bool isVisible() const { return visible; }
@@ -200,6 +200,12 @@ public:  // event handler
     bool paintPage(cairo_t* cr, GdkRectangle* rect);
 
     void deleteLaserPointerHandler();
+
+    struct CacheSize {
+        size_t nbTiles;
+        size_t estMemUsage;  ///< in MB
+    };
+    CacheSize getCacheSize() const;
 
 public:  // listener
     void rectChanged(xoj::util::Rectangle<double>& rect) override;
@@ -305,7 +311,7 @@ private:
         xoj::view::Tiling::RetilingData retiling;
         bool rerenderComplete = false;
         bool sizeChanged = false;
-        xoj::util::Point<double> centerOfVisibleArea{};  ///< In page coordinates. May be outside the page.
+        xoj::util::Point<int> centerOfVisibleArea{};  ///< In widget coordinates. May be outside the page.
     } rerenderData;
 
 

@@ -24,7 +24,7 @@ std::string getSurfaceTypeName(cairo_surface_t*);
 #endif
 
 /// Create a cairo context which takes ownership of surf
-static auto createOwingContext(cairo_surface_t* surf, double offsetX, double offsetY, double zoom) {
+static auto createOwningContext(cairo_surface_t* surf, double offsetX, double offsetY, double zoom) {
     cairo_t* cr = cairo_create(surf);
     cairo_surface_destroy(surf);  // now owned by cr
     cairo_translate(cr, -offsetX, -offsetY);
@@ -64,7 +64,7 @@ static xoj::util::CairoSPtr makeContext(DPIInfoType dpiInfo, const xoj::util::Re
         std::cout << "  Its DPI scaling: " << x << " x " << y << std::endl;
     });
 
-    auto cr = createOwingContext(surf, extent.x, extent.y, zoom);  // surf is now owned by cr
+    auto cr = createOwningContext(surf, extent.x, extent.y, zoom);  // surf is now owned by cr
 
     IF_DBG_MASKS({
         xoj::util::CairoSaveGuard saveGuard(cr.get());
@@ -72,6 +72,10 @@ static xoj::util::CairoSPtr makeContext(DPIInfoType dpiInfo, const xoj::util::Re
         cairo_set_source_rgba(cr.get(), 1.0, 0.0, 0.0, 0.3);
         cairo_paint(cr.get());
     });
+
+    if (cairo_status_t status = cairo_status(cr.get()); status != CAIRO_STATUS_SUCCESS) {
+        g_warning("Unable to allocate mask: %s", cairo_status_to_string(status));
+    }
     return cr;
 }
 
@@ -100,7 +104,7 @@ void Tile::paintToWithAlpha(cairo_t* targetCr, uint8_t alpha) const {
 
 void Tile::repurpose(const xoj::util::Rectangle<int>& extent, double zoom) {
     xoj_assert(extent.width == this->extent.width && extent.height == this->extent.height);
-    this->cr = createOwingContext(cairo_surface_reference(cairo_get_target(this->cr.get())), extent.x, extent.y, zoom);
+    this->cr = createOwningContext(cairo_surface_reference(cairo_get_target(this->cr.get())), extent.x, extent.y, zoom);
     this->extent = extent;
 }
 

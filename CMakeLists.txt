@@ -162,6 +162,7 @@ pkg_check_modules(ExternalModules REQUIRED IMPORTED_TARGET ${pkg-module-spec})
 
 find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
+find_package(TBB REQUIRED)  # for libstdc++ <execution>
 
 option(ENABLE_QPDF "Compile with QPDF export support" ON)
 if (ENABLE_QPDF)
@@ -233,6 +234,7 @@ target_link_libraries(external_modules INTERFACE
         $<$<TARGET_EXISTS:qpdf::libqpdf>:qpdf::libqpdf>
         ZLIB::ZLIB
         Threads::Threads
+        TBB::tbb
         )
 
 target_compile_definitions(external_modules INTERFACE

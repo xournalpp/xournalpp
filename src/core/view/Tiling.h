@@ -54,7 +54,7 @@ public:
     inline void setZoom(double z) { zoom = z; }
 
     /// Compute what tiles are necessary to cover an area centered at c (and within rg) and creates the tiles
-    void populate(int DPIscaling, const xoj::util::Point<double>& c, const Range& rg, double zoom);
+    void populate(int DPIscaling, const xoj::util::Point<int>& c, const Range& rg, double zoom);
 
     struct RetilingData {
         std::vector<xoj::util::Rectangle<int>> missingTiles;  ///< Sorted lexicographically with respect to (x,y)
@@ -64,10 +64,10 @@ public:
     };
 
     /**
-     * Get the extents of missing tiles to cover the intersection of extent and an elliptic area around p
+     * Get the extents of missing tiles to cover the intersection of extent and an elliptic area around c
      * The result vector is sorted for the lexicographic order of the rectangle's (x,y)
      */
-    RetilingData computeRetiling(const xoj::util::Point<double>& p, const Range& extent);
+    RetilingData computeRetiling(const xoj::util::Point<int>& c, const Range& extent, double zoom);
 
     /// Create tiles. Set zoom before calling this.
     void createTiles(int DPIscaling, RetilingData retiling);
@@ -78,7 +78,9 @@ public:
     /// Get the tiles intersecting the given range
     std::vector<Tile*> getTilesFor(const Range& rg);
 
-    inline auto& getTiles() { return tiles; }
+    inline const auto& getTiles() const { return tiles; }
+
+    static size_t getEstimatedMemUsageForOneTile(int DPIscaling);
 
 private:
     double zoom = 1.0;
