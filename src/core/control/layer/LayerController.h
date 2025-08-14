@@ -71,6 +71,11 @@ public:
     void deleteCurrentLayer();
     void copyCurrentLayer();
     void moveCurrentLayer(bool up);
+
+    void spanTo(std::size_t pageIndex);
+    void spanUp();
+    void spanDown();
+
     void mergeCurrentLayerDown();
     void switchToLay(Layer::Index layerId, bool hideShow = false, bool clearSelection = true);
     void setLayerVisible(Layer::Index layerId, bool visible);

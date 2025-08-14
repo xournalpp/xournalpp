@@ -8,16 +8,16 @@
 #include "control/actions/ActionDatabase.h"  // for ActionDatabase
 #include "gui/MainWindow.h"                  // for MainWindow
 #include "gui/XournalView.h"                 // for XournalView
-#include "model/Document.h"                 // for Document
-#include "model/XojPage.h"                  // for XojPage
-#include "undo/InsertLayerUndoAction.h"     // for InsertLayerUndoAction
-#include "undo/MergeLayerDownUndoAction.h"  // for MergeLayerDownUndoAction
-#include "undo/MoveLayerUndoAction.h"       // for MoveLayerUndoAction
-#include "undo/RemoveLayerUndoAction.h"     // for RemoveLayerUndoAction
-#include "undo/UndoAction.h"                // for UndoActionPtr, UndoAction
-#include "undo/UndoRedoHandler.h"           // for UndoRedoHandler
-#include "util/Util.h"                      // for npos
-#include "util/i18n.h"                      // for FS, _F
+#include "model/Document.h"                  // for Document
+#include "model/XojPage.h"                   // for XojPage
+#include "undo/InsertLayerUndoAction.h"      // for InsertLayerUndoAction
+#include "undo/MergeLayerDownUndoAction.h"   // for MergeLayerDownUndoAction
+#include "undo/MoveLayerUndoAction.h"        // for MoveLayerUndoAction
+#include "undo/RemoveLayerUndoAction.h"      // for RemoveLayerUndoAction
+#include "undo/UndoAction.h"                 // for UndoActionPtr, UndoAction
+#include "undo/UndoRedoHandler.h"            // for UndoRedoHandler
+#include "util/Util.h"                       // for npos
+#include "util/i18n.h"                       // for FS, _F
 
 #include "LayerCtrlListener.h"  // for LayerCtrlListener
 
@@ -58,8 +58,33 @@ void LayerController::updateActions() {
 
     auto* actionDB = control->getActionDatabase();
 
-    actionDB->enableAction(Action::LAYER_DELETE, layer > 0);
-    actionDB->enableAction(Action::LAYER_MERGE_DOWN, layer > 1);
+    PageRef currentPage = getCurrentPage();
+    if (currentPage != nullptr) {
+        bool can_delete;
+        bool can_merge_down;
+
+        Layer* currentLayer = currentPage->getSelectedLayer();
+        if (currentLayer != nullptr) {
+            if (selectedPage == currentLayer->getFirstPage() or selectedPage == currentLayer->getLastPage()) {
+                can_delete = layer > 0;
+            } else {
+                can_delete = false;
+            }
+
+            if (currentLayer->getFirstPage() != currentLayer->getLastPage()) {
+                can_merge_down = false;
+            } else {
+                can_merge_down = true;
+            }
+        } else {
+            can_delete = layer > 0;
+            can_merge_down = layer > 1;
+        }
+
+        actionDB->enableAction(Action::LAYER_DELETE, can_delete);
+        actionDB->enableAction(Action::LAYER_MERGE_DOWN, can_merge_down);
+    }
+
     actionDB->enableAction(Action::LAYER_MOVE_UP, layer < maxLayer);
     actionDB->enableAction(Action::LAYER_MOVE_DOWN, layer > 1);
     actionDB->enableAction(Action::MOVE_SELECTION_LAYER_UP, layer < maxLayer);
@@ -68,19 +93,29 @@ void LayerController::updateActions() {
     actionDB->enableAction(Action::LAYER_GOTO_PREVIOUS, layer > 0);
     actionDB->enableAction(Action::LAYER_GOTO_TOP, layer < maxLayer);
 
+    actionDB->enableAction(Action::LAYER_SPAN_UP, selectedPage > 0);
+    actionDB->enableAction(Action::LAYER_SPAN_DOWN, selectedPage + 1 < control->getDocument()->getPageCount());
+
     actionDB->setActionState(Action::LAYER_ACTIVE, layer);
 }
 
 void LayerController::fireRebuildLayerMenu() {
-    for (LayerCtrlListener* l: this->listener) { l->rebuildLayerMenu(); }
+    for (LayerCtrlListener* l: this->listener) {
+        l->rebuildLayerMenu();
+    }
     updateActions();
 }
 
 void LayerController::fireLayerVisibilityChanged() {
-    for (LayerCtrlListener* l: this->listener) { l->layerVisibilityChanged(); }
+    for (LayerCtrlListener* l: this->listener) {
+        l->layerVisibilityChanged();
+    }
 
-    // Rerenders the page - Todo: make this another listener
-    control->getWindow()->getXournal()->layerChanged(selectedPage);
+    // Rerenders all pages this layer is present in - Todo: make this another listener
+    Layer* l = getCurrentPage()->getSelectedLayer();
+    for (std::size_t i = l->getFirstPage(); i <= l->getLastPage(); ++i) {
+        control->getWindow()->getXournal()->layerChanged(i);
+    }
 }
 
 void LayerController::fireSelectedLayerChanged() {
@@ -105,7 +140,9 @@ void LayerController::hideAllLayer() { showOrHideAllLayer(false); }
  */
 void LayerController::showOrHideAllLayer(bool show) {
     PageRef page = getCurrentPage();
-    for (Layer::Index i = 1; i <= page->getLayerCount(); i++) { page->setLayerVisible(i, show); }
+    for (Layer::Index i = 1; i <= page->getLayerCount(); i++) {
+        page->setLayerVisible(i, show);
+    }
 
     fireLayerVisibilityChanged();
 }
@@ -119,6 +156,10 @@ void LayerController::addNewLayer(bool belowCurrentLayer) {
 
     auto* l = new Layer();
     xoj_assert(p->getSelectedLayerId() > 0);
+
+    l->setFirstPage(selectedPage);
+    l->setLastPage(selectedPage);
+
     auto layerPos = belowCurrentLayer ? p->getSelectedLayerId() - 1 : p->getSelectedLayerId();
     p->insertLayer(l, layerPos);
 
@@ -126,6 +167,10 @@ void LayerController::addNewLayer(bool belowCurrentLayer) {
 
     fireRebuildLayerMenu();
     // Repaint is not needed here - the new layer is empty
+}
+
+std::string makeLayerName(std::size_t i, std::size_t j) {
+    return "Span " + std::to_string(i) + "-" + std::to_string(j);
 }
 
 void LayerController::deleteCurrentLayer() {
@@ -142,6 +187,18 @@ void LayerController::deleteCurrentLayer() {
         return;
     }
     Layer* l = p->getSelectedLayer();
+
+    if (l != nullptr) {
+        if (l->getFirstPage() != l->getLastPage()) {
+            l->decrementPageCount();
+            if (selectedPage == l->getFirstPage()) {
+                l->setFirstPage(l->getFirstPage() + 1);
+            } else {
+                l->setLastPage(l->getLastPage() - 1);
+            }
+            l->setName(makeLayerName(l->getFirstPage() + 1, l->getLastPage() + 1));
+        }
+    }
 
     p->removeLayer(l);
 
@@ -199,6 +256,55 @@ void LayerController::moveCurrentLayer(bool up) {
 
     fireRebuildLayerMenu();
 }
+
+void LayerController::spanTo(std::size_t pageIndex) {
+    Layer* currentLayer = getCurrentPage()->getSelectedLayer();
+
+    std::size_t i, j;
+    if (currentLayer->getName() == "") {
+        i = (selectedPage < pageIndex ? selectedPage : pageIndex);
+        j = (selectedPage < pageIndex ? pageIndex : selectedPage);
+    } else {
+        i = currentLayer->getFirstPage();
+        j = currentLayer->getLastPage();
+
+        if (i <= pageIndex and pageIndex <= j) {
+            // this is a mistake: the user is trying to span a layer into a page
+            // that already contains this layer
+            return;
+        }
+
+        if (selectedPage < pageIndex) {
+            ++j;
+        } else {
+            --i;
+        }
+    }
+
+    currentLayer->incrementPageCount();
+    currentLayer->setFirstPage(i);
+    currentLayer->setLastPage(j);
+    currentLayer->setName(makeLayerName(i + 1, j + 1));
+
+    MainWindow* win = control->getWindow();
+    if (win) {
+        win->getXournal()->layerChanged(selectedPage < pageIndex ? j : i);
+    }
+
+    PageRef span_page = control->getDocument()->getPage(pageIndex);
+
+    const Layer::Index idx = span_page->getLayerCount();
+    span_page->addLayer(currentLayer);
+
+    control->getUndoRedoHandler()->addUndoAction(
+            std::make_unique<InsertLayerUndoAction>(this, span_page, currentLayer, idx));
+
+    fireRebuildLayerMenu();
+}
+
+void LayerController::spanUp() { spanTo(selectedPage - 1); }
+
+void LayerController::spanDown() { spanTo(selectedPage + 1); }
 
 void LayerController::mergeCurrentLayerDown() {
     control->clearSelectionEndText();
@@ -262,6 +368,11 @@ void LayerController::copyCurrentLayer() {
     }
     Layer* l = p->getSelectedLayer();
     Layer* cloned = l->clone();
+    if (cloned->getName()[0] == 'S') {
+        cloned->setName("");
+        cloned->setFirstPage(selectedPage);
+        cloned->setLastPage(selectedPage);
+    }
 
     p->insertLayer(cloned, lId);
 
@@ -305,7 +416,9 @@ void LayerController::switchToLay(Layer::Index layerId, bool hideShow, bool clea
     fireSelectedLayerChanged();
 
     if (hideShow) {
-        for (Layer::Index i = 1; i <= p->getLayerCount(); i++) { p->setLayerVisible(i, i <= layerId); }
+        for (Layer::Index i = 1; i <= p->getLayerCount(); i++) {
+            p->setLayerVisible(i, i <= layerId);
+        }
 
         fireLayerVisibilityChanged();
     }
