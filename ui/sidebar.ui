@@ -112,8 +112,40 @@
         </child>
         <child>
             <object class="GtkButton">
+                <property name="action-name">win.layer-page-span-up</property>
+                <child>
+                    <object class="GtkImage">
+                        <property name="visible">1</property>
+                        <property name="can-focus">0</property>
+                        <property name="icon-name">layer-page-span-up</property>
+                    </object>
+                </child>
+                <property name="tooltip-text">Span this layer one page up</property>
+            </object>
+        </child>
+        <child>
+            <object class="GtkButton">
+                <property name="action-name">win.layer-page-span-down</property>
+                <child>
+                    <object class="GtkImage">
+                        <property name="visible">1</property>
+                        <property name="can-focus">0</property>
+                        <property name="icon-name">layer-page-span-down</property>
+                    </object>
+                </child>
+                <property name="tooltip-text">Span this layer one page down</property>
+            </object>
+        </child>
+        <child>
+            <object class="GtkButton">
                 <property name="action-name">win.layer-delete</property>
-<child><object class="GtkImage"><property name="visible">1</property><property name="can-focus">0</property><property name="icon-name">delete</property></object></child>
+                <child>
+                    <object class="GtkImage">
+                        <property name="visible">1</property>
+                        <property name="can-focus">0</property>
+                        <property name="icon-name">delete</property>
+                    </object>
+                </child>
                 <property name="tooltip-text">Delete this layer</property>
             </object>
         </child>
@@ -135,6 +167,14 @@
             <item>
                 <attribute name="label" translatable="yes">Duplicate</attribute>
                 <attribute name="action">win.layer-copy</attribute>
+            </item>
+            <item>
+                <attribute name="label" translatable="yes">Span page up</attribute>
+                <attribute name="action">win.layer-span-up</attribute>
+            </item>
+            <item>
+                <attribute name="label" translatable="yes">Span page down</attribute>
+                <attribute name="action">win.layer-span-down</attribute>
             </item>
         </section>
         <section>

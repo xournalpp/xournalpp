@@ -994,6 +994,16 @@ struct ActionProperties<Action::LAYER_MOVE_DOWN> {
 };
 
 template <>
+struct ActionProperties<Action::LAYER_SPAN_UP> {
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getLayerController()->spanUp(); }
+};
+
+template <>
+struct ActionProperties<Action::LAYER_SPAN_DOWN> {
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getLayerController()->spanDown(); }
+};
+
+template <>
 struct ActionProperties<Action::LAYER_DELETE> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getLayerController()->deleteCurrentLayer(); }
 };
