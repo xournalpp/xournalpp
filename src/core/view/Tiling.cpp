@@ -144,8 +144,8 @@ auto Tiling::computeRetiling(const xoj::util::Point<int>& c, const Range& extent
                      return t->getExtent().x == x && t->getExtent().y == y;
                  }))) {
                 res.missingTiles.emplace_back(x, y,
-                                             x + MAX_TILE_SIZE > maxXplusWidth ? maxXplusWidth - x : MAX_TILE_SIZE,
-                                             y + MAX_TILE_SIZE > maxYplusHeight ? maxYplusHeight - y : MAX_TILE_SIZE);
+                                              x + MAX_TILE_SIZE > maxXplusWidth ? maxXplusWidth - x : MAX_TILE_SIZE,
+                                              y + MAX_TILE_SIZE > maxYplusHeight ? maxYplusHeight - y : MAX_TILE_SIZE);
             }
         }
     }
@@ -157,7 +157,9 @@ void Tiling::createTiles(int DPIscaling, RetilingData retiling) {
     tiles.reserve(tiles.size() + retiling.missingTiles.size());
     for (auto&& e: retiling.missingTiles) {
         // We try to find an already allocated tile to avoid the cost of huge allocation
-        auto it = std::find_if(retiling.unusedTiles.begin(), retiling.unusedTiles.end(), [&](const auto& t) { return t && t->getExtent().width == e.width && t->getExtent().height == e.height; });
+        auto it = std::find_if(retiling.unusedTiles.begin(), retiling.unusedTiles.end(), [&](const auto& t) {
+            return t && t->getExtent().width == e.width && t->getExtent().height == e.height;
+        });
         if (it != retiling.unusedTiles.end()) {
             tiles.emplace_back(std::move(*it));
             tiles.back()->repurpose(e, this->zoom);
@@ -198,10 +200,9 @@ void Tiling::RetilingData::merge(RetilingData other) {
     std::vector<xoj::util::Rectangle<int>> merged;
     merged.reserve(this->missingTiles.size() + other.missingTiles.size());
     std::set_union(this->missingTiles.begin(), this->missingTiles.end(), other.missingTiles.begin(),
-                       other.missingTiles.end(), std::back_inserter(merged), comp);
+                   other.missingTiles.end(), std::back_inserter(merged), comp);
     std::swap(this->missingTiles, merged);
 
     this->unusedTiles.reserve(this->unusedTiles.size() + other.unusedTiles.size());
     std::move(other.unusedTiles.begin(), other.unusedTiles.end(), std::back_inserter(this->unusedTiles));
 }
-

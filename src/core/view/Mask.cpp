@@ -29,7 +29,8 @@ static auto createOwningContext(cairo_surface_t* surf, double offsetX, double of
     cairo_surface_destroy(surf);  // now owned by cr
     cairo_translate(cr, -offsetX, -offsetY);
     cairo_scale(cr, zoom, zoom);
-    return xoj::util::CairoSPtr(cr, xoj::util::adopt);;
+    return xoj::util::CairoSPtr(cr, xoj::util::adopt);
+    ;
 }
 
 template <typename DPIInfoType>
