@@ -87,7 +87,7 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
     labels[Cat::PLUGINS] = C_("Item category in toolbar customization dialog", "Plugins");
     EnumIndexedArray<GtkWidget*, Cat> tabs;
 
-    for (std::underlying_type_t<Cat> n = 0; n < xoj::to_underlying(Cat::ENUMERATOR_COUNT); n++) {
+    for (std::underlying_type_t<Cat> n = 0; n < std::to_underlying(Cat::ENUMERATOR_COUNT); n++) {
         Cat c = static_cast<Cat>(n);
         tabs[c] = gtk_list_box_new();
         GtkWidget* w = gtk_scrolled_window_new();

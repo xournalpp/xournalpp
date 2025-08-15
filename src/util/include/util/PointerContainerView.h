@@ -17,9 +17,9 @@
 
 #include "util/safe_casts.h"
 
-namespace xoj::util {
-
 // Todo(cpp20) use std::to_address instead
+namespace std {
+
 template <typename T>
 T* to_address(T*& t) {
     return t;
@@ -38,6 +38,10 @@ template <typename T>
 const T* to_address(const std::unique_ptr<T>& t) {
     return t.get();
 }
+
+}  // namespace std
+
+namespace xoj::util {
 
 template <typename container_type>
 class PointerContainerView {
@@ -60,8 +64,8 @@ public:
         iterator_impl(base_it it): base_it(it) {}
 
         // We must return by value
-        value_type operator*() const { return to_address(base_it::operator*()); }
-        value_type operator[](difference_type n) const { return to_address(base_it::operator[](n)); }
+        value_type operator*() const { return std::to_address(base_it::operator*()); }
+        value_type operator[](difference_type n) const { return std::to_address(base_it::operator[](n)); }
 
     private:
         using base_it::operator->;

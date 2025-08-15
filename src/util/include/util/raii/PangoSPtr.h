@@ -24,7 +24,7 @@ class PangoAttrListHandler {
 public:
     constexpr static auto ref = pango_attr_list_ref;
     constexpr static auto unref = pango_attr_list_unref;
-    constexpr static auto adopt = identity<PangoAttrList>;
+    constexpr static auto adopt = std::identity<PangoAttrList>;
 };
 };  // namespace specialization
 

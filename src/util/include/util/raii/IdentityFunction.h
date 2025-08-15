@@ -11,12 +11,10 @@
 
 #pragma once
 
-namespace xoj::util {
+namespace std {
 
-inline namespace raii {
-namespace specialization {
-template <typename T>  // Todo(cpp20): use std:identity() and remove this header
+// Todo(cpp20): use std::identity() and remove this header
+template <typename T>
 constexpr auto identity = [](T* p) { return p; };
-};
-};  // namespace raii
-};  // namespace xoj::util
+
+};  // namespace std

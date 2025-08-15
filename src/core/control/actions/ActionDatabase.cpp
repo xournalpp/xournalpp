@@ -160,7 +160,7 @@ void ActionDatabase::Populator::populate(ActionDatabase* db) {
     ACTIONDB_PRINT_DEBUG("Populating ActionDatabase:");
     ACTIONDB_PRINT_DEBUG("        ACTION NAME:                |  STATE INIT   | PARAM TYPE |");
 
-    populateImpl(std::make_index_sequence<xoj::to_underlying(Action::ENUMERATOR_COUNT)>(), db);
+    populateImpl(std::make_index_sequence<std::to_underlying(Action::ENUMERATOR_COUNT)>(), db);
 }
 
 ActionDatabase::ActionDatabase(Control* control):
@@ -205,5 +205,5 @@ static void resetEnableStatusImpl(std::index_sequence<As...>, ActionDatabase* db
 }
 
 void ActionDatabase::resetEnableStatus() {
-    resetEnableStatusImpl(std::make_index_sequence<xoj::to_underlying(Action::ENUMERATOR_COUNT)>(), this, control);
+    resetEnableStatusImpl(std::make_index_sequence<std::to_underlying(Action::ENUMERATOR_COUNT)>(), this, control);
 }

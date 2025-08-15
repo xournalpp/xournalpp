@@ -22,17 +22,17 @@ template <class T, typename enum_class,
           std::enable_if_t<std::is_enum_v<enum_class> && std::is_unsigned_v<std::underlying_type_t<enum_class>> &&
                                    !std::is_convertible_v<enum_class, std::underlying_type_t<enum_class>>,
                            bool> = true>
-class EnumIndexedArray: private std::array<T, xoj::to_underlying(enum_class::ENUMERATOR_COUNT)> {
+class EnumIndexedArray: private std::array<T, std::to_underlying(enum_class::ENUMERATOR_COUNT)> {
 public:
-    using underlying_array_type = std::array<T, xoj::to_underlying(enum_class::ENUMERATOR_COUNT)>;
+    using underlying_array_type = std::array<T, std::to_underlying(enum_class::ENUMERATOR_COUNT)>;
 
     T& operator[](enum_class value) {
         xoj_assert(value < enum_class::ENUMERATOR_COUNT);
-        return underlying_array_type::operator[](xoj::to_underlying(value));
+        return underlying_array_type::operator[](std::to_underlying(value));
     }
     const T& operator[](enum_class value) const {
         xoj_assert(value < enum_class::ENUMERATOR_COUNT);
-        return underlying_array_type::operator[](xoj::to_underlying(value));
+        return underlying_array_type::operator[](std::to_underlying(value));
     }
     using underlying_array_type::begin;
     using underlying_array_type::end;

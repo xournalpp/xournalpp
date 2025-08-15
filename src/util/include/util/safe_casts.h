@@ -100,12 +100,13 @@ inline auto floor_cast(Float f) -> Integral {
     return rv1;
 }
 
-namespace xoj {
+// Todo(cpp23) This is available in std:: since C++23
+namespace std {
 template <class Enum>
 constexpr std::underlying_type_t<Enum> to_underlying(Enum e) noexcept {
     return static_cast<std::underlying_type_t<Enum>>(e);
 }
-}  // namespace xoj
+}  // namespace std
 
 #if defined __has_include && !defined(XOJ_USE_STD_BIT_CAST)
 #if __has_include(<bit>)
