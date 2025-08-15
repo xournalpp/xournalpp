@@ -20,6 +20,11 @@
 #include "util/Assert.h"
 #include "util/safe_casts.h"  // for as_signed
 
+struct AudioAttributes {
+    double sampleRate;
+    uint32_t channelCount;
+};
+
 template <typename T>
 class AudioQueue {
 public:
@@ -89,14 +94,18 @@ public:
     void waitForProducer(std::unique_lock<std::mutex>& lock) {
         // static_assert(lock.mutex() == &this->queueLock);
         xoj_assert(lock.mutex() == &this->queueLock);
-        while (!this->pushNotified && !hasStreamEnded()) { this->pushLockCondition.wait(lock); }
+        while (!this->pushNotified && !hasStreamEnded()) {
+            this->pushLockCondition.wait(lock);
+        }
         this->pushNotified = false;
     }
 
     void waitForConsumer(std::unique_lock<std::mutex>& lock) {
         // static_assert(lock.mutex() == &this->queueLock);
         xoj_assert(lock.mutex() == &this->queueLock);
-        while (!this->popNotified && !hasStreamEnded()) { this->popLockCondition.wait(lock); }
+        while (!this->popNotified && !hasStreamEnded()) {
+            this->popLockCondition.wait(lock);
+        }
         this->popNotified = false;
     }
 
@@ -120,11 +129,9 @@ public:
 
     /**
      * @return a pair of the sample rate and the channel count,
-     * std::pair<>::first is the sample rate and std::pair<>::second the channel count.
-     * Todo (readability, type-safety): create a struct AudioAttributes; remove this comment
      */
 
-    [[nodiscard]] std::pair<double, int> getAudioAttributes() {
+    [[nodiscard]] AudioAttributes getAudioAttributes() {
         std::lock_guard<std::mutex> lock(internalLock);
         return {this->sampleRate, this->channels};
     }
