@@ -181,10 +181,6 @@ if (ENABLE_STD_EXECUTION_PARALLEL_POLICY)
         # c++17 execution policies are still in the experimental lib (at least in clang 20)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexperimental-library")
     endif()
-    check_cxx_symbol_exists("std::execution::par" execution FOUND_EXECUTION_PAR)
-    if (NOT FOUND_EXECUTION_PAR)
-        message(FATAL_ERROR "Could not find std::execution::par. Using std's parallel algorithms can be disabled with -DENABLE_STD_EXECUTION_PARALLEL_POLICY=off")
-    endif()
 endif()
 
 option(ENABLE_QPDF "Compile with QPDF export support" ON)
@@ -311,10 +307,6 @@ set(DEV_ERRORLOG_DIR "errorlogs" CACHE STRING "Directory where errorlogfiles wil
 set(DEV_FILE_FORMAT_VERSION 4 CACHE STRING "File format version" FORCE)
 
 option(DEV_ENABLE_GCOV "Build with gcov support" OFF) # Enabel gcov support – expanded in src/
-option(DEV_CHECK_GTK3_COMPAT "Adds a few compiler flags to check basic GTK3 upgradeability support (still compiles for GTK2!)")
-if (DEV_CHECK_GTK3_COMPAT)
-    add_definitions(-DGTK_DISABLE_SINGLE_INCLUDES -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGSEAL_ENABLE)
-endif ()
 
 mark_as_advanced(FORCE
         DEV_TOOLBAR_CONFIG DEV_SETTINGS_XML_FILE DEV_PRINT_CONFIG_FILE DEV_METADATA_FILE
