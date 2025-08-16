@@ -21,6 +21,7 @@
 #include <glib.h>         // for GOptionEntry, gchar, G_O...
 #include <libintl.h>      // for bindtextdomain, textdomain
 
+#include "config/TextPlaceholderConfig.h"
 #include "control/RecentManager.h"           // for RecentManager
 #include "control/jobs/BaseExportJob.h"      // for ExportBackgroundType
 #include "control/jobs/XournalScheduler.h"   // for XournalScheduler
@@ -33,6 +34,7 @@
 #include "gui/MainWindow.h"                  // for MainWindow
 #include "gui/XournalView.h"                 // for XournalView
 #include "model/Document.h"                  // for Document
+#include "plugin/luapi_application.h"
 #include "undo/EmergencySaveRestore.h"       // for EmergencySaveRestore
 #include "undo/UndoRedoHandler.h"            // for UndoRedoHandler
 #include "util/PathUtil.h"                   // for getConfigFolder, openFil...
@@ -48,6 +50,7 @@
 #include "config-git.h"    // for GIT_BRANCH, GIT_ORIGIN_O...
 #include "config.h"        // for GETTEXT_PACKAGE, ENABLE_NLS
 #include "filesystem.h"    // for path, operator/, exists
+
 
 namespace {
 
@@ -409,7 +412,9 @@ void on_startup(GApplication* application, XMPtr app_data) {
     initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
     initResourcePath(app_data->gladePath.get(), "ui/toolbar.ini", false);
 
+    fs::path placeholderConfigPath = Util::getConfigFile("placeholders.ini");
     app_data->control = std::make_unique<Control>(application, app_data->gladePath.get(), app_data->disableAudio);
+    app_data->control->setTextPlaceholderConfig(new TextPlaceholderConfig(placeholderConfigPath.string()));
 
     auto& globalLatexTemplatePath = app_data->control->getSettings()->latexSettings.globalTemplatePath;
     if (globalLatexTemplatePath.empty()) {

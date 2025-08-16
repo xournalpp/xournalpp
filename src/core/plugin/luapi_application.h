@@ -57,8 +57,10 @@
 #include "util/StringUtils.h"
 #include "util/i18n.h"        // for _
 #include "util/safe_casts.h"  // for round_cast, as_signed, as_unsigned
+#include "util/XojMsgBox.h"
 
 #include "ActionBackwardCompatibilityLayer.h"
+#include "luapi_textplaceholder.h"
 
 extern "C" {
 #include <lauxlib.h>  // for luaL_Reg, luaL_newstate, luaL_requiref
@@ -3124,10 +3126,33 @@ static int applib_addToSelection(lua_State* L) {
     return 0;
 }
 
+/**
+ * Set the value of a text placeholder shown in the toolbar.
+ *
+ * @param name string: The placeholder name
+ * @param value string: The value to display
+ *
+ * Example: app.setPlaceholderValue("myPlaceholder", "Hello World")
+ * Updates the toolbar placeholder with the given value.
+ */
+static int applib_setPlaceholderValue(lua_State* L) {
+    // Get Control instance from Lua plugin context
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    if (!plugin) return 0;
+    Control* control = plugin->getControl();
+    if (!control) return 0;
+    TextPlaceholderConfig* config = control->getTextPlaceholderConfig();
+    if (!config) return 0;
+    return luapi_textplaceholder::set_placeholder_value(L, config, control);
+}
+
 /*
  * The full Lua Plugin API.
  * See above for example usage of each function.
  */
+static int applib_setPlaceholderValue(lua_State* L);
+
+
 static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remove this deprecated function
                                   {"openDialog", applib_openDialog},
                                   {"getPageLabel", applib_getPageLabel},
@@ -3172,8 +3197,9 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remo
                                   {"getImages", applib_getImages},
                                   {"getTexts", applib_getTexts},
                                   {"openFile", applib_openFile},
+                                  {"setPlaceholderValue", applib_setPlaceholderValue},
                                   // Placeholder
-                                  //	{"MSG_BT_OK", nullptr},
+                                  // {"MSG_BT_OK", nullptr},
 
                                   {nullptr, nullptr}};
 
@@ -3182,7 +3208,7 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remo
  */
 inline int luaopen_app(lua_State* L) {
     luaL_newlib(L, applib);
-    //	lua_pushnumber(L, MSG_BT_OK);
-    //	lua_setfield(L, -2, "MSG_BT_OK");
+    // lua_pushnumber(L, MSG_BT_OK);
+    // lua_setfield(L, -2, "MSG_BT_OK");
     return 1;
 }
