@@ -202,11 +202,13 @@ void Settings::loadDefault() {
 	this->pageTemplate = "xoj/template\ncopyLastPageSettings=true\nsize=595.275591x841.889764\nbackgroundType=lined\nbackgroundColor=#ffffff\n";
     // clang-format on
 
+#ifdef ENABLE_AUDIO
     this->audioSampleRate = 44100.0;
     this->audioInputDevice = AUDIO_INPUT_SYSTEM_DEFAULT;
     this->audioOutputDevice = AUDIO_OUTPUT_SYSTEM_DEFAULT;
     this->audioGain = 1.0;
     this->defaultSeekTime = 5;
+#endif
 
     this->pluginEnabled = "";
     this->pluginDisabled = "";
@@ -619,6 +621,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->disableScrollbarFadeout = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("disableAudio")) == 0) {
         this->disableAudio = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+#ifdef ENABLE_AUDIO
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioSampleRate")) == 0) {
         this->audioSampleRate = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioGain")) == 0) {
@@ -629,6 +632,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->audioInputDevice = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioOutputDevice")) == 0) {
         this->audioOutputDevice = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+#endif
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("numIgnoredStylusEvents")) == 0) {
         this->numIgnoredStylusEvents =
                 std::max<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10), 0);
@@ -1144,6 +1148,8 @@ void Settings::save() {
     ATTACH_COMMENT("Config for new pages");
 
     SAVE_STRING_PROP(sizeUnit);
+
+#ifdef ENABLE_AUDIO
     {
         auto audioFolder = this->audioFolder.u8string();
         SAVE_STRING_PROP(audioFolder);
@@ -1153,6 +1159,7 @@ void Settings::save() {
     SAVE_DOUBLE_PROP(audioSampleRate);
     SAVE_DOUBLE_PROP(audioGain);
     SAVE_INT_PROP(defaultSeekTime);
+#endif
 
     SAVE_STRING_PROP(pluginEnabled);
     SAVE_STRING_PROP(pluginDisabled);
@@ -1750,18 +1757,6 @@ void Settings::setPageTemplate(const string& pageTemplate) {
     save();
 }
 
-auto Settings::getAudioFolder() const -> fs::path const& { return this->audioFolder; }
-
-void Settings::setAudioFolder(fs::path audioFolder) {
-    if (this->audioFolder == audioFolder) {
-        return;
-    }
-
-    this->audioFolder = std::move(audioFolder);
-
-    save();
-}
-
 auto Settings::getSizeUnit() const -> string const& { return sizeUnit; }
 
 void Settings::setSizeUnit(const string& sizeUnit) {
@@ -2211,6 +2206,18 @@ void Settings::setFont(const XojFont& font) {
     save();
 }
 
+#ifdef ENABLE_AUDIO
+auto Settings::getAudioFolder() const -> fs::path const& { return this->audioFolder; }
+
+void Settings::setAudioFolder(fs::path audioFolder) {
+    if (this->audioFolder == audioFolder) {
+        return;
+    }
+
+    this->audioFolder = std::move(audioFolder);
+
+    save();
+}
 
 auto Settings::getAudioInputDevice() const -> PaDeviceIndex { return this->audioInputDevice; }
 
@@ -2261,6 +2268,7 @@ void Settings::setDefaultSeekTime(unsigned int t) {
     this->defaultSeekTime = t;
     save();
 }
+#endif
 
 auto Settings::getPluginEnabled() const -> string const& { return this->pluginEnabled; }
 

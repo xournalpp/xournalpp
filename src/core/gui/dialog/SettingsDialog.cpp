@@ -405,9 +405,6 @@ void SettingsDialog::load() {
     GtkWidget* txtDefaultPdfName = builder.get("txtDefaultPdfName");
     gtk_editable_set_text(GTK_EDITABLE(txtDefaultPdfName), settings->getDefaultPdfExportName().c_str());
 
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(builder.get("fcAudioPath")),
-                                        Util::toGFilename(settings->getAudioFolder()).c_str());
-
     GtkWidget* spAutosaveTimeout = builder.get("spAutosaveTimeout");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout), settings->getAutosaveTimeout());
 
@@ -676,6 +673,9 @@ void SettingsDialog::load() {
     touch.getInt("timeout", timeoutMs);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(builder.get("spTouchDisableTimeout")), timeoutMs / 1000.0);
 
+#ifdef ENABLE_AUDIO
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(builder.get("fcAudioPath")),
+                                        Util::toGFilename(settings->getAudioFolder()).c_str());
     if (this->control->getAudioController()) {
         this->audioInputDevices = this->control->getAudioController()->getInputDevices();
         gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(builder.get("cbAudioInputDevice")), "", "System default");
@@ -722,6 +722,9 @@ void SettingsDialog::load() {
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(builder.get("spAudioGain")), settings->getAudioGain());
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(builder.get("spDefaultSeekTime")), settings->getDefaultSeekTime());
     }
+#else
+    gtk_widget_destroy(builder.get("audioRecordingTabBox"));
+#endif
 
     this->latexPanel.load(settings->latexSettings);
     paletteTab.renderPaletteTab(this->control->getPalette().getFilePath());
@@ -914,13 +917,6 @@ void SettingsDialog::save() {
     settings->setDefaultSaveName(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultSaveName"))));
     settings->setDefaultPdfExportName(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultPdfName"))));
 
-    auto file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(builder.get("fcAudioPath")));
-    auto path = Util::fromGFile(file);
-    g_object_unref(file);
-    if (fs::is_directory(path)) {
-        settings->setAudioFolder(path);
-    }
-
     GtkWidget* spAutosaveTimeout = builder.get("spAutosaveTimeout");
     int autosaveTimeout = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutosaveTimeout)));
     settings->setAutosaveTimeout(autosaveTimeout);
@@ -1042,6 +1038,14 @@ void SettingsDialog::save() {
     settings->setStrokeRecognizerMinSize(
             static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(builder.get("spStrokeRecognizerMinSize")))));
 
+#ifdef ENABLE_AUDIO
+    auto file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(builder.get("fcAudioPath")));
+    auto path = Util::fromGFile(file);
+    g_object_unref(file);
+    if (fs::is_directory(path)) {
+        settings->setAudioFolder(path);
+    }
+
     size_t selectedInputDeviceIndex =
             static_cast<size_t>(gtk_combo_box_get_active(GTK_COMBO_BOX(builder.get("cbAudioInputDevice"))));
     if (selectedInputDeviceIndex == 0) {
@@ -1077,6 +1081,7 @@ void SettingsDialog::save() {
     settings->setAudioGain(static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(builder.get("spAudioGain")))));
     settings->setDefaultSeekTime(
             static_cast<unsigned int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(builder.get("spDefaultSeekTime")))));
+#endif
 
     const std::optional<std::filesystem::path> selectedPalette = paletteTab.getSelectedPalette();
     if (selectedPalette.has_value()) {
