@@ -194,11 +194,11 @@ static void gtk_xournal_draw_shadow(GtkXournal* xournal, cairo_t* cr, int left, 
 
         // Draw border
         Util::cairo_set_source_rgbi(cr, settings->getBorderColor());
-        cairo_set_line_width(cr, 4.0);
+        cairo_set_line_width(cr, 2.0);
         cairo_set_line_cap(cr, CAIRO_LINE_CAP_SQUARE);
         cairo_set_line_join(cr, CAIRO_LINE_JOIN_MITER);
 
-        cairo_rectangle(cr, left, top, width, height);
+        cairo_rectangle(cr, left - 1, top - 1, width + 2, height + 2);
         cairo_stroke(cr);
     } else {
         Shadow::drawShadow(cr, left, top, width, height);

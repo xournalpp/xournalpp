@@ -88,15 +88,22 @@ void Shadow::paintEdge(cairo_t* cr, cairo_surface_t* image, int x, int y, int wi
     cairo_fill(cr);
 }
 
+static constexpr int PATTERN_LENGTH = 200;  ///< Why not?
+
+static void setPattern(cairo_t* cr, cairo_surface_t* patt, double offsetX, double offsetY) {
+    cairo_pattern_t* p = cairo_pattern_create_for_surface(patt);
+    cairo_pattern_set_extend(p, CAIRO_EXTEND_REPEAT);
+    cairo_matrix_t m;
+    cairo_matrix_init_translate(&m, -offsetX, -offsetY);
+    cairo_pattern_set_matrix(p, &m);
+    cairo_set_source(cr, p);
+    cairo_pattern_destroy(p);
+}
+
 void Shadow::drawShadowTop(cairo_t* cr, int x, int y, int width, double r, double g, double b) {
-    int w = this->top ? cairo_image_surface_get_width(this->top) : 0;
 
-    if (w < width) {
-        if (this->top) {
-            cairo_surface_destroy(this->top);
-        }
-
-        this->top = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, shadowTopLeftSize);
+    if (!this->top) {
+        this->top = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, PATTERN_LENGTH, shadowTopLeftSize);
         cairo_t* cr2 = cairo_create(this->top);
 
         double a = NAN;
@@ -106,27 +113,21 @@ void Shadow::drawShadowTop(cairo_t* cr, int x, int y, int width, double r, doubl
             a = shadowTopLeft[i] / 255.0;
             cairo_set_source_rgba(cr2, r, g, b, a);
 
-            cairo_rectangle(cr2, 0, i, width, 1);
+            cairo_rectangle(cr2, 0, i, PATTERN_LENGTH, 1);
             cairo_fill(cr2);
         }
 
         cairo_destroy(cr2);
     }
 
-    cairo_set_source_surface(cr, this->top, x + shadowTopLeftSize, y - shadowTopLeftSize);
+    setPattern(cr, this->top, x + shadowTopLeftSize, y - shadowTopLeftSize);
     cairo_rectangle(cr, x + shadowTopLeftSize, y - shadowTopLeftSize, width - 2 * shadowTopLeftSize, shadowTopLeftSize);
     cairo_fill(cr);
 }
 
 void Shadow::drawShadowLeft(cairo_t* cr, int x, int y, int height, double r, double g, double b) {
-    int h = this->left ? cairo_image_surface_get_height(this->left) : 0;
-
-    if (h < height) {
-        if (this->left) {
-            cairo_surface_destroy(this->left);
-        }
-
-        this->left = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, shadowTopLeftSize, height);
+    if (!this->left) {
+        this->left = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, shadowTopLeftSize, PATTERN_LENGTH);
         cairo_t* cr2 = cairo_create(this->left);
 
         double a = NAN;
@@ -136,28 +137,22 @@ void Shadow::drawShadowLeft(cairo_t* cr, int x, int y, int height, double r, dou
             a = shadowTopLeft[i] / 255.0;
             cairo_set_source_rgba(cr2, r, g, b, a);
 
-            cairo_rectangle(cr2, i, 0, 1, height);
+            cairo_rectangle(cr2, i, 0, 1, PATTERN_LENGTH);
             cairo_fill(cr2);
         }
 
         cairo_destroy(cr2);
     }
 
-    cairo_set_source_surface(cr, this->left, x - shadowTopLeftSize, y + shadowTopLeftSize);
+    setPattern(cr, this->left, x - shadowTopLeftSize, y + shadowTopLeftSize);
     cairo_rectangle(cr, x - shadowTopLeftSize, y + shadowTopLeftSize, shadowTopLeftSize,
                     height - 2 * shadowTopLeftSize);
     cairo_fill(cr);
 }
 
 void Shadow::drawShadowRight(cairo_t* cr, int x, int y, int height, double r, double g, double b) {
-    int h = this->right ? cairo_image_surface_get_height(this->right) : 0;
-
-    if (h < height) {
-        if (this->right) {
-            cairo_surface_destroy(this->right);
-        }
-
-        this->right = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, shadowBottomRightSize, height);
+    if (!this->right) {
+        this->right = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, shadowBottomRightSize, PATTERN_LENGTH);
         cairo_t* cr2 = cairo_create(this->right);
 
         double a = NAN;
@@ -167,27 +162,21 @@ void Shadow::drawShadowRight(cairo_t* cr, int x, int y, int height, double r, do
             a = shadowBottomRight[i] / 255.0;
             cairo_set_source_rgba(cr2, r, g, b, a);
 
-            cairo_rectangle(cr2, i, 0, 1, height);
+            cairo_rectangle(cr2, i, 0, 1, PATTERN_LENGTH);
             cairo_fill(cr2);
         }
 
         cairo_destroy(cr2);
     }
 
-    cairo_set_source_surface(cr, this->right, x, y + shadowBottomRightSize);
+    setPattern(cr, this->right, x, y + shadowBottomRightSize);
     cairo_rectangle(cr, x, y + shadowBottomRightSize, shadowBottomRightSize, height - 2 * shadowBottomRightSize);
     cairo_fill(cr);
 }
 
 void Shadow::drawShadowBottom(cairo_t* cr, int x, int y, int width, double r, double g, double b) {
-    int w = this->bottom ? cairo_image_surface_get_width(this->bottom) : 0;
-
-    if (w < width) {
-        if (this->bottom) {
-            cairo_surface_destroy(this->bottom);
-        }
-
-        this->bottom = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, shadowBottomRightSize);
+    if (!this->bottom) {
+        this->bottom = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, PATTERN_LENGTH, shadowBottomRightSize);
         cairo_t* cr2 = cairo_create(this->bottom);
 
 
@@ -196,14 +185,14 @@ void Shadow::drawShadowBottom(cairo_t* cr, int x, int y, int width, double r, do
             auto a = shadowBottomRight[i] / 255.0;
             cairo_set_source_rgba(cr2, r, g, b, a);
 
-            cairo_rectangle(cr2, 0, i, width, 1);
+            cairo_rectangle(cr2, 0, i, PATTERN_LENGTH, 1);
             cairo_fill(cr2);
         }
 
         cairo_destroy(cr2);
     }
 
-    cairo_set_source_surface(cr, this->bottom, x + shadowBottomRightSize, y);
+    setPattern(cr, this->bottom, x + shadowBottomRightSize, y);
     cairo_rectangle(cr, x + shadowBottomRightSize, y, width - 2 * shadowBottomRightSize, shadowBottomRightSize);
     cairo_fill(cr);
 }

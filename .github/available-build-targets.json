@@ -34,7 +34,8 @@
     "mac-x64": {
       "displayed_name": "MacOS x64",
       "runner": "macos-13",
-      "run_ci": "true"
+      "run_ci": "true",
+      "extra_cmake_flags": "-DENABLE_STD_EXECUTION_PARALLEL_POLICY=off"
     },
     "mac-arm": {
       "displayed_name": "MacOS ARM",

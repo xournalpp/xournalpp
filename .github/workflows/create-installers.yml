@@ -57,6 +57,7 @@ jobs:
       container_image: ${{ matrix.run.container_image }}
       head_sha: ${{ inputs.head_sha }}
       artifact_version_suffix: ${{ inputs.artifact_version_suffix }}
+      extra_cmake_flags: ${{ matrix.run.extra_cmake_flags }}
 
   ci-windows:
     name: Create installer (Windows)
@@ -74,6 +75,7 @@ jobs:
       publish_portable_version:  ${{ matrix.run.build_portable == 'true' }}
       head_sha: ${{ inputs.head_sha }}
       artifact_version_suffix: ${{ inputs.artifact_version_suffix }}
+      extra_cmake_flags: ${{ matrix.run.extra_cmake_flags }}
 
   ci-macos:
     name: Create installer (MacOS)
@@ -88,3 +90,4 @@ jobs:
       displayed_name: ${{ matrix.run.displayed_name }}
       head_sha: ${{ inputs.head_sha }}
       artifact_version_suffix: ${{ inputs.artifact_version_suffix }}
+      extra_cmake_flags: ${{ matrix.run.extra_cmake_flags }}
