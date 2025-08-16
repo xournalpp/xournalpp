@@ -24,6 +24,8 @@
 #include "view/DocumentView.h"          // for DocumentView
 #include "view/Tiling.h"                // for Tiling
 
+#include "config-features.h"  // for ENABLE_STD_EXECUTION_PARALLEL_POLICY
+
 #if defined(__has_cpp_attribute) && __has_cpp_attribute(likely)
 #define XOJ_CPP20_UNLIKELY [[unlikely]]
 #else
@@ -87,10 +89,15 @@ void RenderJob::run() {
 
             {
                 std::shared_lock<Document> lock(*this->view->xournal->getDocument());
+#ifdef ENABLE_STD_EXECUTION_PARALLEL_POLICY
                 // We lock the document only once and render the tiles in parallel. This is safe because rendering the
                 // document does not modify it and never invalidates any iterators
                 std::for_each(std::execution::par, newTiles.getTiles().begin(), newTiles.getTiles().end(),
                               [this](auto&& t) { renderToBuffer(t->get()); });
+#else
+                std::for_each(newTiles.getTiles().begin(), newTiles.getTiles().end(),
+                              [this](auto&& t) { renderToBuffer(t->get()); });
+#endif
             }
             for (auto&& t: newTiles.getTiles()) {
                 toRepaint.emplace_back(t->getExtent());
@@ -109,10 +116,15 @@ void RenderJob::run() {
                           Range(0, 0, view->page->getWidth(), view->page->getHeight()), view->xournal->getZoom());
         {
             std::lock_guard<Document> lock(*this->view->xournal->getDocument());
+#ifdef ENABLE_STD_EXECUTION_PARALLEL_POLICY
             // We lock the document only once and render the tiles in parallel. This is safe because rendering the
             // document does not modify it and never invalidates any iterators
             std::for_each(std::execution::par, newTiles.getTiles().begin(), newTiles.getTiles().end(),
                           [this](auto&& t) { renderToBuffer(t->get()); });
+#else
+            std::for_each(newTiles.getTiles().begin(), newTiles.getTiles().end(),
+                          [this](auto&& t) { renderToBuffer(t->get()); });
+#endif
         }
         {
             std::lock_guard lock(this->view->drawingMutex);

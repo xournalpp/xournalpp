@@ -167,16 +167,24 @@ pkg_check_modules(ExternalModules REQUIRED IMPORTED_TARGET ${pkg-module-spec})
 find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
 
-include(CheckCXXSymbolExists)
-# TODO(cpp20) replace `ciso646` by `version`
-check_cxx_symbol_exists(__GLIBCXX__ ciso646 GLIBCXX)
-if(GLIBCXX) # Using libstdc++
-    find_package(TBB REQUIRED)  # for libstdc++ <execution>
-endif()
-check_cxx_symbol_exists(_LIBCPP_VERSION ciso646 LIBCPP)
-if(LIBCPP) # Using libc++
-    # c++17 execution policies are still in the experimental lib (at least in clang 20)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexperimental-library")
+# std::execution parallel policy
+option(ENABLE_STD_EXECUTION_PARALLEL_POLICY "Use std::execution::parallel policy" ON)
+if (ENABLE_STD_EXECUTION_PARALLEL_POLICY)
+    include(CheckCXXSymbolExists)
+    # TODO(cpp20) replace `ciso646` by `version`
+    check_cxx_symbol_exists(__GLIBCXX__ ciso646 GLIBCXX)
+    if(GLIBCXX) # Using libstdc++
+        find_package(TBB REQUIRED)  # for libstdc++ <execution>
+    endif()
+    check_cxx_symbol_exists(_LIBCPP_VERSION ciso646 LIBCPP)
+    if(LIBCPP) # Using libc++
+        # c++17 execution policies are still in the experimental lib (at least in clang 20)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexperimental-library")
+    endif()
+    check_cxx_symbol_exists("std::execution::par" execution FOUND_EXECUTION_PAR)
+    if (NOT FOUND_EXECUTION_PAR)
+        message(FATAL_ERROR "Could not find std::execution::par. Using std's parallel algorithms can be disabled with -DENABLE_STD_EXECUTION_PARALLEL_POLICY=off")
+    endif()
 endif()
 
 option(ENABLE_QPDF "Compile with QPDF export support" ON)
