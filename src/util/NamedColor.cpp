@@ -20,7 +20,7 @@ NamedColor::NamedColor(size_t paletteIndex):
         color{Color(0u)},
         isPaletteColor{true} {}
 
-NamedColor::NamedColor(const Color& color):
+NamedColor::NamedColor(Color color):
         paletteIndex{0},
         name{"Custom Color"},
         colorU16(Util::argb_to_ColorU16(color)),
@@ -56,9 +56,9 @@ auto operator>>(std::istream& str, NamedColor& namedColor) -> std::istream& {
     return str;
 }
 
-auto NamedColor::getColorU16() const -> const ColorU16& { return colorU16; }
+auto NamedColor::getColorU16() const -> ColorU16 { return colorU16; }
 
-auto NamedColor::getColor() const -> const Color& { return color; }
+auto NamedColor::getColor() const -> Color { return color; }
 
 auto NamedColor::getIndex() const -> size_t { return paletteIndex; };
 

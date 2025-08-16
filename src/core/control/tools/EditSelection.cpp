@@ -428,7 +428,7 @@ auto EditSelection::setLineStyle(LineStyle style) -> UndoActionPtr { return this
  * Set the color of all elements, return an undo action
  * (Or nullptr if nothing done, e.g. because there is only an image)
  */
-auto EditSelection::setColor(const Color& color) -> UndoActionPtr { return this->contents->setColor(color); }
+auto EditSelection::setColor(Color color) -> UndoActionPtr { return this->contents->setColor(color); }
 
 /**
  * Sets the font of all containing text elements, return an undo action

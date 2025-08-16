@@ -75,9 +75,9 @@ auto Element::boundingRect() const -> Rectangle<double> {
     return Rectangle<double>(getX(), getY(), getElementWidth(), getElementHeight());
 }
 
-void Element::setColor(const Color& color) { this->color = color; }
+void Element::setColor(Color color) { this->color = color; }
 
-auto Element::getColor() const -> const Color& { return this->color; }
+auto Element::getColor() const -> Color { return this->color; }
 
 auto Element::intersectsArea(const GdkRectangle* src) const -> bool {
     // compute the smallest rectangle with integer coordinates containing the bounding box and having width, height > 0

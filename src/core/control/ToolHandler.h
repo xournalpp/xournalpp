@@ -86,7 +86,7 @@ public:
      * 			false if the color is selected by a tool change
      * 			and therefore should not be applied to a selection
      */
-    void setColor(const Color& color, bool userSelection);
+    void setColor(Color color, bool userSelection);
 
     /**
      * @brief Set the color for a Button
@@ -95,14 +95,14 @@ public:
      * @param color color to be set
      * @param button button to set color for
      */
-    void setButtonColor(const Color& color, Button button);
+    void setButtonColor(Color color, Button button);
 
     /**
      * @brief Get the Color of the active tool
      *
      * @return Color of active tool
      */
-    const Color& getColor() const;
+    Color getColor() const;
 
     /**
      * @brief Get the Color of the active tool except the alpha value is replaced by 0xFF

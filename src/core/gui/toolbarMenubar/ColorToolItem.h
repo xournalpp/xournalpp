@@ -38,7 +38,7 @@ public:
     std::string getToolDisplayName() const override;
     GtkWidget* getNewToolIcon() const override;
 
-    const Color& getColor() const;
+    Color getColor() const;
 
     /**
      * @brief Update Color based on (new) palette

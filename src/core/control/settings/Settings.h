@@ -339,14 +339,14 @@ public:
     bool isHighlightPosition() const;
     void setHighlightPosition(bool highlight);
 
-    const Color& getCursorHighlightColor() const;
-    void setCursorHighlightColor(const Color& color);
+    Color getCursorHighlightColor() const;
+    void setCursorHighlightColor(Color color);
 
     double getCursorHighlightRadius() const;
     void setCursorHighlightRadius(double radius);
 
-    const Color& getCursorHighlightBorderColor() const;
-    void setCursorHighlightBorderColor(const Color& color);
+    Color getCursorHighlightBorderColor() const;
+    void setCursorHighlightBorderColor(Color color);
 
     double getCursorHighlightBorderWidth() const;
     void setCursorHighlightBorderWidth(double width);
@@ -370,17 +370,17 @@ public:
 
     void setViewMode(ViewModeId mode, ViewMode ViewMode);
 
-    const Color& getBorderColor() const;
-    void setBorderColor(const Color& color);
+    Color getBorderColor() const;
+    void setBorderColor(Color color);
 
-    const Color& getSelectionColor() const;
-    void setSelectionColor(const Color& color);
+    Color getSelectionColor() const;
+    void setSelectionColor(Color color);
 
-    const Color& getBackgroundColor() const;
-    void setBackgroundColor(const Color& color);
+    Color getBackgroundColor() const;
+    void setBackgroundColor(Color color);
 
-    const Color& getActiveSelectionColor() const;
-    void setActiveSelectionColor(const Color& color);
+    Color getActiveSelectionColor() const;
+    void setActiveSelectionColor(Color color);
 
     const RecolorParameters& getRecolorParameters() const;
     void setRecolorParameters(RecolorParameters&& recolorParameters);

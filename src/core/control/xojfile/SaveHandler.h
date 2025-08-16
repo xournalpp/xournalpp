@@ -42,7 +42,7 @@ public:
     const std::string& getErrorMessage();
 
 protected:
-    static std::string getColorStr(const Color& c, unsigned char alpha = 0xff);
+    static std::string getColorStr(Color c, unsigned char alpha = 0xff);
 
     virtual void visitPage(XmlNode* root, ConstPageRef p, const Document* doc, int id, const fs::path& target);
     virtual void visitLayer(XmlNode* page, const Layer* l);

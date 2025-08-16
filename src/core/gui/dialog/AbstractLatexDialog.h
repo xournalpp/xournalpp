@@ -44,7 +44,7 @@ public:
      * Set TeX preview background color to the given color.
      * @param color New preview background color.
      */
-    void setPreviewBackgroundColor(const Color& color);
+    void setPreviewBackgroundColor(Color color);
 
     inline GtkWindow* getWindow() const { return window.get(); }
 

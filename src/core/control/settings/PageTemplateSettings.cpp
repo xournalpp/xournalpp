@@ -36,7 +36,7 @@ auto PageTemplateSettings::getPageHeight() const -> double { return this->pageHe
 
 void PageTemplateSettings::setPageHeight(double pageHeight) { this->pageHeight = pageHeight; }
 
-auto PageTemplateSettings::getBackgroundColor() const -> const Color& { return this->backgroundColor; }
+auto PageTemplateSettings::getBackgroundColor() const -> Color { return this->backgroundColor; }
 
 void PageTemplateSettings::setBackgroundColor(Color backgroundColor) { this->backgroundColor = backgroundColor; }
 

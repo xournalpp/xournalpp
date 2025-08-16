@@ -1533,9 +1533,9 @@ void Settings::setHighlightPosition(bool highlight) {
     save();
 }
 
-auto Settings::getCursorHighlightColor() const -> const Color& { return this->cursorHighlightColor; }
+auto Settings::getCursorHighlightColor() const -> Color { return this->cursorHighlightColor; }
 
-void Settings::setCursorHighlightColor(const Color& color) {
+void Settings::setCursorHighlightColor(Color color) {
     if (this->cursorHighlightColor != color) {
         this->cursorHighlightColor = color;
         save();
@@ -1551,9 +1551,9 @@ void Settings::setCursorHighlightRadius(double radius) {
     }
 }
 
-auto Settings::getCursorHighlightBorderColor() const -> const Color& { return this->cursorHighlightBorderColor; }
+auto Settings::getCursorHighlightBorderColor() const -> Color { return this->cursorHighlightBorderColor; }
 
-void Settings::setCursorHighlightBorderColor(const Color& color) {
+void Settings::setCursorHighlightBorderColor(Color color) {
     if (this->cursorHighlightBorderColor != color) {
         this->cursorHighlightBorderColor = color;
         save();
@@ -2147,9 +2147,9 @@ void Settings::setEagerPageCleanup(bool b) {
     save();
 }
 
-auto Settings::getBorderColor() const -> const Color& { return this->selectionBorderColor; }
+auto Settings::getBorderColor() const -> Color { return this->selectionBorderColor; }
 
-void Settings::setBorderColor(const Color& color) {
+void Settings::setBorderColor(Color color) {
     if (this->selectionBorderColor == color) {
         return;
     }
@@ -2157,9 +2157,9 @@ void Settings::setBorderColor(const Color& color) {
     save();
 }
 
-auto Settings::getSelectionColor() const -> const Color& { return this->selectionMarkerColor; }
+auto Settings::getSelectionColor() const -> Color { return this->selectionMarkerColor; }
 
-void Settings::setSelectionColor(const Color& color) {
+void Settings::setSelectionColor(Color color) {
     if (this->selectionMarkerColor == color) {
         return;
     }
@@ -2167,9 +2167,9 @@ void Settings::setSelectionColor(const Color& color) {
     save();
 }
 
-auto Settings::getActiveSelectionColor() const -> const Color& { return this->activeSelectionColor; }
+auto Settings::getActiveSelectionColor() const -> Color { return this->activeSelectionColor; }
 
-void Settings::setActiveSelectionColor(const Color& color) {
+void Settings::setActiveSelectionColor(Color color) {
     if (this->activeSelectionColor == color) {
         return;
     }
@@ -2187,9 +2187,9 @@ void Settings::setRecolorParameters(RecolorParameters&& recolor) {
     save();
 }
 
-auto Settings::getBackgroundColor() const -> const Color& { return this->backgroundColor; }
+auto Settings::getBackgroundColor() const -> Color { return this->backgroundColor; }
 
-void Settings::setBackgroundColor(const Color& color) {
+void Settings::setBackgroundColor(Color color) {
     if (this->backgroundColor == color) {
         return;
     }

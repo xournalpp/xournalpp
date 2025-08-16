@@ -1,8 +1,8 @@
 #include "SaveHandler.h"
 
-#include <cinttypes>  // for PRIx32
-#include <cstdint>    // for uint32_t
-#include <cstdio>     // for sprintf, size_t
+#include <cinttypes>   // for PRIx32
+#include <cstdint>     // for uint32_t
+#include <cstdio>      // for sprintf, size_t
 
 #include <cairo.h>                  // for cairo_surface_t
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_save
@@ -81,7 +81,7 @@ void SaveHandler::writeHeader() {
     this->root->addChild(new XmlTextNode("title", std::string{"Xournal++ document - see "} + PROJECT_HOMEPAGE_URL));
 }
 
-auto SaveHandler::getColorStr(const Color& c, unsigned char alpha) -> std::string {
+auto SaveHandler::getColorStr(Color c, unsigned char alpha) -> std::string {
     char str[10];
     sprintf(str, "#%08" PRIx32, uint32_t(c) << 8U | alpha);
     std::string color(str);

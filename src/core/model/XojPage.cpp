@@ -11,8 +11,7 @@
 
 #include "BackgroundImage.h"  // for BackgroundImage
 
-XojPage::XojPage(double width, double height, bool suppressLayerCreation):
-        width(width), height(height), bgType(PageTypeFormat::Lined) {
+XojPage::XojPage(double width, double height, bool suppressLayerCreation): width(width), height(height), bgType(PageTypeFormat::Lined) {
     if (!suppressLayerCreation) {
         // ensure at least one valid layer exists
         this->addLayer(new Layer());
@@ -21,9 +20,7 @@ XojPage::XojPage(double width, double height, bool suppressLayerCreation):
 }
 
 XojPage::~XojPage() {
-    for (Layer* l: this->layer) {
-        delete l;
-    }
+    for (Layer* l: this->layer) { delete l; }
     this->layer.clear();
 }
 
@@ -120,9 +117,9 @@ void XojPage::setBackgroundPdfPageNr(size_t page) {
     this->bgType.config = "";
 }
 
-void XojPage::setBackgroundColor(const Color& color) { this->backgroundColor = color; }
+void XojPage::setBackgroundColor(Color color) { this->backgroundColor = color; }
 
-auto XojPage::getBackgroundColor() const -> const Color& { return this->backgroundColor; }
+auto XojPage::getBackgroundColor() const -> Color { return this->backgroundColor; }
 
 void XojPage::setSize(double width, double height) {
     this->width = width;

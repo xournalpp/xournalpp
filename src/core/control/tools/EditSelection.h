@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include <memory>   // for unique_ptr
+#include <memory>  // for unique_ptr
 #include <utility>  // for pair
 #include <vector>   // for vector
 
@@ -181,7 +181,7 @@ public:
      * Set the color of all elements, return an undo action
      * (Or nullptr if nothing done, e.g. because there is only an image)
      */
-    UndoActionPtr setColor(const Color& color);
+    UndoActionPtr setColor(Color color);
 
     /**
      * Sets the font of all containing text elements, return an undo action
