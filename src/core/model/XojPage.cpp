@@ -11,7 +11,8 @@
 
 #include "BackgroundImage.h"  // for BackgroundImage
 
-XojPage::XojPage(double width, double height, bool suppressLayerCreation): width(width), height(height), bgType(PageTypeFormat::Lined) {
+XojPage::XojPage(double width, double height, bool suppressLayerCreation):
+        width(width), height(height), bgType(PageTypeFormat::Lined) {
     if (!suppressLayerCreation) {
         // ensure at least one valid layer exists
         this->addLayer(new Layer());
@@ -20,7 +21,12 @@ XojPage::XojPage(double width, double height, bool suppressLayerCreation): width
 }
 
 XojPage::~XojPage() {
-    for (Layer* l: this->layer) { delete l; }
+    for (Layer* l: this->layer) {
+        l->decrementPageCount();
+        if (l->getPageCount() == 0) {
+            delete l;
+        }
+    }
     this->layer.clear();
 }
 
