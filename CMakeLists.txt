@@ -103,6 +103,10 @@ include(GitRepo)
 find_package(CXX17 REQUIRED COMPONENTS optional)
 find_package(Filesystem REQUIRED COMPONENTS ghc Final Experimental)
 
+##############################
+# backtrace
+##############################
+
 if (NOT CMAKE_BUILD_TYPE STREQUAL "Release")
     include(FetchContent)
     FetchContent_Declare(
@@ -164,9 +168,15 @@ find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
 
 include(CheckCXXSymbolExists)
+# TODO(cpp20) replace `ciso646` by `version`
 check_cxx_symbol_exists(__GLIBCXX__ ciso646 GLIBCXX)
-if(GLIBCXX)
+if(GLIBCXX) # Using libstdc++
     find_package(TBB REQUIRED)  # for libstdc++ <execution>
+endif()
+check_cxx_symbol_exists(_LIBCPP_VERSION ciso646 LIBCPP)
+if(LIBCPP) # Using libc++
+    # c++17 execution policies are still in the experimental lib (at least in clang 20)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexperimental-library")
 endif()
 
 option(ENABLE_QPDF "Compile with QPDF export support" ON)
