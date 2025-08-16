@@ -195,7 +195,7 @@ void TextEditor::replaceBufferContent(const std::string& text) {
     this->cursorBox = computeCursorBox();
 }
 
-void TextEditor::setColor(Color color) {
+void TextEditor::setColor(const Color& color) {
     this->textElement->setColor(color);
     repaintEditor(false);
 }
@@ -899,7 +899,7 @@ void TextEditor::setTextToPangoLayout(PangoLayout* pl) const {
     }
 }
 
-Color TextEditor::getSelectionColor() const { return this->control->getSettings()->getSelectionColor(); }
+const Color& TextEditor::getSelectionColor() const { return this->control->getSettings()->getSelectionColor(); }
 
 void TextEditor::setSelectionAttributesToPangoLayout(PangoLayout* pl) const {
     xoj::util::PangoAttrListSPtr attrlist(pango_attr_list_new(), xoj::util::adopt);

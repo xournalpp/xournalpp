@@ -9,12 +9,12 @@ ToolBase::~ToolBase() = default;
 /**
  * @return Color of the tool for all drawing tools
  */
-auto ToolBase::getColor() const -> Color { return this->color; }
+auto ToolBase::getColor() const -> const Color& { return this->color; }
 
 /**
  * @param color Color of the tool for all drawing tools
  */
-void ToolBase::setColor(Color color) { this->color = color; }
+void ToolBase::setColor(const Color& color) { this->color = color; }
 
 /**
  * @return Size of a drawing tool

@@ -59,8 +59,8 @@ public:
 
     bool isAnnotated() const;
 
-    void setBackgroundColor(Color color);
-    Color getBackgroundColor() const;
+    void setBackgroundColor(const Color& color);
+    const Color& getBackgroundColor() const;
 
     std::vector<Layer*>& getLayers();
     xoj::util::PointerContainerView<std::vector<Layer*>> getLayersView() const;

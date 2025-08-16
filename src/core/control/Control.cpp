@@ -982,7 +982,7 @@ void Control::changePageBackgroundColor() {
         return;
     }
 
-    xoj::popup::PopupWindowWrapper<SelectBackgroundColorDialog> dlg(this, [p, pNr, ctrl = this](Color color) {
+    xoj::popup::PopupWindowWrapper<SelectBackgroundColorDialog> dlg(this, [p, pNr, ctrl = this](const Color& color) {
         p->setBackgroundColor(color);
         ctrl->firePageChanged(pNr);
     });
@@ -1310,9 +1310,7 @@ void Control::changeColorOfSelection() {
         }
 
         TextEditor* edit = getTextEditor();
-
-
-        if (this->toolHandler->getToolType() == TOOL_TEXT && edit != nullptr) {
+        if (edit != nullptr and this->toolHandler->getToolType() == TOOL_TEXT) {
             // Todo move into selection
             edit->setColor(toolHandler->getColor());
         }

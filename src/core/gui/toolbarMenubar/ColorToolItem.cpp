@@ -20,7 +20,7 @@ ColorToolItem::ColorToolItem(NamedColor namedColor, const std::optional<Recolor>
 
 ColorToolItem::~ColorToolItem() = default;
 
-auto ColorToolItem::getColor() const -> Color { return this->namedColor.getColor(); }
+auto ColorToolItem::getColor() const -> const Color& { return this->namedColor.getColor(); }
 
 auto ColorToolItem::createItem(bool) -> xoj::util::WidgetSPtr {
     auto* btn = gtk_toggle_button_new();

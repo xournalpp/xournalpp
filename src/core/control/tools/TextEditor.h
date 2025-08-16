@@ -66,13 +66,13 @@ public:
     bool bufferEmpty() const;
 
     void setFont(XojFont font);
-    void setColor(Color color);
+    void setColor(const Color& color);
 
     PangoLayout* getUpToDateLayout() const;
 
     const std::shared_ptr<xoj::util::DispatchPool<xoj::view::TextEditionView>>& getViewPool() const;
 
-    Color getSelectionColor() const;
+    const Color& getSelectionColor() const;
 
     const Range& getCursorBox() const;
     const Range& getContentBoundingBox() const;

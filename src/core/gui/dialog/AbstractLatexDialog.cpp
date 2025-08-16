@@ -40,7 +40,7 @@ void AbstractLatexDialog::setTempRender(PopplerDocument* pdf) {
     gtk_widget_queue_draw(GTK_WIDGET(this->previewDrawingArea));
 }
 
-void AbstractLatexDialog::setPreviewBackgroundColor(Color newColor) { this->previewBackgroundColor = newColor; }
+void AbstractLatexDialog::setPreviewBackgroundColor(const Color& newColor) { this->previewBackgroundColor = newColor; }
 
 void AbstractLatexDialog::previewDrawFunc(GtkDrawingArea*, cairo_t* cr, int width, int height,
                                           AbstractLatexDialog* self) {

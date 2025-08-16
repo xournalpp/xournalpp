@@ -284,7 +284,7 @@ auto EditSelectionContents::setLineStyle(LineStyle style) -> UndoActionPtr {
  * Set the color of all elements, return an undo action
  * (Or nullptr if nothing done, e.g. because there is only an image)
  */
-auto EditSelectionContents::setColor(Color color) -> UndoActionPtr {
+auto EditSelectionContents::setColor(const Color& color) -> UndoActionPtr {
     auto undo = std::make_unique<ColorUndoAction>(this->sourcePage, this->sourceLayer);
 
     bool found = false;

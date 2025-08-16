@@ -48,7 +48,7 @@ public:
     double getPageHeight() const;
     void setPageHeight(double pageHeight);
 
-    Color getBackgroundColor() const;
+    const Color& getBackgroundColor() const;
     void setBackgroundColor(Color backgroundColor);
 
     PageType getBackgroundType();

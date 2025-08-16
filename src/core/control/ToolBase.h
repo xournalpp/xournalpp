@@ -31,12 +31,12 @@ public:
     /**
      * @return Color of the tool for all drawing tools
      */
-    Color getColor() const;
+    const Color& getColor() const;
 
     /**
      * @param color Color of the tool for all drawing tools
      */
-    virtual void setColor(Color color);
+    virtual void setColor(const Color& color);
 
     /**
      * @return Size of a drawing tool

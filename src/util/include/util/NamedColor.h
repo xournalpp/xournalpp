@@ -54,7 +54,7 @@ struct NamedColor {
      *
      * @param color color to set for the custom NamedColor instance
      */
-    explicit NamedColor(Color color);
+    explicit NamedColor(const Color& color);
 
     /**
      * @brief Input operator for parsing NamedColor from input string stream
@@ -70,14 +70,14 @@ struct NamedColor {
      *
      * @return ColorU16
      */
-    auto getColorU16() const -> ColorU16;
+    auto getColorU16() const -> const ColorU16&;
 
     /**
      * @brief Get the color formatted as Color object
      *
      * @return Color
      */
-    auto getColor() const -> Color;
+    auto getColor() const -> const Color&;
 
     /**
      * @brief Get the Index of the NamedColor inside the Palette
