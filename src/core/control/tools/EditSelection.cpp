@@ -519,6 +519,17 @@ auto EditSelection::rearrangeInsertionOrder(const OrderChange change) -> UndoAct
                                                std::move(newOrd));
 }
 
+#define HANDLE_CASE(name, str, ...) \
+    case OrderChange::name:         \
+        return str;
+auto EditSelection::orderChangeToString(const OrderChange change) -> std::string {
+    switch (change) {
+        FOR_ORDERCHANGE(HANDLE_CASE)
+        default:
+            return "";
+    }
+}
+
 /**
  * Finish the current movement
  * (should be called in the mouse-button-released event handler)

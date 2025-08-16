@@ -2,99 +2,45 @@
 
 #include "model/StrokeStyle.h"
 
+#define HANDLE_CASE(name, str, ...) \
+    case name:                      \
+        return str;
+#define HANDLE_IF_SIZE(name, str, ...) \
+    if (size == str) {                 \
+        return name;                   \
+    }
+#define HANDLE_IF_TYPE(name, str, ...) \
+    if (type == str) {                 \
+        return name;                   \
+    }
+#define HANDLE_IF_FEATURE(name, str, ...) \
+    if (feature == str) {                 \
+        return name;                      \
+    }
+
 auto toolSizeToString(ToolSize size) -> std::string {
     switch (size) {
-        case TOOL_SIZE_NONE:
-            return "none";
-        case TOOL_SIZE_VERY_FINE:
-            return "veryThin";
-        case TOOL_SIZE_FINE:
-            return "thin";
-        case TOOL_SIZE_MEDIUM:
-            return "medium";
-        case TOOL_SIZE_THICK:
-            return "thick";
-        case TOOL_SIZE_VERY_THICK:
-            return "veryThick";
+        FOR_TOOLSIZE(HANDLE_CASE)
         default:
             return "";
     }
 }
 
 auto toolSizeFromString(const std::string& size) -> ToolSize {
-    if (size == "veryThin") {
-        return TOOL_SIZE_VERY_FINE;
-    }
-    if (size == "thin") {
-        return TOOL_SIZE_FINE;
-    }
-    if (size == "medium") {
-        return TOOL_SIZE_MEDIUM;
-    }
-    if (size == "thick") {
-        return TOOL_SIZE_THICK;
-    }
-    if (size == "veryThick") {
-        return TOOL_SIZE_VERY_THICK;
-    }
+    FOR_TOOLSIZE(HANDLE_IF_SIZE)
     return TOOL_SIZE_NONE;
 }
 
 auto drawingTypeToString(DrawingType type) -> std::string {
     switch (type) {
-        case DRAWING_TYPE_DONT_CHANGE:
-            return "dontChange";
-        case DRAWING_TYPE_DEFAULT:
-            return "default";
-        case DRAWING_TYPE_LINE:
-            return "line";
-        case DRAWING_TYPE_RECTANGLE:
-            return "rectangle";
-        case DRAWING_TYPE_ELLIPSE:
-            return "ellipse";
-        case DRAWING_TYPE_ARROW:
-            return "arrow";
-        case DRAWING_TYPE_DOUBLE_ARROW:
-            return "doubleArrow";
-        case DRAWING_TYPE_SHAPE_RECOGNIZER:
-            return "strokeRecognizer";
-        case DRAWING_TYPE_COORDINATE_SYSTEM:
-            return "drawCoordinateSystem";
-        case DRAWING_TYPE_SPLINE:
-            return "spline";
+        FOR_DRAWINGTYPE(HANDLE_CASE)
         default:
             return "";
     }
 }
 
 auto drawingTypeFromString(const std::string& type) -> DrawingType {
-    if (type == "dontChange") {
-        return DRAWING_TYPE_DONT_CHANGE;
-    }
-    if (type == "line") {
-        return DRAWING_TYPE_LINE;
-    }
-    if (type == "rectangle") {
-        return DRAWING_TYPE_RECTANGLE;
-    }
-    if (type == "ellipse") {
-        return DRAWING_TYPE_ELLIPSE;
-    }
-    if (type == "arrow") {
-        return DRAWING_TYPE_ARROW;
-    }
-    if (type == "doubleArrow") {
-        return DRAWING_TYPE_DOUBLE_ARROW;
-    }
-    if (type == "strokeRecognizer") {
-        return DRAWING_TYPE_SHAPE_RECOGNIZER;
-    }
-    if (type == "drawCoordinateSystem") {
-        return DRAWING_TYPE_COORDINATE_SYSTEM;
-    }
-    if (type == "spline") {
-        return DRAWING_TYPE_SPLINE;
-    }
+    FOR_DRAWINGTYPE(HANDLE_IF_TYPE)
     return DRAWING_TYPE_DEFAULT;
 }
 
@@ -115,195 +61,48 @@ auto requiresClearedSelection(ToolType type) -> bool {
 
 auto toolTypeToString(ToolType type) -> std::string {
     switch (type) {
-        case TOOL_NONE:
-            return "none";
-        case TOOL_PEN:
-            return "pen";
-        case TOOL_ERASER:
-            return "eraser";
-        case TOOL_HIGHLIGHTER:
-            return "highlighter";
-        case TOOL_TEXT:
-            return "text";
-        case TOOL_IMAGE:
-            return "image";
-        case TOOL_SELECT_RECT:
-            return "selectRect";
-        case TOOL_SELECT_REGION:
-            return "selectRegion";
-        case TOOL_SELECT_MULTILAYER_RECT:
-            return "selectMultiLayerRect";
-        case TOOL_SELECT_MULTILAYER_REGION:
-            return "selectMultiLayerRegion";
-        case TOOL_SELECT_OBJECT:
-            return "selectObject";
-        case TOOL_PLAY_OBJECT:
-            return "playObject";
-        case TOOL_VERTICAL_SPACE:
-            return "verticalSpace";
-        case TOOL_HAND:
-            return "hand";
-        case TOOL_DRAW_RECT:
-            return "drawRect";
-        case TOOL_DRAW_ELLIPSE:
-            return "drawEllipse";
-        case TOOL_DRAW_ARROW:
-            return "drawArrow";
-        case TOOL_DRAW_DOUBLE_ARROW:
-            return "drawDoubleArrow";
-        case TOOL_DRAW_COORDINATE_SYSTEM:
-            return "drawCoordinateSystem";
-        case TOOL_DRAW_SPLINE:
-            return "drawSpline";
-        case TOOL_FLOATING_TOOLBOX:
-            return "showFloatingToolbox";
-        case TOOL_SELECT_PDF_TEXT_LINEAR:
-            return "selectPdfTextLinear";
-        case TOOL_SELECT_PDF_TEXT_RECT:
-            return "selectPdfTextRect";
-        case TOOL_LASER_POINTER_PEN:
-            return "laserPointerPen";
-        case TOOL_LASER_POINTER_HIGHLIGHTER:
-            return "laserPointerHighlighter";
+        FOR_TOOLTYPE(HANDLE_CASE)
         default:
             return "";
     }
 }
 
 auto toolTypeFromString(const std::string& type) -> ToolType {
-    if (type == "pen") {
-        return TOOL_PEN;
-    }
-    if (type == "eraser") {
-        return TOOL_ERASER;
-    }
+    FOR_TOOLTYPE(HANDLE_IF_TYPE)
     // recognize previous spelling of Highlighter, V1.0.19 (Dec 2020) and earlier
-    if (type == "highlighter" || type == "hilighter") {
+    if (type == "hilighter") {
         return TOOL_HIGHLIGHTER;
     }
-    if (type == "text") {
-        return TOOL_TEXT;
-    }
-    if (type == "image") {
-        return TOOL_IMAGE;
-    }
-    if (type == "selectRect") {
-        return TOOL_SELECT_RECT;
-    }
-    if (type == "selectRegion") {
-        return TOOL_SELECT_REGION;
-    }
-    if (type == "selectMultiLayerRect") {
-        return TOOL_SELECT_MULTILAYER_RECT;
-    }
-    if (type == "selectMultiLayerRegion") {
-        return TOOL_SELECT_MULTILAYER_REGION;
-    }
-    if (type == "selectObject") {
-        return TOOL_SELECT_OBJECT;
-    }
-    if (type == "playObject") {
-        return TOOL_PLAY_OBJECT;
-    }
-    if (type == "verticalSpace") {
-        return TOOL_VERTICAL_SPACE;
-    }
-    if (type == "hand") {
-        return TOOL_HAND;
-    }
-    if (type == "drawRect") {
-        return TOOL_DRAW_RECT;
-    }
     // recognize previous spelling of Ellipse, V1.1.0+dev (Jan 2021) and earlier
-    if (type == "drawEllipse" || type == "drawCircle") {
+    if (type == "drawCircle") {
         return TOOL_DRAW_ELLIPSE;
-    }
-    if (type == "drawArrow") {
-        return TOOL_DRAW_ARROW;
-    }
-    if (type == "drawDoubleArrow") {
-        return TOOL_DRAW_DOUBLE_ARROW;
-    }
-    if (type == "drawCoordinateSystem") {
-        return TOOL_DRAW_COORDINATE_SYSTEM;
-    }
-    if (type == "drawSpline") {
-        return TOOL_DRAW_SPLINE;
-    }
-    if (type == "showFloatingToolbox") {
-        return TOOL_FLOATING_TOOLBOX;
-    }
-    if (type == "selectPdfTextLinear") {
-        return TOOL_SELECT_PDF_TEXT_LINEAR;
-    }
-    if (type == "selectPdfTextRect") {
-        return TOOL_SELECT_PDF_TEXT_RECT;
-    }
-    if (type == "laserPointerPen") {
-        return TOOL_LASER_POINTER_PEN;
-    }
-    if (type == "laserPointerHighlighter") {
-        return TOOL_LASER_POINTER_HIGHLIGHTER;
     }
     return TOOL_NONE;
 }
 
 auto opacityFeatureToString(OpacityFeature feature) -> std::string {
     switch (feature) {
-        case OPACITY_NONE:
-            return "none";
-        case OPACITY_FILL_PEN:
-            return "opacityFillPen";
-        case OPACITY_FILL_HIGHLIGHTER:
-            return "opacityFillHighlighter";
-        case OPACITY_SELECT_PDF_TEXT_MARKER:
-            return "opacitySelectPdfTextMarker";
+        FOR_OPACITYFEATURE(HANDLE_CASE)
         default:
             return "";
     }
 }
 
 auto opacityFeatureFromString(const std::string& feature) -> OpacityFeature {
-    if (feature == "none") {
-        return OPACITY_NONE;
-    }
-    if (feature == "opacityFillPen") {
-        return OPACITY_FILL_PEN;
-    }
-    if (feature == "opacityFillHighlighter") {
-        return OPACITY_FILL_HIGHLIGHTER;
-    }
-    if (feature == "opacitySelectPdfTextMarker") {
-        return OPACITY_SELECT_PDF_TEXT_MARKER;
-    }
+    FOR_OPACITYFEATURE(HANDLE_IF_FEATURE)
     return OPACITY_NONE;
 }
 
 auto eraserTypeToString(EraserType type) -> std::string {
     switch (type) {
-        case ERASER_TYPE_NONE:
-            return "none";
-        case ERASER_TYPE_DEFAULT:
-            return "default";
-        case ERASER_TYPE_WHITEOUT:
-            return "whiteout";
-        case ERASER_TYPE_DELETE_STROKE:
-            return "deleteStroke";
+        FOR_ERASERTYPE(HANDLE_CASE)
         default:
             return "";
     }
 }
 
 auto eraserTypeFromString(const std::string& type) -> EraserType {
-    if (type == "default") {
-        return ERASER_TYPE_DEFAULT;
-    }
-    if (type == "whiteout") {
-        return ERASER_TYPE_WHITEOUT;
-    }
-    if (type == "deleteStroke") {
-        return ERASER_TYPE_DELETE_STROKE;
-    }
+    FOR_ERASERTYPE(HANDLE_IF_TYPE)
     return ERASER_TYPE_NONE;
 }
 
@@ -324,30 +123,13 @@ auto strokeTypeToLineStyle(StrokeType type) -> LineStyle {
 
 auto strokeTypeToString(StrokeType type) -> std::string {
     switch (type) {
-        case STROKE_TYPE_NONE:
-            return "none";
-        case STROKE_TYPE_STANDARD:
-            return "standard";
-        case STROKE_TYPE_DASHED:
-            return "dash";
-        case STROKE_TYPE_DASHDOTTED:
-            return "dashdot";
-        case STROKE_TYPE_DOTTED:
-            return "dot";
+        FOR_STROKETYPE(HANDLE_CASE)
         default:
             return "";
     }
 }
 auto strokeTypeFromString(const std::string& type) -> StrokeType {
-    if (type == "standard")
-        return STROKE_TYPE_STANDARD;
-    if (type == "dash")
-        return STROKE_TYPE_DASHED;
-    if (type == "dashdot")
-        return STROKE_TYPE_DASHDOTTED;
-    if (type == "dot")
-        return STROKE_TYPE_DOTTED;
-
+    FOR_STROKETYPE(HANDLE_IF_TYPE)
     return STROKE_TYPE_NONE;
 }
 

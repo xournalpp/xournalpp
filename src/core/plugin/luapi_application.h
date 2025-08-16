@@ -24,7 +24,9 @@
 #include "control/PageBackgroundChangeController.h"
 #include "control/ScrollHandler.h"
 #include "control/Tool.h"
+#include "control/ToolEnums.h"               // for ToolSize, ToolType
 #include "control/actions/ActionDatabase.h"  // for ActionDatabase
+#include "control/actions/ActionProperties.h"
 #include "control/layer/LayerController.h"
 #include "control/pagetype/PageTypeHandler.h"
 #include "control/settings/Settings.h"
@@ -52,6 +54,7 @@
 #include "model/XojPage.h"  // IWYU pragma: keep for XojPage
 #include "plugin/Plugin.h"
 #include "undo/InsertUndoAction.h"
+#include "util/GVariantTemplate.h"    // for makeGVariant
 #include "util/PathUtil.h"            // for clea...
 #include "util/PopupWindowWrapper.h"  // for PopupWindowWrapper
 #include "util/StringUtils.h"
@@ -67,6 +70,26 @@ extern "C" {
 
 #include "undo/PageSizeChangeUndoAction.h"
 }
+
+template <Action a, class U = void>
+struct helper {
+    static void setup(EnumIndexedArray<const GVariantType*, Action>& expectedTypes) { expectedTypes[a] = nullptr; };
+};
+template <Action a>
+struct helper<a, std::void_t<typename ActionProperties<a>::parameter_type>> {
+    static void setup(EnumIndexedArray<const GVariantType*, Action>& expectedTypes) {
+        expectedTypes[a] = gVariantType<typename ActionProperties<a>::parameter_type>();
+    }
+};
+
+template <size_t... As>
+static auto setupImpl(std::index_sequence<As...>) {
+    EnumIndexedArray<const GVariantType*, Action> expectedTypes;
+    ((helper<static_cast<Action>(As)>::setup(expectedTypes)), ...);
+    return expectedTypes;
+}
+
+static const auto expectedTypes = setupImpl(std::make_index_sequence<xoj::to_underlying(Action::ENUMERATOR_COUNT)>());
 
 
 static std::tuple<std::optional<std::string>, std::vector<const Element*>> getElementsFromHelper(
@@ -504,6 +527,122 @@ static int applib_registerUi(lua_State* L) {
 }
 
 /**
+ * Helper function to convert Lua stack items to GVariant*
+ * Currently only boolean, int32 and uint64 are supported.
+ */
+GVariant* lua_to_gvariant(lua_State* L, int idx, const GVariantType* typeHint) {
+    if (!typeHint) {
+        return nullptr;
+    }
+    std::string typeString =
+            std::string(g_variant_type_peek_string(typeHint), g_variant_type_get_string_length(typeHint));
+    if (typeString.length() > 1) {
+        g_warning("Unsupported type: %s", typeString.c_str());
+        return nullptr;
+    }
+    const char* luaTypeName = lua_typename(L, lua_type(L, idx));
+
+    switch (typeString[0]) {
+        case 'b':  // Expecting boolean
+            return g_variant_new_boolean(lua_toboolean(L, idx));
+        case 'i':  // Expecting int32
+            if (!lua_isinteger(L, idx)) {
+                luaL_error(L, "Expected: int32, provided: %s", luaTypeName);
+            }
+            return g_variant_new_int32(lua_tointeger(L, idx));
+        case 't':  // Expecting uint64
+            if (!lua_isinteger(L, idx)) {
+                luaL_error(L, "Expected: uint64, provided: %s", luaTypeName);
+            }
+            return g_variant_new_uint64(as_unsigned(lua_tointeger(L, idx)));
+        case 'u':  // Expecting uint32 (Color)
+            if (!lua_isinteger(L, idx)) {
+                luaL_error(L, "Expected: uint32, provided: %s", luaTypeName);
+            }
+            return g_variant_new_uint32(as_unsigned(lua_tointeger(L, idx)));
+        case 'd':  // Expecting double
+            if (!lua_isnumber(L, idx)) {
+                luaL_error(L, "Expected double, provided: %s", luaTypeName);
+            }
+            return g_variant_new_double(lua_tonumber(L, idx));
+        case 's':  // Expecting string
+            if (!lua_isstring(L, idx)) {
+                luaL_error(L, "Expected string, provided: %s", luaTypeName);
+            }
+            return g_variant_new_string(lua_tostring(L, idx));
+        default:
+            g_warning("Unhandled type: %s", typeString.c_str());
+            return nullptr;
+    }
+}
+
+/***
+ * Change the action's state, triggering callbacks. Actions with state from an enum
+ * (like ToolType, ToolSize, EraserSize, OrderChange) should be accessed via the app.C
+ * table of constants for consistency between different versions of Xournal++
+ * @param action Action
+ * @param state any
+ *
+ * Example 1: app.changeActionState("select-tool",  app.C.Tool_text)
+ * Example 2: app.changeActionState("set-layout-vertical", false)
+ * Example 3: app.changeActionState("set-columns-or-rows", -3)      # 3 rows
+ * Example 4: app.changeActionState("tool-color", 0xff0000)         # red color
+ * Example 5: app.changeActionState("zoom", 2.25)
+ * Example 6: app.changeActionState("tool-pen-line-style", "cust: 1 5 3 5")
+ */
+static int applib_changeActionState(lua_State* L) {
+    const char* actionStr = luaL_checkstring(L, 1);
+    if (actionStr == nullptr) {
+        return luaL_error(L, "Missing action!");
+    }
+    Action action = Action_fromString(actionStr);
+    auto type = expectedTypes[action];
+    GVariant* state = lua_to_gvariant(L, 2, type);
+
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    auto* actionDB = control->getActionDatabase();
+    actionDB->fireChangeActionState(action, state);
+    return 0;
+}
+
+/***
+ * Activate the action, triggering callbacks. Actions with state from an enum
+ * (like ToolType, ToolSize, EraserSize, OrderChange) should be accessed via the app.C
+ * table of constants for consistency between different versions of Xournal++
+ * @param action Action
+ * @param state nilt | any
+ *
+ * Example 1: app.activateAction("arrange-selection-order", app.C.OrderChange.bringForward)
+ * Example 2: app.activateAction("setsquare")
+ * Example 3: app.activateAction("tool-fill")
+ */
+static int applib_activateAction(lua_State* L) {
+    const char* actionStr = luaL_checkstring(L, 1);
+    if (actionStr == nullptr) {
+        return luaL_error(L, "Missing action!");
+    }
+    Action action = Action_fromString(actionStr);
+    auto type = expectedTypes[action];
+    GVariant* state = lua_to_gvariant(L, 2, type);
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    auto* actionDB = control->getActionDatabase();
+    if (state) {
+        g_message(g_variant_print_string(state, nullptr, true)->str);
+        actionDB->fireActivateAction(action, state);
+    } else {
+        actionDB->fireActivateAction(action);
+    }
+    return 0;
+}
+
+
+/**
+ * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_changeActionState or
+ * applib_activateAction instead.
+ *
+ * @deprecated
  * Execute an UI action (usually internally called from Toolbar / Menu)
  * The argument consists of a Lua table with 3 keys: "action", "group" and "enabled"
  * The key "group" is currently only used for debugging purpose and can safely be omitted.
@@ -544,6 +683,9 @@ static int applib_uiAction(lua_State* L) {
 }
 
 /**
+ * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_activateAction instead.
+ *
+ * @deprecated
  * Execute action from sidebar menu
  *
  * @param action string the desired action
@@ -593,6 +735,9 @@ static int applib_sidebarAction(lua_State* L) {
 }
 
 /**
+ * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. No substitute needed.
+ *
+ * @deprecated
  * Get the index of the currently active sidebar-page.
  *
  * @return integer pageNr pageNr of the sidebar page
@@ -607,6 +752,9 @@ static int applib_getSidebarPageNo(lua_State* L) {
 }
 
 /**
+ * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. No substitute needed.
+ *
+ * @deprecated
  * Set the currently active sidebar-page by its index.
  *
  * @param pageNr integer pageNr of the sidebar page
@@ -643,6 +791,9 @@ static int applib_setSidebarPageNo(lua_State* L) {
 }
 
 /**
+ * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_activateAction instead.
+ *
+ * @deprecated
  * Execute action from layer controller
  *
  * @param action string the desired action
@@ -3128,61 +3279,98 @@ static int applib_addToSelection(lua_State* L) {
  * The full Lua Plugin API.
  * See above for example usage of each function.
  */
-static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remove this deprecated function
-                                  {"openDialog", applib_openDialog},
-                                  {"getPageLabel", applib_getPageLabel},
-                                  {"glib_rename", applib_glib_rename},
-                                  {"saveAs", applib_saveAs},  // Todo(gtk4) remove this deprecated function
-                                  {"fileDialogSave", applib_fileDialogSave},
-                                  {"registerUi", applib_registerUi},
-                                  {"uiAction", applib_uiAction},
-                                  {"sidebarAction", applib_sidebarAction},
-                                  {"layerAction", applib_layerAction},
-                                  {"changeToolColor", applib_changeToolColor},
-                                  {"getColorPalette", applib_getColorPalette},
-                                  {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
-                                  {"changeBackgroundPdfPageNr", applib_changeBackgroundPdfPageNr},
-                                  {"getToolInfo", applib_getToolInfo},
-                                  {"getFolder", applib_getFolder},
-                                  {"getSidebarPageNo", applib_getSidebarPageNo},
-                                  {"setSidebarPageNo", applib_setSidebarPageNo},
-                                  {"getDocumentStructure", applib_getDocumentStructure},
-                                  {"scrollToPage", applib_scrollToPage},
-                                  {"scrollToPos", applib_scrollToPos},
-                                  {"setCurrentPage", applib_setCurrentPage},
-                                  {"setPageSize", applib_setPageSize},
-                                  {"setCurrentLayer", applib_setCurrentLayer},
-                                  {"setLayerVisibility", applib_setLayerVisibility},
-                                  {"setCurrentLayerName", applib_setCurrentLayerName},
-                                  {"setBackgroundName", applib_setBackgroundName},
-                                  {"getDisplayDpi", applib_getDisplayDpi},
-                                  {"getZoom", applib_getZoom},
-                                  {"setZoom", applib_setZoom},
-                                  {"export", applib_export},
-                                  {"addStrokes", applib_addStrokes},
-                                  {"addSplines", applib_addSplines},
-                                  {"addImages", applib_addImages},
-                                  {"addTexts", applib_addTexts},
-                                  {"addToSelection", applib_addToSelection},
-                                  {"clearSelection", applib_clearSelection},
-                                  {"getFilePath", applib_getFilePath},  // Todo(gtk4) remove this deprecated function
-                                  {"fileDialogOpen", applib_fileDialogOpen},
-                                  {"refreshPage", applib_refreshPage},
-                                  {"getStrokes", applib_getStrokes},
-                                  {"getImages", applib_getImages},
-                                  {"getTexts", applib_getTexts},
-                                  {"openFile", applib_openFile},
-                                  // Placeholder
-                                  //	{"MSG_BT_OK", nullptr},
+static const luaL_Reg applib[] = {
+        {"msgbox", applib_msgbox},  // Todo(gtk4) remove this deprecated function
+        {"openDialog", applib_openDialog},
+        {"changeActionState", applib_changeActionState},
+        {"activateAction", applib_activateAction},
+        {"getPageLabel", applib_getPageLabel},
+        {"glib_rename", applib_glib_rename},
+        {"saveAs", applib_saveAs},  // Todo(gtk4) remove this deprecated function
+        {"fileDialogSave", applib_fileDialogSave},
+        {"registerUi", applib_registerUi},
+        {"uiAction", applib_uiAction},            // Todo(gtk4) remove this deprecated function
+        {"sidebarAction", applib_sidebarAction},  // Todo(gtk4) remove this deprecated function
+        {"layerAction", applib_layerAction},      // Todo(gtk4) remove this deprecated function
+        {"changeToolColor", applib_changeToolColor},
+        {"getColorPalette", applib_getColorPalette},
+        {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
+        {"changeBackgroundPdfPageNr", applib_changeBackgroundPdfPageNr},
+        {"getToolInfo", applib_getToolInfo},
+        {"getFolder", applib_getFolder},
+        {"getSidebarPageNo", applib_getSidebarPageNo},  // Todo(gtk4) remove this deprecated function
+        {"setSidebarPageNo", applib_setSidebarPageNo},  // Todo(gtk4) remove this deprecated function
+        {"getDocumentStructure", applib_getDocumentStructure},
+        {"scrollToPage", applib_scrollToPage},
+        {"scrollToPos", applib_scrollToPos},
+        {"setCurrentPage", applib_setCurrentPage},
+        {"setPageSize", applib_setPageSize},
+        {"setCurrentLayer", applib_setCurrentLayer},
+        {"setLayerVisibility", applib_setLayerVisibility},
+        {"setCurrentLayerName", applib_setCurrentLayerName},
+        {"setBackgroundName", applib_setBackgroundName},
+        {"getDisplayDpi", applib_getDisplayDpi},
+        {"getZoom", applib_getZoom},
+        {"setZoom", applib_setZoom},
+        {"export", applib_export},
+        {"addStrokes", applib_addStrokes},
+        {"addSplines", applib_addSplines},
+        {"addImages", applib_addImages},
+        {"addTexts", applib_addTexts},
+        {"addToSelection", applib_addToSelection},
+        {"clearSelection", applib_clearSelection},
+        {"getFilePath", applib_getFilePath},  // Todo(gtk4) remove this deprecated function
+        {"fileDialogOpen", applib_fileDialogOpen},
+        {"refreshPage", applib_refreshPage},
+        {"getStrokes", applib_getStrokes},
+        {"getImages", applib_getImages},
+        {"getTexts", applib_getTexts},
+        {"openFile", applib_openFile},
+        // Placeholder
+        //	{"MSG_BT_OK", nullptr},
 
-                                  {nullptr, nullptr}};
+        {nullptr, nullptr}};
 
 /**
  * Open application Library
  */
 inline int luaopen_app(lua_State* L) {
     luaL_newlib(L, applib);
-    //	lua_pushnumber(L, MSG_BT_OK);
-    //	lua_setfield(L, -2, "MSG_BT_OK");
+
+    lua_newtable(L);  // table of constants
+    // ToolType enum
+    for (unsigned int i = 0; i < TOOL_END_ENTRY; i++) {
+        auto toolType = static_cast<ToolType>(i);
+        std::string s = toolTypeToString(toolType);
+        std::string key = "Tool_" + s;
+        lua_pushinteger(L, i);  // value
+        lua_setfield(L, -2, key.c_str());
+    }
+    // ToolSize enum
+    for (unsigned int i = 0; i <= TOOL_SIZE_NONE; i++) {
+        auto toolSize = static_cast<ToolSize>(i);
+        std::string s = toolSizeToString(toolSize);
+        std::string key = "ToolSize_" + s;
+        lua_pushinteger(L, i);  // value
+        lua_setfield(L, -2, key.c_str());
+    }
+    // EraserType enum
+    for (unsigned int i = 0; i <= ERASER_TYPE_DELETE_STROKE; i++) {
+        auto eraserType = static_cast<EraserType>(i);
+        std::string s = eraserTypeToString(eraserType);
+        std::string key = "EraserType_" + s;
+        lua_pushinteger(L, i);  // value
+        lua_setfield(L, -2, key.c_str());
+    }
+    // EditSelection::OrderChange enum
+    for (auto change: EditSelection::allChanges) {
+        std::string s = EditSelection::orderChangeToString(change);
+        std::string key = "OrderChange_" + s;
+        lua_pushinteger(L, static_cast<int>(change));  // value
+        lua_setfield(L, -2, key.c_str());
+    }
+
+    lua_setfield(L, -2, "C");
+
     return 1;
 }

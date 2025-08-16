@@ -156,6 +156,61 @@ def fmt_luaLS_def(file, function_name, comments = [], params = []):
         print("\n".join(comments), file=file)
     print(f"function app.{function_name}({', '.join(params)}) end\n", file=file)
 
+def insertActions(file_name):
+    start_pattern = re.compile(r'constexpr\s+const\s+char\*\s+ACTION_NAMES\[\]\s*=\s*{')
+
+    with open(file_name, 'r') as file:
+        inside_array = False
+        for line in file:
+            line = line.strip()
+
+            if not inside_array:
+                if re.match(start_pattern, line):
+                    inside_array = True
+            else:
+                if '}' in line:
+                    content = line[:line.find('}')]
+                    print(f"---| {re.search(r'(".*?")', content).group(1)}", file=f_out)
+                    break
+                else:
+                    print(f"---| {re.search(r'(".*?")', line).group(1)}", file=f_out)
+
+def insertValuesForEnum(macro_name, prefix, file_name):
+    found_macro = False
+    macro_lines = []
+
+    start_pattern = rf'#define\s+FOR_{macro_name}\s*\(DO\)'
+
+    with open(file_name, 'r') as file:
+        for line in file:
+            if not found_macro:
+                if re.match(start_pattern, line):
+                    found_macro = True
+                    macro_lines.append(line)
+            else:
+                if 'DO(' not in line:
+                    break
+                else:
+                    macro_lines.append(line)
+
+        if not found_macro:
+            raise Exception (f"Enum {macro_name} not found")
+
+        # Regex to match DO(...) with 2 or 3 parameters
+        pattern = r'DO\(\s*(\w+)\s*,\s*"([^"]+)"(?:\s*,\s*([^)\s]+))?\s*\)'
+
+        matches = re.findall(pattern, ''.join(macro_lines))
+
+        count = 0
+        for match in matches:
+            enum_value, string_value, int_value = match
+            if int_value:
+                print(f"    {prefix}_{string_value} = {int_value},", file=f_out)
+            else:
+                print(f"    {prefix}_{string_value} = {count},", file=f_out)
+            count += 1
+
+
 
 if __name__ == "__main__":
     # argument handling
@@ -183,6 +238,8 @@ if __name__ == "__main__":
     with open(fn_out, 'w') as f_out:
         print("---@meta", file=f_out)
         print("app = {}", file=f_out)
+
+        # Add functions
         funcs = dict(gather_functions(file_name))
         funcs_emitted = set()
         for x in docs_for_functions(file_name, funcs):
@@ -194,3 +251,17 @@ if __name__ == "__main__":
             if i not in funcs_emitted:
                 print(f"Warning: Did not find doc-comments for API function {i}")
                 fmt_luaLS_def(f_out, i)
+
+        # Add alias for actions
+        print("---@alias Action", file=f_out)
+        insertActions("src/core/enums/generated/Action.NameMap.generated.h")
+        print("", file=f_out)
+
+        # Add enum values
+        print("---@enum", file=f_out)
+        print("app.C = {", file=f_out)
+        insertValuesForEnum("TOOLSIZE", "ToolSize", "src/core/control/ToolEnums.h")
+        insertValuesForEnum("TOOLTYPE", "Tool", "src/core/control/ToolEnums.h")
+        insertValuesForEnum("ERASERTYPE", "EraserType", "src/core/control/ToolEnums.h")
+        insertValuesForEnum("ORDERCHANGE", "OrderChange", "src/core/control/tools/EditSelection.h")
+        print("}", file=f_out)

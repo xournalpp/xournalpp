@@ -221,12 +221,19 @@ public:
      */
     auto getInsertionOrder() const -> InsertionOrder const&;
 
-    enum class OrderChange {
-        BringToFront,
-        BringForward,
-        SendBackward,
-        SendToBack,
-    };
+#define FOR_ORDERCHANGE(DO)          \
+    DO(BringToFront, "bringToFront") \
+    DO(BringForward, "bringForward") \
+    DO(SendBackward, "sendBackward") \
+    DO(SendToBack, "sendToBack")
+
+#define DEFINE_ENUMERATION(name, str, ...) name,
+    enum class OrderChange { FOR_ORDERCHANGE(DEFINE_ENUMERATION) };
+
+    static constexpr std::array<OrderChange, 4> allChanges = {OrderChange::BringToFront, OrderChange::BringForward,
+                                                              OrderChange::SendBackward, OrderChange::SendToBack};
+
+    static auto orderChangeToString(const OrderChange change) -> std::string;
 
     /**
      * Change the insert order of this selection.
