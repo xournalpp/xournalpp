@@ -1,46 +1,27 @@
 #include "ToolEnums.h"
 
+#include <algorithm>  // for find, remove_if
+
 #include "model/StrokeStyle.h"
 
-#define HANDLE_CASE(name, str, ...) \
-    case name:                      \
-        return str;
-#define HANDLE_IF_SIZE(name, str, ...) \
-    if (size == str) {                 \
-        return name;                   \
-    }
-#define HANDLE_IF_TYPE(name, str, ...) \
-    if (type == str) {                 \
-        return name;                   \
-    }
-#define HANDLE_IF_FEATURE(name, str, ...) \
-    if (feature == str) {                 \
-        return name;                      \
-    }
 
-auto toolSizeToString(ToolSize size) -> std::string {
-    switch (size) {
-        FOR_TOOLSIZE(HANDLE_CASE)
-        default:
-            return "";
-    }
-}
+auto toolSizeToString(ToolSize size) -> std::string { return toolSizeNames.at(static_cast<size_t>(size)); }
 
 auto toolSizeFromString(const std::string& size) -> ToolSize {
-    FOR_TOOLSIZE(HANDLE_IF_SIZE)
+    auto it = std::find(toolSizeNames.begin(), toolSizeNames.end(), size);
+    if (it != toolSizeNames.end()) {
+        return static_cast<ToolSize>(std::distance(toolSizeNames.begin(), it));
+    }
     return TOOL_SIZE_NONE;
 }
 
-auto drawingTypeToString(DrawingType type) -> std::string {
-    switch (type) {
-        FOR_DRAWINGTYPE(HANDLE_CASE)
-        default:
-            return "";
-    }
-}
+auto drawingTypeToString(DrawingType type) -> std::string { return drawingTypeNames.at(static_cast<size_t>(type)); }
 
 auto drawingTypeFromString(const std::string& type) -> DrawingType {
-    FOR_DRAWINGTYPE(HANDLE_IF_TYPE)
+    auto it = std::find(drawingTypeNames.begin(), drawingTypeNames.end(), type);
+    if (it != drawingTypeNames.end()) {
+        return static_cast<DrawingType>(std::distance(drawingTypeNames.begin(), it));
+    }
     return DRAWING_TYPE_DEFAULT;
 }
 
@@ -59,16 +40,13 @@ auto requiresClearedSelection(ToolType type) -> bool {
            type == TOOL_VERTICAL_SPACE;
 }
 
-auto toolTypeToString(ToolType type) -> std::string {
-    switch (type) {
-        FOR_TOOLTYPE(HANDLE_CASE)
-        default:
-            return "";
-    }
-}
+auto toolTypeToString(ToolType type) -> std::string { return toolNames.at(static_cast<size_t>(type)); }
 
 auto toolTypeFromString(const std::string& type) -> ToolType {
-    FOR_TOOLTYPE(HANDLE_IF_TYPE)
+    auto it = std::find(toolNames.begin(), toolNames.end(), type);
+    if (it != toolNames.end()) {
+        return static_cast<ToolType>(std::distance(toolNames.begin(), it));
+    }
     // recognize previous spelling of Highlighter, V1.0.19 (Dec 2020) and earlier
     if (type == "hilighter") {
         return TOOL_HIGHLIGHTER;
@@ -81,28 +59,24 @@ auto toolTypeFromString(const std::string& type) -> ToolType {
 }
 
 auto opacityFeatureToString(OpacityFeature feature) -> std::string {
-    switch (feature) {
-        FOR_OPACITYFEATURE(HANDLE_CASE)
-        default:
-            return "";
-    }
+    return opacityFeatureNames.at(static_cast<size_t>(feature));
 }
 
 auto opacityFeatureFromString(const std::string& feature) -> OpacityFeature {
-    FOR_OPACITYFEATURE(HANDLE_IF_FEATURE)
+    auto it = std::find(opacityFeatureNames.begin(), opacityFeatureNames.end(), feature);
+    if (it != opacityFeatureNames.end()) {
+        return static_cast<OpacityFeature>(std::distance(opacityFeatureNames.begin(), it));
+    }
     return OPACITY_NONE;
 }
 
-auto eraserTypeToString(EraserType type) -> std::string {
-    switch (type) {
-        FOR_ERASERTYPE(HANDLE_CASE)
-        default:
-            return "";
-    }
-}
+auto eraserTypeToString(EraserType type) -> std::string { return eraserTypeNames.at(static_cast<size_t>(type)); }
 
 auto eraserTypeFromString(const std::string& type) -> EraserType {
-    FOR_ERASERTYPE(HANDLE_IF_TYPE)
+    auto it = std::find(eraserTypeNames.begin(), eraserTypeNames.end(), type);
+    if (it != eraserTypeNames.end()) {
+        return static_cast<EraserType>(std::distance(eraserTypeNames.begin(), it));
+    }
     return ERASER_TYPE_NONE;
 }
 
@@ -121,15 +95,12 @@ auto strokeTypeToLineStyle(StrokeType type) -> LineStyle {
     }
 }
 
-auto strokeTypeToString(StrokeType type) -> std::string {
-    switch (type) {
-        FOR_STROKETYPE(HANDLE_CASE)
-        default:
-            return "";
-    }
-}
+auto strokeTypeToString(StrokeType type) -> std::string { return strokeTypeNames.at(static_cast<size_t>(type)); }
 auto strokeTypeFromString(const std::string& type) -> StrokeType {
-    FOR_STROKETYPE(HANDLE_IF_TYPE)
+    auto it = std::find(strokeTypeNames.begin(), strokeTypeNames.end(), type);
+    if (it != strokeTypeNames.end()) {
+        return static_cast<StrokeType>(std::distance(strokeTypeNames.begin(), it));
+    }
     return STROKE_TYPE_NONE;
 }
 

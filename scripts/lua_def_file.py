@@ -175,39 +175,29 @@ def insertActions(file_name):
                 else:
                     print(f"---| {re.search(r'(".*?")', line).group(1)}", file=f_out)
 
-def insertValuesForEnum(macro_name, prefix, file_name):
-    found_macro = False
-    macro_lines = []
+def insertValuesForEnum(name, prefix, file_name):
+    with open(file_name, 'r') as f:
+        content = f.read()
 
-    start_pattern = rf'#define\s+FOR_{macro_name}\s*\(DO\)'
+        # Pattern to match the following two forms (with word boundaries):
+        # 1. name{"string1", ...};
+        # 2. name = { "string1", ...};
+        pattern = rf'\b{re.escape(name)}\s*(?:=\s*)?\{{([^}}]*)\}}\s*;'
+        match = re.search(pattern, content, re.MULTILINE | re.DOTALL)
 
-    with open(file_name, 'r') as file:
-        for line in file:
-            if not found_macro:
-                if re.match(start_pattern, line):
-                    found_macro = True
-                    macro_lines.append(line)
-            else:
-                if 'DO(' not in line:
-                    break
-                else:
-                    macro_lines.append(line)
+        if not match:
+            raise Exception (f"Enum {name} not found")
 
-        if not found_macro:
-            raise Exception (f"Enum {macro_name} not found")
+        # Extract the inside of the braces
+        inside = match.group(1)
 
-        # Regex to match DO(...) with 2 or 3 parameters
-        pattern = r'DO\(\s*(\w+)\s*,\s*"([^"]+)"(?:\s*,\s*([^)\s]+))?\s*\)'
-
-        matches = re.findall(pattern, ''.join(macro_lines))
+        # Find all string literals inside the braces
+        string_pattern = r'"([^"]*)"'
+        matches = re.findall(string_pattern, inside)
 
         count = 0
         for match in matches:
-            enum_value, string_value, int_value = match
-            if int_value:
-                print(f"    {prefix}_{string_value} = {int_value},", file=f_out)
-            else:
-                print(f"    {prefix}_{string_value} = {count},", file=f_out)
+            print(f"    {prefix}_{match} = {count},", file=f_out)
             count += 1
 
 
@@ -260,8 +250,8 @@ if __name__ == "__main__":
         # Add enum values
         print("---@enum", file=f_out)
         print("app.C = {", file=f_out)
-        insertValuesForEnum("TOOLSIZE", "ToolSize", "src/core/control/ToolEnums.h")
-        insertValuesForEnum("TOOLTYPE", "Tool", "src/core/control/ToolEnums.h")
-        insertValuesForEnum("ERASERTYPE", "EraserType", "src/core/control/ToolEnums.h")
-        insertValuesForEnum("ORDERCHANGE", "OrderChange", "src/core/control/tools/EditSelection.h")
+        insertValuesForEnum("toolSizeNames", "ToolSize", "src/core/control/ToolEnums.h")
+        insertValuesForEnum("toolNames", "Tool", "src/core/control/ToolEnums.h")
+        insertValuesForEnum("eraserTypeNames", "EraserType", "src/core/control/ToolEnums.h")
+        insertValuesForEnum("orderChangeNames", "OrderChange", "src/core/control/tools/EditSelection.h")
         print("}", file=f_out)

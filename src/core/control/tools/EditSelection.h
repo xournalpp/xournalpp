@@ -12,7 +12,9 @@
 
 #pragma once
 
+#include <array>
 #include <memory>  // for unique_ptr
+#include <string>
 #include <utility>  // for pair
 #include <vector>   // for vector
 
@@ -221,15 +223,15 @@ public:
      */
     auto getInsertionOrder() const -> InsertionOrder const&;
 
-#define FOR_ORDERCHANGE(DO)          \
-    DO(BringToFront, "bringToFront") \
-    DO(BringForward, "bringForward") \
-    DO(SendBackward, "sendBackward") \
-    DO(SendToBack, "sendToBack")
+    enum class OrderChange {
+        BringToFront,
+        BringForward,
+        SendBackward,
+        SendToBack,
+    };
 
-#define DEFINE_ENUMERATION(name, str, ...) name,
-    enum class OrderChange { FOR_ORDERCHANGE(DEFINE_ENUMERATION) };
-
+    static inline std::array<std::string, 4> orderChangeNames = {"bringToFront", "bringForward", "sendBackward",
+                                                                 "sendToBack"};
     static constexpr std::array<OrderChange, 4> allChanges = {OrderChange::BringToFront, OrderChange::BringForward,
                                                               OrderChange::SendBackward, OrderChange::SendToBack};
 
