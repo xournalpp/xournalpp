@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-08 13:20+0000\n"
-"PO-Revision-Date: 2025-08-10 04:30\n"
+"POT-Creation-Date: 2025-08-16 11:01+0000\n"
+"PO-Revision-Date: 2025-08-17 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -181,7 +181,7 @@ msgid "Save As..."
 msgstr "另存为..."
 
 #: ../src/core/control/Control.cpp:2104 ../src/core/control/jobs/SaveJob.cpp:25
-#: ../src/core/gui/dialog/XojSaveDlg.cpp:80
+#: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:286
 msgid "Save"
 msgstr "保存"
@@ -190,43 +190,43 @@ msgstr "保存"
 msgid "Discard"
 msgstr "丢弃"
 
-#: ../src/core/control/Control.cpp:2191
+#: ../src/core/control/Control.cpp:2192
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr "创建 Gtk 演示子进程失败: {1} (退出代码: {2})"
 
-#: ../src/core/control/DeviceListHelper.cpp:95
+#: ../src/core/control/DeviceListHelper.cpp:97
 msgid "mouse"
 msgstr "鼠标"
 
-#: ../src/core/control/DeviceListHelper.cpp:97
+#: ../src/core/control/DeviceListHelper.cpp:99
 msgid "pen"
 msgstr "画笔"
 
-#: ../src/core/control/DeviceListHelper.cpp:99
+#: ../src/core/control/DeviceListHelper.cpp:101
 msgid "eraser"
 msgstr "橡皮"
 
-#: ../src/core/control/DeviceListHelper.cpp:101
+#: ../src/core/control/DeviceListHelper.cpp:103
 msgid "cursor"
 msgstr "光标"
 
-#: ../src/core/control/DeviceListHelper.cpp:104
+#: ../src/core/control/DeviceListHelper.cpp:106
 msgid "keyboard"
 msgstr "键盘"
 
-#: ../src/core/control/DeviceListHelper.cpp:106
+#: ../src/core/control/DeviceListHelper.cpp:108
 msgid "touchscreen"
 msgstr "触摸屏"
 
-#: ../src/core/control/DeviceListHelper.cpp:108
+#: ../src/core/control/DeviceListHelper.cpp:110
 msgid "touchpad"
 msgstr "触控板"
 
-#: ../src/core/control/DeviceListHelper.cpp:111
+#: ../src/core/control/DeviceListHelper.cpp:113
 msgid "trackpoint"
 msgstr "小红点"
 
-#: ../src/core/control/DeviceListHelper.cpp:113
+#: ../src/core/control/DeviceListHelper.cpp:115
 msgid "tablet pad"
 msgstr "数位板"
 
@@ -282,40 +282,40 @@ msgstr "PDF背景丢失"
 msgid "Running print operation failed with {1}"
 msgstr "使用 {1} 运行打印操作失败"
 
-#: ../src/core/control/XournalMain.cpp:119
+#: ../src/core/control/XournalMain.cpp:120
 msgid "Failed to delete file: {1}"
 msgstr "文件删除失败：{1}"
 
-#: ../src/core/control/XournalMain.cpp:121
+#: ../src/core/control/XournalMain.cpp:122
 msgid "Please delete the file manually"
 msgstr "请手动删除文件"
 
-#: ../src/core/control/XournalMain.cpp:133
+#: ../src/core/control/XournalMain.cpp:134
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ 上次崩溃了。是否恢复最后一次编辑的文件？"
 
-#: ../src/core/control/XournalMain.cpp:136
+#: ../src/core/control/XournalMain.cpp:137
 msgid "Recovery file detected"
 msgstr "检测到恢复文件"
 
-#: ../src/core/control/XournalMain.cpp:137
+#: ../src/core/control/XournalMain.cpp:138
 msgid "Delete file"
 msgstr "删除文件"
 
-#: ../src/core/control/XournalMain.cpp:137
+#: ../src/core/control/XournalMain.cpp:138
 msgid "Restore file"
 msgstr "还原文件"
 
-#: ../src/core/control/XournalMain.cpp:157
+#: ../src/core/control/XournalMain.cpp:158
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "无法找到背景文件“{1}”。它可能已被移动、改名或删除。"
 
-#: ../src/core/control/XournalMain.cpp:210
-#: ../src/core/control/XournalMain.cpp:217
+#: ../src/core/control/XournalMain.cpp:211
+#: ../src/core/control/XournalMain.cpp:218
 msgid "Error: {1}"
 msgstr "错误：{1}"
 
-#: ../src/core/control/XournalMain.cpp:350
+#: ../src/core/control/XournalMain.cpp:351
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -329,24 +329,24 @@ msgstr "<span foreground='red' size='x-large'>缺失必要的用户界面文件�
 "  不在工作目录下\n"
 "  不在 {2}"
 
-#: ../src/core/control/XournalMain.cpp:355
+#: ../src/core/control/XournalMain.cpp:356
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "将尝试在不使用此文件的情况下运行。"
 
-#: ../src/core/control/XournalMain.cpp:377
-#: ../src/core/control/XournalMain.cpp:438
+#: ../src/core/control/XournalMain.cpp:378
+#: ../src/core/control/XournalMain.cpp:439
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "对不起，Xournal++ 只能一次打开一个文件。\n"
 "其他文件已被忽略。"
 
-#: ../src/core/control/XournalMain.cpp:388
+#: ../src/core/control/XournalMain.cpp:389
 msgid "File {1} does not exist."
 msgstr "文件 {1} 不存在。"
 
-#: ../src/core/control/XournalMain.cpp:392
+#: ../src/core/control/XournalMain.cpp:393
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -354,55 +354,55 @@ msgstr "文件系统错误： {1}\n"
 "抱歉，Xournal++ 无法打开文件： {2}\n"
 "考虑将文件复制到本地目录。"
 
-#: ../src/core/control/XournalMain.cpp:586
+#: ../src/core/control/XournalMain.cpp:578
 msgid "Jump to Page (first Page: 1)"
 msgstr "跳到页面(第一页:1)"
 
-#: ../src/core/control/XournalMain.cpp:590
+#: ../src/core/control/XournalMain.cpp:582
 msgid "Get version of xournalpp"
 msgstr "获取xournalp版本信息"
 
-#: ../src/core/control/XournalMain.cpp:592
+#: ../src/core/control/XournalMain.cpp:584
 msgid "Disable audio for this session"
 msgstr "禁用此会话的音频"
 
-#: ../src/core/control/XournalMain.cpp:594
+#: ../src/core/control/XournalMain.cpp:586
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:598
+#: ../src/core/control/XournalMain.cpp:590
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "使用 FILE 指定的 PDF 作为背景保存 xopp 文件"
 
-#: ../src/core/control/XournalMain.cpp:603
+#: ../src/core/control/XournalMain.cpp:595
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:612
+#: ../src/core/control/XournalMain.cpp:604
 msgid "Export FILE as PDF"
 msgstr "导出为 PDF"
 
-#: ../src/core/control/XournalMain.cpp:615
+#: ../src/core/control/XournalMain.cpp:607
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:621
+#: ../src/core/control/XournalMain.cpp:613
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:626
+#: ../src/core/control/XournalMain.cpp:618
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:631
+#: ../src/core/control/XournalMain.cpp:623
 msgid "Export layers progressively\n"
 "                                       In PDF export, Render layers progressively one by one.\n"
 "                                       This results in N export pages per page with N layers,\n"
@@ -410,38 +410,38 @@ msgid "Export layers progressively\n"
 "                                       The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:640
+#: ../src/core/control/XournalMain.cpp:632
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:645
+#: ../src/core/control/XournalMain.cpp:637
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:649
+#: ../src/core/control/XournalMain.cpp:641
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:653
+#: ../src/core/control/XournalMain.cpp:645
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:658
+#: ../src/core/control/XournalMain.cpp:650
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:666
+#: ../src/core/control/XournalMain.cpp:658
 msgid "Advanced export options"
 msgstr "高级导出选项"
 
-#: ../src/core/control/XournalMain.cpp:667
+#: ../src/core/control/XournalMain.cpp:659
 msgid "Display advanced export options"
 msgstr "显示高级导出选项"
 
@@ -470,6 +470,7 @@ msgid "Export File"
 msgstr "导出文件"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
+#: ../src/core/gui/dialog/DeviceTestingArea.cpp:161
 msgid "Export"
 msgstr "输出"
 
@@ -1033,6 +1034,10 @@ msgstr "识别形状"
 msgid "Draw Spline"
 msgstr "绘制样条曲线"
 
+#: ../src/core/gui/dialog/DeviceTestingArea.cpp:161
+msgid "Export Logs"
+msgstr ""
+
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:115
 msgid "Failed to parse external editor command: {1}"
 msgstr ""
@@ -1088,32 +1093,32 @@ msgstr "系统默认"
 msgid "Previously selected language not available anymore!"
 msgstr "已选择的语言不再可用！"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:55
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:56
 msgid "LaTeX editor theme:"
 msgstr "LaTeX 编辑器主题："
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:65
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:66
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "在构建 Xournal++ 时禁用了 GtkSourceView！一些选项将不可用。"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:157
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:158
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "无法在 {1} 打开全局模板文件，该文件是否存在？"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:168
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:169
 msgid "Sample LaTeX file generated successfully."
 msgstr "已成功生成示例 LaTeX 文件。"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:170
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:171
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "错误： {1}。请检查 {2} 的内容"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:182
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:183
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "错误： {1} 不是常规文件。请检查您的 LaTeX 模板文件设置。 "
 
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:115
-#: ../src/core/gui/dialog/XojSaveDlg.cpp:79
+#: ../src/core/gui/dialog/XojSaveDlg.cpp:84
 msgid "Save File"
 msgstr "保存文件"
 
@@ -1170,15 +1175,11 @@ msgid "<b>{1}</b>\n"
 msgstr "<b>{1}</b>\n"
 "{2}{3}"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:77
-msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
-msgstr "<b>没有找到设备。可能出错了，要提交 bug 报告吗？</b>"
-
-#: ../src/core/gui/dialog/SettingsDialog.cpp:283
+#: ../src/core/gui/dialog/SettingsDialog.cpp:274
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "启用压感或压力提示以更改此设置！"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:287
+#: ../src/core/gui/dialog/SettingsDialog.cpp:278
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "过滤输入压力，压力乘以压力乘数，如果小于最小压力，则使用最小压力。"
 
@@ -2195,12 +2196,12 @@ msgstr "作者"
 msgid "Close"
 msgstr "关闭"
 
-#: ../ui/backgroundSelection.glade:49 ../ui/exportSettings.glade:457
-#: ../ui/extEdTexDialog.glade:168 ../ui/goto.glade:108
-#: ../ui/intEdTexDialog.glade:203 ../ui/pageFormat.glade:346
-#: ../ui/pageTemplate.glade:278 ../ui/plugin.glade:114
-#: ../ui/renameLayerDialog.glade:71 ../ui/selectOpacity.glade:134
-#: ../ui/settings.glade:6546
+#: ../ui/backgroundSelection.glade:49 ../ui/deviceList.glade:94
+#: ../ui/exportSettings.glade:457 ../ui/extEdTexDialog.glade:168
+#: ../ui/goto.glade:108 ../ui/intEdTexDialog.glade:203
+#: ../ui/pageFormat.glade:346 ../ui/pageTemplate.glade:278
+#: ../ui/plugin.glade:114 ../ui/renameLayerDialog.glade:71
+#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6520
 msgid "Ok"
 msgstr "确定"
 
@@ -2237,6 +2238,102 @@ msgctxt "github is a name - do not try to translate it"
 msgid "(this will open github in your browser)"
 msgstr ""
 
+#: ../ui/deviceList.glade:7
+msgid "Known devices"
+msgstr ""
+
+#: ../ui/deviceList.glade:46
+msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
+msgstr "<i>将设备类分配给您系统的每个输入设备。 只有当您的设备无法正确匹配时才更改这些值。(例如您的笔显示为触摸屏时)</i>"
+
+#: ../ui/deviceTestingArea.glade:42
+msgid "Try out your devices in the area below"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:70 ../ui/settings.glade:1630
+#: ../ui/settingsDeviceClassConfig.glade:35
+msgid "Mouse"
+msgstr "鼠标"
+
+#: ../ui/deviceTestingArea.glade:82
+msgctxt "mouse button"
+msgid "Left"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:96
+msgctxt "mouse button"
+msgid "Middle"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:110
+msgctxt "mouse button"
+msgid "Right"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:124 ../ui/settings.glade:2170
+msgid "Stylus"
+msgstr "触控笔"
+
+#: ../ui/deviceTestingArea.glade:136 ../ui/deviceTestingArea.glade:190
+msgctxt "the tip of the stylus"
+msgid "Tip"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:150 ../ui/settings.glade:1987
+msgid "Button 1"
+msgstr "按钮1"
+
+#: ../ui/deviceTestingArea.glade:164 ../ui/settings.glade:2019
+msgid "Button 2"
+msgstr "按钮 2"
+
+#: ../ui/deviceTestingArea.glade:256 ../ui/settings.glade:2250
+#: ../ui/settings.glade:2838 ../ui/settingsDeviceClassConfig.glade:38
+msgid "Touchscreen"
+msgstr "触摸屏"
+
+#: ../ui/deviceTestingArea.glade:374
+msgid "In use"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:388 ../ui/deviceTestingArea.glade:402
+msgctxt "stylus hover"
+msgid "Hover"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:443
+msgid "Show logs"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:455
+msgid "Export debug info"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:477
+msgid "To clear the logs, simply close and reopen the settings dialog"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:491
+msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
+"Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:500
+msgid "Emulate stylus tip contact on button press"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:547
+msgid "<i>Change the device class below if your device is not correctly recognized (e.g. your active stylus shows up as touchscreen)</i>"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:568
+msgid "Last device used:"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:588
+msgid "Show all known devices"
+msgstr ""
+
 #: ../ui/exportSettings.glade:36
 msgid "Resolution"
 msgstr "分辨率"
@@ -2250,7 +2347,7 @@ msgid "Height"
 msgstr "高度"
 
 #: ../ui/exportSettings.glade:53 ../ui/settings.glade:260
-#: ../ui/settings.glade:277 ../ui/settings.glade:3761
+#: ../ui/settings.glade:277 ../ui/settings.glade:3735
 msgid "None"
 msgstr "无"
 
@@ -2816,783 +2913,746 @@ msgstr "自动加载"
 msgid "Load / Save"
 msgstr "加载/保存"
 
-#: ../ui/settings.glade:923
-msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
-msgstr "<i>将设备类分配给您系统的每个输入设备。 只有当您的设备无法正确匹配时才更改这些值。(例如您的笔显示为触摸屏时)</i>"
-
-#: ../ui/settings.glade:957
+#: ../ui/settings.glade:929
 msgid "Input Devices"
 msgstr "输入设备"
 
-#: ../ui/settings.glade:991
+#: ../ui/settings.glade:963
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
 msgstr "启用溢出绘图 <i>【允许笔划穿过窗口】</i>"
 
-#: ../ui/settings.glade:1009
-msgid "Drag LEFT from start point acts like shift key is being held.\n"
-"\t    Drag UP acts as if Control key is being held.\n\n"
-"            Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
-"\t    <i>Useful for operating without keyboard.</i>"
-msgstr "从起点向左拖拽，效果如同按住Shift键。\n"
-"向上拖拽，效果如同按住Ctrl键。\n\n"
-"限定半径：半径修改器将被锁定直到笔划结束为止。\n\n"
-"<i>有助于无键盘操作。</i>"
-
-#: ../ui/settings.glade:1020
-msgid "Merge button events with stylus tip events\n"
-"\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr "将按钮事件与触控笔点击事件合并\n"
-"<i>(如果</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>返回</i> \"<tt>on</tt>\"<i> ，请选中这一项)</i>"
-
-#: ../ui/settings.glade:1039
+#: ../ui/settings.glade:981
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
 msgstr "如果缺少压力信息，缓速笔划的压力要大于更快的笔划。\n\n"
 "<i>此功能可能对缺乏压感的设备有用。例如，鼠标或触摸屏。</i>"
 
-#: ../ui/settings.glade:1047
+#: ../ui/settings.glade:989
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
 msgstr "启用压力提示 <i>(当设备提供的压力不可用时根据绘制速度测定压力)</i>"
 
-#: ../ui/settings.glade:1065
+#: ../ui/settings.glade:1007
 msgid "Options"
 msgstr "选项"
 
-#: ../ui/settings.glade:1095
+#: ../ui/settings.glade:1037
 msgid "Averaging method"
 msgstr "平均方法"
 
-#: ../ui/settings.glade:1128
+#: ../ui/settings.glade:1070
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
 msgstr "<i>选择一种输入稳定算法及其参数</i>"
 
-#: ../ui/settings.glade:1144
+#: ../ui/settings.glade:1086
 msgid "Buffersize"
 msgstr "缓冲区大小"
 
-#: ../ui/settings.glade:1156
+#: ../ui/settings.glade:1098
 msgid "20"
 msgstr "20"
 
-#: ../ui/settings.glade:1173
+#: ../ui/settings.glade:1115
 msgid "Deadzone radius"
 msgstr "盲区半径"
 
-#: ../ui/settings.glade:1185
+#: ../ui/settings.glade:1127
 msgid "1,30"
 msgstr "1,30"
 
-#: ../ui/settings.glade:1203 ../ui/settings.glade:1215
+#: ../ui/settings.glade:1145 ../ui/settings.glade:1157
 msgctxt "Drag = Noun: force opposing the movement"
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr "拖动调节：如果值太小，可能会带来新的抖动。如果值太大，则不会进行防抖。"
 
-#: ../ui/settings.glade:1204
+#: ../ui/settings.glade:1146
 msgctxt "Noun: force opposing the movement"
 msgid "Drag"
 msgstr "拖拽"
 
-#: ../ui/settings.glade:1217
+#: ../ui/settings.glade:1159
 msgid "0,4"
 msgstr "0,4"
 
-#: ../ui/settings.glade:1235 ../ui/settings.glade:1247
+#: ../ui/settings.glade:1177 ../ui/settings.glade:1189
 msgctxt "Mass = Noun: physics term, related to weight"
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
 msgstr "质量：质量越大惯性越大、越稳定"
 
-#: ../ui/settings.glade:1236
+#: ../ui/settings.glade:1178
 msgctxt "Noun: physics term, related to weight"
 msgid "Mass"
 msgstr "质量"
 
-#: ../ui/settings.glade:1249
+#: ../ui/settings.glade:1191
 msgid "5"
 msgstr "5"
 
-#: ../ui/settings.glade:1267 ../ui/settings.glade:1287
+#: ../ui/settings.glade:1209 ../ui/settings.glade:1229
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
 msgstr "高斯参数：值越大，线条越稳定，光标到笔画末端的缺口也越大"
 
-#: ../ui/settings.glade:1269
+#: ../ui/settings.glade:1211
 msgid "0,50"
 msgstr "0,50"
 
-#: ../ui/settings.glade:1301
+#: ../ui/settings.glade:1243
 msgid "Preprocessor"
 msgstr "预处理器"
 
-#: ../ui/settings.glade:1332
+#: ../ui/settings.glade:1274
 msgid "Cusp detection"
 msgstr "尖端检测"
 
-#: ../ui/settings.glade:1349
+#: ../ui/settings.glade:1291
 msgid "Finalize the stroke"
 msgstr "笔画补全"
 
-#: ../ui/settings.glade:1354
+#: ../ui/settings.glade:1296
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
 msgstr "抖动处理会在笔画末端产生一个缺口。勾选此项可填补缺口。"
 
-#: ../ui/settings.glade:1372
+#: ../ui/settings.glade:1314
 msgid "Input stabilization"
 msgstr "抖动处理（输入稳定化）"
 
-#: ../ui/settings.glade:1403
+#: ../ui/settings.glade:1345
 msgid "Indent using spaces"
 msgstr "使用空格缩进"
 
-#: ../ui/settings.glade:1425
+#: ../ui/settings.glade:1367
 msgid "Number of Spaces : "
 msgstr "空格数："
 
-#: ../ui/settings.glade:1437
+#: ../ui/settings.glade:1379
 msgid "Number of spaces inserted with tab."
 msgstr "使用制表符时插入的空格数。"
 
-#: ../ui/settings.glade:1439
+#: ../ui/settings.glade:1381
 msgid "4"
 msgstr "4"
 
-#: ../ui/settings.glade:1467
+#: ../ui/settings.glade:1409
 msgid "Tab"
 msgstr "制表符"
 
-#: ../ui/settings.glade:1498
+#: ../ui/settings.glade:1440
 msgid "Input System"
 msgstr "输入系统"
 
-#: ../ui/settings.glade:1543
+#: ../ui/settings.glade:1485
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
 msgstr "<i>设置你按鼠标时按钮将选择的工具。 松开按钮后，将恢复先前的工具。</i>"
 
-#: ../ui/settings.glade:1577
+#: ../ui/settings.glade:1519
+msgid "Left Mouse Button"
+msgstr ""
+
+#: ../ui/settings.glade:1551
 msgid "Middle Mouse Button"
 msgstr "鼠标中键"
 
-#: ../ui/settings.glade:1609
+#: ../ui/settings.glade:1583
 msgid "Right Mouse Button"
 msgstr "鼠标右键"
 
-#: ../ui/settings.glade:1625
+#: ../ui/settings.glade:1599
 msgid "Mouse Buttons"
 msgstr "鼠标按钮"
 
-#: ../ui/settings.glade:1656 ../ui/settingsDeviceClassConfig.glade:35
-msgid "Mouse"
-msgstr "鼠标"
-
-#: ../ui/settings.glade:1703
+#: ../ui/settings.glade:1677
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
 msgstr "<i>压感允许您根据笔压力的大小，绘制不同宽度的线条，如果您的平板不支持此功能，这个设置将没有效果。</i>"
 
-#: ../ui/settings.glade:1717
+#: ../ui/settings.glade:1691
 msgid "Enable Pressure Sensitivity"
 msgstr "启用压感"
 
-#: ../ui/settings.glade:1747
+#: ../ui/settings.glade:1721
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
 msgstr "<i>某些设备压力过小或过大，可以通过设置更大或更小的压力反馈修复。</i>"
 
-#: ../ui/settings.glade:1769
+#: ../ui/settings.glade:1743
 msgid "Minimum Pressure:"
 msgstr "最小压力："
 
-#: ../ui/settings.glade:1780
+#: ../ui/settings.glade:1754
 msgid "Pressure Multiplier: "
 msgstr "压力增量： "
 
-#: ../ui/settings.glade:1839
+#: ../ui/settings.glade:1813
 msgid "Sensitivity Scale"
 msgstr "压感设置"
 
-#: ../ui/settings.glade:1855
+#: ../ui/settings.glade:1829
 msgid "Pressure Sensitivity"
 msgstr "压感"
 
-#: ../ui/settings.glade:1879
+#: ../ui/settings.glade:1853
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
 msgstr "<i>因为某些设置，笔触在开始时会出现伪影， 通过忽略笔触摸屏幕时的前几个事件/笔触点，可以避免这种情况。</i>"
 
-#: ../ui/settings.glade:1897
+#: ../ui/settings.glade:1871
 msgid "Ignore the first"
 msgstr "忽略第"
 
-#: ../ui/settings.glade:1915
+#: ../ui/settings.glade:1889
 msgid "1"
 msgstr "1"
 
-#: ../ui/settings.glade:1931
+#: ../ui/settings.glade:1905
 msgid "events"
 msgstr "事件"
 
-#: ../ui/settings.glade:1952
+#: ../ui/settings.glade:1926
 msgid "Artifact workaround"
 msgstr "手工痕迹处理"
 
-#: ../ui/settings.glade:1979
+#: ../ui/settings.glade:1953
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
 msgstr "<i>指定当笔上的按钮被按下或使用橡皮时被选中的工具。释放按钮后则会选中之前的工具</i>"
 
-#: ../ui/settings.glade:2013
-msgid "Button 1"
-msgstr "按钮1"
-
-#: ../ui/settings.glade:2045
-msgid "Button 2"
-msgstr "按钮 2"
-
-#: ../ui/settings.glade:2093
+#: ../ui/settings.glade:2067
 msgid "Stylus Buttons"
 msgstr "触控笔按钮"
 
-#: ../ui/settings.glade:2125
+#: ../ui/settings.glade:2099
 msgid "Stylus-based eraser is visible"
 msgstr "触控笔橡皮擦可见"
 
-#: ../ui/settings.glade:2140
+#: ../ui/settings.glade:2114
 msgctxt "eraser is never visible"
 msgid "Never"
 msgstr "从不"
 
-#: ../ui/settings.glade:2141
+#: ../ui/settings.glade:2115
 msgctxt "eraser is always visible"
 msgid "Always"
 msgstr "总是"
 
-#: ../ui/settings.glade:2142
+#: ../ui/settings.glade:2116
 msgctxt "eraser is only visible when floating"
 msgid "When floating"
 msgstr "当浮云时"
 
-#: ../ui/settings.glade:2143
+#: ../ui/settings.glade:2117
 msgctxt "eraser is only visible when touching the screen"
 msgid "When touching"
 msgstr "当触摸时"
 
-#: ../ui/settings.glade:2165
+#: ../ui/settings.glade:2139
 msgid "Eraser visibility"
 msgstr "橡皮擦可见性"
 
-#: ../ui/settings.glade:2196
-msgid "Stylus"
-msgstr "触控笔"
-
-#: ../ui/settings.glade:2243
+#: ../ui/settings.glade:2217
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
 msgstr "<i>您可以手动配置未被GTK识别为触摸屏的设备。</i>"
 
-#: ../ui/settings.glade:2276 ../ui/settings.glade:2864
-#: ../ui/settingsDeviceClassConfig.glade:39
-msgid "Touchscreen"
-msgstr "触摸屏"
-
-#: ../ui/settings.glade:2303
+#: ../ui/settings.glade:2277
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
 msgstr "<i>如果您的硬件不支持手动识别，Xournal++ 可以在您的笔靠近屏幕时禁用您的触摸屏。</i>"
 
-#: ../ui/settings.glade:2317
+#: ../ui/settings.glade:2291
 msgid "Enable internal Hand Recognition"
 msgstr "启用手势感知"
 
-#: ../ui/settings.glade:2347
+#: ../ui/settings.glade:2321
 msgid "Disabling Method"
 msgstr "禁用方法"
 
-#: ../ui/settings.glade:2358
+#: ../ui/settings.glade:2332
 msgid "Timeout"
 msgstr "超时"
 
-#: ../ui/settings.glade:2372
+#: ../ui/settings.glade:2346
 msgid "Autodetect"
 msgstr "自动检测"
 
-#: ../ui/settings.glade:2401
+#: ../ui/settings.glade:2375
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "s <i>(在此之后触摸屏将被重新激活)</i>"
 
-#: ../ui/settings.glade:2446
+#: ../ui/settings.glade:2420
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
 msgstr "<i>设定在手势识别模式下触发的指令。这些指令会在UI线程中执行，请确保不会造成阻碍！</i>"
 
-#: ../ui/settings.glade:2469
+#: ../ui/settings.glade:2443
 msgid "Enable"
 msgstr "启用"
 
-#: ../ui/settings.glade:2480
+#: ../ui/settings.glade:2454
 msgid "Disable"
 msgstr "禁用"
 
-#: ../ui/settings.glade:2513 ../ui/settings.glade:2526
+#: ../ui/settings.glade:2487 ../ui/settings.glade:2500
 msgid "Test"
 msgstr "测试"
 
-#: ../ui/settings.glade:2559
+#: ../ui/settings.glade:2533
 msgid "Custom Commands (for Method \"Custom\")"
 msgstr "自定义命令(对于\"自定义\"方法)"
 
-#: ../ui/settings.glade:2582
+#: ../ui/settings.glade:2556
 msgid "Hand Recognition"
 msgstr "手势识别"
 
-#: ../ui/settings.glade:2609
+#: ../ui/settings.glade:2583
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
 msgstr "<i>使用缩放手势来缩放日记页。</i>"
 
-#: ../ui/settings.glade:2623
+#: ../ui/settings.glade:2597
 msgid "Enable zoom gestures (requires restart)"
 msgstr "启用手势缩放(需要重启)"
 
-#: ../ui/settings.glade:2641
+#: ../ui/settings.glade:2615
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues.\n"
 "This setting can make it easier to draw with touch. "
 msgstr "通过触摸绘图时，用于平移视图的两指手势可能会导致视图缩放，从而导致性能问题。\n"
 "此设置可以使触摸绘图更加容易。"
 
-#: ../ui/settings.glade:2647
+#: ../ui/settings.glade:2621
 msgid "Start zooming after a distance "
 msgstr "开始缩放当距离为 "
 
-#: ../ui/settings.glade:2659
+#: ../ui/settings.glade:2633
 msgid "1.0"
 msgstr "1.0"
 
-#: ../ui/settings.glade:2674
+#: ../ui/settings.glade:2648
 msgid "% greater than the initial distance between the two touches."
 msgstr "%大于两次触碰之间的初始距离。"
 
-#: ../ui/settings.glade:2712
+#: ../ui/settings.glade:2686
 msgid "Zoom Gestures"
 msgstr "缩放手势"
 
-#: ../ui/settings.glade:2739
+#: ../ui/settings.glade:2713
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
 msgstr "<i>像使用多点触控笔一样使用触摸屏。</i>"
 
-#: ../ui/settings.glade:2753
+#: ../ui/settings.glade:2727
 msgid "Enable touch drawing"
 msgstr "允许触摸板的绘画输入"
 
-#: ../ui/settings.glade:2758
+#: ../ui/settings.glade:2732
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
 msgstr "使用双指缩放，单指操作选定工具。"
 
-#: ../ui/settings.glade:2773
+#: ../ui/settings.glade:2747
 msgid "Touch Drawing"
 msgstr "触摸板绘图"
 
-#: ../ui/settings.glade:2800
+#: ../ui/settings.glade:2774
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
 msgstr "<i>禁用 GTK 内置触摸屏滚动可以绕过某些平台上的滚动bug。 如果您用触摸屏滚动时页面位置跳动，请考虑更改此设置。</i>"
 
-#: ../ui/settings.glade:2814
+#: ../ui/settings.glade:2788
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
 msgstr "禁用 GTK 内置的惯性滚动功能。（需要重启）"
 
-#: ../ui/settings.glade:2833
+#: ../ui/settings.glade:2807
 msgid "Touch Scrolling"
 msgstr "触摸滚动"
 
-#: ../ui/settings.glade:2920
+#: ../ui/settings.glade:2894
 msgid "Show Menubar on Startup"
 msgstr "启动时显示菜单栏"
 
-#: ../ui/settings.glade:2938
+#: ../ui/settings.glade:2912
 msgid "<i>Toggle visibility of menubar with F10</i>"
 msgstr "<i>F10切换菜单栏可见性</i>"
 
-#: ../ui/settings.glade:2956
+#: ../ui/settings.glade:2930
 msgid "Show filepath in title bar"
 msgstr "标题栏显示完整路径"
 
-#: ../ui/settings.glade:2971
+#: ../ui/settings.glade:2945
 msgid "Show page number in title bar"
 msgstr "在标题栏中显示页码"
 
-#: ../ui/settings.glade:3011
+#: ../ui/settings.glade:2985
 msgid "Border color for current page and other selections"
 msgstr "当前页面和其他选择的边框颜色"
 
-#: ../ui/settings.glade:3025
+#: ../ui/settings.glade:2999
 msgid "Border color"
 msgstr "边界颜色"
 
-#: ../ui/settings.glade:3038
+#: ../ui/settings.glade:3012
 msgid "Background color between pages"
 msgstr "页面背景颜色"
 
-#: ../ui/settings.glade:3064
+#: ../ui/settings.glade:3038
 msgid "Selection Color (Text, Stroke Selection etc.)"
 msgstr "选择颜色（文字，笔划等）"
 
-#: ../ui/settings.glade:3090
+#: ../ui/settings.glade:3064
 msgid "Active Selection Color (Search Results etc.)"
 msgstr "活动选区颜色(搜索结果等)"
 
-#: ../ui/settings.glade:3112
+#: ../ui/settings.glade:3086
 msgid "Use available Stock Icons (requires restart)"
 msgstr "使用可用的原生图标 (需要重启)"
 
-#: ../ui/settings.glade:3133
+#: ../ui/settings.glade:3107
 msgid "Icon Theme"
 msgstr "图标主题"
 
-#: ../ui/settings.glade:3148
+#: ../ui/settings.glade:3122
 msgid "Color"
 msgstr "颜色"
 
-#: ../ui/settings.glade:3162
+#: ../ui/settings.glade:3136
 msgid "(requires restart)"
 msgstr "(需要重启)"
 
-#: ../ui/settings.glade:3185
+#: ../ui/settings.glade:3159
 msgid "Theme Variant:"
 msgstr "主题"
 
-#: ../ui/settings.glade:3205
+#: ../ui/settings.glade:3179
 msgid "Use system default"
 msgstr "使用系统默认"
 
-#: ../ui/settings.glade:3206
+#: ../ui/settings.glade:3180
 msgid "Force light theme"
 msgstr "强制使用浅色主题"
 
-#: ../ui/settings.glade:3207
+#: ../ui/settings.glade:3181
 msgid "Force dark theme"
 msgstr "强制使用暗色主题"
 
-#: ../ui/settings.glade:3220
+#: ../ui/settings.glade:3194
 msgid "(this may not work, depending on your system theme)"
 msgstr "(这可能无法工作，取决于您的系统主题)"
 
-#: ../ui/settings.glade:3241
+#: ../ui/settings.glade:3215
 msgid "Colors"
 msgstr "颜色"
 
-#: ../ui/settings.glade:3257
+#: ../ui/settings.glade:3231
 msgid "Global"
 msgstr "全局"
 
-#: ../ui/settings.glade:3285
+#: ../ui/settings.glade:3259
 msgid "Recolor Drawing Area (might introduce lags when moving selections)"
 msgstr "重新着色绘图区域（移动选择时可能会引入滞后）"
 
-#: ../ui/settings.glade:3290
+#: ../ui/settings.glade:3264
 msgid "Recolors the drawing area so that white regions get the dark color and black regions get the light color. Other colors are interpolated accordingly."
 msgstr "重新着色绘图区域，使白色区域变暗，黑色区域变亮。其他颜色按相应颜色进行插值。"
 
-#: ../ui/settings.glade:3300
+#: ../ui/settings.glade:3274
 msgid "Recolor Previews in the Sidebar"
 msgstr "重新着色侧边栏中的预览"
 
-#: ../ui/settings.glade:3305
+#: ../ui/settings.glade:3279
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) so that white regions get the dark color and black regions get the light color. Other colors are interpolated accordingly."
 msgstr "重新着色侧边栏中的预览（页面/图层预览），使白色区域变为深色，黑色区域变为浅色。其他颜色将相应地进行插值。"
 
-#: ../ui/settings.glade:3319
+#: ../ui/settings.glade:3293
 msgid "The color black regions are translated to"
 msgstr "颜色黑色区域被转换为"
 
-#: ../ui/settings.glade:3333
+#: ../ui/settings.glade:3307
 msgid "The color white regions are translated to"
 msgstr "颜色白色区域被转换为"
 
-#: ../ui/settings.glade:3348
+#: ../ui/settings.glade:3322
 msgid "Dark Color"
 msgstr "深色颜色"
 
-#: ../ui/settings.glade:3362
+#: ../ui/settings.glade:3336
 msgid "Light Color"
 msgstr "浅色颜色"
 
-#: ../ui/settings.glade:3375
+#: ../ui/settings.glade:3349
 msgid "Recoloring / Inverting colors"
 msgstr "重新着色/反转颜色"
 
-#: ../ui/settings.glade:3407
+#: ../ui/settings.glade:3381
 msgid "Cursor icon for pen"
 msgstr "笔的光标图标"
 
-#: ../ui/settings.glade:3422
+#: ../ui/settings.glade:3396
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
 msgstr "无图标"
 
-#: ../ui/settings.glade:3423
+#: ../ui/settings.glade:3397
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
 msgstr "小图标"
 
-#: ../ui/settings.glade:3424
+#: ../ui/settings.glade:3398
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
 msgstr "粗笔图标"
 
-#: ../ui/settings.glade:3425
+#: ../ui/settings.glade:3399
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
 msgstr "系统光标"
 
-#: ../ui/settings.glade:3450
+#: ../ui/settings.glade:3424
 msgid "Highlight cursor position"
 msgstr "高亮光标位置"
 
-#: ../ui/settings.glade:3455
+#: ../ui/settings.glade:3429
 msgid "Draw a transparent circle around the cursor"
 msgstr "在光标周围绘制透明圆圈"
 
-#: ../ui/settings.glade:3473 ../ui/settings.glade:3616
+#: ../ui/settings.glade:3447 ../ui/settings.glade:3590
 msgid "Choose the color to use for \"Highlight cursor position\""
 msgstr "选择 “高亮光标位置” 所使用的颜色"
 
-#: ../ui/settings.glade:3487
+#: ../ui/settings.glade:3461
 msgid "Circle Color"
 msgstr "圆圈颜色"
 
-#: ../ui/settings.glade:3511 ../ui/settings.glade:3562
-#: ../ui/settings.glade:5054
+#: ../ui/settings.glade:3485 ../ui/settings.glade:3536
+#: ../ui/settings.glade:5028
 msgid "pixels"
 msgstr "像素"
 
-#: ../ui/settings.glade:3539
+#: ../ui/settings.glade:3513
 msgid "Radius"
 msgstr "半径"
 
-#: ../ui/settings.glade:3575
+#: ../ui/settings.glade:3549
 msgid "30"
 msgstr "30"
 
-#: ../ui/settings.glade:3591
+#: ../ui/settings.glade:3565
 msgid "Border Width"
 msgstr "边框厚度"
 
-#: ../ui/settings.glade:3630
+#: ../ui/settings.glade:3604
 msgid "Border Color"
 msgstr "边框颜色"
 
-#: ../ui/settings.glade:3662
+#: ../ui/settings.glade:3636
 msgid "Cursor"
 msgstr "光标"
 
-#: ../ui/settings.glade:3687
+#: ../ui/settings.glade:3661
 msgid "Show sidebar on the right side"
 msgstr "侧边栏右置"
 
-#: ../ui/settings.glade:3702
+#: ../ui/settings.glade:3676
 msgid "Show vertical scrollbar on the left side"
 msgstr "垂直滚动条左置"
 
-#: ../ui/settings.glade:3721
+#: ../ui/settings.glade:3695
 msgid "Left / Right-Handed"
 msgstr "左利手/右利手"
 
-#: ../ui/settings.glade:3746
+#: ../ui/settings.glade:3720
 msgid "Page numbering  "
 msgstr "页码  "
 
-#: ../ui/settings.glade:3762
+#: ../ui/settings.glade:3736
 msgid "Below preview"
 msgstr "预览下方"
 
-#: ../ui/settings.glade:3763
+#: ../ui/settings.glade:3737
 msgid "Circle background"
 msgstr "圆形背景"
 
-#: ../ui/settings.glade:3764
+#: ../ui/settings.glade:3738
 msgid "Square background"
 msgstr "方形背景"
 
-#: ../ui/settings.glade:3784
+#: ../ui/settings.glade:3758
 msgid "Sidebar"
 msgstr "侧边栏"
 
-#: ../ui/settings.glade:3810
+#: ../ui/settings.glade:3784
 msgid "Hide the horizontal scrollbar"
 msgstr "隐藏水平滚动条"
 
-#: ../ui/settings.glade:3825
+#: ../ui/settings.glade:3799
 msgid "Hide the vertical scrollbar"
 msgstr "隐藏垂直滚动条"
 
-#: ../ui/settings.glade:3840
+#: ../ui/settings.glade:3814
 msgid "Disable scrollbar fade out"
 msgstr "禁用滚动条淡出"
 
-#: ../ui/settings.glade:3858
+#: ../ui/settings.glade:3832
 msgid "Scrollbars"
 msgstr "滚动条"
 
-#: ../ui/settings.glade:3912
+#: ../ui/settings.glade:3886
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
 msgstr "当一个被选中元素被移出画布的可见部分时， 以这个百分比数值滚动画布。 "
 
-#: ../ui/settings.glade:3914
+#: ../ui/settings.glade:3888
 msgid "Base speed"
 msgstr "基本速度"
 
-#: ../ui/settings.glade:3925
+#: ../ui/settings.glade:3899
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
 msgstr "根据当前视图外被选中的元素数量将滚动速度翻倍，并以此数值为上限。"
 
-#: ../ui/settings.glade:3927
+#: ../ui/settings.glade:3901
 msgid "Max multiplier"
 msgstr "最大倍数"
 
-#: ../ui/settings.glade:3940
+#: ../ui/settings.glade:3914
 msgid "Selection Edge Panning"
 msgstr "选区边缘平移"
 
-#: ../ui/settings.glade:3965 ../ui/settings.glade:4039
+#: ../ui/settings.glade:3939 ../ui/settings.glade:4013
 #: ../ui/mainmenubar.xml:205
 msgid "Show Menubar"
 msgstr "显示菜单"
 
-#: ../ui/settings.glade:3980 ../ui/settings.glade:4054
+#: ../ui/settings.glade:3954 ../ui/settings.glade:4028
 msgid "Show Toolbar"
 msgstr "显示工具栏"
 
-#: ../ui/settings.glade:3995 ../ui/settings.glade:4084
+#: ../ui/settings.glade:3969 ../ui/settings.glade:4058
 #: ../ui/mainmenubar.xml:210
 msgid "Show Sidebar"
 msgstr "显示侧边栏"
 
-#: ../ui/settings.glade:4014 ../ui/mainmenubar.xml:193
+#: ../ui/settings.glade:3988 ../ui/mainmenubar.xml:193
 msgid "Fullscreen"
 msgstr "全屏"
 
-#: ../ui/settings.glade:4069
+#: ../ui/settings.glade:4043
 msgid "Go Fullscreen"
 msgstr "全屏显示"
 
-#: ../ui/settings.glade:4104
+#: ../ui/settings.glade:4078
 msgid "Select toolbar:"
 msgstr "选择工具条："
 
-#: ../ui/settings.glade:4137
+#: ../ui/settings.glade:4111
 msgid "Presentation Mode"
 msgstr "演示模式"
 
-#: ../ui/settings.glade:4166
+#: ../ui/settings.glade:4140
 msgid "Pre-load pages before"
 msgstr "预加载页面前"
 
-#: ../ui/settings.glade:4178
+#: ../ui/settings.glade:4152
 msgid "Pre-load pages after"
 msgstr "预加载页面后"
 
-#: ../ui/settings.glade:4215
+#: ../ui/settings.glade:4189
 msgid "Clear cached paged while scrolling"
 msgstr "滚动时清除缓存的分页"
 
-#: ../ui/settings.glade:4242
+#: ../ui/settings.glade:4216
 msgid "Performance"
 msgstr "性能"
 
-#: ../ui/settings.glade:4273
+#: ../ui/settings.glade:4247
 msgid "View"
 msgstr "视图"
 
-#: ../ui/settings.glade:4322
+#: ../ui/settings.glade:4296
 msgid "Speed for Ctrl + Scroll"
 msgstr "Ctrl+滚动 的速度"
 
-#: ../ui/settings.glade:4349
+#: ../ui/settings.glade:4323
 msgid "Speed for a Zoomstep"
 msgstr "缩放速度"
 
-#: ../ui/settings.glade:4409
+#: ../ui/settings.glade:4383
 msgid "Zoom Speed"
 msgstr "缩放速度"
 
-#: ../ui/settings.glade:4436
+#: ../ui/settings.glade:4410
 msgid "<i>To make sure on 100% zoom the size of elements is natural.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4456
+#: ../ui/settings.glade:4430
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
 msgstr "<i>在你的屏幕上放置一个尺子并移动滑动条直到刻度对齐</i>"
 
-#: ../ui/settings.glade:4472
+#: ../ui/settings.glade:4446
 msgid "Automatic"
 msgstr ""
 
-#: ../ui/settings.glade:4529
+#: ../ui/settings.glade:4503
 msgid "The unit of the ruler is cm"
 msgstr "标尺的单位是厘米"
 
-#: ../ui/settings.glade:4550
+#: ../ui/settings.glade:4524
 msgid "Display DPI Calibration"
 msgstr "屏幕校准"
 
-#: ../ui/settings.glade:4581
+#: ../ui/settings.glade:4555
 msgid "Zoom"
 msgstr "缩放"
 
-#: ../ui/settings.glade:4630
+#: ../ui/settings.glade:4604
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
 msgstr "<i>如果你在页面旁边添加额外空间，你可以选择你想要继续工作的屏幕区域</i>"
 
-#: ../ui/settings.glade:4753
+#: ../ui/settings.glade:4727
 msgid "Add additional horizontal space"
 msgstr "添加其他水平间距"
 
-#: ../ui/settings.glade:4769
+#: ../ui/settings.glade:4743
 msgid "Add additional vertical space"
 msgstr "添加其他垂直间距"
 
-#: ../ui/settings.glade:4787
+#: ../ui/settings.glade:4761
 msgid "<i>or</i>"
 msgstr "<i>或</i>"
 
-#: ../ui/settings.glade:4799
+#: ../ui/settings.glade:4773
 msgid "Unlimited scrolling"
 msgstr "无限制滚动"
 
-#: ../ui/settings.glade:4823
+#: ../ui/settings.glade:4797
 msgid "<i>The amount is specified in pixels.</i>"
 msgstr "<i>以像素为单位指定数量。</i>"
 
-#: ../ui/settings.glade:4855
+#: ../ui/settings.glade:4829
 msgid "Scrolling outside the page"
 msgstr "在页面外滚动"
 
-#: ../ui/settings.glade:4882
+#: ../ui/settings.glade:4856
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr "当启用 <b>双页</b> 显示时，偏移多个页面中的第一页"
 
-#: ../ui/settings.glade:4883
+#: ../ui/settings.glade:4857
 msgid "First Page Offset "
 msgstr "第一页偏移 "
 
-#: ../ui/settings.glade:4896
+#: ../ui/settings.glade:4870
 msgid "Usually 0 or 1"
 msgstr "通常为 0 或 1"
 
-#: ../ui/settings.glade:4915
+#: ../ui/settings.glade:4889
 msgid "Paired Pages"
 msgstr "双页模式"
 
-#: ../ui/settings.glade:4941
+#: ../ui/settings.glade:4915
 msgid "when scrolling to end of last page"
 msgstr "当滚动到最后一页尾部"
 
-#: ../ui/settings.glade:4956
+#: ../ui/settings.glade:4930
 msgid "when drawing on last page"
 msgstr "当在最后一个页面绘制时"
 
-#: ../ui/settings.glade:4971
+#: ../ui/settings.glade:4945
 msgid "disabled"
 msgstr "已禁用"
 
-#: ../ui/settings.glade:4989
+#: ../ui/settings.glade:4963
 msgid "Automatically Add Empty Last Page (excluding PDFs)"
 msgstr "自动添加空白尾页 (不包括PDF)"
 
-#: ../ui/settings.glade:5013
+#: ../ui/settings.glade:4987
 msgid "Enable  with determination radius of "
 msgstr "启用 并将临界半径设为 "
 
-#: ../ui/settings.glade:5018
+#: ../ui/settings.glade:4992
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
@@ -3602,171 +3662,171 @@ msgstr "从起点向左拖拽，效果如同按住Shift键。\n"
 "临界半径：达到此半径后，设置会锁定，到笔划结束为止。\n\n"
 "<i>有助于无键盘操作。</i>"
 
-#: ../ui/settings.glade:5068
+#: ../ui/settings.glade:5042
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "绘图工具 - 依据笔划方向调整设置【实验性】"
 
-#: ../ui/settings.glade:5085
+#: ../ui/settings.glade:5059
 msgid "Preserve line width"
 msgstr "保留线宽"
 
-#: ../ui/settings.glade:5090
+#: ../ui/settings.glade:5064
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
 msgstr "调整选区大小后，所有笔画将会保持操作前的相同宽度。 "
 
-#: ../ui/settings.glade:5101
+#: ../ui/settings.glade:5075
 msgid "Resizing"
 msgstr "调整大小"
 
-#: ../ui/settings.glade:5137
+#: ../ui/settings.glade:5111
 msgid "Rotation snapping tolerance"
 msgstr "旋转吸附范围"
 
-#: ../ui/settings.glade:5149
+#: ../ui/settings.glade:5123
 msgid "Grid snapping tolerance"
 msgstr "网格吸附范围"
 
-#: ../ui/settings.glade:5191
+#: ../ui/settings.glade:5165
 msgid "Grid size"
 msgstr "网格大小"
 
-#: ../ui/settings.glade:5222
+#: ../ui/settings.glade:5196
 msgid "Use snapping for recognized shapes"
 msgstr "使用形状识别器识别形状"
 
-#: ../ui/settings.glade:5226
+#: ../ui/settings.glade:5200
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
 msgstr "激活时，由形状识别器识别的形状将自动被网格捕捉，如果在书写时打开了形状识别器，则可能导致意外结果。"
 
-#: ../ui/settings.glade:5241
+#: ../ui/settings.glade:5215
 msgid "Snapping"
 msgstr "吸附"
 
-#: ../ui/settings.glade:5269
+#: ../ui/settings.glade:5243
 msgid "Minimum Stroke Size"
 msgstr "最小笔画大小"
 
-#: ../ui/settings.glade:5324
+#: ../ui/settings.glade:5298
 msgctxt "Short taps/clicks will trigger special actions"
 msgid "Enable Tap action"
 msgstr "启用点击操作"
 
-#: ../ui/settings.glade:5329
+#: ../ui/settings.glade:5303
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr "不要绘制短时间和短距离的输入，而是显示浮动工具箱，除非该输入是连续的。"
 
-#: ../ui/settings.glade:5341
+#: ../ui/settings.glade:5315
 msgid "Time limit (ms)"
 msgstr "时间限制（毫秒）"
 
-#: ../ui/settings.glade:5353
+#: ../ui/settings.glade:5327
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
 msgstr "时间限制：点击持续时间过长不会触发特殊操作\n\n"
 "<i>建议：150 毫秒</i>"
 
-#: ../ui/settings.glade:5373
+#: ../ui/settings.glade:5347
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
 msgstr "长度限制：进一步移动的点击不会触发特殊操作\n\n"
 "<i>建议：1 毫米</i>"
 
-#: ../ui/settings.glade:5393
+#: ../ui/settings.glade:5367
 msgid "Length limit (mm)"
 msgstr "长度限制（毫米）"
 
-#: ../ui/settings.glade:5404
+#: ../ui/settings.glade:5378
 msgid "Frequency limit (ms)"
 msgstr "频率限制（毫秒）"
 
-#: ../ui/settings.glade:5416
+#: ../ui/settings.glade:5390
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
 "<i>Recommended: 500ms</i>"
 msgstr "频率限制：点击后在此时间段内发生的点击不会触发特殊操作。\n\n"
 "<i>建议：500 毫秒</i>"
 
-#: ../ui/settings.glade:5433
+#: ../ui/settings.glade:5407
 msgid "Try to select object first."
 msgstr "请先选择对象。"
 
-#: ../ui/settings.glade:5438 ../ui/settings.glade:5468
+#: ../ui/settings.glade:5412 ../ui/settings.glade:5442
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "请先选择对象；如果没有选中，则显示浮动工具箱（需要启用）。"
 
-#: ../ui/settings.glade:5451
+#: ../ui/settings.glade:5425
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr "在忽略笔划之前，必须满足所有三个条件。\n"
 "它必须是短时间、短距离的，且最近没有可忽略的另一条笔画。"
 
-#: ../ui/settings.glade:5454
+#: ../ui/settings.glade:5428
 msgid "Settings:"
 msgstr "设置："
 
-#: ../ui/settings.glade:5463
+#: ../ui/settings.glade:5437
 msgid "Show Floating Toolbox"
 msgstr "显示浮动工具箱"
 
-#: ../ui/settings.glade:5482
+#: ../ui/settings.glade:5456
 msgid "Action on Tool Tap"
 msgstr "工具点击操作"
 
-#: ../ui/settings.glade:5510
+#: ../ui/settings.glade:5484
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality.\n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr "<i>在缩放时更频繁地重新渲染 PDF 背景，以获得更好的渲染质量。\n"
 "<b>注意：</b>这不应影响打印质量。</i>"
 
-#: ../ui/settings.glade:5532
+#: ../ui/settings.glade:5506
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr "当PDF放大至高分辨率时，每次重新渲染都可能需要很长时间，设置该值可以减少重新渲染的次数，设置为0%时则缩放时总是重新渲染。"
 
-#: ../ui/settings.glade:5535
+#: ../ui/settings.glade:5509
 msgid "Re-render when the page's zoom changes by more than "
 msgstr "重新渲染每当页面缩放变化大于 "
 
-#: ../ui/settings.glade:5548
+#: ../ui/settings.glade:5522
 msgid "0.00"
 msgstr "0.00"
 
-#: ../ui/settings.glade:5565
+#: ../ui/settings.glade:5539
 msgid "%."
 msgstr "%."
 
-#: ../ui/settings.glade:5586
+#: ../ui/settings.glade:5560
 msgid "PDF Cache"
 msgstr "PDF 缓存"
 
-#: ../ui/settings.glade:5617
+#: ../ui/settings.glade:5591
 msgid "Drawing Area"
 msgstr "绘图区域"
 
-#: ../ui/settings.glade:5664
+#: ../ui/settings.glade:5638
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
 msgstr "<i>选择按下缺省按钮后的工具和设置</i>"
 
-#: ../ui/settings.glade:5716
+#: ../ui/settings.glade:5690
 msgid "<b>Default tool</b>"
 msgstr ""
 
-#: ../ui/settings.glade:5752
+#: ../ui/settings.glade:5726
 msgid "<i>The laser pointer allows to write strokes that will fade out after a short while.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5773
+#: ../ui/settings.glade:5747
 msgid "Fade out delay (in ms)"
 msgstr ""
 
-#: ../ui/settings.glade:5825
+#: ../ui/settings.glade:5799
 msgid "<b>Laser pointer</b>"
 msgstr ""
 
-#: ../ui/settings.glade:5865
+#: ../ui/settings.glade:5839
 msgid "Tools"
 msgstr "工具"
 
-#: ../ui/settings.glade:5918
+#: ../ui/settings.glade:5892
 msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required).\n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
@@ -3776,89 +3836,89 @@ msgstr "<i>\n"
 "可以使用命令行上的 <tt>--disable-audio</tt> 标志来禁用单个会话的音频。\n"
 "</i>"
 
-#: ../ui/settings.glade:5934
+#: ../ui/settings.glade:5908
 msgid "Disable Audio"
 msgstr "禁用音频"
 
-#: ../ui/settings.glade:5956
+#: ../ui/settings.glade:5930
 msgid "Enable or Disable Audio"
 msgstr "启用或禁用音频"
 
-#: ../ui/settings.glade:5983
+#: ../ui/settings.glade:5957
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr "<i>录音存储在另一个单独的文件中, 并可以在你的日志中引用.</i>"
 
-#: ../ui/settings.glade:6002 ../ui/settings.glade:6038
+#: ../ui/settings.glade:5976 ../ui/settings.glade:6012
 msgid "Storage Folder"
 msgstr "保存位置"
 
-#: ../ui/settings.glade:6017
+#: ../ui/settings.glade:5991
 msgid "Select Folder"
 msgstr "选择文件夹"
 
-#: ../ui/settings.glade:6065
+#: ../ui/settings.glade:6039
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr "<i>指定用于录制和播放音频附件的音频设备。\n"
 "如果可用，请选择 <small><tt>脉冲</tt></small> 作为输入/输出设备。</i>"
 
-#: ../ui/settings.glade:6089
+#: ../ui/settings.glade:6063
 msgid "Input Device"
 msgstr "输入设备"
 
-#: ../ui/settings.glade:6111
+#: ../ui/settings.glade:6085
 msgid "Output Device"
 msgstr "输出设备"
 
-#: ../ui/settings.glade:6142
+#: ../ui/settings.glade:6116
 msgid "Audio Devices"
 msgstr "音频设备"
 
-#: ../ui/settings.glade:6171
+#: ../ui/settings.glade:6145
 msgid "Sample Rate"
 msgstr "采样率"
 
-#: ../ui/settings.glade:6182
+#: ../ui/settings.glade:6156
 msgid "Gain"
 msgstr "收益"
 
-#: ../ui/settings.glade:6229
+#: ../ui/settings.glade:6203
 msgid "Recording Quality"
 msgstr "录制质量"
 
-#: ../ui/settings.glade:6255
+#: ../ui/settings.glade:6229
 msgid "Default Seek Time (in seconds)"
 msgstr "默认寻找时间(秒)"
 
-#: ../ui/settings.glade:6268
+#: ../ui/settings.glade:6242
 msgid "1,00"
 msgstr "1,00"
 
-#: ../ui/settings.glade:6287
+#: ../ui/settings.glade:6261
 msgid "Playback Settings"
 msgstr "播放设置"
 
-#: ../ui/settings.glade:6301
+#: ../ui/settings.glade:6275
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr "<i>更改仅在新录音和播放时生效。</i>"
 
-#: ../ui/settings.glade:6332
+#: ../ui/settings.glade:6306
 msgid "Audio Recording"
 msgstr "音频录音"
 
-#: ../ui/settings.glade:6405
+#: ../ui/settings.glade:6379
 msgid "<i>Select language (requires restart)</i>"
 msgstr "<i>选择语言 (需要重启)</i>"
 
-#: ../ui/settings.glade:6437 ../ui/settings.glade:6483
+#: ../ui/settings.glade:6411 ../ui/settings.glade:6457
 msgid "Language"
 msgstr "语言"
 
-#: ../ui/settings.glade:6453
+#: ../ui/settings.glade:6427
 msgid "Language Settings"
 msgstr "语言设置"
 
-#: ../ui/settings.glade:6507
+#: ../ui/settings.glade:6481
 msgid "Palette"
 msgstr "调色板"
 
@@ -3902,9 +3962,9 @@ msgstr "点划线"
 msgid "Disabled"
 msgstr "已禁用"
 
-#: ../ui/settingsDeviceClassConfig.glade:36
-msgid "Mouse+Keyboard Combo"
-msgstr "鼠标+键盘结合"
+#: ../ui/settingsDeviceClassConfig.glade:54
+msgid "Apply"
+msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:30
 msgid "Drag and drop Components from here to the toolbars and back."
