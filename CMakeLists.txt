@@ -147,7 +147,6 @@ endif (APPLE)
 list(APPEND pkg-module-spec "gthread-2.0 >= 2.4.0")
 list(APPEND pkg-module-spec "libxml-2.0 >= 2.0.0")
 list(APPEND pkg-module-spec "libzip >= 1.0.1")
-list(APPEND pkg-module-spec "sndfile >= 1.0.25")
 list(APPEND pkg-module-spec "librsvg-2.0 >= 2.40")
 
 # Profiling
@@ -165,9 +164,7 @@ find_package(Threads REQUIRED)
 option(ENABLE_AUDIO "Compile with Audio recording/playing support" ON)
 if (ENABLE_AUDIO)
     message(STATUS "Enable Audio support")
-    # find_package(portaudiocpp 12 REQUIRED)
-    # # list(APPEND pkg-module-spec "portaudiocpp >= 12")
-    pkg_check_modules(PortAudio REQUIRED IMPORTED_TARGET "portaudiocpp >= 12")
+    pkg_check_modules(ExternalAudioModules REQUIRED IMPORTED_TARGET "portaudiocpp >= 12;sndfile >= 1.0.25")
 else ()
     message(STATUS "Disable Audio support")
 endif ()
@@ -236,7 +233,7 @@ target_link_libraries(external_modules INTERFACE
         PkgConfig::ExternalModules
         $<$<TARGET_EXISTS:Lua::lua>:Lua::lua>
         $<$<TARGET_EXISTS:PkgConfig::GtkSourceView>:PkgConfig::GtkSourceView>
-        $<$<TARGET_EXISTS:PkgConfig::PortAudio>:PkgConfig::PortAudio>
+        $<$<TARGET_EXISTS:PkgConfig::ExternalAudioModules>:PkgConfig::ExternalAudioModules>
         $<$<TARGET_EXISTS:X11::Xi>:X11::Xi>
         $<$<TARGET_EXISTS:X11::X11>:X11::X11>
         $<$<TARGET_EXISTS:cpptrace::cpptrace>:cpptrace::cpptrace>

@@ -68,8 +68,5 @@ private:
     size_t timestamp = 0;
 };
 #else
-class AudioController final {
-public:
-    ~AudioController() = default;
-};
+class AudioController final {};
 #endif
