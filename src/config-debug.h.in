@@ -26,7 +26,7 @@
 /**
  * Scheduler debug: show jobs etc.
  */
-#cmakedefine DEBUG_SHEDULER
+#cmakedefine DEBUG_SCHEDULER
 
 /**
  * Draw a surrounding border to all elements

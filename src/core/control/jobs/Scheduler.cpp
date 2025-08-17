@@ -7,9 +7,9 @@
 #include "util/Assert.h"       // for xoj_assert
 #include "util/glib_casts.h"   // for wrap_for_once_v
 
-#include "config-debug.h"  // for DEBUG_SHEDULER
+#include "config-debug.h"  // for DEBUG_SCHEDULER
 
-#ifdef DEBUG_SHEDULER
+#ifdef DEBUG_SCHEDULER
 #define SDEBUG g_message
 #else
 #define SDEBUG(msg, ...)
