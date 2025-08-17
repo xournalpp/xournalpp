@@ -75,6 +75,7 @@ jobs:
         uses: ./.github/actions/build
         with:
           build_type: ${{env.BUILD_TYPE}}
+          extra_cmake_flags: ${{ matrix.run.extra_cmake_flags }}
       - name: 'Build tests'
         id: build-test
         run: |
@@ -140,6 +141,7 @@ jobs:
         uses: ./.github/actions/build
         with:
           build_type: ${{env.BUILD_TYPE}}
+          extra_cmake_flags: ${{ matrix.run.extra_cmake_flags }}
           shell: msys2 {0}
       - name: 'Build tests'
         shell: msys2 {0}
@@ -168,6 +170,7 @@ jobs:
         uses: ./.github/actions/build
         with:
           build_type: ${{env.BUILD_TYPE}}
+          extra_cmake_flags: ${{ matrix.run.extra_cmake_flags }}
       - name: 'Build tests'
         shell: bash
         run: |

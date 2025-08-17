@@ -28,6 +28,9 @@ on:
       build_type:
         type: string
         default: 'RelWithDebInfo'
+      extra_cmake_flags:
+        type: string
+        default: ''
       artifact_version_suffix:  # Additional version string appended to 1.2.3+dev (for instance) in artifacts names
         type: string
         default: ''
@@ -80,6 +83,7 @@ jobs:
           cmake_flags: >-
             -DCMAKE_INSTALL_PREFIX=/usr
             -DCPACK_GENERATOR="TGZ;DEB"
+          extra_cmake_flags: ${{ inputs.extra_cmake_flags }}
           cmake_commands: '--target package'
       - name: 'Rename assets'
         if: ${{ inputs.artifact_version_suffix != '' }}
