@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-27 10:36+0000\n"
-"PO-Revision-Date: 2025-08-03 04:35\n"
+"POT-Creation-Date: 2025-08-11 14:47+0000\n"
+"PO-Revision-Date: 2025-08-17 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -24,7 +24,7 @@ msgstr "未設置音訊存放目錄, 無法錄製聲音, 請到\"偏好設置 > 
 
 #: ../src/core/control/Control.cpp:230
 msgid "Filesystem error: {1}"
-msgstr ""
+msgstr "檔案系統錯誤：{1}"
 
 #: ../src/core/control/Control.cpp:242
 msgid "Could not remove old autosave file \"{1}\": {2}"
@@ -263,11 +263,11 @@ msgstr "PDF背景丟失"
 
 #: ../src/core/control/XournalMain.cpp:123
 msgid "Failed to delete file: {1}"
-msgstr ""
+msgstr "無法刪除檔案：{1}"
 
 #: ../src/core/control/XournalMain.cpp:125
 msgid "Please delete the file manually"
-msgstr ""
+msgstr "請手動刪除檔案"
 
 #: ../src/core/control/XournalMain.cpp:161
 msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
@@ -1077,27 +1077,27 @@ msgstr "系統預設"
 msgid "Previously selected language not available anymore!"
 msgstr "以前選擇的語言不再可用！"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:49
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:50
 msgid "LaTeX editor theme:"
 msgstr "LaTeX 編輯器主題："
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:54
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:55
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "建立 Xournal++ 時已關閉 GtkSourceView！有些選項可能會無法使用。"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:143
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:144
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "無法打開全域模板檔案{1}。它存在嘛？"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
 msgid "Sample LaTeX file generated successfully."
 msgstr "產生範例 LaTeX file 成功。"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:156
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "錯誤:{1}, 請檢查{2} 的內容"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:165
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:166
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "錯誤:{1} 並不是正規檔案. 請檢查LaTex範本檔案之設定 "
 

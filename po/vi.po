@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-27 10:36+0000\n"
-"PO-Revision-Date: 2025-08-03 04:36\n"
+"POT-Creation-Date: 2025-08-11 14:47+0000\n"
+"PO-Revision-Date: 2025-08-17 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -1084,27 +1084,27 @@ msgstr "Mặc định hệ thống"
 msgid "Previously selected language not available anymore!"
 msgstr "Ngôn ngữ được chọn trước đây không còn nữa!"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:49
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:50
 msgid "LaTeX editor theme:"
 msgstr "Chủ đề trình chỉnh sửa LaTeX:"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:54
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:55
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "GtkSourceView đã bị vô hiệu hóa khi build Xournal++! Một số tùy chọn sẽ không khả dụng."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:143
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:144
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Không thể đọc được tệp mẫu chung tại {1}. Tệp có tồn tại không?"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
 msgid "Sample LaTeX file generated successfully."
 msgstr "Tệp LaTeX mẫu được tạo thành công."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:156
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Lỗi: {1}. Vui lòng kiểm tra nội dung của {2}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:165
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:166
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Lỗi: {1} không phải là một tệp thông thường. Vui lòng kiểm tra cài đặt tệp mẫu LaTeX của bạn. "
 
