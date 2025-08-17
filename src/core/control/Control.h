@@ -488,7 +488,7 @@ private:
 
     ScrollHandler* scrollHandler;
 
-    AudioController* audioController;
+    std::unique_ptr<AudioController> audioController;
 
     ToolbarDragDropHandler* dragDropHandler = nullptr;
 

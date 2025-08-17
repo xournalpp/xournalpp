@@ -26,7 +26,8 @@
 #include "LanguageConfigGui.h"
 #include "LatexSettingsPanel.h"
 #include "SettingsDialogPaletteTab.h"
-#include "filesystem.h"  // for path
+#include "config-features.h"  // for ENABLE_AUDIO
+#include "filesystem.h"       // for path
 
 class Control;
 class Settings;
@@ -83,8 +84,11 @@ private:
     Control* control = nullptr;
     GtkWidget* callib = nullptr;
     int dpi = 72;
+
+#ifdef ENABLE_AUDIO
     std::vector<DeviceInfo> audioInputDevices;
     std::vector<DeviceInfo> audioOutputDevices;
+#endif
 
     Builder builder;
     xoj::util::GtkWindowUPtr window;

@@ -178,6 +178,7 @@ protected:
     }
 
     bool playElement(const AudioElement* s) {
+#ifdef ENABLE_AUDIO
         size_t ts = s->getTimestamp();
 
         if (auto fn = s->getAudioFilename(); !fn.empty()) {
@@ -195,6 +196,9 @@ protected:
             playbackStatus = {success, std::move(fn)};
             return success;
         }
+#else
+        g_warning("Audio support was disabled at compile time");
+#endif
         return false;
     }
 };

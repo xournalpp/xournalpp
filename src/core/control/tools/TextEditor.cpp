@@ -1080,6 +1080,7 @@ void TextEditor::initializeEditionAt(double x, double y) {
         this->textElement->setX(x);
         this->textElement->setY(y - this->textElement->getElementHeight() / 2);
 
+#ifdef ENABLE_AUDIO
         if (auto audioController = control->getAudioController(); audioController && audioController->isRecording()) {
             fs::path audioFilename = audioController->getAudioFilename();
             size_t sttime = audioController->getStartTime();
@@ -1087,6 +1088,7 @@ void TextEditor::initializeEditionAt(double x, double y) {
             this->textElement->setTimestamp(milliseconds);
             this->textElement->setAudioFilename(audioFilename);
         }
+#endif
         this->originalTextElement = nullptr;
     } else {
         this->control->setFontSelected(text->getFont());
