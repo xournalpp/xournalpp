@@ -230,8 +230,8 @@ public:
         SendToBack,
     };
 
-    static inline std::array<std::string, 4> orderChangeNames = {"bringToFront", "bringForward", "sendBackward",
-                                                                 "sendToBack"};
+    static constexpr std::array<std::string_view, 4> orderChangeNames{"bringToFront", "bringForward", "sendBackward",
+                                                                      "sendToBack"};
     static constexpr std::array<OrderChange, 4> allChanges = {OrderChange::BringToFront, OrderChange::BringForward,
                                                               OrderChange::SendBackward, OrderChange::SendToBack};
 

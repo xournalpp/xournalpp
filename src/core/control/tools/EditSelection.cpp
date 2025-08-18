@@ -519,7 +519,7 @@ auto EditSelection::rearrangeInsertionOrder(const OrderChange change) -> UndoAct
 }
 
 auto EditSelection::orderChangeToString(const OrderChange change) -> std::string {
-    return EditSelection::orderChangeNames.at(static_cast<size_t>(change));
+    return EditSelection::orderChangeNames.at(static_cast<size_t>(change)).data();
 }
 
 /**

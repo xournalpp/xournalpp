@@ -26,7 +26,8 @@ enum ToolSize {
     TOOL_SIZE_NONE
 };
 
-static std::array<std::string, 6> toolSizeNames{"veryThin", "thin", "medium", "thick", "veryThick", "none"};
+static constexpr std::array<std::string_view, 6> toolSizeNames{"veryThin", "thin",      "medium",
+                                                               "thick",    "veryThick", "none"};
 
 std::string toolSizeToString(ToolSize size);
 ToolSize toolSizeFromString(const std::string& size);
@@ -51,7 +52,7 @@ enum DrawingType {
     DRAWING_TYPE_SHAPE_RECOGNIZER,
     DRAWING_TYPE_SPLINE
 };
-static std::array<std::string, 10> drawingTypeNames{
+static constexpr std::array<std::string_view, 10> drawingTypeNames{
         "dontChange",           "default",          "line",  "rectangle", "ellipse", "arrow", "doubleArrow",
         "drawCoordinateSystem", "strokeRecognizer", "spline"};
 
@@ -90,31 +91,31 @@ enum ToolType {
 
     TOOL_END_ENTRY
 };
-static std::array<std::string, 25> toolNames{"none",
-                                             "pen",
-                                             "eraser",
-                                             "highlighter",
-                                             "text",
-                                             "image",
-                                             "selectRect",
-                                             "selectRegion",
-                                             "selectMultiLayerRect",
-                                             "selectMultiLayerRegion",
-                                             "selectObject",
-                                             "playObject",
-                                             "verticalSpace",
-                                             "hand",
-                                             "drawRect",
-                                             "drawEllipse",
-                                             "drawArrow",
-                                             "drawDoubleArrow",
-                                             "drawCoordinateSystem",
-                                             "showFloatingToolbox",
-                                             "drawSpline",
-                                             "selectPdfTextLinear",
-                                             "selectPdfTextRect",
-                                             "laserPointerPen",
-                                             "laserPointerHighlighter"};
+static constexpr std::array<std::string_view, 25> toolNames{"none",
+                                                            "pen",
+                                                            "eraser",
+                                                            "highlighter",
+                                                            "text",
+                                                            "image",
+                                                            "selectRect",
+                                                            "selectRegion",
+                                                            "selectMultiLayerRect",
+                                                            "selectMultiLayerRegion",
+                                                            "selectObject",
+                                                            "playObject",
+                                                            "verticalSpace",
+                                                            "hand",
+                                                            "drawRect",
+                                                            "drawEllipse",
+                                                            "drawArrow",
+                                                            "drawDoubleArrow",
+                                                            "drawCoordinateSystem",
+                                                            "showFloatingToolbox",
+                                                            "drawSpline",
+                                                            "selectPdfTextLinear",
+                                                            "selectPdfTextRect",
+                                                            "laserPointerPen",
+                                                            "laserPointerHighlighter"};
 
 auto isSelectToolType(ToolType type) -> bool;
 auto isSelectToolTypeSingleLayer(ToolType type) -> bool;
@@ -137,14 +138,14 @@ enum OpacityFeature {
     OPACITY_FILL_HIGHLIGHTER,
     OPACITY_SELECT_PDF_TEXT_MARKER,
 };
-static std::array<std::string, 4> opacityFeatureNames = {"none", "opacityFillPen", "opacityFillHighlighter",
-                                                         "opacitySelectPdfTextMarker"};
+static constexpr std::array<std::string_view, 4> opacityFeatureNames{"none", "opacityFillPen", "opacityFillHighlighter",
+                                                                     "opacitySelectPdfTextMarker"};
 
 std::string opacityFeatureToString(OpacityFeature feature);
 OpacityFeature opacityFeatureFromString(const std::string& feature);
 
 enum EraserType { ERASER_TYPE_NONE = 0, ERASER_TYPE_DEFAULT, ERASER_TYPE_WHITEOUT, ERASER_TYPE_DELETE_STROKE };
-static std::array<std::string, 4> eraserTypeNames{"none", "default", "whiteout", "deleteStroke"};
+static constexpr std::array<std::string_view, 4> eraserTypeNames{"none", "default", "whiteout", "deleteStroke"};
 
 std::string eraserTypeToString(EraserType type);
 EraserType eraserTypeFromString(const std::string& type);
@@ -175,7 +176,7 @@ enum StrokeType {
     STROKE_TYPE_DOTTED = 4
 };
 
-static std::array<std::string, 5> strokeTypeNames = {"none", "standard", "dashed", "dashdot", "dot"};
+static constexpr std::array<std::string_view, 5> strokeTypeNames{"none", "standard", "dashed", "dashdot", "dot"};
 
 auto strokeTypeFromString(const std::string& type) -> StrokeType;
 auto strokeTypeToLineStyle(StrokeType type) -> LineStyle;
