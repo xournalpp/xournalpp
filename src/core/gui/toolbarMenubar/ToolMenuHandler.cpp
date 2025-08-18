@@ -214,8 +214,6 @@ void ToolMenuHandler::addPluginPlaceholderItem(ToolbarPlaceholderEntry* entry) {
 
 void ToolMenuHandler::initToolItems() {
     using Cat = AbstractToolItem::Category;
-
-    using Cat = AbstractToolItem::Category;
     /**
      * @brief Simple button, with a GTK stock icon name
      *      The corresponding action in ActionDatabase[action] should have no state (it can have a parameter)
