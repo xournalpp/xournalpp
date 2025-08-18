@@ -23,5 +23,5 @@ protected:
 
 private:
     ToolbarPlaceholderEntry* t;
-    GtkWidget* labelWidget {nullptr};
+    std::vector<GtkWidget*> labelWidgets;
 };

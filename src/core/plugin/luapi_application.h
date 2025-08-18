@@ -3139,7 +3139,6 @@ static int applib_addToSelection(lua_State* L) {
  */
 static int applib_registerPlaceholder(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
-    if (!plugin) return 0;
     const char* id = luaL_checkstring(L, 1);
     const char* description = luaL_checkstring(L, 2);
     plugin->registerPlaceholder(id, description);
@@ -3158,7 +3157,6 @@ static int applib_registerPlaceholder(lua_State* L) {
  */
 static int applib_setPlaceholderValue(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
-    if (!plugin) return 0;
     const char* id = luaL_checkstring(L, 1);
     const char* value = luaL_checkstring(L, 2);
     plugin->setPlaceholderValue(id, value);
