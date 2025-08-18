@@ -14,6 +14,7 @@
 #include <cstddef>  // for size_t
 #include <limits>   // for numeric_limits
 #include <memory>   // for unique_ptr
+#include <unordered_map> 
 
 #include "config-features.h"  // for ENABLE_PLUGINS
 
@@ -78,6 +79,13 @@ struct ToolbarButtonEntry final {
     ptrdiff_t mode{std::numeric_limits<ptrdiff_t>::max()};  ///< mode in which the callback function is run
 };
 
+struct ToolbarPlaceholderEntry final {
+    std::string toolbarId;      ///< toolbar ID to be used in toolbar.ini
+    std::string description;    ///< description displayed on hovering over the placeholder
+    std::string value;          ///< current value of the placeholder
+    class PluginPlaceholderLabel* label = nullptr; ///< pointer to the label for updates
+};
+
 struct LuaDeleter {
     void operator()(lua_State* ptr) const { lua_close(ptr); }
 };
@@ -85,6 +93,10 @@ struct LuaDeleter {
 class Plugin final {
 public:
     Plugin(Control* control, std::string name, fs::path path);
+    // Register a placeholder label for the toolbar
+    void registerPlaceholder(const std::string& toolbarId, const std::string& description);
+    // Update the value of a placeholder label
+    void setPlaceholderValue(const std::string& toolbarId, const std::string& value);
 
 public:
     /// Load the plugin script
@@ -111,6 +123,7 @@ public:
                             ptrdiff_t mode);
     // Register all toolbar buttons
     void registerToolButton(ToolMenuHandler* toolMenuHandler);
+    void registerPlaceholders(ToolMenuHandler* toolMenuHandler);
 
     /// Execute menu entry
     void executeMenuEntry(MenuEntry* entry);
@@ -154,6 +167,8 @@ public:
 private:
     /// Load ini file
     void loadIni();
+    // Storage for toolbar placeholder entries
+    std::unordered_map<std::string, std::unique_ptr<ToolbarPlaceholderEntry>> toolbarPlaceholderEntries;
 
     /// Load custom Lua Libraries
     static void registerXournalppLibs(lua_State* luaPtr);

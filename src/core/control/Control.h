@@ -22,7 +22,6 @@
 #include <glib.h>                   // for guint
 #include <gtk/gtk.h>                // for GtkLabel
 
-#include "config/TextPlaceholderConfig.h"           // for TextPlaceholder
 #include "control/ToolEnums.h"                      // for ToolSize, ToolType
 #include "control/jobs/ProgressListener.h"          // for ProgressListener
 #include "control/settings/ViewModes.h"             // for ViewModeId
@@ -79,10 +78,6 @@ class Control:
         public ClipboardListener,
         public ProgressListener {
 public:
-    // Text placeholder config for toolbar/Lua API
-    void setTextPlaceholderConfig(TextPlaceholderConfig* config) { textPlaceholderConfig = config; }
-    // Text placeholder config for toolbar/Lua API
-    TextPlaceholderConfig* getTextPlaceholderConfig() const { return textPlaceholderConfig; }
     Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool disableAudio);
     Control(Control const&) = delete;
     Control(Control&&) = delete;
@@ -392,7 +387,6 @@ protected:
     void saveImpl(bool saveAs, std::function<void(bool)> callback);
 
 private:
-    TextPlaceholderConfig* textPlaceholderConfig = nullptr;
     /**
      * @brief Creates the specified geometric tool if it's not on the current page yet. Deletes it if it already exists.
      * @return true if a geometric tool was created
