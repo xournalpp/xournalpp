@@ -18,8 +18,6 @@
 #include "gui/toolbarMenubar/model/ToolbarItem.h"   // for ToolbarItem
 #include "gui/toolbarMenubar/model/ToolbarModel.h"  // for ToolbarModel
 #include "plugin/Plugin.h"                          // for ToolbarButtonEntr<
-#include "plugin/luapi_application.h"
-#include "tools/TextPlaceholderTool.h"
 #include "util/GVariantTemplate.h"                  // for gVariantType
 #include "util/GtkUtil.h"
 #include "util/NamedColor.h"  // for NamedColor
@@ -35,8 +33,8 @@
 #include "DrawingTypeComboToolButton.h"  // for DrawingTypeComboToolButton
 #include "FontButton.h"                  // for FontButton
 #include "PluginToolButton.h"            // for PluginToolButton
+#include "PluginPlaceholderLabel.h"      // for PluginPlaceholderLabel
 #include "StylePopoverFactory.h"         // for ToolButtonWithStylePopover
-#include "TextPlaceholderToolItem.h"     // for TextPlaceholderToolItem
 #include "ToolButton.h"                  // for ToolButton
 #include "ToolPageLayer.h"               // for ToolPageLayer
 #include "ToolPageSpinner.h"             // for ToolPageSpinner
@@ -81,18 +79,6 @@ void ToolMenuHandler::populate(const GladeSearchpath* gladeSearchPath) {
                                "Toolbars will not be available") %
                             file.u8string());
             XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
-        }
-    }
-}
-
-void ToolMenuHandler::refreshPlaceholderToolItems() {
-    fprintf(stderr, "[ToolMenuHandler] refreshPlaceholderToolItems called. toolItems.size=%zu\n", toolItems.size());
-    for (auto& item : this->toolItems) {
-        fprintf(stderr, "[ToolMenuHandler] Checking item id='%s' type='%s'\n", item->getId().c_str(), typeid(*item).name());
-        auto* placeholderItem = dynamic_cast<TextPlaceholderToolItem*>(item.get());
-        if (placeholderItem) {
-            fprintf(stderr, "[ToolMenuHandler] Updating placeholder item id='%s'\n", item->getId().c_str());
-            placeholderItem->updateLabel();
         }
     }
 }
@@ -220,19 +206,15 @@ tool_item& ToolMenuHandler::emplaceItem(Args&&... args) {
 
 #ifdef ENABLE_PLUGINS
 void ToolMenuHandler::addPluginItem(ToolbarButtonEntry* t) { emplaceItem<PluginToolButton>(t); }
+void ToolMenuHandler::addPluginPlaceholderItem(ToolbarPlaceholderEntry* entry) {
+    emplaceItem<PluginPlaceholderLabel>(entry);
+}
 #endif /* ENABLE_PLUGINS */
+
 
 void ToolMenuHandler::initToolItems() {
     using Cat = AbstractToolItem::Category;
 
-    // Add placeholder tools from config
-    if (control && control->getTextPlaceholderConfig()) {
-        auto* config = control->getTextPlaceholderConfig();
-        for (const auto& kv : config->getPlaceholders()) {
-            auto* placeholderTool = new TextPlaceholderTool(kv.first, config);
-            emplaceItem<TextPlaceholderToolItem>(kv.first, placeholderTool);
-        }
-    }
     using Cat = AbstractToolItem::Category;
     /**
      * @brief Simple button, with a GTK stock icon name

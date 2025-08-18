@@ -42,6 +42,7 @@ class Control;
 class PageBackgroundChangeController;
 class ColorToolItem;
 struct ToolbarButtonEntry;
+struct ToolbarPlaceholderEntry;
 class PageTypeSelectionPopover;
 class PageType;
 struct Palette;
@@ -50,7 +51,6 @@ class Recolor;
 
 class ToolMenuHandler {
 public:
-    void refreshPlaceholderToolItems();
     ToolMenuHandler(Control* control, GladeGui* gui);
     virtual ~ToolMenuHandler();
 
@@ -87,6 +87,7 @@ public:
 
     void initToolItems();
     void addPluginItem(ToolbarButtonEntry* t);
+    void addPluginPlaceholderItem(ToolbarPlaceholderEntry* entry);
 
     void setPageInfo(size_t currentPage, size_t pageCount, size_t pdfpage);
 

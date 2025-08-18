@@ -60,7 +60,6 @@
 #include "util/XojMsgBox.h"
 
 #include "ActionBackwardCompatibilityLayer.h"
-#include "luapi_textplaceholder.h"
 
 extern "C" {
 #include <lauxlib.h>  // for luaL_Reg, luaL_newstate, luaL_requiref
@@ -3126,31 +3125,45 @@ static int applib_addToSelection(lua_State* L) {
     return 0;
 }
 
+
 /**
- * Set the value of a text placeholder shown in the toolbar.
+ * Registers a new placeholder label for the toolbar.
  *
- * @param name string: The placeholder name
+ * @param id string: The placeholder ID (must be unique for each placeholder)
+ * @param description string: The label description shown in the toolbar
+ *
+ * Example:
+ *   app.registerPlaceholder("vi-mode", "Current mode")
+ *
+ * The placeholder can then be updated with app.setPlaceholderValue(id, value).
+ */
+static int applib_registerPlaceholder(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    if (!plugin) return 0;
+    const char* id = luaL_checkstring(L, 1);
+    const char* description = luaL_checkstring(L, 2);
+    plugin->registerPlaceholder(id, description);
+    return 0;
+}
+
+
+/**
+ * Set the value of a plugin placeholder label in the toolbar.
+ *
+ * @param id string: The placeholder ID
  * @param value string: The value to display
  *
  * Example: app.setPlaceholderValue("myPlaceholder", "Hello World")
  * Updates the toolbar placeholder with the given value.
  */
 static int applib_setPlaceholderValue(lua_State* L) {
-    // Get Control instance from Lua plugin context
     Plugin* plugin = Plugin::getPluginFromLua(L);
     if (!plugin) return 0;
-    Control* control = plugin->getControl();
-    if (!control) return 0;
-    TextPlaceholderConfig* config = control->getTextPlaceholderConfig();
-    if (!config) return 0;
-    return luapi_textplaceholder::set_placeholder_value(L, config, control);
+    const char* id = luaL_checkstring(L, 1);
+    const char* value = luaL_checkstring(L, 2);
+    plugin->setPlaceholderValue(id, value);
+    return 0;
 }
-
-/*
- * The full Lua Plugin API.
- * See above for example usage of each function.
- */
-static int applib_setPlaceholderValue(lua_State* L);
 
 
 static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remove this deprecated function
@@ -3197,6 +3210,7 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remo
                                   {"getImages", applib_getImages},
                                   {"getTexts", applib_getTexts},
                                   {"openFile", applib_openFile},
+                                  {"registerPlaceholder", applib_registerPlaceholder},
                                   {"setPlaceholderValue", applib_setPlaceholderValue},
                                   // Placeholder
                                   // {"MSG_BT_OK", nullptr},
