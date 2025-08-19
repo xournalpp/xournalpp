@@ -49,6 +49,11 @@
 #cmakedefine DEBUG_MASKS
 
 /**
+ * Print info on draw requests and calls
+ */
+#cmakedefine DEBUG_DRAW_WIDGET
+
+/**
  * Show repainted areas when erasing an highlighter stroke
  */
 #cmakedefine DEBUG_ERASABLE_STROKE_BOXES
