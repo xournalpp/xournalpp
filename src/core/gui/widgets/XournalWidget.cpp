@@ -21,8 +21,7 @@
 #include "util/Color.h"                     // for cairo_set_source_rgbi
 #include "util/Rectangle.h"                 // for Rectangle
 
-
-using xoj::util::Rectangle;
+#include "config-debug.h"  // for DEBUG_DRAW_WIDGET
 
 /*
  * Declares:
@@ -64,10 +63,25 @@ static void gtk_xournal_class_init(GtkXournalClass* cptr) {
 
     widget_class->draw = gtk_xournal_draw;
 
+#ifdef DEBUG_DRAW_WIDGET
+    widget_class->queue_draw_region = +[](GtkWidget* w, const cairo_region_t* reg) {
+        cairo_rectangle_int_t r;
+        cairo_region_get_extents(reg, &r);
+        auto width = gtk_widget_get_allocated_width(w);
+        auto height = gtk_widget_get_allocated_height(w);
+
+        auto widthp = gtk_widget_get_allocated_width(gtk_widget_get_parent(w));
+        auto heightp = gtk_widget_get_allocated_height(gtk_widget_get_parent(w));
+        printf("   * queue_draw_region: %d x %d + (%d ; %d) out of %d x %d   parent: %d x %d\n", r.width, r.height, r.x,
+               r.y, width, height, widthp, heightp);
+        GTK_WIDGET_CLASS(gtk_xournal_parent_class)->queue_draw_region(w, reg);
+    };
+#endif
+
     G_OBJECT_CLASS(cptr)->dispose = gtk_xournal_dispose;
 }
 
-auto gtk_xournal_get_visible_area(GtkWidget* widget, const XojPageView* p) -> Rectangle<double>* {
+auto gtk_xournal_get_visible_area(GtkWidget* widget, const XojPageView* p) -> xoj::util::Rectangle<double>* {
     g_return_val_if_fail(widget != nullptr, nullptr);
     g_return_val_if_fail(GTK_IS_XOURNAL(widget), nullptr);
 
@@ -105,7 +119,8 @@ auto gtk_xournal_get_visible_area(GtkWidget* widget, const XojPageView* p) -> Re
                   "should never happen");
     }
 
-    return new Rectangle<double>(std::max(r3.x, 0) / zoom, std::max(r3.y, 0) / zoom, r3.width / zoom, r3.height / zoom);
+    return new xoj::util::Rectangle<double>(std::max(r3.x, 0) / zoom, std::max(r3.y, 0) / zoom, r3.width / zoom,
+                                            r3.height / zoom);
 }
 
 auto gtk_xournal_get_layout(GtkWidget* widget) -> Layout* {
@@ -227,6 +242,18 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
     g_return_val_if_fail(widget != nullptr, false);
     g_return_val_if_fail(GTK_IS_XOURNAL(widget), false);
 
+
+#ifdef DEBUG_DRAW_WIDGET
+    {
+        double x1 = NAN, x2 = NAN, y1 = NAN, y2 = NAN;
+        cairo_clip_extents(cr, &x1, &y1, &x2, &y2);
+        printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n"
+               "      DRAW  %d x %d + (%d ; %d)\n\n"
+               "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$&&&&&&&&&&&&&&&&&&&&&&\n",
+               round_cast<int>(x2 - x1), round_cast<int>(y2 - y1), round_cast<int>(x1), round_cast<int>(y1));
+    }
+#endif
+
     GtkXournal* xournal = GTK_XOURNAL(widget);
 
     double x1 = NAN, x2 = NAN, y1 = NAN, y2 = NAN;
@@ -239,7 +266,7 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
     cairo_paint(cr);
 
     // Add a padding for the shadow of the pages
-    Rectangle clippingRect(x1 - 10, y1 - 10, x2 - x1 + 20, y2 - y1 + 20);
+    xoj::util::Rectangle<double> clippingRect(x1 - 10, y1 - 10, x2 - x1 + 20, y2 - y1 + 20);
 
     for (auto&& pv: xournal->view->getViewPages()) {
         int px = pv->getX();
