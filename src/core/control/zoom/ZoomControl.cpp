@@ -72,21 +72,11 @@ auto onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomC
 // Todo: try to connect this function with the "expose_event", it would be way cleaner and we dont need to align/layout
 //       the pages manually, but it only works with the top Widget (GtkWindow) for now this works "fine"
 //       see https://stackoverflow.com/questions/1060039/gtk-detecting-window-resize-from-the-user
-auto onWindowSizeChangedEvent(GtkWidget* widget, GdkEvent* event, ZoomControl* zoom) -> bool {
+auto onWindowSizeChangedEvent(GtkWidget* widget, GdkEvent*, ZoomControl* zoom) -> bool {
     xoj_assert(widget != zoom->view->getWidget());
-    auto layout = zoom->view->getLayout();
-    // Todo (fabian): The following code is a hack.
-    //    Problem size-allocate:
-    //    when using the size-allocate signal, we cant use layout->recalculate() directly.
-    //    But using the xournal-widgets allocation is wrong, since the calculation is skipped already.
-    //    using size-allocate's allocation is wrong, since it is the alloc of the toplevel.
-    //    Problem expose-event:
-    //    when using the expose-event signal, the new Allocation is not known yet; calculation must be deferred.
-    //    (minimize / maximize wont work)
-    Util::execInUiThread([layout, zoom]() {
+    Util::execInUiThread([zoom]() {
         zoom->updateZoomPresentationValue();
         zoom->updateZoomFitValue();
-        layout->recalculate();
     });
 
     GdkWindow* gdkWindow = gtk_widget_get_window(widget);
