@@ -149,7 +149,13 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
         return false;
     }
 
-    InputEvent event = InputEvents::translateEvent(sourceEvent, this->getSettings());
+    InputEvent event = InputEvents::translateEvent(
+            sourceEvent, this->getSettings(),
+            this->view ?
+                    xoj::util::Point<double>{
+                            gtk_adjustment_get_value(GTK_XOURNAL(this->view->getWidget())->hadjustment),
+                            gtk_adjustment_get_value(GTK_XOURNAL(this->view->getWidget())->vadjustment)} :
+                    xoj::util::Point<double>{0., 0.});
 
     // Add the device to the list of known devices if it is currently unknown
     if (gdk_device_get_device_type(sourceDevice) != GDK_DEVICE_TYPE_MASTER &&
