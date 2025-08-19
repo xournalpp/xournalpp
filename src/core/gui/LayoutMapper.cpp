@@ -90,8 +90,15 @@ constexpr auto hash(T&& data_, GridPosition const& pos) {
  */
 
 void calculate(LayoutSettings& data, size_t numRows, size_t numCols, bool useRows, uint32_t firstPageOffset) {
+    if (data.actualPages == 0) {
+        // Happens in the early startup... It should rather not happen at all
+        data.rows = 1;
+        data.cols = 1;
+        data.offset = 0;
+        return;
+    }
     if (useRows) {
-        data.rows = std::max<size_t>(1UL, numRows);
+        data.rows = std::clamp<size_t>(numRows, 1UL, data.actualPages);
 
         // using  + ( rows-1) to round up (int)pages/rows
         data.cols = std::max<size_t>(1UL, (data.actualPages + firstPageOffset + (data.rows - 1)) / data.rows);
@@ -99,7 +106,7 @@ void calculate(LayoutSettings& data, size_t numRows, size_t numCols, bool useRow
             data.cols += data.cols % 2;  // make even
         }
     } else {
-        data.cols = std::max<size_t>(1UL, numCols);
+        data.cols = std::clamp<size_t>(numCols, 1UL, data.actualPages);
         if (data.showPairedPages) {
             data.cols += data.cols % 2;  // make even
         }
