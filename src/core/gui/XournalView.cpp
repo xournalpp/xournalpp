@@ -140,7 +140,7 @@ auto XournalView::cleanupBufferCache() -> void {
                 page->deleteViewBuffer();
             }
         } else {
-            page->setCenterOfVisibleArea(center);
+            page->setCenterOfVisibleArea(center, page->getPixelPosition());
             IF_DBG_TILING({
                 auto cache = page->getCacheSize();
                 printf("  page: %4zu buf  -> %3zu tiles (~ %4zu MB)\n", pageNum, cache.nbTiles, cache.estMemUsage);
@@ -449,16 +449,16 @@ void XournalView::scrollTo(size_t pageNo, XojPdfRectangle rect) {
         return;
     }
 
-    auto& v = this->viewPages[pageNo];
-
     // Make sure it is visible
     Layout* layout = this->getLayout();
+    auto p = layout->getPixelCoordinatesOfEntry(pageNo);
 
-    int x = v->getX() + round_cast<int>(rect.x1 * zoom);
-    int y = v->getY() + round_cast<int>(rect.y1 * zoom);
+    int x = p.x + round_cast<int>(rect.x1 * zoom);
+    int y = p.y + round_cast<int>(rect.y1 * zoom);
     int width;
     int height;
     if (rect.x2 == -1 || rect.y2 == -1) {
+        auto& v = this->viewPages[pageNo];
         width = v->getDisplayWidth();
         height = v->getDisplayHeight();
     } else {
@@ -474,14 +474,8 @@ void XournalView::scrollTo(size_t pageNo, XojPdfRectangle rect) {
 
 
 void XournalView::pageRelativeXY(int offCol, int offRow) {
-    size_t currPage = getCurrentPage();
-
-    XojPageView* view = getViewFor(currPage);
-    int row = view->getMappedRow();
-    int col = view->getMappedCol();
-
     Layout* layout = this->getLayout();
-    auto optionalPageIndex = layout->getPageIndexAtGridMap(as_unsigned(row + offRow), as_unsigned(col + offCol));
+    auto optionalPageIndex = layout->getPageWithRelativePosition(getCurrentPage(), offCol, offRow);
     if (optionalPageIndex) {
         this->scrollTo(*optionalPageIndex);
     }
@@ -582,7 +576,7 @@ void XournalView::zoomChanged() {
         return;
     }
 
-    layoutPages();
+    gtk_widget_queue_resize(getWidget());
 
     if (zoom->isZoomPresentationMode() || zoom->isZoomFitMode()) {
         scrollTo(currentPage);
@@ -754,16 +748,7 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
     gtk_widget_queue_draw(this->widget);
 }
 
-void XournalView::layoutPages() {
-    Layout* layout = this->getLayout();
-    layout->recalculate();
-
-    // Todo (fabian): the following lines are conceptually wrong, the Layout::layoutPages function is meant to be
-    // called by an expose event, but removing it, will break "add page".
-    auto rectangle = layout->getVisibleRect();
-    layout->layoutPages(std::max<int>(layout->getMinimalWidth(), round_cast<int>(rectangle.width)),
-                        std::max<int>(layout->getMinimalHeight(), round_cast<int>(rectangle.height)));
-}
+void XournalView::layoutPages() { this->getLayout()->recalculate(/* forceNow = */ true); }
 
 auto XournalView::getDisplayHeight() const -> int {
     GtkAllocation allocation = {0};
