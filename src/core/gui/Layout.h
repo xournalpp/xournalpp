@@ -11,21 +11,27 @@
 
 #pragma once
 
-#include <cstddef>   // for size_t
-#include <mutex>     // for mutex
-#include <optional>  // for optional
-#include <vector>    // for vector
+#include <cstddef>     // for size_t
+#include <functional>  // for function
+#include <mutex>       // for mutex
+#include <optional>    // for optional
+#include <vector>      // for vector
 
 #include <gtk/gtk.h>  // for GtkAdjustment
-
-#include "util/Rectangle.h"  // for Rectangle
 
 #include "LayoutMapper.h"  // for LayoutMapper
 
 class XojPageView;
 class XournalView;
 class ScrollHandling;
+class Range;
 
+namespace xoj::util {
+template <typename T>
+struct Point;
+template <typename T>
+class Rectangle;
+};  // namespace xoj::util
 
 /**
  * @brief The Layout manager for the XournalWidget
@@ -36,16 +42,6 @@ class ScrollHandling;
 class Layout final {
 public:
     Layout(XournalView* view, ScrollHandling* scrollHandling);
-    struct PreCalculated {
-        std::mutex m;
-
-        // The width and height of all our pages
-        size_t minWidth = 0;
-        size_t minHeight = 0;
-        std::vector<double> widthCols;
-        std::vector<double> heightRows;
-        bool valid = false;
-    };
 
 public:
     // Todo(Fabian): move to ScrollHandling also it must not depend on Layout
@@ -73,12 +69,12 @@ public:
     /**
      * Returns the height of the entire Layout
      */
-    int getMinimalHeight() const;
+    int getTotalPixelHeight() const;
 
     /**
      * Returns the width of the entire Layout
      */
-    int getMinimalWidth() const;
+    int getTotalPixelWidth() const;
 
     // Todo(Fabian): move to XournalView this must not depend on Layout directly
     /**
@@ -89,8 +85,10 @@ public:
 
     /**
      * recalculate and resize Layout
+     * If forceNow == true, the layout is computed straight away and the gtk_adjustment values are updated
+     * Otherwise, the computation is differed until the values are needed
      */
-    void recalculate();
+    void recalculate(bool forceNow = false);
 
     /**
      * Performs a layout of the XojPageView's managed in this Layout
@@ -114,10 +112,10 @@ public:
     XojPageView* getPageViewAt(int x, int y);
 
     /**
-     * Return the page index found ( or std::nullopt if not found) at layout grid row,col
-     *
+     * Return the page index found (or std::nullopt if not found) when moving by the given offsets from the ref page
+     * Assumes refPageNumber is a valid page index.
      */
-    std::optional<size_t> getPageIndexAtGridMap(size_t row, size_t col);
+    std::optional<size_t> getPageWithRelativePosition(size_t refPageNumber, int columnOffset, int rowOffset) const;
 
     /**
      * @brief Get the total padding above the page at the given index.
@@ -142,26 +140,66 @@ public:
      */
     int getPaddingLeftOfPage(size_t pageIndex) const;
 
+    /// Returns a list of the indices of the visible pages
+    std::vector<size_t> getVisiblePages() const;
+
+    xoj::util::Point<int> getPixelCoordinatesOfEntry(xoj::util::Point<int> gridCoords) const;
+    xoj::util::Point<int> getPixelCoordinatesOfEntry(size_t n) const;
+
+    /**
+     * Execute the given function for each entry that intersects the range. entryIndex is the entry, intersection is the
+     * intersection (in widget coordinates) and pixelPosition is the entry's upper left corner in widget coordinates
+     */
+    void forEachEntriesIntersectingRange(
+            const Range& rg,
+            std::function<void(size_t entryIndex, const Range& intersection, xoj::util::Point<int> pixelPosition)> fun)
+            const;
+
 protected:
+    /// Same as above but does not lock the mutex or recalculate the PreCalculated
+    xoj::util::Point<int> getPixelCoordinatesOfEntryUnsafe(xoj::util::Point<int> gridCoords) const;
+    /// Same as above but does not lock the mutex or recalculate the PreCalculated
+    xoj::util::Point<int> getPixelCoordinatesOfEntryUnsafe(size_t n) const;
+
     // Todo(Fabian): move to ScrollHandling also it must not depend on Layout
     static void horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout);
     static void verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout);
 
 private:
-    void recalculate_int() const;
+    void computePrecalculated() const;
 
     void maybeAddLastPage(Layout* layout);
 
     // Todo(Fabian): move to ScrollHandling also it must not depend on Layout
     static void checkScroll(GtkAdjustment* adjustment, double& lastScroll);
 
+public:
+    struct PreCalculated {
+        std::mutex m;
+        bool valid = false;
+
+        std::vector<double> widthCols;   ///< In page coordinates - multiply by zoom to get pixels
+        std::vector<double> heightRows;  ///< In page coordinates - multiply by zoom to get pixels
+
+        std::vector<double> stretchableHorizontalPixelsAfterColumn;  ///< Stretchable - multiply by zoom to get pixels
+        std::vector<double> stretchableVerticalPixelsAfterRow;       ///< Stretchable - multiply by zoom to get pixels
+        int paddingLeft;                                             ///< in pixels
+        int paddingRight;                                            ///< in pixels
+        int paddingTop;                                              ///< in pixels
+        int paddingBottom;                                           ///< in pixels
+    };
+
 private:
+    struct PixelCounter;  ///< Used to get the pixel coordinates of entries
+
     XournalView* view = nullptr;
     ScrollHandling* scrollHandling = nullptr;
 
     // Todo(Fabian): move to ScrollHandling also it must not depend on Layout
     double lastScrollHorizontal = -1;
     double lastScrollVertical = -1;
+
+    std::vector<size_t> previouslyVisiblePages;  ///< indexes of pages with XojPageView::isVisible() == true
 
     /**
      * layoutPages invalidates the precalculation of recalculate
@@ -170,6 +208,4 @@ private:
      */
     mutable LayoutMapper mapper;
     mutable PreCalculated pc{};
-    mutable std::vector<unsigned> colXStart;
-    mutable std::vector<unsigned> rowYStart;
 };

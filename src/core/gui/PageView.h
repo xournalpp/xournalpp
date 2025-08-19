@@ -97,7 +97,9 @@ public:
     void setSelected(bool selected);
 
     void setIsVisible(bool visible);
-    void setCenterOfVisibleArea(xoj::util::Point<int> c);  ///< In widget coordinates. May be out of the page.
+
+    /// All in widget coordinates. centerOfVisibleArea may be out of the page.
+    void setCenterOfVisibleArea(xoj::util::Point<int> centerOfVisibleArea, xoj::util::Point<int> pagePosition);
 
     bool isSelected() const;
     inline bool isVisible() const { return visible; }
@@ -125,16 +127,6 @@ public:
      */
     bool containsPoint(int x, int y, bool local = false) const;
 
-    /**
-     * Returns Row assigned in current layout
-     */
-    int getMappedRow() const;
-
-    /**
-     * Returns Column assigned in current layout
-     */
-    int getMappedCol() const;
-
     GdkRGBA getSelectionColor() override;
     bool hasBuffer() const;
 
@@ -161,22 +153,11 @@ public:
     int getDisplayHeight() const;
     double getDisplayHeightDouble() const;
 
-    /**
-     * Returns the x coordinate of this XojPageView with
-     * respect to the display
-     */
-    int getX() const override;
-
-    /**
-     * Returns the y coordinate of this XojPageView with
-     * respect to the display
-     */
-    int getY() const override;
+    /// Returns the position of the upper-left corner in Widget coordinates
+    xoj::util::Point<int> getPixelPosition() const;
 
     const TexImage* getSelectedTex() const;
     const Text* getSelectedText() const;
-
-    xoj::util::Rectangle<double> getRect() const;
 
 public:  // event handler
     bool onButtonPressEvent(const PositionInputData& pos);
@@ -206,6 +187,9 @@ public:  // event handler
         size_t estMemUsage;  ///< in MB
     };
     CacheSize getCacheSize() const;
+
+    void setGridCoordinates(xoj::util::Point<int> pos);
+    xoj::util::Point<int> getGridCoordinates() const;
 
 public:  // listener
     void rectChanged(xoj::util::Rectangle<double>& rect) override;
@@ -238,11 +222,6 @@ private:
      * @returns true iff a URI link exists near/at (targetX, targetY) => a popover was shown
      */
     bool displayLinkPopover(std::shared_ptr<XojPdfPage> page, double targetX, double targetY);
-
-    void setX(int x);
-    void setY(int y);
-
-    void setMappedRowCol(int row, int col);  // row, column assigned by mapper during layout.
 
     /**
      * Shows the floating toolbox at the location of an input event
@@ -287,7 +266,7 @@ private:
      */
     Text* oldtext;
 
-    bool visible = true;
+    bool visible = false;
     bool selected = false;
 
     xoj::view::Tiling tiles;
@@ -314,13 +293,8 @@ private:
         xoj::util::Point<int> centerOfVisibleArea{};  ///< In widget coordinates. May be outside the page.
     } rerenderData;
 
+    xoj::util::Point<int> gridCoordinates;  ///< Coordinates in the layout grid
 
-    int dispX{};  // position on display - set in Layout::layoutPages
-    int dispY{};
-
-
-    int mappedRow{};
-    int mappedCol{};
 
     DeviceId currentSequenceDeviceId;
 
@@ -331,6 +305,4 @@ private:
     friend class SelectObject;
     friend class PlayObject;
     friend class PdfFloatingToolbox;
-    // only function allowed to setX(), setY(), setMappedRowCol():
-    friend void Layout::layoutPages(int width, int height);
 };

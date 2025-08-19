@@ -15,12 +15,11 @@
 #include "gui/PageView.h"               // for XojPageView
 #include "gui/scroll/ScrollHandling.h"  // for ScrollHandling
 #include "model/Document.h"             // for Document
+#include "util/Range.h"                 // for Range
 #include "util/Rectangle.h"             // for Rectangle
 #include "util/safe_casts.h"            // for strict_cast, as_signed, as_si...
 
 #include "XournalView.h"  // for XournalView
-
-using xoj::util::Rectangle;
 
 /**
  * Padding outside the pages, including shadow
@@ -64,7 +63,8 @@ void Layout::maybeAddLastPage(Layout* layout) {
     auto* settings = control->getSettings();
     if (settings->getEmptyLastPageAppend() == EmptyLastPageAppendType::OnScrollToEndOfLastPage) {
         // If the layout is 5px away from the end of the last page
-        if (std::abs((layout->getMinimalHeight() - layout->getVisibleRect().y) - layout->getVisibleRect().height) < 5) {
+        if (std::abs((layout->getTotalPixelHeight() - layout->getVisibleRect().y) - layout->getVisibleRect().height) <
+            5) {
             auto* doc = control->getDocument();
             doc->lock();
             auto pdfPageCount = doc->getPdfPageCount();
@@ -86,88 +86,226 @@ void Layout::checkScroll(GtkAdjustment* adjustment, double& lastScroll) {
     lastScroll = gtk_adjustment_get_value(adjustment);
 }
 
-void Layout::updateVisibility() {
-    Rectangle visRect = getVisibleRect();
-    xoj::util::Point<int> center(round_cast<int>(visRect.x + .5 * visRect.width),
-                                 round_cast<int>(visRect.y + .5 * visRect.height));
+/**
+ * Iteratable view that computes the pixel coordinates of the delimitation between columns (makeHorizontal) or rows
+ * (makeVertical) in the layout from the PreCalculated zoom-agnostic data
+ *
+ * The value returned by a given iterator is the pixel coordinate AFTER the corresponding column/row.
+ */
+struct Layout::PixelCounter {
+    static PixelCounter makeVertical(const PreCalculated& pc, double zoom) {
+        return {pc.stretchableVerticalPixelsAfterRow, pc.paddingTop, zoom};
+    }
+    static PixelCounter makeHorizontal(const PreCalculated& pc, double zoom) {
+        return {pc.stretchableHorizontalPixelsAfterColumn, pc.paddingLeft, zoom};
+    }
 
-    // step through every possible page position and update using p->setIsVisible()
-    // Using initial grid aprox speeds things up by a factor of 5.  See previous git check-in for specifics.
-    int x1 = 0;
-    int y1 = 0;
+    static_assert(std::is_same<decltype(PreCalculated::stretchableHorizontalPixelsAfterColumn),
+                               decltype(PreCalculated::stretchableVerticalPixelsAfterRow)>());
+    using base_container = decltype(PreCalculated::stretchableHorizontalPixelsAfterColumn);
+    using base_iterator = base_container::const_iterator;
+
+private:
+    PixelCounter(const base_container& c, int padding, double zoom):
+            b(c.begin()), e(c.end()), padding(padding), zoom(zoom) {}
+
+    base_iterator b;
+    base_iterator e;
+    int padding;
+    double zoom;
+
+public:
+    struct iterator {
+        iterator() = default;
+        iterator(const iterator& o) = default;
+        iterator(iterator&& o) = default;
+        iterator& operator=(const iterator& o) = default;
+        iterator& operator=(iterator&& o) = default;
+
+        using difference_type = base_iterator::difference_type;
+        using iterator_category = std::random_access_iterator_tag;
+        using value_type = double;
+        using reference = double;
+        using pointer = void;
+
+        iterator(base_iterator base, const PixelCounter* parent): it(base), parent(parent) {}
+
+
+        /**
+         * This is the only function with non-trivial content of this iterator class. Computes the pixel position based
+         * on the precalculated zoom-agnostic data
+         */
+        value_type operator*() const {
+            return *it * parent->zoom + parent->padding +
+                   XOURNAL_PADDING_BETWEEN * static_cast<double>(std::distance(parent->b, it)) +
+                   .5 * XOURNAL_PADDING_BETWEEN;
+        }
+
+        // input iterator
+        bool operator==(const iterator& o) const { return it == o.it; }
+        bool operator!=(const iterator& o) const { return it != o.it; }
+        iterator& operator++() {
+            ++it;
+            return *this;
+        }
+
+        // forward iterator
+        iterator operator++(int) {
+            auto c = *this;
+            this->operator++();
+            return c;
+        }
+
+        // bidirectional operator
+        iterator& operator--() {
+            --it;
+            return *this;
+        }
+        iterator operator--(int) {
+            auto c = *this;
+            this->operator--();
+            return c;
+        }
+
+        // random access iterator
+        iterator& operator+=(difference_type n) {
+            it += n;
+            return *this;
+        }
+        iterator operator+(difference_type n) const { return iterator(it + n, parent); }
+        friend iterator operator+(iterator::difference_type n, const iterator& self) { return self + n; }
+        iterator& operator-=(difference_type n) {
+            it -= n;
+            return *this;
+        }
+        iterator operator-(difference_type n) const { return iterator(it - n, parent); }
+        difference_type operator-(const iterator& o) const { return it - o.it; }
+        value_type operator[](difference_type n) const { return *(*this + n); }
+        bool operator<(const iterator& o) const { return it < o.it; }
+        bool operator<=(const iterator& o) const { return it <= o.it; }
+        bool operator>(const iterator& o) const { return it > o.it; }
+        bool operator>=(const iterator& o) const { return it >= o.it; }
+
+    private:
+        base_iterator it;
+        const PixelCounter* parent;
+    };
+    iterator begin() const { return iterator(b, this); }
+    iterator end() const { return iterator(e, this); }
+};
+
+void Layout::forEachEntriesIntersectingRange(
+        const Range& rg, std::function<void(size_t, const Range&, xoj::util::Point<int>)> fun) const {
+    if (rg.empty()) {
+        return;
+    }
+    xoj_assert(rg.isValid());
+    const double zoom = this->view->getZoom();
+    std::lock_guard g{pc.m};
+    if (!pc.valid) {
+        computePrecalculated();
+    }
+    auto verticalPixels = PixelCounter::makeVertical(this->pc, zoom);
+    auto horizontalPixels = PixelCounter::makeHorizontal(this->pc, zoom);
+
+    // Use binary search to find the possibly visible slots
+    auto xEnd = [&]() {
+        // To get an actual "end", take the next one
+        auto it = std::upper_bound(horizontalPixels.begin(), horizontalPixels.end(), rg.maxX);
+        return it == horizontalPixels.end() ? horizontalPixels.end() : std::next(it);
+    }();
+    auto xBegin = std::lower_bound(horizontalPixels.begin(), xEnd, rg.minX);
+
+    auto yEnd = [&]() {
+        // To get an actual "end", take the next one
+        auto it = std::upper_bound(verticalPixels.begin(), verticalPixels.end(), rg.maxY);
+        return it == verticalPixels.end() ? verticalPixels.end() : std::next(it);
+    }();
+    auto yBegin = std::lower_bound(verticalPixels.begin(), yEnd, rg.minY);
+
+    for (auto col = as_unsigned(std::distance(horizontalPixels.begin(), xBegin)),
+              endCol = as_unsigned(std::distance(horizontalPixels.begin(), xEnd));
+         col != endCol; col++) {
+        for (auto row = as_unsigned(std::distance(verticalPixels.begin(), yBegin)),
+                  endRow = as_unsigned(std::distance(verticalPixels.begin(), yEnd));
+             row != endRow; row++) {
+            auto optionalPage = this->mapper.at({as_unsigned(col), as_unsigned(row)});
+            if (optionalPage) {
+                auto pos = this->getPixelCoordinatesOfEntryUnsafe(optionalPage.value());
+                auto& pageView = this->view->viewPages[optionalPage.value()];
+                double w = pageView->getWidth();
+                double h = pageView->getHeight();
+                Range pageRg(pos.x, pos.y, pos.x + w * zoom, pos.y + h * zoom);
+                if (auto intersection = pageRg.intersect(rg); !intersection.empty()) {
+                    fun(optionalPage.value(), intersection, pos);
+                }
+            }
+        }
+    }
+}
+
+void Layout::updateVisibility() {
+    auto visibleRg = Range(getVisibleRect());
+    xoj::util::Point<int> center(round_cast<int>(.5 * (visibleRg.minX + visibleRg.maxX)),
+                                 round_cast<int>(.5 * (visibleRg.minY + visibleRg.maxY)));
 
     // Data to select page based on visibility
     std::optional<size_t> mostPageNr;
     double mostPagePercent = 0;
 
-    for (size_t row = 0; row < this->rowYStart.size(); ++row) {
-        auto y2 = as_signed_strict(this->rowYStart[row]);
-        for (size_t col = 0; col < this->colXStart.size(); ++col) {
-            auto x2 = as_signed_strict(this->colXStart[col]);
-            auto optionalPage = this->mapper.at({col, row});
-            if (optionalPage)  // a page exists at this grid location
-            {
-                auto& pageView = this->view->viewPages[*optionalPage];
+    std::vector<size_t> visiblePages;
+    forEachEntriesIntersectingRange(visibleRg, [&](size_t index, const Range& intersection, xoj::util::Point<int> pos) {
+        auto& pageView = this->view->viewPages[index];
+        pageView->setIsVisible(true);
+        pageView->setCenterOfVisibleArea(center, pos);
+        visiblePages.emplace_back(index);
 
-                // check if grid location is visible as an aprox for page visiblity:
-                if (!(visRect.x > x2 || visRect.x + visRect.width < x1)  // visrect not outside current row/col
-                    && !(visRect.y > y2 || visRect.y + visRect.height < y1)) {
-                    // now use exact check of page itself:
-                    // visrect not outside current page dimensions:
-                    auto const& pageRect = pageView->getRect();
-                    if (auto intersection = pageRect.intersects(visRect); intersection) {
-                        pageView->setIsVisible(true);
-                        pageView->setCenterOfVisibleArea(center);
-                        // Set the selected page
-                        double percent = intersection->area() / pageRect.area();
+        // Set the selected page
+        double percent =
+                intersection.getWidth() * intersection.getHeight() / (visibleRg.getWidth() * visibleRg.getHeight());
 
-                        if (percent > mostPagePercent) {
-                            mostPageNr = *optionalPage;
-                            mostPagePercent = percent;
-                        }
-                    }
-                } else {
-                    pageView->setIsVisible(false);
-                }
-            }
-            x1 = x2;
+        if (percent > mostPagePercent) {
+            mostPageNr = index;
+            mostPagePercent = percent;
         }
-        y1 = y2;
-        x1 = 0;
-    }
+    });
 
+    std::sort(visiblePages.begin(), visiblePages.end());
+    xoj_assert(std::is_sorted(this->previouslyVisiblePages.begin(), this->previouslyVisiblePages.end()));
+    printf("visible pages:");
+    for (auto&& p: visiblePages) {
+        printf(" %zu", p);
+    }
+    printf("\n");
+    auto it = visiblePages.begin();
+    for (auto&& s: this->previouslyVisiblePages) {
+        while (it != visiblePages.end() && *it < s) {
+            it++;
+        }
+        if (it == visiblePages.end() || *it != s) {
+            // This page is no longer visible
+            this->view->viewPages[s]->setIsVisible(false);
+        }
+    }
+    this->previouslyVisiblePages = std::move(visiblePages);
     if (mostPageNr) {
         this->view->getControl()->firePageSelected(*mostPageNr);
     }
 }
 
-auto Layout::getVisibleRect() -> Rectangle<double> {
-    return Rectangle(gtk_adjustment_get_value(scrollHandling->getHorizontal()),
-                     gtk_adjustment_get_value(scrollHandling->getVertical()),
-                     gtk_adjustment_get_page_size(scrollHandling->getHorizontal()),
-                     gtk_adjustment_get_page_size(scrollHandling->getVertical()));
+auto Layout::getVisiblePages() const -> std::vector<size_t> {
+    // We make a copy in case previouslyVisiblePages's iterators get invalidated. The vector is typically very small.
+    return previouslyVisiblePages;
 }
 
-/**
- * adds the addend to base if the predicate is true
- */
+auto Layout::getVisibleRect() -> xoj::util::Rectangle<double> {
+    return xoj::util::Rectangle<double>(gtk_adjustment_get_value(scrollHandling->getHorizontal()),
+                                        gtk_adjustment_get_value(scrollHandling->getVertical()),
+                                        gtk_adjustment_get_page_size(scrollHandling->getHorizontal()),
+                                        gtk_adjustment_get_page_size(scrollHandling->getVertical()));
+}
 
-[[maybe_unused]] constexpr auto sumIf = [](auto base, auto addend, bool predicate) {
-    if constexpr (std::is_signed_v<decltype(base)> || std::is_signed_v<decltype(addend)>) {
-        using RT = std::make_signed_t<decltype(base + addend)>;
-        if (predicate) {
-            return RT(base) + RT(addend);
-        }
-        return RT(base);
-    } else if constexpr (!(std::is_signed_v<decltype(base)> || std::is_signed_v<decltype(addend)>)) {
-        using RT = decltype(base + addend);
-        if (predicate) {
-            return RT(base) + RT(addend);
-        }
-        return RT(base);
-    }
-};
-void Layout::recalculate_int() const {
+void Layout::computePrecalculated() const {
     auto* settings = view->getControl()->getSettings();
     auto len = view->viewPages.size();
     mapper.configureFromSettings(len, settings);
@@ -182,153 +320,55 @@ void Layout::recalculate_int() const {
         auto const& c = raster_p.col;
         auto const& r = raster_p.row;
         auto& v = view->viewPages[pageIdx];
-        pc.widthCols[c] = std::max(pc.widthCols[c], v->getDisplayWidthDouble());
-        pc.heightRows[r] = std::max(pc.heightRows[r], v->getDisplayHeightDouble());
+        pc.widthCols[c] = std::max(pc.widthCols[c], v->getWidth());
+        pc.heightRows[r] = std::max(pc.heightRows[r], v->getHeight());
+        v->setGridCoordinates({strict_cast<int>(c), strict_cast<int>(r)});
     }
 
-    // add space around the entire page area to accommodate older Wacom tablets with limited sense area.
-    auto vPadding = 2 * XOURNAL_PADDING;
+    pc.stretchableHorizontalPixelsAfterColumn.clear();
+    pc.stretchableHorizontalPixelsAfterColumn.reserve(colCount);
+    pc.stretchableVerticalPixelsAfterRow.clear();
+    pc.stretchableVerticalPixelsAfterRow.reserve(rowCount);
+
+    std::partial_sum(pc.widthCols.begin(), pc.widthCols.end(),
+                     std::back_inserter(pc.stretchableHorizontalPixelsAfterColumn));
+    std::partial_sum(pc.heightRows.begin(), pc.heightRows.end(),
+                     std::back_inserter(pc.stretchableVerticalPixelsAfterRow));
+
+    pc.paddingTop = XOURNAL_PADDING;
+    pc.paddingBottom = XOURNAL_PADDING;
     if (settings->getUnlimitedScrolling()) {
-        vPadding += 2 * static_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getVertical()));
+        pc.paddingTop += static_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getVertical()));
+        pc.paddingBottom = pc.paddingTop;
     } else if (settings->getAddVerticalSpace()) {
-        vPadding += settings->getAddVerticalSpaceAmountAbove();
-        vPadding += settings->getAddVerticalSpaceAmountBelow();
+        pc.paddingTop += settings->getAddVerticalSpaceAmountAbove();
+        pc.paddingBottom += settings->getAddVerticalSpaceAmountBelow();
     }
 
-    auto hPadding = 2 * XOURNAL_PADDING;
+    pc.paddingLeft = XOURNAL_PADDING;
+    pc.paddingRight = XOURNAL_PADDING;
     if (settings->getUnlimitedScrolling()) {
-        hPadding += 2 * static_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getHorizontal()));
+        pc.paddingLeft += static_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getHorizontal()));
+        pc.paddingRight = pc.paddingLeft;
     } else if (settings->getAddHorizontalSpace()) {
-        hPadding += settings->getAddHorizontalSpaceAmountLeft();
-        hPadding += settings->getAddHorizontalSpaceAmountRight();
+        pc.paddingLeft += settings->getAddHorizontalSpaceAmountLeft();
+        pc.paddingRight += settings->getAddHorizontalSpaceAmountRight();
     }
 
-    pc.minWidth = as_unsigned(hPadding + as_signed_strict((pc.widthCols.size() - 1) * XOURNAL_PADDING_BETWEEN));
-    pc.minHeight = as_unsigned(vPadding + as_signed_strict((pc.heightRows.size() - 1) * XOURNAL_PADDING_BETWEEN));
+    printf("pc: %d %d %d %d  layout %zu x %zu\n", pc.paddingTop, pc.paddingBottom, pc.paddingLeft, pc.paddingRight,
+           colCount, rowCount);
 
-    pc.minWidth = floor_cast<size_t>(std::accumulate(begin(pc.widthCols), end(pc.widthCols), double(pc.minWidth)));
-    pc.minHeight = floor_cast<size_t>(std::accumulate(begin(pc.heightRows), end(pc.heightRows), double(pc.minHeight)));
     pc.valid = true;
 }
 
-void Layout::recalculate() {
+void Layout::recalculate(bool forceNow) {
     pc.valid = false;
+    if (forceNow) {
+        gtk_adjustment_set_upper(scrollHandling->getHorizontal(), getTotalPixelWidth());
+        gtk_adjustment_set_upper(scrollHandling->getVertical(), getTotalPixelHeight());
+    }
     gtk_widget_queue_resize(view->getWidget());
 }
-
-void Layout::layoutPages(int width, int height) {
-    std::lock_guard g{pc.m};
-    if (!pc.valid) {
-        recalculate_int();
-    }
-    // Todo: remove, just a hack-hotfix
-    scrollHandling->setLayoutSize(std::max(width, strict_cast<int>(this->pc.minWidth)),
-                                  std::max(height, strict_cast<int>(this->pc.minHeight)));
-
-    size_t const len = this->view->viewPages.size();
-    Settings* settings = this->view->getControl()->getSettings();
-
-    // get from mapper (some may have changed to accommodate paired setting etc.)
-    bool const isPairedPages = this->mapper.isPairedPages();
-
-    auto const rows = this->pc.heightRows.size();
-    auto const columns = this->pc.widthCols.size();
-
-
-    // add space around the entire page area to accommodate older Wacom tablets with limited sense area.
-    auto v_padding = XOURNAL_PADDING;
-    if (settings->getUnlimitedScrolling()) {
-        v_padding += ceil_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getVertical()));
-    } else if (settings->getAddVerticalSpace()) {
-        v_padding += settings->getAddVerticalSpaceAmountAbove();
-    }
-
-    auto h_padding = XOURNAL_PADDING;
-    if (settings->getUnlimitedScrolling()) {
-        h_padding += ceil_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getHorizontal()));
-    } else if (settings->getAddHorizontalSpace()) {
-        h_padding += settings->getAddHorizontalSpaceAmountLeft();
-    }
-
-    auto const centeringXBorder = (width - as_signed(pc.minWidth)) / 2;
-    auto const centeringYBorder = (height - as_signed(pc.minHeight)) / 2;
-
-    using SBig = decltype(as_signed(h_padding * centeringXBorder));
-    auto const borderX = static_cast<double>(std::max<SBig>(h_padding, centeringXBorder));
-    auto const borderY = static_cast<double>(std::max<SBig>(v_padding, centeringYBorder));
-
-    // initialize here and x again in loop below.
-    auto x = borderX;
-    auto y = borderY;
-
-
-    // Iterate over ALL possible rows and columns.
-    // We don't know which page, if any,  is to be displayed in each row, column -  ask the mapper object!
-    // Then assign that page coordinates with center, left or right justify within row,column grid cell as required.
-    for (size_t r = 0; r < rows; r++) {
-        for (size_t c = 0; c < columns; c++) {
-            auto optionalPage = this->mapper.at({c, r});
-
-            if (optionalPage) {
-
-                auto& v = this->view->viewPages[*optionalPage];
-                v->setMappedRowCol(strict_cast<int>(r),
-                                   strict_cast<int>(c));  // store row and column for e.g. proper arrow key navigation
-                auto vDisplayWidth = v->getDisplayWidthDouble();
-                {
-                    auto paddingLeft = 0.0;
-                    auto paddingRight = 0.0;
-                    auto columnPadding = this->pc.widthCols[c] - vDisplayWidth;
-
-                    if (isPairedPages && len > 1) {
-                        // pair pages mode
-                        if (c % 2 == 0) {
-                            // align right
-                            paddingLeft = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;
-                            paddingRight = XOURNAL_ROOM_FOR_SHADOW;
-                        } else {  // align left
-                            paddingLeft = XOURNAL_ROOM_FOR_SHADOW;
-                            paddingRight = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;
-                        }
-                    } else {  // not paired page mode - center
-                        paddingLeft = XOURNAL_PADDING_BETWEEN / 2.0 + columnPadding / 2.0;  // center justify
-                        paddingRight = XOURNAL_PADDING_BETWEEN - paddingLeft + columnPadding / 2.0;
-                    }
-
-                    x += paddingLeft;
-
-                    v->setX(floor_cast<int>(x));  // set the page position
-                    v->setY(floor_cast<int>(y));
-
-                    x += vDisplayWidth + paddingRight;
-                }
-            } else {
-                x += this->pc.widthCols[c] + XOURNAL_PADDING_BETWEEN;
-            }
-        }
-        x = borderX;
-        y += this->pc.heightRows[r] + XOURNAL_PADDING_BETWEEN;
-    }
-
-    this->colXStart.resize(this->pc.widthCols.size());
-    this->rowYStart.resize(this->pc.heightRows.size());
-
-
-    // accumulated - absolute pixel location for use by getViewAt() and updateVisibility()
-    auto totalWidth = borderX;
-    std::transform(
-            begin(this->pc.widthCols), end(this->pc.widthCols), begin(this->colXStart), [&totalWidth](auto&& widthCol) {
-                return strict_cast<std::remove_reference_t<decltype(widthCol)>>(totalWidth +=
-                                                                                widthCol + XOURNAL_PADDING_BETWEEN);
-            });
-    auto totalHeight = borderY;
-    std::transform(begin(this->pc.heightRows), end(this->pc.heightRows), begin(this->rowYStart),
-                   [&totalHeight](auto&& heightRow) {
-                       return strict_cast<std::remove_reference_t<decltype(heightRow)>>(
-                               (totalHeight += heightRow + XOURNAL_PADDING_BETWEEN));
-                   });
-}
-
 
 auto Layout::getPaddingAbovePage(size_t pageIndex) const -> int {
     const Settings* settings = this->view->getControl()->getSettings();
@@ -393,21 +433,30 @@ void Layout::scrollAbs(double x, double y) {
     gtk_adjustment_set_value(scrollHandling->getVertical(), y);
 }
 
-
 void Layout::ensureRectIsVisible(int x, int y, int width, int height) {
     gtk_adjustment_clamp_page(scrollHandling->getHorizontal(), x - 5, x + width + 10);
     gtk_adjustment_clamp_page(scrollHandling->getVertical(), y - 5, y + height + 10);
 }
 
-
 auto Layout::getPageViewAt(int x, int y) -> XojPageView* {
-    // Binary Search:
-    auto rit = std::lower_bound(this->rowYStart.begin(), this->rowYStart.end(), y);
-    auto const foundRow = size_t(std::distance(this->rowYStart.begin(), rit));
-    auto cit = std::lower_bound(this->colXStart.begin(), this->colXStart.end(), x);
-    auto const foundCol = size_t(std::distance(this->colXStart.begin(), cit));
+    auto gridPosition = [&]() {
+        std::lock_guard g{pc.m};
+        if (!pc.valid) {
+            computePrecalculated();
+        }
+        // Binary Search:
+        double zoom = this->view->getZoom();
+        auto verticalPixels = PixelCounter::makeVertical(this->pc, zoom);
+        auto rit = std::lower_bound(verticalPixels.begin(), verticalPixels.end(), y);
+        auto const foundRow = size_t(std::distance(verticalPixels.begin(), rit));
 
-    auto optionalPage = this->mapper.at({foundCol, foundRow});
+        auto horizontalPixels = PixelCounter::makeHorizontal(this->pc, zoom);
+        auto cit = std::lower_bound(horizontalPixels.begin(), horizontalPixels.end(), x);
+        auto const foundCol = size_t(std::distance(horizontalPixels.begin(), cit));
+
+        return GridPosition{foundCol, foundRow};
+    }();
+    auto optionalPage = this->mapper.at(gridPosition);
 
     if (optionalPage && this->view->viewPages[*optionalPage]->containsPoint(x, y, false)) {
         return this->view->viewPages[*optionalPage].get();
@@ -416,22 +465,73 @@ auto Layout::getPageViewAt(int x, int y) -> XojPageView* {
     return nullptr;
 }
 
-auto Layout::getPageIndexAtGridMap(size_t row, size_t col) -> std::optional<size_t> {
-    return this->mapper.at({col, row});  // watch out.. x,y --> c,r
+auto Layout::getPageWithRelativePosition(size_t referencePageNumber, int columnOffset, int rowOffset) const
+        -> std::optional<size_t> {
+    auto pos = this->mapper.at(referencePageNumber);
+    return this->mapper.at(
+            {as_unsigned(as_signed(pos.col) + columnOffset), as_unsigned(as_signed(pos.row) + rowOffset)});
 }
 
-auto Layout::getMinimalHeight() const -> int {
+auto Layout::getTotalPixelHeight() const -> int {
     std::lock_guard g{pc.m};
     if (!pc.valid) {
-        recalculate_int();
+        computePrecalculated();
     }
-    return strict_cast<int>(this->pc.minHeight);
+    auto rowCount = mapper.getRows();
+    return pc.paddingTop + pc.paddingBottom + strict_cast<int>(rowCount - 1) * XOURNAL_PADDING_BETWEEN +
+           ceil_cast<int>(pc.stretchableVerticalPixelsAfterRow.back() * view->getZoom());
 }
 
-auto Layout::getMinimalWidth() const -> int {
+auto Layout::getTotalPixelWidth() const -> int {
     std::lock_guard g{pc.m};
     if (!pc.valid) {
-        recalculate_int();
+        computePrecalculated();
     }
-    return strict_cast<int>(this->pc.minWidth);
+    auto colCount = mapper.getColumns();
+    return pc.paddingLeft + pc.paddingRight + strict_cast<int>(colCount - 1) * XOURNAL_PADDING_BETWEEN +
+           ceil_cast<int>(pc.stretchableHorizontalPixelsAfterColumn.back() * view->getZoom());
+}
+
+auto Layout::getPixelCoordinatesOfEntry(xoj::util::Point<int> gridCoords) const -> xoj::util::Point<int> {
+    std::lock_guard g{pc.m};
+    if (!pc.valid) {
+        computePrecalculated();
+    }
+    return getPixelCoordinatesOfEntryUnsafe(gridCoords);
+}
+
+auto Layout::getPixelCoordinatesOfEntry(size_t n) const -> xoj::util::Point<int> {
+    std::lock_guard g{pc.m};
+    if (!pc.valid) {
+        computePrecalculated();
+    }
+    return getPixelCoordinatesOfEntryUnsafe(n);
+}
+
+static xoj::util::Point<int> getPixelCoords(const Layout::PreCalculated& pc, const GridPosition& pos, XojPageView& pv) {
+    double zoom = pv.getZoom();
+    return {floor_cast<int>(((pos.col == 0 ? 0. : pc.stretchableHorizontalPixelsAfterColumn[pos.col - 1]) +
+                             .5 * (pc.widthCols[pos.col] - pv.getWidth())) *
+                            zoom) +
+                    strict_cast<int>(pos.col) * XOURNAL_PADDING_BETWEEN + pc.paddingLeft,
+            floor_cast<int>(((pos.row == 0 ? 0. : pc.stretchableVerticalPixelsAfterRow[pos.row - 1]) +
+                             .5 * (pc.heightRows[pos.row] - pv.getHeight())) *
+                            zoom) +
+                    strict_cast<int>(pos.row) * XOURNAL_PADDING_BETWEEN + pc.paddingTop};
+}
+
+auto Layout::getPixelCoordinatesOfEntryUnsafe(xoj::util::Point<int> gridCoords) const -> xoj::util::Point<int> {
+    GridPosition pos{size_t(gridCoords.x), size_t(gridCoords.y)};
+
+    auto optionalPage = this->mapper.at(pos);
+
+    if (optionalPage) {
+        return getPixelCoords(this->pc, pos, *this->view->viewPages[*optionalPage]);
+    } else {
+        return {0, 0};
+    }
+}
+
+auto Layout::getPixelCoordinatesOfEntryUnsafe(size_t n) const -> xoj::util::Point<int> {
+    return getPixelCoords(this->pc, this->mapper.at(n), *this->view->viewPages[n]);
 }

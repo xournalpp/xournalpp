@@ -150,17 +150,15 @@ void RenderJob::repaintPage() const { repaintPageArea(0, 0, view->getWidth(), vi
 
 void RenderJob::repaintPageArea(double x1, double y1, double x2, double y2) const {
     double zoom = view->xournal->getZoom();
-    int x = view->getX();
-    int y = view->getY();
-    repaintWidgetArea(view->xournal->getWidget(), x + floor_cast<int>(zoom * x1), y + floor_cast<int>(zoom * y1),
-                      x + ceil_cast<int>(zoom * x2), y + ceil_cast<int>(zoom * y2));
+    auto p = this->view->getPixelPosition();
+    repaintWidgetArea(view->xournal->getWidget(), p.x + floor_cast<int>(zoom * x1), p.y + floor_cast<int>(zoom * y1),
+                      p.x + ceil_cast<int>(zoom * x2), p.y + ceil_cast<int>(zoom * y2));
 }
 
 void RenderJob::repaintTile(const xoj::util::Rectangle<int>& area) const {
-    int x = view->getX();
-    int y = view->getY();
-    repaintWidgetArea(view->xournal->getWidget(), x + area.x, y + area.y, x + area.x + area.width,
-                      y + area.y + area.height);
+    auto p = this->view->getPixelPosition();
+    repaintWidgetArea(view->xournal->getWidget(), p.x + area.x, p.y + area.y, p.x + area.x + area.width,
+                      p.y + area.y + area.height);
 }
 
 
