@@ -300,8 +300,8 @@ void GeometryToolInputHandler::rotateAndZoomMotion(InputEvent const& event) {
 
 auto GeometryToolInputHandler::getCoords(InputEvent const& event) -> xoj::util::Point<double> {
     const double zoom = xournal->getZoom();
-    const auto view = controller->getView();
-    return (event.relative - xoj::util::Point<double>(view->getX(), view->getY())) / zoom;
+    auto viewPos = controller->getView()->getPixelPosition();
+    return (event.relative - xoj::util::Point<double>(viewPos.x, viewPos.y)) / zoom;
 }
 
 void GeometryToolInputHandler::blockDevice(InputContext::DeviceType deviceType) { isBlocked[deviceType] = true; }

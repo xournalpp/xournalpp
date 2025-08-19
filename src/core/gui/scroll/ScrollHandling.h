@@ -27,8 +27,6 @@ public:
 
     void init(GtkWidget* xournal, Layout* layout);
 
-    void setLayoutSize(int width, int height);
-
 private:
 protected:
     GtkAdjustment* adjHorizontal = nullptr;

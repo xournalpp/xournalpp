@@ -145,8 +145,9 @@ void LatexController::findSelectedTexElement() {
 
         if (layout->getPageViewAt(round_cast<int>(centerX), round_cast<int>(centerY)) == this->view) {
             // Pick the center of the visible area (converting from screen to page coordinates)
-            this->posx = (centerX - this->view->getX()) / zoom;
-            this->posy = (centerY - this->view->getY()) / zoom;
+            auto p = this->view->getPixelPosition();
+            this->posx = (centerX - p.x) / zoom;
+            this->posy = (centerY - p.y) / zoom;
         } else {
             // No better location, so just center it on the page (possibly out of viewport)
             this->posx = this->page->getWidth() / 2;
