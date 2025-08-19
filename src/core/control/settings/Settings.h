@@ -21,7 +21,6 @@
 #include <vector>    // for vector
 
 #include <gdk/gdk.h>      // for GdkInputSource, GdkD...
-#include <glib.h>         // for gchar, gboolean, gint
 #include <libxml/tree.h>  // for xmlNodePtr, xmlDocPtr
 
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
@@ -53,7 +52,6 @@ public:
     SAttribute(const SAttribute& attrib);
     virtual ~SAttribute();
 
-public:
     std::string sValue;
     int iValue{};
     double dValue{};
@@ -79,10 +77,10 @@ public:
 
     SElement& child(const std::string& name);
 
-    void setIntHex(const std::string& name, const int value);
-    void setInt(const std::string& name, const int value);
-    void setDouble(const std::string& name, const double value);
-    void setBool(const std::string& name, const bool value);
+    void setIntHex(const std::string& name, int value);
+    void setInt(const std::string& name, int value);
+    void setDouble(const std::string& name, double value);
+    void setBool(const std::string& name, bool value);
     void setString(const std::string& name, const std::string& value);
 
     [[maybe_unused]] void setComment(const std::string& name, const std::string& comment);
@@ -106,20 +104,18 @@ public:
     void operator=(const Settings& settings) = delete;
     virtual ~Settings();
 
-public:
     bool load();
     void parseData(xmlNodePtr cur, SElement& elem);
 
     void save();
 
 private:
-    void loadDefault();
     void parseItem(xmlDocPtr doc, xmlNodePtr cur);
 
-    static xmlNodePtr savePropertyDouble(const gchar* key, double value, xmlNodePtr parent);
-    static xmlNodePtr saveProperty(const gchar* key, int value, xmlNodePtr parent);
-    static xmlNodePtr savePropertyUnsigned(const gchar* key, unsigned int value, xmlNodePtr parent);
-    static xmlNodePtr saveProperty(const gchar* key, const gchar* value, xmlNodePtr parent);
+    static xmlNodePtr savePropertyDouble(const char* key, double value, xmlNodePtr parent);
+    static xmlNodePtr saveProperty(const char* key, int value, xmlNodePtr parent);
+    static xmlNodePtr savePropertyUnsigned(const char* key, unsigned int value, xmlNodePtr parent);
+    static xmlNodePtr saveProperty(const char* key, const char* value, xmlNodePtr parent);
 
     void saveData(xmlNodePtr root, const std::string& name, SElement& elem);
 
@@ -135,7 +131,7 @@ public:
     ViewModeId getActiveViewMode() const;
 
     bool isPressureSensitivity() const;
-    void setPressureSensitivity(gboolean presureSensitivity);
+    void setPressureSensitivity(bool pressureSensitivity);
 
     /**
      * Input device pressure options
@@ -618,7 +614,6 @@ private:
      */
     fs::path filepath;
 
-private:
     /**
      * The settings tree
      */
