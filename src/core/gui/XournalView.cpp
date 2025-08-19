@@ -25,6 +25,7 @@
 #include "gui/inputdevices/GeometryToolInputHandler.h"  // for GeometryToolInputHandler
 #include "gui/inputdevices/HandRecognition.h"    // for HandRecognition
 #include "gui/inputdevices/InputContext.h"       // for InputContext
+#include "gui/scroll/ScrollHandling.h"           // for ScrollHandling
 #include "gui/toolbarMenubar/ColorToolItem.h"    // for ColorToolItem
 #include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
 #include "gui/widgets/XournalWidget.h"           // for gtk_xournal_get_layout
@@ -74,7 +75,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
     registerListener(control);
 
     InputContext* inputContext = new InputContext(this, scrollHandling);
-    this->widget = gtk_xournal_new(this, inputContext);
+    this->widget = gtk_xournal_new(this, inputContext, scrollHandling->getVertical(), scrollHandling->getHorizontal());
     g_object_ref_sink(this->widget);  // take ownership without increasing the ref count
 
     gtk_container_add(GTK_CONTAINER(parent), this->widget);
@@ -542,8 +543,6 @@ void XournalView::zoomChanged() {
     ZoomControl* zoom = control->getZoomControl();
     this->getLayout()->recomputeCenteringPadding();
 
-    gtk_widget_queue_resize(getWidget());
-
     if (zoom->isZoomPresentationMode() || zoom->isZoomFitMode()) {
         scrollTo(this->getCurrentPage());
     } else if (zoom->isZoomSequenceActive()) {
@@ -560,6 +559,8 @@ void XournalView::zoomChanged() {
     control->getWindow()->getPdfToolbox()->hide();
 
     this->control->getScheduler()->blockRerenderZoom();
+
+    gtk_widget_queue_draw(getWidget());
 }
 
 void XournalView::pageSizeChanged(size_t page) {

@@ -99,5 +99,6 @@ struct InputEvents {
     static InputDeviceClass translateDeviceType(GdkDevice* device, Settings* settings);
     static InputDeviceClass translateDeviceType(const std::string& name, GdkInputSource source, Settings* settings);
 
-    static InputEvent translateEvent(GdkEvent* sourceEvent, Settings* settings);
+    static InputEvent translateEvent(GdkEvent* sourceEvent, Settings* settings,
+                                     const xoj::util::Point<double>& relativeOffset);
 };
