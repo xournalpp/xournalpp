@@ -76,8 +76,9 @@ auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, 
     xoj_assert(page != nullptr);
 
     PositionInputData pos = {};
-    pos.x = event.relative.x - static_cast<double>(page->getX());
-    pos.y = event.relative.y - static_cast<double>(page->getY());
+    auto pagePos = page->getPixelPosition();
+    pos.x = event.relative.x - pagePos.x;
+    pos.y = event.relative.y - pagePos.y;
     pos.pressure = Point::NO_PRESSURE;
 
     if (this->inputContext->getSettings()->isPressureSensitivity()) {
