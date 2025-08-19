@@ -31,7 +31,7 @@
  *      gtk_xournal_parent_class (pointer to GtkWidgetClass instance)
  *      GType gtk_xournal_get_type();
  */
-G_DEFINE_TYPE(GtkXournal, gtk_xournal, GTK_TYPE_WIDGET)
+G_DEFINE_TYPE_WITH_CODE(GtkXournal, gtk_xournal, GTK_TYPE_WIDGET, G_IMPLEMENT_INTERFACE(GTK_TYPE_SCROLLABLE, NULL))
 
 static void gtk_xournal_get_preferred_width(GtkWidget* widget, gint* minimal_width, gint* natural_width);
 static void gtk_xournal_get_preferred_height(GtkWidget* widget, gint* minimal_height, gint* natural_height);
@@ -40,7 +40,11 @@ static void gtk_xournal_realize(GtkWidget* widget);
 static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean;
 static void gtk_xournal_dispose(GObject* object);
 
-auto gtk_xournal_new(XournalView* view, InputContext* inputContext) -> GtkWidget* {
+static void gtk_xournal_set_property(GObject* object, guint prop_id, const GValue* value, GParamSpec* pspec);
+static void gtk_xournal_get_property(GObject* object, guint prop_id, GValue* value, GParamSpec* pspec);
+
+auto gtk_xournal_new(XournalView* view, InputContext* inputContext, GtkAdjustment* vadj, GtkAdjustment* hadj)
+        -> GtkWidget* {
     GtkXournal* xoj = GTK_XOURNAL(g_object_new(gtk_xournal_get_type(), nullptr));
     xoj->view = view;
     xoj->scrollHandling = inputContext->getScrollHandling();
@@ -48,10 +52,19 @@ auto gtk_xournal_new(XournalView* view, InputContext* inputContext) -> GtkWidget
     xoj->selection = nullptr;
     xoj->input = inputContext;
 
+    // Scrollable interface
+    xoj->vadjustment = GTK_ADJUSTMENT(g_object_ref(vadj));
+    xoj->hadjustment = GTK_ADJUSTMENT(g_object_ref(hadj));
+    xoj->vscroll_policy = GTK_SCROLL_NATURAL;
+    xoj->hscroll_policy = GTK_SCROLL_NATURAL;
+
+
     xoj->input->connect(GTK_WIDGET(xoj));
 
     return GTK_WIDGET(xoj);
 }
+
+enum { PROP_0, PROP_HADJUSTMENT, PROP_VADJUSTMENT, PROP_HSCROLL_POLICY, PROP_VSCROLL_POLICY };
 
 static void gtk_xournal_class_init(GtkXournalClass* cptr) {
     auto* widget_class = reinterpret_cast<GtkWidgetClass*>(cptr);
@@ -70,15 +83,21 @@ static void gtk_xournal_class_init(GtkXournalClass* cptr) {
         auto width = gtk_widget_get_allocated_width(w);
         auto height = gtk_widget_get_allocated_height(w);
 
-        auto widthp = gtk_widget_get_allocated_width(gtk_widget_get_parent(w));
-        auto heightp = gtk_widget_get_allocated_height(gtk_widget_get_parent(w));
-        printf("   * queue_draw_region: %d x %d + (%d ; %d) out of %d x %d   parent: %d x %d\n", r.width, r.height, r.x,
-               r.y, width, height, widthp, heightp);
+        printf("   * queue_draw_region: %d x %d + (%d ; %d) out of %d x %d\n", r.width, r.height, r.x, r.y, width,
+               height);
         GTK_WIDGET_CLASS(gtk_xournal_parent_class)->queue_draw_region(w, reg);
     };
 #endif
 
     G_OBJECT_CLASS(cptr)->dispose = gtk_xournal_dispose;
+
+    // Scrollable interface
+    G_OBJECT_CLASS(cptr)->set_property = gtk_xournal_set_property;
+    G_OBJECT_CLASS(cptr)->get_property = gtk_xournal_get_property;
+    g_object_class_override_property(G_OBJECT_CLASS(cptr), PROP_HADJUSTMENT, "hadjustment");
+    g_object_class_override_property(G_OBJECT_CLASS(cptr), PROP_VADJUSTMENT, "vadjustment");
+    g_object_class_override_property(G_OBJECT_CLASS(cptr), PROP_HSCROLL_POLICY, "hscroll-policy");
+    g_object_class_override_property(G_OBJECT_CLASS(cptr), PROP_VSCROLL_POLICY, "vscroll-policy");
 }
 
 auto gtk_xournal_get_visible_area(GtkWidget* widget, const XojPageView* p) -> xoj::util::Rectangle<double>* {
@@ -171,6 +190,11 @@ static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocati
                                allocation->height);
     }
 
+    GtkXournal* xournal = GTK_XOURNAL(widget);
+
+    gtk_adjustment_set_page_size(xournal->hadjustment, allocation->width);
+    gtk_adjustment_set_page_size(xournal->vadjustment, allocation->height);
+
     gtk_xournal_get_layout(widget)->recomputeCenteringPadding(allocation->width, allocation->height);
 }
 
@@ -198,8 +222,9 @@ static void gtk_xournal_realize(GtkWidget* widget) {
 
     gint attributes_mask = GDK_WA_X | GDK_WA_Y;
 
-    gtk_widget_set_window(widget, gdk_window_new(gtk_widget_get_parent_window(widget), &attributes, attributes_mask));
-    gdk_window_set_user_data(gtk_widget_get_window(widget), widget);
+    GdkWindow* win = gdk_window_new(gtk_widget_get_parent_window(widget), &attributes, attributes_mask);
+    gtk_widget_set_window(widget, win);
+    gtk_widget_register_window(widget, win);
 }
 
 static void gtk_xournal_draw_shadow(GtkXournal* xournal, cairo_t* cr, int left, int top, int width, int height,
@@ -226,18 +251,28 @@ void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2, int y2)
     g_return_if_fail(widget != nullptr);
     g_return_if_fail(GTK_IS_XOURNAL(widget));
 
-    if (x2 < 0 || y2 < 0) {
-        return;  // outside visible area
+    Range rg(x1, y1, x2, y2);
+    if (!rg.isValid()) {
+        return;
     }
 
-    GtkAllocation alloc = {0};
-    gtk_widget_get_allocation(widget, &alloc);
+    Range visible(xoj::util::Rectangle<double>(gtk_adjustment_get_value(GTK_XOURNAL(widget)->hadjustment),
+                                               gtk_adjustment_get_value(GTK_XOURNAL(widget)->vadjustment),
+                                               gtk_adjustment_get_page_size(GTK_XOURNAL(widget)->hadjustment),
+                                               gtk_adjustment_get_page_size(GTK_XOURNAL(widget)->vadjustment)));
 
-    if (x1 > alloc.width || y1 > alloc.height) {
-        return;  // outside visible area
+    rg = visible.intersect(rg);
+    if (rg.empty()) {
+        return;
     }
 
-    gtk_widget_queue_draw_area(widget, x1, y1, x2 - x1, y2 - y1);
+    rg.translate(-visible.minX, -visible.minY);
+    int minX = floor_cast<int>(rg.minX);
+    int minY = floor_cast<int>(rg.minY);
+    int width = ceil_cast<int>(rg.maxX) - minX;
+    int height = ceil_cast<int>(rg.maxY) - minY;
+
+    gtk_widget_queue_draw_area(widget, minX, minY, width, height);
 }
 
 static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
@@ -257,6 +292,9 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
 #endif
 
     GtkXournal* xournal = GTK_XOURNAL(widget);
+
+    cairo_translate(cr, -gtk_adjustment_get_value(xournal->hadjustment),
+                    -gtk_adjustment_get_value(xournal->vadjustment));
 
     Range clip;
     cairo_clip_extents(cr, &clip.minX, &clip.minY, &clip.maxX, &clip.maxY);
@@ -316,6 +354,11 @@ static void gtk_xournal_dispose(GObject* object) {
     g_return_if_fail(GTK_IS_XOURNAL(object));
     GtkXournal* xournal = GTK_XOURNAL(object);
 
+    g_object_unref(xournal->vadjustment);
+    xournal->vadjustment = nullptr;
+    g_object_unref(xournal->hadjustment);
+    xournal->hadjustment = nullptr;
+
     delete xournal->selection;
     xournal->selection = nullptr;
 
@@ -326,4 +369,55 @@ static void gtk_xournal_dispose(GObject* object) {
     xournal->input = nullptr;
 
     G_OBJECT_CLASS(gtk_xournal_parent_class)->dispose(object);
+}
+
+static void gtk_xournal_set_property(GObject* object, guint prop_id, const GValue* value, GParamSpec* pspec) {
+    GtkXournal* xournal = GTK_XOURNAL(object);
+
+    switch (prop_id) {
+        case PROP_HADJUSTMENT:
+            xournal->hadjustment = GTK_ADJUSTMENT(g_value_get_object(value));
+            break;
+        case PROP_VADJUSTMENT:
+            xournal->vadjustment = GTK_ADJUSTMENT(g_value_get_object(value));
+            break;
+        case PROP_HSCROLL_POLICY:
+            if (xournal->hscroll_policy != g_value_get_enum(value)) {
+                xournal->hscroll_policy = static_cast<GtkScrollablePolicy>(g_value_get_enum(value));
+                gtk_widget_queue_resize(GTK_WIDGET(xournal));
+                g_object_notify_by_pspec(object, pspec);
+            }
+            break;
+        case PROP_VSCROLL_POLICY:
+            if (xournal->vscroll_policy != g_value_get_enum(value)) {
+                xournal->vscroll_policy = static_cast<GtkScrollablePolicy>(g_value_get_enum(value));
+                gtk_widget_queue_resize(GTK_WIDGET(xournal));
+                g_object_notify_by_pspec(object, pspec);
+            }
+            break;
+        default:
+            G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+            break;
+    }
+}
+static void gtk_xournal_get_property(GObject* object, guint prop_id, GValue* value, GParamSpec* pspec) {
+    GtkXournal* xournal = GTK_XOURNAL(object);
+
+    switch (prop_id) {
+        case PROP_HADJUSTMENT:
+            g_value_set_object(value, xournal->hadjustment);
+            break;
+        case PROP_VADJUSTMENT:
+            g_value_set_object(value, xournal->vadjustment);
+            break;
+        case PROP_HSCROLL_POLICY:
+            g_value_set_enum(value, xournal->hscroll_policy);
+            break;
+        case PROP_VSCROLL_POLICY:
+            g_value_set_enum(value, xournal->vscroll_policy);
+            break;
+        default:
+            G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+            break;
+    }
 }
