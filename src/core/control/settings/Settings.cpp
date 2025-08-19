@@ -1,11 +1,12 @@
 #include "Settings.h"
 
-#include <algorithm>    // for max
-#include <cstdint>      // for uint32_t, int32_t
-#include <cstdio>       // for sscanf, size_t
-#include <cstdlib>      // for atoi
-#include <cstring>      // for strcmp
-#include <exception>    // for exception
+#include <algorithm>  // for max
+#include <cstdint>    // for uint32_t, int32_t
+#include <cstdio>     // for sscanf, size_t
+#include <cstdlib>    // for atoi
+#include <cstring>    // for strcmp
+#include <exception>  // for exception
+#include <list>
 #include <type_traits>  // for add_const<>::type
 #include <utility>      // for pair, move, make_...
 
@@ -20,9 +21,9 @@
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "model/FormatDefinitions.h"                // for FormatUnits, XOJ_...
 #include "util/Color.h"
-#include "util/PathUtil.h"  // for getConfigFile
-#include "util/Util.h"      // for PRECISION_FORMAT_...
-#include "util/i18n.h"      // for _
+#include "util/PathUtil.h"    // for getConfigFile
+#include "util/Util.h"        // for PRECISION_FORMAT_...
+#include "util/i18n.h"        // for _
 #include "util/safe_casts.h"  // for as_unsigned
 #include "util/utf8_view.h"   // for utf8_view
 
@@ -30,7 +31,7 @@
 #include "config-dev.h"    // for PALETTE_FILE
 #include "config-dev.h"
 #include "filesystem.h"  // for path, exists
-
+#include "xmlutils.h"    // for parse, cast, getXml
 
 using std::string;
 
@@ -48,11 +49,9 @@ constexpr auto DEFAULT_TOOLBAR = "Portrait";
     com = xmlNewComment((const xmlChar*)(var)); \
     xmlAddPrevSibling(xmlNode, com);
 
-Settings::Settings(fs::path filepath): filepath(std::move(filepath)) { loadDefault(); }
-
 Settings::~Settings() = default;
 
-void Settings::loadDefault() {
+Settings::Settings(fs::path filepath): filepath(std::move(filepath)) {
     this->pressureSensitivity = true;
     this->minimumPressure = 0.05;
     this->pressureMultiplier = 1.0;
@@ -195,7 +194,7 @@ void Settings::loadDefault() {
     this->selectionMarkerColor = Colors::xopp_cornflowerblue;
     this->activeSelectionColor = Colors::lawngreen;
 
-    this->recolorParameters = {false, false, Recolor(ColorU8{198, 208, 245}, ColorU8{48, 52, 70})};
+    this->recolorParameters = {false, false, Recolor(Color{198, 208, 245}, Color{48, 52, 70})};
 
     this->backgroundColor = Colors::xopp_gainsboro02;
 
@@ -277,76 +276,52 @@ auto Settings::getViewModes() const -> const std::vector<ViewMode>& { return thi
 
 auto Settings::getActiveViewMode() const -> ViewModeId { return this->activeViewMode; }
 
-/**
- * tempg_ascii_strtod
- * 	Transition to using g_ascii_strtod to minimize disruption. May, 2019.
- *  Delete this and replace calls to this function with calls to g_ascii_strtod() in 2020.
- * 	See: https://developer.gnome.org/glib/stable/glib-String-Utility-Functions.html#g-strtod
- */
-auto tempg_ascii_strtod(const gchar* txt, gchar** endptr) -> double {
-    return g_strtod(txt,
-                    endptr);  //  makes best guess between locale formatted and C formatted numbers. See link above.
-}
-
-
 void Settings::parseData(xmlNodePtr cur, SElement& elem) {
     for (xmlNodePtr x = cur->children; x != nullptr; x = x->next) {
-        if (!xmlStrcmp(x->name, reinterpret_cast<const xmlChar*>("data"))) {
-            xmlChar* name = xmlGetProp(x, reinterpret_cast<const xmlChar*>("name"));
-            parseData(x, elem.child(reinterpret_cast<const char*>(name)));
-            xmlFree(name);
-        } else if (!xmlStrcmp(x->name, reinterpret_cast<const xmlChar*>("attribute"))) {
-            xmlChar* name = xmlGetProp(x, reinterpret_cast<const xmlChar*>("name"));
-            xmlChar* value = xmlGetProp(x, reinterpret_cast<const xmlChar*>("value"));
-            xmlChar* type = xmlGetProp(x, reinterpret_cast<const xmlChar*>("type"));
+        const string type = reinterpret_cast<const char*>(x->name);
+        const auto name = xmlGet<string>(x, "name");
 
-            string sType = reinterpret_cast<const char*>(type);
+        if (type == "data") {
+            parseData(x, elem.child(name));
+        } else if (type == "attribute") {
+            const auto value = xmlGet<string>(x, "value");
+            const auto sType = xmlGet<string>(x, "type");
 
             if (sType == "int") {
-                int i = atoi(reinterpret_cast<const char*>(value));
-                elem.setInt(reinterpret_cast<const char*>(name), i);
+                elem.setInt(name, std::stoi(value));
             } else if (sType == "double") {
-                double d = tempg_ascii_strtod(reinterpret_cast<const char*>(value),
-                                              nullptr);  // g_ascii_strtod ignores locale setting.
-                elem.setDouble(reinterpret_cast<const char*>(name), d);
+                elem.setDouble(name, g_ascii_strtod(value.c_str(), nullptr));
             } else if (sType == "hex") {
-                int i = 0;
-                if (sscanf(reinterpret_cast<const char*>(value), "%x", &i)) {
-                    elem.setIntHex(reinterpret_cast<const char*>(name), i);
+                int i = std::stoi(value, 0, 16);
+                if (i) {
+                    elem.setIntHex(name, i);
                 } else {
-                    g_warning("Settings::Unknown hex value: %s:%s\n", name, value);
+                    g_warning("Settings::Unknown hex value: %s:%s\n", name.c_str(), value.c_str());
                 }
             } else if (sType == "string") {
-                elem.setString(reinterpret_cast<const char*>(name), reinterpret_cast<const char*>(value));
+                elem.setString(name, value);
             } else if (sType == "boolean") {
-                elem.setBool(reinterpret_cast<const char*>(name),
-                             strcmp(reinterpret_cast<const char*>(value), "true") == 0);
+                elem.setBool(name, value == "true");
             } else {
                 g_warning("Settings::Unknown datatype: %s\n", sType.c_str());
             }
-
-            xmlFree(name);
-            xmlFree(type);
-            xmlFree(value);
         } else {
             g_warning("Settings::parseData: Unknown XML node: %s\n", x->name);
-            continue;
         }
     }
 }
 
 void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     // Parse data map
-    if (!xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("data"))) {
-        xmlChar* name = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("name"));
-        if (name == nullptr) {
+    if (cur->name == "data"_xml) {
+        const auto name = xmlGet<string>(cur, "name");
+        if (name.empty()) {
             g_warning("Settings::%s:No name property!\n", cur->name);
             return;
         }
 
-        parseData(cur, data[reinterpret_cast<const char*>(name)]);
+        parseData(cur, data[name]);
 
-        xmlFree(name);
         return;
     }
 
@@ -354,384 +329,336 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         return;
     }
 
-    if (xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("property"))) {
+    if (cur->name != "property"_xml) {
         g_warning("Settings::Unknown XML node: %s\n", cur->name);
         return;
     }
 
-    xmlChar* name = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("name"));
-    if (name == nullptr) {
+    const auto name = xmlGet<string>(cur, "name");
+    if (name.empty()) {
         g_warning("Settings::%s:No name property!\n", cur->name);
         return;
     }
 
-    if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("font")) == 0) {
-        xmlFree(name);
-        xmlChar* font = nullptr;
-        xmlChar* size = nullptr;
-
-        font = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("font"));
-        if (font) {
-            this->font.setName(reinterpret_cast<const char*>(font));
-            xmlFree(font);
+    if (name == "font") {
+        const auto font = xmlGet<string>(cur, "font");
+        if (font.empty()) {
+            this->font.setName(font);
         }
 
-        size = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("size"));
-        if (size) {
-            double dSize = DEFAULT_FONT_SIZE;
-            if (sscanf(reinterpret_cast<const char*>(size), "%lf", &dSize) == 1) {
-                this->font.setSize(dSize);
-            }
-            xmlFree(size);
-        }
+        const auto size = xmlGet<double>(cur, "size", DEFAULT_FONT_SIZE);
+
+        this->font.setSize(size);
         return;
     }
 
-    xmlChar* value = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("value"));
-    if (value == nullptr) {
-        xmlFree(name);
+    const auto value = xmlGet<string>(cur, "value");
+    if (value.empty()) {
         g_warning("Settings::No value property!\n");
         return;
     }
 
     // TODO(fabian): remove this typo fix in 2-3 release cycles
-    if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("presureSensitivity")) == 0) {
-        this->pressureSensitivity = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    if (name == "presureSensitivity") {
+        this->pressureSensitivity = parse<bool>(value);
     }
-    if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pressureSensitivity")) == 0) {
-        this->pressureSensitivity = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("minimumPressure")) == 0) {
+    if (name == "pressureSensitivity") {
+        this->pressureSensitivity = parse<bool>(value);
+    } else if (name == "minimumPressure") {
         // std::max is for backwards compatibility for users who might have set this value too small
-        this->minimumPressure = std::max(0.01, g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pressureMultiplier")) == 0) {
-        this->pressureMultiplier = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomGesturesEnabled")) == 0) {
-        this->zoomGesturesEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectedToolbar")) == 0) {
-        this->selectedToolbar = reinterpret_cast<const char*>(value);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastSavePath")) == 0) {
-        this->lastSavePath = fs::path(xoj::util::utf8(value));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastOpenPath")) == 0) {
-        this->lastOpenPath = fs::path(xoj::util::utf8(value));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastImagePath")) == 0) {
-        this->lastImagePath = fs::path(xoj::util::utf8(value));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("edgePanSpeed")) == 0) {
-        this->edgePanSpeed = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("edgePanMaxMult")) == 0) {
-        this->edgePanMaxMult = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomStep")) == 0) {
-        this->zoomStep = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomStepScroll")) == 0) {
-        this->zoomStepScroll = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("displayDpi")) == 0) {
-        this->displayDpi = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("mainWndWidth")) == 0) {
-        this->mainWndWidth = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("mainWndHeight")) == 0) {
-        this->mainWndHeight = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("maximized")) == 0) {
-        this->maximized = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("showToolbar")) == 0) {
-        this->showToolbar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("filepathShownInTitlebar")) == 0) {
-        this->filepathShownInTitlebar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pageNumberShownInTitlebar")) == 0) {
-        this->pageNumberShownInTitlebar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("showSidebar")) == 0) {
-        this->showSidebar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sidebarNumberingStyle")) == 0) {
-        int num = std::stoi(reinterpret_cast<char*>(value));
+        this->minimumPressure = std::max(0.01, parse<double>(value));
+    } else if (name == "pressureMultiplier") {
+        this->pressureMultiplier = parse<double>(value);
+    } else if (name == "zoomGesturesEnabled") {
+        this->zoomGesturesEnabled = parse<bool>(value);
+    } else if (name == "selectedToolbar") {
+        this->selectedToolbar = value;
+    } else if (name == "lastSavePath") {
+        this->lastSavePath = fs::path(value);
+    } else if (name == "lastOpenPath") {
+        this->lastOpenPath = fs::path(value);
+    } else if (name == "lastImagePath") {
+        this->lastImagePath = fs::path(value);
+    } else if (name == "edgePanSpeed") {
+        this->edgePanSpeed = parse<double>(value);
+    } else if (name == "edgePanMaxMult") {
+        this->edgePanMaxMult = parse<double>(value);
+    } else if (name == "zoomStep") {
+        this->zoomStep = parse<double>(value);
+    } else if (name == "zoomStepScroll") {
+        this->zoomStepScroll = parse<double>(value);
+    } else if (name == "displayDpi") {
+        this->displayDpi = parse<int>(value);
+    } else if (name == "mainWndWidth") {
+        this->mainWndWidth = parse<int>(value);
+    } else if (name == "mainWndHeight") {
+        this->mainWndHeight = parse<int>(value);
+    } else if (name == "maximized") {
+        this->maximized = parse<bool>(value);
+    } else if (name == "showToolbar") {
+        this->showToolbar = parse<bool>(value);
+    } else if (name == "filepathShownInTitlebar") {
+        this->filepathShownInTitlebar = parse<bool>(value);
+    } else if (name == "pageNumberShownInTitlebar") {
+        this->pageNumberShownInTitlebar = parse<bool>(value);
+    } else if (name == "showSidebar") {
+        this->showSidebar = parse<bool>(value);
+    } else if (name == "sidebarNumberingStyle") {
+        auto num = parse<int>(value);
         if (num < static_cast<int>(SidebarNumberingStyle::MIN) || static_cast<int>(SidebarNumberingStyle::MAX) < num) {
             num = static_cast<int>(SidebarNumberingStyle::DEFAULT);
             g_warning("Settings::Invalid sidebarNumberingStyle value. Reset to default.");
         }
         this->sidebarNumberingStyle = static_cast<SidebarNumberingStyle>(num);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sidebarWidth")) == 0) {
-        this->sidebarWidth = std::max<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10), 50);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sidebarOnRight")) == 0) {
-        this->sidebarOnRight = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("scrollbarOnLeft")) == 0) {
-        this->scrollbarOnLeft = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("menubarVisible")) == 0) {
-        this->menubarVisible = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("numColumns")) == 0) {
-        this->numColumns = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("numRows")) == 0) {
-        this->numRows = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("viewFixedRows")) == 0) {
-        this->viewFixedRows = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("layoutVertical")) == 0) {
-        this->layoutVertical = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("layoutRightToLeft")) == 0) {
-        this->layoutRightToLeft = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("layoutBottomToTop")) == 0) {
-        this->layoutBottomToTop = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("showPairedPages")) == 0) {
-        this->showPairedPages = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("numPairsOffset")) == 0) {
-        this->numPairsOffset = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("presentationMode")) == 0) {
-        this->presentationMode = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autoloadMostRecent")) == 0) {
-        this->autoloadMostRecent = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autoloadPdfXoj")) == 0) {
-        this->autoloadPdfXoj = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stylusCursorType")) == 0) {
-        this->stylusCursorType = stylusCursorTypeFromString(reinterpret_cast<const char*>(value));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("eraserVisibility")) == 0) {
-        this->eraserVisibility = eraserVisibilityFromString(reinterpret_cast<const char*>(value));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("iconTheme")) == 0) {
-        this->iconTheme = iconThemeFromString(reinterpret_cast<const char*>(value));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("themeVariant")) == 0) {
-        this->themeVariant = themeVariantFromString(reinterpret_cast<const char*>(value));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("highlightPosition")) == 0) {
-        this->highlightPosition = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("cursorHighlightColor")) == 0) {
-        this->cursorHighlightColor = g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("cursorHighlightRadius")) == 0) {
-        this->cursorHighlightRadius = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("cursorHighlightBorderColor")) == 0) {
-        this->cursorHighlightBorderColor = g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("cursorHighlightBorderWidth")) == 0) {
-        this->cursorHighlightBorderWidth = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("useStockIcons")) == 0) {
-        this->useStockIcons = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultSaveName")) == 0) {
-        this->defaultSaveName = xoj::util::utf8(value).str();
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultPdfExportName")) == 0) {
-        this->defaultPdfExportName = xoj::util::utf8(value).str();
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginEnabled")) == 0) {
-        this->pluginEnabled = reinterpret_cast<const char*>(value);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginDisabled")) == 0) {
-        this->pluginDisabled = reinterpret_cast<const char*>(value);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pageTemplate")) == 0) {
-        this->pageTemplate = reinterpret_cast<const char*>(value);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sizeUnit")) == 0) {
-        this->sizeUnit = reinterpret_cast<const char*>(value);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioFolder")) == 0) {
-        this->audioFolder = fs::path(xoj::util::utf8(value));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveEnabled")) == 0) {
-        this->autosaveEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveTimeout")) == 0) {
-        this->autosaveTimeout = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultViewModeAttributes")) == 0) {
-        this->viewModes.at(PresetViewModeIds::VIEW_MODE_DEFAULT) =
-                settingsStringToViewMode(reinterpret_cast<const char*>(value));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("fullscreenViewModeAttributes")) == 0) {
-        this->viewModes.at(PresetViewModeIds::VIEW_MODE_FULLSCREEN) =
-                settingsStringToViewMode(reinterpret_cast<const char*>(value));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("presentationViewModeAttributes")) == 0) {
-        this->viewModes.at(PresetViewModeIds::VIEW_MODE_PRESENTATION) =
-                settingsStringToViewMode(reinterpret_cast<const char*>(value));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchZoomStartThreshold")) == 0) {
-        this->touchZoomStartThreshold = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pageRerenderThreshold")) == 0) {
-        this->pageRerenderThreshold = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pdfPageCacheSize")) == 0) {
-        this->pdfPageCacheSize = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("preloadPagesBefore")) == 0) {
-        this->preloadPagesBefore = g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("preloadPagesAfter")) == 0) {
-        this->preloadPagesAfter = g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("eagerPageCleanup")) == 0) {
-        this->eagerPageCleanup = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectionBorderColor")) == 0) {
-        this->selectionBorderColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectionMarkerColor")) == 0) {
-        this->selectionMarkerColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("activeSelectionColor")) == 0) {
-        this->activeSelectionColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
-
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("recolor.enabled")) == 0) {
-        this->recolorParameters.recolorizeMainView = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("recolor.sidebar")) == 0) {
-        this->recolorParameters.recolorizeSidebarMiniatures =
-                xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("recolor.light")) == 0) {
-        this->recolorParameters.recolor =
-                Recolor(ColorU8(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10)),
-                        this->recolorParameters.recolor.getDark());
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("recolor.dark")) == 0) {
-        this->recolorParameters.recolor =
-                Recolor(this->recolorParameters.recolor.getLight(),
-                        ColorU8(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10)));
-
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("backgroundColor")) == 0) {
-        this->backgroundColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpace")) == 0) {
-        this->addHorizontalSpace = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpaceAmount")) == 0) {
-        const int oldHorizontalAmount =
-                static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
+    } else if (name == "sidebarWidth") {
+        this->sidebarWidth = std::max<int>(parse<int>(value), 50);
+    } else if (name == "sidebarOnRight") {
+        this->sidebarOnRight = parse<bool>(value);
+    } else if (name == "scrollbarOnLeft") {
+        this->scrollbarOnLeft = parse<bool>(value);
+    } else if (name == "menubarVisible") {
+        this->menubarVisible = parse<bool>(value);
+    } else if (name == "numColumns") {
+        this->numColumns = parse<int>(value);
+    } else if (name == "numRows") {
+        this->numRows = parse<int>(value);
+    } else if (name == "viewFixedRows") {
+        this->viewFixedRows = parse<bool>(value);
+    } else if (name == "layoutVertical") {
+        this->layoutVertical = parse<bool>(value);
+    } else if (name == "layoutRightToLeft") {
+        this->layoutRightToLeft = parse<bool>(value);
+    } else if (name == "layoutBottomToTop") {
+        this->layoutBottomToTop = parse<bool>(value);
+    } else if (name == "showPairedPages") {
+        this->showPairedPages = parse<bool>(value);
+    } else if (name == "numPairsOffset") {
+        this->numPairsOffset = parse<int>(value);
+    } else if (name == "presentationMode") {
+        this->presentationMode = parse<bool>(value);
+    } else if (name == "autoloadMostRecent") {
+        this->autoloadMostRecent = parse<bool>(value);
+    } else if (name == "autoloadPdfXoj") {
+        this->autoloadPdfXoj = parse<bool>(value);
+    } else if (name == "stylusCursorType") {
+        this->stylusCursorType = stylusCursorTypeFromString(value);
+    } else if (name == "eraserVisibility") {
+        this->eraserVisibility = eraserVisibilityFromString(value);
+    } else if (name == "iconTheme") {
+        this->iconTheme = iconThemeFromString(value);
+    } else if (name == "themeVariant") {
+        this->themeVariant = themeVariantFromString(value);
+    } else if (name == "highlightPosition") {
+        this->highlightPosition = parse<bool>(value);
+    } else if (name == "cursorHighlightColor") {
+        this->cursorHighlightColor = parse<Color>(value);
+    } else if (name == "cursorHighlightRadius") {
+        this->cursorHighlightRadius = parse<double>(value);
+    } else if (name == "cursorHighlightBorderColor") {
+        this->cursorHighlightBorderColor = parse<unsigned int>(value);
+    } else if (name == "cursorHighlightBorderWidth") {
+        this->cursorHighlightBorderWidth = parse<double>(value);
+    } else if (name == "useStockIcons") {
+        this->useStockIcons = parse<bool>(value);
+    } else if (name == "defaultSaveName") {
+        this->defaultSaveName = value;
+    } else if (name == "defaultPdfExportName") {
+        this->defaultPdfExportName = value;
+    } else if (name == "pluginEnabled") {
+        this->pluginEnabled = value;
+    } else if (name == "pluginDisabled") {
+        this->pluginDisabled = value;
+    } else if (name == "pageTemplate") {
+        this->pageTemplate = value;
+    } else if (name == "sizeUnit") {
+        this->sizeUnit = value;
+    } else if (name == "audioFolder") {
+        this->audioFolder = fs::path(value);
+    } else if (name == "autosaveEnabled") {
+        this->autosaveEnabled = parse<bool>(value);
+    } else if (name == "autosaveTimeout") {
+        this->autosaveTimeout = parse<int>(value);
+    } else if (name == "defaultViewModeAttributes") {
+        this->viewModes.at(VIEW_MODE_DEFAULT) = settingsStringToViewMode(value);
+    } else if (name == "fullscreenViewModeAttributes") {
+        this->viewModes.at(VIEW_MODE_FULLSCREEN) = settingsStringToViewMode(value);
+    } else if (name == "presentationViewModeAttributes") {
+        this->viewModes.at(VIEW_MODE_PRESENTATION) = settingsStringToViewMode(value);
+    } else if (name == "touchZoomStartThreshold") {
+        this->touchZoomStartThreshold = parse<double>(value);
+    } else if (name == "pageRerenderThreshold") {
+        this->pageRerenderThreshold = parse<double>(value);
+    } else if (name == "pdfPageCacheSize") {
+        this->pdfPageCacheSize = parse<int>(value);
+    } else if (name == "preloadPagesBefore") {
+        this->preloadPagesBefore = parse<unsigned int>(value);
+    } else if (name == "preloadPagesAfter") {
+        this->preloadPagesAfter = parse<unsigned int>(value);
+    } else if (name == "eagerPageCleanup") {
+        this->eagerPageCleanup = parse<bool>(value);
+    } else if (name == "selectionBorderColor") {
+        this->selectionBorderColor = parse<Color>(value);
+    } else if (name == "selectionMarkerColor") {
+        this->selectionMarkerColor = parse<Color>(value);
+    } else if (name == "activeSelectionColor") {
+        this->activeSelectionColor = parse<Color>(value);
+    } else if (name == "recolor.enabled") {
+        this->recolorParameters.recolorizeMainView = parse<bool>(value);
+    } else if (name == "recolor.sidebar") {
+        this->recolorParameters.recolorizeSidebarMiniatures = parse<bool>(value);
+    } else if (name == "recolor.light") {
+        this->recolorParameters.recolor = Recolor(parse<Color>(value), this->recolorParameters.recolor.getDark());
+    } else if (name == "recolor.dark") {
+        this->recolorParameters.recolor = Recolor(this->recolorParameters.recolor.getLight(), parse<Color>(value));
+    } else if (name == "backgroundColor") {
+        this->backgroundColor = parse<Color>(value);
+    } else if (name == "addHorizontalSpace") {
+        this->addHorizontalSpace = parse<bool>(value);
+    } else if (name == "addHorizontalSpaceAmount") {
+        const int oldHorizontalAmount = parse<int>(value);
         this->addHorizontalSpaceAmountLeft = oldHorizontalAmount;
         this->addHorizontalSpaceAmountRight = oldHorizontalAmount;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpaceAmountRight")) == 0) {
-        this->addHorizontalSpaceAmountRight =
-                static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addVerticalSpace")) == 0) {
-        this->addVerticalSpace = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addVerticalSpaceAmount")) == 0) {
-        const int oldVerticalAmount =
-                static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
+    } else if (name == "addHorizontalSpaceAmountRight") {
+        this->addHorizontalSpaceAmountRight = parse<int>(value);
+    } else if (name == "addVerticalSpace") {
+        this->addVerticalSpace = parse<bool>(value);
+    } else if (name == "addVerticalSpaceAmount") {
+        const int oldVerticalAmount = parse<int>(value);
         this->addHorizontalSpaceAmountLeft = oldVerticalAmount;
         this->addHorizontalSpaceAmountRight = oldVerticalAmount;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addVerticalSpaceAmountAbove")) == 0) {
-        this->addVerticalSpaceAmountAbove =
-                static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpaceAmountLeft")) == 0) {
-        this->addHorizontalSpaceAmountLeft =
-                static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addVerticalSpaceAmountBelow")) == 0) {
-        this->addVerticalSpaceAmountBelow =
-                static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("unlimitedScrolling")) == 0) {
-        this->unlimitedScrolling = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("drawDirModsEnabled")) == 0) {
-        this->drawDirModsEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("drawDirModsRadius")) == 0) {
-        this->drawDirModsRadius = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapRotation")) == 0) {
-        this->snapRotation = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapRotationTolerance")) == 0) {
-        this->snapRotationTolerance = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapGrid")) == 0) {
-        this->snapGrid = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapGridSize")) == 0) {
-        this->snapGridSize = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapGridTolerance")) == 0) {
-        this->snapGridTolerance = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("strokeRecognizerMinSize")) == 0) {
-        this->strokeRecognizerMinSize = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchDrawing")) == 0) {
-        this->touchDrawing = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("gtkTouchInertialScrolling")) == 0) {
-        this->gtkTouchInertialScrolling = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pressureGuessing")) == 0) {
-        this->pressureGuessing = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("scrollbarHideType")) == 0) {
-        if (xmlStrcmp(value, reinterpret_cast<const xmlChar*>("both")) == 0) {
+    } else if (name == "addVerticalSpaceAmountAbove") {
+        this->addVerticalSpaceAmountAbove = parse<int>(value);
+    } else if (name == "addHorizontalSpaceAmountLeft") {
+        this->addHorizontalSpaceAmountLeft = parse<int>(value);
+    } else if (name == "addVerticalSpaceAmountBelow") {
+        this->addVerticalSpaceAmountBelow = parse<int>(value);
+    } else if (name == "unlimitedScrolling") {
+        this->unlimitedScrolling = parse<bool>(value);
+    } else if (name == "drawDirModsEnabled") {
+        this->drawDirModsEnabled = parse<bool>(value);
+    } else if (name == "drawDirModsRadius") {
+        this->drawDirModsRadius = parse<int>(value);
+    } else if (name == "snapRotation") {
+        this->snapRotation = parse<bool>(value);
+    } else if (name == "snapRotationTolerance") {
+        this->snapRotationTolerance = parse<double>(value);
+    } else if (name == "snapGrid") {
+        this->snapGrid = parse<bool>(value);
+    } else if (name == "snapGridSize") {
+        this->snapGridSize = parse<double>(value);
+    } else if (name == "snapGridTolerance") {
+        this->snapGridTolerance = parse<double>(value);
+    } else if (name == "strokeRecognizerMinSize") {
+        this->strokeRecognizerMinSize = parse<double>(value);
+    } else if (name == "touchDrawing") {
+        this->touchDrawing = parse<bool>(value);
+    } else if (name == "gtkTouchInertialScrolling") {
+        this->gtkTouchInertialScrolling = parse<bool>(value);
+    } else if (name == "pressureGuessing") {
+        this->pressureGuessing = parse<bool>(value);
+    } else if (name == "scrollbarHideType") {
+        if (value == "both") {
             this->scrollbarHideType = SCROLLBAR_HIDE_BOTH;
-        } else if (xmlStrcmp(value, reinterpret_cast<const xmlChar*>("horizontal")) == 0) {
+        } else if (value == "horizontal") {
             this->scrollbarHideType = SCROLLBAR_HIDE_HORIZONTAL;
-        } else if (xmlStrcmp(value, reinterpret_cast<const xmlChar*>("vertical")) == 0) {
+        } else if (value == "vertical") {
             this->scrollbarHideType = SCROLLBAR_HIDE_VERTICAL;
         } else {
             this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
         }
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("disableScrollbarFadeout")) == 0) {
-        this->disableScrollbarFadeout = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("disableAudio")) == 0) {
-        this->disableAudio = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (name == "disableScrollbarFadeout") {
+        this->disableScrollbarFadeout = parse<bool>(value);
+    } else if (name == "disableAudio") {
+        this->disableAudio = parse<bool>(value);
 #ifdef ENABLE_AUDIO
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioSampleRate")) == 0) {
-        this->audioSampleRate = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioGain")) == 0) {
-        this->audioGain = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultSeekTime")) == 0) {
-        this->defaultSeekTime = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioInputDevice")) == 0) {
-        this->audioInputDevice = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioOutputDevice")) == 0) {
-        this->audioOutputDevice = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+    } else if (name == "audioSampleRate") {
+        this->audioSampleRate = parse<double>(value);
+    } else if (name == "audioGain") {
+        this->audioGain = parse<double>(value);
+    } else if (name == "defaultSeekTime") {
+        this->defaultSeekTime = parse<unsigned int>(value);
+    } else if (name == "audioInputDevice") {
+        this->audioInputDevice = parse<int>(value);
+    } else if (name == "audioOutputDevice") {
+        this->audioOutputDevice = parse<int>(value);
 #endif
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("numIgnoredStylusEvents")) == 0) {
-        this->numIgnoredStylusEvents =
-                std::max<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10), 0);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("inputSystemTPCButton")) == 0) {
-        this->inputSystemTPCButton = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("inputSystemDrawOutsideWindow")) == 0) {
-        this->inputSystemDrawOutsideWindow = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("emptyLastPageAppend")) == 0) {
-        this->emptyLastPageAppend = emptyLastPageAppendFromString(reinterpret_cast<char*>(value));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("strokeFilterIgnoreTime")) == 0) {
-        this->strokeFilterIgnoreTime = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("strokeFilterIgnoreLength")) == 0) {
-        this->strokeFilterIgnoreLength = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("strokeFilterSuccessiveTime")) == 0) {
-        this->strokeFilterSuccessiveTime = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("strokeFilterEnabled")) == 0) {
-        this->strokeFilterEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("doActionOnStrokeFiltered")) == 0) {
-        this->doActionOnStrokeFiltered = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("trySelectOnStrokeFiltered")) == 0) {
-        this->trySelectOnStrokeFiltered = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.autoCheckDependencies")) == 0) {
-        this->latexSettings.autoCheckDependencies = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.defaultText")) == 0) {
-        this->latexSettings.defaultText = reinterpret_cast<char*>(value);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.globalTemplatePath")) == 0) {
-        this->latexSettings.globalTemplatePath = fs::path(xoj::util::utf8(value));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.genCmd")) == 0) {
-        this->latexSettings.genCmd = reinterpret_cast<char*>(value);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.sourceViewThemeId")) == 0) {
-        this->latexSettings.sourceViewThemeId = reinterpret_cast<char*>(value);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.editorFont")) == 0) {
-        this->latexSettings.editorFont = std::string{reinterpret_cast<char*>(value)};
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.useCustomEditorFont")) == 0) {
-        this->latexSettings.useCustomEditorFont = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.editorWordWrap")) == 0) {
-        this->latexSettings.editorWordWrap = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.sourceViewAutoIndent")) == 0) {
-        this->latexSettings.sourceViewAutoIndent = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.sourceViewSyntaxHighlight")) == 0) {
-        this->latexSettings.sourceViewSyntaxHighlight = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.sourceViewShowLineNumbers")) == 0) {
-        this->latexSettings.sourceViewShowLineNumbers = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.useExternalEditor")) == 0) {
-        this->latexSettings.useExternalEditor = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.externalEditorAutoConfirm")) == 0) {
-        this->latexSettings.externalEditorAutoConfirm = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.externalEditorCmd")) == 0) {
-        this->latexSettings.externalEditorCmd = std::string{reinterpret_cast<char*>(value)};
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.temporaryFileExt")) == 0) {
-        this->latexSettings.temporaryFileExt = std::string{reinterpret_cast<char*>(value)};
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapRecognizedShapesEnabled")) == 0) {
-        this->snapRecognizedShapesEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("restoreLineWidthEnabled")) == 0) {
-        this->restoreLineWidthEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("preferredLocale")) == 0) {
-        this->preferredLocale = reinterpret_cast<char*>(value);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("useSpacesForTab")) == 0) {
-        this->setUseSpacesAsTab(xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("numberOfSpacesForTab")) == 0) {
-        this->setNumberOfSpacesForTab(
-                static_cast<unsigned int>(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10)));
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("laserPointerFadeOutTime")) == 0) {
-        this->laserPointerFadeOutTime =
-                static_cast<unsigned int>(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
+    } else if (name == "numIgnoredStylusEvents") {
+        this->numIgnoredStylusEvents = std::max<int>(parse<int>(value), 0);
+    } else if (name == "inputSystemTPCButton") {
+        this->inputSystemTPCButton = parse<bool>(value);
+    } else if (name == "inputSystemDrawOutsideWindow") {
+        this->inputSystemDrawOutsideWindow = parse<bool>(value);
+    } else if (name == "emptyLastPageAppend") {
+        this->emptyLastPageAppend = emptyLastPageAppendFromString(value);
+    } else if (name == "strokeFilterIgnoreTime") {
+        this->strokeFilterIgnoreTime = parse<int>(value);
+    } else if (name == "strokeFilterIgnoreLength") {
+        this->strokeFilterIgnoreLength = parse<double>(value);
+    } else if (name == "strokeFilterSuccessiveTime") {
+        this->strokeFilterSuccessiveTime = parse<int>(value);
+    } else if (name == "strokeFilterEnabled") {
+        this->strokeFilterEnabled = parse<bool>(value);
+    } else if (name == "doActionOnStrokeFiltered") {
+        this->doActionOnStrokeFiltered = parse<bool>(value);
+    } else if (name == "trySelectOnStrokeFiltered") {
+        this->trySelectOnStrokeFiltered = parse<bool>(value);
+    } else if (name == "latexSettings.autoCheckDependencies") {
+        this->latexSettings.autoCheckDependencies = parse<bool>(value);
+    } else if (name == "latexSettings.defaultText") {
+        this->latexSettings.defaultText = value;
+    } else if (name == "latexSettings.globalTemplatePath") {
+        this->latexSettings.globalTemplatePath = fs::path(value);
+    } else if (name == "latexSettings.genCmd") {
+        this->latexSettings.genCmd = value;
+    } else if (name == "latexSettings.sourceViewThemeId") {
+        this->latexSettings.sourceViewThemeId = value;
+    } else if (name == "latexSettings.editorFont") {
+        this->latexSettings.editorFont = value;
+    } else if (name == "latexSettings.useCustomEditorFont") {
+        this->latexSettings.useCustomEditorFont = parse<bool>(value);
+    } else if (name == "latexSettings.editorWordWrap") {
+        this->latexSettings.editorWordWrap = parse<bool>(value);
+    } else if (name == "latexSettings.sourceViewAutoIndent") {
+        this->latexSettings.sourceViewAutoIndent = parse<bool>(value);
+    } else if (name == "latexSettings.sourceViewSyntaxHighlight") {
+        this->latexSettings.sourceViewSyntaxHighlight = parse<bool>(value);
+    } else if (name == "latexSettings.sourceViewShowLineNumbers") {
+        this->latexSettings.sourceViewShowLineNumbers = parse<bool>(value);
+    } else if (name == "snapRecognizedShapesEnabled") {
+        this->snapRecognizedShapesEnabled = parse<bool>(value);
+    } else if (name == "restoreLineWidthEnabled") {
+        this->restoreLineWidthEnabled = parse<bool>(value);
+    } else if (name == "preferredLocale") {
+        this->preferredLocale = value;
+    } else if (name == "useSpacesForTab") {
+        this->setUseSpacesAsTab(parse<bool>(value));
+    } else if (name == "numberOfSpacesForTab") {
+        this->setNumberOfSpacesForTab(parse<unsigned int>(value));
         /**
          * Stabilizer related settings
          */
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerAveragingMethod")) == 0) {
-        this->stabilizerAveragingMethod =
-                (StrokeStabilizer::AveragingMethod)g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerPreprocessor")) == 0) {
-        this->stabilizerPreprocessor =
-                (StrokeStabilizer::Preprocessor)g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerBuffersize")) == 0) {
-        this->stabilizerBuffersize = g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerSigma")) == 0) {
-        this->stabilizerSigma = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerDeadzoneRadius")) == 0) {
-        this->stabilizerDeadzoneRadius = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerDrag")) == 0) {
-        this->stabilizerDrag = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerMass")) == 0) {
-        this->stabilizerMass = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerCuspDetection")) == 0) {
-        this->stabilizerCuspDetection = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerFinalizeStroke")) == 0) {
-        this->stabilizerFinalizeStroke = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("colorPalette")) == 0) {
-        std::string paletteConfig = std::string{reinterpret_cast<const char*>(value)};
-        if (!paletteConfig.empty()) {
-            this->colorPaletteSetting = paletteConfig;
-        }
+    } else if (name == "stabilizerAveragingMethod") {
+        this->stabilizerAveragingMethod = static_cast<StrokeStabilizer::AveragingMethod>(parse<int>(value));
+    } else if (name == "stabilizerPreprocessor") {
+        this->stabilizerPreprocessor = static_cast<StrokeStabilizer::Preprocessor>(parse<int>(value));
+    } else if (name == "stabilizerBuffersize") {
+        this->stabilizerBuffersize = parse<unsigned int>(value);
+    } else if (name == "stabilizerSigma") {
+        this->stabilizerSigma = parse<int>(value);
+    } else if (name == "stabilizerDeadzoneRadius") {
+        this->stabilizerDeadzoneRadius = parse<double>(value);
+    } else if (name == "stabilizerDrag") {
+        this->stabilizerDrag = parse<double>(value);
+    } else if (name == "stabilizerMass") {
+        this->stabilizerMass = parse<double>(value);
+    } else if (name == "stabilizerCuspDetection") {
+        this->stabilizerCuspDetection = parse<bool>(value);
+    } else if (name == "stabilizerFinalizeStroke") {
+        this->stabilizerFinalizeStroke = parse<bool>(value);
+    } else if (name == "colorPalette") {
+        this->colorPaletteSetting = !value.empty() ? value : nullptr;
     }
     /**/
-
-    xmlFree(name);
-    xmlFree(value);
 }
 
 void Settings::loadDeviceClasses() {
@@ -760,7 +687,7 @@ void Settings::loadButtonConfig() {
 
         string sType;
         if (e.getString("tool", sType)) {
-            ToolType type = toolTypeFromString(sType);
+            const ToolType type = toolTypeFromString(sType);
             cfg->action = type;
 
             if (type == TOOL_PEN) {
@@ -770,13 +697,11 @@ void Settings::loadButtonConfig() {
             }
 
             if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER) {
-                string drawingType;
-                if (e.getString("drawingType", drawingType)) {
+                if (string drawingType; e.getString("drawingType", drawingType)) {
                     cfg->drawingType = drawingTypeFromString(drawingType);
                 }
 
-                string sSize;
-                if (e.getString("size", sSize)) {
+                if (string sSize; e.getString("size", sSize)) {
                     cfg->size = toolSizeFromString(sSize);
                 } else {
                     // If not specified: do not change
@@ -791,16 +716,14 @@ void Settings::loadButtonConfig() {
             }
 
             if (type == TOOL_ERASER) {
-                string sEraserMode;
-                if (e.getString("eraserMode", sEraserMode)) {
+                if (string sEraserMode; e.getString("eraserMode", sEraserMode)) {
                     cfg->eraserMode = eraserTypeFromString(sEraserMode);
                 } else {
                     // If not specified: do not change
                     cfg->eraserMode = ERASER_TYPE_NONE;
                 }
 
-                string sSize;
-                if (e.getString("size", sSize)) {
+                if (string sSize; e.getString("size", sSize)) {
                     cfg->size = toolSizeFromString(sSize);
                 } else {
                     // If not specified: do not change
@@ -816,8 +739,6 @@ void Settings::loadButtonConfig() {
 
                 e.getBool("disableDrawing", cfg->disableDrawing);
             }
-        } else {
-            continue;
         }
     }
 }
@@ -830,7 +751,8 @@ auto Settings::load() -> bool {
         save();
     }
 
-    xmlDocPtr doc = xmlParseFile(char_cast(filepath.u8string().c_str()));
+    const xmlDocPtr doc = xmlParseFile(char_cast(filepath.u8string().c_str()));
+
 
     if (doc == nullptr) {
         g_warning("Settings::load:: doc == null, could not load Settings!\n");
@@ -845,7 +767,7 @@ auto Settings::load() -> bool {
         return false;
     }
 
-    if (xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("settings"))) {
+    if (cur->name != "settings"_xml) {
         g_message("File \"%s\" is of the wrong type", filepath.string().c_str());
         xmlFreeDoc(doc);
 
@@ -876,7 +798,7 @@ auto Settings::load() -> bool {
     return true;
 }
 
-auto Settings::savePropertyDouble(const gchar* key, double value, xmlNodePtr parent) -> xmlNodePtr {
+auto Settings::savePropertyDouble(const char* key, double value, xmlNodePtr parent) -> xmlNodePtr {
     char text[G_ASCII_DTOSTR_BUF_SIZE];
     //  g_ascii_ version uses C locale always.
     g_ascii_formatd(text, G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, value);
@@ -884,26 +806,26 @@ auto Settings::savePropertyDouble(const gchar* key, double value, xmlNodePtr par
     return xmlNode;
 }
 
-auto Settings::saveProperty(const gchar* key, int value, xmlNodePtr parent) -> xmlNodePtr {
+auto Settings::saveProperty(const char* key, int value, xmlNodePtr parent) -> xmlNodePtr {
     char* text = g_strdup_printf("%i", value);
     xmlNodePtr xmlNode = saveProperty(key, text, parent);
     g_free(text);
     return xmlNode;
 }
 
-auto Settings::savePropertyUnsigned(const gchar* key, unsigned int value, xmlNodePtr parent) -> xmlNodePtr {
+auto Settings::savePropertyUnsigned(const char* key, unsigned int value, xmlNodePtr parent) -> xmlNodePtr {
     char* text = g_strdup_printf("%u", value);
     xmlNodePtr xmlNode = saveProperty(key, text, parent);
     g_free(text);
     return xmlNode;
 }
 
-auto Settings::saveProperty(const gchar* key, const gchar* value, xmlNodePtr parent) -> xmlNodePtr {
-    xmlNodePtr xmlNode = xmlNewChild(parent, nullptr, reinterpret_cast<const xmlChar*>("property"), nullptr);
+auto Settings::saveProperty(const char* key, const char* value, xmlNodePtr parent) -> xmlNodePtr {
+    xmlNodePtr xmlNode = xmlNewChild(parent, nullptr, "property"_xml, nullptr);
 
-    xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>(key));
+    xmlSetProp(xmlNode, "name"_xml, reinterpret_cast<const xmlChar*>(key));
 
-    xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"), reinterpret_cast<const xmlChar*>(value));
+    xmlSetProp(xmlNode, "value"_xml, reinterpret_cast<const xmlChar*>(value));
 
     return xmlNode;
 }
@@ -982,7 +904,7 @@ void Settings::save() {
 
     xmlIndentTreeOutput = true;
 
-    doc = xmlNewDoc(reinterpret_cast<const xmlChar*>("1.0"));
+    doc = xmlNewDoc("1.0"_xml);
     if (doc == nullptr) {
         return;
     }
@@ -991,12 +913,11 @@ void Settings::save() {
     saveDeviceClasses();
 
     /* Create metadata root */
-    root = xmlNewDocNode(doc, nullptr, reinterpret_cast<const xmlChar*>("settings"), nullptr);
+    root = xmlNewDocNode(doc, nullptr, "settings"_xml, nullptr);
     xmlDocSetRootElement(doc, root);
-    xmlNodePtr com = xmlNewComment(
-            reinterpret_cast<const xmlChar*>("The Xournal++ settings file. Do not edit this file! "
-                                             "Most settings are available in the Settings dialog, "
-                                             "the others are commented in this file, but handle with care!"));
+    xmlNodePtr com = xmlNewComment("The Xournal++ settings file. Do not edit this file! "
+                                   "Most settings are available in the Settings dialog, "
+                                   "the others are commented in this file, but handle with care!"_xml);
     xmlAddPrevSibling(root, com);
 
     SAVE_BOOL_PROP(pressureSensitivity);
@@ -1221,16 +1142,15 @@ void Settings::save() {
     SAVE_STRING_PROP(latexSettings.temporaryFileExt);
 
     xmlNodePtr xmlFont = nullptr;
-    xmlFont = xmlNewChild(root, nullptr, reinterpret_cast<const xmlChar*>("property"), nullptr);
-    xmlSetProp(xmlFont, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>("font"));
-    xmlSetProp(xmlFont, reinterpret_cast<const xmlChar*>("font"),
-               reinterpret_cast<const xmlChar*>(this->font.getName().c_str()));
+    xmlFont = xmlNewChild(root, nullptr, "property"_xml, nullptr);
+    xmlSetProp(xmlFont, "name"_xml, "font"_xml);
+    xmlSetProp(xmlFont, "font"_xml, reinterpret_cast<const xmlChar*>(this->font.getName().c_str()));
 
     char sSize[G_ASCII_DTOSTR_BUF_SIZE];
 
     g_ascii_formatd(sSize, G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING,
                     this->font.getSize());  // no locale
-    xmlSetProp(xmlFont, reinterpret_cast<const xmlChar*>("size"), reinterpret_cast<const xmlChar*>(sSize));
+    xmlSetProp(xmlFont, "size"_xml, reinterpret_cast<const xmlChar*>(sSize));
 
 
     for (std::map<string, SElement>::value_type p: data) {
@@ -1242,9 +1162,9 @@ void Settings::save() {
 }
 
 void Settings::saveData(xmlNodePtr root, const string& name, SElement& elem) {
-    xmlNodePtr xmlNode = xmlNewChild(root, nullptr, reinterpret_cast<const xmlChar*>("data"), nullptr);
+    xmlNodePtr xmlNode = xmlNewChild(root, nullptr, "data"_xml, nullptr);
 
-    xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>(name.c_str()));
+    xmlSetProp(xmlNode, "name"_xml, reinterpret_cast<const xmlChar*>(name.c_str()));
 
     for (auto const& [aname, attrib]: elem.attributes()) {
         string type;
@@ -1285,11 +1205,11 @@ void Settings::saveData(xmlNodePtr root, const string& name, SElement& elem) {
         }
 
         xmlNodePtr at = nullptr;
-        at = xmlNewChild(xmlNode, nullptr, reinterpret_cast<const xmlChar*>("attribute"), nullptr);
+        at = xmlNewChild(xmlNode, nullptr, "attribute"_xml, nullptr);
 
-        xmlSetProp(at, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>(aname.c_str()));
-        xmlSetProp(at, reinterpret_cast<const xmlChar*>("type"), reinterpret_cast<const xmlChar*>(type.c_str()));
-        xmlSetProp(at, reinterpret_cast<const xmlChar*>("value"), reinterpret_cast<const xmlChar*>(value.c_str()));
+        xmlSetProp(at, "name"_xml, reinterpret_cast<const xmlChar*>(aname.c_str()));
+        xmlSetProp(at, "type"_xml, reinterpret_cast<const xmlChar*>(type.c_str()));
+        xmlSetProp(at, "value"_xml, reinterpret_cast<const xmlChar*>(value.c_str()));
 
         if (!attrib.comment.empty()) {
             xmlNodePtr com = xmlNewComment(reinterpret_cast<const xmlChar*>(attrib.comment.c_str()));
@@ -1816,11 +1736,11 @@ auto Settings::isPresentationMode() const -> bool {
     return this->activeViewMode == PresetViewModeIds::VIEW_MODE_PRESENTATION;
 }
 
-void Settings::setPressureSensitivity(gboolean presureSensitivity) {
-    if (this->pressureSensitivity == presureSensitivity) {
+void Settings::setPressureSensitivity(bool pressureSensitivity) {
+    if (this->pressureSensitivity == pressureSensitivity) {
         return;
     }
-    this->pressureSensitivity = presureSensitivity;
+    this->pressureSensitivity = pressureSensitivity;
 
     save();
 }
