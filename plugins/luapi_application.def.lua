@@ -873,3 +873,30 @@ function app.clearSelection() end
 --- 
 function app.addToSelection(refs) end
 
+--- Registers a placeholder label for use in the toolbar or menubar.
+---
+--- The placeholder will display a label with the given toolbarId until its value is set.
+--- The label text is sanitized (removes newlines/carriage returns) and truncated if too long.
+---
+--- @param toolbarId string Unique identifier for the placeholder in the toolbar or menubar
+--- @param description string Description shown in tooltips and menus (optional)
+---
+--- Example: app.registerPlaceholder("VI_MODE_LABEL", "Current Vi mode")
+function app.registerPlaceholder(toolbarId, description) end
+
+--- Sets the displayed value of a previously registered placeholder label.
+---
+--- Updates all label widgets associated with the placeholder. The value is sanitized and truncated.
+---
+--- @param toolbarId string Unique identifier for the placeholder
+--- @param value string Text to display in the label
+---
+--- Example: app.setPlaceholderValue("VI_MODE_LABEL", "NORMAL")
+function app.setPlaceholderValue(toolbarId, value) end
+
+-- Example usage:
+-- Register a placeholder for vi-mode in a plugin (e.g., vi-xournal).
+-- When the mode changes, update the label:
+-- app.registerPlaceholder("VI_MODE_LABEL", "Current Vi mode")
+-- app.setPlaceholderValue("VI_MODE_LABEL", "INSERT")
+-- app.setPlaceholderValue("VI_MODE_LABEL", "NORMAL")
