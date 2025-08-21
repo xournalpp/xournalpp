@@ -18,9 +18,17 @@
 
 #ifdef _WIN32
 #include <cstdlib>
+
+#include "win32/console.h"
 #endif
 
 auto main(int argc, char* argv[]) -> int {
+#ifdef _WIN32
+    // Attach to the console here. Otherwise, gspawn-win32-helper will create annoying console popups,
+    // e.g. in the LaTeX tool after every change in the formula
+    attachConsole();
+#endif
+
     // init crash handler
     installCrashHandlers();
 
