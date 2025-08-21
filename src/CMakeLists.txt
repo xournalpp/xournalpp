@@ -137,6 +137,8 @@ if (WIN32)
   add_dependencies(xournalpp-wrapper xournalpp_icon)
   
   # windows specific source files
+  target_sources(xournalpp PRIVATE exe/win32/console.cpp)
+  target_sources(xournalpp-wrapper PRIVATE exe/win32/console.cpp)
   if (MSVC)
     target_sources(xournalpp PRIVATE exe/win32/gui_main.cpp)
     target_sources(xournalpp-wrapper PRIVATE exe/win32/gui_main.cpp)
