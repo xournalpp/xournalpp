@@ -188,7 +188,7 @@ auto XournalView::onKeyPressEvent(const KeyEvent& event) -> bool {
         return true;
     }
 
-    Layout* layout = gtk_xournal_get_layout(this->widget);
+    Layout* layout = this->getLayout();
 
     if (!state) {
         if (keyval == GDK_KEY_Page_Down || keyval == GDK_KEY_KP_Page_Down) {
@@ -432,7 +432,7 @@ void XournalView::scrollTo(size_t pageNo, XojPdfRectangle rect) {
     auto& v = this->viewPages[pageNo];
 
     // Make sure it is visible
-    Layout* layout = gtk_xournal_get_layout(this->widget);
+    Layout* layout = this->getLayout();
 
     int x = v->getX() + round_cast<int>(rect.x1 * zoom);
     int y = v->getY() + round_cast<int>(rect.y1 * zoom);
@@ -460,7 +460,7 @@ void XournalView::pageRelativeXY(int offCol, int offRow) {
     int row = view->getMappedRow();
     int col = view->getMappedCol();
 
-    Layout* layout = gtk_xournal_get_layout(this->widget);
+    Layout* layout = this->getLayout();
     auto optionalPageIndex = layout->getPageIndexAtGridMap(as_unsigned(row + offRow), as_unsigned(col + offCol));
     if (optionalPageIndex) {
         this->scrollTo(*optionalPageIndex);
@@ -547,7 +547,7 @@ auto XournalView::getScrollHandling() const -> ScrollHandling* { return scrollHa
 auto XournalView::getWidget() const -> GtkWidget* { return widget; }
 
 void XournalView::ensureRectIsVisible(int x, int y, int width, int height) {
-    Layout* layout = gtk_xournal_get_layout(this->widget);
+    Layout* layout = this->getLayout();
     layout->ensureRectIsVisible(x, y, width, height);
 }
 
@@ -568,7 +568,7 @@ void XournalView::zoomChanged() {
         scrollTo(currentPage);
     } else if (zoom->isZoomSequenceActive()) {
         auto pos = zoom->getScrollPositionAfterZoom();
-        Layout* layout = gtk_xournal_get_layout(this->widget);
+        Layout* layout = this->getLayout();
         layout->scrollAbs(pos.x, pos.y);
     }
 
@@ -638,7 +638,7 @@ void XournalView::pageInserted(size_t page) {
 
     layoutPages();
     // check which pages are visible and select the most visible page
-    Layout* layout = gtk_xournal_get_layout(this->widget);
+    Layout* layout = this->getLayout();
     layout->updateVisibility();
 }
 
@@ -735,7 +735,7 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
 }
 
 void XournalView::layoutPages() {
-    Layout* layout = gtk_xournal_get_layout(this->widget);
+    Layout* layout = this->getLayout();
     layout->recalculate();
 
     // Todo (fabian): the following lines are conceptually wrong, the Layout::layoutPages function is meant to be
@@ -858,3 +858,5 @@ auto XournalView::getSelection() const -> EditSelection* {
 
     return GTK_XOURNAL(this->widget)->selection;
 }
+
+auto XournalView::getLayout() const -> Layout* { return gtk_xournal_get_layout(getWidget()); }

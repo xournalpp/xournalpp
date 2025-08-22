@@ -307,8 +307,7 @@ void MainWindow::initXournalWidget() {
     control->getZoomControl()->initZoomHandler(this->window, winXournal, xournal.get(), control);
     gtk_widget_show_all(winXournal);
 
-    Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
-    scrollHandling->init(this->xournal->getWidget(), layout);
+    scrollHandling->init(this->xournal->getWidget(), this->xournal->getLayout());
 }
 
 void MainWindow::setGtkTouchscreenScrollingForDeviceMapping() {
@@ -326,7 +325,7 @@ void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
     gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), enabled);
 }
 
-auto MainWindow::getLayout() const -> Layout* { return gtk_xournal_get_layout(this->xournal->getWidget()); }
+auto MainWindow::getLayout() const -> Layout* { return this->xournal->getLayout(); }
 
 auto MainWindow::getNegativeXournalWidgetPos() const -> xoj::util::Point<double> {
     return Util::toWidgetCoords(this->winXournal, xoj::util::Point{0.0, 0.0});

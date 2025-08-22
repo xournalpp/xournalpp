@@ -20,7 +20,6 @@
 #include "gui/PageView.h"                          // for XojPageView
 #include "gui/XournalView.h"                       // for XournalView
 #include "gui/XournalppCursor.h"                   // for XournalppCursor
-#include "gui/widgets/XournalWidget.h"             // for gtk_xournal_get_la...
 #include "model/Document.h"                        // for Document
 #include "model/Element.h"                         // for Element::Index
 #include "model/ElementInsertionPosition.h"
@@ -756,7 +755,7 @@ auto EditSelection::getPageViewUnderCursor() -> XojPageView* {
     double hy = this->view->getY() + (this->snappedBounds.y + this->relMousePosY) * zoom;
 
 
-    Layout* layout = gtk_xournal_get_layout(this->view->getXournal()->getWidget());
+    Layout* layout = this->view->getXournal()->getLayout();
     XojPageView* v = layout->getPageViewAt(static_cast<int>(hx), static_cast<int>(hy));
 
     return v;
@@ -888,7 +887,7 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
     }
 
 
-    Layout* layout = gtk_xournal_get_layout(self->view->getXournal()->getWidget());
+    Layout* layout = self->view->getXournal()->getLayout();
     const Settings* const settings = self->getView()->getXournal()->getControl()->getSettings();
     const double zoom = self->view->getXournal()->getZoom();
 

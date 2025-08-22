@@ -136,7 +136,7 @@ void LatexController::findSelectedTexElement() {
     } else {
         // This is a new latex object, so here we pick a convenient initial location
         const double zoom = this->control->getWindow()->getXournal()->getZoom();
-        Layout* const layout = this->control->getWindow()->getLayout();
+        Layout* layout = this->control->getWindow()->getXournal()->getLayout();
 
         // Calculate coordinates (screen) of the center of the visible area
         const auto visibleBounds = layout->getVisibleRect();
