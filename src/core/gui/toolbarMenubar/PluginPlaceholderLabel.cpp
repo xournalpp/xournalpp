@@ -5,7 +5,6 @@
 #include "config-features.h"
 
 #include <algorithm>  // for std::replace
-#include <iostream>
 
 #ifdef ENABLE_PLUGINS
 
@@ -25,24 +24,34 @@ PluginPlaceholderLabel::~PluginPlaceholderLabel() {
     labelWidgets.clear();
 }
 
+/// Sanitizes text by replacing newlines and carriage returns with spaces
+auto PluginPlaceholderLabel::sanitizeText(const std::string& text) const -> std::string {
+    std::string sanitized = text;
+    std::replace(sanitized.begin(), sanitized.end(), '\n', ' ');
+    std::replace(sanitized.begin(), sanitized.end(), '\r', ' ');
+    return sanitized;
+}
+
+/// Gets the display text, using toolbarId as fallback if value is empty
+auto PluginPlaceholderLabel::getDisplayText() const -> std::string {
+    std::string text = t->value;
+    if (text.empty()) {
+        text = t->toolbarId;
+    }
+    return sanitizeText(text);
+}
+
 /// Creates a label widget for the placeholder; stores and tracks it
 auto PluginPlaceholderLabel::createItem(bool) -> xoj::util::WidgetSPtr {
-    std::string labelText = t->value;
-    if (labelText.empty()) {
-        labelText = t->toolbarId;
-    }
-    std::replace(labelText.begin(), labelText.end(), '\n', ' '); // sanitize newlines
-    std::replace(labelText.begin(), labelText.end(), '\r', ' '); // sanitize carriage returns
-    constexpr size_t maxLen = 32;
-    if (labelText.length() > maxLen) {
-        size_t keep = maxLen - 3;
-        labelText = labelText.substr(0, keep) + "...";
-    }
+    const std::string labelText = getDisplayText();
+    
     xoj::util::WidgetSPtr item(gtk_label_new(labelText.c_str()), xoj::util::adopt);
     GtkWidget* rawLabel = item.get();
     labelWidgets.push_back(rawLabel);
     gtk_widget_set_can_focus(rawLabel, false);
     gtk_widget_set_size_request(rawLabel, 200, -1);
+    gtk_label_set_ellipsize(GTK_LABEL(rawLabel), PANGO_ELLIPSIZE_END);
+    
     // Remove label from vector when destroyed
     g_signal_connect(rawLabel, "destroy", G_CALLBACK(+[](GtkWidget* widget, gpointer user_data) {
         auto self = static_cast<PluginPlaceholderLabel*>(user_data);
@@ -53,18 +62,10 @@ auto PluginPlaceholderLabel::createItem(bool) -> xoj::util::WidgetSPtr {
 }
 
 /// Updates all label widgets with new text
-void PluginPlaceholderLabel::setText(const std::string& text) {
-    std::string displayText = text;
-    if (displayText.empty()) {
-        displayText = t->toolbarId;
-    }
-    std::replace(displayText.begin(), displayText.end(), '\n', ' '); // sanitize newlines
-    std::replace(displayText.begin(), displayText.end(), '\r', ' '); // sanitize carriage returns
-    constexpr size_t maxLen = 32;
-    if (displayText.length() > maxLen) {
-        size_t keep = maxLen - 3;
-        displayText = displayText.substr(0, keep) + "...";
-    }
+void PluginPlaceholderLabel::setText(std::string text) {
+    t->value = std::move(text);
+    const std::string displayText = getDisplayText();
+    
     for (auto* label : labelWidgets) {
         if (GTK_IS_WIDGET(label)) {
             gtk_label_set_text(GTK_LABEL(label), displayText.c_str());
@@ -80,7 +81,7 @@ auto PluginPlaceholderLabel::getToolDisplayName() const -> std::string {
 
 /// Returns a theme-supported icon for the placeholder tool
 auto PluginPlaceholderLabel::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name("insert-text", GTK_ICON_SIZE_LARGE_TOOLBAR);
+    return gtk_image_new_from_icon_name("dialog-information", GTK_ICON_SIZE_LARGE_TOOLBAR);
 }
 
 #endif /* ENABLE_PLUGINS */
