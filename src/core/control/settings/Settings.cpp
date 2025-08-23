@@ -1,11 +1,12 @@
 #include "Settings.h"
 
-#include <algorithm>    // for max
-#include <cstdint>      // for uint32_t, int32_t
-#include <cstdio>       // for sscanf, size_t
-#include <cstdlib>      // for atoi
-#include <cstring>      // for strcmp
-#include <exception>    // for exception
+#include <algorithm>  // for max
+#include <cstdint>    // for uint32_t, int32_t
+#include <cstdio>     // for sscanf, size_t
+#include <cstdlib>    // for atoi
+#include <cstring>    // for strcmp
+#include <exception>  // for exception
+#include <list>
 #include <type_traits>  // for add_const<>::type
 #include <utility>      // for pair, move, make_...
 
@@ -28,7 +29,7 @@
 #include "config-dev.h"    // for PALETTE_FILE
 #include "config-dev.h"
 #include "filesystem.h"  // for path, u8path, exists
-#include "xmlutils.cpp"  // for parse, cast, getXml
+#include "xmlutils.h"    // for parse, cast, getXml
 
 using std::string;
 
@@ -37,7 +38,7 @@ constexpr auto DEFAULT_FONT_SIZE = 12;
 constexpr auto DEFAULT_TOOLBAR = "Portrait";
 
 #define SAVE_BOOL_PROP(var) xmlNode = saveProperty((const char*)#var, (var) ? "true" : "false", root)
-#define SAVE_STRING_PROP(var) xmlNode = saveProperty((const char*)#var, (var).empty() ? "" : (var).c_str(), root)
+#define SAVE_STRING_PROP(var) xmlNode = saveProperty((const char*)#var, (var).c_str(), root)
 #define SAVE_FONT_PROP(var) xmlNode = saveProperty((const char*)#var, var.asString().c_str(), root)
 #define SAVE_INT_PROP(var) xmlNode = saveProperty((const char*)#var, var, root)
 #define SAVE_UINT_PROP(var) xmlNode = savePropertyUnsigned((const char*)#var, var, root)
@@ -46,11 +47,9 @@ constexpr auto DEFAULT_TOOLBAR = "Portrait";
     com = xmlNewComment((const xmlChar*)(var)); \
     xmlAddPrevSibling(xmlNode, com);
 
-Settings::Settings(fs::path filepath): filepath(std::move(filepath)) { loadDefault(); }
-
 Settings::~Settings() = default;
 
-void Settings::loadDefault() {
+Settings::Settings(fs::path filepath): filepath(std::move(filepath)) {
     this->pressureSensitivity = true;
     this->minimumPressure = 0.05;
     this->pressureMultiplier = 1.0;
@@ -194,7 +193,7 @@ void Settings::loadDefault() {
     this->selectionMarkerColor = Colors::xopp_cornflowerblue;
     this->activeSelectionColor = Colors::lawngreen;
 
-    this->recolorParameters = {false, false, Recolor(ColorU8{198, 208, 245}, ColorU8{48, 52, 70})};
+    this->recolorParameters = {false, false, Recolor(Color{198, 208, 245}, Color{48, 52, 70})};
 
     this->backgroundColor = Colors::xopp_gainsboro02;
 
@@ -278,7 +277,7 @@ auto Settings::getActiveViewMode() const -> ViewModeId { return this->activeView
 
 void Settings::parseData(xmlNodePtr cur, SElement& elem) {
     for (xmlNodePtr x = cur->children; x != nullptr; x = x->next) {
-        const auto type = parse<string>(x->name);
+        const string type = reinterpret_cast<const char*>(x->name);
         const auto name = xmlGet<string>(x, "name");
 
         if (type == "data") {
@@ -288,12 +287,11 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem) {
             const auto sType = xmlGet<string>(x, "type");
 
             if (sType == "int") {
-                elem.setInt(name, stoi(value));
+                elem.setInt(name, std::stoi(value));
             } else if (sType == "double") {
                 elem.setDouble(name, g_ascii_strtod(value.c_str(), nullptr));
             } else if (sType == "hex") {
-                int i;
-                istringstream(value) >> hex >> i;
+                int i = std::stoi(value, 0, 16);
                 if (i) {
                     elem.setIntHex(name, i);
                 } else {
@@ -343,7 +341,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 
     if (name == "font") {
         const auto font = xmlGet<string>(cur, "font");
-        if (font.length() > 0) {
+        if (font.empty()) {
             this->font.setName(font);
         }
 
@@ -688,7 +686,7 @@ void Settings::loadButtonConfig() {
 
         string sType;
         if (e.getString("tool", sType)) {
-            ToolType type = toolTypeFromString(sType);
+            const ToolType type = toolTypeFromString(sType);
             cfg->action = type;
 
             switch (type) {
@@ -825,11 +823,11 @@ auto Settings::savePropertyUnsigned(const char* key, unsigned int value, xmlNode
 }
 
 auto Settings::saveProperty(const char* key, const char* value, xmlNodePtr parent) -> xmlNodePtr {
-    xmlNodePtr xmlNode = xmlNewChild(parent, nullptr, str2xmlChar("property"), nullptr);
+    xmlNodePtr xmlNode = xmlNewChild(parent, nullptr, "property"_xml, nullptr);
 
-    xmlSetProp(xmlNode, str2xmlChar("name"), str2xmlChar(key));
+    xmlSetProp(xmlNode, "name"_xml, reinterpret_cast<const xmlChar*>(key));
 
-    xmlSetProp(xmlNode, str2xmlChar("value"), str2xmlChar(value));
+    xmlSetProp(xmlNode, "value"_xml, reinterpret_cast<const xmlChar*>(value));
 
     return xmlNode;
 }
@@ -908,7 +906,7 @@ void Settings::save() {
 
     xmlIndentTreeOutput = true;
 
-    doc = xmlNewDoc(str2xmlChar("1.0"));
+    doc = xmlNewDoc("1.0"_xml);
     if (doc == nullptr) {
         return;
     }
@@ -917,11 +915,11 @@ void Settings::save() {
     saveDeviceClasses();
 
     /* Create metadata root */
-    root = xmlNewDocNode(doc, nullptr, str2xmlChar("settings"), nullptr);
+    root = xmlNewDocNode(doc, nullptr, "settings"_xml, nullptr);
     xmlDocSetRootElement(doc, root);
-    xmlNodePtr com = xmlNewComment(str2xmlChar("The Xournal++ settings file. Do not edit this file! "
-                                               "Most settings are available in the Settings dialog, "
-                                               "the others are commented in this file, but handle with care!"));
+    xmlNodePtr com = xmlNewComment("The Xournal++ settings file. Do not edit this file! "
+                                   "Most settings are available in the Settings dialog, "
+                                   "the others are commented in this file, but handle with care!"_xml);
     xmlAddPrevSibling(root, com);
 
     SAVE_BOOL_PROP(pressureSensitivity);
@@ -1151,15 +1149,15 @@ void Settings::save() {
     SAVE_STRING_PROP(latexSettings.temporaryFileExt);
 
     xmlNodePtr xmlFont = nullptr;
-    xmlFont = xmlNewChild(root, nullptr, str2xmlChar("property"), nullptr);
-    xmlSetProp(xmlFont, str2xmlChar("name"), str2xmlChar("font"));
-    xmlSetProp(xmlFont, str2xmlChar("font"), str2xmlChar(this->font.getName().c_str()));
+    xmlFont = xmlNewChild(root, nullptr, "property"_xml, nullptr);
+    xmlSetProp(xmlFont, "name"_xml, "font"_xml);
+    xmlSetProp(xmlFont, "font"_xml, reinterpret_cast<const xmlChar*>(this->font.getName().c_str()));
 
     char sSize[G_ASCII_DTOSTR_BUF_SIZE];
 
     g_ascii_formatd(sSize, G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING,
                     this->font.getSize());  // no locale
-    xmlSetProp(xmlFont, str2xmlChar("size"), str2xmlChar(sSize));
+    xmlSetProp(xmlFont, "size"_xml, reinterpret_cast<const xmlChar*>(sSize));
 
 
     for (std::map<string, SElement>::value_type p: data) {
@@ -1171,9 +1169,9 @@ void Settings::save() {
 }
 
 void Settings::saveData(xmlNodePtr root, const string& name, SElement& elem) {
-    xmlNodePtr xmlNode = xmlNewChild(root, nullptr, str2xmlChar("data"), nullptr);
+    xmlNodePtr xmlNode = xmlNewChild(root, nullptr, "data"_xml, nullptr);
 
-    xmlSetProp(xmlNode, str2xmlChar("name"), str2xmlChar(name));
+    xmlSetProp(xmlNode, "name"_xml, reinterpret_cast<const xmlChar*>(name.c_str()));
 
     for (auto const& [aname, attrib]: elem.attributes()) {
         string type;
@@ -1214,11 +1212,11 @@ void Settings::saveData(xmlNodePtr root, const string& name, SElement& elem) {
         }
 
         xmlNodePtr at = nullptr;
-        at = xmlNewChild(xmlNode, nullptr, reinterpret_cast<const xmlChar*>("attribute"), nullptr);
+        at = xmlNewChild(xmlNode, nullptr, "attribute"_xml, nullptr);
 
-        xmlSetProp(at, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>(aname.c_str()));
-        xmlSetProp(at, reinterpret_cast<const xmlChar*>("type"), reinterpret_cast<const xmlChar*>(type.c_str()));
-        xmlSetProp(at, reinterpret_cast<const xmlChar*>("value"), reinterpret_cast<const xmlChar*>(value.c_str()));
+        xmlSetProp(at, "name"_xml, reinterpret_cast<const xmlChar*>(aname.c_str()));
+        xmlSetProp(at, "type"_xml, reinterpret_cast<const xmlChar*>(type.c_str()));
+        xmlSetProp(at, "value"_xml, reinterpret_cast<const xmlChar*>(value.c_str()));
 
         if (!attrib.comment.empty()) {
             xmlNodePtr com = xmlNewComment(reinterpret_cast<const xmlChar*>(attrib.comment.c_str()));
@@ -1745,7 +1743,7 @@ auto Settings::isPresentationMode() const -> bool {
     return this->activeViewMode == PresetViewModeIds::VIEW_MODE_PRESENTATION;
 }
 
-void Settings::setPressureSensitivity(int pressureSensitivity) {
+void Settings::setPressureSensitivity(bool pressureSensitivity) {
     if (this->pressureSensitivity == pressureSensitivity) {
         return;
     }

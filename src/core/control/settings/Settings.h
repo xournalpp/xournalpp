@@ -131,7 +131,7 @@ public:
     ViewModeId getActiveViewMode() const;
 
     bool isPressureSensitivity() const;
-    void setPressureSensitivity(int pressureSensitivity);
+    void setPressureSensitivity(bool pressureSensitivity);
 
     /**
      * Input device pressure options
