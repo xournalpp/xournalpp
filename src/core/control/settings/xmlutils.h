@@ -21,18 +21,11 @@
 
 #include "xmlutils.h"
 
-
 /*
- * xTo: parse xmlChar* (unsigned char*) string to template type
+ * parse: parse settings from XML
  */
 template <typename T>
-T parse(const xmlChar* xml, T defaultValue = T{});
-
-/*
- * cast: cast settings parsed from XML
- */
-template <typename T>
-T cast(std::string_view strView, T defaultValue = T{});
+T parse(std::string_view strView, T defaultValue = T{});
 
 /*
  * Operator that converts string literals to xmlChar* (unsigned char*)
@@ -45,30 +38,21 @@ inline const xmlChar* operator""_xml(const char* ch, size_t);
 template <typename T>
 T xmlGet(const xmlNode* node, const char* property, T defaultValue = T{});
 
-template <typename T>
-T parse(const xmlChar* xml, T defaultValue) {
-    if (xml == nullptr) {
-        return defaultValue;
-    }
-
-    return cast(reinterpret_cast<const char*>(xml), defaultValue);
-}
-
 inline const xmlChar* operator""_xml(const char* ch, size_t) { return reinterpret_cast<const xmlChar*>(ch); }
 
 template <typename T>
 T xmlGet(const xmlNode* node, const char* property, T defaultValue) {
     xmlChar* str = xmlGetProp(node, reinterpret_cast<const xmlChar*>(property));
-    const T ret = parse<T>(str, defaultValue);
+    const std::string_view ret = reinterpret_cast<const char*>(str);
 
     xmlFree(str);
 
-    return ret;
+    return parse<T>(ret, defaultValue);
 }
 
 
 template <typename T>
-T cast(const std::string_view strView, T defaultValue) {
+T parse(const std::string_view strView, T defaultValue) {
     if (strView.empty()) {
         return defaultValue;
     }

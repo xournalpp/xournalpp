@@ -312,7 +312,7 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem) {
 
 void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     // Parse data map
-    if (parse<string>(cur->name) == "data") {
+    if (cur->name == "data"_xml) {
         const auto name = xmlGet<string>(cur, "name");
         if (name.empty()) {
             g_warning("Settings::%s:No name property!\n", cur->name);
@@ -328,7 +328,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         return;
     }
 
-    if (parse<string>(cur->name) != "property") {
+    if (cur->name != "property"_xml) {
         g_warning("Settings::Unknown XML node: %s\n", cur->name);
         return;
     }
@@ -359,17 +359,17 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 
     // TODO(fabian): remove this typo fix in 2-3 release cycles
     if (name == "presureSensitivity") {
-        this->pressureSensitivity = cast<bool>(value);
+        this->pressureSensitivity = parse<bool>(value);
     }
     if (name == "pressureSensitivity") {
-        this->pressureSensitivity = cast<bool>(value);
+        this->pressureSensitivity = parse<bool>(value);
     } else if (name == "minimumPressure") {
         // std::max is for backwards compatibility for users who might have set this value too small
-        this->minimumPressure = std::max(0.01, cast<double>(value));
+        this->minimumPressure = std::max(0.01, parse<double>(value));
     } else if (name == "pressureMultiplier") {
-        this->pressureMultiplier = cast<double>(value);
+        this->pressureMultiplier = parse<double>(value);
     } else if (name == "zoomGesturesEnabled") {
-        this->zoomGesturesEnabled = cast<bool>(value);
+        this->zoomGesturesEnabled = parse<bool>(value);
     } else if (name == "selectedToolbar") {
         this->selectedToolbar = value;
     } else if (name == "lastSavePath") {
@@ -379,66 +379,66 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (name == "lastImagePath") {
         this->lastImagePath = fs::u8path(value);
     } else if (name == "edgePanSpeed") {
-        this->edgePanSpeed = cast<double>(value);
+        this->edgePanSpeed = parse<double>(value);
     } else if (name == "edgePanMaxMult") {
-        this->edgePanMaxMult = cast<double>(value);
+        this->edgePanMaxMult = parse<double>(value);
     } else if (name == "zoomStep") {
-        this->zoomStep = cast<double>(value);
+        this->zoomStep = parse<double>(value);
     } else if (name == "zoomStepScroll") {
-        this->zoomStepScroll = cast<double>(value);
+        this->zoomStepScroll = parse<double>(value);
     } else if (name == "displayDpi") {
-        this->displayDpi = cast<int>(value);
+        this->displayDpi = parse<int>(value);
     } else if (name == "mainWndWidth") {
-        this->mainWndWidth = cast<int>(value);
+        this->mainWndWidth = parse<int>(value);
     } else if (name == "mainWndHeight") {
-        this->mainWndHeight = cast<int>(value);
+        this->mainWndHeight = parse<int>(value);
     } else if (name == "maximized") {
-        this->maximized = cast<bool>(value);
+        this->maximized = parse<bool>(value);
     } else if (name == "showToolbar") {
-        this->showToolbar = cast<bool>(value);
+        this->showToolbar = parse<bool>(value);
     } else if (name == "filepathShownInTitlebar") {
-        this->filepathShownInTitlebar = cast<bool>(value);
+        this->filepathShownInTitlebar = parse<bool>(value);
     } else if (name == "pageNumberShownInTitlebar") {
-        this->pageNumberShownInTitlebar = cast<bool>(value);
+        this->pageNumberShownInTitlebar = parse<bool>(value);
     } else if (name == "showSidebar") {
-        this->showSidebar = cast<bool>(value);
+        this->showSidebar = parse<bool>(value);
     } else if (name == "sidebarNumberingStyle") {
-        auto num = cast<int>(value);
+        auto num = parse<int>(value);
         if (num < static_cast<int>(SidebarNumberingStyle::MIN) || static_cast<int>(SidebarNumberingStyle::MAX) < num) {
             num = static_cast<int>(SidebarNumberingStyle::DEFAULT);
             g_warning("Settings::Invalid sidebarNumberingStyle value. Reset to default.");
         }
         this->sidebarNumberingStyle = static_cast<SidebarNumberingStyle>(num);
     } else if (name == "sidebarWidth") {
-        this->sidebarWidth = std::max<int>(cast<int>(value), 50);
+        this->sidebarWidth = std::max<int>(parse<int>(value), 50);
     } else if (name == "sidebarOnRight") {
-        this->sidebarOnRight = cast<bool>(value);
+        this->sidebarOnRight = parse<bool>(value);
     } else if (name == "scrollbarOnLeft") {
-        this->scrollbarOnLeft = cast<bool>(value);
+        this->scrollbarOnLeft = parse<bool>(value);
     } else if (name == "menubarVisible") {
-        this->menubarVisible = cast<bool>(value);
+        this->menubarVisible = parse<bool>(value);
     } else if (name == "numColumns") {
-        this->numColumns = cast<int>(value);
+        this->numColumns = parse<int>(value);
     } else if (name == "numRows") {
-        this->numRows = cast<int>(value);
+        this->numRows = parse<int>(value);
     } else if (name == "viewFixedRows") {
-        this->viewFixedRows = cast<bool>(value);
+        this->viewFixedRows = parse<bool>(value);
     } else if (name == "layoutVertical") {
-        this->layoutVertical = cast<bool>(value);
+        this->layoutVertical = parse<bool>(value);
     } else if (name == "layoutRightToLeft") {
-        this->layoutRightToLeft = cast<bool>(value);
+        this->layoutRightToLeft = parse<bool>(value);
     } else if (name == "layoutBottomToTop") {
-        this->layoutBottomToTop = cast<bool>(value);
+        this->layoutBottomToTop = parse<bool>(value);
     } else if (name == "showPairedPages") {
-        this->showPairedPages = cast<bool>(value);
+        this->showPairedPages = parse<bool>(value);
     } else if (name == "numPairsOffset") {
-        this->numPairsOffset = cast<int>(value);
+        this->numPairsOffset = parse<int>(value);
     } else if (name == "presentationMode") {
-        this->presentationMode = cast<bool>(value);
+        this->presentationMode = parse<bool>(value);
     } else if (name == "autoloadMostRecent") {
-        this->autoloadMostRecent = cast<bool>(value);
+        this->autoloadMostRecent = parse<bool>(value);
     } else if (name == "autoloadPdfXoj") {
-        this->autoloadPdfXoj = cast<bool>(value);
+        this->autoloadPdfXoj = parse<bool>(value);
     } else if (name == "stylusCursorType") {
         this->stylusCursorType = stylusCursorTypeFromString(value);
     } else if (name == "eraserVisibility") {
@@ -448,17 +448,17 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (name == "themeVariant") {
         this->themeVariant = themeVariantFromString(value);
     } else if (name == "highlightPosition") {
-        this->highlightPosition = cast<bool>(value);
+        this->highlightPosition = parse<bool>(value);
     } else if (name == "cursorHighlightColor") {
-        this->cursorHighlightColor = cast<Color>(value);
+        this->cursorHighlightColor = parse<Color>(value);
     } else if (name == "cursorHighlightRadius") {
-        this->cursorHighlightRadius = cast<double>(value);
+        this->cursorHighlightRadius = parse<double>(value);
     } else if (name == "cursorHighlightBorderColor") {
-        this->cursorHighlightBorderColor = cast<unsigned int>(value);
+        this->cursorHighlightBorderColor = parse<unsigned int>(value);
     } else if (name == "cursorHighlightBorderWidth") {
-        this->cursorHighlightBorderWidth = cast<double>(value);
+        this->cursorHighlightBorderWidth = parse<double>(value);
     } else if (name == "useStockIcons") {
-        this->useStockIcons = cast<bool>(value);
+        this->useStockIcons = parse<bool>(value);
     } else if (name == "defaultSaveName") {
         this->defaultSaveName = value;
     } else if (name == "defaultPdfExportName") {
@@ -474,9 +474,9 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (name == "audioFolder") {
         this->audioFolder = fs::u8path(value);
     } else if (name == "autosaveEnabled") {
-        this->autosaveEnabled = cast<bool>(value);
+        this->autosaveEnabled = parse<bool>(value);
     } else if (name == "autosaveTimeout") {
-        this->autosaveTimeout = cast<int>(value);
+        this->autosaveTimeout = parse<int>(value);
     } else if (name == "defaultViewModeAttributes") {
         this->viewModes.at(VIEW_MODE_DEFAULT) = settingsStringToViewMode(value);
     } else if (name == "fullscreenViewModeAttributes") {
@@ -484,77 +484,77 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (name == "presentationViewModeAttributes") {
         this->viewModes.at(VIEW_MODE_PRESENTATION) = settingsStringToViewMode(value);
     } else if (name == "touchZoomStartThreshold") {
-        this->touchZoomStartThreshold = cast<double>(value);
+        this->touchZoomStartThreshold = parse<double>(value);
     } else if (name == "pageRerenderThreshold") {
-        this->pageRerenderThreshold = cast<double>(value);
+        this->pageRerenderThreshold = parse<double>(value);
     } else if (name == "pdfPageCacheSize") {
-        this->pdfPageCacheSize = cast<int>(value);
+        this->pdfPageCacheSize = parse<int>(value);
     } else if (name == "preloadPagesBefore") {
-        this->preloadPagesBefore = cast<unsigned int>(value);
+        this->preloadPagesBefore = parse<unsigned int>(value);
     } else if (name == "preloadPagesAfter") {
-        this->preloadPagesAfter = cast<unsigned int>(value);
+        this->preloadPagesAfter = parse<unsigned int>(value);
     } else if (name == "eagerPageCleanup") {
-        this->eagerPageCleanup = cast<bool>(value);
+        this->eagerPageCleanup = parse<bool>(value);
     } else if (name == "selectionBorderColor") {
-        this->selectionBorderColor = cast<Color>(value);
+        this->selectionBorderColor = parse<Color>(value);
     } else if (name == "selectionMarkerColor") {
-        this->selectionMarkerColor = cast<Color>(value);
+        this->selectionMarkerColor = parse<Color>(value);
     } else if (name == "activeSelectionColor") {
-        this->activeSelectionColor = cast<Color>(value);
+        this->activeSelectionColor = parse<Color>(value);
     } else if (name == "recolor.enabled") {
-        this->recolorParameters.recolorizeMainView = cast<bool>(value);
+        this->recolorParameters.recolorizeMainView = parse<bool>(value);
     } else if (name == "recolor.sidebar") {
-        this->recolorParameters.recolorizeSidebarMiniatures = cast<bool>(value);
+        this->recolorParameters.recolorizeSidebarMiniatures = parse<bool>(value);
     } else if (name == "recolor.light") {
-        this->recolorParameters.recolor = Recolor(cast<Color>(value), this->recolorParameters.recolor.getDark());
+        this->recolorParameters.recolor = Recolor(parse<Color>(value), this->recolorParameters.recolor.getDark());
     } else if (name == "recolor.dark") {
-        this->recolorParameters.recolor = Recolor(this->recolorParameters.recolor.getLight(), cast<Color>(value));
+        this->recolorParameters.recolor = Recolor(this->recolorParameters.recolor.getLight(), parse<Color>(value));
     } else if (name == "backgroundColor") {
-        this->backgroundColor = cast<Color>(value);
+        this->backgroundColor = parse<Color>(value);
     } else if (name == "addHorizontalSpace") {
-        this->addHorizontalSpace = cast<bool>(value);
+        this->addHorizontalSpace = parse<bool>(value);
     } else if (name == "addHorizontalSpaceAmount") {
-        const int oldHorizontalAmount = cast<int>(value);
+        const int oldHorizontalAmount = parse<int>(value);
         this->addHorizontalSpaceAmountLeft = oldHorizontalAmount;
         this->addHorizontalSpaceAmountRight = oldHorizontalAmount;
     } else if (name == "addHorizontalSpaceAmountRight") {
-        this->addHorizontalSpaceAmountRight = cast<int>(value);
+        this->addHorizontalSpaceAmountRight = parse<int>(value);
     } else if (name == "addVerticalSpace") {
-        this->addVerticalSpace = cast<bool>(value);
+        this->addVerticalSpace = parse<bool>(value);
     } else if (name == "addVerticalSpaceAmount") {
-        const int oldVerticalAmount = cast<int>(value);
+        const int oldVerticalAmount = parse<int>(value);
         this->addHorizontalSpaceAmountLeft = oldVerticalAmount;
         this->addHorizontalSpaceAmountRight = oldVerticalAmount;
     } else if (name == "addVerticalSpaceAmountAbove") {
-        this->addVerticalSpaceAmountAbove = cast<int>(value);
+        this->addVerticalSpaceAmountAbove = parse<int>(value);
     } else if (name == "addHorizontalSpaceAmountLeft") {
-        this->addHorizontalSpaceAmountLeft = cast<int>(value);
+        this->addHorizontalSpaceAmountLeft = parse<int>(value);
     } else if (name == "addVerticalSpaceAmountBelow") {
-        this->addVerticalSpaceAmountBelow = cast<int>(value);
+        this->addVerticalSpaceAmountBelow = parse<int>(value);
     } else if (name == "unlimitedScrolling") {
-        this->unlimitedScrolling = cast<bool>(value);
+        this->unlimitedScrolling = parse<bool>(value);
     } else if (name == "drawDirModsEnabled") {
-        this->drawDirModsEnabled = cast<bool>(value);
+        this->drawDirModsEnabled = parse<bool>(value);
     } else if (name == "drawDirModsRadius") {
-        this->drawDirModsRadius = cast<int>(value);
+        this->drawDirModsRadius = parse<int>(value);
     } else if (name == "snapRotation") {
-        this->snapRotation = cast<bool>(value);
+        this->snapRotation = parse<bool>(value);
     } else if (name == "snapRotationTolerance") {
-        this->snapRotationTolerance = cast<double>(value);
+        this->snapRotationTolerance = parse<double>(value);
     } else if (name == "snapGrid") {
-        this->snapGrid = cast<bool>(value);
+        this->snapGrid = parse<bool>(value);
     } else if (name == "snapGridSize") {
-        this->snapGridSize = cast<double>(value);
+        this->snapGridSize = parse<double>(value);
     } else if (name == "snapGridTolerance") {
-        this->snapGridTolerance = cast<double>(value);
+        this->snapGridTolerance = parse<double>(value);
     } else if (name == "strokeRecognizerMinSize") {
-        this->strokeRecognizerMinSize = cast<double>(value);
+        this->strokeRecognizerMinSize = parse<double>(value);
     } else if (name == "touchDrawing") {
-        this->touchDrawing = cast<bool>(value);
+        this->touchDrawing = parse<bool>(value);
     } else if (name == "gtkTouchInertialScrolling") {
-        this->gtkTouchInertialScrolling = cast<bool>(value);
+        this->gtkTouchInertialScrolling = parse<bool>(value);
     } else if (name == "pressureGuessing") {
-        this->pressureGuessing = cast<bool>(value);
+        this->pressureGuessing = parse<bool>(value);
     } else if (name == "scrollbarHideType") {
         if (value == "both") {
             this->scrollbarHideType = SCROLLBAR_HIDE_BOTH;
@@ -566,43 +566,43 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
             this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
         }
     } else if (name == "disableScrollbarFadeout") {
-        this->disableScrollbarFadeout = cast<bool>(value);
+        this->disableScrollbarFadeout = parse<bool>(value);
     } else if (name == "disableAudio") {
-        this->disableAudio = cast<bool>(value);
+        this->disableAudio = parse<bool>(value);
 #ifdef ENABLE_AUDIO
     } else if (name == "audioSampleRate") {
-        this->audioSampleRate = cast<double>(value);
+        this->audioSampleRate = parse<double>(value);
     } else if (name == "audioGain") {
-        this->audioGain = cast<double>(value);
+        this->audioGain = parse<double>(value);
     } else if (name == "defaultSeekTime") {
-        this->defaultSeekTime = cast<unsigned int>(value);
+        this->defaultSeekTime = parse<unsigned int>(value);
     } else if (name == "audioInputDevice") {
-        this->audioInputDevice = cast<int>(value);
+        this->audioInputDevice = parse<int>(value);
     } else if (name == "audioOutputDevice") {
-        this->audioOutputDevice = cast<int>(value);
+        this->audioOutputDevice = parse<int>(value);
 #endif
     } else if (name == "numIgnoredStylusEvents") {
-        this->numIgnoredStylusEvents = std::max<int>(cast<int>(value), 0);
+        this->numIgnoredStylusEvents = std::max<int>(parse<int>(value), 0);
     } else if (name == "inputSystemTPCButton") {
-        this->inputSystemTPCButton = cast<bool>(value);
+        this->inputSystemTPCButton = parse<bool>(value);
     } else if (name == "inputSystemDrawOutsideWindow") {
-        this->inputSystemDrawOutsideWindow = cast<bool>(value);
+        this->inputSystemDrawOutsideWindow = parse<bool>(value);
     } else if (name == "emptyLastPageAppend") {
         this->emptyLastPageAppend = emptyLastPageAppendFromString(value);
     } else if (name == "strokeFilterIgnoreTime") {
-        this->strokeFilterIgnoreTime = cast<int>(value);
+        this->strokeFilterIgnoreTime = parse<int>(value);
     } else if (name == "strokeFilterIgnoreLength") {
-        this->strokeFilterIgnoreLength = cast<double>(value);
+        this->strokeFilterIgnoreLength = parse<double>(value);
     } else if (name == "strokeFilterSuccessiveTime") {
-        this->strokeFilterSuccessiveTime = cast<int>(value);
+        this->strokeFilterSuccessiveTime = parse<int>(value);
     } else if (name == "strokeFilterEnabled") {
-        this->strokeFilterEnabled = cast<bool>(value);
+        this->strokeFilterEnabled = parse<bool>(value);
     } else if (name == "doActionOnStrokeFiltered") {
-        this->doActionOnStrokeFiltered = cast<bool>(value);
+        this->doActionOnStrokeFiltered = parse<bool>(value);
     } else if (name == "trySelectOnStrokeFiltered") {
-        this->trySelectOnStrokeFiltered = cast<bool>(value);
+        this->trySelectOnStrokeFiltered = parse<bool>(value);
     } else if (name == "latexSettings.autoCheckDependencies") {
-        this->latexSettings.autoCheckDependencies = cast<bool>(value);
+        this->latexSettings.autoCheckDependencies = parse<bool>(value);
     } else if (name == "latexSettings.defaultText") {
         this->latexSettings.defaultText = value;
     } else if (name == "latexSettings.globalTemplatePath") {
@@ -614,46 +614,46 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (name == "latexSettings.editorFont") {
         this->latexSettings.editorFont = value;
     } else if (name == "latexSettings.useCustomEditorFont") {
-        this->latexSettings.useCustomEditorFont = cast<bool>(value);
+        this->latexSettings.useCustomEditorFont = parse<bool>(value);
     } else if (name == "latexSettings.editorWordWrap") {
-        this->latexSettings.editorWordWrap = cast<bool>(value);
+        this->latexSettings.editorWordWrap = parse<bool>(value);
     } else if (name == "latexSettings.sourceViewAutoIndent") {
-        this->latexSettings.sourceViewAutoIndent = cast<bool>(value);
+        this->latexSettings.sourceViewAutoIndent = parse<bool>(value);
     } else if (name == "latexSettings.sourceViewSyntaxHighlight") {
-        this->latexSettings.sourceViewSyntaxHighlight = cast<bool>(value);
+        this->latexSettings.sourceViewSyntaxHighlight = parse<bool>(value);
     } else if (name == "latexSettings.sourceViewShowLineNumbers") {
-        this->latexSettings.sourceViewShowLineNumbers = cast<bool>(value);
+        this->latexSettings.sourceViewShowLineNumbers = parse<bool>(value);
     } else if (name == "snapRecognizedShapesEnabled") {
-        this->snapRecognizedShapesEnabled = cast<bool>(value);
+        this->snapRecognizedShapesEnabled = parse<bool>(value);
     } else if (name == "restoreLineWidthEnabled") {
-        this->restoreLineWidthEnabled = cast<bool>(value);
+        this->restoreLineWidthEnabled = parse<bool>(value);
     } else if (name == "preferredLocale") {
         this->preferredLocale = value;
     } else if (name == "useSpacesForTab") {
-        this->setUseSpacesAsTab(cast<bool>(value));
+        this->setUseSpacesAsTab(parse<bool>(value));
     } else if (name == "numberOfSpacesForTab") {
-        this->setNumberOfSpacesForTab(cast<unsigned int>(value));
+        this->setNumberOfSpacesForTab(parse<unsigned int>(value));
         /**
          * Stabilizer related settings
          */
     } else if (name == "stabilizerAveragingMethod") {
-        this->stabilizerAveragingMethod = static_cast<StrokeStabilizer::AveragingMethod>(cast<int>(value));
+        this->stabilizerAveragingMethod = static_cast<StrokeStabilizer::AveragingMethod>(parse<int>(value));
     } else if (name == "stabilizerPreprocessor") {
-        this->stabilizerPreprocessor = static_cast<StrokeStabilizer::Preprocessor>(cast<int>(value));
+        this->stabilizerPreprocessor = static_cast<StrokeStabilizer::Preprocessor>(parse<int>(value));
     } else if (name == "stabilizerBuffersize") {
-        this->stabilizerBuffersize = cast<unsigned int>(value);
+        this->stabilizerBuffersize = parse<unsigned int>(value);
     } else if (name == "stabilizerSigma") {
-        this->stabilizerSigma = cast<int>(value);
+        this->stabilizerSigma = parse<int>(value);
     } else if (name == "stabilizerDeadzoneRadius") {
-        this->stabilizerDeadzoneRadius = cast<double>(value);
+        this->stabilizerDeadzoneRadius = parse<double>(value);
     } else if (name == "stabilizerDrag") {
-        this->stabilizerDrag = cast<double>(value);
+        this->stabilizerDrag = parse<double>(value);
     } else if (name == "stabilizerMass") {
-        this->stabilizerMass = cast<double>(value);
+        this->stabilizerMass = parse<double>(value);
     } else if (name == "stabilizerCuspDetection") {
-        this->stabilizerCuspDetection = cast<bool>(value);
+        this->stabilizerCuspDetection = parse<bool>(value);
     } else if (name == "stabilizerFinalizeStroke") {
-        this->stabilizerFinalizeStroke = cast<bool>(value);
+        this->stabilizerFinalizeStroke = parse<bool>(value);
     } else if (name == "colorPalette") {
         this->colorPaletteSetting = !value.empty() ? value : nullptr;
     }
@@ -689,48 +689,44 @@ void Settings::loadButtonConfig() {
             const ToolType type = toolTypeFromString(sType);
             cfg->action = type;
 
-            switch (type) {
-                case TOOL_PEN: {
-                    string strokeType;
-                    cfg->strokeType =
-                            e.getString("strokeType", strokeType) ? strokeTypeFromString(strokeType) : STROKE_TYPE_NONE;
+            if (type == TOOL_PEN) {
+                string strokeType;
+                cfg->strokeType =
+                        e.getString("strokeType", strokeType) ? strokeTypeFromString(strokeType) : STROKE_TYPE_NONE;
+            }
 
-                    // Does not break on purpose!
+            if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER) {
+                if (string drawingType; e.getString("drawingType", drawingType)) {
+                    cfg->drawingType = drawingTypeFromString(drawingType);
                 }
-                case TOOL_HIGHLIGHTER: {
-                    if (string drawingType; e.getString("drawingType", drawingType)) {
-                        cfg->drawingType = drawingTypeFromString(drawingType);
-                    }
 
-                    string sSize;
-                    if (e.getString("size", sSize)) {
-                        cfg->size = toolSizeFromString(sSize);
-                    } else {
-                        // If not specified: do not change
-                        cfg->size = TOOL_SIZE_NONE;
-                    }
-                    // Does not break on purpose!
+                if (string sSize; e.getString("size", sSize)) {
+                    cfg->size = toolSizeFromString(sSize);
+                } else {
+                    // If not specified: do not change
+                    cfg->size = TOOL_SIZE_NONE;
                 }
-                case TOOL_TEXT: {
-                    if (int iColor; e.getInt("color", iColor)) {
-                        cfg->color = Color(as_unsigned(iColor));
-                    }
-                    break;
-                }
-                case TOOL_ERASER: {
-                    if (string sEraserMode; e.getString("eraserMode", sEraserMode)) {
-                        cfg->eraserMode = eraserTypeFromString(sEraserMode);
-                    } else {
-                        // If not specified: do not change
-                        cfg->eraserMode = ERASER_TYPE_NONE;
-                    }
+            }
 
-                    if (string sSize; e.getString("size", sSize)) {
-                        cfg->size = toolSizeFromString(sSize);
-                    } else {
-                        // If not specified: do not change
-                        cfg->size = TOOL_SIZE_NONE;
-                    }
+            if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER || type == TOOL_TEXT) {
+                if (int iColor; e.getInt("color", iColor)) {
+                    cfg->color = Color(as_unsigned(iColor));
+                }
+            }
+
+            if (type == TOOL_ERASER) {
+                if (string sEraserMode; e.getString("eraserMode", sEraserMode)) {
+                    cfg->eraserMode = eraserTypeFromString(sEraserMode);
+                } else {
+                    // If not specified: do not change
+                    cfg->eraserMode = ERASER_TYPE_NONE;
+                }
+
+                if (string sSize; e.getString("size", sSize)) {
+                    cfg->size = toolSizeFromString(sSize);
+                } else {
+                    // If not specified: do not change
+                    cfg->size = TOOL_SIZE_NONE;
                 }
             }
 
@@ -769,7 +765,7 @@ auto Settings::load() -> bool {
         return false;
     }
 
-    if (parse<string>(cur->name) != "settings") {
+    if (cur->name != "settings"_xml) {
         g_message("File \"%s\" is of the wrong type", filepath.string().c_str());
         xmlFreeDoc(doc);
 
