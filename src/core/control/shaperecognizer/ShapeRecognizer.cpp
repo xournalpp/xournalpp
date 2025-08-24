@@ -333,9 +333,26 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) ->
                 s->addPoint(Point(rs->x1, rs->y1));
                 s->addPoint(Point(rs->x2, rs->y2));
             } else {
-                auto points = stroke->getPointVector();
-                s->addPoint(Point(points.front().x, points.front().y));
-                s->addPoint(Point(points.back().x, points.back().y));
+                const Point P(rs->x1, rs->y1);
+                const Point Q(rs->x2, rs->y2);
+
+                const auto& points = stroke->getPointVector();
+                const Point& last = points.back();
+
+                const double dx = Q.x - P.x;
+                const double dy = Q.y - P.y;
+                const double num = dy * last.x - dx * last.y + Q.x * P.y - Q.y * P.x;
+                const double num2 = num * num;
+                const double den2 = dy * dy + dx * dx;
+                const double dist2 = num2 / den2;
+
+                if (dist2 < LINE_POINT_DIST2_THRESHOLD) {
+                    s->addPoint(P);
+                    s->addPoint(Q);
+                } else {
+                    s->addPoint(Point(points.front().x, points.front().y));
+                    s->addPoint(Point(points.back().x, points.back().y));
+                }
             }
 
             RDEBUG("return line");
