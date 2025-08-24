@@ -134,6 +134,26 @@ auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
     return lastSavePath;
 }
 
+
+static std::string preprocessFormatString(const std::string& formatStr) {
+    std::string processed = formatStr;
+    // Replace %F with %Y-%m-%d
+    size_t pos;
+    while ((pos = processed.find("%F")) != std::string::npos) {
+        processed.replace(pos, 2, "%Y-%m-%d");
+    }
+    // Replace %T with %H-%M-%S
+    while ((pos = processed.find("%T")) != std::string::npos) {
+        processed.replace(pos, 2, "%H-%M-%S");
+    }
+    // Replace %V with %U
+    while ((pos = processed.find("%V")) != std::string::npos) {
+        processed.replace(pos, 2, "%U");
+    }
+    return processed;
+}
+
+
 auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName,
                                   const std::string& defaultPdfName) -> fs::path {
     constexpr static std::wstring_view forbiddenChars = {L"\\/:*?\"<>|"};
@@ -158,6 +178,7 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
 
     auto format_str = wildcardString.empty() ? defaultSaveName : wildcardString;
 
+    format_str = preprocessFormatString(format_str);
     std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
     auto format = converter.from_bytes(format_str);
 
