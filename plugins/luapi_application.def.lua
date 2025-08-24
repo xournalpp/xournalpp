@@ -873,30 +873,23 @@ function app.clearSelection() end
 --- 
 function app.addToSelection(refs) end
 
---- Registers a placeholder label for use in the toolbar or menubar.
----
---- The placeholder will display a label with the given toolbarId until its value is set.
---- The label text is sanitized (removes newlines/carriage returns) and truncated if too long.
----
---- @param toolbarId string Unique identifier for the placeholder in the toolbar or menubar
---- @param description string Description shown in tooltips and menus (optional)
----
---- Example: app.registerPlaceholder("VI_MODE_LABEL", "Current Vi mode")
-function app.registerPlaceholder(toolbarId, description) end
+--- Registers a new placeholder label for the toolbar.
+--- 
+--- @param id string: The placeholder ID (must be unique for each placeholder)
+--- @param description string: The label description shown in the toolbar
+--- 
+--- Example:
+---   app.registerPlaceholder("vi-mode", "Current mode")
+--- 
+--- The placeholder can then be updated with app.setPlaceholderValue(id, value).
+function app.registerPlaceholder(id, description) end
 
---- Sets the displayed value of a previously registered placeholder label.
----
---- Updates all label widgets associated with the placeholder. The value is sanitized and truncated.
----
---- @param toolbarId string Unique identifier for the placeholder
---- @param value string Text to display in the label
----
---- Example: app.setPlaceholderValue("VI_MODE_LABEL", "NORMAL")
-function app.setPlaceholderValue(toolbarId, value) end
+--- Set the value of a plugin placeholder label in the toolbar.
+--- 
+--- @param id string: The placeholder ID
+--- @param value string: The value to display
+--- 
+--- Example: app.setPlaceholderValue("vi-mode", "Current mode")
+--- Updates the toolbar placeholder with the given value.
+function app.setPlaceholderValue(id, value) end
 
--- Example usage:
--- Register a placeholder for vi-mode in a plugin (e.g., vi-xournal).
--- When the mode changes, update the label:
--- app.registerPlaceholder("VI_MODE_LABEL", "Current Vi mode")
--- app.setPlaceholderValue("VI_MODE_LABEL", "INSERT")
--- app.setPlaceholderValue("VI_MODE_LABEL", "NORMAL")

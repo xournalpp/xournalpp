@@ -55,9 +55,9 @@
 #include "util/PathUtil.h"            // for clea...
 #include "util/PopupWindowWrapper.h"  // for PopupWindowWrapper
 #include "util/StringUtils.h"
+#include "util/XojMsgBox.h"
 #include "util/i18n.h"        // for _
 #include "util/safe_casts.h"  // for round_cast, as_signed, as_unsigned
-#include "util/XojMsgBox.h"
 
 #include "ActionBackwardCompatibilityLayer.h"
 
@@ -3152,7 +3152,7 @@ static int applib_registerPlaceholder(lua_State* L) {
  * @param id string: The placeholder ID
  * @param value string: The value to display
  *
- * Example: app.setPlaceholderValue("myPlaceholder", "Hello World")
+ * Example: app.setPlaceholderValue("vi-mode", "Current mode")
  * Updates the toolbar placeholder with the given value.
  */
 static int applib_setPlaceholderValue(lua_State* L) {

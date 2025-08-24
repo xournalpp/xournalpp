@@ -14,7 +14,7 @@
 #include <cstddef>  // for size_t
 #include <limits>   // for numeric_limits
 #include <memory>   // for unique_ptr
-#include <unordered_map> 
+#include <unordered_map>
 
 #include "config-features.h"  // for ENABLE_PLUGINS
 
@@ -80,10 +80,10 @@ struct ToolbarButtonEntry final {
 };
 
 struct ToolbarPlaceholderEntry final {
-    std::string toolbarId;      ///< toolbar ID to be used in toolbar.ini
-    std::string description;    ///< description displayed on hovering over the placeholder
-    std::string value;          ///< current value of the placeholder
-    class PluginPlaceholderLabel* label = nullptr; ///< pointer to the label for updates
+    std::string toolbarId;                          ///< toolbar ID to be used in toolbar.ini
+    std::string description;                        ///< description displayed on hovering over the placeholder
+    std::string value;                              ///< current value of the placeholder
+    class PluginPlaceholderLabel* label = nullptr;  ///< pointer to the label for updates
 };
 
 struct LuaDeleter {
