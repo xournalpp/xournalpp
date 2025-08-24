@@ -17,9 +17,9 @@
 
 #include <utility>  // for move, pair
 
-#include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
-#include "gui/toolbarMenubar/PluginPlaceholderLabel.h" // for the PlaceholderLabel Plugin
-#include "util/i18n.h"                           // for _
+#include "gui/toolbarMenubar/PluginPlaceholderLabel.h"  // for the PlaceholderLabel Plugin
+#include "gui/toolbarMenubar/ToolMenuHandler.h"         // for ToolMenuHandler
+#include "util/i18n.h"                                  // for _
 #include "util/raii/GObjectSPtr.h"
 
 #include "config.h"  // for PROJECT_VERSION
@@ -332,7 +332,7 @@ void Plugin::registerPlaceholders(ToolMenuHandler* toolMenuHandler) {
         // No entries - nothing to do
         return;
     }
-    for (auto& pair : toolbarPlaceholderEntries) {
+    for (auto& pair: toolbarPlaceholderEntries) {
         g_message("Plugin: Adding placeholder to ToolMenuHandler: %s", pair.first.c_str());
         toolMenuHandler->addPluginPlaceholderItem(pair.second.get());
     }
@@ -344,7 +344,7 @@ void Plugin::registerPlaceholder(const std::string& toolbarId, const std::string
         entry->toolbarId = toolbarId;
         entry->description = description;
         entry->value = "";
-        entry->label = nullptr; // Will be set when toolbar is built
+        entry->label = nullptr;  // Will be set when toolbar is built
         toolbarPlaceholderEntries[toolbarId] = std::move(entry);
     }
 }

@@ -13,13 +13,14 @@
 
 #include <string>
 #include <vector>
+
 #include <gtk/gtk.h>
 
 #include "AbstractToolItem.h"
 
 struct ToolbarPlaceholderEntry;
 
-class PluginPlaceholderLabel : public AbstractToolItem {
+class PluginPlaceholderLabel: public AbstractToolItem {
 public:
     explicit PluginPlaceholderLabel(ToolbarPlaceholderEntry* t);
     ~PluginPlaceholderLabel() override;
@@ -31,12 +32,12 @@ public:
 
 protected:
     xoj::util::WidgetSPtr createItem(bool horizontal) override;
-    GtkWidget* getNewToolIcon() const override; // unused but required by base
+    GtkWidget* getNewToolIcon() const override;  // unused but required by base
 
 private:
     ToolbarPlaceholderEntry* t;
     std::vector<GtkWidget*> labelWidgets;
-    
+
     auto sanitizeText(const std::string& text) const -> std::string;
     auto getDisplayText() const -> std::string;
 };
