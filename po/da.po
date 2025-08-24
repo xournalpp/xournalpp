@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-16 11:01+0000\n"
-"PO-Revision-Date: 2025-08-17 04:28\n"
+"POT-Creation-Date: 2025-08-22 14:27+0000\n"
+"PO-Revision-Date: 2025-08-24 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Danish\n"
 "Language: da_DK\n"
@@ -23,71 +23,71 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 msgstr "Lydmappen er ikke indstillet eller ugyldig! Optagelse virker ikke!\n"
 "Indstil venligst optagelsesmappen under \"Indstillinger > Lydoptagelse\""
 
-#: ../src/core/control/Control.cpp:232
+#: ../src/core/control/Control.cpp:233
 msgid "Filesystem error: {1}"
 msgstr "Filsystem fejl: {1}"
 
-#: ../src/core/control/Control.cpp:244
+#: ../src/core/control/Control.cpp:245
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "Kunne ikke fjerne den gamle autosave fil \"{1}:\"{2}"
 
-#: ../src/core/control/Control.cpp:563
+#: ../src/core/control/Control.cpp:564
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "Du slettede den aktive værktøjslinje. Skifter tilbage til standardværktøjslinjen."
 
-#: ../src/core/control/Control.cpp:583
+#: ../src/core/control/Control.cpp:584
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Værktøjslinje konfigurationen \"{1}\" er foruddefineret, vil du oprette en kopi til at redigere?"
 
-#: ../src/core/control/Control.cpp:586 ../src/core/control/Control.cpp:1557
+#: ../src/core/control/Control.cpp:587 ../src/core/control/Control.cpp:1558
 msgid "Yes"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:586 ../src/core/control/Control.cpp:1557
+#: ../src/core/control/Control.cpp:587 ../src/core/control/Control.cpp:1558
 msgid "No"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:816 ../src/core/control/Control.cpp:1769
-#: ../src/core/control/Control.cpp:2109
+#: ../src/core/control/Control.cpp:817 ../src/core/control/Control.cpp:1770
+#: ../src/core/control/Control.cpp:2112
 msgid "Cancel"
 msgstr "Annullér"
 
-#: ../src/core/control/Control.cpp:817
+#: ../src/core/control/Control.cpp:818
 msgid "Insert after current page"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:818
+#: ../src/core/control/Control.cpp:819
 msgid "Insert at end"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:821
+#: ../src/core/control/Control.cpp:822
 msgid "_Journal"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:821
+#: ../src/core/control/Control.cpp:822
 msgid "Paper B_ackground"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:822
+#: ../src/core/control/Control.cpp:823
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:40
 msgid "With PDF background"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:825
+#: ../src/core/control/Control.cpp:826
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:868
+#: ../src/core/control/Control.cpp:869
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Ingen PDF-sider tilgængelige til at tilføje, Du skal muligvis genåbne dokumentet først."
 
-#: ../src/core/control/Control.cpp:882
+#: ../src/core/control/Control.cpp:883
 msgid "Unable to retrieve pdf page."
 msgstr "Kan ikke hente PDF-side."
 
-#: ../src/core/control/Control.cpp:1481
+#: ../src/core/control/Control.cpp:1482
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -95,99 +95,99 @@ msgstr "Åben ikke autosave filer. De kan blive overskrevet!\n"
 "Kopier filerne til en anden mappe.\n"
 "Filer fra mappen {1} kan ikke åbnes."
 
-#: ../src/core/control/Control.cpp:1501
+#: ../src/core/control/Control.cpp:1502
 msgid "file: {1}"
 msgstr "Fil: {1}"
 
-#: ../src/core/control/Control.cpp:1534
+#: ../src/core/control/Control.cpp:1535
 msgid "Error opening file \"{1}\""
 msgstr "Fejl ved åbning af filen \"{1}\""
 
-#: ../src/core/control/Control.cpp:1559
+#: ../src/core/control/Control.cpp:1560
 msgid "File version mismatch"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1560
+#: ../src/core/control/Control.cpp:1561
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Filen, der indlæses, har en filformatversion, der er nyere end den, der i øjeblikket understøttes af denne version af Xournal++, så den indlæses måske ikke korrekt. Åbn alligevel?"
 
-#: ../src/core/control/Control.cpp:1583
+#: ../src/core/control/Control.cpp:1584
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1605
+#: ../src/core/control/Control.cpp:1606
 msgid "Error reading PNG file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1749
+#: ../src/core/control/Control.cpp:1750
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Den vedhæftede baggrundsfil kunne ikke findes. Den er måske blevet flyttet, omdøbt eller slettet."
 
-#: ../src/core/control/Control.cpp:1752
+#: ../src/core/control/Control.cpp:1753
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Baggrundsfilen \"{1}\" kunne ikke findes. Den er måske blevet flyttet, omdøbt eller slettet.\n"
 "Den blev sidst set på: \"{2}\""
 
-#: ../src/core/control/Control.cpp:1762
+#: ../src/core/control/Control.cpp:1763
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Foreslået erstatningsfil: \"{1}\""
 
-#: ../src/core/control/Control.cpp:1767
+#: ../src/core/control/Control.cpp:1768
 msgid "Select another PDF"
 msgstr "Vælg en anden PDF"
 
-#: ../src/core/control/Control.cpp:1768
+#: ../src/core/control/Control.cpp:1769
 msgid "Remove PDF Background"
 msgstr "Fjern PDF-baggrund"
 
-#: ../src/core/control/Control.cpp:1772
+#: ../src/core/control/Control.cpp:1773
 msgid "Use proposed PDF"
 msgstr "Brug foreslået PDF"
 
-#: ../src/core/control/Control.cpp:1775
+#: ../src/core/control/Control.cpp:1776
 msgid "Missing PDF background file"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1907
+#: ../src/core/control/Control.cpp:1908
 msgid "Select font"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1926
+#: ../src/core/control/Control.cpp:1927
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1951
+#: ../src/core/control/Control.cpp:1952
 msgid "Unsaved Document"
 msgstr "Ikke gemt dokument"
 
-#: ../src/core/control/Control.cpp:2102
+#: ../src/core/control/Control.cpp:2105
 msgid "Document file was removed."
 msgstr "Dokumentfilen blev fjernet."
 
-#: ../src/core/control/Control.cpp:2102
+#: ../src/core/control/Control.cpp:2105
 msgid "This document is not saved yet."
 msgstr "Dette dokument er ikke gemt endnu."
 
-#: ../src/core/control/Control.cpp:2104
+#: ../src/core/control/Control.cpp:2107
 msgid "Save As..."
 msgstr "Gem som..."
 
-#: ../src/core/control/Control.cpp:2104 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2107 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:286
 msgid "Save"
 msgstr "Gem"
 
-#: ../src/core/control/Control.cpp:2107
+#: ../src/core/control/Control.cpp:2110
 msgid "Discard"
 msgstr "Kassér"
 
-#: ../src/core/control/Control.cpp:2192
+#: ../src/core/control/Control.cpp:2195
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -1990,7 +1990,7 @@ msgstr ""
 msgid "Page background changed"
 msgstr ""
 
-#: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
+#: ../src/core/undo/PageSizeChangeUndoAction.cpp:42
 msgid "Page size changed"
 msgstr ""
 

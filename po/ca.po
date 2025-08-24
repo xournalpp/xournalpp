@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-16 11:01+0000\n"
-"PO-Revision-Date: 2025-08-17 04:28\n"
+"POT-Creation-Date: 2025-08-22 14:27+0000\n"
+"PO-Revision-Date: 2025-08-24 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -23,57 +23,57 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 msgstr "No s'ha establert una carpeta d'àudio o bé no és vàlida! La gravació no funcionarà!\n"
 "Configureu la carpeta d'enregistrament a «Configuració → Gravació d'àudio»."
 
-#: ../src/core/control/Control.cpp:232
+#: ../src/core/control/Control.cpp:233
 msgid "Filesystem error: {1}"
 msgstr "Error del sistema de fitxers: {1}"
 
-#: ../src/core/control/Control.cpp:244
+#: ../src/core/control/Control.cpp:245
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "El fitxer d'autodesada «{1}» no s'ha pogut esborrar: {2}"
 
-#: ../src/core/control/Control.cpp:563
+#: ../src/core/control/Control.cpp:564
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "Heu esborrat la barra d'eines activa. S'aplica la barra d'eines per defecte."
 
-#: ../src/core/control/Control.cpp:583
+#: ../src/core/control/Control.cpp:584
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "La configuració de barres d'eines predefinida «{1}» no es pot modificar. En voleu fer una còpia i editar-la?"
 
-#: ../src/core/control/Control.cpp:586 ../src/core/control/Control.cpp:1557
+#: ../src/core/control/Control.cpp:587 ../src/core/control/Control.cpp:1558
 msgid "Yes"
 msgstr "Sí"
 
-#: ../src/core/control/Control.cpp:586 ../src/core/control/Control.cpp:1557
+#: ../src/core/control/Control.cpp:587 ../src/core/control/Control.cpp:1558
 msgid "No"
 msgstr "No"
 
-#: ../src/core/control/Control.cpp:816 ../src/core/control/Control.cpp:1769
-#: ../src/core/control/Control.cpp:2109
+#: ../src/core/control/Control.cpp:817 ../src/core/control/Control.cpp:1770
+#: ../src/core/control/Control.cpp:2112
 msgid "Cancel"
 msgstr "Cancel·la"
 
-#: ../src/core/control/Control.cpp:817
+#: ../src/core/control/Control.cpp:818
 msgid "Insert after current page"
 msgstr "Afegeix després de la pàgina actual"
 
-#: ../src/core/control/Control.cpp:818
+#: ../src/core/control/Control.cpp:819
 msgid "Insert at end"
 msgstr "Afegeix al final"
 
-#: ../src/core/control/Control.cpp:821
+#: ../src/core/control/Control.cpp:822
 msgid "_Journal"
 msgstr "_Quadern"
 
-#: ../src/core/control/Control.cpp:821
+#: ../src/core/control/Control.cpp:822
 msgid "Paper B_ackground"
 msgstr "_Fons del paper"
 
-#: ../src/core/control/Control.cpp:822
+#: ../src/core/control/Control.cpp:823
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:40
 msgid "With PDF background"
 msgstr "Amb fons de PDF"
 
-#: ../src/core/control/Control.cpp:825
+#: ../src/core/control/Control.cpp:826
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
@@ -81,15 +81,15 @@ msgstr "El document actual no té pàgina PDF número {1}.\n"
 "Voleu afegir aquesta pàgina?\n\n"
 "Consell: Podeu seleccionar {2} per a afegir una pàgina PDF."
 
-#: ../src/core/control/Control.cpp:868
+#: ../src/core/control/Control.cpp:869
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "No hi ha pàgines PDF disponibles per a afegir. És possible que primer calgui reobrir el document."
 
-#: ../src/core/control/Control.cpp:882
+#: ../src/core/control/Control.cpp:883
 msgid "Unable to retrieve pdf page."
 msgstr "La pagina del pdf no es pot recuperar."
 
-#: ../src/core/control/Control.cpp:1481
+#: ../src/core/control/Control.cpp:1482
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -97,98 +97,98 @@ msgstr "No obriu els fitxers de desada automàtica. Es poden sobreescriure!\n"
 "Copieu els fitxers a una altra carpeta.\n"
 "Els fitxers de la carpeta {1} no es poden obrir."
 
-#: ../src/core/control/Control.cpp:1501
+#: ../src/core/control/Control.cpp:1502
 msgid "file: {1}"
 msgstr "fitxer: {1}"
 
-#: ../src/core/control/Control.cpp:1534
+#: ../src/core/control/Control.cpp:1535
 msgid "Error opening file \"{1}\""
 msgstr "S'ha produït un error a l'obrir el fitxer «{1}»."
 
-#: ../src/core/control/Control.cpp:1559
+#: ../src/core/control/Control.cpp:1560
 msgid "File version mismatch"
 msgstr "La versió del fitxer és incompatible."
 
-#: ../src/core/control/Control.cpp:1560
+#: ../src/core/control/Control.cpp:1561
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "El fitxer que s'ha carregat té un format de fitxer amb una versió posterior a la que suporta aquesta versió del Xournal++ i potser no es pugui carregar bé. Voleu obrir-lo igualment?"
 
-#: ../src/core/control/Control.cpp:1583
+#: ../src/core/control/Control.cpp:1584
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr "S'ha produït un error al llegir el fitxer PDF «{1}»."
 
-#: ../src/core/control/Control.cpp:1605
+#: ../src/core/control/Control.cpp:1606
 msgid "Error reading PNG file \"{1}\""
 msgstr "S'ha produït un error al llegir el fitxer PNG «{1}»."
 
-#: ../src/core/control/Control.cpp:1749
+#: ../src/core/control/Control.cpp:1750
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "El fitxer de fons adjunt no s'ha pogut trobar. Potser s'ha mogut, se li ha canviat el nom o s'ha esborrat."
 
-#: ../src/core/control/Control.cpp:1752
+#: ../src/core/control/Control.cpp:1753
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "El fitxer de fons «1» no s'ha pogut trobar. Potser s'ha mogut, se li ha canviat el nom o s'ha esborrat. L'última ubicació on es va veure és «{2}»."
 
-#: ../src/core/control/Control.cpp:1762
+#: ../src/core/control/Control.cpp:1763
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Arxiu de recanvi proposat: «{1}»"
 
-#: ../src/core/control/Control.cpp:1767
+#: ../src/core/control/Control.cpp:1768
 msgid "Select another PDF"
 msgstr "Tria un altre PDF"
 
-#: ../src/core/control/Control.cpp:1768
+#: ../src/core/control/Control.cpp:1769
 msgid "Remove PDF Background"
 msgstr "Elimina el fons PDF"
 
-#: ../src/core/control/Control.cpp:1772
+#: ../src/core/control/Control.cpp:1773
 msgid "Use proposed PDF"
 msgstr "Fes servir el PDF proposat"
 
-#: ../src/core/control/Control.cpp:1775
+#: ../src/core/control/Control.cpp:1776
 msgid "Missing PDF background file"
 msgstr "Falta el fitxer PDF de fons."
 
-#: ../src/core/control/Control.cpp:1907
+#: ../src/core/control/Control.cpp:1908
 msgid "Select font"
 msgstr "Tria una font"
 
-#: ../src/core/control/Control.cpp:1926
+#: ../src/core/control/Control.cpp:1927
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Tria un color"
 
-#: ../src/core/control/Control.cpp:1951
+#: ../src/core/control/Control.cpp:1952
 msgid "Unsaved Document"
 msgstr "Document sense desar"
 
-#: ../src/core/control/Control.cpp:2102
+#: ../src/core/control/Control.cpp:2105
 msgid "Document file was removed."
 msgstr "S'ha eliminat el fitxer del document."
 
-#: ../src/core/control/Control.cpp:2102
+#: ../src/core/control/Control.cpp:2105
 msgid "This document is not saved yet."
 msgstr "Aquest document encara no s'ha desat."
 
-#: ../src/core/control/Control.cpp:2104
+#: ../src/core/control/Control.cpp:2107
 msgid "Save As..."
 msgstr "Anomena i desa..."
 
-#: ../src/core/control/Control.cpp:2104 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2107 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:286
 msgid "Save"
 msgstr "Desa"
 
-#: ../src/core/control/Control.cpp:2107
+#: ../src/core/control/Control.cpp:2110
 msgid "Discard"
 msgstr "Descarta"
 
-#: ../src/core/control/Control.cpp:2192
+#: ../src/core/control/Control.cpp:2195
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr "No s'ha progut crear el subproceś de demostració de Gtk: {1} (codi d'error: {2})"
 
@@ -1054,7 +1054,7 @@ msgstr "Dibuixa corbes spline"
 
 #: ../src/core/gui/dialog/DeviceTestingArea.cpp:161
 msgid "Export Logs"
-msgstr ""
+msgstr "Exporta els registres"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:115
 msgid "Failed to parse external editor command: {1}"
@@ -2017,7 +2017,7 @@ msgstr "Mou"
 msgid "Page background changed"
 msgstr "El fons de la pàgina s'ha canviat."
 
-#: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
+#: ../src/core/undo/PageSizeChangeUndoAction.cpp:42
 msgid "Page size changed"
 msgstr "La mida del full ha canviat."
 
@@ -2259,7 +2259,7 @@ msgstr "(s'obrirà el GitHub al navegador)"
 
 #: ../ui/deviceList.glade:7
 msgid "Known devices"
-msgstr ""
+msgstr "Dispositius coneguts"
 
 #: ../ui/deviceList.glade:46
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -2267,7 +2267,7 @@ msgstr "<i>Assigna classes de dispositius a cada dispositiu d'entrada del sistem
 
 #: ../ui/deviceTestingArea.glade:42
 msgid "Try out your devices in the area below"
-msgstr ""
+msgstr "Proveu els vostres dispositius a l'àrea de sota"
 
 #: ../ui/deviceTestingArea.glade:70 ../ui/settings.glade:1630
 #: ../ui/settingsDeviceClassConfig.glade:35
@@ -2277,17 +2277,17 @@ msgstr "Ratolí"
 #: ../ui/deviceTestingArea.glade:82
 msgctxt "mouse button"
 msgid "Left"
-msgstr ""
+msgstr "Esquerra"
 
 #: ../ui/deviceTestingArea.glade:96
 msgctxt "mouse button"
 msgid "Middle"
-msgstr ""
+msgstr "Mig"
 
 #: ../ui/deviceTestingArea.glade:110
 msgctxt "mouse button"
 msgid "Right"
-msgstr ""
+msgstr "Dreta"
 
 #: ../ui/deviceTestingArea.glade:124 ../ui/settings.glade:2170
 msgid "Stylus"
@@ -2296,7 +2296,7 @@ msgstr "Llapis"
 #: ../ui/deviceTestingArea.glade:136 ../ui/deviceTestingArea.glade:190
 msgctxt "the tip of the stylus"
 msgid "Tip"
-msgstr ""
+msgstr "Punta"
 
 #: ../ui/deviceTestingArea.glade:150 ../ui/settings.glade:1987
 msgid "Button 1"
@@ -2313,45 +2313,46 @@ msgstr "Pantalla tàctil"
 
 #: ../ui/deviceTestingArea.glade:374
 msgid "In use"
-msgstr ""
+msgstr "En ús"
 
 #: ../ui/deviceTestingArea.glade:388 ../ui/deviceTestingArea.glade:402
 msgctxt "stylus hover"
 msgid "Hover"
-msgstr ""
+msgstr "Passar per sobre"
 
 #: ../ui/deviceTestingArea.glade:443
 msgid "Show logs"
-msgstr ""
+msgstr "Mostra els registres"
 
 #: ../ui/deviceTestingArea.glade:455
 msgid "Export debug info"
-msgstr ""
+msgstr "Exporta la informació de depuració"
 
 #: ../ui/deviceTestingArea.glade:477
 msgid "To clear the logs, simply close and reopen the settings dialog"
-msgstr ""
+msgstr "Per a esborrar els registres, tanqueu i reobriu el diàleg de configuració."
 
 #: ../ui/deviceTestingArea.glade:491
 msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
 "Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
-msgstr ""
+msgstr "Trieu aquesta opció si el senyal de «punta» no s'il·lumina quan es fa servir l'stylus i es prem un dels seus botons.\n\n"
+"Traieu la selecció si es mostra el senyal de «punta» quan l'stylus passa per sobre però no toca la pantalla o tauleta."
 
 #: ../ui/deviceTestingArea.glade:500
 msgid "Emulate stylus tip contact on button press"
-msgstr ""
+msgstr "Emula el contacte de la punta de l'stylus quan es premi el botó"
 
 #: ../ui/deviceTestingArea.glade:547
 msgid "<i>Change the device class below if your device is not correctly recognized (e.g. your active stylus shows up as touchscreen)</i>"
-msgstr ""
+msgstr "<i>Canvieu la classe de dispositiu a sota si no es reconeix correctament ‒com ara si l'stylus actiu es mostra com a pantalla tàctil‒</i>"
 
 #: ../ui/deviceTestingArea.glade:568
 msgid "Last device used:"
-msgstr ""
+msgstr "Últim dispositiu fet servir:"
 
 #: ../ui/deviceTestingArea.glade:588
 msgid "Show all known devices"
-msgstr ""
+msgstr "Mostra tots els dispositius coneguts"
 
 #: ../ui/exportSettings.glade:36
 msgid "Resolution"
@@ -3064,7 +3065,7 @@ msgstr "<i>Defineix quines eines se seleccionaran si premeu un botó de ratolí.
 
 #: ../ui/settings.glade:1519
 msgid "Left Mouse Button"
-msgstr ""
+msgstr "Botó esquerre del ratolí"
 
 #: ../ui/settings.glade:1551
 msgid "Middle Mouse Button"
@@ -3982,7 +3983,7 @@ msgstr "Desactivat"
 
 #: ../ui/settingsDeviceClassConfig.glade:54
 msgid "Apply"
-msgstr ""
+msgstr "Aplica"
 
 #: ../ui/toolbarCustomizeDialog.glade:30
 msgid "Drag and drop Components from here to the toolbars and back."
