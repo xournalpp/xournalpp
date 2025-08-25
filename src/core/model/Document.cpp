@@ -134,23 +134,23 @@ auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
     return lastSavePath;
 }
 
-
-static std::string preprocessFormatString(const std::string& formatStr) {
-    std::string processed = formatStr;
+static std::string preprocessFormatString(std::string formatStr) {
     // Replace %F with %Y-%m-%d
-    size_t pos;
-    while ((pos = processed.find("%F")) != std::string::npos) {
-        processed.replace(pos, 2, "%Y-%m-%d");
+    while (size_t pos = formatStr.find("%F"); pos != std::string::npos) {
+        formatStr.replace(pos, 2, "%Y-%m-%d");
     }
+
     // Replace %T with %H-%M-%S
-    while ((pos = processed.find("%T")) != std::string::npos) {
-        processed.replace(pos, 2, "%H-%M-%S");
+    while (size_t pos = formatStr.find("%T"); pos != std::string::npos) {
+        formatStr.replace(pos, 2, "%H-%M-%S");
     }
+
     // Replace %V with %U
-    while ((pos = processed.find("%V")) != std::string::npos) {
-        processed.replace(pos, 2, "%U");
+    while (size_t pos = formatStr.find("%V"); pos != std::string::npos) {
+        formatStr.replace(pos, 2, "%U");
     }
-    return processed;
+
+    return formatStr;
 }
 
 
