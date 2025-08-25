@@ -136,6 +136,17 @@ auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
     return lastSavePath;
 }
 
+/**
+ * Preprocesses a format string to standardize date/time format specifiers.
+ *
+ * This function is necessary because different systems or libraries may use
+ * non-standard or shorthand format specifiers (e.g., %F, %T, %V) for date/time formatting.
+ * By converting these to widely supported specifiers (e.g., %Y-%m-%d, %H-%M-%S, %U),
+ * it ensures compatibility and consistency across platforms and libraries.
+ *
+ * @param formatStr The input format string to preprocess.
+ * @return The processed format string with standardized specifiers.
+ */
 static std::string preprocessFormatString(std::string formatStr) {
     auto replace = [&formatStr](std::string_view pattern, std::string_view replacement) {
         for (size_t pos = formatStr.find(pattern); pos != std::string::npos;
