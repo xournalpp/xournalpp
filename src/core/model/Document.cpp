@@ -151,7 +151,7 @@ static std::string preprocessFormatString(std::string formatStr) {
     auto replace = [&formatStr](std::string_view pattern, std::string_view replacement) {
         for (size_t pos = formatStr.find(pattern); pos != std::string::npos;
              pos = formatStr.find(pattern, pos + replacement.length())) {
-                        formatStr.replace(pos, pattern.length(), replacement);
+            formatStr.replace(pos, pattern.length(), replacement);
         }
     };
 
@@ -161,7 +161,6 @@ static std::string preprocessFormatString(std::string formatStr) {
 
     return formatStr;
 }
-
 
 auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName,
                                   const std::string& defaultPdfName) -> fs::path {
