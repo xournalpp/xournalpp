@@ -2,10 +2,12 @@
 
 #include <array>
 #include <codecvt>  // for codecvt_utf8_utf16
-#include <ctime>    // for size_t, localtime, strf...
+#include <cstddef>
+#include <ctime>  // for size_t, localtime, strf...
 #include <iomanip>
 #include <sstream>
-#include <string>   // for string
+#include <string>  // for string
+#include <string_view>
 #include <utility>  // for move, pair
 
 #include <glib-object.h>  // for g_object_unref, G_TYPE_...
@@ -135,20 +137,16 @@ auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
 }
 
 static std::string preprocessFormatString(std::string formatStr) {
-    // Replace %F with %Y-%m-%d
-    while (size_t pos = formatStr.find("%F"); pos != std::string::npos) {
-        formatStr.replace(pos, 2, "%Y-%m-%d");
-    }
+    auto replace = [&formatStr](std::string_view pattern, std::string_view replacement) {
+        for (size_t pos = formatStr.find(pattern); pos != std::string::npos;
+             pos = formatStr.find(pattern, pos + replacement.length())) {
+                        formatStr.replace(pos, pattern.length(), replacement);
+        }
+    };
 
-    // Replace %T with %H-%M-%S
-    while (size_t pos = formatStr.find("%T"); pos != std::string::npos) {
-        formatStr.replace(pos, 2, "%H-%M-%S");
-    }
-
-    // Replace %V with %U
-    while (size_t pos = formatStr.find("%V"); pos != std::string::npos) {
-        formatStr.replace(pos, 2, "%U");
-    }
+    replace("%F", "%Y-%m-%d");
+    replace("%T", "%H-%M-%S");
+    replace("%V", "%U");
 
     return formatStr;
 }
