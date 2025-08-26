@@ -1,7 +1,7 @@
 #include "Layout.h"
 
 #include <algorithm>    // for max, lower_bound, transform
-#include <cmath>        // for abs
+#include <cmath>        // for abs, sqrt
 #include <iterator>     // for begin, end, distance
 #include <numeric>      // for accumulate
 #include <optional>     // for optional
@@ -40,22 +40,20 @@ constexpr auto const XOURNAL_PADDING_BETWEEN = 15;
 Layout::Layout(XournalView* view, ScrollHandling* scrollHandling): view(view), scrollHandling(scrollHandling) {
     g_signal_connect(scrollHandling->getHorizontal(), "value-changed", G_CALLBACK(horizontalScrollChanged), this);
     g_signal_connect(scrollHandling->getVertical(), "value-changed", G_CALLBACK(verticalScrollChanged), this);
-
-
-    lastScrollHorizontal = gtk_adjustment_get_value(scrollHandling->getHorizontal());
-    lastScrollVertical = gtk_adjustment_get_value(scrollHandling->getVertical());
 }
 
 void Layout::horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout) {
-    Layout::checkScroll(adjustment, layout->lastScrollHorizontal);
-    layout->updateVisibility();
+    if (!layout->blockScrollCallback) {
+        layout->view->updateVisibility();
+    }
 }
 
 void Layout::verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout) {
-    Layout::checkScroll(adjustment, layout->lastScrollVertical);
-    layout->updateVisibility();
+    if (!layout->blockScrollCallback) {
+        layout->view->updateVisibility();
 
-    layout->maybeAddLastPage(layout);
+        layout->maybeAddLastPage(layout);
+    }
 }
 
 void Layout::maybeAddLastPage(Layout* layout) {
@@ -232,7 +230,7 @@ void Layout::forEachEntriesIntersectingRange(
             auto optionalPage = this->mapper.at({as_unsigned(col), as_unsigned(row)});
             if (optionalPage) {
                 auto pos = this->getPixelCoordinatesOfEntryUnsafe(optionalPage.value());
-                auto& pageView = this->view->viewPages[optionalPage.value()];
+                auto& pageView = this->view->getViewPages()[optionalPage.value()];
                 double w = pageView->getWidth();
                 double h = pageView->getHeight();
                 Range pageRg(pos.x, pos.y, pos.x + w * zoom, pos.y + h * zoom);
@@ -244,60 +242,6 @@ void Layout::forEachEntriesIntersectingRange(
     }
 }
 
-void Layout::updateVisibility() {
-    auto visibleRg = Range(getVisibleRect());
-    xoj::util::Point<int> center(round_cast<int>(.5 * (visibleRg.minX + visibleRg.maxX)),
-                                 round_cast<int>(.5 * (visibleRg.minY + visibleRg.maxY)));
-
-    // Data to select page based on visibility
-    std::optional<size_t> mostPageNr;
-    double mostPagePercent = 0;
-
-    std::vector<size_t> visiblePages;
-    forEachEntriesIntersectingRange(visibleRg, [&](size_t index, const Range& intersection, xoj::util::Point<int> pos) {
-        auto& pageView = this->view->viewPages[index];
-        pageView->setIsVisible(true);
-        pageView->setCenterOfVisibleArea(center, pos);
-        visiblePages.emplace_back(index);
-
-        // Set the selected page
-        double percent =
-                intersection.getWidth() * intersection.getHeight() / (visibleRg.getWidth() * visibleRg.getHeight());
-
-        if (percent > mostPagePercent) {
-            mostPageNr = index;
-            mostPagePercent = percent;
-        }
-    });
-
-    std::sort(visiblePages.begin(), visiblePages.end());
-    xoj_assert(std::is_sorted(this->previouslyVisiblePages.begin(), this->previouslyVisiblePages.end()));
-    printf("visible pages:");
-    for (auto&& p: visiblePages) {
-        printf(" %zu", p);
-    }
-    printf("\n");
-    auto it = visiblePages.begin();
-    for (auto&& s: this->previouslyVisiblePages) {
-        while (it != visiblePages.end() && *it < s) {
-            it++;
-        }
-        if (it == visiblePages.end() || *it != s) {
-            // This page is no longer visible
-            this->view->viewPages[s]->setIsVisible(false);
-        }
-    }
-    this->previouslyVisiblePages = std::move(visiblePages);
-    if (mostPageNr) {
-        this->view->getControl()->firePageSelected(*mostPageNr);
-    }
-}
-
-auto Layout::getVisiblePages() const -> std::vector<size_t> {
-    // We make a copy in case previouslyVisiblePages's iterators get invalidated. The vector is typically very small.
-    return previouslyVisiblePages;
-}
-
 auto Layout::getVisibleRect() -> xoj::util::Rectangle<double> {
     return xoj::util::Rectangle<double>(gtk_adjustment_get_value(scrollHandling->getHorizontal()),
                                         gtk_adjustment_get_value(scrollHandling->getVertical()),
@@ -307,7 +251,7 @@ auto Layout::getVisibleRect() -> xoj::util::Rectangle<double> {
 
 void Layout::computePrecalculated() const {
     auto* settings = view->getControl()->getSettings();
-    auto len = view->viewPages.size();
+    auto len = view->getViewPages().size();
     mapper.configureFromSettings(len, settings);
     auto colCount = mapper.getColumns();
     auto rowCount = mapper.getRows();
@@ -319,7 +263,7 @@ void Layout::computePrecalculated() const {
         auto const& raster_p = mapper.at(pageIdx);  // auto [c, r] raster = mapper.at();
         auto const& c = raster_p.col;
         auto const& r = raster_p.row;
-        auto& v = view->viewPages[pageIdx];
+        auto& v = view->getViewPages()[pageIdx];
         pc.widthCols[c] = std::max(pc.widthCols[c], v->getWidth());
         pc.heightRows[r] = std::max(pc.heightRows[r], v->getHeight());
         v->setGridCoordinates({strict_cast<int>(c), strict_cast<int>(r)});
@@ -354,9 +298,6 @@ void Layout::computePrecalculated() const {
         pc.paddingLeft += settings->getAddHorizontalSpaceAmountLeft();
         pc.paddingRight += settings->getAddHorizontalSpaceAmountRight();
     }
-
-    printf("pc: %d %d %d %d  layout %zu x %zu\n", pc.paddingTop, pc.paddingBottom, pc.paddingLeft, pc.paddingRight,
-           colCount, rowCount);
 
     pc.valid = true;
 }
@@ -418,10 +359,14 @@ void Layout::scrollRelative(double x, double y) {
         return;
     }
 
+    // We need the callback to be called only once both values have been set
+    this->blockScrollCallback = true;
     gtk_adjustment_set_value(scrollHandling->getHorizontal(),
                              gtk_adjustment_get_value(scrollHandling->getHorizontal()) + x);
     gtk_adjustment_set_value(scrollHandling->getVertical(),
                              gtk_adjustment_get_value(scrollHandling->getVertical()) + y);
+    this->blockScrollCallback = false;
+    verticalScrollChanged(nullptr, this);
 }
 
 void Layout::scrollAbs(double x, double y) {
@@ -429,13 +374,19 @@ void Layout::scrollAbs(double x, double y) {
         return;
     }
 
+    this->blockScrollCallback = true;
     gtk_adjustment_set_value(scrollHandling->getHorizontal(), x);
     gtk_adjustment_set_value(scrollHandling->getVertical(), y);
+    this->blockScrollCallback = false;
+    verticalScrollChanged(nullptr, this);
 }
 
 void Layout::ensureRectIsVisible(int x, int y, int width, int height) {
+    this->blockScrollCallback = true;
     gtk_adjustment_clamp_page(scrollHandling->getHorizontal(), x - 5, x + width + 10);
     gtk_adjustment_clamp_page(scrollHandling->getVertical(), y - 5, y + height + 10);
+    this->blockScrollCallback = false;
+    verticalScrollChanged(nullptr, this);
 }
 
 auto Layout::getPageViewAt(int x, int y) -> XojPageView* {
@@ -458,8 +409,8 @@ auto Layout::getPageViewAt(int x, int y) -> XojPageView* {
     }();
     auto optionalPage = this->mapper.at(gridPosition);
 
-    if (optionalPage && this->view->viewPages[*optionalPage]->containsPoint(x, y, false)) {
-        return this->view->viewPages[*optionalPage].get();
+    if (optionalPage && this->view->getViewPages()[*optionalPage]->containsPoint(x, y, false)) {
+        return this->view->getViewPages()[*optionalPage].get();
     }
 
     return nullptr;
@@ -526,12 +477,12 @@ auto Layout::getPixelCoordinatesOfEntryUnsafe(xoj::util::Point<int> gridCoords) 
     auto optionalPage = this->mapper.at(pos);
 
     if (optionalPage) {
-        return getPixelCoords(this->pc, pos, *this->view->viewPages[*optionalPage]);
+        return getPixelCoords(this->pc, pos, *this->view->getViewPages()[*optionalPage]);
     } else {
         return {0, 0};
     }
 }
 
 auto Layout::getPixelCoordinatesOfEntryUnsafe(size_t n) const -> xoj::util::Point<int> {
-    return getPixelCoords(this->pc, this->mapper.at(n), *this->view->viewPages[n]);
+    return getPixelCoords(this->pc, this->mapper.at(n), *this->view->getViewPages()[n]);
 }

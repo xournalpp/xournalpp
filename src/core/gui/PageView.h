@@ -93,16 +93,20 @@ public:
 
     xoj::util::Rectangle<double> toWindowCoordinates(const xoj::util::Rectangle<double>& r) const override;
 
+    /**
+     * Computes which tiles must be cached and which cached tiles must be cleared. Triggers an asynchronous rendering of
+     * the missing tiles.
+     * @param centerOfVisibleArea The center of the visible area, in pixel coordinates relative to the page's upper-left
+     *                            corner. May be out of the page.
+     * @param mustRenderRadius Tiles whose center is closer (in pixels) to centerOfVisibleArea must be cached
+     * @param mustClearRadius Tiles whose center is further away to centerOfVisibleArea must be cleared
+     * @return true if the view should be considered as having a buffer (either it has one or it scheduled one)
+     */
+    bool updateVisibilityAndCache(xoj::util::Point<int> centerOfVisibleArea, double mustRenderRadius,
+                                  double mustClearRadius);
 
     void setSelected(bool selected);
-
-    void setIsVisible(bool visible);
-
-    /// All in widget coordinates. centerOfVisibleArea may be out of the page.
-    void setCenterOfVisibleArea(xoj::util::Point<int> centerOfVisibleArea, xoj::util::Point<int> pagePosition);
-
     bool isSelected() const;
-    inline bool isVisible() const { return visible; }
 
     void endText();
 
@@ -266,13 +270,11 @@ private:
      */
     Text* oldtext;
 
-    bool visible = false;
     bool selected = false;
+    bool inEraser = false;
 
     xoj::view::Tiling tiles;
     std::mutex drawingMutex;  ///< Protects tiles
-
-    bool inEraser = false;
 
     /**
      * Vertical Space
@@ -288,9 +290,11 @@ private:
     struct {
         std::vector<xoj::util::Rectangle<double>> rerenderRects;
         xoj::view::Tiling::RetilingData retiling;
+
         bool rerenderComplete = false;
         bool sizeChanged = false;
-        xoj::util::Point<int> centerOfVisibleArea{};  ///< In widget coordinates. May be outside the page.
+        xoj::util::Point<double> centerOfVisibleArea{};  ///< In Page coordinates. May be outside the page.
+        double mustRenderRadius;                         ///< In Page coordinates
     } rerenderData;
 
     xoj::util::Point<int> gridCoordinates;  ///< Coordinates in the layout grid

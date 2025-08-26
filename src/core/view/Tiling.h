@@ -34,12 +34,14 @@ class Tile;
  * @brief Tiling class: a collection of tiles, with the later purpose of blitting or using as a buffer.
  *
  * In the following documentation, there will be two sets of coordinates:
- *      - User-space coordinates: independent of the zoom level (e.g. coordinates on a XojPage)
- *      - Pixel coordinates: cairo_surface_t coordinates (= pixels / DPI scaling)
+ *      - User-space coordinates (double): independent of the zoom level (e.g. coordinates on a XojPage)
+ *      - Pixel coordinates (int): cairo_surface_t coordinates (= pixels / DPI scaling)
  * One goes from user-space coordinates to pixel coordinates by multiplying by the zoom ratio.
  */
 class Tiling {
 public:
+    static constexpr int MAX_TILE_SIZE = 2048;  ///< Each tile has width/height <= MAX_TILE_SIZE
+
     Tiling();
     Tiling(Tiling&&);
     Tiling(const Tiling&) = delete;
@@ -60,10 +62,13 @@ public:
 
     /**
      * Compute what tiles are necessary to cover an area centered at c (and within rg) and creates the tiles
-     * @param c  the center of the target area, in pixel coordinates
+     * @param c  the center of the target area, in user-space coordinates
      * @param rg a range that will contain all the tiles. In user-space coordinates.
+     * @param mustRenderRadius Radius of the rendered area, in user-space coordinates
+     * @param freeTiles Unused but allocated tiles - every one will be either used or destroyed.
      */
-    void populate(int DPIscaling, const xoj::util::Point<int>& c, const Range& rg, double zoom);
+    void populate(int DPIscaling, const xoj::util::Point<double>& c, const Range& rg, double mustRenderRadius,
+                  double zoom, std::vector<std::unique_ptr<Tile>> freeTiles);
 
     struct RetilingData {
         std::vector<xoj::util::Rectangle<int>> missingTiles;  ///< Sorted lexicographically with respect to (x,y)
@@ -78,7 +83,8 @@ public:
      * @param c  the center of the target area, in pixel coordinates
      * @param rg a range that will contain all the tiles. In user-space coordinates.
      */
-    RetilingData computeRetiling(const xoj::util::Point<int>& c, const Range& extent, double zoom);
+    RetilingData computeRetiling(const xoj::util::Point<int>& c, const Range& extent, double mustRenderRadius,
+                                 double mustClearRadius, double zoom);
 
     /// Create tiles. Set zoom before calling this.
     void createTiles(int DPIscaling, RetilingData retiling);
