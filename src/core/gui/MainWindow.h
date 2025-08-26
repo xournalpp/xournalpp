@@ -189,6 +189,9 @@ private:
 
     bool sidebarVisible = true;
 
+    /// The last monitor the window has been moved to -- used for setting dpi
+    GdkMonitor* lastMonitor = nullptr;
+
     xoj::util::WidgetSPtr boxContainerWidget;
     xoj::util::WidgetSPtr panedContainerWidget;
     xoj::util::WidgetSPtr mainContentWidget;
