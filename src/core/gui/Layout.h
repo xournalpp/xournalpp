@@ -98,14 +98,6 @@ public:
      */
     void layoutPages(int width, int height);
 
-    // Todo(Fabian): move to View:
-    /**
-     * Updates the current XojPageView. The XojPageView is selected based on
-     * the percentage of the visible area of the XojPageView relative
-     * to its total area.
-     */
-    void updateVisibility();
-
     /**
      * Return the pageview containing co-ordinates.
      */
@@ -139,9 +131,6 @@ public:
      *         any horizontal padding the user decided to add (from settings)
      */
     int getPaddingLeftOfPage(size_t pageIndex) const;
-
-    /// Returns a list of the indices of the visible pages
-    std::vector<size_t> getVisiblePages() const;
 
     xoj::util::Point<int> getPixelCoordinatesOfEntry(xoj::util::Point<int> gridCoords) const;
     xoj::util::Point<int> getPixelCoordinatesOfEntry(size_t n) const;
@@ -195,12 +184,6 @@ private:
     XournalView* view = nullptr;
     ScrollHandling* scrollHandling = nullptr;
 
-    // Todo(Fabian): move to ScrollHandling also it must not depend on Layout
-    double lastScrollHorizontal = -1;
-    double lastScrollVertical = -1;
-
-    std::vector<size_t> previouslyVisiblePages;  ///< indexes of pages with XojPageView::isVisible() == true
-
     /**
      * layoutPages invalidates the precalculation of recalculate
      * this bool prevents that layotPages can be called without a previously call to recalculate
@@ -208,4 +191,7 @@ private:
      */
     mutable LayoutMapper mapper;
     mutable PreCalculated pc{};
+
+    /// Used to have only one call when zooming in/out
+    bool blockScrollCallback = false;
 };

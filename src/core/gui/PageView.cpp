@@ -120,26 +120,31 @@ void XojPageView::addOverlayView(std::unique_ptr<xoj::view::OverlayView> overlay
     this->overlayViews.emplace_back(std::move(overlay));
 }
 
-void XojPageView::setIsVisible(bool visible) { this->visible = visible; }
-
-void XojPageView::setCenterOfVisibleArea(xoj::util::Point<int> centerOfVisibleArea,
-                                         xoj::util::Point<int> pagePosition) {
-    auto c = centerOfVisibleArea - pagePosition;
+bool XojPageView::updateVisibilityAndCache(xoj::util::Point<int> centerOfVisibleArea, double mustRenderRadius,
+                                           double mustClearRadius) {
+    auto zoom = this->getZoom();
     this->drawingMutex.lock();
-    auto retiling = this->tiles.computeRetiling(c, Range(0., 0., this->page->getWidth(), this->page->getHeight()),
-                                                this->getZoom());
+    auto retiling = this->tiles.computeRetiling(centerOfVisibleArea,
+                                                Range(0., 0., this->page->getWidth(), this->page->getHeight()),
+                                                mustRenderRadius, mustClearRadius, zoom);
+    bool noMoreTiles = this->tiles.empty();
     this->drawingMutex.unlock();
 
-    bool rerender = !retiling.missingTiles.empty();
-
     this->rerenderDataMutex.lock();
-    this->rerenderData.centerOfVisibleArea = c;
+    this->rerenderData.centerOfVisibleArea = {centerOfVisibleArea.x / zoom, centerOfVisibleArea.y / zoom};
+    this->rerenderData.mustRenderRadius = mustRenderRadius / zoom;
     this->rerenderData.retiling.merge(std::move(retiling));
+    bool noretiling = this->rerenderData.retiling.missingTiles.empty();
+    if (noretiling) {
+        // Take back the unused tiles to be destruction at the end of the function
+        retiling = std::move(this->rerenderData.retiling);
+    }
     this->rerenderDataMutex.unlock();
 
-    if (rerender) {
+    if (!noretiling) {
         this->xournal->getControl()->getScheduler()->addRerenderPage(this);
     }
+    return !(noMoreTiles && noretiling);
 }
 
 void XojPageView::deleteViewBuffer() {

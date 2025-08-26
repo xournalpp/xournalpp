@@ -74,6 +74,7 @@ void RenderJob::run() {
     auto rerenderRects = std::move(this->view->rerenderData.rerenderRects);
     auto retiling = std::move(this->view->rerenderData.retiling);
     auto center = this->view->rerenderData.centerOfVisibleArea;  // Do not move out - it may still be used.
+    auto mustRenderRadius = this->view->rerenderData.mustRenderRadius;
 
     this->view->rerenderDataMutex.unlock();
 
@@ -116,7 +117,8 @@ void RenderJob::run() {
     } else {
         xoj::view::Tiling newTiles;
         newTiles.populate(view->xournal->getDpiScaleFactor(), center,
-                          Range(0, 0, view->page->getWidth(), view->page->getHeight()), view->xournal->getZoom());
+                          Range(0, 0, view->page->getWidth(), view->page->getHeight()), mustRenderRadius,
+                          view->xournal->getZoom(), std::move(retiling.unusedTiles));
         {
             std::lock_guard<Document> lock(*this->view->xournal->getDocument());
 #ifdef ENABLE_STD_EXECUTION_PARALLEL_POLICY
