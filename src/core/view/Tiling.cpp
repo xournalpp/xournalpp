@@ -13,26 +13,6 @@
 #include "Mask.h"
 #include "config-debug.h"  // for DEBUG_TILING
 
-// You can try that out for debug/fun
-// static constexpr int MAX_TILE_SIZE = 50;               ///< Each tile has width/height <= MAX_TILE_SIZE
-// static constexpr int ELLIPSE_VERTICAL_RADIUS = 400;    ///< In pixels
-// static constexpr int ELLIPSE_HORIZONTAL_RADIUS = 300;  ///< In pixels
-
-static constexpr int MAX_TILE_SIZE = 2048;                           ///< Each tile has width/height <= MAX_TILE_SIZE
-static constexpr int ELLIPSE_VERTICAL_RADIUS = 3 * MAX_TILE_SIZE;    ///< In pixels
-static constexpr int ELLIPSE_HORIZONTAL_RADIUS = 2 * MAX_TILE_SIZE;  ///< In pixels
-
-/*
- * Each tile takes MAX_TILE_SIZE * MAX_TILE_SIZE * DPIScaling^2 * 4 bytes (=8M or 32M for DPIScaling=2) of memory,
- * so we avoid reallocating them all the time.
- */
-size_t xoj::view::Tiling::getEstimatedMemUsageForOneTile(int DPIScaling) {
-    return as_unsigned(MAX_TILE_SIZE) * as_unsigned(MAX_TILE_SIZE) * 4 * as_unsigned(DPIScaling * DPIScaling);
-}
-
-
-/// Smaller movements do not trigger an update of the tiles. In pixels
-static constexpr int RETILE_THRESHOLD = MAX_TILE_SIZE / 10;
 
 #ifdef DEBUG_TILING
 #define IF_DBG_TILING(f) f
@@ -42,6 +22,9 @@ static constexpr int RETILE_THRESHOLD = MAX_TILE_SIZE / 10;
 
 using namespace xoj::view;
 
+/// Smaller movements do not trigger an update of the tiles. In pixels
+static constexpr int RETILE_THRESHOLD = Tiling::MAX_TILE_SIZE / 10;
+
 Tiling::Tiling() = default;
 Tiling::Tiling(Tiling&&) = default;
 Tiling& Tiling::operator=(Tiling&&) = default;
@@ -50,6 +33,13 @@ Tiling::~Tiling() = default;
 void Tiling::clear() { tiles.clear(); }
 bool Tiling::empty() const { return tiles.empty(); }
 
+/*
+ * Each tile takes MAX_TILE_SIZE * MAX_TILE_SIZE * DPIScaling^2 * 4 bytes (=8M or 32M for DPIScaling=2) of memory,
+ * so we avoid reallocating them all the time.
+ */
+size_t Tiling::getEstimatedMemUsageForOneTile(int DPIScaling) {
+    return as_unsigned(MAX_TILE_SIZE) * as_unsigned(MAX_TILE_SIZE) * 4 * as_unsigned(DPIScaling * DPIScaling);
+}
 
 void Tiling::paintTo(cairo_t* targetCr) const {
     xoj::util::CairoSaveGuard guard(targetCr);
@@ -77,48 +67,37 @@ void Tiling::paintTo(cairo_t* targetCr) const {
     }
 }
 
-static bool isTileWithinEllipse(int x, int y, const xoj::util::Point<int>& center) {
-    return std::hypot((x + MAX_TILE_SIZE / 2 - center.x) / static_cast<double>(ELLIPSE_HORIZONTAL_RADIUS),
-                      (y + MAX_TILE_SIZE / 2 - center.y) / static_cast<double>(ELLIPSE_VERTICAL_RADIUS)) <= 1;
-}
-
-void Tiling::populate(int DPIscaling, const xoj::util::Point<int>& c, const Range& extent, double zoom) {
+void Tiling::populate(int DPIscaling, const xoj::util::Point<double>& c, const Range& rg, double mustRenderRadius,
+                      double zoom, std::vector<std::unique_ptr<Tile>> freeTiles) {
     this->zoom = zoom;
-    this->createTiles(DPIscaling, this->computeRetiling(c, extent, zoom));
+    xoj::util::Point<int> pixelCenter(round_cast<int>(c.x * zoom), round_cast<int>(c.y * zoom));
+    auto retiling = this->computeRetiling(pixelCenter, rg, mustRenderRadius * zoom, mustRenderRadius * zoom, zoom);
+    retiling.merge({{}, std::move(freeTiles)});
+    this->createTiles(DPIscaling, std::move(retiling));
 }
 
-auto Tiling::computeRetiling(const xoj::util::Point<int>& c, const Range& extent, double zoom) -> RetilingData {
+auto Tiling::computeRetiling(const xoj::util::Point<int>& c, const Range& extent, double mustRenderRadius,
+                             double mustClearRadius, double zoom) -> RetilingData {
     if (this->zoom == zoom && !this->tiles.empty() && this->center.distance(c) < RETILE_THRESHOLD) {
         return {};
     }
 
-    auto box = Range((c.x - ELLIPSE_HORIZONTAL_RADIUS) / zoom, (c.y - ELLIPSE_VERTICAL_RADIUS) / zoom,
-                     (c.x + ELLIPSE_HORIZONTAL_RADIUS) / zoom, (c.y + ELLIPSE_VERTICAL_RADIUS) / zoom)
-                       .intersect(extent);
-
-    if (box.empty()) {
-        // The ellipse is entirely out of the page - none of the tiles are useful anymore
-        return {{}, std::move(this->tiles)};
-    }
-
     bool zoomChanged = this->zoom != zoom;
 
-    auto partitionFun = [&]() {
-        if (zoomChanged) {
-            // Keep the old tiles until the new ones have been rendered but some may still be too far away to be of use
-            return std::function<bool(const std::unique_ptr<Tile>&)>([&, zoomRatio = zoom / this->zoom](const auto& t) {
-                const auto& ext = t->getExtent();
-                return isTileWithinEllipse(round_cast<int>(ext.x * zoomRatio), round_cast<int>(ext.y * zoomRatio), c);
-            });
-        } else {
-            return std::function<bool(const std::unique_ptr<Tile>&)>([&](const auto& t) {
-                const auto& ext = t->getExtent();
-                return isTileWithinEllipse(ext.x, ext.y, c);
-            });
-        }
-    }();
+    auto oldsize = this->tiles.size();
 
-    auto firstUnused = std::partition(this->tiles.begin(), this->tiles.end(), partitionFun);
+    auto firstUnused = [&]() {
+        auto clearCenter = (zoomChanged ? xoj::util::Point<int>(round_cast<int>(c.x * this->zoom / zoom),
+                                                                round_cast<int>(c.y * this->zoom / zoom)) :
+                                          c) -
+                           xoj::util::Point<int>(MAX_TILE_SIZE / 2, MAX_TILE_SIZE / 2);
+        // If zoom changed, no need to keep tiles out of mustRenderRadius: they will get invalidated upon rerender
+        double clearRadius = zoomChanged ? mustRenderRadius * this->zoom / zoom : mustClearRadius;
+
+        return std::partition(this->tiles.begin(), this->tiles.end(), [clearCenter, clearRadius](const auto& t) {
+            return std::hypot(t->getExtent().x - clearCenter.x, t->getExtent().y - clearCenter.y) < clearRadius;
+        });
+    }();
 
     RetilingData res;
     // Discarded tiles are kept to avoid reallocation. They may be reused elsewhere. See Tiling::createTiles()
@@ -127,8 +106,16 @@ auto Tiling::computeRetiling(const xoj::util::Point<int>& c, const Range& extent
 
     this->tiles.erase(firstUnused, this->tiles.end());
 
+    auto box = Range((c.x - mustRenderRadius) / zoom, (c.y - mustRenderRadius) / zoom, (c.x + mustRenderRadius) / zoom,
+                     (c.y + mustRenderRadius) / zoom)
+                       .intersect(extent);
+
+    if (box.empty()) {
+        // No need to render anything
+        return res;
+    }
     // Find the range of tile positions that may be missing
-    // Using simple integer division may not give the right results if coordinates are non-positives.
+    // Using simple integer division may not give the right results if coordinates are non-positive.
     int minX = floor_cast<int>(box.minX * zoom / MAX_TILE_SIZE) * MAX_TILE_SIZE;
     int maxX = floor_cast<int>(box.maxX * zoom / MAX_TILE_SIZE) * MAX_TILE_SIZE;
     int minY = floor_cast<int>(box.minY * zoom / MAX_TILE_SIZE) * MAX_TILE_SIZE;
@@ -139,7 +126,7 @@ auto Tiling::computeRetiling(const xoj::util::Point<int>& c, const Range& extent
 
     for (int x = minX; x <= maxX; x += MAX_TILE_SIZE) {
         for (int y = minY; y <= maxY; y += MAX_TILE_SIZE) {
-            if (isTileWithinEllipse(x, y, c) &&
+            if (std::hypot(x + MAX_TILE_SIZE / 2 - c.x, y + MAX_TILE_SIZE / 2 - c.y) < mustRenderRadius &&
                 (zoomChanged || std::none_of(this->tiles.begin(), this->tiles.end(), [&](const auto& t) {
                      return t->getExtent().x == x && t->getExtent().y == y;
                  }))) {
@@ -149,7 +136,9 @@ auto Tiling::computeRetiling(const xoj::util::Point<int>& c, const Range& extent
             }
         }
     }
-    this->center = c;
+    if (!zoomChanged) {
+        this->center = c;
+    }
     return res;
 }
 
