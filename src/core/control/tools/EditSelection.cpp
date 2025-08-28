@@ -313,6 +313,12 @@ void EditSelection::finalizeSelection() {
 
     // This is needed if the selection not was 100% on a page
     this->view->getXournal()->repaintSelection(true);
+
+    // Rerenders all pages that layer 'destinationLayer' is present in
+    auto* ctrl = this->view->getXournal()->getControl();
+    for (std::size_t i = destinationLayer->getFirstPage(); i <= destinationLayer->getLastPage(); ++i) {
+        ctrl->getDocument()->getPage(i)->firePageChanged();
+    }
 }
 
 auto EditSelection::makeMoveEffective() -> InsertionOrder {
