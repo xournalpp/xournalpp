@@ -300,8 +300,10 @@ auto ZoomControl::getZoomFitValue() const -> double { return this->zoomFitValue;
 auto ZoomControl::updateZoomPresentationValue(size_t pageNo) -> bool {
     XojPageView* page = view->getViewFor(view->getCurrentPage());
     if (!page) {
-        g_warning("Cannot update zoomPresentationValue yet. This should only happen on startup! ");
-        return true;
+        if (!view->getViewPages().empty()) {
+            g_warning("Cannot update zoomPresentationValue: no page view for the current page.");
+        }
+        return false;
     }
 
     Rectangle widget_rect = getVisibleRect();
