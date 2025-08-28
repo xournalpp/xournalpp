@@ -77,7 +77,7 @@ public:
 
     SElement& child(const std::string& name);
 
-    void setIntHex(const std::string& name, int value);
+    void setIntHex(const std::string& name, uint32_t value);
     void setInt(const std::string& name, int value);
     void setDouble(const std::string& name, double value);
     void setBool(const std::string& name, bool value);
