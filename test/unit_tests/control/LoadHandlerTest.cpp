@@ -413,6 +413,7 @@ TEST(ControlLoadHandler, imageSaveJpegBackwardCompat) {
 
     // FIXME: use a path in CMAKE_BINARY_DIR or CMAKE_CURRENT_BINARY_DIR
     const fs::path outPath = fs::temp_directory_path() / "xournalpp-test-units_ControlLoaderHandler_imageLoadJpeg.xopp";
+    ASSERT_TRUE(!fs::exists(outPath));
 
     // save journal containing JPEG image
     {
@@ -438,12 +439,15 @@ TEST(ControlLoadHandler, imageSaveJpegBackwardCompat) {
     const Image* img = dynamic_cast<const Image*>(layer->getElementsView()[0]);
     ASSERT_TRUE(img) << "element should be an image";
     checkImageFormat(img, "png");
+
+    fs::remove(outPath);
 }
 
 TEST(ControlLoadHandler, linebreaksLatex) {
     // FIXME: use a path in CMAKE_BINARY_DIR or CMAKE_CURRENT_BINARY_DIR
     const fs::path outPath =
             fs::temp_directory_path() / "xournalpp-test-units_ControlLoaderHandler_linebreaksLatex.xopp";
+    ASSERT_TRUE(!fs::exists(outPath));
 
     // save journal containing latex object with linebreaks.
     {
