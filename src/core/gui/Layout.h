@@ -66,15 +66,17 @@ public:
      */
     void ensureRectIsVisible(int x, int y, int width, int height);
 
-    /**
-     * Returns the height of the entire Layout
-     */
+    /// Returns the height of the entire Layout - including centering padding
     int getTotalPixelHeight() const;
 
-    /**
-     * Returns the width of the entire Layout
-     */
+    /// Returns the height of the entire Layout - excluding centering padding
+    int getMinimalPixelHeight() const;
+
+    /// Returns the width of the entire Layout - including centering padding
     int getTotalPixelWidth() const;
+
+    /// Returns the width of the entire Layout - excluding centering padding
+    int getMinimalPixelWidth() const;
 
     // Todo(Fabian): move to XournalView this must not depend on Layout directly
     /**
@@ -88,15 +90,13 @@ public:
      * If forceNow == true, the layout is computed straight away and the gtk_adjustment values are updated
      * Otherwise, the computation is differed until the values are needed
      */
-    void recalculate(bool forceNow = false);
+    void recalculate();
 
     /**
-     * Performs a layout of the XojPageView's managed in this Layout
-     * Sets out pages in a grid.
-     * Document pages are assigned to grid positions by the mapper object and may be ordered in a myriad of ways.
-     * ONLY call this on size allocation
+     * Recompute the centering paddings (to center the content if the allocation is too big)
+     * @params the size of the GtkAllocation of the GtkXournal instance - or -1 for computation from the GtkAdjustments
      */
-    void layoutPages(int width, int height);
+    void recomputeCenteringPadding(int allocWidth = -1, int allocHeight = -1);
 
     /**
      * Return the pageview containing co-ordinates.
@@ -145,17 +145,28 @@ public:
             const;
 
 protected:
-    /// Same as above but does not lock the mutex or recalculate the PreCalculated
+    /// Same as above but does not lock the mutex
     xoj::util::Point<int> getPixelCoordinatesOfEntryUnsafe(xoj::util::Point<int> gridCoords) const;
-    /// Same as above but does not lock the mutex or recalculate the PreCalculated
+    /// Same as above but does not lock the mutex
     xoj::util::Point<int> getPixelCoordinatesOfEntryUnsafe(size_t n) const;
+
+    /// Same as above but does not lock the mutex
+    int getTotalPixelWidthUnsafe() const;
+    /// Same as above but does not lock the mutex
+    int getMinimalPixelWidthUnsafe() const;
+    /// Same as above but does not lock the mutex
+    int getTotalPixelHeightUnsafe() const;
+    /// Same as above but does not lock the mutex
+    int getMinimalPixelHeightUnsafe() const;
+    /// Same as above but does not lock the mutex
+    void recomputeCenteringPaddingUnsafe(int allocWidth, int allocHeight);
 
     // Todo(Fabian): move to ScrollHandling also it must not depend on Layout
     static void horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout);
     static void verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout);
 
 private:
-    void computePrecalculated() const;
+    void computePrecalculated();
 
     void maybeAddLastPage(Layout* layout);
 
@@ -164,8 +175,9 @@ private:
 
 public:
     struct PreCalculated {
-        std::mutex m;
-        bool valid = false;
+        mutable std::mutex m;
+
+        LayoutMapper mapper;
 
         std::vector<double> widthCols;   ///< In page coordinates - multiply by zoom to get pixels
         std::vector<double> heightRows;  ///< In page coordinates - multiply by zoom to get pixels
@@ -176,6 +188,9 @@ public:
         int paddingRight;                                            ///< in pixels
         int paddingTop;                                              ///< in pixels
         int paddingBottom;                                           ///< in pixels
+
+        int horizontalCenteringPadding;  ///< Added before and after if the allocation is too big
+        int verticalCenteringPadding;    ///< Added before and after if the allocation is too big
     };
 
 private:
@@ -184,13 +199,7 @@ private:
     XournalView* view = nullptr;
     ScrollHandling* scrollHandling = nullptr;
 
-    /**
-     * layoutPages invalidates the precalculation of recalculate
-     * this bool prevents that layotPages can be called without a previously call to recalculate
-     * Todo: we may want to remove the additional calculation in layoutPages, since we stored those values in
-     */
-    mutable LayoutMapper mapper;
-    mutable PreCalculated pc{};
+    PreCalculated pc{};
 
     /// Used to have only one call when zooming in/out
     bool blockScrollCallback = false;

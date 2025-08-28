@@ -142,14 +142,14 @@ static void gtk_xournal_get_preferred_width(GtkWidget* widget, gint* minimal_wid
     g_return_if_fail(GTK_IS_XOURNAL(widget));
     GtkXournal* xournal = GTK_XOURNAL(widget);
     g_return_if_fail(xournal->layout);
-    *minimal_width = *natural_width = xournal->layout->getTotalPixelWidth();
+    *minimal_width = *natural_width = xournal->layout->getMinimalPixelWidth();
 }
 
 static void gtk_xournal_get_preferred_height(GtkWidget* widget, gint* minimal_height, gint* natural_height) {
     g_return_if_fail(GTK_IS_XOURNAL(widget));
     GtkXournal* xournal = GTK_XOURNAL(widget);
     g_return_if_fail(xournal->layout);
-    *minimal_height = *natural_height = xournal->layout->getTotalPixelHeight();
+    *minimal_height = *natural_height = xournal->layout->getMinimalPixelHeight();
 }
 
 /**
@@ -166,6 +166,8 @@ static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocati
         gdk_window_move_resize(gtk_widget_get_window(widget), allocation->x, allocation->y, allocation->width,
                                allocation->height);
     }
+
+    gtk_xournal_get_layout(widget)->recomputeCenteringPadding(allocation->width, allocation->height);
 }
 
 static void gtk_xournal_realize(GtkWidget* widget) {

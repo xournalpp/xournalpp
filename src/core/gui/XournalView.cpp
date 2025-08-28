@@ -541,20 +541,13 @@ void XournalView::ensureRectIsVisible(int x, int y, int width, int height) {
 }
 
 void XournalView::zoomChanged() {
-
-    size_t currentPage = this->getCurrentPage();
-    XojPageView* view = getViewFor(currentPage);
-
     ZoomControl* zoom = control->getZoomControl();
-
-    if (!view) {
-        return;
-    }
+    this->getLayout()->recomputeCenteringPadding();
 
     gtk_widget_queue_resize(getWidget());
 
     if (zoom->isZoomPresentationMode() || zoom->isZoomFitMode()) {
-        scrollTo(currentPage);
+        scrollTo(this->getCurrentPage());
     } else if (zoom->isZoomSequenceActive()) {
         auto pos = zoom->getScrollPositionAfterZoom();
         Layout* layout = this->getLayout();
@@ -721,7 +714,7 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
     gtk_widget_queue_draw(this->widget);
 }
 
-void XournalView::layoutPages() { this->getLayout()->recalculate(/* forceNow = */ true); }
+void XournalView::layoutPages() { this->getLayout()->recalculate(); }
 
 auto XournalView::getDisplayHeight() const -> int {
     GtkAllocation allocation = {0};
@@ -843,6 +836,9 @@ void XournalView::updateVisibility() {
     auto visibleRg = Range(this->getLayout()->getVisibleRect());
     xoj::util::Point<int> center(round_cast<int>(.5 * (visibleRg.minX + visibleRg.maxX)),
                                  round_cast<int>(.5 * (visibleRg.minY + visibleRg.maxY)));
+
+    std::string debug = std::to_string(visibleRg.minX) + " < x < " + std::to_string(visibleRg.maxX) + " ; " +
+                        std::to_string(visibleRg.minY) + " < y < " + std::to_string(visibleRg.maxY);
 
     unsigned int maxCacheSize =
             this->maxCacheUsageOverride.value_or(this->getControl()->getSettings()->getMaxTilingMemoryUsage());
