@@ -291,8 +291,7 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem) {
             } else if (sType == "double") {
                 elem.setDouble(name, g_ascii_strtod(value.c_str(), nullptr));
             } else if (sType == "hex") {
-                int i = std::stoi(value, 0, 16);
-                if (i) {
+                if (const long i = std::stol(value, nullptr, 16)) {
                     elem.setIntHex(name, i);
                 } else {
                     g_warning("Settings::Unknown hex value: %s:%s\n", name.c_str(), value.c_str());
@@ -312,7 +311,7 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem) {
 
 void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     // Parse data map
-    if (cur->name == "data"_xml) {
+    if (u8string(cur->name) == "data"_xmlstr) {
         const auto name = xmlGet<string>(cur, "name");
         if (name.empty()) {
             g_warning("Settings::%s:No name property!\n", cur->name);
@@ -328,7 +327,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         return;
     }
 
-    if (cur->name != "property"_xml) {
+    if (u8string(cur->name) != "property"_xmlstr) {
         g_warning("Settings::Unknown XML node: %s\n", cur->name);
         return;
     }
@@ -341,12 +340,9 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 
     if (name == "font") {
         const auto font = xmlGet<string>(cur, "font");
-        if (font.empty()) {
-            this->font.setName(font);
-        }
-
         const auto size = xmlGet<double>(cur, "size", DEFAULT_FONT_SIZE);
 
+        this->font.setName(font);
         this->font.setSize(size);
         return;
     }
@@ -746,11 +742,11 @@ auto Settings::load() -> bool {
     xmlKeepBlanksDefault(0);
 
     if (!fs::exists(filepath)) {
-        g_warning("Settings file %s does not exist. Regenerating. ", filepath.string().c_str());
+        g_warning("Settings file %s does not exist. Regenerating. ", filepath.c_str());
         save();
     }
 
-    const xmlDocPtr doc = xmlParseFile(filepath.u8string().c_str());
+    const xmlDocPtr doc = xmlParseFile(filepath.c_str());
 
     if (doc == nullptr) {
         g_warning("Settings::load:: doc == null, could not load Settings!\n");
@@ -759,14 +755,14 @@ auto Settings::load() -> bool {
 
     xmlNodePtr cur = xmlDocGetRootElement(doc);
     if (cur == nullptr) {
-        g_message("The settings file \"%s\" is empty", filepath.string().c_str());
+        g_message("The settings file \"%s\" is empty", filepath.c_str());
         xmlFreeDoc(doc);
 
         return false;
     }
 
-    if (cur->name != "settings"_xml) {
-        g_message("File \"%s\" is of the wrong type", filepath.string().c_str());
+    if (u8string(cur->name) != "settings"_xmlstr) {
+        g_message("File \"%s\" is of the wrong type", filepath.c_str());
         xmlFreeDoc(doc);
 
         return false;
@@ -1160,7 +1156,7 @@ void Settings::save() {
         saveData(root, p.first, p.second);
     }
 
-    xmlSaveFormatFileEnc(filepath.u8string().c_str(), doc, "UTF-8", 1);
+    xmlSaveFormatFileEnc(filepath.c_str(), doc, "UTF-8", 1);
     xmlFreeDoc(doc);
 }
 
@@ -2397,7 +2393,7 @@ void SElement::setComment(const string& name, const string& comment) {
     attrib.comment = comment;
 }
 
-void SElement::setIntHex(const string& name, const int value) {
+void SElement::setIntHex(const string& name, const uint32_t value) {
     SAttribute& attrib = this->element->attributes[name];
     attrib.iValue = value;
     attrib.type = ATTRIBUTE_TYPE_INT_HEX;
