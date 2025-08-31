@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-27 10:36+0000\n"
-"PO-Revision-Date: 2025-08-03 04:36\n"
+"POT-Creation-Date: 2025-08-26 08:45+0000\n"
+"PO-Revision-Date: 2025-08-31 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Thai\n"
 "Language: th_TH\n"
@@ -1055,27 +1055,27 @@ msgstr ""
 msgid "Previously selected language not available anymore!"
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:49
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:50
 msgid "LaTeX editor theme:"
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:54
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:55
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:143
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:144
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:156
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:165
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:166
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr ""
 
@@ -1616,8 +1616,8 @@ msgstr "ตกลง"
 msgid "Toolbar found: {1}"
 msgstr ""
 
-#: ../src/core/model/Document.cpp:327 ../src/core/model/Document.cpp:336
-#: ../src/core/model/Document.cpp:339
+#: ../src/core/model/Document.cpp:356 ../src/core/model/Document.cpp:365
+#: ../src/core/model/Document.cpp:368
 msgid "Document not loaded! ({1}), {2}"
 msgstr ""
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-27 10:36+0000\n"
-"PO-Revision-Date: 2025-08-03 04:36\n"
+"POT-Creation-Date: 2025-08-26 08:45+0000\n"
+"PO-Revision-Date: 2025-08-31 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -1086,27 +1086,27 @@ msgstr "Predefinita di sistema"
 msgid "Previously selected language not available anymore!"
 msgstr "La lingua precedentemente selezionata non è più disponibile!"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:49
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:50
 msgid "LaTeX editor theme:"
 msgstr "Tema editor LaTeX:"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:54
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:55
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "GtkSourceView è stato disabilitato durante la creazione di Xournal++! Alcune opzioni non saranno disponibili."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:143
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:144
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Impossibile aprire il modello globale in {1}. Esiste un modello?"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
 msgid "Sample LaTeX file generated successfully."
 msgstr "File LaTeX di esempio generato con successo."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:156
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Errore: {1}. Controlla il contenuto di {2}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:165
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:166
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Errore: {1} non è un file normale. Controlla le impostazioni del tuo modello LaTeX. "
 
@@ -1651,8 +1651,8 @@ msgstr "OK"
 msgid "Toolbar found: {1}"
 msgstr "Barra degli Strumenti trovata: {1}"
 
-#: ../src/core/model/Document.cpp:327 ../src/core/model/Document.cpp:336
-#: ../src/core/model/Document.cpp:339
+#: ../src/core/model/Document.cpp:356 ../src/core/model/Document.cpp:365
+#: ../src/core/model/Document.cpp:368
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Documento non caricato! ({1}), {2}"
 

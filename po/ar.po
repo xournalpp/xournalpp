@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-27 10:36+0000\n"
-"PO-Revision-Date: 2025-08-03 04:35\n"
+"POT-Creation-Date: 2025-08-26 08:45+0000\n"
+"PO-Revision-Date: 2025-08-31 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -1086,27 +1086,27 @@ msgstr "لغة النظام"
 msgid "Previously selected language not available anymore!"
 msgstr "اللغة المختارة سابقا لم تعد متاحة!"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:49
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:50
 msgid "LaTeX editor theme:"
 msgstr "سمة محرر LaTeX:"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:54
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:55
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "تم تعطيل GtkSourceView عندما تم بناء Xournal++‎؛ لن تتوفر بعض الخيارات."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:143
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:144
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "تعذر فتح ملف القالب العام في {1}. هل هو موجود؟"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
 msgid "Sample LaTeX file generated successfully."
 msgstr "تم توليد ملف عينة LaTeX بنجاح."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:156
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "خطأ: {1}. برجاء التحقق من محتويات {2}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:165
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:166
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "خطأ: {1} ليس ملفا عاديا. الرجاء مراجعة إعدادات ملف قالب LaTeX. "
 
@@ -1651,14 +1651,14 @@ msgstr "موافق"
 msgid "Toolbar found: {1}"
 msgstr "تم العثور على شريط الأدوات: {1}"
 
-#: ../src/core/model/Document.cpp:327 ../src/core/model/Document.cpp:336
-#: ../src/core/model/Document.cpp:339
+#: ../src/core/model/Document.cpp:356 ../src/core/model/Document.cpp:365
+#: ../src/core/model/Document.cpp:368
 msgid "Document not loaded! ({1}), {2}"
 msgstr "لم يتم قراءة المستند بواسطة التطبيق بشكل صحيح! ({1})، {2}"
 
 #: ../src/core/model/Image.cpp:163 ../src/core/model/Image.cpp:173
 msgid "Error: "
-msgstr ""
+msgstr "خطأ: "
 
 #: ../src/core/model/Image.cpp:167 ../src/core/model/Image.cpp:177
 msgid "Unrecoverable error"
