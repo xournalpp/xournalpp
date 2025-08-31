@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-22 14:27+0000\n"
-"PO-Revision-Date: 2025-08-24 04:26\n"
+"PO-Revision-Date: 2025-08-31 04:25\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -369,7 +369,8 @@ msgstr "Audio für diese Sitzung deaktivieren"
 #: ../src/core/control/XournalMain.cpp:586
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
-msgstr ""
+msgstr "PDF im Anhang-Modus öffnen\n"
+"                                 Ignoriert, wenn keine PDF-Datei angegeben wurde."
 
 #: ../src/core/control/XournalMain.cpp:590
 msgid "Save xopp-file with the background PDF specified as FILE"
@@ -379,7 +380,9 @@ msgstr "XOPP-Datei mit dem als FILE angegebenen Hintergrund-PDF speichern"
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
-msgstr ""
+msgstr "Verwende das angegebene Backend für PDF-Exporte.\n"
+"                                       Verfügbare Backends: {1}\n"
+"                                       Kein Effekt ohne -p/--create-pdf=foo.pdf"
 
 #: ../src/core/control/XournalMain.cpp:604
 msgid "Export FILE as PDF"
@@ -395,12 +398,15 @@ msgstr ""
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
-msgstr ""
+msgstr "Exportiere ohne Hintergrund\n"
+"                                 Die exportierte Datei hat einen transparenten oder weißen Hintergrund,\n"
+"                                 abhängig davon, was das jeweilige Dateiformat unterstützt\n"
 
 #: ../src/core/control/XournalMain.cpp:618
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
-msgstr ""
+msgstr "Exportiere ohne Lineatur\n"
+"                                 Die exportierte Datei hat keine Lineatur\n"
 
 #: ../src/core/control/XournalMain.cpp:623
 msgid "Export layers progressively\n"

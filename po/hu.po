@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-22 14:27+0000\n"
-"PO-Revision-Date: 2025-08-24 04:26\n"
+"PO-Revision-Date: 2025-08-31 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1055,7 +1055,7 @@ msgstr "Görbe rajzolása"
 
 #: ../src/core/gui/dialog/DeviceTestingArea.cpp:161
 msgid "Export Logs"
-msgstr ""
+msgstr "Naplók exportálása"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:115
 msgid "Failed to parse external editor command: {1}"
@@ -2261,7 +2261,7 @@ msgstr "(megnyitja a GitHubot a böngészőben)"
 
 #: ../ui/deviceList.glade:7
 msgid "Known devices"
-msgstr ""
+msgstr "Ismert eszközök"
 
 #: ../ui/deviceList.glade:46
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -2269,7 +2269,7 @@ msgstr "<i>Rendeljen eszközosztályokat a rendszer minden egyes bemeneti eszkö
 
 #: ../ui/deviceTestingArea.glade:42
 msgid "Try out your devices in the area below"
-msgstr ""
+msgstr "Próbálja ki eszközeit az alábbi területen"
 
 #: ../ui/deviceTestingArea.glade:70 ../ui/settings.glade:1630
 #: ../ui/settingsDeviceClassConfig.glade:35
@@ -2279,17 +2279,17 @@ msgstr "Egér"
 #: ../ui/deviceTestingArea.glade:82
 msgctxt "mouse button"
 msgid "Left"
-msgstr ""
+msgstr "Balra"
 
 #: ../ui/deviceTestingArea.glade:96
 msgctxt "mouse button"
 msgid "Middle"
-msgstr ""
+msgstr "Középső"
 
 #: ../ui/deviceTestingArea.glade:110
 msgctxt "mouse button"
 msgid "Right"
-msgstr ""
+msgstr "Jobbra"
 
 #: ../ui/deviceTestingArea.glade:124 ../ui/settings.glade:2170
 msgid "Stylus"
@@ -2298,7 +2298,7 @@ msgstr "Mutató"
 #: ../ui/deviceTestingArea.glade:136 ../ui/deviceTestingArea.glade:190
 msgctxt "the tip of the stylus"
 msgid "Tip"
-msgstr ""
+msgstr "Tipp"
 
 #: ../ui/deviceTestingArea.glade:150 ../ui/settings.glade:1987
 msgid "Button 1"
@@ -2315,45 +2315,46 @@ msgstr "Érintőképernyő"
 
 #: ../ui/deviceTestingArea.glade:374
 msgid "In use"
-msgstr ""
+msgstr "Használatban"
 
 #: ../ui/deviceTestingArea.glade:388 ../ui/deviceTestingArea.glade:402
 msgctxt "stylus hover"
 msgid "Hover"
-msgstr ""
+msgstr "Lebegés"
 
 #: ../ui/deviceTestingArea.glade:443
 msgid "Show logs"
-msgstr ""
+msgstr "Naplók megjelenítése"
 
 #: ../ui/deviceTestingArea.glade:455
 msgid "Export debug info"
-msgstr ""
+msgstr "Hibakeresési adatok exportálása"
 
 #: ../ui/deviceTestingArea.glade:477
 msgid "To clear the logs, simply close and reopen the settings dialog"
-msgstr ""
+msgstr "A naplók törléséhez egyszerűen zárja be, majd nyissa meg újra a beállítások párbeszédpanelt"
 
 #: ../ui/deviceTestingArea.glade:491
 msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
 "Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
-msgstr ""
+msgstr "Jelölje ki ezt a beállítást, ha a „Tipp” jelzés nem jelenik meg az érintőceruza használatakor és annak valamelyik gombjának megnyomásakor.\n\n"
+"Törölje a beállítást, ha a „Tipp” jelzés be van kapcsolva, miközben a ceruza lebeg (de nem érinti a képernyőt vagy a táblagépet)."
 
 #: ../ui/deviceTestingArea.glade:500
 msgid "Emulate stylus tip contact on button press"
-msgstr ""
+msgstr "Gombnyomáskor emulálja a stylus hegyének érintését"
 
 #: ../ui/deviceTestingArea.glade:547
 msgid "<i>Change the device class below if your device is not correctly recognized (e.g. your active stylus shows up as touchscreen)</i>"
-msgstr ""
+msgstr "<i>Módosítsa az alábbi eszközosztályt, ha az eszközét a rendszer nem ismeri fel megfelelően (pl. az aktív stylus érintőképernyőként jelenik meg)</i>"
 
 #: ../ui/deviceTestingArea.glade:568
 msgid "Last device used:"
-msgstr ""
+msgstr "Utolsó használt eszköz:"
 
 #: ../ui/deviceTestingArea.glade:588
 msgid "Show all known devices"
-msgstr ""
+msgstr "Az összes ismert eszköz megjelenítése"
 
 #: ../ui/exportSettings.glade:36
 msgid "Resolution"
@@ -3067,7 +3068,7 @@ msgstr "<i>Határozza meg, hogy mely eszközök legyenek kiválasztva, ha megnyo
 
 #: ../ui/settings.glade:1519
 msgid "Left Mouse Button"
-msgstr ""
+msgstr "Bal egérgomb"
 
 #: ../ui/settings.glade:1551
 msgid "Middle Mouse Button"
@@ -3987,7 +3988,7 @@ msgstr "Letiltva"
 
 #: ../ui/settingsDeviceClassConfig.glade:54
 msgid "Apply"
-msgstr ""
+msgstr "Alkalmazás"
 
 #: ../ui/toolbarCustomizeDialog.glade:30
 msgid "Drag and drop Components from here to the toolbars and back."
