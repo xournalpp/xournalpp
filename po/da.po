@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-11 14:47+0000\n"
-"PO-Revision-Date: 2025-08-17 04:28\n"
+"POT-Creation-Date: 2025-08-26 08:45+0000\n"
+"PO-Revision-Date: 2025-08-31 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Danish\n"
 "Language: da_DK\n"
@@ -1628,8 +1628,8 @@ msgstr "Ok"
 msgid "Toolbar found: {1}"
 msgstr "Værktøjslinje fundet: {1}"
 
-#: ../src/core/model/Document.cpp:327 ../src/core/model/Document.cpp:336
-#: ../src/core/model/Document.cpp:339
+#: ../src/core/model/Document.cpp:356 ../src/core/model/Document.cpp:365
+#: ../src/core/model/Document.cpp:368
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Dokument ikke indlæst! ({1}), {2}"
 
