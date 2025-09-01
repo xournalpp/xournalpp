@@ -1,3 +1,9 @@
+xournalpp (1.2.9~dev-1) UNRELEASED; urgency=medium
+
+  * 
+
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Mon, 01 Sep 2025 10:40:09 +0200
+
 xournalpp (1.2.8-1) unstable; urgency=medium
 
   * Improved the behavior of the selection tools
