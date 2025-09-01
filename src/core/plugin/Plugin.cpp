@@ -339,25 +339,27 @@ void Plugin::registerPlaceholders(ToolMenuHandler* toolMenuHandler) {
 }
 
 void Plugin::registerPlaceholder(const std::string& toolbarId, const std::string& description) {
-    if (toolbarPlaceholderEntries.find(toolbarId) == toolbarPlaceholderEntries.end()) {
+    std::string prefixedId = "Plugin::" + toolbarId;
+    if (toolbarPlaceholderEntries.find(prefixedId) == toolbarPlaceholderEntries.end()) {
         auto entry = std::make_unique<ToolbarPlaceholderEntry>();
-        entry->toolbarId = toolbarId;
+        entry->toolbarId = prefixedId;
         entry->description = description;
         entry->value = "";
         entry->label = nullptr;  // Will be set when toolbar is built
-        toolbarPlaceholderEntries[toolbarId] = std::move(entry);
+        toolbarPlaceholderEntries[prefixedId] = std::move(entry);
     }
 }
 
 void Plugin::setPlaceholderValue(const std::string& toolbarId, const std::string& value) {
-    auto it = toolbarPlaceholderEntries.find(toolbarId);
+    std::string prefixedId = toolbarId.rfind("Plugin::", 0) == 0 ? toolbarId : "Plugin::" + toolbarId;
+    auto it = toolbarPlaceholderEntries.find(prefixedId);
     if (it != toolbarPlaceholderEntries.end()) {
         it->second->value = value;
         if (it->second->label) {
-            it->second->label->setText(value);
+            it->second->label->setText(value.empty() ? getDisplayId(it->second->toolbarId) : value);
         }
     } else {
-        g_warning("setPlaceholderValue: placeholder id '%s' does not exist", toolbarId.c_str());
+        g_warning("setPlaceholderValue: placeholder id '%s' does not exist", prefixedId.c_str());
     }
 }
 

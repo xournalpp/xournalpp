@@ -80,11 +80,19 @@ struct ToolbarButtonEntry final {
 };
 
 struct ToolbarPlaceholderEntry final {
-    std::string toolbarId;                          ///< toolbar ID to be used in toolbar.ini
+    std::string toolbarId;                          ///< prefixed toolbar ID to be used in toolbar.ini
     std::string description;                        ///< description displayed on hovering over the placeholder
     std::string value;                              ///< current value of the placeholder
     class PluginPlaceholderLabel* label = nullptr;  ///< pointer to the label for updates
 };
+
+inline std::string getDisplayId(const std::string& toolbarId) {
+    constexpr const char* prefix = "Plugin::";
+    if (toolbarId.rfind(prefix, 0) == 0) {
+        return toolbarId.substr(strlen(prefix));
+    }
+    return toolbarId;
+}
 
 struct LuaDeleter {
     void operator()(lua_State* ptr) const { lua_close(ptr); }
@@ -167,8 +175,6 @@ public:
 private:
     /// Load ini file
     void loadIni();
-    // Storage for toolbar placeholder entries
-    std::unordered_map<std::string, std::unique_ptr<ToolbarPlaceholderEntry>> toolbarPlaceholderEntries;
 
     /// Load custom Lua Libraries
     static void registerXournalppLibs(lua_State* luaPtr);
@@ -190,7 +196,8 @@ private:
     std::vector<MenuEntry> menuEntries;                    ///< All registered menu entries
     xoj::util::GObjectSPtr<GMenu> menuSection;             ///< Menu section containing the menu entries
     std::vector<ToolbarButtonEntry> toolbarButtonEntries;  ///< All registered toolbar button entries
-
+    std::unordered_map<std::string, std::unique_ptr<ToolbarPlaceholderEntry>>
+            toolbarPlaceholderEntries;  ///< Storage for toolbar placeholder entries
 
     std::string name;             ///< Plugin name
     std::string description;      ///< Description of the plugin

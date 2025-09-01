@@ -10,13 +10,11 @@
 
 #ifdef ENABLE_PLUGINS
 
-/// Constructor: links placeholder entry to this label
 PluginPlaceholderLabel::PluginPlaceholderLabel(ToolbarPlaceholderEntry* t):
         AbstractToolItem(t->toolbarId, Category::PLUGINS), t(t) {
     t->label = this;
 }
 
-/// Destructor: disconnects signal handlers and clears label widget vector
 PluginPlaceholderLabel::~PluginPlaceholderLabel() {
     for (auto* label: labelWidgets) {
         if (GTK_IS_WIDGET(label)) {
@@ -26,7 +24,6 @@ PluginPlaceholderLabel::~PluginPlaceholderLabel() {
     labelWidgets.clear();
 }
 
-/// Sanitizes text by replacing newlines and carriage returns with spaces
 auto PluginPlaceholderLabel::sanitizeText(const std::string& text) const -> std::string {
     std::string sanitized = text;
     std::replace(sanitized.begin(), sanitized.end(), '\n', ' ');
@@ -34,16 +31,14 @@ auto PluginPlaceholderLabel::sanitizeText(const std::string& text) const -> std:
     return sanitized;
 }
 
-/// Gets the display text, using toolbarId as fallback if value is empty
 auto PluginPlaceholderLabel::getDisplayText() const -> std::string {
     std::string text = t->value;
     if (text.empty()) {
-        text = t->toolbarId;
+        text = getDisplayId(t->toolbarId);
     }
     return sanitizeText(text);
 }
 
-/// Creates a label widget for the placeholder; stores and tracks it
 auto PluginPlaceholderLabel::createItem(bool) -> xoj::util::WidgetSPtr {
     const std::string labelText = getDisplayText();
 
@@ -64,7 +59,6 @@ auto PluginPlaceholderLabel::createItem(bool) -> xoj::util::WidgetSPtr {
     return item;
 }
 
-/// Updates all label widgets with new text
 void PluginPlaceholderLabel::setText(std::string text) {
     t->value = std::move(text);
     const std::string displayText = getDisplayText();
@@ -77,10 +71,8 @@ void PluginPlaceholderLabel::setText(std::string text) {
     }
 }
 
-/// Returns the display name for the placeholder tool
 auto PluginPlaceholderLabel::getToolDisplayName() const -> std::string { return this->t->description; }
 
-/// Returns a theme-supported icon for the placeholder tool
 auto PluginPlaceholderLabel::getNewToolIcon() const -> GtkWidget* {
     return gtk_image_new_from_icon_name("dialog-information", GTK_ICON_SIZE_LARGE_TOOLBAR);
 }
