@@ -278,7 +278,7 @@ auto Settings::getActiveViewMode() const -> ViewModeId { return this->activeView
 
 void Settings::parseData(xmlNodePtr cur, SElement& elem) {
     for (xmlNodePtr x = cur->children; x != nullptr; x = x->next) {
-        const string type = reinterpret_cast<const char*>(x->name);
+        const std::string_view type = reinterpret_cast<const char*>(x->name);
         const auto name = xmlGet<string>(x, "name");
 
         if (type == "data") {
@@ -312,7 +312,7 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem) {
 
 void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     // Parse data map
-    if (u8string(cur->name) == "data"_xmlstr) {
+    if (ustring_view(cur->name) == "data"_xmlsv) {
         const auto name = xmlGet<string>(cur, "name");
         if (name.empty()) {
             g_warning("Settings::%s:No name property!\n", cur->name);
@@ -328,7 +328,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         return;
     }
 
-    if (u8string(cur->name) != "property"_xmlstr) {
+    if (ustring_view(cur->name) != "property"_xmlsv) {
         g_warning("Settings::Unknown XML node: %s\n", cur->name);
         return;
     }
@@ -762,8 +762,8 @@ auto Settings::load() -> bool {
         return false;
     }
 
-    if (cur->name != "settings"_xml) {
-        g_message("File \"%s\" is of the wrong type", filepath.string().c_str());
+    if (u8string_view(cur->name) != "settings"_xmlsv) {
+        g_message("File \"%s\" is of the wrong type", filepath.c_str());
         xmlFreeDoc(doc);
 
         return false;
