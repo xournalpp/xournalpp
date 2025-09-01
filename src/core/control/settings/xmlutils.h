@@ -21,11 +21,8 @@
 
 #include "xmlutils.h"
 
-// C++20 stubs
-using char8_t = unsigned char;
-
-using u8string = std::basic_string<char8_t>;
-using u8string_view = std::basic_string_view<char8_t>;
+// TODO: after C++20 migrate to std::u8string_view
+using ustring_view = std::basic_string_view<unsigned char>;
 
 /*
  * parse: parse settings from XML
@@ -34,14 +31,14 @@ template <typename T>
 T parse(std::string_view strView, T defaultValue = T{});
 
 /*
- * Operator that converts string literals to char8_t* (unsigned char*)
+ * Operator that converts string literals to xmlChar* (unsigned char*)
  */
-inline const char8_t* operator""_xml(const char* ch, size_t);
+inline const xmlChar* operator""_xml(const char* ch, size_t);
 
 /*
  * Operator that converts string literals to std::basic_string<unsigned char> for comparisons
  */
-inline u8string operator""_xmlstr(const char* ch, size_t);
+inline ustring_view operator""_xmlsv(const char* ch, size_t);
 
 /*
  * get a string (c-style or cpp-style) from xmlNodePtr (xmlNode*)
@@ -49,18 +46,21 @@ inline u8string operator""_xmlstr(const char* ch, size_t);
 template <typename T>
 T xmlGet(const xmlNode* node, const std::string& property, T defaultValue = T{});
 
-inline const char8_t* operator""_xml(const char* ch, size_t) { return reinterpret_cast<const char8_t*>(ch); }
+inline const xmlChar* operator""_xml(const char* ch, size_t) { return reinterpret_cast<const xmlChar*>(ch); }
 
-inline u8string operator""_xmlstr(const char* ch, size_t) { return reinterpret_cast<const char8_t*>(ch); }
+inline ustring_view operator""_xmlsv(const char* ch, size_t) { return reinterpret_cast<const unsigned char*>(ch); }
 
 template <typename T>
 T xmlGet(const xmlNode* node, const std::string& property, T defaultValue) {
-    xmlChar* str = xmlGetProp(node, reinterpret_cast<const char8_t*>(property.c_str()));
-    const std::string ret{reinterpret_cast<const char*>(str)};
+    const xmlChar* prop = xmlGetProp(node, reinterpret_cast<const xmlChar*>(property.c_str()));
 
-    xmlFree(str);
+    if (prop == nullptr) {
+        return parse<T>({}, defaultValue);
+    }
 
-    return parse<T>(ret, defaultValue);
+    const std::string_view str(reinterpret_cast<const char*>(prop));
+
+    return parse<T>(str, defaultValue);
 }
 
 template <typename T>
