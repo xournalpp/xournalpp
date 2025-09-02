@@ -1,6 +1,27 @@
 # Changelog
 
-## 1.2.7+dev (Unreleased)
+## 1.2.8+dev (Unreleased)
+
+## 1.2.8
+
+New Windows ARM and Ubuntu ARM releases are now available (#6482)
+This release also includes bugfixes from various community contributors:
+
+* Fixed delete selection button not working in some situations (#6432)
+* Made the selection algorithm more intuitive (#6433)
+* Fixed various visual artifacts (#6461, #6462, #6596)
+* Fixed some behavior of Mouse+Keyboard combo devices (#6473)
+* Fixed filename extension stripping (#6546)
+* Fixed CLI using relative paths (#6539)
+* Fixed crashes due to race conditions (#6567)
+* Fixed crash involving kinetic scrolling (#6485)
+* Fixed crash that sometimes happened when quitting without saving (#6577, #6581)
+* Made using GtkSourceView and Plugins proper CMake options (#6585)
+* Fixed crash when changing keyboard layouts on Windows (#6482)
+* Fixed default filename processing on Windows (#6634)
+* Bumped dependency versions on MacOS (#6498)
+* Updated translations
+>>>>>>> release-1.2
 
 ## 1.2.7
 
