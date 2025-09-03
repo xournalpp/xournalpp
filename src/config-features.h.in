@@ -23,9 +23,9 @@
 
 #cmakedefine ENABLE_QPDF
 
-#cmakedefine ENABLE_STD_EXECUTION_PARALLEL_POLICY
-
 #cmakedefine ENABLE_CPPTRACE
+
+#define RENDER_ALGORITHM @XOPP_RENDER_ALGORITHM@
 
 // Example: #cmakedefine NAME_FROM_Cmake_list
 // in CMakeFile.txt:
