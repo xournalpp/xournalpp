@@ -32,12 +32,14 @@ public:
     /**
      * Draw the full page, usually you would like to call this method
      * @param page The page to draw
-     * @param cr Draw to thgis context
+     * @param cr Draw to this context
      * @param dontRenderEditingStroke false to draw currently drawing stroke
      * @param flags show/hide various background components
+     * @param safeForParallelExecution Ensures the rendering is thread safe (but may have a performance cost)
      */
     void drawPage(ConstPageRef page, cairo_t* cr, bool dontRenderEditingStroke,
-                  xoj::view::BackgroundFlags flags = xoj::view::BACKGROUND_SHOW_ALL);
+                  xoj::view::BackgroundFlags flags = xoj::view::BACKGROUND_SHOW_ALL,
+                  bool safeForParallelExecution = false);
 
     /**
      * Only draws the prescribed layers of the given page, regardless of the layer's current visibility.

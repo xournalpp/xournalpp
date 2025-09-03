@@ -163,20 +163,14 @@ pkg_check_modules(ExternalModules REQUIRED IMPORTED_TARGET ${pkg-module-spec})
 find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
 
-# std::execution parallel policy
-option(ENABLE_STD_EXECUTION_PARALLEL_POLICY "Use std::execution::parallel policy" ON)
-if (ENABLE_STD_EXECUTION_PARALLEL_POLICY)
-    include(CheckCXXSymbolExists)
-    # TODO(cpp20) replace `ciso646` by `version`
-    check_cxx_symbol_exists(__GLIBCXX__ ciso646 GLIBCXX)
-    if(GLIBCXX) # Using libstdc++
-        find_package(TBB REQUIRED)  # for libstdc++ <execution>
-    endif()
-    check_cxx_symbol_exists(_LIBCPP_VERSION ciso646 LIBCPP)
-    if(LIBCPP) # Using libc++
-        # c++17 execution policies are still in the experimental lib (at least in clang 20)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexperimental-library")
-    endif()
+# Rendering algorithm
+set(XOPP_RENDER_ALGORITHM PARALLEL_LOOP CACHE STRING "Algorithm used to render tiles")
+set_property(CACHE XOPP_RENDER_ALGORITHM PROPERTY STRINGS CAIRO_TEE_SURFACE SEQUENCIAL_LOOP PARALLEL_LOOP)
+
+message(STATUS "Using rendering algorithm: ${XOPP_RENDER_ALGORITHM}")
+if (XOPP_RENDER_ALGORITHM STREQUAL "PARALLEL_LOOP")
+    # Uses std::execution::par
+    find_package(Execution REQUIRED)
 endif()
 
 option(ENABLE_AUDIO "Compile with Audio recording/playing support" ON)
@@ -258,7 +252,7 @@ target_link_libraries(external_modules INTERFACE
         $<$<TARGET_EXISTS:qpdf::libqpdf>:qpdf::libqpdf>
         ZLIB::ZLIB
         Threads::Threads
-        $<$<TARGET_EXISTS:TBB::tbb>:TBB::tbb>
+        $<$<TARGET_EXISTS:std::execution>:std::execution>
         )
 
 target_compile_definitions(external_modules INTERFACE

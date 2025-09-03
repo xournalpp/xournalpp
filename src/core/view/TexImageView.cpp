@@ -29,11 +29,26 @@ void TexImageView::draw(const Context& ctx) const {
             return;
         }
 
-        PopplerPage* page = poppler_document_get_page(pdf, 0);
+        xoj::util::GObjectSPtr<PopplerDocument> reparsedPdf;
+        xoj::util::GObjectSPtr<PopplerPage> page;
+        if (ctx.executionPolicy == PARALLEL) {
+            // poppler_page_render and poppler_page_render_for_printing are not thread safe because the cairo context is
+            // set globally. So we have to create an independent new PopplerDocument.
+            // Performance-wise, this is quite bad (fonts have to be reloaded and all that) so make sure to only use
+            // when parallelization grants actual benefits
+            const auto& binData = texImage->getBinaryData();
+            auto* bytes = g_bytes_new_with_free_func(binData.data(), binData.size(), nullptr, nullptr);
+            reparsedPdf.reset(poppler_document_new_from_bytes(bytes, nullptr, nullptr), xoj::util::adopt);
+            g_bytes_unref(bytes);
+
+            page.reset(poppler_document_get_page(reparsedPdf.get(), 0), xoj::util::adopt);
+        } else {
+            page.reset(poppler_document_get_page(pdf, 0), xoj::util::adopt);
+        }
 
         double pageWidth = 0;
         double pageHeight = 0;
-        poppler_page_get_size(page, &pageWidth, &pageHeight);
+        poppler_page_get_size(page.get(), &pageWidth, &pageHeight);
 
         double xFactor = texImage->getElementWidth() / pageWidth;
         double yFactor = texImage->getElementHeight() / pageHeight;
@@ -58,16 +73,14 @@ void TexImageView::draw(const Context& ctx) const {
              * This sets the current pattern to the temporary surface.
              */
             cairo_push_group(cr);
-            pageRenderFunction(page, cr);
+            pageRenderFunction(page.get(), cr);
             cairo_pop_group_to_source(cr);
 
             // paint the temporary surface with opacity level
             cairo_paint_with_alpha(cr, OPACITY_NO_AUDIO);
         } else {
-            pageRenderFunction(page, cr);
+            pageRenderFunction(page.get(), cr);
         }
-
-        g_clear_object(&page);
     } else if (img != nullptr) {
         int width = cairo_image_surface_get_width(img);
         int height = cairo_image_surface_get_height(img);
