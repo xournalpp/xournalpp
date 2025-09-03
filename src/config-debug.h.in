@@ -58,6 +58,9 @@
  */
 #cmakedefine DEBUG_TILING
 
+/// Print time performances of renders loops in RenderJob
+#cmakedefine DEBUG_TIME_RENDER_LOOPS
+
 /**
  * Show repainted areas when erasing an highlighter stroke
  */

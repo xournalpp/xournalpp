@@ -35,7 +35,7 @@
       "displayed_name": "MacOS x64",
       "runner": "macos-13",
       "run_ci": "true",
-      "extra_cmake_flags": "-DENABLE_STD_EXECUTION_PARALLEL_POLICY=off"
+      "extra_cmake_flags": "-DBENCHMARK_USE_STD_EXECUTION=off"
     },
     "mac-arm": {
       "displayed_name": "MacOS ARM",
