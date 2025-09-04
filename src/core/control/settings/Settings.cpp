@@ -293,7 +293,7 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem) {
                 elem.setDouble(name, g_ascii_strtod(value.c_str(), nullptr));
             } else if (sType == "hex") {
                 if (const long i = std::stol(value, nullptr, 16)) {
-                    elem.setIntHex(name, i);
+                    elem.setIntHex(name, static_cast<uint32_t>(i));
                 } else {
                     g_warning("Settings::Unknown hex value: %s:%s\n", name.c_str(), value.c_str());
                 }
@@ -859,7 +859,7 @@ void Settings::saveButtonConfig() {
         }
 
         if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER || type == TOOL_TEXT) {
-            e.setIntHex("color", int32_t(uint32_t(cfg->color)));
+            e.setIntHex("color", static_cast<uint32_t>(cfg->color));
         }
 
         if (type == TOOL_ERASER) {
