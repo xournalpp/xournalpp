@@ -129,6 +129,23 @@ function app.registerUi(opts) end
 function app.changeActionState(action, state) end
 
 --- *
+--- Get the action's state. For actions with state from an enum
+--- (like ToolType, ToolSize, EraserSize, OrderChange) the return value should
+--- be compared to the app.C table of constants for consistency between different
+--- versions of Xournal++
+--- @param action Action
+--- 
+--- Example 1: if app.getActionState("select-tool") == app.C.Tool_text then
+---               print("Currently the text tool is selected")
+---            end
+--- Example 2: app.getActionState("set-layout-vertical")    -- whether the layout is vertical or not
+--- Example 3: app.getActionState("set-columns-or-rows")    -- number of columns (positive values) or rows (negative
+--- values) Example 4: app.getActionState("tool-color")             -- current color Example 5:
+--- app.getActionState("zoom")                   -- current zoom value Example 6:
+--- app.getActionState("tool-pen-line-style")    -- current pen line style (as a string)
+function app.getActionState(action) end
+
+--- *
 --- Activate the action, triggering callbacks. Actions with state from an enum
 --- (like ToolType, ToolSize, EraserSize, OrderChange) should be accessed via the app.C
 --- table of constants for consistency between different versions of Xournal++
