@@ -40,6 +40,7 @@ static constexpr int NB_ITERATIONS = 5;
 
 template <auto fun>
 static void runBench(const PageRef& page) {
+    auto time = g_get_monotonic_time();
     for (auto c: BENCH_CASES) {
         xoj::view::Tiling tiles;
         tiles.populate(DPI_SCALE_FACTOR, {.5 * page->getWidth(), .5 * page->getHeight()},
@@ -53,6 +54,7 @@ static void runBench(const PageRef& page) {
         printf(u8" -> Rendered %2zu tiles %d times in %8ld µs (zoom %f)\n", tiles.getTiles().size(), NB_ITERATIONS,
                g_get_monotonic_time() - t, c.zoom);
     }
+    printf("   ------- Done in %8ld ms\n", (g_get_monotonic_time() - time) / 1000);
 }
 
 static inline void renderToBuffer(const PageRef& page, cairo_t* cr, bool parallelExecution) {

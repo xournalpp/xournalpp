@@ -35,7 +35,7 @@ void TexImageView::draw(const Context& ctx) const {
             // poppler_page_render and poppler_page_render_for_printing are not thread safe because the cairo context is
             // set globally. So we have to create an independent new PopplerDocument.
             // Performance-wise, this is quite bad (fonts have to be reloaded and all that) so make sure to only use
-            // when parallelization grants tangible benefits
+            // when parallelization grants actual benefits
             const auto& binData = texImage->getBinaryData();
             auto* bytes = g_bytes_new_with_free_func(binData.data(), binData.size(), nullptr, nullptr);
             reparsedPdf.reset(poppler_document_new_from_bytes(bytes, nullptr, nullptr), xoj::util::adopt);
