@@ -35,7 +35,7 @@
       "displayed_name": "MacOS x64",
       "runner": "macos-13",
       "run_ci": "true",
-      "extra_cmake_flags": "-DBENCHMARK_USE_STD_EXECUTION=off"
+      "extra_cmake_flags": "-DBENCHMARK_USE_STD_EXECUTION=off -DXOPP_RENDER_ALGORITHM=SEQUENCIAL_LOOP"
     },
     "mac-arm": {
       "displayed_name": "MacOS ARM",

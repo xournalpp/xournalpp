@@ -166,7 +166,7 @@ find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
 
 # Rendering algorithm
-set(XOPP_RENDER_ALGORITHM CAIRO_TEE_SURFACE CACHE STRING "Algorithm used to render tiles")
+set(XOPP_RENDER_ALGORITHM PARALLEL_LOOP CACHE STRING "Algorithm used to render tiles")
 set_property(CACHE XOPP_RENDER_ALGORITHM PROPERTY STRINGS CAIRO_TEE_SURFACE SEQUENCIAL_LOOP PARALLEL_LOOP)
 
 message(STATUS "Using rendering algorithm: ${XOPP_RENDER_ALGORITHM}")
