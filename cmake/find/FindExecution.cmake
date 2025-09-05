@@ -23,6 +23,7 @@ check_cxx_symbol_exists(_LIBCPP_VERSION ciso646 LIBCPP)
 if(LIBCPP) # Using libc++
     # c++17 execution policies are still in the experimental lib (at least in clang 20)
     target_compile_options(execution_lib INTERFACE "-fexperimental-library")
+    target_link_options(execution_lib INTERFACE "-fexperimental-library")
 endif()
 
 add_library(std::execution ALIAS execution_lib)
