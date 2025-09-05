@@ -577,6 +577,40 @@ GVariant* lua_to_gvariant(lua_State* L, int idx, const GVariantType* typeHint) {
     }
 }
 
+void lua_push_gvariant(lua_State* L, GVariant* state, const GVariantType* typeHint) {
+    std::string typeString =
+            std::string(g_variant_type_peek_string(typeHint), g_variant_type_get_string_length(typeHint));
+    if (typeString.length() > 1) {
+        g_warning("Unsupported type: %s", typeString.c_str());
+        lua_pushnil(L);
+        return;
+    }
+
+    switch (typeString[0]) {
+        case 'b':  // Expecting boolean
+            lua_pushboolean(L, getGVariantValue<bool>(state));
+            break;
+        case 'i':  // Expecting int32
+            lua_pushinteger(L, getGVariantValue<int32_t>(state));
+            break;
+        case 't':  // Expecting uint64
+            lua_pushinteger(L, getGVariantValue<uint64_t>(state));
+            break;
+        case 'u':  // Expecting uint32
+            lua_pushinteger(L, getGVariantValue<uint32_t>(state));
+            break;
+        case 'd':  // Expecting double
+            lua_pushnumber(L, getGVariantValue<double>(state));
+            break;
+        case 's':  // Expecting string
+            lua_pushstring(L, getGVariantValue<const char*>(state));
+            break;
+        default:
+            g_warning("Unhandled type: %s", typeString.c_str());
+            lua_pushnil(L);
+    }
+}
+
 /***
  * Change the action's state, triggering callbacks. Actions with state from an enum
  * (like ToolType, ToolSize, EraserSize, OrderChange) should be accessed via the app.C
@@ -605,6 +639,38 @@ static int applib_changeActionState(lua_State* L) {
     auto* actionDB = control->getActionDatabase();
     actionDB->fireChangeActionState(action, state);
     return 0;
+}
+
+/***
+ * Get the action's state. For actions with state from an enum
+ * (like ToolType, ToolSize, EraserSize, OrderChange) the return value should
+ * be compared to the app.C table of constants for consistency between different
+ * versions of Xournal++
+ * @param action Action
+ *
+ * Example 1: if app.getActionState("select-tool") == app.C.Tool_text then
+ *               print("Currently the text tool is selected")
+ *            end
+ * Example 2: app.getActionState("set-layout-vertical")    -- whether the layout is vertical or not
+ * Example 3: app.getActionState("set-columns-or-rows")    -- number of columns (positive values) or rows (negative
+ * values) Example 4: app.getActionState("tool-color")             -- current color Example 5:
+ * app.getActionState("zoom")                   -- current zoom value Example 6:
+ * app.getActionState("tool-pen-line-style")    -- current pen line style (as a string)
+ */
+static int applib_getActionState(lua_State* L) {
+    const char* actionStr = luaL_checkstring(L, 1);
+    if (actionStr == nullptr) {
+        return luaL_error(L, "Missing action!");
+    }
+    Action action = Action_fromString(actionStr);
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    auto* actionDB = control->getActionDatabase();
+    GAction* gAction = G_ACTION(actionDB->getAction(action).get());
+    auto* state = g_action_get_state(gAction);
+    auto* type = g_action_get_state_type(gAction);
+    lua_push_gvariant(L, state, type);
+    return 1;
 }
 
 /***
@@ -3317,6 +3383,7 @@ static int applib_setPlaceholderValue(lua_State* L) {
 static const luaL_Reg applib[] = {
         {"msgbox", applib_msgbox},  // Todo(gtk4) remove this deprecated function
         {"openDialog", applib_openDialog},
+        {"getActionState", applib_getActionState},
         {"changeActionState", applib_changeActionState},
         {"activateAction", applib_activateAction},
         {"getPageLabel", applib_getPageLabel},
