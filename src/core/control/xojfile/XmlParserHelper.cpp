@@ -68,19 +68,6 @@ auto XmlParserHelper::getAttrib<std::string_view>(std::string_view name, const A
 }
 
 template <>
-auto XmlParserHelper::getAttrib<const char*>(std::string_view name, const AttributeMap& attributeMap)
-        -> std::optional<const char*> {
-    const auto optSV = attributeMap[name];
-    if (optSV) {
-        // The values in the attribute map come from GMarkup, so they are null-terminated
-        xoj_assert(*optSV->end() == '\0');
-        return optSV->data();
-    } else {
-        return std::nullopt;
-    }
-}
-
-template <>
 auto XmlParserHelper::getAttrib<fs::path>(std::string_view name, const AttributeMap& attributeMap)
         -> std::optional<fs::path> {
     const auto optSV = attributeMap[name];
@@ -102,15 +89,6 @@ auto XmlParserHelper::getAttrib<LineStyle>(std::string_view name, const Attribut
     } else {
         return std::nullopt;
     }
-}
-
-template <>
-auto XmlParserHelper::getAttribMandatory<const char*>(std::string_view name, const AttributeMap& attributeMap,
-                                                      const char* const& defaultValue, bool warn) -> const char* {
-    const auto sv = getAttribMandatory<std::string_view>(name, attributeMap, defaultValue, warn);
-    // The values in the attribute map come from GMarkup, so they are null-terminated
-    xoj_assert(*sv.end() == '\0');
-    return sv.data();
 }
 
 

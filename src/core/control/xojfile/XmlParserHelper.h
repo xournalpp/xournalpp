@@ -74,14 +74,9 @@ T getAttribMandatory(std::string_view name, const AttributeMap& attributeMap, co
 template <>
 std::optional<std::string_view> getAttrib<std::string_view>(std::string_view name, const AttributeMap& attributeMap);
 template <>
-std::optional<const char*> getAttrib<const char*>(std::string_view name, const AttributeMap& attributeMap);
-template <>
 std::optional<fs::path> getAttrib<fs::path>(std::string_view name, const AttributeMap& attributeMap);
 template <>
 std::optional<LineStyle> getAttrib<LineStyle>(std::string_view name, const AttributeMap& attributeMap);
-template <>
-const char* getAttribMandatory<const char*>(std::string_view name, const AttributeMap& attributeMap,
-                                            const char* const& defaultValue, bool warn);
 
 // "color" attribute
 Color getAttribColorMandatory(const AttributeMap& attributeMap, const Color& defaultValue, bool bg = false);
