@@ -26,7 +26,6 @@
 #include "control/Tool.h"
 #include "control/ToolEnums.h"               // for ToolSize, ToolType
 #include "control/actions/ActionDatabase.h"  // for ActionDatabase
-#include "control/actions/ActionProperties.h"
 #include "control/layer/LayerController.h"
 #include "control/pagetype/PageTypeHandler.h"
 #include "control/settings/Settings.h"
@@ -71,27 +70,6 @@ extern "C" {
 
 #include "undo/PageSizeChangeUndoAction.h"
 }
-
-template <Action a, class U = void>
-struct helper {
-    static void setup(EnumIndexedArray<const GVariantType*, Action>& expectedTypes) { expectedTypes[a] = nullptr; };
-};
-template <Action a>
-struct helper<a, std::void_t<typename ActionProperties<a>::parameter_type>> {
-    static void setup(EnumIndexedArray<const GVariantType*, Action>& expectedTypes) {
-        expectedTypes[a] = gVariantType<typename ActionProperties<a>::parameter_type>();
-    }
-};
-
-template <size_t... As>
-static auto setupImpl(std::index_sequence<As...>) {
-    EnumIndexedArray<const GVariantType*, Action> expectedTypes;
-    ((helper<static_cast<Action>(As)>::setup(expectedTypes)), ...);
-    return expectedTypes;
-}
-
-static const auto expectedTypes = setupImpl(std::make_index_sequence<xoj::to_underlying(Action::ENUMERATOR_COUNT)>());
-
 
 static std::tuple<std::optional<std::string>, std::vector<const Element*>> getElementsFromHelper(
         Control* control, const std::string& type) {
@@ -631,12 +609,12 @@ static int applib_changeActionState(lua_State* L) {
         return luaL_error(L, "Missing action!");
     }
     Action action = Action_fromString(actionStr);
-    auto type = expectedTypes[action];
-    GVariant* state = lua_to_gvariant(L, 2, type);
-
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* control = plugin->getControl();
     auto* actionDB = control->getActionDatabase();
+    GAction* gAction = G_ACTION(actionDB->getAction(action).get());
+    auto* type = g_action_get_state_type(gAction);
+    GVariant* state = lua_to_gvariant(L, 2, type);
     actionDB->fireChangeActionState(action, state);
     return 0;
 }
@@ -690,11 +668,12 @@ static int applib_activateAction(lua_State* L) {
         return luaL_error(L, "Missing action!");
     }
     Action action = Action_fromString(actionStr);
-    auto type = expectedTypes[action];
-    GVariant* state = lua_to_gvariant(L, 2, type);
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* control = plugin->getControl();
     auto* actionDB = control->getActionDatabase();
+    GAction* gAction = G_ACTION(actionDB->getAction(action).get());
+    auto* type = g_action_get_state_type(gAction);
+    GVariant* state = lua_to_gvariant(L, 2, type);
     if (state) {
         g_message(g_variant_print_string(state, nullptr, true)->str);
         actionDB->fireActivateAction(action, state);
