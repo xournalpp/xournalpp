@@ -451,7 +451,7 @@ void Control::selectAlpha(OpacityFeature feature) {
             alpha = this->toolHandler->getSelectPDFTextMarkerOpacity();
             break;
         default:
-            g_warning("Unhandled OpacityFeature for selectAlpha event: %s", opacityFeatureToString(feature).c_str());
+            g_warning("Unhandled OpacityFeature for selectAlpha event: %s", opacityFeatureToString(feature).data());
             Stacktrace::printStacktrace();
             break;
     }
@@ -469,7 +469,7 @@ void Control::selectAlpha(OpacityFeature feature) {
                         break;
                     default:
                         g_warning("Unhandled OpacityFeature for callback of SelectOpacityDialog: %s",
-                                  opacityFeatureToString(feature).c_str());
+                                  opacityFeatureToString(feature).data());
                         Stacktrace::printStacktrace();
                         break;
                 }

@@ -29,7 +29,9 @@ enum ToolSize {
 static constexpr std::array<std::string_view, 6> toolSizeNames{"veryThin", "thin",      "medium",
                                                                "thick",    "veryThick", "none"};
 
-std::string toolSizeToString(ToolSize size);
+static constexpr std::string_view toolSizeToString(ToolSize size) {
+    return toolSizeNames.at(static_cast<size_t>(size));
+}
 ToolSize toolSizeFromString(const std::string& size);
 
 
@@ -56,7 +58,9 @@ static constexpr std::array<std::string_view, 10> drawingTypeNames{
         "dontChange",           "default",          "line",  "rectangle", "ellipse", "arrow", "doubleArrow",
         "drawCoordinateSystem", "strokeRecognizer", "spline"};
 
-std::string drawingTypeToString(DrawingType type);
+static constexpr std::string_view drawingTypeToString(DrawingType type) {
+    return drawingTypeNames.at(static_cast<size_t>(type));
+}
 DrawingType drawingTypeFromString(const std::string& type);
 
 // The numbers must agree with the action's targets in ui/mainmenubar.xml
@@ -128,7 +132,9 @@ auto requiresClearedSelection(ToolType type) -> bool;
 // The count of tools
 #define TOOL_COUNT (TOOL_END_ENTRY - 1)
 
-std::string toolTypeToString(ToolType type);
+static constexpr std::string_view toolTypeToString(ToolType type) {
+    return toolNames.at(static_cast<size_t>(type));
+}
 ToolType toolTypeFromString(const std::string& type);
 
 
@@ -141,13 +147,17 @@ enum OpacityFeature {
 static constexpr std::array<std::string_view, 4> opacityFeatureNames{"none", "opacityFillPen", "opacityFillHighlighter",
                                                                      "opacitySelectPdfTextMarker"};
 
-std::string opacityFeatureToString(OpacityFeature feature);
+static constexpr std::string_view opacityFeatureToString(OpacityFeature feature) {
+    return opacityFeatureNames.at(static_cast<size_t>(feature));
+}
 OpacityFeature opacityFeatureFromString(const std::string& feature);
 
 enum EraserType { ERASER_TYPE_NONE = 0, ERASER_TYPE_DEFAULT, ERASER_TYPE_WHITEOUT, ERASER_TYPE_DELETE_STROKE };
 static constexpr std::array<std::string_view, 4> eraserTypeNames{"none", "default", "whiteout", "deleteStroke"};
 
-std::string eraserTypeToString(EraserType type);
+static constexpr std::string_view eraserTypeToString(EraserType type) {
+    return eraserTypeNames.at(static_cast<size_t>(type));
+}
 EraserType eraserTypeFromString(const std::string& type);
 
 
@@ -180,7 +190,9 @@ static constexpr std::array<std::string_view, 5> strokeTypeNames{"none", "standa
 
 auto strokeTypeFromString(const std::string& type) -> StrokeType;
 auto strokeTypeToLineStyle(StrokeType type) -> LineStyle;
-auto strokeTypeToString(StrokeType type) -> std::string;
+static constexpr auto strokeTypeToString(StrokeType type) -> std::string_view {
+    return strokeTypeNames.at(static_cast<size_t>(type));
+}
 
 namespace xoj::tool {
 /// \return Whether the provided tool is used for selecting objects on a PDF.

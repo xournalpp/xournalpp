@@ -5,7 +5,6 @@
 #include "model/StrokeStyle.h"
 
 
-auto toolSizeToString(ToolSize size) -> std::string { return toolSizeNames.at(static_cast<size_t>(size)).data(); }
 
 auto toolSizeFromString(const std::string& size) -> ToolSize {
     auto it = std::find(toolSizeNames.begin(), toolSizeNames.end(), size);
@@ -15,9 +14,6 @@ auto toolSizeFromString(const std::string& size) -> ToolSize {
     return TOOL_SIZE_NONE;
 }
 
-auto drawingTypeToString(DrawingType type) -> std::string {
-    return drawingTypeNames.at(static_cast<size_t>(type)).data();
-}
 
 auto drawingTypeFromString(const std::string& type) -> DrawingType {
     auto it = std::find(drawingTypeNames.begin(), drawingTypeNames.end(), type);
@@ -42,7 +38,6 @@ auto requiresClearedSelection(ToolType type) -> bool {
            type == TOOL_VERTICAL_SPACE;
 }
 
-auto toolTypeToString(ToolType type) -> std::string { return toolNames.at(static_cast<size_t>(type)).data(); }
 
 auto toolTypeFromString(const std::string& type) -> ToolType {
     auto it = std::find(toolNames.begin(), toolNames.end(), type);
@@ -60,9 +55,6 @@ auto toolTypeFromString(const std::string& type) -> ToolType {
     return TOOL_NONE;
 }
 
-auto opacityFeatureToString(OpacityFeature feature) -> std::string {
-    return opacityFeatureNames.at(static_cast<size_t>(feature)).data();
-}
 
 auto opacityFeatureFromString(const std::string& feature) -> OpacityFeature {
     auto it = std::find(opacityFeatureNames.begin(), opacityFeatureNames.end(), feature);
@@ -72,7 +64,6 @@ auto opacityFeatureFromString(const std::string& feature) -> OpacityFeature {
     return OPACITY_NONE;
 }
 
-auto eraserTypeToString(EraserType type) -> std::string { return eraserTypeNames.at(static_cast<size_t>(type)).data(); }
 
 auto eraserTypeFromString(const std::string& type) -> EraserType {
     auto it = std::find(eraserTypeNames.begin(), eraserTypeNames.end(), type);
@@ -97,7 +88,6 @@ auto strokeTypeToLineStyle(StrokeType type) -> LineStyle {
     }
 }
 
-auto strokeTypeToString(StrokeType type) -> std::string { return strokeTypeNames.at(static_cast<size_t>(type)).data(); }
 auto strokeTypeFromString(const std::string& type) -> StrokeType {
     auto it = std::find(strokeTypeNames.begin(), strokeTypeNames.end(), type);
     if (it != strokeTypeNames.end()) {

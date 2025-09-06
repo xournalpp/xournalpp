@@ -235,7 +235,9 @@ public:
     static constexpr std::array<OrderChange, 4> allChanges = {OrderChange::BringToFront, OrderChange::BringForward,
                                                               OrderChange::SendBackward, OrderChange::SendToBack};
 
-    static auto orderChangeToString(const OrderChange change) -> std::string;
+    static constexpr auto orderChangeToString(const OrderChange change) -> std::string_view {
+        return orderChangeNames.at(static_cast<size_t>(change));
+    }
 
     /**
      * Change the insert order of this selection.
