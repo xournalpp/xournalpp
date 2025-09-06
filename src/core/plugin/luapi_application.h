@@ -507,7 +507,7 @@ static int applib_registerUi(lua_State* L) {
 
 /**
  * Helper function to convert Lua stack items to GVariant*
- * Currently only boolean, int32 and uint64 are supported.
+ * Returns a floating reference to a new GVariant instance.
  */
 GVariant* lua_to_gvariant(lua_State* L, int idx, const GVariantType* typeHint) {
     if (!typeHint) {
@@ -675,7 +675,6 @@ static int applib_activateAction(lua_State* L) {
     auto* type = g_action_get_state_type(gAction);
     GVariant* state = lua_to_gvariant(L, 2, type);
     if (state) {
-        g_message(g_variant_print_string(state, nullptr, true)->str);
         actionDB->fireActivateAction(action, state);
     } else {
         actionDB->fireActivateAction(action);
