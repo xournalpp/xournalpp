@@ -165,6 +165,8 @@ auto LayoutMapper::getRows() const -> size_t { return data_.rows; }
 
 auto LayoutMapper::isPairedPages() const -> bool { return data_.showPairedPages; }
 
+auto LayoutMapper::getOrientation() const -> LayoutSettings::Orientation { return data_.orientation; }
+
 auto LayoutMapper::at(size_t page) const -> GridPosition { return pageToRaster.at(page); }
 
 auto LayoutMapper::at(GridPosition const& rasterXY) const -> std::optional<size_t> {

@@ -320,6 +320,18 @@ struct ActionProperties<Action::SHOW_TOOLBAR> {
 };
 
 template <>
+struct ActionProperties<Action::SET_LAYOUT_TYPE> {
+    using state_type = LayoutType;
+    using parameter_type = state_type;
+    static state_type initialState(Control* ctrl) { return ctrl->getSettings()->getViewLayoutType(); }
+    static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
+        g_simple_action_set_state(ga, p);
+        LayoutType type = getGVariantValue<LayoutType>(p);
+        ctrl->setViewLayoutType(type);
+    }
+};
+
+template <>
 struct ActionProperties<Action::SET_LAYOUT_VERTICAL> {
     using state_type = bool;
     using parameter_type = state_type;
