@@ -24,3 +24,7 @@
  * Show speed benchmarks of tests
  */
 #cmakedefine TEST_CHECK_SPEED
+
+
+/// Use std::execution in benchmarks
+#cmakedefine BENCHMARK_USE_STD_EXECUTION

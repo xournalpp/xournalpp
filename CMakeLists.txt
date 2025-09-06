@@ -103,6 +103,10 @@ include(GitRepo)
 find_package(CXX17 REQUIRED COMPONENTS optional)
 find_package(Filesystem REQUIRED COMPONENTS ghc Final Experimental)
 
+##############################
+# backtrace
+##############################
+
 if (NOT CMAKE_BUILD_TYPE STREQUAL "Release")
     include(FetchContent)
     FetchContent_Declare(
@@ -160,6 +164,16 @@ pkg_check_modules(ExternalModules REQUIRED IMPORTED_TARGET ${pkg-module-spec})
 
 find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
+
+# Rendering algorithm
+set(XOPP_RENDER_ALGORITHM PARALLEL_LOOP CACHE STRING "Algorithm used to render tiles")
+set_property(CACHE XOPP_RENDER_ALGORITHM PROPERTY STRINGS CAIRO_TEE_SURFACE SEQUENCIAL_LOOP PARALLEL_LOOP)
+
+message(STATUS "Using rendering algorithm: ${XOPP_RENDER_ALGORITHM}")
+if (XOPP_RENDER_ALGORITHM STREQUAL "PARALLEL_LOOP")
+    # Uses std::execution::par
+    find_package(Execution REQUIRED)
+endif()
 
 option(ENABLE_AUDIO "Compile with Audio recording/playing support" ON)
 if (ENABLE_AUDIO)
@@ -240,6 +254,7 @@ target_link_libraries(external_modules INTERFACE
         $<$<TARGET_EXISTS:qpdf::libqpdf>:qpdf::libqpdf>
         ZLIB::ZLIB
         Threads::Threads
+        $<$<TARGET_EXISTS:std::execution>:std::execution>
         )
 
 target_compile_definitions(external_modules INTERFACE
@@ -293,10 +308,6 @@ set(DEV_ERRORLOG_DIR "errorlogs" CACHE STRING "Directory where errorlogfiles wil
 set(DEV_FILE_FORMAT_VERSION 4 CACHE STRING "File format version" FORCE)
 
 option(DEV_ENABLE_GCOV "Build with gcov support" OFF) # Enabel gcov support – expanded in src/
-option(DEV_CHECK_GTK3_COMPAT "Adds a few compiler flags to check basic GTK3 upgradeability support (still compiles for GTK2!)")
-if (DEV_CHECK_GTK3_COMPAT)
-    add_definitions(-DGTK_DISABLE_SINGLE_INCLUDES -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGSEAL_ENABLE)
-endif ()
 
 mark_as_advanced(FORCE
         DEV_TOOLBAR_CONFIG DEV_SETTINGS_XML_FILE DEV_PRINT_CONFIG_FILE DEV_METADATA_FILE

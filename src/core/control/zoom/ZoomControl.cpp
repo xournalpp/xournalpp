@@ -13,6 +13,7 @@
 #include "gui/MainWindow.h"
 #include "gui/PageView.h"               // for XojPageView
 #include "gui/XournalView.h"            // for XournalView
+#include "gui/scroll/ScrollHandling.h"  // for ScrollHandling
 #include "util/Assert.h"                // for xoj_assert
 #include "util/Util.h"                  // for execInUiThread
 #include "util/gdk4_helper.h"           // for gdk_event_get_modifier_state
@@ -64,39 +65,6 @@ auto onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomC
                 break;
         }
         return true;
-    }
-    return false;
-}
-
-
-// Todo: try to connect this function with the "expose_event", it would be way cleaner and we dont need to align/layout
-//       the pages manually, but it only works with the top Widget (GtkWindow) for now this works "fine"
-//       see https://stackoverflow.com/questions/1060039/gtk-detecting-window-resize-from-the-user
-auto onWindowSizeChangedEvent(GtkWidget* widget, GdkEvent* event, ZoomControl* zoom) -> bool {
-    xoj_assert(widget != zoom->view->getWidget());
-    auto layout = zoom->view->getLayout();
-    // Todo (fabian): The following code is a hack.
-    //    Problem size-allocate:
-    //    when using the size-allocate signal, we cant use layout->recalculate() directly.
-    //    But using the xournal-widgets allocation is wrong, since the calculation is skipped already.
-    //    using size-allocate's allocation is wrong, since it is the alloc of the toplevel.
-    //    Problem expose-event:
-    //    when using the expose-event signal, the new Allocation is not known yet; calculation must be deferred.
-    //    (minimize / maximize wont work)
-    Util::execInUiThread([layout, zoom]() {
-        zoom->updateZoomPresentationValue();
-        zoom->updateZoomFitValue();
-        layout->recalculate();
-    });
-
-    GdkWindow* gdkWindow = gtk_widget_get_window(widget);
-    GdkDisplay* display = gdkWindow ? gdk_window_get_display(gdkWindow) : nullptr;
-    GdkMonitor* monitor = display ? gdk_display_get_monitor_at_window(display, gdkWindow) : nullptr;
-    if (monitor && monitor != zoom->lastMonitor) {
-        zoom->lastMonitor = monitor;
-        const char* monitorName = gdk_monitor_get_model(monitor);
-        g_debug("Window moved to monitor \"%s\"", monitorName);
-        zoom->control->getWindow()->setDPI();
     }
     return false;
 }
@@ -247,7 +215,18 @@ void ZoomControl::initZoomHandler(GtkWidget* window, GtkWidget* widget, XournalV
     gtk_widget_add_events(widget, GDK_TOUCHPAD_GESTURE_MASK);
     g_signal_connect(widget, "scroll-event", xoj::util::wrap_for_g_callback_v<onScrolledwindowMainScrollEvent>, this);
     g_signal_connect(widget, "event", xoj::util::wrap_for_g_callback_v<onTouchpadPinchEvent>, this);
-    g_signal_connect(window, "configure-event", xoj::util::wrap_for_g_callback_v<onWindowSizeChangedEvent>, this);
+    g_signal_connect(v->getScrollHandling()->getHorizontal(), "notify::page-size",
+                     G_CALLBACK(+[](GObject*, GParamSpec*, gpointer self) {
+                         static_cast<ZoomControl*>(self)->updateZoomFitValue();
+                         static_cast<ZoomControl*>(self)->updateZoomPresentationValue();
+                     }),
+                     this);
+    g_signal_connect(v->getScrollHandling()->getVertical(), "notify::page-size",
+                     G_CALLBACK(+[](GObject*, GParamSpec*, gpointer self) {
+                         static_cast<ZoomControl*>(self)->updateZoomPresentationValue();
+                     }),
+                     this);
+
     registerListener(this->control);
 }
 
@@ -310,8 +289,10 @@ auto ZoomControl::getZoomFitValue() const -> double { return this->zoomFitValue;
 auto ZoomControl::updateZoomPresentationValue(size_t pageNo) -> bool {
     XojPageView* page = view->getViewFor(view->getCurrentPage());
     if (!page) {
-        g_warning("Cannot update zoomPresentationValue yet. This should only happen on startup! ");
-        return true;
+        if (!view->getViewPages().empty()) {
+            g_warning("Cannot update zoomPresentationValue: no page view for the current page.");
+        }
+        return false;
     }
 
     Rectangle widget_rect = getVisibleRect();

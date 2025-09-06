@@ -35,6 +35,7 @@ runs:
           mingw-w64-${{inputs.msys_package_env}}-lua-luarocks
           mingw-w64-${{inputs.msys_package_env}}-qpdf
           mingw-w64-${{inputs.msys_package_env}}-zstd
+          mingw-w64-${{inputs.msys_package_env}}-tbb
     - shell: msys2 {0}
       run: |
         # install LuaGObject via luarocks as long as there is no MinGW package

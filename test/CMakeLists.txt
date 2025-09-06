@@ -35,12 +35,7 @@ else ()
   endif ()
 endif ()
 
-# Load configure file including constants and helper Macros
-configure_file (
-    config-test.h.in
-    config-test.h
-    ESCAPE_QUOTES @ONLY
-)
+include(GoogleTest)
 
 ###############################################################################
 # Define test-units
@@ -57,6 +52,16 @@ add_executable (test-units EXCLUDE_FROM_ALL ${test-units-sources})
 target_link_libraries (test-units xoj::core xoj::util std::filesystem gtest)
 target_include_directories(test-units PRIVATE "${PROJECT_BINARY_DIR}/test")
 
+# Add the test units to CTest (and to the `test` target)
+# MacOs needs a bit longer to find the tests on azure, hence, set the timeout to 30s (default 5s)
+gtest_discover_tests(test-units
+  DISCOVERY_TIMEOUT 30
+  PROPERTIES
+    ENVIRONMENT "${TEST_ENV_VARS}"
+  $<$<NOT:$<STREQUAL:${TEST_GDK_PIXBUF_LOADER_CACHE},"">>:
+    DEPENDS create-gdk-pixbuf-loader-cache>
+)
+
 ###############################################################################
 # Define test-gtk-integration
 ###############################################################################
@@ -71,23 +76,38 @@ add_executable (test-gtk-integration EXCLUDE_FROM_ALL ${test-gtk-sources})
 target_link_libraries (test-gtk-integration xoj::core xoj::util std::filesystem gtest_main gtest)
 target_include_directories(test-gtk-integration PRIVATE "${PROJECT_BINARY_DIR}/test")
 
-###############################################################################
-# Discover and Register Tests
-###############################################################################
-# MacOs needs a bit longer to find the tests on azure
-# Hence, set the timeout to 30s (default 5s)
-include(GoogleTest)
-gtest_discover_tests(test-units
-  DISCOVERY_TIMEOUT 30
-  PROPERTIES
-    ENVIRONMENT "${TEST_ENV_VARS}"
-  $<$<NOT:$<STREQUAL:${TEST_GDK_PIXBUF_LOADER_CACHE},"">>:
-    DEPENDS create-gdk-pixbuf-loader-cache>
-)
+# Add the test units to CTest (and to the `test` target)
+# MacOs needs a bit longer to find the tests on azure, hence, set the timeout to 30s (default 5s)
 gtest_discover_tests(test-gtk-integration
         DISCOVERY_TIMEOUT 30
         PROPERTIES
         ENVIRONMENT "${TEST_ENV_VARS}"
         $<$<NOT:$<STREQUAL:${TEST_GDK_PIXBUF_LOADER_CACHE},"">>:
         DEPENDS create-gdk-pixbuf-loader-cache>
+)
+
+###############################################################################
+# Define benchmarks: gtest-like app with benchmark units - not added to CTest or the `test` target
+###############################################################################
+
+option(BENCHMARK_USE_STD_EXECUTION "Use std::execution when available in benchmarks" ON)
+
+file (GLOB_RECURSE benchmarks-sources benchmarks/*.cpp)
+add_executable (benchmarks EXCLUDE_FROM_ALL ${benchmarks-sources})
+target_link_libraries (benchmarks xoj::core xoj::util std::filesystem gtest_main gtest)
+if (BENCHMARK_USE_STD_EXECUTION)
+  if (NOT TARGET std::execution)
+    find_package(Execution REQUIRED)
+  endif()
+  target_link_libraries (benchmarks std::execution)
+endif()
+target_include_directories(benchmarks PRIVATE "${PROJECT_BINARY_DIR}/test")
+target_compile_options(benchmarks PRIVATE "-O2") # Always optimize for benchmarks!
+
+
+# Load configure file including constants and helper Macros
+configure_file (
+    config-test.h.in
+    config-test.h
+    ESCAPE_QUOTES @ONLY
 )

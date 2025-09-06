@@ -15,7 +15,7 @@
 
 #include <cstddef>        // for size_t
 #include <memory>         // for unique_ptr
-#include <mutex>          // for mutex
+#include <shared_mutex>   // for shared_mutex
 #include <string>         // for string
 #include <unordered_map>  // for unordered_map
 #include <vector>         // for vector
@@ -100,6 +100,9 @@ public:
     void unlock();
     bool tryLock();
 
+    void lock_shared();
+    void unlock_shared();
+
     inline Util::PathStorageMode getPathStorageMode() const { return pathStorageMode; }
     inline void setPathStorageMode(Util::PathStorageMode m) { pathStorageMode = m; }
 
@@ -170,7 +173,7 @@ private:
     /**
      * The lock of the document
      */
-    std::mutex documentLock;
+    std::shared_mutex documentLock;
 };
 
 template <class InputIter>
