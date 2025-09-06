@@ -22,7 +22,7 @@ function AddEmpty(mode)
         -- if mode is force => pred is set to true
         if pred then
             app.setCurrentPage(p)
-            app.uiAction{action="ACTION_NEW_PAGE_AFTER"}
+            app.activateAction("new-page-after")
         end
     end
 end
