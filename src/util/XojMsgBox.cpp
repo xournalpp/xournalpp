@@ -6,7 +6,6 @@
 #include <glib.h>         // for g_free, g_markup_escape_text, g_error_free
 
 #include "util/PopupWindowWrapper.h"
-#include "util/StringUtils.h"
 #include "util/Util.h"
 #include "util/gtk4_helper.h"
 #include "util/i18n.h"  // for _, FS, _F

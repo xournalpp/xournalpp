@@ -10,7 +10,7 @@
 #include "gui/MainWindow.h"             // for MainWindow
 #include "gui/dialog/XojSaveDlg.h"
 #include "model/Document.h"             // for Document, Document::PDF
-#include "util/PathUtil.h"              // for toGFilename, clearExtensions
+#include "util/PathUtil.h"              // for clearExtensions
 #include "util/PopupWindowWrapper.h"    // for PopupWindowWrapper
 #include "util/XojMsgBox.h"             // for XojMsgBox
 #include "util/glib_casts.h"            // for wrap_for_g_callback_v

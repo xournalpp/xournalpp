@@ -42,16 +42,6 @@ struct BackgroundImage::Content {
     bool attach = false;
 };
 
-BackgroundImage::BackgroundImage() = default;
-
-BackgroundImage::BackgroundImage(const BackgroundImage& img) = default;
-
-BackgroundImage::BackgroundImage(BackgroundImage&& img) noexcept: img(std::move(img.img)) {}
-
-BackgroundImage::~BackgroundImage() = default;
-
-auto BackgroundImage::operator==(const BackgroundImage& img) -> bool { return this->img == img.img; }
-
 void BackgroundImage::free() { this->img.reset(); }
 
 void BackgroundImage::loadFile(fs::path const& path, GError** error) {

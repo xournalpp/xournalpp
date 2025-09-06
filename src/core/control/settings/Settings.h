@@ -364,11 +364,11 @@ public:
     bool isAudioDisabled() const;
     void setAudioDisabled(bool disable);
 
-    std::string const& getDefaultSaveName() const;
-    void setDefaultSaveName(const std::string& name);
+    std::u8string const& getDefaultSaveName() const;
+    void setDefaultSaveName(const std::u8string& name);
 
-    std::string const& getDefaultPdfExportName() const;
-    void setDefaultPdfExportName(const std::string& name);
+    std::u8string const& getDefaultPdfExportName() const;
+    void setDefaultPdfExportName(const std::u8string& name);
 
     ButtonConfig* getButtonConfig(unsigned int id);
 
@@ -952,9 +952,9 @@ private:
     /**
      * Default name if you save a new document
      */
-    std::string defaultSaveName;  // should be string - don't change to path
+    std::u8string defaultSaveName;  // should be string - don't change to path
 
-    std::string defaultPdfExportName;
+    std::u8string defaultPdfExportName;
 
     /**
      * The button config

@@ -20,7 +20,7 @@
 #include "model/XojPage.h"                  // for XojPage
 #include "pdf/base/XojPdfPage.h"            // for XojPdfPageSPtr, XojPdfPage
 #include "util/Assert.h"                    // for xoj_assert
-#include "util/StringUtils.h"
+#include "util/StringUtils.h"               // for char_cast
 #include "util/Util.h"                      // for npos
 #include "util/i18n.h"                      // for _
 #include "util/serdesstream.h"              // for serdes_stream

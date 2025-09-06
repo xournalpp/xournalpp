@@ -15,22 +15,22 @@
 
 #include "filesystem.h"       // for path
 
-constexpr auto DEFAULT_WILDCARD_START = "%{";
-constexpr auto DEFAULT_WILDCARD_END = "}";
+constexpr auto DEFAULT_WILDCARD_START = u8"%{";
+constexpr auto DEFAULT_WILDCARD_END = u8"}";
 
 // wildcard options
-constexpr auto WILDCARD_PDF_NAME = "name";  ///< default store name, e.g. original pdf name
+constexpr auto WILDCARD_PDF_NAME = u8"name";  ///< default store name, e.g. original pdf name
 
-constexpr auto WILDCARD_FILE_NAME = "file";  ///< name of the file itself
+constexpr auto WILDCARD_FILE_NAME = u8"file";  ///< name of the file itself
 
-constexpr auto WILDCARD_DATE = "date";  ///< current date - Deprecated: prefer using %F instead of %{date}
-constexpr auto WILDCARD_TIME = "time";  ///< current time - Deprecated: prefer using %X instead of %{time}
+constexpr auto WILDCARD_DATE = u8"date";  ///< current date - Deprecated: prefer using %F instead of %{date}
+constexpr auto WILDCARD_TIME = u8"time";  ///< current time - Deprecated: prefer using %X instead of %{time}
 
 class SaveNameUtils {
 public:
-    static std::string parseFilenameFromWildcardString(const std::string& wildcardString, const fs::path& PdfPath,
-                                                       const fs::path& FilePath);
+    static std::u8string parseFilenameFromWildcardString(std::u8string_view wildcardString, const fs::path& PdfPath,
+                                                         const fs::path& FilePath);
 
 private:
-    static std::string parseWildcard(const std::string& wildcard, const fs::path& PdfPath, const fs::path& FilePath);
+    static std::u8string parseWildcard(std::u8string_view wildcard, const fs::path& PdfPath, const fs::path& FilePath);
 };

@@ -18,27 +18,6 @@
 #include "util/safe_casts.h"
 
 namespace xoj::util {
-
-// Todo(cpp20) use std::to_address instead
-template <typename T>
-T* to_address(T*& t) {
-    return t;
-}
-template <typename T>
-T* const to_address(T* const& t) {
-    return t;
-}
-
-template <typename T>
-T* to_address(std::unique_ptr<T>& t) {
-    return t.get();
-}
-
-template <typename T>
-const T* to_address(const std::unique_ptr<T>& t) {
-    return t.get();
-}
-
 template <typename container_type>
 class PointerContainerView {
 public:
@@ -55,16 +34,49 @@ public:
         using reference = const value_type&;
         using pointer = const value_type*;
 
+
         iterator_impl() = default;
-        ~iterator_impl() = default;
+        iterator_impl(const iterator_impl& o) = default;
+        iterator_impl(iterator_impl&& o) = default;
+        iterator_impl& operator=(const iterator_impl& o) = default;
+        iterator_impl& operator=(iterator_impl&& o) = default;
+
         iterator_impl(base_it it): base_it(it) {}
 
         // We must return by value
-        value_type operator*() const { return to_address(base_it::operator*()); }
-        value_type operator[](difference_type n) const { return to_address(base_it::operator[](n)); }
+        value_type operator*() const { return std::to_address(base_it::operator*()); }
+        value_type operator[](difference_type n) const { return std::to_address(base_it::operator[](n)); }
 
-    private:
-        using base_it::operator->;
+        /*
+         * operator->() is not required by std::random_access_iterator but Clang's libc++20 seems to rely on
+         * std::to_address to implement the constructor std::vector::vector(It b, It e). So we add it.
+         *
+         * Also, operator*() returns by value, so we cannot only return a value_type*
+         */
+        std::unique_ptr<value_type> operator->() const { return std::make_unique<value_type>(operator*()); }
+
+
+        iterator_impl& operator++() {
+            base_it::operator++();
+            return *this;
+        }
+        iterator_impl operator++(int i) { return base_it::operator++(i); }
+        iterator_impl& operator--() {
+            base_it::operator--();
+            return *this;
+        }
+        iterator_impl operator--(int i) { return base_it::operator--(i); }
+        iterator_impl& operator+=(difference_type n) {
+            base_it::operator+=(n);
+            return *this;
+        }
+        iterator_impl operator+(difference_type n) const { return base_it::operator+(n); }
+        friend iterator_impl operator+(base_it::difference_type n, const iterator_impl& self) { return self + n; }
+        iterator_impl& operator-=(difference_type n) {
+            base_it::operator-=(n);
+            return *this;
+        }
+        iterator_impl operator-(difference_type n) const { return base_it::operator-(n); }
     };
     using iterator = iterator_impl<typename container_type::const_iterator>;
     using const_iterator = iterator;
@@ -87,14 +99,15 @@ public:
     size_t size() const { return as_unsigned(std::distance(b, e)); }
 
     /// Clones the view into a vector. The pointed elements are not cloned.
-    std::vector<value_type> clone() const { return {begin(), end()}; }
+    std::vector<value_type> clone() const { return std::vector<value_type>(begin(), end()); }
 
 private:
     const iterator b;
     const iterator e;
 };
 
-
+static_assert(std::ranges::random_access_range<PointerContainerView<std::vector<std::unique_ptr<const int>>>>);
+static_assert(std::random_access_iterator<PointerContainerView<std::vector<std::unique_ptr<const int>>>::iterator>);
 static_assert(std::is_same_v<PointerContainerView<std::vector<int*>>::value_type, const int*>);
 static_assert(std::is_same_v<PointerContainerView<std::vector<const int*>>::value_type, const int*>);
 static_assert(std::is_same_v<PointerContainerView<std::vector<std::unique_ptr<int>>>::value_type, const int*>);

@@ -24,21 +24,21 @@ using namespace std;
 
 TEST(UtilXojPreviewExtractor, testNonExistingFile) {
     XojPreviewExtractor extractor;
-    PreviewExtractResult result = extractor.readFile(GET_TESTFILE("THIS FILE DOES NOT EXIST.xoj"));
+    PreviewExtractResult result = extractor.readFile(GET_TESTFILE(u8"THIS FILE DOES NOT EXIST.xoj"));
 
     EXPECT_EQ(PREVIEW_RESULT_COULD_NOT_OPEN_FILE, result);
 }
 
 TEST(UtilXojPreviewExtractor, testExtensionCheck) {
     XojPreviewExtractor extractor;
-    PreviewExtractResult result = extractor.readFile(GET_TESTFILE("test.xoi"));
+    PreviewExtractResult result = extractor.readFile(GET_TESTFILE(u8"test.xoi"));
 
     EXPECT_EQ(PREVIEW_RESULT_BAD_FILE_EXTENSION, result);
 }
 
 TEST(UtilXojPreviewExtractor, testLoadGzipped) {
     XojPreviewExtractor extractor;
-    PreviewExtractResult result = extractor.readFile(GET_TESTFILE("preview-test.xoj"));
+    PreviewExtractResult result = extractor.readFile(GET_TESTFILE(u8"preview-test.xoj"));
 
     EXPECT_EQ(PREVIEW_RESULT_IMAGE_READ, result);
 
@@ -49,7 +49,7 @@ TEST(UtilXojPreviewExtractor, testLoadGzipped) {
 
 TEST(UtilXojPreviewExtractor, testLoadGzipped2) {
     XojPreviewExtractor extractor;
-    PreviewExtractResult result = extractor.readFile(GET_TESTFILE("preview-test2.xoj"));
+    PreviewExtractResult result = extractor.readFile(GET_TESTFILE(u8"preview-test2.xoj"));
 
     EXPECT_EQ(PREVIEW_RESULT_IMAGE_READ, result);
 
@@ -60,7 +60,7 @@ TEST(UtilXojPreviewExtractor, testLoadGzipped2) {
 
 TEST(UtilXojPreviewExtractor, testLoad1Unzipped) {
     XojPreviewExtractor extractor;
-    PreviewExtractResult result = extractor.readFile(GET_TESTFILE("preview-test.unzipped.xoj"));
+    PreviewExtractResult result = extractor.readFile(GET_TESTFILE(u8"preview-test.unzipped.xoj"));
 
     EXPECT_EQ(PREVIEW_RESULT_IMAGE_READ, result);
 
@@ -71,7 +71,7 @@ TEST(UtilXojPreviewExtractor, testLoad1Unzipped) {
 
 TEST(UtilXojPreviewExtractor, testLoad1Zipped) {
     XojPreviewExtractor extractor;
-    PreviewExtractResult result = extractor.readFile(GET_TESTFILE("packaged_xopp/testPreview.xopp"));
+    PreviewExtractResult result = extractor.readFile(GET_TESTFILE(u8"packaged_xopp/testPreview.xopp"));
 
     EXPECT_EQ(PREVIEW_RESULT_IMAGE_READ, result);
 
@@ -82,7 +82,7 @@ TEST(UtilXojPreviewExtractor, testLoad1Zipped) {
 
 TEST(UtilXojPreviewExtractor, testLoad2Zipped) {
     XojPreviewExtractor extractor;
-    PreviewExtractResult result = extractor.readFile(GET_TESTFILE("packaged_xopp/testPreview2.xopp"));
+    PreviewExtractResult result = extractor.readFile(GET_TESTFILE(u8"packaged_xopp/testPreview2.xopp"));
 
     EXPECT_EQ(PREVIEW_RESULT_IMAGE_READ, result);
 
@@ -93,14 +93,14 @@ TEST(UtilXojPreviewExtractor, testLoad2Zipped) {
 
 TEST(UtilXojPreviewExtractor, testNoPreview) {
     XojPreviewExtractor extractor;
-    PreviewExtractResult result = extractor.readFile(GET_TESTFILE("preview-test-no-preview.unzipped.xoj"));
+    PreviewExtractResult result = extractor.readFile(GET_TESTFILE(u8"preview-test-no-preview.unzipped.xoj"));
 
     EXPECT_EQ(PREVIEW_RESULT_NO_PREVIEW, result);
 }
 
 TEST(UtilXojPreviewExtractor, testInvalidFile) {
     XojPreviewExtractor extractor;
-    PreviewExtractResult result = extractor.readFile(GET_TESTFILE("preview-test-invalid.xoj"));
+    PreviewExtractResult result = extractor.readFile(GET_TESTFILE(u8"preview-test-invalid.xoj"));
 
     EXPECT_EQ(PREVIEW_RESULT_ERROR_READING_PREVIEW, result);
 }

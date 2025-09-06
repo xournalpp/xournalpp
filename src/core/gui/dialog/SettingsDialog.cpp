@@ -400,10 +400,10 @@ void SettingsDialog::load() {
     gtk_combo_box_set_active(cbSidebarNumberingStyle, static_cast<int>(settings->getSidebarNumberingStyle()));
 
     GtkWidget* txtDefaultSaveName = builder.get("txtDefaultSaveName");
-    gtk_editable_set_text(GTK_EDITABLE(txtDefaultSaveName), settings->getDefaultSaveName().c_str());
+    gtk_editable_set_text(GTK_EDITABLE(txtDefaultSaveName), char_cast(settings->getDefaultSaveName().c_str()));
 
     GtkWidget* txtDefaultPdfName = builder.get("txtDefaultPdfName");
-    gtk_editable_set_text(GTK_EDITABLE(txtDefaultPdfName), settings->getDefaultPdfExportName().c_str());
+    gtk_editable_set_text(GTK_EDITABLE(txtDefaultPdfName), char_cast(settings->getDefaultPdfExportName().c_str()));
 
     GtkWidget* spAutosaveTimeout = builder.get("spAutosaveTimeout");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout), settings->getAutosaveTimeout());
@@ -914,8 +914,10 @@ void SettingsDialog::save() {
     settings->setPreloadPagesBefore(preloadPagesBefore);
     settings->setEagerPageCleanup(getCheckbox("cbEagerPageCleanup"));
 
-    settings->setDefaultSaveName(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultSaveName"))));
-    settings->setDefaultPdfExportName(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultPdfName"))));
+    settings->setDefaultSaveName(
+            reinterpret_cast<const char8_t*>(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultSaveName")))));
+    settings->setDefaultPdfExportName(
+            reinterpret_cast<const char8_t*>(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultPdfName")))));
 
     GtkWidget* spAutosaveTimeout = builder.get("spAutosaveTimeout");
     int autosaveTimeout = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutosaveTimeout)));

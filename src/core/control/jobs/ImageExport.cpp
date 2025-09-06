@@ -14,7 +14,7 @@
 #include "model/PageType.h"              // for PageType
 #include "model/XojPage.h"               // for XojPage
 #include "pdf/base/XojPdfPage.h"         // for XojPdfPageSPtr, XojPdfPage
-#include "util/StringUtils.h"
+#include "util/StringUtils.h"            // for char_cast
 #include "util/Util.h"                   // for DPI_NORMALIZATION_FACTOR
 #include "util/i18n.h"                   // for _
 #include "view/DocumentView.h"           // for DocumentView

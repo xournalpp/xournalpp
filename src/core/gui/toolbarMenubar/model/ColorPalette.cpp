@@ -175,7 +175,7 @@ auto Palette::parseErrorDialog(const std::exception& e) const -> void {
     msg_stream << "What to do:\n";
     msg_stream << "Please fix your palette file, or rename it so xournalpp creates a new default palette file "
                   "for you. This file can then be used as a template.\n";
-    msg_stream << "Until this is fixed, the application will use the default color palette.\n" << std::flush;
+    msg_stream << "Until this is fixed, the application will use the default color palette." << std::endl;
 
     // Call later, to make sure the main window has been set up, so the popup is displayed in front of it (and modal)
     Util::execInUiThread([msg = msg_stream.str()]() { XojMsgBox::showErrorToUser(nullptr, msg); });

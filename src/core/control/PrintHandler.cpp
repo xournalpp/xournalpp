@@ -16,7 +16,7 @@
 #include "pdf/base/XojPdfPage.h"  // for XojPdfPageSPtr, XojPdfPage
 #include "util/Assert.h"          // for xoj_assert
 #include "util/PathUtil.h"        // for getConfigFile
-#include "util/StringUtils.h"
+#include "util/StringUtils.h"     // for char_cast
 #include "util/XojMsgBox.h"       // for XojMsgBox
 #include "util/i18n.h"            // for _
 #include "util/safe_casts.h"      // for strict_cast
