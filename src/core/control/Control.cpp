@@ -490,6 +490,8 @@ void Control::selectAllOnPage() {
         return;
     }
 
+    win->getXournal()->clearSelection();
+
     this->doc->lock();
     XojPageView* view = win->getXournal()->getViewFor(pageNr);
     if (view == nullptr) {
@@ -499,8 +501,6 @@ void Control::selectAllOnPage() {
 
     PageRef page = this->doc->getPage(pageNr);
     Layer* layer = page->getSelectedLayer();
-
-    win->getXournal()->clearSelection();
 
     auto elements = layer->clearNoFree();
     this->doc->unlock();
