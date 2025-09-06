@@ -6,7 +6,6 @@
 #include <utility>  // for move
 
 #include "util/GzUtil.h"  // for GzUtil
-#include "util/StringUtils.h"
 #include "util/i18n.h"    // for FS, _F
 #include "util/safe_casts.h"
 

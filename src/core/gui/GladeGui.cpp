@@ -6,7 +6,7 @@
 #include <glib.h>         // for g_error_free, GError, g_warning
 
 #include "util/PlaceholderString.h"  // for PlaceholderString
-#include "util/StringUtils.h"
+#include "util/StringUtils.h"        // for char_cast
 #include "util/XojMsgBox.h"          // for XojMsgBox
 #include "util/i18n.h"               // for FS, _F
 

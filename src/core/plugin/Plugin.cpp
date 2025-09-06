@@ -269,7 +269,8 @@ void Plugin::loadScript() {
         const char* errMsg = lua_tostring(lua.get(), -1);
         XojMsgBox::showPluginMessage(name, errMsg, true);
 
-        g_warning("Could not run plugin Lua file: \"%s\", error: \"%s\"", luafile.string().c_str(), errMsg);
+        g_warning("Could not run plugin Lua file: \"%s\", error: \"%s\"", char_cast(luafile.u8string().c_str()),
+                  errMsg);
         this->valid = false;
         return;
     }

@@ -39,7 +39,6 @@ TouchDrawingInputHandler::TouchDrawingInputHandler(InputContext* inputContext): 
 TouchDrawingInputHandler::~TouchDrawingInputHandler() = default;
 
 auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
-    auto* mainWindow = inputContext->getView()->getControl()->getWindow();
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
 
     // Do we need to end the touch sequence?

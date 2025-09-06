@@ -27,12 +27,14 @@ auto getGObjectPalettePath(GObject* gObject) -> fs::path {
 
 auto getDisplayPalettePath(const fs::path& path) -> std::string {
     if (path.parent_path() == Util::getBuiltInPaletteDirectoryPath()) {
-        return std::string{"└─ "} + "<i>" + FS(_F("Built-in palettes")) + "/</i> " + path.filename().u8string();
+        return std::string{"└─ "} + "<i>" + FS(_F("Built-in palettes")) + "/</i> " +
+               char_cast(path.filename().u8string().c_str());
     } else if (path.parent_path() == Util::getCustomPaletteDirectoryPath()) {
-        return std::string{"└─ "} + "<i>" + FS(_F("User palettes")) + "/</i> " + path.filename().u8string();
+        return std::string{"└─ "} + "<i>" + FS(_F("User palettes")) + "/</i> " +
+               char_cast(path.filename().u8string().c_str());
     } else {
-        g_warning("Unexpected type of palette path encountered %s", path.parent_path().u8string().c_str());
-        return std::string{"└─ "} + path.u8string();
+        g_warning("Unexpected type of palette path encountered %s", char_cast(path.parent_path().u8string().c_str()));
+        return std::string{"└─ "} + char_cast(path.u8string().c_str());
     }
 }
 

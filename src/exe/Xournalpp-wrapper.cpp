@@ -114,9 +114,9 @@ auto main(int argc, char* argv[]) -> int {
         std::vector<const char*> subargv;
         std::cout << Util::getExePath() << std::endl;
 
-        const std::string path = (Util::getExePath() / "xournalpp").u8string();
-        subargv.emplace_back(path.c_str());  // Data is owned by `path` - Do not delete it
-        errorlog << "Executing \"" << path;
+        const std::u8string path = (Util::getExePath() / "xournalpp").u8string();
+        subargv.emplace_back(char_cast(path.c_str()));  // Data is owned by `path` - Do not delete it
+        errorlog << "Executing \"" << char_cast(path);
 
         for (int i = 1; i < argc; i++) {
             subargv.emplace_back(argv[i]);  // Data is owned by whatever called main()...

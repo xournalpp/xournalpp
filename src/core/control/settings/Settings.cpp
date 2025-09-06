@@ -27,7 +27,7 @@
 #include "ButtonConfig.h"  // for ButtonConfig
 #include "config-dev.h"    // for PALETTE_FILE
 #include "config-dev.h"
-#include "filesystem.h"  // for path, u8path, exists
+#include "filesystem.h"  // for path, exists
 
 
 using std::string;
@@ -148,9 +148,9 @@ void Settings::loadDefault() {
     this->touchDrawing = false;
     this->gtkTouchInertialScrolling = true;
 
-    this->defaultSaveName = _("%F-Note-%H-%M");
+    this->defaultSaveName = reinterpret_cast<const char8_t*>(_("%F-Note-%H-%M"));
 
-    this->defaultPdfExportName = _("%{name}_annotated");
+    this->defaultPdfExportName = reinterpret_cast<const char8_t*>(_("%{name}_annotated"));
 
     // Eraser
     this->buttonConfig[BUTTON_ERASER] = std::make_unique<ButtonConfig>(TOOL_ERASER, Colors::black, TOOL_SIZE_NONE,
@@ -409,11 +409,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectedToolbar")) == 0) {
         this->selectedToolbar = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastSavePath")) == 0) {
-        this->lastSavePath = fs::u8path(reinterpret_cast<const char*>(value));
+        this->lastSavePath = fs::path(reinterpret_cast<const char8_t*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastOpenPath")) == 0) {
-        this->lastOpenPath = fs::u8path(reinterpret_cast<const char*>(value));
+        this->lastOpenPath = fs::path(reinterpret_cast<const char8_t*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastImagePath")) == 0) {
-        this->lastImagePath = fs::u8path(reinterpret_cast<const char*>(value));
+        this->lastImagePath = fs::path(reinterpret_cast<const char8_t*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("edgePanSpeed")) == 0) {
         this->edgePanSpeed = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("edgePanMaxMult")) == 0) {
@@ -496,9 +496,9 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("useStockIcons")) == 0) {
         this->useStockIcons = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultSaveName")) == 0) {
-        this->defaultSaveName = reinterpret_cast<const char*>(value);
+        this->defaultSaveName = reinterpret_cast<const char8_t*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultPdfExportName")) == 0) {
-        this->defaultPdfExportName = reinterpret_cast<const char*>(value);
+        this->defaultPdfExportName = reinterpret_cast<const char8_t*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginEnabled")) == 0) {
         this->pluginEnabled = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginDisabled")) == 0) {
@@ -508,7 +508,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sizeUnit")) == 0) {
         this->sizeUnit = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioFolder")) == 0) {
-        this->audioFolder = fs::u8path(reinterpret_cast<const char*>(value));
+        this->audioFolder = fs::path(reinterpret_cast<const char8_t*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveEnabled")) == 0) {
         this->autosaveEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveTimeout")) == 0) {
@@ -659,8 +659,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.defaultText")) == 0) {
         this->latexSettings.defaultText = reinterpret_cast<char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.globalTemplatePath")) == 0) {
-        std::string v(reinterpret_cast<char*>(value));
-        this->latexSettings.globalTemplatePath = fs::u8path(v);
+        this->latexSettings.globalTemplatePath = fs::path(reinterpret_cast<const char8_t*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.genCmd")) == 0) {
         this->latexSettings.genCmd = reinterpret_cast<char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.sourceViewThemeId")) == 0) {
@@ -1007,12 +1006,9 @@ void Settings::save() {
 
     SAVE_STRING_PROP(selectedToolbar);
 
-    auto lastSavePath = char_cast(this->lastSavePath.u8string());
-    auto lastOpenPath = char_cast(this->lastOpenPath.u8string());
-    auto lastImagePath = char_cast(this->lastImagePath.u8string());
-    SAVE_STRING_PROP(lastSavePath);
-    SAVE_STRING_PROP(lastOpenPath);
-    SAVE_STRING_PROP(lastImagePath);
+    saveProperty("lastSavePath", char_cast(this->lastSavePath.u8string().c_str()), root);
+    saveProperty("lastOpenPath", char_cast(this->lastOpenPath.u8string().c_str()), root);
+    saveProperty("lastImagePath", char_cast(this->lastImagePath.u8string().c_str()), root);
 
     SAVE_DOUBLE_PROP(edgePanSpeed);
     SAVE_DOUBLE_PROP(edgePanMaxMult);
@@ -1094,8 +1090,9 @@ void Settings::save() {
 
     SAVE_BOOL_PROP(autoloadMostRecent);
     SAVE_BOOL_PROP(autoloadPdfXoj);
-    SAVE_STRING_PROP(defaultSaveName);
-    SAVE_STRING_PROP(defaultPdfExportName);
+    saveProperty("defaultSaveName", defaultSaveName.empty() ? "" : char_cast(defaultSaveName.c_str()), root);
+    saveProperty("defaultPdfExportName", defaultPdfExportName.empty() ? "" : char_cast(defaultPdfExportName.c_str()),
+                 root);
 
     SAVE_BOOL_PROP(autosaveEnabled);
     SAVE_INT_PROP(autosaveTimeout);
@@ -1150,10 +1147,7 @@ void Settings::save() {
     SAVE_STRING_PROP(sizeUnit);
 
 #ifdef ENABLE_AUDIO
-    {
-        auto audioFolder = char_cast(this->audioFolder.u8string());
-        SAVE_STRING_PROP(audioFolder);
-    }
+    saveProperty("audioFolder", char_cast(this->audioFolder.u8string().c_str()), root);
     SAVE_INT_PROP(audioInputDevice);
     SAVE_INT_PROP(audioOutputDevice);
     SAVE_DOUBLE_PROP(audioSampleRate);
@@ -1200,7 +1194,7 @@ void Settings::save() {
     SAVE_BOOL_PROP(stabilizerFinalizeStroke);
 
     if (!this->colorPaletteSetting.empty()) {
-        saveProperty("colorPalette", this->colorPaletteSetting.u8string().c_str(), root);
+        saveProperty("colorPalette", char_cast(this->colorPaletteSetting.u8string().c_str()), root);
     }
 
     /**/
@@ -1721,9 +1715,9 @@ void Settings::setAutoloadPdfXoj(bool load) {
     save();
 }
 
-auto Settings::getDefaultSaveName() const -> string const& { return this->defaultSaveName; }
+auto Settings::getDefaultSaveName() const -> std::u8string const& { return this->defaultSaveName; }
 
-void Settings::setDefaultSaveName(const string& name) {
+void Settings::setDefaultSaveName(const std::u8string& name) {
     if (this->defaultSaveName == name) {
         return;
     }
@@ -1733,9 +1727,9 @@ void Settings::setDefaultSaveName(const string& name) {
     save();
 }
 
-auto Settings::getDefaultPdfExportName() const -> string const& { return this->defaultPdfExportName; }
+auto Settings::getDefaultPdfExportName() const -> std::u8string const& { return this->defaultPdfExportName; }
 
-void Settings::setDefaultPdfExportName(const string& name) {
+void Settings::setDefaultPdfExportName(const std::u8string& name) {
     if (this->defaultPdfExportName == name) {
         return;
     }

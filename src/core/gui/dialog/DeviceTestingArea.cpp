@@ -123,7 +123,7 @@ static void saveLog(const std::stringstream& fullLog, const std::stringstream& e
                      settings = settings->getSettingsFile()](std::optional<fs::path> p) {
         if (p && !p->empty()) {
             int errorCode = 0;
-            auto* zip = zip_open(p->u8string().c_str(), ZIP_CREATE | ZIP_TRUNCATE, &errorCode);
+            auto* zip = zip_open(char_cast(p->u8string().c_str()), ZIP_CREATE | ZIP_TRUNCATE, &errorCode);
             if (!zip) {
                 // TODO handle error
                 // errorCode contains the error
@@ -143,9 +143,10 @@ static void saveLog(const std::stringstream& fullLog, const std::stringstream& e
             addSource("full-logs.txt", zip_source_buffer(zip, fullLog.data(), fullLog.length(), 0));
             addSource("input-gdk_events.txt", zip_source_buffer(zip, gdkeventslog.data(), gdkeventslog.length(), 0));
 #ifdef ZIP_LENGTH_TO_END  // Only introduced in libzip 1.10.1 - ubuntu 22 has v1.7.3
-            addSource("settings.xml", zip_source_file(zip, settings.u8string().c_str(), 0, ZIP_LENGTH_TO_END));
+            addSource("settings.xml",
+                      zip_source_file(zip, char_cast(settings.u8string().c_str()), 0, ZIP_LENGTH_TO_END));
 #else
-            addSource("settings.xml", zip_source_file(zip, settings.u8string().c_str(), 0, -1));
+            addSource("settings.xml", zip_source_file(zip, char_cast(settings.u8string().c_str()), 0, -1));
 #endif
             auto version = xoj::util::getVersionInfo();
             addSource("version.txt", zip_source_buffer(zip, version.data(), version.length(), 0));

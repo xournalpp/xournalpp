@@ -30,7 +30,7 @@
 #include "util/i18n.h"                 // for _F, _
 
 #include "config.h"      // for GETTEXT_PACKAGE, ENABLE_NLS
-#include "filesystem.h"  // for path, operator/, u8path, exists
+#include "filesystem.h"  // for path, operator/, exists
 
 #ifdef DEBUG_THUMBERNAILER
 #include <fstream>
@@ -43,7 +43,7 @@ using std::string;
 
 void initLocalisation() {
 #ifdef ENABLE_NLS
-    bindtextdomain(GETTEXT_PACKAGE, Util::getLocalePath().u8string().c_str());
+    bindtextdomain(GETTEXT_PACKAGE, char_cast(Util::getLocalePath().u8string().c_str()));
     textdomain(GETTEXT_PACKAGE);
 #endif  // ENABLE_NLS
 
@@ -82,22 +82,22 @@ static const std::string iconName = "com.github.xournalpp.xournalpp";
 fs::path findAppIcon() {
     std::vector<fs::path> basedirs;
 #if DEBUG_THUMBNAILER
-    basedirs.emplace_back(fs::u8path("../ui/pixmaps"));
+    basedirs.emplace_back(fs::path("../ui/pixmaps"));
 #endif
     // $HOME/.icons
-    basedirs.emplace_back(fs::u8path(g_get_home_dir()) / ".icons");
+    basedirs.emplace_back(Util::GFilename(g_get_home_dir()).toPath().value_or(fs::path()) / ".icons");
     // $XDG_DATA_DIRS/icons
     if (const char* datadirs = g_getenv("XDG_DATA_DIRS")) {
-        std::string dds = datadirs;
+        std::string_view dds = datadirs;
         std::string::size_type lastp = 0;
         std::string::size_type p;
-        while ((p = dds.find(":", lastp)) != std::string::npos) {
-            std::string path = dds.substr(lastp, p - lastp);
-            basedirs.emplace_back(fs::u8path(path) / "icons");
+        while ((p = dds.find(G_SEARCHPATH_SEPARATOR, lastp)) != std::string::npos) {
+            auto file = Util::GFilename::assumeOwnerhip(g_strndup(dds.data() + lastp, p - lastp));
+            basedirs.emplace_back(file.toPath().value_or(fs::path()) / "icons");
             lastp = p + 1;
         }
     }
-    basedirs.emplace_back(fs::u8path("/usr/share/pixmaps"));
+    basedirs.emplace_back(fs::path("/usr/share/pixmaps"));
 
     const auto iconFile = iconName + ".svg";
     // Search through base directories

@@ -98,10 +98,6 @@ include(GitRepo)
 
 ## Libraries ##
 ##############################
-# c++17 support
-##############################
-#find_package(CXX17 REQUIRED COMPONENTS optional)
-#find_package(Filesystem REQUIRED COMPONENTS ghc Final Experimental)
 
 if (NOT CMAKE_BUILD_TYPE STREQUAL "Release")
     include(FetchContent)
@@ -414,7 +410,6 @@ Configuration:
     X11 support enabled:        ${X11_FOUND}
     GTEST enabled:              ${ENABLE_GTEST}
     GCOV enabled:               ${DEV_ENABLE_GCOV}
-    Filesystem library:         ${CXX_FILESYSTEM_NAMESPACE}
     Profiling enabled:          ${ENABLE_PROFILING}
 ")
 

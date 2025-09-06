@@ -149,25 +149,25 @@ auto Document::createSaveFoldername(const fs::path& lastSavePath) const -> fs::p
  * @param formatStr The input format string to preprocess.
  * @return The processed format string with standardized specifiers.
  */
-static std::string preprocessFormatString(std::string formatStr) {
-    auto replace = [&formatStr](std::string_view pattern, std::string_view replacement) {
+static std::u8string preprocessFormatString(std::u8string formatStr) {
+    auto replace = [&formatStr](std::u8string_view pattern, std::u8string_view replacement) {
         for (size_t pos = formatStr.find(pattern); pos != std::string::npos;
              pos = formatStr.find(pattern, pos + replacement.length())) {
             formatStr.replace(pos, pattern.length(), replacement);
         }
     };
 
-    replace("%F", "%Y-%m-%d");
-    replace("%T", "%H-%M-%S");
-    replace("%V", "%U");
+    replace(u8"%F", u8"%Y-%m-%d");
+    replace(u8"%T", u8"%H-%M-%S");
+    replace(u8"%V", u8"%U");
 
     return formatStr;
 }
 
-auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName,
-                                  const std::string& defaultPdfName) const -> fs::path {
+auto Document::createSaveFilename(DocumentType type, std::u8string_view defaultSaveName,
+                                  std::u8string_view defaultPdfName) const -> fs::path {
     constexpr static std::wstring_view forbiddenChars = {L"\\/:*?\"<>|"};
-    std::string wildcardString;
+    std::u8string wildcardString;
     if (type != Document::PDF) {
         if (!filepath.empty()) {
             // This can be any extension
@@ -188,11 +188,10 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
                                                                         this->filepath.filename());
     }
 
-    auto format_str = wildcardString.empty() ? defaultSaveName : wildcardString;
+    auto format_str = preprocessFormatString(wildcardString.empty() ? defaultSaveName.data() : wildcardString);
 
-    format_str = preprocessFormatString(format_str);
     std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
-    auto format = converter.from_bytes(format_str);
+    auto format = converter.from_bytes(char_cast(format_str).data());
 
     // Todo (cpp20): use <format>
     std::wostringstream ss;
@@ -207,7 +206,7 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
     }
 
     auto fn2 = converter.to_bytes(filename);
-    auto p = fs::u8path(fn2);
+    auto p = fs::path(reinterpret_cast<const char8_t*>(fn2.c_str()));
 
     Util::clearExtensions(p);
     return p;

@@ -16,7 +16,7 @@
 #include "util/i18n.h"                      // for _
 #include "util/raii/GObjectSPtr.h"          // for GObjectSPtr
 
-#include "filesystem.h"  // for operator==, path, u8path
+#include "filesystem.h"  // for operator==, path
 
 namespace ExportHelper {
 
@@ -98,7 +98,7 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
 
     std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, nullptr, backend);
     pdfe->setExportBackground(exportBackground);
-    auto path = fs::u8path(g_file_peek_path(file.get()));
+    auto path = Util::GFilename(g_file_peek_path(file.get())).toPath().value_or(fs::path());
 
     bool exportSuccess = 0;  // Return of the export job
 

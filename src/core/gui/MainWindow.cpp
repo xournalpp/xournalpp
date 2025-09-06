@@ -34,7 +34,7 @@
 #include "util/GListView.h"                             // for GListView, GListV...
 #include "util/GtkUtil.h"                               // for getWidgetDPI
 #include "util/PathUtil.h"                              // for getConfigFile
-#include "util/StringUtils.h"
+#include "util/StringUtils.h"                           // for char_cast
 #include "util/Util.h"                                  // for execInUiThread, npos
 #include "util/XojMsgBox.h"                             // for XojMsgBox
 #include "util/glib_casts.h"                            // for wrap_for_once_v

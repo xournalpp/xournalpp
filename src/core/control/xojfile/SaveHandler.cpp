@@ -34,7 +34,6 @@
 #include "util/OutputStream.h"                 // for GzOutputStream, Output...
 #include "util/PathUtil.h"                     // for clearExtensions, normalizeAssetPath
 #include "util/PlaceholderString.h"            // for PlaceholderString
-#include "util/StringUtils.h"
 #include "util/i18n.h"                         // for FS, _F
 
 #include "config.h"  // for FILE_FORMAT_VERSION
@@ -93,7 +92,7 @@ void SaveHandler::writeTimestamp(XmlAudioNode* xmlAudioNode, const AudioElement*
     if (!audioElement->getAudioFilename().empty()) {
         /** set stroke timestamp value to the XmlPointNode */
         xmlAudioNode->setAttrib("ts", audioElement->getTimestamp());
-        auto audioFilename = audioElement->getAudioFilename().u8string();
+        auto audioFilename = audioElement->getAudioFilename().generic_u8string();
         auto casted = char_cast(audioFilename);
         xmlAudioNode->setAttrib("fn", std::string{casted.begin(), casted.end()});
     }
@@ -260,7 +259,7 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
                 background->setAttrib("domain", "absolute");
                 auto normalizedPath = Util::normalizeAssetPath(doc->getPdfFilepath(), target.parent_path(),
                                                                doc->getPathStorageMode());
-                background->setAttrib("filename", std::move(normalizedPath));
+                background->setAttrib("filename", char_cast(normalizedPath.c_str()));
             }
         }
         background->setAttrib("pageno", p->getPdfPageNr() + 1);
@@ -294,7 +293,7 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
             background->setAttrib("domain", "absolute");
             auto normalizedPath = Util::normalizeAssetPath(p->getBackgroundImage().getFilepath(), target.parent_path(),
                                                            doc->getPathStorageMode());
-            background->setAttrib("filename", std::move(normalizedPath));
+            background->setAttrib("filename", char_cast(normalizedPath.c_str()));
 
             BackgroundImage img = p->getBackgroundImage();
 
@@ -364,8 +363,8 @@ void SaveHandler::saveTo(OutputStream* out, const fs::path& filepath, ProgressLi
     for (const BackgroundImage& img: backgroundImages) {
         auto tmpfn = (fs::path(filepath) += ".") += img.getFilepath();
         // Are we certain that does not modify the GdkPixbuf?
-        if (!gdk_pixbuf_save(const_cast<GdkPixbuf*>(img.getPixbuf()), char_cast(tmpfn.u8string().c_str()), "png", nullptr,
-                             nullptr)) {
+        if (!gdk_pixbuf_save(const_cast<GdkPixbuf*>(img.getPixbuf()), char_cast(tmpfn.u8string().c_str()), "png",
+                             nullptr, nullptr)) {
             if (!this->errorMessage.empty()) {
                 this->errorMessage += "\n";
             }

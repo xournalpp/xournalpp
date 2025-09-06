@@ -108,7 +108,7 @@ void ExtEdLatexDialog::openEditor() {
         editorCmd = maybeEditor;
     }
     editorCmd += " '";
-    editorCmd += tempf.u8string();
+    editorCmd += char_cast(tempf.u8string());
     editorCmd += "'";
 
     if (!g_shell_parse_argv(editorCmd.c_str(), nullptr, xoj::util::out_ptr(argv), xoj::util::out_ptr(err))) {

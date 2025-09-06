@@ -69,7 +69,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkBox* box, 
 
     GtkListStore* typeModel = gtk_list_store_new(3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INT);
 
-    auto addTypeCB = [=](const char* icon, const char* name, ToolType action) {
+    auto addTypeCB = [&](const char* icon, const char* name, ToolType action) {
         GtkTreeIter iter;
         gtk_list_store_append(typeModel, &iter);
         gtk_list_store_set(typeModel, &iter, 0, iconNameHelper.iconName(icon).c_str(), 1, name, 2, action, -1);

@@ -3,14 +3,13 @@
 #include <algorithm>  // for max
 #include <cstdlib>    // for size_t
 #include <exception>  // for exce...
-#include <format>
 #include <functional>  // for bind
 #include <iterator>    // for end
 #include <memory>      // for make...
 #include <optional>    // for opti...
 #include <regex>       // for regex
-#include <string>
-#include <utility>  // for move
+#include <string>      // for string
+#include <utility>     // for move
 
 #include "control/AudioController.h"                             // for Audi...
 #include "control/ClipboardHandler.h"                            // for Clip...
@@ -98,17 +97,17 @@
 #include "util/PlaceholderString.h"                              // for Plac...
 #include "util/PopupWindowWrapper.h"                             // for PopupWindowWrapper
 #include "util/Stacktrace.h"                                     // for Stac...
-#include "util/StringUtils.h"
-#include "util/Util.h"                              // for exec...
-#include "util/XojMsgBox.h"                         // for XojM...
-#include "util/glib_casts.h"                        // for wrap_v
-#include "util/i18n.h"                              // for _, FS
-#include "util/safe_casts.h"                        // for as_unsigned
-#include "util/serializing/InputStreamException.h"  // for Inpu...
-#include "util/serializing/ObjectInputStream.h"     // for Obje...
-#include "view/CompassView.h"                       // for Comp...
-#include "view/SetsquareView.h"                     // for Sets...
-#include "view/overlays/OverlayView.h"              // for Over...
+#include "util/StringUtils.h"                                    // for char_cast
+#include "util/Util.h"                                           // for exec...
+#include "util/XojMsgBox.h"                                      // for XojM...
+#include "util/glib_casts.h"                                     // for wrap_v
+#include "util/i18n.h"                                           // for _, FS
+#include "util/safe_casts.h"                                     // for as_unsigned
+#include "util/serializing/InputStreamException.h"               // for Inpu...
+#include "util/serializing/ObjectInputStream.h"                  // for Obje...
+#include "view/CompassView.h"                                    // for Comp...
+#include "view/SetsquareView.h"                                  // for Sets...
+#include "view/overlays/OverlayView.h"                           // for Over...
 
 #include "CrashHandler.h"                    // for emer...
 #include "LatexController.h"                 // for Late...
@@ -243,7 +242,7 @@ void Control::deleteLastAutosaveFile() {
             fs::remove(this->lastAutosaveFilename);
         }
     } catch (const fs::filesystem_error& e) {
-        auto fmtstr = FS(_F("Could not remove old autosave file \"{1}\": {2}") % this->lastAutosaveFilename.string() %
+        auto fmtstr = FS(_F("Could not remove old autosave file \"{1}\": {2}") % this->lastAutosaveFilename.u8string() %
                          e.what());
         Util::execInUiThread([fmtstr, win = getGtkWindow()]() { XojMsgBox::showErrorToUser(win, fmtstr); });
     }
@@ -1761,7 +1760,7 @@ void Control::promptMissingPdf(Control::MissingPdfData& missingPdf, const fs::pa
     bool proposePdfFile = !missingPdf.wasPdfAttached && !filename.empty() && fs::exists(proposedPdfFilepath) &&
                           !fs::is_directory(proposedPdfFilepath);
     if (proposePdfFile) {
-        msg += FS(_F("\nProposed replacement file: \"{1}\"") % proposedPdfFilepath.string());
+        msg += FS(_F("\nProposed replacement file: \"{1}\"") % proposedPdfFilepath.u8string());
     }
 
     // show the dialog
@@ -1898,7 +1897,7 @@ void Control::unblock() {
 void Control::setMaximumState(size_t max) { this->maxState = max; }
 
 void Control::setCurrentState(size_t state) {
-    Util::execInUiThread([=]() {
+    Util::execInUiThread([state, this]() {
         gtk_progress_bar_set_fraction(this->pgState,
                                       static_cast<gdouble>(state) / static_cast<gdouble>(this->maxState));
     });
@@ -1945,41 +1944,24 @@ void Control::showColorChooserDialog() {
 }
 
 void Control::updateWindowTitle() {
-    std::string title{};
+    std::string title{};  ///< Actually a UTF-8 string
 
     this->doc->lock();
-    if (doc->getFilepath().empty()) {
-        if (doc->getPdfFilepath().empty()) {
-            title = _("Unsaved Document");
-        } else {
-            if (settings->isPageNumberInTitlebarShown()) {
-                title += std::format("[{}/{}]  ", getCurrentPageNo() + 1, doc->getPageCount());
-            }
-            if (undoRedo->isChanged()) {
-                title += "*";
-            }
-
-            if (settings->isFilepathInTitlebarShown()) {
-                title += std::format("[{}] - {}", char_cast(doc->getPdfFilepath().parent_path().u8string()),
-                                     char_cast(doc->getPdfFilepath().filename().u8string()));
-            } else {
-                title += char_cast(doc->getPdfFilepath().filename().u8string());
-            }
-        }
+    const fs::path& refPath = doc->getFilepath().empty() ? doc->getPdfFilepath() : doc->getFilepath();
+    if (refPath.empty()) {
+        title = _("Unsaved Document");
     } else {
         if (settings->isPageNumberInTitlebarShown()) {
-            title += ("[" + std::to_string(getCurrentPageNo() + 1) + "/" + std::to_string(doc->getPageCount()) + "]  ");
+            title = "[" + std::to_string(getCurrentPageNo() + 1) + "/" + std::to_string(doc->getPageCount()) + "]  ";
         }
         if (undoRedo->isChanged()) {
             title += "*";
         }
 
         if (settings->isFilepathInTitlebarShown()) {
-            title += (std::format("[{}] - {}", char_cast(doc->getFilepath().parent_path().u8string()),
-                                  char_cast(doc->getFilepath().filename().u8string())));
-        } else {
-            title += char_cast(doc->getFilepath().filename().u8string());
+            title += std::string("[") + char_cast(refPath.parent_path().u8string().c_str()) + "] - ";
         }
+        title += char_cast(refPath.filename().u8string());
     }
     this->doc->unlock();
 
@@ -2178,7 +2160,7 @@ void Control::showGtkDemo() {
         // Try absolute path for binary
         auto path = Util::getExePath() / binary;
 
-        binary = path.string();
+        binary = Util::toGFilename(path).c_str();
     }
 #endif
     gchar* prog = g_find_program_in_path(binary.c_str());

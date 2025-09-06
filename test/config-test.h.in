@@ -11,14 +11,16 @@
 
 #pragma once
 
+#include <string>
+
 /**
  * Project source directory (needed for loading testfiles)
  */
-#cmakedefine PROJECT_SOURCE_DIR "@PROJECT_SOURCE_DIR@"
+#cmakedefine PROJECT_SOURCE_DIR u8"@PROJECT_SOURCE_DIR@"
 
-#define GET_TESTFILE(relative) PROJECT_SOURCE_DIR "/test/files/" relative
+#define GET_TESTFILE(relative) std::u8string(PROJECT_SOURCE_DIR) + u8"/test/files/" + relative
 
-#define GET_UI_FOLDER PROJECT_SOURCE_DIR "/ui/"
+#define GET_UI_FOLDER std::u8string(PROJECT_SOURCE_DIR) + u8"/ui/"
 
 /**
  * Show speed benchmarks of tests
