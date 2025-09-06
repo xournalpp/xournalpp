@@ -72,6 +72,14 @@ target_link_libraries (test-gtk-integration xoj::core xoj::util std::filesystem 
 target_include_directories(test-gtk-integration PRIVATE "${PROJECT_BINARY_DIR}/test")
 
 ###############################################################################
+# Define bench-load-file (standalone file loading benchmark)
+###############################################################################
+
+add_executable(bench-load-file EXCLUDE_FROM_ALL benchmarks/benchLoadFile.cpp)
+target_link_libraries(bench-load-file xoj::core xoj::util std::filesystem)
+target_include_directories(bench-load-file PRIVATE "${PROJECT_BINARY_DIR}/benchmarks")
+
+###############################################################################
 # Discover and Register Tests
 ###############################################################################
 # MacOs needs a bit longer to find the tests on azure
