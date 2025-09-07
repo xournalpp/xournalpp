@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-22 14:27+0000\n"
-"PO-Revision-Date: 2025-08-24 04:26\n"
+"POT-Creation-Date: 2025-09-02 18:22+0000\n"
+"PO-Revision-Date: 2025-09-07 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -182,7 +182,7 @@ msgstr "Salvează ca..."
 
 #: ../src/core/control/Control.cpp:2107 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:286
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "Salvează"
 
@@ -621,7 +621,7 @@ msgid "Isometric Graph"
 msgstr "Grilă izometrică"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:41
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:400
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 msgid "Image"
 msgstr "Imagine"
 
@@ -633,19 +633,19 @@ msgstr "%F-Notițe-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_adnotat"
 
-#: ../src/core/control/tools/EditSelection.cpp:476
+#: ../src/core/control/tools/EditSelection.cpp:475
 msgid "Arrange"
 msgstr "Aranjare"
 
-#: ../src/core/control/tools/EditSelection.cpp:491
+#: ../src/core/control/tools/EditSelection.cpp:490
 msgid "Bring forward"
 msgstr "Adu mai aproape"
 
-#: ../src/core/control/tools/EditSelection.cpp:502
+#: ../src/core/control/tools/EditSelection.cpp:501
 msgid "Send backward"
 msgstr "Trimite în plan secundar"
 
-#: ../src/core/control/tools/EditSelection.cpp:509
+#: ../src/core/control/tools/EditSelection.cpp:508
 msgid "Send to back"
 msgstr "Trimite în ultimul plan"
 
@@ -831,7 +831,7 @@ msgid "Unable to play audio recording {1}"
 msgstr "Imposibil de redat înregistrarea audio {1}"
 
 #: ../src/core/gui/PageView.cpp:944
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:81
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
 msgid "Loading..."
 msgstr "Se încarcă..."
@@ -906,12 +906,12 @@ msgid "Thin"
 msgstr "Subțire"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:498
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:503
 msgid "Medium"
 msgstr "Mediu"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:499
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:504
 msgid "Thick"
 msgstr "Gros"
 
@@ -928,24 +928,24 @@ msgid "Tool - don't change"
 msgstr "Instrument - nu schimba"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:79
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:373
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:486
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:378
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
 msgid "Pen"
 msgstr "Creion"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:80
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:382
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:387
 msgid "Eraser"
 msgstr "Gumă"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:81
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:487
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:401
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:492
 msgid "Highlighter"
 msgstr "Evidențiator"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:82
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:398
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
 msgid "Text"
 msgstr "Text"
 
@@ -956,11 +956,11 @@ msgstr "Introdu o imagine"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 msgid "Laser Pointer - Pen"
-msgstr ""
+msgstr "Indicator laser - Creion"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 msgid "Laser Pointer - Hightlighter"
-msgstr ""
+msgstr "Indicator laser - Evidențiator"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 msgid "Vertical space"
@@ -983,7 +983,7 @@ msgid "Select multi layer rect"
 msgstr "Alege un dreptunghi multistrat"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Hand"
 msgstr "Mână"
 
@@ -1009,54 +1009,54 @@ msgstr "Desen normal"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Draw Line"
 msgstr "Desenează drepte"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Draw Rectangle"
 msgstr "Desenează dreptunghiuri"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Draw Ellipse"
 msgstr "Desenează elipse"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Draw Arrow"
 msgstr "Desenează săgeți"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Draw Double Arrow"
 msgstr "Desenează săgeți duble"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Draw Coordinate System"
 msgstr "Desenează sistemul de coordonate"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
 msgstr "Recunoaște forma"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 msgid "Draw Spline"
 msgstr "Desenează curbe"
 
 #: ../src/core/gui/dialog/DeviceTestingArea.cpp:161
 msgid "Export Logs"
-msgstr ""
+msgstr "Exportă jurnalele"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:115
 msgid "Failed to parse external editor command: {1}"
@@ -1263,7 +1263,7 @@ msgstr "Deschide fișierul model"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:136
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:197
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:285
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:290
 msgid "Open file"
 msgstr "Deschide un fișier"
 
@@ -1465,280 +1465,280 @@ msgstr "Tipuri de desenare"
 msgid "Font"
 msgstr "Tipul de litere"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:68
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:69
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "Nu s-a putut analiza fișierul general toolbar.ini: {1}\n"
 "Benzile cu instrumente nu vor fi disponibile"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:77
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:78
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "Nu s-a putut analiza fișierul personalizat toolbar.ini: {1}\n"
 "Benzile cu instrumente nu vor fi disponibile"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:284
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:289
 msgid "New Xournal"
 msgstr "Document nou"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:287
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:292
 msgid "Export as PDF"
 msgstr "Exportă ca PDF"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:288
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:293
 msgid "Print"
 msgstr "Tipărește"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:297
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:302
 #: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo"
 msgstr "Anulează"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:300
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:305
 #: ../src/core/undo/UndoRedoHandler.cpp:191
 msgid "Redo"
 msgstr "Refă"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:303
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:308
 msgid "Cut"
 msgstr "Taie"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:304
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:309
 msgid "Copy"
 msgstr "Copiază"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:305
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:310
 #: ../src/core/undo/AddUndoAction.cpp:72
 msgid "Paste"
 msgstr "Lipește"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:307
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:312
 msgid "Search"
 msgstr "Caută"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:309
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:314
 #: ../src/core/undo/DeleteUndoAction.cpp:74
 msgid "Delete"
 msgstr "Elimină"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:312
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:317
 msgid "Rotation Snapping"
 msgstr "Rotire forțată"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:313
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:318
 msgid "Grid Snapping"
 msgstr "Ancorare la grilă"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:321
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:326
 msgid "Paired pages"
 msgstr "Pagini alăturate"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:323
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:328
 msgid "Presentation mode"
 msgstr "Prezentare"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:324
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Toggle fullscreen"
 msgstr "Act/Dez Pe tot ecranul"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:325
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:330
 msgid "Toggle sidebar"
 msgstr "Panoul lateral"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:327
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:332
 msgid "Manage Toolbars"
 msgstr "Gestionare benzi cu instrumente"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:329
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:334
 msgid "Customize Toolbars"
 msgstr "Personalizare Benzi cu instrumente"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:331
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Zoom out"
 msgstr "Micșorează"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:332
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 msgid "Zoom in"
 msgstr "Mărește"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:333
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:338
 msgid "Zoom fit to screen"
 msgstr "Zoom Încadrare optimă"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:334
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:339
 msgid "Zoom to 100%"
 msgstr "Zoom 100%"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:341
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:346
 msgid "Go to first page"
 msgstr "Du-te la prima pagină"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:342
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:451
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:347
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:456
 msgid "Back"
 msgstr "Înapoi"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:343
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:348
 msgid "Go to page"
 msgstr "Du-te la pagina"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:344
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:349
 msgid "Next"
 msgstr "Următoarea"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:345
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:350
 msgid "Go to last page"
 msgstr "Du-te la ultima pagină"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:348
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:353
 msgid "Go to previous layer"
 msgstr "Du-te la stratul anterior"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:349
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:354
 msgid "Go to next layer"
 msgstr "Du-te la stratul următor"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:350
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:355
 msgid "Go to top layer"
 msgstr "Du-te la cel mai de sus strat"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:353
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:358
 msgid "Next annotated page"
 msgstr "Pagina următoare cu însemnări"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:359
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:364
 msgid "Insert page"
 msgstr "Introdu o pagină"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:361
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:366
 msgid "Delete current page"
 msgstr "Elimină pagina actuală"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:378
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:386
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:374
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:383
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:391
 msgid "standard"
 msgstr "standard"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:370
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:388
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:375
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:393
 msgid "dashed"
 msgstr "linie întreruptă"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:371
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:390
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:376
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
 msgid "dash-/ dotted"
 msgstr "întreruptă-/punctată"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:372
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:392
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:377
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:397
 msgid "dotted"
 msgstr "linie punctată"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:379
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:384
 msgid "whiteout"
 msgstr "albește"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:380
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:385
 msgid "delete stroke"
 msgstr "elimină linia"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:399
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Add/Edit TeX"
 msgstr "Adaugă/Modifică TeX"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:401
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 msgid "Default Tool"
 msgstr "Instrument prestabilit"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:14
 msgid "Select Linear PDF Text"
 msgstr "Alege text PDF liniar"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:405
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Select PDF Text in Rectangle"
 msgstr "Alege textul PDF din dreptunghi"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Setsquare"
 msgstr "Echer"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Compass"
 msgstr "Compas"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
 msgid "Select Region"
 msgstr "Alege o zonă"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:431
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:12
 msgid "Select Rectangle"
 msgstr "Selecție dreptunghiulară"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Select Multi-Layer Region"
 msgstr "Alege o zonă multistrat"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Select Multi-Layer Rectangle"
 msgstr "Alege un dreptunghi multistrat"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 msgid "Select Object"
 msgstr "Alege un obiect"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:436
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Vertical Space"
 msgstr "Spațiu vertical"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:443
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 msgid "Play Object"
 msgstr "Redă obiectul"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:449
 msgid "Record Audio / Stop Recording"
 msgstr "Înregistrare audio / Oprire înregistrare"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:451
 msgid "Pause / Play"
 msgstr "Pauză / Pornire"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:447
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:452
 msgid "Stop"
 msgstr "Stop"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:449
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:454
 msgid "Forward"
 msgstr "Înainte"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:490
 msgid "Laser pointer"
-msgstr ""
+msgstr "Indicator laser"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:496
 msgid "Fill"
 msgstr "Umplere"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:492
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:497
 msgid "Fill Opacity"
 msgstr "Opacitatea umplerii"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:495
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:500
 msgid "Very Fine"
 msgstr "Foarte subțire"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:496
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:501
 msgid "Fine"
 msgstr "Subțire"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:501
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:506
 msgid "Very Thick"
 msgstr "Foarte gros"
 
@@ -1863,8 +1863,8 @@ msgctxt "as a noun: a copy of"
 msgid "Copy"
 msgstr "Copiază"
 
-#: ../src/core/model/Document.cpp:331 ../src/core/model/Document.cpp:340
-#: ../src/core/model/Document.cpp:343
+#: ../src/core/model/Document.cpp:360 ../src/core/model/Document.cpp:369
+#: ../src/core/model/Document.cpp:372
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Documentul nu a fost încărcat! ({1}), {2}"
 
@@ -2138,7 +2138,8 @@ msgstr "Înlocuiește"
 #: ../src/util/XojMsgBox.cpp:217
 msgid "Unable to open the link: {1}\n"
 "{2}"
-msgstr ""
+msgstr "Nu s-a putut deschide legătura: {1}\n"
+"{2}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
@@ -2228,40 +2229,40 @@ msgstr "Aprobă"
 
 #: ../ui/crashDialog.glade:7
 msgid "Crash report"
-msgstr ""
+msgstr "Raport de oprire anormală"
 
 #: ../ui/crashDialog.glade:23
 msgid "Oops... Xournal++ encountered a fatal error"
-msgstr ""
+msgstr "Xournal++ a fost afectat de o eroare gravă"
 
 #: ../ui/crashDialog.glade:39
 msgid "Please consider filling a bug report (see button below). Attach the following log to your report."
-msgstr ""
+msgstr "Se recomandă raportarea problemei (a se vedea butonul de mai jos). Trebuie atașat următorul jurnal la raport."
 
 #: ../ui/crashDialog.glade:56
 msgid "Your document has been saved in:"
-msgstr ""
+msgstr "Documentul a fost salvat în:"
 
 #: ../ui/crashDialog.glade:92
 msgid "Execution log:"
-msgstr ""
+msgstr "Jurnal de execuție:"
 
 #: ../ui/crashDialog.glade:140
 msgid "Open your web browser with a partially pre-filled bug report"
-msgstr ""
+msgstr "Deschide navigatorul web cu un raport parțial de eroare"
 
 #: ../ui/crashDialog.glade:145
 msgid "Create a bug report"
-msgstr ""
+msgstr "Creează un raport de eroare"
 
 #: ../ui/crashDialog.glade:164
 msgctxt "github is a name - do not try to translate it"
 msgid "(this will open github in your browser)"
-msgstr ""
+msgstr "(aceasta va deschide github în navigatorul web)"
 
 #: ../ui/deviceList.glade:7
 msgid "Known devices"
-msgstr ""
+msgstr "Dispozitive cunoscute"
 
 #: ../ui/deviceList.glade:46
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -2269,7 +2270,7 @@ msgstr "<i>Atribuie o categorie fiecărui dispozitiv conectat la sistem. Schimb�
 
 #: ../ui/deviceTestingArea.glade:42
 msgid "Try out your devices in the area below"
-msgstr ""
+msgstr "Încearcă dispozitivele în zona de mai jos"
 
 #: ../ui/deviceTestingArea.glade:70 ../ui/settings.glade:1630
 #: ../ui/settingsDeviceClassConfig.glade:35
@@ -2279,17 +2280,17 @@ msgstr "Maus"
 #: ../ui/deviceTestingArea.glade:82
 msgctxt "mouse button"
 msgid "Left"
-msgstr ""
+msgstr "Stânga"
 
 #: ../ui/deviceTestingArea.glade:96
 msgctxt "mouse button"
 msgid "Middle"
-msgstr ""
+msgstr "Mijloc"
 
 #: ../ui/deviceTestingArea.glade:110
 msgctxt "mouse button"
 msgid "Right"
-msgstr ""
+msgstr "Dreapta"
 
 #: ../ui/deviceTestingArea.glade:124 ../ui/settings.glade:2170
 msgid "Stylus"
@@ -2298,7 +2299,7 @@ msgstr "Creion electronic"
 #: ../ui/deviceTestingArea.glade:136 ../ui/deviceTestingArea.glade:190
 msgctxt "the tip of the stylus"
 msgid "Tip"
-msgstr ""
+msgstr "Vârf"
 
 #: ../ui/deviceTestingArea.glade:150 ../ui/settings.glade:1987
 msgid "Button 1"
@@ -2315,45 +2316,46 @@ msgstr "Ecran tactil"
 
 #: ../ui/deviceTestingArea.glade:374
 msgid "In use"
-msgstr ""
+msgstr "Folosit"
 
 #: ../ui/deviceTestingArea.glade:388 ../ui/deviceTestingArea.glade:402
 msgctxt "stylus hover"
 msgid "Hover"
-msgstr ""
+msgstr "Trecere"
 
 #: ../ui/deviceTestingArea.glade:443
 msgid "Show logs"
-msgstr ""
+msgstr "Arată jurnalele"
 
 #: ../ui/deviceTestingArea.glade:455
 msgid "Export debug info"
-msgstr ""
+msgstr "Exportă informațiile de depanare"
 
 #: ../ui/deviceTestingArea.glade:477
 msgid "To clear the logs, simply close and reopen the settings dialog"
-msgstr ""
+msgstr "Pentru a şterge jurnalele, închide şi redeschide fereastra cu dialogul"
 
 #: ../ui/deviceTestingArea.glade:491
 msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
 "Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
-msgstr ""
+msgstr "Alege această opțiune dacă simbolul de „Vârf” nu este aprins atunci când se utilizează creionul și apasă unul dintre butoanele sale.\n\n"
+"Deselecționează această opțiune dacă simbolul de „Vârf” este aprins la trecerea creionului (dar când nu atinge ecranul sau tableta)."
 
 #: ../ui/deviceTestingArea.glade:500
 msgid "Emulate stylus tip contact on button press"
-msgstr ""
+msgstr "Simulează contactul vârfului creionului la apăsarea butonului"
 
 #: ../ui/deviceTestingArea.glade:547
 msgid "<i>Change the device class below if your device is not correctly recognized (e.g. your active stylus shows up as touchscreen)</i>"
-msgstr ""
+msgstr "<i>Schimbă tipul dispozitivului de mai jos dacă dispozitivul nu este corect recunoscut (de ex. creionul electronic apare ca ecran tactil)</i>"
 
 #: ../ui/deviceTestingArea.glade:568
 msgid "Last device used:"
-msgstr ""
+msgstr "Ultimul dispozitiv utilizat:"
 
 #: ../ui/deviceTestingArea.glade:588
 msgid "Show all known devices"
-msgstr ""
+msgstr "Arată toate dispozitivele cunoscute"
 
 #: ../ui/exportSettings.glade:36
 msgid "Resolution"
@@ -3068,7 +3070,7 @@ msgstr "<i>Stabilește ce instrument va fi ales dacă apeși un buton al mausulu
 
 #: ../ui/settings.glade:1519
 msgid "Left Mouse Button"
-msgstr ""
+msgstr "Butonul stâng al mausului"
 
 #: ../ui/settings.glade:1551
 msgid "Middle Mouse Button"
@@ -3589,7 +3591,7 @@ msgstr "Viteza de zoom"
 
 #: ../ui/settings.glade:4410
 msgid "<i>To make sure on 100% zoom the size of elements is natural.</i>"
-msgstr ""
+msgstr "<i>Pentru a garanta că mărimea elementelor este naturală la un zoom de 100%.</i>"
 
 #: ../ui/settings.glade:4430
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
@@ -3597,7 +3599,7 @@ msgstr "<i>Pune o riglă pe ecran și deplasează cursorul până când ambele r
 
 #: ../ui/settings.glade:4446
 msgid "Automatic"
-msgstr ""
+msgstr "Automat"
 
 #: ../ui/settings.glade:4503
 msgid "The unit of the ruler is cm"
@@ -3832,19 +3834,19 @@ msgstr "<i>Alege instrumentul și reglările dacă se apasă butonul „Prestabi
 
 #: ../ui/settings.glade:5690
 msgid "<b>Default tool</b>"
-msgstr ""
+msgstr "<b>Instrument prestabilit</b>"
 
 #: ../ui/settings.glade:5726
 msgid "<i>The laser pointer allows to write strokes that will fade out after a short while.</i>"
-msgstr ""
+msgstr "<i>Indicatorul cu laser permite scrierea de linii care vor dispărea după scurt timp.</i>"
 
 #: ../ui/settings.glade:5747
 msgid "Fade out delay (in ms)"
-msgstr ""
+msgstr "Întârziere dispariție (în ms)"
 
 #: ../ui/settings.glade:5799
 msgid "<b>Laser pointer</b>"
-msgstr ""
+msgstr "<b>Indicator laser</b>"
 
 #: ../ui/settings.glade:5839
 msgid "Tools"
@@ -3988,7 +3990,7 @@ msgstr "Dezactivat"
 
 #: ../ui/settingsDeviceClassConfig.glade:54
 msgid "Apply"
-msgstr ""
+msgstr "Aplică"
 
 #: ../ui/toolbarCustomizeDialog.glade:30
 msgid "Drag and drop Components from here to the toolbars and back."
