@@ -4,8 +4,8 @@
 #include <memory>     // for unique_ptr, allocator
 #include <string>     // for string
 
-#include <gio/gio.h>      // for g_file_new_for_commandlin...
-#include <glib.h>         // for g_message, g_error
+#include <gio/gio.h>  // for g_file_new_for_commandlin...
+#include <glib.h>     // for g_message, g_error
 
 #include "control/jobs/ImageExport.h"       // for ImageExport, EXPORT_GRAPH...
 #include "control/jobs/ProgressListener.h"  // for DummyProgressListener
@@ -99,6 +99,20 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
     std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, nullptr);
     pdfe->setExportBackground(exportBackground);
     auto path = fs::u8path(g_file_peek_path(file.get()));
+
+    // Check if we're trying to overwrite the background PDF file
+    auto backgroundPDF = doc->getPdfFilepath();
+    try {
+        if (!backgroundPDF.empty() && fs::exists(backgroundPDF)) {
+            if (fs::weakly_canonical(path) == fs::weakly_canonical(backgroundPDF)) {
+                g_error("Do not overwrite the background PDF! This will cause errors!");
+                return -3;  // Return error code for export failure
+            }
+        }
+    } catch (const fs::filesystem_error& fe) {
+        g_warning("The check for overwriting the background failed with: %s", fe.what());
+        // Continue with export since this is just a filesystem error in the check
+    }
 
     bool exportSuccess = 0;  // Return of the export job
 
