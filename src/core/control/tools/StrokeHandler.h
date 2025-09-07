@@ -15,12 +15,12 @@
 
 #include <gdk/gdk.h>  // for GdkEventKey
 
-#include "model/PageRef.h"  // for PageRef
-#include "model/Point.h"    // for Point
+#include "control/shaperecognizer/Stroke_Shape_Recognizer.h"  // for ShapeRecognizer
+#include "model/PageRef.h"                                    // for PageRef
+#include "model/Point.h"                                      // for Point
 
 #include "InputHandler.h"            // for InputHandler
 #include "SnapToGridInputHandler.h"  // for SnapToGridInputHandler
-#include "control/shaperecognizer/Stroke_Shape_Recognizer.h" // for ShapeRecognizer
 
 class Control;
 class Layer;
