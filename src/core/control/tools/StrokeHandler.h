@@ -20,6 +20,7 @@
 
 #include "InputHandler.h"            // for InputHandler
 #include "SnapToGridInputHandler.h"  // for SnapToGridInputHandler
+#include "control/shaperecognizer/Stroke_Shape_Recognizer.h" // for ShapeRecognizer
 
 class Control;
 class Layer;
@@ -91,6 +92,7 @@ protected:
 protected:
     Point buttonDownPoint;  // used for tapSelect and filtering - never snapped to grid.
     SnapToGridInputHandler snappingHandler;
+    Recognizer shape_recognizer;
 
     bool hasPressure;
 

@@ -15,7 +15,6 @@
 #include "control/layer/LayerController.h"                  // for LayerController
 #include "control/settings/Settings.h"                      // for Settings
 #include "control/settings/SettingsEnums.h"                 // for EmptyLastPageAppendType
-#include "control/shaperecognizer/ShapeRecognizer.h"        // for ShapeRecognizer
 #include "control/tools/InputHandler.h"                     // for InputHandler::P...
 #include "control/tools/SnapToGridInputHandler.h"           // for SnapToGridInput...
 #include "gui/inputdevices/PositionInputData.h"             // for PositionInputData
@@ -43,6 +42,7 @@ using xoj::util::Rectangle;
 StrokeHandler::StrokeHandler(Control* control, const PageRef& page):
         InputHandler(control, page),
         snappingHandler(control->getSettings()),
+        shape_recognizer(),
         stabilizer(StrokeStabilizer::get(control->getSettings())),
         viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::StrokeToolView>>()) {}
 
@@ -188,10 +188,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
 
     ToolHandler* h = control->getToolHandler();
     if (h->getDrawingType() == DRAWING_TYPE_SHAPE_RECOGNIZER) {
-        ShapeRecognizer reco;
-
-        auto recognized = reco.recognizePatterns(stroke.get(), control->getSettings()->getStrokeRecognizerMinSize());
-
+        auto recognized = shape_recognizer.recognize(stroke.get());
         if (recognized) {
             // strokeRecognizerDetected handles the repainting and the deletion of the views.
             strokeRecognizerDetected(std::move(recognized), layer);
