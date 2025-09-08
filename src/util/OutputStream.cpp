@@ -2,8 +2,9 @@
 
 #include <cassert>
 #include <cerrno>
-#include <cstring>  // for strlen
-#include <utility>  // for move
+#include <cstring>      // for strlen
+#include <string_view>  // for string_view
+#include <utility>      // for move
 
 #include "util/GzUtil.h"  // for GzUtil
 #include "util/i18n.h"    // for FS, _F
@@ -13,9 +14,9 @@ OutputStream::OutputStream() = default;
 
 OutputStream::~OutputStream() = default;
 
-void OutputStream::write(const std::string& str) { write(str.c_str(), str.length()); }
-
 void OutputStream::write(const char* str) { write(str, std::strlen(str)); }
+
+void OutputStream::write(const std::string_view sv) { write(sv.data(), sv.length()); }
 
 ////////////////////////////////////////////////////////
 /// GzOutputStream /////////////////////////////////////
