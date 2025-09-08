@@ -5,7 +5,7 @@
 #include "control/xml/XmlNode.h"  // for XmlNode
 #include "util/OutputStream.h"    // for OutputStream
 
-XmlTexNode::XmlTexNode(const char* tag, std::string&& binaryData): XmlNode(tag), binaryData(binaryData) {}
+XmlTexNode::XmlTexNode(const std::string_view tag, std::string&& binaryData): XmlNode(tag), binaryData(binaryData) {}
 
 XmlTexNode::~XmlTexNode() = default;
 

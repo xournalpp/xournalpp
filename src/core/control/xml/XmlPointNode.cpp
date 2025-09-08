@@ -7,7 +7,7 @@
 #include "util/OutputStream.h"         // for OutputStream
 #include "util/Util.h"                 // for writeCoordinateString
 
-XmlPointNode::XmlPointNode(const char* tag): XmlAudioNode(tag) {}
+XmlPointNode::XmlPointNode(const std::string_view tag): XmlAudioNode(tag) {}
 
 void XmlPointNode::setPoints(std::vector<Point> pts) { this->points = std::move(pts); }
 
