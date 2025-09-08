@@ -1,8 +1,8 @@
 #include "SaveHandler.h"
 
-#include <cinttypes>   // for PRIx32
-#include <cstdint>     // for uint32_t
-#include <cstdio>      // for sprintf, size_t
+#include <cinttypes>  // for PRIx32
+#include <cstdint>    // for uint32_t
+#include <cstdio>     // for sprintf, size_t
 
 #include <cairo.h>                  // for cairo_surface_t
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_save
@@ -15,7 +15,9 @@
 #include "control/xml/XmlPointNode.h"          // for XmlPointNode
 #include "control/xml/XmlTexNode.h"            // for XmlTexNode
 #include "control/xml/XmlTextNode.h"           // for XmlTextNode
-#include "control/xojfile/XmlAttrs.h"          // for XmlAttrs
+#include "control/xojfile/XmlAttrs.h"          // for xml_attrs
+#include "control/xojfile/XmlParserHelper.h"   // for Domain, DOMAIN_NAMES
+#include "control/xojfile/XmlTags.h"           // for xml_tags
 #include "control/xojfile/XmlTags.h"           // for XmlTags
 #include "model/AudioElement.h"                // for AudioElement
 #include "model/BackgroundImage.h"             // for BackgroundImage
@@ -110,17 +112,17 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, const Stroke* s) {
 
     unsigned char alpha = 0xff;
 
+    if (t >= StrokeTool::NAMES.size()) {
+        g_warning("Unknown StrokeTool::Value: %d", static_cast<unsigned int>(t));
+        t = StrokeTool::PEN;
+    }
+
+    stroke->setAttrib(xoj::xml_attrs::TOOL_STR, StrokeTool::NAMES[t]);
+
     if (t == StrokeTool::PEN) {
-        stroke->setAttrib("tool", "pen");
         writeTimestamp(stroke, s);
-    } else if (t == StrokeTool::ERASER) {
-        stroke->setAttrib("tool", "eraser");
     } else if (t == StrokeTool::HIGHLIGHTER) {
-        stroke->setAttrib("tool", "highlighter");
         alpha = 0x7f;
-    } else {
-        g_warning("Unknown StrokeTool::Value");
-        stroke->setAttrib("tool", "pen");
     }
 
     stroke->setAttrib(xoj::xml_attrs::COLOR_STR, getColorStr(s->getColor(), alpha).c_str());
@@ -150,17 +152,14 @@ void SaveHandler::visitStrokeExtended(XmlPointNode* stroke, const Stroke* s) {
         stroke->setAttrib(xoj::xml_attrs::FILL_STR, s->getFill());
     }
 
-    const StrokeCapStyle capStyle = s->getStrokeCapStyle();
-    if (capStyle == StrokeCapStyle::BUTT) {
-        stroke->setAttrib("capStyle", "butt");
-    } else if (capStyle == StrokeCapStyle::ROUND) {
-        stroke->setAttrib("capStyle", "round");
-    } else if (capStyle == StrokeCapStyle::SQUARE) {
-        stroke->setAttrib("capStyle", "square");
-    } else {
-        g_warning("Unknown stroke cap type: %i", capStyle);
-        stroke->setAttrib("capStyle", "round");
+    StrokeCapStyle capStyle = s->getStrokeCapStyle();
+
+    if (capStyle >= StrokeCapStyle::NAMES.size()) {
+        g_warning("Unknown stroke cap type: %d", static_cast<int>(capStyle));
+        capStyle = StrokeCapStyle::ROUND;
     }
+
+    stroke->setAttrib(xoj::xml_attrs::CAPSTYLE_STR, StrokeCapStyle::NAMES[capStyle]);
 
     if (s->getLineStyle().hasDashes()) {
         stroke->setAttrib(xoj::xml_attrs::STYLE_STR, StrokeStyle::formatStyle(s->getLineStyle()));
@@ -234,18 +233,21 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
 
     writeBackgroundName(background, p);
 
+    using xoj::xml_attrs::BackgroundType;
+    using xoj::xml_attrs::Domain;
+
     if (p->getBackgroundType().isPdfPage()) {
         /**
          * ATTENTION! The original xournal can only read the XML if the attributes are in the right order!
          * DO NOT CHANGE THE ORDER OF THE ATTRIBUTES!
          */
 
-        background->setAttrib(xoj::xml_attrs::TYPE_STR, "pdf");
+        background->setAttrib(xoj::xml_attrs::TYPE_STR, BackgroundType::NAMES[BackgroundType::PDF]);
         if (!firstPdfPageVisited) {
             firstPdfPageVisited = true;
 
             if (doc->isAttachPdf()) {
-                background->setAttrib(xoj::xml_attrs::DOMAIN_STR, "attach");
+                background->setAttrib(xoj::xml_attrs::DOMAIN_STR, Domain::NAMES[Domain::ATTACH]);
                 auto filepath = doc->getFilepath();
                 Util::clearExtensions(filepath);
                 filepath += ".xopp.bg.pdf";
@@ -267,7 +269,7 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
                 }
             } else {
                 // "absolute" just means path. For backward compatibility, it is hard to change the word
-                background->setAttrib(xoj::xml_attrs::DOMAIN_STR, "absolute");
+                background->setAttrib(xoj::xml_attrs::DOMAIN_STR, Domain::NAMES[Domain::ABSOLUTE]);
                 auto normalizedPath = Util::normalizeAssetPath(doc->getPdfFilepath(), target.parent_path(),
                                                                doc->getPathStorageMode());
                 background->setAttrib(xoj::xml_attrs::FILENAME_STR, char_cast(normalizedPath.c_str()));
@@ -275,17 +277,17 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
         }
         background->setAttrib(xoj::xml_attrs::PAGE_NUMBER_STR, p->getPdfPageNr() + 1);
     } else if (p->getBackgroundType().isImagePage()) {
-        background->setAttrib(xoj::xml_attrs::TYPE_STR, "pixmap");
+        background->setAttrib(xoj::xml_attrs::TYPE_STR, BackgroundType::NAMES[BackgroundType::PIXMAP]);
 
         int cloneId = p->getBackgroundImage().getCloneId();
         if (cloneId != -1) {
-            background->setAttrib(xoj::xml_attrs::DOMAIN_STR, "clone");
+            background->setAttrib(xoj::xml_attrs::DOMAIN_STR, Domain::NAMES[Domain::CLONE]);
             char* filename = g_strdup_printf("%i", cloneId);
             background->setAttrib(xoj::xml_attrs::FILENAME_STR, filename);
             g_free(filename);
         } else if (p->getBackgroundImage().isAttached() && p->getBackgroundImage().getPixbuf()) {
             char* filename = g_strdup_printf("bg_%d.png", this->attachBgId++);
-            background->setAttrib(xoj::xml_attrs::DOMAIN_STR, "attach");
+            background->setAttrib(xoj::xml_attrs::DOMAIN_STR, Domain::NAMES[Domain::ATTACH]);
             background->setAttrib(xoj::xml_attrs::FILENAME_STR, filename);
 
             backgroundImages.emplace_back(p->getBackgroundImage());
@@ -301,7 +303,7 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
             g_free(filename);
         } else {
             // "absolute" just means path. For backward compatibility, it is hard to change the word
-            background->setAttrib(xoj::xml_attrs::DOMAIN_STR, "absolute");
+            background->setAttrib(xoj::xml_attrs::DOMAIN_STR, Domain::NAMES[Domain::ABSOLUTE]);
             auto normalizedPath = Util::normalizeAssetPath(p->getBackgroundImage().getFilepath(), target.parent_path(),
                                                            doc->getPathStorageMode());
             background->setAttrib(xoj::xml_attrs::FILENAME_STR, char_cast(normalizedPath.c_str()));
@@ -331,7 +333,8 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
 }
 
 void SaveHandler::writeSolidBackground(XmlNode* background, ConstPageRef p) {
-    background->setAttrib(xoj::xml_attrs::TYPE_STR, "solid");
+    using xoj::xml_attrs::BackgroundType;
+    background->setAttrib(xoj::xml_attrs::TYPE_STR, BackgroundType::NAMES[BackgroundType::SOLID]);
     background->setAttrib(xoj::xml_attrs::COLOR_STR, getColorStr(p->getBackgroundColor()));
     background->setAttrib(xoj::xml_attrs::STYLE_STR,
                           PageTypeHandler::getStringForPageTypeFormat(p->getBackgroundType().format));

@@ -156,10 +156,25 @@ void exitOnMissingPdfFileName(const LoadHandler& loader) {
     if (!loader.getMissingPdfFilename().empty()) {
         auto msg =
                 FS(_F("The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.") %
-                   loader.getMissingPdfFilename());
+                   loader.getMissingPdfFilename().u8string());
         std::cerr << msg << std::endl;
         exit(-2);
     }
+}
+
+std::unique_ptr<Document> loadDocumentOrExit(const char* filename, ExportBackgroundType exportBackground) {
+    std::unique_ptr<Document> doc{};
+    try {
+        LoadHandler loader;
+        doc = loader.loadDocument(filename);
+
+        if (exportBackground != EXPORT_BACKGROUND_NONE) {
+            exitOnMissingPdfFileName(loader);
+        }
+    } catch (std::exception& e) {
+        g_error("Document was not loaded: %s", e.what());
+    }
+    return doc;
 }
 }  // namespace
 
@@ -183,16 +198,7 @@ void exitOnMissingPdfFileName(const LoadHandler& loader) {
  */
 auto exportImg(const char* input, const char* output, const char* range, const char* layerRange, int pngDpi,
                int pngWidth, int pngHeight, ExportBackgroundType exportBackground) -> int {
-    LoadHandler loader;
-    auto doc = loader.loadDocument(input);
-    if (doc == nullptr) {
-        g_error("%s", loader.getLastError().c_str());
-    }
-
-    if (exportBackground != EXPORT_BACKGROUND_NONE) {
-        exitOnMissingPdfFileName(loader);
-    }
-
+    std::unique_ptr<Document> doc = loadDocumentOrExit(input, exportBackground);
     return ExportHelper::exportImg(doc.get(), output, range, layerRange, pngDpi, pngWidth, pngHeight, exportBackground);
 }
 
@@ -239,16 +245,7 @@ auto saveDoc(const char* input, const char* output) -> int {
  */
 auto exportPdf(const char* input, const char* output, const char* range, const char* layerRange,
                ExportBackgroundType exportBackground, bool progressiveMode, ExportBackend backend) -> int {
-    LoadHandler loader;
-    auto doc = loader.loadDocument(input);
-    if (doc == nullptr) {
-        g_error("%s", loader.getLastError().c_str());
-    }
-
-    if (exportBackground != EXPORT_BACKGROUND_NONE) {
-        exitOnMissingPdfFileName(loader);
-    }
-
+    std::unique_ptr<Document> doc = loadDocumentOrExit(input, exportBackground);
     return ExportHelper::exportPdf(doc.get(), output, range, layerRange, exportBackground, progressiveMode, backend);
 }
 
