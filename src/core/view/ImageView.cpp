@@ -17,6 +17,11 @@ void ImageView::draw(const Context& ctx) const {
     cairo_save(cr);
 
     cairo_surface_t* img = image->getImage();
+    if (!img) {
+        g_warning("Image could not be rendered");
+        return;
+    }
+
     int width = cairo_image_surface_get_width(img);
     int height = cairo_image_surface_get_height(img);
 
