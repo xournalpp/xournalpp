@@ -21,6 +21,7 @@
 #define CIRCLE_MIN_DET 0.95                          // minimum det. score for circle (ideal circle = 1)
 #define CIRCLE_MAX_SCORE 0.10                        // max circle score for circle (ideal circle = 0)
 #define SLANT_TOLERANCE (5 * M_PI / 180)             // ignore slanting by +/- 5 degrees
+#define TRIANGLE_LINEAR_TOLERANCE 0.3                // vertex gap tolerance in triangles
 #define RECTANGLE_ANGLE_TOLERANCE (15 * M_PI / 180)  // angle tolerance in rectangles
 #define RECTANGLE_LINEAR_TOLERANCE 0.20              // vertex gap tolerance in rectangles
 #define POLYGON_LINEAR_TOLERANCE 0.20                // vertex gap tolerance in closed polygons
