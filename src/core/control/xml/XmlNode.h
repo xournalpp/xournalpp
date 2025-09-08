@@ -11,10 +11,13 @@
 
 #pragma once
 
-#include <cstddef>  // for size_t
-#include <memory>   // for unique_ptr
-#include <string>   // for string
-#include <vector>   // for vector
+#include <cstddef>      // for size_t
+#include <memory>       // for unique_ptr
+#include <string>       // for string
+#include <string_view>  // for string_view
+#include <vector>       // for vector
+
+#include "util/StringUtils.h"  // for StaticStringView
 
 #include "Attribute.h"  // for XMLAttribute
 
@@ -23,7 +26,7 @@ class OutputStream;
 
 class XmlNode {
 public:
-    XmlNode(const char* tag);
+    XmlNode(StringUtils::StaticStringView tag);
     virtual ~XmlNode() = default;
 
 public:
@@ -48,5 +51,5 @@ protected:
     std::vector<std::unique_ptr<XmlNode>> children{};
     std::vector<std::unique_ptr<XMLAttribute>> attributes{};
 
-    std::string tag;
+    StringUtils::StaticStringView tag;
 };

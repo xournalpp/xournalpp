@@ -21,7 +21,7 @@ class OutputStream;
 
 class XmlPointNode: public XmlAudioNode {
 public:
-    XmlPointNode(const char* tag);
+    XmlPointNode(StringUtils::StaticStringView tag);
 
 public:
     void setPoints(std::vector<Point> points);
