@@ -15,7 +15,7 @@
 #include "TextAttribute.h"         // for TextAttribute
 
 
-XmlNode::XmlNode(const char* tag): tag(tag) {}
+XmlNode::XmlNode(const std::string_view tag): tag(tag) {}
 
 void XmlNode::setAttrib(const char* attrib, const char* value) {
     if (value == nullptr) {
