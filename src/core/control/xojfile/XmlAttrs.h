@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <array>
+
 
 // Names of attributes
 namespace xoj::xml_attrs {
@@ -61,5 +63,36 @@ constexpr auto TEXT_STR = "text";
 
 // attachment
 constexpr auto PATH_STR = "path";
+
+
+class Domain {
+public:
+    enum Value { ABSOLUTE, ATTACH, CLONE };
+    static constexpr std::array<const char*, 3> NAMES = {"absolute", "attach", "clone"};
+    Domain(Value v): value(v) {}
+
+    // Implicit conversion to underlying enum type
+    operator const Value&() const { return value; }
+    operator Value&() { return value; }
+
+private:
+    Value value;
+};
+
+// Named enum for the values that the "type" attribute can take in .xopp and
+// .xoj files. It is less detailed than the PageType class.
+class BackgroundType {
+public:
+    enum Value { SOLID, PIXMAP, PDF };
+    static constexpr std::array<const char*, 3> NAMES = {"solid", "pixmap", "pdf"};
+    BackgroundType(Value v): value(v) {}
+
+    // Implicit conversion to underlying enum type
+    operator const Value&() const { return value; }
+    operator Value&() { return value; }
+
+private:
+    Value value;
+};
 
 }  // namespace xoj::xml_attrs

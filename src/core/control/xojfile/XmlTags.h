@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Enum and contexpr names for the tags used in .xoj and .xopp files
+ * Enum and constexpr names for the tags used in .xoj and .xopp files
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp

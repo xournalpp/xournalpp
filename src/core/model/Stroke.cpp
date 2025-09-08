@@ -197,7 +197,7 @@ void Stroke::readSerialized(ObjectInputStream& in) {
 
     this->fill = in.readInt();
 
-    this->capStyle = static_cast<StrokeCapStyle>(in.readInt());
+    this->capStyle = static_cast<StrokeCapStyle::Value>(in.readInt());
 
     in.readData(this->points);
     this->lineStyle.readSerialized(in);

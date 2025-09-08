@@ -6,6 +6,8 @@
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeHandler
 #include "control/xml/XmlNode.h"               // for XmlNode
 #include "control/xml/XmlTextNode.h"           // for XmlTextNode
+#include "control/xojfile/XmlAttrs.h"          // for xml_attrs
+#include "control/xojfile/XmlTags.h"           // for xml_tags
 #include "model/PageType.h"                    // for PageTypeFormat, PageType
 #include "model/XojPage.h"                     // for XojPage
 
@@ -29,16 +31,18 @@ void XojExportHandler::visitStrokeExtended(XmlPointNode* stroke, const Stroke* s
 }
 
 void XojExportHandler::writeHeader() {
-    this->root->setAttrib("creator", PROJECT_STRING);
+    this->root->setAttrib(xoj::xml_attrs::CREATOR_STR, PROJECT_STRING);
     // Keep this version on 2, as this is anyway not read by Xournal
-    this->root->setAttrib("fileversion", "2");
+    this->root->setAttrib(xoj::xml_attrs::FILEVERSION_STR, "2");
     this->root->addChild(
-            new XmlTextNode("title", std::string{"Xournal document (Compatibility) - see "} + PROJECT_HOMEPAGE_URL));
+            new XmlTextNode(xoj::xml_tags::NAMES[xoj::xml_tags::Type::TITLE],
+                            std::string{"Xournal document (Compatibility) - see "} + PROJECT_HOMEPAGE_URL));
 }
 
 void XojExportHandler::writeSolidBackground(XmlNode* background, ConstPageRef p) {
-    background->setAttrib("type", "solid");
-    background->setAttrib("color", getColorStr(p->getBackgroundColor()));
+    using xoj::xml_attrs::BackgroundType;
+    background->setAttrib(xoj::xml_attrs::TYPE_STR, BackgroundType::NAMES[BackgroundType::SOLID]);
+    background->setAttrib(xoj::xml_attrs::COLOR_STR, getColorStr(p->getBackgroundColor()));
 
     PageTypeFormat bgFormat = p->getBackgroundType().format;
     std::string format;
@@ -49,7 +53,7 @@ void XojExportHandler::writeSolidBackground(XmlNode* background, ConstPageRef p)
         format = "plain";
     }
 
-    background->setAttrib("style", format);
+    background->setAttrib(xoj::xml_attrs::STYLE_STR, format);
 }
 
 void XojExportHandler::writeTimestamp(XmlAudioNode* xmlAudioNode, const AudioElement* audioElement) {
