@@ -2,6 +2,8 @@
 
 #include <cstring>
 #include <sstream>  // std::istringstream
+#include <string>
+#include <string_view>
 #include <utility>
 
 #include <glib.h>
@@ -82,4 +84,29 @@ auto StringUtils::iequals(const string& a, const string& b) -> bool {
 
 
     return result == 0;
+}
+
+auto StringUtils::ellipsize(std::string_view sv, std::size_t max_width) -> std::string {
+    constexpr std::string_view ELLIPSIS_STR = "...";
+    xoj_assert(max_width > ELLIPSIS_STR.size());
+    const auto length = g_utf8_strlen(sv.data(), as_signed(sv.size()));
+
+    if (length <= as_signed(max_width)) {
+        return std::string{sv};
+    }
+
+    const auto bytes_kept = static_cast<std::size_t>(
+            g_utf8_offset_to_pointer(sv.data(), as_signed(max_width - ELLIPSIS_STR.size())) - sv.data());
+    std::string str;
+    str.reserve(bytes_kept + ELLIPSIS_STR.size());
+    str.append(sv.data(), bytes_kept);
+    str.append(ELLIPSIS_STR);
+    return str;
+}
+
+auto StringUtils::markup_escape(std::string_view sv) -> std::string {
+    auto escaped = g_markup_escape_text(sv.data(), as_signed(sv.size()));
+    std::string str{escaped};
+    g_free(escaped);
+    return str;
 }
