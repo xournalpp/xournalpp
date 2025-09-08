@@ -4,7 +4,7 @@
 
 #include "control/xml/XmlNode.h"  // for XmlNode
 
-XmlAudioNode::XmlAudioNode(const char* tag): XmlNode(tag), audioFilepath{} {}
+XmlAudioNode::XmlAudioNode(const std::string_view tag): XmlNode(tag), audioFilepath{} {}
 
 XmlAudioNode::~XmlAudioNode() = default;
 

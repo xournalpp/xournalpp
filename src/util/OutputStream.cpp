@@ -13,9 +13,9 @@ OutputStream::OutputStream() = default;
 
 OutputStream::~OutputStream() = default;
 
-void OutputStream::write(const std::string& str) { write(str.c_str(), str.length()); }
-
 void OutputStream::write(const char* str) { write(str, std::strlen(str)); }
+
+void OutputStream::write(const std::string_view sv) { write(sv.data(), sv.length()); }
 
 ////////////////////////////////////////////////////////
 /// GzOutputStream /////////////////////////////////////

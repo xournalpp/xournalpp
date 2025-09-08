@@ -6,9 +6,9 @@
 #include "util/OutputStream.h"         // for OutputStream
 #include "util/StringUtils.h"          // for replace_pair, StringUtils
 
-XmlTextNode::XmlTextNode(const char* tag, std::string text): XmlAudioNode(tag), text(std::move(text)) {}
+XmlTextNode::XmlTextNode(const std::string_view tag, std::string text): XmlAudioNode(tag), text(std::move(text)) {}
 
-XmlTextNode::XmlTextNode(const char* tag): XmlAudioNode(tag) {}
+XmlTextNode::XmlTextNode(const std::string_view tag): XmlAudioNode(tag) {}
 
 void XmlTextNode::setText(std::string text) { this->text = std::move(text); }
 
