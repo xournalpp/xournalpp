@@ -11,32 +11,42 @@
 
 #pragma once
 
-#include <tuple>  // for tuple
+#include <functional>
+#include <memory>
 
-#include <gio/gio.h>  // for GFile
+#include "model/PageRef.h"
+#include "util/Rectangle.h"
 
-#include "model/Image.h"  // for Image
+#include "filesystem.h"
 
 class Control;
-class XojPageView;
+class Image;
 
-class ImageHandler {
+class ImageHandler final {
 public:
-    ImageHandler(Control* control, XojPageView* view);
-    virtual ~ImageHandler();
+    ImageHandler(Control* control);
+    ~ImageHandler();
 
 public:
-    bool insertImage(double x, double y);
-    // does the complete insertion based on create and add
-    bool insertImage(GFile* file, double x, double y);
-    // creates the image and does automatic scaling of the image
-    std::tuple<Image*, int, int> createImage(GFile* file, double x, double y);
-    bool addImageToDocument(Image* img, bool addUndoAction);
-    // scale down (only if necessary) the image so that the it fits on the page
-    // applies (potentially adjusted) width/height to the image
-    void automaticScaling(Image* img, double x, double y, int width, int height);
+    /**
+     * inserts an image scaled to the given size
+     */
+    void insertImageWithSize(PageRef page, const xoj::util::Rectangle<double>& space);
+
+    /// Creates the image from the given file
+    [[nodiscard]] static auto createImageFromFile(const fs::path& path) -> std::unique_ptr<Image>;
+
+    static bool addImageToDocument(std::unique_ptr<Image> img, PageRef page, Control* ctrl, bool addUndoAction);
+
+    /// applies (potentially adjusted) width/height to the image: scale down (only if necessary) the image so that it
+    /// then fits on the page
+    static void automaticScaling(Image& img, PageRef page, int width, int height);
+    /// Same as above, but width and height are inferred from the image file.
+    static void automaticScaling(Image& img, PageRef page);
+
+    /// lets the user choose an image file, creates the image and calls the callback
+    void chooseAndCreateImage(std::function<void(std::unique_ptr<Image>)> callback);
 
 private:
     Control* control;
-    XojPageView* view;
 };

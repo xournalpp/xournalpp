@@ -14,6 +14,7 @@
 #include <map>     // for map
 #include <string>  // for string
 
+#include "pdf/base/PdfExportBackend.h"
 #include "util/ElementRange.h"  // for PageRangeVector
 
 #include "BaseExportJob.h"  // for BaseExportJob, EXPORT_BACKGROUND_ALL
@@ -34,19 +35,19 @@ public:
     void run() override;
 
 public:
-    bool showFilechooser() override;
+    void showDialogAndRun();
 
 protected:
     void afterRun() override;
 
-    void addFilterToDialog() override;
+    void addFilterToDialog(GtkFileChooser* dialog) override;
+    void setExtensionFromFilter(fs::path& p, const char* filterName) const override;
 
     /**
      * Create one Graphics file per page
      */
     void exportGraphics();
 
-    bool testAndSetFilepath(const fs::path& file) override;
 
 private:
     /**
@@ -73,6 +74,9 @@ private:
      * Background export type
      */
     ExportBackgroundType exportBackground = EXPORT_BACKGROUND_ALL;
+
+    /// Backend used for exporting the PDF background to PDF
+    ExportBackend pdfExportBackend = ExportBackend::DEFAULT;
 
     /**
      * Export all Layers progressively

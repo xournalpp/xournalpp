@@ -1,24 +1,24 @@
 #include "SizeUndoAction.h"
 
-#include <cassert>
 #include <memory>   // for allocator, __shared_ptr_access, __share...
 #include <utility>  // for move
 
+#include "control/Control.h"
+#include "model/Document.h"
 #include "model/Point.h"      // for Point
 #include "model/Stroke.h"     // for Stroke
 #include "model/XojPage.h"    // for XojPage
 #include "undo/UndoAction.h"  // for UndoAction
+#include "util/Assert.h"      // for xoj_assert
 #include "util/Range.h"       // for Range
 #include "util/i18n.h"        // for _
-
-class Control;
 
 using std::vector;
 
 class SizeUndoActionEntry {
 public:
     SizeUndoActionEntry(Stroke* s, double originalWidth, double newWidth, vector<double> originalPressure,
-                        vector<double> newPressure, int pressureCount) {
+                        vector<double> newPressure, size_t pressureCount) {
         this->s = s;
         this->originalWidth = originalWidth;
         this->newWidth = newWidth;
@@ -34,7 +34,7 @@ public:
 
     vector<double> originalPressure;
     vector<double> newPressure;
-    int pressureCount;
+    size_t pressureCount;
 };
 
 SizeUndoAction::SizeUndoAction(const PageRef& page, Layer* layer): UndoAction("SizeUndoAction") {
@@ -48,11 +48,11 @@ SizeUndoAction::~SizeUndoAction() {
 }
 
 auto SizeUndoAction::getPressure(Stroke* s) -> vector<double> {
-    int count = s->getPointCount();
-    assert(count >= 2);
+    size_t count = s->getPointCount();
+    xoj_assert(count >= 2);
     vector<double> data;
     data.reserve(count);
-    for (int i = 0; i < count - 1; i++) {
+    for (size_t i = 0; i < count; i++) {
         data.push_back(s->getPoint(i).z);
     }
 
@@ -60,7 +60,7 @@ auto SizeUndoAction::getPressure(Stroke* s) -> vector<double> {
 }
 
 void SizeUndoAction::addStroke(Stroke* s, double originalWidth, double newWidth, vector<double> originalPressure,
-                               vector<double> newPressure, int pressureCount) {
+                               vector<double> newPressure, size_t pressureCount) {
     this->data.push_back(new SizeUndoActionEntry(s, originalWidth, newWidth, std::move(originalPressure),
                                                  std::move(newPressure), pressureCount));
 }
@@ -70,8 +70,10 @@ auto SizeUndoAction::undo(Control* control) -> bool {
         return true;
     }
 
-    Range range;
+    Document* doc = control->getDocument();
+    doc->lock();
 
+    Range range;
     for (SizeUndoActionEntry* e: this->data) {
         range = range.unite(Range(e->s->boundingRect()));
 
@@ -80,6 +82,8 @@ auto SizeUndoAction::undo(Control* control) -> bool {
 
         range = range.unite(Range(e->s->boundingRect()));
     }
+
+    doc->unlock();
 
     this->page->fireRangeChanged(range);
 
@@ -91,8 +95,10 @@ auto SizeUndoAction::redo(Control* control) -> bool {
         return true;
     }
 
-    Range range;
+    Document* doc = control->getDocument();
+    doc->lock();
 
+    Range range;
     for (SizeUndoActionEntry* e: this->data) {
         range = range.unite(Range(e->s->boundingRect()));
 
@@ -101,6 +107,8 @@ auto SizeUndoAction::redo(Control* control) -> bool {
 
         range = range.unite(Range(e->s->boundingRect()));
     }
+
+    doc->unlock();
 
     this->page->fireRangeChanged(range);
 

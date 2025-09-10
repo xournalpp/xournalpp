@@ -1,42 +1,47 @@
 #include "PageTypeHandler.h"
 
+#include <algorithm>
 #include <utility>
 
 #include "gui/GladeSearchpath.h"
 #include "util/XojMsgBox.h"
 #include "util/i18n.h"
 
-using std::string;
+static void addPageTypeInfo(const std::string& name, PageTypeFormat format, const std::string& config,
+                            std::vector<std::unique_ptr<PageTypeInfo>>& types) {
+    auto pt = std::make_unique<PageTypeInfo>();
+    pt->name = std::move(name);
+    pt->page.format = format;
+    pt->page.config = std::move(config);
+
+    types.emplace_back(std::move(pt));
+}
 
 PageTypeHandler::PageTypeHandler(GladeSearchpath* gladeSearchPath) {
     auto file = gladeSearchPath->findFile("", "pagetemplates.ini");
 
     if (!parseIni(file) || this->types.size() < 5) {
 
-        string msg = FS(_F("Could not load pagetemplates.ini file"));
+        std::string msg = FS(_F("Could not load pagetemplates.ini file"));
         XojMsgBox::showErrorToUser(nullptr, msg);
 
         // On failure load the hardcoded and predefined values
-        addPageTypeInfo(_("Plain"), PageTypeFormat::Plain, "");
-        addPageTypeInfo(_("Ruled"), PageTypeFormat::Ruled, "");
-        addPageTypeInfo(_("Ruled with vertical line"), PageTypeFormat::Lined, "");
-        addPageTypeInfo(_("Staves"), PageTypeFormat::Staves, "");
-        addPageTypeInfo(_("Graph"), PageTypeFormat::Graph, "");
-        addPageTypeInfo(_("Dotted"), PageTypeFormat::Dotted, "");
-        addPageTypeInfo(_("Isometric Dotted"), PageTypeFormat::IsoDotted, "");
-        addPageTypeInfo(_("Isometric Graph"), PageTypeFormat::IsoGraph, "");
+        addPageTypeInfo(_("Plain"), PageTypeFormat::Plain, "", types);
+        addPageTypeInfo(_("Ruled"), PageTypeFormat::Ruled, "", types);
+        addPageTypeInfo(_("Ruled with vertical line"), PageTypeFormat::Lined, "", types);
+        addPageTypeInfo(_("Staves"), PageTypeFormat::Staves, "", types);
+        addPageTypeInfo(_("Graph"), PageTypeFormat::Graph, "", types);
+        addPageTypeInfo(_("Dotted"), PageTypeFormat::Dotted, "", types);
+        addPageTypeInfo(_("Isometric Dotted"), PageTypeFormat::IsoDotted, "", types);
+        addPageTypeInfo(_("Isometric Graph"), PageTypeFormat::IsoGraph, "", types);
     }
 
     // Special types
-    addPageTypeInfo(_("Copy current"), PageTypeFormat::Copy, "");
-    addPageTypeInfo(_("With PDF background"), PageTypeFormat::Pdf, "");
-    addPageTypeInfo(_("Image"), PageTypeFormat::Image, "");
+    addPageTypeInfo(_("With PDF background"), PageTypeFormat::Pdf, "", specialTypes);
+    addPageTypeInfo(_("Image"), PageTypeFormat::Image, "", specialTypes);
 }
 
-PageTypeHandler::~PageTypeHandler() {
-    for (PageTypeInfo* t: types) { delete t; }
-    types.clear();
-}
+PageTypeHandler::~PageTypeHandler() = default;
 
 auto PageTypeHandler::parseIni(fs::path const& filepath) -> bool {
     GKeyFile* config = g_key_file_new();
@@ -57,42 +62,42 @@ auto PageTypeHandler::parseIni(fs::path const& filepath) -> bool {
 }
 
 void PageTypeHandler::loadFormat(GKeyFile* config, const char* group) {
-    string strName;
+    std::string strName;
     gchar* name = g_key_file_get_locale_string(config, group, "name", nullptr, nullptr);
     if (name != nullptr) {
         strName = name;
         g_free(name);
     }
 
-    string strFormat;
+    std::string strFormat;
     gchar* format = g_key_file_get_string(config, group, "format", nullptr);
     if (format != nullptr) {
         strFormat = format;
         g_free(format);
     }
 
-    string strConfig;
+    std::string strConfig;
     gchar* cconfig = g_key_file_get_string(config, group, "config", nullptr);
     if (cconfig != nullptr) {
         strConfig = cconfig;
         g_free(cconfig);
     }
 
-    addPageTypeInfo(strName, getPageTypeFormatForString(strFormat), strConfig);
+    addPageTypeInfo(strName, getPageTypeFormatForString(strFormat), strConfig, types);
 }
 
-void PageTypeHandler::addPageTypeInfo(string name, PageTypeFormat format, string config) {
-    auto pt = new PageTypeInfo();
-    pt->name = std::move(name);
-    pt->page.format = format;
-    pt->page.config = std::move(config);
-
-    this->types.push_back(pt);
+auto PageTypeHandler::getPageTypes() -> const std::vector<std::unique_ptr<PageTypeInfo>>& { return this->types; }
+auto PageTypeHandler::getSpecialPageTypes() -> const std::vector<std::unique_ptr<PageTypeInfo>>& {
+    return this->specialTypes;
 }
 
-auto PageTypeHandler::getPageTypes() -> std::vector<PageTypeInfo*>& { return this->types; }
+auto PageTypeHandler::getInfoOn(const PageType& pt) const -> const PageTypeInfo* {
+    const auto& vector = pt.isSpecial() ? specialTypes : types;
+    auto it = std::find_if(vector.begin(), vector.end(), [&](const auto& info) { return info->page == pt; });
+    return it == vector.end() ? nullptr : it->get();
+}
 
-auto PageTypeHandler::getPageTypeFormatForString(const string& format) -> PageTypeFormat {
+auto PageTypeHandler::getPageTypeFormatForString(const std::string& format) -> PageTypeFormat {
     if (format == "plain") {
         return PageTypeFormat::Plain;
     }
@@ -123,13 +128,13 @@ auto PageTypeHandler::getPageTypeFormatForString(const string& format) -> PageTy
     if (format == ":image") {
         return PageTypeFormat::Image;
     }
-    if (format == ":copy") {
-        return PageTypeFormat::Copy;
-    }
-    return PageTypeFormat::Ruled;
+    g_warning("PageTypeHandler::getPageTypeFormatForString: unknown PageType: \"%s\". Replacing with "
+              "PageTypeFormat::Plain",
+              format.c_str());
+    return PageTypeFormat::Plain;
 }
 
-auto PageTypeHandler::getStringForPageTypeFormat(const PageTypeFormat& format) -> string {
+auto PageTypeHandler::getStringForPageTypeFormat(const PageTypeFormat& format) -> std::string {
     switch (format) {
         case PageTypeFormat::Plain:
             return "plain";
@@ -151,8 +156,9 @@ auto PageTypeHandler::getStringForPageTypeFormat(const PageTypeFormat& format) -
             return ":pdf";
         case PageTypeFormat::Image:
             return ":image";
-        case PageTypeFormat::Copy:
-            return ":copy";
     }
+    g_warning("PageTypeHandler::getStringForPageTypeFormat: unknown PageType: %d. Replacing with "
+              "PageTypeFormat::Ruled",
+              static_cast<int>(format));
     return "ruled";
 }

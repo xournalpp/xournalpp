@@ -17,25 +17,23 @@
 #include <glib.h>     // for guint, gulong
 #include <gtk/gtk.h>  // for GtkWidget, GtkSpinButton
 
+#include "util/raii/GObjectSPtr.h"  // for WidgetSPtr
 #include "util/raii/GSourceURef.h"
 
 class SpinPageListener;
 
-class SpinPageAdapter {
+class SpinPageAdapter final {
 public:
-    SpinPageAdapter();
-    virtual ~SpinPageAdapter();
+    SpinPageAdapter() = default;
+    ~SpinPageAdapter() = default;
 
 public:
-    bool hasWidget();
-
     /**
      * Assumes ownership of widget
      */
     void setWidget(GtkWidget* widget);
-    void removeWidget();
 
-    int getPage() const;
+    size_t getPage() const;
     void setPage(size_t page);
     void setMinMaxPage(size_t min, size_t max);
 
@@ -49,12 +47,12 @@ private:
     void firePageChanged();
 
 private:
-    GtkWidget* widget = nullptr;
+    xoj::util::WidgetSPtr widget;
     gulong pageNrSpinChangedHandlerId = 0;
     size_t page = 0;
 
     xoj::util::GSourceURef timeout;
-    std::list<SpinPageListener*> listener;
+    SpinPageListener* listener;
 
     size_t min = 0;
     size_t max = 0;

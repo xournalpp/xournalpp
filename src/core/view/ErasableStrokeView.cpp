@@ -1,6 +1,5 @@
 #include "ErasableStrokeView.h"
 
-#include <cassert>   // for assert
 #include <cmath>     // for ceil
 #include <iosfwd>    // for ptrdiff_t
 #include <iterator>  // for next
@@ -12,6 +11,7 @@
 #include "model/Point.h"                  // for Point
 #include "model/Stroke.h"                 // for Stroke, StrokeTool::HIGHLIG...
 #include "model/eraser/ErasableStroke.h"  // for ErasableStroke, ErasableStr...
+#include "util/Assert.h"                  // for xoj_assert
 #include "util/Color.h"                   // for cairo_set_source_rgbi
 #include "util/Interval.h"                // for Interval
 #include "util/Rectangle.h"               // for Rectangle
@@ -216,7 +216,7 @@ void ErasableStrokeView::paintFilledHighlighter(cairo_t* cr) const {
     cairo_matrix_t matrix;
     cairo_get_matrix(cr, &matrix);
     // We assume the matrix is an homothety
-    assert(matrix.xx == matrix.yy && matrix.xy == 0 && matrix.yx == 0);
+    xoj_assert(matrix.xx == matrix.yy && matrix.xy == 0 && matrix.yx == 0);
 
     // Initialise the cairo context
     cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);

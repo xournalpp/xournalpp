@@ -26,10 +26,10 @@ class Menubar;
 /**
  * @brief Handles the GtkMenu displaying the recent files
  */
-class RecentDocumentsSubmenu: public Submenu {
+class RecentDocumentsSubmenu final: public Submenu {
 public:
     RecentDocumentsSubmenu(Control* control, GtkApplicationWindow* win);
-    virtual ~RecentDocumentsSubmenu();
+    ~RecentDocumentsSubmenu();
 
     /**
      * Updates the menu of recent files
@@ -37,23 +37,11 @@ public:
     void updateMenu();
 
     void setDisabled(bool disabled) override;
-    void addToMenubar(MainWindow* win) override;
-
-    static constexpr auto SUBMENU_ID = "menuFileRecent";
-    static constexpr auto G_ACTION_NAMESPACE = "win.";
-
-    static constexpr auto OPEN_ACTION_NAME = "open-file-at";
-
-    /**
-     * @brief For a disable placeholder saying "No recent files"
-     *  To disable a GMenu entry, give it an action name that does not correspond to any GAction
-     */
-    static constexpr auto DISABLED_ACTION_NAME = "always-disabled-action";
-
-    static constexpr auto CLEAR_LIST_ACTION_NAME = "clear-recent-files";
+    void addToMenubar(Menubar& menubar) override;
 
 private:
     static void openFileCallback(GSimpleAction* ga, GVariant* parameter, RecentDocumentsSubmenu* self);
+    static void removeFileCallback(GSimpleAction* ga, GVariant* parameter, RecentDocumentsSubmenu* self);
 
     gulong recentHandlerId{};
 
@@ -77,8 +65,10 @@ private:
      * </submenu>
      * and the section separator does not appear in this case...
      */
+    xoj::util::GObjectSPtr<GMenu> recentFilesSubmenu;
     xoj::util::GObjectSPtr<GMenu> menuXoppFiles;
     xoj::util::GObjectSPtr<GMenu> menuPdfFiles;
     xoj::util::GObjectSPtr<GSimpleAction> openFileAction;
     xoj::util::GObjectSPtr<GSimpleAction> clearListAction;
+    xoj::util::GObjectSPtr<GSimpleAction> removeFileAction;
 };

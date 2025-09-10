@@ -57,7 +57,7 @@ auto FloatingToolbox::floatingToolboxActivated() -> bool {
     ButtonConfig* cfg = nullptr;
 
     // check if any buttons assigned to bring up toolbox
-    for (int id = 0; id < BUTTON_COUNT; id++) {
+    for (unsigned int id = 0; id < BUTTON_COUNT; id++) {
         cfg = settings->getButtonConfig(id);
 
         if (cfg->getAction() == TOOL_FLOATING_TOOLBOX) {
@@ -70,25 +70,18 @@ auto FloatingToolbox::floatingToolboxActivated() -> bool {
         return true;  // return true
     }
 
-    if (this->countWidgets() > 0)  // FloatingToolbox contains something
-    {
-        return true;  // return true
-    }
-
-    return false;
+    return this->hasWidgets();
 }
 
 
-auto FloatingToolbox::countWidgets() -> int {
-    int count = 0;
-
+auto FloatingToolbox::hasWidgets() -> bool {
     for (int index = TBFloatFirst; index <= TBFloatLast; index++) {
-        const char* guiName = TOOLBAR_DEFINITIONS[index].guiName;
-        GtkToolbar* toolbar1 = GTK_TOOLBAR(this->mainWindow->get(guiName));
-        count += gtk_toolbar_get_n_items(toolbar1);
+        GtkToolbar* toolbar1 = GTK_TOOLBAR(this->mainWindow->get(TOOLBAR_DEFINITIONS[index].guiName));
+        if (gtk_toolbar_get_n_items(toolbar1) > 0) {
+            return true;
+        }
     }
-
-    return count;
+    return false;
 }
 
 
@@ -107,16 +100,10 @@ void FloatingToolbox::showForConfiguration() {
 
 
 void FloatingToolbox::show() {
-    gtk_widget_hide(this->floatingToolbox);  // force showing in new position
     gtk_widget_show_all(this->floatingToolbox);
-
-    if (this->floatingToolboxState != configuration) {
-        gtk_widget_hide(this->mainWindow->get("labelFloatingToolbox"));
-    }
-
-    if (this->floatingToolboxState == configuration || countWidgets() > 0) {
-        gtk_widget_hide(this->mainWindow->get("showIfEmpty"));
-    }
+    gtk_widget_set_visible(this->mainWindow->get("labelFloatingToolbox"), this->floatingToolboxState == configuration);
+    gtk_widget_set_visible(this->mainWindow->get("showIfEmpty"),
+                           this->floatingToolboxState != configuration && !hasWidgets());
 }
 
 

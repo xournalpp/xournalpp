@@ -1,10 +1,10 @@
 #include "util/Color.h"
 
 #include <algorithm>  // for max, min
-#include <cassert>    // for assert
 #include <iomanip>    // for operator<<, setfill, setw
 #include <sstream>    // for operator<<, stringstream, basic_ostream, char_t...
 
+#include "util/Assert.h"  // for xoj_assert
 #include "util/serdesstream.h"  // for serdes_stream
 
 float Util::as_grayscale_color(Color color) {

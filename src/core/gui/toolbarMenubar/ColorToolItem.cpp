@@ -1,157 +1,77 @@
 #include "ColorToolItem.h"
 
-#include <array>    // for array
-#include <memory>   // for unique_ptr
-#include <sstream>  // for ostringstream
 #include <utility>  // for move
 
-#include <glib.h>  // for gchar
+#include "enums/Action.enum.h"                  // for Action
+#include "gui/toolbarMenubar/icon/ColorIcon.h"  // for ColorIcon
+#include "util/GtkUtil.h"                       // for setToggleButtonUnreleasable
+#include "util/gtk4_helper.h"                   // for gtk_button_set_child
 
-#include "control/ToolEnums.h"                         // for TOOL_CAP_COLOR
-#include "control/ToolHandler.h"                       // for ToolHandler
-#include "gui/toolbarMenubar/AbstractToolItem.h"       // for AbstractToolItem
-#include "gui/toolbarMenubar/icon/ColorSelectImage.h"  // for ColorSelectImage
-#include "util/i18n.h"                                 // for _
-
-class ActionHandler;
-
-bool ColorToolItem::inUpdate = false;
+ColorToolItem::ColorToolItem(NamedColor namedColor, const std::optional<Recolor>& recolor):
+        AbstractToolItem(std::string("COLOR(") + std::to_string(namedColor.getIndex()) + ")", Category::COLORS),
+        namedColor(std::move(namedColor)),
+        target(xoj::util::makeGVariantSPtr(namedColor.getColor())) {
+    if (recolor) {
+        secondaryColor = std::make_optional(recolor->convertColor(namedColor.getColor()));
+    } else {
+        secondaryColor = std::nullopt;
+    }
+}
 
 ColorToolItem::~ColorToolItem() = default;
 
-ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, NamedColor namedColor,
-                             bool selector):
-        AbstractToolItem("", handler, selector ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR),
-        namedColor{std::move(namedColor)},
-        parent(parent),
-        toolHandler(toolHandler) {
-    this->group = GROUP_COLOR;
-}
-
-auto ColorToolItem::isSelector() const -> bool { return this->action == ACTION_SELECT_COLOR_CUSTOM; }
-
-
-void ColorToolItem::actionSelected(ActionGroup group, ActionType action) {
-    inUpdate = true;
-    if (this->group == group && this->item) {
-        if (isSelector()) {
-            gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item), isSelector());
-        }
-        enableColor(toolHandler->getColor());
-    }
-    inUpdate = false;
-}
-
-void ColorToolItem::enableColor(Color color) {
-    if (isSelector()) {
-        if (this->icon) {
-            this->icon->setColor(color);
-        }
-
-        this->namedColor = NamedColor{color};
-        if (GTK_IS_TOGGLE_BUTTON(this->item)) {
-            gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item), false);
-        }
-    } else {
-        if (this->item) {
-            gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item), this->namedColor.getColor() == color);
-        }
-    }
-}
-
 auto ColorToolItem::getColor() const -> Color { return this->namedColor.getColor(); }
 
-auto ColorToolItem::getId() const -> std::string {
-    if (isSelector()) {
-        return "COLOR_SELECT";
-    }
+auto ColorToolItem::createItem(bool) -> xoj::util::WidgetSPtr {
+    auto* btn = gtk_toggle_button_new();
+    gtk_widget_set_can_focus(btn, false);  // todo(gtk4) not necessary anymore
+    auto actionName = std::string("win.") + Action_toString(Action::TOOL_COLOR);
+    gtk_actionable_set_action_name(GTK_ACTIONABLE(btn), actionName.data());
+    gtk_actionable_set_action_target_value(GTK_ACTIONABLE(btn), target.get());
+    xoj::util::gtk::setToggleButtonUnreleasable(GTK_TOGGLE_BUTTON(btn));
 
-    std::ostringstream os;
-    os << "COLOR(" << this->namedColor.getIndex() << ")";
-    return os.str();
-}
+    gtk_widget_set_tooltip_text(btn, this->namedColor.getName().c_str());
+    gtk_button_set_child(GTK_BUTTON(btn), getNewToolIcon());
 
-/**
- * Show colochooser to select a custom color
- */
-void ColorToolItem::showColorchooser() {
-    GtkWidget* dialog = gtk_color_chooser_dialog_new(_("Select color"), parent);
-    gtk_color_chooser_set_use_alpha(GTK_COLOR_CHOOSER(dialog), false);
 
-    GdkRGBA color = Util::argb_to_GdkRGBA(getColor(), 1.0);
-    gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(dialog), &color);
+    // For the sake of deprecated GtkToolbar, wrap the button in a GtkToolItem
+    // Todo(gtk4): remove
+    GtkToolItem* it = gtk_tool_item_new();
+    gtk_container_add(GTK_CONTAINER(it), btn);
+    /// Makes a proxy item for the toolbar's overflow menu
+    auto createProxy = [this]() {
+        GtkWidget* proxy = gtk_check_menu_item_new();
+        gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(proxy), true);
 
-    int response = gtk_dialog_run(GTK_DIALOG(dialog));
-    if (response == GTK_RESPONSE_OK) {
-        gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(dialog), &color);
-        this->namedColor = NamedColor{Util::GdkRGBA_to_argb(color)};
-    }
+        auto* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+        gtk_container_add(GTK_CONTAINER(proxy), box);
+        gtk_box_append(GTK_BOX(box), getNewToolIcon());
+        gtk_box_append(GTK_BOX(box), gtk_label_new(getToolDisplayName().c_str()));
 
-    gtk_widget_destroy(dialog);
-}
-
-/**
- * Enable / Disable the tool item
- */
-void ColorToolItem::enable(bool enabled) {
-    if (!enabled && !toolHandler->hasCapability(TOOL_CAP_COLOR, SelectedTool::active) &&
-        toolHandler->hasCapability(TOOL_CAP_COLOR, SelectedTool::toolbar)) {
-        if (this->icon) {
-            /*
-             * allow changes if currentTool has no colour capability
-             * and mainTool has Colour capability
-             */
-            icon->setState(COLOR_ICON_STATE_PEN);
-            AbstractToolItem::enable(true);
+        gtk_actionable_set_action_name(GTK_ACTIONABLE(proxy),
+                                       (std::string("win.") + Action_toString(Action::TOOL_COLOR)).c_str());
+        if (target) {
+            gtk_actionable_set_action_target_value(GTK_ACTIONABLE(proxy), target.get());
         }
-        return;
-    }
-
-    AbstractToolItem::enable(enabled);
-    if (this->icon) {
-        if (enabled) {
-            icon->setState(COLOR_ICON_STATE_ENABLED);
-        } else {
-            icon->setState(COLOR_ICON_STATE_DISABLED);
-        }
-    }
-}
-
-void ColorToolItem::activated(GtkMenuItem* menuitem, GtkToolButton* toolbutton) {
-    if (inUpdate) {
-        return;
-    }
-    inUpdate = true;
-
-    if (isSelector()) {
-        showColorchooser();
-    }
-
-    toolHandler->setColor(this->namedColor.getColor(), true);
-
-    inUpdate = false;
-}
-
-auto ColorToolItem::newItem() -> GtkToolItem* {
-    this->icon = std::make_unique<ColorSelectImage>(this->namedColor.getColor(), !isSelector());
-
-    GtkToolItem* it = gtk_toggle_tool_button_new();
-
-    const gchar* name = this->namedColor.getName().c_str();
-    gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(it), name);
-    gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), name);
-
-    gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it), this->icon->getWidget());
-
-    return it;
+        xoj::util::gtk::fixActionableInitialSensitivity(GTK_ACTIONABLE(proxy));
+        return proxy;
+    };
+    gtk_tool_item_set_proxy_menu_item(it, "", createProxy());
+    return xoj::util::WidgetSPtr(GTK_WIDGET(it), xoj::util::adopt);
 }
 
 auto ColorToolItem::getToolDisplayName() const -> std::string { return this->namedColor.getName(); }
 
 auto ColorToolItem::getNewToolIcon() const -> GtkWidget* {
-    return ColorSelectImage::newColorIcon(this->namedColor.getColor(), 16, !isSelector());
+    return ColorIcon::newGtkImage(this->namedColor.getColor(), 16, true, this->secondaryColor);
 }
 
-auto ColorToolItem::getNewToolPixbuf() const -> GdkPixbuf* {
-    return ColorSelectImage::newColorIconPixbuf(this->namedColor.getColor(), 16, !isSelector());
+void ColorToolItem::updateColor(const Palette& palette) { namedColor = palette.getColorAt(namedColor.getIndex()); }
+
+void ColorToolItem::updateSecondaryColor(const std::optional<Recolor>& recolor) {
+    if (recolor) {
+        secondaryColor = std::make_optional(recolor->convertColor(namedColor.getColor()));
+    } else {
+        secondaryColor = std::nullopt;
+    }
 }

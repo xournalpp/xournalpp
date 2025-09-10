@@ -1,6 +1,5 @@
 #include "RenderJob.h"
 
-#include <cmath>    // for ceil, floor
 #include <mutex>    // for mutex
 #include <utility>  // for move
 #include <vector>   // for vector
@@ -16,9 +15,11 @@
 #include "gui/widgets/XournalWidget.h"  // for gtk_xournal_repaint_area
 #include "model/Document.h"             // for Document
 #include "model/XojPage.h"              // for Page
+#include "util/Assert.h"                // for xoj_assert
 #include "util/Rectangle.h"             // for Rectangle
 #include "util/Util.h"                  // for execInUiThread
 #include "util/raii/CairoWrappers.h"    // for CairoSurfaceSPtr, CairoSPtr
+#include "util/safe_casts.h"            // for strict_cast, as_signed, as_si...
 #include "view/DocumentView.h"          // for DocumentView
 #include "view/Mask.h"                  // for Mask
 
@@ -96,15 +97,14 @@ static void repaintWidgetArea(GtkWidget* widget, int x1, int y1, int x2, int y2)
     Util::execInUiThread([=]() { gtk_xournal_repaint_area(widget, x1, y1, x2, y2); });
 }
 
-void RenderJob::repaintPage() const {
-    repaintPageArea(0, 0, view->getWidth(), view->getHeight());
-}
+void RenderJob::repaintPage() const { repaintPageArea(0, 0, view->getWidth(), view->getHeight()); }
 
 void RenderJob::repaintPageArea(double x1, double y1, double x2, double y2) const {
     double zoom = view->xournal->getZoom();
     int x = view->getX();
     int y = view->getY();
-    repaintWidgetArea(view->xournal->getWidget(), x + std::floor(zoom * x1), y + std::floor(zoom * y1), x + std::ceil(zoom * x2), y + std::ceil(zoom * y2));
+    repaintWidgetArea(view->xournal->getWidget(), x + floor_cast<int>(zoom * x1), y + floor_cast<int>(zoom * y1),
+                      x + ceil_cast<int>(zoom * x2), y + ceil_cast<int>(zoom * y2));
 }
 
 void RenderJob::renderToBuffer(cairo_t* cr) const {

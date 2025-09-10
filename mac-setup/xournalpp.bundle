@@ -19,7 +19,15 @@
 
   <plist>${project}/Info.plist</plist>
 
-  <main-binary>${prefix}/bin/xournalpp</main-binary>
+  <main-binary>${prefix}/bin/xournalpp-wrapper</main-binary>
+
+  <binary dest="${bundle}/Contents/MacOS">
+    ${prefix}/bin/xournalpp
+  </binary>
+
+  <binary dest="${bundle}/Contents/MacOS">
+    ${prefix}/bin/gtk3-demo
+  </binary>
 
   <!-- Copy in the input methods. Dunno if they actually work with
        OSX. Note the ${gtkdir} macro, which expands to the correct
@@ -41,6 +49,31 @@
   <!-- Poppler -->
   <binary>
     ${prefix}/lib/libpoppler-glib*.dylib
+  </binary>
+
+  <!-- Lua-GObject and GObject-introspection dependency -->
+  <binary>
+    ${prefix}/lib/lua/5.4/LuaGObject/lua_gobject_core.so
+  </binary>
+  <binary>
+    ${prefix}/lib/libgirepository*.dylib
+  </binary>
+  <data>
+    ${prefix}/share/lua/5.4/LuaGObject.lua
+  </data>
+  <data>
+    ${prefix}/share/lua/5.4/LuaGObject/*.lua
+  </data>
+  <data>
+    ${prefix}/share/lua/5.4/LuaGObject/override/*.lua
+  </data>
+  <data>
+    ${prefix}/lib/girepository-1.0/*.typelib
+  </data>
+
+  <!-- QPDF -->
+  <binary>
+    ${prefix}/lib/libqpdf*.dylib
   </binary>
 
   <!-- Translation filenames, one for each program or library that you
@@ -83,6 +116,10 @@
 
   <data>
     ${prefix}/share/gtksourceview-4
+  </data>
+
+  <data dest="${bundle}/Contents/Resources/palettes">
+    ${prefix}/share/xournalpp/palettes
   </data>
 
   <data>

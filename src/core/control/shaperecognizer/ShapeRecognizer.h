@@ -12,6 +12,7 @@
 #pragma once
 
 #include <array>  // for array
+#include <memory>
 
 #include "RecoSegment.h"
 #include "ShapeRecognizerConfig.h"  // for MAX_POLYGON_SIDES
@@ -26,11 +27,13 @@ public:
     ShapeRecognizer();
     virtual ~ShapeRecognizer();
 
-    Stroke* recognizePatterns(Stroke* stroke, double strokeMinSize);
+    auto recognizePatterns(Stroke* stroke, double strokeMinSize) -> std::unique_ptr<Stroke>;
     void resetRecognizer();
 
 private:
-    Stroke* tryRectangle();
+    auto tryTriangle() -> std::unique_ptr<Stroke>;
+    auto tryRectangle() -> std::unique_ptr<Stroke>;
+
     // function Stroke* tryArrow(); removed after commit a3f7a251282dcfea8b4de695f28ce52bf2035da2
 
     static void optimizePolygonal(const Point* pt, int nsides, int* breaks, Inertia* ss);

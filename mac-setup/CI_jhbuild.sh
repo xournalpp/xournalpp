@@ -105,6 +105,10 @@ EOF
     echo "shallow_clone = True" >> ~/.config/jhbuildrc
     echo "use_local_modulesets = True" >> ~/.config/jhbuildrc
     echo "disable_Werror = False" >> ~/.config/jhbuildrc
+
+    # MODULEFILE contains dependencies to other module sets - they need to be in the same directory
+    cp "$MODULEFILE" "$HOME/gtk-osx-custom/modulesets-stable/"
+    export MODULEFILE="$(basename $MODULEFILE)"
 }
 
 echo "::group::Setup jhbuild"
@@ -118,7 +122,7 @@ echo "::endgroup::"
 download() {
     jhbuild update $GTK_MODULES
     jhbuild -m "$MODULEFILE" update meta-xournalpp-deps
-    jhbuild -m ~/gtk-osx-custom/modulesets-stable/bootstrap.modules update meta-bootstrap
+    jhbuild -m bootstrap.modules update meta-bootstrap
     echo "Downloaded all jhbuild modules' sources"
 }
 echo "::group::Download modules' sources"
@@ -127,7 +131,7 @@ echo "::endgroup::"
 
 ### Step 3: bootstrap
 bootstrap_jhbuild() {
-    jhbuild -m ~/gtk-osx-custom/modulesets-stable/bootstrap.modules build --no-network meta-bootstrap
+    jhbuild -m bootstrap.modules build --no-network meta-bootstrap
 }
 echo "::group::Bootstrap jhbuild"
 bootstrap_jhbuild

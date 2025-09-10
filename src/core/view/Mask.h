@@ -58,6 +58,10 @@ public:
      */
     void paintTo(cairo_t* targetCr) const;
     /**
+     * @brief Paint the content of the surface to the target cairo context
+     */
+    void paintToWithAlpha(cairo_t* targetCr, uint8_t alpha) const;
+    /**
      * @brief Erase all the surface's content
      */
     void wipe();

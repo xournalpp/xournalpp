@@ -12,6 +12,7 @@
 #pragma once
 
 #include <cstddef>      // for size_t
+#include <cstdint>      // for uint32_t
 #include <string>       // for string
 #include <string_view>  // for string_view
 #include <vector>       // for vector
@@ -30,12 +31,13 @@ public:
     void endObject();
 
     void writeInt(int i);
+    void writeUInt(uint32_t u);
     void writeDouble(double d);
     void writeSizeT(size_t st);
     void writeString(const char* str);
     void writeString(const std::string& s);
 
-    void writeData(const void* data, int len, int width);
+    void writeData(const void* data, size_t len, size_t width);
 
     template <typename T>
     void writeData(const std::vector<T>& data);
@@ -43,7 +45,8 @@ public:
     /// Writes the raw image data to the output stream.
     void writeImage(const std::string_view& imgData);
 
-    GString* getStr();
+    /// The caller takes ownership of the returned data
+    GString* stealData();
 
 private:
     ObjectEncoding* encoder = nullptr;
@@ -51,5 +54,5 @@ private:
 
 template <typename T>
 void ObjectOutputStream::writeData(const std::vector<T>& data) {
-    writeData(data.data(), static_cast<int>(data.size()), sizeof(T));
+    writeData(data.data(), data.size(), sizeof(T));
 }

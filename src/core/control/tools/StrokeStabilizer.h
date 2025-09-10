@@ -10,7 +10,6 @@
  */
 #pragma once
 
-#include <cmath>    // for hypot
 #include <cstddef>  // for size_t
 #include <deque>    // for deque
 #include <memory>   // for allocator, unique_ptr
@@ -20,26 +19,13 @@
 
 #include "control/tools/StrokeHandler.h"         // for StrokeHandler
 #include "gui/inputdevices/PositionInputData.h"  // for PositionInputData
+#include "model/MathVect.h"                      // for MathVect2
 #include "model/Point.h"                         // for Point
 #include "util/CircularBuffer.h"                 // for CircularBuffer
 
 class Settings;
 
 namespace StrokeStabilizer {
-
-/**
- * Auxiliary structures
- */
-
-/**
- * @brief A (rudimentary) structure for 2D mathematical vectors
- */
-struct MathVect {
-    double dx{};
-    double dy{};
-    static inline double scalarProduct(MathVect u, MathVect v) { return u.dx * v.dx + u.dy * v.dy; }
-    inline double norm() { return std::hypot(dx, dy); }
-};
 
 /**
  * @brief A structure containing the event's information relevant for the stabilizers
@@ -255,7 +241,7 @@ private:
     /**
      * @brief The direction of the last event outside the deadzone
      */
-    MathVect lastLiveDirection = {0, 0};
+    MathVect2 lastLiveDirection = {0, 0};
 
     /**
      * @brief The last event outside the deadzone
@@ -336,7 +322,7 @@ private:
     /**
      * @brief Speed during the last step
      */
-    MathVect speed;
+    MathVect2 speed;
 
     /**
      * @brief The last (stabilized) painted point, center of the deadzone

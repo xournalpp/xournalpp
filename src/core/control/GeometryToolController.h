@@ -35,33 +35,32 @@ public:
 public:
     /**
      * @brief translates the geometry tool in x- and y-direction
-     * @param x the translation in x-direction (in document coordinates)
-     * @param y the translation in y-direction (in document coordinates)
+     * @param offset the translation vector (in document coordinates)
      */
-    void translate(double x, double y);
+    void translate(const xoj::util::Point<double>& offset);
 
     /**
-     * @brief rotates the geometry tool around its rotation center
+     * @brief rotates the geometry tool around then given rotation center
      * @param da the rotation angle
-     * @param cx the x-coordinate of the rotation center (in document coordinates)
-     * @param cy the y-coordinate of the rotation center (in document coordinates)
+     * @param center the rotation center (in document coordinates
      */
-    void rotate(double da, double cx, double cy);
+    void rotate(double da, const xoj::util::Point<double>& center);
+    /// Rotates around the tool's origin
+    void rotate(double da);
 
     /**
      * @brief resizes the geometry tool by the factor f with respect to a given scaling center
      * @param f the scaling factor
-     * @param cx the x-coordinate of the scaling center (in document coordinates)
-     * @param cy the y-coordinate of the scaling center (in document coordiantes)
+     * @param center the scaling center (in document coordinates)
      */
-    void scale(double f, double cx, double cy);
+    void scale(double f, const xoj::util::Point<double>& center);
+    /// Rescales around the tools origin
+    void scale(double f);
 
     /**
-     * @brief marks a point with a "x" and puts the mark onto the current layer
-     * @param x the x-coordinate of the point (in document coordinates)
-     * @param y the y-coordinate of the point (in document coordinates)
+     * @brief marks the origin with a "x" and puts the mark onto the current layer
      */
-    void markPoint(double x, double y);
+    void markOrigin();
 
     /**
      * @brief adds the stroke to the layer and rerenders the stroke area
@@ -83,11 +82,13 @@ public:
      */
     const PageRef getPage() const;
 
+    inline GeometryTool* getGeometryTool() const { return geometryTool; }
+
     virtual bool isInsideGeometryTool(double x, double y, double border = 0.0) const = 0;
 
     virtual GeometryToolType getType() const = 0;
 
-public:
+protected:
     XojPageView* view;
 
     /**

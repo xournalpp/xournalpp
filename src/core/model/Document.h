@@ -26,6 +26,7 @@
 
 #include "pdf/base/XojPdfDocument.h"  // for XojPdfDocument
 #include "pdf/base/XojPdfPage.h"      // for XojPdfPageSPtr
+#include "util/PathUtil.h"            // for PathStorageMode
 #include "util/raii/GObjectSPtr.h"    // for GObjectSptr
 
 #include "PageRef.h"     // for PageRef
@@ -43,8 +44,8 @@ public:
     enum DocumentType { XOPP, XOJ, PDF };
 
     void setPdfAttributes(const fs::path& filename, bool attachToDocument);
-    bool readPdf(const fs::path& filename, bool initPages, bool attachToDocument, gpointer data = nullptr,
-                 gsize length = 0);
+    bool readPdf(const fs::path& filename, bool initPages, bool attachToDocument,
+                 std::unique_ptr<std::string> data = {});
     void resetPdf();
 
     size_t getPageCount() const;
@@ -70,15 +71,16 @@ public:
      */
     std::string getLastErrorMsg() const;
 
-    size_t findPdfPage(size_t pdfPage);
+    size_t findPdfPage(size_t pdfPage) const;
 
     Document& operator=(const Document& doc);
 
     void setFilepath(fs::path filepath);
     fs::path getFilepath() const;
     fs::path getPdfFilepath() const;
-    fs::path createSaveFolder(fs::path lastSavePath);
-    fs::path createSaveFilename(DocumentType type, const std::string& defaultSaveName, const std::string& defaultPfdName = "");
+    fs::path createSaveFoldername(const fs::path& lastSavePath) const;
+    fs::path createSaveFilename(DocumentType type, const std::string& defaultSaveName,
+                                const std::string& defaultPfdName = "") const;
 
     fs::path getEvMetadataFilename() const;
 
@@ -98,6 +100,9 @@ public:
     void unlock();
     bool tryLock();
 
+    inline Util::PathStorageMode getPathStorageMode() const { return pathStorageMode; }
+    inline void setPathStorageMode(Util::PathStorageMode m) { pathStorageMode = m; }
+
 private:
     void buildContentsModel();
     void freeTreeContentModel();
@@ -115,6 +120,8 @@ private:
     fs::path filepath;
     fs::path pdfFilepath;
     bool attachPdf = false;
+
+    Util::PathStorageMode pathStorageMode = Util::PathStorageMode::AS_RELATIVE_PATH;
 
     /**
      *  Password: not handled yet

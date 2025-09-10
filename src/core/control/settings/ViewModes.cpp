@@ -3,6 +3,11 @@
 
 #include <iostream>
 
+auto ViewMode::operator==(const ViewMode& other) const -> bool {
+    return (this->goFullscreen == other.goFullscreen) && (this->showMenubar == other.showMenubar) &&
+           (this->showToolbar == other.showToolbar) && (this->showSidebar == other.showSidebar);
+}
+
 struct ViewMode settingsStringToViewMode(std::string viewModeString) {
     struct ViewMode viewMode;
     for (const std::string& attr : StringUtils::split(viewModeString, ',')) {

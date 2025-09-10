@@ -1,7 +1,6 @@
 #include "ErasableStroke.h"
 
 #include <algorithm>  // for max, min, copy, lower_bound
-#include <cassert>    // for assert
 #include <cstddef>    // for size_t, ptrdiff_t
 #include <iterator>   // for next
 #include <optional>   // for optional
@@ -11,6 +10,7 @@
 
 #include "model/Point.h"            // for Point
 #include "model/Stroke.h"           // for Stroke, IntersectionParameter...
+#include "util/Assert.h"            // for xoj_assert
 #include "util/Range.h"             // for Range
 #include "util/SmallVector.h"       // for SmallVector
 #include "util/UnionOfIntervals.h"  // for UnionOfIntervals
@@ -42,7 +42,7 @@ void ErasableStroke::beginErasure(const IntersectionParametersContainer& paddedI
         return;
     }
 
-    assert(paddedIntersections.size() % 2 == 0);
+    xoj_assert(paddedIntersections.size() % 2 == 0);
 
     UnionOfIntervals<PathParameter> sections;
     // Contains the removed sections

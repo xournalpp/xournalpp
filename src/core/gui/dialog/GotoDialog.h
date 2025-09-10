@@ -11,23 +11,28 @@
 
 #pragma once
 
-#include <gtk/gtk.h>  // for GtkWindow
+#include <functional>
 
-#include "gui/GladeGui.h"  // for GladeGui
+#include <gtk/gtk.h>
+
+#include "util/raii/GtkWindowUPtr.h"
 
 class GladeSearchpath;
 
-class GotoDialog: public GladeGui {
+namespace xoj::popup {
+class GotoDialog {
 public:
-    GotoDialog(GladeSearchpath* gladeSearchPath, int maxPage);
-    ~GotoDialog() override;
+    GotoDialog(GladeSearchpath* gladeSearchPath, size_t initialPage, size_t maxPage,
+               std::function<void(size_t)> callback);
+    ~GotoDialog();
 
 public:
-    void show(GtkWindow* parent) override;
-
-    // returns the selected page or -1 if closed
-    int getSelectedPage() const;
+    inline GtkWindow* getWindow() const { return window.get(); }
 
 private:
-    int selectedPage = -1;
+    xoj::util::GtkWindowUPtr window;
+    GtkSpinButton* spinButton = nullptr;
+
+    std::function<void(size_t)> callback;
 };
+};  // namespace xoj::popup

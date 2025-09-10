@@ -54,18 +54,12 @@ protected:
     /**
      * Start position to reference scroll offset
      */
-    double scrollStartX = 0;
-    double scrollStartY = 0;
+    xoj::util::Point<double> scrollStartPosition{0., 0.};
 
     /**
-     * The offset to scroll in x-direction
+     * The scroll offset vector
      */
-    double scrollOffsetX = 0;
-
-    /**
-     * The offset to scroll in y-direction
-     */
-    double scrollOffsetY = 0;
+    xoj::util::Point<double> scrollOffsetVector{0., 0.};
 
     /**
      * Flag whether pen is within the widget
@@ -82,7 +76,7 @@ protected:
      */
     guint32 lastActionEndTimeStamp = 0U;
     guint32 lastActionStartTimeStamp = 0U;
-    utl::Point<double> sequenceStartPosition;
+    xoj::util::Point<double> sequenceStartPosition;
 
 public:
     explicit PenInputHandler(InputContext* inputContext);
@@ -155,4 +149,10 @@ protected:
      * @return The filtered pressure.
      */
     double filterPressure(PositionInputData const& pos, XojPageView* page);
+
+    /**
+     * @brief Detects whether the current input event is to be used as a selection
+     * rather than drawing
+     */
+    bool isCurrentTapSelection(InputEvent const& event) const;
 };

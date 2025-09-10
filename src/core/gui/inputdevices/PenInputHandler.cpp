@@ -5,7 +5,6 @@
 #include "PenInputHandler.h"
 
 #include <algorithm>  // for max, min
-#include <cassert>    // for assert
 #include <cmath>      // for abs, atan, sqrt
 #include <thread>     // for thread
 #include <utility>    // for move
@@ -25,8 +24,10 @@
 #include "gui/scroll/ScrollHandling.h"          // for ScrollHandling
 #include "gui/widgets/XournalWidget.h"          // for GtkXournal
 #include "model/Point.h"                        // for Point, Point::NO_PRES...
+#include "util/Assert.h"                        // for xoj_assert
 #include "util/Point.h"                         // for Point
 #include "util/Util.h"                          // for execInUiThread
+#include "util/safe_casts.h"
 
 #include "AbstractInputHandler.h"  // for AbstractInputHandler
 #include "InputContext.h"          // for InputContext
@@ -56,26 +57,24 @@ void PenInputHandler::handleScrollEvent(InputEvent const& event) {
 
     // GTK handles event compression/filtering differently between versions - this may be needed on certain hardware/GTK
     // combinations.
-    if (std::abs((this->scrollStartX - event.absoluteX)) < 0.1 &&
-        std::abs((this->scrollStartY - event.absoluteY)) < 0.1) {
+    if (std::abs((this->scrollStartPosition.x - event.absolute.x)) < 0.1 &&
+        std::abs((this->scrollStartPosition.y - event.absolute.y)) < 0.1) {
         return;
     }
 
-    if (this->scrollOffsetX == 0 && this->scrollOffsetY == 0) {
-        this->scrollOffsetX = this->scrollStartX - event.absoluteX;
-        this->scrollOffsetY = this->scrollStartY - event.absoluteY;
+    if (this->scrollOffsetVector == xoj::util::Point<double>(0., 0.)) {
+        this->scrollOffsetVector = this->scrollStartPosition - event.absolute;
 
         Util::execInUiThread([&]() {
-            this->inputContext->getXournal()->layout->scrollRelative(this->scrollOffsetX, this->scrollOffsetY);
+            this->inputContext->getXournal()->layout->scrollRelative(this->scrollOffsetVector.x,
+                                                                     this->scrollOffsetVector.y);
 
             // Scrolling done, so reset our counters
-            this->scrollOffsetX = 0;
-            this->scrollOffsetY = 0;
+            this->scrollOffsetVector = xoj::util::Point<double>(0., 0.);
         });
 
         // Update the reference for the scroll-offset
-        this->scrollStartX = event.absoluteX;
-        this->scrollStartY = event.absoluteY;
+        this->scrollStartPosition = event.absolute;
     }
 }
 
@@ -83,7 +82,7 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     this->inputContext->focusWidget();
 
     this->lastActionStartTimeStamp = event.timestamp;
-    this->sequenceStartPosition = {event.absoluteX, event.absoluteY};
+    this->sequenceStartPosition = event.absolute;
 
     XojPageView* currentPage = this->getPageAtCurrentPosition(event);
     // set reference data for handling of entering/leaving page
@@ -117,14 +116,24 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
 
     // Save the starting offset when hand-tool is selected to get a reference for the scroll-offset
     if (toolType == TOOL_HAND) {
-        this->scrollStartX = event.absoluteX;
-        this->scrollStartY = event.absoluteY;
+        this->scrollStartPosition = event.absolute;
     }
 
     this->sequenceStartPage = currentPage;
 
     // hand tool don't change the selection, so you can scroll e.g. with your touchscreen without remove the selection
-    if (toolHandler->getToolType() != TOOL_HAND && xournal->selection) {
+    bool changeSelection = xournal->selection && toolHandler->getToolType() != TOOL_HAND;
+    if ((event.state & GDK_SHIFT_MASK)) {
+        // When tap single selection is enabled
+        if (toolHandler->supportsTapFilter() && inputContext->getSettings()->getStrokeFilterEnabled()) {
+            changeSelection = false;
+        }
+        // Selection tools does not change selection with Shift pressed
+        if (isSelectToolTypeSingleLayer(toolType)) {
+            changeSelection = false;
+        }
+    }
+    if (changeSelection) {
         EditSelection* selection = xournal->selection;
 
         XojPageView* view = selection->getView();
@@ -146,8 +155,9 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
         xournal->view->clearSelection();
         changeTool(event);
         // stop early to prevent drawing when clicking outside of the selection with the intention of deselecting
-        if (toolHandler->isDrawingTool())
+        if (toolHandler->isDrawingTool()) {
             return true;
+        }
     }
 
     // Forward event to page
@@ -172,7 +182,7 @@ double PenInputHandler::inferPressureValue(PositionInputData const& pos, XojPage
     PositionInputData lastPos = getInputDataRelativeToCurrentPage(page, this->lastEvent);
 
     double dt = (pos.timestamp - lastPos.timestamp) / 10.0;
-    double distance = utl::Point<double>(pos.x, pos.y).distance(utl::Point<double>(lastPos.x, lastPos.y));
+    double distance = xoj::util::Point<double>(pos.x, pos.y).distance(xoj::util::Point<double>(lastPos.x, lastPos.y));
     double inverseSpeed = dt / (distance + 0.001);
 
     // This doesn't have to be exact. Arctan is used here for its sigmoid-like shape,
@@ -203,7 +213,7 @@ double PenInputHandler::filterPressure(PositionInputData const& pos, XojPageView
     if (pressureMode == PressureMode::INFERRED_PRESSURE) {
         filteredPressure = inferPressureValue(pos, page);
     } else {
-        assert(pressureMode == PressureMode::DEVICE_PRESSURE);
+        xoj_assert(pressureMode == PressureMode::DEVICE_PRESSURE);
         /**
          * On some devices, the pressure value of some events is missing. Use the last recorded pressure value then.
          */
@@ -217,8 +227,36 @@ double PenInputHandler::filterPressure(PositionInputData const& pos, XojPageView
     }
 
     Settings* settings = this->inputContext->getSettings();
-    assert(settings->getMinimumPressure() >= 0.01);
+    xoj_assert(settings->getMinimumPressure() >= 0.01);
     return std::max(settings->getMinimumPressure(), filteredPressure * settings->getPressureMultiplier());
+}
+
+bool PenInputHandler::isCurrentTapSelection(InputEvent const& event) const {
+    if (!inputContext->getToolHandler()->supportsTapFilter()) {
+        return false;
+    }
+
+    auto* settings = inputContext->getSettings();
+    if (!settings->getStrokeFilterEnabled()) {
+        return false;
+    }
+
+    int tapMaxDuration = 0, filterRepetitionTime = 0;
+    double tapMaxDistance = NAN;  // in mm
+
+    settings->getStrokeFilter(&tapMaxDuration, &tapMaxDistance, &filterRepetitionTime);
+
+    const double dpmm = settings->getDisplayDpi() / 25.4;
+    const double dist = this->sequenceStartPosition.distance(event.absolute);
+
+    const bool noMovement = dist < tapMaxDistance * dpmm;
+    const bool fastEnoughTap = event.timestamp - this->lastActionStartTimeStamp < as_unsigned(tapMaxDuration);
+    const bool notAnAftershock = event.timestamp - this->lastActionEndTimeStamp > as_unsigned(filterRepetitionTime);
+
+    auto* selection = inputContext->getView()->getSelection();
+    const bool notInSelectionDeleteButton = !selection || !selection->isDeleting();
+
+    return noMovement && fastEnoughTap && notAnAftershock && notInSelectionDeleteButton;
 }
 
 auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
@@ -226,8 +264,8 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
      * Workaround for misbehaving devices where Enter events are not published every time
      * This is required to disable outside scrolling again
      */
-    gdouble eventX = event.relativeX;
-    gdouble eventY = event.relativeY;
+    gdouble eventX = event.relative.x;
+    gdouble eventY = event.relative.y;
 
     GtkAdjustment* adjHorizontal = this->inputContext->getScrollHandling()->getHorizontal();
     GtkAdjustment* adjVertical = this->inputContext->getScrollHandling()->getVertical();
@@ -258,7 +296,20 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
         }
         return false;
     }
-    if (xournal->selection) {
+
+    bool isShiftDown = (event.state & GDK_SHIFT_MASK);
+    bool handleSelectionMove = xournal->selection != nullptr;
+
+    if (xournal->selection && isSelectToolTypeSingleLayer(toolHandler->getToolType()) &&
+        !xournal->selection->isMoving()) {
+        if (isShiftDown || this->deviceClassPressed) {
+            handleSelectionMove = false;
+            // Cursor mode to match the multiple-selection mode
+            xournal->view->getCursor()->setMouseSelectionType(CURSOR_SELECTION_NONE);
+        }
+    }
+
+    if (handleSelectionMove) {
         EditSelection* selection = xournal->selection;
         XojPageView* view = selection->getView();
 
@@ -266,7 +317,7 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
 
         if (xournal->selection->isMoving()) {
             selection->mouseMove(pos.x, pos.y, pos.isAltDown());
-        } else {
+        } else if (!isShiftDown) {
             CursorSelectionType selType = selection->getSelectionTypeForPos(pos.x, pos.y, xournal->view->getZoom());
             xournal->view->getCursor()->setMouseSelectionType(selType);
         }
@@ -354,39 +405,28 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
 
     cursor->setMouseDown(false);
 
+    bool cancelAction = isCurrentTapSelection(event);
+
+    // Holding shift (with selections) also does not imply drawing
     if (toolHandler->supportsTapFilter()) {
-        auto* settings = inputContext->getSettings();
-        if (settings->getStrokeFilterEnabled()) {
-            int tapMaxDuration = 0, filterRepetitionTime = 0;
-            double tapMaxDistance = NAN;  // in mm
-
-            settings->getStrokeFilter(&tapMaxDuration, &tapMaxDistance, &filterRepetitionTime);
-
-            const double dpmm = settings->getDisplayDpi() / 25.4;
-            const double dist = std::hypot(this->sequenceStartPosition.x - event.absoluteX,
-                                           this->sequenceStartPosition.y - event.absoluteY);
-
-            const bool noMovement = dist < tapMaxDistance * dpmm;
-            const bool fastEnoughTap = event.timestamp - this->lastActionStartTimeStamp < tapMaxDuration;
-            const bool notAnAftershock = event.timestamp - this->lastActionEndTimeStamp > filterRepetitionTime;
+        if (inputContext->getSettings()->getStrokeFilterEnabled()) {
             // Tapping/Clicking in the selection delete button should still delete the selection
-            const bool notInSelectionDeleteButton = !selection || !selection->isDeleting();
-
-            if (noMovement && fastEnoughTap && notAnAftershock && notInSelectionDeleteButton) {
-                // Cancel the sequence and trigger the necessary action
-                XojPageView* pageUnderTap =
-                        this->sequenceStartPage ? this->sequenceStartPage : getPageAtCurrentPosition(event);
-                if (pageUnderTap) {
-                    PositionInputData pos = getInputDataRelativeToCurrentPage(pageUnderTap, event);
-                    pageUnderTap->onSequenceCancelEvent(pos.deviceId);
-                    pageUnderTap->onTapEvent(pos);
-                }
-                this->sequenceStartPage = nullptr;
-                this->inputRunning = false;
-                this->lastActionEndTimeStamp = event.timestamp;
-                return false;
-            }
+            cancelAction |= (event.state & GDK_SHIFT_MASK) && xournal->selection != nullptr && !selection->isDeleting();
         }
+    }
+
+    if (cancelAction) {
+        // Cancel the sequence and trigger the necessary action
+        XojPageView* pageUnderTap = this->sequenceStartPage ? this->sequenceStartPage : getPageAtCurrentPosition(event);
+        if (pageUnderTap) {
+            PositionInputData pos = getInputDataRelativeToCurrentPage(pageUnderTap, event);
+            pageUnderTap->onSequenceCancelEvent(pos.deviceId);
+            pageUnderTap->onTapEvent(pos);
+        }
+        this->sequenceStartPage = nullptr;
+        this->inputRunning = false;
+        this->lastActionEndTimeStamp = event.timestamp;
+        return false;
     }
     this->lastActionEndTimeStamp = event.timestamp;
 
@@ -478,8 +518,8 @@ void PenInputHandler::actionLeaveWindow(InputEvent const& event) {
         }
     } else if (this->deviceClassPressed) {
         // scroll if we have an active selection
-        gdouble eventX = event.relativeX;
-        gdouble eventY = event.relativeY;
+        gdouble eventX = event.relative.x;
+        gdouble eventY = event.relative.y;
 
         GtkAdjustment* adjHorizontal = this->inputContext->getScrollHandling()->getHorizontal();
         GtkAdjustment* adjVertical = this->inputContext->getScrollHandling()->getVertical();

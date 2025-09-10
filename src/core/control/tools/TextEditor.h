@@ -31,6 +31,7 @@ class Text;
 class XojFont;
 class Control;
 class TextEditorCallbacks;
+struct KeyEvent;
 
 namespace xoj::util {
 template <class T>
@@ -49,8 +50,8 @@ public:
     /** Represents the different kinds of text selection */
     enum class SelectType { WORD, PARAGRAPH, ALL };
 
-    bool onKeyPressEvent(GdkEventKey* event);
-    bool onKeyReleaseEvent(GdkEventKey* event);
+    bool onKeyPressEvent(const KeyEvent& event);
+    bool onKeyReleaseEvent(const KeyEvent& event);
     void mousePressed(double x, double y);
     void mouseMoved(double x, double y);
     void mouseReleased();
@@ -91,6 +92,8 @@ private:
     void decreaseFontSize();
     void moveCursor(GtkMovementStep step, int count, bool extendSelection);
     void backspace();
+    void linebreak();
+    void tabulation();
 
     void afterFontChange();
     void replaceBufferContent(const std::string& text);
@@ -130,7 +133,7 @@ private:
     static bool iMRetrieveSurroundingCallback(GtkIMContext* context, TextEditor* te);
     static bool imDeleteSurroundingCallback(GtkIMContext* context, gint offset, gint n_chars, TextEditor* te);
 
-    void moveCursor(const GtkTextIter* newLocation, gboolean extendSelection);
+    void moveCursorIterator(const GtkTextIter* newLocation, gboolean extendSelection);
 
     void computeVirtualCursorPosition();
     void jumpALine(GtkTextIter* textIter, int count);
@@ -143,7 +146,7 @@ private:
 
     void updateTextElementContent();
 
-    static bool blinkCallback(TextEditor* te);
+    static void blinkCallback(TextEditor* te);
 
 private:
     Control* control;
@@ -160,10 +163,6 @@ private:
     std::unique_ptr<Text> textElement;
     Text* originalTextElement;
 
-    /**
-     * @brief Invisible widget, used for signal catching
-     */
-    xoj::util::GObjectSPtr<GtkWidget> textWidget;
     xoj::util::GObjectSPtr<GtkIMContext> imContext;
     xoj::util::GObjectSPtr<GtkTextBuffer> buffer;
     xoj::util::GObjectSPtr<PangoLayout> layout;
@@ -210,5 +209,6 @@ private:
     static constexpr unsigned int CURSOR_OFF_MULTIPLIER = 1;
     static constexpr unsigned int CURSOR_DIVIDER = CURSOR_ON_MULTIPLIER + CURSOR_OFF_MULTIPLIER;
 
-    friend class TextEditorCallbacks;
+    struct KeyBindings;
+    static const KeyBindings keyBindings;
 };

@@ -1,6 +1,6 @@
 #include "PopplerGlibDocument.h"
 
-#include <memory>    // for make_shared
+#include <memory>    // for make_shared, unique_ptr
 #include <optional>  // for optional
 
 #include <poppler-document.h>  // for poppler_document_get_n_...
@@ -72,13 +72,17 @@ auto PopplerGlibDocument::load(fs::path const& file, string password, GError** e
     return this->document != nullptr;
 }
 
-auto PopplerGlibDocument::load(gpointer data, gsize length, string password, GError** error) -> bool {
+auto PopplerGlibDocument::load(std::unique_ptr<std::string> data, string password, GError** error) -> bool {
     if (document) {
         g_object_unref(document);
     }
 
-    this->document =
-            poppler_document_new_from_data(static_cast<char*>(data), static_cast<int>(length), password.c_str(), error);
+    GBytes* bytes = g_bytes_new_with_free_func(
+            data->data(), data->size(), [](gpointer d) { delete reinterpret_cast<std::string*>(d); }, data.get());
+    data.release();  // the string will be deleted with the bytes object
+    this->document = poppler_document_new_from_bytes(bytes, password.c_str(), error);
+    g_bytes_unref(bytes);  // a reference is now held by the document
+
     return this->document != nullptr;
 }
 

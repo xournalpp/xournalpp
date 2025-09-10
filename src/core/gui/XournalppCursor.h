@@ -38,7 +38,7 @@ public:
     void setMirror(bool mirror);
 
 private:
-    void setCursor(int id);
+    void setCursor(guint id);
 
     GdkCursor* getPenCursor();
 
@@ -46,7 +46,7 @@ private:
     GdkCursor* getHighlighterCursor();
     GdkCursor* getResizeCursor(double deltaAngle);
 
-    GdkCursor* createHighlighterOrPenCursor(int size, double alpha);
+    GdkCursor* createHighlighterOrPenCursor(double alpha);
     GdkCursor* createCustomDrawDirCursor(int size, bool shift, bool ctrl);
 
 private:

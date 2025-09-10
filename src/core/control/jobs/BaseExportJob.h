@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <functional>
 #include <string>  // for string
 
 #include <gtk/gtk.h>  // for GtkWidget
@@ -38,20 +39,24 @@ public:
     void afterRun() override;
 
 public:
-    virtual bool showFilechooser();
-    std::string getFilterName() const;
+    virtual void showFileChooser(std::function<void()> onFileSelected, std::function<void()> onCancel);
 
 protected:
-    void initDialog();
-    virtual void addFilterToDialog() = 0;
-    void addFileFilterToDialog(const std::string& name, const std::string& pattern);
+    virtual void addFilterToDialog(GtkFileChooser* dialog) = 0;
+    static void addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const std::string& mimetype);
     bool checkOverwriteBackgroundPDF(fs::path const& file) const;
-    virtual bool testAndSetFilepath(const fs::path& file);
+
+    virtual void setExtensionFromFilter(fs::path& p, const char* filterName) const = 0;
+
+    /**
+     * Test if the given path is valid and records the path for the instance's later export tasks.
+     *
+     * Returns true if the path is validated.
+     */
+    bool testAndSetFilepath(const fs::path& file);
 
 private:
 protected:
-    GtkWidget* dialog = nullptr;
-
     fs::path filepath;
 
     /**
@@ -62,7 +67,8 @@ protected:
     class ExportType {
     public:
         std::string extension;
+        std::string mimeType;
 
-        ExportType(std::string ext): extension(std::move(ext)) {}
+        ExportType(std::string ext, std::string mime): extension(std::move(ext)), mimeType(std::move(mime)) {}
     };
 };

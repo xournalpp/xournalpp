@@ -16,20 +16,15 @@ PdfExportJob::PdfExportJob(Control* control): BaseExportJob(control, _("PDF Expo
 
 PdfExportJob::~PdfExportJob() = default;
 
-void PdfExportJob::addFilterToDialog() { addFileFilterToDialog(_("PDF files"), "*.pdf"); }
-
-auto PdfExportJob::testAndSetFilepath(const fs::path& file) -> bool {
-    if (!BaseExportJob::testAndSetFilepath(file)) {
-        return false;
-    }
-
-    // Remove any pre-existing extension and adds .pdf
-    Util::clearExtensions(filepath, ".pdf");
-    filepath += ".pdf";
-
-    return checkOverwriteBackgroundPDF(filepath);
+void PdfExportJob::addFilterToDialog(GtkFileChooser* dialog) {
+    addFileFilterToDialog(dialog, _("PDF files"), "application/pdf");
 }
 
+void PdfExportJob::setExtensionFromFilter(fs::path& file, const char* /*filterName*/) const {
+    // Remove any pre-existing extension and adds .pdf
+    Util::clearExtensions(file, ".pdf");
+    file += ".pdf";
+}
 
 void PdfExportJob::run() {
     Document* doc = control->getDocument();

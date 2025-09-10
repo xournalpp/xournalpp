@@ -13,17 +13,14 @@
 
 #include "util/raii/GObjectSPtr.h"
 
-class MainWindow;
+class Menubar;
 
 class Submenu {
-public:
+protected:
     Submenu() = default;
-    virtual ~Submenu() noexcept = default;
+    ~Submenu() noexcept = default;
 
 public:
     virtual void setDisabled(bool disabled) = 0;
-    virtual void addToMenubar(MainWindow* win) = 0;
-
-protected:
-    xoj::util::WidgetSPtr menuItem;
+    virtual void addToMenubar(Menubar& menubar) = 0;
 };

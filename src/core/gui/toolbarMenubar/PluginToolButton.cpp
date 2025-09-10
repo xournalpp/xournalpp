@@ -1,35 +1,44 @@
-#include <utility>  // for move
+#include "PluginToolButton.h"
 
 #include "config-features.h"  // for ENABLE_PLUGINS
 
 #ifdef ENABLE_PLUGINS
 
+#include <utility>  // for move
+
 #include "plugin/Plugin.h"  // for ToolbarButtonEntry
+#include "util/glib_casts.h"
+#include "util/gtk4_helper.h"
 
-#include "PluginToolButton.h"
 
-PluginToolButton::PluginToolButton(ActionHandler* handler, ToolbarButtonEntry* t):
-        ToolButton(handler, std::move(t->toolbarId), ACTION_NONE, std::move(t->iconName), std::move(t->description)),
-        t(t) {}
+PluginToolButton::PluginToolButton(ToolbarButtonEntry* t):
+        AbstractToolItem(std::move(t->toolbarId), Category::PLUGINS), t(t) {}
 
 PluginToolButton::~PluginToolButton() = default;
 
-auto PluginToolButton::createItem(bool horizontal) -> GtkToolItem* {
-    if (this->item) {
-        return this->item;
-    }
+auto PluginToolButton::createItem(bool) -> xoj::util::WidgetSPtr {
+    xoj::util::WidgetSPtr item(gtk_button_new(), xoj::util::adopt);
+    gtk_widget_set_can_focus(item.get(), false);  // todo(gtk4) not necessary anymore
 
-    this->item = createTmpItem(horizontal);
-    g_object_ref(this->item);
+    GtkButton* btn = GTK_BUTTON(item.get());
+    gtk_button_set_relief(btn, GTK_RELIEF_NONE);
+    gtk_button_set_icon_name(btn, t->iconName.c_str());
+    gtk_widget_set_tooltip_text(GTK_WIDGET(btn), t->description.c_str());
 
     // Connect signal
-    g_signal_connect(GTK_TOOL_BUTTON(item), "clicked", G_CALLBACK(+[](GtkToolButton* bt, gpointer te) {
-                         auto* self = static_cast<ToolbarButtonEntry*>(te);
-                         self->plugin->executeToolbarButton(self);
+    g_signal_connect(item.get(), "clicked", G_CALLBACK(+[](GtkButton*, gpointer d) {
+                         auto* te = static_cast<ToolbarButtonEntry*>(d);
+                         te->plugin->executeToolbarButton(te);
                      }),
                      this->t);
 
-    return this->item;
+    return item;
+}
+
+auto PluginToolButton::getToolDisplayName() const -> std::string { return this->t->description; }
+
+auto PluginToolButton::getNewToolIcon() const -> GtkWidget* {
+    return gtk_image_new_from_icon_name(t->iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
 #endif /* ENABLE_PLUGINS */

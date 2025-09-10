@@ -11,8 +11,9 @@
 
 #pragma once
 
-
+#include <functional>
 #include <memory>  // for unique_ptr
+#include <optional>
 #include <set>     // for set
 #include <string>  // for string
 
@@ -32,23 +33,30 @@ class ToolHandler;
 class TouchDrawingInputHandler;
 class TouchInputHandler;
 class XournalView;
+class DeviceTestingArea;
+class HandRecognition;
 
-class InputContext {
+class InputContext final {
 
 private:
-    gulong signal_id{0};
-    StylusInputHandler* stylusHandler;
-    MouseInputHandler* mouseHandler;
-    TouchDrawingInputHandler* touchDrawingHandler;
-    KeyboardInputHandler* keyboardHandler;
-    TouchInputHandler* touchHandler;
-    std::unique_ptr<GeometryToolInputHandler> geometryToolInputHandler;
-
-    GtkWidget* widget = nullptr;
     XournalView* view;
     ScrollHandling* scrollHandling;
+    Settings* settings;
 
-    GdkModifierType modifierState = (GdkModifierType)0;
+    gulong signal_id{0};
+    std::unique_ptr<StylusInputHandler> stylusHandler;
+    std::unique_ptr<MouseInputHandler> mouseHandler;
+    std::unique_ptr<TouchDrawingInputHandler> touchDrawingHandler;
+    std::unique_ptr<KeyboardInputHandler> keyboardHandler;
+    std::unique_ptr<TouchInputHandler> touchHandler;
+    std::unique_ptr<GeometryToolInputHandler> geometryToolInputHandler;
+
+    /**
+     * Helper class for Touch specific fixes
+     */
+    std::unique_ptr<HandRecognition> handRecognition;
+
+    GtkWidget* widget = nullptr;
 
     std::set<std::string> knownDevices;
 
@@ -63,16 +71,10 @@ public:
     InputContext(XournalView* view, ScrollHandling* scrollHandling);
     ~InputContext();
 
-private:
-    /**
-     * Callback used by Glib to notify for new events
-     * @param widget The widget the event happened in
-     * @param event The event
-     * @param self A pointer to our handler
-     * @return Whether the event was handled
-     */
-    static bool eventCallback(GtkWidget* widget, GdkEvent* event, InputContext* self);
+    /// Make an input context for testing purposes
+    InputContext(Settings* settings, DeviceTestingArea& testing);
 
+private:
     /**
      * Handle the events
      * @param event The event to handle
@@ -88,18 +90,22 @@ private:
 public:
     /**
      * Connect the input handling to the window to receive events
+     *
+     * If logfunction is provided, it will be called on all the received events
      */
-    void connect(GtkWidget* widget);
+    void connect(GtkWidget* widget, bool connectKeyboardHandler = true,
+                 std::optional<std::function<void(GdkEvent*)>> logfunction = std::nullopt);
 
-    GtkXournal* getXournal();
-    XournalView* getView();
-    ToolHandler* getToolHandler();
-    Settings* getSettings();
-    ScrollHandling* getScrollHandling();
+    GtkXournal* getXournal() const;
+    XournalView* getView() const;
+    ToolHandler* getToolHandler() const;
+    Settings* getSettings() const;
+    HandRecognition* getHandRecognition() const;
+    ScrollHandling* getScrollHandling() const;
     void setGeometryToolInputHandler(std::unique_ptr<GeometryToolInputHandler> handler);
+    GeometryToolInputHandler* getGeometryToolInputHandler() const;
     void resetGeometryToolInputHandler();
 
-    GdkModifierType getModifierState();
     void focusWidget();
     void blockDevice(DeviceType deviceType);
     void unblockDevice(DeviceType deviceType);

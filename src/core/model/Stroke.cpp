@@ -1,11 +1,11 @@
 #include "Stroke.h"
 
 #include <algorithm>  // for min, max, copy
-#include <cassert>    // for assert
 #include <cmath>      // for abs, hypot, sqrt
 #include <cstdint>    // for uint64_t
 #include <iterator>   // for back_insert_iterator
 #include <limits>     // for numeric_limits
+#include <memory>
 #include <numeric>    // for accumulate
 #include <optional>   // for optional, nullopt
 #include <string>     // for to_string, operator<<
@@ -18,12 +18,13 @@
 #include "model/Element.h"                        // for Element, ELEMENT_ST...
 #include "model/LineStyle.h"                      // for LineStyle
 #include "model/Point.h"                          // for Point, Point::NO_PR...
+#include "util/Assert.h"                          // for xoj_assert
 #include "util/BasePointerIterator.h"             // for BasePointerIterator
 #include "util/Interval.h"                        // for Interval
 #include "util/PairView.h"                        // for PairView<>::BaseIte...
 #include "util/PairView.h"                        // for PairView
 #include "util/PlaceholderString.h"               // for PlaceholderString
-#include "util/Point.h"                           // for utl::Point<>
+#include "util/Point.h"                           // for xoj::util::Point<>
 #include "util/Rectangle.h"                       // for Rectangle
 #include "util/SmallVector.h"                     // for SmallVector
 #include "util/TinyVector.h"                      // for TinyVector
@@ -97,8 +98,8 @@ void Stroke::applyStyleFrom(const Stroke* other) {
     cloneAudioData(other);
 }
 
-auto Stroke::cloneStroke() const -> Stroke* {
-    auto* s = new Stroke();
+auto Stroke::cloneStroke() const -> std::unique_ptr<Stroke> {
+    auto s = std::make_unique<Stroke>();
     s->applyStyleFrom(this);
     s->points = this->points;
     s->x = this->x;
@@ -110,12 +111,12 @@ auto Stroke::cloneStroke() const -> Stroke* {
     return s;
 }
 
-auto Stroke::clone() const -> Element* { return this->cloneStroke(); }
+auto Stroke::clone() const -> ElementPtr { return this->cloneStroke(); }
 
 std::unique_ptr<Stroke> Stroke::cloneSection(const PathParameter& lowerBound, const PathParameter& upperBound) const {
-    assert(lowerBound.isValid() && upperBound.isValid());
-    assert(lowerBound <= upperBound);
-    assert(upperBound.index < this->points.size() - 1);
+    xoj_assert(lowerBound.isValid() && upperBound.isValid());
+    xoj_assert(lowerBound <= upperBound);
+    xoj_assert(upperBound.index < this->points.size() - 1);
 
     auto s = std::make_unique<Stroke>();
     s->applyStyleFrom(this);
@@ -138,9 +139,9 @@ std::unique_ptr<Stroke> Stroke::cloneSection(const PathParameter& lowerBound, co
 
 std::unique_ptr<Stroke> Stroke::cloneCircularSectionOfClosedStroke(const PathParameter& startParam,
                                                                    const PathParameter& endParam) const {
-    assert(startParam.isValid() && endParam.isValid());
-    assert(endParam < startParam);
-    assert(startParam.index < this->points.size() - 1);
+    xoj_assert(startParam.isValid() && endParam.isValid());
+    xoj_assert(endParam < startParam);
+    xoj_assert(startParam.index < this->points.size() - 1);
 
     auto s = std::make_unique<Stroke>();
     s->applyStyleFrom(this);
@@ -151,7 +152,7 @@ std::unique_ptr<Stroke> Stroke::cloneCircularSectionOfClosedStroke(const PathPar
 
     auto startIt = std::next(this->points.cbegin(), (std::ptrdiff_t)startParam.index + 1);
     // Skip the last point: points.back().equalPos(points.front()) == true and we want this point only once
-    assert(startIt != this->points.cend());
+    xoj_assert(startIt != this->points.cend());
     std::copy(startIt, std::prev(this->points.cend()), std::back_inserter(s->points));
 
     auto endIt = std::next(this->points.cbegin(), (std::ptrdiff_t)endParam.index + 1);
@@ -229,7 +230,7 @@ void Stroke::setWidth(double width) {
 
 auto Stroke::getWidth() const -> double { return this->width; }
 
-auto Stroke::rescaleWithMirror() -> bool { return true; }
+auto Stroke::rescaleWithMirror() const -> bool { return true; }
 
 auto Stroke::isInSelection(ShapeContainer* container) const -> bool {
     for (auto&& p: this->points) {
@@ -258,7 +259,7 @@ void Stroke::addPoint(const Point& p) {
     }
 }
 
-auto Stroke::getPointCount() const -> int { return this->points.size(); }
+auto Stroke::getPointCount() const -> size_t { return this->points.size(); }
 
 auto Stroke::getPointVector() const -> std::vector<Point> const& { return points; }
 
@@ -267,16 +268,16 @@ void Stroke::deletePointsFrom(size_t index) {
     this->sizeCalculated = false;
 }
 
-auto Stroke::getPoint(int index) const -> Point {
+auto Stroke::getPoint(size_t index) const -> Point {
     if (index < 0 || index >= this->points.size()) {
-        g_warning("Stroke::getPoint(%i) out of bounds!", index);
-        return Point(0, 0, Point::NO_PRESSURE);
+        g_warning("Stroke::getPoint(%zu) out of bounds!", index);
+        return Point(0., 0., Point::NO_PRESSURE);
     }
     return points.at(index);
 }
 
 Point Stroke::getPoint(PathParameter parameter) const {
-    assert(parameter.isValid() && parameter.index < this->points.size() - 1);
+    xoj_assert(parameter.isValid() && parameter.index < this->points.size() - 1);
 
     const Point& p = this->points[parameter.index];
     Point res = p.relativeLineTo(this->points[parameter.index + 1], parameter.t);
@@ -291,7 +292,7 @@ void Stroke::setPointVectorInternal(const Range* const snappingBox) {
         // We cannot deduce the bounding box from the snapping box if the stroke has pressure values
         this->sizeCalculated = false;
     } else {
-        assert(snappingBox->isValid());
+        xoj_assert(snappingBox->isValid());
         this->snappedBounds = xoj::util::Rectangle<double>(*snappingBox);
         Element::x = snappingBox->minX - 0.5 * this->width;
         Element::y = snappingBox->minY - 0.5 * this->width;
@@ -378,7 +379,7 @@ auto Stroke::hasPressure() const -> bool {
 auto Stroke::getAvgPressure() const -> double {
     return std::accumulate(begin(this->points), end(this->points), 0.0,
                            [](double l, Point const& p) { return l + p.z; }) /
-           this->points.size();
+           static_cast<double>(this->points.size());
 }
 
 void Stroke::updateBoundsLastTwoPressures() {
@@ -387,7 +388,7 @@ void Stroke::updateBoundsLastTwoPressures() {
     }
 
     auto const pointCount = this->getPointCount();
-    assert(pointCount >= 2);
+    xoj_assert(pointCount >= 2);
 
     Point& p = this->points.back();
     Point& p2 = this->points[pointCount - 2];
@@ -410,7 +411,7 @@ void Stroke::scalePressure(double factor) {
 
 void Stroke::setLastPressure(double pressure) {
     if (!this->points.empty()) {
-        assert(pressure != Point::NO_PRESSURE);
+        xoj_assert(pressure != Point::NO_PRESSURE);
         Point& back = this->points.back();
         back.z = pressure;
     }
@@ -501,10 +502,10 @@ auto Stroke::intersects(double x, double y, double halfEraserSize) const -> bool
 double Stroke::distanceTo(double x, double y) const {
     double distance = std::numeric_limits<double>::max();
     for (auto&& [p1, p2]: PairView(this->points)) {
-        utl::Point<double> v(p2.x - p1.x, p2.y - p1.y);
+        xoj::util::Point<double> v(p2.x - p1.x, p2.y - p1.y);
         double ratio = std::clamp(((x - p1.x) * v.x + (y - p1.y) * v.y) / (v.x * v.x + v.y * v.y), 0., 1.);
         /// Projection of (x,y) onto the segment [p1,p2]
-        utl::Point<double> projection(p1.x + ratio * v.x, p1.y + ratio * v.y);
+        xoj::util::Point<double> projection(p1.x + ratio * v.x, p1.y + ratio * v.y);
         double width = p1.z == Point::NO_PRESSURE ? this->width : p1.z;
         distance = std::clamp(std::hypot(x - projection.x, y - projection.y) - .5 * width, 0., distance);
     }
@@ -595,7 +596,7 @@ auto Stroke::intersectWithPaddedBox(const PaddedBox& box) const -> IntersectionP
 
 auto Stroke::intersectWithPaddedBox(const PaddedBox& box, size_t firstIndex, size_t lastIndex) const
         -> IntersectionParametersContainer {
-    assert(firstIndex <= lastIndex && lastIndex < this->points.size() - 1);
+    xoj_assert(firstIndex <= lastIndex && lastIndex < this->points.size() - 1);
 
     const auto innerBox = box.getInnerRectangle();
     const auto outerBox = box.getOuterRectangle();
@@ -677,7 +678,7 @@ auto Stroke::intersectWithPaddedBox(const PaddedBox& box, size_t firstIndex, siz
                 if (p.isInside(outerBox) != (result.size() % 2 != 0)) {
                     // The stroke bounced back on the box border and never got in or out
                     // Remove the last intersection point
-                    assert(!result.empty());
+                    xoj_assert(!result.empty());
                     result.pop_back();
                 }
             }
@@ -703,7 +704,7 @@ auto Stroke::intersectWithPaddedBox(const PaddedBox& box, size_t firstIndex, siz
                                             << outerIntersection << ")" << std::endl;
                             })
                 } else {
-                    assert(!result.empty());
+                    xoj_assert(!result.empty());
                     DEBUG_ERASER(debugstream << "|  |  ** popping   (" << std::setw(3) << result.back().index << ","
                                              << std::setw(20) << result.back().t << ")" << std::endl;)
                     result.pop_back();
@@ -725,7 +726,7 @@ auto Stroke::intersectWithPaddedBox(const PaddedBox& box, size_t firstIndex, siz
 
     auto isHalfTangentAtLastKnotGoingTowardInnerBox =
             [&innerBox, &outerBox](const Point& lastKnot, const Point& halfTangentControlPoint) -> bool {
-        assert(lastKnot.isInside(outerBox));
+        xoj_assert(lastKnot.isInside(outerBox));
         std::optional<Interval<double>> innerLineIntersections =
                 intersectLineWithRectangle(lastKnot, halfTangentControlPoint, innerBox);
         return innerLineIntersections && innerLineIntersections.value().max < 0.0;
@@ -864,7 +865,7 @@ auto Stroke::getStrokeCapStyle() const -> StrokeCapStyle { return this->capStyle
 void Stroke::setStrokeCapStyle(const StrokeCapStyle capStyle) { this->capStyle = capStyle; }
 
 void Stroke::debugPrint() const {
-    g_message("%s", FC(FORMAT_STR("Stroke {1} / hasPressure() = {2}") % (uint64_t)this % this->hasPressure()));
+    g_message("%s", FC(FORMAT_STR("Stroke {1} / hasPressure() = {2}") % (int64_t)this % this->hasPressure()));
 
     for (auto&& p: points) {
         g_message("%lf / %lf / %lf", p.x, p.y, p.z);

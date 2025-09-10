@@ -1,5 +1,6 @@
 #include "Text.h"
 
+#include <memory>
 #include <utility>  // for move
 
 #include <glib.h>  // for g_warning
@@ -25,8 +26,8 @@ Text::Text(): AudioElement(ELEMENT_TEXT) {
 
 Text::~Text() = default;
 
-auto Text::clone() const -> Text* {
-    Text* text = new Text();
+auto Text::cloneText() const -> std::unique_ptr<Text> {
+    auto text = std::make_unique<Text>();
     text->font = this->font;
     text->text = this->text;
     text->setColor(this->getColor());
@@ -42,7 +43,10 @@ auto Text::clone() const -> Text* {
     return text;
 }
 
+auto Text::clone() const -> ElementPtr { return cloneText(); }
+
 auto Text::getFont() -> XojFont& { return font; }
+auto Text::getFont() const -> const XojFont& { return font; }
 
 void Text::setFont(const XojFont& font) {
     this->font = font;
@@ -131,7 +135,7 @@ void Text::rotate(double x0, double y0, double th) {}
 
 auto Text::isInEditing() const -> bool { return this->inEditing; }
 
-auto Text::rescaleOnlyAspectRatio() -> bool { return true; }
+auto Text::rescaleOnlyAspectRatio() const -> bool { return true; }
 
 void Text::serialize(ObjectOutputStream& out) const {
     out.writeObject("Text");

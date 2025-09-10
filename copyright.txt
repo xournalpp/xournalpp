@@ -167,15 +167,6 @@ Files: src/core/gui/dialog/LatexDialog.h
 Copyright: 2013, Wilson Brenna
 License: GPL-2+
 
-Files: src/util/pixbuf-utils.cpp
-Copyright: 2001, 2002, 2003, The Free Software Foundation, Inc.
-           2003, Ettore Perazzoli
-           1995, Spencer Kimball and Peter Mattis
-License: GPL-3+
-Comment: Original Author Paolo Bacchilega <paolo.bacch@tin.it>
-          seemingly for the FSF but this is unclear from the code
-License: GPL-3+
-
 Files: src/util/include/util/safe_casts.h
 Copyright: 2020, Fabian Keßler <fabian_kessler@gmx.de>
 License: BSL-1

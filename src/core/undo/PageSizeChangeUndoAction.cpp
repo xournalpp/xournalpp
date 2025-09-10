@@ -18,6 +18,8 @@ PageSizeChangeUndoAction::~PageSizeChangeUndoAction() = default;
 
 auto PageSizeChangeUndoAction::swapSizes(Control* control) -> bool {
     Document* doc = control->getDocument();
+
+    doc->lock();
     auto pageNr = doc->indexOf(this->page);
     if (pageNr == npos) {
         return false;
@@ -27,10 +29,9 @@ auto PageSizeChangeUndoAction::swapSizes(Control* control) -> bool {
     double h = this->page->getHeight();
 
     this->page->setSize(std::exchange(this->otherWidth, w), std::exchange(this->otherHeight, h));
-
     doc->unlock();
+
     control->firePageSizeChanged(pageNr);
-    doc->lock();
 
     return true;
 }

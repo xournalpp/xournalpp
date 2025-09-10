@@ -1,14 +1,12 @@
 #include "PdfElemSelection.h"
 
 #include <algorithm>  // for max, min
-#include <cmath>
 #include <limits>   // for numeric_limits
 #include <memory>   // for __shared_ptr_access
 #include <utility>  // for move
 
 #include <cairo.h>    // for cairo_line_to, cairo_region_destroy
 #include <gdk/gdk.h>  // for GdkRGBA, gdk_cairo_set_source_rgba
-#include <glib.h>     // for g_assert, g_assert_nonnull
 
 #include "control/Control.h"      // for Control
 #include "control/ToolHandler.h"  // for ToolHandler
@@ -18,7 +16,8 @@
 #include "model/PageRef.h"        // for PageRef
 #include "model/XojPage.h"        // for XojPage
 #include "pdf/base/XojPdfPage.h"  // for XojPdfRectangle, XojPdfPageSelectio...
-#include "util/safe_casts.h"
+#include "util/Assert.h"          // for xoj_assert
+#include "util/safe_casts.h"      // for strict_cast, as_signed, as_si...
 #include "view/overlays/PdfElementSelectionView.h"
 
 PdfElemSelection::PdfElemSelection(double x, double y, Control* control):
@@ -104,16 +103,16 @@ void PdfElemSelection::currentPos(double x, double y, XojPdfPageSelectionStyle s
             break;
         case XojPdfPageSelectionStyle::Area: {
             cairo_rectangle_int_t rect;
-            rect.x = static_cast<int>(std::floor(std::min(bounds.x1, bounds.x2)));
-            rect.width = static_cast<int>(std::ceil(std::max(bounds.x1, bounds.x2))) - rect.x;
-            rect.y = static_cast<int>(std::floor(std::min(bounds.y1, bounds.y2)));
-            rect.height = static_cast<int>(std::ceil(std::max(bounds.y1, bounds.y2))) - rect.y;
+            rect.x = floor_cast<int>(std::min(bounds.x1, bounds.x2));
+            rect.width = ceil_cast<int>(std::max(bounds.x1, bounds.x2)) - rect.x;
+            rect.y = floor_cast<int>(std::min(bounds.y1, bounds.y2));
+            rect.height = ceil_cast<int>(std::max(bounds.y1, bounds.y2)) - rect.y;
             this->selectedTextRegion.reset(cairo_region_create_rectangle(&rect), xoj::util::adopt);
         } break;
         default:
-            g_assert(false && "Unreachable");
+            xoj_assert_message(false, "Unreachable");
     }
-    g_assert(this->selectedTextRegion);
+    xoj_assert(this->selectedTextRegion);
 
     rg = rg.unite(getRegionBbox());
     if (!rg.empty()) {
@@ -133,7 +132,7 @@ auto PdfElemSelection::getSelectedTextRects() const -> const std::vector<XojPdfR
 
 auto PdfElemSelection::getSelectedText() const -> const std::string& { return this->selectedText; }
 
-auto PdfElemSelection::getSelectionPageNr() const -> uint64_t { return selectionPageNr; }
+auto PdfElemSelection::getSelectionPageNr() const -> size_t { return selectionPageNr; }
 
 auto PdfElemSelection::isFinalized() const -> bool { return this->finalized; }
 

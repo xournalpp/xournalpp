@@ -16,6 +16,7 @@
 
 #include "model/OverlayBase.h"
 #include "model/PageRef.h"        // for PageRef
+#include "model/Point.h"          // for Point
 #include "pdf/base/XojPdfPage.h"  // for XojPdfPageSPtr, XojPdfRectangle
 #include "util/DispatchPool.h"
 
@@ -30,9 +31,11 @@ public:
     SearchControl(const PageRef& page, XojPdfPageSPtr pdf);
     virtual ~SearchControl();
 
-    bool search(const std::string& text, size_t* occurrences, double* yOfUpperMostMatch);
+    bool search(const std::string& text, size_t index, size_t* occurrences, XojPdfRectangle* UpperMostMatch);
 
     const std::vector<XojPdfRectangle>& getResults() const { return results; }
+
+    const XojPdfRectangle* getHighlightRect() const { return highlightRect; }
 
     const std::shared_ptr<xoj::util::DispatchPool<xoj::view::SearchResultView>>& getViewPool() const {
         return viewPool;
@@ -41,6 +44,8 @@ public:
 private:
     PageRef page;
     XojPdfPageSPtr pdf;
+    std::string currentText;
+    XojPdfRectangle* highlightRect = nullptr;
 
     std::vector<XojPdfRectangle> results;
     std::shared_ptr<xoj::util::DispatchPool<xoj::view::SearchResultView>> viewPool;

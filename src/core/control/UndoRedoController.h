@@ -44,5 +44,5 @@ private:
     /**
      * Selected elements
      */
-    std::vector<Element*> elements;
+    std::vector<const Element*> elements;
 };

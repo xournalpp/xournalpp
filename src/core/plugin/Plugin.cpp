@@ -2,12 +2,12 @@
 
 #include <algorithm>  // for max
 #include <array>      // for array
-#include <map>        // for map
 
 #include <gdk/gdk.h>      // for GdkModifierType
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 #include <glib.h>         // for g_key_file_free, g_warning, g_free
 
+#include "util/Assert.h"     // for xoj_assert
 #include "util/PathUtil.h"   // for toGFilename
 #include "util/XojMsgBox.h"  // for XojMsgBox
 
@@ -17,8 +17,9 @@
 
 #include <utility>  // for move, pair
 
-#include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
-#include "util/i18n.h"                           // for _
+#include "gui/toolbarMenubar/PluginPlaceholderLabel.h"  // for the PlaceholderLabel Plugin
+#include "gui/toolbarMenubar/ToolMenuHandler.h"         // for ToolMenuHandler
+#include "util/i18n.h"                                  // for _
 #include "util/raii/GObjectSPtr.h"
 
 #include "config.h"  // for PROJECT_VERSION
@@ -83,7 +84,7 @@ size_t Plugin::populateMenuSection(GtkApplicationWindow* win, size_t startId) {
 
     // The menu should never be populated twice.
     // If this assert ever fails, do not recreate the GSimpleAction's below
-    assert(!menuSection);
+    xoj_assert(!menuSection);
 
     this->menuSection.reset(g_menu_new(), xoj::util::adopt);
 
@@ -115,7 +116,7 @@ size_t Plugin::populateMenuSection(GtkApplicationWindow* win, size_t startId) {
 
 void Plugin::executeMenuEntry(MenuEntry* entry) { callFunction(entry->callback, entry->mode); }
 
-auto Plugin::registerMenu(std::string menu, std::string callback, long mode, std::string accelerator) -> size_t {
+auto Plugin::registerMenu(std::string menu, std::string callback, ptrdiff_t mode, std::string accelerator) -> size_t {
     menuEntries.emplace_back(this, std::move(menu), std::move(callback), mode, std::move(accelerator));
     return menuEntries.size() - 1;
 }
@@ -135,7 +136,7 @@ void Plugin::registerToolButton(ToolMenuHandler* toolMenuHandler) {
 void Plugin::executeToolbarButton(ToolbarButtonEntry* entry) { callFunction(entry->callback, entry->mode); }
 
 void Plugin::registerToolButton(std::string description, std::string toolbarId, std::string iconName,
-                                std::string callback, long mode) {
+                                std::string callback, ptrdiff_t mode) {
     if (toolbarId == "") {
         return;
     }
@@ -247,6 +248,8 @@ void Plugin::loadScript() {
     int status = luaL_loadfile(lua.get(), luafile.string().c_str());
     if (status != LUA_OK) {
         const char* errMsg = lua_tostring(lua.get(), -1);
+        XojMsgBox::showPluginMessage(name, errMsg, true);
+
         // Error out if file can't be read
         g_warning("Could not load plugin Lua file. Error: \"%s\", error code: %d (syntax error: %s)", errMsg, status, status == LUA_ERRSYNTAX ? "true" : "false");
         this->valid = false;
@@ -264,9 +267,7 @@ void Plugin::loadScript() {
     // Run the loaded Lua script
     if (lua_pcall(lua.get(), 0, 0, 0) != LUA_OK) {
         const char* errMsg = lua_tostring(lua.get(), -1);
-        std::map<int, std::string> button;
-        button.insert(std::pair<int, std::string>(0, _("OK")));
-        XojMsgBox::showPluginMessage(name, errMsg, button, true);
+        XojMsgBox::showPluginMessage(name, errMsg, true);
 
         g_warning("Could not run plugin Lua file: \"%s\", error: \"%s\"", luafile.string().c_str(), errMsg);
         this->valid = false;
@@ -274,12 +275,12 @@ void Plugin::loadScript() {
     }
 }
 
-auto Plugin::callFunction(const std::string& fnc, long mode) -> bool {
+auto Plugin::callFunction(const std::string& fnc, ptrdiff_t mode) -> bool {
     lua_getglobal(lua.get(), fnc.c_str());
 
     int numArgs = 0;
 
-    if (mode != std::numeric_limits<long>::max()) {
+    if (mode != std::numeric_limits<ptrdiff_t>::max()) {
         lua_pushinteger(lua.get(), mode);
         numArgs = 1;
     }
@@ -287,9 +288,24 @@ auto Plugin::callFunction(const std::string& fnc, long mode) -> bool {
     // Run the function
     if (lua_pcall(lua.get(), numArgs, 0, 0)) {
         const char* errMsg = lua_tostring(lua.get(), -1);
-        std::map<int, std::string> button;
-        button.insert(std::pair<int, std::string>(0, _("OK")));
-        XojMsgBox::showPluginMessage(name, errMsg, button, true);
+        XojMsgBox::showPluginMessage(name, errMsg, true);
+
+        g_warning("Error in Plugin: \"%s\", error: \"%s\"", name.c_str(), errMsg);
+        return false;
+    }
+
+    return true;
+}
+
+auto Plugin::callFunction(const std::string& fnc, const char* s) -> bool {
+    lua_getglobal(lua.get(), fnc.c_str());
+
+    lua_pushstring(lua.get(), s);
+
+    // Run the function
+    if (lua_pcall(lua.get(), 1, 0, 0)) {
+        const char* errMsg = lua_tostring(lua.get(), -1);
+        XojMsgBox::showPluginMessage(name, errMsg, true);
 
         g_warning("Error in Plugin: \"%s\", error: \"%s\"", name.c_str(), errMsg);
         return false;
@@ -310,5 +326,41 @@ auto Plugin::isDefaultEnabled() const -> bool { return defaultEnabled; }
 
 auto Plugin::isInInitUi() const -> bool { return inInitUi; }
 auto Plugin::isValid() const -> bool { return valid; }
+
+void Plugin::registerPlaceholders(ToolMenuHandler* toolMenuHandler) {
+    if (toolbarPlaceholderEntries.empty() || !this->enabled) {
+        // No entries - nothing to do
+        return;
+    }
+    for (auto& pair: toolbarPlaceholderEntries) {
+        g_message("Plugin: Adding placeholder to ToolMenuHandler: %s", pair.first.c_str());
+        toolMenuHandler->addPluginPlaceholderItem(pair.second.get());
+    }
+}
+
+void Plugin::registerPlaceholder(const std::string& toolbarId, const std::string& description) {
+    std::string prefixedId = "Plugin::" + toolbarId;
+    if (toolbarPlaceholderEntries.find(prefixedId) == toolbarPlaceholderEntries.end()) {
+        auto entry = std::make_unique<ToolbarPlaceholderEntry>();
+        entry->toolbarId = prefixedId;
+        entry->description = description;
+        entry->value = "";
+        entry->label = nullptr;  // Will be set when toolbar is built
+        toolbarPlaceholderEntries[prefixedId] = std::move(entry);
+    }
+}
+
+void Plugin::setPlaceholderValue(const std::string& toolbarId, const std::string& value) {
+    std::string prefixedId = toolbarId.rfind("Plugin::", 0) == 0 ? toolbarId : "Plugin::" + toolbarId;
+    auto it = toolbarPlaceholderEntries.find(prefixedId);
+    if (it != toolbarPlaceholderEntries.end()) {
+        it->second->value = value;
+        if (it->second->label) {
+            it->second->label->setText(value.empty() ? getDisplayId(it->second->toolbarId) : value);
+        }
+    } else {
+        g_warning("setPlaceholderValue: placeholder id '%s' does not exist", prefixedId.c_str());
+    }
+}
 
 #endif

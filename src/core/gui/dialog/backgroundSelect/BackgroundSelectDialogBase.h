@@ -11,60 +11,52 @@
 
 #pragma once
 
-#include <string>  // for string
+#include <memory>
 #include <vector>  // for vector
 
-#include <gtk/gtk.h>  // for GtkWidget, GtkRequisition, GtkWindow
+#include <gtk/gtk.h>  // for GtkWidget, GtkWindow
 
-#include "gui/GladeGui.h"  // for GladeGui
+#include "util/Util.h"     // for npos
+#include "util/raii/GtkWindowUPtr.h"
 
 class Document;
 class Settings;
 class BaseElementView;
 class GladeSearchpath;
 
-class BackgroundSelectDialogBase: public GladeGui {
-public:
-    BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings,
-                               const std::string& glade, const std::string& mainWnd);
-    ~BackgroundSelectDialogBase() override;
+class BackgroundSelectDialogBase {
+protected:
+    BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings, const char* title);
+    ~BackgroundSelectDialogBase();
 
 public:
     Settings* getSettings();
-    void show(GtkWindow* parent) override;
-    virtual void setSelected(int selected);
+    void setSelected(size_t selected);
+
+    inline GtkWindow* getWindow() const { return window.get(); }
 
 protected:
+    /// Adds the entry widgets
+    void populate();
     void layout();
 
-private:
-    static void sizeAllocate(GtkWidget* widget, GtkAllocation* alloc, BackgroundSelectDialogBase* dlg);
-
-private:
 protected:
+    xoj::util::GtkWindowUPtr window;
+
     Settings* settings = nullptr;
-    GtkWidget* scrollPreview = nullptr;
-    GtkWidget* layoutContainer = nullptr;
+    GtkScrolledWindow* scrolledWindow = nullptr;
+    GtkFixed* container = nullptr;  ///< Area where miniatures are layed out
+    GtkWidget* okButton = nullptr;
+    GtkBox* vbox = nullptr;  ///< Vertical GtkBox containing all.
 
     Document* doc = nullptr;
 
-    /**
-     * Selection confirmed
-     */
+    /// Selection confirmed
     bool confirmed = false;
 
-    /**
-     * Selected image, none if negative
-     */
-    int selected = -1;
+    /// Selected entry, none if npos
+    size_t selected = npos;
 
-    /**
-     * To check if the size has real changed
-     */
-    int lastWidth = 0;
-
-    /**
-     * Elements to display
-     */
-    std::vector<BaseElementView*> elements;
+    /// Entries to display
+    std::vector<std::unique_ptr<BaseElementView>> entries;
 };

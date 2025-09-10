@@ -6,11 +6,13 @@
 
 #include <glib.h>
 
+#include "util/safe_casts.h"  // for as_signed
+
 using std::string;
 using std::vector;
 
 auto StringUtils::toLowerCase(const string& input) -> string {
-    char* lower = g_utf8_strdown(input.c_str(), input.size());
+    char* lower = g_utf8_strdown(input.c_str(), as_signed(input.size()));
     string lowerStr = lower;
     g_free(lower);
     return lowerStr;
@@ -45,11 +47,11 @@ auto StringUtils::split(const string& input, char delimiter) -> vector<string> {
     return tokens;
 }
 
-auto StringUtils::startsWith(const string& str, const string& start) -> bool {
+auto StringUtils::startsWith(std::string_view str, std::string_view start) -> bool {
     return str.compare(0, start.length(), start) == 0;
 }
 
-auto StringUtils::endsWith(const string& str, const string& end) -> bool {
+auto StringUtils::endsWith(std::string_view str, std::string_view end) -> bool {
     if (end.size() > str.size()) {
         return false;
     }
@@ -72,8 +74,8 @@ auto StringUtils::rtrim(std::string str) -> std::string {
 auto StringUtils::trim(std::string str) -> std::string { return ltrim(rtrim(std::move(str))); }
 
 auto StringUtils::iequals(const string& a, const string& b) -> bool {
-    gchar* ca = g_utf8_casefold(a.c_str(), a.size());
-    gchar* cb = g_utf8_casefold(b.c_str(), b.size());
+    gchar* ca = g_utf8_casefold(a.c_str(), as_signed(a.size()));
+    gchar* cb = g_utf8_casefold(b.c_str(), as_signed(b.size()));
     int result = strcmp(ca, cb);
     g_free(ca);
     g_free(cb);

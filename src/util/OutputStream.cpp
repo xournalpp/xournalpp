@@ -39,7 +39,7 @@ GzOutputStream::~GzOutputStream() {
 auto GzOutputStream::getLastError() const -> const std::string& { return this->error; }
 
 void GzOutputStream::write(const char* data, size_t len) {
-    assert(len != 0 && this->fp);
+    xoj_assert(len != 0 && this->fp);
     auto written = gzwrite(this->fp, data, strict_cast<unsigned int>(len));
     if (as_unsigned(written) != len) {
         int errnum = 0;

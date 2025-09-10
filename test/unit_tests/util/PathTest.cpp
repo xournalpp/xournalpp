@@ -10,13 +10,13 @@
  */
 
 
+#include <filesystem>
+
 #include <gtest/gtest.h>
 
 #include "util/PathUtil.h"
 
 #include "filesystem.h"
-
-using namespace std;
 
 
 TEST(UtilPath, testUnsupportedUri) {
@@ -29,7 +29,7 @@ TEST(UtilPath, testUnsupportedUri) {
 TEST(UtilPath, testPathFromUri) {
     auto b = Util::fromUri("file:///tmp/test.txt");
     EXPECT_EQ(false, !b);
-    EXPECT_EQ(G_DIR_SEPARATOR_S + string("tmp") + G_DIR_SEPARATOR_S + string("test.txt"), b->string());
+    EXPECT_EQ(G_DIR_SEPARATOR_S + std::string("tmp") + G_DIR_SEPARATOR_S + std::string("test.txt"), b->string());
 }
 
 TEST(UtilPath, testPathIsChildOf) {
@@ -67,53 +67,137 @@ TEST(UtilPath, testClearExtensions) {
     // The following tests use the generic separator which works on all systems
     auto b = fs::path("/test/asdf.TXT");
     Util::clearExtensions(b);
-    EXPECT_EQ(string("/test/asdf.TXT"), b.string());
+    EXPECT_EQ(std::string("/test/asdf.TXT"), b.string());
     Util::clearExtensions(b, ".txt");
-    EXPECT_EQ(string("/test/asdf"), b.string());
+    EXPECT_EQ(std::string("/test/asdf"), b.string());
 
     b = fs::path("/test/asdf.asdf/asdf");
     Util::clearExtensions(b);
-    EXPECT_EQ(string("/test/asdf.asdf/asdf"), b.string());
+    EXPECT_EQ(std::string("/test/asdf.asdf/asdf"), b.string());
 
     b = fs::path("/test/asdf.PDF");
     Util::clearExtensions(b);
-    EXPECT_EQ(string("/test/asdf.PDF"), b.string());
+    EXPECT_EQ(std::string("/test/asdf.PDF"), b.string());
     Util::clearExtensions(b, ".pdf");
-    EXPECT_EQ(string("/test/asdf"), b.string());
+    EXPECT_EQ(std::string("/test/asdf"), b.string());
 
     b = fs::path("/test/asdf.PDF.xoj");
     Util::clearExtensions(b);
-    EXPECT_EQ(string("/test/asdf.PDF"), b.string());
+    EXPECT_EQ(std::string("/test/asdf.PDF"), b.string());
 
     b = fs::path("/test/asdf.PDF.xoj");
     Util::clearExtensions(b, ".Pdf");
-    EXPECT_EQ(string("/test/asdf"), b.string());
+    EXPECT_EQ(std::string("/test/asdf"), b.string());
 
     b = fs::path("/test/asdf.pdf.pdf");
     Util::clearExtensions(b, ".pdf");
-    EXPECT_EQ(string("/test/asdf.pdf"), b.string());
+    EXPECT_EQ(std::string("/test/asdf.pdf"), b.string());
 
     b = fs::path("/test/asdf.xopp.xopp");
     Util::clearExtensions(b);
-    EXPECT_EQ(string("/test/asdf.xopp"), b.string());
+    EXPECT_EQ(std::string("/test/asdf.xopp"), b.string());
 
     b = fs::path("/test/asdf.PDF.xopp");
     Util::clearExtensions(b);
-    EXPECT_EQ(string("/test/asdf.PDF"), b.string());
+    EXPECT_EQ(std::string("/test/asdf.PDF"), b.string());
 
     b = fs::path("/test/asdf.SVG.xopp");
     Util::clearExtensions(b, ".svg");
-    EXPECT_EQ(string("/test/asdf"), b.string());
+    EXPECT_EQ(std::string("/test/asdf"), b.string());
 
     b = fs::path("/test/asdf.xoj");
     Util::clearExtensions(b);
-    EXPECT_EQ(string("/test/asdf"), b.string());
+    EXPECT_EQ(std::string("/test/asdf"), b.string());
 
     b = fs::path("/test/asdf.xopp");
     Util::clearExtensions(b);
-    EXPECT_EQ(string("/test/asdf"), b.string());
+    EXPECT_EQ(std::string("/test/asdf"), b.string());
 
     b = fs::path("/test/asdf.pdf");
     Util::clearExtensions(b);
-    EXPECT_EQ(string("/test/asdf.pdf"), b.string());
+    EXPECT_EQ(std::string("/test/asdf.pdf"), b.string());
+}
+
+TEST(UtilPath, normalizeAssetPath) {
+    auto p = fs::path();
+
+#ifdef _WIN32
+    // Test \\ to / conversion + not relative
+
+    // Test, if the implementation of std::filesystem::proximate and std::filesystem::relative resolves "/" and "\\" to
+    // the same path
+    EXPECT_EQ(std::filesystem::proximate("D:/home/freddy", "C:/home"),
+              std::filesystem::proximate("D:\\home\\freddy", "C:\\home"));
+    EXPECT_EQ(std::filesystem::relative("D:/home/freddy", "C:/home"),
+              std::filesystem::relative("D:\\home\\freddy", "C:\\home"));
+
+    p = Util::normalizeAssetPath("C:\\dir\\file.txt", "D:", Util::PathStorageMode::AS_RELATIVE_PATH);
+    EXPECT_EQ(std::string("C:/dir/file.txt"), p.u8string());
+    p = Util::normalizeAssetPath("C:\\dir\\file.txt", "D:\\base", Util::PathStorageMode::AS_RELATIVE_PATH);
+    EXPECT_EQ(std::string("C:/dir/file.txt"), p.u8string());
+
+    p = Util::normalizeAssetPath("C:/dir/file.txt", "D:", Util::PathStorageMode::AS_RELATIVE_PATH);
+    EXPECT_EQ(std::string("C:/dir/file.txt"), p.u8string());
+    p = Util::normalizeAssetPath("C:/dir/file.txt", "D:/base", Util::PathStorageMode::AS_RELATIVE_PATH);
+    EXPECT_EQ(std::string("C:/dir/file.txt"), p.u8string());
+
+    // Test \\ to / conversion + relative
+    p = Util::normalizeAssetPath("C:\\dir\\file.txt", "C:\\dir", Util::PathStorageMode::AS_RELATIVE_PATH);
+    EXPECT_EQ(std::string("file.txt"), p.u8string());
+    p = Util::normalizeAssetPath("C:\\dir\\file.txt", "C:\\base", Util::PathStorageMode::AS_RELATIVE_PATH);
+    EXPECT_EQ(std::string("../dir/file.txt"), p.u8string());
+
+    p = Util::normalizeAssetPath("C:\\dir\\..\\dir2\\.\\dir3\\..\\file.txt", "C:\\base",
+                                 Util::PathStorageMode::AS_RELATIVE_PATH);
+    EXPECT_EQ(std::string("../dir2/file.txt"), p.u8string());
+    p = Util::normalizeAssetPath("C:\\dir\\..\\dir2\\.\\dir3\\..\\file.txt", "C:\\base",
+                                 Util::PathStorageMode::AS_ABSOLUTE_PATH);
+    EXPECT_EQ(std::string("C:/dir2/file.txt"), p.u8string());
+
+    auto current = fs::current_path();
+    auto gen = fs::weakly_canonical((current / "..\\dir\\file.txt")).generic_u8string();
+    // relative asset path
+    p = Util::normalizeAssetPath("..\\dir\\file.txt", "H:", Util::PathStorageMode::AS_RELATIVE_PATH);
+    EXPECT_EQ(gen, p.u8string());
+
+    p = Util::normalizeAssetPath(".\\file.txt", fs::current_path(), Util::PathStorageMode::AS_RELATIVE_PATH);
+    EXPECT_EQ(std::string("file.txt"), p.u8string());
+#else
+    p = Util::normalizeAssetPath("/dir/file.txt", "/", Util::PathStorageMode::AS_RELATIVE_PATH);
+    EXPECT_EQ(std::string("dir/file.txt"), p.u8string());
+
+    p = Util::normalizeAssetPath("/dir/file.txt", "/base", Util::PathStorageMode::AS_RELATIVE_PATH);
+    EXPECT_EQ(std::string("../dir/file.txt"), p.u8string());
+
+    p = Util::normalizeAssetPath("/dir/../dir2/./dir3/../file.txt", "/base", Util::PathStorageMode::AS_RELATIVE_PATH);
+    EXPECT_EQ(std::string("../dir2/file.txt"), p.u8string());
+
+    p = Util::normalizeAssetPath("../../dir/../dir2/./dir3/../file.txt", {}, Util::PathStorageMode::AS_RELATIVE_PATH);
+    EXPECT_EQ(std::string("../../dir2/file.txt"), p.u8string());
+
+    p = Util::normalizeAssetPath("/dir/../dir2/./dir3/../file.txt", "/base", Util::PathStorageMode::AS_ABSOLUTE_PATH);
+    EXPECT_EQ(std::string("/dir2/file.txt"), p.u8string());
+
+    p = Util::normalizeAssetPath("dir/file.txt", "dir/..", Util::PathStorageMode::AS_RELATIVE_PATH);
+    EXPECT_EQ(std::string("dir/file.txt"), p.u8string());
+
+    // do not return empty if asset_path is relative
+    p = Util::normalizeAssetPath("../dir/file.txt", "/", Util::PathStorageMode::AS_RELATIVE_PATH);
+    EXPECT_TRUE(!p.empty());
+
+    p = Util::normalizeAssetPath("../dir/file.txt", "/base", Util::PathStorageMode::AS_RELATIVE_PATH);
+    EXPECT_TRUE(!p.empty());
+
+    // symlinks are not resolved
+    if (!fs::exists("xournalpp-test-symlink")) {
+        fs::create_directory_symlink("../dir", "xournalpp-test-symlink");
+        p = Util::normalizeAssetPath("xournalpp-test-symlink/file.txt", "base",
+                                     Util::PathStorageMode::AS_RELATIVE_PATH);
+        EXPECT_EQ(std::string("../xournalpp-test-symlink/file.txt"), p.u8string());
+        fs::remove("xournalpp-test-symlink");
+    } else {
+        FAIL() << "File named \"xournalpp-test-symlink\" already exists";
+    }
+
+#endif
 }

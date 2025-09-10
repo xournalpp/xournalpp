@@ -12,21 +12,32 @@
 #pragma once
 
 #include <string>  // for string
+#include <vector>
 
-#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
-#include <gtk/gtk.h>                // for GtkToolItem, GtkWidget, GtkToolB...
+#include <gtk/gtk.h>  // for GtkWidget
 
-#include "enums/ActionGroup.enum.h"  // for ActionGroup
-#include "enums/ActionType.enum.h"   // for ActionType
+#include "enums/Action.enum.h"
+#include "util/raii/GObjectSPtr.h"
+#include "util/raii/GVariantSPtr.h"
 
-#include "AbstractItem.h"  // for AbstractItem
-
-class ActionHandler;
-
-class AbstractToolItem: public AbstractItem {
+class AbstractToolItem {
 public:
-    AbstractToolItem(std::string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem = nullptr);
-    ~AbstractToolItem() override;
+    // If you add a category, don't forget to give it a label in ToolbarCustomizeDialog.cpp.
+    // Keep the enum contiguous
+    enum class Category : unsigned char {
+        FILES,
+        TOOLS,
+        COLORS,
+        NAVIGATION,
+        MISC,
+        SELECTION,
+        AUDIO,
+        SEPARATORS,
+        PLUGINS,
+        ENUMERATOR_COUNT  // Keep last
+    };
+    AbstractToolItem(std::string id, Category cat);
+    virtual ~AbstractToolItem();
 
     AbstractToolItem(AbstractToolItem const&) = delete;
     auto operator=(AbstractToolItem const&) -> AbstractToolItem& = delete;
@@ -34,54 +45,20 @@ public:
     auto operator=(AbstractToolItem&&) -> AbstractToolItem& = delete;  // Implement if desired
 
 public:
-    void selected(ActionGroup group, ActionType action) override;
-    virtual GtkToolItem* createItem(bool horizontal);
-    virtual GtkToolItem* createTmpItem(bool horizontal);
-    void setPopupMenu(GtkWidget* popupMenu);
+    virtual xoj::util::WidgetSPtr createItem(bool horizontal) = 0;
 
-    bool isUsed() const;
-    void setUsed(bool used);
+    xoj::util::WidgetSPtr createToolItem(bool horizontal);
 
-    static void toolButtonCallback(GtkToolButton* toolbutton, AbstractToolItem* item);
-
-    /**
-     * @brief Get the Pixbuf representation of the instantiation of the abstract tool item
-     * Only usable for GTK images with image type: GTK_IMAGE_ICON_NAME.
-     *
-     * @throw g_error if image type not GTK_IMAGE_ICON_NAME
-     * @return GdkPixbuf* of the tool item
-     */
-    GdkPixbuf* getPixbufFromImageIconName() const;
-
-
+    const std::string& getId() const;
+    Category getCategory() const;
     virtual std::string getToolDisplayName() const = 0;
 
     /**
      * Returns: (transfer floating)
      */
     virtual GtkWidget* getNewToolIcon() const = 0;
-    virtual GdkPixbuf* getNewToolPixbuf() const = 0;
-
-    /**
-     * Enable / Disable the tool item
-     */
-    void enable(bool enabled) override;
-
-    GtkToolItem* getItem() const;
 
 protected:
-    virtual GtkToolItem* newItem() = 0;
-
-public:
-protected:
-    GtkToolItem* item = nullptr;
-    GtkWidget* popupMenu = nullptr;
-
-    bool toolToggleButtonActive = false;
-    bool toolToggleOnlyEnable = false;
-
-    /**
-     * This item is already somewhere in the toolbar
-     */
-    bool used = false;
+    std::string id;
+    const Category category;
 };

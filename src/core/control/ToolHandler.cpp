@@ -9,27 +9,41 @@
 
 #include <glib.h>  // for g_warning, g_error
 
-#include "control/Tool.h"               // for Tool, Tool::toolSizes
+#include "control/Tool.h"  // for Tool, Tool::toolSizes
+#include "control/actions/ActionDatabase.h"
 #include "control/settings/Settings.h"  // for SElement, Settings
-#include "enums/ActionGroup.enum.h"     // for GROUP_ERASER_MODE
-#include "enums/ActionType.enum.h"      // for ACTION_TOOL_ERASER_DELETE_STROKE
 #include "model/StrokeStyle.h"          // for StrokeStyle
 #include "util/Color.h"
-
-#include "Actions.h"  // for ActionHandler
+#include "util/Stacktrace.h"  // for Stac...
+#include "util/safe_casts.h"  // for as_unsigned
 
 class LineStyle;
 
 
 ToolListener::~ToolListener() = default;
 
-ToolHandler::ToolHandler(ToolListener* stateChangeListener, ActionHandler* actionHandler, Settings* settings) {
-    this->settings = settings;
+ToolHandler::ToolHandler(ToolListener* stateChangeListener, ActionDatabase* actionDB, Settings* settings):
+        stateChangeListener(stateChangeListener), actionDB(actionDB), settings(settings) {
     initTools();
-    this->actionHandler = actionHandler;
-
-    this->stateChangeListener = stateChangeListener;
 }
+
+class ToolSelectPDFText: public Tool {
+public:
+    ToolSelectPDFText(std::string name, ToolType type, Color color):
+            Tool(name, type, color, TOOL_CAP_COLOR | TOOL_CAP_RULER, std::nullopt) {}
+
+    ~ToolSelectPDFText() override{};
+
+    void setColor(Color color) override {
+        if (color.alpha == 0) {
+            color.alpha = DEFAULT_SELECT_PDF_TEXT_MARKER_OPACITY;
+        }
+        Tool::setColor(color);
+    }
+
+private:
+    static const int DEFAULT_SELECT_PDF_TEXT_MARKER_OPACITY = 60;
+};
 
 void ToolHandler::initTools() {
     std::array<double, Tool::toolSizes> thickness;
@@ -118,12 +132,26 @@ void ToolHandler::initTools() {
                                                                      Colors::black, TOOL_CAP_NONE, std::nullopt);
 
     tools[TOOL_SELECT_PDF_TEXT_LINEAR - TOOL_PEN] =
-            std::make_unique<Tool>("selectPdfTextLinear", TOOL_SELECT_PDF_TEXT_LINEAR, Colors::black,
-                                   TOOL_CAP_COLOR | TOOL_CAP_RULER, std::nullopt);
+            std::make_unique<ToolSelectPDFText>("selectPdfTextLinear", TOOL_SELECT_PDF_TEXT_LINEAR, Colors::black);
 
     tools[TOOL_SELECT_PDF_TEXT_RECT - TOOL_PEN] =
-            std::make_unique<Tool>("selectPdfTextRect", TOOL_SELECT_PDF_TEXT_RECT, Colors::black,
-                                   TOOL_CAP_COLOR | TOOL_CAP_RULER, std::nullopt);
+            std::make_unique<ToolSelectPDFText>("selectPdfTextRect", TOOL_SELECT_PDF_TEXT_RECT, Colors::black);
+
+    thickness[TOOL_SIZE_VERY_FINE] = .7;
+    thickness[TOOL_SIZE_FINE] = 1.41;
+    thickness[TOOL_SIZE_MEDIUM] = 2.4;
+    thickness[TOOL_SIZE_THICK] = 4;
+    thickness[TOOL_SIZE_VERY_THICK] = 7;
+    tools[TOOL_LASER_POINTER_PEN - TOOL_PEN] = std::make_unique<Tool>(
+            "laserPointerPen", TOOL_LASER_POINTER_PEN, Colors::red, TOOL_CAP_COLOR | TOOL_CAP_SIZE, thickness);
+    thickness[TOOL_SIZE_VERY_FINE] = 1;
+    thickness[TOOL_SIZE_FINE] = 2.83;
+    thickness[TOOL_SIZE_MEDIUM] = 8.50;
+    thickness[TOOL_SIZE_THICK] = 19.84;
+    thickness[TOOL_SIZE_VERY_THICK] = 30;
+    tools[TOOL_LASER_POINTER_HIGHLIGHTER - TOOL_PEN] =
+            std::make_unique<Tool>("laserPointerHighlighter", TOOL_LASER_POINTER_HIGHLIGHTER, Colors::red,
+                                   TOOL_CAP_COLOR | TOOL_CAP_SIZE, thickness);
 
     this->eraserButtonTool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
     this->stylusButton1Tool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
@@ -150,28 +178,14 @@ void ToolHandler::setEraserType(EraserType eraserType) {
 void ToolHandler::setButtonEraserType(EraserType eraserType, Button button) {
     Tool* tool = getButtonTool(button);
     tool->setEraserType(eraserType);
-    eraserTypeChanged();
 }
 
 void ToolHandler::eraserTypeChanged() {
-    if (this->actionHandler == nullptr) {
+    if (this->actionDB == nullptr) {
         return;
     }
 
-    switch (this->getEraserType()) {
-        case ERASER_TYPE_DELETE_STROKE:
-            this->actionHandler->fireActionSelected(GROUP_ERASER_MODE, ACTION_TOOL_ERASER_DELETE_STROKE);
-            break;
-
-        case ERASER_TYPE_WHITEOUT:
-            this->actionHandler->fireActionSelected(GROUP_ERASER_MODE, ACTION_TOOL_ERASER_WHITEOUT);
-            break;
-
-        case ERASER_TYPE_DEFAULT:
-        default:
-            this->actionHandler->fireActionSelected(GROUP_ERASER_MODE, ACTION_TOOL_ERASER_STANDARD);
-            break;
-    }
+    this->actionDB->setActionState(Action::TOOL_ERASER_TYPE, this->getEraserType());
 }
 
 auto ToolHandler::getEraserType() const -> EraserType {
@@ -258,10 +272,10 @@ void ToolHandler::setHighlighterSize(ToolSize size) {
     }
 }
 
-void ToolHandler::setPenFillEnabled(bool fill, bool fireEvent) {
+void ToolHandler::setPenFillEnabled(bool fill) {
     this->tools[TOOL_PEN - TOOL_PEN]->setFill(fill);
 
-    if (this->activeTool->type == TOOL_PEN && fireEvent) {
+    if (this->activeTool->type == TOOL_PEN) {
         this->stateChangeListener->toolFillChanged();
     }
 }
@@ -272,10 +286,10 @@ void ToolHandler::setPenFill(int alpha) { this->tools[TOOL_PEN - TOOL_PEN]->setF
 
 auto ToolHandler::getPenFill() const -> int { return this->tools[TOOL_PEN - TOOL_PEN]->getFillAlpha(); }
 
-void ToolHandler::setHighlighterFillEnabled(bool fill, bool fireEvent) {
+void ToolHandler::setHighlighterFillEnabled(bool fill) {
     this->tools[TOOL_HIGHLIGHTER - TOOL_PEN]->setFill(fill);
 
-    if (this->activeTool->type == TOOL_HIGHLIGHTER && fireEvent) {
+    if (this->activeTool->type == TOOL_HIGHLIGHTER) {
         this->stateChangeListener->toolFillChanged();
     }
 }
@@ -287,6 +301,28 @@ auto ToolHandler::getHighlighterFillEnabled() const -> bool {
 void ToolHandler::setHighlighterFill(int alpha) { this->tools[TOOL_HIGHLIGHTER - TOOL_PEN]->setFillAlpha(alpha); }
 
 auto ToolHandler::getHighlighterFill() const -> int { return this->tools[TOOL_HIGHLIGHTER - TOOL_PEN]->getFillAlpha(); }
+
+static void inline setColorAlpha(Tool& tool, int alpha) {
+    if (tool.hasCapability(TOOL_CAP_COLOR)) {
+        Color color = tool.getColor();
+        color.alpha = static_cast<uint8_t>(alpha);
+        tool.setColor(color);
+    } else {
+        g_warning("setColorAlpha : tool='%s' has no color capability!", tool.getName().c_str());
+        Stacktrace::printStacktrace();
+    }
+}
+
+void ToolHandler::setSelectPDFTextMarkerOpacity(int alpha) {
+    // Use same marker opacity for 'select linear pdf text' or 'select pdf text in rectangle'
+    setColorAlpha(this->getTool(TOOL_SELECT_PDF_TEXT_LINEAR), alpha);
+    setColorAlpha(this->getTool(TOOL_SELECT_PDF_TEXT_RECT), alpha);
+}
+
+auto ToolHandler::getSelectPDFTextMarkerOpacity() const -> int {
+    // Use same marker opacity for 'select linear pdf text' or 'select pdf text in rectangle'
+    return this->getTool(TOOL_SELECT_PDF_TEXT_LINEAR).getColor().alpha;
+}
 
 auto ToolHandler::getThickness() const -> double {
     Tool* tool = this->activeTool;
@@ -315,7 +351,6 @@ void ToolHandler::setButtonSize(ToolSize size, Button button) {
 
     Tool* tool = getButtonTool(button);
     tool->setSize(clippedSize);
-    this->stateChangeListener->toolSizeChanged();
 }
 
 void ToolHandler::setLineStyle(const LineStyle& style) {
@@ -329,31 +364,33 @@ void ToolHandler::setColor(Color color, bool userSelection) {
         this->toolbarSelectedTool->setColor(color);
     }
     Tool* tool = this->activeTool;
+    int currentAlpha = tool->getColor().alpha;
     tool->setColor(color);
     this->stateChangeListener->toolColorChanged();
-    if (userSelection)
+    if (userSelection) {
+        // ensure that tool color alpha is re-applied on new selected color;
+        setColorAlpha(*tool, currentAlpha);
         this->stateChangeListener->changeColorOfSelection();
-    this->stateChangeListener->setCustomColorSelected();
+    }
 }
 
 void ToolHandler::setButtonColor(Color color, Button button) {
     Tool* tool = this->getButtonTool(button);
     tool->setColor(color);
-    this->stateChangeListener->toolColorChanged();
-    this->stateChangeListener->setCustomColorSelected();
 }
 
-auto ToolHandler::getColor() const -> Color {
-    Tool* tool = this->activeTool;
-    return tool->getColor();
+auto ToolHandler::getColor() const -> Color { return this->activeTool->getColor(); }
+
+auto ToolHandler::getColorMaskAlpha() const -> Color {
+    Color c = this->activeTool->getColor();
+    c.alpha = 0xff;
+    return c;
 }
 
-void ToolHandler::setFillEnabled(bool fill, bool fireEvent) {
+void ToolHandler::setFillEnabled(bool fill) {
     Tool* tool = this->toolbarSelectedTool;
     tool->setFill(fill);
-    if (fireEvent) {
-        this->stateChangeListener->toolFillChanged();
-    }
+    this->stateChangeListener->toolFillChanged();
 }
 
 auto ToolHandler::getFill() const -> int {
@@ -382,6 +419,15 @@ void ToolHandler::setDrawingType(DrawingType drawingType) {
 void ToolHandler::setButtonDrawingType(DrawingType drawingType, Button button) {
     Tool* tool = getButtonTool(button);
     tool->setDrawingType(drawingType);
+}
+
+void ToolHandler::setButtonStrokeType(StrokeType strokeType, Button button) {
+    this->setButtonStrokeType(strokeTypeToLineStyle(strokeType), button);
+}
+
+void ToolHandler::setButtonStrokeType(const LineStyle& lineStyle, Button button) {
+    Tool* tool = getButtonTool(button);
+    tool->setLineStyle(lineStyle);
 }
 
 auto ToolHandler::getTools() const -> std::array<std::unique_ptr<Tool>, TOOL_COUNT> const& { return tools; }
@@ -425,7 +471,7 @@ void ToolHandler::saveSettings() const {
             st.setString("size", value);
         }
 
-        if (tool->type == TOOL_PEN || tool->type == TOOL_HIGHLIGHTER) {
+        if (tool->hasCapability(TOOL_CAP_FILL)) {
             st.setInt("fill", tool->getFill());
             st.setInt("fillAlpha", tool->getFillAlpha());
         }
@@ -463,7 +509,7 @@ void ToolHandler::loadSettings() {
 
             int iColor{};
             if (tool->hasCapability(TOOL_CAP_COLOR) && st.getInt("color", iColor)) {
-                tool->setColor(Color(iColor));
+                tool->setColor(Color(as_unsigned(iColor)));
             }
 
             std::string drawingType;
@@ -551,7 +597,7 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
         t->setCapability(TOOL_CAP_FILL, setFill);
         t->setCapability(TOOL_CAP_LINE_STYLE, setLineStyle);
         t->setSize(TOOL_SIZE_NONE);
-        t->setColor(Color(-1));
+        t->setColor(Colors::white);
         t->setFill(false);
     }
 
@@ -594,9 +640,10 @@ auto ToolHandler::acceptsOutOfPageEvents() const -> bool {
 auto ToolHandler::supportsTapFilter() const -> bool {
     ToolType toolType = this->getToolType();
 
-    return toolType == TOOL_PEN || toolType == TOOL_HIGHLIGHTER || toolType == TOOL_HAND ||
-           toolType == TOOL_DRAW_RECT || toolType == TOOL_DRAW_ELLIPSE || toolType == TOOL_DRAW_COORDINATE_SYSTEM ||
-           toolType == TOOL_DRAW_ARROW || toolType == TOOL_DRAW_DOUBLE_ARROW || toolType == TOOL_DRAW_SPLINE;
+    return toolType == TOOL_PEN || toolType == TOOL_HIGHLIGHTER || toolType == TOOL_LASER_POINTER_PEN ||
+           toolType == TOOL_LASER_POINTER_HIGHLIGHTER || toolType == TOOL_HAND || toolType == TOOL_DRAW_RECT ||
+           toolType == TOOL_DRAW_ELLIPSE || toolType == TOOL_DRAW_COORDINATE_SYSTEM || toolType == TOOL_DRAW_ARROW ||
+           toolType == TOOL_DRAW_DOUBLE_ARROW || toolType == TOOL_DRAW_SPLINE;
 }
 
 auto ToolHandler::getSelectedTool(SelectedTool selectedTool) const -> Tool* {
@@ -618,6 +665,8 @@ auto ToolHandler::getButtonTool(Button button) const -> Tool* {
             return this->stylusButton1Tool.get();
         case Button::BUTTON_STYLUS_TWO:
             return this->stylusButton2Tool.get();
+        case Button::BUTTON_MOUSE_LEFT:
+            return this->mouseLeftButtonTool.get();
         case Button::BUTTON_MOUSE_MIDDLE:
             return this->mouseMiddleButtonTool.get();
         case Button::BUTTON_MOUSE_RIGHT:
@@ -640,6 +689,9 @@ void ToolHandler::resetButtonTool(ToolType type, Button button) {
             break;
         case Button::BUTTON_STYLUS_TWO:
             this->stylusButton2Tool.reset(new Tool(tool));
+            break;
+        case Button::BUTTON_MOUSE_LEFT:
+            this->mouseLeftButtonTool.reset(new Tool(tool));
             break;
         case Button::BUTTON_MOUSE_MIDDLE:
             this->mouseMiddleButtonTool.reset(new Tool(tool));

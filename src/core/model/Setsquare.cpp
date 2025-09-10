@@ -22,9 +22,9 @@ auto Setsquare::getToolRange(bool transformed) const -> Range {
     if (transformed) {
         const auto cs = std::cos(rotation);
         const auto si = std::sin(rotation);
-        rg.addPoint(translationX + cs * h, translationY - si * h);
-        rg.addPoint(translationX - cs * h, translationY + si * h);
-        rg.addPoint(translationX - si * h, translationY + cs * h);
+        rg.addPoint(origin.x + cs * h, origin.y - si * h);
+        rg.addPoint(origin.x - cs * h, origin.y + si * h);
+        rg.addPoint(origin.x - si * h, origin.y + cs * h);
     } else {
         rg.addPoint(h, 0);
         rg.addPoint(-h, 0);
@@ -46,6 +46,4 @@ void Setsquare::notify(bool resetMask) const {
                        this->getMatrix());
     Range rg = this->getToolRange(true);
     viewPool->dispatch(xoj::view::SetsquareView::FLAG_DIRTY_REGION, this->computeRepaintRange(rg));
-    handlerPool->dispatch(SetsquareInputHandler::UPDATE_VALUES, this->getHeight(), this->getRotation(),
-                          this->getTranslationX(), this->getTranslationY());
 }

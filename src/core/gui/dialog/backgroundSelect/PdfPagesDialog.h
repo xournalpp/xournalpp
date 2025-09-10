@@ -20,21 +20,22 @@ class GladeSearchpath;
 class Settings;
 
 
-class PdfPagesDialog: public BackgroundSelectDialogBase {
+class PdfPagesDialog final: public BackgroundSelectDialogBase {
 public:
-    PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings);
-    ~PdfPagesDialog() override;
+    PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings,
+                   std::function<void(size_t)> callback);
+    ~PdfPagesDialog();
 
 public:
-    void show(GtkWindow* parent) override;
-    void setSelected(int selected) override;
     void updateOkButton();
-    static double getZoom();
-    int getSelectedPage();
+
+    static constexpr double ZOOM_VALUE = 0.25;
 
 private:
     static void onlyNotUsedCallback(GtkToggleButton* tb, PdfPagesDialog* dlg);
-    static void okButtonCallback(GtkButton* button, PdfPagesDialog* dlg);
 
-private:
+    GtkCheckButton* cbUnusedOnly;
+
+    /// Takes parameter the pdf page number
+    std::function<void(size_t)> callback;
 };

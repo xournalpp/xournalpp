@@ -14,9 +14,9 @@ constexpr double MIN_HEIGHT = 0.5;
 constexpr double MAX_HEIGHT = 10.0;
 
 CompassInputHandler::CompassInputHandler(XournalView* xournal, GeometryToolController* controller):
-        GeometryToolInputHandler(xournal, controller, Compass::INITIAL_HEIGHT, 0., 0.) {}
+        GeometryToolInputHandler(xournal, controller) {}
 
-CompassInputHandler::~CompassInputHandler() noexcept { this->unregisterFromPool(); }
+CompassInputHandler::~CompassInputHandler() noexcept = default;
 
 auto CompassInputHandler::handlePointer(InputEvent const& event) -> bool {
     const auto coords = getCoords(event);
@@ -34,10 +34,10 @@ auto CompassInputHandler::handlePointer(InputEvent const& event) -> bool {
                     lastProj = std::atan2(-p.y, p.x);
                     compassController->createOutlineStroke(lastProj);
                     return true;
-                } else if (controller->isInsideGeometryTool(coords.x, coords.y, 0.) &&
+                } else if (double h = controller->getGeometryTool()->getHeight();
+                           controller->isInsideGeometryTool(coords.x, coords.y, 0.) &&
                            std::abs(compassController->posRelToSide(coords.x, coords.y).y) <= 0.5 &&
-                           std::abs(compassController->posRelToSide(coords.x, coords.y).x - 0.5 * height) <=
-                                   0.5 * height) {
+                           std::abs(compassController->posRelToSide(coords.x, coords.y).x - 0.5 * h) <= 0.5 * h) {
                     compassController->createRadialStroke(std::hypot(p.x, p.y));
                     return true;
                 }

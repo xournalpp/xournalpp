@@ -10,14 +10,14 @@
 #include "gui/inputdevices/touchdisable/TouchDisableInterface.h"  // for Tou...
 #include "gui/inputdevices/touchdisable/TouchDisableX11.h"        // for Tou...
 #include "util/glib_casts.h"                                      // for wrap_v
-#include "util/safe_casts.h"
+#include "util/safe_casts.h"                                      // for as_unsigned
 
 #include "InputContext.h"  // for Inp...
 
 using std::string;
 
-HandRecognition::HandRecognition(GtkWidget* widget, InputContext* inputContext, Settings* settings):
-        inputContext(inputContext), settings(settings) {
+HandRecognition::HandRecognition(InputContext* inputContext):
+        inputContext(inputContext), settings(inputContext->getSettings()) {
 #ifdef X11_ENABLED
     const char* sessionType = g_getenv("XDG_SESSION_TYPE");
     if (sessionType != nullptr && strcmp(sessionType, "x11") == 0) {
@@ -117,7 +117,7 @@ auto HandRecognition::enableTimeout(HandRecognition* self) -> bool {
         return false;
     }
 
-    auto nextTime = now - self->lastPenAction + self->disableTimeout;
+    auto nextTime = static_cast<guint>(now - self->lastPenAction + self->disableTimeout);
 
     self->timer.consume();
     self->timer = g_timeout_add(strict_cast<guint>(nextTime), xoj::util::wrap_v<enableTimeout>, self);

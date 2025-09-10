@@ -22,8 +22,8 @@
 #include <poppler.h>  // for GObject
 
 #include "control/latex/LatexGenerator.h"  // for LatexGenerator
-#include "gui/dialog/LatexDialog.h"        // for LatexDialog
-#include "model/PageRef.h"                 // for PageRef
+#include "gui/dialog/AbstractLatexDialog.h"
+#include "model/PageRef.h"  // for PageRef
 
 #include "filesystem.h"  // for path
 
@@ -34,14 +34,15 @@ class XojPageView;
 class Layer;
 class Element;
 class LatexSettings;
+class IntEdLatexDialog;
 
-class LatexController {
+class LatexController final {
 public:
     LatexController() = delete;
     LatexController(const LatexController& other) = delete;
     LatexController& operator=(const LatexController& other) = delete;
     LatexController(Control* control);
-    virtual ~LatexController();
+    ~LatexController();
 
 public:
     /**
@@ -49,7 +50,7 @@ public:
      * insert the rendered formula into the document if the supplied LaTeX is
      * valid.
      */
-    void run();
+    static void run(Control* ctrl);
 
 private:
     /**
@@ -57,7 +58,7 @@ private:
      */
     class FindDependencyStatus {
     public:
-        FindDependencyStatus(bool success, std::string errorMsg): success(success), errorMsg(std::move(errorMsg)){};
+        FindDependencyStatus(bool success, std::string errorMsg): success(success), errorMsg(std::move(errorMsg)) {};
         bool success;
         std::string errorMsg;
     };
@@ -85,17 +86,15 @@ private:
     void triggerImageUpdate(const std::string& texString);
 
     /**
-     * Show the LaTex Editor dialog, returning the final formula input by the
-     * user. If the input was cancelled, the resulting string will be the same
-     * as the initial formula.
+     * Show the LaTex Editor dialog and process its output
      */
-    std::string showTexEditDialog();
+    static void showTexEditDialog(std::unique_ptr<LatexController> texCtrl);
 
     /**
      * Signal handler, updates the rendered image when the text in the editor
      * changes.
      */
-    static void handleTexChanged(GtkTextBuffer* buffer, LatexController* self);
+    static void handleTexChanged(LatexController* self);
 
     /**
      * Updates the display once the PDF file is generated.
@@ -118,6 +117,9 @@ private:
      */
     void insertTexImage();
 
+    /// Cancels the current edition: puts the original Tex element back in place (does nothing if there was none)
+    void cancelEditing();
+
 private:
     Control* control = nullptr;
     LatexSettings const& settings;
@@ -130,7 +132,10 @@ private:
     /**
      * LaTex editor dialog
      */
-    LatexDialog dlg;
+    AbstractLatexDialog* dlg = nullptr;
+    friend class AbstractLatexDialog;
+    friend class ExtEdLatexDialog;
+    friend class IntEdLatexDialog;
 
     /**
      * Tex binary full path
@@ -213,7 +218,7 @@ private:
     /**
      * The element that is currently being edited.
      */
-    Element* selectedElem = nullptr;
+    const Element* selectedElem = nullptr;
 
     /**
      * The controller owns the rendered preview in order to be able to delete it

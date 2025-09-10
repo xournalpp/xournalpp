@@ -1,9 +1,8 @@
 #include "SidebarPreviewBaseEntry.h"
 
-#include <memory>  // for __shared_ptr_access
-
 #include <gdk/gdk.h>      // for GdkEvent, GDK_BUTTON_PRESS
 #include <glib-object.h>  // for G_CALLBACK, g_object_ref
+#include <gtk/gtk.h>      //
 
 #include "control/Control.h"                // for Control
 #include "control/jobs/XournalScheduler.h"  // for XournalScheduler
@@ -11,21 +10,23 @@
 #include "gui/Shadow.h"                     // for Shadow
 #include "model/XojPage.h"                  // for XojPage
 #include "util/Color.h"                     // for cairo_set_source_rgbi
+#include "util/gtk4_helper.h"               //
 #include "util/i18n.h"                      // for _
+#include "util/safe_casts.h"                // for floor_cast
 
 #include "SidebarPreviewBase.h"  // for SidebarPreviewBase
 
+static constexpr int MAX_MINIATURE_SIZE = 500;  ///< in pixels - avoid things going very wrong when pages are huge
+
 SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, const PageRef& page):
-        sidebar(sidebar), page(page) {
-    this->widget = GTK_WIDGET(g_object_ref_sink(gtk_button_new()));
-    gtk_widget_show(this->widget);
+        sidebar(sidebar), page(page), button(gtk_button_new(), xoj::util::adopt) {
 
     updateSize();
-    gtk_widget_set_events(widget, GDK_EXPOSURE_MASK);
+    gtk_widget_set_events(this->button.get(), GDK_EXPOSURE_MASK);
 
-    g_signal_connect(this->widget, "draw", G_CALLBACK(drawCallback), this);
+    g_signal_connect(this->button.get(), "draw", G_CALLBACK(drawCallback), this);
 
-    g_signal_connect(GTK_BUTTON(this->widget), "clicked", G_CALLBACK(+[](GtkButton*, gpointer self) {
+    g_signal_connect(this->button.get(), "clicked", G_CALLBACK(+[](GtkButton*, gpointer self) {
                          static_cast<SidebarPreviewBaseEntry*>(self)->mouseButtonPressCallback();
                      }),
                      this);
@@ -36,26 +37,17 @@ SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, co
             auto mouseEvent = reinterpret_cast<GdkEventButton*>(event);
             if (mouseEvent->button == 3) {
                 static_cast<SidebarPreviewBaseEntry*>(self)->mouseButtonPressCallback();
-                static_cast<SidebarPreviewBaseEntry*>(self)->sidebar->openPreviewContextMenu();
+                static_cast<SidebarPreviewBaseEntry*>(self)->sidebar->openPreviewContextMenu(event);
                 return true;
             }
         }
         return false;
     });
-    g_signal_connect_after(this->widget, "button-press-event", clickCallback, this);
+    g_signal_connect_after(this->button.get(), "button-press-event", clickCallback, this);
 }
 
 SidebarPreviewBaseEntry::~SidebarPreviewBaseEntry() {
     this->sidebar->getControl()->getScheduler()->removeSidebar(this);
-    this->page = nullptr;
-
-    gtk_widget_destroy(this->widget);
-    this->widget = nullptr;
-
-    if (this->crBuffer) {
-        cairo_surface_destroy(this->crBuffer);
-        this->crBuffer = nullptr;
-    }
 }
 
 auto SidebarPreviewBaseEntry::drawCallback(GtkWidget* widget, cairo_t* cr, SidebarPreviewBaseEntry* preview)
@@ -70,20 +62,17 @@ void SidebarPreviewBaseEntry::setSelected(bool selected) {
     }
     this->selected = selected;
 
-    gtk_widget_queue_draw(this->widget);
+    gtk_widget_queue_draw(this->button.get());
 }
 
 void SidebarPreviewBaseEntry::repaint() { sidebar->getControl()->getScheduler()->addRepaintSidebar(this); }
 
 void SidebarPreviewBaseEntry::drawLoadingPage() {
-    GtkAllocation alloc;
-    gtk_widget_get_allocation(widget, &alloc);
-
-    this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width, alloc.height);
+    this->buffer.reset(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, imageWidth, imageHeight), xoj::util::adopt);
 
     double zoom = sidebar->getZoom();
 
-    cairo_t* cr2 = cairo_create(this->crBuffer);
+    cairo_t* cr2 = cairo_create(this->buffer.get());
     cairo_matrix_t defaultMatrix = {0};
     cairo_get_matrix(cr2, &defaultMatrix);
 
@@ -110,13 +99,15 @@ void SidebarPreviewBaseEntry::paint(cairo_t* cr) {
 
     this->drawingMutex.lock();
 
-    if (this->crBuffer == nullptr) {
+    if (!this->buffer) {
         drawLoadingPage();
         doRepaint = true;
     }
 
-    cairo_set_source_surface(cr, this->crBuffer, 0, 0);
+    cairo_set_source_surface(cr, this->buffer.get(), 0, 0);
     cairo_paint(cr);
+
+    this->drawingMutex.unlock();
 
     double height = page->getHeight() * sidebar->getZoom();
     double width = page->getWidth() * sidebar->getZoom();
@@ -134,13 +125,25 @@ void SidebarPreviewBaseEntry::paint(cairo_t* cr) {
         cairo_stroke(cr);
 
         cairo_set_operator(cr, CAIRO_OPERATOR_ATOP);
-        Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(), width + 4, height + 4);
+        Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(),
+                           round_cast<int>(width) + 4, round_cast<int>(height) + 4);
     } else {
         cairo_set_operator(cr, CAIRO_OPERATOR_ATOP);
-        Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2, width, height);
+        Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2,
+                           round_cast<int>(width), round_cast<int>(height));
     }
 
-    this->drawingMutex.unlock();
+    const auto& recolorParams = sidebar->getControl()->getSettings()->getRecolorParameters();
+    auto recolor = recolorParams.recolorizeSidebarMiniatures ? std::make_optional(recolorParams.recolor) : std::nullopt;
+
+    if (recolor) {
+        // encapsulate in save/restore to limit the scope of the clip operation
+        xoj::util::CairoSaveGuard const saveGuard(cr);
+        cairo_rectangle(cr, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2, width, height);
+        // constrain the area which is painted on
+        cairo_clip(cr);
+        recolor->recolorCurrentCairoRegion(cr);
+    }
 
     if (doRepaint) {
         repaint();
@@ -148,21 +151,19 @@ void SidebarPreviewBaseEntry::paint(cairo_t* cr) {
 }
 
 void SidebarPreviewBaseEntry::updateSize() {
-    gtk_widget_set_size_request(this->widget, getWidgetWidth(), getWidgetHeight());
+    this->DPIscaling = gtk_widget_get_scale_factor(this->button.get());
+
+    const int shadowPadding = Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
+    // To avoid having a black line, we use floor rather than ceil
+    this->imageWidth =
+            std::min(floor_cast<int>(page->getWidth() * sidebar->getZoom()) + shadowPadding, MAX_MINIATURE_SIZE);
+    this->imageHeight =
+            std::min(floor_cast<int>(page->getHeight() * sidebar->getZoom()) + shadowPadding, MAX_MINIATURE_SIZE);
+    gtk_widget_set_size_request(this->button.get(), imageWidth, imageHeight);
 }
 
-auto SidebarPreviewBaseEntry::getWidgetWidth() -> int {
-    return page->getWidth() * sidebar->getZoom() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() +
-           4;
-}
+auto SidebarPreviewBaseEntry::getWidget() const -> GtkWidget* { return this->button.get(); }
 
-auto SidebarPreviewBaseEntry::getWidgetHeight() -> int {
-    return page->getHeight() * sidebar->getZoom() + Shadow::getShadowBottomRightSize() +
-           Shadow::getShadowTopLeftSize() + 4;
-}
+auto SidebarPreviewBaseEntry::getWidth() const -> int { return imageWidth; }
 
-auto SidebarPreviewBaseEntry::getWidth() -> int { return getWidgetWidth(); }
-
-auto SidebarPreviewBaseEntry::getHeight() -> int { return getWidgetHeight(); }
-
-auto SidebarPreviewBaseEntry::getWidget() -> GtkWidget* { return this->widget; }
+auto SidebarPreviewBaseEntry::getHeight() const -> int { return imageHeight; }

@@ -29,6 +29,11 @@ constexpr auto PROJECT_VERSION = "@PROJECT_VERSION@";
 constexpr auto PROJECT_BUGREPORT = "@PROJECT_BUGREPORT@";
 
 /**
+ * Address where crash reports for this project should be sent
+ */
+constexpr auto PROJECT_CRASHREPORT = "@PROJECT_CRASHREPORT@";
+
+/**
  * Full name and version of this project
  */
 constexpr auto PROJECT_STRING = "@PROJECT_NAME@ @PROJECT_VERSION@";

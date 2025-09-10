@@ -29,8 +29,8 @@ protected:
     bool inputRunning = false;
 
 protected:
-    XojPageView* getPageAtCurrentPosition(InputEvent const& event);
-    PositionInputData getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent const& event);
+    XojPageView* getPageAtCurrentPosition(InputEvent const& event) const;
+    PositionInputData getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent const& event) const;
 
 public:
     explicit AbstractInputHandler(InputContext* inputContext);

@@ -6,8 +6,10 @@
 
 #include "control/settings/Settings.h"       // for Settings
 #include "control/settings/SettingsEnums.h"  // for InputDeviceTypeOption
+#include "util/Point.h"
+#include "util/gdk4_helper.h"
 
-auto InputEvents::translateEventType(GdkEventType type) -> InputEventType {
+static auto translateEventType(GdkEventType type) -> InputEventType {
     switch (type) {
         case GDK_MOTION_NOTIFY:
         case GDK_TOUCH_UPDATE:
@@ -35,12 +37,8 @@ auto InputEvents::translateEventType(GdkEventType type) -> InputEventType {
             return SCROLL_EVENT;
         case GDK_GRAB_BROKEN:
             return GRAB_BROKEN_EVENT;
-        case GDK_KEY_PRESS:
-            return KEY_PRESS_EVENT;
-        case GDK_KEY_RELEASE:
-            return KEY_RELEASE_EVENT;
         default:
-            // Events we do not care about
+            // Events we do not care about or handle otherwise (e.g. key events)
             return UNKNOWN;
     }
 }
@@ -49,14 +47,10 @@ auto InputEvents::translateDeviceType(const std::string& name, GdkInputSource so
         -> InputDeviceClass {
     InputDeviceTypeOption deviceType = settings->getDeviceClassForDevice(name, source);
     switch (deviceType) {
-        case InputDeviceTypeOption::Disabled: {
-            // Keyboards are not matched in their own class - do this here manually
-            if (source == GDK_SOURCE_KEYBOARD) {
-                return INPUT_DEVICE_KEYBOARD;
-            }
+        case InputDeviceTypeOption::Disabled:
             return INPUT_DEVICE_IGNORE;
-        }
         case InputDeviceTypeOption::Mouse:
+        case InputDeviceTypeOption::MouseKeyboardCombo:
             return INPUT_DEVICE_MOUSE;
         case InputDeviceTypeOption::Pen:
             return INPUT_DEVICE_PEN;
@@ -64,8 +58,6 @@ auto InputEvents::translateDeviceType(const std::string& name, GdkInputSource so
             return INPUT_DEVICE_ERASER;
         case InputDeviceTypeOption::Touchscreen:
             return INPUT_DEVICE_TOUCHSCREEN;
-        case InputDeviceTypeOption::MouseKeyboardCombo:
-            return INPUT_DEVICE_MOUSE_KEYBOARD_COMBO;
         default:
             return INPUT_DEVICE_IGNORE;
     }
@@ -78,21 +70,19 @@ auto InputEvents::translateDeviceType(GdkDevice* device, Settings* settings) -> 
 auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings) -> InputEvent {
     InputEvent targetEvent{};
 
-    targetEvent.sourceEvent = sourceEvent;
-
     // Map the event type to our internal ones
     GdkEventType sourceEventType = gdk_event_get_event_type(sourceEvent);
     targetEvent.type = translateEventType(sourceEventType);
 
-    GdkDevice* device = gdk_event_get_source_device(sourceEvent);
-    targetEvent.deviceClass = translateDeviceType(device, settings);
+    targetEvent.device = gdk_event_get_source_device(sourceEvent);
+    targetEvent.deviceClass = translateDeviceType(targetEvent.device, settings);
 
-    targetEvent.deviceName = gdk_device_get_name(device);
-    targetEvent.deviceId = DeviceId(device);
+    targetEvent.deviceName = gdk_device_get_name(targetEvent.device);
+    targetEvent.deviceId = DeviceId(targetEvent.device);
 
     // Copy both coordinates of the event
-    gdk_event_get_root_coords(sourceEvent, &targetEvent.absoluteX, &targetEvent.absoluteY);
-    gdk_event_get_coords(sourceEvent, &targetEvent.relativeX, &targetEvent.relativeY);
+    gdk_event_get_root_coords(sourceEvent, &targetEvent.absolute.x, &targetEvent.absolute.y);
+    gdk_event_get_coords(sourceEvent, &targetEvent.relative.x, &targetEvent.relative.y);
 
     // Copy the event button if there is any
     if (targetEvent.type == BUTTON_PRESS_EVENT || targetEvent.type == BUTTON_RELEASE_EVENT) {
@@ -102,11 +92,7 @@ auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings) -> I
         // As we only handle single finger events we can set the button statically to 1
         targetEvent.button = 1;
     }
-    gdk_event_get_state(sourceEvent, &targetEvent.state);
-    if (targetEvent.deviceClass == INPUT_DEVICE_KEYBOARD) {
-        gdk_event_get_keyval(sourceEvent, &targetEvent.button);
-    }
-
+    targetEvent.state = gdk_event_get_modifier_state(sourceEvent);
 
     // Copy the timestamp
     targetEvent.timestamp = gdk_event_get_time(sourceEvent);

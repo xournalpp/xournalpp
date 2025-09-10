@@ -11,43 +11,48 @@
 
 #pragma once
 
-#include <memory>  // for unique_ptr
+#include <functional>
 #include <string>  // for string
 #include <vector>  // for vector
 
-#include <glib.h>     // for gboolean
 #include <gtk/gtk.h>  // for GtkWidget, GtkWindow
 
 #include "audio/DeviceInfo.h"                    // for DeviceInfo
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
-#include "gui/GladeGui.h"                        // for GladeGui
+#include "gui/Builder.h"
+#include "util/raii/GtkWindowUPtr.h"
 
-#include "LatexSettingsPanel.h"  // for LatexSettingsPanel
+#include "ButtonConfigGui.h"
+#include "LanguageConfigGui.h"
+#include "LatexSettingsPanel.h"
+#include "SettingsDialogPaletteTab.h"
+#include "config-features.h"  // for ENABLE_AUDIO
+#include "filesystem.h"       // for path
 
-class ButtonConfigGui;
 class Control;
-class DeviceClassConfigGui;
-class GladeSearchpath;
-class LanguageConfigGui;
 class Settings;
+class DeviceTestingArea;
 
-class SettingsDialog: public GladeGui {
+struct Palette;
+
+class SettingsDialog {
 public:
-    SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control);
-    ~SettingsDialog() override;
+    SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control,
+                   const std::vector<fs::path>& paletteDirectories, std::function<void()> callback);
+    ~SettingsDialog();
 
-public:
-    void show(GtkWindow* parent) override;
+    inline GtkWindow* getWindow() const { return window.get(); }
 
+private:
     void save();
-
     void setDpi(int dpi);
 
     /**
      * Set active regions
      */
     void enableWithCheckbox(const std::string& checkbox, const std::string& widget);
-    [[maybe_unused]] void disableWithCheckbox(const std::string& checkbox, const std::string& widget);
+    void disableWithCheckbox(const std::string& checkbox, const std::string& widget);
+    void enableWithEnabledCheckbox(const std::string& checkbox, const std::string& widget);
 
     /*
      * Listeners for changes to settings.
@@ -63,16 +68,13 @@ public:
 
 private:
     void load();
-    void loadCheckbox(const char* name, gboolean value);
+    void loadCheckbox(const char* name, bool value);
     bool getCheckbox(const char* name);
 
     void loadSlider(const char* name, double value);
     double getSlider(const char* name);
 
-    void initMouseButtonEvents();
-    void initMouseButtonEvents(const char* hbox, int button, bool withDevice = false);
-
-    void initLanguageSettings();
+    void initMouseButtonEvents(GladeSearchpath* gladeSearchPath);
 
     void showStabilizerAvMethodOptions(StrokeStabilizer::AveragingMethod method);
     void showStabilizerPreprocessorOptions(StrokeStabilizer::Preprocessor preprocessor);
@@ -82,12 +84,22 @@ private:
     Control* control = nullptr;
     GtkWidget* callib = nullptr;
     int dpi = 72;
+
+#ifdef ENABLE_AUDIO
     std::vector<DeviceInfo> audioInputDevices;
     std::vector<DeviceInfo> audioOutputDevices;
+#endif
 
-    std::unique_ptr<LanguageConfigGui> languageConfig;
+    Builder builder;
+    xoj::util::GtkWindowUPtr window;
+
+    std::unique_ptr<DeviceTestingArea> deviceTestingArea;
+
+    LanguageConfigGui languageConfig;
     std::vector<std::unique_ptr<ButtonConfigGui>> buttonConfigs;
-    std::vector<std::unique_ptr<DeviceClassConfigGui>> deviceClassConfigs;
 
     LatexSettingsPanel latexPanel;
+    SettingsDialogPaletteTab paletteTab;
+
+    std::function<void()> callback;
 };

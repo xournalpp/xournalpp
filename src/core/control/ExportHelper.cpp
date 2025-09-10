@@ -92,11 +92,11 @@ auto exportImg(Document* doc, const char* output, const char* range, const char*
  * @return 0 on success, -3 on export failure
  */
 auto exportPdf(Document* doc, const char* output, const char* range, const char* layerRange,
-               ExportBackgroundType exportBackground, bool progressiveMode) -> int {
+               ExportBackgroundType exportBackground, bool progressiveMode, ExportBackend backend) -> int {
 
     xoj::util::GObjectSPtr<GFile> file(g_file_new_for_commandline_arg(output), xoj::util::adopt);
 
-    std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, nullptr);
+    std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, nullptr, backend);
     pdfe->setExportBackground(exportBackground);
     auto path = fs::u8path(g_file_peek_path(file.get()));
 

@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <memory>
 #include <string>  // for string
 #include <vector>  // for vector
 
@@ -34,15 +35,17 @@ public:
     virtual ~PageTypeHandler();
 
 public:
-    std::vector<PageTypeInfo*>& getPageTypes();
+    const std::vector<std::unique_ptr<PageTypeInfo>>& getPageTypes();
+    const std::vector<std::unique_ptr<PageTypeInfo>>& getSpecialPageTypes();
     static PageTypeFormat getPageTypeFormatForString(const std::string& format);
     static std::string getStringForPageTypeFormat(const PageTypeFormat& format);
+    const PageTypeInfo* getInfoOn(const PageType& pt) const;
 
 private:
-    void addPageTypeInfo(std::string name, PageTypeFormat format, std::string config);
     bool parseIni(fs::path const& filepath);
     void loadFormat(GKeyFile* config, const char* group);
 
 private:
-    std::vector<PageTypeInfo*> types;
+    std::vector<std::unique_ptr<PageTypeInfo>> types;
+    std::vector<std::unique_ptr<PageTypeInfo>> specialTypes;
 };

@@ -42,9 +42,9 @@ void PageTemplateSettings::setBackgroundColor(Color backgroundColor) { this->bac
 
 auto PageTemplateSettings::getBackgroundType() -> PageType { return backgroundType; }
 
-auto PageTemplateSettings::getPageInsertType() -> PageType {
+auto PageTemplateSettings::getPageInsertType() -> std::optional<PageType> {
     if (copyLastPageSettings) {
-        return PageType(PageTypeFormat::Copy);
+        return std::nullopt;
     }
 
     return backgroundType;
@@ -87,7 +87,7 @@ auto PageTemplateSettings::parse(const std::string& tpl) -> bool {
             pageWidth = std::stod(value.substr(0, pos));
             pageHeight = std::stod(value.substr(pos + 1));
         } else if (key == "backgroundColor") {
-            backgroundColor = Color(std::stoul(value.substr(1), nullptr, 16));
+            backgroundColor = Color(static_cast<uint32_t>(std::stoul(value.substr(1), nullptr, 16)));
         } else if (key == "backgroundType") {
             this->backgroundType.format = PageTypeHandler::getPageTypeFormatForString(value);
         } else if (key == "backgroundTypeConfig") {

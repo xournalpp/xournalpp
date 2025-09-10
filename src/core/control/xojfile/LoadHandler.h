@@ -12,6 +12,7 @@
 #pragma once
 
 #include <cstddef>   // for size_t
+#include <memory>    // for unique_ptr
 #include <optional>  // for optional
 #include <string>    // for string
 #include <vector>    // for vector
@@ -55,7 +56,7 @@ public:
     virtual ~LoadHandler();
 
 public:
-    Document* loadDocument(fs::path const& filepath);
+    std::unique_ptr<Document> loadDocument(fs::path const& filepath);
 
     std::string getLastError();
     bool isAttachedPdfMissing() const;
@@ -112,7 +113,7 @@ private:
      * Returns the contents of the zip attachment with the given file name, or
      * nullopt if there is no such file.
      */
-    std::optional<std::string> readZipAttachment(fs::path const& filename);
+    std::unique_ptr<std::string> readZipAttachment(fs::path const& filename);
 
     fs::path getTempFileForPath(fs::path const& filename);
 
@@ -160,7 +161,7 @@ private:
     std::string loadedFilename;
 
     DocumentHandler dHanlder;
-    Document doc;
+    std::unique_ptr<Document> doc;
 
     friend Color LoadHandlerHelper::parseBackgroundColor(LoadHandler* loadHandler);
     friend bool LoadHandlerHelper::parseColor(const char* text, Color& color, LoadHandler* loadHandler);

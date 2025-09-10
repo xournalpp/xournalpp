@@ -3,14 +3,14 @@
 #include <algorithm>  // for max, min
 #include <memory>     // for __shared_ptr_access, __shared_ptr_acces...
 
+#include "control/Control.h"
+#include "model/Document.h"
 #include "model/PageRef.h"    // for PageRef
 #include "model/Stroke.h"     // for Stroke
 #include "model/XojPage.h"    // for XojPage
 #include "undo/UndoAction.h"  // for UndoAction
 #include "util/Rectangle.h"   // for Rectangle
 #include "util/i18n.h"        // for _
-
-class Control;
 
 using xoj::util::Rectangle;
 
@@ -28,6 +28,8 @@ auto LineStyleUndoAction::undo(Control* control) -> bool {
         return true;
     }
 
+    Document* doc = control->getDocument();
+    doc->lock();
     LineStyleUndoActionEntry e = this->data.front();
     double x1 = e.s->getX();
     double x2 = e.s->getX() + e.s->getElementWidth();
@@ -43,6 +45,8 @@ auto LineStyleUndoAction::undo(Control* control) -> bool {
         y2 = std::max(y2, e.s->getY() + e.s->getElementHeight());
     }
 
+    doc->unlock();
+
     Rectangle rect(x1, y1, x2 - x1, y2 - y1);
     this->page->fireRectChanged(rect);
 
@@ -54,6 +58,8 @@ auto LineStyleUndoAction::redo(Control* control) -> bool {
         return true;
     }
 
+    Document* doc = control->getDocument();
+    doc->lock();
     LineStyleUndoActionEntry e = this->data.front();
     double x1 = e.s->getX();
     double x2 = e.s->getX() + e.s->getElementWidth();
@@ -68,6 +74,8 @@ auto LineStyleUndoAction::redo(Control* control) -> bool {
         y1 = std::min(y1, e.s->getY());
         y2 = std::max(y2, e.s->getY() + e.s->getElementHeight());
     }
+
+    doc->unlock();
 
     Rectangle rect(x1, y1, x2 - x1, y2 - y1);
     this->page->fireRectChanged(rect);

@@ -24,8 +24,10 @@ struct BackgroundImage::Content {
             path(std::move(path)), pixbuf(gdk_pixbuf_new_from_stream(stream, nullptr, error)) {}
 
     ~Content() {
-        g_object_unref(this->pixbuf);
-        this->pixbuf = nullptr;
+        if (this->pixbuf) {
+            g_object_unref(this->pixbuf);
+            this->pixbuf = nullptr;
+        }
     };
 
     Content(const Content&) = delete;
@@ -59,7 +61,7 @@ void BackgroundImage::loadFile(GInputStream* stream, fs::path const& path, GErro
     this->img = std::make_shared<Content>(stream, path, error);
 }
 
-auto BackgroundImage::getCloneId() -> int { return this->img ? this->img->pageId : -1; }
+auto BackgroundImage::getCloneId() const -> int { return this->img ? this->img->pageId : -1; }
 
 void BackgroundImage::setCloneId(int id) {
     if (this->img) {
@@ -88,6 +90,7 @@ void BackgroundImage::setAttach(bool attach) {
     this->img->attach = attach;
 }
 
-auto BackgroundImage::getPixbuf() const -> GdkPixbuf* { return this->img ? this->img->pixbuf : nullptr; }
+auto BackgroundImage::getPixbuf() -> GdkPixbuf* { return this->img ? this->img->pixbuf : nullptr; }
+auto BackgroundImage::getPixbuf() const -> const GdkPixbuf* { return this->img ? this->img->pixbuf : nullptr; }
 
 auto BackgroundImage::isEmpty() const -> bool { return !this->img; }

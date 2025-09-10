@@ -14,26 +14,24 @@
 #include <gtk/gtk.h>  // for GtkWidget, GtkComboBox, GtkWindow
 
 #include "control/DeviceListHelper.h"  // for InputDevice
-#include "gui/GladeGui.h"              // for GladeGui
 
 class Settings;
 class GladeSearchpath;
 
-class DeviceClassConfigGui: public GladeGui {
+class DeviceClassConfigGui {
 public:
-    DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, const InputDevice& device);
-    ~DeviceClassConfigGui() override;
+    DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, GtkBox* box, Settings* settings, bool showApplyBtn = false);
+    ~DeviceClassConfigGui();
 
 public:
     void loadSettings();
     void saveSettings();
 
-    // Not implemented! This is not a dialog!
-    void show(GtkWindow* parent) override;
+    /// Set the device represented by the entry.
+    /// Please call saveSettings() beforehand if the settings of the previous device need to be saved.
+    void setDevice(const InputDevice& device);
 
-private:
-    static void cbSelectCallback(GtkComboBox* widget, DeviceClassConfigGui* gui);
-    void enableDisableTools();
+    inline bool representsDevice(const InputDevice& dev) const { return dev == device; }
 
 private:
     Settings* settings;

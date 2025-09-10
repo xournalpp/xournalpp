@@ -1,60 +1,108 @@
 #include "ToolPageSpinner.h"
 
-#include <utility>  // for move
+#include <algorithm>  // for find
+#include <utility>    // for move
 
 #include <glib-object.h>  // for g_object_ref_sink
 
 #include "gui/toolbarMenubar/AbstractToolItem.h"  // for AbstractToolItem
 #include "gui/widgets/SpinPageAdapter.h"          // for SpinPageAdapter
-#include "util/i18n.h"                            // for FS, _, _F, C_F
+#include "util/Assert.h"                          // for xoj_assert
+#include "util/Util.h"
+#include "util/gtk4_helper.h"  // for gtk_box_append
+#include "util/i18n.h"         // for FS, _, _F, C_F
 
-class ActionHandler;
+class ToolPageSpinner::Instance final {
+public:
+    Instance(ToolPageSpinner* handler, GtkOrientation orientation): handler(handler), orientation(orientation) {}
 
-ToolPageSpinner::ToolPageSpinner(ActionHandler* handler, std::string id, ActionType type,
-                                 IconNameHelper iconNameHelper):
-        AbstractToolItem(std::move(id), handler, type, nullptr), iconNameHelper(iconNameHelper) {
-    this->pageSpinner = new SpinPageAdapter();
-}
+    xoj::util::WidgetSPtr makeWidget() {
+        GtkWidget* spinner = gtk_spin_button_new_with_range(0, 1, 1);
+        gtk_orientable_set_orientation(GTK_ORIENTABLE(spinner), orientation);
+        this->spinner.setWidget(spinner);  // takes ownership of spinner reference
+        this->spinner.addListener(handler->getListener());
+
+        GtkWidget* numberLabel = gtk_label_new("");
+        GtkWidget* pageLabel = gtk_label_new(_("Page"));
+        if (orientation == GTK_ORIENTATION_HORIZONTAL) {
+            gtk_widget_set_valign(pageLabel, GTK_ALIGN_BASELINE);
+            gtk_widget_set_margin_start(pageLabel, 7);
+            gtk_widget_set_margin_end(pageLabel, 7);
+            gtk_widget_set_valign(spinner, GTK_ALIGN_BASELINE);
+            gtk_widget_set_valign(numberLabel, GTK_ALIGN_BASELINE);
+            gtk_widget_set_margin_start(numberLabel, 7);
+            gtk_widget_set_margin_end(numberLabel, 7);
+        } else {
+            gtk_widget_set_halign(pageLabel, GTK_ALIGN_CENTER);
+            gtk_widget_set_margin_top(pageLabel, 7);
+            gtk_widget_set_margin_bottom(pageLabel, 7);
+            gtk_widget_set_halign(spinner, GTK_ALIGN_CENTER);
+            gtk_widget_set_halign(numberLabel, GTK_ALIGN_CENTER);
+            gtk_widget_set_valign(spinner, GTK_ALIGN_BASELINE);
+            gtk_widget_set_valign(numberLabel, GTK_ALIGN_BASELINE);
+            gtk_label_set_justify(GTK_LABEL(numberLabel), GTK_JUSTIFY_CENTER);
+            gtk_widget_set_margin_top(numberLabel, 7);
+            gtk_widget_set_margin_bottom(numberLabel, 7);
+        }
+        this->numberLabel = GTK_LABEL(numberLabel);
+
+        xoj::util::WidgetSPtr item(gtk_box_new(orientation, 1), xoj::util::adopt);
+        GtkBox* box = GTK_BOX(item.get());
+        gtk_box_append(box, pageLabel);
+        gtk_box_append(box, spinner);
+        gtk_box_append(box, numberLabel);
+
+        return item;
+    }
+
+    void disconnect() { handler = nullptr; }
+
+private:
+    ToolPageSpinner* handler;
+    GtkOrientation orientation;
+    SpinPageAdapter spinner;
+    GtkLabel* numberLabel;
+
+public:
+    void setPageInfo(size_t currentPage, size_t pageCount, size_t pdfPage) {
+        if (pageCount == 0) {
+            spinner.setMinMaxPage(0, 0);
+            spinner.setPage(0);
+        } else {
+            spinner.setMinMaxPage(1, pageCount);
+            spinner.setPage(currentPage + 1);
+        }
+
+        updateLabel(pageCount, pdfPage);
+    }
+    ToolPageSpinner* getHandler() const { return handler; }
+
+private:
+    void updateLabel(const size_t pageCount, const size_t pdfPage) {
+        std::string ofString = FS(C_F("Page {pagenumber} \"of {pagecount}\"", " of {1}") % pageCount);
+        if (pdfPage != npos) {
+            if (this->orientation == GTK_ORIENTATION_HORIZONTAL) {
+                ofString += std::string(", ") + FS(_F("PDF Page {1}") % (pdfPage + 1));
+            } else {
+                ofString += std::string("\n") + FS(_F("PDF {1}") % (pdfPage + 1));
+            }
+        }
+        gtk_label_set_text(this->numberLabel, ofString.c_str());
+    }
+};
+
+ToolPageSpinner::ToolPageSpinner(std::string id, IconNameHelper iconNameHelper, SpinPageListener* listener):
+        AbstractToolItem(std::move(id), Category::NAVIGATION), iconNameHelper(iconNameHelper), listener(listener) {}
 
 ToolPageSpinner::~ToolPageSpinner() {
-    delete this->pageSpinner;
-    g_clear_object(&this->lbVerticalPdfPage);
-    g_clear_object(&this->lbPageNo);
-    g_clear_object(&this->box);
-}
-
-auto ToolPageSpinner::getPageSpinner() const -> SpinPageAdapter* { return pageSpinner; }
-
-void ToolPageSpinner::setPageInfo(const size_t pageCount, const size_t pdfPage) {
-    this->pageCount = pageCount;
-    this->pdfPage = pdfPage;
-    if (this->lbPageNo) {
-        updateLabels();
+    for (auto* i: instances) {
+        i->disconnect();
     }
 }
 
-void ToolPageSpinner::updateLabels() {
-    std::string ofString = FS(C_F("Page {pagenumber} \"of {pagecount}\"", " of {1}") % this->pageCount);
-    if (this->orientation == GTK_ORIENTATION_HORIZONTAL) {
-        std::string pdfString;
-        if (this->pdfPage > 0) {  // zero means that theres no pdf currently
-            pdfString = std::string(", ") + FS(_F("PDF Page {1}") % this->pdfPage);
-        }
-        gtk_label_set_text(GTK_LABEL(lbPageNo), (ofString + pdfString).c_str());
-    } else {
-        gtk_label_set_text(GTK_LABEL(lbPageNo), ofString.c_str());
-        if (this->pdfPage > 0) {  // zero means that theres no pdf currently
-            gtk_label_set_text(GTK_LABEL(lbVerticalPdfPage), FS(_F("PDF {1}") % this->pdfPage).c_str());
-            if (gtk_widget_get_parent(this->lbVerticalPdfPage) == nullptr) {
-                // re-add pdf label if it has been removed previously
-                gtk_box_pack_start(GTK_BOX(box), this->lbVerticalPdfPage, false, false, 0);
-                gtk_widget_show(this->lbVerticalPdfPage);
-            }
-        } else {
-            if (gtk_widget_get_parent(this->lbVerticalPdfPage) != nullptr) {
-                gtk_container_remove(GTK_CONTAINER(box), this->lbVerticalPdfPage);
-            }
-        }
+void ToolPageSpinner::setPageInfo(size_t currentPage, size_t pageCount, size_t pdfPage) {
+    for (auto* i: instances) {
+        i->setPageInfo(currentPage, pageCount, pdfPage);
     }
 }
 
@@ -64,69 +112,27 @@ auto ToolPageSpinner::getNewToolIcon() const -> GtkWidget* {
     return gtk_image_new_from_icon_name(iconNameHelper.iconName("page-spinner").c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
-auto ToolPageSpinner::getNewToolPixbuf() const -> GdkPixbuf* { return getPixbufFromImageIconName(); }
+auto ToolPageSpinner::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
+    auto orientation = horizontal ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
+    auto data = std::make_unique<Instance>(this, orientation);
+    auto item = data->makeWidget();
 
-auto ToolPageSpinner::newItem() -> GtkToolItem* {
-    if (this->pageSpinner->hasWidget()) {
-        this->pageSpinner->removeWidget();
-    }
-    GtkWidget* spinner = gtk_spin_button_new_with_range(0, 1, 1);
-    gtk_orientable_set_orientation(reinterpret_cast<GtkOrientable*>(spinner), orientation);
-    g_object_ref_sink(spinner);
-    this->pageSpinner->setWidget(spinner);  // takes ownership of spinner reference
+    this->instances.emplace_back(data.get());  // Keep a ref for callback propagation
 
-    if (this->lbPageNo) {
-        g_object_unref(this->lbPageNo);
-    }
-    this->lbPageNo = gtk_label_new("");
-    g_object_ref_sink(this->lbPageNo);
+    // Destroy *data if the widget is destroyed
+    g_object_weak_ref(
+            G_OBJECT(item.get()),
+            +[](gpointer d, GObject*) {
+                auto* data = static_cast<Instance*>(d);
+                if (auto* h = data->getHandler(); h) {
+                    auto& instances = h->instances;
+                    if (auto it = std::find(instances.begin(), instances.end(), data); it != instances.end()) {
+                        instances.erase(it);
+                    }
+                }
+                delete data;
+            },
+            data.release());
 
-    if (this->lbVerticalPdfPage) {
-        g_clear_object(&this->lbVerticalPdfPage);
-    }
-
-    GtkWidget* pageLabel = gtk_label_new(_("Page"));
-    if (orientation == GTK_ORIENTATION_HORIZONTAL) {
-        gtk_widget_set_valign(pageLabel, GTK_ALIGN_BASELINE);
-        gtk_widget_set_valign(spinner, GTK_ALIGN_BASELINE);
-        gtk_widget_set_valign(this->lbPageNo, GTK_ALIGN_BASELINE);
-    } else {
-        this->lbVerticalPdfPage = gtk_label_new("");
-        g_object_ref_sink(this->lbVerticalPdfPage);
-
-        gtk_widget_set_halign(pageLabel, GTK_ALIGN_BASELINE);
-        gtk_widget_set_halign(spinner, GTK_ALIGN_CENTER);
-        gtk_widget_set_halign(this->lbPageNo, GTK_ALIGN_BASELINE);
-        gtk_widget_set_halign(lbVerticalPdfPage, GTK_ALIGN_BASELINE);
-    }
-
-    if (this->box) {
-        g_object_unref(this->box);
-    }
-    this->box = gtk_box_new(orientation, 1);
-    g_object_ref_sink(this->box);
-    gtk_box_pack_start(GTK_BOX(box), pageLabel, false, false, 7);
-    gtk_box_pack_start(GTK_BOX(box), spinner, false, false, 0);
-    gtk_box_pack_start(GTK_BOX(box), this->lbPageNo, false, false, 7);
-
-    GtkToolItem* it = gtk_tool_item_new();
-    gtk_container_add(GTK_CONTAINER(it), box);
-
-    updateLabels();
-
-    return it;
-}
-
-auto ToolPageSpinner::createItem(bool horizontal) -> GtkToolItem* {
-    this->orientation = horizontal ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
-
-    this->item = createTmpItem(horizontal);
-
-    return this->item;
-}
-
-auto ToolPageSpinner::createTmpItem(bool horizontal) -> GtkToolItem* {
-    GtkToolItem* item = AbstractToolItem::createTmpItem(horizontal);
-    g_object_ref(item);
     return item;
 }

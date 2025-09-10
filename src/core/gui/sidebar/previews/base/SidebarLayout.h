@@ -15,8 +15,8 @@ class SidebarPreviewBase;
 
 class SidebarLayout {
 public:
-    SidebarLayout();
-    virtual ~SidebarLayout();
+    SidebarLayout() = delete;
+    ~SidebarLayout() = delete;
 
 public:
     /**

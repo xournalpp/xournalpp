@@ -14,9 +14,9 @@ constexpr double MIN_HEIGHT = 4.5;
 constexpr double MAX_HEIGHT = 15.0;
 
 SetsquareInputHandler::SetsquareInputHandler(XournalView* xournal, GeometryToolController* controller):
-        GeometryToolInputHandler(xournal, controller, Setsquare::INITIAL_HEIGHT, 0., 0.) {}
+        GeometryToolInputHandler(xournal, controller) {}
 
-SetsquareInputHandler::~SetsquareInputHandler() noexcept { this->unregisterFromPool(); }
+SetsquareInputHandler::~SetsquareInputHandler() noexcept = default;
 
 auto SetsquareInputHandler::handlePointer(InputEvent const& event) -> bool {
     const auto coords = getCoords(event);

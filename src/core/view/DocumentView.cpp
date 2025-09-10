@@ -1,5 +1,6 @@
 #include "DocumentView.h"
 
+#include <map>
 #include <memory>  // for __shared_ptr_access, uni...
 #include <vector>  // for vector
 
@@ -26,7 +27,7 @@ void DocumentView::setPdfCache(PdfCache* cache) { pdfCache = cache; }
  * @param cr Draw to this context
  * @param dontRenderEditingStroke false to draw currently drawing stroke
  */
-void DocumentView::initDrawing(PageRef page, cairo_t* cr, bool dontRenderEditingStroke) {
+void DocumentView::initDrawing(ConstPageRef page, cairo_t* cr, bool dontRenderEditingStroke) {
     this->cr = cr;
     this->page = page;
     this->dontRenderEditingStroke = dontRenderEditingStroke;
@@ -65,28 +66,15 @@ void DocumentView::drawBackground(xoj::view::BackgroundFlags bgFlags) const {
     bgView->draw(cr);
 }
 
-/**
- * Draw the full page, usually you would like to call this method
- * @param page The page to draw
- * @param cr Draw to thgis context
- * @param dontRenderEditingStroke false to draw currently drawing stroke
- * @param hideBackground true to hide the background
- */
-void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke, bool hidePdfBackground,
-                            bool hideImageBackground, bool hideRulingBackground) {
+void DocumentView::drawPage(ConstPageRef page, cairo_t* cr, bool dontRenderEditingStroke,
+                            xoj::view::BackgroundFlags flags) {
     initDrawing(page, cr, dontRenderEditingStroke);
 
-    {  // Draw background
-        xoj::view::BackgroundFlags bgFlags;
-        bgFlags.showImage = (xoj::view::ImageBackgroundTreatment)!hideImageBackground;
-        bgFlags.showPDF = (xoj::view::PDFBackgroundTreatment)!hidePdfBackground;
-        bgFlags.showRuling = (xoj::view::RulingBackgroundTreatment)!hideRulingBackground;
-        drawBackground(bgFlags);
-    }
+    drawBackground(flags);
 
     xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
                                (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
-    for (Layer* layer: *page->getLayers()) {
+    for (const Layer* layer: page->getLayersView()) {
         if (layer->isVisible()) {
             xoj::view::LayerView layerView(layer);
             layerView.draw(context);
@@ -97,39 +85,28 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStr
 }
 
 
-void DocumentView::drawLayersOfPage(const LayerRangeVector& layerRange, PageRef page, cairo_t* cr,
-                                    bool dontRenderEditingStroke, bool hidePdfBackground, bool hideImageBackground,
-                                    bool hideRulingBackground) {
+void DocumentView::drawLayersOfPage(const LayerRangeVector& layerRange, ConstPageRef page, cairo_t* cr,
+                                    bool dontRenderEditingStroke, xoj::view::BackgroundFlags flags) {
     initDrawing(page, cr, dontRenderEditingStroke);
 
-    {  // Draw background
-        xoj::view::BackgroundFlags bgFlags;
-        bgFlags.showImage = (xoj::view::ImageBackgroundTreatment)!hideImageBackground;
-        bgFlags.showPDF = (xoj::view::PDFBackgroundTreatment)!hidePdfBackground;
-        bgFlags.showRuling = (xoj::view::RulingBackgroundTreatment)!hideRulingBackground;
-        drawBackground(bgFlags);
-    }
+    drawBackground(flags);
 
     size_t layerCount = page->getLayerCount();
-    std::vector<bool> visible(layerCount, false);
+    std::map<size_t, const Layer*> visibleLayers;
 
     for (LayerRangeEntry e: layerRange) {
         auto last = e.last;
         if (last >= layerCount) {
             last = layerCount - 1;
         }
-        for (auto x = e.first; x <= last; x++) {
-            visible[x] = true;
+        for (size_t x = e.first; x <= last; x++) {
+            visibleLayers[x] = page->getLayersView()[x];
         }
     }
 
     xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
                                (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
-    auto visibilityIt = visible.begin();
-    for (Layer* l: *page->getLayers()) {
-        if (!*(visibilityIt++)) {
-            continue;
-        }
+    for (auto&& [_, l]: visibleLayers) {
         xoj::view::LayerView layerView(l);
         layerView.draw(context);
     }

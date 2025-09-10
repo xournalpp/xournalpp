@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.2.9~dev (Unreleased)
+## 1.2.8+dev (Unreleased)
 
 ## 1.2.8
 
@@ -21,6 +21,7 @@ This release also includes bugfixes from various community contributors:
 * Fixed default filename processing on Windows (#6634)
 * Bumped dependency versions on MacOS (#6498)
 * Updated translations
+>>>>>>> release-1.2
 
 ## 1.2.7
 
@@ -122,22 +123,22 @@ Bugfixes from various community contributors.
 
 Bugfixes from various community contributors.
 
-* Fixed undefined behaviour due to signal callbacks wrong type (#5057)
-* Fixed reference handling of sidebar widgets, fixing crashes and warning (#5083,
+* Fix undefined behaviour due to signal callbacks wrong type (#5057)
+* Fix reference handling of sidebar widgets, fixing crashes and warning (#5083,
   #5074, #4026)
 * Default build type is now "RelWithDebInfo" (#5118)
-* Fixed error message when trying to open an autosave file (#5140)
-* Fixed empty toolbars being shown (#5160, #5051)
-* Added a device id check for input sequences, so devices don't interfere with one
+* Fix error message when trying to open an autosave file (#5140)
+* Fix empty toolbars being shown (#5160, #5051)
+* Add a device id check for input sequences, so devices don't interfere with one
   another anymore (#5170, #5116, #5087)
-* Fixed a bunch of memory leaks (#5164, #5216)
+* Fix a bunch of memory leaks (#5164, #5216)
 * Properly read PDF files as binary, fixing some reading issues (#5174, #4740)
-* Removed unsafe symbols from document name generation (#5144, #5123)
-* Fixed crash when a modification happens outside of the cached pages (#5144, 
+* Remove unsafe symbols from document name generation (#5144, #5123)
+* Fix crash when a modification happens outside of the cached pages (#5144, 
   #5178, #5162, #5046, #5126)
-* Fixed audio output settings being off by 1 (#5205)
-* Clarified CrashLog message: deleting the Crashlog will stop the message from popping up (#5214)
-* Fixed a crash when pressing both mouse buttons at once (#5210, #5149)
+* Fix audio output settings being off by 1 (#5205)
+* Clarify CrashLog message: deleting the crashlog will stop the message from popping up (#5214)
+* Fix a crash when pressing both mouse buttons at once (#5210, #5149)
 
 ## 1.2.1
 

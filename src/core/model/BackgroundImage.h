@@ -36,7 +36,7 @@ struct BackgroundImage {
     void loadFile(fs::path const& filepath, GError** error);
     void loadFile(GInputStream* stream, fs::path const& filepath, GError** error);
 
-    int getCloneId();
+    int getCloneId() const;
     void setCloneId(int id);
     void clearSaveState();
 
@@ -46,7 +46,8 @@ struct BackgroundImage {
     bool isAttached() const;
     void setAttach(bool attach);
 
-    GdkPixbuf* getPixbuf() const;
+    GdkPixbuf* getPixbuf();
+    const GdkPixbuf* getPixbuf() const;
 
     bool isEmpty() const;
 

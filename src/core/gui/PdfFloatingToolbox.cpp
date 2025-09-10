@@ -2,9 +2,11 @@
 
 #include <algorithm>  // for max, min
 #include <cmath>      // for abs
-#include <string>     // for string
-#include <utility>    // for move
-#include <vector>     // for vector
+#include <cstddef>    // for size_t
+#include <memory>
+#include <string>   // for string
+#include <utility>  // for move
+#include <vector>   // for vector
 
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 #include <gtk/gtk.h>
@@ -25,6 +27,8 @@
 #include "undo/InsertUndoAction.h"  // for InsertUndoAction
 #include "undo/UndoAction.h"        // for UndoAction
 #include "undo/UndoRedoHandler.h"   // for UndoRedoHandler
+#include "util/Assert.h"            // for xoj_assert
+#include "util/gtk4_helper.h"       // for gtk_widget_get_clipboard
 
 #include "MainWindow.h"  // for MainWindow
 
@@ -60,7 +64,7 @@ auto PdfFloatingToolbox::newSelection(double x, double y) -> const PdfElemSelect
 }
 
 void PdfFloatingToolbox::show(int x, int y) {
-    g_assert_nonnull(this->getSelection());
+    xoj_assert(this->getSelection());
 
     // (x, y) are in the gtk window's coordinates.
     // However, we actually show the toolbox in the overlay's coordinate system.
@@ -112,7 +116,8 @@ void PdfFloatingToolbox::userCancelSelection() {
 }
 
 void PdfFloatingToolbox::highlightCb(GtkButton* button, PdfFloatingToolbox* pft) {
-    pft->createStrokes(PdfMarkerStyle::POS_TEXT_MIDDLE, PdfMarkerStyle::WIDTH_TEXT_HEIGHT, 60);
+    int markerOpacity = pft->theMainWindow->getControl()->getToolHandler()->getSelectPDFTextMarkerOpacity();
+    pft->createStrokes(PdfMarkerStyle::POS_TEXT_MIDDLE, PdfMarkerStyle::WIDTH_TEXT_HEIGHT, markerOpacity);
     pft->userCancelSelection();
 }
 
@@ -137,21 +142,21 @@ void PdfFloatingToolbox::show() {
 }
 
 void PdfFloatingToolbox::copyTextToClipboard() {
-    GtkClipboard* clipboard = gtk_widget_get_clipboard(this->theMainWindow->getWindow(), GDK_SELECTION_CLIPBOARD);
+    GtkClipboard* clipboard = gtk_widget_get_clipboard(this->theMainWindow->getWindow());
     if (const std::string& text = this->pdfElemSelection->getSelectedText(); !text.empty()) {
         gtk_clipboard_set_text(clipboard, text.c_str(), -1);
     }
 }
 
 void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle width, int markerOpacity) {
-    const uint64_t pdfPageNo = this->pdfElemSelection->getSelectionPageNr();
-    const uint64_t currentPage = theMainWindow->getXournal()->getCurrentPage();
+    const size_t pdfPageNo = this->pdfElemSelection->getSelectionPageNr();
+    const size_t currentPage = theMainWindow->getXournal()->getCurrentPage();
 
     // Get the PDF page that the current page corresponds to.
     // It should be the same as the PDF page of the selection.
     auto doc = this->theMainWindow->getControl()->getDocument();
     doc->lock();
-    const uint64_t pdfPageOfCurrentPage = doc->getPage(currentPage)->getPdfPageNr();
+    const size_t pdfPageOfCurrentPage = doc->getPage(currentPage)->getPdfPageNr();
     doc->unlock();
 
     if (pdfPageOfCurrentPage != pdfPageNo) {
@@ -172,7 +177,7 @@ void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle w
     auto color = theMainWindow->getXournal()->getControl()->getToolHandler()->getColor();
 
     Range dirtyRange;
-    std::vector<Element*> strokes;
+    std::vector<ElementPtr> strokes;
     for (XojPdfRectangle rect: textRects) {
         const double topOfLine = std::min(rect.y1, rect.y2);
         const double middleOfLine = (rect.y1 + rect.y2) / 2;
@@ -186,7 +191,7 @@ void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle w
         // the width of stroke
         const double w = width == PdfMarkerStyle::WIDTH_TEXT_LINE ? 1 : rectWidth;
 
-        auto* stroke = new Stroke();
+        auto stroke = std::make_unique<Stroke>();
         stroke->setColor(color);
         stroke->setFill(markerOpacity);
         stroke->setToolType(StrokeTool::HIGHLIGHTER);
@@ -198,18 +203,21 @@ void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle w
         dirtyRange.addPoint(rect.x1, h - 0.5 * w);
         dirtyRange.addPoint(rect.x2, h + 0.5 * w);
 
-        strokes.push_back(stroke);
+        strokes.push_back(std::move(stroke));
     }
+
+    std::vector<const Element*> strokePtrs(strokes.size());
+    std::transform(strokes.begin(), strokes.end(), strokePtrs.begin(), [](auto& e) { return e.get(); });
 
     doc->lock();
-    for (auto* s: strokes) {
-        layer->addElement(s);
+    for (auto&& s: strokes) {
+        layer->addElement(std::move(s));
     }
     doc->unlock();
-    page->fireElementsChanged(strokes, dirtyRange);
+    page->fireElementsChanged(strokePtrs, dirtyRange);
 
     auto undoAct = std::make_unique<GroupUndoAction>();
-    for (auto* stroke: strokes) {
+    for (auto* stroke: strokePtrs) {
         undoAct->addAction(std::make_unique<InsertUndoAction>(page, layer, stroke));
     }
     control->getUndoRedoHandler()->addUndoAction(std::move(undoAct));

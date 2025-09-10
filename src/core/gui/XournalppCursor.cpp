@@ -17,7 +17,7 @@
 #include "control/zoom/ZoomControl.h"        // for ZoomControl
 #include "gui/MainWindow.h"                  // for MainWindow
 #include "util/Color.h"                      // for argb_to_GdkRGBA, rgb_to_...
-#include "util/pixbuf-utils.h"               // for xoj_pixbuf_get_from_surface
+#include "util/safe_casts.h"                 // for ceil_cast
 
 #include "XournalView.h"  // for XournalView
 
@@ -75,7 +75,7 @@ cursorStruct cssCursors[CRSR_END_OF_CURSORS];
 
 XournalppCursor::XournalppCursor(Control* control): control(control) {
     // clang-format off
-	// NOTE: Go ahead and use a fancy css cursor... but specify a common backup cursor. 
+	// NOTE: Go ahead and use a fancy css cursor... but specify a common backup cursor.
 	cssCursors[CRSR_nullptr                ] = 	{"",""};
 	cssCursors[CRSR_BUSY                ] = 	{"wait", 		""					};
 	cssCursors[CRSR_MOVE                ] = 	{"all-scroll", 	""					};
@@ -273,15 +273,15 @@ void XournalppCursor::updateCursor() {
                 default:
                     break;
             }
-        } else if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER) {
-            if ((this->inputDevice == INPUT_DEVICE_MOUSE || this->inputDevice == INPUT_DEVICE_MOUSE_KEYBOARD_COMBO) &&
-                !this->mouseDown)  // mouse and not pressed
-            {
+        } else if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER || type == TOOL_LASER_POINTER_PEN ||
+                   type == TOOL_LASER_POINTER_HIGHLIGHTER) {
+            if (this->inputDevice == INPUT_DEVICE_MOUSE && !this->mouseDown) {
+                // mouse and not pressed
                 setCursor(CRSR_ARROW);
             } else {
-                if (type == TOOL_PEN) {
+                if (type == TOOL_PEN || type == TOOL_LASER_POINTER_PEN) {
                     cursor = getPenCursor();
-                } else  // must be:  if (type == TOOL_HIGHLIGHTER)
+                } else  // must be:  if (type == TOOL_HIGHLIGHTER || type == TOOL_LASER_POINTER_HIGHLIGHTER)
                 {
                     cursor = getHighlighterCursor();
                 }
@@ -304,7 +304,7 @@ void XournalppCursor::updateCursor() {
                 setCursor(CRSR_XTERM);
             }
         } else if (type == TOOL_IMAGE) {
-            setCursor(CRSR_DEFAULT);
+            setCursor(CRSR_TCROSS);
         } else if (type == TOOL_FLOATING_TOOLBOX) {
             setCursor(CRSR_DEFAULT);
         } else if (type == TOOL_VERTICAL_SPACE) {
@@ -371,7 +371,7 @@ auto XournalppCursor::getResizeCursor(double deltaAngle) -> GdkCursor* {
     }
 
     cairo_destroy(cr);
-    GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, RESIZE_CURSOR_SIZE, RESIZE_CURSOR_SIZE);
+    GdkPixbuf* pixbuf = gdk_pixbuf_get_from_surface(crCursor, 0, 0, RESIZE_CURSOR_SIZE, RESIZE_CURSOR_SIZE);
     cairo_surface_destroy(crCursor);
     GdkCursor* cursor =
             gdk_cursor_new_from_pixbuf(gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf,
@@ -392,7 +392,8 @@ auto XournalppCursor::getEraserCursor() -> GdkCursor* {
     this->currentCursor = CRSR_ERASER;
     this->currentCursorFlavour = flavour;
 
-    cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, cursorSize, cursorSize);
+    cairo_surface_t* surface =
+            cairo_image_surface_create(CAIRO_FORMAT_ARGB32, ceil_cast<int>(cursorSize), ceil_cast<int>(cursorSize));
     cairo_t* cr = cairo_create(surface);
     cairo_rectangle(cr, 0, 0, cursorSize, cursorSize);
     cairo_set_source_rgb(cr, 1, 1, 1);
@@ -413,7 +414,7 @@ auto XournalppCursor::getHighlighterCursor() -> GdkCursor* {
         return createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
     }
 
-    return createHighlighterOrPenCursor(5, 120 / 255.0);
+    return createHighlighterOrPenCursor(120 / 255.0);
 }
 
 
@@ -431,22 +432,26 @@ auto XournalppCursor::getPenCursor() -> GdkCursor* {
         return createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
     }
 
-    return createHighlighterOrPenCursor(3, 1.0);
+    return createHighlighterOrPenCursor(1.0);
 }
 
-auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> GdkCursor* {
+auto XournalppCursor::createHighlighterOrPenCursor(double alpha) -> GdkCursor* {
     auto irgb = control->getToolHandler()->getColor();
+    if (const auto& params = control->getSettings()->getRecolorParameters(); params.recolorizeMainView) {
+        irgb = params.recolor.convertColor(irgb);
+    }
     auto drgb = Util::rgb_to_GdkRGBA(irgb);
     auto cursorType = control->getSettings()->getStylusCursorType();
     auto cursor = (cursorType == STYLUS_CURSOR_NONE) ? CRSR_BLANK_CURSOR : CRSR_PENORHIGHLIGHTER;
     bool bright = control->getSettings()->isHighlightPosition();
-    int height = size;
-    int width = size;
+    double cursorSize = std::min(90., control->getToolHandler()->getThickness() * control->getZoomControl()->getZoom());
+    int height = ceil_cast<int>(cursorSize);
+    int width = height;
 
     // create a hash of variables so we notice if one changes despite being the same cursor type:
     gulong flavour = (cursorType == STYLUS_CURSOR_DOT ? 1U : 0U) | (cursorType == STYLUS_CURSOR_BIG ? 2U : 0U) |
-                     (bright ? 4U : 0U) | static_cast<gulong>(64 * alpha) << 3U | static_cast<gulong>(size) << 10U |
-                     static_cast<gulong>(uint32_t(irgb)) << 15U;
+                     (bright ? 4U : 0U) | static_cast<gulong>(64 * alpha) << 3U |
+                     static_cast<gulong>(cursorSize) << 10U | static_cast<gulong>(uint32_t(irgb)) << 15U;
 
     if ((cursor == this->currentCursor) && (flavour == this->currentCursorFlavour)) {
         return nullptr;
@@ -468,7 +473,7 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
 
     if (cursorType == STYLUS_CURSOR_BIG) {
         // When using highlighter, paint the icon with the current color
-        if (size == 5) {
+        if (alpha != 1.0) {
             gdk_cairo_set_source_rgba(cr, &drgb);
         } else {
             cairo_set_source_rgb(cr, 1, 1, 1);
@@ -507,13 +512,12 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
         auto drgbCopy = drgb;
         drgbCopy.alpha = alpha;
         gdk_cairo_set_source_rgba(cr, &drgbCopy);
-        double cursorSize = control->getToolHandler()->getThickness() * control->getZoomControl()->getZoom();
         cairo_arc(cr, centerX, centerY, cursorSize / 2., 0, 2. * M_PI);
         cairo_fill(cr);
     }
 
     cairo_destroy(cr);
-    GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
+    GdkPixbuf* pixbuf = gdk_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
     cairo_surface_destroy(crCursor);
     GdkCursor* gdkCursor = gdk_cursor_new_from_pixbuf(
             gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, centerX, centerY);
@@ -522,7 +526,7 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
 }
 
 
-void XournalppCursor::setCursor(int cursorID) {
+void XournalppCursor::setCursor(guint cursorID) {
     if (cursorID == this->currentCursor) {
         return;
     }
@@ -573,7 +577,7 @@ auto XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool ctrl)
     bool big = control->getSettings()->getStylusCursorType() == STYLUS_CURSOR_BIG;
     bool bright = control->getSettings()->isHighlightPosition();
 
-    int newCursorID = CRSR_DRAWDIRNONE + (shift ? 1 : 0) + (ctrl ? 2 : 0);
+    guint newCursorID = CRSR_DRAWDIRNONE + (shift ? 1 : 0) + (ctrl ? 2 : 0);
     gulong flavour =
             (big ? 1 : 0) | (bright ? 2 : 0) | static_cast<gulong>(size) << 2;  // hash of variables for comparison only
 
@@ -634,7 +638,7 @@ auto XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool ctrl)
     }
 
     cairo_destroy(cr);
-    GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
+    GdkPixbuf* pixbuf = gdk_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
     cairo_surface_destroy(crCursor);
     GdkCursor* cursor = gdk_cursor_new_from_pixbuf(
             gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, centerX, centerY);

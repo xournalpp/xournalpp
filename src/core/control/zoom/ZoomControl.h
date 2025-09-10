@@ -43,7 +43,7 @@ public:
      * @param direction direction to zoom in or out
      * @param zoomCenter position of zoom focus
      */
-    void zoomOneStep(ZoomDirection direction, utl::Point<double> zoomCenter);
+    void zoomOneStep(ZoomDirection direction, xoj::util::Point<double> zoomCenter);
     void zoomOneStep(ZoomDirection direction);
 
     /**
@@ -52,7 +52,7 @@ public:
      * @param direction to zoom in or out
      * @param zoomCenter position of zoom focus
      */
-    void zoomScroll(ZoomDirection direction, utl::Point<double> zoomCenter);
+    void zoomScroll(ZoomDirection direction, xoj::util::Point<double> zoomCenter);
 
     /**
      * Zoom so that the page fits the current size of the window
@@ -129,7 +129,7 @@ public:
      * is, absolute coordinates (not scaling with the document) translated to the
      * top left corner of the drawing area.
      */
-    void startZoomSequence(utl::Point<double> zoomCenter);
+    void startZoomSequence(xoj::util::Point<double> zoomCenter);
 
     /**
      * Call this before any zoom is done, it saves the current page and position
@@ -140,8 +140,8 @@ public:
     /**
      * Change the zoom within a Zoom sequence (startZoomSequence() / endZoomSequence())
      *
-     * @param zoom Current zoom value
-     * @param relative If the zoom is relative to the start value (for Gesture)
+     * @param zoom Zoom value
+     * @param relative If true, multiplies the current zoom value by `zoom`. Otherwise replaces it with `zoom`.
      */
     void zoomSequenceChange(double zoom, bool relative);
 
@@ -153,7 +153,7 @@ public:
      * @param relative If the zoom is relative to the start value (for Gesture)
      * @param scrollVector relative zoom center movement in pixels since last call
      */
-    void zoomSequenceChange(double zoom, bool relative, utl::Point<double> scrollVector);
+    void zoomSequenceChange(double zoom, bool relative, xoj::util::Point<double> scrollVector);
 
     /// Clear all stored data from startZoomSequence()
     void endZoomSequence();
@@ -168,7 +168,7 @@ public:
      * Zoom to correct position on zooming.
      * This function should only be called during a zoom sequence.
      */
-    utl::Point<double> getScrollPositionAfterZoom() const;
+    xoj::util::Point<double> getScrollPositionAfterZoom() const;
 
     /// Get visible rect on xournal view, for Zoom Gesture
     xoj::util::Rectangle<double> getVisibleRect();
@@ -223,14 +223,14 @@ private:
     double zoomSequenceStart = -1;
 
     /// Zoom center position in widget coordinate space, will not be zoomed!
-    utl::Point<double> zoomWidgetPos;
+    xoj::util::Point<double> zoomWidgetPos;
 
     /// Scroll position (top left corner of view) to scale
-    utl::Point<double> scrollPosition;
+    xoj::util::Point<double> scrollPosition;
 
     /// Size {x, y} of the pixels before the current page that
     /// do not scale.
-    utl::Point<double> unscaledPixels;
+    xoj::util::Point<double> unscaledPixels;
 
     /**
      * Zoomstep value for Ctrl - and Zoom In and Out Button
@@ -259,4 +259,7 @@ private:
     size_t current_page = static_cast<size_t>(-1);
     size_t last_page = static_cast<size_t>(-1);
     bool isZoomFittingNow = false;
+
+    /// The last monitor the window has been moved to -- used for setting dpi
+    GdkMonitor* lastMonitor = nullptr;
 };

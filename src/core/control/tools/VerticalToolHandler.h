@@ -12,11 +12,9 @@
 #pragma once
 
 #include <memory>    // for unique_ptr
-#include <optional>  // for optional
 #include <vector>    // for vector
 
-#include <cairo.h>    // for cairo_surface_t, cairo_t
-#include <gdk/gdk.h>  // for GdkEventKey, GdkWindow
+#include <cairo.h>  // for cairo_surface_t, cairo_t
 
 #include "model/ElementContainer.h"  // for ElementContainer
 #include "model/OverlayBase.h"
@@ -30,6 +28,9 @@ class Layer;
 class MoveUndoAction;
 class Control;
 class ZoomControl;
+struct KeyEvent;
+
+using ElementPtr = std::unique_ptr<Element>;
 
 namespace xoj::view {
 class OverlayView;
@@ -58,17 +59,15 @@ public:
     VerticalToolHandler(VerticalToolHandler&&) = delete;
     VerticalToolHandler&& operator=(VerticalToolHandler&&) = delete;
 
-    void paint(cairo_t* cr);
-
     /** Update the tool state with the new spacing position */
     void currentPos(double x, double y);
 
-    bool onKeyPressEvent(GdkEventKey* event);
-    bool onKeyReleaseEvent(GdkEventKey* event);
+    bool onKeyPressEvent(const KeyEvent& event);
+    bool onKeyReleaseEvent(const KeyEvent& event);
 
     std::unique_ptr<MoveUndoAction> finalize();
 
-    const std::vector<Element*>& getElements() const override;
+    void forEachElement(std::function<void(const Element*)> f) const override;
 
     auto createView(xoj::view::Repaintable* parent, ZoomControl* zoomControl, const Settings* settings) const
             -> std::unique_ptr<xoj::view::OverlayView>;
@@ -91,6 +90,11 @@ public:
 
 private:
     /**
+     * Returns a vector of pointers to the elements we have adopted
+     * This function copies the element ptrs into a new vector
+     */
+    auto refElements() const -> std::vector<Element*>;
+    /**
      * Clear the currently moved elements, and then select all elements
      * above/below startY (depending on the side) to use for the spacing.
      * Lastly, redraw the elements to the buffer.
@@ -106,10 +110,10 @@ private:
 
     PageRef page;
     Layer* layer;
-    std::vector<Element*> elements;
+    std::vector<ElementPtr> elements;
     Control* control;
     /**
-     * @brief Stores the smallest box containing all the adopted elements. 
+     * @brief Stores the smallest box containing all the adopted elements.
      *     Used to only refresh the part of the screen that needs refreshing.
      */
     Range ownedElementsOriginalBoundingBox;

@@ -15,7 +15,6 @@
 #include <list>     // for list
 #include <string>   // for string
 
-#include "enums/ActionType.enum.h"     // for ActionType
 #include "model/DocumentChangeType.h"  // for DocumentChangeType
 #include "model/DocumentListener.h"    // for DocumentListener
 #include "model/Layer.h"               // for Layer, Layer::Index
@@ -34,7 +33,9 @@ public:
     void pageSelected(size_t page) override;
 
 public:
+    /// Insert a layer, without adding an UndoAction
     void insertLayer(PageRef page, Layer* layer, Layer::Index layerPos);
+    /// Remove a layer, without adding an UndoAction
     void removeLayer(PageRef page, Layer* layer);
 
     // Listener handling
@@ -45,10 +46,11 @@ public:
 
 protected:
     void fireLayerVisibilityChanged();
+    void fireSelectedLayerChanged();
+
+    void updateActions();
 
 public:
-    bool actionPerformed(ActionType type);
-
     /**
      * Show all layer on the current page
      */
@@ -62,9 +64,10 @@ public:
     /**
      * Show / Hide all layer on the current page
      */
-    void hideOrHideAllLayer(bool show);
+    void showOrHideAllLayer(bool show);
 
-    void addNewLayer();
+    /// Adds a new layer above/below the active layer. Adds the appropriate UndoAction
+    void addNewLayer(bool belowCurrentLayer);
     void deleteCurrentLayer();
     void copyCurrentLayer();
     void moveCurrentLayer(bool up);

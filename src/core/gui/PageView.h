@@ -22,6 +22,7 @@
 #include <gtk/gtk.h>  // for GtkWidget
 
 #include "gui/inputdevices/DeviceId.h"
+#include "gui/inputdevices/InputEvents.h"
 #include "model/PageListener.h"       // for PageListener
 #include "model/PageRef.h"            // for PageRef
 #include "util/Rectangle.h"           // for Rectangle
@@ -33,9 +34,11 @@
 #include "LegacyRedrawable.h"  // for LegacyRedrawable
 
 class EraseHandler;
+class ImageSizeSelection;
 class InputHandler;
+class LaserPointerHandler;
 class SearchControl;
-class Selection;
+class Selector;
 class Settings;
 class Text;
 class TextEditor;
@@ -101,10 +104,10 @@ public:
 
     void endSpline();
 
-    bool searchTextOnPage(const std::string& text, size_t* occurrences, double* yOfUpperMostMatch);
+    bool searchTextOnPage(const std::string& text, size_t index, size_t* occurrences, XojPdfRectangle* matchRect);
 
-    bool onKeyPressEvent(GdkEventKey* event);
-    bool onKeyReleaseEvent(GdkEventKey* event);
+    bool onKeyPressEvent(const KeyEvent& event);
+    bool onKeyReleaseEvent(const KeyEvent& event);
 
     bool cut();
     bool copy();
@@ -168,8 +171,8 @@ public:
      */
     int getY() const override;
 
-    TexImage* getSelectedTex();
-    Text* getSelectedText();
+    const TexImage* getSelectedTex() const;
+    const Text* getSelectedText() const;
 
     xoj::util::Rectangle<double> getRect() const;
 
@@ -194,12 +197,14 @@ public:  // event handler
      */
     bool paintPage(cairo_t* cr, GdkRectangle* rect);
 
+    void deleteLaserPointerHandler();
+
 public:  // listener
     void rectChanged(xoj::util::Rectangle<double>& rect) override;
     void rangeChanged(Range& range) override;
     void pageChanged() override;
-    void elementChanged(Element* elem) override;
-    void elementsChanged(const std::vector<Element*>& elements, const Range& range) override;
+    void elementChanged(const Element* elem) override;
+    void elementsChanged(const std::vector<const Element*>& elements, const Range& range) override;
 
 private:
     void startText(double x, double y);
@@ -255,12 +260,19 @@ private:
     /**
      * The selected (while selection)
      */
-    std::unique_ptr<Selection> selection;
+    std::unique_ptr<Selector> selector;
 
     /**
      * The text editor
      */
     std::unique_ptr<TextEditor> textEditor;
+
+    /**
+     * For image insertion with size (selects the size)
+     */
+    std::unique_ptr<ImageSizeSelection> imageSizeSelection;
+
+    std::unique_ptr<LaserPointerHandler> laserPointer;
 
     /**
      * For keeping old text changes to undo!

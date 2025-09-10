@@ -12,11 +12,15 @@
 #pragma once
 
 #include <cstddef>   // for size_t
+#include <memory>    // for unique_ptr
 #include <optional>  // for optional
 #include <string>    // for string
 #include <vector>    // for vector
 
-#include "Element.h"  // for Element, Element::Index
+#include "util/PointerContainerView.h"
+
+#include "Element.h"                   // for Element, Element::Index
+#include "ElementInsertionPosition.h"  // for InsertionOrder
 
 template <class T>
 using optional = std::optional<T>;
@@ -34,44 +38,59 @@ public:
      *
      * @note Performs a check to determine whether the element is already contained in the Layer
      */
-    void addElement(Element* e);
+    void addElement(ElementPtr e);
 
     /**
      * Inserts an Element in the specified position of the Layer%s internal list
      *
      * @note Performs a check to determine whether the element is already contained in the Layer
      */
-    void insertElement(Element* e, Element::Index pos);
+    void insertElement(ElementPtr e, Element::Index pos);
 
     /**
      * Returns the index of the given Element with respect to the internal list
      */
-    Element::Index indexOf(Element* e) const;
+    auto indexOf(const Element* e) const -> Element::Index;
 
     /**
      * Removes an Element from the Layer and optionally deletes it
+     * @return the position the element occupied
      */
-    Element::Index removeElement(Element* e, bool free);
+    auto removeElement(const Element* e) -> InsertionPosition;
 
     /**
-     * Removes all Elements from the Layer *without freeing them*
+     * Removes the Element. If e is not at index pos, tries to find it elsewhere (this could happen is the layer was
+     * modified between now and when pos was computed)
+     * @return The actual position of the removed element
      */
-    void clearNoFree();
+    auto removeElementAt(const Element* e, Element::Index pos) -> InsertionPosition;
 
     /**
-     * Returns an iterator over the Element%s contained in this Layer
+     * Removes the Elements. If an element cannot be found at its designated position, it is search through the layer
      */
-    const std::vector<Element*>& getElements() const;
+    auto removeElementsAt(InsertionOrderRef const& elts) -> InsertionOrder;
+
+    /**
+     * Removes all Elements from the Layer *without freeing them*. Returns the elements.
+     */
+    auto clearNoFree() -> std::vector<ElementPtr>;
+
+    /**
+     * Returns an iteratable over the Element%s contained in this Layer
+     */
+    auto getElements() -> std::vector<ElementPtr>&;
+
+    auto getElementsView() const -> xoj::util::PointerContainerView<std::vector<ElementPtr>>;
 
     /**
      * Returns whether or not the Layer is empty
      */
-    bool isAnnotated() const;
+    auto isAnnotated() const -> bool;
 
     /**
      * @return true if the layer is visible
      */
-    bool isVisible() const;
+    auto isVisible() const -> bool;
 
     /**
      * @param visible true if the layer is visible
@@ -81,17 +100,17 @@ public:
     /**
      * Creates a deep copy of this Layer by copying all of the Element%s contained in it
      */
-    Layer* clone() const;
+    auto clone() const -> Layer*;
 
     /**
      * @return true if layer has a name
      */
-    bool hasName() const;
+    auto hasName() const -> bool;
 
     /**
      * @return layer custom name or empty string if custom name is not set
      */
-    std::string getName() const;
+    auto getName() const -> std::string;
 
     /**
      * Sets custom name for the layer
@@ -99,9 +118,9 @@ public:
     void setName(const std::string& newName);
 
 private:
-    std::vector<Element*> elements;
+    std::vector<ElementPtr> elements;
 
     bool visible = true;
 
-    optional<std::string> name;
+    std::optional<std::string> name;
 };

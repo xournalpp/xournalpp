@@ -25,6 +25,9 @@ on:
       build_type:
         type: string
         default: 'RelWithDebInfo'
+      extra_cmake_flags:
+        type: string
+        default: ''
       artifact_version_suffix:  # Additional version string appended to 1.2.3+dev (for instance) in artifacts names
         type: string
         default: ''
@@ -57,9 +60,8 @@ jobs:
         uses: ./.github/actions/build
         with:
           build_type: ${{ inputs.build_type }}
+          extra_cmake_flags: ${{ inputs.extra_cmake_flags }}
           shell: msys2 {0}
-          cmake_flags: >-
-            -DCMAKE_CXX_FLAGS="-Os -s"
       - name: 'Create installer'
         id: create-installer
         working-directory: ${{github.workspace}}/build

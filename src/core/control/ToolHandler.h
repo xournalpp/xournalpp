@@ -24,6 +24,7 @@
 
 class LineStyle;
 class Settings;
+class ActionDatabase;
 
 
 // enum for ptrs that are dynamically pointing to different tools
@@ -50,7 +51,6 @@ public:
      *
      */
     virtual void changeColorOfSelection() = 0;
-    virtual void setCustomColorSelected() = 0;
     virtual void toolSizeChanged() = 0;
     virtual void toolFillChanged() = 0;
     virtual void toolLineStyleChanged() = 0;
@@ -59,12 +59,10 @@ public:
     virtual ~ToolListener();
 };
 
-class ActionHandler;
-
 class ToolHandler {
 public:
     using ToolChangedCallback = std::function<void(ToolType)>;
-    ToolHandler(ToolListener* stateChangedListener, ActionHandler* actionHandler, Settings* settings);
+    ToolHandler(ToolListener* stateChangedListener, ActionDatabase* actionDB, Settings* settings);
     virtual ~ToolHandler();
 
     /**
@@ -107,12 +105,17 @@ public:
     Color getColor() const;
 
     /**
+     * @brief Get the Color of the active tool except the alpha value is replaced by 0xFF
+     */
+    Color getColorMaskAlpha() const;
+
+    /**
      * @brief Enable/disable fill for the tool selected in the toolbar
      *
      * @param fill whether fill should be enabled
      * @param fireEvent whether a toolFillChanged event should be fired
      */
-    void setFillEnabled(bool fill, bool fireEvent);
+    void setFillEnabled(bool fill);
 
     /**
      * @brief Get the Fill of the active tool
@@ -146,6 +149,15 @@ public:
      * @param button button tool to be selected
      */
     void setButtonDrawingType(DrawingType drawingType, Button button);
+
+    /**
+     * @brief Set the Stroke Type of a button tool
+     *
+     * @param strokeType The stroke type to apply
+     * @param button The button tool to change
+     */
+    void setButtonStrokeType(StrokeType strokeType, Button button);
+    void setButtonStrokeType(const LineStyle& lineStyle, Button button);
 
     /**
      * @brief Get the Line Style of active tool
@@ -195,15 +207,18 @@ public:
     void setEraserSize(ToolSize size);
     void setHighlighterSize(ToolSize size);
 
-    void setPenFillEnabled(bool fill, bool fireEvent = true);
+    void setPenFillEnabled(bool fill);
     bool getPenFillEnabled() const;
     void setPenFill(int alpha);
     int getPenFill() const;
 
-    void setHighlighterFillEnabled(bool fill, bool fireEvent = true);
+    void setHighlighterFillEnabled(bool fill);
     bool getHighlighterFillEnabled() const;
     void setHighlighterFill(int alpha);
     int getHighlighterFill() const;
+
+    void setSelectPDFTextMarkerOpacity(int alpha);
+    int getSelectPDFTextMarkerOpacity() const;
 
     /**
      * @brief Set the toolbar selected tool to the type
@@ -248,9 +263,9 @@ public:
 
     /**
      * @brief Get the active Tool, returns nullptr if no tool is active
-     * 
+     *
      * @return Tool*
-    */
+     */
     Tool* getActiveTool() const;
 
     /**
@@ -389,6 +404,7 @@ private:
     std::unique_ptr<Tool> stylusButton1Tool;
     std::unique_ptr<Tool> stylusButton2Tool;
     std::unique_ptr<Tool> eraserButtonTool;
+    std::unique_ptr<Tool> mouseLeftButtonTool;
     std::unique_ptr<Tool> mouseMiddleButtonTool;
     std::unique_ptr<Tool> mouseRightButtonTool;
     std::unique_ptr<Tool> touchDrawingButtonTool;
@@ -396,6 +412,6 @@ private:
     std::vector<ToolChangedCallback> toolChangeListeners;
 
     ToolListener* stateChangeListener = nullptr;
-    ActionHandler* actionHandler = nullptr;
+    ActionDatabase* actionDB = nullptr;
     Settings* settings = nullptr;
 };

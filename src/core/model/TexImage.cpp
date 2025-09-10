@@ -1,5 +1,6 @@
 #include "TexImage.h"
 
+#include <memory>
 #include <utility>  // for move
 
 #include <poppler-document.h>  // for poppler_document_ge...
@@ -26,8 +27,9 @@ void TexImage::freeImageAndPdf() {
     this->pdf.reset();
 }
 
-auto TexImage::clone() const -> Element* {
-    auto* img = new TexImage();
+auto TexImage::cloneTexImage() const -> std::unique_ptr<TexImage> {
+
+    auto img = std::make_unique<TexImage>();
     img->x = this->x;
     img->y = this->y;
     img->setColor(this->getColor());
@@ -48,6 +50,8 @@ auto TexImage::clone() const -> Element* {
     return img;
 }
 
+auto TexImage::clone() const -> ElementPtr { return cloneTexImage(); }
+
 void TexImage::setWidth(double width) {
     this->width = width;
     this->calcSize();
@@ -63,7 +67,7 @@ auto TexImage::cairoReadFunction(TexImage* image, unsigned char* data, unsigned 
         if (image->read >= image->binaryData.length()) {
             return CAIRO_STATUS_READ_ERROR;
         }
-        data[i] = image->binaryData[image->read];
+        data[i] = static_cast<unsigned char>(image->binaryData[image->read]);
     }
 
     return CAIRO_STATUS_SUCCESS;
@@ -88,12 +92,14 @@ auto TexImage::loadData(std::string&& bytes, GError** err) -> bool {
     const std::string type = binaryData.substr(1, 3);
     if (type == "PDF") {
         // Note: binaryData must not be modified while pdf is live.
-        this->pdf.reset(poppler_document_new_from_data(this->binaryData.data(), this->binaryData.size(), nullptr, err),
-                        xoj::util::adopt);
+        auto* bytes = g_bytes_new_with_free_func(this->binaryData.data(), this->binaryData.size(), nullptr, nullptr);
+        this->pdf.reset(poppler_document_new_from_bytes(bytes, nullptr, err), xoj::util::adopt);
+        g_bytes_unref(bytes);
+
         if (!pdf.get() || poppler_document_get_n_pages(this->pdf.get()) < 1) {
             return false;
         }
-        if (!this->width && !this->height) {
+        if (std::abs(this->width * this->height) <= std::numeric_limits<double>::epsilon()) {
             xoj::util::GObjectSPtr<PopplerPage> page(poppler_document_get_page(this->pdf.get(), 0), xoj::util::adopt);
             poppler_page_get_size(page.get(), &this->width, &this->height);
         }

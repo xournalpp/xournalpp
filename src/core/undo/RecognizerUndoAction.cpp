@@ -1,59 +1,41 @@
 #include "RecognizerUndoAction.h"
 
 #include <memory>  // for __shared_ptr_access, __shared_ptr_acces...
+#include <utility>
 
 #include <glib.h>  // for g_warning
 
+#include "control/Control.h"
+#include "model/Document.h"
+#include "model/Element.h"
 #include "model/Layer.h"      // for Layer
 #include "model/Stroke.h"     // for Stroke
 #include "model/XojPage.h"    // for XojPage
 #include "undo/UndoAction.h"  // for UndoAction
-#include "util/Stacktrace.h"  // for Stacktrace
 #include "util/i18n.h"        // for _
 
-class Control;
-
-RecognizerUndoAction::RecognizerUndoAction(const PageRef& page, Layer* layer, Stroke* original, Stroke* recognized):
-        UndoAction("RecognizerUndoAction") {
+RecognizerUndoAction::RecognizerUndoAction(const PageRef& page, Layer* layer, ElementPtr original, Element* recognized):
+        UndoAction("RecognizerUndoAction"),
+        layer(layer),
+        original(original.get()),
+        originalOwned(std::move(original)),
+        recognized(recognized) {
     this->page = page;
-    this->layer = layer;
-    this->recognized = recognized;
-
-    addSourceElement(original);
 }
 
-RecognizerUndoAction::~RecognizerUndoAction() {
-    if (this->undone) {
-        delete this->recognized;
-    } else {
-        for (Stroke* s: this->original) { delete s; }
-    }
-    this->recognized = nullptr;
-    this->original.clear();
-}
-
-void RecognizerUndoAction::addSourceElement(Stroke* s) {
-    for (Stroke* s2: this->original) {
-        if (s2 == s) {
-            g_warning("RecognizerUndoAction::addSourceElement() twice the same\n");
-            Stacktrace::printStacktrace();
-            return;
-        }
-    }
-
-    this->original.push_back(s);
-}
+RecognizerUndoAction::~RecognizerUndoAction() = default;
 
 auto RecognizerUndoAction::undo(Control* control) -> bool {
-    Element::Index pos = this->layer->removeElement(this->recognized, false);
-    this->page->fireElementChanged(this->recognized);
+    Document* doc = control->getDocument();
+    doc->lock();
+    auto [owned, pos] = this->layer->removeElement(this->recognized);
+    this->recognizedOwned = std::move(owned);
 
-    int i = 0;
-    for (Stroke* s: this->original) {
-        this->layer->insertElement(s, pos);
-        this->page->fireElementChanged(s);
-        i++;
-    }
+    this->layer->insertElement(std::move(this->originalOwned), pos);
+    doc->unlock();
+
+    this->page->fireElementChanged(this->recognized);
+    this->page->fireElementChanged(original);
 
     this->undone = true;
     return true;
@@ -61,12 +43,15 @@ auto RecognizerUndoAction::undo(Control* control) -> bool {
 
 auto RecognizerUndoAction::redo(Control* control) -> bool {
     Element::Index pos = 0;
-    for (Stroke* s: this->original) {
-        pos = this->layer->removeElement(s, false);
-        this->page->fireElementChanged(s);
-    }
-    this->layer->insertElement(this->recognized, pos);
 
+    Document* doc = control->getDocument();
+    doc->lock();
+    auto [owned, posi] = this->layer->removeElement(original);
+    this->originalOwned = std::move(owned);
+    this->layer->insertElement(std::move(this->recognizedOwned), pos);
+    doc->unlock();
+
+    this->page->fireElementChanged(original);
     this->page->fireElementChanged(this->recognized);
 
     this->undone = false;

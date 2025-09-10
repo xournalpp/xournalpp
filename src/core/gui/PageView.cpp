@@ -1,8 +1,7 @@
 #include "PageView.h"
 
 #include <algorithm>  // for max, find_if
-#include <cassert>    // for assert
-#include <cmath>      // for lround
+#include <cinttypes>  // for int64_t
 #include <cstdint>    // for int64_t
 #include <cstdlib>    // for size_t
 #include <iomanip>    // for operator<<, quoted
@@ -34,11 +33,13 @@
 #include "control/tools/EllipseHandler.h"           // for EllipseHandler
 #include "control/tools/EraseHandler.h"             // for EraseHandler
 #include "control/tools/ImageHandler.h"             // for ImageHandler
+#include "control/tools/ImageSizeSelection.h"       // for ImageSizeSelection
 #include "control/tools/InputHandler.h"             // for InputHandler
+#include "control/tools/LaserPointerHandler.h"      // for LaserPointerHandler
 #include "control/tools/PdfElemSelection.h"         // for PdfElemSelection
 #include "control/tools/RectangleHandler.h"         // for RectangleHandler
 #include "control/tools/RulerHandler.h"             // for RulerHandler
-#include "control/tools/Selection.h"                // for RectSelection
+#include "control/tools/Selector.h"                 // for RectangularSelector
 #include "control/tools/SplineHandler.h"            // for SplineHandler
 #include "control/tools/StrokeHandler.h"            // for StrokeHandler
 #include "control/tools/TextEditor.h"               // for TextEditor, TextE...
@@ -65,6 +66,7 @@
 #include "undo/MoveUndoAction.h"                    // for MoveUndoAction
 #include "undo/TextBoxUndoAction.h"                 // for TextBoxUndoAction
 #include "undo/UndoRedoHandler.h"                   // for UndoRedoHandler
+#include "util/Assert.h"                            // for xoj_assert
 #include "util/Color.h"                             // for rgb_to_GdkRGBA
 #include "util/Range.h"                             // for Range
 #include "util/Rectangle.h"                         // for Rectangle
@@ -73,12 +75,13 @@
 #include "util/gtk4_helper.h"                       // for gtk_box_append
 #include "util/i18n.h"                              // for _F, FC, FS, _
 #include "util/raii/CLibrariesSPtr.h"               // for adopt
+#include "util/safe_casts.h"                        // for ceil_cast, floor_cast, round_cast
 #include "util/serdesstream.h"                      // for serdes_stream
 #include "view/DebugShowRepaintBounds.h"            // for IF_DEBUG_REPAINT
 #include "view/overlays/OverlayView.h"              // for OverlayView, Tool...
 #include "view/overlays/PdfElementSelectionView.h"  // for PdfElementSelecti...
 #include "view/overlays/SearchResultView.h"         // for SearchResultView
-#include "view/overlays/SelectionView.h"            // for SelectionView
+#include "view/overlays/SelectorView.h"             // for SelectionView
 #include "view/overlays/TextEditionView.h"          // for TextEditionView
 
 #include "PageViewFindObjectHelper.h"  // for SelectObject, Pla...
@@ -138,7 +141,8 @@ auto XojPageView::containsPoint(int x, int y, bool local) const -> bool {
     return x >= 0 && y >= 0 && x <= this->getWidth() && y <= this->getHeight();
 }
 
-auto XojPageView::searchTextOnPage(const std::string& text, size_t* occurrences, double* yOfUpperMostMatch) -> bool {
+auto XojPageView::searchTextOnPage(const std::string& text, size_t index, size_t* occurrences,
+                                   XojPdfRectangle* matchRect) -> bool {
     if (!this->search) {
         if (text.empty()) {
             return true;
@@ -154,11 +158,11 @@ auto XojPageView::searchTextOnPage(const std::string& text, size_t* occurrences,
             doc->unlock();
         }
         this->search = std::make_unique<SearchControl>(page, pdf);
-        this->overlayViews.emplace_back(
-                std::make_unique<xoj::view::SearchResultView>(this->search.get(), this, settings->getSelectionColor()));
+        this->overlayViews.emplace_back(std::make_unique<xoj::view::SearchResultView>(
+                this->search.get(), this, settings->getSelectionColor(), settings->getActiveSelectionColor()));
     }
 
-    bool found = this->search->search(text, occurrences, yOfUpperMostMatch);
+    bool found = this->search->search(text, index, occurrences, matchRect);
 
     repaintPage();
 
@@ -188,7 +192,7 @@ void XojPageView::startText(double x, double y) {
 }
 
 #ifndef NDEBUG
-// used in assert()
+// used in xoj_assert()
 [[maybe_unused]] static bool hasNoViewOf(const std::vector<std::unique_ptr<xoj::view::OverlayView>>& views,
                                          const OverlayBase* o) {
     return std::find_if(views.begin(), views.end(), [o](auto& v) { return v->isViewOf(o); }) == views.end();
@@ -197,15 +201,20 @@ void XojPageView::startText(double x, double y) {
 
 static void eraseViewsOf(std::vector<std::unique_ptr<xoj::view::OverlayView>>& views, const OverlayBase* o) {
     views.erase(std::remove_if(views.begin(), views.end(), [o](auto& v) { return v->isViewOf(o); }), views.end());
-    assert(hasNoViewOf(views, o));
+    xoj_assert(hasNoViewOf(views, o));
 }
 
 void XojPageView::endSpline() {
     if (SplineHandler* h = dynamic_cast<SplineHandler*>(this->inputHandler.get()); h) {
         h->finalizeSpline();
-        assert(hasNoViewOf(overlayViews, inputHandler.get()));
+        xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
         this->inputHandler.reset();
     }
+}
+
+void XojPageView::deleteLaserPointerHandler() {
+    xoj_assert(hasNoViewOf(overlayViews, laserPointer.get()));
+    laserPointer.reset();
 }
 
 auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
@@ -291,57 +300,70 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     } else if (h->getToolType() == TOOL_ERASER) {
         this->eraser->erase(x, y);
         this->inEraser = true;
+    } else if (h->getToolType() == TOOL_LASER_POINTER_PEN || h->getToolType() == TOOL_LASER_POINTER_HIGHLIGHTER) {
+        if (!this->laserPointer) {
+            this->laserPointer = std::make_unique<LaserPointerHandler>(this, control, getPage());
+            this->laserPointer->onButtonPressEvent(pos, zoom);
+            this->overlayViews.emplace_back(this->laserPointer->createView(this));
+        } else {
+            this->laserPointer->onButtonPressEvent(pos, zoom);
+        }
     } else if (h->getToolType() == TOOL_VERTICAL_SPACE) {
         if (this->verticalSpace) {
             control->getUndoRedoHandler()->addUndoAction(this->verticalSpace->finalize());
             this->verticalSpace.reset();
         }
         auto* zoomControl = this->getXournal()->getControl()->getZoomControl();
-        this->verticalSpace = std::make_unique<VerticalToolHandler>(this->page, this->getXournal()->getControl(), y, pos.isControlDown());
+        this->verticalSpace = std::make_unique<VerticalToolHandler>(this->page, this->getXournal()->getControl(), y,
+                                                                    pos.isControlDown());
         this->overlayViews.emplace_back(this->verticalSpace->createView(this, zoomControl, this->settings));
     } else if (h->getToolType() == TOOL_SELECT_RECT || h->getToolType() == TOOL_SELECT_REGION ||
                h->getToolType() == TOOL_SELECT_MULTILAYER_RECT || h->getToolType() == TOOL_SELECT_MULTILAYER_REGION ||
                h->getToolType() == TOOL_PLAY_OBJECT || h->getToolType() == TOOL_SELECT_OBJECT ||
                h->getToolType() == TOOL_SELECT_PDF_TEXT_LINEAR || h->getToolType() == TOOL_SELECT_PDF_TEXT_RECT) {
         if (h->getToolType() == TOOL_SELECT_RECT) {
-            if (!selection) {
-                this->selection = std::make_unique<RectSelection>(x, y);
-                this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
-                        this->selection.get(), this, this->settings->getSelectionColor()));
+            if (!selector) {
+                this->selector = std::make_unique<RectangularSelector>(x, y);
+                this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectorView>(
+                        this->selector.get(), this, this->settings->getSelectionColor()));
             } else {
-                assert(settings->getInputSystemTPCButtonEnabled() &&
-                       "the selection has already been created by a stylus button press while the stylus was "
-                       "hovering!");
+                xoj_assert_message(
+                        settings->getInputSystemTPCButtonEnabled(),
+                        "the selection has already been created by a stylus button press while the stylus was "
+                        "hovering!");
             }
         } else if (h->getToolType() == TOOL_SELECT_REGION) {
-            if (!selection) {
-                this->selection = std::make_unique<RegionSelect>(x, y);
-                this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
-                        this->selection.get(), this, this->settings->getSelectionColor()));
+            if (!selector) {
+                this->selector = std::make_unique<LassoSelector>(x, y);
+                this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectorView>(
+                        this->selector.get(), this, this->settings->getSelectionColor()));
             } else {
-                assert(settings->getInputSystemTPCButtonEnabled() &&
-                       "the selection has already been created by a stylus button press while the stylus was "
-                       "hovering!");
+                xoj_assert_message(
+                        settings->getInputSystemTPCButtonEnabled(),
+                        "the selection has already been created by a stylus button press while the stylus was "
+                        "hovering!");
             }
         } else if (h->getToolType() == TOOL_SELECT_MULTILAYER_RECT) {
-            if (!selection) {
-                this->selection = std::make_unique<RectSelection>(x, y, /*multiLayer*/ true);
-                this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
-                        this->selection.get(), this, this->settings->getSelectionColor()));
+            if (!selector) {
+                this->selector = std::make_unique<RectangularSelector>(x, y, /*multiLayer*/ true);
+                this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectorView>(
+                        this->selector.get(), this, this->settings->getSelectionColor()));
             } else {
-                assert(settings->getInputSystemTPCButtonEnabled() &&
-                       "the selection has already been created by a stylus button press while the stylus was "
-                       "hovering!");
+                xoj_assert_message(
+                        settings->getInputSystemTPCButtonEnabled(),
+                        "the selection has already been created by a stylus button press while the stylus was "
+                        "hovering!");
             }
         } else if (h->getToolType() == TOOL_SELECT_MULTILAYER_REGION) {
-            if (!selection) {
-                this->selection = std::make_unique<RegionSelect>(x, y, /*multiLayer*/ true);
-                this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
-                        this->selection.get(), this, this->settings->getSelectionColor()));
+            if (!selector) {
+                this->selector = std::make_unique<LassoSelector>(x, y, /*multiLayer*/ true);
+                this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectorView>(
+                        this->selector.get(), this, this->settings->getSelectionColor()));
             } else {
-                assert(settings->getInputSystemTPCButtonEnabled() &&
-                       "the selection has already been created by a stylus button press while the stylus was "
-                       "hovering!");
+                xoj_assert_message(
+                        settings->getInputSystemTPCButtonEnabled(),
+                        "the selection has already been created by a stylus button press while the stylus was "
+                        "hovering!");
             }
         } else if (h->getToolType() == TOOL_SELECT_PDF_TEXT_LINEAR || h->getToolType() == TOOL_SELECT_PDF_TEXT_RECT) {
             // so if we selected something && the pdf selection toolbox is hidden && we hit within the selection
@@ -367,7 +389,11 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
             }
         } else if (h->getToolType() == TOOL_SELECT_OBJECT) {
             SelectObject select(this);
-            select.at(x, y);
+            if (pos.isShiftDown() && xournal->getSelection()) {
+                select.atAggregate(x, y);
+            } else {
+                select.at(x, y);
+            }
         } else if (h->getToolType() == TOOL_PLAY_OBJECT) {
             PlayObject play(this);
             play.at(x, y);
@@ -382,8 +408,10 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     } else if (h->getToolType() == TOOL_TEXT) {
         startText(x, y);
     } else if (h->getToolType() == TOOL_IMAGE) {
-        ImageHandler imgHandler(control, this);
-        imgHandler.insertImage(x, y);
+        // start selecting the size for the image
+        this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);
+        this->overlayViews.emplace_back(std::make_unique<xoj::view::ImageSizeSelectionView>(
+                this->imageSizeSelection.get(), this, settings->getSelectionColor()));
     }
 
     this->onButtonClickEvent(pos);
@@ -432,12 +460,12 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
         // original coordinates of the selection.
         double origx = x - (selection->getXOnView() - selection->getOriginalXOnView());
         double origy = y - (selection->getYOnView() - selection->getOriginalYOnView());
-        const std::vector<Element*>& elems = selection->getElements();
+        auto elems = selection->getElementsView();
         auto it = std::find_if(elems.begin(), elems.end(),
-                               [&](Element* elem) { return elem->intersectsArea(origx - 5, origy - 5, 5, 5); });
+                               [&](const Element* elem) { return elem->intersectsArea(origx - 5, origy - 5, 5, 5); });
         if (it != elems.end()) {
             // Enter editing mode on the selected object
-            Element* object = *it;
+            const Element* object = *it;
             ElementType elemType = object->getType();
             if (elemType == ELEMENT_TEXT) {
                 this->xournal->clearSelection();
@@ -448,12 +476,12 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
                 this->onButtonPressEvent(pos);
             } else if (elemType == ELEMENT_TEXIMAGE) {
                 Control* control = this->xournal->getControl();
-                this->xournal->clearSelection();
-                auto* doc = this->xournal->getControl()->getDocument();
-                doc->lock();
-                auto* sel = new EditSelection(control->getUndoRedoHandler(), object, this, this->getPage());
-                doc->unlock();
-                this->xournal->setSelection(sel);
+                if (elems.size() > 1) {
+                    // Deselect the other elements
+                    this->xournal->clearSelection();
+                    auto sel = SelectionFactory::createFromElementOnActiveLayer(control, getPage(), this, object);
+                    this->xournal->setSelection(sel.release());
+                }
                 control->runLatex();
             }
         }
@@ -469,7 +497,7 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
     } else if (drawingType == DRAWING_TYPE_SPLINE) {
         if (this->inputHandler) {
             this->inputHandler->onButtonDoublePressEvent(pos, zoom);
-            assert(hasNoViewOf(overlayViews, inputHandler.get()));
+            xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
             this->inputHandler.reset();
         }
     }
@@ -518,8 +546,10 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
 
     if (this->inputHandler && this->inputHandler->onMotionNotifyEvent(pos, zoom)) {
         // input handler used this event
-    } else if (this->selection) {
-        this->selection->currentPos(x, y);
+    } else if (this->imageSizeSelection) {
+        this->imageSizeSelection->updatePosition(x, y);
+    } else if (this->selector) {
+        this->selector->currentPos(x, y);
     } else if (auto* selection = pdfToolbox->getSelection(); selection && !selection->isFinalized()) {
         selection->currentPos(x, y, pdfToolbox->selectionStyle);
     } else if (this->verticalSpace) {
@@ -530,6 +560,8 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
 
         const Text* text = this->textEditor->getTextElement();
         this->textEditor->mouseMoved(x - text->getX(), y - text->getY());
+    } else if (this->laserPointer && this->laserPointer->onMotionNotifyEvent(pos, zoom)) {
+        // used this event
     } else if (h->getToolType() == TOOL_ERASER && h->getEraserType() != ERASER_TYPE_WHITEOUT && this->inEraser) {
         this->eraser->erase(x, y);
     }
@@ -550,13 +582,15 @@ void XojPageView::onSequenceCancelEvent(DeviceId deviceId) {
         if (auto* h = dynamic_cast<SplineHandler*>(this->inputHandler.get()); h) {
             // SplineHandler can survive a sequence cancellation
             if (!h->getStroke()) {
-                assert(hasNoViewOf(overlayViews, inputHandler.get()));
+                xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
                 this->inputHandler.reset();
             }
         } else {
-            assert(hasNoViewOf(overlayViews, inputHandler.get()));
+            xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
             this->inputHandler.reset();
         }
+    } else if (this->laserPointer) {
+        this->laserPointer->onSequenceCancelEvent();
     }
 }
 
@@ -572,7 +606,7 @@ void XojPageView::onTapEvent(const PositionInputData& pos) {
         this->inputHandler->onButtonReleaseEvent(pos, zoom);
         if (!this->inputHandler->getStroke()) {
             // The InputHandler finalized its edition
-            assert(hasNoViewOf(overlayViews, inputHandler.get()));
+            xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
             this->inputHandler.reset();
         }
         return;
@@ -583,8 +617,14 @@ void XojPageView::onTapEvent(const PositionInputData& pos) {
     if (settings->getTrySelectOnStrokeFiltered()) {
         double zoom = xournal->getZoom();
         SelectObject select(this);
-        if (select.at(pos.x / zoom, pos.y / zoom)) {
-            doAction = false;  // selection made.. no action.
+        if (pos.isShiftDown()) {
+            if (select.atAggregate(pos.x / zoom, pos.y / zoom)) {
+                doAction = false;  // selection made.. no action.
+            }
+        } else {
+            if (select.at(pos.x / zoom, pos.y / zoom)) {
+                doAction = false;  // selection made.. no action.
+            }
         }
     }
 
@@ -602,8 +642,8 @@ auto XojPageView::showPdfToolbox(const PositionInputData& pos) -> void {
 
     // Add the position of the current page view widget (relative to canvas origin)
     // and add the input position (relative to the current page view widget).
-    wx += this->getX() + static_cast<gint>(std::lround(pos.x));
-    wy += this->getY() + static_cast<gint>(std::lround(pos.y));
+    wx += this->getX() + round_cast<gint>(pos.x);
+    wy += this->getY() + round_cast<gint>(pos.y);
 
     auto* pdfToolbox = this->xournal->getControl()->getWindow()->getPdfToolbox();
     pdfToolbox->show(wx, wy);
@@ -633,9 +673,12 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         ToolHandler* h = control->getToolHandler();
         bool isDrawingTypeSpline = h->getDrawingType() == DRAWING_TYPE_SPLINE;
         if (!isDrawingTypeSpline || !this->inputHandler->getStroke()) {  // The Spline Tool finalizes drawing manually
-            assert(hasNoViewOf(overlayViews, inputHandler.get()));
+            xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
             this->inputHandler.reset();
         }
+    } else if (auto tt = control->getToolHandler()->getToolType();
+               this->laserPointer && (tt == TOOL_LASER_POINTER_PEN || tt == TOOL_LASER_POINTER_HIGHLIGHTER)) {
+        this->laserPointer->onButtonReleaseEvent(pos, xournal->getZoom());
     }
 
     if (this->inEraser) {
@@ -674,37 +717,56 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         }
     }
 
-    if (this->selection) {
-        size_t layerOfFinalizedSel = this->selection->finalize(this->page);
+    if (this->selector) {
+        const bool aggregate = pos.isShiftDown() && xournal->getSelection();
+        size_t layerOfFinalizedSel = this->selector->finalize(this->page, aggregate, control->getDocument());
+
         if (layerOfFinalizedSel) {
-            xournal->getControl()->getLayerController()->switchToLay(layerOfFinalizedSel);
-            auto* doc = this->xournal->getControl()->getDocument();
-            doc->lock();
-            xournal->setSelection(new EditSelection(control->getUndoRedoHandler(), this->selection.get(), this));
-            doc->unlock();
-        } else {
-            const double zoom = xournal->getZoom();
-            if (this->selection->userTapped(zoom)) {
-                bool isMultiLayerSelection{this->selection->isMultiLayerSelection()};
-                SelectObject select(this);
-                select.at(pos.x / zoom, pos.y / zoom, isMultiLayerSelection);
+            xournal->setSelection([&]() {
+                if (aggregate) {
+                    // Aggregate selection
+                    auto sel = selector->releaseElements();
+                    return SelectionFactory::addElementsFromActiveLayer(control, xournal->getSelection(), sel);
+                } else {
+                    // if selection->multiLayer == true, the selected objects might be on another layer
+                    xournal->getControl()->getLayerController()->switchToLay(layerOfFinalizedSel);
+                    return SelectionFactory::createFromElementsOnActiveLayer(control, page, this,
+                                                                             selector->releaseElements());
+                }
+            }()
+                                          .release());
+        } else if (const double zoom = xournal->getZoom(); selector->userTapped(zoom)) {
+            if (aggregate) {
+                SelectObject(this).atAggregate(pos.x / zoom, pos.y / zoom);
+            } else {
+                SelectObject(this).at(pos.x / zoom, pos.y / zoom, this->selector->isMultiLayerSelection());
             }
         }
-        this->selection.reset();
+        this->selector.reset();
     } else if (this->textEditor) {
         this->textEditor->mouseReleased();
+    }
+
+    if (this->imageSizeSelection) {
+        // size for image has been selected, now the image can be added
+        auto spaceForImage = this->imageSizeSelection->getSelectedSpace();
+        ImageHandler imgHandler(control);
+        imgHandler.insertImageWithSize(this->page, spaceForImage);
+
+        imageSizeSelection->finalize();
+        this->imageSizeSelection.reset();
     }
 
     return false;
 }
 
-auto XojPageView::onKeyPressEvent(GdkEventKey* event) -> bool {
+auto XojPageView::onKeyPressEvent(const KeyEvent& event) -> bool {
     if (this->textEditor) {
         if (this->textEditor->onKeyPressEvent(event)) {
             return true;
         }
     } else if (this->inputHandler) {
-        if (this->inputHandler->onKeyEvent(event)) {
+        if (this->inputHandler->onKeyPressEvent(event)) {
             return true;
         }
     } else if (this->verticalSpace) {
@@ -714,7 +776,7 @@ auto XojPageView::onKeyPressEvent(GdkEventKey* event) -> bool {
     }
 
     // Esc leaves text edition
-    if (event->keyval == GDK_KEY_Escape) {
+    if (event.keyval == GDK_KEY_Escape) {
         if (this->textEditor) {
             endText();
             return true;
@@ -726,16 +788,16 @@ auto XojPageView::onKeyPressEvent(GdkEventKey* event) -> bool {
     return false;
 }
 
-auto XojPageView::onKeyReleaseEvent(GdkEventKey* event) -> bool {
+auto XojPageView::onKeyReleaseEvent(const KeyEvent& event) -> bool {
     if (this->textEditor && this->textEditor->onKeyReleaseEvent(event)) {
         return true;
     }
 
-    if (this->inputHandler && this->inputHandler->onKeyEvent(event)) {
+    if (this->inputHandler && this->inputHandler->onKeyReleaseEvent(event)) {
         DrawingType drawingType = this->xournal->getControl()->getToolHandler()->getDrawingType();
         if (drawingType == DRAWING_TYPE_SPLINE) {  // Spline drawing has been finalized
             if (this->inputHandler) {
-                assert(hasNoViewOf(overlayViews, inputHandler.get()));
+                xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
                 this->inputHandler.reset();
             }
         }
@@ -760,9 +822,8 @@ void XojPageView::repaintPage() const { xournal->getRepaintHandler()->repaintPag
 
 void XojPageView::repaintArea(double x1, double y1, double x2, double y2) const {
     double zoom = xournal->getZoom();
-    xournal->getRepaintHandler()->repaintPageArea(
-            this, static_cast<int>(std::floor(x1 * zoom)), static_cast<int>(std::floor(y1 * zoom)),
-            static_cast<int>(std::ceil(x2 * zoom)), static_cast<int>(std::ceil(y2 * zoom)));
+    xournal->getRepaintHandler()->repaintPageArea(this, floor_cast<int>(x1 * zoom), floor_cast<int>(y1 * zoom),
+                                                  ceil_cast<int>(x2 * zoom), ceil_cast<int>(y2 * zoom));
 }
 
 void XojPageView::flagDirtyRegion(const Range& rg) const { repaintArea(rg.minX, rg.minY, rg.maxX, rg.maxY); }
@@ -784,7 +845,7 @@ void XojPageView::drawAndDeleteToolView(xoj::view::ToolView* v, const Range& rg)
 void XojPageView::deleteOverlayView(xoj::view::OverlayView* v, const Range& rg) {
     this->deleteView(v);
     if (!rg.empty()) {
-        assert(rg.isValid());
+        xoj_assert(rg.isValid());
         this->flagDirtyRegion(rg);
     }
 }
@@ -969,12 +1030,12 @@ GtkWidget* XojPageView::makePopover(const XojPdfRectangle& rect, GtkWidget* chil
     double zoom = xournal->getZoom();
 
     GtkWidget* popover = gtk_popover_new(this->getXournal()->getWidget());
-    gtk_container_add(GTK_CONTAINER(popover), child);
+    gtk_popover_set_child(GTK_POPOVER(popover), child);
 
-    auto x = static_cast<int>(this->getX() + rect.x1 * zoom);
-    auto y = static_cast<int>(this->getY() + rect.y1 * zoom);
-    auto w = static_cast<int>((rect.x2 - rect.x1) * zoom);
-    auto h = static_cast<int>((rect.y2 - rect.y1) * zoom);
+    auto x = floor_cast<int>(this->getX() + rect.x1 * zoom);
+    auto y = floor_cast<int>(this->getY() + rect.y1 * zoom);
+    auto w = ceil_cast<int>((rect.x2 - rect.x1) * zoom);
+    auto h = ceil_cast<int>((rect.y2 - rect.y1) * zoom);
 
     GdkRectangle canvasRect{x, y, w, h};
     gtk_popover_set_pointing_to(GTK_POPOVER(popover), &canvasRect);
@@ -1055,11 +1116,11 @@ auto XojPageView::getPage() const -> const PageRef { return page; }
 auto XojPageView::getXournal() const -> XournalView* { return this->xournal; }
 
 auto XojPageView::getDisplayWidth() const -> int {
-    return static_cast<int>(std::round(this->page->getWidth() * this->xournal->getZoom()));
+    return round_cast<int>(this->page->getWidth() * this->xournal->getZoom());
 }
 
 auto XojPageView::getDisplayHeight() const -> int {
-    return static_cast<int>(std::round(this->page->getHeight() * this->xournal->getZoom()));
+    return round_cast<int>(this->page->getHeight() * this->xournal->getZoom());
 }
 
 auto XojPageView::getDisplayWidthDouble() const -> double { return this->page->getWidth() * this->xournal->getZoom(); }
@@ -1068,29 +1129,29 @@ auto XojPageView::getDisplayHeightDouble() const -> double {
     return this->page->getHeight() * this->xournal->getZoom();
 }
 
-auto XojPageView::getSelectedTex() -> TexImage* {
+auto XojPageView::getSelectedTex() const -> const TexImage* {
     EditSelection* theSelection = this->xournal->getSelection();
     if (!theSelection) {
         return nullptr;
     }
 
-    for (Element* e: theSelection->getElements()) {
+    for (const Element* e: theSelection->getElementsView()) {
         if (e->getType() == ELEMENT_TEXIMAGE) {
-            return dynamic_cast<TexImage*>(e);
+            return dynamic_cast<const TexImage*>(e);
         }
     }
     return nullptr;
 }
 
-auto XojPageView::getSelectedText() -> Text* {
+auto XojPageView::getSelectedText() const -> const Text* {
     EditSelection* theSelection = this->xournal->getSelection();
     if (!theSelection) {
         return nullptr;
     }
 
-    for (Element* e: theSelection->getElements()) {
+    for (const Element* e: theSelection->getElementsView()) {
         if (e->getType() == ELEMENT_TEXT) {
-            return dynamic_cast<Text*>(e);
+            return dynamic_cast<const Text*>(e);
         }
     }
     return nullptr;
@@ -1106,7 +1167,7 @@ void XojPageView::rangeChanged(Range& range) { rerenderRange(range); }
 
 void XojPageView::pageChanged() { rerenderPage(); }
 
-void XojPageView::elementChanged(Element* elem) {
+void XojPageView::elementChanged(const Element* elem) {
     /*
      * The input handlers issue an elementChanged event when creating an element.
      * There is however no need to redraw the element in this case: the element was already painted to the buffer via a
@@ -1124,7 +1185,7 @@ void XojPageView::elementChanged(Element* elem) {
     }
 }
 
-void XojPageView::elementsChanged(const std::vector<Element*>& elements, const Range& range) {
+void XojPageView::elementsChanged(const std::vector<const Element*>& elements, const Range& range) {
     if (!range.empty()) {
         rerenderRange(range);
     }
@@ -1137,8 +1198,8 @@ void XojPageView::showFloatingToolbox(const PositionInputData& pos) {
     GtkWidget* widget = xournal->getWidget();
     gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
 
-    wx += static_cast<int>(std::round(pos.x) + this->getX());
-    wy += static_cast<int>(std::round(pos.y) + this->getY());
+    wx += round_cast<int>(pos.x) + this->getX();
+    wy += round_cast<int>(pos.y) + this->getY();
 
     control->getWindow()->getFloatingToolbox()->show(wx, wy);
 }

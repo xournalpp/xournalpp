@@ -16,6 +16,7 @@
 
 #include <pango/pango.h>
 
+#include "model/Element.h"
 #include "util/raii/GObjectSPtr.h"
 
 #include "AudioElement.h"  // for AudioElement
@@ -34,6 +35,7 @@ public:
 public:
     void setFont(const XojFont& font);
     XojFont& getFont();
+    const XojFont& getFont() const;
     double getFontSize() const;       // same result as getFont()->getSize(), but const
     std::string getFontName() const;  // same result as getFont()->getName(), but const
 
@@ -52,12 +54,10 @@ public:
     void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
     void rotate(double x0, double y0, double th) override;
 
-    bool rescaleOnlyAspectRatio() override;
+    bool rescaleOnlyAspectRatio() const override;
 
-    /**
-     * @overwrite
-     */
-    Text* clone() const override;
+    auto cloneText() const -> std::unique_ptr<Text>;
+    auto clone() const -> ElementPtr override;
 
 public:
     // Serialize interface

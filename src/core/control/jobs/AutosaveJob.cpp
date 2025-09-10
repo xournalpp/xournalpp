@@ -19,7 +19,6 @@ AutosaveJob::~AutosaveJob() = default;
 
 void AutosaveJob::afterRun() {
     std::string msg = FS(_F("Error while autosaving: {1}") % this->error);
-    g_warning("%s", msg.c_str());
     XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 }
 
@@ -31,9 +30,7 @@ void AutosaveJob::run() {
     Document* doc = control->getDocument();
 
     doc->lock();
-    handler.prepareSave(doc);
     auto filepath = doc->getFilepath();
-    doc->unlock();
 
     if (filepath.empty()) {
         filepath = Util::getAutosaveFilepath();
@@ -42,6 +39,9 @@ void AutosaveJob::run() {
     }
     Util::clearExtensions(filepath);
     filepath += ".autosave.xopp";
+
+    handler.prepareSave(doc, filepath);
+    doc->unlock();
 
     g_message("%s", FS(_F("Autosaving to {1}") % filepath.string()).c_str());
 

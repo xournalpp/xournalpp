@@ -21,7 +21,7 @@ class PdfPagesDialog;
 
 class PdfElementView: public BaseElementView {
 public:
-    PdfElementView(int id, XojPdfPageSPtr page, PdfPagesDialog* dlg);
+    PdfElementView(size_t id, XojPdfPageSPtr page, PdfPagesDialog* dlg);
     ~PdfElementView() override;
 
 protected:
@@ -43,7 +43,7 @@ protected:
 public:
     bool isUsed() const;
     void setUsed(bool used);
-    void setHideUnused();
+    void setHideIfUsed(bool hideIfUsed);
 
 private:
     XojPdfPageSPtr page;

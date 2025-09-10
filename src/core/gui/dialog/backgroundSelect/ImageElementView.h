@@ -14,6 +14,7 @@
 #include <cairo.h>  // for cairo_t
 
 #include "model/BackgroundImage.h"  // for BackgroundImage
+#include "util/Util.h"              // for npos
 
 #include "BaseElementView.h"  // for BaseElementView
 
@@ -22,7 +23,7 @@ class BackgroundSelectDialogBase;
 
 class ImageElementView: public BaseElementView {
 public:
-    ImageElementView(int id, BackgroundSelectDialogBase* dlg);
+    ImageElementView(size_t id, BackgroundSelectDialogBase* dlg);
     ~ImageElementView() override;
 
 protected:

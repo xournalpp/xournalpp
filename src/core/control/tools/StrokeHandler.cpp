@@ -1,7 +1,6 @@
 #include "StrokeHandler.h"
 
 #include <algorithm>  // for max, min
-#include <cassert>    // for assert
 #include <cmath>      // for ceil, pow, abs
 #include <limits>     // for numeric_limits
 #include <memory>     // for unique_ptr, mak...
@@ -10,34 +9,36 @@
 
 #include <gdk/gdk.h>  // for GdkEventKey
 
-#include "control/Control.h"                          // for Control
-#include "control/ToolEnums.h"                        // for DRAWING_TYPE_ST...
-#include "control/ToolHandler.h"                      // for ToolHandler
-#include "control/layer/LayerController.h"            // for LayerController
-#include "control/settings/Settings.h"                // for Settings
-#include "control/settings/SettingsEnums.h"           // for EmptyLastPageAppendType
-#include "control/shaperecognizer/ShapeRecognizer.h"  // for ShapeRecognizer
-#include "control/tools/InputHandler.h"               // for InputHandler::P...
-#include "control/tools/SnapToGridInputHandler.h"     // for SnapToGridInput...
-#include "gui/inputdevices/PositionInputData.h"  // for PositionInputData
-#include "model/Document.h"                      // for Document
-#include "model/Layer.h"                         // for Layer
-#include "model/LineStyle.h"                     // for LineStyle
-#include "model/Stroke.h"                        // for Stroke, STROKE_...
-#include "model/XojPage.h"                       // for XojPage
-#include "undo/InsertUndoAction.h"               // for InsertUndoAction
-#include "undo/RecognizerUndoAction.h"           // for RecognizerUndoA...
-#include "undo/UndoRedoHandler.h"                // for UndoRedoHandler
-#include "util/DispatchPool.h"                   // for DispatchPool
-#include "util/Range.h"                          // for Range
-#include "util/Rectangle.h"                      // for Rectangle, util
+#include "control/Control.h"                                // for Control
+#include "control/ToolEnums.h"                              // for DRAWING_TYPE_ST...
+#include "control/ToolHandler.h"                            // for ToolHandler
+#include "control/layer/LayerController.h"                  // for LayerController
+#include "control/settings/Settings.h"                      // for Settings
+#include "control/settings/SettingsEnums.h"                 // for EmptyLastPageAppendType
+#include "control/shaperecognizer/ShapeRecognizer.h"        // for ShapeRecognizer
+#include "control/tools/InputHandler.h"                     // for InputHandler::P...
+#include "control/tools/SnapToGridInputHandler.h"           // for SnapToGridInput...
+#include "gui/inputdevices/PositionInputData.h"             // for PositionInputData
+#include "model/Document.h"                                 // for Document
+#include "model/Element.h"
+#include "model/Layer.h"                                    // for Layer
+#include "model/LineStyle.h"                                // for LineStyle
+#include "model/Stroke.h"                                   // for Stroke, STROKE_...
+#include "model/XojPage.h"                                  // for XojPage
+#include "undo/InsertUndoAction.h"                          // for InsertUndoAction
+#include "undo/RecognizerUndoAction.h"                      // for RecognizerUndoA...
+#include "undo/UndoRedoHandler.h"                           // for UndoRedoHandler
+#include "util/Assert.h"                                    // for xoj_assert
+#include "util/DispatchPool.h"                              // for DispatchPool
+#include "util/Range.h"                                     // for Range
+#include "util/Rectangle.h"                                 // for Rectangle, util
 #include "view/overlays/StrokeToolFilledHighlighterView.h"  // for StrokeToolFilledHighlighterView
 #include "view/overlays/StrokeToolFilledView.h"             // for StrokeToolFilledView
 #include "view/overlays/StrokeToolView.h"                   // for StrokeToolView
 
 #include "StrokeStabilizer.h"  // for Base, get
 
-using namespace xoj::util;
+using xoj::util::Rectangle;
 
 StrokeHandler::StrokeHandler(Control* control, const PageRef& page):
         InputHandler(control, page),
@@ -47,7 +48,8 @@ StrokeHandler::StrokeHandler(Control* control, const PageRef& page):
 
 StrokeHandler::~StrokeHandler() = default;
 
-auto StrokeHandler::onKeyEvent(GdkEventKey* event) -> bool { return false; }
+auto StrokeHandler::onKeyPressEvent(const KeyEvent&) -> bool { return false; }
+auto StrokeHandler::onKeyReleaseEvent(const KeyEvent&) -> bool { return false; }
 
 auto StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos, double zoom) -> bool {
     if (!stroke) {
@@ -71,7 +73,7 @@ void StrokeHandler::paintTo(Point point) {
         point.z *= this->stroke->getWidth();
     }
 
-    auto pointCount = stroke->getPointCount();
+    size_t pointCount = stroke->getPointCount();
 
     if (pointCount > 0) {
         Point endPoint = stroke->getPoint(pointCount - 1);
@@ -128,7 +130,7 @@ void StrokeHandler::onSequenceCancelEvent() {
     }
 }
 
-void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zoom) {
+void StrokeHandler::finalizeStroke(double pressure) {
     if (!stroke) {
         return;
     }
@@ -146,7 +148,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
         const Point pt = pv.front();  // Make a copy, otherwise stroke->addPoint(pt); in UB
         if (this->hasPressure) {
             // Pressure inference provides a pressure value to the last event. Most devices set this value to 0.
-            const double newPressure = std::max(pt.z, pos.pressure * this->stroke->getWidth());
+            const double newPressure = std::max(pt.z, pressure * this->stroke->getWidth());
             this->stroke->setLastPressure(newPressure);
             this->viewPool->dispatch(xoj::view::StrokeToolView::THICKEN_FIRST_POINT_REQUEST, newPressure);
         }
@@ -154,6 +156,13 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
     }
 
     stroke->freeUnusedPointItems();
+}
+
+void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zoom) {
+    if (!stroke) {
+        return;
+    }
+    finalizeStroke(pos.pressure);
 
     Layer* layer = page->getSelectedLayer();
 
@@ -178,32 +187,32 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
     }
 
     ToolHandler* h = control->getToolHandler();
-    if (h->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER) {
+    if (h->getDrawingType() == DRAWING_TYPE_SHAPE_RECOGNIZER) {
         ShapeRecognizer reco;
 
-        Stroke* recognized = reco.recognizePatterns(stroke.get(), control->getSettings()->getStrokeRecognizerMinSize());
+        auto recognized = reco.recognizePatterns(stroke.get(), control->getSettings()->getStrokeRecognizerMinSize());
 
         if (recognized) {
             // strokeRecognizerDetected handles the repainting and the deletion of the views.
-            strokeRecognizerDetected(recognized, layer);
+            strokeRecognizerDetected(std::move(recognized), layer);
             return;
         }
     }
 
+    auto ptr = stroke.get();
     Document* doc = control->getDocument();
     doc->lock();
-    layer->addElement(stroke.get());
+    layer->addElement(std::move(stroke));
     doc->unlock();
 
     // Blitt the stroke to the page's buffer and delete all views.
     // Passing the empty Range() as no actual redrawing is necessary at this point
     this->viewPool->dispatchAndClear(xoj::view::StrokeToolView::FINALIZATION_REQUEST, Range());
 
-    page->fireElementChanged(stroke.get());
-    stroke.release();
+    page->fireElementChanged(ptr);
 }
 
-void StrokeHandler::strokeRecognizerDetected(Stroke* recognized, Layer* layer) {
+void StrokeHandler::strokeRecognizerDetected(std::unique_ptr<Stroke> recognized, Layer* layer) {
     recognized->setWidth(stroke->hasPressure() ? stroke->getAvgPressure() : stroke->getWidth());
 
     // snapping
@@ -227,35 +236,32 @@ void StrokeHandler::strokeRecognizerDetected(Stroke* recognized, Layer* layer) {
     }
 
     UndoRedoHandler* undo = control->getUndoRedoHandler();
-    undo->addUndoAction(std::make_unique<RecognizerUndoAction>(page, layer, stroke.get(), recognized));
+    auto recognizedPtr = recognized.get();
+    auto strokePtr = stroke.get();
+    undo->addUndoAction(std::make_unique<RecognizerUndoAction>(page, layer, std::move(stroke), recognizedPtr));
 
     Document* doc = control->getDocument();
     doc->lock();
-    layer->addElement(recognized);
+    layer->addElement(std::move(recognized));
     doc->unlock();
 
-    Range range(recognized->getX(), recognized->getY());
-    range.addPoint(recognized->getX() + recognized->getElementWidth(),
-                   recognized->getY() + recognized->getElementHeight());
+    Range range(recognizedPtr->getX(), recognizedPtr->getY());
+    range.addPoint(recognizedPtr->getX() + recognizedPtr->getElementWidth(),
+                   recognizedPtr->getY() + recognizedPtr->getElementHeight());
 
-    range.addPoint(stroke->getX(), stroke->getY());
-    range.addPoint(stroke->getX() + stroke->getElementWidth(), stroke->getY() + stroke->getElementHeight());
+    range.addPoint(strokePtr->getX(), strokePtr->getY());
+    range.addPoint(strokePtr->getX() + strokePtr->getElementWidth(), strokePtr->getY() + strokePtr->getElementHeight());
 
-    stroke.release();  // The stroke is now owned by the UndoRedoHandler (to undo the recognition)
-
-    this->viewPool->dispatch(xoj::view::StrokeToolView::STROKE_REPLACEMENT_REQUEST, *recognized);
+    this->viewPool->dispatch(xoj::view::StrokeToolView::STROKE_REPLACEMENT_REQUEST, *recognizedPtr);
 
     // Blitt the new stroke to the page's buffer, delete all the views and refresh the area (so the recognized stroke
     // gets displayed instead of the old one).
     this->viewPool->dispatchAndClear(xoj::view::StrokeToolView::FINALIZATION_REQUEST, range);
-
-    stroke.reset(recognized);  // To ensure PageView::elementChanged knows the recognized stroke is handler by *this
-    page->fireElementChanged(recognized);
-    stroke.release();  // The recognized stroke is owned by the layer
+    page->fireElementChanged(recognizedPtr);
 }
 
 void StrokeHandler::onButtonPressEvent(const PositionInputData& pos, double zoom) {
-    assert(!stroke);
+    xoj_assert(!stroke);
 
     this->buttonDownPoint.x = pos.x / zoom;
     this->buttonDownPoint.y = pos.y / zoom;
@@ -275,7 +281,7 @@ void StrokeHandler::onButtonDoublePressEvent(const PositionInputData&, double) {
 }
 
 auto StrokeHandler::createView(xoj::view::Repaintable* parent) const -> std::unique_ptr<xoj::view::OverlayView> {
-    assert(this->stroke);
+    xoj_assert(this->stroke);
     const Stroke& s = *this->stroke;
     if (s.getFill() != -1) {
         if (s.getToolType() == StrokeTool::HIGHLIGHTER) {

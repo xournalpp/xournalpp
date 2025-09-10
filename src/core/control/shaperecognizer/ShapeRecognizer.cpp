@@ -12,6 +12,7 @@
 #include "control/shaperecognizer/ShapeRecognizerConfig.h"  // for RDEBUG
 #include "model/Point.h"                                    // for Point
 #include "model/Stroke.h"                                   // for Stroke
+#include "util/safe_casts.h"                                // for as_unsigned
 
 #include "CircleRecognizer.h"  // for CircleRec...
 #include "Inertia.h"           // for Inertia
@@ -31,16 +32,87 @@ void ShapeRecognizer::resetRecognizer() {
     this->queueLength = 0;
 }
 
+inline double dist2(const Point& P, const Point& Q) {
+    const double dx = P.x - Q.x;
+    const double dy = P.y - Q.y;
+    return dx * dx + dy * dy;
+}
+
+auto ShapeRecognizer::tryTriangle() -> std::unique_ptr<Stroke> {
+    // first, we need whole strokes to combine to 3 segments...
+    if (this->queueLength < 3) {
+        return nullptr;
+    }
+
+    RecoSegment* rs = &this->queue[as_unsigned(this->queueLength - 3)];
+    if (rs->startpt != 0) {
+        return nullptr;
+    }
+
+    /*
+    Make segments be oriented so that, for every pair of neighbouring segments,
+    the first segment points towards the second. This should make the polygon
+    have all of its segments oriented either clockwise or counter-clockwise.
+
+    The direction of any segment R is defined from P to Q where
+    if R is not reversed then
+        P is (x1,y1)
+        Q is (x2,y2)
+    else
+        P is (x2,y2)
+        Q is (x1,y1)
+    */
+    for (int i = 0; i <= 2; i++) {
+        RecoSegment& r1 = rs[i];
+        const RecoSegment& r2 = rs[(i + 1) % 3];
+
+        const Point P(r1.x1, r1.y1);
+        const Point Q(r1.x2, r1.y2);
+        const Point R(r2.x1, r2.y1);
+        const Point S(r2.x2, r2.y2);
+        const double min_PR_PS = std::min(dist2(P, R), dist2(P, S));
+        const double min_QR_QS = std::min(dist2(Q, R), dist2(Q, S));
+        r1.reversed = min_PR_PS < min_QR_QS;
+    }
+
+    for (int i = 0; i <= 2; i++) {
+        const RecoSegment& r1 = rs[i];
+        const RecoSegment& r2 = rs[(i + 1) % 3];
+
+        const double x1 = r1.reversed ? r1.x1 : r1.x2;
+        const double y1 = r1.reversed ? r1.y1 : r1.y2;
+        const double x2 = r2.reversed ? r2.x2 : r2.x1;
+        const double y2 = r2.reversed ? r2.y2 : r2.y1;
+
+        const double dist = hypot(x1 - x2, y1 - y2);
+        if (dist > TRIANGLE_LINEAR_TOLERANCE * (r1.radius + r2.radius)) {
+            return nullptr;
+        }
+    }
+
+    auto s = std::make_unique<Stroke>();
+    s->applyStyleFrom(this->stroke);
+
+    for (int i = 0; i <= 2; i++) {
+        Point p = rs[i].calcEdgeIsect(&rs[(i + 1) % 3]);
+        s->addPoint(p);
+    }
+
+    s->addPoint(s->getPoint(0));
+
+    return s;
+}
+
 /**
  *  Test if segments form standard shapes
  */
-auto ShapeRecognizer::tryRectangle() -> Stroke* {
+auto ShapeRecognizer::tryRectangle() -> std::unique_ptr<Stroke> {
     // first, we need whole strokes to combine to 4 segments...
     if (this->queueLength < 4) {
         return nullptr;
     }
 
-    RecoSegment* rs = &this->queue[this->queueLength - 4];
+    RecoSegment* rs = &this->queue[as_unsigned(this->queueLength - 4)];
     if (rs->startpt != 0) {
         return nullptr;
     }
@@ -84,7 +156,7 @@ auto ShapeRecognizer::tryRectangle() -> Stroke* {
         avgAngle = M_PI / 2;
     }
 
-    auto* s = new Stroke();
+    auto s = std::make_unique<Stroke>();
     s->applyStyleFrom(this->stroke);
 
     for (int i = 0; i <= 3; i++) {
@@ -126,7 +198,7 @@ auto ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsi
         i1 = start + (k * (end - start)) / nsides;
         i2 = start + ((k + 1) * (end - start)) / nsides;
         s.calc(pt, i1, i2);
-        if (s.det() < LINE_MAX_DET) {
+        if (s.det() < SEGMENT_MAX_DET) {
             break;
         }
     }
@@ -157,10 +229,10 @@ auto ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsi
             det2 = 1.0;
         }
 
-        if (det1 < det2 && det1 < LINE_MAX_DET) {
+        if (det1 < det2 && det1 < SEGMENT_MAX_DET) {
             i1--;
             s = s1;
-        } else if (det2 < det1 && det2 < LINE_MAX_DET) {
+        } else if (det2 < det1 && det2 < SEGMENT_MAX_DET) {
             i2++;
             s = s2;
         } else {
@@ -259,7 +331,7 @@ auto ShapeRecognizer::isStrokeLargeEnough(Stroke* stroke, double strokeMinSize) 
 /**
  * The main pattern recognition function
  */
-auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) -> Stroke* {
+auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) -> std::unique_ptr<Stroke> {
     this->stroke = stroke;
 
     if (!isStrokeLargeEnough(stroke, strokeMinSize)) {
@@ -270,7 +342,8 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) ->
     int brk[5] = {0};
 
     // first see if it's a polygon
-    int n = findPolygonal(stroke->getPoints(), 0, stroke->getPointCount() - 1, MAX_POLYGON_SIDES, brk, ss);
+    int n = findPolygonal(stroke->getPoints(), 0, static_cast<int>(stroke->getPointCount()) - 1, MAX_POLYGON_SIDES, brk,
+                          ss);
     if (n > 0) {
         optimizePolygonal(stroke->getPoints(), n, brk, ss);
 #ifdef DEBUG_RECOGNIZER
@@ -285,7 +358,7 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) ->
         while (n + queueLength > MAX_POLYGON_SIDES) {
             // remove oldest polygonal stroke
             int i = 1;
-            while (i < queueLength && queue[i].startpt != 0) {
+            while (i < queueLength && queue[as_unsigned(i)].startpt != 0) {
                 i++;
             }
             queueLength -= i;
@@ -294,7 +367,7 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) ->
 
         RDEBUG("Queue now has %i + %i edges", this->queueLength, n);
 
-        RecoSegment* rs = &this->queue[this->queueLength];
+        RecoSegment* rs = &this->queue[as_unsigned(this->queueLength)];
         this->queueLength += n;
 
         for (int i = 0; i < n; i++) {
@@ -303,14 +376,18 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) ->
             rs[i].calcSegmentGeometry(stroke->getPoints(), brk[i], brk[i + 1], ss + i);
         }
 
-        if (Stroke* result = tryRectangle(); result != nullptr) {
+        if (auto result = tryTriangle(); result != nullptr) {
+            RDEBUG("return triangle");
+            return result;
+        }
+        if (auto result = tryRectangle(); result != nullptr) {
             RDEBUG("return rectangle");
             return result;
         }
 
         // Removed complicated recognition in commit 5494bd002050182cde3af70bd1924f4062579be5
 
-        if (n == 1)  // current stroke is a line
+        if (n == 1 && ss->det() < LINE_MAX_DET)  // current stroke is a line
         {
             bool aligned = true;
             if (fabs(rs->angle) < SLANT_TOLERANCE)  // nearly horizontal
@@ -324,16 +401,33 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) ->
                 aligned = false;
             }
 
-            auto* s = new Stroke();
+            auto s = std::make_unique<Stroke>();
             s->applyStyleFrom(this->stroke);
 
             if (aligned) {
                 s->addPoint(Point(rs->x1, rs->y1));
                 s->addPoint(Point(rs->x2, rs->y2));
             } else {
-                auto points = stroke->getPointVector();
-                s->addPoint(Point(points.front().x, points.front().y));
-                s->addPoint(Point(points.back().x, points.back().y));
+                const Point P(rs->x1, rs->y1);
+                const Point Q(rs->x2, rs->y2);
+
+                const auto& points = stroke->getPointVector();
+                const Point& last = points.back();
+
+                const double dx = Q.x - P.x;
+                const double dy = Q.y - P.y;
+                const double num = dy * last.x - dx * last.y + Q.x * P.y - Q.y * P.x;
+                const double num2 = num * num;
+                const double den2 = dy * dy + dx * dx;
+                const double dist2 = num2 / den2;
+
+                if (dist2 < LINE_POINT_DIST2_THRESHOLD) {
+                    s->addPoint(P);
+                    s->addPoint(Q);
+                } else {
+                    s->addPoint(Point(points.front().x, points.front().y));
+                    s->addPoint(Point(points.back().x, points.back().y));
+                }
             }
 
             RDEBUG("return line");
@@ -342,7 +436,7 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) ->
     }
 
     // not a polygon: maybe a circle ?
-    Stroke* s = CircleRecognizer::recognize(stroke);
+    auto s = CircleRecognizer::recognize(stroke);
     if (s) {
         RDEBUG("return circle");
         return s;

@@ -1,7 +1,6 @@
 #include "SplineToolView.h"
 
 #include <algorithm>  // for for_each
-#include <cassert>
 #include <cmath>
 #include <cstdio>
 #include <optional>
@@ -11,6 +10,7 @@
 #include "control/zoom/ZoomControl.h"
 #include "model/Point.h"
 #include "model/SplineSegment.h"
+#include "util/Assert.h"
 #include "util/raii/CairoWrappers.h"
 #include "view/Repaintable.h"
 
@@ -34,7 +34,7 @@ void SplineToolView::draw(cairo_t* cr) const {
     if (!data) {
         return;
     }
-    assert(!data->knots.empty() && data->knots.size() == data->tangents.size());
+    xoj_assert(!data->knots.empty() && data->knots.size() == data->tangents.size());
 
     const double lineWidth = LINE_WIDTH_WITHOUT_ZOOM / this->parent->getZoom();
 
@@ -93,7 +93,7 @@ void SplineToolView::drawWithoutDrawingAids(cairo_t* cr) const {
     if (!data) {
         return;
     }
-    assert(!data->knots.empty() && data->knots.size() == data->tangents.size());
+    xoj_assert(!data->knots.empty() && data->knots.size() == data->tangents.size());
 
     xoj::util::CairoSaveGuard saveGuard(cr);
     this->drawSpline(cr, data.value());

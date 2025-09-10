@@ -14,6 +14,7 @@
 #include <cstddef>  // for size_t
 #include <limits>   // for numeric_limits
 #include <memory>   // for unique_ptr
+#include <unordered_map>
 
 #include "config-features.h"  // for ENABLE_PLUGINS
 
@@ -39,17 +40,17 @@ class ToolMenuHandler;
 
 struct MenuEntry final {
     MenuEntry() = default;
-    MenuEntry(Plugin* plugin, std::string label, std::string callback, long mode, std::string accelerator):
+    MenuEntry(Plugin* plugin, std::string label, std::string callback, ptrdiff_t mode, std::string accelerator):
             plugin(plugin),
             label(std::move(label)),
             callback(std::move(callback)),
             mode(mode),
             accelerator(std::move(accelerator)) {}
 
-    Plugin* plugin = nullptr;                     ///< The Plugin
-    std::string label{};                          ///< Menu display name
-    std::string callback{};                       ///< Callback function name
-    long mode{std::numeric_limits<long>::max()};  ///< mode in which the callback function is run
+    Plugin* plugin = nullptr;                               ///< The Plugin
+    std::string label{};                                    ///< Menu display name
+    std::string callback{};                                 ///< Callback function name
+    ptrdiff_t mode{std::numeric_limits<ptrdiff_t>::max()};  ///< mode in which the callback function is run
     /**
      * @brief Accelerator key, see
      *     https://developer.gnome.org/gtk3/stable/gtk3-Keyboard-Accelerators.html#gtk-accelerator-parse
@@ -62,7 +63,7 @@ struct MenuEntry final {
 struct ToolbarButtonEntry final {
     ToolbarButtonEntry() = default;
     ToolbarButtonEntry(Plugin* plugin, std::string description, std::string toolbarId, std::string iconName,
-                       std::string callback, long mode):
+                       std::string callback, ptrdiff_t mode):
             plugin(plugin),
             description(std::move(description)),
             toolbarId(std::move(toolbarId)),
@@ -71,12 +72,27 @@ struct ToolbarButtonEntry final {
             mode(mode) {}
 
     Plugin* plugin = nullptr;
-    std::string description{};                    ///< description displayed on hovering over the toolbar button
-    std::string toolbarId{};                      ///< toolbar ID to be used in toolbar.ini
-    std::string iconName{};                       ///< name of the icon which should be stored as iconName + ".svg"
-    std::string callback{};                       ///< Callback function name
-    long mode{std::numeric_limits<long>::max()};  ///< mode in which the callback function is run
+    std::string description{};  ///< description displayed on hovering over the toolbar button
+    std::string toolbarId{};    ///< toolbar ID to be used in toolbar.ini
+    std::string iconName{};     ///< name of the icon which should be stored as iconName + ".svg"
+    std::string callback{};     ///< Callback function name
+    ptrdiff_t mode{std::numeric_limits<ptrdiff_t>::max()};  ///< mode in which the callback function is run
 };
+
+struct ToolbarPlaceholderEntry final {
+    std::string toolbarId;                          ///< prefixed toolbar ID to be used in toolbar.ini
+    std::string description;                        ///< description displayed on hovering over the placeholder
+    std::string value;                              ///< current value of the placeholder
+    class PluginPlaceholderLabel* label = nullptr;  ///< pointer to the label for updates
+};
+
+inline std::string getDisplayId(const std::string& toolbarId) {
+    constexpr const char* prefix = "Plugin::";
+    if (toolbarId.rfind(prefix, 0) == 0) {
+        return toolbarId.substr(strlen(prefix));
+    }
+    return toolbarId;
+}
 
 struct LuaDeleter {
     void operator()(lua_State* ptr) const { lua_close(ptr); }
@@ -85,6 +101,10 @@ struct LuaDeleter {
 class Plugin final {
 public:
     Plugin(Control* control, std::string name, fs::path path);
+    // Register a placeholder label for the toolbar
+    void registerPlaceholder(const std::string& toolbarId, const std::string& description);
+    // Update the value of a placeholder label
+    void setPlaceholderValue(const std::string& toolbarId, const std::string& value);
 
 public:
     /// Load the plugin script
@@ -108,9 +128,10 @@ public:
 
     // Register toolbar button
     void registerToolButton(std::string description, std::string toolbarId, std::string iconName, std::string callback,
-                            long mode);
+                            ptrdiff_t mode);
     // Register all toolbar buttons
     void registerToolButton(ToolMenuHandler* toolMenuHandler);
+    void registerPlaceholders(ToolMenuHandler* toolMenuHandler);
 
     /// Execute menu entry
     void executeMenuEntry(MenuEntry* entry);
@@ -146,7 +167,7 @@ public:
 
     /// Register a menu item
     /// @return Internal ID, can e.g. be used to disable the menu
-    auto registerMenu(std::string menu, std::string callback, long mode, std::string accelerator) -> size_t;
+    auto registerMenu(std::string menu, std::string callback, ptrdiff_t mode, std::string accelerator) -> size_t;
 
     ///@return The main controller
     auto getControl() const -> Control*;
@@ -154,9 +175,6 @@ public:
 private:
     /// Load ini file
     void loadIni();
-
-    /// Execute lua function
-    auto callFunction(const std::string& fnc, long mode = std::numeric_limits<long>::max()) -> bool;
 
     /// Load custom Lua Libraries
     static void registerXournalppLibs(lua_State* luaPtr);
@@ -168,13 +186,18 @@ public:
     /// Get Plugin from lua engine
     static auto getPluginFromLua(lua_State* lua) -> Plugin*;
 
+    /// Execute lua function
+    auto callFunction(const std::string& fnc, ptrdiff_t mode = std::numeric_limits<ptrdiff_t>::max()) -> bool;
+    auto callFunction(const std::string& fnc, const char* s) -> bool;
+
 private:
     Control* control;                                      ///< The main controller
     std::unique_ptr<lua_State, LuaDeleter> lua{};          ///< Lua engine
     std::vector<MenuEntry> menuEntries;                    ///< All registered menu entries
     xoj::util::GObjectSPtr<GMenu> menuSection;             ///< Menu section containing the menu entries
     std::vector<ToolbarButtonEntry> toolbarButtonEntries;  ///< All registered toolbar button entries
-
+    std::unordered_map<std::string, std::unique_ptr<ToolbarPlaceholderEntry>>
+            toolbarPlaceholderEntries;  ///< Storage for toolbar placeholder entries
 
     std::string name;             ///< Plugin name
     std::string description;      ///< Description of the plugin

@@ -6,104 +6,109 @@
 #include <gdk/gdk.h>      // for GDK_EXPOSURE_MASK
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 
+#include "gui/Builder.h"
 #include "util/Util.h"  // for paintBackgroundWhite
+#include "util/gtk4_helper.h"
+#include "util/safe_casts.h"  // for round_cast
 
 #include "BaseElementView.h"  // for BaseElementView
 
 class GladeSearchpath;
 
 
+constexpr auto UI_FILE = "backgroundSelection.glade";
+constexpr auto UI_DIALOG_NAME = "Dialog";
+
 BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc,
-                                                       Settings* settings, const std::string& glade,
-                                                       const std::string& mainWnd):
-        GladeGui(gladeSearchPath, glade, std::move(mainWnd)), settings(settings), doc(doc) {
-    this->layoutContainer = gtk_layout_new(nullptr, nullptr);
-    gtk_widget_show(this->layoutContainer);
-    this->scrollPreview = get("scrollContents");
-    gtk_container_add(GTK_CONTAINER(scrollPreview), layoutContainer);
+                                                       Settings* settings, const char* title):
+        settings(settings), doc(doc) {
+    Builder builder(gladeSearchPath, UI_FILE);
+    this->window.reset(GTK_WINDOW(builder.get(UI_DIALOG_NAME)));
+    gtk_window_set_title(window.get(), title);
 
-    gtk_widget_set_events(this->layoutContainer, GDK_EXPOSURE_MASK);
-    g_signal_connect(this->layoutContainer, "draw", G_CALLBACK(Util::paintBackgroundWhite), nullptr);
+    this->container = GTK_FIXED(gtk_fixed_new());
+    gtk_widget_set_hexpand(GTK_WIDGET(this->container), true);
+    this->okButton = builder.get("btOk");
+    this->vbox = GTK_BOX(builder.get("vbox"));
 
-    g_signal_connect(this->window, "size-allocate", G_CALLBACK(sizeAllocate), this);
-    gtk_window_set_default_size(GTK_WINDOW(this->window), 800, 600);
+    this->scrolledWindow = GTK_SCROLLED_WINDOW(builder.get("scrollContents"));
+    gtk_scrolled_window_set_child(scrolledWindow, GTK_WIDGET(container));
+
+    g_signal_connect(gtk_scrolled_window_get_hadjustment(scrolledWindow), "notify::page-size",
+                     G_CALLBACK(+[](GObject*, GParamSpec*, gpointer d) {
+                         static_cast<BackgroundSelectDialogBase*>(d)->layout();
+                     }),
+                     this);
+
+    gtk_window_set_default_size(this->window.get(), 800, 600);
+    gtk_widget_set_sensitive(this->okButton, false);
+
+    g_signal_connect_swapped(builder.get("btCancel"), "clicked", G_CALLBACK(gtk_window_close), this->window.get());
+
+    g_signal_connect(this->container, "realize", G_CALLBACK(+[](GtkWidget*, gpointer self) {
+                         static_cast<BackgroundSelectDialogBase*>(self)->layout();
+                     }),
+                     this);
 }
 
-BackgroundSelectDialogBase::~BackgroundSelectDialogBase() {
-    for (BaseElementView* e: elements) { delete e; }
-    elements.clear();
-}
-
-void BackgroundSelectDialogBase::sizeAllocate(GtkWidget* widget, GtkAllocation* alloc,
-                                              BackgroundSelectDialogBase* dlg) {
-    if (dlg->lastWidth == alloc->width) {
-        return;
-    }
-    dlg->lastWidth = alloc->width;
-    dlg->layout();
-}
+BackgroundSelectDialogBase::~BackgroundSelectDialogBase() = default;
 
 auto BackgroundSelectDialogBase::getSettings() -> Settings* { return this->settings; }
 
 void BackgroundSelectDialogBase::layout() {
-    double x = 0;
-    double y = 0;
-    double row_height = 0;
-    double max_row_width = 0;
+    int x = 0;
+    int y = 0;
+    int row_height = 0;
+    int max_row_width = 0;
 
-    GtkAllocation alloc = {0};
-    gtk_widget_get_allocation(this->scrollPreview, &alloc);
+    auto width = gtk_adjustment_get_page_size(gtk_scrolled_window_get_hadjustment(scrolledWindow));
 
-    for (BaseElementView* p: this->elements) {
+    for (const auto& p: this->entries) {
         if (!gtk_widget_get_visible(p->getWidget())) {
             continue;
         }
 
-        if (x + p->getWidth() > alloc.width) {
+        if (x + p->getWidth() > width) {
+            max_row_width = std::max(max_row_width, x);
             y += row_height;
             x = 0;
             row_height = 0;
         }
-        max_row_width = std::max(max_row_width, x + static_cast<double>(p->getWidth()));
+        gtk_fixed_move(this->container, p->getWidget(), x, y);
 
-        gtk_layout_move(GTK_LAYOUT(this->layoutContainer), p->getWidget(), x, y);
-
-        row_height =
-                std::max(row_height,
-                         static_cast<double>(p->getHeight()));  // TODO(fabian): page height should be double as well
-
+        row_height = std::max(row_height, p->getHeight());
         x += p->getWidth();
     }
+    max_row_width = std::max(max_row_width, x);
 
-    gtk_layout_set_size(GTK_LAYOUT(this->layoutContainer), max_row_width, y + row_height);
+    gtk_widget_set_size_request(GTK_WIDGET(this->container), max_row_width, y + row_height);
 }
 
-void BackgroundSelectDialogBase::show(GtkWindow* parent) {
-    for (BaseElementView* e: elements) { gtk_layout_put(GTK_LAYOUT(this->layoutContainer), e->getWidget(), 0, 0); }
+void BackgroundSelectDialogBase::populate() {
+    for (const auto& e: entries) {
+        gtk_fixed_put(this->container, e->getWidget(), 0, 0);
+    }
 
-    if (!elements.empty()) {
+    if (!entries.empty()) {
         setSelected(0);
     }
 
     layout();
-
-    gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
-    gtk_dialog_run(GTK_DIALOG(this->window));
-    gtk_widget_hide(this->window);
 }
 
-void BackgroundSelectDialogBase::setSelected(int selected) {
+void BackgroundSelectDialogBase::setSelected(size_t selected) {
     if (this->selected == selected) {
         return;
     }
 
-    int lastSelected = this->selected;
-    if (lastSelected >= 0 && lastSelected < static_cast<int>(elements.size())) {
-        elements[lastSelected]->setSelected(false);
+    size_t lastSelected = this->selected;
+    if (lastSelected < entries.size()) {
+        entries[lastSelected]->setSelected(false);
     }
 
-    if (selected >= 0 && selected < static_cast<int>(elements.size())) {
-        elements[selected]->setSelected(true);
+    if (selected < entries.size()) {
+        entries[selected]->setSelected(true);
         this->selected = selected;
+        gtk_widget_set_sensitive(okButton, true);
     }
 }

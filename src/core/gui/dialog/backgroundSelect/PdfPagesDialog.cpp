@@ -14,6 +14,8 @@
 #include "model/PageType.h"
 #include "model/XojPage.h"
 #include "pdf/base/XojPdfPage.h"
+#include "util/Assert.h"
+#include "util/Util.h"  // for npos
 #include "util/i18n.h"  // for FC
 
 #include "PdfElementView.h"
@@ -21,91 +23,72 @@
 class GladeSearchpath;
 class Settings;
 
-
-PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings):
-        BackgroundSelectDialogBase(gladeSearchPath, doc, settings, "pdfpages.glade", "pdfPagesDialog") {
+PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings,
+                               std::function<void(size_t)> callback):
+        BackgroundSelectDialogBase(gladeSearchPath, doc, settings, _("Select PDF Page")),
+        callback(std::move(callback)) {
+    doc->lock();
     for (size_t i = 0; i < doc->getPdfPageCount(); i++) {
         XojPdfPageSPtr p = doc->getPdfPage(i);
-        auto* pv = new PdfElementView(elements.size(), p, this);
-        elements.push_back(pv);
+        entries.emplace_back(std::make_unique<PdfElementView>(entries.size(), p, this));
     }
 
+    size_t used = 0;
     for (size_t i = 0; i < doc->getPageCount(); i++) {
         PageRef p = doc->getPage(i);
 
         if (p->getBackgroundType().isPdfPage()) {
             auto pdfPage = p->getPdfPageNr();
-            if (pdfPage >= 0 && pdfPage < elements.size()) {
-                (dynamic_cast<PdfElementView*>(elements[p->getPdfPageNr()]))->setUsed(true);
+            if (pdfPage >= 0 && pdfPage < entries.size()) {
+                auto* pv = (static_cast<PdfElementView*>(entries[pdfPage].get()));
+                if (!pv->isUsed()) {
+                    pv->setUsed(true);
+                    used++;
+                }
             }
         }
     }
+    xoj_assert(used <= doc->getPdfPageCount());
+    auto unused = doc->getPdfPageCount() - used;
+    doc->unlock();
 
-    gtk_widget_set_sensitive(get("buttonOk"), false);
+    cbUnusedOnly = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(
+            (unused == 1 ? _("Show only not used pages (one unused page)") :
+                           FC(_F("Show only not used pages ({1} unused pages)") % unused))));
 
-    g_signal_connect(get("cbOnlyNotUsed"), "toggled", G_CALLBACK(onlyNotUsedCallback), this);
-    g_signal_connect(get("buttonOk"), "clicked", G_CALLBACK(okButtonCallback), this);
+    gtk_box_prepend(vbox, GTK_WIDGET(cbUnusedOnly));
+
+#if GTK_MAJOR_VERSION == 3
+    gtk_widget_show_all(GTK_WIDGET(vbox));
+#endif
+
+    g_signal_connect(cbUnusedOnly, "toggled", G_CALLBACK(onlyNotUsedCallback), this);
+
+    g_signal_connect_swapped(okButton, "clicked", G_CALLBACK(+[](PdfPagesDialog* self) {
+                                 if (self->selected < self->entries.size()) {
+                                     self->callback(self->selected);
+                                 }
+                                 gtk_window_close(self->window.get());
+                             }),
+                             this);
+
+    populate();
 }
 
 PdfPagesDialog::~PdfPagesDialog() = default;
 
 void PdfPagesDialog::updateOkButton() {
-    bool valid = false;
-    if (selected >= 0 && selected < static_cast<int>(elements.size())) {
-        BaseElementView* p = this->elements[this->selected];
-        valid = gtk_widget_get_visible(p->getWidget());
-    }
-
-    gtk_widget_set_sensitive(get("buttonOk"), valid);
+    bool valid = selected < entries.size() && gtk_widget_get_visible(this->entries[this->selected]->getWidget());
+    gtk_widget_set_sensitive(okButton, valid);
 }
 
-void PdfPagesDialog::okButtonCallback(GtkButton* button, PdfPagesDialog* dlg) { dlg->confirmed = true; }
-
 void PdfPagesDialog::onlyNotUsedCallback(GtkToggleButton* tb, PdfPagesDialog* dlg) {
-    if (gtk_toggle_button_get_active(tb)) {
-        for (BaseElementView* p: dlg->elements) {
-            auto* pv = dynamic_cast<PdfElementView*>(p);
-            pv->setHideUnused();
-        }
-    } else {
-        gtk_widget_show_all(dlg->scrollPreview);
+    bool hideIfUsed = gtk_toggle_button_get_active(tb);
+    for (const auto& p: dlg->entries) {
+        auto* pv = static_cast<PdfElementView*>(p.get());
+        pv->setHideIfUsed(hideIfUsed);
     }
 
     dlg->layout();
     dlg->updateOkButton();
-}
-
-auto PdfPagesDialog::getZoom() -> double { return 0.25; }
-
-auto PdfPagesDialog::getSelectedPage() -> int {
-    if (confirmed) {
-        return this->selected;
-    }
-
-    return -1;
-}
-
-void PdfPagesDialog::show(GtkWindow* parent) {
-    GtkWidget* w = get("cbOnlyNotUsed");
-
-    int unused = 0;
-    for (BaseElementView* p: elements) {
-        auto* pv = dynamic_cast<PdfElementView*>(p);
-        if (!pv->isUsed()) {
-            unused++;
-        }
-    }
-
-    gtk_button_set_label(GTK_BUTTON(w), (unused == 1 ? _("Show only not used pages (one unused page)") :
-                                                       FC(_F("Show only not used pages ({1} unused pages)") % unused)));
-
-    BackgroundSelectDialogBase::show(parent);
-}
-
-void PdfPagesDialog::setSelected(int selected) {
-    BackgroundSelectDialogBase::setSelected(selected);
-
-    if (selected < this->elements.size()) {
-        gtk_widget_set_sensitive(get("buttonOk"), true);
-    }
 }

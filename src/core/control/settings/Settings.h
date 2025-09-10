@@ -11,31 +11,38 @@
 
 #pragma once
 
-#include <array>    // for array
-#include <cstddef>  // for size_t
-#include <map>      // for map
-#include <memory>   // for make_shared, shared_ptr
-#include <string>   // for string, basic_string
-#include <utility>  // for pair
-#include <vector>   // for vector
+#include <array>     // for array
+#include <cstddef>   // for size_t
+#include <map>       // for map
+#include <memory>    // for make_shared, shared_ptr
+#include <optional>  // for optional
+#include <string>    // for string, basic_string
+#include <utility>   // for pair
+#include <vector>    // for vector
 
-#include <gdk/gdk.h>                      // for GdkInputSource, GdkD...
-#include <glib.h>                         // for gchar, gboolean, gint
-#include <libxml/tree.h>                  // for xmlNodePtr, xmlDocPtr
-#include <portaudiocpp/PortAudioCpp.hxx>  // for PaDeviceIndex
+#include <gdk/gdk.h>      // for GdkInputSource, GdkD...
+#include <glib.h>         // for gchar, gboolean, gint
+#include <libxml/tree.h>  // for xmlNodePtr, xmlDocPtr
 
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
 #include "model/Font.h"                          // for XojFont
 #include "util/Color.h"                          // for Color
 
-#include "LatexSettings.h"  // for LatexSettings
-#include "SettingsEnums.h"  // for InputDeviceTypeOption
-#include "ViewModes.h"      // for ViewModes
-#include "filesystem.h"     // for path
+#include "LatexSettings.h"      // for LatexSettings
+#include "RecolorParameters.h"  // for RecolorParameters
+#include "SettingsEnums.h"      // for InputDeviceTypeOption
+#include "ViewModes.h"          // for ViewModes
+#include "config-features.h"    // for ENABLE_AUDIO
+#include "filesystem.h"         // for path
+
+#ifdef ENABLE_AUDIO
+#include <portaudiocpp/PortAudioCpp.hxx>  // for PaDeviceIndex
+#endif
 
 struct Palette;
 
 constexpr auto DEFAULT_GRID_SIZE = 14.17;
+constexpr unsigned int MAX_SPACES_FOR_TAB = 8U;
 
 class ButtonConfig;
 class InputDevice;
@@ -125,6 +132,7 @@ public:
 
     // Getter- / Setter
     const std::vector<ViewMode>& getViewModes() const;
+    ViewModeId getActiveViewMode() const;
 
     bool isPressureSensitivity() const;
     void setPressureSensitivity(gboolean presureSensitivity);
@@ -227,6 +235,9 @@ public:
     const bool isFilepathInTitlebarShown() const;
     void setFilepathInTitlebarShown(const bool shown);
 
+    const bool isPageNumberInTitlebarShown() const;
+    void setPageNumberInTitlebarShown(const bool shown);
+
     void setShowPairedPages(bool showPairedPages);
     bool isShowPairedPages() const;
 
@@ -270,13 +281,20 @@ public:
 
     bool getAddVerticalSpace() const;
     void setAddVerticalSpace(bool space);
-    int getAddVerticalSpaceAmount() const;
-    void setAddVerticalSpaceAmount(int pixels);
+    int getAddVerticalSpaceAmountAbove() const;
+    void setAddVerticalSpaceAmountAbove(int pixels);
+    int getAddVerticalSpaceAmountBelow() const;
+    void setAddVerticalSpaceAmountBelow(int pixels);
 
     bool getAddHorizontalSpace() const;
     void setAddHorizontalSpace(bool space);
-    int getAddHorizontalSpaceAmount() const;
-    void setAddHorizontalSpaceAmount(int pixels);
+    int getAddHorizontalSpaceAmountRight() const;
+    void setAddHorizontalSpaceAmountRight(int pixels);
+    int getAddHorizontalSpaceAmountLeft() const;
+    void setAddHorizontalSpaceAmountLeft(int pixels);
+
+    bool getUnlimitedScrolling() const;
+    void setUnlimitedScrolling(bool enable);
 
     bool getDrawDirModsEnabled() const;
     void setDrawDirModsEnabled(bool enable);
@@ -365,6 +383,12 @@ public:
     Color getBackgroundColor() const;
     void setBackgroundColor(Color color);
 
+    Color getActiveSelectionColor() const;
+    void setActiveSelectionColor(Color color);
+
+    const RecolorParameters& getRecolorParameters() const;
+    void setRecolorParameters(RecolorParameters&& recolorParameters);
+
     // Re-render pages if document zoom differs from the last render zoom by the given threshold.
     double getPDFPageRerenderThreshold() const;
     void setPDFPageRerenderThreshold(double threshold);
@@ -387,6 +411,7 @@ public:
     std::string const& getPageTemplate() const;
     void setPageTemplate(const std::string& pageTemplate);
 
+#ifdef ENABLE_AUDIO
     fs::path const& getAudioFolder() const;
     void setAudioFolder(fs::path audioFolder);
 
@@ -406,6 +431,7 @@ public:
 
     unsigned int getDefaultSeekTime() const;
     void setDefaultSeekTime(unsigned int t);
+#endif
 
     std::string const& getPluginEnabled() const;
     void setPluginEnabled(const std::string& pluginEnabled);
@@ -551,7 +577,17 @@ public:
     void setStabilizerAveragingMethod(StrokeStabilizer::AveragingMethod averagingMethod);
     void setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preprocessor);
 
-    const Palette& getColorPalette();
+    fs::path const& getColorPaletteSetting();
+    void setColorPaletteSetting(fs::path palettePath);
+
+    void setNumberOfSpacesForTab(unsigned int numberSpaces);
+    unsigned int getNumberOfSpacesForTab() const;
+
+    void setUseSpacesAsTab(bool useSpaces);
+    bool getUseSpacesAsTab() const;
+
+    void setLaserPointerFadeOutTime(unsigned int timeInMs);
+    unsigned int getLaserPointerFadeOutTime() const;
 
 public:
     // Custom settings
@@ -573,6 +609,8 @@ public:
     void transactionEnd();
 
     LatexSettings latexSettings{};
+
+    inline const fs::path& getSettingsFile() const { return filepath; }
 
 private:
     /**
@@ -694,6 +732,11 @@ private:
     bool filepathShownInTitlebar{};
 
     /**
+     * If the page number is shown in titlebar
+     */
+    bool pageNumberShownInTitlebar{};
+
+    /**
      *  Hide the scrollbar
      */
     ScrollbarHideType scrollbarHideType;
@@ -756,9 +799,9 @@ private:
     double zoomStepScroll{};
 
     /**
-     * The display resolution, in pixels per inch
+     * The display resolution, in pixels per inch. -1 for automatic detection
      */
-    gint displayDpi{};
+    int displayDpi{};
 
     /**
      *  If the window is maximized
@@ -857,18 +900,34 @@ private:
     bool addHorizontalSpace{};
 
     /**
-     * How much allowance to scroll outside the page display area (either side of )
+     * How much allowance to scroll outside the page display area on the right
      */
-    int addHorizontalSpaceAmount{};
+    int addHorizontalSpaceAmountRight{};
+
+    /**
+     * How much allowance to scroll outside the page display area on the left
+     */
+    int addHorizontalSpaceAmountLeft{};
 
     /**
      * Allow scroll outside the page display area (vertical)
      */
     bool addVerticalSpace{};
 
-    /** How much allowance to scroll outside the page display area (above and below)
+    /**
+     * How much allowance to scroll outside the page display area above
      */
-    int addVerticalSpaceAmount{};
+    int addVerticalSpaceAmountAbove{};
+
+    /**
+     * How much allowance to scroll outside the page display area below
+     */
+    int addVerticalSpaceAmountBelow{};
+
+    /**
+     * Enables unlimited scrolling, which automatically adds maximum space to scroll outside the page
+     */
+    bool unlimitedScrolling{};
 
     /**
      * Emulate modifier keys based on initial direction of drawing tool ( for Rectangle, Ellipse etc. )
@@ -938,9 +997,20 @@ private:
     Color selectionMarkerColor{};
 
     /**
+     * Color for active selection.
+     */
+    Color activeSelectionColor{};
+
+    /**
      * The color for Xournal page background
      */
     Color backgroundColor{};
+
+    /**
+     * The parameters for the recoloring logic
+     * Also contains fields whether it is active at all
+     */
+    RecolorParameters recolorParameters{};
 
     /**
      * Page template String
@@ -988,6 +1058,7 @@ private:
      */
     bool pressureGuessing{};
 
+#ifdef ENABLE_AUDIO
     /**
      * The index of the audio device used for recording
      */
@@ -1012,6 +1083,7 @@ private:
      * The default time by which the playback will seek backwards and forwards
      */
     unsigned int defaultSeekTime{};
+#endif
 
     /**
      * List of enabled plugins (only the one which are not enabled by default)
@@ -1100,9 +1172,13 @@ private:
     StrokeStabilizer::AveragingMethod stabilizerAveragingMethod{};
     StrokeStabilizer::Preprocessor stabilizerPreprocessor{};
 
+    fs::path colorPaletteSetting;
+
     /**
-     * @brief Color Palette for tool colors
-     *
+     * Tab control settings
      */
-    std::unique_ptr<Palette> palette;
+    bool useSpacesForTab{};
+    unsigned int numberOfSpacesForTab{};
+
+    unsigned int laserPointerFadeOutTime{};  ///< Time in ms before the laser pointer strokes start fading out
 };

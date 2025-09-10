@@ -28,7 +28,7 @@ class ProgressListener;
 
 class XojCairoPdfExport: public XojPdfExport {
 public:
-    XojCairoPdfExport(Document* doc, ProgressListener* progressListener);
+    XojCairoPdfExport(const Document* doc, ProgressListener* progressListener);
     ~XojCairoPdfExport() override;
 
 public:
@@ -52,8 +52,11 @@ private:
      */
     void populatePdfOutline();
 #endif
+
+protected:
+    void configureCairoFontOptions();
     bool endPdf();
-    void exportPage(size_t page);
+    void exportPage(size_t page, bool exportPdfBackground = true);
     /**
      * Export as a PDF document where each additional layer creates a
      * new page */
@@ -65,8 +68,8 @@ private:
      */
     void setLayerRange(const char* rangeStr) override;
 
-private:
-    Document* doc = nullptr;
+protected:
+    const Document* doc = nullptr;
     ProgressListener* progressListener = nullptr;
 
     cairo_surface_t* surface = nullptr;

@@ -1,10 +1,10 @@
 #include "PluginController.h"
 
-#include <cassert>
 #include <memory>
 
 #include "control/Control.h"
 #include "gui/MainWindow.h"
+#include "util/Assert.h"
 
 #include "config-features.h"  // for ENABLE_PLUGINS
 
@@ -18,6 +18,7 @@
 #include "gui/GladeSearchpath.h"
 #include "gui/dialog/PluginDialog.h"
 #include "util/PathUtil.h"
+#include "util/PopupWindowWrapper.h"
 #include "util/StringUtils.h"
 
 #include "Plugin.h"
@@ -64,6 +65,9 @@ auto load_available_plugins_from(fs::path const& path, Control* control) -> std:
     std::vector<std::unique_ptr<Plugin>> returner;
     try {
         for (auto const& f: fs::directory_iterator(path)) {
+            if (!f.is_directory()) {
+                continue;
+            }
             const auto& pluginPath = f.path();
             try {
                 auto plugin = std::make_unique<Plugin>(control, pluginPath.filename().string(), pluginPath);
@@ -85,13 +89,13 @@ auto load_available_plugins_from(fs::path const& path, Control* control) -> std:
 
 auto emplace_sorted_if_not_exists(std::vector<std::unique_ptr<Plugin>>& plugins, std::unique_ptr<Plugin> plugin)
         -> void {
-    assert(std::is_sorted(begin(plugins), end(plugins), PluginComparator{}));
+    xoj_assert(std::is_sorted(begin(plugins), end(plugins), PluginComparator{}));
     auto iter = std::equal_range(begin(plugins), std::end(plugins), plugin, PluginComparator{});
     if (iter.first != iter.second) {
         return;
     }
     plugins.emplace(iter.first, std::move(plugin));
-    assert(std::is_sorted(begin(plugins), end(plugins), PluginComparator{}));
+    xoj_assert(std::is_sorted(begin(plugins), end(plugins), PluginComparator{}));
 }
 }  // namespace
 #endif
@@ -152,8 +156,8 @@ void PluginController::registerToolbar() {
 
 void PluginController::showPluginManager() const {
 #ifdef ENABLE_PLUGINS
-    PluginDialog dlg(control->getGladeSearchPath(), control->getSettings());
-    dlg.loadPluginList(this);
+    xoj::popup::PopupWindowWrapper<PluginDialog> dlg(control->getGladeSearchPath(), control->getSettings(),
+                                                     this->plugins);
     dlg.show(control->getGtkWindow());
 #endif
 }
@@ -179,17 +183,7 @@ void PluginController::registerToolButtons(ToolMenuHandler* toolMenuHandler) {
 #ifdef ENABLE_PLUGINS
     for (auto&& p: this->plugins) {
         p->registerToolButton(toolMenuHandler);
+        p->registerPlaceholders(toolMenuHandler);
     }
-#endif
-}
-
-auto PluginController::getPlugins() const -> std::vector<Plugin*> {
-#ifdef ENABLE_PLUGINS
-    std::vector<Plugin*> pl;
-    pl.reserve(plugins.size());
-    std::transform(begin(plugins), end(plugins), std::back_inserter(pl), [](auto&& plugin) { return plugin.get(); });
-    return pl;
-#else
-    return {};
 #endif
 }

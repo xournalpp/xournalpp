@@ -37,9 +37,54 @@ add_subdirectory(util)
 add_subdirectory(core)
 
 ##############################
-# xournalpp main program
+# xournalpp-wrapper: catches crashes
 ##############################
 
+# The crash dialog's ui file is stored as gresource to make sure the wrapper is standalone
+find_program(GLIB_COMPILE_RESOURCES NAMES glib-compile-resources REQUIRED)
+
+set(XOURNAL_WRAPPER_GRESOURCE_C   xournalpp-wrapper.gresource.c)
+set(XOURNAL_WRAPPER_GRESOURCE_XML exe/xournalpp-wrapper.gresource.xml)
+
+add_custom_command(
+    OUTPUT ${XOURNAL_WRAPPER_GRESOURCE_C}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMAND ${GLIB_COMPILE_RESOURCES}
+    ARGS
+        --generate-source
+        --sourcedir=${CMAKE_SOURCE_DIR}
+        --target=${CMAKE_CURRENT_BINARY_DIR}/${XOURNAL_WRAPPER_GRESOURCE_C}
+        ${XOURNAL_WRAPPER_GRESOURCE_XML}
+    VERBATIM
+    MAIN_DEPENDENCY ${XOURNAL_WRAPPER_GRESOURCE_XML}
+    DEPENDS
+        ${CMAKE_SOURCE_DIR}/ui/crashDialog.glade
+)
+
+add_custom_target(
+    xournalpp-wrapper-resource
+    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${XOURNAL_WRAPPER_GRESOURCE_C}
+)
+
+add_executable(xournalpp-wrapper exe/Xournalpp-wrapper.cpp ${CMAKE_CURRENT_BINARY_DIR}/${XOURNAL_WRAPPER_GRESOURCE_C})
+set_source_files_properties(
+    ${CMAKE_CURRENT_BINARY_DIR}/${XOURNAL_WRAPPER_GRESOURCE_C}
+    PROPERTIES GENERATED TRUE
+)
+
+add_dependencies(xournalpp-wrapper xournalpp-wrapper-resource)
+target_link_libraries(xournalpp-wrapper
+        PUBLIC xoj::defaults xoj::util xoj::external_modules std::filesystem cxx17)
+set_target_properties(xournalpp-wrapper PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+        MACOSX_BUNDLE $<IF:$<PLATFORM_ID:Darwin>,TRUE,${CMAKE_MACOSX_BUNDLE}>
+        WIN32_EXECUTABLE $<IF:$<PLATFORM_ID:Windows>,TRUE,${CMAKE_WIN32_EXECUTABLE}>
+        )
+target_include_directories(xournalpp-wrapper PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
+
+
+##############################
+# xournalpp main program
+##############################
 
 add_executable(xournalpp exe/Xournalpp.cpp)
 target_link_libraries(xournalpp PRIVATE xoj::core xoj::util)
@@ -89,14 +134,18 @@ if (WIN32)
   unset(ICON_DEPS)
   add_custom_target(xournalpp_icon DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/win32/xournalpp.ico)
   add_dependencies(xournalpp xournalpp_icon)
+  add_dependencies(xournalpp-wrapper xournalpp_icon)
   
   # windows specific source files
-  file (GLOB xournalpp-sources-win32 exe/win32/*.cpp exe/win32/*.h)
-  target_sources(xournalpp PRIVATE ${xournalpp-sources-win32})
-  target_include_directories(xournalpp PRIVATE exe)
+  target_sources(xournalpp PRIVATE exe/win32/console.cpp)
+  target_sources(xournalpp-wrapper PRIVATE exe/win32/console.cpp)
+  if (MSVC)
+    target_sources(xournalpp PRIVATE exe/win32/gui_main.cpp)
+    target_sources(xournalpp-wrapper PRIVATE exe/win32/gui_main.cpp)
+  endif()
+  
   # windows specific appinfo
   if(NOT MSVC)
-    target_compile_options(xournalpp PRIVATE -mwindows)
     set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> -O coff -i <SOURCE> -o <OBJECT>")
     set(CMAKE_RC_COMPILER_INIT windres)
   endif()
@@ -104,10 +153,15 @@ if (WIN32)
 
   configure_file(exe/win32/xpp.rc.in ${CMAKE_CURRENT_BINARY_DIR}/win32/xpp.rc)
   target_sources(xournalpp PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/win32/xpp.rc)
+  target_sources(xournalpp-wrapper PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/win32/xpp.rc)
 endif ()
 # Until here
 ################################
 
+install(TARGETS xournalpp-wrapper
+        RUNTIME DESTINATION bin
+        COMPONENT xournalpp-wrapper
+        )
 install(TARGETS xournalpp
         RUNTIME DESTINATION bin
         COMPONENT xournalpp

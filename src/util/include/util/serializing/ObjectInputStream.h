@@ -12,9 +12,12 @@
 #pragma once
 
 #include <cstddef>  // for size_t
+#include <cstdint>  // for uint32_t
 #include <sstream>  // for istringstream
 #include <string>   // for string
 #include <vector>   // for vector
+
+#include "util/safe_casts.h"  // for as_signed
 
 #include "InputStreamException.h"
 
@@ -24,7 +27,9 @@ public:
     virtual ~ObjectInputStream() = default;
 
 public:
-    bool read(const char* data, int len);
+    bool read(const char* data, size_t len);
+    /// @param length of the stream
+    bool read(std::stringstream istream, size_t length);
 
     void readObject(const char* name);
     std::string readObject();
@@ -32,6 +37,7 @@ public:
     void endObject();
 
     int readInt();
+    uint32_t readUInt();
     double readDouble();
     size_t readSizeT();
     std::string readString();
@@ -51,38 +57,34 @@ private:
     T readType();
 
 private:
-    std::istringstream istream;
+    std::stringstream istream;
     size_t pos();
     size_t len = 0;
 };
 
-extern template int ObjectInputStream::readType<int>();
+extern template size_t ObjectInputStream::readType<size_t>();
 
 template <typename T>
 void ObjectInputStream::readData(std::vector<T>& data) {
     checkType('b');
 
-    if (istream.str().size() < 2 * sizeof(int)) {
+    if (istream.str().size() < 2 * sizeof(size_t)) {
         throw InputStreamException("End reached, but try to read data len and width", __FILE__, __LINE__);
     }
 
-    int len = readType<int>();
-    int width = readType<int>();
+    size_t len = readType<size_t>();
+    size_t width = readType<size_t>();
 
     if (width != sizeof(T)) {
         throw InputStreamException("Data width mismatch requested type width", __FILE__, __LINE__);
     }
 
-    if (len < 0) {
-        throw InputStreamException("Negative length of data array", __FILE__, __LINE__);
-    }
-
-    if (istream.str().size() < static_cast<size_t>(len * width)) {
+    if (istream.str().size() < len * width) {
         throw InputStreamException("End reached, but try to read data", __FILE__, __LINE__);
     }
 
     if (len) {
-        data.resize(static_cast<size_t>(len));
-        istream.read((char*)data.data(), len * width);
+        data.resize(len);
+        istream.read((char*)data.data(), as_signed(len * width));
     }
 }

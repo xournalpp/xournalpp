@@ -21,13 +21,13 @@ endif()
 ## Project related Variables
 ## Also update changelog in debian folder!
 project(xournalpp
-        VERSION 1.2.9
+        VERSION 1.2.8
         DESCRIPTION "Xournal++ - Open source hand note-taking program"
         HOMEPAGE_URL "https://xournalpp.github.io/"
         LANGUAGES CXX C)
 # according to https://cmake.org/cmake/help/latest/command/project.html we must fix the suffix:
 # And https://gitlab.kitware.com/cmake/cmake/-/issues/16716 is still open:
-set(VERSION_SUFFIX "~dev")
+set(VERSION_SUFFIX "+dev")
 set(PROJECT_VERSION "${PROJECT_VERSION}${VERSION_SUFFIX}")
 set(xournalpp_VERSION ${PROJECT_VERSION})
 set(CMAKE_PROJECT_VERSION ${PROJECT_VERSION})
@@ -63,6 +63,10 @@ string(TIMESTAMP PACKAGE_TIMESTAMP "%Y%m%d.%H%M" UTC)
 set(PACKAGE_ARCH ${CMAKE_SYSTEM_PROCESSOR})
 
 
+if (UNIX AND NOT APPLE AND NOT CYGWIN)
+    set(INSTALL_DESKTOP_FILES true)
+endif()
+
 ## I18n ##
 add_subdirectory(po)
 option (ONLY_CONFIGURE_FOR_TARGET_POT "Only configure the pot target" OFF)
@@ -80,7 +84,7 @@ configure_file(
         @ONLY
 )
 
-include(FindPkgConfig)
+find_package(PkgConfig REQUIRED)
 
 set(PACKAGE_DATA_DIR "${CMAKE_INSTALL_PREFIX}/share")
 
@@ -99,19 +103,34 @@ include(GitRepo)
 find_package(CXX17 REQUIRED COMPONENTS optional)
 find_package(Filesystem REQUIRED COMPONENTS ghc Final Experimental)
 
-find_package(Backtrace)
-if (Backtrace_FOUND)
-    ##############################
-    # stacktrace library
-    # Todo use platform independent stacktrace library
-    # Currently this works only for linux systems
-    ##############################
-    add_library(backtrace INTERFACE)
-    target_include_directories(backtrace INTERFACE ${Backtrace_INCLUDE_DIRS})
-    target_link_libraries(backtrace INTERFACE ${Backtrace_LIBRARIES})
-    target_link_options(backtrace INTERFACE $<$<AND:$<NOT:$<PLATFORM_ID:Windows>>,$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>>:-rdynamic>)
-    add_library(Backtrace::backtrace ALIAS backtrace)
-endif (Backtrace_FOUND)
+if (NOT CMAKE_BUILD_TYPE STREQUAL "Release")
+    include(FetchContent)
+    FetchContent_Declare(
+        cpptrace
+        GIT_REPOSITORY https://github.com/jeremy-rifkin/cpptrace.git
+        GIT_TAG        v1.0.4 # <HASH or TAG>
+        EXCLUDE_FROM_ALL
+    )
+    set(FETCHCONTENT_UPDATES_DISCONNECTED ON) # Prevent reloading if already downloaded
+    set(CPPTRACE_BUILD_SHARED OFF)
+    set(CPPTRACE_USE_EXTERNAL_ZSTD ON)
+    if (UNIX)
+        # Otherwise uses libdwarf - adding yet another dependency
+        set(CPPTRACE_GET_SYMBOLS_WITH_LIBDL ON)
+    endif()
+    if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.28")
+        FetchContent_MakeAvailable(cpptrace)
+    else()
+        # FetchContent_Declare option EXCLUDE_FROM_ALL was only introduced in cmake 3.28
+        # Workaround it for older versions (ubuntu 22 has cmake 3.22)
+        FetchContent_GetProperties(cpptrace)
+        if(NOT cpptrace_POPULATED)
+            FetchContent_Populate(cpptrace)
+            add_subdirectory(${cpptrace_SOURCE_DIR} ${cpptrace_BINARY_DIR} EXCLUDE_FROM_ALL)
+        endif()
+    endif()
+    set(ENABLE_CPPTRACE ON)
+endif()
 
 
 ##############################
@@ -128,8 +147,6 @@ endif (APPLE)
 list(APPEND pkg-module-spec "gthread-2.0 >= 2.4.0")
 list(APPEND pkg-module-spec "libxml-2.0 >= 2.0.0")
 list(APPEND pkg-module-spec "libzip >= 1.0.1")
-list(APPEND pkg-module-spec "portaudiocpp >= 12")
-list(APPEND pkg-module-spec "sndfile >= 1.0.25")
 list(APPEND pkg-module-spec "librsvg-2.0 >= 2.40")
 
 # Profiling
@@ -143,6 +160,29 @@ pkg_check_modules(ExternalModules REQUIRED IMPORTED_TARGET ${pkg-module-spec})
 
 find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
+
+option(ENABLE_AUDIO "Compile with Audio recording/playing support" ON)
+if (ENABLE_AUDIO)
+    message(STATUS "Enable Audio support")
+    pkg_check_modules(ExternalAudioModules REQUIRED IMPORTED_TARGET "portaudiocpp >= 12;sndfile >= 1.0.25")
+else ()
+    message(STATUS "Disable Audio support")
+endif ()
+
+option(ENABLE_QPDF "Compile with QPDF export support" ON)
+if (ENABLE_QPDF)
+    find_package(qpdf)
+    if (NOT qpdf_FOUND)
+        # Before version 11.0 (e.g. for ubuntu 22.04 LTS), qpdf did not provide qpdfConfig.cmake (and friends)
+        # We cannot only use pkg_search_module() though: it fails to link on MacOS
+        pkg_search_module(qpdf REQUIRED libqpdf)
+        add_library(qpdf_tgt INTERFACE)
+        target_link_libraries(qpdf_tgt INTERFACE ${qpdf_LIBRARIES})
+        target_include_directories(qpdf_tgt INTERFACE ${qpdf_INCLUDE_DIRS})
+        add_library(qpdf::libqpdf ALIAS qpdf_tgt)
+    endif ()
+    message(STATUS "Found qpdf: ${qpdf_VERSION}")
+endif ()
 
 option(ENABLE_PLUGINS "Compile with plugin support" ON)
 if (ENABLE_PLUGINS)
@@ -193,15 +233,17 @@ target_link_libraries(external_modules INTERFACE
         PkgConfig::ExternalModules
         $<$<TARGET_EXISTS:Lua::lua>:Lua::lua>
         $<$<TARGET_EXISTS:PkgConfig::GtkSourceView>:PkgConfig::GtkSourceView>
+        $<$<TARGET_EXISTS:PkgConfig::ExternalAudioModules>:PkgConfig::ExternalAudioModules>
         $<$<TARGET_EXISTS:X11::Xi>:X11::Xi>
         $<$<TARGET_EXISTS:X11::X11>:X11::X11>
-        $<$<TARGET_EXISTS:Backtrace::backtrace>:Backtrace::backtrace>
+        $<$<TARGET_EXISTS:cpptrace::cpptrace>:cpptrace::cpptrace>
+        $<$<TARGET_EXISTS:qpdf::libqpdf>:qpdf::libqpdf>
         ZLIB::ZLIB
         Threads::Threads
         )
 
 target_compile_definitions(external_modules INTERFACE
-        GLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_32
+        GLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_40
         GDK_VERSION_MIN_REQUIRED=GDK_VERSION_3_18
         $<$<TARGET_EXISTS:X11::X11>:X11_ENABLED>
         )
@@ -233,7 +275,7 @@ option(DEBUG_INPUT "Input debugging, e.g. eraser events etc" OFF)
 option(DEBUG_INPUT_PRINT_ALL_MOTION_EVENTS "Input debugging, print all motion events" OFF)
 option(DEBUG_INPUT_GDK_PRINT_EVENTS "Input debugging, print all GDK events" OFF)
 option(DEBUG_RECOGNIZER "Shape recognizer debug: output score etc" OFF)
-option(DEBUG_SHEDULER "Scheduler debug: show jobs etc" OFF)
+option(DEBUG_SCHEDULER "Scheduler debug: show jobs etc" OFF)
 option(DEBUG_SHOW_ELEMENT_BOUNDS "Draw a surrounding border to all elements" OFF)
 option(DEBUG_SHOW_REPAINT_BOUNDS "Draw a border around all repaint rects" OFF)
 option(DEBUG_SHOW_PAINT_BOUNDS "Draw a border around all painted rects" OFF)
@@ -244,7 +286,7 @@ mark_as_advanced(FORCE
 # Advanced development config
 set(DEV_TOOLBAR_CONFIG "toolbar.ini" CACHE STRING "Toolbar config file name")
 set(DEV_SETTINGS_XML_FILE "settings.xml" CACHE STRING "Settings file name")
-set(DEV_PALETTE_FILE "palette.gpl" CACHE STRING "Color Palette")
+set(DEV_DEFAULT_PALETTE_FILE "xournal.gpl" CACHE STRING "Default Color Palette")
 set(DEV_PRINT_CONFIG_FILE "print-config.ini" CACHE STRING "Print config file name")
 set(DEV_METADATA_FILE "metadata.ini" CACHE STRING "Metadata file name")
 set(DEV_ERRORLOG_DIR "errorlogs" CACHE STRING "Directory where errorlogfiles will be placed")
@@ -327,9 +369,13 @@ install(DIRECTORY resources
         DESTINATION "share/xournalpp"
         COMPONENT xournalpp
         )
+install(DIRECTORY palettes
+        DESTINATION "share/xournalpp"
+        COMPONENT xournalpp
+        )
 
 # Install desktop shortcuts for Linux
-if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+if (${INSTALL_DESKTOP_FILES})
     message("Installing desktop files")
 
     # Install icons
@@ -345,13 +391,11 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
             DESTINATION share/icons/hicolor/scalable/mimetypes/)
     install(FILES ui/pixmaps/gnome-mime-application-x-xopt.svg
             DESTINATION share/icons/hicolor/scalable/mimetypes/)
-    install(FILES desktop/com.github.xournalpp.xournalpp.xml
+    install(FILES ${CMAKE_BINARY_DIR}/generated/com.github.xournalpp.xournalpp.xml
             DESTINATION share/mime/packages)
-    install(FILES desktop/com.github.xournalpp.xournalpp.desktop
-            DESTINATION share/applications)
     install(FILES desktop/com.github.xournalpp.xournalpp.thumbnailer
             DESTINATION share/thumbnailers)
-    install(FILES desktop/com.github.xournalpp.xournalpp.appdata.xml
+    install(FILES ${CMAKE_BINARY_DIR}/generated/com.github.xournalpp.xournalpp.appdata.xml
             DESTINATION share/metainfo)
 endif ()
 
@@ -404,7 +448,7 @@ set(CPACK_DEBIAN_PACKAGE_RELEASE 2)
 set(CPACK_DEBIAN_PACKAGE_VERSION "${CPACK_PROJECT_VERSION}")
 set(CPACK_DEBIAN_PACKAGE_SECTION "graphics")
 set(CPACK_DEBIAN_PACKAGE_DEPENDS
-        "libglib2.0-0 (>= 2.32), libgtk-3-0 (>= 3.18), libpoppler-glib8 (>= 0.41.0), libxml2 (>= 2.0.0), libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0, libzip4 (>= 1.0.1) | libzip5, zlib1g, libc6")
+        "libglib2.0-0 (>= 2.32), libgtk-3-0 (>= 3.18), libpoppler-glib8 (>= 0.41.0), libxml2 (>= 2.0.0), libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0, libzip4 (>= 1.0.1) | libzip5, zlib1g, libc6, qpdf (>= 10.6.0)")
 set(CPACK_DEBIAN_PACKAGE_SUGGESTS "texlive-base, texlive-latex-extra")  # Latex tool
 # Use debian's arch scheme; we only care about x86/amd64 for now but feel free to add more
 if (${PACKAGE_ARCH} STREQUAL "x86_64")

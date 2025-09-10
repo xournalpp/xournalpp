@@ -78,8 +78,8 @@ export GTKDIR="$1/inst"
 
 "$GTK_MAC_BUNDLER" xournalpp.bundle
 
-echo "Replace GDK_CONTROL_MASK by GDK_META_MASK in main.glade"
-sed -i -e 's/GDK_CONTROL_MASK/GDK_META_MASK/g' ./Xournal++.app/Contents/Resources/ui/main.glade
+echo "Replace Ctrl by Meta in mainmenubar.xml"
+sed -i -e 's/Ctrl/Meta/g' ./Xournal++.app/Contents/Resources/ui/mainmenubar.xml
 
 echo "Create zip"
 zip --filesync -r Xournal++.zip Xournal++.app

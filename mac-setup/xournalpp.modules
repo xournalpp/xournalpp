@@ -5,6 +5,8 @@
 
 <?xml-stylesheet type="text/xsl" href="moduleset.xsl"?>
 <moduleset>
+  <include href="gtk-osx.modules" />
+
   <repository type="tarball" name="github-tarball" href="https://github.com/"/>
   <repository type="tarball" name="poppler" href="https://poppler.freedesktop.org/"/>
   <repository type="tarball" name="libzip" href="https://libzip.org/download/"/>
@@ -104,6 +106,19 @@
     </dependencies>
   </cmake>
 
+  <cmake id="libqpdf" cmakeargs="-DBUILD_SHARED_LIBS=true -DCMAKE_BUILD_TYPE=RelWithDebInfo">
+    <branch repo="github-tarball"
+            version="12.2.0"
+            module="qpdf/qpdf/archive/refs/tags/v12.2.0.tar.gz"
+            hash="sha256:2d004611699a94030a594318393f08a7352ab1cf3cee337c5312d4e7eb7f8a4f"
+            checkoutdir="libqpdf-12.2.0"/>
+    <dependencies>
+      <dep package="zlib"/>
+      <dep package="libjpeg"/>
+      <dep package="openssl"/>
+    </dependencies>
+  </cmake>
+
   <autotools id="lua"
              skip-autogen="true"
              supports-non-srcdir-builds="no"
@@ -118,13 +133,30 @@
             checkoutdir="lua-5.4.8"/>
   </autotools>
 
+  <autotools id="lua-gobject"
+             skip-autogen="true"
+             supports-non-srcdir-builds="no"
+             makeinstallargs='LUA_VERSION=5.4 PREFIX="${prefix}" install'
+  >
+    <branch repo="github-tarball"
+            module="vtrlx/LuaGObject/archive/refs/tags/0.10.0.tar.gz"
+            hash="sha256:0b94b6d254a92827cc2efc80fbf40cc237ae7f1c4e1677f8f658c8d4fe393d0c"
+            version="0.10.0"
+            checkoutdir="LuaGObject-0.10.0">
+    </branch>
+    <dependencies>
+      <dep package="lua"/>
+    </dependencies>
+  </autotools>
+
   <metamodule id="meta-xournalpp-deps">
     <dependencies>
+      <dep package="libqpdf"/>
       <dep package="poppler"/>
       <dep package="libzip"/>
       <dep package="portaudio"/>
       <dep package="libsndfile"/>
-      <dep package="lua"/>
+      <dep package="lua-gobject"/>
     </dependencies>
   </metamodule>
 

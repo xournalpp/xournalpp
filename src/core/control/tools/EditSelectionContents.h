@@ -11,20 +11,22 @@
 
 #pragma once
 
-#include <deque>    // for deque
+#include <memory>   // for unique_ptr
 #include <utility>  // for pair
 #include <vector>   // for vector
 
 #include <cairo.h>  // for cairo_surface_t, cairo_t
 
-#include "control/ToolEnums.h"              // for ToolSize
-#include "model/Element.h"                  // for Element::Index, Element
-#include "model/ElementContainer.h"         // for ElementContainer
-#include "model/PageRef.h"                  // for PageRef
-#include "undo/UndoAction.h"                // for UndoAction (ptr only)
-#include "util/Color.h"                     // for Color
-#include "util/Rectangle.h"                 // for Rectangle
-#include "util/serializing/Serializable.h"  // for Serializable
+#include "control/ToolEnums.h"               // for ToolSize
+#include "model/Element.h"                   // for Element::Index, Element
+#include "model/ElementContainer.h"          // for ElementContainer
+#include "model/ElementInsertionPosition.h"  // for InsertionOrder
+#include "model/PageRef.h"                   // for PageRef
+#include "undo/UndoAction.h"                 // for UndoAction (ptr only)
+#include "util/Color.h"                      // for Color
+#include "util/PointerContainerView.h"       // for PointerContainerView
+#include "util/Rectangle.h"                  // for Rectangle
+#include "util/serializing/Serializable.h"   // for Serializable
 
 #include "CursorSelectionType.h"  // for CursorSelectionType
 
@@ -67,7 +69,7 @@ public:
      * Sets the font of all containing text elements, return an undo action
      * (or nullptr if there are no Text elements)
      */
-    UndoActionPtr setFont(XojFont& font);
+    UndoActionPtr setFont(const XojFont& font);
 
     /**
      * Fills the undo item if the selection is deleted
@@ -87,22 +89,29 @@ public:
      * @param orderInSourceLayer: specifies the index of the element from the source layer,
      * in case we want to replace it back where it came from.
      */
-    void addElement(Element* e, Element::Index order);
+    void addElement(ElementPtr e, Element::Index order);
 
     /**
      * Returns all containing elements of this selection
      */
-    const std::vector<Element*>& getElements() const override;
+    auto getElementsView() const -> xoj::util::PointerContainerView<std::vector<Element*>>;
+
+    void forEachElement(std::function<void(const Element*)> f) const override;
 
     /**
      * Returns the insert order of this selection
      */
-    std::deque<std::pair<Element*, Element::Index>> const& getInsertOrder() const;
+    auto getInsertionOrder() const -> const InsertionOrder&;
 
     /** replaces all elements by a new vector of elements
      * @param newElements: the elements which should replace the old elements
      * */
-    void replaceInsertOrder(std::deque<std::pair<Element*, Element::Index>> newInsertOrder);
+    void replaceInsertionOrder(InsertionOrder newInsertionOrder);
+
+    /**
+     * Returns InsertionOrder of this selection and clears it
+     */
+    auto stealInsertionOrder() -> InsertionOrder;
 
 public:
     /**
@@ -110,11 +119,9 @@ public:
      */
     void paint(cairo_t* cr, double x, double y, double rotation, double width, double height, double zoom);
 
-    /**
-     * Finish the editing
-     */
-    void finalizeSelection(xoj::util::Rectangle<double> bounds, xoj::util::Rectangle<double> snappedBounds,
-                           bool aspectRatio);
+    /// Applies the transformation to the selected elements, empties the selection and return the modified elements
+    InsertionOrder makeMoveEffective(const xoj::util::Rectangle<double>& bounds,
+                                     const xoj::util::Rectangle<double>& snappedBounds, bool preserveAspectRatio);
 
     void updateContent(xoj::util::Rectangle<double> bounds, xoj::util::Rectangle<double> snappedBounds, double rotation,
                        bool aspectRatio, Layer* layer, const PageRef& targetPage, UndoRedoHandler* undo,
@@ -152,13 +159,7 @@ public:
     /**
      * Gets the complete original bounding box as rectangle
      */
-    xoj::util::Rectangle<double> getOriginalBounds() const;
-
-    constexpr static struct {
-        bool operator()(std::pair<Element*, Element::Index> p1, std::pair<Element*, Element::Index> p2) {
-            return p1.second < p2.second;
-        }
-    } insertOrderCmp{};
+    auto getOriginalBounds() const -> xoj::util::Rectangle<double>;
 
 public:
     // Serialize interface
@@ -202,7 +203,7 @@ private:
      *
      * Invariant: the insert order must be sorted by index in ascending order.
      */
-    std::deque<std::pair<Element*, Element::Index>> insertOrder;
+    InsertionOrder insertionOrder;
 
     /**
      * The rendered elements

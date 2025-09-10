@@ -1,9 +1,8 @@
 #include "TextEditor.h"
 
-#include <cassert>
-#include <cmath>
 #include <cstring>  // for strcmp, size_t
 #include <memory>   // for allocator, make_unique, __shared_p...
+#include <string>   // for std::string()
 #include <utility>  // for move
 
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_B, GDK_KEY_ISO_Enter, GDK_...
@@ -13,6 +12,7 @@
 #include "control/Control.h"  // for Control
 #include "control/settings/Settings.h"
 #include "gui/XournalppCursor.h"  // for XournalppCursor
+#include "model/Document.h"       // for Document
 #include "model/Font.h"           // for XojFont
 #include "model/Text.h"           // for Text
 #include "model/XojPage.h"        // for XojPage
@@ -20,14 +20,16 @@
 #include "undo/InsertUndoAction.h"
 #include "undo/TextBoxUndoAction.h"
 #include "undo/UndoRedoHandler.h"  // for UndoRedoHandler
+#include "util/Assert.h"
 #include "util/DispatchPool.h"
 #include "util/Range.h"
 #include "util/glib_casts.h"  // for wrap_for_once_v
+#include "util/gtk4_helper.h"
 #include "util/raii/CStringWrapper.h"
+#include "util/safe_casts.h"  // for round_cast, as_unsigned
 #include "view/overlays/TextEditionView.h"
 
-#include "TextEditorWidget.h"  // for gtk_xoj_int_txt_new
-#include "model/Document.h"  // for Document
+#include "TextEditorKeyBindings.h"
 
 class UndoAction;
 
@@ -64,7 +66,7 @@ static auto getByteOffsetOfCursor(GtkTextBuffer* buffer) -> int {
  * NB: This is much faster than relying on g_utf8_pointer_to_offset for long texts
  */
 static auto getIteratorAtByteOffset(GtkTextBuffer* buf, int byteIndex) {
-    assert(byteIndex >= 0);
+    xoj_assert(byteIndex >= 0);
     GtkTextIter it = {nullptr};
     gtk_text_buffer_get_start_iter(buf, &it);
 
@@ -123,7 +125,6 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
         control(control),
         page(page),
         xournalWidget(xournalWidget),
-        textWidget(gtk_xoj_int_txt_new(this), xoj::util::adopt),
         imContext(gtk_im_multicontext_new(), xoj::util::adopt),
         buffer(gtk_text_buffer_new(nullptr), xoj::util::adopt),
         viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::TextEditionView>>()) {
@@ -140,14 +141,14 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
         if (this->cursorBlink) {
             int tmp = 0;
             g_object_get(settings, "gtk-cursor-blink-time", &tmp, nullptr);
-            assert(tmp >= 0);
+            xoj_assert(tmp >= 0);
             auto cursorBlinkingPeriod = static_cast<unsigned int>(tmp);
             this->cursorBlinkingTimeOn = cursorBlinkingPeriod * CURSOR_ON_MULTIPLIER / CURSOR_DIVIDER;
             this->cursorBlinkingTimeOff = cursorBlinkingPeriod - this->cursorBlinkingTimeOn;
         }
     }
 
-    gtk_im_context_set_client_window(this->imContext.get(), gtk_widget_get_parent_window(this->xournalWidget));
+    gtk_im_context_set_client_widget(this->imContext.get(), this->xournalWidget);
     gtk_im_context_focus_in(this->imContext.get());
 
     g_signal_connect(this->imContext.get(), "commit", G_CALLBACK(iMCommitCallback), this);
@@ -299,78 +300,31 @@ auto TextEditor::imDeleteSurroundingCallback(GtkIMContext* context, gint offset,
     return true;
 }
 
-auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool {
-    bool retval = false;
-    bool obscure = false;
-
-    GdkModifierType modifiers = gtk_accelerator_get_default_mod_mask();
-    auto keymap = gdk_keymap_get_for_display(gdk_display_get_default());
-    GdkModifierType consumed;
-    /*
-    According to https://docs.gtk.org/gdk3/method.Keymap.translate_keyboard_state.html
-    consumed modifiers should be masked out. For instance, on a US keyboard, the plus symbol is shifted, so when
-    comparing a key press to a <Control>plus accelerator <Shift> should be masked out.
-    */
-    gdk_keymap_translate_keyboard_state(keymap, event->hardware_keycode, static_cast<GdkModifierType>(event->state),
-                                        event->group, nullptr, nullptr, nullptr, &consumed);
-
-    GtkTextIter iter = getIteratorAtCursor(this->buffer.get());
-    bool canInsert = gtk_text_iter_can_insert(&iter, true);
+auto TextEditor::onKeyPressEvent(const KeyEvent& event) -> bool {
 
     // IME needs to handle the input first so the candidate window works correctly
-    if (gtk_im_context_filter_keypress(this->imContext.get(), event)) {
+    if (gtk_im_context_filter_keypress(this->imContext.get(), event.sourceEvent.get())) {
         this->needImReset = true;
-        if (!canInsert) {
+
+        GtkTextIter iter = getIteratorAtCursor(this->buffer.get());
+        bool canInsert = gtk_text_iter_can_insert(&iter, true);
+
+        if (canInsert) {
+            control->getCursor()->setInvisible(true);
+        } else {
             this->resetImContext();
         }
-        obscure = canInsert;
-        retval = true;
-    } else if (gtk_bindings_activate_event(G_OBJECT(this->textWidget.get()), event)) {
         return true;
-    } else if ((event->state & ~consumed & modifiers) == GDK_CONTROL_MASK) {
-        if (event->keyval == GDK_KEY_b || event->keyval == GDK_KEY_B) {
-            toggleBoldFace();
-            return true;
-        }
-        if (event->keyval == GDK_KEY_plus || event->keyval == GDK_KEY_KP_Add) {
-            increaseFontSize();
-            return true;
-        }
-        if (event->keyval == GDK_KEY_minus || event->keyval == GDK_KEY_KP_Subtract) {
-            decreaseFontSize();
-            return true;
-        }
-    } else if (event->keyval == GDK_KEY_Return || event->keyval == GDK_KEY_ISO_Enter ||
-               event->keyval == GDK_KEY_KP_Enter) {
-        this->resetImContext();
-        iMCommitCallback(nullptr, "\n", this);
-
-        obscure = true;
-        retval = true;
-    }
-    // Pass through Tab as literal tab, unless Control is held down
-    else if ((event->keyval == GDK_KEY_Tab || event->keyval == GDK_KEY_KP_Tab ||
-              event->keyval == GDK_KEY_ISO_Left_Tab) &&
-             !(event->state & GDK_CONTROL_MASK)) {
-        resetImContext();
-        iMCommitCallback(nullptr, "\t", this);
-        obscure = true;
-        retval = true;
-    } else {
-        retval = false;
     }
 
-    if (obscure) {
-        control->getCursor()->setInvisible(true);
-    }
-
-    return retval;
+    return keyBindings.processEvent(this, event);
 }
 
-auto TextEditor::onKeyReleaseEvent(GdkEventKey* event) -> bool {
+auto TextEditor::onKeyReleaseEvent(const KeyEvent& event) -> bool {
     GtkTextIter iter = getIteratorAtCursor(this->buffer.get());
 
-    if (gtk_text_iter_can_insert(&iter, true) && gtk_im_context_filter_keypress(this->imContext.get(), event)) {
+    if (gtk_text_iter_can_insert(&iter, true) &&
+        gtk_im_context_filter_keypress(this->imContext.get(), event.sourceEvent.get())) {
         this->needImReset = true;
         return true;
     }
@@ -573,8 +527,8 @@ void TextEditor::moveCursor(GtkMovementStep step, int count, bool extendSelectio
             break;
     }
 
-    // call moveCursor() even if the cursor hasn't moved, since it cancels the selection
-    moveCursor(&newplace, extendSelection);
+    // call moveCursorIterator() even if the cursor hasn't moved, since it cancels the selection
+    moveCursorIterator(&newplace, extendSelection);
 
     if (updateVirtualCursor) {
         computeVirtualCursorPosition();
@@ -588,8 +542,8 @@ void TextEditor::moveCursor(GtkMovementStep step, int count, bool extendSelectio
 void TextEditor::findPos(GtkTextIter* iter, double xPos, double yPos) const {
     int index = 0;
     int trailing = 0;
-    pango_layout_xy_to_index(this->getUpToDateLayout(), static_cast<int>(std::round(xPos * PANGO_SCALE)),
-                             static_cast<int>(std::round(yPos * PANGO_SCALE)), &index, &trailing);
+    pango_layout_xy_to_index(this->getUpToDateLayout(), round_cast<int>(xPos * PANGO_SCALE),
+                             round_cast<int>(yPos * PANGO_SCALE), &index, &trailing);
     /*
      * trailing is non-zero iff the abscissa is past the middle of the grapheme.
      * In this case, it contains the length of the grapheme in utf8 char count.
@@ -612,8 +566,8 @@ void TextEditor::markPos(double x, double y, bool extendSelection) {
 
     findPos(&newplace, x, y);
 
-    // call moveCursor() even if the cursor hasn't moved, since it cancels the selection
-    moveCursor(&newplace, extendSelection);
+    // call moveCursorIterator() even if the cursor hasn't moved, since it cancels the selection
+    moveCursorIterator(&newplace, extendSelection);
     computeVirtualCursorPosition();
 }
 
@@ -662,7 +616,7 @@ void TextEditor::computeVirtualCursorPosition() {
     this->virtualCursorAbscissa = rect.x;
 }
 
-void TextEditor::moveCursor(const GtkTextIter* newLocation, gboolean extendSelection) {
+void TextEditor::moveCursorIterator(const GtkTextIter* newLocation, gboolean extendSelection) {
     bool selectionChanged = true;
     if (extendSelection) {
         if (auto oldLoc = getIteratorAtCursor(this->buffer.get()); gtk_text_iter_equal(newLocation, &oldLoc)) {
@@ -861,13 +815,34 @@ void TextEditor::backspace() {
     }
 }
 
+void TextEditor::linebreak() {
+    this->resetImContext();
+    iMCommitCallback(nullptr, "\n", this);
+
+    control->getCursor()->setInvisible(true);
+}
+
+void TextEditor::tabulation() {
+    resetImContext();
+    Settings* settings = control->getSettings();
+    if (!settings->getUseSpacesAsTab()) {
+        iMCommitCallback(nullptr, "\t", this);
+    } else {
+        std::string indent(static_cast<size_t>(settings->getNumberOfSpacesForTab()), ' ');
+        iMCommitCallback(nullptr, indent.c_str(), this);
+    }
+
+    control->getCursor()->setInvisible(true);
+}
+
+
 void TextEditor::copyToClipboard() const {
-    GtkClipboard* clipboard = gtk_widget_get_clipboard(this->xournalWidget, GDK_SELECTION_CLIPBOARD);
+    auto* clipboard = gtk_widget_get_clipboard(this->xournalWidget);
     gtk_text_buffer_copy_clipboard(this->buffer.get(), clipboard);
 }
 
 void TextEditor::cutToClipboard() {
-    GtkClipboard* clipboard = gtk_widget_get_clipboard(this->xournalWidget, GDK_SELECTION_CLIPBOARD);
+    auto* clipboard = gtk_widget_get_clipboard(this->xournalWidget);
     gtk_text_buffer_cut_clipboard(this->buffer.get(), clipboard, true);
 
     this->contentsChanged(true);
@@ -875,7 +850,7 @@ void TextEditor::cutToClipboard() {
 }
 
 void TextEditor::pasteFromClipboard() {
-    GtkClipboard* clipboard = gtk_widget_get_clipboard(this->xournalWidget, GDK_SELECTION_CLIPBOARD);
+    auto* clipboard = gtk_widget_get_clipboard(this->xournalWidget);
     gtk_text_buffer_paste_clipboard(this->buffer.get(), clipboard, nullptr, true);
 }
 
@@ -894,17 +869,14 @@ void TextEditor::resetImContext() {
 /*
  * Blink!
  */
-auto TextEditor::blinkCallback(TextEditor* te) -> bool {
+void TextEditor::blinkCallback(TextEditor* te) {
     te->cursorVisible = !te->cursorVisible;
     auto time = te->cursorVisible ? te->cursorBlinkingTimeOn : te->cursorBlinkingTimeOff;
-    te->blinkTimer = gdk_threads_add_timeout(time, xoj::util::wrap_for_once_v<blinkCallback>, te);
+    te->blinkTimer = g_timeout_add(time, xoj::util::wrap_for_once_v<blinkCallback>, te);
 
     Range dirtyRange = te->cursorBox;
     dirtyRange.translate(te->textElement->getX(), te->textElement->getY());
     te->viewPool->dispatch(xoj::view::TextEditionView::FLAG_DIRTY_REGION, dirtyRange);
-
-    // Remove ourselves
-    return false;
 }
 
 void TextEditor::setTextToPangoLayout(PangoLayout* pl) const {
@@ -1037,10 +1009,10 @@ void TextEditor::finalizeEdition() {
             auto eraseDeleteUndoAction = std::make_unique<DeleteUndoAction>(page, true);
             doc->lock();
             Layer* layer = this->page->getSelectedLayer();
-            auto elementIndex = layer->removeElement(originalTextElement, false);
+            auto [orig, elementIndex] = layer->removeElement(originalTextElement);
             doc->unlock();
             if (elementIndex != Element::InvalidIndex) [[likely]] {
-                eraseDeleteUndoAction->addElement(layer, originalTextElement, elementIndex);
+                eraseDeleteUndoAction->addElement(layer, std::move(orig), elementIndex);
                 undo->addUndoAction(std::move(eraseDeleteUndoAction));
             }  // A warning has already been issued otherwise
             originalTextElement = nullptr;
@@ -1056,30 +1028,32 @@ void TextEditor::finalizeEdition() {
 
         doc->lock();
         Layer* layer = this->page->getSelectedLayer();
-        auto index = layer->removeElement(this->originalTextElement, false);
-        layer->addElement(this->textElement.get());
+        auto [orig, _] = layer->removeElement(this->originalTextElement);
+        auto ptr = this->textElement.get();
+        layer->addElement(std::move(this->textElement));
         doc->unlock();
 
-        this->page->fireElementChanged(this->textElement.get());
+        this->page->fireElementChanged(ptr);
 
-        if (index != Element::InvalidIndex) [[likely]] {
+        if (orig) [[likely]] {
+            xoj_assert(orig.get() == this->originalTextElement);
             this->originalTextElement->setInEditing(false);
-            undo->addUndoAction(std::make_unique<TextBoxUndoAction>(this->page, layer, this->textElement.release(),
-                                                                this->originalTextElement));
+            undo->addUndoAction(std::make_unique<TextBoxUndoAction>(this->page, layer, ptr, std::move(orig)));
         } else {
             // A warning has already been issued
-            undo->addUndoAction(std::make_unique<InsertUndoAction>(this->page, layer, this->textElement.release()));
+            undo->addUndoAction(std::make_unique<InsertUndoAction>(this->page, layer, ptr));
         }
         originalTextElement = nullptr;
     } else {
         // Creating a new element
+        auto ptr = this->textElement.get();
         doc->lock();
         Layer* layer = this->page->getSelectedLayer();
-        layer->addElement(textElement.get());
+        layer->addElement(std::move(this->textElement));
         doc->unlock();
         this->viewPool->dispatchAndClear(xoj::view::TextEditionView::FINALIZATION_REQUEST, this->previousBoundingBox);
-        this->page->fireElementChanged(textElement.get());
-        undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, textElement.release()));
+        this->page->fireElementChanged(ptr);
+        undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, ptr));
     }
 }
 
@@ -1088,11 +1062,11 @@ void TextEditor::initializeEditionAt(double x, double y) {
     Text* text = nullptr;
 
     // Should we reverse this loop to select the most recent text rather than the oldest?
-    for (Element* e: this->page->getSelectedLayer()->getElements()) {
+    for (auto&& e: this->page->getSelectedLayer()->getElements()) {
         if (e->getType() == ELEMENT_TEXT) {
             GdkRectangle matchRect = {gint(x), gint(y), 1, 1};
             if (e->intersectsArea(&matchRect)) {
-                text = dynamic_cast<Text*>(e);
+                text = dynamic_cast<Text*>(e.get());
                 break;
             }
         }
@@ -1106,33 +1080,21 @@ void TextEditor::initializeEditionAt(double x, double y) {
         this->textElement->setX(x);
         this->textElement->setY(y - this->textElement->getElementHeight() / 2);
 
+#ifdef ENABLE_AUDIO
         if (auto audioController = control->getAudioController(); audioController && audioController->isRecording()) {
             fs::path audioFilename = audioController->getAudioFilename();
             size_t sttime = audioController->getStartTime();
-            size_t milliseconds = ((g_get_monotonic_time() / 1000) - sttime);
+            size_t milliseconds = (as_unsigned(g_get_monotonic_time() / 1000) - sttime);
             this->textElement->setTimestamp(milliseconds);
             this->textElement->setAudioFilename(audioFilename);
         }
+#endif
         this->originalTextElement = nullptr;
     } else {
         this->control->setFontSelected(text->getFont());
         this->originalTextElement = text;
 
-        // The original code did not use clone here (but did the cloning by hand). Why?
-        this->textElement.reset(text->clone());
-
-        /*
-         * Original code
-         *
-        this->textElement = std::make_unique<Text>();
-        this->textElement->setX(text->getX());
-        this->textElement->setY(text->getY());
-        this->textElement->setColor(text->getColor());
-        this->textElement->setFont(text->getFont());
-        this->textElement->setText(text->getText());
-        this->textElement->setTimestamp(text->getTimestamp());
-        this->textElement->setAudioFilename(text->getAudioFilename());
-        **/
+        this->textElement = text->cloneText();
 
         text->setInEditing(true);
         this->page->fireElementChanged(text);

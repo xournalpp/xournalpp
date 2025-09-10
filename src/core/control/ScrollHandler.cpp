@@ -44,7 +44,7 @@ void ScrollHandler::goToFirstPage() {
     }
 }
 
-void ScrollHandler::scrollToPage(const PageRef& page, double top) {
+void ScrollHandler::scrollToPage(const PageRef& page, XojPdfRectangle rect) {
     Document* doc = this->control->getDocument();
 
     doc->lock();
@@ -52,35 +52,22 @@ void ScrollHandler::scrollToPage(const PageRef& page, double top) {
     doc->unlock();
 
     if (p != npos) {
-        scrollToPage(p, top);
+        scrollToPage(p, rect);
     }
 }
 
-void ScrollHandler::scrollToPage(size_t page, double top) {
+void ScrollHandler::scrollToPage(size_t page, XojPdfRectangle rect) {
     MainWindow* win = this->control->getWindow();
     if (win == nullptr) {
         g_error("Window is nullptr!");
         return;
     }
 
-    win->getXournal()->scrollTo(page, top);
-}
-
-void ScrollHandler::scrollToSpinPage() {
-    if (!this->control->getWindow()) {
-        return;
-    }
-    SpinPageAdapter* spinPageNo = this->control->getWindow()->getSpinPageNo();
-    int page = spinPageNo->getPage();
-    if (page == 0) {
-        return;
-    }
-    scrollToPage(page - 1);
+    win->getXournal()->scrollTo(page, rect);
 }
 
 void ScrollHandler::scrollToLinkDest(const LinkDestination& dest) {
     size_t pdfPage = dest.getPdfPage();
-    Sidebar* sidebar = control->getSidebar();
 
     if (pdfPage != npos) {
         Document* doc = control->getDocument();
@@ -89,10 +76,10 @@ void ScrollHandler::scrollToLinkDest(const LinkDestination& dest) {
         doc->unlock();
 
         if (page == npos) {
-            sidebar->askInsertPdfPage(pdfPage);
+            control->askInsertPdfPage(pdfPage);
         } else {
             if (dest.shouldChangeTop()) {
-                control->getScrollHandler()->scrollToPage(page, dest.getTop() * control->getZoomControl()->getZoom());
+                control->getScrollHandler()->scrollToPage(page, {dest.getLeft(), dest.getTop(), -1, -1});
             } else {
                 if (control->getCurrentPageNo() != page) {
                     control->getScrollHandler()->scrollToPage(page);
@@ -107,12 +94,11 @@ void ScrollHandler::scrollToAnnotatedPage(bool next) {
         return;
     }
 
-    int step = next ? 1 : -1;
+    size_t step = next ? size_t(1) : size_t(-1);  // Don't assume blindly that size_t(-1) == npos
 
     Document* doc = this->control->getDocument();
 
-    for (size_t i = this->control->getCurrentPageNo() + step; i != npos && i < doc->getPageCount();
-         i = ((i == 0 && step == -1) ? npos : i + step)) {
+    for (size_t i = this->control->getCurrentPageNo() + step; i < doc->getPageCount() && i != size_t(-1); i += step) {
         if (doc->getPage(i)->isAnnotated()) {
             scrollToPage(i);
             break;
@@ -131,4 +117,9 @@ auto ScrollHandler::isPageVisible(size_t page, int* visibleHeight) -> bool {
     return this->control->getWindow()->getXournal()->isPageVisible(page, visibleHeight);
 }
 
-void ScrollHandler::pageChanged(size_t page) { scrollToSpinPage(); }
+void ScrollHandler::pageChanged(size_t page) {
+    if (page == 0) {
+        return;
+    }
+    scrollToPage(page - 1);
+}

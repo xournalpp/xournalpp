@@ -21,9 +21,10 @@ public:
 
 public:
     void addStr(const char* str) const;
-    virtual void addData(const void* data, int len) = 0;
+    virtual void addData(const void* data, size_t len) = 0;
 
-    GString* getData();
+    /// The caller takes ownership of the returned data
+    GString* stealData();
 
 public:
     GString* data;

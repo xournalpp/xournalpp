@@ -7,27 +7,42 @@
 #include "control/DeviceListHelper.h"        // for InputDevice
 #include "control/settings/Settings.h"       // for Settings
 #include "control/settings/SettingsEnums.h"  // for InputDeviceTypeOption
+#include "gui/Builder.h"                     // for Builder
+#include "util/Assert.h"                     // for xoj_assert
+#include "util/gtk4_helper.h"                // for gtk_box_append
 
 class GladeSearchpath;
 
-DeviceClassConfigGui::DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings,
-                                           const InputDevice& device):
-        GladeGui(gladeSearchPath, "settingsDeviceClassConfig.glade", "offscreenwindow"),
-        settings(settings),
-        device(device) {
-    GtkWidget* mainGrid = get("deviceClassGrid");
-    gtk_container_remove(GTK_CONTAINER(getWindow()), mainGrid);
-    gtk_box_pack_end(GTK_BOX(w), mainGrid, true, true, 0);
-    gtk_widget_show_all(mainGrid);
+constexpr auto UI_FILE = "settingsDeviceClassConfig.glade";
+constexpr auto UI_WIDGET_NAME = "deviceClassBox";
 
-    this->labelDevice = get("labelDevice");
-    this->cbDeviceClass = get("cbDeviceClass");
+DeviceClassConfigGui::DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, GtkBox* box, Settings* settings,
+                                           bool showApplyBtn):
+        settings(settings) {
+    Builder builder(gladeSearchPath, UI_FILE);
+    gtk_box_append(box, builder.get(UI_WIDGET_NAME));  // box takes ownership of it all!
+
+    this->labelDevice = builder.get("labelDevice");
+    this->cbDeviceClass = builder.get("cbDeviceClass");
+    auto* applyBtn = builder.get("btnApply");
+
+    gtk_widget_set_visible(applyBtn, showApplyBtn);
+    if (showApplyBtn) {
+        g_signal_connect(applyBtn, "clicked", G_CALLBACK(+[](GtkButton*, gpointer d) {
+                             static_cast<DeviceClassConfigGui*>(d)->saveSettings();
+                         }),
+                         this);
+    }
+}
+
+DeviceClassConfigGui::~DeviceClassConfigGui() = default;
+
+void DeviceClassConfigGui::setDevice(const InputDevice& d) {
+    this->device = d;
     gtk_label_set_text(GTK_LABEL(this->labelDevice), (device.getName() + " (" + device.getType() + ")").c_str());
 
     loadSettings();
 }
-
-DeviceClassConfigGui::~DeviceClassConfigGui() = default;
 
 void DeviceClassConfigGui::loadSettings() {
     // Get device class of device if available or
@@ -38,13 +53,9 @@ void DeviceClassConfigGui::loadSettings() {
                                 std::to_string(static_cast<int>(deviceType)).c_str());
 }
 
-void DeviceClassConfigGui::show(GtkWindow* parent) {
-    // Not implemented! This is not a dialog!
-}
-
 void DeviceClassConfigGui::saveSettings() {
     const gchar* deviceClassId = gtk_combo_box_get_active_id(GTK_COMBO_BOX(this->cbDeviceClass));
-    g_assert(deviceClassId != nullptr);
+    xoj_assert(deviceClassId != nullptr);
     auto deviceClass = static_cast<InputDeviceTypeOption>(g_ascii_strtoll(deviceClassId, nullptr, 10));
     this->settings->setDeviceClassForDevice(this->device.getName(), this->device.getSource(), deviceClass);
 }

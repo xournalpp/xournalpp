@@ -14,6 +14,7 @@
 #pragma once
 
 #include <array>               // for array
+#include <atomic>              // for atomic
 #include <condition_variable>  // for condition_variable
 #include <deque>               // for deque
 #include <mutex>               // for mutex
@@ -111,8 +112,6 @@ private:
 protected:
     bool threadRunning = true;
 
-    guint jobRenderThreadTimerId = 0;
-
     GThread* thread = nullptr;
 
     std::condition_variable jobQueueCond{};
@@ -141,8 +140,8 @@ protected:
      */
     std::array<std::deque<Job*>*, JOB_N_PRIORITIES> jobQueue{};
 
-    GTimeVal* blockRenderZoomTime = nullptr;
-    std::mutex blockRenderMutex{};
+    std::atomic<gint64> blockRenderZoomTime = 0;
+    std::atomic<guint> jobRenderThreadTimerId = 0;
 
     std::string name;
 };

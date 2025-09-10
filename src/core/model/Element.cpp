@@ -6,14 +6,13 @@
 
 #include <glib.h>  // for gint
 
+#include "util/safe_casts.h"                      // for as_unsigned
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
 using xoj::util::Rectangle;
 
 Element::Element(ElementType type): type(type) {}
-
-Element::~Element() = default;
 
 auto Element::getType() const -> ElementType { return this->type; }
 
@@ -129,15 +128,15 @@ auto Element::isInSelection(ShapeContainer* container) const -> bool {
     return true;
 }
 
-auto Element::rescaleOnlyAspectRatio() -> bool { return false; }
-auto Element::rescaleWithMirror() -> bool { return false; }
+auto Element::rescaleOnlyAspectRatio() const -> bool { return false; }
+auto Element::rescaleWithMirror() const -> bool { return false; }
 
 void Element::serialize(ObjectOutputStream& out) const {
     out.writeObject("Element");
 
     out.writeDouble(this->x);
     out.writeDouble(this->y);
-    out.writeInt(int(uint32_t(this->color)));
+    out.writeUInt(uint32_t(this->color));
 
     out.endObject();
 }
@@ -147,7 +146,17 @@ void Element::readSerialized(ObjectInputStream& in) {
 
     this->x = in.readDouble();
     this->y = in.readDouble();
-    this->color = Color(in.readInt());
+    this->color = Color(in.readUInt());
 
     in.endObject();
 }
+
+namespace xoj {
+
+auto refElementContainer(const std::vector<ElementPtr>& elements) -> std::vector<Element*> {
+    std::vector<Element*> result(elements.size());
+    std::transform(elements.begin(), elements.end(), result.begin(), [](auto const& e) { return e.get(); });
+    return result;
+}
+
+}  // namespace xoj

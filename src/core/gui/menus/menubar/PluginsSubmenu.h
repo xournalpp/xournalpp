@@ -20,19 +20,15 @@
 
 class PluginController;
 
-class PluginsSubmenu: public Submenu {
+class PluginsSubmenu final: public Submenu {
 public:
     PluginsSubmenu(PluginController* pluginController, GtkApplicationWindow* win);
-    virtual ~PluginsSubmenu() noexcept = default;
+    ~PluginsSubmenu() noexcept = default;
 
 public:
     void setDisabled(bool disabled) override;
-    void addToMenubar(MainWindow* win) override;
+    void addToMenubar(Menubar& menubar) override;
 
 private:
-    PluginController* pluginController;
-    std::vector<GMenuModel*> sections;
-
-private:
-    static constexpr auto SUBMENU_ID = "menuitemPlugin";
+    xoj::util::GObjectSPtr<GMenu> submenu;
 };

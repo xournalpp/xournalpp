@@ -26,7 +26,7 @@ class SidebarToolbar;
 
 class SidebarIndexPage: public AbstractSidebarPage {
 public:
-    SidebarIndexPage(Control* control, SidebarToolbar* toolbar);
+    SidebarIndexPage(Control* control);
     ~SidebarIndexPage() override;
 
 public:

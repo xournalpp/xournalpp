@@ -5,6 +5,7 @@
 #include <iterator>   // for back_insert_iterator
 #include <limits>     // for numeric_limits
 #include <memory>     // for make_unique, __shar...
+#include <utility>
 
 #include <glib.h>  // for g_idle_add, g_sourc...
 
@@ -30,6 +31,7 @@
 #include "undo/ScaleUndoAction.h"                 // for ScaleUndoAction
 #include "undo/SizeUndoAction.h"                  // for SizeUndoAction
 #include "undo/UndoRedoHandler.h"                 // for UndoRedoHandler
+#include "util/Assert.h"                          // for xoj_assert
 #include "util/glib_casts.h"                      // for wrap_v
 #include "util/safe_casts.h"                      // for as_signed
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
@@ -67,33 +69,40 @@ EditSelectionContents::~EditSelectionContents() {
 /**
  * Add an element to the this selection
  */
-void EditSelectionContents::addElement(Element* e, Element::Index order) {
-    g_assert(this->selected.size() == this->insertOrder.size());
-    this->selected.emplace_back(e);
-    auto item = std::make_pair(e, order);
-    this->insertOrder.insert(std::upper_bound(this->insertOrder.begin(), this->insertOrder.end(), item, insertOrderCmp),
-                             item);
+void EditSelectionContents::addElement(ElementPtr e, Element::Index order) {
+    xoj_assert(this->selected.size() == this->insertionOrder.size());
+    this->selected.emplace_back(e.get());
+    this->insertionOrder.emplace(std::upper_bound(this->insertionOrder.begin(), this->insertionOrder.end(), order),  //
+                                 std::move(e), order);
 }
 
-void EditSelectionContents::replaceInsertOrder(std::deque<std::pair<Element*, Element::Index>> newInsertOrder) {
+void EditSelectionContents::replaceInsertionOrder(InsertionOrder newInsertionOrder) {
     this->selected.clear();
-    this->selected.reserve(newInsertOrder.size());
-    std::transform(begin(newInsertOrder), end(newInsertOrder), std::back_inserter(this->selected),
-                   [](auto const& e) { return e.first; });
-    this->insertOrder = std::move(newInsertOrder);
+    this->selected.reserve(newInsertionOrder.size());
+    std::transform(begin(newInsertionOrder), end(newInsertionOrder), std::back_inserter(this->selected),
+                   [](auto const& e) { return e.e.get(); });
+    this->insertionOrder = std::move(newInsertionOrder);
 }
+
+auto EditSelectionContents::stealInsertionOrder() -> InsertionOrder { return std::move(this->insertionOrder); }
 
 /**
  * Returns all containing elements of this selection
  */
-auto EditSelectionContents::getElements() const -> const vector<Element*>& { return this->selected; }
+auto EditSelectionContents::getElementsView() const -> xoj::util::PointerContainerView<std::vector<Element*>> {
+    return this->selected;
+}
+
+void EditSelectionContents::forEachElement(std::function<void(const Element*)> f) const {
+    for (auto const& e: this->selected) {
+        f(e);
+    }
+}
 
 /**
  * Returns the insert order of this selection
  */
-auto EditSelectionContents::getInsertOrder() const -> std::deque<std::pair<Element*, Element::Index>> const& {
-    return this->insertOrder;
-}
+auto EditSelectionContents::getInsertionOrder() const -> const InsertionOrder& { return this->insertionOrder; }
 
 /**
  * Sets the tool size for pen or eraser, returs an undo action
@@ -112,7 +121,7 @@ auto EditSelectionContents::setSize(ToolSize size, const double* thicknessPen, c
 
             double originalWidth = s->getWidth();
 
-            int pointCount = s->getPointCount();
+            size_t pointCount = s->getPointCount();
             vector<double> originalPressure = SizeUndoAction::getPressure(s);
 
             if (tool == StrokeTool::PEN) {
@@ -194,7 +203,7 @@ auto EditSelectionContents::setFill(int alphaPen, int alphaHighligther) -> UndoA
  * Sets the font of all containing text elements, return an undo action
  * (or nullptr if there are no Text elements)
  */
-auto EditSelectionContents::setFont(XojFont& font) -> UndoActionPtr {
+auto EditSelectionContents::setFont(const XojFont& font) -> UndoActionPtr {
     double x1 = std::numeric_limits<double>::quiet_NaN();
     double x2 = std::numeric_limits<double>::quiet_NaN();
     double y1 = std::numeric_limits<double>::quiet_NaN();
@@ -307,17 +316,12 @@ auto EditSelectionContents::setColor(Color color) -> UndoActionPtr {
 void EditSelectionContents::fillUndoItem(DeleteUndoAction* undo) {
     Layer* layer = this->sourceLayer;
 
-    // Always insert the elements on top
-    // Because the elements are already removed
-    // and owned by the selection, therefore the layer
-    // doesn't know the index anymore
-    Element::Index index = as_signed(layer->getElements().size());
-    for (Element* e: this->selected) {
-        undo->addElement(layer, e, index);
+    for (auto& [e, pos]: this->insertionOrder) {
+        undo->addElement(layer, std::move(e), pos);
     }
 
     this->selected.clear();
-    this->insertOrder.clear();
+    this->insertionOrder.clear();
 }
 
 /**
@@ -343,15 +347,13 @@ void EditSelectionContents::deleteViewBuffer() {
     }
 }
 
-/**
- * The contents of the selection
- */
-void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangle<double> snappedBounds,
-                                              bool aspectRatio) {
+InsertionOrder EditSelectionContents::makeMoveEffective(const xoj::util::Rectangle<double>& bounds,
+                                                        const xoj::util::Rectangle<double>& snappedBounds,
+                                                        bool preserveAspectRatio) {
     double fx = bounds.width / this->originalBounds.width;
     double fy = bounds.height / this->originalBounds.height;
 
-    if (aspectRatio) {
+    if (preserveAspectRatio) {
         double f = (fx + fy) / 2;
         fx = f;
         fy = f;
@@ -364,8 +366,7 @@ void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangl
 
     bool move = mx != 0 || my != 0;
 
-    g_assert(this->selected.size() == this->insertOrder.size());
-    for (auto&& [e, index]: this->insertOrder) {
+    for (auto&& [e, _]: this->insertionOrder) {
         if (move) {
             e->move(mx, my);
         }
@@ -377,6 +378,8 @@ void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangl
                       snappedBounds.y + this->lastSnappedBounds.height / 2, this->rotation);
         }
     }
+    this->selected.clear();
+    return std::move(this->insertionOrder);
 }
 
 auto EditSelectionContents::getOriginalX() const -> double { return this->originalBounds.x; }
@@ -413,7 +416,7 @@ void EditSelectionContents::updateContent(Rectangle<double> bounds, Rectangle<do
                   snappedBounds.height != this->lastSnappedBounds.height);
 
     if (type == CURSOR_SELECTION_MOVE && move) {
-        undo->addUndoAction(std::make_unique<MoveUndoAction>(this->sourceLayer, this->sourcePage, &this->selected, mx,
+        undo->addUndoAction(std::make_unique<MoveUndoAction>(this->sourceLayer, this->sourcePage, this->selected, mx,
                                                              my, layer, targetPage));
     } else if (type == CURSOR_SELECTION_ROTATE && rotate) {
         undo->addUndoAction(std::make_unique<RotateUndoAction>(
@@ -547,6 +550,8 @@ void EditSelectionContents::serialize(ObjectOutputStream& out) const {
     out.writeDouble(this->lastSnappedBounds.width);
     out.writeDouble(this->lastSnappedBounds.height);
 
+    out.writeDouble(this->rotation);
+
     out.writeDouble(this->relativeX);
     out.writeDouble(this->relativeY);
 
@@ -567,6 +572,8 @@ void EditSelectionContents::readSerialized(ObjectInputStream& in) {
     double snappedW = in.readDouble();
     double snappedH = in.readDouble();
     this->lastSnappedBounds = Rectangle<double>{snappedX, snappedY, snappedW, snappedH};
+
+    this->rotation = in.readDouble();
 
     this->relativeX = in.readDouble();
     this->relativeY = in.readDouble();

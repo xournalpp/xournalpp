@@ -20,71 +20,85 @@
 TouchInputHandler::TouchInputHandler(InputContext* inputContext): AbstractInputHandler(inputContext) {}
 
 auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
-    bool zoomGesturesEnabled = inputContext->getSettings()->isZoomGesturesEnabled();
-
-    // Don't handle more then 2 inputs
-    if (this->primarySequence && this->primarySequence != event.sequence && this->secondarySequence &&
-        this->secondarySequence != event.sequence) {
+    if (!event.sequence) {
+        // On x11, a GDK_MOTION_EVENT with sequence == nullptr is emitted before TOUCH_BEGIN: Ignore it
+        // In general, every valid touch event must have a sequence
         return false;
     }
+    bool zoomGesturesEnabled = inputContext->getSettings()->isZoomGesturesEnabled();
 
     if (event.type == BUTTON_PRESS_EVENT) {
-        // Start scrolling when a sequence starts and we currently have none other
-        if (this->primarySequence == nullptr && this->secondarySequence == nullptr) {
-            this->primarySequence = event.sequence;
-
-            // Set sequence data
-            sequenceStart(event);
+        if (invalidActive.find(event.sequence) != invalidActive.end()) {
+            g_warning("Missed touch end/cancel event. Resetting touch input handler.");
+            invalidActive.clear();
         }
-        // Start zooming as soon as we have two sequences.
-        else if (this->primarySequence && this->primarySequence != event.sequence &&
-                 this->secondarySequence == nullptr) {
-            this->secondarySequence = event.sequence;
-
-            // Even if zoom gestures are disabled,
-            // this is still the start of a sequence.
-
-            // Set sequence data
-            sequenceStart(event);
-
-            this->startZoomReady = true;
+        if (invalidActive.empty() && event.sequence != primarySequence && event.sequence != secondarySequence) {
+            // All touches are previously valid and we did not miss an end/cancel event for the current touch
+            if (primarySequence && secondarySequence) {
+                // All touches become invalid
+                g_debug("All touches become invalid");
+                invalidActive.insert({primarySequence, secondarySequence, event.sequence});
+                primarySequence = secondarySequence = nullptr;
+            } else {
+                if (primarySequence) {
+                    secondarySequence = event.sequence;
+                } else {
+                    primarySequence = event.sequence;
+                }
+                sequenceStart(event);
+                if (secondarySequence) {
+                    startZoomReady = true;
+                }
+            }
+        } else {
+            invalidActive.insert(event.sequence);
+            g_debug("Add touch as invalid. %zu touches are invalid now.", invalidActive.size());
         }
+        return true;
     }
 
-    if (event.type == MOTION_EVENT && this->primarySequence) {
-        if (this->primarySequence && this->secondarySequence && zoomGesturesEnabled) {
-            if (this->startZoomReady) {
-                if (this->primarySequence == event.sequence) {
-                    sequenceStart(event);
-                    zoomStart();
+    if (event.type == MOTION_EVENT) {
+        if (primarySequence == event.sequence && !secondarySequence) {
+            scrollMotion(event);
+            return true;
+        } else if (event.sequence && (primarySequence == event.sequence || secondarySequence == event.sequence)) {
+            xoj_assert(primarySequence);
+            if (zoomGesturesEnabled) {
+                if (startZoomReady) {
+                    if (this->primarySequence == event.sequence) {
+                        sequenceStart(event);
+                        zoomStart();
+                    }
+                } else {
+                    zoomMotion(event);
                 }
             } else {
-                zoomMotion(event);
+                scrollMotion(event);
             }
-        } else if (event.sequence == this->primarySequence) {
-            scrollMotion(event);
-        } else if (this->primarySequence && this->secondarySequence) {
-            sequenceStart(event);
+            return true;
         }
     }
 
     if (event.type == BUTTON_RELEASE_EVENT) {
-        // Only stop zooing if both sequences were active (we were scrolling)
-        if (this->primarySequence != nullptr && this->secondarySequence != nullptr && zoomGesturesEnabled) {
+        if (zooming && primarySequence && secondarySequence &&
+            (event.sequence == primarySequence || event.sequence == secondarySequence)) {
             zoomEnd();
         }
 
-        if (event.sequence == this->primarySequence) {
+        if (event.sequence == primarySequence) {
             // If secondarySequence is nullptr, this sets primarySequence
             // to nullptr. If it isn't, then it is now the primary sequence!
-            this->primarySequence = this->secondarySequence;
-            this->secondarySequence = nullptr;
+            primarySequence = std::exchange(secondarySequence, nullptr);
 
             this->priLastAbs = this->secLastAbs;
             this->priLastRel = this->secLastRel;
+        } else if (event.sequence == secondarySequence) {
+            secondarySequence = nullptr;
         } else {
-            this->secondarySequence = nullptr;
+            invalidActive.erase(event.sequence);
+            g_debug("Removing sequence from invalid list, %zu inputs remain invalid.", invalidActive.size());
         }
+        return true;
     }
 
     return false;
@@ -92,35 +106,33 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
 
 void TouchInputHandler::sequenceStart(InputEvent const& event) {
     if (event.sequence == this->primarySequence) {
-        this->priLastAbs = {event.absoluteX, event.absoluteY};
-        this->priLastRel = {event.relativeX, event.relativeY};
+        this->priLastAbs = event.absolute;
+        this->priLastRel = event.relative;
     } else {
-        this->secLastAbs = {event.absoluteX, event.absoluteY};
-        this->secLastRel = {event.relativeX, event.relativeY};
+        this->secLastAbs = event.absolute;
+        this->secLastRel = event.relative;
     }
 }
 
 void TouchInputHandler::scrollMotion(InputEvent const& event) {
     // Will only be called if there is a single sequence (zooming handles two sequences)
     auto offset = [&]() {
-        auto absolutePoint = utl::Point{event.absoluteX, event.absoluteY};
         if (event.sequence == this->primarySequence) {
-            auto offset = absolutePoint - this->priLastAbs;
-            this->priLastAbs = absolutePoint;
+            auto offset = event.absolute - this->priLastAbs;
+            this->priLastAbs = event.absolute;
             return offset;
         } else {
-            auto offset = absolutePoint - this->secLastAbs;
-            this->secLastAbs = absolutePoint;
+            auto offset = event.absolute - this->secLastAbs;
+            this->secLastAbs = event.absolute;
             return offset;
         }
     }();
 
-    auto* layout = inputContext->getView()->getControl()->getWindow()->getLayout();
-
-    layout->scrollRelative(-offset.x, -offset.y);
+    inputContext->getView()->getLayout()->scrollRelative(-offset.x, -offset.y);
 }
 
 void TouchInputHandler::zoomStart() {
+    this->zooming = true;
     this->startZoomDistance = this->priLastAbs.distance(this->secLastAbs);
 
     if (this->startZoomDistance == 0.0) {
@@ -156,9 +168,9 @@ void TouchInputHandler::zoomStart() {
 
 void TouchInputHandler::zoomMotion(InputEvent const& event) {
     if (event.sequence == this->primarySequence) {
-        this->priLastAbs = {event.absoluteX, event.absoluteY};
+        this->priLastAbs = event.absolute;
     } else {
-        this->secLastAbs = {event.absoluteX, event.absoluteY};
+        this->secLastAbs = event.absolute;
     }
 
     double distance = this->priLastAbs.distance(this->secLastAbs);
@@ -183,11 +195,19 @@ void TouchInputHandler::zoomMotion(InputEvent const& event) {
 }
 
 void TouchInputHandler::zoomEnd() {
+    this->zooming = false;
     ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
     zoomControl->endZoomSequence();
 }
 
+void TouchInputHandler::onBlock() {
+    if (this->zooming) {
+        zoomEnd();
+    }
+}
+
 void TouchInputHandler::onUnblock() {
+    this->invalidActive.clear();
     this->primarySequence = nullptr;
     this->secondarySequence = nullptr;
 

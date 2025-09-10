@@ -11,22 +11,22 @@
 
 #pragma once
 
-#include <cstddef>  // for size_t
-#include <memory>   // for unique_ptr
-#include <string>   // for string
-#include <vector>   // for vector
+#include <cstddef>   // for size_t
+#include <memory>    // for unique_ptr
+#include <optional>  // for optional
+#include <string>    // for string
+#include <vector>    // for vector
 
+#include <gio/gio.h>
 #include <glib-object.h>  // for GObject, GConnectFlags
 #include <glib.h>         // for gchar
 #include <gtk/gtk.h>      // for GtkWidget, GtkWindow, GtkBuilder
 
-#include "enums/ActionGroup.enum.h"  // for GROUP_NOGROUP, ActionGroup
-#include "enums/ActionType.enum.h"   // for ActionType
-#include "gui/IconNameHelper.h"      // for IconNameHelper
-#include "util/Color.h"              // for Color
+#include "gui/IconNameHelper.h"  // for IconNameHelper
+#include "model/PaperSize.h"
+#include "util/raii/GObjectSPtr.h"
 
 class AbstractToolItem;
-class FontButton;
 class GladeGui;
 class GladeSearchpath;
 class ToolbarData;
@@ -37,14 +37,17 @@ class ToolPageLayer;
 class ToolPageSpinner;
 class PageTypeMenu;
 class SpinPageAdapter;
-class XojFont;
 class ZoomControl;
 class Control;
 class PageBackgroundChangeController;
-class ActionHandler;
 class ColorToolItem;
-class MenuItem;
 struct ToolbarButtonEntry;
+struct ToolbarPlaceholderEntry;
+class PageTypeSelectionPopover;
+class PageType;
+struct Palette;
+class StylePopoverFactory;
+class Recolor;
 
 class ToolMenuHandler {
 public:
@@ -66,77 +69,61 @@ public:
      * @param toolbarName toolbarName which should be read from the file
      * @param horizontal whether the toolbar is horizontal
      */
-    void load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal);
+    void load(const ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal);
 
-    void registerMenupoint(GtkWidget* widget, ActionType type, ActionGroup group = GROUP_NOGROUP);
+    /**
+     * @brief Update all ColorToolItems based on palette
+     *
+     * @param palette
+     */
+    void updateColorToolItems(const Palette& palette);
+
+    /**
+     * @brief Update all ColorToolItems based on recolor settings
+     *
+     * @param recolor
+     */
+    void updateColorToolItemsRecoloring(const std::optional<Recolor>& recolor);
 
     void initToolItems();
     void addPluginItem(ToolbarButtonEntry* t);
+    void addPluginPlaceholderItem(ToolbarPlaceholderEntry* entry);
 
-    void setUndoDescription(const std::string& description);
-    void setRedoDescription(const std::string& description);
-
-    SpinPageAdapter* getPageSpinner();
-    void setPageInfo(size_t pagecount, size_t pdfpage = 0);
-
-    void setFontButtonFont(const XojFont& font);
-    XojFont getFontButtonFont();
-
-    void showFontSelectionDlg();
-
-    void setTmpDisabled(bool disabled);
+    void setPageInfo(size_t currentPage, size_t pageCount, size_t pdfpage);
 
     [[maybe_unused]] void removeColorToolItem(AbstractToolItem* it);
-    void addColorToolItem(AbstractToolItem* it);
+    void addColorToolItem(std::unique_ptr<ColorToolItem> it);
 
     ToolbarModel* getModel();
 
-    std::vector<AbstractToolItem*>* getToolItems();
-    const std::vector<ColorToolItem*>& getColorToolItems() const;
+    const std::vector<std::unique_ptr<AbstractToolItem>>& getToolItems() const;
+    const std::vector<std::unique_ptr<ColorToolItem>>& getColorToolItems() const;
 
     Control* getControl();
 
-    [[maybe_unused]] bool isColorInUse(Color color);
-
-    void disableAudioPlaybackButtons();
-
-    void enableAudioPlaybackButtons();
-
     void hideAudioMenuItems();
 
-    void setAudioPlaybackPaused(bool paused);
     std::string iconName(const char* icon);
 
-private:
-    void addToolItem(AbstractToolItem* it);
+    void setDefaultNewPageType(const std::optional<PageType>& pt);
+    void setDefaultNewPaperSize(const std::optional<PaperSize>& paperSize);
 
-    static void signalConnectCallback(GtkBuilder* builder, GObject* object, const gchar* signalName,
-                                      const gchar* handlerName, GObject* connectObject, GConnectFlags flags,
-                                      ToolMenuHandler* self);
+private:
+    template <class tool_item, class... Args>
+    tool_item& emplaceItem(Args&&... args);
+
     void initPenToolItem();
     void initEraserToolItem();
 
 private:
-    std::vector<ColorToolItem*> toolbarColorItems;
+    std::vector<std::unique_ptr<ColorToolItem>> toolbarColorItems;
     GtkWindow* parent = nullptr;
 
-    std::vector<AbstractToolItem*> toolItems;
-    std::vector<MenuItem*> menuItems;
-
-    ToolButton* undoButton = nullptr;
-    ToolButton* redoButton = nullptr;
-
-    ToolButton* audioPausePlaybackButton = nullptr;
-    ToolButton* audioStopPlaybackButton = nullptr;
-    ToolButton* audioSeekBackwardsButton = nullptr;
-    ToolButton* audioSeekForwardsButton = nullptr;
+    std::vector<std::unique_ptr<AbstractToolItem>> toolItems;
 
     ToolPageSpinner* toolPageSpinner = nullptr;
-    ToolPageLayer* toolPageLayer = nullptr;
-    FontButton* fontButton = nullptr;
 
     Control* control = nullptr;
-    ActionHandler* listener = nullptr;
     ZoomControl* zoom = nullptr;
     GladeGui* gui = nullptr;
     ToolHandler* toolHandler = nullptr;
@@ -146,4 +133,10 @@ private:
     PageTypeMenu* newPageType = nullptr;
     PageBackgroundChangeController* pageBackgroundChangeController = nullptr;
     IconNameHelper iconNameHelper;
+
+    std::unique_ptr<PageTypeSelectionPopover> pageTypeSelectionPopup;
+    std::unique_ptr<StylePopoverFactory> penLineStylePopover;
+    std::unique_ptr<StylePopoverFactory> eraserTypePopover;
+
+    xoj::util::GObjectSPtr<GSimpleAction> gAction;
 };

@@ -15,17 +15,21 @@
 
 #include <gtk/gtk.h>  // for GtkWidget, GtkToolItem
 
-#include "plugin/Plugin.h"
+#include "AbstractToolItem.h"  // for AbstractToolItem
 
-#include "ToolButton.h"  // for AbstractToolItem
+struct ToolbarButtonEntry;
 
-class PluginToolButton: public ToolButton {
+class PluginToolButton: public AbstractToolItem {
 public:
-    PluginToolButton(ActionHandler* handler, ToolbarButtonEntry* t);
+    PluginToolButton(ToolbarButtonEntry* t);
 
     ~PluginToolButton() override;
+    std::string getToolDisplayName() const override;
 
 protected:
-    GtkToolItem* createItem(bool horizontal) override;
+    xoj::util::WidgetSPtr createItem(bool horizontal) override;
+    GtkWidget* getNewToolIcon() const override;
+
+private:
     ToolbarButtonEntry* t;
 };

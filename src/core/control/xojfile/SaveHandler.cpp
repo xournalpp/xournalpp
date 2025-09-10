@@ -3,7 +3,6 @@
 #include <cinttypes>   // for PRIx32
 #include <cstdint>     // for uint32_t
 #include <cstdio>      // for sprintf, size_t
-#include <filesystem>  // for exists
 
 #include <cairo.h>                  // for cairo_surface_t
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_save
@@ -33,18 +32,19 @@
 #include "model/XojPage.h"                     // for XojPage
 #include "pdf/base/XojPdfDocument.h"           // for XojPdfDocument
 #include "util/OutputStream.h"                 // for GzOutputStream, Output...
-#include "util/PathUtil.h"                     // for clearExtensions
+#include "util/PathUtil.h"                     // for clearExtensions, normalizeAssetPath
 #include "util/PlaceholderString.h"            // for PlaceholderString
 #include "util/i18n.h"                         // for FS, _F
 
 #include "config.h"  // for FILE_FORMAT_VERSION
+#include "filesystem.h"
 
 SaveHandler::SaveHandler() {
     this->firstPdfPageVisited = false;
     this->attachBgId = 1;
 }
 
-void SaveHandler::prepareSave(Document* doc) {
+void SaveHandler::prepareSave(const Document* doc, const fs::path& target) {
     if (this->root) {
         // cleanup old data
         backgroundImages.clear();
@@ -71,7 +71,7 @@ void SaveHandler::prepareSave(Document* doc) {
 
     for (size_t i = 0; i < doc->getPageCount(); i++) {
         PageRef p = doc->getPage(i);
-        visitPage(root.get(), p, doc, static_cast<int>(i));
+        visitPage(root.get(), p, doc, static_cast<int>(i), target);
     }
 }
 
@@ -88,7 +88,7 @@ auto SaveHandler::getColorStr(Color c, unsigned char alpha) -> std::string {
     return color;
 }
 
-void SaveHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode) {
+void SaveHandler::writeTimestamp(XmlAudioNode* xmlAudioNode, const AudioElement* audioElement) {
     if (!audioElement->getAudioFilename().empty()) {
         /** set stroke timestamp value to the XmlPointNode */
         xmlAudioNode->setAttrib("ts", audioElement->getTimestamp());
@@ -96,14 +96,14 @@ void SaveHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAu
     }
 }
 
-void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {
+void SaveHandler::visitStroke(XmlPointNode* stroke, const Stroke* s) {
     StrokeTool t = s->getToolType();
 
     unsigned char alpha = 0xff;
 
     if (t == StrokeTool::PEN) {
         stroke->setAttrib("tool", "pen");
-        writeTimestamp(s, stroke);
+        writeTimestamp(stroke, s);
     } else if (t == StrokeTool::ERASER) {
         stroke->setAttrib("tool", "eraser");
     } else if (t == StrokeTool::HIGHLIGHTER) {
@@ -136,7 +136,7 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {
 /**
  * Export the fill attributes
  */
-void SaveHandler::visitStrokeExtended(XmlPointNode* stroke, Stroke* s) {
+void SaveHandler::visitStrokeExtended(XmlPointNode* stroke, const Stroke* s) {
     if (s->getFill() != -1) {
         stroke->setAttrib("fill", s->getFill());
     }
@@ -158,25 +158,25 @@ void SaveHandler::visitStrokeExtended(XmlPointNode* stroke, Stroke* s) {
     }
 }
 
-void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
+void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
     auto* layer = new XmlNode("layer");
     page->addChild(layer);
     if (l->hasName()) {
         layer->setAttrib("name", l->getName().c_str());
     }
 
-    for (Element* e: l->getElements()) {
+    for (const auto& e: l->getElementsView()) {
         if (e->getType() == ELEMENT_STROKE) {
-            auto* s = dynamic_cast<Stroke*>(e);
+            auto* s = dynamic_cast<const Stroke*>(e);
             auto* stroke = new XmlPointNode("stroke");
             layer->addChild(stroke);
             visitStroke(stroke, s);
         } else if (e->getType() == ELEMENT_TEXT) {
-            Text* t = dynamic_cast<Text*>(e);
+            const Text* t = dynamic_cast<const Text*>(e);
             auto* text = new XmlTextNode("text", t->getText());
             layer->addChild(text);
 
-            XojFont& f = t->getFont();
+            const XojFont& f = t->getFont();
 
             text->setAttrib("font", f.getName().c_str());
             text->setAttrib("size", f.getSize());
@@ -184,9 +184,9 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
             text->setAttrib("y", t->getY());
             text->setAttrib("color", getColorStr(t->getColor()).c_str());
 
-            writeTimestamp(t, text);
+            writeTimestamp(text, t);
         } else if (e->getType() == ELEMENT_IMAGE) {
-            auto* i = dynamic_cast<Image*>(e);
+            auto* i = dynamic_cast<const Image*>(e);
             auto* image = new XmlImageNode("image");
             layer->addChild(image);
 
@@ -197,7 +197,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
             image->setAttrib("right", i->getX() + i->getElementWidth());
             image->setAttrib("bottom", i->getY() + i->getElementHeight());
         } else if (e->getType() == ELEMENT_TEXIMAGE) {
-            auto* i = dynamic_cast<TexImage*>(e);
+            auto* i = dynamic_cast<const TexImage*>(e);
             auto* image = new XmlTexNode("teximage", std::string(i->getBinaryData()));
             layer->addChild(image);
 
@@ -210,7 +210,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
     }
 }
 
-void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
+void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, int id, const fs::path& target) {
     auto* page = new XmlNode("page");
     root->addChild(page);
     page->setAttrib("width", p->getWidth());
@@ -253,8 +253,11 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
                     g_error_free(error);
                 }
             } else {
+                // "absolute" just means path. For backward compatibility, it is hard to change the word
                 background->setAttrib("domain", "absolute");
-                background->setAttrib("filename", doc->getPdfFilepath().u8string());
+                auto normalizedPath = Util::normalizeAssetPath(doc->getPdfFilepath(), target.parent_path(),
+                                                               doc->getPathStorageMode());
+                background->setAttrib("filename", std::move(normalizedPath));
             }
         }
         background->setAttrib("pageno", p->getPdfPageNr() + 1);
@@ -271,55 +274,53 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
             char* filename = g_strdup_printf("bg_%d.png", this->attachBgId++);
             background->setAttrib("domain", "attach");
             background->setAttrib("filename", filename);
-            p->getBackgroundImage().setFilepath(filename);
 
             backgroundImages.emplace_back(p->getBackgroundImage());
 
+            /*
+             * Because BackgroundImage is basically a wrapped pointer, the following lines actually modify
+             * *(p->getBackgroundImage().content) and thus the Document.
+             * TODO Find a better way
+             */
+            backgroundImages.back().setFilepath(filename);
+            backgroundImages.back().setCloneId(id);
+
             g_free(filename);
-            p->getBackgroundImage().setCloneId(id);
         } else {
+            // "absolute" just means path. For backward compatibility, it is hard to change the word
             background->setAttrib("domain", "absolute");
-            background->setAttrib("filename", p->getBackgroundImage().getFilepath().u8string());
-            p->getBackgroundImage().setCloneId(id);
+            auto normalizedPath = Util::normalizeAssetPath(p->getBackgroundImage().getFilepath(), target.parent_path(),
+                                                           doc->getPathStorageMode());
+            background->setAttrib("filename", std::move(normalizedPath));
+
+            BackgroundImage img = p->getBackgroundImage();
+
+            /*
+             * Because BackgroundImage is basically a wrapped pointer, the following line actually modifies
+             * *(p->getBackgroundImage().content) and thus the Document.
+             * TODO Find a better way
+             */
+            img.setCloneId(id);
         }
     } else {
         writeSolidBackground(background, p);
     }
 
     // no layer, but we need to write one layer, else the old Xournal cannot read the file
-    if (p->getLayers()->empty()) {
+    if (p->getLayerCount() == 0) {
         auto* layer = new XmlNode("layer");
         page->addChild(layer);
     }
 
-    for (Layer* l: *p->getLayers()) {
+    for (const Layer* l: p->getLayersView()) {
         visitLayer(page, l);
     }
 }
 
-void SaveHandler::writeSolidBackground(XmlNode* background, PageRef p) {
+void SaveHandler::writeSolidBackground(XmlNode* background, ConstPageRef p) {
     background->setAttrib("type", "solid");
     background->setAttrib("color", getColorStr(p->getBackgroundColor()));
-
-    if (auto fmt = p->getBackgroundType().format; fmt == PageTypeFormat::Copy) {
-        /*
-         * PageTypeFormat::Copy is just a placeholder for the various background related menus, indicating that the
-         * background should be copied from another page.
-         * IT SHOULD NEVER APPEAR IN AN ACTUAL PAGE MODEL OR A FORTIORI IN A SAVED FILE
-         *
-         * A page with background type PageTypeFormat::Copy is unwanted.
-         * To avoid creating corrupted files, we replace the format with PageTypeFormat::Plain
-         */
-        if (!this->errorMessage.empty()) {
-            this->errorMessage += "\n";
-        }
-        this->errorMessage += _("Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to "
-                                "avoid corrupted file");
-
-        background->setAttrib("style", PageTypeHandler::getStringForPageTypeFormat(PageTypeFormat::Plain));
-    } else {
-        background->setAttrib("style", PageTypeHandler::getStringForPageTypeFormat(fmt));
-    }
+    background->setAttrib("style", PageTypeHandler::getStringForPageTypeFormat(p->getBackgroundType().format));
 
     // Not compatible with Xournal, so the background needs
     // to be changed to a basic one!
@@ -328,7 +329,7 @@ void SaveHandler::writeSolidBackground(XmlNode* background, PageRef p) {
     }
 }
 
-void SaveHandler::writeBackgroundName(XmlNode* background, PageRef p) {
+void SaveHandler::writeBackgroundName(XmlNode* background, ConstPageRef p) {
     if (p->backgroundHasName()) {
         background->setAttrib("name", p->getBackgroundName());
     }
@@ -357,9 +358,11 @@ void SaveHandler::saveTo(OutputStream* out, const fs::path& filepath, ProgressLi
     out->write("<?xml version=\"1.0\" standalone=\"no\"?>\n");
     root->writeOut(out, listener);
 
-    for (BackgroundImage const& img: backgroundImages) {
+    for (const BackgroundImage& img: backgroundImages) {
         auto tmpfn = (fs::path(filepath) += ".") += img.getFilepath();
-        if (!gdk_pixbuf_save(img.getPixbuf(), tmpfn.u8string().c_str(), "png", nullptr, nullptr)) {
+        // Are we certain that does not modify the GdkPixbuf?
+        if (!gdk_pixbuf_save(const_cast<GdkPixbuf*>(img.getPixbuf()), tmpfn.u8string().c_str(), "png", nullptr,
+                             nullptr)) {
             if (!this->errorMessage.empty()) {
                 this->errorMessage += "\n";
             }
@@ -369,4 +372,4 @@ void SaveHandler::saveTo(OutputStream* out, const fs::path& filepath, ProgressLi
     }
 }
 
-auto SaveHandler::getErrorMessage() -> std::string { return this->errorMessage; }
+auto SaveHandler::getErrorMessage() -> const std::string& { return this->errorMessage; }

@@ -1,6 +1,8 @@
 #include "MoveLayerUndoAction.h"
 
+#include "control/Control.h"
 #include "control/layer/LayerController.h"  // for LayerController
+#include "model/Document.h"
 #include "model/Layer.h"                    // for Layer, Layer::Index
 #include "model/PageRef.h"                  // for PageRef
 #include "undo/UndoAction.h"                // for UndoAction
@@ -26,8 +28,11 @@ MoveLayerUndoAction::~MoveLayerUndoAction() {
 auto MoveLayerUndoAction::getText() -> std::string { return _("Move layer"); }
 
 auto MoveLayerUndoAction::undo(Control* control) -> bool {
+    Document* doc = control->getDocument();
+    doc->lock();
     layerController->removeLayer(this->page, this->layer);
     layerController->insertLayer(this->page, this->layer, oldLayerPos);
+    doc->unlock();
 
     this->undone = true;
 
@@ -35,8 +40,11 @@ auto MoveLayerUndoAction::undo(Control* control) -> bool {
 }
 
 auto MoveLayerUndoAction::redo(Control* control) -> bool {
+    Document* doc = control->getDocument();
+    doc->lock();
     layerController->removeLayer(this->page, this->layer);
     layerController->insertLayer(this->page, this->layer, newLayerPos);
+    doc->unlock();
 
     this->undone = false;
 

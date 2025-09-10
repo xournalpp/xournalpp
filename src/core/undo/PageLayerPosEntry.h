@@ -11,18 +11,30 @@
 
 #pragma once
 
-#include <cstdint>
+#include <memory>
+#include <utility>
+
+#include "model/Element.h"
 
 class Layer;
 
 template <class T>
 struct PageLayerPosEntry {
-    // TODO: constructor could be removed with C++20
-    PageLayerPosEntry(Layer* layer, T* element, typename T::Index pos): layer(layer), element(element), pos(pos) {}
+    // TODO (cpp20): constructor could be removed with C++20
+    explicit PageLayerPosEntry(Layer* layer, std::unique_ptr<T> element, typename T::Index pos):
+            pos(pos),
+            layer(layer),  //
+            element(element.get()),
+            elementOwn(std::move(element)) {}
+    explicit PageLayerPosEntry(Layer* layer, T* element, typename T::Index pos):
+            pos(pos),
+            layer(layer),  //
+            element(element) {}
 
-    Layer* layer;
-    T* element;
-    typename T::Index pos;
+    typename T::Index pos{};
+    Layer* layer{};
+    T* element{};
+    mutable std::unique_ptr<Element> elementOwn{};
 };
 
 template <typename T>

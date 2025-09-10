@@ -49,11 +49,6 @@ public:
      */
     void showPluginManager() const;
 
-    /**
-     * Return the plugin list
-     */
-    auto getPlugins() const -> std::vector<Plugin*>;
-
 private:
     /**
      * The main controller

@@ -6,7 +6,7 @@
 #include <glib.h>
 #include <poppler-global.h>
 
-#include "util/Stacktrace.h"
+#include "util/PathUtil.h"
 
 #include "filesystem.h"
 
@@ -15,7 +15,7 @@ void setupEnvironment() {
      * see https://gitlab.gnome.org/GNOME/gtk-mac-bundler/-/blob/master/examples/gtk3-launcher.sh
      * and https://gitlab.gnome.org/GNOME/gtk-mac-bundler/-/issues/12
      */
-    auto base = Stacktrace::getExePath().parent_path();  // Xournal++.app/Contents or $HOME/gtk/inst
+    auto base = Util::getExePath().parent_path();  // Xournal++.app/Contents or $HOME/gtk/inst
 
     if (fs::exists(base / "Resources")) {  // app-bundle
         base = base / "Resources";
@@ -31,6 +31,11 @@ void setupEnvironment() {
     auto imModuleFile = libPath / "gtk-3.0" / "3.0.0" / "immodules.cache";
     auto pixbufModuleFile = libPath / "gdk-pixbuf-2.0" / "2.10.0" / "loaders.cache";
 
+    auto typelibPath = libPath / "girepository-1.0";
+
+    std::string luaPath = dataPath.string() + "/lua/5.4/?.lua";
+    std::string luaCPath = libPath.string() + "/lua/5.4/?.so";
+
     setenv("XDG_CONFIG_DIRS", xdgPath.string().c_str(), 1);
     setenv("XDG_DATA_DIRS", dataPath.string().c_str(), 1);
     setenv("GTK_DATA_PREFIX", base.string().c_str(), 1);
@@ -40,9 +45,25 @@ void setupEnvironment() {
     setenv("GTK_IM_MODULE_FILE", imModuleFile.string().c_str(), 0);
     setenv("GDK_PIXBUF_MODULE_FILE", pixbufModuleFile.string().c_str(), 0);
 
+    setenv("GI_TYPELIB_PATH", typelibPath.string().c_str(), 0);
+
+    setenv("LUA_PATH", luaPath.c_str(), 0);
+    setenv("LUA_CPATH", luaCPath.c_str(), 0);
+
     auto environ = g_get_environ();
     const char* usedPixbufModuleFile = g_environ_getenv(environ, "GDK_PIXBUF_MODULE_FILE");
-    g_message("Continue with GDK_PIXBUF_MODULE_FILE = %s", usedPixbufModuleFile);
+    const char* usedTypelibPath = g_environ_getenv(environ, "GI_TYPELIB_PATH");
+    // The DYLD_LIBRARY_PATH is only read when the process is started, so it can't be set here. It is set in
+    // the Info.plist therefore, which only takes effect when running the App from Finder or using the "open" command.
+    const char* usedDYLDLibraryPath = g_environ_getenv(environ, "DYLD_LIBRARY_PATH");
+    const char* usedLuaPath = g_environ_getenv(environ, "LUA_PATH");
+    const char* usedLuaCPath = g_environ_getenv(environ, "LUA_CPATH");
+    g_message("Continue with GDK_PIXBUF_MODULE_FILE = %s\n"
+              "GI_TYPELIB_PATH = %s\n"
+              "DYLD_LIBRARY_PATH = %s\n"
+              "LUA_PATH = %s\n"
+              "LUA_CPATH = %s",
+              usedPixbufModuleFile, usedTypelibPath, usedDYLDLibraryPath, usedLuaPath, usedLuaCPath);
 
     /**
      * set LANG and LC_MESSAGES in order to detect the default language

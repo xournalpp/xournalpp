@@ -15,6 +15,8 @@
 #include <memory>   // for unique_ptr
 #include <vector>   // for vector
 
+#include "model/Element.h"
+
 #include "AudioElement.h"  // for AudioElement
 #include "LineStyle.h"     // for LineStyle
 #include "Point.h"         // for Point
@@ -64,8 +66,8 @@ public:
     ~Stroke() override;
 
 public:
-    Stroke* cloneStroke() const;
-    Element* clone() const override;
+    auto cloneStroke() const -> std::unique_ptr<Stroke>;
+    auto clone() const -> ElementPtr override;
 
     /**
      * @brief Create a partial clone whose points are those of parameters between lowerBound and upperBound
@@ -108,10 +110,10 @@ public:
     void setFill(int fill);
 
     void addPoint(const Point& p);
-    int getPointCount() const;
+    size_t getPointCount() const;
     void freeUnusedPointItems();
     std::vector<Point> const& getPointVector() const;
-    Point getPoint(int index) const;
+    Point getPoint(size_t index) const;
     Point getPoint(PathParameter parameter) const;
     const Point* getPoints() const;
 
@@ -164,7 +166,6 @@ public:
     void setPressure(const std::vector<double>& pressure);
     void setLastPressure(double pressure);
     void setSecondToLastPressure(double pressure);
-    void clearPressure();
     void scalePressure(double factor);
 
     /**
@@ -194,7 +195,7 @@ public:
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;
 
-    bool rescaleWithMirror() override;
+    bool rescaleWithMirror() const override;
 
 protected:
     void calcSize() const override;

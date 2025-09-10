@@ -14,10 +14,12 @@
 #include <cstring>   // for strlen, size_t
 #include <optional>  // for optional
 #include <string>    // for string, allocator, basic_string
+#include <vector>    // for vector
 
 #include <gio/gio.h>  // for GFile
 #include <glib.h>     // for g_free, GError, g_error_free, g_filename_fro...
 
+#include "util/raii/GObjectSPtr.h"
 #include "util/safe_casts.h"  // for as_signed
 
 #include "filesystem.h"  // for path, u8path
@@ -49,7 +51,12 @@ namespace Util {
 /**
  * @return true if this file has a pdf extension
  */
-bool hasPdfFileExt(const fs::path& path);
+[[nodiscard]] bool hasPdfFileExt(const fs::path& path);
+
+/**
+ * @return true if this file has a png extension
+ */
+[[nodiscard]] bool hasPngFileExt(const fs::path& path);
 
 /**
  * Check if a path is absolute.
@@ -74,48 +81,10 @@ void clearExtensions(fs::path& path, const std::string& ext = "");
 
 
 [[maybe_unused]] [[nodiscard]] fs::path fromGFile(GFile* file);
-[[maybe_unused]] [[nodiscard]] GFile* toGFile(fs::path const& path);
+[[maybe_unused]] [[nodiscard]] xoj::util::GObjectSPtr<GFile> toGFile(fs::path const& path);
 
-[[maybe_unused]] [[nodiscard]] inline fs::path fromGFilename(char* path, bool owned = true) {
-    auto deleter = [path, owned]() {
-        if (owned) {
-            g_free(path);
-        }
-    };
-
-    if (path == nullptr) {
-        return {};
-    }
-    gsize pSize{0};
-    GError* err{};
-    auto* u8Path = g_filename_to_utf8(path, std::strlen(path), nullptr, &pSize, &err);
-    if (err) {
-        g_message("Failed to convert g_filename to utf8 with error code: %d\n%s", err->code, err->message);
-        g_error_free(err);
-        deleter();
-        return {};
-    }
-    auto ret = fs::u8path(u8Path, u8Path + pSize);
-    g_free(u8Path);
-    deleter();
-    return ret;
-}
-
-[[maybe_unused]] [[nodiscard]] inline std::string toGFilename(fs::path const& path) {
-    auto u8path = path.u8string();
-    gsize pSize{0};
-    GError* err{};
-    auto* local = g_filename_from_utf8(u8path.c_str(), as_signed(u8path.size()), nullptr, &pSize, &err);
-    if (err) {
-        g_message("Failed to convert g_filename from utf8 with error code: %d\n%s", err->code, err->message);
-        g_error_free(err);
-        return {};
-    }
-    auto ret = std::string{local, pSize};
-    g_free(local);
-    return ret;
-}
-
+[[maybe_unused]] [[nodiscard]] fs::path fromGFilename(const char* path);
+[[maybe_unused]] [[nodiscard]] std::string toGFilename(fs::path const& path);
 
 void openFileWithDefaultApplication(const fs::path& filename);
 
@@ -125,6 +94,20 @@ void openFileWithDefaultApplication(const fs::path& filename);
 [[maybe_unused]] void safeReplaceExtension(fs::path& p, const char* nexExtension);
 
 [[maybe_unused]] fs::path ensureFolderExists(const fs::path& p);
+
+enum class PathStorageMode { AS_ABSOLUTE_PATH, AS_RELATIVE_PATH };
+/**
+ * A Xournalpp file may include references to other PDF, PNG, etc. files on disk. This function converts an asset path
+ * to a string destined for storage (e.g. in a .xopp file).
+ *
+ * If mode == ABSOLUTE, the path is made absolute before being converted to string
+ * If mode == RELATIVE, this function assumes the .xopp file is in the directory `base` and it attempts to convert
+ *      `assetPath` to a relative path, relative to `base`.
+ *      If it is unable to create a relative path, it will return the path unchanged
+ *
+ * The result if a utf-8 string with '/' as directory delimiter
+ */
+[[nodiscard]] std::string normalizeAssetPath(const fs::path& assetPath, const fs::path& base, PathStorageMode mode);
 
 /**
  * Convert to platform compatible path. Call this before
@@ -142,6 +125,7 @@ auto system_single_byte_filename(const fs::path& path) -> std::string;
 [[maybe_unused]] [[nodiscard]] fs::path getConfigSubfolder(const fs::path& subfolder = "");
 [[maybe_unused]] [[nodiscard]] fs::path getCacheSubfolder(const fs::path& subfolder = "");
 [[maybe_unused]] [[nodiscard]] fs::path getDataSubfolder(const fs::path& subfolder = "");
+[[maybe_unused]] [[nodiscard]] fs::path getStateSubfolder(const fs::path& subfolder = "");
 [[maybe_unused]] [[nodiscard]] fs::path getConfigFile(const fs::path& relativeFileName = "");
 [[maybe_unused]] [[nodiscard]] fs::path getCacheFile(const fs::path& relativeFileName = "");
 [[maybe_unused]] [[nodiscard]] fs::path getTmpDirSubfolder(const fs::path& subfolder = "");
@@ -149,5 +133,16 @@ auto system_single_byte_filename(const fs::path& path) -> std::string;
 [[maybe_unused]] [[nodiscard]] fs::path getGettextFilepath(fs::path const& localeDir);
 [[maybe_unused]] [[nodiscard]] fs::path getDataPath();
 [[maybe_unused]] [[nodiscard]] fs::path getLocalePath();
+[[maybe_unused]] [[nodiscard]] fs::path getExePath();  ///< folder containing the executable
+fs::path getBuiltInPaletteDirectoryPath();
+fs::path getCustomPaletteDirectoryPath();
 
+/**
+ * List all files in a directory sorted alphabetically
+ *
+ * If the directory does not exist it returns an empty list.
+ * @param directory to search
+ * @return files in directory
+ */
+std::vector<fs::path> listFilesSorted(fs::path directory);
 }  // namespace Util

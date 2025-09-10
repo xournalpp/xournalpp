@@ -12,6 +12,7 @@
 #pragma once
 
 #include <cstddef>  // for size_t
+#include <limits>   // for numeric_limits
 #include <memory>   // for unique_ptr
 #include <string>   // for string
 #include <utility>  // for pair
@@ -21,21 +22,25 @@
 #include <glib.h>     // for gboolean
 #include <gtk/gtk.h>  // for GtkWidget, GtkAllocation
 
-#include "control/zoom/ZoomListener.h"  // for ZoomListener
-#include "model/DocumentChangeType.h"   // for DocumentChangeType
-#include "model/DocumentListener.h"     // for DocumentListener
-#include "util/Util.h"                  // for npos
+#include "control/zoom/ZoomListener.h"     // for ZoomListener
+#include "gui/inputdevices/InputEvents.h"  // for KeyEvent
+#include "model/DocumentChangeType.h"      // for DocumentChangeType
+#include "model/DocumentListener.h"        // for DocumentListener
+#include "pdf/base/XojPdfPage.h"           // for XojPdfRectangle
+#include "util/Util.h"                     // for npos
 
 class Control;
 class XournalppCursor;
 class Document;
 class EditSelection;
 class XojPageView;
+class XojPdfRectangle;
 class PdfCache;
 class RepaintHandler;
 class ScrollHandling;
 class TextEditor;
 class HandRecognition;
+class Layout;
 namespace xoj::util {
 template <class T>
 class Rectangle;
@@ -50,7 +55,7 @@ public:
     // Recalculate the layout width and height amd layout the pages with the updated layout size
     void layoutPages();
 
-    void scrollTo(size_t pageNo, double y = 0);
+    void scrollTo(size_t pageNo, XojPdfRectangle rect = {0, 0, -1, -1});
 
     // Relative navigation in current layout:
     void pageRelativeXY(int offCol, int offRow);
@@ -67,7 +72,8 @@ public:
 
     XojPageView* getViewFor(size_t pageNr) const;
 
-    bool searchTextOnPage(const std::string& text, size_t pageNumber, size_t* occurrences, double* yOfUpperMostMatch);
+    bool searchTextOnPage(const std::string& text, size_t pageNumber, size_t index, size_t* occurrences,
+                          XojPdfRectangle* matchRect);
 
     bool cut();
     bool copy();
@@ -104,6 +110,7 @@ public:
     RepaintHandler* getRepaintHandler() const;
     GtkWidget* getWidget() const;
     XournalppCursor* getCursor() const;
+    Layout* getLayout() const;
 
     xoj::util::Rectangle<double>* getVisibleRect(size_t page) const;
     xoj::util::Rectangle<double>* getVisibleRect(const XojPageView* redrawable) const;
@@ -143,10 +150,8 @@ public:
     void documentChanged(DocumentChangeType type) override;
 
 public:
-    bool onKeyPressEvent(GdkEventKey* event);
-    bool onKeyReleaseEvent(GdkEventKey* event);
-
-    static void onRealized(GtkWidget* widget, XournalView* view);
+    bool onKeyPressEvent(const KeyEvent& event);
+    bool onKeyReleaseEvent(const KeyEvent& event);
 
     void onSettingsChanged();
 
@@ -184,12 +189,7 @@ private:
     /**
      * Memory cleanup timeout
      */
-    guint cleanupTimeout = -1;
-
-    /**
-     * Helper class for Touch specific fixes
-     */
-    std::unique_ptr<HandRecognition> handRecognition;
+    guint cleanupTimeout = std::numeric_limits<guint>::max();
 
     friend class Layout;
 };

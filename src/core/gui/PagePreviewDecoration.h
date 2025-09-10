@@ -28,7 +28,7 @@ private:
 
 public:
     /* For the style with the page numbers below the preview the widget height has to be extended by this amount */
-    static constexpr double MARGIN_BOTTOM = 20.0;
+    static constexpr int MARGIN_BOTTOM = 20;
 
 private:
     /* The font sized used for drawing the page number*/

@@ -50,4 +50,5 @@ endif ()
 
 # Hardcode bugreport address instead of using ${GIT_ORIGIN_OWNER} which is just a directory name for local clones
 set (PROJECT_BUGREPORT "https://github.com/xournalpp/xournalpp/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml")
+set (PROJECT_CRASHREPORT "https://github.com/xournalpp/xournalpp/issues/new?template=crash_report.yml")
 

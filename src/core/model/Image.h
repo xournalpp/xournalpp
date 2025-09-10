@@ -62,7 +62,7 @@ public:
     void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
     void rotate(double x0, double y0, double th) override;
 
-    Element* clone() const override;
+    auto clone() const -> ElementPtr override;
 
     bool hasData() const;
 
@@ -87,16 +87,7 @@ public:
 private:
     void calcSize() const override;
 
-    static cairo_status_t cairoReadFunction(const Image* image, unsigned char* data, unsigned int length);
-
 private:
-    /// Set the image data by rendering the surface to PNG and copying the PNG data.
-    ///
-    /// \deprecated Pass the raw image data instead.
-    ///
-    /// FIXME: remove this when setImage(GdkPixbuf*) is removed.
-    [[deprecated]] void setImage(cairo_surface_t* image);
-
     /// Temporary surface used as a render buffer.
     mutable cairo_surface_t* image = nullptr;
 

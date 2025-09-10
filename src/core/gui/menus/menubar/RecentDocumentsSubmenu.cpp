@@ -6,15 +6,28 @@
 
 #include "control/Control.h"
 #include "control/RecentManager.h"
-#include "gui/MainWindow.h"
 #include "gui/menus/StaticAssertActionNamespace.h"
+#include "util/Assert.h"
 #include "util/PathUtil.h"           // for fromUri, toUri, hasPdfFileExt
 #include "util/PlaceholderString.h"  // for PlaceholderString
 #include "util/StringUtils.h"        // for replace_pair, StringUtils
 #include "util/TinyVector.h"         // for TinyVector
 #include "util/i18n.h"               // for FS, FORMAT_STR, C_F
 
+#include "Menubar.h"
+
 namespace {
+constexpr auto SUBMENU_ID = "menuFileRecent";
+constexpr auto G_ACTION_NAMESPACE = "win.";
+constexpr auto OPEN_ACTION_NAME = "open-file-at";
+constexpr auto REMOVE_ACTION_NAME = "remove-file-at";
+
+/**
+ * @brief For a disable placeholder saying "No recent files"
+ *  To disable a GMenu entry, give it an action name that does not correspond to any GAction
+ */
+constexpr auto DISABLED_ACTION_NAME = "always-disabled-action";
+constexpr auto CLEAR_LIST_ACTION_NAME = "clear-recent-files";
 
 void recentManagerChangedCallback(GtkRecentManager* /*manager*/, RecentDocumentsSubmenu* recentDocsSubmenu) {
     recentDocsSubmenu->updateMenu();
@@ -29,8 +42,26 @@ auto createRecentMenuItem(const GtkRecentInfo* info, size_t i) {
     StringUtils::replaceAllChars(display_name, {replace_pair('_', "__")});
     std::string label = FS(FORMAT_STR("{1}. {2}") % (i + 1) % display_name);
 
-    std::string action = RecentDocumentsSubmenu::G_ACTION_NAMESPACE;
-    action += RecentDocumentsSubmenu::OPEN_ACTION_NAME;
+    std::string action = G_ACTION_NAMESPACE;
+    action += OPEN_ACTION_NAME;
+    action += "(uint64 ";
+    action += std::to_string(i);
+    action += ")";
+
+    return xoj::util::GObjectSPtr<GMenuItem>(g_menu_item_new(label.c_str(), action.c_str()), xoj::util::adopt);
+}
+
+auto createRemoveMenuItem(const GtkRecentInfo* info, size_t i) {
+    std::string display_name = gtk_recent_info_get_display_name(const_cast<GtkRecentInfo*>(info));
+
+    // escape underscore
+    StringUtils::replaceAllChars(display_name, {replace_pair('_', "__")});
+    std::string label =
+            FS(FORMAT_STR("{1}. {2} {3}") % (i + 1) %
+               C_("The selected document will be removed from the recent files list", "Dismiss") % display_name);
+
+    std::string action = G_ACTION_NAMESPACE;
+    action += REMOVE_ACTION_NAME;
     action += "(uint64 ";
     action += std::to_string(i);
     action += ")";
@@ -51,15 +82,29 @@ auto createRecentMenu(const container& recentFiles, size_t start_index) -> xoj::
     return xoj::util::GObjectSPtr<GMenu>(menu, xoj::util::adopt);
 }
 
+template <typename container>
+auto createRemoveSubmenu(const container& recentFiles, size_t start_index) -> xoj::util::GObjectSPtr<GMenu> {
+    if (recentFiles.empty()) {
+        return nullptr;
+    }
+    GMenu* menu = g_menu_new();
+
+    for (auto& recent: recentFiles) {
+        g_menu_append_item(menu, createRemoveMenuItem(recent.get(), start_index++).get());
+    }
+
+    return xoj::util::GObjectSPtr<GMenu>(menu, xoj::util::adopt);
+}
+
 auto createEmptyListPlaceholder() {
-    return xoj::util::GObjectSPtr<GMenuItem>(
-            g_menu_item_new(_("No recent files"), RecentDocumentsSubmenu::DISABLED_ACTION_NAME), xoj::util::adopt);
+    return xoj::util::GObjectSPtr<GMenuItem>(g_menu_item_new(_("No recent files"), DISABLED_ACTION_NAME),
+                                             xoj::util::adopt);
 }
 
 auto createClearListSection() {
     // Todo(cpp20): constexpr this concatenation
-    std::string action = RecentDocumentsSubmenu::G_ACTION_NAMESPACE;
-    action += RecentDocumentsSubmenu::CLEAR_LIST_ACTION_NAME;
+    std::string action = G_ACTION_NAMESPACE;
+    action += CLEAR_LIST_ACTION_NAME;
 
     GMenu* menu = g_menu_new();
     g_menu_append(menu, _("Clear list"), action.c_str());
@@ -85,6 +130,10 @@ RecentDocumentsSubmenu::RecentDocumentsSubmenu(Control* control, GtkApplicationW
         clearListAction.reset(g_simple_action_new(CLEAR_LIST_ACTION_NAME, nullptr), xoj::util::adopt);
         g_signal_connect(G_OBJECT(clearListAction.get()), "activate", G_CALLBACK(clearRecentFilesCallback), nullptr);
         g_action_map_add_action(G_ACTION_MAP(win), G_ACTION(clearListAction.get()));
+
+        removeFileAction.reset(g_simple_action_new(REMOVE_ACTION_NAME, G_VARIANT_TYPE_UINT64), xoj::util::adopt);
+        g_signal_connect(G_OBJECT(removeFileAction.get()), "activate", G_CALLBACK(removeFileCallback), this);
+        g_action_map_add_action(G_ACTION_MAP(win), G_ACTION(removeFileAction.get()));
     }
 }
 
@@ -109,31 +158,61 @@ void RecentDocumentsSubmenu::updateMenu() {
     this->menuXoppFiles = createRecentMenu(fileList.recentXoppFiles, 0);
     this->menuPdfFiles = createRecentMenu(fileList.recentPdfFiles, fileList.recentXoppFiles.size());
 
-    xoj::util::GObjectSPtr<GMenu> submenu(g_menu_new(), xoj::util::adopt);
+    xoj_assert(recentFilesSubmenu);
+    g_menu_remove_all(recentFilesSubmenu.get());
+
     if (this->menuXoppFiles) {
-        g_menu_append_section(submenu.get(), nullptr, G_MENU_MODEL(this->menuXoppFiles.get()));
+        g_menu_append_section(recentFilesSubmenu.get(), nullptr, G_MENU_MODEL(this->menuXoppFiles.get()));
     }
     if (this->menuPdfFiles) {
-        g_menu_append_section(submenu.get(), nullptr, G_MENU_MODEL(this->menuPdfFiles.get()));
+        g_menu_append_section(recentFilesSubmenu.get(), nullptr, G_MENU_MODEL(this->menuPdfFiles.get()));
     }
     if (this->menuXoppFiles || this->menuPdfFiles) {
-        g_menu_append_section(submenu.get(), nullptr, G_MENU_MODEL(createClearListSection().get()));
-    } else {
-        g_menu_append_item(submenu.get(), createEmptyListPlaceholder().get());
+        g_menu_append_section(recentFilesSubmenu.get(), nullptr, G_MENU_MODEL(createClearListSection().get()));
     }
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(this->menuItem.get()),
-                              gtk_menu_new_from_model(G_MENU_MODEL(submenu.get())));
+
+    if (!fileList.recentXoppFiles.empty() || !fileList.recentPdfFiles.empty()) {
+        GMenu* removeSubmenu = g_menu_new();
+
+        if (!fileList.recentXoppFiles.empty()) {
+            auto removeXoppMenu = createRemoveSubmenu(fileList.recentXoppFiles, 0);
+            g_menu_append_section(removeSubmenu,
+                                  C_("In the submenu for removing recent documents, this will display on top of the "
+                                     "list xournal++ files to separate them from PDF files",
+                                     "Xournal++ Files"),
+                                  G_MENU_MODEL(removeXoppMenu.get()));
+        }
+
+        if (!fileList.recentPdfFiles.empty()) {
+            auto removePdfMenu = createRemoveSubmenu(fileList.recentPdfFiles, fileList.recentXoppFiles.size());
+            g_menu_append_section(removeSubmenu,
+                                  C_("In the submenu for removing recent documents, this will display on top of the "
+                                     "list PDF files to separate them from xournal++ files",
+                                     "PDF Files"),
+                                  G_MENU_MODEL(removePdfMenu.get()));
+        }
+
+        GMenuItem* removeSubmenuItem =
+                g_menu_item_new_submenu(C_("This opens a submenu of the recent files list, and clicking on individual "
+                                           "entries in this submenu will remove it from the recent files list",
+                                           "Dismiss a single document"),
+                                        G_MENU_MODEL(removeSubmenu));
+        g_menu_append_item(recentFilesSubmenu.get(), removeSubmenuItem);
+
+        g_object_unref(removeSubmenu);
+    } else {
+        g_menu_append_item(recentFilesSubmenu.get(), createEmptyListPlaceholder().get());
+    }
 }
 
-void RecentDocumentsSubmenu::addToMenubar(MainWindow* win) {
-    this->menuItem.reset(win->get(SUBMENU_ID), xoj::util::ref);
+void RecentDocumentsSubmenu::addToMenubar(Menubar& menubar) {
+    recentFilesSubmenu.reset(menubar.get<GMenu>(SUBMENU_ID, [](auto* p) { return G_MENU(p); }), xoj::util::ref);
     updateMenu();
 }
 
 void RecentDocumentsSubmenu::setDisabled(bool disabled) {
     g_simple_action_set_enabled(openFileAction.get(), !disabled);
     g_simple_action_set_enabled(clearListAction.get(), !disabled);
-    gtk_widget_set_sensitive(menuItem.get(), !disabled);
 }
 
 void RecentDocumentsSubmenu::openFileCallback(GSimpleAction* ga, GVariant* parameter, RecentDocumentsSubmenu* self) {
@@ -141,4 +220,12 @@ void RecentDocumentsSubmenu::openFileCallback(GSimpleAction* ga, GVariant* param
     auto& path =
             index < self->xoppFiles.size() ? self->xoppFiles[index] : self->pdfFiles[index - self->xoppFiles.size()];
     self->control->openFile(path);
+}
+
+void RecentDocumentsSubmenu::removeFileCallback(GSimpleAction* ga, GVariant* parameter, RecentDocumentsSubmenu* self) {
+    auto index = g_variant_get_uint64(parameter);
+    auto& path =
+            index < self->xoppFiles.size() ? self->xoppFiles[index] : self->pdfFiles[index - self->xoppFiles.size()];
+    RecentManager::removeRecentFileFilename(path);
+    self->updateMenu();
 }
