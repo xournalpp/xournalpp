@@ -1,41 +1,71 @@
 <?xml version="1.0" standalone="no"?>
-<xournal creator="Xournal++ 1.0.1" fileversion="2">
-<title>Xournal document - see http://xournal.sourceforge.net/</title>
-<preview>iVBORw0KGgoAAAANSUhEUgAAAFoAAACACAIAAAAEb+kcAAAABmJLR0QA/wD/AP+gvaeTAAABGUlEQVR4nO3YsQ2EQBAEwYP8AyASovgMCOawkGgL78GoimDU0jq7zDkHl/XtAd8iR8gRcoQcIUfIEXKEHCFHyBFyhBwhRzzk2H7bGGM/9r+Med/i33HnWEKOkCPkCDlCjpAj5Ag5Qo6QI+QIOUKOkCPkCDlCjpAj5Ag5Qo6QI+QIOUKOkCPkCDlCjpAj5Ag5Qo6QI+QIOUKOkCPkCDlCjpAj5Ag5Qo6QI+QIOUKOkCPkCDlCjpAj5Ag5Qo6QI+QIOUKOkCPkCDlCjpAj5Ag5Qo6QI+QIOUKOkCPkCDlCjpAj5Ag5Qo6QI+QIOUKOkCPkCDlCjpAj5Ag5Qo6QI+QIOUKOkCPkCDlCjpAj5Ag5Qo6QI+QIOUKOkCNOfacLPORLhs4AAAAASUVORK5CYII=</preview>
-<page width="595.28" height="841.89">
+<xournal creator="xournalpp 1.2.8+dev" fileversion="4">
+<title>Xournal++ document - see https://xournalpp.github.io/</title>
+<preview>iVBORw0KGgoAAAANSUhEUgAAAFsAAACACAIAAADrrYIiAAAABmJLR0QA/wD/AP+gvaeTAAABjUlEQVR4nO3YMUpjUQCG0bzEwmKKKS0UbF2ACG7DXbgIF2Yza7AWOxEVp1ETwcwktvJ1EcOzOKd+xc/Hu1y4w3q9nvDJdOwBP44ipUgpUoqUIqVIKVKKlCKlSClSipQipUh9sch8Ob/4c3H/ev+9a36CnY2+vry5vHu5W66WZ0dnh78P3/69bWnWiDb7R54WT6cHp4vlYjad7e7sbmnTuDYrslqvrh6uHueP7//fb59vr/9eb2nWiDY7NbPpbO/X3vnx+TAZTvZPhsmwpVkjGrw8h9u3FClFSpFSpBQpRUqRUqQUKUVKkVKkFClFSpFSpBQpRUqRUqQUKUVKkVKkFClFSpFSpBQpRUqRUqQUKUVKkVKkFClFSpFSpBQpRUqRUqQUKUVKkVKkFClFSpFSpBQpRUqRUqQUKUVKkVKkFClFSpFSpBQpRUqRUqQUKUVKkVKkFClFSpFSpBQpRUqRUqQUKUVKkVKkFClFSpFSpBQpRUqRUqQUKUVKkVKkFClFSpFSpBQpRUqRUqQUqQ+91TNItChlOgAAAABJRU5ErkJggg==</preview>
+<page width="595.27559" height="841.88976">
 <background type="solid" color="#ffffffff" style="plain"/>
 <layer>
-<text font="Liberation Sans" size="12.00" x="68.97" y="94.15" color="#008000ff">p1</text>
+<text font="Liberation Sans" size="36" x="100" y="100" color="#008000ff">p1</text>
 </layer>
 </page>
-<page width="595.28" height="841.89">
+<page width="595.27559" height="841.88976">
 <background type="solid" color="#ffffffff" style="ruled"/>
 <layer>
-<text font="Liberation Sans" size="12.00" x="74.99" y="92.51" color="#008000ff">p2</text>
+<text font="Liberation Sans" size="36" x="100" y="100" color="#008000ff">p2</text>
 </layer>
 </page>
-<page width="595.28" height="841.89">
+<page width="595.27559" height="841.88976">
 <background type="solid" color="#ffffffff" style="lined"/>
 <layer>
-<text font="Liberation Sans" size="12.00" x="94.70" y="98.53" color="#008000ff">p3</text>
+<text font="Liberation Sans" size="36" x="100" y="100" color="#008000ff">p3</text>
 </layer>
 </page>
-<page width="595.28" height="841.89">
+<page width="595.27559" height="841.88976">
+<background type="solid" color="#ffffffff" style="lined" config="m1=-72"/>
+<layer>
+<text font="Liberation Sans" size="36" x="100" y="100" color="#008000ff">p4</text>
+</layer>
+</page>
+<page width="595.27559" height="841.88976">
 <background type="solid" color="#ffffffff" style="staves"/>
 <layer>
-<text font="Liberation Sans" size="12.00" x="74.99" y="92.51" color="#008000ff">p4</text>
+<text font="Liberation Sans" size="36" x="100" y="100" color="#008000ff">p5</text>
 </layer>
 </page>
-<page width="595.28" height="841.89">
+<page width="595.27559" height="841.88976">
 <background type="solid" color="#ffffffff" style="graph"/>
 <layer>
-<text font="Liberation Sans" size="12.00" x="68.97" y="151.63" color="#008000ff">p5</text>
+<text font="Liberation Sans" size="36" x="100" y="100" color="#008000ff">p6</text>
 </layer>
 </page>
-<page width="50.00" height="50.00">
+<page width="595.27559" height="841.88976">
+<background type="solid" color="#ffffffff" style="dotted"/>
+<layer>
+<text font="Liberation Sans" size="36" x="100" y="100" color="#008000ff">p7</text>
+</layer>
+</page>
+<page width="595.27559" height="841.88976">
+<background type="solid" color="#ffffffff" style="isodotted"/>
+<layer>
+<text font="Liberation Sans" size="36" x="100" y="100" color="#008000ff">p8</text>
+</layer>
+</page>
+<page width="595.27559" height="841.88976">
+<background type="solid" color="#ffffffff" style="isograph"/>
+<layer>
+<text font="Liberation Sans" size="36" x="100" y="100" color="#008000ff">p9</text>
+</layer>
+</page>
+<page width="595.27559" height="841.88976">
+<background type="solid" color="#ffffffff" style="graph" config="m1=40,rm=1"/>
+<layer>
+<text font="Liberation Sans" size="36" x="100" y="100" color="#008000ff">p10</text>
+</layer>
+</page>
+<page width="50" height="50">
 <background type="pixmap" domain="attach" filename="bg_1.png"/>
 <layer>
-<text font="Liberation Sans" size="12.00" x="12.04" y="14.78" color="#008000ff">p6</text>
+<text font="Liberation Sans" size="24" x="5" y="10" color="#008000ff">p11</text>
 </layer>
 </page>
 </xournal>

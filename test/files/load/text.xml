@@ -1,12 +1,19 @@
 <?xml version="1.0" standalone="no"?>
-<xournal version="0.4.7">
-<title>Xournal document - see http://math.mit.edu/~auroux/software/xournal/</title>
-<page width="612.00" height="792.00">
-<background type="solid" color="white" style="lined" />
+<xournal creator="xournalpp 1.2.7+dev" fileversion="4">
+<title>Xournal++ document - see https://xournalpp.github.io/</title>
+<preview>iVBORw0KGgoAAAANSUhEUgAAAGMAAACACAIAAACQiUDuAAAABmJLR0QA/wD/AP+gvaeTAAACnUlEQVR4nO3XPU4bURSG4XuHwUaJHIpEQkKWqeiSFSA6FsEeWBMbIAUdFQWLcAp6SixiS7bCeDI3BRJduC/BPzjzPiUc4dEnn48zMaUUXnY/C18+ZGZaoFj3A2wMk6JMijIpyqQok6JMiirX8qk39c2gGNyn+yY0gzjYL/bX8hivEr08IbePMimqHD9mJmIVUm6mDcrdbm6kE0J2pgXcPmo9V8Kz4XD68FAXRTg62l3vk2TFn78yV0IczdLnv14JWz+GYTIOvU+/v35b9LO9L95TlD1FmRTlPUV5T1Er2r6qqqqqWs1nLcnS76nLy8vxeDybzaqq6vV63W63LMvT09Nlf+7CvfWeykopxRibpimKzf7vsfSeurj4XhTF3t7e8fHxv/+Vd8DLk9rsjVgl7ynKe4py+yiTouwpyp6ilrJ9KaXpdPrCwNNvN+tlcAHvfefn55PJJMZ4dnZ2dXV1e3vb7/fn8/nTDzudzmg0Ojw8rOv6+XXv+vr67u5uZ2fn5OTk4ODg7c+wAkt/7/tv2FOUVwJlUpT3FGVPUW4f5fZRbh/l9lEmRdlTlD1FuX2USVH2FGVPUW4fZVKUPUXZU5TbR5kUZU9R9hTl9lEmRdlTlD1FuX2USVH2FGVPUW4fZVKUPUXZU5TbR5WzeWYizkPKzbRBuZ39VhV+80IIodzeyo1shZCdaQG/LZRXAuWVQLl9lElR9hRlT1FuH2VSlD1F2VOU20eZFGVPUfYU5fZRJkXZU5Q9Rbl9lElR9hRlT1FuH2VSlD1F2VOU20eVdZMbaULIzrRA+VhnJmIdUm6mDcqPndxIJ4TsTAvYU5RXAuWVQLl9lElR9hRlT1FuH2VSlD1F2VOU20eZFGVSlElRJkWZFGVSlElRJkX9AUu6AwFdt6ozAAAAAElFTkSuQmCC</preview>
+<page width="612" height="792">
+<background type="solid" color="#ffffffff" style="lined"/>
 <layer>
-<text font="Sans" size="12.00" x="130.50" y="96.75" color="red">red</text>
-<text font="Sans" size="12.00" x="258.75" y="87.00" color="blue">blue</text>
-<text font="Sans" size="12.00" x="240.75" y="42.00" color="#00f000ff">green</text>
+<text font="Sans" size="12" x="130.5" y="96.75" color="#ff0000ff">red</text>
+<text font="Sans" size="12" x="258.75" y="87" color="#3333ccff">blue</text>
+<text font="Sans" size="12" x="240.75" y="42" color="#00f000ff">green</text>
+<text font="Sans" size="12" x="196.26678" y="137.84693" color="#000000ff">multiline
+text</text>
+<text font="Sans" size="12" x="135.38428" y="197.98843" color="#000000ff"> 
+ odd  whitespace	text
+
+</text>
 </layer>
 </page>
 </xournal>
