@@ -92,11 +92,11 @@ auto exportImg(Document* doc, const char* output, const char* range, const char*
  * @return 0 on success, -3 on export failure
  */
 auto exportPdf(Document* doc, const char* output, const char* range, const char* layerRange,
-               ExportBackgroundType exportBackground, bool progressiveMode, ExportBackend backend) -> int {
+               ExportBackgroundType exportBackground, bool progressiveMode) -> int {
 
     xoj::util::GObjectSPtr<GFile> file(g_file_new_for_commandline_arg(output), xoj::util::adopt);
 
-    std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, nullptr, backend);
+    std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, nullptr);
     pdfe->setExportBackground(exportBackground);
     auto path = fs::u8path(g_file_peek_path(file.get()));
 
@@ -111,7 +111,7 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
         }
     } catch (const fs::filesystem_error& fe) {
         g_warning("The check for overwriting the background failed with: %s", fe.what());
-        // Continue with export since this is just a filesystem error in the check
+        return -3;  // Return error code for export failure
     }
 
     bool exportSuccess = 0;  // Return of the export job
