@@ -883,6 +883,39 @@ static int applib_layerAction(lua_State* L) {
 }
 
 /**
+ * Show the floating toolbox at the specified coordinates, or at the current cursor position if no coordinates are
+ * provided
+ *
+ * @param x integer x coordinate relative to main window (optional)
+ * @param y integer y coordinate relative to main window (optional)
+ *
+ * Example 1: app.showFloatingToolbox()
+ * Shows the floating toolbox at the current mouse/stylus position
+ *
+ * Example 2: app.showFloatingToolbox(100, 200)
+ * Shows the floating toolbox at position (100, 200) relative to the main window
+ */
+static int applib_showFloatingToolbox(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+
+    // Check how many arguments were provided
+    int argc = lua_gettop(L);
+
+    if (argc >= 2) {
+        // Both coordinates provided - use specific position
+        int x = static_cast<int>(luaL_checkinteger(L, 1));
+        int y = static_cast<int>(luaL_checkinteger(L, 2));
+        control->showFloatingToolbox(x, y);
+    } else {
+        // No coordinates provided - use current cursor position
+        control->showFloatingToolbox();
+    }
+
+    return 0;
+}
+
+/**
  * Helper function to handle a allowUndoRedoAction string parameter. allowUndoRedoAction can take the following values:
  * - "grouped": the elements get a single undo-redo-action
  * - "individual" each of the elements get an own undo-redo-action
@@ -3689,6 +3722,7 @@ static const luaL_Reg applib[] = {
         {"uiAction", applib_uiAction},            // Todo(gtk4) remove this deprecated function
         {"sidebarAction", applib_sidebarAction},  // Todo(gtk4) remove this deprecated function
         {"layerAction", applib_layerAction},      // Todo(gtk4) remove this deprecated function
+        {"showFloatingToolbox", applib_showFloatingToolbox},
         {"changeToolColor", applib_changeToolColor},
         {"getColorPalette", applib_getColorPalette},
         {"changeCurrentPageBackground", applib_changeCurrentPageBackground},

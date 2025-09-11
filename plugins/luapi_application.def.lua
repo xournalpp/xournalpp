@@ -220,6 +220,19 @@ function app.setSidebarPageNo(pageNr) end
 --- deletes the current layer
 function app.layerAction(action) end
 
+--- Show the floating toolbox at the specified coordinates, or at the current cursor position if no coordinates are
+--- provided
+--- 
+--- @param x integer x coordinate relative to main window (optional)
+--- @param y integer y coordinate relative to main window (optional)
+--- 
+--- Example 1: app.showFloatingToolbox()
+--- Shows the floating toolbox at the current mouse/stylus position
+--- 
+--- Example 2: app.showFloatingToolbox(100, 200)
+--- Shows the floating toolbox at position (100, 200) relative to the main window
+function app.showFloatingToolbox(x, y) end
+
 --- Given a table containing a series of splines, draws a batch of strokes on the canvas.
 --- Expects a table of tables containing eight coordinate pairs, along with attributes of the stroke.
 --- 

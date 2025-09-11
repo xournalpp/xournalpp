@@ -38,6 +38,7 @@
 #include "control/tools/TextEditor.h"                            // for Text...
 #include "control/xojfile/LoadHandler.h"                         // for Load...
 #include "control/zoom/ZoomControl.h"                            // for Zoom...
+#include "gui/FloatingToolbox.h"                                 // for Floa...
 #include "gui/MainWindow.h"                                      // for Main...
 #include "gui/PageView.h"                                        // for XojP...
 #include "gui/PdfFloatingToolbox.h"                              // for PdfF...
@@ -415,6 +416,30 @@ void Control::resetGeometryTool() {
     auto* xournal = GTK_XOURNAL(this->win->getXournal()->getWidget());
     xournal->input->resetGeometryToolInputHandler();
 }
+
+void Control::showFloatingToolbox() {
+    // Get the default display and pointer device
+    GdkDisplay* display = gdk_display_get_default();
+    GdkSeat* defaultSeat = gdk_display_get_default_seat(display);
+    GdkDevice* pointer = gdk_seat_get_pointer(defaultSeat);
+
+    // Get the current pointer position (screen coordinates)
+    gdouble screenX, screenY;
+    gdk_device_get_position_double(pointer, nullptr, &screenX, &screenY);
+
+    // Get the main window position on screen
+    GtkWindow* window = this->getGtkWindow();
+    gint windowX, windowY;
+    gtk_window_get_position(window, &windowX, &windowY);
+
+    // Convert screen coordinates to window-relative coordinates
+    gint windowRelativeX = static_cast<gint>(screenX) - windowX;
+    gint windowRelativeY = static_cast<gint>(screenY) - windowY;
+
+    this->getWindow()->getFloatingToolbox()->show(windowRelativeX, windowRelativeY);
+}
+
+void Control::showFloatingToolbox(int x, int y) { this->getWindow()->getFloatingToolbox()->show(x, y); }
 
 auto Control::copy() -> bool {
     if (this->win && this->win->getXournal()->copy()) {
