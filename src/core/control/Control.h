@@ -319,6 +319,17 @@ public:
     PluginController* getPluginController() const;
     const Palette& getPalette() const;
 
+    /**
+     * Shows the floating toolbox at the current cursor position
+     */
+    void showFloatingToolbox();
+
+    /**
+     * Shows the floating toolbox at the specified coordinates relative to the main window
+     * @param x Window-relative x coordinate
+     * @param y Window-relative y coordinate
+     */
+    void showFloatingToolbox(int x, int y);
 
     bool copy();
     bool cut();
