@@ -402,6 +402,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->zoomStepScroll = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("displayDpi")) == 0) {
         this->displayDpi = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+        if (this->displayDpi <= 0) {
+            g_warning("Settings::load(): The displayDpi value is non-positive. Maybe it has been set to -1 when "
+                      "running version 1.3 or later. Resetting to the default 72.");
+            this->displayDpi = 72;
+        }
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("mainWndWidth")) == 0) {
         this->mainWndWidth = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("mainWndHeight")) == 0) {
