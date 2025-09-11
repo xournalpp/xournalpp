@@ -284,23 +284,27 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem) {
         if (type == "data") {
             parseData(x, elem.child(name));
         } else if (type == "attribute") {
-            const auto value = xmlGet<string>(x, "value");
             const auto sType = xmlGet<string>(x, "type");
 
             if (sType == "int") {
-                elem.setInt(name, std::stoi(value));
+                const auto value = xmlGet<int>(x, "value");
+                elem.setInt(name, value);
             } else if (sType == "double") {
-                elem.setDouble(name, g_ascii_strtod(value.c_str(), nullptr));
+                const auto value = xmlGet<double>(x, "value");
+                elem.setDouble(name, value);
             } else if (sType == "hex") {
-                if (const long i = std::stol(value, nullptr, 16)) {
-                    elem.setIntHex(name, static_cast<uint32_t>(i));
+                const auto value = xmlGet<string>(x, "value");
+                if (const auto i = static_cast<uint32_t>(std::stoull(value, nullptr, 16))) {
+                    elem.setIntHex(name, i);
                 } else {
                     g_warning("Settings::Unknown hex value: %s:%s\n", name.c_str(), value.c_str());
                 }
             } else if (sType == "string") {
+                const auto value = xmlGet<string>(x, "value");
                 elem.setString(name, value);
             } else if (sType == "boolean") {
-                elem.setBool(name, value == "true");
+                const auto value = xmlGet<bool>(x, "value");
+                elem.setBool(name, value);
             } else {
                 g_warning("Settings::Unknown datatype: %s\n", sType.c_str());
             }
@@ -312,7 +316,7 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem) {
 
 void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     // Parse data map
-    if (ustring_view(cur->name) == "data"_xmlsv) {
+    if (u8string_view(cur->name) == u8string_view("data"_xml)) {
         const auto name = xmlGet<string>(cur, "name");
         if (name.empty()) {
             g_warning("Settings::%s:No name property!\n", cur->name);
@@ -328,7 +332,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         return;
     }
 
-    if (ustring_view(cur->name) != "property"_xmlsv) {
+    if (u8string_view(cur->name) != u8string_view("property"_xml)) {
         g_warning("Settings::Unknown XML node: %s\n", cur->name);
         return;
     }
@@ -762,8 +766,8 @@ auto Settings::load() -> bool {
         return false;
     }
 
-    if (u8string_view(cur->name) != "settings"_xmlsv) {
-        g_message("File \"%s\" is of the wrong type", filepath.c_str());
+    if (u8string_view(cur->name) != u8string_view("settings"_xml)) {
+        g_message("File \"%s\" is of the wrong type", filepath.string().c_str());
         xmlFreeDoc(doc);
 
         return false;
@@ -808,7 +812,7 @@ auto Settings::saveProperty(const char* key, int value, xmlNodePtr parent) -> xm
     return xmlNode;
 }
 
-auto Settings::savePropertyUnsigned(const char* key, unsigned int value, xmlNodePtr parent) -> xmlNodePtr {
+auto Settings::savePropertyUnsigned(const char* key, size_t value, xmlNodePtr parent) -> xmlNodePtr {
     char* text = g_strdup_printf("%u", value);
     xmlNodePtr xmlNode = saveProperty(key, text, parent);
     g_free(text);
@@ -1069,7 +1073,7 @@ void Settings::save() {
     SAVE_INT_PROP(audioOutputDevice);
     SAVE_DOUBLE_PROP(audioSampleRate);
     SAVE_DOUBLE_PROP(audioGain);
-    SAVE_INT_PROP(defaultSeekTime);
+    SAVE_UINT_PROP(defaultSeekTime);
 #endif
 
     SAVE_STRING_PROP(pluginEnabled);

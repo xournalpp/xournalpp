@@ -15,7 +15,6 @@
 #include <type_traits>
 
 #include <libxml/tree.h>
-#include <libxml/xmlmemory.h>
 #include <libxml/xmlstring.h>
 
 #include "util/Color.h"
@@ -35,19 +34,12 @@ T parse(std::string_view strView, T defaultValue = T{});
 inline const xmlChar* operator""_xml(const char* ch, size_t);
 
 /*
- * Operator that converts string literals to std::basic_string<unsigned char> for comparisons
- */
-inline u8string_view operator""_xmlsv(const char* ch, size_t);
-
-/*
  * get a string (c-style or cpp-style) from xmlNodePtr (xmlNode*)
  */
 template <typename T>
 T xmlGet(const xmlNode* node, const std::string& property, T defaultValue = T{});
 
 inline const xmlChar* operator""_xml(const char* ch, size_t) { return reinterpret_cast<const xmlChar*>(ch); }
-
-inline u8string_view operator""_xmlsv(const char* ch, size_t) { return reinterpret_cast<const unsigned char*>(ch); }
 
 template <typename T>
 T xmlGet(const xmlNode* node, const std::string& property, T defaultValue) {
