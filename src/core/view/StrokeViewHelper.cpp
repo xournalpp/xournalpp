@@ -60,7 +60,7 @@ double xoj::view::StrokeViewHelper::drawWithPressure(cairo_t* cr, const std::vec
         }
     } else {
         if (!dashes.empty()) {
-            StrokeContourDashes(pts, dashes).addToCairo(cr);
+            dashOffset = StrokeContourDashes(pts, dashes).addToCairo(cr, dashOffset);
         } else {
             StrokeContour(pts).addToCairo(cr);
         }
