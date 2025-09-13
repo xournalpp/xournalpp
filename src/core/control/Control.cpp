@@ -417,7 +417,7 @@ void Control::resetGeometryTool() {
     xournal->input->resetGeometryToolInputHandler();
 }
 
-void Control::showFloatingToolbox() {
+std::pair<int, int> Control::getCursorPosition() const {
     // Get the default display and pointer device
     GdkDisplay* display = gdk_display_get_default();
     GdkSeat* defaultSeat = gdk_display_get_default_seat(display);
@@ -433,13 +433,23 @@ void Control::showFloatingToolbox() {
     gtk_window_get_position(window, &windowX, &windowY);
 
     // Convert screen coordinates to window-relative coordinates
-    gint windowRelativeX = static_cast<gint>(screenX) - windowX;
-    gint windowRelativeY = static_cast<gint>(screenY) - windowY;
+    int windowRelativeX = static_cast<int>(screenX) - windowX;
+    int windowRelativeY = static_cast<int>(screenY) - windowY;
 
-    this->getWindow()->getFloatingToolbox()->show(windowRelativeX, windowRelativeY);
+    return std::make_pair(windowRelativeX, windowRelativeY);
 }
 
-void Control::showFloatingToolbox(int x, int y) { this->getWindow()->getFloatingToolbox()->show(x, y); }
+void Control::showFloatingToolbox(int x, int y) {
+    GtkWindow* window = this->getGtkWindow();
+    gint windowWidth, windowHeight;
+    gtk_window_get_size(window, &windowWidth, &windowHeight);
+
+    const int margin = 100;
+    int clampedX = std::max(margin, std::min(x, windowWidth - margin));
+    int clampedY = std::max(margin, std::min(y, windowHeight - margin));
+
+    this->getWindow()->getFloatingToolbox()->show(clampedX, clampedY);
+}
 
 auto Control::copy() -> bool {
     if (this->win && this->win->getXournal()->copy()) {
