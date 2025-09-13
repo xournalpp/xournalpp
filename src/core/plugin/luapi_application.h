@@ -899,13 +899,10 @@ static int applib_getCursorPosition(lua_State* L) {
     // Return as a table with x and y fields
     lua_createtable(L, 0, 2);
 
-    lua_pushstring(L, "x");
     lua_pushinteger(L, position.first);
-    lua_settable(L, -3);
-
-    lua_pushstring(L, "y");
+    lua_setfield(L, -2, "x");
     lua_pushinteger(L, position.second);
-    lua_settable(L, -3);
+    lua_setfield(L, -2, "y");
 
     return 1;
 }
