@@ -883,34 +883,57 @@ static int applib_layerAction(lua_State* L) {
 }
 
 /**
- * Show the floating toolbox at the specified coordinates, or at the current cursor position if no coordinates are
- * provided
+ * Get the current cursor position relative to the main window
  *
- * @param x integer x coordinate relative to main window (optional)
- * @param y integer y coordinate relative to main window (optional)
+ * @return table {x:integer, y:integer} cursor position relative to main window
  *
- * Example 1: app.showFloatingToolbox()
- * Shows the floating toolbox at the current mouse/stylus position
+ * Example: local pos = app.getCursorPosition()
+ * print("Cursor at:", pos.x, pos.y)
+ */
+static int applib_getCursorPosition(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+
+    auto position = control->getCursorPosition();
+
+    // Return as a table with x and y fields
+    lua_createtable(L, 0, 2);
+
+    lua_pushstring(L, "x");
+    lua_pushinteger(L, position.first);
+    lua_settable(L, -3);
+
+    lua_pushstring(L, "y");
+    lua_pushinteger(L, position.second);
+    lua_settable(L, -3);
+
+    return 1;
+}
+
+/**
+ * Show the floating toolbox at the specified coordinates relative to the main window
  *
- * Example 2: app.showFloatingToolbox(100, 200)
+ * @param x integer x coordinate relative to main window
+ * @param y integer y coordinate relative to main window
+ *
+ * Example 1: app.showFloatingToolbox(100, 200)
  * Shows the floating toolbox at position (100, 200) relative to the main window
+ *
+ * Example 2: local pos = app.getCursorPosition()
+ *            app.showFloatingToolbox(pos.x, pos.y)
+ * Shows the floating toolbox at the current cursor position
+ *
+ * Note: Coordinates are automatically clamped to window bounds.
  */
 static int applib_showFloatingToolbox(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* control = plugin->getControl();
 
-    // Check how many arguments were provided
-    int argc = lua_gettop(L);
+    // Both coordinates are required
+    int x = static_cast<int>(luaL_checkinteger(L, 1));
+    int y = static_cast<int>(luaL_checkinteger(L, 2));
 
-    if (argc >= 2) {
-        // Both coordinates provided - use specific position
-        int x = static_cast<int>(luaL_checkinteger(L, 1));
-        int y = static_cast<int>(luaL_checkinteger(L, 2));
-        control->showFloatingToolbox(x, y);
-    } else {
-        // No coordinates provided - use current cursor position
-        control->showFloatingToolbox();
-    }
+    control->showFloatingToolbox(x, y);
 
     return 0;
 }
@@ -3722,6 +3745,7 @@ static const luaL_Reg applib[] = {
         {"uiAction", applib_uiAction},            // Todo(gtk4) remove this deprecated function
         {"sidebarAction", applib_sidebarAction},  // Todo(gtk4) remove this deprecated function
         {"layerAction", applib_layerAction},      // Todo(gtk4) remove this deprecated function
+        {"getCursorPosition", applib_getCursorPosition},
         {"showFloatingToolbox", applib_showFloatingToolbox},
         {"changeToolColor", applib_changeToolColor},
         {"getColorPalette", applib_getColorPalette},

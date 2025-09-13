@@ -15,6 +15,7 @@
 #include <memory>    // for unique_ptr
 #include <optional>  // for optional
 #include <string>    // for string, allocator
+#include <utility>   // for pair
 #include <vector>    // for vector
 
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
@@ -320,14 +321,15 @@ public:
     const Palette& getPalette() const;
 
     /**
-     * Shows the floating toolbox at the current cursor position
+     * Get the current cursor position relative to the main window
+     * @return std::pair<int, int> x and y coordinates relative to main window
      */
-    void showFloatingToolbox();
+    std::pair<int, int> getCursorPosition() const;
 
     /**
      * Shows the floating toolbox at the specified coordinates relative to the main window
-     * @param x Window-relative x coordinate
-     * @param y Window-relative y coordinate
+     * @param x Window-relative x coordinate (clamped to window bounds)
+     * @param y Window-relative y coordinate (clamped to window bounds)
      */
     void showFloatingToolbox(int x, int y);
 
