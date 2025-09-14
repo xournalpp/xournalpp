@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-02 18:22+0000\n"
-"PO-Revision-Date: 2025-09-07 04:26\n"
+"PO-Revision-Date: 2025-09-14 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -2119,7 +2119,8 @@ msgstr "Sostituisci"
 #: ../src/util/XojMsgBox.cpp:217
 msgid "Unable to open the link: {1}\n"
 "{2}"
-msgstr ""
+msgstr "Impossibile aprire il collegamento: {1}\n"
+"{2}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
@@ -2242,7 +2243,7 @@ msgstr ""
 
 #: ../ui/deviceList.glade:7
 msgid "Known devices"
-msgstr ""
+msgstr "Dispositivi conosciuti"
 
 #: ../ui/deviceList.glade:46
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -2330,11 +2331,11 @@ msgstr ""
 
 #: ../ui/deviceTestingArea.glade:568
 msgid "Last device used:"
-msgstr ""
+msgstr "Ultimo dispositivo usato:"
 
 #: ../ui/deviceTestingArea.glade:588
 msgid "Show all known devices"
-msgstr ""
+msgstr "Mostra tutti i dispositivi conosciuti"
 
 #: ../ui/exportSettings.glade:36
 msgid "Resolution"
@@ -2426,7 +2427,7 @@ msgstr "Risultato generato dal comando LaTeX."
 
 #: ../ui/extEdTexDialog.glade:138
 msgid "Continue Editing"
-msgstr ""
+msgstr "Continua la modifica"
 
 #: ../ui/goto.glade:23
 msgid "Go to Page"
@@ -2546,23 +2547,23 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:532
 msgid "Use external Editor"
-msgstr ""
+msgstr "Usa editor esterno"
 
 #: ../ui/latexSettings.glade:549
 msgid "Editor command"
-msgstr ""
+msgstr "Commando dell'editor"
 
 #: ../ui/latexSettings.glade:574
 msgid "Extension of temporary file"
-msgstr ""
+msgstr "Estensione del file temporaneo"
 
 #: ../ui/latexSettings.glade:595
 msgid "Automatically confirm on editor exit"
-msgstr ""
+msgstr "Conferma automaticamente all'uscita dall'editor"
 
 #: ../ui/latexSettings.glade:625
 msgid "External Editor (Expert user only)"
-msgstr ""
+msgstr "Editor esterno (solo per utenti esperti)"
 
 #: ../ui/latexSettings.glade:641
 msgid "Editor settings"
@@ -2885,20 +2886,8 @@ msgstr "%{name} Il nome del file (se presente) dello sfondo PDF \n"
 "%y Anno, ultime due cifre (00-99) \n"
 "%Y Anno (es. 2001) \n"
 "%Z Nome o abbreviazione del fuso orario (es. CDT) \n"
-"%% %\n\n"
-"%{name} Il nome del file (se presente) dello sfondo PDF \n"
-"%{file} Il nome del file salvato \n"
-"%a Nome abbreviato del giorno della settimana (es. Thu) \n"
-"%A Nome completo del giorno della settimana (es. Thursday) \n"
-"%b Nome abbreviato del mese (es. Aug) \n"
-"%B Nome completo del mese (es. August) \n"
-"%c Rappresentazione della data e ora (es. Thu Aug 23 14:55:02 2001) \n"
-"%d Giorno del mese (01-31) \n"
-"%F Rappresentazione della data (es. 2001-08-23) \n"
-"%H Ora in formato 24h (00-23) \n"
-"%I Ora in formato 12h (01-12) \n"
-"%j Giorno dell'anno (001-366) \n"
-"%m Mese come numero decimale (01-12)"
+"%%\t\t\t%\n"
+"I caratteri non validi sono sostituiti da \"_\""
 
 #: ../ui/settings.glade:788
 msgid "Default Pdf export name"
@@ -3036,7 +3025,7 @@ msgstr "Rientro usando gli spazi"
 
 #: ../ui/settings.glade:1367
 msgid "Number of Spaces : "
-msgstr "Numero di spazi : "
+msgstr "Numero di spazi: "
 
 #: ../ui/settings.glade:1379
 msgid "Number of spaces inserted with tab."
@@ -3062,7 +3051,7 @@ msgstr "<i>Qui puoi definire quali strumenti saranno selezionati se terrai premu
 
 #: ../ui/settings.glade:1519
 msgid "Left Mouse Button"
-msgstr ""
+msgstr "Pulsante sinistro del mouse"
 
 #: ../ui/settings.glade:1551
 msgid "Middle Mouse Button"
@@ -3306,7 +3295,7 @@ msgstr "Colore della Selezione (Testo, Selezione Tratto, ecc.)"
 
 #: ../ui/settings.glade:3064
 msgid "Active Selection Color (Search Results etc.)"
-msgstr "Colore selezione attiva (Risultati di ricerca, ecc.)"
+msgstr "Colore della selezione attiva (Risultati di ricerca, ecc.)"
 
 #: ../ui/settings.glade:3086
 msgid "Use available Stock Icons (requires restart)"
@@ -3941,7 +3930,7 @@ msgstr "Impostazioni della lingua"
 
 #: ../ui/settings.glade:6481
 msgid "Palette"
-msgstr "Palette"
+msgstr "Tavolozza"
 
 #: ../ui/settingsButtonConfig.glade:20
 msgid "Device"
@@ -3985,7 +3974,7 @@ msgstr "Disabilitato"
 
 #: ../ui/settingsDeviceClassConfig.glade:54
 msgid "Apply"
-msgstr ""
+msgstr "Applica"
 
 #: ../ui/toolbarCustomizeDialog.glade:30
 msgid "Drag and drop Components from here to the toolbars and back."
@@ -4294,7 +4283,7 @@ msgstr "_Elimina pagina"
 
 #: ../ui/mainmenubar.xml:468
 msgid "Add a _Layer above the active layer"
-msgstr "Aggiunge un _Livello sopra il livello attivo"
+msgstr "Aggiunge un _livello sopra il livello attivo"
 
 #: ../ui/mainmenubar.xml:477
 msgid "Delete Layer"
@@ -4350,7 +4339,7 @@ msgstr "_Immagine"
 
 #: ../ui/mainmenubar.xml:552
 msgid "_Default Tool"
-msgstr "_Strumento predefinito"
+msgstr "Strumento pre_definito"
 
 #: ../ui/mainmenubar.xml:559
 msgid "Drawing Type"
@@ -4459,7 +4448,7 @@ msgstr "Aiuto"
 
 #: ../ui/mainmenubar.xml:863
 msgid "Run Gtk3 demo"
-msgstr "Esegui la demo Gtk3"
+msgstr "Esegui demo Gtk3"
 
 #: ../ui/mainmenubar.xml:867
 msgid "About"
@@ -4531,7 +4520,7 @@ msgstr "Xournal++ è un programma scritto in C++ per prendere appunti a mano con
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:17
 msgid "Xournal++ features:"
-msgstr "Caratteristiche Xournal++:"
+msgstr "Caratteristiche di Xournal++:"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:21
 msgid "Supports pressure-sensitive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)"
@@ -4551,7 +4540,7 @@ msgstr "Seleziona il testo dallo sfondo del PDF, copialo, evidenzialo, sottoline
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:25
 msgid "Follow links from the background PDF"
-msgstr "Segui i link dal PDF di sfondo"
+msgstr "Segue i collegamento dal PDF di sfondo"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:26
 msgid "Export to a variety of formats including SVG, PNG and PDF, both from the GUI and command line"
@@ -4567,7 +4556,7 @@ msgstr "Disegno di forme (linea, freccia, cerchio, rettangolo, spline)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:29
 msgid "Use the set-square and compass tools for measurements or as a guide for drawing straight lines, circular arcs and radii"
-msgstr "Utilizzare gli strumenti squadretta e compasso per effettuare misurazioni o come guida per disegnare linee rette, archi di cerchio e raggi"
+msgstr "Utilizza gli strumenti squadretta e compasso per effettuare misurazioni o come guida per disegnare linee rette, archi di cerchio e raggi"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:30
 msgid "Fill shape functionality"
@@ -4607,7 +4596,7 @@ msgstr "Pannello laterale contenente anteprime delle pagine con ordinamento avan
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:39
 msgid "Allows mapping different tools/colors etc. to stylus/mouse buttons"
-msgstr "Consente il collegamento di diversi strumenti/colori ecc. ai pulsanti della penna/mouse"
+msgstr "Permette il collegamento di diversi strumenti/colori ecc. ai pulsanti della penna/mouse"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:40
 msgid "Customizable toolbar with multiple configurations, e.g. to optimize toolbar for portrait/landscape"

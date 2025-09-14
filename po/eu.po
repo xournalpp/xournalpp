@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-02 18:22+0000\n"
-"PO-Revision-Date: 2025-09-07 04:26\n"
+"PO-Revision-Date: 2025-09-14 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -62,7 +62,7 @@ msgstr "Txertatu bukaeran"
 
 #: ../src/core/control/Control.cpp:822
 msgid "_Journal"
-msgstr "_Egunkaria"
+msgstr "_Koadernoa"
 
 #: ../src/core/control/Control.cpp:822
 msgid "Paper B_ackground"
@@ -378,7 +378,9 @@ msgstr "Gorde xopp-fitxategia FILE gisa zehaztutako atzeko planoko PDFarekin"
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
-msgstr ""
+msgstr "Erabili emandako euskarria PDF esportazioetarako.\n"
+"                                       Euskarri eskuragarriak: {1}\n"
+"                                       Ez dago efekturik -p/--llc-pdf=foo.pdf gabe"
 
 #: ../src/core/control/XournalMain.cpp:604
 msgid "Export FILE as PDF"
@@ -403,7 +405,8 @@ msgstr "Esportatu atzeko planorik gabe\n"
 #: ../src/core/control/XournalMain.cpp:618
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
-msgstr ""
+msgstr "Esportatu lerrorik gabe\n"
+"                                       Esportatutako fitxategiaren paperak ez du lerrorik\n"
 
 #: ../src/core/control/XournalMain.cpp:623
 msgid "Export layers progressively\n"
@@ -590,11 +593,11 @@ msgstr "Pentagramak"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 msgid "Graph"
-msgstr "Grafoa"
+msgstr "Koadrikula"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:34
 msgid "Dotted"
-msgstr "Puntu-lerroa"
+msgstr "Puntu-sareta"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:35
 msgid "Isometric Dotted"
@@ -602,7 +605,7 @@ msgstr "Puntu-sareta isometrikoa"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:36
 msgid "Isometric Graph"
-msgstr "Grafo isometrikoa"
+msgstr "Koadrikula isometrikoa"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:41
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:405
@@ -1617,7 +1620,7 @@ msgstr "marrak/puntuak"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:377
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:397
 msgid "dotted"
-msgstr "puntuak"
+msgstr "puntua-sareta"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:384
 msgid "whiteout"
@@ -3051,7 +3054,7 @@ msgstr "<i>Definitu zein tresna aukeratuko diren saguaren botoia sakatzen baduzu
 
 #: ../ui/settings.glade:1519
 msgid "Left Mouse Button"
-msgstr ""
+msgstr "Saguaren ezkerreko botoia"
 
 #: ../ui/settings.glade:1551
 msgid "Middle Mouse Button"
@@ -3580,7 +3583,7 @@ msgstr "<i>Jarri erregela bat zure pantailan eta mugitu graduatzailea bi erregel
 
 #: ../ui/settings.glade:4446
 msgid "Automatic"
-msgstr ""
+msgstr "Automatikoa"
 
 #: ../ui/settings.glade:4503
 msgid "The unit of the ruler is cm"
@@ -3964,7 +3967,7 @@ msgstr "Desgaitua"
 
 #: ../ui/settingsDeviceClassConfig.glade:54
 msgid "Apply"
-msgstr ""
+msgstr "Aplikatu"
 
 #: ../ui/toolbarCustomizeDialog.glade:30
 msgid "Drag and drop Components from here to the toolbars and back."
@@ -4446,7 +4449,7 @@ msgstr "Honi buruz"
 
 #: ../resources-templates/pagetemplates.ini.in:17
 msgid "Ruled with vertical line on the right"
-msgstr "Eskuineko marra bertikala"
+msgstr "Lerroduna eskuineko marra bertikalarekin"
 
 #: ../resources-templates/pagetemplates.ini.in:42
 msgid "Graph with border"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-02 18:22+0000\n"
-"PO-Revision-Date: 2025-09-07 04:26\n"
+"PO-Revision-Date: 2025-09-14 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -120,7 +120,7 @@ msgstr "Chyba při čtení souboru PDF \"{1}\"\n"
 
 #: ../src/core/control/Control.cpp:1606
 msgid "Error reading PNG file \"{1}\""
-msgstr ""
+msgstr "Nepovedlo se přečíst soubor PNG \"{1}\""
 
 #: ../src/core/control/Control.cpp:1750
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -3924,7 +3924,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:13
 msgid "Open"
-msgstr ""
+msgstr "Otevřít"
 
 #. Filled dynamically
 #: ../ui/mainmenubar.xml:19
@@ -3937,7 +3937,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:31
 msgid "Save As"
-msgstr ""
+msgstr "Uložit jako"
 
 #: ../ui/mainmenubar.xml:38
 msgid "_Export as PDF"
@@ -3957,15 +3957,15 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:93
 msgid "Select All"
-msgstr ""
+msgstr "Vybrat vše"
 
 #: ../ui/mainmenubar.xml:100
 msgid "Find"
-msgstr ""
+msgstr "Hledat"
 
 #: ../ui/mainmenubar.xml:114
 msgid "Arrange Selection"
-msgstr ""
+msgstr "Uspořádat výběr"
 
 #: ../ui/mainmenubar.xml:117
 msgid "Bring to Front"
@@ -4129,11 +4129,11 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:355
 msgid "Zoom In"
-msgstr ""
+msgstr "Přiblížit"
 
 #: ../ui/mainmenubar.xml:360
 msgid "Zoom Out"
-msgstr ""
+msgstr "Oddálit"
 
 #: ../ui/mainmenubar.xml:365
 msgid "Normal Size"
@@ -4217,7 +4217,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:468
 msgid "Add a _Layer above the active layer"
-msgstr ""
+msgstr "Přidat _vrstvu nad aktivní vrstvu"
 
 #: ../ui/mainmenubar.xml:477
 msgid "Delete Layer"
@@ -4273,11 +4273,11 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:552
 msgid "_Default Tool"
-msgstr ""
+msgstr "_Výchozí nástroj"
 
 #: ../ui/mainmenubar.xml:559
 msgid "Drawing Type"
-msgstr ""
+msgstr "b"
 
 #: ../ui/mainmenubar.xml:561
 msgid "_Shape Recognizer"
@@ -4378,11 +4378,11 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:859
 msgid "Help"
-msgstr ""
+msgstr "Nápověda"
 
 #: ../ui/mainmenubar.xml:863
 msgid "Run Gtk3 demo"
-msgstr ""
+msgstr "Spustit Gtk3 demo"
 
 #: ../ui/mainmenubar.xml:867
 msgid "About"
@@ -4398,11 +4398,11 @@ msgstr ""
 
 #: ../resources-templates/toolbar.ini.in:50
 msgid "All Tools"
-msgstr ""
+msgstr "Všechny nástroje"
 
 #: ../resources-templates/toolbar.ini.in:55
 msgid "Portrait"
-msgstr ""
+msgstr "Na výšku"
 
 #: ../resources-templates/toolbar.ini.in:61
 msgid "Minimal Left"
@@ -4414,7 +4414,7 @@ msgstr ""
 
 #: ../resources-templates/toolbar.ini.in:69
 msgid "Xournal++"
-msgstr ""
+msgstr "Xournal++"
 
 #: ../resources-templates/toolbar.ini.in:77
 msgid "Right hand Note Taking"
@@ -4434,7 +4434,7 @@ msgstr ""
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:6
 msgid "Note-taking application"
-msgstr ""
+msgstr "Program pro psaní poznámek"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:7
 msgid "Take handwritten notes"
