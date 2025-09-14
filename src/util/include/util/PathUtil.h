@@ -93,7 +93,7 @@ void clearExtensions(fs::path& path, const std::string& ext = "");
 class GFilename {
 public:
     explicit GFilename(const fs::path& p);
-    /// Assumes the string is in g_filename encoding. The string is NOT copied and owned by the caller.
+    /// Assumes the string is in g_filename encoding. The string is NOT copied and is owned by the caller.
     explicit GFilename(const char* p);
 
     /// Assumes the string is in g_filename encoding. Takes ownership of the given string.

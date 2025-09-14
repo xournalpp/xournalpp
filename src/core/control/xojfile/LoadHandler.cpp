@@ -33,6 +33,7 @@
 #include "util/i18n.h"               // for _F, FC, FS, _
 #include "util/raii/GObjectSPtr.h"
 #include "util/safe_casts.h"  // for as_signed, as_unsigned
+#include "util/utf8_view.h"   // for utf8_view
 
 #include "LoadHandlerHelper.h"  // for getAttrib, getAttribDo...
 
@@ -358,8 +359,7 @@ void LoadHandler::parseBgSolid() {
 
 void LoadHandler::parseBgPixmap() {
     const char* domain = LoadHandlerHelper::getAttrib("domain", false, this);
-    const fs::path filepath =
-            fs::path(reinterpret_cast<const char8_t*>(LoadHandlerHelper::getAttrib("filename", false, this)));
+    const fs::path filepath = fs::path(xoj::util::utf8(LoadHandlerHelper::getAttrib("filename", false, this)));
     // in case of a cloned background image, filename is a string representation of the page number from which the image
     // is cloned
 
@@ -448,12 +448,12 @@ void LoadHandler::parseBgPdf() {
 
         const char* domain = LoadHandlerHelper::getAttrib("domain", false, this);
         {
-            const auto* file = reinterpret_cast<const char8_t*>(LoadHandlerHelper::getAttrib("filename", false, this));
+            const auto* file = LoadHandlerHelper::getAttrib("filename", false, this);
             if (file == nullptr) {
                 error("PDF Filename missing!");
                 return;
             }
-            pdfFilename = fs::path(file);
+            pdfFilename = fs::path(xoj::util::utf8(file));
         }
 
         if (!strcmp("absolute", domain)) {
@@ -576,12 +576,13 @@ void LoadHandler::parseStroke() {
     stroke->setColor(color);
 
     /** read stroke timestamps (xopp fileformat) */
-    const auto* fn = reinterpret_cast<const char8_t*>(LoadHandlerHelper::getAttrib("fn", true, this));
-    if (fn != nullptr && std::u8string_view(fn).length() > 0) {
+    const auto* fn = LoadHandlerHelper::getAttrib("fn", true, this);
+    if (fn != nullptr && *fn != '\0') {
+        fs::path p(xoj::util::utf8(fn));
         if (this->isGzFile) {
-            stroke->setAudioFilename(fs::path(fn));
+            stroke->setAudioFilename(std::move(p));
         } else {
-            auto tempFile = getTempFileForPath(fn);
+            auto tempFile = getTempFileForPath(p);
             if (!tempFile.empty()) {
                 stroke->setAudioFilename(tempFile);
             }
@@ -670,12 +671,13 @@ void LoadHandler::parseText() {
     LoadHandlerHelper::parseColor(sColor, color, this);
     text->setColor(color);
 
-    const auto* fn = reinterpret_cast<const char8_t*>(LoadHandlerHelper::getAttrib("fn", true, this));
-    if (fn != nullptr && std::u8string_view(fn).length() > 0) {
+    const auto* fn = LoadHandlerHelper::getAttrib("fn", true, this);
+    if (fn != nullptr && *fn != '\0') {
+        fs::path p(xoj::util::utf8(fn));
         if (this->isGzFile) {
-            text->setAudioFilename(fs::path(fn));
+            text->setAudioFilename(std::move(p));
         } else {
-            auto tempFile = getTempFileForPath(fn);
+            auto tempFile = getTempFileForPath(p);
             if (!tempFile.empty()) {
                 text->setAudioFilename(tempFile);
             }
