@@ -28,6 +28,7 @@
 #include "util/i18n.h"                              // for _
 #include "util/raii/CairoWrappers.h"                // for CairoSurfaceSPtr
 #include "util/safe_casts.h"                        // for round_cast
+#include "util/utf8_view.h"                         // for utf8
 
 #include "ButtonConfigGui.h"       // for ButtonConfigGui
 #include "DeviceTestingArea.h"     // for DeviceTestingArea
@@ -915,9 +916,9 @@ void SettingsDialog::save() {
     settings->setEagerPageCleanup(getCheckbox("cbEagerPageCleanup"));
 
     settings->setDefaultSaveName(
-            reinterpret_cast<const char8_t*>(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultSaveName")))));
+            xoj::util::utf8(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultSaveName")))).str());
     settings->setDefaultPdfExportName(
-            reinterpret_cast<const char8_t*>(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultPdfName")))));
+            xoj::util::utf8(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultPdfName")))).str());
 
     GtkWidget* spAutosaveTimeout = builder.get("spAutosaveTimeout");
     int autosaveTimeout = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutosaveTimeout)));

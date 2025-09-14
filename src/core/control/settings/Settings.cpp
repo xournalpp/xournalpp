@@ -22,7 +22,9 @@
 #include "util/Color.h"
 #include "util/PathUtil.h"  // for getConfigFile
 #include "util/Util.h"      // for PRECISION_FORMAT_...
-#include "util/i18n.h"      // for _#include "util/safe_casts.h"  // for as_unsigned
+#include "util/i18n.h"      // for _
+#include "util/safe_casts.h"  // for as_unsigned
+#include "util/utf8_view.h"   // for utf8_view
 
 #include "ButtonConfig.h"  // for ButtonConfig
 #include "config-dev.h"    // for PALETTE_FILE
@@ -148,9 +150,8 @@ void Settings::loadDefault() {
     this->touchDrawing = false;
     this->gtkTouchInertialScrolling = true;
 
-    this->defaultSaveName = reinterpret_cast<const char8_t*>(_("%F-Note-%H-%M"));
-
-    this->defaultPdfExportName = reinterpret_cast<const char8_t*>(_("%{name}_annotated"));
+    this->defaultSaveName = xoj::util::utf8(_("%F-Note-%H-%M")).str();
+    this->defaultPdfExportName = xoj::util::utf8(_("%{name}_annotated")).str();
 
     // Eraser
     this->buttonConfig[BUTTON_ERASER] = std::make_unique<ButtonConfig>(TOOL_ERASER, Colors::black, TOOL_SIZE_NONE,
@@ -409,11 +410,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectedToolbar")) == 0) {
         this->selectedToolbar = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastSavePath")) == 0) {
-        this->lastSavePath = fs::path(reinterpret_cast<const char8_t*>(value));
+        this->lastSavePath = fs::path(xoj::util::utf8(reinterpret_cast<const char*>(value)));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastOpenPath")) == 0) {
-        this->lastOpenPath = fs::path(reinterpret_cast<const char8_t*>(value));
+        this->lastOpenPath = fs::path(xoj::util::utf8(reinterpret_cast<const char*>(value)));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastImagePath")) == 0) {
-        this->lastImagePath = fs::path(reinterpret_cast<const char8_t*>(value));
+        this->lastImagePath = fs::path(xoj::util::utf8(reinterpret_cast<const char*>(value)));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("edgePanSpeed")) == 0) {
         this->edgePanSpeed = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("edgePanMaxMult")) == 0) {
@@ -496,9 +497,9 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("useStockIcons")) == 0) {
         this->useStockIcons = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultSaveName")) == 0) {
-        this->defaultSaveName = reinterpret_cast<const char8_t*>(value);
+        this->defaultSaveName = xoj::util::utf8(reinterpret_cast<const char*>(value)).str();
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultPdfExportName")) == 0) {
-        this->defaultPdfExportName = reinterpret_cast<const char8_t*>(value);
+        this->defaultPdfExportName = xoj::util::utf8(reinterpret_cast<const char*>(value)).str();
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginEnabled")) == 0) {
         this->pluginEnabled = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginDisabled")) == 0) {
@@ -508,7 +509,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sizeUnit")) == 0) {
         this->sizeUnit = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioFolder")) == 0) {
-        this->audioFolder = fs::path(reinterpret_cast<const char8_t*>(value));
+        this->audioFolder = fs::path(xoj::util::utf8(reinterpret_cast<const char*>(value)));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveEnabled")) == 0) {
         this->autosaveEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveTimeout")) == 0) {
@@ -659,7 +660,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.defaultText")) == 0) {
         this->latexSettings.defaultText = reinterpret_cast<char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.globalTemplatePath")) == 0) {
-        this->latexSettings.globalTemplatePath = fs::path(reinterpret_cast<const char8_t*>(value));
+        this->latexSettings.globalTemplatePath = fs::path(xoj::util::utf8(reinterpret_cast<const char*>(value)));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.genCmd")) == 0) {
         this->latexSettings.genCmd = reinterpret_cast<char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.sourceViewThemeId")) == 0) {

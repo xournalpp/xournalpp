@@ -27,6 +27,7 @@
 #include "util/i18n.h"                        // for FS, _F
 #include "util/raii/GObjectSPtr.h"            // for GObjectSPtr
 #include "util/safe_casts.h"                  // for as_signed
+#include "util/utf8_view.h"                   // for utf8
 
 #include "LinkDestination.h"  // for XojLinkDest, DOCUMENT_L...
 #include "XojPage.h"          // for XojPage
@@ -206,7 +207,7 @@ auto Document::createSaveFilename(DocumentType type, std::u8string_view defaultS
     }
 
     auto fn2 = converter.to_bytes(filename);
-    auto p = fs::path(reinterpret_cast<const char8_t*>(fn2.c_str()));
+    auto p = fs::path(xoj::util::utf8(fn2));
 
     Util::clearExtensions(p);
     return p;

@@ -20,6 +20,7 @@
 #include "util/i18n.h"               // for FS, _F, FORMAT_STR
 #include "util/raii/CStringWrapper.h"
 #include "util/safe_casts.h"  // for as_signed
+#include "util/utf8_view.h"   // for utf8_view
 
 #include "config.h"  // for PROJECT_NAME
 
@@ -182,6 +183,7 @@ auto Util::clearExtensions(fs::path& path, const std::string& ext) -> void {
 }
 
 Util::GFilename::GFilename(const fs::path& p) {
+#ifndef _WIN32  // On Windows, g_filename are always in UTF8
     if (!g_get_filename_charsets(nullptr)) {
         // g_filename are NOT utf-8 encoded
         GError* err = nullptr;
@@ -192,11 +194,13 @@ Util::GFilename::GFilename(const fs::path& p) {
             g_error_free(err);
             value = u8"";
         }
-    } else {
+    } else
+#endif
+    {
         value = p.u8string();
     }
 }
-/// Assumes the string is in g_filename encoding. Takes ownership of the given string
+
 Util::GFilename::GFilename(const char* p): value(p) {}
 
 auto Util::GFilename::assumeOwnerhip(char* p) -> GFilename {
@@ -214,6 +218,7 @@ const char* Util::GFilename::c_str() const {
 }
 
 std::optional<fs::path> Util::GFilename::toPath() const {
+#ifndef _WIN32  // On Windows, g_filename are always in UTF8
     if (!g_get_filename_charsets(nullptr)) {
         // g_filename are NOT utf-8 encoded
         GError* err = nullptr;
@@ -225,15 +230,17 @@ std::optional<fs::path> Util::GFilename::toPath() const {
             return std::nullopt;
         }
         if (utf8) {
-            return fs::path(reinterpret_cast<const char8_t*>(utf8.get()));
+            return fs::path(xoj::util::utf8(utf8.get()));
         } else {
             // Conversion failed?
             g_warning("Failed to convert g_filename to utf8: the resulting string is empty");
             return std::nullopt;
         }
-    } else {
+    } else
+#endif
+    {
         if (const char* p = this->c_str(); p) {
-            return fs::path(reinterpret_cast<const char8_t*>(p));
+            return fs::path(xoj::util::utf8(p));
         } else {
             return std::nullopt;
         }
@@ -367,7 +374,7 @@ auto Util::getDataSubfolder(const fs::path& subfolder) -> fs::path {
 static auto buildUserStateDir() -> fs::path {
 #if _WIN32
     // Windows: state directory is same as data directory (and the path is necessarily in utf-8)
-    return fs::path((const char8_t*)g_get_user_data_dir());
+    return fs::path(xoj::util::utf8(g_get_user_data_dir()));
 #else
     // Unix: $XDG_STATE_HOME or ~/.local/state
     const char* xdgStateHome = std::getenv("XDG_STATE_HOME");

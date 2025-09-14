@@ -20,14 +20,6 @@
 #include "filesystem.h"  // for path
 
 struct BackgroundImage {
-    BackgroundImage() = default;
-    BackgroundImage(const BackgroundImage& img) = default;
-    BackgroundImage(BackgroundImage&& img) noexcept = default;
-    BackgroundImage& operator=(const BackgroundImage& img) = default;
-    BackgroundImage& operator=(BackgroundImage&& img) = default;
-    ~BackgroundImage() = default;
-
-
     friend bool operator==(const BackgroundImage& lhs, const BackgroundImage& rhs) = default;
 
     void free();
