@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-01 14:30+0000\n"
-"PO-Revision-Date: 2025-09-07 04:25\n"
+"POT-Creation-Date: 2025-09-11 12:54+0000\n"
+"PO-Revision-Date: 2025-09-14 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -212,7 +212,7 @@ msgstr "数位板"
 msgid "Image file successfully created"
 msgstr "图片文件创建成功"
 
-#: ../src/core/control/ExportHelper.cpp:120
+#: ../src/core/control/ExportHelper.cpp:134
 msgid "PDF file successfully created"
 msgstr "PDF文件成功建立"
 
@@ -245,8 +245,8 @@ msgid "Could not load LaTeX PDF file"
 msgstr "无法加载 LaTeX PDF 文件"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:80
-#: ../src/core/control/xojfile/LoadHandler.cpp:490
-#: ../src/core/control/xojfile/LoadHandler.cpp:506
+#: ../src/core/control/xojfile/LoadHandler.cpp:493
+#: ../src/core/control/xojfile/LoadHandler.cpp:509
 msgid "Error reading PDF: {1}"
 msgstr "读入PDF出错：{1}"
 
@@ -753,73 +753,73 @@ msgstr "意外的根标签：{1}"
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "文档中意外的标签：“{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:400
-#: ../src/core/control/xojfile/LoadHandler.cpp:428
+#: ../src/core/control/xojfile/LoadHandler.cpp:401
+#: ../src/core/control/xojfile/LoadHandler.cpp:430
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "未能读入图像：{1}。错误提示为：{2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:438
+#: ../src/core/control/xojfile/LoadHandler.cpp:441
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "无法为克隆背景图像读取页码： {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:446
+#: ../src/core/control/xojfile/LoadHandler.cpp:449
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "未知的 pixmap::domain 类型：{1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:497
+#: ../src/core/control/xojfile/LoadHandler.cpp:500
 msgid "Unknown domain type: {1}"
 msgstr "未知的域类型：{1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:535
+#: ../src/core/control/xojfile/LoadHandler.cpp:538
 msgid "Unknown background type: {1}"
 msgstr "未知背景类型：{1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:559
+#: ../src/core/control/xojfile/LoadHandler.cpp:562
 msgid "Error reading width of a stroke: {1}"
 msgstr "读入笔划粗细出错：{1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:627
+#: ../src/core/control/xojfile/LoadHandler.cpp:630
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "未知笔划端点类型：“{1}”，将假设为圆形"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:645
+#: ../src/core/control/xojfile/LoadHandler.cpp:648
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "未知笔划类型：“{1}”，将假设为笔"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:813
-#: ../src/core/control/xojfile/LoadHandler.cpp:829
-#: ../src/core/control/xojfile/LoadHandler.cpp:1143
-#: ../src/core/control/xojfile/LoadHandler.cpp:1157
+#: ../src/core/control/xojfile/LoadHandler.cpp:816
+#: ../src/core/control/xojfile/LoadHandler.cpp:832
+#: ../src/core/control/xojfile/LoadHandler.cpp:1146
+#: ../src/core/control/xojfile/LoadHandler.cpp:1160
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "无法打开附件: {1}. 错误消息: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:822
-#: ../src/core/control/xojfile/LoadHandler.cpp:1150
-#: ../src/core/control/xojfile/LoadHandler.cpp:1168
+#: ../src/core/control/xojfile/LoadHandler.cpp:825
+#: ../src/core/control/xojfile/LoadHandler.cpp:1153
+#: ../src/core/control/xojfile/LoadHandler.cpp:1171
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "无法打开附件: {1}. 错误消息: 没有提供有效的文件大小"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:841
+#: ../src/core/control/xojfile/LoadHandler.cpp:844
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "无法打开附件: {1}. 错误消息: 无法读取文件"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:850
+#: ../src/core/control/xojfile/LoadHandler.cpp:853
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "无法打开附件: {1}. 错误消息: 无法写入文件"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1037
+#: ../src/core/control/xojfile/LoadHandler.cpp:1040
 msgid "Wrong count of points ({1})"
 msgstr "点数 ({1}) 错误"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1053
+#: ../src/core/control/xojfile/LoadHandler.cpp:1056
 msgid "xoj-File: {1}"
 msgstr "xoj-文件: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1054
+#: ../src/core/control/xojfile/LoadHandler.cpp:1057
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr "笔压力值错误，读取 {1}，预期 {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1187
+#: ../src/core/control/xojfile/LoadHandler.cpp:1190
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "未找到附件 {1} 所要求的临时文件"
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-01 14:30+0000\n"
-"PO-Revision-Date: 2025-09-07 04:25\n"
+"POT-Creation-Date: 2025-09-11 12:54+0000\n"
+"PO-Revision-Date: 2025-09-14 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -212,7 +212,7 @@ msgstr "tabletaren teklatua"
 msgid "Image file successfully created"
 msgstr "Irudi fitxategia behar bezala sortu da"
 
-#: ../src/core/control/ExportHelper.cpp:120
+#: ../src/core/control/ExportHelper.cpp:134
 msgid "PDF file successfully created"
 msgstr "PDF fitxategia behar bezala sortu da"
 
@@ -245,8 +245,8 @@ msgid "Could not load LaTeX PDF file"
 msgstr "Ezin izan da LaTeX PDF fitxategia kargatu"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:80
-#: ../src/core/control/xojfile/LoadHandler.cpp:490
-#: ../src/core/control/xojfile/LoadHandler.cpp:506
+#: ../src/core/control/xojfile/LoadHandler.cpp:493
+#: ../src/core/control/xojfile/LoadHandler.cpp:509
 msgid "Error reading PDF: {1}"
 msgstr "Errorea {1} PDF irakurtzean"
 
@@ -592,11 +592,11 @@ msgstr "Pentagramak"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:24
 msgid "Graph"
-msgstr "Grafoa"
+msgstr "Koadrikula"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:25
 msgid "Dotted"
-msgstr "Puntu-lerroa"
+msgstr "Puntu-sareta"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Dotted"
@@ -604,7 +604,7 @@ msgstr "Puntu-sareta isometrikoa"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:27
 msgid "Isometric Graph"
-msgstr "Grafo isometrikoa"
+msgstr "Koadrikula isometrikoa"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Copy current"
@@ -753,73 +753,73 @@ msgstr "Ustekabeko root etiketa: {1}"
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Ustekabeko etiketa dokumentuan: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:400
-#: ../src/core/control/xojfile/LoadHandler.cpp:428
+#: ../src/core/control/xojfile/LoadHandler.cpp:401
+#: ../src/core/control/xojfile/LoadHandler.cpp:430
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Ezin izan da irudia irakurri: {1}. Errore mezua: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:438
+#: ../src/core/control/xojfile/LoadHandler.cpp:441
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "Ezin izan da orrialdearen zenbakia irakurri klonatutako atzeko planoko irudirako: {1}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:446
+#: ../src/core/control/xojfile/LoadHandler.cpp:449
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Pixmap::domain mota ezezaguna: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:497
+#: ../src/core/control/xojfile/LoadHandler.cpp:500
 msgid "Unknown domain type: {1}"
 msgstr "Domeinu mota ezezaguna: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:535
+#: ../src/core/control/xojfile/LoadHandler.cpp:538
 msgid "Unknown background type: {1}"
 msgstr "Atzeko plano mota ezezaguna: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:559
+#: ../src/core/control/xojfile/LoadHandler.cpp:562
 msgid "Error reading width of a stroke: {1}"
 msgstr "Errorea trazuaren zabalera irakurtzean: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:627
+#: ../src/core/control/xojfile/LoadHandler.cpp:630
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "Trazu mota ezezaguna: \"{1}\", biribila suposatzen da"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:645
+#: ../src/core/control/xojfile/LoadHandler.cpp:648
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Trazu mota ezezaguna: {1}, arkatza erabiliko da"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:813
-#: ../src/core/control/xojfile/LoadHandler.cpp:829
-#: ../src/core/control/xojfile/LoadHandler.cpp:1143
-#: ../src/core/control/xojfile/LoadHandler.cpp:1157
+#: ../src/core/control/xojfile/LoadHandler.cpp:816
+#: ../src/core/control/xojfile/LoadHandler.cpp:832
+#: ../src/core/control/xojfile/LoadHandler.cpp:1146
+#: ../src/core/control/xojfile/LoadHandler.cpp:1160
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Ezin izan da eranskina ireki: {1}. Errore mezua: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:822
-#: ../src/core/control/xojfile/LoadHandler.cpp:1150
-#: ../src/core/control/xojfile/LoadHandler.cpp:1168
+#: ../src/core/control/xojfile/LoadHandler.cpp:825
+#: ../src/core/control/xojfile/LoadHandler.cpp:1153
+#: ../src/core/control/xojfile/LoadHandler.cpp:1171
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Ezin izan da eranskina ireki: {1}. Errore mezua: ez da fitxategi-tamaina baliozkoa"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:841
+#: ../src/core/control/xojfile/LoadHandler.cpp:844
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Ezin izan da eranskina ireki: {1}. Errore mezua: ezin da fitxategia irakurri"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:850
+#: ../src/core/control/xojfile/LoadHandler.cpp:853
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Ezin izan da eranskina ireki: {1}. Errore mezua: ezin da fitxategia idatzi"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1037
+#: ../src/core/control/xojfile/LoadHandler.cpp:1040
 msgid "Wrong count of points ({1})"
 msgstr "Puntuen zenbaketa okerra ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1053
+#: ../src/core/control/xojfile/LoadHandler.cpp:1056
 msgid "xoj-File: {1}"
 msgstr "xoj-fitxategia: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1054
+#: ../src/core/control/xojfile/LoadHandler.cpp:1057
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr "Presio-balio kopuru okerra, eskuratua {1}, espero zen {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1187
+#: ../src/core/control/xojfile/LoadHandler.cpp:1190
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Eskatutako behin-behineko fitxategia ez da aurkitu eranskinean {1}"
 
@@ -1191,7 +1191,7 @@ msgstr "Garbitu zerrenda"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:94
 msgid "_Journal"
-msgstr "_Egunkaria"
+msgstr "_Koadernoa"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:94
 msgid "Paper B_ackground"
@@ -1302,7 +1302,7 @@ msgstr "marrak/puntuak"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:319
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:517
 msgid "dotted"
-msgstr "puntuak"
+msgstr "puntua-sareta"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:330
 msgid "whiteout"
