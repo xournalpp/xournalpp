@@ -892,16 +892,12 @@ static int applib_layerAction(lua_State* L) {
  */
 static int applib_getCursorPosition(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
-    Control* control = plugin->getControl();
+    auto pos = plugin->getControl()->getCursorPosition();
 
-    auto position = control->getCursorPosition();
-
-    // Return as a table with x and y fields
     lua_createtable(L, 0, 2);
-
-    lua_pushinteger(L, position.first);
+    lua_pushinteger(L, pos.x);
     lua_setfield(L, -2, "x");
-    lua_pushinteger(L, position.second);
+    lua_pushinteger(L, pos.y);
     lua_setfield(L, -2, "y");
 
     return 1;
@@ -924,14 +920,10 @@ static int applib_getCursorPosition(lua_State* L) {
  */
 static int applib_showFloatingToolbox(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
-    Control* control = plugin->getControl();
-
-    // Both coordinates are required
     int x = static_cast<int>(luaL_checkinteger(L, 1));
     int y = static_cast<int>(luaL_checkinteger(L, 2));
 
-    control->showFloatingToolbox(x, y);
-
+    plugin->getControl()->showFloatingToolbox(x, y);
     return 0;
 }
 

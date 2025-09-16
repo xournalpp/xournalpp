@@ -131,39 +131,73 @@ void FloatingToolbox::flagRecalculateSizeRequired() { this->floatingToolboxState
  */
 auto FloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget, GdkRectangle* allocation,
                                          FloatingToolbox* self) -> bool {
-    if (widget == self->floatingToolbox) {
-        gtk_widget_get_allocation(widget, allocation);  // get existing width and height
+    if (widget != self->floatingToolbox) {
+        return false;
+    }
 
-        if (self->floatingToolboxState != noChange ||
-            allocation->height < 2)  // if recalcSize or configuration or  initiation.
-        {
-            GtkRequisition natural;
-            gtk_widget_get_preferred_size(widget, nullptr, &natural);
-            allocation->width = natural.width;
-            allocation->height = natural.height;
-        }
+    gtk_widget_get_allocation(widget, allocation);
 
-        switch (self->floatingToolboxState) {
-            case recalcSize:  // fallthrough 		note: recalc done above
-            case noChange:
-                // show centered on x,y
-                allocation->x = self->floatingToolboxX - allocation->width / 2;
-                allocation->y = self->floatingToolboxY - allocation->height / 2;
-                self->floatingToolboxState = noChange;
-                break;
+    if (self->floatingToolboxState != noChange || allocation->height < 2) {
+        GtkRequisition natural;
+        gtk_widget_get_preferred_size(widget, nullptr, &natural);
+        allocation->width = natural.width;
+        allocation->height = natural.height;
+    }
 
-            case configuration:
-                allocation->x = self->floatingToolboxX;
-                allocation->y = self->floatingToolboxY;
-                allocation->width = std::max(allocation->width + 32, 50);  // always room for one more...
-                allocation->height = std::max(allocation->height, 50);
-                break;
-        }
+    // Get scrolled window for boundary clamping
+    GtkWidget* mainBox = self->mainWindow->get("mainBox");
+    GtkWidget* boxContents = self->mainWindow->get("boxContents");
 
+    GtkWidget* scrolledWindow = nullptr;
+    GList* children = gtk_container_get_children(GTK_CONTAINER(boxContents));
+    if (children != nullptr) {
+        scrolledWindow = GTK_WIDGET(children->data);
+        g_list_free(children);
+    }
+
+    if (scrolledWindow == nullptr) {
+        // Fallback: no clamping if scrolled window not found
+        allocation->x = self->floatingToolboxX - allocation->width / 2;
+        allocation->y = self->floatingToolboxY - allocation->height / 2;
+        self->floatingToolboxState = noChange;
         return true;
     }
 
-    return false;
+    // Get scrolled window position relative to mainBox
+    gint scrollX, scrollY;
+    gtk_widget_translate_coordinates(scrolledWindow, mainBox, 0, 0, &scrollX, &scrollY);
+
+    GtkAllocation scrollAllocation;
+    gtk_widget_get_allocation(scrolledWindow, &scrollAllocation);
+
+    switch (self->floatingToolboxState) {
+        case recalcSize:
+        case noChange: {
+            int centerX = self->floatingToolboxX - allocation->width / 2;
+            int centerY = self->floatingToolboxY - allocation->height / 2;
+
+            // Clamp to scrolled window bounds with margin
+            const int margin = 10;
+            int minX = scrollX + margin;
+            int maxX = scrollX + scrollAllocation.width - allocation->width - margin;
+            int minY = scrollY + margin;
+            int maxY = scrollY + scrollAllocation.height - allocation->height - margin;
+
+            allocation->x = std::max(minX, std::min(centerX, maxX));
+            allocation->y = std::max(minY, std::min(centerY, maxY));
+            self->floatingToolboxState = noChange;
+            break;
+        }
+
+        case configuration:
+            allocation->x = self->floatingToolboxX;
+            allocation->y = self->floatingToolboxY;
+            allocation->width = std::max(allocation->width + 32, 50);
+            allocation->height = std::max(allocation->height, 50);
+            break;
+    }
+
+    return true;
 }
 
 
