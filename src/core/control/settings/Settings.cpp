@@ -410,11 +410,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectedToolbar")) == 0) {
         this->selectedToolbar = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastSavePath")) == 0) {
-        this->lastSavePath = fs::path(xoj::util::utf8(reinterpret_cast<const char*>(value)));
+        this->lastSavePath = fs::path(xoj::util::utf8(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastOpenPath")) == 0) {
-        this->lastOpenPath = fs::path(xoj::util::utf8(reinterpret_cast<const char*>(value)));
+        this->lastOpenPath = fs::path(xoj::util::utf8(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastImagePath")) == 0) {
-        this->lastImagePath = fs::path(xoj::util::utf8(reinterpret_cast<const char*>(value)));
+        this->lastImagePath = fs::path(xoj::util::utf8(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("edgePanSpeed")) == 0) {
         this->edgePanSpeed = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("edgePanMaxMult")) == 0) {
@@ -497,9 +497,9 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("useStockIcons")) == 0) {
         this->useStockIcons = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultSaveName")) == 0) {
-        this->defaultSaveName = xoj::util::utf8(reinterpret_cast<const char*>(value)).str();
+        this->defaultSaveName = xoj::util::utf8(value).str();
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultPdfExportName")) == 0) {
-        this->defaultPdfExportName = xoj::util::utf8(reinterpret_cast<const char*>(value)).str();
+        this->defaultPdfExportName = xoj::util::utf8(value).str();
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginEnabled")) == 0) {
         this->pluginEnabled = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginDisabled")) == 0) {
@@ -509,7 +509,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sizeUnit")) == 0) {
         this->sizeUnit = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioFolder")) == 0) {
-        this->audioFolder = fs::path(xoj::util::utf8(reinterpret_cast<const char*>(value)));
+        this->audioFolder = fs::path(xoj::util::utf8(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveEnabled")) == 0) {
         this->autosaveEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveTimeout")) == 0) {
@@ -660,7 +660,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.defaultText")) == 0) {
         this->latexSettings.defaultText = reinterpret_cast<char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.globalTemplatePath")) == 0) {
-        this->latexSettings.globalTemplatePath = fs::path(xoj::util::utf8(reinterpret_cast<const char*>(value)));
+        this->latexSettings.globalTemplatePath = fs::path(xoj::util::utf8(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.genCmd")) == 0) {
         this->latexSettings.genCmd = reinterpret_cast<char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.sourceViewThemeId")) == 0) {

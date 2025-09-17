@@ -76,13 +76,19 @@ private:
     Sentinel endI;
 };
 
+template <typename T>
+concept is_byte = sizeof(T) == sizeof(char8_t) && std::convertible_to<T, char8_t>;
+
+template <is_byte T>
 struct CharSentinelClass {
-    constexpr auto operator==(char const* v) const -> bool { return *v == '\0'; }
+    constexpr auto operator==(T const* v) const -> bool { return *v == T('\0'); }
 };
-constexpr inline CharSentinelClass char_sentinel{};
-static_assert(std::sentinel_for<CharSentinelClass, char const*>);
-static_assert(std::sentinel_for<utf8_view<char const*, CharSentinelClass>::Sentinel,
-                                utf8_view<char const*, CharSentinelClass>::Iterator>);
+static_assert(std::sentinel_for<CharSentinelClass<char>, char const*>);
+static_assert(std::sentinel_for<utf8_view<char const*, CharSentinelClass<char>>::Sentinel,
+                                utf8_view<char const*, CharSentinelClass<char>>::Iterator>);
+static_assert(std::sentinel_for<CharSentinelClass<unsigned char>, unsigned char const*>);
+static_assert(std::sentinel_for<utf8_view<unsigned char const*, CharSentinelClass<unsigned char>>::Sentinel,
+                                utf8_view<unsigned char const*, CharSentinelClass<unsigned char>>::Iterator>);
 
 // RangeAdaptorClosureObject for utf8_view
 struct utf8_t {
@@ -92,9 +98,15 @@ struct utf8_t {
     }
 
     // For some reason, gcc 11 (default on ubuntu 22 LTS) does not recognize std::string as a viewable_range
-    auto operator()(std::string const& r) const { return utf8_view{std::begin(r), std::end(r)}; }
+    template <is_byte T>
+    auto operator()(std::basic_string<T> const& r) const {
+        return utf8_view{std::begin(r), std::end(r)};
+    }
 
-    auto operator()(char const* r) const { return utf8_view{r, char_sentinel}; }
+    template <is_byte T>
+    auto operator()(T const* r) const {
+        return utf8_view{r, CharSentinelClass<T>{}};
+    }
 };
 
 inline constexpr utf8_t utf8;
@@ -104,7 +116,10 @@ constexpr auto operator|(R r, utf8_t const&) {
     return utf8_view{std::begin(r), std::end(r)};
 }
 
-inline constexpr auto operator|(char const* r, utf8_t const&) { return utf8_view{r, char_sentinel}; }
+template <is_byte T>
+inline constexpr auto operator|(T const* r, utf8_t const&) {
+    return utf8_view{r, CharSentinelClass<T>{}};
+}
 
 // template<class InI, class InS>
 // constexpr auto begin(utf8_view<InI, InS> const& view) -> utf8_view<InI, InS>::Iterator { return view.begin(); }
@@ -115,6 +130,12 @@ inline constexpr auto operator|(char const* r, utf8_t const&) { return utf8_view
 namespace {
 constexpr auto* s = "Hello, world!";
 constexpr std::string_view sv = "Hello, world!";
+constexpr unsigned char us[] = {0xE2, 0x84, 0x8F,  // ℏ
+                                0xE2, 0x93, 0x94,  // ⓔ
+                                0xE2, 0x84, 0x93,  // ℓ
+                                0x6C,              // l
+                                0xC6, 0xA1,        // ơ
+                                0x00};
 
 constexpr utf8_view<char const*, char const*> view{sv.data(), sv.data() + sv.size()};
 
@@ -136,10 +157,12 @@ static_assert(std::ranges::viewable_range<decltype(s | utf8)>);
 static_assert(std::ranges::random_access_range<decltype(sv | utf8)>);
 static_assert(std::ranges::random_access_range<decltype(utf8(s))>);
 static_assert(std::ranges::random_access_range<decltype(s | utf8)>);
+static_assert(std::ranges::random_access_range<decltype(us | utf8)>);
 
 #if __cpp_lib_constexpr_string == 201907L
 static_assert(utf8_view<char const*, char const*>{sv.data(), sv.data() + sv.size()}.str() == u8"Hello, world!");
-static_assert(utf8_view{sv.data(), char_sentinel}.str() == u8"Hello, world!");
+static_assert(utf8_view{sv.data(), CharSentinelClass<char>{}}.str() == u8"Hello, world!");
+static_assert((us | utf8).str() == u8"ℏⓔℓlơ");
 #endif
 };  // namespace
 };  // namespace xoj::util
