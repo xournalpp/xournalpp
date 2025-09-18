@@ -883,38 +883,13 @@ static int applib_layerAction(lua_State* L) {
 }
 
 /**
- * Get the current cursor position relative to the main window
- *
- * @return table {x:integer, y:integer} cursor position relative to main window
- *
- * Example: local pos = app.getCursorPosition()
- * print("Cursor at:", pos.x, pos.y)
- */
-static int applib_getCursorPosition(lua_State* L) {
-    Plugin* plugin = Plugin::getPluginFromLua(L);
-    auto pos = plugin->getControl()->getCursorPosition();
-
-    lua_createtable(L, 0, 2);
-    lua_pushinteger(L, pos.x);
-    lua_setfield(L, -2, "x");
-    lua_pushinteger(L, pos.y);
-    lua_setfield(L, -2, "y");
-
-    return 1;
-}
-
-/**
  * Show the floating toolbox at the specified coordinates relative to the main window
  *
  * @param x integer x coordinate relative to main window
  * @param y integer y coordinate relative to main window
  *
- * Example 1: app.showFloatingToolbox(100, 200)
+ * Example: app.showFloatingToolbox(100, 200)
  * Shows the floating toolbox at position (100, 200) relative to the main window
- *
- * Example 2: local pos = app.getCursorPosition()
- *            app.showFloatingToolbox(pos.x, pos.y)
- * Shows the floating toolbox at the current cursor position
  *
  * Note: Coordinates are automatically clamped to window bounds.
  */
@@ -971,9 +946,9 @@ static void refsHelper(lua_State* L, std::vector<const Element*> elements) {
     lua_newtable(L);
     size_t count = 0;
     for (const Element* element: elements) {
-        lua_pushinteger(L, strict_cast<lua_Integer>(++count));  // index
+        lua_pushinteger(L, strict_cast<lua_Integer>(++count));                           // index
         lua_pushlightuserdata(L, const_cast<void*>(static_cast<const void*>(element)));  // value
-        lua_settable(L, -3);                                    // insert
+        lua_settable(L, -3);                                                             // insert
     }
 }
 
@@ -2962,8 +2937,7 @@ static int applib_openFile(lua_State* L) {
         forceOpen = lua_toboolean(L, 3);
     }
 
-    control->openFile(
-            fs::path(filename), [](bool) {}, scrollToPage - 1, forceOpen);
+    control->openFile(fs::path(filename), [](bool) {}, scrollToPage - 1, forceOpen);
     lua_pushboolean(L, true);  // Todo replace with callback
     return 1;
 }
@@ -3734,7 +3708,6 @@ static const luaL_Reg applib[] = {
         {"uiAction", applib_uiAction},            // Todo(gtk4) remove this deprecated function
         {"sidebarAction", applib_sidebarAction},  // Todo(gtk4) remove this deprecated function
         {"layerAction", applib_layerAction},      // Todo(gtk4) remove this deprecated function
-        {"getCursorPosition", applib_getCursorPosition},
         {"showFloatingToolbox", applib_showFloatingToolbox},
         {"changeToolColor", applib_changeToolColor},
         {"getColorPalette", applib_getColorPalette},
