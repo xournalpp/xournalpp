@@ -417,24 +417,6 @@ void Control::resetGeometryTool() {
     xournal->input->resetGeometryToolInputHandler();
 }
 
-xoj::util::Point<int> Control::getCursorPosition() const {
-    GdkDisplay* display = gdk_display_get_default();
-    GdkSeat* seat = gdk_display_get_default_seat(display);
-    GdkDevice* pointer = gdk_seat_get_pointer(seat);
-
-    gdouble screenX, screenY;
-    gdk_device_get_position_double(pointer, nullptr, &screenX, &screenY);
-
-    GtkWindow* window = this->getGtkWindow();
-    gint windowX, windowY;
-    gtk_window_get_position(window, &windowX, &windowY);
-
-    int relativeX = static_cast<int>(screenX) - windowX;
-    int relativeY = static_cast<int>(screenY) - windowY;
-
-    return xoj::util::Point<int>(relativeX, relativeY);
-}
-
 void Control::showFloatingToolbox(int x, int y) {
     GtkWidget* mainWindow = GTK_WIDGET(this->getGtkWindow());
     GtkWidget* mainBox = this->getWindow()->get("mainBox");

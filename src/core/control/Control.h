@@ -33,7 +33,6 @@
 #include "model/GeometryTool.h"                     // for GeometryTool
 #include "model/PageRef.h"                          // for PageRef
 #include "undo/UndoRedoHandler.h"                   // for UndoRedoHandler (ptr only)
-#include "util/Point.h"                             // for Point
 
 #include "ClipboardHandler.h"  // for ClipboardListener
 #include "ToolHandler.h"       // for ToolListener
@@ -319,11 +318,6 @@ public:
     LayerController* getLayerController() const;
     PluginController* getPluginController() const;
     const Palette& getPalette() const;
-
-    /**
-     * Get cursor position relative to main window
-     */
-    xoj::util::Point<int> getCursorPosition() const;
 
     /**
      * Show floating toolbox at specified coordinates
