@@ -11,6 +11,7 @@
 #include "control/Control.h"                            // for Control
 #include "control/DeviceListHelper.h"                   // for getSourceMapping
 #include "control/ScrollHandler.h"                      // for ScrollHandler
+#include "control/tools/EditSelection.h"                // for EditSelection
 #include "control/actions/ActionDatabase.h"             // for ActionDatabase
 #include "control/jobs/XournalScheduler.h"              // for XournalScheduler
 #include "control/layer/LayerController.h"              // for LayerController
@@ -346,7 +347,7 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
         gtk_drag_finish(dragContext, false, false, time);
         return;
     }
-
+    
     guchar* text = gtk_selection_data_get_text(data);
     if (text) {
         win->control->clipboardPasteText(reinterpret_cast<const char*>(text));
@@ -368,6 +369,20 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
     if (uris) {
         for (int i = 0; uris[i] != nullptr && i < 3; i++) {
             const char* uri = uris[i];
+
+            //If the URI is a mp3 file and there is a valid, selected object, connect them
+            gchar *path = g_filename_from_uri(uri, NULL, NULL);
+            if (path && (g_str_has_suffix(path, ".mp3") || 
+                        g_str_has_suffix(path, ".wav") || 
+                        g_str_has_suffix(path, ".ogg"))) {
+                auto sel = win->xournal->getSelection();
+                if (sel) {
+                    sel->setAudioFilename(fs::path(path), 0);
+                }   
+
+                g_free(path);
+                continue;
+            }
 
             GCancellable* cancel = g_cancellable_new();
             auto cancelTimeout = g_timeout_add(3000, xoj::util::wrap_for_once_v<cancellable_cancel>, cancel);
