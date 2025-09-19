@@ -4,6 +4,7 @@
 #include <cstdlib>      // for system
 #include <fstream>      // for ifstream, char_traits, basic_ist...
 #include <iterator>     // for begin
+#include <sstream>      // for stringstream
 #include <string_view>  // for basic_string_view, operator""sv
 #include <type_traits>  // for remove_reference<>::type
 #include <utility>      // for move
@@ -20,6 +21,18 @@
 
 #include "config.h"  // for PROJECT_NAME
 
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>  // for readlink, ssize_t
+#ifdef __APPLE__
+#include <glib.h>
+#include <mach-o/dyld.h>
+#else
+#include <climits>  // for PATH_MAX
+#endif
+#endif
+
 #ifdef GHC_FILESYSTEM
 // Fix of ghc::filesystem bug (path::operator/=() won't support string_views)
 constexpr auto const* CONFIG_FOLDER_NAME = "xournalpp";
@@ -29,27 +42,66 @@ constexpr auto CONFIG_FOLDER_NAME = "xournalpp"sv;
 #endif
 
 #ifdef _WIN32
-#include <windows.h>
-
 auto Util::getLongPath(const fs::path& path) -> fs::path {
-    DWORD wLongPathSz = GetLongPathNameW(path.c_str(), nullptr, 0);
+    auto asWString = path.wstring();
+    DWORD wLongPathSz = GetLongPathNameW(asWString.c_str(), nullptr, 0);
 
     if (wLongPathSz == 0) {
         return path;
     }
 
     std::wstring wLongPath(wLongPathSz, L'\0');
-    GetLongPathNameW(path.c_str(), wLongPath.data(), static_cast<DWORD>(wLongPath.size()));
+    GetLongPathNameW(asWString.c_str(), wLongPath.data(), static_cast<DWORD>(wLongPath.size()));
     wLongPath.pop_back();
-    return fs::path(std::move(wLongPath));
+    return {std::move(wLongPath)};
 }
 #else
 auto Util::getLongPath(const fs::path& path) -> fs::path { return path; }
 #endif
 
+
+#ifdef _WIN32
+fs::path Util::getExePath() {
+    char szFileName[MAX_PATH + 1];
+    GetModuleFileNameA(nullptr, szFileName, MAX_PATH + 1);
+
+    return fs::path{szFileName}.parent_path();
+}
+#else
 #ifdef __APPLE__
-#include "util/Stacktrace.h"
+fs::path Util::getExePath() {
+    char c;
+    uint32_t size = 0;
+    _NSGetExecutablePath(&c, &size);
+
+    char* path = new char[size + 1];
+    if (_NSGetExecutablePath(path, &size) == 0) {
+        fs::path p(path);
+        delete[] path;
+        return p.parent_path();
+    }
+
+    g_error("Could not get executable path!");
+
+    delete[] path;
+    return "";
+}
+#else
+auto Util::getExePath() -> fs::path {
+#ifndef PATH_MAX
+    // This is because PATH_MAX is (per posix) not defined if there is
+    // no limit, e.g., on GNU Hurd. The "right" workaround is to not use
+    // PATH_MAX, instead stat the link and use stat.st_size for
+    // allocating the buffer.
+#define PATH_MAX 4096
 #endif
+    std::array<char, PATH_MAX> result{};
+    ssize_t count = readlink("/proc/self/exe", result.data(), PATH_MAX);
+    return fs::path{std::string(result.data(), as_unsigned(std::max(ssize_t{0}, count)))}.parent_path();
+}
+#endif
+#endif
+
 
 /**
  * Read a file to a string
@@ -63,11 +115,10 @@ auto Util::getLongPath(const fs::path& path) -> fs::path { return path; }
 auto Util::readString(fs::path const& path, bool showErrorToUser, std::ios_base::openmode openmode)
         -> std::optional<std::string> {
     try {
-        std::string s;
+        std::stringstream buffer;
         std::ifstream ifs{path, openmode};
-        s.resize(fs::file_size(path));
-        ifs.read(s.data(), as_signed(s.size()));
-        return {std::move(s)};
+        buffer << ifs.rdbuf();
+        return buffer.str();
     } catch (const fs::filesystem_error& e) {
         if (showErrorToUser) {
             XojMsgBox::showErrorToUser(nullptr, e.what());
@@ -178,6 +229,38 @@ auto Util::fromGFile(GFile* file) -> fs::path {
 
 auto Util::toGFile(fs::path const& path) -> xoj::util::GObjectSPtr<GFile> {
     return xoj::util::GObjectSPtr<GFile>(g_file_new_for_path(path.u8string().c_str()), xoj::util::adopt);
+}
+
+auto Util::fromGFilename(const char* path) -> fs::path {
+    if (path == nullptr) {
+        return {};
+    }
+    gsize pSize{0};
+    GError* err{};
+    auto* u8Path = g_filename_to_utf8(path, as_signed(std::strlen(path)), nullptr, &pSize, &err);
+    if (err) {
+        g_message("Failed to convert g_filename to utf8 with error code: %d\n%s", err->code, err->message);
+        g_error_free(err);
+        return {};
+    }
+    auto ret = fs::u8path(u8Path, u8Path + pSize);
+    g_free(u8Path);
+    return ret;
+}
+
+auto Util::toGFilename(fs::path const& path) -> std::string {
+    auto u8path = path.u8string();
+    gsize pSize{0};
+    GError* err{};
+    auto* local = g_filename_from_utf8(u8path.c_str(), as_signed(u8path.size()), nullptr, &pSize, &err);
+    if (err) {
+        g_message("Failed to convert g_filename from utf8 with error code: %d\n%s", err->code, err->message);
+        g_error_free(err);
+        return {};
+    }
+    auto ret = std::string{local, pSize};
+    g_free(local);
+    return ret;
 }
 
 
@@ -321,6 +404,21 @@ auto Util::ensureFolderExists(const fs::path& p) -> fs::path {
     return p;
 }
 
+auto Util::normalizeAssetPath(const fs::path& asset, const fs::path& base, PathStorageMode mode) -> std::string {
+    try {
+        if (mode == PathStorageMode::AS_RELATIVE_PATH) {
+            fs::path basenormal = base.empty() ? fs::current_path() : fs::absolute(base).lexically_normal();
+            return fs::absolute(asset).lexically_proximate(basenormal).lexically_normal().generic_u8string();
+        } else {
+            xoj_assert(mode == PathStorageMode::AS_ABSOLUTE_PATH);
+            return fs::absolute(asset).lexically_normal().generic_u8string();
+        }
+    } catch (const fs::filesystem_error& fe) {
+        g_warning("Could not normalize path: %s\nFailed with error: %s", asset.u8string().c_str(), fe.what());
+        return asset.generic_u8string();
+    }
+}
+
 auto Util::isChildOrEquivalent(fs::path const& path, fs::path const& base) -> bool {
     auto safeCanonical = [](fs::path const& p) {
         try {
@@ -364,6 +462,14 @@ bool Util::safeRenameFile(fs::path const& from, fs::path const& to) {
     return true;
 }
 
+void Util::safeReplaceExtension(fs::path& p, const char* newExtension) {
+    try {
+        p.replace_extension(newExtension);
+    } catch (const fs::filesystem_error& fe) {
+        g_warning("Could not replace extension of file \"%s\"! Failed with %s", p.u8string().c_str(), fe.what());
+    }
+}
+
 auto Util::getDataPath() -> fs::path {
 #ifdef _WIN32
     TCHAR szFileName[MAX_PATH];
@@ -374,7 +480,7 @@ auto Util::getDataPath() -> fs::path {
     p = p / ".." / "share" / PROJECT_NAME;
     return p;
 #elif defined(__APPLE__)
-    fs::path p = Stacktrace::getExePath().parent_path();
+    fs::path p = getExePath().parent_path();
     if (fs::exists(p / "Resources")) {
         p = p / "Resources";
     } else {
@@ -391,7 +497,7 @@ auto Util::getDataPath() -> fs::path {
 
 auto Util::getLocalePath() -> fs::path {
 #ifdef __APPLE__
-    fs::path p = Stacktrace::getExePath().parent_path();
+    fs::path p = getExePath().parent_path();
     if (fs::exists(p / "Resources")) {
         return p / "Resources" / "share" / "locale";
     }

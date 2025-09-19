@@ -35,14 +35,15 @@ public:
         std::string icon;
         xoj::util::GVariantSPtr target;  /// Target value of the associated GSimpleAction corresponding to the entry
     };
+    using Entries = std::vector<Entry>;
     /**
      * @brief When all entries correspond to a single action (but different target values)
      * @param iconName Icon used in the toolbar customization dialog to represent this combo button.
      * @param description Description used in the toolbar customization dialog to explain this combo button.
      * @param entries Entries of the combo menu.
      */
-    ComboToolButton(std::string id, Category cat, std::string iconName, std::string description,
-                    std::vector<Entry> entries, ActionRef gAction);
+    ComboToolButton(std::string id, Category cat, std::string iconName, std::string description, Entries entries,
+                    ActionRef gAction);
 
     ~ComboToolButton() override = default;
 
@@ -55,7 +56,7 @@ protected:
     GtkWidget* getNewToolIcon() const override;
 
 protected:
-    const std::vector<Entry> entries;
+    const Entries entries;
     ActionRef gAction;
     std::string iconName;
     std::string description;

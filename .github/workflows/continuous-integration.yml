@@ -32,15 +32,29 @@ jobs:
           script: |
             const available_targets = require('${{ env.build-targets-json }}')
 
+            const linux_builds = []
             for (const tgt in available_targets.linux_targets) {
-              // No need to run the CI on all ubuntu versions - pick the one we build the AppImage with
-              if (available_targets.linux_targets[tgt].build_appimage === 'true') {
-                core.setOutput('linux_builds', [available_targets.linux_targets[tgt]])
-                break
+              if (available_targets.linux_targets[tgt].run_ci === 'true') {
+                linux_builds.push(available_targets.linux_targets[tgt])
               }
             }
-            core.setOutput('macos_builds', Object.values(available_targets.macos_targets))
-            core.setOutput('windows_builds', Object.values(available_targets.windows_targets))
+            core.setOutput('linux_builds', linux_builds)
+
+            const macos_builds = []
+            for (const tgt in available_targets.macos_targets) {
+              if (available_targets.macos_targets[tgt].run_ci === 'true') {
+                macos_builds.push(available_targets.macos_targets[tgt])
+              }
+            }
+            core.setOutput('macos_builds', macos_builds)
+
+            const windows_builds = []
+            for (const tgt in available_targets.windows_targets) {
+              if (available_targets.windows_targets[tgt].run_ci === 'true') {
+                windows_builds.push(available_targets.windows_targets[tgt])
+              }
+            }
+            core.setOutput('windows_builds', windows_builds)
   ubuntu:
     needs: ['prepare']
     strategy:
@@ -61,6 +75,7 @@ jobs:
         uses: ./.github/actions/build
         with:
           build_type: ${{env.BUILD_TYPE}}
+          extra_cmake_flags: ${{ matrix.run.extra_cmake_flags }}
       - name: 'Build tests'
         id: build-test
         run: |
@@ -119,10 +134,14 @@ jobs:
       - uses: actions/checkout@v4
       - name: 'Install dependencies'
         uses: ./.github/actions/install_deps_windows
+        with:
+          msystem: ${{ matrix.run.msystem }}
+          msys_package_env: ${{ matrix.run.msys_package_env }}
       - name: 'Build Xournal++'
         uses: ./.github/actions/build
         with:
           build_type: ${{env.BUILD_TYPE}}
+          extra_cmake_flags: ${{ matrix.run.extra_cmake_flags }}
           shell: msys2 {0}
       - name: 'Build tests'
         shell: msys2 {0}
@@ -151,6 +170,7 @@ jobs:
         uses: ./.github/actions/build
         with:
           build_type: ${{env.BUILD_TYPE}}
+          extra_cmake_flags: ${{ matrix.run.extra_cmake_flags }}
       - name: 'Build tests'
         shell: bash
         run: |

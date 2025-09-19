@@ -103,7 +103,7 @@ void testReadDataType(const std::vector<T>& data) {
 
 
 TEST(UtilObjectIOStream, testReadData) {
-    testReadDataType(std::vector<char>{0, 42, -42});
+    testReadDataType(std::vector<char>{0, 0x0e, 0x3f});
     testReadDataType(std::vector<long>{0, 42, -42});
     testReadDataType(std::vector<long long>{0, 420000000000, -42000000000});
     testReadDataType(std::vector<float>{0, 42., -42.});

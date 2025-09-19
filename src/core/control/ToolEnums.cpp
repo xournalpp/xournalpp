@@ -161,6 +161,10 @@ auto toolTypeToString(ToolType type) -> std::string {
             return "selectPdfTextLinear";
         case TOOL_SELECT_PDF_TEXT_RECT:
             return "selectPdfTextRect";
+        case TOOL_LASER_POINTER_PEN:
+            return "laserPointerPen";
+        case TOOL_LASER_POINTER_HIGHLIGHTER:
+            return "laserPointerHighlighter";
         default:
             return "";
     }
@@ -234,6 +238,12 @@ auto toolTypeFromString(const std::string& type) -> ToolType {
     }
     if (type == "selectPdfTextRect") {
         return TOOL_SELECT_PDF_TEXT_RECT;
+    }
+    if (type == "laserPointerPen") {
+        return TOOL_LASER_POINTER_PEN;
+    }
+    if (type == "laserPointerHighlighter") {
+        return TOOL_LASER_POINTER_HIGHLIGHTER;
     }
     return TOOL_NONE;
 }

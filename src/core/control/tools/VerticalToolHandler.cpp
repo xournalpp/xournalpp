@@ -6,9 +6,11 @@
 #include <cairo.h>           // for cairo_fill, cairo_...
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_Control_L
 
+#include "control/Control.h"                       // for Control
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
 #include "gui/LegacyRedrawable.h"                  // for Redrawable
 #include "gui/inputdevices/InputEvents.h"          // for KeyEvent
+#include "model/Document.h"                        // for Document
 #include "model/Element.h"                         // for Element
 #include "model/Layer.h"                           // for Layer
 #include "model/XojPage.h"                         // for XojPage
@@ -16,13 +18,12 @@
 #include "util/DispatchPool.h"
 #include "view/overlays/VerticalToolView.h"
 
-class Settings;
-
-VerticalToolHandler::VerticalToolHandler(const PageRef& page, Settings* settings, double y, bool initiallyReverse):
+VerticalToolHandler::VerticalToolHandler(const PageRef& page, Control* control, double y, bool initiallyReverse):
         page(page),
         layer(this->page->getSelectedLayer()),
+        control(control),
         spacingSide(initiallyReverse ? Side::Above : Side::Below),
-        snappingHandler(settings),
+        snappingHandler(control->getSettings()),
         viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::VerticalToolView>>()) {
     double ySnapped = snappingHandler.snapVertically(y, false);
     this->startY = ySnapped;
@@ -36,6 +37,8 @@ VerticalToolHandler::~VerticalToolHandler() = default;
 void VerticalToolHandler::adoptElements(const Side side) {
     this->spacingSide = side;
 
+    auto* doc = this->control->getDocument();
+    doc->lock();
     // Return current elements back to page
     for (auto&& e: this->elements) {
         this->layer->addElement(std::move(e));
@@ -43,12 +46,13 @@ void VerticalToolHandler::adoptElements(const Side side) {
     this->elements.clear();
 
     // Add new elements based on position
-    for (Element* e: xoj::refElementContainer(this->layer->getElements())) {
+    for (const Element* e: this->layer->getElementsView().clone()) {
         if ((side == Side::Below && e->getY() >= this->startY) ||
             (side == Side::Above && e->getY() + e->getElementHeight() <= this->startY)) {
             this->elements.push_back(this->layer->removeElement(e).e);
         }
     }
+    doc->unlock();
 
     Range rg = this->ownedElementsOriginalBoundingBox;
     this->ownedElementsOriginalBoundingBox = this->computeElementsBoundingBox();
@@ -91,7 +95,7 @@ auto VerticalToolHandler::refElements() const -> std::vector<Element*> {
     return result;
 }
 
-void VerticalToolHandler::forEachElement(std::function<void(Element*)> f) const {
+void VerticalToolHandler::forEachElement(std::function<void(const Element*)> f) const {
     for (auto const& e: this->elements) {
         f(e.get());
     }

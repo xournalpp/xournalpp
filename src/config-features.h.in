@@ -13,11 +13,17 @@
 
 /* --- Stable features --- */
 
-// Currently none
+#cmakedefine ENABLE_PLUGINS
+
+#cmakedefine ENABLE_GTK_SOURCEVIEW
+
+#cmakedefine ENABLE_AUDIO
 
 /* --- Testing features --- */
 
-#cmakedefine ENABLE_PLUGINS
+#cmakedefine ENABLE_QPDF
+
+#cmakedefine ENABLE_CPPTRACE
 
 // Example: #cmakedefine NAME_FROM_Cmake_list
 // in CMakeFile.txt:

@@ -46,7 +46,8 @@ pacman -S \
   mingw-w64-clang-aarch64-libsndfile \
   mingw-w64-clang-aarch64-libzip \
   mingw-w64-clang-aarch64-lua \
-  mingw-w64-clang-aarch64-portaudio
+  mingw-w64-clang-aarch64-portaudio \
+  mingw-w64-clang-aarch64-qpdf
 ```
 
 If prompted, confirm or use all default values.
@@ -55,25 +56,14 @@ If prompted, confirm or use all default values.
 
 See [Compile.md](./Compile.md)
 
-## Modify Path Environment Variable
-
-Add `C:\msys64\clangarm64\bin` and `C:\msys64\usr\bin` to the top of 
-your PATH environment variable in the Windows Advanced system 
-settings (assuming default installation folder for MSYS2). 
-
-You can now run Xournal++ with
-```sh
-./xournalpp.exe
-```
-or package it in an installer (see below).
-
 ## Packaging and Setup
 
 Create the installer with
 ```sh
-./windows-setup/package.sh
+./windows-setup/package.sh build/
 ```
 
-The installer will be located at `windows-setup/xournalpp-setup.exe`. This
+The installer will be located at `build/xournalpp-setup.exe`. This
 command will also create a portable version of Xournal++ located in
-`windows-setup/dist`.
+`build/dist`.
+

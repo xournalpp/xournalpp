@@ -55,6 +55,12 @@
     <property name="step-increment">1</property>
     <property name="page-increment">10</property>
   </object>
+  <object class="GtkAdjustment" id="adjustmentLaserFadeOutTime">
+    <property name="upper">4000</property>
+    <property name="value">500</property>
+    <property name="step-increment">10</property>
+    <property name="page-increment">100</property>
+  </object>
   <object class="GtkAdjustment" id="adjustmentMinimumPressure">
     <property name="lower">0.01</property>
     <property name="upper">1</property>
@@ -314,7 +320,7 @@
                   <object class="GtkScrolledWindow" id="sid01">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <property name="min-content-width">500</property>
+                    <property name="min-content-width">900</property>
                     <property name="min-content-height">450</property>
                     <child>
                       <object class="GtkViewport" id="sid02">
@@ -903,7 +909,8 @@ Illegal characters are replaced with "_"</property>
                                 <property name="can-focus">False</property>
                                 <property name="label-xalign">0.009999999776482582</property>
                                 <child>
-                                  <object class="GtkBox">
+                                  <object class="GtkBox" id="hboxInputDeviceClasses">
+                                    <property name="name">hboxInputDeviceClasses</property>
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
                                     <property name="margin-start">12</property>
@@ -911,36 +918,7 @@ Illegal characters are replaced with "_"</property>
                                     <property name="margin-bottom">8</property>
                                     <property name="orientation">vertical</property>
                                     <child>
-                                      <object class="GtkLabel">
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">False</property>
-                                        <property name="label" translatable="yes">&lt;i&gt;Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)&lt;/i&gt;</property>
-                                        <property name="use-markup">True</property>
-                                        <property name="wrap">True</property>
-                                        <property name="max-width-chars">85</property>
-                                        <property name="xalign">0</property>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">0</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkBox" id="hboxInputDeviceClasses">
-                                        <property name="name">hboxInputDeviceClasses</property>
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">False</property>
-                                        <property name="orientation">vertical</property>
-                                        <child>
-                                          <placeholder/>
-                                        </child>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">1</property>
-                                      </packing>
+                                      <placeholder/>
                                     </child>
                                   </object>
                                 </child>
@@ -991,37 +969,7 @@ Illegal characters are replaced with "_"</property>
                                       <packing>
                                         <property name="expand">False</property>
                                         <property name="fill">True</property>
-                                        <property name="position">1</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkCheckButton" id="cbInputSystemTPCButton">
-                                        <property name="name">cbInputSystemTPCButton</property>
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">True</property>
-                                        <property name="receives-default">False</property>
-                                        <property name="tooltip-markup" translatable="yes">Drag LEFT from start point acts like shift key is being held.
-	    Drag UP acts as if Control key is being held.
-
-            Determination Radius: Radius at which modifiers will lock in until finished drawing.
-
-	    &lt;i&gt;Useful for operating without keyboard.&lt;/i&gt;</property>
-                                        <property name="draw-indicator">True</property>
-                                        <child>
-                                          <object class="GtkLabel" id="sid93">
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">False</property>
-                                            <property name="label" translatable="yes">Merge button events with stylus tip events
-	    &lt;i&gt;(Check this if&lt;/i&gt; "&lt;tt&gt;xsetwacom get *deviceId* TabletPCButton&lt;/tt&gt;" &lt;i&gt;returns&lt;/i&gt; "&lt;tt&gt;on&lt;/tt&gt;"&lt;i&gt;)&lt;/i&gt;</property>
-                                            <property name="use-markup">True</property>
-                                            <property name="wrap">True</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">2</property>
+                                        <property name="position">0</property>
                                       </packing>
                                     </child>
                                     <child>
@@ -1047,7 +995,7 @@ Illegal characters are replaced with "_"</property>
                                       <packing>
                                         <property name="expand">False</property>
                                         <property name="fill">True</property>
-                                        <property name="position">3</property>
+                                        <property name="position">1</property>
                                       </packing>
                                     </child>
                                   </object>
@@ -1547,6 +1495,38 @@ Illegal characters are replaced with "_"</property>
                                       </packing>
                                     </child>
                                     <child>
+                                      <object class="GtkFrame">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="label-xalign">0.01</property>
+                                        <child>
+                                          <object class="GtkBox" id="hboxLeftMouse">
+                                            <property name="name">hboxLeftMouse</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="margin-start">12</property>
+                                            <property name="margin-end">12</property>
+                                            <property name="margin-bottom">8</property>
+                                            <child>
+                                              <placeholder/>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child type="label">
+                                          <object class="GtkLabel">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="label" translatable="yes">Left Mouse Button</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                    <child>
                                       <object class="GtkFrame" id="sid23">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
@@ -1575,7 +1555,7 @@ Illegal characters are replaced with "_"</property>
                                       <packing>
                                         <property name="expand">False</property>
                                         <property name="fill">True</property>
-                                        <property name="position">1</property>
+                                        <property name="position">2</property>
                                       </packing>
                                     </child>
                                     <child>
@@ -1607,7 +1587,7 @@ Illegal characters are replaced with "_"</property>
                                       <packing>
                                         <property name="expand">False</property>
                                         <property name="fill">True</property>
-                                        <property name="position">2</property>
+                                        <property name="position">3</property>
                                       </packing>
                                     </child>
                                   </object>
@@ -4427,7 +4407,7 @@ This setting can make it easier to draw with touch. </property>
                                       <object class="GtkLabel" id="sid132">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
-                                        <property name="label" translatable="yes">&lt;i&gt;To make sure on 100% zoom the size of elements is natural. (requires restart)&lt;/i&gt;</property>
+                                        <property name="label" translatable="yes">&lt;i&gt;To make sure on 100% zoom the size of elements is natural.&lt;/i&gt;</property>
                                         <property name="use-markup">True</property>
                                         <property name="max-width-chars">85</property>
                                       </object>
@@ -4458,15 +4438,41 @@ This setting can make it easier to draw with touch. </property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkScale" id="zoomCallibSlider">
-                                            <property name="name">zoomCallibSlider</property>
+                                          <object class="GtkBox">
                                             <property name="visible">True</property>
-                                            <property name="can-focus">True</property>
-                                            <property name="margin-top">10</property>
-                                            <property name="margin-bottom">20</property>
-                                            <property name="adjustment">adjustmentZoom</property>
-                                            <property name="round-digits">0</property>
-                                            <property name="digits">0</property>
+                                            <property name="can-focus">False</property>
+                                            <child>
+                                              <object class="GtkCheckButton" id="zoomCallibAutomaticCb">
+                                                <property name="label" translatable="yes">Automatic</property>
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">True</property>
+                                                <property name="receives-default">False</property>
+                                                <property name="draw-indicator">True</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkScale" id="zoomCallibSlider">
+                                                <property name="name">zoomCallibSlider</property>
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">True</property>
+                                                <property name="margin-top">10</property>
+                                                <property name="margin-bottom">20</property>
+                                                <property name="hexpand">True</property>
+                                                <property name="adjustment">adjustmentZoom</property>
+                                                <property name="round-digits">0</property>
+                                                <property name="digits">0</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">1</property>
+                                              </packing>
+                                            </child>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
@@ -5590,7 +5596,7 @@ Set this to 0% to always re-render on zoom.</property>
               </packing>
             </child>
             <child>
-              <object class="GtkBox" id="defaultTabBox">
+              <object class="GtkBox" id="toolsTabBox">
                 <property name="name">defaultTabBox</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
@@ -5681,7 +5687,7 @@ Set this to 0% to always re-render on zoom.</property>
                                       <object class="GtkLabel" id="label8">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
-                                        <property name="label" translatable="yes">&lt;b&gt;Default&lt;/b&gt;</property>
+                                        <property name="label" translatable="yes">&lt;b&gt;Default tool&lt;/b&gt;</property>
                                         <property name="use-markup">True</property>
                                       </object>
                                       <packing>
@@ -5698,6 +5704,115 @@ Set this to 0% to always re-render on zoom.</property>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
                                 <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkFrame" id="sid1">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label-xalign">0.009999999776482582</property>
+                                <child>
+                                  <object class="GtkBox" id="sid2">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="margin-start">12</property>
+                                    <property name="margin-end">12</property>
+                                    <property name="margin-bottom">8</property>
+                                    <property name="orientation">vertical</property>
+                                    <child>
+                                      <object class="GtkLabel" id="label12">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="label" translatable="yes">&lt;i&gt;The laser pointer allows to write strokes that will fade out after a short while.&lt;/i&gt;</property>
+                                        <property name="use-markup">True</property>
+                                        <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="padding">5</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkBox">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="spacing">8</property>
+                                        <child>
+                                          <object class="GtkLabel">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="label" translatable="yes">Fade out delay (in ms)</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkSpinButton" id="sbLaserFadeOutTime">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="adjustment">adjustmentLaserFadeOutTime</property>
+                                            <property name="snap-to-ticks">True</property>
+                                            <property name="numeric">True</property>
+                                            <property name="value">500</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkBox" id="box4">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <child>
+                                      <object class="GtkImage" id="image4">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="pixbuf">iconsLucide-dark/hicolor/scalable/actions/xopp-laser-pointer.svg</property>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="label14">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="label" translatable="yes">&lt;b&gt;Laser pointer&lt;/b&gt;</property>
+                                        <property name="use-markup">True</property>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="padding">5</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
                               </packing>
                             </child>
                           </object>
@@ -5717,11 +5832,11 @@ Set this to 0% to always re-render on zoom.</property>
               </packing>
             </child>
             <child type="tab">
-              <object class="GtkLabel" id="defaultTabLabel">
+              <object class="GtkLabel" id="toolsTabLabel">
                 <property name="name">defaultTabLabel</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Defaults</property>
+                <property name="label" translatable="yes">Tools</property>
               </object>
               <packing>
                 <property name="position">8</property>
@@ -6392,7 +6507,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                 <property name="can-default">True</property>
                 <property name="receives-default">True</property>
                 <property name="image">iconCancel</property>
-                <accelerator key="Escape" signal="clicked"/>
+                <accelerator key="Escape" signal="activate"/>
               </object>
               <packing>
                 <property name="expand">False</property>

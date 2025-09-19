@@ -28,6 +28,9 @@ on:
       build_type:
         type: string
         default: 'RelWithDebInfo'
+      extra_cmake_flags:
+        type: string
+        default: ''
       artifact_version_suffix:  # Additional version string appended to 1.2.3+dev (for instance) in artifacts names
         type: string
         default: ''
@@ -80,6 +83,7 @@ jobs:
           cmake_flags: >-
             -DCMAKE_INSTALL_PREFIX=/usr
             -DCPACK_GENERATOR="TGZ;DEB"
+          extra_cmake_flags: ${{ inputs.extra_cmake_flags }}
           cmake_commands: '--target package'
       - name: 'Rename assets'
         if: ${{ inputs.artifact_version_suffix != '' }}
@@ -98,11 +102,12 @@ jobs:
         id: publish-packages
         uses: actions/upload-artifact@v4
         with:
-          name: "Packages ${{ inputs.displayed_name }}"
+          name: "Packages ${{ inputs.displayed_name }} ${{ runner.arch }}"
           compression-level: 0
           path: "${{github.workspace}}/build/packages"
           if-no-files-found: error
       - name: 'Create AppImage'
+        id: build-appimage
         if: ${{ inputs.build_appimage }}
         shell: bash
         run: |
@@ -114,13 +119,14 @@ jobs:
 
           mkdir appimage
           mv "$OUTPUT" "$OUTPUT".zsync appimage/
+          echo "appimage-arch=$ARCH" >> "$GITHUB_OUTPUT"
         working-directory: ./build
       - name: 'Publish AppImage'
         id: publish-appimage
         if: ${{ inputs.build_appimage }}
         uses: actions/upload-artifact@v4
         with:
-          name: "Linux AppImage (built on ${{ inputs.displayed_name }})"
+          name: "Linux AppImage ${{ steps.build-appimage.outputs.appimage-arch }} (built on ${{ inputs.displayed_name }})"
           compression-level: 0
           path: "${{github.workspace}}/build/appimage"
           if-no-files-found: error

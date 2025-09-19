@@ -1,11 +1,13 @@
 #include "Document.h"
 
 #include <codecvt>  // for codecvt_utf8_utf16
-#include <ctime>    // for size_t, localtime, strf...
+#include <cstddef>
+#include <ctime>  // for size_t, localtime, strf...
 #include <iomanip>
 #include <memory>
 #include <sstream>
-#include <string>   // for string
+#include <string>  // for string
+#include <string_view>
 #include <utility>  // for move, pair
 
 #include <glib-object.h>  // for g_object_unref, G_TYPE_...
@@ -136,6 +138,32 @@ auto Document::createSaveFoldername(const fs::path& lastSavePath) const -> fs::p
     return lastSavePath;
 }
 
+/**
+ * Preprocesses a format string to standardize date/time format specifiers.
+ *
+ * This function is necessary because different systems or libraries may use
+ * non-standard or shorthand format specifiers (e.g., %F, %T, %V) for date/time formatting.
+ * By converting these to widely supported specifiers (e.g., %Y-%m-%d, %H-%M-%S, %U),
+ * it ensures compatibility and consistency across platforms and libraries.
+ *
+ * @param formatStr The input format string to preprocess.
+ * @return The processed format string with standardized specifiers.
+ */
+static std::string preprocessFormatString(std::string formatStr) {
+    auto replace = [&formatStr](std::string_view pattern, std::string_view replacement) {
+        for (size_t pos = formatStr.find(pattern); pos != std::string::npos;
+             pos = formatStr.find(pattern, pos + replacement.length())) {
+            formatStr.replace(pos, pattern.length(), replacement);
+        }
+    };
+
+    replace("%F", "%Y-%m-%d");
+    replace("%T", "%H-%M-%S");
+    replace("%V", "%U");
+
+    return formatStr;
+}
+
 auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName,
                                   const std::string& defaultPdfName) const -> fs::path {
     constexpr static std::wstring_view forbiddenChars = {L"\\/:*?\"<>|"};
@@ -162,6 +190,7 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
 
     auto format_str = wildcardString.empty() ? defaultSaveName : wildcardString;
 
+    format_str = preprocessFormatString(format_str);
     std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
     auto format = converter.from_bytes(format_str);
 
@@ -451,6 +480,7 @@ auto Document::operator=(const Document& doc) -> Document& {
     this->filepath = doc.filepath;
     this->pages = doc.pages;
     this->attachPdf = doc.attachPdf;
+    this->pathStorageMode = doc.pathStorageMode;
 
     indexPdfPages();
     buildContentsModel();

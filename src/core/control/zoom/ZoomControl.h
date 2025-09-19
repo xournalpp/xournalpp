@@ -259,4 +259,7 @@ private:
     size_t current_page = static_cast<size_t>(-1);
     size_t last_page = static_cast<size_t>(-1);
     bool isZoomFittingNow = false;
+
+    /// The last monitor the window has been moved to -- used for setting dpi
+    GdkMonitor* lastMonitor = nullptr;
 };

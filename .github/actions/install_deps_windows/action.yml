@@ -1,26 +1,49 @@
 # Template for setting up an MSYS2 environment on Windows
 
 name: Install dependencies for Windows build
+inputs:
+  msystem:
+    required: true
+    type: string
+  msys_package_env:
+    required: true
+    type: string
 
 runs:
   using: composite
   steps:
     - uses: msys2/setup-msys2@v2
       with:
-        msystem: mingw64
+        msystem: ${{inputs.msystem}}
         update: true
         install: >-
-          mingw-w64-x86_64-toolchain
-          mingw-w64-x86_64-cmake
-          mingw-w64-x86_64-make
-          mingw-w64-x86_64-ninja
-          mingw-w64-x86_64-gettext
-          mingw-w64-x86_64-poppler
-          mingw-w64-x86_64-gtk3
-          mingw-w64-x86_64-libsndfile
-          mingw-w64-x86_64-libzip
-          mingw-w64-x86_64-portaudio
-          mingw-w64-x86_64-lua
-          mingw-w64-x86_64-gtksourceview4
-          mingw-w64-x86_64-imagemagick
-          mingw-w64-x86_64-lua-lgi
+          mingw-w64-${{inputs.msys_package_env}}-toolchain
+          mingw-w64-${{inputs.msys_package_env}}-cmake
+          mingw-w64-${{inputs.msys_package_env}}-make
+          mingw-w64-${{inputs.msys_package_env}}-ninja
+          mingw-w64-${{inputs.msys_package_env}}-gettext
+          mingw-w64-${{inputs.msys_package_env}}-poppler
+          mingw-w64-${{inputs.msys_package_env}}-gtk3
+          mingw-w64-${{inputs.msys_package_env}}-libsndfile
+          mingw-w64-${{inputs.msys_package_env}}-libzip
+          mingw-w64-${{inputs.msys_package_env}}-portaudio
+          mingw-w64-${{inputs.msys_package_env}}-lua
+          mingw-w64-${{inputs.msys_package_env}}-gtksourceview4
+          mingw-w64-${{inputs.msys_package_env}}-imagemagick
+          make
+          mingw-w64-${{inputs.msys_package_env}}-gobject-introspection-runtime
+          mingw-w64-${{inputs.msys_package_env}}-lua-luarocks
+          mingw-w64-${{inputs.msys_package_env}}-qpdf
+          mingw-w64-${{inputs.msys_package_env}}-zstd
+    - shell: msys2 {0}
+      run: |
+        # install LuaGObject via luarocks as long as there is no MinGW package
+        luarocks install --lua-version=5.4 LuaGObject
+    - shell: msys2 {0}
+      run: |
+        # Downgrade gtk to avoid https://github.com/xournalpp/xournalpp/issues/6315
+        wget -q https://repo.msys2.org/mingw/${{inputs.msystem}}/mingw-w64-${{inputs.msys_package_env}}-gtk3-3.24.43-1-any.pkg.tar.zst
+        wget -q https://repo.msys2.org/mingw/${{inputs.msystem}}/mingw-w64-${{inputs.msys_package_env}}-gtk3-3.24.43-1-any.pkg.tar.zst.sig
+
+        pacman -U --noconfirm mingw-w64-${{inputs.msys_package_env}}-gtk3-3.24.43-1-any.pkg.tar.zst
+

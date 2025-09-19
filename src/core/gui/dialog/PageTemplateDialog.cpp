@@ -19,7 +19,7 @@
 #include "model/FormatDefinitions.h"  // for FormatUnits, XOJ_UNITS
 #include "model/PageType.h"           // for PageType
 #include "util/Color.h"               // for GdkRGBA_to_argb, rgb_t...
-#include "util/PathUtil.h"            // for fromGFilename, readString
+#include "util/PathUtil.h"            // for fromGFile, readString
 #include "util/PopupWindowWrapper.h"  // for PopupWindowWrapper
 #include "util/XojMsgBox.h"           // for XojMsgBox
 #include "util/i18n.h"                // for _
@@ -44,8 +44,8 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
 
     // Needs to be initialized after this->window
     pageTypeSelectionMenu = std::make_unique<PageTypeSelectionPopoverGridOnly>(types, settings, this);
-    gtk_menu_button_set_popover(GTK_MENU_BUTTON(builder.get("btBackgroundDropdown")),
-                                pageTypeSelectionMenu->getPopover());
+    gtk_menu_button_set_popup(GTK_MENU_BUTTON(builder.get("btBackgroundDropdown")),
+                              pageTypeSelectionMenu->getPopover());
 
     pageSizeLabel = GTK_LABEL(builder.get("lbPageSize"));
     backgroundTypeLabel = GTK_LABEL(builder.get("lbBackgroundType"));

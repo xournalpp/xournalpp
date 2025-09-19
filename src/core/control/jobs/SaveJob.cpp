@@ -106,12 +106,12 @@ auto SaveJob::save() -> bool {
     SaveHandler h;
 
     doc->lock();
-    h.prepareSave(doc);
-    fs::path filepath = doc->getFilepath();
+    fs::path target = doc->getFilepath();
+    Util::safeReplaceExtension(target, "xopp");
+
+    h.prepareSave(doc, target);
     doc->unlock();
 
-    Util::clearExtensions(filepath, ".pdf");
-    auto const target = fs::path{filepath}.concat(".xopp");
     auto const createBackup = doc->shouldCreateBackupOnSave();
 
     if (createBackup) {

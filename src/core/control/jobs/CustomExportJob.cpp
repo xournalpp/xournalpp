@@ -70,13 +70,16 @@ void CustomExportJob::showDialogAndRun() {
                 g_warning("Unknown extension");
             }
 
+            auto* ctrl = job->control;
             xoj::popup::PopupWindowWrapper<xoj::popup::ExportDialog> popup(
-                    job->control->getGladeSearchPath(), job->format, job->control->getCurrentPageNo() + 1,
-                    job->control->getDocument()->getPageCount(), [job](const xoj::popup::ExportDialog& dialog) {
+                    ctrl->getGladeSearchPath(), job->format, ctrl->getCurrentPageNo() + 1,
+                    ctrl->getDocument()->getPageCount(), !ctrl->getDocument()->getPdfFilepath().empty(),
+                    [job](const xoj::popup::ExportDialog& dialog) {
                         if (dialog.isConfirmed()) {
                             job->exportRange = dialog.getRange();
                             job->progressiveMode = dialog.progressiveModeSelected();
                             job->exportBackground = dialog.getBackgroundType();
+                            job->pdfExportBackend = dialog.getPdfExportBackend();
 
                             if (job->format == EXPORT_GRAPHICS_PNG) {
                                 job->pngQualityParameter = dialog.getPngQualityParameter();
@@ -121,7 +124,7 @@ void CustomExportJob::run() {
 
         XojExportHandler h;
         doc->lock();
-        h.prepareSave(doc);
+        h.prepareSave(doc, filepath);
         h.saveTo(filepath, this->control);
         doc->unlock();
 
@@ -135,7 +138,7 @@ void CustomExportJob::run() {
         // the ui is blocked, so there should be no changes...
         Document* doc = control->getDocument();
 
-        std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, control);
+        std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, control, pdfExportBackend);
 
         pdfe->setExportBackground(exportBackground);
 

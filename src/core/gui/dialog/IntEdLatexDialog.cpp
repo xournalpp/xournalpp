@@ -11,57 +11,44 @@
  * @license GNU GPLv2 or later
  */
 
-#include "LatexDialog.h"
+#include "IntEdLatexDialog.h"
 
-#include <algorithm>  // for max, min
-#include <cmath>
-#include <sstream>    // for operator<<, basic_ostream
-#include <utility>    // for move
+#include <sstream>  // for operator<<, basic_ostream
+#include <utility>  // for move
 
 #include <glib.h>              // for g_free, gpointer, guint
 #include <poppler-document.h>  // for poppler_document_get_n_p...
 #include <poppler-page.h>      // for poppler_page_get_size
 
-#ifdef USE_GTK_SOURCEVIEW
+#include "AbstractLatexDialog.h"
+
+#ifdef ENABLE_GTK_SOURCEVIEW
 #include <gtksourceview/gtksource.h>  // for GTK_SOURCE_VIEW, gtk_sou...
 #endif
 
 #include "control/LatexController.h"
 #include "control/settings/LatexSettings.h"  // for LatexSettings
 #include "gui/Builder.h"
-#include "model/Font.h"  // for XojFont
-#include "model/TexImage.h"
-#include "util/Range.h"
+#include "model/Font.h"        // for XojFont
 #include "util/StringUtils.h"  // for replace_pair, StringUtils
-#include "util/gtk4_helper.h"
 #include "util/raii/CStringWrapper.h"
 
 class GladeSearchpath;
 
-// Default background color of the preview.
-const Color DEFAULT_PREVIEW_BACKGROUND = Colors::white;
-
-constexpr auto UI_FILE_NAME = "texdialog.glade";
-constexpr auto UI_DIALOG_ID = "texDialog";
+constexpr auto UI_FILE_NAME = "intEdTexDialog.glade";
+constexpr auto UI_DIALOG_ID = "intEdTexDialog";
 
 constexpr auto TEX_BOX_WIDGET_NAME = "texBox";
-constexpr auto PREVIEW_WIDGET_ID = "texImage";
 
-LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, std::unique_ptr<LatexController> ctrl):
-        texCtrl(std::move(ctrl)),
-        cssProvider(gtk_css_provider_new(), xoj::util::adopt),
-        previewBackgroundColor{DEFAULT_PREVIEW_BACKGROUND} {
-    texCtrl->dlg = this;
+IntEdLatexDialog::IntEdLatexDialog(GladeSearchpath* gladeSearchPath, std::unique_ptr<LatexController> ctrl):
+        AbstractLatexDialog(std::move(ctrl)), cssProvider(gtk_css_provider_new(), xoj::util::adopt) {
 
     Builder builder(gladeSearchPath, UI_FILE_NAME);
     window.reset(GTK_WINDOW(builder.get(UI_DIALOG_ID)));
 
-    previewDrawingArea = GTK_DRAWING_AREA(builder.get(PREVIEW_WIDGET_ID));
-    btOk = GTK_BUTTON(builder.get("btOk"));
-    texErrorLabel = GTK_LABEL(builder.get("texErrorLabel"));
-    compilationOutputTextBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(builder.get("texCommandOutputText")));
+    populateStandardWidgetsFromBuilder(builder);
 
-#ifdef USE_GTK_SOURCEVIEW
+#ifdef ENABLE_GTK_SOURCEVIEW
     this->texBox = gtk_source_view_new();
 #else
     this->texBox = gtk_text_view_new();
@@ -90,7 +77,7 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, std::unique_ptr<Latex
     gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(builder.get("texBoxContainer")), this->texBox);
 
 
-#ifdef USE_GTK_SOURCEVIEW
+#ifdef ENABLE_GTK_SOURCEVIEW
     // We own neither the languageManager, the styleSchemeManager, nor the sourceLanguage.
     // Do not attempt to free them.
     GtkSourceStyleSchemeManager* styleSchemeManager = gtk_source_style_scheme_manager_get_default();
@@ -124,8 +111,6 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, std::unique_ptr<Latex
 
     gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(this->texBox), texBoxWrapMode);
 
-    gtk_drawing_area_set_draw_func(this->previewDrawingArea, GtkDrawingAreaDrawFunc(previewDrawFunc), this, nullptr);
-
     std::stringstream texBoxCssBuilder;
     if (settings.useCustomEditorFont) {
         std::string fontName = settings.editorFont.getName();
@@ -150,23 +135,7 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, std::unique_ptr<Latex
                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     }
 
-    g_signal_connect(builder.get("btCancel"), "clicked", G_CALLBACK(+[](GtkButton*, gpointer d) {
-                         auto* self = static_cast<LatexDialog*>(d);
-                         self->texCtrl->cancelEditing();
-                         gtk_window_close(self->window.get());
-                     }),
-                     this);
-    g_signal_connect(builder.get("btOk"), "clicked", G_CALLBACK(+[](GtkButton*, gpointer d) {
-                         auto* self = static_cast<LatexDialog*>(d);
-                         self->texCtrl->insertTexImage();
-                         gtk_window_close(self->window.get());
-                     }),
-                     this);
-
-    if (texCtrl->temporaryRender) {
-        // Use preexisting pdf
-        this->setTempRender(texCtrl->temporaryRender->getPdf());
-    }
+    connectStandardSignals();
 
     /*
      * Connect handleTexChanged() to the text buffer containing the latex code, to trigger rebuilds upon code changes.
@@ -177,7 +146,7 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, std::unique_ptr<Latex
                      texCtrl.get());
 
     g_signal_connect(this->getWindow(), "delete-event", G_CALLBACK(+[](GtkWidget*, GdkEvent*, gpointer d) -> gboolean {
-                         auto self = static_cast<LatexDialog*>(d);
+                         auto self = static_cast<IntEdLatexDialog*>(d);
                          /**
                           * dlg->getTextBuffer() may survive the dialog. When copying all of its content, the
                           * clipboard owns a ref to the GtkTextBuffer. We must disconnect the signal to avoid
@@ -189,7 +158,7 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, std::unique_ptr<Latex
                      this);
 
     g_signal_connect(this->getWindow(), "show", G_CALLBACK(+[](GtkWidget*, gpointer d) {
-                         auto* texCtrl = static_cast<LatexController*>(d);
+                         auto texCtrl = static_cast<LatexController*>(d);
                          if (!texCtrl->temporaryRender) {
                              // Trigger an asynchronous compilation if we are not using a preexisting TexImage
                              // Keep this after popup.show() so that if an error message is to be displayed (e.g.
@@ -200,71 +169,15 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, std::unique_ptr<Latex
                      texCtrl.get());
 }
 
-LatexDialog::~LatexDialog() = default;
+IntEdLatexDialog::~IntEdLatexDialog() = default;
 
-void LatexDialog::setCompilationStatus(bool isTexValid, bool isCompilationDone, const std::string& compilationOutput) {
-    gtk_widget_set_sensitive(GTK_WIDGET(btOk), isTexValid && isCompilationDone);
 
-    // Show error warning only if LaTeX is invalid.
-    gtk_widget_set_opacity(GTK_WIDGET(texErrorLabel), isTexValid ? 0 : 1);
+auto IntEdLatexDialog::getTextBuffer() -> GtkTextBuffer* { return this->textBuffer; }
 
-    // Update the output pane.
-    gtk_text_buffer_set_text(compilationOutputTextBuffer, compilationOutput.c_str(), -1);
-}
-
-void LatexDialog::setTempRender(PopplerDocument* pdf) {
-    if (poppler_document_get_n_pages(pdf) < 1) {
-        return;
-    }
-
-    this->previewPdfPage.reset(poppler_document_get_page(pdf, 0), xoj::util::adopt);
-    this->previewMask.reset();
-
-    // Queue rendering the changed preview.
-    gtk_widget_queue_draw(GTK_WIDGET(this->previewDrawingArea));
-}
-
-void LatexDialog::setPreviewBackgroundColor(Color newColor) { this->previewBackgroundColor = newColor; }
-
-auto LatexDialog::getTextBuffer() -> GtkTextBuffer* { return this->textBuffer; }
-
-auto LatexDialog::getBufferContents() -> std::string {
+auto IntEdLatexDialog::getBufferContents() -> std::string {
     GtkTextIter start, end;
     gtk_text_buffer_get_bounds(this->textBuffer, &start, &end);
     auto content =
             xoj::util::OwnedCString::assumeOwnership(gtk_text_buffer_get_text(this->textBuffer, &start, &end, false));
     return content.get();
-}
-
-void LatexDialog::previewDrawFunc(GtkDrawingArea*, cairo_t* cr, int width, int height, LatexDialog* self) {
-
-    // If we have nothing to render, do nothing!
-    if (!self->previewPdfPage) {
-        return;
-    }
-
-    Range pageRange(0, 0, 0, 0);
-    poppler_page_get_size(self->previewPdfPage.get(), &pageRange.maxX, &pageRange.maxY);
-
-    const double zoom =
-            std::min(static_cast<double>(width) / pageRange.maxX, static_cast<double>(height) / pageRange.maxY);
-
-
-    if (!self->previewMask.isInitialized() || self->previewMask.getZoom() < zoom) {
-        // Need to rerender the preview
-        self->previewMask = xoj::view::Mask(gtk_widget_get_scale_factor(GTK_WIDGET(self->previewDrawingArea)),
-                                            pageRange, zoom, CAIRO_CONTENT_COLOR_ALPHA);
-        poppler_page_render(self->previewPdfPage.get(), self->previewMask.get());
-    }
-
-
-    Util::cairo_set_source_rgbi(cr, self->previewBackgroundColor);
-    cairo_paint(cr);
-
-    // Center the rendering
-    const double extraHorizontalSpace = std::max(0.0, width - pageRange.maxX * zoom);
-    const double extraVerticalSpace = std::max(0.0, height - pageRange.maxY * zoom);
-    cairo_translate(cr, 0.5 * extraHorizontalSpace, 0.5 * extraVerticalSpace);
-    cairo_scale(cr, zoom, zoom);
-    self->previewMask.paintTo(cr);
 }

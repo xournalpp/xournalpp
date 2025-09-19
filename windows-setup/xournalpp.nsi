@@ -11,9 +11,8 @@ Unicode true
 
 !include "MUI2.nsh"
 !include x64.nsh
-!include "FileAssociation.nsh"
+!include "${SCRIPT_DIR}\FileAssociation.nsh"
 !include nsDialogs.nsh
-!include "xournalpp_version.nsh"
 
 ; Options for MultiUser plugin
 !define MULTIUSER_INSTALLMODE_INSTDIR "Xournal++"
@@ -57,7 +56,7 @@ FunctionEnd
 
 ; Name and file
 Name "Xournal++ ${XOURNALPP_VERSION}"
-OutFile "xournalpp-setup.exe"
+OutFile "${OUTPUT_INSTALLER_FILE}"
 
 ;--------------------------------
 ; Global Variables
@@ -72,7 +71,7 @@ Var StartMenuFolder
 ;--------------------------------
 ; Pages
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE "..\LICENSE"
+!insertmacro MUI_PAGE_LICENSE "${SCRIPT_DIR}\..\LICENSE"
 !insertmacro MULTIUSER_PAGE_INSTALLMODE
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
@@ -206,16 +205,16 @@ Section "Xournal++" SecXournalpp
 	SetOutPath "$INSTDIR"
 
 	; Files to put into the setup
-	File /r "dist\*"
+	File /r ${SETUP_DIR}\*
 
 	; Set install information
 	WriteRegStr SHCTX "Software\Xournal++" "" '"$INSTDIR"'
 
 	; Set program information
-	WriteRegStr SHCTX "Software\Classes\Applications\xournalpp.exe" "" '"$INSTDIR\bin\xournalpp.exe"'
+	WriteRegStr SHCTX "Software\Classes\Applications\xournalpp.exe" "" '"$INSTDIR\bin\xournalpp-wrapper.exe"'
 	WriteRegStr SHCTX "Software\Classes\Applications\xournalpp.exe" "FriendlyAppName" "Xournal++"
-	WriteRegExpandStr SHCTX "Software\Classes\Applications\xournalpp.exe" "DefaultIcon" '"$INSTDIR\bin\xournalpp.exe",0'
-	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\App Paths\xournalpp.exe" "" '"$INSTDIR\bin\xournalpp.exe"'
+	WriteRegExpandStr SHCTX "Software\Classes\Applications\xournalpp.exe" "DefaultIcon" '"$INSTDIR\bin\xournalpp-wrapper.exe",0'
+	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\App Paths\xournalpp.exe" "" '"$INSTDIR\bin\xournalpp-wrapper.exe"'
 
 	; Add file type information
 	!insertmacro RegisterExt ".xopp" "Xournal++.File"
@@ -223,7 +222,7 @@ Section "Xournal++" SecXournalpp
 	!insertmacro RegisterExt ".xoj" "Xournal++.Xournal"
 	!insertmacro RegisterExt ".pdf" "Xournal++.AnnotatePdf"
 	push $R0
-	StrCpy $R0 "$INSTDIR\bin\xournalpp.exe"
+	StrCpy $R0 "$INSTDIR\bin\xournalpp-wrapper.exe"
 	!insertmacro AddProgId "Xournal++.File" "$R0" "Xournal++ file"
 	!insertmacro AddProgId "Xournal++.Template" "$R0" "Xournal++ template file"
 	!insertmacro AddProgId "Xournal++.Xournal" "$R0" "Xournal file"
@@ -233,7 +232,7 @@ Section "Xournal++" SecXournalpp
 	; Create uninstaller
 	WriteUninstaller "$INSTDIR\Uninstall.exe"
 	; Add uninstall entry. See https://docs.microsoft.com/en-us/windows/win32/msi/uninstall-registry-key
-	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Xournal++" "DisplayIcon" '"$INSTDIR\bin\xournalpp.exe"'
+	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Xournal++" "DisplayIcon" '"$INSTDIR\bin\xournalpp-wrapper.exe"'
 	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Xournal++" "DisplayName" "Xournal++"
 	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Xournal++" "DisplayVersion" "${XOURNALPP_VERSION}"
 	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Xournal++" "Publisher" "The Xournal++ Team"
@@ -246,7 +245,7 @@ Section "Xournal++" SecXournalpp
 	!insertmacro MUI_STARTMENU_WRITE_BEGIN Application
 		;Create shortcuts
 		CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
-		CreateShortcut "$SMPROGRAMS\$StartMenuFolder\Xournal++.lnk" '"$INSTDIR\bin\xournalpp.exe"'
+		CreateShortcut "$SMPROGRAMS\$StartMenuFolder\Xournal++.lnk" '"$INSTDIR\bin\xournalpp-wrapper.exe"'
 		CreateShortcut "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk" '"$INSTDIR\Uninstall.exe"'
 		
 		!insertmacro RefreshShellIconCreate "$SMPROGRAMS\$StartMenuFolder\Xournal++.lnk"

@@ -43,19 +43,43 @@ template <typename container_type>
 class PointerContainerView {
 public:
     using value_type = const typename std::pointer_traits<typename container_type::value_type>::element_type*;
-    class iterator;
-    using const_iterator = iterator;
     using reference = const value_type&;
     using pointer = const value_type*;
     using difference_type = typename container_type::difference_type;
     using size_type = typename container_type::size_type;
 
+    template <typename base_it>
+    class iterator_impl: public base_it {
+    public:
+        using value_type = const typename std::pointer_traits<typename container_type::value_type>::element_type*;
+        using reference = const value_type&;
+        using pointer = const value_type*;
+
+        iterator_impl() = default;
+        ~iterator_impl() = default;
+        iterator_impl(base_it it): base_it(it) {}
+
+        // We must return by value
+        value_type operator*() const { return to_address(base_it::operator*()); }
+        value_type operator[](difference_type n) const { return to_address(base_it::operator[](n)); }
+
+    private:
+        using base_it::operator->;
+    };
+    using iterator = iterator_impl<typename container_type::const_iterator>;
+    using const_iterator = iterator;
+    using reverse_iterator = iterator_impl<std::reverse_iterator<typename container_type::const_iterator>>;
+
     PointerContainerView(const container_type& container): b(container.cbegin()), e(container.cend()) {}
 
     iterator begin() const { return b; }
     iterator end() const { return e; }
-    std::reverse_iterator<iterator> rbegin() const { return std::reverse_iterator(e); }
-    std::reverse_iterator<iterator> rend() const { return std::reverse_iterator(b); }
+    reverse_iterator rbegin() const {
+        return reverse_iterator(std::reverse_iterator(static_cast<typename container_type::const_iterator>(e)));
+    }
+    reverse_iterator rend() const {
+        return reverse_iterator(std::reverse_iterator(static_cast<typename container_type::const_iterator>(b)));
+    }
     value_type operator[](size_type n) const { return b[static_cast<typename iterator::difference_type>(n)]; }
     value_type front() const { return *b; }
     value_type back() const { return e[-1]; }
@@ -68,22 +92,6 @@ public:
 private:
     const iterator b;
     const iterator e;
-};
-
-template <typename container_type>
-class PointerContainerView<container_type>::iterator: public container_type::const_iterator {
-public:
-    using value_type = const typename std::pointer_traits<typename container_type::value_type>::element_type*;
-    using reference = const value_type&;
-    using pointer = const value_type*;
-
-    iterator() = default;
-    ~iterator() = default;
-    iterator(typename container_type::const_iterator it): container_type::const_iterator(it) {}
-
-    value_type operator*() const { return to_address(container_type::const_iterator::operator*()); }
-    pointer operator->() const { return container_type::const_iterator::operator->(); }
-    value_type operator[](difference_type n) const { return to_address(container_type::const_iterator::operator[](n)); }
 };
 
 

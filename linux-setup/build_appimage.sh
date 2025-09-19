@@ -3,6 +3,8 @@
 # Script to package an AppImage. Assumes it is being run from the build
 # directory.
 
+ARCH=`uname -m`
+
 # AppImage root
 APPDIR=${APPDIR:-"appimage_staging"}
 
@@ -34,7 +36,7 @@ chmod +x "$LINUXDEPLOY_PLUGIN_GETTEXT"
 fi
 
 if [[ ! -f $LINUXDEPLOY ]]; then
-wget -c "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage" -O "$LINUXDEPLOY"
+wget -c "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-$ARCH.AppImage" -O "$LINUXDEPLOY"
 chmod +x "$LINUXDEPLOY"
 fi
 
@@ -49,7 +51,7 @@ ICON_FILE="$APPDIR"/usr/share/icons/hicolor/scalable/apps/com.github.xournalpp.x
 DESKTOP_FILE="$APPDIR"/usr/share/applications/com.github.xournalpp.xournalpp.desktop
 echo "Use the icon file $ICON_FILE and the desktop file $DESKTOP_FILE"
 
-filename_pattern='xournalpp-*x86_64.AppImage.zsync' 
+filename_pattern="xournalpp-*$ARCH.AppImage.zsync"
 # See https://github.com/AppImage/AppImageSpec/blob/master/draft.md#update-information
 
 if [[ $VERSION = *dev ]]; then

@@ -50,14 +50,11 @@ auto GeometryToolInputHandler::handle(InputEvent const& event) -> bool {
     }
 
     switch (device) {
-        case INPUT_DEVICE_KEYBOARD:
-            return false;  // Handled via GtkEventControllerKey in InputContext
         case INPUT_DEVICE_TOUCHSCREEN:
             return this->handleTouchscreen(event);
         case INPUT_DEVICE_PEN:
         case INPUT_DEVICE_MOUSE:
-        case INPUT_DEVICE_MOUSE_KEYBOARD_COMBO:
-            return (!isBlocked[InputContext::DeviceType::MOUSE] && this->handlePointer(event));
+            return this->handlePointer(event);
         default:
             g_warning("Device class %d not handled by geometry tool", event.deviceClass);
             return false;
@@ -201,9 +198,9 @@ void GeometryToolInputHandler::sequenceStart(InputEvent const& event) {
     doc->lock();
     // Performance improvement might be obtained by avoiding filtering all elements each
     // time a finger has been put onto the screen
-    for (const auto& e: layer->getElements()) {
+    for (const auto& e: layer->getElementsView()) {
         if (e->getType() == ELEMENT_STROKE) {
-            auto* s = dynamic_cast<Stroke*>(e.get());
+            auto* s = dynamic_cast<const Stroke*>(e);
             if (s->getPointCount() == 2) {
                 lines.push_back(s);
             }

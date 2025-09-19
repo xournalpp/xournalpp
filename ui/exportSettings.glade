@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.40.0 -->
 <interface>
-  <requires lib="gtk+" version="3.16"/>
+  <requires lib="gtk+" version="3.24"/>
   <object class="GtkAdjustment" id="adjustmentDpi">
     <property name="lower">72</property>
     <property name="upper">1200</property>
@@ -368,7 +368,39 @@ Set export parameters</property>
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <object class="GtkBox" id="boxPdfBackend">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="margin-end">12</property>
+                        <property name="label" translatable="yes">Backend</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkComboBoxText" id="cbtPdfExportBackend">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="hexpand">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="left-attach">2</property>
+                    <property name="top-attach">1</property>
+                  </packing>
                 </child>
                 <child>
                   <placeholder/>
@@ -412,7 +444,7 @@ Set export parameters</property>
                 <property name="can-default">True</property>
                 <property name="receives-default">True</property>
                 <property name="image">iconCancel</property>
-                <accelerator key="Escape" signal="clicked"/>
+                <accelerator key="Escape" signal="activate"/>
               </object>
               <packing>
                 <property name="expand">False</property>

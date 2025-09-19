@@ -62,7 +62,7 @@ void Layer::insertElement(ElementPtr e, Element::Index pos) {
     }
 }
 
-auto Layer::indexOf(Element* e) const -> Element::Index {
+auto Layer::indexOf(const Element* e) const -> Element::Index {
     for (unsigned int i = 0; i < this->elements.size(); i++) {
         if (this->elements[i].get() == e) {
             return i;
@@ -72,7 +72,7 @@ auto Layer::indexOf(Element* e) const -> Element::Index {
     return Element::InvalidIndex;
 }
 
-auto Layer::removeElement(Element* e) -> InsertionPosition {
+auto Layer::removeElement(const Element* e) -> InsertionPosition {
     for (unsigned int i = 0; i < this->elements.size(); i++) {
         if (e == this->elements[i].get()) {
             auto res = std::move(this->elements[i]);
@@ -86,7 +86,7 @@ auto Layer::removeElement(Element* e) -> InsertionPosition {
     return InsertionPosition{nullptr, Element::InvalidIndex};
 }
 
-auto Layer::removeElementAt(Element* e, Element::Index pos) -> InsertionPosition {
+auto Layer::removeElementAt(const Element* e, Element::Index pos) -> InsertionPosition {
     if (pos >= 0 && as_unsigned(pos) < elements.size() && this->elements[as_unsigned(pos)].get() == e) {
         auto iter = std::next(this->elements.begin(), pos);
         auto res = std::move(*iter);
@@ -131,7 +131,12 @@ auto Layer::isVisible() const -> bool { return visible; }
  */
 void Layer::setVisible(bool visible) { this->visible = visible; }
 
-auto Layer::getElements() const -> std::vector<ElementPtr> const& { return this->elements; }
+auto Layer::getElements() -> std::vector<ElementPtr>& { return this->elements; }
+
+auto Layer::getElementsView() const -> xoj::util::PointerContainerView<std::vector<ElementPtr>> {
+    return this->elements;
+}
+
 
 auto Layer::hasName() const -> bool { return name.has_value(); }
 

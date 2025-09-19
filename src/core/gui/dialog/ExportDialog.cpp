@@ -19,7 +19,8 @@ constexpr auto UI_DIALOG_NAME = "exportDialog";
 using namespace xoj::popup;
 
 ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, ExportGraphicsFormat format, size_t currentPage,
-                           size_t pageCount, std::function<void(const ExportDialog&)> callbackFun):
+                           size_t pageCount, bool hasPdfBackground,
+                           std::function<void(const ExportDialog&)> callbackFun):
         currentPage(currentPage), pageCount(pageCount), builder(gladeSearchPath, UI_FILE), callbackFun(callbackFun) {
     window.reset(GTK_WINDOW(builder.get(UI_DIALOG_NAME)));
 
@@ -39,11 +40,22 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, ExportGraphicsForma
 
     if (format == EXPORT_GRAPHICS_PDF) {
         removeQualitySetting();
+        auto* cbt = GTK_COMBO_BOX_TEXT(builder.get("cbtPdfExportBackend"));
+        for (auto&& [id, name]: ExportBackend::getPrettyNamesOfAvailableBackends()) {
+            gtk_combo_box_text_append(cbt, id, name);
+        }
+        gtk_combo_box_set_active_id(GTK_COMBO_BOX(cbt), ExportBackend::DEFAULT_ID_STRING);
+        if (!hasPdfBackground) {
+            // No need for backend selection if no pdf background is present.
+            gtk_widget_set_sensitive(builder.get("boxPdfBackend"), false);
+        }
     } else if (format == EXPORT_GRAPHICS_PNG) {
         gtk_widget_hide(builder.get("cbProgressiveMode"));
+        gtk_widget_hide(builder.get("boxPdfBackend"));
     } else {  // (format == EXPORT_GRAPHICS_SVG)
         removeQualitySetting();
         gtk_widget_hide(builder.get("cbProgressiveMode"));
+        gtk_widget_hide(builder.get("boxPdfBackend"));
     }
 
     // rdRangePages toggled signal handler
@@ -57,7 +69,7 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, ExportGraphicsForma
         auto txtPages = self->builder.get("txtPages");
         gtk_widget_set_sensitive(txtPages, active);
         if (active) {
-            const std::string text_form(gtk_editable_get_chars(GTK_EDITABLE(txtPages), 0, -1));
+            const std::string text_form(gtk_editable_get_text(GTK_EDITABLE(txtPages)));
             try {
                 ElementRange::parse(text_form, self->pageCount);
                 gtk_widget_remove_css_class(txtPages, "error");
@@ -160,6 +172,8 @@ void ExportDialog::onSuccessCallback(ExportDialog* self) {
         range.emplace_back(0, self->pageCount - 1);
         return range;
     }();
+    self->pdfExportBackend = ExportBackend::fromString(
+            gtk_combo_box_get_active_id(GTK_COMBO_BOX(self->builder.get("cbtPdfExportBackend"))));
     self->qualityParameter = RasterImageQualityParameter(
             static_cast<ExportQualityCriterion>(
                     gtk_combo_box_get_active(GTK_COMBO_BOX(self->builder.get("cbQuality")))),

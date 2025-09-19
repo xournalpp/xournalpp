@@ -16,9 +16,9 @@
     <string>Xournal++</string>
 
     <key>CFBundleShortVersionString</key>
-    <string>1.2.7+dev</string>
+    <string>1.2.8+dev</string>
     <key>CFBundleVersion</key>
-    <string>1.2.7+dev.0</string>
+    <string>1.2.8+dev.0</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>NSHumanReadableCopyright</key>
@@ -36,7 +36,7 @@
     <true />
 
     <key>CFBundleExecutable</key>
-    <string>xournalpp</string>
+    <string>xournalpp-wrapper</string>
     <key>LSArchitecturePriority</key>
     <array>
       <string>x86_64</string>
@@ -184,7 +184,7 @@
 
     <key>LSEnvironment</key>
     <dict>
-        <key>DYLD_FALLBACK_LIBRARY_PATH</key>
+        <key>DYLD_LIBRARY_PATH</key>
         <string>/Applications/Xournal++.app/Contents/Resources/lib</string>
     </dict>
 

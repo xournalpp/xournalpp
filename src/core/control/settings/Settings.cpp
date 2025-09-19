@@ -79,7 +79,7 @@ void Settings::loadDefault() {
     this->zoomStep = 10.0;
     this->zoomStepScroll = 2.0;
 
-    this->displayDpi = 72;
+    this->displayDpi = -1;  // Automatic detection
 
     this->font.setName(DEFAULT_FONT);
     this->font.setSize(DEFAULT_FONT_SIZE);
@@ -155,6 +155,9 @@ void Settings::loadDefault() {
     // Eraser
     this->buttonConfig[BUTTON_ERASER] = std::make_unique<ButtonConfig>(TOOL_ERASER, Colors::black, TOOL_SIZE_NONE,
                                                                        DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    // Left button
+    this->buttonConfig[BUTTON_MOUSE_LEFT] = std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE,
+                                                                           DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Middle button
     this->buttonConfig[BUTTON_MOUSE_MIDDLE] = std::make_unique<ButtonConfig>(TOOL_HAND, Colors::black, TOOL_SIZE_NONE,
                                                                              DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
@@ -199,18 +202,27 @@ void Settings::loadDefault() {
 	this->pageTemplate = "xoj/template\ncopyLastPageSettings=true\nsize=595.275591x841.889764\nbackgroundType=lined\nbackgroundColor=#ffffff\n";
     // clang-format on
 
+#ifdef ENABLE_AUDIO
     this->audioSampleRate = 44100.0;
     this->audioInputDevice = AUDIO_INPUT_SYSTEM_DEFAULT;
     this->audioOutputDevice = AUDIO_OUTPUT_SYSTEM_DEFAULT;
     this->audioGain = 1.0;
     this->defaultSeekTime = 5;
+#endif
 
     this->pluginEnabled = "";
     this->pluginDisabled = "";
 
     this->numIgnoredStylusEvents = 0;
 
+#ifdef _WIN32
+    // This option should be on on Windows:
+    // GTK (at least until 3.24.49) only creates GDK_BUTTON_PRESS events on mouse-events or stylus-down-events
+    this->inputSystemTPCButton = true;
+#else
     this->inputSystemTPCButton = false;
+#endif
+
     this->inputSystemDrawOutsideWindow = true;
 
     this->strokeFilterIgnoreTime = 150;
@@ -241,6 +253,8 @@ void Settings::loadDefault() {
 
     this->useSpacesForTab = false;
     this->numberOfSpacesForTab = 4;
+
+    this->laserPointerFadeOutTime = 500;
 
     this->colorPaletteSetting = Util::getBuiltInPaletteDirectoryPath() / DEFAULT_PALETTE_FILE;
 }
@@ -607,6 +621,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->disableScrollbarFadeout = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("disableAudio")) == 0) {
         this->disableAudio = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+#ifdef ENABLE_AUDIO
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioSampleRate")) == 0) {
         this->audioSampleRate = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioGain")) == 0) {
@@ -617,6 +632,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->audioInputDevice = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioOutputDevice")) == 0) {
         this->audioOutputDevice = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+#endif
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("numIgnoredStylusEvents")) == 0) {
         this->numIgnoredStylusEvents =
                 std::max<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10), 0);
@@ -661,6 +677,14 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->latexSettings.sourceViewSyntaxHighlight = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.sourceViewShowLineNumbers")) == 0) {
         this->latexSettings.sourceViewShowLineNumbers = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.useExternalEditor")) == 0) {
+        this->latexSettings.useExternalEditor = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.externalEditorAutoConfirm")) == 0) {
+        this->latexSettings.externalEditorAutoConfirm = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.externalEditorCmd")) == 0) {
+        this->latexSettings.externalEditorCmd = std::string{reinterpret_cast<char*>(value)};
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.temporaryFileExt")) == 0) {
+        this->latexSettings.temporaryFileExt = std::string{reinterpret_cast<char*>(value)};
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapRecognizedShapesEnabled")) == 0) {
         this->snapRecognizedShapesEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("restoreLineWidthEnabled")) == 0) {
@@ -670,7 +694,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("useSpacesForTab")) == 0) {
         this->setUseSpacesAsTab(xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("numberOfSpacesForTab")) == 0) {
-        this->setNumberOfSpacesForTab(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
+        this->setNumberOfSpacesForTab(
+                static_cast<unsigned int>(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10)));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("laserPointerFadeOutTime")) == 0) {
+        this->laserPointerFadeOutTime =
+                static_cast<unsigned int>(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
         /**
          * Stabilizer related settings
          */
@@ -714,8 +742,12 @@ void Settings::loadDeviceClasses() {
         int deviceSource = 0;
         deviceNode.getInt("deviceClass", deviceClass);
         deviceNode.getInt("deviceSource", deviceSource);
-        inputDeviceClasses.emplace(device.first, std::make_pair(static_cast<InputDeviceTypeOption>(deviceClass),
-                                                                static_cast<GdkInputSource>(deviceSource)));
+        auto devClass = static_cast<InputDeviceTypeOption>(deviceClass);
+        if (devClass == InputDeviceTypeOption::MouseKeyboardCombo) {
+            // This extra class is no longer handled differently from Mouse. Merge them.
+            devClass = InputDeviceTypeOption::Mouse;
+        }
+        inputDeviceClasses.emplace(device.first, std::make_pair(devClass, static_cast<GdkInputSource>(deviceSource)));
     }
 }
 
@@ -1116,6 +1148,8 @@ void Settings::save() {
     ATTACH_COMMENT("Config for new pages");
 
     SAVE_STRING_PROP(sizeUnit);
+
+#ifdef ENABLE_AUDIO
     {
         auto audioFolder = this->audioFolder.u8string();
         SAVE_STRING_PROP(audioFolder);
@@ -1125,6 +1159,7 @@ void Settings::save() {
     SAVE_DOUBLE_PROP(audioSampleRate);
     SAVE_DOUBLE_PROP(audioGain);
     SAVE_INT_PROP(defaultSeekTime);
+#endif
 
     SAVE_STRING_PROP(pluginEnabled);
     SAVE_STRING_PROP(pluginDisabled);
@@ -1148,6 +1183,8 @@ void Settings::save() {
 
     SAVE_BOOL_PROP(useSpacesForTab);
     SAVE_UINT_PROP(numberOfSpacesForTab);
+
+    SAVE_UINT_PROP(laserPointerFadeOutTime);
 
     /**
      * Stabilizer related settings
@@ -1183,6 +1220,10 @@ void Settings::save() {
     SAVE_BOOL_PROP(latexSettings.sourceViewAutoIndent);
     SAVE_BOOL_PROP(latexSettings.sourceViewSyntaxHighlight);
     SAVE_BOOL_PROP(latexSettings.sourceViewShowLineNumbers);
+    SAVE_BOOL_PROP(latexSettings.useExternalEditor);
+    SAVE_BOOL_PROP(latexSettings.externalEditorAutoConfirm);
+    SAVE_STRING_PROP(latexSettings.externalEditorCmd);
+    SAVE_STRING_PROP(latexSettings.temporaryFileExt);
 
     xmlNodePtr xmlFont = nullptr;
     xmlFont = xmlNewChild(root, nullptr, reinterpret_cast<const xmlChar*>("property"), nullptr);
@@ -1716,18 +1757,6 @@ void Settings::setPageTemplate(const string& pageTemplate) {
     save();
 }
 
-auto Settings::getAudioFolder() const -> fs::path const& { return this->audioFolder; }
-
-void Settings::setAudioFolder(fs::path audioFolder) {
-    if (this->audioFolder == audioFolder) {
-        return;
-    }
-
-    this->audioFolder = std::move(audioFolder);
-
-    save();
-}
-
 auto Settings::getSizeUnit() const -> string const& { return sizeUnit; }
 
 void Settings::setSizeUnit(const string& sizeUnit) {
@@ -2177,6 +2206,18 @@ void Settings::setFont(const XojFont& font) {
     save();
 }
 
+#ifdef ENABLE_AUDIO
+auto Settings::getAudioFolder() const -> fs::path const& { return this->audioFolder; }
+
+void Settings::setAudioFolder(fs::path audioFolder) {
+    if (this->audioFolder == audioFolder) {
+        return;
+    }
+
+    this->audioFolder = std::move(audioFolder);
+
+    save();
+}
 
 auto Settings::getAudioInputDevice() const -> PaDeviceIndex { return this->audioInputDevice; }
 
@@ -2227,6 +2268,7 @@ void Settings::setDefaultSeekTime(unsigned int t) {
     this->defaultSeekTime = t;
     save();
 }
+#endif
 
 auto Settings::getPluginEnabled() const -> string const& { return this->pluginEnabled; }
 
@@ -2641,3 +2683,13 @@ void Settings::setNumberOfSpacesForTab(unsigned int numberOfSpaces) {
 }
 
 unsigned int Settings::getNumberOfSpacesForTab() const { return this->numberOfSpacesForTab; }
+
+void Settings::setLaserPointerFadeOutTime(unsigned int timeInMs) {
+    if (this->laserPointerFadeOutTime == timeInMs) {
+        return;
+    }
+    this->laserPointerFadeOutTime = timeInMs;
+    save();
+}
+
+unsigned int Settings::getLaserPointerFadeOutTime() const { return this->laserPointerFadeOutTime; }

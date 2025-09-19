@@ -19,7 +19,11 @@
 
   <plist>${project}/Info.plist</plist>
 
-  <main-binary>${prefix}/bin/xournalpp</main-binary>
+  <main-binary>${prefix}/bin/xournalpp-wrapper</main-binary>
+
+  <binary dest="${bundle}/Contents/MacOS">
+    ${prefix}/bin/xournalpp
+  </binary>
 
   <binary dest="${bundle}/Contents/MacOS">
     ${prefix}/bin/gtk3-demo
@@ -47,25 +51,30 @@
     ${prefix}/lib/libpoppler-glib*.dylib
   </binary>
 
-  <!-- Lua-lgi and GObject-introspection dependency -->
+  <!-- Lua-GObject and GObject-introspection dependency -->
   <binary>
-    ${prefix}/lib/lua/5.4/lgi/corelgilua51.so
+    ${prefix}/lib/lua/5.4/LuaGObject/lua_gobject_core.so
   </binary>
   <binary>
     ${prefix}/lib/libgirepository*.dylib
   </binary>
   <data>
-    ${prefix}/share/lua/5.4/lgi.lua
+    ${prefix}/share/lua/5.4/LuaGObject.lua
   </data>
   <data>
-    ${prefix}/share/lua/5.4/lgi/*.lua
+    ${prefix}/share/lua/5.4/LuaGObject/*.lua
   </data>
   <data>
-    ${prefix}/share/lua/5.4/lgi/override/*.lua
+    ${prefix}/share/lua/5.4/LuaGObject/override/*.lua
   </data>
   <data>
     ${prefix}/lib/girepository-1.0/*.typelib
   </data>
+
+  <!-- QPDF -->
+  <binary>
+    ${prefix}/lib/libqpdf*.dylib
+  </binary>
 
   <!-- Translation filenames, one for each program or library that you
        want to copy in to the bundle. The "dest" attribute is

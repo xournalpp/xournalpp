@@ -35,6 +35,7 @@
 #include "control/tools/ImageHandler.h"             // for ImageHandler
 #include "control/tools/ImageSizeSelection.h"       // for ImageSizeSelection
 #include "control/tools/InputHandler.h"             // for InputHandler
+#include "control/tools/LaserPointerHandler.h"      // for LaserPointerHandler
 #include "control/tools/PdfElemSelection.h"         // for PdfElemSelection
 #include "control/tools/RectangleHandler.h"         // for RectangleHandler
 #include "control/tools/RulerHandler.h"             // for RulerHandler
@@ -211,6 +212,11 @@ void XojPageView::endSpline() {
     }
 }
 
+void XojPageView::deleteLaserPointerHandler() {
+    xoj_assert(hasNoViewOf(overlayViews, laserPointer.get()));
+    laserPointer.reset();
+}
+
 auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     if (currentSequenceDeviceId) {
         // An input sequence is already under way from another device
@@ -294,13 +300,22 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     } else if (h->getToolType() == TOOL_ERASER) {
         this->eraser->erase(x, y);
         this->inEraser = true;
+    } else if (h->getToolType() == TOOL_LASER_POINTER_PEN || h->getToolType() == TOOL_LASER_POINTER_HIGHLIGHTER) {
+        if (!this->laserPointer) {
+            this->laserPointer = std::make_unique<LaserPointerHandler>(this, control, getPage());
+            this->laserPointer->onButtonPressEvent(pos, zoom);
+            this->overlayViews.emplace_back(this->laserPointer->createView(this));
+        } else {
+            this->laserPointer->onButtonPressEvent(pos, zoom);
+        }
     } else if (h->getToolType() == TOOL_VERTICAL_SPACE) {
         if (this->verticalSpace) {
             control->getUndoRedoHandler()->addUndoAction(this->verticalSpace->finalize());
             this->verticalSpace.reset();
         }
         auto* zoomControl = this->getXournal()->getControl()->getZoomControl();
-        this->verticalSpace = std::make_unique<VerticalToolHandler>(this->page, this->settings, y, pos.isControlDown());
+        this->verticalSpace = std::make_unique<VerticalToolHandler>(this->page, this->getXournal()->getControl(), y,
+                                                                    pos.isControlDown());
         this->overlayViews.emplace_back(this->verticalSpace->createView(this, zoomControl, this->settings));
     } else if (h->getToolType() == TOOL_SELECT_RECT || h->getToolType() == TOOL_SELECT_REGION ||
                h->getToolType() == TOOL_SELECT_MULTILAYER_RECT || h->getToolType() == TOOL_SELECT_MULTILAYER_REGION ||
@@ -445,12 +460,12 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
         // original coordinates of the selection.
         double origx = x - (selection->getXOnView() - selection->getOriginalXOnView());
         double origy = y - (selection->getYOnView() - selection->getOriginalYOnView());
-        const std::vector<Element*>& elems = selection->getElements();
+        auto elems = selection->getElementsView();
         auto it = std::find_if(elems.begin(), elems.end(),
-                               [&](Element* elem) { return elem->intersectsArea(origx - 5, origy - 5, 5, 5); });
+                               [&](const Element* elem) { return elem->intersectsArea(origx - 5, origy - 5, 5, 5); });
         if (it != elems.end()) {
             // Enter editing mode on the selected object
-            Element* object = *it;
+            const Element* object = *it;
             ElementType elemType = object->getType();
             if (elemType == ELEMENT_TEXT) {
                 this->xournal->clearSelection();
@@ -545,6 +560,8 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
 
         const Text* text = this->textEditor->getTextElement();
         this->textEditor->mouseMoved(x - text->getX(), y - text->getY());
+    } else if (this->laserPointer && this->laserPointer->onMotionNotifyEvent(pos, zoom)) {
+        // used this event
     } else if (h->getToolType() == TOOL_ERASER && h->getEraserType() != ERASER_TYPE_WHITEOUT && this->inEraser) {
         this->eraser->erase(x, y);
     }
@@ -572,6 +589,8 @@ void XojPageView::onSequenceCancelEvent(DeviceId deviceId) {
             xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
             this->inputHandler.reset();
         }
+    } else if (this->laserPointer) {
+        this->laserPointer->onSequenceCancelEvent();
     }
 }
 
@@ -657,6 +676,9 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
             xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
             this->inputHandler.reset();
         }
+    } else if (auto tt = control->getToolHandler()->getToolType();
+               this->laserPointer && (tt == TOOL_LASER_POINTER_PEN || tt == TOOL_LASER_POINTER_HIGHLIGHTER)) {
+        this->laserPointer->onButtonReleaseEvent(pos, xournal->getZoom());
     }
 
     if (this->inEraser) {
@@ -1107,29 +1129,29 @@ auto XojPageView::getDisplayHeightDouble() const -> double {
     return this->page->getHeight() * this->xournal->getZoom();
 }
 
-auto XojPageView::getSelectedTex() -> TexImage* {
+auto XojPageView::getSelectedTex() const -> const TexImage* {
     EditSelection* theSelection = this->xournal->getSelection();
     if (!theSelection) {
         return nullptr;
     }
 
-    for (Element* e: theSelection->getElements()) {
+    for (const Element* e: theSelection->getElementsView()) {
         if (e->getType() == ELEMENT_TEXIMAGE) {
-            return dynamic_cast<TexImage*>(e);
+            return dynamic_cast<const TexImage*>(e);
         }
     }
     return nullptr;
 }
 
-auto XojPageView::getSelectedText() -> Text* {
+auto XojPageView::getSelectedText() const -> const Text* {
     EditSelection* theSelection = this->xournal->getSelection();
     if (!theSelection) {
         return nullptr;
     }
 
-    for (Element* e: theSelection->getElements()) {
+    for (const Element* e: theSelection->getElementsView()) {
         if (e->getType() == ELEMENT_TEXT) {
-            return dynamic_cast<Text*>(e);
+            return dynamic_cast<const Text*>(e);
         }
     }
     return nullptr;
@@ -1145,7 +1167,7 @@ void XojPageView::rangeChanged(Range& range) { rerenderRange(range); }
 
 void XojPageView::pageChanged() { rerenderPage(); }
 
-void XojPageView::elementChanged(Element* elem) {
+void XojPageView::elementChanged(const Element* elem) {
     /*
      * The input handlers issue an elementChanged event when creating an element.
      * There is however no need to redraw the element in this case: the element was already painted to the buffer via a
@@ -1163,7 +1185,7 @@ void XojPageView::elementChanged(Element* elem) {
     }
 }
 
-void XojPageView::elementsChanged(const std::vector<Element*>& elements, const Range& range) {
+void XojPageView::elementsChanged(const std::vector<const Element*>& elements, const Range& range) {
     if (!range.empty()) {
         rerenderRange(range);
     }

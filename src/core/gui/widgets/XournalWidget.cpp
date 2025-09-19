@@ -21,48 +21,24 @@
 #include "util/Color.h"                     // for cairo_set_source_rgbi
 #include "util/Rectangle.h"                 // for Rectangle
 
+#include "config-debug.h"  // for DEBUG_DRAW_WIDGET
 
-using xoj::util::Rectangle;
+/*
+ * Declares:
+ *      static void gtk_xournal_class_init(GtkXournalClass*);
+ *      static void gtk_xournal_init(GtkXournal*);
+ * Defines
+ *      gtk_xournal_parent_class (pointer to GtkWidgetClass instance)
+ *      GType gtk_xournal_get_type();
+ */
+G_DEFINE_TYPE(GtkXournal, gtk_xournal, GTK_TYPE_WIDGET)
 
-static void gtk_xournal_class_init(GtkXournalClass* klass);
-static void gtk_xournal_init(GtkXournal* xournal);
 static void gtk_xournal_get_preferred_width(GtkWidget* widget, gint* minimal_width, gint* natural_width);
 static void gtk_xournal_get_preferred_height(GtkWidget* widget, gint* minimal_height, gint* natural_height);
 static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocation);
 static void gtk_xournal_realize(GtkWidget* widget);
 static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean;
 static void gtk_xournal_dispose(GObject* object);
-
-auto gtk_xournal_get_type(void) -> GType {
-    static GType gtk_xournal_type = 0;
-
-    if (!gtk_xournal_type) {
-        static const GTypeInfo gtk_xournal_info = {sizeof(GtkXournalClass),
-                                                   // base initialize
-                                                   nullptr,
-                                                   // base finalize
-                                                   nullptr,
-                                                   // class initialize
-                                                   reinterpret_cast<GClassInitFunc>(gtk_xournal_class_init),
-                                                   // class finalize
-                                                   nullptr,
-                                                   // class data,
-                                                   nullptr,
-                                                   // instance size
-                                                   sizeof(GtkXournal),
-                                                   // n_preallocs
-                                                   0,
-                                                   // instance init
-                                                   reinterpret_cast<GInstanceInitFunc>(gtk_xournal_init),
-                                                   // value table
-                                                   nullptr};
-
-        gtk_xournal_type =
-                g_type_register_static(GTK_TYPE_WIDGET, "GtkXournal", &gtk_xournal_info, static_cast<GTypeFlags>(0));
-    }
-
-    return gtk_xournal_type;
-}
 
 auto gtk_xournal_new(XournalView* view, InputContext* inputContext) -> GtkWidget* {
     GtkXournal* xoj = GTK_XOURNAL(g_object_new(gtk_xournal_get_type(), nullptr));
@@ -87,10 +63,25 @@ static void gtk_xournal_class_init(GtkXournalClass* cptr) {
 
     widget_class->draw = gtk_xournal_draw;
 
-    reinterpret_cast<GObjectClass*>(widget_class)->dispose = gtk_xournal_dispose;
+#ifdef DEBUG_DRAW_WIDGET
+    widget_class->queue_draw_region = +[](GtkWidget* w, const cairo_region_t* reg) {
+        cairo_rectangle_int_t r;
+        cairo_region_get_extents(reg, &r);
+        auto width = gtk_widget_get_allocated_width(w);
+        auto height = gtk_widget_get_allocated_height(w);
+
+        auto widthp = gtk_widget_get_allocated_width(gtk_widget_get_parent(w));
+        auto heightp = gtk_widget_get_allocated_height(gtk_widget_get_parent(w));
+        printf("   * queue_draw_region: %d x %d + (%d ; %d) out of %d x %d   parent: %d x %d\n", r.width, r.height, r.x,
+               r.y, width, height, widthp, heightp);
+        GTK_WIDGET_CLASS(gtk_xournal_parent_class)->queue_draw_region(w, reg);
+    };
+#endif
+
+    G_OBJECT_CLASS(cptr)->dispose = gtk_xournal_dispose;
 }
 
-auto gtk_xournal_get_visible_area(GtkWidget* widget, const XojPageView* p) -> Rectangle<double>* {
+auto gtk_xournal_get_visible_area(GtkWidget* widget, const XojPageView* p) -> xoj::util::Rectangle<double>* {
     g_return_val_if_fail(widget != nullptr, nullptr);
     g_return_val_if_fail(GTK_IS_XOURNAL(widget), nullptr);
 
@@ -128,7 +119,8 @@ auto gtk_xournal_get_visible_area(GtkWidget* widget, const XojPageView* p) -> Re
                   "should never happen");
     }
 
-    return new Rectangle<double>(std::max(r3.x, 0) / zoom, std::max(r3.y, 0) / zoom, r3.width / zoom, r3.height / zoom);
+    return new xoj::util::Rectangle<double>(std::max(r3.x, 0) / zoom, std::max(r3.y, 0) / zoom, r3.width / zoom,
+                                            r3.height / zoom);
 }
 
 auto gtk_xournal_get_layout(GtkWidget* widget) -> Layout* {
@@ -146,12 +138,16 @@ static void gtk_xournal_init(GtkXournal* xournal) {
 }
 
 static void gtk_xournal_get_preferred_width(GtkWidget* widget, gint* minimal_width, gint* natural_width) {
+    g_return_if_fail(GTK_IS_XOURNAL(widget));
     GtkXournal* xournal = GTK_XOURNAL(widget);
+    g_return_if_fail(xournal->layout);
     *minimal_width = *natural_width = xournal->layout->getMinimalWidth();
 }
 
 static void gtk_xournal_get_preferred_height(GtkWidget* widget, gint* minimal_height, gint* natural_height) {
+    g_return_if_fail(GTK_IS_XOURNAL(widget));
     GtkXournal* xournal = GTK_XOURNAL(widget);
+    g_return_if_fail(xournal->layout);
     *minimal_height = *natural_height = xournal->layout->getMinimalHeight();
 }
 
@@ -213,11 +209,11 @@ static void gtk_xournal_draw_shadow(GtkXournal* xournal, cairo_t* cr, int left, 
 
         // Draw border
         Util::cairo_set_source_rgbi(cr, settings->getBorderColor());
-        cairo_set_line_width(cr, 4.0);
+        cairo_set_line_width(cr, 2.0);
         cairo_set_line_cap(cr, CAIRO_LINE_CAP_SQUARE);
         cairo_set_line_join(cr, CAIRO_LINE_JOIN_MITER);
 
-        cairo_rectangle(cr, left, top, width, height);
+        cairo_rectangle(cr, left - 1, top - 1, width + 2, height + 2);
         cairo_stroke(cr);
     } else {
         Shadow::drawShadow(cr, left, top, width, height);
@@ -246,6 +242,18 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
     g_return_val_if_fail(widget != nullptr, false);
     g_return_val_if_fail(GTK_IS_XOURNAL(widget), false);
 
+
+#ifdef DEBUG_DRAW_WIDGET
+    {
+        double x1 = NAN, x2 = NAN, y1 = NAN, y2 = NAN;
+        cairo_clip_extents(cr, &x1, &y1, &x2, &y2);
+        printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n"
+               "      DRAW  %d x %d + (%d ; %d)\n\n"
+               "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$&&&&&&&&&&&&&&&&&&&&&&\n",
+               round_cast<int>(x2 - x1), round_cast<int>(y2 - y1), round_cast<int>(x1), round_cast<int>(y1));
+    }
+#endif
+
     GtkXournal* xournal = GTK_XOURNAL(widget);
 
     double x1 = NAN, x2 = NAN, y1 = NAN, y2 = NAN;
@@ -258,7 +266,7 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
     cairo_paint(cr);
 
     // Add a padding for the shadow of the pages
-    Rectangle clippingRect(x1 - 10, y1 - 10, x2 - x1 + 20, y2 - y1 + 20);
+    xoj::util::Rectangle<double> clippingRect(x1 - 10, y1 - 10, x2 - x1 + 20, y2 - y1 + 20);
 
     for (auto&& pv: xournal->view->getViewPages()) {
         int px = pv->getX();
@@ -314,4 +322,6 @@ static void gtk_xournal_dispose(GObject* object) {
 
     delete xournal->input;
     xournal->input = nullptr;
+
+    G_OBJECT_CLASS(gtk_xournal_parent_class)->dispose(object);
 }

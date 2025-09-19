@@ -53,18 +53,22 @@
   <url type="homepage">https://xournalpp.github.io/</url>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/xournalpp/xournalpp-examples/main/appdata/screenshots/note_taking_1600x900.png</image>
+      <image>https://raw.githubusercontent.com/xournalpp/xournalpp-examples/6aaf99756b0cc6a9d600b72490766330601daa67/appdata/screenshots_1.2.7/Note_taking.png</image>
       <caption>Note taking</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/xournalpp/xournalpp-examples/main/appdata/screenshots/pdf_annotation_1600x900.png</image>
+      <image>https://raw.githubusercontent.com/xournalpp/xournalpp-examples/6aaf99756b0cc6a9d600b72490766330601daa67/appdata/screenshots_1.2.7/pdf_annotation.png</image>
       <caption>PDF annotation</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/xournalpp/xournalpp-examples/main/appdata/screenshots/LaTeX_with_customized_preamble_1600x900.png</image>
+      <image>https://raw.githubusercontent.com/xournalpp/xournalpp-examples/6aaf99756b0cc6a9d600b72490766330601daa67/appdata/screenshots_1.2.7/LaTeX_with_customized_preamble.png</image>
       <caption>LaTeX with customized preamble</caption>
     </screenshot>
   </screenshots>
+  <branding>
+    <color type="primary" scheme_preference="light">#77767b</color>
+    <color type="primary" scheme_preference="dark">#241f31</color>
+  </branding>
   <launchable type="desktop-id">com.github.xournalpp.xournalpp.desktop</launchable>
   <provides>
     <id>xournalpp.desktop</id>
@@ -79,7 +83,8 @@
     <!-- Could be automated more:
 	 `git tag -l | grep "^[0-9]*\.[0-9]*\.[0-9]*$`"
     -->
-    <release date="2025-05-08" version="1.2.7+dev" />
+    <release date="2025-09-01" version="1.2.8+dev" />
+    <release date="2025-09-01" version="1.2.8" />
     <release date="2025-05-08" version="1.2.7" />
     <release date="2025-02-19" version="1.2.6" />
     <release date="2024-12-04" version="1.2.5" />

@@ -12,6 +12,7 @@
 #include "control/Control.h"  // for Control
 #include "control/settings/Settings.h"
 #include "gui/XournalppCursor.h"  // for XournalppCursor
+#include "model/Document.h"       // for Document
 #include "model/Font.h"           // for XojFont
 #include "model/Text.h"           // for Text
 #include "model/XojPage.h"        // for XojPage
@@ -996,7 +997,8 @@ void TextEditor::repaintCursorAfterChange() {
 }
 
 void TextEditor::finalizeEdition() {
-    Layer* layer = this->page->getSelectedLayer();
+
+    auto* doc = this->control->getDocument();
     UndoRedoHandler* undo = this->control->getUndoRedoHandler();
 
     this->control->setFontSelected(this->control->getSettings()->getFont());
@@ -1005,10 +1007,14 @@ void TextEditor::finalizeEdition() {
         // Delete the edited element from layer
         if (originalTextElement) {
             auto eraseDeleteUndoAction = std::make_unique<DeleteUndoAction>(page, true);
+            doc->lock();
+            Layer* layer = this->page->getSelectedLayer();
             auto [orig, elementIndex] = layer->removeElement(originalTextElement);
-            xoj_assert(elementIndex != Element::InvalidIndex);
-            eraseDeleteUndoAction->addElement(layer, std::move(orig), elementIndex);
-            undo->addUndoAction(std::move(eraseDeleteUndoAction));
+            doc->unlock();
+            if (elementIndex != Element::InvalidIndex) [[likely]] {
+                eraseDeleteUndoAction->addElement(layer, std::move(orig), elementIndex);
+                undo->addUndoAction(std::move(eraseDeleteUndoAction));
+            }  // A warning has already been issued otherwise
             originalTextElement = nullptr;
         }
         this->viewPool->dispatchAndClear(xoj::view::TextEditionView::FINALIZATION_REQUEST, this->previousBoundingBox);
@@ -1020,19 +1026,31 @@ void TextEditor::finalizeEdition() {
         // Modifying a preexisting element
         this->viewPool->dispatchAndClear(xoj::view::TextEditionView::FINALIZATION_REQUEST, this->previousBoundingBox);
 
-        this->originalTextElement->setInEditing(false);
-
+        doc->lock();
+        Layer* layer = this->page->getSelectedLayer();
         auto [orig, _] = layer->removeElement(this->originalTextElement);
         auto ptr = this->textElement.get();
         layer->addElement(std::move(this->textElement));
+        doc->unlock();
 
         this->page->fireElementChanged(ptr);
 
-        undo->addUndoAction(std::make_unique<TextBoxUndoAction>(this->page, layer, ptr, std::move(orig)));
+        if (orig) [[likely]] {
+            xoj_assert(orig.get() == this->originalTextElement);
+            this->originalTextElement->setInEditing(false);
+            undo->addUndoAction(std::make_unique<TextBoxUndoAction>(this->page, layer, ptr, std::move(orig)));
+        } else {
+            // A warning has already been issued
+            undo->addUndoAction(std::make_unique<InsertUndoAction>(this->page, layer, ptr));
+        }
+        originalTextElement = nullptr;
     } else {
         // Creating a new element
         auto ptr = this->textElement.get();
+        doc->lock();
+        Layer* layer = this->page->getSelectedLayer();
         layer->addElement(std::move(this->textElement));
+        doc->unlock();
         this->viewPool->dispatchAndClear(xoj::view::TextEditionView::FINALIZATION_REQUEST, this->previousBoundingBox);
         this->page->fireElementChanged(ptr);
         undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, ptr));
@@ -1062,6 +1080,7 @@ void TextEditor::initializeEditionAt(double x, double y) {
         this->textElement->setX(x);
         this->textElement->setY(y - this->textElement->getElementHeight() / 2);
 
+#ifdef ENABLE_AUDIO
         if (auto audioController = control->getAudioController(); audioController && audioController->isRecording()) {
             fs::path audioFilename = audioController->getAudioFilename();
             size_t sttime = audioController->getStartTime();
@@ -1069,6 +1088,7 @@ void TextEditor::initializeEditionAt(double x, double y) {
             this->textElement->setTimestamp(milliseconds);
             this->textElement->setAudioFilename(audioFilename);
         }
+#endif
         this->originalTextElement = nullptr;
     } else {
         this->control->setFontSelected(text->getFont());

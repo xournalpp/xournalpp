@@ -136,8 +136,11 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
 
     this->pageTypes = new PageTypeHandler(gladeSearchPath);
 
-    this->audioController =
-            (disableAudio || this->settings->isAudioDisabled()) ? nullptr : new AudioController(this->settings, this);
+#ifdef ENABLE_AUDIO
+    if (!(disableAudio || this->settings->isAudioDisabled())) {
+        this->audioController = std::make_unique<AudioController>(this->settings, this);
+    }
+#endif
 
     this->scrollHandler = new ScrollHandler(this);
 
@@ -148,10 +151,10 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     // for crashhandling
     setEmergencyDocument(this->doc);
 
+
     this->zoom = new ZoomControl();
     this->zoom->setZoomStep(this->settings->getZoomStep() / 100.0);
     this->zoom->setZoomStepScroll(this->settings->getZoomStepScroll() / 100.0);
-    this->zoom->setZoom100Value(this->settings->getDisplayDpi() / Util::DPI_NORMALIZATION_FACTOR);
 
     this->toolHandler = new ToolHandler(this, this->actionDB.get(), this->settings);
     this->toolHandler->loadSettings();
@@ -191,6 +194,8 @@ Control::~Control() {
     this->toolHandler = nullptr;
     delete this->sidebar;
     this->sidebar = nullptr;
+
+    setEmergencyDocument(nullptr);
     delete this->doc;
     this->doc = nullptr;
     delete this->searchBar;
@@ -209,8 +214,6 @@ Control::~Control() {
     this->scheduler = nullptr;
     delete this->dragDropHandler;
     this->dragDropHandler = nullptr;
-    delete this->audioController;
-    this->audioController = nullptr;
     delete this->layerController;
     this->layerController = nullptr;
 }
@@ -487,6 +490,8 @@ void Control::selectAllOnPage() {
         return;
     }
 
+    win->getXournal()->clearSelection();
+
     this->doc->lock();
     XojPageView* view = win->getXournal()->getViewFor(pageNr);
     if (view == nullptr) {
@@ -496,8 +501,6 @@ void Control::selectAllOnPage() {
 
     PageRef page = this->doc->getPage(pageNr);
     Layer* layer = page->getSelectedLayer();
-
-    win->getXournal()->clearSelection();
 
     auto elements = layer->clearNoFree();
     this->doc->unlock();
@@ -1273,7 +1276,7 @@ auto Control::getLineStyleToSelect() -> std::optional<string> const {
     std::optional<std::string> previous_style;
 
     // Todo(cpp20) Replace with std::ranges::filter_view and for_first_then_for_each
-    for (const Element* e: sel->getElements()) {
+    for (const Element* e: sel->getElementsView()) {
         if (e->getType() == ELEMENT_STROKE) {
             const auto* s = dynamic_cast<const Stroke*>(e);
 
@@ -1437,7 +1440,7 @@ void Control::showSettings() {
 
                 ctrl->zoom->setZoomStep(settings->getZoomStep() / 100.0);
                 ctrl->zoom->setZoomStepScroll(settings->getZoomStepScroll() / 100.0);
-                ctrl->zoom->setZoom100Value(settings->getDisplayDpi() / Util::DPI_NORMALIZATION_FACTOR);
+                ctrl->win->setDPI();
 
                 if (settingsBeforeDialog.sidebarStyle != settings->getSidebarNumberingStyle()) {
                     ctrl->getSidebar()->layout();
@@ -1511,6 +1514,8 @@ void Control::replaceDocument(std::unique_ptr<Document> doc, int scrollToPage) {
     this->doc->lock();
     *this->doc = *doc;  // This calls fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE). No need to fire it again
     this->doc->unlock();
+
+    setEmergencyDocument(this->doc);
 
     // Set folder as last save path, so the next save will be at the current document location
     // This is important because of the new .xopp format, where Xournal .xoj handled as import,
@@ -2070,9 +2075,11 @@ void Control::quit(bool allowCancel) {
                 emergencySave();
             }
         } else {
+#ifdef ENABLE_AUDIO
             if (audioController) {
                 audioController->stopRecording();
             }
+#endif
             this->scheduler->lock();
             this->scheduler->removeAllJobs();
             this->scheduler->unlock();
@@ -2139,8 +2146,9 @@ void Control::closeDocument() {
 }
 
 void Control::initButtonTool() {
-    std::vector<Button> buttons{Button::BUTTON_ERASER,       Button::BUTTON_STYLUS_ONE,  Button::BUTTON_STYLUS_TWO,
-                                Button::BUTTON_MOUSE_MIDDLE, Button::BUTTON_MOUSE_RIGHT, Button::BUTTON_TOUCH};
+    std::vector<Button> buttons{Button::BUTTON_ERASER,     Button::BUTTON_STYLUS_ONE,   Button::BUTTON_STYLUS_TWO,
+                                Button::BUTTON_MOUSE_LEFT, Button::BUTTON_MOUSE_MIDDLE, Button::BUTTON_MOUSE_RIGHT,
+                                Button::BUTTON_TOUCH};
     ButtonConfig* cfg;
     for (auto b: buttons) {
         cfg = settings->getButtonConfig(b);
@@ -2168,7 +2176,7 @@ void Control::showGtkDemo() {
 #ifdef __APPLE__
     if (!xoj::util::OwnedCString::assumeOwnership(g_find_program_in_path(binary.c_str()))) {
         // Try absolute path for binary
-        auto path = Stacktrace::getExePath() / binary;
+        auto path = Util::getExePath() / binary;
 
         binary = path.string();
     }
@@ -2397,7 +2405,7 @@ void Control::moveSelectionToLayer(size_t layerNo) {
     auto* newLayer = currentP->getLayers().at(layerNo);
     auto moveSelUndo = std::make_unique<MoveSelectionToLayerUndoAction>(currentP, getLayerController(), oldLayer,
                                                                         currentP->getSelectedLayerId() - 1, layerNo);
-    for (auto* e: selection->getElements()) {
+    for (const auto* e: selection->getElementsView()) {
         moveSelUndo->addElement(newLayer, e, newLayer->indexOf(e));
     }
     undoRedo->addUndoAction(std::move(moveSelUndo));
@@ -2550,7 +2558,7 @@ auto Control::getSidebar() const -> Sidebar* { return this->sidebar; }
 
 auto Control::getSearchBar() const -> SearchBar* { return this->searchBar; }
 
-auto Control::getAudioController() const -> AudioController* { return this->audioController; }
+auto Control::getAudioController() const -> AudioController* { return this->audioController.get(); }
 
 auto Control::getPageTypes() const -> PageTypeHandler* { return this->pageTypes; }
 

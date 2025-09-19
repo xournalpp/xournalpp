@@ -128,8 +128,8 @@ auto Element::isInSelection(ShapeContainer* container) const -> bool {
     return true;
 }
 
-auto Element::rescaleOnlyAspectRatio() -> bool { return false; }
-auto Element::rescaleWithMirror() -> bool { return false; }
+auto Element::rescaleOnlyAspectRatio() const -> bool { return false; }
+auto Element::rescaleWithMirror() const -> bool { return false; }
 
 void Element::serialize(ObjectOutputStream& out) const {
     out.writeObject("Element");

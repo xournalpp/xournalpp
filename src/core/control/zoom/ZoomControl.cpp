@@ -10,9 +10,9 @@
 #include "control/settings/Settings.h"  // for Settings
 #include "control/zoom/ZoomListener.h"  // for ZoomListener
 #include "gui/Layout.h"                 // for Layout
+#include "gui/MainWindow.h"
 #include "gui/PageView.h"               // for XojPageView
 #include "gui/XournalView.h"            // for XournalView
-#include "gui/widgets/XournalWidget.h"  // for gtk_xournal_get_layout
 #include "util/Assert.h"                // for xoj_assert
 #include "util/Util.h"                  // for execInUiThread
 #include "util/gdk4_helper.h"           // for gdk_event_get_modifier_state
@@ -74,7 +74,7 @@ auto onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomC
 //       see https://stackoverflow.com/questions/1060039/gtk-detecting-window-resize-from-the-user
 auto onWindowSizeChangedEvent(GtkWidget* widget, GdkEvent* event, ZoomControl* zoom) -> bool {
     xoj_assert(widget != zoom->view->getWidget());
-    auto layout = gtk_xournal_get_layout(zoom->view->getWidget());
+    auto layout = zoom->view->getLayout();
     // Todo (fabian): The following code is a hack.
     //    Problem size-allocate:
     //    when using the size-allocate signal, we cant use layout->recalculate() directly.
@@ -88,6 +88,16 @@ auto onWindowSizeChangedEvent(GtkWidget* widget, GdkEvent* event, ZoomControl* z
         zoom->updateZoomFitValue();
         layout->recalculate();
     });
+
+    GdkWindow* gdkWindow = gtk_widget_get_window(widget);
+    GdkDisplay* display = gdkWindow ? gdk_window_get_display(gdkWindow) : nullptr;
+    GdkMonitor* monitor = display ? gdk_display_get_monitor_at_window(display, gdkWindow) : nullptr;
+    if (monitor && monitor != zoom->lastMonitor) {
+        zoom->lastMonitor = monitor;
+        const char* monitorName = gdk_monitor_get_model(monitor);
+        g_debug("Window moved to monitor \"%s\"", monitorName);
+        zoom->control->getWindow()->setDPI();
+    }
     return false;
 }
 
@@ -151,14 +161,10 @@ void ZoomControl::startZoomSequence(xoj::util::Point<double> zoomCenter) {
     // * set unscaledPixels padding value
     size_t currentPageIdx = this->view->getCurrentPage();
 
-    // To get the layout, we need to call view->getWidget(), which isn't const.
-    // As such, we get the view and determine `unscaledPixels` here, rather than
-    // in `getScrollPositionAfterZoom`.
-    GtkWidget* widget = view->getWidget();
-    Layout* layout = gtk_xournal_get_layout(widget);
 
     // Not everything changes size as we zoom in/out. The padding, for example,
     // remains constant! (changed when page changes, but the error stays small enough)
+    Layout* layout = view->getLayout();
     this->unscaledPixels = {static_cast<double>(layout->getPaddingLeftOfPage(currentPageIdx)),
                             static_cast<double>(layout->getPaddingAbovePage(currentPageIdx))};
 
@@ -212,11 +218,7 @@ void ZoomControl::cancelZoomSequence() {
 
 auto ZoomControl::isZoomSequenceActive() const -> bool { return zoomSequenceStart != -1; }
 
-auto ZoomControl::getVisibleRect() -> Rectangle<double> {
-    GtkWidget* widget = view->getWidget();
-    Layout* layout = gtk_xournal_get_layout(widget);
-    return layout->getVisibleRect();
-}
+auto ZoomControl::getVisibleRect() -> Rectangle<double> { return view->getLayout()->getVisibleRect(); }
 
 auto ZoomControl::getScrollPositionAfterZoom() const -> xoj::util::Point<double> {
     //  If we aren't in a zoomSequence, `unscaledPixels`, `scrollPosition`, and `zoomWidgetPos

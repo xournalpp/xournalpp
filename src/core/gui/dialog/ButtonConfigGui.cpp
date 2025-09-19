@@ -81,6 +81,8 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkBox* box, 
     addTypeCB("tool-highlighter", _("Highlighter"), TOOL_HIGHLIGHTER);
     addTypeCB("tool-text", _("Text"), TOOL_TEXT);
     addTypeCB("tool-image", _("Insert image"), TOOL_IMAGE);
+    addTypeCB("laser-pointer", _("Laser Pointer - Pen"), TOOL_LASER_POINTER_PEN);
+    addTypeCB("laser-pointer", _("Laser Pointer - Hightlighter"), TOOL_LASER_POINTER_HIGHLIGHTER);
     addTypeCB("spacer", _("Vertical space"), TOOL_VERTICAL_SPACE);
     addTypeCB("select-lasso", _("Select region"), TOOL_SELECT_REGION);
     addTypeCB("select-rect", _("Select rectangle"), TOOL_SELECT_RECT);

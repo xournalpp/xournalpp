@@ -16,6 +16,8 @@
 
 #include "SidebarPreviewBase.h"  // for SidebarPreviewBase
 
+static constexpr int MAX_MINIATURE_SIZE = 500;  ///< in pixels - avoid things going very wrong when pages are huge
+
 SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, const PageRef& page):
         sidebar(sidebar), page(page), button(gtk_button_new(), xoj::util::adopt) {
 
@@ -153,8 +155,10 @@ void SidebarPreviewBaseEntry::updateSize() {
 
     const int shadowPadding = Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
     // To avoid having a black line, we use floor rather than ceil
-    this->imageWidth = floor_cast<int>(page->getWidth() * sidebar->getZoom()) + shadowPadding;
-    this->imageHeight = floor_cast<int>(page->getHeight() * sidebar->getZoom()) + shadowPadding;
+    this->imageWidth =
+            std::min(floor_cast<int>(page->getWidth() * sidebar->getZoom()) + shadowPadding, MAX_MINIATURE_SIZE);
+    this->imageHeight =
+            std::min(floor_cast<int>(page->getHeight() * sidebar->getZoom()) + shadowPadding, MAX_MINIATURE_SIZE);
     gtk_widget_set_size_request(this->button.get(), imageWidth, imageHeight);
 }
 

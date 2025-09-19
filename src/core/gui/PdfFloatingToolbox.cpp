@@ -206,7 +206,7 @@ void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle w
         strokes.push_back(std::move(stroke));
     }
 
-    std::vector<Element*> strokePtrs(strokes.size());
+    std::vector<const Element*> strokePtrs(strokes.size());
     std::transform(strokes.begin(), strokes.end(), strokePtrs.begin(), [](auto& e) { return e.get(); });
 
     doc->lock();

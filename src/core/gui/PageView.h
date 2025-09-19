@@ -36,6 +36,7 @@
 class EraseHandler;
 class ImageSizeSelection;
 class InputHandler;
+class LaserPointerHandler;
 class SearchControl;
 class Selector;
 class Settings;
@@ -170,8 +171,8 @@ public:
      */
     int getY() const override;
 
-    TexImage* getSelectedTex();
-    Text* getSelectedText();
+    const TexImage* getSelectedTex() const;
+    const Text* getSelectedText() const;
 
     xoj::util::Rectangle<double> getRect() const;
 
@@ -196,12 +197,14 @@ public:  // event handler
      */
     bool paintPage(cairo_t* cr, GdkRectangle* rect);
 
+    void deleteLaserPointerHandler();
+
 public:  // listener
     void rectChanged(xoj::util::Rectangle<double>& rect) override;
     void rangeChanged(Range& range) override;
     void pageChanged() override;
-    void elementChanged(Element* elem) override;
-    void elementsChanged(const std::vector<Element*>& elements, const Range& range) override;
+    void elementChanged(const Element* elem) override;
+    void elementsChanged(const std::vector<const Element*>& elements, const Range& range) override;
 
 private:
     void startText(double x, double y);
@@ -268,6 +271,8 @@ private:
      * For image insertion with size (selects the size)
      */
     std::unique_ptr<ImageSizeSelection> imageSizeSelection;
+
+    std::unique_ptr<LaserPointerHandler> laserPointer;
 
     /**
      * For keeping old text changes to undo!

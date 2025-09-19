@@ -37,8 +37,8 @@
 #include "undo/UndoRedoHandler.h"            // for UndoRedoHandler
 #include "util/PathUtil.h"                   // for getConfigFolder, openFil...
 #include "util/PlaceholderString.h"          // for PlaceholderString
-#include "util/Stacktrace.h"                 // for Stacktrace
 #include "util/Util.h"                       // for execInUiThread
+#include "util/VersionInfo.h"                // for getVersionInfo
 #include "util/XojMsgBox.h"                  // for XojMsgBox
 #include "util/i18n.h"                       // for _, FS, _F
 
@@ -124,66 +124,6 @@ static void deleteFile(const fs::path& file, GtkWindow* win) {
     }
 }
 
-void checkForErrorlog(GtkWindow* win) {
-    std::vector<fs::path> errorList;
-
-    try {
-        const fs::path errorDir = Util::getCacheSubfolder(ERRORLOG_DIR);
-        if (!fs::exists(errorDir)) {
-            return;
-        }
-
-        // Todo(cpp20): replace std::chrono::hours(168) with std::chrono::weeks(1)
-        const auto oldestModificationDate = fs::file_time_type::clock::now() - std::chrono::hours(168);
-        for (auto const& f: fs::directory_iterator(errorDir)) {
-            if (f.is_regular_file() && f.path().filename().string().substr(0, 8) == "errorlog") {
-                if (f.last_write_time() > oldestModificationDate) {
-                    errorList.emplace_back(f);
-                }
-            }
-        }
-    } catch (fs::filesystem_error& e) {
-        g_warning("Filesystem error while looking for crash logs:\n"
-                  "   %s\n"
-                  "   %s\n",
-                  e.path1().u8string().c_str(), e.what());
-        return;
-    }
-
-    if (errorList.empty()) {
-        return;
-    }
-
-    std::sort(errorList.begin(), errorList.end());
-    std::string msg = errorList.size() == 1 ? _("There is a recent errorlogfile from Xournal++. Please file a "
-                                                "Bugreport, so the bug may be fixed.") :
-                                              _("There are recent errorlogfiles from Xournal++. Please file a "
-                                                "Bugreport, so the bug may be fixed.");
-    msg += "\n";
-    msg += FS(_F("The most recent log file name: {1}") % errorList[0].string());
-    msg += "\n\n";
-    msg += FS(_F("To prevent this popup from reappearing, simply delete the errorlogfiles."));
-
-    enum Responses { FILE_REPORT = 1, OPEN_FILE, OPEN_DIR, DELETE_FILE, CANCEL };
-    std::vector<XojMsgBox::Button> buttons = {{_("File Bug Report"), FILE_REPORT},
-                                              {_("Open Logfile"), OPEN_FILE},
-                                              {_("Open Logfile directory"), OPEN_DIR},
-                                              {_("Delete Logfile"), DELETE_FILE},
-                                              {_("Cancel"), CANCEL}};
-    XojMsgBox::askQuestion(win, _("Crash log"), msg, buttons, [errorlogPath = errorList.front(), win](int response) {
-        if (response == FILE_REPORT) {
-            Util::openFileWithDefaultApplication(PROJECT_BUGREPORT);
-            Util::openFileWithDefaultApplication(errorlogPath);
-        } else if (response == OPEN_FILE) {
-            Util::openFileWithDefaultApplication(errorlogPath);
-        } else if (response == OPEN_DIR) {
-            Util::openFileWithDefaultApplication(errorlogPath.parent_path());
-        } else if (response == DELETE_FILE) {
-            deleteFile(errorlogPath, win);
-        }
-    });
-}
-
 void checkForEmergencySave(Control* control) {
     auto file = Util::getConfigFile("emergencysave.xopp");
 
@@ -262,18 +202,17 @@ auto exportImg(const char* input, const char* output, const char* range, const c
  * @return int 0 on success
  */
 auto saveDoc(const char* input, const char* output) -> int {
-    // LoadHandler loader;
     SaveHandler saver;
-    char* inputFilename = (char*)input;
-    const fs::path p = Util::fromGFilename(inputFilename, false);
+    const fs::path in = Util::fromGFilename(input);
     auto handler = std::make_unique<DocumentHandler>();
     auto newDoc = std::make_unique<Document>(handler.get());
-    const bool res = newDoc->readPdf(p, /*initPages=*/true, false);
+    const bool res = newDoc->readPdf(in, /*initPages=*/true, false);
     if (!res) {
         g_error("%s", FC(_F("Error: {1}") % newDoc->getLastErrorMsg().c_str()));
     }
-    saver.prepareSave(newDoc.get());
-    saver.saveTo(output);
+    const fs::path out = fs::absolute(Util::fromGFilename(output));
+    saver.prepareSave(newDoc.get(), out);
+    saver.saveTo(out);
 
     if (!saver.getErrorMessage().empty()) {
         g_error("%s", FC(_F("Error: {1}") % saver.getErrorMessage()));
@@ -292,11 +231,12 @@ auto saveDoc(const char* input, const char* output) -> int {
  * @param exportBackground If EXPORT_BACKGROUND_NONE, the exported pdf file has white background
  * @param progressiveMode If true, then for each xournalpp page, instead of rendering one PDF page, the page layers are
  * rendered one by one to produce as many pages as there are layers.
+ * @param backend The requested backend
  *
  * @return 0 on success, -2 on failure opening the input file, -3 on export failure
  */
 auto exportPdf(const char* input, const char* output, const char* range, const char* layerRange,
-               ExportBackgroundType exportBackground, bool progressiveMode) -> int {
+               ExportBackgroundType exportBackground, bool progressiveMode, ExportBackend backend) -> int {
     LoadHandler loader;
     auto doc = loader.loadDocument(input);
     if (doc == nullptr) {
@@ -305,7 +245,7 @@ auto exportPdf(const char* input, const char* output, const char* range, const c
 
     exitOnMissingPdfFileName(loader);
 
-    return ExportHelper::exportPdf(doc.get(), output, range, layerRange, exportBackground, progressiveMode);
+    return ExportHelper::exportPdf(doc.get(), output, range, layerRange, exportBackground, progressiveMode, backend);
 }
 
 struct XournalMainPrivate {
@@ -338,6 +278,7 @@ struct XournalMainPrivate {
     gboolean progressiveMode = false;
     gboolean disableAudio = false;
     gboolean attachMode = false;
+    gchar* exportPdfBackend{};
     std::unique_ptr<GladeSearchpath> gladePath;
     std::unique_ptr<Control> control;
     std::unique_ptr<MainWindow> win;
@@ -381,7 +322,7 @@ auto findResourcePath(const fs::path& searchFile) -> fs::path {
             return *path;
         }*/
     /// real execution path
-    if (auto path = search_for(Stacktrace::getExePath().parent_path()); path) {
+    if (auto path = search_for(Util::getExePath().parent_path()); path) {
         return *path;
     }
     // Not found
@@ -439,11 +380,11 @@ void on_open_files(GApplication* application, gpointer f, gint numFiles, gchar* 
         XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
     }
 
-    const fs::path p = Util::fromGFilename(g_file_get_path(files[0]), false);
+    const fs::path p = Util::fromGFile(files[0]);
 
     try {
         if (fs::exists(p)) {
-            app_data->control->openFile(p);
+            app_data->control->openFile(fs::absolute(p));
         } else {
             const std::string msg = FS(_F("File {1} does not exist.") % p.u8string());
             XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
@@ -466,6 +407,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
     app_data->gladePath = std::make_unique<GladeSearchpath>();
     initResourcePath(app_data->gladePath.get(), "ui/about.glade");
     initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
+    initResourcePath(app_data->gladePath.get(), "ui/toolbar.ini", false);
 
     app_data->control = std::make_unique<Control>(application, app_data->gladePath.get(), app_data->disableAudio);
 
@@ -498,8 +440,12 @@ void on_startup(GApplication* application, XMPtr app_data) {
                                       "Others are ignored.");
             XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
         }
-
-        p = Util::fromGFilename(app_data->optFilename[0], false);
+        p = Util::fromGFilename(app_data->optFilename[0]);
+        try {
+            p = fs::absolute(p);
+        } catch (const fs::filesystem_error& e) {
+            g_warning("Unable to convert path %s to absolute path: %s", app_data->optFilename[0], e.what());
+        }
     } else if (app_data->control->getSettings()->isAutoloadMostRecent()) {
         auto most_recent = RecentManager::getMostRecent();
         if (most_recent) {
@@ -513,7 +459,6 @@ void on_startup(GApplication* application, XMPtr app_data) {
             [ctrl = app_data->control.get(), app = GTK_APPLICATION(application)](bool) {
                 ctrl->getScheduler()->start();
 
-                checkForErrorlog(ctrl->getGtkWindow());
                 checkForEmergencySave(ctrl);
 
                 // There is a timing issue with the layout
@@ -526,16 +471,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
 auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gint {
     initCAndCoutLocales();
 
-    auto print_version = [&] {
-        if (!std::string(GIT_COMMIT_ID).empty()) {
-            std::cout << PROJECT_NAME << " " << PROJECT_VERSION << " (" << GIT_COMMIT_ID << ")" << std::endl;
-        } else {
-            std::cout << PROJECT_NAME << " " << PROJECT_VERSION << std::endl;
-        }
-        std::cout << "└──libgtk: " << gtk_get_major_version() << "."  //
-                  << gtk_get_minor_version() << "."                   //
-                  << gtk_get_micro_version() << std::endl;            //
-    };
+    auto print_version = [&] { std::cout << xoj::util::getVersionInfo() << std::endl; };
 
     auto exec_guarded = [&](auto&& fun, auto&& s) {
         try {
@@ -566,7 +502,7 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
                                      app_data->exportNoBackground ? EXPORT_BACKGROUND_NONE :
                                      app_data->exportNoRuling     ? EXPORT_BACKGROUND_UNRULED :
                                                                     EXPORT_BACKGROUND_ALL,
-                                     app_data->progressiveMode);
+                                     app_data->progressiveMode, ExportBackend::fromString(app_data->exportPdfBackend));
                 },
                 "exportPdf");
     }
@@ -648,63 +584,76 @@ auto XournalMain::run(int argc, char** argv) -> int {
                                        _("Disable audio for this session"), nullptr},
                           GOptionEntry{"attach-mode", 0, 0, G_OPTION_ARG_NONE, &app_data.attachMode,
                                        _("Open PDF in attach mode\n"
-                                         "                                 Ignored if no PDF file is specified."),
+                                         "                                       Ignored if no PDF file is specified."),
                                        nullptr},
                           GOptionEntry{"save", 's', 0, G_OPTION_ARG_FILENAME, &app_data.docFilename,
                                        _("Save xopp-file with the background PDF specified as FILE"), "XOPPFILE"},
                           GOptionEntry{nullptr}};  // Must be terminated by a nullptr. See gtk doc
     g_application_add_main_option_entries(G_APPLICATION(app), options.data());
 
+    std::string pdfbackendMessage =
+            FS(_F("Use the provided backend for PDF exports.\n"
+                  "                                       Available backends: {1}\n"
+                  "                                       No effect without -p/--create-pdf=foo.pdf") %
+               ExportBackend::listAvailableBackends());
     /**
      * Export related options
      */
     std::array exportOptions = {
             GOptionEntry{"create-pdf", 'p', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_FILENAME, &app_data.pdfFilename,
                          _("Export FILE as PDF"), "PDFFILE"},
-            GOptionEntry{"create-img", 'i', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_FILENAME, &app_data.imgFilename,
-                         _("Export FILE as image files (one per page)\n"
-                           "                                 Guess the output format from the extension of IMGFILE\n"
-                           "                                 Supported formats: .png, .svg"),
-                         "IMGFILE"},
-            GOptionEntry{"export-no-background", 0, 0, G_OPTION_ARG_NONE, &app_data.exportNoBackground,
-                         _("Export without background\n"
-                           "                                 The exported file has transparent or white background,\n"
-                           "                                 depending on what its format supports\n"),
-                         0},
+            GOptionEntry{
+                    "create-img", 'i', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_FILENAME, &app_data.imgFilename,
+                    _("Export FILE as image files (one per page)\n"
+                      "                                       Guess the output format from the extension of IMGFILE\n"
+                      "                                       Supported formats: .png, .svg"),
+                    "IMGFILE"},
+            GOptionEntry{
+                    "export-no-background", 0, 0, G_OPTION_ARG_NONE, &app_data.exportNoBackground,
+                    _("Export without background\n"
+                      "                                       The exported file has transparent or white background,\n"
+                      "                                       depending on what its format supports\n"),
+                    0},
             GOptionEntry{"export-no-ruling", 0, 0, G_OPTION_ARG_NONE, &app_data.exportNoRuling,
                          _("Export without ruling\n"
-                           "                                 The exported file has no paper ruling\n"),
+                           "                                       The exported file has no paper ruling\n"),
                          0},
-            GOptionEntry{"export-layers-progressively", 0, 0, G_OPTION_ARG_NONE, &app_data.progressiveMode,
-                         _("Export layers progressively\n"
-                           "                                 In PDF export, Render layers progressively one by one.\n"
-                           "                                 This results in N export pages per page with N layers,\n"
-                           "                                 building up the layer stack progressively.\n"
-                           "                                 The resulting PDF file can be used for a presentation.\n"),
-                         0},
-            GOptionEntry{"export-range", 0, 0, G_OPTION_ARG_STRING, &app_data.exportRange,
-                         _("Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
-                           "                                 No effect without -p/--create-pdf or -i/--create-img"),
-                         "RANGE"},
-            GOptionEntry{"export-layer-range", 0, 0, G_OPTION_ARG_STRING, &app_data.exportLayerRange,
-                         _("Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
-                           "                                 No effect without -p/--create-pdf or -i/--create-img"),
-                         "RANGE"},
+            GOptionEntry{
+                    "export-layers-progressively", 0, 0, G_OPTION_ARG_NONE, &app_data.progressiveMode,
+                    _("Export layers progressively\n"
+                      "                                       In PDF export, Render layers progressively one by one.\n"
+                      "                                       This results in N export pages per page with N layers,\n"
+                      "                                       building up the layer stack progressively.\n"
+                      "                                       The resulting PDF file can be used for a "
+                      "presentation.\n"),
+                    0},
+            GOptionEntry{
+                    "export-range", 0, 0, G_OPTION_ARG_STRING, &app_data.exportRange,
+                    _("Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
+                      "                                       No effect without -p/--create-pdf or -i/--create-img"),
+                    "RANGE"},
+            GOptionEntry{
+                    "export-layer-range", 0, 0, G_OPTION_ARG_STRING, &app_data.exportLayerRange,
+                    _("Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
+                      "                                       No effect without -p/--create-pdf or -i/--create-img"),
+                    "RANGE"},
             GOptionEntry{"export-png-dpi", 0, 0, G_OPTION_ARG_INT, &app_data.exportPngDpi,
                          _("Set DPI for PNG exports. Default is 300\n"
-                           "                                 No effect without -i/--create-img=foo.png"),
+                           "                                       No effect without -i/--create-img=foo.png"),
                          "N"},
             GOptionEntry{"export-png-width", 0, 0, G_OPTION_ARG_INT, &app_data.exportPngWidth,
                          _("Set page width for PNG exports\n"
-                           "                                 No effect without -i/--create-img=foo.png\n"
-                           "                                 Ignored if --export-png-dpi is used"),
+                           "                                       No effect without -i/--create-img=foo.png\n"
+                           "                                       Ignored if --export-png-dpi is used"),
                          "N"},
-            GOptionEntry{
-                    "export-png-height", 0, 0, G_OPTION_ARG_INT, &app_data.exportPngHeight,
-                    _("Set page height for PNG exports\n"
-                      "                                 No effect without -i/--create-img=foo.png\n"
-                      "                                 Ignored if --export-png-dpi or --export-png-width is used"),
-                    "N"},
+            GOptionEntry{"export-png-height", 0, 0, G_OPTION_ARG_INT, &app_data.exportPngHeight,
+                         _("Set page height for PNG exports\n"
+                           "                                       No effect without -i/--create-img=foo.png\n"
+                           "                                       Ignored if --export-png-dpi or --export-png-width "
+                           "is used"),
+                         "N"},
+            GOptionEntry{"export-pdf-backend", 0, 0, G_OPTION_ARG_STRING, &app_data.exportPdfBackend,
+                         pdfbackendMessage.c_str(), "BACKEND"},
             GOptionEntry{nullptr}};  // Must be terminated by a nullptr. See gtk doc
     GOptionGroup* exportGroup = g_option_group_new("export", _("Advanced export options"),
                                                    _("Display advanced export options"), nullptr, nullptr);

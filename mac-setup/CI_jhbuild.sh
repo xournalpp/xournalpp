@@ -37,7 +37,7 @@ download_jhbuild_sources() {
     shallow_clone_into_commit "https://gitlab.gnome.org/GNOME/gtk-osx.git" "gtk-osx" ~/gtk-osx-custom
 
     # Make a shallow clone of jhbuild's sources. This way we detect if cloning fails and avoid the deep clone in gtk-osx-setup.sh
-    JHBUILD_BRANCH=$(sed -e '/^JHBUILD_RELEASE_VERSION=/!d' -e 's/^[^=]*=//' ~/gtk-osx-custom/gtk-osx-setup.sh)
+    JHBUILD_BRANCH=$(sed -e '/^JHBUILD_RELEASE_VERSION=/!d' -e 's/^[^=]*=//' -e 's/^\"\([^\"]*\)\"$/\1/' ~/gtk-osx-custom/gtk-osx-setup.sh)
     echo "Cloning jhbuild version $JHBUILD_BRANCH"
     git clone --depth 1 -b $JHBUILD_BRANCH https://gitlab.gnome.org/GNOME/jhbuild.git "$HOME/Source/jhbuild"
 
@@ -72,7 +72,7 @@ configure_jhbuild_envvars() {
 
 setup_custom_modulesets() {
     # Set osx deployment target
-    sed -i '' -e 's/^setup_sdk()/setup_sdk(target="11.7")/' ~/.config/jhbuildrc-custom
+    sed -i '' -e "s/^setup_sdk()/setup_sdk(target=\"$(get_lockfile_entry deployment_target)\")/" ~/.config/jhbuildrc-custom
 
     # Enable custom jhbuild configuration
     cat <<EOF >> ~/.config/jhbuildrc-custom
@@ -101,6 +101,14 @@ EOF
     sed -i '' -e 's/^\(module_cmakeargs\["freetype-no-harfbuzz"\]\) =/module_cmakeargs.setdefault("freetype-no-harfbuzz", ""); \1 +=/' ~/.config/jhbuildrc
 
     echo "interact = False" >> ~/.config/jhbuildrc
+    echo "exit_on_error = True" >> ~/.config/jhbuildrc
+    echo "shallow_clone = True" >> ~/.config/jhbuildrc
+    echo "use_local_modulesets = True" >> ~/.config/jhbuildrc
+    echo "disable_Werror = False" >> ~/.config/jhbuildrc
+
+    # MODULEFILE contains dependencies to other module sets - they need to be in the same directory
+    cp "$MODULEFILE" "$HOME/gtk-osx-custom/modulesets-stable/"
+    export MODULEFILE="$(basename $MODULEFILE)"
 }
 
 echo "::group::Setup jhbuild"
@@ -114,7 +122,7 @@ echo "::endgroup::"
 download() {
     jhbuild update $GTK_MODULES
     jhbuild -m "$MODULEFILE" update meta-xournalpp-deps
-    jhbuild -m ~/gtk-osx-custom/modulesets-stable/bootstrap.modules update meta-bootstrap
+    jhbuild -m bootstrap.modules update meta-bootstrap
     echo "Downloaded all jhbuild modules' sources"
 }
 echo "::group::Download modules' sources"
@@ -123,7 +131,7 @@ echo "::endgroup::"
 
 ### Step 3: bootstrap
 bootstrap_jhbuild() {
-    jhbuild -m ~/gtk-osx-custom/modulesets-stable/bootstrap.modules build --no-network meta-bootstrap
+    jhbuild -m bootstrap.modules build --no-network meta-bootstrap
 }
 echo "::group::Bootstrap jhbuild"
 bootstrap_jhbuild

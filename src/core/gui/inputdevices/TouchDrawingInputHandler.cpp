@@ -50,6 +50,7 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
     // Note: Drawing outside window doesn't seem to work
     //  if this is put later in handleImpl.
     if (event.type == ENTER_EVENT) {
+        this->changeTool(event);
         this->actionEnterWindow(event);
         return false;
     }
@@ -63,11 +64,6 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
     if ((this->primarySequence && this->primarySequence != event.sequence) || this->secondarySequence) {
         if (!this->secondarySequence) {
             this->secondarySequence = event.sequence;
-
-            // Let Gtk's touchscreen-based scrolling do
-            // momentum-based scrolling!
-            mainWindow->setGtkTouchscreenScrollingEnabled(true);
-
             XojPageView* currentPage = this->getPageAtCurrentPosition(event);
 
             if (currentPage) {
@@ -80,16 +76,12 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
             if (event.sequence == this->primarySequence) {
                 this->primarySequence = this->secondarySequence;
                 this->secondarySequence = nullptr;
-
-                // Only scrolling now if using the hand tool.
-                mainWindow->setGtkTouchscreenScrollingEnabled(toolHandler->getToolType() == TOOL_HAND);
             } else if (event.sequence == this->secondarySequence) {
                 this->secondarySequence = nullptr;
             }
         }
 
-        // false lets another input handler (e.g. TouchInputHandler)
-        // handle the event.
+        // false lets another input handler (e.g. TouchInputHandler) handle the event.
         return false;
     }
 
@@ -99,8 +91,6 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
         this->deviceClassPressed = true;
 
         this->actionStart(event);
-
-        updateKineticScrollingEnabled();
 
         return false;
     }
@@ -140,8 +130,9 @@ auto TouchDrawingInputHandler::changeTool(InputEvent const& event) -> bool {
     bool toolChanged = false;
 
     if (cfg->device == event.deviceName) {
-        if (InputUtils::touchDrawingDisallowed(toolHandler, settings))
+        if (InputUtils::touchDrawingDisallowed(toolHandler, settings)) {
             return false;
+        }
         toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_TOUCH);
     } else {
         toolChanged = toolHandler->pointActiveToolToToolbarTool();
@@ -161,8 +152,7 @@ void TouchDrawingInputHandler::updateKineticScrollingEnabled() {
     auto* mainWindow = control->getWindow();
     auto* toolHandler = this->inputContext->getToolHandler();
 
-    //  Kinetic scrolling is nice; however, we need to disable it so we can draw (it steals
-    // single-finger input).
+    // Kinetic scrolling is nice; however, we need to disable it so we can draw (it steals single-finger input).
     if (mainWindow != nullptr && control->getSettings()->getTouchDrawingEnabled()) {
         mainWindow->setGtkTouchscreenScrollingEnabled(toolHandler->getToolType() == TOOL_HAND);
     }

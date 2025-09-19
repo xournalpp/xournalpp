@@ -22,7 +22,8 @@
 #include "gui/MainWindow.h"                  // for MainWindow
 #include "gui/PageView.h"                    // for XojPageView
 #include "gui/XournalView.h"                 // for XournalView
-#include "gui/dialog/LatexDialog.h"          // for LatexDialog
+#include "gui/dialog/ExtEdLatexDialog.h"     // for ExtEdLatexDialog
+#include "gui/dialog/IntEdLatexDialog.h"     // for IntEdLatexDialog
 #include "model/Document.h"                  // for Document
 #include "model/Element.h"                   // for Element
 #include "model/Layer.h"                     // for Layer
@@ -112,8 +113,10 @@ void LatexController::findSelectedTexElement() {
     this->page = this->doc->getPage(pageNr);
     this->layer = page->getSelectedLayer();
 
-    this->selectedElem = view->getSelectedTex() != nullptr ? static_cast<Element*>(view->getSelectedTex()) :
-                                                             static_cast<Element*>(view->getSelectedText());
+    auto* tex = view->getSelectedTex();
+    this->selectedElem =
+            tex != nullptr ? static_cast<const Element*>(tex) : static_cast<const Element*>(view->getSelectedText());
+
     if (this->selectedElem) {
         // this will get the position of the Latex properly
         EditSelection* theSelection = control->getWindow()->getXournal()->getSelection();
@@ -121,11 +124,11 @@ void LatexController::findSelectedTexElement() {
         this->posx = rect.x;
         this->posy = rect.y;
 
-        if (auto* img = dynamic_cast<TexImage*>(this->selectedElem)) {
+        if (auto* img = dynamic_cast<const TexImage*>(this->selectedElem)) {
             this->initialTex = img->getText();
             this->temporaryRender = img->cloneTexImage();
             this->isValidTex = true;
-        } else if (auto* txt = dynamic_cast<Text*>(this->selectedElem)) {
+        } else if (auto* txt = dynamic_cast<const Text*>(this->selectedElem)) {
             this->initialTex = "\\text{" + txt->getText() + "}";
         }
         this->imgwidth = this->selectedElem->getElementWidth();
@@ -133,7 +136,7 @@ void LatexController::findSelectedTexElement() {
     } else {
         // This is a new latex object, so here we pick a convenient initial location
         const double zoom = this->control->getWindow()->getXournal()->getZoom();
-        Layout* const layout = this->control->getWindow()->getLayout();
+        Layout* layout = this->control->getWindow()->getXournal()->getLayout();
 
         // Calculate coordinates (screen) of the center of the visible area
         const auto visibleBounds = layout->getVisibleRect();
@@ -155,31 +158,36 @@ void LatexController::findSelectedTexElement() {
 
 void LatexController::showTexEditDialog(std::unique_ptr<LatexController> ctrl) {
     LatexController* texCtrl = ctrl.get();
-    xoj::popup::PopupWindowWrapper<LatexDialog> popup(texCtrl->control->getGladeSearchPath(), std::move(ctrl));
+    if (ctrl->settings.useExternalEditor) {
+        xoj::popup::PopupWindowWrapper<ExtEdLatexDialog> popup(texCtrl->control->getGladeSearchPath(), std::move(ctrl));
 
-    popup.show(GTK_WINDOW(texCtrl->control->getWindow()->getWindow()));
+        popup.show(GTK_WINDOW(texCtrl->control->getWindow()->getWindow()));
+    } else {
+        xoj::popup::PopupWindowWrapper<IntEdLatexDialog> popup(texCtrl->control->getGladeSearchPath(), std::move(ctrl));
+
+        popup.show(GTK_WINDOW(texCtrl->control->getWindow()->getWindow()));
+    }
 }
 
 void LatexController::triggerImageUpdate(const string& texString) {
-    xoj_assert(this->dlg);
-    if (this->isUpdating()) {
+    if (isUpdating()) {
         return;
     }
 
-    Color textColor = this->control->getToolHandler()->getTool(TOOL_TEXT).getColor();
+    Color textColor = control->getToolHandler()->getTool(TOOL_TEXT).getColor();
 
     // Determine a background color that has enough contrast with the text color:
     if (Util::get_color_contrast(textColor, LIGHT_PREVIEW_BACKGROUND) > 0.5) {
-        this->dlg->setPreviewBackgroundColor(LIGHT_PREVIEW_BACKGROUND);
+        dlg->setPreviewBackgroundColor(LIGHT_PREVIEW_BACKGROUND);
     } else {
-        this->dlg->setPreviewBackgroundColor(DARK_PREVIEW_BACKGROUND);
+        dlg->setPreviewBackgroundColor(DARK_PREVIEW_BACKGROUND);
     }
 
-    this->lastPreviewedTex = texString;
-    const std::string texContents = LatexGenerator::templateSub(texString, this->latexTemplate, textColor);
-    auto result = generator.asyncRun(this->texTmpDir, texContents);
+    lastPreviewedTex = texString;
+    const std::string texContents = LatexGenerator::templateSub(texString, latexTemplate, textColor);
+    auto result = generator.asyncRun(texTmpDir, texContents);
     if (auto* err = std::get_if<LatexGenerator::GenError>(&result)) {
-        XojMsgBox::showErrorToUser(this->control->getGtkWindow(), err->message);
+        XojMsgBox::showErrorToUser(control->getGtkWindow(), err->message);
     } else if (auto** proc = std::get_if<GSubprocess*>(&result)) {
         // Render the TeX and capture the process' output.
         updating_cancellable = g_cancellable_new();
@@ -266,7 +274,10 @@ void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, L
     g_clear_object(&proc);
 
     self->updateStatus();
-    if (shouldUpdate) {
+
+    // If dlg is an ExtEdLatexDialog and the user has the auto-confirm option set, the dialog might
+    // have closed itself in the above updateStatus call, causing self->dlg to be nullptr.
+    if (shouldUpdate && self->dlg) {
         self->triggerImageUpdate(currentTex);
     }
 }

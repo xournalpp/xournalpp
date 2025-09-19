@@ -89,9 +89,11 @@ auto EditSelectionContents::stealInsertionOrder() -> InsertionOrder { return std
 /**
  * Returns all containing elements of this selection
  */
-auto EditSelectionContents::getElements() const -> std::vector<Element*> const& { return this->selected; }
+auto EditSelectionContents::getElementsView() const -> xoj::util::PointerContainerView<std::vector<Element*>> {
+    return this->selected;
+}
 
-void EditSelectionContents::forEachElement(std::function<void(Element*)> f) const {
+void EditSelectionContents::forEachElement(std::function<void(const Element*)> f) const {
     for (auto const& e: this->selected) {
         f(e);
     }
@@ -378,23 +380,6 @@ InsertionOrder EditSelectionContents::makeMoveEffective(const xoj::util::Rectang
     }
     this->selected.clear();
     return std::move(this->insertionOrder);
-}
-
-/**
- * The contents of the selection
- */
-void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangle<double> snappedBounds,
-                                              bool aspectRatio, Layer* destinationLayer) {
-    xoj_assert(this->selected.size() == this->insertionOrder.size());
-    for (auto&& [e, index]: this->makeMoveEffective(bounds, snappedBounds, aspectRatio)) {
-        if (index == Element::InvalidIndex) {
-            // if the element didn't have a source layer (e.g, clipboard)
-            g_warning("Invalid index");
-            destinationLayer->addElement(std::move(e));
-        } else {
-            destinationLayer->insertElement(std::move(e), index);
-        }
-    }
 }
 
 auto EditSelectionContents::getOriginalX() const -> double { return this->originalBounds.x; }

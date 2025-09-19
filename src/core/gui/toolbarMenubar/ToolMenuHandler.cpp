@@ -5,10 +5,10 @@
 
 #include "control/Control.h"                         // for Control
 #include "control/PageBackgroundChangeController.h"  // for PageBackgroundChangeController
-#include "control/ScrollHandler.h"           // for ScrollHandler
-#include "control/actions/ActionDatabase.h"  // for ActionDatabase
-#include "control/settings/Settings.h"       // for Settings
-#include "gui/GladeGui.h"                    // for GladeGui
+#include "control/ScrollHandler.h"                   // for ScrollHandler
+#include "control/actions/ActionDatabase.h"          // for ActionDatabase
+#include "control/settings/Settings.h"               // for Settings
+#include "gui/GladeGui.h"                            // for GladeGui
 #include "gui/GladeSearchpath.h"
 #include "gui/ToolitemDragDrop.h"  // for ToolitemDragDrop
 #include "gui/menus/popoverMenus/PageTypeSelectionPopover.h"
@@ -32,6 +32,7 @@
 #include "ColorToolItem.h"               // for ColorToolItem
 #include "DrawingTypeComboToolButton.h"  // for DrawingTypeComboToolButton
 #include "FontButton.h"                  // for FontButton
+#include "PluginPlaceholderLabel.h"      // for PluginPlaceholderLabel
 #include "PluginToolButton.h"            // for PluginToolButton
 #include "StylePopoverFactory.h"         // for ToolButtonWithStylePopover
 #include "ToolButton.h"                  // for ToolButton
@@ -205,7 +206,11 @@ tool_item& ToolMenuHandler::emplaceItem(Args&&... args) {
 
 #ifdef ENABLE_PLUGINS
 void ToolMenuHandler::addPluginItem(ToolbarButtonEntry* t) { emplaceItem<PluginToolButton>(t); }
+void ToolMenuHandler::addPluginPlaceholderItem(ToolbarPlaceholderEntry* entry) {
+    emplaceItem<PluginPlaceholderLabel>(entry);
+}
 #endif /* ENABLE_PLUGINS */
+
 
 void ToolMenuHandler::initToolItems() {
     using Cat = AbstractToolItem::Category;
@@ -479,6 +484,13 @@ void ToolMenuHandler::initToolItems() {
     emplaceItem<ToolSelectCombocontrol>("SELECT", this->iconNameHelper, *this->control->getActionDatabase(), hideAudio);
     emplaceItem<DrawingTypeComboToolButton>("DRAW", this->iconNameHelper, *this->control->getActionDatabase());
     emplaceItem<ToolPdfCombocontrol>("PDF_TOOL", this->iconNameHelper, *this->control->getActionDatabase());
+
+    auto laserIcon = this->iconNameHelper.iconName("laser-pointer");
+    emplaceItem<ComboToolButton>(
+            "LASER_POINTER", Cat::TOOLS, laserIcon, _("Laser pointer"),
+            ComboToolButton::Entries{{_("Pen"), laserIcon, TOOL_LASER_POINTER_PEN},
+                                     {_("Highlighter"), laserIcon, TOOL_LASER_POINTER_HIGHLIGHTER}},
+            this->control->getActionDatabase()->getAction(Action::SELECT_TOOL));
 
     // General tool configuration - working for every tool which support it
     emplaceCustomItemTgl("TOOL_FILL", Cat::TOOLS, Action::TOOL_FILL, "fill", _("Fill"));

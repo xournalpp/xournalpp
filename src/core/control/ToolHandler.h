@@ -404,6 +404,7 @@ private:
     std::unique_ptr<Tool> stylusButton1Tool;
     std::unique_ptr<Tool> stylusButton2Tool;
     std::unique_ptr<Tool> eraserButtonTool;
+    std::unique_ptr<Tool> mouseLeftButtonTool;
     std::unique_ptr<Tool> mouseMiddleButtonTool;
     std::unique_ptr<Tool> mouseRightButtonTool;
     std::unique_ptr<Tool> touchDrawingButtonTool;

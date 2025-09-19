@@ -1,5 +1,6 @@
 #include "DocumentView.h"
 
+#include <map>
 #include <memory>  // for __shared_ptr_access, uni...
 #include <vector>  // for vector
 
@@ -91,25 +92,21 @@ void DocumentView::drawLayersOfPage(const LayerRangeVector& layerRange, ConstPag
     drawBackground(flags);
 
     size_t layerCount = page->getLayerCount();
-    std::vector<bool> visible(layerCount, false);
+    std::map<size_t, const Layer*> visibleLayers;
 
     for (LayerRangeEntry e: layerRange) {
         auto last = e.last;
         if (last >= layerCount) {
             last = layerCount - 1;
         }
-        for (auto x = e.first; x <= last; x++) {
-            visible[x] = true;
+        for (size_t x = e.first; x <= last; x++) {
+            visibleLayers[x] = page->getLayersView()[x];
         }
     }
 
     xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
                                (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
-    auto visibilityIt = visible.begin();
-    for (const Layer* l: page->getLayersView()) {
-        if (!*(visibilityIt++)) {
-            continue;
-        }
+    for (auto&& [_, l]: visibleLayers) {
         xoj::view::LayerView layerView(l);
         layerView.draw(context);
     }

@@ -166,7 +166,6 @@ public:
     void setPressure(const std::vector<double>& pressure);
     void setLastPressure(double pressure);
     void setSecondToLastPressure(double pressure);
-    void clearPressure();
     void scalePressure(double factor);
 
     /**
@@ -196,7 +195,7 @@ public:
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;
 
-    bool rescaleWithMirror() override;
+    bool rescaleWithMirror() const override;
 
 protected:
     void calcSize() const override;

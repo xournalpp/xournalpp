@@ -9,7 +9,8 @@
 #include <glib-object.h>  // for g_object_unref, g_object...
 #include <glib.h>         // for g_error_free, GError
 
-#ifdef USE_GTK_SOURCEVIEW
+#include "config-features.h"  // for ENABLE_GTK_SOURCEVIEW
+#ifdef ENABLE_GTK_SOURCEVIEW
 #include <gtksourceview/gtksource.h>  // for gtk_source_style_scheme_...
 #endif
 
@@ -18,7 +19,7 @@
 #include "gui/Builder.h"
 #include "model/Font.h"              // for XojFont
 #include "util/Color.h"              // for Color
-#include "util/PathUtil.h"           // for fromGFilename, getTmpDir...
+#include "util/PathUtil.h"           // for fromGFile, getTmpDir...
 #include "util/PlaceholderString.h"  // for PlaceholderString
 #include "util/XojMsgBox.h"
 #include "util/gtk4_helper.h"
@@ -44,8 +45,10 @@ LatexSettingsPanel::LatexSettingsPanel(GladeSearchpath* gladeSearchPath):
                              G_CALLBACK(+[](LatexSettingsPanel* self) { self->checkDeps(); }), this);
     g_signal_connect_swapped(this->cbUseSystemFont, "toggled",
                              G_CALLBACK(+[](LatexSettingsPanel* self) { self->updateWidgetSensitivity(); }), this);
+    g_signal_connect_swapped(builder.get("cbUseExternalEditor"), "toggled",
+                             G_CALLBACK(+[](LatexSettingsPanel* self) { self->updateWidgetSensitivity(); }), this);
 
-#ifdef USE_GTK_SOURCEVIEW
+#ifdef ENABLE_GTK_SOURCEVIEW
     GtkBox* themeSelectionBox = GTK_BOX(builder.get("bxThemeSelectionContainer"));
     this->sourceViewThemeSelector = gtk_source_style_scheme_chooser_button_new();
     gtk_box_append(themeSelectionBox, sourceViewThemeSelector);
@@ -75,7 +78,7 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
     gtk_editable_set_text(GTK_EDITABLE(builder.get("latexSettingsGenCmd")), settings.genCmd.c_str());
 
 
-#ifdef USE_GTK_SOURCEVIEW
+#ifdef ENABLE_GTK_SOURCEVIEW
     std::string themeId = settings.sourceViewThemeId;
     GtkSourceStyleSchemeManager* themeManager = gtk_source_style_scheme_manager_get_default();
     GtkSourceStyleScheme* theme = gtk_source_style_scheme_manager_get_scheme(themeManager, themeId.c_str());
@@ -100,6 +103,13 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
     // Editor word wrap.
     gtk_check_button_set_active(GTK_CHECK_BUTTON(builder.get("cbWordWrap")), settings.editorWordWrap);
 
+    // External editor
+    gtk_check_button_set_active(GTK_CHECK_BUTTON(builder.get("cbUseExternalEditor")), settings.useExternalEditor);
+    gtk_check_button_set_active(GTK_CHECK_BUTTON(builder.get("cbExternalEditorAutoConfirm")),
+                                settings.externalEditorAutoConfirm);
+    gtk_editable_set_text(GTK_EDITABLE(builder.get("latexExternalEditorCmd")), settings.externalEditorCmd.c_str());
+    gtk_editable_set_text(GTK_EDITABLE(builder.get("latexTemporaryFileExt")), settings.temporaryFileExt.c_str());
+
     this->updateWidgetSensitivity();
 }
 
@@ -111,7 +121,7 @@ void LatexSettingsPanel::save(LatexSettings& settings) {
                     .get());
     settings.genCmd = gtk_editable_get_text(GTK_EDITABLE(builder.get("latexSettingsGenCmd")));
 
-#ifdef USE_GTK_SOURCEVIEW
+#ifdef ENABLE_GTK_SOURCEVIEW
     GtkSourceStyleScheme* theme = gtk_source_style_scheme_chooser_get_style_scheme(
             GTK_SOURCE_STYLE_SCHEME_CHOOSER(this->sourceViewThemeSelector));
     settings.sourceViewThemeId = gtk_source_style_scheme_get_id(theme);
@@ -127,6 +137,12 @@ void LatexSettingsPanel::save(LatexSettings& settings) {
     settings.editorFont = xoj::util::OwnedCString::assumeOwnership(gtk_font_chooser_get_font(fontSelector)).get();
     settings.useCustomEditorFont = !gtk_check_button_get_active(this->cbUseSystemFont);
     settings.editorWordWrap = gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get("cbWordWrap")));
+
+    settings.useExternalEditor = gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get("cbUseExternalEditor")));
+    settings.externalEditorAutoConfirm =
+            gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get("cbExternalEditorAutoConfirm")));
+    settings.externalEditorCmd = gtk_editable_get_text(GTK_EDITABLE(builder.get("latexExternalEditorCmd")));
+    settings.temporaryFileExt = gtk_editable_get_text(GTK_EDITABLE(builder.get("latexTemporaryFileExt")));
 }
 
 void LatexSettingsPanel::checkDeps() {
@@ -179,7 +195,12 @@ void LatexSettingsPanel::updateWidgetSensitivity() {
     // Only select a custom font if we're not using the system's.
     gtk_widget_set_sensitive(builder.get("boxCustomFontOptions"), !useSystemFont);
 
-#ifndef USE_GTK_SOURCEVIEW
+#ifndef ENABLE_GTK_SOURCEVIEW
     gtk_widget_set_sensitive(builder.get("bxGtkSourceviewSettings"), false);
 #endif
+
+    auto useExternalEditor = gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get("cbUseExternalEditor")));
+    gtk_widget_set_sensitive(builder.get("cbExternalEditorAutoConfirm"), useExternalEditor);
+    gtk_widget_set_sensitive(builder.get("latexExternalEditorCmd"), useExternalEditor);
+    gtk_widget_set_sensitive(builder.get("latexTemporaryFileExt"), useExternalEditor);
 }

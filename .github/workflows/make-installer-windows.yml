@@ -9,6 +9,12 @@ on:
       displayed_name:
         type: string
         required: true
+      msystem:
+        type: string
+        required: true
+      msys_package_env:
+        type: string
+        required: true
       publish_portable_version:
         type: boolean
         required: false
@@ -19,6 +25,9 @@ on:
       build_type:
         type: string
         default: 'RelWithDebInfo'
+      extra_cmake_flags:
+        type: string
+        default: ''
       artifact_version_suffix:  # Additional version string appended to 1.2.3+dev (for instance) in artifacts names
         type: string
         default: ''
@@ -44,22 +53,24 @@ jobs:
           ref: ${{ inputs.head_sha }}
       - name: 'Install dependencies'
         uses: ./.github/actions/install_deps_windows
+        with:
+          msystem: ${{ inputs.msystem }}
+          msys_package_env: ${{ inputs.msys_package_env }}
       - name: 'Build Xournal++'
         uses: ./.github/actions/build
         with:
           build_type: ${{ inputs.build_type }}
+          extra_cmake_flags: ${{ inputs.extra_cmake_flags }}
           shell: msys2 {0}
-          cmake_flags: >-
-            -DCMAKE_CXX_FLAGS="-Os -s"
       - name: 'Create installer'
         id: create-installer
-        working-directory: ${{github.workspace}}/windows-setup
+        working-directory: ${{github.workspace}}/build
         shell: msys2 {0}
         run: |
-          bash -lc "./package.sh"
+          bash -lc "../windows-setup/package.sh"
 
-          export VERSION=$(cat ../build/VERSION | sed '1q;d')
-          export ARCH=$(cat ../build/VERSION | sed '4q;d')
+          export VERSION=$(cat VERSION | sed '1q;d')
+          export ARCH=$(cat VERSION | sed '4q;d')
           export FULL_VERSION_STRING="$VERSION${{ inputs.artifact_version_suffix }}"
           export INSTALLER_FILENAME="xournalpp-$FULL_VERSION_STRING-windows-setup-$ARCH.exe"
 
@@ -74,8 +85,8 @@ jobs:
         id: publish
         uses: actions/upload-artifact@v4
         with:
-          name: "Windows package"
-          path: "${{github.workspace}}/windows-setup/${{ steps.create-installer.outputs.artifact }}"
+          name: "Windows package ${{ runner.arch }} ${{ inputs.msys_package_env }}"
+          path: "${{github.workspace}}/build/${{ steps.create-installer.outputs.artifact }}"
           compression-level: 0
           if-no-files-found: error
       - name: 'Publish portable version'
@@ -83,6 +94,6 @@ jobs:
         if: ${{ inputs.publish_portable_version }}
         uses: actions/upload-artifact@v4
         with:
-          name: "Windows package (portable version)"
-          path: "${{github.workspace}}/windows-setup/portable_content"
+          name: "Windows package ${{ runner.arch }} ${{ inputs.msys_package_env }} (portable version)"
+          path: "${{github.workspace}}/build/portable_content"
           if-no-files-found: error

@@ -127,6 +127,9 @@ public:
     void setGtkTouchscreenScrollingForDeviceMapping();
     void setGtkTouchscreenScrollingEnabled(bool enabled);
 
+    /// Infer the window's DPI from available monitor info and use it to set the default zoom value.
+    void setDPI() const;
+
 private:
     void initXournalWidget();
 

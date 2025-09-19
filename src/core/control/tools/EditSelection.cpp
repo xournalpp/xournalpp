@@ -20,7 +20,6 @@
 #include "gui/PageView.h"                          // for XojPageView
 #include "gui/XournalView.h"                       // for XournalView
 #include "gui/XournalppCursor.h"                   // for XournalppCursor
-#include "gui/widgets/XournalWidget.h"             // for gtk_xournal_get_la...
 #include "model/Document.h"                        // for Document
 #include "model/Element.h"                         // for Element::Index
 #include "model/ElementInsertionPosition.h"
@@ -83,7 +82,7 @@ auto createFromFloatingElements(Control* ctrl, const PageRef& page, Layer* layer
             std::make_unique<EditSelection>(ctrl, std::move(elts), page, layer, view, bounds, snappingBounds), bounds);
 }
 
-auto createFromElementOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view, Element* e,
+auto createFromElementOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view, const Element* e,
                                     Element::Index pos) -> std::unique_ptr<EditSelection> {
     Document* doc = ctrl->getDocument();
     Layer* layer = nullptr;
@@ -116,7 +115,7 @@ auto createFromElementsOnActiveLayer(Control* ctrl, const PageRef& page, XojPage
     return std::make_unique<EditSelection>(ctrl, std::move(ownedElts), page, layer, view, bounds, snappingBounds);
 }
 
-auto addElementFromActiveLayer(Control* ctrl, EditSelection* base, Element* e, Element::Index pos)
+auto addElementFromActiveLayer(Control* ctrl, EditSelection* base, const Element* e, Element::Index pos)
         -> std::unique_ptr<EditSelection> {
     Document* doc = ctrl->getDocument();
     Layer* layer = base->getSourceLayer();
@@ -232,7 +231,7 @@ EditSelection::EditSelection(Control* ctrl, InsertionOrder elts, const PageRef& 
     this->view->getXournal()->getCursor()->setRotationAngle(0);
     this->view->getXournal()->getCursor()->setMirror(false);
 
-    for (auto&& e: contents->getElements()) {
+    for (const auto& e: contents->getElementsView()) {
         this->preserveAspectRatio = this->preserveAspectRatio || e->rescaleOnlyAspectRatio();
         this->supportMirroring = this->supportMirroring && e->rescaleWithMirror();
         this->supportRotation = this->supportRotation && e->getType() == ELEMENT_STROKE;
@@ -283,9 +282,23 @@ void EditSelection::finalizeSelection() {
 
     this->view = v;
 
-    PageRef page = this->view->getPage();
-    Layer* layer = page->getSelectedLayer();
-    this->contents->finalizeSelection(this->getRect(), this->snappedBounds, this->preserveAspectRatio, layer);
+    auto insertOrder =
+            this->contents->makeMoveEffective(this->getRect(), this->snappedBounds, this->preserveAspectRatio);
+
+
+    auto* doc = view->getXournal()->getControl()->getDocument();
+    doc->lock();
+
+    Layer* destinationLayer = this->view->getPage()->getSelectedLayer();
+    for (auto&& [e, index]: insertOrder) {
+        if (index == Element::InvalidIndex) {
+            // if the element didn't have a source layer (e.g, clipboard)
+            destinationLayer->addElement(std::move(e));
+        } else {
+            destinationLayer->insertElement(std::move(e), index);
+        }
+    }
+    doc->unlock();
 
 
     // Calculate new clip region delta due to rotation:
@@ -443,9 +456,11 @@ void EditSelection::addElement(ElementPtr eOwned, Element::Index order) {
 /**
  * Returns all containing elements of this selection
  */
-auto EditSelection::getElements() const -> std::vector<Element*> const& { return this->contents->getElements(); }
+auto EditSelection::getElementsView() const -> xoj::util::PointerContainerView<std::vector<Element*>> {
+    return this->contents->getElementsView();
+}
 
-void EditSelection::forEachElement(std::function<void(Element*)> f) const {
+void EditSelection::forEachElement(std::function<void(const Element*)> f) const {
     this->contents->forEachElement(std::move(f));
 }
 
@@ -740,7 +755,7 @@ auto EditSelection::getPageViewUnderCursor() -> XojPageView* {
     double hy = this->view->getY() + (this->snappedBounds.y + this->relMousePosY) * zoom;
 
 
-    Layout* layout = gtk_xournal_get_layout(this->view->getXournal()->getWidget());
+    Layout* layout = this->view->getXournal()->getLayout();
     XojPageView* v = layout->getPageViewAt(static_cast<int>(hx), static_cast<int>(hy));
 
     return v;
@@ -796,7 +811,7 @@ void EditSelection::copySelection() {
     // add undo action
     PageRef page = this->view->getPage();
     Layer* layer = page->getSelectedLayer();
-    undo->addUndoAction(std::make_unique<InsertsUndoAction>(page, layer, getElements()));
+    undo->addUndoAction(std::make_unique<InsertsUndoAction>(page, layer, getElementsView().clone()));
 }
 
 /**
@@ -872,7 +887,7 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
     }
 
 
-    Layout* layout = gtk_xournal_get_layout(self->view->getXournal()->getWidget());
+    Layout* layout = self->view->getXournal()->getLayout();
     const Settings* const settings = self->getView()->getXournal()->getControl()->getSettings();
     const double zoom = self->view->getXournal()->getZoom();
 
@@ -1208,8 +1223,8 @@ void EditSelection::serialize(ObjectOutputStream& out) const {
     this->contents->serialize(out);
     out.endObject();
 
-    out.writeInt(static_cast<int>(this->getElements().size()));
-    for (Element* e: this->getElements()) {
+    out.writeInt(static_cast<int>(this->getInsertionOrder().size()));
+    for (const Element* e: this->getElementsView()) {
         e->serialize(out);
     }
 }

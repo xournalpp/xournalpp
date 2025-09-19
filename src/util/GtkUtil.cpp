@@ -1,5 +1,6 @@
 #include "util/GtkUtil.h"
 
+#include <algorithm>
 #include <string>
 #include <string_view>
 
@@ -41,6 +42,9 @@ void setToggleButtonUnreleasable(GtkToggleButton* btn) {
     // "hierarchy-change" is emitted when the widget is added to/removed from a toplevel's descendance
     // We use this to connect to the suitable GAction signals once the widget has been added to the toolbar
     g_signal_connect(btn, "hierarchy-changed", G_CALLBACK(+[](GtkWidget* btn, GtkWidget*, gpointer) {
+                         if (!GTK_IS_WINDOW(gtk_widget_get_toplevel(btn))) {
+                             return;  // The widget was removed from the hierarchy
+                         }
                          GAction* action = findAction(GTK_ACTIONABLE(btn));
                          if (!action) {
                              return;
@@ -69,6 +73,28 @@ void setWidgetFollowActionEnabled(GtkWidget* w, GAction* a) {
     gtk_widget_set_sensitive(w, g_action_get_enabled(a));
 }
 
+std::optional<double> getWidgetDPI(GtkWidget* w) {
+    GdkWindow* win = gtk_widget_get_window(w);
+    GdkDisplay* disp = gtk_widget_get_display(w);
+    if (win && disp) {
+        GdkMonitor* mon = gdk_display_get_monitor_at_window(disp, win);
+        if (mon) {
+            int h = gdk_monitor_get_height_mm(mon);
+            GdkRectangle r;
+            gdk_monitor_get_geometry(mon, &r);
+            auto res = static_cast<double>(r.height) * 25.4 / static_cast<double>(h);
+            g_debug("Automatic DPI conf: monitor height %d mm - DPI = %f", h, res);
+            // I assume some monitors may not return the right value: clamp to avoid wild values that could cause very
+            // bad performances. Not sure what good clamping values should be here.
+            // DPI > 720 should use HiDPI scaling but smaller devices (tablet/phone) can have high DPI values
+            res = std::clamp(res, 36., 720.);
+            return res;
+        }
+    }
+    return std::nullopt;
+}
+
+
 #if GTK_MAJOR_VERSION == 3
 void setRadioButtonActionName(GtkRadioButton* btn, const char* actionNamespace, const char* actionName) {
     // "hierarchy-change" is emitted when the widget is added to/removed from a toplevel's descendance
@@ -79,10 +105,13 @@ void setRadioButtonActionName(GtkRadioButton* btn, const char* actionNamespace, 
     };
     g_signal_connect_data(
             btn, "hierarchy-changed", G_CALLBACK(+[](GtkWidget* btn, GtkWidget*, gpointer d) {
+                if (!GTK_IS_WINDOW(gtk_widget_get_toplevel(btn))) {
+                    return;  // The widget was removed from the hierarchy
+                }
                 Data* data = static_cast<Data*>(d);
                 GActionGroup* win = gtk_widget_get_action_group(btn, data->actionNamespace.c_str());
                 if (!win) {
-                    // Most likely the widget just got removed from the toplevel
+                    g_warning("Could not find action group \"%s\"", data->actionNamespace.c_str());
                     return;
                 }
                 xoj_assert(G_IS_ACTION_MAP(win));
@@ -134,11 +163,12 @@ void setRadioButtonActionName(GtkRadioButton* btn, const char* actionNamespace, 
 
 void fixActionableInitialSensitivity(GtkActionable* w) {
     g_signal_connect(w, "hierarchy-changed", G_CALLBACK(+[](GtkWidget* w, GtkWidget*, gpointer) {
-                         GAction* action = findAction(GTK_ACTIONABLE(w));
-                         if (!action) {
-                             return;
+                         if (!GTK_IS_WINDOW(gtk_widget_get_toplevel(w))) {
+                             return;  // The widget was removed from the hierarchy
                          }
-                         gtk_widget_set_sensitive(w, g_action_get_enabled(action));
+                         if (GAction* action = findAction(GTK_ACTIONABLE(w)); action) {
+                             gtk_widget_set_sensitive(w, g_action_get_enabled(action));
+                         }
                      }),
                      nullptr);
 }

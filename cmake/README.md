@@ -11,7 +11,7 @@ Here you can find complete list of Xournal++ CMake flags (sorted by categories).
 | --------------------------- | -----------
 | `DEBUG_INPUT`               | Input debugging, e.g. eraser events etc
 | `DEBUG_RECOGNIZER`          | Shape recognizer debug: output score etc
-| `DEBUG_SHEDULER`            | Scheduler debug: show jobs etc
+| `DEBUG_SCHEDULER`           | Scheduler debug: show jobs etc
 | `DEBUG_SHOW_ELEMENT_BOUNDS` | Draw a surrounding border to all elements
 | `DEBUG_SHOW_PAINT_BOUNDS`   | Draw a border around all painted rects
 | `DEBUG_SHOW_REPAINT_BOUNDS` | Draw a border around all repaint rects

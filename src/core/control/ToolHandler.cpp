@@ -137,6 +137,22 @@ void ToolHandler::initTools() {
     tools[TOOL_SELECT_PDF_TEXT_RECT - TOOL_PEN] =
             std::make_unique<ToolSelectPDFText>("selectPdfTextRect", TOOL_SELECT_PDF_TEXT_RECT, Colors::black);
 
+    thickness[TOOL_SIZE_VERY_FINE] = .7;
+    thickness[TOOL_SIZE_FINE] = 1.41;
+    thickness[TOOL_SIZE_MEDIUM] = 2.4;
+    thickness[TOOL_SIZE_THICK] = 4;
+    thickness[TOOL_SIZE_VERY_THICK] = 7;
+    tools[TOOL_LASER_POINTER_PEN - TOOL_PEN] = std::make_unique<Tool>(
+            "laserPointerPen", TOOL_LASER_POINTER_PEN, Colors::red, TOOL_CAP_COLOR | TOOL_CAP_SIZE, thickness);
+    thickness[TOOL_SIZE_VERY_FINE] = 1;
+    thickness[TOOL_SIZE_FINE] = 2.83;
+    thickness[TOOL_SIZE_MEDIUM] = 8.50;
+    thickness[TOOL_SIZE_THICK] = 19.84;
+    thickness[TOOL_SIZE_VERY_THICK] = 30;
+    tools[TOOL_LASER_POINTER_HIGHLIGHTER - TOOL_PEN] =
+            std::make_unique<Tool>("laserPointerHighlighter", TOOL_LASER_POINTER_HIGHLIGHTER, Colors::red,
+                                   TOOL_CAP_COLOR | TOOL_CAP_SIZE, thickness);
+
     this->eraserButtonTool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
     this->stylusButton1Tool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
     this->stylusButton2Tool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
@@ -624,9 +640,10 @@ auto ToolHandler::acceptsOutOfPageEvents() const -> bool {
 auto ToolHandler::supportsTapFilter() const -> bool {
     ToolType toolType = this->getToolType();
 
-    return toolType == TOOL_PEN || toolType == TOOL_HIGHLIGHTER || toolType == TOOL_HAND ||
-           toolType == TOOL_DRAW_RECT || toolType == TOOL_DRAW_ELLIPSE || toolType == TOOL_DRAW_COORDINATE_SYSTEM ||
-           toolType == TOOL_DRAW_ARROW || toolType == TOOL_DRAW_DOUBLE_ARROW || toolType == TOOL_DRAW_SPLINE;
+    return toolType == TOOL_PEN || toolType == TOOL_HIGHLIGHTER || toolType == TOOL_LASER_POINTER_PEN ||
+           toolType == TOOL_LASER_POINTER_HIGHLIGHTER || toolType == TOOL_HAND || toolType == TOOL_DRAW_RECT ||
+           toolType == TOOL_DRAW_ELLIPSE || toolType == TOOL_DRAW_COORDINATE_SYSTEM || toolType == TOOL_DRAW_ARROW ||
+           toolType == TOOL_DRAW_DOUBLE_ARROW || toolType == TOOL_DRAW_SPLINE;
 }
 
 auto ToolHandler::getSelectedTool(SelectedTool selectedTool) const -> Tool* {
@@ -648,6 +665,8 @@ auto ToolHandler::getButtonTool(Button button) const -> Tool* {
             return this->stylusButton1Tool.get();
         case Button::BUTTON_STYLUS_TWO:
             return this->stylusButton2Tool.get();
+        case Button::BUTTON_MOUSE_LEFT:
+            return this->mouseLeftButtonTool.get();
         case Button::BUTTON_MOUSE_MIDDLE:
             return this->mouseMiddleButtonTool.get();
         case Button::BUTTON_MOUSE_RIGHT:
@@ -670,6 +689,9 @@ void ToolHandler::resetButtonTool(ToolType type, Button button) {
             break;
         case Button::BUTTON_STYLUS_TWO:
             this->stylusButton2Tool.reset(new Tool(tool));
+            break;
+        case Button::BUTTON_MOUSE_LEFT:
+            this->mouseLeftButtonTool.reset(new Tool(tool));
             break;
         case Button::BUTTON_MOUSE_MIDDLE:
             this->mouseMiddleButtonTool.reset(new Tool(tool));

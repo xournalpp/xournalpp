@@ -113,19 +113,19 @@ public:
     bool checkLayer(const Layer* l) override {
         double minDistance = ACTION_RADIUS;
         // Iterate starting from the front-most element
-        Element::Index pos = as_signed(l->getElements().size());
-        for (auto it = l->getElements().rbegin(); it < l->getElements().rend(); ++it) {
+        Element::Index pos = as_signed(l->getElementsView().size());
+        for (auto it = l->getElementsView().rbegin(); it < l->getElementsView().rend(); ++it) {
             pos--;
             // First perform a rough check to avoid expensive calls to Stroke::distanceTo()
             if ((*it)->intersectsArea(x - minDistance, y - minDistance, 2. * minDistance, 2. * minDistance)) {
                 double d = (*it)->distanceTo(x, y);
                 if (d == 0.0) {
-                    this->match = it->get();
+                    this->match = *it;
                     this->matchIndex = pos;
                     return true;
                 }
                 if (d < minDistance) {
-                    this->match = it->get();
+                    this->match = *it;
                     this->matchIndex = pos;
                     minDistance = d;
                     // Keep going, we may find something closer
@@ -136,7 +136,7 @@ public:
     }
 
 private:
-    Element* match;
+    const Element* match;
     Element::Index matchIndex;
 };
 
@@ -162,8 +162,8 @@ protected:
     /// Plays every element of the layer that are closer than ACTION_RADIUS
     bool checkLayer(const Layer* l) override {
         bool found = false;
-        for (auto&& e: l->getElements()) {
-            if (auto* audio = dynamic_cast<AudioElement*>(e.get()); audio) {
+        for (auto&& e: l->getElementsView()) {
+            if (auto* audio = dynamic_cast<const AudioElement*>(e); audio) {
                 // First perform a rough check to avoid expensive calls to Stroke::distanceTo()
                 if (audio->intersectsArea(x - ACTION_RADIUS, y - ACTION_RADIUS, 2. * ACTION_RADIUS,
                                           2. * ACTION_RADIUS)) {
@@ -178,6 +178,7 @@ protected:
     }
 
     bool playElement(const AudioElement* s) {
+#ifdef ENABLE_AUDIO
         size_t ts = s->getTimestamp();
 
         if (auto fn = s->getAudioFilename(); !fn.empty()) {
@@ -195,6 +196,9 @@ protected:
             playbackStatus = {success, std::move(fn)};
             return success;
         }
+#else
+        g_warning("Audio support was disabled at compile time");
+#endif
         return false;
     }
 };

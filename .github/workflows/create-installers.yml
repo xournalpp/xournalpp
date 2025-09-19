@@ -18,6 +18,8 @@ on:
         # Some JSON string of a list of items, each containing the following members
         #   - runner: one of github's WINDOWS runners
         #   - displayed_name
+        #   - msystem: ID of one of the msys environments https://www.msys2.org/docs/environments/
+        #   - msys_package_env: msys package "group" - inserted in package names. see e.g. https://packages.msys2.org/search?t=binpkg&q=libzip
         #   - build_portable (optional, defaults to false)
         type: string
         default: ''
@@ -55,6 +57,7 @@ jobs:
       container_image: ${{ matrix.run.container_image }}
       head_sha: ${{ inputs.head_sha }}
       artifact_version_suffix: ${{ inputs.artifact_version_suffix }}
+      extra_cmake_flags: ${{ matrix.run.extra_cmake_flags }}
 
   ci-windows:
     name: Create installer (Windows)
@@ -67,9 +70,12 @@ jobs:
     with:
       runner: ${{ matrix.run.runner }}
       displayed_name: ${{ matrix.run.displayed_name }}
+      msystem: ${{ matrix.run.msystem }}
+      msys_package_env: ${{ matrix.run.msys_package_env }}
       publish_portable_version:  ${{ matrix.run.build_portable == 'true' }}
       head_sha: ${{ inputs.head_sha }}
       artifact_version_suffix: ${{ inputs.artifact_version_suffix }}
+      extra_cmake_flags: ${{ matrix.run.extra_cmake_flags }}
 
   ci-macos:
     name: Create installer (MacOS)
@@ -84,3 +90,4 @@ jobs:
       displayed_name: ${{ matrix.run.displayed_name }}
       head_sha: ${{ inputs.head_sha }}
       artifact_version_suffix: ${{ inputs.artifact_version_suffix }}
+      extra_cmake_flags: ${{ matrix.run.extra_cmake_flags }}

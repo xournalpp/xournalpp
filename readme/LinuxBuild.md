@@ -17,36 +17,36 @@ The minimum required CMake version is 3.13, but we recommend using >=3.15. Also,
 #### For Arch Linux:
 ```sh
 sudo pacman -S cmake gtk3 base-devel libxml2 portaudio libsndfile \
-  poppler-glib texlive-bin texlive-pictures gettext libzip lua53 lua53-lgi \
-  gtksourceview4 help2man
+  poppler-glib texlive-bin texlive-pictures gettext libzip lua53 \
+  gtksourceview4 help2man qpdf
 ```
 
 #### For Fedora:
 ```sh
 sudo dnf install gcc-c++ cmake gtk3-devel libxml2-devel portaudio-devel libsndfile-devel \
   poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext libzip-devel \
-  librsvg2-devel lua-devel lua-lgi gtksourceview4-devel help2man
+  librsvg2-devel lua-devel gtksourceview4-devel help2man qpdf-devel
 ```
 
 #### For CentOS/RHEL:
 ```sh
 sudo dnf install gcc-c++ cmake gtk3-devel libxml2-devel cppunit-devel portaudio-devel libsndfile-devel \
   poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext libzip-devel \
-  librsvg2-devel gtksourceview4-devel
+  librsvg2-devel gtksourceview4-devel qpdf-devel
 ```
 
 #### For Ubuntu/Debian and Raspberry Pi OS:
 ```sh
 sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev \
-  dvipng texlive libxml2-dev liblua5.3-dev libzip-dev librsvg2-dev gettext lua-lgi \
-  libgtksourceview-4-dev help2man
+  dvipng texlive libxml2-dev liblua5.3-dev libzip-dev librsvg2-dev gettext \
+  libgtksourceview-4-dev help2man libqpdf-dev
 ```
 
 #### For openSUSE:
 ```sh
 sudo zypper install gcc-c++ cmake gtk3-devel portaudio-devel libsndfile-devel \
-  texlive-dvipng texlive libxml2-devel libpoppler-glib-devel libzip-devel librsvg-devel lua-devel lua-lgi \
-  gtksourceview4-devel lsb-release help2man
+  texlive-dvipng texlive libxml2-devel libpoppler-glib-devel libzip-devel librsvg-devel lua-devel \
+  gtksourceview4-devel lsb-release help2man qpdf-devel
 ```
 
 #### For Solus:
@@ -54,7 +54,7 @@ sudo zypper install gcc-c++ cmake gtk3-devel portaudio-devel libsndfile-devel \
 sudo eopkg it -c system.devel
 sudo eopkg it cmake libgtk-3-devel libxml2-devel poppler-devel libzip-devel \
   portaudio-devel libsndfile-devel alsa-lib-devel lua-devel \
-  librsvg-devel gettext libgtksourceview-devel
+  librsvg-devel gettext libgtksourceview-devel qpdf-devel
 ```
 
 ## Building and Testing
@@ -90,13 +90,13 @@ TODO
 ### AppImage
 
 The quickest way to generate an AppImage is to first generate the `.tar.gz`
-package and then use that with the `azure-pipelines/util/build_appimage.sh`
+package and then use that with the `linux-setup/build_appimage.sh`
 script.
 
 ```sh
 cmake .. -DCPACK_GENERATOR="TGZ"
 cmake --build . --target package
-../azure-pipelines/util/build_appimage.sh
+../linux-setup/build_appimage.sh
 ```
 
 The `build_appimage.sh` script will automatically download LinuxDeploy, copy the

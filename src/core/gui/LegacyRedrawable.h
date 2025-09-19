@@ -66,7 +66,7 @@ public:
     /**
      * Call this if you add an element, remove an element etc.
      */
-    void rerenderElement(Element* e);
+    void rerenderElement(const Element* e);
     void rerenderRange(const Range& r);
 
     /**

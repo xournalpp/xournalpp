@@ -230,7 +230,7 @@ void Stroke::setWidth(double width) {
 
 auto Stroke::getWidth() const -> double { return this->width; }
 
-auto Stroke::rescaleWithMirror() -> bool { return true; }
+auto Stroke::rescaleWithMirror() const -> bool { return true; }
 
 auto Stroke::isInSelection(ShapeContainer* container) const -> bool {
     for (auto&& p: this->points) {

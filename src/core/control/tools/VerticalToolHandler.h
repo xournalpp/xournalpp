@@ -26,7 +26,7 @@
 class Element;
 class Layer;
 class MoveUndoAction;
-class Settings;
+class Control;
 class ZoomControl;
 struct KeyEvent;
 
@@ -52,7 +52,7 @@ public:
      * @param initiallyReverse Set this to true if the user has the reverse mode
      * button (e.g., Ctrl) held down when a vertical selection is started.
      */
-    VerticalToolHandler(const PageRef& page, Settings* settings, double y, bool initiallyReverse);
+    VerticalToolHandler(const PageRef& page, Control* control, double y, bool initiallyReverse);
     ~VerticalToolHandler() override;
     VerticalToolHandler(VerticalToolHandler&) = delete;
     VerticalToolHandler& operator=(VerticalToolHandler&) = delete;
@@ -67,7 +67,7 @@ public:
 
     std::unique_ptr<MoveUndoAction> finalize();
 
-    void forEachElement(std::function<void(Element*)> f) const override;
+    void forEachElement(std::function<void(const Element*)> f) const override;
 
     auto createView(xoj::view::Repaintable* parent, ZoomControl* zoomControl, const Settings* settings) const
             -> std::unique_ptr<xoj::view::OverlayView>;
@@ -111,6 +111,7 @@ private:
     PageRef page;
     Layer* layer;
     std::vector<ElementPtr> elements;
+    Control* control;
     /**
      * @brief Stores the smallest box containing all the adopted elements.
      *     Used to only refresh the part of the screen that needs refreshing.

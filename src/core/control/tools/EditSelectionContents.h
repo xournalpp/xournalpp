@@ -24,6 +24,7 @@
 #include "model/PageRef.h"                   // for PageRef
 #include "undo/UndoAction.h"                 // for UndoAction (ptr only)
 #include "util/Color.h"                      // for Color
+#include "util/PointerContainerView.h"       // for PointerContainerView
 #include "util/Rectangle.h"                  // for Rectangle
 #include "util/serializing/Serializable.h"   // for Serializable
 
@@ -93,9 +94,9 @@ public:
     /**
      * Returns all containing elements of this selection
      */
-    auto getElements() const -> std::vector<Element*> const&;
+    auto getElementsView() const -> xoj::util::PointerContainerView<std::vector<Element*>>;
 
-    void forEachElement(std::function<void(Element*)> f) const override;
+    void forEachElement(std::function<void(const Element*)> f) const override;
 
     /**
      * Returns the insert order of this selection
@@ -121,12 +122,6 @@ public:
     /// Applies the transformation to the selected elements, empties the selection and return the modified elements
     InsertionOrder makeMoveEffective(const xoj::util::Rectangle<double>& bounds,
                                      const xoj::util::Rectangle<double>& snappedBounds, bool preserveAspectRatio);
-
-    /**
-     * Finish the editing
-     */
-    void finalizeSelection(xoj::util::Rectangle<double> bounds, xoj::util::Rectangle<double> snappedBounds,
-                           bool aspectRatio, Layer* destinationLayer);
 
     void updateContent(xoj::util::Rectangle<double> bounds, xoj::util::Rectangle<double> snappedBounds, double rotation,
                        bool aspectRatio, Layer* layer, const PageRef& targetPage, UndoRedoHandler* undo,

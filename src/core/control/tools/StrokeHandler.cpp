@@ -130,7 +130,7 @@ void StrokeHandler::onSequenceCancelEvent() {
     }
 }
 
-void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zoom) {
+void StrokeHandler::finalizeStroke(double pressure) {
     if (!stroke) {
         return;
     }
@@ -148,7 +148,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
         const Point pt = pv.front();  // Make a copy, otherwise stroke->addPoint(pt); in UB
         if (this->hasPressure) {
             // Pressure inference provides a pressure value to the last event. Most devices set this value to 0.
-            const double newPressure = std::max(pt.z, pos.pressure * this->stroke->getWidth());
+            const double newPressure = std::max(pt.z, pressure * this->stroke->getWidth());
             this->stroke->setLastPressure(newPressure);
             this->viewPool->dispatch(xoj::view::StrokeToolView::THICKEN_FIRST_POINT_REQUEST, newPressure);
         }
@@ -156,6 +156,13 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
     }
 
     stroke->freeUnusedPointItems();
+}
+
+void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zoom) {
+    if (!stroke) {
+        return;
+    }
+    finalizeStroke(pos.pressure);
 
     Layer* layer = page->getSelectedLayer();
 

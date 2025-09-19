@@ -32,6 +32,7 @@
 #include "gui/widgets/SpinPageAdapter.h"                // for SpinPageAdapter
 #include "gui/widgets/XournalWidget.h"                  // for gtk_xournal_get_l...
 #include "util/GListView.h"                             // for GListView, GListV...
+#include "util/GtkUtil.h"                               // for getWidgetDPI
 #include "util/PathUtil.h"                              // for getConfigFile
 #include "util/Util.h"                                  // for execInUiThread, npos
 #include "util/XojMsgBox.h"                             // for XojMsgBox
@@ -306,8 +307,7 @@ void MainWindow::initXournalWidget() {
     control->getZoomControl()->initZoomHandler(this->window, winXournal, xournal.get(), control);
     gtk_widget_show_all(winXournal);
 
-    Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
-    scrollHandling->init(this->xournal->getWidget(), layout);
+    scrollHandling->init(this->xournal->getWidget(), this->xournal->getLayout());
 }
 
 void MainWindow::setGtkTouchscreenScrollingForDeviceMapping() {
@@ -322,23 +322,10 @@ void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
     if (!control->getSettings()->getGtkTouchInertialScrollingEnabled()) {
         enabled = false;
     }
-
-    if (enabled == gtkTouchscreenScrollingEnabled.load() || winXournal == nullptr) {
-        return;
-    }
-
-    gtkTouchscreenScrollingEnabled.store(enabled);
-
-    Util::execInUiThread(
-            [=]() {
-                const bool touchScrollEnabled = gtkTouchscreenScrollingEnabled.load();
-
-                gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), touchScrollEnabled);
-            },
-            G_PRIORITY_HIGH);
+    gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), enabled);
 }
 
-auto MainWindow::getLayout() const -> Layout* { return gtk_xournal_get_layout(this->xournal->getWidget()); }
+auto MainWindow::getLayout() const -> Layout* { return this->xournal->getLayout(); }
 
 auto MainWindow::getNegativeXournalWidgetPos() const -> xoj::util::Point<double> {
     return Util::toWidgetCoords(this->winXournal, xoj::util::Point{0.0, 0.0});
@@ -742,3 +729,13 @@ void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssF
 PdfFloatingToolbox* MainWindow::getPdfToolbox() const { return this->pdfFloatingToolBox.get(); }
 
 FloatingToolbox* MainWindow::getFloatingToolbox() const { return this->floatingToolbox.get(); }
+
+void MainWindow::setDPI() const {
+    if (auto dpi = this->getControl()->getSettings()->getDisplayDpi(); dpi == -1) {
+        auto res = xoj::util::gtk::getWidgetDPI(this->window);
+        this->getControl()->getZoomControl()->setZoom100Value(res.value_or(Util::DPI_NORMALIZATION_FACTOR) /
+                                                              Util::DPI_NORMALIZATION_FACTOR);
+    } else {
+        this->getControl()->getZoomControl()->setZoom100Value(dpi / Util::DPI_NORMALIZATION_FACTOR);
+    }
+}

@@ -61,16 +61,19 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
         if (primarySequence == event.sequence && !secondarySequence) {
             scrollMotion(event);
             return true;
-        } else if (event.sequence && zoomGesturesEnabled &&
-                   (primarySequence == event.sequence || secondarySequence == event.sequence)) {
+        } else if (event.sequence && (primarySequence == event.sequence || secondarySequence == event.sequence)) {
             xoj_assert(primarySequence);
-            if (startZoomReady) {
-                if (this->primarySequence == event.sequence) {
-                    sequenceStart(event);
-                    zoomStart();
+            if (zoomGesturesEnabled) {
+                if (startZoomReady) {
+                    if (this->primarySequence == event.sequence) {
+                        sequenceStart(event);
+                        zoomStart();
+                    }
+                } else {
+                    zoomMotion(event);
                 }
             } else {
-                zoomMotion(event);
+                scrollMotion(event);
             }
             return true;
         }
@@ -125,9 +128,7 @@ void TouchInputHandler::scrollMotion(InputEvent const& event) {
         }
     }();
 
-    auto* layout = inputContext->getView()->getControl()->getWindow()->getLayout();
-
-    layout->scrollRelative(-offset.x, -offset.y);
+    inputContext->getView()->getLayout()->scrollRelative(-offset.x, -offset.y);
 }
 
 void TouchInputHandler::zoomStart() {

@@ -22,7 +22,8 @@
 #include <poppler.h>  // for GObject
 
 #include "control/latex/LatexGenerator.h"  // for LatexGenerator
-#include "model/PageRef.h"                 // for PageRef
+#include "gui/dialog/AbstractLatexDialog.h"
+#include "model/PageRef.h"  // for PageRef
 
 #include "filesystem.h"  // for path
 
@@ -33,7 +34,7 @@ class XojPageView;
 class Layer;
 class Element;
 class LatexSettings;
-class LatexDialog;
+class IntEdLatexDialog;
 
 class LatexController final {
 public:
@@ -57,7 +58,7 @@ private:
      */
     class FindDependencyStatus {
     public:
-        FindDependencyStatus(bool success, std::string errorMsg): success(success), errorMsg(std::move(errorMsg)){};
+        FindDependencyStatus(bool success, std::string errorMsg): success(success), errorMsg(std::move(errorMsg)) {};
         bool success;
         std::string errorMsg;
     };
@@ -131,8 +132,10 @@ private:
     /**
      * LaTex editor dialog
      */
-    LatexDialog* dlg = nullptr;
-    friend class LatexDialog;
+    AbstractLatexDialog* dlg = nullptr;
+    friend class AbstractLatexDialog;
+    friend class ExtEdLatexDialog;
+    friend class IntEdLatexDialog;
 
     /**
      * Tex binary full path
@@ -215,7 +218,7 @@ private:
     /**
      * The element that is currently being edited.
      */
-    Element* selectedElem = nullptr;
+    const Element* selectedElem = nullptr;
 
     /**
      * The controller owns the rendered preview in order to be able to delete it

@@ -17,13 +17,28 @@ constexpr auto UI_FILE = "settingsDeviceClassConfig.glade";
 constexpr auto UI_WIDGET_NAME = "deviceClassBox";
 
 DeviceClassConfigGui::DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, GtkBox* box, Settings* settings,
-                                           const InputDevice& device):
-        settings(settings), device(device) {
+                                           bool showApplyBtn):
+        settings(settings) {
     Builder builder(gladeSearchPath, UI_FILE);
     gtk_box_append(box, builder.get(UI_WIDGET_NAME));  // box takes ownership of it all!
 
     this->labelDevice = builder.get("labelDevice");
     this->cbDeviceClass = builder.get("cbDeviceClass");
+    auto* applyBtn = builder.get("btnApply");
+
+    gtk_widget_set_visible(applyBtn, showApplyBtn);
+    if (showApplyBtn) {
+        g_signal_connect(applyBtn, "clicked", G_CALLBACK(+[](GtkButton*, gpointer d) {
+                             static_cast<DeviceClassConfigGui*>(d)->saveSettings();
+                         }),
+                         this);
+    }
+}
+
+DeviceClassConfigGui::~DeviceClassConfigGui() = default;
+
+void DeviceClassConfigGui::setDevice(const InputDevice& d) {
+    this->device = d;
     gtk_label_set_text(GTK_LABEL(this->labelDevice), (device.getName() + " (" + device.getType() + ")").c_str());
 
     loadSettings();

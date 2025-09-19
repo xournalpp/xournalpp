@@ -273,15 +273,15 @@ void XournalppCursor::updateCursor() {
                 default:
                     break;
             }
-        } else if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER) {
-            if ((this->inputDevice == INPUT_DEVICE_MOUSE || this->inputDevice == INPUT_DEVICE_MOUSE_KEYBOARD_COMBO) &&
-                !this->mouseDown)  // mouse and not pressed
-            {
+        } else if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER || type == TOOL_LASER_POINTER_PEN ||
+                   type == TOOL_LASER_POINTER_HIGHLIGHTER) {
+            if (this->inputDevice == INPUT_DEVICE_MOUSE && !this->mouseDown) {
+                // mouse and not pressed
                 setCursor(CRSR_ARROW);
             } else {
-                if (type == TOOL_PEN) {
+                if (type == TOOL_PEN || type == TOOL_LASER_POINTER_PEN) {
                     cursor = getPenCursor();
-                } else  // must be:  if (type == TOOL_HIGHLIGHTER)
+                } else  // must be:  if (type == TOOL_HIGHLIGHTER || type == TOOL_LASER_POINTER_HIGHLIGHTER)
                 {
                     cursor = getHighlighterCursor();
                 }

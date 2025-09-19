@@ -3,7 +3,6 @@
 #include <cinttypes>   // for PRIx32
 #include <cstdint>     // for uint32_t
 #include <cstdio>      // for sprintf, size_t
-#include <filesystem>  // for exists
 
 #include <cairo.h>                  // for cairo_surface_t
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_save
@@ -33,18 +32,19 @@
 #include "model/XojPage.h"                     // for XojPage
 #include "pdf/base/XojPdfDocument.h"           // for XojPdfDocument
 #include "util/OutputStream.h"                 // for GzOutputStream, Output...
-#include "util/PathUtil.h"                     // for clearExtensions
+#include "util/PathUtil.h"                     // for clearExtensions, normalizeAssetPath
 #include "util/PlaceholderString.h"            // for PlaceholderString
 #include "util/i18n.h"                         // for FS, _F
 
 #include "config.h"  // for FILE_FORMAT_VERSION
+#include "filesystem.h"
 
 SaveHandler::SaveHandler() {
     this->firstPdfPageVisited = false;
     this->attachBgId = 1;
 }
 
-void SaveHandler::prepareSave(const Document* doc) {
+void SaveHandler::prepareSave(const Document* doc, const fs::path& target) {
     if (this->root) {
         // cleanup old data
         backgroundImages.clear();
@@ -71,7 +71,7 @@ void SaveHandler::prepareSave(const Document* doc) {
 
     for (size_t i = 0; i < doc->getPageCount(); i++) {
         PageRef p = doc->getPage(i);
-        visitPage(root.get(), p, doc, static_cast<int>(i));
+        visitPage(root.get(), p, doc, static_cast<int>(i), target);
     }
 }
 
@@ -165,18 +165,18 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
         layer->setAttrib("name", l->getName().c_str());
     }
 
-    for (auto&& e: l->getElements()) {
+    for (const auto& e: l->getElementsView()) {
         if (e->getType() == ELEMENT_STROKE) {
-            auto* s = dynamic_cast<Stroke*>(e.get());
+            auto* s = dynamic_cast<const Stroke*>(e);
             auto* stroke = new XmlPointNode("stroke");
             layer->addChild(stroke);
             visitStroke(stroke, s);
         } else if (e->getType() == ELEMENT_TEXT) {
-            Text* t = dynamic_cast<Text*>(e.get());
+            const Text* t = dynamic_cast<const Text*>(e);
             auto* text = new XmlTextNode("text", t->getText());
             layer->addChild(text);
 
-            XojFont& f = t->getFont();
+            const XojFont& f = t->getFont();
 
             text->setAttrib("font", f.getName().c_str());
             text->setAttrib("size", f.getSize());
@@ -186,7 +186,7 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
 
             writeTimestamp(text, t);
         } else if (e->getType() == ELEMENT_IMAGE) {
-            auto* i = dynamic_cast<Image*>(e.get());
+            auto* i = dynamic_cast<const Image*>(e);
             auto* image = new XmlImageNode("image");
             layer->addChild(image);
 
@@ -197,7 +197,7 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
             image->setAttrib("right", i->getX() + i->getElementWidth());
             image->setAttrib("bottom", i->getY() + i->getElementHeight());
         } else if (e->getType() == ELEMENT_TEXIMAGE) {
-            auto* i = dynamic_cast<TexImage*>(e.get());
+            auto* i = dynamic_cast<const TexImage*>(e);
             auto* image = new XmlTexNode("teximage", std::string(i->getBinaryData()));
             layer->addChild(image);
 
@@ -210,7 +210,7 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
     }
 }
 
-void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, int id) {
+void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, int id, const fs::path& target) {
     auto* page = new XmlNode("page");
     root->addChild(page);
     page->setAttrib("width", p->getWidth());
@@ -253,8 +253,11 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
                     g_error_free(error);
                 }
             } else {
+                // "absolute" just means path. For backward compatibility, it is hard to change the word
                 background->setAttrib("domain", "absolute");
-                background->setAttrib("filename", doc->getPdfFilepath().u8string());
+                auto normalizedPath = Util::normalizeAssetPath(doc->getPdfFilepath(), target.parent_path(),
+                                                               doc->getPathStorageMode());
+                background->setAttrib("filename", std::move(normalizedPath));
             }
         }
         background->setAttrib("pageno", p->getPdfPageNr() + 1);
@@ -284,8 +287,12 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
 
             g_free(filename);
         } else {
+            // "absolute" just means path. For backward compatibility, it is hard to change the word
             background->setAttrib("domain", "absolute");
-            background->setAttrib("filename", p->getBackgroundImage().getFilepath().u8string());
+            auto normalizedPath = Util::normalizeAssetPath(p->getBackgroundImage().getFilepath(), target.parent_path(),
+                                                           doc->getPathStorageMode());
+            background->setAttrib("filename", std::move(normalizedPath));
+
             BackgroundImage img = p->getBackgroundImage();
 
             /*

@@ -873,3 +873,23 @@ function app.clearSelection() end
 --- 
 function app.addToSelection(refs) end
 
+--- Registers a new placeholder label for the toolbar.
+--- 
+--- @param id string: The placeholder ID (must be unique for each placeholder)
+--- @param description string: The label description shown in the toolbar
+--- 
+--- Example:
+---   app.registerPlaceholder("vi-mode", "Current mode")
+--- 
+--- The placeholder can then be updated with app.setPlaceholderValue(id, value).
+function app.registerPlaceholder(id, description) end
+
+--- Set the value of a plugin placeholder label in the toolbar.
+--- 
+--- @param id string: The placeholder ID
+--- @param value string: The value to display
+--- 
+--- Example: app.setPlaceholderValue("vi-mode", "Current mode")
+--- Updates the toolbar placeholder with the given value.
+function app.setPlaceholderValue(id, value) end
+

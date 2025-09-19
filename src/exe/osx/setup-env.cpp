@@ -6,7 +6,7 @@
 #include <glib.h>
 #include <poppler-global.h>
 
-#include "util/Stacktrace.h"
+#include "util/PathUtil.h"
 
 #include "filesystem.h"
 
@@ -15,7 +15,7 @@ void setupEnvironment() {
      * see https://gitlab.gnome.org/GNOME/gtk-mac-bundler/-/blob/master/examples/gtk3-launcher.sh
      * and https://gitlab.gnome.org/GNOME/gtk-mac-bundler/-/issues/12
      */
-    auto base = Stacktrace::getExePath().parent_path();  // Xournal++.app/Contents or $HOME/gtk/inst
+    auto base = Util::getExePath().parent_path();  // Xournal++.app/Contents or $HOME/gtk/inst
 
     if (fs::exists(base / "Resources")) {  // app-bundle
         base = base / "Resources";
@@ -53,17 +53,17 @@ void setupEnvironment() {
     auto environ = g_get_environ();
     const char* usedPixbufModuleFile = g_environ_getenv(environ, "GDK_PIXBUF_MODULE_FILE");
     const char* usedTypelibPath = g_environ_getenv(environ, "GI_TYPELIB_PATH");
-    // The DYLD_FALLBACK_LIBRARY_PATH is only read when the process is started, so it can't be set here. It is set in
+    // The DYLD_LIBRARY_PATH is only read when the process is started, so it can't be set here. It is set in
     // the Info.plist therefore, which only takes effect when running the App from Finder or using the "open" command.
-    const char* usedDYLDFallbackLibraryPath = g_environ_getenv(environ, "DYLD_FALLBACK_LIBRARY_PATH");
+    const char* usedDYLDLibraryPath = g_environ_getenv(environ, "DYLD_LIBRARY_PATH");
     const char* usedLuaPath = g_environ_getenv(environ, "LUA_PATH");
     const char* usedLuaCPath = g_environ_getenv(environ, "LUA_CPATH");
     g_message("Continue with GDK_PIXBUF_MODULE_FILE = %s\n"
               "GI_TYPELIB_PATH = %s\n"
-              "DYLD_FALLBACK_LIBRARY_PATH = %s\n"
+              "DYLD_LIBRARY_PATH = %s\n"
               "LUA_PATH = %s\n"
               "LUA_CPATH = %s",
-              usedPixbufModuleFile, usedTypelibPath, usedDYLDFallbackLibraryPath, usedLuaPath, usedLuaCPath);
+              usedPixbufModuleFile, usedTypelibPath, usedDYLDLibraryPath, usedLuaPath, usedLuaCPath);
 
     /**
      * set LANG and LC_MESSAGES in order to detect the default language
