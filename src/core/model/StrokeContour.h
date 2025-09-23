@@ -31,9 +31,10 @@ private:
 
 class StrokeContourDashes final {
 public:
-    explicit StrokeContourDashes(const std::vector<Point>& path, const std::vector<double>& dashPattern);
+    StrokeContourDashes(const std::vector<Point>& path, const std::vector<double>& dashPattern);
     ~StrokeContourDashes();
-    void addToCairo(cairo_t* cr) const;
+    /// Returns the new dash offset (= dashoffset + path length)
+    double addToCairo(cairo_t* cr, double dashoffset) const;
     void drawDebug(cairo_t* cr) const;
 
 private:
