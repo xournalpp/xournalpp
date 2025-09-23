@@ -5,7 +5,7 @@
 #include "control/xml/XmlNode.h"  // for XmlNode
 #include "util/OutputStream.h"    // for OutputStream
 
-XmlImageNode::XmlImageNode(const char* tag): XmlNode(tag) {
+XmlImageNode::XmlImageNode(const std::string_view tag): XmlNode(tag) {
     this->img = nullptr;
     this->out = nullptr;
     this->pos = 0;
