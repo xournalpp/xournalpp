@@ -278,12 +278,12 @@ auto Settings::getActiveViewMode() const -> ViewModeId { return this->activeView
 
 void Settings::parseData(xmlNodePtr cur, SElement& elem) {
     for (xmlNodePtr x = cur->children; x != nullptr; x = x->next) {
-        const std::string_view type = reinterpret_cast<const char*>(x->name);
+        const std::u8string_view type = reinterpret_cast<const char8_t*>(x->name);
         const auto name = xmlGet<string>(x, "name");
 
-        if (type == "data") {
+        if (type == "data"_u8s) {
             parseData(x, elem.child(name));
-        } else if (type == "attribute") {
+        } else if (type == "attribute"_u8s) {
             const auto sType = xmlGet<string>(x, "type");
 
             if (sType == "int") {
@@ -316,7 +316,7 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem) {
 
 void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     // Parse data map
-    if (u8string_view(cur->name) == u8string_view("data"_xml)) {
+    if (u8string_view(reinterpret_cast<const char8_t*>(cur->name)) == "data"_u8s) {
         const auto name = xmlGet<string>(cur, "name");
         if (name.empty()) {
             g_warning("Settings::%s:No name property!\n", cur->name);
@@ -332,7 +332,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         return;
     }
 
-    if (u8string_view(cur->name) != u8string_view("property"_xml)) {
+    if (u8string_view(reinterpret_cast<const char8_t*>(cur->name)) != "property"_u8s) {
         g_warning("Settings::Unknown XML node: %s\n", cur->name);
         return;
     }
@@ -461,9 +461,9 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (name == "useStockIcons") {
         this->useStockIcons = parse<bool>(value);
     } else if (name == "defaultSaveName") {
-        this->defaultSaveName = value;
+        this->defaultSaveName = parse<u8string>(value);
     } else if (name == "defaultPdfExportName") {
-        this->defaultPdfExportName = value;
+        this->defaultPdfExportName = parse<u8string>(value);
     } else if (name == "pluginEnabled") {
         this->pluginEnabled = value;
     } else if (name == "pluginDisabled") {
@@ -766,7 +766,7 @@ auto Settings::load() -> bool {
         return false;
     }
 
-    if (u8string_view(cur->name) != u8string_view("settings"_xml)) {
+    if (u8string_view(reinterpret_cast<const char8_t*>(cur->name)) != "settings"_u8s) {
         g_message("File \"%s\" is of the wrong type", filepath.string().c_str());
         xmlFreeDoc(doc);
 

@@ -21,14 +21,14 @@ TEST(SettingsTest, testLoadDoesNotThrowForNonExistingFilePath) {
 // Rudimentary test for Settings save/load - very crude
 TEST(SettingsTest, testReadWrite) {
     auto saveReloadTest = [&](const fs::path& dir) {
-        std::cout << "Test saving in " << dir.u8string() << std::endl;
+        std::cout << "Test saving in " << dir.string() << std::endl;
         const fs::path outPath = dir / "xournalpp-test-units_Settings_testReadWrite.xml";
         ASSERT_TRUE(!fs::exists(outPath));
 
         Settings settings(outPath);
         settings.transactionStart();
         settings.setAudioDisabled(true);                        // bool
-        settings.setDefaultSaveName("foo/bar€_%H");             // string
+        settings.setDefaultSaveName(u8"foo/bar€_%H");           // string
         settings.setDisplayDpi(123);                            // int
         settings.setStabilizerDrag(3.1415);                     // double
         settings.setBackgroundColor(Color(123, 45, 67));        // Color
