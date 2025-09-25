@@ -376,11 +376,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (name == "selectedToolbar") {
         this->selectedToolbar = value;
     } else if (name == "lastSavePath") {
-        this->lastSavePath = fs::path(value);
+        this->lastSavePath = parse<fs::path>(value);
     } else if (name == "lastOpenPath") {
-        this->lastOpenPath = fs::path(value);
+        this->lastOpenPath = parse<fs::path>(value);
     } else if (name == "lastImagePath") {
-        this->lastImagePath = fs::path(value);
+        this->lastImagePath = parse<fs::path>(value);
     } else if (name == "edgePanSpeed") {
         this->edgePanSpeed = parse<double>(value);
     } else if (name == "edgePanMaxMult") {
@@ -477,7 +477,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (name == "sizeUnit") {
         this->sizeUnit = value;
     } else if (name == "audioFolder") {
-        this->audioFolder = fs::path(value);
+        this->audioFolder = parse<fs::path>(value);
     } else if (name == "autosaveEnabled") {
         this->autosaveEnabled = parse<bool>(value);
     } else if (name == "autosaveTimeout") {
@@ -611,7 +611,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (name == "latexSettings.defaultText") {
         this->latexSettings.defaultText = value;
     } else if (name == "latexSettings.globalTemplatePath") {
-        this->latexSettings.globalTemplatePath = fs::path(value);
+        this->latexSettings.globalTemplatePath = parse<fs::path>(value);
     } else if (name == "latexSettings.genCmd") {
         this->latexSettings.genCmd = value;
     } else if (name == "latexSettings.sourceViewThemeId") {
@@ -660,9 +660,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (name == "stabilizerFinalizeStroke") {
         this->stabilizerFinalizeStroke = parse<bool>(value);
     } else if (name == "colorPalette") {
-        this->colorPaletteSetting = !value.empty() ? value : nullptr;
+        this->colorPaletteSetting = parse<fs::path>(value);
     }
-    /**/
 }
 
 void Settings::loadDeviceClasses() {
