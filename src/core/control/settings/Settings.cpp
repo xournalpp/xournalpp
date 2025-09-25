@@ -374,11 +374,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (name == "selectedToolbar") {
         this->selectedToolbar = value;
     } else if (name == "lastSavePath") {
-        this->lastSavePath = fs::path(value);
+        this->lastSavePath = fs::path(xoj::util::utf8(value));
     } else if (name == "lastOpenPath") {
-        this->lastOpenPath = fs::path(value);
+        this->lastOpenPath = fs::path(xoj::util::utf8(value));
     } else if (name == "lastImagePath") {
-        this->lastImagePath = fs::path(value);
+        this->lastImagePath = fs::path(xoj::util::utf8(value));
     } else if (name == "edgePanSpeed") {
         this->edgePanSpeed = parse<double>(value);
     } else if (name == "edgePanMaxMult") {
@@ -473,7 +473,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (name == "sizeUnit") {
         this->sizeUnit = value;
     } else if (name == "audioFolder") {
-        this->audioFolder = fs::path(value);
+        this->audioFolder = fs::path(xoj::util::utf8(value));
     } else if (name == "autosaveEnabled") {
         this->autosaveEnabled = parse<bool>(value);
     } else if (name == "autosaveTimeout") {
@@ -607,7 +607,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (name == "latexSettings.defaultText") {
         this->latexSettings.defaultText = value;
     } else if (name == "latexSettings.globalTemplatePath") {
-        this->latexSettings.globalTemplatePath = fs::path(value);
+        this->latexSettings.globalTemplatePath = fs::path(xoj::util::utf8(value));
     } else if (name == "latexSettings.genCmd") {
         this->latexSettings.genCmd = value;
     } else if (name == "latexSettings.sourceViewThemeId") {
