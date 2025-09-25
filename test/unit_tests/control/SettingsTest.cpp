@@ -28,7 +28,9 @@ TEST(SettingsTest, testReadWrite) {
         Settings settings(outPath);
         settings.transactionStart();
         settings.setAudioDisabled(true);                        // bool
-        settings.setDefaultSaveName(u8"foo/bar€_%H");           // string
+        settings.setDefaultSaveName(u8"foo/bar€_%H");           // u8string
+        settings.setPreferredLocale("es");                      // string
+        settings.setPageTemplate("wasd");                       // string
         settings.setDisplayDpi(123);                            // int
         settings.setStabilizerDrag(3.1415);                     // double
         settings.setBackgroundColor(Color(123, 45, 67));        // Color
@@ -45,8 +47,10 @@ TEST(SettingsTest, testReadWrite) {
         // For each type, we test one that has been changed and one that should be default
         EXPECT_EQ(settings.isAudioDisabled(), loaded.isAudioDisabled());                                  // bool
         EXPECT_EQ(settings.isAutoloadPdfXoj(), loaded.isAutoloadPdfXoj());                                // bool
-        EXPECT_EQ(settings.getDefaultSaveName(), loaded.getDefaultSaveName());                            // string
-        EXPECT_EQ(settings.getDefaultPdfExportName(), loaded.getDefaultPdfExportName());                  // string
+        EXPECT_EQ(settings.getDefaultSaveName(), loaded.getDefaultSaveName());                            // u8string
+        EXPECT_EQ(settings.getDefaultPdfExportName(), loaded.getDefaultPdfExportName());                  // u8string
+        EXPECT_EQ(settings.getPreferredLocale(), loaded.getPreferredLocale());                            // string
+        EXPECT_EQ(settings.getPageTemplate(), loaded.getPageTemplate());                                  // string
         EXPECT_EQ(settings.getDisplayDpi(), loaded.getDisplayDpi());                                      // int
         EXPECT_EQ(settings.getAddHorizontalSpaceAmountLeft(), loaded.getAddHorizontalSpaceAmountLeft());  // int
         EXPECT_EQ(settings.getStabilizerDrag(), loaded.getStabilizerDrag());                              // double

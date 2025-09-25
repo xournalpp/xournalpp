@@ -94,7 +94,7 @@ T parse(const std::string_view strView, T defaultValue) {
     }
 
     if constexpr (std::is_same_v<T, std::u8string>) {
-        return u8string(reinterpret_cast<const char8_t*>(str.c_str()));
+        return xoj::util::utf8(str).str();
     }
 
     return defaultValue;
