@@ -27,19 +27,19 @@ TEST(SettingsTest, testReadWrite) {
 
         Settings settings(outPath);
         settings.transactionStart();
-        settings.setAudioDisabled(true);                        // bool
-        settings.setDefaultSaveName(u8"foo/bar€_%H");           // u8string
-        settings.setPreferredLocale("es");                      // string
-        settings.setPageTemplate("wasd");                       // string
-        settings.setDisplayDpi(123);                            // int
-        settings.setStabilizerDrag(3.1415);                     // double
-        settings.setBackgroundColor(Color(123, 45, 67));        // Color
-        settings.setColorPaletteSetting("foo/bar€_palette");    // path
-        settings.setEraserVisibility(ERASER_VISIBILITY_HOVER);  // enum
-        XojFont testfont("myfontname italic 34");
-        settings.setFont(testfont);          // Font
-        settings.setPreloadPagesAfter(145);  // unsigned int
-        settings.transactionEnd();           // calls save()
+        settings.setAudioDisabled(true);                                // bool
+        settings.setDefaultSaveName(u8"foo/bar€_%H");                   // u8string
+        settings.setPreferredLocale("es");                              // string
+        settings.setPageTemplate("wasd");                               // string
+        settings.setDisplayDpi(123);                                    // int
+        settings.setStabilizerDrag(3.1415);                             // double
+        settings.setBackgroundColor(Color(123, 45, 67));                // Color
+        settings.setColorPaletteSetting(fs::path("foo/bar€_palette"));  // path
+        settings.setEraserVisibility(ERASER_VISIBILITY_HOVER);          // enum
+        XojFont testfont("myfontname italic 34");                       // Font
+        settings.setFont(testfont);                                     // Font
+        settings.setPreloadPagesAfter(145);                             // unsigned int
+        settings.transactionEnd();                                      // calls save()
 
         Settings loaded(outPath);
         loaded.load();
