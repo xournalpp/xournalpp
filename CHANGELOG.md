@@ -21,7 +21,6 @@ This release also includes bugfixes from various community contributors:
 * Fixed default filename processing on Windows (#6634)
 * Bumped dependency versions on MacOS (#6498)
 * Updated translations
->>>>>>> release-1.2
 
 ## 1.2.7
 
