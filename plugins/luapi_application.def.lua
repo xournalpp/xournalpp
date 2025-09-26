@@ -953,6 +953,16 @@ function app.registerPlaceholder(id, description) end
 --- Updates the toolbar placeholder with the given value.
 function app.setPlaceholderValue(id, value) end
 
+--- Set the current font for text tool
+--- 
+--- @param font string|table: Either a Pango-style font description string (e.g., "Arial 12")
+---                           or a table with 'name' and 'size' fields
+--- 
+--- Examples:
+---   app.setFont("Arial 12")
+---   app.setFont({name = "Arial", size = 12})
+function app.setFont(font) end
+
 ---@alias Action
 ---| "new-file"
 ---| "open"

@@ -3379,6 +3379,61 @@ static int applib_setPlaceholderValue(lua_State* L) {
     return 0;
 }
 
+/**
+ * Set the current font for text tool
+ *
+ * @param font string|table: Either a Pango-style font description string (e.g., "Arial 12")
+ *                           or a table with 'name' and 'size' fields
+ *
+ * Examples:
+ *   app.setFont("Arial 12")
+ *   app.setFont({name = "Arial", size = 12})
+ */
+static int applib_setFont(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    Settings* settings = control->getSettings();
+
+    XojFont newFont;
+
+    // Parse font specification based on argument type
+    if (lua_isstring(L, 1)) {
+        // Handle Pango
+        const char* fontDesc = luaL_checkstring(L, 1);
+        newFont = XojFont(fontDesc);
+    } else if (lua_istable(L, 1)) {
+        // Handle table
+        lua_getfield(L, 1, "name");
+        lua_getfield(L, 1, "size");
+
+        const char* name = luaL_optstring(L, -2, "");
+        double size = luaL_optnumber(L, -1, 12.0);
+
+        lua_pop(L, 2);
+
+        if (strlen(name) == 0) {
+            return luaL_error(L, "Font name cannot be empty");
+        }
+        if (size <= 0) {
+            return luaL_error(L, "Font size must be positive");
+        }
+
+        newFont = XojFont(name, size);
+    } else {
+        return luaL_error(L, "Font must be either a string or a table with 'name' and 'size' fields");
+    }
+
+    // XojFont constructor handles format validation
+    if (newFont.getName().empty() || newFont.getSize() <= 0) {
+        return luaL_error(L, "Invalid font specification");
+    }
+
+    // Set the font and trigger UI update
+    settings->setFont(newFont);
+    control->getActionDatabase()->fireChangeActionState(Action::FONT, newFont.asString().c_str());
+
+    return 0;
+}
 
 static const luaL_Reg applib[] = {
         {"msgbox", applib_msgbox},  // Todo(gtk4) remove this deprecated function
@@ -3430,6 +3485,7 @@ static const luaL_Reg applib[] = {
         {"openFile", applib_openFile},
         {"registerPlaceholder", applib_registerPlaceholder},
         {"setPlaceholderValue", applib_setPlaceholderValue},
+        {"setFont", applib_setFont},
         // Placeholder
         // {"MSG_BT_OK", nullptr},
         {nullptr, nullptr}};
