@@ -1,7 +1,7 @@
 #include "Settings.h"
 
-#include <algorithm>  // for max
-#include <cstdint>    // for uint32_t, int32_t
+#include <algorithm>    // for max
+#include <cstdint>      // for uint32_t, int32_t
 #include <string_view>  // for literal sv
 #include <type_traits>  // for add_const<>::type
 #include <utility>      // for pair, move, make_...
@@ -278,7 +278,7 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem) {
         const std::u8string type = xoj::util::utf8(x->name).str();
         const auto name = xmlGet<string>(x, "name");
 
-        if (type == "data"_u8s) {
+        if (type == u8"data") {
             parseData(x, elem.child(name));
         } else if (type == u8"attribute") {
             const auto sType = xmlGet<string>(x, "type");
