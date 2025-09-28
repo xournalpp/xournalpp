@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-02 18:22+0000\n"
-"PO-Revision-Date: 2025-09-07 04:26\n"
+"POT-Creation-Date: 2025-09-24 06:39+0000\n"
+"PO-Revision-Date: 2025-09-28 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -48,7 +48,7 @@ msgid "No"
 msgstr "Hayır"
 
 #: ../src/core/control/Control.cpp:817 ../src/core/control/Control.cpp:1770
-#: ../src/core/control/Control.cpp:2112
+#: ../src/core/control/Control.cpp:2094
 msgid "Cancel"
 msgstr "İptal"
 
@@ -69,7 +69,7 @@ msgid "Paper B_ackground"
 msgstr "Kağıt Ark_a Planı"
 
 #: ../src/core/control/Control.cpp:823
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:40
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:41
 msgid "With PDF background"
 msgstr "PDF arka planı ile"
 
@@ -166,29 +166,29 @@ msgstr "Renk seç"
 msgid "Unsaved Document"
 msgstr "Kaydedilmemiş Belge"
 
-#: ../src/core/control/Control.cpp:2105
+#: ../src/core/control/Control.cpp:2087
 msgid "Document file was removed."
 msgstr "Belge dosyası kaldırıldı."
 
-#: ../src/core/control/Control.cpp:2105
+#: ../src/core/control/Control.cpp:2087
 msgid "This document is not saved yet."
 msgstr "Bu belge henüz kaydedilmemiş."
 
-#: ../src/core/control/Control.cpp:2107
+#: ../src/core/control/Control.cpp:2089
 msgid "Save As..."
 msgstr "Farklı kaydet..."
 
-#: ../src/core/control/Control.cpp:2107 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2089 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "Kaydet"
 
-#: ../src/core/control/Control.cpp:2110
+#: ../src/core/control/Control.cpp:2092
 msgid "Discard"
 msgstr "Gözden Çıkar"
 
-#: ../src/core/control/Control.cpp:2195
+#: ../src/core/control/Control.cpp:2177
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -261,8 +261,8 @@ msgid "Could not load LaTeX PDF file"
 msgstr "LaTeX PDF dosyası yüklenemedi"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:110
-#: ../src/core/control/xojfile/LoadHandler.cpp:478
-#: ../src/core/control/xojfile/LoadHandler.cpp:494
+#: ../src/core/control/xojfile/LoadHandler.cpp:480
+#: ../src/core/control/xojfile/LoadHandler.cpp:496
 msgid "Error reading PDF: {1}"
 msgstr "PDF okunurken hata oluştu: {1}"
 
@@ -276,7 +276,7 @@ msgstr "Aralarından seçim yapabileceğiniz PDF sayfanız yok. İşlemi iptal e
 msgid "PDF background missing"
 msgstr "PDF arka planı eksik"
 
-#: ../src/core/control/PrintHandler.cpp:121
+#: ../src/core/control/PrintHandler.cpp:122
 msgid "Running print operation failed with {1}"
 msgstr "Yazdırma işlemi çalıştırılırken hata: {1}"
 
@@ -468,7 +468,7 @@ msgid "Export File"
 msgstr ""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
-#: ../src/core/gui/dialog/DeviceTestingArea.cpp:161
+#: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
 msgid "Export"
 msgstr "Dışa aktar"
 
@@ -507,19 +507,19 @@ msgstr "Xournal (Uyumluluk)"
 msgid "Save file error: {1}"
 msgstr "Dosya kaydetme hatası: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:108
+#: ../src/core/control/jobs/ImageExport.cpp:110
 msgid "Unsupported graphics format: "
 msgstr "Desteklenmeyen grafik biçimi: "
 
-#: ../src/core/control/jobs/ImageExport.cpp:168
+#: ../src/core/control/jobs/ImageExport.cpp:170
 msgid "Error save image #1"
 msgstr "Resim #1 kaydedilirken hata oluştu"
 
-#: ../src/core/control/jobs/ImageExport.cpp:177
+#: ../src/core/control/jobs/ImageExport.cpp:179
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
 msgstr "PDF arka planını dışa aktarırken hata: PDF sayfa sayısını bulamıyorum "
 
-#: ../src/core/control/jobs/ImageExport.cpp:201
+#: ../src/core/control/jobs/ImageExport.cpp:203
 msgid "Error save image #2"
 msgstr "Resim #2 kaydedilirken hata oluştu"
 
@@ -531,15 +531,11 @@ msgstr "Pdf Olarak Dışa Aktar"
 msgid "Save file error, can't backup: {1}"
 msgstr "Dosya kaydetme hatası, yedekleme yapılamıyor: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:55
-msgid "Failed to parse LaTeX generator path: {1}"
-msgstr "LaTex oluşturucu dizini çözümlenemedi: {1}"
-
-#: ../src/core/control/latex/LatexGenerator.cpp:65
+#: ../src/core/control/latex/LatexGenerator.cpp:60
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "LaTeX oluşturucu komutu ayrıştırılamadı: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:71
+#: ../src/core/control/latex/LatexGenerator.cpp:66
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
@@ -547,15 +543,15 @@ msgstr "PATH değişkeninde LaTeX oluşturma programı bulunamadı: {1}\n\n"
 "Kurulum Flatpak içinde tespit edildiği için, Flatpak freedesktop Tex Live uzantısını indirmeniz gerekiyor. Örneğin, şunu çalıştırarak:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:76
+#: ../src/core/control/latex/LatexGenerator.cpp:71
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "KONUM içinde LaTeX oluşturucu programı bulunamadı: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:84
+#: ../src/core/control/latex/LatexGenerator.cpp:79
 msgid "Could not save .tex file: {1}"
 msgstr ".tex dosyası kaydedilemedi: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:99
+#: ../src/core/control/latex/LatexGenerator.cpp:94
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Başlatılamadı {1}: {2} (çıkış kodu: {3})"
 
@@ -563,52 +559,52 @@ msgstr "Başlatılamadı {1}: {2} (çıkış kodu: {3})"
 msgid "Layer {1}"
 msgstr "Katman {1}"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:25
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:26
 msgid "Could not load pagetemplates.ini file"
 msgstr "pagetemplates.ini dosyası yüklenemedi"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:29
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:30
 msgid "Plain"
 msgstr "Düz"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:30
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Ruled"
 msgstr "Cetvel"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "Ruled with vertical line"
 msgstr "Dikey çizgi ile yönetilir"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 msgid "Staves"
 msgstr "Porteler"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
 msgid "Graph"
 msgstr "Grafik"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
 msgid "Dotted"
 msgstr "Noktalı"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
 msgid "Isometric Dotted"
 msgstr "İzometrik Noktalı"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:37
 msgid "Isometric Graph"
 msgstr "İzometrik Grafik"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:41
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:42
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 msgid "Image"
 msgstr "Resim"
 
-#: ../src/core/control/settings/Settings.cpp:151
+#: ../src/core/control/settings/Settings.cpp:153
 msgid "%F-Note-%H-%M"
 msgstr "%F-Not-%H-%M"
 
-#: ../src/core/control/settings/Settings.cpp:153
+#: ../src/core/control/settings/Settings.cpp:154
 msgid "%{name}_annotated"
 msgstr "%{name}_açıklanmış"
 
@@ -637,121 +633,121 @@ msgstr "Görsel yüklenemedi"
 msgid "Error while opening image file: "
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:133
+#: ../src/core/control/xojfile/LoadHandler.cpp:135
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr "Dosya geçerli bir .xopp dosyası değil (Mime türü eksik): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:141
+#: ../src/core/control/xojfile/LoadHandler.cpp:143
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr "Dosya geçerli bir .xopp dosyası değil (Mime türü yanlış): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:150
+#: ../src/core/control/xojfile/LoadHandler.cpp:152
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr "Dosya geçerli bir .xopp dosyası değil (Sürüm eksik): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:163
+#: ../src/core/control/xojfile/LoadHandler.cpp:165
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "Dosya geçerli bir .xopp dosyası değil (Sürüm dizesi bozuk): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:172
+#: ../src/core/control/xojfile/LoadHandler.cpp:174
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr "Zip arşivindeki content.xml dosyası açılamadı: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:180
+#: ../src/core/control/xojfile/LoadHandler.cpp:182
 msgid "Could not open file: \"{1}\""
 msgstr "Dosya açılamadı: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:247
+#: ../src/core/control/xojfile/LoadHandler.cpp:249
 msgid "XML Parser error: {1}"
 msgstr "XML Ayrıştırıcı hatası: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:250
+#: ../src/core/control/xojfile/LoadHandler.cpp:252
 msgid "Unknown parser error"
 msgstr "Bilinmeyen ayrıştırma hatası"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:261
+#: ../src/core/control/xojfile/LoadHandler.cpp:263
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "Belge tamamlanmadı (sonu kesilmiş olabilir mi?)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:265
+#: ../src/core/control/xojfile/LoadHandler.cpp:267
 msgid "Document is corrupted (no pages found in file)"
 msgstr "Belge bozuk (dosyada sayfa bulunamadı)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:310
+#: ../src/core/control/xojfile/LoadHandler.cpp:312
 msgid "Unexpected root tag: {1}"
 msgstr "Beklenmeyen kök etiketi: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:331
+#: ../src/core/control/xojfile/LoadHandler.cpp:333
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Belgede beklenmeyen etiket: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:384
-#: ../src/core/control/xojfile/LoadHandler.cpp:413
+#: ../src/core/control/xojfile/LoadHandler.cpp:386
+#: ../src/core/control/xojfile/LoadHandler.cpp:415
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Resim okunamadı: {1}. Hata mesajı: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:423
+#: ../src/core/control/xojfile/LoadHandler.cpp:425
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "Kopyalanmış arka plan resmi için sayfa numarası okunamadı: {1}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:431
+#: ../src/core/control/xojfile/LoadHandler.cpp:433
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Bilinmeyen pixmap::alan adı türü: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:485
+#: ../src/core/control/xojfile/LoadHandler.cpp:487
 msgid "Unknown domain type: {1}"
 msgstr "Bilinmeyen alan adı türü: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:523
+#: ../src/core/control/xojfile/LoadHandler.cpp:525
 msgid "Unknown background type: {1}"
 msgstr "Bilinmeyen arka plan türü: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:548
+#: ../src/core/control/xojfile/LoadHandler.cpp:550
 msgid "Error reading width of a stroke: {1}"
 msgstr "Bir konturun genişliğini okuma hatası: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:616
+#: ../src/core/control/xojfile/LoadHandler.cpp:619
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "Bilinmeyen kontur başığı türü: \"{1}\", yuvarlak varsayılıyor"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:634
+#: ../src/core/control/xojfile/LoadHandler.cpp:637
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Bilinmeyen kontur türü: \"{1}\", kalem varsayarak"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:805
-#: ../src/core/control/xojfile/LoadHandler.cpp:821
-#: ../src/core/control/xojfile/LoadHandler.cpp:1134
-#: ../src/core/control/xojfile/LoadHandler.cpp:1148
+#: ../src/core/control/xojfile/LoadHandler.cpp:809
+#: ../src/core/control/xojfile/LoadHandler.cpp:825
+#: ../src/core/control/xojfile/LoadHandler.cpp:1138
+#: ../src/core/control/xojfile/LoadHandler.cpp:1152
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Ek açılamadı: {1}. Hata mesajı: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:814
-#: ../src/core/control/xojfile/LoadHandler.cpp:1141
-#: ../src/core/control/xojfile/LoadHandler.cpp:1159
+#: ../src/core/control/xojfile/LoadHandler.cpp:818
+#: ../src/core/control/xojfile/LoadHandler.cpp:1144
+#: ../src/core/control/xojfile/LoadHandler.cpp:1163
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Ek açılamadı: {1}. Hata mesajı: Geçerli bir dosya boyutu sağlanmadı"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:833
+#: ../src/core/control/xojfile/LoadHandler.cpp:837
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Ek açılamadı: {1}. Hata mesajı: Dosya okunamadı"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:842
+#: ../src/core/control/xojfile/LoadHandler.cpp:846
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Ek açılamadı: {1}. Hata mesajı: Dosya yazılamadı"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1029
+#: ../src/core/control/xojfile/LoadHandler.cpp:1033
 msgid "Wrong count of points ({1})"
 msgstr "Yanlış puan sayısı ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1045
+#: ../src/core/control/xojfile/LoadHandler.cpp:1049
 msgid "xoj-File: {1}"
 msgstr "xoj-Dosyası: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1046
+#: ../src/core/control/xojfile/LoadHandler.cpp:1050
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr "Yanlış basınç değer sayısı, verilen {1}, beklenen {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1178
+#: ../src/core/control/xojfile/LoadHandler.cpp:1182
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "{1} eki için istenen geçici dosya bulunamadı"
 
@@ -793,11 +789,11 @@ msgstr "\"{1}\" özelliği size_t olarak ayrıştırılamadı, değer nullptr"
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "\"{1}\" özelliği size_t olarak ayrıştırılamadı, değer \"{2}\""
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:251
+#: ../src/core/control/xojfile/SaveHandler.cpp:253
 msgid "Could not write background \"{1}\", {2}"
 msgstr "\"{1}\" arka planı yazılamadı, {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:370
+#: ../src/core/control/xojfile/SaveHandler.cpp:372
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Arka plan \"{1}\" yazılamadı. Yine de devam ediliyor."
 
@@ -1033,7 +1029,7 @@ msgstr "Şekil Tanıyıcı"
 msgid "Draw Spline"
 msgstr "Eğri Çiz"
 
-#: ../src/core/gui/dialog/DeviceTestingArea.cpp:161
+#: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
 msgid "Export Logs"
 msgstr ""
 
@@ -1084,11 +1080,11 @@ msgstr ""
 msgid "Custom"
 msgstr "Özel"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:47
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:49
 msgid "System Default"
 msgstr "Sistem Varsayılanı"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:65
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:67
 msgid "Previously selected language not available anymore!"
 msgstr "Önceden seçilmiş dil artık kullanılabilir değil!"
 
@@ -1112,7 +1108,7 @@ msgstr "Örnek LaTeX dosyası başarıyla oluşturuldu."
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Hata: {1}. Lütfen {2} içeriğini kontrol edin"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:183
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:182
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Hata: {1} normal bir dosya değil. Lütfen LaTeX şablon dosyası ayarlarınızı kontrol edin. "
 
@@ -1174,11 +1170,11 @@ msgid "<b>{1}</b>\n"
 msgstr "<b>{1}</b>\n"
 "{2}{3}"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:274
+#: ../src/core/gui/dialog/SettingsDialog.cpp:275
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Bu ayarı değiştirmek için basınç duyarlılığını veya basınç çıkarımını etkinleştirin!"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:278
+#: ../src/core/gui/dialog/SettingsDialog.cpp:279
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Basınç girişini filitrele. Basıncı, basınç çarpanıyla çarp. Eğer minimumdan azsa, minimum basıncı kullan."
 
@@ -1186,28 +1182,28 @@ msgstr "Basınç girişini filitrele. Basıncı, basınç çarpanıyla çarp. E�
 msgid "Built-in palettes"
 msgstr ""
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:32
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:33
 msgid "User palettes"
 msgstr ""
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:96
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:98
 msgid "<i>The palettes shown below are obtained from the <a href=\"file://{1}\">Built-in palettes</a> and <a href=\"file://{2}\">User palettes</a> directories:</i>\n"
 msgstr ""
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:109
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:111
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
 "Using the default until another palette is configured."
 msgstr ""
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:151
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:153
 msgid "Error"
 msgstr ""
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:163
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:165
 msgid "Name"
 msgstr ""
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:166
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:168
 msgid "Palette has no Name"
 msgstr ""
 
@@ -1781,62 +1777,62 @@ msgstr "Seçim açılır menüsü"
 msgid "Zoom Slider"
 msgstr "Yakınlaştırma kaydırıcısı"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:119
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:120
 msgctxt "Color"
 msgid "Black"
 msgstr "Siyah"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:120
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:121
 msgctxt "Color"
 msgid "Green"
 msgstr "Yeşil"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:121
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:122
 msgctxt "Color"
 msgid "Light Blue"
 msgstr "Açık Mavi"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:122
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:123
 msgctxt "Color"
 msgid "Light Green"
 msgstr "Açık Yeşil"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:123
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:124
 msgctxt "Color"
 msgid "Blue"
 msgstr "Mavi"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:124
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:125
 msgctxt "Color"
 msgid "Gray"
 msgstr "Gri"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:125
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:126
 msgctxt "Color"
 msgid "Red"
 msgstr "Kırmızı"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:126
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:127
 msgctxt "Color"
 msgid "Magenta"
 msgstr "Macenta"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:127
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:128
 msgctxt "Color"
 msgid "Orange"
 msgstr "Turuncu"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:128
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:129
 msgctxt "Color"
 msgid "Yellow"
 msgstr "Sarı"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:129
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:130
 msgctxt "Color"
 msgid "White"
 msgstr "Beyaz"
 
-#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
+#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:76
 msgctxt "as a noun: a copy of"
 msgid "Copy"
 msgstr "Kopyala"
@@ -1863,14 +1859,14 @@ msgid "Background"
 msgstr "Arka plan"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:46
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:196
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:242
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:244
 msgid "No pages to export!"
 msgstr "Dışarıya aktarılacak sayfalar bulunamadı!"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:54
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:205
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:247
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:207
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:249
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "PDF Cairo eklentisi başlatılırken hata meydana geldi"
 
@@ -1890,7 +1886,7 @@ msgstr ""
 msgid "Error with overlay or final export:"
 msgstr ""
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:126
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:128
 msgid "Error while finalizing the PDF Cairo surface"
 msgstr "PDF Cairo yüzeyini sonlandırırken hata"
 
@@ -2085,17 +2081,17 @@ msgstr "Dosya kapatılırken sorun oluştu: \"{1}\""
 msgid "Error code {1}"
 msgstr "Hata kodu {1}"
 
-#: ../src/util/PathUtil.cpp:282
+#: ../src/util/PathUtil.cpp:310
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Dosya açılamadı. Elle yapmalısınız:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:392
+#: ../src/util/PathUtil.cpp:425
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:401
+#: ../src/util/PathUtil.cpp:434
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Klasör oluşturulamadı: {1}\n"
@@ -2105,15 +2101,19 @@ msgstr "Klasör oluşturulamadı: {1}\n"
 msgid "Error {1} executing system command: {2}"
 msgstr "Sistem komutu yürütülürken {1} hatası: {2}"
 
-#: ../src/util/XojMsgBox.cpp:191
+#: ../src/util/XojMsgBox.cpp:186
+msgid "The file {1} already exists! Do you want to replace it?"
+msgstr ""
+
+#: ../src/util/XojMsgBox.cpp:190
 msgid "Select another name"
 msgstr "Başka bir ad seçin"
 
-#: ../src/util/XojMsgBox.cpp:192
+#: ../src/util/XojMsgBox.cpp:191
 msgid "Replace"
 msgstr "Değiştir"
 
-#: ../src/util/XojMsgBox.cpp:217
+#: ../src/util/XojMsgBox.cpp:216
 msgid "Unable to open the link: {1}\n"
 "{2}"
 msgstr ""

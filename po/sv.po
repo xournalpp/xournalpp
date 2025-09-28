@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-02 18:22+0000\n"
-"PO-Revision-Date: 2025-09-14 04:25\n"
+"POT-Creation-Date: 2025-09-24 06:39+0000\n"
+"PO-Revision-Date: 2025-09-28 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -48,7 +48,7 @@ msgid "No"
 msgstr "Nej"
 
 #: ../src/core/control/Control.cpp:817 ../src/core/control/Control.cpp:1770
-#: ../src/core/control/Control.cpp:2112
+#: ../src/core/control/Control.cpp:2094
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -69,7 +69,7 @@ msgid "Paper B_ackground"
 msgstr ""
 
 #: ../src/core/control/Control.cpp:823
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:40
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:41
 msgid "With PDF background"
 msgstr "Med PDF-bakgrund"
 
@@ -164,29 +164,29 @@ msgstr "Välj färg"
 msgid "Unsaved Document"
 msgstr "Osparat dokument"
 
-#: ../src/core/control/Control.cpp:2105
+#: ../src/core/control/Control.cpp:2087
 msgid "Document file was removed."
 msgstr "Dokumentfilen har tagits bort."
 
-#: ../src/core/control/Control.cpp:2105
+#: ../src/core/control/Control.cpp:2087
 msgid "This document is not saved yet."
 msgstr "Detta dokument har inte sparats ännu."
 
-#: ../src/core/control/Control.cpp:2107
+#: ../src/core/control/Control.cpp:2089
 msgid "Save As..."
 msgstr "Spara som..."
 
-#: ../src/core/control/Control.cpp:2107 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2089 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "Spara"
 
-#: ../src/core/control/Control.cpp:2110
+#: ../src/core/control/Control.cpp:2092
 msgid "Discard"
 msgstr "Släng"
 
-#: ../src/core/control/Control.cpp:2195
+#: ../src/core/control/Control.cpp:2177
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -259,8 +259,8 @@ msgid "Could not load LaTeX PDF file"
 msgstr "Kunde inte ladda LaTeX PDF-fil"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:110
-#: ../src/core/control/xojfile/LoadHandler.cpp:478
-#: ../src/core/control/xojfile/LoadHandler.cpp:494
+#: ../src/core/control/xojfile/LoadHandler.cpp:480
+#: ../src/core/control/xojfile/LoadHandler.cpp:496
 msgid "Error reading PDF: {1}"
 msgstr "Fel vid läsning av PDF: {1}"
 
@@ -273,7 +273,7 @@ msgstr ""
 msgid "PDF background missing"
 msgstr "PDF-bakgrund saknas"
 
-#: ../src/core/control/PrintHandler.cpp:121
+#: ../src/core/control/PrintHandler.cpp:122
 msgid "Running print operation failed with {1}"
 msgstr ""
 
@@ -465,7 +465,7 @@ msgid "Export File"
 msgstr "Exportera fil"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
-#: ../src/core/gui/dialog/DeviceTestingArea.cpp:161
+#: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
 msgid "Export"
 msgstr "Exportera"
 
@@ -503,19 +503,19 @@ msgstr "Xournal (Kompatibilitet)"
 msgid "Save file error: {1}"
 msgstr "Fel vid sparande av fil: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:108
+#: ../src/core/control/jobs/ImageExport.cpp:110
 msgid "Unsupported graphics format: "
 msgstr "Grafikformatet stöds inte: "
 
-#: ../src/core/control/jobs/ImageExport.cpp:168
+#: ../src/core/control/jobs/ImageExport.cpp:170
 msgid "Error save image #1"
 msgstr "Fel vid sparande av bild #1"
 
-#: ../src/core/control/jobs/ImageExport.cpp:177
+#: ../src/core/control/jobs/ImageExport.cpp:179
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
 msgstr ""
 
-#: ../src/core/control/jobs/ImageExport.cpp:201
+#: ../src/core/control/jobs/ImageExport.cpp:203
 msgid "Error save image #2"
 msgstr "Fel vid sparande av bild #2"
 
@@ -527,29 +527,25 @@ msgstr "PDF-export"
 msgid "Save file error, can't backup: {1}"
 msgstr ""
 
-#: ../src/core/control/latex/LatexGenerator.cpp:55
-msgid "Failed to parse LaTeX generator path: {1}"
-msgstr "Misslyckades att tolka LaTeX-generatorsökväg: {1}"
-
-#: ../src/core/control/latex/LatexGenerator.cpp:65
+#: ../src/core/control/latex/LatexGenerator.cpp:60
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Misslyckades att tolka LaTeX-generatorkommandot: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:71
+#: ../src/core/control/latex/LatexGenerator.cpp:66
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 msgstr ""
 
-#: ../src/core/control/latex/LatexGenerator.cpp:76
+#: ../src/core/control/latex/LatexGenerator.cpp:71
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Det gick inte att hitta LaTeX-generatorprogrammet i PATH: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:84
+#: ../src/core/control/latex/LatexGenerator.cpp:79
 msgid "Could not save .tex file: {1}"
 msgstr "Kunde inte spara .tex-filen: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:99
+#: ../src/core/control/latex/LatexGenerator.cpp:94
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Kunde inte starta {1}: {2} (exit-kod: {3})"
 
@@ -557,52 +553,52 @@ msgstr "Kunde inte starta {1}: {2} (exit-kod: {3})"
 msgid "Layer {1}"
 msgstr "Lager {1}"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:25
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:26
 msgid "Could not load pagetemplates.ini file"
 msgstr "Kunde inte läsa in pagetemplates.ini-fil"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:29
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:30
 msgid "Plain"
 msgstr "Blank"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:30
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Ruled"
 msgstr "Linjerad"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "Ruled with vertical line"
 msgstr "Linjerad med vertikalt streck"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 msgid "Staves"
 msgstr "Notrader"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
 msgid "Graph"
 msgstr "Rutad"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
 msgid "Dotted"
 msgstr "Prickad"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
 msgid "Isometric Dotted"
 msgstr ""
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:37
 msgid "Isometric Graph"
 msgstr "Isometrisk graf"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:41
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:42
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 msgid "Image"
 msgstr "Bild"
 
-#: ../src/core/control/settings/Settings.cpp:151
+#: ../src/core/control/settings/Settings.cpp:153
 msgid "%F-Note-%H-%M"
 msgstr "%F-Anteckning-%H-%M"
 
-#: ../src/core/control/settings/Settings.cpp:153
+#: ../src/core/control/settings/Settings.cpp:154
 msgid "%{name}_annotated"
 msgstr "%{name}_annoterad"
 
@@ -631,121 +627,121 @@ msgstr "Kunde inte läsa in bild"
 msgid "Error while opening image file: "
 msgstr "Fel vid öppning av bildfil: "
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:133
+#: ../src/core/control/xojfile/LoadHandler.cpp:135
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr "Filen är ingen giltig .xopp fil (Mimetype saknas): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:141
+#: ../src/core/control/xojfile/LoadHandler.cpp:143
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:150
+#: ../src/core/control/xojfile/LoadHandler.cpp:152
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr "Filen är ingen giltig .xopp fil (Version saknas): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:163
+#: ../src/core/control/xojfile/LoadHandler.cpp:165
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "Filen är inte en giltig .xopp-fil (Versionssträng skadad): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:172
+#: ../src/core/control/xojfile/LoadHandler.cpp:174
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr "Det gick inte att öppna content.xml i zip-arkivet: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:180
+#: ../src/core/control/xojfile/LoadHandler.cpp:182
 msgid "Could not open file: \"{1}\""
 msgstr "Kunde inte öppna filen: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:247
+#: ../src/core/control/xojfile/LoadHandler.cpp:249
 msgid "XML Parser error: {1}"
 msgstr "Fel vid XML-parsning: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:250
+#: ../src/core/control/xojfile/LoadHandler.cpp:252
 msgid "Unknown parser error"
 msgstr "Okänt parserfel"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:261
+#: ../src/core/control/xojfile/LoadHandler.cpp:263
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:265
+#: ../src/core/control/xojfile/LoadHandler.cpp:267
 msgid "Document is corrupted (no pages found in file)"
 msgstr "Dokumentet är skadat (inga sidor finns i filen)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:310
+#: ../src/core/control/xojfile/LoadHandler.cpp:312
 msgid "Unexpected root tag: {1}"
 msgstr "Oväntad roottagg: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:331
+#: ../src/core/control/xojfile/LoadHandler.cpp:333
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Oväntad tagg i dokumentet: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:384
-#: ../src/core/control/xojfile/LoadHandler.cpp:413
+#: ../src/core/control/xojfile/LoadHandler.cpp:386
+#: ../src/core/control/xojfile/LoadHandler.cpp:415
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Kunde inte läsa bild: {1}. Felmeddelande: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:423
+#: ../src/core/control/xojfile/LoadHandler.cpp:425
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "Kunde inte läsa sidnummer för klonad bakgrundsbild: {1}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:431
+#: ../src/core/control/xojfile/LoadHandler.cpp:433
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Okänd pixmap::domäntyp: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:485
+#: ../src/core/control/xojfile/LoadHandler.cpp:487
 msgid "Unknown domain type: {1}"
 msgstr "Okänd domäntyp: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:523
+#: ../src/core/control/xojfile/LoadHandler.cpp:525
 msgid "Unknown background type: {1}"
 msgstr "Okänd bakgrundstyp: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:548
+#: ../src/core/control/xojfile/LoadHandler.cpp:550
 msgid "Error reading width of a stroke: {1}"
 msgstr "Fel vid läsning av bredden på ett streck: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:616
+#: ../src/core/control/xojfile/LoadHandler.cpp:619
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:634
+#: ../src/core/control/xojfile/LoadHandler.cpp:637
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:805
-#: ../src/core/control/xojfile/LoadHandler.cpp:821
-#: ../src/core/control/xojfile/LoadHandler.cpp:1134
-#: ../src/core/control/xojfile/LoadHandler.cpp:1148
+#: ../src/core/control/xojfile/LoadHandler.cpp:809
+#: ../src/core/control/xojfile/LoadHandler.cpp:825
+#: ../src/core/control/xojfile/LoadHandler.cpp:1138
+#: ../src/core/control/xojfile/LoadHandler.cpp:1152
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Kunde inte öppna bilaga: {1}. Felmeddelande: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:814
-#: ../src/core/control/xojfile/LoadHandler.cpp:1141
-#: ../src/core/control/xojfile/LoadHandler.cpp:1159
+#: ../src/core/control/xojfile/LoadHandler.cpp:818
+#: ../src/core/control/xojfile/LoadHandler.cpp:1144
+#: ../src/core/control/xojfile/LoadHandler.cpp:1163
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Kunde inte öppna bilaga: {1}. Felmeddelande: Ingen giltig filstorlek angiven"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:833
+#: ../src/core/control/xojfile/LoadHandler.cpp:837
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Kunde inte öppna bilaga: {1}. Felmeddelande: Kunde inte läsa filen"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:842
+#: ../src/core/control/xojfile/LoadHandler.cpp:846
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Kunde inte öppna bilaga: {1}. Felmeddelande: Kunde inte skriva till filen"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1029
+#: ../src/core/control/xojfile/LoadHandler.cpp:1033
 msgid "Wrong count of points ({1})"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1045
+#: ../src/core/control/xojfile/LoadHandler.cpp:1049
 msgid "xoj-File: {1}"
 msgstr "xoj-fil: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1046
+#: ../src/core/control/xojfile/LoadHandler.cpp:1050
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1178
+#: ../src/core/control/xojfile/LoadHandler.cpp:1182
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
@@ -787,11 +783,11 @@ msgstr "Attributet \"{1}\" kunde inte tolkas som size_t, värdet är nullptr"
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "Attribut \"{1}\" kunde inte tolkas som size_t, värdet är \"{2}\""
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:251
+#: ../src/core/control/xojfile/SaveHandler.cpp:253
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Kunde inte skriva bakgrund \"{1}\", {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:370
+#: ../src/core/control/xojfile/SaveHandler.cpp:372
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Kunde inte skriva bakgrund \"{1}\". Fortsätter ändå."
 
@@ -1027,7 +1023,7 @@ msgstr "Identifiera former"
 msgid "Draw Spline"
 msgstr "Rita spline"
 
-#: ../src/core/gui/dialog/DeviceTestingArea.cpp:161
+#: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
 msgid "Export Logs"
 msgstr "Exportera loggar"
 
@@ -1078,11 +1074,11 @@ msgstr "Bildfiler"
 msgid "Custom"
 msgstr "Anpassad"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:47
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:49
 msgid "System Default"
 msgstr "Systemstandard"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:65
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:67
 msgid "Previously selected language not available anymore!"
 msgstr "Tidigare valt språk är inte längre tillgängligt!"
 
@@ -1106,7 +1102,7 @@ msgstr ""
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Fel: {1}. Kontrollera innehållet i {2}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:183
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:182
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr ""
 
@@ -1168,11 +1164,11 @@ msgid "<b>{1}</b>\n"
 msgstr "<b>{1}</b>\n"
 "{2}{3}"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:274
+#: ../src/core/gui/dialog/SettingsDialog.cpp:275
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr ""
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:278
+#: ../src/core/gui/dialog/SettingsDialog.cpp:279
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr ""
 
@@ -1180,28 +1176,28 @@ msgstr ""
 msgid "Built-in palettes"
 msgstr "Inbyggda paletter"
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:32
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:33
 msgid "User palettes"
 msgstr "Användarpaletter"
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:96
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:98
 msgid "<i>The palettes shown below are obtained from the <a href=\"file://{1}\">Built-in palettes</a> and <a href=\"file://{2}\">User palettes</a> directories:</i>\n"
 msgstr ""
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:109
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:111
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
 "Using the default until another palette is configured."
 msgstr ""
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:151
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:153
 msgid "Error"
 msgstr "Fel"
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:163
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:165
 msgid "Name"
 msgstr "Namn"
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:166
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:168
 msgid "Palette has no Name"
 msgstr "Paletten har inget namn"
 
@@ -1773,62 +1769,62 @@ msgstr ""
 msgid "Zoom Slider"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:119
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:120
 msgctxt "Color"
 msgid "Black"
 msgstr "Svart"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:120
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:121
 msgctxt "Color"
 msgid "Green"
 msgstr "Grön"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:121
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:122
 msgctxt "Color"
 msgid "Light Blue"
 msgstr "Ljusblå"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:122
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:123
 msgctxt "Color"
 msgid "Light Green"
 msgstr "Ljusgrön"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:123
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:124
 msgctxt "Color"
 msgid "Blue"
 msgstr "Blå"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:124
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:125
 msgctxt "Color"
 msgid "Gray"
 msgstr "Grå"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:125
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:126
 msgctxt "Color"
 msgid "Red"
 msgstr "Röd"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:126
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:127
 msgctxt "Color"
 msgid "Magenta"
 msgstr "Lila"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:127
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:128
 msgctxt "Color"
 msgid "Orange"
 msgstr "Orange"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:128
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:129
 msgctxt "Color"
 msgid "Yellow"
 msgstr "Gul"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:129
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:130
 msgctxt "Color"
 msgid "White"
 msgstr "Vit"
 
-#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
+#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:76
 msgctxt "as a noun: a copy of"
 msgid "Copy"
 msgstr "Kopiera"
@@ -1855,14 +1851,14 @@ msgid "Background"
 msgstr "Bakgrund"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:46
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:196
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:242
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:244
 msgid "No pages to export!"
 msgstr "Inga sidor att exportera!"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:54
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:205
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:247
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:207
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:249
 msgid "Failed to initialize PDF Cairo surface"
 msgstr ""
 
@@ -1882,7 +1878,7 @@ msgstr "Standard"
 msgid "Error with overlay or final export:"
 msgstr ""
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:126
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:128
 msgid "Error while finalizing the PDF Cairo surface"
 msgstr ""
 
@@ -2076,17 +2072,17 @@ msgstr "Fel uppstod vid stängning av fil: \"{1}\""
 msgid "Error code {1}"
 msgstr "Felkod {1}"
 
-#: ../src/util/PathUtil.cpp:282
+#: ../src/util/PathUtil.cpp:310
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Filen kunde inte öppnas. Du måste göra det manuellt:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:392
+#: ../src/util/PathUtil.cpp:425
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:401
+#: ../src/util/PathUtil.cpp:434
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Kunde inte skapa mapp: {1}\n"
@@ -2096,15 +2092,19 @@ msgstr "Kunde inte skapa mapp: {1}\n"
 msgid "Error {1} executing system command: {2}"
 msgstr "Fel {1} vid körning av systemkommando: {2}"
 
-#: ../src/util/XojMsgBox.cpp:191
+#: ../src/util/XojMsgBox.cpp:186
+msgid "The file {1} already exists! Do you want to replace it?"
+msgstr ""
+
+#: ../src/util/XojMsgBox.cpp:190
 msgid "Select another name"
 msgstr "Välj ett annat namn"
 
-#: ../src/util/XojMsgBox.cpp:192
+#: ../src/util/XojMsgBox.cpp:191
 msgid "Replace"
 msgstr "Ersätt"
 
-#: ../src/util/XojMsgBox.cpp:217
+#: ../src/util/XojMsgBox.cpp:216
 msgid "Unable to open the link: {1}\n"
 "{2}"
 msgstr "Kunde inte öppna länken: {1}\n"

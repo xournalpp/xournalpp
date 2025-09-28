@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-02 18:22+0000\n"
-"PO-Revision-Date: 2025-09-07 04:26\n"
+"POT-Creation-Date: 2025-09-24 06:39+0000\n"
+"PO-Revision-Date: 2025-09-28 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -48,7 +48,7 @@ msgid "No"
 msgstr "Ne"
 
 #: ../src/core/control/Control.cpp:817 ../src/core/control/Control.cpp:1770
-#: ../src/core/control/Control.cpp:2112
+#: ../src/core/control/Control.cpp:2094
 msgid "Cancel"
 msgstr "Prekliči"
 
@@ -69,7 +69,7 @@ msgid "Paper B_ackground"
 msgstr "O_zadje papirja"
 
 #: ../src/core/control/Control.cpp:823
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:40
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:41
 msgid "With PDF background"
 msgstr "S PDF ozadjem"
 
@@ -166,29 +166,29 @@ msgstr "Izberi barvo"
 msgid "Unsaved Document"
 msgstr "Neshranjen dokument"
 
-#: ../src/core/control/Control.cpp:2105
+#: ../src/core/control/Control.cpp:2087
 msgid "Document file was removed."
 msgstr "Datoteka dokumenta je bila odstranjena."
 
-#: ../src/core/control/Control.cpp:2105
+#: ../src/core/control/Control.cpp:2087
 msgid "This document is not saved yet."
 msgstr "Ta dokument še ni shranjen."
 
-#: ../src/core/control/Control.cpp:2107
+#: ../src/core/control/Control.cpp:2089
 msgid "Save As..."
 msgstr "Shrani kot..."
 
-#: ../src/core/control/Control.cpp:2107 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2089 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "Shrani"
 
-#: ../src/core/control/Control.cpp:2110
+#: ../src/core/control/Control.cpp:2092
 msgid "Discard"
 msgstr "Zavrzi"
 
-#: ../src/core/control/Control.cpp:2195
+#: ../src/core/control/Control.cpp:2177
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -261,8 +261,8 @@ msgid "Could not load LaTeX PDF file"
 msgstr "Ni bilo mogoče naložiti LaTeX PDF datoteke"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:110
-#: ../src/core/control/xojfile/LoadHandler.cpp:478
-#: ../src/core/control/xojfile/LoadHandler.cpp:494
+#: ../src/core/control/xojfile/LoadHandler.cpp:480
+#: ../src/core/control/xojfile/LoadHandler.cpp:496
 msgid "Error reading PDF: {1}"
 msgstr "Napaka pri branju PDF: {1}"
 
@@ -276,7 +276,7 @@ msgstr "Na voljo ni PDF datotek. Preklic operacije.\n"
 msgid "PDF background missing"
 msgstr "PDF ozadje manjka"
 
-#: ../src/core/control/PrintHandler.cpp:121
+#: ../src/core/control/PrintHandler.cpp:122
 msgid "Running print operation failed with {1}"
 msgstr "Tiskanje neuspešno za {1}"
 
@@ -468,7 +468,7 @@ msgid "Export File"
 msgstr "Izvozi datoteko"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
-#: ../src/core/gui/dialog/DeviceTestingArea.cpp:161
+#: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
 msgid "Export"
 msgstr "Izvozi"
 
@@ -507,19 +507,19 @@ msgstr "Xournal (združljivost)"
 msgid "Save file error: {1}"
 msgstr "Napaka pri shranjevanju datoteke: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:108
+#: ../src/core/control/jobs/ImageExport.cpp:110
 msgid "Unsupported graphics format: "
 msgstr "Nepodprt grafični format: "
 
-#: ../src/core/control/jobs/ImageExport.cpp:168
+#: ../src/core/control/jobs/ImageExport.cpp:170
 msgid "Error save image #1"
 msgstr "Napaka pri shranjevanju slike #1"
 
-#: ../src/core/control/jobs/ImageExport.cpp:177
+#: ../src/core/control/jobs/ImageExport.cpp:179
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
 msgstr "Napaka pri izvozu ozadja pdf: Ne najdem številke strani pdf "
 
-#: ../src/core/control/jobs/ImageExport.cpp:201
+#: ../src/core/control/jobs/ImageExport.cpp:203
 msgid "Error save image #2"
 msgstr "Napaka pri shranjevanju slike #2"
 
@@ -531,15 +531,11 @@ msgstr "Izvoz PDF"
 msgid "Save file error, can't backup: {1}"
 msgstr "Napaka pri shranjevanju datoteke, ni mogoče varnostno kopirati: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:55
-msgid "Failed to parse LaTeX generator path: {1}"
-msgstr "Ni bilo mogoče razčleniti poti generatorja LaTeX: {1}"
-
-#: ../src/core/control/latex/LatexGenerator.cpp:65
+#: ../src/core/control/latex/LatexGenerator.cpp:60
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Ni bilo mogoče razčleniti ukaza generatorja LaTeX: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:71
+#: ../src/core/control/latex/LatexGenerator.cpp:66
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
@@ -547,15 +543,15 @@ msgstr "Ni bilo mogoče najti programa za ustvarjanje LaTeX v PATH: {1}\n\n"
 "Ker je namestitev zaznana znotraj Flatpaka, morate namestiti razširitev Flatpak freedesktop Tex Live. Na primer z zagonom ukaza:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:76
+#: ../src/core/control/latex/LatexGenerator.cpp:71
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Ni bilo mogoče najti programa za ustvarjanje LaTeX v PATH: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:84
+#: ../src/core/control/latex/LatexGenerator.cpp:79
 msgid "Could not save .tex file: {1}"
 msgstr "Ni bilo mogoče shraniti datoteke .tex: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:99
+#: ../src/core/control/latex/LatexGenerator.cpp:94
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "{1} ni bilo mogoče zagnati: {2} (izhodna koda: {3})"
 
@@ -563,52 +559,52 @@ msgstr "{1} ni bilo mogoče zagnati: {2} (izhodna koda: {3})"
 msgid "Layer {1}"
 msgstr "Sloj {1}"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:25
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:26
 msgid "Could not load pagetemplates.ini file"
 msgstr "Ni bilo mogoče naložiti pagetemplates.ini"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:29
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:30
 msgid "Plain"
 msgstr "Osnovno"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:30
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Ruled"
 msgstr "Črtast"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "Ruled with vertical line"
 msgstr "Črtast z navpično črto"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 msgid "Staves"
 msgstr "Notno črtovje"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
 msgid "Graph"
 msgstr "Karo"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
 msgid "Dotted"
 msgstr "Pikčast"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
 msgid "Isometric Dotted"
 msgstr "Izometrično pikčast"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:37
 msgid "Isometric Graph"
 msgstr "Izometričen karo"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:41
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:42
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 msgid "Image"
 msgstr "Slika"
 
-#: ../src/core/control/settings/Settings.cpp:151
+#: ../src/core/control/settings/Settings.cpp:153
 msgid "%F-Note-%H-%M"
 msgstr "%F-Nota_%H-%M"
 
-#: ../src/core/control/settings/Settings.cpp:153
+#: ../src/core/control/settings/Settings.cpp:154
 msgid "%{name}_annotated"
 msgstr "%{name}_komentiran"
 
@@ -637,121 +633,121 @@ msgstr "Nalaganje slike je spodletelo"
 msgid "Error while opening image file: "
 msgstr "Napaka pri odpiranju slike: "
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:133
+#: ../src/core/control/xojfile/LoadHandler.cpp:135
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr "Datoteka ni veljavna datoteka .xopp (manjka Mimetype): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:141
+#: ../src/core/control/xojfile/LoadHandler.cpp:143
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr "Datoteka ni veljavna datoteka .xopp (napačen Mimetype): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:150
+#: ../src/core/control/xojfile/LoadHandler.cpp:152
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr "Datoteka ni veljavna datoteka .xopp (manjka različica): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:163
+#: ../src/core/control/xojfile/LoadHandler.cpp:165
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "Datoteka ni veljavna datoteka .xopp (Niz različice je poškodovan): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:172
+#: ../src/core/control/xojfile/LoadHandler.cpp:174
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr "Ni bilo mogoče odpreti content.xml v arhivu zip: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:180
+#: ../src/core/control/xojfile/LoadHandler.cpp:182
 msgid "Could not open file: \"{1}\""
 msgstr "Ni bilo mogoče odpreti datoteke: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:247
+#: ../src/core/control/xojfile/LoadHandler.cpp:249
 msgid "XML Parser error: {1}"
 msgstr "Napaka razčlenjevalnika XML: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:250
+#: ../src/core/control/xojfile/LoadHandler.cpp:252
 msgid "Unknown parser error"
 msgstr "Neznana napaka razčlenjevalnika"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:261
+#: ../src/core/control/xojfile/LoadHandler.cpp:263
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "Dokument ni popoln (morda je konec odrezan?)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:265
+#: ../src/core/control/xojfile/LoadHandler.cpp:267
 msgid "Document is corrupted (no pages found in file)"
 msgstr "Dokument je poškodovan (v datoteki ni najdenih strani)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:310
+#: ../src/core/control/xojfile/LoadHandler.cpp:312
 msgid "Unexpected root tag: {1}"
 msgstr "Nepričakovana korenska oznaka: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:331
+#: ../src/core/control/xojfile/LoadHandler.cpp:333
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Nepričakovana oznaka v dokumentu: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:384
-#: ../src/core/control/xojfile/LoadHandler.cpp:413
+#: ../src/core/control/xojfile/LoadHandler.cpp:386
+#: ../src/core/control/xojfile/LoadHandler.cpp:415
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Ni bilo mogoče prebrati slike: {1}. Napaka: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:423
+#: ../src/core/control/xojfile/LoadHandler.cpp:425
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "Ni bilo mogoče prebrati številke strani za klonirano sliko ozadja: {1}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:431
+#: ../src/core/control/xojfile/LoadHandler.cpp:433
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Neznan pixmap::vrsta domene: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:485
+#: ../src/core/control/xojfile/LoadHandler.cpp:487
 msgid "Unknown domain type: {1}"
 msgstr "Neznana vrsta domene: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:523
+#: ../src/core/control/xojfile/LoadHandler.cpp:525
 msgid "Unknown background type: {1}"
 msgstr "Neznana vrsta ozadja: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:548
+#: ../src/core/control/xojfile/LoadHandler.cpp:550
 msgid "Error reading width of a stroke: {1}"
 msgstr "Napaka pri branju širine poteze: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:616
+#: ../src/core/control/xojfile/LoadHandler.cpp:619
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "Neznana vrsta kapice poteze: \"{1}\", predpostavljam, da je okrogla"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:634
+#: ../src/core/control/xojfile/LoadHandler.cpp:637
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Neznana vrsta poteze: \"{1}\", predpostavljam pero"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:805
-#: ../src/core/control/xojfile/LoadHandler.cpp:821
-#: ../src/core/control/xojfile/LoadHandler.cpp:1134
-#: ../src/core/control/xojfile/LoadHandler.cpp:1148
+#: ../src/core/control/xojfile/LoadHandler.cpp:809
+#: ../src/core/control/xojfile/LoadHandler.cpp:825
+#: ../src/core/control/xojfile/LoadHandler.cpp:1138
+#: ../src/core/control/xojfile/LoadHandler.cpp:1152
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Ni bilo mogoče odpreti priponke: {1}. Napaka: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:814
-#: ../src/core/control/xojfile/LoadHandler.cpp:1141
-#: ../src/core/control/xojfile/LoadHandler.cpp:1159
+#: ../src/core/control/xojfile/LoadHandler.cpp:818
+#: ../src/core/control/xojfile/LoadHandler.cpp:1144
+#: ../src/core/control/xojfile/LoadHandler.cpp:1163
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Ni bilo mogoče odpreti priponke: {1}. Napaka: Brez veljavne velikosti"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:833
+#: ../src/core/control/xojfile/LoadHandler.cpp:837
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Ni bilo mogoče odpreti priponke: {1}. Napaka: Ni bilo mogoče prebrati datoteke"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:842
+#: ../src/core/control/xojfile/LoadHandler.cpp:846
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Ni bilo mogoče odpreti priponke: {1}. Napaka: Ni mogoče zapisati datoteke"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1029
+#: ../src/core/control/xojfile/LoadHandler.cpp:1033
 msgid "Wrong count of points ({1})"
 msgstr "Napačno število točk ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1045
+#: ../src/core/control/xojfile/LoadHandler.cpp:1049
 msgid "xoj-File: {1}"
 msgstr "xoj-datoteka: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1046
+#: ../src/core/control/xojfile/LoadHandler.cpp:1050
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr "Napačno število vrednosti pritiska, dobljeno {1}, pričakovano {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1178
+#: ../src/core/control/xojfile/LoadHandler.cpp:1182
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Zahtevane začasne datoteke ni bilo mogoče najti za prilogo {1}"
 
@@ -793,11 +789,11 @@ msgstr "Atributa »{1}« ni bilo mogoče razčleniti kot size_t, vrednost je nul
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "Atributa »{1}« ni bilo mogoče razčleniti kot size_t, vrednost je »{2}«"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:251
+#: ../src/core/control/xojfile/SaveHandler.cpp:253
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Ozadja »{1}«, {2} ni bilo mogoče zapisati"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:370
+#: ../src/core/control/xojfile/SaveHandler.cpp:372
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Ozadja »{1}« ni bilo mogoče zapisati. Vseeno nadaljujem."
 
@@ -1033,7 +1029,7 @@ msgstr "Prepoznavanje oblik"
 msgid "Draw Spline"
 msgstr "Nariši črto"
 
-#: ../src/core/gui/dialog/DeviceTestingArea.cpp:161
+#: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
 msgid "Export Logs"
 msgstr ""
 
@@ -1084,11 +1080,11 @@ msgstr "Slikovne datoteke"
 msgid "Custom"
 msgstr "Po meri"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:47
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:49
 msgid "System Default"
 msgstr "Sistemsko privzeto"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:65
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:67
 msgid "Previously selected language not available anymore!"
 msgstr "Prej izbrani jezik ni več na voljo!"
 
@@ -1112,7 +1108,7 @@ msgstr "Vzorčna datoteka LaTeX je bila uspešno ustvarjena."
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Napaka: {1}. Preverite vsebino {2}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:183
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:182
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Napaka: {1} ni navadna datoteka. Preverite nastavitve datoteke predloge LaTeX. "
 
@@ -1174,11 +1170,11 @@ msgid "<b>{1}</b>\n"
 msgstr "<b>{1}</b>\n"
 "{2}{3}"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:274
+#: ../src/core/gui/dialog/SettingsDialog.cpp:275
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Omogočite občutljivost na pritisk ali sklepanje o pritisku, da spremenite to nastavitev!"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:278
+#: ../src/core/gui/dialog/SettingsDialog.cpp:279
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Filtriranje vhodnega tlaka. Množenje tlaka z množiteljem tlaka. Če je nižji od minimuma, uporabi najmanjši tlak."
 
@@ -1186,29 +1182,29 @@ msgstr "Filtriranje vhodnega tlaka. Množenje tlaka z množiteljem tlaka. Če je
 msgid "Built-in palettes"
 msgstr "Vgrajene palete"
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:32
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:33
 msgid "User palettes"
 msgstr "Uporabnikove palete"
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:96
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:98
 msgid "<i>The palettes shown below are obtained from the <a href=\"file://{1}\">Built-in palettes</a> and <a href=\"file://{2}\">User palettes</a> directories:</i>\n"
 msgstr "<i>Spodnje palete so iz <a href=\"file://{1}\">Vgrajene palete</a> in <a href=\"file://{2}\">Uporabnikove palete</a>:</i>\n"
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:109
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:111
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
 "Using the default until another palette is configured."
 msgstr "Palet (s končnico .gpl) ni bilo mogoče najti.\n"
 "Dokler ne nastavite druge palete je v uporabi osnovna."
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:151
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:153
 msgid "Error"
 msgstr "Napaka"
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:163
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:165
 msgid "Name"
 msgstr "Ime"
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:166
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:168
 msgid "Palette has no Name"
 msgstr "Paleta je brez imena"
 
@@ -1782,62 +1778,62 @@ msgstr "Spustni meni za izbiro"
 msgid "Zoom Slider"
 msgstr "Drsnik za povečevanje"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:119
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:120
 msgctxt "Color"
 msgid "Black"
 msgstr "Črna"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:120
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:121
 msgctxt "Color"
 msgid "Green"
 msgstr "Zelena"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:121
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:122
 msgctxt "Color"
 msgid "Light Blue"
 msgstr "Svetlomodra"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:122
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:123
 msgctxt "Color"
 msgid "Light Green"
 msgstr "Svetlozelena"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:123
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:124
 msgctxt "Color"
 msgid "Blue"
 msgstr "Modra"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:124
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:125
 msgctxt "Color"
 msgid "Gray"
 msgstr "Siva"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:125
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:126
 msgctxt "Color"
 msgid "Red"
 msgstr "Rdeča"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:126
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:127
 msgctxt "Color"
 msgid "Magenta"
 msgstr "Škrlatna"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:127
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:128
 msgctxt "Color"
 msgid "Orange"
 msgstr "Oranžna"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:128
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:129
 msgctxt "Color"
 msgid "Yellow"
 msgstr "Rumena"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:129
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:130
 msgctxt "Color"
 msgid "White"
 msgstr "Bela"
 
-#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
+#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:76
 msgctxt "as a noun: a copy of"
 msgid "Copy"
 msgstr "Kopiraj"
@@ -1864,14 +1860,14 @@ msgid "Background"
 msgstr "Ozadje"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:46
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:196
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:242
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:244
 msgid "No pages to export!"
 msgstr "Ni strani za izvoz!"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:54
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:205
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:247
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:207
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:249
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "Zagon površine PDF Cairo ni uspela"
 
@@ -1891,7 +1887,7 @@ msgstr ""
 msgid "Error with overlay or final export:"
 msgstr ""
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:126
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:128
 msgid "Error while finalizing the PDF Cairo surface"
 msgstr "Napaka med dokončanjem površine PDF Cairo"
 
@@ -2086,17 +2082,17 @@ msgstr "Med zapiranjem datoteke je prišlo do napake: \"{1}\""
 msgid "Error code {1}"
 msgstr "Koda napake {1}"
 
-#: ../src/util/PathUtil.cpp:282
+#: ../src/util/PathUtil.cpp:310
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Datoteke ni bilo mogoče odpreti. To morate storiti ročno:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:392
+#: ../src/util/PathUtil.cpp:425
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:401
+#: ../src/util/PathUtil.cpp:434
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Ni bilo mogoče ustvariti mape: {1}\n"
@@ -2106,15 +2102,19 @@ msgstr "Ni bilo mogoče ustvariti mape: {1}\n"
 msgid "Error {1} executing system command: {2}"
 msgstr "Napaka {1} pri izvajanju sistemskega ukaza: {2}"
 
-#: ../src/util/XojMsgBox.cpp:191
+#: ../src/util/XojMsgBox.cpp:186
+msgid "The file {1} already exists! Do you want to replace it?"
+msgstr ""
+
+#: ../src/util/XojMsgBox.cpp:190
 msgid "Select another name"
 msgstr "Izberi drugo ime"
 
-#: ../src/util/XojMsgBox.cpp:192
+#: ../src/util/XojMsgBox.cpp:191
 msgid "Replace"
 msgstr "Zamenjaj"
 
-#: ../src/util/XojMsgBox.cpp:217
+#: ../src/util/XojMsgBox.cpp:216
 msgid "Unable to open the link: {1}\n"
 "{2}"
 msgstr ""

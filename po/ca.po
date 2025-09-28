@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-02 18:22+0000\n"
-"PO-Revision-Date: 2025-09-07 04:26\n"
+"POT-Creation-Date: 2025-09-24 06:39+0000\n"
+"PO-Revision-Date: 2025-09-28 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -48,7 +48,7 @@ msgid "No"
 msgstr "No"
 
 #: ../src/core/control/Control.cpp:817 ../src/core/control/Control.cpp:1770
-#: ../src/core/control/Control.cpp:2112
+#: ../src/core/control/Control.cpp:2094
 msgid "Cancel"
 msgstr "Cancel·la"
 
@@ -69,7 +69,7 @@ msgid "Paper B_ackground"
 msgstr "_Fons del paper"
 
 #: ../src/core/control/Control.cpp:823
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:40
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:41
 msgid "With PDF background"
 msgstr "Amb fons de PDF"
 
@@ -166,29 +166,29 @@ msgstr "Tria un color"
 msgid "Unsaved Document"
 msgstr "Document sense desar"
 
-#: ../src/core/control/Control.cpp:2105
+#: ../src/core/control/Control.cpp:2087
 msgid "Document file was removed."
 msgstr "S'ha eliminat el fitxer del document."
 
-#: ../src/core/control/Control.cpp:2105
+#: ../src/core/control/Control.cpp:2087
 msgid "This document is not saved yet."
 msgstr "Aquest document encara no s'ha desat."
 
-#: ../src/core/control/Control.cpp:2107
+#: ../src/core/control/Control.cpp:2089
 msgid "Save As..."
 msgstr "Anomena i desa..."
 
-#: ../src/core/control/Control.cpp:2107 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2089 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "Desa"
 
-#: ../src/core/control/Control.cpp:2110
+#: ../src/core/control/Control.cpp:2092
 msgid "Discard"
 msgstr "Descarta"
 
-#: ../src/core/control/Control.cpp:2195
+#: ../src/core/control/Control.cpp:2177
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr "No s'ha progut crear el subproceś de demostració de Gtk: {1} (codi d'error: {2})"
 
@@ -261,8 +261,8 @@ msgid "Could not load LaTeX PDF file"
 msgstr "El fitxer PDF de LaTeX no s'ha pogut carregar."
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:110
-#: ../src/core/control/xojfile/LoadHandler.cpp:478
-#: ../src/core/control/xojfile/LoadHandler.cpp:494
+#: ../src/core/control/xojfile/LoadHandler.cpp:480
+#: ../src/core/control/xojfile/LoadHandler.cpp:496
 msgid "Error reading PDF: {1}"
 msgstr "S'ha produït un error al llegir el PDF: {1}"
 
@@ -276,7 +276,7 @@ msgstr "No teniu pàgines PDF seleccionables. L'operació es cancel·la.\n"
 msgid "PDF background missing"
 msgstr "Falta el fons de PDF."
 
-#: ../src/core/control/PrintHandler.cpp:121
+#: ../src/core/control/PrintHandler.cpp:122
 msgid "Running print operation failed with {1}"
 msgstr "L'operació d'impressió en execució ha fallat amb {1}."
 
@@ -487,7 +487,7 @@ msgid "Export File"
 msgstr "Exporta el fitxer"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
-#: ../src/core/gui/dialog/DeviceTestingArea.cpp:161
+#: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
 msgid "Export"
 msgstr "Exporta"
 
@@ -526,19 +526,19 @@ msgstr "Xournal (Compatibilitat)"
 msgid "Save file error: {1}"
 msgstr "S'ha produït un error al desar el fitxer: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:108
+#: ../src/core/control/jobs/ImageExport.cpp:110
 msgid "Unsupported graphics format: "
 msgstr "Format de gràfics no suportat: "
 
-#: ../src/core/control/jobs/ImageExport.cpp:168
+#: ../src/core/control/jobs/ImageExport.cpp:170
 msgid "Error save image #1"
 msgstr "S'ha produït un error al desar la imatge #1."
 
-#: ../src/core/control/jobs/ImageExport.cpp:177
+#: ../src/core/control/jobs/ImageExport.cpp:179
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
 msgstr "S'ha produït un error a l'exportar el fons del PDF: no es pot trobar la pàgina número "
 
-#: ../src/core/control/jobs/ImageExport.cpp:201
+#: ../src/core/control/jobs/ImageExport.cpp:203
 msgid "Error save image #2"
 msgstr "S'ha produït un error al desar la imatge #2."
 
@@ -550,15 +550,11 @@ msgstr "Exportació a PDF"
 msgid "Save file error, can't backup: {1}"
 msgstr "No s'ha pogut desar el fitxer ni es pot fer una còpia de seguretat: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:55
-msgid "Failed to parse LaTeX generator path: {1}"
-msgstr "El camí del generador LaTeX no s'ha pogut processar: {1}"
-
-#: ../src/core/control/latex/LatexGenerator.cpp:65
+#: ../src/core/control/latex/LatexGenerator.cpp:60
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "La comanda del generador LaTeX no s'ha pogut processar: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:71
+#: ../src/core/control/latex/LatexGenerator.cpp:66
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
@@ -566,15 +562,15 @@ msgstr "No s'ha pogut trobar el programa generador de LaTeX al CAMÍ: {1}\n\n"
 "Com la instal·lació es detecta amb Platpak, heu d'instal·lar l'extensió Tex Live del Flatpak freedesktop. Ho podeu fer per exemple amb:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:76
+#: ../src/core/control/latex/LatexGenerator.cpp:71
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "No s'ha pogut trobar el programa generador LaTeX al camí: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:84
+#: ../src/core/control/latex/LatexGenerator.cpp:79
 msgid "Could not save .tex file: {1}"
 msgstr "No s'ha pogut desar el fitxer .tex: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:99
+#: ../src/core/control/latex/LatexGenerator.cpp:94
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "No s'ha pogut iniciar {1}: {2} (codi de sortida: {3})"
 
@@ -582,52 +578,52 @@ msgstr "No s'ha pogut iniciar {1}: {2} (codi de sortida: {3})"
 msgid "Layer {1}"
 msgstr "Capa {1}"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:25
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:26
 msgid "Could not load pagetemplates.ini file"
 msgstr "El fitxer «pagetemplates.ini» no s'ha pogut carregar."
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:29
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:30
 msgid "Plain"
 msgstr "Simple"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:30
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Ruled"
 msgstr "Amb línies"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "Ruled with vertical line"
 msgstr "Amb línies i un marge vertical"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 msgid "Staves"
 msgstr "Pentagrames"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
 msgid "Graph"
 msgstr "Quadrícula"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
 msgid "Dotted"
 msgstr "Puntejada"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
 msgid "Isometric Dotted"
 msgstr "Puntejat en vista isomètrica"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:37
 msgid "Isometric Graph"
 msgstr "Quadrícula isomètrica"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:41
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:42
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 msgid "Image"
 msgstr "Imatge"
 
-#: ../src/core/control/settings/Settings.cpp:151
+#: ../src/core/control/settings/Settings.cpp:153
 msgid "%F-Note-%H-%M"
 msgstr "%F‒Nota‒%H-%M"
 
-#: ../src/core/control/settings/Settings.cpp:153
+#: ../src/core/control/settings/Settings.cpp:154
 msgid "%{name}_annotated"
 msgstr "%{name}_comentat"
 
@@ -656,121 +652,121 @@ msgstr "No s'ha pogut carregar la imatge."
 msgid "Error while opening image file: "
 msgstr "S'ha produït un error mentre s'obria el fitxer d'imatge: "
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:133
+#: ../src/core/control/xojfile/LoadHandler.cpp:135
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr "El fitxer no és un fitxer .xopp vàlid (falta el tipus MIME): «{1}»"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:141
+#: ../src/core/control/xojfile/LoadHandler.cpp:143
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr "El fitxer no és un fitxer .xopp vàlid (el tipus MIME no és correcte): «{1}»"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:150
+#: ../src/core/control/xojfile/LoadHandler.cpp:152
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr "El fitxer no és un fitxer .xopp vàlid (falta la versió): «{1}»"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:163
+#: ../src/core/control/xojfile/LoadHandler.cpp:165
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "El fitxer no és un fitxer .xopp vàlid (la cadena de versió està danyada): «{1}»"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:172
+#: ../src/core/control/xojfile/LoadHandler.cpp:174
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr "No s'ha pogut obrir el fitxer «content.xml» del fitxer zip «{1}»."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:180
+#: ../src/core/control/xojfile/LoadHandler.cpp:182
 msgid "Could not open file: \"{1}\""
 msgstr "El fitxer «{1}» no s'ha pogut obrir."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:247
+#: ../src/core/control/xojfile/LoadHandler.cpp:249
 msgid "XML Parser error: {1}"
 msgstr "Error del processador XML: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:250
+#: ../src/core/control/xojfile/LoadHandler.cpp:252
 msgid "Unknown parser error"
 msgstr "Error desconegut del processador"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:261
+#: ../src/core/control/xojfile/LoadHandler.cpp:263
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "El document no està complet (potser la part del final està truncada?)."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:265
+#: ../src/core/control/xojfile/LoadHandler.cpp:267
 msgid "Document is corrupted (no pages found in file)"
 msgstr "El document està danyat (al fitxer no s'ha trobat cap pàgina)."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:310
+#: ../src/core/control/xojfile/LoadHandler.cpp:312
 msgid "Unexpected root tag: {1}"
 msgstr "Etiqueta «root» inesperada: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:331
+#: ../src/core/control/xojfile/LoadHandler.cpp:333
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Etiqueta inesperada al document: «{1}»"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:384
-#: ../src/core/control/xojfile/LoadHandler.cpp:413
+#: ../src/core/control/xojfile/LoadHandler.cpp:386
+#: ../src/core/control/xojfile/LoadHandler.cpp:415
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "No s'ha pogut llegir la imatge: {1}. Missatge d'error: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:423
+#: ../src/core/control/xojfile/LoadHandler.cpp:425
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "No s'ha pogut llegir el número de pàgina de la imatge de fons clonada: {1}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:431
+#: ../src/core/control/xojfile/LoadHandler.cpp:433
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "El tipus pixmap::domain és desconegut: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:485
+#: ../src/core/control/xojfile/LoadHandler.cpp:487
 msgid "Unknown domain type: {1}"
 msgstr "El tipus de domini és desconegut: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:523
+#: ../src/core/control/xojfile/LoadHandler.cpp:525
 msgid "Unknown background type: {1}"
 msgstr "Tipus de fons desconegut: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:548
+#: ../src/core/control/xojfile/LoadHandler.cpp:550
 msgid "Error reading width of a stroke: {1}"
 msgstr "Error al llegir l'amplada d'un traç: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:616
+#: ../src/core/control/xojfile/LoadHandler.cpp:619
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "El tipus d'extrem de traç «{1}» és desconegut. Es canvia a rodó."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:634
+#: ../src/core/control/xojfile/LoadHandler.cpp:637
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "El tipus de traç «{1}» és desconegut. Es canvia a llapis."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:805
-#: ../src/core/control/xojfile/LoadHandler.cpp:821
-#: ../src/core/control/xojfile/LoadHandler.cpp:1134
-#: ../src/core/control/xojfile/LoadHandler.cpp:1148
+#: ../src/core/control/xojfile/LoadHandler.cpp:809
+#: ../src/core/control/xojfile/LoadHandler.cpp:825
+#: ../src/core/control/xojfile/LoadHandler.cpp:1138
+#: ../src/core/control/xojfile/LoadHandler.cpp:1152
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:814
-#: ../src/core/control/xojfile/LoadHandler.cpp:1141
-#: ../src/core/control/xojfile/LoadHandler.cpp:1159
+#: ../src/core/control/xojfile/LoadHandler.cpp:818
+#: ../src/core/control/xojfile/LoadHandler.cpp:1144
+#: ../src/core/control/xojfile/LoadHandler.cpp:1163
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: No s'ha proporcionat una mida de fitxer vàlida."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:833
+#: ../src/core/control/xojfile/LoadHandler.cpp:837
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: No s'ha pogut llegir el fitxer."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:842
+#: ../src/core/control/xojfile/LoadHandler.cpp:846
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: El fitxer no s'ha pogut escriure."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1029
+#: ../src/core/control/xojfile/LoadHandler.cpp:1033
 msgid "Wrong count of points ({1})"
 msgstr "Recompte de punts incorrecte ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1045
+#: ../src/core/control/xojfile/LoadHandler.cpp:1049
 msgid "xoj-File: {1}"
 msgstr "Fitxer xoj: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1046
+#: ../src/core/control/xojfile/LoadHandler.cpp:1050
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr "Nombre de valors de pressió incorrecte. N'hi ha {1} i se n'esperaven {2}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1178
+#: ../src/core/control/xojfile/LoadHandler.cpp:1182
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "El fitxer temporal sol·licitat per a l'adjunt {1} no s'ha pogut trobar."
 
@@ -812,11 +808,11 @@ msgstr "L'atribut «{1}» no s'ha pogut processar com a «size_t». El valor és
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "No s'ha pogut processar l'atribut «{1}» com a «size_t». El valor és «{2}»."
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:251
+#: ../src/core/control/xojfile/SaveHandler.cpp:253
 msgid "Could not write background \"{1}\", {2}"
 msgstr "No s'ha pogut escriure el fons «{1}», {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:370
+#: ../src/core/control/xojfile/SaveHandler.cpp:372
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "No s'ha pogut escriure el fons «{1}». Es continua de totes maneres."
 
@@ -1052,7 +1048,7 @@ msgstr "Reconeixedor de traços"
 msgid "Draw Spline"
 msgstr "Dibuixa corbes spline"
 
-#: ../src/core/gui/dialog/DeviceTestingArea.cpp:161
+#: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
 msgid "Export Logs"
 msgstr "Exporta els registres"
 
@@ -1103,11 +1099,11 @@ msgstr "Fitxers d'imatge"
 msgid "Custom"
 msgstr "Personalitzat"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:47
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:49
 msgid "System Default"
 msgstr "Predeterminat del sistema"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:65
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:67
 msgid "Previously selected language not available anymore!"
 msgstr "L'idioma seleccionat anteriorment ja no està disponible!"
 
@@ -1131,7 +1127,7 @@ msgstr "Fitxer LaTeX d'exemple generat amb èxit."
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Error: {1}. Comproveu els continguts de {2}."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:183
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:182
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Error: {1} no és un fitxer regular. Comproveu la configuració del fitxer de plantilla LaTeX. "
 
@@ -1193,11 +1189,11 @@ msgid "<b>{1}</b>\n"
 msgstr "<b>{1}</b>\n"
 "{2}{3}"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:274
+#: ../src/core/gui/dialog/SettingsDialog.cpp:275
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Per a canviar aquesta opció, cal activar prèviament la sensibilitat o inferència de pressió."
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:278
+#: ../src/core/gui/dialog/SettingsDialog.cpp:279
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Filtre de la pressió d'entrada. Multiplica la pressió pel valor especificat. Si és menor que el mínim, fa servir la pressió mínima."
 
@@ -1205,29 +1201,29 @@ msgstr "Filtre de la pressió d'entrada. Multiplica la pressió pel valor especi
 msgid "Built-in palettes"
 msgstr "Paletes predefinides"
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:32
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:33
 msgid "User palettes"
 msgstr "Paletes personalitzades"
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:96
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:98
 msgid "<i>The palettes shown below are obtained from the <a href=\"file://{1}\">Built-in palettes</a> and <a href=\"file://{2}\">User palettes</a> directories:</i>\n"
 msgstr "<i>Les paletes que es mostren a sota s'han obtingut de les carpetes de <a href=\"file://{1}\">paletes predefinides</a> i <a href=\"file://{2}\">paletes personalitzades</a>:</i>\n"
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:109
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:111
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
 "Using the default until another palette is configured."
 msgstr "No s'ha trobat cap fitxer de paletes (amb l'extensió .gpl).\n"
 "Es farà servir la paleta per defecte fins que se'n configuri una altra."
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:151
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:153
 msgid "Error"
 msgstr "Error"
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:163
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:165
 msgid "Name"
 msgstr "Nom"
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:166
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:168
 msgid "Palette has no Name"
 msgstr "La paleta no té nom."
 
@@ -1801,62 +1797,62 @@ msgstr "Menú desplegable de selecció"
 msgid "Zoom Slider"
 msgstr "Control de zoom"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:119
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:120
 msgctxt "Color"
 msgid "Black"
 msgstr "Negre"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:120
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:121
 msgctxt "Color"
 msgid "Green"
 msgstr "Verd"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:121
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:122
 msgctxt "Color"
 msgid "Light Blue"
 msgstr "Blau clar"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:122
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:123
 msgctxt "Color"
 msgid "Light Green"
 msgstr "Verd clar"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:123
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:124
 msgctxt "Color"
 msgid "Blue"
 msgstr "Blau"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:124
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:125
 msgctxt "Color"
 msgid "Gray"
 msgstr "Gris"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:125
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:126
 msgctxt "Color"
 msgid "Red"
 msgstr "Vermell"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:126
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:127
 msgctxt "Color"
 msgid "Magenta"
 msgstr "Magenta"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:127
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:128
 msgctxt "Color"
 msgid "Orange"
 msgstr "Taronja"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:128
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:129
 msgctxt "Color"
 msgid "Yellow"
 msgstr "Groc"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:129
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:130
 msgctxt "Color"
 msgid "White"
 msgstr "Blanc"
 
-#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
+#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:76
 msgctxt "as a noun: a copy of"
 msgid "Copy"
 msgstr "Copia"
@@ -1883,14 +1879,14 @@ msgid "Background"
 msgstr "Fons"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:46
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:196
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:242
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:244
 msgid "No pages to export!"
 msgstr "No hi ha cap pàgina per a exportar!"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:54
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:205
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:247
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:207
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:249
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "La PDF Cairo Surface no s'ha pogut inicialitzar."
 
@@ -1910,7 +1906,7 @@ msgstr "Predeterminat"
 msgid "Error with overlay or final export:"
 msgstr "Error amb les capes o l'exportació final:"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:126
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:128
 msgid "Error while finalizing the PDF Cairo surface"
 msgstr "S'ha produït un error al finalitzar la PDF Cairo Surface."
 
@@ -2105,17 +2101,17 @@ msgstr "S'ha produïut un error mentre es tancava el fitxer «{1}»."
 msgid "Error code {1}"
 msgstr "Codi d'error {1}"
 
-#: ../src/util/PathUtil.cpp:282
+#: ../src/util/PathUtil.cpp:310
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "El fitxer no s'ha pogut obrir. Caldrà que ho feu manualment:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:392
+#: ../src/util/PathUtil.cpp:425
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:401
+#: ../src/util/PathUtil.cpp:434
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "No s'ha pogut crear la carpeta: {1}\n"
@@ -2125,15 +2121,19 @@ msgstr "No s'ha pogut crear la carpeta: {1}\n"
 msgid "Error {1} executing system command: {2}"
 msgstr "Error {1} a l'executar la comanda de sistema: {2}"
 
-#: ../src/util/XojMsgBox.cpp:191
+#: ../src/util/XojMsgBox.cpp:186
+msgid "The file {1} already exists! Do you want to replace it?"
+msgstr "El fitxer {1} ja existeix! Voleu reemplaçar-lo?"
+
+#: ../src/util/XojMsgBox.cpp:190
 msgid "Select another name"
 msgstr "Tria un altre nom"
 
-#: ../src/util/XojMsgBox.cpp:192
+#: ../src/util/XojMsgBox.cpp:191
 msgid "Replace"
 msgstr "Reemplaça"
 
-#: ../src/util/XojMsgBox.cpp:217
+#: ../src/util/XojMsgBox.cpp:216
 msgid "Unable to open the link: {1}\n"
 "{2}"
 msgstr "No s'ha pogut obrir l'enllaç: {1} {2}"
