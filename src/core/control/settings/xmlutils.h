@@ -19,9 +19,6 @@
 
 #include "util/Color.h"
 
-using std::u8string;
-using std::u8string_view;
-
 /*
  * parse: parse settings from XML
  */
@@ -31,7 +28,7 @@ T parse(std::string_view strView, T defaultValue = T{});
 /*
  * reinterpret cast from xmlChar* to char8_t*
  */
-inline u8string_view operator""_u8s(const char* xml, size_t);
+inline std::u8string_view operator""_u8s(const char* xml, size_t);
 
 /*
  * Operator that converts string literals to xmlChar* (unsigned char*)
@@ -46,7 +43,7 @@ T xmlGet(const xmlNode* node, const std::string& property, T defaultValue = T{})
 
 inline const xmlChar* operator""_xml(const char* ch, size_t) { return reinterpret_cast<const xmlChar*>(ch); }
 
-inline u8string_view operator""_u8s(const char* xml, size_t) { return reinterpret_cast<const char8_t*>(xml); }
+inline std::u8string_view operator""_u8s(const char* xml, size_t) { return xoj::util::utf8(xml).str(); }
 
 template <typename T>
 T xmlGet(const xmlNode* node, const std::string& property, T defaultValue) {

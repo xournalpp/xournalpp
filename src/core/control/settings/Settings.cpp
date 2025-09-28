@@ -2,11 +2,7 @@
 
 #include <algorithm>  // for max
 #include <cstdint>    // for uint32_t, int32_t
-#include <cstdio>     // for sscanf, size_t
-#include <cstdlib>    // for atoi
-#include <cstring>    // for strcmp
-#include <exception>  // for exception
-#include <list>
+#include <string_view>  // for literal sv
 #include <type_traits>  // for add_const<>::type
 #include <utility>      // for pair, move, make_...
 
@@ -34,6 +30,7 @@
 #include "xmlutils.h"    // for parse, cast, getXml
 
 using std::string;
+using namespace std::string_view_literals;
 
 constexpr auto const* DEFAULT_FONT = "Sans";
 constexpr auto DEFAULT_FONT_SIZE = 12;
@@ -278,12 +275,12 @@ auto Settings::getActiveViewMode() const -> ViewModeId { return this->activeView
 
 void Settings::parseData(xmlNodePtr cur, SElement& elem) {
     for (xmlNodePtr x = cur->children; x != nullptr; x = x->next) {
-        const std::u8string_view type = reinterpret_cast<const char8_t*>(x->name);
+        const std::u8string type = xoj::util::utf8(x->name).str();
         const auto name = xmlGet<string>(x, "name");
 
         if (type == "data"_u8s) {
             parseData(x, elem.child(name));
-        } else if (type == "attribute"_u8s) {
+        } else if (type == u8"attribute") {
             const auto sType = xmlGet<string>(x, "type");
 
             if (sType == "int") {
@@ -316,7 +313,7 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem) {
 
 void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     // Parse data map
-    if (u8string_view(reinterpret_cast<const char8_t*>(cur->name)) == "data"_u8s) {
+    if (std::string_view(reinterpret_cast<const char*>(cur->name)) == "data"sv) {
         const auto name = xmlGet<string>(cur, "name");
         if (name.empty()) {
             g_warning("Settings::%s:No name property!\n", cur->name);
@@ -332,7 +329,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         return;
     }
 
-    if (u8string_view(reinterpret_cast<const char8_t*>(cur->name)) != "property"_u8s) {
+    if (std::string_view(reinterpret_cast<const char*>(cur->name)) != "property"sv) {
         g_warning("Settings::Unknown XML node: %s\n", cur->name);
         return;
     }
@@ -461,9 +458,9 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (name == "useStockIcons") {
         this->useStockIcons = parse<bool>(value);
     } else if (name == "defaultSaveName") {
-        this->defaultSaveName = parse<u8string>(value);
+        this->defaultSaveName = parse<std::u8string>(value);
     } else if (name == "defaultPdfExportName") {
-        this->defaultPdfExportName = parse<u8string>(value);
+        this->defaultPdfExportName = parse<std::u8string>(value);
     } else if (name == "pluginEnabled") {
         this->pluginEnabled = value;
     } else if (name == "pluginDisabled") {
@@ -750,7 +747,7 @@ auto Settings::load() -> bool {
         save();
     }
 
-    const xmlDocPtr doc = xmlParseFile(char_cast(filepath.u8string().c_str()));
+    xmlDocPtr doc = xmlParseFile(char_cast(filepath.u8string().c_str()));
 
     if (doc == nullptr) {
         g_warning("Settings::load:: doc == null, could not load Settings!\n");
@@ -765,7 +762,7 @@ auto Settings::load() -> bool {
         return false;
     }
 
-    if (u8string_view(reinterpret_cast<const char8_t*>(cur->name)) != "settings"_u8s) {
+    if (std::string_view(reinterpret_cast<const char*>(cur->name)) != "settings"sv) {
         g_message("File \"%s\" is of the wrong type", filepath.string().c_str());
         xmlFreeDoc(doc);
 
