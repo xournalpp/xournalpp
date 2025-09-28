@@ -26,11 +26,6 @@ template <typename T>
 T parse(std::string_view strView, T defaultValue = T{});
 
 /*
- * reinterpret cast from xmlChar* to char8_t*
- */
-inline std::u8string_view operator""_u8s(const char* xml, size_t);
-
-/*
  * Operator that converts string literals to xmlChar* (unsigned char*)
  */
 inline const xmlChar* operator""_xml(const char* ch, size_t);
@@ -42,8 +37,6 @@ template <typename T>
 T xmlGet(const xmlNode* node, const std::string& property, T defaultValue = T{});
 
 inline const xmlChar* operator""_xml(const char* ch, size_t) { return reinterpret_cast<const xmlChar*>(ch); }
-
-inline std::u8string_view operator""_u8s(const char* xml, size_t) { return xoj::util::utf8(xml).str(); }
 
 template <typename T>
 T xmlGet(const xmlNode* node, const std::string& property, T defaultValue) {
