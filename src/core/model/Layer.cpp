@@ -142,4 +142,6 @@ auto Layer::hasName() const -> bool { return name.has_value(); }
 
 auto Layer::getName() const -> std::string { return name.value_or(""); }
 
+void Layer::clearName() { name.reset(); }
+
 void Layer::setName(const std::string& newName) { this->name = newName; }

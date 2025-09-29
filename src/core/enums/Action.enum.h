@@ -166,6 +166,8 @@ enum class Action : size_t {
     LAYER_GOTO_NEXT,
     LAYER_GOTO_PREVIOUS,
     LAYER_GOTO_TOP,
+    LAYER_SPAN_UP,
+    LAYER_SPAN_DOWN,
     LAYER_ACTIVE,  ///< Action whose state is the current layer index
 
     // Miscellaneous

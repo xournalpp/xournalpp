@@ -283,8 +283,11 @@ void SplineHandler::finalizeSpline() {
     this->viewPool->dispatchAndClear(xoj::view::SplineToolView::FINALIZATION_REQUEST, rg);
 
     // Wait until this finishes before releasing `stroke`, so that PageView::elementChanged does not needlessly rerender
-    // the stroke
-    this->page->fireElementChanged(ptr);
+    // the stroke.
+    // Rerenders all pages that layer 'layer' is present in
+    for (std::size_t i = layer->getFirstPage(); i <= layer->getLastPage(); ++i) {
+        control->getDocument()->getPage(i)->fireElementChanged(ptr);
+    }
 
     control->getCursor()->updateCursor();
 }

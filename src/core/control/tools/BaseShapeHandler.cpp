@@ -113,7 +113,11 @@ void BaseShapeHandler::onButtonReleaseEvent(const PositionInputData& pos, double
     doc->lock();
     layer->addElement(std::move(stroke));
     doc->unlock();
-    page->fireElementChanged(ptr);
+
+    // Rerenders all pages that layer 'layer' is present in
+    for (std::size_t i = layer->getFirstPage(); i <= layer->getLastPage(); ++i) {
+        this->control->getDocument()->getPage(i)->fireElementChanged(ptr);
+    }
 
     control->getCursor()->updateCursor();
 }
