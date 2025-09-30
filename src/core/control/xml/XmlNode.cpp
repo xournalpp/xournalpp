@@ -14,9 +14,8 @@
 #include "SizeTAttribute.h"        // for SizeTAttribute
 #include "TextAttribute.h"         // for TextAttribute
 #include <functional>
-#include <vector>
 #include <algorithm>  // per std::find
-#include "control/Control.h"  // per Control
+#include "undo/UndoRedoHandler.h"  // per UndoRedoHandler
 
 XmlNode::XmlNode(const char* tag): tag(tag) {}
 
@@ -44,9 +43,13 @@ void XmlNode::setAttrib(const char* attrib, std::vector<double> values) {
     putAttrib(new DoubleArrayAttribute(attrib, std::move(values)));
 }
 
+/*
+    Individua le pagine giuste da scrivere ma ne scrive altre
+*/
+
 void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
     
-    auto pagesToWrite = Control::pagesChanged;
+    auto pagesToWrite = UndoRedoHandler::pagesChanged;
     
     out->write("<");
     out->write(tag);
@@ -60,6 +63,16 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
 
         bool isFilteringPages = (!pagesToWrite.empty() && tag == "xournal");
 
+        // DEBUG: stampa info
+        if (isFilteringPages) {
+            g_message("=== FILTERING PAGES ===");
+            g_message("Total children (pages): %zu", children.size());
+            g_message("Pages to write (%zu): ", pagesToWrite.size());
+            for (const auto& p : pagesToWrite) {
+                g_message("  - Page index: %zu", p);
+            }
+        }
+
         if (listener) {
             size_t maxState = isFilteringPages ? pagesToWrite.size() : children.size();
             listener->setMaximumState(maxState);
@@ -71,10 +84,12 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
             if (isFilteringPages) {
                 auto it = std::find(pagesToWrite.begin(), pagesToWrite.end(), i);
                 if (it == pagesToWrite.end()) {
+                    g_message("Skipping page index %zu", i);
                     continue;
+                } else {
+                    g_message("Writing page index %zu", i);
                 }
             }
-
             
             children[i]->writeOut(out);
             

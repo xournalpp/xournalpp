@@ -18,6 +18,7 @@
 
 using std::string;
 
+std::vector<int> UndoRedoHandler::pagesChanged;
 
 template <typename T>
 T* GetPtr(T* ptr) {
@@ -67,7 +68,7 @@ void UndoRedoHandler::printContents() {
     }
 }
 
-UndoRedoHandler::UndoRedoHandler(Control* control): control(control) {}
+UndoRedoHandler::UndoRedoHandler(Control* control): control(control) {  }
 
 UndoRedoHandler::~UndoRedoHandler() { clearContents(); }
 
@@ -107,6 +108,7 @@ void UndoRedoHandler::undo() {
     auto& undoAction = *this->undoList.back();
     this->redoList.emplace_back(std::move(this->undoList.back()));
     this->undoList.pop_back();
+    this->pagesChanged.pop_back();
 
     bool undoResult = undoAction.undo(this->control);
 
@@ -121,6 +123,14 @@ void UndoRedoHandler::undo() {
 
     printContents();
 }
+
+/*
+    Se fa redo non è implementata ancora bene la logica
+    Quindi se si fa undo di una pagina e poi si fa redo
+    non viene re-inserito nel vector.
+
+    Se invece fa solo undo sì
+*/
 
 void UndoRedoHandler::redo() {
     if (this->redoList.empty()) {
@@ -163,7 +173,19 @@ void UndoRedoHandler::addUndoAction(UndoActionPtr action) {
     this->undoList.emplace_back(std::move(action));
     clearRedo();
     fireUpdateUndoRedoButtons(this->undoList.back()->getPages());
-    this->pagesChanged.emplace_back(Control::getCurrentPageNo());
+
+    bool isInserted = false;
+
+    for (int page: this->pagesChanged) {
+        if (std::find(this->pagesChanged.begin(), this->pagesChanged.end(), page) != this->pagesChanged.end()) {
+            isInserted = true;
+        }
+    }
+
+    if (!isInserted)
+        this->pagesChanged.emplace_back(this->control->getCurrentPageNo());
+
+    isInserted = false;
 
     printContents();
 }
