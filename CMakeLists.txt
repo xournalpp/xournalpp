@@ -156,6 +156,15 @@ pkg_check_modules(ExternalModules REQUIRED IMPORTED_TARGET ${pkg-module-spec})
 
 find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
+find_package(PugiXML REQUIRED)
+
+pkg_check_modules(PUGIXML REQUIRED pugixml)
+
+add_library(PugiXML::PugiXML INTERFACE IMPORTED)
+set_target_properties(PugiXML::PugiXML PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${PUGIXML_INCLUDE_DIRS}"
+    INTERFACE_LINK_LIBRARIES "${PUGIXML_LIBRARIES}"
+)
 
 option(ENABLE_AUDIO "Compile with Audio recording/playing support" ON)
 if (ENABLE_AUDIO)

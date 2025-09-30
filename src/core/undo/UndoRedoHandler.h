@@ -54,6 +54,7 @@ public:
     bool isChangedAutosave();
     void documentAutosaved();
     void documentSaved();
+    static std::vector<int> pagesChanged;
 
 private:
     void clearRedo();

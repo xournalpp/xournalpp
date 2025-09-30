@@ -13,7 +13,10 @@
 #include "IntAttribute.h"          // for IntAttribute
 #include "SizeTAttribute.h"        // for SizeTAttribute
 #include "TextAttribute.h"         // for TextAttribute
-
+#include <functional>
+#include <vector>
+#include <algorithm>  // per std::find
+#include "control/Control.h"  // per Control
 
 XmlNode::XmlNode(const char* tag): tag(tag) {}
 
@@ -42,8 +45,12 @@ void XmlNode::setAttrib(const char* attrib, std::vector<double> values) {
 }
 
 void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
+    
+    auto pagesToWrite = Control::pagesChanged;
+    
     out->write("<");
     out->write(tag);
+
     writeAttributes(out);
 
     if (children.empty()) {
@@ -51,18 +58,30 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
     } else {
         out->write(">\n");
 
+        bool isFilteringPages = (!pagesToWrite.empty() && tag == "xournal");
+
         if (listener) {
-            listener->setMaximumState(children.size());
+            size_t maxState = isFilteringPages ? pagesToWrite.size() : children.size();
+            listener->setMaximumState(maxState);
         }
 
-        size_t i = 1;
-
-        for (auto& node: children) {
-            node->writeOut(out);
-            if (listener) {
-                listener->setCurrentState(i);
+        size_t progressCounter = 1;
+    
+        for (size_t i = 0; i < children.size(); i++) {
+            if (isFilteringPages) {
+                auto it = std::find(pagesToWrite.begin(), pagesToWrite.end(), i);
+                if (it == pagesToWrite.end()) {
+                    continue;
+                }
             }
-            i++;
+
+            
+            children[i]->writeOut(out);
+            
+            if (listener) {
+                listener->setCurrentState(progressCounter);
+            }
+            progressCounter++;
         }
 
         out->write("</");

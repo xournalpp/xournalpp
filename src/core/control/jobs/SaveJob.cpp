@@ -1,9 +1,12 @@
 #include "SaveJob.h"
+#include "util/OutputStream.h"
 
 #include <memory>  // for __shared_ptr_access
 
 #include <cairo.h>  // for cairo_create, cairo_destroy
 #include <glib.h>   // for g_warning, g_error
+#include <random>
+#include <fstream>
 
 #include "control/Control.h"              // for Control
 #include "control/jobs/BlockingJob.h"     // for BlockingJob
@@ -133,6 +136,36 @@ auto SaveJob::save() -> bool {
     h.saveTo(target, this->control);
     doc->setFilepath(target);
     doc->unlock();
+
+    /*
+        Codice nuovo
+    */
+
+    // Leggi XML dal file .xopp
+    GzInputStream in(target);
+    std::string xml = in.readAll();
+
+    if (xml.empty()) {
+        std::cerr << "Errore: " << in.getLastError() << "\n";
+        return 1;
+    }
+
+    // Genera cartella temporanea con codice random
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dist(0, 9999);
+    int code = dist(gen);
+
+    fs::path tempDir = fs::temp_directory_path() / ("Xournal-" + std::to_string(code));
+    fs::create_directories(tempDir);
+
+    // Scrivi l'XML in un file dentro la cartella
+    fs::path xmlFile = tempDir / "document.xml";
+    std::ofstream out(xmlFile);
+    out << xml;
+    out.close();
+
+    std::cout << "Estratto XML in: " << xmlFile << "\n";
 
     if (!h.getErrorMessage().empty()) {
         this->lastError = FS(_F("Save file error: {1}") % h.getErrorMessage());

@@ -163,6 +163,7 @@ void UndoRedoHandler::addUndoAction(UndoActionPtr action) {
     this->undoList.emplace_back(std::move(action));
     clearRedo();
     fireUpdateUndoRedoButtons(this->undoList.back()->getPages());
+    this->pagesChanged.emplace_back(Control::getCurrentPageNo());
 
     printContents();
 }
