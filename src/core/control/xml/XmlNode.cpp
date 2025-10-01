@@ -43,10 +43,6 @@ void XmlNode::setAttrib(const char* attrib, std::vector<double> values) {
     putAttrib(new DoubleArrayAttribute(attrib, std::move(values)));
 }
 
-/*
-    Individua le pagine giuste da scrivere ma ne scrive altre
-*/
-
 void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
    
     auto pagesToWrite = UndoRedoHandler::pagesChanged;
@@ -72,12 +68,16 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
             }
         }
 
+        // Il maxState è buggato perché la barra di caricamento sta sempre al massimo
+        // Prende solo le pagine da scrivere in considerazione, non so se è un buon metodo
         if (listener) {
             size_t maxState = isFilteringPages ? pagesToWrite.size() : children.size();
             listener->setMaximumState(maxState);
+
+            g_warning("XmlNode::writeOut: Setting maximum state to %zu", maxState);
         }
 
-        size_t progressCounter = 1;
+        //size_t progressCounter = 1;
         size_t pageNumber = 0;  // Contatore per le VERE pagine (tag == "page")
    
         for (size_t i = 0; i < children.size(); i++) {
@@ -104,9 +104,8 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
                 children[i]->writeOut(out);
                 
                 if (listener) {
-                    listener->setCurrentState(progressCounter);
+                    listener->setCurrentState(pageNumber);
                 }
-                progressCounter++;
             }
         }
 

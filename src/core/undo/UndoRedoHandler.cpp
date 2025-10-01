@@ -18,7 +18,8 @@
 
 using std::string;
 
-std::vector<int> UndoRedoHandler::pagesChanged;
+std::deque<int> UndoRedoHandler::pagesChanged; // undoList
+std::deque<int> UndoRedoHandler::pagesChangedUndo; // redoList
 
 template <typename T>
 T* GetPtr(T* ptr) {
@@ -82,6 +83,9 @@ void UndoRedoHandler::clearContents() {
     undoList.clear();
     clearRedo();
 
+    pagesChanged.clear();
+    pagesChangedUndo.clear();
+
     this->savedUndo = nullptr;
     this->autosavedUndo = nullptr;
 
@@ -108,6 +112,8 @@ void UndoRedoHandler::undo() {
     auto& undoAction = *this->undoList.back();
     this->redoList.emplace_back(std::move(this->undoList.back()));
     this->undoList.pop_back();
+
+    this->pagesChangedUndo.emplace_back(this->pagesChanged.back());
     this->pagesChanged.pop_back();
 
     bool undoResult = undoAction.undo(this->control);
@@ -143,6 +149,9 @@ void UndoRedoHandler::redo() {
 
     this->undoList.emplace_back(std::move(this->redoList.back()));
     this->redoList.pop_back();
+
+    this->pagesChanged.emplace_back(this->pagesChangedUndo.back());
+    this->pagesChangedUndo.pop_back();
 
     bool redoResult = redoAction.redo(this->control);
 
