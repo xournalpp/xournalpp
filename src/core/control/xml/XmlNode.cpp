@@ -48,9 +48,9 @@ void XmlNode::setAttrib(const char* attrib, std::vector<double> values) {
 */
 
 void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
-    
+   
     auto pagesToWrite = UndoRedoHandler::pagesChanged;
-    
+   
     out->write("<");
     out->write(tag);
 
@@ -63,13 +63,12 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
 
         bool isFilteringPages = (!pagesToWrite.empty() && tag == "xournal");
 
-        // DEBUG: stampa info
         if (isFilteringPages) {
             g_message("=== FILTERING PAGES ===");
-            g_message("Total children (pages): %zu", children.size());
+            g_message("Total children: %zu", children.size());
             g_message("Pages to write (%zu): ", pagesToWrite.size());
             for (const auto& p : pagesToWrite) {
-                g_message("  - Page index: %zu", p);
+                g_message("  - Page number: %zu", p);
             }
         }
 
@@ -79,29 +78,46 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
         }
 
         size_t progressCounter = 1;
-    
+        size_t pageNumber = 0;  // Contatore per le VERE pagine (tag == "page")
+   
         for (size_t i = 0; i < children.size(); i++) {
+            bool shouldWrite = true;
+            
             if (isFilteringPages) {
-                auto it = std::find(pagesToWrite.begin(), pagesToWrite.end(), i);
-                if (it == pagesToWrite.end()) {
-                    g_message("Skipping page index %zu", i);
-                    continue;
+                // Se questo child è una pagina, controlla se va scritta
+                if (children[i]->tag == "page") {
+                    auto it = std::find(pagesToWrite.begin(), pagesToWrite.end(), pageNumber);
+                    if (it == pagesToWrite.end()) {
+                        g_message("Skipping page %zu (child index %zu)", pageNumber, i);
+                        shouldWrite = false;
+                    } else {
+                        g_message("Writing page %zu (child index %zu)", pageNumber, i);
+                    }
+                    pageNumber++;  // Incrementa solo per i tag <page>
                 } else {
-                    g_message("Writing page index %zu", i);
+                    // Non è una pagina (es: <title>), scrivila sempre
+                    g_message("Writing non-page element: %s (child index %zu)", children[i]->tag.c_str(), i);
                 }
             }
             
-            children[i]->writeOut(out);
-            
-            if (listener) {
-                listener->setCurrentState(progressCounter);
+            if (shouldWrite) {
+                children[i]->writeOut(out);
+                
+                if (listener) {
+                    listener->setCurrentState(progressCounter);
+                }
+                progressCounter++;
             }
-            progressCounter++;
         }
 
         out->write("</");
         out->write(tag);
         out->write(">\n");
+        
+        if (isFilteringPages) {
+            g_message("=== FINISHED WRITING FILTERED PAGES ===");
+            g_message("Total pages found: %zu", pageNumber);
+        }
     }
 }
 

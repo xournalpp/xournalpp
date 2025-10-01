@@ -174,19 +174,19 @@ void UndoRedoHandler::addUndoAction(UndoActionPtr action) {
     clearRedo();
     fireUpdateUndoRedoButtons(this->undoList.back()->getPages());
 
-    bool isInserted = false;
+    int currentPageNo = this->control->getCurrentPageNo();
 
-    for (int page: this->pagesChanged) {
-        if (std::find(this->pagesChanged.begin(), this->pagesChanged.end(), page) != this->pagesChanged.end()) {
-            isInserted = true;
-        }
+    auto it = std::find(this->pagesChanged.begin(), 
+                        this->pagesChanged.end(), 
+                        currentPageNo);
+
+    if (it == this->pagesChanged.end()) {
+        this->pagesChanged.emplace_back(currentPageNo);
+        g_warning("Page number %d INSERITA", currentPageNo); // Messaggio di conferma
+    } else {
+        g_warning("Page number %d GIA' PRESENTE", currentPageNo); // Messaggio di debug
     }
-
-    if (!isInserted)
-        this->pagesChanged.emplace_back(this->control->getCurrentPageNo());
-
-    isInserted = false;
-
+    
     printContents();
 }
 
