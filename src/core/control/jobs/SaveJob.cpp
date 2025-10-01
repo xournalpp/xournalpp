@@ -114,15 +114,74 @@ std::string extractXmlFromXopp(const fs::path& filepath, fs::path tempDir) {
     return xml;
 }
 
+fs::path createTempDir() {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dist(0, 9999);
+    int code = dist(gen);
+
+    fs::path tempDir = fs::temp_directory_path() / ("Xournal-" + std::to_string(code));
+    
+    return tempDir;
+}
+
+void saveFinalFile(const std::string& modifiedXMLStr, const std::string& originalXMLStr, 
+                   const fs::path& target, auto& lastError)
+{
+    pugi::xml_document doc1, doc2;
+
+    if (!doc1.load_string(modifiedXMLStr.c_str())) {
+        lastError = FS(_F("Error saving file, could not parse modified XML"));
+        return;
+    }
+
+    if (!doc2.load_string(originalXMLStr.c_str())) {
+        lastError = FS(_F("Error saving file, could not parse original XML"));
+        return;
+    }
+    
+    pugi::xml_document resultDoc;
+    pugi::xml_node root = resultDoc.append_copy(doc2.document_element());
+
+    int pageIndex = 0;
+    
+    std::vector<std::pair<pugi::xml_node, pugi::xml_node>> replacements;
+    
+    for (pugi::xml_node page : root.children("page")) {
+        if (std::find(UndoRedoHandler::pagesChanged.begin(), 
+                     UndoRedoHandler::pagesChanged.end(), 
+                     pageIndex) != UndoRedoHandler::pagesChanged.end()) {
+            
+            pugi::xpath_node pageDoc1 = doc1.select_node(
+                ("/xournal/page[" + std::to_string(pageIndex + 1) + "]").c_str());
+            
+            if (pageDoc1) {
+                replacements.push_back({page, pageDoc1.node()});
+            }
+        }
+        pageIndex++;
+    }
+    
+    for (auto& [oldPage, newPage] : replacements) {
+        root.insert_copy_before(newPage, oldPage);
+        root.remove_child(oldPage);
+    }
+
+    std::stringstream ss;
+    resultDoc.save(ss, "  ");
+    std::string mergedXml = ss.str();
+    
+    GzOutputStream out(target);
+    out.write(mergedXml.c_str(), mergedXml.length());
+    out.close();
+}
+
 auto SaveJob::save() -> bool {
     updatePreview(control);
     Document* doc = this->control->getDocument();
     SaveHandler h;
 
     long totalTime = 0;
-
-    auto startTotal = std::chrono::high_resolution_clock::now();
-    auto start = std::chrono::high_resolution_clock::now();
 
     doc->lock();
     fs::path target = doc->getFilepath();
@@ -131,23 +190,9 @@ auto SaveJob::save() -> bool {
     h.prepareSave(doc, target);
     doc->unlock();
 
-    auto end = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    fs::path tempDir = createTempDir();
 
-    totalTime += duration.count();
-
-    g_message("Prepare to save %lld ms", duration.count());
-
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> dist(0, 9999);
-    int code = dist(gen);
-
-    start = std::chrono::high_resolution_clock::now();
-
-    fs::path tempDir = fs::temp_directory_path() / ("Xournal-" + std::to_string(code));
-
-    std::string originalDocument = extractXmlFromXopp(target, tempDir);
+    std::string originalXMLStr = extractXmlFromXopp(target, tempDir);
 
     auto const createBackup = doc->shouldCreateBackupOnSave();
 
@@ -166,72 +211,25 @@ auto SaveJob::save() -> bool {
         }
     }
 
-    fs::path xoppModifiedPages = tempDir / "backup.xopp";
+    fs::path xoppFileModifiedOnlyPages = tempDir / "backup.xopp";
 
     /*
         Save modified pages only in xopp format
     */
 
     doc->lock();
-    h.saveTo(xoppModifiedPages, this->control);
+    h.saveTo(xoppFileModifiedOnlyPages, this->control);
     doc->setFilepath(target);
     doc->unlock();
 
-    end = std::chrono::high_resolution_clock::now();
-    duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-
-    totalTime += duration.count();
-    g_message("Salvare solo le pagine modificate %lld ms", duration.count());
-
-    start = std::chrono::high_resolution_clock::now();
-
     /*
-        Extract XML from xoppModifiedPages
+        Extract XML from xoppFileModifiedOnlyPages
     */
 
-    std::string newDocument = extractXmlFromXopp(xoppModifiedPages, tempDir);
+    std::string modifiedXMLStr = extractXmlFromXopp(xoppFileModifiedOnlyPages, tempDir);
 
-    pugi::xml_document doc1, doc2;
+    saveFinalFile(modifiedXMLStr, originalXMLStr, target, this->lastError);
 
-    if (!doc1.load_string(newDocument.c_str())) {
-        std::cerr << "Errore caricamento documento1.xml\n";
-        return -1;
-    }
-    if (!doc2.load_string(originalDocument.c_str())) {
-        std::cerr << "Errore caricamento documento2.xml\n";
-        return -1;
-    }
-    
-    pugi::xml_document resultDoc;
-    pugi::xml_node root = resultDoc.append_copy(doc2.document_element());
-
-    int pageIndex = 0;
-    for (pugi::xml_node page : root.children("page")) {
-        if (std::find(UndoRedoHandler::pagesChanged.begin(), UndoRedoHandler::pagesChanged.end(),  pageIndex) != UndoRedoHandler::pagesChanged.end()) {
-            pugi::xpath_node pageDoc1 = doc1.select_node(("/xournal/page[" + std::to_string(pageIndex + 1) + "]").c_str());
-            if (pageDoc1) {
-                root.insert_copy_before(pageDoc1.node(), page);
-                root.remove_child(page);
-            }
-        }
-        pageIndex++;
-    }
-
-    std::stringstream ss;
-    resultDoc.save(ss, "  ");
-    std::string mergedXml = ss.str();
-    
-    GzOutputStream out(target);
-    out.write(mergedXml.c_str(), mergedXml.length());
-    out.close();
-
-    end = std::chrono::high_resolution_clock::now();
-    duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    totalTime += duration.count();
-    g_message("Salvare il file ultimo %lld ms", duration.count());
-
-    g_message("Total save time %lld ms", totalTime);
-    
     if (!h.getErrorMessage().empty()) {
         this->lastError = FS(_F("Save file error: {1}") % h.getErrorMessage());
         if (!control->getWindow()) {

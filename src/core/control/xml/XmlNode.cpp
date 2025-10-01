@@ -46,7 +46,7 @@ void XmlNode::setAttrib(const char* attrib, std::vector<double> values) {
 void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
    
     auto pagesToWrite = UndoRedoHandler::pagesChanged;
-   
+
     out->write("<");
     out->write(tag);
 
@@ -59,52 +59,51 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
 
         bool isFilteringPages = (!pagesToWrite.empty() && tag == "xournal");
 
-        if (isFilteringPages) {
-            g_message("=== FILTERING PAGES ===");
-            g_message("Total children: %zu", children.size());
-            g_message("Pages to write (%zu): ", pagesToWrite.size());
-            for (const auto& p : pagesToWrite) {
-                g_message("  - Page number: %zu", p);
+        /*
+            if (isFilteringPages) {
+                g_message("=== FILTERING PAGES ===");
+                g_message("Total children: %zu", children.size());
+                g_message("Pages to write (%zu): ", pagesToWrite.size());
+                for (const auto& p : pagesToWrite) {
+                    g_message("  - Page number: %zu", p);
+                }
             }
-        }
-
-        // Il maxState è buggato perché la barra di caricamento sta sempre al massimo
-        // Prende solo le pagine da scrivere in considerazione, non so se è un buon metodo
+        */
         if (listener) {
             size_t maxState = isFilteringPages ? pagesToWrite.size() : children.size();
             listener->setMaximumState(maxState);
-
-            g_warning("XmlNode::writeOut: Setting maximum state to %zu", maxState);
         }
 
-        //size_t progressCounter = 1;
-        size_t pageNumber = 0;  // Contatore per le VERE pagine (tag == "page")
+        size_t pageNumber = 0; 
+        size_t writtenPages = 0;
    
         for (size_t i = 0; i < children.size(); i++) {
             bool shouldWrite = true;
             
-            if (isFilteringPages) {
-                // Se questo child è una pagina, controlla se va scritta
-                if (children[i]->tag == "page") {
-                    auto it = std::find(pagesToWrite.begin(), pagesToWrite.end(), pageNumber);
-                    if (it == pagesToWrite.end()) {
-                        g_message("Skipping page %zu (child index %zu)", pageNumber, i);
-                        shouldWrite = false;
-                    } else {
-                        g_message("Writing page %zu (child index %zu)", pageNumber, i);
-                    }
-                    pageNumber++;  // Incrementa solo per i tag <page>
+            if (isFilteringPages && children[i]->tag == "page") {
+                // Questo è un elemento <page>
+                auto it = std::find(pagesToWrite.begin(), pagesToWrite.end(), pageNumber);
+                
+                if (it == pagesToWrite.end()) {
+                    //g_message("Skipping page %zu (child index %zu)", pageNumber, i);
+                    shouldWrite = false;
                 } else {
-                    // Non è una pagina (es: <title>), scrivila sempre
-                    g_message("Writing non-page element: %s (child index %zu)", children[i]->tag.c_str(), i);
+                    //g_message("Writing page %zu (child index %zu)", pageNumber, i);
+                    shouldWrite = true;
                 }
+                
+                pageNumber++;
+            } else if (isFilteringPages && children[i]->tag != "page") {
+                //g_message("Writing non-page element: %s (child index %zu)", children[i]->tag.c_str(), i);
+                shouldWrite = true;
             }
             
             if (shouldWrite) {
                 children[i]->writeOut(out);
                 
-                if (listener) {
-                    listener->setCurrentState(pageNumber);
+                if (listener && isFilteringPages && children[i]->tag == "page") {
+                    writtenPages++;
+                    listener->setCurrentState(writtenPages);
                 }
             }
         }
@@ -112,11 +111,6 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
         out->write("</");
         out->write(tag);
         out->write(">\n");
-        
-        if (isFilteringPages) {
-            g_message("=== FINISHED WRITING FILTERED PAGES ===");
-            g_message("Total pages found: %zu", pageNumber);
-        }
     }
 }
 

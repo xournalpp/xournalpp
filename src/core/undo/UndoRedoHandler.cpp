@@ -171,6 +171,12 @@ auto UndoRedoHandler::canUndo() -> bool { return !this->undoList.empty(); }
 
 auto UndoRedoHandler::canRedo() -> bool { return !this->redoList.empty(); }
 
+/*
+    When I write between two pages, the action splits into two, as if they were two on two different pages. 
+    That's why it crashes when I undo, because it tries to take FEWER elements than there are undo statements. 
+    The problem is in the page number.
+*/
+
 /**
  * Adds an undo Action to the list, or if nullptr does nothing
  */
@@ -191,9 +197,9 @@ void UndoRedoHandler::addUndoAction(UndoActionPtr action) {
 
     if (it == this->pagesChanged.end()) {
         this->pagesChanged.emplace_back(currentPageNo);
-        g_warning("Page number %d INSERITA", currentPageNo); // Messaggio di conferma
+        g_warning("Page number %d inserted", currentPageNo);
     } else {
-        g_warning("Page number %d GIA' PRESENTE", currentPageNo); // Messaggio di debug
+        g_warning("Page number %d already here", currentPageNo); 
     }
     
     printContents();
