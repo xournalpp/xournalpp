@@ -23,6 +23,7 @@ namespace view {
 enum NonAudioTreatment : bool { FADE_OUT_NON_AUDIO_ = true, NORMAL_NON_AUDIO = false };
 enum EditionTreatment : bool { SHOW_CURRENT_EDITING = true, HIDE_CURRENT_EDITING = false };
 enum ColorTreatment : bool { COLORBLIND = true, NORMAL_COLOR = false };
+enum ExecutionPolicy { SEQUENCIAL, PARALLEL };
 
 class Context {
 public:
@@ -30,9 +31,14 @@ public:
     NonAudioTreatment fadeOutNonAudio;
     EditionTreatment showCurrentEdition;
     ColorTreatment noColor;
+    ExecutionPolicy executionPolicy;  ///< If PARALLEL, make sure no shared data is modified (e.g. in PDF rendering)
 
-    static Context createDefault(cairo_t* cr) { return {cr, NORMAL_NON_AUDIO, HIDE_CURRENT_EDITING, NORMAL_COLOR}; }
-    static Context createColorBlind(cairo_t* cr) { return {cr, NORMAL_NON_AUDIO, HIDE_CURRENT_EDITING, COLORBLIND}; }
+    static Context createDefault(cairo_t* cr) {
+        return {cr, NORMAL_NON_AUDIO, HIDE_CURRENT_EDITING, NORMAL_COLOR, SEQUENCIAL};
+    }
+    static Context createColorBlind(cairo_t* cr) {
+        return {cr, NORMAL_NON_AUDIO, HIDE_CURRENT_EDITING, COLORBLIND, SEQUENCIAL};
+    }
 };
 
 class ElementView {

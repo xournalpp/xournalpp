@@ -40,10 +40,9 @@ private:
     void repaintPage() const;
 
     void repaintPageArea(double x1, double y1, double x2, double y2) const;
+    void repaintTile(const xoj::util::Rectangle<int>& area) const;
 
     void rerenderRectangle(xoj::util::Rectangle<double> const& rect);
-
-    void renderToBuffer(cairo_t* cr) const;
 
 private:
     XojPageView* view;
