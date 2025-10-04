@@ -273,9 +273,13 @@ The Flatpak manifest can be found at the [Xournal++ Flatpak packaging
 repository](https://github.com/flathub/com.github.xournalpp.xournalpp), and all
 Flatpak-related packaging issues should be reported there.
 
-### Android and Chrome OS
+### Android
 
 Android is supported by Xournal++ Mobile. It can be downloaded either on the [Tags page](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile/-/tags) or [from Google Play](https://play.google.com/store/apps/details?id=online.xournal.mobile).
+
+### Chrome OS
+
+You can either enable Android app support and install Xournal++ Mobile [android app](https://github.com/xournalpp/xournalpp?tab=readme-ov-file#android), or, you can enable the linux container, and install the [Debian package](https://github.com/xournalpp/xournalpp?tab=readme-ov-file#debian) from the official Debian repositories.
 
 ### iOS
 
