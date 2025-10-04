@@ -30,6 +30,24 @@ public:
     virtual void close() = 0;
 };
 
+class InputStream {
+public:
+    virtual ~InputStream();
+    virtual std::string readAll() = 0;
+};
+
+class GzInputStream : public InputStream {
+    gzFile fp;
+    std::string error;
+public:
+    explicit GzInputStream(const fs::path& file);
+    ~GzInputStream() override;
+
+    std::string readAll() override;
+
+    std::string getLastError() const { return error; }
+};
+
 class GzOutputStream: public OutputStream {
 public:
     GzOutputStream(fs::path file);

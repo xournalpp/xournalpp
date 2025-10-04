@@ -1,9 +1,12 @@
 #include "SaveJob.h"
+#include "util/OutputStream.h"
 
 #include <memory>  // for __shared_ptr_access
 
 #include <cairo.h>  // for cairo_create, cairo_destroy
 #include <glib.h>   // for g_warning, g_error
+#include <random>
+#include <fstream>
 
 #include "control/Control.h"              // for Control
 #include "control/jobs/BlockingJob.h"     // for BlockingJob
@@ -17,7 +20,8 @@
 #include "util/XojMsgBox.h"               // for XojMsgBox
 #include "util/i18n.h"                    // for FS, _, _F
 #include "view/DocumentView.h"            // for DocumentView
-
+#include <pugixml.hpp> // Da aggiungere anche per Unix
+#include "util/OutputStream.h"           // for GzInputStream
 #include "filesystem.h"  // for path, filesystem_error, remove
 
 
@@ -100,10 +104,84 @@ void SaveJob::updatePreview(Control* control) {
     doc->unlock();
 }
 
+std::string extractXmlFromXopp(const fs::path& filepath, fs::path tempDir) {
+    
+    GzInputStream in(filepath);
+
+    fs::create_directories(tempDir);
+    std::string xml = in.readAll();
+
+    return xml;
+}
+
+fs::path createTempDir() {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dist(0, 9999);
+    int code = dist(gen);
+
+    fs::path tempDir = fs::temp_directory_path() / ("Xournal-" + std::to_string(code));
+    
+    return tempDir;
+}
+
+void saveFinalFile(const std::string& modifiedXMLStr, const std::string& originalXMLStr, 
+                   const fs::path& target, auto& lastError)
+{
+    pugi::xml_document doc1, doc2;
+
+    if (!doc1.load_string(modifiedXMLStr.c_str())) {
+        lastError = FS(_F("Error saving file, could not parse modified XML"));
+        return;
+    }
+
+    if (!doc2.load_string(originalXMLStr.c_str())) {
+        lastError = FS(_F("Error saving file, could not parse original XML"));
+        return;
+    }
+    
+    pugi::xml_document resultDoc;
+    pugi::xml_node root = resultDoc.append_copy(doc2.document_element());
+
+    int pageIndex = 0;
+    
+    std::vector<std::pair<pugi::xml_node, pugi::xml_node>> replacements;
+    
+    for (pugi::xml_node page : root.children("page")) {
+        if (std::find(UndoRedoHandler::pagesChanged.begin(), 
+                     UndoRedoHandler::pagesChanged.end(), 
+                     pageIndex) != UndoRedoHandler::pagesChanged.end()) {
+            
+            pugi::xpath_node pageDoc1 = doc1.select_node(
+                ("/xournal/page[" + std::to_string(pageIndex + 1) + "]").c_str());
+            
+            if (pageDoc1) {
+                replacements.push_back({page, pageDoc1.node()});
+            }
+        }
+        pageIndex++;
+    }
+    
+    for (auto& [oldPage, newPage] : replacements) {
+        root.insert_copy_before(newPage, oldPage);
+        root.remove_child(oldPage);
+    }
+
+    std::stringstream ss;
+    resultDoc.save(ss, "  ");
+    std::string mergedXml = ss.str();
+    
+    GzOutputStream out(target);
+    out.write(mergedXml.c_str(), mergedXml.length());
+    out.close();
+}
+
 auto SaveJob::save() -> bool {
     updatePreview(control);
     Document* doc = this->control->getDocument();
     SaveHandler h;
+
+    long totalTime = 0;
 
     doc->lock();
     fs::path target = doc->getFilepath();
@@ -111,6 +189,10 @@ auto SaveJob::save() -> bool {
 
     h.prepareSave(doc, target);
     doc->unlock();
+
+    fs::path tempDir = createTempDir();
+
+    std::string originalXMLStr = extractXmlFromXopp(target, tempDir);
 
     auto const createBackup = doc->shouldCreateBackupOnSave();
 
@@ -129,10 +211,24 @@ auto SaveJob::save() -> bool {
         }
     }
 
+    fs::path xoppFileModifiedOnlyPages = tempDir / "backup.xopp";
+
+    /*
+        Save modified pages only in xopp format
+    */
+
     doc->lock();
-    h.saveTo(target, this->control);
+    h.saveTo(xoppFileModifiedOnlyPages, this->control);
     doc->setFilepath(target);
     doc->unlock();
+
+    /*
+        Extract XML from xoppFileModifiedOnlyPages
+    */
+
+    std::string modifiedXMLStr = extractXmlFromXopp(xoppFileModifiedOnlyPages, tempDir);
+
+    saveFinalFile(modifiedXMLStr, originalXMLStr, target, this->lastError);
 
     if (!h.getErrorMessage().empty()) {
         this->lastError = FS(_F("Save file error: {1}") % h.getErrorMessage());
