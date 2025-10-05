@@ -45,7 +45,7 @@
   "windows_targets": {
     "windows": {
       "displayed_name": "Windows x86_64",
-      "runner": "windows-latest",
+      "runner": "windows-2022",
       "msystem": "mingw64",
       "msys_package_env": "x86_64",
       "build_portable": "true",

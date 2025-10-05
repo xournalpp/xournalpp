@@ -363,9 +363,10 @@ void LoadHandler::parseBgPixmap() {
     // in case of a cloned background image, filename is a string representation of the page number from which the image
     // is cloned
 
-    if (!strcmp(domain, "absolute") || (!strcmp(domain, "attach") && this->isGzFile)) {
+    bool attach = !strcmp(domain, "attach");
+    if (!strcmp(domain, "absolute") || (attach && this->isGzFile)) {
         fs::path fileToLoad;
-        if (!strcmp(domain, "attach")) {
+        if (attach) {
             fileToLoad = this->filepath;
             fileToLoad += ".";
             fileToLoad += filepath;
@@ -387,8 +388,9 @@ void LoadHandler::parseBgPixmap() {
             g_error_free(error);
         }
 
+        img.setAttach(attach);
         this->page->setBackgroundImage(img);
-    } else if (!strcmp(domain, "attach")) {
+    } else if (attach) {
         // This is the new zip file attach domain
         const auto readResult = readZipAttachment(filepath);  ///< Do not remove the const qualifier - see below
         if (!readResult) {
@@ -416,6 +418,7 @@ void LoadHandler::parseBgPixmap() {
             g_error_free(error);
         }
 
+        img.setAttach(attach);
         this->page->setBackgroundImage(img);
     } else if (!strcmp(domain, "clone")) {
         gchar* endptr = nullptr;

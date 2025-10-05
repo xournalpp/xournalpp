@@ -111,7 +111,10 @@ auto ObjectInputStream::readString() -> std::string {
     size_t lenString = readType<size_t>();
 
     if (getSize(istream) < lenString) {
-        throw InputStreamException("End reached, but try to read an string", __FILE__, __LINE__);
+        std::ostringstream oss;
+        oss << "End reached: trying to read a string of " << lenString << " bytes while only " << istream.str().size()
+            << " bytes are available";
+        throw InputStreamException(oss.str(), __FILE__, __LINE__);
     }
 
     std::string output;
@@ -129,13 +132,16 @@ auto ObjectInputStream::readImage() -> std::string {
         throw InputStreamException("End reached, but try to read an image's data's length", __FILE__, __LINE__);
     }
 
-    const size_t len = readType<size_t>();
-    if (getSize(istream) < len) {
-        throw InputStreamException("End reached, but try to read an image", __FILE__, __LINE__);
+    const size_t lenString = readType<size_t>();
+    if (getSize(istream) < lenString) {
+        std::ostringstream oss;
+        oss << "End reached: trying to read an image of " << lenString << " bytes while only " << istream.str().size()
+            << " bytes are available";
+        throw InputStreamException(oss.str(), __FILE__, __LINE__);
     }
     std::string data;
-    data.resize(len);
-    istream.read(data.data(), as_signed(len));
+    data.resize(lenString);
+    istream.read(data.data(), as_signed(lenString));
 
     return data;
 }
