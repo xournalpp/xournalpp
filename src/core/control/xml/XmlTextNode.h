@@ -19,8 +19,8 @@ class OutputStream;
 
 class XmlTextNode: public XmlAudioNode {
 public:
-    XmlTextNode(const std::string_view tag, std::string text);
-    explicit XmlTextNode(const std::string_view tag);
+    XmlTextNode(StringUtils::StaticStringView tag, std::string text);
+    explicit XmlTextNode(StringUtils::StaticStringView tag);
     ~XmlTextNode() override = default;
 
 public:
