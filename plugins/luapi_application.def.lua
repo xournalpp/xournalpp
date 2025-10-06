@@ -953,14 +953,43 @@ function app.registerPlaceholder(id, description) end
 --- Updates the toolbar placeholder with the given value.
 function app.setPlaceholderValue(id, value) end
 
+--- Get list of available font families on the system
+--- 
+--- @return table: A table containing:
+---                - families: array of font family names
+---                - current: index of the currently selected font (or nil if not found)
+--- 
+--- Example:
+---   local fonts = app.getFonts()
+---   for i, family in ipairs(fonts.families) do
+---       print(i, family)
+---   end
+---   print("Current font index:", fonts.current)
+function app.getFonts() end
+
+--- Get the current font for text tool
+--- 
+--- @return table: A table with 'name' and 'size' fields representing the current font
+--- 
+--- Example:
+---   local font = app.getFont()
+---   print(font.name)  -- "Arial"
+---   print(font.size)  -- 12
+function app.getFont() end
+
 --- Set the current font for text tool
 --- 
 --- @param font string|table: Either a Pango-style font description string (e.g., "Arial 12")
----                           or a table with 'name' and 'size' fields
+---                           or a table with 'name' and/or 'size' fields
+--- 
+--- The font family name is validated against the system's available fonts.
+--- If the font is not available, an error is raised.
 --- 
 --- Examples:
 ---   app.setFont("Arial 12")
 ---   app.setFont({name = "Arial", size = 12})
+---   app.setFont({name = "Arial"})  -- Only change font name
+---   app.setFont({size = 14})       -- Only change font size
 function app.setFont(font) end
 
 ---@alias Action
