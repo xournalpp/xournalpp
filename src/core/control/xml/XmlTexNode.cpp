@@ -4,8 +4,10 @@
 
 #include "control/xml/XmlNode.h"  // for XmlNode
 #include "util/OutputStream.h"    // for OutputStream
+#include "util/StringUtils.h"     // for StaticStringView
 
-XmlTexNode::XmlTexNode(const std::string_view tag, std::string&& binaryData): XmlNode(tag), binaryData(binaryData) {}
+XmlTexNode::XmlTexNode(StringUtils::StaticStringView tag, std::string&& binaryData):
+        XmlNode(tag), binaryData(binaryData) {}
 
 XmlTexNode::~XmlTexNode() = default;
 
