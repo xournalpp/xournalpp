@@ -3,8 +3,9 @@
 #include <utility>  // for move
 
 #include "control/xml/XmlNode.h"  // for XmlNode
+#include "util/StringUtils.h"     // for StaticStringView
 
-XmlAudioNode::XmlAudioNode(const std::string_view tag): XmlNode(tag), audioFilepath{} {}
+XmlAudioNode::XmlAudioNode(StringUtils::StaticStringView tag): XmlNode(tag), audioFilepath{} {}
 
 XmlAudioNode::~XmlAudioNode() = default;
 
