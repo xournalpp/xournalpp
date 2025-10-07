@@ -21,7 +21,7 @@ endif()
 ## Project related Variables
 ## Also update changelog in debian folder!
 project(xournalpp
-        VERSION 1.2.7
+        VERSION 1.2.8
         DESCRIPTION "Xournal++ - Open source hand note-taking program"
         HOMEPAGE_URL "https://xournalpp.github.io/"
         LANGUAGES CXX C)
@@ -35,7 +35,7 @@ set(PROJECT_CONTACT "core.xournalpp@github.com")
 
 ## CMAKE_Variables
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/find" "${PROJECT_SOURCE_DIR}/cmake/include")
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # enable clang tidy to use correct includes
@@ -98,10 +98,6 @@ include(GitRepo)
 
 ## Libraries ##
 ##############################
-# c++17 support
-##############################
-find_package(CXX17 REQUIRED COMPONENTS optional)
-find_package(Filesystem REQUIRED COMPONENTS ghc Final Experimental)
 
 if (NOT CMAKE_BUILD_TYPE STREQUAL "Release")
     include(FetchContent)
@@ -147,8 +143,6 @@ endif (APPLE)
 list(APPEND pkg-module-spec "gthread-2.0 >= 2.4.0")
 list(APPEND pkg-module-spec "libxml-2.0 >= 2.0.0")
 list(APPEND pkg-module-spec "libzip >= 1.0.1")
-list(APPEND pkg-module-spec "portaudiocpp >= 12")
-list(APPEND pkg-module-spec "sndfile >= 1.0.25")
 list(APPEND pkg-module-spec "librsvg-2.0 >= 2.40")
 
 # Profiling
@@ -162,6 +156,14 @@ pkg_check_modules(ExternalModules REQUIRED IMPORTED_TARGET ${pkg-module-spec})
 
 find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
+
+option(ENABLE_AUDIO "Compile with Audio recording/playing support" ON)
+if (ENABLE_AUDIO)
+    message(STATUS "Enable Audio support")
+    pkg_check_modules(ExternalAudioModules REQUIRED IMPORTED_TARGET "portaudiocpp >= 12;sndfile >= 1.0.25")
+else ()
+    message(STATUS "Disable Audio support")
+endif ()
 
 option(ENABLE_QPDF "Compile with QPDF export support" ON)
 if (ENABLE_QPDF)
@@ -227,6 +229,7 @@ target_link_libraries(external_modules INTERFACE
         PkgConfig::ExternalModules
         $<$<TARGET_EXISTS:Lua::lua>:Lua::lua>
         $<$<TARGET_EXISTS:PkgConfig::GtkSourceView>:PkgConfig::GtkSourceView>
+        $<$<TARGET_EXISTS:PkgConfig::ExternalAudioModules>:PkgConfig::ExternalAudioModules>
         $<$<TARGET_EXISTS:X11::Xi>:X11::Xi>
         $<$<TARGET_EXISTS:X11::X11>:X11::X11>
         $<$<TARGET_EXISTS:cpptrace::cpptrace>:cpptrace::cpptrace>
@@ -252,10 +255,6 @@ configure_file(
         src/config-features.h
         ESCAPE_QUOTES @ONLY
 )
-configure_file(
-        src/filesystem.h.in
-        src/filesystem.h
-)
 
 ## Configuration headers and development options ##
 
@@ -268,7 +267,7 @@ option(DEBUG_INPUT "Input debugging, e.g. eraser events etc" OFF)
 option(DEBUG_INPUT_PRINT_ALL_MOTION_EVENTS "Input debugging, print all motion events" OFF)
 option(DEBUG_INPUT_GDK_PRINT_EVENTS "Input debugging, print all GDK events" OFF)
 option(DEBUG_RECOGNIZER "Shape recognizer debug: output score etc" OFF)
-option(DEBUG_SHEDULER "Scheduler debug: show jobs etc" OFF)
+option(DEBUG_SCHEDULER "Scheduler debug: show jobs etc" OFF)
 option(DEBUG_SHOW_ELEMENT_BOUNDS "Draw a surrounding border to all elements" OFF)
 option(DEBUG_SHOW_REPAINT_BOUNDS "Draw a border around all repaint rects" OFF)
 option(DEBUG_SHOW_PAINT_BOUNDS "Draw a border around all painted rects" OFF)
@@ -411,7 +410,6 @@ Configuration:
     X11 support enabled:        ${X11_FOUND}
     GTEST enabled:              ${ENABLE_GTEST}
     GCOV enabled:               ${DEV_ENABLE_GCOV}
-    Filesystem library:         ${CXX_FILESYSTEM_NAMESPACE}
     Profiling enabled:          ${ENABLE_PROFILING}
 ")
 

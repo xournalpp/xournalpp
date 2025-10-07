@@ -5,10 +5,10 @@
 
 #include "control/Control.h"                         // for Control
 #include "control/PageBackgroundChangeController.h"  // for PageBackgroundChangeController
-#include "control/ScrollHandler.h"           // for ScrollHandler
-#include "control/actions/ActionDatabase.h"  // for ActionDatabase
-#include "control/settings/Settings.h"       // for Settings
-#include "gui/GladeGui.h"                    // for GladeGui
+#include "control/ScrollHandler.h"                   // for ScrollHandler
+#include "control/actions/ActionDatabase.h"          // for ActionDatabase
+#include "control/settings/Settings.h"               // for Settings
+#include "gui/GladeGui.h"                            // for GladeGui
 #include "gui/GladeSearchpath.h"
 #include "gui/ToolitemDragDrop.h"  // for ToolitemDragDrop
 #include "gui/menus/popoverMenus/PageTypeSelectionPopover.h"
@@ -32,6 +32,7 @@
 #include "ColorToolItem.h"               // for ColorToolItem
 #include "DrawingTypeComboToolButton.h"  // for DrawingTypeComboToolButton
 #include "FontButton.h"                  // for FontButton
+#include "PluginPlaceholderLabel.h"      // for PluginPlaceholderLabel
 #include "PluginToolButton.h"            // for PluginToolButton
 #include "StylePopoverFactory.h"         // for ToolButtonWithStylePopover
 #include "ToolButton.h"                  // for ToolButton
@@ -205,7 +206,11 @@ tool_item& ToolMenuHandler::emplaceItem(Args&&... args) {
 
 #ifdef ENABLE_PLUGINS
 void ToolMenuHandler::addPluginItem(ToolbarButtonEntry* t) { emplaceItem<PluginToolButton>(t); }
+void ToolMenuHandler::addPluginPlaceholderItem(ToolbarPlaceholderEntry* entry) {
+    emplaceItem<PluginPlaceholderLabel>(entry);
+}
 #endif /* ENABLE_PLUGINS */
+
 
 void ToolMenuHandler::initToolItems() {
     using Cat = AbstractToolItem::Category;

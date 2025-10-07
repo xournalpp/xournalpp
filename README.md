@@ -251,6 +251,14 @@ The latest stable release is available in the main repository:
 sudo eopkg it xournalpp
 ```
 
+
+### Chrome OS
+
+You can [enable the linux container](https://support.google.com/chromebook/answer/9145439?hl=en), and install the [Debian package](https://github.com/xournalpp/xournalpp?tab=readme-ov-file#debian) from the official Debian repositories.
+```sh
+sudo apt install xournalpp
+```
+
 ### Flatpak
 
 The Xournal++ team officially supports a [FlatHub
@@ -273,9 +281,10 @@ The Flatpak manifest can be found at the [Xournal++ Flatpak packaging
 repository](https://github.com/flathub/com.github.xournalpp.xournalpp), and all
 Flatpak-related packaging issues should be reported there.
 
-### Android and Chrome OS
+### Android
 
 Android is supported by Xournal++ Mobile. It can be downloaded either on the [Tags page](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile/-/tags) or [from Google Play](https://play.google.com/store/apps/details?id=online.xournal.mobile).
+
 
 ### iOS
 

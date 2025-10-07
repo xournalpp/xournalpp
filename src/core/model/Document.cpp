@@ -1,11 +1,13 @@
 #include "Document.h"
 
 #include <codecvt>  // for codecvt_utf8_utf16
-#include <ctime>    // for size_t, localtime, strf...
+#include <cstddef>
+#include <ctime>  // for size_t, localtime, strf...
 #include <iomanip>
 #include <memory>
 #include <sstream>
-#include <string>   // for string
+#include <string>  // for string
+#include <string_view>
 #include <utility>  // for move, pair
 
 #include <glib-object.h>  // for g_object_unref, G_TYPE_...
@@ -25,6 +27,7 @@
 #include "util/i18n.h"                        // for FS, _F
 #include "util/raii/GObjectSPtr.h"            // for GObjectSPtr
 #include "util/safe_casts.h"                  // for as_signed
+#include "util/utf8_view.h"                   // for utf8
 
 #include "LinkDestination.h"  // for XojLinkDest, DOCUMENT_L...
 #include "XojPage.h"          // for XojPage
@@ -136,10 +139,36 @@ auto Document::createSaveFoldername(const fs::path& lastSavePath) const -> fs::p
     return lastSavePath;
 }
 
-auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName,
-                                  const std::string& defaultPdfName) const -> fs::path {
+/**
+ * Preprocesses a format string to standardize date/time format specifiers.
+ *
+ * This function is necessary because different systems or libraries may use
+ * non-standard or shorthand format specifiers (e.g., %F, %T, %V) for date/time formatting.
+ * By converting these to widely supported specifiers (e.g., %Y-%m-%d, %H-%M-%S, %U),
+ * it ensures compatibility and consistency across platforms and libraries.
+ *
+ * @param formatStr The input format string to preprocess.
+ * @return The processed format string with standardized specifiers.
+ */
+static std::u8string preprocessFormatString(std::u8string formatStr) {
+    auto replace = [&formatStr](std::u8string_view pattern, std::u8string_view replacement) {
+        for (size_t pos = formatStr.find(pattern); pos != std::string::npos;
+             pos = formatStr.find(pattern, pos + replacement.length())) {
+            formatStr.replace(pos, pattern.length(), replacement);
+        }
+    };
+
+    replace(u8"%F", u8"%Y-%m-%d");
+    replace(u8"%T", u8"%H-%M-%S");
+    replace(u8"%V", u8"%U");
+
+    return formatStr;
+}
+
+auto Document::createSaveFilename(DocumentType type, std::u8string_view defaultSaveName,
+                                  std::u8string_view defaultPdfName) const -> fs::path {
     constexpr static std::wstring_view forbiddenChars = {L"\\/:*?\"<>|"};
-    std::string wildcardString;
+    std::u8string wildcardString;
     if (type != Document::PDF) {
         if (!filepath.empty()) {
             // This can be any extension
@@ -160,10 +189,10 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
                                                                         this->filepath.filename());
     }
 
-    auto format_str = wildcardString.empty() ? defaultSaveName : wildcardString;
+    auto format_str = preprocessFormatString(wildcardString.empty() ? defaultSaveName.data() : wildcardString);
 
     std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
-    auto format = converter.from_bytes(format_str);
+    auto format = converter.from_bytes(char_cast(format_str).data());
 
     // Todo (cpp20): use <format>
     std::wostringstream ss;
@@ -178,7 +207,7 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
     }
 
     auto fn2 = converter.to_bytes(filename);
-    auto p = fs::u8path(fn2);
+    auto p = fs::path(xoj::util::utf8(fn2));
 
     Util::clearExtensions(p);
     return p;

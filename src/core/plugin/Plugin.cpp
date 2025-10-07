@@ -17,8 +17,9 @@
 
 #include <utility>  // for move, pair
 
-#include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
-#include "util/i18n.h"                           // for _
+#include "gui/toolbarMenubar/PluginPlaceholderLabel.h"  // for the PlaceholderLabel Plugin
+#include "gui/toolbarMenubar/ToolMenuHandler.h"         // for ToolMenuHandler
+#include "util/i18n.h"                                  // for _
 #include "util/raii/GObjectSPtr.h"
 
 #include "config.h"  // for PROJECT_VERSION
@@ -268,7 +269,8 @@ void Plugin::loadScript() {
         const char* errMsg = lua_tostring(lua.get(), -1);
         XojMsgBox::showPluginMessage(name, errMsg, true);
 
-        g_warning("Could not run plugin Lua file: \"%s\", error: \"%s\"", luafile.string().c_str(), errMsg);
+        g_warning("Could not run plugin Lua file: \"%s\", error: \"%s\"", char_cast(luafile.u8string().c_str()),
+                  errMsg);
         this->valid = false;
         return;
     }
@@ -325,5 +327,41 @@ auto Plugin::isDefaultEnabled() const -> bool { return defaultEnabled; }
 
 auto Plugin::isInInitUi() const -> bool { return inInitUi; }
 auto Plugin::isValid() const -> bool { return valid; }
+
+void Plugin::registerPlaceholders(ToolMenuHandler* toolMenuHandler) {
+    if (toolbarPlaceholderEntries.empty() || !this->enabled) {
+        // No entries - nothing to do
+        return;
+    }
+    for (auto& pair: toolbarPlaceholderEntries) {
+        g_message("Plugin: Adding placeholder to ToolMenuHandler: %s", pair.first.c_str());
+        toolMenuHandler->addPluginPlaceholderItem(pair.second.get());
+    }
+}
+
+void Plugin::registerPlaceholder(const std::string& toolbarId, const std::string& description) {
+    std::string prefixedId = "Plugin::" + toolbarId;
+    if (toolbarPlaceholderEntries.find(prefixedId) == toolbarPlaceholderEntries.end()) {
+        auto entry = std::make_unique<ToolbarPlaceholderEntry>();
+        entry->toolbarId = prefixedId;
+        entry->description = description;
+        entry->value = "";
+        entry->label = nullptr;  // Will be set when toolbar is built
+        toolbarPlaceholderEntries[prefixedId] = std::move(entry);
+    }
+}
+
+void Plugin::setPlaceholderValue(const std::string& toolbarId, const std::string& value) {
+    std::string prefixedId = toolbarId.rfind("Plugin::", 0) == 0 ? toolbarId : "Plugin::" + toolbarId;
+    auto it = toolbarPlaceholderEntries.find(prefixedId);
+    if (it != toolbarPlaceholderEntries.end()) {
+        it->second->value = value;
+        if (it->second->label) {
+            it->second->label->setText(value.empty() ? getDisplayId(it->second->toolbarId) : value);
+        }
+    } else {
+        g_warning("setPlaceholderValue: placeholder id '%s' does not exist", prefixedId.c_str());
+    }
+}
 
 #endif

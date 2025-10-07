@@ -54,7 +54,8 @@ file (GLOB_RECURSE test-units-sources
 
 # Define test-units target
 add_executable (test-units EXCLUDE_FROM_ALL ${test-units-sources})
-target_link_libraries (test-units xoj::core xoj::util std::filesystem gtest)
+target_link_libraries (test-units xoj::core xoj::util gtest)
+target_compile_features(test-units PRIVATE cxx_std_20)
 target_include_directories(test-units PRIVATE "${PROJECT_BINARY_DIR}/test")
 
 ###############################################################################
@@ -68,7 +69,8 @@ file (GLOB_RECURSE test-gtk-sources
 
 # Define test-gtk-integration target
 add_executable (test-gtk-integration EXCLUDE_FROM_ALL ${test-gtk-sources})
-target_link_libraries (test-gtk-integration xoj::core xoj::util std::filesystem gtest_main gtest)
+target_link_libraries (test-gtk-integration xoj::core xoj::util gtest_main gtest)
+target_compile_features(test-gtk-integration PRIVATE cxx_std_20)
 target_include_directories(test-gtk-integration PRIVATE "${PROJECT_BINARY_DIR}/test")
 
 ###############################################################################

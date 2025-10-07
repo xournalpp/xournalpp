@@ -191,3 +191,25 @@ notebook frame>label {
 menubar, toolbar {
     -GtkWidget-window-dragging: false
 }
+
+label.setting-button-indicator {
+    border: 1px solid gray;
+    border-radius: 3px;
+    margin: 1px;
+    padding: 2px;
+}
+
+label.setting-button-indicator.pressed {
+    background-color: red;
+}
+
+label.setting-touch-indicator {
+    border: none;
+    background: radial-gradient(circle at center, alpha(gray,.7) 0%, alpha(gray,.7) 20%, alpha(gray, .1) 60%, alpha(gray, 0.) 100%);
+    border-radius: 50%;
+    margin: 1px;
+    padding: 10px;
+}
+label.setting-touch-indicator.pressed {
+    background: radial-gradient(circle at center, red 0%, red 20%, alpha(red, .1) 60%, alpha(red, 0.) 100%);
+}

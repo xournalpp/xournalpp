@@ -17,6 +17,8 @@
 
 #cmakedefine ENABLE_GTK_SOURCEVIEW
 
+#cmakedefine ENABLE_AUDIO
+
 /* --- Testing features --- */
 
 #cmakedefine ENABLE_QPDF

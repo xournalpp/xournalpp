@@ -113,6 +113,54 @@ function app.openDialog(message, options, cb, error) end
 ---    that receives the mode. This is useful for callback functions that are shared among multiple menu entries.
 function app.registerUi(opts) end
 
+--- *
+--- Change the action's state, triggering callbacks. Actions with state from an enum
+--- (like ToolType, ToolSize, EraserSize, OrderChange) should be accessed via the app.C
+--- table of constants for consistency between different versions of Xournal++
+--- @param action Action
+--- @param state any
+--- 
+--- Example 1: app.changeActionState("select-tool",  app.C.Tool_text)
+--- Example 2: app.changeActionState("set-layout-vertical", false)
+--- Example 3: app.changeActionState("set-columns-or-rows", -3)      # 3 rows
+--- Example 4: app.changeActionState("tool-color", 0xff0000)         # red color
+--- Example 5: app.changeActionState("zoom", 2.25)
+--- Example 6: app.changeActionState("tool-pen-line-style", "cust: 1 5 3 5")
+function app.changeActionState(action, state) end
+
+--- *
+--- Get the action's state. For actions with state from an enum
+--- (like ToolType, ToolSize, EraserSize, OrderChange) the return value should
+--- be compared to the app.C table of constants for consistency between different
+--- versions of Xournal++
+--- @param action Action
+--- 
+--- Example 1: if app.getActionState("select-tool") == app.C.Tool_text then
+---               print("Currently the text tool is selected")
+---            end
+--- Example 2: app.getActionState("set-layout-vertical")    -- whether the layout is vertical or not
+--- Example 3: app.getActionState("set-columns-or-rows")    -- number of columns (positive values) or rows (negative
+--- values) Example 4: app.getActionState("tool-color")             -- current color Example 5:
+--- app.getActionState("zoom")                   -- current zoom value Example 6:
+--- app.getActionState("tool-pen-line-style")    -- current pen line style (as a string)
+function app.getActionState(action) end
+
+--- *
+--- Activate the action, triggering callbacks. Actions with state from an enum
+--- (like ToolType, ToolSize, EraserSize, OrderChange) should be accessed via the app.C
+--- table of constants for consistency between different versions of Xournal++
+--- @param action Action
+--- @param state nil | any
+--- 
+--- Example 1: app.activateAction("arrange-selection-order", app.C.OrderChange.bringForward)
+--- Example 2: app.activateAction("setsquare")
+--- Example 3: app.activateAction("tool-fill")
+function app.activateAction(action, state) end
+
+--- THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_changeActionState or
+--- applib_activateAction instead.
+--- 
+--- @deprecated
 --- Execute an UI action (usually internally called from Toolbar / Menu)
 --- The argument consists of a Lua table with 3 keys: "action", "group" and "enabled"
 --- The key "group" is currently only used for debugging purpose and can safely be omitted.
@@ -127,6 +175,9 @@ function app.registerUi(opts) end
 --- turns off the Ellipse drawing type
 function app.uiAction(opts) end
 
+--- THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_activateAction instead.
+--- 
+--- @deprecated
 --- Execute action from sidebar menu
 --- 
 --- @param action string the desired action
@@ -135,6 +186,9 @@ function app.uiAction(opts) end
 --- moves down the current page or layer, depending on which sidebar tab is selected
 function app.sidebarAction(action) end
 
+--- THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. No substitute needed.
+--- 
+--- @deprecated
 --- Get the index of the currently active sidebar-page.
 --- 
 --- @return integer pageNr pageNr of the sidebar page
@@ -142,6 +196,9 @@ function app.sidebarAction(action) end
 --- Example: app.getSidebarPageNo() -- returns e.g. 1
 function app.getSidebarPageNo() end
 
+--- THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. No substitute needed.
+--- 
+--- @deprecated
 --- Set the currently active sidebar-page by its index.
 --- 
 --- @param pageNr integer pageNr of the sidebar page
@@ -152,6 +209,9 @@ function app.getSidebarPageNo() end
 --- Example: app.setSidebarPageNo(3) -- sets the sidebar-page to preview Layer
 function app.setSidebarPageNo(pageNr) end
 
+--- THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_activateAction instead.
+--- 
+--- @deprecated
 --- Execute action from layer controller
 --- 
 --- @param action string the desired action
@@ -873,3 +933,180 @@ function app.clearSelection() end
 --- 
 function app.addToSelection(refs) end
 
+--- Registers a new placeholder label for the toolbar.
+--- 
+--- @param id string: The placeholder ID (must be unique for each placeholder)
+--- @param description string: The label description shown in the toolbar
+--- 
+--- Example:
+---   app.registerPlaceholder("vi-mode", "Current mode")
+--- 
+--- The placeholder can then be updated with app.setPlaceholderValue(id, value).
+function app.registerPlaceholder(id, description) end
+
+--- Set the value of a plugin placeholder label in the toolbar.
+--- 
+--- @param id string: The placeholder ID
+--- @param value string: The value to display
+--- 
+--- Example: app.setPlaceholderValue("vi-mode", "Current mode")
+--- Updates the toolbar placeholder with the given value.
+function app.setPlaceholderValue(id, value) end
+
+---@alias Action
+---| "new-file"
+---| "open"
+---| "annotate-pdf"
+---| "save"
+---| "save-as"
+---| "export-as-pdf"
+---| "export-as"
+---| "print"
+---| "quit"
+---| "arrange-selection-order"
+---| "undo"
+---| "redo"
+---| "cut"
+---| "copy"
+---| "paste"
+---| "search"
+---| "select-all"
+---| "delete"
+---| "move-selection-layer-up"
+---| "move-selection-layer-down"
+---| "rotation-snapping"
+---| "grid-snapping"
+---| "preferences"
+---| "paired-pages-mode"
+---| "paired-pages-offset"
+---| "presentation-mode"
+---| "fullscreen"
+---| "show-sidebar"
+---| "show-toolbar"
+---| "set-layout-vertical"
+---| "set-layout-right-to-left"
+---| "set-layout-bottom-to-top"
+---| "set-columns-or-rows"
+---| "manage-toolbar"
+---| "customize-toolbar"
+---| "show-menubar"
+---| "zoom-in"
+---| "zoom-out"
+---| "zoom-100"
+---| "zoom-fit"
+---| "zoom"
+---| "goto-first"
+---| "goto-previous"
+---| "goto-page"
+---| "goto-next"
+---| "goto-last"
+---| "goto-next-annotated-page"
+---| "goto-previous-annotated-page"
+---| "new-page-before"
+---| "new-page-after"
+---| "new-page-at-end"
+---| "duplicate-page"
+---| "move-page-towards-beginning"
+---| "move-page-towards-end"
+---| "append-new-pdf-pages"
+---| "configure-page-template"
+---| "delete-page"
+---| "paper-format"
+---| "paper-background-color"
+---| "select-tool"
+---| "select-default-tool"
+---| "tool-draw-shape-recognizer"
+---| "tool-draw-rectangle"
+---| "tool-draw-ellipse"
+---| "tool-draw-arrow"
+---| "tool-draw-double-arrow"
+---| "tool-draw-coordinate-system"
+---| "tool-draw-line"
+---| "tool-draw-spline"
+---| "setsquare"
+---| "compass"
+---| "tool-pen-size"
+---| "tool-pen-line-style"
+---| "tool-pen-fill"
+---| "tool-pen-fill-opacity"
+---| "tool-eraser-size"
+---| "tool-eraser-type"
+---| "tool-highlighter-size"
+---| "tool-highlighter-fill"
+---| "tool-highlighter-fill-opacity"
+---| "tool-select-pdf-text-marker-opacity"
+---| "audio-record"
+---| "audio-pause-playback"
+---| "audio-stop-playback"
+---| "audio-seek-forwards"
+---| "audio-seek-backwards"
+---| "select-font"
+---| "font"
+---| "tex"
+---| "plugin-manager"
+---| "help"
+---| "demo"
+---| "about"
+---| "tool-size"
+---| "tool-fill"
+---| "tool-fill-opacity"
+---| "tool-color"
+---| "select-color"
+---| "layer-show-all"
+---| "layer-hide-all"
+---| "layer-new-above-current"
+---| "layer-new-below-current"
+---| "layer-copy"
+---| "layer-move-up"
+---| "layer-move-down"
+---| "layer-delete"
+---| "layer-merge-down"
+---| "layer-rename"
+---| "layer-goto-next"
+---| "layer-goto-previous"
+---| "layer-goto-top"
+---| "layer-active"
+---| "position-highlighting"
+
+---@enum
+app.C = {
+    ToolSize_veryThin = 0,
+    ToolSize_thin = 1,
+    ToolSize_medium = 2,
+    ToolSize_thick = 3,
+    ToolSize_veryThick = 4,
+    ToolSize_none = 5,
+    Tool_none = 0,
+    Tool_pen = 1,
+    Tool_eraser = 2,
+    Tool_highlighter = 3,
+    Tool_text = 4,
+    Tool_image = 5,
+    Tool_selectRect = 6,
+    Tool_selectRegion = 7,
+    Tool_selectMultiLayerRect = 8,
+    Tool_selectMultiLayerRegion = 9,
+    Tool_selectObject = 10,
+    Tool_playObject = 11,
+    Tool_verticalSpace = 12,
+    Tool_hand = 13,
+    Tool_drawRect = 14,
+    Tool_drawEllipse = 15,
+    Tool_drawArrow = 16,
+    Tool_drawDoubleArrow = 17,
+    Tool_drawCoordinateSystem = 18,
+    Tool_showFloatingToolbox = 19,
+    Tool_drawSpline = 20,
+    Tool_selectPdfTextLinear = 21,
+    Tool_selectPdfTextRect = 22,
+    Tool_laserPointerPen = 23,
+    Tool_laserPointerHighlighter = 24,
+    EraserType_none = 0,
+    EraserType_default = 1,
+    EraserType_whiteout = 2,
+    EraserType_deleteStroke = 3,
+    OrderChange_bringToFront = 0,
+    OrderChange_bringForward = 1,
+    OrderChange_sendBackward = 2,
+    OrderChange_sendToBack = 3,
+}

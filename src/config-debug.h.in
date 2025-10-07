@@ -26,7 +26,7 @@
 /**
  * Scheduler debug: show jobs etc.
  */
-#cmakedefine DEBUG_SHEDULER
+#cmakedefine DEBUG_SCHEDULER
 
 /**
  * Draw a surrounding border to all elements
@@ -47,6 +47,11 @@
  * Draw the mask in StrokeView
  */
 #cmakedefine DEBUG_MASKS
+
+/**
+ * Print info on draw requests and calls
+ */
+#cmakedefine DEBUG_DRAW_WIDGET
 
 /**
  * Show repainted areas when erasing an highlighter stroke

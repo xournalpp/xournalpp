@@ -38,6 +38,7 @@
 #include "util/PathUtil.h"                   // for getConfigFolder, openFil...
 #include "util/PlaceholderString.h"          // for PlaceholderString
 #include "util/Util.h"                       // for execInUiThread
+#include "util/VersionInfo.h"                // for getVersionInfo
 #include "util/XojMsgBox.h"                  // for XojMsgBox
 #include "util/i18n.h"                       // for _, FS, _F
 
@@ -84,9 +85,9 @@ auto migrateSettings() -> MigrateResult {
 
     if (!fs::exists(newConfigPath)) {
         const std::array oldPaths = {
-                Util::getConfigFolder().parent_path() /= "com.github.xournalpp.xournalpp",
-                Util::getConfigFolder().parent_path() /= "com.github.xournalpp.xournalpp.exe",
-                fs::u8path(g_get_home_dir()) /= ".xournalpp",
+                Util::getConfigFolder().parent_path() / "com.github.xournalpp.xournalpp",
+                Util::getConfigFolder().parent_path() / "com.github.xournalpp.xournalpp.exe",
+                Util::GFilename(g_get_home_dir()).toPath().value_or(fs::path()) / ".xournalpp",
         };
         for (auto const& oldPath: oldPaths) {
             if (!fs::is_directory(oldPath)) {
@@ -349,7 +350,7 @@ void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFi
     std::string msg =
             FS(_F("<span foreground='red' size='x-large'>Missing the needed UI file:\n<b>{1}</b></span>\nCould "
                   "not find them at any location.\n  Not relative\n  Not in the Working Path\n  Not in {2}") %
-               relativePathAndFile % Util::getDataPath().string());
+               relativePathAndFile % Util::getDataPath().u8string());
 
     if (!failIfNotFound) {
         msg += _("\n\nWill now attempt to run without this file.");
@@ -470,16 +471,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
 auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gint {
     initCAndCoutLocales();
 
-    auto print_version = [&] {
-        if (!std::string(GIT_COMMIT_ID).empty()) {
-            std::cout << PROJECT_NAME << " " << PROJECT_VERSION << " (" << GIT_COMMIT_ID << ")" << std::endl;
-        } else {
-            std::cout << PROJECT_NAME << " " << PROJECT_VERSION << std::endl;
-        }
-        std::cout << "└──libgtk: " << gtk_get_major_version() << "."  //
-                  << gtk_get_minor_version() << "."                   //
-                  << gtk_get_micro_version() << std::endl;            //
-    };
+    auto print_version = [&] { std::cout << xoj::util::getVersionInfo() << std::endl; };
 
     auto exec_guarded = [&](auto&& fun, auto&& s) {
         try {
@@ -548,7 +540,7 @@ void XournalMain::initLocalisation() {
 #ifdef _WIN32
     wbindtextdomain(GETTEXT_PACKAGE, localeDir.wstring().c_str());
 #else
-    bindtextdomain(GETTEXT_PACKAGE, localeDir.u8string().c_str());
+    bindtextdomain(GETTEXT_PACKAGE, char_cast(localeDir.u8string().c_str()));
 #endif
 
     textdomain(GETTEXT_PACKAGE);

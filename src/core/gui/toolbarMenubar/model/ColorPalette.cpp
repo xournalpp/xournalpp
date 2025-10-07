@@ -1,6 +1,7 @@
 #include "ColorPalette.h"
 
 #include <fstream>    // for basic_ifstream, basic_ofstream
+#include <ostream>
 #include <sstream>    // for operator<<, basic_ostream::operator<<
 #include <stdexcept>  // for invalid_argument
 #include <utility>    // for move
@@ -168,12 +169,13 @@ auto operator>>(std::istream& str, Header& header) -> std::istream& {
 
 auto Palette::parseErrorDialog(const std::exception& e) const -> void {
     std::stringstream msg_stream{};
-    msg_stream << "There has been a problem parsing the color palette file at " << filepath.c_str() << "\n\n";
-    msg_stream << "What happened:\n" << e.what() << std::endl;
+    msg_stream << "There has been a problem parsing the color palette file at " << char_cast(filepath.u8string())
+               << "\n\n";
+    msg_stream << "What happened:\n" << e.what() << "\n";
     msg_stream << "What to do:\n";
     msg_stream << "Please fix your palette file, or rename it so xournalpp creates a new default palette file "
                   "for you. This file can then be used as a template.\n";
-    msg_stream << "Until this is fixed, the application will use the default color palette.";
+    msg_stream << "Until this is fixed, the application will use the default color palette." << std::endl;
 
     // Call later, to make sure the main window has been set up, so the popup is displayed in front of it (and modal)
     Util::execInUiThread([msg = msg_stream.str()]() { XojMsgBox::showErrorToUser(nullptr, msg); });

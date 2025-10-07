@@ -12,6 +12,9 @@
 
 #include <string>  // for string
 
+#include "config-features.h"
+
+#ifdef ENABLE_AUDIO
 #include <portaudiocpp/PortAudioCpp.hxx>  // for PaDeviceIndex
 
 
@@ -31,3 +34,4 @@ private:
     const int inputChannels{};
     const int outputChannels{};
 };
+#endif

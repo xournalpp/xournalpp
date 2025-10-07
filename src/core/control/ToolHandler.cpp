@@ -444,7 +444,7 @@ void ToolHandler::saveSettings() const {
             st.setIntHex("color", int(uint32_t(tool->getColor())));
         }
 
-        st.setString("drawingType", drawingTypeToString(tool->getDrawingType()));
+        st.setString("drawingType", drawingTypeToString(tool->getDrawingType()).data());
 
         if (tool->hasCapability(TOOL_CAP_SIZE)) {
             std::string value;
@@ -665,6 +665,8 @@ auto ToolHandler::getButtonTool(Button button) const -> Tool* {
             return this->stylusButton1Tool.get();
         case Button::BUTTON_STYLUS_TWO:
             return this->stylusButton2Tool.get();
+        case Button::BUTTON_MOUSE_LEFT:
+            return this->mouseLeftButtonTool.get();
         case Button::BUTTON_MOUSE_MIDDLE:
             return this->mouseMiddleButtonTool.get();
         case Button::BUTTON_MOUSE_RIGHT:
@@ -687,6 +689,9 @@ void ToolHandler::resetButtonTool(ToolType type, Button button) {
             break;
         case Button::BUTTON_STYLUS_TWO:
             this->stylusButton2Tool.reset(new Tool(tool));
+            break;
+        case Button::BUTTON_MOUSE_LEFT:
+            this->mouseLeftButtonTool.reset(new Tool(tool));
             break;
         case Button::BUTTON_MOUSE_MIDDLE:
             this->mouseMiddleButtonTool.reset(new Tool(tool));

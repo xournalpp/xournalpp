@@ -22,6 +22,7 @@ class Settings;
 
 class InputDevice {
 public:
+    InputDevice();
     explicit InputDevice(GdkDevice* device);
     explicit InputDevice(std::string name, GdkInputSource source);
     ~InputDevice() = default;
@@ -36,7 +37,7 @@ public:
 
 private:
     std::string name;
-    GdkInputSource source;
+    GdkInputSource source{GDK_SOURCE_MOUSE};
 };
 
 namespace DeviceListHelper {

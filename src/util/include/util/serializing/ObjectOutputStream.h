@@ -35,7 +35,7 @@ public:
     void writeDouble(double d);
     void writeSizeT(size_t st);
     void writeString(const char* str);
-    void writeString(const std::string& s);
+    void writeString(std::string_view s);
 
     void writeData(const void* data, size_t len, size_t width);
 

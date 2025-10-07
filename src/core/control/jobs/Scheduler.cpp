@@ -7,9 +7,9 @@
 #include "util/Assert.h"       // for xoj_assert
 #include "util/glib_casts.h"   // for wrap_for_once_v
 
-#include "config-debug.h"  // for DEBUG_SHEDULER
+#include "config-debug.h"  // for DEBUG_SCHEDULER
 
-#ifdef DEBUG_SHEDULER
+#ifdef DEBUG_SCHEDULER
 #define SDEBUG g_message
 #else
 #define SDEBUG(msg, ...)
@@ -28,18 +28,15 @@ Scheduler::Scheduler() {
 Scheduler::~Scheduler() {
     SDEBUG("Destroy scheduler");
 
-    if (this->jobRenderThreadTimerId) {
-        g_source_remove(this->jobRenderThreadTimerId);
-        this->jobRenderThreadTimerId = 0;
+    if (auto id = this->jobRenderThreadTimerId.exchange(0); id != 0) {
+        g_source_remove(id);
     }
 
     stop();
 
     Job* job = nullptr;
-    while ((job = getNextJobUnlocked()) != nullptr) { job->unref(); }
-
-    if (this->blockRenderZoomTime) {
-        g_free(this->blockRenderZoomTime);
+    while ((job = getNextJobUnlocked()) != nullptr) {
+        job->unref();
     }
 }
 
@@ -121,48 +118,16 @@ void Scheduler::unlock() { this->schedulerMutex.unlock(); }
 
 #define ZOOM_WAIT_US_TIMEOUT 300000  // 0.3s
 
-void Scheduler::blockRerenderZoom() {
-    std::lock_guard lock{this->blockRenderMutex};
-
-    if (this->blockRenderZoomTime == nullptr) {
-        this->blockRenderZoomTime = g_new(GTimeVal, 1);
-    }
-
-    g_get_current_time(this->blockRenderZoomTime);
-    g_time_val_add(this->blockRenderZoomTime, ZOOM_WAIT_US_TIMEOUT);
-}
+void Scheduler::blockRerenderZoom() { this->blockRenderZoomTime = g_get_monotonic_time() + ZOOM_WAIT_US_TIMEOUT; }
 
 void Scheduler::unblockRerenderZoom() {
-    {
-        std::lock_guard lock{this->blockRenderMutex};
+    this->blockRenderZoomTime = 0;
 
-        g_free(this->blockRenderZoomTime);
-        this->blockRenderZoomTime = nullptr;
-
-        if (this->jobRenderThreadTimerId) {
-            g_source_remove(this->jobRenderThreadTimerId);
-            this->jobRenderThreadTimerId = 0;
-        }
+    if (auto id = this->jobRenderThreadTimerId.exchange(0); id != 0) {
+        g_source_remove(id);
     }
 
     this->jobQueueCond.notify_all();
-}
-
-/**
- * g_time_val_diff:
- * @t1: time value t1
- * @t2: time value t2
- *
- * Calculates the time difference between t1 and t2 in milliseconds.
- * The result is positive if t1 is later than t2.
- *
- * Returns:
- * Time difference in microseconds
- */
-auto g_time_val_diff(GTimeVal* t1, GTimeVal* t2) -> glong {
-    xoj_assert(t1);
-    xoj_assert(t2);
-    return ((t1->tv_sec - t2->tv_sec) * G_USEC_PER_SEC + (t1->tv_usec - t2->tv_usec)) / 1000;
 }
 
 /**
@@ -171,12 +136,7 @@ auto g_time_val_diff(GTimeVal* t1, GTimeVal* t2) -> glong {
  */
 auto Scheduler::jobRenderThreadTimer(Scheduler* scheduler) -> bool {
     scheduler->jobRenderThreadTimerId = 0;
-
-    {
-        std::lock_guard lock{scheduler->blockRenderMutex};
-        g_free(scheduler->blockRenderZoomTime);
-        scheduler->blockRenderZoomTime = nullptr;
-    }
+    scheduler->blockRenderZoomTime = 0;
 
     scheduler->jobQueueCond.notify_all();
 
@@ -190,18 +150,13 @@ auto Scheduler::jobThreadCallback(Scheduler* scheduler) -> gpointer {
         SDEBUG("Job Thread: Blocked scheduler.");
 
         bool onlyNonRenderJobs = false;
-        glong diff = 1000;
+        gint64 diff = 1000;
         if (scheduler->blockRenderZoomTime) {
-            std::lock_guard lock{scheduler->blockRenderMutex};
             SDEBUG("Zoom re-render blocking.");
 
-            GTimeVal time;
-            g_get_current_time(&time);
-
-            diff = g_time_val_diff(scheduler->blockRenderZoomTime, &time);
+            diff = (scheduler->blockRenderZoomTime - g_get_monotonic_time()) / 1000;
             if (diff <= 0) {
-                g_free(scheduler->blockRenderZoomTime);
-                scheduler->blockRenderZoomTime = nullptr;
+                scheduler->blockRenderZoomTime = 0;
                 SDEBUG("Ended zoom re-render blocking.");
             } else {
                 onlyNonRenderJobs = true;
@@ -228,11 +183,11 @@ auto Scheduler::jobThreadCallback(Scheduler* scheduler) -> gpointer {
                 schedulerLock.unlock();
 
                 if (hasOnlyRenderJobs) {
-                    if (scheduler->jobRenderThreadTimerId) {
-                        g_source_remove(scheduler->jobRenderThreadTimerId);
+                    if (auto id = scheduler->jobRenderThreadTimerId.exchange(g_timeout_add(
+                                static_cast<guint>(diff), xoj::util::wrap_for_once_v<jobRenderThreadTimer>, scheduler));
+                        id != 0) {
+                        g_source_remove(id);
                     }
-                    scheduler->jobRenderThreadTimerId = g_timeout_add(
-                            static_cast<guint>(diff), xoj::util::wrap_for_once_v<jobRenderThreadTimer>, scheduler);
                 }
 
                 scheduler->jobQueueCond.wait(jobLock);

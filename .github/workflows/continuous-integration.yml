@@ -75,6 +75,7 @@ jobs:
         uses: ./.github/actions/build
         with:
           build_type: ${{env.BUILD_TYPE}}
+          extra_cmake_flags: ${{ matrix.run.extra_cmake_flags }}
       - name: 'Build tests'
         id: build-test
         run: |
@@ -113,6 +114,12 @@ jobs:
           sudo locale-gen
           LC_ALL=zh_CN.GB18030 CI=true ./test/test-units
         working-directory: ${{github.workspace}}/build
+      - name: 'Run tests zh_CN.GB18030 G_FILENAME_ENCODING=GB18030' # Test for non-UTF-8 locales
+        if: always() && steps.build-test.outcome == 'success'  # Run the test in every locale even if it failed in another
+        run: |
+          # Omit the tests that actually try to open files with utf8 paths, as the system's filename encoding does not match
+          G_FILENAME_ENCODING=GB18030 LC_ALL=zh_CN.gb18030 CI=true ./test/test-units --gtest_filter=-ControlLoadHandler.testLoadStoreCJK:ControlLoadHandler.testRelativePath
+        working-directory: ${{github.workspace}}/build
       - name: 'Run gtk-integration tests'
         # Todo: Port this to MacOS and Windows
         run: |
@@ -140,6 +147,7 @@ jobs:
         uses: ./.github/actions/build
         with:
           build_type: ${{env.BUILD_TYPE}}
+          extra_cmake_flags: ${{ matrix.run.extra_cmake_flags }}
           shell: msys2 {0}
       - name: 'Build tests'
         shell: msys2 {0}
@@ -168,6 +176,7 @@ jobs:
         uses: ./.github/actions/build
         with:
           build_type: ${{env.BUILD_TYPE}}
+          extra_cmake_flags: ${{ matrix.run.extra_cmake_flags }}
       - name: 'Build tests'
         shell: bash
         run: |

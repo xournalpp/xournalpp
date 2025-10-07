@@ -23,10 +23,10 @@ class Settings;
 class TouchDisableInterface;
 class InputContext;
 
-class HandRecognition {
+class HandRecognition final {
 public:
-    HandRecognition(GtkWidget* widget, InputContext* inputContext, Settings* settings);
-    virtual ~HandRecognition();
+    HandRecognition(InputContext* inputContext);
+    ~HandRecognition();
 
 public:
     /**

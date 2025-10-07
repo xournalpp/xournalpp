@@ -23,14 +23,15 @@
 #include "util/raii/GtkWindowUPtr.h"
 
 #include "ButtonConfigGui.h"
-#include "DeviceClassConfigGui.h"
 #include "LanguageConfigGui.h"
 #include "LatexSettingsPanel.h"
 #include "SettingsDialogPaletteTab.h"
-#include "filesystem.h"  // for path
+#include "config-features.h"  // for ENABLE_AUDIO
+#include "filesystem.h"       // for path
 
 class Control;
 class Settings;
+class DeviceTestingArea;
 
 struct Palette;
 
@@ -38,6 +39,7 @@ class SettingsDialog {
 public:
     SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control,
                    const std::vector<fs::path>& paletteDirectories, std::function<void()> callback);
+    ~SettingsDialog();
 
     inline GtkWindow* getWindow() const { return window.get(); }
 
@@ -82,15 +84,19 @@ private:
     Control* control = nullptr;
     GtkWidget* callib = nullptr;
     int dpi = 72;
+
+#ifdef ENABLE_AUDIO
     std::vector<DeviceInfo> audioInputDevices;
     std::vector<DeviceInfo> audioOutputDevices;
+#endif
 
     Builder builder;
     xoj::util::GtkWindowUPtr window;
 
+    std::unique_ptr<DeviceTestingArea> deviceTestingArea;
+
     LanguageConfigGui languageConfig;
     std::vector<std::unique_ptr<ButtonConfigGui>> buttonConfigs;
-    std::vector<DeviceClassConfigGui> deviceClassConfigs;
 
     LatexSettingsPanel latexPanel;
     SettingsDialogPaletteTab paletteTab;

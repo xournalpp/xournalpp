@@ -39,7 +39,7 @@ void emergencySave() {
     if (!handler.getErrorMessage().empty()) {
         std::cerr << "Error: " << handler.getErrorMessage() << std::endl;
     } else {
-        std::cerr << "Successfully saved document to \"" << filepath.u8string() << "\"" << std::endl;
+        std::cerr << "Successfully saved document to \"" << char_cast(filepath.u8string()) << "\"" << std::endl;
     }
 }
 

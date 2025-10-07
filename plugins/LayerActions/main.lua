@@ -47,17 +47,14 @@ function proceed()
 
   local nextPdfPage = docStructure["pages"][nextPage]["pdfBackgroundPageNo"]
 
-  local sidebarPage = app.getSidebarPageNo()
-  app.setSidebarPageNo(2)
-  app.sidebarAction("COPY");
-  app.setSidebarPageNo(sidebarPage)
+  app.activateAction("duplicate-page")
 
   app.changeBackgroundPdfPageNr(nextPdfPage, false);
   app.refreshPage()
-  app.uiAction({["action"]="ACTION_GOTO_NEXT"})
-  app.uiAction({["action"]="ACTION_DELETE_PAGE"})
+  app.activateAction("goto-next")
+  app.activateAction("delete-page")
   if currentPage < numPages -1 then
-    app.uiAction({["action"]="ACTION_GOTO_BACK"})
+    app.activateAction("goto-previous")
   end
 end
 
@@ -81,8 +78,8 @@ function add()
 
   for i=1, numPages do
     app.setCurrentPage(i)
-    app.layerAction("ACTION_GOTO_TOP_LAYER")
-    app.layerAction("ACTION_NEW_LAYER")
+    app.activateAction("layer-goto-top")
+    app.activateAction("layer-new-above-current")
   end
 
   app.setCurrentPage(page)

@@ -20,10 +20,9 @@
 #include <utility>   // for pair
 #include <vector>    // for vector
 
-#include <gdk/gdk.h>                      // for GdkInputSource, GdkD...
-#include <glib.h>                         // for gchar, gboolean, gint
-#include <libxml/tree.h>                  // for xmlNodePtr, xmlDocPtr
-#include <portaudiocpp/PortAudioCpp.hxx>  // for PaDeviceIndex
+#include <gdk/gdk.h>      // for GdkInputSource, GdkD...
+#include <glib.h>         // for gchar, gboolean, gint
+#include <libxml/tree.h>  // for xmlNodePtr, xmlDocPtr
 
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
 #include "model/Font.h"                          // for XojFont
@@ -33,7 +32,12 @@
 #include "RecolorParameters.h"  // for RecolorParameters
 #include "SettingsEnums.h"      // for InputDeviceTypeOption
 #include "ViewModes.h"          // for ViewModes
+#include "config-features.h"    // for ENABLE_AUDIO
 #include "filesystem.h"         // for path
+
+#ifdef ENABLE_AUDIO
+#include <portaudiocpp/PortAudioCpp.hxx>  // for PaDeviceIndex
+#endif
 
 struct Palette;
 
@@ -360,11 +364,11 @@ public:
     bool isAudioDisabled() const;
     void setAudioDisabled(bool disable);
 
-    std::string const& getDefaultSaveName() const;
-    void setDefaultSaveName(const std::string& name);
+    std::u8string const& getDefaultSaveName() const;
+    void setDefaultSaveName(const std::u8string& name);
 
-    std::string const& getDefaultPdfExportName() const;
-    void setDefaultPdfExportName(const std::string& name);
+    std::u8string const& getDefaultPdfExportName() const;
+    void setDefaultPdfExportName(const std::u8string& name);
 
     ButtonConfig* getButtonConfig(unsigned int id);
 
@@ -407,6 +411,7 @@ public:
     std::string const& getPageTemplate() const;
     void setPageTemplate(const std::string& pageTemplate);
 
+#ifdef ENABLE_AUDIO
     fs::path const& getAudioFolder() const;
     void setAudioFolder(fs::path audioFolder);
 
@@ -426,6 +431,7 @@ public:
 
     unsigned int getDefaultSeekTime() const;
     void setDefaultSeekTime(unsigned int t);
+#endif
 
     std::string const& getPluginEnabled() const;
     void setPluginEnabled(const std::string& pluginEnabled);
@@ -603,6 +609,8 @@ public:
     void transactionEnd();
 
     LatexSettings latexSettings{};
+
+    inline const fs::path& getSettingsFile() const { return filepath; }
 
 private:
     /**
@@ -944,9 +952,9 @@ private:
     /**
      * Default name if you save a new document
      */
-    std::string defaultSaveName;  // should be string - don't change to path
+    std::u8string defaultSaveName;  // should be string - don't change to path
 
-    std::string defaultPdfExportName;
+    std::u8string defaultPdfExportName;
 
     /**
      * The button config
@@ -1050,6 +1058,7 @@ private:
      */
     bool pressureGuessing{};
 
+#ifdef ENABLE_AUDIO
     /**
      * The index of the audio device used for recording
      */
@@ -1074,6 +1083,7 @@ private:
      * The default time by which the playback will seek backwards and forwards
      */
     unsigned int defaultSeekTime{};
+#endif
 
     /**
      * List of enabled plugins (only the one which are not enabled by default)

@@ -79,6 +79,8 @@ InputDeviceClass DeviceListHelper::getSourceMapping(GdkInputSource source, Setti
     return InputDeviceClass::INPUT_DEVICE_IGNORE;
 }
 
+InputDevice::InputDevice() = default;
+
 InputDevice::InputDevice(GdkDevice* device): name(gdk_device_get_name(device)), source(gdk_device_get_source(device)) {}
 
 InputDevice::InputDevice(std::string name, GdkInputSource source): name(std::move(name)), source(source) {}

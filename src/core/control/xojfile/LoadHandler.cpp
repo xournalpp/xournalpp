@@ -29,9 +29,11 @@
 #include "util/GzUtil.h"                       // for GzUtil
 #include "util/LoopUtil.h"
 #include "util/PlaceholderString.h"  // for PlaceholderString
+#include "util/StringUtils.h"        // for char_cast
 #include "util/i18n.h"               // for _F, FC, FS, _
 #include "util/raii/GObjectSPtr.h"
 #include "util/safe_casts.h"  // for as_signed, as_unsigned
+#include "util/utf8_view.h"   // for utf8_view
 
 #include "LoadHandlerHelper.h"  // for getAttrib, getAttribDo...
 
@@ -116,7 +118,7 @@ auto LoadHandler::getMissingPdfFilename() const -> string { return this->pdfMiss
 auto LoadHandler::openFile(fs::path const& filepath) -> bool {
     this->filepath = filepath;
     int zipError = 0;
-    this->zipFp = zip_open(filepath.u8string().c_str(), ZIP_RDONLY, &zipError);
+    this->zipFp = zip_open(char_cast(filepath.u8string().c_str()), ZIP_RDONLY, &zipError);
 
     // Check if the file is actually an old XOPP-File and open it
     if (!this->zipFp && zipError == ZIP_ER_NOZIP) {
@@ -357,13 +359,14 @@ void LoadHandler::parseBgSolid() {
 
 void LoadHandler::parseBgPixmap() {
     const char* domain = LoadHandlerHelper::getAttrib("domain", false, this);
-    const fs::path filepath = fs::u8path(LoadHandlerHelper::getAttrib("filename", false, this));
+    const fs::path filepath = fs::path(xoj::util::utf8(LoadHandlerHelper::getAttrib("filename", false, this)));
     // in case of a cloned background image, filename is a string representation of the page number from which the image
     // is cloned
 
-    if (!strcmp(domain, "absolute") || (!strcmp(domain, "attach") && this->isGzFile)) {
+    bool attach = !strcmp(domain, "attach");
+    if (!strcmp(domain, "absolute") || (attach && this->isGzFile)) {
         fs::path fileToLoad;
-        if (!strcmp(domain, "attach")) {
+        if (attach) {
             fileToLoad = this->filepath;
             fileToLoad += ".";
             fileToLoad += filepath;
@@ -385,8 +388,9 @@ void LoadHandler::parseBgPixmap() {
             g_error_free(error);
         }
 
+        img.setAttach(attach);
         this->page->setBackgroundImage(img);
-    } else if (!strcmp(domain, "attach")) {
+    } else if (attach) {
         // This is the new zip file attach domain
         const auto readResult = readZipAttachment(filepath);  ///< Do not remove the const qualifier - see below
         if (!readResult) {
@@ -410,17 +414,18 @@ void LoadHandler::parseBgPixmap() {
         g_input_stream_close(inputStream.get(), nullptr, nullptr);
 
         if (error) {
-            error("%s", FC(_F("Could not read image: {1}. Error message: {2}") % filepath.string() % error->message));
+            error("%s", FC(_F("Could not read image: {1}. Error message: {2}") % filepath.u8string() % error->message));
             g_error_free(error);
         }
 
+        img.setAttach(attach);
         this->page->setBackgroundImage(img);
     } else if (!strcmp(domain, "clone")) {
         gchar* endptr = nullptr;
         auto const& filename = filepath.u8string();
-        auto nr = static_cast<size_t>(g_ascii_strtoull(filename.c_str(), &endptr, 10));
-        if (endptr == filename.c_str()) {
-            error("%s", FC(_F("Could not read page number for cloned background image: {1}.") % filepath.string()));
+        auto nr = static_cast<size_t>(g_ascii_strtoull(char_cast(filename.c_str()), &endptr, 10));
+        if (endptr == char_cast(filename.c_str())) {
+            error("%s", FC(_F("Could not read page number for cloned background image: {1}.") % filepath.u8string()));
         }
         PageRef p = pages[nr];
 
@@ -446,12 +451,12 @@ void LoadHandler::parseBgPdf() {
 
         const char* domain = LoadHandlerHelper::getAttrib("domain", false, this);
         {
-            const char* sFilename = LoadHandlerHelper::getAttrib("filename", false, this);
-            if (sFilename == nullptr) {
+            const auto* file = LoadHandlerHelper::getAttrib("filename", false, this);
+            if (file == nullptr) {
                 error("PDF Filename missing!");
                 return;
             }
-            pdfFilename = fs::u8path(sFilename);
+            pdfFilename = fs::path(xoj::util::utf8(file));
         }
 
         if (!strcmp("absolute", domain)) {
@@ -498,7 +503,7 @@ void LoadHandler::parseBgPdf() {
             if (attachToDocument) {
                 this->attachedPdfMissing = true;
             } else {
-                this->pdfMissing = pdfFilename.u8string();
+                this->pdfMissing = char_cast(pdfFilename.u8string());
             }
         }
     }
@@ -574,12 +579,13 @@ void LoadHandler::parseStroke() {
     stroke->setColor(color);
 
     /** read stroke timestamps (xopp fileformat) */
-    const char* fn = LoadHandlerHelper::getAttrib("fn", true, this);
-    if (fn != nullptr && strlen(fn) > 0) {
+    const auto* fn = LoadHandlerHelper::getAttrib("fn", true, this);
+    if (fn != nullptr && *fn != '\0') {
+        fs::path p(xoj::util::utf8(fn));
         if (this->isGzFile) {
-            stroke->setAudioFilename(fs::u8path(fn));
+            stroke->setAudioFilename(std::move(p));
         } else {
-            auto tempFile = getTempFileForPath(fn);
+            auto tempFile = getTempFileForPath(p);
             if (!tempFile.empty()) {
                 stroke->setAudioFilename(tempFile);
             }
@@ -668,12 +674,13 @@ void LoadHandler::parseText() {
     LoadHandlerHelper::parseColor(sColor, color, this);
     text->setColor(color);
 
-    const char* fn = LoadHandlerHelper::getAttrib("fn", true, this);
-    if (fn != nullptr && strlen(fn) > 0) {
+    const auto* fn = LoadHandlerHelper::getAttrib("fn", true, this);
+    if (fn != nullptr && *fn != '\0') {
+        fs::path p(xoj::util::utf8(fn));
         if (this->isGzFile) {
-            text->setAudioFilename(fs::u8path(fn));
+            text->setAudioFilename(std::move(p));
         } else {
-            auto tempFile = getTempFileForPath(fn);
+            auto tempFile = getTempFileForPath(p);
             if (!tempFile.empty()) {
                 text->setAudioFilename(tempFile);
             }
@@ -1129,23 +1136,23 @@ auto LoadHandler::loadDocument(fs::path const& filepath) -> std::unique_ptr<Docu
 
 auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::unique_ptr<std::string> {
     zip_stat_t attachmentFileStat;
-    const int statStatus = zip_stat(this->zipFp, filename.u8string().c_str(), 0, &attachmentFileStat);
+    const int statStatus = zip_stat(this->zipFp, char_cast(filename.u8string().c_str()), 0, &attachmentFileStat);
     if (statStatus != 0) {
-        error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename.string() %
+        error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename.u8string() %
                        zip_error_strerror(zip_get_error(this->zipFp))));
         return {};
     }
 
     if (!(attachmentFileStat.valid & ZIP_STAT_SIZE)) {
-        error("%s",
-              FC(_F("Could not open attachment: {1}. Error message: No valid file size provided") % filename.string()));
+        error("%s", FC(_F("Could not open attachment: {1}. Error message: No valid file size provided") %
+                       filename.u8string()));
         return {};
     }
     const zip_uint64_t length = attachmentFileStat.size;
 
-    zip_file_t* attachmentFile = zip_fopen(this->zipFp, filename.u8string().c_str(), 0);
+    zip_file_t* attachmentFile = zip_fopen(this->zipFp, char_cast(filename.u8string().c_str()), 0);
     if (!attachmentFile) {
-        error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename.string() %
+        error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename.u8string() %
                        zip_error_strerror(zip_get_error(this->zipFp))));
         return {};
     }

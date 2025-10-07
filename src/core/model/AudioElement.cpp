@@ -3,6 +3,7 @@
 #include <utility>  // for move
 
 #include "model/Element.h"                        // for Element, ElementType
+#include "util/StringUtils.h"                     // for char_cast
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
@@ -23,7 +24,7 @@ void AudioElement::serialize(ObjectOutputStream& out) const {
 
     this->Element::serialize(out);
 
-    out.writeString(this->audioFilename.u8string());
+    out.writeString(char_cast(this->audioFilename.u8string()));
     out.writeSizeT(this->timestamp);
 
     out.endObject();

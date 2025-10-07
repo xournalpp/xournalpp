@@ -33,7 +33,7 @@ function BeamerClean()
         local prev = struct.pages[p-1].pdfBackgroundPageNo
         if app.getPageLabel(page) == app.getPageLabel(prev) then
             app.setCurrentPage(p)
-            app.uiAction({["action"]="ACTION_DELETE_PAGE"})
+            app.activateAction("delete-page")
         end
     end
 end

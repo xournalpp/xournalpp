@@ -14,6 +14,7 @@
 
 #include "audio/AudioQueue.h"           // for AudioQueue
 #include "control/settings/Settings.h"  // for Settings
+#include "util/StringUtils.h"
 
 #include "SNDFileCpp.h"  // for make_snd_file, xoj
 
@@ -34,8 +35,8 @@ auto VorbisConsumer::start(fs::path const& file) -> bool {
 
     auto sfFile = audio::make_snd_file(file.native(), SFM_WRITE, &sfInfo);
     if (!sfFile) {
-        g_warning("VorbisConsumer: output file \"%s\" could not be opened\ncaused by:%s", file.u8string().c_str(),
-                  sf_strerror(sfFile.get()));
+        g_warning("VorbisConsumer: output file \"%s\" could not be opened\ncaused by:%s",
+                  char_cast(file.u8string().c_str()), sf_strerror(sfFile.get()));
         return false;
     }
 

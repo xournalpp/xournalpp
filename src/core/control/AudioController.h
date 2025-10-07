@@ -11,6 +11,9 @@
 
 #pragma once
 
+#include "config-features.h"  // for ENABLE_AUDIO
+#ifdef ENABLE_AUDIO
+
 #include <cstddef>  // for size_t
 #include <memory>   // for make_unique, unique_ptr
 #include <vector>   // for vector
@@ -64,3 +67,6 @@ private:
     fs::path audioFilename;
     size_t timestamp = 0;
 };
+#else
+class AudioController final {};
+#endif

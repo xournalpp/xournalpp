@@ -18,6 +18,7 @@
 #include "control/actions/ActionProperties.h"
 #include "gui/menus/menubar/Menubar.h"
 #include "util/EnumIndexedArray.h"
+#include "util/StringUtils.h"
 #include "util/raii/GObjectSPtr.h"
 #include "util/raii/GVariantSPtr.h"
 #include "util/safe_casts.h"  // for to_underlying Todo(cpp20) replace with <utility>
@@ -53,7 +54,7 @@ static auto setupImpl(std::index_sequence<As...>) {
 
 static const auto expectedTypes = setupImpl(std::make_index_sequence<xoj::to_underlying(Action::ENUMERATOR_COUNT)>());
 
-void exploreMenu(GMenuModel* m, int lvl = 1) {
+void exploreMenu(GMenuModel* m) {
     int n = g_menu_model_get_n_items(m);
     for (int i = 0; i < n; i++) {
         xoj::util::GVariantSPtr val(g_menu_model_get_item_attribute_value(m, i, "action", nullptr), xoj::util::adopt);
@@ -65,7 +66,6 @@ void exploreMenu(GMenuModel* m, int lvl = 1) {
             EXPECT_TRUE(pos != 0);
             std::string prefix = value.substr(0, pos);
             std::string action = value.substr(pos + 1);
-            std::cout << std::setw(2 * lvl) << lvl << "  " << value << std::endl;
             Action a = Action_fromString(action);
 
             xoj::util::GVariantSPtr target(g_menu_model_get_item_attribute_value(m, i, "target", nullptr),
@@ -80,9 +80,8 @@ void exploreMenu(GMenuModel* m, int lvl = 1) {
         {
             xoj::util::GObjectSPtr<GMenuLinkIter> it(g_menu_model_iterate_item_links(m, i), xoj::util::adopt);
             while (g_menu_link_iter_next(it.get())) {
-                std::cout << std::setw(2 * lvl) << lvl << "  " << g_menu_link_iter_get_name(it.get()) << std::endl;
                 xoj::util::GObjectSPtr<GMenuModel> subm(g_menu_link_iter_get_value(it.get()), xoj::util::adopt);
-                exploreMenu(subm.get(), lvl + 1);
+                exploreMenu(subm.get());
             }
         }
     }
@@ -95,9 +94,9 @@ TEST(ActionDatabaseTest, testActionTargetMatch) {
     GError* error = nullptr;
     auto filepath = fs::path(GET_UI_FOLDER) / MENU_XML_FILE;
 
-    if (!gtk_builder_add_from_file(builder.get(), filepath.u8string().c_str(), &error)) {
+    if (!gtk_builder_add_from_file(builder.get(), char_cast(filepath.u8string().c_str()), &error)) {
         std::string msg = "Error loading menubar XML file ";
-        msg += filepath.u8string();
+        msg.append(char_cast(filepath.u8string()));
 
         if (error != nullptr) {
             msg += "\n";

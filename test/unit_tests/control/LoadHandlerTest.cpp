@@ -12,6 +12,7 @@
 #include <cmath>
 #include <filesystem>
 #include <iostream>
+#include <string_view>
 
 #include <config-test.h>
 #include <gtest/gtest.h>
@@ -26,6 +27,7 @@
 #include "model/Text.h"
 #include "model/XojPage.h"
 #include "util/PathUtil.h"
+#include "util/StringUtils.h"
 
 #include "filesystem.h"
 
@@ -165,7 +167,7 @@ void checkLayer(ConstPageRef page, size_t layerIndex, string expectedText) {
 
 TEST(ControlLoadHandler, testLoad) {
     LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE("test1.xoj"));
+    auto doc = handler.loadDocument(GET_TESTFILE(u8"test1.xoj"));
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
@@ -184,7 +186,7 @@ TEST(ControlLoadHandler, testLoad) {
 
 TEST(ControlLoadHandler, testLoadZipped) {
     LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/test.xopp"));
+    auto doc = handler.loadDocument(GET_TESTFILE(u8"packaged_xopp/test.xopp"));
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
@@ -203,7 +205,7 @@ TEST(ControlLoadHandler, testLoadZipped) {
 
 TEST(ControlLoadHandler, testLoadUnzipped) {
     LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE("test1.unzipped.xoj"));
+    auto doc = handler.loadDocument(GET_TESTFILE(u8"test1.unzipped.xoj"));
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
@@ -222,14 +224,14 @@ TEST(ControlLoadHandler, testLoadUnzipped) {
 
 TEST(ControlLoadHandler, testPages) {
     LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE("load/pages.xoj"));
+    auto doc = handler.loadDocument(GET_TESTFILE(u8"load/pages.xoj"));
 
     EXPECT_EQ((size_t)6, doc->getPageCount());
 }
 
 TEST(ControlLoadHandler, testPagesZipped) {
     LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/pages.xopp"));
+    auto doc = handler.loadDocument(GET_TESTFILE(u8"packaged_xopp/pages.xopp"));
 
     EXPECT_EQ((size_t)6, doc->getPageCount());
 }
@@ -237,7 +239,7 @@ TEST(ControlLoadHandler, testPagesZipped) {
 
 TEST(ControlLoadHandler, testPageType) {
     LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE("load/pages.xoj"));
+    auto doc = handler.loadDocument(GET_TESTFILE(u8"load/pages.xoj"));
 
     EXPECT_EQ((size_t)6, doc->getPageCount());
     checkPageType(doc.get(), 0, "p1", PageType(PageTypeFormat::Plain));
@@ -250,7 +252,7 @@ TEST(ControlLoadHandler, testPageType) {
 
 TEST(ControlLoadHandler, testPageTypeZipped) {
     LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/pages.xopp"));
+    auto doc = handler.loadDocument(GET_TESTFILE(u8"packaged_xopp/pages.xopp"));
 
     EXPECT_EQ((size_t)6, doc->getPageCount());
     checkPageType(doc.get(), 0, "p1", PageType(PageTypeFormat::Plain));
@@ -263,7 +265,7 @@ TEST(ControlLoadHandler, testPageTypeZipped) {
 
 TEST(ControlLoadHandler, testPageTypeFormatCopyFix) {
     LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE("pageTypeFormatCopy.xopp"));
+    auto doc = handler.loadDocument(GET_TESTFILE(u8"pageTypeFormatCopy.xopp"));
 
     EXPECT_EQ((size_t)3, doc->getPageCount());
     checkPageType(doc.get(), 0, "p1", PageType(PageTypeFormat::Lined));
@@ -273,7 +275,7 @@ TEST(ControlLoadHandler, testPageTypeFormatCopyFix) {
 
 TEST(ControlLoadHandler, testLayer) {
     LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE("load/layer.xoj"));
+    auto doc = handler.loadDocument(GET_TESTFILE(u8"load/layer.xoj"));
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
@@ -286,7 +288,7 @@ TEST(ControlLoadHandler, testLayer) {
 
 TEST(ControlLoadHandler, testLayerZipped) {
     LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/layer.xopp"));
+    auto doc = handler.loadDocument(GET_TESTFILE(u8"packaged_xopp/layer.xopp"));
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
@@ -299,7 +301,7 @@ TEST(ControlLoadHandler, testLayerZipped) {
 
 TEST(ControlLoadHandler, testText) {
     LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE("load/text.xml"));
+    auto doc = handler.loadDocument(GET_TESTFILE(u8"load/text.xml"));
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
@@ -330,7 +332,7 @@ TEST(ControlLoadHandler, testText) {
 
 TEST(ControlLoadHandler, testTextZipped) {
     LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/text.xopp"));
+    auto doc = handler.loadDocument(GET_TESTFILE(u8"packaged_xopp/text.xopp"));
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
@@ -361,7 +363,7 @@ TEST(ControlLoadHandler, testTextZipped) {
 
 TEST(ControlLoadHandler, testImageZipped) {
     LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/imgAttachment/new.xopp"));
+    auto doc = handler.loadDocument(GET_TESTFILE(u8"packaged_xopp/imgAttachment/new.xopp"));
 
     EXPECT_EQ(1U, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
@@ -390,7 +392,7 @@ void checkImageFormat(const Image* img, const char* formatName) {
 TEST(ControlLoadHandler, imageLoadJpeg) {
     // check loading of arbitrary image format (up to whatever is supported by GdkPixbuf)
     LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/imgAttachment/doc_with_jpg.xopp"));
+    auto doc = handler.loadDocument(GET_TESTFILE(u8"packaged_xopp/imgAttachment/doc_with_jpg.xopp"));
     ASSERT_TRUE(doc) << "doc should not be null";
     ASSERT_EQ(1U, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
@@ -415,7 +417,7 @@ TEST(ControlLoadHandler, imageSaveJpegBackwardCompat) {
     // save journal containing JPEG image
     {
         LoadHandler handler;
-        auto doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/imgAttachment/doc_with_jpg.xopp"));
+        auto doc = handler.loadDocument(GET_TESTFILE(u8"packaged_xopp/imgAttachment/doc_with_jpg.xopp"));
         ASSERT_TRUE(doc) << "doc with jpeg should not be null";
 
         SaveHandler saver;
@@ -446,7 +448,7 @@ TEST(ControlLoadHandler, linebreaksLatex) {
     // save journal containing latex object with linebreaks.
     {
         LoadHandler handler;
-        auto doc = handler.loadDocument(GET_TESTFILE("load/linebreaksLatex.xopp"));
+        auto doc = handler.loadDocument(GET_TESTFILE(u8"load/linebreaksLatex.xopp"));
         ASSERT_TRUE(doc) << "latex objects with linebreaks";
 
         SaveHandler saver;
@@ -476,18 +478,18 @@ TEST(ControlLoadHandler, linebreaksLatex) {
 }
 
 TEST(ControlLoadHandler, testLoadStoreLoadDefault) {
-    testLoadStoreLoadHelper(GET_TESTFILE("packaged_xopp/suite.xopp"), /*tol=*/1e-8);
+    testLoadStoreLoadHelper(GET_TESTFILE(u8"packaged_xopp/suite.xopp"), /*tol=*/1e-8);
 }
 
 // Backwards compatibility test that checks that full-precision float strings can be loaded.
 // See https://github.com/xournalpp/xournalpp/pull/4065
 TEST(ControlLoadHandler, testLoadStoreLoadFloatBwCompat) {
-    testLoadStoreLoadHelper(GET_TESTFILE("packaged_xopp/suite_float_bw_compat.xopp"), /*tol=*/1e-5);
+    testLoadStoreLoadHelper(GET_TESTFILE(u8"packaged_xopp/suite_float_bw_compat.xopp"), /*tol=*/1e-5);
 }
 
 TEST(ControlLoadHandler, testStrokeWidthRecovery) {
     LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/stroke/width_recovery.xopp"));
+    auto doc = handler.loadDocument(GET_TESTFILE(u8"packaged_xopp/stroke/width_recovery.xopp"));
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
@@ -542,11 +544,11 @@ TEST(ControlLoadHandler, testStrokeWidthRecovery) {
 
 TEST(ControlLoadHandler, testLoadStoreCJK) {
     LoadHandler handler;
-    auto filepath = string(GET_TESTFILE("cjk/测试.xopp"));
-    auto doc = handler.loadDocument(fs::u8path(filepath));
+    auto filepath = std::u8string(GET_TESTFILE(u8"cjk/测试.xopp"));
+    auto doc = handler.loadDocument(fs::path(filepath));
     ASSERT_NE(doc.get(), nullptr);
 
-    EXPECT_STREQ(doc->getPdfFilepath().filename().u8string().c_str(), u8"测试.pdf");
+    EXPECT_EQ(doc->getPdfFilepath().filename().u8string(), std::u8string_view{u8"测试.pdf"});
 
     EXPECT_EQ((size_t)2, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
@@ -557,11 +559,11 @@ TEST(ControlLoadHandler, testLoadStoreCJK) {
     auto elements = layer->getElementsView();
     ASSERT_EQ((size_t)3, layer->getElementsView().size());
 
-    auto check_element = [&](size_t i, const char* answer) {
+    auto check_element = [&](size_t i, const auto* answer) {
         EXPECT_EQ(ELEMENT_TEXT, elements[i]->getType());
         auto* text = dynamic_cast<const Text*>(elements[i]);
         ASSERT_NE(text, nullptr);
-        EXPECT_STREQ(text->getText().c_str(), answer);
+        EXPECT_STREQ(text->getText().c_str(), char_cast(answer));
     };
 
     check_element(0, u8"Test");
@@ -570,21 +572,21 @@ TEST(ControlLoadHandler, testLoadStoreCJK) {
 }
 
 TEST(ControlLoadHandler, testRelativePath) {
-    auto doc = LoadHandler().loadDocument(GET_TESTFILE("load/relativePaths.xopp"));
+    auto doc = LoadHandler().loadDocument(GET_TESTFILE(u8"load/relativePaths.xopp"));
     ASSERT_TRUE(doc) << "Unable to load test file \"load/relativePaths.xopp\"";
     const auto& pdffile = doc->getPdfFilepath();
 
     auto check = [&pdffile](const fs::path& file, Util::PathStorageMode mode) {
         const auto doc = LoadHandler().loadDocument(file);
-        ASSERT_TRUE(doc) << "Unable to load " << file.u8string();
+        ASSERT_TRUE(doc) << "Unable to load " << file.string();
         EXPECT_TRUE(fs::equivalent(doc->getPdfFilepath().lexically_normal(), pdffile.lexically_normal()))
-                << "Paths \"" << doc->getPdfFilepath().u8string() << "\" and \"" << pdffile.u8string()
+                << "Paths \"" << doc->getPdfFilepath().string() << "\" and \"" << pdffile.string()
                 << "\" are not equivalent";
         EXPECT_EQ(doc->getPathStorageMode(), mode);
     };
 
     auto saveReloadTest = [&](const fs::path& dir) {
-        std::cout << "Test saving in " << dir.u8string() << std::endl;
+        std::cout << "Test saving in " << dir.string() << std::endl;
         const fs::path outPath = dir / "xournalpp-test-units_ControlLoaderHandler_testRelativePath.xopp";
         ASSERT_TRUE(!fs::exists(outPath));
 

@@ -16,13 +16,15 @@
 
 #include "model/Image.h"
 
+#include "filesystem.h"
+
 
 TEST(Image, testGetImageApplyOrientation) {
     auto image = Image();
 
     // Image width is 500px and height 130px - but has exif data saying image should be
     // rotated 90 deg CW to have correct orientation.
-    std::ifstream imageFile{GET_TESTFILE("images/r90.jpg"), std::ios::binary};
+    std::ifstream imageFile{fs::path(GET_TESTFILE(u8"images/r90.jpg")), std::ios::binary};
     auto imageData = std::string(std::istreambuf_iterator<char>(imageFile), {});
 
     GdkPixbufLoader* loader = gdk_pixbuf_loader_new();

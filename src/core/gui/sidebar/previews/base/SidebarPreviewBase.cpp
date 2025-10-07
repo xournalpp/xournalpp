@@ -60,7 +60,12 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control, const char* menuId, con
 
 SidebarPreviewBase::~SidebarPreviewBase() { this->control->removeChangedDocumentListener(this); }
 
-void SidebarPreviewBase::enableSidebar() { enabled = true; }
+void SidebarPreviewBase::enableSidebar() {
+    if (!this->enabled) {
+        enabled = true;
+        layout();
+    }
+}
 
 void SidebarPreviewBase::disableSidebar() { enabled = false; }
 
@@ -77,7 +82,11 @@ auto SidebarPreviewBase::getZoom() const -> double { return this->zoom; }
 
 auto SidebarPreviewBase::getCache() -> PdfCache* { return this->cache.get(); }
 
-void SidebarPreviewBase::layout() { SidebarLayout::layout(this); }
+void SidebarPreviewBase::layout() {
+    if (enabled) {
+        SidebarLayout::layout(this);
+    }
+}
 
 auto SidebarPreviewBase::hasData() -> bool { return true; }
 

@@ -16,6 +16,7 @@
 #include "pdf/base/XojPdfPage.h"  // for XojPdfPageSPtr, XojPdfPage
 #include "util/Assert.h"          // for xoj_assert
 #include "util/PathUtil.h"        // for getConfigFile
+#include "util/StringUtils.h"     // for char_cast
 #include "util/XojMsgBox.h"       // for XojMsgBox
 #include "util/i18n.h"            // for _
 #include "util/safe_casts.h"      // for strict_cast
@@ -91,7 +92,7 @@ void PrintHandler::print(Document* doc, size_t currentPage, GtkWindow* parent) {
     auto filepath = Util::getConfigFile(PRINT_CONFIG_FILE);
     if (fs::exists(filepath)) {
         GError* error{};
-        settings = gtk_print_settings_new_from_file(filepath.u8string().c_str(), &error);
+        settings = gtk_print_settings_new_from_file(char_cast(filepath.u8string().c_str()), &error);
         handlePrintError(error, "Loading print settings failed with: %s");
         fs::remove(filepath);
     }
@@ -115,7 +116,7 @@ void PrintHandler::print(Document* doc, size_t currentPage, GtkWindow* parent) {
     if (GTK_PRINT_OPERATION_RESULT_APPLY == res) {
         xoj_assert(!error);
         settings = gtk_print_operation_get_print_settings(op);
-        gtk_print_settings_to_file(settings, filepath.u8string().c_str(), nullptr);
+        gtk_print_settings_to_file(settings, char_cast(filepath.u8string().c_str()), nullptr);
     } else if (GTK_PRINT_OPERATION_RESULT_ERROR == res) {
         xoj_assert(error);
         std::string msg = FS(_F("Running print operation failed with {1}") % error->message);

@@ -16,6 +16,7 @@
 
 #include "model/Document.h"
 #include "model/DocumentHandler.h"
+#include "util/StringUtils.h"
 
 TEST(DocumentName, testUTF8) {
     DocumentHandler dh;
@@ -24,9 +25,9 @@ TEST(DocumentName, testUTF8) {
     bool failed = false;
     auto trything = [&](Document::DocumentType t) {
         try {
-            p = doc.createSaveFilename(t, "%% %Y %EY %B %A", "%{name} %Y %EY %B %A");
-            std::cout << "Resulting path: " << p.u8string() << std::endl;
-            if (!g_utf8_validate(p.u8string().c_str(), -1, nullptr)) {
+            p = doc.createSaveFilename(t, u8"%% %Y %EY %B %A", u8"%{name} %Y %EY %B %A");
+            std::cout << "Resulting path: " << char_cast(p.u8string()) << std::endl;
+            if (!g_utf8_validate(char_cast(p.u8string().c_str()), -1, nullptr)) {
                 failed = true;
                 std::cout << "This path yields an invalid UTF8 string" << std::endl;
             }
@@ -37,7 +38,7 @@ TEST(DocumentName, testUTF8) {
     };
     trything(Document::PDF);
     trything(Document::XOPP);
-    doc.setFilepath(fs::u8path(u8"ùèçüûin/ë€ds测试q.xopp"));
+    doc.setFilepath(fs::path(u8"ùèçüûin/ë€ds测试q.xopp"));
     trything(Document::PDF);
     trything(Document::XOPP);
     if (failed) {

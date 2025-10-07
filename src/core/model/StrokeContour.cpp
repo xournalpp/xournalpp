@@ -1,10 +1,12 @@
 #include "StrokeContour.h"
 
 #include <cmath>
+#include <numeric>
 
 #include "model/MathVect.h"
 #include "model/Point.h"
 #include "util/Assert.h"
+#include "util/safe_casts.h"
 
 static_assert(std::numeric_limits<double>::is_iec559);  // Ensures atan2(0., 0.) does not error
 
@@ -218,13 +220,37 @@ static inline void dashSegment(cairo_t* cr, std::vector<ReturnOp>& ops, double& 
     }
 }
 
-void xoj::view::StrokeContourDashes::addToCairo(cairo_t* cr) const {
-    double dashoffset = 0.;
+double xoj::view::StrokeContourDashes::addToCairo(cairo_t* cr, double globalDashOffset) const {
     std::vector<ReturnOp> ops;
     auto dashIt = dashPattern.begin();
     bool on = true;
 
-    contourStrokeEnd<true>(cr, path.front(), path[1]);
+    double dashoffset = globalDashOffset;
+
+    if (dashoffset != 0.) {
+        // We need to advance dashIt to account for the offset
+
+        double dashPeriod = std::accumulate(dashPattern.begin(), dashPattern.end(), 0.);
+        xoj_assert(dashoffset >= 0.);
+        xoj_assert(dashPeriod >= 0.);
+
+        auto ratio = floor_cast<unsigned>(dashoffset / dashPeriod);
+        dashoffset -= dashPeriod * ratio;
+
+        on = (ratio * dashPattern.size() + 1) % 2;
+
+        while (dashoffset >= *dashIt) {
+            dashoffset -= *dashIt;
+            on = !on;
+            dashIt++;
+            // as dashoffset < dashPeriod, this loop should not consume all of dashPattern
+            xoj_assert(dashIt != dashPattern.end());
+        }
+    }
+
+    if (on) {
+        contourStrokeEnd<true>(cr, path.front(), path[1]);
+    }
 
     for (auto it1 = path.begin(), it2 = it1 + 1, it3 = it2 + 1; it3 != path.end(); it1++, it2++, it3++) {
         const auto& p1 = *it1;
@@ -241,13 +267,17 @@ void xoj::view::StrokeContourDashes::addToCairo(cairo_t* cr) const {
             drawCoupling(cr, ops, p2, std::min(dashoffset, norm1), std::min(*dashIt - dashoffset, v3.norm()), a1,
                          v3.argument(), p1.z);
         }
+
+        globalDashOffset += norm1;
     }
 
     const Point& p1 = path[path.size() - 2];
     const Point& p2 = path.back();
     MathVect2 v(p2, p1);
     double a = v.argument();
-    dashSegment(cr, ops, dashoffset, dashIt, dashPattern, p1, p2, v.norm(), a, on);
+    double norm = v.norm();
+    globalDashOffset += norm;
+    dashSegment(cr, ops, dashoffset, dashIt, dashPattern, p1, p2, norm, a, on);
     if (on) {
         cairo_arc(cr, p2.x, p2.y, .5 * p1.z, a + M_PI_2, a - M_PI_2);
         for (auto it = ops.rbegin(); it < ops.rend(); it++) {
@@ -255,6 +285,7 @@ void xoj::view::StrokeContourDashes::addToCairo(cairo_t* cr) const {
         }
         cairo_close_path(cr);
     }
+    return globalDashOffset;
 }
 
 static void xtraFun(cairo_t* cr) {

@@ -6,6 +6,7 @@
 #include <glib-object.h>  // for g_object_unref
 
 #include "util/Stacktrace.h"  // for Stacktrace
+#include "util/StringUtils.h"
 
 /*
  * The contents of a background image
@@ -18,7 +19,7 @@
 
 struct BackgroundImage::Content {
     Content(fs::path path, GError** error):
-            path(std::move(path)), pixbuf(gdk_pixbuf_new_from_file(this->path.u8string().c_str(), error)) {}
+            path(std::move(path)), pixbuf(gdk_pixbuf_new_from_file(char_cast(this->path.u8string().c_str()), error)) {}
 
     Content(GInputStream* stream, fs::path path, GError** error):
             path(std::move(path)), pixbuf(gdk_pixbuf_new_from_stream(stream, nullptr, error)) {}
@@ -40,16 +41,6 @@ struct BackgroundImage::Content {
     int pageId = -1;
     bool attach = false;
 };
-
-BackgroundImage::BackgroundImage() = default;
-
-BackgroundImage::BackgroundImage(const BackgroundImage& img) = default;
-
-BackgroundImage::BackgroundImage(BackgroundImage&& img) noexcept: img(std::move(img.img)) {}
-
-BackgroundImage::~BackgroundImage() = default;
-
-auto BackgroundImage::operator==(const BackgroundImage& img) -> bool { return this->img == img.img; }
 
 void BackgroundImage::free() { this->img.reset(); }
 

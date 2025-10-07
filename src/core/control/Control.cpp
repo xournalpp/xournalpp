@@ -1,16 +1,15 @@
 #include "Control.h"
 
-#include <algorithm>   // for max
-#include <cstdlib>     // for size_t
-#include <exception>   // for exce...
+#include <algorithm>  // for max
+#include <cstdlib>    // for size_t
+#include <exception>  // for exce...
 #include <functional>  // for bind
 #include <iterator>    // for end
-#include <locale>
-#include <memory>    // for make...
-#include <numeric>   // for accu...
-#include <optional>  // for opti...
-#include <regex>     // for regex
-#include <utility>   // for move
+#include <memory>      // for make...
+#include <optional>    // for opti...
+#include <regex>       // for regex
+#include <string>      // for string
+#include <utility>     // for move
 
 #include "control/AudioController.h"                             // for Audi...
 #include "control/ClipboardHandler.h"                            // for Clip...
@@ -98,6 +97,7 @@
 #include "util/PlaceholderString.h"                              // for Plac...
 #include "util/PopupWindowWrapper.h"                             // for PopupWindowWrapper
 #include "util/Stacktrace.h"                                     // for Stac...
+#include "util/StringUtils.h"                                    // for char_cast
 #include "util/Util.h"                                           // for exec...
 #include "util/XojMsgBox.h"                                      // for XojM...
 #include "util/glib_casts.h"                                     // for wrap_v
@@ -136,8 +136,11 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
 
     this->pageTypes = new PageTypeHandler(gladeSearchPath);
 
-    this->audioController =
-            (disableAudio || this->settings->isAudioDisabled()) ? nullptr : new AudioController(this->settings, this);
+#ifdef ENABLE_AUDIO
+    if (!(disableAudio || this->settings->isAudioDisabled())) {
+        this->audioController = std::make_unique<AudioController>(this->settings, this);
+    }
+#endif
 
     this->scrollHandler = new ScrollHandler(this);
 
@@ -211,8 +214,6 @@ Control::~Control() {
     this->scheduler = nullptr;
     delete this->dragDropHandler;
     this->dragDropHandler = nullptr;
-    delete this->audioController;
-    this->audioController = nullptr;
     delete this->layerController;
     this->layerController = nullptr;
 }
@@ -241,7 +242,7 @@ void Control::deleteLastAutosaveFile() {
             fs::remove(this->lastAutosaveFilename);
         }
     } catch (const fs::filesystem_error& e) {
-        auto fmtstr = FS(_F("Could not remove old autosave file \"{1}\": {2}") % this->lastAutosaveFilename.string() %
+        auto fmtstr = FS(_F("Could not remove old autosave file \"{1}\": {2}") % this->lastAutosaveFilename.u8string() %
                          e.what());
         Util::execInUiThread([fmtstr, win = getGtkWindow()]() { XojMsgBox::showErrorToUser(win, fmtstr); });
     }
@@ -450,7 +451,7 @@ void Control::selectAlpha(OpacityFeature feature) {
             alpha = this->toolHandler->getSelectPDFTextMarkerOpacity();
             break;
         default:
-            g_warning("Unhandled OpacityFeature for selectAlpha event: %s", opacityFeatureToString(feature).c_str());
+            g_warning("Unhandled OpacityFeature for selectAlpha event: %s", opacityFeatureToString(feature).data());
             Stacktrace::printStacktrace();
             break;
     }
@@ -468,7 +469,7 @@ void Control::selectAlpha(OpacityFeature feature) {
                         break;
                     default:
                         g_warning("Unhandled OpacityFeature for callback of SelectOpacityDialog: %s",
-                                  opacityFeatureToString(feature).c_str());
+                                  opacityFeatureToString(feature).data());
                         Stacktrace::printStacktrace();
                         break;
                 }
@@ -489,6 +490,8 @@ void Control::selectAllOnPage() {
         return;
     }
 
+    win->getXournal()->clearSelection();
+
     this->doc->lock();
     XojPageView* view = win->getXournal()->getViewFor(pageNr);
     if (view == nullptr) {
@@ -498,8 +501,6 @@ void Control::selectAllOnPage() {
 
     PageRef page = this->doc->getPage(pageNr);
     Layer* layer = page->getSelectedLayer();
-
-    win->getXournal()->clearSelection();
 
     auto elements = layer->clearNoFree();
     this->doc->unlock();
@@ -1759,7 +1760,7 @@ void Control::promptMissingPdf(Control::MissingPdfData& missingPdf, const fs::pa
     bool proposePdfFile = !missingPdf.wasPdfAttached && !filename.empty() && fs::exists(proposedPdfFilepath) &&
                           !fs::is_directory(proposedPdfFilepath);
     if (proposePdfFile) {
-        msg += FS(_F("\nProposed replacement file: \"{1}\"") % proposedPdfFilepath.string());
+        msg += FS(_F("\nProposed replacement file: \"{1}\"") % proposedPdfFilepath.u8string());
     }
 
     // show the dialog
@@ -1896,7 +1897,7 @@ void Control::unblock() {
 void Control::setMaximumState(size_t max) { this->maxState = max; }
 
 void Control::setCurrentState(size_t state) {
-    Util::execInUiThread([=]() {
+    Util::execInUiThread([state, this]() {
         gtk_progress_bar_set_fraction(this->pgState,
                                       static_cast<gdouble>(state) / static_cast<gdouble>(this->maxState));
     });
@@ -1943,42 +1944,24 @@ void Control::showColorChooserDialog() {
 }
 
 void Control::updateWindowTitle() {
-    string title{};
+    std::string title{};  ///< Actually a UTF-8 string
 
     this->doc->lock();
-    if (doc->getFilepath().empty()) {
-        if (doc->getPdfFilepath().empty()) {
-            title = _("Unsaved Document");
-        } else {
-            if (settings->isPageNumberInTitlebarShown()) {
-                title += ("[" + std::to_string(getCurrentPageNo() + 1) + "/" + std::to_string(doc->getPageCount()) +
-                          "]  ");
-            }
-            if (undoRedo->isChanged()) {
-                title += "*";
-            }
-
-            if (settings->isFilepathInTitlebarShown()) {
-                title += ("[" + doc->getPdfFilepath().parent_path().u8string() + "] - " +
-                          doc->getPdfFilepath().filename().u8string());
-            } else {
-                title += doc->getPdfFilepath().filename().u8string();
-            }
-        }
+    const fs::path& refPath = doc->getFilepath().empty() ? doc->getPdfFilepath() : doc->getFilepath();
+    if (refPath.empty()) {
+        title = _("Unsaved Document");
     } else {
         if (settings->isPageNumberInTitlebarShown()) {
-            title += ("[" + std::to_string(getCurrentPageNo() + 1) + "/" + std::to_string(doc->getPageCount()) + "]  ");
+            title = "[" + std::to_string(getCurrentPageNo() + 1) + "/" + std::to_string(doc->getPageCount()) + "]  ";
         }
         if (undoRedo->isChanged()) {
             title += "*";
         }
 
         if (settings->isFilepathInTitlebarShown()) {
-            title += ("[" + doc->getFilepath().parent_path().u8string() + "] - " +
-                      doc->getFilepath().filename().u8string());
-        } else {
-            title += doc->getFilepath().filename().u8string();
+            title += std::string("[") + char_cast(refPath.parent_path().u8string().c_str()) + "] - ";
         }
+        title += char_cast(refPath.filename().u8string());
     }
     this->doc->unlock();
 
@@ -2074,9 +2057,11 @@ void Control::quit(bool allowCancel) {
                 emergencySave();
             }
         } else {
+#ifdef ENABLE_AUDIO
             if (audioController) {
                 audioController->stopRecording();
             }
+#endif
             this->scheduler->lock();
             this->scheduler->removeAllJobs();
             this->scheduler->unlock();
@@ -2143,8 +2128,9 @@ void Control::closeDocument() {
 }
 
 void Control::initButtonTool() {
-    std::vector<Button> buttons{Button::BUTTON_ERASER,       Button::BUTTON_STYLUS_ONE,  Button::BUTTON_STYLUS_TWO,
-                                Button::BUTTON_MOUSE_MIDDLE, Button::BUTTON_MOUSE_RIGHT, Button::BUTTON_TOUCH};
+    std::vector<Button> buttons{Button::BUTTON_ERASER,     Button::BUTTON_STYLUS_ONE,   Button::BUTTON_STYLUS_TWO,
+                                Button::BUTTON_MOUSE_LEFT, Button::BUTTON_MOUSE_MIDDLE, Button::BUTTON_MOUSE_RIGHT,
+                                Button::BUTTON_TOUCH};
     ButtonConfig* cfg;
     for (auto b: buttons) {
         cfg = settings->getButtonConfig(b);
@@ -2174,7 +2160,7 @@ void Control::showGtkDemo() {
         // Try absolute path for binary
         auto path = Util::getExePath() / binary;
 
-        binary = path.string();
+        binary = Util::toGFilename(path).c_str();
     }
 #endif
     gchar* prog = g_find_program_in_path(binary.c_str());
@@ -2554,7 +2540,7 @@ auto Control::getSidebar() const -> Sidebar* { return this->sidebar; }
 
 auto Control::getSearchBar() const -> SearchBar* { return this->searchBar; }
 
-auto Control::getAudioController() const -> AudioController* { return this->audioController; }
+auto Control::getAudioController() const -> AudioController* { return this->audioController.get(); }
 
 auto Control::getPageTypes() const -> PageTypeHandler* { return this->pageTypes; }
 

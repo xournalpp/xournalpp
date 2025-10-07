@@ -1,8 +1,21 @@
-xournalpp (1.2.7+dev-1) UNRELEASED; urgency=medium
+xournalpp (1.2.8+dev-1) UNRELEASED; urgency=medium
 
   * 
 
- -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Thu, 08 May 2025 15:20:59 +0200
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Mon, 01 Sep 2025 10:40:09 +0200
+
+xournalpp (1.2.8-1) unstable; urgency=medium
+
+  * Improved the behavior of the selection tools
+  * Fixed various visual artifacts
+  * Fixed some behavior of Mouse+Keyboard combo devices
+  * Fixed filename extension stripping
+  * Fixed CLI using relative paths
+  * Fixed various crashes
+  * Made using GtkSourceView and Plugins proper CMake options
+  * Updated translations
+
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Mon, 01 Sep 2025 10:40:09 +0200
 
 xournalpp (1.2.7-1) unstable; urgency=medium
 

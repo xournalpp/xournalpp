@@ -21,6 +21,7 @@
  */
 enum Button {
     BUTTON_ERASER,
+    BUTTON_MOUSE_LEFT,
     BUTTON_MOUSE_MIDDLE,
     BUTTON_MOUSE_RIGHT,
     BUTTON_TOUCH,
@@ -55,6 +56,8 @@ enum class EmptyLastPageAppendType {
 
 /**
  * The user-selectable device types
+ *
+ *  Those values are stored as integers in settings.xml. DO NOT ALTER THE VALUES!
  */
 enum class InputDeviceTypeOption {
     Disabled = 0,
@@ -62,7 +65,7 @@ enum class InputDeviceTypeOption {
     Pen = 2,
     Eraser = 3,
     Touchscreen = 4,
-    MouseKeyboardCombo = 5,
+    MouseKeyboardCombo = 5,  ///< Deprecated
 };
 
 enum StylusCursorType {
@@ -109,6 +112,8 @@ constexpr auto buttonToString(Button button) -> const char* {
     switch (button) {
         case BUTTON_ERASER:
             return "eraser";
+        case BUTTON_MOUSE_LEFT:
+            return "left";
         case BUTTON_MOUSE_MIDDLE:
             return "middle";
         case BUTTON_MOUSE_RIGHT:

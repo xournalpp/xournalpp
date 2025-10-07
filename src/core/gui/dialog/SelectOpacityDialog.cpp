@@ -41,7 +41,7 @@ static inline void buildLabel(Builder& builder, OpacityFeature opacityFeature) {
             opacityFeatureDesc = _("PDF Text Marker");
             break;
         default:
-            g_warning("No opacityFeature description set for '%s'", opacityFeatureToString(opacityFeature).c_str());
+            g_warning("No opacityFeature description set for '%s'", opacityFeatureToString(opacityFeature).data());
             Stacktrace::printStacktrace();
             break;
     }

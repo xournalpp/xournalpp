@@ -183,6 +183,7 @@ void PluginController::registerToolButtons(ToolMenuHandler* toolMenuHandler) {
 #ifdef ENABLE_PLUGINS
     for (auto&& p: this->plugins) {
         p->registerToolButton(toolMenuHandler);
+        p->registerPlaceholders(toolMenuHandler);
     }
 #endif
 }

@@ -47,6 +47,7 @@ pacman -S \
   mingw-w64-x86_64-libzip \
   mingw-w64-x86_64-lua \
   mingw-w64-x86_64-portaudio \
+  mingw-w64-clang-x86_64-gtksourceview4 \
   mingw-w64-x86_64-qpdf
 ```
 

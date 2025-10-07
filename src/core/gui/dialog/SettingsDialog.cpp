@@ -9,7 +9,6 @@
 
 #include "control/AudioController.h"             // for AudioController
 #include "control/Control.h"                     // for Control
-#include "control/DeviceListHelper.h"            // for getDeviceList, Input...
 #include "control/settings/Settings.h"           // for Settings, SElement
 #include "control/settings/SettingsEnums.h"      // for STYLUS_CURSOR_ARROW
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
@@ -29,9 +28,10 @@
 #include "util/i18n.h"                              // for _
 #include "util/raii/CairoWrappers.h"                // for CairoSurfaceSPtr
 #include "util/safe_casts.h"                        // for round_cast
+#include "util/utf8_view.h"                         // for utf8
 
 #include "ButtonConfigGui.h"       // for ButtonConfigGui
-#include "DeviceClassConfigGui.h"  // for DeviceClassConfigGui
+#include "DeviceTestingArea.h"     // for DeviceTestingArea
 #include "LanguageConfigGui.h"     // for LanguageConfigGui
 #include "LatexSettingsPanel.h"    // for LatexSettingsPanel
 #include "filesystem.h"            // for is_directory
@@ -65,19 +65,8 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 
     initMouseButtonEvents(gladeSearchPath);
 
-    vector<InputDevice> deviceList = DeviceListHelper::getDeviceList(this->settings);
     GtkBox* container = GTK_BOX(builder.get("hboxInputDeviceClasses"));
-    for (const InputDevice& inputDevice: deviceList) {
-        // Only add real devices (core pointers have vendor and product id nullptr)
-        this->deviceClassConfigs.emplace_back(gladeSearchPath, container, settings, inputDevice);
-    }
-    if (deviceList.empty()) {
-        GtkWidget* label = gtk_label_new("");
-        gtk_label_set_markup(GTK_LABEL(label),
-                             _("<b>No devices were found. This seems wrong - maybe file a bug report?</b>"));
-        gtk_box_append(GTK_BOX(container), label);
-        gtk_widget_show(label);
-    }
+    deviceTestingArea = std::make_unique<DeviceTestingArea>(gladeSearchPath, container, this->settings);
 
     gtk_box_append(GTK_BOX(builder.get("latexTabBox")), this->latexPanel.getPanel());
     gtk_box_append(GTK_BOX(builder.get("paletteTabBox")), this->paletteTab.getPanel());
@@ -208,6 +197,8 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
     load();
 }
 
+SettingsDialog::~SettingsDialog() = default;
+
 void SettingsDialog::initMouseButtonEvents(GladeSearchpath* gladeSearchPath) {
     auto emplaceButton = [gladeSearchPath, &btns = buttonConfigs, settings = settings, &bld = builder](
                                  const char* hbox, Button button, bool withDevice = false) {
@@ -215,6 +206,7 @@ void SettingsDialog::initMouseButtonEvents(GladeSearchpath* gladeSearchPath) {
                                                             withDevice));
     };
 
+    emplaceButton("hboxLeftMouse", BUTTON_MOUSE_LEFT);
     emplaceButton("hboxMiddleMouse", BUTTON_MOUSE_MIDDLE);
     emplaceButton("hboxRightMouse", BUTTON_MOUSE_RIGHT);
     emplaceButton("hboxEraser", BUTTON_ERASER);
@@ -365,7 +357,6 @@ void SettingsDialog::load() {
     loadCheckbox("cbDisableGtkInertialScroll", !settings->getGtkTouchInertialScrollingEnabled());
     const bool ignoreStylusEventsEnabled = settings->getIgnoredStylusEvents() != 0;  // 0 means disabled, >0 enabled
     loadCheckbox("cbIgnoreFirstStylusEvents", ignoreStylusEventsEnabled);
-    loadCheckbox("cbInputSystemTPCButton", settings->getInputSystemTPCButtonEnabled());
     loadCheckbox("cbInputSystemDrawOutsideWindow", settings->getInputSystemDrawOutsideWindowEnabled());
 
     /**
@@ -410,13 +401,10 @@ void SettingsDialog::load() {
     gtk_combo_box_set_active(cbSidebarNumberingStyle, static_cast<int>(settings->getSidebarNumberingStyle()));
 
     GtkWidget* txtDefaultSaveName = builder.get("txtDefaultSaveName");
-    gtk_editable_set_text(GTK_EDITABLE(txtDefaultSaveName), settings->getDefaultSaveName().c_str());
+    gtk_editable_set_text(GTK_EDITABLE(txtDefaultSaveName), char_cast(settings->getDefaultSaveName().c_str()));
 
     GtkWidget* txtDefaultPdfName = builder.get("txtDefaultPdfName");
-    gtk_editable_set_text(GTK_EDITABLE(txtDefaultPdfName), settings->getDefaultPdfExportName().c_str());
-
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(builder.get("fcAudioPath")),
-                                        Util::toGFilename(settings->getAudioFolder()).c_str());
+    gtk_editable_set_text(GTK_EDITABLE(txtDefaultPdfName), char_cast(settings->getDefaultPdfExportName().c_str()));
 
     GtkWidget* spAutosaveTimeout = builder.get("spAutosaveTimeout");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout), settings->getAutosaveTimeout());
@@ -686,6 +674,9 @@ void SettingsDialog::load() {
     touch.getInt("timeout", timeoutMs);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(builder.get("spTouchDisableTimeout")), timeoutMs / 1000.0);
 
+#ifdef ENABLE_AUDIO
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(builder.get("fcAudioPath")),
+                                        Util::toGFilename(settings->getAudioFolder()).c_str());
     if (this->control->getAudioController()) {
         this->audioInputDevices = this->control->getAudioController()->getInputDevices();
         gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(builder.get("cbAudioInputDevice")), "", "System default");
@@ -732,6 +723,9 @@ void SettingsDialog::load() {
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(builder.get("spAudioGain")), settings->getAudioGain());
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(builder.get("spDefaultSeekTime")), settings->getDefaultSeekTime());
     }
+#else
+    gtk_widget_destroy(builder.get("audioRecordingTabBox"));
+#endif
 
     this->latexPanel.load(settings->latexSettings);
     paletteTab.renderPaletteTab(this->control->getPalette().getFilePath());
@@ -762,7 +756,6 @@ void SettingsDialog::save() {
     settings->setPressureGuessingEnabled(getCheckbox("cbEnablePressureInference"));
     settings->setTouchDrawingEnabled(getCheckbox("cbTouchDrawing"));
     settings->setGtkTouchInertialScrollingEnabled(!getCheckbox("cbDisableGtkInertialScroll"));
-    settings->setInputSystemTPCButtonEnabled(getCheckbox("cbInputSystemTPCButton"));
     settings->setInputSystemDrawOutsideWindowEnabled(getCheckbox("cbInputSystemDrawOutsideWindow"));
     settings->setScrollbarFadeoutDisabled(getCheckbox("cbDisableScrollbarFadeout"));
     settings->setAudioDisabled(getCheckbox("cbDisableAudio"));
@@ -922,15 +915,10 @@ void SettingsDialog::save() {
     settings->setPreloadPagesBefore(preloadPagesBefore);
     settings->setEagerPageCleanup(getCheckbox("cbEagerPageCleanup"));
 
-    settings->setDefaultSaveName(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultSaveName"))));
-    settings->setDefaultPdfExportName(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultPdfName"))));
-
-    auto file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(builder.get("fcAudioPath")));
-    auto path = Util::fromGFile(file);
-    g_object_unref(file);
-    if (fs::is_directory(path)) {
-        settings->setAudioFolder(path);
-    }
+    settings->setDefaultSaveName(
+            xoj::util::utf8(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultSaveName")))).str());
+    settings->setDefaultPdfExportName(
+            xoj::util::utf8(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultPdfName")))).str());
 
     GtkWidget* spAutosaveTimeout = builder.get("spAutosaveTimeout");
     int autosaveTimeout = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutosaveTimeout)));
@@ -1053,6 +1041,14 @@ void SettingsDialog::save() {
     settings->setStrokeRecognizerMinSize(
             static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(builder.get("spStrokeRecognizerMinSize")))));
 
+#ifdef ENABLE_AUDIO
+    auto file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(builder.get("fcAudioPath")));
+    auto path = Util::fromGFile(file);
+    g_object_unref(file);
+    if (fs::is_directory(path)) {
+        settings->setAudioFolder(path);
+    }
+
     size_t selectedInputDeviceIndex =
             static_cast<size_t>(gtk_combo_box_get_active(GTK_COMBO_BOX(builder.get("cbAudioInputDevice"))));
     if (selectedInputDeviceIndex == 0) {
@@ -1088,15 +1084,14 @@ void SettingsDialog::save() {
     settings->setAudioGain(static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(builder.get("spAudioGain")))));
     settings->setDefaultSeekTime(
             static_cast<unsigned int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(builder.get("spDefaultSeekTime")))));
+#endif
 
     const std::optional<std::filesystem::path> selectedPalette = paletteTab.getSelectedPalette();
     if (selectedPalette.has_value()) {
         settings->setColorPaletteSetting(selectedPalette.value());
     }
 
-    for (auto& deviceClassConfigGui: this->deviceClassConfigs) {
-        deviceClassConfigGui.saveSettings();
-    }
+    this->deviceTestingArea->saveSettings();
 
     this->latexPanel.save(settings->latexSettings);
 

@@ -34,6 +34,7 @@
 #include "util/GListView.h"                             // for GListView, GListV...
 #include "util/GtkUtil.h"                               // for getWidgetDPI
 #include "util/PathUtil.h"                              // for getConfigFile
+#include "util/StringUtils.h"                           // for char_cast
 #include "util/Util.h"                                  // for execInUiThread, npos
 #include "util/XojMsgBox.h"                             // for XojMsgBox
 #include "util/glib_casts.h"                            // for wrap_for_once_v
@@ -230,13 +231,13 @@ void MainWindow::updateColorscheme() {
     // Set up icons
     {
         const auto uiPath = this->getGladeSearchPath()->getFirstSearchPath();
-        const auto lightColorIcons = (uiPath / "iconsColor-light").u8string();
-        const auto darkColorIcons = (uiPath / "iconsColor-dark").u8string();
-        const auto lightLucideIcons = (uiPath / "iconsLucide-light").u8string();
-        const auto darkLucideIcons = (uiPath / "iconsLucide-dark").u8string();
+        const auto lightColorIcons = (uiPath / "iconsColor-light");
+        const auto darkColorIcons = (uiPath / "iconsColor-dark");
+        const auto lightLucideIcons = (uiPath / "iconsLucide-light");
+        const auto darkLucideIcons = (uiPath / "iconsLucide-dark");
 
         // icon load order from lowest priority to highest priority
-        std::vector<std::string> iconLoadOrder = {};
+        std::vector<fs::path> iconLoadOrder = {};
         const auto chosenTheme = control->getSettings()->getIconTheme();
         switch (chosenTheme) {
             case ICON_THEME_COLOR:
@@ -256,7 +257,7 @@ void MainWindow::updateColorscheme() {
         }
 
         for (auto& p: iconLoadOrder) {
-            gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), p.c_str());
+            gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), char_cast(p.u8string().c_str()));
         }
     }
 
@@ -307,8 +308,7 @@ void MainWindow::initXournalWidget() {
     control->getZoomControl()->initZoomHandler(this->window, winXournal, xournal.get(), control);
     gtk_widget_show_all(winXournal);
 
-    Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
-    scrollHandling->init(this->xournal->getWidget(), layout);
+    scrollHandling->init(this->xournal->getWidget(), this->xournal->getLayout());
 }
 
 void MainWindow::setGtkTouchscreenScrollingForDeviceMapping() {
@@ -326,7 +326,7 @@ void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
     gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), enabled);
 }
 
-auto MainWindow::getLayout() const -> Layout* { return gtk_xournal_get_layout(this->xournal->getWidget()); }
+auto MainWindow::getLayout() const -> Layout* { return this->xournal->getLayout(); }
 
 auto MainWindow::getNegativeXournalWidgetPos() const -> xoj::util::Point<double> {
     return Util::toWidgetCoords(this->winXournal, xoj::util::Point{0.0, 0.0});
@@ -722,7 +722,7 @@ auto MainWindow::getToolMenuHandler() const -> ToolMenuHandler* { return this->t
 void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename) {
     auto filepath = gladeSearchPath->findFile("", cssFilename);
     xoj::util::GObjectSPtr<GtkCssProvider> provider(gtk_css_provider_new(), xoj::util::adopt);
-    gtk_css_provider_load_from_path(provider.get(), filepath.u8string().c_str(), nullptr);
+    gtk_css_provider_load_from_path(provider.get(), char_cast(filepath.u8string().c_str()), nullptr);
     gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider.get()),
                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }

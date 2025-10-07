@@ -446,6 +446,7 @@ struct ActionProperties<Action::ZOOM_FIT> {
 template <>
 struct ActionProperties<Action::ZOOM> {
     using state_type = double;
+    using parameter_type = state_type;
     static state_type initialState(Control* ctrl) { return ctrl->getZoomControl()->getZoom(); }
     static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
         g_simple_action_set_state(ga, p);
@@ -777,6 +778,7 @@ struct ActionProperties<Action::AUDIO_RECORD> {
     using state_type = bool;
     static constexpr state_type initialState(Control*) { return false; }
     static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
+#ifdef ENABLE_AUDIO
         if (!ctrl->audioController) {
             g_warning("Audio has been disabled");
             return;
@@ -797,6 +799,9 @@ struct ActionProperties<Action::AUDIO_RECORD> {
                 XojMsgBox::showErrorToUser(win, _("Recorder could not be started."));
             });
         }
+#else
+        g_warning("Audio has been disabled at compile time");
+#endif
     }
 };
 template <>
@@ -805,6 +810,7 @@ struct ActionProperties<Action::AUDIO_PAUSE_PLAYBACK> {
     static constexpr state_type initialState(Control*) { return false; }
     static constexpr bool initiallyEnabled(Control*) { return false; }
     static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
+#ifdef ENABLE_AUDIO
         if (!ctrl->audioController) {
             g_warning("Audio has been disabled");
             return;
@@ -816,6 +822,9 @@ struct ActionProperties<Action::AUDIO_PAUSE_PLAYBACK> {
         } else {
             ctrl->getAudioController()->continuePlayback();
         }
+#else
+        g_warning("Audio has been disabled at compile time");
+#endif
     }
 };
 
@@ -823,11 +832,15 @@ template <>
 struct ActionProperties<Action::AUDIO_SEEK_FORWARDS> {
     static constexpr bool initiallyEnabled(Control*) { return false; }
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
+#ifdef ENABLE_AUDIO
         if (!ctrl->audioController) {
             g_warning("Audio has been disabled");
             return;
         }
         ctrl->getAudioController()->seekForwards();
+#else
+        g_warning("Audio has been disabled at compile time");
+#endif
     }
 };
 
@@ -835,11 +848,15 @@ template <>
 struct ActionProperties<Action::AUDIO_SEEK_BACKWARDS> {
     static constexpr bool initiallyEnabled(Control*) { return false; }
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
+#ifdef ENABLE_AUDIO
         if (!ctrl->audioController) {
             g_warning("Audio has been disabled");
             return;
         }
         ctrl->getAudioController()->seekBackwards();
+#else
+        g_warning("Audio has been disabled at compile time");
+#endif
     }
 };
 
@@ -847,11 +864,15 @@ template <>
 struct ActionProperties<Action::AUDIO_STOP_PLAYBACK> {
     static constexpr bool initiallyEnabled(Control*) { return false; }
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
+#ifdef ENABLE_AUDIO
         if (!ctrl->audioController) {
             g_warning("Audio has been disabled");
             return;
         }
         ctrl->getAudioController()->stopPlayback();
+#else
+        g_warning("Audio has been disabled at compile time");
+#endif
     }
 };
 

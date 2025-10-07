@@ -74,7 +74,7 @@ set_source_files_properties(
 
 add_dependencies(xournalpp-wrapper xournalpp-wrapper-resource)
 target_link_libraries(xournalpp-wrapper
-        PUBLIC xoj::defaults xoj::util xoj::external_modules std::filesystem cxx17)
+        PUBLIC xoj::defaults xoj::util xoj::external_modules)
 set_target_properties(xournalpp-wrapper PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
         MACOSX_BUNDLE $<IF:$<PLATFORM_ID:Darwin>,TRUE,${CMAKE_MACOSX_BUNDLE}>
         WIN32_EXECUTABLE $<IF:$<PLATFORM_ID:Windows>,TRUE,${CMAKE_WIN32_EXECUTABLE}>
@@ -137,6 +137,8 @@ if (WIN32)
   add_dependencies(xournalpp-wrapper xournalpp_icon)
   
   # windows specific source files
+  target_sources(xournalpp PRIVATE exe/win32/console.cpp)
+  target_sources(xournalpp-wrapper PRIVATE exe/win32/console.cpp)
   if (MSVC)
     target_sources(xournalpp PRIVATE exe/win32/gui_main.cpp)
     target_sources(xournalpp-wrapper PRIVATE exe/win32/gui_main.cpp)

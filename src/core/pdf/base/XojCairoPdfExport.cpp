@@ -20,6 +20,7 @@
 #include "model/XojPage.h"                  // for XojPage
 #include "pdf/base/XojPdfPage.h"            // for XojPdfPageSPtr, XojPdfPage
 #include "util/Assert.h"                    // for xoj_assert
+#include "util/StringUtils.h"               // for char_cast
 #include "util/Util.h"                      // for npos
 #include "util/i18n.h"                      // for _
 #include "util/serdesstream.h"              // for serdes_stream
@@ -45,11 +46,12 @@ void XojCairoPdfExport::setExportBackground(ExportBackgroundType exportBackgroun
 }
 
 auto XojCairoPdfExport::startPdf(const fs::path& file, bool exportOutline) -> bool {
-    this->surface = cairo_pdf_surface_create(file.u8string().c_str(), 0, 0);
+    this->surface = cairo_pdf_surface_create(char_cast(file.u8string().c_str()), 0, 0);
     this->cr = cairo_create(surface);
 
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
-    cairo_pdf_surface_set_metadata(surface, CAIRO_PDF_METADATA_TITLE, doc->getFilepath().filename().u8string().c_str());
+    cairo_pdf_surface_set_metadata(surface, CAIRO_PDF_METADATA_TITLE,
+                                   char_cast(doc->getFilepath().filename().u8string().c_str()));
     cairo_pdf_surface_set_metadata(surface, CAIRO_PDF_METADATA_CREATOR, PROJECT_STRING);
     if (exportOutline) {
         this->populatePdfOutline();
