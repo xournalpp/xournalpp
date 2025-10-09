@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <span>
+
 class Point;
 
 class Inertia {
@@ -34,7 +36,7 @@ public:
     double getMass() const;
 
     void increase(Point p1, Point p2, int coef);
-    void calc(const Point* pt, int start, int end);
+    void calc(std::span<const Point> points);
 
 private:
     double mass{};

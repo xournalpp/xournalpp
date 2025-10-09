@@ -3,6 +3,7 @@
 #include <cmath>     // for fabs, M_PI
 #include <iterator>  // for begin, next
 #include <memory>    // for allocator...
+#include <span>      // for span
 #include <utility>   // for move
 #include <vector>    // for vector
 
@@ -197,7 +198,7 @@ auto ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsi
     for (; k < nsides; k++) {
         i1 = start + (k * (end - start)) / nsides;
         i2 = start + ((k + 1) * (end - start)) / nsides;
-        s.calc(pt, i1, i2);
+        s.calc(std::span<const Point>(pt + i1, pt + i2 + 1));
         if (s.det() < SEGMENT_MAX_DET) {
             break;
         }
