@@ -370,7 +370,7 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
         for (int i = 0; uris[i] != nullptr && i < 3; i++) {
             const char* uri = uris[i];
 
-            //If the URI is a mp3 file and there is a valid, selected object, connect them
+            // If the URI is an audio file and there is a valid, selected object, connect them
             gchar *path = g_filename_from_uri(uri, NULL, NULL);
             if (path && (g_str_has_suffix(path, ".mp3") || 
                         g_str_has_suffix(path, ".wav") || 
