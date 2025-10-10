@@ -157,6 +157,15 @@ pkg_check_modules(ExternalModules REQUIRED IMPORTED_TARGET ${pkg-module-spec})
 find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
 
+pkg_check_modules(PUGIXML REQUIRED pugixml)
+
+add_library(pugixml_tgt INTERFACE)
+target_include_directories(pugixml_tgt INTERFACE ${PUGIXML_INCLUDE_DIRS})
+target_link_libraries(pugixml_tgt INTERFACE ${PUGIXML_LIBRARIES})
+
+add_library(pugixml::pugixml ALIAS pugixml_tgt)
+
+
 option(ENABLE_AUDIO "Compile with Audio recording/playing support" ON)
 if (ENABLE_AUDIO)
     message(STATUS "Enable Audio support")
@@ -234,6 +243,7 @@ target_link_libraries(external_modules INTERFACE
         $<$<TARGET_EXISTS:X11::X11>:X11::X11>
         $<$<TARGET_EXISTS:cpptrace::cpptrace>:cpptrace::cpptrace>
         $<$<TARGET_EXISTS:qpdf::libqpdf>:qpdf::libqpdf>
+        $<$<TARGET_EXISTS:pugixml::pugixml>:pugixml::pugixml>
         ZLIB::ZLIB
         Threads::Threads
         )
