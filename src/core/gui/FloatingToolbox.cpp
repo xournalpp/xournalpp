@@ -172,19 +172,20 @@ auto FloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget,
 
     switch (self->floatingToolboxState) {
         case recalcSize:
+            [[fallthrough]];
         case noChange: {
             int centerX = self->floatingToolboxX - allocation->width / 2;
             int centerY = self->floatingToolboxY - allocation->height / 2;
 
             // Clamp to scrolled window bounds with margin
-            const int margin = 10;
+            constexpr int margin = 10;
             int minX = scrollX + margin;
             int maxX = scrollX + scrollAllocation.width - allocation->width - margin;
             int minY = scrollY + margin;
             int maxY = scrollY + scrollAllocation.height - allocation->height - margin;
 
-            allocation->x = std::max(minX, std::min(centerX, maxX));
-            allocation->y = std::max(minY, std::min(centerY, maxY));
+            allocation->x = std::clamp(centerX, minX, maxX);
+            allocation->y = std::clamp(centerY, minY, maxY);
             self->floatingToolboxState = noChange;
             break;
         }
