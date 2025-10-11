@@ -758,6 +758,17 @@ struct ActionProperties<Action::TOOL_SELECT_PDF_TEXT_MARKER_OPACITY> {
 };
 
 template <>
+struct ActionProperties<Action::TOGGLE_TOUCH_DRAWING> {
+    using state_type = bool;
+    static state_type initialState(Control* ctrl) { return ctrl->getSettings()->getTouchDrawingEnabled(); }
+    static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
+        g_simple_action_set_state(ga, p);
+        bool enabled = g_variant_get_boolean(p);
+        ctrl->getSettings()->setTouchDrawingEnabled(enabled);
+    }
+};
+
+template <>
 struct ActionProperties<Action::SELECT_FONT> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->showFontDialog(); }
 };

@@ -412,6 +412,9 @@ void ToolMenuHandler::initToolItems() {
     emplaceCustomItemTgl("SETSQUARE", Cat::MISC, Action::SETSQUARE, "setsquare", _("Setsquare"));
     emplaceCustomItemTgl("COMPASS", Cat::MISC, Action::COMPASS, "compass", _("Compass"));
 
+    emplaceCustomItemTgl("TOGGLE_TOUCH_DRAWING", Cat::MISC, Action::TOGGLE_TOUCH_DRAWING, "touch-drawing",
+                         _("Toggle Touch Drawing"));
+
 
     emplaceCustomItemTgl("SHAPE_RECOGNIZER", Cat::TOOLS, Action::TOOL_DRAW_SHAPE_RECOGNIZER, "shape-recognizer",
                          _("Shape Recognizer"));

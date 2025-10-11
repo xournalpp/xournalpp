@@ -1459,6 +1459,9 @@ void Control::showSettings() {
 
                 xournal->getHandRecognition()->reload();
                 ctrl->win->updateColorscheme();
+
+                ctrl->getActionDatabase()->setActionState(Action::TOGGLE_TOUCH_DRAWING,
+                                                          settings->getTouchDrawingEnabled());
             });
     dlg.show(GTK_WINDOW(this->win->getWindow()));
 }
