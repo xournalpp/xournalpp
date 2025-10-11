@@ -25,6 +25,8 @@
 
 #cmakedefine ENABLE_CPPTRACE
 
+#define RENDER_ALGORITHM @XOPP_RENDER_ALGORITHM@
+
 // Example: #cmakedefine NAME_FROM_Cmake_list
 // in CMakeFile.txt:
 // option (NAME_FROM_Cmake_list "Description" OFF)

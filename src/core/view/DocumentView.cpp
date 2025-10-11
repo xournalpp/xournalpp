@@ -67,13 +67,14 @@ void DocumentView::drawBackground(xoj::view::BackgroundFlags bgFlags) const {
 }
 
 void DocumentView::drawPage(ConstPageRef page, cairo_t* cr, bool dontRenderEditingStroke,
-                            xoj::view::BackgroundFlags flags) {
+                            xoj::view::BackgroundFlags flags, bool safeForParallelExecution) {
     initDrawing(page, cr, dontRenderEditingStroke);
 
     drawBackground(flags);
 
     xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
-                               (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
+                               (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR,
+                               safeForParallelExecution ? xoj::view::PARALLEL : xoj::view::SEQUENCIAL};
     for (const Layer* layer: page->getLayersView()) {
         if (layer->isVisible()) {
             xoj::view::LayerView layerView(layer);
