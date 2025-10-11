@@ -9,10 +9,10 @@
 #include "gui/XournalView.h"              // for XournalView
 #include "model/Document.h"               // for Document
 #include "model/ElementInsertionPosition.h"
-#include "model/Layer.h"                  // for Layer
-#include "model/PageRef.h"                // for PageRef
-#include "model/XojPage.h"                // for XojPage
-#include "undo/UndoRedoHandler.h"         // for UndoRedoHandler
+#include "model/Layer.h"           // for Layer
+#include "model/PageRef.h"         // for PageRef
+#include "model/XojPage.h"         // for XojPage
+#include "undo/UndoRedoHandler.h"  // for UndoRedoHandler
 
 #include "Control.h"  // for Control
 
@@ -75,6 +75,11 @@ void UndoRedoController::undo(Control* control) {
 
     control->getUndoRedoHandler()->undo();
 
+    Layer* layer = control->getCurrentPage()->getSelectedLayer();
+    for (std::size_t i = layer->getFirstPage(); i <= layer->getLastPage(); ++i) {
+        control->getDocument()->getPage(i)->firePageChanged();
+    }
+
     handler.after();
 }
 
@@ -83,6 +88,11 @@ void UndoRedoController::redo(Control* control) {
     handler.before();
 
     control->getUndoRedoHandler()->redo();
+
+    Layer* layer = control->getCurrentPage()->getSelectedLayer();
+    for (std::size_t i = layer->getFirstPage(); i <= layer->getLastPage(); ++i) {
+        control->getDocument()->getPage(i)->firePageChanged();
+    }
 
     handler.after();
 }
