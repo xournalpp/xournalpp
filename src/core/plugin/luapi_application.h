@@ -883,6 +883,26 @@ static int applib_layerAction(lua_State* L) {
 }
 
 /**
+ * Show the floating toolbox at the specified coordinates relative to the main window
+ *
+ * @param x integer x coordinate relative to main window
+ * @param y integer y coordinate relative to main window
+ *
+ * Example: app.showFloatingToolbox(100, 200)
+ * Shows the floating toolbox at position (100, 200) relative to the main window
+ *
+ * Note: Coordinates are automatically clamped to window bounds.
+ */
+static int applib_showFloatingToolbox(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    int x = static_cast<int>(luaL_checkinteger(L, 1));
+    int y = static_cast<int>(luaL_checkinteger(L, 2));
+
+    plugin->getControl()->showFloatingToolbox(x, y);
+    return 0;
+}
+
+/**
  * Helper function to handle a allowUndoRedoAction string parameter. allowUndoRedoAction can take the following values:
  * - "grouped": the elements get a single undo-redo-action
  * - "individual" each of the elements get an own undo-redo-action
@@ -926,9 +946,9 @@ static void refsHelper(lua_State* L, std::vector<const Element*> elements) {
     lua_newtable(L);
     size_t count = 0;
     for (const Element* element: elements) {
-        lua_pushinteger(L, strict_cast<lua_Integer>(++count));  // index
+        lua_pushinteger(L, strict_cast<lua_Integer>(++count));                           // index
         lua_pushlightuserdata(L, const_cast<void*>(static_cast<const void*>(element)));  // value
-        lua_settable(L, -3);                                    // insert
+        lua_settable(L, -3);                                                             // insert
     }
 }
 
@@ -2917,8 +2937,7 @@ static int applib_openFile(lua_State* L) {
         forceOpen = lua_toboolean(L, 3);
     }
 
-    control->openFile(
-            fs::path(filename), [](bool) {}, scrollToPage - 1, forceOpen);
+    control->openFile(fs::path(filename), [](bool) {}, scrollToPage - 1, forceOpen);
     lua_pushboolean(L, true);  // Todo replace with callback
     return 1;
 }
@@ -3689,6 +3708,7 @@ static const luaL_Reg applib[] = {
         {"uiAction", applib_uiAction},            // Todo(gtk4) remove this deprecated function
         {"sidebarAction", applib_sidebarAction},  // Todo(gtk4) remove this deprecated function
         {"layerAction", applib_layerAction},      // Todo(gtk4) remove this deprecated function
+        {"showFloatingToolbox", applib_showFloatingToolbox},
         {"changeToolColor", applib_changeToolColor},
         {"getColorPalette", applib_getColorPalette},
         {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
