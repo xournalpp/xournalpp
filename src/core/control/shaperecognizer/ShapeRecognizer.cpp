@@ -370,68 +370,74 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) ->
         RecoSegment* rs = &this->queue[as_unsigned(this->queueLength)];
         this->queueLength += n;
 
+        bool is_bad = false;
         for (int i = 0; i < n; i++) {
             rs[i].startpt = brk[i];
             rs[i].endpt = brk[i + 1];
             rs[i].calcSegmentGeometry(stroke->getPoints(), brk[i], brk[i + 1], ss + i);
+
+            is_bad = is_bad or std::isnan(rs[i].x1) or std::isnan(rs[i].y1) or std::isnan(rs[i].x2) or
+                     std::isnan(rs[i].y2);
         }
 
-        if (auto result = tryTriangle(); result != nullptr) {
-            RDEBUG("return triangle");
-            return result;
-        }
-        if (auto result = tryRectangle(); result != nullptr) {
-            RDEBUG("return rectangle");
-            return result;
-        }
+        if (not is_bad) {
+            if (auto result = tryTriangle(); result != nullptr) {
+                RDEBUG("return triangle");
+                return result;
+            }
+            if (auto result = tryRectangle(); result != nullptr) {
+                RDEBUG("return rectangle");
+                return result;
+            }
 
-        // Removed complicated recognition in commit 5494bd002050182cde3af70bd1924f4062579be5
+            // Removed complicated recognition in commit 5494bd002050182cde3af70bd1924f4062579be5
 
-        if (n == 1 && ss->det() < LINE_MAX_DET)  // current stroke is a line
-        {
-            bool aligned = true;
-            if (fabs(rs->angle) < SLANT_TOLERANCE)  // nearly horizontal
+            if (n == 1 && ss->det() < LINE_MAX_DET)  // current stroke is a line
             {
-                rs->angle = 0.0;
-                rs->y1 = rs->y2 = rs->ycenter;
-            } else if (fabs(rs->angle) > M_PI / 2 - SLANT_TOLERANCE) {  // nearly vertical
-                rs->angle = (rs->angle > 0) ? (M_PI / 2) : (-M_PI / 2);
-                rs->x1 = rs->x2 = rs->xcenter;
-            } else {
-                aligned = false;
-            }
-
-            auto s = std::make_unique<Stroke>();
-            s->applyStyleFrom(this->stroke);
-
-            if (aligned) {
-                s->addPoint(Point(rs->x1, rs->y1));
-                s->addPoint(Point(rs->x2, rs->y2));
-            } else {
-                const Point P(rs->x1, rs->y1);
-                const Point Q(rs->x2, rs->y2);
-
-                const auto& points = stroke->getPointVector();
-                const Point& last = points.back();
-
-                const double dx = Q.x - P.x;
-                const double dy = Q.y - P.y;
-                const double num = dy * last.x - dx * last.y + Q.x * P.y - Q.y * P.x;
-                const double num2 = num * num;
-                const double den2 = dy * dy + dx * dx;
-                const double dist2 = num2 / den2;
-
-                if (dist2 < LINE_POINT_DIST2_THRESHOLD) {
-                    s->addPoint(P);
-                    s->addPoint(Q);
+                bool aligned = true;
+                if (fabs(rs->angle) < SLANT_TOLERANCE)  // nearly horizontal
+                {
+                    rs->angle = 0.0;
+                    rs->y1 = rs->y2 = rs->ycenter;
+                } else if (fabs(rs->angle) > M_PI / 2 - SLANT_TOLERANCE) {  // nearly vertical
+                    rs->angle = (rs->angle > 0) ? (M_PI / 2) : (-M_PI / 2);
+                    rs->x1 = rs->x2 = rs->xcenter;
                 } else {
-                    s->addPoint(Point(points.front().x, points.front().y));
-                    s->addPoint(Point(points.back().x, points.back().y));
+                    aligned = false;
                 }
-            }
 
-            RDEBUG("return line");
-            return s;
+                auto s = std::make_unique<Stroke>();
+                s->applyStyleFrom(this->stroke);
+
+                if (aligned) {
+                    s->addPoint(Point(rs->x1, rs->y1));
+                    s->addPoint(Point(rs->x2, rs->y2));
+                } else {
+                    const Point P(rs->x1, rs->y1);
+                    const Point Q(rs->x2, rs->y2);
+
+                    const auto& points = stroke->getPointVector();
+                    const Point& last = points.back();
+
+                    const double dx = Q.x - P.x;
+                    const double dy = Q.y - P.y;
+                    const double num = dy * last.x - dx * last.y + Q.x * P.y - Q.y * P.x;
+                    const double num2 = num * num;
+                    const double den2 = dy * dy + dx * dx;
+                    const double dist2 = num2 / den2;
+
+                    if (dist2 < LINE_POINT_DIST2_THRESHOLD) {
+                        s->addPoint(P);
+                        s->addPoint(Q);
+                    } else {
+                        s->addPoint(Point(points.front().x, points.front().y));
+                        s->addPoint(Point(points.back().x, points.back().y));
+                    }
+                }
+
+                RDEBUG("return line");
+                return s;
+            }
         }
     }
 
