@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-24 06:39+0000\n"
-"PO-Revision-Date: 2025-09-28 04:26\n"
+"POT-Creation-Date: 2025-10-11 12:20+0000\n"
+"PO-Revision-Date: 2025-10-12 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Malayalam\n"
 "Language: ml_IN\n"
@@ -22,169 +22,169 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
 msgstr "ഓഡിയോ ഫോൾഡർ സജ്ജമാക്കിയില്ല/അസാധുവാണ്! ആയതിനാൽ റെക്കോർഡിംഗ് പ്രവർത്തനയോഗ്യമല്ല! ദയവായി ശരിയായ റെക്കോർഡിങ് ഫോൾഡർ \"മുൻഗണനകൾ (Preferences) > ഓഡിയോ റെക്കോർഡിങ് (Audio recording)\" വഴി സജ്ജമാക്കുക"
 
-#: ../src/core/control/Control.cpp:233
+#: ../src/core/control/Control.cpp:234
 msgid "Filesystem error: {1}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:245
+#: ../src/core/control/Control.cpp:246
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:564
+#: ../src/core/control/Control.cpp:575
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:584
+#: ../src/core/control/Control.cpp:595
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "\"{1}\" എന്ന ടൂൾബാർ ക്രമീകരണം മുൻപേ തിട്ടപ്പെടുത്തിയതാണ്, അത് പുനർക്രമീകരിക്കാൻ താങ്കൾ പുതിയൊരു പകർപ്പ് നിർമിക്കുമോ?"
 
-#: ../src/core/control/Control.cpp:587 ../src/core/control/Control.cpp:1558
+#: ../src/core/control/Control.cpp:598 ../src/core/control/Control.cpp:1572
 msgid "Yes"
 msgstr "അതെ"
 
-#: ../src/core/control/Control.cpp:587 ../src/core/control/Control.cpp:1558
+#: ../src/core/control/Control.cpp:598 ../src/core/control/Control.cpp:1572
 msgid "No"
 msgstr "ഇല്ല"
 
-#: ../src/core/control/Control.cpp:817 ../src/core/control/Control.cpp:1770
-#: ../src/core/control/Control.cpp:2094
+#: ../src/core/control/Control.cpp:828 ../src/core/control/Control.cpp:1784
+#: ../src/core/control/Control.cpp:2108
 msgid "Cancel"
 msgstr "റദ്ദാക്കുക"
 
-#: ../src/core/control/Control.cpp:818
+#: ../src/core/control/Control.cpp:829
 msgid "Insert after current page"
 msgstr "നിലവിലുള്ള താളിനു ശേഷം ചേർക്കുക"
 
-#: ../src/core/control/Control.cpp:819
+#: ../src/core/control/Control.cpp:830
 msgid "Insert at end"
 msgstr "അവസാനം ചേർക്കുക"
 
-#: ../src/core/control/Control.cpp:822
+#: ../src/core/control/Control.cpp:833
 msgid "_Journal"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:822
+#: ../src/core/control/Control.cpp:833
 msgid "Paper B_ackground"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:823
+#: ../src/core/control/Control.cpp:834
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:41
 msgid "With PDF background"
 msgstr "പിഡിഎഫ് പശ്ചാത്തലം സഹിതം"
 
-#: ../src/core/control/Control.cpp:826
+#: ../src/core/control/Control.cpp:837
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:869
+#: ../src/core/control/Control.cpp:880
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "കൂട്ടിച്ചേർക്കാനായി പിഡിഎഫ് താളുകൾ ലഭ്യമല്ല. നിങ്ങൾ ഒരിക്കൽ കൂടി ഡോക്യുമെന്റ് തുറക്കേണ്ടതായി വരും."
 
-#: ../src/core/control/Control.cpp:883
+#: ../src/core/control/Control.cpp:894
 msgid "Unable to retrieve pdf page."
 msgstr "പിഡിഎഫ് താൾ ലഭ്യമാക്കാൻ സാധിക്കുന്നില്ല."
 
-#: ../src/core/control/Control.cpp:1482
+#: ../src/core/control/Control.cpp:1496
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
 msgstr "ഓട്ടോസേവ് ചെയ്ത ഫയലുകൾ തുറക്കരുത്. അവ വീണ്ടും മാറ്റി നിര്മിക്കപ്പെട്ടേക്കും. അവ മറ്റൊരു ഫോൾഡറിലേക്ക് പകർത്തുക. ഫോൾഡർ {1}-ലുള്ള ഫയലുകൾ തുറക്കാൻ സാധിക്കുന്നില്ല."
 
-#: ../src/core/control/Control.cpp:1502
+#: ../src/core/control/Control.cpp:1516
 msgid "file: {1}"
 msgstr "ഫയൽ: {1}"
 
-#: ../src/core/control/Control.cpp:1535
+#: ../src/core/control/Control.cpp:1549
 msgid "Error opening file \"{1}\""
 msgstr "ഫയൽ തുറക്കാൻ പരാജയപ്പെട്ടു: {1}"
 
-#: ../src/core/control/Control.cpp:1560
+#: ../src/core/control/Control.cpp:1574
 msgid "File version mismatch"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1561
+#: ../src/core/control/Control.cpp:1575
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "ഇപ്പോൾ തുറക്കാൻ ശ്രമിക്കുന്ന ഫയലിന്റെ പതിപ്പ് Xournal++ പിന്തുണയ്ക്കുന്ന പതിപ്പിനേക്കാൾ പുതുതാണ്. ആയതിനാൽ ശരിയായ വിധം ഫയൽ പ്രവർത്തിച്ചേക്കണമെന്നില്ല. എന്തുതന്നെയായാലും ഫയൽ തുറക്കണോ?"
 
-#: ../src/core/control/Control.cpp:1584
+#: ../src/core/control/Control.cpp:1598
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1606
+#: ../src/core/control/Control.cpp:1620
 msgid "Error reading PNG file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1750
+#: ../src/core/control/Control.cpp:1764
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "അറ്റാച്ച് ചെയ്ത പശ്ചാത്തല ഫയൽ കണ്ടെത്താൻ സാധിച്ചില്ല. അത് മറ്റൊരിടത്തേക്ക് മാറ്റിയതോ, പുനർനാമകരണം ചെയ്തതോ, അല്ലെങ്കിൽ നീക്കം ചെയ്തതോ ആയിരിക്കാം."
 
-#: ../src/core/control/Control.cpp:1753
+#: ../src/core/control/Control.cpp:1767
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "പശ്ചാത്തല ഫയൽ \"{1}\" കണ്ടെത്താൻ സാധിച്ചില്ല. അത് മറ്റൊരിടത്തേക്ക് മാറ്റിയതോ, പുനർനാമകരണം ചെയ്തതോ, അല്ലെങ്കിൽ നീക്കം ചെയ്തതോ ആയിരിക്കാം.\n"
 "അത് അവസാനം കണ്ട പാത: \"{2}\""
 
-#: ../src/core/control/Control.cpp:1763
+#: ../src/core/control/Control.cpp:1777
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "പകരം ഉപയോഗിക്കേണ്ട നിർദ്ദിഷ്ട ഫൈൽ: \"{1}\""
 
-#: ../src/core/control/Control.cpp:1768
+#: ../src/core/control/Control.cpp:1782
 msgid "Select another PDF"
 msgstr "മറ്റൊരു പിഡിഎഫ് തിരഞ്ഞെടുക്കുക"
 
-#: ../src/core/control/Control.cpp:1769
+#: ../src/core/control/Control.cpp:1783
 msgid "Remove PDF Background"
 msgstr "പിഡിഎഫ് പശ്ചാത്തലം നീക്കം ചെയ്യുക"
 
-#: ../src/core/control/Control.cpp:1773
+#: ../src/core/control/Control.cpp:1787
 msgid "Use proposed PDF"
 msgstr "മുന്നോട്ട് വച്ച പിഡിഎഫ് ഉപയോഗിക്കുക"
 
-#: ../src/core/control/Control.cpp:1776
+#: ../src/core/control/Control.cpp:1790
 msgid "Missing PDF background file"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1908
+#: ../src/core/control/Control.cpp:1922
 msgid "Select font"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1927
+#: ../src/core/control/Control.cpp:1941
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "നിറം തിരഞ്ഞെടുക്കുക"
 
-#: ../src/core/control/Control.cpp:1952
+#: ../src/core/control/Control.cpp:1966
 msgid "Unsaved Document"
 msgstr "സേവ് ചെയ്യാത്ത ഡോക്യുമെന്റ്"
 
-#: ../src/core/control/Control.cpp:2087
+#: ../src/core/control/Control.cpp:2101
 msgid "Document file was removed."
 msgstr "ഡോക്യുമെന്റ് ഫയൽ നീക്കം ചെയ്യപ്പെട്ടു."
 
-#: ../src/core/control/Control.cpp:2087
+#: ../src/core/control/Control.cpp:2101
 msgid "This document is not saved yet."
 msgstr "ഈ ഡോക്യുമെന്റ് ഇത് വരെ സേവ് ചെയ്യപ്പെട്ടിട്ടില്ല."
 
-#: ../src/core/control/Control.cpp:2089
+#: ../src/core/control/Control.cpp:2103
 msgid "Save As..."
 msgstr "സേവ് തരം..."
 
-#: ../src/core/control/Control.cpp:2089 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2103 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "സേവ്"
 
-#: ../src/core/control/Control.cpp:2092
+#: ../src/core/control/Control.cpp:2106
 msgid "Discard"
 msgstr "ഒഴിവാക്കുക"
 
-#: ../src/core/control/Control.cpp:2177
+#: ../src/core/control/Control.cpp:2191
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -228,7 +228,7 @@ msgstr "ടാബ്ലറ്റ് പാഡ്"
 msgid "Image file successfully created"
 msgstr "ചിത്രത്തിന്റെ ഫയൽ വിജയകരമായി നിർമ്മിക്കപ്പെട്ടു"
 
-#: ../src/core/control/ExportHelper.cpp:120
+#: ../src/core/control/ExportHelper.cpp:134
 msgid "PDF file successfully created"
 msgstr "പിഡിഎഫ് ഫയൽ വിജയകരമായി നിർമ്മിക്കപ്പെട്ടു"
 
@@ -257,8 +257,8 @@ msgid "Could not load LaTeX PDF file"
 msgstr "ലാറ്റെക് (LaTeX) പി. ഡി. എഫ്. (PDF) ഫയൽ തുറക്കാൻ സാധിച്ചില്ല"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:110
-#: ../src/core/control/xojfile/LoadHandler.cpp:480
-#: ../src/core/control/xojfile/LoadHandler.cpp:496
+#: ../src/core/control/xojfile/LoadHandler.cpp:483
+#: ../src/core/control/xojfile/LoadHandler.cpp:499
 msgid "Error reading PDF: {1}"
 msgstr "പി. ഡി. എഫ്. (PDF) വായിക്കാൻ പരാജയപ്പെട്ടു: {1}"
 
@@ -672,73 +672,73 @@ msgstr "പ്രതീക്ഷിക്കാത്ത മൂല ടാഗ്:
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "ഡോക്യൂമെന്റിൽ അപ്രതീക്ഷിതമായ ടാഗ്: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:386
-#: ../src/core/control/xojfile/LoadHandler.cpp:415
+#: ../src/core/control/xojfile/LoadHandler.cpp:387
+#: ../src/core/control/xojfile/LoadHandler.cpp:417
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "ചിത്രം വായിക്കാൻ സാധിച്ചില്ല: {1}. പിശകിനെ സംബന്ധിച്ച സന്ദേശം: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:425
+#: ../src/core/control/xojfile/LoadHandler.cpp:428
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "ക്ലോൺ ചെയ്ത പശ്ചാത്തല ചിത്രത്തെ സംബന്ധിച്ച താളിന്റെ സംഖ്യ വായിച്ചെടുക്കാൻ സാധിച്ചില്ല: {1}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:433
+#: ../src/core/control/xojfile/LoadHandler.cpp:436
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "അറിവില്ലാത്ത പിക്സ്മാപ്::ഡൊമൈൻ (pixmap::domain) തരം:{1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:487
+#: ../src/core/control/xojfile/LoadHandler.cpp:490
 msgid "Unknown domain type: {1}"
 msgstr "ഡൊമൈൻ തരം അജ്ഞാതം: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:525
+#: ../src/core/control/xojfile/LoadHandler.cpp:528
 msgid "Unknown background type: {1}"
 msgstr "അജ്ഞാതമായ പശ്ചാത്തല തരം: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:550
+#: ../src/core/control/xojfile/LoadHandler.cpp:553
 msgid "Error reading width of a stroke: {1}"
 msgstr "സ്‌ട്രോക്കിന്റെ വീതി അളക്കുന്നതിൽ പരാജയപ്പെട്ടു: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:619
+#: ../src/core/control/xojfile/LoadHandler.cpp:622
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "അജ്ഞാതമായ സ്ട്രോക്ക് ക്യാപ് തരം: \"{1}\", വട്ടത്തിലുള്ളതെന്ന് അനുമാനിക്കുന്നു"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:637
+#: ../src/core/control/xojfile/LoadHandler.cpp:640
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "അജ്ഞാതമായ സ്ട്രോക്ക് തരം: \"{1}\", പേന ആണെന്ന് അനുമാനിക്കുന്നു"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:809
-#: ../src/core/control/xojfile/LoadHandler.cpp:825
-#: ../src/core/control/xojfile/LoadHandler.cpp:1138
-#: ../src/core/control/xojfile/LoadHandler.cpp:1152
+#: ../src/core/control/xojfile/LoadHandler.cpp:812
+#: ../src/core/control/xojfile/LoadHandler.cpp:828
+#: ../src/core/control/xojfile/LoadHandler.cpp:1141
+#: ../src/core/control/xojfile/LoadHandler.cpp:1155
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "അറ്റാച്ച്മെന്റ് തുറക്കാൻ സാധിച്ചില്ല: {1}. പിശകിനെ സംബന്ധിച്ച സന്ദേശം: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:818
-#: ../src/core/control/xojfile/LoadHandler.cpp:1144
-#: ../src/core/control/xojfile/LoadHandler.cpp:1163
+#: ../src/core/control/xojfile/LoadHandler.cpp:821
+#: ../src/core/control/xojfile/LoadHandler.cpp:1147
+#: ../src/core/control/xojfile/LoadHandler.cpp:1166
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "അറ്റാച്ച്മെന്റ് തുറക്കാൻ സാധിച്ചില്ല: {1}. പിശകിനെ സംബന്ധിച്ച സന്ദേശം: ഫയലിന്റെ വലിപ്പം നൽകിയില്ല"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:837
+#: ../src/core/control/xojfile/LoadHandler.cpp:840
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "അറ്റാച്ച്മെന്റ് തുറക്കാൻ സാധിച്ചില്ല: {1}. പിശക് സംബന്ധിച്ച സന്ദേശം: ഫയൽ വായിക്കാൻ സാധിച്ചില്ല"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:846
+#: ../src/core/control/xojfile/LoadHandler.cpp:849
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "അറ്റാച്ച്മെന്റ് തുറക്കാൻ സാധിച്ചില്ല: {1}. പിശകിനെ സംബന്ധിച്ച സന്ദേശം: ഫയലിലേക്ക് എഴുതാൻ സാധിച്ചില്ല"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1033
+#: ../src/core/control/xojfile/LoadHandler.cpp:1036
 msgid "Wrong count of points ({1})"
 msgstr "തെറ്റായ പോയിന്റ്‌സിന്റെ സംഖ്യ ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1049
+#: ../src/core/control/xojfile/LoadHandler.cpp:1052
 msgid "xoj-File: {1}"
 msgstr "എക്സ്ഓജെ-ഫയൽ (xoj-File): {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1050
+#: ../src/core/control/xojfile/LoadHandler.cpp:1053
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr "തെറ്റായ സമ്മർദ്ദത്തിന്റെ മൂല്യങ്ങൾ, ലഭിച്ചത് {1}, പ്രതീക്ഷിച്ചത് {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1182
+#: ../src/core/control/xojfile/LoadHandler.cpp:1185
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "ആവശ്യപ്പെട്ട താത്കാലിക ഫയൽ അറ്റാച്മെന്റിനു വേണ്ടി കണ്ടെത്താൻ സാധിച്ചില്ല {1}"
 
@@ -872,12 +872,12 @@ msgid "Thin"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:503
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:506
 msgid "Medium"
 msgstr "ഇടത്തരം"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:504
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:507
 msgid "Thick"
 msgstr "കനത്തിലുള്ളത്"
 
@@ -895,7 +895,7 @@ msgstr "ടൂൾ - മാറ്റരുത്"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:79
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:378
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:494
 msgid "Pen"
 msgstr "പേന"
 
@@ -906,7 +906,7 @@ msgstr "ഇറേസർ"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:401
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:492
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:495
 msgid "Highlighter"
 msgstr "ഹൈലൈറ്റർ"
 
@@ -949,7 +949,7 @@ msgid "Select multi layer rect"
 msgstr "അനേകം പാളികൾക്ക് മേൽ റെക്ട് തിരഞ്ഞെടുക്കുക"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:447
 msgid "Hand"
 msgstr "കൈ"
 
@@ -975,48 +975,48 @@ msgstr "സാധാരണ വര"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Draw Line"
 msgstr "ലൈൻ വരയ്ക്കുക"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:418
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw Rectangle"
 msgstr "ദീർഘചതുരം വരയ്ക്കുക"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Draw Ellipse"
 msgstr "ദീർഘവൃത്തം വരയ്‌ക്കുക"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Draw Arrow"
 msgstr "അമ്പ് വരയ്ക്കുക"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:422
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Draw Double Arrow"
 msgstr "ഇരട്ട തലയുള്ള അമ്പ് വരയ്ക്കുക"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Draw Coordinate System"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
 msgstr "ആകൃതി തിരിച്ചറിയുന്നത്"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Draw Spline"
 msgstr "സ്പ്ലൈൻ വരയ്ക്കുക"
 
@@ -1536,7 +1536,7 @@ msgid "Go to first page"
 msgstr "അടുത്ത താളിലേക്ക് പോകുക"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:347
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:456
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
 msgid "Back"
 msgstr "പിന്നോട്ട്"
 
@@ -1630,77 +1630,81 @@ msgstr "സെറ്റ്സ്‌ക്വയർ"
 msgid "Compass"
 msgstr "കോമ്പസ്"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
+msgid "Toggle Touch Drawing"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
 msgid "Select Region"
 msgstr "മണ്ഡലം തിരഞ്ഞെടുക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:431
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:12
 msgid "Select Rectangle"
 msgstr "ദീർഘചതുരം തിരഞ്ഞെടുക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Select Multi-Layer Region"
 msgstr "അനേകം പാളികൾക്ക് മേൽ മണ്ഡലം തിരഞ്ഞെടുക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Select Multi-Layer Rectangle"
 msgstr "അനേകം പാളികൾക്ക് മേൽ ദീർഘചതുരം തിരഞ്ഞെടുക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 msgid "Select Object"
 msgstr "വസ്തു തിരഞ്ഞെടുക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:441
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Vertical Space"
 msgstr "കുത്തനെയുള്ള വ്യാപ്തി"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:443
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 msgid "Play Object"
 msgstr "വസ്തു പ്രവർത്തിപ്പിക്കുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:449
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:452
 msgid "Record Audio / Stop Recording"
 msgstr "ഓഡിയോ റെക്കോർഡ് ചെയ്യുക/നിറുത്തുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:451
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:454
 msgid "Pause / Play"
 msgstr "നിറുത്തുക/തുടരുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:452
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:455
 msgid "Stop"
 msgstr "നിര്‍ത്തുക"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:454
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:457
 msgid "Forward"
 msgstr "മുന്നോട്ട്"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:490
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:493
 msgid "Laser pointer"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:496
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:499
 msgid "Fill"
 msgstr "ഫിൽ"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:497
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:500
 msgid "Fill Opacity"
 msgstr "ഫിൽ ഒപാസിറ്റി"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:500
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:503
 msgid "Very Fine"
 msgstr "വളരെ നേർത്ത"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:501
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:504
 msgid "Fine"
 msgstr "നേർത്ത"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:506
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:509
 msgid "Very Thick"
 msgstr "വളരെ കനത്തിലുള്ള"
 

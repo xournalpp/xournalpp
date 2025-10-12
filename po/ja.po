@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-24 06:39+0000\n"
-"PO-Revision-Date: 2025-09-28 04:26\n"
+"POT-Creation-Date: 2025-10-11 12:20+0000\n"
+"PO-Revision-Date: 2025-10-12 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -23,71 +23,71 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 msgstr "オーディオフォルダーが未設定か正しくないため録音が機能しません。\n"
 "\"環境設定 > 録音\"でオーディオフォルダーを設定してください"
 
-#: ../src/core/control/Control.cpp:233
+#: ../src/core/control/Control.cpp:234
 msgid "Filesystem error: {1}"
 msgstr "ファイルシステムエラー: {1}"
 
-#: ../src/core/control/Control.cpp:245
+#: ../src/core/control/Control.cpp:246
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "古い自動保存ファイル\"{1}\"を削除できませんでした： {2}"
 
-#: ../src/core/control/Control.cpp:564
+#: ../src/core/control/Control.cpp:575
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "アクティブなツールバーを削除しました。デフォルトのツールバーに戻ります。"
 
-#: ../src/core/control/Control.cpp:584
+#: ../src/core/control/Control.cpp:595
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "ツールバー設定 \"{1}\" が定義されています。コピーを作成して編集しますか？"
 
-#: ../src/core/control/Control.cpp:587 ../src/core/control/Control.cpp:1558
+#: ../src/core/control/Control.cpp:598 ../src/core/control/Control.cpp:1572
 msgid "Yes"
 msgstr "はい"
 
-#: ../src/core/control/Control.cpp:587 ../src/core/control/Control.cpp:1558
+#: ../src/core/control/Control.cpp:598 ../src/core/control/Control.cpp:1572
 msgid "No"
 msgstr "いいえ"
 
-#: ../src/core/control/Control.cpp:817 ../src/core/control/Control.cpp:1770
-#: ../src/core/control/Control.cpp:2094
+#: ../src/core/control/Control.cpp:828 ../src/core/control/Control.cpp:1784
+#: ../src/core/control/Control.cpp:2108
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: ../src/core/control/Control.cpp:818
+#: ../src/core/control/Control.cpp:829
 msgid "Insert after current page"
 msgstr "現在のページの後に挿入"
 
-#: ../src/core/control/Control.cpp:819
+#: ../src/core/control/Control.cpp:830
 msgid "Insert at end"
 msgstr "最後に挿入"
 
-#: ../src/core/control/Control.cpp:822
+#: ../src/core/control/Control.cpp:833
 msgid "_Journal"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:822
+#: ../src/core/control/Control.cpp:833
 msgid "Paper B_ackground"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:823
+#: ../src/core/control/Control.cpp:834
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:41
 msgid "With PDF background"
 msgstr "PDF背景あり"
 
-#: ../src/core/control/Control.cpp:826
+#: ../src/core/control/Control.cpp:837
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:869
+#: ../src/core/control/Control.cpp:880
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "追加できるpdfページがありません。ドキュメントを再度開く必要があるかもしれません。"
 
-#: ../src/core/control/Control.cpp:883
+#: ../src/core/control/Control.cpp:894
 msgid "Unable to retrieve pdf page."
 msgstr "PDFページを取得できません。"
 
-#: ../src/core/control/Control.cpp:1482
+#: ../src/core/control/Control.cpp:1496
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -95,99 +95,99 @@ msgstr "Autosaveファイルを開かないでください。上書きされて�
 "Autosaveファイルを別のフォルダにコピーしてください。\n"
 "フォルダ {1} からのファイルは開けません。"
 
-#: ../src/core/control/Control.cpp:1502
+#: ../src/core/control/Control.cpp:1516
 msgid "file: {1}"
 msgstr "ファイル: {1}"
 
-#: ../src/core/control/Control.cpp:1535
+#: ../src/core/control/Control.cpp:1549
 msgid "Error opening file \"{1}\""
 msgstr "ファイル \"{1}\" の展開中にエラーが発生しました"
 
-#: ../src/core/control/Control.cpp:1560
+#: ../src/core/control/Control.cpp:1574
 msgid "File version mismatch"
 msgstr "ファイルのバージョンが一致していません"
 
-#: ../src/core/control/Control.cpp:1561
+#: ../src/core/control/Control.cpp:1575
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "読み込まれるファイルにはこのバージョンの Xournal++で現在サポートされているものよりも新しいファイル形式のバージョンがあり、 正しくロードされない可能性があります それでも開きますか？"
 
-#: ../src/core/control/Control.cpp:1584
+#: ../src/core/control/Control.cpp:1598
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr "PDF ファイルの読み込みエラー \"{1}\"\n"
 "{2}"
 
-#: ../src/core/control/Control.cpp:1606
+#: ../src/core/control/Control.cpp:1620
 msgid "Error reading PNG file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1750
+#: ../src/core/control/Control.cpp:1764
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "背景に設定されていたファイルが見つかりませんでした。ファイルが移動、名前の変更または削除された可能性があります。"
 
-#: ../src/core/control/Control.cpp:1753
+#: ../src/core/control/Control.cpp:1767
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "背景ファイル \"{1}\" が見つかりませんでした。ファイルの移動、名前の変更または削除された可能性があります。最後に確認された場所: \"{2}\""
 
-#: ../src/core/control/Control.cpp:1763
+#: ../src/core/control/Control.cpp:1777
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "提案された代替ファイル:\"{1}\""
 
-#: ../src/core/control/Control.cpp:1768
+#: ../src/core/control/Control.cpp:1782
 msgid "Select another PDF"
 msgstr "他のPDFを選択"
 
-#: ../src/core/control/Control.cpp:1769
+#: ../src/core/control/Control.cpp:1783
 msgid "Remove PDF Background"
 msgstr "PDFの背景を削除"
 
-#: ../src/core/control/Control.cpp:1773
+#: ../src/core/control/Control.cpp:1787
 msgid "Use proposed PDF"
 msgstr "提案されたPDFを使用する"
 
-#: ../src/core/control/Control.cpp:1776
+#: ../src/core/control/Control.cpp:1790
 msgid "Missing PDF background file"
 msgstr "PDF背景ファイルがありません"
 
-#: ../src/core/control/Control.cpp:1908
+#: ../src/core/control/Control.cpp:1922
 msgid "Select font"
 msgstr "フォントを選択"
 
-#: ../src/core/control/Control.cpp:1927
+#: ../src/core/control/Control.cpp:1941
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "色を選択"
 
-#: ../src/core/control/Control.cpp:1952
+#: ../src/core/control/Control.cpp:1966
 msgid "Unsaved Document"
 msgstr "保存されていないドキュメント"
 
-#: ../src/core/control/Control.cpp:2087
+#: ../src/core/control/Control.cpp:2101
 msgid "Document file was removed."
 msgstr "ドキュメントファイルが削除されました。"
 
-#: ../src/core/control/Control.cpp:2087
+#: ../src/core/control/Control.cpp:2101
 msgid "This document is not saved yet."
 msgstr "このドキュメントはまだ保存されていません。"
 
-#: ../src/core/control/Control.cpp:2089
+#: ../src/core/control/Control.cpp:2103
 msgid "Save As..."
 msgstr "名前を付けて保存..."
 
-#: ../src/core/control/Control.cpp:2089 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2103 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "保存"
 
-#: ../src/core/control/Control.cpp:2092
+#: ../src/core/control/Control.cpp:2106
 msgid "Discard"
 msgstr "破棄"
 
-#: ../src/core/control/Control.cpp:2177
+#: ../src/core/control/Control.cpp:2191
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -231,7 +231,7 @@ msgstr "タブレットパッド"
 msgid "Image file successfully created"
 msgstr "画像ファイルが正常に作成されました"
 
-#: ../src/core/control/ExportHelper.cpp:120
+#: ../src/core/control/ExportHelper.cpp:134
 msgid "PDF file successfully created"
 msgstr "PDFファイルが正常に作成されました"
 
@@ -260,8 +260,8 @@ msgid "Could not load LaTeX PDF file"
 msgstr "LaTeX PDFファイルを読み込めませんでした"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:110
-#: ../src/core/control/xojfile/LoadHandler.cpp:480
-#: ../src/core/control/xojfile/LoadHandler.cpp:496
+#: ../src/core/control/xojfile/LoadHandler.cpp:483
+#: ../src/core/control/xojfile/LoadHandler.cpp:499
 msgid "Error reading PDF: {1}"
 msgstr "PDF読み込みエラー: {1}"
 
@@ -680,73 +680,73 @@ msgstr ""
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "ドキュメント内の予期しないタグ: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:386
-#: ../src/core/control/xojfile/LoadHandler.cpp:415
+#: ../src/core/control/xojfile/LoadHandler.cpp:387
+#: ../src/core/control/xojfile/LoadHandler.cpp:417
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "画像を読み込めませんでした: {1}。エラーメッセージ: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:425
+#: ../src/core/control/xojfile/LoadHandler.cpp:428
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "クローンされた背景画像のページ番号を読み取ることができませんでした: {1}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:433
+#: ../src/core/control/xojfile/LoadHandler.cpp:436
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "不明なpixmap::domainタイプ:{1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:487
+#: ../src/core/control/xojfile/LoadHandler.cpp:490
 msgid "Unknown domain type: {1}"
 msgstr "不明なドメインタイプ: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:525
+#: ../src/core/control/xojfile/LoadHandler.cpp:528
 msgid "Unknown background type: {1}"
 msgstr "不明な背景タイプ: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:550
+#: ../src/core/control/xojfile/LoadHandler.cpp:553
 msgid "Error reading width of a stroke: {1}"
 msgstr "ストロークの幅を読み取る際にエラーが発生しました: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:619
+#: ../src/core/control/xojfile/LoadHandler.cpp:622
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:637
+#: ../src/core/control/xojfile/LoadHandler.cpp:640
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "未知のストロークタイプ: \"{1}\", ペンを仮定する"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:809
-#: ../src/core/control/xojfile/LoadHandler.cpp:825
-#: ../src/core/control/xojfile/LoadHandler.cpp:1138
-#: ../src/core/control/xojfile/LoadHandler.cpp:1152
+#: ../src/core/control/xojfile/LoadHandler.cpp:812
+#: ../src/core/control/xojfile/LoadHandler.cpp:828
+#: ../src/core/control/xojfile/LoadHandler.cpp:1141
+#: ../src/core/control/xojfile/LoadHandler.cpp:1155
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "添付ファイルを開くことができませんでした：{1}。エラーメッセージ：{2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:818
-#: ../src/core/control/xojfile/LoadHandler.cpp:1144
-#: ../src/core/control/xojfile/LoadHandler.cpp:1163
+#: ../src/core/control/xojfile/LoadHandler.cpp:821
+#: ../src/core/control/xojfile/LoadHandler.cpp:1147
+#: ../src/core/control/xojfile/LoadHandler.cpp:1166
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "添付ファイルを開けませんでした: {1}. エラーメッセージ: 有効なファイルサイズが指定されていません"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:837
+#: ../src/core/control/xojfile/LoadHandler.cpp:840
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "添付ファイルを開くことができませんでした: {1}. エラーメッセージ: ファイルを読み込めませんでした"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:846
+#: ../src/core/control/xojfile/LoadHandler.cpp:849
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "添付ファイルを開くことができませんでした: {1}. エラーメッセージ: ファイルを書き込めませんでした"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1033
+#: ../src/core/control/xojfile/LoadHandler.cpp:1036
 msgid "Wrong count of points ({1})"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1049
+#: ../src/core/control/xojfile/LoadHandler.cpp:1052
 msgid "xoj-File: {1}"
 msgstr "xoj-File: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1050
+#: ../src/core/control/xojfile/LoadHandler.cpp:1053
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr "筆圧の値が間違っています。 {1} が設定されましたが、期待値は {2} です"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1182
+#: ../src/core/control/xojfile/LoadHandler.cpp:1185
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "リクエストされた一時ファイルが添付ファイル {1} に見つかりませんでした"
 
@@ -880,12 +880,12 @@ msgid "Thin"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:503
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:506
 msgid "Medium"
 msgstr "中"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:504
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:507
 msgid "Thick"
 msgstr "太い"
 
@@ -903,7 +903,7 @@ msgstr "ツール - 変更しない"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:79
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:378
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:494
 msgid "Pen"
 msgstr "ぺン"
 
@@ -914,7 +914,7 @@ msgstr "消しゴム"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:401
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:492
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:495
 msgid "Highlighter"
 msgstr "蛍光ペン"
 
@@ -957,7 +957,7 @@ msgid "Select multi layer rect"
 msgstr "マルチレイヤーを長方形で選択"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:447
 msgid "Hand"
 msgstr "手のひらツール"
 
@@ -983,48 +983,48 @@ msgstr "通常の描画"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Draw Line"
 msgstr "線を描く"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:418
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw Rectangle"
 msgstr "長方形を描く"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Draw Ellipse"
 msgstr "楕円を描く"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Draw Arrow"
 msgstr "矢印を描く"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:422
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Draw Double Arrow"
 msgstr "二重矢印"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Draw Coordinate System"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
 msgstr "図形認識"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Draw Spline"
 msgstr "曲線を描く"
 
@@ -1547,7 +1547,7 @@ msgid "Go to first page"
 msgstr "最初のページに移動"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:347
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:456
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
 msgid "Back"
 msgstr "戻る"
 
@@ -1641,77 +1641,81 @@ msgstr ""
 msgid "Compass"
 msgstr "コンパス"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
+msgid "Toggle Touch Drawing"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
 msgid "Select Region"
 msgstr "エリアの選択"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:431
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:12
 msgid "Select Rectangle"
 msgstr "長方形を選択"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Select Multi-Layer Region"
 msgstr "複数レイヤーの領域を選択"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Select Multi-Layer Rectangle"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 msgid "Select Object"
 msgstr "オブジェクトを選択"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:441
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Vertical Space"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:443
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 msgid "Play Object"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:449
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:452
 msgid "Record Audio / Stop Recording"
 msgstr "録音開始/録音停止"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:451
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:454
 msgid "Pause / Play"
 msgstr "一時停止/再生"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:452
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:455
 msgid "Stop"
 msgstr "停止"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:454
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:457
 msgid "Forward"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:490
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:493
 msgid "Laser pointer"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:496
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:499
 msgid "Fill"
 msgstr "塗りつぶし"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:497
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:500
 msgid "Fill Opacity"
 msgstr "塗りつぶしの不透明度"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:500
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:503
 msgid "Very Fine"
 msgstr "極細"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:501
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:504
 msgid "Fine"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:506
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:509
 msgid "Very Thick"
 msgstr "極太"
 

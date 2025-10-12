@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-24 06:39+0000\n"
-"PO-Revision-Date: 2025-09-28 04:26\n"
+"POT-Creation-Date: 2025-10-11 12:20+0000\n"
+"PO-Revision-Date: 2025-10-12 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -23,57 +23,57 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 msgstr "Тека з аудіо не задана чи не відповідна! Запис не працюватиме!\n"
 "Будь ласка, задайте теку для записів через \"Властивості > Запис аудіо\""
 
-#: ../src/core/control/Control.cpp:233
+#: ../src/core/control/Control.cpp:234
 msgid "Filesystem error: {1}"
 msgstr "Помилка файлової системи: {1}"
 
-#: ../src/core/control/Control.cpp:245
+#: ../src/core/control/Control.cpp:246
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "Неможливо видалити файл автозбереження \"{1}\": {2}"
 
-#: ../src/core/control/Control.cpp:564
+#: ../src/core/control/Control.cpp:575
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "Ви видалили активну панель інструментів. Повертаємось до панелі за замовчуванням."
 
-#: ../src/core/control/Control.cpp:584
+#: ../src/core/control/Control.cpp:595
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Конфігурацію панелі інструментів \"{1}\" вже задано. Хочете створити копію для редагування?"
 
-#: ../src/core/control/Control.cpp:587 ../src/core/control/Control.cpp:1558
+#: ../src/core/control/Control.cpp:598 ../src/core/control/Control.cpp:1572
 msgid "Yes"
 msgstr "Так"
 
-#: ../src/core/control/Control.cpp:587 ../src/core/control/Control.cpp:1558
+#: ../src/core/control/Control.cpp:598 ../src/core/control/Control.cpp:1572
 msgid "No"
 msgstr "Ні"
 
-#: ../src/core/control/Control.cpp:817 ../src/core/control/Control.cpp:1770
-#: ../src/core/control/Control.cpp:2094
+#: ../src/core/control/Control.cpp:828 ../src/core/control/Control.cpp:1784
+#: ../src/core/control/Control.cpp:2108
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: ../src/core/control/Control.cpp:818
+#: ../src/core/control/Control.cpp:829
 msgid "Insert after current page"
 msgstr "Вставити після поточної сторінки"
 
-#: ../src/core/control/Control.cpp:819
+#: ../src/core/control/Control.cpp:830
 msgid "Insert at end"
 msgstr "Вставити в кінці"
 
-#: ../src/core/control/Control.cpp:822
+#: ../src/core/control/Control.cpp:833
 msgid "_Journal"
 msgstr "_Журнал"
 
-#: ../src/core/control/Control.cpp:822
+#: ../src/core/control/Control.cpp:833
 msgid "Paper B_ackground"
 msgstr "_Тло паперу"
 
-#: ../src/core/control/Control.cpp:823
+#: ../src/core/control/Control.cpp:834
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:41
 msgid "With PDF background"
 msgstr "З тлом PDF"
 
-#: ../src/core/control/Control.cpp:826
+#: ../src/core/control/Control.cpp:837
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
@@ -81,15 +81,15 @@ msgstr "У поточному PDF документі відсутня сторі
 "Бажаєте вставити цю сторінку?\n\n"
 "Підказка: Можна обрати {2} для додавання PDF сторінки."
 
-#: ../src/core/control/Control.cpp:869
+#: ../src/core/control/Control.cpp:880
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Немає сторінок pdf, доступних для додавання. Вам може знадобитися заново відкрити документ."
 
-#: ../src/core/control/Control.cpp:883
+#: ../src/core/control/Control.cpp:894
 msgid "Unable to retrieve pdf page."
 msgstr "Не вдалося виділити сторінку pdf окремо."
 
-#: ../src/core/control/Control.cpp:1482
+#: ../src/core/control/Control.cpp:1496
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -97,100 +97,100 @@ msgstr "Не відкривайте автоматично збережені ф
 "Скопіюйте файли до іншої директорії.\n"
 "Файли з директорії {1} не вдається відкрити."
 
-#: ../src/core/control/Control.cpp:1502
+#: ../src/core/control/Control.cpp:1516
 msgid "file: {1}"
 msgstr "файл: {1}"
 
-#: ../src/core/control/Control.cpp:1535
+#: ../src/core/control/Control.cpp:1549
 msgid "Error opening file \"{1}\""
 msgstr "Помилка відкриття файлу \"{1}\""
 
-#: ../src/core/control/Control.cpp:1560
+#: ../src/core/control/Control.cpp:1574
 msgid "File version mismatch"
 msgstr "Невідповідність версії файлу"
 
-#: ../src/core/control/Control.cpp:1561
+#: ../src/core/control/Control.cpp:1575
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Файл, який завантажується, має новішу версію формату ніж та, що наразі підтримується цією версією Xournal++, так що він може не завантажитись належним чином. Все одно відкрити?"
 
-#: ../src/core/control/Control.cpp:1584
+#: ../src/core/control/Control.cpp:1598
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr "Помилка читання PDF-файлу \"{1}\"\n"
 "{2}"
 
-#: ../src/core/control/Control.cpp:1606
+#: ../src/core/control/Control.cpp:1620
 msgid "Error reading PNG file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1750
+#: ../src/core/control/Control.cpp:1764
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Прикріплений файл не знайдено. Можливо, його було переміщено, перейменовано або видалено."
 
-#: ../src/core/control/Control.cpp:1753
+#: ../src/core/control/Control.cpp:1767
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Файл фонового зображення \"{1}\" не знайдено. Можливо, його було переміщено, перейменовано або видалено.\n"
 "Останнє відоме його розташування: \"{2}\""
 
-#: ../src/core/control/Control.cpp:1763
+#: ../src/core/control/Control.cpp:1777
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Запропонований файл-замінник: \"{1}\""
 
-#: ../src/core/control/Control.cpp:1768
+#: ../src/core/control/Control.cpp:1782
 msgid "Select another PDF"
 msgstr "Оберіть інший файл PDF"
 
-#: ../src/core/control/Control.cpp:1769
+#: ../src/core/control/Control.cpp:1783
 msgid "Remove PDF Background"
 msgstr "Видалити тло PDF"
 
-#: ../src/core/control/Control.cpp:1773
+#: ../src/core/control/Control.cpp:1787
 msgid "Use proposed PDF"
 msgstr "Використовувати запропонований PDF"
 
-#: ../src/core/control/Control.cpp:1776
+#: ../src/core/control/Control.cpp:1790
 msgid "Missing PDF background file"
 msgstr "Відсутній PDF-файл підложки"
 
-#: ../src/core/control/Control.cpp:1908
+#: ../src/core/control/Control.cpp:1922
 msgid "Select font"
 msgstr "Обрати шрифт"
 
-#: ../src/core/control/Control.cpp:1927
+#: ../src/core/control/Control.cpp:1941
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Обрати колір"
 
-#: ../src/core/control/Control.cpp:1952
+#: ../src/core/control/Control.cpp:1966
 msgid "Unsaved Document"
 msgstr "Незбережений документ"
 
-#: ../src/core/control/Control.cpp:2087
+#: ../src/core/control/Control.cpp:2101
 msgid "Document file was removed."
 msgstr "Файл документу видалено."
 
-#: ../src/core/control/Control.cpp:2087
+#: ../src/core/control/Control.cpp:2101
 msgid "This document is not saved yet."
 msgstr "Цей документ ще не збережено."
 
-#: ../src/core/control/Control.cpp:2089
+#: ../src/core/control/Control.cpp:2103
 msgid "Save As..."
 msgstr "Зберегти як..."
 
-#: ../src/core/control/Control.cpp:2089 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2103 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "Зберегти"
 
-#: ../src/core/control/Control.cpp:2092
+#: ../src/core/control/Control.cpp:2106
 msgid "Discard"
 msgstr "Відмінити"
 
-#: ../src/core/control/Control.cpp:2177
+#: ../src/core/control/Control.cpp:2191
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -234,7 +234,7 @@ msgstr "планшет"
 msgid "Image file successfully created"
 msgstr "Файл зображення успішно створено"
 
-#: ../src/core/control/ExportHelper.cpp:120
+#: ../src/core/control/ExportHelper.cpp:134
 msgid "PDF file successfully created"
 msgstr "PDF-файл успішно створено"
 
@@ -263,8 +263,8 @@ msgid "Could not load LaTeX PDF file"
 msgstr "Не вдалося завантажити LaTeX PDF файл"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:110
-#: ../src/core/control/xojfile/LoadHandler.cpp:480
-#: ../src/core/control/xojfile/LoadHandler.cpp:496
+#: ../src/core/control/xojfile/LoadHandler.cpp:483
+#: ../src/core/control/xojfile/LoadHandler.cpp:499
 msgid "Error reading PDF: {1}"
 msgstr "Помилка читання PDF: {1}"
 
@@ -682,73 +682,73 @@ msgstr "Неочікуваний кореневий тег: {1}"
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Неочікуваний тег у документі: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:386
-#: ../src/core/control/xojfile/LoadHandler.cpp:415
+#: ../src/core/control/xojfile/LoadHandler.cpp:387
+#: ../src/core/control/xojfile/LoadHandler.cpp:417
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Не вдалося прочитати зображення: {1}. Повідомлення про помилку: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:425
+#: ../src/core/control/xojfile/LoadHandler.cpp:428
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "Не вдалося прочитати номер сторінки для клонованого фонового зображення: {1}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:433
+#: ../src/core/control/xojfile/LoadHandler.cpp:436
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Невідомий pixmap::domain: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:487
+#: ../src/core/control/xojfile/LoadHandler.cpp:490
 msgid "Unknown domain type: {1}"
 msgstr "Невідомий тип домену: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:525
+#: ../src/core/control/xojfile/LoadHandler.cpp:528
 msgid "Unknown background type: {1}"
 msgstr "Невідомий тип фону: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:550
+#: ../src/core/control/xojfile/LoadHandler.cpp:553
 msgid "Error reading width of a stroke: {1}"
 msgstr "Помилка при зчитуванні ширини лінії: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:619
+#: ../src/core/control/xojfile/LoadHandler.cpp:622
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "Невідомий тип обведення: \"{1}\", ймовірно округлий"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:637
+#: ../src/core/control/xojfile/LoadHandler.cpp:640
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Невідомий тип ліній: \"{1}\", ймовірно перо"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:809
-#: ../src/core/control/xojfile/LoadHandler.cpp:825
-#: ../src/core/control/xojfile/LoadHandler.cpp:1138
-#: ../src/core/control/xojfile/LoadHandler.cpp:1152
+#: ../src/core/control/xojfile/LoadHandler.cpp:812
+#: ../src/core/control/xojfile/LoadHandler.cpp:828
+#: ../src/core/control/xojfile/LoadHandler.cpp:1141
+#: ../src/core/control/xojfile/LoadHandler.cpp:1155
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Не вдалося відкрити вкладення: {1}. Повідомлення про помилку: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:818
-#: ../src/core/control/xojfile/LoadHandler.cpp:1144
-#: ../src/core/control/xojfile/LoadHandler.cpp:1163
+#: ../src/core/control/xojfile/LoadHandler.cpp:821
+#: ../src/core/control/xojfile/LoadHandler.cpp:1147
+#: ../src/core/control/xojfile/LoadHandler.cpp:1166
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Не вдалося відкрити вкладення: {1}. Повідомлення про помилку: вказано неприпустимий розмір файлу"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:837
+#: ../src/core/control/xojfile/LoadHandler.cpp:840
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Не вдалося відкрити вкладення: {1}. Повідомлення про помилку: не вдалося прочитати файл"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:846
+#: ../src/core/control/xojfile/LoadHandler.cpp:849
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Не вдалося відкрити вкладення: {1}. Повідомлення про помилку: Не вдалося записати файл"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1033
+#: ../src/core/control/xojfile/LoadHandler.cpp:1036
 msgid "Wrong count of points ({1})"
 msgstr "Невірна кількість крапок ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1049
+#: ../src/core/control/xojfile/LoadHandler.cpp:1052
 msgid "xoj-File: {1}"
 msgstr "Файл xoj: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1050
+#: ../src/core/control/xojfile/LoadHandler.cpp:1053
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr "Невірна кількість значень натиску, отримано {1}, очікувалось {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1182
+#: ../src/core/control/xojfile/LoadHandler.cpp:1185
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Запитаний тимчасовий файл не знайдено для вкладення {1}"
 
@@ -882,12 +882,12 @@ msgid "Thin"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:503
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:506
 msgid "Medium"
 msgstr "Середній"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:504
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:507
 msgid "Thick"
 msgstr "Широкий"
 
@@ -905,7 +905,7 @@ msgstr "Інструмент - Не змінюйте"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:79
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:378
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:494
 msgid "Pen"
 msgstr "Перо"
 
@@ -916,7 +916,7 @@ msgstr "Гумка"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:401
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:492
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:495
 msgid "Highlighter"
 msgstr "Маркер"
 
@@ -959,7 +959,7 @@ msgid "Select multi layer rect"
 msgstr "Обрати багатошарову прямокутну область"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:447
 msgid "Hand"
 msgstr "Рука"
 
@@ -985,48 +985,48 @@ msgstr "Нормальний малюнок"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Draw Line"
 msgstr "Намалювати лінію"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:418
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw Rectangle"
 msgstr "Намалювати Прямокутник"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Draw Ellipse"
 msgstr "Еліпс"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Draw Arrow"
 msgstr "Стрілка"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:422
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Draw Double Arrow"
 msgstr "Подвійна стрілка"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Draw Coordinate System"
 msgstr "Намалювати систему координат"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
 msgstr "Розпізнавання форм"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Draw Spline"
 msgstr "Намалювати Криву"
 
@@ -1550,7 +1550,7 @@ msgid "Go to first page"
 msgstr "Перейти на першу сторінку"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:347
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:456
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
 msgid "Back"
 msgstr "Назад"
 
@@ -1644,77 +1644,81 @@ msgstr "Косинець-транспортир"
 msgid "Compass"
 msgstr "Компас"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
+msgid "Toggle Touch Drawing"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
 msgid "Select Region"
 msgstr "Виділення ласо"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:431
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:12
 msgid "Select Rectangle"
 msgstr "Прямокутне виділення"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Select Multi-Layer Region"
 msgstr "Обрати багатошарову область"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Select Multi-Layer Rectangle"
 msgstr "Вибрати багатошаровий прямокутник"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 msgid "Select Object"
 msgstr "Обрати Об'єкт"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:441
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Vertical Space"
 msgstr "Вертикальний відступ"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:443
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 msgid "Play Object"
 msgstr "Відтворити Об'єкт"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:449
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:452
 msgid "Record Audio / Stop Recording"
 msgstr "Запис аудіо / Зупинити запис"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:451
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:454
 msgid "Pause / Play"
 msgstr "Пауза / Відтворення"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:452
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:455
 msgid "Stop"
 msgstr "Стоп"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:454
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:457
 msgid "Forward"
 msgstr "Вперед"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:490
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:493
 msgid "Laser pointer"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:496
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:499
 msgid "Fill"
 msgstr "Заливка"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:497
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:500
 msgid "Fill Opacity"
 msgstr "Прозорість заливки"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:500
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:503
 msgid "Very Fine"
 msgstr "Дуже тонкий"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:501
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:504
 msgid "Fine"
 msgstr "Тонкий"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:506
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:509
 msgid "Very Thick"
 msgstr "Дуже широкий"
 
