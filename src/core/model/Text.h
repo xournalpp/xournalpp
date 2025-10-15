@@ -15,7 +15,6 @@
 #include <vector>
 
 #include <pango/pango.h>
-
 #include "model/Element.h"
 #include "util/raii/GObjectSPtr.h"
 
@@ -70,9 +69,13 @@ protected:
 
 public:
     std::vector<XojPdfRectangle> findText(const std::string& search) const;
+    //void setUID(std::string uid);
+    //const std::string getUID() const;
 
 private:
     XojFont font;
+
+    //std::string uid;
 
     std::string text;
 

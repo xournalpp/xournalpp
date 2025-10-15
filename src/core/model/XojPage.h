@@ -85,11 +85,16 @@ public:
      */
     XojPage* clone();
 
+    void setUID(std::string uid);
+    const std::string getUID() const;
+
 private:
     /**
      * The Background image if any
      */
     BackgroundImage backgroundImage;
+
+    std::string uid;
 
     /**
      * The size of the page
