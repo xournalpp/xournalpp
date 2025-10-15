@@ -15,6 +15,7 @@ XojPage::XojPage(double width, double height, bool suppressLayerCreation): width
     if (!suppressLayerCreation) {
         // ensure at least one valid layer exists
         this->addLayer(new Layer());
+        this->uid = StringUtils::generateUniqueAlphanumericString();
         this->currentLayer = 1;
     }
 }
@@ -33,6 +34,9 @@ XojPage::XojPage(XojPage const& page):
         pdfBackgroundPage(page.pdfBackgroundPage),
         backgroundColor(page.backgroundColor) {
     this->layer.reserve(page.layer.size());
+
+    this->uid = StringUtils::generateUniqueAlphanumericString();
+    
     std::transform(begin(page.layer), end(page.layer), std::back_inserter(this->layer),
                    [](auto* layer) { return layer->clone(); });
 }
@@ -43,6 +47,15 @@ void XojPage::addLayer(Layer* layer) {
     this->layer.push_back(layer);
     this->currentLayer = npos;
 }
+
+void XojPage::setUID(std::string uid) {
+    this->uid = uid;
+}
+
+const std::string XojPage::getUID() const {
+    return this->uid;
+}
+
 
 void XojPage::insertLayer(Layer* layer, Layer::Index index) {
     if (index >= this->layer.size()) {

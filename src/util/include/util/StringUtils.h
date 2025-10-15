@@ -29,6 +29,11 @@ public:
     static std::string trim(std::string str);
     static bool iequals(const std::string& a, const std::string& b);
     static bool isNumber(const std::string& input);
+    static std::string generateUniqueAlphanumericString();
+    
+private:
+    static std::vector <std::string> uids;
+    static std::string generateRandomUid(int length);
 };
 
 inline auto char_cast(std::u8string_view str) -> std::string_view {

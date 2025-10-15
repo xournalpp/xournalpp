@@ -186,6 +186,8 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
             text->setAttrib("y", t->getY());
             text->setAttrib("color", getColorStr(t->getColor()).c_str());
 
+            //text->setAttrib("uid", t->getUID().c_str());
+
             writeTimestamp(text, t);
         } else if (e->getType() == ELEMENT_IMAGE) {
             auto* i = dynamic_cast<const Image*>(e);
@@ -209,6 +211,7 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
             image->setAttrib("right", i->getX() + i->getElementWidth());
             image->setAttrib("bottom", i->getY() + i->getElementHeight());
         }
+
     }
 }
 
@@ -217,6 +220,8 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
     root->addChild(page);
     page->setAttrib("width", p->getWidth());
     page->setAttrib("height", p->getHeight());
+
+    page->setAttrib("uid", p->getUID().c_str());
 
     auto* background = new XmlNode("background");
     page->addChild(background);
