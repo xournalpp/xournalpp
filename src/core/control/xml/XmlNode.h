@@ -37,7 +37,7 @@ public:
     void writeOut(OutputStream* out, ProgressListener* _listener);
 
     virtual void writeOut(OutputStream* out) { writeOut(out, nullptr); }
-
+    
     void addChild(XmlNode* node);
 
 protected:

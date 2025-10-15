@@ -13,7 +13,9 @@
 #include "IntAttribute.h"          // for IntAttribute
 #include "SizeTAttribute.h"        // for SizeTAttribute
 #include "TextAttribute.h"         // for TextAttribute
-
+#include <functional>
+#include <algorithm>  // per std::find
+#include "undo/UndoRedoHandler.h"  // per UndoRedoHandler
 
 XmlNode::XmlNode(const char* tag): tag(tag) {}
 
@@ -42,8 +44,12 @@ void XmlNode::setAttrib(const char* attrib, std::vector<double> values) {
 }
 
 void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
+   
+    auto pagesToWrite = UndoRedoHandler::pagesChanged;
+
     out->write("<");
     out->write(tag);
+
     writeAttributes(out);
 
     if (children.empty()) {
@@ -51,18 +57,55 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
     } else {
         out->write(">\n");
 
+        bool isFilteringPages = (!pagesToWrite.empty() && tag == "xournal");
+
+        /*
+            if (isFilteringPages) {
+                g_message("=== FILTERING PAGES ===");
+                g_message("Total children: %zu", children.size());
+                g_message("Pages to write (%zu): ", pagesToWrite.size());
+                for (const auto& p : pagesToWrite) {
+                    g_message("  - Page number: %zu", p);
+                }
+            }
+        */
         if (listener) {
-            listener->setMaximumState(children.size());
+            size_t maxState = isFilteringPages ? pagesToWrite.size() : children.size();
+            listener->setMaximumState(maxState);
         }
 
-        size_t i = 1;
-
-        for (auto& node: children) {
-            node->writeOut(out);
-            if (listener) {
-                listener->setCurrentState(i);
+        size_t pageNumber = 0; 
+        size_t writtenPages = 0;
+   
+        for (size_t i = 0; i < children.size(); i++) {
+            bool shouldWrite = true;
+            
+            if (isFilteringPages && children[i]->tag == "page") {
+                // Questo è un elemento <page>
+                auto it = std::find(pagesToWrite.begin(), pagesToWrite.end(), pageNumber);
+                
+                if (it == pagesToWrite.end()) {
+                    //g_message("Skipping page %zu (child index %zu)", pageNumber, i);
+                    shouldWrite = false;
+                } else {
+                    //g_message("Writing page %zu (child index %zu)", pageNumber, i);
+                    shouldWrite = true;
+                }
+                
+                pageNumber++;
+            } else if (isFilteringPages && children[i]->tag != "page") {
+                //g_message("Writing non-page element: %s (child index %zu)", children[i]->tag.c_str(), i);
+                shouldWrite = true;
             }
-            i++;
+            
+            if (shouldWrite) {
+                children[i]->writeOut(out);
+                
+                if (listener && isFilteringPages && children[i]->tag == "page") {
+                    writtenPages++;
+                    listener->setCurrentState(writtenPages);
+                }
+            }
         }
 
         out->write("</");

@@ -10,8 +10,33 @@
 #include "util/safe_casts.h"
 
 OutputStream::OutputStream() = default;
-
+InputStream::~InputStream() = default;
 OutputStream::~OutputStream() = default;
+
+GzInputStream::GzInputStream(const fs::path& file) {
+    fp = gzopen(file.string().c_str(), "rb");
+    if (!fp) {
+        error = "Errore apertura file: " + file.string();
+    }
+}
+
+GzInputStream::~GzInputStream() {
+    if (fp) gzclose(fp);
+}
+
+std::string GzInputStream::readAll()
+{
+    if (!fp) return "";
+    
+    std::string buffer;
+    char tmp[4096];
+    int bytes;
+    while ((bytes = gzread(fp, tmp, sizeof(tmp))) > 0) {
+        buffer.append(tmp, bytes);
+    }
+
+    return buffer;
+}
 
 void OutputStream::write(const std::string& str) { write(str.c_str(), str.length()); }
 
