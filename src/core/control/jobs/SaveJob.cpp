@@ -8,6 +8,7 @@
 #include <random>
 #include <fstream>
 #include <vector>
+#include <chrono>
 
 #include "control/Control.h"              // for Control
 #include "control/jobs/BlockingJob.h"     // for BlockingJob
@@ -151,6 +152,8 @@ fs::path createTempDir() {
 void saveFinalFile(Control* control, const std::string& modifiedXMLStr, const std::string& originalXMLStr, const fs::path& target, auto& lastError) {
     pugi::xml_document modifiedDoc, originalDoc;
 
+    // Carica il documento modificato e originale
+
     if (!modifiedDoc.load_string(modifiedXMLStr.c_str())) {
         lastError = FS(_F("Error saving file, could not parse modified XML"));
         return;
@@ -186,6 +189,8 @@ void saveFinalFile(Control* control, const std::string& modifiedXMLStr, const st
     if (previewNode) {
         resultRoot.append_copy(previewNode);
     }
+
+    auto start = std::chrono::steady_clock::now();
 
     // 2. Ottieni l'ordine corretto delle pagine dal documento in memoria
     Document* doc = control->getDocument();
@@ -224,6 +229,13 @@ void saveFinalFile(Control* control, const std::string& modifiedXMLStr, const st
     GzOutputStream out(target);
     out.write(mergedXml.c_str(), mergedXml.length());
     out.close();
+
+    auto end = std::chrono::steady_clock::now(); // tempo finale
+
+    // differenza in secondi (double)
+    std::chrono::duration<double> elapsed = end - start;
+    g_warning("Merging XML and saving took %.3f seconds", elapsed.count());
+
 }
 
 auto SaveJob::save() -> bool {
@@ -263,21 +275,26 @@ auto SaveJob::save() -> bool {
         // 1. Chiedi l'attributo direttamente per nome
         pugi::xml_attribute legacyAttr = sourceRoot.attribute("isLegacy");
 
-        // 2. Controlla se l'attributo esiste E confronta il suo contenuto (non il puntatore)
-        if (std::string(legacyAttr.as_string()) == "false") {
-            StringUtils::isOldXopp = false;
-        } else if (  std::string(legacyAttr.as_string()) == "true" || !legacyAttr ) {
-            // È buona norma reimpostare il flag se non è trovato o è diverso da "true"
-            StringUtils::isOldXopp = true;
+        // L'attributo non esiste
+        if ( !legacyAttr )
+        {
+            StringUtils::isLegacy = true;
         }
+        else
+        {
+            StringUtils::isLegacy = false;
+        }
+
     } else {
         // Il file potrebbe essere nuovo o corrotto, quindi non è legacy
-        StringUtils::isOldXopp = false;
+        StringUtils::isLegacy = false;
     }
 
-    g_warning("isOldXopp: %s", StringUtils::isOldXopp ? "true" : "false");
+    g_warning("isLegacy: %s", StringUtils::isLegacy ? "true" : "false");
 
-    if ( !StringUtils::isOldXopp )
+    // Se le pagine non hanno uid quindi isLegacy non esiste come attributo
+    // Allora dobbiamo ricorrere al vecchio tipo di salvataggio, sennò il nuovo
+    if ( !StringUtils::isLegacy )
     {
         if (createBackup) {
             try {

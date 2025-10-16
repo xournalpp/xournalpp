@@ -325,7 +325,7 @@ void LoadHandler::parseContents() {
         if ( LoadHandlerHelper::getAttrib("uid", false, this) == nullptr )
         {
             uid = "";
-            StringUtils::isOldXopp = true;
+            StringUtils::isLegacy = true;
             g_warning("Legacy file without UID detected. New UIDs will be generated.");
         }
         else

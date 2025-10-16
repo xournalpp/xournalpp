@@ -53,7 +53,7 @@ void XmlNode::setAttrib(const char* attrib, std::vector<double> values) {
 
 void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
    
-    if ( !StringUtils::isOldXopp )
+    if ( !StringUtils::isLegacy )
     {
         
         auto pagesToWrite = UndoRedoHandler::pagesChanged;
