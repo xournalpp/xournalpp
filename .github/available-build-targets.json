@@ -51,6 +51,14 @@
       "build_portable": "true",
       "run_ci": "true"
     },
+    "windows_ucrt": {
+      "displayed_name": "Windows x86_64 UCRT64",
+      "runner": "windows-latest",
+      "msystem": "UCRT64",
+      "msys_package_env": "ucrt-x86_64",
+      "build_portable": "true",
+      "run_ci": "true"
+    },
     "windows-arm": {
       "displayed_name": "Windows ARM",
       "runner": "windows-11-arm",
