@@ -192,7 +192,7 @@ void UndoRedoHandler::addUndoAction(UndoActionPtr action) {
     fireUpdateUndoRedoButtons(this->undoList.back()->getPages());
 
     for (auto const& page : this->undoList.back()->getPages()) {
-        g_warning("UID page added: %s", page.get()->getUID().c_str());  
+        //g_warning("UID page added: %s", page.get()->getUID().c_str());  
         this->pagesChanged.emplace_back(page.get()->getUID());
     }
     

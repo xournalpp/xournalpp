@@ -326,7 +326,7 @@ void LoadHandler::parseContents() {
         {
             uid = "";
             StringUtils::isLegacy = true;
-            g_warning("Legacy file without UID detected. New UIDs will be generated.");
+            //g_warning("Legacy file without UID detected. New UIDs will be generated.");
         }
         else
         {
@@ -335,7 +335,7 @@ void LoadHandler::parseContents() {
 
         this->page = std::make_unique<XojPage>(width, height, true, uid);
 
-        g_warning("UID page loaded: %s", this->page.get()->getUID().c_str()); 
+        //g_warning("UID page loaded: %s", this->page.get()->getUID().c_str()); 
 
         pages.push_back(this->page);
     } else if (strcmp(elementName, "audio") == 0) {

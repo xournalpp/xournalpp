@@ -83,7 +83,7 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
 
             if (listener) {
                 size_t maxState = isFilteringPages ? pagesToWrite.size() : children.size();
-                listener->setMaximumState(maxState);
+                //listener->setMaximumState(maxState);
             }
 
             size_t pageNumber = 1; 
@@ -117,7 +117,7 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
                     
                     if (listener && isFilteringPages && children[i]->tag == "page") {
                         writtenPages++;
-                        listener->setCurrentState(writtenPages);
+                        //listener->setCurrentState(writtenPages);
                     }
                 }
             }

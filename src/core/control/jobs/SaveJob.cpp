@@ -12,6 +12,7 @@
 
 #include "control/Control.h"              // for Control
 #include "control/jobs/BlockingJob.h"     // for BlockingJob
+#include "control/jobs/ProgressListener.h"  // for ProgressListener
 #include "control/xojfile/SaveHandler.h"  // for SaveHandler
 #include "model/Document.h"               // for Document
 #include "model/PageRef.h"                // for PageRef
@@ -190,9 +191,18 @@ void saveFinalFile(Control* control, const std::string& modifiedXMLStr, const st
         resultRoot.append_copy(previewNode);
     }
 
-    auto start = std::chrono::steady_clock::now();
-
     // 2. Ottieni l'ordine corretto delle pagine dal documento in memoria
+
+    ProgressListener* listener = control;
+
+    int progressCounter = 1;
+
+    auto pagesCount = control->getDocument()->getPages().size();
+
+    listener->setMaximumState(  pagesCount );
+
+    g_warning("Total pages to process: %zu", pagesCount);
+
     Document* doc = control->getDocument();
     std::vector<PageRef> pages = doc->getPages();
 
@@ -219,6 +229,8 @@ void saveFinalFile(Control* control, const std::string& modifiedXMLStr, const st
                 g_warning("Could not find page with UID %s in either modified or original document.", uid);
             }
         }
+
+        listener->setCurrentState(progressCounter++);
     }
 
     // 4. Salva il documento finale unito
@@ -230,15 +242,12 @@ void saveFinalFile(Control* control, const std::string& modifiedXMLStr, const st
     out.write(mergedXml.c_str(), mergedXml.length());
     out.close();
 
-    auto end = std::chrono::steady_clock::now(); // tempo finale
-
-    // differenza in secondi (double)
-    std::chrono::duration<double> elapsed = end - start;
-    g_warning("Merging XML and saving took %.3f seconds", elapsed.count());
-
 }
 
 auto SaveJob::save() -> bool {
+
+    auto start = std::chrono::steady_clock::now();
+
     updatePreview(control);
     Document* doc = this->control->getDocument();
     SaveHandler h;
@@ -375,6 +384,12 @@ auto SaveJob::save() -> bool {
     } else {
         doc->setCreateBackupOnSave(true);
     }
+
+    auto end = std::chrono::steady_clock::now(); // tempo finale
+
+    // differenza in secondi (double)
+    std::chrono::duration<double> elapsed = end - start;
+    g_warning("Merging XML and saving took %.3f seconds", elapsed.count());
 
     return true;
 }
