@@ -434,6 +434,10 @@ void Document::insertPage(const PageRef& p, size_t position) {
     updateIndexPageNumbers();
 }
 
+std::vector<PageRef> Document::getPages() const {
+    return this->pages;
+}
+
 void Document::addPage(const PageRef& p) {
     this->pages.push_back(p);
 

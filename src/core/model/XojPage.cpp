@@ -11,11 +11,11 @@
 
 #include "BackgroundImage.h"  // for BackgroundImage
 
-XojPage::XojPage(double width, double height, bool suppressLayerCreation): width(width), height(height), bgType(PageTypeFormat::Lined) {
+XojPage::XojPage(double width, double height, bool suppressLayerCreation, std::string uid): width(width), height(height), bgType(PageTypeFormat::Lined), uid( (uid == "") ? StringUtils::generateUniqueAlphanumericString() : uid ) {
     if (!suppressLayerCreation) {
         // ensure at least one valid layer exists
         this->addLayer(new Layer());
-        this->uid = StringUtils::generateUniqueAlphanumericString();
+
         this->currentLayer = 1;
     }
 }
@@ -25,8 +25,10 @@ XojPage::~XojPage() {
     this->layer.clear();
 }
 
+// Costruttore di copia
 XojPage::XojPage(XojPage const& page):
         backgroundImage(page.backgroundImage),
+        uid(page.uid),
         width(page.width),
         height(page.height),
         currentLayer(page.currentLayer),
@@ -35,8 +37,6 @@ XojPage::XojPage(XojPage const& page):
         backgroundColor(page.backgroundColor) {
     this->layer.reserve(page.layer.size());
 
-    this->uid = StringUtils::generateUniqueAlphanumericString();
-    
     std::transform(begin(page.layer), end(page.layer), std::back_inserter(this->layer),
                    [](auto* layer) { return layer->clone(); });
 }

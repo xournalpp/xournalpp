@@ -11,6 +11,8 @@
 
 #include "control/Control.h"  // for Control
 #include "model/Document.h"   // for Document
+#include "model/PageRef.h"   // for PageRef
+#include "model/XojPage.h"   // for PageRef
 #include "undo/UndoAction.h"  // for UndoActionPtr, UndoAction
 #include "util/Assert.h"      // for xoj_assert
 #include "util/XojMsgBox.h"   // for XojMsgBox
@@ -18,8 +20,8 @@
 
 using std::string;
 
-std::deque<int> UndoRedoHandler::pagesChanged; // undoList
-std::deque<int> UndoRedoHandler::pagesChangedUndo; // redoList
+std::deque<std::string> UndoRedoHandler::pagesChanged; // undoList
+std::deque<std::string> UndoRedoHandler::pagesChangedUndo; // redoList
 
 template <typename T>
 T* GetPtr(T* ptr) {
@@ -189,17 +191,9 @@ void UndoRedoHandler::addUndoAction(UndoActionPtr action) {
     clearRedo();
     fireUpdateUndoRedoButtons(this->undoList.back()->getPages());
 
-    int currentPageNo = this->control->getCurrentPageNo();
-
-    auto it = std::find(this->pagesChanged.begin(), 
-                        this->pagesChanged.end(), 
-                        currentPageNo);
-
-    if (it == this->pagesChanged.end()) {
-        this->pagesChanged.emplace_back(currentPageNo);
-        g_warning("Page number %d inserted", currentPageNo);
-    } else {
-        g_warning("Page number %d already here", currentPageNo); 
+    for (auto const& page : this->undoList.back()->getPages()) {
+        g_warning("UID page added: %s", page.get()->getUID().c_str());  
+        this->pagesChanged.emplace_back(page.get()->getUID());
     }
     
     printContents();

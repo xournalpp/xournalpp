@@ -16,7 +16,7 @@ OutputStream::~OutputStream() = default;
 GzInputStream::GzInputStream(const fs::path& file) {
     fp = gzopen(file.string().c_str(), "rb");
     if (!fp) {
-        error = "Errore apertura file: " + file.string();
+        g_warning("%s", "Errore apertura file");
     }
 }
 
@@ -24,17 +24,36 @@ GzInputStream::~GzInputStream() {
     if (fp) gzclose(fp);
 }
 
-std::string GzInputStream::readAll()
-{
-    if (!fp) return "";
+std::string GzInputStream::readAll() {
+    if (!fp) {
+        // Se il file non è mai stato aperto, imposta un errore e esci.
+        g_warning("%s", "File could not be opened or is invalid.");
+        return "";
+    }
     
     std::string buffer;
     char tmp[4096];
-    int bytes;
-    while ((bytes = gzread(fp, tmp, sizeof(tmp))) > 0) {
-        buffer.append(tmp, bytes);
+    int bytesRead;
+
+    // Pulisci lo stato di errore prima di iniziare a leggere
+    gzclearerr(fp);
+
+    while ((bytesRead = gzread(fp, tmp, sizeof(tmp))) > 0) {
+        buffer.append(tmp, bytesRead);
     }
 
+    // **Controllo cruciale dopo il ciclo**
+    // Se bytesRead è < 0, si è verificato un errore.
+    if (bytesRead < 0) {
+        int errnum = 0;
+        const char *errmsg = gzerror(fp, &errnum);
+        if (errnum != Z_OK && errnum != Z_STREAM_END) {
+             // Memorizza il messaggio di errore specifico di zlib
+             g_warning("%s", "Gzip read error: " + std::string(errmsg));
+        }
+    }
+
+    // Se non ci sono stati errori, la funzione restituirà il buffer (anche se vuoto).
     return buffer;
 }
 

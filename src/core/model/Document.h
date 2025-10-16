@@ -103,6 +103,8 @@ public:
     inline Util::PathStorageMode getPathStorageMode() const { return pathStorageMode; }
     inline void setPathStorageMode(Util::PathStorageMode m) { pathStorageMode = m; }
 
+    std::vector<PageRef> getPages() const;
+
 private:
     void buildContentsModel();
     void freeTreeContentModel();

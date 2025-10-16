@@ -23,7 +23,7 @@
 #include <pugixml.hpp> // Da aggiungere anche per Unix
 #include "util/OutputStream.h"           // for GzInputStream
 #include "filesystem.h"  // for path, filesystem_error, remove
-
+#include "util/StringUtils.h"
 
 SaveJob::SaveJob(Control* control, std::function<void(bool)> callback):
         BlockingJob(control, _("Save")), callback(std::move(callback)) {}
@@ -103,13 +103,35 @@ void SaveJob::updatePreview(Control* control) {
 
     doc->unlock();
 }
+// Nel tuo file che contiene extractXmlFromXopp
+#include <iostream> // Per il logging degli errori
 
 std::string extractXmlFromXopp(const fs::path& filepath, fs::path tempDir) {
-    
     GzInputStream in(filepath);
+
+    // **Controllo 1: Errore durante l'apertura del file**
+    // GzInputStream imposta un errore nel costruttore se gzopen fallisce.
+    if (!in.getLastError().empty()) {
+        std::cerr << "Error opening compressed file " << filepath.string() 
+                  << ": " << in.getLastError() << std::endl;
+        return ""; // Restituisce stringa vuota in caso di errore
+    }
 
     fs::create_directories(tempDir);
     std::string xml = in.readAll();
+
+    // **Controllo 2: Errore durante la lettura del file**
+    // Controlla se readAll() ha impostato un errore.
+    if (!in.getLastError().empty()) {
+        std::cerr << "Error reading compressed file " << filepath.string() 
+                  << ": " << in.getLastError() << std::endl;
+        return ""; // Restituisce stringa vuota in caso di errore
+    }
+    
+    if (xml.empty()) {
+        std::cerr << "Warning: Extracted XML from " << filepath.string() 
+                  << " is empty. The file might be valid but contain no data." << std::endl;
+    }
 
     return xml;
 }
@@ -125,52 +147,75 @@ fs::path createTempDir() {
     return tempDir;
 }
 
-void saveFinalFile(const std::string& modifiedXMLStr, const std::string& originalXMLStr, 
+void saveFinalFile(const std::string& modifiedXMLStr, const std::string& originalXMLStr,
                    const fs::path& target, auto& lastError)
 {
-    pugi::xml_document doc1, doc2;
+    pugi::xml_document modifiedDoc, originalDoc;
 
-    if (!doc1.load_string(modifiedXMLStr.c_str())) {
+    if (!modifiedDoc.load_string(modifiedXMLStr.c_str())) {
         lastError = FS(_F("Error saving file, could not parse modified XML"));
         return;
     }
 
-    if (!doc2.load_string(originalXMLStr.c_str())) {
-        lastError = FS(_F("Error saving file, could not parse original XML"));
+    if (!originalDoc.load_string(originalXMLStr.c_str())) {
+        // Se il file originale non esiste o è corrotto, salviamo semplicemente il file con le modifiche.
+        // Questo gestisce il caso di "Salva con nome" o di un file nuovo.
+        GzOutputStream out(target);
+        out.write(modifiedXMLStr.c_str(), modifiedXMLStr.length());
+        out.close();
+
+        g_warning("Pare ci sia un problema qui");
+
         return;
     }
-    
-    pugi::xml_document resultDoc;
-    pugi::xml_node root = resultDoc.append_copy(doc2.document_element());
 
-    int pageIndex = 0;
+    // Usa il documento originale come base per il risultato.
+    pugi::xml_document resultDoc;
+    resultDoc.append_copy(originalDoc.document_element());
+    pugi::xml_node resultRoot = resultDoc.child("xournal");
+
+    // 1. Crea una mappa di UID -> xml_node per tutte le pagine modificate.
     
-    std::vector<std::pair<pugi::xml_node, pugi::xml_node>> replacements;
-    
-    for (pugi::xml_node page : root.children("page")) {
-        if (std::find(UndoRedoHandler::pagesChanged.begin(), 
-                     UndoRedoHandler::pagesChanged.end(), 
-                     pageIndex) != UndoRedoHandler::pagesChanged.end()) {
-            
-            pugi::xpath_node pageDoc1 = doc1.select_node(
-                ("/xournal/page[" + std::to_string(pageIndex + 1) + "]").c_str());
-            
-            if (pageDoc1) {
-                replacements.push_back({page, pageDoc1.node()});
+    std::map<std::string, pugi::xml_node> modifiedPagesMap;
+    for (pugi::xml_node modifiedPage : modifiedDoc.child("xournal").children("page")) {
+        const char* uid = modifiedPage.attribute("uid").as_string();
+        if (uid && *uid) { // Assicurati che l'UID non sia nullo o vuoto
+            modifiedPagesMap[uid] = modifiedPage;
+        }
+    }
+
+    pugi::xml_node currentPage = resultRoot.child("page");
+    while (currentPage) {
+        // Salva il nodo successivo PRIMA di un'eventuale rimozione
+        pugi::xml_node nextNode = currentPage.next_sibling("page");
+
+        const char* uid = currentPage.attribute("uid").as_string();
+        if (uid && *uid) {
+            auto it = modifiedPagesMap.find(uid);
+            if (it != modifiedPagesMap.end()) {
+                // Trovata una versione modificata di questa pagina, sostituiscila.
+                resultRoot.insert_copy_before(it->second, currentPage);
+                resultRoot.remove_child(currentPage); // Ora è sicuro rimuovere il nodo corrente
+
+                // Rimuovi dalla mappa per contrassegnarla come elaborata.
+                modifiedPagesMap.erase(it);
             }
         }
-        pageIndex++;
-    }
-    
-    for (auto& [oldPage, newPage] : replacements) {
-        root.insert_copy_before(newPage, oldPage);
-        root.remove_child(oldPage);
+        // Passa al nodo successivo
+        currentPage = nextNode;
     }
 
-    std::stringstream ss;
-    resultDoc.save(ss, "  ");
-    std::string mergedXml = ss.str();
+    // 3. Aggiungi alla fine le pagine rimanenti dalla mappa (pagine nuove o senza un UID corrispondente).
+    for (const auto& pair : modifiedPagesMap) {
+        resultRoot.append_copy(pair.second);
+    }
     
+
+    // 4. Salva il documento unito.
+    std::stringstream ss;
+    resultDoc.save(ss, "  "); // Usa un'indentazione per la leggibilità
+    std::string mergedXml = ss.str();
+
     GzOutputStream out(target);
     out.write(mergedXml.c_str(), mergedXml.length());
     out.close();
@@ -185,51 +230,85 @@ auto SaveJob::save() -> bool {
 
     doc->lock();
     fs::path target = doc->getFilepath();
+
+    g_warning("Saving to: %s", target.u8string().c_str());
+
     Util::safeReplaceExtension(target, "xopp");
 
     h.prepareSave(doc, target);
     doc->unlock();
-
-    fs::path tempDir = createTempDir();
-
-    std::string originalXMLStr = extractXmlFromXopp(target, tempDir);
-
+    
     auto const createBackup = doc->shouldCreateBackupOnSave();
 
-    if (createBackup) {
-        try {
-            // Note: The backup must be created for the target as this is the filepath
-            // which will be written to. Do not use the `filepath` variable!
-            Util::safeRenameFile(target, fs::path{target} += "~");
-        } catch (const fs::filesystem_error& fe) {
-            g_warning("Could not create backup! Failed with %s", fe.what());
-            this->lastError = FS(_F("Save file error, can't backup: {1}") % std::string(fe.what()));
-            if (!control->getWindow()) {
-                g_error("%s", this->lastError.c_str());
+    if ( !StringUtils::isXoppLegacy )
+    {
+        fs::path tempDir = createTempDir();
+
+        std::string originalXMLStr = extractXmlFromXopp(target, tempDir);
+        
+        if (createBackup) {
+            try {
+                // Note: The backup must be created for the target as this is the filepath
+                // which will be written to. Do not use the `filepath` variable!
+                Util::safeRenameFile(target, fs::path{target} += "~");
+            } catch (const fs::filesystem_error& fe) {
+                g_warning("Could not create backup! Failed with %s", fe.what());
+                this->lastError = FS(_F("Save file error, can't backup: {1}") % std::string(fe.what()));
+                if (!control->getWindow()) {
+                    g_error("%s", this->lastError.c_str());
+                }
+                return false;
             }
-            return false;
         }
+
+        //std::ofstream outFile(tempDir / "original.xml");
+        //outFile << originalXMLStr;
+
+        fs::path xoppFileModifiedOnlyPages = tempDir / "backup.xopp";
+
+        /*
+            Save modified pages only in xopp format
+        */
+
+        doc->lock();
+        h.saveTo(xoppFileModifiedOnlyPages, this->control);
+        doc->setFilepath(target);
+        doc->unlock();
+
+        /*
+            Extract XML from xoppFileModifiedOnlyPages
+        */
+
+        std::string modifiedXMLStr = extractXmlFromXopp(xoppFileModifiedOnlyPages, tempDir);
+
+        saveFinalFile(modifiedXMLStr, originalXMLStr, target, this->lastError);
+
+    }
+    else
+    {
+        
+        if (createBackup) {
+            try {
+                // Note: The backup must be created for the target as this is the filepath
+                // which will be written to. Do not use the `filepath` variable!
+                Util::safeRenameFile(target, fs::path{target} += "~");
+            } catch (const fs::filesystem_error& fe) {
+                g_warning("Could not create backup! Failed with %s", fe.what());
+                this->lastError = FS(_F("Save file error, can't backup: {1}") % std::string(fe.what()));
+                if (!control->getWindow()) {
+                    g_error("%s", this->lastError.c_str());
+                }
+                return false;
+            }
+        }
+
+        doc->lock();
+        h.saveTo(target, this->control);
+        doc->setFilepath(target);
+        doc->unlock();
     }
 
-    fs::path xoppFileModifiedOnlyPages = tempDir / "backup.xopp";
-
-    /*
-        Save modified pages only in xopp format
-    */
-
-    doc->lock();
-    h.saveTo(xoppFileModifiedOnlyPages, this->control);
-    doc->setFilepath(target);
-    doc->unlock();
-
-    /*
-        Extract XML from xoppFileModifiedOnlyPages
-    */
-
-    std::string modifiedXMLStr = extractXmlFromXopp(xoppFileModifiedOnlyPages, tempDir);
-
-    saveFinalFile(modifiedXMLStr, originalXMLStr, target, this->lastError);
-
+    
     if (!h.getErrorMessage().empty()) {
         this->lastError = FS(_F("Save file error: {1}") % h.getErrorMessage());
         if (!control->getWindow()) {

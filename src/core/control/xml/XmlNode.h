@@ -15,6 +15,7 @@
 #include <memory>   // for unique_ptr
 #include <string>   // for string
 #include <vector>   // for vector
+#include <optional>
 
 #include "Attribute.h"  // for XMLAttribute
 
