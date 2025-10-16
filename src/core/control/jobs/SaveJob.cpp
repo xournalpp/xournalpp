@@ -23,8 +23,8 @@
 #include "util/XojMsgBox.h"               // for XojMsgBox
 #include "util/i18n.h"                    // for FS, _, _F
 #include "view/DocumentView.h"            // for DocumentView
-#include <pugixml.hpp> // Da aggiungere anche per Unix
-#include "util/OutputStream.h"           // for GzInputStream
+#include <pugixml.hpp>                    // for xml_document, xml_node, ...             
+#include "util/OutputStream.h"            // for GzInputStream
 #include "filesystem.h"  // for path, filesystem_error, remove
 #include "util/StringUtils.h"
 
@@ -106,34 +106,21 @@ void SaveJob::updatePreview(Control* control) {
 
     doc->unlock();
 }
-// Nel tuo file che contiene extractXmlFromXopp
-#include <iostream> // Per il logging degli errori
 
-std::string extractXmlFromXopp(const fs::path& filepath, fs::path tempDir) {
+std::string extractXmlFromXopp(const fs::path& filepath, fs::path tempDir, auto* lastError) {
     GzInputStream in(filepath);
 
-    // **Controllo 1: Errore durante l'apertura del file**
-    // GzInputStream imposta un errore nel costruttore se gzopen fallisce.
     if (!in.getLastError().empty()) {
-        std::cerr << "Error opening compressed file " << filepath.string() 
-                  << ": " << in.getLastError() << std::endl;
-        return ""; // Restituisce stringa vuota in caso di errore
+        lastError = FS(_F("Error opening compressed file"));
+        return;
     }
 
     fs::create_directories(tempDir);
     std::string xml = in.readAll();
 
-    // **Controllo 2: Errore durante la lettura del file**
-    // Controlla se readAll() ha impostato un errore.
-    if (!in.getLastError().empty()) {
-        std::cerr << "Error reading compressed file " << filepath.string() 
-                  << ": " << in.getLastError() << std::endl;
-        return ""; // Restituisce stringa vuota in caso di errore
-    }
-    
     if (xml.empty()) {
-        std::cerr << "Warning: Extracted XML from " << filepath.string() 
-                  << " is empty. The file might be valid but contain no data." << std::endl;
+        lastError = FS(_F("Cannot parse XML from file"));
+        return;
     }
 
     return xml;
@@ -153,8 +140,6 @@ fs::path createTempDir() {
 void saveFinalFile(Control* control, const std::string& modifiedXMLStr, const std::string& originalXMLStr, const fs::path& target, auto& lastError) {
     pugi::xml_document modifiedDoc, originalDoc;
 
-    // Carica il documento modificato e originale
-
     if (!modifiedDoc.load_string(modifiedXMLStr.c_str())) {
         lastError = FS(_F("Error saving file, could not parse modified XML"));
         return;
@@ -163,35 +148,30 @@ void saveFinalFile(Control* control, const std::string& modifiedXMLStr, const st
     bool originalIsValid = originalDoc.load_string(originalXMLStr.c_str());
 
     if (!originalIsValid) {
-        // Se il file originale non esiste o è corrotto, salviamo semplicemente il file con le modifiche.
-        // Questo gestisce il caso di "Salva con nome" o di un file nuovo.
         GzOutputStream out(target);
         out.write(modifiedXMLStr.c_str(), modifiedXMLStr.length());
         out.close();
         return;
     }
 
-    // 1. Crea la base del documento finale con l'header corretto.
     pugi::xml_document resultDoc;
     pugi::xml_node sourceRoot = modifiedDoc.child("xournal");
     pugi::xml_node resultRoot = resultDoc.append_child("xournal");
 
-    // Copia tutti gli attributi (creator, fileversion, etc.) dal sorgente
     for (pugi::xml_attribute attr : sourceRoot.attributes()) {
         resultRoot.append_attribute(attr.name()) = attr.value();
     }
 
-    // Aggiungi solo i tag <title> e <preview> all'header
     pugi::xml_node titleNode = sourceRoot.child("title");
+
     if (titleNode) {
         resultRoot.append_copy(titleNode);
     }
     pugi::xml_node previewNode = sourceRoot.child("preview");
+
     if (previewNode) {
         resultRoot.append_copy(previewNode);
     }
-
-    // 2. Ottieni l'ordine corretto delle pagine dal documento in memoria
 
     ProgressListener* listener = control;
 
@@ -201,41 +181,38 @@ void saveFinalFile(Control* control, const std::string& modifiedXMLStr, const st
 
     listener->setMaximumState(  pagesCount );
 
-    g_warning("Total pages to process: %zu", pagesCount);
-
     Document* doc = control->getDocument();
     std::vector<PageRef> pages = doc->getPages();
 
     pugi::xml_node modifiedXournalNode = modifiedDoc.child("xournal");
     pugi::xml_node originalXournalNode = originalDoc.child("xournal");
 
-    // 3. Itera sull'ordine corretto e aggiungi le pagine al documento finale
     for (const auto& pageRef : pages) {
         const char* uid = pageRef.get()->getUID().c_str();
 
-        // Cerca la pagina prima nel documento delle modifiche
         pugi::xml_node pageNode = modifiedXournalNode.find_child_by_attribute("page", "uid", uid);
 
         if (pageNode) {
-            // **CORREZIONE**: Aggiungi al nodo <xournal> (resultRoot), non al documento
+
             resultRoot.append_copy(pageNode);
+
         } else {
-            // Se non la troviamo, cerchiamo quella originale (pagina spostata ma non modificata)
+            
             pugi::xml_node originalPageNode = originalXournalNode.find_child_by_attribute("page", "uid", uid);
+
             if (originalPageNode) {
-                // **CORREZIONE**: Aggiungi al nodo <xournal> (resultRoot), non al documento
                 resultRoot.append_copy(originalPageNode);
             } else {
                 g_warning("Could not find page with UID %s in either modified or original document.", uid);
             }
+
         }
 
         listener->setCurrentState(progressCounter++);
     }
 
-    // 4. Salva il documento finale unito
     std::stringstream ss;
-    resultDoc.save(ss, "  "); // Usa un'indentazione per la leggibilità
+    resultDoc.save(ss, "  ");
     std::string mergedXml = ss.str();
 
     GzOutputStream out(target);
@@ -257,8 +234,6 @@ auto SaveJob::save() -> bool {
     doc->lock();
     fs::path target = doc->getFilepath();
 
-    g_warning("Saving to: %s", target.u8string().c_str());
-
     Util::safeReplaceExtension(target, "xopp");
 
     h.prepareSave(doc, target);
@@ -270,21 +245,17 @@ auto SaveJob::save() -> bool {
 
     std::string originalXMLStr = extractXmlFromXopp(target, tempDir);
         
-    // Carica il documento originale
     pugi::xml_document xmlDoc;
     if (!xmlDoc.load_string(originalXMLStr.c_str())) {
-        g_warning("XML originale non valido, impossibile controllare il flag 'isLegacy'.");
-        // Continua comunque, la funzione saveFinalFile gestirà l'XML vuoto
+        this->lastError = FS(_F("Could not parse original XML file"));
+        return;
     }
 
-    // Ottieni il nodo radice dal documento che hai appena caricato
     pugi::xml_node sourceRoot = xmlDoc.child("xournal");
 
     if (sourceRoot) {
-        // 1. Chiedi l'attributo direttamente per nome
         pugi::xml_attribute legacyAttr = sourceRoot.attribute("isLegacy");
 
-        // L'attributo non esiste
         if ( !legacyAttr )
         {
             StringUtils::isLegacy = true;
@@ -295,20 +266,13 @@ auto SaveJob::save() -> bool {
         }
 
     } else {
-        // Il file potrebbe essere nuovo o corrotto, quindi non è legacy
         StringUtils::isLegacy = false;
     }
 
-    g_warning("isLegacy: %s", StringUtils::isLegacy ? "true" : "false");
-
-    // Se le pagine non hanno uid quindi isLegacy non esiste come attributo
-    // Allora dobbiamo ricorrere al vecchio tipo di salvataggio, sennò il nuovo
     if ( !StringUtils::isLegacy )
     {
         if (createBackup) {
             try {
-                // Note: The backup must be created for the target as this is the filepath
-                // which will be written to. Do not use the `filepath` variable!
                 Util::safeRenameFile(target, fs::path{target} += "~");
             } catch (const fs::filesystem_error& fe) {
                 g_warning("Could not create backup! Failed with %s", fe.what());
@@ -320,36 +284,27 @@ auto SaveJob::save() -> bool {
             }
         }
 
-        //std::ofstream outFile(tempDir / "original.xml");
-        //outFile << originalXMLStr;
-
         fs::path xoppFileModifiedOnlyPages = tempDir / "backup.xopp";
-
-        /*
-            Save modified pages only in xopp format
-        */
 
         doc->lock();
         h.saveTo(xoppFileModifiedOnlyPages, this->control);
         doc->setFilepath(target);
         doc->unlock();
 
-        /*
-            Extract XML from xoppFileModifiedOnlyPages
-        */
-
         std::string modifiedXMLStr = extractXmlFromXopp(xoppFileModifiedOnlyPages, tempDir);
 
         saveFinalFile(this->control, modifiedXMLStr, originalXMLStr, target, this->lastError);
 
+        uintmax_t removeTempDirectory = fs::remove_all(tempDir);
+        g_warning("Removed temporary directory %s with %llu files.", tempDir.u8string().c_str(),
+                  static_cast<unsigned long long>(removeTempDirectory));
+    
     }
     else
     {
         
         if (createBackup) {
             try {
-                // Note: The backup must be created for the target as this is the filepath
-                // which will be written to. Do not use the `filepath` variable!
                 Util::safeRenameFile(target, fs::path{target} += "~");
             } catch (const fs::filesystem_error& fe) {
                 g_warning("Could not create backup! Failed with %s", fe.what());
@@ -387,7 +342,6 @@ auto SaveJob::save() -> bool {
 
     auto end = std::chrono::steady_clock::now(); // tempo finale
 
-    // differenza in secondi (double)
     std::chrono::duration<double> elapsed = end - start;
     g_warning("Merging XML and saving took %.3f seconds", elapsed.count());
 

@@ -20,7 +20,6 @@
 using xoj::util::Rectangle;
 
 Text::Text(): AudioElement(ELEMENT_TEXT) {
-    //this->uid = StringUtils::generateUniqueAlphanumericString();
     this->font.setName("Sans");
     this->font.setSize(12);
 }
@@ -40,8 +39,6 @@ auto Text::cloneText() const -> std::unique_ptr<Text> {
     text->snappedBounds = this->snappedBounds;
     text->sizeCalculated = this->sizeCalculated;
     text->inEditing = this->inEditing;
-
-    //text->uid = this->uid;
 
     return text;
 }
@@ -149,20 +146,8 @@ void Text::serialize(ObjectOutputStream& out) const {
 
     font.serialize(out);
 
-    //out.writeString(this->uid);
-
     out.endObject();
 }
-
-/*
-void Text::setUID(std::string uid) {
-    this->uid = uid;
-}
-
-const std::string Text::getUID() const {
-    return this->uid;
-}
-*/
 
 void Text::readSerialized(ObjectInputStream& in) {
     in.readObject("Text");
@@ -170,8 +155,6 @@ void Text::readSerialized(ObjectInputStream& in) {
     this->AudioElement::readSerialized(in);
 
     this->text = in.readString();
-
-    //this->uid = in.readString();
 
     font.readSerialized(in);
 

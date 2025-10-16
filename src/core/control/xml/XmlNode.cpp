@@ -19,8 +19,8 @@
 #include "SizeTAttribute.h"        // for SizeTAttribute
 #include "TextAttribute.h"         // for TextAttribute
 #include <functional>
-#include <algorithm>  // per std::find
-#include "undo/UndoRedoHandler.h"  // per UndoRedoHandler
+#include <algorithm> 
+#include "undo/UndoRedoHandler.h"  
 
 class XojPage;
 class StringUtils;
@@ -70,20 +70,8 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
 
             bool isFilteringPages = (!pagesToWrite.empty() && tag == "xournal");
 
-            /*
-            if (isFilteringPages) {
-                g_message("=== FILTERING PAGES ===");
-                g_message("Total children: %zu", children.size());
-                g_message("Pages to write (%zu): ", pagesToWrite.size());
-                for (const auto& p : pagesToWrite) {
-                    g_message("  - Page number: %s", p.c_str());
-                }
-            }
-            */
-
             if (listener) {
                 size_t maxState = isFilteringPages ? pagesToWrite.size() : children.size();
-                //listener->setMaximumState(maxState);
             }
 
             size_t pageNumber = 1; 
@@ -94,7 +82,7 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
                 
                 if (isFilteringPages && children[i]->tag == "page") {
                     
-                    shouldWrite = false; // Di default non scrivere la pagina
+                    shouldWrite = false;
                     
                     Control* control = dynamic_cast<Control*>(listener);
 
@@ -117,7 +105,6 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
                     
                     if (listener && isFilteringPages && children[i]->tag == "page") {
                         writtenPages++;
-                        //listener->setCurrentState(writtenPages);
                     }
                 }
             }

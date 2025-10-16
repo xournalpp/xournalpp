@@ -8,8 +8,8 @@
 
 #include "util/safe_casts.h"  // for as_signed
 
-#include <random>    // Per la generazione di numeri casuali
-#include <algorithm> // Per std::find
+#include <random>    
+#include <algorithm> 
 
 using std::string;
 using std::vector;
@@ -28,16 +28,14 @@ std::vector<std::string> StringUtils::uids;
 std::string StringUtils::generateRandomUid(int length)
 {
 
-    // Caratteri possibili nella stringa
     const std::string charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     
-    // Inizializza il generatore di numeri casuali
     std::random_device rd;
     std::mt19937 generator(rd());
     std::uniform_int_distribution<int> distribution(0, charset.length() - 1);
 
     std::string randomString;
-    randomString.reserve(length); // Pre-alloca la memoria per efficienza
+    randomString.reserve(length);
 
     for (int i = 0; i < length; ++i) {
         randomString += charset[distribution(generator)];
@@ -52,18 +50,14 @@ std::string StringUtils::generateUniqueAlphanumericString() {
     while (true) {
         newString = generateRandomUid(8);
         
-        // Controlla se la stringa generata esiste già nel vector
-        // std::find ritorna un iteratore alla fine del vector se l'elemento non viene trovato.
         auto it = std::find(StringUtils::uids.begin(), StringUtils::uids.end(), newString);
         
         if (it == StringUtils::uids.end()) {
-            // La stringa è unica, esci dal ciclo e ritorna la stringa
             break;
         }
-        // Altrimenti, il ciclo continua per generare una nuova stringa
     }
 
-    StringUtils::uids.push_back(newString); // Aggiungi la nuova stringa al vector
+    StringUtils::uids.push_back(newString);
 
     return newString;
 }

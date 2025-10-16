@@ -191,8 +191,6 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
             text->setAttrib("y", t->getY());
             text->setAttrib("color", getColorStr(t->getColor()).c_str());
 
-            //text->setAttrib("uid", t->getUID().c_str());
-
             writeTimestamp(text, t);
         } else if (e->getType() == ELEMENT_IMAGE) {
             auto* i = dynamic_cast<const Image*>(e);

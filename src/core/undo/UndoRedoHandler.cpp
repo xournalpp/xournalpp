@@ -132,14 +132,6 @@ void UndoRedoHandler::undo() {
     printContents();
 }
 
-/*
-    Se fa redo non è implementata ancora bene la logica
-    Quindi se si fa undo di una pagina e poi si fa redo
-    non viene re-inserito nel vector.
-
-    Se invece fa solo undo sì
-*/
-
 void UndoRedoHandler::redo() {
     if (this->redoList.empty()) {
         return;
@@ -173,12 +165,6 @@ auto UndoRedoHandler::canUndo() -> bool { return !this->undoList.empty(); }
 
 auto UndoRedoHandler::canRedo() -> bool { return !this->redoList.empty(); }
 
-/*
-    When I write between two pages, the action splits into two, as if they were two on two different pages. 
-    That's why it crashes when I undo, because it tries to take FEWER elements than there are undo statements. 
-    The problem is in the page number.
-*/
-
 /**
  * Adds an undo Action to the list, or if nullptr does nothing
  */
@@ -192,7 +178,6 @@ void UndoRedoHandler::addUndoAction(UndoActionPtr action) {
     fireUpdateUndoRedoButtons(this->undoList.back()->getPages());
 
     for (auto const& page : this->undoList.back()->getPages()) {
-        //g_warning("UID page added: %s", page.get()->getUID().c_str());  
         this->pagesChanged.emplace_back(page.get()->getUID());
     }
     
