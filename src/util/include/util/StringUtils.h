@@ -30,7 +30,7 @@ public:
     static bool iequals(const std::string& a, const std::string& b);
     static bool isNumber(const std::string& input);
     static std::string generateUniqueAlphanumericString();
-    static bool isXoppLegacy;
+    static bool isOldXopp;
 
 private:
     static std::vector <std::string> uids;

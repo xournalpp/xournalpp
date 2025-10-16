@@ -7,6 +7,7 @@
 #include <glib.h>   // for g_warning, g_error
 #include <random>
 #include <fstream>
+#include <vector>
 
 #include "control/Control.h"              // for Control
 #include "control/jobs/BlockingJob.h"     // for BlockingJob
@@ -147,9 +148,7 @@ fs::path createTempDir() {
     return tempDir;
 }
 
-void saveFinalFile(const std::string& modifiedXMLStr, const std::string& originalXMLStr,
-                   const fs::path& target, auto& lastError)
-{
+void saveFinalFile(Control* control, const std::string& modifiedXMLStr, const std::string& originalXMLStr, const fs::path& target, auto& lastError) {
     pugi::xml_document modifiedDoc, originalDoc;
 
     if (!modifiedDoc.load_string(modifiedXMLStr.c_str())) {
@@ -157,61 +156,67 @@ void saveFinalFile(const std::string& modifiedXMLStr, const std::string& origina
         return;
     }
 
-    if (!originalDoc.load_string(originalXMLStr.c_str())) {
+    bool originalIsValid = originalDoc.load_string(originalXMLStr.c_str());
+
+    if (!originalIsValid) {
         // Se il file originale non esiste o è corrotto, salviamo semplicemente il file con le modifiche.
         // Questo gestisce il caso di "Salva con nome" o di un file nuovo.
         GzOutputStream out(target);
         out.write(modifiedXMLStr.c_str(), modifiedXMLStr.length());
         out.close();
-
-        g_warning("Pare ci sia un problema qui");
-
         return;
     }
 
-    // Usa il documento originale come base per il risultato.
+    // 1. Crea la base del documento finale con l'header corretto.
     pugi::xml_document resultDoc;
-    resultDoc.append_copy(originalDoc.document_element());
-    pugi::xml_node resultRoot = resultDoc.child("xournal");
+    pugi::xml_node sourceRoot = modifiedDoc.child("xournal");
+    pugi::xml_node resultRoot = resultDoc.append_child("xournal");
 
-    // 1. Crea una mappa di UID -> xml_node per tutte le pagine modificate.
-    
-    std::map<std::string, pugi::xml_node> modifiedPagesMap;
-    for (pugi::xml_node modifiedPage : modifiedDoc.child("xournal").children("page")) {
-        const char* uid = modifiedPage.attribute("uid").as_string();
-        if (uid && *uid) { // Assicurati che l'UID non sia nullo o vuoto
-            modifiedPagesMap[uid] = modifiedPage;
-        }
+    // Copia tutti gli attributi (creator, fileversion, etc.) dal sorgente
+    for (pugi::xml_attribute attr : sourceRoot.attributes()) {
+        resultRoot.append_attribute(attr.name()) = attr.value();
     }
 
-    pugi::xml_node currentPage = resultRoot.child("page");
-    while (currentPage) {
-        // Salva il nodo successivo PRIMA di un'eventuale rimozione
-        pugi::xml_node nextNode = currentPage.next_sibling("page");
+    // Aggiungi solo i tag <title> e <preview> all'header
+    pugi::xml_node titleNode = sourceRoot.child("title");
+    if (titleNode) {
+        resultRoot.append_copy(titleNode);
+    }
+    pugi::xml_node previewNode = sourceRoot.child("preview");
+    if (previewNode) {
+        resultRoot.append_copy(previewNode);
+    }
 
-        const char* uid = currentPage.attribute("uid").as_string();
-        if (uid && *uid) {
-            auto it = modifiedPagesMap.find(uid);
-            if (it != modifiedPagesMap.end()) {
-                // Trovata una versione modificata di questa pagina, sostituiscila.
-                resultRoot.insert_copy_before(it->second, currentPage);
-                resultRoot.remove_child(currentPage); // Ora è sicuro rimuovere il nodo corrente
+    // 2. Ottieni l'ordine corretto delle pagine dal documento in memoria
+    Document* doc = control->getDocument();
+    std::vector<PageRef> pages = doc->getPages();
 
-                // Rimuovi dalla mappa per contrassegnarla come elaborata.
-                modifiedPagesMap.erase(it);
+    pugi::xml_node modifiedXournalNode = modifiedDoc.child("xournal");
+    pugi::xml_node originalXournalNode = originalDoc.child("xournal");
+
+    // 3. Itera sull'ordine corretto e aggiungi le pagine al documento finale
+    for (const auto& pageRef : pages) {
+        const char* uid = pageRef.get()->getUID().c_str();
+
+        // Cerca la pagina prima nel documento delle modifiche
+        pugi::xml_node pageNode = modifiedXournalNode.find_child_by_attribute("page", "uid", uid);
+
+        if (pageNode) {
+            // **CORREZIONE**: Aggiungi al nodo <xournal> (resultRoot), non al documento
+            resultRoot.append_copy(pageNode);
+        } else {
+            // Se non la troviamo, cerchiamo quella originale (pagina spostata ma non modificata)
+            pugi::xml_node originalPageNode = originalXournalNode.find_child_by_attribute("page", "uid", uid);
+            if (originalPageNode) {
+                // **CORREZIONE**: Aggiungi al nodo <xournal> (resultRoot), non al documento
+                resultRoot.append_copy(originalPageNode);
+            } else {
+                g_warning("Could not find page with UID %s in either modified or original document.", uid);
             }
         }
-        // Passa al nodo successivo
-        currentPage = nextNode;
     }
 
-    // 3. Aggiungi alla fine le pagine rimanenti dalla mappa (pagine nuove o senza un UID corrispondente).
-    for (const auto& pair : modifiedPagesMap) {
-        resultRoot.append_copy(pair.second);
-    }
-    
-
-    // 4. Salva il documento unito.
+    // 4. Salva il documento finale unito
     std::stringstream ss;
     resultDoc.save(ss, "  "); // Usa un'indentazione per la leggibilità
     std::string mergedXml = ss.str();
@@ -240,12 +245,40 @@ auto SaveJob::save() -> bool {
     
     auto const createBackup = doc->shouldCreateBackupOnSave();
 
-    if ( !StringUtils::isXoppLegacy )
-    {
-        fs::path tempDir = createTempDir();
+    fs::path tempDir = createTempDir();
 
-        std::string originalXMLStr = extractXmlFromXopp(target, tempDir);
+    std::string originalXMLStr = extractXmlFromXopp(target, tempDir);
         
+    // Carica il documento originale
+    pugi::xml_document xmlDoc;
+    if (!xmlDoc.load_string(originalXMLStr.c_str())) {
+        g_warning("XML originale non valido, impossibile controllare il flag 'isLegacy'.");
+        // Continua comunque, la funzione saveFinalFile gestirà l'XML vuoto
+    }
+
+    // Ottieni il nodo radice dal documento che hai appena caricato
+    pugi::xml_node sourceRoot = xmlDoc.child("xournal");
+
+    if (sourceRoot) {
+        // 1. Chiedi l'attributo direttamente per nome
+        pugi::xml_attribute legacyAttr = sourceRoot.attribute("isLegacy");
+
+        // 2. Controlla se l'attributo esiste E confronta il suo contenuto (non il puntatore)
+        if (std::string(legacyAttr.as_string()) == "false") {
+            StringUtils::isOldXopp = false;
+        } else if (  std::string(legacyAttr.as_string()) == "true" || !legacyAttr ) {
+            // È buona norma reimpostare il flag se non è trovato o è diverso da "true"
+            StringUtils::isOldXopp = true;
+        }
+    } else {
+        // Il file potrebbe essere nuovo o corrotto, quindi non è legacy
+        StringUtils::isOldXopp = false;
+    }
+
+    g_warning("isOldXopp: %s", StringUtils::isOldXopp ? "true" : "false");
+
+    if ( !StringUtils::isOldXopp )
+    {
         if (createBackup) {
             try {
                 // Note: The backup must be created for the target as this is the filepath
@@ -281,7 +314,7 @@ auto SaveJob::save() -> bool {
 
         std::string modifiedXMLStr = extractXmlFromXopp(xoppFileModifiedOnlyPages, tempDir);
 
-        saveFinalFile(modifiedXMLStr, originalXMLStr, target, this->lastError);
+        saveFinalFile(this->control, modifiedXMLStr, originalXMLStr, target, this->lastError);
 
     }
     else

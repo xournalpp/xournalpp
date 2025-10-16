@@ -79,6 +79,11 @@ void SaveHandler::writeHeader() {
     this->root->setAttrib("creator", PROJECT_STRING);
     this->root->setAttrib("fileversion", FILE_FORMAT_VERSION);
     this->root->addChild(new XmlTextNode("title", std::string{"Xournal++ document - see "} + PROJECT_HOMEPAGE_URL));
+    
+    std::string isLegacy = (StringUtils::isOldXopp) ? "true" : "false";
+
+    this->root->setAttrib("isLegacy", isLegacy);
+
 }
 
 auto SaveHandler::getColorStr(Color c, unsigned char alpha) -> std::string {

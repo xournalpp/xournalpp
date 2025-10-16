@@ -53,7 +53,7 @@ void XmlNode::setAttrib(const char* attrib, std::vector<double> values) {
 
 void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
    
-    if ( !StringUtils::isXoppLegacy )
+    if ( !StringUtils::isOldXopp )
     {
         
         auto pagesToWrite = UndoRedoHandler::pagesChanged;
@@ -70,7 +70,7 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
 
             bool isFilteringPages = (!pagesToWrite.empty() && tag == "xournal");
 
-            
+            /*
             if (isFilteringPages) {
                 g_message("=== FILTERING PAGES ===");
                 g_message("Total children: %zu", children.size());
@@ -79,7 +79,7 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
                     g_message("  - Page number: %s", p.c_str());
                 }
             }
-            
+            */
 
             if (listener) {
                 size_t maxState = isFilteringPages ? pagesToWrite.size() : children.size();
