@@ -8,7 +8,7 @@
 #include <exception>    // for exception
 #include <type_traits>  // for add_const<>::type
 #include <utility>      // for pair, move, make_...
-
+#include <charconv>
 #include <libxml/globals.h>    // for xmlFree, xmlInden...
 #include <libxml/parser.h>     // for xmlKeepBlanksDefault
 #include <libxml/xmlstring.h>  // for xmlStrcmp, xmlChar
@@ -877,10 +877,19 @@ auto Settings::load() -> bool {
 }
 
 auto Settings::savePropertyDouble(const gchar* key, double value, xmlNodePtr parent) -> xmlNodePtr {
-    char text[G_ASCII_DTOSTR_BUF_SIZE];
+    
+    
     //  g_ascii_ version uses C locale always.
-    g_ascii_formatd(text, G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, value);
-    xmlNodePtr xmlNode = saveProperty(key, text, parent);
+    //g_ascii_formatd(text, G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, value);
+    
+    std::array<char, G_ASCII_DTOSTR_BUF_SIZE> text;
+    auto result = std::to_chars(text.data(), text.data() + G_ASCII_DTOSTR_BUF_SIZE, value, std::chars_format::general, 8);
+    
+    if (result.ec == std::errc{}) {
+        *result.ptr = '\0';  // terminatore
+    }
+
+    xmlNodePtr xmlNode = saveProperty(key, text.data(), parent);
     return xmlNode;
 }
 
@@ -1226,12 +1235,18 @@ void Settings::save() {
     xmlSetProp(xmlFont, reinterpret_cast<const xmlChar*>("font"),
                reinterpret_cast<const xmlChar*>(this->font.getName().c_str()));
 
-    char sSize[G_ASCII_DTOSTR_BUF_SIZE];
+    
+    //g_ascii_formatd(sSize, G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING,
+    //                this->font.getSize());  // no locale
+    
+    std::array<char, G_ASCII_DTOSTR_BUF_SIZE> text;
+    auto result = std::to_chars(text.data(), text.data() + G_ASCII_DTOSTR_BUF_SIZE, this->font.getSize(), std::chars_format::general, 8);
 
-    g_ascii_formatd(sSize, G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING,
-                    this->font.getSize());  // no locale
-    xmlSetProp(xmlFont, reinterpret_cast<const xmlChar*>("size"), reinterpret_cast<const xmlChar*>(sSize));
+    if (result.ec == std::errc{}) {
+        *result.ptr = '\0';  // terminatore
+    }
 
+    xmlSetProp(xmlFont, reinterpret_cast<const xmlChar*>("size"), reinterpret_cast<const xmlChar*>(text.data()));
 
     for (std::map<string, SElement>::value_type p: data) {
         saveData(root, p.first, p.second);
@@ -1267,9 +1282,16 @@ void Settings::saveData(xmlNodePtr root, const string& name, SElement& elem) {
         } else if (attrib.type == ATTRIBUTE_TYPE_DOUBLE) {
             type = "double";
 
-            char tmp[G_ASCII_DTOSTR_BUF_SIZE];
-            g_ascii_formatd(tmp, G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, attrib.dValue);
-            value = tmp;
+            std::array<char, G_ASCII_DTOSTR_BUF_SIZE> text;
+            auto result = std::to_chars(text.data(), text.data() + G_ASCII_DTOSTR_BUF_SIZE, attrib.dValue, std::chars_format::general, 8);
+        
+            
+            if (result.ec == std::errc{}) {
+                *result.ptr = '\0';  // terminatore
+            }
+
+            //g_ascii_formatd(tmp, G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, attrib.dValue);
+            value = text.data();
         } else if (attrib.type == ATTRIBUTE_TYPE_INT_HEX) {
             type = "hex";
 

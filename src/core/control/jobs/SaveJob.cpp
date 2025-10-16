@@ -107,12 +107,12 @@ void SaveJob::updatePreview(Control* control) {
     doc->unlock();
 }
 
-std::string extractXmlFromXopp(const fs::path& filepath, fs::path tempDir, auto* lastError) {
+std::string extractXmlFromXopp(const fs::path& filepath, fs::path tempDir, auto& lastError) {
     GzInputStream in(filepath);
 
     if (!in.getLastError().empty()) {
         lastError = FS(_F("Error opening compressed file"));
-        return;
+        return "";
     }
 
     fs::create_directories(tempDir);
@@ -120,7 +120,7 @@ std::string extractXmlFromXopp(const fs::path& filepath, fs::path tempDir, auto*
 
     if (xml.empty()) {
         lastError = FS(_F("Cannot parse XML from file"));
-        return;
+        return "";
     }
 
     return xml;
@@ -129,12 +129,23 @@ std::string extractXmlFromXopp(const fs::path& filepath, fs::path tempDir, auto*
 fs::path createTempDir() {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> dist(0, 9999);
-    int code = dist(gen);
+    std::uniform_int_distribution<int> dist(0, 999999);
 
-    fs::path tempDir = fs::temp_directory_path() / ("Xournal-" + std::to_string(code));
-    
-    return tempDir;
+    while (true) {
+        int code = dist(gen);
+        fs::path tempDir = fs::temp_directory_path() / ("xournal-" + std::to_string(code));
+        
+        std::error_code ec;
+
+        if (fs::create_directory(tempDir, ec)) {
+            return tempDir;
+        }
+
+        if (ec && ec != std::errc::file_exists) {
+            throw fs::filesystem_error("Impossibile creare la directory temporanea", tempDir, ec);
+        }
+
+    }
 }
 
 void saveFinalFile(Control* control, const std::string& modifiedXMLStr, const std::string& originalXMLStr, const fs::path& target, auto& lastError) {
@@ -243,12 +254,12 @@ auto SaveJob::save() -> bool {
 
     fs::path tempDir = createTempDir();
 
-    std::string originalXMLStr = extractXmlFromXopp(target, tempDir);
+    std::string originalXMLStr = extractXmlFromXopp(target, tempDir, this->lastError);
         
     pugi::xml_document xmlDoc;
     if (!xmlDoc.load_string(originalXMLStr.c_str())) {
         this->lastError = FS(_F("Could not parse original XML file"));
-        return;
+        return false;
     }
 
     pugi::xml_node sourceRoot = xmlDoc.child("xournal");
@@ -291,7 +302,7 @@ auto SaveJob::save() -> bool {
         doc->setFilepath(target);
         doc->unlock();
 
-        std::string modifiedXMLStr = extractXmlFromXopp(xoppFileModifiedOnlyPages, tempDir);
+        std::string modifiedXMLStr = extractXmlFromXopp(xoppFileModifiedOnlyPages, tempDir, this->lastError);
 
         saveFinalFile(this->control, modifiedXMLStr, originalXMLStr, target, this->lastError);
 

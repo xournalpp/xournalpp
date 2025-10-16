@@ -5,7 +5,7 @@
 #include <string>   // for allocator, string
 #include <utility>  // for move
 #include <vector>   // for vector
-
+#include <charconv>
 #include <gdk/gdk.h>  // for gdk_cairo_set_source_rgba, gdk_t...
 
 #include "util/Color.h"              // for argb_to_GdkRGBA, rgb_to_GdkRGBA
@@ -64,10 +64,24 @@ void Util::cairo_set_dash_from_vector(cairo_t* cr, const std::vector<double>& da
 
 void Util::writeCoordinateString(OutputStream* out, double xVal, double yVal) {
     std::array<char, G_ASCII_DTOSTR_BUF_SIZE> coordString{};
-    g_ascii_formatd(coordString.data(), G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, xVal);
+
+    auto result = std::to_chars(coordString.data(), coordString.data() + G_ASCII_DTOSTR_BUF_SIZE, xVal, std::chars_format::fixed, 8);
+    
+    if (result.ec == std::errc{}) {
+        *result.ptr = '\0';  // terminatore
+    }
+
+    //g_ascii_formatd(coordString.data(), G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, xVal);
     out->write(coordString.data());
     out->write(" ");
-    g_ascii_formatd(coordString.data(), G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, yVal);
+    
+    result = std::to_chars(coordString.data(), coordString.data() + G_ASCII_DTOSTR_BUF_SIZE, yVal, std::chars_format::fixed, 8);
+    
+    if (result.ec == std::errc{}) {
+        *result.ptr = '\0';  // terminatore
+    }
+    
+    //g_ascii_formatd(coordString.data(), G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, yVal);
     out->write(coordString.data());
 }
 
