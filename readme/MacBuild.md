@@ -1,9 +1,9 @@
 # MacOS Build (.app)
 
-This file describes how to build and package Xournal++ into a `.app` bundle.
+This file describes how to build and run Xournal++ and package Xournal++ into a `.app` bundle.
 
-If you are only interested in building Xournal++ for local development, see
-the below sections on the dependency setup for Homebrew and Macports.
+If you are only interested in building and running Xournal++ for local development, see
+the below sections on the dependency setup for Homebrew.
 
 For packaging into a `.app` bundle, see the section on gtk-osx.
 
@@ -19,10 +19,7 @@ Run `xcode-select --install` in a terminal to install developer tools.
 
 ## Xournal++ Mac Homebrew Build
 
-**We do not officially support builds with Homebrew. They are solely for convenience.**
-
-It is highly recommended to either use an official or nightly release.
-Should you still want to build your own version please refer to the app-build above.
+**Builds with Homebrew are for local development only. You won't be able to create an .app-bundle and distribute it.**
 
 ### Install Homebrew
 https://brew.sh/
@@ -33,7 +30,7 @@ https://brew.sh/
 
 ### Install dependencies
 ````sh
-brew install cmake ninja pkg-config gtk+3 poppler librsvg adwaita-icon-theme libzip portaudio libsndfile
+brew install cmake ninja pkg-config gtk+3 poppler librsvg adwaita-icon-theme libzip portaudio libsndfile gdk-pixbuf
 ````
 
 ### Build Xournal++:
@@ -42,9 +39,34 @@ git clone http://github.com/xournalpp/xournalpp.git
 cd xournalpp
 mkdir build
 cd build
-cmake .. -GNinja
-cmake --build .
+cmake .. -GNinja -DCMAKE_INSTALL_PREFIX="$(brew --prefix)"
+ninja install
 ````
+
+Here `"$(brew --prefix)"` where Xournal++ gets installed defaults to `/usr/local` on MacOS Intel and to `/opt/homebrew` on MacOS ARM.
+This installation prefix is essential when running the binary, since otherwise pixbuf loaders don't work properly.
+
+### Run Xournal++:
+
+On MacOS Intel:
+```sh
+/usr/local/bin/xournalpp
+```
+or using the wrapper (in the development version):
+```sh
+/usr/local/bin/xournalpp-wrapper
+```
+
+On MacOS ARM:
+
+```sh
+/opt/homebrew/bin/xournalpp
+```
+or using the wrapper:
+```sh
+/opt/homebrew/bin/xournalpp-wrapper
+```
+
 
 ## Bundling Xournal++ into a `.app` with gtk-osx
 
@@ -344,3 +366,16 @@ for a list of configuration variables.
 
 
 [gtk-osx]: https://gitlab.gnome.org/GNOME/gtk-osx
+
+#### Fix linker errors related to system libraries
+
+Errors like
+
+```sh
+clang++: error: no such file or directory: 'AudioToolbox'
+clang++: error: no such file or directory: 'AudioUnit'
+clang++: error: no such file or directory: 'CoreFoundation'
+clang++: error: no such file or directory: 'CoreServices'
+```
+
+can be fixed by deleting the build folder and building from scratch again.
