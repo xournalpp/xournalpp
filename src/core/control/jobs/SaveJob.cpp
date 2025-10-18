@@ -27,6 +27,8 @@
 #include "util/OutputStream.h"            // for GzInputStream
 #include "filesystem.h"  // for path, filesystem_error, remove
 #include "util/StringUtils.h"
+#include <unordered_map> 
+#include <string_view>   
 
 SaveJob::SaveJob(Control* control, std::function<void(bool)> callback):
         BlockingJob(control, _("Save")), callback(std::move(callback)) {}
@@ -148,15 +150,25 @@ fs::path createTempDir() {
     }
 }
 
+struct GzXmlWriter : public pugi::xml_writer {
+    GzOutputStream& stream;
+
+    GzXmlWriter(GzOutputStream& s) : stream(s) {}
+
+    virtual void write(const void* data, size_t size) {
+        stream.write(static_cast<const char*>(data), size);
+    }
+};
+
 void saveFinalFile(Control* control, const std::string& modifiedXMLStr, const std::string& originalXMLStr, const fs::path& target, auto& lastError) {
     pugi::xml_document modifiedDoc, originalDoc;
 
-    if (!modifiedDoc.load_string(modifiedXMLStr.c_str())) {
+    if (!modifiedDoc.load_buffer(modifiedXMLStr.data(), modifiedXMLStr.length())) {
         lastError = FS(_F("Error saving file, could not parse modified XML"));
         return;
     }
 
-    bool originalIsValid = originalDoc.load_string(originalXMLStr.c_str());
+    bool originalIsValid = originalDoc.load_buffer(originalXMLStr.data(), originalXMLStr.length());
 
     if (!originalIsValid) {
         GzOutputStream out(target);
@@ -174,73 +186,73 @@ void saveFinalFile(Control* control, const std::string& modifiedXMLStr, const st
     }
 
     pugi::xml_node titleNode = sourceRoot.child("title");
-
     if (titleNode) {
         resultRoot.append_copy(titleNode);
     }
     pugi::xml_node previewNode = sourceRoot.child("preview");
-
     if (previewNode) {
         resultRoot.append_copy(previewNode);
     }
 
     ProgressListener* listener = control;
 
-    int progressCounter = 1;
-
-    auto pagesCount = control->getDocument()->getPages().size();
-
-    listener->setMaximumState(  pagesCount );
-
     Document* doc = control->getDocument();
+
+    int progressCounter = 1;
+    auto pagesCount = doc->getPages().size();
+    listener->setMaximumState(pagesCount);
+    g_warning("%lu pages to process", static_cast<unsigned long>(pagesCount));
+
     std::vector<PageRef> pages = doc->getPages();
 
+    std::unordered_map<std::string_view, pugi::xml_node> modifiedPageMap;
     pugi::xml_node modifiedXournalNode = modifiedDoc.child("xournal");
+    for (pugi::xml_node page : modifiedXournalNode.children("page")) {
+        modifiedPageMap[page.attribute("uid").value()] = page;
+    }
+
+    std::unordered_map<std::string_view, pugi::xml_node> originalPageMap;
     pugi::xml_node originalXournalNode = originalDoc.child("xournal");
+    for (pugi::xml_node page : originalXournalNode.children("page")) {
+        originalPageMap[page.attribute("uid").value()] = page;
+    }
+
 
     for (const auto& pageRef : pages) {
-        const char* uid = pageRef.get()->getUID().c_str();
+        std::string_view uid = pageRef.get()->getUID();
 
-        pugi::xml_node pageNode = modifiedXournalNode.find_child_by_attribute("page", "uid", uid);
+        auto it_mod = modifiedPageMap.find(uid);
 
-        if (pageNode) {
-
-            resultRoot.append_copy(pageNode);
-
+        if (it_mod != modifiedPageMap.end()) {
+            resultRoot.append_copy(it_mod->second);
         } else {
-            
-            pugi::xml_node originalPageNode = originalXournalNode.find_child_by_attribute("page", "uid", uid);
+            auto it_orig = originalPageMap.find(uid);
 
-            if (originalPageNode) {
-                resultRoot.append_copy(originalPageNode);
+            if (it_orig != originalPageMap.end()) {
+                resultRoot.append_copy(it_orig->second);
             } else {
-                g_warning("Could not find page with UID %s in either modified or original document.", uid);
+                g_warning("Could not find page with UID %s in either modified or original document.", std::string(uid).c_str());
             }
-
         }
 
         listener->setCurrentState(progressCounter++);
     }
 
-    std::stringstream ss;
-    resultDoc.save(ss, "  ");
-    std::string mergedXml = ss.str();
-
     GzOutputStream out(target);
-    out.write(mergedXml.c_str(), mergedXml.length());
+    GzXmlWriter writer(out);
+    resultDoc.save(writer, "  "); 
     out.close();
-
 }
 
 auto SaveJob::save() -> bool {
 
-    auto start = std::chrono::steady_clock::now();
+    long totalTime = 0;
+    
+    auto start_time = std::chrono::steady_clock::now();
 
     updatePreview(control);
     Document* doc = this->control->getDocument();
     SaveHandler h;
-
-    long totalTime = 0;
 
     doc->lock();
     fs::path target = doc->getFilepath();
@@ -248,9 +260,10 @@ auto SaveJob::save() -> bool {
     Util::safeReplaceExtension(target, "xopp");
 
     h.prepareSave(doc, target);
-    doc->unlock();
-    
+        
     auto const createBackup = doc->shouldCreateBackupOnSave();
+
+    doc->unlock();
 
     fs::path tempDir = createTempDir();
 
@@ -280,59 +293,80 @@ auto SaveJob::save() -> bool {
         StringUtils::isLegacy = false;
     }
 
+    auto end_time = std::chrono::steady_clock::now();
+    auto duration = end_time - start_time;
+    auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+    
+    totalTime += millis;
+    g_warning("prepareToSave and legacy detection take: %ld ms", millis);
+    
+    start_time = std::chrono::steady_clock::now();
+
+    if (createBackup) {
+        try {
+            Util::safeRenameFile(target, fs::path{target} += "~");
+        } catch (const fs::filesystem_error& fe) {
+            g_warning("Could not create backup! Failed with %s", fe.what());
+            this->lastError = FS(_F("Save file error, can't backup: {1}") % std::string(fe.what()));
+            if (!control->getWindow()) {
+                g_error("%s", this->lastError.c_str());
+            }
+            return false;
+        }
+    }
+
+    
+
     if ( !StringUtils::isLegacy )
     {
-        if (createBackup) {
-            try {
-                Util::safeRenameFile(target, fs::path{target} += "~");
-            } catch (const fs::filesystem_error& fe) {
-                g_warning("Could not create backup! Failed with %s", fe.what());
-                this->lastError = FS(_F("Save file error, can't backup: {1}") % std::string(fe.what()));
-                if (!control->getWindow()) {
-                    g_error("%s", this->lastError.c_str());
-                }
-                return false;
-            }
-        }
-
         fs::path xoppFileModifiedOnlyPages = tempDir / "backup.xopp";
 
         doc->lock();
         h.saveTo(xoppFileModifiedOnlyPages, this->control);
-        doc->setFilepath(target);
         doc->unlock();
+
+        end_time = std::chrono::steady_clock::now();
+        duration = end_time - start_time;
+        millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+        
+        totalTime += millis;
+        g_warning("saveTo duration: %ld ms", millis);
+
+        start_time = std::chrono::steady_clock::now();
 
         std::string modifiedXMLStr = extractXmlFromXopp(xoppFileModifiedOnlyPages, tempDir, this->lastError);
 
+        doc->lock();
         saveFinalFile(this->control, modifiedXMLStr, originalXMLStr, target, this->lastError);
+        doc->unlock();
+
+        end_time = std::chrono::steady_clock::now();
+        duration = end_time - start_time;
+        millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+        totalTime += millis;
+        g_warning("saveFinalFile duration: %ld ms", millis);
 
         uintmax_t removeTempDirectory = fs::remove_all(tempDir);
         g_warning("Removed temporary directory %s with %llu files.", tempDir.u8string().c_str(),
                   static_cast<unsigned long long>(removeTempDirectory));
-    
     }
     else
     {
-        
-        if (createBackup) {
-            try {
-                Util::safeRenameFile(target, fs::path{target} += "~");
-            } catch (const fs::filesystem_error& fe) {
-                g_warning("Could not create backup! Failed with %s", fe.what());
-                this->lastError = FS(_F("Save file error, can't backup: {1}") % std::string(fe.what()));
-                if (!control->getWindow()) {
-                    g_error("%s", this->lastError.c_str());
-                }
-                return false;
-            }
-        }
-
         doc->lock();
         h.saveTo(target, this->control);
-        doc->setFilepath(target);
         doc->unlock();
+
+        end_time = std::chrono::steady_clock::now();
+        duration = end_time - start_time;
+        millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+        
+        totalTime += millis;
+        g_warning("saveTo (legacy) duration: %ld ms", millis);
     }
 
+    doc->setFilepath(target);
+
+    g_warning("Save took: %ld ms", totalTime );
     
     if (!h.getErrorMessage().empty()) {
         this->lastError = FS(_F("Save file error: {1}") % h.getErrorMessage());
@@ -351,10 +385,7 @@ auto SaveJob::save() -> bool {
         doc->setCreateBackupOnSave(true);
     }
 
-    auto end = std::chrono::steady_clock::now(); // tempo finale
-
-    std::chrono::duration<double> elapsed = end - start;
-    g_warning("Merging XML and saving took %.3f seconds", elapsed.count());
+    g_warning("Save successful");
 
     return true;
 }

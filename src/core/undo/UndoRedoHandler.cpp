@@ -178,7 +178,11 @@ void UndoRedoHandler::addUndoAction(UndoActionPtr action) {
     fireUpdateUndoRedoButtons(this->undoList.back()->getPages());
 
     for (auto const& page : this->undoList.back()->getPages()) {
-        this->pagesChanged.emplace_back(page.get()->getUID());
+        const auto& uid = page.get()->getUID();
+        
+        if (std::find(this->pagesChanged.begin(), this->pagesChanged.end(), uid) == this->pagesChanged.end()) {
+            this->pagesChanged.emplace_back(uid);
+        }
     }
     
     printContents();

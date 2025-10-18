@@ -58,6 +58,10 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
         
         auto pagesToWrite = UndoRedoHandler::pagesChanged;
 
+        g_warning("Pages to write count: %lu", static_cast<unsigned long>(pagesToWrite.size()));
+
+        // Segmentation fault here
+
         out->write("<");
         out->write(tag);
 

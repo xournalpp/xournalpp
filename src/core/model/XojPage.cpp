@@ -28,7 +28,7 @@ XojPage::~XojPage() {
 // Costruttore di copia
 XojPage::XojPage(XojPage const& page):
         backgroundImage(page.backgroundImage),
-        uid(page.uid),
+        uid( StringUtils::generateUniqueAlphanumericString() ),
         width(page.width),
         height(page.height),
         currentLayer(page.currentLayer),
