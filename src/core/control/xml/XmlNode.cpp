@@ -53,14 +53,10 @@ void XmlNode::setAttrib(const char* attrib, std::vector<double> values) {
 
 void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
    
-    if ( !StringUtils::isLegacy )
+    if ( !StringUtils::isLegacy && listener != nullptr )
     {
         
         auto pagesToWrite = UndoRedoHandler::pagesChanged;
-
-        g_warning("Pages to write count: %lu", static_cast<unsigned long>(pagesToWrite.size()));
-
-        // Segmentation fault here
 
         out->write("<");
         out->write(tag);
@@ -80,17 +76,18 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
 
             size_t pageNumber = 1; 
             size_t writtenPages = 0; 
-    
+
             for (size_t i = 0; i < children.size(); i++) {
                 bool shouldWrite = true;
-                
+
                 if (isFilteringPages && children[i]->tag == "page") {
-                    
+                                
+                    Control* control = dynamic_cast<Control*>(listener);
+                    Document* doc = control->getDocument(); 
+
                     shouldWrite = false;
                     
-                    Control* control = dynamic_cast<Control*>(listener);
-
-                    auto page = control->getDocument()->getPages().at(pageNumber - 1);
+                    auto page = doc->getPages().at(pageNumber - 1);
                     
                     std::shared_ptr<XojPage> xojPage = page;
 
@@ -100,7 +97,7 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
                     if (it != pagesToWrite.end()) {
                         shouldWrite = true;
                     }
-                    
+
                     pageNumber++;
                 }
   
@@ -116,6 +113,7 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
             out->write("</");
             out->write(tag);
             out->write(">\n");
+
         }
     }
     else

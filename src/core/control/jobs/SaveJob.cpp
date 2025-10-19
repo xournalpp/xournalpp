@@ -259,12 +259,12 @@ auto SaveJob::save() -> bool {
 
     Util::safeReplaceExtension(target, "xopp");
 
-    h.prepareSave(doc, target);
-        
-    auto const createBackup = doc->shouldCreateBackupOnSave();
+    h.prepareSave(doc, target);        
 
     doc->unlock();
 
+    auto const createBackup = doc->shouldCreateBackupOnSave();
+    
     fs::path tempDir = createTempDir();
 
     std::string originalXMLStr = extractXmlFromXopp(target, tempDir, this->lastError);
@@ -315,15 +315,19 @@ auto SaveJob::save() -> bool {
         }
     }
 
-    
-
     if ( !StringUtils::isLegacy )
     {
         fs::path xoppFileModifiedOnlyPages = tempDir / "backup.xopp";
 
+        // Here, Segmentation Fault
+        g_warning("%s", "Before saveTo");
+
         doc->lock();
         h.saveTo(xoppFileModifiedOnlyPages, this->control);
+        
         doc->unlock();
+
+        g_warning("%s", "After saveTo");
 
         end_time = std::chrono::steady_clock::now();
         duration = end_time - start_time;
@@ -336,9 +340,13 @@ auto SaveJob::save() -> bool {
 
         std::string modifiedXMLStr = extractXmlFromXopp(xoppFileModifiedOnlyPages, tempDir, this->lastError);
 
-        doc->lock();
+        g_warning("%s", "Before saveFinalFile");
+
+        //doc->lock();
         saveFinalFile(this->control, modifiedXMLStr, originalXMLStr, target, this->lastError);
-        doc->unlock();
+        //doc->unlock();
+
+        g_warning("%s", "After saveFinalFile");
 
         end_time = std::chrono::steady_clock::now();
         duration = end_time - start_time;
@@ -365,7 +373,6 @@ auto SaveJob::save() -> bool {
     }
 
     doc->setFilepath(target);
-
     g_warning("Save took: %ld ms", totalTime );
     
     if (!h.getErrorMessage().empty()) {
