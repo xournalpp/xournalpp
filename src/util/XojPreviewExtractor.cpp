@@ -9,8 +9,10 @@
 #include <zipconf.h>  // for zip_int64_t, zip_uint64_t
 #include <zlib.h>     // for gzclose, gzread, gzFile
 
-#include "util/GzUtil.h"    // for GzUtil
-#include "util/PathUtil.h"  // for hasXournalFileExt
+#include "util/GzUtil.h"      // for GzUtil
+#include "util/PathUtil.h"    // for hasXournalFileExt
+#include "util/ZipUtil.h"    // for ZipUtil
+#include "util/safe_casts.h"  // for as_signed
 
 #include "filesystem.h"  // for path
 
@@ -109,7 +111,7 @@ auto XojPreviewExtractor::readFile(const fs::path& file) -> PreviewExtractResult
     }
     // read the new file format
     int zipError = 0;
-    zip_t* zipFp = zip_open(file.u8string().c_str(), ZIP_RDONLY, &zipError);
+    zip_t* zipFp = ZipUtil::openPath(file, ZIP_RDONLY, &zipError);
 
     if (!zipFp && zipError == ZIP_ER_NOZIP) {
         gzFile fp = GzUtil::openPath(file, "r");
