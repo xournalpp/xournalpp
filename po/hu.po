@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-11 12:20+0000\n"
-"PO-Revision-Date: 2025-10-12 04:26\n"
+"PO-Revision-Date: 2025-10-19 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1538,7 +1538,7 @@ msgstr "Teljes képernyőre váltás"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:330
 msgid "Toggle sidebar"
-msgstr "Oldalsáv be/kikapcsolása"
+msgstr "Oldalsáv be-/kikapcsolása"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:332
 msgid "Manage Toolbars"
@@ -1665,7 +1665,7 @@ msgstr "Iránytű"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Toggle Touch Drawing"
-msgstr ""
+msgstr "Érintéses rajzolás be-/kikapcsolása"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
