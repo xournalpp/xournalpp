@@ -18,75 +18,14 @@
 
 #ifdef _WIN32
 #include <cstdlib>
-#include <string>
-#include <vector>
 
-#include <windows.h>
-
+#include "util/Win32ArgsUtil.h"
 #include "win32/console.h"
 #endif
 
 auto main(int argc, char* argv[]) -> int {
 #ifdef _WIN32
-    // Convert Windows wide-character arguments to UTF-8
-    // Required for proper handling of Unicode filenames (e.g., ä, ö, ü, 中文)
-    int wideArgCount = 0;
-    wchar_t** wideArgs = CommandLineToArgvW(GetCommandLineW(), &wideArgCount);
-
-    std::vector<std::string> utf8ArgStorage;
-    std::vector<char*> utf8ArgPointers;
-
-    if (wideArgs) {
-        utf8ArgStorage.reserve(wideArgCount);
-        utf8ArgPointers.reserve(wideArgCount + 1);
-
-        for (int i = 0; i < wideArgCount; i++) {
-            int utf8Size = WideCharToMultiByte(CP_UTF8, 0, wideArgs[i], -1, nullptr, 0, nullptr, nullptr);
-            if (utf8Size > 0) {
-                utf8ArgStorage.emplace_back(utf8Size - 1, '\0');
-                WideCharToMultiByte(CP_UTF8, 0, wideArgs[i], -1, utf8ArgStorage.back().data(), utf8Size, nullptr,
-                                    nullptr);
-                utf8ArgPointers.push_back(utf8ArgStorage.back().data());
-            }
-        }
-        utf8ArgPointers.push_back(nullptr);
-
-        LocalFree(wideArgs);
-
-        argc = wideArgCount;
-        argv = utf8ArgPointers.data();
-    }
-#endif
-
-#ifdef _WIN32
-    // Convert Windows wide-character arguments to UTF-8
-    // Required for proper handling of Unicode filenames (e.g., ä, ö, ü, 中文)
-    int wideArgCount = 0;
-    wchar_t** wideArgs = CommandLineToArgvW(GetCommandLineW(), &wideArgCount);
-
-    std::vector<std::string> utf8ArgStorage;
-    std::vector<char*> utf8ArgPointers;
-
-    if (wideArgs) {
-        utf8ArgStorage.reserve(wideArgCount);
-        utf8ArgPointers.reserve(wideArgCount + 1);
-
-        for (int i = 0; i < wideArgCount; i++) {
-            int utf8Size = WideCharToMultiByte(CP_UTF8, 0, wideArgs[i], -1, nullptr, 0, nullptr, nullptr);
-            if (utf8Size > 0) {
-                utf8ArgStorage.emplace_back(utf8Size - 1, '\0');
-                WideCharToMultiByte(CP_UTF8, 0, wideArgs[i], -1, utf8ArgStorage.back().data(), utf8Size, nullptr,
-                                    nullptr);
-                utf8ArgPointers.push_back(utf8ArgStorage.back().data());
-            }
-        }
-        utf8ArgPointers.push_back(nullptr);
-
-        LocalFree(wideArgs);
-
-        argc = wideArgCount;
-        argv = utf8ArgPointers.data();
-    }
+    convertWin32ArgsToUtf8(argc, argv);
 #endif
 
 #ifdef _WIN32

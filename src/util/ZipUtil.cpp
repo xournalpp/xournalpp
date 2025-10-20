@@ -11,7 +11,7 @@
 
 #include "util/ZipUtil.h"
 
-#include "util/StringUtils.h"  // for char_cast
+#include "util/StringUtils.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -26,6 +26,6 @@ auto ZipUtil::openPath(const fs::path& path, int flags, int* error) -> zip_t* {
     WideCharToMultiByte(CP_UTF8, 0, widePath.c_str(), -1, utf8Path.data(), utf8Size, nullptr, nullptr);
     return zip_open(utf8Path.c_str(), flags, error);
 #else
-    return zip_open(char_cast(path.u8string().c_str()), flags, error);
+    return zip_open(path.u8string().c_str(), flags, error);
 #endif
 }
