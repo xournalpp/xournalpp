@@ -25,7 +25,6 @@
 #include "view/DocumentView.h"            // for DocumentView
 #include <pugixml.hpp>                    // for xml_document, xml_node, ...             
 #include "util/OutputStream.h"            // for GzInputStream
-#include "filesystem.h"  // for path, filesystem_error, remove
 #include "util/StringUtils.h"
 #include <unordered_map> 
 #include <string_view>   
@@ -121,7 +120,7 @@ std::string extractXmlFromXopp(const fs::path& filepath, fs::path tempDir, auto&
     std::string xml = in.readAll();
 
     if (xml.empty()) {
-        lastError = FS(_F("Cannot parse XML from file"));
+        //lastError = FS(_F("Cannot parse XML from file"));
         return "";
     }
 
@@ -160,16 +159,77 @@ struct GzXmlWriter : public pugi::xml_writer {
     }
 };
 
-void saveFinalFile(Control* control, const std::string& modifiedXMLStr, const std::string& originalXMLStr, const fs::path& target, auto& lastError) {
+/**
+ * Helper function to build a map of XML page nodes keyed by their UID.
+ * This allows for O(1) average-case lookup of pages.
+ * @param xournalRoot The <xournal> root node.
+ * @return A map where key is UID (string_view) and value is the page node.
+ */
+std::unordered_map<std::string_view, pugi::xml_node> buildPageMap(pugi::xml_node xournalRoot) {
+    std::unordered_map<std::string_view, pugi::xml_node> pageMap;
+    if (!xournalRoot) {
+        return pageMap;
+    }
+    for (pugi::xml_node page : xournalRoot.children("page")) {
+        pageMap[page.attribute("uid").value()] = page;
+    }
+    return pageMap;
+}
+
+/**
+ * Helper function to copy metadata (root attributes, title, preview)
+ * from a source XML root node to a destination root node.
+ * @param sourceRoot The <xournal> node to copy from.
+ * @param destRoot The <xournal> node to copy to.
+ */
+void copyMetadata(pugi::xml_node sourceRoot, pugi::xml_node destRoot) {
+    if (!sourceRoot || !destRoot) {
+        return;
+    }
+
+    // Copy all attributes from <xournal> tag
+    for (pugi::xml_attribute attr : sourceRoot.attributes()) {
+        destRoot.append_attribute(attr.name()) = attr.value();
+    }
+
+    // Copy <title> and <preview> nodes if they exist
+    pugi::xml_node titleNode = sourceRoot.child("title");
+    if (titleNode) {
+        destRoot.append_copy(titleNode);
+    }
+    pugi::xml_node previewNode = sourceRoot.child("preview");
+    if (previewNode) {
+        destRoot.append_copy(previewNode);
+    }
+}
+
+/**
+ * Merges the modified XML (containing only changed pages) with the original XML
+ * to create the final, complete .xopp file.
+ *
+ * This function ensures that the final page order matches the current order in the Document object.
+ * It iterates through the Document's pages, picking the "modified" version of a page if it exists,
+ * otherwise falling back to the "original" version.
+ *
+ * @param control The main application control object.
+ * @param modifiedXMLStr A string containing the XML for *only* the modified pages.
+ * @param originalXMLStr A string containing the XML for the *original* file.
+ * @param target The final file path to save to.
+ * @param lastError A reference to store any error message.
+ */
+void SaveJob::saveFinalFile(Control* control, const std::string& modifiedXMLStr, const std::string& originalXMLStr, const fs::path& target, auto& lastError) {
     pugi::xml_document modifiedDoc, originalDoc;
 
+    // 1. Parse the modified XML string
     if (!modifiedDoc.load_buffer(modifiedXMLStr.data(), modifiedXMLStr.length())) {
         lastError = FS(_F("Error saving file, could not parse modified XML"));
         return;
     }
 
+    // 2. Try to parse the original XML string
     bool originalIsValid = originalDoc.load_buffer(originalXMLStr.data(), originalXMLStr.length());
 
+    // 3. If the original XML is invalid (e.g., new file), just save the modified XML directly.
     if (!originalIsValid) {
         GzOutputStream out(target);
         out.write(modifiedXMLStr.c_str(), modifiedXMLStr.length());
@@ -177,60 +237,44 @@ void saveFinalFile(Control* control, const std::string& modifiedXMLStr, const st
         return;
     }
 
+    // 4. Both XMLs are valid; proceed with the merge.
     pugi::xml_document resultDoc;
     pugi::xml_node sourceRoot = modifiedDoc.child("xournal");
     pugi::xml_node resultRoot = resultDoc.append_child("xournal");
 
-    for (pugi::xml_attribute attr : sourceRoot.attributes()) {
-        resultRoot.append_attribute(attr.name()) = attr.value();
-    }
+    // 5. Copy metadata (attributes, title, preview) from the modified doc
+    copyMetadata(sourceRoot, resultRoot);
 
-    pugi::xml_node titleNode = sourceRoot.child("title");
-    if (titleNode) {
-        resultRoot.append_copy(titleNode);
-    }
-    pugi::xml_node previewNode = sourceRoot.child("preview");
-    if (previewNode) {
-        resultRoot.append_copy(previewNode);
-    }
-
-    ProgressListener* listener = control;
-
+    // 6. Get the definitive page order from the main Document object
     Document* doc = control->getDocument();
+    std::vector<PageRef> pages = doc->getPages();
 
-    int progressCounter = 1;
-    auto pagesCount = doc->getPages().size();
+    // 7. Set up progress reporting
+    ProgressListener* listener = control;
+    auto pagesCount = pages.size();
     listener->setMaximumState(pagesCount);
     g_warning("%lu pages to process", static_cast<unsigned long>(pagesCount));
 
-    std::vector<PageRef> pages = doc->getPages();
+    // 8. Build lookup maps for fast page access (O(1) average)
+    auto modifiedPageMap = buildPageMap(modifiedDoc.child("xournal"));
+    auto originalPageMap = buildPageMap(originalDoc.child("xournal"));
 
-    std::unordered_map<std::string_view, pugi::xml_node> modifiedPageMap;
-    pugi::xml_node modifiedXournalNode = modifiedDoc.child("xournal");
-    for (pugi::xml_node page : modifiedXournalNode.children("page")) {
-        modifiedPageMap[page.attribute("uid").value()] = page;
-    }
-
-    std::unordered_map<std::string_view, pugi::xml_node> originalPageMap;
-    pugi::xml_node originalXournalNode = originalDoc.child("xournal");
-    for (pugi::xml_node page : originalXournalNode.children("page")) {
-        originalPageMap[page.attribute("uid").value()] = page;
-    }
-
-
+    // 9. Main merge loop: Iterate through pages in the *correct* order
+    int progressCounter = 1;
     for (const auto& pageRef : pages) {
         std::string_view uid = pageRef.get()->getUID();
 
         auto it_mod = modifiedPageMap.find(uid);
-
         if (it_mod != modifiedPageMap.end()) {
+            // Page was modified: use the version from modifiedXMLStr
             resultRoot.append_copy(it_mod->second);
         } else {
             auto it_orig = originalPageMap.find(uid);
-
             if (it_orig != originalPageMap.end()) {
+                // Page was *not* modified: use the version from originalXMLStr
                 resultRoot.append_copy(it_orig->second);
             } else {
+                // This should ideally not happen if the Document is in sync
                 g_warning("Could not find page with UID %s in either modified or original document.", std::string(uid).c_str());
             }
         }
@@ -238,161 +282,212 @@ void saveFinalFile(Control* control, const std::string& modifiedXMLStr, const st
         listener->setCurrentState(progressCounter++);
     }
 
+    // 10. Save the final merged XML document
     GzOutputStream out(target);
     GzXmlWriter writer(out);
-    resultDoc.save(writer, "  "); 
+    resultDoc.save(writer, "   "); // Using 3 spaces for indentation
     out.close();
 }
 
-auto SaveJob::save() -> bool {
+/**
+ * Attempts to create a backup of the target file by renaming it with a "~" suffix.
+ * @param target The file to back up.
+ * @return true on success, false on failure (and sets lastError).
+ */
+auto SaveJob::createBackup(const fs::path& target) -> bool {
+    try {
+        Util::safeRenameFile(target, fs::path{target} += "~");
+        return true;
+    } catch (const fs::filesystem_error& fe) {
+        g_warning("Could not create backup! Failed with %s", fe.what());
+        this->lastError = FS(_F("Save file error, can't backup: {1}") % std::string(fe.what()));
+        if (!control->getWindow()) {
+            g_error("%s", this->lastError.c_str());
+        }
+        return false;
+    }
+}
 
-    long totalTime = 0;
-    
+/**
+ * Extracts the original XML, detects if it's a "legacy" format, and stores the XML.
+ * This also sets the global StringUtils::isLegacy flag based on its findings.
+ * @param target The path to the original .xopp file.
+ * @param tempDir A temporary directory for extraction.
+ * @param originalXMLStr [out] The extracted XML content.
+ * @return true on success, false on failure (and sets lastError).
+ */
+auto SaveJob::detectLegacyFormat(const fs::path& target, const fs::path& tempDir, std::string& originalXMLStr) -> bool {
+    originalXMLStr = extractXmlFromXopp(target, tempDir, this->lastError);
+
+    pugi::xml_document xmlDoc;
+    if (!xmlDoc.load_string(originalXMLStr.c_str())) {
+        // If the file doesn't exist or is empty, originalXMLStr might be empty.
+        // This is OK (e.g., new file), but we can't parse it.
+        // We'll treat it as non-legacy by default.
+        if (originalXMLStr.empty()) {
+            StringUtils::isLegacy = false;
+            return true;
+        }
+
+        this->lastError = FS(_F("Could not parse original XML file"));
+        return false;
+    }
+
+    pugi::xml_node sourceRoot = xmlDoc.child("xournal");
+    if (sourceRoot) {
+        // The "isLegacy" attribute *being absent* indicates a legacy file.
+        pugi::xml_attribute legacyAttr = sourceRoot.attribute("isLegacy");
+        StringUtils::isLegacy = !legacyAttr;
+    } else {
+        // No <xournal> root, treat as new/non-legacy
+        StringUtils::isLegacy = false;
+    }
+
+    return true;
+}
+
+/**
+ * Handles saving the document in the "legacy" format (saving the entire document at once).
+ * @param h The SaveHandler prepared for saving.
+ * @param target The final destination path.
+ * @param totalTime [in/out] Reference to the total time counter for metrics.
+ */
+auto SaveJob::saveLegacy(SaveHandler& h, const fs::path& target, long& totalTime) -> void {
     auto start_time = std::chrono::steady_clock::now();
 
+    Document* doc = this->control->getDocument();
+    doc->lock();
+    h.saveTo(target, this->control);
+    doc->unlock();
+
+    auto end_time = std::chrono::steady_clock::now();
+    auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+
+    totalTime += millis;
+    g_warning("saveTo (legacy) duration: %ld ms", millis);
+}
+
+/**
+ * Handles saving the document in the "modern" format.
+ * This involves saving only modified pages to a temporary file,
+ * then merging them with the original file's pages using saveFinalFile.
+ * @param h The SaveHandler prepared for saving.
+ * @param target The final destination path.
+ * @param originalXMLStr The XML content of the original file.
+ * @param tempDir The temporary directory for intermediate files.
+ * @param totalTime [in/out] Reference to the total time counter for metrics.
+ */
+auto SaveJob::saveModern(SaveHandler& h, const fs::path& target, const std::string& originalXMLStr, const fs::path& tempDir, long& totalTime) -> void {
+    auto start_time = std::chrono::steady_clock::now();
+    fs::path xoppFileModifiedOnlyPages = tempDir / "backup.xopp";
+
+    // 1. Save *only* modified pages to a temporary .xopp file
+    Document* doc = this->control->getDocument();
+    doc->lock();
+    h.saveTo(xoppFileModifiedOnlyPages, this->control);
+    doc->unlock();
+
+    auto end_time = std::chrono::steady_clock::now();
+    auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+    totalTime += millis;
+    g_warning("Saving modified pages took: %ld ms", millis);
+
+    start_time = std::chrono::steady_clock::now();
+
+    // 2. Extract the XML from the temporary file
+    std::string modifiedXMLStr = extractXmlFromXopp(xoppFileModifiedOnlyPages, tempDir, this->lastError);
+
+    // 3. Merge the modified XML and original XML into the final target file
+    this->saveFinalFile(this->control, modifiedXMLStr, originalXMLStr, target, this->lastError);
+
+    end_time = std::chrono::steady_clock::now();
+    millis = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+    totalTime += millis;
+    g_warning("saveFinalFile (merge) duration: %ld ms", millis);
+
+    // 4. Clean up the temporary directory
+    uintmax_t removeTempDirectory = fs::remove_all(tempDir);
+    g_warning("Removed temporary directory %s with %llu files.", tempDir.u8string().c_str(),
+              static_cast<unsigned long long>(removeTempDirectory));
+}
+
+/**
+ * Main function to save the document.
+ * Orchestrates preview updates, backup creation, legacy detection,
+ * and the appropriate save strategy (legacy vs. modern).
+ * @return true if the save was successful, false otherwise.
+ */
+auto SaveJob::save() -> bool {
+    long totalTime = 0;
+    auto start_time = std::chrono::steady_clock::now();
+
+    // 1. Initial setup: update preview, get doc, prepare save handler
     updatePreview(control);
     Document* doc = this->control->getDocument();
     SaveHandler h;
 
     doc->lock();
     fs::path target = doc->getFilepath();
-
     Util::safeReplaceExtension(target, "xopp");
-
-    h.prepareSave(doc, target);        
-
+    h.prepareSave(doc, target);
     doc->unlock();
 
     auto const createBackup = doc->shouldCreateBackupOnSave();
-    
     fs::path tempDir = createTempDir();
 
-    std::string originalXMLStr = extractXmlFromXopp(target, tempDir, this->lastError);
-        
-    pugi::xml_document xmlDoc;
-    if (!xmlDoc.load_string(originalXMLStr.c_str())) {
-        this->lastError = FS(_F("Could not parse original XML file"));
+    // 2. Detect format (legacy or modern) and get original XML
+    std::string originalXMLStr;
+    if (!this->detectLegacyFormat(target, tempDir, originalXMLStr)) {
+        // Error already set in detectLegacyFormat
+        fs::remove_all(tempDir); // Clean up temp dir on failure
         return false;
     }
 
-    pugi::xml_node sourceRoot = xmlDoc.child("xournal");
-
-    if (sourceRoot) {
-        pugi::xml_attribute legacyAttr = sourceRoot.attribute("isLegacy");
-
-        if ( !legacyAttr )
-        {
-            StringUtils::isLegacy = true;
-        }
-        else
-        {
-            StringUtils::isLegacy = false;
-        }
-
-    } else {
-        StringUtils::isLegacy = false;
-    }
-
     auto end_time = std::chrono::steady_clock::now();
-    auto duration = end_time - start_time;
-    auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-    
+    auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
     totalTime += millis;
     g_warning("prepareToSave and legacy detection take: %ld ms", millis);
-    
-    start_time = std::chrono::steady_clock::now();
 
+    // 3. Create a backup (e.g., rename main.xopp to main.xopp~)
     if (createBackup) {
-        try {
-            Util::safeRenameFile(target, fs::path{target} += "~");
-        } catch (const fs::filesystem_error& fe) {
-            g_warning("Could not create backup! Failed with %s", fe.what());
-            this->lastError = FS(_F("Save file error, can't backup: {1}") % std::string(fe.what()));
-            if (!control->getWindow()) {
-                g_error("%s", this->lastError.c_str());
-            }
-            return false;
+        if (!this->createBackup(target)) {
+            fs::remove_all(tempDir); // Clean up temp dir on failure
+            return false; // Error already set in createBackup
         }
     }
 
-    if ( !StringUtils::isLegacy )
-    {
-        fs::path xoppFileModifiedOnlyPages = tempDir / "backup.xopp";
-
-        // Here, Segmentation Fault
-        g_warning("%s", "Before saveTo");
-
-        doc->lock();
-        h.saveTo(xoppFileModifiedOnlyPages, this->control);
-        
-        doc->unlock();
-
-        g_warning("%s", "After saveTo");
-
-        end_time = std::chrono::steady_clock::now();
-        duration = end_time - start_time;
-        millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-        
-        totalTime += millis;
-        g_warning("saveTo duration: %ld ms", millis);
-
-        start_time = std::chrono::steady_clock::now();
-
-        std::string modifiedXMLStr = extractXmlFromXopp(xoppFileModifiedOnlyPages, tempDir, this->lastError);
-
-        g_warning("%s", "Before saveFinalFile");
-
-        //doc->lock();
-        saveFinalFile(this->control, modifiedXMLStr, originalXMLStr, target, this->lastError);
-        //doc->unlock();
-
-        g_warning("%s", "After saveFinalFile");
-
-        end_time = std::chrono::steady_clock::now();
-        duration = end_time - start_time;
-        millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-        totalTime += millis;
-        g_warning("saveFinalFile duration: %ld ms", millis);
-
-        uintmax_t removeTempDirectory = fs::remove_all(tempDir);
-        g_warning("Removed temporary directory %s with %llu files.", tempDir.u8string().c_str(),
-                  static_cast<unsigned long long>(removeTempDirectory));
-    }
-    else
-    {
-        doc->lock();
-        h.saveTo(target, this->control);
-        doc->unlock();
-
-        end_time = std::chrono::steady_clock::now();
-        duration = end_time - start_time;
-        millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-        
-        totalTime += millis;
-        g_warning("saveTo (legacy) duration: %ld ms", millis);
+    // 4. Execute the appropriate save strategy based on format
+    if (StringUtils::isLegacy) {
+        this->saveLegacy(h, target, totalTime);
+    } else {
+        this->saveModern(h, target, originalXMLStr, tempDir, totalTime);
     }
 
+    // 5. Finalize: update doc path and report total time
     doc->setFilepath(target);
-    g_warning("Save took: %ld ms", totalTime );
-    
+    g_warning("Save took: %ld ms", totalTime);
+
+    // 6. Final error checking and backup cleanup
     if (!h.getErrorMessage().empty()) {
         this->lastError = FS(_F("Save file error: {1}") % h.getErrorMessage());
         if (!control->getWindow()) {
             g_error("%s", this->lastError.c_str());
         }
+        // Note: We DON'T remove the backup file if saving failed, allowing user recovery
         return false;
+
     } else if (createBackup) {
+        // Save was successful, remove the backup file.
         try {
-            // If a backup was created it can be removed now since no error occured during the save
             fs::remove(fs::path{target} += "~");
         } catch (const fs::filesystem_error& fe) {
             g_warning("Could not delete backup! Failed with %s", fe.what());
         }
     } else {
+        // Backup was not created this time (e.g., first save),
+        // so ensure it's enabled for *next* time.
         doc->setCreateBackupOnSave(true);
     }
-
-    g_warning("Save successful");
 
     return true;
 }
