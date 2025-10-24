@@ -19,10 +19,15 @@
 #ifdef _WIN32
 #include <cstdlib>
 
+#include "util/Win32ArgsUtil.h"
 #include "win32/console.h"
 #endif
 
 auto main(int argc, char* argv[]) -> int {
+#ifdef _WIN32
+    convertWin32ArgsToUtf8(argc, argv);
+#endif
+
 #ifdef _WIN32
     // Attach to the console here. Otherwise, gspawn-win32-helper will create annoying console popups.
     attachConsole();

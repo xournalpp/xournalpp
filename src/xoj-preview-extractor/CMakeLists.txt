@@ -15,6 +15,7 @@ endif (DEV_ENABLE_GCOV)
 add_executable (xournalpp-thumbnailer
         xournalpp-thumbnailer.cpp
         "${PROJECT_SOURCE_DIR}/src/util/GzUtil.cpp"
+        "${PROJECT_SOURCE_DIR}/src/util/ZipUtil.cpp"
         "${PROJECT_SOURCE_DIR}/src/util/PlaceholderString.cpp"
         "${PROJECT_SOURCE_DIR}/src/util/StringUtils.cpp"
         "${PROJECT_SOURCE_DIR}/src/util/PathUtil.cpp"

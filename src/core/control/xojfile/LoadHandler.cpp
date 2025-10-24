@@ -28,6 +28,7 @@
 #include "util/GzUtil.h"                       // for GzUtil
 #include "util/LoopUtil.h"
 #include "util/PlaceholderString.h"  // for PlaceholderString
+#include "util/ZipUtil.h"            // for ZipUtil
 #include "util/i18n.h"               // for _F, FC, FS, _
 #include "util/raii/GObjectSPtr.h"
 
@@ -115,7 +116,7 @@ auto LoadHandler::getMissingPdfFilename() const -> string { return this->pdfMiss
 auto LoadHandler::openFile(fs::path const& filepath) -> bool {
     this->filepath = filepath;
     int zipError = 0;
-    this->zipFp = zip_open(filepath.u8string().c_str(), ZIP_RDONLY, &zipError);
+    this->zipFp = ZipUtil::openPath(filepath, ZIP_RDONLY, &zipError);
 
     // Check if the file is actually an old XOPP-File and open it
     if (!this->zipFp && zipError == ZIP_ER_NOZIP) {
