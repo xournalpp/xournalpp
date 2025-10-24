@@ -11,7 +11,7 @@
 
 #include "util/GzUtil.h"      // for GzUtil
 #include "util/PathUtil.h"    // for hasXournalFileExt
-#include "util/ZipUtil.h"    // for ZipUtil
+#include "util/ZipUtil.h"     // for ZipUtil
 #include "util/safe_casts.h"  // for as_signed
 
 #include "filesystem.h"  // for path
