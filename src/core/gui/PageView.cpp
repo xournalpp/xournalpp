@@ -29,6 +29,11 @@
 #include "control/settings/Settings.h"              // for Settings
 #include "control/tools/ArrowHandler.h"             // for ArrowHandler
 #include "control/tools/CoordinateSystemHandler.h"  // for CoordinateSystemH...
+#include "control/tools/ExpHandler.h"               // for ExpHandler...
+#include "control/tools/GaussHandler.h"             // for GaussHandler...
+#include "control/tools/PolyHandler.h"              // for PolyHandler...
+#include "control/tools/PolyNegHandler.h"            // for PolyNegHandler...
+#include "control/tools/SinusHandler.h"             // for SinusHandler...
 #include "control/tools/EditSelection.h"            // for EditSelection
 #include "control/tools/EllipseHandler.h"           // for EllipseHandler
 #include "control/tools/EraseHandler.h"             // for EraseHandler
@@ -281,6 +286,21 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
                 break;
             case DRAWING_TYPE_COORDINATE_SYSTEM:
                 this->inputHandler = std::make_unique<CoordinateSystemHandler>(control, getPage());
+                break;
+            case DRAWING_TYPE_EXP:
+                this->inputHandler = std::make_unique<ExpHandler>(control, getPage(), true);
+                break;
+            case DRAWING_TYPE_GAUSS:
+                this->inputHandler = std::make_unique<GaussHandler>(control, getPage(), true);
+                break;
+            case DRAWING_TYPE_POLY:
+                this->inputHandler = std::make_unique<PolyHandler>(control, getPage(), true);
+                break;
+            case DRAWING_TYPE_POLYNEG:
+                this->inputHandler = std::make_unique<PolyNegHandler>(control, getPage(), true);
+                break;
+            case DRAWING_TYPE_SINUS:
+                this->inputHandler = std::make_unique<SinusHandler>(control, getPage(), true);
                 break;
             default:
                 this->inputHandler = std::make_unique<StrokeHandler>(control, getPage());

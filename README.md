@@ -29,7 +29,7 @@ Xournal++ features:
 - Follow links from the background PDF
 - Export to a variety of formats including SVG, PNG and PDF, both from the GUI and command line
 - Different drawing tools (e.g. pen, highlighter) and stroke styles (e.g. solid, dotted)
-- Shape drawing (line, arrow, circle, rectangle, spline)
+- Shape drawing (line, arrow, circle, rectangle, spline, exp, gauss, poly, poly neg, sinus)
 - Use the set-square and compass tools for measurements or as a guide for drawing straight lines, circular arcs and radii
 - Fill shape functionality
 - Shape resizing and rotation
