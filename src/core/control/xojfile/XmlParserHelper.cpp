@@ -28,31 +28,14 @@
 #include "filesystem.h"
 
 
-XmlParserHelper::AttributeMap::AttributeMap(const char** attributeNames, const char** attributeValues) {
-    // Get array length, and verify that it is identical for names and values
-    std::size_t attribute_count = 0;
-    while (attributeNames[attribute_count] != nullptr) {
-        xoj_assert(attributeValues[attribute_count] != nullptr);
-        ++attribute_count;
-    }
-    xoj_assert(attributeValues[attribute_count] == nullptr);
+XmlParserHelper::AttributeMap::AttributeMap(const char** attributeNames, const char** attributeValues):
+        names(attributeNames), values(attributeValues) {}
 
-    // Allocate space for string views
-    this->names.resize(attribute_count);
-    this->values.resize(attribute_count);
-
-    // Reference strings
-    for (size_t i = 0; i < attribute_count; ++i) {
-        this->names[i] = std::string_view{attributeNames[i]};
-        this->values[i] = std::string_view{attributeValues[i]};
-    }
-}
-
-auto XmlParserHelper::AttributeMap::operator[](const std::u8string_view name) const -> std::optional<std::string_view> {
-    for (auto it = this->names.cbegin(); it != this->names.cend(); ++it) {
+auto XmlParserHelper::AttributeMap::operator[](std::u8string_view name) const -> std::optional<const char*> {
+    for (auto it = this->names; *it != nullptr; ++it) {
         if ((*it | xoj::util::utf8) == name) {
             // Name was found
-            return this->values[as_unsigned(std::distance(this->names.cbegin(), it))];
+            return this->values[as_unsigned(std::distance(this->names, it))];
         }
     }
 
@@ -60,22 +43,33 @@ auto XmlParserHelper::AttributeMap::operator[](const std::u8string_view name) co
     return std::nullopt;
 }
 
+using XmlParserHelper::c_string_utf8_view;
 using XmlParserHelper::string_utf8_view;
 
 // template specializations
+template <>
+auto XmlParserHelper::getAttrib<const char*>(std::u8string_view name, const AttributeMap& attributeMap)
+        -> std::optional<const char*> {
+    return attributeMap[name];
+}
 
 template <>
-auto XmlParserHelper::getAttrib<std::string_view>(std::u8string_view name, const AttributeMap& attributeMap)
-        -> std::optional<std::string_view> {
-    return attributeMap[name];
+auto XmlParserHelper::getAttrib<c_string_utf8_view>(std::u8string_view name, const AttributeMap& attributeMap)
+        -> std::optional<c_string_utf8_view> {
+    const auto optCStr = attributeMap[name];
+    if (optCStr) {
+        return *optCStr | xoj::util::utf8;
+    } else {
+        return std::nullopt;
+    }
 }
 
 template <>
 auto XmlParserHelper::getAttrib<string_utf8_view>(std::u8string_view name, const AttributeMap& attributeMap)
         -> std::optional<string_utf8_view> {
-    const auto optSV = attributeMap[name];
-    if (optSV) {
-        return *optSV | xoj::util::utf8;
+    const auto optCStr = attributeMap[name];
+    if (optCStr) {
+        return std::string_view(*optCStr) | xoj::util::utf8;
     } else {
         return std::nullopt;
     }
@@ -84,9 +78,9 @@ auto XmlParserHelper::getAttrib<string_utf8_view>(std::u8string_view name, const
 template <>
 auto XmlParserHelper::getAttrib<fs::path>(std::u8string_view name, const AttributeMap& attributeMap)
         -> std::optional<fs::path> {
-    const auto optSV = attributeMap[name];
-    if (optSV) {
-        return fs::path(*optSV | xoj::util::utf8);
+    const auto optCStr = attributeMap[name];
+    if (optCStr) {
+        return fs::path(*optCStr | xoj::util::utf8);
     } else {
         return std::nullopt;
     }
@@ -95,11 +89,11 @@ auto XmlParserHelper::getAttrib<fs::path>(std::u8string_view name, const Attribu
 template <>
 auto XmlParserHelper::getAttrib<LineStyle>(std::u8string_view name, const AttributeMap& attributeMap)
         -> std::optional<LineStyle> {
-    const auto optSV = attributeMap[name];
-    if (optSV) {
+    const auto optCStr = attributeMap[name];
+    if (optCStr) {
         // With lots of efforts, we could avoid a copy here, but this attribute likely does
         // not show up often in regular files.
-        return StrokeStyle::parseStyle(std::string{*optSV});
+        return StrokeStyle::parseStyle(std::string{*optCStr});
     } else {
         return std::nullopt;
     }
