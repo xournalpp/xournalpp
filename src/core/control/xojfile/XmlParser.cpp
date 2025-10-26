@@ -199,7 +199,7 @@ void XmlParser::parseUnknownTag(const XmlParserHelper::AttributeMap& attributeMa
 }
 
 void XmlParser::parseXournalTag(const XmlParserHelper::AttributeMap& attributeMap) {
-    const auto optCreator = XmlParserHelper::getAttrib<string_utf8_view>(xoj::xml_attrs::CREATOR_STR, attributeMap);
+    const auto optCreator = XmlParserHelper::getAttrib<c_string_utf8_view>(xoj::xml_attrs::CREATOR_STR, attributeMap);
     std::u8string creator;
     if (optCreator) {
         creator = optCreator->str();

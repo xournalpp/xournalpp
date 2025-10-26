@@ -52,11 +52,11 @@ public:
      * Look up `name` in the attribute map
      * @return The matching value, or std::nullopt if it was not found.
      */
-    std::optional<std::string_view> operator[](const std::u8string_view name) const;
+    std::optional<const char*> operator[](std::u8string_view name) const;
 
 private:
-    std::vector<std::string_view> names;
-    std::vector<std::string_view> values;
+    const char** names;
+    const char** values;
 };
 
 using c_string_utf8_view = xoj::util::utf8_view<const char*, xoj::util::CharSentinelClass<char>>;
@@ -77,7 +77,10 @@ T getAttribMandatory(std::u8string_view name, const AttributeMap& attributeMap, 
                      bool warn = true);
 // specializations
 template <>
-std::optional<std::string_view> getAttrib<std::string_view>(std::u8string_view name, const AttributeMap& attributeMap);
+std::optional<const char*> getAttrib<const char*>(std::u8string_view name, const AttributeMap& attributeMap);
+template <>
+std::optional<c_string_utf8_view> getAttrib<c_string_utf8_view>(std::u8string_view name,
+                                                                const AttributeMap& attributeMap);
 template <>
 std::optional<string_utf8_view> getAttrib<string_utf8_view>(std::u8string_view name, const AttributeMap& attributeMap);
 template <>
@@ -160,7 +163,7 @@ private:
 
 // Parse named enums
 template <typename T>
-T parse_enum(string_utf8_view sv) {
+T parse_enum(c_string_utf8_view sv) {
     static_assert(has_names_v<T>, "T must define a static T::NAMES array to perform lookup");
     static_assert(has_value_enum_v<T>, "T must define an underlying enum type T::Value");
 
@@ -220,27 +223,27 @@ std::istream& operator>>(std::istream& stream, LineStyle& style);
 
 template <typename T>
 auto XmlParserHelper::getAttrib(std::u8string_view name, const AttributeMap& attributeMap) -> std::optional<T> {
-    auto optionalSV = attributeMap[name];  // mildly expensive operation: string search in array.
-                                           // Use the operator[] only once and store the result.
-    if (optionalSV) {
+    auto optionalCStr = attributeMap[name];  // mildly expensive operation: string search in array.
+                                             // Use the operator[] only once and store the result.
+    if (optionalCStr) {
         try {
             // Choose appropriate parsing strategy
-            if constexpr (std::is_constructible_v<T, std::string_view>) {
-                return T{*optionalSV};  // Type is directly constructible from a string_view (e.g. std::string)
+            if constexpr (std::is_constructible_v<T, const char*>) {
+                return T{*optionalCStr};  // Type is directly constructible from a C-string, e.g. std::string_view
             } else if constexpr (detail::has_names_v<T> && detail::has_value_enum_v<T>) {
-                return detail::parse_enum<T>(*optionalSV | xoj::util::utf8);
+                return detail::parse_enum<T>(*optionalCStr | xoj::util::utf8);
             } else if constexpr (std::is_arithmetic_v<T>) {
-                return detail::parse_numeric<T>(*optionalSV);
+                return detail::parse_numeric<T>(*optionalCStr);
             } else {
                 static_assert(detail::always_false<T>, "No parser defined for this type");
             }
         } catch (const std::domain_error& e) {
-            g_warning("XML parser: Attribute \"" SV_FMT "\" could not be parsed as %s: %s. The value is \"" SV_FMT "\"",
-                      U8SV_ARG(name), Util::demangledTypeName<T>().c_str(), e.what(), SV_ARG(*optionalSV));
+            g_warning("XML parser: Attribute \"" SV_FMT "\" could not be parsed as %s: %s. The value is \"%s\"",
+                      U8SV_ARG(name), Util::demangledTypeName<T>().c_str(), e.what(), *optionalCStr);
             return std::nullopt;
         } catch (const detail::IncompleteParseError<T>& e) {
-            g_warning("XML parser: Attribute \"" SV_FMT "\" was not entirely parsed as %s. The value is \"" SV_FMT "\"",
-                      U8SV_ARG(name), Util::demangledTypeName<T>().c_str(), SV_ARG(*optionalSV));
+            g_warning("XML parser: Attribute \"" SV_FMT "\" was not entirely parsed as %s. The value is \"%s\"",
+                      U8SV_ARG(name), Util::demangledTypeName<T>().c_str(), *optionalCStr);
             return e.value();
         }
     } else {
