@@ -7,6 +7,7 @@
 #include "control/jobs/ProgressListener.h"  // for ProgressListener
 #include "control/xml/Attribute.h"          // for XMLAttribute
 #include "util/OutputStream.h"              // for OutputStream
+#include "util/utf8_view.h"                 // for utf8
 
 #include "DoubleArrayAttribute.h"  // for DoubleArrayAttribute
 #include "DoubleAttribute.h"       // for DoubleAttribute
@@ -17,27 +18,38 @@
 
 XmlNode::XmlNode(StringUtils::StaticStringView tag): tag(tag) {}
 
-void XmlNode::setAttrib(const char* attrib, const char* value) {
+void XmlNode::setAttrib(const char8_t* attrib, const char* value) {
     if (value == nullptr) {
         value = "";
+    }
+    putAttrib(new TextAttribute(attrib, xoj::util::utf8(value).str()));
+}
+
+void XmlNode::setAttrib(const char8_t* attrib, const std::string& value) {
+    putAttrib(new TextAttribute(attrib, xoj::util::utf8(value).str()));
+}
+
+void XmlNode::setAttrib(const char8_t* attrib, const char8_t* value) {
+    if (value == nullptr) {
+        value = u8"";
     }
     putAttrib(new TextAttribute(attrib, value));
 }
 
-void XmlNode::setAttrib(const char* attrib, std::string value) {
+void XmlNode::setAttrib(const char8_t* attrib, std::u8string value) {
     putAttrib(new TextAttribute(attrib, std::move(value)));
 }
 
-void XmlNode::setAttrib(const char* attrib, double value) { putAttrib(new DoubleAttribute(attrib, value)); }
+void XmlNode::setAttrib(const char8_t* attrib, double value) { putAttrib(new DoubleAttribute(attrib, value)); }
 
-void XmlNode::setAttrib(const char* attrib, int value) { putAttrib(new IntAttribute(attrib, value)); }
+void XmlNode::setAttrib(const char8_t* attrib, int value) { putAttrib(new IntAttribute(attrib, value)); }
 
-void XmlNode::setAttrib(const char* attrib, size_t value) { putAttrib(new SizeTAttribute(attrib, value)); }
+void XmlNode::setAttrib(const char8_t* attrib, size_t value) { putAttrib(new SizeTAttribute(attrib, value)); }
 
 /**
  * The double array is now owned by XmlNode and automatically deleted!
  */
-void XmlNode::setAttrib(const char* attrib, std::vector<double> values) {
+void XmlNode::setAttrib(const char8_t* attrib, std::vector<double> values) {
     putAttrib(new DoubleArrayAttribute(attrib, std::move(values)));
 }
 
