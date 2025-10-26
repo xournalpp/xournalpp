@@ -102,8 +102,7 @@ void SaveHandler::writeTimestamp(XmlAudioNode* xmlAudioNode, const AudioElement*
         /** set stroke timestamp value to the XmlPointNode */
         xmlAudioNode->setAttrib(xoj::xml_attrs::TIMESTAMP_STR, audioElement->getTimestamp());
         auto audioFilename = audioElement->getAudioFilename().generic_u8string();
-        auto casted = char_cast(audioFilename);
-        xmlAudioNode->setAttrib(xoj::xml_attrs::AUDIO_FILENAME_STR, std::string{casted.begin(), casted.end()});
+        xmlAudioNode->setAttrib(xoj::xml_attrs::AUDIO_FILENAME_STR, audioFilename);
     }
 }
 
@@ -268,7 +267,7 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
                 background->setAttrib(xoj::xml_attrs::DOMAIN_STR, Domain::NAMES[Domain::ABSOLUTE]);
                 auto normalizedPath = Util::normalizeAssetPath(doc->getPdfFilepath(), target.parent_path(),
                                                                doc->getPathStorageMode());
-                background->setAttrib(xoj::xml_attrs::FILENAME_STR, char_cast(normalizedPath.c_str()));
+                background->setAttrib(xoj::xml_attrs::FILENAME_STR, normalizedPath.c_str());
             }
         }
         background->setAttrib(xoj::xml_attrs::PAGE_NUMBER_STR, p->getPdfPageNr() + 1);
@@ -302,7 +301,7 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
             background->setAttrib(xoj::xml_attrs::DOMAIN_STR, Domain::NAMES[Domain::ABSOLUTE]);
             auto normalizedPath = Util::normalizeAssetPath(p->getBackgroundImage().getFilepath(), target.parent_path(),
                                                            doc->getPathStorageMode());
-            background->setAttrib(xoj::xml_attrs::FILENAME_STR, char_cast(normalizedPath.c_str()));
+            background->setAttrib(xoj::xml_attrs::FILENAME_STR, normalizedPath.c_str());
 
             BackgroundImage img = p->getBackgroundImage();
 

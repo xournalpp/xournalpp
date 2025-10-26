@@ -78,7 +78,7 @@ public:
 
 public:
     // interface for XmlParser
-    void addDocument(std::string creator, int fileVersion);
+    void addDocument(std::u8string creator, int fileVersion);
     void finalizeDocument();
     void addPage(double width, double height);
     void finalizePage();
@@ -173,7 +173,7 @@ private:
     bool attachedPdfMissing;
     bool pdfFilenameParsed;
 
-    std::string creator;
+    std::u8string creator;
     int fileVersion;
     int minimalFileVersion;
 

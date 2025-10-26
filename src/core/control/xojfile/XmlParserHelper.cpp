@@ -48,27 +48,41 @@ XmlParserHelper::AttributeMap::AttributeMap(const char** attributeNames, const c
     }
 }
 
-auto XmlParserHelper::AttributeMap::operator[](const std::string_view name) const -> std::optional<std::string_view> {
-    auto it = std::find(this->names.cbegin(), this->names.cend(), name);
-    if (it != this->names.end()) {
-        // Name was found
-        return this->values[as_unsigned(std::distance(this->names.cbegin(), it))];
+auto XmlParserHelper::AttributeMap::operator[](const std::u8string_view name) const -> std::optional<std::string_view> {
+    for (auto it = this->names.cbegin(); it != this->names.cend(); ++it) {
+        if ((*it | xoj::util::utf8) == name) {
+            // Name was found
+            return this->values[as_unsigned(std::distance(this->names.cbegin(), it))];
+        }
     }
 
     // Name not found
     return std::nullopt;
 }
 
+using XmlParserHelper::string_utf8_view;
+
 // template specializations
 
 template <>
-auto XmlParserHelper::getAttrib<std::string_view>(std::string_view name, const AttributeMap& attributeMap)
+auto XmlParserHelper::getAttrib<std::string_view>(std::u8string_view name, const AttributeMap& attributeMap)
         -> std::optional<std::string_view> {
     return attributeMap[name];
 }
 
 template <>
-auto XmlParserHelper::getAttrib<fs::path>(std::string_view name, const AttributeMap& attributeMap)
+auto XmlParserHelper::getAttrib<string_utf8_view>(std::u8string_view name, const AttributeMap& attributeMap)
+        -> std::optional<string_utf8_view> {
+    const auto optSV = attributeMap[name];
+    if (optSV) {
+        return *optSV | xoj::util::utf8;
+    } else {
+        return std::nullopt;
+    }
+}
+
+template <>
+auto XmlParserHelper::getAttrib<fs::path>(std::u8string_view name, const AttributeMap& attributeMap)
         -> std::optional<fs::path> {
     const auto optSV = attributeMap[name];
     if (optSV) {
@@ -79,7 +93,7 @@ auto XmlParserHelper::getAttrib<fs::path>(std::string_view name, const Attribute
 }
 
 template <>
-auto XmlParserHelper::getAttrib<LineStyle>(std::string_view name, const AttributeMap& attributeMap)
+auto XmlParserHelper::getAttrib<LineStyle>(std::u8string_view name, const AttributeMap& attributeMap)
         -> std::optional<LineStyle> {
     const auto optSV = attributeMap[name];
     if (optSV) {
@@ -101,7 +115,7 @@ auto XmlParserHelper::getAttribColorMandatory(const AttributeMap& attributeMap, 
     if (optColorSV) {
         std::optional<Color> optColor;
         if (bg) {
-            optColor = parseBgColor(*optColorSV);
+            optColor = parseBgColor(*optColorSV | xoj::util::utf8);
             if (optColor) {
                 return *optColor;
             }
@@ -110,7 +124,7 @@ auto XmlParserHelper::getAttribColorMandatory(const AttributeMap& attributeMap, 
         if (optColor) {
             return *optColor;
         }
-        optColor = parsePredefinedColor(*optColorSV);
+        optColor = parsePredefinedColor(*optColorSV | xoj::util::utf8);
         if (optColor) {
             return *optColor;
         }
@@ -127,18 +141,18 @@ auto XmlParserHelper::getAttribColorMandatory(const AttributeMap& attributeMap, 
 }
 
 struct PredefinedColor {
-    std::string_view name{};
+    std::u8string_view name{};
     Color color{};
 };
 
 using namespace std::literals::string_view_literals;
-constexpr std::array<PredefinedColor, 5> BACKGROUND_COLORS = {{{"blue"sv, Colors::xopp_paleturqoise},
-                                                               {"pink"sv, Colors::xopp_pink},
-                                                               {"green"sv, Colors::xopp_aquamarine},
-                                                               {"orange"sv, Colors::xopp_lightsalmon},
-                                                               {"yellow"sv, Colors::xopp_khaki}}};
+constexpr std::array<PredefinedColor, 5> BACKGROUND_COLORS = {{{u8"blue"sv, Colors::xopp_paleturqoise},
+                                                               {u8"pink"sv, Colors::xopp_pink},
+                                                               {u8"green"sv, Colors::xopp_aquamarine},
+                                                               {u8"orange"sv, Colors::xopp_lightsalmon},
+                                                               {u8"yellow"sv, Colors::xopp_khaki}}};
 
-auto XmlParserHelper::parseBgColor(std::string_view sv) -> std::optional<Color> {
+auto XmlParserHelper::parseBgColor(string_utf8_view sv) -> std::optional<Color> {
     for (const auto& i: BACKGROUND_COLORS) {
         if (sv == i.name) {
             return i.color;
@@ -165,19 +179,19 @@ auto XmlParserHelper::parseColorCode(std::string_view sv) -> std::optional<Color
     }
 }
 
-constexpr std::array<PredefinedColor, 11> PREDEFINED_COLORS = {{{"black"sv, Colors::black},
-                                                                {"blue"sv, Colors::xopp_royalblue},
-                                                                {"red"sv, Colors::red},
-                                                                {"green"sv, Colors::green},
-                                                                {"gray"sv, Colors::gray},
-                                                                {"lightblue"sv, Colors::xopp_deepskyblue},
-                                                                {"lightgreen"sv, Colors::lime},
-                                                                {"magenta"sv, Colors::magenta},
-                                                                {"orange"sv, Colors::xopp_darkorange},
-                                                                {"yellow"sv, Colors::yellow},
-                                                                {"white"sv, Colors::white}}};
+constexpr std::array<PredefinedColor, 11> PREDEFINED_COLORS = {{{u8"black"sv, Colors::black},
+                                                                {u8"blue"sv, Colors::xopp_royalblue},
+                                                                {u8"red"sv, Colors::red},
+                                                                {u8"green"sv, Colors::green},
+                                                                {u8"gray"sv, Colors::gray},
+                                                                {u8"lightblue"sv, Colors::xopp_deepskyblue},
+                                                                {u8"lightgreen"sv, Colors::lime},
+                                                                {u8"magenta"sv, Colors::magenta},
+                                                                {u8"orange"sv, Colors::xopp_darkorange},
+                                                                {u8"yellow"sv, Colors::yellow},
+                                                                {u8"white"sv, Colors::white}}};
 
-auto XmlParserHelper::parsePredefinedColor(std::string_view sv) -> std::optional<Color> {
+auto XmlParserHelper::parsePredefinedColor(string_utf8_view sv) -> std::optional<Color> {
     for (const auto& i: PREDEFINED_COLORS) {
         if (sv == i.name) {
             return i.color;
