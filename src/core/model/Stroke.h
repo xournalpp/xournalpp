@@ -30,7 +30,7 @@ class ShapeContainer;
 class StrokeTool {
 public:
     enum Value { PEN, ERASER, HIGHLIGHTER };
-    static constexpr std::array<const char*, 3> NAMES = {"pen", "eraser", "highlighter"};
+    static constexpr std::array<const char8_t*, 3> NAMES = {u8"pen", u8"eraser", u8"highlighter"};
     StrokeTool(Value v): value(v) {}
 
     [[nodiscard]] bool isPressureSensitive() const { return value == PEN; }
@@ -50,7 +50,7 @@ public:
         SQUARE = 2
     };  // Must match the indices in StrokeView::CAIRO_LINE_CAP
         // and in EraserHandler::PADDING_COEFFICIENT_CAP
-    static constexpr std::array<const char*, 3> NAMES = {"round", "butt", "square"};
+    static constexpr std::array<const char8_t*, 3> NAMES = {u8"round", u8"butt", u8"square"};
     StrokeCapStyle(Value v): value(v) {}
 
     // Implicit conversion to underlying enum type
