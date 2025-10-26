@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-11 12:20+0000\n"
-"PO-Revision-Date: 2025-10-12 04:26\n"
+"POT-Creation-Date: 2025-10-24 03:54+0000\n"
+"PO-Revision-Date: 2025-10-26 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -4481,6 +4481,10 @@ msgstr "Dictando cu margine liniată în dreapta"
 #: ../resources-templates/pagetemplates.ini.in:42
 msgid "Graph with border"
 msgstr "Cu pătrățele și margini"
+
+#: ../resources-templates/pagetemplates.ini.in:47
+msgid "Graph with border (bold every 5th)"
+msgstr ""
 
 #: ../resources-templates/toolbar.ini.in:50
 msgid "All Tools"

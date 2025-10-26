@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-11 12:20+0000\n"
-"PO-Revision-Date: 2025-10-12 04:26\n"
+"POT-Creation-Date: 2025-10-24 03:54+0000\n"
+"PO-Revision-Date: 2025-10-26 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -4398,6 +4398,10 @@ msgstr ""
 
 #: ../resources-templates/pagetemplates.ini.in:42
 msgid "Graph with border"
+msgstr ""
+
+#: ../resources-templates/pagetemplates.ini.in:47
+msgid "Graph with border (bold every 5th)"
 msgstr ""
 
 #: ../resources-templates/toolbar.ini.in:50
