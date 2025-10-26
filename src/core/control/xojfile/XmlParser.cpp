@@ -21,7 +21,7 @@
 #include "util/Assert.h"                       // for xoj_assert
 #include "util/Color.h"                        // for Color
 #include "util/EnumIndexedArray.h"             // for EnumIndexedArray
-#include "util/Util.h"                         // for SV_FMT, SV_ARG
+#include "util/StringUtils.h"                  // for SV_FMT, SV_ARG
 #include "util/safe_casts.h"                   // for as_unsigned
 
 #include "filesystem.h"  // for path
@@ -71,7 +71,7 @@ static bool parseDouble(const char*& it, const char* end, double& value) {
         g_warning("XML parser: Error parsing a double:\n"
                   "\"%s\"\n"
                   "Remaining string: \"" SV_FMT "\"",
-                  std::make_error_condition(ec).message().c_str(), SV_ARG(std::string_view(it, as_unsigned(end - it))));
+                  std::make_error_condition(ec).message().c_str(), SV_ARG(std::string_view(it, end)));
         return false;
     }
 #else
@@ -294,8 +294,7 @@ void XmlParser::parseBgPixmap(const XmlParserHelper::AttributeMap& attributeMap)
             xoj::xml_attrs::DOMAIN_STR, attributeMap, xoj::xml_attrs::Domain::ABSOLUTE);
 
     if (domain != xoj::xml_attrs::Domain::CLONE) {
-        const fs::path filename =
-                XmlParserHelper::getAttribMandatory<std::string_view>(xoj::xml_attrs::FILENAME_STR, attributeMap);
+        const auto filename = XmlParserHelper::getAttribMandatory<fs::path>(xoj::xml_attrs::FILENAME_STR, attributeMap);
         this->handler.setBgPixmap(domain == xoj::xml_attrs::Domain::ATTACH, filename);
     } else {
         // In case of a cloned background image, filename contains the page
