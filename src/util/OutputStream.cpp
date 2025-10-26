@@ -17,6 +17,8 @@ void OutputStream::write(const char* str) { write(str, std::strlen(str)); }
 
 void OutputStream::write(const std::string_view sv) { write(sv.data(), sv.length()); }
 
+void OutputStream::write(const std::u8string_view sv) { write(char_cast(sv.data()), sv.length()); }
+
 ////////////////////////////////////////////////////////
 /// GzOutputStream /////////////////////////////////////
 ////////////////////////////////////////////////////////
