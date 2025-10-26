@@ -94,10 +94,6 @@ constexpr const gchar* PRECISION_FORMAT_STRING = "%.8g";
 
 constexpr const auto DPI_NORMALIZATION_FACTOR = 72.0;
 
-// Helpers for C-style formatting of string views
-#define SV_FMT "%.*s"
-#define SV_ARG(sv) static_cast<int>((sv).size()), (sv).data()
-
 /**
  * Get the demangled name string of type T
  */

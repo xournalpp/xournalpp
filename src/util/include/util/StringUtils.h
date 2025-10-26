@@ -50,3 +50,8 @@ inline auto char_cast(std::u8string_view str) -> std::string_view {
 }
 
 inline auto char_cast(char8_t const* str) -> char const* { return reinterpret_cast<const char*>(str); }
+
+// Helpers for C-style formatting of string views
+// Usage: printf("Message " SV_FMT, SV_ARG(string_view))
+#define SV_FMT "%.*s"
+#define SV_ARG(sv) static_cast<int>((sv).size()), (sv).data()

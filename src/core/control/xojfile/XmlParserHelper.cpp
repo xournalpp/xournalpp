@@ -21,7 +21,7 @@
 #include "model/StrokeStyle.h"
 #include "util/Assert.h"
 #include "util/Color.h"
-#include "util/Util.h"
+#include "util/StringUtils.h"
 #include "util/safe_casts.h"
 #include "util/utf8_view.h"
 
@@ -184,7 +184,7 @@ auto XmlParserHelper::parsePredefinedColor(std::string_view sv) -> std::optional
         }
     }
 
-    g_warning("XML parser: Color \"" SV_FMT "\" unknown (not defined in default color list)", SV_ARG(sv));
+    // color not found in predefined colors
     return {};
 }
 
