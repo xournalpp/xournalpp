@@ -27,6 +27,7 @@
 
 #include "util/Assert.h"
 #include "util/Color.h"
+#include "util/StringUtils.h"
 #include "util/Util.h"
 #include "util/serdesstream.h"
 
@@ -94,25 +95,18 @@ namespace detail {
 
 // SFINAE logic for checking named enums
 template <typename, typename = void>
-struct has_names: std::false_type {};
+inline constexpr bool has_names_v = false;
 
 template <typename T>
-struct has_names<T, std::void_t<decltype(T::NAMES)>>: std::true_type {};
-
-template <typename T>
-constexpr bool has_names_v = has_names<T>::value;
+inline constexpr bool has_names_v<T, std::void_t<decltype(T::NAMES)>> = true;
 
 
 template <typename, typename = void>
-struct has_value_enum: std::false_type {};
+inline constexpr bool has_value_enum_v = false;
 
 template <typename T>
-struct has_value_enum<T, std::void_t<typename T::Value>> {
-    static constexpr bool value = std::is_enum_v<typename T::Value>;
-};
+inline constexpr bool has_value_enum_v<T, std::void_t<typename T::Value>> = std::is_enum_v<typename T::Value>;
 
-template <typename T>
-constexpr bool has_value_enum_v = has_value_enum<T>::value;
 
 template <typename T>
 constexpr bool always_false = false;
@@ -182,7 +176,7 @@ T parse_numeric(std::string_view sv) {
         }
     } else {
         // Fallback for missing floating point from_chars implementation
-        // Attributes originate from GMarkup and are null-terminated
+        // Attributes originate from GMarkup and are null-terminated.
         xoj_assert(*sv.end() == '\0');
         char* end = nullptr;
         value = static_cast<T>(g_ascii_strtod(sv.begin(), &end));
