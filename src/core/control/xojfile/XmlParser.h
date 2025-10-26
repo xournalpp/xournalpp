@@ -41,6 +41,18 @@ public:
     static constexpr GMarkupParser interface = {parserStartElement, parserEndElement, parserText, nullptr, nullptr};
 
 private:
+    /**
+     * UTF-8 Roadmap
+     *
+     * Most internals of Xournal++ still use or accept std::string as
+     * constructors. When that changes, you should directly retrieve
+     * xoj::util::utf8_view types or their aliases below from getAttrib<T>()
+     * functions instead of converting it after you already obtained a
+     * std::string_view or similar, as shown in parseXournalTag().
+     */
+    using c_string_utf8_view = XmlParserHelper::c_string_utf8_view;
+    using string_utf8_view = XmlParserHelper::string_utf8_view;
+
     void parseUnknownTag(const XmlParserHelper::AttributeMap& attributeMap);
     void parseXournalTag(const XmlParserHelper::AttributeMap& attributeMap);
     void parseMrWriterTag(const XmlParserHelper::AttributeMap& attributeMap);
@@ -69,7 +81,7 @@ private:
      * the last valid tag type. Otherwise it returns TagType::UNKNOWN, even if
      * the tag is globally known (e.g. if a page is found under a layer).
      */
-    xoj::xml_tags::Type getTagType(std::string_view name) const;
+    xoj::xml_tags::Type getTagType(c_string_utf8_view name) const;
 
     using StartElementFunc = void (XmlParser::*)(const XmlParserHelper::AttributeMap&);
     using TextFunc = void (XmlParser::*)(std::string_view);

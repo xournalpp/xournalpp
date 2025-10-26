@@ -11,7 +11,7 @@
 #include "util/OutputStream.h"      // for OutputStream
 #include "util/Util.h"              // for PRECISION_FORMAT_STRING
 
-DoubleArrayAttribute::DoubleArrayAttribute(const char* name, std::vector<double>&& values):
+DoubleArrayAttribute::DoubleArrayAttribute(const char8_t* name, std::vector<double>&& values):
         XMLAttribute(name), values(std::move(values)) {}
 
 DoubleArrayAttribute::~DoubleArrayAttribute() = default;

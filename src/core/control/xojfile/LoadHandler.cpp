@@ -80,7 +80,7 @@ auto LoadHandler::getMissingPdfFilename() const -> const fs::path& { return this
 
 auto LoadHandler::getFileVersion() const -> int { return this->fileVersion; }
 
-void LoadHandler::addDocument(std::string creator, int fileVersion) {
+void LoadHandler::addDocument(std::u8string creator, int fileVersion) {
     this->creator = std::move(creator);
     if (this->isGzFile) {
         this->fileVersion = fileVersion;

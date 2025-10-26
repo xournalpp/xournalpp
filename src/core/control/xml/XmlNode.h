@@ -30,12 +30,14 @@ public:
     virtual ~XmlNode() = default;
 
 public:
-    void setAttrib(const char* attrib, std::string value);
-    void setAttrib(const char* attrib, const char* value);
-    void setAttrib(const char* attrib, double value);
-    void setAttrib(const char* attrib, int value);
-    void setAttrib(const char* attrib, size_t value);
-    void setAttrib(const char* attrib, std::vector<double> values);
+    void setAttrib(const char8_t* attrib, const std::string& value);
+    void setAttrib(const char8_t* attrib, const char* value);
+    void setAttrib(const char8_t* attrib, std::u8string value);
+    void setAttrib(const char8_t* attrib, const char8_t* value);
+    void setAttrib(const char8_t* attrib, double value);
+    void setAttrib(const char8_t* attrib, int value);
+    void setAttrib(const char8_t* attrib, size_t value);
+    void setAttrib(const char8_t* attrib, std::vector<double> values);
 
     void writeOut(OutputStream* out, ProgressListener* _listener);
 

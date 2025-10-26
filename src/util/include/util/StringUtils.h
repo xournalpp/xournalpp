@@ -31,16 +31,16 @@ bool iequals(const std::string& a, const std::string& b);
 bool isNumber(const std::string& input);
 
 /**
- * Wrapper around an std::string_view that only accepts compile-time instances
- * It can only be constructed from a litteral or other compile-time ressources
+ * Wrapper around an std::u8string_view that only accepts compile-time instances
+ * It can only be constructed from a litteral or other compile-time ressources.
  */
 class StaticStringView {
 public:
-    consteval StaticStringView(std::string_view v): view(v) {}
-    constexpr operator std::string_view() const noexcept { return view; }
+    consteval StaticStringView(std::u8string_view v): view(v) {}
+    constexpr operator std::u8string_view() const noexcept { return view; }
 
 private:
-    std::string_view view;
+    std::u8string_view view;
 };
 
 };  // namespace StringUtils
@@ -55,3 +55,4 @@ inline auto char_cast(char8_t const* str) -> char const* { return reinterpret_ca
 // Usage: printf("Message " SV_FMT, SV_ARG(string_view))
 #define SV_FMT "%.*s"
 #define SV_ARG(sv) static_cast<int>((sv).size()), (sv).data()
+#define U8SV_ARG(sv) static_cast<int>((sv).size()), char_cast((sv).data())

@@ -8,7 +8,7 @@
 #include "util/OutputStream.h"      // for OutputStream
 #include "util/Util.h"              // for PRECISION_FORMAT_STRING
 
-DoubleAttribute::DoubleAttribute(const char* name, double value): XMLAttribute(name) { this->value = value; }
+DoubleAttribute::DoubleAttribute(const char8_t* name, double value): XMLAttribute(name) { this->value = value; }
 
 DoubleAttribute::~DoubleAttribute() = default;
 

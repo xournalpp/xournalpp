@@ -21,8 +21,9 @@
 #include "util/Assert.h"                       // for xoj_assert
 #include "util/Color.h"                        // for Color
 #include "util/EnumIndexedArray.h"             // for EnumIndexedArray
-#include "util/StringUtils.h"                  // for SV_FMT, SV_ARG
+#include "util/StringUtils.h"                  // for char_cast, SV_FMT, ...
 #include "util/safe_casts.h"                   // for as_unsigned
+#include "util/utf8_view.h"                    // for xoj::util::utf8
 
 #include "filesystem.h"  // for path
 
@@ -97,7 +98,7 @@ void XmlParser::parserStartElement(GMarkupParseContext* context, const gchar* el
     auto self = static_cast<XmlParser*>(userdata);
     xoj_assert(self);
 
-    const auto tagType = self->getTagType(elementName);
+    const auto tagType = self->getTagType(elementName | xoj::util::utf8);
 
     // Check for unknown tags
     if (tagType == TagType::UNKNOWN) {
@@ -107,7 +108,8 @@ void XmlParser::parserStartElement(GMarkupParseContext* context, const gchar* el
             }
             // If the hierarchy is empty, we will attempt parsing it anyways
         } else {
-            g_warning("Ignoring unexpected %s tag under " SV_FMT, elementName, SV_ARG(TAG_NAMES[*self->lastValidTag]));
+            g_warning("Ignoring unexpected %s tag under " SV_FMT, elementName,
+                      U8SV_ARG(TAG_NAMES[*self->lastValidTag]));
         }
     }
 
@@ -131,7 +133,7 @@ void XmlParser::parserEndElement(GMarkupParseContext* context, const gchar* elem
     // GMarkup should have already risen an error if there was an error in the document structure.
     xoj_assert(!self->hierarchy.empty());
     const auto tagType = self->hierarchy.back();
-    xoj_assert(TAG_NAMES[tagType] == elementName || tagType == TagType::UNKNOWN);
+    xoj_assert(TAG_NAMES[tagType] == xoj::util::utf8(elementName) || tagType == TagType::UNKNOWN);
 
     // Check for unknown tags
     if (tagType == TagType::UNKNOWN && self->hierarchy.size() == 1) {
@@ -179,7 +181,7 @@ void XmlParser::parserText(GMarkupParseContext* context, const gchar* text, gsiz
         // we always get the whole text in a single callback.
         (self->*parsingTable[tagType].text)(textSV);
     } else if (tagType != TagType::TITLE && tagType != TagType::PREVIEW && !isAllWhitespace(textSV)) {
-        g_warning("Unexpected text in " SV_FMT " node: \"" SV_FMT "\"", SV_ARG(TAG_NAMES[tagType]), SV_ARG(textSV));
+        g_warning("Unexpected text in " SV_FMT " node: \"" SV_FMT "\"", U8SV_ARG(TAG_NAMES[tagType]), SV_ARG(textSV));
     }
 }
 
@@ -191,24 +193,24 @@ void XmlParser::parseUnknownTag(const XmlParserHelper::AttributeMap& attributeMa
     if (this->hierarchy.empty()) {
         // Unknown tag at document root. Assume it's another application (like Xournal++ or MrWriter) that has
         // its own tag name, but a similar structure. Attempt parsing anyways.
-        this->handler.addDocument("Unknown", 1);
+        this->handler.addDocument(u8"Unknown", 1);
         g_warning("Attempting to parse unknown document type.");
     }
 }
 
 void XmlParser::parseXournalTag(const XmlParserHelper::AttributeMap& attributeMap) {
-    const auto optCreator = XmlParserHelper::getAttrib<std::string_view>(xoj::xml_attrs::CREATOR_STR, attributeMap);
-    std::string creator;
+    const auto optCreator = XmlParserHelper::getAttrib<string_utf8_view>(xoj::xml_attrs::CREATOR_STR, attributeMap);
+    std::u8string creator;
     if (optCreator) {
-        creator = *optCreator;
+        creator = optCreator->str();
     } else {
         // Compatibility: the creator attribute exists since 7017b71. Before that, only a version string was written
-        const auto optVersion = XmlParserHelper::getAttrib<std::string_view>(xoj::xml_attrs::VERSION_STR, attributeMap);
+        const auto optVersion = XmlParserHelper::getAttrib<string_utf8_view>(xoj::xml_attrs::VERSION_STR, attributeMap);
         if (optVersion) {
-            creator = "Xournal ";
-            creator += *optVersion;
+            creator = u8"Xournal ";
+            creator.append(optVersion->begin(), optVersion->end());
         } else {
-            creator = "Unknown";
+            creator = u8"Unknown";
         }
     }
 
@@ -220,13 +222,13 @@ void XmlParser::parseXournalTag(const XmlParserHelper::AttributeMap& attributeMa
 }
 
 void XmlParser::parseMrWriterTag(const XmlParserHelper::AttributeMap& attributeMap) {
-    auto optVersion = XmlParserHelper::getAttrib<std::string_view>(xoj::xml_attrs::VERSION_STR, attributeMap);
-    std::string creator;
+    auto optVersion = XmlParserHelper::getAttrib<string_utf8_view>(xoj::xml_attrs::VERSION_STR, attributeMap);
+    std::u8string creator;
     if (optVersion) {
-        creator = "MrWriter ";
-        creator += *optVersion;
+        creator = u8"MrWriter ";
+        creator.append(optVersion->begin(), optVersion->end());
     } else {
-        creator = "Unknown";
+        creator = u8"Unknown";
     }
 
     this->handler.addDocument(std::move(creator), 1);
@@ -493,12 +495,12 @@ void XmlParser::parseAttachmentTag(const XmlParserHelper::AttributeMap& attribut
             this->handler.setTexImageAttachment(path);
             break;
         default:
-            g_warning("Ignoring attachment tag under " SV_FMT, SV_ARG(TAG_NAMES[*this->lastValidTag]));
+            g_warning("Ignoring attachment tag under " SV_FMT, U8SV_ARG(TAG_NAMES[*this->lastValidTag]));
             break;
     }
 }
 
-auto XmlParser::getTagType(std::string_view name) const -> TagType {
+auto XmlParser::getTagType(c_string_utf8_view name) const -> TagType {
     using namespace std::literals;
 
     if (this->hierarchy.empty()) {
