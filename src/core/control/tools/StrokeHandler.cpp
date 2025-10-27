@@ -193,8 +193,15 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
         auto recognized = reco.recognizePatterns(stroke.get(), control->getSettings()->getStrokeRecognizerMinSize());
 
         if (recognized) {
+            auto ptr = recognized.get();
+
             // strokeRecognizerDetected handles the repainting and the deletion of the views.
             strokeRecognizerDetected(std::move(recognized), layer);
+
+            // Rerenders all pages the layer 'layer' is present in
+            for (std::size_t i = layer->getFirstPage(); i <= layer->getLastPage(); ++i) {
+                this->control->getDocument()->getPage(i)->fireElementChanged(ptr);
+            }
             return;
         }
     }
