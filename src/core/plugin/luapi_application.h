@@ -17,6 +17,8 @@
 #include <unordered_set>
 
 #include <gtk/gtk.h>
+#include <pango/pango.h>
+#include <pango/pangocairo.h>
 #include <stdint.h>
 
 #include "control/Control.h"
@@ -59,8 +61,9 @@
 #include "util/PopupWindowWrapper.h"  // for PopupWindowWrapper
 #include "util/StringUtils.h"
 #include "util/XojMsgBox.h"
-#include "util/i18n.h"        // for _
-#include "util/safe_casts.h"  // for round_cast, as_signed, as_unsigned
+#include "util/i18n.h"              // for _
+#include "util/raii/GObjectSPtr.h"  // for GObjectSPtr (font validation)
+#include "util/safe_casts.h"        // for round_cast, as_signed, as_unsigned
 
 #include "ActionBackwardCompatibilityLayer.h"
 
@@ -880,6 +883,26 @@ static int applib_layerAction(lua_State* L) {
 }
 
 /**
+ * Show the floating toolbox at the specified coordinates relative to the main window
+ *
+ * @param x integer x coordinate relative to main window
+ * @param y integer y coordinate relative to main window
+ *
+ * Example: app.showFloatingToolbox(100, 200)
+ * Shows the floating toolbox at position (100, 200) relative to the main window
+ *
+ * Note: Coordinates are automatically clamped to window bounds.
+ */
+static int applib_showFloatingToolbox(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    int x = static_cast<int>(luaL_checkinteger(L, 1));
+    int y = static_cast<int>(luaL_checkinteger(L, 2));
+
+    plugin->getControl()->showFloatingToolbox(x, y);
+    return 0;
+}
+
+/**
  * Helper function to handle a allowUndoRedoAction string parameter. allowUndoRedoAction can take the following values:
  * - "grouped": the elements get a single undo-redo-action
  * - "individual" each of the elements get an own undo-redo-action
@@ -923,9 +946,9 @@ static void refsHelper(lua_State* L, std::vector<const Element*> elements) {
     lua_newtable(L);
     size_t count = 0;
     for (const Element* element: elements) {
-        lua_pushinteger(L, strict_cast<lua_Integer>(++count));  // index
+        lua_pushinteger(L, strict_cast<lua_Integer>(++count));                           // index
         lua_pushlightuserdata(L, const_cast<void*>(static_cast<const void*>(element)));  // value
-        lua_settable(L, -3);                                    // insert
+        lua_settable(L, -3);                                                             // insert
     }
 }
 
@@ -2914,8 +2937,7 @@ static int applib_openFile(lua_State* L) {
         forceOpen = lua_toboolean(L, 3);
     }
 
-    control->openFile(
-            fs::path(filename), [](bool) {}, scrollToPage - 1, forceOpen);
+    control->openFile(fs::path(filename), [](bool) {}, scrollToPage - 1, forceOpen);
     lua_pushboolean(L, true);  // Todo replace with callback
     return 1;
 }
@@ -3379,6 +3401,298 @@ static int applib_setPlaceholderValue(lua_State* L) {
     return 0;
 }
 
+/**
+ * Helper function to check if a font family exists on the system
+ *
+ * @param fontName The font family name to validate
+ * @return true if the font family exists, false otherwise
+ */
+static bool isFontFamilyAvailable(const std::string& fontName) {
+    if (fontName.empty()) {
+        return false;
+    }
+
+    PangoFontMap* fontMap = pango_cairo_font_map_get_default();
+    if (!fontMap) {
+        return false;
+    }
+
+    PangoFontFamily** families = nullptr;
+    int nFamilies = 0;
+    pango_font_map_list_families(fontMap, &families, &nFamilies);
+
+    if (!families) {
+        return false;
+    }
+
+    bool found = false;
+    for (int i = 0; i < nFamilies; i++) {
+        const char* familyName = pango_font_family_get_name(families[i]);
+        if (familyName && fontName == familyName) {
+            found = true;
+            break;
+        }
+    }
+
+    g_free(families);
+    return found;
+}
+
+/**
+ * Helper function to validate a complete font description including style, weight, etc.
+ *
+ * @param fontDescription The Pango font description string (e.g., "Arial Bold 12")
+ * @return true if the font can be loaded, false otherwise
+ */
+static bool isFontDescriptionValid(const std::string& fontDescription) {
+    if (fontDescription.empty()) {
+        return false;
+    }
+
+    PangoFontMap* fontMap = pango_cairo_font_map_get_default();
+    if (!fontMap) {
+        return false;
+    }
+
+    // Create a temporary Pango context
+    xoj::util::GObjectSPtr<PangoContext> context(pango_font_map_create_context(fontMap), xoj::util::adopt);
+    if (!context) {
+        return false;
+    }
+
+    // Parse the font description (PangoFontDescription is a boxed type, not GObject)
+    PangoFontDescription* desc = pango_font_description_from_string(fontDescription.c_str());
+    if (!desc) {
+        return false;
+    }
+
+    // Try to load the font - this will find the best match
+    // If the family doesn't exist at all, we should check that separately
+    const char* family = pango_font_description_get_family(desc);
+    bool familyValid = true;
+    if (family) {
+        familyValid = isFontFamilyAvailable(family);
+    }
+
+    // Load the font to verify it can be resolved with the specified attributes
+    bool result = false;
+    if (familyValid) {
+        xoj::util::GObjectSPtr<PangoFont> font(pango_font_map_load_font(fontMap, context.get(), desc),
+                                               xoj::util::adopt);
+        result = (font != nullptr);
+    }
+
+    // Free the font description
+    pango_font_description_free(desc);
+
+    // If we got a font back, the description is valid (Pango will find closest match for style/weight)
+    return result;
+}
+
+/**
+ * Get list of available font families on the system
+ *
+ * @return table: A table containing:
+ *                - families: array of font family names
+ *                - current: index of the currently selected font (or nil if not found)
+ *
+ * Example:
+ *   local fonts = app.getFonts()
+ *   for i, family in ipairs(fonts.families) do
+ *       print(i, family)
+ *   end
+ *   print("Current font index:", fonts.current)
+ */
+static int applib_getFonts(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    Settings* settings = control->getSettings();
+
+    // Get the current font name for comparison
+    std::string currentFontName = settings->getFont().getName();
+
+    // Get the default Pango font map
+    PangoFontMap* fontMap = pango_cairo_font_map_get_default();
+    if (!fontMap) {
+        return luaL_error(L, "Failed to get font map");
+    }
+
+    // Get font families
+    PangoFontFamily** families = nullptr;
+    int nFamilies = 0;
+    pango_font_map_list_families(fontMap, &families, &nFamilies);
+
+    // Create result table
+    lua_newtable(L);
+
+    // Create families array
+    lua_newtable(L);
+    int currentIndex = -1;
+    for (int i = 0; i < nFamilies; i++) {
+        const char* familyName = pango_font_family_get_name(families[i]);
+        lua_pushstring(L, familyName);
+        lua_rawseti(L, -2, i + 1);  // Lua arrays are 1-indexed
+
+        // Check if this is the current font
+        if (currentIndex == -1 && currentFontName == familyName) {
+            currentIndex = i + 1;  // Lua is 1-indexed
+        }
+    }
+    lua_setfield(L, -2, "families");
+
+    // Set current index (or nil if not found)
+    if (currentIndex != -1) {
+        lua_pushinteger(L, currentIndex);
+    } else {
+        lua_pushnil(L);
+    }
+    lua_setfield(L, -2, "current");
+
+    // Free the families array
+    g_free(families);
+
+    return 1;
+}
+
+/**
+ * Get the current font for text tool
+ *
+ * @return table: A table with 'name' and 'size' fields representing the current font
+ *
+ * Example:
+ *   local font = app.getFont()
+ *   print(font.name)  -- "Arial"
+ *   print(font.size)  -- 12
+ */
+static int applib_getFont(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    Settings* settings = control->getSettings();
+
+    XojFont& currentFont = settings->getFont();
+
+    lua_newtable(L);
+    lua_pushstring(L, currentFont.getName().c_str());
+    lua_setfield(L, -2, "name");
+    lua_pushnumber(L, currentFont.getSize());
+    lua_setfield(L, -2, "size");
+
+    return 1;
+}
+
+/**
+ * Set the current font for text tool
+ *
+ * @param font string|table: Either a Pango-style font description string (e.g., "Arial 12")
+ *                           or a table with 'name' and/or 'size' fields
+ *
+ * The font family name is validated against the system's available fonts.
+ * If the font is not available, an error is raised.
+ *
+ * Examples:
+ *   app.setFont("Arial 12")
+ *   app.setFont({name = "Arial", size = 12})
+ *   app.setFont({name = "Arial"})  -- Only change font name
+ *   app.setFont({size = 14})       -- Only change font size
+ */
+static int applib_setFont(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    Settings* settings = control->getSettings();
+
+    // Ensure an argument was provided
+    if (lua_gettop(L) < 1) {
+        return luaL_error(L, "setFont requires one argument (string or table)");
+    }
+
+    XojFont newFont;
+
+    // Parse font specification based on argument type
+    if (lua_isstring(L, 1)) {
+        // Handle Pango font description string
+        const char* fontDesc = luaL_checkstring(L, 1);
+
+        // Validate the complete font description (family + style/weight)
+        if (!isFontDescriptionValid(fontDesc)) {
+            return luaL_error(L, "Font description '%s' is not valid or not available on this system", fontDesc);
+        }
+
+        newFont = XojFont(fontDesc);
+
+        // XojFont constructor handles format validation for string input
+        if (newFont.getName().empty() || newFont.getSize() <= 0) {
+            return luaL_error(L, "Invalid font specification");
+        }
+    } else if (lua_istable(L, 1)) {
+        // Handle table - allow partial updates
+        lua_getfield(L, 1, "name");
+        lua_getfield(L, 1, "size");
+
+        bool hasName = !lua_isnil(L, -2);
+        bool hasSize = !lua_isnil(L, -1);
+
+        // Validate inputs early
+        if (!hasName && !hasSize) {
+            lua_pop(L, 2);
+            return luaL_error(L, "Font table must contain at least 'name' or 'size' field");
+        }
+
+        // Get current font for partial updates
+        XojFont& currentFont = settings->getFont();
+        std::string currentName = currentFont.getName();
+        double currentSize = currentFont.getSize();
+
+        // Extract and validate name if provided
+        const char* name = currentName.c_str();
+        if (hasName) {
+            if (!lua_isstring(L, -2)) {
+                lua_pop(L, 2);
+                return luaL_error(L, "Font name must be a string");
+            }
+            name = lua_tostring(L, -2);
+            if (strlen(name) == 0) {
+                lua_pop(L, 2);
+                return luaL_error(L, "Font name cannot be empty");
+            }
+            // Validate that the font family exists on the system
+            if (!isFontFamilyAvailable(name)) {
+                lua_pop(L, 2);
+                return luaL_error(L, "Font family '%s' is not available on this system", name);
+            }
+        }
+
+        // Extract and validate size if provided
+        double size = currentSize;
+        if (hasSize) {
+            if (!lua_isnumber(L, -1)) {
+                lua_pop(L, 2);
+                return luaL_error(L, "Font size must be a number");
+            }
+            size = lua_tonumber(L, -1);
+            if (!std::isfinite(size)) {
+                lua_pop(L, 2);
+                return luaL_error(L, "Font size must be a finite number");
+            }
+            if (size <= 0) {
+                lua_pop(L, 2);
+                return luaL_error(L, "Font size must be positive");
+            }
+        }
+
+        lua_pop(L, 2);
+
+        newFont = XojFont(name, size);
+    } else {
+        return luaL_error(L, "Font must be either a string or a table with 'name' and/or 'size' fields");
+    }
+
+    // Set the font and trigger UI update
+    settings->setFont(newFont);
+    std::string fontStr = newFont.asString();
+    control->getActionDatabase()->fireChangeActionState(Action::FONT, fontStr.c_str());
+
+    return 0;
+}
 
 static const luaL_Reg applib[] = {
         {"msgbox", applib_msgbox},  // Todo(gtk4) remove this deprecated function
@@ -3394,6 +3708,7 @@ static const luaL_Reg applib[] = {
         {"uiAction", applib_uiAction},            // Todo(gtk4) remove this deprecated function
         {"sidebarAction", applib_sidebarAction},  // Todo(gtk4) remove this deprecated function
         {"layerAction", applib_layerAction},      // Todo(gtk4) remove this deprecated function
+        {"showFloatingToolbox", applib_showFloatingToolbox},
         {"changeToolColor", applib_changeToolColor},
         {"getColorPalette", applib_getColorPalette},
         {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
@@ -3430,6 +3745,9 @@ static const luaL_Reg applib[] = {
         {"openFile", applib_openFile},
         {"registerPlaceholder", applib_registerPlaceholder},
         {"setPlaceholderValue", applib_setPlaceholderValue},
+        {"getFonts", applib_getFonts},
+        {"getFont", applib_getFont},
+        {"setFont", applib_setFont},
         // Placeholder
         // {"MSG_BT_OK", nullptr},
         {nullptr, nullptr}};

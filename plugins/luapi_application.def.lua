@@ -220,6 +220,17 @@ function app.setSidebarPageNo(pageNr) end
 --- deletes the current layer
 function app.layerAction(action) end
 
+--- Show the floating toolbox at the specified coordinates relative to the main window
+--- 
+--- @param x integer x coordinate relative to main window
+--- @param y integer y coordinate relative to main window
+--- 
+--- Example: app.showFloatingToolbox(100, 200)
+--- Shows the floating toolbox at position (100, 200) relative to the main window
+--- 
+--- Note: Coordinates are automatically clamped to window bounds.
+function app.showFloatingToolbox(x, y) end
+
 --- Given a table containing a series of splines, draws a batch of strokes on the canvas.
 --- Expects a table of tables containing eight coordinate pairs, along with attributes of the stroke.
 --- 
@@ -952,6 +963,45 @@ function app.registerPlaceholder(id, description) end
 --- Example: app.setPlaceholderValue("vi-mode", "Current mode")
 --- Updates the toolbar placeholder with the given value.
 function app.setPlaceholderValue(id, value) end
+
+--- Get list of available font families on the system
+--- 
+--- @return table: A table containing:
+---                - families: array of font family names
+---                - current: index of the currently selected font (or nil if not found)
+--- 
+--- Example:
+---   local fonts = app.getFonts()
+---   for i, family in ipairs(fonts.families) do
+---       print(i, family)
+---   end
+---   print("Current font index:", fonts.current)
+function app.getFonts() end
+
+--- Get the current font for text tool
+--- 
+--- @return table: A table with 'name' and 'size' fields representing the current font
+--- 
+--- Example:
+---   local font = app.getFont()
+---   print(font.name)  -- "Arial"
+---   print(font.size)  -- 12
+function app.getFont() end
+
+--- Set the current font for text tool
+--- 
+--- @param font string|table: Either a Pango-style font description string (e.g., "Arial 12")
+---                           or a table with 'name' and/or 'size' fields
+--- 
+--- The font family name is validated against the system's available fonts.
+--- If the font is not available, an error is raised.
+--- 
+--- Examples:
+---   app.setFont("Arial 12")
+---   app.setFont({name = "Arial", size = 12})
+---   app.setFont({name = "Arial"})  -- Only change font name
+---   app.setFont({size = 14})       -- Only change font size
+function app.setFont(font) end
 
 ---@alias Action
 ---| "new-file"

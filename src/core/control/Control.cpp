@@ -38,6 +38,7 @@
 #include "control/tools/TextEditor.h"                            // for Text...
 #include "control/xojfile/LoadHandler.h"                         // for Load...
 #include "control/zoom/ZoomControl.h"                            // for Zoom...
+#include "gui/FloatingToolbox.h"                                 // for Floa...
 #include "gui/MainWindow.h"                                      // for Main...
 #include "gui/PageView.h"                                        // for XojP...
 #include "gui/PdfFloatingToolbox.h"                              // for PdfF...
@@ -414,6 +415,16 @@ void Control::resetGeometryTool() {
     this->geometryTool.reset();
     auto* xournal = GTK_XOURNAL(this->win->getXournal()->getWidget());
     xournal->input->resetGeometryToolInputHandler();
+}
+
+void Control::showFloatingToolbox(int x, int y) {
+    GtkWidget* mainWindow = GTK_WIDGET(this->getGtkWindow());
+    GtkWidget* mainBox = this->getWindow()->get("mainBox");
+
+    gint mainBoxX, mainBoxY;
+    gtk_widget_translate_coordinates(mainWindow, mainBox, x, y, &mainBoxX, &mainBoxY);
+
+    this->getWindow()->getFloatingToolbox()->show(mainBoxX, mainBoxY);
 }
 
 auto Control::copy() -> bool {
@@ -1448,6 +1459,9 @@ void Control::showSettings() {
 
                 xournal->getHandRecognition()->reload();
                 ctrl->win->updateColorscheme();
+
+                ctrl->getActionDatabase()->setActionState(Action::TOGGLE_TOUCH_DRAWING,
+                                                          settings->getTouchDrawingEnabled());
             });
     dlg.show(GTK_WINDOW(this->win->getWindow()));
 }
