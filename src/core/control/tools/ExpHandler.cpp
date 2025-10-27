@@ -1,6 +1,5 @@
 #include "ExpHandler.h"
 
-#include <cmath>
 #include <math.h>
 #include "control/Control.h"
 #include "control/settings/Settings.h"             // for Settings
@@ -34,6 +33,8 @@ auto ExpHandler::createShape(bool isAltDown, bool isShiftDown, bool isControlDow
     double start_x = this->startPoint.x;
     double start_y = this->startPoint.y;
 
+    double f = width/30.;
+
     if (npts < 24) {
         npts = 24;  // min. number of points
     }
@@ -42,21 +43,36 @@ auto ExpHandler::createShape(bool isAltDown, bool isShiftDown, bool isControlDow
     std::vector<Point>& shape = res.first;
     Range& rg = res.second;
     shape.reserve(static_cast<int>(npts));
-    if(!modControl){
-        //exp(x)
+    if(isShiftDown){
+        //1-exp(-x)
+        double sign = c.y>start_y?1.:-1;
+        double a = height*height/400.;
+        double ymax = 1.-exp(-((npts-1)*f/npts)*a);
         for (int j = 0; j <= npts; j++) {
-            double x = -4.0+j*6/npts;
-            double y = exp(x);
-            Point p(start_x+x*width/2., start_y+(y-1.)*height/(M_E*M_E-1.));
+            double x = j*f/npts;
+            double y = 1.-exp(-x*a);
+            Point p(start_x+x*30., start_y+y*80.*sign/ymax);
             rg.addPoint(p.x, p.y);
             shape.emplace_back(p);
         }
-    } else {
+    } else if (isControlDown) {
         //ln(x)
         for (int j = 0; j <= npts; j++) {
             double x = 0.1+j*6.9/npts;
             double y = log2(x);
             Point p(start_x+(x-1)*width/6, start_y+y*height/log2(7.));
+            rg.addPoint(p.x, p.y);
+            shape.emplace_back(p);
+        }
+    } else {
+        //exp(x)
+        double sign = c.y>start_y?1.:-1;
+        double a = height*height/400.;
+        double ymax = exp((1.-1./npts)*f*a)-1;
+        for (int j = 0; j <= npts; j++) {
+            double x = j*f/npts;
+            double y = exp(x*a);
+            Point p(start_x+x*30., start_y+(y-1.)*80.*sign/ymax);
             rg.addPoint(p.x, p.y);
             shape.emplace_back(p);
         }
