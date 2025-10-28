@@ -14,8 +14,6 @@
 using std::string;
 using std::vector;
 
-bool StringUtils::isLegacy = false;
-
 auto StringUtils::toLowerCase(const string& input) -> string {
     char* lower = g_utf8_strdown(input.c_str(), as_signed(input.size()));
     string lowerStr = lower;

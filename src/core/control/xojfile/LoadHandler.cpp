@@ -322,12 +322,7 @@ void LoadHandler::parseContents() {
 
         std::string uid = "";
 
-        if ( LoadHandlerHelper::getAttrib("uid", false, this) == nullptr )
-        {
-            uid = "";
-            StringUtils::isLegacy = true;
-        }
-        else
+        if ( this->fileVersion == 5 )
         {
             uid = LoadHandlerHelper::getAttrib("uid", false, this);
         }

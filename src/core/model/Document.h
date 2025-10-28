@@ -43,6 +43,10 @@ public:
 public:
     enum DocumentType { XOPP, XOJ, PDF };
 
+    int getFileVersion();
+
+    void setFileVersion(int version);
+
     void setPdfAttributes(const fs::path& filename, bool attachToDocument);
     bool readPdf(const fs::path& filename, bool initPages, bool attachToDocument,
                  std::unique_ptr<std::string> data = {});
@@ -118,6 +122,8 @@ private:
     DocumentHandler* handler = nullptr;
 
     XojPdfDocument pdfDocument;
+
+    int fileVersion;
 
     fs::path filepath;
     fs::path pdfFilepath;

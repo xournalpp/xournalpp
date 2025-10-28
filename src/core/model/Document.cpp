@@ -438,6 +438,10 @@ std::vector<PageRef> Document::getPages() const {
     return this->pages;
 }
 
+int Document::getFileVersion() { return this->fileVersion; }
+
+void Document::setFileVersion(int version) { this->fileVersion = version; }
+
 void Document::addPage(const PageRef& p) {
     this->pages.push_back(p);
 

@@ -312,7 +312,6 @@ auto SaveJob::createBackup(const fs::path& target) -> bool {
 
 /**
  * Extracts the original XML, detects if it's a "legacy" format, and stores the XML.
- * This also sets the global StringUtils::isLegacy flag based on its findings.
  * @param target The path to the original .xopp file.
  * @param tempDir A temporary directory for extraction.
  * @param originalXMLStr [out] The extracted XML content.
@@ -327,7 +326,6 @@ auto SaveJob::detectLegacyFormat(const fs::path& target, const fs::path& tempDir
         // This is OK (e.g., new file), but we can't parse it.
         // We'll treat it as non-legacy by default.
         if (originalXMLStr.empty()) {
-            StringUtils::isLegacy = false;
             return true;
         }
 
@@ -335,38 +333,7 @@ auto SaveJob::detectLegacyFormat(const fs::path& target, const fs::path& tempDir
         return false;
     }
 
-    pugi::xml_node sourceRoot = xmlDoc.child("xournal");
-    if (sourceRoot) {
-        // The "isLegacy" attribute *being absent* indicates a legacy file.
-        pugi::xml_attribute legacyAttr = sourceRoot.attribute("isLegacy");
-        StringUtils::isLegacy = !legacyAttr;
-    } else {
-        // No <xournal> root, treat as new/non-legacy
-        StringUtils::isLegacy = false;
-    }
-
     return true;
-}
-
-/**
- * Handles saving the document in the "legacy" format (saving the entire document at once).
- * @param h The SaveHandler prepared for saving.
- * @param target The final destination path.
- * @param totalTime [in/out] Reference to the total time counter for metrics.
- */
-auto SaveJob::saveLegacy(SaveHandler& h, const fs::path& target, long& totalTime) -> void {
-    auto start_time = std::chrono::steady_clock::now();
-
-    Document* doc = this->control->getDocument();
-    doc->lock();
-    h.saveTo(target, this->control);
-    doc->unlock();
-
-    auto end_time = std::chrono::steady_clock::now();
-    auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
-
-    totalTime += millis;
-    g_warning("saveTo (legacy) duration: %ld ms", millis);
 }
 
 /**
@@ -414,6 +381,27 @@ auto SaveJob::saveModern(SaveHandler& h, const fs::path& target, const std::stri
 }
 
 /**
+ * Handles saving the document in the "legacy" format (saving the entire document at once).
+ * @param h The SaveHandler prepared for saving.
+ * @param target The final destination path.
+ * @param totalTime [in/out] Reference to the total time counter for metrics.
+ */
+auto SaveJob::saveLegacy(SaveHandler& h, const fs::path& target, long& totalTime) -> void {
+    auto start_time = std::chrono::steady_clock::now();
+
+    Document* doc = this->control->getDocument();
+    doc->lock();
+    h.saveTo(target, this->control);
+    doc->unlock();
+
+    auto end_time = std::chrono::steady_clock::now();
+    auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+
+    totalTime += millis;
+    g_warning("saveTo (legacy) duration: %ld ms", millis);
+}
+
+/**
  * Main function to save the document.
  * Orchestrates preview updates, backup creation, legacy detection,
  * and the appropriate save strategy (legacy vs. modern).
@@ -457,9 +445,8 @@ auto SaveJob::save() -> bool {
             return false; // Error already set in createBackup
         }
     }
-
-    // 4. Execute the appropriate save strategy based on format
-    if (StringUtils::isLegacy) {
+    
+    if ( doc->getFileVersion() < 5 ) {
         this->saveLegacy(h, target, totalTime);
     } else {
         this->saveModern(h, target, originalXMLStr, tempDir, totalTime);
