@@ -1,6 +1,7 @@
 #include "LoadHandler.h"
 
 #include <algorithm>    // for copy
+#include <charconv>     // for from_chars
 #include <cmath>        // for isnan
 #include <cstdlib>      // for atoi, size_t
 #include <cstring>      // for strcmp, strlen
@@ -529,14 +530,63 @@ void LoadHandler::parsePage() {
         }
     } else if (!strcmp(elementName, "layer")) {
         this->pos = PARSER_POS_IN_LAYER;
-        this->layer = new Layer();
 
-        const char* name = LoadHandlerHelper::getAttrib("name", true, this);
-        if (name != nullptr) {
-            this->layer->setName(name);
+        size_t num_first_page = 0;
+        size_t num_last_page = 0;
+        {
+            const char* first_page = LoadHandlerHelper::getAttrib("span-first-page", true, this);
+            if (first_page != nullptr) {
+                const auto length = strlen(first_page);
+                const auto res = std::from_chars(first_page, first_page + length, num_first_page);
+                if (res.ec == std::errc::invalid_argument) {
+                    error("%s", FC(_F("Wrong value for span first page number: {1}") % first_page));
+                }
+            }
+            const char* last_page = LoadHandlerHelper::getAttrib("span-last-page", true, this);
+            if (last_page != nullptr) {
+                const auto length = strlen(last_page);
+                const auto res = std::from_chars(last_page, last_page + length, num_last_page);
+                if (res.ec == std::errc::invalid_argument) {
+                    error("%s", FC(_F("Wrong value for span last page number: {1}") % last_page));
+                }
+            }
         }
+        const char* name = LoadHandlerHelper::getAttrib("name", true, this);
 
-        this->page->addLayer(this->layer);
+        const size_t num_pages = pages.size();
+
+        if ((num_first_page == num_last_page) or (num_first_page == num_pages - 1)) {
+            this->layer = new Layer();
+
+            if (name != nullptr) {
+                this->layer->setName(name);
+            }
+
+            this->layer->setFirstPage(num_first_page);
+            this->layer->setLastPage(num_last_page);
+            this->page->addLayer(this->layer);
+        } else {
+            const string layer_name(name);
+            if (layer_name.size() == 0) {
+                error("%s", FC(_F("All layers that span over two or more pages must have a name")));
+            }
+
+            // find the current layer in a previous page and set the reference appropriately
+            PageRef first_page = pages[num_first_page];
+            auto& layers = first_page->getLayers();
+
+            Layer* to_add = nullptr;
+            for (size_t i = 0; i < layers.size(); ++i) {
+                if (strcmp(layers[i]->getName().c_str(), name) == 0) {
+                    to_add = layers[i];
+                    break;
+                }
+            }
+            if (to_add == nullptr) {
+                error("%s", FC(_F("Did not find original layer span in page {1}") % num_first_page));
+            }
+            this->page->addLayer(to_add);
+        }
     }
 }
 
