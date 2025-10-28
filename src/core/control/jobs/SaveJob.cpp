@@ -285,7 +285,9 @@ void SaveJob::saveFinalFile(Control* control, const std::string& modifiedXMLStr,
     // 10. Save the final merged XML document
     GzOutputStream out(target);
     GzXmlWriter writer(out);
-    resultDoc.save(writer, "   "); // Using 3 spaces for indentation
+    
+    // Using 3 spaces for indentation
+    resultDoc.save(writer, "   "); 
     out.close();
 }
 
