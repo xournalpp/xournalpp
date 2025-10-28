@@ -57,9 +57,11 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
         Control* control = dynamic_cast<Control*>(listener);
         Document* doc = control->getDocument();
 
+        g_warning("Document file version: %d", doc->getFileVersion());
+
         if (doc->getFileVersion() == 5) 
         {
-            auto pagesToWrite = UndoRedoHandler::pagesChanged;
+            auto pagesToWrite = control->getUndoRedoHandler()->pagesChanged;
 
             out->write("<");
             out->write(tag);

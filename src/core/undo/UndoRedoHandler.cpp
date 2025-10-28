@@ -20,9 +20,6 @@
 
 using std::string;
 
-std::deque<std::string> UndoRedoHandler::pagesChanged; // undoList
-std::deque<std::string> UndoRedoHandler::pagesChangedUndo; // redoList
-
 template <typename T>
 T* GetPtr(T* ptr) {
     return ptr;
@@ -85,8 +82,8 @@ void UndoRedoHandler::clearContents() {
     undoList.clear();
     clearRedo();
 
-    pagesChanged.clear();
-    pagesChangedUndo.clear();
+    this->pagesChanged.clear();
+    this->pagesChangedUndo.clear();
 
     this->savedUndo = nullptr;
     this->autosavedUndo = nullptr;
@@ -115,8 +112,12 @@ void UndoRedoHandler::undo() {
     this->redoList.emplace_back(std::move(this->undoList.back()));
     this->undoList.pop_back();
 
-    this->pagesChangedUndo.emplace_back(this->pagesChanged.back());
-    this->pagesChanged.pop_back();
+    if (this->pagesChanged.empty()) {
+        g_warning("UndoRedoHandler::undo(): pagesChanged is empty while undoList is not. State is inconsistent!");
+    } else {
+        this->pagesChangedUndo.emplace_back(this->pagesChanged.back());
+        this->pagesChanged.pop_back();
+    }
 
     bool undoResult = undoAction.undo(this->control);
 
@@ -144,8 +145,16 @@ void UndoRedoHandler::redo() {
     this->undoList.emplace_back(std::move(this->redoList.back()));
     this->redoList.pop_back();
 
-    this->pagesChanged.emplace_back(this->pagesChangedUndo.back());
-    this->pagesChangedUndo.pop_back();
+    if (this->pagesChangedUndo.empty()) 
+    {
+        g_warning("UndoRedoHandler::redo(): pagesChangedUndo is empty while redoList is not. State is inconsistent!");
+    } 
+    else 
+    {
+        this->pagesChanged.emplace_back(this->pagesChangedUndo.back());
+        this->pagesChangedUndo.pop_back();
+    }
+
 
     bool redoResult = redoAction.redo(this->control);
 
