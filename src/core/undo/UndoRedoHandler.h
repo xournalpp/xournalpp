@@ -55,6 +55,17 @@ public:
     void documentAutosaved();
     void documentSaved();
 
+    /*
+        When you write something the page must be inserted here
+    */
+    static std::deque<int> pagesChanged; 
+    
+    /*
+        If you do undo you should insert the page in here and in case of redo go back to pagesChanged
+    */
+    
+    static std::deque<int> pagesChangedUndo;
+
 private:
     void clearRedo();
     void printContents();

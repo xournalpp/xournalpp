@@ -18,6 +18,8 @@
 
 using std::string;
 
+std::deque<int> UndoRedoHandler::pagesChanged; // undoList
+std::deque<int> UndoRedoHandler::pagesChangedUndo; // redoList
 
 template <typename T>
 T* GetPtr(T* ptr) {
@@ -67,7 +69,7 @@ void UndoRedoHandler::printContents() {
     }
 }
 
-UndoRedoHandler::UndoRedoHandler(Control* control): control(control) {}
+UndoRedoHandler::UndoRedoHandler(Control* control): control(control) {  }
 
 UndoRedoHandler::~UndoRedoHandler() { clearContents(); }
 
@@ -80,6 +82,9 @@ void UndoRedoHandler::clearContents() {
 
     undoList.clear();
     clearRedo();
+
+    pagesChanged.clear();
+    pagesChangedUndo.clear();
 
     this->savedUndo = nullptr;
     this->autosavedUndo = nullptr;
@@ -108,6 +113,9 @@ void UndoRedoHandler::undo() {
     this->redoList.emplace_back(std::move(this->undoList.back()));
     this->undoList.pop_back();
 
+    this->pagesChangedUndo.emplace_back(this->pagesChanged.back());
+    this->pagesChanged.pop_back();
+
     bool undoResult = undoAction.undo(this->control);
 
     if (!undoResult) {
@@ -122,6 +130,14 @@ void UndoRedoHandler::undo() {
     printContents();
 }
 
+/*
+    Se fa redo non è implementata ancora bene la logica
+    Quindi se si fa undo di una pagina e poi si fa redo
+    non viene re-inserito nel vector.
+
+    Se invece fa solo undo sì
+*/
+
 void UndoRedoHandler::redo() {
     if (this->redoList.empty()) {
         return;
@@ -133,6 +149,9 @@ void UndoRedoHandler::redo() {
 
     this->undoList.emplace_back(std::move(this->redoList.back()));
     this->redoList.pop_back();
+
+    this->pagesChanged.emplace_back(this->pagesChangedUndo.back());
+    this->pagesChangedUndo.pop_back();
 
     bool redoResult = redoAction.redo(this->control);
 
@@ -152,6 +171,12 @@ auto UndoRedoHandler::canUndo() -> bool { return !this->undoList.empty(); }
 
 auto UndoRedoHandler::canRedo() -> bool { return !this->redoList.empty(); }
 
+/*
+    When I write between two pages, the action splits into two, as if they were two on two different pages. 
+    That's why it crashes when I undo, because it tries to take FEWER elements than there are undo statements. 
+    The problem is in the page number.
+*/
+
 /**
  * Adds an undo Action to the list, or if nullptr does nothing
  */
@@ -164,6 +189,19 @@ void UndoRedoHandler::addUndoAction(UndoActionPtr action) {
     clearRedo();
     fireUpdateUndoRedoButtons(this->undoList.back()->getPages());
 
+    int currentPageNo = this->control->getCurrentPageNo();
+
+    auto it = std::find(this->pagesChanged.begin(), 
+                        this->pagesChanged.end(), 
+                        currentPageNo);
+
+    if (it == this->pagesChanged.end()) {
+        this->pagesChanged.emplace_back(currentPageNo);
+        g_warning("Page number %d inserted", currentPageNo);
+    } else {
+        g_warning("Page number %d already here", currentPageNo); 
+    }
+    
     printContents();
 }
 
