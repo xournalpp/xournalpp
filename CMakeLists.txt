@@ -99,7 +99,14 @@ include(GitRepo)
 ## Libraries ##
 ##############################
 
-if (NOT CMAKE_BUILD_TYPE STREQUAL "Release")
+option(ENABLE_CPPTRACE "Compile with cpptrace stacktrace library" ON)
+# Requires fetching content during build.
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
+  set(ENABLE_CPPTRACE OFF)
+  message(STATUS "Disable cpptrace by lack of debug symbols in Release mode")
+endif ()
+
+if (ENABLE_CPPTRACE)
     include(FetchContent)
     FetchContent_Declare(
         cpptrace
@@ -125,7 +132,6 @@ if (NOT CMAKE_BUILD_TYPE STREQUAL "Release")
             add_subdirectory(${cpptrace_SOURCE_DIR} ${cpptrace_BINARY_DIR} EXCLUDE_FROM_ALL)
         endif()
     endif()
-    set(ENABLE_CPPTRACE ON)
 endif()
 
 
