@@ -45,21 +45,12 @@ auto SinusHandler::createShape(bool isAltDown, bool isShiftDown, bool isControlD
     std::vector<Point>& shape = res.first;
     Range& rg = res.second;
     shape.reserve(static_cast<int>(npts));
-    double period;
-    if (isShiftDown && isControlDown) {
-        period = width/12.;
-    } else if (isShiftDown) {
-        period = width/24.;
-    } else if (isControlDown) {
-        period = width/36.;
-    } else {
-        period = width/48;
-    }
+    double period = width*(height*height*height)/(800.*800.*150.);
 
     for (int j = 0; j <= npts; j++) {
         double x = j*period*M_PI/npts;
         double y = sin(x);
-        Point p(start_x+x*width/period/M_PI, start_y-y*height);
+        Point p(start_x+x*width/period/M_PI, start_y-y*50.);
         rg.addPoint(p.x, p.y);
         shape.emplace_back(p);
     }
