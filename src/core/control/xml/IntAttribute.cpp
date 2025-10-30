@@ -7,7 +7,7 @@
 #include "control/xml/Attribute.h"  // for XMLAttribute
 #include "util/OutputStream.h"      // for OutputStream
 
-IntAttribute::IntAttribute(const char* name, int value): XMLAttribute(name) { this->value = value; }
+IntAttribute::IntAttribute(const char8_t* name, int value): XMLAttribute(name) { this->value = value; }
 
 IntAttribute::~IntAttribute() = default;
 

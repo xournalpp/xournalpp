@@ -18,7 +18,7 @@ class OutputStream;
 
 class DoubleAttribute: public XMLAttribute {
 public:
-    DoubleAttribute(const char* name, double value);
+    DoubleAttribute(const char8_t* name, double value);
     ~DoubleAttribute() override;
 
 public:

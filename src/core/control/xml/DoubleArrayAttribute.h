@@ -20,7 +20,7 @@ class OutputStream;
 
 class DoubleArrayAttribute: public XMLAttribute {
 public:
-    DoubleArrayAttribute(const char* name, std::vector<double>&& values);
+    DoubleArrayAttribute(const char8_t* name, std::vector<double>&& values);
     ~DoubleArrayAttribute() override;
 
 public:
