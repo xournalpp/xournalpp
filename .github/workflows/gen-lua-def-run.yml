@@ -5,6 +5,7 @@ on:
     branches: [ "master", "release-*" ]
     paths:
       - 'src/core/plugin/luapi_application.h'
+      - 'src/core/enums/generated/Action.NameMap.generated.h'
 
 jobs:
   Test_Lua_definition:

@@ -6,5 +6,5 @@ local toggleState = false;
 
 function laser()
   toggleState = not toggleState
-  app.changeActionState("highlight-position", toggleState);
+  app.changeActionState("position-highlighting", toggleState);
 end

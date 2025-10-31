@@ -8,10 +8,10 @@ local toggleState = false
 
 function toggleGridPaper()
   if toggleState == true then
-    app.changeState("grid-snapping", true);
+    app.changeActionState("grid-snapping", true);
     app.changeCurrentPageBackground("graph");
   else
-    app.changeState("grid-snapping", false);
+    app.changeActionState("grid-snapping", false);
     app.changeCurrentPageBackground("plain");
   end
   toggleState = not toggleState
