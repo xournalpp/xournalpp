@@ -1,6 +1,7 @@
 #include "Inertia.h"
 
 #include <cmath>
+#include <span>
 
 #include "model/Point.h"
 
@@ -78,7 +79,9 @@ void Inertia::increase(Point p1, Point p2, int coef) {
     this->sxy += dm * p1.x * p1.y;
 }
 
-void Inertia::calc(const Point* pt, int start, int end) {
+void Inertia::calc(std::span<const Point> points) {
     this->mass = this->sx = this->sy = this->sxx = this->sxy = this->syy = 0.;
-    for (int i = start; i < end - 1; i++) { this->increase(pt[i], pt[i + 1], 1); }
+    for (auto it = points.begin(); it + 1 < points.end(); ++it) {
+        this->increase(*it, *(it + 1), 1);
+    }
 }
