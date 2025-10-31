@@ -601,6 +601,11 @@ struct ActionPropDrawingTypes {
         actionDB->setActionState(Action::TOOL_DRAW_COORDINATE_SYSTEM, false);
         actionDB->setActionState(Action::TOOL_DRAW_LINE, false);
         actionDB->setActionState(Action::TOOL_DRAW_SPLINE, false);
+        actionDB->setActionState(Action::TOOL_DRAW_EXP, false);
+        actionDB->setActionState(Action::TOOL_DRAW_GAUSS, false);
+        actionDB->setActionState(Action::TOOL_DRAW_POLY, false);
+        actionDB->setActionState(Action::TOOL_DRAW_POLYNEG, false);
+        actionDB->setActionState(Action::TOOL_DRAW_SINUS, false);
 
         g_simple_action_set_state(ga, p);
         bool enabled = g_variant_get_boolean(p);
@@ -625,6 +630,16 @@ template <>
 struct ActionProperties<Action::TOOL_DRAW_LINE>: ActionPropDrawingTypes<DRAWING_TYPE_LINE> {};
 template <>
 struct ActionProperties<Action::TOOL_DRAW_SPLINE>: ActionPropDrawingTypes<DRAWING_TYPE_SPLINE> {};
+template <>
+struct ActionProperties<Action::TOOL_DRAW_EXP>: ActionPropDrawingTypes<DRAWING_TYPE_EXP> {};
+template <>
+struct ActionProperties<Action::TOOL_DRAW_GAUSS>: ActionPropDrawingTypes<DRAWING_TYPE_GAUSS> {};
+template <>
+struct ActionProperties<Action::TOOL_DRAW_POLY>: ActionPropDrawingTypes<DRAWING_TYPE_POLY> {};
+template <>
+struct ActionProperties<Action::TOOL_DRAW_POLYNEG>: ActionPropDrawingTypes<DRAWING_TYPE_POLYNEG> {};
+template <>
+struct ActionProperties<Action::TOOL_DRAW_SINUS>: ActionPropDrawingTypes<DRAWING_TYPE_SINUS> {};
 
 template <>
 struct ActionProperties<Action::SETSQUARE> {

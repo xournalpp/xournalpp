@@ -13,6 +13,7 @@
 
 #include <array>
 #include <string>  // for string
+#include <cstdint>
 
 #include "model/LineStyle.h"
 
@@ -52,11 +53,16 @@ enum DrawingType {
     DRAWING_TYPE_DOUBLE_ARROW,
     DRAWING_TYPE_COORDINATE_SYSTEM,
     DRAWING_TYPE_SHAPE_RECOGNIZER,
-    DRAWING_TYPE_SPLINE
+    DRAWING_TYPE_SPLINE,
+    DRAWING_TYPE_EXP,
+    DRAWING_TYPE_GAUSS,
+    DRAWING_TYPE_POLY,
+    DRAWING_TYPE_POLYNEG,
+    DRAWING_TYPE_SINUS
 };
-static constexpr std::array<std::string_view, 10> drawingTypeNames{
+static constexpr std::array<std::string_view, 15> drawingTypeNames{
         "dontChange",           "default",          "line",  "rectangle", "ellipse", "arrow", "doubleArrow",
-        "drawCoordinateSystem", "strokeRecognizer", "spline"};
+        "drawCoordinateSystem", "strokeRecognizer", "spline", "exp", "gauss", "poly", "polyneg", "sinus"};
 
 static constexpr std::string_view drawingTypeToString(DrawingType type) {
     return drawingTypeNames.at(static_cast<size_t>(type));
@@ -88,6 +94,11 @@ enum ToolType {
     TOOL_DRAW_COORDINATE_SYSTEM = 18,
     TOOL_FLOATING_TOOLBOX = 19,
     TOOL_DRAW_SPLINE = 20,
+    TOOL_DRAW_EXP = 25,
+    TOOL_DRAW_GAUSS = 26,
+    TOOL_DRAW_POLY = 27,
+    TOOL_DRAW_POLYNEG = 28,
+    TOOL_DRAW_SINUS = 29,
     TOOL_SELECT_PDF_TEXT_LINEAR = 21,
     TOOL_SELECT_PDF_TEXT_RECT = 22,
     TOOL_LASER_POINTER_PEN = 23,
@@ -95,7 +106,7 @@ enum ToolType {
 
     TOOL_END_ENTRY
 };
-static constexpr std::array<std::string_view, 25> toolNames{"none",
+static constexpr std::array<std::string_view, 30> toolNames{"none",
                                                             "pen",
                                                             "eraser",
                                                             "highlighter",
@@ -116,6 +127,11 @@ static constexpr std::array<std::string_view, 25> toolNames{"none",
                                                             "drawCoordinateSystem",
                                                             "showFloatingToolbox",
                                                             "drawSpline",
+                                                            "drawExp",
+                                                            "drawGauss",
+                                                            "drawPoly",
+                                                            "drawPolyNeg",
+                                                            "drawSinus",
                                                             "selectPdfTextLinear",
                                                             "selectPdfTextRect",
                                                             "laserPointerPen",
@@ -159,7 +175,7 @@ static constexpr std::string_view eraserTypeToString(EraserType type) {
 EraserType eraserTypeFromString(const std::string& type);
 
 
-enum ToolCapabilities : unsigned int {
+enum ToolCapabilities : uint32_t {
     TOOL_CAP_NONE = 0,
     TOOL_CAP_COLOR = 1 << 0,
     TOOL_CAP_SIZE = 1 << 1,
@@ -173,6 +189,11 @@ enum ToolCapabilities : unsigned int {
     TOOL_CAP_COORDINATE_SYSTEM = 1 << 9,
     TOOL_CAP_DASH_LINE = 1 << 10,
     TOOL_CAP_SPLINE = 1 << 11,
+    TOOL_CAP_EXP = 1 << 13,
+    TOOL_CAP_GAUSS = 1 << 14,
+    TOOL_CAP_POLY = 1 << 15,
+    TOOL_CAP_POLYNEG = 1 << 16,
+    TOOL_CAP_SINUS = 1 << 17,
     TOOL_CAP_LINE_STYLE = 1 << 12
 };
 
