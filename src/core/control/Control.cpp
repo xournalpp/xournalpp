@@ -1545,6 +1545,10 @@ void Control::openXoppFile(fs::path filepath, int scrollToPage, std::function<vo
     LoadHandler loadHandler;
     std::unique_ptr<Document> doc(loadHandler.loadDocument(filepath));
 
+    doc.get()->setFileVersion(loadHandler.getFileVersion());
+
+    g_warning("Loaded file format version: %d", loadHandler.getFileVersion());
+
     if (!doc) {
         string msg = FS(_F("Error opening file \"{1}\"") % filepath.u8string()) + "\n" + loadHandler.getLastError();
         XojMsgBox::showErrorToUser(this->getGtkWindow(), msg);

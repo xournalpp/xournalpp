@@ -1,12 +1,20 @@
 #include "XmlNode.h"
 
+#include <algorithm>
+#include <functional>
 #include <utility>  // for move
 
 #include <glib.h>  // for g_free
 
+#include "control/Control.h"
 #include "control/jobs/ProgressListener.h"  // for ProgressListener
 #include "control/xml/Attribute.h"          // for XMLAttribute
-#include "util/OutputStream.h"              // for OutputStream
+#include "model/Document.h"
+#include "model/PageRef.h"
+#include "model/XojPage.h"
+#include "undo/UndoRedoHandler.h"
+#include "util/OutputStream.h"  // for OutputStream
+#include "util/StringUtils.h"
 
 #include "DoubleArrayAttribute.h"  // for DoubleArrayAttribute
 #include "DoubleAttribute.h"       // for DoubleAttribute
@@ -14,6 +22,8 @@
 #include "SizeTAttribute.h"        // for SizeTAttribute
 #include "TextAttribute.h"         // for TextAttribute
 
+class XojPage;
+class StringUtils;
 
 XmlNode::XmlNode(const char* tag): tag(tag) {}
 
@@ -42,32 +52,139 @@ void XmlNode::setAttrib(const char* attrib, std::vector<double> values) {
 }
 
 void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
-    out->write("<");
-    out->write(tag);
-    writeAttributes(out);
 
-    if (children.empty()) {
-        out->write("/>\n");
-    } else {
-        out->write(">\n");
+    if (listener != nullptr) {
+        Control* control = dynamic_cast<Control*>(listener);
+        Document* doc = control->getDocument();
 
-        if (listener) {
-            listener->setMaximumState(children.size());
-        }
+        g_warning("Document file version: %d", doc->getFileVersion());
 
-        size_t i = 1;
+        if (doc->getFileVersion() == 5) 
+        {
+            auto pagesToWrite = control->getUndoRedoHandler()->pagesChanged;
 
-        for (auto& node: children) {
-            node->writeOut(out);
-            if (listener) {
-                listener->setCurrentState(i);
+            out->write("<");
+            out->write(tag);
+
+            writeAttributes(out);
+
+            if (children.empty()) {
+                out->write("/>\n");
+            } else {
+                out->write(">\n");
+
+                bool isFilteringPages = (!pagesToWrite.empty() && tag == "xournal");
+
+                if (listener) {
+                    size_t maxState = isFilteringPages ? pagesToWrite.size() : children.size();
+                }
+
+                size_t pageNumber = 1;
+                size_t writtenPages = 0;
+
+                for (size_t i = 0; i < children.size(); i++) {
+                    bool shouldWrite = true;
+
+                    if (isFilteringPages && children[i]->tag == "page") {
+
+                        shouldWrite = false;
+
+                        auto page = doc->getPages().at(pageNumber - 1);
+
+                        std::shared_ptr<XojPage> xojPage = page;
+
+                        std::string pageUID = xojPage.get()->getUID();
+
+                        auto it = std::find(pagesToWrite.begin(), pagesToWrite.end(), pageUID);
+                        if (it != pagesToWrite.end()) {
+                            shouldWrite = true;
+                        }
+
+                        pageNumber++;
+                    }
+
+                    if (shouldWrite) {
+                        children[i]->writeOut(out);
+
+                        if (listener && isFilteringPages && children[i]->tag == "page") {
+                            writtenPages++;
+                        }
+                    }
+                }
+
+                out->write("</");
+                out->write(tag);
+                out->write(">\n");
             }
-            i++;
+        }
+        else 
+        {
+
+            // Upgrade to version 5 on save
+            doc->setFileVersion(5); 
+
+            out->write("<");
+            out->write(tag);
+            writeAttributes(out);
+
+            if (children.empty()) {
+                out->write("/>\n");
+            } else {
+                out->write(">\n");
+
+                if (listener) {
+                    listener->setMaximumState(children.size());
+                }
+
+                size_t i = 1;
+
+                for (auto& node: children) {
+                    node->writeOut(out);
+                    if (listener) {
+                        listener->setCurrentState(i);
+                    }
+                    i++;
+                }
+
+                out->write("</");
+                out->write(tag);
+                out->write(">\n");
+            }
         }
 
-        out->write("</");
+    } 
+    else 
+    {
+        // Upgrade to version 5 on save
+        //doc->setFileVersion(5); 
+        
+        out->write("<");
         out->write(tag);
-        out->write(">\n");
+        writeAttributes(out);
+
+        if (children.empty()) {
+            out->write("/>\n");
+        } else {
+            out->write(">\n");
+
+            if (listener) {
+                listener->setMaximumState(children.size());
+            }
+
+            size_t i = 1;
+
+            for (auto& node: children) {
+                node->writeOut(out);
+                if (listener) {
+                    listener->setCurrentState(i);
+                }
+                i++;
+            }
+
+            out->write("</");
+            out->write(tag);
+            out->write(">\n");
+        }
     }
 }
 

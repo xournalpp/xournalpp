@@ -8,6 +8,9 @@
 
 #include "util/safe_casts.h"  // for as_signed
 
+#include <random>    
+#include <algorithm> 
+
 using std::string;
 using std::vector;
 
@@ -16,6 +19,45 @@ auto StringUtils::toLowerCase(const string& input) -> string {
     string lowerStr = lower;
     g_free(lower);
     return lowerStr;
+}
+
+std::vector<std::string> StringUtils::uids;
+
+std::string StringUtils::generateRandomUid(int length)
+{
+
+    const std::string charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    
+    std::random_device rd;
+    std::mt19937 generator(rd());
+    std::uniform_int_distribution<int> distribution(0, charset.length() - 1);
+
+    std::string randomString;
+    randomString.reserve(length);
+
+    for (int i = 0; i < length; ++i) {
+        randomString += charset[distribution(generator)];
+    }
+
+    return randomString;
+
+}
+
+std::string StringUtils::generateUniqueAlphanumericString() {
+    std::string newString;
+    while (true) {
+        newString = generateRandomUid(8);
+        
+        auto it = std::find(StringUtils::uids.begin(), StringUtils::uids.end(), newString);
+        
+        if (it == StringUtils::uids.end()) {
+            break;
+        }
+    }
+
+    StringUtils::uids.push_back(newString);
+
+    return newString;
 }
 
 void StringUtils::replaceAllChars(string& input, const std::vector<replace_pair>& replaces) {

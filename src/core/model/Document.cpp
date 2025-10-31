@@ -434,6 +434,14 @@ void Document::insertPage(const PageRef& p, size_t position) {
     updateIndexPageNumbers();
 }
 
+std::vector<PageRef> Document::getPages() const {
+    return this->pages;
+}
+
+int Document::getFileVersion() { return this->fileVersion; }
+
+void Document::setFileVersion(int version) { this->fileVersion = version; }
+
 void Document::addPage(const PageRef& p) {
     this->pages.push_back(p);
 
@@ -481,6 +489,7 @@ auto Document::operator=(const Document& doc) -> Document& {
     this->pages = doc.pages;
     this->attachPdf = doc.attachPdf;
     this->pathStorageMode = doc.pathStorageMode;
+    this->fileVersion = doc.fileVersion;
 
     indexPdfPages();
     buildContentsModel();

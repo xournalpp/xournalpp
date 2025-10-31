@@ -34,7 +34,7 @@
 #include "util/raii/GObjectSPtr.h"
 #include "util/safe_casts.h"  // for as_signed, as_unsigned
 #include "util/utf8_view.h"   // for utf8_view
-
+#include "util/StringUtils.h"
 #include "LoadHandlerHelper.h"  // for getAttrib, getAttribDo...
 
 using std::string;
@@ -320,7 +320,14 @@ void LoadHandler::parseContents() {
         double width = LoadHandlerHelper::getAttribDouble("width", this);
         double height = LoadHandlerHelper::getAttribDouble("height", this);
 
-        this->page = std::make_unique<XojPage>(width, height, /*suppressLayer*/ true);
+        std::string uid = "";
+
+        if ( this->fileVersion == 5 )
+        {
+            uid = LoadHandlerHelper::getAttrib("uid", false, this);
+        }
+
+        this->page = std::make_unique<XojPage>(width, height, true, uid);
 
         pages.push_back(this->page);
     } else if (strcmp(elementName, "audio") == 0) {
