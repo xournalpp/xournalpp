@@ -1085,6 +1085,7 @@ function app.setFont(font) end
 ---| "tool-highlighter-fill"
 ---| "tool-highlighter-fill-opacity"
 ---| "tool-select-pdf-text-marker-opacity"
+---| "toggle-touch-drawing"
 ---| "audio-record"
 ---| "audio-pause-playback"
 ---| "audio-stop-playback"
