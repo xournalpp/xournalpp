@@ -20,9 +20,10 @@ For testing purposes, install in a subdirectory:
 mkdir build
 cd build
 
-cmake .. -DCMAKE_INSTALL_PREFIX=install
+# For a faster build, remove this '#' ~~⇓
+cmake .. -DCMAKE_INSTALL_PREFIX=install #-DCMAKE_BUILD_TYPE=RelWithDebInfo 
 
-cmake --build . # For a faster build, set the flag -DCMAKE_BUILD_TYPE=RelWithDebInfo
+cmake --build . 
 cmake --build . --target install
 ```
 

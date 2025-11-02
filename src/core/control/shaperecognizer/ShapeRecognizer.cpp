@@ -176,7 +176,7 @@ auto ShapeRecognizer::tryRectangle() -> std::unique_ptr<Stroke> {
 /*
  * check if something is a polygonal line with at most nsides sides
  */
-auto ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsides, int* breaks, Inertia* ss) -> int {
+auto ShapeRecognizer::findPolygonal(const std::vector<Point>& pt, int start, int end, int nsides, int* breaks, Inertia* ss) -> int {
     Inertia s;
     int i1 = 0, i2 = 0, n1 = 0, n2 = 0;
 
@@ -197,7 +197,7 @@ auto ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsi
     for (; k < nsides; k++) {
         i1 = start + (k * (end - start)) / nsides;
         i2 = start + ((k + 1) * (end - start)) / nsides;
-        s.calc(pt, i1, i2);
+        s.calc(pt.begin()+i1,pt.begin()+i2);
         if (s.det() < SEGMENT_MAX_DET) {
             break;
         }
@@ -268,7 +268,7 @@ auto ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsi
 /**
  * Improve on the polygon found by find_polygonal()
  */
-void ShapeRecognizer::optimizePolygonal(const Point* pt, int nsides, int* breaks, Inertia* ss) {
+void ShapeRecognizer::optimizePolygonal(const std::vector<Point>& pt, int nsides, int* breaks, Inertia* ss) {
     for (int i = 1; i < nsides; i++) {
         // optimize break between sides i and i+1
         double cost = ss[i - 1].det() * ss[i - 1].det() + ss[i].det() * ss[i].det();

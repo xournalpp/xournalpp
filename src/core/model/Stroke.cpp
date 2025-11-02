@@ -285,7 +285,7 @@ Point Stroke::getPoint(PathParameter parameter) const {
     return res;
 }
 
-auto Stroke::getPoints() const -> const Point* { return this->points.data(); }
+auto Stroke::getPoints() const -> const std::vector<Point>& { return this->points; }
 
 void Stroke::setPointVectorInternal(const Range* const snappingBox) {
     if (!snappingBox || this->points.empty() || this->points.front().z != Point::NO_PRESSURE) {
