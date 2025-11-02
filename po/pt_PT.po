@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-24 03:54+0000\n"
-"PO-Revision-Date: 2025-10-26 04:26\n"
+"PO-Revision-Date: 2025-11-02 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -624,7 +624,7 @@ msgstr ""
 
 #: ../src/core/control/tools/ImageHandler.cpp:69
 msgid "Error while opening image file: "
-msgstr ""
+msgstr "Erro ao abrir ficheiro de imagem: "
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:135
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -3924,7 +3924,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:31
 msgid "Save As"
-msgstr "Guardar como"
+msgstr "Guardar Como"
 
 #: ../ui/mainmenubar.xml:38
 msgid "_Export as PDF"
@@ -4260,7 +4260,7 @@ msgstr "_Imagem"
 
 #: ../ui/mainmenubar.xml:552
 msgid "_Default Tool"
-msgstr "Ferramenta _padrão"
+msgstr "Ferramenta _Padrão"
 
 #: ../ui/mainmenubar.xml:559
 msgid "Drawing Type"

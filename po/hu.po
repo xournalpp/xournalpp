@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-24 03:54+0000\n"
-"PO-Revision-Date: 2025-10-26 04:26\n"
+"PO-Revision-Date: 2025-11-02 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -4482,7 +4482,7 @@ msgstr "Grafikon szegéllyel"
 
 #: ../resources-templates/pagetemplates.ini.in:47
 msgid "Graph with border (bold every 5th)"
-msgstr ""
+msgstr "Ábra szegéllyel (minden ötödik versszakban félkövér)"
 
 #: ../resources-templates/toolbar.ini.in:50
 msgid "All Tools"
