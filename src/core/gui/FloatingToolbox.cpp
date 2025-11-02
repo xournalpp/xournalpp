@@ -184,6 +184,10 @@ auto FloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget,
             int minY = scrollY + margin;
             int maxY = scrollY + scrollAllocation.height - allocation->height - margin;
 
+            // Ensure valid clamp bounds when toolbox is larger than viewport
+            maxX = std::max(maxX, minX);
+            maxY = std::max(maxY, minY);
+
             allocation->x = std::clamp(centerX, minX, maxX);
             allocation->y = std::clamp(centerY, minY, maxY);
             self->floatingToolboxState = noChange;
