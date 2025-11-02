@@ -30,7 +30,7 @@ https://brew.sh/
 
 ### Install dependencies
 ````sh
-brew install cmake ninja pkg-config gtk+3 poppler librsvg adwaita-icon-theme libzip portaudio libsndfile gdk-pixbuf
+brew install cmake ninja pkg-config gtk+3 poppler librsvg adwaita-icon-theme libzip portaudio libsndfile gdk-pixbuf qpdf lua gtksourceview4
 ````
 
 ### Build Xournal++:
