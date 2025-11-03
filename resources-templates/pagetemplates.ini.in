@@ -45,5 +45,5 @@ config=m1=40,rm=1
 [graphWithBorderBold5]
 name=Graph with border (bold every 5th)
 format=graph
-config=m1=20,rm=1,bli=5,blw=1.5
+config=m1=20,rm=1,bli=5,blw=1
 

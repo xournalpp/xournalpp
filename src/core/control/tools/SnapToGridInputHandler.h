@@ -10,6 +10,7 @@
  */
 #pragma once
 
+#include "model/PageRef.h"  // for PageRef
 #include "model/Point.h"
 
 class Settings;
@@ -19,8 +20,41 @@ class SnapToGridInputHandler final {
 public:
     SnapToGridInputHandler(const Settings* settings);
 
+    /**
+     * @brief Updates the page context for grid offset calculations
+     * @param page the current page (used to get background configuration)
+     */
+    void setPageRef(PageRef page);
+
 protected:
     const Settings* settings;
+    PageRef currentPage;
+
+    // Cached offsets to avoid recalculation on every snap
+    mutable double cachedXOffset = 0.0;
+    mutable double cachedYOffset = 0.0;
+    mutable bool offsetsCached = false;
+
+    /**
+     * @brief Ensure cached offsets are computed and up-to-date
+     */
+    void ensureOffsetsCached() const;
+
+    /**
+     * @brief Calculate grid offsets from the current page's background configuration
+     * @param xOffset output parameter for horizontal grid offset
+     * @param yOffset output parameter for vertical grid offset
+     * @param pageWidth page width
+     * @param pageHeight page height
+     */
+    void calculateGridOffsets(double& xOffset, double& yOffset, double pageWidth, double pageHeight) const;
+
+    /**
+     * @brief Check if current page has an isometric background
+     * @param triangleSize output parameter for triangle size (if isometric)
+     * @return true if current page has isometric background
+     */
+    bool isIsometricBackground(double& triangleSize) const;
 
 public:
     /**

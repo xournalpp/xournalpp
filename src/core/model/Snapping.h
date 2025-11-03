@@ -24,6 +24,16 @@ namespace Snapping {
 [[nodiscard]] double snapVertically(double y, double gridSize, double tolerance);
 
 /**
+ * @brief If a value is near enough to the y-coordinate of a grid point (with offset), it returns the nearest
+ * y-coordinate of the grid point. Otherwise the original value itself.
+ * @param y the value
+ * @param gridSize the distance to each snapping point
+ * @param tolerance the tolerance as a fraction of a half grid diagonal (assumed to be between 0 and 1)
+ * @param yOffset the vertical offset of the grid (e.g., from page margins)
+ */
+[[nodiscard]] double snapVertically(double y, double gridSize, double tolerance, double yOffset);
+
+/**
  * @brief If a value is near enough to the x-coordinate of a grid point, it returns the nearest x-coordinate of the
  * grid point. Otherwise the original value itself.
  * @param x the value
@@ -33,6 +43,16 @@ namespace Snapping {
 [[nodiscard]] double snapHorizontally(double x, double gridSize, double tolerance);
 
 /**
+ * @brief If a value is near enough to the x-coordinate of a grid point (with offset), it returns the nearest
+ * x-coordinate of the grid point. Otherwise the original value itself.
+ * @param x the value
+ * @param gridSize the distance to each snapping point
+ * @param tolerance the tolerance as a fraction of a half grid diagonal (assumed to be between 0 and 1)
+ * @param xOffset the horizontal offset of the grid (e.g., from page margins)
+ */
+[[nodiscard]] double snapHorizontally(double x, double gridSize, double tolerance, double xOffset);
+
+/**
  * @brief If a points distance to the nearest grid point is under a certain tolerance, it returns the nearest
  * grid point. Otherwise the original Point itself.
  * @param pos the position
@@ -40,6 +60,17 @@ namespace Snapping {
  * @param tolerance the tolerance as a fraction of a half grid diagonal (assumed to be between 0 and 1)
  */
 [[nodiscard]] Point snapToGrid(Point const& pos, double gridSize, double tolerance);
+
+/**
+ * @brief If a points distance to the nearest grid point (with offset) is under a certain tolerance, it returns the
+ * nearest grid point. Otherwise the original Point itself.
+ * @param pos the position
+ * @param gridSize the distance to each snapping point
+ * @param tolerance the tolerance as a fraction of a half grid diagonal (assumed to be between 0 and 1)
+ * @param xOffset the horizontal offset of the grid (e.g., from page margins)
+ * @param yOffset the vertical offset of the grid (e.g., from page margins)
+ */
+[[nodiscard]] Point snapToGrid(Point const& pos, double gridSize, double tolerance, double xOffset, double yOffset);
 
 /**
  * @brief if the angles distance to a multiple quarter of PI is under a certain tolerance, it returns the latter.
@@ -73,5 +104,16 @@ namespace Snapping {
  * @param second the second end point of the line segment
  */
 [[nodiscard]] double distanceLine(Point const& pos, Point const& first, Point const& second);
+
+/**
+ * @brief Snaps to the nearest vertex of an isometric (triangular) grid
+ * @param pos the position
+ * @param triangleSize the size of the equilateral triangles in the grid
+ * @param tolerance the tolerance as a fraction of the triangle size (assumed to be between 0 and 1)
+ * @param xOffset the horizontal offset of the grid
+ * @param yOffset the vertical offset of the grid
+ */
+[[nodiscard]] Point snapToIsometricGrid(Point const& pos, double triangleSize, double tolerance, double xOffset,
+                                        double yOffset);
 
 }  // namespace Snapping

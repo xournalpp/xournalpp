@@ -1,6 +1,7 @@
 #include "Snapping.h"
 
 #include <algorithm>  // for min, max
+#include <array>      // for array
 #include <cmath>      // for pow, atan2, cos, hypot, remainder, sin, abs
 #include <cstdlib>    // for abs
 
@@ -15,14 +16,34 @@ double snapVertically(double y, double gridSize, double tolerance) {
     return std::abs(ySnapped - y) < tolerance * gridSize / 2.0 ? ySnapped : y;
 }
 
+double snapVertically(double y, double gridSize, double tolerance, double yOffset) {
+    // Adjust for offset: translate to grid space, snap, and translate back
+    double ySnapped = roundToMultiple(y - yOffset, gridSize) + yOffset;
+    return std::abs(ySnapped - y) < tolerance * gridSize / 2.0 ? ySnapped : y;
+}
+
 double snapHorizontally(double x, double gridSize, double tolerance) {
     double xSnapped = roundToMultiple(x, gridSize);
+    return std::abs(xSnapped - x) < tolerance * gridSize / 2.0 ? xSnapped : x;
+}
+
+double snapHorizontally(double x, double gridSize, double tolerance, double xOffset) {
+    // Adjust for offset: translate to grid space, snap, and translate back
+    double xSnapped = roundToMultiple(x - xOffset, gridSize) + xOffset;
     return std::abs(xSnapped - x) < tolerance * gridSize / 2.0 ? xSnapped : x;
 }
 
 Point snapToGrid(Point const& pos, double gridSize, double tolerance) {
     double abs_tolerance = (gridSize / sqrt(2)) * tolerance;
     Point ret{roundToMultiple(pos.x, gridSize), roundToMultiple(pos.y, gridSize), pos.z};
+    return distance(ret, pos) < abs_tolerance ? ret : pos;
+}
+
+Point snapToGrid(Point const& pos, double gridSize, double tolerance, double xOffset, double yOffset) {
+    // Adjust for offset: translate to grid space, snap, and translate back
+    double abs_tolerance = (gridSize / sqrt(2)) * tolerance;
+    Point ret{roundToMultiple(pos.x - xOffset, gridSize) + xOffset,
+              roundToMultiple(pos.y - yOffset, gridSize) + yOffset, pos.z};
     return distance(ret, pos) < abs_tolerance ? ret : pos;
 }
 
@@ -58,6 +79,65 @@ double distanceLine(Point const& pos, Point const& first, Point const& second) {
         const double dist2 = distance(pos, second);
         return std::min(dist1, dist2);
     }
+}
+
+Point snapToIsometricGrid(Point const& pos, double triangleSize, double tolerance, double xOffset, double yOffset) {
+    // Snap to triangular lattice grid. Find nearest vertex from ~7 candidates around the point.
+    const double columnSpacing = std::sqrt(3.0) / 2.0 * triangleSize;
+    const double rowSpacing = triangleSize / 2.0;
+
+    // Transform to grid-relative coordinates
+    const double relativeX = pos.x - xOffset;
+    const double relativeY = pos.y - yOffset;
+
+    // Find approximate grid cell containing the point
+    const int approxCol = static_cast<int>(std::round(relativeX / columnSpacing));
+    const int approxRow = static_cast<int>(std::round(relativeY / rowSpacing));
+
+    // Build list of candidate vertices to check
+    // Maximum of 7 candidates: center vertex + up to 6 neighbors
+    constexpr size_t MAX_CANDIDATES = 7;
+    std::array<Point, MAX_CANDIDATES> candidates;
+    size_t candidateCount = 0;
+
+    // Lambda helper to add candidate vertices
+    auto addCandidate = [&](int col, int row) {
+        if (candidateCount < MAX_CANDIDATES) {
+            candidates[candidateCount++] = Point(xOffset + col * columnSpacing, yOffset + row * rowSpacing, pos.z);
+        }
+    };
+
+    // Add center vertex
+    addCandidate(approxCol, approxRow);
+
+    // Add adjacent vertices in the same column (even columns only)
+    const bool isEvenColumn = (approxCol % 2 == 0);
+    if (isEvenColumn) {
+        addCandidate(approxCol, approxRow - 2);
+        addCandidate(approxCol, approxRow + 2);
+    }
+
+    // Add adjacent vertices in neighboring columns (forms the triangular connections)
+    addCandidate(approxCol - 1, approxRow - 1);
+    addCandidate(approxCol - 1, approxRow + 1);
+    addCandidate(approxCol + 1, approxRow - 1);
+    addCandidate(approxCol + 1, approxRow + 1);
+
+    // Find the nearest vertex from all candidates
+    Point nearestVertex = candidates[0];
+    double minDistance = distance(pos, nearestVertex);
+
+    for (size_t i = 1; i < candidateCount; ++i) {
+        const double dist = distance(pos, candidates[i]);
+        if (dist < minDistance) {
+            minDistance = dist;
+            nearestVertex = candidates[i];
+        }
+    }
+
+    // Only snap if within tolerance threshold
+    const double snapThreshold = triangleSize * tolerance;
+    return (minDistance < snapThreshold) ? nearestVertex : pos;
 }
 
 }  // namespace Snapping
