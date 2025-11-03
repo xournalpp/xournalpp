@@ -11,36 +11,30 @@ namespace Snapping {
 
 [[nodiscard]] inline double roundToMultiple(double val, double multiple) { return val - std::remainder(val, multiple); }
 [[nodiscard]] inline double distance(Point const& a, Point const& b) { return std::hypot(b.x - a.x, b.y - a.y); }
+
 double snapVertically(double y, double gridSize, double tolerance) {
-    double ySnapped = roundToMultiple(y, gridSize);
-    return std::abs(ySnapped - y) < tolerance * gridSize / 2.0 ? ySnapped : y;
+    return snapVertically(y, gridSize, tolerance, 0.0);
 }
 
 double snapVertically(double y, double gridSize, double tolerance, double yOffset) {
-    // Adjust for offset: translate to grid space, snap, and translate back
     double ySnapped = roundToMultiple(y - yOffset, gridSize) + yOffset;
     return std::abs(ySnapped - y) < tolerance * gridSize / 2.0 ? ySnapped : y;
 }
 
 double snapHorizontally(double x, double gridSize, double tolerance) {
-    double xSnapped = roundToMultiple(x, gridSize);
-    return std::abs(xSnapped - x) < tolerance * gridSize / 2.0 ? xSnapped : x;
+    return snapHorizontally(x, gridSize, tolerance, 0.0);
 }
 
 double snapHorizontally(double x, double gridSize, double tolerance, double xOffset) {
-    // Adjust for offset: translate to grid space, snap, and translate back
     double xSnapped = roundToMultiple(x - xOffset, gridSize) + xOffset;
     return std::abs(xSnapped - x) < tolerance * gridSize / 2.0 ? xSnapped : x;
 }
 
 Point snapToGrid(Point const& pos, double gridSize, double tolerance) {
-    double abs_tolerance = (gridSize / sqrt(2)) * tolerance;
-    Point ret{roundToMultiple(pos.x, gridSize), roundToMultiple(pos.y, gridSize), pos.z};
-    return distance(ret, pos) < abs_tolerance ? ret : pos;
+    return snapToGrid(pos, gridSize, tolerance, 0.0, 0.0);
 }
 
 Point snapToGrid(Point const& pos, double gridSize, double tolerance, double xOffset, double yOffset) {
-    // Adjust for offset: translate to grid space, snap, and translate back
     double abs_tolerance = (gridSize / sqrt(2)) * tolerance;
     Point ret{roundToMultiple(pos.x - xOffset, gridSize) + xOffset,
               roundToMultiple(pos.y - yOffset, gridSize) + yOffset, pos.z};

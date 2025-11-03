@@ -9,129 +9,114 @@
 
 using namespace background_config_strings;
 
+namespace {
+constexpr double DEFAULT_RASTER_SIZE = 14.17;  // 5mm
+constexpr double RULED_HEADER_SIZE = 80.0;
+}  // namespace
+
 SnapToGridInputHandler::SnapToGridInputHandler(const Settings* settings): settings(settings), currentPage(nullptr) {}
 
 void SnapToGridInputHandler::setPageRef(PageRef page) {
     this->currentPage = page;
-    this->offsetsCached = false;  // Invalidate cache when page changes
+    this->offsetsCached = false;
 }
 
 void SnapToGridInputHandler::ensureOffsetsCached() const {
     if (!currentPage) {
-        // Defensive: if page is null, ensure cache is reset to defaults
         cachedXOffset = 0.0;
         cachedYOffset = 0.0;
-        offsetsCached = true;  // Mark as cached to avoid repeated checks
+        offsetsCached = true;
         return;
     }
-
     if (!offsetsCached) {
         calculateGridOffsets(cachedXOffset, cachedYOffset, currentPage->getWidth(), currentPage->getHeight());
         offsetsCached = true;
     }
 }
 
+void SnapToGridInputHandler::calculateGraphOffsets(const BackgroundConfig& config, double pageWidth, double pageHeight,
+                                                   double& xOffset, double& yOffset) const {
+    double margin = 0.0;
+    double squareSize = DEFAULT_RASTER_SIZE;
+    int roundToGrid = 0;
+    int boldLineInterval = 0;
+
+    config.loadValue(CFG_MARGIN, margin);
+    config.loadValue(CFG_RASTER, squareSize);
+    config.loadValue(CFG_ROUND_MARGIN, roundToGrid);
+    config.loadValue(CFG_BOLD_LINE_INTERVAL, boldLineInterval);
+
+    if (margin <= 0.0) {
+        return;
+    }
+    if (roundToGrid) {
+        // Centered grid: align with bold line intervals
+        const double roundingUnit = (boldLineInterval > 0) ? (squareSize * boldLineInterval) : squareSize;
+        const double maxGridWidth = pageWidth - 2.0 * margin;
+        const double maxGridHeight = pageHeight - 2.0 * margin;
+
+        const int completeUnitsX = static_cast<int>(std::floor(maxGridWidth / roundingUnit));
+        const int completeUnitsY = static_cast<int>(std::floor(maxGridHeight / roundingUnit));
+
+        const double actualGridWidth = completeUnitsX * roundingUnit;
+        const double actualGridHeight = completeUnitsY * roundingUnit;
+
+        xOffset = (pageWidth - actualGridWidth) / 2.0;
+        yOffset = (pageHeight - actualGridHeight) / 2.0;
+    } else {
+        xOffset = margin;
+        yOffset = margin;
+    }
+}
+
+void SnapToGridInputHandler::calculateIsometricOffsets(const BackgroundConfig& config, double pageWidth,
+                                                       double pageHeight, double& xOffset, double& yOffset) const {
+    double triangleSize = DEFAULT_RASTER_SIZE;
+    config.loadValue(CFG_RASTER, triangleSize);
+
+    const double xStep = std::sqrt(3.0) / 2.0 * triangleSize;
+    const double yStep = triangleSize / 2.0;
+    const double isoMargin = triangleSize;
+
+    const int cols = static_cast<int>(std::floor((pageWidth - 2.0 * isoMargin) / xStep));
+    const int rows = static_cast<int>(std::floor((pageHeight - 2.0 * isoMargin) / yStep));
+
+    const double contentWidth = cols * xStep;
+    const double contentHeight = rows * yStep;
+
+    xOffset = (pageWidth - contentWidth) / 2.0;
+    yOffset = (pageHeight - contentHeight) / 2.0;
+}
+
 void SnapToGridInputHandler::calculateGridOffsets(double& xOffset, double& yOffset, double pageWidth,
                                                   double pageHeight) const {
-    // Initialize offsets to zero (origin-based grid by default)
     xOffset = 0.0;
     yOffset = 0.0;
-
     if (!currentPage) {
         return;
     }
-
     const PageType bgType = currentPage->getBackgroundType();
     const BackgroundConfig config(bgType.config);
 
-    // Constants for background-specific calculations
-    constexpr double DEFAULT_RASTER_SIZE = 14.17;  // 5mm in points (1/72 inch)
-    constexpr double RULED_HEADER_SIZE = 80.0;     // Standard header spacing for ruled paper
-
     switch (bgType.format) {
-        case PageTypeFormat::Graph: {
-            // Graph paper: square grid with optional margins and bold line intervals
-            double margin = 0.0;
-            double squareSize = DEFAULT_RASTER_SIZE;
-            int roundToGrid = 0;
-            int boldLineInterval = 0;
-
-            config.loadValue(CFG_MARGIN, margin);
-            config.loadValue(CFG_RASTER, squareSize);
-            config.loadValue(CFG_ROUND_MARGIN, roundToGrid);
-            config.loadValue(CFG_BOLD_LINE_INTERVAL, boldLineInterval);
-
-            if (margin > 0.0) {
-                if (roundToGrid) {
-                    // Centered grid: adjust margin to align grid with bold line intervals
-                    const double roundingUnit = (boldLineInterval > 0) ? (squareSize * boldLineInterval) : squareSize;
-
-                    const double maxGridWidth = pageWidth - 2.0 * margin;
-                    const double maxGridHeight = pageHeight - 2.0 * margin;
-
-                    const int completeUnitsX = static_cast<int>(std::floor(maxGridWidth / roundingUnit));
-                    const int completeUnitsY = static_cast<int>(std::floor(maxGridHeight / roundingUnit));
-
-                    const double actualGridWidth = completeUnitsX * roundingUnit;
-                    const double actualGridHeight = completeUnitsY * roundingUnit;
-
-                    xOffset = (pageWidth - actualGridWidth) / 2.0;
-                    yOffset = (pageHeight - actualGridHeight) / 2.0;
-                } else {
-                    // Simple fixed margin
-                    xOffset = margin;
-                    yOffset = margin;
-                }
-            }
+        case PageTypeFormat::Graph:
+            calculateGraphOffsets(config, pageWidth, pageHeight, xOffset, yOffset);
             break;
-        }
-
-        case PageTypeFormat::Dotted: {
-            // Dotted paper: simple square grid at origin (no margins)
-            // Offsets remain 0.0 - grid starts at page origin
-            break;
-        }
-
         case PageTypeFormat::IsoDotted:
-        case PageTypeFormat::IsoGraph: {
-            // Isometric paper: triangular grid pattern, automatically centered on page
-            double triangleSize = DEFAULT_RASTER_SIZE;
-            config.loadValue(CFG_RASTER, triangleSize);
-
-            // Isometric grid geometry
-            const double xStep = std::sqrt(3.0) / 2.0 * triangleSize;  // Horizontal column spacing
-            const double yStep = triangleSize / 2.0;                   // Vertical row spacing
-
-            // Calculate grid size (matching BaseIsometricBackgroundView logic)
-            const double isoMargin = triangleSize;
-            const int cols = static_cast<int>(std::floor((pageWidth - 2.0 * isoMargin) / xStep));
-            const int rows = static_cast<int>(std::floor((pageHeight - 2.0 * isoMargin) / yStep));
-
-            const double contentWidth = cols * xStep;
-            const double contentHeight = rows * yStep;
-
-            // Center the grid on the page
-            xOffset = (pageWidth - contentWidth) / 2.0;
-            yOffset = (pageHeight - contentHeight) / 2.0;
+        case PageTypeFormat::IsoGraph:
+            calculateIsometricOffsets(config, pageWidth, pageHeight, xOffset, yOffset);
             break;
-        }
-
         case PageTypeFormat::Ruled:
-        case PageTypeFormat::Lined: {
-            // Ruled/Lined paper: horizontal lines with header spacing
-            // Apply vertical offset only (snap to horizontal line positions)
+        case PageTypeFormat::Lined:
             yOffset = RULED_HEADER_SIZE;
-            // xOffset remains 0.0 - lines span full page width
             break;
-        }
-
+        case PageTypeFormat::Dotted:
         case PageTypeFormat::Staves:
         case PageTypeFormat::Plain:
         case PageTypeFormat::Pdf:
         case PageTypeFormat::Image:
         default:
-            // No special grid snapping for these background types
-            // Use default origin-based rectangular grid (offsets remain 0.0)
+            // Origin-based grid (offsets remain 0.0)
             break;
     }
 }
@@ -140,15 +125,12 @@ bool SnapToGridInputHandler::isIsometricBackground(double& triangleSize) const {
     if (!currentPage) {
         return false;
     }
-
     const PageType bgType = currentPage->getBackgroundType();
     if (bgType.format != PageTypeFormat::IsoDotted && bgType.format != PageTypeFormat::IsoGraph) {
         return false;
     }
-
-    // Load triangle size from config
     const BackgroundConfig config(bgType.config);
-    triangleSize = 14.17;  // Default 5mm
+    triangleSize = DEFAULT_RASTER_SIZE;
     config.loadValue(CFG_RASTER, triangleSize);
     return true;
 }
@@ -173,13 +155,10 @@ double SnapToGridInputHandler::snapHorizontally(double x, bool alt) const {
 
 Point SnapToGridInputHandler::snapToGrid(Point const& pos, bool alt) const {
     if (alt == settings->isSnapGrid()) {
-        // Snapping is disabled (either explicitly off, or alt-toggled off)
         return pos;
     }
-
     ensureOffsetsCached();
 
-    // Use isometric snapping for isometric backgrounds, rectangular snapping for others
     double triangleSize;
     if (isIsometricBackground(triangleSize)) {
         return Snapping::snapToIsometricGrid(pos, triangleSize, settings->getSnapGridTolerance(), cachedXOffset,

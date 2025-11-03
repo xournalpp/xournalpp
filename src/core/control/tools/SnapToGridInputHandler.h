@@ -13,6 +13,7 @@
 #include "model/PageRef.h"  // for PageRef
 #include "model/Point.h"
 
+class BackgroundConfig;
 class Settings;
 
 class SnapToGridInputHandler final {
@@ -30,7 +31,7 @@ protected:
     const Settings* settings;
     PageRef currentPage;
 
-    // Cached offsets to avoid recalculation on every snap
+    // Cached offsets (computed once per page)
     mutable double cachedXOffset = 0.0;
     mutable double cachedYOffset = 0.0;
     mutable bool offsetsCached = false;
@@ -48,6 +49,18 @@ protected:
      * @param pageHeight page height
      */
     void calculateGridOffsets(double& xOffset, double& yOffset, double pageWidth, double pageHeight) const;
+
+    /**
+     * @brief Calculate offsets for graph paper backgrounds
+     */
+    void calculateGraphOffsets(const BackgroundConfig& config, double pageWidth, double pageHeight, double& xOffset,
+                               double& yOffset) const;
+
+    /**
+     * @brief Calculate offsets for isometric backgrounds
+     */
+    void calculateIsometricOffsets(const BackgroundConfig& config, double pageWidth, double pageHeight, double& xOffset,
+                                   double& yOffset) const;
 
     /**
      * @brief Check if current page has an isometric background
