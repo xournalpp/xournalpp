@@ -1575,7 +1575,7 @@ static int applib_addTexts(lua_State* L) {
  *             size = 8.0,
  *            },
  *     color = 0x0,
- *     x = 150.0,,
+ *     x = 150.0,
  *     y = 70.0,
  *     width = 55.0,
  *     height = 23.0,
@@ -2099,7 +2099,7 @@ static void pushRectangleHelper(lua_State* L, xoj::util::Rectangle<double> rect)
  *
  * See /src/control/ToolEnums.cpp for possible values of "size".
  *
- * for seiection:
+ * for selection:
  * {
  *   -- bounding box as drawn in the UI (includes padding on all sides)
  *   "boundingBox" = {
