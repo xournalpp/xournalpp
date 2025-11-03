@@ -201,6 +201,7 @@ void ToolHandler::selectTool(ToolType type) {
         g_warning("unknown tool selected: %i\n", type);
         return;
     }
+    this->previousTool = this->activeTool;
     this->toolbarSelectedTool = &getTool(type);
     // set activeTool is necessary for fireToolChanged()
     // if called after this method
@@ -224,6 +225,11 @@ auto ToolHandler::getActiveTool() const -> Tool* {return this->activeTool; }
 
 auto ToolHandler::getToolType() const -> ToolType {
     Tool* tool = this->activeTool;
+    return tool->type;
+}
+
+auto ToolHandler::getPreviousToolType() const -> ToolType {
+    Tool* tool = this->previousTool;
     return tool->type;
 }
 
