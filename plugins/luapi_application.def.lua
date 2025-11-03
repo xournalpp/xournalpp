@@ -409,7 +409,7 @@ function app.addTexts(opts) end
 ---             size = 8.0,
 ---            },
 ---     color = 0x0,
----     x = 150.0,,
+---     x = 150.0,
 ---     y = 70.0,
 ---     width = 55.0,
 ---     height = 23.0,
@@ -585,7 +585,7 @@ function app.changeBackgroundPdfPageNr(pageNr, relative) end
 --- 
 --- See /src/control/ToolEnums.cpp for possible values of "size".
 --- 
---- for seiection:
+--- for selection:
 --- {
 ---   -- bounding box as drawn in the UI (includes padding on all sides)
 ---   "boundingBox" = {
