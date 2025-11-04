@@ -161,12 +161,12 @@ Point SnapToGridInputHandler::snapToGrid(Point const& pos, bool alt) const {
 
     double triangleSize;
     if (isIsometricBackground(triangleSize)) {
-        return Snapping::snapToIsometricGrid(pos, triangleSize, settings->getSnapGridTolerance(), cachedXOffset,
-                                             cachedYOffset);
+        return Snapping::snapToGrid(pos, triangleSize, settings->getSnapGridTolerance(), std::sqrt(3.0) / 2.0, 0.5,
+                                    cachedXOffset, cachedYOffset);
     }
 
-    return Snapping::snapToGrid(pos, settings->getSnapGridSize(), settings->getSnapGridTolerance(), cachedXOffset,
-                                cachedYOffset);
+    return Snapping::snapToGrid(pos, settings->getSnapGridSize(), settings->getSnapGridTolerance(), 1.0, 1.0,
+                                cachedXOffset, cachedYOffset);
 }
 
 double SnapToGridInputHandler::snapAngle(double radian, bool alt) const {

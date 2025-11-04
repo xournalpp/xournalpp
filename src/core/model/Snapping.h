@@ -36,15 +36,17 @@ namespace Snapping {
 
 /**
  * @brief If a points distance to the nearest grid point is under a certain tolerance, it returns the nearest
- * grid point. Otherwise the original Point itself.
+ * grid point. Otherwise the original Point itself. Supports arbitrary grid spacing ratios.
  * @param pos the position
- * @param gridSize the distance to each snapping point
- * @param tolerance the tolerance as a fraction of a half grid diagonal (assumed to be between 0 and 1)
+ * @param gridSize the base grid size
+ * @param tolerance the tolerance as a fraction of the grid size (assumed to be between 0 and 1)
+ * @param xSpacing horizontal spacing multiplier (e.g., 1.0 for square, sqrt(3)/2 for isometric)
+ * @param ySpacing vertical spacing multiplier (e.g., 1.0 for square, 0.5 for isometric)
  * @param xOffset the horizontal offset of the grid (e.g., from page margins)
  * @param yOffset the vertical offset of the grid (e.g., from page margins)
  */
-[[nodiscard]] Point snapToGrid(Point const& pos, double gridSize, double tolerance, double xOffset = 0.0,
-                               double yOffset = 0.0);
+[[nodiscard]] Point snapToGrid(Point const& pos, double gridSize, double tolerance, double xSpacing, double ySpacing,
+                               double xOffset, double yOffset);
 
 /**
  * @brief if the angles distance to a multiple quarter of PI is under a certain tolerance, it returns the latter.
@@ -78,16 +80,5 @@ namespace Snapping {
  * @param second the second end point of the line segment
  */
 [[nodiscard]] double distanceLine(Point const& pos, Point const& first, Point const& second);
-
-/**
- * @brief Snaps to the nearest vertex of an isometric (triangular) grid
- * @param pos the position
- * @param triangleSize the size of the equilateral triangles in the grid
- * @param tolerance the tolerance as a fraction of the triangle size (assumed to be between 0 and 1)
- * @param xOffset the horizontal offset of the grid
- * @param yOffset the vertical offset of the grid
- */
-[[nodiscard]] Point snapToIsometricGrid(Point const& pos, double triangleSize, double tolerance, double xOffset,
-                                        double yOffset);
 
 }  // namespace Snapping
