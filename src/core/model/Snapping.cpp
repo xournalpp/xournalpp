@@ -12,26 +12,14 @@ namespace Snapping {
 [[nodiscard]] inline double roundToMultiple(double val, double multiple) { return val - std::remainder(val, multiple); }
 [[nodiscard]] inline double distance(Point const& a, Point const& b) { return std::hypot(b.x - a.x, b.y - a.y); }
 
-double snapVertically(double y, double gridSize, double tolerance) {
-    return snapVertically(y, gridSize, tolerance, 0.0);
-}
-
 double snapVertically(double y, double gridSize, double tolerance, double yOffset) {
     double ySnapped = roundToMultiple(y - yOffset, gridSize) + yOffset;
     return std::abs(ySnapped - y) < tolerance * gridSize / 2.0 ? ySnapped : y;
 }
 
-double snapHorizontally(double x, double gridSize, double tolerance) {
-    return snapHorizontally(x, gridSize, tolerance, 0.0);
-}
-
 double snapHorizontally(double x, double gridSize, double tolerance, double xOffset) {
     double xSnapped = roundToMultiple(x - xOffset, gridSize) + xOffset;
     return std::abs(xSnapped - x) < tolerance * gridSize / 2.0 ? xSnapped : x;
-}
-
-Point snapToGrid(Point const& pos, double gridSize, double tolerance) {
-    return snapToGrid(pos, gridSize, tolerance, 0.0, 0.0);
 }
 
 Point snapToGrid(Point const& pos, double gridSize, double tolerance, double xOffset, double yOffset) {
