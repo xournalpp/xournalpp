@@ -22,19 +22,15 @@ double snapHorizontally(double x, double gridSize, double tolerance, double xOff
     return std::abs(xSnapped - x) < tolerance * gridSize / 2.0 ? xSnapped : x;
 }
 
-Point snapToGrid(Point const& pos, double gridSize, double tolerance, double xSpacing, double ySpacing, double xOffset,
+Point snapToGrid(Point const& pos, double columnSpacing, double rowSpacing, double tolerance, double xOffset,
                  double yOffset) {
-    // Calculate actual column and row spacing
-    const double columnSpacing = xSpacing * gridSize;
-    const double rowSpacing = ySpacing * gridSize;
-
     // Round to nearest grid point
     Point nearestVertex{roundToMultiple(pos.x - xOffset, columnSpacing) + xOffset,
                         roundToMultiple(pos.y - yOffset, rowSpacing) + yOffset, pos.z};
 
-    // Only snap if within tolerance threshold
+    // Only snap if within tolerance threshold (fraction of the half-diagonal)
     const double dist = distance(pos, nearestVertex);
-    const double snapThreshold = gridSize * tolerance;
+    const double snapThreshold = 0.5 * std::hypot(columnSpacing, rowSpacing) * tolerance;
     return (dist < snapThreshold) ? nearestVertex : pos;
 }
 

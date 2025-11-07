@@ -35,17 +35,16 @@ namespace Snapping {
 [[nodiscard]] double snapHorizontally(double x, double gridSize, double tolerance, double xOffset = 0.0);
 
 /**
- * @brief If a points distance to the nearest grid point is under a certain tolerance, it returns the nearest
- * grid point. Otherwise the original Point itself. Supports arbitrary grid spacing ratios.
+ * @brief If a point's distance to the nearest grid point is under a certain tolerance, it returns the nearest
+ * grid point. Otherwise the original Point itself. Supports arbitrary column/row spacings.
  * @param pos the position
- * @param gridSize the base grid size
- * @param tolerance the tolerance as a fraction of the grid size (assumed to be between 0 and 1)
- * @param xSpacing horizontal spacing multiplier (e.g., 1.0 for square, sqrt(3)/2 for isometric)
- * @param ySpacing vertical spacing multiplier (e.g., 1.0 for square, 0.5 for isometric)
+ * @param columnSpacing the horizontal distance between grid points (in user units)
+ * @param rowSpacing the vertical distance between grid points (in user units)
+ * @param tolerance the tolerance as a fraction of the grid diagonal (assumed to be between 0 and 1)
  * @param xOffset the horizontal offset of the grid (e.g., from page margins)
  * @param yOffset the vertical offset of the grid (e.g., from page margins)
  */
-[[nodiscard]] Point snapToGrid(Point const& pos, double gridSize, double tolerance, double xSpacing, double ySpacing,
+[[nodiscard]] Point snapToGrid(Point const& pos, double columnSpacing, double rowSpacing, double tolerance,
                                double xOffset, double yOffset);
 
 /**
