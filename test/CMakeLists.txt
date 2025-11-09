@@ -78,14 +78,6 @@ target_compile_features(test-gtk-integration PRIVATE cxx_std_20)
 target_include_directories(test-gtk-integration PRIVATE "${PROJECT_BINARY_DIR}/test")
 
 ###############################################################################
-# Define bench-load-file (standalone file loading benchmark)
-###############################################################################
-
-add_executable(bench-load-file EXCLUDE_FROM_ALL benchmarks/benchLoadFile.cpp)
-target_link_libraries(bench-load-file xoj::core xoj::util)
-target_include_directories(bench-load-file PRIVATE "${PROJECT_BINARY_DIR}/benchmarks")
-
-###############################################################################
 # Discover and Register Tests
 ###############################################################################
 # MacOs needs a bit longer to find the tests on azure
@@ -105,3 +97,13 @@ gtest_discover_tests(test-gtk-integration
         $<$<NOT:$<STREQUAL:${TEST_GDK_PIXBUF_LOADER_CACHE},"">>:
         DEPENDS create-gdk-pixbuf-loader-cache>
 )
+
+###############################################################################
+# Define benchmarks: gtest-like app with benchmark units - not added to CTest or the `test` target
+###############################################################################
+
+file (GLOB_RECURSE benchmarks-sources benchmarks/*.cpp)
+add_executable (benchmarks EXCLUDE_FROM_ALL ${benchmarks-sources})
+target_link_libraries (benchmarks xoj::core xoj::util gtest_main gtest)
+target_include_directories(benchmarks PRIVATE "${PROJECT_BINARY_DIR}/test")
+target_compile_options(benchmarks PRIVATE "-O2") # Always optimize for benchmarks
