@@ -3,6 +3,7 @@
 #include <cmath>     // for fabs, M_PI
 #include <iterator>  // for begin, next
 #include <memory>    // for allocator...
+#include <span>      // for span
 #include <utility>   // for move
 #include <vector>    // for vector
 
@@ -173,14 +174,16 @@ auto ShapeRecognizer::tryRectangle() -> std::unique_ptr<Stroke> {
     return s;
 }
 
-/*
- * check if something is a polygonal line with at most nsides sides
+/**
+ * Check if something is a polygonal line with at most nsides sides.
+ * [start, finish] (inclusive) specifies the range to operate on in the pt array.
  */
-auto ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsides, int* breaks, Inertia* ss) -> int {
+auto ShapeRecognizer::findPolygonal(const Point* pt, int start, int finish, int nsides, int* breaks, Inertia* ss)
+        -> int {
     Inertia s;
     int i1 = 0, i2 = 0, n1 = 0, n2 = 0;
 
-    if (end == start) {
+    if (finish == start) {
         return 0;  // no way
     }
 
@@ -188,16 +191,16 @@ auto ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsi
         return 0;
     }
 
-    if (end - start < 5) {
+    if (finish - start < 5) {
         nsides = 1;  // too small for a polygon
     }
 
     // look for a linear piece that's big enough
     int k = 0;
     for (; k < nsides; k++) {
-        i1 = start + (k * (end - start)) / nsides;
-        i2 = start + ((k + 1) * (end - start)) / nsides;
-        s.calc(pt, i1, i2);
+        i1 = start + (k * (finish - start)) / nsides;
+        i2 = start + ((k + 1) * (finish - start)) / nsides;
+        s.calc(std::span<const Point>(pt + i1, pt + i2 + 1));
         if (s.det() < SEGMENT_MAX_DET) {
             break;
         }
@@ -221,7 +224,7 @@ auto ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsi
             det1 = 1.0;
         }
 
-        if (i2 < end) {
+        if (i2 < finish) {
             s2 = s;
             s2.increase(pt[i2], pt[i2 + 1], 1);
             det2 = s2.det();
@@ -241,7 +244,7 @@ auto ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsi
     }
 
     if (i1 > start) {
-        n1 = findPolygonal(pt, start, i1, (i2 == end) ? (nsides - 1) : (nsides - 2), breaks, ss);
+        n1 = findPolygonal(pt, start, i1, (i2 == finish) ? (nsides - 1) : (nsides - 2), breaks, ss);
         if (n1 == 0) {
             return 0;  // it doesn't work
         }
@@ -253,8 +256,8 @@ auto ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsi
     breaks[n1 + 1] = i2;
     ss[n1] = s;
 
-    if (i2 < end) {
-        n2 = findPolygonal(pt, i2, end, nsides - n1 - 1, breaks + n1 + 1, ss + n1 + 1);
+    if (i2 < finish) {
+        n2 = findPolygonal(pt, i2, finish, nsides - n1 - 1, breaks + n1 + 1, ss + n1 + 1);
         if (n2 == 0) {
             return 0;
         }
