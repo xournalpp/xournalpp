@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-26 08:45+0000\n"
-"PO-Revision-Date: 2025-08-31 04:25\n"
+"POT-Creation-Date: 2025-09-11 12:54+0000\n"
+"PO-Revision-Date: 2025-11-09 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -37,7 +37,7 @@ msgstr "Nagrywarka nie mogła zostać uruchomiona."
 
 #: ../src/core/control/Control.cpp:1257
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
-msgstr ""
+msgstr "Usunąłeś aktywny pasek narzędzi. Wróć do domyślnego paska narzędzi."
 
 #: ../src/core/control/Control.cpp:1271
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
@@ -212,7 +212,7 @@ msgstr "tablet"
 msgid "Image file successfully created"
 msgstr "Udało się utworzyć zdjęcie"
 
-#: ../src/core/control/ExportHelper.cpp:120
+#: ../src/core/control/ExportHelper.cpp:134
 msgid "PDF file successfully created"
 msgstr "Utworzono dokument PDF"
 
@@ -245,8 +245,8 @@ msgid "Could not load LaTeX PDF file"
 msgstr "Nie udało się wgrać pliku LaTeX PDF"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:80
-#: ../src/core/control/xojfile/LoadHandler.cpp:490
-#: ../src/core/control/xojfile/LoadHandler.cpp:506
+#: ../src/core/control/xojfile/LoadHandler.cpp:493
+#: ../src/core/control/xojfile/LoadHandler.cpp:509
 msgid "Error reading PDF: {1}"
 msgstr "Błąd przy odczytywaniu pliku PDF: {1}"
 
@@ -750,73 +750,73 @@ msgstr "Niespodziewany tag w korzeniu: {1}"
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Niespodziewany tag w dokumencie: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:400
-#: ../src/core/control/xojfile/LoadHandler.cpp:428
+#: ../src/core/control/xojfile/LoadHandler.cpp:401
+#: ../src/core/control/xojfile/LoadHandler.cpp:430
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Nie można odczytać obrazu: {1}. Treść błędu: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:438
+#: ../src/core/control/xojfile/LoadHandler.cpp:441
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "Nie można odczytać numeru strony dla sklonowanego obrazu tła: {1}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:446
+#: ../src/core/control/xojfile/LoadHandler.cpp:449
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Nieznany typ pixmap::domain: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:497
+#: ../src/core/control/xojfile/LoadHandler.cpp:500
 msgid "Unknown domain type: {1}"
 msgstr "Nieznany rodzaj domeny: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:535
+#: ../src/core/control/xojfile/LoadHandler.cpp:538
 msgid "Unknown background type: {1}"
 msgstr "Nieznany rodzaj tła: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:559
+#: ../src/core/control/xojfile/LoadHandler.cpp:562
 msgid "Error reading width of a stroke: {1}"
 msgstr "Błędna grubość kreski: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:627
+#: ../src/core/control/xojfile/LoadHandler.cpp:630
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "Nieznany rodzaj kreski: \"{1}\", zakładam, że to chodziło o okrągłą"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:645
+#: ../src/core/control/xojfile/LoadHandler.cpp:648
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Nieznany rodzaj kreski: \"{1}\", zakładam, że to pióro"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:813
-#: ../src/core/control/xojfile/LoadHandler.cpp:829
-#: ../src/core/control/xojfile/LoadHandler.cpp:1143
-#: ../src/core/control/xojfile/LoadHandler.cpp:1157
+#: ../src/core/control/xojfile/LoadHandler.cpp:816
+#: ../src/core/control/xojfile/LoadHandler.cpp:832
+#: ../src/core/control/xojfile/LoadHandler.cpp:1146
+#: ../src/core/control/xojfile/LoadHandler.cpp:1160
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Nie można odczytać załącznika {1}. Komunikat błędu: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:822
-#: ../src/core/control/xojfile/LoadHandler.cpp:1150
-#: ../src/core/control/xojfile/LoadHandler.cpp:1168
+#: ../src/core/control/xojfile/LoadHandler.cpp:825
+#: ../src/core/control/xojfile/LoadHandler.cpp:1153
+#: ../src/core/control/xojfile/LoadHandler.cpp:1171
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Nie udało się otworzyć załącznika: {1}. Komunikat błędu: Poprawny rozmiar pliku niedostępny"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:841
+#: ../src/core/control/xojfile/LoadHandler.cpp:844
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Nie udało się otworzyć załącznika: {1}. Komunikat błędu: Nie można odczytać pliku"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:850
+#: ../src/core/control/xojfile/LoadHandler.cpp:853
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Nie udało się otworzyć załącznika: {1}. Komunikat błędu: Nie można zapisać pliku"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1037
+#: ../src/core/control/xojfile/LoadHandler.cpp:1040
 msgid "Wrong count of points ({1})"
 msgstr "Nieprawidłowa liczba punktów ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1053
+#: ../src/core/control/xojfile/LoadHandler.cpp:1056
 msgid "xoj-File: {1}"
 msgstr "Plik xoj: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1054
+#: ../src/core/control/xojfile/LoadHandler.cpp:1057
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1187
+#: ../src/core/control/xojfile/LoadHandler.cpp:1190
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Żądany plik tymczasowy nie został znaleziony dla załącznika {1}"
 
