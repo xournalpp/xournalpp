@@ -21,7 +21,8 @@ GzInputStream::GzInputStream(const fs::path& file) {
 }
 
 GzInputStream::~GzInputStream() {
-    if (fp) gzclose(fp);
+    if (fp)
+        gzclose(fp);
 }
 
 std::string GzInputStream::readAll() {
@@ -29,7 +30,7 @@ std::string GzInputStream::readAll() {
         g_warning("%s", "File could not be opened or is invalid.");
         return "";
     }
-    
+
     std::string buffer;
     char tmp[4096];
     int bytesRead;
@@ -42,9 +43,9 @@ std::string GzInputStream::readAll() {
 
     if (bytesRead < 0) {
         int errnum = 0;
-        const char *errmsg = gzerror(fp, &errnum);
+        const char* errmsg = gzerror(fp, &errnum);
         if (errnum != Z_OK && errnum != Z_STREAM_END) {
-             g_warning("%s", "Gzip read error: " + std::string(errmsg));
+            g_warning("%s", "Gzip read error: " + std::string(errmsg));
         }
     }
 

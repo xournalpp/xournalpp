@@ -90,17 +90,11 @@ void Document::unlock() {
 auto Document::tryLock() -> bool { return this->documentLock.try_lock(); }
 
 
-pugi::xml_document& Document::getRawPageXmlDocument() {
-    return this->xmlRawDocument;
-}
+pugi::xml_document& Document::getRawPageXmlDocument() { return this->xmlRawDocument; }
 
-void Document::setRawPageXmlDocument(std::string const& doc) {
-    this->xmlRawDocument.load(doc.c_str());
-}
+void Document::setRawPageXmlDocument(std::string const& doc) { this->xmlRawDocument.load(doc.c_str()); }
 
-void Document::clearOriginalXmlDoc() {
-    this->xmlRawDocument.reset();
-}
+void Document::clearOriginalXmlDoc() { this->xmlRawDocument.reset(); }
 
 void Document::clearDocument(bool destroy) {
     if (this->preview) {
@@ -450,9 +444,7 @@ void Document::insertPage(const PageRef& p, size_t position) {
 void Document::setFileHash(const std::string& hash) { this->fileHash = hash; }
 std::string Document::getFileHash() const { return this->fileHash; }
 
-std::vector<PageRef> Document::getPages() const {
-    return this->pages;
-}
+std::vector<PageRef> Document::getPages() const { return this->pages; }
 
 int Document::getFileVersion() { return this->fileVersion; }
 

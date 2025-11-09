@@ -34,7 +34,7 @@ public:
     static std::string calculateFileSHA256(const std::string& input);
 
 private:
-    static std::vector <std::string> uids;
+    static std::vector<std::string> uids;
     static std::string generateRandomUid(int length);
 };
 

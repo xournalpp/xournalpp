@@ -11,7 +11,11 @@
 
 #include "BackgroundImage.h"  // for BackgroundImage
 
-XojPage::XojPage(double width, double height, bool suppressLayerCreation, std::string uid): width(width), height(height), bgType(PageTypeFormat::Lined), uid( (uid == "") ? StringUtils::generateUniqueAlphanumericString() : uid ) {
+XojPage::XojPage(double width, double height, bool suppressLayerCreation, std::string uid):
+        width(width),
+        height(height),
+        bgType(PageTypeFormat::Lined),
+        uid((uid == "") ? StringUtils::generateUniqueAlphanumericString() : uid) {
     if (!suppressLayerCreation) {
         // ensure at least one valid layer exists
         this->addLayer(new Layer());
@@ -21,14 +25,16 @@ XojPage::XojPage(double width, double height, bool suppressLayerCreation, std::s
 }
 
 XojPage::~XojPage() {
-    for (Layer* l: this->layer) { delete l; }
+    for (Layer* l: this->layer) {
+        delete l;
+    }
     this->layer.clear();
 }
 
 // Costruttore di copia
 XojPage::XojPage(XojPage const& page):
         backgroundImage(page.backgroundImage),
-        uid( StringUtils::generateUniqueAlphanumericString() ),
+        uid(StringUtils::generateUniqueAlphanumericString()),
         width(page.width),
         height(page.height),
         currentLayer(page.currentLayer),
@@ -42,15 +48,9 @@ XojPage::XojPage(XojPage const& page):
 }
 
 
-void XojPage::setRawXmlString(const std::string& xml)
-{
-    this->rawOriginalXml = xml;
-}
+void XojPage::setRawXmlString(const std::string& xml) { this->rawOriginalXml = xml; }
 
-const std::string& XojPage::getRawXmlString() const
-{
-    return this->rawOriginalXml;
-}
+const std::string& XojPage::getRawXmlString() const { return this->rawOriginalXml; }
 
 auto XojPage::clone() -> XojPage* { return new XojPage(*this); }
 
@@ -59,13 +59,9 @@ void XojPage::addLayer(Layer* layer) {
     this->currentLayer = npos;
 }
 
-void XojPage::setUID(std::string uid) {
-    this->uid = uid;
-}
+void XojPage::setUID(std::string uid) { this->uid = uid; }
 
-const std::string XojPage::getUID() const {
-    return this->uid;
-}
+const std::string XojPage::getUID() const { return this->uid; }
 
 
 void XojPage::insertLayer(Layer* layer, Layer::Index index) {

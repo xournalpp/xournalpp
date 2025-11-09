@@ -32,7 +32,7 @@
 #include "util/LoopUtil.h"
 #include "util/PlaceholderString.h"  // for PlaceholderString
 #include "util/StringUtils.h"        // for char_cast
-#include "util/i18n.h"  // for _F, FC, FS, _
+#include "util/i18n.h"               // for _F, FC, FS, _
 #include "util/raii/GObjectSPtr.h"
 #include "util/safe_casts.h"  // for as_signed, as_unsigned
 #include "util/utf8_view.h"   // for utf8_view

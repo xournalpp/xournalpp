@@ -12,18 +12,17 @@
 #pragma once
 
 #include <memory>  // for unique_ptr
+#include <set>
 #include <string>  // for string
+#include <string>
 #include <vector>  // for vector
 
+#include "control/Control.h"      // for Control
+#include "control/xml/XmlNode.h"  // for XmlNode
 #include "control/xml/XmlPreserializedNode.h"
-
-#include "control/xml/XmlNode.h"    // for XmlNode
 #include "model/BackgroundImage.h"  // for BackgroundImage
 #include "model/PageRef.h"          // for PageRef
 #include "util/Color.h"             // for Color
-#include "control/Control.h"        // for Control
-#include <set>       
-#include <string>    
 
 #include "filesystem.h"  // for path
 

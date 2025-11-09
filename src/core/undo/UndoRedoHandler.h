@@ -13,8 +13,8 @@
 
 #include <deque>   // for deque
 #include <string>  // for string
-#include <vector>  // for vector
 #include <string>
+#include <vector>  // for vector
 
 #include "model/PageRef.h"  // for PageRef
 
@@ -59,12 +59,12 @@ public:
     /*
         When you write something the page must be inserted here
     */
-    std::deque<std::string> pagesChanged; 
-    
+    std::deque<std::string> pagesChanged;
+
     /*
         If you do undo you should insert the page in here and in case of redo go back to pagesChanged
     */
-    
+
     std::deque<std::string> pagesChangedUndo;
 
 private:

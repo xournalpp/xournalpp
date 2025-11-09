@@ -13,18 +13,17 @@
 
 #include <cstddef>  // for size_t
 #include <memory>   // for unique_ptr
-#include <string>   // for string
-#include <vector>   // for vector
 #include <optional>
+#include <string>  // for string
+#include <vector>  // for vector
 
 #include "AbstractXmlNode.h"
-
 #include "Attribute.h"  // for XMLAttribute
 
 class ProgressListener;
 class OutputStream;
 
-class XmlNode : public AbstractXmlNode {
+class XmlNode: public AbstractXmlNode {
 public:
     XmlNode(const char* tag);
     virtual ~XmlNode() = default;
@@ -39,8 +38,8 @@ public:
 
     void writeOut(OutputStream* out, ProgressListener* _listener);
 
-    //virtual void writeOut(OutputStream* out) { writeOut(out, nullptr); }
-    
+    // virtual void writeOut(OutputStream* out) { writeOut(out, nullptr); }
+
     void writeOut(OutputStream* out) override;
     void addChild(std::unique_ptr<AbstractXmlNode> node);
 

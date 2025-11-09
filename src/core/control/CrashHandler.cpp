@@ -5,11 +5,12 @@
 #include <iostream>
 #include <string>
 
+#include "control/Control.h"
 #include "control/xojfile/SaveHandler.h"  // for SaveHandler
 #include "util/PathUtil.h"
 #include "util/Stacktrace.h"
 #include "util/VersionInfo.h"
-#include "control/Control.h" 
+
 #include "filesystem.h"  // for path
 
 static std::atomic<const Document*> document = nullptr;
@@ -24,9 +25,7 @@ extern "C" void forceClose(int sig) {
 
 void setEmergencyDocument(const Document* doc) { document = doc; }
 
-void setControl(Control* ctrl) {
-    control.store(ctrl);
-}
+void setControl(Control* ctrl) { control.store(ctrl); }
 
 void emergencySave() {
     if (document == nullptr) {

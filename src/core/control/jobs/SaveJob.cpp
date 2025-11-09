@@ -1,11 +1,10 @@
 #include "SaveJob.h"
 
+#include <chrono>
 #include <memory>  // for __shared_ptr_access
 
 #include <cairo.h>  // for cairo_create, cairo_destroy
 #include <glib.h>   // for g_warning, g_error
-
-#include <chrono>
 
 #include "control/Control.h"              // for Control
 #include "control/jobs/BlockingJob.h"     // for BlockingJob
@@ -119,8 +118,7 @@ auto SaveJob::save() -> bool {
 
     doc->unlock();
 
-    if (!h.getErrorMessage().empty())
-    {
+    if (!h.getErrorMessage().empty()) {
         this->lastError = FS(_F("Save file error: {1}") % h.getErrorMessage());
         if (!control->getWindow()) {
             g_error("%s", this->lastError.c_str());

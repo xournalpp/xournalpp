@@ -36,9 +36,10 @@ public:
     virtual std::string readAll() = 0;
 };
 
-class GzInputStream : public InputStream {
+class GzInputStream: public InputStream {
     gzFile fp;
     std::string error;
+
 public:
     explicit GzInputStream(const fs::path& file);
     ~GzInputStream() override;

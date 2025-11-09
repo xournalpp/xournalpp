@@ -1,20 +1,18 @@
 #include "util/StringUtils.h"
 
+#include <algorithm>
 #include <cstring>
+#include <fstream>  // for ifstream
+#include <iomanip>
+#include <memory>
+#include <random>
 #include <sstream>  // std::istringstream
 #include <utility>
 
 #include <glib.h>
+#include <openssl/sha.h>  // for SHA256_DIGEST_LENGTH, SHA256
 
 #include "util/safe_casts.h"  // for as_signed
-
-#include <memory>
-#include <iomanip>
-#include <openssl/sha.h>  // for SHA256_DIGEST_LENGTH, SHA256
-#include <fstream>      // for ifstream
-
-#include <random>    
-#include <algorithm> 
 
 using std::string;
 using std::vector;
@@ -25,7 +23,8 @@ std::string StringUtils::calculateFileSHA256(const std::string& filename) {
     SHA256_Init(&sha256);
 
     std::ifstream file(filename, std::ios::binary);
-    if (!file) return "";
+    if (!file)
+        return "";
 
     char buffer[8192];
     while (file.read(buffer, sizeof(buffer))) {
@@ -39,8 +38,7 @@ std::string StringUtils::calculateFileSHA256(const std::string& filename) {
     SHA256_Final(hash, &sha256);
 
     std::ostringstream oss;
-    for (int i = 0; i < SHA256_DIGEST_LENGTH; ++i)
-        oss << std::hex << std::setw(2) << std::setfill('0') << (int)hash[i];
+    for (int i = 0; i < SHA256_DIGEST_LENGTH; ++i) oss << std::hex << std::setw(2) << std::setfill('0') << (int)hash[i];
 
     return oss.str();
 }
@@ -54,11 +52,10 @@ auto StringUtils::toLowerCase(const string& input) -> string {
 
 std::vector<std::string> StringUtils::uids;
 
-std::string StringUtils::generateRandomUid(int length)
-{
+std::string StringUtils::generateRandomUid(int length) {
 
     const std::string charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    
+
     std::random_device rd;
     std::mt19937 generator(rd());
     std::uniform_int_distribution<int> distribution(0, charset.length() - 1);
@@ -71,16 +68,15 @@ std::string StringUtils::generateRandomUid(int length)
     }
 
     return randomString;
-
 }
 
 std::string StringUtils::generateUniqueAlphanumericString() {
     std::string newString;
     while (true) {
         newString = generateRandomUid(8);
-        
+
         auto it = std::find(StringUtils::uids.begin(), StringUtils::uids.end(), newString);
-        
+
         if (it == StringUtils::uids.end()) {
             break;
         }

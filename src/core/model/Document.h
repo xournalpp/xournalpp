@@ -23,13 +23,13 @@
 #include <cairo.h>    // for cairo_surface_t
 #include <glib.h>     // for gpointer, gsize
 #include <gtk/gtk.h>  // for GtkTreeModel, GtkTreeIter, GtkT...
-
 #include <pugixml.hpp>
 
 #include "pdf/base/XojPdfDocument.h"  // for XojPdfDocument
 #include "pdf/base/XojPdfPage.h"      // for XojPdfPageSPtr
 #include "util/PathUtil.h"            // for PathStorageMode
 #include "util/raii/GObjectSPtr.h"    // for GObjectSptr
+
 #include "PageRef.h"     // for PageRef
 #include "filesystem.h"  // for path
 
@@ -135,7 +135,7 @@ private:
     XojPdfDocument pdfDocument;
 
     pugi::xml_document xmlRawDocument;
-    
+
     int fileVersion;
 
     fs::path filepath;

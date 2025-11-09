@@ -521,7 +521,9 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
                 "exportImg");
     }
     if (app_data->docFilename && app_data->optFilename && *app_data->optFilename) {
-        return exec_guarded([&] { return saveDoc(*app_data->optFilename, app_data->docFilename, app_data->control.get()); }, "saveDocument");
+        return exec_guarded(
+                [&] { return saveDoc(*app_data->optFilename, app_data->docFilename, app_data->control.get()); },
+                "saveDocument");
     }
     return -1;
 }

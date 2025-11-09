@@ -89,7 +89,7 @@ public:
     const std::string getUID() const;
 
     void setRawXmlString(const std::string& xml);
-    
+
     const std::string& getRawXmlString() const;
 
 private:
