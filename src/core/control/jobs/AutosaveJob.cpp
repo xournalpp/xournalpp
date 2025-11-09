@@ -40,7 +40,7 @@ void AutosaveJob::run() {
     Util::clearExtensions(filepath);
     filepath += ".autosave.xopp";
 
-    handler.prepareSave(doc, filepath);
+    handler.prepareSave(doc, filepath, control);
     doc->unlock();
 
     g_message("%s", FS(_F("Autosaving to {1}") % filepath.string()).c_str());

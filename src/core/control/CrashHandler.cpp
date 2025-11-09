@@ -9,10 +9,11 @@
 #include "util/PathUtil.h"
 #include "util/Stacktrace.h"
 #include "util/VersionInfo.h"
-
+#include "control/Control.h" 
 #include "filesystem.h"  // for path
 
 static std::atomic<const Document*> document = nullptr;
+static std::atomic<Control*> control = nullptr;
 static std::atomic<int> alreadyCrashed = 0;
 
 extern "C" void forceClose(int sig) {
@@ -22,6 +23,10 @@ extern "C" void forceClose(int sig) {
 }
 
 void setEmergencyDocument(const Document* doc) { document = doc; }
+
+void setControl(Control* ctrl) {
+    control.store(ctrl);
+}
 
 void emergencySave() {
     if (document == nullptr) {
@@ -33,7 +38,7 @@ void emergencySave() {
     auto const& filepath = Util::getConfigFile("emergencysave.xopp");
 
     SaveHandler handler;
-    handler.prepareSave(document, filepath);
+    handler.prepareSave(document, filepath, control.load());
     handler.saveTo(filepath);
 
     if (!handler.getErrorMessage().empty()) {

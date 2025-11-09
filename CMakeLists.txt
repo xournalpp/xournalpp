@@ -156,6 +156,7 @@ pkg_check_modules(ExternalModules REQUIRED IMPORTED_TARGET ${pkg-module-spec})
 
 find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
+find_package(OpenSSL REQUIRED)
 
 pkg_check_modules(PUGIXML REQUIRED pugixml)
 
@@ -246,6 +247,7 @@ target_link_libraries(external_modules INTERFACE
         $<$<TARGET_EXISTS:pugixml::pugixml>:pugixml::pugixml>
         ZLIB::ZLIB
         Threads::Threads
+        OpenSSL::Crypto
         )
 
 target_compile_definitions(external_modules INTERFACE

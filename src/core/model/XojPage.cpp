@@ -41,6 +41,17 @@ XojPage::XojPage(XojPage const& page):
                    [](auto* layer) { return layer->clone(); });
 }
 
+
+void XojPage::setRawXmlString(const std::string& xml)
+{
+    this->rawOriginalXml = xml;
+}
+
+const std::string& XojPage::getRawXmlString() const
+{
+    return this->rawOriginalXml;
+}
+
 auto XojPage::clone() -> XojPage* { return new XojPage(*this); }
 
 void XojPage::addLayer(Layer* layer) {

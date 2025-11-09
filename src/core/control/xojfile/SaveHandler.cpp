@@ -1,12 +1,13 @@
 #include "SaveHandler.h"
 
-#include <cinttypes>   // for PRIx32
-#include <cstdint>     // for uint32_t
-#include <cstdio>      // for sprintf, size_t
+#include <cinttypes>  // for PRIx32
+#include <cstdint>    // for uint32_t
+#include <cstdio>     // for sprintf, size_t
 
 #include <cairo.h>                  // for cairo_surface_t
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_save
 #include <glib.h>                   // for g_free, g_strdup_printf
+#include <pugixml.hpp>
 
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeHandler
 #include "control/xml/XmlAudioNode.h"          // for XmlAudioNode
@@ -31,6 +32,8 @@
 #include "model/Text.h"                        // for Text
 #include "model/XojPage.h"                     // for XojPage
 #include "pdf/base/XojPdfDocument.h"           // for XojPdfDocument
+#include "undo/UndoAction.h"                   // Per UndoAction
+#include "undo/UndoRedoHandler.h"              // Per UndoRedoHandler
 #include "util/OutputStream.h"                 // for GzOutputStream, Output...
 #include "util/PathUtil.h"                     // for clearExtensions, normalizeAssetPath
 #include "util/PlaceholderString.h"            // for PlaceholderString
@@ -44,10 +47,31 @@ SaveHandler::SaveHandler() {
     this->attachBgId = 1;
 }
 
-void SaveHandler::prepareSave(const Document* doc, const fs::path& target) {
+void SaveHandler::prepareSave(const Document* doc, const fs::path& target, Control* control) {
+
+    g_warning("Calculating file hash for file: %s", StringUtils::calculateFileSHA256(target.string()).c_str());
+    g_warning("Calculating file hash for file: %s", doc->getFileHash().c_str());
+
+    g_warning(StringUtils::calculateFileSHA256(target.string()) != doc->getFileHash() ? "File hash mismatch!" : "File hash match!");
+
+    if (StringUtils::calculateFileSHA256(target.string()) != doc->getFileHash()) {
+        this->errorMessage += FS(_F("You cannot save the file {1}. It was modified externally by another instance of Xournal") % target.u8string());
+        return;
+    }
+
+    g_warning("Preparing save for file: %s", target.u8string().c_str());
+
+    this->modifiedPageUIDs.clear();
+
     if (this->root) {
         // cleanup old data
         backgroundImages.clear();
+    }
+
+    UndoRedoHandler* undoHandler = control->getUndoRedoHandler();
+
+    for (std::string uid: undoHandler->pagesChanged) {
+        this->modifiedPageUIDs.insert(uid);
     }
 
     this->firstPdfPageVisited = false;
@@ -79,7 +103,6 @@ void SaveHandler::writeHeader() {
     this->root->setAttrib("creator", PROJECT_STRING);
     this->root->setAttrib("fileversion", FILE_FORMAT_VERSION);
     this->root->addChild(new XmlTextNode("title", std::string{"Xournal++ document - see "} + PROJECT_HOMEPAGE_URL));
-
 }
 
 auto SaveHandler::getColorStr(Color c, unsigned char alpha) -> std::string {
@@ -210,116 +233,126 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
             image->setAttrib("right", i->getX() + i->getElementWidth());
             image->setAttrib("bottom", i->getY() + i->getElementHeight());
         }
-
     }
 }
 
 void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, int id, const fs::path& target) {
-    auto* page = new XmlNode("page");
-    root->addChild(page);
-    page->setAttrib("width", p->getWidth());
-    page->setAttrib("height", p->getHeight());
 
-    page->setAttrib("uid", p->getUID().c_str());
+    bool isModified = (this->modifiedPageUIDs.count(p->getUID()) > 0);
 
-    auto* background = new XmlNode("background");
-    page->addChild(background);
+    if (isModified) {
 
-    writeBackgroundName(background, p);
+        auto* page = new XmlNode("page");
+        root->addChild(page);
 
-    if (p->getBackgroundType().isPdfPage()) {
-        /**
-         * ATTENTION! The original xournal can only read the XML if the attributes are in the right order!
-         * DO NOT CHANGE THE ORDER OF THE ATTRIBUTES!
-         */
+        page->setAttrib("width", p->getWidth());
+        page->setAttrib("height", p->getHeight());
 
-        background->setAttrib("type", "pdf");
-        if (!firstPdfPageVisited) {
-            firstPdfPageVisited = true;
+        auto* background = new XmlNode("background");
+        page->addChild(background);
 
-            if (doc->isAttachPdf()) {
-                background->setAttrib("domain", "attach");
-                auto filepath = doc->getFilepath();
-                Util::clearExtensions(filepath);
-                filepath += ".xopp.bg.pdf";
-                background->setAttrib("filename", "bg.pdf");
+        writeBackgroundName(background, p);
 
-                GError* error = nullptr;
-                if (!exists(filepath)) {
-                    doc->getPdfDocument().save(filepath, &error);
-                }
+        if (p->getBackgroundType().isPdfPage()) {
+            /**
+             * ATTENTION! The original xournal can only read the XML if the attributes are in the right order!
+             * DO NOT CHANGE THE ORDER OF THE ATTRIBUTES!
+             */
 
-                if (error) {
-                    if (!this->errorMessage.empty()) {
-                        this->errorMessage += "\n";
+            background->setAttrib("type", "pdf");
+            if (!firstPdfPageVisited) {
+                firstPdfPageVisited = true;
+
+                if (doc->isAttachPdf()) {
+                    background->setAttrib("domain", "attach");
+                    auto filepath = doc->getFilepath();
+                    Util::clearExtensions(filepath);
+                    filepath += ".xopp.bg.pdf";
+                    background->setAttrib("filename", "bg.pdf");
+
+                    GError* error = nullptr;
+                    if (!exists(filepath)) {
+                        doc->getPdfDocument().save(filepath, &error);
                     }
-                    this->errorMessage +=
-                            FS(_F("Could not write background \"{1}\", {2}") % filepath.u8string() % error->message);
 
-                    g_error_free(error);
+                    if (error) {
+                        if (!this->errorMessage.empty()) {
+                            this->errorMessage += "\n";
+                        }
+                        this->errorMessage += FS(_F("Could not write background \"{1}\", {2}") % filepath.u8string() %
+                                                 error->message);
+
+                        g_error_free(error);
+                    }
+                } else {
+                    // "absolute" just means path. For backward compatibility, it is hard to change the word
+                    background->setAttrib("domain", "absolute");
+                    auto normalizedPath = Util::normalizeAssetPath(doc->getPdfFilepath(), target.parent_path(),
+                                                                   doc->getPathStorageMode());
+                    background->setAttrib("filename", char_cast(normalizedPath.c_str()));
                 }
+            }
+            background->setAttrib("pageno", p->getPdfPageNr() + 1);
+        } else if (p->getBackgroundType().isImagePage()) {
+            background->setAttrib("type", "pixmap");
+
+            int cloneId = p->getBackgroundImage().getCloneId();
+            if (cloneId != -1) {
+                background->setAttrib("domain", "clone");
+                char* filename = g_strdup_printf("%i", cloneId);
+                background->setAttrib("filename", filename);
+                g_free(filename);
+            } else if (p->getBackgroundImage().isAttached() && p->getBackgroundImage().getPixbuf()) {
+                char* filename = g_strdup_printf("bg_%d.png", this->attachBgId++);
+                background->setAttrib("domain", "attach");
+                background->setAttrib("filename", filename);
+
+                backgroundImages.emplace_back(p->getBackgroundImage());
+
+                /*
+                 * Because BackgroundImage is basically a wrapped pointer, the following lines actually modify
+                 * *(p->getBackgroundImage().content) and thus the Document.
+                 * TODO Find a better way
+                 */
+                backgroundImages.back().setFilepath(filename);
+                backgroundImages.back().setCloneId(id);
+
+                g_free(filename);
             } else {
                 // "absolute" just means path. For backward compatibility, it is hard to change the word
                 background->setAttrib("domain", "absolute");
-                auto normalizedPath = Util::normalizeAssetPath(doc->getPdfFilepath(), target.parent_path(),
-                                                               doc->getPathStorageMode());
+                auto normalizedPath = Util::normalizeAssetPath(p->getBackgroundImage().getFilepath(),
+                                                               target.parent_path(), doc->getPathStorageMode());
                 background->setAttrib("filename", char_cast(normalizedPath.c_str()));
+
+                BackgroundImage img = p->getBackgroundImage();
+
+                /*
+                 * Because BackgroundImage is basically a wrapped pointer, the following line actually modifies
+                 * *(p->getBackgroundImage().content) and thus the Document.
+                 * TODO Find a better way
+                 */
+                img.setCloneId(id);
             }
-        }
-        background->setAttrib("pageno", p->getPdfPageNr() + 1);
-    } else if (p->getBackgroundType().isImagePage()) {
-        background->setAttrib("type", "pixmap");
-
-        int cloneId = p->getBackgroundImage().getCloneId();
-        if (cloneId != -1) {
-            background->setAttrib("domain", "clone");
-            char* filename = g_strdup_printf("%i", cloneId);
-            background->setAttrib("filename", filename);
-            g_free(filename);
-        } else if (p->getBackgroundImage().isAttached() && p->getBackgroundImage().getPixbuf()) {
-            char* filename = g_strdup_printf("bg_%d.png", this->attachBgId++);
-            background->setAttrib("domain", "attach");
-            background->setAttrib("filename", filename);
-
-            backgroundImages.emplace_back(p->getBackgroundImage());
-
-            /*
-             * Because BackgroundImage is basically a wrapped pointer, the following lines actually modify
-             * *(p->getBackgroundImage().content) and thus the Document.
-             * TODO Find a better way
-             */
-            backgroundImages.back().setFilepath(filename);
-            backgroundImages.back().setCloneId(id);
-
-            g_free(filename);
         } else {
-            // "absolute" just means path. For backward compatibility, it is hard to change the word
-            background->setAttrib("domain", "absolute");
-            auto normalizedPath = Util::normalizeAssetPath(p->getBackgroundImage().getFilepath(), target.parent_path(),
-                                                           doc->getPathStorageMode());
-            background->setAttrib("filename", char_cast(normalizedPath.c_str()));
-
-            BackgroundImage img = p->getBackgroundImage();
-
-            /*
-             * Because BackgroundImage is basically a wrapped pointer, the following line actually modifies
-             * *(p->getBackgroundImage().content) and thus the Document.
-             * TODO Find a better way
-             */
-            img.setCloneId(id);
+            writeSolidBackground(background, p);
         }
+
+        // no layer, but we need to write one layer, else the old Xournal cannot read the file
+        if (p->getLayerCount() == 0) {
+            auto* layer = new XmlNode("layer");
+            page->addChild(layer);
+        }
+
+        for (const Layer* l: p->getLayersView()) {
+            visitLayer(page, l);
+        }
+
     } else {
-        writeSolidBackground(background, p);
-    }
 
-    // no layer, but we need to write one layer, else the old Xournal cannot read the file
-    if (p->getLayerCount() == 0) {
-        auto* layer = new XmlNode("layer");
-        page->addChild(layer);
-    }
+        auto* rawNode = new XmlPreserializedNode(p->getRawXmlString());
 
-    for (const Layer* l: p->getLayersView()) {
-        visitLayer(page, l);
+        root->addChild(rawNode);
     }
 }
 

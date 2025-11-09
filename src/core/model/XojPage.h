@@ -88,11 +88,17 @@ public:
     void setUID(std::string uid);
     const std::string getUID() const;
 
+    void setRawXmlString(const std::string& xml);
+    
+    const std::string& getRawXmlString() const;
+
 private:
     /**
      * The Background image if any
      */
     BackgroundImage backgroundImage;
+
+    std::string rawOriginalXml;
 
     std::string uid;
 

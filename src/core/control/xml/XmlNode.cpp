@@ -53,142 +53,36 @@ void XmlNode::setAttrib(const char* attrib, std::vector<double> values) {
 
 void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
 
-    if (listener != nullptr) {
-        Control* control = dynamic_cast<Control*>(listener);
-        Document* doc = control->getDocument();
+    out->write("<");
+    out->write(tag);
+    writeAttributes(out);
 
-        g_warning("Document file version: %d", doc->getFileVersion());
+    if (children.empty()) {
+        out->write("/>\n");
+    } else {
+        out->write(">\n");
 
-        if (doc->getFileVersion() == 5) 
-        {
-            auto pagesToWrite = control->getUndoRedoHandler()->pagesChanged;
-
-            out->write("<");
-            out->write(tag);
-
-            writeAttributes(out);
-
-            if (children.empty()) {
-                out->write("/>\n");
-            } else {
-                out->write(">\n");
-
-                bool isFilteringPages = (!pagesToWrite.empty() && tag == "xournal");
-
-                if (listener) {
-                    size_t maxState = isFilteringPages ? pagesToWrite.size() : children.size();
-                }
-
-                size_t pageNumber = 1;
-                size_t writtenPages = 0;
-
-                for (size_t i = 0; i < children.size(); i++) {
-                    bool shouldWrite = true;
-
-                    if (isFilteringPages && children[i]->tag == "page") {
-
-                        shouldWrite = false;
-
-                        auto page = doc->getPages().at(pageNumber - 1);
-
-                        std::shared_ptr<XojPage> xojPage = page;
-
-                        std::string pageUID = xojPage.get()->getUID();
-
-                        auto it = std::find(pagesToWrite.begin(), pagesToWrite.end(), pageUID);
-                        if (it != pagesToWrite.end()) {
-                            shouldWrite = true;
-                        }
-
-                        pageNumber++;
-                    }
-
-                    if (shouldWrite) {
-                        children[i]->writeOut(out);
-
-                        if (listener && isFilteringPages && children[i]->tag == "page") {
-                            writtenPages++;
-                        }
-                    }
-                }
-
-                out->write("</");
-                out->write(tag);
-                out->write(">\n");
-            }
-        }
-        else 
-        {
-
-            // Upgrade to version 5 on save
-            doc->setFileVersion(5); 
-
-            out->write("<");
-            out->write(tag);
-            writeAttributes(out);
-
-            if (children.empty()) {
-                out->write("/>\n");
-            } else {
-                out->write(">\n");
-
-                if (listener) {
-                    listener->setMaximumState(children.size());
-                }
-
-                size_t i = 1;
-
-                for (auto& node: children) {
-                    node->writeOut(out);
-                    if (listener) {
-                        listener->setCurrentState(i);
-                    }
-                    i++;
-                }
-
-                out->write("</");
-                out->write(tag);
-                out->write(">\n");
-            }
+        if (listener) {
+            listener->setMaximumState(children.size());
         }
 
-    } 
-    else 
-    {
-        // Upgrade to version 5 on save
-        //doc->setFileVersion(5); 
-        
-        out->write("<");
-        out->write(tag);
-        writeAttributes(out);
+        size_t i = 1;
 
-        if (children.empty()) {
-            out->write("/>\n");
-        } else {
-            out->write(">\n");
-
+        for (auto& node: children) {
+            node->writeOut(out);
             if (listener) {
-                listener->setMaximumState(children.size());
+                listener->setCurrentState(i);
             }
-
-            size_t i = 1;
-
-            for (auto& node: children) {
-                node->writeOut(out);
-                if (listener) {
-                    listener->setCurrentState(i);
-                }
-                i++;
-            }
-
-            out->write("</");
-            out->write(tag);
-            out->write(">\n");
+            i++;
         }
+
+        out->write("</");
+        out->write(tag);
+        out->write(">\n");
     }
 }
 
-void XmlNode::addChild(XmlNode* node) { children.emplace_back(node); }
+void XmlNode::addChild(AbstractXmlNode* node) { children.emplace_back(node); }
 
 void XmlNode::putAttrib(XMLAttribute* a) {
     for (auto& attrib: attributes) {
@@ -200,6 +94,8 @@ void XmlNode::putAttrib(XMLAttribute* a) {
 
     attributes.emplace_back(a);
 }
+
+void XmlNode::writeOut(OutputStream* out) { writeOut(out, nullptr); }
 
 void XmlNode::writeAttributes(OutputStream* out) {
     for (auto& attrib: attributes) {

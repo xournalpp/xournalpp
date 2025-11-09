@@ -1,12 +1,14 @@
 #include "LoadHandler.h"
 
-#include <algorithm>    // for copy
-#include <cmath>        // for isnan
-#include <cstdlib>      // for atoi, size_t
-#include <cstring>      // for strcmp, strlen
-#include <iterator>     // for back_inserter
-#include <memory>       // for __shared_ptr_access
-#include <regex>        // for regex_search, smatch
+#include <algorithm>  // for copy
+#include <cmath>      // for isnan
+#include <cstdlib>    // for atoi, size_t
+#include <cstring>    // for strcmp, strlen
+#include <fstream>
+#include <iterator>  // for back_inserter
+#include <memory>    // for __shared_ptr_access
+#include <regex>     // for regex_search, smatch
+#include <sstream>
 #include <type_traits>  // for remove_reference<>::type
 #include <utility>      // for move
 
@@ -30,11 +32,11 @@
 #include "util/LoopUtil.h"
 #include "util/PlaceholderString.h"  // for PlaceholderString
 #include "util/StringUtils.h"        // for char_cast
-#include "util/i18n.h"               // for _F, FC, FS, _
+#include "util/i18n.h"  // for _F, FC, FS, _
 #include "util/raii/GObjectSPtr.h"
 #include "util/safe_casts.h"  // for as_signed, as_unsigned
 #include "util/utf8_view.h"   // for utf8_view
-#include "util/StringUtils.h"
+
 #include "LoadHandlerHelper.h"  // for getAttrib, getAttribDo...
 
 using std::string;
@@ -220,6 +222,7 @@ auto LoadHandler::parseXml() -> bool {
     this->error = nullptr;
     gboolean valid = true;
 
+    std::stringstream xmlStream;
     this->pos = PARSER_POS_NOT_STARTED;
     this->creator = "Unknown";
     this->fileVersion = 1;
@@ -233,6 +236,7 @@ auto LoadHandler::parseXml() -> bool {
         len = readContentFile(buffer, sizeof(buffer));
         if (len > 0) {
             valid = g_markup_parse_context_parse(context, buffer, len, &error);
+            xmlStream.write(buffer, len);
         }
 
         if (error) {
@@ -241,6 +245,8 @@ auto LoadHandler::parseXml() -> bool {
             break;
         }
     } while (len >= 0 && valid && !error);
+
+    this->doc->setRawPageXmlDocument(xmlStream.str());
 
     if (valid) {
         valid = g_markup_parse_context_end_parse(context, &error);
@@ -256,8 +262,22 @@ auto LoadHandler::parseXml() -> bool {
 
     g_markup_parse_context_free(context);
 
-    // Add all parsed pages to the document
     this->doc->addPages(pages.begin(), pages.end());
+
+    std::vector<PageRef> pagesVector = doc->getPages();
+
+    size_t j = 0;
+
+    for (pugi::xml_node pageNode: this->doc->getRawPageXmlDocument().child("xournal").children("page")) {
+
+        XojPage* page = pagesVector[j++].get();
+        std::string uid = page->getUID();
+
+        std::stringstream ss;
+        pageNode.print(ss, "", pugi::format_raw);
+
+        page->setRawXmlString(ss.str());
+    }
 
     if (this->pos != PASER_POS_FINISHED && this->lastError.empty()) {
         lastError = _("Document is not complete (maybe the end is cut off?)");
@@ -320,14 +340,7 @@ void LoadHandler::parseContents() {
         double width = LoadHandlerHelper::getAttribDouble("width", this);
         double height = LoadHandlerHelper::getAttribDouble("height", this);
 
-        std::string uid = "";
-
-        if ( this->fileVersion == 5 )
-        {
-            uid = LoadHandlerHelper::getAttrib("uid", false, this);
-        }
-
-        this->page = std::make_unique<XojPage>(width, height, true, uid);
+        this->page = std::make_unique<XojPage>(width, height, true);
 
         pages.push_back(this->page);
     } else if (strcmp(elementName, "audio") == 0) {
@@ -873,6 +886,7 @@ void LoadHandler::parserStartElement(GMarkupParseContext* context, const gchar* 
     if (*error) {
         return;
     }
+
     handler->attributeNames = attributeNames;
     handler->attributeValues = attributeValues;
     handler->elementName = elementName;
@@ -1108,6 +1122,10 @@ void LoadHandler::readTexImage(const gchar* base64string, gsize base64stringLen)
 auto LoadHandler::loadDocument(fs::path const& filepath) -> std::unique_ptr<Document> {
     initAttributes();
     this->doc = std::make_unique<Document>(&dHanlder);
+
+    this->doc->setFileHash(StringUtils::calculateFileSHA256(filepath.string()));
+
+    g_warning("File hash loaded: %s", this->doc->getFileHash().c_str());
 
     if (!openFile(filepath)) {
         this->doc.reset();

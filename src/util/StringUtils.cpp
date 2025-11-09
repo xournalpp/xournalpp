@@ -8,11 +8,42 @@
 
 #include "util/safe_casts.h"  // for as_signed
 
+#include <memory>
+#include <iomanip>
+#include <openssl/sha.h>  // for SHA256_DIGEST_LENGTH, SHA256
+#include <fstream>      // for ifstream
+
 #include <random>    
 #include <algorithm> 
 
 using std::string;
 using std::vector;
+
+std::string StringUtils::calculateFileSHA256(const std::string& filename) {
+    unsigned char hash[SHA256_DIGEST_LENGTH];
+    SHA256_CTX sha256;
+    SHA256_Init(&sha256);
+
+    std::ifstream file(filename, std::ios::binary);
+    if (!file) return "";
+
+    char buffer[8192];
+    while (file.read(buffer, sizeof(buffer))) {
+        SHA256_Update(&sha256, buffer, file.gcount());
+    }
+    // ultimo blocco
+    if (file.gcount() > 0) {
+        SHA256_Update(&sha256, buffer, file.gcount());
+    }
+
+    SHA256_Final(hash, &sha256);
+
+    std::ostringstream oss;
+    for (int i = 0; i < SHA256_DIGEST_LENGTH; ++i)
+        oss << std::hex << std::setw(2) << std::setfill('0') << (int)hash[i];
+
+    return oss.str();
+}
 
 auto StringUtils::toLowerCase(const string& input) -> string {
     char* lower = g_utf8_strdown(input.c_str(), as_signed(input.size()));

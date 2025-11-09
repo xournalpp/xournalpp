@@ -15,10 +15,15 @@
 #include <string>  // for string
 #include <vector>  // for vector
 
+#include "control/xml/XmlPreserializedNode.h"
+
 #include "control/xml/XmlNode.h"    // for XmlNode
 #include "model/BackgroundImage.h"  // for BackgroundImage
 #include "model/PageRef.h"          // for PageRef
 #include "util/Color.h"             // for Color
+#include "control/Control.h"        // for Control
+#include <set>       
+#include <string>    
 
 #include "filesystem.h"  // for path
 
@@ -30,13 +35,14 @@ class Layer;
 class OutputStream;
 class Stroke;
 class XmlAudioNode;
+class Control;
 
 class SaveHandler {
 public:
     SaveHandler();
 
 public:
-    void prepareSave(const Document* doc, const fs::path& target);
+    void prepareSave(const Document* doc, const fs::path& target, Control* control);
     void saveTo(const fs::path& filepath, ProgressListener* listener = nullptr);
     void saveTo(OutputStream* out, const fs::path& filepath, ProgressListener* listener = nullptr);
     const std::string& getErrorMessage();
@@ -66,4 +72,6 @@ protected:
     std::string errorMessage;
 
     std::vector<BackgroundImage> backgroundImages{};
+
+    std::set<std::string> modifiedPageUIDs;
 };

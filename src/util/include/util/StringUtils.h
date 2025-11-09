@@ -31,6 +31,7 @@ public:
     static bool isNumber(const std::string& input);
     static std::string generateUniqueAlphanumericString();
     static bool isLegacy;
+    static std::string calculateFileSHA256(const std::string& input);
 
 private:
     static std::vector <std::string> uids;

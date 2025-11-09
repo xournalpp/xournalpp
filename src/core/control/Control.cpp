@@ -151,7 +151,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
 
     // for crashhandling
     setEmergencyDocument(this->doc);
-
+    setControl(this);
 
     this->zoom = new ZoomControl();
     this->zoom->setZoomStep(this->settings->getZoomStep() / 100.0);
@@ -197,6 +197,8 @@ Control::~Control() {
     this->sidebar = nullptr;
 
     setEmergencyDocument(nullptr);
+    setControl(nullptr);
+
     delete this->doc;
     this->doc = nullptr;
     delete this->searchBar;
@@ -1530,6 +1532,7 @@ void Control::replaceDocument(std::unique_ptr<Document> doc, int scrollToPage) {
     this->doc->unlock();
 
     setEmergencyDocument(this->doc);
+    setControl(this);
 
     // Set folder as last save path, so the next save will be at the current document location
     // This is important because of the new .xopp format, where Xournal .xoj handled as import,
@@ -1546,8 +1549,6 @@ void Control::openXoppFile(fs::path filepath, int scrollToPage, std::function<vo
     std::unique_ptr<Document> doc(loadHandler.loadDocument(filepath));
 
     doc.get()->setFileVersion(loadHandler.getFileVersion());
-
-    g_warning("Loaded file format version: %d", loadHandler.getFileVersion());
 
     if (!doc) {
         string msg = FS(_F("Error opening file \"{1}\"") % filepath.u8string()) + "\n" + loadHandler.getLastError();

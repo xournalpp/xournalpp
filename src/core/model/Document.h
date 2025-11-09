@@ -24,11 +24,12 @@
 #include <glib.h>     // for gpointer, gsize
 #include <gtk/gtk.h>  // for GtkTreeModel, GtkTreeIter, GtkT...
 
+#include <pugixml.hpp>
+
 #include "pdf/base/XojPdfDocument.h"  // for XojPdfDocument
 #include "pdf/base/XojPdfPage.h"      // for XojPdfPageSPtr
 #include "util/PathUtil.h"            // for PathStorageMode
 #include "util/raii/GObjectSPtr.h"    // for GObjectSptr
-
 #include "PageRef.h"     // for PageRef
 #include "filesystem.h"  // for path
 
@@ -109,6 +110,13 @@ public:
 
     std::vector<PageRef> getPages() const;
 
+    pugi::xml_document& getRawPageXmlDocument();
+    void setRawPageXmlDocument(std::string const& doc);
+    void clearOriginalXmlDoc();
+
+    void setFileHash(const std::string& hash);
+    std::string getFileHash() const;
+
 private:
     void buildContentsModel();
     void freeTreeContentModel();
@@ -118,11 +126,16 @@ private:
     void updateIndexPageNumbers();
     static bool fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc);
 
+
 private:
     DocumentHandler* handler = nullptr;
 
+    std::string fileHash;
+
     XojPdfDocument pdfDocument;
 
+    pugi::xml_document xmlRawDocument;
+    
     int fileVersion;
 
     fs::path filepath;
