@@ -217,6 +217,8 @@ auto saveDoc(const char* input, const char* output, Control* control) -> int {
     if (!saver.getErrorMessage().empty()) {
         g_error("%s", FC(_F("Error: {1}") % saver.getErrorMessage()));
     }
+
+    newDoc->setFileHash(StringUtils::calculateFileSHA256(out.string()));
     return 0;
 }
 

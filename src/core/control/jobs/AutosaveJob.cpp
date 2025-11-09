@@ -49,6 +49,8 @@ void AutosaveJob::run() {
     tempfile += u8"~";
     handler.saveTo(tempfile);
 
+    doc->setFileHash(StringUtils::calculateFileSHA256(filepath.string()));
+
     this->error = handler.getErrorMessage();
     if (!this->error.empty()) {
         callAfterRun();

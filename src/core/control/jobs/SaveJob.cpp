@@ -109,8 +109,6 @@ auto SaveJob::save() -> bool {
     updatePreview(control);
     Document* doc = this->control->getDocument();
 
-    g_warning("Before prepare to save %s", doc->getFileHash().c_str());
-
     SaveHandler h;
 
     doc->lock();
@@ -118,8 +116,6 @@ auto SaveJob::save() -> bool {
     Util::safeReplaceExtension(target, "xopp");
 
     h.prepareSave(doc, target, this->control);
-
-    g_warning("After prepare to save");
 
     doc->unlock();
 
@@ -153,6 +149,8 @@ auto SaveJob::save() -> bool {
     h.saveTo(target, this->control);
     doc->setFilepath(target);
     doc->unlock();
+
+    doc->setFileHash(StringUtils::calculateFileSHA256(target.string()));
 
     auto end = std::chrono::high_resolution_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);

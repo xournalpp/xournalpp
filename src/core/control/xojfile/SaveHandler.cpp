@@ -49,17 +49,10 @@ SaveHandler::SaveHandler() {
 
 void SaveHandler::prepareSave(const Document* doc, const fs::path& target, Control* control) {
 
-    g_warning("Calculating file hash for file: %s", StringUtils::calculateFileSHA256(target.string()).c_str());
-    g_warning("Calculating file hash for file: %s", doc->getFileHash().c_str());
-
-    g_warning(StringUtils::calculateFileSHA256(target.string()) != doc->getFileHash() ? "File hash mismatch!" : "File hash match!");
-
     if (StringUtils::calculateFileSHA256(target.string()) != doc->getFileHash()) {
         this->errorMessage += FS(_F("You cannot save the file {1}. It was modified externally by another instance of Xournal") % target.u8string());
         return;
     }
-
-    g_warning("Preparing save for file: %s", target.u8string().c_str());
 
     this->modifiedPageUIDs.clear();
 
