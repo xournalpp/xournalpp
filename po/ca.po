@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-24 03:54+0000\n"
-"PO-Revision-Date: 2025-10-26 04:26\n"
+"PO-Revision-Date: 2025-11-09 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -881,7 +881,7 @@ msgstr "Comissió Git"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:61
 msgid "See the full list of contributors"
-msgstr "Mostra la llista completa de contribuidors"
+msgstr "Mostra la llista completa de contribuïdors"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:63
 msgid "GNU GPLv2 or later"
@@ -4477,7 +4477,7 @@ msgstr "Quadrícula amb vora"
 
 #: ../resources-templates/pagetemplates.ini.in:47
 msgid "Graph with border (bold every 5th)"
-msgstr ""
+msgstr "Quadrícula amb vora (marca cada 5)"
 
 #: ../resources-templates/toolbar.ini.in:50
 msgid "All Tools"

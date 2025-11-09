@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-24 03:54+0000\n"
-"PO-Revision-Date: 2025-10-26 04:26\n"
+"PO-Revision-Date: 2025-11-09 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -33,7 +33,7 @@ msgstr "Nie można usunąć starego pliku autozapisu \"{1}\": {2}"
 
 #: ../src/core/control/Control.cpp:575
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
-msgstr ""
+msgstr "Usunąłeś aktywny pasek narzędzi. Wróć do domyślnego paska narzędzi."
 
 #: ../src/core/control/Control.cpp:595
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
