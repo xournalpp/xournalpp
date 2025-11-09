@@ -124,7 +124,7 @@ void CustomExportJob::run() {
 
         XojExportHandler h;
         doc->lock();
-        h.prepareSave(doc, filepath);
+        h.prepareSave(doc, filepath, this->control);
         h.saveTo(filepath, this->control);
         doc->unlock();
 
@@ -133,6 +133,9 @@ void CustomExportJob::run() {
 
             callAfterRun();
         }
+
+        doc->setFileHash(StringUtils::calculateFileSHA256(filepath.string()));
+
     } else if (format == EXPORT_GRAPHICS_PDF) {
         // don't lock the page here for the whole flow, else we get a dead lock...
         // the ui is blocked, so there should be no changes...

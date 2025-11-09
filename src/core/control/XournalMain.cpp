@@ -201,7 +201,7 @@ auto exportImg(const char* input, const char* output, const char* range, const c
  * @param output Path to the output .xopp file
  * @return int 0 on success
  */
-auto saveDoc(const char* input, const char* output) -> int {
+auto saveDoc(const char* input, const char* output, Control* control) -> int {
     SaveHandler saver;
     const fs::path in = Util::fromGFilename(input);
     auto handler = std::make_unique<DocumentHandler>();
@@ -211,12 +211,14 @@ auto saveDoc(const char* input, const char* output) -> int {
         g_error("%s", FC(_F("Error: {1}") % newDoc->getLastErrorMsg().c_str()));
     }
     const fs::path out = fs::absolute(Util::fromGFilename(output));
-    saver.prepareSave(newDoc.get(), out);
+    saver.prepareSave(newDoc.get(), out, control);
     saver.saveTo(out);
 
     if (!saver.getErrorMessage().empty()) {
         g_error("%s", FC(_F("Error: {1}") % saver.getErrorMessage()));
     }
+
+    newDoc->setFileHash(StringUtils::calculateFileSHA256(out.string()));
     return 0;
 }
 
@@ -519,7 +521,9 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
                 "exportImg");
     }
     if (app_data->docFilename && app_data->optFilename && *app_data->optFilename) {
-        return exec_guarded([&] { return saveDoc(*app_data->optFilename, app_data->docFilename); }, "saveDocument");
+        return exec_guarded(
+                [&] { return saveDoc(*app_data->optFilename, app_data->docFilename, app_data->control.get()); },
+                "saveDocument");
     }
     return -1;
 }
