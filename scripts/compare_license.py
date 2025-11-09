@@ -111,12 +111,12 @@ def get_whitelist_not_listed():
     return white_list
 
 # II: Add an entry to the whitelist if you added a file which has special
-# licensing/copyright but does not contain any of the substrings used to 
+# licensing/copyright but does not contain any of the substrings used to
 # automatically identify such files
 # The rational should be explained in the copyright.txt file itself.
 # Do not use comments in this file to explain the rational.
 def get_whitelist_not_found():
-    """Whitelist for files listed in copyright.txt but do not include 
+    """Whitelist for files listed in copyright.txt but do not include
     the searched for substrings"""
     white_list = set()
     white_list.add("*")
@@ -145,10 +145,20 @@ def get_whitelist_not_found():
     white_list.add("ui/iconsColor-light/hicolor/scalable/actions/xopp-Tselect-pdf-text-hd.svg")
     white_list.add("ui/iconsLucide-dark/hicolor/scalable/actions/xopp-compass.svg")
     white_list.add("ui/iconsLucide-dark/hicolor/scalable/actions/xopp-draw-spline.svg")
+    white_list.add("ui/iconsLucide-dark/hicolor/scalable/actions/xopp-draw-exp.svg")
+    white_list.add("ui/iconsLucide-dark/hicolor/scalable/actions/xopp-draw-gauss.svg")
+    white_list.add("ui/iconsLucide-dark/hicolor/scalable/actions/xopp-draw-poly.svg")
+    white_list.add("ui/iconsLucide-dark/hicolor/scalable/actions/xopp-draw-polyneg.svg")
+    white_list.add("ui/iconsLucide-dark/hicolor/scalable/actions/xopp-draw-sinus.svg")
     white_list.add("ui/iconsLucide-dark/hicolor/scalable/actions/xopp-floating-toolbox.svg")
     white_list.add("ui/iconsLucide-dark/hicolor/scalable/actions/xopp-setsquare.svg")
     white_list.add("ui/iconsLucide-light/hicolor/scalable/actions/xopp-compass.svg")
     white_list.add("ui/iconsLucide-light/hicolor/scalable/actions/xopp-draw-spline.svg")
+    white_list.add("ui/iconsLucide-light/hicolor/scalable/actions/xopp-draw-exp.svg")
+    white_list.add("ui/iconsLucide-light/hicolor/scalable/actions/xopp-draw-gauss.svg")
+    white_list.add("ui/iconsLucide-light/hicolor/scalable/actions/xopp-draw-poly.svg")
+    white_list.add("ui/iconsLucide-light/hicolor/scalable/actions/xopp-draw-polyneg.svg")
+    white_list.add("ui/iconsLucide-light/hicolor/scalable/actions/xopp-draw-sinus.svg")
     white_list.add("ui/iconsLucide-light/hicolor/scalable/actions/xopp-floating-toolbox.svg")
     white_list.add("ui/iconsLucide-light/hicolor/scalable/actions/xopp-setsquare.svg")
 
