@@ -142,4 +142,10 @@ void EraseHandler::finalize() {
     } else if (this->eraseDeleteUndoAction) {
         this->eraseDeleteUndoAction = nullptr;
     }
+
+    // Rerenders all pages that layer 'layer' is present in
+    Layer* layer = page->getSelectedLayer();
+    for (std::size_t i = layer->getFirstPage(); i <= layer->getLastPage(); ++i) {
+        this->doc->getPage(i)->firePageChanged();
+    }
 }
