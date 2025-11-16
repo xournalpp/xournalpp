@@ -53,7 +53,6 @@ constexpr Color DARK_PREVIEW_BACKGROUND = Colors::black;
 LatexController::LatexController(Control* control):
         control(control),
         settings(control->getSettings()->latexSettings),
-        doc(control->getDocument()),
         texTmpDir(Util::getTmpDirSubfolder("tex")),
         generator(settings) {
     Util::ensureFolderExists(this->texTmpDir);
@@ -93,68 +92,6 @@ auto LatexController::findTexDependencies() -> LatexController::FindDependencySt
     }
 }
 
-/**
- * Find a selected tex element, and load it
- */
-void LatexController::findSelectedTexElement() {
-    this->doc->lock();
-    auto pageNr = this->control->getCurrentPageNo();
-    if (pageNr == npos) {
-        this->doc->unlock();
-        return;
-    }
-    this->view = this->control->getWindow()->getXournal()->getViewFor(pageNr);
-    if (view == nullptr) {
-        this->doc->unlock();
-        return;
-    }
-
-    // we get the selection
-    this->page = this->doc->getPage(pageNr);
-    this->layer = page->getSelectedLayer();
-
-    auto* tex = view->getSelectedTex();
-    this->selectedElem =
-            tex != nullptr ? static_cast<const Element*>(tex) : static_cast<const Element*>(view->getSelectedText());
-
-    if (this->selectedElem) {
-        // this will get the position of the Latex properly
-        EditSelection* theSelection = control->getWindow()->getXournal()->getSelection();
-        xoj::util::Rectangle<double> rect = theSelection->getSnappedBounds();
-        this->posx = rect.x;
-        this->posy = rect.y;
-
-        if (auto* img = dynamic_cast<const TexImage*>(this->selectedElem)) {
-            this->initialTex = img->getText();
-            this->temporaryRender = img->cloneTexImage();
-            this->isValidTex = true;
-        } else if (auto* txt = dynamic_cast<const Text*>(this->selectedElem)) {
-            this->initialTex = "\\text{" + txt->getText() + "}";
-        }
-        this->imgwidth = this->selectedElem->getElementWidth();
-        this->imgheight = this->selectedElem->getElementHeight();
-    } else {
-        // This is a new latex object, so here we pick a convenient initial location
-        const double zoom = this->control->getWindow()->getXournal()->getZoom();
-        Layout* layout = this->control->getWindow()->getXournal()->getLayout();
-
-        // Calculate coordinates (screen) of the center of the visible area
-        const auto visibleBounds = layout->getVisibleRect();
-        const double centerX = visibleBounds.x + 0.5 * visibleBounds.width;
-        const double centerY = visibleBounds.y + 0.5 * visibleBounds.height;
-
-        if (layout->getPageViewAt(round_cast<int>(centerX), round_cast<int>(centerY)) == this->view) {
-            // Pick the center of the visible area (converting from screen to page coordinates)
-            this->posx = (centerX - this->view->getX()) / zoom;
-            this->posy = (centerY - this->view->getY()) / zoom;
-        } else {
-            // No better location, so just center it on the page (possibly out of viewport)
-            this->posx = this->page->getWidth() / 2;
-            this->posy = this->page->getHeight() / 2;
-        }
-    }
-    this->doc->unlock();
-}
 
 void LatexController::showTexEditDialog(std::unique_ptr<LatexController> ctrl) {
     LatexController* texCtrl = ctrl.get();
@@ -286,14 +223,6 @@ bool LatexController::isUpdating() { return updating_cancellable; }
 
 void LatexController::updateStatus() { this->dlg->setCompilationStatus(isValidTex, !isUpdating(), texProcessOutput); }
 
-void LatexController::deleteOldImage() {
-    if (this->selectedElem) {
-        auto sel = SelectionFactory::createFromElementOnActiveLayer(control, page, view, selectedElem);
-        this->view->getXournal()->deleteSelection(sel.release());
-        this->selectedElem = nullptr;
-    }
-}
-
 auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexImage> {
     if (!this->isValidTex) {
         return nullptr;
@@ -323,7 +252,7 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
     img->setY(posy);
     img->setText(std::move(renderedTex));
 
-    /*if (std::abs(imgheight) > 1024 * std::numeric_limits<double>::epsilon()) {
+    if (std::abs(imgheight) > 1024 * std::numeric_limits<double>::epsilon()) {
         double ratio = img->getElementWidth() / img->getElementHeight();
         if (ratio == 0) {
             img->setWidth(imgwidth == 0 ? 10 : imgwidth);
@@ -331,7 +260,7 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
             img->setWidth(imgheight * ratio);
         }
         img->setHeight(imgheight);
-    }*/
+    }
 
     return img;
 }
@@ -340,8 +269,27 @@ void LatexController::insertTexImage() {
     xoj_assert(this->isValidTex);
     xoj_assert(this->temporaryRender != nullptr);
 
+    /* Das folgende wird erst am Ende gemacht... */
+    Layer* layer = page->getSelectedLayer();
+    XournalView* xournal = this->control->getWindow()->getXournal();
+    auto pageNr = xournal->getCurrentPage();
+    auto* view = xournal->getViewFor(pageNr);
+
+    /* Clearing the old image and creating the new one creates two separate undo actions; I don't
+       know yet how to merge that to one. (That bug was already present before.) */
+
     this->control->clearSelectionEndText();
-    this->deleteOldImage();
+    if (this->selectedElem) {
+        auto sel = SelectionFactory::createFromElementOnActiveLayer(control, page, view, selectedElem);
+        view->getXournal()->deleteSelection(sel.release());
+        this->selectedElem = nullptr;
+    }
+
+    if (view->getPage() != page) {
+        g_warning("Active page changed while you edited the tex code. Aborting.");
+        return;
+    }
+
 
     control->getUndoRedoHandler()->addUndoAction(
             std::make_unique<InsertUndoAction>(page, layer, this->temporaryRender.get()));
@@ -357,20 +305,8 @@ void LatexController::cancelEditing() {
     this->control->clearSelectionEndText();
 }
 
-void LatexController::run(Control* ctrl) {
-    auto self = std::make_unique<LatexController>(ctrl);
-    auto depStatus = self->findTexDependencies();
-    if (!depStatus.success) {
-        XojMsgBox::showErrorToUser(ctrl->getGtkWindow(), depStatus.errorMsg);
-        return;
-    }
 
-    self->findSelectedTexElement();
-    showTexEditDialog(std::move(self));
-}
-
-
-void LatexController::runXY(PageRef page, Control* ctrl, double x, double y) {
+void LatexController::insertLatex(PageRef page, Control* ctrl, double x, double y) {
     auto self = std::make_unique<LatexController>(ctrl);
     auto depStatus = self->findTexDependencies();
     if (!depStatus.success) {
@@ -379,16 +315,7 @@ void LatexController::runXY(PageRef page, Control* ctrl, double x, double y) {
     }
 
     self->page = page;
-    self->layer = page->getSelectedLayer();
 
-    XournalView* xournal = ctrl->getWindow()->getXournal();
-    auto pageNr = xournal->getCurrentPage();
-    self->view = xournal->getViewFor(pageNr);
-
-    if (self->view->getPage() != page) {
-        g_warning("Active page changed unexpectedly. Aborting.");
-        return;
-    }
 
     // Is there already a teximage?
     self->selectedElem = nullptr;

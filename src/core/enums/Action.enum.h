@@ -137,7 +137,6 @@ enum class Action : size_t {
 
     SELECT_FONT,
     FONT,  ///< Action whose state is the font's description
-    TEX,
 
     // Plugin Menu
     PLUGIN_MANAGER,

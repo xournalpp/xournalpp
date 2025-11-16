@@ -482,14 +482,10 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
                 // could forget to do if we manually call startText
                 this->onButtonPressEvent(pos);
             } else if (elemType == ELEMENT_TEXIMAGE) {
-                Control* control = this->xournal->getControl();
-                if (elems.size() > 1) {
-                    // Deselect the other elements
-                    this->xournal->clearSelection();
-                    auto sel = SelectionFactory::createFromElementOnActiveLayer(control, getPage(), this, object);
-                    this->xournal->setSelection(sel.release());
-                }
-                control->runLatex();
+                this->xournal->clearSelection();
+                toolHandler->selectTool(TOOL_TEXT);
+                toolHandler->fireToolChanged();
+                LatexController::insertLatex(this->page, this->xournal->getControl(), x, y);
             }
         }
     } else if (toolType == TOOL_TEXT) {
@@ -697,7 +693,7 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
     }
     if (this->inLatex) {
         this->inLatex = false;
-        LatexController::runXY(this->page, control, this->latexX, this->latexY);
+        LatexController::insertLatex(this->page, control, this->latexX, this->latexY);
     }
 
     if (this->verticalSpace) {
@@ -1138,34 +1134,6 @@ auto XojPageView::getDisplayWidthDouble() const -> double { return this->page->g
 
 auto XojPageView::getDisplayHeightDouble() const -> double {
     return this->page->getHeight() * this->xournal->getZoom();
-}
-
-auto XojPageView::getSelectedTex() const -> const TexImage* {
-    EditSelection* theSelection = this->xournal->getSelection();
-    if (!theSelection) {
-        return nullptr;
-    }
-
-    for (const Element* e: theSelection->getElementsView()) {
-        if (e->getType() == ELEMENT_TEXIMAGE) {
-            return dynamic_cast<const TexImage*>(e);
-        }
-    }
-    return nullptr;
-}
-
-auto XojPageView::getSelectedText() const -> const Text* {
-    EditSelection* theSelection = this->xournal->getSelection();
-    if (!theSelection) {
-        return nullptr;
-    }
-
-    for (const Element* e: theSelection->getElementsView()) {
-        if (e->getType() == ELEMENT_TEXT) {
-            return dynamic_cast<const Text*>(e);
-        }
-    }
-    return nullptr;
 }
 
 auto XojPageView::getRect() const -> Rectangle<double> {

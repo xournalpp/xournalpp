@@ -171,9 +171,6 @@ public:
      */
     int getY() const override;
 
-    const TexImage* getSelectedTex() const;
-    const Text* getSelectedText() const;
-
     xoj::util::Rectangle<double> getRect() const;
 
 public:  // event handler
