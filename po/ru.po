@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-24 03:54+0000\n"
-"PO-Revision-Date: 2025-10-26 04:26\n"
+"POT-Creation-Date: 2025-11-09 05:39+0000\n"
+"PO-Revision-Date: 2025-11-16 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -607,19 +607,19 @@ msgstr "%F-Заметка-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_аннотирован"
 
-#: ../src/core/control/tools/EditSelection.cpp:475
+#: ../src/core/control/tools/EditSelection.cpp:478
 msgid "Arrange"
 msgstr "Расположить"
 
-#: ../src/core/control/tools/EditSelection.cpp:490
+#: ../src/core/control/tools/EditSelection.cpp:493
 msgid "Bring forward"
 msgstr "Переместить вперед"
 
-#: ../src/core/control/tools/EditSelection.cpp:501
+#: ../src/core/control/tools/EditSelection.cpp:504
 msgid "Send backward"
 msgstr "Переместить назад"
 
-#: ../src/core/control/tools/EditSelection.cpp:508
+#: ../src/core/control/tools/EditSelection.cpp:511
 msgid "Send to back"
 msgstr "На задний план"
 

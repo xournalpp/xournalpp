@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-24 03:54+0000\n"
-"PO-Revision-Date: 2025-10-26 04:26\n"
+"POT-Creation-Date: 2025-11-09 05:39+0000\n"
+"PO-Revision-Date: 2025-11-16 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -121,7 +121,7 @@ msgstr "خطأ في قراءة ملف الـPDF المسمى «{1}»\n"
 
 #: ../src/core/control/Control.cpp:1620
 msgid "Error reading PNG file \"{1}\""
-msgstr ""
+msgstr "خطأ بقراءة ملف PNG {1}"
 
 #: ../src/core/control/Control.cpp:1764
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -610,19 +610,19 @@ msgstr "%F-ملاحظة-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_مشروح"
 
-#: ../src/core/control/tools/EditSelection.cpp:475
+#: ../src/core/control/tools/EditSelection.cpp:478
 msgid "Arrange"
 msgstr "ترتيب"
 
-#: ../src/core/control/tools/EditSelection.cpp:490
+#: ../src/core/control/tools/EditSelection.cpp:493
 msgid "Bring forward"
 msgstr "خطوة إلى الأمام"
 
-#: ../src/core/control/tools/EditSelection.cpp:501
+#: ../src/core/control/tools/EditSelection.cpp:504
 msgid "Send backward"
 msgstr "خطوة إلى الخلف"
 
-#: ../src/core/control/tools/EditSelection.cpp:508
+#: ../src/core/control/tools/EditSelection.cpp:511
 msgid "Send to back"
 msgstr "إرسال إلى المؤخرة"
 
@@ -1854,11 +1854,11 @@ msgstr "خطأ: "
 
 #: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:175
 msgid "Unrecoverable error"
-msgstr ""
+msgstr "لا يوجد إمكانية لاسترجاع الخطأ"
 
 #: ../src/core/model/Image.cpp:171 ../src/core/model/Image.cpp:175
 msgid "Failed to close image stream"
-msgstr ""
+msgstr "خطأ بإغلاق التدفق الصوري"
 
 #: ../src/core/model/XojPage.cpp:173
 msgid "Background"
@@ -2001,7 +2001,7 @@ msgstr "تم تغيير خلفية الصفحة"
 
 #: ../src/core/undo/PageSizeChangeUndoAction.cpp:42
 msgid "Page size changed"
-msgstr ""
+msgstr "حجم الصفحة قد تغير"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
@@ -2224,7 +2224,7 @@ msgstr ""
 
 #: ../ui/crashDialog.glade:56
 msgid "Your document has been saved in:"
-msgstr ""
+msgstr "تم حفظ الملف بنجاح في:"
 
 #: ../ui/crashDialog.glade:92
 msgid "Execution log:"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-24 03:54+0000\n"
-"PO-Revision-Date: 2025-11-02 04:26\n"
+"POT-Creation-Date: 2025-11-09 05:39+0000\n"
+"PO-Revision-Date: 2025-11-16 04:26\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -628,19 +628,19 @@ msgstr "%F-Jegyzet-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_jegyzetekkel_ellátva"
 
-#: ../src/core/control/tools/EditSelection.cpp:475
+#: ../src/core/control/tools/EditSelection.cpp:478
 msgid "Arrange"
 msgstr "Elrendezés"
 
-#: ../src/core/control/tools/EditSelection.cpp:490
+#: ../src/core/control/tools/EditSelection.cpp:493
 msgid "Bring forward"
 msgstr "Előbbre hozás"
 
-#: ../src/core/control/tools/EditSelection.cpp:501
+#: ../src/core/control/tools/EditSelection.cpp:504
 msgid "Send backward"
 msgstr "Hátrébb küldés"
 
-#: ../src/core/control/tools/EditSelection.cpp:508
+#: ../src/core/control/tools/EditSelection.cpp:511
 msgid "Send to back"
 msgstr "Hátraküldés"
 

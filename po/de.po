@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-24 03:54+0000\n"
-"PO-Revision-Date: 2025-10-26 04:26\n"
+"POT-Creation-Date: 2025-11-09 05:39+0000\n"
+"PO-Revision-Date: 2025-11-16 04:26\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -616,19 +616,19 @@ msgstr "%F-Notiz-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_kommentiert"
 
-#: ../src/core/control/tools/EditSelection.cpp:475
+#: ../src/core/control/tools/EditSelection.cpp:478
 msgid "Arrange"
 msgstr "Anordnen"
 
-#: ../src/core/control/tools/EditSelection.cpp:490
+#: ../src/core/control/tools/EditSelection.cpp:493
 msgid "Bring forward"
 msgstr "Eine Ebene nach vorne"
 
-#: ../src/core/control/tools/EditSelection.cpp:501
+#: ../src/core/control/tools/EditSelection.cpp:504
 msgid "Send backward"
 msgstr "Eine Ebene nach hinten"
 
-#: ../src/core/control/tools/EditSelection.cpp:508
+#: ../src/core/control/tools/EditSelection.cpp:511
 msgid "Send to back"
 msgstr "In den Hintergrund"
 
@@ -2289,7 +2289,7 @@ msgstr "Stift"
 #: ../ui/deviceTestingArea.glade:136 ../ui/deviceTestingArea.glade:190
 msgctxt "the tip of the stylus"
 msgid "Tip"
-msgstr ""
+msgstr "Spitze"
 
 #: ../ui/deviceTestingArea.glade:150 ../ui/settings.glade:1987
 msgid "Button 1"
