@@ -92,10 +92,11 @@ enum ToolType {
     TOOL_SELECT_PDF_TEXT_RECT = 22,
     TOOL_LASER_POINTER_PEN = 23,
     TOOL_LASER_POINTER_HIGHLIGHTER = 24,
+    TOOL_LATEX = 25,
 
     TOOL_END_ENTRY
 };
-static constexpr std::array<std::string_view, 25> toolNames{"none",
+static constexpr std::array<std::string_view, TOOL_END_ENTRY> toolNames{"none",
                                                             "pen",
                                                             "eraser",
                                                             "highlighter",
@@ -119,7 +120,9 @@ static constexpr std::array<std::string_view, 25> toolNames{"none",
                                                             "selectPdfTextLinear",
                                                             "selectPdfTextRect",
                                                             "laserPointerPen",
-                                                            "laserPointerHighlighter"};
+                                                            "laserPointerHighlighter",
+                                                            "latex"
+};
 
 auto isSelectToolType(ToolType type) -> bool;
 auto isSelectToolTypeSingleLayer(ToolType type) -> bool;
