@@ -57,7 +57,7 @@ public:
      * insert the rendered formula into the document at the given position if
      * the supplied LaTeX is valid.
      */
-    static void runXY(Control* ctrl, double x, double y);
+    static void runXY(PageRef page, Control* ctrl, double x, double y);
 
 private:
     /**

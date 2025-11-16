@@ -697,8 +697,7 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
     }
     if (this->inLatex) {
         this->inLatex = false;
-        LatexController::runXY(/*this->page,*/ control, this->latexX, this->latexY);
-        /* to be continued -Immi */
+        LatexController::runXY(this->page, control, this->latexX, this->latexY);
     }
 
     if (this->verticalSpace) {

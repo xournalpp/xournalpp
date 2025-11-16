@@ -322,6 +322,7 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
     img->setX(posx);
     img->setY(posy);
     img->setText(std::move(renderedTex));
+
     /*if (std::abs(imgheight) > 1024 * std::numeric_limits<double>::epsilon()) {
         double ratio = img->getElementWidth() / img->getElementHeight();
         if (ratio == 0) {
@@ -369,7 +370,7 @@ void LatexController::run(Control* ctrl) {
 }
 
 
-void LatexController::runXY(Control* ctrl, double x, double y) {
+void LatexController::runXY(PageRef page, Control* ctrl, double x, double y) {
     auto self = std::make_unique<LatexController>(ctrl);
     auto depStatus = self->findTexDependencies();
     if (!depStatus.success) {
@@ -377,8 +378,57 @@ void LatexController::runXY(Control* ctrl, double x, double y) {
         return;
     }
 
-    self->findSelectedTexElement();
-    self->posx = x;
-    self->posy = y;
+    self->page = page;
+    self->layer = page->getSelectedLayer();
+
+    XournalView* xournal = ctrl->getWindow()->getXournal();
+    auto pageNr = xournal->getCurrentPage();
+    self->view = xournal->getViewFor(pageNr);
+
+    if (self->view->getPage() != page) {
+        g_warning("Active page changed unexpectedly. Aborting.");
+        return;
+    }
+
+    // Is there already a teximage?
+    self->selectedElem = nullptr;
+
+    // Should we reverse this loop to select the most recent teximage rather than the oldest?
+    for (auto&& e: page->getSelectedLayer()->getElements()) {
+        if (e->getType() == ELEMENT_TEXIMAGE || e->getType() == ELEMENT_TEXT) {
+            GdkRectangle matchRect = {gint(x), gint(y), 1, 1};
+            if (e->intersectsArea(&matchRect)) {
+                self->selectedElem = e.get();
+                //ti = dynamic_cast<const TexImage*>(e.get());
+                break;
+            }
+        }
+    }
+
+    if (self->selectedElem) {
+        xoj::util::Rectangle<double> rect = self->selectedElem->getSnappedBounds();
+        self->posx = rect.x;
+        self->posy = rect.y;
+
+        if (auto* img = dynamic_cast<const TexImage*>(self->selectedElem)) {
+            self->initialTex = img->getText();
+            self->temporaryRender = img->cloneTexImage();
+            self->isValidTex = true;
+        } else if (auto* txt = dynamic_cast<const Text*>(self->selectedElem)) {
+            self->initialTex = "\\text{" + txt->getText() + "}";
+        } else {
+            xoj_assert(false);
+        }
+
+        self->imgwidth = self->selectedElem->getElementWidth();
+        self->imgheight = self->selectedElem->getElementHeight();
+
+    } else {
+        self->posx = x;
+        self->posy = y;
+    }
+
+
+
     showTexEditDialog(std::move(self));
 }
