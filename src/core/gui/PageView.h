@@ -286,6 +286,8 @@ private:
     std::mutex drawingMutex;
 
     bool inEraser = false;
+    bool inLatex = false;
+    double latexX, latexY;
 
     /**
      * Vertical Space

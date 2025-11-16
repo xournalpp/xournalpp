@@ -18,6 +18,7 @@
 #include <gtk/gtk.h>         // for GtkWidget, gtk_co...
 
 #include "control/AudioController.h"                // for AudioController
+#include "control/LatexController.h"                // for LatexController
 #include "control/Control.h"                        // for Control
 #include "control/ScrollHandler.h"                  // for ScrollHandler
 #include "control/SearchControl.h"                  // for SearchControl
@@ -407,6 +408,12 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         }
     } else if (h->getToolType() == TOOL_TEXT) {
         startText(x, y);
+    } else if (h->getToolType() == TOOL_LATEX) {
+        /* Currently, the latex dialog is opened only at the onButtonReleaseEvent (but at the location of the
+         * buttonPressevent). I'm not sure whether that's the best solution, but it was the easiest to implement. */
+        this->inLatex = true;
+        this->latexX = x;
+        this->latexY = y;
     } else if (h->getToolType() == TOOL_IMAGE) {
         // start selecting the size for the image
         this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);
@@ -687,6 +694,11 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         doc->lock();
         this->eraser->finalize();
         doc->unlock();
+    }
+    if (this->inLatex) {
+        this->inLatex = false;
+        LatexController::runXY(/*this->page,*/ control, this->latexX, this->latexY);
+        /* to be continued -Immi */
     }
 
     if (this->verticalSpace) {

@@ -174,7 +174,7 @@ void LatexController::triggerImageUpdate(const string& texString) {
         return;
     }
 
-    Color textColor = control->getToolHandler()->getTool(TOOL_TEXT).getColor();
+    Color textColor = control->getToolHandler()->getTool(TOOL_LATEX).getColor();
 
     // Determine a background color that has enough contrast with the text color:
     if (Util::get_color_contrast(textColor, LIGHT_PREVIEW_BACKGROUND) > 0.5) {
@@ -322,7 +322,7 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
     img->setX(posx);
     img->setY(posy);
     img->setText(std::move(renderedTex));
-    if (std::abs(imgheight) > 1024 * std::numeric_limits<double>::epsilon()) {
+    /*if (std::abs(imgheight) > 1024 * std::numeric_limits<double>::epsilon()) {
         double ratio = img->getElementWidth() / img->getElementHeight();
         if (ratio == 0) {
             img->setWidth(imgwidth == 0 ? 10 : imgwidth);
@@ -330,7 +330,7 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
             img->setWidth(imgheight * ratio);
         }
         img->setHeight(imgheight);
-    }
+    }*/
 
     return img;
 }
@@ -365,5 +365,20 @@ void LatexController::run(Control* ctrl) {
     }
 
     self->findSelectedTexElement();
+    showTexEditDialog(std::move(self));
+}
+
+
+void LatexController::runXY(Control* ctrl, double x, double y) {
+    auto self = std::make_unique<LatexController>(ctrl);
+    auto depStatus = self->findTexDependencies();
+    if (!depStatus.success) {
+        XojMsgBox::showErrorToUser(ctrl->getGtkWindow(), depStatus.errorMsg);
+        return;
+    }
+
+    self->findSelectedTexElement();
+    self->posx = x;
+    self->posy = y;
     showTexEditDialog(std::move(self));
 }
