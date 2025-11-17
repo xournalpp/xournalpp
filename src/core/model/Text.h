@@ -15,7 +15,6 @@
 #include <vector>
 
 #include <pango/pango.h>
-
 #include "model/Element.h"
 #include "util/raii/GObjectSPtr.h"
 
