@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   sodipodi:docname="xopp-draw-poly.svg"
+   id="SVGRoot"
+   version="1.1"
+   viewBox="0 0 24.0 24.0"
+   height="24.0px"
+   width="24.0px"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs859" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="7.4070491"
+     inkscape:cx="9.8554767"
+     inkscape:cy="9.4504571"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="true"
+     inkscape:window-width="1088"
+     inkscape:window-height="679"
+     inkscape:window-x="26"
+     inkscape:window-y="23"
+     inkscape:window-maximized="0"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid1429"
+       originx="0"
+       originy="0"
+       spacingy="1"
+       spacingx="1"
+       units="px" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata862">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;fill-opacity:0.3;stroke:#ffffff;stroke-width:2.07874;stroke-miterlimit:4;stroke-dasharray:none;paint-order:fill markers stroke;stroke-opacity:1"
+       d="m 3,4.3752301 c 0.54545,1.759841 1.09091,3.359841 1.63636,4.800001 0.54546,1.4401599 1.09091,2.7198399 1.63637,3.8399999 0.54545,1.12016 1.09091,2.0798 1.63636,2.88 0.54546,0.8002 1.09091,1.4398 1.63636,1.92 0.54545,0.4802 1.09095,0.7998 1.63635,0.96 0.5455,0.1602 1.0909,0.1598 1.6364,0 0.5454,-0.1598 1.0909,-0.4802 1.6363,-0.96 0.5455,-0.4798 1.091,-1.1202 1.6364,-1.92 0.5455,-0.7998 1.0909,-1.76016 1.6364,-2.88 0.5454,-1.11984 1.0909,-2.40016 1.6363,-3.8399999 0.5455,-1.43984 1.0909,-3.04016 1.6364,-4.800001"
+       title="x*x"
+       id="path1454" />
+  </g>
+</svg>

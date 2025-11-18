@@ -55,9 +55,9 @@ void ToolHandler::initTools() {
     thickness[TOOL_SIZE_VERY_THICK] = 5.67;
     tools[TOOL_PEN - TOOL_PEN] = std::make_unique<Tool>(
             "pen", TOOL_PEN, Colors::xopp_royalblue,
-            TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_ELLIPSE | TOOL_CAP_ARROW |
-                    TOOL_CAP_DOUBLE_ARROW | TOOL_CAP_SPLINE | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL | TOOL_CAP_DASH_LINE |
-                    TOOL_CAP_LINE_STYLE,
+            TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_ELLIPSE | TOOL_CAP_ARROW  |
+            TOOL_CAP_DASH_LINE | TOOL_CAP_DOUBLE_ARROW | TOOL_CAP_FILL | TOOL_CAP_LINE_STYLE | TOOL_CAP_RECOGNIZER  |
+            TOOL_CAP_SPLINE | TOOL_CAP_EXP | TOOL_CAP_GAUSS |  TOOL_CAP_POLY | TOOL_CAP_POLYNEG | TOOL_CAP_SINUS,
             thickness);
 
     thickness[TOOL_SIZE_VERY_FINE] = 1;
@@ -77,7 +77,8 @@ void ToolHandler::initTools() {
     tools[TOOL_HIGHLIGHTER - TOOL_PEN] = std::make_unique<Tool>(
             "highlighter", TOOL_HIGHLIGHTER, Colors::yellow,
             TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_ELLIPSE | TOOL_CAP_ARROW |
-                    TOOL_CAP_DOUBLE_ARROW | TOOL_CAP_SPLINE | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL,
+            TOOL_CAP_DOUBLE_ARROW | TOOL_CAP_SPLINE | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL |
+            TOOL_CAP_EXP | TOOL_CAP_GAUSS | TOOL_CAP_POLY | TOOL_CAP_POLYNEG | TOOL_CAP_SINUS,
             thickness);
 
     tools[TOOL_TEXT - TOOL_PEN] =
@@ -127,6 +128,21 @@ void ToolHandler::initTools() {
 
     tools[TOOL_DRAW_SPLINE - TOOL_PEN] =
             std::make_unique<Tool>("drawSpline", TOOL_DRAW_SPLINE, Colors::black, TOOL_CAP_NONE, std::nullopt);
+
+    tools[TOOL_DRAW_EXP - TOOL_PEN] =
+            std::make_unique<Tool>("drawExp", TOOL_DRAW_EXP, Colors::black, TOOL_CAP_NONE, std::nullopt);
+
+    tools[TOOL_DRAW_GAUSS - TOOL_PEN] =
+            std::make_unique<Tool>("drawGauss", TOOL_DRAW_GAUSS, Colors::black, TOOL_CAP_NONE, std::nullopt);
+
+    tools[TOOL_DRAW_POLY - TOOL_PEN] =
+            std::make_unique<Tool>("drawPoly", TOOL_DRAW_POLY, Colors::black, TOOL_CAP_NONE, std::nullopt);
+
+    tools[TOOL_DRAW_POLYNEG - TOOL_PEN] =
+            std::make_unique<Tool>("drawPolyNeg", TOOL_DRAW_POLYNEG, Colors::black, TOOL_CAP_NONE, std::nullopt);
+
+    tools[TOOL_DRAW_SINUS - TOOL_PEN] =
+            std::make_unique<Tool>("drawSinus", TOOL_DRAW_SINUS, Colors::black, TOOL_CAP_NONE, std::nullopt);
 
     tools[TOOL_FLOATING_TOOLBOX - TOOL_PEN] = std::make_unique<Tool>("showFloatingToolbox", TOOL_FLOATING_TOOLBOX,
                                                                      Colors::black, TOOL_CAP_NONE, std::nullopt);
@@ -620,12 +636,14 @@ auto ToolHandler::isSinglePageTool() const -> bool {
             (drawingType == DRAWING_TYPE_ARROW || drawingType == DRAWING_TYPE_DOUBLE_ARROW ||
              drawingType == DRAWING_TYPE_ELLIPSE || drawingType == DRAWING_TYPE_COORDINATE_SYSTEM ||
              drawingType == DRAWING_TYPE_LINE || drawingType == DRAWING_TYPE_RECTANGLE ||
-             drawingType == DRAWING_TYPE_SPLINE)) ||
+             drawingType == DRAWING_TYPE_SPLINE || drawingType == DRAWING_TYPE_GAUSS || drawingType == DRAWING_TYPE_EXP ||
+             drawingType == DRAWING_TYPE_POLY || drawingType == DRAWING_TYPE_POLYNEG || drawingType == DRAWING_TYPE_SINUS)) ||
            toolType == TOOL_SELECT_RECT || toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_MULTILAYER_RECT ||
            toolType == TOOL_SELECT_MULTILAYER_REGION || toolType == TOOL_SELECT_OBJECT ||
            toolType == TOOL_DRAW_RECT || toolType == TOOL_DRAW_ELLIPSE || toolType == TOOL_DRAW_COORDINATE_SYSTEM ||
            toolType == TOOL_DRAW_ARROW || toolType == TOOL_DRAW_DOUBLE_ARROW || toolType == TOOL_FLOATING_TOOLBOX ||
-           toolType == TOOL_DRAW_SPLINE || toolType == TOOL_SELECT_PDF_TEXT_LINEAR ||
+           toolType == TOOL_DRAW_SPLINE || toolType == TOOL_DRAW_EXP || toolType == TOOL_DRAW_GAUSS || toolType == TOOL_DRAW_POLY ||
+           toolType == TOOL_DRAW_SINUS || toolType == TOOL_DRAW_POLYNEG || toolType == TOOL_SELECT_PDF_TEXT_LINEAR ||
            toolType == TOOL_SELECT_PDF_TEXT_RECT;
 }
 
@@ -643,7 +661,9 @@ auto ToolHandler::supportsTapFilter() const -> bool {
     return toolType == TOOL_PEN || toolType == TOOL_HIGHLIGHTER || toolType == TOOL_LASER_POINTER_PEN ||
            toolType == TOOL_LASER_POINTER_HIGHLIGHTER || toolType == TOOL_HAND || toolType == TOOL_DRAW_RECT ||
            toolType == TOOL_DRAW_ELLIPSE || toolType == TOOL_DRAW_COORDINATE_SYSTEM || toolType == TOOL_DRAW_ARROW ||
-           toolType == TOOL_DRAW_DOUBLE_ARROW || toolType == TOOL_DRAW_SPLINE;
+           toolType == TOOL_DRAW_DOUBLE_ARROW || toolType == TOOL_DRAW_SPLINE || toolType == TOOL_DRAW_EXP ||
+           toolType == TOOL_DRAW_GAUSS || toolType == TOOL_DRAW_POLY || toolType == TOOL_DRAW_POLYNEG ||
+           toolType == TOOL_DRAW_SINUS;
 }
 
 auto ToolHandler::getSelectedTool(SelectedTool selectedTool) const -> Tool* {
