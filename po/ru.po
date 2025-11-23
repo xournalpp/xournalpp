@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-09 05:39+0000\n"
-"PO-Revision-Date: 2025-11-16 04:26\n"
+"PO-Revision-Date: 2025-11-23 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -3786,7 +3786,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5908
 msgid "Disable Audio"
-msgstr ""
+msgstr "Выключить звук"
 
 #: ../ui/settings.glade:5930
 msgid "Enable or Disable Audio"
@@ -3924,7 +3924,7 @@ msgstr "Управление панелями инструментов"
 
 #: ../ui/mainmenubar.xml:5
 msgid "_File"
-msgstr ""
+msgstr "_Файл"
 
 #: ../ui/mainmenubar.xml:13
 msgid "Open"
@@ -3949,7 +3949,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:42
 msgid "Export as..."
-msgstr ""
+msgstr "Экспортировать как..."
 
 #: ../ui/mainmenubar.xml:54
 msgid "Quit"
@@ -4173,11 +4173,11 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:405
 msgid "_Previous Layer"
-msgstr ""
+msgstr "_Предыдущий слой"
 
 #: ../ui/mainmenubar.xml:410
 msgid "_Next Layer"
-msgstr ""
+msgstr "_Следующий слой"
 
 #: ../ui/mainmenubar.xml:415
 msgid "_Top Layer"
@@ -4209,7 +4209,7 @@ msgstr "Дублировать страницу"
 
 #: ../ui/mainmenubar.xml:453
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Добавить новые PDF страницы"
 
 #: ../ui/mainmenubar.xml:457
 msgid "Configure Page Template"
@@ -4217,7 +4217,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:461
 msgid "_Delete Page"
-msgstr ""
+msgstr "_Удалить страницу"
 
 #: ../ui/mainmenubar.xml:468
 msgid "Add a _Layer above the active layer"
@@ -4225,7 +4225,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:477
 msgid "Delete Layer"
-msgstr ""
+msgstr "Удалить слой"
 
 #: ../ui/mainmenubar.xml:482
 msgid "Merge Layer Down"
@@ -4233,7 +4233,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:487
 msgid "Rename Layer"
-msgstr ""
+msgstr "Переименовать слой"
 
 #: ../ui/mainmenubar.xml:494
 msgid "Paper _Format"
@@ -4245,7 +4245,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:507
 msgid "_Tools"
-msgstr ""
+msgstr "_Инструменты"
 
 #: ../ui/mainmenubar.xml:510
 msgid "_Pen"
@@ -4269,7 +4269,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:540
 msgid "_Text"
-msgstr ""
+msgstr "_Текст"
 
 #: ../ui/mainmenubar.xml:546
 msgid "_Image"
@@ -4289,7 +4289,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:591
 msgid "Draw _Line"
-msgstr ""
+msgstr "Нарисовать _линию"
 
 #: ../ui/mainmenubar.xml:632
 msgid "_Vertical Space"
