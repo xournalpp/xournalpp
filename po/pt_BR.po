@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 12:54+0000\n"
-"PO-Revision-Date: 2025-09-14 04:25\n"
+"PO-Revision-Date: 2025-11-23 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -703,7 +703,7 @@ msgstr "Erro carregando imagem"
 
 #: ../src/core/control/tools/ImageHandler.cpp:75
 msgid "Could not determine image size!"
-msgstr ""
+msgstr "Não foi possível determinar o tamanho da imagem!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:132
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1657,15 +1657,15 @@ msgstr "Documento não foi carregado! ({1}), {2}"
 
 #: ../src/core/model/Image.cpp:163 ../src/core/model/Image.cpp:173
 msgid "Error: "
-msgstr ""
+msgstr "Erro: "
 
 #: ../src/core/model/Image.cpp:167 ../src/core/model/Image.cpp:177
 msgid "Unrecoverable error"
-msgstr ""
+msgstr "Erro irrecuperável"
 
 #: ../src/core/model/Image.cpp:173 ../src/core/model/Image.cpp:177
 msgid "Failed to close image stream"
-msgstr ""
+msgstr "Falha ao fechar fluxo de imagem"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:122
 msgid "Error while finalizing the PDF Cairo surface"
@@ -2194,7 +2194,7 @@ msgstr "<b>Ferramentas vazias</b>\n"
 
 #: ../ui/main.glade:152
 msgid "_File"
-msgstr ""
+msgstr "_Arquivo"
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"

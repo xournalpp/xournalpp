@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 12:54+0000\n"
-"PO-Revision-Date: 2025-09-14 04:25\n"
+"PO-Revision-Date: 2025-11-23 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -2191,7 +2191,7 @@ msgstr "<b>Пустая панель инструментов</b>\n"
 
 #: ../ui/main.glade:152
 msgid "_File"
-msgstr ""
+msgstr "_Файл"
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
@@ -2207,7 +2207,7 @@ msgstr ""
 
 #: ../ui/main.glade:247
 msgid "Export as..."
-msgstr ""
+msgstr "Экспортировать как..."
 
 #: ../ui/main.glade:292
 msgid "_Edit"
@@ -2411,11 +2411,11 @@ msgstr ""
 
 #: ../ui/main.glade:1138
 msgid "_Previous Layer"
-msgstr ""
+msgstr "_Предыдущий слой"
 
 #: ../ui/main.glade:1149
 msgid "_Next Layer"
-msgstr ""
+msgstr "_Следующий слой"
 
 #: ../ui/main.glade:1160
 msgid "_Top Layer"
@@ -2447,7 +2447,7 @@ msgstr "Дублировать страницу"
 
 #: ../ui/main.glade:1254
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Добавить новые PDF страницы"
 
 #: ../ui/main.glade:1264
 msgid "Configure Page Template"
@@ -2455,15 +2455,15 @@ msgstr ""
 
 #: ../ui/main.glade:1274
 msgid "_Delete Page"
-msgstr ""
+msgstr "_Удалить страницу"
 
 #: ../ui/main.glade:1291
 msgid "New _Layer"
-msgstr ""
+msgstr "Новый _слой"
 
 #: ../ui/main.glade:1302
 msgid "Delete Layer"
-msgstr ""
+msgstr "Удалить слой"
 
 #: ../ui/main.glade:1313
 msgid "Merge Layer Down"
@@ -2471,7 +2471,7 @@ msgstr ""
 
 #: ../ui/main.glade:1324
 msgid "Rename Layer"
-msgstr ""
+msgstr "Переименовать слой"
 
 #: ../ui/main.glade:1341
 msgid "Paper _Format"
@@ -2483,7 +2483,7 @@ msgstr ""
 
 #: ../ui/main.glade:1374
 msgid "_Tools"
-msgstr ""
+msgstr "_Инструменты"
 
 #: ../ui/main.glade:1385
 msgid "_Pen"
@@ -2507,7 +2507,7 @@ msgstr ""
 
 #: ../ui/main.glade:1445
 msgid "_Text"
-msgstr ""
+msgstr "_Текст"
 
 #: ../ui/main.glade:1457
 msgid "_Image"
@@ -2523,7 +2523,7 @@ msgstr ""
 
 #: ../ui/main.glade:1552
 msgid "Draw _Line"
-msgstr ""
+msgstr "Нарисовать _линию"
 
 #: ../ui/main.glade:1638
 msgid "_Vertical Space"
@@ -3780,7 +3780,7 @@ msgstr "<i>\n"
 
 #: ../ui/settings.glade:5913
 msgid "Disable Audio"
-msgstr ""
+msgstr "Выключить звук"
 
 #: ../ui/settings.glade:5935
 msgid "Enable or Disable Audio"
