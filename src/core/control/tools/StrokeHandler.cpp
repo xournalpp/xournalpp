@@ -44,7 +44,9 @@ StrokeHandler::StrokeHandler(Control* control, const PageRef& page):
         InputHandler(control, page),
         snappingHandler(control->getSettings()),
         stabilizer(StrokeStabilizer::get(control->getSettings())),
-        viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::StrokeToolView>>()) {}
+        viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::StrokeToolView>>()) {
+    snappingHandler.setPageRef(page);
+}
 
 StrokeHandler::~StrokeHandler() = default;
 

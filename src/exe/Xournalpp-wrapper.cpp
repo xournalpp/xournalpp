@@ -17,6 +17,13 @@
 #include <gio/gio.h>
 #include <gtk/gtk.h>
 
+#ifdef _WIN32
+// clang-format off
+#include <windows.h>
+#include <shellapi.h>
+// clang-format on
+#endif
+
 #include "util/PathUtil.h"
 #include "util/VersionInfo.h"
 #include "util/XojMsgBox.h"
@@ -118,10 +125,44 @@ auto main(int argc, char* argv[]) -> int {
         subargv.emplace_back(char_cast(path.c_str()));  // Data is owned by `path` - Do not delete it
         errorlog << "Executing \"" << char_cast(path);
 
+#ifdef _WIN32
+        std::vector<std::string> utf8_args;
+
+        LPWSTR* szArglist;
+        int nArgs;
+        szArglist = CommandLineToArgvW(GetCommandLineW(), &nArgs);
+
+        if (szArglist != nullptr) {
+            // Start from 1 to skip program name
+            for (int i = 1; i < nArgs; i++) {
+                // Calculate required buffer size for UTF-8
+                int size_needed = WideCharToMultiByte(CP_UTF8, 0, szArglist[i], -1, nullptr, 0, nullptr, nullptr);
+                if (size_needed > 0) {
+                    std::string utf8_arg(size_needed - 1, 0);  // -1 to exclude null terminator
+                    WideCharToMultiByte(CP_UTF8, 0, szArglist[i], -1, &utf8_arg[0], size_needed, nullptr, nullptr);
+                    utf8_args.push_back(std::move(utf8_arg));
+                }
+            }
+            LocalFree(szArglist);
+
+            // Add UTF-8 encoded arguments
+            for (const auto& arg: utf8_args) {
+                subargv.emplace_back(arg.c_str());
+                errorlog << " " << arg;
+            }
+        } else {
+            // Fallback to original argv if CommandLineToArgvW fails
+            for (int i = 1; i < argc; i++) {
+                subargv.emplace_back(argv[i]);
+                errorlog << " " << argv[i];
+            }
+        }
+#else
         for (int i = 1; i < argc; i++) {
-            subargv.emplace_back(argv[i]);  // Data is owned by whatever called main()...
+            subargv.emplace_back(argv[i]);
             errorlog << " " << argv[i];
         }
+#endif
         subargv.emplace_back(nullptr);
         errorlog << "\"" << std::endl;
 

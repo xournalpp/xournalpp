@@ -33,6 +33,7 @@ SplineHandler::SplineHandler(Control* control, const PageRef& page):
         InputHandler(control, page),
         snappingHandler(control->getSettings()),
         viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::SplineToolView>>()) {
+    snappingHandler.setPageRef(page);
     this->control->getZoomControl()->addZoomListener(this);
     this->knotsAttractionRadius = KNOTS_ATTRACTION_RADIUS_IN_PIXELS / this->control->getZoomControl()->getZoom();
 }

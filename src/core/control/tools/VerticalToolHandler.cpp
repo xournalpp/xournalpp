@@ -25,6 +25,7 @@ VerticalToolHandler::VerticalToolHandler(const PageRef& page, Control* control, 
         spacingSide(initiallyReverse ? Side::Above : Side::Below),
         snappingHandler(control->getSettings()),
         viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::VerticalToolView>>()) {
+    snappingHandler.setPageRef(page);
     double ySnapped = snappingHandler.snapVertically(y, false);
     this->startY = ySnapped;
     this->endY = ySnapped;

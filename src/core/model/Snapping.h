@@ -20,8 +20,9 @@ namespace Snapping {
  * @param y the value
  * @param gridSize the distance to each snapping point
  * @param tolerance the tolerance as a fraction of a half grid diagonal (assumed to be between 0 and 1)
+ * @param yOffset the vertical offset of the grid (e.g., from page margins)
  */
-[[nodiscard]] double snapVertically(double y, double gridSize, double tolerance);
+[[nodiscard]] double snapVertically(double y, double gridSize, double tolerance, double yOffset = 0.0);
 
 /**
  * @brief If a value is near enough to the x-coordinate of a grid point, it returns the nearest x-coordinate of the
@@ -29,17 +30,22 @@ namespace Snapping {
  * @param x the value
  * @param gridSize the distance to each snapping point
  * @param tolerance the tolerance as a fraction of a half grid diagonal (assumed to be between 0 and 1)
+ * @param xOffset the horizontal offset of the grid (e.g., from page margins)
  */
-[[nodiscard]] double snapHorizontally(double x, double gridSize, double tolerance);
+[[nodiscard]] double snapHorizontally(double x, double gridSize, double tolerance, double xOffset = 0.0);
 
 /**
- * @brief If a points distance to the nearest grid point is under a certain tolerance, it returns the nearest
- * grid point. Otherwise the original Point itself.
+ * @brief If a point's distance to the nearest grid point is under a certain tolerance, it returns the nearest
+ * grid point. Otherwise the original Point itself. Supports arbitrary column/row spacings.
  * @param pos the position
- * @param gridSize the distance to each snapping point
- * @param tolerance the tolerance as a fraction of a half grid diagonal (assumed to be between 0 and 1)
+ * @param columnSpacing the horizontal distance between grid points (in user units)
+ * @param rowSpacing the vertical distance between grid points (in user units)
+ * @param tolerance the tolerance as a fraction of the grid diagonal (assumed to be between 0 and 1)
+ * @param xOffset the horizontal offset of the grid (e.g., from page margins)
+ * @param yOffset the vertical offset of the grid (e.g., from page margins)
  */
-[[nodiscard]] Point snapToGrid(Point const& pos, double gridSize, double tolerance);
+[[nodiscard]] Point snapToGrid(Point const& pos, double columnSpacing, double rowSpacing, double tolerance,
+                               double xOffset, double yOffset);
 
 /**
  * @brief if the angles distance to a multiple quarter of PI is under a certain tolerance, it returns the latter.

@@ -1,6 +1,7 @@
 #include "Snapping.h"
 
 #include <algorithm>  // for min, max
+#include <array>      // for array
 #include <cmath>      // for pow, atan2, cos, hypot, remainder, sin, abs
 #include <cstdlib>    // for abs
 
@@ -10,20 +11,27 @@ namespace Snapping {
 
 [[nodiscard]] inline double roundToMultiple(double val, double multiple) { return val - std::remainder(val, multiple); }
 [[nodiscard]] inline double distance(Point const& a, Point const& b) { return std::hypot(b.x - a.x, b.y - a.y); }
-double snapVertically(double y, double gridSize, double tolerance) {
-    double ySnapped = roundToMultiple(y, gridSize);
+
+double snapVertically(double y, double gridSize, double tolerance, double yOffset) {
+    double ySnapped = roundToMultiple(y - yOffset, gridSize) + yOffset;
     return std::abs(ySnapped - y) < tolerance * gridSize / 2.0 ? ySnapped : y;
 }
 
-double snapHorizontally(double x, double gridSize, double tolerance) {
-    double xSnapped = roundToMultiple(x, gridSize);
+double snapHorizontally(double x, double gridSize, double tolerance, double xOffset) {
+    double xSnapped = roundToMultiple(x - xOffset, gridSize) + xOffset;
     return std::abs(xSnapped - x) < tolerance * gridSize / 2.0 ? xSnapped : x;
 }
 
-Point snapToGrid(Point const& pos, double gridSize, double tolerance) {
-    double abs_tolerance = (gridSize / sqrt(2)) * tolerance;
-    Point ret{roundToMultiple(pos.x, gridSize), roundToMultiple(pos.y, gridSize), pos.z};
-    return distance(ret, pos) < abs_tolerance ? ret : pos;
+Point snapToGrid(Point const& pos, double columnSpacing, double rowSpacing, double tolerance, double xOffset,
+                 double yOffset) {
+    // Round to nearest grid point
+    Point nearestVertex{roundToMultiple(pos.x - xOffset, columnSpacing) + xOffset,
+                        roundToMultiple(pos.y - yOffset, rowSpacing) + yOffset, pos.z};
+
+    // Only snap if within tolerance threshold (fraction of the half-diagonal)
+    const double dist = distance(pos, nearestVertex);
+    const double snapThreshold = 0.5 * std::hypot(columnSpacing, rowSpacing) * tolerance;
+    return (dist < snapThreshold) ? nearestVertex : pos;
 }
 
 double snapAngle(double radian, double tolerance) {

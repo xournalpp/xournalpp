@@ -216,6 +216,7 @@ EditSelection::EditSelection(Control* ctrl, InsertionOrder elts, const PageRef& 
         view(view),
         undo(ctrl->getUndoRedoHandler()),
         snappingHandler(ctrl->getSettings()) {
+    snappingHandler.setPageRef(page);
     // make the visible bounding box large enough so that anchors do not collapse even for horizontal/vertical strokes
     const double PADDING = 12.;
     x = bounds.minX - PADDING;
@@ -246,7 +247,9 @@ EditSelection::EditSelection(Control* ctrl, const PageRef& page, Layer* layer, X
         sourceLayer(layer),
         view(view),
         undo(ctrl->getUndoRedoHandler()),
-        snappingHandler(ctrl->getSettings()) {}
+        snappingHandler(ctrl->getSettings()) {
+    snappingHandler.setPageRef(page);
+}
 
 EditSelection::~EditSelection() {
     finalizeSelection();
