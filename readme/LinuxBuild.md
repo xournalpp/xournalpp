@@ -6,7 +6,7 @@ Xournal++ is programmed with C++17 and needs the `<optional>` header and one fil
 Therefore it is required to install a compiler implementing those features.
 We recommend using at least GCC 8 or Clang 9.
 
-Please create file an issue or create a pull request if you require more precise dependencies.
+Please file an issue or create a pull request if you require more precise dependencies.
 
 Lua is needed for plugins; if it is missing, the plugins will be disabled.
 
