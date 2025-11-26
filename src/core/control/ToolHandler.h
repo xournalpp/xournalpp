@@ -237,6 +237,13 @@ public:
     ToolType getToolType() const;
 
     /**
+     * @brief Get the Tool Type of previously active tool
+     *
+     * @return ToolType
+     */
+    ToolType getPreviousToolType() const;
+
+    /**
      * @brief Update the Toolbar and the cursor based on the active Tool
      *
      */
@@ -396,6 +403,9 @@ private:
 
     // active Tool which is used for drawing
     Tool* activeTool = nullptr;
+
+    // previously active Tool which was used for drawing
+    Tool* previousTool = nullptr;
 
     // tool which is selected in the toolbar
     Tool* toolbarSelectedTool = nullptr;
