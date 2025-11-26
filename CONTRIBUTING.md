@@ -63,7 +63,7 @@ You should try to first clone your fork and then compile it manually. The
 instructions for compiling Xournal++ depend on your operating system:
 
 * [`LinuxBuild.md`](readme/LinuxBuild.md)
-* [`MacBuild.md`](readme/MacBuild.md),
+* [`MacBuild.md`](readme/MacBuild.md)
 * [`WindowsBuild.md`](readme/WindowsBuild.md)
 
 ### Code conventions and guidelines
