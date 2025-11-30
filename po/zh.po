@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-09 05:39+0000\n"
-"PO-Revision-Date: 2025-11-16 04:26\n"
+"POT-Creation-Date: 2025-11-25 06:16+0000\n"
+"PO-Revision-Date: 2025-11-30 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1888,7 +1888,7 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: ../src/core/pdf/base/QPdfExport.cpp:172
+#: ../src/core/pdf/base/QPdfExport.cpp:173
 msgid "Error with overlay or final export:"
 msgstr ""
 
