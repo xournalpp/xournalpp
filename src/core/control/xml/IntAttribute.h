@@ -17,7 +17,7 @@ class OutputStream;
 
 class IntAttribute: public XMLAttribute {
 public:
-    IntAttribute(const char* name, int value);
+    IntAttribute(const char8_t* name, int value);
     ~IntAttribute() override;
 
 public:
