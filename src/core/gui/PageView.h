@@ -41,7 +41,9 @@ class SearchControl;
 class Selector;
 class Settings;
 class Text;
+class Link;
 class TextEditor;
+class LinkEditor;
 class VerticalToolHandler;
 class XournalView;
 class Element;
@@ -291,4 +293,9 @@ private:
     friend class SelectObject;
     friend class PlayObject;
     friend class PdfFloatingToolbox;
+
+    /**
+     * The Link Editor
+     */
+    std::unique_ptr<LinkEditor> linkEditor;
 };
