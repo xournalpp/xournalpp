@@ -24,7 +24,7 @@
 class ObjectInputStream;
 class ObjectOutputStream;
 
-enum ElementType { ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_TEXT };
+enum ElementType { ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_TEXT, ELEMENT_LINK };
 
 class ShapeContainer {
 public:
@@ -72,6 +72,7 @@ public:
     virtual bool intersectsArea(double x, double y, double width, double height) const;
     /// Returns the distance between the element "as drawn" and the point (x,y)
     virtual double distanceTo(double x, double y) const;
+    virtual bool containsPoint(double x, double y) const;
 
     virtual bool isInSelection(ShapeContainer* container) const;
 
@@ -85,6 +86,11 @@ public:
 
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;
+
+    /**
+     * Ignore cached element size and recalculate on next request
+     */
+    void sizeChanged();
 
 private:
 protected:

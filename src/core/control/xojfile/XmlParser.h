@@ -76,6 +76,7 @@ private:
     void parseImageText(std::string_view text);
     void parseTexImageTag(const XmlParserHelper::AttributeMap& attributeMap);
     void parseTexImageText(std::string_view text);
+    void parseLinkTag(const XmlParserHelper::AttributeMap& attributeMap);
     void parseAttachmentTag(const XmlParserHelper::AttributeMap& attributeMap);
 
     /**
@@ -124,6 +125,7 @@ private:
                      &DocumentBuilderInterface::finalizeImage},  // TagType::IMAGE
                     {&XmlParser::parseTexImageTag, &XmlParser::parseTexImageText,
                      &DocumentBuilderInterface::finalizeTexImage},  // TagType::TEXIMAGE
+                    {&XmlParser::parseLinkTag, {}, {}},             // TagType::LINK
                     {&XmlParser::parseAttachmentTag, {}, {}},       // TagType::ATTACHMENT
             }}};
 

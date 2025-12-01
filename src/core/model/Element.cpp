@@ -111,6 +111,12 @@ auto Element::distanceTo(double x, double y) const -> double {
     return std::hypot(x - projX, y - projY);
 }
 
+auto Element::containsPoint(double x, double y) const -> bool {
+    bool horizontal = x >= getX() && x <= getX() + getElementWidth();
+    bool vertical = y >= getY() && y <= getY() + getElementHeight();
+    return horizontal && vertical;
+}
+
 auto Element::isInSelection(ShapeContainer* container) const -> bool {
     if (!container->contains(getX(), getY())) {
         return false;
@@ -151,6 +157,7 @@ void Element::readSerialized(ObjectInputStream& in) {
     in.endObject();
 }
 
+void Element::sizeChanged() { this->sizeCalculated = false; }
 namespace xoj {
 
 auto refElementContainer(const std::vector<ElementPtr>& elements) -> std::vector<Element*> {

@@ -18,6 +18,7 @@
 #include "control/xojfile/XmlAttrs.h"                  // for XmlAttrs
 #include "control/xojfile/XmlParserHelper.h"           // for getAttrib...
 #include "control/xojfile/XmlTags.h"                   // for XmlTags
+#include "model/Link.h"                                // for LinkAlignment
 #include "model/PageType.h"                            // for PageType
 #include "model/Point.h"                               // for Point
 #include "model/Stroke.h"                              // for StrokeTool, StrokeCapStyle
@@ -479,6 +480,22 @@ void XmlParser::parseTexImageText(std::string_view text) {
     }
 }
 
+void XmlParser::parseLinkTag(const XmlParserHelper::AttributeMap& attributeMap) {
+    const auto align = XmlParserHelper::getAttribMandatory<LinkAlignment>(xoj::xml_attrs::ALIGN_STR, attributeMap,
+                                                                          LinkAlignment::LEFT);
+    const auto font =
+            XmlParserHelper::getAttribMandatory<std::string_view>(xoj::xml_attrs::FONT_STR, attributeMap, "Sans");
+    const auto size = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::SIZE_STR, attributeMap, 12);
+    const auto x = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::X_COORD_STR, attributeMap);
+    const auto y = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::Y_COORD_STR, attributeMap);
+    const auto color = XmlParserHelper::getAttribColorMandatory(attributeMap, Colors::black);
+
+    auto url = XmlParserHelper::getAttribMandatory<std::string_view>(xoj::xml_attrs::URL_STR, attributeMap);
+    auto text = XmlParserHelper::getAttribMandatory<std::string_view>(xoj::xml_attrs::TEXT_STR, attributeMap);
+
+    this->builder.addLink(align, std::string{font}, size, x, y, color, std::string{url}, std::string{text});
+}
+
 void XmlParser::parseAttachmentTag(const XmlParserHelper::AttributeMap& attributeMap) {
     const auto path = XmlParserHelper::getAttribMandatory<fs::path>(xoj::xml_attrs::PATH_STR, attributeMap);
 
@@ -543,6 +560,8 @@ auto XmlParser::getTagType(c_string_utf8_view name) const -> TagType {
                     return TagType::IMAGE;
                 if (TAG_NAMES[TagType::TEXIMAGE] == name)
                     return TagType::TEXIMAGE;
+                if (TAG_NAMES[TagType::LINK] == name)
+                    return TagType::LINK;
                 break;
             case TagType::IMAGE:
             case TagType::TEXIMAGE:
