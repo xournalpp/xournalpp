@@ -30,6 +30,7 @@
 #include "model/Font.h"                 // for XojFont
 #include "model/Image.h"                // for Image
 #include "model/Layer.h"                // for Layer
+#include "model/Link.h"                 // for Link
 #include "model/PageType.h"             // for PageType, PageTypeFormat
 #include "model/Point.h"                // for Point
 #include "model/Stroke.h"               // for Stroke, StrokeCapStyle
@@ -453,6 +454,28 @@ void LoadHandler::finalizeTexImage() {
 
     this->layer->addElement(std::move(this->teximage));
 }
+
+void LoadHandler::addLink(LinkAlignment align, std::string font, double size, double x, double y, Color color,
+                          std::string url, std::string text) {
+    xoj_assert(!this->link);
+    this->link = std::make_unique<Link>();
+
+    this->link->setAlignment(align);
+
+    this->link->setText(std::string(g_uri_unescape_string(text.c_str(), NULL)));
+    this->link->setUrl(std::string(g_uri_unescape_string(url.c_str(), NULL)));
+
+    this->link->setX(x);
+    this->link->setY(y);
+
+    XojFont& f = this->link->getFont();
+    f.setName(std::move(font));
+    f.setSize(size);
+    this->link->setColor(color);
+
+    this->layer->addElement(std::move(this->link));
+}
+
 
 void LoadHandler::logError(const std::string& error) {
     g_warning("LoadHandler: %s", error.c_str());

@@ -31,7 +31,7 @@ constexpr auto NAME_STR = u8"name";  // also in layer
 constexpr auto TYPE_STR = u8"type";
 constexpr auto STYLE_STR = u8"style";  // also in stroke
 constexpr auto CONFIG_STR = u8"config";
-constexpr auto COLOR_STR = u8"color";  // also in stroke and text
+constexpr auto COLOR_STR = u8"color";  // also in stroke, text and link
 constexpr auto DOMAIN_STR = u8"domain";
 constexpr auto FILENAME_STR = u8"filename";
 constexpr auto PAGE_NUMBER_STR = u8"pageno";
@@ -47,10 +47,10 @@ constexpr auto FILL_STR = u8"fill";
 constexpr auto CAPSTYLE_STR = u8"capStyle";
 
 // text
-constexpr auto FONT_STR = u8"font";
-constexpr auto SIZE_STR = u8"size";
-constexpr auto X_COORD_STR = u8"x";
-constexpr auto Y_COORD_STR = u8"y";
+constexpr auto FONT_STR = u8"font";  // also in link
+constexpr auto SIZE_STR = u8"size";  // also in link
+constexpr auto X_COORD_STR = u8"x";  // also in link
+constexpr auto Y_COORD_STR = u8"y";  // also in link
 
 // image
 constexpr auto LEFT_POS_STR = u8"left";      // also in teximage
@@ -60,6 +60,10 @@ constexpr auto BOTTOM_POS_STR = u8"bottom";  // also in teximage
 
 // teximage
 constexpr auto TEXT_STR = u8"text";
+
+// link
+constexpr auto ALIGN_STR = u8"align";
+constexpr auto URL_STR = u8"url";
 
 // attachment
 constexpr auto PATH_STR = u8"path";

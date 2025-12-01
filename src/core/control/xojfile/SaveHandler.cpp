@@ -26,6 +26,7 @@
 #include "model/Image.h"                       // for Image
 #include "model/Layer.h"                       // for Layer
 #include "model/LineStyle.h"                   // for LineStyle
+#include "model/Link.h"                        // for Link
 #include "model/PageType.h"                    // for PageType
 #include "model/Point.h"                       // for Point
 #include "model/Stroke.h"                      // for Stroke, StrokeCapStyle
@@ -216,6 +217,21 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
             image->setAttrib(xoj::xml_attrs::TOP_POS_STR, i->getY());
             image->setAttrib(xoj::xml_attrs::RIGHT_POS_STR, i->getX() + i->getElementWidth());
             image->setAttrib(xoj::xml_attrs::BOTTOM_POS_STR, i->getY() + i->getElementHeight());
+        } else if (e->getType() == ELEMENT_LINK) {
+            auto* l = dynamic_cast<const Link*>(e);
+            auto* link = new XmlNode(TAG_NAMES[TagType::LINK]);
+            layer->addChild(link);
+
+            const XojFont& f = l->getFont();
+
+            link->setAttrib(xoj::xml_attrs::ALIGN_STR, l->getAlignment());
+            link->setAttrib(xoj::xml_attrs::FONT_STR, f.getName().c_str());
+            link->setAttrib(xoj::xml_attrs::SIZE_STR, f.getSize());
+            link->setAttrib(xoj::xml_attrs::X_COORD_STR, l->getX());
+            link->setAttrib(xoj::xml_attrs::Y_COORD_STR, l->getY());
+            link->setAttrib(xoj::xml_attrs::COLOR_STR, getColorStr(l->getColor()).c_str());
+            link->setAttrib(xoj::xml_attrs::URL_STR, g_uri_escape_string(l->getUrl().c_str(), NULL, false));
+            link->setAttrib(xoj::xml_attrs::TEXT_STR, g_uri_escape_string(l->getText().c_str(), NULL, false));
         }
     }
 }
