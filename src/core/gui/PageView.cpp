@@ -213,8 +213,11 @@ void XojPageView::endSpline() {
 }
 
 void XojPageView::deleteLaserPointerHandler() {
+    Control* control = xournal->getControl();
+    ToolHandler* h = control->getToolHandler();
     xoj_assert(hasNoViewOf(overlayViews, laserPointer.get()));
     laserPointer.reset();
+    h->selectTool(h->getPreviousToolType());
 }
 
 auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
