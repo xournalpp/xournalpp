@@ -1,6 +1,13 @@
 # Changelog
 
-## 1.2.9~dev (Unreleased)
+## 1.2.9
+
+Bugfixes from various community contributors:
+
+* Fix display bug when running release version after having run the development version (#6681)
+* Fix Clipboard pasting issues (#6679)
+* Fix attached attribute on document load (#6678)
+* Prevent export from mistakingly overriding the background PDF (#6675)
 
 ## 1.2.8
 
