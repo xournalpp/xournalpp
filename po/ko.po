@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-31 19:39+0000\n"
-"PO-Revision-Date: 2025-08-03 04:35\n"
+"POT-Creation-Date: 2025-11-25 06:16+0000\n"
+"PO-Revision-Date: 2025-11-30 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -23,71 +23,71 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 msgstr "오디오 폴더가 없거나 설정되지 않았습니다! 녹음이 작동하지 않습니다!\n"
 "\"설정 > 오디오 녹음\"에서 녹음 폴더를 지정하십시오."
 
-#: ../src/core/control/Control.cpp:229
+#: ../src/core/control/Control.cpp:234
 msgid "Filesystem error: {1}"
 msgstr "파일시스템 오류: {1}"
 
-#: ../src/core/control/Control.cpp:241
+#: ../src/core/control/Control.cpp:246
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "이전 자동저장 파일 \"{1}\"을 삭제할 수 없습니다: {2}"
 
-#: ../src/core/control/Control.cpp:560
+#: ../src/core/control/Control.cpp:575
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "현재 활성화된 툴바를 삭제했습니다. 기본 툴바를 사용합니다."
 
-#: ../src/core/control/Control.cpp:580
+#: ../src/core/control/Control.cpp:595
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "툴바설정 \"{1}\"은 수정할 수 없습니다. 수정을 위해 이 툴바설정의 복사본을 만들겠습니까?"
 
-#: ../src/core/control/Control.cpp:583 ../src/core/control/Control.cpp:1552
+#: ../src/core/control/Control.cpp:598 ../src/core/control/Control.cpp:1572
 msgid "Yes"
 msgstr "예"
 
-#: ../src/core/control/Control.cpp:583 ../src/core/control/Control.cpp:1552
+#: ../src/core/control/Control.cpp:598 ../src/core/control/Control.cpp:1572
 msgid "No"
 msgstr "아니오"
 
-#: ../src/core/control/Control.cpp:813 ../src/core/control/Control.cpp:1764
-#: ../src/core/control/Control.cpp:2104 ../src/core/control/XournalMain.cpp:172
+#: ../src/core/control/Control.cpp:828 ../src/core/control/Control.cpp:1784
+#: ../src/core/control/Control.cpp:2108
 msgid "Cancel"
 msgstr "취소"
 
-#: ../src/core/control/Control.cpp:814
+#: ../src/core/control/Control.cpp:829
 msgid "Insert after current page"
 msgstr "현재 페이지 다음에 추가"
 
-#: ../src/core/control/Control.cpp:815
+#: ../src/core/control/Control.cpp:830
 msgid "Insert at end"
 msgstr "마지막에 추가"
 
-#: ../src/core/control/Control.cpp:818
+#: ../src/core/control/Control.cpp:833
 msgid "_Journal"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:818
+#: ../src/core/control/Control.cpp:833
 msgid "Paper B_ackground"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:819
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:40
+#: ../src/core/control/Control.cpp:834
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:41
 msgid "With PDF background"
 msgstr "PDF를 배경으로 사용"
 
-#: ../src/core/control/Control.cpp:822
+#: ../src/core/control/Control.cpp:837
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:865
+#: ../src/core/control/Control.cpp:880
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "추가할 PDF 페이지가 없습니다. 우선 문서를 다시 열어야 할 수 있습니다."
 
-#: ../src/core/control/Control.cpp:879
+#: ../src/core/control/Control.cpp:894
 msgid "Unable to retrieve pdf page."
 msgstr "PDF 페이지를 가져 올 수 없습니다."
 
-#: ../src/core/control/Control.cpp:1478
+#: ../src/core/control/Control.cpp:1496
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -95,150 +95,136 @@ msgstr "자동 저장 파일을 열지 마십시오. 덮어쓰기 될 수 있습
 "해당 파일을 다른 폴더로 복사하십시오.\n"
 "{1} 폴더로부터 파일을 열 수 없습니다."
 
-#: ../src/core/control/Control.cpp:1498
+#: ../src/core/control/Control.cpp:1516
 msgid "file: {1}"
 msgstr "파일: {1}"
 
-#: ../src/core/control/Control.cpp:1529
+#: ../src/core/control/Control.cpp:1549
 msgid "Error opening file \"{1}\""
 msgstr "\"{1}\" 파일 열기 오류"
 
-#: ../src/core/control/Control.cpp:1554
+#: ../src/core/control/Control.cpp:1574
 msgid "File version mismatch"
 msgstr "파일 버전 불일치"
 
-#: ../src/core/control/Control.cpp:1555
+#: ../src/core/control/Control.cpp:1575
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "지금 불러오는 파일이 더 최신 버전의 Xournal++ 파일 포맷을 사용하기 때문에, 파일이 정상적으로 열리지 않을 수 있습니다. 그래도 파일을 불러옵니까?"
 
-#: ../src/core/control/Control.cpp:1578
+#: ../src/core/control/Control.cpp:1598
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr "\"{1}\" PDF 파일 읽기 오류\n"
 "{2}"
 
-#: ../src/core/control/Control.cpp:1600
+#: ../src/core/control/Control.cpp:1620
 msgid "Error reading PNG file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1744
+#: ../src/core/control/Control.cpp:1764
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "첨부된 배경 파일을 찾을 수 없습니다. 파일 이름이 바뀌었거나 파일이 이동, 삭제되었을 수 있습니다."
 
-#: ../src/core/control/Control.cpp:1747
+#: ../src/core/control/Control.cpp:1767
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "\"{1}\" 배경 파일을 찾을 수 없습니다. 파일 이름이 바뀌었거나 파일이 이동, 삭제되었을 수 있습니다.\n"
 "파일의 최근 위치: \"{2}\""
 
-#: ../src/core/control/Control.cpp:1757
+#: ../src/core/control/Control.cpp:1777
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "제안하는 대체 파일: \"{1}\""
 
-#: ../src/core/control/Control.cpp:1762
+#: ../src/core/control/Control.cpp:1782
 msgid "Select another PDF"
 msgstr "다른 PDF 선택"
 
-#: ../src/core/control/Control.cpp:1763
+#: ../src/core/control/Control.cpp:1783
 msgid "Remove PDF Background"
 msgstr "PDF 백그라운드 제거"
 
-#: ../src/core/control/Control.cpp:1767
+#: ../src/core/control/Control.cpp:1787
 msgid "Use proposed PDF"
 msgstr "제안된 PDF를 사용하십시오."
 
-#: ../src/core/control/Control.cpp:1770
+#: ../src/core/control/Control.cpp:1790
 msgid "Missing PDF background file"
 msgstr "PDF 배경 파일이 없습니다."
 
-#: ../src/core/control/Control.cpp:1902
+#: ../src/core/control/Control.cpp:1922
 msgid "Select font"
 msgstr "글꼴 선택"
 
-#: ../src/core/control/Control.cpp:1921
+#: ../src/core/control/Control.cpp:1941
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "색상 선택"
 
-#: ../src/core/control/Control.cpp:1946
+#: ../src/core/control/Control.cpp:1966
 msgid "Unsaved Document"
 msgstr "저장되지 않은 문서"
 
-#: ../src/core/control/Control.cpp:2097
+#: ../src/core/control/Control.cpp:2101
 msgid "Document file was removed."
 msgstr "문서 파일 삭제됨."
 
-#: ../src/core/control/Control.cpp:2097
+#: ../src/core/control/Control.cpp:2101
 msgid "This document is not saved yet."
 msgstr "문서가 아직 저장되지 않았습니다"
 
-#: ../src/core/control/Control.cpp:2099
+#: ../src/core/control/Control.cpp:2103
 msgid "Save As..."
 msgstr "다른 이름으로 저장..."
 
-#: ../src/core/control/Control.cpp:2099 ../src/core/control/jobs/SaveJob.cpp:25
-#: ../src/core/gui/dialog/XojSaveDlg.cpp:80
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:286
+#: ../src/core/control/Control.cpp:2103 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/gui/dialog/XojSaveDlg.cpp:85
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "저장"
 
-#: ../src/core/control/Control.cpp:2102
+#: ../src/core/control/Control.cpp:2106
 msgid "Discard"
 msgstr "버리기"
 
-#: ../src/core/control/Control.cpp:2186
+#: ../src/core/control/Control.cpp:2191
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
-#: ../src/core/control/CrashHandler.cpp:31
-msgid "Trying to emergency save the current open document..."
-msgstr "현재 열려있는 문서의 긴급 저장을 시도 중입니다."
-
-#: ../src/core/control/CrashHandler.cpp:40
-#: ../src/core/control/XournalMain.cpp:271
-#: ../src/core/control/XournalMain.cpp:278
-msgid "Error: {1}"
-msgstr "오류: {1}"
-
-#: ../src/core/control/CrashHandler.cpp:42
-msgid "Successfully saved document to \"{1}\""
-msgstr "정상적으로 문서를 \"{1}\"에 저장했습니다"
-
-#: ../src/core/control/DeviceListHelper.cpp:95
+#: ../src/core/control/DeviceListHelper.cpp:97
 msgid "mouse"
 msgstr "마우스"
 
-#: ../src/core/control/DeviceListHelper.cpp:97
+#: ../src/core/control/DeviceListHelper.cpp:99
 msgid "pen"
 msgstr "펜"
 
-#: ../src/core/control/DeviceListHelper.cpp:99
+#: ../src/core/control/DeviceListHelper.cpp:101
 msgid "eraser"
 msgstr "지우개"
 
-#: ../src/core/control/DeviceListHelper.cpp:101
+#: ../src/core/control/DeviceListHelper.cpp:103
 msgid "cursor"
 msgstr "커서"
 
-#: ../src/core/control/DeviceListHelper.cpp:104
+#: ../src/core/control/DeviceListHelper.cpp:106
 msgid "keyboard"
 msgstr "키보드"
 
-#: ../src/core/control/DeviceListHelper.cpp:106
+#: ../src/core/control/DeviceListHelper.cpp:108
 msgid "touchscreen"
 msgstr "터치스크린"
 
-#: ../src/core/control/DeviceListHelper.cpp:108
+#: ../src/core/control/DeviceListHelper.cpp:110
 msgid "touchpad"
 msgstr "터치패드"
 
-#: ../src/core/control/DeviceListHelper.cpp:111
+#: ../src/core/control/DeviceListHelper.cpp:113
 msgid "trackpoint"
 msgstr "트랙포인트"
 
-#: ../src/core/control/DeviceListHelper.cpp:113
+#: ../src/core/control/DeviceListHelper.cpp:115
 msgid "tablet pad"
 msgstr "태블릿 패드"
 
@@ -246,7 +232,7 @@ msgstr "태블릿 패드"
 msgid "Image file successfully created"
 msgstr "이미지 파일이 성공적으로 생성되었습니다"
 
-#: ../src/core/control/ExportHelper.cpp:120
+#: ../src/core/control/ExportHelper.cpp:134
 msgid "PDF file successfully created"
 msgstr "PDF 파일이 성공적으로 생성되었습니다."
 
@@ -275,8 +261,8 @@ msgid "Could not load LaTeX PDF file"
 msgstr "LaTeX PDF 파일을 불러올 수 없음"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:110
-#: ../src/core/control/xojfile/LoadHandler.cpp:478
-#: ../src/core/control/xojfile/LoadHandler.cpp:494
+#: ../src/core/control/xojfile/LoadHandler.cpp:483
+#: ../src/core/control/xojfile/LoadHandler.cpp:499
 msgid "Error reading PDF: {1}"
 msgstr "PDF를 읽는데 실패했습니다: {1}"
 
@@ -290,7 +276,7 @@ msgstr "선택할 PDF 페이지가 없습니다. 작업을 취소합니다.\n"
 msgid "PDF background missing"
 msgstr "PDF 백그라운드 누락됨"
 
-#: ../src/core/control/PrintHandler.cpp:121
+#: ../src/core/control/PrintHandler.cpp:122
 msgid "Running print operation failed with {1}"
 msgstr "{1} 에 의한 인쇄 작업 실패"
 
@@ -302,63 +288,32 @@ msgstr "파일을 삭제하지 못했습니다: {1}"
 msgid "Please delete the file manually"
 msgstr "직접 파일을 삭제해주세요"
 
-#: ../src/core/control/XournalMain.cpp:158
-msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
-msgstr "Xournal++의 새로운 오류 로그 파일이 존재합니다. 버그를 고칠 수 있도록 버그 리포트를 보내주시기 바랍니다."
-
-#: ../src/core/control/XournalMain.cpp:160
-msgid "There are recent errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
-msgstr "Xournal++의 새로운 오류 로그 파일이 다수 존재합니다. 버그를 고칠 수 있도록 버그 리포트를 보내주시기 바랍니다."
-
-#: ../src/core/control/XournalMain.cpp:163
-msgid "The most recent log file name: {1}"
-msgstr "가장 최근 로그 파일 이름: {1}"
-
-#: ../src/core/control/XournalMain.cpp:165
-msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
-msgstr "이 창이 다시 뜨는 것을 방지하려면 errorlogfiles를 삭제하세요"
-
-#: ../src/core/control/XournalMain.cpp:168
-msgid "File Bug Report"
-msgstr "파일 버그 제보"
-
-#: ../src/core/control/XournalMain.cpp:169
-msgid "Open Logfile"
-msgstr "로그 파일 열기"
-
-#: ../src/core/control/XournalMain.cpp:170
-msgid "Open Logfile directory"
-msgstr "로그 파일 디렉토리 열기"
-
-#: ../src/core/control/XournalMain.cpp:171
-msgid "Delete Logfile"
-msgstr "로그 파일 삭제"
-
-#: ../src/core/control/XournalMain.cpp:173
-msgid "Crash log"
-msgstr "충돌 로그"
-
-#: ../src/core/control/XournalMain.cpp:194
+#: ../src/core/control/XournalMain.cpp:134
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "마지막 사용 중 Xournal++이 강제 종료 되었습니다. 마지막에 작업 중이던 파일을 복구합니까?"
 
-#: ../src/core/control/XournalMain.cpp:197
+#: ../src/core/control/XournalMain.cpp:137
 msgid "Recovery file detected"
 msgstr "복구 파일 발견"
 
-#: ../src/core/control/XournalMain.cpp:198
+#: ../src/core/control/XournalMain.cpp:138
 msgid "Delete file"
 msgstr "파일 삭제"
 
-#: ../src/core/control/XournalMain.cpp:198
+#: ../src/core/control/XournalMain.cpp:138
 msgid "Restore file"
 msgstr "파일 복구하기"
 
-#: ../src/core/control/XournalMain.cpp:218
+#: ../src/core/control/XournalMain.cpp:158
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "\"{1}\" 배경 파일을 찾을 수 없습니다. 파일 이름이 바뀌었거나 파일이 이동, 삭제되었을 수 있습니다."
 
-#: ../src/core/control/XournalMain.cpp:411
+#: ../src/core/control/XournalMain.cpp:211
+#: ../src/core/control/XournalMain.cpp:218
+msgid "Error: {1}"
+msgstr "오류: {1}"
+
+#: ../src/core/control/XournalMain.cpp:351
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -372,24 +327,24 @@ msgstr "<span foreground='red' size='x-large'>다음 필수 UI 파일이 존재�
 "  현재 주소에 없음\n"
 "  {2} 에 없음"
 
-#: ../src/core/control/XournalMain.cpp:416
+#: ../src/core/control/XournalMain.cpp:356
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "이 파일 없이 실행해보겠습니다."
 
-#: ../src/core/control/XournalMain.cpp:438
-#: ../src/core/control/XournalMain.cpp:498
+#: ../src/core/control/XournalMain.cpp:378
+#: ../src/core/control/XournalMain.cpp:439
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Xournal++은 한번에 한 개의 파일만 열 수 있습니다.\n"
 "다른 파일들을 무시합니다."
 
-#: ../src/core/control/XournalMain.cpp:449
+#: ../src/core/control/XournalMain.cpp:389
 msgid "File {1} does not exist."
 msgstr "{1} 파일이 존재하지 않습니다."
 
-#: ../src/core/control/XournalMain.cpp:453
+#: ../src/core/control/XournalMain.cpp:393
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -397,55 +352,55 @@ msgstr "파일시스템 오류: {1}\n"
 "Xournal++에서 파일을 열 수 없습니다: {2}\n"
 "해당 파일을 로컬 디렉토리로 복사해 보십시오."
 
-#: ../src/core/control/XournalMain.cpp:647
+#: ../src/core/control/XournalMain.cpp:578
 msgid "Jump to Page (first Page: 1)"
 msgstr "페이지로 이동 (첫 페이지: 1)"
 
-#: ../src/core/control/XournalMain.cpp:651
+#: ../src/core/control/XournalMain.cpp:582
 msgid "Get version of xournalpp"
 msgstr "xournalpp 버전 가져오기"
 
-#: ../src/core/control/XournalMain.cpp:653
+#: ../src/core/control/XournalMain.cpp:584
 msgid "Disable audio for this session"
 msgstr "현재 세션에서 오디오 비활성화"
 
-#: ../src/core/control/XournalMain.cpp:655
+#: ../src/core/control/XournalMain.cpp:586
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:659
+#: ../src/core/control/XournalMain.cpp:590
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "지정된 PDF 파일의 배경과 함께 xopp 파일 저장"
 
-#: ../src/core/control/XournalMain.cpp:664
+#: ../src/core/control/XournalMain.cpp:595
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:673
+#: ../src/core/control/XournalMain.cpp:604
 msgid "Export FILE as PDF"
 msgstr "파일을 PDF로 내보내기"
 
-#: ../src/core/control/XournalMain.cpp:676
+#: ../src/core/control/XournalMain.cpp:607
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:682
+#: ../src/core/control/XournalMain.cpp:613
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:687
+#: ../src/core/control/XournalMain.cpp:618
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:692
+#: ../src/core/control/XournalMain.cpp:623
 msgid "Export layers progressively\n"
 "                                       In PDF export, Render layers progressively one by one.\n"
 "                                       This results in N export pages per page with N layers,\n"
@@ -453,38 +408,38 @@ msgid "Export layers progressively\n"
 "                                       The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:701
+#: ../src/core/control/XournalMain.cpp:632
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:706
+#: ../src/core/control/XournalMain.cpp:637
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:710
+#: ../src/core/control/XournalMain.cpp:641
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:714
+#: ../src/core/control/XournalMain.cpp:645
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:719
+#: ../src/core/control/XournalMain.cpp:650
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:727
+#: ../src/core/control/XournalMain.cpp:658
 msgid "Advanced export options"
 msgstr "고급 내보내기 옵션"
 
-#: ../src/core/control/XournalMain.cpp:728
+#: ../src/core/control/XournalMain.cpp:659
 msgid "Display advanced export options"
 msgstr "고급 내보내기 옵션 표시"
 
@@ -513,6 +468,7 @@ msgid "Export File"
 msgstr "파일 내보내기"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
+#: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
 msgid "Export"
 msgstr "내보내기"
 
@@ -551,19 +507,19 @@ msgstr "Xournal (호환성)"
 msgid "Save file error: {1}"
 msgstr "파일 저장 오류: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:108
+#: ../src/core/control/jobs/ImageExport.cpp:110
 msgid "Unsupported graphics format: "
 msgstr "지원되지 않는 이미지 형식: "
 
-#: ../src/core/control/jobs/ImageExport.cpp:168
+#: ../src/core/control/jobs/ImageExport.cpp:170
 msgid "Error save image #1"
 msgstr "이미지 저장 오류 #1"
 
-#: ../src/core/control/jobs/ImageExport.cpp:177
+#: ../src/core/control/jobs/ImageExport.cpp:179
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
 msgstr "PDF 배경 내보내기 오류: PDF 페이지 번호를 찾을 수 없습니다. "
 
-#: ../src/core/control/jobs/ImageExport.cpp:201
+#: ../src/core/control/jobs/ImageExport.cpp:203
 msgid "Error save image #2"
 msgstr "이미지 저장 오류 #2"
 
@@ -575,15 +531,11 @@ msgstr "PDF 내보내기"
 msgid "Save file error, can't backup: {1}"
 msgstr "파일 저장 오류, {1} 을 백업할 수 없습니다"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:55
-msgid "Failed to parse LaTeX generator path: {1}"
-msgstr "LaTeX 생성프로그램 경로 읽기 실패: {1}"
-
-#: ../src/core/control/latex/LatexGenerator.cpp:65
+#: ../src/core/control/latex/LatexGenerator.cpp:60
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "LaTeX 생성프로그램 명령 읽기 실패: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:71
+#: ../src/core/control/latex/LatexGenerator.cpp:66
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
@@ -591,15 +543,15 @@ msgstr "{1} 경로에서 LaTeX 생성 프로그램을 찾을 수 없습니다.\n
 "Flatpak에 이 프로그램이 설치된 것으로 감지되었으므로, Flatpak freedesktop Tex Live 확장을 설치해야 합니다. 예를 들어, 다음과 같은 명령어를 실행하십시오:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:76
+#: ../src/core/control/latex/LatexGenerator.cpp:71
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "{1} 경로에서 LaTeX 생성 프로그램을 찾을 수 없습니다."
 
-#: ../src/core/control/latex/LatexGenerator.cpp:84
+#: ../src/core/control/latex/LatexGenerator.cpp:79
 msgid "Could not save .tex file: {1}"
 msgstr ".tex 파일을 저장하지 못했습니다: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:99
+#: ../src/core/control/latex/LatexGenerator.cpp:94
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "{1} 을 시작할 수 없습니다:{2} (exit code {3})"
 
@@ -607,68 +559,68 @@ msgstr "{1} 을 시작할 수 없습니다:{2} (exit code {3})"
 msgid "Layer {1}"
 msgstr "{1} 레이어"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:25
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:26
 msgid "Could not load pagetemplates.ini file"
 msgstr "pagetemplates.ini 파일을 불러올 수 없음"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:29
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:30
 msgid "Plain"
 msgstr "빈 노트"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:30
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Ruled"
 msgstr "줄 노트"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "Ruled with vertical line"
 msgstr "수직 줄 노트"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 msgid "Staves"
 msgstr "오선지"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
 msgid "Graph"
 msgstr "그래프 모눈종이"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
 msgid "Dotted"
 msgstr "점 모눈종이"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
 msgid "Isometric Dotted"
 msgstr "등각 투영 점 모눈종이"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:37
 msgid "Isometric Graph"
 msgstr "등각 투영 그래프 모눈종이"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:41
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:400
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:42
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 msgid "Image"
 msgstr "이미지"
 
-#: ../src/core/control/settings/Settings.cpp:151
+#: ../src/core/control/settings/Settings.cpp:153
 msgid "%F-Note-%H-%M"
 msgstr "%F-노트-%H-%M"
 
-#: ../src/core/control/settings/Settings.cpp:153
+#: ../src/core/control/settings/Settings.cpp:154
 msgid "%{name}_annotated"
 msgstr "%{name}_주석추가됨"
 
-#: ../src/core/control/tools/EditSelection.cpp:476
+#: ../src/core/control/tools/EditSelection.cpp:478
 msgid "Arrange"
 msgstr "정렬"
 
-#: ../src/core/control/tools/EditSelection.cpp:491
+#: ../src/core/control/tools/EditSelection.cpp:493
 msgid "Bring forward"
 msgstr "앞으로 보내기"
 
-#: ../src/core/control/tools/EditSelection.cpp:502
+#: ../src/core/control/tools/EditSelection.cpp:504
 msgid "Send backward"
 msgstr "뒤로 보내기"
 
-#: ../src/core/control/tools/EditSelection.cpp:509
+#: ../src/core/control/tools/EditSelection.cpp:511
 msgid "Send to back"
 msgstr "맨 뒤로 보내기"
 
@@ -681,121 +633,121 @@ msgstr "이미지 불러오기 실패"
 msgid "Error while opening image file: "
 msgstr "이미지 파일 열기 오류: "
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:133
+#: ../src/core/control/xojfile/LoadHandler.cpp:135
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr "이 파일은 올바른 .xopp 파일이 아닙니다 (Mimetype 누락): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:141
+#: ../src/core/control/xojfile/LoadHandler.cpp:143
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr "이 파일은 올바른 .xopp 파일이 아닙니다 (잘못된 Mimetype): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:150
+#: ../src/core/control/xojfile/LoadHandler.cpp:152
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr "이 파일은 올바른 .xopp 파일이 아닙니다 (버전 누락): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:163
+#: ../src/core/control/xojfile/LoadHandler.cpp:165
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "이 파일은 올바른 .xopp 파일이 아닙니다 (버전 문자열 손상): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:172
+#: ../src/core/control/xojfile/LoadHandler.cpp:174
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr "zip 압축파일에서 content.xml 파일을 불러오지 못했습니다: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:180
+#: ../src/core/control/xojfile/LoadHandler.cpp:182
 msgid "Could not open file: \"{1}\""
 msgstr "\"{1}\" 파일을 열 수 없습니다."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:247
+#: ../src/core/control/xojfile/LoadHandler.cpp:249
 msgid "XML Parser error: {1}"
 msgstr "XML 파서 오류: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:250
+#: ../src/core/control/xojfile/LoadHandler.cpp:252
 msgid "Unknown parser error"
 msgstr "알 수 없는 구문 해석기 오류"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:261
+#: ../src/core/control/xojfile/LoadHandler.cpp:263
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "이 문서는 완전한 파일이 압니다. (파일에서 끝 부분이 누락된 것 같습니다)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:265
+#: ../src/core/control/xojfile/LoadHandler.cpp:267
 msgid "Document is corrupted (no pages found in file)"
 msgstr "이 문서는 손상되었습니다. (파일에 페이지가 없습니다)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:310
+#: ../src/core/control/xojfile/LoadHandler.cpp:312
 msgid "Unexpected root tag: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:331
+#: ../src/core/control/xojfile/LoadHandler.cpp:333
 msgid "Unexpected tag in document: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:384
-#: ../src/core/control/xojfile/LoadHandler.cpp:413
+#: ../src/core/control/xojfile/LoadHandler.cpp:387
+#: ../src/core/control/xojfile/LoadHandler.cpp:417
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:423
+#: ../src/core/control/xojfile/LoadHandler.cpp:428
 msgid "Could not read page number for cloned background image: {1}."
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:431
+#: ../src/core/control/xojfile/LoadHandler.cpp:436
 msgid "Unknown pixmap::domain type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:485
+#: ../src/core/control/xojfile/LoadHandler.cpp:490
 msgid "Unknown domain type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:523
+#: ../src/core/control/xojfile/LoadHandler.cpp:528
 msgid "Unknown background type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:548
+#: ../src/core/control/xojfile/LoadHandler.cpp:553
 msgid "Error reading width of a stroke: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:616
+#: ../src/core/control/xojfile/LoadHandler.cpp:622
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:634
+#: ../src/core/control/xojfile/LoadHandler.cpp:640
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:805
-#: ../src/core/control/xojfile/LoadHandler.cpp:821
-#: ../src/core/control/xojfile/LoadHandler.cpp:1134
-#: ../src/core/control/xojfile/LoadHandler.cpp:1148
+#: ../src/core/control/xojfile/LoadHandler.cpp:812
+#: ../src/core/control/xojfile/LoadHandler.cpp:828
+#: ../src/core/control/xojfile/LoadHandler.cpp:1141
+#: ../src/core/control/xojfile/LoadHandler.cpp:1155
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:814
-#: ../src/core/control/xojfile/LoadHandler.cpp:1141
-#: ../src/core/control/xojfile/LoadHandler.cpp:1159
+#: ../src/core/control/xojfile/LoadHandler.cpp:821
+#: ../src/core/control/xojfile/LoadHandler.cpp:1147
+#: ../src/core/control/xojfile/LoadHandler.cpp:1166
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:833
+#: ../src/core/control/xojfile/LoadHandler.cpp:840
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:842
+#: ../src/core/control/xojfile/LoadHandler.cpp:849
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1029
+#: ../src/core/control/xojfile/LoadHandler.cpp:1036
 msgid "Wrong count of points ({1})"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1045
+#: ../src/core/control/xojfile/LoadHandler.cpp:1052
 msgid "xoj-File: {1}"
 msgstr "xoj-File: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1046
+#: ../src/core/control/xojfile/LoadHandler.cpp:1053
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr "잘못된 필압 수치입니다. {2} 를 예상했으나, {1} 이 입력 되었습니다."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1178
+#: ../src/core/control/xojfile/LoadHandler.cpp:1185
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "{1} 첨부 파일에 대해 요청된 임시 파일을 찾을 수 없습니다."
 
@@ -837,11 +789,11 @@ msgstr ""
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:251
+#: ../src/core/control/xojfile/SaveHandler.cpp:253
 msgid "Could not write background \"{1}\", {2}"
 msgstr "\"{1}\" 배경을 작성할 수 없습니다, {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:370
+#: ../src/core/control/xojfile/SaveHandler.cpp:372
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "\"{1}\" 배경을 작성할 수 없습니다. 무시하고 진행합니다."
 
@@ -849,21 +801,21 @@ msgstr "\"{1}\" 배경을 작성할 수 없습니다. 무시하고 진행합니�
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "글레이드 파일 \"{1}\"을 불러오는 중 오류 발생 (\"{2}\"를 사용해 보십시오.)"
 
-#: ../src/core/gui/PageView.cpp:389
+#: ../src/core/gui/PageView.cpp:403
 msgid "Unable to play audio recording {1}"
 msgstr "오디오 녹음 {1} 을 재생할 수 없습니다."
 
-#: ../src/core/gui/PageView.cpp:923
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:81
+#: ../src/core/gui/PageView.cpp:944
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
 msgid "Loading..."
 msgstr "로딩중..."
 
-#: ../src/core/gui/PageView.cpp:980
+#: ../src/core/gui/PageView.cpp:1001
 msgid "Scroll to page {1}"
 msgstr "페이지로 스크롤 {1}"
 
-#: ../src/core/gui/PageView.cpp:982
+#: ../src/core/gui/PageView.cpp:1003
 msgid "Add missing page"
 msgstr "누락된 페이지 추가"
 
@@ -929,12 +881,12 @@ msgid "Thin"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:506
 msgid "Medium"
 msgstr "중간"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:492
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:507
 msgid "Thick"
 msgstr "두꺼운"
 
@@ -951,22 +903,24 @@ msgid "Tool - don't change"
 msgstr "도구 - 바꾸지 않기"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:79
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:373
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:378
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:494
 msgid "Pen"
 msgstr "펜"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:80
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:382
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:387
 msgid "Eraser"
 msgstr "지우개"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:81
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:401
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:495
 msgid "Highlighter"
 msgstr "형광펜"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:82
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:398
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
 msgid "Text"
 msgstr "텍스트"
 
@@ -976,96 +930,108 @@ msgid "Insert image"
 msgstr "이미지 추가"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
+msgid "Laser Pointer - Pen"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
+msgid "Laser Pointer - Hightlighter"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 msgid "Vertical space"
 msgstr "수직 공간"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
 msgid "Select region"
 msgstr "영역 선택"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
 msgid "Select rectangle"
 msgstr "직사각형 선택"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
 msgid "Select multi layer region"
 msgstr "다중 레이어 영역 선택"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
 msgid "Select multi layer rect"
 msgstr "다중 레이어 사각형 선택"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:447
 msgid "Hand"
 msgstr "핸드"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
 msgid "Floating Toolbox (experimental)"
 msgstr "플로팅 도구상자 (테스트중)"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Select Text from pdf"
 msgstr "PDF에서 텍스트 선택"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
 msgid "Select Area Text from pdf"
 msgstr "PDF로부터 영역 텍스트 선택"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:117
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Drawing Type - don't change"
 msgstr "그리기 타입 - 바꾸지 않기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
 msgid "Normal drawing"
 msgstr "일반 그리기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Draw Line"
 msgstr "선 그리기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw Rectangle"
 msgstr "직사각형 그리기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Draw Ellipse"
 msgstr "타원 그리기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Draw Arrow"
 msgstr "화살표 그리기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Draw Double Arrow"
 msgstr "양쪽 화살표 그리기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Draw Coordinate System"
 msgstr ""
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
 msgstr "도형 자동인식"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Draw Spline"
 msgstr "스플라인 그리기"
+
+#: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
+msgid "Export Logs"
+msgstr ""
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:115
 msgid "Failed to parse external editor command: {1}"
@@ -1114,31 +1080,31 @@ msgstr "이미지 파일"
 msgid "Custom"
 msgstr "사용자 정의"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:47
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:49
 msgid "System Default"
 msgstr "시스템 기본 설정"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:65
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:67
 msgid "Previously selected language not available anymore!"
 msgstr "이전에 선택된 언어를 더 이상 사용할 수 없습니다!"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:55
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:56
 msgid "LaTeX editor theme:"
 msgstr "LaTeX 에디터 테마:"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:65
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:66
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "Xournal++ 빌드 중 GtkSourceView가 비활성화 되었습니다! 몇몇 설정은 사용할 수 없게 됩니다."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:157
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:158
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "{1} 에서 글로벌 템플릿 파일을 열 수 없습니다. 파일이 존재합니까?"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:168
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:169
 msgid "Sample LaTeX file generated successfully."
 msgstr "샘플 LaTeX 파일이 성공적으로 생성되었습니다."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:170
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:171
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "오류: {1}. {2} 의 내용을 확인 하십시오."
 
@@ -1147,7 +1113,7 @@ msgid "Error: {1} is not a regular file. Please check your LaTeX template file s
 msgstr "오류: {1} 는 정상적인 파일이 아닙니다. LaTeX 템플릿 파일 설정을 확인 하십시오. "
 
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:115
-#: ../src/core/gui/dialog/XojSaveDlg.cpp:79
+#: ../src/core/gui/dialog/XojSaveDlg.cpp:84
 msgid "Save File"
 msgstr "파일 저장"
 
@@ -1204,15 +1170,11 @@ msgid "<b>{1}</b>\n"
 msgstr "<b>{1}</b>\n"
 "{2}{3}"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:77
-msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
-msgstr "<b>기기를 찾을 수 없습니다. 문제가 있는 것 같습니다 - 시간 되신다면 버그 리포트를 작성해 주세요?</b>"
-
-#: ../src/core/gui/dialog/SettingsDialog.cpp:283
+#: ../src/core/gui/dialog/SettingsDialog.cpp:275
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "이 설정을 바꾸기 위해 필압 감지 또는 필압 예측을 활성화 하십시오!"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:287
+#: ../src/core/gui/dialog/SettingsDialog.cpp:279
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "입력 필압을 조절합니다. 필압 배수로 곱한 값만큼 필압을 증가시킵니다. 만약 최소 필압보다 작을 경우, 최소 필압을 사용합니다."
 
@@ -1220,29 +1182,29 @@ msgstr "입력 필압을 조절합니다. 필압 배수로 곱한 값만큼 필�
 msgid "Built-in palettes"
 msgstr "내장된 팔레트"
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:32
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:33
 msgid "User palettes"
 msgstr "사용자 팔레트"
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:96
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:98
 msgid "<i>The palettes shown below are obtained from the <a href=\"file://{1}\">Built-in palettes</a> and <a href=\"file://{2}\">User palettes</a> directories:</i>\n"
 msgstr "<i>아래 보여지는 팔레트는 <a href=\"file://{1}\">내장된 팔레트</a>와 <a href=\"file://{2}\">사용자 팔레트</a> 디렉토리에서 가져왔습니다:</i>\n"
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:109
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:111
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
 "Using the default until another palette is configured."
 msgstr "팔레트 파일(예: .gpl 확장자 파일)을 찾을 수 없습니다.\n"
 "다른 팔레트가 설정되기 전까지 기본 설정을 사용합니다."
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:151
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:153
 msgid "Error"
 msgstr "오류"
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:163
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:165
 msgid "Name"
 msgstr "이름"
 
-#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:166
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:168
 msgid "Palette has no Name"
 msgstr "팔레트에 이름이 없습니다"
 
@@ -1276,7 +1238,7 @@ msgstr "템플릿 파일 열기"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:136
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:197
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:285
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:290
 msgid "Open file"
 msgstr "파일 열기"
 
@@ -1478,276 +1440,284 @@ msgstr ""
 msgid "Font"
 msgstr "글꼴"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:68
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:69
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "기본 toolbar.ini 파일 {1}을 읽을 수 없습니다.\n"
 "툴바를 사용할 수 없습니다."
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:77
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:78
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "사용자 정의된 toolbar.ini 파일 {1}을 읽을 수 없습니다.\n"
 "툴바를 사용할 수 없습니다."
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:284
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:289
 msgid "New Xournal"
 msgstr "새 Xournal"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:287
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:292
 msgid "Export as PDF"
 msgstr "PDF로 내보내기"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:288
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:293
 msgid "Print"
 msgstr "인쇄"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:297
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:302
 #: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo"
 msgstr "되돌리기"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:300
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:305
 #: ../src/core/undo/UndoRedoHandler.cpp:191
 msgid "Redo"
 msgstr "다시 실행"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:303
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:308
 msgid "Cut"
 msgstr "잘라내기"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:304
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:309
 msgid "Copy"
 msgstr "복사"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:305
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:310
 #: ../src/core/undo/AddUndoAction.cpp:72
 msgid "Paste"
 msgstr "붙여넣기"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:307
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:312
 msgid "Search"
 msgstr "검색"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:309
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:314
 #: ../src/core/undo/DeleteUndoAction.cpp:74
 msgid "Delete"
 msgstr "삭제"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:312
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:317
 msgid "Rotation Snapping"
 msgstr "회전 자동 맞춤"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:313
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:318
 msgid "Grid Snapping"
 msgstr "그리드 자동 맞춤"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:321
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:326
 msgid "Paired pages"
 msgstr "두 쪽 보기"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:323
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:328
 msgid "Presentation mode"
 msgstr "발표 모드"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:324
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Toggle fullscreen"
 msgstr "전체 화면 전환"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:325
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:330
 msgid "Toggle sidebar"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:327
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:332
 msgid "Manage Toolbars"
 msgstr "도구 모음 관리"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:329
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:334
 msgid "Customize Toolbars"
 msgstr "툴바 사용자 정의"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:331
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Zoom out"
 msgstr "축소"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:332
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 msgid "Zoom in"
 msgstr "확대"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:333
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:338
 msgid "Zoom fit to screen"
 msgstr "화면에 맞춤"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:334
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:339
 msgid "Zoom to 100%"
 msgstr "확대／축소 100%"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:341
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:346
 msgid "Go to first page"
 msgstr "첫 페이지로 이동"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:342
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:451
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:347
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
 msgid "Back"
 msgstr "이전"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:343
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:348
 msgid "Go to page"
 msgstr "페이지로 이동"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:344
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:349
 msgid "Next"
 msgstr "다음"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:345
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:350
 msgid "Go to last page"
 msgstr "마지막 페이지로 이동"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:348
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:353
 msgid "Go to previous layer"
 msgstr "이전 레이어로 이동"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:349
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:354
 msgid "Go to next layer"
 msgstr "다음 레이어로 이동"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:350
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:355
 msgid "Go to top layer"
 msgstr "최상위 레이어로 이동"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:353
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:358
 msgid "Next annotated page"
 msgstr "주석 추가된 다음 페이지"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:359
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:364
 msgid "Insert page"
 msgstr "페이지 추가"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:361
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:366
 msgid "Delete current page"
 msgstr "현재 페이지 삭제"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:378
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:386
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:374
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:383
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:391
 msgid "standard"
 msgstr "일반"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:370
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:388
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:375
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:393
 msgid "dashed"
 msgstr "파선"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:371
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:390
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:376
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
 msgid "dash-/ dotted"
 msgstr "1점 쇄선"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:372
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:392
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:377
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:397
 msgid "dotted"
 msgstr "점선"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:379
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:384
 msgid "whiteout"
 msgstr "흰색 덧칠"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:380
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:385
 msgid "delete stroke"
 msgstr "획 삭제"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:399
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Add/Edit TeX"
 msgstr "Tex 추가/편집"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:401
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 msgid "Default Tool"
 msgstr "기본 도구:"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:14
 msgid "Select Linear PDF Text"
 msgstr "한 줄 PDF 텍스트 선택"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:405
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Select PDF Text in Rectangle"
 msgstr "사각형으로 PDF 텍스트 선택"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Setsquare"
 msgstr "삼각자"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Compass"
 msgstr "컴퍼스"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
+msgid "Toggle Touch Drawing"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
 msgid "Select Region"
 msgstr "영역 선택"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:12
 msgid "Select Rectangle"
 msgstr "직사각형 선택"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Select Multi-Layer Region"
 msgstr "다중 레이어 영역 선택"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Select Multi-Layer Rectangle"
 msgstr "다중 레이어 사각형 선택"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 msgid "Select Object"
 msgstr "오브젝트 선택"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:436
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Vertical Space"
 msgstr "수직 공간"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 msgid "Play Object"
 msgstr "객체 실행"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:452
 msgid "Record Audio / Stop Recording"
 msgstr "오디오 녹음 / 중지"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:454
 msgid "Pause / Play"
 msgstr "일시정지 / 재생"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:447
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:455
 msgid "Stop"
 msgstr "정지"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:449
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:457
 msgid "Forward"
 msgstr "앞으로"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:493
+msgid "Laser pointer"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:499
 msgid "Fill"
 msgstr "채우기"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:500
 msgid "Fill Opacity"
 msgstr "채우기 불투명도"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:503
 msgid "Very Fine"
 msgstr "매우 가늘게"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:489
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:504
 msgid "Fine"
 msgstr "부드럽게"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:494
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:509
 msgid "Very Thick"
 msgstr "매우 두껍게"
 
@@ -1812,68 +1782,68 @@ msgstr "드롭다운 메뉴 선택"
 msgid "Zoom Slider"
 msgstr "확대 슬라이더"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:119
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:120
 msgctxt "Color"
 msgid "Black"
 msgstr "검정"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:120
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:121
 msgctxt "Color"
 msgid "Green"
 msgstr "초록"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:121
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:122
 msgctxt "Color"
 msgid "Light Blue"
 msgstr "밝은 파랑"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:122
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:123
 msgctxt "Color"
 msgid "Light Green"
 msgstr "밝은 초록"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:123
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:124
 msgctxt "Color"
 msgid "Blue"
 msgstr "파랑"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:124
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:125
 msgctxt "Color"
 msgid "Gray"
 msgstr "회색"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:125
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:126
 msgctxt "Color"
 msgid "Red"
 msgstr "빨강"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:126
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:127
 msgctxt "Color"
 msgid "Magenta"
 msgstr "진홍"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:127
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:128
 msgctxt "Color"
 msgid "Orange"
 msgstr "주황"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:128
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:129
 msgctxt "Color"
 msgid "Yellow"
 msgstr "노랑"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:129
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:130
 msgctxt "Color"
 msgid "White"
 msgstr "흰색"
 
-#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
+#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:76
 msgctxt "as a noun: a copy of"
 msgid "Copy"
 msgstr "복사"
 
-#: ../src/core/model/Document.cpp:331 ../src/core/model/Document.cpp:340
-#: ../src/core/model/Document.cpp:343
+#: ../src/core/model/Document.cpp:360 ../src/core/model/Document.cpp:369
+#: ../src/core/model/Document.cpp:372
 msgid "Document not loaded! ({1}), {2}"
 msgstr "문서가 로드되지 않았습니다! ({1}), {2}"
 
@@ -1894,14 +1864,14 @@ msgid "Background"
 msgstr "배경"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:46
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:196
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:242
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:244
 msgid "No pages to export!"
 msgstr "내보내기할 페이지가 없습니다!"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:54
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:205
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:247
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:207
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:249
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "PDF Cairo surface을 시작하지 못했습니다."
 
@@ -1917,11 +1887,11 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: ../src/core/pdf/base/QPdfExport.cpp:172
+#: ../src/core/pdf/base/QPdfExport.cpp:173
 msgid "Error with overlay or final export:"
 msgstr ""
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:126
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:128
 msgid "Error while finalizing the PDF Cairo surface"
 msgstr "PDF Cairo surface 마무리 중 오류"
 
@@ -2028,7 +1998,7 @@ msgstr "이동"
 msgid "Page background changed"
 msgstr "페이지 배경 변경됨"
 
-#: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
+#: ../src/core/undo/PageSizeChangeUndoAction.cpp:42
 msgid "Page size changed"
 msgstr ""
 
@@ -2116,17 +2086,17 @@ msgstr "\"{1}\"파일을 닫는 중 오류 발생"
 msgid "Error code {1}"
 msgstr "오류 코드 {1}"
 
-#: ../src/util/PathUtil.cpp:232
+#: ../src/util/PathUtil.cpp:310
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "파일을 열 수 없습니다. 수동으로 직접 파일을 열어야 합니다.\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:342
+#: ../src/util/PathUtil.cpp:425
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:351
+#: ../src/util/PathUtil.cpp:434
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "다음 폴더를 생성할 수 없음: {1}\n"
@@ -2136,17 +2106,22 @@ msgstr "다음 폴더를 생성할 수 없음: {1}\n"
 msgid "Error {1} executing system command: {2}"
 msgstr "시스템 커맨드 {2} 실행 중 오류 {1} 발생"
 
-#: ../src/util/XojMsgBox.cpp:191
+#: ../src/util/XojMsgBox.cpp:186
+msgid "The file {1} already exists! Do you want to replace it?"
+msgstr ""
+
+#: ../src/util/XojMsgBox.cpp:190
 msgid "Select another name"
 msgstr "다른 이름 선택"
 
-#: ../src/util/XojMsgBox.cpp:192
+#: ../src/util/XojMsgBox.cpp:191
 msgid "Replace"
 msgstr "바꾸기"
 
-#: ../src/util/XojMsgBox.cpp:215
-msgid "There was an error displaying help: {1}"
-msgstr "도움말을 표시하는데 오류가 발생해습니다: {1}"
+#: ../src/util/XojMsgBox.cpp:216
+msgid "Unable to open the link: {1}\n"
+"{2}"
+msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
@@ -2220,19 +2195,148 @@ msgstr "라이센스"
 msgid "Authors"
 msgstr "제작자들"
 
-#: ../ui/about.glade:397 ../ui/toolbarCustomizeDialog.glade:73
-#: ../ui/toolbarManageDialog.glade:134
+#: ../ui/about.glade:397 ../ui/crashDialog.glade:174
+#: ../ui/toolbarCustomizeDialog.glade:73 ../ui/toolbarManageDialog.glade:134
 msgid "Close"
 msgstr "닫기"
 
-#: ../ui/backgroundSelection.glade:49 ../ui/exportSettings.glade:457
-#: ../ui/extEdTexDialog.glade:168 ../ui/goto.glade:108
-#: ../ui/intEdTexDialog.glade:203 ../ui/pageFormat.glade:346
-#: ../ui/pageTemplate.glade:278 ../ui/plugin.glade:114
-#: ../ui/renameLayerDialog.glade:71 ../ui/selectOpacity.glade:134
-#: ../ui/settings.glade:6431
+#: ../ui/backgroundSelection.glade:49 ../ui/deviceList.glade:94
+#: ../ui/exportSettings.glade:457 ../ui/extEdTexDialog.glade:168
+#: ../ui/goto.glade:108 ../ui/intEdTexDialog.glade:203
+#: ../ui/pageFormat.glade:346 ../ui/pageTemplate.glade:278
+#: ../ui/plugin.glade:114 ../ui/renameLayerDialog.glade:71
+#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6520
 msgid "Ok"
 msgstr "확인"
+
+#: ../ui/crashDialog.glade:7
+msgid "Crash report"
+msgstr ""
+
+#: ../ui/crashDialog.glade:23
+msgid "Oops... Xournal++ encountered a fatal error"
+msgstr ""
+
+#: ../ui/crashDialog.glade:39
+msgid "Please consider filling a bug report (see button below). Attach the following log to your report."
+msgstr ""
+
+#: ../ui/crashDialog.glade:56
+msgid "Your document has been saved in:"
+msgstr ""
+
+#: ../ui/crashDialog.glade:92
+msgid "Execution log:"
+msgstr ""
+
+#: ../ui/crashDialog.glade:140
+msgid "Open your web browser with a partially pre-filled bug report"
+msgstr ""
+
+#: ../ui/crashDialog.glade:145
+msgid "Create a bug report"
+msgstr ""
+
+#: ../ui/crashDialog.glade:164
+msgctxt "github is a name - do not try to translate it"
+msgid "(this will open github in your browser)"
+msgstr ""
+
+#: ../ui/deviceList.glade:7
+msgid "Known devices"
+msgstr ""
+
+#: ../ui/deviceList.glade:46
+msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:42
+msgid "Try out your devices in the area below"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:70 ../ui/settings.glade:1630
+#: ../ui/settingsDeviceClassConfig.glade:35
+msgid "Mouse"
+msgstr "마우스"
+
+#: ../ui/deviceTestingArea.glade:82
+msgctxt "mouse button"
+msgid "Left"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:96
+msgctxt "mouse button"
+msgid "Middle"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:110
+msgctxt "mouse button"
+msgid "Right"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:124 ../ui/settings.glade:2170
+msgid "Stylus"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:136 ../ui/deviceTestingArea.glade:190
+msgctxt "the tip of the stylus"
+msgid "Tip"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:150 ../ui/settings.glade:1987
+msgid "Button 1"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:164 ../ui/settings.glade:2019
+msgid "Button 2"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:256 ../ui/settings.glade:2250
+#: ../ui/settings.glade:2838 ../ui/settingsDeviceClassConfig.glade:38
+msgid "Touchscreen"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:374
+msgid "In use"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:388 ../ui/deviceTestingArea.glade:402
+msgctxt "stylus hover"
+msgid "Hover"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:443
+msgid "Show logs"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:455
+msgid "Export debug info"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:477
+msgid "To clear the logs, simply close and reopen the settings dialog"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:491
+msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
+"Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:500
+msgid "Emulate stylus tip contact on button press"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:547
+msgid "<i>Change the device class below if your device is not correctly recognized (e.g. your active stylus shows up as touchscreen)</i>"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:568
+msgid "Last device used:"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:588
+msgid "Show all known devices"
+msgstr ""
 
 #: ../ui/exportSettings.glade:36
 msgid "Resolution"
@@ -2246,8 +2350,8 @@ msgstr "너비"
 msgid "Height"
 msgstr "높이"
 
-#: ../ui/exportSettings.glade:53 ../ui/settings.glade:254
-#: ../ui/settings.glade:271 ../ui/settings.glade:3755
+#: ../ui/exportSettings.glade:53 ../ui/settings.glade:260
+#: ../ui/settings.glade:277 ../ui/settings.glade:3735
 msgid "None"
 msgstr "없음"
 
@@ -2619,56 +2723,56 @@ msgstr ""
 msgid "Opacity settings"
 msgstr ""
 
-#: ../ui/settings.glade:257
+#: ../ui/settings.glade:263
 msgid "Arithmetic mean"
 msgstr ""
 
-#: ../ui/settings.glade:260
+#: ../ui/settings.glade:266
 msgid "Velocity based Gaussian weights"
 msgstr ""
 
-#: ../ui/settings.glade:274
+#: ../ui/settings.glade:280
 msgid "Deadzone"
 msgstr ""
 
-#: ../ui/settings.glade:277
+#: ../ui/settings.glade:283
 msgid "Inertia"
 msgstr ""
 
-#: ../ui/settings.glade:285
+#: ../ui/settings.glade:291
 msgid "Xournal++ Preferences"
 msgstr ""
 
-#: ../ui/settings.glade:346
+#: ../ui/settings.glade:352
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xopp\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
 msgstr ""
 
-#: ../ui/settings.glade:365
+#: ../ui/settings.glade:371
 msgid "Enable Autosaving"
 msgstr ""
 
-#: ../ui/settings.glade:388
+#: ../ui/settings.glade:394
 msgid "every"
 msgstr ""
 
-#: ../ui/settings.glade:415
+#: ../ui/settings.glade:421
 msgid "minutes"
 msgstr ""
 
-#: ../ui/settings.glade:443
+#: ../ui/settings.glade:449
 msgid "Autosaving"
 msgstr ""
 
-#: ../ui/settings.glade:469
+#: ../ui/settings.glade:475
 msgid "<i>This name will be proposed if you save a new document.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:502 ../ui/settings.glade:671
+#: ../ui/settings.glade:508 ../ui/settings.glade:677
 msgid "Default name: "
 msgstr ""
 
-#: ../ui/settings.glade:541
+#: ../ui/settings.glade:547
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%A\t\tFull weekday name (e.g. Thursday)\n"
 "%b\t\tAbbreviated month name (e.g. Aug)\n"
@@ -2695,19 +2799,19 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "Illegal characters are replaced with \"_\""
 msgstr ""
 
-#: ../ui/settings.glade:588 ../ui/settings.glade:758
+#: ../ui/settings.glade:594 ../ui/settings.glade:764
 msgid "Available Placeholders"
 msgstr ""
 
-#: ../ui/settings.glade:612
+#: ../ui/settings.glade:618
 msgid "Default Save Name"
 msgstr ""
 
-#: ../ui/settings.glade:638
+#: ../ui/settings.glade:644
 msgid "<i>This name will be proposed if you export a document to PDF.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:709
+#: ../ui/settings.glade:715
 msgid "%{name}\tThe filename (if any) of the PDF background\n"
 "%{file}\t\tThe saved filename of the file\n"
 "%a\t\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -2736,1047 +2840,1026 @@ msgid "%{name}\tThe filename (if any) of the PDF background\n"
 "Illegal characters are replaced with \"_\""
 msgstr ""
 
-#: ../ui/settings.glade:782
+#: ../ui/settings.glade:788
 msgid "Default Pdf export name"
 msgstr ""
 
-#: ../ui/settings.glade:807
+#: ../ui/settings.glade:813
 msgid "Enable Autoloading of Journals"
 msgstr ""
 
-#: ../ui/settings.glade:812
+#: ../ui/settings.glade:818
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
 msgstr ""
 
-#: ../ui/settings.glade:823
+#: ../ui/settings.glade:829
 msgid "Enable autoloading of most recent file on application startup"
 msgstr ""
 
-#: ../ui/settings.glade:828
+#: ../ui/settings.glade:834
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
 msgstr ""
 
-#: ../ui/settings.glade:843
+#: ../ui/settings.glade:849
 msgid "Autoloading"
 msgstr ""
 
-#: ../ui/settings.glade:871
+#: ../ui/settings.glade:877
 msgid "Load / Save"
 msgstr "불러오기 / 저장"
 
-#: ../ui/settings.glade:917
-msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
-msgstr ""
-
-#: ../ui/settings.glade:951
+#: ../ui/settings.glade:929
 msgid "Input Devices"
 msgstr ""
 
-#: ../ui/settings.glade:985
+#: ../ui/settings.glade:963
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1003
-msgid "Drag LEFT from start point acts like shift key is being held.\n"
-"\t    Drag UP acts as if Control key is being held.\n\n"
-"            Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
-"\t    <i>Useful for operating without keyboard.</i>"
-msgstr ""
-
-#: ../ui/settings.glade:1014
-msgid "Merge button events with stylus tip events\n"
-"\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr ""
-
-#: ../ui/settings.glade:1033
+#: ../ui/settings.glade:981
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1041
+#: ../ui/settings.glade:989
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1059
+#: ../ui/settings.glade:1007
 msgid "Options"
 msgstr "옵션"
 
-#: ../ui/settings.glade:1089
+#: ../ui/settings.glade:1037
 msgid "Averaging method"
 msgstr ""
 
-#: ../ui/settings.glade:1122
+#: ../ui/settings.glade:1070
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1138
+#: ../ui/settings.glade:1086
 msgid "Buffersize"
 msgstr ""
 
-#: ../ui/settings.glade:1150
+#: ../ui/settings.glade:1098
 msgid "20"
 msgstr ""
 
-#: ../ui/settings.glade:1167
+#: ../ui/settings.glade:1115
 msgid "Deadzone radius"
 msgstr ""
 
-#: ../ui/settings.glade:1179
+#: ../ui/settings.glade:1127
 msgid "1,30"
 msgstr ""
 
-#: ../ui/settings.glade:1197 ../ui/settings.glade:1209
+#: ../ui/settings.glade:1145 ../ui/settings.glade:1157
 msgctxt "Drag = Noun: force opposing the movement"
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr ""
 
-#: ../ui/settings.glade:1198
+#: ../ui/settings.glade:1146
 msgctxt "Noun: force opposing the movement"
 msgid "Drag"
 msgstr "드래그"
 
-#: ../ui/settings.glade:1211
+#: ../ui/settings.glade:1159
 msgid "0,4"
 msgstr ""
 
-#: ../ui/settings.glade:1229 ../ui/settings.glade:1241
+#: ../ui/settings.glade:1177 ../ui/settings.glade:1189
 msgctxt "Mass = Noun: physics term, related to weight"
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
 msgstr ""
 
-#: ../ui/settings.glade:1230
+#: ../ui/settings.glade:1178
 msgctxt "Noun: physics term, related to weight"
 msgid "Mass"
 msgstr ""
 
-#: ../ui/settings.glade:1243
+#: ../ui/settings.glade:1191
 msgid "5"
 msgstr ""
 
-#: ../ui/settings.glade:1261 ../ui/settings.glade:1281
+#: ../ui/settings.glade:1209 ../ui/settings.glade:1229
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
 msgstr ""
 
-#: ../ui/settings.glade:1263
+#: ../ui/settings.glade:1211
 msgid "0,50"
 msgstr ""
 
-#: ../ui/settings.glade:1295
+#: ../ui/settings.glade:1243
 msgid "Preprocessor"
 msgstr ""
 
-#: ../ui/settings.glade:1326
+#: ../ui/settings.glade:1274
 msgid "Cusp detection"
 msgstr ""
 
-#: ../ui/settings.glade:1343
+#: ../ui/settings.glade:1291
 msgid "Finalize the stroke"
 msgstr ""
 
-#: ../ui/settings.glade:1348
+#: ../ui/settings.glade:1296
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
 msgstr ""
 
-#: ../ui/settings.glade:1366
+#: ../ui/settings.glade:1314
 msgid "Input stabilization"
 msgstr ""
 
-#: ../ui/settings.glade:1397
+#: ../ui/settings.glade:1345
 msgid "Indent using spaces"
 msgstr ""
 
-#: ../ui/settings.glade:1419
+#: ../ui/settings.glade:1367
 msgid "Number of Spaces : "
 msgstr ""
 
-#: ../ui/settings.glade:1431
+#: ../ui/settings.glade:1379
 msgid "Number of spaces inserted with tab."
 msgstr ""
 
-#: ../ui/settings.glade:1433
+#: ../ui/settings.glade:1381
 msgid "4"
 msgstr ""
 
-#: ../ui/settings.glade:1461
+#: ../ui/settings.glade:1409
 msgid "Tab"
 msgstr ""
 
-#: ../ui/settings.glade:1492
+#: ../ui/settings.glade:1440
 msgid "Input System"
 msgstr ""
 
-#: ../ui/settings.glade:1537
+#: ../ui/settings.glade:1485
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1571
+#: ../ui/settings.glade:1519
+msgid "Left Mouse Button"
+msgstr ""
+
+#: ../ui/settings.glade:1551
 msgid "Middle Mouse Button"
 msgstr ""
 
-#: ../ui/settings.glade:1603
+#: ../ui/settings.glade:1583
 msgid "Right Mouse Button"
 msgstr ""
 
-#: ../ui/settings.glade:1619
+#: ../ui/settings.glade:1599
 msgid "Mouse Buttons"
 msgstr ""
 
-#: ../ui/settings.glade:1650 ../ui/settingsDeviceClassConfig.glade:35
-msgid "Mouse"
-msgstr "마우스"
-
-#: ../ui/settings.glade:1697
+#: ../ui/settings.glade:1677
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1711
+#: ../ui/settings.glade:1691
 msgid "Enable Pressure Sensitivity"
 msgstr ""
 
-#: ../ui/settings.glade:1741
+#: ../ui/settings.glade:1721
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1763
+#: ../ui/settings.glade:1743
 msgid "Minimum Pressure:"
 msgstr ""
 
-#: ../ui/settings.glade:1774
+#: ../ui/settings.glade:1754
 msgid "Pressure Multiplier: "
 msgstr ""
 
-#: ../ui/settings.glade:1833
+#: ../ui/settings.glade:1813
 msgid "Sensitivity Scale"
 msgstr ""
 
-#: ../ui/settings.glade:1849
+#: ../ui/settings.glade:1829
 msgid "Pressure Sensitivity"
 msgstr ""
 
-#: ../ui/settings.glade:1873
+#: ../ui/settings.glade:1853
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1891
+#: ../ui/settings.glade:1871
 msgid "Ignore the first"
 msgstr ""
 
-#: ../ui/settings.glade:1909
+#: ../ui/settings.glade:1889
 msgid "1"
 msgstr ""
 
-#: ../ui/settings.glade:1925
+#: ../ui/settings.glade:1905
 msgid "events"
 msgstr ""
 
-#: ../ui/settings.glade:1946
+#: ../ui/settings.glade:1926
 msgid "Artifact workaround"
 msgstr ""
 
-#: ../ui/settings.glade:1973
+#: ../ui/settings.glade:1953
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:2007
-msgid "Button 1"
-msgstr ""
-
-#: ../ui/settings.glade:2039
-msgid "Button 2"
-msgstr ""
-
-#: ../ui/settings.glade:2087
+#: ../ui/settings.glade:2067
 msgid "Stylus Buttons"
 msgstr ""
 
-#: ../ui/settings.glade:2119
+#: ../ui/settings.glade:2099
 msgid "Stylus-based eraser is visible"
 msgstr ""
 
-#: ../ui/settings.glade:2134
+#: ../ui/settings.glade:2114
 msgctxt "eraser is never visible"
 msgid "Never"
 msgstr ""
 
-#: ../ui/settings.glade:2135
+#: ../ui/settings.glade:2115
 msgctxt "eraser is always visible"
 msgid "Always"
 msgstr ""
 
-#: ../ui/settings.glade:2136
+#: ../ui/settings.glade:2116
 msgctxt "eraser is only visible when floating"
 msgid "When floating"
 msgstr ""
 
-#: ../ui/settings.glade:2137
+#: ../ui/settings.glade:2117
 msgctxt "eraser is only visible when touching the screen"
 msgid "When touching"
 msgstr ""
 
-#: ../ui/settings.glade:2159
+#: ../ui/settings.glade:2139
 msgid "Eraser visibility"
 msgstr ""
 
-#: ../ui/settings.glade:2190
-msgid "Stylus"
-msgstr ""
-
-#: ../ui/settings.glade:2237
+#: ../ui/settings.glade:2217
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:2270 ../ui/settings.glade:2858
-#: ../ui/settingsDeviceClassConfig.glade:39
-msgid "Touchscreen"
-msgstr ""
-
-#: ../ui/settings.glade:2297
+#: ../ui/settings.glade:2277
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:2311
+#: ../ui/settings.glade:2291
 msgid "Enable internal Hand Recognition"
 msgstr ""
 
-#: ../ui/settings.glade:2341
+#: ../ui/settings.glade:2321
 msgid "Disabling Method"
 msgstr ""
 
-#: ../ui/settings.glade:2352
+#: ../ui/settings.glade:2332
 msgid "Timeout"
 msgstr ""
 
-#: ../ui/settings.glade:2366
+#: ../ui/settings.glade:2346
 msgid "Autodetect"
 msgstr "자동감지"
 
-#: ../ui/settings.glade:2395
+#: ../ui/settings.glade:2375
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:2440
+#: ../ui/settings.glade:2420
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
 msgstr ""
 
-#: ../ui/settings.glade:2463
+#: ../ui/settings.glade:2443
 msgid "Enable"
 msgstr "활성화"
 
-#: ../ui/settings.glade:2474
+#: ../ui/settings.glade:2454
 msgid "Disable"
 msgstr "비활성화"
 
-#: ../ui/settings.glade:2507 ../ui/settings.glade:2520
+#: ../ui/settings.glade:2487 ../ui/settings.glade:2500
 msgid "Test"
 msgstr "테스트"
 
-#: ../ui/settings.glade:2553
+#: ../ui/settings.glade:2533
 msgid "Custom Commands (for Method \"Custom\")"
 msgstr ""
 
-#: ../ui/settings.glade:2576
+#: ../ui/settings.glade:2556
 msgid "Hand Recognition"
 msgstr ""
 
-#: ../ui/settings.glade:2603
+#: ../ui/settings.glade:2583
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:2617
+#: ../ui/settings.glade:2597
 msgid "Enable zoom gestures (requires restart)"
 msgstr ""
 
-#: ../ui/settings.glade:2635
+#: ../ui/settings.glade:2615
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues.\n"
 "This setting can make it easier to draw with touch. "
 msgstr ""
 
-#: ../ui/settings.glade:2641
+#: ../ui/settings.glade:2621
 msgid "Start zooming after a distance "
 msgstr ""
 
-#: ../ui/settings.glade:2653
+#: ../ui/settings.glade:2633
 msgid "1.0"
 msgstr ""
 
-#: ../ui/settings.glade:2668
+#: ../ui/settings.glade:2648
 msgid "% greater than the initial distance between the two touches."
 msgstr ""
 
-#: ../ui/settings.glade:2706
+#: ../ui/settings.glade:2686
 msgid "Zoom Gestures"
 msgstr ""
 
-#: ../ui/settings.glade:2733
+#: ../ui/settings.glade:2713
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:2747
+#: ../ui/settings.glade:2727
 msgid "Enable touch drawing"
 msgstr ""
 
-#: ../ui/settings.glade:2752
+#: ../ui/settings.glade:2732
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
 msgstr ""
 
-#: ../ui/settings.glade:2767
+#: ../ui/settings.glade:2747
 msgid "Touch Drawing"
 msgstr ""
 
-#: ../ui/settings.glade:2794
+#: ../ui/settings.glade:2774
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:2808
+#: ../ui/settings.glade:2788
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
 msgstr ""
 
-#: ../ui/settings.glade:2827
+#: ../ui/settings.glade:2807
 msgid "Touch Scrolling"
 msgstr ""
 
-#: ../ui/settings.glade:2914
+#: ../ui/settings.glade:2894
 msgid "Show Menubar on Startup"
 msgstr ""
 
-#: ../ui/settings.glade:2932
+#: ../ui/settings.glade:2912
 msgid "<i>Toggle visibility of menubar with F10</i>"
 msgstr ""
 
-#: ../ui/settings.glade:2950
+#: ../ui/settings.glade:2930
 msgid "Show filepath in title bar"
 msgstr ""
 
-#: ../ui/settings.glade:2965
+#: ../ui/settings.glade:2945
 msgid "Show page number in title bar"
 msgstr ""
 
-#: ../ui/settings.glade:3005
+#: ../ui/settings.glade:2985
 msgid "Border color for current page and other selections"
 msgstr ""
 
-#: ../ui/settings.glade:3019
+#: ../ui/settings.glade:2999
 msgid "Border color"
 msgstr ""
 
-#: ../ui/settings.glade:3032
+#: ../ui/settings.glade:3012
 msgid "Background color between pages"
 msgstr ""
 
-#: ../ui/settings.glade:3058
+#: ../ui/settings.glade:3038
 msgid "Selection Color (Text, Stroke Selection etc.)"
 msgstr ""
 
-#: ../ui/settings.glade:3084
+#: ../ui/settings.glade:3064
 msgid "Active Selection Color (Search Results etc.)"
 msgstr ""
 
-#: ../ui/settings.glade:3106
+#: ../ui/settings.glade:3086
 msgid "Use available Stock Icons (requires restart)"
 msgstr ""
 
-#: ../ui/settings.glade:3127
+#: ../ui/settings.glade:3107
 msgid "Icon Theme"
 msgstr ""
 
-#: ../ui/settings.glade:3142
+#: ../ui/settings.glade:3122
 msgid "Color"
 msgstr ""
 
-#: ../ui/settings.glade:3156
+#: ../ui/settings.glade:3136
 msgid "(requires restart)"
 msgstr ""
 
-#: ../ui/settings.glade:3179
+#: ../ui/settings.glade:3159
 msgid "Theme Variant:"
 msgstr ""
 
-#: ../ui/settings.glade:3199
+#: ../ui/settings.glade:3179
 msgid "Use system default"
 msgstr ""
 
-#: ../ui/settings.glade:3200
+#: ../ui/settings.glade:3180
 msgid "Force light theme"
 msgstr ""
 
-#: ../ui/settings.glade:3201
+#: ../ui/settings.glade:3181
 msgid "Force dark theme"
 msgstr ""
 
-#: ../ui/settings.glade:3214
+#: ../ui/settings.glade:3194
 msgid "(this may not work, depending on your system theme)"
 msgstr ""
 
-#: ../ui/settings.glade:3235
+#: ../ui/settings.glade:3215
 msgid "Colors"
 msgstr ""
 
-#: ../ui/settings.glade:3251
+#: ../ui/settings.glade:3231
 msgid "Global"
 msgstr ""
 
-#: ../ui/settings.glade:3279
+#: ../ui/settings.glade:3259
 msgid "Recolor Drawing Area (might introduce lags when moving selections)"
 msgstr ""
 
-#: ../ui/settings.glade:3284
+#: ../ui/settings.glade:3264
 msgid "Recolors the drawing area so that white regions get the dark color and black regions get the light color. Other colors are interpolated accordingly."
 msgstr ""
 
-#: ../ui/settings.glade:3294
+#: ../ui/settings.glade:3274
 msgid "Recolor Previews in the Sidebar"
 msgstr ""
 
-#: ../ui/settings.glade:3299
+#: ../ui/settings.glade:3279
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) so that white regions get the dark color and black regions get the light color. Other colors are interpolated accordingly."
 msgstr ""
 
-#: ../ui/settings.glade:3313
+#: ../ui/settings.glade:3293
 msgid "The color black regions are translated to"
 msgstr ""
 
-#: ../ui/settings.glade:3327
+#: ../ui/settings.glade:3307
 msgid "The color white regions are translated to"
 msgstr ""
 
-#: ../ui/settings.glade:3342
+#: ../ui/settings.glade:3322
 msgid "Dark Color"
 msgstr ""
 
-#: ../ui/settings.glade:3356
+#: ../ui/settings.glade:3336
 msgid "Light Color"
 msgstr ""
 
-#: ../ui/settings.glade:3369
+#: ../ui/settings.glade:3349
 msgid "Recoloring / Inverting colors"
 msgstr ""
 
-#: ../ui/settings.glade:3401
+#: ../ui/settings.glade:3381
 msgid "Cursor icon for pen"
 msgstr ""
 
-#: ../ui/settings.glade:3416
+#: ../ui/settings.glade:3396
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
 msgstr ""
 
-#: ../ui/settings.glade:3417
+#: ../ui/settings.glade:3397
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
 msgstr ""
 
-#: ../ui/settings.glade:3418
+#: ../ui/settings.glade:3398
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
 msgstr ""
 
-#: ../ui/settings.glade:3419
+#: ../ui/settings.glade:3399
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
 msgstr ""
 
-#: ../ui/settings.glade:3444
+#: ../ui/settings.glade:3424
 msgid "Highlight cursor position"
 msgstr ""
 
-#: ../ui/settings.glade:3449
+#: ../ui/settings.glade:3429
 msgid "Draw a transparent circle around the cursor"
 msgstr ""
 
-#: ../ui/settings.glade:3467 ../ui/settings.glade:3610
+#: ../ui/settings.glade:3447 ../ui/settings.glade:3590
 msgid "Choose the color to use for \"Highlight cursor position\""
 msgstr ""
 
-#: ../ui/settings.glade:3481
+#: ../ui/settings.glade:3461
 msgid "Circle Color"
 msgstr ""
 
-#: ../ui/settings.glade:3505 ../ui/settings.glade:3556
-#: ../ui/settings.glade:5048
+#: ../ui/settings.glade:3485 ../ui/settings.glade:3536
+#: ../ui/settings.glade:5028
 msgid "pixels"
 msgstr ""
 
-#: ../ui/settings.glade:3533
+#: ../ui/settings.glade:3513
 msgid "Radius"
 msgstr ""
 
-#: ../ui/settings.glade:3569
+#: ../ui/settings.glade:3549
 msgid "30"
 msgstr ""
 
-#: ../ui/settings.glade:3585
+#: ../ui/settings.glade:3565
 msgid "Border Width"
 msgstr ""
 
-#: ../ui/settings.glade:3624
+#: ../ui/settings.glade:3604
 msgid "Border Color"
 msgstr ""
 
-#: ../ui/settings.glade:3656
+#: ../ui/settings.glade:3636
 msgid "Cursor"
 msgstr "커서"
 
-#: ../ui/settings.glade:3681
+#: ../ui/settings.glade:3661
 msgid "Show sidebar on the right side"
 msgstr ""
 
-#: ../ui/settings.glade:3696
+#: ../ui/settings.glade:3676
 msgid "Show vertical scrollbar on the left side"
 msgstr ""
 
-#: ../ui/settings.glade:3715
+#: ../ui/settings.glade:3695
 msgid "Left / Right-Handed"
 msgstr "왼손 / 오른손잡이"
 
-#: ../ui/settings.glade:3740
+#: ../ui/settings.glade:3720
 msgid "Page numbering  "
 msgstr ""
 
-#: ../ui/settings.glade:3756
+#: ../ui/settings.glade:3736
 msgid "Below preview"
 msgstr ""
 
-#: ../ui/settings.glade:3757
+#: ../ui/settings.glade:3737
 msgid "Circle background"
 msgstr ""
 
-#: ../ui/settings.glade:3758
+#: ../ui/settings.glade:3738
 msgid "Square background"
 msgstr ""
 
-#: ../ui/settings.glade:3778
+#: ../ui/settings.glade:3758
 msgid "Sidebar"
 msgstr ""
 
-#: ../ui/settings.glade:3804
+#: ../ui/settings.glade:3784
 msgid "Hide the horizontal scrollbar"
 msgstr ""
 
-#: ../ui/settings.glade:3819
+#: ../ui/settings.glade:3799
 msgid "Hide the vertical scrollbar"
 msgstr ""
 
-#: ../ui/settings.glade:3834
+#: ../ui/settings.glade:3814
 msgid "Disable scrollbar fade out"
 msgstr ""
 
-#: ../ui/settings.glade:3852
+#: ../ui/settings.glade:3832
 msgid "Scrollbars"
 msgstr ""
 
-#: ../ui/settings.glade:3906
+#: ../ui/settings.glade:3886
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
 msgstr ""
 
-#: ../ui/settings.glade:3908
+#: ../ui/settings.glade:3888
 msgid "Base speed"
 msgstr ""
 
-#: ../ui/settings.glade:3919
+#: ../ui/settings.glade:3899
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
 msgstr ""
 
-#: ../ui/settings.glade:3921
+#: ../ui/settings.glade:3901
 msgid "Max multiplier"
 msgstr ""
 
-#: ../ui/settings.glade:3934
+#: ../ui/settings.glade:3914
 msgid "Selection Edge Panning"
 msgstr ""
 
-#: ../ui/settings.glade:3959 ../ui/settings.glade:4033
+#: ../ui/settings.glade:3939 ../ui/settings.glade:4013
 #: ../ui/mainmenubar.xml:205
 msgid "Show Menubar"
 msgstr ""
 
-#: ../ui/settings.glade:3974 ../ui/settings.glade:4048
+#: ../ui/settings.glade:3954 ../ui/settings.glade:4028
 msgid "Show Toolbar"
 msgstr ""
 
-#: ../ui/settings.glade:3989 ../ui/settings.glade:4078
+#: ../ui/settings.glade:3969 ../ui/settings.glade:4058
 #: ../ui/mainmenubar.xml:210
 msgid "Show Sidebar"
 msgstr ""
 
-#: ../ui/settings.glade:4008 ../ui/mainmenubar.xml:193
+#: ../ui/settings.glade:3988 ../ui/mainmenubar.xml:193
 msgid "Fullscreen"
 msgstr "전체 화면"
 
-#: ../ui/settings.glade:4063
+#: ../ui/settings.glade:4043
 msgid "Go Fullscreen"
 msgstr ""
 
-#: ../ui/settings.glade:4098
+#: ../ui/settings.glade:4078
 msgid "Select toolbar:"
 msgstr ""
 
-#: ../ui/settings.glade:4131
+#: ../ui/settings.glade:4111
 msgid "Presentation Mode"
 msgstr ""
 
-#: ../ui/settings.glade:4160
+#: ../ui/settings.glade:4140
 msgid "Pre-load pages before"
 msgstr ""
 
-#: ../ui/settings.glade:4172
+#: ../ui/settings.glade:4152
 msgid "Pre-load pages after"
 msgstr ""
 
-#: ../ui/settings.glade:4209
+#: ../ui/settings.glade:4189
 msgid "Clear cached paged while scrolling"
 msgstr ""
 
-#: ../ui/settings.glade:4236
+#: ../ui/settings.glade:4216
 msgid "Performance"
 msgstr ""
 
-#: ../ui/settings.glade:4267
+#: ../ui/settings.glade:4247
 msgid "View"
 msgstr ""
 
-#: ../ui/settings.glade:4316
+#: ../ui/settings.glade:4296
 msgid "Speed for Ctrl + Scroll"
 msgstr ""
 
-#: ../ui/settings.glade:4343
+#: ../ui/settings.glade:4323
 msgid "Speed for a Zoomstep"
 msgstr ""
 
-#: ../ui/settings.glade:4403
+#: ../ui/settings.glade:4383
 msgid "Zoom Speed"
 msgstr ""
 
-#: ../ui/settings.glade:4430
+#: ../ui/settings.glade:4410
 msgid "<i>To make sure on 100% zoom the size of elements is natural.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4450
+#: ../ui/settings.glade:4430
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4466
+#: ../ui/settings.glade:4446
 msgid "Automatic"
 msgstr ""
 
-#: ../ui/settings.glade:4523
+#: ../ui/settings.glade:4503
 msgid "The unit of the ruler is cm"
 msgstr ""
 
-#: ../ui/settings.glade:4544
+#: ../ui/settings.glade:4524
 msgid "Display DPI Calibration"
 msgstr ""
 
-#: ../ui/settings.glade:4575
+#: ../ui/settings.glade:4555
 msgid "Zoom"
 msgstr ""
 
-#: ../ui/settings.glade:4624
+#: ../ui/settings.glade:4604
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4747
+#: ../ui/settings.glade:4727
 msgid "Add additional horizontal space"
 msgstr ""
 
-#: ../ui/settings.glade:4763
+#: ../ui/settings.glade:4743
 msgid "Add additional vertical space"
 msgstr ""
 
-#: ../ui/settings.glade:4781
+#: ../ui/settings.glade:4761
 msgid "<i>or</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4793
+#: ../ui/settings.glade:4773
 msgid "Unlimited scrolling"
 msgstr ""
 
-#: ../ui/settings.glade:4817
+#: ../ui/settings.glade:4797
 msgid "<i>The amount is specified in pixels.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4849
+#: ../ui/settings.glade:4829
 msgid "Scrolling outside the page"
 msgstr ""
 
-#: ../ui/settings.glade:4876
+#: ../ui/settings.glade:4856
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr ""
 
-#: ../ui/settings.glade:4877
+#: ../ui/settings.glade:4857
 msgid "First Page Offset "
 msgstr ""
 
-#: ../ui/settings.glade:4890
+#: ../ui/settings.glade:4870
 msgid "Usually 0 or 1"
 msgstr ""
 
-#: ../ui/settings.glade:4909
+#: ../ui/settings.glade:4889
 msgid "Paired Pages"
 msgstr ""
 
-#: ../ui/settings.glade:4935
+#: ../ui/settings.glade:4915
 msgid "when scrolling to end of last page"
 msgstr ""
 
-#: ../ui/settings.glade:4950
+#: ../ui/settings.glade:4930
 msgid "when drawing on last page"
 msgstr ""
 
-#: ../ui/settings.glade:4965
+#: ../ui/settings.glade:4945
 msgid "disabled"
 msgstr ""
 
-#: ../ui/settings.glade:4983
+#: ../ui/settings.glade:4963
 msgid "Automatically Add Empty Last Page (excluding PDFs)"
 msgstr ""
 
-#: ../ui/settings.glade:5007
+#: ../ui/settings.glade:4987
 msgid "Enable  with determination radius of "
 msgstr ""
 
-#: ../ui/settings.glade:5012
+#: ../ui/settings.glade:4992
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "<i>Useful for operating without keyboard.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5062
+#: ../ui/settings.glade:5042
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr ""
 
-#: ../ui/settings.glade:5079
+#: ../ui/settings.glade:5059
 msgid "Preserve line width"
 msgstr ""
 
-#: ../ui/settings.glade:5084
+#: ../ui/settings.glade:5064
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
 msgstr ""
 
-#: ../ui/settings.glade:5095
+#: ../ui/settings.glade:5075
 msgid "Resizing"
 msgstr ""
 
-#: ../ui/settings.glade:5131
+#: ../ui/settings.glade:5111
 msgid "Rotation snapping tolerance"
 msgstr ""
 
-#: ../ui/settings.glade:5143
+#: ../ui/settings.glade:5123
 msgid "Grid snapping tolerance"
 msgstr ""
 
-#: ../ui/settings.glade:5185
+#: ../ui/settings.glade:5165
 msgid "Grid size"
 msgstr ""
 
-#: ../ui/settings.glade:5216
+#: ../ui/settings.glade:5196
 msgid "Use snapping for recognized shapes"
 msgstr ""
 
-#: ../ui/settings.glade:5220
+#: ../ui/settings.glade:5200
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
 msgstr ""
 
-#: ../ui/settings.glade:5235
+#: ../ui/settings.glade:5215
 msgid "Snapping"
 msgstr ""
 
-#: ../ui/settings.glade:5263
+#: ../ui/settings.glade:5243
 msgid "Minimum Stroke Size"
 msgstr ""
 
-#: ../ui/settings.glade:5318
+#: ../ui/settings.glade:5298
 msgctxt "Short taps/clicks will trigger special actions"
 msgid "Enable Tap action"
 msgstr ""
 
-#: ../ui/settings.glade:5323
+#: ../ui/settings.glade:5303
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr ""
 
-#: ../ui/settings.glade:5335
+#: ../ui/settings.glade:5315
 msgid "Time limit (ms)"
 msgstr ""
 
-#: ../ui/settings.glade:5347
+#: ../ui/settings.glade:5327
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5367
+#: ../ui/settings.glade:5347
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5387
+#: ../ui/settings.glade:5367
 msgid "Length limit (mm)"
 msgstr ""
 
-#: ../ui/settings.glade:5398
+#: ../ui/settings.glade:5378
 msgid "Frequency limit (ms)"
 msgstr ""
 
-#: ../ui/settings.glade:5410
+#: ../ui/settings.glade:5390
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
 "<i>Recommended: 500ms</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5427
+#: ../ui/settings.glade:5407
 msgid "Try to select object first."
 msgstr ""
 
-#: ../ui/settings.glade:5432 ../ui/settings.glade:5462
+#: ../ui/settings.glade:5412 ../ui/settings.glade:5442
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr ""
 
-#: ../ui/settings.glade:5445
+#: ../ui/settings.glade:5425
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr ""
 
-#: ../ui/settings.glade:5448
+#: ../ui/settings.glade:5428
 msgid "Settings:"
 msgstr ""
 
-#: ../ui/settings.glade:5457
+#: ../ui/settings.glade:5437
 msgid "Show Floating Toolbox"
 msgstr ""
 
-#: ../ui/settings.glade:5476
+#: ../ui/settings.glade:5456
 msgid "Action on Tool Tap"
 msgstr ""
 
-#: ../ui/settings.glade:5504
+#: ../ui/settings.glade:5484
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality.\n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5526
+#: ../ui/settings.glade:5506
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr ""
 
-#: ../ui/settings.glade:5529
+#: ../ui/settings.glade:5509
 msgid "Re-render when the page's zoom changes by more than "
 msgstr ""
 
-#: ../ui/settings.glade:5542
+#: ../ui/settings.glade:5522
 msgid "0.00"
 msgstr ""
 
-#: ../ui/settings.glade:5559
+#: ../ui/settings.glade:5539
 msgid "%."
 msgstr ""
 
-#: ../ui/settings.glade:5580
+#: ../ui/settings.glade:5560
 msgid "PDF Cache"
 msgstr "PDF 캐시"
 
-#: ../ui/settings.glade:5611
+#: ../ui/settings.glade:5591
 msgid "Drawing Area"
 msgstr ""
 
-#: ../ui/settings.glade:5658
+#: ../ui/settings.glade:5638
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5710
-msgid "<b>Default</b>"
+#: ../ui/settings.glade:5690
+msgid "<b>Default tool</b>"
 msgstr ""
 
-#: ../ui/settings.glade:5750
-msgid "Defaults"
+#: ../ui/settings.glade:5726
+msgid "<i>The laser pointer allows to write strokes that will fade out after a short while.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5803
+#: ../ui/settings.glade:5747
+msgid "Fade out delay (in ms)"
+msgstr ""
+
+#: ../ui/settings.glade:5799
+msgid "<b>Laser pointer</b>"
+msgstr ""
+
+#: ../ui/settings.glade:5839
+msgid "Tools"
+msgstr "도구"
+
+#: ../ui/settings.glade:5892
 msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required).\n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
 "</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5819
+#: ../ui/settings.glade:5908
 msgid "Disable Audio"
 msgstr ""
 
-#: ../ui/settings.glade:5841
+#: ../ui/settings.glade:5930
 msgid "Enable or Disable Audio"
 msgstr ""
 
-#: ../ui/settings.glade:5868
+#: ../ui/settings.glade:5957
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5887 ../ui/settings.glade:5923
+#: ../ui/settings.glade:5976 ../ui/settings.glade:6012
 msgid "Storage Folder"
 msgstr ""
 
-#: ../ui/settings.glade:5902
+#: ../ui/settings.glade:5991
 msgid "Select Folder"
 msgstr ""
 
-#: ../ui/settings.glade:5950
+#: ../ui/settings.glade:6039
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5974
+#: ../ui/settings.glade:6063
 msgid "Input Device"
 msgstr "입력 장치"
 
-#: ../ui/settings.glade:5996
+#: ../ui/settings.glade:6085
 msgid "Output Device"
 msgstr "출력 장치"
 
-#: ../ui/settings.glade:6027
+#: ../ui/settings.glade:6116
 msgid "Audio Devices"
 msgstr "오디오 장치"
 
-#: ../ui/settings.glade:6056
+#: ../ui/settings.glade:6145
 msgid "Sample Rate"
 msgstr "샘플 레이트"
 
-#: ../ui/settings.glade:6067
+#: ../ui/settings.glade:6156
 msgid "Gain"
 msgstr "게인"
 
-#: ../ui/settings.glade:6114
+#: ../ui/settings.glade:6203
 msgid "Recording Quality"
 msgstr "녹음 품질"
 
-#: ../ui/settings.glade:6140
+#: ../ui/settings.glade:6229
 msgid "Default Seek Time (in seconds)"
 msgstr "기본 탐색 시간 (초)"
 
-#: ../ui/settings.glade:6153
+#: ../ui/settings.glade:6242
 msgid "1,00"
 msgstr "1,00"
 
-#: ../ui/settings.glade:6172
+#: ../ui/settings.glade:6261
 msgid "Playback Settings"
 msgstr "재생 설정"
 
-#: ../ui/settings.glade:6186
+#: ../ui/settings.glade:6275
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr "<i>변경 사항은 새로운 녹음과 재생에만 적용됩니다.</i>"
 
-#: ../ui/settings.glade:6217
+#: ../ui/settings.glade:6306
 msgid "Audio Recording"
 msgstr "오디오 녹음"
 
-#: ../ui/settings.glade:6290
+#: ../ui/settings.glade:6379
 msgid "<i>Select language (requires restart)</i>"
 msgstr "<i>언어 선택 (재시작 필요)</i>"
 
-#: ../ui/settings.glade:6322 ../ui/settings.glade:6368
+#: ../ui/settings.glade:6411 ../ui/settings.glade:6457
 msgid "Language"
 msgstr "언어"
 
-#: ../ui/settings.glade:6338
+#: ../ui/settings.glade:6427
 msgid "Language Settings"
 msgstr "언어 설정"
 
-#: ../ui/settings.glade:6392
+#: ../ui/settings.glade:6481
 msgid "Palette"
 msgstr "팔레트"
 
@@ -3820,9 +3903,9 @@ msgstr "1점 쇄선"
 msgid "Disabled"
 msgstr "사용 안 함"
 
-#: ../ui/settingsDeviceClassConfig.glade:36
-msgid "Mouse+Keyboard Combo"
-msgstr "마우스+키보드 콤보"
+#: ../ui/settingsDeviceClassConfig.glade:54
+msgid "Apply"
+msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:30
 msgid "Drag and drop Components from here to the toolbars and back."
@@ -4308,6 +4391,10 @@ msgstr ""
 
 #: ../resources-templates/pagetemplates.ini.in:42
 msgid "Graph with border"
+msgstr ""
+
+#: ../resources-templates/pagetemplates.ini.in:47
+msgid "Graph with border (bold every 5th)"
 msgstr ""
 
 #: ../resources-templates/toolbar.ini.in:50
