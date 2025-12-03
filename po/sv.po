@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-26 08:45+0000\n"
-"PO-Revision-Date: 2025-08-31 04:25\n"
+"POT-Creation-Date: 2025-09-11 12:54+0000\n"
+"PO-Revision-Date: 2025-09-14 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -82,11 +82,12 @@ msgstr "Bakgrundsfilen \"{1}\" hittades inte. Den kan ha flyttats, tilldelats et
 #: ../src/core/control/Control.cpp:2452
 msgid "\n"
 "Proposed replacement file: \"{1}\""
-msgstr ""
+msgstr "\n"
+"Föreslagen ersättningsfil: \"{1}\""
 
 #: ../src/core/control/Control.cpp:2462
 msgid "Use proposed PDF"
-msgstr ""
+msgstr "Använd föreslagen PDF"
 
 #: ../src/core/control/Control.cpp:2464
 msgid "Select another PDF"
@@ -209,7 +210,7 @@ msgstr ""
 msgid "Image file successfully created"
 msgstr "Bildfilen har skapats"
 
-#: ../src/core/control/ExportHelper.cpp:120
+#: ../src/core/control/ExportHelper.cpp:134
 msgid "PDF file successfully created"
 msgstr "PDF-filen har skapats"
 
@@ -242,14 +243,14 @@ msgid "Could not load LaTeX PDF file"
 msgstr "Kunde inte ladda LaTeX PDF-fil"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:80
-#: ../src/core/control/xojfile/LoadHandler.cpp:490
-#: ../src/core/control/xojfile/LoadHandler.cpp:506
+#: ../src/core/control/xojfile/LoadHandler.cpp:493
+#: ../src/core/control/xojfile/LoadHandler.cpp:509
 msgid "Error reading PDF: {1}"
 msgstr "Fel vid läsning av PDF: {1}"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:193
 msgid "This image could not be loaded. Error message: {1}"
-msgstr ""
+msgstr "Bilden kunde inte laddas. Felmeddelande: {1}"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:228
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
@@ -270,7 +271,7 @@ msgstr "Vänligen radera filen manuellt"
 
 #: ../src/core/control/XournalMain.cpp:161
 msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Det finns en ny felloggfil från Xournal++. Var vänlig lämna in en felrapport, så felet kan rättas."
 
 #: ../src/core/control/XournalMain.cpp:163
 msgid "There are recent errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
@@ -278,7 +279,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:166
 msgid "The most recent log file name: {1}"
-msgstr ""
+msgstr "Det senaste loggfilsnamnet: {1}"
 
 #: ../src/core/control/XournalMain.cpp:168
 msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
@@ -302,7 +303,7 @@ msgstr "Ta bort loggfil"
 
 #: ../src/core/control/XournalMain.cpp:203
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr ""
+msgstr "Xournal++ kraschade förra gången. Vill du återställa den senast redigerade filen?"
 
 #: ../src/core/control/XournalMain.cpp:208
 msgid "Delete file"
@@ -362,7 +363,7 @@ msgstr "Hoppa till sida (första sidan: 1)"
 
 #: ../src/core/control/XournalMain.cpp:647
 msgid "Get version of xournalpp"
-msgstr ""
+msgstr "Hämta version av xournalpp"
 
 #: ../src/core/control/XournalMain.cpp:649
 msgid "Disable audio for this session"
@@ -582,7 +583,7 @@ msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:27
 msgid "Isometric Graph"
-msgstr ""
+msgstr "Isometrisk graf"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Copy current"
@@ -681,11 +682,11 @@ msgstr "Kunde inte läsa in bild"
 
 #: ../src/core/control/tools/ImageHandler.cpp:75
 msgid "Could not determine image size!"
-msgstr ""
+msgstr "Kunde inte bestämma bildstorlek!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:132
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr ""
+msgstr "Filen är ingen giltig .xopp fil (Mimetype saknas): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:140
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
@@ -693,11 +694,11 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:149
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
-msgstr ""
+msgstr "Filen är ingen giltig .xopp fil (Version saknas): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:162
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
-msgstr ""
+msgstr "Filen är inte en giltig .xopp-fil (Versionssträng skadad): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:171
 msgid "Failed to open content.xml in zip archive: \"{1}\""
@@ -713,7 +714,7 @@ msgstr "Fel vid XML-parsning: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:248
 msgid "Unknown parser error"
-msgstr ""
+msgstr "Okänt parserfel"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:259
 msgid "Document is not complete (maybe the end is cut off?)"
@@ -725,79 +726,79 @@ msgstr "Dokumentet är skadat (inga sidor finns i filen)"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:308
 msgid "Unexpected root tag: {1}"
-msgstr ""
+msgstr "Oväntad roottagg: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:329
 msgid "Unexpected tag in document: \"{1}\""
-msgstr ""
+msgstr "Oväntad tagg i dokumentet: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:400
-#: ../src/core/control/xojfile/LoadHandler.cpp:428
+#: ../src/core/control/xojfile/LoadHandler.cpp:401
+#: ../src/core/control/xojfile/LoadHandler.cpp:430
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Kunde inte läsa bild: {1}. Felmeddelande: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:438
+#: ../src/core/control/xojfile/LoadHandler.cpp:441
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "Kunde inte läsa sidnummer för klonad bakgrundsbild: {1}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:446
+#: ../src/core/control/xojfile/LoadHandler.cpp:449
 msgid "Unknown pixmap::domain type: {1}"
-msgstr ""
+msgstr "Okänd pixmap::domäntyp: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:497
+#: ../src/core/control/xojfile/LoadHandler.cpp:500
 msgid "Unknown domain type: {1}"
-msgstr ""
+msgstr "Okänd domäntyp: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:535
+#: ../src/core/control/xojfile/LoadHandler.cpp:538
 msgid "Unknown background type: {1}"
 msgstr "Okänd bakgrundstyp: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:559
+#: ../src/core/control/xojfile/LoadHandler.cpp:562
 msgid "Error reading width of a stroke: {1}"
 msgstr "Fel vid läsning av bredden på ett streck: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:627
+#: ../src/core/control/xojfile/LoadHandler.cpp:630
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:645
+#: ../src/core/control/xojfile/LoadHandler.cpp:648
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:813
-#: ../src/core/control/xojfile/LoadHandler.cpp:829
-#: ../src/core/control/xojfile/LoadHandler.cpp:1143
-#: ../src/core/control/xojfile/LoadHandler.cpp:1157
+#: ../src/core/control/xojfile/LoadHandler.cpp:816
+#: ../src/core/control/xojfile/LoadHandler.cpp:832
+#: ../src/core/control/xojfile/LoadHandler.cpp:1146
+#: ../src/core/control/xojfile/LoadHandler.cpp:1160
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Kunde inte öppna bilaga: {1}. Felmeddelande: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:822
-#: ../src/core/control/xojfile/LoadHandler.cpp:1150
-#: ../src/core/control/xojfile/LoadHandler.cpp:1168
+#: ../src/core/control/xojfile/LoadHandler.cpp:825
+#: ../src/core/control/xojfile/LoadHandler.cpp:1153
+#: ../src/core/control/xojfile/LoadHandler.cpp:1171
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Kunde inte öppna bilaga: {1}. Felmeddelande: Ingen giltig filstorlek angiven"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:841
+#: ../src/core/control/xojfile/LoadHandler.cpp:844
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Kunde inte öppna bilaga: {1}. Felmeddelande: Kunde inte läsa filen"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:850
+#: ../src/core/control/xojfile/LoadHandler.cpp:853
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Kunde inte öppna bilaga: {1}. Felmeddelande: Kunde inte skriva till filen"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1037
+#: ../src/core/control/xojfile/LoadHandler.cpp:1040
 msgid "Wrong count of points ({1})"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1053
+#: ../src/core/control/xojfile/LoadHandler.cpp:1056
 msgid "xoj-File: {1}"
-msgstr ""
+msgstr "xoj-fil: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1054
+#: ../src/core/control/xojfile/LoadHandler.cpp:1057
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1187
+#: ../src/core/control/xojfile/LoadHandler.cpp:1190
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
@@ -841,7 +842,7 @@ msgstr "Attribut \"{1}\" kunde inte tolkas som size_t, värdet är \"{2}\""
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:251
 msgid "Could not write background \"{1}\", {2}"
-msgstr ""
+msgstr "Kunde inte skriva bakgrund \"{1}\", {2}"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
@@ -849,7 +850,7 @@ msgstr "Sidtypsformat är PageTypeFormat::Kopiera - konverterad till PageTypeFor
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:367
 msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr ""
+msgstr "Kunde inte skriva bakgrund \"{1}\". Fortsätter ändå."
 
 #: ../src/core/gui/GladeGui.cpp:25
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
@@ -867,11 +868,11 @@ msgstr "Läser in..."
 
 #: ../src/core/gui/PageView.cpp:940
 msgid "Scroll to page {1}"
-msgstr ""
+msgstr "Scrolla till sida {1}"
 
 #: ../src/core/gui/PageView.cpp:942
 msgid "Add missing page"
-msgstr ""
+msgstr "Lägg till saknad sida"
 
 #: ../src/core/gui/SearchBar.cpp:77
 msgid "Text found on this page"
@@ -916,7 +917,7 @@ msgstr "Git-incheckning"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:65
 msgid "See the full list of contributors"
-msgstr ""
+msgstr "Se hela listan över bidragsgivare"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:72
 msgid "GNU GPLv2 or later"
@@ -986,7 +987,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:100
 msgid "Select Text from pdf"
-msgstr ""
+msgstr "Välj text från pdf"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:101
 msgid "Select Area Text from pdf"
@@ -1073,7 +1074,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:144
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "Det går inte att öppna den globala mallfilen på {1}. Finns den?"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
 msgid "Sample LaTeX file generated successfully."
@@ -1089,11 +1090,11 @@ msgstr ""
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:30
 msgid "default enabled"
-msgstr ""
+msgstr "standard aktiverad"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:30
 msgid "default disabled"
-msgstr ""
+msgstr "standard inaktiverad"
 
 #: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:107
 msgid "Select background color"
@@ -1129,7 +1130,7 @@ msgstr "Ny"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:99
 msgid "Show only not used pages (one unused page)"
-msgstr ""
+msgstr "Visa endast ej använda sidor (en oanvänd sida)"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:100
 msgid "Show only not used pages ({1} unused pages)"
@@ -1153,7 +1154,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:57
 msgid "Separator"
-msgstr ""
+msgstr "Avskiljare"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:58
 msgid "Spacer"
@@ -1183,11 +1184,11 @@ msgstr ""
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:106
 msgid "Insert after current page"
-msgstr ""
+msgstr "Infoga efter aktuell sida"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:107
 msgid "Insert at end"
-msgstr ""
+msgstr "Infoga i slutet"
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:167
 msgid "Contents"
@@ -1429,17 +1430,17 @@ msgstr "Lägg till/redigera TeX"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:527
 msgid "Default Tool"
-msgstr ""
+msgstr "Förvalt verktyg"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:531
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:22
 msgid "Select Linear PDF Text"
-msgstr ""
+msgstr "Välj linjär PDF-text"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:533
 msgid "Select PDF Text in Rectangle"
-msgstr ""
+msgstr "Välj PDF-text i rektangel"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:544
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:24
@@ -1559,7 +1560,7 @@ msgstr "Bakgrund"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:237
 msgid "Layer Combo"
-msgstr ""
+msgstr "Lagercombo"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:251
 msgid "Layer"
@@ -1576,7 +1577,7 @@ msgstr "PDF-sida {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:47
 msgid "PDF {1}"
-msgstr ""
+msgstr "PDF {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:61
 msgid "Page number"
@@ -1588,7 +1589,7 @@ msgstr "Sida"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:24
 msgid "Select PDF Text In Rectangle"
-msgstr ""
+msgstr "Välj PDF-text i rektangel"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:61
 msgid "Select PDF Text"
@@ -1627,19 +1628,19 @@ msgstr "Verktygsfältet hittade: {1}"
 #: ../src/core/model/Document.cpp:356 ../src/core/model/Document.cpp:365
 #: ../src/core/model/Document.cpp:368
 msgid "Document not loaded! ({1}), {2}"
-msgstr ""
+msgstr "Dokumentet är inte laddat! ({1}), {2}"
 
 #: ../src/core/model/Image.cpp:163 ../src/core/model/Image.cpp:173
 msgid "Error: "
-msgstr ""
+msgstr "Fel: "
 
 #: ../src/core/model/Image.cpp:167 ../src/core/model/Image.cpp:177
 msgid "Unrecoverable error"
-msgstr ""
+msgstr "Oåterställbart fel"
 
 #: ../src/core/model/Image.cpp:173 ../src/core/model/Image.cpp:177
 msgid "Failed to close image stream"
-msgstr ""
+msgstr "Kunde inte stänga bildström"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:122
 msgid "Error while finalizing the PDF Cairo surface"
@@ -1664,7 +1665,7 @@ msgstr "Sudda streck"
 #: ../src/core/undo/AddUndoAction.cpp:74
 #: ../src/core/undo/DeleteUndoAction.cpp:72
 msgid "elements"
-msgstr ""
+msgstr "element"
 
 #: ../src/core/undo/AddUndoAction.cpp:82
 #: ../src/core/undo/DeleteUndoAction.cpp:80
@@ -1748,7 +1749,7 @@ msgstr "Slå ihop lager nedåt"
 
 #: ../src/core/undo/MissingPdfUndoAction.cpp:66
 msgid "Replace missing PDF"
-msgstr ""
+msgstr "Ersätt saknad PDF"
 
 #: ../src/core/undo/MoveLayerUndoAction.cpp:26
 msgid "Move layer"
@@ -1764,7 +1765,7 @@ msgstr "Sidans bakgrund har ändrats"
 
 #: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
 msgid "Page size changed"
-msgstr ""
+msgstr "Sidstorlek ändrad"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
@@ -1835,28 +1836,29 @@ msgstr "Fel vid öppning av fil: \"{1}\""
 
 #: ../src/util/OutputStream.cpp:48
 msgid "Error writing data to file: \"{1}\""
-msgstr ""
+msgstr "Fel vid skrivning av data till filen: \"{1}\""
 
 #: ../src/util/OutputStream.cpp:49
 msgid "Error code {1}. Message:"
-msgstr ""
+msgstr "Felkod {1}. Meddelande:"
 
 #: ../src/util/OutputStream.cpp:69
 msgid "Error occurred while closing file: \"{1}\""
-msgstr ""
+msgstr "Fel uppstod vid stängning av fil: \"{1}\""
 
 #: ../src/util/OutputStream.cpp:70
 msgid "Error code {1}"
-msgstr ""
+msgstr "Felkod {1}"
 
 #: ../src/util/PathUtil.cpp:191
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
-msgstr ""
+msgstr "Filen kunde inte öppnas. Du måste göra det manuellt:\n"
+"URL: {1}"
 
 #: ../src/util/PathUtil.cpp:264
 msgid "xournalpp-{1}"
-msgstr ""
+msgstr "xournalpp-{1}"
 
 #: ../src/util/PathUtil.cpp:274
 msgid "Could not create folder: {1}\n"
@@ -1886,7 +1888,7 @@ msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:134
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr ""
+msgstr "xoj-preview-extractor: filen \"{1}\" är inte en .xoj-fil"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:138
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
@@ -1902,7 +1904,7 @@ msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:185
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
-msgstr ""
+msgstr "xoj-preview-extractor: kunde inte hitta ikonen \"{1}\""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:202
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
@@ -1941,7 +1943,7 @@ msgstr "Källkod/felrapportering"
 
 #: ../ui/about.glade:307
 msgid "With help from the community"
-msgstr ""
+msgstr "Med hjälp från gemenskapen"
 
 #: ../ui/about.glade:335
 msgid "License"
@@ -2043,7 +2045,7 @@ msgstr "Gå till sida"
 
 #: ../ui/images.glade:8
 msgid "Select Image"
-msgstr ""
+msgstr "Välj bild"
 
 #: ../ui/images.glade:73
 msgid "Load file"
@@ -2051,7 +2053,7 @@ msgstr "Läs in fil"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
-msgstr ""
+msgstr "<b>... eller välj redan använd bild:</b>"
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
@@ -2067,7 +2069,7 @@ msgstr "Allmänna inställningar för LaTeX-verktyget"
 
 #: ../ui/latexSettings.glade:119
 msgid "Default LaTeX Text"
-msgstr ""
+msgstr "Standard LaTeX-text"
 
 #: ../ui/latexSettings.glade:152
 msgid "The LaTeX file to use as a template for the LaTeX tool."
@@ -2075,7 +2077,7 @@ msgstr "Den LaTeX-fil som ska användas som mall för LaTeX-verktyget."
 
 #: ../ui/latexSettings.glade:154
 msgid "Global template file path"
-msgstr ""
+msgstr "Globala mallfilssökväg"
 
 #: ../ui/latexSettings.glade:166
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
@@ -2083,7 +2085,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:180
 msgid "%%XPP_TOOL_INPUT%%"
-msgstr ""
+msgstr "%%XPP_TOOL_INPUT%%"
 
 #: ../ui/latexSettings.glade:192
 msgid "The math mode formula typed in the LaTeX tool."
@@ -2091,7 +2093,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:205
 msgid "Choose a global LaTeX template file"
-msgstr ""
+msgstr "Välj en global LaTeX-mallfil"
 
 #: ../ui/latexSettings.glade:217
 msgid "%%XPP_TEXT_COLOR%%"
@@ -2107,7 +2109,7 @@ msgstr "Inställningar för mallfil"
 
 #: ../ui/latexSettings.glade:297
 msgid "LaTeX generation command"
-msgstr ""
+msgstr "LaTeX-genereringskommando"
 
 #: ../ui/latexSettings.glade:318
 msgid "Test configuration"
@@ -2123,11 +2125,11 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:433
 msgid "Line numbers"
-msgstr ""
+msgstr "Radnummer"
 
 #: ../ui/latexSettings.glade:447
 msgid "Auto-indent"
-msgstr ""
+msgstr "Auto-indrag"
 
 #: ../ui/latexSettings.glade:461
 msgid "Syntax highlighting"
@@ -2151,7 +2153,7 @@ msgstr "Välj typsnitt för editorn"
 
 #: ../ui/latexSettings.glade:606
 msgid "Editor settings"
-msgstr ""
+msgstr "Redigerarinställningar"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
@@ -2276,7 +2278,7 @@ msgstr "Ställ in kolumner"
 
 #: ../ui/main.glade:742
 msgid "_1 Column"
-msgstr ""
+msgstr "_1 kolumn"
 
 #: ../ui/main.glade:753
 msgid "_2 Columns"
@@ -2312,7 +2314,7 @@ msgstr "Ställ in rader"
 
 #: ../ui/main.glade:847
 msgid "_1 Row"
-msgstr ""
+msgstr "_1 rad"
 
 #: ../ui/main.glade:858
 msgid "_2 Rows"
@@ -2532,7 +2534,7 @@ msgstr "m_ycket tjock"
 
 #: ../ui/main.glade:1822 ../ui/main.glade:2027
 msgid "Fi_ll"
-msgstr ""
+msgstr "Fi_ll"
 
 #: ../ui/main.glade:1832 ../ui/main.glade:2037
 msgid "Fill opacity"
@@ -2660,7 +2662,7 @@ msgstr "<b>Sidstorlek</b>"
 
 #: ../ui/pageTemplate.glade:160
 msgid "Change"
-msgstr ""
+msgstr "Ändra"
 
 #: ../ui/pageTemplate.glade:177
 msgid "Select Background Color"
@@ -2668,7 +2670,7 @@ msgstr "Välj bakgrundsfärg"
 
 #: ../ui/pageTemplate.glade:187
 msgid "Copy current page background instead"
-msgstr ""
+msgstr "Kopiera nuvarande sidbakgrund istället"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
@@ -2684,11 +2686,11 @@ msgstr "<b>Bakgrund</b>"
 
 #: ../ui/pageTemplate.glade:269
 msgid "Copy current page size instead"
-msgstr ""
+msgstr "Kopiera nuvarande sidstorlek istället"
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
-msgstr ""
+msgstr "Använd den aktuella sidstorleken istället för sidstorleken ovan."
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -2696,7 +2698,7 @@ msgstr "Pappersformat"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
-msgstr ""
+msgstr "Mall:"
 
 #: ../ui/pagesize.glade:142
 msgid "<b>Pagesize</b>"
@@ -2712,7 +2714,7 @@ msgstr "Höjd:"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
-msgstr ""
+msgstr "Välj PDF-sida"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
@@ -2728,7 +2730,7 @@ msgstr "Skapare: "
 
 #: ../ui/pluginEntry.glade:95
 msgid "Path: "
-msgstr ""
+msgstr "Sökväg: "
 
 #: ../ui/pluginEntry.glade:132
 msgid "Version: "
@@ -2760,7 +2762,7 @@ msgstr ""
 
 #: ../ui/settings.glade:247
 msgid "Inertia"
-msgstr ""
+msgstr "Tröghet"
 
 #: ../ui/settings.glade:255
 msgid "Xournal++ Preferences"
@@ -2778,7 +2780,7 @@ msgstr "Aktivera automatisk sparning"
 
 #: ../ui/settings.glade:406
 msgid "every"
-msgstr ""
+msgstr "varje"
 
 #: ../ui/settings.glade:433
 msgid "minutes"
@@ -2794,7 +2796,7 @@ msgstr "<i>Detta är det namn som kommer att föreslås när du sparar ett nytt 
 
 #: ../ui/settings.glade:526 ../ui/settings.glade:698
 msgid "Default name: "
-msgstr ""
+msgstr "Standardnamn: "
 
 #: ../ui/settings.glade:565
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -2825,7 +2827,7 @@ msgstr ""
 
 #: ../ui/settings.glade:613 ../ui/settings.glade:784
 msgid "Available Placeholders"
-msgstr ""
+msgstr "Tillgängliga platshållare"
 
 #: ../ui/settings.glade:639
 msgid "Default Save Name"
@@ -2960,7 +2962,7 @@ msgstr ""
 #: ../ui/settings.glade:1255
 msgctxt "Noun: force opposing the movement"
 msgid "Drag"
-msgstr ""
+msgstr "Dra"
 
 #: ../ui/settings.glade:1266
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
@@ -2998,7 +3000,7 @@ msgstr "0,50"
 
 #: ../ui/settings.glade:1352
 msgid "Preprocessor"
-msgstr ""
+msgstr "Förbehandlare"
 
 #: ../ui/settings.glade:1383
 msgid "Cusp detection"
@@ -3054,7 +3056,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1755
 msgid "Minimum Pressure:"
-msgstr ""
+msgstr "Minsta tryck:"
 
 #: ../ui/settings.glade:1766
 msgid "Pressure Multiplier: "
@@ -3062,11 +3064,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1827
 msgid "Sensitivity Scale"
-msgstr ""
+msgstr "Känslighetsskala"
 
 #: ../ui/settings.glade:1845
 msgid "Pressure Sensitivity"
-msgstr ""
+msgstr "Tryckkänslighet"
 
 #: ../ui/settings.glade:1876
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
@@ -3074,7 +3076,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1894
 msgid "Ignore the first"
-msgstr ""
+msgstr "Ignorera den första"
 
 #: ../ui/settings.glade:1913
 msgid "1"
@@ -3111,12 +3113,12 @@ msgstr ""
 #: ../ui/settings.glade:2169
 msgctxt "eraser is never visible"
 msgid "Never"
-msgstr ""
+msgstr "Aldrig"
 
 #: ../ui/settings.glade:2170
 msgctxt "eraser is always visible"
 msgid "Always"
-msgstr ""
+msgstr "Alltid"
 
 #: ../ui/settings.glade:2171
 msgctxt "eraser is only visible when floating"
@@ -3159,7 +3161,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2400
 msgid "Timeout"
-msgstr ""
+msgstr "Timeout"
 
 #: ../ui/settings.glade:2415
 msgid "Autodetect"
@@ -3183,15 +3185,15 @@ msgstr "Inaktivera"
 
 #: ../ui/settings.glade:2562 ../ui/settings.glade:2575
 msgid "Test"
-msgstr ""
+msgstr "Test"
 
 #: ../ui/settings.glade:2610
 msgid "Custom Commands (for Method \"Custom\")"
-msgstr ""
+msgstr "Anpassade kommandon (för metod \"Anpassad\")"
 
 #: ../ui/settings.glade:2635
 msgid "Hand Recognition"
-msgstr ""
+msgstr "Handigenkänning"
 
 #: ../ui/settings.glade:2666
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
@@ -3293,19 +3295,19 @@ msgstr "Färg"
 
 #: ../ui/settings.glade:3217
 msgid "Theme Variant:"
-msgstr ""
+msgstr "Temavariant:"
 
 #: ../ui/settings.glade:3235
 msgid "Use system default"
-msgstr ""
+msgstr "Använd systemstandard"
 
 #: ../ui/settings.glade:3236
 msgid "Force light theme"
-msgstr ""
+msgstr "Tvinga ljust tema"
 
 #: ../ui/settings.glade:3237
 msgid "Force dark theme"
-msgstr ""
+msgstr "Tvinga mörkt tema"
 
 #: ../ui/settings.glade:3250
 msgid "(this may not work, depending on your system theme)"
@@ -3331,17 +3333,17 @@ msgstr "Ingen ikon"
 #: ../ui/settings.glade:3363
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
-msgstr ""
+msgstr "Liten prick-ikon"
 
 #: ../ui/settings.glade:3364
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
-msgstr ""
+msgstr "Stor pennikon"
 
 #: ../ui/settings.glade:3365
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
-msgstr ""
+msgstr "Systemmarkör"
 
 #: ../ui/settings.glade:3389
 msgid "Highlight cursor position"
@@ -3349,7 +3351,7 @@ msgstr "Markera markörens position"
 
 #: ../ui/settings.glade:3394
 msgid "Draw a transparent circle around the cursor"
-msgstr ""
+msgstr "Rita en genomskinlig cirkel runt markören"
 
 #: ../ui/settings.glade:3412 ../ui/settings.glade:3555
 msgid "Choose the color to use for \"Highlight cursor position\""
@@ -3363,7 +3365,7 @@ msgstr "Cirkelfärg"
 #: ../ui/settings.glade:4724 ../ui/settings.glade:4735
 #: ../ui/settings.glade:5001
 msgid "pixels"
-msgstr ""
+msgstr "pixlar"
 
 #: ../ui/settings.glade:3478
 msgid "Radius"
@@ -3399,19 +3401,19 @@ msgstr "Vänster- / högerhänta"
 
 #: ../ui/settings.glade:3714
 msgid "Page numbering  "
-msgstr ""
+msgstr "Sidnumrering  "
 
 #: ../ui/settings.glade:3730
 msgid "Below preview"
-msgstr ""
+msgstr "Nedanför förhandsgranskning"
 
 #: ../ui/settings.glade:3731
 msgid "Circle background"
-msgstr ""
+msgstr "Cirkelbakgrund"
 
 #: ../ui/settings.glade:3732
 msgid "Square background"
-msgstr ""
+msgstr "Kvadratbakgrund"
 
 #: ../ui/settings.glade:3761
 msgid "Sidebar"
@@ -3447,7 +3449,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3912
 msgid "Max multiplier"
-msgstr ""
+msgstr "Max multiplikator"
 
 #: ../ui/settings.glade:3927
 msgid "Selection Edge Panning"
@@ -3455,15 +3457,15 @@ msgstr ""
 
 #: ../ui/settings.glade:3956 ../ui/settings.glade:4039
 msgid "Show Menubar"
-msgstr ""
+msgstr "Visa menyrad"
 
 #: ../ui/settings.glade:3972 ../ui/settings.glade:4055
 msgid "Show Toolbar"
-msgstr ""
+msgstr "Visa verktygsfält"
 
 #: ../ui/settings.glade:4071
 msgid "Go Fullscreen"
-msgstr ""
+msgstr "Gå till helskärm"
 
 #: ../ui/settings.glade:4108
 msgid "Select toolbar:"
@@ -3475,11 +3477,11 @@ msgstr "Presentationsläge"
 
 #: ../ui/settings.glade:4174
 msgid "Pre-load pages before"
-msgstr ""
+msgstr "Förladda sidor innan"
 
 #: ../ui/settings.glade:4186
 msgid "Pre-load pages after"
-msgstr ""
+msgstr "Förladda sidor efter"
 
 #: ../ui/settings.glade:4223
 msgid "Clear cached paged while scrolling"
@@ -3487,7 +3489,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4252
 msgid "Performance"
-msgstr ""
+msgstr "Prestanda"
 
 #: ../ui/settings.glade:4283
 msgid "View"
@@ -3539,7 +3541,7 @@ msgstr "Lägg till ytterligare horisontellt utrymme av"
 
 #: ../ui/settings.glade:4766
 msgid "Scrolling outside the page"
-msgstr ""
+msgstr "Scrollande utanför sidan"
 
 #: ../ui/settings.glade:4799
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -3551,7 +3553,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4812
 msgid "Usually 0 or 1"
-msgstr ""
+msgstr "Vanligtvis 0 eller 1"
 
 #: ../ui/settings.glade:4853
 msgid "Paired Pages"
@@ -3559,15 +3561,15 @@ msgstr "Uppslag"
 
 #: ../ui/settings.glade:4881
 msgid "when scrolling to end of last page"
-msgstr ""
+msgstr "vid scrollande till slutet av förra sidan"
 
 #: ../ui/settings.glade:4896
 msgid "when drawing on last page"
-msgstr ""
+msgstr "när du ritar på sista sidan"
 
 #: ../ui/settings.glade:4911
 msgid "disabled"
-msgstr ""
+msgstr "inaktiverad"
 
 #: ../ui/settings.glade:4931
 msgid "Automatically Add Empty Last Page (excluding PDFs)"
@@ -3639,7 +3641,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5392
 msgid "Time limit (ms)"
-msgstr ""
+msgstr "Tidsgräns (ms)"
 
 #: ../ui/settings.glade:5404
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
@@ -3653,11 +3655,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5444
 msgid "Length limit (mm)"
-msgstr ""
+msgstr "Längdgräns (mm)"
 
 #: ../ui/settings.glade:5455
 msgid "Frequency limit (ms)"
-msgstr ""
+msgstr "Frekvensgräns (ms)"
 
 #: ../ui/settings.glade:5467
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
@@ -3666,7 +3668,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5484
 msgid "Try to select object first."
-msgstr ""
+msgstr "Försök att välja objekt först."
 
 #: ../ui/settings.glade:5489 ../ui/settings.glade:5521
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
@@ -3710,7 +3712,7 @@ msgstr "0,00"
 
 #: ../ui/settings.glade:5627
 msgid "%."
-msgstr ""
+msgstr "%."
 
 #: ../ui/settings.glade:5668
 msgid "PDF Cache"
@@ -3730,7 +3732,7 @@ msgstr "<b>Standard</b>"
 
 #: ../ui/settings.glade:5844
 msgid "Defaults"
-msgstr ""
+msgstr "Standardvärden"
 
 #: ../ui/settings.glade:5897
 msgid "<i>\n"
@@ -3744,11 +3746,11 @@ msgstr "<i>\n"
 
 #: ../ui/settings.glade:5913
 msgid "Disable Audio"
-msgstr ""
+msgstr "Inaktivera ljud"
 
 #: ../ui/settings.glade:5935
 msgid "Enable or Disable Audio"
-msgstr ""
+msgstr "Aktivera eller inaktivera ljud"
 
 #: ../ui/settings.glade:5966
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
@@ -3756,11 +3758,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5988 ../ui/settings.glade:6046
 msgid "Storage Folder"
-msgstr ""
+msgstr "Lagringsmapp"
 
 #: ../ui/settings.glade:6003
 msgid "Select Folder"
-msgstr ""
+msgstr "Välj mapp"
 
 #: ../ui/settings.glade:6077
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
@@ -3853,7 +3855,7 @@ msgstr "Inaktiverad"
 
 #: ../ui/settingsDeviceClassConfig.glade:43
 msgid "Mouse+Keyboard Combo"
-msgstr ""
+msgstr "Mus+tangentbordskombo"
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
@@ -3865,7 +3867,7 @@ msgstr "Ange / redigera LaTeX-text"
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
-msgstr ""
+msgstr "TeX-källa"
 
 #: ../ui/texdialog.glade:143
 msgid "Output generated by the LaTeX command."
