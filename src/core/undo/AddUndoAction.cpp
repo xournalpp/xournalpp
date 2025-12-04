@@ -96,6 +96,9 @@ auto AddUndoAction::getText() -> std::string {
                 case ELEMENT_TEXT:
                     text += _("text");
                     break;
+                case ELEMENT_LINK:
+                    text += _("link");
+                    break;
             }
         }
     }
