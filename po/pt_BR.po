@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-25 06:16+0000\n"
-"PO-Revision-Date: 2025-11-30 04:28\n"
+"POT-Creation-Date: 2025-11-30 04:28+0000\n"
+"PO-Revision-Date: 2025-12-04 15:37\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: pt-BR\n"
-"X-Crowdin-File: /master/xournalpp.pot\n"
-"X-Crowdin-File-ID: 38\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] master/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 48\n"
 
 #: ../src/core/control/AudioController.cpp:120
 msgid "Audio folder not set or invalid! Recording won't work!\n"
@@ -379,7 +379,8 @@ msgstr "Salvar arquivo xopp com o plano de fundo PDF especificado como ARQUIVO"
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
-msgstr ""
+msgstr "Usar o fundo provido para exportação de PDF.\n"
+"                                 Fundos disponíveis: {1}"
 
 #: ../src/core/control/XournalMain.cpp:604
 msgid "Export FILE as PDF"
@@ -397,7 +398,9 @@ msgstr "Exportar ARQUIVO como arquivo de imagem (um por página)\n"
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
-msgstr ""
+msgstr "Exportar sem plano de fundo\n"
+"                                 O arquivo exportado tem fundo transparente ou branco,\n"
+"                                 dependendo do que o formato suporta\n"
 
 #: ../src/core/control/XournalMain.cpp:618
 msgid "Export without ruling\n"
@@ -411,7 +414,11 @@ msgid "Export layers progressively\n"
 "                                       This results in N export pages per page with N layers,\n"
 "                                       building up the layer stack progressively.\n"
 "                                       The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "Exportar camadas progressivamente\n"
+"                                 na exportação de PDF, Renderiza camadas progressivamente uma por uma.\n"
+"                                 Isso resulta em N páginas de exportação por página com N camadas,\n"
+"                                 aumentando progressivamente a pilha de camadas.\n"
+"                                 O arquivo PDF resultante pode ser usado para uma apresentação.\n"
 
 #: ../src/core/control/XournalMain.cpp:632
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -428,7 +435,8 @@ msgstr "Exporta somente as páginas especificadas por INTERVALO (ex: \"2-3,5,7-\
 #: ../src/core/control/XournalMain.cpp:641
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "Configurar DPI para exportação em PNG. O padrão é 300.\n"
+"Sem efeito sem -i/--create-img=foo.png"
 
 #: ../src/core/control/XournalMain.cpp:645
 msgid "Set page width for PNG exports\n"
@@ -1050,7 +1058,7 @@ msgstr "Falha ao analisar o comando do editor externo: {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:131
 msgid "Could not spawn editor: {1}"
-msgstr ""
+msgstr "Não foi possível gerar o editor: {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:162
 msgid "Could not wait for editor: {1}"
@@ -1529,7 +1537,7 @@ msgstr "Alternar tela cheia"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:330
 msgid "Toggle sidebar"
-msgstr ""
+msgstr "Ativar/Desativar Barra lateral"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:332
 msgid "Manage Toolbars"
@@ -1656,7 +1664,7 @@ msgstr "Transferidor"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Toggle Touch Drawing"
-msgstr ""
+msgstr "Ativar desenho pelo toque"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
@@ -1742,11 +1750,11 @@ msgstr "Ocultar tudo"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:178
 msgid "Add a layer above the active layer"
-msgstr ""
+msgstr "Adicionar uma camada acima da camada ativa"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:179
 msgid "Add a layer below the active layer"
-msgstr ""
+msgstr "Adicionar uma camada abaixo da camada ativa"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:206
 msgid "Layer"
@@ -1892,7 +1900,7 @@ msgstr "O número da página do PDF está fora do intervalo"
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:21
 msgid "Unknown pdf backend: {1}. Available backends are: {2}. Using default backend."
-msgstr ""
+msgstr "Fundo pdf desconhecido: {1}. Fundos disponíveis são: {2}. Usando o fundo padrão."
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:39
 msgid "Default"
@@ -1900,7 +1908,7 @@ msgstr "Padrão"
 
 #: ../src/core/pdf/base/QPdfExport.cpp:173
 msgid "Error with overlay or final export:"
-msgstr ""
+msgstr "Erro com sobreposição ou exportação final:"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:128
 msgid "Error while finalizing the PDF Cairo surface"
@@ -2231,7 +2239,7 @@ msgstr "Ops... Xournal++ encontrou um erro fatal"
 
 #: ../ui/crashDialog.glade:39
 msgid "Please consider filling a bug report (see button below). Attach the following log to your report."
-msgstr ""
+msgstr "Por favor, considere preencher um relatório de erro (veja o botão abaixo). Anexe os seguintes logs ao seu relatório."
 
 #: ../ui/crashDialog.glade:56
 msgid "Your document has been saved in:"
@@ -2243,7 +2251,7 @@ msgstr "Log de execução:"
 
 #: ../ui/crashDialog.glade:140
 msgid "Open your web browser with a partially pre-filled bug report"
-msgstr ""
+msgstr "Abrir navegador com um relatório de erros parcialmente pré-preenchido"
 
 #: ../ui/crashDialog.glade:145
 msgid "Create a bug report"
@@ -2315,7 +2323,7 @@ msgstr "Em uso"
 #: ../ui/deviceTestingArea.glade:388 ../ui/deviceTestingArea.glade:402
 msgctxt "stylus hover"
 msgid "Hover"
-msgstr ""
+msgstr "Ao Passar o Cursor"
 
 #: ../ui/deviceTestingArea.glade:443
 msgid "Show logs"
@@ -2332,11 +2340,12 @@ msgstr "Para limpar os registros, simplesmente feche e reabra o diálogo de conf
 #: ../ui/deviceTestingArea.glade:491
 msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
 "Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
-msgstr ""
+msgstr "Marque essa opção se a ponta da caneta não aparece quando utilizada ou quando tem seus botões pressionados.\n\n"
+"Desmarque essa opção se a ponta da caneta não aparece quando utilizada ou quando tem seus botões pressionados.."
 
 #: ../ui/deviceTestingArea.glade:500
 msgid "Emulate stylus tip contact on button press"
-msgstr ""
+msgstr "Simular o contato da ponta da caneta ao apertar botão"
 
 #: ../ui/deviceTestingArea.glade:547
 msgid "<i>Change the device class below if your device is not correctly recognized (e.g. your active stylus shows up as touchscreen)</i>"
