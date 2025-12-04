@@ -51,7 +51,7 @@ void LinkDialog::preset(XojFont font, std::string text, std::string url, LinkAli
     GtkTextBuffer* textBuffer = gtk_text_view_get_buffer(this->textInput);
     GtkTextIter start, end;
     gtk_text_buffer_get_bounds(textBuffer, &start, &end);
-    gtk_text_buffer_insert(textBuffer, &start, text.c_str(), text.length());
+    gtk_text_buffer_insert(textBuffer, &start, text.c_str(), static_cast<int>(text.length()));
     gtk_text_view_set_buffer(this->textInput, textBuffer);
     URLPrefix prefix = this->identifyAndShortenURL(url);
     gtk_entry_set_text(this->urlInput, url.c_str());
@@ -99,7 +99,7 @@ bool LinkDialog::isTextValid(std::string text) {
         return false;
     }
 
-    int nBlankChars = 0;
+    size_t nBlankChars = 0;
     for (char c: text) {
         if (std::isblank(c)) {
             nBlankChars++;
@@ -192,7 +192,7 @@ void LinkDialog::setMaxDialogHeight(GtkWindow* window) {
     gint monitorID = gdk_screen_get_primary_monitor(screen);
     GdkRectangle monitor;
     gdk_screen_get_monitor_geometry(screen, monitorID, &monitor);
-    this->maxDialogHeight = int(monitor.height * MAX_HEIGHT_RATIO);
+    this->maxDialogHeight = static_cast<int>(static_cast<float>(monitor.height) * MAX_HEIGHT_RATIO);
 }
 
 int LinkDialog::getLineHeight() {
