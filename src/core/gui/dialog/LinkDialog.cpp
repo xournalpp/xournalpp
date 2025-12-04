@@ -11,13 +11,16 @@ void layoutToogledCenter(GtkToggleButton* source, LinkDialog* dialog) { dialog->
 void layoutToogledRight(GtkToggleButton* source, LinkDialog* dialog) { dialog->layoutToggled(LinkAlignment::RIGHT); };
 void urlPrefixChangedClb(GtkComboBoxText* source, LinkDialog* dialog) { dialog->urlPrefixChanged(source); };
 
-LinkDialog::LinkDialog(Control* control) {
+LinkDialog::LinkDialog(Control* control, std::function<void(LinkDialog*)> callbackOK,
+                       std::function<void()> callbackCancel):
+        callbackOK(std::move(callbackOK)), callbackCancel(std::move(callbackCancel)) {
     auto filepath = control->getGladeSearchPath()->findFile("", "linkDialog.glade");
 
     GtkBuilder* builder = gtk_builder_new();
     gtk_builder_add_from_file(builder, char_cast(filepath.u8string().c_str()), NULL);
 
-    this->linkDialog = GTK_DIALOG(gtk_builder_get_object(builder, "linkDialog"));
+    this->linkDialog =
+            static_cast<xoj::util::raii::GtkWindowUPtr>(GTK_WINDOW(gtk_builder_get_object(builder, "linkDialog")));
     this->textInput = GTK_TEXT_VIEW(gtk_builder_get_object(builder, "inpLinkEditText"));
     this->urlInput = GTK_ENTRY(gtk_builder_get_object(builder, "inpLinkEditURL"));
     this->okButton = GTK_BUTTON(gtk_builder_get_object(builder, "btnLinkEditOk"));
@@ -45,7 +48,7 @@ LinkDialog::LinkDialog(Control* control) {
     this->setMaxDialogHeight(control->getGtkWindow());
 }
 
-LinkDialog::~LinkDialog() { gtk_widget_destroy(GTK_WIDGET(linkDialog)); }
+LinkDialog::~LinkDialog() = default;
 
 void LinkDialog::preset(XojFont font, std::string text, std::string url, LinkAlignment layout) {
     GtkTextBuffer* textBuffer = gtk_text_view_get_buffer(this->textInput);
@@ -60,8 +63,6 @@ void LinkDialog::preset(XojFont font, std::string text, std::string url, LinkAli
     gtk_font_chooser_set_font(this->fontChooser, fontName.c_str());
     this->layoutToggled(layout);
 }
-
-int LinkDialog::show() { return gtk_dialog_run(GTK_DIALOG(this->linkDialog)); }
 
 std::string LinkDialog::getText() { return this->linkText; }
 
@@ -87,12 +88,14 @@ void LinkDialog::okButtonPressed(GtkButton* btn) {
     if (!this->isUrlValid(this->linkURL)) {
         this->linkURL = "xournalpp.github.io";
     }
-
-    gtk_dialog_response(linkDialog, LinkDialog::SUCCESS);
+    this->callbackOK(this);
+    gtk_window_close(this->linkDialog.get());
 }
 
-void LinkDialog::cancelButtonPressed(GtkButton* btn) { gtk_dialog_response(linkDialog, LinkDialog::CANCEL); }
-
+void LinkDialog::cancelButtonPressed(GtkButton* btn) {
+    this->callbackCancel();
+    gtk_window_close(this->linkDialog.get());
+}
 
 bool LinkDialog::isTextValid(std::string text) {
     if (text.empty()) {
@@ -124,10 +127,10 @@ bool LinkDialog::isUrlValid(std::string url) {
 void LinkDialog::textChanged(GtkTextBuffer* buffer) {
     gint lot = gtk_text_buffer_get_line_count(buffer);
     int width, height;
-    gtk_window_get_size(GTK_WINDOW(this->linkDialog), &width, &height);
+    gtk_window_get_size(this->linkDialog.get(), &width, &height);
     height = DEFAULT_HEIGHT + (std::max(0, (lot - INITIAL_NUMBER_OF_LINES + 1)) * getLineHeight());
     height = std::min(height, this->maxDialogHeight);
-    gtk_window_resize(GTK_WINDOW(this->linkDialog), width, height);
+    gtk_window_resize(this->linkDialog.get(), width, height);
 }
 
 void LinkDialog::layoutToggled(LinkAlignment layout) {

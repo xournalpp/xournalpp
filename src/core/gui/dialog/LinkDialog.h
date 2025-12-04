@@ -11,12 +11,14 @@
 
 #pragma once
 
-#include <string>  // for String
+#include <functional>  // for std::function
+#include <string>      // for String
 
 #include <gdk/gdk.h>  // for GdkEventKey
 #include <gtk/gtk.h>  // for GtkIMContext, GtkTextIter, GtkWidget
 
 #include "model/Font.h"  // for XojFont
+#include "util/raii/GtkWindowUPtr.h"
 
 class Control;
 
@@ -25,12 +27,11 @@ enum class URLPrefix { NONE = 0, HTTP = 1, HTTPS = 2, MAILTO = 3, FILE = 4 };
 
 class LinkDialog {
 public:
-    LinkDialog(Control* control);
+    LinkDialog(Control* control, std::function<void(LinkDialog*)> callbackOK, std::function<void()> callbackCancel);
     ~LinkDialog();
 
 public:
     void preset(XojFont font, std::string text, std::string url, LinkAlignment layout = LinkAlignment::LEFT);
-    int show();
     std::string getText();
     std::string getURL();
     LinkAlignment getLayout();
@@ -52,7 +53,9 @@ private:
     int getLineHeight();
 
 private:
-    GtkDialog* linkDialog = nullptr;
+    xoj::util::GtkWindowUPtr linkDialog;
+    std::function<void(LinkDialog*)> callbackOK;
+    std::function<void()> callbackCancel;
 
     GtkTextView* textInput = nullptr;
     GtkEntry* urlInput = nullptr;
@@ -74,15 +77,12 @@ private:
 
     int maxDialogHeight = 0;
 
-    int additionalHeightPerLine = 20;
+public:
+    inline GtkWindow* getWindow() const { return linkDialog.get(); }
 
 public:
-    static constexpr int SUCCESS = 200;
-    static constexpr int CANCEL = 400;
-
     static constexpr int DEFAULT_HEIGHT = 180;
     static constexpr float MAX_HEIGHT_RATIO = 0.75;
-    static constexpr int ADDITIONAL_HEIGHT_PER_LINE = 15;
     static constexpr int INITIAL_NUMBER_OF_LINES = 2;
 
     static constexpr char PLACEHOLDER_HTTPS[] = "google.com";

@@ -12,6 +12,7 @@
 #include "gui/XournalView.h"           // for XournalView
 #include "gui/dialog/LinkDialog.h"     // for LinkDialog
 #include "model/XojPage.h"             // for XojPage
+#include "util/PopupWindowWrapper.h"   // for PopupWindowWrapper
 
 
 LinkEditor::LinkEditor(XournalView* view): view(view), control(view->getControl()), documentWidget(view->getWidget()) {
@@ -37,39 +38,43 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y) {
     }
 
     if (this->linkElement == nullptr) {
-        LinkDialog dialog(this->control);
-        int response = dialog.show();
-        if (response == LinkDialog::CANCEL) {
-            return;
-        }
-        auto linkOwn = std::make_unique<Link>();
-        Link* link = linkOwn.get();
-        link->setText(dialog.getText());
-        link->setUrl(dialog.getURL());
-        link->setAlignment(static_cast<PangoAlignment>(dialog.getLayout()));
-        link->setFont(dialog.getFont());
-        link->setX(x), link->setY(y);
-        page->getSelectedLayer()->addElement(std::move(linkOwn));
-        page->firePageChanged();
+        auto dialog = xoj::popup::PopupWindowWrapper<LinkDialog>(
+                this->control,
+                [x, y, page = page](LinkDialog* dlg) {
+                    auto linkOwn = std::make_unique<Link>();
+                    Link* link = linkOwn.get();
+                    link->setText(dlg->getText());
+                    link->setUrl(dlg->getURL());
+                    link->setAlignment(static_cast<PangoAlignment>(dlg->getLayout()));
+                    link->setFont(dlg->getFont());
+                    link->setX(x), link->setY(y);
+                    page->getSelectedLayer()->addElement(std::move(linkOwn));
+                    page->firePageChanged();
+                },
+                []() {});
+        dialog.show(control->getGtkWindow());
     } else {
         this->linkElement->setHighlighted(true);
         page->firePageChanged();
-        LinkDialog dialog(this->control);
-        dialog.preset(this->linkElement->getFont(), this->linkElement->getText(), this->linkElement->getUrl(),
-                      static_cast<LinkAlignment>(this->linkElement->getAlignment()));
-        int response = dialog.show();
-        if (response == LinkDialog::CANCEL || response == GTK_RESPONSE_DELETE_EVENT) {
-            this->linkElement->setHighlighted(false);
-            page->fireElementChanged(this->linkElement);
-            return;
-        }
-        this->linkElement->setText(dialog.getText());
-        this->linkElement->setUrl(dialog.getURL());
-        this->linkElement->setAlignment(static_cast<PangoAlignment>(dialog.getLayout()));
-        this->linkElement->setFont(dialog.getFont());
-        this->linkElement->sizeChanged();
-        this->linkElement->setHighlighted(false);
-        page->firePageChanged();
+        auto dialog = xoj::popup::PopupWindowWrapper<LinkDialog>(
+                this->control,
+                [this, page = page](LinkDialog* dlg) {
+                    this->linkElement->setText(dlg->getText());
+                    this->linkElement->setUrl(dlg->getURL());
+                    this->linkElement->setAlignment(static_cast<PangoAlignment>(dlg->getLayout()));
+                    this->linkElement->setFont(dlg->getFont());
+                    this->linkElement->sizeChanged();
+                    this->linkElement->setHighlighted(false);
+                    page->firePageChanged();
+                },
+                [this, page = page]() {
+                    this->linkElement->setHighlighted(false);
+                    page->fireElementChanged(this->linkElement);
+                });
+        dialog.getPopup()->preset(this->linkElement->getFont(), this->linkElement->getText(),
+                                  this->linkElement->getUrl(),
+                                  static_cast<LinkAlignment>(this->linkElement->getAlignment()));
+        dialog.show(control->getGtkWindow());
     }
 }
 
