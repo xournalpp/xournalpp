@@ -103,8 +103,8 @@ XojPageView::XojPageView(XournalView* xournal, const PageRef& page):
         eraser(std::make_unique<EraseHandler>(xournal->getControl()->getUndoRedoHandler(),
                                               xournal->getControl()->getDocument(), this->page,
                                               xournal->getControl()->getToolHandler(), this)),
-        linkEditor(std::make_unique<LinkEditor>(xournal)),
-        oldtext(nullptr) {
+        oldtext(nullptr),
+        linkEditor(std::make_unique<LinkEditor>(xournal)) {
     this->registerToHandler(this->page);
 }
 
