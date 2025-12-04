@@ -7,6 +7,7 @@ set -o pipefail
 
 LOCKFILE="$(dirname "$0")"/jhbuild-version.lock
 MODULEFILE="$(dirname "$0")"/xournalpp.modules
+GTK_OSX_PATCHFILE="$(dirname "$0")"/gtk-osx.patch
 GTK_MODULES="meta-gtk-osx-gtk3 gtksourceview3"
 
 get_lockfile_entry() {
@@ -35,6 +36,8 @@ shallow_clone_into_commit() {
 
 download_jhbuild_sources() {
     shallow_clone_into_commit "https://gitlab.gnome.org/GNOME/gtk-osx.git" "gtk-osx" ~/gtk-osx-custom
+    # Patch gtk-osx module sets
+    (cd ~/gtk-osx-custom && git apply "$GTK_OSX_PATCHFILE" && git status)
 
     # Make a shallow clone of jhbuild's sources. This way we detect if cloning fails and avoid the deep clone in gtk-osx-setup.sh
     JHBUILD_BRANCH=$(sed -e '/^JHBUILD_RELEASE_VERSION=/!d' -e 's/^[^=]*=//' -e 's/^\"\([^\"]*\)\"$/\1/' ~/gtk-osx-custom/gtk-osx-setup.sh)
@@ -82,9 +85,6 @@ use_local_modulesets = True
 moduleset = "gtk-osx.modules"
 modulesets_dir = os.path.expanduser("~/gtk-osx-custom/modulesets-stable")
 
-# Workaround for https://gitlab.gnome.org/GNOME/glib/-/issues/2759
-module_mesonargs['glib'] = mesonargs + ' -Dobjc_args=-Wno-error=declaration-after-statement'
-
 # Fix freetype build finding brotli installed through brew or ports, causing the
 # harfbuzz build to fail when jhbuild's pkg-config cannot find brotli.
 module_cmakeargs['freetype-no-harfbuzz'] = ' -DFT_DISABLE_BROTLI=TRUE '
@@ -93,18 +93,18 @@ module_cmakeargs['freetype'] = ' -DFT_DISABLE_BROTLI=TRUE '
 # portaudio may fail with parallel build, so disable parallel building.
 module_makeargs['portaudio'] = ' -j1 '
 
+repos['ftp.gnu.org'] = 'https://ftpmirror.gnu.org/gnu/'
+
 ### END
 EOF
-
-    # Fix broken arg overrides in jhbuildrc
-    sed -i '' -e 's/^\(module_cmakeargs\["freetype"\]\) =/module_cmakeargs.setdefault("freetype", ""); \1 +=/' ~/.config/jhbuildrc
-    sed -i '' -e 's/^\(module_cmakeargs\["freetype-no-harfbuzz"\]\) =/module_cmakeargs.setdefault("freetype-no-harfbuzz", ""); \1 +=/' ~/.config/jhbuildrc
 
     echo "interact = False" >> ~/.config/jhbuildrc
     echo "exit_on_error = True" >> ~/.config/jhbuildrc
     echo "shallow_clone = True" >> ~/.config/jhbuildrc
     echo "use_local_modulesets = True" >> ~/.config/jhbuildrc
     echo "disable_Werror = False" >> ~/.config/jhbuildrc
+
+    echo "verbose=off" >> ~/.wgetrc
 }
 
 echo "::group::Setup jhbuild"
