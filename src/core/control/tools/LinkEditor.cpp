@@ -26,6 +26,7 @@ LinkEditor::~LinkEditor() {
     gtk_widget_destroy(GTK_WIDGET(this->linkPopoverHighlight));
     gtk_widget_destroy(GTK_WIDGET(this->linkPopoverLabelSelect));
     gtk_widget_destroy(GTK_WIDGET(this->linkPopoverSelect));
+    this->control->getZoomControl()->removeZoomListener(this);
 }
 
 void LinkEditor::startEditing(const PageRef& page, const int x, const int y) {
