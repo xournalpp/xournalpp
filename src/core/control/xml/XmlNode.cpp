@@ -1,12 +1,20 @@
 #include "XmlNode.h"
 
+#include <algorithm>
+#include <functional>
 #include <utility>  // for move
 
 #include <glib.h>  // for g_free
 
+#include "control/Control.h"
 #include "control/jobs/ProgressListener.h"  // for ProgressListener
 #include "control/xml/Attribute.h"          // for XMLAttribute
-#include "util/OutputStream.h"              // for OutputStream
+#include "model/Document.h"
+#include "model/PageRef.h"
+#include "model/XojPage.h"
+#include "undo/UndoRedoHandler.h"
+#include "util/OutputStream.h"  // for OutputStream
+#include "util/StringUtils.h"
 
 #include "DoubleArrayAttribute.h"  // for DoubleArrayAttribute
 #include "DoubleAttribute.h"       // for DoubleAttribute
@@ -14,6 +22,8 @@
 #include "SizeTAttribute.h"        // for SizeTAttribute
 #include "TextAttribute.h"         // for TextAttribute
 
+class XojPage;
+class StringUtils;
 
 XmlNode::XmlNode(const char* tag): tag(tag) {}
 
@@ -42,6 +52,7 @@ void XmlNode::setAttrib(const char* attrib, std::vector<double> values) {
 }
 
 void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
+
     out->write("<");
     out->write(tag);
     writeAttributes(out);
@@ -71,7 +82,7 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
     }
 }
 
-void XmlNode::addChild(XmlNode* node) { children.emplace_back(node); }
+void XmlNode::addChild(AbstractXmlNode* node) { children.emplace_back(node); }
 
 void XmlNode::putAttrib(XMLAttribute* a) {
     for (auto& attrib: attributes) {
@@ -83,6 +94,8 @@ void XmlNode::putAttrib(XMLAttribute* a) {
 
     attributes.emplace_back(a);
 }
+
+void XmlNode::writeOut(OutputStream* out) { writeOut(out, nullptr); }
 
 void XmlNode::writeAttributes(OutputStream* out) {
     for (auto& attrib: attributes) {
