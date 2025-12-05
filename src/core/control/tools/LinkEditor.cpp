@@ -13,7 +13,8 @@
 #include "gui/dialog/LinkDialog.h"     // for LinkDialog
 #include "model/XojPage.h"             // for XojPage
 #include "util/PopupWindowWrapper.h"   // for PopupWindowWrapper
-
+#include "util/XojMsgBox.h"            // for XojMsgBox
+#include "util/i18n.h"                 // for FS, _, _F
 
 LinkEditor::LinkEditor(XournalView* view): view(view), control(view->getControl()), documentWidget(view->getWidget()) {
     this->createPopover();
@@ -88,12 +89,10 @@ void LinkEditor::select(const PageRef& page, const int x, const int y, const boo
                 GError* error = NULL;
                 gtk_show_uri_on_window(NULL, localLinkElement->getUrl().c_str(), GDK_CURRENT_TIME, &error);
                 if (error != NULL) {
-                    GtkDialogFlags flags = GTK_DIALOG_DESTROY_WITH_PARENT;
-                    GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(), flags, GTK_MESSAGE_ERROR,
-                                                               GTK_BUTTONS_CLOSE, "Error opening “%s”: %s",
-                                                               localLinkElement->getUrl().c_str(), error->message);
-                    gtk_dialog_run(GTK_DIALOG(dialog));
-                    gtk_widget_destroy(dialog);
+                    auto* win = control->getGtkWindow();
+                    std::string msg =
+                            FS(_F("Error opening “{1}”: {2}") % localLinkElement->getUrl().c_str() % error->message);
+                    XojMsgBox::showMessageToUser(win, msg, GTK_MESSAGE_ERROR);
                     g_error_free(error);
                 }
                 return;
