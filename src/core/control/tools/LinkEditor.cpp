@@ -143,6 +143,9 @@ void LinkEditor::highlight(const PageRef& page, const int x, const int y, XojPag
     for (auto&& e: page->getSelectedLayer()->getElements()) {
         if (e->getType() == ELEMENT_LINK && e->containsPoint(x, y)) {
             this->highlightedLink = dynamic_cast<Link*>(e.get());
+            if (this->highlightedLink->isHighlighted()) {
+                continue;
+            }
             this->highlightedLink->setHighlighted(true);
             page->fireElementChanged(this->highlightedLink);
             GdkWindow* window = gtk_widget_get_window(this->documentWidget);
