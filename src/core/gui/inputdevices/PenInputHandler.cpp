@@ -519,6 +519,8 @@ void PenInputHandler::actionLeaveWindow(InputEvent const& event) {
         if (!this->inputContext->getSettings()->getInputSystemDrawOutsideWindowEnabled()) {
             this->actionEnd(this->lastHitEvent);
         }
+    } else if (toolHandler->getToolType() == TOOL_LINK) {
+        this->actionEnd(this->lastHitEvent);
     } else if (this->deviceClassPressed) {
         // scroll if we have an active selection
         gdouble eventX = event.relative.x;
