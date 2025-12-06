@@ -36,6 +36,7 @@
 #include "control/tools/ImageSizeSelection.h"       // for ImageSizeSelection
 #include "control/tools/InputHandler.h"             // for InputHandler
 #include "control/tools/LaserPointerHandler.h"      // for LaserPointerHandler
+#include "control/tools/LinkEditor.h"               // for LinkEditor
 #include "control/tools/PdfElemSelection.h"         // for PdfElemSelection
 #include "control/tools/RectangleHandler.h"         // for RectangleHandler
 #include "control/tools/RulerHandler.h"             // for RulerHandler
@@ -102,7 +103,8 @@ XojPageView::XojPageView(XournalView* xournal, const PageRef& page):
         eraser(std::make_unique<EraseHandler>(xournal->getControl()->getUndoRedoHandler(),
                                               xournal->getControl()->getDocument(), this->page,
                                               xournal->getControl()->getToolHandler(), this)),
-        oldtext(nullptr) {
+        oldtext(nullptr),
+        linkEditor(std::make_unique<LinkEditor>(xournal)) {
     this->registerToHandler(this->page);
 }
 
@@ -407,6 +409,8 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         }
     } else if (h->getToolType() == TOOL_TEXT) {
         startText(x, y);
+    } else if (h->getToolType() == TOOL_LINK) {
+        this->linkEditor->select(this->getPage(), int(x), int(y), pos.isControlDown(), this);
     } else if (h->getToolType() == TOOL_IMAGE) {
         // start selecting the size for the image
         this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);
@@ -500,6 +504,8 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
             xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
             this->inputHandler.reset();
         }
+    } else if (toolType == TOOL_LINK) {
+        this->linkEditor->startEditing(this->getPage(), int(x), int(y));
     }
 
     return true;
@@ -564,6 +570,8 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
         // used this event
     } else if (h->getToolType() == TOOL_ERASER && h->getEraserType() != ERASER_TYPE_WHITEOUT && this->inEraser) {
         this->eraser->erase(x, y);
+    } else if (h->getActiveTool()->getToolType() == TOOL_LINK) {
+        this->linkEditor->highlight(this->getPage(), int(x), int(y), this);
     }
 
     return false;

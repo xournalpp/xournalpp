@@ -41,7 +41,9 @@ class SearchControl;
 class Selector;
 class Settings;
 class Text;
+class Link;
 class TextEditor;
+class LinkEditor;
 class VerticalToolHandler;
 class XournalView;
 class Element;
@@ -320,4 +322,9 @@ private:
     friend class PdfFloatingToolbox;
     // only function allowed to setX(), setY(), setMappedRowCol():
     friend void Layout::layoutPages(int width, int height);
+
+    /**
+     * The Link Editor
+     */
+    std::unique_ptr<LinkEditor> linkEditor;
 };

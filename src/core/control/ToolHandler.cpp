@@ -153,6 +153,8 @@ void ToolHandler::initTools() {
             std::make_unique<Tool>("laserPointerHighlighter", TOOL_LASER_POINTER_HIGHLIGHTER, Colors::red,
                                    TOOL_CAP_COLOR | TOOL_CAP_SIZE, thickness);
 
+    tools[TOOL_LINK - TOOL_PEN] = std::make_unique<Tool>("link", TOOL_LINK, Colors::black, TOOL_CAP_NONE, std::nullopt);
+
     this->eraserButtonTool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
     this->stylusButton1Tool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
     this->stylusButton2Tool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
