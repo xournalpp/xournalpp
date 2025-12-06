@@ -1,0 +1,62 @@
+diff --git a/modulesets-stable/gtk-osx.modules b/modulesets-stable/gtk-osx.modules
+index 8cade7f..787fda9 100644
+--- a/modulesets-stable/gtk-osx.modules
++++ b/modulesets-stable/gtk-osx.modules
+@@ -270,7 +270,9 @@
+             version="1.5.10"
+             hash="sha256:a7ced37f4102b745ac86d6a70a9da399cc139ff168ba6b8002b4d8d43c900c15"
+             checkoutdir="libepoxy-1.5.10"
+-            repo="github-tarball" />
++            repo="github-tarball" >
++      <patch file="libepoxy-fix-meson-configuration.patch" strip="1" />
++    </branch>
+   </meson>
+   <!-- gtk3 is in maintenance mode with 3.24 the final release series. -->
+   <meson id="gtk+-3.0"
+diff --git a/modulesets-unstable/gtk-osx.modules b/modulesets-unstable/gtk-osx.modules
+index 601bf2b..edb15ce 100644
+--- a/modulesets-unstable/gtk-osx.modules
++++ b/modulesets-unstable/gtk-osx.modules
+@@ -222,7 +222,9 @@
+   </meson>
+   <meson id="libepoxy">
+     <branch module="anholt/libepoxy"
+-            repo="github" />
++            repo="github" >
++      <patch file="libepoxy-fix-meson-configuration.patch" strip="1" />
++    </branch>
+   </meson>
+   <autotools id="hicolor-icon-theme">
+     <branch module="hicolor-icon-theme-0.17.tar.xz"
+diff --git a/modulesets/gtk-osx.modules b/modulesets/gtk-osx.modules
+index c8f357d..fa10b27 100644
+--- a/modulesets/gtk-osx.modules
++++ b/modulesets/gtk-osx.modules
+@@ -233,7 +233,9 @@
+   <meson id="libepoxy">
+     <branch module="anholt/libepoxy"
+             repo="github"
+-            revision="1.5.10" />
++            revision="1.5.10" >
++      <patch file="libepoxy-fix-meson-configuration.patch" strip="1" />
++    </branch>
+   </meson>
+   <autotools id="hicolor-icon-theme">
+     <branch module="hicolor-icon-theme-0.17.tar.xz"
+diff --git a/patches/libepoxy-fix-meson-configuration.patch b/patches/libepoxy-fix-meson-configuration.patch
+new file mode 100644
+index 0000000..2fa0afd
+--- /dev/null
++++ b/patches/libepoxy-fix-meson-configuration.patch
+@@ -0,0 +1,11 @@
++diff --git a/src/meson.build b/src/meson.build
++index e19a918..db7df9d 100644
++--- a/src/meson.build
+++++ b/src/meson.build
++@@ -117,5 +117,5 @@ pkg.generate(
++     'epoxy_has_wgl=@0@'.format(epoxy_has_wgl),
++   ],
++   filebase: 'epoxy',
++-  requires_private: ' '.join(gl_reqs),
+++  requires_private: gl_reqs,
++ )
