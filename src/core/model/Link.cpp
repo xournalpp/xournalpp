@@ -3,6 +3,7 @@
 #include "model/Element.h"                        // for ELEMENT_TEXT, Eleme...
 #include "model/Font.h"                           // for XojFont
 #include "util/Color.h"                           // for Colors
+#include "util/Point.h"                           // for Point
 #include "util/Rectangle.h"                       // for Rectangle
 #include "util/Stacktrace.h"                      // for Stacktrace
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
@@ -18,6 +19,11 @@ Link::Link(): Element(ELEMENT_LINK) {
 void Link::setText(std::string text) { this->text = text; }
 
 std::string Link::getText() const { return this->text; }
+
+void Link::setTextPos(double x, double y) {
+    this->setX(x - PADDING);
+    this->setY(y - PADDING);
+}
 
 void Link::setUrl(std::string url) { this->url = url; }
 
@@ -72,14 +78,12 @@ void Link::scale(double x0, double y0, double fx, double fy, double rotation, bo
         Stacktrace::printStacktrace();
     }
 
-    std::cout << x0 << ":" << y0 << ":" << fx << ":" << fy << std::endl;
-
-    this->x -= x0;
-    this->x *= fx;
-    this->x += x0;
-    this->y -= y0;
-    this->y *= fy;
-    this->y += y0;
+    xoj::util::Point<double> textPos{this->snappedBounds.x, this->snappedBounds.y};
+    textPos -= xoj::util::Point(x0, y0);
+    textPos *= fx;
+    textPos += xoj::util::Point(x0, y0);
+    this->x = textPos.x - PADDING;
+    this->y = textPos.y - PADDING;
 
     double size = this->font.getSize() * fx;
     this->font.setSize(size);
@@ -110,9 +114,11 @@ void Link::calcSize() const {
     pango_layout_set_text(layout.get(), this->text.c_str(), static_cast<int>(this->text.length()));
     int w = 0, h = 0;
     pango_layout_get_size(layout.get(), &w, &h);
-    this->width = (static_cast<double>(w)) / PANGO_SCALE + PADDING;
-    this->height = (static_cast<double>(h)) / PANGO_SCALE + PADDING;
-    this->updateSnapping();
+    double textWidth = (static_cast<double>(w)) / PANGO_SCALE;
+    double textHeight = (static_cast<double>(h)) / PANGO_SCALE;
+    this->width = textWidth + 2 * PADDING;
+    this->height = textHeight + 2 * PADDING;
+    this->snappedBounds = xoj::util::Rectangle<double>(this->x + PADDING, this->y + PADDING, textWidth, textHeight);
 };
 
 auto Link::createPangoLayout() const -> xoj::util::GObjectSPtr<PangoLayout> {
@@ -140,7 +146,3 @@ auto Link::rescaleWithMirror() const -> bool { return true; }
 void Link::setAlignment(PangoAlignment alignment) { this->alignment = alignment; }
 
 PangoAlignment Link::getAlignment() const { return this->alignment; }
-
-void Link::updateSnapping() const {
-    this->snappedBounds = xoj::util::Rectangle<double>(this->x, this->y, this->width, this->height);
-}

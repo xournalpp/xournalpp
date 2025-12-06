@@ -49,7 +49,7 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y) {
                     link->setUrl(dlg->getURL());
                     link->setAlignment(static_cast<PangoAlignment>(dlg->getLayout()));
                     link->setFont(dlg->getFont());
-                    link->setX(x), link->setY(y);
+                    link->setTextPos(x, y);
                     page->getSelectedLayer()->addElement(std::move(linkOwn));
                     page->firePageChanged();
                 },
