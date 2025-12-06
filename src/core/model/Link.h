@@ -48,6 +48,8 @@ public:
     void setText(std::string text);
     std::string getText() const;
 
+    void setTextPos(double x, double y);
+
     void setUrl(std::string url);
     std::string getUrl() const;
 
@@ -84,7 +86,7 @@ public:
     bool rescaleOnlyAspectRatio() const override;
     bool rescaleWithMirror() const override;
 
-    static constexpr double PADDING = 2.0;
+    static constexpr double PADDING = 2.0;  // space around text including painted border
 
     //  Must match the enum LinkAlignment
     static constexpr PangoAlignment PANGO_ALIGNMENT[] = {PANGO_ALIGN_LEFT, PANGO_ALIGN_CENTER, PANGO_ALIGN_RIGHT};
@@ -92,7 +94,6 @@ public:
 
 protected:
     void calcSize() const override;
-    void updateSnapping() const;
 
 private:
     XojFont font;
