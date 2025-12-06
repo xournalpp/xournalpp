@@ -75,6 +75,7 @@
 #include "model/Image.h"                                         // for Image
 #include "model/Layer.h"                                         // for Layer
 #include "model/LineStyle.h"                                     // for Line...
+#include "model/Link.h"                                          // for Link
 #include "model/PageType.h"                                      // for Page...
 #include "model/Setsquare.h"                                     // for Sets...
 #include "model/Stroke.h"                                        // for Stroke
@@ -2376,6 +2377,8 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
                 element = std::make_unique<TexImage>();
             } else if (name == "Text") {
                 element = std::make_unique<Text>();
+            } else if (name == "Link") {
+                element = std::make_unique<Link>();
             } else {
                 throw InputStreamException(FS(FORMAT_STR("Get unknown object {1}") % name), __FILE__, __LINE__);
             }
