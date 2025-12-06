@@ -21,7 +21,8 @@ void LinkView::draw(const Context& ctx) const {
 
     if (link->isHighlighted() || link->isSelected()) {
         Util::cairo_set_source_rgbi(ctx.cr, LINE_COLOR);
-        cairo_rectangle(ctx.cr, link->getX(), link->getY(), link->getElementWidth(), link->getElementHeight());
+        cairo_rectangle(ctx.cr, link->getX() + LINE_WIDTH / 2, link->getY() + LINE_WIDTH / 2,
+                        link->getElementWidth() - LINE_WIDTH, link->getElementHeight() - LINE_WIDTH);
         cairo_set_line_width(ctx.cr, LINE_WIDTH);
         cairo_stroke(ctx.cr);
     }
@@ -32,7 +33,8 @@ void LinkView::draw(const Context& ctx) const {
 
     cairo_tag_begin(ctx.cr, CAIRO_TAG_LINK, ("uri='" + link->getUrl() + "'").c_str());
 
-    cairo_translate(ctx.cr, link->getX() + (Link::PADDING / 2), link->getY() + (Link::PADDING / 2));
+    auto rect = link->getSnappedBounds();
+    cairo_translate(ctx.cr, rect.x, rect.y);
 
     auto layout = initPango(ctx.cr, link);
     const std::string& content = link->getText();
