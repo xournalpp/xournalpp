@@ -86,6 +86,11 @@ auto StylusInputHandler::handleImpl(InputEvent const& event) -> bool {
         cursor->updateCursor();
     }
 
+    if ((event.type == ENTER_EVENT || event.type == LEAVE_EVENT) &&
+        this->inputContext->getToolHandler()->getToolType() == TOOL_LINK) {
+        this->actionEnd(event);
+        return true;
+    }
 
     // Check if enter/leave events occur in possible locations. This is a bug of the hardware (there are such devices!)
     if ((event.type == ENTER_EVENT || event.type == LEAVE_EVENT) && this->deviceClassPressed && this->lastEvent) {
