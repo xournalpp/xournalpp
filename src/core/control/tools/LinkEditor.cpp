@@ -11,7 +11,9 @@
 #include "gui/PageView.h"              // for PageView
 #include "gui/XournalView.h"           // for XournalView
 #include "gui/dialog/LinkDialog.h"     // for LinkDialog
+#include "model/Document.h"            // for Document
 #include "model/XojPage.h"             // for XojPage
+#include "undo/InsertUndoAction.h"     // for InsertUndoAction
 #include "util/PopupWindowWrapper.h"   // for PopupWindowWrapper
 #include "util/XojMsgBox.h"            // for XojMsgBox
 #include "util/i18n.h"                 // for FS, _, _F
@@ -42,7 +44,7 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y) {
     if (this->linkElement == nullptr) {
         auto dialog = xoj::popup::PopupWindowWrapper<LinkDialog>(
                 this->control,
-                [x, y, page = page](LinkDialog* dlg) {
+                [x, y, page = page, control = control](LinkDialog* dlg) {
                     auto linkOwn = std::make_unique<Link>();
                     Link* link = linkOwn.get();
                     link->setText(dlg->getText());
@@ -50,8 +52,14 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y) {
                     link->setAlignment(static_cast<PangoAlignment>(dlg->getLayout()));
                     link->setFont(dlg->getFont());
                     link->setTextPos(x, y);
-                    page->getSelectedLayer()->addElement(std::move(linkOwn));
+                    Document* doc = control->getDocument();
+                    doc->lock();
+                    const auto layer = page->getSelectedLayer();
+                    layer->addElement(std::move(linkOwn));
+                    doc->unlock();
                     page->firePageChanged();
+                    const auto undo = control->getUndoRedoHandler();
+                    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, link));
                 },
                 []() {});
         dialog.show(control->getGtkWindow());
