@@ -104,6 +104,8 @@ public:
 
     void endText();
 
+    void endLink();
+
     void endSpline();
 
     bool searchTextOnPage(const std::string& text, size_t index, size_t* occurrences, XojPdfRectangle* matchRect);
@@ -192,6 +194,8 @@ public:  // listener
 
 private:
     void startText(double x, double y);
+
+    void startLink();
 
     void drawLoadingPage(cairo_t* cr);
 
