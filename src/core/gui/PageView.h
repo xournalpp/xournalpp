@@ -155,9 +155,6 @@ public:
     /// Returns the position of the upper-left corner in Layout pixel-coordinates
     xoj::util::Point<int> getPixelPosition() const;
 
-    const TexImage* getSelectedTex() const;
-    const Text* getSelectedText() const;
-
 public:  // event handler
     bool onButtonPressEvent(const PositionInputData& pos);
     bool onButtonReleaseEvent(const PositionInputData& pos);
@@ -269,6 +266,8 @@ private:
 
     bool inEraser = false;
     bool startEditingOnButtonRelease = false;
+    bool inLatex = false;
+    double latexX, latexY;
 
     /**
      * Vertical Space
