@@ -1229,6 +1229,11 @@ void Control::toolChanged() {
             win->getXournal()->endTextAllPages();
         }
     }
+    if (type != TOOL_LINK) {
+        if (win) {
+            win->getXournal()->endLinkAllPages();
+        }
+    }
     if (toolHandler->getDrawingType() != DRAWING_TYPE_SPLINE) {
         if (win) {
             win->getXournal()->endSplineAllPages();
