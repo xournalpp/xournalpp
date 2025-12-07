@@ -1,6 +1,9 @@
 # Changelog
 
-## 1.2.10~dev (Unreleased)
+## 1.2.10
+
+* Fixed Continuous Integration
+* Updated translations
 
 ## 1.2.9
 

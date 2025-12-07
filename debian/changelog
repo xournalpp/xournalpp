@@ -1,8 +1,8 @@
-xournalpp (1.2.10~dev-1) UNRELEASED; urgency=medium
+xournalpp (1.2.10-1) unstable; urgency=medium
 
-  * 
+  * Updated translations 
 
- -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Wed, 03 Dec 2025 10:36:35 +0100
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Sun, 07 Dec 2025 11:26:46 +0100
 
 xournalpp (1.2.9-1) unstable; urgency=medium
 
