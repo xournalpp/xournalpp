@@ -1,4 +1,4 @@
-xournalpp (1.3.0~dev-1) UNRELEASED; urgency=medium
+xournalpp (1.3.0-1) unstable; urgency=medium
 
   * PDF exports now preserves the background PDF's inner structure (hyperlink, comments, ...)
   * Grid snapping now follows the displayed grid for all background types
@@ -13,7 +13,7 @@ xournalpp (1.3.0~dev-1) UNRELEASED; urgency=medium
   * Major changes in the plugin interface
   * Many smaller new features and bugfixes
 
- -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Wed, 10 Dec 2025 10:07:54 +0100
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Thu, 11 Dec 2025 21:44:23 +0100
 
 xournalpp (1.2.10-1) unstable; urgency=medium
 
