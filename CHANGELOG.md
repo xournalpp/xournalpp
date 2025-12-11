@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.3.1~dev (Unreleased)
+
 ## 1.3.0
 
 This is a new minor version of Xournal++, including many new features and plethora of bug fixes from the community:
