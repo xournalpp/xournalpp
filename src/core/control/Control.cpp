@@ -857,8 +857,8 @@ void Control::askInsertPdfPage(size_t pdfPage) {
                            });
 }
 
-void Control::insertNewPage(size_t position, bool shouldScrollToPage) {
-    pageBackgroundChangeController->insertNewPage(position, shouldScrollToPage);
+void Control::insertNewPage(size_t position, bool automatedInsertion) {
+    pageBackgroundChangeController->insertNewPage(position, automatedInsertion);
 }
 
 void Control::appendNewPdfPages() {

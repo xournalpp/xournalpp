@@ -232,7 +232,7 @@ public:
 
     void addDefaultPage(const std::optional<std::string>& pageTemplate, Document* doc = nullptr);
     void duplicatePage();
-    void insertNewPage(size_t position, bool shouldScrollToPage = true);
+    void insertNewPage(size_t position, bool automatedInsertion = false);
     void appendNewPdfPages();
     void insertPage(const PageRef& page, size_t position, bool shouldScrollToPage = true);
     void deletePage();
