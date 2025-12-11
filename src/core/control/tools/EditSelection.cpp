@@ -962,13 +962,16 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
     // Perform the scrolling
     bool edgePanned = false;
     if (self->isMoving() && (layoutScrollX != 0.0 || layoutScrollY != 0.0)) {
-        layout->scrollRelative(layoutScrollX, layoutScrollY);
         self->moveSelection(translateX, translateY);
         edgePanned = true;
 
         // To prevent the selection from jumping and to reduce jitter, block the selection movement triggered by user
         // input
         self->edgePanInhibitNext = true;
+
+        // WARNING: this may end up destroying *self (see layout::maybeAddLastPage())
+        // Do not use self after this call
+        layout->scrollRelative(layoutScrollX, layoutScrollY);
     } else {
         // No panning, so disable the timer.
         self->setEdgePan(false);
