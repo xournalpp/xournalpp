@@ -49,8 +49,8 @@ This is a new minor version of Xournal++, including many new features and pletho
 * Updated translations
 
 For downstream package maintainers: changes in cmake flags and compile-time dependencies
-* New flag `ENABLE_QPDF` (default=on) adds a compile-time dependency to qpdf (for PDF better exports).
-* New flag `ENABLE_AUDIO` (default=on). Disabling it removes the (preexisting) dependency to pulseaudio.
+* New flag `ENABLE_QPDF` (default=on) adds a compile-time dependency to qpdf (for better PDF exports).
+* New flag `ENABLE_AUDIO` (default=on). Disabling it removes the (preexisting) dependency to portaudio and sndfile.
 * New flag `MAN_COMPRESS` (default=on). Disabling it leaves the man pages uncompressed.
 * New flag `ENABLE_CPPTRACE` (default=on) will fetch and include cpp-trace (to generate crash reports).
 
