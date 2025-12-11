@@ -1,12 +1,23 @@
 xournalpp (1.3.0~dev-1) UNRELEASED; urgency=medium
 
-  * 
+  * PDF exports now preserves the background PDF's inner structure (hyperlink, comments, ...)
+  * Grid snapping now follows the displayed grid for all background types
+  * New graph background with periodically thicker lines
+  * New laser pointer tool, writing ephemeral strokes
+  * Allow to use an external editor for LaTeX entries
+  * Add the possibility of recoloring the screen output (e.g. for night mode or accessibility)
+  * Add the possibility of choosing the PDF marker opacity
+  * Configurable behaviour in fullscreen or presentation modes
+  * Allow to optionally scroll beyond the page's edges
+  * The toolbars can now contain several instances of the same button
+  * Major changes in the plugin interface
+  * Many smaller new features and bugfixes
 
  -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Wed, 10 Dec 2025 10:07:54 +0100
 
 xournalpp (1.2.10-1) unstable; urgency=medium
 
-  * Updated translations 
+  * Updated translations
 
  -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Sun, 07 Dec 2025 11:26:46 +0100
 
