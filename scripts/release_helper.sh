@@ -179,9 +179,9 @@ function bump_version() {
     if [ "$replace" -eq 0 ]; then
         sed -i "1,/^    <release .*$/ {/^    <release .*$/i\
         \ \ \ \ <release date=\"$date\" version=\"$(current_version)\" />
-        }" "${SCRIPT_PATH}/../desktop/com.github.xournalpp.xournalpp.appdata.xml"
+        }" "${SCRIPT_PATH}/../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in"
     else
-        sed -i "s/\ \ \ \ <release date=\".*\" version=\"${prior_version}\" \/>/\ \ \ \ <release date=\"$date\" version=\"$(current_version)\" \/>/g" "${SCRIPT_PATH}/../desktop/com.github.xournalpp.xournalpp.appdata.xml"
+        sed -i "s/\ \ \ \ <release date=\".*\" version=\"${prior_version}\" \/>/\ \ \ \ <release date=\"$date\" version=\"$(current_version)\" \/>/g" "${SCRIPT_PATH}/../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in"
     fi
 
     # Update MacOS Info.plist

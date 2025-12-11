@@ -1,6 +1,60 @@
 # Changelog
 
-## 1.2.10+dev (Unreleased)
+## 1.3.0+dev (Unreleased)
+
+## 1.3.0
+
+This is a new minor version of Xournal++, including many new features and plethora of bug fixes from the community:
+
+* PDF exports now preserves the background PDF's inner structure (hyperlink, comments, ...) (#6364, #6545, #6831)
+* Grid snapping now follows the displayed grid for all background types (#6790)
+* New graph background with periodically thicker lines (#6751)
+* New laser pointer tool, writing ephemeral strokes (#6391, #6592)
+* Allow to use an external editor for LaTex entries (#6476, #6529)
+* Add the possibility of recoloring the screen output (e.g. for night mode or accessibility) (#6090, #6195, #6203)
+* Add the possibility of choose the PDF marker opacity (#5139)
+* Configurable behaviour in fullscreen or presentation modes (#5130)
+* Allow to optionally scroll beyond the page's edges (#4855)
+* Changes to the toolbar interface:
+  * The toolbars can now contain several instances of the same button (#5426)
+  * New toolbar item for enabling/disabling touch drawing (#6479)
+  * New toolbar item for showing/hiding the sidebar (#6239, #6708)
+* 4 new plugins are shipped with the app (#4528, #4884, #5836, #5837)
+* Major changes in the plugin interface:
+  * New API to interact with in-app actions (#6588)
+  * New API for font configuration (#6710)
+  * New API for managing the floating toolbox (#6682, #6788)
+  * New Toolbar entry for plugin text output (#6601)
+  * New API to fetch config, state or data folders of plugins (#6155)
+  * New API to change zoom levels (#5845)
+  * Replaced the API for file opening and saving (#5723)
+  * New Lua definition file to improve development environment (#5572)
+  * New API to interact with content (#4832, #4884, #5029, #5061, #5836, #5837, #6023, #6034, #6501)
+  * (MacOS and Windows) Our releases now ship LuaGObject for plugins to create their own interface (#6572)
+* The application is now wrapped in a launcher that will show error messages in case of a crash (#6563, #6777)
+* Add a device testing area in Settings->Input, for easier testing, configuration and bug reports (#6491)
+* Better unicode handling on Windows (#5640, #6757)
+* Faster rendering of strokes (#6385, #6685)
+* Automatic detection of screen DPI value (#6556)
+* Rewrite of selection logic, improving performances, and fixing many bugs and crashes related to it (#5317, #6361, #6664)
+* Improve display performances (#6642)
+* All parts of the interface are now open for translation (#5226)
+* Add possibility of adding a layer below the current layer (#6427)
+* New command line options: Open PNG files (#6402), Open PDF in attached mode (#5228)
+* (MacOS, Windows) Ship GTK-demo in our releases to help with bug reporting (#6192)
+* (Linux) Add caption to appdata (#6193)
+* More options in file naming (#6171)
+* (Unix) Metadata migration to $XDG_STATE_HOME (#5855, #6070)
+* Progress towards porting to GTK4 (#4763, #4796, #5078, #5079, #5481, #5500, #5585, #5591, #5602, #5630, #5631, #5644, #5646, #6440)
+* Consistently save new asset names as relative paths (#6540)
+* Many smaller improvements and bug fixes. Many code-base improvements.
+* Updated translations
+
+For downstream package maintainers: changes in cmake flags and compile-time dependencies
+* New flag `ENABLE_QPDF` (default=on) adds a compile-time dependency to qpdf (for better PDF exports).
+* New flag `ENABLE_AUDIO` (default=on). Disabling it removes the (preexisting) dependency to portaudio and sndfile.
+* New flag `MAN_COMPRESS` (default=on). Disabling it leaves the man pages uncompressed.
+* New flag `ENABLE_CPPTRACE` (default=on) will fetch and include cpp-trace (to generate crash reports).
 
 ## 1.2.10
 

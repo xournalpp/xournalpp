@@ -14,11 +14,11 @@ Copyright: 2010-2021, Andreas Butti <andreas.butti@gmail.com>
            2019-2019, Justin Jones <bjustjones@netscape.net>
            2019-2023, Bryan Tan <Technius@users.noreply.github.com>
            2019-2019, Justus Rossmeier <veecue@users.noreply.github.com>
-           2019-2022, Fabian Keßler <Fabian_Kessler@gmx.de>
+           2019-2025, Fabian Keßler <Fabian_Kessler@gmx.de>
            2019-2020, Julius Lehmann <internet@devpi.de>
-           2020-2021, Tobias Hermann <idotobi@users.noreply.github.com>
-           2020-2023, Roland Lötscher <roland_loetscher@hotmail.com>
-           2021-2023, Benjamin Hennion <benjamin.hennion@wanadoo.fr>
+           2020-2024, Tobias Hermann <idotobi@users.noreply.github.com>
+           2020-2025, Roland Lötscher <roland_loetscher@hotmail.com>
+           2021-2025, Benjamin Hennion <benjamin.hennion@wanadoo.fr>
            2021-2022, Henry Heino <personalizedrefrigerator@gmail.com>
 License: GPL-2+
 Comment: Source of truth https://github.com/xournalpp/xournalpp/graphs/contributors
@@ -32,12 +32,6 @@ Copyright: 2015, Xournal Team
 License: GPL-2+
 Comment: The files were committed by Andreas Butti initially who was active for both
          Xournal and Xournal++
-
-Files: src/core/gui/widgets/gtkmenutooltogglebutton.cpp
-       src/core/gui/widgets/gtkmenutooltogglebutton.h
-Copyright: 2004, Paolo Borelli
-           2003, Ricardo Fernandez Pascual
-License: LGPL-2+
 
 Files: ui/iconsColor-dark/*
        ui/iconsColor-light/*
@@ -91,11 +85,6 @@ Copyright: 2020, Luya Tshimbalanga <luya@fedoraproject.org>
 License: CC-BY-SA-4.0
 Comment: See https://github.com/xournalpp/xournalpp/issues/3103#issuecomment-844556592
 
-Files: cmake/find/FindFilesystem.cmake
-       cmake/include/clang-tidy.cmake
-Copyright: 2000-2021, Kitware, Inc. and Contributors
-License: BSD-3-clause
-
 Files: cmake/include/Copyright.txt
 Copyright: 2015, Marek Pikuła <marpirk@gmail.com>
            Xournal++ team
@@ -105,11 +94,15 @@ Files: cmake/include/GitRepo.cmake
 Copyright: 2015, Marek Pikuła <marek@pikula.co>
 License: BSD-3-clause
 
+Files: cmake/include/clang-tidy.cmake
+Copyright: 2000-2025 Kitware, Inc. and Contributors
+License: BSD-3-clause
+
 Files: cmake/find/Gettext.cmake
 Copyright: 2012-2013, Valama development team
 License: GPL-3+
 
-Files: desktop/com.github.xournalpp.xournalpp.appdata.xml
+Files: resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in
 Copyright: 2019, Tobias Mueller <tobiasmue@gnome.org>
 License: CC0-1.0
 
@@ -129,10 +122,6 @@ License: GPL-2+
 
 Files: debian/copyright
 Copyright: 2018, Andreas Butti <andreasbutti@gmail.com>
-License: GPL-2+
-
-Files: plugins/MigrateFontSizes/plugin.ini
-Copyright: 2021, Roland Lötscher
 License: GPL-2+
 
 Files: plugins/Export/plugin.ini
@@ -157,13 +146,28 @@ Files: plugins/QuickScreenshot/plugin.ini
 Copyright: 2020, Debbie Reynolds
 License: GPL-2+
 
+Files: plugins/BeamerPresentation/plugin.ini
+Copyright: 2024, Lukas Heindl
+License: GPL-2+
+
+Files: plugins/FitToContent/plugin.ini
+Copyright: 2022, Lukas Heindl
+License: GPL-2+
+
+Files: plugins/ImageActions/plugin.ini
+Copyright: 2023, Roland Lötscher
+License: GPL-2+
+
+Files: plugins/SpaceForNotes/plugin.ini
+Copyright: 2024, Lukas Heindl
+License: GPL-2+
+
 Files: src/core/gui/GladeSearchpath.h
        src/core/gui/GladeSearchpath.cpp
 Copyright: 2011, Andreas Butti
 License: GPL-2+
 
-Files: src/core/gui/dialog/LatexDialog.h
-       src/core/gui/dialog/LatexDialog.cpp
+Files: src/core/gui/dialog/IntEdLatexDialog.cpp
 Copyright: 2013, Wilson Brenna
 License: GPL-2+
 
