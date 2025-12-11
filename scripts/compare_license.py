@@ -111,12 +111,12 @@ def get_whitelist_not_listed():
     return white_list
 
 # II: Add an entry to the whitelist if you added a file which has special
-# licensing/copyright but does not contain any of the substrings used to 
+# licensing/copyright but does not contain any of the substrings used to
 # automatically identify such files
 # The rational should be explained in the copyright.txt file itself.
 # Do not use comments in this file to explain the rational.
 def get_whitelist_not_found():
-    """Whitelist for files listed in copyright.txt but do not include 
+    """Whitelist for files listed in copyright.txt but do not include
     the searched for substrings"""
     white_list = set()
     white_list.add("*")
@@ -156,7 +156,7 @@ def get_whitelist_not_found():
 
 # III: Update git commit hash to current commit once you checked
 # that the changes do not affect the licensing information in copyright.txt
-last_checked_git_commit_hash = "44499921e90d2d3620f9f23395be3b44a226f617"
+last_checked_git_commit_hash = "c00f7b74009716c488bd666fa8ba7587ea0fed2f"
 
 changed_files = get_changed_files_since(last_checked_git_commit_hash)
 
