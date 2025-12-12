@@ -12,7 +12,7 @@ jobs:
     name: Download translated strings from Crowdin
     strategy:
       matrix:
-        branch: ['master', 'release-1.2']
+        branch: ['master', 'release-1.3']
     runs-on: ubuntu-latest
     permissions:
       contents: write

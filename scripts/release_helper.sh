@@ -222,6 +222,10 @@ function prepare_new_version() {
         abort 9 "Could not bump version of release branch"
     fi
 
+    if ! sed -i "s/release-[0-9]*\.[0-9]*/${branch_name}/g" "${SCRIPT_PATH}/../.github/workflows/download-translations-from-crowdin.yml"; then
+        abort 9 "Could not bump release branch version in Crowdin github action"
+    fi
+
     # Commit version bump
     if ! git commit --quiet -a -m "Automated version bump to $new_version"; then
         abort 10 "Could not commit version bump on release branch"
