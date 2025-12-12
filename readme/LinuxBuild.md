@@ -17,7 +17,7 @@ The minimum required CMake version is 3.13, but we recommend using >=3.15. Also,
 #### For Arch Linux:
 ```sh
 sudo pacman -S cmake gtk3 base-devel libxml2 portaudio libsndfile \
-  poppler-glib texlive-bin texlive-pictures gettext libzip lua \
+  poppler-glib texlive-bin texlive-pictures libzip lua \
   gtksourceview4 help2man qpdf
 ```
 
