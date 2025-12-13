@@ -1,5 +1,6 @@
 #include "SaveJob.h"
 
+#include <chrono>
 #include <memory>  // for __shared_ptr_access
 
 #include <cairo.h>  // for cairo_create, cairo_destroy
@@ -101,16 +102,29 @@ void SaveJob::updatePreview(Control* control) {
 }
 
 auto SaveJob::save() -> bool {
+
+    auto start = std::chrono::high_resolution_clock::now();
+
     updatePreview(control);
     Document* doc = this->control->getDocument();
+
     SaveHandler h;
 
     doc->lock();
     fs::path target = doc->getFilepath();
     Util::safeReplaceExtension(target, "xopp");
 
-    h.prepareSave(doc, target);
+    h.prepareSave(doc, target, this->control);
+
     doc->unlock();
+
+    if (!h.getErrorMessage().empty()) {
+        this->lastError = FS(_F("Save file error: {1}") % h.getErrorMessage());
+        if (!control->getWindow()) {
+            g_error("%s", this->lastError.c_str());
+        }
+        return false;
+    }
 
     auto const createBackup = doc->shouldCreateBackupOnSave();
 
@@ -133,6 +147,12 @@ auto SaveJob::save() -> bool {
     h.saveTo(target, this->control);
     doc->setFilepath(target);
     doc->unlock();
+
+    doc->setFileHash(StringUtils::calculateFileSHA256(target.string()));
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    g_warning("Saving took %lld ms", static_cast<long long>(elapsed.count()));
 
     if (!h.getErrorMessage().empty()) {
         this->lastError = FS(_F("Save file error: {1}") % h.getErrorMessage());
