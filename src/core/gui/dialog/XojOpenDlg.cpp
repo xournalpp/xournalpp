@@ -23,13 +23,13 @@ static void addlastSavePathShortcut(GtkFileChooser* fc, Settings* settings) {
 }
 
 static void setCurrentFolderToLastOpenPath(GtkFileChooser* fc, Settings* settings) {
-    fs::path currentFolder;
+    xoj::util::GObjectSPtr<GFile> currentFolder;
     if (settings && !settings->getLastOpenPath().empty()) {
-        currentFolder = settings->getLastOpenPath();
+        currentFolder = Util::toGFile(settings->getLastOpenPath());
     } else {
-        currentFolder = g_get_home_dir();
+        currentFolder.reset(g_file_new_for_path(g_get_home_dir()), xoj::util::adopt);
     }
-    gtk_file_chooser_set_current_folder(fc, Util::toGFile(currentFolder).get(), nullptr);
+    gtk_file_chooser_set_current_folder(fc, currentFolder.get(), nullptr);
 }
 
 template <class... Args>
