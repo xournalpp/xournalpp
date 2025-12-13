@@ -33,9 +33,8 @@ auto isSelectToolTypeSingleLayer(ToolType type) -> bool {
 
 auto requiresClearedSelection(ToolType type) -> bool {
     return type == TOOL_PEN || type == TOOL_HIGHLIGHTER || type == TOOL_ERASER || type == TOOL_TEXT ||
-           type == TOOL_LATEX ||
-           type == TOOL_IMAGE || type == TOOL_SELECT_PDF_TEXT_RECT || type == TOOL_SELECT_PDF_TEXT_RECT ||
-           type == TOOL_VERTICAL_SPACE;
+           type == TOOL_LATEX || type == TOOL_IMAGE || type == TOOL_SELECT_PDF_TEXT_RECT ||
+           type == TOOL_SELECT_PDF_TEXT_RECT || type == TOOL_VERTICAL_SPACE;
 }
 
 

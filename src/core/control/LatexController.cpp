@@ -325,7 +325,7 @@ void LatexController::insertLatex(PageRef page, Control* ctrl, double x, double 
             GdkRectangle matchRect = {gint(x), gint(y), 1, 1};
             if (e->intersectsArea(&matchRect)) {
                 self->selectedElem = e.get();
-                //ti = dynamic_cast<const TexImage*>(e.get());
+                // ti = dynamic_cast<const TexImage*>(e.get());
                 break;
             }
         }
@@ -353,7 +353,6 @@ void LatexController::insertLatex(PageRef page, Control* ctrl, double x, double 
         self->posx = x;
         self->posy = y;
     }
-
 
 
     showTexEditDialog(std::move(self));
