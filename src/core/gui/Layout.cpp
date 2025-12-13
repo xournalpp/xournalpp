@@ -75,7 +75,7 @@ void Layout::maybeAddLastPage(Layout* layout) {
                 auto lastPage = doc->getPageCount() - 1;
                 doc->unlock();
                 if (currentPage == lastPage) {
-                    control->insertNewPage(currentPage + 1, false);
+                    control->insertNewPage(currentPage + 1, true);
                 }
             }
         }
