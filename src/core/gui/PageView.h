@@ -41,7 +41,9 @@ class SearchControl;
 class Selector;
 class Settings;
 class Text;
+class Link;
 class TextEditor;
+class LinkEditor;
 class VerticalToolHandler;
 class XournalView;
 class Element;
@@ -101,6 +103,8 @@ public:
     inline bool isVisible() const { return visible; }
 
     void endText();
+
+    void endLink();
 
     void endSpline();
 
@@ -208,6 +212,8 @@ public:  // listener
 
 private:
     void startText(double x, double y);
+
+    void startLink();
 
     void drawLoadingPage(cairo_t* cr);
 
@@ -320,4 +326,9 @@ private:
     friend class PdfFloatingToolbox;
     // only function allowed to setX(), setY(), setMappedRowCol():
     friend void Layout::layoutPages(int width, int height);
+
+    /**
+     * The Link Editor
+     */
+    std::unique_ptr<LinkEditor> linkEditor;
 };
