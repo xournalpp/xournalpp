@@ -1939,7 +1939,7 @@ static int applib_changeToolColor(lua_State* L) {
         color = static_cast<uint32_t>(as_unsigned(lua_tointeger(L, -1)));
         if (color > 0xffffff) {
             std::stringstream msg;
-            msg << "Color 0x" << std::hex << color << " is no valid RGB color.";
+            msg << "Color 0x" << std::hex << color << " is too large. Use 0xRRGGBB format.";
             return luaL_error(L, msg.str().c_str());  // luaL_error does not support %x for hex numbers
         }
     } else if (!lua_isnil(L, -1)) {
@@ -1951,7 +1951,9 @@ static int applib_changeToolColor(lua_State* L) {
     Tool& tool = toolHandler->getTool(toolType);
 
     if (tool.hasCapability(TOOL_CAP_COLOR)) {
-        tool.setColor(Color(color | 0xff000000U));
+        uint8_t currentAlpha = tool.getColor().alpha;
+        Color newColor = Color(color | (static_cast<uint32_t>(currentAlpha) << 24));
+        tool.setColor(newColor);
         ctrl->toolColorChanged();
         if (selection) {
             ctrl->changeColorOfSelection();
