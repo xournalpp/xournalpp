@@ -2767,7 +2767,7 @@ static int applib_setBackgroundName(lua_State* L) {
 static int applib_getDisplayDpi(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* control = plugin->getControl();
-    int dpi = control->getSettings()->getDisplayDpi();
+    int dpi = round_cast<int>(control->getZoomControl()->getZoom100Value() * Util::DPI_NORMALIZATION_FACTOR);
     lua_pushinteger(L, dpi);
 
     return 1;
