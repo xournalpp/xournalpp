@@ -207,10 +207,14 @@ auto addElementsFromActiveLayer(Control* ctrl, EditSelection* base, const Insert
 }
 };  // namespace SelectionFactory
 
+static int getBtnWidth(Control* c) {
+    return std::max(10, round_cast<int>(c->getZoomControl()->getZoom100Value() * Util::DPI_NORMALIZATION_FACTOR / 8));
+}
+
 EditSelection::EditSelection(Control* ctrl, InsertionOrder elts, const PageRef& page, Layer* layer, XojPageView* view,
                              const Range& bounds, const Range& snappingBounds):
         snappedBounds(snappingBounds),
-        btnWidth(std::max(10, ctrl->getSettings()->getDisplayDpi() / 8)),
+        btnWidth(getBtnWidth(ctrl)),
         sourcePage(page),
         sourceLayer(layer),
         view(view),
@@ -242,7 +246,7 @@ EditSelection::EditSelection(Control* ctrl, InsertionOrder elts, const PageRef& 
 
 EditSelection::EditSelection(Control* ctrl, const PageRef& page, Layer* layer, XojPageView* view):
         snappedBounds(Rectangle<double>{}),
-        btnWidth(std::max(10, ctrl->getSettings()->getDisplayDpi() / 8)),
+        btnWidth(getBtnWidth(ctrl)),
         sourcePage(page),
         sourceLayer(layer),
         view(view),
