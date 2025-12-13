@@ -23,6 +23,7 @@
 #include "util/PopupWindowWrapper.h"  // for PopupWindowWrapper
 #include "util/XojMsgBox.h"           // for XojMsgBox
 #include "util/i18n.h"                // for _
+#include "util/serdesstream.h"        // for serdes_stream
 
 #include "FormatDialog.h"  // for FormatDialog
 #include "filesystem.h"    // for path
@@ -128,9 +129,9 @@ void PageTemplateDialog::saveToFile() {
     time_t curtime = time(nullptr);
     char stime[128];
     strftime(stime, sizeof(stime), "%F-Template-%H-%M.xopt", localtime(&curtime));
-    std::string saveFilename = stime;
+    fs::path saveFilename = stime;  // There may be an issue here, if the C and C++ locales do not use the same encoding
 
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), saveFilename.c_str());
+    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), Util::toGFilename(saveFilename).c_str());
 
     class FileDlg final {
     public:
@@ -150,7 +151,7 @@ void PageTemplateDialog::saveToFile() {
                                 gtk_window_close(GTK_WINDOW(dialog));
                                 self->parent->settings->setLastSavePath(file.parent_path());
 
-                                std::ofstream out{file};
+                                auto out = serdes_stream<std::ofstream>(file);
                                 out << self->parent->model.toString();
                             };
                             XojMsgBox::replaceFileQuestion(GTK_WINDOW(dialog), std::move(file),
