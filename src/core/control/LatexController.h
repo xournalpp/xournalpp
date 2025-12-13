@@ -45,7 +45,6 @@ public:
     ~LatexController();
 
 public:
-
     /**
      * Open a LatexDialog, wait for the user to provide the LaTeX formula, and
      * insert the rendered formula into the document at the given position if
