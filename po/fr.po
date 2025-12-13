@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-11 20:45+0000\n"
-"PO-Revision-Date: 2025-12-13 06:28\n"
+"PO-Revision-Date: 2025-12-13 14:17\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2302,7 +2302,7 @@ msgstr "Stylet"
 #: ../ui/deviceTestingArea.glade:136 ../ui/deviceTestingArea.glade:190
 msgctxt "the tip of the stylus"
 msgid "Tip"
-msgstr "Astuce"
+msgstr "Pointe"
 
 #: ../ui/deviceTestingArea.glade:150 ../ui/settings.glade:1987
 msgid "Button 1"
@@ -2324,7 +2324,7 @@ msgstr "En cours d'utilisation"
 #: ../ui/deviceTestingArea.glade:388 ../ui/deviceTestingArea.glade:402
 msgctxt "stylus hover"
 msgid "Hover"
-msgstr "Survoler"
+msgstr "Survol"
 
 #: ../ui/deviceTestingArea.glade:443
 msgid "Show logs"
@@ -2341,8 +2341,8 @@ msgstr "Pour effacer les journaux, il suffit de fermer et de rouvrir la boîte d
 #: ../ui/deviceTestingArea.glade:491
 msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
 "Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
-msgstr "Sélectionnez cette option si le signe \"Astuce\" ne s'allume pas lorsque vous utilisez le stylet et appuyez sur l'un de ses boutons.\n\n"
-"Désélectionnez cette option si le signe \"Astuce\" est allumé pendant que le stylet survole (mais sans toucher à l'écran ou à la tablette)."
+msgstr "Sélectionnez cette option si le voyant \"Pointe\" ne s'allume pas lorsque vous utilisez le stylet et appuyez sur l'un de ses boutons.\n\n"
+"Désélectionnez cette option si le voyant \"Pointe\" est allumé pendant que le stylet survole (mais sans toucher à l'écran ou à la tablette)."
 
 #: ../ui/deviceTestingArea.glade:500
 msgid "Emulate stylus tip contact on button press"
