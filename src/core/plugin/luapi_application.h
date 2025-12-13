@@ -1884,12 +1884,17 @@ static int applib_getColorPalette(lua_State* L) {
  *
  * @param opts {color: integer, tool: string, selection: boolean} options (`selection=true` -> new color applies to
  * active selection as well, `tool=nil` (unset) -> currently active tool is being used)
+ * The color can be specified as 0xRRGGBB (preserves current alpha) or 0xAARRGGBB (sets alpha explicitly)
  *
  * Example 1: app.changeToolColor({["color"] = 0xff00ff, ["tool"] = "PEN"})
- * changes the color of the pen tool to violet without applying this change to the current selection
+ * changes the color of the pen tool to violet, preserving its current alpha/opacity
  *
  * Example 2: app.changeToolColor({["color"] = 0xff0000, ["selection"] = true })
- * changes the color of the current tool to red and also applies it to the current selection if there is one
+ * changes the color of the current tool to red, preserving alpha, and also applies it to the current selection if there
+ * is one
+ *
+ * Example 3: app.changeToolColor({["color"] = 0x80ff0000, ["tool"] = "HIGHLIGHTER"})
+ * changes the highlighter to red with 50% opacity (alpha = 0x80 = 128)
  */
 static int applib_changeToolColor(lua_State* L) {
 
@@ -1935,23 +1940,33 @@ static int applib_changeToolColor(lua_State* L) {
     }
 
     uint32_t color = 0x000000;
+    bool hasAlpha = false;
     if (lua_isinteger(L, -1)) {
         color = static_cast<uint32_t>(as_unsigned(lua_tointeger(L, -1)));
-        if (color > 0xffffff) {
+        if (color > 0xffffffff) {
             std::stringstream msg;
-            msg << "Color 0x" << std::hex << color << " is no valid RGB color.";
-            return luaL_error(L, msg.str().c_str());  // luaL_error does not support %x for hex numbers
+            msg << "Color 0x" << std::hex << color << " is too large. Use 0xRRGGBB or 0xAARRGGBB format.";
+            return luaL_error(L, msg.str().c_str());
         }
+        hasAlpha = (color > 0xffffff);
     } else if (!lua_isnil(L, -1)) {
         return luaL_error(L, " "
                              "color"
-                             " key should be an RGB hex code in the form 0xRRGGBB (or nil)");
+                             " key should be an RGB hex code in the form 0xRRGGBB or 0xAARRGGBB (or nil)");
     }
 
     Tool& tool = toolHandler->getTool(toolType);
 
     if (tool.hasCapability(TOOL_CAP_COLOR)) {
-        tool.setColor(Color(color | 0xff000000U));
+        Color newColor;
+        if (hasAlpha) {
+            newColor = Color(color);
+        } else {
+            // Preserve current alpha when only RGB is provided
+            uint8_t currentAlpha = tool.getColor().alpha;
+            newColor = Color(color | (static_cast<uint32_t>(currentAlpha) << 24));
+        }
+        tool.setColor(newColor);
         ctrl->toolColorChanged();
         if (selection) {
             ctrl->changeColorOfSelection();
