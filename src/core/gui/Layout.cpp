@@ -9,14 +9,15 @@
 
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 
-#include "control/Control.h"            // for Control
-#include "control/settings/Settings.h"  // for Settings
-#include "gui/LayoutMapper.h"           // for LayoutMapper, GridPosition
-#include "gui/PageView.h"               // for XojPageView
-#include "gui/scroll/ScrollHandling.h"  // for ScrollHandling
-#include "model/Document.h"             // for Document
-#include "util/Rectangle.h"             // for Rectangle
-#include "util/safe_casts.h"            // for strict_cast, as_signed, as_si...
+#include "control/Control.h"                 // for Control
+#include "control/settings/Settings.h"       // for Settings
+#include "control/settings/SettingsEnums.h"  // for LayoutType
+#include "gui/LayoutMapper.h"                // for LayoutMapper, GridPosition
+#include "gui/PageView.h"                    // for XojPageView
+#include "gui/scroll/ScrollHandling.h"       // for ScrollHandling
+#include "model/Document.h"                  // for Document
+#include "util/Rectangle.h"                  // for Rectangle
+#include "util/safe_casts.h"                 // for strict_cast, as_signed, as_si...
 
 #include "XournalView.h"  // for XournalView
 
@@ -89,29 +90,25 @@ void Layout::checkScroll(GtkAdjustment* adjustment, double& lastScroll) {
 void Layout::updateVisibility() {
     Rectangle visRect = getVisibleRect();
 
-    // step through every possible page position and update using p->setIsVisible()
-    // Using initial grid aprox speeds things up by a factor of 5.  See previous git check-in for specifics.
-    int x1 = 0;
-    int y1 = 0;
+    // Step through every possible page position and update using pageView->setIsVisible()
 
     // Data to select page based on visibility
     std::optional<size_t> mostPageNr;
     double mostPagePercent = 0;
 
-    for (size_t row = 0; row < this->rowYStart.size(); ++row) {
-        auto y2 = as_signed_strict(this->rowYStart[row]);
-        for (size_t col = 0; col < this->colXStart.size(); ++col) {
-            auto x2 = as_signed_strict(this->colXStart[col]);
+    const auto beginPos = getGridPositionAt(floor_cast<int>(visRect.x), floor_cast<int>(visRect.y));
+    const auto endPos =
+            getGridPositionAt(ceil_cast<int>(visRect.x + visRect.width), ceil_cast<int>(visRect.y + visRect.height));
+
+    for (size_t row = 0; row < this->mapper.getRows(); ++row) {
+        for (size_t col = 0; col < this->mapper.getColumns(); ++col) {
             auto optionalPage = this->mapper.at({col, row});
             if (optionalPage)  // a page exists at this grid location
             {
                 auto& pageView = this->view->viewPages[*optionalPage];
 
-                // check if grid location is visible as an aprox for page visiblity:
-                if (!(visRect.x > x2 || visRect.x + visRect.width < x1)  // visrect not outside current row/col
-                    && !(visRect.y > y2 || visRect.y + visRect.height < y1)) {
-                    // now use exact check of page itself:
-                    // visrect not outside current page dimensions:
+                if (row >= beginPos.row && row <= endPos.row && col >= beginPos.col && col <= endPos.col) {
+                    // The grid position is within the bounds of the view. Now, use exact check of page itself.
                     auto const& pageRect = pageView->getRect();
                     if (auto intersection = pageRect.intersects(visRect); intersection) {
                         pageView->setIsVisible(true);
@@ -122,15 +119,14 @@ void Layout::updateVisibility() {
                             mostPageNr = *optionalPage;
                             mostPagePercent = percent;
                         }
+                    } else {
+                        pageView->setIsVisible(false);
                     }
                 } else {
                     pageView->setIsVisible(false);
                 }
             }
-            x1 = x2;
         }
-        y1 = y2;
-        x1 = 0;
     }
 
     if (mostPageNr) {
@@ -213,6 +209,42 @@ void Layout::recalculate() {
     gtk_widget_queue_resize(view->getWidget());
 }
 
+auto Layout::getPaddingAboveAll() const -> int {
+    Settings* settings = this->view->getControl()->getSettings();
+
+    // Minimal padding around the page area in order to accomodate older Wacom tablets
+    // with limited sense area
+    auto padding = XOURNAL_PADDING;
+
+    if (settings->getUnlimitedScrolling()) {
+        // add the widget's size in padding for "unlimited scrolling"
+        padding += ceil_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getVertical()));
+    } else if (settings->getAddVerticalSpace()) {
+        // add user-defined space above the drawing area
+        padding += settings->getAddVerticalSpaceAmountAbove();
+    }
+
+    return padding;
+}
+
+auto Layout::getPaddingLeftOfAll() const -> int {
+    Settings* settings = this->view->getControl()->getSettings();
+
+    // Minimal padding around the page area in order to accomodate older Wacom tablets
+    // with limited sense area
+    auto padding = XOURNAL_PADDING;
+
+    if (settings->getUnlimitedScrolling()) {
+        // add the widget's size in padding for "unlimited scrolling"
+        padding += ceil_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getHorizontal()));
+    } else if (settings->getAddHorizontalSpace()) {
+        // add user-defined space left of the drawing area
+        padding += settings->getAddHorizontalSpaceAmountLeft();
+    }
+
+    return padding;
+}
+
 void Layout::layoutPages(int width, int height) {
     std::lock_guard g{pc.m};
     if (!pc.valid) {
@@ -225,27 +257,19 @@ void Layout::layoutPages(int width, int height) {
     size_t const len = this->view->viewPages.size();
     Settings* settings = this->view->getControl()->getSettings();
 
-    // get from mapper (some may have changed to accommodate paired setting etc.)
-    bool const isPairedPages = this->mapper.isPairedPages();
+    // Get layout settings from mapper
+    auto const rows = this->mapper.getRows();
+    auto const columns = this->mapper.getColumns();
+    auto const orientation = this->mapper.getOrientation();
+    bool const isPairedPages = this->mapper.isPairedPages() && len > 1;
+    xoj_assert(!isPairedPages || this->mapper.getColumns() % 2 == 0);
 
-    auto const rows = this->pc.heightRows.size();
-    auto const columns = this->pc.widthCols.size();
+    // Retrieve and store layout type
+    this->layoutType = settings->getViewLayoutType();
 
-
-    // add space around the entire page area to accommodate older Wacom tablets with limited sense area.
-    auto v_padding = XOURNAL_PADDING;
-    if (settings->getUnlimitedScrolling()) {
-        v_padding += ceil_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getVertical()));
-    } else if (settings->getAddVerticalSpace()) {
-        v_padding += settings->getAddVerticalSpaceAmountAbove();
-    }
-
-    auto h_padding = XOURNAL_PADDING;
-    if (settings->getUnlimitedScrolling()) {
-        h_padding += ceil_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getHorizontal()));
-    } else if (settings->getAddHorizontalSpace()) {
-        h_padding += settings->getAddHorizontalSpaceAmountLeft();
-    }
+    // Start with the padding around the page area
+    auto v_padding = getPaddingAboveAll();
+    auto h_padding = getPaddingLeftOfAll();
 
     auto const centeringXBorder = (width - as_signed(pc.minWidth)) / 2;
     auto const centeringYBorder = (height - as_signed(pc.minHeight)) / 2;
@@ -254,89 +278,208 @@ void Layout::layoutPages(int width, int height) {
     auto const borderX = static_cast<double>(std::max<SBig>(h_padding, centeringXBorder));
     auto const borderY = static_cast<double>(std::max<SBig>(v_padding, centeringYBorder));
 
-    // initialize here and x again in loop below.
-    auto x = borderX;
-    auto y = borderY;
+    struct PageLayoutDescription {
+        double paddingLeft = 0.0;
+        double paddingTop = 0.0;
+        double width = 0.0;
+        double height = 0.0;
+        std::optional<size_t> optionalPage = std::nullopt;
+    };
+
+    std::vector<PageLayoutDescription> pages;  // access with r * rows + c
+    pages.resize(rows * columns);
 
 
-    // Iterate over ALL possible rows and columns.
-    // We don't know which page, if any,  is to be displayed in each row, column -  ask the mapper object!
-    // Then assign that page coordinates with center, left or right justify within row,column grid cell as required.
+    // Iterate over ALL possible rows and columns 3 times:
+    // We don't know which page, if any, is to be displayed in each row, column -  ask the mapper object!
+    // Once we know the dimensions of all pages, define the paddings above and left of each page as required.
+    // Finally, assign page coordinates by propagating page paddings and sizes from the border.
+
+    // first loop: set mapped position in view object and retrieve page dimensions
     for (size_t r = 0; r < rows; r++) {
         for (size_t c = 0; c < columns; c++) {
-            auto optionalPage = this->mapper.at({c, r});
+            const auto index = c * rows + r;
+            pages[index].optionalPage = this->mapper.at({c, r});
 
-            if (optionalPage) {
+            if (pages[index].optionalPage) {
+                auto& v = this->view->viewPages[*pages[index].optionalPage];
 
-                auto& v = this->view->viewPages[*optionalPage];
                 v->setMappedRowCol(strict_cast<int>(r),
                                    strict_cast<int>(c));  // store row and column for e.g. proper arrow key navigation
-                auto vDisplayWidth = v->getDisplayWidthDouble();
-                {
-                    auto paddingLeft = 0.0;
-                    auto paddingRight = 0.0;
-                    auto columnPadding = this->pc.widthCols[c] - vDisplayWidth;
 
-                    if (isPairedPages && len > 1) {
+                pages[index].width = v->getDisplayWidthDouble();
+                pages[index].height = v->getDisplayHeightDouble();
+            }
+        }
+    }
+
+    // second loop: set paddings, width and height according to the layout style and orientation
+    if (this->layoutType == LAYOUT_TYPE_GRID) {
+        for (size_t r = 0; r < rows; r++) {
+            for (size_t c = 0; c < columns; c++) {
+                const auto index = c * rows + r;
+
+                const auto columnPadding = this->pc.widthCols[c] - pages[index].width;
+
+                if (isPairedPages) {
+                    // pair pages mode
+                    if (c % 2 == 0) {
+                        // align right
+                        pages[index].paddingLeft = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;
+                    } else {  // align left
+                        pages[index].paddingLeft = XOURNAL_ROOM_FOR_SHADOW;
+                    }
+                } else {  // not paired page mode - center
+                    pages[index].paddingLeft = XOURNAL_PADDING_BETWEEN / 2.0 + columnPadding / 2.0;
+                }
+
+                // center page vertically
+                pages[index].paddingTop = (this->pc.heightRows[r] - pages[index].height) / 2.0;
+
+                pages[index].width = pc.widthCols[c];
+                pages[index].height = pc.heightRows[r];
+            }
+        }
+    } else {  // this->layoutType == LAYOUT_TYPE_CONST_PADDING
+        if (orientation == LayoutSettings::Orientation::Horizontal) {
+            for (size_t r = 0; r < rows; r++) {
+                for (size_t c = 0; c < columns; c++) {
+                    const auto index = c * rows + r;
+
+                    if (isPairedPages) {
                         // pair pages mode
                         if (c % 2 == 0) {
                             // align right
-                            paddingLeft = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;
-                            paddingRight = XOURNAL_ROOM_FOR_SHADOW;
+                            pages[index].paddingLeft = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW;
                         } else {  // align left
-                            paddingLeft = XOURNAL_ROOM_FOR_SHADOW;
-                            paddingRight = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;
+                            pages[index].paddingLeft = XOURNAL_ROOM_FOR_SHADOW;
                         }
                     } else {  // not paired page mode - center
-                        paddingLeft = XOURNAL_PADDING_BETWEEN / 2.0 + columnPadding / 2.0;  // center justify
-                        paddingRight = XOURNAL_PADDING_BETWEEN - paddingLeft + columnPadding / 2.0;
+                        pages[index].paddingLeft = XOURNAL_PADDING_BETWEEN / 2.0;
                     }
 
-                    x += paddingLeft;
-
-                    v->setX(floor_cast<int>(x));  // set the page position
-                    v->setY(floor_cast<int>(y));
-
-                    x += vDisplayWidth + paddingRight;
+                    // center page vertically
+                    pages[index].paddingTop = (this->pc.heightRows[r] - pages[index].height) / 2.0;
                 }
-            } else {
-                x += this->pc.widthCols[c] + XOURNAL_PADDING_BETWEEN;
+            }
+        } else {  // orientation == LayoutSettings::Orientation::Vertical
+            for (size_t c = 0; c < columns; c++) {
+                for (size_t r = 0; r < rows; r++) {
+                    const auto index = c * rows + r;
+
+                    auto columnPadding = this->pc.widthCols[c] - pages[index].width;
+
+                    if (isPairedPages) {
+                        // pair pages mode
+                        if (c % 2 == 0) {
+                            // align right
+                            pages[index].paddingLeft =
+                                    XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;
+                            if (pages[index + rows].height > pages[index].height) {
+                                pages[index].paddingTop = (pages[index + rows].height - pages[index].height) / 2;
+                                pages[index].height = pages[index + rows].height;
+                            }
+                        } else {  // align left
+                            pages[index].paddingLeft = XOURNAL_ROOM_FOR_SHADOW;
+                            if (pages[index - rows].height > pages[index].height) {
+                                pages[index].paddingTop = (pages[index - rows].height - pages[index].height) / 2;
+                                pages[index].height = pages[index - rows].height;
+                            }
+                        }
+                    } else {  // not paired page mode - center
+                        pages[index].paddingLeft = XOURNAL_PADDING_BETWEEN / 2.0 + columnPadding / 2.0;
+                    }
+                }
             }
         }
-        x = borderX;
-        y += this->pc.heightRows[r] + XOURNAL_PADDING_BETWEEN;
     }
 
-    this->colXStart.resize(this->pc.widthCols.size());
-    this->rowYStart.resize(this->pc.heightRows.size());
+    // initialize x and y here and again in loop below.
+    auto x = borderX;
+    auto y = borderY;
 
+    // Fill in the row and column positions either in the last loop or using std::transform
+    if (this->layoutType == LAYOUT_TYPE_CONST_PADDING && orientation == LayoutSettings::Orientation::Horizontal) {
+        this->colXEnd.resize(rows * columns);
+    } else {
+        this->colXEnd.resize(rows);
+    }
+    if (this->layoutType == LAYOUT_TYPE_CONST_PADDING && orientation == LayoutSettings::Orientation::Vertical) {
+        this->rowYEnd.resize(rows * columns);
+    } else {
+        this->rowYEnd.resize(columns);
+    }
 
-    // accumulated - absolute pixel location for use by getViewAt() and updateVisibility()
-    auto totalWidth = borderX;
-    std::transform(
-            begin(this->pc.widthCols), end(this->pc.widthCols), begin(this->colXStart), [&totalWidth](auto&& widthCol) {
-                return strict_cast<std::remove_reference_t<decltype(widthCol)>>(totalWidth +=
-                                                                                widthCol + XOURNAL_PADDING_BETWEEN);
-            });
-    auto totalHeight = borderY;
-    std::transform(begin(this->pc.heightRows), end(this->pc.heightRows), begin(this->rowYStart),
-                   [&totalHeight](auto&& heightRow) {
-                       return strict_cast<std::remove_reference_t<decltype(heightRow)>>(
-                               (totalHeight += heightRow + XOURNAL_PADDING_BETWEEN));
-                   });
+    // third loop: set the position of each page
+    if (orientation == LayoutSettings::Orientation::Horizontal) {
+        for (size_t r = 0; r < rows; r++) {
+            for (size_t c = 0; c < columns; c++) {
+                const auto index = c * rows + r;
+
+                if (pages[index].optionalPage) {
+                    auto& v = this->view->viewPages[*pages[index].optionalPage];
+                    // set the page position
+                    v->setX(round_cast<int>(x + pages[index].paddingLeft));
+                    v->setY(round_cast<int>(y + pages[index].paddingTop));
+                }
+
+                x += pages[index].width + XOURNAL_PADDING_BETWEEN;
+                if (this->layoutType == LAYOUT_TYPE_CONST_PADDING) {
+                    this->colXEnd[r * columns + c] = floor_cast<unsigned int>(x);
+                }
+            }
+            x = borderX;
+            y += this->pc.heightRows[r] + XOURNAL_PADDING_BETWEEN;
+        }
+    } else {  // orientation == LayoutSettings::Orientation::Vertical
+        for (size_t c = 0; c < columns; c++) {
+            for (size_t r = 0; r < rows; r++) {
+                const auto index = c * rows + r;
+                auto optionalPage = this->mapper.at({c, r});
+
+                if (optionalPage) {
+                    auto& v = this->view->viewPages[*optionalPage];
+                    // set the page position
+                    v->setX(round_cast<int>(x + pages[index].paddingLeft));
+                    v->setY(round_cast<int>(y + pages[index].paddingTop));
+                }
+
+                y += pages[index].height + XOURNAL_PADDING_BETWEEN;
+                if (this->layoutType == LAYOUT_TYPE_CONST_PADDING) {
+                    this->rowYEnd[index] = floor_cast<unsigned int>(y);
+                }
+            }
+            x += this->pc.widthCols[c] + XOURNAL_PADDING_BETWEEN;
+            y = borderY;
+        }
+    }
+
+    // accumulated - absolute pixel location for use by getGridPositionAt() and updateVisibility()
+
+    if (this->layoutType == LAYOUT_TYPE_GRID || orientation == LayoutSettings::Orientation::Vertical) {
+        this->colXEnd.resize(columns);
+        auto totalWidth = borderX;
+        std::transform(this->pc.widthCols.begin(), this->pc.widthCols.end(), this->colXEnd.begin(),
+                       [&totalWidth](auto&& widthCol) {
+                           return strict_cast<std::remove_reference_t<decltype(widthCol)>>(
+                                   totalWidth += widthCol + XOURNAL_PADDING_BETWEEN);
+                       });
+    }
+    if (this->layoutType == LAYOUT_TYPE_GRID || orientation == LayoutSettings::Orientation::Horizontal) {
+        this->rowYEnd.resize(rows);
+        auto totalHeight = borderY;
+        std::transform(this->pc.heightRows.begin(), this->pc.heightRows.end(), this->rowYEnd.begin(),
+                       [&totalHeight](auto&& heightRow) {
+                           return strict_cast<std::remove_reference_t<decltype(heightRow)>>(
+                                   (totalHeight += heightRow + XOURNAL_PADDING_BETWEEN));
+                       });
+    }
 }
 
 
 auto Layout::getPaddingAbovePage(size_t pageIndex) const -> int {
-    const Settings* settings = this->view->getControl()->getSettings();
-
     // User-configured padding above all pages.
-    auto paddingAbove = XOURNAL_PADDING;
-    if (settings->getUnlimitedScrolling()) {
-        paddingAbove += ceil_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getVertical()));
-    } else if (settings->getAddVerticalSpace()) {
-        paddingAbove += settings->getAddVerticalSpaceAmountAbove();
-    }
+    const auto paddingAbove = getPaddingAboveAll();
 
     // (x, y) coordinate pair gives grid indices. This handles paired pages and different page layouts for us.
     auto pageYLocation = strict_cast<int>(this->mapper.at(pageIndex).row);
@@ -346,14 +489,9 @@ auto Layout::getPaddingAbovePage(size_t pageIndex) const -> int {
 
 auto Layout::getPaddingLeftOfPage(size_t pageIndex) const -> int {
     bool isPairedPages = this->mapper.isPairedPages();
-    const Settings* settings = this->view->getControl()->getSettings();
 
-    auto paddingBefore = XOURNAL_PADDING;
-    if (settings->getUnlimitedScrolling()) {
-        paddingBefore += ceil_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getHorizontal()));
-    } else if (settings->getAddHorizontalSpace()) {
-        paddingBefore += settings->getAddHorizontalSpaceAmountLeft();
-    }
+    // User-configured padding left of all pages.
+    const auto paddingBefore = getPaddingLeftOfAll();
 
     auto const pageXLocation = strict_cast<int>(this->mapper.at(pageIndex).col);
 
@@ -396,15 +534,46 @@ void Layout::ensureRectIsVisible(int x, int y, int width, int height) {
     gtk_adjustment_clamp_page(scrollHandling->getVertical(), y - 5, y + height + 10);
 }
 
+auto Layout::getGridPositionAt(int x, int y) -> GridPosition {
+    size_t row = 0;
+    size_t col = 0;
+
+    if (this->layoutType == LAYOUT_TYPE_GRID ||
+        this->mapper.getOrientation() == LayoutSettings::Orientation::Horizontal) {
+
+        // find row
+        const auto rit = std::lower_bound(this->rowYEnd.begin(), this->rowYEnd.end(), y);
+        row = size_t(std::distance(this->rowYEnd.begin(), rit));
+    }
+    if (this->layoutType == LAYOUT_TYPE_GRID ||
+        this->mapper.getOrientation() == LayoutSettings::Orientation::Vertical) {
+
+        // find column
+        const auto cit = std::lower_bound(this->colXEnd.begin(), this->colXEnd.end(), x);
+        col = size_t(std::distance(this->colXEnd.begin(), cit));
+    }
+
+    // For constant padding, we need to know the row first in order to look for
+    // the column, or vice-versa.
+    if (this->layoutType == LAYOUT_TYPE_CONST_PADDING) {
+        if (this->mapper.getOrientation() == LayoutSettings::Orientation::Horizontal) {
+            // row-major ordering
+            const auto rowBeginIt = this->colXEnd.begin() + as_signed(this->mapper.getColumns() * row);
+            const auto cit = std::lower_bound(rowBeginIt, rowBeginIt + as_signed(this->mapper.getColumns()), x);
+            col = static_cast<size_t>(std::distance(rowBeginIt, cit));
+        } else {  // this->mapper.getOrientation() == LayoutSettings::Orientation::Vertical
+            // column-major ordering
+            const auto colBeginIt = this->rowYEnd.begin() + as_signed(this->mapper.getRows() * col);
+            const auto rit = std::lower_bound(colBeginIt, colBeginIt + as_signed(this->mapper.getRows()), y);
+            row = static_cast<size_t>(std::distance(colBeginIt, rit));
+        }
+    }
+
+    return {col, row};
+}
 
 auto Layout::getPageViewAt(int x, int y) -> XojPageView* {
-    // Binary Search:
-    auto rit = std::lower_bound(this->rowYStart.begin(), this->rowYStart.end(), y);
-    auto const foundRow = size_t(std::distance(this->rowYStart.begin(), rit));
-    auto cit = std::lower_bound(this->colXStart.begin(), this->colXStart.end(), x);
-    auto const foundCol = size_t(std::distance(this->colXStart.begin(), cit));
-
-    auto optionalPage = this->mapper.at({foundCol, foundRow});
+    auto optionalPage = this->mapper.at(getGridPositionAt(x, y));
 
     if (optionalPage && this->view->viewPages[*optionalPage]->containsPoint(x, y, false)) {
         return this->view->viewPages[*optionalPage].get();
