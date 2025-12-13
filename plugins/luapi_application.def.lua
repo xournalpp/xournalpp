@@ -500,12 +500,17 @@ function app.getColorPalette() end
 --- 
 --- @param opts {color: integer, tool: string, selection: boolean} options (`selection=true` -> new color applies to
 --- active selection as well, `tool=nil` (unset) -> currently active tool is being used)
+--- The color can be specified as 0xRRGGBB (preserves current alpha) or 0xAARRGGBB (sets alpha explicitly)
 --- 
 --- Example 1: app.changeToolColor({["color"] = 0xff00ff, ["tool"] = "PEN"})
---- changes the color of the pen tool to violet without applying this change to the current selection
+--- changes the color of the pen tool to violet, preserving its current alpha/opacity
 --- 
 --- Example 2: app.changeToolColor({["color"] = 0xff0000, ["selection"] = true })
---- changes the color of the current tool to red and also applies it to the current selection if there is one
+--- changes the color of the current tool to red, preserving alpha, and also applies it to the current selection if there
+--- is one
+--- 
+--- Example 3: app.changeToolColor({["color"] = 0x80ff0000, ["tool"] = "HIGHLIGHTER"})
+--- changes the highlighter to red with 50% opacity (alpha = 0x80 = 128)
 function app.changeToolColor(opts) end
 
 --- Select Background Pdf Page for Current Page
