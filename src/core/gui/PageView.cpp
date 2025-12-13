@@ -18,8 +18,8 @@
 #include <gtk/gtk.h>         // for GtkWidget, gtk_co...
 
 #include "control/AudioController.h"                // for AudioController
-#include "control/LatexController.h"                // for LatexController
 #include "control/Control.h"                        // for Control
+#include "control/LatexController.h"                // for LatexController
 #include "control/ScrollHandler.h"                  // for ScrollHandler
 #include "control/SearchControl.h"                  // for SearchControl
 #include "control/Tool.h"                           // for Tool
