@@ -1,8 +1,8 @@
 #include "SaveHandler.h"
 
-#include <cinttypes>   // for PRIx32
-#include <cstdint>     // for uint32_t
-#include <cstdio>      // for sprintf, size_t
+#include <cinttypes>  // for PRIx32
+#include <cstdint>    // for uint32_t
+#include <cstdio>     // for sprintf, size_t
 
 #include <cairo.h>                  // for cairo_surface_t
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_save
@@ -166,6 +166,8 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
     if (l->hasName()) {
         layer->setAttrib("name", l->getName().c_str());
     }
+    layer->setAttrib("span-first-page", l->getFirstPage());
+    layer->setAttrib("span-last-page", l->getLastPage());
 
     for (const auto& e: l->getElementsView()) {
         if (e->getType() == ELEMENT_STROKE) {
@@ -315,7 +317,19 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
     }
 
     for (const Layer* l: p->getLayersView()) {
-        visitLayer(page, l);
+        const size_t first = l->getFirstPage();
+        const size_t last = l->getLastPage();
+        if (first == id or first == last and first == 0) {
+            visitLayer(page, l);
+        } else {
+            auto* layer = new XmlNode("layer");
+            if (l->hasName()) {
+                layer->setAttrib("name", l->getName().c_str());
+            }
+            layer->setAttrib("span-first-page", first);
+            layer->setAttrib("span-last-page", last);
+            page->addChild(layer);
+        }
     }
 }
 
