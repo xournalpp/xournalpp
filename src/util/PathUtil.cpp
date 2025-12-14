@@ -65,8 +65,8 @@ auto Util::getLongPath(const fs::path& path) -> fs::path { return path; }
 
 #ifdef _WIN32
 fs::path Util::getExePath() {
-    char szFileName[MAX_PATH + 1];
-    GetModuleFileNameA(nullptr, szFileName, MAX_PATH + 1);
+    wchar_t szFileName[MAX_PATH + 1];
+    GetModuleFileNameW(nullptr, szFileName, MAX_PATH + 1);
 
     return fs::path{szFileName}.parent_path();
 }
@@ -507,12 +507,13 @@ void Util::safeReplaceExtension(fs::path& p, const char* newExtension) {
 
 auto Util::getDataPath() -> fs::path {
 #ifdef _WIN32
-    TCHAR szFileName[MAX_PATH];
-    GetModuleFileName(nullptr, szFileName, MAX_PATH);
-    auto exePath = std::string(szFileName);
-    std::string::size_type pos = exePath.find_last_of("\\/");
+    wchar_t szFileName[MAX_PATH];
+    szFileName[0] = 0;
+    GetModuleFileNameW(nullptr, szFileName, MAX_PATH);
+    auto exePath = std::wstring_view(szFileName);
+    std::string::size_type pos = exePath.find_last_of(L"\\/");
     fs::path p = exePath.substr(0, pos);
-    p = p / ".." / "share" / PROJECT_NAME;
+    p = p / L".." / L"share" / PROJECT_NAME;
     return p;
 #elif defined(__APPLE__)
     fs::path p = getExePath().parent_path();
