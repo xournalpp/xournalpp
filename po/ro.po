@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-11 20:45+0000\n"
-"PO-Revision-Date: 2025-12-13 14:17\n"
+"POT-Creation-Date: 2025-12-13 21:27+0000\n"
+"PO-Revision-Date: 2025-12-14 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -629,19 +629,19 @@ msgstr "%F-Notițe-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_adnotat"
 
-#: ../src/core/control/tools/EditSelection.cpp:478
+#: ../src/core/control/tools/EditSelection.cpp:482
 msgid "Arrange"
 msgstr "Aranjare"
 
-#: ../src/core/control/tools/EditSelection.cpp:493
+#: ../src/core/control/tools/EditSelection.cpp:497
 msgid "Bring forward"
 msgstr "Adu mai aproape"
 
-#: ../src/core/control/tools/EditSelection.cpp:504
+#: ../src/core/control/tools/EditSelection.cpp:508
 msgid "Send backward"
 msgstr "Trimite în plan secundar"
 
-#: ../src/core/control/tools/EditSelection.cpp:511
+#: ../src/core/control/tools/EditSelection.cpp:515
 msgid "Send to back"
 msgstr "Trimite în ultimul plan"
 

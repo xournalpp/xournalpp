@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-11 20:45+0000\n"
-"PO-Revision-Date: 2025-12-13 14:17\n"
+"POT-Creation-Date: 2025-12-13 21:27+0000\n"
+"PO-Revision-Date: 2025-12-14 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -599,19 +599,19 @@ msgstr "%F-筆記-%H-%M"
 msgid "%{name}_annotated"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:478
+#: ../src/core/control/tools/EditSelection.cpp:482
 msgid "Arrange"
 msgstr "排序"
 
-#: ../src/core/control/tools/EditSelection.cpp:493
+#: ../src/core/control/tools/EditSelection.cpp:497
 msgid "Bring forward"
 msgstr "往前移動"
 
-#: ../src/core/control/tools/EditSelection.cpp:504
+#: ../src/core/control/tools/EditSelection.cpp:508
 msgid "Send backward"
 msgstr "下移一層"
 
-#: ../src/core/control/tools/EditSelection.cpp:511
+#: ../src/core/control/tools/EditSelection.cpp:515
 msgid "Send to back"
 msgstr "置於底層"
 

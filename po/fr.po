@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-11 20:45+0000\n"
-"PO-Revision-Date: 2025-12-13 14:17\n"
+"POT-Creation-Date: 2025-12-13 21:27+0000\n"
+"PO-Revision-Date: 2025-12-14 04:28\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -628,19 +628,19 @@ msgstr "%F-Note-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_annoté"
 
-#: ../src/core/control/tools/EditSelection.cpp:478
+#: ../src/core/control/tools/EditSelection.cpp:482
 msgid "Arrange"
 msgstr "Classer par"
 
-#: ../src/core/control/tools/EditSelection.cpp:493
+#: ../src/core/control/tools/EditSelection.cpp:497
 msgid "Bring forward"
 msgstr "Mettre en avant"
 
-#: ../src/core/control/tools/EditSelection.cpp:504
+#: ../src/core/control/tools/EditSelection.cpp:508
 msgid "Send backward"
 msgstr "Mettre en arrière"
 
-#: ../src/core/control/tools/EditSelection.cpp:511
+#: ../src/core/control/tools/EditSelection.cpp:515
 msgid "Send to back"
 msgstr "Mettre en arrière-plan"
 

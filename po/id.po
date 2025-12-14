@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-11 20:45+0000\n"
-"PO-Revision-Date: 2025-12-13 14:17\n"
+"POT-Creation-Date: 2025-12-13 21:27+0000\n"
+"PO-Revision-Date: 2025-12-14 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -600,19 +600,19 @@ msgstr "%F-Catatan-%H-%M"
 msgid "%{name}_annotated"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:478
+#: ../src/core/control/tools/EditSelection.cpp:482
 msgid "Arrange"
 msgstr "Susun"
 
-#: ../src/core/control/tools/EditSelection.cpp:493
+#: ../src/core/control/tools/EditSelection.cpp:497
 msgid "Bring forward"
 msgstr "Bawa maju"
 
-#: ../src/core/control/tools/EditSelection.cpp:504
+#: ../src/core/control/tools/EditSelection.cpp:508
 msgid "Send backward"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:511
+#: ../src/core/control/tools/EditSelection.cpp:515
 msgid "Send to back"
 msgstr ""
 
