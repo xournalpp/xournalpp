@@ -150,7 +150,7 @@ private:
     GCancellable* updating_cancellable = nullptr;
 
     /**
-     * The output of the last run of thesrc/util/include/util/Assert.h
+     * The output of the last run of the
      * TeX command.
      */
     std::string texProcessOutput;
