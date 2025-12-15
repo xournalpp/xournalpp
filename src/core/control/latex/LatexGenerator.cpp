@@ -1,5 +1,6 @@
 #include "LatexGenerator.h"
 
+#include <format>
 #include <regex>        // for smatch, sregex_iterator
 #include <sstream>      // for ostringstream
 #include <string_view>  // for string_view
@@ -46,41 +47,38 @@ auto LatexGenerator::templateSub(const std::string& input, const std::string& te
 }
 
 auto LatexGenerator::asyncRun(const fs::path& texDir, const std::string& texFileContents) -> Result {
-    std::string cmd = this->settings.genCmd;
+    // std::string cmd = this->settings.genCmd;
     GErrorGuard err{};
-    std::string texFilePathOSEncoding = Util::GFilename(Util::getLongPath(texDir) / "tex.tex").c_str();
+    std::string texFilePathOSEncoding =
+            Util::GFilename(Util::getLongPath(texDir) / ("tex." + settings.genTmpFileExt)).c_str();
+    const std::string cmd = std::vformat(this->settings.genCmd.string() + this->settings.genArgs,
+                                         std::make_format_args(texFilePathOSEncoding));
 
-    for (auto i = cmd.find("{}"); i != std::string::npos; i = cmd.find("{}", i + texFilePathOSEncoding.length())) {
-        cmd.replace(i, 2, texFilePathOSEncoding);
-    }
     // Todo (rolandlo): is this a todo?
     // Windows note: g_shell_parse_argv assumes POSIX paths, so Windows paths need to be escaped.
     GStrvGuard argv{};
     if (!g_shell_parse_argv(cmd.c_str(), nullptr, out_ptr(argv), out_ptr(err))) {
         return GenError{FS(_F("Failed to parse LaTeX generator command: {1}") % err->message)};
     }
-    gchar* prog = argv.get()[0];
-    if (!prog || !(prog = g_find_program_in_path(prog))) {
+    const fs::path prog = this->settings.genCmd;
+    if (!g_find_program_in_path(prog.c_str())) {
         if (Util::isFlatpakInstallation()) {
-            return GenError{
-                    FS(_F("Failed to find LaTeX generator program in PATH: {1}\n\nSince installation is detected "
-                          "within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For "
-                          "example, by running:\n\n$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive") %
-                       argv.get()[0])};
-        } else {
-            return GenError{FS(_F("Failed to find LaTeX generator program in PATH: {1}") % argv.get()[0])};
+            return GenError{std::format(
+                    "Failed to find LaTeX generator program in PATH: {}\n\nSince installation is detected "
+                    "within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For "
+                    "example, by running:\n\n$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive",
+                    prog.c_str())};
         }
+        return GenError{std::format("Failed to find LaTeX generator program in PATH: {}", prog.c_str())};
     }
-    g_free(argv.get()[0]);
-    argv.get()[0] = prog;
 
     if (!g_file_set_contents(texFilePathOSEncoding.c_str(), texFileContents.c_str(), as_signed(texFileContents.size()),
                              out_ptr(err))) {
-        return GenError({FS(_F("Could not save .tex file: {1}") % err->message)});
+        return GenError({std::format("Could not save .tex file: {}", err->message)});
     }
 
     auto flags = static_cast<GSubprocessFlags>(G_SUBPROCESS_FLAGS_STDOUT_PIPE | G_SUBPROCESS_FLAGS_STDERR_MERGE);
-    xoj::util::GObjectSPtr<GSubprocessLauncher> launcher(g_subprocess_launcher_new(flags), xoj::util::adopt);
+    GObjectSPtr launcher(g_subprocess_launcher_new(flags), adopt);
     g_subprocess_launcher_set_cwd(launcher.get(), Util::GFilename(texDir).c_str());
     auto* proc = g_subprocess_launcher_spawnv(launcher.get(), argv.get(), out_ptr(err));
 

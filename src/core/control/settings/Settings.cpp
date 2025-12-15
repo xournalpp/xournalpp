@@ -20,9 +20,9 @@
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "model/FormatDefinitions.h"                // for FormatUnits, XOJ_...
 #include "util/Color.h"
-#include "util/PathUtil.h"  // for getConfigFile
-#include "util/Util.h"      // for PRECISION_FORMAT_...
-#include "util/i18n.h"      // for _
+#include "util/PathUtil.h"    // for getConfigFile
+#include "util/Util.h"        // for PRECISION_FORMAT_...
+#include "util/i18n.h"        // for _
 #include "util/safe_casts.h"  // for as_unsigned
 #include "util/utf8_view.h"   // for utf8_view
 
@@ -47,6 +47,12 @@ constexpr auto DEFAULT_TOOLBAR = "Portrait";
 #define ATTACH_COMMENT(var)                     \
     com = xmlNewComment((const xmlChar*)(var)); \
     xmlAddPrevSibling(xmlNode, com);
+
+// Inline SAVE_STRING_PROP(latexSettings.globalTemplatePath) since it
+// breaks on Windows due to the native character representation being
+// wchar_t instead of char
+#define SAVE_PATH_PROP(var) \
+    xmlNode = saveProperty((const char*)#var, (var).empty() ? "" : char_cast((var).u8string().c_str()), (root))
 
 Settings::Settings(fs::path filepath): filepath(std::move(filepath)) { loadDefault(); }
 
@@ -663,6 +669,12 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->latexSettings.globalTemplatePath = fs::path(xoj::util::utf8(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.genCmd")) == 0) {
         this->latexSettings.genCmd = reinterpret_cast<char*>(value);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.genCmdBin")) == 0) {
+        this->latexSettings.genCmd = reinterpret_cast<char*>(value);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.genArgs")) == 0) {
+        this->latexSettings.genArgs = reinterpret_cast<char*>(value);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.genTmpFileExt")) == 0) {
+        this->latexSettings.genTmpFileExt = reinterpret_cast<char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.sourceViewThemeId")) == 0) {
         this->latexSettings.sourceViewThemeId = reinterpret_cast<char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.editorFont")) == 0) {
@@ -1202,12 +1214,13 @@ void Settings::save() {
 
     SAVE_BOOL_PROP(latexSettings.autoCheckDependencies);
     SAVE_STRING_PROP(latexSettings.defaultText);
-    // Inline SAVE_STRING_PROP(latexSettings.globalTemplatePath) since it
-    // breaks on Windows due to the native character representation being
-    // wchar_t instead of char
-    fs::path& p = latexSettings.globalTemplatePath;
-    xmlNode = saveProperty("latexSettings.globalTemplatePath", p.empty() ? "" : char_cast(p.u8string().c_str()), root);
-    SAVE_STRING_PROP(latexSettings.genCmd);
+
+    SAVE_PATH_PROP(latexSettings.globalTemplatePath);
+    SAVE_PATH_PROP(latexSettings.genCmd);
+
+    SAVE_STRING_PROP(latexSettings.genArgs);
+    SAVE_STRING_PROP(latexSettings.genTmpFileExt);
+
     SAVE_STRING_PROP(latexSettings.sourceViewThemeId);
     SAVE_FONT_PROP(latexSettings.editorFont);
     SAVE_BOOL_PROP(latexSettings.useCustomEditorFont);
