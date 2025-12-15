@@ -483,7 +483,7 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
                 this->onButtonPressEvent(pos);
             } else if (elemType == ELEMENT_TEXIMAGE) {
                 this->xournal->clearSelection();
-                toolHandler->selectTool(TOOL_TEXT);
+                toolHandler->selectTool(TOOL_LATEX);
                 toolHandler->fireToolChanged();
                 LatexController::insertLatex(this->page, this->xournal->getControl(), x, y);
             }
