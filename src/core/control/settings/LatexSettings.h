@@ -14,18 +14,25 @@
 #include <string>
 
 #include "model/Font.h"
+
 #include "filesystem.h"
 
-class LatexSettings {
+#ifdef __APPLE__
+constexpr std::string_view defaultPdflatexPath = "/Library/TeX/texbin/pdflatex";
+#else
+constexpr std::string_view defaultPdflatexPath = "/usr/bin/pdflatex";
+#endif
+
+class TemplateSettings {
 public:
     bool autoCheckDependencies{true};
     std::string defaultText{"x^2"};
     fs::path globalTemplatePath{};
-#ifdef __APPLE__
-    std::string genCmd{"/Library/TeX/texbin/pdflatex -halt-on-error -interaction=nonstopmode '{}'"};
-#else
-    std::string genCmd{"pdflatex -halt-on-error -interaction=nonstopmode '{}'"};
-#endif
+    fs::path genCmd{defaultPdflatexPath};
+    std::string genArgs{" -halt-on-error -interaction=nonstopmode '{}'"};
+    std::string genTmpFileExt{"tex"};
+
+    enum type { pdflatex, typst };
 
     /**
      * LaTeX editor theme. Only used if linked with the GtkSourceView
@@ -48,4 +55,17 @@ public:
     bool externalEditorAutoConfirm{false};
     std::string externalEditorCmd{};
     std::string temporaryFileExt{"tex"};
+};
+
+// use defaults fallback
+class LatexSettings: public TemplateSettings {};
+
+// typst template
+class TypstSettings: public LatexSettings {
+public:
+    fs::path genCmd{"typst"};
+    std::string genArgs{" c {} tex.pdf"};
+    std::string defaultText{"x^2"};
+    fs::path globalTemplatePath{};
+    std::string genTmpFileExt{"typ"};
 };

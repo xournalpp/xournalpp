@@ -75,7 +75,9 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
         gtk_file_chooser_set_file(this->globalTemplateChooser, Util::toGFile(settings.globalTemplatePath).get(),
                                   nullptr);
     }
-    gtk_editable_set_text(GTK_EDITABLE(builder.get("latexSettingsGenCmd")), settings.genCmd.c_str());
+    gtk_editable_set_text(GTK_EDITABLE(builder.get("latexSettingsGenCmdBin")), settings.genCmd.c_str());
+
+    gtk_editable_set_text(GTK_EDITABLE(builder.get("latexSettingsGenCmdArgs")), settings.genArgs.c_str());
 
 
 #ifdef ENABLE_GTK_SOURCEVIEW
