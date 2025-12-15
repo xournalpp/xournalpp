@@ -1147,7 +1147,6 @@ function app.setFont(font) end
 ---| "audio-seek-backwards"
 ---| "select-font"
 ---| "font"
----| "tex"
 ---| "plugin-manager"
 ---| "help"
 ---| "demo"
@@ -1207,6 +1206,7 @@ app.C = {
     Tool_laserPointerPen = 23,
     Tool_laserPointerHighlighter = 24,
     Tool_link = 25,
+    Tool_latex = 26,
     EraserType_none = 0,
     EraserType_default = 1,
     EraserType_whiteout = 2,
