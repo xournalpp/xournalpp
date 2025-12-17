@@ -32,7 +32,7 @@ runs:
           libpoppler-glib-dev
           portaudio19-dev
           libsndfile1-dev
-          liblua5.3-dev
+          liblua5.4-dev
           libzip-dev
           gettext
           help2man
