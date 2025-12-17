@@ -47,18 +47,18 @@ auto LatexGenerator::templateSub(const std::string& input, const std::string& te
 }
 
 auto LatexGenerator::asyncRun(const fs::path& texDir, const std::string& texFileContents) -> Result {
-    // std::string cmd = this->settings.genCmd;
     GErrorGuard err{};
-    std::string texFilePathOSEncoding =
-            Util::GFilename(Util::getLongPath(texDir) / ("tex." + settings.genTmpFileExt)).c_str();
-    const std::string cmd = std::vformat(this->settings.genCmd.string() + this->settings.genArgs,
-                                         std::make_format_args(texFilePathOSEncoding));
+    const std::string& ext = settings.temporaryFileExt;
+
+    std::string texFilePathOSEncoding = Util::GFilename(Util::getLongPath(texDir) / ("tex." + ext)).c_str();
+    const std::string cmd =
+            std::vformat(this->settings.genCmd + this->settings.genArgs, std::make_format_args(texFilePathOSEncoding));
 
     // Todo (rolandlo): is this a todo?
     // Windows note: g_shell_parse_argv assumes POSIX paths, so Windows paths need to be escaped.
     GStrvGuard argv{};
     if (!g_shell_parse_argv(cmd.c_str(), nullptr, out_ptr(argv), out_ptr(err))) {
-        return GenError{FS(_F("Failed to parse LaTeX generator command: {1}") % err->message)};
+        return GenError{std::format("Failed to parse LaTeX generator command: {}", err->message)};
     }
     const fs::path prog = this->settings.genCmd;
     if (!g_find_program_in_path(prog.c_str())) {

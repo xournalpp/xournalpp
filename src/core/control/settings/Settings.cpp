@@ -20,9 +20,10 @@
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "model/FormatDefinitions.h"                // for FormatUnits, XOJ_...
 #include "util/Color.h"
-#include "util/PathUtil.h"    // for getConfigFile
-#include "util/Util.h"        // for PRECISION_FORMAT_...
-#include "util/i18n.h"        // for _
+#include "util/PathUtil.h"  // for getConfigFile
+#include "util/Util.h"      // for PRECISION_FORMAT_...
+#include "util/i18n.h"      // for _
+#include "util/raii/GLibGuards.h"
 #include "util/safe_casts.h"  // for as_unsigned
 #include "util/utf8_view.h"   // for utf8_view
 
@@ -668,13 +669,23 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.globalTemplatePath")) == 0) {
         this->latexSettings.globalTemplatePath = fs::path(xoj::util::utf8(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.genCmd")) == 0) {
-        this->latexSettings.genCmd = reinterpret_cast<char*>(value);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.genCmdBin")) == 0) {
-        this->latexSettings.genCmd = reinterpret_cast<char*>(value);
+        xoj::util::GStrvGuard argv{};
+        xoj::util::GErrorGuard err{};
+
+        const char* str = reinterpret_cast<char*>(value);
+
+        if (g_shell_parse_argv(str, nullptr, xoj::util::out_ptr(argv), xoj::util::out_ptr(err))) {
+            const std::string prog = argv.get()[0];
+            if (g_find_program_in_path(prog.c_str())) {
+                this->latexSettings.genCmd = prog;
+            } else {
+                this->latexSettings.applyTemplate(LatexSettings::type_t::pdflatex);
+            }
+        } else {
+            this->latexSettings.applyTemplate(LatexSettings::type_t::pdflatex);
+        }
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.genArgs")) == 0) {
         this->latexSettings.genArgs = reinterpret_cast<char*>(value);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.genTmpFileExt")) == 0) {
-        this->latexSettings.genTmpFileExt = reinterpret_cast<char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.sourceViewThemeId")) == 0) {
         this->latexSettings.sourceViewThemeId = reinterpret_cast<char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.editorFont")) == 0) {
@@ -1216,10 +1227,9 @@ void Settings::save() {
     SAVE_STRING_PROP(latexSettings.defaultText);
 
     SAVE_PATH_PROP(latexSettings.globalTemplatePath);
-    SAVE_PATH_PROP(latexSettings.genCmd);
+    SAVE_STRING_PROP(latexSettings.genCmd);
 
     SAVE_STRING_PROP(latexSettings.genArgs);
-    SAVE_STRING_PROP(latexSettings.genTmpFileExt);
 
     SAVE_STRING_PROP(latexSettings.sourceViewThemeId);
     SAVE_FONT_PROP(latexSettings.editorFont);
