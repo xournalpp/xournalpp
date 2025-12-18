@@ -19,7 +19,6 @@
 #include <vector>   // for vector
 
 #include <cairo.h>  // for cairo_t, cairo_matrix_t
-#include <glib.h>   // for GSource
 
 #include "control/ToolEnums.h"               // for ToolSize
 #include "model/Element.h"                   // for Element, Element::Index
@@ -30,6 +29,7 @@
 #include "util/Color.h"                      // for Color
 #include "util/PointerContainerView.h"       // for PointerContainerView
 #include "util/Rectangle.h"                  // for Rectangle
+#include "util/raii/GSourceURef.h"           // for GSourceURef
 #include "util/serializing/Serializable.h"   // for Serializable
 
 #include "CursorSelectionType.h"     // for CursorSelectionType, CURS...
@@ -458,7 +458,7 @@ private:  // HANDLER
     /**
      * Edge pan timer
      */
-    GSource* edgePanHandler = nullptr;
+    xoj::util::GSourceURef edgePanHandler;
 
     /**
      * Inhibit the next move event after edge panning finishes. This prevents
