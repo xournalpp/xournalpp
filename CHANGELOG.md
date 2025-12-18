@@ -7,6 +7,7 @@
 This is a new minor version of Xournal++, including many new features and plethora of bug fixes from the community:
 
 * PDF exports now preserves the background PDF's inner structure (hyperlink, comments, ...) (#6364, #6545, #6831)
+* The color palette can now be selected in the preferences (#3767)
 * Grid snapping now follows the displayed grid for all background types (#6790)
 * New graph background with periodically thicker lines (#6751)
 * New laser pointer tool, writing ephemeral strokes (#6391, #6592)

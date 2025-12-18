@@ -1,12 +1,13 @@
 xournalpp (1.3.1~dev-1) UNRELEASED; urgency=medium
 
-  * 
+  *
 
  -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Thu, 11 Dec 2025 21:44:23 +0100
 
 xournalpp (1.3.0-1) unstable; urgency=medium
 
   * PDF exports now preserves the background PDF's inner structure (hyperlink, comments, ...)
+  * The color palette can now be selected in the preferences
   * Grid snapping now follows the displayed grid for all background types
   * New graph background with periodically thicker lines
   * New laser pointer tool, writing ephemeral strokes
@@ -32,7 +33,7 @@ xournalpp (1.2.9-1) unstable; urgency=medium
   * Fixed diplay bug when mixing versions
   * Fixed clipboard issues
   * Fixed dangerous background overriding
-  * Fixed image attach mode 
+  * Fixed image attach mode
 
  -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Wed, 03 Dec 2025 10:36:35 +0100
 
