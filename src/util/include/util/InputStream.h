@@ -12,6 +12,8 @@
 #pragma once
 
 
+namespace xoj::util {
+
 class InputStream {
 protected:
     InputStream() = default;
@@ -30,3 +32,5 @@ public:
     virtual int read(char* buffer, unsigned int len) noexcept = 0;
     virtual void close() = 0;
 };
+
+}  // namespace xoj::util
