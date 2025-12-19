@@ -13,10 +13,12 @@
 
 #include <zip.h>
 
-#include "control/xojfile/InputStream.h"  // for InputStream
+#include "util/InputStream.h"  // for InputStream
 
 #include "filesystem.h"  // for path
 
+
+namespace xoj::util {
 
 class ZipInputStream final: public InputStream {
 public:
@@ -42,3 +44,5 @@ public:
 private:
     zip_file_t* file;
 };
+
+}  // namespace xoj::util

@@ -13,10 +13,12 @@
 
 #include <zlib.h>
 
-#include "control/xojfile/InputStream.h"  // for InputStream
+#include "util/InputStream.h"  // for InputStream
 
 #include "filesystem.h"  // for path
 
+
+namespace xoj::util {
 
 class GzInputStream final: public InputStream {
 public:
@@ -31,3 +33,5 @@ public:
 private:
     gzFile file;
 };
+
+}  // namespace xoj::util
