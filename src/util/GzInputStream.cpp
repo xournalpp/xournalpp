@@ -1,4 +1,4 @@
-#include "control/xojfile/GzInputStream.h"
+#include "util/GzInputStream.h"
 
 #include <cerrno>     // for errno
 #include <cstring>    // for strerror
@@ -11,6 +11,8 @@
 #include "util/GzUtil.h"  // for GzUtil
 #include "util/i18n.h"    // for FS, _F
 
+
+namespace xoj::util {
 
 GzInputStream::GzInputStream(): file(nullptr) {}
 
@@ -66,3 +68,5 @@ void GzInputStream::close() {
         throw std::runtime_error(error);
     }
 }
+
+}  // namespace xoj::util

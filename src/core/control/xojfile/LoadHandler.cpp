@@ -23,31 +23,31 @@
 #include <zip.h>         // for zip_file_t, zip_fopen,...
 #include <zipconf.h>     // for zip_int64_t, zip_uint64_t
 
-#include "control/xojfile/GzInputStream.h"   // for GzInputStream
-#include "control/xojfile/XmlParser.h"       // for XmlParser
-#include "control/xojfile/ZipInputStream.h"  // for ZipInputStream
-#include "model/BackgroundImage.h"           // for BackgroundImage
-#include "model/Document.h"                  // for Document
-#include "model/Font.h"                      // for XojFont
-#include "model/Image.h"                     // for Image
-#include "model/Layer.h"                     // for Layer
-#include "model/PageType.h"                  // for PageType, PageTypeFormat
-#include "model/Point.h"                     // for Point
-#include "model/Stroke.h"                    // for Stroke, StrokeCapStyle
-#include "model/TexImage.h"                  // for TexImage
-#include "model/Text.h"                      // for Text
-#include "model/XojPage.h"                   // for XojPage
-#include "util/Assert.h"                     // for xoj_assert
-#include "util/Color.h"                      // for Color
-#include "util/LoopUtil.h"                   // for for_first_then_each
-#include "util/PathUtil.h"                   // for PathStorageMode
-#include "util/PlaceholderString.h"          // for PlaceholderString
-#include "util/StringUtils.h"                // for char_cast
-#include "util/i18n.h"                       // for _F, FC, FS, _
-#include "util/raii/CLibrariesSPtr.h"        // for adopt
-#include "util/raii/GLibGuards.h"            // for GErrorGuard
-#include "util/raii/GObjectSPtr.h"           // for GObjectSPtr
-#include "util/utf8_view.h"                  // for utf8_view
+#include "control/xojfile/XmlParser.h"  // for XmlParser
+#include "model/BackgroundImage.h"      // for BackgroundImage
+#include "model/Document.h"             // for Document
+#include "model/Font.h"                 // for XojFont
+#include "model/Image.h"                // for Image
+#include "model/Layer.h"                // for Layer
+#include "model/PageType.h"             // for PageType, PageTypeFormat
+#include "model/Point.h"                // for Point
+#include "model/Stroke.h"               // for Stroke, StrokeCapStyle
+#include "model/TexImage.h"             // for TexImage
+#include "model/Text.h"                 // for Text
+#include "model/XojPage.h"              // for XojPage
+#include "util/Assert.h"                // for xoj_assert
+#include "util/Color.h"                 // for Color
+#include "util/GzInputStream.h"         // for GzInputStream
+#include "util/LoopUtil.h"              // for for_first_then_each
+#include "util/PathUtil.h"              // for PathStorageMode
+#include "util/PlaceholderString.h"     // for PlaceholderString
+#include "util/StringUtils.h"           // for char_cast
+#include "util/ZipInputStream.h"        // for ZipInputStream
+#include "util/i18n.h"                  // for _F, FC, FS, _
+#include "util/raii/CLibrariesSPtr.h"   // for adopt
+#include "util/raii/GLibGuards.h"       // for GErrorGuard
+#include "util/raii/GObjectSPtr.h"      // for GObjectSPtr
+#include "util/utf8_view.h"             // for utf8_view
 
 #include "filesystem.h"  // for path, is_regular_file
 
@@ -452,7 +452,7 @@ void LoadHandler::finalizeTexImage() {
 }
 
 
-auto LoadHandler::openFile(fs::path const& filepath) -> std::unique_ptr<InputStream> {
+auto LoadHandler::openFile(fs::path const& filepath) -> std::unique_ptr<xoj::util::InputStream> {
     this->xournalFilepath = filepath;
     int zipError = 0;
     this->zipFp = zip_wrapper(zip_open(char_cast(filepath.u8string().c_str()), ZIP_RDONLY, &zipError));
@@ -460,7 +460,7 @@ auto LoadHandler::openFile(fs::path const& filepath) -> std::unique_ptr<InputStr
     // Check if file is a gzip
     if (!this->zipFp && zipError == ZIP_ER_NOZIP) {
         this->isGzFile = true;
-        return std::make_unique<GzInputStream>(filepath);
+        return std::make_unique<xoj::util::GzInputStream>(filepath);
     }
 
     // Check if file is a zip
@@ -502,7 +502,7 @@ auto LoadHandler::openFile(fs::path const& filepath) -> std::unique_ptr<InputStr
         }
 
         // open the main content file
-        return std::make_unique<ZipInputStream>(this->zipFp.get(), "content.xml");
+        return std::make_unique<xoj::util::ZipInputStream>(this->zipFp.get(), "content.xml");
     }
 
     // Fail if neither utility could open the file
@@ -513,7 +513,7 @@ void LoadHandler::closeFile() noexcept { this->zipFp.reset(); }
 
 XOJ_GIO_GUARD_GENERATOR_TYPE(GMarkupParseContext, g_markup_parse_context_free);
 
-void LoadHandler::parseXml(std::unique_ptr<InputStream> xmlContentStream) {
+void LoadHandler::parseXml(std::unique_ptr<xoj::util::InputStream> xmlContentStream) {
     xoj_assert(xmlContentStream);
 
     XmlParser parserInterface(*this);

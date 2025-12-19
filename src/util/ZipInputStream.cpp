@@ -1,4 +1,4 @@
-#include "control/xojfile/ZipInputStream.h"
+#include "util/ZipInputStream.h"
 
 #include <stdexcept>  // for runtime_error
 #include <string>     // for string
@@ -10,6 +10,8 @@
 
 #include "filesystem.h"  // for path
 
+
+namespace xoj::util {
 
 ZipInputStream::ZipInputStream(): file(nullptr) {}
 
@@ -53,3 +55,5 @@ void ZipInputStream::close() {
         throw std::runtime_error(error);
     }
 }
+
+}  // namespace xoj::util
