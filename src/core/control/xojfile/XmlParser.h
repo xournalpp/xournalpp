@@ -18,7 +18,7 @@
 
 #include <glib.h>
 
-#include "control/xojfile/LoadHandler.h"
+#include "control/xojfile/DocumentBuilderInterface.h"
 #include "control/xojfile/XmlParserHelper.h"
 #include "control/xojfile/XmlTags.h"
 #include "util/EnumIndexedArray.h"
@@ -28,7 +28,7 @@
 
 class XmlParser {
 public:
-    XmlParser(LoadHandler& handler);
+    XmlParser(DocumentBuilderInterface& builder);
 
     // GMarkup callbacks
     static void parserStartElement(GMarkupParseContext* context, const gchar* elementName, const gchar** attributeNames,
@@ -85,7 +85,7 @@ private:
 
     using StartElementFunc = void (XmlParser::*)(const XmlParserHelper::AttributeMap&);
     using TextFunc = void (XmlParser::*)(std::string_view);
-    using EndElementFunc = void (LoadHandler::*)();
+    using EndElementFunc = void (DocumentBuilderInterface::*)();
     struct ParsingEntry {
         StartElementFunc start;
         TextFunc text;
@@ -95,28 +95,31 @@ private:
     // Table to dispatch parsing callbacks
     static constexpr EnumIndexedArray<ParsingEntry, xoj::xml_tags::Type> parsingTable{
             EnumIndexedArray<ParsingEntry, xoj::xml_tags::Type>::underlying_array_type{{
-                    {&XmlParser::parseUnknownTag, {}, {}},                               // TagType::UNKNOWN
-                    {&XmlParser::parseXournalTag, {}, &LoadHandler::finalizeDocument},   // TagType::XOURNAL
-                    {&XmlParser::parseMrWriterTag, {}, &LoadHandler::finalizeDocument},  // TagType::MRWRITER
-                    {{}, {}, {}},                                                        // TagType::TITLE (ignored)
-                    {{}, {}, {}},                                                        // TagType::PREVIEW (ignored)
-                    {&XmlParser::parsePageTag, {}, &LoadHandler::finalizePage},          // TagType::PAGE
-                    {&XmlParser::parseAudioTag, {}, {}},                                 // TagType::AUDIO
-                    {&XmlParser::parseBackgroundTag, {}, {}},                            // TagType::BACKGROUND
-                    {&XmlParser::parseLayerTag, {}, &LoadHandler::finalizeLayer},        // TagType::LAYER
-                    {&XmlParser::parseTimestampTag, {}, {}},                             // TagType::TIMESTAMP
+                    {&XmlParser::parseUnknownTag, {}, {}},                                           // TagType::UNKNOWN
+                    {&XmlParser::parseXournalTag, {}, &DocumentBuilderInterface::finalizeDocument},  // TagType::XOURNAL
+                    {&XmlParser::parseMrWriterTag,
+                     {},
+                     &DocumentBuilderInterface::finalizeDocument},  // TagType::MRWRITER
+                    {{}, {}, {}},                                   // TagType::TITLE (ignored)
+                    {{}, {}, {}},                                   // TagType::PREVIEW (ignored)
+                    {&XmlParser::parsePageTag, {}, &DocumentBuilderInterface::finalizePage},    // TagType::PAGE
+                    {&XmlParser::parseAudioTag, {}, {}},                                        // TagType::AUDIO
+                    {&XmlParser::parseBackgroundTag, {}, {}},                                   // TagType::BACKGROUND
+                    {&XmlParser::parseLayerTag, {}, &DocumentBuilderInterface::finalizeLayer},  // TagType::LAYER
+                    {&XmlParser::parseTimestampTag, {}, {}},                                    // TagType::TIMESTAMP
                     {&XmlParser::parseStrokeTag, &XmlParser::parseStrokeText,
-                     &LoadHandler::finalizeStroke},  // TagType::STROKE
-                    {&XmlParser::parseTextTag, &XmlParser::parseTextText, &LoadHandler::finalizeText},  // TagType::TEXT
+                     &DocumentBuilderInterface::finalizeStroke},  // TagType::STROKE
+                    {&XmlParser::parseTextTag, &XmlParser::parseTextText,
+                     &DocumentBuilderInterface::finalizeText},  // TagType::TEXT
                     {&XmlParser::parseImageTag, &XmlParser::parseImageText,
-                     &LoadHandler::finalizeImage},  // TagType::IMAGE
+                     &DocumentBuilderInterface::finalizeImage},  // TagType::IMAGE
                     {&XmlParser::parseTexImageTag, &XmlParser::parseTexImageText,
-                     &LoadHandler::finalizeTexImage},         // TagType::TEXIMAGE
-                    {&XmlParser::parseAttachmentTag, {}, {}}  // TagType::ATTACHMENT
+                     &DocumentBuilderInterface::finalizeTexImage},  // TagType::TEXIMAGE
+                    {&XmlParser::parseAttachmentTag, {}, {}}        // TagType::ATTACHMENT
             }}};
 
-    // Handler to which the parsed data is forwarded
-    LoadHandler& handler;
+    // Builder interface to which the parsed data is forwarded
+    DocumentBuilderInterface& builder;
 
     // Stack containing the tag types found at every level in the document
     std::vector<xoj::xml_tags::Type> hierarchy;

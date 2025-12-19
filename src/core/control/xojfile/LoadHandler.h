@@ -21,12 +21,13 @@
 
 #include <zip.h>  // for zip_t
 
-#include "model/Document.h"         // for Document
-#include "model/DocumentHandler.h"  // for DocumentHandler
-#include "model/PageRef.h"          // for PageRef
-#include "model/Stroke.h"           // for Stroke, StrokeTool,...
-#include "util/Color.h"             // for Color
-#include "util/PathUtil.h"          // for Util::hash
+#include "control/xojfile/DocumentBuilderInterface.h"  // for DocumentBuilderInterface
+#include "model/Document.h"                            // for Document
+#include "model/DocumentHandler.h"                     // for DocumentHandler
+#include "model/PageRef.h"                             // for PageRef
+#include "model/Stroke.h"                              // for Stroke, StrokeTool,...
+#include "util/Color.h"                                // for Color
+#include "util/PathUtil.h"                             // for Util::hash
 
 #include "filesystem.h"  // for path
 
@@ -44,7 +45,7 @@ class InputStream;
 }
 
 
-class LoadHandler {
+class LoadHandler: private DocumentBuilderInterface {
 public:
     /**
      * @param errorMessages Either `nullptr` or a pointer to a string to which
@@ -79,7 +80,7 @@ public:
     /** @return The version of the loaded file */
     int getFileVersion() const;
 
-public:
+private:
     // interface for XmlParser
     void addDocument(std::u8string creator, int fileVersion);
     void finalizeDocument();
