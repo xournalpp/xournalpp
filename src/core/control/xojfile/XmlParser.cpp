@@ -410,12 +410,17 @@ void XmlParser::parseStrokeTag(const XmlParserHelper::AttributeMap& attributeMap
 
 void XmlParser::parseStrokeText(std::string_view text) {
     std::vector<Point> pointVector;
-    pointVector.reserve(this->pressureBuffer.size());
+    pointVector.reserve(this->pressureBuffer.size() + 1);
 
     auto it = text.begin();
     const auto end = text.end();
     double x{}, y{};
-    while (parseDouble(it, end, x) && parseDouble(it, end, y)) {
+    while (parseDouble(it, end, x)) {
+        if (!parseDouble(it, end, y)) {
+            g_warning("XML parser: Found stroke that contains an odd number of valid coordinates. "
+                      "Discarding the last value");
+            break;
+        }
         pointVector.emplace_back(x, y);
     }
 
@@ -510,7 +515,7 @@ auto XmlParser::getTagType(c_string_utf8_view name) const -> TagType {
         if (TAG_NAMES[TagType::MRWRITER] == name)
             return TagType::MRWRITER;
     } else if (!this->lastValidTag) {
-        // Hiearchy contains only unknown tags. Allow parsing of document contents.
+        // Hierarchy contains only unknown tags. Allow parsing of document contents.
         if (TAG_NAMES[TagType::TITLE] == name)
             return TagType::TITLE;
         if (TAG_NAMES[TagType::PREVIEW] == name)
