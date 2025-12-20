@@ -25,7 +25,8 @@
 #include "util/safe_casts.h"                           // for as_unsigned
 #include "util/utf8_view.h"                            // for xoj::util::utf8
 
-#include "filesystem.h"  // for path
+#include "config-features.h"  // for ENABLE_FLOAT_FROM_CHARS
+#include "filesystem.h"       // for path
 
 
 static constexpr auto& TAG_NAMES = xoj::xml_tags::NAMES;
@@ -65,7 +66,7 @@ static bool parseDouble(const char*& it, const char* end, double& value) {
         return false;
     }
 
-#if HAS_FLOAT_FROM_CHARS
+#if ENABLE_FLOAT_FROM_CHARS
     // Parse double
     const auto [ptr, ec] = std::from_chars(it, end, value);
     if (ec != std::errc{}) {
@@ -86,7 +87,7 @@ static bool parseDouble(const char*& it, const char* end, double& value) {
                   SV_ARG(std::string_view(it, as_unsigned(end - it))));
         return false;
     }
-#endif  // HAS_FLOAT_FROM_CHARS
+#endif  // ENABLE_FLOAT_FROM_CHARS
 
     // Update start pointer and return
     it = ptr;
