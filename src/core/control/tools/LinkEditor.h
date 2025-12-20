@@ -53,7 +53,7 @@ private:
     Link* linkElement = nullptr;
 
     GtkPopover* linkPopoverHighlight = nullptr;
-    GtkWidget* linkPopoverLabelHightlight = nullptr;
+    GtkWidget* linkPopoverLabelHighlight = nullptr;
     GtkPopover* linkPopoverSelect = nullptr;
     GtkWidget* linkPopoverLabelSelect = nullptr;
     Link* highlightedLink = nullptr;
