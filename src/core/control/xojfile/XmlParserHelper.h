@@ -32,6 +32,7 @@
 #include "util/serdesstream.h"
 #include "util/utf8_view.h"
 
+#include "config-features.h"
 #include "filesystem.h"
 
 class LineStyle;
@@ -127,23 +128,6 @@ inline constexpr bool is_utf8_view_v<xoj::util::utf8_view<It, Sen>> = true;
 template <typename T>
 constexpr bool always_false = false;
 
-// Check for floating-point std::from_chars support
-#ifndef HAS_FLOAT_FROM_CHARS
-#if defined(_GLIBCXX_RELEASE)
-// libstdc++ supports floating-point from_chars since GCC 11
-#define HAS_FLOAT_FROM_CHARS (_GLIBCXX_RELEASE >= 11)
-#elif defined(_LIBCPP_VERSION)
-// libc++ supports floating-point from chars since version 20.1.0
-#define HAS_FLOAT_FROM_CHARS (_LIBCPP_VERSION >= 200100)
-#elif defined(_MSC_VER)
-// MSVC STL supports float from_chars since VS 2017 15.7
-#define HAS_FLOAT_FROM_CHARS (_MSC_VER >= 1914)
-#else
-// Unknown standard library
-#define HAS_FLOAT_FROM_CHARS 0
-#endif
-#endif  // HAS_FLOAT_FROM_CHARS
-
 // Exception type for incompletely parsed attributes
 template <typename T>
 class IncompleteParseError: public std::runtime_error {
@@ -184,7 +168,7 @@ T parse_numeric(std::string_view sv) {
     static_assert(std::is_arithmetic_v<T>, "T must be numeric");
 
     T value{};
-    if constexpr (std::is_integral_v<T> || HAS_FLOAT_FROM_CHARS) {
+    if constexpr (std::is_integral_v<T> || ENABLE_FLOAT_FROM_CHARS) {
         auto [ptr, ec] = std::from_chars(sv.begin(), sv.end(), value);
         if (ec != std::errc{}) {
             throw std::domain_error(std::make_error_condition(ec).message());

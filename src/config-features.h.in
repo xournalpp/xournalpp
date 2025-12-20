@@ -19,6 +19,8 @@
 
 #cmakedefine ENABLE_AUDIO
 
+#cmakedefine01 ENABLE_FLOAT_FROM_CHARS
+
 /* --- Testing features --- */
 
 #cmakedefine ENABLE_QPDF
