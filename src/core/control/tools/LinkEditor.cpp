@@ -24,7 +24,7 @@ LinkEditor::LinkEditor(XournalView* view): view(view), control(view->getControl(
 }
 
 LinkEditor::~LinkEditor() {
-    gtk_widget_destroy(GTK_WIDGET(this->linkPopoverLabelHightlight));
+    gtk_widget_destroy(GTK_WIDGET(this->linkPopoverLabelHighlight));
     gtk_widget_destroy(GTK_WIDGET(this->linkPopoverHighlight));
     gtk_widget_destroy(GTK_WIDGET(this->linkPopoverLabelSelect));
     gtk_widget_destroy(GTK_WIDGET(this->linkPopoverSelect));
@@ -160,7 +160,7 @@ void LinkEditor::highlight(const PageRef& page, const int x, const int y, XojPag
             GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window), "alias");
             gdk_window_set_cursor(window, cursor);
             positionPopover(pageView, this->highlightedLink, this->linkPopoverHighlight);
-            gtk_label_set_text(GTK_LABEL(this->linkPopoverLabelHightlight), highlightedLink->getUrl().c_str());
+            gtk_label_set_text(GTK_LABEL(this->linkPopoverLabelHighlight), highlightedLink->getUrl().c_str());
             if (!this->highlightedLink->isSelected()) {
                 gtk_widget_show_all(GTK_WIDGET(this->linkPopoverHighlight));
                 gtk_popover_popup(this->linkPopoverHighlight);
@@ -185,8 +185,8 @@ void LinkEditor::createPopover() {
     gtk_popover_set_modal(linkPopoverHighlight, false);
     gtk_popover_set_constrain_to(this->linkPopoverHighlight, GTK_POPOVER_CONSTRAINT_WINDOW);
     GtkWidget* vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    this->linkPopoverLabelHightlight = gtk_label_new("");
-    gtk_box_pack_start(GTK_BOX(vbox), this->linkPopoverLabelHightlight, true, true, POPOVER_PADDING);
+    this->linkPopoverLabelHighlight = gtk_label_new("");
+    gtk_box_pack_start(GTK_BOX(vbox), this->linkPopoverLabelHighlight, true, true, POPOVER_PADDING);
     gtk_container_add(GTK_CONTAINER(this->linkPopoverHighlight), vbox);
 
     this->linkPopoverSelect = GTK_POPOVER(gtk_popover_new(view->getWidget()));
