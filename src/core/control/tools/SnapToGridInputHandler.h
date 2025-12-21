@@ -51,12 +51,6 @@ protected:
     void calculateGridOffsets(double& xOffset, double& yOffset, double pageWidth, double pageHeight) const;
 
     /**
-     * @brief Calculate offsets for graph paper backgrounds
-     */
-    void calculateGraphOffsets(const BackgroundConfig& config, double pageWidth, double pageHeight, double& xOffset,
-                               double& yOffset) const;
-
-    /**
      * @brief Calculate offsets for isometric backgrounds
      */
     void calculateIsometricOffsets(const BackgroundConfig& config, double pageWidth, double pageHeight, double& xOffset,
