@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.3.2~dev (Unreleased)
+
 ## 1.3.1
 
 * Restored the rendering of graph backgrounds used before the 1.3.0 release (#6894)
