@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-25 06:16+0000\n"
-"PO-Revision-Date: 2025-11-30 04:28\n"
+"POT-Creation-Date: 2025-12-11 21:17+0000\n"
+"PO-Revision-Date: 2025-12-21 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1665,7 +1665,7 @@ msgstr "Compás"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Toggle Touch Drawing"
-msgstr ""
+msgstr "Alternar Dibujar Toque"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
@@ -2128,7 +2128,7 @@ msgstr "Error {1} al ejecutar el comando de sistema: {2}"
 
 #: ../src/util/XojMsgBox.cpp:186
 msgid "The file {1} already exists! Do you want to replace it?"
-msgstr ""
+msgstr "¡El archivo {1} ya existe! ¿Desea reemplazarlo?"
 
 #: ../src/util/XojMsgBox.cpp:190
 msgid "Select another name"
@@ -4481,7 +4481,7 @@ msgstr "Gráfico con borde"
 
 #: ../resources-templates/pagetemplates.ini.in:47
 msgid "Graph with border (bold every 5th)"
-msgstr ""
+msgstr "Gráfico con borde (negrita cada cinco)"
 
 #: ../resources-templates/toolbar.ini.in:50
 msgid "All Tools"
