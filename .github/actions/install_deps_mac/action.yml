@@ -13,7 +13,7 @@ runs:
     uses: actions/cache/restore@v4
     with:
       path: "${{github.workspace}}/blob"
-      key: ${{ runner.os }}-${{ runner.arch }}-blob-${{ hashFiles('mac-setup/CI_jhbuild.sh', 'mac-setup/jhbuild-version.lock', 'mac-setup/xournalpp.modules') }}
+      key: ${{ runner.os }}-${{ runner.arch }}-blob-${{ hashFiles('mac-setup/CI_jhbuild.sh', 'mac-setup/jhbuild-version.lock', 'mac-setup/xournalpp.modules', 'mac-setup/gtk-osx.patch') }}
   - name: 'Install Perl XML::Parser' # Needed for compilation of Intltool in the blob
     if: steps.restore-blob.outputs.cache-hit != 'true'
     uses: perl-actions/install-with-cpm@v1

@@ -33,7 +33,7 @@
   "macos_targets": {
     "mac-x64": {
       "displayed_name": "MacOS x64",
-      "runner": "macos-13",
+      "runner": "macos-15-intel",
       "run_ci": "true"
     },
     "mac-arm": {

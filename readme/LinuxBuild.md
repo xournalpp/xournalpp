@@ -6,7 +6,7 @@ Xournal++ is programmed with C++17 and needs the `<optional>` header and one fil
 Therefore it is required to install a compiler implementing those features.
 We recommend using at least GCC 8 or Clang 9.
 
-Please create file an issue or create a pull request if you require more precise dependencies.
+Please file an issue or create a pull request if you require more precise dependencies.
 
 Lua is needed for plugins; if it is missing, the plugins will be disabled.
 
@@ -17,7 +17,7 @@ The minimum required CMake version is 3.13, but we recommend using >=3.15. Also,
 #### For Arch Linux:
 ```sh
 sudo pacman -S cmake gtk3 base-devel libxml2 portaudio libsndfile \
-  poppler-glib texlive-bin texlive-pictures gettext libzip lua53 \
+  poppler-glib texlive-bin texlive-pictures libzip lua \
   gtksourceview4 help2man qpdf
 ```
 
@@ -38,7 +38,7 @@ sudo dnf install gcc-c++ cmake gtk3-devel libxml2-devel cppunit-devel portaudio-
 #### For Ubuntu/Debian and Raspberry Pi OS:
 ```sh
 sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev \
-  dvipng texlive libxml2-dev liblua5.3-dev libzip-dev librsvg2-dev gettext \
+  dvipng texlive libxml2-dev liblua5.4-dev libzip-dev librsvg2-dev gettext \
   libgtksourceview-4-dev help2man libqpdf-dev
 ```
 

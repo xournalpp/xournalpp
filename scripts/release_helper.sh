@@ -179,9 +179,9 @@ function bump_version() {
     if [ "$replace" -eq 0 ]; then
         sed -i "1,/^    <release .*$/ {/^    <release .*$/i\
         \ \ \ \ <release date=\"$date\" version=\"$(current_version)\" />
-        }" "${SCRIPT_PATH}/../desktop/com.github.xournalpp.xournalpp.appdata.xml"
+        }" "${SCRIPT_PATH}/../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in"
     else
-        sed -i "s/\ \ \ \ <release date=\".*\" version=\"${prior_version}\" \/>/\ \ \ \ <release date=\"$date\" version=\"$(current_version)\" \/>/g" "${SCRIPT_PATH}/../desktop/com.github.xournalpp.xournalpp.appdata.xml"
+        sed -i "s/\ \ \ \ <release date=\".*\" version=\"${prior_version}\" \/>/\ \ \ \ <release date=\"$date\" version=\"$(current_version)\" \/>/g" "${SCRIPT_PATH}/../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in"
     fi
 
     # Update MacOS Info.plist
@@ -220,6 +220,10 @@ function prepare_new_version() {
     
     if ! bump_version "$new_version" 1; then
         abort 9 "Could not bump version of release branch"
+    fi
+
+    if ! sed -i "s/release-[0-9]*\.[0-9]*/${branch_name}/g" "${SCRIPT_PATH}/../.github/workflows/download-translations-from-crowdin.yml"; then
+        abort 9 "Could not bump release branch version in Crowdin github action"
     fi
 
     # Commit version bump

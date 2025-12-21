@@ -99,7 +99,8 @@ bool QPdfExport::overlayAndSave(const fs::path& saveDestination, std::stringstre
         auto overlayPages = QPDFPageDocumentHelper(overlay).getAllPages();
         overlaysAsXObjects.reserve(overlayPages.size());
         for (auto&& p: overlayPages) {
-            overlaysAsXObjects.emplace_back(p.getFormXObjectForPage());
+            auto&& xobj = overlaysAsXObjects.emplace_back(p.getFormXObjectForPage());
+            xobj.getDict().getKey("/Group").removeKey("/I");
         }
 
         auto outputPages = QPDFPageDocumentHelper(background).getAllPages();

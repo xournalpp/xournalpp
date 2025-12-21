@@ -157,6 +157,9 @@ includes the very latest features and bug fixes.
 With the help of the community, Xournal++ is also available on official repositories
 of some popular GNU/Linux distros and platforms.
 
+[![Packaging status](https://repology.org/badge/vertical-allrepos/xournalpp.svg?columns=5)](https://repology.org/project/xournalpp/versions)
+
+
 ### Debian
 
 On Debian bookworm and Debian sid the `xournalpp` package (stable version) is contained in the official repositories. Simply install via
