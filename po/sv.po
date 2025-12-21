@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-11 21:17+0000\n"
-"PO-Revision-Date: 2025-12-13 14:17\n"
+"PO-Revision-Date: 2025-12-21 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -958,7 +958,7 @@ msgstr "Hand"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
 msgid "Floating Toolbox (experimental)"
-msgstr ""
+msgstr "Flytande verktygslåda (experimentell)"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Select Text from pdf"
@@ -1297,7 +1297,7 @@ msgstr "Avskiljare"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
 msgid "Spacer"
-msgstr ""
+msgstr "Mellanrum"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:79
 msgctxt "Item category in toolbar customization dialog"
@@ -1327,7 +1327,7 @@ msgstr "Navigering"
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:84
 msgctxt "Item category in toolbar customization dialog"
 msgid "Selection"
-msgstr ""
+msgstr "Markering"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:85
 msgctxt "Item category in toolbar customization dialog"
@@ -1342,7 +1342,7 @@ msgstr "Avskiljare"
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:87
 msgctxt "Item category in toolbar customization dialog"
 msgid "Plugins"
-msgstr "Plugins"
+msgstr "Insticksprogram"
 
 #: ../src/core/gui/menus/menubar/Menubar.cpp:54
 msgid "Error loading menubar XML file (try to load \"{1}\")"
@@ -1359,7 +1359,7 @@ msgstr "Hantera insticksprogram"
 
 #: ../src/core/gui/menus/menubar/PluginsSubmenu.cpp:32
 msgid "Plugin"
-msgstr "Plugin"
+msgstr "Insticksprogram"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:61
 msgctxt "The selected document will be removed from the recent files list"
@@ -2562,12 +2562,13 @@ msgstr "Redigerarinställningar"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
-msgstr ""
+msgstr " = Flytande verktygslåda (experimentell) ="
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "            <i>Menu: View/Toolbars</i>"
-msgstr ""
+msgstr "<b>Tom verktygslåda</b>\n"
+"            <i>Meny: Visa/Verktygsfält</i>"
 
 #: ../ui/main.glade:421
 msgid "Find previous occurrence of the search string"
@@ -2679,7 +2680,7 @@ msgstr "Färgpaletter"
 
 #: ../ui/plugin.glade:22
 msgid "Plugins"
-msgstr "Plugins"
+msgstr "Insticksprogram"
 
 #: ../ui/plugin.glade:81
 msgid "Plugin changes are only applied after Xournal++ is restarted"
@@ -3589,7 +3590,7 @@ msgstr "inaktiverad"
 
 #: ../ui/settings.glade:4963
 msgid "Automatically Add Empty Last Page (excluding PDFs)"
-msgstr ""
+msgstr "Lägg automatiskt till en tom sida i slutet (gäller inte PDF-filer)"
 
 #: ../ui/settings.glade:4987
 msgid "Enable  with determination radius of "
@@ -3701,7 +3702,7 @@ msgstr "Inställningar:"
 
 #: ../ui/settings.glade:5437
 msgid "Show Floating Toolbox"
-msgstr ""
+msgstr "Visa flytande verktygslåda"
 
 #: ../ui/settings.glade:5456
 msgid "Action on Tool Tap"
@@ -3952,7 +3953,7 @@ msgstr "Hitta"
 
 #: ../ui/mainmenubar.xml:114
 msgid "Arrange Selection"
-msgstr ""
+msgstr "Ordna markering"
 
 #: ../ui/mainmenubar.xml:117
 msgid "Bring to Front"
@@ -3992,7 +3993,7 @@ msgstr "_Hantera"
 
 #: ../ui/mainmenubar.xml:173
 msgid "_Customize"
-msgstr ""
+msgstr "_Anpassa"
 
 #: ../ui/mainmenubar.xml:181
 msgid "_View"
@@ -4204,7 +4205,7 @@ msgstr "Ra_dera sida"
 
 #: ../ui/mainmenubar.xml:468
 msgid "Add a _Layer above the active layer"
-msgstr ""
+msgstr "Lägg till ett _lager ovanför det aktiva lagret"
 
 #: ../ui/mainmenubar.xml:477
 msgid "Delete Layer"
@@ -4397,11 +4398,11 @@ msgstr "Porträtt"
 
 #: ../resources-templates/toolbar.ini.in:61
 msgid "Minimal Left"
-msgstr ""
+msgstr "Minimalt vänster"
 
 #: ../resources-templates/toolbar.ini.in:65
 msgid "Minimal Top"
-msgstr ""
+msgstr "Minimalt uppe"
 
 #: ../resources-templates/toolbar.ini.in:69
 msgid "Xournal++"
@@ -4409,19 +4410,19 @@ msgstr "Xournal++"
 
 #: ../resources-templates/toolbar.ini.in:77
 msgid "Right hand Note Taking"
-msgstr ""
+msgstr "Anteckna med höger hand"
 
 #: ../resources-templates/toolbar.ini.in:80
 msgid "Toolbar Left"
-msgstr "Verktygsfält till vänster"
+msgstr "Verktygsfält vänster"
 
 #: ../resources-templates/toolbar.ini.in:86
 msgid "Toolbar Right"
-msgstr ""
+msgstr "Verktygsfält höger"
 
 #: ../resources-templates/toolbar.ini.in:101
 msgid "Empty Toolbar"
-msgstr ""
+msgstr "Tomt verktygsfält"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:6
 msgid "Note-taking application"

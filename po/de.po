@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-11 21:17+0000\n"
-"PO-Revision-Date: 2025-12-13 14:16\n"
+"PO-Revision-Date: 2025-12-21 04:28\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -77,9 +77,9 @@ msgstr "Mit PDF-Hintergrund"
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
-msgstr "Das aktuelle Dokument enthält keine PDF-Seite {1}\n"
-"Möchten Sie diese Seite einfügen?\n\n"
-"Tipp: Wählen Sie {2} aus, um eine PDF-Seite einzufügen."
+msgstr "Dein aktuelles Dokument enthält keine PDF-Seite {1}\n"
+"Möchtest du diese Seite einfügen?\n\n"
+"Tipp: Du kannst {2} auswählen, um eine PDF-Seite einzufügen."
 
 #: ../src/core/control/Control.cpp:880
 msgid "No pdf pages available to append. You may need to reopen the document first."
@@ -945,7 +945,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 msgid "Laser Pointer - Hightlighter"
-msgstr ""
+msgstr "Laser Zeiger - Highlighter"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 msgid "Vertical space"
@@ -1057,7 +1057,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:171
 msgid "Editor exited with bad status {1}"
-msgstr ""
+msgstr "Editor mit schlechtem Status {1} beendet"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:15
 msgid "All files"
@@ -2118,7 +2118,7 @@ msgstr "Fehler {1} bei der Ausführung des Systembefehls: {2}"
 
 #: ../src/util/XojMsgBox.cpp:186
 msgid "The file {1} already exists! Do you want to replace it?"
-msgstr ""
+msgstr "Die Datei {1} existiert bereits! Möchten Sie sie ersetzen?"
 
 #: ../src/util/XojMsgBox.cpp:190
 msgid "Select another name"
@@ -2321,7 +2321,7 @@ msgstr ""
 
 #: ../ui/deviceTestingArea.glade:455
 msgid "Export debug info"
-msgstr ""
+msgstr "Debug-Info exportieren"
 
 #: ../ui/deviceTestingArea.glade:477
 msgid "To clear the logs, simply close and reopen the settings dialog"
