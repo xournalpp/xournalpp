@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-13 21:27+0000\n"
-"PO-Revision-Date: 2025-12-14 04:28\n"
+"POT-Creation-Date: 2025-12-18 14:01+0000\n"
+"PO-Revision-Date: 2025-12-21 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -601,19 +601,19 @@ msgstr "%F-Nota-%H-%M"
 msgid "%{name}_annotated"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:482
+#: ../src/core/control/tools/EditSelection.cpp:478
 msgid "Arrange"
 msgstr "Organizar"
 
-#: ../src/core/control/tools/EditSelection.cpp:497
+#: ../src/core/control/tools/EditSelection.cpp:493
 msgid "Bring forward"
 msgstr "Trazer para frente"
 
-#: ../src/core/control/tools/EditSelection.cpp:508
+#: ../src/core/control/tools/EditSelection.cpp:504
 msgid "Send backward"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:515
+#: ../src/core/control/tools/EditSelection.cpp:511
 msgid "Send to back"
 msgstr ""
 
@@ -782,11 +782,11 @@ msgstr "O atributo \"{1}\" não pôde ser tratado como um size_t, o valor é nul
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "O atributo \"{1}\" não pôde ser tratado como um size_t, o valor é \"{2}\""
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:253
+#: ../src/core/control/xojfile/SaveHandler.cpp:257
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Não foi possível escrever o fundo \"{1}\", {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:372
+#: ../src/core/control/xojfile/SaveHandler.cpp:376
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Não foi possível escrever o fundo \"{1}\". Continuando mesmo assim."
 

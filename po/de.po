@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-13 21:27+0000\n"
-"PO-Revision-Date: 2025-12-14 04:28\n"
+"POT-Creation-Date: 2025-12-18 14:01+0000\n"
+"PO-Revision-Date: 2025-12-21 04:28\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -77,9 +77,9 @@ msgstr "Mit PDF-Hintergrund"
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
-msgstr "Das aktuelle Dokument enthält keine PDF-Seite {1}\n"
-"Möchten Sie diese Seite einfügen?\n\n"
-"Tipp: Wählen Sie {2} aus, um eine PDF-Seite einzufügen."
+msgstr "Dein aktuelles Dokument enthält keine PDF-Seite {1}\n"
+"Möchtest du diese Seite einfügen?\n\n"
+"Tipp: Du kannst {2} auswählen, um eine PDF-Seite einzufügen."
 
 #: ../src/core/control/Control.cpp:880
 msgid "No pdf pages available to append. You may need to reopen the document first."
@@ -618,19 +618,19 @@ msgstr "%F-Notiz-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_kommentiert"
 
-#: ../src/core/control/tools/EditSelection.cpp:482
+#: ../src/core/control/tools/EditSelection.cpp:478
 msgid "Arrange"
 msgstr "Anordnen"
 
-#: ../src/core/control/tools/EditSelection.cpp:497
+#: ../src/core/control/tools/EditSelection.cpp:493
 msgid "Bring forward"
 msgstr "Eine Ebene nach vorne"
 
-#: ../src/core/control/tools/EditSelection.cpp:508
+#: ../src/core/control/tools/EditSelection.cpp:504
 msgid "Send backward"
 msgstr "Eine Ebene nach hinten"
 
-#: ../src/core/control/tools/EditSelection.cpp:515
+#: ../src/core/control/tools/EditSelection.cpp:511
 msgid "Send to back"
 msgstr "In den Hintergrund"
 
@@ -799,11 +799,11 @@ msgstr "Attribut \"{1}\" konnte nicht als size_t ausgelesen werden, der Wert ist
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "Attribut \"{1}\" konnte nicht als size_t ausgelesen werden, der Wert ist \"{2}\""
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:253
+#: ../src/core/control/xojfile/SaveHandler.cpp:257
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Konnte Hintergrund \"{1}\" nicht speichern, {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:372
+#: ../src/core/control/xojfile/SaveHandler.cpp:376
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Konnte Hintergrund nicht speichern \"{1}\". Fahre trotzdem fort."
 
@@ -945,7 +945,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 msgid "Laser Pointer - Hightlighter"
-msgstr ""
+msgstr "Laser Zeiger - Highlighter"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 msgid "Vertical space"
@@ -1057,7 +1057,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:171
 msgid "Editor exited with bad status {1}"
-msgstr ""
+msgstr "Editor mit schlechtem Status {1} beendet"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:15
 msgid "All files"
@@ -2118,7 +2118,7 @@ msgstr "Fehler {1} bei der Ausführung des Systembefehls: {2}"
 
 #: ../src/util/XojMsgBox.cpp:186
 msgid "The file {1} already exists! Do you want to replace it?"
-msgstr ""
+msgstr "Die Datei {1} existiert bereits! Möchten Sie sie ersetzen?"
 
 #: ../src/util/XojMsgBox.cpp:190
 msgid "Select another name"
@@ -2321,7 +2321,7 @@ msgstr ""
 
 #: ../ui/deviceTestingArea.glade:455
 msgid "Export debug info"
-msgstr ""
+msgstr "Debug-Info exportieren"
 
 #: ../ui/deviceTestingArea.glade:477
 msgid "To clear the logs, simply close and reopen the settings dialog"
