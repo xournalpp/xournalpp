@@ -1,8 +1,11 @@
-xournalpp (1.3.1~dev-1) UNRELEASED; urgency=medium
+xournalpp (1.3.1-1) unstable; urgency=medium
 
-  *
+* Restored the rendering of graph backgrounds used before the 1.3.0 release
+* Fixed image loading on Windows
+* Fixed clipboard pasting
+* Fixed crashes related to saving text nodes and automatic page addition
 
- -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Thu, 11 Dec 2025 21:44:23 +0100
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Sun, 21 Dec 2025 22:04:28 +0100
 
 xournalpp (1.3.0-1) unstable; urgency=medium
 
