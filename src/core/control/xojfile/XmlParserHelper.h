@@ -101,6 +101,48 @@ std::optional<Color> parsePredefinedColor(string_utf8_view sv);
 // Decode C-string of Base64 encoded data into a string of binary data
 std::string decodeBase64(std::string_view base64data);
 
+/**
+ * Attempt parsing a number (floating point or integral) from a string
+ *
+ * Parses the string in the range [it, end) for a numeric value. On success,
+ * `it` is updated to point to the first unparsed character.
+ *
+ * When available, we use std::from_chars, beacuse it is about 10x faster than
+ * streams and about 5x faster than g_ascii_strtod.
+ * @param it  Pointer to the beginning of the string, modified to point to the
+ *            first unparsed character
+ * @param end Pointer to one character past the end of the string
+ * @throws std::domain_error if no value could be parsed
+ * @return The parsed value
+ *
+ * @note The fallback implementation requires that the string be null-terminated
+ *       at end. The string must contain at least one parsable value.
+ */
+template <typename T>
+T parseNumeric(const char*& it, const char* end) {
+    static_assert(std::is_arithmetic_v<T>, "T must be numeric");
+
+    T value{};
+    if constexpr (std::is_integral_v<T> || ENABLE_FLOAT_FROM_CHARS) {
+        auto [ptr, ec] = std::from_chars(it, end, value);
+        if (ec != std::errc{}) {
+            throw std::domain_error(std::make_error_condition(ec).message());
+        }
+        it = ptr;
+    } else {
+        // Fallback for missing floating point from_chars implementation
+        // strtod requires the input to be null-terminated.
+        xoj_assert(*end == '\0');
+        char* ptr = nullptr;
+        value = static_cast<T>(g_ascii_strtod(it, &ptr));
+        if (ptr == it) {
+            throw std::domain_error("g_ascii_strtod failed");
+        }
+        it = ptr;
+    }
+    return value;
+}
+
 namespace detail {
 
 // SFINAE logic for checking named enums and utf8 views
@@ -147,7 +189,7 @@ private:
 
 // Parse named enums
 template <typename T>
-T parse_enum(c_string_utf8_view sv) {
+T parseEnum(c_string_utf8_view sv) {
     static_assert(has_names_v<T>, "T must define a static T::NAMES array to perform lookup");
     static_assert(has_value_enum_v<T>, "T must define an underlying enum type T::Value");
 
@@ -164,31 +206,11 @@ T parse_enum(c_string_utf8_view sv) {
 
 // Parse numeric types
 template <typename T>
-T parse_numeric(std::string_view sv) {
-    static_assert(std::is_arithmetic_v<T>, "T must be numeric");
-
-    T value{};
-    if constexpr (std::is_integral_v<T> || ENABLE_FLOAT_FROM_CHARS) {
-        auto [ptr, ec] = std::from_chars(sv.begin(), sv.end(), value);
-        if (ec != std::errc{}) {
-            throw std::domain_error(std::make_error_condition(ec).message());
-        }
-        if (ptr != sv.end()) {
-            throw IncompleteParseError(value);
-        }
-    } else {
-        // Fallback for missing floating point from_chars implementation
-        // Attributes originate from GMarkup and are null-terminated.
-        xoj_assert(*sv.end() == '\0');
-        char* end = nullptr;
-        value = static_cast<T>(g_ascii_strtod(sv.begin(), &end));
-        if (end != sv.end()) {
-            if (end == sv.begin()) {
-                throw std::domain_error("g_ascii_strtod failed");
-            } else {
-                throw IncompleteParseError(value);
-            }
-        }
+T parseNumeric(std::string_view sv) {
+    auto it = sv.begin();
+    auto value = ::XmlParserHelper::parseNumeric<T>(it, sv.end());
+    if (it != sv.end()) {
+        throw IncompleteParseError(value);
     }
     return value;
 }
@@ -215,9 +237,9 @@ auto XmlParserHelper::getAttrib(std::u8string_view name, const AttributeMap& att
             if constexpr (std::is_constructible_v<T, const char*>) {
                 return T{*optionalCStr};  // Type is directly constructible from a C-string, e.g. std::string_view
             } else if constexpr (detail::has_names_v<T> && detail::has_value_enum_v<T>) {
-                return detail::parse_enum<T>(*optionalCStr | xoj::util::utf8);
+                return detail::parseEnum<T>(*optionalCStr | xoj::util::utf8);
             } else if constexpr (std::is_arithmetic_v<T>) {
-                return detail::parse_numeric<T>(*optionalCStr);
+                return detail::parseNumeric<T>(*optionalCStr);
             } else {
                 static_assert(detail::always_false<T>, "No parser defined for this type");
             }
