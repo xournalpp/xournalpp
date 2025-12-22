@@ -172,28 +172,4 @@ fs::path getCustomPaletteDirectoryPath();
  * @return files in directory
  */
 std::vector<fs::path> listFilesSorted(fs::path directory);
-
-namespace detail {
-// SFINAE logic to check if the std::hash specialization is available
-template <typename T, typename = void>
-struct has_std_hash: std::false_type {};
-
-template <typename T>
-struct has_std_hash<T, std::void_t<decltype(std::declval<std::hash<T>&>()(std::declval<const T&>()))>>:
-        std::true_type {};
-}  // namespace detail
-
-template <class Key, bool HasStdHash = detail::has_std_hash<Key>::value>
-struct hash;
-
-// Use std::hash<Key> when available
-template <class Key>
-struct hash<Key, true>: std::hash<Key> {};
-
-// Fallback for missing specialization of fs::hash (missing until libc++ 16)
-template <>
-struct hash<fs::path, false> {
-    size_t operator()(const fs::path& path) const noexcept { return fs::hash_value(path); }
-};
-
 }  // namespace Util
