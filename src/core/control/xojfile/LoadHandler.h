@@ -81,34 +81,35 @@ public:
 
 private:
     // interface for XmlParser
-    void addDocument(std::u8string creator, int fileVersion);
-    void finalizeDocument();
-    void addPage(double width, double height);
-    void finalizePage();
-    void addAudioAttachment(const fs::path& filename);
-    void setBgName(const std::string& name);
-    void setBgSolid(const PageType& bg, Color color);
-    void setBgPixmap(bool attach, const fs::path& filename);
-    void setBgPixmapCloned(size_t pageNr);
-    void setBgPdf(size_t pageno);
-    void loadBgPdf(bool attach, const fs::path& filename);
-    void addLayer(const std::optional<std::string_view>& name);
-    void finalizeLayer();
+    void addDocument(std::u8string creator, int fileVersion) override;
+    void finalizeDocument() override;
+    void addPage(double width, double height) override;
+    void finalizePage() override;
+    void addAudioAttachment(const fs::path& filename) override;
+    void setBgName(const std::string& name) override;
+    void setBgSolid(const PageType& bg, Color color) override;
+    void setBgPixmap(bool attach, const fs::path& filename) override;
+    void setBgPixmapCloned(size_t pageNr) override;
+    void setBgPdf(size_t pageno) override;
+    void loadBgPdf(bool attach, const fs::path& filename) override;
+    void addLayer(const std::optional<std::string_view>& name) override;
+    void finalizeLayer() override;
     void addStroke(StrokeTool tool, Color color, double width, int fill, StrokeCapStyle capStyle,
-                   const LineStyle& lineStyle, fs::path filename, size_t timestamp);
-    void setStrokePoints(std::vector<Point> pointVector, bool hasPressure);
-    void finalizeStroke();
-    void addText(std::string font, double size, double x, double y, Color color, fs::path filename, size_t timestamp);
-    void setTextContents(std::string contents);
-    void finalizeText();
-    void addImage(double left, double top, double right, double bottom);
-    void setImageData(std::string data);
-    void setImageAttachment(const fs::path& filename);
-    void finalizeImage();
-    void addTexImage(double left, double top, double right, double bottom, std::string text);
-    void setTexImageData(std::string data);
-    void setTexImageAttachment(const fs::path& filename);
-    void finalizeTexImage();
+                   const LineStyle& lineStyle, fs::path filename, size_t timestamp) override;
+    void setStrokePoints(std::vector<Point> pointVector, bool hasPressure) override;
+    void finalizeStroke() override;
+    void addText(std::string font, double size, double x, double y, Color color, fs::path filename,
+                 size_t timestamp) override;
+    void setTextContents(std::string contents) override;
+    void finalizeText() override;
+    void addImage(double left, double top, double right, double bottom) override;
+    void setImageData(std::string data) override;
+    void setImageAttachment(const fs::path& filename) override;
+    void finalizeImage() override;
+    void addTexImage(double left, double top, double right, double bottom, std::string text) override;
+    void setTexImageData(std::string data) override;
+    void setTexImageAttachment(const fs::path& filename) override;
+    void finalizeTexImage() override;
 
 private:
     /**
