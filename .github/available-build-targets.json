@@ -39,7 +39,7 @@
     },
     "mac-arm": {
       "displayed_name": "MacOS ARM",
-      "runner": "macos-14",
+      "runner": "macos-15",
       "extra_cmake_flags": "-DENABLE_FLOAT_FROM_CHARS=off",
       "run_ci": "true"
     }
