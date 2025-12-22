@@ -9,6 +9,7 @@
 #include <iterator>       // for back_inserter
 #include <memory>         // for make_unique, make_shared...
 #include <optional>       // for optional
+#include <ranges>         // for take
 #include <regex>          // for regex_search, match_results
 #include <stdexcept>      // for runtime_error
 #include <string>         // for string
@@ -319,28 +320,23 @@ void LoadHandler::addStroke(StrokeTool tool, Color color, double width, int fill
     setAudioAttributes(*this->stroke, std::move(filename), timestamp);
 }
 
-void LoadHandler::setStrokePoints(std::vector<Point> pointVector, std::vector<double> pressures) {
+void LoadHandler::setStrokePoints(std::vector<Point> pointVector, bool hasPressure) {
     xoj_assert(this->stroke);
 
     if (pointVector.size() < 2) {
         g_warning("LoadHandler: Ignoring stroke with less than two points");
+        this->stroke.reset();
         return;
     }
-    this->stroke->setPointVector(std::move(pointVector));
 
-    if (!pressures.empty()) {
-        if (pressures.size() + 1 >= this->stroke->getPointCount()) {
-            if (!std::all_of(pressures.begin(), pressures.end(), [](double pressure) { return pressure > 0; })) {
-                // Warning: this may delete this->stroke if no positive pressure values are provided
-                // Do not dereference this->stroke after that
-                fixNullPressureValues(std::move(pressures));
-            } else {
-                this->stroke->setPressure(pressures);
-            }
-        } else {
-            g_warning("LoadHandler: Wrong number of pressure values: got %ld, expected %ld", pressures.size(),
-                      (this->stroke->getPointCount() - 1));
-        }
+    if (hasPressure && !std::ranges::all_of(
+                               pointVector | std::views::take(pointVector.size() - 1),
+                               [](double pressure) { return pressure > 0; }, &Point::z)) {
+        // Warning: this may delete this->stroke if no positive pressure values are provided
+        // Do not dereference this->stroke after that without checking first
+        fixNullPressureValues(std::move(pointVector));
+    } else {
+        this->stroke->setPointVector(std::move(pointVector));
     }
 }
 
@@ -580,7 +576,7 @@ auto LoadHandler::loadDocument(fs::path const& filepath) -> std::unique_ptr<Docu
 }
 
 
-void LoadHandler::fixNullPressureValues(std::vector<double> pressures) {
+void LoadHandler::fixNullPressureValues(std::vector<Point> pts) {
     /*
      * Due to various bugs (see e.g. https://github.com/xournalpp/xournalpp/issues/3643), old files may contain strokes
      * with non-positive pressure values.
@@ -593,39 +589,22 @@ void LoadHandler::fixNullPressureValues(std::vector<double> pressures) {
      *  2- if required, splitting the affected stroke into several strokes.
      *  3- entirely deleting strokes without any valid pressure value
      */
-    auto& pts = stroke->getPointVector();
-    if (pressures.size() >= pts.size()) {
-        // Too many pressure values. Drop the last ones
-        xoj_assert(pts.size() >= 2);  // An error has already been returned otherwise
-        pressures.resize(pts.size() - 1);
-    }
 
-    auto nextPositive = std::find_if(pressures.begin(), pressures.end(), [](double v) { return v > 0; });
+    xoj_assert_message(pts.back().z == Point::NO_PRESSURE, "The last point of a stroke must have no pressure");
+    auto nextPositive = std::ranges::find_if(pts, [](double v) { return v > 0; }, &Point::z);
 
     std::vector<std::vector<Point>> strokePortions;
-    while (nextPositive != pressures.end()) {
+    while (nextPositive != pts.end()) {
         auto nextNonPositive =
-                std::find_if(nextPositive, pressures.end(), [](double v) { return v <= 0 || std::isnan(v); });
-        const auto nValidPressureValues = static_cast<size_t>(std::distance(nextPositive, nextNonPositive));
+                std::find_if(nextPositive, pts.end(), [](const Point& p) { return p.z <= 0 || std::isnan(p.z); });
 
-        std::vector<Point> ps;
-        ps.reserve(nValidPressureValues + 1);
-
-        std::transform(nextPositive, nextNonPositive,
-                       std::next(pts.begin(), std::distance(pressures.begin(), nextPositive)), std::back_inserter(ps),
-                       [](double v, const Point& p) { return Point(p.x, p.y, v); });
-
-        // pts.size() == pressures.size() + 1 so the following iterator is always dereferencable, even if
-        // nextNonPositive == pressures.end()
-        ps.emplace_back(*std::next(pts.begin(), std::distance(pressures.begin(), nextNonPositive)));
-
-        xoj_assert(ps.size() == nValidPressureValues + 1);
+        // Since the last point has no pressure, nextNonPositive is always dereferencable
+        xoj_assert(nextNonPositive != pts.end());
+        std::vector<Point> ps{nextPositive, std::next(nextNonPositive)};
+        ps.back().z = Point::NO_PRESSURE;
         strokePortions.emplace_back(std::move(ps));
 
-        if (nextNonPositive == pressures.end()) {
-            break;
-        }
-        nextPositive = std::find_if(nextNonPositive, pressures.end(), [](double v) { return v > 0; });
+        nextPositive = std::find_if(nextNonPositive, pts.end(), [](const Point& p) { return p.z > 0; });
     }
 
     if (strokePortions.empty()) {

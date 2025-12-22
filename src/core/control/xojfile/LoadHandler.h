@@ -96,7 +96,7 @@ private:
     void finalizeLayer();
     void addStroke(StrokeTool tool, Color color, double width, int fill, StrokeCapStyle capStyle,
                    const LineStyle& lineStyle, fs::path filename, size_t timestamp);
-    void setStrokePoints(std::vector<Point> pointVector, std::vector<double> pressures);
+    void setStrokePoints(std::vector<Point> pointVector, bool hasPressure);
     void finalizeStroke();
     void addText(std::string font, double size, double x, double y, Color color, fs::path filename, size_t timestamp);
     void setTextContents(std::string contents);
@@ -141,7 +141,7 @@ private:
      * except for the last one, which is left in `stroke`. If no pressure points
      * are valid, the stroke is removed entirely and `stroke` is reset.
      */
-    void fixNullPressureValues(std::vector<double> pressures);
+    void fixNullPressureValues(std::vector<Point> pressures);
 
     /**
      * Returns the contents of the zip attachment with the given file name, or
