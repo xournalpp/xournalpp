@@ -397,6 +397,7 @@ void XmlParser::parseStrokeText(std::string_view text) {
 
     auto it = text.begin();
     const auto end = text.end();
+    auto pit = pressureBuffer.begin();
     double x{}, y{};
     while (parseDouble(it, end, x)) {
         if (!parseDouble(it, end, y)) {
@@ -404,10 +405,27 @@ void XmlParser::parseStrokeText(std::string_view text) {
                       "Discarding the last value");
             break;
         }
-        pointVector.emplace_back(x, y);
+        const auto p = (pit != pressureBuffer.end()) ? *pit++ : Point::NO_PRESSURE;
+        pointVector.emplace_back(x, y, p);
     }
 
-    this->builder.setStrokePoints(std::move(pointVector), std::move(this->pressureBuffer));
+    // Check strokes with the wrong amount of coordinates or pressure points.
+    // An empty pressure buffer is valid: all points have NO_PRESSURE.
+    if (this->pressureBuffer.size() + 1 < pointVector.size() && !this->pressureBuffer.empty()) {
+        g_warning("XML Parser: Found stroke with more coordinates than pressure points: %ld, expected %ld. "
+                  "Shrinking stroke to match pressure point count",
+                  pointVector.size(), this->pressureBuffer.size() + 1);
+        pointVector.resize(this->pressureBuffer.size() + 1);
+    }
+    if (this->pressureBuffer.size() >= pointVector.size() && !pointVector.empty()) {
+        g_warning("XML Parser: Found stroke with too many pressure points: %ld, expected %ld. "
+                  "Discarding remaining pressure points",
+                  this->pressureBuffer.size(), pointVector.size() - 1);
+        pointVector.back().z = Point::NO_PRESSURE;  // The last point should have no pressure
+    }
+
+    this->builder.setStrokePoints(std::move(pointVector), !this->pressureBuffer.empty());
+    this->pressureBuffer.clear();
 }
 
 void XmlParser::parseTextTag(const XmlParserHelper::AttributeMap& attributeMap) {
