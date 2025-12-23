@@ -1,8 +1,9 @@
 #include "ToolbarModel.h"
 
 #include <algorithm>  // for find_if
-#include <cstddef>  // for size_t
+#include <cstddef>    // for size_t
 
+#include "util/PathUtil.h"
 #include "util/StringUtils.h"
 #include "util/XojMsgBox.h"   // for XojMsgBox
 #include "util/i18n.h"        // for _
@@ -41,7 +42,7 @@ auto ToolbarModel::add(std::unique_ptr<ToolbarData> data) -> ToolbarData* {
 auto ToolbarModel::parse(fs::path const& filepath, bool predefined, const Palette& colorPalette) -> bool {
     GKeyFile* config = g_key_file_new();
     g_key_file_set_list_separator(config, ',');
-    if (!g_key_file_load_from_file(config, char_cast(filepath.u8string().c_str()), G_KEY_FILE_NONE, nullptr)) {
+    if (!g_key_file_load_from_file(config, Util::toGFilename(filepath).c_str(), G_KEY_FILE_NONE, nullptr)) {
         g_key_file_free(config);
         return false;
     }
@@ -153,7 +154,7 @@ void ToolbarModel::save(fs::path const& filepath) const {
     config = nullptr;
 
     GError* error = nullptr;
-    if (!g_file_set_contents(char_cast(filepath.u8string().c_str()), data, as_signed(len), &error)) {
+    if (!g_file_set_contents(Util::toGFilename(filepath).c_str(), data, as_signed(len), &error)) {
         XojMsgBox::showErrorToUser(nullptr, error->message);
         g_error_free(error);
     }
