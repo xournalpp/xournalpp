@@ -2182,7 +2182,7 @@ static void onGtkDemoShown(GObject* proc_object, GAsyncResult* res, gpointer) {
 }
 
 void Control::showGtkDemo() {
-    std::string binary = "gtk3-demo";
+    std::string binary = "gtk4-demo";
 #ifdef __APPLE__
     if (!xoj::util::OwnedCString::assumeOwnership(g_find_program_in_path(binary.c_str()))) {
         // Try absolute path for binary
@@ -2193,7 +2193,8 @@ void Control::showGtkDemo() {
 #endif
     gchar* prog = g_find_program_in_path(binary.c_str());
     if (!prog) {
-        XojMsgBox::showErrorToUser(getGtkWindow(), "gtk3-demo was not found in path");
+        std::string message = FS(_F("Executable \"{1}\" was not found in path") % binary);
+        XojMsgBox::showErrorToUser(getGtkWindow(), message);
         return;
     }
     GError* err = nullptr;
