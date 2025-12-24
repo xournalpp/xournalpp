@@ -1,12 +1,22 @@
 # Changelog
 
-## 1.3.0+dev (Unreleased)
+## 1.3.1+dev (Unreleased)
+
+## 1.3.1
+
+* Restored the rendering of graph backgrounds used before the 1.3.0 release (#6894)
+* Fixed image loading on Windows (#6893)
+* Fixed various issues when using automatic display DPI detection, like clipboard pasting not working (#6887)
+* Fixed a bug where changing the color through the Lua API changed the alpha channel (#6889)
+* Fixed a crash when triggering automatic page addition by dragging a selection (#6868)
+* Fixed a crash when saving an empty text node (#6886)
 
 ## 1.3.0
 
 This is a new minor version of Xournal++, including many new features and plethora of bug fixes from the community:
 
 * PDF exports now preserves the background PDF's inner structure (hyperlink, comments, ...) (#6364, #6545, #6831)
+* The color palette can now be selected in the preferences (#3767)
 * Grid snapping now follows the displayed grid for all background types (#6790)
 * New graph background with periodically thicker lines (#6751)
 * New laser pointer tool, writing ephemeral strokes (#6391, #6592)

@@ -17,5 +17,5 @@ void PlainBackgroundView::draw(cairo_t* cr) const {
 
 std::pair<int, int> PlainBackgroundView::getIndexBounds(double min, double max, double step, double margin,
                                                         double length) {
-    return {ceil_cast<int>(std::max(min, margin) / step), floor_cast<int>(std::min(max, margin + length) / step)};
+    return {ceil_cast<int>(std::max(min, margin) / step), floor_cast<int>(std::min(max, length - margin) / step)};
 }

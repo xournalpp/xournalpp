@@ -857,8 +857,8 @@ void Control::askInsertPdfPage(size_t pdfPage) {
                            });
 }
 
-void Control::insertNewPage(size_t position, bool shouldScrollToPage) {
-    pageBackgroundChangeController->insertNewPage(position, shouldScrollToPage);
+void Control::insertNewPage(size_t position, bool automatedInsertion) {
+    pageBackgroundChangeController->insertNewPage(position, automatedInsertion);
 }
 
 void Control::appendNewPdfPages() {
@@ -2227,10 +2227,10 @@ void Control::clipboardPasteImage(GdkPixbuf* img) {
     auto image = std::make_unique<Image>();
     image->setImage(img);
 
-    auto width =
-            static_cast<double>(gdk_pixbuf_get_width(img)) / settings->getDisplayDpi() * Util::DPI_NORMALIZATION_FACTOR;
-    auto height = static_cast<double>(gdk_pixbuf_get_height(img)) / settings->getDisplayDpi() *
-                  Util::DPI_NORMALIZATION_FACTOR;
+    auto zoom100 = this->getZoomControl()->getZoom100Value();
+
+    auto width = static_cast<double>(gdk_pixbuf_get_width(img)) / zoom100;
+    auto height = static_cast<double>(gdk_pixbuf_get_height(img)) / zoom100;
 
     auto pageNr = getCurrentPageNo();
     if (pageNr == npos) {
