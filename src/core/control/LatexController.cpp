@@ -349,6 +349,10 @@ void LatexController::insertTexImage() {
     auto selection =
             SelectionFactory::createFromFloatingElement(control, page, layer, view, std::move(this->temporaryRender));
     view->getXournal()->setSelection(selection.release());
+
+    for (std::size_t i = layer->getFirstPage(); i <= layer->getLastPage(); ++i) {
+        this->control->getDocument()->getPage(i)->firePageChanged();
+    }
 }
 
 void LatexController::cancelEditing() {

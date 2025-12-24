@@ -9,17 +9,17 @@
 
 #include <gdk/gdk.h>  // for GdkEventKey
 
-#include "control/Control.h"                                // for Control
-#include "control/ToolEnums.h"                              // for DRAWING_TYPE_ST...
-#include "control/ToolHandler.h"                            // for ToolHandler
-#include "control/layer/LayerController.h"                  // for LayerController
-#include "control/settings/Settings.h"                      // for Settings
-#include "control/settings/SettingsEnums.h"                 // for EmptyLastPageAppendType
-#include "control/shaperecognizer/ShapeRecognizer.h"        // for ShapeRecognizer
-#include "control/tools/InputHandler.h"                     // for InputHandler::P...
-#include "control/tools/SnapToGridInputHandler.h"           // for SnapToGridInput...
-#include "gui/inputdevices/PositionInputData.h"             // for PositionInputData
-#include "model/Document.h"                                 // for Document
+#include "control/Control.h"                          // for Control
+#include "control/ToolEnums.h"                        // for DRAWING_TYPE_ST...
+#include "control/ToolHandler.h"                      // for ToolHandler
+#include "control/layer/LayerController.h"            // for LayerController
+#include "control/settings/Settings.h"                // for Settings
+#include "control/settings/SettingsEnums.h"           // for EmptyLastPageAppendType
+#include "control/shaperecognizer/ShapeRecognizer.h"  // for ShapeRecognizer
+#include "control/tools/InputHandler.h"               // for InputHandler::P...
+#include "control/tools/SnapToGridInputHandler.h"     // for SnapToGridInput...
+#include "gui/inputdevices/PositionInputData.h"       // for PositionInputData
+#include "model/Document.h"                           // for Document
 #include "model/Element.h"
 #include "model/Layer.h"                                    // for Layer
 #include "model/LineStyle.h"                                // for LineStyle
@@ -93,7 +93,7 @@ void StrokeHandler::paintTo(Point point) {
              * Both device and tool are pressure sensitive
              */
             if (const double widthDelta = point.z - endPoint.z;
-                - widthDelta > MAX_WIDTH_VARIATION || widthDelta > MAX_WIDTH_VARIATION) {
+                -widthDelta > MAX_WIDTH_VARIATION || widthDelta > MAX_WIDTH_VARIATION) {
                 /**
                  * If the width variation is to big, decompose into shorter segments.
                  * Those segments can not be shorter than PIXEL_MOTION_THRESHOLD
@@ -195,8 +195,15 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
         auto recognized = reco.recognizePatterns(stroke.get(), control->getSettings()->getStrokeRecognizerMinSize());
 
         if (recognized) {
+            auto ptr = recognized.get();
+
             // strokeRecognizerDetected handles the repainting and the deletion of the views.
             strokeRecognizerDetected(std::move(recognized), layer);
+
+            // Rerenders all pages the layer 'layer' is present in
+            for (std::size_t i = layer->getFirstPage(); i <= layer->getLastPage(); ++i) {
+                this->control->getDocument()->getPage(i)->fireElementChanged(ptr);
+            }
             return;
         }
     }
@@ -211,7 +218,10 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
     // Passing the empty Range() as no actual redrawing is necessary at this point
     this->viewPool->dispatchAndClear(xoj::view::StrokeToolView::FINALIZATION_REQUEST, Range());
 
-    page->fireElementChanged(ptr);
+    // Rerenders all pages that layer 'layer' is present in
+    for (std::size_t i = layer->getFirstPage(); i <= layer->getLastPage(); ++i) {
+        this->control->getDocument()->getPage(i)->fireElementChanged(ptr);
+    }
 }
 
 void StrokeHandler::strokeRecognizerDetected(std::unique_ptr<Stroke> recognized, Layer* layer) {
