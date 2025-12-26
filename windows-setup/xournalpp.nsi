@@ -13,7 +13,6 @@ Unicode true
 !include x64.nsh
 !include "${SCRIPT_DIR}\FileAssociation.nsh"
 !include nsDialogs.nsh
-!include "WordFunc.nsh"
 
 ; Options for MultiUser plugin
 !define MULTIUSER_INSTALLMODE_INSTDIR "Xournal++"
