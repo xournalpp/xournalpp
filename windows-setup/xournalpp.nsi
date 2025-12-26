@@ -13,6 +13,7 @@ Unicode true
 !include x64.nsh
 !include "${SCRIPT_DIR}\FileAssociation.nsh"
 !include nsDialogs.nsh
+!include "WordFunc.nsh"
 
 ; Options for MultiUser plugin
 !define MULTIUSER_INSTALLMODE_INSTDIR "Xournal++"
@@ -197,6 +198,15 @@ SectionEnd
 Section "Associate .xoj files with Xournal++" SecFileXoj
 	!insertmacro SetDefaultExt ".xoj" "Xournal++.Xournal"
 SectionEnd
+
+Function .onVerifyInstDir
+    ; Get last component of path
+    ${GetFileName} $INSTDIR $0
+    
+    ${If} $0 != "Xournal++"
+        StrCpy $INSTDIR "$INSTDIR\Xournal++"
+    ${EndIf}
+FunctionEnd
 
 Section "Xournal++" SecXournalpp
 	; Required
