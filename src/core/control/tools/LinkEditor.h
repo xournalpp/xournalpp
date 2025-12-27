@@ -8,47 +8,22 @@
  *
  * @license GNU GPLv2 or later
  */
+
+#pragma once
+
 #include <string>
 
 #include <gdk/gdk.h>  // for GdkEventKey
 #include <gtk/gtk.h>  // for GtkIMContext, GtkTextIter, GtkWidget
 
 #include "control/zoom/ZoomListener.h"  // for ZoomListener
-#include "model/Link.h"                 // for Link
 #include "model/PageRef.h"              // for PageRef
-
 
 class Control;
 class XournalView;
 class XojPageView;
-
-class LinkPopover {
-public:
-    LinkPopover(XournalView* view);
-    ~LinkPopover();
-    void hide();
-    void show();
-    void show_all();
-    void popup();
-    void popdown();
-    void updateLabel(bool markup);
-    void positionPopover();
-    bool hasLink();
-
-    void linkTo(Link* link);
-    inline GtkPopover* getPopover() const { return this->popover; }
-    inline Link* getLink() const { return this->link; }
-
-private:
-    XournalView* view;
-
-    GtkPopover* popover = nullptr;
-    GtkLabel* label = nullptr;
-    Link* link = nullptr;
-
-    static constexpr int POPOVER_PADDING = 2;
-};
-
+class LinkPopover;
+class Link;
 class LinkEditor: public ZoomListener {
 public:
     LinkEditor(XournalView* view);
