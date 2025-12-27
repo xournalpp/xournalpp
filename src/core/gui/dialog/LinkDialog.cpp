@@ -1,7 +1,11 @@
 #include "LinkDialog.h"
 
 #include "control/Control.h"      // for Control
+#include "gui/Builder.h"          // for Builder
 #include "gui/GladeSearchpath.h"  // for GladeSearchPath
+
+constexpr auto UI_FILE = "linkDialog.glade";
+constexpr auto UI_DIALOG_NAME = "linkDialog";
 
 void okButtonClicked(GtkButton* btn, LinkDialog* dialog) { dialog->okButtonPressed(btn); }
 void cancelButtonClicked(GtkButton* btn, LinkDialog* dialog) { dialog->cancelButtonPressed(btn); }
@@ -14,25 +18,22 @@ void urlPrefixChangedClb(GtkComboBoxText* source, LinkDialog* dialog) { dialog->
 LinkDialog::LinkDialog(Control* control, std::function<void(LinkDialog*)> callbackOK,
                        std::function<void()> callbackCancel):
         callbackOK(std::move(callbackOK)), callbackCancel(std::move(callbackCancel)) {
-    auto filepath = control->getGladeSearchPath()->findFile("", "linkDialog.glade");
 
-    GtkBuilder* builder = gtk_builder_new();
-    gtk_builder_add_from_file(builder, char_cast(filepath.u8string().c_str()), NULL);
+    Builder builder(control->getGladeSearchPath(), UI_FILE);
 
-    this->linkDialog =
-            static_cast<xoj::util::raii::GtkWindowUPtr>(GTK_WINDOW(gtk_builder_get_object(builder, "linkDialog")));
-    this->textInput = GTK_TEXT_VIEW(gtk_builder_get_object(builder, "inpLinkEditText"));
-    this->urlInput = GTK_ENTRY(gtk_builder_get_object(builder, "inpLinkEditURL"));
-    this->okButton = GTK_BUTTON(gtk_builder_get_object(builder, "btnLinkEditOk"));
-    this->cancelButton = GTK_BUTTON(gtk_builder_get_object(builder, "btnLinkEditCancel"));
+    this->linkDialog = static_cast<xoj::util::raii::GtkWindowUPtr>(GTK_WINDOW(builder.get(UI_DIALOG_NAME)));
+    this->textInput = GTK_TEXT_VIEW(builder.get("inpLinkEditText"));
+    this->urlInput = GTK_ENTRY(builder.get("inpLinkEditURL"));
+    this->okButton = GTK_BUTTON(builder.get("btnLinkEditOk"));
+    this->cancelButton = GTK_BUTTON(builder.get("btnLinkEditCancel"));
 
-    this->fontChooser = GTK_FONT_CHOOSER(gtk_builder_get_object(builder, "btnFontChooser"));
+    this->fontChooser = GTK_FONT_CHOOSER(builder.get("btnFontChooser"));
 
-    this->layoutLeft = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnLeftLayout"));
-    this->layoutCenter = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnCenterLayout"));
-    this->layoutRight = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnRightLayout"));
+    this->layoutLeft = GTK_TOGGLE_BUTTON(builder.get("btnLeftLayout"));
+    this->layoutCenter = GTK_TOGGLE_BUTTON(builder.get("btnCenterLayout"));
+    this->layoutRight = GTK_TOGGLE_BUTTON(builder.get("btnRightLayout"));
 
-    this->linkTypeChooser = GTK_COMBO_BOX_TEXT(gtk_builder_get_object(builder, "cbLinkPrefix"));
+    this->linkTypeChooser = GTK_COMBO_BOX_TEXT(builder.get("cbLinkPrefix"));
     this->urlPrefixChanged(this->linkTypeChooser);
 
     g_signal_connect(G_OBJECT(okButton), "clicked", G_CALLBACK(okButtonClicked), this);
