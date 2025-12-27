@@ -249,7 +249,9 @@ void InputContext::blockDevice(InputContext::DeviceType deviceType) {
             this->stylusHandler->block(true);
             break;
         case TOUCHSCREEN:
-            this->touchDrawingHandler->block(true);
+            if (this->touchDrawingHandler) {
+                this->touchDrawingHandler->block(true);
+            }
             this->touchHandler->block(true);
             break;
     }
@@ -267,7 +269,9 @@ void InputContext::unblockDevice(InputContext::DeviceType deviceType) {
             this->stylusHandler->block(false);
             break;
         case TOUCHSCREEN:
-            this->touchDrawingHandler->block(false);
+            if (this->touchDrawingHandler) {
+                this->touchDrawingHandler->block(false);
+            }
             this->touchHandler->block(false);
             break;
     }
@@ -280,7 +284,7 @@ auto InputContext::isBlocked(InputContext::DeviceType deviceType) -> bool {
         case STYLUS:
             return this->stylusHandler->isBlocked();
         case TOUCHSCREEN:
-            return this->touchDrawingHandler->isBlocked();
+            return this->touchDrawingHandler && this->touchDrawingHandler->isBlocked();
     }
     return false;
 }
