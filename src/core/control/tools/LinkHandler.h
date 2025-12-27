@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Link editor gui (for Link Tool)
+ * Link handler (for Link Tool)
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -24,10 +24,10 @@ class XournalView;
 class XojPageView;
 class LinkPopover;
 class Link;
-class LinkEditor: public ZoomListener {
+class LinkHandler: public ZoomListener {
 public:
-    LinkEditor(XournalView* view);
-    ~LinkEditor();
+    LinkHandler(XournalView* view);
+    ~LinkHandler();
 
     /* Called on mouse double click event
      * -> Opens the link editor dialog, or tries to open the link when controlDown = CTRL */
