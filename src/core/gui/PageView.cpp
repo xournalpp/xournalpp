@@ -36,7 +36,7 @@
 #include "control/tools/ImageSizeSelection.h"       // for ImageSizeSelection
 #include "control/tools/InputHandler.h"             // for InputHandler
 #include "control/tools/LaserPointerHandler.h"      // for LaserPointerHandler
-#include "control/tools/LinkEditor.h"               // for LinkEditor
+#include "control/tools/LinkHandler.h"              // for LinkHandler
 #include "control/tools/PdfElemSelection.h"         // for PdfElemSelection
 #include "control/tools/RectangleHandler.h"         // for RectangleHandler
 #include "control/tools/RulerHandler.h"             // for RulerHandler
@@ -168,7 +168,7 @@ auto XojPageView::searchTextOnPage(const std::string& text, size_t index, size_t
 
 void XojPageView::endText() { this->textEditor.reset(); }
 
-void XojPageView::endLink() { this->linkEditor.reset(); }
+void XojPageView::endLink() { this->linkHandler.reset(); }
 
 void XojPageView::startText(double x, double y) {
     this->xournal->endTextAllPages(this);
@@ -192,8 +192,8 @@ void XojPageView::startText(double x, double y) {
 
 void XojPageView::startLink() {
     this->xournal->endLinkAllPages(this);
-    if (this->linkEditor == nullptr) {
-        this->linkEditor = std::make_unique<LinkEditor>(xournal);
+    if (this->linkHandler == nullptr) {
+        this->linkHandler = std::make_unique<LinkHandler>(xournal);
     }
 }
 
@@ -415,7 +415,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         startText(x, y);
     } else if (h->getToolType() == TOOL_LINK) {
         startLink();
-        this->linkEditor->select(this->getPage(), int(x), int(y), pos.isControlDown(), this);
+        this->linkHandler->select(this->getPage(), int(x), int(y), pos.isControlDown(), this);
     } else if (h->getToolType() == TOOL_IMAGE) {
         // start selecting the size for the image
         this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);
@@ -518,7 +518,7 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
         }
     } else if (toolType == TOOL_LINK) {
         startLink();
-        this->linkEditor->startEditing(this->getPage(), int(x), int(y));
+        this->linkHandler->startEditing(this->getPage(), int(x), int(y));
     }
 
     return true;
@@ -585,7 +585,7 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
         this->eraser->erase(x, y);
     } else if (h->getActiveTool()->getToolType() == TOOL_LINK) {
         startLink();
-        this->linkEditor->highlight(this->getPage(), int(x), int(y), this);
+        this->linkHandler->highlight(this->getPage(), int(x), int(y), this);
     }
 
     return false;

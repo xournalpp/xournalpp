@@ -1,4 +1,4 @@
-#include "LinkEditor.h"
+#include "LinkHandler.h"
 
 #include <iostream>
 
@@ -20,15 +20,15 @@
 #include "util/i18n.h"                 // for FS, _, _F
 
 
-LinkEditor::LinkEditor(XournalView* view): view(view), control(view->getControl()) {
+LinkHandler::LinkHandler(XournalView* view): view(view), control(view->getControl()) {
     this->highlightPopover = std::make_unique<LinkPopover>(view);
     this->selectPopover = std::make_unique<LinkPopover>(view);
     this->control->getZoomControl()->addZoomListener(this);
 }
 
-LinkEditor::~LinkEditor() { this->control->getZoomControl()->removeZoomListener(this); }
+LinkHandler::~LinkHandler() { this->control->getZoomControl()->removeZoomListener(this); }
 
-void LinkEditor::startEditing(const PageRef& page, const int x, const int y) {
+void LinkHandler::startEditing(const PageRef& page, const int x, const int y) {
     this->linkElement = nullptr;
 
     // Find Link element
@@ -85,7 +85,7 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y) {
     }
 }
 
-void LinkEditor::select(const PageRef& page, const int x, const int y, const bool controlDown, XojPageView* pageView) {
+void LinkHandler::select(const PageRef& page, const int x, const int y, const bool controlDown, XojPageView* pageView) {
     bool noSelection = true;
     for (auto&& e: page->getSelectedLayer()->getElements()) {
         if (e->getType() == ELEMENT_LINK && e->containsPoint(x, y)) {
@@ -144,7 +144,7 @@ void LinkEditor::select(const PageRef& page, const int x, const int y, const boo
     }
 }
 
-void LinkEditor::highlight(const PageRef& page, const int x, const int y, XojPageView* pageView) {
+void LinkHandler::highlight(const PageRef& page, const int x, const int y, XojPageView* pageView) {
     for (auto&& e: page->getSelectedLayer()->getElements()) {
         if (e->getType() == ELEMENT_LINK && e->containsPoint(x, y)) {
             Link* link = dynamic_cast<Link*>(e.get());
@@ -177,7 +177,7 @@ void LinkEditor::highlight(const PageRef& page, const int x, const int y, XojPag
     }
 }
 
-void LinkEditor::zoomChanged() {
+void LinkHandler::zoomChanged() {
     this->selectPopover->positionPopover();
     this->highlightPopover->positionPopover();
 }
