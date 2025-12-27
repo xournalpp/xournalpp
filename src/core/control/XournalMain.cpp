@@ -166,8 +166,8 @@ void exitOnMissingPdfFileName(const LoadHandler& loader) {
 
 /**
  * @brief Export the input file as a bunch of image files (one per page)
- * @param input Path to the input file
- * @param output Path to the output file(s)
+ * @param input Path to the input file  -- in gfilename encoding
+ * @param output Path to the output file(s)  -- in gfilename encoding
  * @param range Page range to be parsed. If range=nullptr, exports the whole file
  * @param layerRange Layer range to be parsed. Will only export those layers, for every exported page.
  *                  If a number is too high for the number of layers on a given page, it is just ignored.
@@ -183,22 +183,27 @@ void exitOnMissingPdfFileName(const LoadHandler& loader) {
  */
 auto exportImg(const char* input, const char* output, const char* range, const char* layerRange, int pngDpi,
                int pngWidth, int pngHeight, ExportBackgroundType exportBackground) -> int {
+    auto infile = Util::fromGFilename(input);
+    auto outfile = Util::fromGFilename(output);
+
     LoadHandler loader;
-    auto doc = loader.loadDocument(input);
+
+    auto doc = loader.loadDocument(infile);
     if (doc == nullptr) {
         g_error("%s", loader.getLastError().c_str());
     }
 
     exitOnMissingPdfFileName(loader);
 
-    return ExportHelper::exportImg(doc.get(), output, range, layerRange, pngDpi, pngWidth, pngHeight, exportBackground);
+    return ExportHelper::exportImg(doc.get(), std::move(outfile), range, layerRange, pngDpi, pngWidth, pngHeight,
+                                   exportBackground);
 }
 
 /**
  * @brief Save a xopp-file with given pdf-background
  *
- * @param input Path to the input .pdf file
- * @param output Path to the output .xopp file
+ * @param input Path to the input .pdf file  -- in gfilename encoding
+ * @param output Path to the output .xopp file  -- in gfilename encoding
  * @return int 0 on success
  */
 auto saveDoc(const char* input, const char* output) -> int {
@@ -222,8 +227,8 @@ auto saveDoc(const char* input, const char* output) -> int {
 
 /**
  * @brief Export the input file as pdf
- * @param input Path to the input file
- * @param output Path to the output file
+ * @param input Path to the input file  -- in gfilename encoding
+ * @param output Path to the output file  -- in gfilename encoding
  * @param layerRange Layer range to be parsed. Will only export those layers, for every exported page.
  *                  If a number is too high for the number of layers on a given page, it is just ignored.
  *                  If range=nullptr, exports all layers.
@@ -237,15 +242,18 @@ auto saveDoc(const char* input, const char* output) -> int {
  */
 auto exportPdf(const char* input, const char* output, const char* range, const char* layerRange,
                ExportBackgroundType exportBackground, bool progressiveMode, ExportBackend backend) -> int {
+    auto infile = Util::fromGFilename(input);
+    auto outfile = Util::fromGFilename(output);
+
     LoadHandler loader;
-    auto doc = loader.loadDocument(input);
+    auto doc = loader.loadDocument(infile);
     if (doc == nullptr) {
         g_error("%s", loader.getLastError().c_str());
     }
 
     exitOnMissingPdfFileName(loader);
 
-    return ExportHelper::exportPdf(doc.get(), output, range, layerRange, exportBackground, progressiveMode, backend);
+    return ExportHelper::exportPdf(doc.get(), outfile, range, layerRange, exportBackground, progressiveMode, backend);
 }
 
 struct XournalMainPrivate {

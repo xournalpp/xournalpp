@@ -257,7 +257,7 @@ void MainWindow::updateColorscheme() {
         }
 
         for (auto& p: iconLoadOrder) {
-            gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), char_cast(p.u8string().c_str()));
+            gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), Util::toGFilename(p).c_str());
         }
     }
 
@@ -722,7 +722,7 @@ auto MainWindow::getToolMenuHandler() const -> ToolMenuHandler* { return this->t
 void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename) {
     auto filepath = gladeSearchPath->findFile("", cssFilename);
     xoj::util::GObjectSPtr<GtkCssProvider> provider(gtk_css_provider_new(), xoj::util::adopt);
-    gtk_css_provider_load_from_path(provider.get(), char_cast(filepath.u8string().c_str()), nullptr);
+    gtk_css_provider_load_from_path(provider.get(), Util::toGFilename(filepath).c_str(), nullptr);
     gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider.get()),
                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }

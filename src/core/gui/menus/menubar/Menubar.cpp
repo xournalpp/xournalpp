@@ -4,6 +4,7 @@
 #include "gui/GladeSearchpath.h"
 #include "gui/MainWindow.h"
 #include "util/Assert.h"
+#include "util/PathUtil.h"
 #include "util/XojMsgBox.h"
 #include "util/i18n.h"
 #include "util/raii/GVariantSPtr.h"
@@ -50,8 +51,8 @@ void Menubar::populate(const GladeSearchpath* gladeSearchPath, MainWindow* win) 
     auto filepath = gladeSearchPath->findFile("", MENU_XML_FILE);
     GError* error = nullptr;
 
-    if (auto u8fp = filepath.u8string(); !gtk_builder_add_from_file(builder.get(), char_cast(u8fp.c_str()), &error)) {
-        std::string msg = FS(_F("Error loading menubar XML file (try to load \"{1}\")") % u8fp);
+    if (!gtk_builder_add_from_file(builder.get(), Util::toGFilename(filepath).c_str(), &error)) {
+        std::string msg = FS(_F("Error loading menubar XML file (try to load \"{1}\")") % filepath.u8string());
 
         if (error != nullptr) {
             msg += "\n";

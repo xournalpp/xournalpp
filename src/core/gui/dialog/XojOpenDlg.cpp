@@ -14,22 +14,18 @@
 static void addlastSavePathShortcut(GtkFileChooser* fc, Settings* settings) {
     auto lastSavePath = settings->getLastSavePath();
     if (!lastSavePath.empty()) {
-#if GTK_MAJOR_VERSION == 3
-        gtk_file_chooser_add_shortcut_folder(fc, char_cast(lastSavePath.u8string().c_str()), nullptr);
-#else
         gtk_file_chooser_add_shortcut_folder(fc, Util::toGFile(lastSavePath).get(), nullptr);
-#endif
     }
 }
 
 static void setCurrentFolderToLastOpenPath(GtkFileChooser* fc, Settings* settings) {
-    fs::path currentFolder;
+    xoj::util::GObjectSPtr<GFile> currentFolder;
     if (settings && !settings->getLastOpenPath().empty()) {
-        currentFolder = settings->getLastOpenPath();
+        currentFolder = Util::toGFile(settings->getLastOpenPath());
     } else {
-        currentFolder = g_get_home_dir();
+        currentFolder.reset(g_file_new_for_path(g_get_home_dir()), xoj::util::adopt);
     }
-    gtk_file_chooser_set_current_folder(fc, Util::toGFile(currentFolder).get(), nullptr);
+    gtk_file_chooser_set_current_folder(fc, currentFolder.get(), nullptr);
 }
 
 template <class... Args>
