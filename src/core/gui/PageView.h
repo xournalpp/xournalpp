@@ -43,7 +43,7 @@ class Settings;
 class Text;
 class Link;
 class TextEditor;
-class LinkEditor;
+class LinkHandler;
 class VerticalToolHandler;
 class XournalView;
 class Element;
@@ -301,5 +301,5 @@ private:
     /**
      * The Link Editor
      */
-    std::unique_ptr<LinkEditor> linkEditor;
+    std::unique_ptr<LinkHandler> linkHandler;
 };
