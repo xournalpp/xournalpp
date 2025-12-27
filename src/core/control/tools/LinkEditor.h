@@ -22,6 +22,33 @@ class Control;
 class XournalView;
 class XojPageView;
 
+class LinkPopover {
+public:
+    LinkPopover(XournalView* view);
+    ~LinkPopover();
+    void hide();
+    void show();
+    void show_all();
+    void popup();
+    void popdown();
+    void updateLabel(bool markup);
+    void positionPopover();
+    bool hasLink();
+
+    void linkTo(Link* link);
+    inline GtkPopover* getPopover() const { return this->popover; }
+    inline Link* getLink() const { return this->link; }
+
+private:
+    XournalView* view;
+
+    GtkPopover* popover = nullptr;
+    GtkLabel* label = nullptr;
+    Link* link = nullptr;
+
+    static constexpr int POPOVER_PADDING = 2;
+};
+
 class LinkEditor: public ZoomListener {
 public:
     LinkEditor(XournalView* view);
@@ -42,21 +69,12 @@ public:
     void zoomChanged() override;
 
 private:
-    void createPopover();
-    std::string toLinkMarkup(std::string url);
-    void positionPopover(XojPageView* pageView, Link* element, GtkPopover* popover);
-
-private:
     XournalView* view;
     Control* control;
-    GtkWidget* documentWidget;
     Link* linkElement = nullptr;
 
-    GtkPopover* linkPopoverHighlight = nullptr;
-    GtkWidget* linkPopoverLabelHighlight = nullptr;
-    GtkPopover* linkPopoverSelect = nullptr;
-    GtkWidget* linkPopoverLabelSelect = nullptr;
-    Link* highlightedLink = nullptr;
-    Link* selectedLink = nullptr;
-    static constexpr int POPOVER_PADDING = 2;
+    // There is always at most one selected link and one highlighted link.
+    // Both can be present at the same time, when one link being selected another one is highlighted.
+    std::unique_ptr<LinkPopover> highlightPopover;
+    std::unique_ptr<LinkPopover> selectPopover;
 };
