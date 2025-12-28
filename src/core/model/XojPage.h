@@ -27,7 +27,7 @@
 
 class XojPage: public PageHandler {
 public:
-    XojPage(double width, double height, bool suppressLayerCreation = false);
+    XojPage(double width, double height, bool suppressLayerCreation = false, std::string uid = "");
     ~XojPage() override;
     XojPage(const XojPage& page);
     void operator=(const XojPage& p) = delete;
@@ -85,11 +85,22 @@ public:
      */
     XojPage* clone();
 
+    void setUID(std::string uid);
+    const std::string getUID() const;
+
+    void setRawXmlString(const std::string& xml);
+
+    const std::string& getRawXmlString() const;
+
 private:
     /**
      * The Background image if any
      */
     BackgroundImage backgroundImage;
+
+    std::string rawOriginalXml;
+
+    std::string uid;
 
     /**
      * The size of the page

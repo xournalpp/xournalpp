@@ -89,6 +89,13 @@ void Document::unlock() {
 */
 auto Document::tryLock() -> bool { return this->documentLock.try_lock(); }
 
+
+pugi::xml_document& Document::getRawPageXmlDocument() { return this->xmlRawDocument; }
+
+void Document::setRawPageXmlDocument(std::string const& doc) { this->xmlRawDocument.load(doc.c_str()); }
+
+void Document::clearOriginalXmlDoc() { this->xmlRawDocument.reset(); }
+
 void Document::clearDocument(bool destroy) {
     if (this->preview) {
         cairo_surface_destroy(this->preview);
@@ -434,6 +441,15 @@ void Document::insertPage(const PageRef& p, size_t position) {
     updateIndexPageNumbers();
 }
 
+void Document::setFileHash(const std::string& hash) { this->fileHash = hash; }
+std::string Document::getFileHash() const { return this->fileHash; }
+
+std::vector<PageRef> Document::getPages() const { return this->pages; }
+
+int Document::getFileVersion() { return this->fileVersion; }
+
+void Document::setFileVersion(int version) { this->fileVersion = version; }
+
 void Document::addPage(const PageRef& p) {
     this->pages.push_back(p);
 
@@ -481,6 +497,8 @@ auto Document::operator=(const Document& doc) -> Document& {
     this->pages = doc.pages;
     this->attachPdf = doc.attachPdf;
     this->pathStorageMode = doc.pathStorageMode;
+    this->fileVersion = doc.fileVersion;
+    this->fileHash = doc.fileHash;
 
     indexPdfPages();
     buildContentsModel();
