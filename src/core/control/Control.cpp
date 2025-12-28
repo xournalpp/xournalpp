@@ -10,6 +10,7 @@
 #include <regex>       // for regex
 #include <string>      // for string
 #include <utility>     // for move
+#include <csignal>    // for restart setting on SIGUSR1
 
 #include "control/AudioController.h"                             // for Audi...
 #include "control/ClipboardHandler.h"                            // for Clip...
@@ -119,6 +120,17 @@
 #include "config.h"                          // for PROJ...
 
 using std::string;
+Control* Control::instance = nullptr;
+
+void Control::SigUsr1Handler(int sig) {
+    if (Control::instance) Control::instance->LoadSettings();
+}
+
+void Control::LoadSettings() {
+    auto name = Util::getConfigFile(SETTINGS_XML_FILE);
+    this->settings = new Settings(std::move(name));
+    this->settings->load();
+}
 
 Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool disableAudio): gtkApp(gtkApp) {
     this->undoRedo = new UndoRedoHandler(this);
@@ -129,10 +141,9 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
 
     this->metadata = new MetadataManager();
     this->cursor = new XournalppCursor(this);
-
-    auto name = Util::getConfigFile(SETTINGS_XML_FILE);
-    this->settings = new Settings(std::move(name));
-    this->settings->load();
+    this->LoadSettings();
+    Control::instance = this;
+    std::signal(SIGUSR1, Control::SigUsr1Handler);
     this->loadPaletteFromSettings();
 
     this->pageTypes = new PageTypeHandler(gladeSearchPath);
@@ -185,6 +196,7 @@ Control::~Control() {
 
     delete this->pluginController;
     this->pluginController = nullptr;
+    this->instance = nullptr;
     delete this->clipboardHandler;
     this->clipboardHandler = nullptr;
     delete this->undoRedo;

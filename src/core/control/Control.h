@@ -86,8 +86,11 @@ public:
     ~Control() override;
 
     void initWindow(MainWindow* win);
-
+private:
+    static Control *instance;
+    static void SigUsr1Handler(int sig);
 public:
+    void LoadSettings();
     /// Asymchronously closes the current document and replaces it by a new file
     void newFile(fs::path filepath = {});
 
