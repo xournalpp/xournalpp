@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-11 21:17+0000\n"
-"PO-Revision-Date: 2025-12-13 14:16\n"
+"POT-Creation-Date: 2025-12-24 17:29+0000\n"
+"PO-Revision-Date: 2025-12-28 04:33\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -791,11 +791,11 @@ msgstr "السمة \"{1}\" لا يمكن تحليلها كحجم size_t، الق
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "السمة \"{1}\" لا يمكن تحليلها كحجم size_t، القيمة هي \"{2}\""
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:253
+#: ../src/core/control/xojfile/SaveHandler.cpp:257
 msgid "Could not write background \"{1}\", {2}"
 msgstr "تعذر كتابة الخلفية\"{1}\"، {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:372
+#: ../src/core/control/xojfile/SaveHandler.cpp:376
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "تعذر كتابة الخلفية «{1}». سنتابع على أيّة حال."
 

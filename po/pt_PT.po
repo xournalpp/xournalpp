@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-11 21:17+0000\n"
-"PO-Revision-Date: 2025-12-13 14:17\n"
+"POT-Creation-Date: 2025-12-24 17:29+0000\n"
+"PO-Revision-Date: 2025-12-28 04:33\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -782,11 +782,11 @@ msgstr "O atributo \"{1}\" não pôde ser tratado como um size_t, o valor é nul
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "O atributo \"{1}\" não pôde ser tratado como um size_t, o valor é \"{2}\""
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:253
+#: ../src/core/control/xojfile/SaveHandler.cpp:257
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Não foi possível escrever o fundo \"{1}\", {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:372
+#: ../src/core/control/xojfile/SaveHandler.cpp:376
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Não foi possível escrever o fundo \"{1}\". Continuando mesmo assim."
 

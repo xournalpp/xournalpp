@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-11 21:17+0000\n"
-"PO-Revision-Date: 2025-12-21 04:28\n"
+"POT-Creation-Date: 2025-12-24 17:29+0000\n"
+"PO-Revision-Date: 2025-12-28 04:33\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -799,11 +799,11 @@ msgstr "Attribut \"{1}\" konnte nicht als size_t ausgelesen werden, der Wert ist
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "Attribut \"{1}\" konnte nicht als size_t ausgelesen werden, der Wert ist \"{2}\""
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:253
+#: ../src/core/control/xojfile/SaveHandler.cpp:257
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Konnte Hintergrund \"{1}\" nicht speichern, {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:372
+#: ../src/core/control/xojfile/SaveHandler.cpp:376
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Konnte Hintergrund nicht speichern \"{1}\". Fahre trotzdem fort."
 
