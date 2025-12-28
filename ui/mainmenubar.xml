@@ -217,6 +217,18 @@
      <attribute name="label" translatable="yes">Layout</attribute>
      <section>
       <item>
+       <attribute name="label" translatable="yes">_Grid</attribute>
+       <attribute name="action">win.set-layout-type</attribute>
+       <attribute name="target" type="t">0</attribute>
+      </item>
+      <item>
+       <attribute name="label" translatable="yes">_Constant padding</attribute>
+       <attribute name="action">win.set-layout-type</attribute>
+       <attribute name="target" type="t">1</attribute>
+      </item>
+     </section>
+     <section>
+      <item>
        <attribute name="label" translatable="yes">_Horizontal</attribute>
        <attribute name="action">win.set-layout-vertical</attribute>
        <attribute name="target" type="b">false</attribute>
