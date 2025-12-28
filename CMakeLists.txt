@@ -112,6 +112,7 @@ if (ENABLE_CPPTRACE)
         cpptrace
         GIT_REPOSITORY https://github.com/jeremy-rifkin/cpptrace.git
         GIT_TAG        v1.0.4 # <HASH or TAG>
+        GIT_SHALLOW     ON
         EXCLUDE_FROM_ALL
     )
     set(FETCHCONTENT_UPDATES_DISCONNECTED ON) # Prevent reloading if already downloaded
@@ -134,13 +135,34 @@ if (ENABLE_CPPTRACE)
     endif()
 endif()
 
+##############################
+# GVDB -- GVariant database library. Used to generate GResources on the fly
+##############################
+
+FetchContent_Declare(
+    gvdb
+    GIT_REPOSITORY https://gitlab.gnome.org/GNOME/gvdb.git
+    GIT_TAG           4758f6fb7f889e074e13df3f914328f3eecb1fd3 # <HASH or TAG>$
+    GIT_SHALLOW     ON
+    EXCLUDE_FROM_ALL
+)
+set(FETCHCONTENT_UPDATES_DISCONNECTED ON) # Prevents reloading if already downloaded
+FetchContent_GetProperties(gvdb)          # Sets gvdb_SOURCE_DIR
+FetchContent_MakeAvailable(gvdb)
+add_library(gvdb_obj STATIC ${gvdb_SOURCE_DIR}/gvdb/gvdb-builder.c)
+pkg_check_modules(GvdbDeps REQUIRED IMPORTED_TARGET "glib-2.0 >= 2.44.0" "gio-2.0")
+target_link_libraries(gvdb_obj PRIVATE PkgConfig::GvdbDeps)
+target_include_directories(gvdb_obj PUBLIC ${gvdb_SOURCE_DIR})
+add_library(gvdb::libgvdb ALIAS gvdb_obj)
+
 
 ##############################
 # other externals
 ##############################
 
 set(pkg-module-spec "")
-list(APPEND pkg-module-spec "glib-2.0 >= 2.32.0")
+list(APPEND pkg-module-spec "glib-2.0 >= 2.44.0")
+list(APPEND pkg-module-spec "gio-2.0")
 list(APPEND pkg-module-spec "gtk+-3.0 >= 3.18.9")
 list(APPEND pkg-module-spec "poppler-glib >= 0.41.0")
 if (APPLE)
@@ -242,6 +264,7 @@ target_link_libraries(external_modules INTERFACE
         $<$<TARGET_EXISTS:qpdf::libqpdf>:qpdf::libqpdf>
         ZLIB::ZLIB
         Threads::Threads
+        gvdb::libgvdb
         )
 
 target_compile_definitions(external_modules INTERFACE

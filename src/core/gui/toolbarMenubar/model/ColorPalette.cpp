@@ -180,3 +180,5 @@ auto Palette::parseErrorDialog(const std::exception& e) const -> void {
     // Call later, to make sure the main window has been set up, so the popup is displayed in front of it (and modal)
     Util::execInUiThread([msg = msg_stream.str()]() { XojMsgBox::showErrorToUser(nullptr, msg); });
 }
+
+auto Palette::getColors() const -> const std::vector<NamedColor>& { return namedColors; }

@@ -2,6 +2,7 @@
 
 #include "gui/toolbarMenubar/icon/ColorIcon.h"
 #include "util/PathUtil.h"
+#include "util/Recolor.h"
 #include "util/gtk4_helper.h"
 #include "util/i18n.h"
 
@@ -84,6 +85,7 @@ auto SettingsDialogPaletteTab::renderPaletteListBoxRow(GtkListBox* lb, const fs:
 
     try {
         palette.load();
+        ColorIcon::createPaletteIconResources(palette, std::nullopt);
         listBoxRow = newPaletteListBoxRow(palette);
     } catch (const std::exception& e) {
         listBoxRow = newErrorListBoxRow(p, e.what());
@@ -196,10 +198,8 @@ auto SettingsDialogPaletteTab::newPaletteTextBox(const std::string& mainContent,
 
 auto SettingsDialogPaletteTab::newPaletteColorIconsBox(const Palette& palette) -> GtkWidget* {
     GtkWidget* colors = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
-    for (unsigned long i = 0; i < palette.size(); i++) {
-        const NamedColor& namedColor = palette.getColorAt(i);
-        const Color c = namedColor.getColor();
-        GtkWidget* icon = ColorIcon::newGtkImage(c, 16, true);
+    for (const auto& namedColor: palette.getColors()) {
+        GtkWidget* icon = ColorIcon::newGtkImage(namedColor.getColor(), 16, true);
         gtk_box_append(GTK_BOX(colors), icon);
     }
     gtk_widget_set_halign(colors, GTK_ALIGN_END);

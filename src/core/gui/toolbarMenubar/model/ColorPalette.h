@@ -131,6 +131,8 @@ struct Palette {
 
     std::string getHeader(const std::string& attr) const;
 
+    const std::vector<NamedColor>& getColors() const;
+
 
 private:
     /**
