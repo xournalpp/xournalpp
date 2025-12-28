@@ -2496,16 +2496,6 @@ void Control::fontChanged(const XojFont& font) {
 }
 
 /**
- * The core handler for inserting latex
- */
-void Control::runLatex() {
-    /*
-     * LatexController::run() will open a non-blocking dialog.
-     */
-    LatexController::run(this);
-}
-
-/**
  * GETTER / SETTER
  */
 
