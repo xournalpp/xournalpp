@@ -12,7 +12,7 @@
 
 typedef struct {
     /**
-     * The name in the glade.xml file
+     * The name in the main.ui file
      */
     const char* guiName;
 
@@ -20,25 +20,16 @@ typedef struct {
      * The name in the .ini file
      */
     const char* propName;
+} ToolbarEntryDefinition;
 
-    /**
-     * if horizontal (true) or vertical (false)
-     */
-    bool horizontal;
-} ToolbarEntryDefintion;
-
-const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] = {
-        {"tbTop1", "toolbarTop1", true},       {"tbTop2", "toolbarTop2", true},
-        {"tbLeft1", "toolbarLeft1", false},    {"tbLeft2", "toolbarLeft2", false},
-        {"tbRight1", "toolbarRight1", false},  {"tbRight2", "toolbarRight2", false},
-        {"tbBottom1", "toolbarBottom1", true}, {"tbBottom2", "toolbarBottom2", true},
-        {"tbFloat1", "toolbarFloat1", true},  // define this index below as TBFloatFirst
-        {"tbFloat2", "toolbarFloat2", true},   {"tbFloat3", "toolbarFloat3", true},
-        {"tbFloat4", "toolbarFloat4", true}  // define this index below as TBFloatLast
-};
-
-
-const static int TOOLBAR_DEFINITIONS_LEN = G_N_ELEMENTS(TOOLBAR_DEFINITIONS);
+constexpr std::array<ToolbarEntryDefinition, 12> TOOLBAR_DEFINITIONS(
+        {ToolbarEntryDefinition{"tbTop1", "toolbarTop1"}, ToolbarEntryDefinition{"tbTop2", "toolbarTop2"},
+         ToolbarEntryDefinition{"tbLeft1", "toolbarLeft1"}, ToolbarEntryDefinition{"tbLeft2", "toolbarLeft2"},
+         ToolbarEntryDefinition{"tbRight1", "toolbarRight1"}, ToolbarEntryDefinition{"tbRight2", "toolbarRight2"},
+         ToolbarEntryDefinition{"tbBottom1", "toolbarBottom1"}, ToolbarEntryDefinition{"tbBottom2", "toolbarBottom2"},
+         ToolbarEntryDefinition{"tbFloat1", "toolbarFloat1"},  // define this index below as TBFloatFirst
+         ToolbarEntryDefinition{"tbFloat2", "toolbarFloat2"}, ToolbarEntryDefinition{"tbFloat3", "toolbarFloat3"},
+         ToolbarEntryDefinition{"tbFloat4", "toolbarFloat4"}});
 
 #define TBFloatFirst 8
 #define TBFloatLast 11

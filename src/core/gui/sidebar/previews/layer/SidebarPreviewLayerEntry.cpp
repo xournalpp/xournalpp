@@ -3,9 +3,6 @@
 #include <gdk/gdk.h>      // for GdkEvent, GDK_BUTTON_PRESS, GdkEve...
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect, g_si...
 
-#include "gui/Shadow.h"  // for Shadow
-#include "util/gtk4_helper.h"
-
 #include "SidebarPreviewLayers.h"  // for SidebarPreviewLayers
 
 
@@ -16,7 +13,6 @@ SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewLayers* sidebar
         layerId(layerId),
         box(gtk_box_new(GTK_ORIENTATION_VERTICAL, 4), xoj::util::adopt),
         stacked(stacked) {
-
 #if GTK_CHECK_VERSION(4, 8, 0)
     cbVisible = gtk_check_button_new();
     GtkWidget* lbl = gtk_label_new(layerName.c_str());
@@ -33,14 +29,10 @@ SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewLayers* sidebar
                 (dynamic_cast<SidebarPreviewLayers*>(self->sidebar))->layerVisibilityChanged(self->layerId, check);
             }),
             this);
-    gtk_widget_set_margin_start(cbVisible, Shadow::getShadowTopLeftSize());
 
-    // This doesn't really do it. gtk_widget_get_allocated_height() always returns 1...
-    toolbarHeight = gtk_widget_get_allocated_height(cbVisible) + Shadow::getShadowTopLeftSize() + 20;
+    gtk_widget_set_margin_start(cbVisible, 2);
     gtk_box_append(GTK_BOX(box.get()), this->button.get());
     gtk_box_append(GTK_BOX(box.get()), cbVisible);
-
-    gtk_widget_show_all(box.get());
 }
 
 SidebarPreviewLayerEntry::~SidebarPreviewLayerEntry() {
@@ -55,8 +47,6 @@ void SidebarPreviewLayerEntry::mouseButtonPressCallback() {
 auto SidebarPreviewLayerEntry::getRenderType() const -> PreviewRenderType {
     return stacked ? RENDER_TYPE_PAGE_LAYERSTACK : RENDER_TYPE_PAGE_LAYER;
 }
-
-auto SidebarPreviewLayerEntry::getHeight() const -> int { return imageHeight + toolbarHeight; }
 
 auto SidebarPreviewLayerEntry::getLayer() const -> Layer::Index { return layerId; }
 
