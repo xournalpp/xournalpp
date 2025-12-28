@@ -10,11 +10,13 @@
  */
 
 
+#include <cctype>
 #include <filesystem>
 
 #include <gtest/gtest.h>
 
 #include "util/PathUtil.h"
+#include "util/StringUtils.h"
 #include "util/raii/CStringWrapper.h"
 
 #include "filesystem.h"
@@ -222,3 +224,34 @@ TEST(UtilPath, pathGFilenameConvertion) {
     test(u8"foo/µbar/Ñ/ë€ds测试q.pdf");
     test(u8"/foo/µbar/Ñ/ë€ds测试q.pdf");
 }
+
+#ifdef XOURNALPP_WRAP_STD_FS_ABSOLUTE
+TEST(UtilPath, wrapStdFsAbsolute) {
+    // Already absolute
+    EXPECT_EQ(fs::absolute("C:\\Windows\\System32"), "C:\\Windows\\System32");
+    // UNC paths should not be modified
+    EXPECT_EQ(fs::absolute("\\\\server\\some\\path"), "\\\\server\\some\\path");
+    EXPECT_EQ(fs::absolute("\\\\server\\some\\path\\..\\other"), "\\\\server\\some\\path\\..\\other");
+}
+
+TEST(UtilPath, stdFsIsAbsolute) {
+    EXPECT_TRUE(fs::path("C:\\Windows\\System32").is_absolute());
+    // UNC paths are not considered absolute in libstdc++
+    EXPECT_FALSE(fs::path("\\\\server\\some\\path").is_absolute());
+    EXPECT_FALSE(fs::path("\\\\server\\some\\path\\..\\other").is_absolute());
+}
+
+TEST(UtilPath, wrapStdFsWeaklyCanonical) {
+    // Already canonical
+    EXPECT_EQ(fs::weakly_canonical("C:\\Windows\\System32"), "C:\\Windows\\System32");
+
+    EXPECT_EQ(fs::weakly_canonical("C:\\Windows\\System32\\..\\System32"), "C:\\Windows\\System32");
+
+    // UNC paths should stay if they're canonical
+    EXPECT_EQ(fs::weakly_canonical("\\\\?\\C:\\Windows\\System32"), "\\\\?\\C:\\Windows\\System32");
+    // otherwise, they get mangled
+    fs::path mangled = fs::weakly_canonical("\\\\?\\C:\\Windows\\System32\\..\\System32");
+    EXPECT_EQ(StringUtils::toLowerCase(mangled.string().substr(1)), ":\\?\\c:\\windows\\system32") << mangled;
+    EXPECT_TRUE(std::isalpha(mangled.string()[0])) << mangled;
+}
+#endif
