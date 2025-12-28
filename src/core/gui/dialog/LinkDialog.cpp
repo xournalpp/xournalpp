@@ -1,8 +1,9 @@
 #include "LinkDialog.h"
 
-#include "control/Control.h"      // for Control
-#include "gui/Builder.h"          // for Builder
-#include "gui/GladeSearchpath.h"  // for GladeSearchPath
+#include "control/Control.h"           // for Control
+#include "gui/Builder.h"               // for Builder
+#include "gui/GladeSearchpath.h"       // for GladeSearchPath
+#include "util/raii/CStringWrapper.h"  // for OwnedCString
 
 constexpr auto UI_FILE = "linkDialog.glade";
 constexpr auto UI_DIALOG_NAME = "linkDialog";
@@ -144,12 +145,8 @@ void LinkDialog::layoutToggled(LinkAlignment layout) {
 LinkAlignment LinkDialog::getLayout() { return this->layout; }
 
 XojFont LinkDialog::getFont() {
-    XojFont newfont;
-    std::string fontName = gtk_font_chooser_get_font(this->fontChooser);
-    auto pos = fontName.find_last_of(" ");
-    newfont.setName(fontName.substr(0, pos));
-    newfont.setSize(std::stod(fontName.substr(pos + 1)));
-    return newfont;
+    auto font = xoj::util::OwnedCString::assumeOwnership(gtk_font_chooser_get_font(this->fontChooser));
+    return XojFont(font.get());
 }
 
 void LinkDialog::urlPrefixChanged(GtkComboBoxText* eventSource) {
