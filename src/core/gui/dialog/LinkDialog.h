@@ -45,8 +45,8 @@ public:
     void urlPrefixChanged(GtkComboBoxText* source);
 
 private:
-    bool isTextValid(std::string text);
-    bool isUrlValid(std::string url);
+    bool isTextValid(const std::string& text);
+    bool isUrlValid(const std::string& url);
     URLPrefix identifyAndShortenURL(std::string& url);
 
     void setMaxDialogHeight(GtkWindow* window);

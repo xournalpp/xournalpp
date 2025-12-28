@@ -99,32 +99,11 @@ void LinkDialog::cancelButtonPressed(GtkButton* btn) {
     gtk_window_close(this->linkDialog.get());
 }
 
-bool LinkDialog::isTextValid(std::string text) {
-    if (text.empty()) {
-        return false;
-    }
-
-    size_t nBlankChars = 0;
-    for (char c: text) {
-        if (std::isblank(c)) {
-            nBlankChars++;
-        }
-    }
-
-    if (text.length() == nBlankChars) {
-        return false;
-    }
-
-    return true;
+bool LinkDialog::isTextValid(const std::string& text) {
+    return !std::all_of(text.begin(), text.end(), [](unsigned char c) { return std::isblank(c); });
 }
 
-bool LinkDialog::isUrlValid(std::string url) {
-    if (url.empty()) {
-        return false;
-    }
-    return true;
-}
-
+bool LinkDialog::isUrlValid(const std::string& url) { return !url.empty(); }
 
 void LinkDialog::textChanged(GtkTextBuffer* buffer) {
     gint lot = gtk_text_buffer_get_line_count(buffer);
