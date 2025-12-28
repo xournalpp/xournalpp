@@ -43,6 +43,7 @@
 #include "gui/MainWindow.h"                                      // for Main...
 #include "gui/PageView.h"                                        // for XojP...
 #include "gui/PdfFloatingToolbox.h"                              // for PdfF...
+#include "gui/RepaintHandler.h"
 #include "gui/SearchBar.h"                                       // for Sear...
 #include "gui/XournalView.h"                                     // for Xour...
 #include "gui/XournalppCursor.h"                                 // for Xour...
@@ -123,13 +124,24 @@ using std::string;
 Control* Control::instance = nullptr;
 
 void Control::SigUsr1Handler(int sig) {
-    if (Control::instance) Control::instance->LoadSettings();
+    if (Control::instance) {
+        Control::instance->LoadSettings();
+        auto pageNr = Control::instance->getCurrentPageNo();
+        if (pageNr == npos) {
+            return;
+        }
+        XojPageView* view = Control::instance->win->getXournal()->getViewFor(pageNr);
+        auto handler = Control::instance->win->getXournal()->getRepaintHandler();
+        handler->repaintPageBorder(view);
+        view->repaintPage();
+    }
 }
 
 void Control::LoadSettings() {
     auto name = Util::getConfigFile(SETTINGS_XML_FILE);
     this->settings = new Settings(std::move(name));
     this->settings->load();
+    this->loadPaletteFromSettings();
 }
 
 Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool disableAudio): gtkApp(gtkApp) {
@@ -144,7 +156,6 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     this->LoadSettings();
     Control::instance = this;
     std::signal(SIGUSR1, Control::SigUsr1Handler);
-    this->loadPaletteFromSettings();
 
     this->pageTypes = new PageTypeHandler(gladeSearchPath);
 
