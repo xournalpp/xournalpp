@@ -2225,12 +2225,14 @@ void Control::clipboardPasteText(string text) {
 
 void Control::clipboardPasteImage(GdkPixbuf* img) {
     auto image = std::make_unique<Image>();
-    image->setImage(img);
+    xoj::util::GObjectSPtr<GdkPixbuf> pixbuf(gdk_pixbuf_apply_embedded_orientation(img), xoj::util::adopt);
+
+    image->setImage(pixbuf.get());
 
     auto zoom100 = this->getZoomControl()->getZoom100Value();
 
-    auto width = static_cast<double>(gdk_pixbuf_get_width(img)) / zoom100;
-    auto height = static_cast<double>(gdk_pixbuf_get_height(img)) / zoom100;
+    auto width = static_cast<double>(gdk_pixbuf_get_width(pixbuf.get())) / zoom100;
+    auto height = static_cast<double>(gdk_pixbuf_get_height(pixbuf.get())) / zoom100;
 
     auto pageNr = getCurrentPageNo();
     if (pageNr == npos) {
