@@ -38,7 +38,7 @@ public:
 
 private:
     constexpr friend bool operator==(Recolor const& lhs, Recolor const& rhs) {
-        return lhs.light == rhs.light && lhs.dark == rhs.dark;
+        return lhs.difference == rhs.difference && lhs.offset == rhs.offset;
     }
 
     void recalcDiffAndOff();
