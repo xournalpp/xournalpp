@@ -125,6 +125,7 @@ Control* Control::instance = nullptr;
 
 void Control::SigUsr1Handler(int sig) {
     if (Control::instance) {
+        auto recolorParameters = instance->settings->getRecolorParameters();
         Control::instance->LoadSettings();
         auto pageNr = Control::instance->getCurrentPageNo();
         if (pageNr == npos) {
@@ -134,6 +135,13 @@ void Control::SigUsr1Handler(int sig) {
         auto handler = Control::instance->win->getXournal()->getRepaintHandler();
         handler->repaintPageBorder(view);
         view->repaintPage();
+        if (recolorParameters != instance->settings->getRecolorParameters()) {
+            instance->getWindow()->getToolMenuHandler()->updateColorToolItemsRecoloring(
+                    instance->settings->getRecolorParameters().recolorizeMainView ?
+                            std::make_optional(instance->settings->getRecolorParameters().recolor) :
+                            std::nullopt);
+            instance->getWindow()->reloadToolbars();
+        }
     }
 }
 
