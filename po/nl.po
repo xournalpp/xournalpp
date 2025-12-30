@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-11 21:17+0000\n"
-"PO-Revision-Date: 2025-12-13 14:16\n"
+"POT-Creation-Date: 2025-12-24 17:29+0000\n"
+"PO-Revision-Date: 2025-12-28 04:33\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -782,11 +782,11 @@ msgstr "Het attribuut \"{1}\" kan niet als size_t worden verwerkt, de waarde is 
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "Het attribuut '{1}' kan niet worden verwerkt als size_t; de waarde is '{2}'"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:253
+#: ../src/core/control/xojfile/SaveHandler.cpp:257
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Kan achtergrond '{1}' niet wegschrijven; {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:372
+#: ../src/core/control/xojfile/SaveHandler.cpp:376
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Kan achtergrond '{1}' niet wegschrijven. Er wordt tóch doorgegaan."
 
