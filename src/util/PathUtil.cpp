@@ -149,25 +149,6 @@ auto Util::hasPngFileExt(const fs::path& path) -> bool {
     return StringUtils::toLowerCase(path.extension().string()) == ".png";
 }
 
-auto Util::isAbsolute(const fs::path& path) -> bool {
-#if defined(__GLIBCXX__) && defined(_WIN32)
-    if (path.is_absolute()) {
-        return true;
-    }
-
-    // Check for UNC paths like \\server\foo\bar.
-    // This works around a libstdc++ bug: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99333
-    const auto& str = path.native();
-    if (str.size() < 3) {
-        return false;
-    }
-    // support both forward and backward slashes
-    return (str[0] == '\\' || str[0] == '/') && (str[1] == '\\' || str[1] == '/');
-#else
-    return path.is_absolute();
-#endif
-}
-
 auto Util::clearExtensions(fs::path& path, const std::string& ext) -> void {
     auto rm_ext = [&path](const std::string ext) {
         if (StringUtils::toLowerCase(path.extension().string()) == StringUtils::toLowerCase(ext)) {
@@ -258,7 +239,7 @@ auto Util::fromUri(const std::string& uri) -> std::optional<fs::path> {
 auto Util::toUri(const fs::path& path) -> std::optional<std::string> {
     GError* error{};
     char* uri = [&] {
-        if (isAbsolute(path)) {
+        if (path.is_absolute()) {
             return g_filename_to_uri(GFilename(path).c_str(), nullptr, &error);
         }
         return g_filename_to_uri(GFilename(fs::absolute(path)).c_str(), nullptr, &error);
@@ -558,3 +539,32 @@ auto Util::listFilesSorted(fs::path directory) -> std::vector<fs::path> {
     std::sort(filePaths.begin(), filePaths.end());
     return filePaths;
 }
+
+#ifdef XOURNALPP_WRAP_STD_FS_ABSOLUTE
+
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreturn-type-c-linkage"
+#endif  // __clang__
+
+// The real wrapped function
+extern "C" std::filesystem::path __real__ZNSt10filesystem8absoluteERKNS_7__cxx114pathE(
+        const std::filesystem::path& path);
+
+// Wrap std::filesystem::absolute(std::filesystem::__cxx11::path const&)
+extern "C" std::filesystem::path __wrap__ZNSt10filesystem8absoluteERKNS_7__cxx114pathE(
+        const std::filesystem::path& path) {
+    // Check for UNC paths like \\server\foo\bar. These are always absolute.
+    // This works around a libstdc++ bug: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99333
+    const auto& str = path.native();
+    if (str.size() >= 3 && (str[0] == '\\' || str[0] == '/') && (str[1] == '\\' || str[1] == '/')) {
+        return path;
+    }
+    return __real__ZNSt10filesystem8absoluteERKNS_7__cxx114pathE(path);
+}
+
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif  // __clang__
+
+#endif  // XOURNALPP_WRAP_STD_FS_ABSOLUTE
