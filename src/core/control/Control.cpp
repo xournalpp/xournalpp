@@ -124,10 +124,20 @@ using std::string;
 Control* Control::instance = nullptr;
 
 void Control::SigUsr1Handler(int sig) {
-    if (Control::instance) {
+    if (instance) {
         SettingsBefore settingsBefore = instance->getSettingsBefore();
-        Control::instance->LoadSettings();
+        instance->LoadSettings();
         instance->reloadSettings(settingsBefore);
+        auto pageNr = instance->getCurrentPageNo();
+        if (pageNr == npos) {
+            return;
+        }
+        if (settingsBefore.recolorParameters != instance->settings->getRecolorParameters()) {
+            XojPageView* view = instance->win->getXournal()->getViewFor(pageNr);
+            auto handler = instance->win->getXournal()->getRepaintHandler();
+            handler->repaintPageBorder(view);
+            view->repaintPage();
+        }
     }
 }
 
