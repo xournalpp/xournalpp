@@ -38,7 +38,7 @@ public:
 
 private:
     constexpr friend bool operator==(Recolor const& lhs, Recolor const& rhs) {
-        return lhs.difference == rhs.difference && lhs.offset == rhs.offset;
+        return lhs.difference == rhs.difference && lhs.offset == rhs.offset && lhs.ref == rhs.ref;
     }
 
     void recalcDiffAndOff();
@@ -51,4 +51,5 @@ private:
     // calculated from above parameters to avoid having to calculate them for every recoloring all over again
     ColorU8 difference = {};  // abs(dark - light)
     ColorU8 offset = {};      // min(dark, light)
+    ColorU8 ref = {};         // reference color
 };
