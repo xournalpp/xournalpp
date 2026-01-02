@@ -506,6 +506,12 @@
   <submenu>
    <attribute name="label" translatable="yes">_Tools</attribute>
    <section id="menu10">
+
+    <item>
+     <attribute name="label" translatable="yes">Draw Exp</attribute>
+     <attribute name="action">win.select-tool</attribute>
+     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;t</attribute>
+    </item>
     <item>
      <attribute name="label" translatable="yes">_Pen</attribute>
      <attribute name="action">win.select-tool</attribute>
@@ -596,6 +602,31 @@
       <attribute name="label" translatable="yes">Draw Spline</attribute>
       <attribute name="action">win.tool-draw-spline</attribute>
       <attribute name="accel">&lt;Ctrl&gt;8</attribute>
+     </item>
+     <item>
+      <attribute name="label" translatable="yes">Draw Exp</attribute>
+      <attribute name="action">win.tool-draw-exp</attribute>
+      <attribute name="accel">&lt;Ctrl&gt;9</attribute>
+     </item>
+     <item>
+      <attribute name="label" translatable="yes">Draw Gauss</attribute>
+      <attribute name="action">win.tool-draw-gauss</attribute>
+      <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;1</attribute>
+     </item>
+     <item>
+      <attribute name="label" translatable="yes">Draw Poly</attribute>
+      <attribute name="action">win.tool-draw-poly</attribute>
+      <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;2</attribute>
+     </item>
+     <item>
+      <attribute name="label" translatable="yes">Draw Poly Neg</attribute>
+      <attribute name="action">win.tool-draw-polyneg</attribute>
+      <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;3</attribute>
+     </item>
+     <item>
+      <attribute name="label" translatable="yes">Draw Sinus</attribute>
+      <attribute name="action">win.tool-draw-sinus</attribute>
+      <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;4</attribute>
      </item>
     </submenu>
    </section>
