@@ -314,16 +314,14 @@ void LatexController::insertLatex(PageRef page, Control* ctrl, double x, double 
 
     self->page = page;
 
-
-    // Is there already a teximage?
+    // Is there already a teximage at the click location? If yes, find the most recent one.
     self->selectedElem = nullptr;
-
-    // Should we reverse this loop to select the most recent teximage rather than the oldest?
-    for (auto&& e: page->getSelectedLayer()->getElements()) {
-        if (e->getType() == ELEMENT_TEXIMAGE || e->getType() == ELEMENT_TEXT) {
+    auto &el = page->getSelectedLayer()->getElements();
+    for (auto e = el.rbegin(); e != el.rend(); ++e) {
+        if ((*e)->getType() == ELEMENT_TEXIMAGE || (*e)->getType() == ELEMENT_TEXT) {
             GdkRectangle matchRect = {gint(x), gint(y), 1, 1};
-            if (e->intersectsArea(&matchRect)) {
-                self->selectedElem = e.get();
+            if ((*e)->intersectsArea(&matchRect)) {
+                self->selectedElem = (*e).get();
                 break;
             }
         }
