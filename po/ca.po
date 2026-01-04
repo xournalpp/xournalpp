@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-24 17:29+0000\n"
-"PO-Revision-Date: 2025-12-28 04:33\n"
+"PO-Revision-Date: 2026-01-04 04:36\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -4533,7 +4533,7 @@ msgstr "Desenvolupadors del Xournalpp"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:10
 msgid "Xournal++ is a hand note-taking software written in C++ with the target of flexibility, functionality and speed. Stroke recognizer and other parts are based on Xournal Code, which you can find at sourceforge. It supports GNU/Linux (e.g. Ubuntu, Debian, Arch, SUSE), macOS and Windows. Supports pen input from devices such as Wacom Tablets."
-msgstr "El Xournal++ és un programari per a prendre notes a mà escrit en C++ i que pretén ser ràpid, flexible i funcional. El reconeixedor de traços i altres parts es basen en el codi del Xournal, que podeu trobar al sourceforge. Suporta GNU/Linux (Ubuntu, Debia, Arch i SUSE), macOS i Windows. Admet entrades a través de llapis òptics, com ara els de les tauletes Wacom."
+msgstr "El Xournal++ és un programari per a prendre notes a mà escrit en C++ i que pretén ser ràpid, flexible i funcional. El reconeixedor de traços i altres parts es basen en el codi del Xournal, que podeu trobar al sourceforge. Suporta GNU/Linux (Ubuntu, Debian, Arch i SUSE), macOS i Windows. Admet entrades a través de llapis òptics, com ara els de les tauletes Wacom."
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:17
 msgid "Xournal++ features:"
@@ -4541,7 +4541,7 @@ msgstr "Característiques i funcions del Xournal++:"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:21
 msgid "Supports pressure-sensitive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)"
-msgstr "Suporta llapis sensibles a la pressió i llapis de tauletes digitals (com ara les tauletes Wacom, Huion, XP Pen, etc.)."
+msgstr "Suporta llapis sensibles a la pressió i llapis de tauletes digitals (com ara les tauletes Wacom, Huion, XP Pen, etc.)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:22
 msgid "Paper backgrounds for note-taking, scratch paper, or whiteboarding"
@@ -4593,7 +4593,7 @@ msgstr "Estabilització de l'entrada per a dibuixar i escriure millor"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:34
 msgid "Text tool for adding text in different fonts, colors, and sizes"
-msgstr "Eina de text per a afegir text amb diferents tipus de lletres, mides i colors"
+msgstr "Eina de text per a afegir-ne amb diferents tipus de lletres, mides i colors"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:35
 msgid "Enhanced support for image insertion"
