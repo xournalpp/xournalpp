@@ -274,6 +274,11 @@ void LatexController::insertTexImage() {
     auto pageNr = xournal->getCurrentPage();
     auto* view = xournal->getViewFor(pageNr);
 
+    if (view->getPage() != page) {
+        g_warning("Active page changed while you edited the tex code. Aborting.");
+        return;
+    }
+
     /* Clearing the old image and creating the new one creates two separate undo actions; I don't
        know yet how to merge that to one. (That bug was already present before.) */
 
@@ -283,12 +288,6 @@ void LatexController::insertTexImage() {
         view->getXournal()->deleteSelection(sel.release());
         this->selectedElem = nullptr;
     }
-
-    if (view->getPage() != page) {
-        g_warning("Active page changed while you edited the tex code. Aborting.");
-        return;
-    }
-
 
     control->getUndoRedoHandler()->addUndoAction(
             std::make_unique<InsertUndoAction>(page, layer, this->temporaryRender.get()));
