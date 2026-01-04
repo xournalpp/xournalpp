@@ -269,7 +269,6 @@ void LatexController::insertTexImage() {
     xoj_assert(this->isValidTex);
     xoj_assert(this->temporaryRender != nullptr);
 
-    /* Das folgende wird erst am Ende gemacht... */
     Layer* layer = page->getSelectedLayer();
     XournalView* xournal = this->control->getWindow()->getXournal();
     auto pageNr = xournal->getCurrentPage();
@@ -326,7 +325,6 @@ void LatexController::insertLatex(PageRef page, Control* ctrl, double x, double 
             GdkRectangle matchRect = {gint(x), gint(y), 1, 1};
             if (e->intersectsArea(&matchRect)) {
                 self->selectedElem = e.get();
-                // ti = dynamic_cast<const TexImage*>(e.get());
                 break;
             }
         }
