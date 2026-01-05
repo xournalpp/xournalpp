@@ -4391,6 +4391,50 @@ This setting can make it easier to draw with touch. </property>
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkFrame" id="sid109">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label-xalign">0.009999999776482582</property>
+                                <child>
+                                  <object class="GtkBox" id="box20">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="margin-start">12</property>
+                                    <property name="margin-end">12</property>
+                                    <property name="margin-bottom">8</property>
+                                    <property name="orientation">vertical</property>
+                                    <child>
+                                      <object class="GtkCheckButton" id="cbForceZoomToFitOnLoad">
+                                        <property name="label" translatable="yes">Force zoom to fit on document load</property>
+                                        <property name="name">cbForceZoomToFitOnLoad </property>
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="receives-default">False</property>
+                                        <property name="draw-indicator">True</property>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkLabel" id="sid112">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Default Zoom</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">3</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkFrame" id="sid129">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
