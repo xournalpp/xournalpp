@@ -11,7 +11,8 @@
 #pragma once
 
 #include <cstring>
-#include <limits>  // for numeric_limits
+#include <exception>  // for exception
+#include <limits>     // for numeric_limits
 #include <memory>
 #include <sstream>
 #include <unordered_set>
@@ -2884,10 +2885,14 @@ static int applib_export(lua_State* L) {
     fs::path file = fs::path(outputFile);
     auto extension = file.extension();
 
-    if (extension == ".pdf") {
-        ExportHelper::exportPdf(doc, outputFile, range, layerRange, bgType, progressiveMode);
-    } else if (extension == ".svg" || extension == ".png") {
-        ExportHelper::exportImg(doc, outputFile, range, layerRange, pngDpi, pngWidth, pngHeight, bgType);
+    try {
+        if (extension == ".pdf") {
+            ExportHelper::exportPdf(doc, outputFile, range, layerRange, bgType, progressiveMode);
+        } else if (extension == ".svg" || extension == ".png") {
+            ExportHelper::exportImg(doc, outputFile, range, layerRange, pngDpi, pngWidth, pngHeight, bgType);
+        }
+    } catch (const std::exception& e) {
+        return luaL_error(L, "Error exporting document: %s", e.what());
     }
 
     return 0;
