@@ -1702,7 +1702,7 @@ void Control::openFile(fs::path filepath, std::function<void(bool)> callback, in
         if (closed) {
             ctrl->openFileWithoutSavingTheCurrentDocument(std::move(filepath), false, scrollToPage, std::move(cb));
         }
-    });
+    }, false, true, std::move(forceOpen));
 }
 
 void Control::fileLoaded(int scrollToPage) {
@@ -2089,12 +2089,12 @@ void Control::quit(bool allowCancel) {
     this->close(std::move(afterClosed), true, allowCancel);
 }
 
-void Control::close(std::function<void(bool)> callback, const bool allowDestroy, const bool allowCancel) {
+void Control::close(std::function<void(bool)> callback, const bool allowDestroy, const bool allowCancel, const bool forceClose) {
     clearSelectionEndText();
     metadata->documentChanged();
     resetGeometryTool();
 
-    bool safeToClose = !undoRedo->isChanged();
+    bool safeToClose = forceClose || !undoRedo->isChanged();
     if (!safeToClose) {
         fs::path path = doc->getFilepath();
         const bool fileRemoved = !path.empty() && !fs::exists(path);
