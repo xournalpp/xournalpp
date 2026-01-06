@@ -1487,9 +1487,8 @@ void Control::newFile(fs::path filepath) {
     if (hasContent) {
         // Show dialog asking user what to do
         enum { NEW_WINDOW = 1, NEW_HERE, CANCEL };
-        std::vector<XojMsgBox::Button> buttons = {{_("New Window"), NEW_WINDOW},
-                                                  {_("This Window"), NEW_HERE},
-                                                  {_("Cancel"), CANCEL}};
+        std::vector<XojMsgBox::Button> buttons = {
+                {_("New Window"), NEW_WINDOW}, {_("This Window"), NEW_HERE}, {_("Cancel"), CANCEL}};
 
         XojMsgBox::askQuestion(
                 getGtkWindow(), _("New Document"),
@@ -1501,8 +1500,8 @@ void Control::newFile(fs::path filepath) {
                         ctrl->close(
                                 [ctrl, filepath = std::move(filepath)](bool closed) mutable {
                                     if (closed) {
-                                        ctrl->replaceDocument(createNewDocument(ctrl, std::move(filepath), std::nullopt),
-                                                              -1);
+                                        ctrl->replaceDocument(
+                                                createNewDocument(ctrl, std::move(filepath), std::nullopt), -1);
                                     }
                                 },
                                 true);
