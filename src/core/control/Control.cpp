@@ -1,8 +1,8 @@
 #include "Control.h"
 
-#include <algorithm>  // for max
-#include <cstdlib>    // for size_t
-#include <exception>  // for exce...
+#include <algorithm>   // for max
+#include <cstdlib>     // for size_t
+#include <exception>   // for exce...
 #include <functional>  // for bind
 #include <iterator>    // for end
 #include <memory>      // for make...
@@ -1477,13 +1477,48 @@ static std::unique_ptr<Document> createNewDocument(Control* ctrl, fs::path filep
 }
 
 void Control::newFile(fs::path filepath) {
-    this->close(
-            [ctrl = this, filepath = std::move(filepath)](bool closed) {
-                if (closed) {
-                    ctrl->replaceDocument(createNewDocument(ctrl, std::move(filepath), std::nullopt), -1);
-                }
-            },
-            true);
+    // Check if current document has content (not a fresh empty document)
+    bool hasContent = false;
+    this->doc->lock();
+    hasContent = this->doc->getPageCount() > 0 &&
+                 (!this->doc->getFilepath().empty() || undoRedo->isChanged() || this->doc->getPageCount() > 1);
+    this->doc->unlock();
+
+    if (hasContent) {
+        // Show dialog asking user what to do
+        enum { NEW_WINDOW = 1, NEW_HERE, CANCEL };
+        std::vector<XojMsgBox::Button> buttons = {{_("New Window"), NEW_WINDOW},
+                                                  {_("This Window"), NEW_HERE},
+                                                  {_("Cancel"), CANCEL}};
+
+        XojMsgBox::askQuestion(
+                getGtkWindow(), _("New Document"),
+                _("A document is already open. Where would you like to open the new document?"), std::move(buttons),
+                [ctrl = this, filepath = std::move(filepath)](int response) mutable {
+                    if (response == NEW_WINDOW) {
+                        ctrl->openFileInNewWindow(fs::path{});  // Empty path = new document
+                    } else if (response == NEW_HERE) {
+                        ctrl->close(
+                                [ctrl, filepath = std::move(filepath)](bool closed) mutable {
+                                    if (closed) {
+                                        ctrl->replaceDocument(createNewDocument(ctrl, std::move(filepath), std::nullopt),
+                                                              -1);
+                                    }
+                                },
+                                true);
+                    }
+                    // CANCEL: do nothing
+                });
+    } else {
+        // Original behavior for empty/new documents
+        this->close(
+                [ctrl = this, filepath = std::move(filepath)](bool closed) {
+                    if (closed) {
+                        ctrl->replaceDocument(createNewDocument(ctrl, std::move(filepath), std::nullopt), -1);
+                    }
+                },
+                true);
+    }
 }
 
 /**
@@ -1503,21 +1538,54 @@ static auto shouldFileOpen(fs::path const& filepath, GtkWindow* win) -> bool {
 }
 
 void Control::askToOpenFile() {
-    /**
-     * Question: in case the current file has not been saved yet, do we want:
-     *      1. First ask to save it, save it or discard it and then show the FileChooserDialog to open a new file
-     *      2. First show the FileChooserDialog, and if a valid file has been selected and successfully opened, ask to
-     *         save or discard the current file
-     * For now, this implements option 1.
-     */
-    this->close([ctrl = this](bool closed) {
-        if (closed) {
-            xoj::OpenDlg::showOpenFileDialog(ctrl->getGtkWindow(), ctrl->settings, [ctrl](fs::path path) {
-                g_message("%s", (_F("file: {1}") % path.string()).c_str());
-                ctrl->openFileWithoutSavingTheCurrentDocument(std::move(path), false, -1, [](bool) {});
-            });
+    // Show the file chooser dialog first, then route through openFile()
+    // which will handle the "document has content" dialog if needed.
+    xoj::OpenDlg::showOpenFileDialog(this->getGtkWindow(), this->settings, [ctrl = this](fs::path path) {
+        if (!path.empty()) {
+            g_message("%s", (_F("file: {1}") % path.string()).c_str());
+            ctrl->openFile(std::move(path));
         }
     });
+}
+
+void Control::openFileInNewWindow(fs::path filepath) {
+    std::string binary = "xournalpp";
+#ifdef __APPLE__
+    // On macOS, try to find the binary in the app bundle first
+    if (!xoj::util::OwnedCString::assumeOwnership(g_find_program_in_path(binary.c_str()))) {
+        auto path = Util::getExePath() / binary;
+        binary = Util::toGFilename(path).c_str();
+    }
+#endif
+    gchar* prog = g_find_program_in_path(binary.c_str());
+    if (!prog) {
+        // Fallback to current executable path
+        auto path = Util::getExePath() / "xournalpp";
+        prog = g_strdup(Util::toGFilename(path).c_str());
+    }
+
+    GError* err = nullptr;
+    GSubprocess* process = nullptr;
+
+    if (filepath.empty()) {
+        // Launch new instance with blank document
+        process = g_subprocess_new(G_SUBPROCESS_FLAGS_NONE, &err, prog, nullptr);
+    } else {
+        // Launch new instance with specified file
+        std::string filepathStr = Util::toGFilename(filepath).c_str();
+        process = g_subprocess_new(G_SUBPROCESS_FLAGS_NONE, &err, prog, filepathStr.c_str(), nullptr);
+    }
+    g_free(prog);
+
+    if (err != nullptr) {
+        std::string message = FS(_F("Failed to open new window: {1}") % err->message);
+        XojMsgBox::showErrorToUser(getGtkWindow(), message);
+        g_error_free(err);
+        return;
+    }
+
+    // Let the process run independently
+    g_object_unref(process);
 }
 
 void Control::replaceDocument(std::unique_ptr<Document> doc, int scrollToPage) {
@@ -1697,12 +1765,52 @@ void Control::openFile(fs::path filepath, std::function<void(bool)> callback, in
         return;
     }
 
-    this->close([ctrl = this, filepath = std::move(filepath), cb = std::move(callback),
+    // Check if current document has content (not a fresh empty document)
+    bool hasContent = false;
+    this->doc->lock();
+    hasContent = this->doc->getPageCount() > 0 &&
+                 (!this->doc->getFilepath().empty() || undoRedo->isChanged() || this->doc->getPageCount() > 1);
+    this->doc->unlock();
+
+    if (hasContent) {
+        // Show dialog asking user what to do
+        enum { NEW_WINDOW = 1, OPEN_HERE, CANCEL };
+        std::vector<XojMsgBox::Button> buttons = {
+                {_("New Window"), NEW_WINDOW}, {_("This Window"), OPEN_HERE}, {_("Cancel"), CANCEL}};
+
+        XojMsgBox::askQuestion(getGtkWindow(), _("Open File"),
+                               _("A document is already open. Where would you like to open this file?"),
+                               std::move(buttons),
+                               [ctrl = this, filepath = std::move(filepath), cb = std::move(callback),
+                                scrollToPage](int response) mutable {
+                                   if (response == NEW_WINDOW) {
+                                       ctrl->openFileInNewWindow(std::move(filepath));
+                                       cb(true);
+                                   } else if (response == OPEN_HERE) {
+                                       ctrl->close(
+                                               [ctrl, filepath = std::move(filepath), cb = std::move(cb),
+                                                scrollToPage](bool closed) mutable {
+                                                   if (closed) {
+                                                       ctrl->openFileWithoutSavingTheCurrentDocument(
+                                                               std::move(filepath), false, scrollToPage, std::move(cb));
+                                                   }
+                                               },
+                                               true);
+                                   }
+                                   // CANCEL: do nothing
+                               });
+    } else {
+        // Original behavior for empty/new documents
+        this->close(
+                [ctrl = this, filepath = std::move(filepath), cb = std::move(callback),
                  scrollToPage](bool closed) mutable {
-        if (closed) {
-            ctrl->openFileWithoutSavingTheCurrentDocument(std::move(filepath), false, scrollToPage, std::move(cb));
-        }
-    });
+                    if (closed) {
+                        ctrl->openFileWithoutSavingTheCurrentDocument(std::move(filepath), false, scrollToPage,
+                                                                      std::move(cb));
+                    }
+                },
+                true);
+    }
 }
 
 void Control::fileLoaded(int scrollToPage) {
