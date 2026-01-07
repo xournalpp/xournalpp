@@ -1702,7 +1702,7 @@ void Control::openFile(fs::path filepath, std::function<void(bool)> callback, in
         if (closed) {
             ctrl->openFileWithoutSavingTheCurrentDocument(std::move(filepath), false, scrollToPage, std::move(cb));
         }
-    }, false, true, std::move(forceOpen));
+    }, false, true, forceOpen);
 }
 
 void Control::fileLoaded(int scrollToPage) {
