@@ -1697,12 +1697,14 @@ void Control::openFile(fs::path filepath, std::function<void(bool)> callback, in
         return;
     }
 
-    this->close([ctrl = this, filepath = std::move(filepath), cb = std::move(callback),
-                 scrollToPage](bool closed) mutable {
-        if (closed) {
-            ctrl->openFileWithoutSavingTheCurrentDocument(std::move(filepath), false, scrollToPage, std::move(cb));
-        }
-    }, false, true, forceOpen);
+    this->close(
+            [ctrl = this, filepath = std::move(filepath), cb = std::move(callback), scrollToPage](bool closed) mutable {
+                if (closed) {
+                    ctrl->openFileWithoutSavingTheCurrentDocument(std::move(filepath), false, scrollToPage,
+                                                                  std::move(cb));
+                }
+            },
+            false, true, forceOpen);
 }
 
 void Control::fileLoaded(int scrollToPage) {
@@ -2089,7 +2091,8 @@ void Control::quit(bool allowCancel) {
     this->close(std::move(afterClosed), true, allowCancel);
 }
 
-void Control::close(std::function<void(bool)> callback, const bool allowDestroy, const bool allowCancel, const bool forceClose) {
+void Control::close(std::function<void(bool)> callback, const bool allowDestroy, const bool allowCancel,
+                    const bool forceClose) {
     clearSelectionEndText();
     metadata->documentChanged();
     resetGeometryTool();

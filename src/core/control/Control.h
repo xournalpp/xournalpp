@@ -141,7 +141,8 @@ public:
      * @param forceClose Whether to skip the save dialog and unconditionally discard unsaved changes.
      * @return true if the user closed the document, otherwise false.
      */
-    void close(std::function<void(bool)> callback, bool allowDestroy = false, bool allowCancel = true, bool forceClose = false);
+    void close(std::function<void(bool)> callback, bool allowDestroy = false, bool allowCancel = true,
+               bool forceClose = false);
 
     // Menu edit
     void showSettings();
