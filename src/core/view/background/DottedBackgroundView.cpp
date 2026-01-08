@@ -29,13 +29,15 @@ void DottedBackgroundView::draw(cairo_t* cr) const {
     double maxY;
     cairo_clip_extents(cr, &minX, &minY, &maxX, &maxY);
 
-    //  Add a 0.5 * lineWidth padding in case the line is just outside the mask but its thickness still makes it
-    //  (partially) visible
     const double halfLineWidth = 0.5 * lineWidth;
+    /*  1- Add a halfLineWidth padding in case the line is just outside the mask but its thickness still makes it
+     *     (partially) visible
+     *  2- Set clearance so no dot is half-drawn on the edge of the sheet
+     */
     auto [indexMinX, indexMaxX] =
-            getIndexBounds(minX - halfLineWidth, maxX + halfLineWidth, squareSize, squareSize, pageWidth);
+            getIndexBounds(minX - halfLineWidth, maxX + halfLineWidth, squareSize, halfLineWidth, pageWidth);
     auto [indexMinY, indexMaxY] =
-            getIndexBounds(minY - halfLineWidth, maxY + halfLineWidth, squareSize, squareSize, pageHeight);
+            getIndexBounds(minY - halfLineWidth, maxY + halfLineWidth, squareSize, halfLineWidth, pageHeight);
 
     for (int i = indexMinX; i <= indexMaxX; ++i) {
         double x = i * squareSize;
