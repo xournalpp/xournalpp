@@ -28,49 +28,41 @@ GraphBackgroundView::GraphBackgroundView(double pageWidth, double pageHeight, Co
 }
 
 void GraphBackgroundView::draw(cairo_t* cr) const {
+    // Paint the background color
     PlainBackgroundView::draw(cr);
 
+    // Get the bounds of the mask, in page coordinates
     double minX;
     double maxX;
     double minY;
     double maxY;
     cairo_clip_extents(cr, &minX, &minY, &maxX, &maxY);
 
-    double effectiveMarginX = margin;
-    double effectiveMarginY = margin;
-
-    if (roundUpMargin && margin > 0.0) {
-        double roundingUnit = (boldLineInterval > 0) ? (squareSize * boldLineInterval) : squareSize;
-
-        double maxGridWidth = pageWidth - 2 * margin;
-        double maxGridHeight = pageHeight - 2 * margin;
-
-        int completeUnitsX = static_cast<int>(std::floor(maxGridWidth / roundingUnit));
-        int completeUnitsY = static_cast<int>(std::floor(maxGridHeight / roundingUnit));
-
-        double actualGridWidth = completeUnitsX * roundingUnit;
-        double actualGridHeight = completeUnitsY * roundingUnit;
-
-        effectiveMarginX = (pageWidth - actualGridWidth) / 2.0;
-        effectiveMarginY = (pageHeight - actualGridHeight) / 2.0;
+    if (margin > 0.0) {
+        minX = std::max(minX, margin);
+        maxX = std::min(maxX, pageWidth - margin);
+        minY = std::max(minY, margin);
+        maxY = std::min(maxY, pageHeight - margin);
     }
 
-    if (margin > 0.0 || roundUpMargin) {
-        minX = std::max(minX, effectiveMarginX);
-        maxX = std::min(maxX, pageWidth - effectiveMarginX);
-        minY = std::max(minY, effectiveMarginY);
-        maxY = std::min(maxY, pageHeight - effectiveMarginY);
-    }
-
+    //  Add a 0.5 * lineWidth padding in case the line is just outside the mask but its thickness still makes it
+    //  (partially) visible
     const double halfLineWidth = 0.5 * (boldLineInterval > 0 ? boldLineWidth : lineWidth);
+    auto [indexMinX, indexMaxX] =
+            getIndexBounds(minX - halfLineWidth, maxX + halfLineWidth, squareSize, squareSize, pageWidth);
+    auto [indexMinY, indexMaxY] =
+            getIndexBounds(minY - halfLineWidth, maxY + halfLineWidth, squareSize, squareSize, pageHeight);
 
-    int indexMinX = static_cast<int>(std::ceil((minX - halfLineWidth - effectiveMarginX) / squareSize));
-    int indexMaxX = static_cast<int>(std::floor((maxX + halfLineWidth - effectiveMarginX) / squareSize));
-    int indexMinY = static_cast<int>(std::ceil((minY - halfLineWidth - effectiveMarginY) / squareSize));
-    int indexMaxY = static_cast<int>(std::floor((maxY + halfLineWidth - effectiveMarginY) / squareSize));
-
-    indexMinX = std::max(0, indexMinX);
-    indexMinY = std::max(0, indexMinY);
+    if (roundUpMargin) {
+        auto [pageIndexMinX, pageIndexMaxX] = getIndexBounds(margin - halfLineWidth, pageWidth - margin + halfLineWidth,
+                                                             squareSize, squareSize, pageWidth);
+        auto [pageIndexMinY, pageIndexMaxY] = getIndexBounds(
+                margin - halfLineWidth, pageHeight - margin + halfLineWidth, squareSize, squareSize, pageHeight);
+        minX = std::max(minX, squareSize * pageIndexMinX);
+        maxX = std::min(maxX, squareSize * pageIndexMaxX);
+        minY = std::max(minY, squareSize * pageIndexMinY);
+        maxY = std::min(maxY, squareSize * pageIndexMaxY);
+    }
 
     cairo_save(cr);
     Util::cairo_set_source_rgbi(cr, foregroundColor);
@@ -81,7 +73,7 @@ void GraphBackgroundView::draw(cairo_t* cr) const {
         if (minY < maxY) {
             for (int i = indexMinX; i <= indexMaxX; ++i) {
                 if (i % boldLineInterval != 0) {
-                    double x = effectiveMarginX + i * squareSize;
+                    double x = i * squareSize;
                     cairo_move_to(cr, x, minY);
                     cairo_line_to(cr, x, maxY);
                 }
@@ -90,7 +82,7 @@ void GraphBackgroundView::draw(cairo_t* cr) const {
         if (minX < maxX) {
             for (int i = indexMinY; i <= indexMaxY; ++i) {
                 if (i % boldLineInterval != 0) {
-                    double y = effectiveMarginY + i * squareSize;
+                    double y = i * squareSize;
                     cairo_move_to(cr, minX, y);
                     cairo_line_to(cr, maxX, y);
                 }
@@ -102,7 +94,7 @@ void GraphBackgroundView::draw(cairo_t* cr) const {
         if (minY < maxY) {
             for (int i = indexMinX; i <= indexMaxX; ++i) {
                 if (i % boldLineInterval == 0) {
-                    double x = effectiveMarginX + i * squareSize;
+                    double x = i * squareSize;
                     cairo_move_to(cr, x, minY);
                     cairo_line_to(cr, x, maxY);
                 }
@@ -111,7 +103,7 @@ void GraphBackgroundView::draw(cairo_t* cr) const {
         if (minX < maxX) {
             for (int i = indexMinY; i <= indexMaxY; ++i) {
                 if (i % boldLineInterval == 0) {
-                    double y = effectiveMarginY + i * squareSize;
+                    double y = i * squareSize;
                     cairo_move_to(cr, minX, y);
                     cairo_line_to(cr, maxX, y);
                 }
@@ -122,14 +114,14 @@ void GraphBackgroundView::draw(cairo_t* cr) const {
         cairo_set_line_width(cr, lineWidth);
         if (minY < maxY) {
             for (int i = indexMinX; i <= indexMaxX; ++i) {
-                double x = effectiveMarginX + i * squareSize;
+                double x = i * squareSize;
                 cairo_move_to(cr, x, minY);
                 cairo_line_to(cr, x, maxY);
             }
         }
         if (minX < maxX) {
             for (int i = indexMinY; i <= indexMaxY; ++i) {
-                double y = effectiveMarginY + i * squareSize;
+                double y = i * squareSize;
                 cairo_move_to(cr, minX, y);
                 cairo_line_to(cr, maxX, y);
             }

@@ -207,10 +207,14 @@ auto addElementsFromActiveLayer(Control* ctrl, EditSelection* base, const Insert
 }
 };  // namespace SelectionFactory
 
+static int getBtnWidth(Control* c) {
+    return std::max(10, round_cast<int>(c->getZoomControl()->getZoom100Value() * Util::DPI_NORMALIZATION_FACTOR / 8));
+}
+
 EditSelection::EditSelection(Control* ctrl, InsertionOrder elts, const PageRef& page, Layer* layer, XojPageView* view,
                              const Range& bounds, const Range& snappingBounds):
         snappedBounds(snappingBounds),
-        btnWidth(std::max(10, ctrl->getSettings()->getDisplayDpi() / 8)),
+        btnWidth(getBtnWidth(ctrl)),
         sourcePage(page),
         sourceLayer(layer),
         view(view),
@@ -242,7 +246,7 @@ EditSelection::EditSelection(Control* ctrl, InsertionOrder elts, const PageRef& 
 
 EditSelection::EditSelection(Control* ctrl, const PageRef& page, Layer* layer, XojPageView* view):
         snappedBounds(Rectangle<double>{}),
-        btnWidth(std::max(10, ctrl->getSettings()->getDisplayDpi() / 8)),
+        btnWidth(getBtnWidth(ctrl)),
         sourcePage(page),
         sourceLayer(layer),
         view(view),
@@ -252,12 +256,8 @@ EditSelection::EditSelection(Control* ctrl, const PageRef& page, Layer* layer, X
 }
 
 EditSelection::~EditSelection() {
+    this->edgePanHandler.cancel();
     finalizeSelection();
-
-    if (this->edgePanHandler) {
-        g_source_destroy(this->edgePanHandler);
-        g_source_unref(this->edgePanHandler);
-    }
 }
 
 /**
@@ -876,13 +876,10 @@ void EditSelection::moveSelection(double dx, double dy, bool addMoveUndo) {
 
 void EditSelection::setEdgePan(bool pan) {
     if (pan && !this->edgePanHandler) {
-        this->edgePanHandler = g_timeout_source_new(1000 / PAN_TIMER_RATE);
-        g_source_set_callback(this->edgePanHandler, xoj::util::wrap_v<EditSelection::handleEdgePan>, this, nullptr);
-        g_source_attach(this->edgePanHandler, nullptr);
-    } else if (!pan && this->edgePanHandler) {
-        g_source_destroy(this->edgePanHandler);
-        g_source_unref(this->edgePanHandler);
-        this->edgePanHandler = nullptr;
+        this->edgePanHandler =
+                g_timeout_add(1000 / PAN_TIMER_RATE, xoj::util::wrap_v<EditSelection::handleEdgePan>, this);
+    } else if (!pan) {
+        this->edgePanHandler.cancel();
         this->edgePanInhibitNext = false;
     }
 }
@@ -891,7 +888,8 @@ bool EditSelection::isEdgePanning() const { return this->edgePanHandler; }
 
 bool EditSelection::handleEdgePan(EditSelection* self) {
     if (self->view->getXournal()->getControl()->getZoomControl()->isZoomPresentationMode()) {
-        self->setEdgePan(false);
+        self->edgePanHandler.consume();
+        self->edgePanInhibitNext = false;
         return false;
     }
 
@@ -966,21 +964,29 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
     const auto translateY = layoutScrollY / zoom;
 
     // Perform the scrolling
-    bool edgePanned = false;
     if (self->isMoving() && (layoutScrollX != 0.0 || layoutScrollY != 0.0)) {
-        layout->scrollRelative(layoutScrollX, layoutScrollY);
+        layout->scrollRelative(layoutScrollX, layoutScrollY);  // May create a page
         self->moveSelection(translateX, translateY);
-        edgePanned = true;
+
+        if (XojPageView* v = self->getPageViewUnderCursor(); v && v != self->view) {
+            XournalView* xournal = self->view->getXournal();
+            xournal->pageSelected(xournal->getControl()->getDocument()->indexOf(v->getPage()));
+
+            self->translateToView(v);
+        }
 
         // To prevent the selection from jumping and to reduce jitter, block the selection movement triggered by user
         // input
         self->edgePanInhibitNext = true;
+
+        return true;
     } else {
         // No panning, so disable the timer.
-        self->setEdgePan(false);
-    }
+        self->edgePanHandler.consume();
+        self->edgePanInhibitNext = false;
 
-    return edgePanned;
+        return false;
+    }
 }
 
 auto EditSelection::getBoundingBoxInView() const -> Rectangle<double> {

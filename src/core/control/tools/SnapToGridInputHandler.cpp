@@ -34,41 +34,6 @@ void SnapToGridInputHandler::ensureOffsetsCached() const {
     }
 }
 
-void SnapToGridInputHandler::calculateGraphOffsets(const BackgroundConfig& config, double pageWidth, double pageHeight,
-                                                   double& xOffset, double& yOffset) const {
-    double margin = 0.0;
-    double squareSize = DEFAULT_RASTER_SIZE;
-    int roundToGrid = 0;
-    int boldLineInterval = 0;
-
-    config.loadValue(CFG_MARGIN, margin);
-    config.loadValue(CFG_RASTER, squareSize);
-    config.loadValue(CFG_ROUND_MARGIN, roundToGrid);
-    config.loadValue(CFG_BOLD_LINE_INTERVAL, boldLineInterval);
-
-    if (margin <= 0.0) {
-        return;
-    }
-    if (roundToGrid) {
-        // Centered grid: align with bold line intervals
-        const double roundingUnit = (boldLineInterval > 0) ? (squareSize * boldLineInterval) : squareSize;
-        const double maxGridWidth = pageWidth - 2.0 * margin;
-        const double maxGridHeight = pageHeight - 2.0 * margin;
-
-        const int completeUnitsX = static_cast<int>(std::floor(maxGridWidth / roundingUnit));
-        const int completeUnitsY = static_cast<int>(std::floor(maxGridHeight / roundingUnit));
-
-        const double actualGridWidth = completeUnitsX * roundingUnit;
-        const double actualGridHeight = completeUnitsY * roundingUnit;
-
-        xOffset = (pageWidth - actualGridWidth) / 2.0;
-        yOffset = (pageHeight - actualGridHeight) / 2.0;
-    } else {
-        xOffset = margin;
-        yOffset = margin;
-    }
-}
-
 void SnapToGridInputHandler::calculateIsometricOffsets(const BackgroundConfig& config, double pageWidth,
                                                        double pageHeight, double& xOffset, double& yOffset) const {
     double triangleSize = DEFAULT_RASTER_SIZE;
@@ -99,9 +64,6 @@ void SnapToGridInputHandler::calculateGridOffsets(double& xOffset, double& yOffs
     const BackgroundConfig config(bgType.config);
 
     switch (bgType.format) {
-        case PageTypeFormat::Graph:
-            calculateGraphOffsets(config, pageWidth, pageHeight, xOffset, yOffset);
-            break;
         case PageTypeFormat::IsoDotted:
         case PageTypeFormat::IsoGraph:
             calculateIsometricOffsets(config, pageWidth, pageHeight, xOffset, yOffset);
@@ -110,6 +72,7 @@ void SnapToGridInputHandler::calculateGridOffsets(double& xOffset, double& yOffs
         case PageTypeFormat::Lined:
             yOffset = RULED_HEADER_SIZE;
             break;
+        case PageTypeFormat::Graph:
         case PageTypeFormat::Dotted:
         case PageTypeFormat::Staves:
         case PageTypeFormat::Plain:

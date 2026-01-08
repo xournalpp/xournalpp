@@ -49,7 +49,7 @@ auto ImageHandler::createImageFromFile(const fs::path& p) -> std::unique_ptr<Ima
 
     auto fileToString = [](const fs::path& p) {
         // This is the faster file dump I could come up with. Faster by 20% than g_file_load_contents (with -O3)
-        std::ifstream stream(p);
+        std::ifstream stream(p, std::ios::binary);
 
         auto pos = stream.tellg();
         stream.seekg(0, std::ios_base::end);  // Go to the end

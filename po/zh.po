@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-25 06:16+0000\n"
-"PO-Revision-Date: 2025-11-30 04:28\n"
+"POT-Creation-Date: 2025-12-11 21:17+0000\n"
+"PO-Revision-Date: 2025-12-13 14:16\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1700,7 +1700,7 @@ msgstr "下一步"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:493
 msgid "Laser pointer"
-msgstr ""
+msgstr "激光笔"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:499
 msgid "Fill"
@@ -3049,7 +3049,7 @@ msgstr "<i>设置你按鼠标时按钮将选择的工具。 松开按钮后，�
 
 #: ../ui/settings.glade:1519
 msgid "Left Mouse Button"
-msgstr ""
+msgstr "鼠标左键"
 
 #: ../ui/settings.glade:1551
 msgid "Middle Mouse Button"
