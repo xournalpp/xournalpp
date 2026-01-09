@@ -138,9 +138,11 @@ public:
      * @param callback Called after trying to close the document, with param true in case of success, false otherwise.
      * @param allowDestroy Whether clicking "Discard" should destroy the current document.
      * @param allowCancel Whether the user should be able to cancel closing the document.
+     * @param forceClose Whether to skip the save dialog and unconditionally discard unsaved changes.
      * @return true if the user closed the document, otherwise false.
      */
-    void close(std::function<void(bool)> callback, bool allowDestroy = false, bool allowCancel = true);
+    void close(std::function<void(bool)> callback, bool allowDestroy = false, bool allowCancel = true,
+               bool forceClose = false);
 
     // Menu edit
     void showSettings();
