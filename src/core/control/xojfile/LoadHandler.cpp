@@ -41,10 +41,9 @@
 #include "util/GzInputStream.h"         // for GzInputStream
 #include "util/LoopUtil.h"              // for for_first_then_each
 #include "util/PathUtil.h"              // for PathStorageMode
-#include "util/PlaceholderString.h"     // for PlaceholderString
 #include "util/StringUtils.h"           // for char_cast
 #include "util/ZipInputStream.h"        // for ZipInputStream
-#include "util/i18n.h"                  // for _F, FC, FS, _
+#include "util/i18n.h"                  // for _F, FS, _
 #include "util/raii/CLibrariesSPtr.h"   // for adopt
 #include "util/raii/GLibGuards.h"       // for GErrorGuard
 #include "util/raii/GObjectSPtr.h"      // for GObjectSPtr
@@ -121,7 +120,7 @@ void LoadHandler::addAudioAttachment(const fs::path& filename) {
     zip_stat_t attachmentFileStat;
     const int statStatus = zip_stat(this->zipFp.get(), char_cast(filename.u8string().c_str()), 0, &attachmentFileStat);
     if (statStatus != 0) {
-        logError(FS(PlaceholderString("Could not open attachment: {1}. Error message: {2}") % filename.u8string() %
+        logError(FS(_F("Could not open attachment: {1}. Error message: {2}") % filename.u8string() %
                     zip_error_strerror(zip_get_error(this->zipFp.get()))));
         return;
     }
@@ -130,7 +129,7 @@ void LoadHandler::addAudioAttachment(const fs::path& filename) {
     if (attachmentFileStat.valid & ZIP_STAT_SIZE) {
         length = static_cast<zip_int64_t>(attachmentFileStat.size);
     } else {
-        logError(FS(PlaceholderString("Could not open attachment: {1}. Error message: No valid file size provided") %
+        logError(FS(_F("Could not open attachment: {1}. Error message: No valid file size provided") %
                     filename.u8string()));
         return;
     }
@@ -138,7 +137,7 @@ void LoadHandler::addAudioAttachment(const fs::path& filename) {
     auto attachmentFile = zip_file_wrapper(zip_fopen(this->zipFp.get(), char_cast(filename.u8string().c_str()), 0));
 
     if (!attachmentFile) {
-        logError(FS(PlaceholderString("Could not open attachment: {1}. Error message: {2}") % filename.u8string() %
+        logError(FS(_F("Could not open attachment: {1}. Error message: {2}") % filename.u8string() %
                     zip_error_strerror(zip_get_error(this->zipFp.get()))));
         return;
     }
@@ -148,7 +147,7 @@ void LoadHandler::addAudioAttachment(const fs::path& filename) {
     const xoj::util::GObjectSPtr<GFile> tmpFile(g_file_new_tmp("xournal_audio_XXXXXX.tmp", &fileStream, nullptr),
                                                 xoj::util::adopt);
     if (!tmpFile) {
-        logError("Unable to create temporary file for audio attachment.");
+        logError(_("Unable to create temporary file for audio attachment"));
         return;
     }
 
@@ -159,17 +158,16 @@ void LoadHandler::addAudioAttachment(const fs::path& filename) {
     while (readBytes < length) {
         const zip_int64_t read = zip_fread(attachmentFile.get(), data->data(), data->size());
         if (read == -1) {
-            logError(FS(PlaceholderString("Could not open attachment: {1}. Error message: Could not read file") %
-                        filename.u8string()));
+            logError(
+                    FS(_F("Could not open attachment: {1}. Error message: Could not read file") % filename.u8string()));
             return;
         }
 
         const gboolean writeSuccessful = g_output_stream_write_all(outputStream, data->data(), static_cast<gsize>(read),
                                                                    nullptr, nullptr, nullptr);
         if (!writeSuccessful) {
-            logError(FS(
-                    PlaceholderString("Could not open attachment: {1}. Error message: Could not write temporary file") %
-                    filename.u8string()));
+            logError(FS(_F("Could not open attachment: {1}. Error message: Could not write temporary file") %
+                        filename.u8string()));
             return;
         }
 
@@ -201,8 +199,7 @@ void LoadHandler::setBgPixmap(bool attach, const fs::path& filename) {
         img.loadFile(fileToLoad, xoj::util::out_ptr(error));
 
         if (error) {
-            logError(FS(PlaceholderString("Could not read image: {1}. Error message: {2}") % fileToLoad.u8string() %
-                        error->message));
+            logError(FS(_F("Could not read image: {1}. Error message: {2}") % fileToLoad.u8string() % error->message));
         }
     } else {
         // The image is stored in an attachemt inside the zip archive
@@ -227,8 +224,7 @@ void LoadHandler::setBgPixmap(bool attach, const fs::path& filename) {
         g_input_stream_close(inputStream.get(), nullptr, nullptr);
 
         if (error) {
-            logError(FS(PlaceholderString("Could not read image: {1}. Error message: {2}") % filename.u8string() %
-                        error->message));
+            logError(FS(_F("Could not read image: {1}. Error message: {2}") % filename.u8string() % error->message));
         }
     }
     img.setAttach(attach);
@@ -238,7 +234,7 @@ void LoadHandler::setBgPixmap(bool attach, const fs::path& filename) {
 
 void LoadHandler::setBgPixmapCloned(size_t pageNr) {
     if (pageNr >= this->doc->getPageCount()) {
-        logError(FS(PlaceholderString("Cloned pixmap page background on page {1} references inexistent page {2}") %
+        logError(FS(_F("Cloned pixmap page background on page {1} references inexistent page {2}") %
                     this->doc->getPageCount() % pageNr));
         return;
     }
@@ -262,7 +258,7 @@ void LoadHandler::loadBgPdf(bool attach, const fs::path& filename) {
             doc->readPdf(pdfFilepath, false, attach);
 
             if (!doc->getLastErrorMsg().empty()) {
-                g_warning("Error reading PDF: %s", doc->getLastErrorMsg().c_str());
+                logError(FS(_F("Error reading PDF: {1}") % doc->getLastErrorMsg()));
             }
         } else {
             // Even if loading the PDF failed, tell the document what should
@@ -281,7 +277,7 @@ void LoadHandler::loadBgPdf(bool attach, const fs::path& filename) {
             doc->readPdf(filename, false, attach, std::move(pdfBytes));
 
             if (!doc->getLastErrorMsg().empty()) {
-                g_warning("Error reading PDF: %s", doc->getLastErrorMsg().c_str());
+                logError(FS(_F("Error reading PDF: {1}") % doc->getLastErrorMsg()));
             }
         } else {
             doc->setPdfAttributes(filename, true);
@@ -530,7 +526,7 @@ void LoadHandler::parseXml(std::unique_ptr<xoj::util::InputStream> xmlContentStr
 
         auto valid = g_markup_parse_context_parse(context.get(), buffer.data(), len, xoj::util::out_ptr(error));
         if (error) {
-            logError(std::string("XML Parser error: ") + error->message);
+            logError(FS(_F("XML Parser error: ") % error->message));
             error.reset();
         }
         if (!valid) {
@@ -629,13 +625,13 @@ auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::unique_ptr
     zip_stat_t attachmentFileStat;
     const int statStatus = zip_stat(this->zipFp.get(), char_cast(filename.u8string().c_str()), 0, &attachmentFileStat);
     if (statStatus != 0) {
-        logError(FS(PlaceholderString("Could not open attachment: {1}. Error message: {2}") % filename.u8string() %
+        logError(FS(_F("Could not open attachment: {1}. Error message: {2}") % filename.u8string() %
                     zip_error_strerror(zip_get_error(this->zipFp.get()))));
         return {};
     }
 
     if (!(attachmentFileStat.valid & ZIP_STAT_SIZE)) {
-        logError(FS(PlaceholderString("Could not open attachment: {1}. Error message: No valid file size provided") %
+        logError(FS(_F("Could not open attachment: {1}. Error message: No valid file size provided") %
                     filename.u8string()));
         return {};
     }
@@ -643,7 +639,7 @@ auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::unique_ptr
 
     auto attachmentFile = zip_file_wrapper(zip_fopen(this->zipFp.get(), char_cast(filename.u8string().c_str()), 0));
     if (!attachmentFile) {
-        logError(FS(PlaceholderString("Could not open attachment: {1}. Error message: {2}") % filename.u8string() %
+        logError(FS(_F("Could not open attachment: {1}. Error message: {2}") % filename.u8string() %
                     zip_error_strerror(zip_get_error(this->zipFp.get()))));
         return {};
     }
@@ -653,9 +649,8 @@ auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::unique_ptr
     while (readBytes < length) {
         const zip_int64_t read = zip_fread(attachmentFile.get(), data->data() + readBytes, length - readBytes);
         if (read == -1) {
-            logError(
-                    FS(PlaceholderString("Could not open attachment: {1}. Error message: No valid file size provided") %
-                       filename.u8string()));
+            logError(FS(_F("Could not open attachment: {1}. Error message: No valid file size provided") %
+                        filename.u8string()));
             return {};
         }
 
@@ -687,8 +682,7 @@ auto LoadHandler::getTempFileForPath(fs::path const& filename) -> fs::path {
     auto it = this->audioFiles.find(filename);
 
     if (it == this->audioFiles.end()) {
-        logError(FS(PlaceholderString("Requested temporary file was not found for attachment {1}") %
-                    filename.u8string()));
+        logError(FS(_F("Requested temporary file was not found for attachment {1}") % filename.u8string()));
         return {};
     } else {
         return it->second;
