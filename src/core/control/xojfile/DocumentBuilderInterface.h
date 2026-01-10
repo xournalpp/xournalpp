@@ -62,4 +62,10 @@ public:
     virtual void setTexImageData(std::string data) = 0;
     virtual void setTexImageAttachment(const fs::path& filename) = 0;
     virtual void finalizeTexImage() = 0;
+
+    /**
+     * Store an error for retrieval through `getErrorMessages()` and print it
+     * to the console as a warning.
+     */
+    virtual void logError(const std::string& error) = 0;
 };
