@@ -385,7 +385,7 @@ void LoadHandler::setImageData(std::string data) {
     xoj_assert(this->image);
 
     if (this->image->hasData()) {
-        g_warning("Image data section found, but the image already has data.");
+        g_warning("LoadHandler: Image data section found, but the image already has data");
     }
 
     this->image->setImage(std::move(data));
@@ -395,7 +395,7 @@ void LoadHandler::setImageAttachment(const fs::path& filename) {
     xoj_assert(this->image);
 
     if (this->image->hasData()) {
-        g_warning("Image attachment found, but the image already has data.");
+        g_warning("LoadHandler: Image attachment found, but the image already has data");
     }
 
     auto imageData = readZipAttachment(filename);
@@ -441,6 +441,13 @@ void LoadHandler::finalizeTexImage() {
     xoj_assert(this->teximage);
 
     this->layer->addElement(std::move(this->teximage));
+}
+
+void LoadHandler::logError(const std::string& error) {
+    g_warning("LoadHandler: %s", error.c_str());
+    if (this->errorMessages) {
+        this->errorMessages->append("\n" + error);
+    }
 }
 
 
@@ -605,12 +612,12 @@ void LoadHandler::fixNullPressureValues(std::vector<Point> pts) {
 
     if (strokePortions.empty()) {
         // There was no valid pressure values! Delete the stroke entirely
-        g_warning("Found a stroke with only non-positive pressure values! Removing this invisible stroke.");
+        g_warning("LoadHandler: Found a stroke with only non-positive pressure values! Removing this invisible stroke");
         this->stroke.reset();
         return;
     }
 
-    g_warning("Found a stroke with some non-positive pressure values. Removing the affected points.");
+    g_warning("LoadHandler: Found a stroke with some non-positive pressure values. Removing the affected points");
     for_first_then_each(
             strokePortions, [&](std::vector<Point>& points) { this->stroke->setPointVector(std::move(points)); },
             [&](std::vector<Point>& points) {
@@ -708,11 +715,4 @@ auto LoadHandler::getAbsoluteFilepath(const fs::path& filename, bool attach) con
         }
     }
     return absolutePath;
-}
-
-void LoadHandler::logError(const std::string& error) {
-    g_warning("%s", error.c_str());
-    if (this->errorMessages) {
-        this->errorMessages->append("\n" + error);
-    }
 }

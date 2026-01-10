@@ -22,6 +22,7 @@
 #include "util/Color.h"                                // for Color
 #include "util/EnumIndexedArray.h"                     // for EnumIndexedArray
 #include "util/StringUtils.h"                          // for char_cast, SV_FMT, ...
+#include "util/i18n.h"                                 // for FS, _F, _
 #include "util/safe_casts.h"                           // for as_unsigned
 #include "util/utf8_view.h"                            // for xoj::util::utf8
 
@@ -87,12 +88,12 @@ void XmlParser::parserStartElement(GMarkupParseContext* context, const gchar* el
     if (tagType == TagType::UNKNOWN) {
         if (!self->lastValidTag) {
             if (!self->hierarchy.empty()) {
-                g_warning("Ignoring unexpected %s tag at document root.", elementName);
+                self->builder.logError(FS(_F("Ignoring unexpected {1} tag at document root") % elementName));
             }
             // If the hierarchy is empty, we will attempt parsing it anyways
         } else {
-            g_warning("Ignoring unexpected %s tag under " SV_FMT, elementName,
-                      U8SV_ARG(TAG_NAMES[*self->lastValidTag]));
+            self->builder.logError(
+                    FS(_F("Ignoring unexpected {1} tag under {2}") % elementName % TAG_NAMES[*self->lastValidTag]));
         }
     }
 
@@ -151,7 +152,7 @@ void XmlParser::parserText(GMarkupParseContext* context, const gchar* text, gsiz
     // Check for text at document root
     if (self->hierarchy.empty()) {
         if (!isAllWhitespace(textSV)) {
-            g_warning("Ignoring unexpected text at document root: \"" SV_FMT "\"", SV_ARG(textSV));
+            self->builder.logError(FS(_F("Ignoring unexpected text at document root: \"{1}\"") % textSV));
         }
         return;
     }
@@ -164,7 +165,7 @@ void XmlParser::parserText(GMarkupParseContext* context, const gchar* text, gsiz
         // we always get the whole text in a single callback.
         (self->*parsingTable[tagType].text)(textSV);
     } else if (tagType != TagType::TITLE && tagType != TagType::PREVIEW && !isAllWhitespace(textSV)) {
-        g_warning("Unexpected text in " SV_FMT " node: \"" SV_FMT "\"", U8SV_ARG(TAG_NAMES[tagType]), SV_ARG(textSV));
+        self->builder.logError(FS(_F("Unexpected text in {1} node: \"{2}\"") % TAG_NAMES[tagType] % textSV));
     }
 }
 
@@ -177,7 +178,7 @@ void XmlParser::parseUnknownTag(const XmlParserHelper::AttributeMap& attributeMa
         // Unknown tag at document root. Assume it's another application (like Xournal++ or MrWriter) that has
         // its own tag name, but a similar structure. Attempt parsing anyways.
         this->builder.addDocument(u8"Unknown", 1);
-        g_warning("Attempting to parse unknown document type.");
+        g_warning("XML parser: Attempting to parse unknown document type");
     }
 }
 
@@ -255,7 +256,7 @@ void XmlParser::parseBackgroundTag(const XmlParserHelper::AttributeMap& attribut
     } else {
         // It's not possible to assume a default type as other attributes have to be set in fuction of this. Not setting
         // a background will leave the default-constructed one.
-        g_warning("XML parser: Attribute \"type\" not found in background tag. Ignoring tag.");
+        this->builder.logError(_(R"(Attribute "type" not found in background tag. Ignoring tag)"));
     }
 }
 
@@ -294,7 +295,7 @@ void XmlParser::parseBgPdf(const XmlParserHelper::AttributeMap& attributeMap) {
         auto domain = XmlParserHelper::getAttribMandatory<xoj::xml_attrs::Domain>(
                 xoj::xml_attrs::DOMAIN_STR, attributeMap, xoj::xml_attrs::Domain::ABSOLUTE);
         if (domain == xoj::xml_attrs::Domain::CLONE) {
-            g_warning(R"(XML parser: Domain "clone" is invalid for PDF backgrounds. Using "absolute" instead)");
+            this->builder.logError(_(R"(Domain "clone" is invalid for PDF backgrounds. Using "absolute" instead)"));
             domain = xoj::xml_attrs::Domain::ABSOLUTE;
         }
 
@@ -304,7 +305,7 @@ void XmlParser::parseBgPdf(const XmlParserHelper::AttributeMap& attributeMap) {
             this->pdfFilenameParsed = true;
             this->builder.loadBgPdf(domain == xoj::xml_attrs::Domain::ATTACH, filename);
         } else {
-            g_warning("XML parser: PDF background filename is empty");
+            this->builder.logError(_("PDF background filename is empty"));
         }
     }
 
@@ -324,8 +325,8 @@ void XmlParser::parseTimestampTag(const XmlParserHelper::AttributeMap& attribute
     // Compatibility: timestamps for audio elements are stored in the attributes since 6b43baf
 
     if (!this->tempFilename.empty()) {
-        g_warning("XML parser: Discarding unused audio timestamp element. Filename: %s",
-                  char_cast(this->tempFilename.u8string().c_str()));
+        this->builder.logError(FS(_F("Discarding unused audio timestamp element. Filename: {1}") %
+                                  char_cast(this->tempFilename.u8string())));
     }
 
     this->tempFilename =
@@ -401,8 +402,8 @@ void XmlParser::parseStrokeText(std::string_view text) {
     double x{}, y{};
     while (parseDouble(it, end, x)) {
         if (!parseDouble(it, end, y)) {
-            g_warning("XML parser: Found stroke that contains an odd number of valid coordinates. "
-                      "Discarding the last value");
+            this->builder.logError(_("Found stroke that contains an odd number of valid coordinates. "
+                                     "Discarding the last value"));
             break;
         }
         const auto p = (pit != pressureBuffer.end()) ? *pit++ : Point::NO_PRESSURE;
@@ -412,15 +413,15 @@ void XmlParser::parseStrokeText(std::string_view text) {
     // Check strokes with the wrong amount of coordinates or pressure points.
     // An empty pressure buffer is valid: all points have NO_PRESSURE.
     if (this->pressureBuffer.size() + 1 < pointVector.size() && !this->pressureBuffer.empty()) {
-        g_warning("XML Parser: Found stroke with more coordinates than pressure points: %ld, expected %ld. "
-                  "Shrinking stroke to match pressure point count",
-                  pointVector.size(), this->pressureBuffer.size() + 1);
+        this->builder.logError(FS(_F("Found stroke with more coordinates than pressure points: {1}, expected {2}. "
+                                     "Shrinking stroke to match pressure point count") %
+                                  pointVector.size() % (this->pressureBuffer.size() + 1)));
         pointVector.resize(this->pressureBuffer.size() + 1);
     }
     if (this->pressureBuffer.size() >= pointVector.size() && !pointVector.empty()) {
-        g_warning("XML Parser: Found stroke with too many pressure points: %ld, expected %ld. "
-                  "Discarding remaining pressure points",
-                  this->pressureBuffer.size(), pointVector.size() - 1);
+        this->builder.logError(FS(_F("Found stroke with too many pressure points: {1}, expected {2}. "
+                                     "Discarding remaining pressure points") %
+                                  this->pressureBuffer.size() % (pointVector.size() - 1)));
         pointVector.back().z = Point::NO_PRESSURE;  // The last point should have no pressure
     }
 
@@ -501,7 +502,7 @@ void XmlParser::parseAttachmentTag(const XmlParserHelper::AttributeMap& attribut
             this->builder.setTexImageAttachment(path);
             break;
         default:
-            g_warning("Ignoring attachment tag under " SV_FMT, U8SV_ARG(TAG_NAMES[*this->lastValidTag]));
+            this->builder.logError(FS(_F("Ignoring attachment tag under {1}") % TAG_NAMES[*this->lastValidTag]));
             break;
     }
 }
