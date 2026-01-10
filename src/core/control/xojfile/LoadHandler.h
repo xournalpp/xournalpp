@@ -111,6 +111,8 @@ private:
     void setTexImageAttachment(const fs::path& filename) override;
     void finalizeTexImage() override;
 
+    void logError(const std::string& error) override;
+
 private:
     /**
      * Open a file for reading
@@ -162,12 +164,6 @@ private:
      * attachment in the zip file format.
      */
     fs::path getAbsoluteFilepath(const fs::path& filename, bool attach) const;
-
-    /**
-     * Store an error for retrieval through `getErrorMessages()` and print it
-     * to the console as a warning.
-     */
-    void logError(const std::string& error);
 
 private:
     fs::path xournalFilepath;
