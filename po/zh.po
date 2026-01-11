@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-24 17:29+0000\n"
-"PO-Revision-Date: 2026-01-04 04:37\n"
+"PO-Revision-Date: 2026-01-11 04:36\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -395,12 +395,15 @@ msgstr ""
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
-msgstr ""
+msgstr "无背景导出\n"
+"                                 导出文件包含白色或透明背景，\n"
+"                                 取决于文件的导出格式\n"
 
 #: ../src/core/control/XournalMain.cpp:618
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
-msgstr ""
+msgstr "无规则导出\n"
+"                                 导出的文件没有文档结构\n"
 
 #: ../src/core/control/XournalMain.cpp:623
 msgid "Export layers progressively\n"
@@ -423,19 +426,24 @@ msgstr ""
 #: ../src/core/control/XournalMain.cpp:641
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "设置导出为 PNG 图片时的DPI，默认为 300\n"
+"                                 在未使用 -i/--create-img=foo.png 时无效"
 
 #: ../src/core/control/XournalMain.cpp:645
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "设置导出页面为 PNG 图片时的宽度\n"
+"                                 当未使用 -i/--create-img=foo.png 时无效\n"
+"                                 当使用 --export-png-dpi 时无效"
 
 #: ../src/core/control/XournalMain.cpp:650
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "设置导出页面为 PNG 图片时的高度\n"
+"                                 当未使用 -i/--create-img=foo.png 时无效\n"
+"                                 当使用 --export-png-dpi 或 --export-png-width 时无效"
 
 #: ../src/core/control/XournalMain.cpp:658
 msgid "Advanced export options"
@@ -932,11 +940,11 @@ msgstr "插入图片"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 msgid "Laser Pointer - Pen"
-msgstr ""
+msgstr "激光笔 - Pen"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 msgid "Laser Pointer - Hightlighter"
-msgstr ""
+msgstr "激光笔 - 荧光笔"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 msgid "Vertical space"
@@ -1032,23 +1040,23 @@ msgstr "绘制样条曲线"
 
 #: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
 msgid "Export Logs"
-msgstr ""
+msgstr "导出日志"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:115
 msgid "Failed to parse external editor command: {1}"
-msgstr ""
+msgstr "解析外部编辑器命令失败：{1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:131
 msgid "Could not spawn editor: {1}"
-msgstr ""
+msgstr "无法生成编辑器： {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:162
 msgid "Could not wait for editor: {1}"
-msgstr ""
+msgstr "无法等待编辑器： {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:171
 msgid "Editor exited with bad status {1}"
-msgstr ""
+msgstr "编辑器以错误状态退出 {1}"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:15
 msgid "All files"
@@ -1646,7 +1654,7 @@ msgstr "圆规"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Toggle Touch Drawing"
-msgstr ""
+msgstr "切换到触摸板的绘画输入"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
@@ -1878,15 +1886,15 @@ msgstr "PDF Cairo画布初始化失败"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:110
 msgid "PDF page number is out of range"
-msgstr ""
+msgstr "PDF 页码超出范围"
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:21
 msgid "Unknown pdf backend: {1}. Available backends are: {2}. Using default backend."
-msgstr ""
+msgstr "未知的 pdf后端： {1}. 可用的后端是： {2}. 使用默认后端。"
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:39
 msgid "Default"
-msgstr ""
+msgstr "默认"
 
 #: ../src/core/pdf/base/QPdfExport.cpp:173
 msgid "Error with overlay or final export:"
@@ -2109,7 +2117,7 @@ msgstr "错误 {1} 执行系统命令: {2}"
 
 #: ../src/util/XojMsgBox.cpp:186
 msgid "The file {1} already exists! Do you want to replace it?"
-msgstr ""
+msgstr "文件：{1} 已存在！是否要替换它？"
 
 #: ../src/util/XojMsgBox.cpp:190
 msgid "Select another name"
@@ -2122,7 +2130,8 @@ msgstr "替换"
 #: ../src/util/XojMsgBox.cpp:216
 msgid "Unable to open the link: {1}\n"
 "{2}"
-msgstr ""
+msgstr "无法打开链接: {1}\n"
+"{2}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
@@ -2211,11 +2220,11 @@ msgstr "确定"
 
 #: ../ui/crashDialog.glade:7
 msgid "Crash report"
-msgstr ""
+msgstr "崩溃报告"
 
 #: ../ui/crashDialog.glade:23
 msgid "Oops... Xournal++ encountered a fatal error"
-msgstr ""
+msgstr "Oops... Xournal++ 遇到了一个致命错误"
 
 #: ../ui/crashDialog.glade:39
 msgid "Please consider filling a bug report (see button below). Attach the following log to your report."
@@ -2223,24 +2232,24 @@ msgstr ""
 
 #: ../ui/crashDialog.glade:56
 msgid "Your document has been saved in:"
-msgstr ""
+msgstr "您的文档已保存在："
 
 #: ../ui/crashDialog.glade:92
 msgid "Execution log:"
-msgstr ""
+msgstr "运行日志："
 
 #: ../ui/crashDialog.glade:140
 msgid "Open your web browser with a partially pre-filled bug report"
-msgstr ""
+msgstr "在浏览器中打开一个部分预填好的错误报告页面"
 
 #: ../ui/crashDialog.glade:145
 msgid "Create a bug report"
-msgstr ""
+msgstr "创建错误报告"
 
 #: ../ui/crashDialog.glade:164
 msgctxt "github is a name - do not try to translate it"
 msgid "(this will open github in your browser)"
-msgstr ""
+msgstr "(这将在您的浏览器中打开 Github)"
 
 #: ../ui/deviceList.glade:7
 msgid "Known devices"
@@ -2413,7 +2422,7 @@ msgstr "启用时，每个页面的图层将被逐一添加，由此产生的 PD
 
 #: ../ui/exportSettings.glade:379
 msgid "Backend"
-msgstr ""
+msgstr "后端"
 
 #: ../ui/extEdTexDialog.glade:23 ../ui/intEdTexDialog.glade:18
 msgid "Insert Latex"
@@ -2421,7 +2430,7 @@ msgstr "插入LaTeX"
 
 #: ../ui/extEdTexDialog.glade:42
 msgid "Enter / edit LaTeX Text in external Editor"
-msgstr ""
+msgstr "在外部编辑器中输入/编辑 LaTeX 文本"
 
 #: ../ui/extEdTexDialog.glade:86 ../ui/intEdTexDialog.glade:116
 msgid "Output generated by the LaTeX command."
@@ -2429,7 +2438,7 @@ msgstr "LaTeX 命令生成的输出。"
 
 #: ../ui/extEdTexDialog.glade:138
 msgid "Continue Editing"
-msgstr ""
+msgstr "继续编辑"
 
 #: ../ui/goto.glade:23
 msgid "Go to Page"
@@ -2545,27 +2554,27 @@ msgstr "选择编辑器字体"
 
 #: ../ui/latexSettings.glade:516
 msgid "You can optionally use an external editor program instead of the built-in editor. If you enable the option below, the provided editor command (defaulting to $EDITOR) will start with a popup that only shows a preview and potential error message instead of the normal one with a built-in editor. The environment variable XPP_TEXT_COLOR is set to the current Text Tool color in hex RGB format."
-msgstr ""
+msgstr "你也可以选择使用外部编辑器程序，而不是内置编辑器。如果你启用下面的选项，所提供的编辑器命令（默认是 $EDITOR）会以一个弹出窗口启动，这个窗口只会显示预览和可能的错误信息，而不是正常情况下带有内置编辑器的窗口。环境变量 XPP_TEXT_COLOR 会被设置为当前文本工具的颜色（以十六进制 RGB 格式表示）。"
 
 #: ../ui/latexSettings.glade:532
 msgid "Use external Editor"
-msgstr ""
+msgstr "使用外部编辑器"
 
 #: ../ui/latexSettings.glade:549
 msgid "Editor command"
-msgstr ""
+msgstr "编辑器指令"
 
 #: ../ui/latexSettings.glade:574
 msgid "Extension of temporary file"
-msgstr ""
+msgstr "扩展临时文件"
 
 #: ../ui/latexSettings.glade:595
 msgid "Automatically confirm on editor exit"
-msgstr ""
+msgstr "编辑器退出时自动确认"
 
 #: ../ui/latexSettings.glade:625
 msgid "External Editor (Expert user only)"
-msgstr ""
+msgstr "外部编辑器 (仅限专业用户)"
 
 #: ../ui/latexSettings.glade:641
 msgid "Editor settings"
@@ -3809,23 +3818,23 @@ msgstr "绘图区域"
 
 #: ../ui/settings.glade:5638
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
-msgstr "<i>选择按下缺省按钮后的工具和设置</i>"
+msgstr "<i>选择按下默认按钮后的工具和设置</i>"
 
 #: ../ui/settings.glade:5690
 msgid "<b>Default tool</b>"
-msgstr ""
+msgstr "<b>默认工具</b>"
 
 #: ../ui/settings.glade:5726
 msgid "<i>The laser pointer allows to write strokes that will fade out after a short while.</i>"
-msgstr ""
+msgstr "<i>激光笔允许您书写不久后就会消失的笔划。</i>"
 
 #: ../ui/settings.glade:5747
 msgid "Fade out delay (in ms)"
-msgstr ""
+msgstr "淡出延迟 (毫秒)"
 
 #: ../ui/settings.glade:5799
 msgid "<b>Laser pointer</b>"
-msgstr ""
+msgstr "<b>激光笔</b>"
 
 #: ../ui/settings.glade:5839
 msgid "Tools"
@@ -3969,7 +3978,7 @@ msgstr "已禁用"
 
 #: ../ui/settingsDeviceClassConfig.glade:54
 msgid "Apply"
-msgstr ""
+msgstr "应用"
 
 #: ../ui/toolbarCustomizeDialog.glade:30
 msgid "Drag and drop Components from here to the toolbars and back."
@@ -4322,7 +4331,7 @@ msgstr "在矩形中选择文本"
 
 #: ../ui/mainmenubar.xml:534
 msgid "_Highlighter"
-msgstr "高亮(_H)"
+msgstr "荧光笔(_H)"
 
 #: ../ui/mainmenubar.xml:540
 msgid "_Text"
@@ -4547,7 +4556,7 @@ msgstr "从GUI和命令行导出到多种格式，包括SVG、PNG和 PDF。"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:27
 msgid "Different drawing tools (e.g. pen, highlighter) and stroke styles (e.g. solid, dotted)"
-msgstr "不同的绘图工具 (如笔, 高亮) 和 笔画样式(如线条, 点状)"
+msgstr "不同的绘图工具 (如笔, 荧光笔) 和 笔画样式(如线条, 点状)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:28
 msgid "Shape drawing (line, arrow, circle, rectangle, spline)"
