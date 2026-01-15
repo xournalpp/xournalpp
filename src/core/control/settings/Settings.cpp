@@ -652,7 +652,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (name == "stabilizerBuffersize") {
         this->stabilizerBuffersize = parse<unsigned int>(value);
     } else if (name == "stabilizerSigma") {
-        this->stabilizerSigma = parse<int>(value);
+        this->stabilizerSigma = parse<double>(value);
     } else if (name == "stabilizerDeadzoneRadius") {
         this->stabilizerDeadzoneRadius = parse<double>(value);
     } else if (name == "stabilizerDrag") {
