@@ -8,7 +8,7 @@
 
 #include <libxml/globals.h>    // for xmlFree, xmlInden...
 #include <libxml/parser.h>     // for xmlKeepBlanksDefault
-#include <libxml/xmlstring.h>  // for xmlStrcmp, xmlChar
+#include <libxml/xmlstring.h>  // for xmlChar
 
 #include "control/DeviceListHelper.h"               // for InputDevice
 #include "control/ToolEnums.h"                      // for ERASER_TYPE_NONE
@@ -275,12 +275,12 @@ auto Settings::getActiveViewMode() const -> ViewModeId { return this->activeView
 
 void Settings::parseData(xmlNodePtr cur, SElement& elem) {
     for (xmlNodePtr x = cur->children; x != nullptr; x = x->next) {
-        const std::u8string type = xoj::util::utf8(x->name).str();
+        const xmlChar* type = x->name;
         const auto name = xmlGet<string>(x, "name");
 
-        if (type == u8"data") {
+        if (type == "data"sv) {
             parseData(x, elem.child(name));
-        } else if (type == u8"attribute") {
+        } else if (type == "attribute"sv) {
             const auto sType = xmlGet<string>(x, "type");
 
             if (sType == "int") {
@@ -313,7 +313,7 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem) {
 
 void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     // Parse data map
-    if (std::string_view(reinterpret_cast<const char*>(cur->name)) == "data"sv) {
+    if (cur->name == "data"sv) {
         const auto name = xmlGet<string>(cur, "name");
         if (name.empty()) {
             g_warning("Settings::%s:No name property!\n", cur->name);
@@ -329,7 +329,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         return;
     }
 
-    if (std::string_view(reinterpret_cast<const char*>(cur->name)) != "property"sv) {
+    if (cur->name != "property"sv) {
         g_warning("Settings::Unknown XML node: %s\n", cur->name);
         return;
     }
@@ -762,7 +762,7 @@ auto Settings::load() -> bool {
         return false;
     }
 
-    if (std::string_view(reinterpret_cast<const char*>(cur->name)) != "settings"sv) {
+    if (cur->name != "settings"sv) {
         g_message("File \"%s\" is of the wrong type", filepath.string().c_str());
         xmlFreeDoc(doc);
 
