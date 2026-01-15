@@ -53,7 +53,7 @@ public:
     virtual ~SAttribute();
 
     std::string sValue;
-    long iValue{};
+    int32_t iValue{};
     double dValue{};
 
     AttributeType type;
@@ -77,11 +77,8 @@ public:
 
     SElement& child(const std::string& name);
 
-    void setIntHex(const std::string& name, uint32_t value);
-    void setInt(const std::string& name, int value);
-    void setDouble(const std::string& name, double value);
-    void setBool(const std::string& name, bool value);
-    void setString(const std::string& name, const std::string& value);
+    template <typename T>
+    void set(const std::string& name, T value);
 
     [[maybe_unused]] void setComment(const std::string& name, const std::string& comment);
 

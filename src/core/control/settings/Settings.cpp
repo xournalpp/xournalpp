@@ -1,7 +1,6 @@
 #include "Settings.h"
 
 #include <algorithm>    // for max
-#include <cstdint>      // for uint32_t, int32_t
 #include <string_view>  // for literal sv
 #include <type_traits>  // for add_const<>::type
 #include <utility>      // for pair, move, make_...
@@ -281,29 +280,41 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem) {
         if (type == "data"sv) {
             parseData(x, elem.child(name));
         } else if (type == "attribute"sv) {
-            const auto sType = xmlGet<string>(x, "type");
-
-            if (sType == "int") {
-                const auto value = xmlGet<int>(x, "value");
-                elem.setInt(name, value);
-            } else if (sType == "double") {
-                const auto value = xmlGet<double>(x, "value");
-                elem.setDouble(name, value);
-            } else if (sType == "hex") {
-                const auto value = xmlGet<string>(x, "value");
-                if (const auto i = static_cast<uint32_t>(std::stoull(value, nullptr, 16))) {
-                    elem.setIntHex(name, i);
-                } else {
-                    g_warning("Settings::Unknown hex value: %s:%s\n", name.c_str(), value.c_str());
+            switch (xmlGet<AttributeType>(x, "type")) {
+                case ATTRIBUTE_TYPE_INT: {
+                    const auto value = xmlGet<int>(x, "value");
+                    elem.set(name, value);
+                    break;
                 }
-            } else if (sType == "string") {
-                const auto value = xmlGet<string>(x, "value");
-                elem.setString(name, value);
-            } else if (sType == "boolean") {
-                const auto value = xmlGet<bool>(x, "value");
-                elem.setBool(name, value);
-            } else {
-                g_warning("Settings::Unknown datatype: %s\n", sType.c_str());
+                case ATTRIBUTE_TYPE_DOUBLE: {
+                    const auto value = xmlGet<double>(x, "value");
+                    elem.set(name, value);
+                    break;
+                }
+                case ATTRIBUTE_TYPE_INT_HEX: {
+                    const auto value = xmlGet<string>(x, "value");
+                    if (const auto i = static_cast<uint32_t>(std::stoull(value, nullptr, 16))) {
+                        elem.set(name, i);
+                    } else {
+                        g_warning("Settings::Unknown hex value: %s:%s\n", name.c_str(), value.c_str());
+                    }
+                    break;
+                }
+                case ATTRIBUTE_TYPE_STRING: {
+                    const auto value = xmlGet<string>(x, "value");
+                    elem.set(name, value);
+                    break;
+                }
+                case ATTRIBUTE_TYPE_BOOLEAN: {
+                    const auto value = xmlGet<bool>(x, "value");
+                    elem.set(name, value);
+                    break;
+                }
+                default: {
+                    const auto sType = xmlGet<string>(x, "type");
+                    g_warning("Settings::Unknown datatype: %s\n", sType.c_str());
+                    break;
+                }
             }
         } else {
             g_warning("Settings::parseData: Unknown XML node: %s\n", x->name);
@@ -833,8 +844,8 @@ void Settings::saveDeviceClasses() {
         InputDeviceTypeOption& deviceClass = device.second.first;
         GdkInputSource& source = device.second.second;
         SElement& e = s.child(name);
-        e.setInt("deviceClass", static_cast<int>(deviceClass));
-        e.setInt("deviceSource", source);
+        e.set("deviceClass", static_cast<int>(deviceClass));
+        e.set("deviceSource", source);
     }
 }
 
@@ -847,30 +858,30 @@ void Settings::saveButtonConfig() {
         const auto& cfg = buttonConfig[i];
 
         ToolType const type = cfg->action;
-        e.setString("tool", toolTypeToString(type).data());
+        e.set("tool", toolTypeToString(type).data());
 
         if (type == TOOL_PEN) {
-            e.setString("strokeType", strokeTypeToString(cfg->strokeType).data());
+            e.set("strokeType", strokeTypeToString(cfg->strokeType).data());
         }
 
         if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER) {
-            e.setString("drawingType", drawingTypeToString(cfg->drawingType).data());
-            e.setString("size", toolSizeToString(cfg->size).data());
+            e.set("drawingType", drawingTypeToString(cfg->drawingType).data());
+            e.set("size", toolSizeToString(cfg->size).data());
         }
 
         if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER || type == TOOL_TEXT) {
-            e.setIntHex("color", static_cast<uint32_t>(cfg->color));
+            e.set("color", static_cast<uint32_t>(cfg->color));
         }
 
         if (type == TOOL_ERASER) {
-            e.setString("eraserMode", eraserTypeToString(cfg->eraserMode).data());
-            e.setString("size", toolSizeToString(cfg->size).data());
+            e.set("eraserMode", eraserTypeToString(cfg->eraserMode).data());
+            e.set("size", toolSizeToString(cfg->size).data());
         }
 
         // Touch device
         if (i == BUTTON_TOUCH) {
-            e.setString("device", cfg->device);
-            e.setBool("disableDrawing", cfg->disableDrawing);
+            e.set("device", cfg->device);
+            e.set("disableDrawing", cfg->disableDrawing);
         }
     }
 }
@@ -2389,34 +2400,26 @@ void SElement::setComment(const string& name, const string& comment) {
     attrib.comment = comment;
 }
 
-void SElement::setIntHex(const string& name, const uint32_t value) {
+template <typename T>
+void SElement::set(const string& name, const T value) {
     SAttribute& attrib = this->element->attributes[name];
-    attrib.iValue = value;
-    attrib.type = ATTRIBUTE_TYPE_INT_HEX;
-}
 
-void SElement::setInt(const string& name, const int value) {
-    SAttribute& attrib = this->element->attributes[name];
-    attrib.iValue = value;
-    attrib.type = ATTRIBUTE_TYPE_INT;
-}
-
-void SElement::setBool(const string& name, const bool value) {
-    SAttribute& attrib = this->element->attributes[name];
-    attrib.iValue = value;
-    attrib.type = ATTRIBUTE_TYPE_BOOLEAN;
-}
-
-void SElement::setString(const string& name, const string& value) {
-    SAttribute& attrib = this->element->attributes[name];
-    attrib.sValue = value;
-    attrib.type = ATTRIBUTE_TYPE_STRING;
-}
-
-void SElement::setDouble(const string& name, const double value) {
-    SAttribute& attrib = this->element->attributes[name];
-    attrib.dValue = value;
-    attrib.type = ATTRIBUTE_TYPE_DOUBLE;
+    if constexpr (std::is_same_v<T, std::string>) {
+        attrib.type = ATTRIBUTE_TYPE_STRING;
+        attrib.sValue = value;
+    } else if constexpr (std::is_same_v<T, int>) {
+        attrib.type = ATTRIBUTE_TYPE_INT;
+        attrib.iValue = value;
+    } else if constexpr (std::is_same_v<T, uint32_t>) {
+        attrib.type = ATTRIBUTE_TYPE_INT_HEX;
+        attrib.iValue = static_cast<int32_t>(value);
+    } else if constexpr (std::is_same_v<T, double>) {
+        attrib.type = ATTRIBUTE_TYPE_DOUBLE;
+        attrib.dValue = value;
+    } else if constexpr (std::is_same_v<T, bool>) {
+        attrib.type = ATTRIBUTE_TYPE_BOOLEAN;
+        attrib.iValue = value;
+    }
 }
 
 auto SElement::getDouble(const string& name, double& value) -> bool {
@@ -2446,7 +2449,7 @@ auto SElement::getInt(const string& name, int& value) -> bool {
         return false;
     }
 
-    value = attrib.iValue;
+    value = static_cast<int>(attrib.iValue);
 
     return true;
 }

@@ -13,6 +13,8 @@
 
 #include <string>  // for string
 
+#include "util/PlaceholderString.h"
+
 
 /**
  * @brief Buttons that can have a configuration attached to them
@@ -196,6 +198,27 @@ constexpr auto emptyLastPageAppendToString(EmptyLastPageAppendType appendType) -
         default:
             return "unknown";
     }
+}
+
+constexpr auto stringToAttributeType(const std::string_view str) {
+    if (str == "int")
+        return ATTRIBUTE_TYPE_INT;
+
+    if (str == "double")
+        return ATTRIBUTE_TYPE_DOUBLE;
+
+    if (str == "boolean")
+        return ATTRIBUTE_TYPE_BOOLEAN;
+
+    if (str == "string")
+        return ATTRIBUTE_TYPE_STRING;
+
+    if (str == "hex" || str == "color")
+        return ATTRIBUTE_TYPE_INT_HEX;
+
+    g_warning("Settings::Unknown datatype: %s\n", str.data());
+
+    return ATTRIBUTE_TYPE_NONE;
 }
 
 StylusCursorType stylusCursorTypeFromString(const std::string& stylusCursorTypeStr);

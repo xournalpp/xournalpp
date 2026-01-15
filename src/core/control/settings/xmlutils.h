@@ -19,6 +19,8 @@
 
 #include "util/Color.h"
 
+#include "SettingsEnums.h"
+
 /*
  * parse: parse settings from XML
  */
@@ -103,6 +105,10 @@ T parse(const std::string_view strView, T defaultValue) {
 
     if constexpr (std::is_same_v<T, fs::path>) {
         return fs::path(xoj::util::utf8(str));
+    }
+
+    if constexpr (std::is_same_v<T, AttributeType>) {
+        return stringToAttributeType(str);
     }
 
     return defaultValue;
