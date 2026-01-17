@@ -63,3 +63,4 @@ Debug
 # Miscellaneous
 .DS_STORE
 *~
+/install/
