@@ -250,6 +250,21 @@ public:
      */
     void updatePageActions();
 
+    /**
+     * Record the current view as a navigation history entry.
+     */
+    void recordNavPoint();
+
+    /**
+     * @return Whether navigation history can move by dir (-1 back, +1 forward).
+     */
+    bool canNavigateHistory(int dir) const;
+
+    /**
+     * Navigate the history by dir (-1 back, +1 forward).
+     */
+    void navigateHistory(int dir);
+
     // selection handling
     void clearSelection();
 
@@ -393,6 +408,17 @@ protected:
     void saveImpl(bool saveAs, std::function<void(bool)> callback);
 
 private:
+    struct NavState;
+
+    NavState captureNavState() const;
+    bool isSameNavState(const NavState& a, const NavState& b) const;
+    bool scrollToNavState(const NavState& state);
+    void pruneNavHistory();
+    void resetNavHistory();
+    void updateNavHistoryActions();
+
+    static constexpr size_t MAX_NAV_HISTORY_LEN = 50;
+
     /**
      * @brief Creates the specified geometric tool if it's not on the current page yet. Deletes it if it already exists.
      * @return true if a geometric tool was created
@@ -554,6 +580,19 @@ private:
 
     std::unique_ptr<GeometryTool> geometryTool;
     std::unique_ptr<GeometryToolController> geometryToolController;
+
+    struct NavState {
+        PageRef page;
+        double x1 = -1;
+        double y1 = -1;
+        double x2 = -1;
+        double y2 = -1;
+        bool hasRect = false;
+    };
+
+    std::vector<NavState> navHistory;
+    size_t navHistoryIdx = 0;
+    bool navHistoryRestoring = false;
 
     /**
      * Manage all Xournal++ plugins

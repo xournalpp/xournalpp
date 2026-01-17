@@ -500,6 +500,20 @@ struct ActionProperties<Action::GOTO_PREVIOUS_ANNOTATED_PAGE> {
     }
 };
 
+template <>
+struct ActionProperties<Action::NAVIGATE_BACK> {
+    static bool initiallyEnabled(Control*) { return false; }
+    static constexpr const char* accelerators[] = {"<Alt>Left", nullptr};
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->navigateHistory(-1); }
+};
+
+template <>
+struct ActionProperties<Action::NAVIGATE_FORWARD> {
+    static bool initiallyEnabled(Control*) { return false; }
+    static constexpr const char* accelerators[] = {"<Alt>Right", nullptr};
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->navigateHistory(1); }
+};
+
 
 /** Journal Menu **/
 template <>

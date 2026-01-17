@@ -79,9 +79,11 @@ void ScrollHandler::scrollToLinkDest(const LinkDestination& dest) {
             control->askInsertPdfPage(pdfPage);
         } else {
             if (dest.shouldChangeTop()) {
+                control->recordNavPoint();
                 control->getScrollHandler()->scrollToPage(page, {dest.getLeft(), dest.getTop(), -1, -1});
             } else {
                 if (control->getCurrentPageNo() != page) {
+                    control->recordNavPoint();
                     control->getScrollHandler()->scrollToPage(page);
                 }
             }
