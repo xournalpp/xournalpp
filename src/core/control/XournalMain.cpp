@@ -188,8 +188,10 @@ auto exportImg(const char* input, const char* output, const char* range, const c
     if (doc == nullptr) {
         g_error("%s", loader.getLastError().c_str());
     }
-
-    exitOnMissingPdfFileName(loader);
+    
+    if (exportBackground != EXPORT_BACKGROUND_NONE) {
+        exitOnMissingPdfFileName(loader);
+    }
 
     return ExportHelper::exportImg(doc.get(), output, range, layerRange, pngDpi, pngWidth, pngHeight, exportBackground);
 }
@@ -243,7 +245,9 @@ auto exportPdf(const char* input, const char* output, const char* range, const c
         g_error("%s", loader.getLastError().c_str());
     }
 
-    exitOnMissingPdfFileName(loader);
+    if (exportBackground != EXPORT_BACKGROUND_NONE) {
+        exitOnMissingPdfFileName(loader);
+    }
 
     return ExportHelper::exportPdf(doc.get(), output, range, layerRange, exportBackground, progressiveMode, backend);
 }
