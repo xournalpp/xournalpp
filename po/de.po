@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-24 17:29+0000\n"
-"PO-Revision-Date: 2025-12-28 04:33\n"
+"PO-Revision-Date: 2026-01-18 04:31\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -2131,7 +2131,8 @@ msgstr "Ersetzen"
 #: ../src/util/XojMsgBox.cpp:216
 msgid "Unable to open the link: {1}\n"
 "{2}"
-msgstr ""
+msgstr "Link kann nicht geöffnet werden: {1}\n"
+"{2}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
@@ -2225,36 +2226,36 @@ msgstr "Absturzbericht"
 
 #: ../ui/crashDialog.glade:23
 msgid "Oops... Xournal++ encountered a fatal error"
-msgstr ""
+msgstr "Hoppla... In Xournal++ ist ein schwerwiegender Fehler aufgetreten"
 
 #: ../ui/crashDialog.glade:39
 msgid "Please consider filling a bug report (see button below). Attach the following log to your report."
-msgstr ""
+msgstr "Bitte erwägen Sie, einen Fehlerbericht zu erstellen (siehe Schaltfläche unten). Fügen Sie ihrem Bericht das folgende Log an."
 
 #: ../ui/crashDialog.glade:56
 msgid "Your document has been saved in:"
-msgstr ""
+msgstr "Ihr Dokument wurde gespeichert in:"
 
 #: ../ui/crashDialog.glade:92
 msgid "Execution log:"
-msgstr ""
+msgstr "Ausführungslog:"
 
 #: ../ui/crashDialog.glade:140
 msgid "Open your web browser with a partially pre-filled bug report"
-msgstr ""
+msgstr "Browser mit einem teilweise ausgefüllten Fehlerbericht öffnen"
 
 #: ../ui/crashDialog.glade:145
 msgid "Create a bug report"
-msgstr ""
+msgstr "Fehlerbericht erstellen"
 
 #: ../ui/crashDialog.glade:164
 msgctxt "github is a name - do not try to translate it"
 msgid "(this will open github in your browser)"
-msgstr ""
+msgstr "(Dies wird github in Ihrem Browser öffnen)"
 
 #: ../ui/deviceList.glade:7
 msgid "Known devices"
-msgstr ""
+msgstr "Bekannte Geräte"
 
 #: ../ui/deviceList.glade:46
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -2262,7 +2263,7 @@ msgstr "<i>Weise jedem Eingabegerät deines Systems eine Geräteklasse zu. Ände
 
 #: ../ui/deviceTestingArea.glade:42
 msgid "Try out your devices in the area below"
-msgstr ""
+msgstr "Probieren Sie Ihre Geräte im unteren Bereich aus"
 
 #: ../ui/deviceTestingArea.glade:70 ../ui/settings.glade:1630
 #: ../ui/settingsDeviceClassConfig.glade:35
@@ -2291,7 +2292,7 @@ msgstr "Stift"
 #: ../ui/deviceTestingArea.glade:136 ../ui/deviceTestingArea.glade:190
 msgctxt "the tip of the stylus"
 msgid "Tip"
-msgstr "Spitze"
+msgstr "Kontakt"
 
 #: ../ui/deviceTestingArea.glade:150 ../ui/settings.glade:1987
 msgid "Button 1"
@@ -2308,16 +2309,16 @@ msgstr "Touchscreen"
 
 #: ../ui/deviceTestingArea.glade:374
 msgid "In use"
-msgstr ""
+msgstr "Aktiv"
 
 #: ../ui/deviceTestingArea.glade:388 ../ui/deviceTestingArea.glade:402
 msgctxt "stylus hover"
 msgid "Hover"
-msgstr ""
+msgstr "Annäherung"
 
 #: ../ui/deviceTestingArea.glade:443
 msgid "Show logs"
-msgstr ""
+msgstr "Logs anzeigen"
 
 #: ../ui/deviceTestingArea.glade:455
 msgid "Export debug info"
@@ -2325,28 +2326,29 @@ msgstr "Debug-Info exportieren"
 
 #: ../ui/deviceTestingArea.glade:477
 msgid "To clear the logs, simply close and reopen the settings dialog"
-msgstr ""
+msgstr "Um die Logs zu löschen, schließen und öffnen Sie einfach den Einstellungsdialog"
 
 #: ../ui/deviceTestingArea.glade:491
 msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
 "Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
-msgstr ""
+msgstr "Wählen Sie diese Option, wenn das \"Kontakt\" Anzeige nicht aufleuchtet, wenn Sie den Stift verwenden und eine der Tasten drücken.\n\n"
+"Deaktivieren Sie diese Option, wenn das \"Kontakt\" Anzeige leuchtet, während der Stift schwebt (aber nicht den Bildschirm oder das Tablet berührt)."
 
 #: ../ui/deviceTestingArea.glade:500
 msgid "Emulate stylus tip contact on button press"
-msgstr ""
+msgstr "Bei Tastendruck Stiftkontakt emulieren"
 
 #: ../ui/deviceTestingArea.glade:547
 msgid "<i>Change the device class below if your device is not correctly recognized (e.g. your active stylus shows up as touchscreen)</i>"
-msgstr ""
+msgstr "<i>Ändern Sie die Geräteklasse unten, wenn Ihr Gerät nicht richtig erkannt wird (z.B. wenn Ihr aktiver Stift als Touchscreen angezeigt wird)</i>"
 
 #: ../ui/deviceTestingArea.glade:568
 msgid "Last device used:"
-msgstr ""
+msgstr "Zuletzt benutztes Gerät:"
 
 #: ../ui/deviceTestingArea.glade:588
 msgid "Show all known devices"
-msgstr ""
+msgstr "Alle bekannten Geräte anzeigen"
 
 #: ../ui/exportSettings.glade:36
 msgid "Resolution"
@@ -2554,7 +2556,7 @@ msgstr "Schriftart des Editors auswählen"
 
 #: ../ui/latexSettings.glade:516
 msgid "You can optionally use an external editor program instead of the built-in editor. If you enable the option below, the provided editor command (defaulting to $EDITOR) will start with a popup that only shows a preview and potential error message instead of the normal one with a built-in editor. The environment variable XPP_TEXT_COLOR is set to the current Text Tool color in hex RGB format."
-msgstr ""
+msgstr "Sie können optional ein externes Editorprogramm anstelle des integrierten Editors verwenden. Wenn Sie die folgende Option aktivieren, wird der angegebene Befehl (standardmäßig $EDITOR) mit einem Popup gestartet, das nur eine Vorschau und mögliche Fehlermeldungen anzeigt, anstatt des normalen Fensters mit integrierten Editor. Die Umgebungsvariable XPP_TEXT_COLOR wird auf die aktuelle Farbe des Textwerkzeugs im Hex-RGB-Format gesetzt."
 
 #: ../ui/latexSettings.glade:532
 msgid "Use external Editor"
