@@ -1549,18 +1549,20 @@ void Control::askToOpenFile() {
 
 void Control::openFileInNewWindow(fs::path filepath) {
     std::string binary = "xournalpp";
-#ifdef __APPLE__
-    // On macOS, try to find the binary in the app bundle first
-    if (!xoj::util::OwnedCString::assumeOwnership(g_find_program_in_path(binary.c_str()))) {
-        auto path = Util::getExePath() / binary;
-        binary = Util::toGFilename(path).c_str();
+    gchar* prog = nullptr;
+
+    // First, try to use the executable from the same directory as the current one
+    auto localPath = Util::getExePath() / "xournalpp";
+    if (fs::exists(localPath) && fs::is_regular_file(localPath)) {
+        prog = g_strdup(Util::toGFilename(localPath).c_str());
+    } else {
+        // Fallback to searching in PATH
+        prog = g_find_program_in_path(binary.c_str());
     }
-#endif
-    gchar* prog = g_find_program_in_path(binary.c_str());
+
     if (!prog) {
-        // Fallback to current executable path
-        auto path = Util::getExePath() / "xournalpp";
-        prog = g_strdup(Util::toGFilename(path).c_str());
+        XojMsgBox::showErrorToUser(getGtkWindow(), "Could not find xournalpp executable");
+        return;
     }
 
     GError* err = nullptr;
