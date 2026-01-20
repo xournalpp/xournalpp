@@ -188,7 +188,7 @@ auto exportImg(const char* input, const char* output, const char* range, const c
     if (doc == nullptr) {
         g_error("%s", loader.getLastError().c_str());
     }
-    
+
     if (exportBackground != EXPORT_BACKGROUND_NONE) {
         exitOnMissingPdfFileName(loader);
     }
