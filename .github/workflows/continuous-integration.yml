@@ -6,6 +6,7 @@ on:
     ignores-paths:
       - 'po/xournalpp.pot'
       - 'po/*.po'
+  push:
 
 env:
   build-targets-json: '.github/available-build-targets.json'
