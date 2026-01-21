@@ -46,7 +46,7 @@ inline bool operator==(const xmlChar* lhs, std::string_view rhs);
  * get a string (c-style or cpp-style) from xmlNodePtr (xmlNode*)
  */
 template <typename T>
-T xmlGet(const xmlNode* node, const std::string& property, T defaultValue = T{});
+T xmlGet(const xmlNode* node, const char* property, T defaultValue = T{});
 
 /* === END OF PROTOTYPES === */
 
@@ -60,8 +60,8 @@ inline bool operator==(const xmlChar* lhs, const std::string_view rhs) {
 }
 
 template <typename T>
-T xmlGet(const xmlNode* node, const std::string& property, T defaultValue) {
-    const xmlChar* prop = xmlGetProp(node, reinterpret_cast<const xmlChar*>(property.c_str()));
+T xmlGet(const xmlNode* node, const char* property, T defaultValue) {
+    const xmlChar* prop = xmlGetProp(node, reinterpret_cast<const xmlChar*>(property));
 
     if (prop == nullptr) {
         return parse<T>({}, defaultValue);
@@ -73,8 +73,8 @@ T xmlGet(const xmlNode* node, const std::string& property, T defaultValue) {
 }
 
 template <typename T>
-std::string xmlGet(const xmlNode* node, const std::string& property, std::string defaultValue) {
-    const xmlChar* prop = xmlGetProp(node, reinterpret_cast<const xmlChar*>(property.c_str()));
+std::string xmlGet(const xmlNode* node, const char* property, std::string defaultValue) {
+    const xmlChar* prop = xmlGetProp(node, reinterpret_cast<const xmlChar*>(property));
 
     if (prop == nullptr) {
         return "";
