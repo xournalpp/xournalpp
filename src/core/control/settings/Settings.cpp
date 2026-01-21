@@ -606,7 +606,9 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         setParsed(this->doActionOnStrokeFiltered, value);
     } else if (name == "trySelectOnStrokeFiltered") {
         setParsed(this->trySelectOnStrokeFiltered, value);
-    } else if (name == "latexSettings.autoCheckDependencies") {
+    }
+
+    else if (name == "latexSettings.autoCheckDependencies") {
         setParsed(this->latexSettings.autoCheckDependencies, value);
     } else if (name == "latexSettings.defaultText") {
         setParsed(this->latexSettings.defaultText, value);
@@ -628,7 +630,15 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         setParsed(this->latexSettings.sourceViewSyntaxHighlight, value);
     } else if (name == "latexSettings.sourceViewShowLineNumbers") {
         setParsed(this->latexSettings.sourceViewShowLineNumbers, value);
-    } else if (name == "snapRecognizedShapesEnabled") {
+    } else if (name == "latexSettings.useExternalEditor") {
+        setParsed(this->latexSettings.useExternalEditor, value);
+    } else if (name == "latexSettings.externalEditorAutoConfirm") {
+        setParsed(this->latexSettings.externalEditorAutoConfirm, value);
+    } else if (name == "latexSettings.temporaryFileExt") {
+        setParsed(this->latexSettings.temporaryFileExt, value);
+    }
+
+    else if (name == "snapRecognizedShapesEnabled") {
         setParsed(this->snapRecognizedShapesEnabled, value);
     } else if (name == "restoreLineWidthEnabled") {
         setParsed(this->restoreLineWidthEnabled, value);
@@ -638,6 +648,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->setUseSpacesAsTab(parse<bool>(value));
     } else if (name == "numberOfSpacesForTab") {
         this->setNumberOfSpacesForTab(parse<unsigned int>(value));
+    } else if (name == "laserPointerFadeOutTime") {
+        setParsed(this->laserPointerFadeOutTime, value);
         /**
          * Stabilizer related settings
          */
@@ -659,8 +671,12 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         setParsed(this->stabilizerCuspDetection, value);
     } else if (name == "stabilizerFinalizeStroke") {
         setParsed(this->stabilizerFinalizeStroke, value);
-    } else if (name == "colorPalette") {
+    }
+    // migrate from old name!
+    else if (name == "colorPalette" || name == "colorPaletteSetting") {
         setParsed(this->colorPaletteSetting, value);
+    } else {
+        g_warning("Settings: Name property not found: %s!", name.c_str());
     }
 }
 
@@ -821,7 +837,7 @@ xmlNodePtr Settings::saveProperty(const std::string& key, T value, xmlNodePtr pa
     } else if constexpr (std::is_same_v<T, fs::path>) {
         // Since it breaks on Windows due to the native character representation being wchar_t instead of char it is
         // sooo complicated!
-        str = char_cast(value.u8string().c_str());
+        str = char_cast(value.u8string());
     } else if constexpr (std::convertible_to<T, std::string>) {
         str = value;
     } else if constexpr (std::convertible_to<T, std::u8string>) {
