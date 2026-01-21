@@ -5,7 +5,7 @@
 #include <X11/Xatom.h>          // for XA_INTEGER
 #include <X11/extensions/XI.h>  // for XI_TOUCHSCREEN
 #include <gdk/gdk.h>            // for gdk_display_get_default
-#include <gdk/gdkx.h>           // for gdk_x11_display_get_xdisplay
+#include <gdk/x11/gdkx.h>       // for gdk_x11_display_get_xdisplay
 #include <glib.h>               // for g_message, g_warning, g_error
 
 TouchDisableX11::TouchDisableX11() = default;
