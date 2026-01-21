@@ -1010,6 +1010,12 @@ void TextEditor::finalizeEdition() {
             doc->lock();
             Layer* layer = this->page->getSelectedLayer();
             auto [orig, elementIndex] = layer->removeElement(originalTextElement);
+
+            // Rerenders all pages that layer 'layer' is present in
+            for (std::size_t i = layer->getFirstPage(); i <= layer->getLastPage(); ++i) {
+                control->getDocument()->getPage(i)->firePageChanged();
+            }
+
             doc->unlock();
             if (elementIndex != Element::InvalidIndex) [[likely]] {
                 eraseDeleteUndoAction->addElement(layer, std::move(orig), elementIndex);
@@ -1022,6 +1028,7 @@ void TextEditor::finalizeEdition() {
     }
 
     this->updateTextElementContent();
+    Text* ptr;
     if (originalTextElement) {
         // Modifying a preexisting element
         this->viewPool->dispatchAndClear(xoj::view::TextEditionView::FINALIZATION_REQUEST, this->previousBoundingBox);
@@ -1029,11 +1036,9 @@ void TextEditor::finalizeEdition() {
         doc->lock();
         Layer* layer = this->page->getSelectedLayer();
         auto [orig, _] = layer->removeElement(this->originalTextElement);
-        auto ptr = this->textElement.get();
+        ptr = this->textElement.get();
         layer->addElement(std::move(this->textElement));
         doc->unlock();
-
-        this->page->fireElementChanged(ptr);
 
         if (orig) [[likely]] {
             xoj_assert(orig.get() == this->originalTextElement);
@@ -1046,14 +1051,19 @@ void TextEditor::finalizeEdition() {
         originalTextElement = nullptr;
     } else {
         // Creating a new element
-        auto ptr = this->textElement.get();
+        ptr = this->textElement.get();
         doc->lock();
         Layer* layer = this->page->getSelectedLayer();
         layer->addElement(std::move(this->textElement));
         doc->unlock();
         this->viewPool->dispatchAndClear(xoj::view::TextEditionView::FINALIZATION_REQUEST, this->previousBoundingBox);
-        this->page->fireElementChanged(ptr);
         undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, ptr));
+    }
+
+    Layer* layer = this->page->getSelectedLayer();
+    // Rerenders all pages that layer 'layer' is present in
+    for (std::size_t i = layer->getFirstPage(); i <= layer->getLastPage(); ++i) {
+        this->control->getDocument()->getPage(i)->fireElementChanged(ptr);
     }
 }
 
