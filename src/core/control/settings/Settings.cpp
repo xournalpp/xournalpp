@@ -819,6 +819,8 @@ xmlNodePtr Settings::saveProperty(const std::string& key, T value, xmlNodePtr pa
     } else if constexpr (std::is_same_v<T, bool>) {
         str = value ? "true" : "false";
     } else if constexpr (std::is_same_v<T, fs::path>) {
+        // Since it breaks on Windows due to the native character representation being wchar_t instead of char it is
+        // sooo complicated!
         str = char_cast(value.u8string().c_str());
     } else if constexpr (std::convertible_to<T, std::string>) {
         str = value;
@@ -941,10 +943,8 @@ void Settings::save() {
     SAVE_PROP(selectedToolbar);
 
     SAVE_PROP(lastSavePath);
-
-    // saveProperty("lastSavePath", char_cast(this->lastSavePath.u8string().c_str()), root);
-    saveProperty("lastOpenPath", char_cast(this->lastOpenPath.u8string().c_str()), root);
-    saveProperty("lastImagePath", char_cast(this->lastImagePath.u8string().c_str()), root);
+    SAVE_PROP(lastOpenPath);
+    SAVE_PROP(lastImagePath);
 
     SAVE_PROP(edgePanSpeed);
     SAVE_PROP(edgePanMaxMult);
@@ -1128,21 +1128,13 @@ void Settings::save() {
     SAVE_PROP(stabilizerCuspDetection);
     SAVE_PROP(stabilizerFinalizeStroke);
 
-    if (!this->colorPaletteSetting.empty()) {
-        saveProperty("colorPalette", char_cast(this->colorPaletteSetting.u8string().c_str()), root);
-    }
-
     SAVE_PROP(colorPaletteSetting);
 
     /**/
 
     SAVE_PROP(latexSettings.autoCheckDependencies);
     SAVE_PROP(latexSettings.defaultText);
-    // Inline SAVE_PROP(latexSettings.globalTemplatePath) since it
-    // breaks on Windows due to the native character representation being
-    // wchar_t instead of char
-    fs::path& p = latexSettings.globalTemplatePath;
-    xmlNode = saveProperty("latexSettings.globalTemplatePath", p.empty() ? "" : char_cast(p.u8string().c_str()), root);
+    SAVE_PROP(latexSettings.globalTemplatePath);
     SAVE_PROP(latexSettings.genCmd);
     SAVE_PROP(latexSettings.sourceViewThemeId);
     SAVE_PROP(latexSettings.editorFont);
