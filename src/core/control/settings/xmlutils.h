@@ -10,6 +10,8 @@
  */
 #pragma once
 
+#include <charconv>
+#include <format>
 #include <string>
 #include <string_view>
 #include <type_traits>
@@ -26,6 +28,9 @@
  */
 template <typename T>
 T parse(std::string_view strView, T defaultValue = T{});
+
+template <typename T>
+void setParsed(T& target, const std::string_view value, T defaultValue = T{});
 
 /*
  * Operator that converts string literals to xmlChar* (unsigned char*)
@@ -68,48 +73,73 @@ T xmlGet(const xmlNode* node, const std::string& property, T defaultValue) {
 }
 
 template <typename T>
+std::string xmlGet(const xmlNode* node, const std::string& property, std::string defaultValue) {
+    const xmlChar* prop = xmlGetProp(node, reinterpret_cast<const xmlChar*>(property.c_str()));
+
+    if (prop == nullptr) {
+        return "";
+    }
+
+    const std::string str{reinterpret_cast<const char*>(prop)};
+
+    return str;
+}
+
+template <typename T>
 T parse(const std::string_view strView, T defaultValue) {
     if (strView.empty()) {
         return defaultValue;
     }
 
+    if constexpr (std::is_same_v<T, std::string_view>) {
+        return strView;
+    }
+
     const auto str = static_cast<std::string>(strView);
 
+    T val = defaultValue;
+
     if constexpr (std::is_same_v<T, std::string>) {
-        return str;
+        val = str;
+    } else if constexpr (std::is_same_v<T, unsigned int> || std::is_same_v<T, unsigned long>) {
+        val = static_cast<T>(std::stoul(str));
+    } else if constexpr (std::is_same_v<T, int>) {
+        val = std::stoi(str);
+    } else if constexpr (std::is_same_v<T, double>) {
+        double d;
+
+        const auto [ptr, ec] = std::from_chars(str.c_str(), str.c_str() + sizeof(str), d);
+
+        if (ec == std::errc::invalid_argument) {
+            g_error("Invalid argument");
+        }
+        if (ec == std::errc()) {
+            val = d;
+        }
+    } else if constexpr (std::is_same_v<T, bool>) {
+        val = str == "true";
+    } else if constexpr (std::is_same_v<T, Color> || std::is_same_v<T, ColorU8>) {
+        val = Color(static_cast<uint32_t>(std::stoull(str)));
+    } else if constexpr (std::is_same_v<T, std::u8string>) {
+        val = xoj::util::utf8(str).str();
+    } else if constexpr (std::is_same_v<T, fs::path>) {
+        val = fs::path{xoj::util::utf8(str)};
+    } else if constexpr (std::is_same_v<T, AttributeType>) {
+        val = stringToAttributeType(strView);
+    } else if constexpr (std::is_same_v<T, XojFont>) {
+        val = str;
+    } else {
+        const std::string err = std::format("Xournalpp does not support the required type: {}", typeid(T).name());
+        throw(std::runtime_error{err});
     }
 
-    if constexpr (std::is_same_v<T, int>) {
-        return std::stoi(str);
-    }
+    return val;
+}
 
-    if constexpr (std::is_same_v<T, unsigned int>) {
-        return static_cast<unsigned int>(std::stoul(str));
-    }
-
-    if constexpr (std::is_same_v<T, double>) {
-        return g_ascii_strtod(str.c_str(), nullptr);
-    }
-
-    if constexpr (std::is_same_v<T, bool>) {
-        return str == "true";
-    }
-
-    if constexpr (std::is_same_v<T, Color> || std::is_same_v<T, ColorU8>) {
-        return Color(static_cast<uint32_t>(std::stoull(str)));
-    }
-
-    if constexpr (std::is_same_v<T, std::u8string>) {
-        return xoj::util::utf8(str).str();
-    }
-
-    if constexpr (std::is_same_v<T, fs::path>) {
-        return fs::path(xoj::util::utf8(str));
-    }
-
-    if constexpr (std::is_same_v<T, AttributeType>) {
-        return stringToAttributeType(str);
-    }
-
-    return defaultValue;
+/*
+ * Wrapper to reduce types deduction
+ */
+template <typename T>
+void setParsed(T& target, const std::string_view value, T defaultValue) {
+    target = parse<T>(value, defaultValue);
 }
