@@ -101,6 +101,14 @@ public:
     void openFile(
             fs::path filepath, std::function<void(bool)> callback = [](bool) {}, int scrollToPage = -1,
             bool forceOpen = false);
+    
+    /**
+     * Open the given file in a new Xournal++ window or process.
+     * This does not close or replace the current document. If `filepath` is empty,
+     * a new blank window is opened.
+     */
+    void openFileInNewWindow(fs::path filepath);
+
     /// Shows an open file dialog and opens the selected file
     void askToAnnotatePdf();
 
