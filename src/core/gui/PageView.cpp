@@ -954,7 +954,7 @@ void XojPageView::drawLoadingPage(cairo_t* cr) {
     cairo_text_extents(cr, txtLoading.c_str(), &ex);
     cairo_move_to(cr, (page->getWidth() - ex.width) / 2 - ex.x_bearing,
                   (page->getHeight() - ex.height) / 2 - ex.y_bearing);
-    cairo_show_text(cr, txtLoading.c_str());
+    cairo_text_path(cr, txtLoading.c_str());
 
     rerenderPage();
 }
