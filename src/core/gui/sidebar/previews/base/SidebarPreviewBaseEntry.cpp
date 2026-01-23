@@ -89,7 +89,7 @@ void SidebarPreviewBaseEntry::drawLoadingPage() {
     cairo_text_extents(cr2, txtLoading, &ex);
     cairo_move_to(cr2, (page->getWidth() - ex.width) / 2 - ex.x_bearing,
                   (page->getHeight() - ex.height) / 2 - ex.y_bearing);
-    cairo_show_text(cr2, txtLoading);
+    cairo_text_path(cr2, txtLoading);
 
     cairo_destroy(cr2);
 }
