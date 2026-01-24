@@ -172,4 +172,5 @@ fs::path getCustomPaletteDirectoryPath();
  * @return files in directory
  */
 std::vector<fs::path> listFilesSorted(fs::path directory);
+
 }  // namespace Util
