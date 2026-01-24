@@ -1697,12 +1697,14 @@ void Control::openFile(fs::path filepath, std::function<void(bool)> callback, in
         return;
     }
 
-    this->close([ctrl = this, filepath = std::move(filepath), cb = std::move(callback),
-                 scrollToPage](bool closed) mutable {
-        if (closed) {
-            ctrl->openFileWithoutSavingTheCurrentDocument(std::move(filepath), false, scrollToPage, std::move(cb));
-        }
-    });
+    this->close(
+            [ctrl = this, filepath = std::move(filepath), cb = std::move(callback), scrollToPage](bool closed) mutable {
+                if (closed) {
+                    ctrl->openFileWithoutSavingTheCurrentDocument(std::move(filepath), false, scrollToPage,
+                                                                  std::move(cb));
+                }
+            },
+            false, true, forceOpen);
 }
 
 void Control::fileLoaded(int scrollToPage) {
@@ -2089,12 +2091,13 @@ void Control::quit(bool allowCancel) {
     this->close(std::move(afterClosed), true, allowCancel);
 }
 
-void Control::close(std::function<void(bool)> callback, const bool allowDestroy, const bool allowCancel) {
+void Control::close(std::function<void(bool)> callback, const bool allowDestroy, const bool allowCancel,
+                    const bool forceClose) {
     clearSelectionEndText();
     metadata->documentChanged();
     resetGeometryTool();
 
-    bool safeToClose = !undoRedo->isChanged();
+    bool safeToClose = forceClose || !undoRedo->isChanged();
     if (!safeToClose) {
         fs::path path = doc->getFilepath();
         const bool fileRemoved = !path.empty() && !fs::exists(path);
@@ -2225,12 +2228,14 @@ void Control::clipboardPasteText(string text) {
 
 void Control::clipboardPasteImage(GdkPixbuf* img) {
     auto image = std::make_unique<Image>();
-    image->setImage(img);
+    xoj::util::GObjectSPtr<GdkPixbuf> pixbuf(gdk_pixbuf_apply_embedded_orientation(img), xoj::util::adopt);
+
+    image->setImage(pixbuf.get());
 
     auto zoom100 = this->getZoomControl()->getZoom100Value();
 
-    auto width = static_cast<double>(gdk_pixbuf_get_width(img)) / zoom100;
-    auto height = static_cast<double>(gdk_pixbuf_get_height(img)) / zoom100;
+    auto width = static_cast<double>(gdk_pixbuf_get_width(pixbuf.get())) / zoom100;
+    auto height = static_cast<double>(gdk_pixbuf_get_height(pixbuf.get())) / zoom100;
 
     auto pageNr = getCurrentPageNo();
     if (pageNr == npos) {

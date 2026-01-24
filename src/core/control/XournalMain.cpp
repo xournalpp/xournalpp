@@ -179,21 +179,29 @@ void exitOnMissingPdfFileName(const LoadHandler& loader) {
  *
  *  The priority is: pngDpi overwrites pngWidth overwrites pngHeight
  *
- * @return 0 on success, -2 on failure opening the input file, -3 on export failure
+ * @return 0 on success
+ *
+ * Calls std::exit(-2) on failure opening the input file and std::exit(-3) on export failure
  */
 auto exportImg(const char* input, const char* output, const char* range, const char* layerRange, int pngDpi,
                int pngWidth, int pngHeight, ExportBackgroundType exportBackground) -> int {
     LoadHandler loader;
     auto doc = loader.loadDocument(input);
     if (doc == nullptr) {
-        g_error("%s", loader.getLastError().c_str());
+        g_message("%s", loader.getLastError().c_str());
+        std::exit(-2);
     }
 
     if (exportBackground != EXPORT_BACKGROUND_NONE) {
         exitOnMissingPdfFileName(loader);
     }
 
-    return ExportHelper::exportImg(doc.get(), output, range, layerRange, pngDpi, pngWidth, pngHeight, exportBackground);
+    const auto res = ExportHelper::exportImg(doc.get(), output, range, layerRange, pngDpi, pngWidth, pngHeight,
+                                             exportBackground);
+    if (res != 0) {
+        std::exit(res);
+    }
+    return 0;
 }
 
 /**
@@ -201,7 +209,9 @@ auto exportImg(const char* input, const char* output, const char* range, const c
  *
  * @param input Path to the input .pdf file
  * @param output Path to the output .xopp file
- * @return int 0 on success
+ * @return 0 on success
+ *
+ * Calls std::exit(-2) on failure reading the input file and std::exit(-3) on save failure
  */
 auto saveDoc(const char* input, const char* output) -> int {
     SaveHandler saver;
@@ -210,14 +220,16 @@ auto saveDoc(const char* input, const char* output) -> int {
     auto newDoc = std::make_unique<Document>(handler.get());
     const bool res = newDoc->readPdf(in, /*initPages=*/true, false);
     if (!res) {
-        g_error("%s", FC(_F("Error: {1}") % newDoc->getLastErrorMsg().c_str()));
+        g_message("%s", FC(_F("Error: {1}") % newDoc->getLastErrorMsg().c_str()));
+        std::exit(-2);
     }
     const fs::path out = fs::absolute(Util::fromGFilename(output));
     saver.prepareSave(newDoc.get(), out);
     saver.saveTo(out);
 
     if (!saver.getErrorMessage().empty()) {
-        g_error("%s", FC(_F("Error: {1}") % saver.getErrorMessage()));
+        g_message("%s", FC(_F("Error: {1}") % saver.getErrorMessage()));
+        std::exit(-3);
     }
     return 0;
 }
@@ -235,21 +247,29 @@ auto saveDoc(const char* input, const char* output) -> int {
  * rendered one by one to produce as many pages as there are layers.
  * @param backend The requested backend
  *
- * @return 0 on success, -2 on failure opening the input file, -3 on export failure
+ * @return 0 on success
+ *
+ * Calls std::exit(-2) on failure opening the input file and std::exit(-3) on export failure
  */
 auto exportPdf(const char* input, const char* output, const char* range, const char* layerRange,
                ExportBackgroundType exportBackground, bool progressiveMode, ExportBackend backend) -> int {
     LoadHandler loader;
     auto doc = loader.loadDocument(input);
     if (doc == nullptr) {
-        g_error("%s", loader.getLastError().c_str());
+        g_message("%s", loader.getLastError().c_str());
+        std::exit(-2);
     }
 
     if (exportBackground != EXPORT_BACKGROUND_NONE) {
         exitOnMissingPdfFileName(loader);
     }
 
-    return ExportHelper::exportPdf(doc.get(), output, range, layerRange, exportBackground, progressiveMode, backend);
+    const auto res =
+            ExportHelper::exportPdf(doc.get(), output, range, layerRange, exportBackground, progressiveMode, backend);
+    if (res != 0) {
+        std::exit(res);
+    }
+    return 0;
 }
 
 struct XournalMainPrivate {

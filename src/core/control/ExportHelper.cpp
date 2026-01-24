@@ -73,6 +73,7 @@ auto exportImg(Document* doc, const char* output, const char* range, const char*
     std::string errorMsg = imgExport.getLastErrorMsg();
     if (!errorMsg.empty()) {
         g_message("Error exporting image: %s\n", errorMsg.c_str());
+        return -3;
     }
 
     g_message("%s", _("Image file successfully created"));
@@ -105,7 +106,7 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
     try {
         if (!backgroundPDF.empty() && fs::exists(backgroundPDF)) {
             if (fs::weakly_canonical(path) == fs::weakly_canonical(backgroundPDF)) {
-                g_error("Do not overwrite the background PDF! This will cause errors!");
+                g_message("Do not overwrite the background PDF! This will cause errors!");
                 return -3;  // Return error code for export failure
             }
         }
@@ -128,7 +129,8 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
     }
 
     if (!exportSuccess) {
-        g_error("%s", pdfe->getLastError().c_str());
+        g_message("%s", pdfe->getLastError().c_str());
+        return -3;
     }
 
     g_message("%s", _("PDF file successfully created"));

@@ -21,6 +21,7 @@
 #include <poppler-page.h>      // for poppler_page_get_size
 
 #include "AbstractLatexDialog.h"
+#include "config-features.h"
 
 #ifdef ENABLE_GTK_SOURCEVIEW
 #include <gtksourceview/gtksource.h>  // for GTK_SOURCE_VIEW, gtk_sou...

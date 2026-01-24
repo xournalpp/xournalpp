@@ -96,12 +96,9 @@ static std::tuple<GtkWidget*, std::vector<ShowLayerEntry>, std::vector<std::pair
     };
 #else  // GTK4
     std::string actionName = std::string("win.") + Action_toString(Action::LAYER_ACTIVE);  // Todo(cpp20) constexpr
-    GtkCheckButton* group = nullptr;
-    auto createLayerRadioButton = [&actionName, &group, popover](const std::string& layerName,
-                                                                 Layer::Index id) -> std::pair<GtkWidget*, gulong> {
+    auto createLayerRadioButton = [&actionName, popover](const std::string& layerName,
+                                                         Layer::Index id) -> std::pair<GtkWidget*, gulong> {
         GtkWidget* btn = gtk_check_button_new_with_label(layerName.c_str());
-        // Is grouping necessary here? The GTK4 doc is unclear
-        gtk_check_button_set_group(GTK_CHECK_BUTTON(btn), std::exchange(group, GTK_CHECK_BUTTON(btn));
         gtk_actionable_set_action_name(GTK_ACTIONABLE(btn), actionName.c_str());
         gtk_actionable_set_action_target_value(GTK_ACTIONABLE(btn), xoj::util::makeGVariantSPtr(id).get());
         // Callback to hide the popover when a new layer is selected

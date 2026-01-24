@@ -39,7 +39,11 @@ T ObjectInputStream::readType() {
 size_t ObjectInputStream::pos() { return static_cast<size_t>(istream.tellg()); }
 
 auto ObjectInputStream::read(const char* data, size_t data_len) -> bool {
-    return read(std::stringstream(std::string(data, data_len)), data_len);
+    if (data && data_len > 0) {
+        // std::string() constructor can throw is data == nullptr. cf https://github.com/xournalpp/xournalpp/issues/6964
+        return read(std::stringstream(std::string(data, data_len)), data_len);
+    }
+    return false;
 }
 
 auto ObjectInputStream::read(std::stringstream stream, size_t length) -> bool {
