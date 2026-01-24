@@ -962,7 +962,7 @@ void SettingsDialog::save() {
     settings->setZoomStepScroll(zoomStepScroll);
 
     GtkWidget* cbForceZoomToFitOnLoad = builder.get("cbForceZoomToFitOnLoad");
-    bool const forceZoomToFitOnLoad = gtk_check_button_get_active(GTK_CHECK_BUTTON(cbForceZoomToFitOnLoad));
+    const bool forceZoomToFitOnLoad = gtk_check_button_get_active(GTK_CHECK_BUTTON(cbForceZoomToFitOnLoad));
     settings->setForceZoomToFitOnLoad(forceZoomToFitOnLoad);
 
     GtkWidget* spAddHorizontalSpaceRight = builder.get("spAddHorizontalSpaceRight");

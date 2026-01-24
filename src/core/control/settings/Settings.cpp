@@ -1961,7 +1961,6 @@ void Settings::setZoomStepScroll(double zoomStepScroll) {
 
 auto Settings::getZoomStepScroll() const -> double { return this->zoomStepScroll; }
 
-bool Settings::ifForceZoomToFitOnLoad() { return this->forceZoomToFitOnLoad; }
 void Settings::setForceZoomToFitOnLoad(bool force) {
     if (this->forceZoomToFitOnLoad == force) {
         return;
@@ -1972,8 +1971,7 @@ void Settings::setForceZoomToFitOnLoad(bool force) {
     save();
 }
 
-auto Settings::getForceZoomToFitOnLoad() -> bool { return this->forceZoomToFitOnLoad; }
-
+const auto Settings::getForceZoomToFitOnLoad() -> bool { return this->forceZoomToFitOnLoad; }
 
 void Settings::setEdgePanSpeed(double speed) {
     if (this->edgePanSpeed == speed) {
