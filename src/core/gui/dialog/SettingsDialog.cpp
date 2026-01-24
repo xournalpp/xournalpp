@@ -446,7 +446,7 @@ void SettingsDialog::load() {
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spZoomStepScroll), settings->getZoomStepScroll());
 
     GtkWidget* cbForceZoomToFitOnLoad = builder.get("cbForceZoomToFitOnLoad");
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(cbForceZoomToFitOnLoad), settings->getForceZoomToFitOnLoad());
+    gtk_check_button_set_active(GTK_CHECK_BUTTON(cbForceZoomToFitOnLoad), settings->getForceZoomToFitOnLoad());
 
     GtkWidget* spAddHorizontalSpaceRight = builder.get("spAddHorizontalSpaceRight");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAddHorizontalSpaceRight), settings->getAddHorizontalSpaceAmountRight());
