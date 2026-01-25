@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-18 14:01+0000\n"
-"PO-Revision-Date: 2025-12-21 04:28\n"
+"POT-Creation-Date: 2026-01-09 15:22+0000\n"
+"PO-Revision-Date: 2026-01-25 04:39\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -47,8 +47,8 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nein"
 
-#: ../src/core/control/Control.cpp:828 ../src/core/control/Control.cpp:1784
-#: ../src/core/control/Control.cpp:2108
+#: ../src/core/control/Control.cpp:828 ../src/core/control/Control.cpp:1786
+#: ../src/core/control/Control.cpp:2111
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -123,74 +123,74 @@ msgstr "Fehler beim Lesen der PDF-Datei \"{1}\"\n"
 msgid "Error reading PNG file \"{1}\""
 msgstr "Fehler beim Lesen der PNG-Datei \"{1}\""
 
-#: ../src/core/control/Control.cpp:1764
+#: ../src/core/control/Control.cpp:1766
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Die angehängte Hintergrunddatei konnte nicht gefunden werden. Sie wurde möglicherweise verschoben, umbenannt oder gelöscht."
 
-#: ../src/core/control/Control.cpp:1767
+#: ../src/core/control/Control.cpp:1769
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Die Hintergrunddatei \"{1}\" konnte nicht gefunden werden. Sie wurde möglicherweise verschoben, umbenannt oder gelöscht.\n"
 "Sie wurde zuletzt hier gesehen: \"{2}\""
 
-#: ../src/core/control/Control.cpp:1777
+#: ../src/core/control/Control.cpp:1779
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Vorgeschlagene Ersatzdatei: \"{1}\""
 
-#: ../src/core/control/Control.cpp:1782
+#: ../src/core/control/Control.cpp:1784
 msgid "Select another PDF"
 msgstr "Andere PDF-Datei auswählen"
 
-#: ../src/core/control/Control.cpp:1783
+#: ../src/core/control/Control.cpp:1785
 msgid "Remove PDF Background"
 msgstr "PDF-Hintergrund entfernen"
 
-#: ../src/core/control/Control.cpp:1787
+#: ../src/core/control/Control.cpp:1789
 msgid "Use proposed PDF"
 msgstr "Nutze das vorgeschlagene PDF"
 
-#: ../src/core/control/Control.cpp:1790
+#: ../src/core/control/Control.cpp:1792
 msgid "Missing PDF background file"
 msgstr "Fehlende PDF-Hintergrunddatei"
 
-#: ../src/core/control/Control.cpp:1922
+#: ../src/core/control/Control.cpp:1924
 msgid "Select font"
 msgstr "Schriftart auswählen"
 
-#: ../src/core/control/Control.cpp:1941
+#: ../src/core/control/Control.cpp:1943
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Farbe auswählen"
 
-#: ../src/core/control/Control.cpp:1966
+#: ../src/core/control/Control.cpp:1968
 msgid "Unsaved Document"
 msgstr "Ungespeichertes Dokument"
 
-#: ../src/core/control/Control.cpp:2101
+#: ../src/core/control/Control.cpp:2104
 msgid "Document file was removed."
 msgstr "Datei des Dokuments wurde entfernt."
 
-#: ../src/core/control/Control.cpp:2101
+#: ../src/core/control/Control.cpp:2104
 msgid "This document is not saved yet."
 msgstr "Dieses Dokument wurde noch nicht gespeichert."
 
-#: ../src/core/control/Control.cpp:2103
+#: ../src/core/control/Control.cpp:2106
 msgid "Save As..."
 msgstr "Speichern unter..."
 
-#: ../src/core/control/Control.cpp:2103 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2106 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "Speichern"
 
-#: ../src/core/control/Control.cpp:2106
+#: ../src/core/control/Control.cpp:2109
 msgid "Discard"
 msgstr "Verwerfen"
 
-#: ../src/core/control/Control.cpp:2191
+#: ../src/core/control/Control.cpp:2194
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr "GTK Demo-Subprozess konnte nicht erstellt werden: {1} (Exit-Code: {2})"
 
@@ -230,11 +230,11 @@ msgstr "Trackpoint"
 msgid "tablet pad"
 msgstr "Stifttablett"
 
-#: ../src/core/control/ExportHelper.cpp:78
+#: ../src/core/control/ExportHelper.cpp:79
 msgid "Image file successfully created"
 msgstr "Bild erfolgreich erstellt"
 
-#: ../src/core/control/ExportHelper.cpp:134
+#: ../src/core/control/ExportHelper.cpp:136
 msgid "PDF file successfully created"
 msgstr "PDF-Datei erfolgreich erstellt"
 
@@ -310,12 +310,12 @@ msgstr "Datei wiederherstellen"
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "Die Hintergrunddatei \"{1}\" konnte nicht gefunden werden. Sie wurde möglicherweise verschoben, umbenannt oder gelöscht."
 
-#: ../src/core/control/XournalMain.cpp:211
-#: ../src/core/control/XournalMain.cpp:218
+#: ../src/core/control/XournalMain.cpp:221
+#: ../src/core/control/XournalMain.cpp:229
 msgid "Error: {1}"
 msgstr "Fehler: {1}"
 
-#: ../src/core/control/XournalMain.cpp:351
+#: ../src/core/control/XournalMain.cpp:371
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -329,24 +329,24 @@ msgstr "<span foreground='red' size='x-large'>Benötigte UI-Datei fehlt:\n"
 "Nicht im Arbeitsverzeichnis\n"
 "Nicht in {2}"
 
-#: ../src/core/control/XournalMain.cpp:356
+#: ../src/core/control/XournalMain.cpp:376
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "Versuche nun, ohne diese Datei zu starten."
 
-#: ../src/core/control/XournalMain.cpp:378
-#: ../src/core/control/XournalMain.cpp:439
+#: ../src/core/control/XournalMain.cpp:398
+#: ../src/core/control/XournalMain.cpp:459
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Entschuldigung, Xournal++ kann nur eine Datei auf einmal öffnen.\n"
 "Alle weiteren werden ignoriert."
 
-#: ../src/core/control/XournalMain.cpp:389
+#: ../src/core/control/XournalMain.cpp:409
 msgid "File {1} does not exist."
 msgstr "Datei {1} existiert nicht."
 
-#: ../src/core/control/XournalMain.cpp:393
+#: ../src/core/control/XournalMain.cpp:413
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -354,29 +354,29 @@ msgstr "Dateisystem-Fehler: {1}\n"
 "Sorry, Xournal++ kann folgende Datei nicht öffnen: {2}\n"
 "Überlegen Sie sich, die Datei in ein lokales Verzeichnis zu kopieren."
 
-#: ../src/core/control/XournalMain.cpp:578
+#: ../src/core/control/XournalMain.cpp:598
 msgid "Jump to Page (first Page: 1)"
 msgstr "Springe zur Seite (erste Seite: 1)"
 
-#: ../src/core/control/XournalMain.cpp:582
+#: ../src/core/control/XournalMain.cpp:602
 msgid "Get version of xournalpp"
 msgstr "Xournalpp-Version erhalten"
 
-#: ../src/core/control/XournalMain.cpp:584
+#: ../src/core/control/XournalMain.cpp:604
 msgid "Disable audio for this session"
 msgstr "Audio für diese Sitzung deaktivieren"
 
-#: ../src/core/control/XournalMain.cpp:586
+#: ../src/core/control/XournalMain.cpp:606
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
 msgstr "PDF im Anhang-Modus öffnen\n"
 "                                 Ignoriert, wenn keine PDF-Datei angegeben wurde."
 
-#: ../src/core/control/XournalMain.cpp:590
+#: ../src/core/control/XournalMain.cpp:610
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "XOPP-Datei mit dem als FILE angegebenen Hintergrund-PDF speichern"
 
-#: ../src/core/control/XournalMain.cpp:595
+#: ../src/core/control/XournalMain.cpp:615
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
@@ -384,11 +384,11 @@ msgstr "Verwende das angegebene Backend für PDF-Exporte.\n"
 "                                       Verfügbare Backends: {1}\n"
 "                                       Kein Effekt ohne -p/--create-pdf=foo.pdf"
 
-#: ../src/core/control/XournalMain.cpp:604
+#: ../src/core/control/XournalMain.cpp:624
 msgid "Export FILE as PDF"
 msgstr "Datei als PDF exportieren"
 
-#: ../src/core/control/XournalMain.cpp:607
+#: ../src/core/control/XournalMain.cpp:627
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
@@ -396,7 +396,7 @@ msgstr "Exportiere DATEI als Bilddateien (eine pro Seite)\n"
 "                                       Errate das Ausgabeformat von der Endung von IMGFILE\n"
 "                                       Unterstützte Formate: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:613
+#: ../src/core/control/XournalMain.cpp:633
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
@@ -404,52 +404,63 @@ msgstr "Exportiere ohne Hintergrund\n"
 "                                 Die exportierte Datei hat einen transparenten oder weißen Hintergrund,\n"
 "                                 abhängig davon, was das jeweilige Dateiformat unterstützt\n"
 
-#: ../src/core/control/XournalMain.cpp:618
+#: ../src/core/control/XournalMain.cpp:638
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
 msgstr "Exportiere ohne Lineatur\n"
 "                                 Die exportierte Datei hat keine Lineatur\n"
 
-#: ../src/core/control/XournalMain.cpp:623
+#: ../src/core/control/XournalMain.cpp:643
 msgid "Export layers progressively\n"
 "                                       In PDF export, Render layers progressively one by one.\n"
 "                                       This results in N export pages per page with N layers,\n"
 "                                       building up the layer stack progressively.\n"
 "                                       The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "Ebenen schrittweise exportieren\n"
+"                                 Beim Export als PDF werden die Ebenen nacheinander auf einzelne Seiten abgebildet.\n"
+"                                 Dadurch werden für eine Seite mit N Ebenen N Exportseiten erstellt,\n"
+"                                 was den Ebenenstapel Schritt für Schritt aufbaut.\n"
+"                                 Die entstehende PDF-Datei kann als Präsentation benutzt werden.\n"
 
-#: ../src/core/control/XournalMain.cpp:632
+#: ../src/core/control/XournalMain.cpp:652
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Exportiere nur die durch den Bereich angegebenen Seiten (z.B. \"2-3,5,7-\")\n"
+"                                 Keine Auswirkung ohne -p/--create-pdf oder -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:637
+#: ../src/core/control/XournalMain.cpp:657
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Exportiere nur die durch den Bereich angegebenen Ebenen (z.B. \"2-3,5,7-\")\n"
+"                                 Keine Auswirkung ohne -p/--create-pdf oder -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:641
+#: ../src/core/control/XournalMain.cpp:661
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "DPI für PNG-Exporte festlegen. Standard ist 300\n"
+"                                 Keine Auswirkung ohne -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:645
+#: ../src/core/control/XournalMain.cpp:665
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "Seitenbreite für den Export von PNG-Dateien festlegen\n"
+"                                 Keine Auswirkung ohne -i/--create-img=foo.png\n"
+"                                 Ignoriert wenn --export-png-dpi verwendet wird"
 
-#: ../src/core/control/XournalMain.cpp:650
+#: ../src/core/control/XournalMain.cpp:670
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "Seitenhöhe für Export von PNG-Dateien festlegen\n"
+"                                 Keine Auswirkung ohne -i/--create-img=foo.png\n"
+"                                 Ignoriert wenn --export-png-dpi oder --export-png-width verwendet wird"
 
-#: ../src/core/control/XournalMain.cpp:658
+#: ../src/core/control/XournalMain.cpp:678
 msgid "Advanced export options"
 msgstr "Erweiterte Exportoptionen"
 
-#: ../src/core/control/XournalMain.cpp:659
+#: ../src/core/control/XournalMain.cpp:679
 msgid "Display advanced export options"
 msgstr "Erweiterte Exportoptionen anzeigen"
 
@@ -817,7 +828,7 @@ msgstr "Audioaufnahme {1} kann nicht abgespielt werden"
 
 #: ../src/core/gui/PageView.cpp:944
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:83
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:145
 msgid "Loading..."
 msgstr "Laden..."
 
@@ -941,7 +952,7 @@ msgstr "Bild einfügen"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 msgid "Laser Pointer - Pen"
-msgstr ""
+msgstr "Laserpointer - Stift"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 msgid "Laser Pointer - Hightlighter"
@@ -1041,19 +1052,19 @@ msgstr "Zeichne Spline"
 
 #: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
 msgid "Export Logs"
-msgstr ""
+msgstr "Logs exportieren"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:115
 msgid "Failed to parse external editor command: {1}"
-msgstr ""
+msgstr "Fehler beim Parsen des externen Editor-Befehls: {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:131
 msgid "Could not spawn editor: {1}"
-msgstr ""
+msgstr "Konnte Editor nicht öffnen: {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:162
 msgid "Could not wait for editor: {1}"
-msgstr ""
+msgstr "Konnte nicht auf Editor warten: {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:171
 msgid "Editor exited with bad status {1}"
@@ -1655,7 +1666,7 @@ msgstr "Zirkel"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Toggle Touch Drawing"
-msgstr ""
+msgstr "Touch-Zeichnen umschalten"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
@@ -1731,27 +1742,27 @@ msgstr "Fein"
 msgid "Very Thick"
 msgstr "Sehr dick"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:175
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:172
 msgid "Show all"
 msgstr "Alle anzeigen"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:176
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:173
 msgid "Hide all"
 msgstr "Alle ausblenden"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:178
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:175
 msgid "Add a layer above the active layer"
 msgstr "Eine Ebene über der aktiven Ebene hinzufügen"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:179
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:176
 msgid "Add a layer below the active layer"
 msgstr "Eine Ebene unter der aktiven Ebene hinzufügen"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:206
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:203
 msgid "Layer"
 msgstr "Ebene"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:303
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:300
 msgid "Layer Combo"
 msgstr "Ebenen-Combo"
 
@@ -1887,19 +1898,19 @@ msgstr "Fehler beim Initialisieren der PDF-Kairo-Oberfläche"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:110
 msgid "PDF page number is out of range"
-msgstr ""
+msgstr "PDF-Seitennummer ist außerhalb des Bereichs"
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:21
 msgid "Unknown pdf backend: {1}. Available backends are: {2}. Using default backend."
-msgstr ""
+msgstr "Unbekanntes pdf-Backend: {1}. Verfügbare Backends sind: {2}. Standard-Backend."
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:39
 msgid "Default"
-msgstr ""
+msgstr "Standard"
 
 #: ../src/core/pdf/base/QPdfExport.cpp:173
 msgid "Error with overlay or final export:"
-msgstr ""
+msgstr "Fehler im Overlay oder finalem Export:"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:128
 msgid "Error while finalizing the PDF Cairo surface"
@@ -2131,7 +2142,8 @@ msgstr "Ersetzen"
 #: ../src/util/XojMsgBox.cpp:216
 msgid "Unable to open the link: {1}\n"
 "{2}"
-msgstr ""
+msgstr "Link kann nicht geöffnet werden: {1}\n"
+"{2}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
@@ -2225,36 +2237,36 @@ msgstr "Absturzbericht"
 
 #: ../ui/crashDialog.glade:23
 msgid "Oops... Xournal++ encountered a fatal error"
-msgstr ""
+msgstr "Hoppla... In Xournal++ ist ein schwerwiegender Fehler aufgetreten"
 
 #: ../ui/crashDialog.glade:39
 msgid "Please consider filling a bug report (see button below). Attach the following log to your report."
-msgstr ""
+msgstr "Bitte erwägen Sie, einen Fehlerbericht zu erstellen (siehe Schaltfläche unten). Fügen Sie ihrem Bericht das folgende Log an."
 
 #: ../ui/crashDialog.glade:56
 msgid "Your document has been saved in:"
-msgstr ""
+msgstr "Ihr Dokument wurde gespeichert in:"
 
 #: ../ui/crashDialog.glade:92
 msgid "Execution log:"
-msgstr ""
+msgstr "Ausführungslog:"
 
 #: ../ui/crashDialog.glade:140
 msgid "Open your web browser with a partially pre-filled bug report"
-msgstr ""
+msgstr "Browser mit einem teilweise ausgefüllten Fehlerbericht öffnen"
 
 #: ../ui/crashDialog.glade:145
 msgid "Create a bug report"
-msgstr ""
+msgstr "Fehlerbericht erstellen"
 
 #: ../ui/crashDialog.glade:164
 msgctxt "github is a name - do not try to translate it"
 msgid "(this will open github in your browser)"
-msgstr ""
+msgstr "(Dies wird github in Ihrem Browser öffnen)"
 
 #: ../ui/deviceList.glade:7
 msgid "Known devices"
-msgstr ""
+msgstr "Bekannte Geräte"
 
 #: ../ui/deviceList.glade:46
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -2262,7 +2274,7 @@ msgstr "<i>Weise jedem Eingabegerät deines Systems eine Geräteklasse zu. Ände
 
 #: ../ui/deviceTestingArea.glade:42
 msgid "Try out your devices in the area below"
-msgstr ""
+msgstr "Probieren Sie Ihre Geräte im unteren Bereich aus"
 
 #: ../ui/deviceTestingArea.glade:70 ../ui/settings.glade:1630
 #: ../ui/settingsDeviceClassConfig.glade:35
@@ -2291,7 +2303,7 @@ msgstr "Stift"
 #: ../ui/deviceTestingArea.glade:136 ../ui/deviceTestingArea.glade:190
 msgctxt "the tip of the stylus"
 msgid "Tip"
-msgstr "Spitze"
+msgstr "Kontakt"
 
 #: ../ui/deviceTestingArea.glade:150 ../ui/settings.glade:1987
 msgid "Button 1"
@@ -2308,16 +2320,16 @@ msgstr "Touchscreen"
 
 #: ../ui/deviceTestingArea.glade:374
 msgid "In use"
-msgstr ""
+msgstr "Aktiv"
 
 #: ../ui/deviceTestingArea.glade:388 ../ui/deviceTestingArea.glade:402
 msgctxt "stylus hover"
 msgid "Hover"
-msgstr ""
+msgstr "Annäherung"
 
 #: ../ui/deviceTestingArea.glade:443
 msgid "Show logs"
-msgstr ""
+msgstr "Logs anzeigen"
 
 #: ../ui/deviceTestingArea.glade:455
 msgid "Export debug info"
@@ -2325,28 +2337,29 @@ msgstr "Debug-Info exportieren"
 
 #: ../ui/deviceTestingArea.glade:477
 msgid "To clear the logs, simply close and reopen the settings dialog"
-msgstr ""
+msgstr "Um die Logs zu löschen, schließen und öffnen Sie einfach den Einstellungsdialog"
 
 #: ../ui/deviceTestingArea.glade:491
 msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
 "Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
-msgstr ""
+msgstr "Wählen Sie diese Option, wenn das \"Kontakt\" Anzeige nicht aufleuchtet, wenn Sie den Stift verwenden und eine der Tasten drücken.\n\n"
+"Deaktivieren Sie diese Option, wenn das \"Kontakt\" Anzeige leuchtet, während der Stift schwebt (aber nicht den Bildschirm oder das Tablet berührt)."
 
 #: ../ui/deviceTestingArea.glade:500
 msgid "Emulate stylus tip contact on button press"
-msgstr ""
+msgstr "Bei Tastendruck Stiftkontakt emulieren"
 
 #: ../ui/deviceTestingArea.glade:547
 msgid "<i>Change the device class below if your device is not correctly recognized (e.g. your active stylus shows up as touchscreen)</i>"
-msgstr ""
+msgstr "<i>Ändern Sie die Geräteklasse unten, wenn Ihr Gerät nicht richtig erkannt wird (z.B. wenn Ihr aktiver Stift als Touchscreen angezeigt wird)</i>"
 
 #: ../ui/deviceTestingArea.glade:568
 msgid "Last device used:"
-msgstr ""
+msgstr "Zuletzt benutztes Gerät:"
 
 #: ../ui/deviceTestingArea.glade:588
 msgid "Show all known devices"
-msgstr ""
+msgstr "Alle bekannten Geräte anzeigen"
 
 #: ../ui/exportSettings.glade:36
 msgid "Resolution"
@@ -2554,7 +2567,7 @@ msgstr "Schriftart des Editors auswählen"
 
 #: ../ui/latexSettings.glade:516
 msgid "You can optionally use an external editor program instead of the built-in editor. If you enable the option below, the provided editor command (defaulting to $EDITOR) will start with a popup that only shows a preview and potential error message instead of the normal one with a built-in editor. The environment variable XPP_TEXT_COLOR is set to the current Text Tool color in hex RGB format."
-msgstr ""
+msgstr "Sie können optional ein externes Editorprogramm anstelle des integrierten Editors verwenden. Wenn Sie die folgende Option aktivieren, wird der angegebene Befehl (standardmäßig $EDITOR) mit einem Popup gestartet, das nur eine Vorschau und mögliche Fehlermeldungen anzeigt, anstatt des normalen Fensters mit integrierten Editor. Die Umgebungsvariable XPP_TEXT_COLOR wird auf die aktuelle Farbe des Textwerkzeugs im Hex-RGB-Format gesetzt."
 
 #: ../ui/latexSettings.glade:532
 msgid "Use external Editor"

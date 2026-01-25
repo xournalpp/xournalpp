@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-18 14:01+0000\n"
-"PO-Revision-Date: 2025-12-21 04:28\n"
+"POT-Creation-Date: 2026-01-09 15:22+0000\n"
+"PO-Revision-Date: 2026-01-25 04:38\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -47,8 +47,8 @@ msgstr "是"
 msgid "No"
 msgstr "否"
 
-#: ../src/core/control/Control.cpp:828 ../src/core/control/Control.cpp:1784
-#: ../src/core/control/Control.cpp:2108
+#: ../src/core/control/Control.cpp:828 ../src/core/control/Control.cpp:1786
+#: ../src/core/control/Control.cpp:2111
 msgid "Cancel"
 msgstr "取消"
 
@@ -62,7 +62,7 @@ msgstr "在结尾插入"
 
 #: ../src/core/control/Control.cpp:833
 msgid "_Journal"
-msgstr "日志(_J)"
+msgstr "页面(_J)"
 
 #: ../src/core/control/Control.cpp:833
 msgid "Paper B_ackground"
@@ -123,74 +123,74 @@ msgstr "读取 PDF 文件 \"{1}\" 时出错\n"
 msgid "Error reading PNG file \"{1}\""
 msgstr "读取 PNG 文件“{1}”时出错"
 
-#: ../src/core/control/Control.cpp:1764
+#: ../src/core/control/Control.cpp:1766
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "无法找到所附的背景文件。它可能已被移动、重命名或删除。"
 
-#: ../src/core/control/Control.cpp:1767
+#: ../src/core/control/Control.cpp:1769
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "无法找到背景文件“{1}”。它可能已被移动、重命名或删除。\n"
 "它最后一次出现是在：“{2}”"
 
-#: ../src/core/control/Control.cpp:1777
+#: ../src/core/control/Control.cpp:1779
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "拟议替换文件：\"{1}\""
 
-#: ../src/core/control/Control.cpp:1782
+#: ../src/core/control/Control.cpp:1784
 msgid "Select another PDF"
 msgstr "选择其他PDF"
 
-#: ../src/core/control/Control.cpp:1783
+#: ../src/core/control/Control.cpp:1785
 msgid "Remove PDF Background"
 msgstr "去掉PDF背景"
 
-#: ../src/core/control/Control.cpp:1787
+#: ../src/core/control/Control.cpp:1789
 msgid "Use proposed PDF"
 msgstr "使用拟议的 PDF"
 
-#: ../src/core/control/Control.cpp:1790
+#: ../src/core/control/Control.cpp:1792
 msgid "Missing PDF background file"
 msgstr "缺少 PDF 背景文件"
 
-#: ../src/core/control/Control.cpp:1922
+#: ../src/core/control/Control.cpp:1924
 msgid "Select font"
 msgstr "选择字体"
 
-#: ../src/core/control/Control.cpp:1941
+#: ../src/core/control/Control.cpp:1943
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "选色"
 
-#: ../src/core/control/Control.cpp:1966
+#: ../src/core/control/Control.cpp:1968
 msgid "Unsaved Document"
 msgstr "未保存文档"
 
-#: ../src/core/control/Control.cpp:2101
+#: ../src/core/control/Control.cpp:2104
 msgid "Document file was removed."
 msgstr "文档已删除。"
 
-#: ../src/core/control/Control.cpp:2101
+#: ../src/core/control/Control.cpp:2104
 msgid "This document is not saved yet."
 msgstr "此文档尚未保存。"
 
-#: ../src/core/control/Control.cpp:2103
+#: ../src/core/control/Control.cpp:2106
 msgid "Save As..."
 msgstr "另存为..."
 
-#: ../src/core/control/Control.cpp:2103 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2106 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "保存"
 
-#: ../src/core/control/Control.cpp:2106
+#: ../src/core/control/Control.cpp:2109
 msgid "Discard"
 msgstr "丢弃"
 
-#: ../src/core/control/Control.cpp:2191
+#: ../src/core/control/Control.cpp:2194
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr "创建 Gtk 演示子进程失败: {1} (退出代码: {2})"
 
@@ -230,11 +230,11 @@ msgstr "小红点"
 msgid "tablet pad"
 msgstr "数位板"
 
-#: ../src/core/control/ExportHelper.cpp:78
+#: ../src/core/control/ExportHelper.cpp:79
 msgid "Image file successfully created"
 msgstr "图片文件创建成功"
 
-#: ../src/core/control/ExportHelper.cpp:134
+#: ../src/core/control/ExportHelper.cpp:136
 msgid "PDF file successfully created"
 msgstr "PDF文件成功建立"
 
@@ -310,12 +310,12 @@ msgstr "还原文件"
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "无法找到背景文件“{1}”。它可能已被移动、改名或删除。"
 
-#: ../src/core/control/XournalMain.cpp:211
-#: ../src/core/control/XournalMain.cpp:218
+#: ../src/core/control/XournalMain.cpp:221
+#: ../src/core/control/XournalMain.cpp:229
 msgid "Error: {1}"
 msgstr "错误：{1}"
 
-#: ../src/core/control/XournalMain.cpp:351
+#: ../src/core/control/XournalMain.cpp:371
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -329,24 +329,24 @@ msgstr "<span foreground='red' size='x-large'>缺失必要的用户界面文件�
 "  不在工作目录下\n"
 "  不在 {2}"
 
-#: ../src/core/control/XournalMain.cpp:356
+#: ../src/core/control/XournalMain.cpp:376
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "将尝试在不使用此文件的情况下运行。"
 
-#: ../src/core/control/XournalMain.cpp:378
-#: ../src/core/control/XournalMain.cpp:439
+#: ../src/core/control/XournalMain.cpp:398
+#: ../src/core/control/XournalMain.cpp:459
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "对不起，Xournal++ 只能一次打开一个文件。\n"
 "其他文件已被忽略。"
 
-#: ../src/core/control/XournalMain.cpp:389
+#: ../src/core/control/XournalMain.cpp:409
 msgid "File {1} does not exist."
 msgstr "文件 {1} 不存在。"
 
-#: ../src/core/control/XournalMain.cpp:393
+#: ../src/core/control/XournalMain.cpp:413
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -354,94 +354,113 @@ msgstr "文件系统错误： {1}\n"
 "抱歉，Xournal++ 无法打开文件： {2}\n"
 "考虑将文件复制到本地目录。"
 
-#: ../src/core/control/XournalMain.cpp:578
+#: ../src/core/control/XournalMain.cpp:598
 msgid "Jump to Page (first Page: 1)"
 msgstr "跳到页面(第一页:1)"
 
-#: ../src/core/control/XournalMain.cpp:582
+#: ../src/core/control/XournalMain.cpp:602
 msgid "Get version of xournalpp"
 msgstr "获取xournalp版本信息"
 
-#: ../src/core/control/XournalMain.cpp:584
+#: ../src/core/control/XournalMain.cpp:604
 msgid "Disable audio for this session"
 msgstr "禁用此会话的音频"
 
-#: ../src/core/control/XournalMain.cpp:586
+#: ../src/core/control/XournalMain.cpp:606
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
-msgstr ""
+msgstr "以附件模式打开 PDF 文件\n\n"
+"如果未指定 PDF 文件，则忽略此操作。"
 
-#: ../src/core/control/XournalMain.cpp:590
+#: ../src/core/control/XournalMain.cpp:610
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "使用 FILE 指定的 PDF 作为背景保存 xopp 文件"
 
-#: ../src/core/control/XournalMain.cpp:595
+#: ../src/core/control/XournalMain.cpp:615
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
-msgstr ""
+msgstr "使用提供的后端导出 PDF 文件。\n\n"
+"可用后端：{1}\n\n"
+"不使用 `-p/--create-pdf=foo.pdf` 参数无效。"
 
-#: ../src/core/control/XournalMain.cpp:604
+#: ../src/core/control/XournalMain.cpp:624
 msgid "Export FILE as PDF"
 msgstr "导出为 PDF"
 
-#: ../src/core/control/XournalMain.cpp:607
+#: ../src/core/control/XournalMain.cpp:627
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
-msgstr ""
+msgstr "将文件导出为图像文件（每页一个）\n\n"
+"根据 IMGFILE 文件的扩展名猜测输出格式\n\n"
+"支持的格式：.png、.svg"
 
-#: ../src/core/control/XournalMain.cpp:613
+#: ../src/core/control/XournalMain.cpp:633
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
-msgstr ""
+msgstr "无背景导出\n"
+"                                 导出文件包含白色或透明背景，\n"
+"                                 取决于文件的导出格式\n"
 
-#: ../src/core/control/XournalMain.cpp:618
+#: ../src/core/control/XournalMain.cpp:638
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
-msgstr ""
+msgstr "无规则导出\n"
+"                                 导出的文件没有文档结构\n"
 
-#: ../src/core/control/XournalMain.cpp:623
+#: ../src/core/control/XournalMain.cpp:643
 msgid "Export layers progressively\n"
 "                                       In PDF export, Render layers progressively one by one.\n"
 "                                       This results in N export pages per page with N layers,\n"
 "                                       building up the layer stack progressively.\n"
 "                                       The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "逐层导出\n\n"
+"在 PDF 导出中，逐层渲染图层。\n\n"
+"这样每页会生成 N 个导出页面，每个页面包含 N 个图层，\n\n"
+"图层堆栈会逐步构建。\n\n"
+"生成的 PDF 文件可用于演示文稿。"
 
-#: ../src/core/control/XournalMain.cpp:632
+#: ../src/core/control/XournalMain.cpp:652
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "仅导出 RANGE 指定的页码（例如“2-3,5,7-”)\n\n"
+"不使用 -p/--create-pdf 或 -i/--create-img 参数无效"
 
-#: ../src/core/control/XournalMain.cpp:637
+#: ../src/core/control/XournalMain.cpp:657
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "仅导出 RANGE 指定的图层（例如“2-3,5,7-”)\n\n"
+"不使用 -p/--create-pdf 或 -i/--create-img 参数无效"
 
-#: ../src/core/control/XournalMain.cpp:641
+#: ../src/core/control/XournalMain.cpp:661
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "设置导出为 PNG 图片时的DPI，默认为 300\n"
+"                                 在未使用 -i/--create-img=foo.png 时无效"
 
-#: ../src/core/control/XournalMain.cpp:645
+#: ../src/core/control/XournalMain.cpp:665
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "设置导出页面为 PNG 图片时的宽度\n"
+"                                 当未使用 -i/--create-img=foo.png 时无效\n"
+"                                 当使用 --export-png-dpi 时无效"
 
-#: ../src/core/control/XournalMain.cpp:650
+#: ../src/core/control/XournalMain.cpp:670
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "设置导出页面为 PNG 图片时的高度\n"
+"                                 当未使用 -i/--create-img=foo.png 时无效\n"
+"                                 当使用 --export-png-dpi 或 --export-png-width 时无效"
 
-#: ../src/core/control/XournalMain.cpp:658
+#: ../src/core/control/XournalMain.cpp:678
 msgid "Advanced export options"
 msgstr "高级导出选项"
 
-#: ../src/core/control/XournalMain.cpp:659
+#: ../src/core/control/XournalMain.cpp:679
 msgid "Display advanced export options"
 msgstr "显示高级导出选项"
 
@@ -808,7 +827,7 @@ msgstr "无法播放音频录音 {1}"
 
 #: ../src/core/gui/PageView.cpp:944
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:83
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:145
 msgid "Loading..."
 msgstr "加载中..."
 
@@ -932,11 +951,11 @@ msgstr "插入图片"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 msgid "Laser Pointer - Pen"
-msgstr ""
+msgstr "激光笔 - Pen"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 msgid "Laser Pointer - Hightlighter"
-msgstr ""
+msgstr "激光笔 - 荧光笔"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 msgid "Vertical space"
@@ -1032,23 +1051,23 @@ msgstr "绘制样条曲线"
 
 #: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
 msgid "Export Logs"
-msgstr ""
+msgstr "导出日志"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:115
 msgid "Failed to parse external editor command: {1}"
-msgstr ""
+msgstr "解析外部编辑器命令失败：{1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:131
 msgid "Could not spawn editor: {1}"
-msgstr ""
+msgstr "无法生成编辑器： {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:162
 msgid "Could not wait for editor: {1}"
-msgstr ""
+msgstr "无法等待编辑器： {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:171
 msgid "Editor exited with bad status {1}"
-msgstr ""
+msgstr "编辑器以错误状态退出 {1}"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:15
 msgid "All files"
@@ -1646,7 +1665,7 @@ msgstr "圆规"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Toggle Touch Drawing"
-msgstr ""
+msgstr "切换到触摸板的绘画输入"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
@@ -1722,27 +1741,27 @@ msgstr "细"
 msgid "Very Thick"
 msgstr "非常粗"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:175
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:172
 msgid "Show all"
 msgstr "显示全部"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:176
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:173
 msgid "Hide all"
 msgstr "隐藏所有"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:178
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:175
 msgid "Add a layer above the active layer"
 msgstr "在活动图层上方添加一个图层"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:179
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:176
 msgid "Add a layer below the active layer"
 msgstr "在活动图层下方添加一个图层"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:206
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:203
 msgid "Layer"
 msgstr "图层"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:303
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:300
 msgid "Layer Combo"
 msgstr "图层工具组"
 
@@ -1878,19 +1897,19 @@ msgstr "PDF Cairo画布初始化失败"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:110
 msgid "PDF page number is out of range"
-msgstr ""
+msgstr "PDF 页码超出范围"
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:21
 msgid "Unknown pdf backend: {1}. Available backends are: {2}. Using default backend."
-msgstr ""
+msgstr "未知的 pdf后端： {1}. 可用的后端是： {2}. 使用默认后端。"
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:39
 msgid "Default"
-msgstr ""
+msgstr "默认"
 
 #: ../src/core/pdf/base/QPdfExport.cpp:173
 msgid "Error with overlay or final export:"
-msgstr ""
+msgstr "叠加或最终导出时出错："
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:128
 msgid "Error while finalizing the PDF Cairo surface"
@@ -2109,7 +2128,7 @@ msgstr "错误 {1} 执行系统命令: {2}"
 
 #: ../src/util/XojMsgBox.cpp:186
 msgid "The file {1} already exists! Do you want to replace it?"
-msgstr ""
+msgstr "文件：{1} 已存在！是否要替换它？"
 
 #: ../src/util/XojMsgBox.cpp:190
 msgid "Select another name"
@@ -2122,7 +2141,8 @@ msgstr "替换"
 #: ../src/util/XojMsgBox.cpp:216
 msgid "Unable to open the link: {1}\n"
 "{2}"
-msgstr ""
+msgstr "无法打开链接: {1}\n"
+"{2}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
@@ -2211,40 +2231,40 @@ msgstr "确定"
 
 #: ../ui/crashDialog.glade:7
 msgid "Crash report"
-msgstr ""
+msgstr "崩溃报告"
 
 #: ../ui/crashDialog.glade:23
 msgid "Oops... Xournal++ encountered a fatal error"
-msgstr ""
+msgstr "Oops... Xournal++ 遇到了一个致命错误"
 
 #: ../ui/crashDialog.glade:39
 msgid "Please consider filling a bug report (see button below). Attach the following log to your report."
-msgstr ""
+msgstr "请考虑提交错误报告（见下方按钮）。请将以下日志文​​件附加到您的报告中。"
 
 #: ../ui/crashDialog.glade:56
 msgid "Your document has been saved in:"
-msgstr ""
+msgstr "您的文档已保存在："
 
 #: ../ui/crashDialog.glade:92
 msgid "Execution log:"
-msgstr ""
+msgstr "运行日志："
 
 #: ../ui/crashDialog.glade:140
 msgid "Open your web browser with a partially pre-filled bug report"
-msgstr ""
+msgstr "在浏览器中打开一个部分预填好的错误报告页面"
 
 #: ../ui/crashDialog.glade:145
 msgid "Create a bug report"
-msgstr ""
+msgstr "创建错误报告"
 
 #: ../ui/crashDialog.glade:164
 msgctxt "github is a name - do not try to translate it"
 msgid "(this will open github in your browser)"
-msgstr ""
+msgstr "(这将在您的浏览器中打开 Github)"
 
 #: ../ui/deviceList.glade:7
 msgid "Known devices"
-msgstr ""
+msgstr "已知设备"
 
 #: ../ui/deviceList.glade:46
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -2252,7 +2272,7 @@ msgstr "<i>将设备类分配给您系统的每个输入设备。 只有当您�
 
 #: ../ui/deviceTestingArea.glade:42
 msgid "Try out your devices in the area below"
-msgstr ""
+msgstr "在下方的区域测试您的设备"
 
 #: ../ui/deviceTestingArea.glade:70 ../ui/settings.glade:1630
 #: ../ui/settingsDeviceClassConfig.glade:35
@@ -2262,17 +2282,17 @@ msgstr "鼠标"
 #: ../ui/deviceTestingArea.glade:82
 msgctxt "mouse button"
 msgid "Left"
-msgstr ""
+msgstr "左键"
 
 #: ../ui/deviceTestingArea.glade:96
 msgctxt "mouse button"
 msgid "Middle"
-msgstr ""
+msgstr "中键"
 
 #: ../ui/deviceTestingArea.glade:110
 msgctxt "mouse button"
 msgid "Right"
-msgstr ""
+msgstr "右键"
 
 #: ../ui/deviceTestingArea.glade:124 ../ui/settings.glade:2170
 msgid "Stylus"
@@ -2281,7 +2301,7 @@ msgstr "触控笔"
 #: ../ui/deviceTestingArea.glade:136 ../ui/deviceTestingArea.glade:190
 msgctxt "the tip of the stylus"
 msgid "Tip"
-msgstr ""
+msgstr "按下"
 
 #: ../ui/deviceTestingArea.glade:150 ../ui/settings.glade:1987
 msgid "Button 1"
@@ -2298,45 +2318,46 @@ msgstr "触摸屏"
 
 #: ../ui/deviceTestingArea.glade:374
 msgid "In use"
-msgstr ""
+msgstr "正在使用"
 
 #: ../ui/deviceTestingArea.glade:388 ../ui/deviceTestingArea.glade:402
 msgctxt "stylus hover"
 msgid "Hover"
-msgstr ""
+msgstr "悬停"
 
 #: ../ui/deviceTestingArea.glade:443
 msgid "Show logs"
-msgstr ""
+msgstr "显示日志"
 
 #: ../ui/deviceTestingArea.glade:455
 msgid "Export debug info"
-msgstr ""
+msgstr "导出调试信息"
 
 #: ../ui/deviceTestingArea.glade:477
 msgid "To clear the logs, simply close and reopen the settings dialog"
-msgstr ""
+msgstr "要清除日志，只需关闭并重新打开首选项"
 
 #: ../ui/deviceTestingArea.glade:491
 msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
 "Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
-msgstr ""
+msgstr "如果在使用触控笔并按下其中一个按钮时“按下”没有亮起，请选择此选项。\n\n"
+"如果触控笔悬停时“按下”亮起(但不触摸屏幕或触控板)，请取消选择此选项。"
 
 #: ../ui/deviceTestingArea.glade:500
 msgid "Emulate stylus tip contact on button press"
-msgstr ""
+msgstr "使用按钮模拟触控笔按下"
 
 #: ../ui/deviceTestingArea.glade:547
 msgid "<i>Change the device class below if your device is not correctly recognized (e.g. your active stylus shows up as touchscreen)</i>"
-msgstr ""
+msgstr "<i>如果您的设备无法正确识别，请更改下面的设备类别(例如您的活动样式显示为触摸屏)</i>"
 
 #: ../ui/deviceTestingArea.glade:568
 msgid "Last device used:"
-msgstr ""
+msgstr "最后使用的设备："
 
 #: ../ui/deviceTestingArea.glade:588
 msgid "Show all known devices"
-msgstr ""
+msgstr "显示所有已知设备"
 
 #: ../ui/exportSettings.glade:36
 msgid "Resolution"
@@ -2412,7 +2433,7 @@ msgstr "启用时，每个页面的图层将被逐一添加，由此产生的 PD
 
 #: ../ui/exportSettings.glade:379
 msgid "Backend"
-msgstr ""
+msgstr "后端"
 
 #: ../ui/extEdTexDialog.glade:23 ../ui/intEdTexDialog.glade:18
 msgid "Insert Latex"
@@ -2420,7 +2441,7 @@ msgstr "插入LaTeX"
 
 #: ../ui/extEdTexDialog.glade:42
 msgid "Enter / edit LaTeX Text in external Editor"
-msgstr ""
+msgstr "在外部编辑器中输入/编辑 LaTeX 文本"
 
 #: ../ui/extEdTexDialog.glade:86 ../ui/intEdTexDialog.glade:116
 msgid "Output generated by the LaTeX command."
@@ -2428,7 +2449,7 @@ msgstr "LaTeX 命令生成的输出。"
 
 #: ../ui/extEdTexDialog.glade:138
 msgid "Continue Editing"
-msgstr ""
+msgstr "继续编辑"
 
 #: ../ui/goto.glade:23
 msgid "Go to Page"
@@ -2544,27 +2565,27 @@ msgstr "选择编辑器字体"
 
 #: ../ui/latexSettings.glade:516
 msgid "You can optionally use an external editor program instead of the built-in editor. If you enable the option below, the provided editor command (defaulting to $EDITOR) will start with a popup that only shows a preview and potential error message instead of the normal one with a built-in editor. The environment variable XPP_TEXT_COLOR is set to the current Text Tool color in hex RGB format."
-msgstr ""
+msgstr "你也可以选择使用外部编辑器程序，而不是内置编辑器。如果你启用下面的选项，所提供的编辑器命令（默认是 $EDITOR）会以一个弹出窗口启动，这个窗口只会显示预览和可能的错误信息，而不是正常情况下带有内置编辑器的窗口。环境变量 XPP_TEXT_COLOR 会被设置为当前文本工具的颜色（以十六进制 RGB 格式表示）。"
 
 #: ../ui/latexSettings.glade:532
 msgid "Use external Editor"
-msgstr ""
+msgstr "使用外部编辑器"
 
 #: ../ui/latexSettings.glade:549
 msgid "Editor command"
-msgstr ""
+msgstr "编辑器指令"
 
 #: ../ui/latexSettings.glade:574
 msgid "Extension of temporary file"
-msgstr ""
+msgstr "扩展临时文件"
 
 #: ../ui/latexSettings.glade:595
 msgid "Automatically confirm on editor exit"
-msgstr ""
+msgstr "编辑器退出时自动确认"
 
 #: ../ui/latexSettings.glade:625
 msgid "External Editor (Expert user only)"
-msgstr ""
+msgstr "外部编辑器 (仅限专业用户)"
 
 #: ../ui/latexSettings.glade:641
 msgid "Editor settings"
@@ -3570,7 +3591,7 @@ msgstr "缩放速度"
 
 #: ../ui/settings.glade:4410
 msgid "<i>To make sure on 100% zoom the size of elements is natural.</i>"
-msgstr ""
+msgstr "<i>为了确保100%放大时的大小和现实相同。</i>"
 
 #: ../ui/settings.glade:4430
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
@@ -3578,7 +3599,7 @@ msgstr "<i>在你的屏幕上放置一个尺子并移动滑动条直到刻度对
 
 #: ../ui/settings.glade:4446
 msgid "Automatic"
-msgstr ""
+msgstr "自动"
 
 #: ../ui/settings.glade:4503
 msgid "The unit of the ruler is cm"
@@ -3808,23 +3829,23 @@ msgstr "绘图区域"
 
 #: ../ui/settings.glade:5638
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
-msgstr "<i>选择按下缺省按钮后的工具和设置</i>"
+msgstr "<i>选择按下默认按钮后的工具和设置</i>"
 
 #: ../ui/settings.glade:5690
 msgid "<b>Default tool</b>"
-msgstr ""
+msgstr "<b>默认工具</b>"
 
 #: ../ui/settings.glade:5726
 msgid "<i>The laser pointer allows to write strokes that will fade out after a short while.</i>"
-msgstr ""
+msgstr "<i>激光笔允许您书写不久后就会消失的笔划。</i>"
 
 #: ../ui/settings.glade:5747
 msgid "Fade out delay (in ms)"
-msgstr ""
+msgstr "淡出延迟 (毫秒)"
 
 #: ../ui/settings.glade:5799
 msgid "<b>Laser pointer</b>"
-msgstr ""
+msgstr "<b>激光笔</b>"
 
 #: ../ui/settings.glade:5839
 msgid "Tools"
@@ -3968,7 +3989,7 @@ msgstr "已禁用"
 
 #: ../ui/settingsDeviceClassConfig.glade:54
 msgid "Apply"
-msgstr ""
+msgstr "应用"
 
 #: ../ui/toolbarCustomizeDialog.glade:30
 msgid "Drag and drop Components from here to the toolbars and back."
@@ -4321,7 +4342,7 @@ msgstr "在矩形中选择文本"
 
 #: ../ui/mainmenubar.xml:534
 msgid "_Highlighter"
-msgstr "高亮(_H)"
+msgstr "荧光笔(_H)"
 
 #: ../ui/mainmenubar.xml:540
 msgid "_Text"
@@ -4458,7 +4479,7 @@ msgstr "带边框方格图纸"
 
 #: ../resources-templates/pagetemplates.ini.in:47
 msgid "Graph with border (bold every 5th)"
-msgstr ""
+msgstr "带边框的图表（每隔5个边框加粗）"
 
 #: ../resources-templates/toolbar.ini.in:50
 msgid "All Tools"
@@ -4546,7 +4567,7 @@ msgstr "从GUI和命令行导出到多种格式，包括SVG、PNG和 PDF。"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:27
 msgid "Different drawing tools (e.g. pen, highlighter) and stroke styles (e.g. solid, dotted)"
-msgstr "不同的绘图工具 (如笔, 高亮) 和 笔画样式(如线条, 点状)"
+msgstr "不同的绘图工具 (如笔, 荧光笔) 和 笔画样式(如线条, 点状)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:28
 msgid "Shape drawing (line, arrow, circle, rectangle, spline)"
