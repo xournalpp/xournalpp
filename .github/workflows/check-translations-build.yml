@@ -1,4 +1,4 @@
-name: Build translations
+name: Check translations build
 
 on:
   pull_request:
