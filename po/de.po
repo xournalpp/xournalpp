@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-09 15:22+0000\n"
-"PO-Revision-Date: 2026-01-18 04:31\n"
+"PO-Revision-Date: 2026-01-25 04:39\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -416,34 +416,45 @@ msgid "Export layers progressively\n"
 "                                       This results in N export pages per page with N layers,\n"
 "                                       building up the layer stack progressively.\n"
 "                                       The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "Ebenen schrittweise exportieren\n"
+"                                 Beim Export als PDF werden die Ebenen nacheinander auf einzelne Seiten abgebildet.\n"
+"                                 Dadurch werden für eine Seite mit N Ebenen N Exportseiten erstellt,\n"
+"                                 was den Ebenenstapel Schritt für Schritt aufbaut.\n"
+"                                 Die entstehende PDF-Datei kann als Präsentation benutzt werden.\n"
 
 #: ../src/core/control/XournalMain.cpp:652
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Exportiere nur die durch den Bereich angegebenen Seiten (z.B. \"2-3,5,7-\")\n"
+"                                 Keine Auswirkung ohne -p/--create-pdf oder -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:657
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Exportiere nur die durch den Bereich angegebenen Ebenen (z.B. \"2-3,5,7-\")\n"
+"                                 Keine Auswirkung ohne -p/--create-pdf oder -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:661
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "DPI für PNG-Exporte festlegen. Standard ist 300\n"
+"                                 Keine Auswirkung ohne -i/--create-img=foo.png"
 
 #: ../src/core/control/XournalMain.cpp:665
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "Seitenbreite für den Export von PNG-Dateien festlegen\n"
+"                                 Keine Auswirkung ohne -i/--create-img=foo.png\n"
+"                                 Ignoriert wenn --export-png-dpi verwendet wird"
 
 #: ../src/core/control/XournalMain.cpp:670
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "Seitenhöhe für Export von PNG-Dateien festlegen\n"
+"                                 Keine Auswirkung ohne -i/--create-img=foo.png\n"
+"                                 Ignoriert wenn --export-png-dpi oder --export-png-width verwendet wird"
 
 #: ../src/core/control/XournalMain.cpp:678
 msgid "Advanced export options"
@@ -941,7 +952,7 @@ msgstr "Bild einfügen"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 msgid "Laser Pointer - Pen"
-msgstr ""
+msgstr "Laserpointer - Stift"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 msgid "Laser Pointer - Hightlighter"
@@ -1041,19 +1052,19 @@ msgstr "Zeichne Spline"
 
 #: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
 msgid "Export Logs"
-msgstr ""
+msgstr "Logs exportieren"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:115
 msgid "Failed to parse external editor command: {1}"
-msgstr ""
+msgstr "Fehler beim Parsen des externen Editor-Befehls: {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:131
 msgid "Could not spawn editor: {1}"
-msgstr ""
+msgstr "Konnte Editor nicht öffnen: {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:162
 msgid "Could not wait for editor: {1}"
-msgstr ""
+msgstr "Konnte nicht auf Editor warten: {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:171
 msgid "Editor exited with bad status {1}"
@@ -1655,7 +1666,7 @@ msgstr "Zirkel"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Toggle Touch Drawing"
-msgstr ""
+msgstr "Touch-Zeichnen umschalten"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
@@ -1887,19 +1898,19 @@ msgstr "Fehler beim Initialisieren der PDF-Kairo-Oberfläche"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:110
 msgid "PDF page number is out of range"
-msgstr ""
+msgstr "PDF-Seitennummer ist außerhalb des Bereichs"
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:21
 msgid "Unknown pdf backend: {1}. Available backends are: {2}. Using default backend."
-msgstr ""
+msgstr "Unbekanntes pdf-Backend: {1}. Verfügbare Backends sind: {2}. Standard-Backend."
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:39
 msgid "Default"
-msgstr ""
+msgstr "Standard"
 
 #: ../src/core/pdf/base/QPdfExport.cpp:173
 msgid "Error with overlay or final export:"
-msgstr ""
+msgstr "Fehler im Overlay oder finalem Export:"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:128
 msgid "Error while finalizing the PDF Cairo surface"

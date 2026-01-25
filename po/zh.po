@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-09 15:22+0000\n"
-"PO-Revision-Date: 2026-01-11 04:36\n"
+"PO-Revision-Date: 2026-01-25 04:38\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -369,7 +369,8 @@ msgstr "禁用此会话的音频"
 #: ../src/core/control/XournalMain.cpp:606
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
-msgstr ""
+msgstr "以附件模式打开 PDF 文件\n\n"
+"如果未指定 PDF 文件，则忽略此操作。"
 
 #: ../src/core/control/XournalMain.cpp:610
 msgid "Save xopp-file with the background PDF specified as FILE"
@@ -379,7 +380,9 @@ msgstr "使用 FILE 指定的 PDF 作为背景保存 xopp 文件"
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
-msgstr ""
+msgstr "使用提供的后端导出 PDF 文件。\n\n"
+"可用后端：{1}\n\n"
+"不使用 `-p/--create-pdf=foo.pdf` 参数无效。"
 
 #: ../src/core/control/XournalMain.cpp:624
 msgid "Export FILE as PDF"
@@ -389,7 +392,9 @@ msgstr "导出为 PDF"
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
-msgstr ""
+msgstr "将文件导出为图像文件（每页一个）\n\n"
+"根据 IMGFILE 文件的扩展名猜测输出格式\n\n"
+"支持的格式：.png、.svg"
 
 #: ../src/core/control/XournalMain.cpp:633
 msgid "Export without background\n"
@@ -411,17 +416,23 @@ msgid "Export layers progressively\n"
 "                                       This results in N export pages per page with N layers,\n"
 "                                       building up the layer stack progressively.\n"
 "                                       The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "逐层导出\n\n"
+"在 PDF 导出中，逐层渲染图层。\n\n"
+"这样每页会生成 N 个导出页面，每个页面包含 N 个图层，\n\n"
+"图层堆栈会逐步构建。\n\n"
+"生成的 PDF 文件可用于演示文稿。"
 
 #: ../src/core/control/XournalMain.cpp:652
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "仅导出 RANGE 指定的页码（例如“2-3,5,7-”)\n\n"
+"不使用 -p/--create-pdf 或 -i/--create-img 参数无效"
 
 #: ../src/core/control/XournalMain.cpp:657
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "仅导出 RANGE 指定的图层（例如“2-3,5,7-”)\n\n"
+"不使用 -p/--create-pdf 或 -i/--create-img 参数无效"
 
 #: ../src/core/control/XournalMain.cpp:661
 msgid "Set DPI for PNG exports. Default is 300\n"
@@ -1898,7 +1909,7 @@ msgstr "默认"
 
 #: ../src/core/pdf/base/QPdfExport.cpp:173
 msgid "Error with overlay or final export:"
-msgstr ""
+msgstr "叠加或最终导出时出错："
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:128
 msgid "Error while finalizing the PDF Cairo surface"
@@ -2228,7 +2239,7 @@ msgstr "Oops... Xournal++ 遇到了一个致命错误"
 
 #: ../ui/crashDialog.glade:39
 msgid "Please consider filling a bug report (see button below). Attach the following log to your report."
-msgstr ""
+msgstr "请考虑提交错误报告（见下方按钮）。请将以下日志文​​件附加到您的报告中。"
 
 #: ../ui/crashDialog.glade:56
 msgid "Your document has been saved in:"
@@ -4468,7 +4479,7 @@ msgstr "带边框方格图纸"
 
 #: ../resources-templates/pagetemplates.ini.in:47
 msgid "Graph with border (bold every 5th)"
-msgstr ""
+msgstr "带边框的图表（每隔5个边框加粗）"
 
 #: ../resources-templates/toolbar.ini.in:50
 msgid "All Tools"
