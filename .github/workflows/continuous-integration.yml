@@ -2,8 +2,10 @@ name: Build
 
 on:
   pull_request:
-    branches: [ "master", "release-*" ]
-    ignores-paths:
+    branches: 
+      - "master"
+      - "release-*"
+    paths-ignore:
       - 'po/xournalpp.pot'
       - 'po/*.po'
 
