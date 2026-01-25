@@ -366,11 +366,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         return;
     }
 
-    // TODO(fabian): remove this typo fix in 2-3 release cycles
-    if (name == "presureSensitivity") {
-        setParsed(this->pressureSensitivity, value);
-    }
-
     // macro settings
     PARSE(pressureSensitivity)
     PARSE(pressureMultiplier)
@@ -501,6 +496,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     PARSE(numberOfSpacesForTab)
 
     // "strange" settings
+
+    // TODO(fabian): remove this typo fix in 2-3 release cycles
+    if (name == "presureSensitivity") {
+        setParsed(this->pressureSensitivity, value);
+    }
 
     if (name == "font") {
         this->font = newFont;
