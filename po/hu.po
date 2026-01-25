@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-21 16:55+0000\n"
-"PO-Revision-Date: 2026-01-25 04:38\n"
+"POT-Creation-Date: 2026-01-25 07:16+0000\n"
+"PO-Revision-Date: 2026-01-25 19:17\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -47,8 +47,8 @@ msgstr "Igen"
 msgid "No"
 msgstr "Nem"
 
-#: ../src/core/control/Control.cpp:828 ../src/core/control/Control.cpp:1784
-#: ../src/core/control/Control.cpp:2108
+#: ../src/core/control/Control.cpp:828 ../src/core/control/Control.cpp:1786
+#: ../src/core/control/Control.cpp:2111
 msgid "Cancel"
 msgstr "Mégse"
 
@@ -123,74 +123,74 @@ msgstr "Hiba történt a(z) „{1}” PDF-fájl olvasása közben\n"
 msgid "Error reading PNG file \"{1}\""
 msgstr "Hiba történt a(z) „{1}” PNG-fájl olvasása közben"
 
-#: ../src/core/control/Control.cpp:1764
+#: ../src/core/control/Control.cpp:1766
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "A csatolt háttérfájl nem található. Lehet, hogy áthelyezték, átnevezték vagy törölték."
 
-#: ../src/core/control/Control.cpp:1767
+#: ../src/core/control/Control.cpp:1769
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "A(z) {1}-háttérfájl nem található. Lehet, hogy áthelyezték, átnevezték vagy törölték.\n"
 "Utoljára itt látták: {2}"
 
-#: ../src/core/control/Control.cpp:1777
+#: ../src/core/control/Control.cpp:1779
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Javasolt cserefájl: {1}"
 
-#: ../src/core/control/Control.cpp:1782
+#: ../src/core/control/Control.cpp:1784
 msgid "Select another PDF"
 msgstr "Másik PDF kijelölése"
 
-#: ../src/core/control/Control.cpp:1783
+#: ../src/core/control/Control.cpp:1785
 msgid "Remove PDF Background"
 msgstr "PDF-háttér eltávolítása"
 
-#: ../src/core/control/Control.cpp:1787
+#: ../src/core/control/Control.cpp:1789
 msgid "Use proposed PDF"
 msgstr "Használja a javasolt PDF-fájlt"
 
-#: ../src/core/control/Control.cpp:1790
+#: ../src/core/control/Control.cpp:1792
 msgid "Missing PDF background file"
 msgstr "PDF-háttérfájl hiányzik"
 
-#: ../src/core/control/Control.cpp:1922
+#: ../src/core/control/Control.cpp:1924
 msgid "Select font"
 msgstr "Betűkészlet kijelölése"
 
-#: ../src/core/control/Control.cpp:1941
+#: ../src/core/control/Control.cpp:1943
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Szín kijelölése"
 
-#: ../src/core/control/Control.cpp:1966
+#: ../src/core/control/Control.cpp:1968
 msgid "Unsaved Document"
 msgstr "Nem mentett dokumentum"
 
-#: ../src/core/control/Control.cpp:2101
+#: ../src/core/control/Control.cpp:2104
 msgid "Document file was removed."
 msgstr "A dokumentumfájl eltávolításra került."
 
-#: ../src/core/control/Control.cpp:2101
+#: ../src/core/control/Control.cpp:2104
 msgid "This document is not saved yet."
 msgstr "Ez a dokumentum még nincs elmentve."
 
-#: ../src/core/control/Control.cpp:2103
+#: ../src/core/control/Control.cpp:2106
 msgid "Save As..."
 msgstr "Mentés másként..."
 
-#: ../src/core/control/Control.cpp:2103 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2106 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "Mentés"
 
-#: ../src/core/control/Control.cpp:2106
+#: ../src/core/control/Control.cpp:2109
 msgid "Discard"
 msgstr "Módosítások elvetése"
 
-#: ../src/core/control/Control.cpp:2191
+#: ../src/core/control/Control.cpp:2194
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr "A Gtk demó alfolyamat létrehozása nem sikerült: {1} (kilépési kód: {2})"
 
@@ -230,11 +230,11 @@ msgstr "trackpoint"
 msgid "tablet pad"
 msgstr "grafikai tablet"
 
-#: ../src/core/control/ExportHelper.cpp:78
+#: ../src/core/control/ExportHelper.cpp:79
 msgid "Image file successfully created"
 msgstr "Képfájl sikeresen létrehozva"
 
-#: ../src/core/control/ExportHelper.cpp:134
+#: ../src/core/control/ExportHelper.cpp:136
 msgid "PDF file successfully created"
 msgstr "PDF fájl sikeresen létrehozva"
 
@@ -310,12 +310,12 @@ msgstr "Fájlt helyreállítása"
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "A(z) „{1}” háttérfájl nem található. Lehet, hogy áthelyezték, átnevezték vagy törölték."
 
-#: ../src/core/control/XournalMain.cpp:213
-#: ../src/core/control/XournalMain.cpp:220
+#: ../src/core/control/XournalMain.cpp:223
+#: ../src/core/control/XournalMain.cpp:231
 msgid "Error: {1}"
 msgstr "Hiba: {1}"
 
-#: ../src/core/control/XournalMain.cpp:355
+#: ../src/core/control/XournalMain.cpp:375
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -329,24 +329,24 @@ msgstr "<span foreground='red' size='x-large'>A szükséges UI fájl hiányzik:\
 "  A munkakönyvtárban nem található\n"
 "  A {2} könyvtárban nem található"
 
-#: ../src/core/control/XournalMain.cpp:360
+#: ../src/core/control/XournalMain.cpp:380
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "A program megpróbál enélkül a fájl nélkül futni."
 
-#: ../src/core/control/XournalMain.cpp:382
-#: ../src/core/control/XournalMain.cpp:443
+#: ../src/core/control/XournalMain.cpp:402
+#: ../src/core/control/XournalMain.cpp:463
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Elnézést, a Xournal++ egyszerre csak egy fájlt tud megnyitni.\n"
 "A további fájlok figyelmen kívül hagyva."
 
-#: ../src/core/control/XournalMain.cpp:393
+#: ../src/core/control/XournalMain.cpp:413
 msgid "File {1} does not exist."
 msgstr "A(z) {1} fájl nem létezik."
 
-#: ../src/core/control/XournalMain.cpp:397
+#: ../src/core/control/XournalMain.cpp:417
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -354,29 +354,29 @@ msgstr "Fájlrendszer hiba: {1}\n"
 "Sajnáljuk, a Xournal++ nem tudja megnyitni a következő fájlt: {2}\n"
 "Fontolja meg a fájl másolását egy helyi könyvtárba."
 
-#: ../src/core/control/XournalMain.cpp:582
+#: ../src/core/control/XournalMain.cpp:602
 msgid "Jump to Page (first Page: 1)"
 msgstr "Ugrás adott oldalra (első oldal: 1)"
 
-#: ../src/core/control/XournalMain.cpp:586
+#: ../src/core/control/XournalMain.cpp:606
 msgid "Get version of xournalpp"
 msgstr "A xournalpp verzió lehívása"
 
-#: ../src/core/control/XournalMain.cpp:588
+#: ../src/core/control/XournalMain.cpp:608
 msgid "Disable audio for this session"
 msgstr "Hang letiltása ehhez a munkamenethez"
 
-#: ../src/core/control/XournalMain.cpp:590
+#: ../src/core/control/XournalMain.cpp:610
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
 msgstr "PDF fájl megnyitása csatolási módban\n"
 "                                 Figyelmen kívül hagyja, ha nincs megadva PDF-fájl."
 
-#: ../src/core/control/XournalMain.cpp:594
+#: ../src/core/control/XournalMain.cpp:614
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "xopp-fájl mentése a FÁJL-ként megadott háttér PDF-fájllal"
 
-#: ../src/core/control/XournalMain.cpp:599
+#: ../src/core/control/XournalMain.cpp:619
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
@@ -384,11 +384,11 @@ msgstr "Használja a mellékelt háttérprogramot a PDF-exportáláshoz.\n"
 "                                       Rendelkezésre álló háttérrendszerek: {1}\n"
 "                                       A -p/--create-pdf=foo.pdf nélkül nincs hatása"
 
-#: ../src/core/control/XournalMain.cpp:608
+#: ../src/core/control/XournalMain.cpp:628
 msgid "Export FILE as PDF"
 msgstr "FILE exportálása PDF-fájlként"
 
-#: ../src/core/control/XournalMain.cpp:611
+#: ../src/core/control/XournalMain.cpp:631
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
@@ -396,7 +396,7 @@ msgstr "FÁJL exportálása képfájlként (oldalanként egy)\n"
 "                                       A kimeneti formátum kitalálása a KÉPFÁJL kiterjesztése alapján\n"
 "                                       Támogatott formátumok: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:617
+#: ../src/core/control/XournalMain.cpp:637
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
@@ -404,13 +404,13 @@ msgstr "Exportálás háttér nélkül\n"
 "                                       Az exportált fájl átlátszó vagy fehér háttérrel rendelkezik,\n"
 "                                       attól függően, hogy mit támogat a formátuma\n"
 
-#: ../src/core/control/XournalMain.cpp:622
+#: ../src/core/control/XournalMain.cpp:642
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
 msgstr "Exportálás vonalzó nélkül\n"
 "                                       Az exportált fájl nem tartalmaz papír vonalzót\n"
 
-#: ../src/core/control/XournalMain.cpp:627
+#: ../src/core/control/XournalMain.cpp:647
 msgid "Export layers progressively\n"
 "                                       In PDF export, Render layers progressively one by one.\n"
 "                                       This results in N export pages per page with N layers,\n"
@@ -422,25 +422,25 @@ msgstr "Rétegek fokozatos exportálása\n"
 "                                       fokozatosan építve fel a rétegsort.\n"
 "                                       Az így kapott PDF-fájlt bemutatóhoz lehet használni.\n"
 
-#: ../src/core/control/XournalMain.cpp:636
+#: ../src/core/control/XournalMain.cpp:656
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Csak a TARTOMÁNY által megadott oldalak exportálása (pl. \"2-3,5,7-\")\n"
 "                                       Nincs hatás a -p/--create-pdf vagy -i/--create-img kapcsolók nélkül"
 
-#: ../src/core/control/XournalMain.cpp:641
+#: ../src/core/control/XournalMain.cpp:661
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Csak a TARTOMÁNY által megadott rétegek exportálása (pl. \"2-3,5,7-\")\n"
 "                                       Nincs hatás a -p/--create-pdf vagy -i/--create-img kapcsolók nélkül"
 
-#: ../src/core/control/XournalMain.cpp:645
+#: ../src/core/control/XournalMain.cpp:665
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
 msgstr "DPI beállítása PNG exportáláshoz. Az alapértelmezett érték szintén 300.\n"
 "                                       Nincs hatás a -i/--create-img=foo.png kapcsoló nélkül"
 
-#: ../src/core/control/XournalMain.cpp:649
+#: ../src/core/control/XournalMain.cpp:669
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
@@ -448,7 +448,7 @@ msgstr "PNG exportáláshoz oldalszélesség beállítása\n"
 "                                       Nincs hatása a -i/--create-img=foo.png kapcsoló nélkül\n"
 "                                       Figyelmen kívül hagyja, ha a --export-png-dpi paramétert használja"
 
-#: ../src/core/control/XournalMain.cpp:654
+#: ../src/core/control/XournalMain.cpp:674
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
@@ -456,11 +456,11 @@ msgstr "PNG exportok oldalmagasságának beállítása\n"
 "                                       Nincs hatása a -i/--create-img=foo.png nélkül\n"
 "                                       Figyelmen kívül hagyja, ha a --export-png-dpi vagy a --export-png-width van használatban"
 
-#: ../src/core/control/XournalMain.cpp:662
+#: ../src/core/control/XournalMain.cpp:682
 msgid "Advanced export options"
 msgstr "Haladó exportálási lehetőségek"
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:683
 msgid "Display advanced export options"
 msgstr "A haladó exportálási lehetőségek megjelenítése"
 
@@ -827,7 +827,7 @@ msgstr "Nem sikerült a hangfelvétel lejátszása: {1}"
 
 #: ../src/core/gui/PageView.cpp:944
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:83
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:145
 msgid "Loading..."
 msgstr "Betöltés…"
 
@@ -1741,27 +1741,27 @@ msgstr "Finom"
 msgid "Very Thick"
 msgstr "Nagyon vastag"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:175
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:172
 msgid "Show all"
 msgstr "Összes megjelenítése"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:176
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:173
 msgid "Hide all"
 msgstr "Összes elrejtése"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:178
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:175
 msgid "Add a layer above the active layer"
 msgstr "Réteg hozzáadása az aktív réteg fölé"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:179
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:176
 msgid "Add a layer below the active layer"
 msgstr "Réteg hozzáadása az aktív réteg alá"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:206
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:203
 msgid "Layer"
 msgstr "Réteg"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:303
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:300
 msgid "Layer Combo"
 msgstr "Rétegkombináció"
 
