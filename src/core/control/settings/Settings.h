@@ -1110,9 +1110,9 @@ private:
 
     /**
      * How many stylus events since hitting the screen should be ignored before actually starting the action. If set to
-     * 0, no event will be ignored. Should not be negative.
+     * 0, no event will be ignored. It cannot be negative.
      */
-    int numIgnoredStylusEvents{};
+    unsigned int numIgnoredStylusEvents{};
 
     /**
      * Whether Wacom parameter TabletPCButton is enabled
