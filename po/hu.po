@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-24 17:29+0000\n"
-"PO-Revision-Date: 2025-12-28 04:33\n"
+"POT-Creation-Date: 2026-01-21 16:55+0000\n"
+"PO-Revision-Date: 2026-01-25 04:38\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -310,12 +310,12 @@ msgstr "Fájlt helyreállítása"
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "A(z) „{1}” háttérfájl nem található. Lehet, hogy áthelyezték, átnevezték vagy törölték."
 
-#: ../src/core/control/XournalMain.cpp:211
-#: ../src/core/control/XournalMain.cpp:218
+#: ../src/core/control/XournalMain.cpp:213
+#: ../src/core/control/XournalMain.cpp:220
 msgid "Error: {1}"
 msgstr "Hiba: {1}"
 
-#: ../src/core/control/XournalMain.cpp:351
+#: ../src/core/control/XournalMain.cpp:355
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -329,24 +329,24 @@ msgstr "<span foreground='red' size='x-large'>A szükséges UI fájl hiányzik:\
 "  A munkakönyvtárban nem található\n"
 "  A {2} könyvtárban nem található"
 
-#: ../src/core/control/XournalMain.cpp:356
+#: ../src/core/control/XournalMain.cpp:360
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "A program megpróbál enélkül a fájl nélkül futni."
 
-#: ../src/core/control/XournalMain.cpp:378
-#: ../src/core/control/XournalMain.cpp:439
+#: ../src/core/control/XournalMain.cpp:382
+#: ../src/core/control/XournalMain.cpp:443
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Elnézést, a Xournal++ egyszerre csak egy fájlt tud megnyitni.\n"
 "A további fájlok figyelmen kívül hagyva."
 
-#: ../src/core/control/XournalMain.cpp:389
+#: ../src/core/control/XournalMain.cpp:393
 msgid "File {1} does not exist."
 msgstr "A(z) {1} fájl nem létezik."
 
-#: ../src/core/control/XournalMain.cpp:393
+#: ../src/core/control/XournalMain.cpp:397
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -354,29 +354,29 @@ msgstr "Fájlrendszer hiba: {1}\n"
 "Sajnáljuk, a Xournal++ nem tudja megnyitni a következő fájlt: {2}\n"
 "Fontolja meg a fájl másolását egy helyi könyvtárba."
 
-#: ../src/core/control/XournalMain.cpp:578
+#: ../src/core/control/XournalMain.cpp:582
 msgid "Jump to Page (first Page: 1)"
 msgstr "Ugrás adott oldalra (első oldal: 1)"
 
-#: ../src/core/control/XournalMain.cpp:582
+#: ../src/core/control/XournalMain.cpp:586
 msgid "Get version of xournalpp"
 msgstr "A xournalpp verzió lehívása"
 
-#: ../src/core/control/XournalMain.cpp:584
+#: ../src/core/control/XournalMain.cpp:588
 msgid "Disable audio for this session"
 msgstr "Hang letiltása ehhez a munkamenethez"
 
-#: ../src/core/control/XournalMain.cpp:586
+#: ../src/core/control/XournalMain.cpp:590
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
 msgstr "PDF fájl megnyitása csatolási módban\n"
 "                                 Figyelmen kívül hagyja, ha nincs megadva PDF-fájl."
 
-#: ../src/core/control/XournalMain.cpp:590
+#: ../src/core/control/XournalMain.cpp:594
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "xopp-fájl mentése a FÁJL-ként megadott háttér PDF-fájllal"
 
-#: ../src/core/control/XournalMain.cpp:595
+#: ../src/core/control/XournalMain.cpp:599
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
@@ -384,11 +384,11 @@ msgstr "Használja a mellékelt háttérprogramot a PDF-exportáláshoz.\n"
 "                                       Rendelkezésre álló háttérrendszerek: {1}\n"
 "                                       A -p/--create-pdf=foo.pdf nélkül nincs hatása"
 
-#: ../src/core/control/XournalMain.cpp:604
+#: ../src/core/control/XournalMain.cpp:608
 msgid "Export FILE as PDF"
 msgstr "FILE exportálása PDF-fájlként"
 
-#: ../src/core/control/XournalMain.cpp:607
+#: ../src/core/control/XournalMain.cpp:611
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
@@ -396,7 +396,7 @@ msgstr "FÁJL exportálása képfájlként (oldalanként egy)\n"
 "                                       A kimeneti formátum kitalálása a KÉPFÁJL kiterjesztése alapján\n"
 "                                       Támogatott formátumok: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:613
+#: ../src/core/control/XournalMain.cpp:617
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
@@ -404,13 +404,13 @@ msgstr "Exportálás háttér nélkül\n"
 "                                       Az exportált fájl átlátszó vagy fehér háttérrel rendelkezik,\n"
 "                                       attól függően, hogy mit támogat a formátuma\n"
 
-#: ../src/core/control/XournalMain.cpp:618
+#: ../src/core/control/XournalMain.cpp:622
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
 msgstr "Exportálás vonalzó nélkül\n"
 "                                       Az exportált fájl nem tartalmaz papír vonalzót\n"
 
-#: ../src/core/control/XournalMain.cpp:623
+#: ../src/core/control/XournalMain.cpp:627
 msgid "Export layers progressively\n"
 "                                       In PDF export, Render layers progressively one by one.\n"
 "                                       This results in N export pages per page with N layers,\n"
@@ -422,25 +422,25 @@ msgstr "Rétegek fokozatos exportálása\n"
 "                                       fokozatosan építve fel a rétegsort.\n"
 "                                       Az így kapott PDF-fájlt bemutatóhoz lehet használni.\n"
 
-#: ../src/core/control/XournalMain.cpp:632
+#: ../src/core/control/XournalMain.cpp:636
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Csak a TARTOMÁNY által megadott oldalak exportálása (pl. \"2-3,5,7-\")\n"
 "                                       Nincs hatás a -p/--create-pdf vagy -i/--create-img kapcsolók nélkül"
 
-#: ../src/core/control/XournalMain.cpp:637
+#: ../src/core/control/XournalMain.cpp:641
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Csak a TARTOMÁNY által megadott rétegek exportálása (pl. \"2-3,5,7-\")\n"
 "                                       Nincs hatás a -p/--create-pdf vagy -i/--create-img kapcsolók nélkül"
 
-#: ../src/core/control/XournalMain.cpp:641
+#: ../src/core/control/XournalMain.cpp:645
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
 msgstr "DPI beállítása PNG exportáláshoz. Az alapértelmezett érték szintén 300.\n"
 "                                       Nincs hatás a -i/--create-img=foo.png kapcsoló nélkül"
 
-#: ../src/core/control/XournalMain.cpp:645
+#: ../src/core/control/XournalMain.cpp:649
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
@@ -448,7 +448,7 @@ msgstr "PNG exportáláshoz oldalszélesség beállítása\n"
 "                                       Nincs hatása a -i/--create-img=foo.png kapcsoló nélkül\n"
 "                                       Figyelmen kívül hagyja, ha a --export-png-dpi paramétert használja"
 
-#: ../src/core/control/XournalMain.cpp:650
+#: ../src/core/control/XournalMain.cpp:654
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
@@ -456,11 +456,11 @@ msgstr "PNG exportok oldalmagasságának beállítása\n"
 "                                       Nincs hatása a -i/--create-img=foo.png nélkül\n"
 "                                       Figyelmen kívül hagyja, ha a --export-png-dpi vagy a --export-png-width van használatban"
 
-#: ../src/core/control/XournalMain.cpp:658
+#: ../src/core/control/XournalMain.cpp:662
 msgid "Advanced export options"
 msgstr "Haladó exportálási lehetőségek"
 
-#: ../src/core/control/XournalMain.cpp:659
+#: ../src/core/control/XournalMain.cpp:663
 msgid "Display advanced export options"
 msgstr "A haladó exportálási lehetőségek megjelenítése"
 
