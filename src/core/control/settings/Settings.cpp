@@ -1971,7 +1971,7 @@ void Settings::setForceZoomToFitOnLoad(bool force) {
     save();
 }
 
-const auto Settings::getForceZoomToFitOnLoad() -> bool { return this->forceZoomToFitOnLoad; }
+auto Settings::getForceZoomToFitOnLoad() const -> bool { return this->forceZoomToFitOnLoad; }
 
 void Settings::setEdgePanSpeed(double speed) {
     if (this->edgePanSpeed == speed) {
