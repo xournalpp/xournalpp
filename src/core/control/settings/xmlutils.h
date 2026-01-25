@@ -73,19 +73,6 @@ T xmlGet(const xmlNode* node, const char* property, T defaultValue) {
 }
 
 template <typename T>
-std::string xmlGet(const xmlNode* node, const char* property, std::string defaultValue) {
-    const xmlChar* prop = xmlGetProp(node, reinterpret_cast<const xmlChar*>(property));
-
-    if (prop == nullptr) {
-        return "";
-    }
-
-    const std::string str{reinterpret_cast<const char*>(prop)};
-
-    return str;
-}
-
-template <typename T>
 T parse(const std::string_view strView, T defaultValue) {
     if (strView.empty()) {
         return defaultValue;
