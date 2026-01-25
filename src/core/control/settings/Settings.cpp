@@ -32,15 +32,21 @@
 using std::string;
 using namespace std::string_view_literals;
 
-constexpr auto const* DEFAULT_FONT = "Sans";
-constexpr auto DEFAULT_FONT_SIZE = 12;
-constexpr auto DEFAULT_TOOLBAR = "Portrait";
+inline constexpr auto DEFAULT_FONT = "Sans";
+inline constexpr auto DEFAULT_FONT_SIZE = 12;
+inline constexpr auto DEFAULT_TOOLBAR = "Portrait";
 
 #define SAVE_PROP(var) xmlNode = saveProperty(#var, var, root)
 
 #define ATTACH_COMMENT(var)                     \
     com = xmlNewComment((const xmlChar*)(var)); \
     xmlAddPrevSibling(xmlNode, com);
+
+#define PARSE(param)                   \
+    if (name == #param) {              \
+        setParsed(this->param, value); \
+        return;                        \
+    }
 
 Settings::~Settings() = default;
 
@@ -364,49 +370,143 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     if (name == "presureSensitivity") {
         setParsed(this->pressureSensitivity, value);
     }
-    if (name == "pressureSensitivity") {
-        setParsed(this->pressureSensitivity, value);
-    } else if (name == "font") {
+
+    // macro settings
+    PARSE(pressureSensitivity)
+    PARSE(pressureMultiplier)
+    PARSE(zoomGesturesEnabled)
+    PARSE(selectedToolbar)
+    PARSE(lastSavePath)
+    PARSE(lastOpenPath)
+    PARSE(lastImagePath)
+    PARSE(edgePanSpeed)
+    PARSE(edgePanMaxMult)
+    PARSE(zoomStep)
+    PARSE(zoomStepScroll)
+    PARSE(displayDpi)
+    PARSE(mainWndWidth)
+    PARSE(mainWndHeight)
+    PARSE(maximized)
+    PARSE(showToolbar)
+    PARSE(filepathShownInTitlebar)
+    PARSE(pageNumberShownInTitlebar)
+    PARSE(showSidebar)
+    PARSE(sidebarOnRight)
+    PARSE(scrollbarOnLeft)
+    PARSE(menubarVisible)
+    PARSE(numColumns)
+    PARSE(numRows)
+    PARSE(viewFixedRows)
+    PARSE(layoutVertical)
+    PARSE(layoutRightToLeft)
+    PARSE(layoutBottomToTop)
+    PARSE(showPairedPages)
+    PARSE(numPairsOffset)
+    PARSE(presentationMode)
+    PARSE(autoloadMostRecent)
+    PARSE(autoloadPdfXoj)
+    PARSE(highlightPosition)
+    PARSE(cursorHighlightColor)
+    PARSE(cursorHighlightRadius)
+    PARSE(cursorHighlightBorderColor)
+    PARSE(cursorHighlightBorderWidth)
+    PARSE(useStockIcons)
+    PARSE(defaultSaveName)
+    PARSE(defaultPdfExportName)
+    PARSE(pluginEnabled)
+    PARSE(pluginDisabled)
+    PARSE(pageTemplate)
+    PARSE(sizeUnit)
+    PARSE(audioFolder)
+    PARSE(autosaveEnabled)
+    PARSE(autosaveTimeout)
+    PARSE(touchZoomStartThreshold)
+    PARSE(pageRerenderThreshold)
+    PARSE(pdfPageCacheSize)
+    PARSE(preloadPagesBefore)
+    PARSE(preloadPagesAfter)
+    PARSE(eagerPageCleanup)
+    PARSE(selectionBorderColor)
+    PARSE(selectionMarkerColor)
+    PARSE(activeSelectionColor)
+    PARSE(backgroundColor)
+    PARSE(addHorizontalSpace)
+    PARSE(addHorizontalSpaceAmountRight)
+    PARSE(addVerticalSpace)
+    PARSE(addVerticalSpaceAmountAbove)
+    PARSE(addHorizontalSpaceAmountLeft)
+    PARSE(addVerticalSpaceAmountBelow)
+    PARSE(unlimitedScrolling)
+    PARSE(drawDirModsEnabled)
+    PARSE(drawDirModsRadius)
+    PARSE(snapRotation)
+    PARSE(snapRotationTolerance)
+    PARSE(snapGrid)
+    PARSE(snapGridSize)
+    PARSE(snapGridTolerance)
+    PARSE(strokeRecognizerMinSize)
+    PARSE(touchDrawing)
+    PARSE(gtkTouchInertialScrolling)
+    PARSE(pressureGuessing)
+    PARSE(disableScrollbarFadeout)
+    PARSE(disableAudio)
+#ifdef ENABLE_AUDIO
+    PARSE(audioSampleRate)
+    PARSE(audioGain)
+    PARSE(defaultSeekTime)
+    PARSE(audioInputDevice)
+    PARSE(audioOutputDevice)
+#endif
+    PARSE(numIgnoredStylusEvents)
+    PARSE(inputSystemTPCButton)
+    PARSE(inputSystemDrawOutsideWindow)
+    PARSE(strokeFilterIgnoreTime)
+    PARSE(strokeFilterIgnoreLength)
+    PARSE(strokeFilterSuccessiveTime)
+    PARSE(strokeFilterEnabled)
+    PARSE(doActionOnStrokeFiltered)
+    PARSE(trySelectOnStrokeFiltered)
+
+    PARSE(latexSettings.autoCheckDependencies)
+    PARSE(latexSettings.defaultText)
+    PARSE(latexSettings.globalTemplatePath)
+    PARSE(latexSettings.genCmd)
+    PARSE(latexSettings.sourceViewThemeId)
+    PARSE(latexSettings.useCustomEditorFont)
+    PARSE(latexSettings.editorWordWrap)
+    PARSE(latexSettings.sourceViewAutoIndent)
+    PARSE(latexSettings.sourceViewSyntaxHighlight)
+    PARSE(latexSettings.sourceViewShowLineNumbers)
+    PARSE(latexSettings.useExternalEditor)
+    PARSE(latexSettings.externalEditorAutoConfirm)
+    PARSE(latexSettings.temporaryFileExt)
+
+    PARSE(snapRecognizedShapesEnabled)
+    PARSE(restoreLineWidthEnabled)
+    PARSE(preferredLocale)
+    PARSE(useSpacesForTab)
+    PARSE(numberOfSpacesForTab)
+    PARSE(laserPointerFadeOutTime)
+    /**
+     * Stabilizer related settings
+     */
+    PARSE(stabilizerBuffersize)
+    PARSE(stabilizerSigma)
+    PARSE(stabilizerDeadzoneRadius)
+    PARSE(stabilizerDrag)
+    PARSE(stabilizerMass)
+    PARSE(stabilizerCuspDetection)
+    PARSE(stabilizerFinalizeStroke)
+    PARSE(numberOfSpacesForTab)
+    PARSE(numberOfSpacesForTab)
+
+    // "strange" settings
+
+    if (name == "font") {
         this->font = newFont;
     } else if (name == "minimumPressure") {
         // std::max is for backwards compatibility for users who might have set this value too small
         this->minimumPressure = std::max(0.01, parse<double>(value));
-    } else if (name == "pressureMultiplier") {
-        setParsed(this->pressureMultiplier, value);
-    } else if (name == "zoomGesturesEnabled") {
-        setParsed(this->zoomGesturesEnabled, value);
-    } else if (name == "selectedToolbar") {
-        setParsed(this->selectedToolbar, value);
-    } else if (name == "lastSavePath") {
-        setParsed(this->lastSavePath, value);
-    } else if (name == "lastOpenPath") {
-        setParsed(this->lastOpenPath, value);
-    } else if (name == "lastImagePath") {
-        setParsed(this->lastImagePath, value);
-    } else if (name == "edgePanSpeed") {
-        setParsed(this->edgePanSpeed, value);
-    } else if (name == "edgePanMaxMult") {
-        setParsed(this->edgePanMaxMult, value);
-    } else if (name == "zoomStep") {
-        setParsed(this->zoomStep, value);
-    } else if (name == "zoomStepScroll") {
-        setParsed(this->zoomStepScroll, value);
-    } else if (name == "displayDpi") {
-        setParsed(this->displayDpi, value);
-    } else if (name == "mainWndWidth") {
-        setParsed(this->mainWndWidth, value);
-    } else if (name == "mainWndHeight") {
-        setParsed(this->mainWndHeight, value);
-    } else if (name == "maximized") {
-        setParsed(this->maximized, value);
-    } else if (name == "showToolbar") {
-        setParsed(this->showToolbar, value);
-    } else if (name == "filepathShownInTitlebar") {
-        setParsed(this->filepathShownInTitlebar, value);
-    } else if (name == "pageNumberShownInTitlebar") {
-        setParsed(this->pageNumberShownInTitlebar, value);
-    } else if (name == "showSidebar") {
-        setParsed(this->showSidebar, value);
     } else if (name == "sidebarNumberingStyle") {
         auto num = parse<int>(value);
         if (num < static_cast<int>(SidebarNumberingStyle::MIN) || static_cast<int>(SidebarNumberingStyle::MAX) < num) {
@@ -416,96 +516,20 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->sidebarNumberingStyle = static_cast<SidebarNumberingStyle>(num);
     } else if (name == "sidebarWidth") {
         this->sidebarWidth = std::max<int>(parse<int>(value), 50);
-    } else if (name == "sidebarOnRight") {
-        setParsed(this->sidebarOnRight, value);
-    } else if (name == "scrollbarOnLeft") {
-        setParsed(this->scrollbarOnLeft, value);
-    } else if (name == "menubarVisible") {
-        setParsed(this->menubarVisible, value);
-    } else if (name == "numColumns") {
-        setParsed(this->numColumns, value);
-    } else if (name == "numRows") {
-        setParsed(this->numRows, value);
-    } else if (name == "viewFixedRows") {
-        setParsed(this->viewFixedRows, value);
-    } else if (name == "layoutVertical") {
-        setParsed(this->layoutVertical, value);
-    } else if (name == "layoutRightToLeft") {
-        setParsed(this->layoutRightToLeft, value);
-    } else if (name == "layoutBottomToTop") {
-        setParsed(this->layoutBottomToTop, value);
-    } else if (name == "showPairedPages") {
-        setParsed(this->showPairedPages, value);
-    } else if (name == "numPairsOffset") {
-        setParsed(this->numPairsOffset, value);
-    } else if (name == "presentationMode") {
-        setParsed(this->presentationMode, value);
-    } else if (name == "autoloadMostRecent") {
-        setParsed(this->autoloadMostRecent, value);
-    } else if (name == "autoloadPdfXoj") {
-        setParsed(this->autoloadPdfXoj, value);
     } else if (name == "stylusCursorType") {
-        this->stylusCursorType = stylusCursorTypeFromString(parse<string>(value));
+        this->stylusCursorType = stylusCursorTypeFromString(static_cast<string>(value));
     } else if (name == "eraserVisibility") {
-        this->eraserVisibility = eraserVisibilityFromString(parse<string>(value));
+        this->eraserVisibility = eraserVisibilityFromString(static_cast<string>(value));
     } else if (name == "iconTheme") {
-        this->iconTheme = iconThemeFromString(parse<string>(value));
+        this->iconTheme = iconThemeFromString(static_cast<string>(value));
     } else if (name == "themeVariant") {
-        this->themeVariant = themeVariantFromString(parse<string>(value));
-    } else if (name == "highlightPosition") {
-        setParsed(this->highlightPosition, value);
-    } else if (name == "cursorHighlightColor") {
-        setParsed(this->cursorHighlightColor, value);
-    } else if (name == "cursorHighlightRadius") {
-        setParsed(this->cursorHighlightRadius, value);
-    } else if (name == "cursorHighlightBorderColor") {
-        setParsed(this->cursorHighlightBorderColor, value);
-    } else if (name == "cursorHighlightBorderWidth") {
-        setParsed(this->cursorHighlightBorderWidth, value);
-    } else if (name == "useStockIcons") {
-        setParsed(this->useStockIcons, value);
-    } else if (name == "defaultSaveName") {
-        setParsed(this->defaultSaveName, value);
-    } else if (name == "defaultPdfExportName") {
-        setParsed(this->defaultPdfExportName, value);
-    } else if (name == "pluginEnabled") {
-        setParsed(this->pluginEnabled, value);
-    } else if (name == "pluginDisabled") {
-        setParsed(this->pluginDisabled, value);
-    } else if (name == "pageTemplate") {
-        setParsed(this->pageTemplate, value);
-    } else if (name == "sizeUnit") {
-        setParsed(this->sizeUnit, value);
-    } else if (name == "audioFolder") {
-        setParsed(this->audioFolder, value);
-    } else if (name == "autosaveEnabled") {
-        setParsed(this->autosaveEnabled, value);
-    } else if (name == "autosaveTimeout") {
-        setParsed(this->autosaveTimeout, value);
+        this->themeVariant = themeVariantFromString(static_cast<string>(value));
     } else if (name == "defaultViewModeAttributes") {
-        this->viewModes.at(VIEW_MODE_DEFAULT) = settingsStringToViewMode(parse<string>(value));
+        this->viewModes.at(VIEW_MODE_DEFAULT) = settingsStringToViewMode(static_cast<string>(value));
     } else if (name == "fullscreenViewModeAttributes") {
-        this->viewModes.at(VIEW_MODE_FULLSCREEN) = settingsStringToViewMode(parse<string>(value));
+        this->viewModes.at(VIEW_MODE_FULLSCREEN) = settingsStringToViewMode(static_cast<string>(value));
     } else if (name == "presentationViewModeAttributes") {
-        this->viewModes.at(VIEW_MODE_PRESENTATION) = settingsStringToViewMode(parse<string>(value));
-    } else if (name == "touchZoomStartThreshold") {
-        setParsed(this->touchZoomStartThreshold, value);
-    } else if (name == "pageRerenderThreshold") {
-        setParsed(this->pageRerenderThreshold, value);
-    } else if (name == "pdfPageCacheSize") {
-        setParsed(this->pdfPageCacheSize, value);
-    } else if (name == "preloadPagesBefore") {
-        setParsed(this->preloadPagesBefore, value);
-    } else if (name == "preloadPagesAfter") {
-        setParsed(this->preloadPagesAfter, value);
-    } else if (name == "eagerPageCleanup") {
-        setParsed(this->eagerPageCleanup, value);
-    } else if (name == "selectionBorderColor") {
-        setParsed(this->selectionBorderColor, value);
-    } else if (name == "selectionMarkerColor") {
-        setParsed(this->selectionMarkerColor, value);
-    } else if (name == "activeSelectionColor") {
-        setParsed(this->activeSelectionColor, value);
+        this->viewModes.at(VIEW_MODE_PRESENTATION) = settingsStringToViewMode(static_cast<string>(value));
     } else if (name == "recolor.enabled") {
         setParsed(this->recolorParameters.recolorizeMainView, value);
     } else if (name == "recolor.sidebar") {
@@ -514,52 +538,13 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->recolorParameters.recolor = Recolor(parse<Color>(value), this->recolorParameters.recolor.getDark());
     } else if (name == "recolor.dark") {
         this->recolorParameters.recolor = Recolor(this->recolorParameters.recolor.getLight(), parse<Color>(value));
-    } else if (name == "backgroundColor") {
-        setParsed(this->backgroundColor, value);
-    } else if (name == "addHorizontalSpace") {
-        setParsed(this->addHorizontalSpace, value);
     } else if (name == "addHorizontalSpaceAmount") {
-        // const int oldHorizontalAmount = parse<int>(value);
         setParsed(this->addHorizontalSpaceAmountLeft, value);
         setParsed(this->addHorizontalSpaceAmountRight, value);
-    } else if (name == "addHorizontalSpaceAmountRight") {
-        setParsed(this->addHorizontalSpaceAmountRight, value);
-    } else if (name == "addVerticalSpace") {
-        setParsed(this->addVerticalSpace, value);
     } else if (name == "addVerticalSpaceAmount") {
         // const int oldVerticalAmount = parse<int>(value);
         setParsed(this->addHorizontalSpaceAmountLeft, value);
         setParsed(this->addHorizontalSpaceAmountRight, value);
-    } else if (name == "addVerticalSpaceAmountAbove") {
-        setParsed(this->addVerticalSpaceAmountAbove, value);
-    } else if (name == "addHorizontalSpaceAmountLeft") {
-        setParsed(this->addHorizontalSpaceAmountLeft, value);
-    } else if (name == "addVerticalSpaceAmountBelow") {
-        setParsed(this->addVerticalSpaceAmountBelow, value);
-    } else if (name == "unlimitedScrolling") {
-        setParsed(this->unlimitedScrolling, value);
-    } else if (name == "drawDirModsEnabled") {
-        setParsed(this->drawDirModsEnabled, value);
-    } else if (name == "drawDirModsRadius") {
-        setParsed(this->drawDirModsRadius, value);
-    } else if (name == "snapRotation") {
-        setParsed(this->snapRotation, value);
-    } else if (name == "snapRotationTolerance") {
-        setParsed(this->snapRotationTolerance, value);
-    } else if (name == "snapGrid") {
-        setParsed(this->snapGrid, value);
-    } else if (name == "snapGridSize") {
-        setParsed(this->snapGridSize, value);
-    } else if (name == "snapGridTolerance") {
-        setParsed(this->snapGridTolerance, value);
-    } else if (name == "strokeRecognizerMinSize") {
-        setParsed(this->strokeRecognizerMinSize, value);
-    } else if (name == "touchDrawing") {
-        setParsed(this->touchDrawing, value);
-    } else if (name == "gtkTouchInertialScrolling") {
-        setParsed(this->gtkTouchInertialScrolling, value);
-    } else if (name == "pressureGuessing") {
-        setParsed(this->pressureGuessing, value);
     } else if (name == "scrollbarHideType") {
         if (value == "both") {
             this->scrollbarHideType = SCROLLBAR_HIDE_BOTH;
@@ -570,107 +555,24 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         } else {
             this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
         }
-    } else if (name == "disableScrollbarFadeout") {
-        setParsed(this->disableScrollbarFadeout, value);
-    } else if (name == "disableAudio") {
-        setParsed(this->disableAudio, value);
-#ifdef ENABLE_AUDIO
-    } else if (name == "audioSampleRate") {
-        setParsed(this->audioSampleRate, value);
-    } else if (name == "audioGain") {
-        setParsed(this->audioGain, value);
-    } else if (name == "defaultSeekTime") {
-        setParsed(this->defaultSeekTime, value);
-    } else if (name == "audioInputDevice") {
-        setParsed(this->audioInputDevice, value);
-    } else if (name == "audioOutputDevice") {
-        setParsed(this->audioOutputDevice, value);
-#endif
     } else if (name == "numIgnoredStylusEvents") {
         this->numIgnoredStylusEvents = static_cast<int>(parse<unsigned int>(value));
-    } else if (name == "inputSystemTPCButton") {
-        setParsed(this->inputSystemTPCButton, value);
-    } else if (name == "inputSystemDrawOutsideWindow") {
-        setParsed(this->inputSystemDrawOutsideWindow, value);
     } else if (name == "emptyLastPageAppend") {
-        this->emptyLastPageAppend = emptyLastPageAppendFromString(parse<string>(value));
-    } else if (name == "strokeFilterIgnoreTime") {
-        setParsed(this->strokeFilterIgnoreTime, value);
-    } else if (name == "strokeFilterIgnoreLength") {
-        setParsed(this->strokeFilterIgnoreLength, value);
-    } else if (name == "strokeFilterSuccessiveTime") {
-        setParsed(this->strokeFilterSuccessiveTime, value);
-    } else if (name == "strokeFilterEnabled") {
-        setParsed(this->strokeFilterEnabled, value);
-    } else if (name == "doActionOnStrokeFiltered") {
-        setParsed(this->doActionOnStrokeFiltered, value);
-    } else if (name == "trySelectOnStrokeFiltered") {
-        setParsed(this->trySelectOnStrokeFiltered, value);
+        this->emptyLastPageAppend = emptyLastPageAppendFromString(static_cast<string>(value));
     }
 
-    else if (name == "latexSettings.autoCheckDependencies") {
-        setParsed(this->latexSettings.autoCheckDependencies, value);
-    } else if (name == "latexSettings.defaultText") {
-        setParsed(this->latexSettings.defaultText, value);
-    } else if (name == "latexSettings.globalTemplatePath") {
-        setParsed(this->latexSettings.globalTemplatePath, value);
-    } else if (name == "latexSettings.genCmd") {
-        setParsed(this->latexSettings.genCmd, value);
-    } else if (name == "latexSettings.sourceViewThemeId") {
-        setParsed(this->latexSettings.sourceViewThemeId, value);
-    } else if (name == "latexSettings.editorFont") {
+    // latex-related
+    else if (name == "latexSettings.editorFont") {
         this->latexSettings.editorFont = newFont;
-    } else if (name == "latexSettings.useCustomEditorFont") {
-        setParsed(this->latexSettings.useCustomEditorFont, value);
-    } else if (name == "latexSettings.editorWordWrap") {
-        setParsed(this->latexSettings.editorWordWrap, value);
-    } else if (name == "latexSettings.sourceViewAutoIndent") {
-        setParsed(this->latexSettings.sourceViewAutoIndent, value);
-    } else if (name == "latexSettings.sourceViewSyntaxHighlight") {
-        setParsed(this->latexSettings.sourceViewSyntaxHighlight, value);
-    } else if (name == "latexSettings.sourceViewShowLineNumbers") {
-        setParsed(this->latexSettings.sourceViewShowLineNumbers, value);
-    } else if (name == "latexSettings.useExternalEditor") {
-        setParsed(this->latexSettings.useExternalEditor, value);
-    } else if (name == "latexSettings.externalEditorAutoConfirm") {
-        setParsed(this->latexSettings.externalEditorAutoConfirm, value);
-    } else if (name == "latexSettings.temporaryFileExt") {
-        setParsed(this->latexSettings.temporaryFileExt, value);
     }
 
-    else if (name == "snapRecognizedShapesEnabled") {
-        setParsed(this->snapRecognizedShapesEnabled, value);
-    } else if (name == "restoreLineWidthEnabled") {
-        setParsed(this->restoreLineWidthEnabled, value);
-    } else if (name == "preferredLocale") {
-        setParsed(this->preferredLocale, value);
-    } else if (name == "useSpacesForTab") {
-        this->setUseSpacesAsTab(parse<bool>(value));
-    } else if (name == "numberOfSpacesForTab") {
-        this->setNumberOfSpacesForTab(parse<unsigned int>(value));
-    } else if (name == "laserPointerFadeOutTime") {
-        setParsed(this->laserPointerFadeOutTime, value);
-        /**
-         * Stabilizer related settings
-         */
-    } else if (name == "stabilizerAveragingMethod") {
+    /**
+     * Stabilizer related settings
+     */
+    else if (name == "stabilizerAveragingMethod") {
         this->stabilizerAveragingMethod = static_cast<StrokeStabilizer::AveragingMethod>(parse<int>(value));
     } else if (name == "stabilizerPreprocessor") {
         this->stabilizerPreprocessor = static_cast<StrokeStabilizer::Preprocessor>(parse<int>(value));
-    } else if (name == "stabilizerBuffersize") {
-        setParsed(this->stabilizerBuffersize, value);
-    } else if (name == "stabilizerSigma") {
-        setParsed(this->stabilizerSigma, value);
-    } else if (name == "stabilizerDeadzoneRadius") {
-        setParsed(this->stabilizerDeadzoneRadius, value);
-    } else if (name == "stabilizerDrag") {
-        setParsed(this->stabilizerDrag, value);
-    } else if (name == "stabilizerMass") {
-        setParsed(this->stabilizerMass, value);
-    } else if (name == "stabilizerCuspDetection") {
-        setParsed(this->stabilizerCuspDetection, value);
-    } else if (name == "stabilizerFinalizeStroke") {
-        setParsed(this->stabilizerFinalizeStroke, value);
     }
     // migrate from old name!
     else if (name == "colorPalette" || name == "colorPaletteSetting") {
