@@ -463,6 +463,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     PARSE(strokeFilterEnabled)
     PARSE(doActionOnStrokeFiltered)
     PARSE(trySelectOnStrokeFiltered)
+    PARSE(numIgnoredStylusEvents)
 
     PARSE(latexSettings.autoCheckDependencies)
     PARSE(latexSettings.defaultText)
@@ -511,9 +512,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->minimumPressure = std::max(0.01, parse<double>(value));
     } else if (name == "sidebarNumberingStyle") {
         auto num = parse<int>(value);
-        if (num < static_cast<int>(SidebarNumberingStyle::MIN) || static_cast<int>(SidebarNumberingStyle::MAX) < num) {
-            num = static_cast<int>(SidebarNumberingStyle::DEFAULT);
+        if (num < SidebarNumberingStyle::MIN || SidebarNumberingStyle::MAX < num) {
+            this->sidebarNumberingStyle = SidebarNumberingStyle::DEFAULT;
             g_warning("Settings::Invalid sidebarNumberingStyle value. Reset to default.");
+            return;
         }
         this->sidebarNumberingStyle = static_cast<SidebarNumberingStyle>(num);
     } else if (name == "sidebarWidth") {
@@ -527,7 +529,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (name == "themeVariant") {
         this->themeVariant = themeVariantFromString(static_cast<string>(value));
     } else if (name == "pageTemplate") {
-        this->pageTemplateSettings.parse(value);
+        this->pageTemplateSettings.parse(parse<string>(value));
     } else if (name == "defaultViewModeAttributes") {
         this->viewModes.at(VIEW_MODE_DEFAULT) = settingsStringToViewMode(static_cast<string>(value));
     } else if (name == "fullscreenViewModeAttributes") {
@@ -550,17 +552,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         setParsed(this->addHorizontalSpaceAmountLeft, value);
         setParsed(this->addHorizontalSpaceAmountRight, value);
     } else if (name == "scrollbarHideType") {
-        if (value == "both") {
-            this->scrollbarHideType = SCROLLBAR_HIDE_BOTH;
-        } else if (value == "horizontal") {
-            this->scrollbarHideType = SCROLLBAR_HIDE_HORIZONTAL;
-        } else if (value == "vertical") {
-            this->scrollbarHideType = SCROLLBAR_HIDE_VERTICAL;
-        } else {
-            this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
-        }
-    } else if (name == "numIgnoredStylusEvents") {
-        this->numIgnoredStylusEvents = static_cast<int>(parse<unsigned int>(value));
+        this->scrollbarHideType = stringToScrollbarHideType(value);
     } else if (name == "emptyLastPageAppend") {
         this->emptyLastPageAppend = emptyLastPageAppendFromString(static_cast<string>(value));
     }
@@ -730,14 +722,11 @@ xmlNodePtr Settings::saveProperty(const std::string& key, T value, xmlNodePtr pa
     std::string str{};
 
     if constexpr (std::is_same_v<T, int>) {
-        const auto result = std::to_chars(buffer, buffer + sizeof(buffer), value);
-        str = {buffer, result.ptr};
+        str = std::to_string(value);
     } else if constexpr (std::is_same_v<T, uint32_t>) {
-        const auto result = std::to_chars(buffer, buffer + sizeof(buffer), value);
-        str = {buffer, result.ptr};
+        str = std::to_string(value);
     } else if constexpr (std::is_same_v<T, double>) {
-        const auto result = std::to_chars(buffer, buffer + sizeof(buffer), value);
-        str = {buffer, result.ptr};
+        str = g_ascii_dtostr(buffer, 20, value);
     } else if constexpr (std::is_same_v<T, bool>) {
         str = value ? "true" : "false";
     } else if constexpr (std::is_same_v<T, fs::path>) {
@@ -2179,7 +2168,7 @@ void Settings::setIgnoredStylusEvents(int numEvents) {
     if (this->numIgnoredStylusEvents == numEvents) {
         return;
     }
-    this->numIgnoredStylusEvents = std::max<int>(numEvents, 0);
+    this->numIgnoredStylusEvents = static_cast<unsigned int>(std::max<int>(numEvents, 0));
     save();
 }
 

@@ -11,7 +11,6 @@
 #pragma once
 
 #include <charconv>
-#include <format>
 #include <string>
 #include <string_view>
 #include <type_traits>
@@ -93,16 +92,7 @@ T parse(const std::string_view strView, T defaultValue) {
     } else if constexpr (std::is_same_v<T, int>) {
         val = std::stoi(str);
     } else if constexpr (std::is_same_v<T, double>) {
-        double d;
-
-        const auto [ptr, ec] = std::from_chars(str.c_str(), str.c_str() + sizeof(str), d);
-
-        if (ec == std::errc::invalid_argument) {
-            g_error("Invalid argument");
-        }
-        if (ec == std::errc()) {
-            val = d;
-        }
+        val = g_ascii_strtod(str.c_str(), nullptr);
     } else if constexpr (std::is_same_v<T, bool>) {
         val = str == "true";
     } else if constexpr (std::is_same_v<T, Color> || std::is_same_v<T, ColorU8>) {
@@ -116,7 +106,8 @@ T parse(const std::string_view strView, T defaultValue) {
     } else if constexpr (std::is_same_v<T, XojFont>) {
         val = str;
     } else {
-        const std::string err = std::format("Xournalpp does not support the required type: {}", typeid(T).name());
+        char err[50];
+        std::snprintf(err, 50, "Xournalpp does not support the required type: %s", typeid(T).name());
         throw(std::runtime_error{err});
     }
 

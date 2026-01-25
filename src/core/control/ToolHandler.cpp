@@ -446,8 +446,8 @@ void ToolHandler::saveSettings() const {
         }
 
         static constexpr unsigned int SHAPE_CAPS = TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_ELLIPSE |
-                                           TOOL_CAP_ARROW | TOOL_CAP_DOUBLE_ARROW | TOOL_CAP_RECOGNIZER |
-                                           TOOL_CAP_SPLINE;
+                                                   TOOL_CAP_ARROW | TOOL_CAP_DOUBLE_ARROW | TOOL_CAP_RECOGNIZER |
+                                                   TOOL_CAP_SPLINE;
         if (tool->capabilities & SHAPE_CAPS) {
             st.set("drawingType", drawingTypeToString(tool->getDrawingType()).data());
         }
