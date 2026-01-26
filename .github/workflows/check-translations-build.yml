@@ -10,7 +10,7 @@ on:
 
 jobs:
   check-translations:
-    if: startsWith(github.head_ref, 'l10n-')
+    # if: startsWith(github.head_ref, 'l10n-')
     name: Check translations
     runs-on: ubuntu-latest
     permissions:
@@ -20,6 +20,7 @@ jobs:
       - name: 'Install dependencies'
         shell: bash
         run: |
+          echo "HEAD=${{github.head_ref}}"
           sudo apt-get update
           sudo apt-get install -y gettext
           # Download the last .its/loc files for gettext - Cheaper than installing all of gtk + dependencies
