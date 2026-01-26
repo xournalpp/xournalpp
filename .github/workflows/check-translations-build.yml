@@ -6,6 +6,7 @@ on:
     paths:
       - 'po/xournalpp.pot'
       - 'po/*.po'
+  workflow_dispatch:
 
 jobs:
   check-translations:
