@@ -50,6 +50,7 @@ class ToolbarDragDropHandler;
 class MetadataEntry;
 class MetadataCallbackData;
 class PageBackgroundChangeController;
+class PageTemplateSettings;
 class PageTypeHandler;
 class BaseExportJob;
 class LayerController;
@@ -232,7 +233,7 @@ public:
     size_t firePageSelected(const PageRef& page);
     void firePageSelected(size_t page);
 
-    void addDefaultPage(const std::optional<std::string>& pageTemplate, Document* doc = nullptr);
+    void addDefaultPage(const std::optional<PageTemplateSettings>& pageTemplate, Document* doc = nullptr);
     void duplicatePage();
     void insertNewPage(size_t position, bool automatedInsertion = false);
     void appendNewPdfPages();
