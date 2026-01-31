@@ -46,6 +46,7 @@ constexpr unsigned int MAX_SPACES_FOR_TAB = 8U;
 
 class ButtonConfig;
 class InputDevice;
+class PageTemplateSettings;
 
 class SAttribute {
 public:
@@ -409,6 +410,7 @@ public:
     void setEagerPageCleanup(bool b);
 
     std::string const& getPageTemplate() const;
+    PageTemplateSettings getPageTemplateSettings() const;
     void setPageTemplate(const std::string& pageTemplate);
 
 #ifdef ENABLE_AUDIO
