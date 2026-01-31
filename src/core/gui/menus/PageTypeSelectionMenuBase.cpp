@@ -13,15 +13,6 @@
 #include "util/raii/GVariantSPtr.h"
 
 namespace {
-std::optional<PageType> getInitiallySelectedPageType(const Settings* settings) {
-    if (settings) {
-        PageTemplateSettings model;
-        model.parse(settings->getPageTemplate());
-        return model.getPageInsertType();
-    }
-    return std::nullopt;
-}
-
 /**
  * @brief Returns the action target value associated to the given page type.
  */
@@ -48,7 +39,7 @@ GSimpleAction* createPageTypeSelectionAction(PageTypeHandler* types, const std::
 
 PageTypeSelectionMenuBase::PageTypeSelectionMenuBase(PageTypeHandler* typesHandler, const Settings* settings,
                                                      const std::string_view& actionName):
-        selectedPT(getInitiallySelectedPageType(settings)),
+        selectedPT(settings->getPageTemplateSettings().getPageInsertType()),
         typeSelectionAction(createPageTypeSelectionAction(typesHandler, selectedPT, actionName), xoj::util::adopt),
         types(typesHandler) {
     g_signal_connect(G_OBJECT(typeSelectionAction.get()), "change-state", G_CALLBACK(changeSelectionCallback), this);

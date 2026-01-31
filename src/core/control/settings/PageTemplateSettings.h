@@ -51,9 +51,11 @@ public:
     Color getBackgroundColor() const;
     void setBackgroundColor(Color backgroundColor);
 
-    PageType getBackgroundType();
-    std::optional<PageType> getPageInsertType();
+    PageType getBackgroundType() const;
+    std::optional<PageType> getPageInsertType() const;
     void setBackgroundType(const PageType& backgroundType);
+
+    bool operator==(const PageTemplateSettings&) const = default;
 
 private:
     /**

@@ -61,9 +61,9 @@ GtkGrid* createEmptyGrid() {
 }
 auto getInitiallySelectedPaperSize(const Settings* settings) -> std::optional<PaperSize> {
     if (settings) {
-        PageTemplateSettings model;
-        model.parse(settings->getPageTemplate());
-        return model.isCopyLastPageSize() ? std::nullopt : std::optional(PaperSize(model));
+        return settings->getPageTemplateSettings().isCopyLastPageSize() ?
+                       std::nullopt :
+                       std::optional{PaperSize(settings->getPageTemplateSettings())};
     }
     return std::nullopt;
 }
@@ -424,8 +424,7 @@ void PageTypeSelectionPopover::changedPaperFormatTemplateCb(GtkComboBox* widget,
                     self->control->getGladeSearchPath(), self->settings, self->selectedPageSize->width,
                     self->selectedPageSize->height, callback);
         } else {
-            PageTemplateSettings model;
-            model.parse(self->settings->getPageTemplate());
+            const auto& model = self->settings->getPageTemplateSettings();
             popup = std::make_unique<xoj::popup::PopupWindowWrapper<xoj::popup::FormatDialog>>(
                     self->control->getGladeSearchPath(), self->settings, model.getPageWidth(), model.getPageHeight(),
                     callback);

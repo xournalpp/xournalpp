@@ -666,10 +666,8 @@ void Control::setShowMenubar(bool enabled) {
 
 void Control::disableSidebarTmp(bool disabled) { this->sidebar->setTmpDisabled(disabled); }
 
-void Control::addDefaultPage(const std::optional<std::string>& pageTemplate, Document* doc) {
-    const std::string& templ = pageTemplate.value_or(settings->getPageTemplate());
-    PageTemplateSettings model;
-    model.parse(templ);
+void Control::addDefaultPage(const std::optional<PageTemplateSettings>& pageTemplate, Document* doc) {
+    const auto& model = pageTemplate ? *pageTemplate : this->settings->getPageTemplateSettings();
 
     auto page = std::make_shared<XojPage>(model.getPageWidth(), model.getPageHeight());
     page->setBackgroundColor(model.getBackgroundColor());
@@ -1467,7 +1465,7 @@ void Control::showSettings() {
 }
 
 static std::unique_ptr<Document> createNewDocument(Control* ctrl, fs::path filepath,
-                                                   const std::optional<std::string>& pageTemplate) {
+                                                   const std::optional<PageTemplateSettings>& pageTemplate) {
     auto newDoc = std::make_unique<Document>(ctrl);
     if (!filepath.empty()) {
         newDoc->setFilepath(std::move(filepath));
@@ -1648,7 +1646,9 @@ bool Control::openXoptFile(fs::path filepath) {
         // Unable to read the template from the file
         return false;
     }
-    this->replaceDocument(createNewDocument(this, std::move(filepath), pageTemplate), -1);
+    PageTemplateSettings model;
+    model.parse(*pageTemplate);
+    this->replaceDocument(createNewDocument(this, std::move(filepath), model), -1);
     return true;
 }
 
