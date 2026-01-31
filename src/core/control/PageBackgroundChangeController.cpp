@@ -37,7 +37,9 @@
 #include "filesystem.h"  // for path
 
 
-PageBackgroundChangeController::PageBackgroundChangeController(Control* control): control(control) {
+PageBackgroundChangeController::PageBackgroundChangeController(Control* control):
+        control(control),
+        pageTypeForNewPages(this->control->getSettings()->getPageTemplateSettings().getPageInsertType()) {
     registerListener(control);
 }
 
@@ -351,8 +353,7 @@ void PageBackgroundChangeController::insertNewPage(size_t position, bool automat
         page->setBackgroundType(pageTypeForNewPages.value());
 
         // Set background Color
-        PageTemplateSettings model;
-        model.parse(control->getSettings()->getPageTemplate());
+        const auto& model = control->getSettings()->getPageTemplateSettings();
         page->setBackgroundColor(model.getBackgroundColor());
 
         afterConfigured(std::move(page));
