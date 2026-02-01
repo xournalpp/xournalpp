@@ -16,6 +16,7 @@
 #include "control/DeviceListHelper.h"               // for InputDevice
 #include "control/ToolEnums.h"                      // for ERASER_TYPE_NONE
 #include "control/settings/LatexSettings.h"         // for LatexSettings
+#include "control/settings/PageTemplateSettings.h"  // for PageTemplateSettings
 #include "control/settings/SettingsEnums.h"         // for InputDeviceTypeOp...
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "model/FormatDefinitions.h"                // for FormatUnits, XOJ_...
@@ -1741,6 +1742,12 @@ void Settings::setDefaultPdfExportName(const std::u8string& name) {
 }
 
 auto Settings::getPageTemplate() const -> string const& { return this->pageTemplate; }
+
+auto Settings::getPageTemplateSettings() const -> PageTemplateSettings {
+    PageTemplateSettings model;
+    model.parse(this->pageTemplate);
+    return model;
+}
 
 void Settings::setPageTemplate(const string& pageTemplate) {
     if (this->pageTemplate == pageTemplate) {

@@ -15,9 +15,7 @@
 namespace {
 std::optional<PageType> getInitiallySelectedPageType(const Settings* settings) {
     if (settings) {
-        PageTemplateSettings model;
-        model.parse(settings->getPageTemplate());
-        return model.getPageInsertType();
+        return settings->getPageTemplateSettings().getPageInsertType();
     }
     return std::nullopt;
 }
