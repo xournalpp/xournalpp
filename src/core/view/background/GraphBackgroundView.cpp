@@ -45,19 +45,22 @@ void GraphBackgroundView::draw(cairo_t* cr) const {
         maxY = std::min(maxY, pageHeight - margin);
     }
 
-    //  Add a 0.5 * lineWidth padding in case the line is just outside the mask but its thickness still makes it
-    //  (partially) visible
     const double halfLineWidth = 0.5 * (boldLineInterval > 0 ? boldLineWidth : lineWidth);
+    const double clearance = std::max(margin, halfLineWidth);
+    /*  1- Add a halfLineWidth padding in case the line is just outside the mask but its thickness still makes it
+     *     (partially) visible
+     *  2- Set clearance so no line is drawn in the margin or to close to the edge of the sheet
+     */
     auto [indexMinX, indexMaxX] =
-            getIndexBounds(minX - halfLineWidth, maxX + halfLineWidth, squareSize, squareSize, pageWidth);
+            getIndexBounds(minX - halfLineWidth, maxX + halfLineWidth, squareSize, clearance, pageWidth);
     auto [indexMinY, indexMaxY] =
-            getIndexBounds(minY - halfLineWidth, maxY + halfLineWidth, squareSize, squareSize, pageHeight);
+            getIndexBounds(minY - halfLineWidth, maxY + halfLineWidth, squareSize, clearance, pageHeight);
 
     if (roundUpMargin) {
         auto [pageIndexMinX, pageIndexMaxX] = getIndexBounds(margin - halfLineWidth, pageWidth - margin + halfLineWidth,
-                                                             squareSize, squareSize, pageWidth);
+                                                             squareSize, clearance, pageWidth);
         auto [pageIndexMinY, pageIndexMaxY] = getIndexBounds(
-                margin - halfLineWidth, pageHeight - margin + halfLineWidth, squareSize, squareSize, pageHeight);
+                margin - halfLineWidth, pageHeight - margin + halfLineWidth, squareSize, clearance, pageHeight);
         minX = std::max(minX, squareSize * pageIndexMinX);
         maxX = std::min(maxX, squareSize * pageIndexMaxX);
         minY = std::max(minY, squareSize * pageIndexMinY);
