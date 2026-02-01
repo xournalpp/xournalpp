@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-09 15:22+0000\n"
-"PO-Revision-Date: 2026-01-11 04:36\n"
+"PO-Revision-Date: 2026-02-01 04:57\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -369,7 +369,8 @@ msgstr "عطّل الصوت في هذه الجلسة"
 #: ../src/core/control/XournalMain.cpp:606
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
-msgstr ""
+msgstr "افتح ملف PDF في وضع الإرفاق\n"
+"                                 يهمل إذا لم يحدد ملف PDF."
 
 #: ../src/core/control/XournalMain.cpp:610
 msgid "Save xopp-file with the background PDF specified as FILE"
