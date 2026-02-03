@@ -21,26 +21,12 @@
 
 namespace ExportHelper {
 
-/**
- * @brief Export the input file as a bunch of image files (one per page)
- * @param input Path to the input file
- * @param output Path to the output file(s)
- * @param range Page range to be parsed. If range=nullptr, exports the whole file
- * @param pngDpi Set dpi for Png files. Non positive values are ignored
- * @param pngWidth Set the width for Png files. Non positive values are ignored
- * @param pngHeight Set the height for Png files. Non positive values are ignored
- * @param exportBackground If EXPORT_BACKGROUND_NONE, the exported image file has transparent background
- *
- *  The priority is: pngDpi overwrites pngWidth overwrites pngHeight
- */
-void exportImg(Document* doc, const char* output, const char* range, const char* layerRange, int pngDpi, int pngWidth,
+void exportImg(Document* doc, fs::path outfile, const char* range, const char* layerRange, int pngDpi, int pngWidth,
                int pngHeight, ExportBackgroundType exportBackground) {
-
-    fs::path const path(output);
 
     ExportGraphicsFormat format = EXPORT_GRAPHICS_PNG;
 
-    if (path.extension() == ".svg") {
+    if (outfile.extension() == ".svg") {
         format = EXPORT_GRAPHICS_SVG;
     }
 
@@ -53,7 +39,7 @@ void exportImg(Document* doc, const char* output, const char* range, const char*
 
     DummyProgressListener progress;
 
-    ImageExport imgExport(doc, path, format, exportBackground, exportRange);
+    ImageExport imgExport(doc, std::move(outfile), format, exportBackground, exportRange);
 
     if (format == EXPORT_GRAPHICS_PNG) {
         if (pngDpi > 0) {
@@ -77,29 +63,16 @@ void exportImg(Document* doc, const char* output, const char* range, const char*
     g_message("%s", _("Image file successfully created"));
 }
 
-/**
- * @brief Export the input file as pdf
- * @param input Path to the input file
- * @param output Path to the output file
- * @param range Page range to be parsed. If range=nullptr, exports the whole file
- * @param exportBackground If EXPORT_BACKGROUND_NONE, the exported pdf file has white background
- * @param progressiveMode If true, then for each xournalpp page, instead of rendering one PDF page, the page layers are
- * rendered one by one to produce as many pages as there are layers.
- */
-void exportPdf(Document* doc, const char* output, const char* range, const char* layerRange,
+void exportPdf(Document* doc, const fs::path& output, const char* range, const char* layerRange,
                ExportBackgroundType exportBackground, bool progressiveMode, ExportBackend backend) {
-
-    xoj::util::GObjectSPtr<GFile> file(g_file_new_for_commandline_arg(output), xoj::util::adopt);
-
     std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, nullptr, backend);
     pdfe->setExportBackground(exportBackground);
-    auto path = Util::GFilename(g_file_peek_path(file.get())).toPath().value_or(fs::path());
 
     // Check if we're trying to overwrite the background PDF file
     auto backgroundPDF = doc->getPdfFilepath();
     try {
         if (!backgroundPDF.empty() && fs::exists(backgroundPDF)) {
-            if (fs::weakly_canonical(path) == fs::weakly_canonical(backgroundPDF)) {
+            if (fs::weakly_canonical(output) == fs::weakly_canonical(backgroundPDF)) {
                 throw std::invalid_argument{_("Do not overwrite the background PDF! This will cause errors!")};
             }
         }
@@ -115,9 +88,9 @@ void exportPdf(Document* doc, const char* output, const char* range, const char*
         // Parse the range
         PageRangeVector exportRange = ElementRange::parse(range, doc->getPageCount());
         // Do the export
-        exportSuccess = pdfe->createPdf(path, exportRange, progressiveMode);
+        exportSuccess = pdfe->createPdf(output, exportRange, progressiveMode);
     } else {
-        exportSuccess = pdfe->createPdf(path, progressiveMode);
+        exportSuccess = pdfe->createPdf(output, progressiveMode);
     }
 
     if (!exportSuccess) {

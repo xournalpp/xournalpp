@@ -37,7 +37,8 @@
 #include "filesystem.h"  // for path
 
 
-PageBackgroundChangeController::PageBackgroundChangeController(Control* control): control(control) {
+PageBackgroundChangeController::PageBackgroundChangeController(Control* control):
+        control(control), pageTypeForNewPages(control->getSettings()->getPageTemplateSettings().getPageInsertType()) {
     registerListener(control);
 }
 

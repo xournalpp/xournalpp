@@ -15,6 +15,8 @@
 #include "control/jobs/BaseExportJob.h"  // for ExportBackgroundType
 #include "pdf/base/PdfExportBackend.h"
 
+#include "filesystem.h"
+
 class Document;
 
 namespace ExportHelper {
@@ -33,7 +35,7 @@ namespace ExportHelper {
  *
  *  The priority is: pngDpi overwrites pngWidth overwrites pngHeight
  */
-void exportImg(Document* doc, const char* output, const char* range, const char* layerRange, int pngDpi, int pngWidth,
+void exportImg(Document* doc, fs::path output, const char* range, const char* layerRange, int pngDpi, int pngWidth,
                int pngHeight, ExportBackgroundType exportBackground);
 
 /**
@@ -48,7 +50,7 @@ void exportImg(Document* doc, const char* output, const char* range, const char*
  * @param progressiveMode If true, then for each xournalpp page, instead of rendering one PDF page, the page layers are
  * rendered one by one to produce as many pages as there are layers.
  */
-void exportPdf(Document* doc, const char* output, const char* range, const char* layerRange,
+void exportPdf(Document* doc, const fs::path& output, const char* range, const char* layerRange,
                ExportBackgroundType exportBackground, bool progressiveMode,
                ExportBackend backend = ExportBackend::DEFAULT);
 
