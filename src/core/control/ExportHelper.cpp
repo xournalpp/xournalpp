@@ -2,6 +2,7 @@
 
 #include <algorithm>  // for max
 #include <memory>     // for unique_ptr, allocator
+#include <stdexcept>  // for invalid_argument, runtime_error
 #include <string>     // for string
 
 #include <gio/gio.h>  // for g_file_new_for_commandlin...
@@ -31,11 +32,9 @@ namespace ExportHelper {
  * @param exportBackground If EXPORT_BACKGROUND_NONE, the exported image file has transparent background
  *
  *  The priority is: pngDpi overwrites pngWidth overwrites pngHeight
- *
- * @return 0 on success, -3 on export failure
  */
-auto exportImg(Document* doc, const char* output, const char* range, const char* layerRange, int pngDpi, int pngWidth,
-               int pngHeight, ExportBackgroundType exportBackground) -> int {
+void exportImg(Document* doc, const char* output, const char* range, const char* layerRange, int pngDpi, int pngWidth,
+               int pngHeight, ExportBackgroundType exportBackground) {
 
     fs::path const path(output);
 
@@ -72,13 +71,10 @@ auto exportImg(Document* doc, const char* output, const char* range, const char*
 
     std::string errorMsg = imgExport.getLastErrorMsg();
     if (!errorMsg.empty()) {
-        g_message("Error exporting image: %s\n", errorMsg.c_str());
-        return -3;
+        throw std::runtime_error(errorMsg);
     }
 
     g_message("%s", _("Image file successfully created"));
-
-    return 0;  // no error
 }
 
 /**
@@ -89,11 +85,9 @@ auto exportImg(Document* doc, const char* output, const char* range, const char*
  * @param exportBackground If EXPORT_BACKGROUND_NONE, the exported pdf file has white background
  * @param progressiveMode If true, then for each xournalpp page, instead of rendering one PDF page, the page layers are
  * rendered one by one to produce as many pages as there are layers.
- *
- * @return 0 on success, -3 on export failure
  */
-auto exportPdf(Document* doc, const char* output, const char* range, const char* layerRange,
-               ExportBackgroundType exportBackground, bool progressiveMode, ExportBackend backend) -> int {
+void exportPdf(Document* doc, const char* output, const char* range, const char* layerRange,
+               ExportBackgroundType exportBackground, bool progressiveMode, ExportBackend backend) {
 
     xoj::util::GObjectSPtr<GFile> file(g_file_new_for_commandline_arg(output), xoj::util::adopt);
 
@@ -106,13 +100,11 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
     try {
         if (!backgroundPDF.empty() && fs::exists(backgroundPDF)) {
             if (fs::weakly_canonical(path) == fs::weakly_canonical(backgroundPDF)) {
-                g_message("Do not overwrite the background PDF! This will cause errors!");
-                return -3;  // Return error code for export failure
+                throw std::invalid_argument{_("Do not overwrite the background PDF! This will cause errors!")};
             }
         }
     } catch (const fs::filesystem_error& fe) {
-        g_warning("The check for overwriting the background failed with: %s", fe.what());
-        return -3;  // Return error code for export failure
+        throw std::runtime_error{FS(_F("The check for overwriting the background failed with: {1}") % fe.what())};
     }
 
     bool exportSuccess = 0;  // Return of the export job
@@ -129,13 +121,10 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
     }
 
     if (!exportSuccess) {
-        g_message("%s", pdfe->getLastError().c_str());
-        return -3;
+        throw std::runtime_error{pdfe->getLastError()};
     }
 
     g_message("%s", _("PDF file successfully created"));
-
-    return 0;  // no error
 }
 
 }  // namespace ExportHelper

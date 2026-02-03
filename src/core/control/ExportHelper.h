@@ -32,11 +32,9 @@ namespace ExportHelper {
  * @param exportBackground If EXPORT_BACKGROUND_NONE, the exported image file has transparent background
  *
  *  The priority is: pngDpi overwrites pngWidth overwrites pngHeight
- *
- * @return 0 on success, -2 on failure opening the input file, -3 on export failure
  */
-int exportImg(Document* doc, const char* output, const char* range, const char* layerRange, int pngDpi, int pngWidth,
-              int pngHeight, ExportBackgroundType exportBackground);
+void exportImg(Document* doc, const char* output, const char* range, const char* layerRange, int pngDpi, int pngWidth,
+               int pngHeight, ExportBackgroundType exportBackground);
 
 /**
  * @brief Export the input file as pdf
@@ -49,12 +47,10 @@ int exportImg(Document* doc, const char* output, const char* range, const char* 
  * @param exportBackground If EXPORT_BACKGROUND_NONE, the exported pdf file has white background
  * @param progressiveMode If true, then for each xournalpp page, instead of rendering one PDF page, the page layers are
  * rendered one by one to produce as many pages as there are layers.
- *
- * @return 0 on success, -2 on failure opening the input file, -3 on export failure
  */
-int exportPdf(Document* doc, const char* output, const char* range, const char* layerRange,
-              ExportBackgroundType exportBackground, bool progressiveMode,
-              ExportBackend backend = ExportBackend::DEFAULT);
+void exportPdf(Document* doc, const char* output, const char* range, const char* layerRange,
+               ExportBackgroundType exportBackground, bool progressiveMode,
+               ExportBackend backend = ExportBackend::DEFAULT);
 
 
 }  // namespace ExportHelper

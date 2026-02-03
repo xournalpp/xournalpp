@@ -152,13 +152,29 @@ void checkForEmergencySave(Control* control) {
 }
 
 namespace {
-void exitOnMissingPdfFileName(const LoadHandler& loader) {
+void throwIfMissingPdfFileName(const LoadHandler& loader) {
     if (!loader.getMissingPdfFilename().empty()) {
-        auto msg =
+        throw std::runtime_error{
                 FS(_F("The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.") %
-                   loader.getMissingPdfFilename());
-        std::cerr << msg << std::endl;
-        exit(-2);
+                   loader.getMissingPdfFilename())};
+    }
+}
+
+auto loadDocumentOrExit(const char* filename, ExportBackgroundType exportBackground) -> std::unique_ptr<Document> {
+    try {
+        LoadHandler loader;
+        auto doc = loader.loadDocument(filename);
+        if (doc == nullptr) {
+            throw std::runtime_error{loader.getLastError().c_str()};
+        }
+
+        if (exportBackground != EXPORT_BACKGROUND_NONE) {
+            throwIfMissingPdfFileName(loader);
+        }
+        return doc;
+    } catch (const std::exception& e) {
+        std::cerr << FS(_F("Error loading document: {1}") % e.what()) << std::endl;
+        std::exit(-2);  // Return error code for loading failure
     }
 }
 }  // namespace
@@ -185,21 +201,13 @@ void exitOnMissingPdfFileName(const LoadHandler& loader) {
  */
 auto exportImg(const char* input, const char* output, const char* range, const char* layerRange, int pngDpi,
                int pngWidth, int pngHeight, ExportBackgroundType exportBackground) -> int {
-    LoadHandler loader;
-    auto doc = loader.loadDocument(input);
-    if (doc == nullptr) {
-        g_message("%s", loader.getLastError().c_str());
-        std::exit(-2);
-    }
+    auto doc = loadDocumentOrExit(input, exportBackground);
 
-    if (exportBackground != EXPORT_BACKGROUND_NONE) {
-        exitOnMissingPdfFileName(loader);
-    }
-
-    const auto res = ExportHelper::exportImg(doc.get(), output, range, layerRange, pngDpi, pngWidth, pngHeight,
-                                             exportBackground);
-    if (res != 0) {
-        std::exit(res);
+    try {
+        ExportHelper::exportImg(doc.get(), output, range, layerRange, pngDpi, pngWidth, pngHeight, exportBackground);
+    } catch (const std::exception& e) {
+        std::cerr << FS(_F("Error exporting image: {1}") % e.what()) << std::endl;
+        std::exit(-3);  // Return error code for export failure
     }
     return 0;
 }
@@ -220,7 +228,7 @@ auto saveDoc(const char* input, const char* output) -> int {
     auto newDoc = std::make_unique<Document>(handler.get());
     const bool res = newDoc->readPdf(in, /*initPages=*/true, false);
     if (!res) {
-        g_message("%s", FC(_F("Error: {1}") % newDoc->getLastErrorMsg().c_str()));
+        std::cerr << FS(_F("Error reading PDF: {1}") % newDoc->getLastErrorMsg()) << std::endl;
         std::exit(-2);
     }
     const fs::path out = fs::absolute(Util::fromGFilename(output));
@@ -228,7 +236,7 @@ auto saveDoc(const char* input, const char* output) -> int {
     saver.saveTo(out);
 
     if (!saver.getErrorMessage().empty()) {
-        g_message("%s", FC(_F("Error: {1}") % saver.getErrorMessage()));
+        std::cerr << FS(_F("Error saving document: {1}") % saver.getErrorMessage()) << std::endl;
         std::exit(-3);
     }
     return 0;
@@ -253,21 +261,13 @@ auto saveDoc(const char* input, const char* output) -> int {
  */
 auto exportPdf(const char* input, const char* output, const char* range, const char* layerRange,
                ExportBackgroundType exportBackground, bool progressiveMode, ExportBackend backend) -> int {
-    LoadHandler loader;
-    auto doc = loader.loadDocument(input);
-    if (doc == nullptr) {
-        g_message("%s", loader.getLastError().c_str());
-        std::exit(-2);
-    }
+    auto doc = loadDocumentOrExit(input, exportBackground);
 
-    if (exportBackground != EXPORT_BACKGROUND_NONE) {
-        exitOnMissingPdfFileName(loader);
-    }
-
-    const auto res =
-            ExportHelper::exportPdf(doc.get(), output, range, layerRange, exportBackground, progressiveMode, backend);
-    if (res != 0) {
-        std::exit(res);
+    try {
+        ExportHelper::exportPdf(doc.get(), output, range, layerRange, exportBackground, progressiveMode, backend);
+    } catch (const std::exception& e) {
+        std::cerr << FS(_F("Error exporting PDF: {1}") % e.what()) << std::endl;
+        std::exit(-3);  // Return error code for export failure
     }
     return 0;
 }
