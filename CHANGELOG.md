@@ -2,6 +2,20 @@
 
 ## 1.3.2~dev (Unreleased)
 
+* Fix Windows UTF-8 conversion issues (#6888)
+* Fix sidebar layout when resizing and changing tab (#7060)
+* Fix missing lines/dots in graph/dotted backgrounds (#6968)
+* Fix change in new page behaviour with PDF background (#7055)
+* Fix crash on Windows when background PDF is missing (#7019)
+* Fix crash on Clipboard IO error (#7009)
+* Make Plugin openFile API comply with forceOpen parameter (#6961)
+* Fix CLI behaviour on error (#6956)
+* Restore GtkSourceView support (#6969)
+* Fix recoloring when light color is lighter (#6948)
+* Fix image orientation on Drag-n-Drop pasting (#6943)
+* Fix crashes when using touchscreen in Setting->Input panel (#6916)
+* Updated translations
+
 ## 1.3.1
 
 * Restored the rendering of graph backgrounds used before the 1.3.0 release (#6894)
