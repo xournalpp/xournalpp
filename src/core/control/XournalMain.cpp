@@ -221,7 +221,7 @@ auto exportImg(const char* input, const char* output, const char* range, const c
  *
  * Calls std::exit(-2) on failure reading the input file and std::exit(-3) on save failure
  */
-auto saveDoc(const char* input, const char* output) -> int {
+auto saveDoc(const char* input, const char* output, Control* control) -> int {
     SaveHandler saver;
     const fs::path in = Util::fromGFilename(input);
     auto handler = std::make_unique<DocumentHandler>();
@@ -232,13 +232,15 @@ auto saveDoc(const char* input, const char* output) -> int {
         std::exit(-2);
     }
     const fs::path out = fs::absolute(Util::fromGFilename(output));
-    saver.prepareSave(newDoc.get(), out);
+    saver.prepareSave(newDoc.get(), out, control);
     saver.saveTo(out);
 
     if (!saver.getErrorMessage().empty()) {
         std::cerr << FS(_F("Error saving document: {1}") % saver.getErrorMessage()) << std::endl;
         std::exit(-3);
     }
+
+    newDoc->setFileHash(StringUtils::calculateFileSHA256(out.string()));
     return 0;
 }
 
@@ -543,7 +545,9 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
                 "exportImg");
     }
     if (app_data->docFilename && app_data->optFilename && *app_data->optFilename) {
-        return exec_guarded([&] { return saveDoc(*app_data->optFilename, app_data->docFilename); }, "saveDocument");
+        return exec_guarded(
+                [&] { return saveDoc(*app_data->optFilename, app_data->docFilename, app_data->control.get()); },
+                "saveDocument");
     }
     return -1;
 }

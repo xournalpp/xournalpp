@@ -23,6 +23,7 @@
 #include <cairo.h>    // for cairo_surface_t
 #include <glib.h>     // for gpointer, gsize
 #include <gtk/gtk.h>  // for GtkTreeModel, GtkTreeIter, GtkT...
+#include <pugixml.hpp>
 
 #include "pdf/base/XojPdfDocument.h"  // for XojPdfDocument
 #include "pdf/base/XojPdfPage.h"      // for XojPdfPageSPtr
@@ -42,6 +43,10 @@ public:
 
 public:
     enum DocumentType { XOPP, XOJ, PDF };
+
+    int getFileVersion();
+
+    void setFileVersion(int version);
 
     void setPdfAttributes(const fs::path& filename, bool attachToDocument);
     bool readPdf(const fs::path& filename, bool initPages, bool attachToDocument,
@@ -103,6 +108,15 @@ public:
     inline Util::PathStorageMode getPathStorageMode() const { return pathStorageMode; }
     inline void setPathStorageMode(Util::PathStorageMode m) { pathStorageMode = m; }
 
+    std::vector<PageRef> getPages() const;
+
+    pugi::xml_document& getRawPageXmlDocument();
+    void setRawPageXmlDocument(std::string const& doc);
+    void clearOriginalXmlDoc();
+
+    void setFileHash(const std::string& hash);
+    std::string getFileHash() const;
+
 private:
     void buildContentsModel();
     void freeTreeContentModel();
@@ -112,10 +126,17 @@ private:
     void updateIndexPageNumbers();
     static bool fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc);
 
+
 private:
     DocumentHandler* handler = nullptr;
 
+    std::string fileHash;
+
     XojPdfDocument pdfDocument;
+
+    pugi::xml_document xmlRawDocument;
+
+    int fileVersion;
 
     fs::path filepath;
     fs::path pdfFilepath;

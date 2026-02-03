@@ -11,13 +11,14 @@
 
 #include "control/Control.h"  // for Control
 #include "model/Document.h"   // for Document
+#include "model/PageRef.h"    // for PageRef
+#include "model/XojPage.h"    // for PageRef
 #include "undo/UndoAction.h"  // for UndoActionPtr, UndoAction
 #include "util/Assert.h"      // for xoj_assert
 #include "util/XojMsgBox.h"   // for XojMsgBox
 #include "util/i18n.h"        // for _, FS, _F
 
 using std::string;
-
 
 template <typename T>
 T* GetPtr(T* ptr) {
@@ -63,7 +64,7 @@ void UndoRedoHandler::printContents() {
         if (this->savedUndo)               // NOLINT
         {                                  // NOLINT
             printAction(this->savedUndo);  // NOLINT
-        }                                  // NOLINT
+        }  // NOLINT
     }
 }
 
@@ -80,6 +81,9 @@ void UndoRedoHandler::clearContents() {
 
     undoList.clear();
     clearRedo();
+
+    this->pagesChanged.clear();
+    this->pagesChangedUndo.clear();
 
     this->savedUndo = nullptr;
     this->autosavedUndo = nullptr;
@@ -108,6 +112,13 @@ void UndoRedoHandler::undo() {
     this->redoList.emplace_back(std::move(this->undoList.back()));
     this->undoList.pop_back();
 
+    if (this->pagesChanged.empty()) {
+        g_warning("UndoRedoHandler::undo(): pagesChanged is empty while undoList is not. State is inconsistent!");
+    } else {
+        this->pagesChangedUndo.emplace_back(this->pagesChanged.back());
+        this->pagesChanged.pop_back();
+    }
+
     bool undoResult = undoAction.undo(this->control);
 
     if (!undoResult) {
@@ -133,6 +144,14 @@ void UndoRedoHandler::redo() {
 
     this->undoList.emplace_back(std::move(this->redoList.back()));
     this->redoList.pop_back();
+
+    if (this->pagesChangedUndo.empty()) {
+        g_warning("UndoRedoHandler::redo(): pagesChangedUndo is empty while redoList is not. State is inconsistent!");
+    } else {
+        this->pagesChanged.emplace_back(this->pagesChangedUndo.back());
+        this->pagesChangedUndo.pop_back();
+    }
+
 
     bool redoResult = redoAction.redo(this->control);
 
@@ -164,6 +183,14 @@ void UndoRedoHandler::addUndoAction(UndoActionPtr action) {
     clearRedo();
     fireUpdateUndoRedoButtons(this->undoList.back()->getPages());
 
+    for (auto const& page: this->undoList.back()->getPages()) {
+        const auto& uid = page.get()->getUID();
+
+        if (std::find(this->pagesChanged.begin(), this->pagesChanged.end(), uid) == this->pagesChanged.end()) {
+            this->pagesChanged.emplace_back(uid);
+        }
+    }
+
     printContents();
 }
 
@@ -192,14 +219,18 @@ auto UndoRedoHandler::redoDescription() -> string {
 }
 
 void UndoRedoHandler::fireUpdateUndoRedoButtons(const std::vector<PageRef>& pages) {
-    for (auto&& undoRedoListener: this->listener) { undoRedoListener->undoRedoChanged(); }
+    for (auto&& undoRedoListener: this->listener) {
+        undoRedoListener->undoRedoChanged();
+    }
 
     for (PageRef page: pages) {
         if (!page) {
             continue;
         }
 
-        for (auto&& undoRedoListener: this->listener) { undoRedoListener->undoRedoPageChanged(page); }
+        for (auto&& undoRedoListener: this->listener) {
+            undoRedoListener->undoRedoPageChanged(page);
+        }
     }
 }
 

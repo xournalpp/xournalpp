@@ -23,7 +23,9 @@ runs:
     if: steps.restore-blob.outputs.cache-hit != 'true'
     shell: bash
     run: |
-      brew install cargo-c
+      brew install cargo-c 
+      brew install openssl
+      brew install pugixml
       mkdir "${{github.workspace}}/blob"
       bash "${{github.workspace}}/mac-setup/CI_jhbuild.sh"
       mv xournalpp-binary-blob.tar.gz "${{github.workspace}}/blob/"
