@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-09 15:22+0000\n"
-"PO-Revision-Date: 2026-01-25 19:17\n"
+"POT-Creation-Date: 2026-02-03 08:38+0000\n"
+"PO-Revision-Date: 2026-02-03 08:53\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -69,7 +69,7 @@ msgid "Paper B_ackground"
 msgstr "纸张背景(_A)"
 
 #: ../src/core/control/Control.cpp:834
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:41
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:42
 msgid "With PDF background"
 msgstr "使用PDF背景"
 
@@ -230,11 +230,11 @@ msgstr "小红点"
 msgid "tablet pad"
 msgstr "数位板"
 
-#: ../src/core/control/ExportHelper.cpp:79
+#: ../src/core/control/ExportHelper.cpp:63
 msgid "Image file successfully created"
 msgstr "图片文件创建成功"
 
-#: ../src/core/control/ExportHelper.cpp:136
+#: ../src/core/control/ExportHelper.cpp:105
 msgid "PDF file successfully created"
 msgstr "PDF文件成功建立"
 
@@ -262,13 +262,13 @@ msgstr "无法加载 LaTeX PDF 文件: {1}"
 msgid "Could not load LaTeX PDF file"
 msgstr "无法加载 LaTeX PDF 文件"
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:110
+#: ../src/core/control/PageBackgroundChangeController.cpp:111
 #: ../src/core/control/xojfile/LoadHandler.cpp:483
 #: ../src/core/control/xojfile/LoadHandler.cpp:499
 msgid "Error reading PDF: {1}"
 msgstr "读入PDF出错：{1}"
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:271
+#: ../src/core/control/PageBackgroundChangeController.cpp:272
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
 msgstr "您没有任何可以选择的 PDF 页面。操作取消。\n"
@@ -310,12 +310,12 @@ msgstr "还原文件"
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "无法找到背景文件“{1}”。它可能已被移动、改名或删除。"
 
-#: ../src/core/control/XournalMain.cpp:221
-#: ../src/core/control/XournalMain.cpp:229
+#: ../src/core/control/XournalMain.cpp:222
+#: ../src/core/control/XournalMain.cpp:230
 msgid "Error: {1}"
 msgstr "错误：{1}"
 
-#: ../src/core/control/XournalMain.cpp:371
+#: ../src/core/control/XournalMain.cpp:372
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -329,24 +329,24 @@ msgstr "<span foreground='red' size='x-large'>缺失必要的用户界面文件�
 "  不在工作目录下\n"
 "  不在 {2}"
 
-#: ../src/core/control/XournalMain.cpp:376
+#: ../src/core/control/XournalMain.cpp:377
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "将尝试在不使用此文件的情况下运行。"
 
-#: ../src/core/control/XournalMain.cpp:398
-#: ../src/core/control/XournalMain.cpp:459
+#: ../src/core/control/XournalMain.cpp:399
+#: ../src/core/control/XournalMain.cpp:460
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "对不起，Xournal++ 只能一次打开一个文件。\n"
 "其他文件已被忽略。"
 
-#: ../src/core/control/XournalMain.cpp:409
+#: ../src/core/control/XournalMain.cpp:410
 msgid "File {1} does not exist."
 msgstr "文件 {1} 不存在。"
 
-#: ../src/core/control/XournalMain.cpp:413
+#: ../src/core/control/XournalMain.cpp:414
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -354,29 +354,29 @@ msgstr "文件系统错误： {1}\n"
 "抱歉，Xournal++ 无法打开文件： {2}\n"
 "考虑将文件复制到本地目录。"
 
-#: ../src/core/control/XournalMain.cpp:598
+#: ../src/core/control/XournalMain.cpp:606
 msgid "Jump to Page (first Page: 1)"
 msgstr "跳到页面(第一页:1)"
 
-#: ../src/core/control/XournalMain.cpp:602
+#: ../src/core/control/XournalMain.cpp:610
 msgid "Get version of xournalpp"
 msgstr "获取xournalp版本信息"
 
-#: ../src/core/control/XournalMain.cpp:604
+#: ../src/core/control/XournalMain.cpp:612
 msgid "Disable audio for this session"
 msgstr "禁用此会话的音频"
 
-#: ../src/core/control/XournalMain.cpp:606
+#: ../src/core/control/XournalMain.cpp:614
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
 msgstr "以附件模式打开 PDF 文件\n\n"
 "如果未指定 PDF 文件，则忽略此操作。"
 
-#: ../src/core/control/XournalMain.cpp:610
+#: ../src/core/control/XournalMain.cpp:618
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "使用 FILE 指定的 PDF 作为背景保存 xopp 文件"
 
-#: ../src/core/control/XournalMain.cpp:615
+#: ../src/core/control/XournalMain.cpp:623
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
@@ -384,11 +384,11 @@ msgstr "使用提供的后端导出 PDF 文件。\n\n"
 "可用后端：{1}\n\n"
 "不使用 `-p/--create-pdf=foo.pdf` 参数无效。"
 
-#: ../src/core/control/XournalMain.cpp:624
+#: ../src/core/control/XournalMain.cpp:632
 msgid "Export FILE as PDF"
 msgstr "导出为 PDF"
 
-#: ../src/core/control/XournalMain.cpp:627
+#: ../src/core/control/XournalMain.cpp:635
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
@@ -396,7 +396,7 @@ msgstr "将文件导出为图像文件（每页一个）\n\n"
 "根据 IMGFILE 文件的扩展名猜测输出格式\n\n"
 "支持的格式：.png、.svg"
 
-#: ../src/core/control/XournalMain.cpp:633
+#: ../src/core/control/XournalMain.cpp:641
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
@@ -404,13 +404,13 @@ msgstr "无背景导出\n"
 "                                 导出文件包含白色或透明背景，\n"
 "                                 取决于文件的导出格式\n"
 
-#: ../src/core/control/XournalMain.cpp:638
+#: ../src/core/control/XournalMain.cpp:646
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
 msgstr "无规则导出\n"
 "                                 导出的文件没有文档结构\n"
 
-#: ../src/core/control/XournalMain.cpp:643
+#: ../src/core/control/XournalMain.cpp:651
 msgid "Export layers progressively\n"
 "                                       In PDF export, Render layers progressively one by one.\n"
 "                                       This results in N export pages per page with N layers,\n"
@@ -422,25 +422,25 @@ msgstr "逐层导出\n\n"
 "图层堆栈会逐步构建。\n\n"
 "生成的 PDF 文件可用于演示文稿。\n"
 
-#: ../src/core/control/XournalMain.cpp:652
+#: ../src/core/control/XournalMain.cpp:660
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr "仅导出 RANGE 指定的页码（例如“2-3,5,7-”)\n\n"
 "不使用 -p/--create-pdf 或 -i/--create-img 参数无效"
 
-#: ../src/core/control/XournalMain.cpp:657
+#: ../src/core/control/XournalMain.cpp:665
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr "仅导出 RANGE 指定的图层（例如“2-3,5,7-”)\n\n"
 "不使用 -p/--create-pdf 或 -i/--create-img 参数无效"
 
-#: ../src/core/control/XournalMain.cpp:661
+#: ../src/core/control/XournalMain.cpp:669
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
 msgstr "设置导出为 PNG 图片时的DPI，默认为 300\n"
 "                                 在未使用 -i/--create-img=foo.png 时无效"
 
-#: ../src/core/control/XournalMain.cpp:665
+#: ../src/core/control/XournalMain.cpp:673
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
@@ -448,7 +448,7 @@ msgstr "设置导出页面为 PNG 图片时的宽度\n"
 "                                 当未使用 -i/--create-img=foo.png 时无效\n"
 "                                 当使用 --export-png-dpi 时无效"
 
-#: ../src/core/control/XournalMain.cpp:670
+#: ../src/core/control/XournalMain.cpp:678
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
@@ -456,11 +456,11 @@ msgstr "设置导出页面为 PNG 图片时的高度\n"
 "                                 当未使用 -i/--create-img=foo.png 时无效\n"
 "                                 当使用 --export-png-dpi 或 --export-png-width 时无效"
 
-#: ../src/core/control/XournalMain.cpp:678
+#: ../src/core/control/XournalMain.cpp:686
 msgid "Advanced export options"
 msgstr "高级导出选项"
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:687
 msgid "Display advanced export options"
 msgstr "显示高级导出选项"
 
@@ -579,52 +579,52 @@ msgstr "无法启动 {1}: {2} (退出代码: {3})"
 msgid "Layer {1}"
 msgstr "{1}图层"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:26
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:27
 msgid "Could not load pagetemplates.ini file"
 msgstr "无法加载 pagempempui.ini 文件"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:30
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Plain"
 msgstr "空白"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "Ruled"
 msgstr "定标"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 msgid "Ruled with vertical line"
 msgstr "信笺纸"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
 msgid "Staves"
 msgstr "五线谱纸"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
 msgid "Graph"
 msgstr "图形"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
 msgid "Dotted"
 msgstr "点虚线"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:37
 msgid "Isometric Dotted"
 msgstr "等距网格点"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:37
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:38
 msgid "Isometric Graph"
 msgstr "等距网格线"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:42
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:43
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 msgid "Image"
 msgstr "图片"
 
-#: ../src/core/control/settings/Settings.cpp:153
+#: ../src/core/control/settings/Settings.cpp:154
 msgid "%F-Note-%H-%M"
 msgstr "%F-笔记-%H-%M"
 
-#: ../src/core/control/settings/Settings.cpp:154
+#: ../src/core/control/settings/Settings.cpp:155
 msgid "%{name}_annotated"
 msgstr "%{name}_已批注"
 
@@ -1087,7 +1087,7 @@ msgid "Xournal++ files"
 msgstr "Xournal++ 文件"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:119
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:120
 msgid "Xournal++ template"
 msgstr "Xournal++ 模板"
 
@@ -1132,18 +1132,18 @@ msgstr "错误： {1}。请检查 {2} 的内容"
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "错误： {1} 不是常规文件。请检查您的 LaTeX 模板文件设置。 "
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:115
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:84
 msgid "Save File"
 msgstr "保存文件"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:115
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:80
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:19
 msgid "_Cancel"
 msgstr "取消 (_C)"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 msgid "_Save"
 msgstr "保存(_S)"
 
