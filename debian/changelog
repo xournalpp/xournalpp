@@ -1,4 +1,4 @@
-xournalpp (1.3.2~dev-1) UNRELEASED; urgency=medium
+xournalpp (1.3.2-1) unstable; urgency=medium
 
   * Fix sidebar layout when resizing and changing tab
   * Fix graph/dotted backgrounds
@@ -13,7 +13,7 @@ xournalpp (1.3.2~dev-1) UNRELEASED; urgency=medium
   * Fix crashes when using touchscreen in Setting->Input panel
   * Updated translations
 
- -- Roland Lötscher <roland_loetscher@hotmail.com>  Sun, 21 Dec 2025 22:04:28 +0100
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Tue, 03 Feb 2026 09:52:28 +0100
 
 xournalpp (1.3.1-1) unstable; urgency=medium
 

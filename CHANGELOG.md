@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.3.2~dev (Unreleased)
+## 1.3.2
 
 * Fix Windows UTF-8 conversion issues (#6888)
 * Fix sidebar layout when resizing and changing tab (#7060)
