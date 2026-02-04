@@ -323,12 +323,30 @@ private:
      */
     void drawAnchorRotation(cairo_t* cr, double x, double y, double zoom);
 
-
     /**
      * Draws an indicator where you can delete the selection
      */
-    void drawDeleteRect(cairo_t* cr, double x, double y, double zoom) const;
+    void drawAnchorDelete(cairo_t* cr, double x, double y, double zoom) const;
 
+    /**
+     * Draws an indicator where you can cut the selection
+     */
+    void drawAnchorCut(cairo_t* cr, double x, double y, double zoom) const;
+
+    /**
+     * Draws an indicator where you can copy the selection
+     */
+    void drawAnchorCopy(cairo_t* cr, double x, double y, double zoom) const;
+
+    /**
+     * Draws an indicator where you can paste a selection
+     */
+    void drawAnchorPaste(cairo_t* cr, double x, double y, double zoom) const;
+
+    /**
+     * Draws an indicator where you can duplicate the selection
+     */
+    void drawAnchorDuplicate(cairo_t* cr, double x, double y, double zoom) const;
 
     /**
      * Finishes all pending changes, move the elements, scale the elements and add
