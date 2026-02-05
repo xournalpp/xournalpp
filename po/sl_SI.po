@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-25 07:16+0000\n"
-"PO-Revision-Date: 2026-01-25 19:17\n"
+"POT-Creation-Date: 2026-02-03 08:38+0000\n"
+"PO-Revision-Date: 2026-02-03 08:53\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -228,11 +228,20 @@ msgstr "sledilna točka"
 msgid "tablet pad"
 msgstr "grafična tablica"
 
-#: ../src/core/control/ExportHelper.cpp:79
+#: ../src/core/control/ExportHelper.cpp:77
 msgid "Image file successfully created"
 msgstr "Slika uspešno ustvarjena"
 
-#: ../src/core/control/ExportHelper.cpp:136
+#: ../src/core/control/ExportHelper.cpp:103
+#: ../src/core/control/jobs/BaseExportJob.cpp:40
+msgid "Do not overwrite the background PDF! This will cause errors!"
+msgstr "Ne prepisujte izvornega PDF! To bo povzročilo napake!"
+
+#: ../src/core/control/ExportHelper.cpp:107
+msgid "The check for overwriting the background failed with: {1}"
+msgstr ""
+
+#: ../src/core/control/ExportHelper.cpp:127
 msgid "PDF file successfully created"
 msgstr "PDF uspešno ustvarjen"
 
@@ -261,6 +270,7 @@ msgid "Could not load LaTeX PDF file"
 msgstr "Ni bilo mogoče naložiti LaTeX PDF datoteke"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:110
+#: ../src/core/control/XournalMain.cpp:231
 #: ../src/core/control/xojfile/LoadHandler.cpp:483
 #: ../src/core/control/xojfile/LoadHandler.cpp:499
 msgid "Error reading PDF: {1}"
@@ -308,10 +318,21 @@ msgstr "Obnovi datoteko"
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "Datoteke ozadja\"{1}\" ni bilo mogoče najti. Mogoče je bila premaknjena, preimenovana ali izbrisana."
 
-#: ../src/core/control/XournalMain.cpp:223
-#: ../src/core/control/XournalMain.cpp:231
-msgid "Error: {1}"
-msgstr "Napaka:{1}"
+#: ../src/core/control/XournalMain.cpp:176
+msgid "Error loading document: {1}"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:209
+msgid "Error exporting image: {1}"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:239
+msgid "Error saving document: {1}"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:269
+msgid "Error exporting PDF: {1}"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:375
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
@@ -454,10 +475,6 @@ msgstr "Samodejno shranjevanje v {1}"
 #: ../src/core/control/jobs/AutosaveJob.cpp:69
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Datoteke za samodejno shranjevanje ni bilo mogoče preimenovati iz »{1}« v »{2}«: {3}"
-
-#: ../src/core/control/jobs/BaseExportJob.cpp:40
-msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr "Ne prepisujte izvornega PDF! To bo povzročilo napake!"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "The check for overwriting the background failed with:\n"
