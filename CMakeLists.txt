@@ -149,7 +149,7 @@ endif (APPLE)
 list(APPEND pkg-module-spec "gthread-2.0 >= 2.4.0")
 list(APPEND pkg-module-spec "libxml-2.0 >= 2.0.0")
 list(APPEND pkg-module-spec "libzip >= 1.0.1")
-list(APPEND pkg-module-spec "librsvg-2.0 >= 2.40")
+list(APPEND pkg-module-spec "librsvg-2.0 >= 2.46")
 
 # Profiling
 option (ENABLE_PROFILING "Link with gperftools" OFF)
