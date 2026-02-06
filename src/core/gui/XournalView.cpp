@@ -25,6 +25,7 @@
 #include "gui/inputdevices/GeometryToolInputHandler.h"  // for GeometryToolInputHandler
 #include "gui/inputdevices/HandRecognition.h"    // for HandRecognition
 #include "gui/inputdevices/InputContext.h"       // for InputContext
+#include "gui/scroll/ScrollHandling.h"           // for ScrollHandling
 #include "gui/toolbarMenubar/ColorToolItem.h"    // for ColorToolItem
 #include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
 #include "gui/widgets/XournalWidget.h"           // for gtk_xournal_get_layout
@@ -74,7 +75,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
     registerListener(control);
 
     InputContext* inputContext = new InputContext(this, scrollHandling);
-    this->widget = gtk_xournal_new(this, inputContext);
+    this->widget = gtk_xournal_new(this, inputContext, scrollHandling->getVertical(), scrollHandling->getHorizontal());
     g_object_ref_sink(this->widget);  // take ownership without increasing the ref count
 
     gtk_container_add(GTK_CONTAINER(parent), this->widget);
@@ -429,16 +430,16 @@ void XournalView::scrollTo(size_t pageNo, XojPdfRectangle rect) {
         return;
     }
 
-    auto& v = this->viewPages[pageNo];
-
     // Make sure it is visible
     Layout* layout = this->getLayout();
+    auto p = layout->getPixelCoordinatesOfEntry(pageNo);
 
-    int x = v->getX() + round_cast<int>(rect.x1 * zoom);
-    int y = v->getY() + round_cast<int>(rect.y1 * zoom);
+    int x = p.x + round_cast<int>(rect.x1 * zoom);
+    int y = p.y + round_cast<int>(rect.y1 * zoom);
     int width;
     int height;
     if (rect.x2 == -1 || rect.y2 == -1) {
+        auto& v = this->viewPages[pageNo];
         width = v->getDisplayWidth();
         height = v->getDisplayHeight();
     } else {
@@ -454,14 +455,8 @@ void XournalView::scrollTo(size_t pageNo, XojPdfRectangle rect) {
 
 
 void XournalView::pageRelativeXY(int offCol, int offRow) {
-    size_t currPage = getCurrentPage();
-
-    XojPageView* view = getViewFor(currPage);
-    int row = view->getMappedRow();
-    int col = view->getMappedCol();
-
     Layout* layout = this->getLayout();
-    auto optionalPageIndex = layout->getPageIndexAtGridMap(as_unsigned(row + offRow), as_unsigned(col + offCol));
+    auto optionalPageIndex = layout->getPageWithRelativePosition(getCurrentPage(), offCol, offRow);
     if (optionalPageIndex) {
         this->scrollTo(*optionalPageIndex);
     }
@@ -552,20 +547,11 @@ void XournalView::ensureRectIsVisible(int x, int y, int width, int height) {
 }
 
 void XournalView::zoomChanged() {
-
-    size_t currentPage = this->getCurrentPage();
-    XojPageView* view = getViewFor(currentPage);
-
     ZoomControl* zoom = control->getZoomControl();
-
-    if (!view) {
-        return;
-    }
-
-    layoutPages();
+    this->getLayout()->recomputeCenteringPadding();
 
     if (zoom->isZoomPresentationMode() || zoom->isZoomFitMode()) {
-        scrollTo(currentPage);
+        scrollTo(this->getCurrentPage());
     } else if (zoom->isZoomSequenceActive()) {
         auto pos = zoom->getScrollPositionAfterZoom();
         Layout* layout = this->getLayout();
@@ -587,6 +573,8 @@ void XournalView::zoomChanged() {
     control->getWindow()->getPdfToolbox()->hide();
 
     this->control->getScheduler()->blockRerenderZoom();
+
+    gtk_widget_queue_draw(getWidget());
 }
 
 void XournalView::pageSizeChanged(size_t page) {
@@ -734,16 +722,7 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
     gtk_widget_queue_draw(this->widget);
 }
 
-void XournalView::layoutPages() {
-    Layout* layout = this->getLayout();
-    layout->recalculate();
-
-    // Todo (fabian): the following lines are conceptually wrong, the Layout::layoutPages function is meant to be
-    // called by an expose event, but removing it, will break "add page".
-    auto rectangle = layout->getVisibleRect();
-    layout->layoutPages(std::max<int>(layout->getMinimalWidth(), round_cast<int>(rectangle.width)),
-                        std::max<int>(layout->getMinimalHeight(), round_cast<int>(rectangle.height)));
-}
+void XournalView::layoutPages() { this->getLayout()->recalculate(); }
 
 auto XournalView::getDisplayHeight() const -> int {
     GtkAllocation allocation = {0};
