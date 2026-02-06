@@ -385,9 +385,17 @@
      <attribute name="accel">&lt;Ctrl&gt;Page_Up</attribute>
     </item>
     <item>
+     <attribute name="label" translatable="yes">Jump _Back</attribute>
+     <attribute name="action">win.navigate-back</attribute>
+    </item>
+    <item>
      <attribute name="label" translatable="yes">_Goto Page</attribute>
      <attribute name="action">win.goto-page</attribute>
      <attribute name="accel">&lt;Ctrl&gt;g</attribute>
+    </item>
+    <item>
+     <attribute name="label" translatable="yes">Jump _Forward</attribute>
+     <attribute name="action">win.navigate-forward</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">_Next Page</attribute>

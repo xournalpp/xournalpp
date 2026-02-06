@@ -85,6 +85,8 @@ enum class Action : size_t {
     GOTO_LAST,
     GOTO_NEXT_ANNOTATED_PAGE,
     GOTO_PREVIOUS_ANNOTATED_PAGE,
+    NAVIGATE_BACK,
+    NAVIGATE_FORWARD,
 
     // Menu Journal
     NEW_PAGE_BEFORE,
