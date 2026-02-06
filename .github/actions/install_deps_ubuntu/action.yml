@@ -39,6 +39,7 @@ runs:
           libgtest-dev
           libgtksourceview-4-dev
           libqpdf-dev
+          libtbb-dev
       run: |
         sudo apt-get update
         sudo apt-get install -y ${{env.packages}}

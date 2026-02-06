@@ -9,44 +9,48 @@
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_Page_Down
 #include <glib-object.h>     // for g_object_ref_sink
 
-#include "control/Control.h"                     // for Control
-#include "control/PdfCache.h"                    // for PdfCache
-#include "control/ScrollHandler.h"               // for ScrollHandler
-#include "control/ToolHandler.h"                 // for ToolHandler
-#include "control/actions/ActionDatabase.h"      // for ActionDatabase
-#include "control/jobs/XournalScheduler.h"       // for XournalScheduler
-#include "control/settings/MetadataManager.h"    // for MetadataManager
-#include "control/settings/Settings.h"           // for Settings
-#include "control/tools/CursorSelectionType.h"   // for CURSOR_SELECTION_NONE
-#include "control/tools/EditSelection.h"         // for EditSelection
-#include "control/zoom/ZoomControl.h"            // for ZoomControl
-#include "gui/MainWindow.h"                      // for MainWindow
-#include "gui/PdfFloatingToolbox.h"              // for PdfFloatingToolbox
+#include "control/Control.h"                            // for Control
+#include "control/PdfCache.h"                           // for PdfCache
+#include "control/ScrollHandler.h"                      // for ScrollHandler
+#include "control/ToolHandler.h"                        // for ToolHandler
+#include "control/actions/ActionDatabase.h"             // for ActionDatabase
+#include "control/jobs/XournalScheduler.h"              // for XournalScheduler
+#include "control/settings/MetadataManager.h"           // for MetadataManager
+#include "control/settings/Settings.h"                  // for Settings
+#include "control/tools/CursorSelectionType.h"          // for CURSOR_SELECTION_NONE
+#include "control/tools/EditSelection.h"                // for EditSelection
+#include "control/zoom/ZoomControl.h"                   // for ZoomControl
+#include "gui/MainWindow.h"                             // for MainWindow
+#include "gui/PdfFloatingToolbox.h"                     // for PdfFloatingToolbox
 #include "gui/inputdevices/GeometryToolInputHandler.h"  // for GeometryToolInputHandler
-#include "gui/inputdevices/HandRecognition.h"    // for HandRecognition
-#include "gui/inputdevices/InputContext.h"       // for InputContext
-#include "gui/toolbarMenubar/ColorToolItem.h"    // for ColorToolItem
-#include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
-#include "gui/widgets/XournalWidget.h"           // for gtk_xournal_get_layout
-#include "model/Document.h"                      // for Document
-#include "model/Element.h"                       // for Element, ELEMENT_STROKE
-#include "model/PageRef.h"                       // for PageRef
-#include "model/Stroke.h"                        // for Stroke, StrokeTool::E...
-#include "model/XojPage.h"                       // for XojPage
-#include "undo/DeleteUndoAction.h"               // for DeleteUndoAction
-#include "undo/UndoRedoHandler.h"                // for UndoRedoHandler
-#include "util/Assert.h"                         // for xoj_assert
-#include "util/Point.h"                          // for Point
-#include "util/Rectangle.h"                      // for Rectangle
-#include "util/Util.h"                           // for npos
-#include "util/glib_casts.h"                     // for wrap_v
-#include "util/gtk4_helper.h"                    // for gtk_scrolled_window_set_child
-#include "util/safe_casts.h"                     // for round_cast
+#include "gui/inputdevices/HandRecognition.h"           // for HandRecognition
+#include "gui/inputdevices/InputContext.h"              // for InputContext
+#include "gui/toolbarMenubar/ColorToolItem.h"           // for ColorToolItem
+#include "gui/toolbarMenubar/ToolMenuHandler.h"         // for ToolMenuHandler
+#include "gui/widgets/XournalWidget.h"                  // for gtk_xournal_get_layout
+#include "model/Document.h"                             // for Document
+#include "model/Element.h"                              // for Element, ELEMENT_STROKE
+#include "model/PageRef.h"                              // for PageRef
+#include "model/Stroke.h"                               // for Stroke, StrokeTool::E...
+#include "model/XojPage.h"                              // for XojPage
+#include "undo/DeleteUndoAction.h"                      // for DeleteUndoAction
+#include "undo/UndoRedoHandler.h"                       // for UndoRedoHandler
+#include "util/Assert.h"                                // for xoj_assert
+#include "util/Interval.h"                              // for Interval
+#include "util/Point.h"                                 // for Point
+#include "util/Rectangle.h"                             // for Rectangle
+#include "util/Util.h"                                  // for npos
+#include "util/XojMsgBox.h"                             // for showErrorToUser
+#include "util/glib_casts.h"                            // for wrap_v
+#include "util/gtk4_helper.h"                           // for gtk_scrolled_window_set_child
+#include "util/i18n.h"                                  // for _F,FS
+#include "util/safe_casts.h"                            // for round_cast
 
 #include "Layout.h"           // for Layout
 #include "PageView.h"         // for XojPageView
 #include "RepaintHandler.h"   // for RepaintHandler
 #include "XournalppCursor.h"  // for XournalppCursor
+#include "config-debug.h"     // for DEBUG_TILING
 
 using xoj::util::Rectangle;
 
@@ -54,13 +58,12 @@ constexpr int REGULAR_MOVE_AMOUNT = 3;
 constexpr int SMALL_MOVE_AMOUNT = 1;
 constexpr int LARGE_MOVE_AMOUNT = 10;
 
-std::pair<size_t, size_t> XournalView::preloadPageBounds(size_t page, size_t maxPage) {
-    const size_t preloadBefore = this->control->getSettings()->getPreloadPagesBefore();
-    const size_t preloadAfter = this->control->getSettings()->getPreloadPagesAfter();
-    const size_t lower = page > preloadBefore ? page - preloadBefore : 0;
-    const size_t upper = std::min(maxPage, page + preloadAfter);
-    return {lower, upper};
-}
+#ifdef DEBUG_TILING
+#define IF_DBG_TILING(f) f
+static guint debugPrintTimer = 0;
+#else
+#define IF_DBG_TILING(f)
+#endif
 
 XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling):
         scrollHandling(scrollHandling), control(control) {
@@ -100,34 +103,39 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 
     gtk_widget_grab_focus(this->widget);
 
-    this->cleanupTimeout = g_timeout_add_seconds(5, xoj::util::wrap_v<clearMemoryTimer>, this);
+    IF_DBG_TILING({
+        debugPrintTimer = g_timeout_add_seconds(
+                5,
+                +[](gpointer v) -> gboolean {
+                    auto self = static_cast<XournalView*>(v);
+                    size_t s = 0;
+                    size_t n = 0;
+                    bool printall = self->pagesMaybeWithBuffers.max - self->pagesMaybeWithBuffers.min < 10;
+
+                    printf("Tiling stats:\n");
+                    for (size_t i = self->pagesMaybeWithBuffers.min; i <= self->pagesMaybeWithBuffers.max; i++) {
+                        auto&& page = self->viewPages[i];
+                        auto cache = page->getCacheSize();
+                        if (printall) {
+                            printf("  page: %4zu buf  -> %3zu tiles (~ %4zu MB)\n", i + 1, cache.nbTiles,
+                                   cache.estMemUsage);
+                        }
+                        n += cache.nbTiles;
+                        s += cache.estMemUsage;
+                    }
+                    printf("  = %zu tiles (~ %4zu MB). Pages with (maybe) a buffer: %zu to %zu\n\n", n, s,
+                           self->pagesMaybeWithBuffers.min + 1, self->pagesMaybeWithBuffers.max + 1);
+                    return G_SOURCE_CONTINUE;
+                },
+                this);
+    });
 }
 
 XournalView::~XournalView() {
-    g_source_remove(this->cleanupTimeout);
+    IF_DBG_TILING({ g_source_remove(std::exchange(debugPrintTimer, 0)); });
 
     gtk_widget_destroy(this->widget);
     this->widget = nullptr;
-}
-
-
-auto XournalView::clearMemoryTimer(XournalView* widget) -> gboolean {
-    widget->cleanupBufferCache();
-    return G_SOURCE_CONTINUE;
-}
-
-auto XournalView::cleanupBufferCache() -> void {
-    const auto& [pagesLower, pagesUpper] = this->preloadPageBounds(this->currentPage, this->viewPages.size());
-    xoj_assert(pagesLower <= pagesUpper);
-
-    for (size_t i = 0; i < this->viewPages.size(); i++) {
-        auto&& page = this->viewPages[i];
-        const size_t pageNum = i + 1;
-        const bool isPreload = pagesLower <= pageNum && pageNum <= pagesUpper;
-        if (!isPreload && !page->isVisible() && page->hasBuffer()) {
-            page->deleteViewBuffer();
-        }
-    }
 }
 
 auto XournalView::getCurrentPage() const -> size_t { return currentPage; }
@@ -406,19 +414,6 @@ void XournalView::pageSelected(size_t page) {
 
     control->updateBackgroundSizeButton();
     control->updatePageActions();
-
-    if (control->getSettings()->isEagerPageCleanup()) {
-        this->cleanupBufferCache();
-    }
-
-    // Load surrounding pages if they are not
-    const auto& [pagesLower, pagesUpper] = preloadPageBounds(page, this->viewPages.size());
-    xoj_assert(pagesLower <= pagesUpper);
-    for (size_t i = pagesLower; i < pagesUpper; i++) {
-        if (!this->viewPages[i]->hasBuffer()) {
-            this->viewPages[i]->rerenderPage();
-        }
-    }
 }
 
 auto XournalView::getControl() const -> Control* { return control; }
@@ -429,16 +424,16 @@ void XournalView::scrollTo(size_t pageNo, XojPdfRectangle rect) {
         return;
     }
 
-    auto& v = this->viewPages[pageNo];
-
     // Make sure it is visible
     Layout* layout = this->getLayout();
+    auto p = layout->getPixelCoordinatesOfEntry(pageNo);
 
-    int x = v->getX() + round_cast<int>(rect.x1 * zoom);
-    int y = v->getY() + round_cast<int>(rect.y1 * zoom);
+    int x = p.x + round_cast<int>(rect.x1 * zoom);
+    int y = p.y + round_cast<int>(rect.y1 * zoom);
     int width;
     int height;
     if (rect.x2 == -1 || rect.y2 == -1) {
+        auto& v = this->viewPages[pageNo];
         width = v->getDisplayWidth();
         height = v->getDisplayHeight();
     } else {
@@ -454,14 +449,8 @@ void XournalView::scrollTo(size_t pageNo, XojPdfRectangle rect) {
 
 
 void XournalView::pageRelativeXY(int offCol, int offRow) {
-    size_t currPage = getCurrentPage();
-
-    XojPageView* view = getViewFor(currPage);
-    int row = view->getMappedRow();
-    int col = view->getMappedCol();
-
     Layout* layout = this->getLayout();
-    auto optionalPageIndex = layout->getPageIndexAtGridMap(as_unsigned(row + offRow), as_unsigned(col + offCol));
+    auto optionalPageIndex = layout->getPageWithRelativePosition(getCurrentPage(), offCol, offRow);
     if (optionalPageIndex) {
         this->scrollTo(*optionalPageIndex);
     }
@@ -552,20 +541,13 @@ void XournalView::ensureRectIsVisible(int x, int y, int width, int height) {
 }
 
 void XournalView::zoomChanged() {
-
-    size_t currentPage = this->getCurrentPage();
-    XojPageView* view = getViewFor(currentPage);
-
     ZoomControl* zoom = control->getZoomControl();
+    this->getLayout()->recomputeCenteringPadding();
 
-    if (!view) {
-        return;
-    }
-
-    layoutPages();
+    gtk_widget_queue_resize(getWidget());
 
     if (zoom->isZoomPresentationMode() || zoom->isZoomFitMode()) {
-        scrollTo(currentPage);
+        scrollTo(this->getCurrentPage());
     } else if (zoom->isZoomSequenceActive()) {
         auto pos = zoom->getScrollPositionAfterZoom();
         Layout* layout = this->getLayout();
@@ -637,9 +619,7 @@ void XournalView::pageInserted(size_t page) {
     viewPages.insert(begin(viewPages) + as_signed(page), std::move(pageView));
 
     layoutPages();
-    // check which pages are visible and select the most visible page
-    Layout* layout = this->getLayout();
-    layout->updateVisibility();
+    this->updateVisibility();  // check which pages are visible and select the most visible page
 }
 
 auto XournalView::getZoom() const -> double { return control->getZoomControl()->getZoom(); }
@@ -734,16 +714,7 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
     gtk_widget_queue_draw(this->widget);
 }
 
-void XournalView::layoutPages() {
-    Layout* layout = this->getLayout();
-    layout->recalculate();
-
-    // Todo (fabian): the following lines are conceptually wrong, the Layout::layoutPages function is meant to be
-    // called by an expose event, but removing it, will break "add page".
-    auto rectangle = layout->getVisibleRect();
-    layout->layoutPages(std::max<int>(layout->getMinimalWidth(), round_cast<int>(rectangle.width)),
-                        std::max<int>(layout->getMinimalHeight(), round_cast<int>(rectangle.height)));
-}
+void XournalView::layoutPages() { this->getLayout()->recalculate(); }
 
 auto XournalView::getDisplayHeight() const -> int {
     GtkAllocation allocation = {0};
@@ -860,3 +831,105 @@ auto XournalView::getSelection() const -> EditSelection* {
 }
 
 auto XournalView::getLayout() const -> Layout* { return gtk_xournal_get_layout(getWidget()); }
+
+void XournalView::updateVisibility() {
+    auto visibleRg = Range(this->getLayout()->getVisibleRect());
+    xoj::util::Point<int> center(round_cast<int>(.5 * (visibleRg.minX + visibleRg.maxX)),
+                                 round_cast<int>(.5 * (visibleRg.minY + visibleRg.maxY)));
+
+    std::string debug = std::to_string(visibleRg.minX) + " < x < " + std::to_string(visibleRg.maxX) + " ; " +
+                        std::to_string(visibleRg.minY) + " < y < " + std::to_string(visibleRg.maxY);
+
+    unsigned int maxCacheSize =
+            this->maxCacheUsageOverride.value_or(this->getControl()->getSettings()->getMaxTilingMemoryUsage());
+    auto DPIScaling = this->getDpiScaleFactor();
+    static constexpr int BYTES_PER_PIXEL = 4;  ///< cairo surface ARGB encoding
+    static constexpr double MEGABYTES_PER_PIXEL = BYTES_PER_PIXEL / (1024. * 1024.);
+
+    double maxCachePixelNumber = maxCacheSize / MEGABYTES_PER_PIXEL / (DPIScaling * DPIScaling);
+
+    // If we are near an edge of the layout, we can keep tiles that are further away in the other directions.
+    // For instance, if we zoom to Fit to Width, we can render a lot further in the up/down direction without the RAM
+    // usage exploding.
+    // We try to account for that:
+    double mustClearRadius = [&]() {
+        auto layoutWidth = this->getLayout()->getTotalPixelWidth();
+        auto layoutHeight = this->getLayout()->getTotalPixelHeight();
+        xoj_assert(0 <= center.x && center.x <= layoutWidth);
+        xoj_assert(0 <= center.y && center.y <= layoutHeight);
+        double r = std::sqrt(maxCachePixelNumber) / 2;
+        double left = std::min(r, static_cast<double>(center.x));
+        double right = std::min(r, static_cast<double>(layoutWidth - center.x));
+        double top = std::min(r, static_cast<double>(center.y));
+        double bottom = std::min(r, static_cast<double>(layoutHeight - center.y));
+        double nbPixels = (left + right) * (top + bottom);  ///< Approximative area actually inside the layout
+
+        double ratio = nbPixels / maxCachePixelNumber;
+        return std::sqrt((maxCachePixelNumber + (maxCachePixelNumber - nbPixels) / ratio) / M_PI);
+    }();
+
+    double mustRenderRadius = std::max(.4 * mustClearRadius, 3 * std::max(visibleRg.getWidth(), visibleRg.getHeight()) +
+                                                                     .75 * xoj::view::Tiling::MAX_TILE_SIZE);
+
+    if (mustClearRadius < 1.1 * mustRenderRadius) {
+        // This is the absolute minimum to ensure the visible part is actually rendered
+        mustRenderRadius =
+                std::hypot(visibleRg.getWidth(), visibleRg.getHeight()) + M_SQRT1_2 * xoj::view::Tiling::MAX_TILE_SIZE;
+        if (mustClearRadius < 1.1 * mustRenderRadius) {
+            if (!this->maxCacheUsageOverride) {
+                XojMsgBox::showErrorToUser(
+                        this->control->getGtkWindow(),
+                        FS(_F("The RAM usage limit on view buffers is too small to render properly ({1} MiB). Please "
+                              "increase it in the Settings.\nFor now, we will override it.") %
+                           maxCacheSize));
+            }
+            mustClearRadius = 1.1 * mustRenderRadius;
+            this->maxCacheUsageOverride = ceil_cast<unsigned int>(M_PI * mustRenderRadius * mustRenderRadius *
+                                                                  DPIScaling * DPIScaling * MEGABYTES_PER_PIXEL);
+        }
+    }
+
+    // Clear out tiles of pages outside of the mustClearRadius by updating the views that may have a buffer
+    Interval<size_t> mayHaveBuffers{std::numeric_limits<size_t>::max(), std::numeric_limits<size_t>::lowest()};
+    for (size_t index = this->pagesMaybeWithBuffers.min; index <= this->pagesMaybeWithBuffers.max; index++) {
+        auto pos = this->getLayout()->getPixelCoordinatesOfEntry(index);
+        if (this->viewPages[index]->updateVisibilityAndCache(center - pos, mustRenderRadius, mustClearRadius)) {
+            mayHaveBuffers.envelop(index);
+        }
+    }
+
+    Range rg(center.x, center.y);
+    rg.addPadding(mustRenderRadius);
+
+    // Data to select page based on visibility
+    std::optional<size_t> mostVisiblePage;
+    double mostVisibleArea = 0;
+
+    size_t n = 0;
+
+    this->getLayout()->forEachEntriesIntersectingRange(
+            rg, [&](size_t index, const Range& intersection, xoj::util::Point<int> pos) {
+                n++;
+                // Skip the pages we already updated above
+                if ((index < this->pagesMaybeWithBuffers.min || index > this->pagesMaybeWithBuffers.max) &&
+                    this->viewPages[index]->updateVisibilityAndCache(center - pos, mustRenderRadius, mustClearRadius)) {
+                    mayHaveBuffers.envelop(index);
+                }
+
+                if (auto visible = intersection.intersect(visibleRg); !visible.empty()) {
+                    // Part of the page is actually visible.
+                    double visibleArea = visible.getWidth() * visible.getHeight();
+                    if (visibleArea > mostVisibleArea) {
+                        mostVisiblePage = index;
+                        mostVisibleArea = visibleArea;
+                    }
+                }
+            });
+    this->pagesMaybeWithBuffers = mayHaveBuffers;
+
+    // printf("within mustRender: %zu -- maybeBuffer: %zu -- %zu\n", n, mayHaveBuffers.min, mayHaveBuffers.max);
+
+    if (mostVisiblePage) {
+        this->getControl()->firePageSelected(mostVisiblePage.value());
+    }
+}
