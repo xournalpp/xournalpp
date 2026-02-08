@@ -35,6 +35,7 @@
 #include "undo/UndoRedoHandler.h"                   // for UndoRedoHandler (ptr only)
 
 #include "ClipboardHandler.h"  // for ClipboardListener
+#include "NavigationHistory.h" // for NavigationHistory
 #include "ToolHandler.h"       // for ToolListener
 #include "filesystem.h"        // for path
 
@@ -251,19 +252,9 @@ public:
     void updatePageActions();
 
     /**
-     * Record the current view as a navigation history entry.
+     * Get the navigation history handler.
      */
-    void recordNavPoint();
-
-    /**
-     * @return Whether navigation history can move by dir (-1 back, +1 forward).
-     */
-    bool canNavigateHistory(int dir) const;
-
-    /**
-     * Navigate the history by dir (-1 back, +1 forward).
-     */
-    void navigateHistory(int dir);
+    NavigationHistory* getNavigationHistory() const;
 
     // selection handling
     void clearSelection();
@@ -408,16 +399,6 @@ protected:
     void saveImpl(bool saveAs, std::function<void(bool)> callback);
 
 private:
-    struct NavState;
-
-    NavState captureNavState() const;
-    bool isSameNavState(const NavState& a, const NavState& b) const;
-    bool scrollToNavState(const NavState& state);
-    void pruneNavHistory();
-    void resetNavHistory();
-    void updateNavHistoryActions();
-
-    static constexpr size_t MAX_NAV_HISTORY_LEN = 50;
 
     /**
      * @brief Creates the specified geometric tool if it's not on the current page yet. Deletes it if it already exists.
@@ -581,18 +562,7 @@ private:
     std::unique_ptr<GeometryTool> geometryTool;
     std::unique_ptr<GeometryToolController> geometryToolController;
 
-    struct NavState {
-        PageRef page;
-        double x1 = -1;
-        double y1 = -1;
-        double x2 = -1;
-        double y2 = -1;
-        bool hasRect = false;
-    };
-
-    std::vector<NavState> navHistory;
-    size_t navHistoryIdx = 0;
-    bool navHistoryRestoring = false;
+    std::unique_ptr<NavigationHistory> navHistory;
 
     /**
      * Manage all Xournal++ plugins

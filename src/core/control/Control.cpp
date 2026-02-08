@@ -14,6 +14,7 @@
 #include <utility>     // for move
 
 #include "control/AudioController.h"                             // for Audi...
+#include "control/NavigationHistory.h"                           // for Navi...
 #include "control/ClipboardHandler.h"                            // for Clip...
 #include "control/CompassController.h"                           // for Comp...
 #include "control/RecentManager.h"                               // for Rece...
@@ -292,6 +293,7 @@ void Control::initWindow(MainWindow* win) {
     this->win = win;
 
     this->actionDB = std::make_unique<ActionDatabase>(this);
+    this->navHistory = std::make_unique<NavigationHistory>(this);
 
     selectTool(toolHandler->getToolType());
     this->sidebar = new Sidebar(win, this);
@@ -375,205 +377,13 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
     this->actionDB->enableAction(Action::GOTO_LAST, current < count - 1);
     this->actionDB->enableAction(Action::GOTO_NEXT_ANNOTATED_PAGE, current < count - 1);
 
-    pruneNavHistory();
-    updateNavHistoryActions();
-}
-
-auto Control::captureNavState() const -> NavState {
-    NavState state;
-    if (!win) {
-        return state;
-    }
-
-    auto* xournal = win->getXournal();
-    if (!xournal) {
-        return state;
-    }
-
-    size_t pageNo = getCurrentPageNo();
-    doc->lock();
-    if (pageNo < doc->getPageCount()) {
-        state.page = doc->getPage(pageNo);
-    }
-    doc->unlock();
-
-    if (!state.page) {
-        return state;
-    }
-
-    std::unique_ptr<xoj::util::Rectangle<double>> rect(xournal->getVisibleRect(pageNo));
-    if (rect) {
-        state.hasRect = true;
-        state.x1 = rect->x;
-        state.y1 = rect->y;
-        state.x2 = rect->x + rect->width;
-        state.y2 = rect->y + rect->height;
-    }
-
-    return state;
-}
-
-auto Control::isSameNavState(const NavState& a, const NavState& b) const -> bool {
-    if (a.page.get() != b.page.get()) {
-        return false;
-    }
-    if (a.hasRect != b.hasRect) {
-        return false;
-    }
-    if (!a.hasRect) {
-        return true;
-    }
-
-    constexpr double EPSILON = 0.5;
-    return std::abs(a.x1 - b.x1) < EPSILON && std::abs(a.y1 - b.y1) < EPSILON && std::abs(a.x2 - b.x2) < EPSILON &&
-           std::abs(a.y2 - b.y2) < EPSILON;
-}
-
-void Control::pruneNavHistory() {
-    if (navHistory.empty()) {
-        return;
-    }
-
-    doc->lock();
-    for (size_t i = navHistory.size(); i > 0; --i) {
-        size_t idx = i - 1;
-        if (!navHistory[idx].page || doc->indexOf(navHistory[idx].page) == npos) {
-            navHistory.erase(navHistory.begin() + static_cast<long>(idx));
-            if (idx < navHistoryIdx && navHistoryIdx > 0) {
-                navHistoryIdx--;
-            }
-        }
-    }
-    doc->unlock();
-
-    if (navHistoryIdx > navHistory.size()) {
-        navHistoryIdx = navHistory.size();
+    if (navHistory) {
+        navHistory->prune();
+        navHistory->updateActions();
     }
 }
 
-void Control::resetNavHistory() {
-    navHistory.clear();
-    navHistoryIdx = 0;
-    navHistoryRestoring = false;
-    updateNavHistoryActions();
-}
-
-void Control::updateNavHistoryActions() {
-    if (!actionDB) {
-        return;
-    }
-
-    actionDB->enableAction(Action::NAVIGATE_BACK, canNavigateHistory(-1));
-    actionDB->enableAction(Action::NAVIGATE_FORWARD, canNavigateHistory(1));
-}
-
-void Control::recordNavPoint() {
-    if (navHistoryRestoring) {
-        return;
-    }
-
-    NavState state = captureNavState();
-    if (!state.page) {
-        return;
-    }
-
-    pruneNavHistory();
-
-    if (navHistoryIdx < navHistory.size()) {
-        navHistory.erase(navHistory.begin() + static_cast<long>(navHistoryIdx), navHistory.end());
-    }
-
-    if (navHistoryIdx > 0 && isSameNavState(state, navHistory[navHistoryIdx - 1])) {
-        updateNavHistoryActions();
-        return;
-    }
-
-    if (navHistoryIdx >= MAX_NAV_HISTORY_LEN) {
-        size_t removeCount = navHistoryIdx - MAX_NAV_HISTORY_LEN + 1;
-        navHistory.erase(navHistory.begin(), navHistory.begin() + static_cast<long>(removeCount));
-        navHistoryIdx = MAX_NAV_HISTORY_LEN - 1;
-    }
-
-    navHistory.push_back(state);
-    navHistoryIdx++;
-
-    updateNavHistoryActions();
-}
-
-auto Control::canNavigateHistory(int dir) const -> bool {
-    if (dir == 0) {
-        return false;
-    }
-
-    if (dir < 0) {
-        return navHistoryIdx >= static_cast<size_t>(-dir);
-    }
-
-    return navHistoryIdx + static_cast<size_t>(dir) < navHistory.size();
-}
-
-auto Control::scrollToNavState(const NavState& state) -> bool {
-    if (!state.page || !scrollHandler) {
-        return false;
-    }
-
-    doc->lock();
-    size_t pageNo = doc->indexOf(state.page);
-    doc->unlock();
-
-    if (pageNo == npos) {
-        return false;
-    }
-
-    if (state.hasRect) {
-        scrollHandler->scrollToPage(pageNo, {state.x1, state.y1, state.x2, state.y2});
-    } else {
-        scrollHandler->scrollToPage(pageNo);
-    }
-
-    return true;
-}
-
-void Control::navigateHistory(int dir) {
-    if (navHistoryRestoring) {
-        return;
-    }
-
-    pruneNavHistory();
-
-    if (!canNavigateHistory(dir)) {
-        updateNavHistoryActions();
-        return;
-    }
-
-    NavState current = captureNavState();
-    if (!current.page) {
-        return;
-    }
-
-    if (navHistoryIdx < navHistory.size()) {
-        navHistory[navHistoryIdx] = current;
-    } else {
-        navHistory.push_back(current);
-    }
-
-    navHistoryIdx = static_cast<size_t>(static_cast<ptrdiff_t>(navHistoryIdx) + dir);
-
-    struct NavHistoryGuard {
-        Control* ctrl;
-        bool prev;
-        explicit NavHistoryGuard(Control* c): ctrl(c), prev(c->navHistoryRestoring) {
-            ctrl->navHistoryRestoring = true;
-        }
-        ~NavHistoryGuard() { ctrl->navHistoryRestoring = prev; }
-    } guard(this);
-
-    if (!scrollToNavState(navHistory[navHistoryIdx])) {
-        pruneNavHistory();
-    }
-
-    updateNavHistoryActions();
-}
+NavigationHistory* Control::getNavigationHistory() const { return navHistory.get(); }
 
 bool Control::toggleCompass() {
     return toggleGeometryTool<Compass, xoj::view::CompassView, CompassController, CompassInputHandler,
@@ -1126,7 +936,7 @@ void Control::gotoPage() {
             this->gladeSearchPath, this->getCurrentPageNo(), this->doc->getPageCount(),
             [ctrl = this](size_t pageNumber) {
                 xoj_assert(pageNumber != 0);
-                ctrl->recordNavPoint();
+                ctrl->getNavigationHistory()->recordNavPoint();
                 ctrl->scrollHandler->scrollToPage(pageNumber - 1);
             });
     popup.show(GTK_WINDOW(this->win->getWindow()));
@@ -2341,7 +2151,9 @@ void Control::closeDocument() {
     this->doc->clearDocument(true);
     this->doc->unlock();
 
-    resetNavHistory();
+    if (navHistory) {
+        navHistory->reset();
+    }
 
     this->undoRedoChanged();
 }

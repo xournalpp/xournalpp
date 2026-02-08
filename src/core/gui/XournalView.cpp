@@ -303,7 +303,7 @@ auto XournalView::onKeyPressEvent(const KeyEvent& event) -> bool {
 
     if (keyval == GDK_KEY_End || keyval == GDK_KEY_KP_End) {
         if (control->getCurrentPageNo() + 1 < control->getDocument()->getPageCount()) {
-            control->recordNavPoint();
+            control->getNavigationHistory()->recordNavPoint();
         }
         control->getScrollHandler()->goToLastPage();
         return true;
@@ -311,7 +311,7 @@ auto XournalView::onKeyPressEvent(const KeyEvent& event) -> bool {
 
     if (keyval == GDK_KEY_Home || keyval == GDK_KEY_KP_Home) {
         if (control->getCurrentPageNo() != 0) {
-            control->recordNavPoint();
+            control->getNavigationHistory()->recordNavPoint();
         }
         control->getScrollHandler()->goToFirstPage();
         return true;

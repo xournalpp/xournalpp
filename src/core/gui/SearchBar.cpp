@@ -133,7 +133,7 @@ void SearchBar::search(Fun next) {
         const bool found = control->searchTextOnPage(text, page, indexInPage, &occurrences, &matchRect);
 
         if (found) {
-            control->recordNavPoint();
+            control->getNavigationHistory()->recordNavPoint();
             control->getScrollHandler()->scrollToPage(page, matchRect);
             control->getScrollHandler();
             gtk_label_set_text(GTK_LABEL(lbSearchState),

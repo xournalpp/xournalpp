@@ -8,6 +8,7 @@
 
 #include "control/AudioController.h"
 #include "control/Control.h"
+#include "control/NavigationHistory.h"
 #include "control/ScrollHandler.h"
 #include "control/ToolEnums.h"
 #include "control/UndoRedoController.h"
@@ -504,14 +505,14 @@ template <>
 struct ActionProperties<Action::NAVIGATE_BACK> {
     static bool initiallyEnabled(Control*) { return false; }
     static constexpr const char* accelerators[] = {"<Alt>Left", nullptr};
-    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->navigateHistory(-1); }
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getNavigationHistory()->navigate(-1); }
 };
 
 template <>
 struct ActionProperties<Action::NAVIGATE_FORWARD> {
     static bool initiallyEnabled(Control*) { return false; }
     static constexpr const char* accelerators[] = {"<Alt>Right", nullptr};
-    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->navigateHistory(1); }
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getNavigationHistory()->navigate(1); }
 };
 
 
