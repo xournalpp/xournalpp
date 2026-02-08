@@ -12,9 +12,11 @@
 #pragma once
 
 #include <cstddef>
+#include <optional>
 #include <vector>
 
 #include "model/PageRef.h"
+#include "util/Rectangle.h"
 
 class Control;
 
@@ -56,11 +58,7 @@ public:
 private:
     struct NavState {
         PageRef page;
-        double x1 = -1;
-        double y1 = -1;
-        double x2 = -1;
-        double y2 = -1;
-        bool hasRect = false;
+        std::optional<xoj::util::Rectangle<double>> rect;
     };
 
     NavState captureState() const;

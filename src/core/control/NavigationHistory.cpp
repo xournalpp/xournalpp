@@ -42,13 +42,9 @@ NavigationHistory::NavState NavigationHistory::captureState() const {
         return state;
     }
 
-    std::unique_ptr<xoj::util::Rectangle<double>> rect(xournal->getVisibleRect(pageNo));
-    if (rect) {
-        state.hasRect = true;
-        state.x1 = rect->x;
-        state.y1 = rect->y;
-        state.x2 = rect->x + rect->width;
-        state.y2 = rect->y + rect->height;
+    std::unique_ptr<xoj::util::Rectangle<double>> visibleRect(xournal->getVisibleRect(pageNo));
+    if (visibleRect) {
+        state.rect = *visibleRect;
     }
 
     return state;
@@ -58,16 +54,18 @@ bool NavigationHistory::isSameState(const NavState& a, const NavState& b) const 
     if (a.page.get() != b.page.get()) {
         return false;
     }
-    if (a.hasRect != b.hasRect) {
+    if (a.rect.has_value() != b.rect.has_value()) {
         return false;
     }
-    if (!a.hasRect) {
+    if (!a.rect) {
         return true;
     }
 
     constexpr double EPSILON = 0.5;
-    return std::abs(a.x1 - b.x1) < EPSILON && std::abs(a.y1 - b.y1) < EPSILON && std::abs(a.x2 - b.x2) < EPSILON &&
-           std::abs(a.y2 - b.y2) < EPSILON;
+    return std::abs(a.rect->x - b.rect->x) < EPSILON &&
+           std::abs(a.rect->y - b.rect->y) < EPSILON &&
+           std::abs(a.rect->width - b.rect->width) < EPSILON &&
+           std::abs(a.rect->height - b.rect->height) < EPSILON;
 }
 
 void NavigationHistory::prune() {
@@ -170,8 +168,9 @@ bool NavigationHistory::scrollToState(const NavState& state) {
         return false;
     }
 
-    if (state.hasRect) {
-        scrollHandler->scrollToPage(pageNo, {state.x1, state.y1, state.x2, state.y2});
+    if (state.rect) {
+        const auto& r = *state.rect;
+        scrollHandler->scrollToPage(pageNo, {r.x, r.y, r.x + r.width, r.y + r.height});
     } else {
         scrollHandler->scrollToPage(pageNo);
     }
