@@ -4,6 +4,7 @@
 
 #include <glib.h>  // for g_error
 
+#include "control/NavigationHistory.h"    // for NavigationHistory
 #include "control/zoom/ZoomControl.h"     // for ZoomControl
 #include "gui/MainWindow.h"               // for MainWindow
 #include "gui/XournalView.h"              // for XournalView
@@ -34,12 +35,19 @@ void ScrollHandler::goToNextPage() {
 
 void ScrollHandler::goToLastPage() {
     if (this->control->getWindow()) {
-        scrollToPage(this->control->getDocument()->getPageCount() - 1);
+        size_t lastPage = this->control->getDocument()->getPageCount() - 1;
+        if (this->control->getCurrentPageNo() != lastPage) {
+            this->control->getNavigationHistory()->recordNavPoint();
+        }
+        scrollToPage(lastPage);
     }
 }
 
 void ScrollHandler::goToFirstPage() {
     if (this->control->getWindow()) {
+        if (this->control->getCurrentPageNo() != 0) {
+            this->control->getNavigationHistory()->recordNavPoint();
+        }
         scrollToPage(0);
     }
 }
@@ -66,6 +74,11 @@ void ScrollHandler::scrollToPage(size_t page, XojPdfRectangle rect) {
     win->getXournal()->scrollTo(page, rect);
 }
 
+void ScrollHandler::jumpToPage(size_t page, XojPdfRectangle rect) {
+    this->control->getNavigationHistory()->recordNavPoint();
+    scrollToPage(page, rect);
+}
+
 void ScrollHandler::scrollToLinkDest(const LinkDestination& dest) {
     size_t pdfPage = dest.getPdfPage();
 
@@ -79,12 +92,10 @@ void ScrollHandler::scrollToLinkDest(const LinkDestination& dest) {
             control->askInsertPdfPage(pdfPage);
         } else {
             if (dest.shouldChangeTop()) {
-                control->getNavigationHistory()->recordNavPoint();
-                control->getScrollHandler()->scrollToPage(page, {dest.getLeft(), dest.getTop(), -1, -1});
+                jumpToPage(page, {dest.getLeft(), dest.getTop(), -1, -1});
             } else {
                 if (control->getCurrentPageNo() != page) {
-                    control->getNavigationHistory()->recordNavPoint();
-                    control->getScrollHandler()->scrollToPage(page);
+                    jumpToPage(page);
                 }
             }
         }

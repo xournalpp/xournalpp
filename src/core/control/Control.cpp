@@ -936,8 +936,7 @@ void Control::gotoPage() {
             this->gladeSearchPath, this->getCurrentPageNo(), this->doc->getPageCount(),
             [ctrl = this](size_t pageNumber) {
                 xoj_assert(pageNumber != 0);
-                ctrl->getNavigationHistory()->recordNavPoint();
-                ctrl->scrollHandler->scrollToPage(pageNumber - 1);
+                ctrl->scrollHandler->jumpToPage(pageNumber - 1);
             });
     popup.show(GTK_WINDOW(this->win->getWindow()));
 }
