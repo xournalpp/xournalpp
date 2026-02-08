@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-03 08:38+0000\n"
-"PO-Revision-Date: 2026-02-03 08:53\n"
+"POT-Creation-Date: 2026-02-03 17:43+0000\n"
+"PO-Revision-Date: 2026-02-08 04:58\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -106,7 +106,7 @@ msgstr "\"{1}\" dosyası açılırken hata oluştu"
 
 #: ../src/core/control/Control.cpp:1574
 msgid "File version mismatch"
-msgstr ""
+msgstr "Dosya sürümü uyuşmuyor"
 
 #: ../src/core/control/Control.cpp:1575
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
@@ -115,11 +115,12 @@ msgstr "Açılmakta olan dosya şu anki Xournal++ sürümünden daha yeni bir s�
 #: ../src/core/control/Control.cpp:1598
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
+msgstr "\"{1}\" PDF dosyası okunurken hata oluştu\n"
+"{2}"
 
 #: ../src/core/control/Control.cpp:1620
 msgid "Error reading PNG file \"{1}\""
-msgstr ""
+msgstr "\"{1}\" dosyası okunurken hata oluştu"
 
 #: ../src/core/control/Control.cpp:1766
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -367,7 +368,8 @@ msgstr "Bu oturum için sesi devre dışı bırak"
 #: ../src/core/control/XournalMain.cpp:614
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
-msgstr ""
+msgstr "PDF'yi ekleme modunda aç\n"
+"                                 PDF dosyası belirtilmemişse yoksay."
 
 #: ../src/core/control/XournalMain.cpp:618
 msgid "Save xopp-file with the background PDF specified as FILE"
@@ -411,12 +413,14 @@ msgstr ""
 #: ../src/core/control/XournalMain.cpp:660
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Yalnızca ARALIK ile belirtilen sayfaları dışa aktar (örn. \"2-3,5,7-\")  \n"
+"                                 -p/--create-pdf veya -i/--create-img kullanılmadıkça etkili değildir"
 
 #: ../src/core/control/XournalMain.cpp:665
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Yalnızca ARALIK ile belirtilen katmanları dışa aktar (örn. \"2-3,5,7-\")  \n"
+"                                 -p/--create-pdf veya -i/--create-img kullanılmadıkça etkili değildir"
 
 #: ../src/core/control/XournalMain.cpp:669
 msgid "Set DPI for PNG exports. Default is 300\n"
@@ -465,7 +469,7 @@ msgstr "Arka plan üzerine yazma kontrolü şu şekilde başarısız oldu:\n"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
 msgid "Export File"
-msgstr ""
+msgstr "Dosyayı Dışa Aktar"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
 #: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
@@ -870,15 +874,15 @@ msgstr "GNU GPLv2 veya üstü"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:30
 msgid "Thickness - don't change"
-msgstr ""
+msgstr "Kalınlık - değiştirmeyin"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:32
 msgid "Very thin"
-msgstr ""
+msgstr "Çok ince"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:34
 msgid "Thin"
-msgstr ""
+msgstr "İnce"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:506
@@ -892,7 +896,7 @@ msgstr "Kalın"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:40
 msgid "Very thick"
-msgstr ""
+msgstr "Çok kalın"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:57
 msgid "No device"
@@ -931,11 +935,11 @@ msgstr "Resim ekle"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 msgid "Laser Pointer - Pen"
-msgstr ""
+msgstr "Lazer İşaretçisi - Kalem"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 msgid "Laser Pointer - Hightlighter"
-msgstr ""
+msgstr "Lazer İşaretçisi - Vurgulayıcı"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 msgid "Vertical space"
@@ -1031,7 +1035,7 @@ msgstr "Eğri Çiz"
 
 #: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
 msgid "Export Logs"
-msgstr ""
+msgstr "Günlüğü Dışa Aktar"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:115
 msgid "Failed to parse external editor command: {1}"
@@ -1370,7 +1374,7 @@ msgstr "Eklenti"
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:61
 msgctxt "The selected document will be removed from the recent files list"
 msgid "Dismiss"
-msgstr ""
+msgstr "Yoksay"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:100
 msgid "No recent files"
@@ -1383,17 +1387,17 @@ msgstr "Listeyi temizle"
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:182
 msgctxt "In the submenu for removing recent documents, this will display on top of the list xournal++ files to separate them from PDF files"
 msgid "Xournal++ Files"
-msgstr ""
+msgstr "Xournal++ dosyaları"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:191
 msgctxt "In the submenu for removing recent documents, this will display on top of the list PDF files to separate them from xournal++ files"
 msgid "PDF Files"
-msgstr ""
+msgstr "PDF dosyaları"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:198
 msgctxt "This opens a submenu of the recent files list, and clicking on individual entries in this submenu will remove it from the recent files list"
 msgid "Dismiss a single document"
-msgstr ""
+msgstr "Tek bir belgeyi yoksay"
 
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:165
 msgid "Copy current page"
@@ -1698,7 +1702,7 @@ msgstr "İleri"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:493
 msgid "Laser pointer"
-msgstr ""
+msgstr "Lazer işaretçisi"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:499
 msgid "Fill"
@@ -1876,7 +1880,7 @@ msgstr "PDF Cairo eklentisi başlatılırken hata meydana geldi"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:110
 msgid "PDF page number is out of range"
-msgstr ""
+msgstr "PDF sayfa numarası aralığın dışında"
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:21
 msgid "Unknown pdf backend: {1}. Available backends are: {2}. Using default backend."
@@ -1884,7 +1888,7 @@ msgstr ""
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:39
 msgid "Default"
-msgstr ""
+msgstr "Varsayılan"
 
 #: ../src/core/pdf/base/QPdfExport.cpp:173
 msgid "Error with overlay or final export:"
@@ -2222,7 +2226,7 @@ msgstr ""
 
 #: ../ui/crashDialog.glade:56
 msgid "Your document has been saved in:"
-msgstr ""
+msgstr "Belgeniz şuraya kaydedildi:"
 
 #: ../ui/crashDialog.glade:92
 msgid "Execution log:"
@@ -3792,7 +3796,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5726
 msgid "<i>The laser pointer allows to write strokes that will fade out after a short while.</i>"
-msgstr ""
+msgstr "<i>Lazer işaretçi, kısa bir süre sonra kaybolacak vuruşların yazılmasına olanak tanır.</i>"
 
 #: ../ui/settings.glade:5747
 msgid "Fade out delay (in ms)"
@@ -3800,7 +3804,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5799
 msgid "<b>Laser pointer</b>"
-msgstr ""
+msgstr "<b>Lazer işaretçisi</b>"
 
 #: ../ui/settings.glade:5839
 msgid "Tools"
