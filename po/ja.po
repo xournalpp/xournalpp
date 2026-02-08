@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-03 08:38+0000\n"
-"PO-Revision-Date: 2026-02-03 08:53\n"
+"POT-Creation-Date: 2026-02-04 09:48+0000\n"
+"PO-Revision-Date: 2026-02-08 04:58\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -69,7 +69,7 @@ msgid "Paper B_ackground"
 msgstr ""
 
 #: ../src/core/control/Control.cpp:834
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:41
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:42
 msgid "With PDF background"
 msgstr "PDF背景あり"
 
@@ -227,20 +227,20 @@ msgstr "トラックポイント"
 msgid "tablet pad"
 msgstr "タブレットパッド"
 
-#: ../src/core/control/ExportHelper.cpp:77
+#: ../src/core/control/ExportHelper.cpp:63
 msgid "Image file successfully created"
 msgstr "画像ファイルが正常に作成されました"
 
-#: ../src/core/control/ExportHelper.cpp:103
+#: ../src/core/control/ExportHelper.cpp:76
 #: ../src/core/control/jobs/BaseExportJob.cpp:40
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "背景のPDFを上書きしないでください。エラーの原因になります。"
 
-#: ../src/core/control/ExportHelper.cpp:107
+#: ../src/core/control/ExportHelper.cpp:80
 msgid "The check for overwriting the background failed with: {1}"
 msgstr ""
 
-#: ../src/core/control/ExportHelper.cpp:127
+#: ../src/core/control/ExportHelper.cpp:100
 msgid "PDF file successfully created"
 msgstr "PDFファイルが正常に作成されました"
 
@@ -268,14 +268,14 @@ msgstr "LaTeX PDFファイルを読み込めませんでした: {1}"
 msgid "Could not load LaTeX PDF file"
 msgstr "LaTeX PDFファイルを読み込めませんでした"
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:110
-#: ../src/core/control/XournalMain.cpp:231
+#: ../src/core/control/PageBackgroundChangeController.cpp:111
+#: ../src/core/control/XournalMain.cpp:230
 #: ../src/core/control/xojfile/LoadHandler.cpp:483
 #: ../src/core/control/xojfile/LoadHandler.cpp:499
 msgid "Error reading PDF: {1}"
 msgstr "PDF読み込みエラー: {1}"
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:271
+#: ../src/core/control/PageBackgroundChangeController.cpp:272
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
 msgstr "選択するPDFページがありません。操作をキャンセルします。\n"
@@ -325,15 +325,15 @@ msgstr ""
 msgid "Error exporting image: {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:239
+#: ../src/core/control/XournalMain.cpp:238
 msgid "Error saving document: {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:269
+#: ../src/core/control/XournalMain.cpp:268
 msgid "Error exporting PDF: {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:375
+#: ../src/core/control/XournalMain.cpp:374
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -347,24 +347,24 @@ msgstr "<span foreground='red' size='x-large'>必要なUIファイルがあり�
 " 作業ディレクトリの中にありません\n"
 " {2}の中にありません"
 
-#: ../src/core/control/XournalMain.cpp:380
+#: ../src/core/control/XournalMain.cpp:379
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "このファイルがないまま実行します。"
 
-#: ../src/core/control/XournalMain.cpp:402
-#: ../src/core/control/XournalMain.cpp:463
+#: ../src/core/control/XournalMain.cpp:401
+#: ../src/core/control/XournalMain.cpp:462
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "申し訳ありません、Xournal++ は一度に 1 つのファイルしか開くことができません。\n"
 "他のファイルは無視されます。"
 
-#: ../src/core/control/XournalMain.cpp:413
+#: ../src/core/control/XournalMain.cpp:412
 msgid "File {1} does not exist."
 msgstr "ファイル {1} は存在しません。"
 
-#: ../src/core/control/XournalMain.cpp:417
+#: ../src/core/control/XournalMain.cpp:416
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -372,55 +372,55 @@ msgstr "ファイルシステムエラー: {1}\n"
 "申し訳ございません、Xournal++はファイル {2} を開くことができません。\n"
 "ローカルディレクトリにファイルをコピーすることを検討してください。"
 
-#: ../src/core/control/XournalMain.cpp:602
+#: ../src/core/control/XournalMain.cpp:608
 msgid "Jump to Page (first Page: 1)"
 msgstr "ページ移動 (最初のページが1)"
 
-#: ../src/core/control/XournalMain.cpp:606
+#: ../src/core/control/XournalMain.cpp:612
 msgid "Get version of xournalpp"
 msgstr "xournalppのバージョンを取得"
 
-#: ../src/core/control/XournalMain.cpp:608
+#: ../src/core/control/XournalMain.cpp:614
 msgid "Disable audio for this session"
 msgstr "このセッションのオーディオを無効にする"
 
-#: ../src/core/control/XournalMain.cpp:610
+#: ../src/core/control/XournalMain.cpp:616
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:614
+#: ../src/core/control/XournalMain.cpp:620
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "xopp-fileを指定した背景PDF付きでファイルとして保存する"
 
-#: ../src/core/control/XournalMain.cpp:619
+#: ../src/core/control/XournalMain.cpp:625
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:628
+#: ../src/core/control/XournalMain.cpp:634
 msgid "Export FILE as PDF"
 msgstr "ファイルをPDFとしてエクスポート"
 
-#: ../src/core/control/XournalMain.cpp:631
+#: ../src/core/control/XournalMain.cpp:637
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:637
+#: ../src/core/control/XournalMain.cpp:643
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:642
+#: ../src/core/control/XournalMain.cpp:648
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:647
+#: ../src/core/control/XournalMain.cpp:653
 msgid "Export layers progressively\n"
 "                                       In PDF export, Render layers progressively one by one.\n"
 "                                       This results in N export pages per page with N layers,\n"
@@ -428,38 +428,38 @@ msgid "Export layers progressively\n"
 "                                       The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:656
+#: ../src/core/control/XournalMain.cpp:662
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:661
+#: ../src/core/control/XournalMain.cpp:667
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:665
+#: ../src/core/control/XournalMain.cpp:671
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:669
+#: ../src/core/control/XournalMain.cpp:675
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:674
+#: ../src/core/control/XournalMain.cpp:680
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:682
+#: ../src/core/control/XournalMain.cpp:688
 msgid "Advanced export options"
 msgstr "アドバンスドエクスポートのオプション"
 
-#: ../src/core/control/XournalMain.cpp:683
+#: ../src/core/control/XournalMain.cpp:689
 msgid "Display advanced export options"
 msgstr "高度なエクスポートオプションを表示"
 
@@ -575,52 +575,52 @@ msgstr "{1} を開始できませんでした：{2} (終了コード: {3})"
 msgid "Layer {1}"
 msgstr "レイヤー {1}"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:26
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:27
 msgid "Could not load pagetemplates.ini file"
 msgstr "pagetemplates.ini ファイルを読み込めませんでした"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:30
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Plain"
 msgstr "装飾なし"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "Ruled"
 msgstr "罫線"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 msgid "Ruled with vertical line"
 msgstr "罫線（分割）"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
 msgid "Staves"
 msgstr ""
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
 msgid "Graph"
 msgstr "グラフ"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
 msgid "Dotted"
 msgstr "点線"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:37
 msgid "Isometric Dotted"
 msgstr "等間隔の点"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:37
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:38
 msgid "Isometric Graph"
 msgstr "等角グラフ"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:42
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:43
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 msgid "Image"
 msgstr "画像"
 
-#: ../src/core/control/settings/Settings.cpp:153
+#: ../src/core/control/settings/Settings.cpp:154
 msgid "%F-Note-%H-%M"
 msgstr "%F-ノート-%H-%M"
 
-#: ../src/core/control/settings/Settings.cpp:154
+#: ../src/core/control/settings/Settings.cpp:155
 msgid "%{name}_annotated"
 msgstr "%{name}_注釈付き"
 
@@ -1083,7 +1083,7 @@ msgid "Xournal++ files"
 msgstr "Xournal++ファイル"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:119
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:120
 msgid "Xournal++ template"
 msgstr "Xournal++テンプレート"
 
@@ -1128,18 +1128,18 @@ msgstr "エラー： {1}。{2} の内容を確認してください。"
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "エラー： {1} は通常のファイルではありません。LaTeXテンプレートファイルの設定を確認してください。 "
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:115
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:84
 msgid "Save File"
 msgstr "ファイルを保存"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:115
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:80
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:19
 msgid "_Cancel"
 msgstr "キャンセル (_C)"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 msgid "_Save"
 msgstr "保存 (_S)"
 

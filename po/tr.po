@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-03 08:38+0000\n"
-"PO-Revision-Date: 2026-02-03 08:53\n"
+"POT-Creation-Date: 2026-02-04 09:48+0000\n"
+"PO-Revision-Date: 2026-02-08 04:58\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -69,7 +69,7 @@ msgid "Paper B_ackground"
 msgstr "Kağıt Ark_a Planı"
 
 #: ../src/core/control/Control.cpp:834
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:41
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:42
 msgid "With PDF background"
 msgstr "PDF arka planı ile"
 
@@ -106,7 +106,7 @@ msgstr "\"{1}\" dosyası açılırken hata oluştu"
 
 #: ../src/core/control/Control.cpp:1574
 msgid "File version mismatch"
-msgstr ""
+msgstr "Dosya sürümü uyuşmuyor"
 
 #: ../src/core/control/Control.cpp:1575
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
@@ -115,11 +115,12 @@ msgstr "Açılmakta olan dosya şu anki Xournal++ sürümünden daha yeni bir s�
 #: ../src/core/control/Control.cpp:1598
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
+msgstr "\"{1}\" PDF dosyası okunurken hata oluştu\n"
+"{2}"
 
 #: ../src/core/control/Control.cpp:1620
 msgid "Error reading PNG file \"{1}\""
-msgstr ""
+msgstr "\"{1}\" dosyası okunurken hata oluştu"
 
 #: ../src/core/control/Control.cpp:1766
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -228,20 +229,20 @@ msgstr "parça noktası"
 msgid "tablet pad"
 msgstr "tablet ped"
 
-#: ../src/core/control/ExportHelper.cpp:77
+#: ../src/core/control/ExportHelper.cpp:63
 msgid "Image file successfully created"
 msgstr "Resim dosyası başarıyla oluşturuldu"
 
-#: ../src/core/control/ExportHelper.cpp:103
+#: ../src/core/control/ExportHelper.cpp:76
 #: ../src/core/control/jobs/BaseExportJob.cpp:40
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Arka plan PDF' sinin üzerine yazmayın! Bu hatalara neden olur!"
 
-#: ../src/core/control/ExportHelper.cpp:107
+#: ../src/core/control/ExportHelper.cpp:80
 msgid "The check for overwriting the background failed with: {1}"
 msgstr ""
 
-#: ../src/core/control/ExportHelper.cpp:127
+#: ../src/core/control/ExportHelper.cpp:100
 msgid "PDF file successfully created"
 msgstr "PDF dosyası başarıyla oluşturuldu"
 
@@ -269,14 +270,14 @@ msgstr "LaTeX PDF dosyası yüklenemedi: {1}"
 msgid "Could not load LaTeX PDF file"
 msgstr "LaTeX PDF dosyası yüklenemedi"
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:110
-#: ../src/core/control/XournalMain.cpp:231
+#: ../src/core/control/PageBackgroundChangeController.cpp:111
+#: ../src/core/control/XournalMain.cpp:230
 #: ../src/core/control/xojfile/LoadHandler.cpp:483
 #: ../src/core/control/xojfile/LoadHandler.cpp:499
 msgid "Error reading PDF: {1}"
 msgstr "PDF okunurken hata oluştu: {1}"
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:271
+#: ../src/core/control/PageBackgroundChangeController.cpp:272
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
 msgstr "Aralarından seçim yapabileceğiniz PDF sayfanız yok. İşlemi iptal edin.\n"
@@ -320,21 +321,21 @@ msgstr "Arka plan dosyası \"{1}\" bulunamadı. Taşınmış, yeniden adlandır�
 
 #: ../src/core/control/XournalMain.cpp:176
 msgid "Error loading document: {1}"
-msgstr ""
+msgstr "Belge okunurken hata oluştu: {1}"
 
 #: ../src/core/control/XournalMain.cpp:209
 msgid "Error exporting image: {1}"
-msgstr ""
+msgstr "Görsel dışarı aktarılırken hata oluştu: {1}"
 
-#: ../src/core/control/XournalMain.cpp:239
+#: ../src/core/control/XournalMain.cpp:238
 msgid "Error saving document: {1}"
-msgstr ""
+msgstr "Belge kaydedilirken hata oluştu: {1}"
 
-#: ../src/core/control/XournalMain.cpp:269
+#: ../src/core/control/XournalMain.cpp:268
 msgid "Error exporting PDF: {1}"
-msgstr ""
+msgstr "PDF dışarı aktarılırken hata oluştu: {1}"
 
-#: ../src/core/control/XournalMain.cpp:375
+#: ../src/core/control/XournalMain.cpp:374
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -348,24 +349,24 @@ msgstr "<span foreground='red' size='x-large'>Gerekli kullanıcı arayüzü dosy
 "  Çalışma Dizininde değil\n"
 "  {2} içinde değil"
 
-#: ../src/core/control/XournalMain.cpp:380
+#: ../src/core/control/XournalMain.cpp:379
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "Şimdi bu dosya olmadan çalıştırma denenecek."
 
-#: ../src/core/control/XournalMain.cpp:402
-#: ../src/core/control/XournalMain.cpp:463
+#: ../src/core/control/XournalMain.cpp:401
+#: ../src/core/control/XournalMain.cpp:462
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Üzgünüz, Xournal++ bir kerede yalnızca bir dosyayı açabilir.\n"
 "Diğerleri yok sayılır."
 
-#: ../src/core/control/XournalMain.cpp:413
+#: ../src/core/control/XournalMain.cpp:412
 msgid "File {1} does not exist."
 msgstr "{1} dosyası yok."
 
-#: ../src/core/control/XournalMain.cpp:417
+#: ../src/core/control/XournalMain.cpp:416
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -373,55 +374,56 @@ msgstr "Dosya sistemi hatası: {1}\n"
 "Xournal++ dosyayı açamadı: {2}\n"
 "Dosyayı yerel dizine kopyalamayı düşünün."
 
-#: ../src/core/control/XournalMain.cpp:602
+#: ../src/core/control/XournalMain.cpp:608
 msgid "Jump to Page (first Page: 1)"
 msgstr "Sayfaya Git (ilk Sayfa: 1)"
 
-#: ../src/core/control/XournalMain.cpp:606
+#: ../src/core/control/XournalMain.cpp:612
 msgid "Get version of xournalpp"
 msgstr "Xournalpp sürümünü edinin"
 
-#: ../src/core/control/XournalMain.cpp:608
+#: ../src/core/control/XournalMain.cpp:614
 msgid "Disable audio for this session"
 msgstr "Bu oturum için sesi devre dışı bırak"
 
-#: ../src/core/control/XournalMain.cpp:610
+#: ../src/core/control/XournalMain.cpp:616
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
-msgstr ""
+msgstr "PDF'yi ekleme modunda aç\n"
+"                                 PDF dosyası belirtilmemişse yoksay."
 
-#: ../src/core/control/XournalMain.cpp:614
+#: ../src/core/control/XournalMain.cpp:620
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:619
+#: ../src/core/control/XournalMain.cpp:625
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:628
+#: ../src/core/control/XournalMain.cpp:634
 msgid "Export FILE as PDF"
 msgstr "Dosyayı PDF Olarak Dışa Aktar"
 
-#: ../src/core/control/XournalMain.cpp:631
+#: ../src/core/control/XournalMain.cpp:637
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:637
+#: ../src/core/control/XournalMain.cpp:643
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:642
+#: ../src/core/control/XournalMain.cpp:648
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:647
+#: ../src/core/control/XournalMain.cpp:653
 msgid "Export layers progressively\n"
 "                                       In PDF export, Render layers progressively one by one.\n"
 "                                       This results in N export pages per page with N layers,\n"
@@ -429,38 +431,40 @@ msgid "Export layers progressively\n"
 "                                       The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:656
+#: ../src/core/control/XournalMain.cpp:662
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Yalnızca ARALIK ile belirtilen sayfaları dışa aktar (örn. \"2-3,5,7-\")  \n"
+"                                 -p/--create-pdf veya -i/--create-img kullanılmadıkça etkili değildir"
 
-#: ../src/core/control/XournalMain.cpp:661
+#: ../src/core/control/XournalMain.cpp:667
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Yalnızca ARALIK ile belirtilen katmanları dışa aktar (örn. \"2-3,5,7-\")  \n"
+"                                 -p/--create-pdf veya -i/--create-img kullanılmadıkça etkili değildir"
 
-#: ../src/core/control/XournalMain.cpp:665
+#: ../src/core/control/XournalMain.cpp:671
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:669
+#: ../src/core/control/XournalMain.cpp:675
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:674
+#: ../src/core/control/XournalMain.cpp:680
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:682
+#: ../src/core/control/XournalMain.cpp:688
 msgid "Advanced export options"
 msgstr "Gelişmiş dışa aktarma seçenekleri"
 
-#: ../src/core/control/XournalMain.cpp:683
+#: ../src/core/control/XournalMain.cpp:689
 msgid "Display advanced export options"
 msgstr "Gelişmiş dışa aktarma seçeneklerini görüntüle"
 
@@ -482,7 +486,7 @@ msgstr "Arka plan üzerine yazma kontrolü şu şekilde başarısız oldu:\n"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
 msgid "Export File"
-msgstr ""
+msgstr "Dosyayı Dışa Aktar"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
 #: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
@@ -576,52 +580,52 @@ msgstr "Başlatılamadı {1}: {2} (çıkış kodu: {3})"
 msgid "Layer {1}"
 msgstr "Katman {1}"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:26
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:27
 msgid "Could not load pagetemplates.ini file"
 msgstr "pagetemplates.ini dosyası yüklenemedi"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:30
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Plain"
 msgstr "Düz"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "Ruled"
 msgstr "Cetvel"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 msgid "Ruled with vertical line"
 msgstr "Dikey çizgi ile yönetilir"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
 msgid "Staves"
 msgstr "Porteler"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
 msgid "Graph"
 msgstr "Grafik"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
 msgid "Dotted"
 msgstr "Noktalı"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:37
 msgid "Isometric Dotted"
 msgstr "İzometrik Noktalı"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:37
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:38
 msgid "Isometric Graph"
 msgstr "İzometrik Grafik"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:42
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:43
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 msgid "Image"
 msgstr "Resim"
 
-#: ../src/core/control/settings/Settings.cpp:153
+#: ../src/core/control/settings/Settings.cpp:154
 msgid "%F-Note-%H-%M"
 msgstr "%F-Not-%H-%M"
 
-#: ../src/core/control/settings/Settings.cpp:154
+#: ../src/core/control/settings/Settings.cpp:155
 msgid "%{name}_annotated"
 msgstr "%{name}_açıklanmış"
 
@@ -887,15 +891,15 @@ msgstr "GNU GPLv2 veya üstü"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:30
 msgid "Thickness - don't change"
-msgstr ""
+msgstr "Kalınlık - değiştirmeyin"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:32
 msgid "Very thin"
-msgstr ""
+msgstr "Çok ince"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:34
 msgid "Thin"
-msgstr ""
+msgstr "İnce"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:506
@@ -909,7 +913,7 @@ msgstr "Kalın"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:40
 msgid "Very thick"
-msgstr ""
+msgstr "Çok kalın"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:57
 msgid "No device"
@@ -948,11 +952,11 @@ msgstr "Resim ekle"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 msgid "Laser Pointer - Pen"
-msgstr ""
+msgstr "Lazer İşaretçisi - Kalem"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 msgid "Laser Pointer - Hightlighter"
-msgstr ""
+msgstr "Lazer İşaretçisi - Vurgulayıcı"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 msgid "Vertical space"
@@ -1048,7 +1052,7 @@ msgstr "Eğri Çiz"
 
 #: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
 msgid "Export Logs"
-msgstr ""
+msgstr "Günlüğü Dışa Aktar"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:115
 msgid "Failed to parse external editor command: {1}"
@@ -1084,7 +1088,7 @@ msgid "Xournal++ files"
 msgstr "Xournal++ dosyaları"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:119
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:120
 msgid "Xournal++ template"
 msgstr "Xournal++ şablonu"
 
@@ -1129,18 +1133,18 @@ msgstr "Hata: {1}. Lütfen {2} içeriğini kontrol edin"
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Hata: {1} normal bir dosya değil. Lütfen LaTeX şablon dosyası ayarlarınızı kontrol edin. "
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:115
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:84
 msgid "Save File"
 msgstr "Dosyayı Kaydet"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:115
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:80
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:19
 msgid "_Cancel"
 msgstr "İ_ptal"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 msgid "_Save"
 msgstr "_Kaydet"
 
@@ -1387,7 +1391,7 @@ msgstr "Eklenti"
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:61
 msgctxt "The selected document will be removed from the recent files list"
 msgid "Dismiss"
-msgstr ""
+msgstr "Yoksay"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:100
 msgid "No recent files"
@@ -1400,17 +1404,17 @@ msgstr "Listeyi temizle"
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:182
 msgctxt "In the submenu for removing recent documents, this will display on top of the list xournal++ files to separate them from PDF files"
 msgid "Xournal++ Files"
-msgstr ""
+msgstr "Xournal++ dosyaları"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:191
 msgctxt "In the submenu for removing recent documents, this will display on top of the list PDF files to separate them from xournal++ files"
 msgid "PDF Files"
-msgstr ""
+msgstr "PDF dosyaları"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:198
 msgctxt "This opens a submenu of the recent files list, and clicking on individual entries in this submenu will remove it from the recent files list"
 msgid "Dismiss a single document"
-msgstr ""
+msgstr "Tek bir belgeyi yoksay"
 
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:165
 msgid "Copy current page"
@@ -1715,7 +1719,7 @@ msgstr "İleri"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:493
 msgid "Laser pointer"
-msgstr ""
+msgstr "Lazer işaretçisi"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:499
 msgid "Fill"
@@ -1893,7 +1897,7 @@ msgstr "PDF Cairo eklentisi başlatılırken hata meydana geldi"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:110
 msgid "PDF page number is out of range"
-msgstr ""
+msgstr "PDF sayfa numarası aralığın dışında"
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:21
 msgid "Unknown pdf backend: {1}. Available backends are: {2}. Using default backend."
@@ -1901,7 +1905,7 @@ msgstr ""
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:39
 msgid "Default"
-msgstr ""
+msgstr "Varsayılan"
 
 #: ../src/core/pdf/base/QPdfExport.cpp:173
 msgid "Error with overlay or final export:"
@@ -2239,7 +2243,7 @@ msgstr ""
 
 #: ../ui/crashDialog.glade:56
 msgid "Your document has been saved in:"
-msgstr ""
+msgstr "Belgeniz şuraya kaydedildi:"
 
 #: ../ui/crashDialog.glade:92
 msgid "Execution log:"
@@ -3809,7 +3813,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5726
 msgid "<i>The laser pointer allows to write strokes that will fade out after a short while.</i>"
-msgstr ""
+msgstr "<i>Lazer işaretçi, kısa bir süre sonra kaybolacak vuruşların yazılmasına olanak tanır.</i>"
 
 #: ../ui/settings.glade:5747
 msgid "Fade out delay (in ms)"
@@ -3817,7 +3821,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5799
 msgid "<b>Laser pointer</b>"
-msgstr ""
+msgstr "<b>Lazer işaretçisi</b>"
 
 #: ../ui/settings.glade:5839
 msgid "Tools"

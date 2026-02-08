@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-03 08:38+0000\n"
-"PO-Revision-Date: 2026-02-03 08:53\n"
+"POT-Creation-Date: 2026-02-04 09:48+0000\n"
+"PO-Revision-Date: 2026-02-08 04:58\n"
 "Last-Translator: \n"
 "Language-Team: Malayalam\n"
 "Language: ml_IN\n"
@@ -68,7 +68,7 @@ msgid "Paper B_ackground"
 msgstr ""
 
 #: ../src/core/control/Control.cpp:834
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:41
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:42
 msgid "With PDF background"
 msgstr "പിഡിഎഫ് പശ്ചാത്തലം സഹിതം"
 
@@ -224,20 +224,20 @@ msgstr "ട്രാക്‌പോയിന്റ്"
 msgid "tablet pad"
 msgstr "ടാബ്ലറ്റ് പാഡ്"
 
-#: ../src/core/control/ExportHelper.cpp:77
+#: ../src/core/control/ExportHelper.cpp:63
 msgid "Image file successfully created"
 msgstr "ചിത്രത്തിന്റെ ഫയൽ വിജയകരമായി നിർമ്മിക്കപ്പെട്ടു"
 
-#: ../src/core/control/ExportHelper.cpp:103
+#: ../src/core/control/ExportHelper.cpp:76
 #: ../src/core/control/jobs/BaseExportJob.cpp:40
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "പിഡിഎഫ് പശ്ചാത്തലം തിരുത്തരുത്! അവ പിശകുകൾക്ക് കാരണമാകും!"
 
-#: ../src/core/control/ExportHelper.cpp:107
+#: ../src/core/control/ExportHelper.cpp:80
 msgid "The check for overwriting the background failed with: {1}"
 msgstr ""
 
-#: ../src/core/control/ExportHelper.cpp:127
+#: ../src/core/control/ExportHelper.cpp:100
 msgid "PDF file successfully created"
 msgstr "പിഡിഎഫ് ഫയൽ വിജയകരമായി നിർമ്മിക്കപ്പെട്ടു"
 
@@ -265,14 +265,14 @@ msgstr "ലാറ്റെക് (LaTeX) പി. ഡി. എഫ്. (PDF) ഫയ
 msgid "Could not load LaTeX PDF file"
 msgstr "ലാറ്റെക് (LaTeX) പി. ഡി. എഫ്. (PDF) ഫയൽ തുറക്കാൻ സാധിച്ചില്ല"
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:110
-#: ../src/core/control/XournalMain.cpp:231
+#: ../src/core/control/PageBackgroundChangeController.cpp:111
+#: ../src/core/control/XournalMain.cpp:230
 #: ../src/core/control/xojfile/LoadHandler.cpp:483
 #: ../src/core/control/xojfile/LoadHandler.cpp:499
 msgid "Error reading PDF: {1}"
 msgstr "പി. ഡി. എഫ്. (PDF) വായിക്കാൻ പരാജയപ്പെട്ടു: {1}"
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:271
+#: ../src/core/control/PageBackgroundChangeController.cpp:272
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
 msgstr "നിങ്ങൾക്ക് തിരഞ്ഞെടുക്കുന്നതിന് വേണ്ടി പിഡിഫ് താളുകൾ ഇല്ല. പ്രവൃത്തി ഉപേക്ഷിക്കുക. മറ്റൊരു പശ്ചാത്തല തരം ദയവായി തിരഞ്ഞെടുക്കുക: മെനു \"ജേർണൽ\" → \"താൾ ടെമ്പ്ലേറ്റ് കോൺഫിഗർ ചെയ്യുക\"."
@@ -321,15 +321,15 @@ msgstr ""
 msgid "Error exporting image: {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:239
+#: ../src/core/control/XournalMain.cpp:238
 msgid "Error saving document: {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:269
+#: ../src/core/control/XournalMain.cpp:268
 msgid "Error exporting PDF: {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:375
+#: ../src/core/control/XournalMain.cpp:374
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -342,78 +342,78 @@ msgstr "<span foreground='red' size='x-large'>ആവശ്യമുള്ള യ
 "  പ്രവർത്തന പാതയിലല്ല\n"
 "  {2}-ൽ അല്ല"
 
-#: ../src/core/control/XournalMain.cpp:380
+#: ../src/core/control/XournalMain.cpp:379
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "ഈ ഫൈൽ ഇല്ലാതെ പ്രവർത്തിക്കാൻ ഇപ്പോൾ ശ്രമിക്കും."
 
-#: ../src/core/control/XournalMain.cpp:402
-#: ../src/core/control/XournalMain.cpp:463
+#: ../src/core/control/XournalMain.cpp:401
+#: ../src/core/control/XournalMain.cpp:462
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "ക്ഷമിക്കണം, Xournal++-നു ഒരു സമയം ഒറ്റ ഫയൽ മാത്രമേ തുറക്കാൻ സാധിക്കുകയുള്ളൂ.\n"
 "മറ്റുള്ളവ തിരസ്കരിക്കപ്പെടും."
 
-#: ../src/core/control/XournalMain.cpp:413
+#: ../src/core/control/XournalMain.cpp:412
 msgid "File {1} does not exist."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:417
+#: ../src/core/control/XournalMain.cpp:416
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:602
+#: ../src/core/control/XournalMain.cpp:608
 msgid "Jump to Page (first Page: 1)"
 msgstr "താളിലേക്ക് ചാടുക (ആദ്യത്തെ താൾ: 1)"
 
-#: ../src/core/control/XournalMain.cpp:606
+#: ../src/core/control/XournalMain.cpp:612
 msgid "Get version of xournalpp"
 msgstr "Xournalpp-യുടെ പതിപ്പ് ലഭിക്കുക"
 
-#: ../src/core/control/XournalMain.cpp:608
+#: ../src/core/control/XournalMain.cpp:614
 msgid "Disable audio for this session"
 msgstr "ഈ സെഷനിൽ ഓഡിയോ പ്രവർത്തനരഹിതമാക്കുക"
 
-#: ../src/core/control/XournalMain.cpp:610
+#: ../src/core/control/XournalMain.cpp:616
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:614
+#: ../src/core/control/XournalMain.cpp:620
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:619
+#: ../src/core/control/XournalMain.cpp:625
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:628
+#: ../src/core/control/XournalMain.cpp:634
 msgid "Export FILE as PDF"
 msgstr "ഫയൽ പിഡിഎഫ് ആയി എക്സ്പോർട്ട് ചെയ്യുക"
 
-#: ../src/core/control/XournalMain.cpp:631
+#: ../src/core/control/XournalMain.cpp:637
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:637
+#: ../src/core/control/XournalMain.cpp:643
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:642
+#: ../src/core/control/XournalMain.cpp:648
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:647
+#: ../src/core/control/XournalMain.cpp:653
 msgid "Export layers progressively\n"
 "                                       In PDF export, Render layers progressively one by one.\n"
 "                                       This results in N export pages per page with N layers,\n"
@@ -421,38 +421,38 @@ msgid "Export layers progressively\n"
 "                                       The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:656
+#: ../src/core/control/XournalMain.cpp:662
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:661
+#: ../src/core/control/XournalMain.cpp:667
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:665
+#: ../src/core/control/XournalMain.cpp:671
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:669
+#: ../src/core/control/XournalMain.cpp:675
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:674
+#: ../src/core/control/XournalMain.cpp:680
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:682
+#: ../src/core/control/XournalMain.cpp:688
 msgid "Advanced export options"
 msgstr "വിപുലമായ എക്സ്പോർട്ട് സംവിധാനങ്ങൾ"
 
-#: ../src/core/control/XournalMain.cpp:683
+#: ../src/core/control/XournalMain.cpp:689
 msgid "Display advanced export options"
 msgstr "വിപുലമായ എക്സ്പോർട്ട് സംവിധാനങ്ങൾ കാണിക്കുക"
 
@@ -567,52 +567,52 @@ msgstr "{1} ആരംഭിക്കാൻ സാധിച്ചില്ല: {2
 msgid "Layer {1}"
 msgstr "പാളി {1}"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:26
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:27
 msgid "Could not load pagetemplates.ini file"
 msgstr "പേജ്ടെംപ്ലേറ്റ്സ്.ഐഎൻഐ (pagetemplates.ini) ഫൈൽ തുറക്കാൻ സാധിച്ചില്ല"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:30
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Plain"
 msgstr "ലളിതമായ"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "Ruled"
 msgstr "റൂൾഡ്"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 msgid "Ruled with vertical line"
 msgstr "കുത്തനെയുള്ള റൂൾഡ് വരകൾ"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
 msgid "Staves"
 msgstr "സ്റ്റേവ്സ്"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
 msgid "Graph"
 msgstr "ഗ്രാഫ്"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
 msgid "Dotted"
 msgstr "ഡോട്ട് ഇട്ടത്"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:37
 msgid "Isometric Dotted"
 msgstr "ഐസോമെട്രിക് ആയി ഡോട്ടുകൾ ഉള്ളത്"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:37
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:38
 msgid "Isometric Graph"
 msgstr "ഐസോമെട്രിക് ഗ്രാഫ്"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:42
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:43
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 msgid "Image"
 msgstr "ചിത്രം"
 
-#: ../src/core/control/settings/Settings.cpp:153
+#: ../src/core/control/settings/Settings.cpp:154
 msgid "%F-Note-%H-%M"
 msgstr "%F-കുറിപ്പ്-%H-%M"
 
-#: ../src/core/control/settings/Settings.cpp:154
+#: ../src/core/control/settings/Settings.cpp:155
 msgid "%{name}_annotated"
 msgstr "%{name}_വ്യാഖ്യാനിച്ചു"
 
@@ -1075,7 +1075,7 @@ msgid "Xournal++ files"
 msgstr "Xournal++ ഫയലുകൾ"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:119
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:120
 msgid "Xournal++ template"
 msgstr "Xournal++ ടെമ്പ്ലേറ്റ്"
 
@@ -1120,18 +1120,18 @@ msgstr "പിശക്: {1}. ദയവായി {2}-ന്റെ ഉള്ള�
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "പിശക്: {1} ശരിയായ ഫയൽ അല്ല. ദയവായി നിങ്ങളുടെ ലാറ്റെക് (LaTeX) ടെമ്പ്ലേറ്റ് ഫയൽ ക്രമീകരങ്ങൾ പരിശോധിക്കുക. "
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:115
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:84
 msgid "Save File"
 msgstr "ഫയൽ സേവ്"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:115
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:80
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:19
 msgid "_Cancel"
 msgstr "_ഉപേക്ഷിക്കുക"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 msgid "_Save"
 msgstr "_സേവ്"
 
