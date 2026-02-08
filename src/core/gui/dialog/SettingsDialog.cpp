@@ -30,11 +30,11 @@
 #include "util/safe_casts.h"                        // for round_cast
 #include "util/utf8_view.h"                         // for utf8
 
-#include "ButtonConfigGui.h"       // for ButtonConfigGui
-#include "DeviceTestingArea.h"     // for DeviceTestingArea
-#include "LanguageConfigGui.h"     // for LanguageConfigGui
-#include "LatexSettingsPanel.h"    // for LatexSettingsPanel
-#include "filesystem.h"            // for is_directory
+#include "ButtonConfigGui.h"     // for ButtonConfigGui
+#include "DeviceTestingArea.h"   // for DeviceTestingArea
+#include "LanguageConfigGui.h"   // for LanguageConfigGui
+#include "LatexSettingsPanel.h"  // for LatexSettingsPanel
+#include "filesystem.h"          // for is_directory
 
 class GladeSearchpath;
 
@@ -1010,24 +1010,24 @@ void SettingsDialog::save() {
     languageConfig.saveSettings();
 
     SElement& touch = settings->getCustomElement("touch");
-    touch.setBool("disableTouch", getCheckbox("cbDisableTouchOnPenNear"));
+    touch.set("disableTouch", getCheckbox("cbDisableTouchOnPenNear"));
     int touchMethod = gtk_combo_box_get_active(GTK_COMBO_BOX(builder.get("cbTouchDisableMethod")));
 
     switch (touchMethod) {
         case 1:
-            touch.setString("method", "X11");
+            touch.set("method", "X11");
             break;
         case 2:
-            touch.setString("method", "custom");
+            touch.set("method", "custom");
             break;
         case 0:
         default:
-            touch.setString("method", "auto");
+            touch.set("method", "auto");
     }
-    touch.setString("cmdEnable", gtk_editable_get_text(GTK_EDITABLE(builder.get("txtEnableTouchCommand"))));
-    touch.setString("cmdDisable", gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDisableTouchCommand"))));
+    touch.set("cmdEnable", gtk_editable_get_text(GTK_EDITABLE(builder.get("txtEnableTouchCommand"))));
+    touch.set("cmdDisable", gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDisableTouchCommand"))));
 
-    touch.setInt(
+    touch.set(
             "timeout",
             static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(builder.get("spTouchDisableTimeout"))) * 1000));
 

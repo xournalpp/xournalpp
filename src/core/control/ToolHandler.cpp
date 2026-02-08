@@ -32,7 +32,7 @@ public:
     ToolSelectPDFText(std::string name, ToolType type, Color color):
             Tool(name, type, color, TOOL_CAP_COLOR | TOOL_CAP_RULER, std::nullopt) {}
 
-    ~ToolSelectPDFText() override{};
+    ~ToolSelectPDFText() override {};
 
     void setColor(Color color) override {
         if (color.alpha == 0) {
@@ -92,11 +92,11 @@ void ToolHandler::initTools() {
     tools[TOOL_SELECT_REGION - TOOL_PEN] =
             std::make_unique<Tool>("selectRegion", TOOL_SELECT_REGION, Colors::black, TOOL_CAP_NONE, std::nullopt);
 
-    tools[TOOL_SELECT_MULTILAYER_RECT - TOOL_PEN] =
-            std::make_unique<Tool>("selectMultiLayerRect", TOOL_SELECT_MULTILAYER_RECT, Colors::black, TOOL_CAP_NONE, std::nullopt);
+    tools[TOOL_SELECT_MULTILAYER_RECT - TOOL_PEN] = std::make_unique<Tool>(
+            "selectMultiLayerRect", TOOL_SELECT_MULTILAYER_RECT, Colors::black, TOOL_CAP_NONE, std::nullopt);
 
-    tools[TOOL_SELECT_MULTILAYER_REGION - TOOL_PEN] =
-            std::make_unique<Tool>("selectMultiLayerRegion", TOOL_SELECT_MULTILAYER_REGION, Colors::black, TOOL_CAP_NONE, std::nullopt);
+    tools[TOOL_SELECT_MULTILAYER_REGION - TOOL_PEN] = std::make_unique<Tool>(
+            "selectMultiLayerRegion", TOOL_SELECT_MULTILAYER_REGION, Colors::black, TOOL_CAP_NONE, std::nullopt);
 
     tools[TOOL_SELECT_OBJECT - TOOL_PEN] =
             std::make_unique<Tool>("selectObject", TOOL_SELECT_OBJECT, Colors::black, TOOL_CAP_NONE, std::nullopt);
@@ -104,8 +104,7 @@ void ToolHandler::initTools() {
     tools[TOOL_VERTICAL_SPACE - TOOL_PEN] =
             std::make_unique<Tool>("verticalSpace", TOOL_VERTICAL_SPACE, Colors::black, TOOL_CAP_NONE, std::nullopt);
 
-    tools[TOOL_HAND - TOOL_PEN] =
-            std::make_unique<Tool>("hand", TOOL_HAND, Colors::black, TOOL_CAP_NONE, std::nullopt);
+    tools[TOOL_HAND - TOOL_PEN] = std::make_unique<Tool>("hand", TOOL_HAND, Colors::black, TOOL_CAP_NONE, std::nullopt);
 
     tools[TOOL_PLAY_OBJECT - TOOL_PEN] =
             std::make_unique<Tool>("playObject", TOOL_PLAY_OBJECT, Colors::black, TOOL_CAP_NONE, std::nullopt);
@@ -209,7 +208,9 @@ void ToolHandler::selectTool(ToolType type) {
 }
 
 void ToolHandler::fireToolChanged() const {
-    for (auto&& listener: this->toolChangeListeners) { listener(this->activeTool->type); }
+    for (auto&& listener: this->toolChangeListeners) {
+        listener(this->activeTool->type);
+    }
 
     stateChangeListener->toolChanged();
 }
@@ -220,7 +221,7 @@ void ToolHandler::addToolChangedListener(ToolChangedCallback listener) {
 
 auto ToolHandler::getTool(ToolType type) const -> Tool& { return *(this->tools[type - TOOL_PEN]); }
 
-auto ToolHandler::getActiveTool() const -> Tool* {return this->activeTool; }
+auto ToolHandler::getActiveTool() const -> Tool* { return this->activeTool; }
 
 auto ToolHandler::getToolType() const -> ToolType {
     Tool* tool = this->activeTool;
@@ -436,15 +437,15 @@ void ToolHandler::saveSettings() const {
     SElement& s = settings->getCustomElement("tools");
     s.clear();
 
-    s.setString("current", this->activeTool->getName());
+    s.set("current", this->activeTool->getName());
 
     for (auto&& tool: tools) {
         SElement& st = s.child(tool->getName());
         if (tool->hasCapability(TOOL_CAP_COLOR)) {
-            st.setIntHex("color", int(uint32_t(tool->getColor())));
+            st.set("color", static_cast<uint32_t>(tool->getColor()));
         }
 
-        st.setString("drawingType", drawingTypeToString(tool->getDrawingType()).data());
+        st.set("drawingType", drawingTypeToString(tool->getDrawingType()).data());
 
         if (tool->hasCapability(TOOL_CAP_SIZE)) {
             std::string value;
@@ -468,26 +469,26 @@ void ToolHandler::saveSettings() const {
                     value = "";
             }
 
-            st.setString("size", value);
+            st.set("size", value);
         }
 
         if (tool->hasCapability(TOOL_CAP_FILL)) {
-            st.setInt("fill", tool->getFill());
-            st.setInt("fillAlpha", tool->getFillAlpha());
+            st.set("fill", tool->getFill());
+            st.set("fillAlpha", tool->getFillAlpha());
         }
 
         if (tool->type == TOOL_PEN) {
-            st.setString("style", StrokeStyle::formatStyle(tool->getLineStyle()));
+            st.set("style", StrokeStyle::formatStyle(tool->getLineStyle()));
         }
 
         if (tool->type == TOOL_ERASER) {
             if (this->getEraserType() == ERASER_TYPE_DELETE_STROKE) {
-                st.setString("type", "deleteStroke");
+                st.set("type", "deleteStroke");
             } else if (this->getEraserType() == ERASER_TYPE_WHITEOUT) {
-                st.setString("type", "whiteout");
+                st.set("type", "whiteout");
             } else  // ERASER_TYPE_DEFAULT
             {
-                st.setString("type", "default");
+                st.set("type", "default");
             }
         }
     }
@@ -602,8 +603,9 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
     }
 
     if (this->activeTool->type == TOOL_SELECT_RECT || this->activeTool->type == TOOL_SELECT_REGION ||
-        this->activeTool->type == TOOL_SELECT_MULTILAYER_RECT || this->activeTool->type == TOOL_SELECT_MULTILAYER_REGION ||
-        this->activeTool->type == TOOL_SELECT_OBJECT || this->activeTool->type == TOOL_PLAY_OBJECT) {
+        this->activeTool->type == TOOL_SELECT_MULTILAYER_RECT ||
+        this->activeTool->type == TOOL_SELECT_MULTILAYER_REGION || this->activeTool->type == TOOL_SELECT_OBJECT ||
+        this->activeTool->type == TOOL_PLAY_OBJECT) {
         this->stateChangeListener->toolColorChanged();
         this->stateChangeListener->toolSizeChanged();
         this->stateChangeListener->toolFillChanged();
@@ -622,11 +624,10 @@ auto ToolHandler::isSinglePageTool() const -> bool {
              drawingType == DRAWING_TYPE_LINE || drawingType == DRAWING_TYPE_RECTANGLE ||
              drawingType == DRAWING_TYPE_SPLINE)) ||
            toolType == TOOL_SELECT_RECT || toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_MULTILAYER_RECT ||
-           toolType == TOOL_SELECT_MULTILAYER_REGION || toolType == TOOL_SELECT_OBJECT ||
-           toolType == TOOL_DRAW_RECT || toolType == TOOL_DRAW_ELLIPSE || toolType == TOOL_DRAW_COORDINATE_SYSTEM ||
-           toolType == TOOL_DRAW_ARROW || toolType == TOOL_DRAW_DOUBLE_ARROW || toolType == TOOL_FLOATING_TOOLBOX ||
-           toolType == TOOL_DRAW_SPLINE || toolType == TOOL_SELECT_PDF_TEXT_LINEAR ||
-           toolType == TOOL_SELECT_PDF_TEXT_RECT;
+           toolType == TOOL_SELECT_MULTILAYER_REGION || toolType == TOOL_SELECT_OBJECT || toolType == TOOL_DRAW_RECT ||
+           toolType == TOOL_DRAW_ELLIPSE || toolType == TOOL_DRAW_COORDINATE_SYSTEM || toolType == TOOL_DRAW_ARROW ||
+           toolType == TOOL_DRAW_DOUBLE_ARROW || toolType == TOOL_FLOATING_TOOLBOX || toolType == TOOL_DRAW_SPLINE ||
+           toolType == TOOL_SELECT_PDF_TEXT_LINEAR || toolType == TOOL_SELECT_PDF_TEXT_RECT;
 }
 
 auto ToolHandler::acceptsOutOfPageEvents() const -> bool {

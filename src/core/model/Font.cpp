@@ -37,7 +37,7 @@ XojFont::XojFont(const char* description) {
     }
 
     if (results.size() > 2) {
-        this->size = atof(results[2].str().c_str());
+        this->size = std::stod(results[2].str());
     } else {
         this->size = 0;
     }

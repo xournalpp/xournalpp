@@ -13,6 +13,8 @@
 
 #include <string>  // for string
 
+#include "util/PlaceholderString.h"
+
 
 /**
  * @brief Buttons that can have a configuration attached to them
@@ -105,8 +107,11 @@ enum class SidebarNumberingStyle {
     /* MIN, MAX and Default values. Need to be updated when new style is added. */
     MIN = SidebarNumberingStyle::NONE,
     MAX = SidebarNumberingStyle::NUMBER_WITH_SQUARE_BACKGROUND,
-    DEFAULT = SidebarNumberingStyle::NUMBER_BELOW_PREVIEW
+    DEFAULT = SidebarNumberingStyle::NUMBER_BELOW_PREVIEW,
 };
+
+inline bool operator<(SidebarNumberingStyle e, const int num) { return num < static_cast<int>(e); }
+inline bool operator<(const int num, SidebarNumberingStyle e) { return static_cast<int>(e) < num; }
 
 constexpr auto buttonToString(Button button) -> const char* {
     switch (button) {
@@ -196,6 +201,40 @@ constexpr auto emptyLastPageAppendToString(EmptyLastPageAppendType appendType) -
         default:
             return "unknown";
     }
+}
+
+constexpr auto stringToAttributeType(const std::string_view str) {
+    if (str == "int")
+        return ATTRIBUTE_TYPE_INT;
+
+    if (str == "double")
+        return ATTRIBUTE_TYPE_DOUBLE;
+
+    if (str == "boolean")
+        return ATTRIBUTE_TYPE_BOOLEAN;
+
+    if (str == "string")
+        return ATTRIBUTE_TYPE_STRING;
+
+    if (str == "hex" || str == "color")
+        return ATTRIBUTE_TYPE_INT_HEX;
+
+    g_warning("Settings::Unknown datatype: %s\n", str.data());
+
+    return ATTRIBUTE_TYPE_NONE;
+}
+
+constexpr auto stringToScrollbarHideType(const std::string_view str) {
+    if (str == "both")
+        return SCROLLBAR_HIDE_BOTH;
+
+    if (str == "horizontal")
+        return SCROLLBAR_HIDE_HORIZONTAL;
+
+    if (str == "vertical")
+        return SCROLLBAR_HIDE_VERTICAL;
+
+    return SCROLLBAR_HIDE_NONE;
 }
 
 StylusCursorType stylusCursorTypeFromString(const std::string& stylusCursorTypeStr);
