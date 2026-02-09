@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.12)
 cmake_policy(VERSION 3.12)
+# Avoid warning about DOWNLOAD_EXTRACT_TIMESTAMP in CMake 3.24 and up
+if (POLICY CMP0135)
+    cmake_policy(SET CMP0135 NEW)
+endif()
 
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
