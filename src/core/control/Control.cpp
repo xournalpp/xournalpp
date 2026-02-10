@@ -1554,10 +1554,10 @@ void Control::openXoppFile(fs::path filepath, int scrollToPage, std::function<vo
         }
         fileVersion = loadHandler.getFileVersion();
     } catch (std::exception& e) {
-        g_warning("LoadHandler failed to load document. Error message: %s", e.what());
+        g_warning("LoadHandler failed to load document: %s", e.what());
 
-        std::string msg = FS(_F("Error opening file \"{1}\".\n\n"
-                                "Error messages:{2}\n{3}") %
+        std::string msg = FS(_F("Error opening file \"{1}\".\n"
+                                "{2}\n{3}") %
                              filepath.u8string() % errorMessages % e.what());
         XojMsgBox::showErrorToUser(this->getGtkWindow(), msg);
         callback(false);

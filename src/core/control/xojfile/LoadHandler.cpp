@@ -519,6 +519,12 @@ void LoadHandler::parseXml(std::unique_ptr<xoj::util::InputStream> xmlContentStr
     auto context = GMarkupParseContextGuard{g_markup_parse_context_new(
             &XmlParser::interface, static_cast<GMarkupParseFlags>(0), &parserInterface, nullptr)};
 
+    const auto handleGError = [this](xoj::util::GErrorGuard error) {
+        if (error) {
+            logError(FS(_F("XML Parser error: {1}") % error->message));
+        }
+    };
+
     std::array<char, 1024> buffer{};
     int len{};
     xoj::util::GErrorGuard error;
@@ -532,24 +538,22 @@ void LoadHandler::parseXml(std::unique_ptr<xoj::util::InputStream> xmlContentStr
         }
 
         auto valid = g_markup_parse_context_parse(context.get(), buffer.data(), len, xoj::util::out_ptr(error));
-        if (error) {
-            logError(FS(_F("XML Parser error: ") % error->message));
-            error.reset();
-        }
+        handleGError(std::move(error));
         if (!valid) {
             throw std::runtime_error(_("Invalid XML data read"));
         }
     }
 
     // Sanity checks for document validity
+    if (!g_markup_parse_context_end_parse(context.get(), xoj::util::out_ptr(error)) || !this->parsingComplete) {
+        handleGError(std::move(error));
+        throw std::runtime_error(_("Document is not complete (maybe the end is cut off)"));
+    }
     if (!this->doc) {
         throw std::runtime_error(_("Document is corrupted (no document tag found in file)"));
     }
     if (this->doc->getPageCount() == 0) {
         throw std::runtime_error(_("Document is corrupted (no pages found in file)"));
-    }
-    if (!g_markup_parse_context_end_parse(context.get(), xoj::util::out_ptr(error)) || !this->parsingComplete) {
-        throw std::runtime_error(_("Document is not complete (maybe the end is cut off)"));
     }
 }
 
