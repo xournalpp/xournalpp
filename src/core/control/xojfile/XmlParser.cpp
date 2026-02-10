@@ -565,7 +565,11 @@ auto XmlParser::getTagType(c_string_utf8_view name) const -> TagType {
             case TagType::UNKNOWN:
                 xoj_assert_message(false, "TagType::UNKNOWN is not a valid tag");
             default:
-                xoj_assert_message(false, "Illegal tag in hierarchy");
+                // We are opening a new tag under a tag that normally doesn't have
+                // children (e.g. preview, stroke, text...). Either the previous
+                // tag has not been closed or the file format is different. In any
+                // case, we cannot parse it properly.
+                return TagType::UNKNOWN;
         }
     }
 
