@@ -11,7 +11,8 @@
 
 #pragma once
 
-#include <mutex>   // for mutex
+#include <mutex>  // for mutex
+#include <optional>
 #include <vector>  // for vector
 
 #include <glib.h>  // for gint64
@@ -25,7 +26,6 @@ public:
 
 public:
     fs::path metadataFile;
-    bool valid;
     fs::path path;
     double zoom;
     int page;
@@ -41,7 +41,7 @@ public:
     /**
      * Get the metadata for a file
      */
-    static MetadataEntry getForFile(fs::path const& file);
+    static std::optional<MetadataEntry> getForFile(fs::path const& file);
 
     /**
      * Store the current data into metadata
@@ -62,12 +62,14 @@ private:
     /**
      * Parse a single metadata file
      */
-    static MetadataEntry loadMetadataFile(fs::path const& path, fs::path const& file);
+    static std::optional<MetadataEntry> loadMetadataFile(fs::path const& path);
 
     /**
      * Store metadata to file
      */
     static void storeMetadata(const MetadataEntry& m);
+
+    static void writeMetadataToFile(const MetadataEntry& m, const fs::path& file);
 
 private:
     /**
@@ -78,4 +80,7 @@ private:
 private:
     std::mutex mutex;
     std::unique_ptr<MetadataEntry> metadata;
+
+    friend class Metadata_testRead_Test;
+    friend class Metadata_testWriteReadCycle_Test;
 };
