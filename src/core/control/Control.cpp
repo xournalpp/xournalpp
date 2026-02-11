@@ -1723,17 +1723,13 @@ void Control::fileLoaded(int scrollToPage) {
     this->doc->unlock();
 
     if (!filepath.empty()) {
-        MetadataEntry md = MetadataManager::getForFile(filepath);
-        if (!md.valid) {
-            md.zoom = -1;
-            md.page = 0;
+        auto md = MetadataManager::getForFile(filepath);
+        if (md) {
+            if (scrollToPage >= 0) {
+                md->page = scrollToPage;
+            }
+            loadMetadata(*md);
         }
-
-        if (scrollToPage >= 0) {
-            md.page = scrollToPage;
-        }
-
-        loadMetadata(md);
         RecentManager::addRecentFileFilename(filepath);
     } else {
         zoom->updateZoomFitValue();
@@ -1837,9 +1833,6 @@ public:
  * Load the data after processing the document...
  */
 auto Control::loadMetadataCallback(MetadataCallbackData* data) -> bool {
-    if (!data->md.valid) {
-        return false;
-    }
     ZoomControl* zoom = data->ctrl->zoom;
     if (zoom->isZoomPresentationMode()) {
         data->ctrl->setViewPresentationMode(true);
