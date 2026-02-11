@@ -9,6 +9,7 @@
 #include <gtest/gtest.h>
 
 #include "model/Stroke.h"
+#include "util/StringUtils.h"
 #include "util/serializing/BinObjectEncoding.h"
 #include "util/serializing/HexObjectEncoding.h"
 #include "util/serializing/ObjectInputStream.h"
@@ -159,7 +160,11 @@ TEST(UtilObjectIOStream, testReadImage) {
 
 TEST(UtilObjectIOStream, testReadString) {
     std::vector<std::string> stringToTest{
-            "", "Hello World", XML_VERSION_STR, "1337",
+            "",
+            "Hello World",
+            XML_VERSION_STR,
+            "1337",
+            char_cast(u8"Ṯℏiⓢ is UTF∞"),
             "Laborum beatae sit at. Tempore ex odio et non et iste et. Deleniti magni beatae quod praesentium dicta quas ducimus hic. Nemo vel est saepe voluptatibus. Sunt eveniet aut saepe consequatur fuga ad molestias.\n \
                 Culpa nulla saepe alias magni nemo magni. Sed sit sint repellat doloremque. Quo ipsum debitis quos impedit. Omnis expedita veritatis nihil sint et itaque possimus. Nobis est fugit vel omnis. Dolores architecto laudantium nihil rerum."};
 
@@ -347,7 +352,7 @@ void assertStrokeEquality(const Stroke& stroke1, const Stroke& stroke2) {
 }
 
 TEST(UtilObjectIOStream, testReadStroke) {
-    std::vector<Stroke> strokes(8);
+    std::vector<Stroke> strokes(9);
     // strokes[0]: empty stroke
 
     strokes[1].addPoint(Point(42, 42));
@@ -380,6 +385,9 @@ TEST(UtilObjectIOStream, testReadStroke) {
     strokes[7].setFill(-42);
     strokes[7].setToolType(static_cast<StrokeTool::Value>(42));
     strokes[7].setWidth(-1337.);
+
+    // Test UTF8 paths
+    strokes[8].setAudioFilename(u8"🡶⬶/assets/foobar.mp3");
 
     size_t i = 0;
     try {
