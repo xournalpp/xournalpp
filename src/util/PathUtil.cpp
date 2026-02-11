@@ -5,6 +5,7 @@
 #include <fstream>      // for ifstream, char_traits, basic_ist...
 #include <iterator>     // for begin
 #include <sstream>      // for stringstream
+#include <stdexcept>    // for runtime_error
 #include <string_view>  // for basic_string_view, operator""sv
 #include <type_traits>  // for remove_reference<>::type
 #include <utility>      // for move
@@ -120,11 +121,16 @@ auto Util::readString(fs::path const& path, bool showErrorToUser, std::ios_base:
     try {
         std::stringstream buffer;
         std::ifstream ifs{path, openmode};
+        if (!ifs) {
+            throw std::runtime_error{FS(_F("Could not open file: {1}") % std::strerror(errno))};
+        }
+        ifs.exceptions(std::ios::failbit | std::ios::badbit);
         buffer << ifs.rdbuf();
         return buffer.str();
-    } catch (const fs::filesystem_error& e) {
+    } catch (const std::exception& e) {
         if (showErrorToUser) {
-            XojMsgBox::showErrorToUser(nullptr, e.what());
+            const auto msg = FS(_F("Error reading \"{1}\":\n{2}") % path.u8string() % e.what());
+            XojMsgBox::showErrorToUser(nullptr, msg);
         }
     }
     return std::nullopt;
