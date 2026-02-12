@@ -6,6 +6,7 @@
 #include "util/StringUtils.h"                     // for char_cast
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
+#include "util/utf8_view.h"
 
 AudioElement::AudioElement(ElementType type): Element(type) {}
 
@@ -35,7 +36,7 @@ void AudioElement::readSerialized(ObjectInputStream& in) {
 
     this->Element::readSerialized(in);
 
-    this->audioFilename = in.readString();
+    this->audioFilename = fs::path(xoj::util::utf8(in.readString()));
     this->timestamp = in.readSizeT();
 
     in.endObject();
