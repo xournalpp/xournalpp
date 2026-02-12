@@ -38,7 +38,7 @@ using namespace xoj::popup;
 PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, ToolMenuHandler* toolmenu,
                                        PageTypeHandler* types):
         gladeSearchPath(gladeSearchPath), settings(settings), toolMenuHandler(toolmenu), types(types) {
-    model.parse(settings->getPageTemplate());
+    model = settings->getPageTemplateSettings();
 
     Builder builder(gladeSearchPath, UI_FILE);
     window.reset(GTK_WINDOW(builder.get(UI_DIALOG_NAME)));
@@ -67,7 +67,7 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
     g_signal_connect_swapped(builder.get("btCancel"), "clicked", G_CALLBACK(gtk_window_close), this->getWindow());
     g_signal_connect_swapped(builder.get("btOk"), "clicked", G_CALLBACK(+[](PageTemplateDialog* self) {
                                  self->saveToModel();
-                                 self->settings->setPageTemplate(self->model.toString());
+                                 self->settings->setPageTemplateSettings(self->model);
                                  self->toolMenuHandler->setDefaultNewPageType(self->model.getPageInsertType());
                                  self->toolMenuHandler->setDefaultNewPaperSize(
                                          self->model.isCopyLastPageSize() ? std::nullopt :

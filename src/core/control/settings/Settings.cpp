@@ -201,7 +201,7 @@ void Settings::loadDefault() {
     this->backgroundColor = Colors::xopp_gainsboro02;
 
     // clang-format off
-	this->pageTemplate = "xoj/template\ncopyLastPageSettings=true\nsize=595.275591x841.889764\nbackgroundType=lined\nbackgroundColor=#ffffff\n";
+	this->pageTemplateSettings.parse("xoj/template\ncopyLastPageSettings=true\nsize=595.275591x841.889764\nbackgroundType=lined\nbackgroundColor=#ffffff\n");
     // clang-format on
 
 #ifdef ENABLE_AUDIO
@@ -506,7 +506,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginDisabled")) == 0) {
         this->pluginDisabled = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pageTemplate")) == 0) {
-        this->pageTemplate = reinterpret_cast<const char*>(value);
+        this->pageTemplateSettings.parse(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sizeUnit")) == 0) {
         this->sizeUnit = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioFolder")) == 0) {
@@ -1143,6 +1143,7 @@ void Settings::save() {
     SAVE_UINT_PROP(preloadPagesAfter);
     SAVE_BOOL_PROP(eagerPageCleanup);
 
+    const auto pageTemplate = pageTemplateSettings.toString();
     SAVE_STRING_PROP(pageTemplate);
     ATTACH_COMMENT("Config for new pages");
 
@@ -1741,20 +1742,14 @@ void Settings::setDefaultPdfExportName(const std::u8string& name) {
     save();
 }
 
-auto Settings::getPageTemplate() const -> string const& { return this->pageTemplate; }
+auto Settings::getPageTemplateSettings() const -> PageTemplateSettings const& { return this->pageTemplateSettings; }
 
-auto Settings::getPageTemplateSettings() const -> PageTemplateSettings {
-    PageTemplateSettings model;
-    model.parse(this->pageTemplate);
-    return model;
-}
-
-void Settings::setPageTemplate(const string& pageTemplate) {
-    if (this->pageTemplate == pageTemplate) {
+void Settings::setPageTemplateSettings(const PageTemplateSettings& newSettings) {
+    if (this->pageTemplateSettings == newSettings) {
         return;
     }
 
-    this->pageTemplate = pageTemplate;
+    this->pageTemplateSettings = newSettings;
 
     save();
 }
