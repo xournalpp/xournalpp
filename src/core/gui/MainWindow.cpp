@@ -171,7 +171,7 @@ static ThemeProperties getThemeProperties(GtkWidget* w) {
 
     // Try to figure out if the theme is dark or light
     // Some themes handle their dark variant via "gtk-application-prefer-dark-theme" while other just append "-dark"
-    const std::regex nameparser("([a-zA-Z-]+?)([:-][dD]ark)?");
+    const std::regex nameparser("([a-zA-Z0-9_\.-]+?)([:-][dD]ark)?");
     std::cmatch sm;
     std::regex_match(name.get(), sm, nameparser);
 
