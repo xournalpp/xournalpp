@@ -1,6 +1,9 @@
 # Force out of source build
 %global __cmake_in_source_build 0
 
+# Build with qpdf export backend
+%bcond qpdf 1
+
 #This spec file is intended for daily development snapshot release
 %global build_shortcommit {{{ git rev-parse --short HEAD }}}
 %global version_string {{{ git describe --tags --match 'v[0-9]*' | sed -e 's/^v\(.*\)-\([0-9]*\)-g\(.*\)$/\1^\2.g\3/' }}}
@@ -68,26 +71,25 @@ The %{name}-ui package contains a graphical user interface for  %{name}.
 
 %prep
 %autosetup -n %{name}
+# We do not build nor ship the wrapper
+sed -i -e 's/xournalpp-wrapper/xournalpp/' desktop/com.github.xournalpp.xournalpp.desktop.in
 
 %build
 %cmake \
         -DDISTRO_CODENAME="Fedora Linux" \
+        -DENABLE_CPPTRACE=OFF \
         %{?_gtest: -DENABLE_GTEST=ON} \
         -DENABLE_MATHTEX=ON \
-        -DGIT_VERSION=%{build_shortcommit} \
-        -DMAC_INTEGRATION=OFF
+        -DENABLE_QPDF=%{?with_qpdf:ON}%{!?with_qpdf:OFF} \
+        -DGIT_VERSION=%{build_shortcommit}
 
 %cmake_build
 
 %install
 %cmake_install
 
-#Remove depreciated key from desktop file
-desktop-file-install \
- --remove-key="Encoding" \
- --set-key="StartupWMClass" \
- --set-value="xournalpp" \
-  %{buildroot}%{_datadir}/applications/com.github.%{name}.%{name}.desktop
+# We do not use the wrapper
+rm -f %{buildroot}%{_bindir}/%{name}-wrapper
 %find_lang %{name}
 
 # Remove unnecssary scripts
@@ -121,6 +123,11 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/com.github.%{n
 %{_datadir}/%{name}/ui
 
 %changelog
+* Mon Sep 9 2024 Luya Tshimbalanga <luya@fedoraproject.org>
+- Disable cpptrace support
+- Enable qpdf support
+- Remove unneeded wrapper
+
 * Mon Sep 9 2024 Luya Tshimbalanga <luya@fedoraproject.org>
 - Add color palettes support
 
