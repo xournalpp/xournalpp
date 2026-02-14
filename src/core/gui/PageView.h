@@ -29,6 +29,7 @@
 #include "util/raii/CairoWrappers.h"  // for CairoSurfaceSPtr
 #include "view/Mask.h"                // for Mask
 #include "view/Repaintable.h"         // for Repaintable
+#include "view/Tiling.h"              // for Tiling
 
 #include "Layout.h"            // for Layout
 #include "LegacyRedrawable.h"  // for LegacyRedrawable
@@ -92,13 +93,20 @@ public:
 
     xoj::util::Rectangle<double> toWindowCoordinates(const xoj::util::Rectangle<double>& r) const override;
 
+    /**
+     * Computes which tiles must be cached and which cached tiles must be cleared. Triggers an asynchronous rendering of
+     * the missing tiles.
+     * @param centerOfVisibleArea The center of the visible area, in pixel coordinates relative to the page's upper-left
+     *                            corner. May be out of the page.
+     * @param mustRenderRadius Tiles whose center is closer (in pixels) to centerOfVisibleArea must be cached
+     * @param mustClearRadius Tiles whose center is further away to centerOfVisibleArea must be cleared
+     * @return true if the view should be considered as having a buffer (either it has one or it scheduled one)
+     */
+    bool updateVisibilityAndCache(xoj::util::Point<int> centerOfVisibleArea, double mustRenderRadius,
+                                  double mustClearRadius);
 
     void setSelected(bool selected);
-
-    void setIsVisible(bool visible);
-
     bool isSelected() const;
-    inline bool isVisible() const { return visible; }
 
     void endText();
 
@@ -178,6 +186,12 @@ public:  // event handler
 
     void deleteLaserPointerHandler();
 
+    struct CacheSize {
+        size_t nbTiles;
+        size_t estMemUsage;  ///< in MB
+    };
+    CacheSize getCacheSize() const;
+
     void setGridCoordinates(xoj::util::Point<int> pos);
     xoj::util::Point<int> getGridCoordinates() const;
 
@@ -256,13 +270,11 @@ private:
      */
     Text* oldtext;
 
-    bool visible = false;
     bool selected = false;
-
-    xoj::view::Mask buffer;
-    std::mutex drawingMutex;
-
     bool inEraser = false;
+
+    xoj::view::Tiling tiles;
+    std::mutex drawingMutex;  ///< Protects tiles
 
     /**
      * Vertical Space
@@ -274,13 +286,17 @@ private:
      */
     std::unique_ptr<SearchControl> search;
 
-    std::mutex repaintRectMutex;
-    std::vector<xoj::util::Rectangle<double>> rerenderRects;
-    bool rerenderComplete = false;
-    bool sizeChanged = false;
+    std::mutex rerenderDataMutex;
+    struct {
+        std::vector<xoj::util::Rectangle<double>> rerenderRects;
+        xoj::view::Tiling::RetilingData retiling;
+        bool rerenderComplete = false;
+        bool sizeChanged = false;
+        xoj::util::Point<double> centerOfVisibleArea{};  ///< In Page coordinates. May be outside the page.
+        double mustRenderRadius;                         ///< In Page coordinates
+    } rerenderData;
 
     xoj::util::Point<int> gridCoordinates;  ///< Coordinates in the layout grid
-
 
     DeviceId currentSequenceDeviceId;
 

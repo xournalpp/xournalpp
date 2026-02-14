@@ -101,10 +101,6 @@ static void gtk_xournal_class_init(GtkXournalClass* cptr) {
 }
 
 auto gtk_xournal_get_visible_area(GtkWidget* widget, const XojPageView* p) -> xoj::util::Rectangle<double>* {
-    if (!p || !p->isVisible()) {
-        return nullptr;
-    }
-
     g_return_val_if_fail(widget != nullptr, nullptr);
     g_return_val_if_fail(GTK_IS_XOURNAL(widget), nullptr);
 

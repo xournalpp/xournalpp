@@ -94,14 +94,6 @@ public:
      */
     void recomputeCenteringPadding(int allocWidth = -1, int allocHeight = -1);
 
-    // Todo(Fabian): move to View:
-    /**
-     * Updates the current XojPageView. The XojPageView is selected based on
-     * the percentage of the visible area of the XojPageView relative
-     * to its total area.
-     */
-    void updateVisibility();
-
     /**
      * Return the pageview containing coordinates (in pixel coordinates)
      */
@@ -193,12 +185,6 @@ private:
 
     XournalView* view = nullptr;
     ScrollHandling* scrollHandling = nullptr;
-
-    // Todo(Fabian): move to ScrollHandling also it must not depend on Layout
-    double lastScrollHorizontal = -1;
-    double lastScrollVertical = -1;
-
-    std::vector<size_t> previouslyVisiblePages;  ///< indexes of pages with XojPageView::isVisible() == true
 
     PreCalculated pc{};
 
