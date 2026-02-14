@@ -82,6 +82,10 @@ static void gtk_xournal_class_init(GtkXournalClass* cptr) {
 }
 
 auto gtk_xournal_get_visible_area(GtkWidget* widget, const XojPageView* p) -> xoj::util::Rectangle<double>* {
+    if (!p || !p->isVisible()) {
+        return nullptr;
+    }
+
     g_return_val_if_fail(widget != nullptr, nullptr);
     g_return_val_if_fail(GTK_IS_XOURNAL(widget), nullptr);
 
@@ -97,8 +101,9 @@ auto gtk_xournal_get_visible_area(GtkWidget* widget, const XojPageView* p) -> xo
     r2.height = static_cast<int>(gtk_adjustment_get_page_size(vadj));
 
     GdkRectangle r1;
-    r1.x = p->getX();
-    r1.y = p->getY();
+    auto pos = p->getPixelPosition();
+    r1.x = pos.x;
+    r1.y = pos.y;
     r1.width = p->getDisplayWidth();
     r1.height = p->getDisplayHeight();
 
@@ -141,14 +146,14 @@ static void gtk_xournal_get_preferred_width(GtkWidget* widget, gint* minimal_wid
     g_return_if_fail(GTK_IS_XOURNAL(widget));
     GtkXournal* xournal = GTK_XOURNAL(widget);
     g_return_if_fail(xournal->layout);
-    *minimal_width = *natural_width = xournal->layout->getMinimalWidth();
+    *minimal_width = *natural_width = xournal->layout->getMinimalPixelWidth();
 }
 
 static void gtk_xournal_get_preferred_height(GtkWidget* widget, gint* minimal_height, gint* natural_height) {
     g_return_if_fail(GTK_IS_XOURNAL(widget));
     GtkXournal* xournal = GTK_XOURNAL(widget);
     g_return_if_fail(xournal->layout);
-    *minimal_height = *natural_height = xournal->layout->getMinimalHeight();
+    *minimal_height = *natural_height = xournal->layout->getMinimalPixelHeight();
 }
 
 /**
@@ -166,10 +171,7 @@ static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocati
                                allocation->height);
     }
 
-    GtkXournal* xournal = GTK_XOURNAL(widget);
-
-    // layout the pages in the XournalWidget
-    xournal->layout->layoutPages(allocation->width, allocation->height);
+    gtk_xournal_get_layout(widget)->recomputeCenteringPadding(allocation->width, allocation->height);
 }
 
 static void gtk_xournal_realize(GtkWidget* widget) {
@@ -256,9 +258,8 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
 
     GtkXournal* xournal = GTK_XOURNAL(widget);
 
-    double x1 = NAN, x2 = NAN, y1 = NAN, y2 = NAN;
-
-    cairo_clip_extents(cr, &x1, &y1, &x2, &y2);
+    Range clip;
+    cairo_clip_extents(cr, &clip.minX, &clip.minY, &clip.maxX, &clip.maxY);
 
     // Draw background
     Settings* settings = xournal->view->getControl()->getSettings();
@@ -266,22 +267,23 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
     cairo_paint(cr);
 
     // Add a padding for the shadow of the pages
-    xoj::util::Rectangle<double> clippingRect(x1 - 10, y1 - 10, x2 - x1 + 20, y2 - y1 + 20);
+    clip.addPadding(10);
 
-    for (auto&& pv: xournal->view->getViewPages()) {
-        int px = pv->getX();
-        int py = pv->getY();
+    const auto& views = xournal->view->getViewPages();
+    // Store the pages to release the layout mutex ASAP
+    std::vector<std::pair<size_t, xoj::util::Point<int>>> pages;
+    xournal->layout->forEachEntriesIntersectingRange(
+            clip, [&](size_t index, const Range&, xoj::util::Point<int> pos) { pages.emplace_back(index, pos); });
+
+    for (auto [index, pos]: pages) {
+        const auto& pv = views[index];
         int pw = pv->getDisplayWidth();
         int ph = pv->getDisplayHeight();
 
-        if (!clippingRect.intersects(pv->getRect())) {
-            continue;
-        }
-
-        gtk_xournal_draw_shadow(xournal, cr, px, py, pw, ph, pv->isSelected());
+        gtk_xournal_draw_shadow(xournal, cr, pos.x, pos.y, pw, ph, pv->isSelected());
 
         cairo_save(cr);
-        cairo_translate(cr, px, py);
+        cairo_translate(cr, pos.x, pos.y);
 
         pv->paintPage(cr, nullptr);
         cairo_restore(cr);
@@ -291,8 +293,8 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
         cairo_save(cr);
         double zoom = xournal->view->getZoom();
 
-        LegacyRedrawable* red = xournal->selection->getView();
-        cairo_translate(cr, red->getX(), red->getY());
+        auto pos = xournal->selection->getView()->getPixelPosition();
+        cairo_translate(cr, pos.x, pos.y);
 
         xournal->selection->paint(cr, zoom);
         cairo_restore(cr);
