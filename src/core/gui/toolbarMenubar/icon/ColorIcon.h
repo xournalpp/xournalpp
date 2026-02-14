@@ -19,7 +19,12 @@
 #include "util/Color.h"  // for Color
 #include "util/raii/GObjectSPtr.h"
 
+struct Palette;
+class Recolor;
+
 namespace ColorIcon {
+void createPaletteIconResources(const Palette& palette, const std::optional<Recolor>& recolor);
+
 /**
  * @brief Create a new GtkImage with preview color
  * @return The pointer is a floating ref
