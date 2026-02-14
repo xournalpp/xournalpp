@@ -1,9 +1,6 @@
 # Force out of source build
 %global __cmake_in_source_build 0
 
-# Build with qpdf export backend
-%bcond qpdf 1
-
 #This spec file is intended for daily development snapshot release
 %global build_shortcommit {{{ git rev-parse --short HEAD }}}
 %global version_string {{{ git describe --tags --match 'v[0-9]*' | sed -e 's/^v\(.*\)-\([0-9]*\)-g\(.*\)$/\1^\2.g\3/' }}}
@@ -36,6 +33,7 @@ BuildRequires:  pkgconfig(glib-2.0) >= 2.32.0
 BuildRequires:  pkgconfig(gtk+-3.0) >= 3.18.9
 BuildRequires:  pkgconfig(librsvg-2.0)
 BuildRequires:  pkgconfig(libxml-2.0) >= 2.0.0
+BuildRequires:  pkgconfig(libqpdf)} >= 11.0.0
 BuildRequires:  pkgconfig(libzip) >= 1.0.1
 BuildRequires:  pkgconfig(lua) >= 5.3
 BuildRequires:  pkgconfig(poppler-glib) >= 0.41.0
@@ -80,7 +78,6 @@ sed -i -e 's/xournalpp-wrapper/xournalpp/' desktop/com.github.xournalpp.xournalp
         -DENABLE_CPPTRACE=OFF \
         %{?_gtest: -DENABLE_GTEST=ON} \
         -DENABLE_MATHTEX=ON \
-        -DENABLE_QPDF=%{?with_qpdf:ON}%{!?with_qpdf:OFF} \
         -DGIT_VERSION=%{build_shortcommit}
 
 %cmake_build
