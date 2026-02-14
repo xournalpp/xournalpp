@@ -3,6 +3,7 @@
 #include <algorithm>  // for copy, max
 #include <cstddef>    // for size_t
 #include <iterator>   // for back_insert_iterator, back_...
+#include <mutex>      // for unique_lock
 
 #include "control/tools/EditSelection.h"  // for EditSelection
 #include "gui/MainWindow.h"               // for MainWindow

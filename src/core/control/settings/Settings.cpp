@@ -188,8 +188,7 @@ void Settings::loadDefault() {
 
     this->pageRerenderThreshold = 5.0;
     this->pdfPageCacheSize = 10;
-    this->preloadPagesBefore = 3U;
-    this->preloadPagesAfter = 5U;
+    this->maxTilingMemoryUsage = 1000U;  // = 1GB
     this->eagerPageCleanup = true;
 
     this->selectionBorderColor = Colors::red;
@@ -530,10 +529,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->pageRerenderThreshold = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pdfPageCacheSize")) == 0) {
         this->pdfPageCacheSize = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("preloadPagesBefore")) == 0) {
-        this->preloadPagesBefore = g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("preloadPagesAfter")) == 0) {
-        this->preloadPagesAfter = g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("maxTilingMemoryUsage")) == 0) {
+        this->maxTilingMemoryUsage = g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("eagerPageCleanup")) == 0) {
         this->eagerPageCleanup = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectionBorderColor")) == 0) {
@@ -1139,8 +1136,7 @@ void Settings::save() {
 
     SAVE_INT_PROP(pdfPageCacheSize);
     ATTACH_COMMENT("The count of rendered PDF pages which will be cached.");
-    SAVE_UINT_PROP(preloadPagesBefore);
-    SAVE_UINT_PROP(preloadPagesAfter);
+    SAVE_UINT_PROP(maxTilingMemoryUsage);
     SAVE_BOOL_PROP(eagerPageCleanup);
 
     const auto pageTemplate = pageTemplateSettings.toString();
@@ -2116,23 +2112,13 @@ void Settings::setPdfPageCacheSize(int size) {
     save();
 }
 
-auto Settings::getPreloadPagesBefore() const -> unsigned int { return this->preloadPagesBefore; }
+auto Settings::getMaxTilingMemoryUsage() const -> unsigned int { return this->maxTilingMemoryUsage; }
 
-void Settings::setPreloadPagesBefore(unsigned int n) {
-    if (this->preloadPagesBefore == n) {
+void Settings::setMaxTilingMemoryUsage(unsigned int n) {
+    if (this->maxTilingMemoryUsage == n) {
         return;
     }
-    this->preloadPagesBefore = n;
-    save();
-}
-
-auto Settings::getPreloadPagesAfter() const -> unsigned int { return this->preloadPagesAfter; }
-
-void Settings::setPreloadPagesAfter(unsigned int n) {
-    if (this->preloadPagesAfter == n) {
-        return;
-    }
-    this->preloadPagesAfter = n;
+    this->maxTilingMemoryUsage = n;
     save();
 }
 

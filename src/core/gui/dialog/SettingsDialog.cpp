@@ -618,10 +618,8 @@ void SettingsDialog::load() {
     loadCheckbox("cbShowFilepathInTitlebar", settings->isFilepathInTitlebarShown());
     loadCheckbox("cbShowPageNumberInTitlebar", settings->isPageNumberInTitlebarShown());
 
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(builder.get("preloadPagesBefore")),
-                              static_cast<double>(settings->getPreloadPagesBefore()));
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(builder.get("preloadPagesAfter")),
-                              static_cast<double>(settings->getPreloadPagesAfter()));
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(builder.get("maxTilingMemoryUsage")),
+                              static_cast<double>(settings->getMaxTilingMemoryUsage()));
     loadCheckbox("cbEagerPageCleanup", settings->isEagerPageCleanup());
 
     disableWithCheckbox("cbUnlimitedScrolling", "cbAddVerticalSpace");
@@ -909,10 +907,7 @@ void SettingsDialog::save() {
         int v = gtk_spin_button_get_value_as_int(btn);
         return v < 0 ? 0U : static_cast<unsigned int>(v);
     };
-    unsigned int preloadPagesBefore = spinAsUint(GTK_SPIN_BUTTON(builder.get("preloadPagesBefore")));
-    unsigned int preloadPagesAfter = spinAsUint(GTK_SPIN_BUTTON(builder.get("preloadPagesAfter")));
-    settings->setPreloadPagesAfter(preloadPagesAfter);
-    settings->setPreloadPagesBefore(preloadPagesBefore);
+    settings->setMaxTilingMemoryUsage(spinAsUint(GTK_SPIN_BUTTON(builder.get("maxTilingMemoryUsage"))));
     settings->setEagerPageCleanup(getCheckbox("cbEagerPageCleanup"));
 
     settings->setDefaultSaveName(

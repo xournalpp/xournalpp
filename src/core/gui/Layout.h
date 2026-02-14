@@ -33,6 +33,8 @@ template <typename T>
 class Rectangle;
 };  // namespace xoj::util
 
+template<typename T> class Interval;
+
 /**
  * @brief The Layout manager for the XournalWidget
  *
@@ -86,21 +88,14 @@ public:
 
 
     /// recalculate and resize Layout
-    void recalculate();
+    /// @return an interval of page numbers containing the index of every page with a buffer
+    Interval<size_t> recalculate();
 
     /**
      * Recompute the centering paddings (to center the content if the allocation is too big)
      * @params the size of the GtkAllocation of the GtkXournal instance - or -1 for computation from the GtkAdjustments
      */
     void recomputeCenteringPadding(int allocWidth = -1, int allocHeight = -1);
-
-    // Todo(Fabian): move to View:
-    /**
-     * Updates the current XojPageView. The XojPageView is selected based on
-     * the percentage of the visible area of the XojPageView relative
-     * to its total area.
-     */
-    void updateVisibility();
 
     /**
      * Return the pageview containing coordinates (in pixel coordinates)
@@ -164,7 +159,9 @@ protected:
     static void verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout);
 
 private:
-    void computePrecalculated();
+    /// Updates the precalculated data (upon relayout)
+    /// @return an interval of page numbers containing the index of every page with a buffer
+    Interval<size_t> computePrecalculated();
 
     void maybeAddLastPage(Layout* layout);
 
@@ -193,12 +190,6 @@ private:
 
     XournalView* view = nullptr;
     ScrollHandling* scrollHandling = nullptr;
-
-    // Todo(Fabian): move to ScrollHandling also it must not depend on Layout
-    double lastScrollHorizontal = -1;
-    double lastScrollVertical = -1;
-
-    std::vector<size_t> previouslyVisiblePages;  ///< indexes of pages with XojPageView::isVisible() == true
 
     PreCalculated pc{};
 

@@ -11,12 +11,13 @@
 
 #pragma once
 
-#include <cstddef>  // for size_t
-#include <limits>   // for numeric_limits
-#include <memory>   // for unique_ptr
-#include <string>   // for string
-#include <utility>  // for pair
-#include <vector>   // for vector
+#include <cstddef>   // for size_t
+#include <limits>    // for numeric_limits
+#include <memory>    // for unique_ptr
+#include <optional>  // for optional
+#include <string>    // for string
+#include <utility>   // for pair
+#include <vector>    // for vector
 
 #include <gdk/gdk.h>  // for GdkEventKey, GdkEventExpose
 #include <glib.h>     // for gboolean
@@ -27,6 +28,7 @@
 #include "model/DocumentChangeType.h"      // for DocumentChangeType
 #include "model/DocumentListener.h"        // for DocumentListener
 #include "pdf/base/XojPdfPage.h"           // for XojPdfRectangle
+#include "util/Interval.h"                 // for Interval
 #include "util/Util.h"                     // for npos
 
 class Control;
@@ -124,12 +126,6 @@ public:
     void recreatePdfCache();
 
     /**
-     * A pen action was detected now, therefore ignore touch events
-     * for a short time
-     */
-    void penActionDetected();
-
-    /**
      * @return Helper class for Touch specific fixes
      */
     HandRecognition* getHandRecognition() const;
@@ -158,14 +154,8 @@ public:
 
     void onSettingsChanged();
 
-private:
-    void fireZoomChanged();
-
-    std::pair<size_t, size_t> preloadPageBounds(size_t page, size_t maxPage);
-
-    static auto clearMemoryTimer(XournalView* widget) -> gboolean;
-
-    void cleanupBufferCache();
+    /// Called upon scrolling. Updates/flushes the views' buffers as needed and sets the most visible page as active
+    void updateVisibility();
 
 private:
     /**
@@ -189,10 +179,8 @@ private:
      */
     std::unique_ptr<RepaintHandler> repaintHandler;
 
-    /**
-     * Memory cleanup timeout
-     */
-    guint cleanupTimeout = std::numeric_limits<guint>::max();
+    ///< pages outside of this range of indices do not have a buffer
+    Interval<size_t> pagesMaybeWithBuffers{std::numeric_limits<size_t>::max(), std::numeric_limits<size_t>::lowest()};
 
-    friend class Layout;
+    std::optional<unsigned int> maxCacheUsageOverride = std::nullopt;
 };
