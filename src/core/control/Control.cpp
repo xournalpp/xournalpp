@@ -1,8 +1,10 @@
 #include "Control.h"
 
-#include <algorithm>  // for max
-#include <cstdlib>    // for size_t
-#include <exception>  // for exce...
+#include <algorithm>   // for max
+#include <cmath>       // for abs
+#include <cstddef>     // for ptrdiff_t
+#include <cstdlib>     // for size_t
+#include <exception>   // for exce...
 #include <functional>  // for bind
 #include <iterator>    // for end
 #include <memory>      // for make...
@@ -12,6 +14,7 @@
 #include <utility>     // for move
 
 #include "control/AudioController.h"                             // for Audi...
+#include "control/NavigationHistory.h"                           // for Navi...
 #include "control/ClipboardHandler.h"                            // for Clip...
 #include "control/CompassController.h"                           // for Comp...
 #include "control/RecentManager.h"                               // for Rece...
@@ -97,6 +100,7 @@
 #include "util/PathUtil.h"                                       // for clea...
 #include "util/PlaceholderString.h"                              // for Plac...
 #include "util/PopupWindowWrapper.h"                             // for PopupWindowWrapper
+#include "util/Rectangle.h"                                      // for Rectangle
 #include "util/Stacktrace.h"                                     // for Stac...
 #include "util/StringUtils.h"                                    // for char_cast
 #include "util/Util.h"                                           // for exec...
@@ -289,6 +293,7 @@ void Control::initWindow(MainWindow* win) {
     this->win = win;
 
     this->actionDB = std::make_unique<ActionDatabase>(this);
+    this->navHistory = std::make_unique<NavigationHistory>(this);
 
     selectTool(toolHandler->getToolType());
     this->sidebar = new Sidebar(win, this);
@@ -371,7 +376,14 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
     this->actionDB->enableAction(Action::GOTO_NEXT, current < count - 1);
     this->actionDB->enableAction(Action::GOTO_LAST, current < count - 1);
     this->actionDB->enableAction(Action::GOTO_NEXT_ANNOTATED_PAGE, current < count - 1);
+
+    if (navHistory) {
+        navHistory->prune();
+        navHistory->updateActions();
+    }
 }
+
+NavigationHistory* Control::getNavigationHistory() const { return navHistory.get(); }
 
 bool Control::toggleCompass() {
     return toggleGeometryTool<Compass, xoj::view::CompassView, CompassController, CompassInputHandler,
@@ -920,9 +932,9 @@ void Control::insertPage(const PageRef& page, size_t position, bool shouldScroll
 void Control::gotoPage() {
     auto popup = xoj::popup::PopupWindowWrapper<xoj::popup::GotoDialog>(
             this->gladeSearchPath, this->getCurrentPageNo(), this->doc->getPageCount(),
-            [scroll = this->scrollHandler](size_t pageNumber) {
+            [ctrl = this](size_t pageNumber) {
                 xoj_assert(pageNumber != 0);
-                scroll->scrollToPage(pageNumber - 1);
+                ctrl->scrollHandler->jumpToPage(pageNumber - 1);
             });
     popup.show(GTK_WINDOW(this->win->getWindow()));
 }
@@ -2146,6 +2158,10 @@ void Control::closeDocument() {
     // FIXME: there could potentially be a data race if a job requires the old document but runs after it is closed
     this->doc->clearDocument(true);
     this->doc->unlock();
+
+    if (navHistory) {
+        navHistory->reset();
+    }
 
     this->undoRedoChanged();
 }

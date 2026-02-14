@@ -35,6 +35,7 @@
 #include "undo/UndoRedoHandler.h"                   // for UndoRedoHandler (ptr only)
 
 #include "ClipboardHandler.h"  // for ClipboardListener
+#include "NavigationHistory.h" // for NavigationHistory
 #include "ToolHandler.h"       // for ToolListener
 #include "filesystem.h"        // for path
 
@@ -253,6 +254,11 @@ public:
      */
     void updatePageActions();
 
+    /**
+     * Get the navigation history handler.
+     */
+    NavigationHistory* getNavigationHistory() const;
+
     // selection handling
     void clearSelection();
 
@@ -396,6 +402,7 @@ protected:
     void saveImpl(bool saveAs, std::function<void(bool)> callback);
 
 private:
+
     /**
      * @brief Creates the specified geometric tool if it's not on the current page yet. Deletes it if it already exists.
      * @return true if a geometric tool was created
@@ -557,6 +564,8 @@ private:
 
     std::unique_ptr<GeometryTool> geometryTool;
     std::unique_ptr<GeometryToolController> geometryToolController;
+
+    std::unique_ptr<NavigationHistory> navHistory;
 
     /**
      * Manage all Xournal++ plugins
