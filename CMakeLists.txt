@@ -206,6 +206,36 @@ else ()
     message(STATUS "Disable GtkSourceView TeX syntax highlighting")
 endif ()
 
+option(ENABLE_FLOAT_FROM_CHARS "Use floating point std::from_chars for parsing doubles" ON)
+include(CheckCXXSourceCompiles)
+check_cxx_source_compiles([[
+    #include <charconv>
+    #include <string_view>
+    #include <system_error>
+    int main() {
+        const std::string_view sv = "7.381450";
+        double val{};
+        auto [ptr, ec] = std::from_chars(sv.begin(), sv.end(), val);
+        return ptr != sv.end() || ec != std::errc{};
+    }
+]] HAVE_FLOAT_FROM_CHARS)
+if (HAVE_FLOAT_FROM_CHARS)
+    if (ENABLE_FLOAT_FROM_CHARS)
+        message(STATUS "Enable floating point std::from_chars")
+    else()
+        message(WARNING "Floating point std::from_chars is disabled, but available. "
+                        "To avoid performance penalty, set ENABLE_FLOAT_FROM_CHARS to ON.")
+    endif()
+else()
+    if (ENABLE_FLOAT_FROM_CHARS)
+        message(SEND_ERROR "Floating point std::from_chars is not supported. Use a newer standard library, "
+                           "or set ENABLE_FLOAT_FROM_CHARS to OFF to fall back to g_ascii_strtod. "
+                           "std::from_chars offers higher performance and should be used whenever possible.")
+    else()
+        message(STATUS "Disable floating point std::from_chars")
+    endif()
+endif()
+
 # X11 link settings
 
 # Note: CMAKE_REQUIRED_FIND_PACKAGE is only supported by CMake >= 3.22

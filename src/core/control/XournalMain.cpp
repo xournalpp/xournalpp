@@ -156,7 +156,7 @@ void throwIfMissingPdfFileName(const LoadHandler& loader) {
     if (!loader.getMissingPdfFilename().empty()) {
         throw std::runtime_error{
                 FS(_F("The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.") %
-                   loader.getMissingPdfFilename())};
+                   loader.getMissingPdfFilename().u8string())};
     }
 }
 
@@ -164,9 +164,6 @@ auto loadDocumentOrExit(const fs::path& filename, ExportBackgroundType exportBac
     try {
         LoadHandler loader;
         auto doc = loader.loadDocument(filename);
-        if (doc == nullptr) {
-            throw std::runtime_error{loader.getLastError().c_str()};
-        }
 
         if (exportBackground != EXPORT_BACKGROUND_NONE) {
             throwIfMissingPdfFileName(loader);
