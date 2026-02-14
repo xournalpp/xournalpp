@@ -9,7 +9,7 @@
 
 Would you like to see Xournal++ in your own language? Translators are welcome to contribute to Xournal++.
 
-You can contribute translations on [Crowdin](https://crowdin.com/project/xournalpp/)
+You can contribute translations on [Crowdin](https://crowdin.com/project/xournalpp/).
 
 Interested in translating a new language? Discuss on [Gitter](https://gitter.im/xournalpp/xournalpp) or create a [new issue](https://github.com/xournalpp/xournalpp/issues) to unlock the language on Crowdin.
 
@@ -48,13 +48,6 @@ Xournal++ features:
 - Audio recording and playback alongside with handwritten notes
 - Multi language support (over 20 languages supported)
 - Plugins using Lua scripting
-
-## Mobile & web app
-
-From mid 2020 to May 2021, a Flutter-written mobile app for **Android** and **iOS** (unreleased) and the **web**
-has been developed, which supports the file format and most of the basic features of Xournal++.
-Unfortunately development has stalled and we have lost contact to the (single) developer. The web app is no longer available.
-You can still check out the [separate repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile).
 
 
 <table>
@@ -136,10 +129,10 @@ Here are a few under development that you can play with now:
 
 The official releases of Xournal++ can be found on the
 [Releases](https://github.com/xournalpp/xournalpp/releases) page. We provide
-binaries for Debian, Ubuntu, MacOS and Windows.
+binaries for Debian, Ubuntu, macOS and Windows.
 For other GNU/Linux distributions (or older/newer ones), we also provide an
 AppImage that is binary compatible with any distribution released around or
-after Ubuntu 22.04. For installing Xournal++ Mobile on handheld devices, please check out [Xournal++ Mobile's instructions](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#try-it-out)
+after Ubuntu 22.04. For installing Xournal++ Mobile on handheld devices, please check out the [Mobile & web app section](#mobile--web-app)
 
 **A note for Ubuntu/Debian users**: The official binaries that we provide are
 only compatible with the _specific version of Debian or Ubuntu_ indicated by the
@@ -285,21 +278,21 @@ Flatpak-related packaging issues should be reported there.
 
 ### Android
 
-Android is supported by Xournal++ Mobile. It can be downloaded either on the [Tags page](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile/-/tags) or [from Google Play](https://play.google.com/store/apps/details?id=online.xournal.mobile).
+Android is supported by Xournal++ Mobile. It can be downloaded [from F-Droid](https://f-droid.org/en/packages/online.xournal.mobile/) or you can [build](#building-the-mobile-app) it.
 
 
 ### iOS
 
-Unfortunately, the iOS app is not published yet in the Apple App Store. See [here](#mobile--web-app) to learn, why. Anyway, in the [Building section](#building) you can learn how to build an early preview.
+Unfortunately, the iOS app is not published yet in the Apple App Store. Read [this](#mobile--web-app) to learn, why. Anyway, in the [Building section](#building-the-mobile-app) you can learn how to build an early preview.
 
 ### Windows
 
 Official Windows releases are provided on the [Releases
 page](https://github.com/xournalpp/xournalpp/releases).
 
-### Mac OS X
+### macOS
 
-Mac OS X releases are provided on the [Releases
+Releases for macOS are provided on the [Releases
 page](https://github.com/xournalpp/xournalpp/releases).
 However, the app will refuse to run due to Apple policies (see https://github.com/xournalpp/xournalpp/issues/6185). Run the following commands one by one to make it work:
 ```
@@ -310,7 +303,7 @@ And for those who type it out, don't forget to type the hyphen (`-`) between `--
 
 **Notes:**
 
-- There have been compatibility problems with Mac OS X Catalina regarding both
+- There have been compatibility problems with macOS Catalina regarding both
   file permissions and stylus support
   ([#1772](https://github.com/xournalpp/xournalpp/issues/1772) and
   [#1757](https://github.com/xournalpp/xournalpp/issues/1757)). Unfortunately,
@@ -321,15 +314,13 @@ And for those who type it out, don't forget to type the hyphen (`-`) between `--
 
 ## Building
 
-[GNU/Linux Build](readme/LinuxBuild.md)
+We support building on three operating systems:
 
-[Mac Build](readme/MacBuild.md)
+- [Linux](readme/LinuxBuild.md)
+- [macOS](readme/MacBuild.md)
+- [Windows](readme/WindowsBuild.md)
+- [Windows on ARM (not officially supported)](readme/WindowsBuildArm.md)
 
-[Windows Build](readme/WindowsBuild.md)
-
-[Android Build](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#getting-started)
-
-[iOS Build](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#getting-started)
 
 ## File format
 
@@ -341,14 +332,17 @@ All new files will be saved as `.xopp`. If an `.xoj` file that was created by Xo
 
 **We are currently introducing a new file format that can efficiently store attached PDF files and other attachments internally. We will still allow for attachments that are linked to external files. Please refer to [#937](https://github.com/xournalpp/xournalpp/issues/937) for further details.**
 
-## Building
+## Mobile & web app
 
-We support building on three operating systems:
+From mid 2020 to May 2021, a Flutter-written mobile app for **Android** and **iOS** (unreleased) and the **web**
+has been developed, which supports the file format and most of the basic features of Xournal++.
+Unfortunately development has stalled and we have lost contact to the (single) developer. The web app is no longer available.
+You can still check out the [separate repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile) or install it from [F-Droid](https://f-droid.org/en/packages/online.xournal.mobile/).
 
-- [Linux](readme/LinuxBuild.md)
-- [MacOS](readme/MacBuild.md)
-- [Windows](readme/WindowsBuild.md)
-- [Windows on ARM (not officially supported)](readme/WindowsBuildArm.md)
+### Building the mobile app
+
+- [Android Build](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#getting-started)
+- [iOS Build](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#getting-started)
 
 ## Contributing
 
