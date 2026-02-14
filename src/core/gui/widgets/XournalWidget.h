@@ -67,6 +67,11 @@ struct _GtkXournal {
      * Input handling
      */
     InputContext* input = nullptr;
+
+    GtkAdjustment* vadjustment;
+    GtkAdjustment* hadjustment;
+    GtkScrollablePolicy hscroll_policy;
+    GtkScrollablePolicy vscroll_policy;
 };
 
 struct _GtkXournalClass {
@@ -75,12 +80,13 @@ struct _GtkXournalClass {
 
 GType gtk_xournal_get_type();
 
-GtkWidget* gtk_xournal_new(XournalView* view, InputContext* inputContext);
+GtkWidget* gtk_xournal_new(XournalView* view, InputContext* inputContext, GtkAdjustment* vadj, GtkAdjustment* hadj);
 
 Layout* gtk_xournal_get_layout(GtkWidget* widget);
 
 void gtk_xournal_scroll_relative(GtkWidget* widget, double x, double y);
 
+/// The given area is in Layout pixel-coordinates
 void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2, int y2);
 
 xoj::util::Rectangle<double>* gtk_xournal_get_visible_area(GtkWidget* widget, const XojPageView* p);
