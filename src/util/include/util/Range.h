@@ -39,7 +39,7 @@ public:
     void translate(double dx, double dy);
 
     [[nodiscard]] bool empty() const;
-    [[nodiscard]] bool isValid() const;
+    [[nodiscard]] bool isValid() const;  ///< A valid range is in particular not empty
     [[nodiscard]] bool contains(double x, double y) const;
     [[nodiscard]] bool contains(const xoj::util::Rectangle<double>& r) const;
 
