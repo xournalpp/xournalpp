@@ -9,7 +9,7 @@
 
 Would you like to see Xournal++ in your own language? Translators are welcome to contribute to Xournal++.
 
-You can contribute translations on [Crowdin](https://crowdin.com/project/xournalpp/)
+You can contribute translations on [Crowdin](https://crowdin.com/project/xournalpp/).
 
 Interested in translating a new language? Discuss on [Gitter](https://gitter.im/xournalpp/xournalpp) or create a [new issue](https://github.com/xournalpp/xournalpp/issues) to unlock the language on Crowdin.
 
@@ -129,7 +129,7 @@ Here are a few under development that you can play with now:
 
 The official releases of Xournal++ can be found on the
 [Releases](https://github.com/xournalpp/xournalpp/releases) page. We provide
-binaries for Debian, Ubuntu, MacOS and Windows.
+binaries for Debian, Ubuntu, macOS and Windows.
 For other GNU/Linux distributions (or older/newer ones), we also provide an
 AppImage that is binary compatible with any distribution released around or
 after Ubuntu 22.04. For installing Xournal++ Mobile on handheld devices, please check out the [Mobile & web app section](#mobile--web-app)
@@ -290,9 +290,9 @@ Unfortunately, the iOS app is not published yet in the Apple App Store. Read [th
 Official Windows releases are provided on the [Releases
 page](https://github.com/xournalpp/xournalpp/releases).
 
-### Mac OS X
+### macOS
 
-Mac OS X releases are provided on the [Releases
+Releases for macOS are provided on the [Releases
 page](https://github.com/xournalpp/xournalpp/releases).
 However, the app will refuse to run due to Apple policies (see https://github.com/xournalpp/xournalpp/issues/6185). Run the following commands one by one to make it work:
 ```
@@ -303,7 +303,7 @@ And for those who type it out, don't forget to type the hyphen (`-`) between `--
 
 **Notes:**
 
-- There have been compatibility problems with Mac OS X Catalina regarding both
+- There have been compatibility problems with macOS Catalina regarding both
   file permissions and stylus support
   ([#1772](https://github.com/xournalpp/xournalpp/issues/1772) and
   [#1757](https://github.com/xournalpp/xournalpp/issues/1757)). Unfortunately,
@@ -317,7 +317,7 @@ And for those who type it out, don't forget to type the hyphen (`-`) between `--
 We support building on three operating systems:
 
 - [Linux](readme/LinuxBuild.md)
-- [MacOS](readme/MacBuild.md)
+- [macOS](readme/MacBuild.md)
 - [Windows](readme/WindowsBuild.md)
 - [Windows on ARM (not officially supported)](readme/WindowsBuildArm.md)
 
