@@ -302,6 +302,12 @@ page](https://github.com/xournalpp/xournalpp/releases).
 
 Mac OS X releases are provided on the [Releases
 page](https://github.com/xournalpp/xournalpp/releases).
+However, the app will refuse to run due to Apple policies (see https://github.com/xournalpp/xournalpp/issues/6185). Run the following commands one by one to make it work:
+```
+xattr -c /Applications/Xournal++.app
+codesign --force --deep --sign - /Applications/Xournal++.app
+```
+And for those who type it out, don't forget to type the hyphen (`-`) between `--sign` and `/Applications/Xournal++.app`
 
 **Notes:**
 
