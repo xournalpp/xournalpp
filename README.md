@@ -51,11 +51,10 @@ Xournal++ features:
 
 ## Mobile & web app
 
-From mid 2020 to May 2021, a Flutter-written mobile app for **Android**, **Chrome OS** and **iOS** (unreleased) and the **web**
+From mid 2020 to May 2021, a Flutter-written mobile app for **Android** and **iOS** (unreleased) and the **web**
 has been developed, which supports the file format and most of the basic features of Xournal++.
 Unfortunately development has stalled and we have lost contact to the (single) developer. The web app is no longer available.
-You can still check out the [separate repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile) or
-[Get it on Google Play](https://play.google.com/store/apps/details?id=online.xournal.mobile)
+You can still check out the [separate repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile).
 
 
 <table>
