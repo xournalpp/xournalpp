@@ -6,6 +6,7 @@
 #include <functional>  // for bind
 #include <iterator>    // for end
 #include <memory>      // for make...
+#include <numeric>     // for accumulate
 #include <optional>    // for opti...
 #include <regex>       // for regex
 #include <string>      // for string
@@ -1539,11 +1540,63 @@ void Control::replaceDocument(std::unique_ptr<Document> doc, int scrollToPage) {
     fileLoaded(scrollToPage);
 }
 
+namespace {
+
+std::string formatErrorMessages(const std::vector<std::string>& errorMessages) {
+    // Deduplicate identical repeated messages
+    std::vector<std::string> deduplicated;
+
+    for (std::size_t i = 0; i < errorMessages.size();) {
+        std::size_t j = i + 1;
+        while (j < errorMessages.size() && errorMessages[j] == errorMessages[i]) {
+            ++j;
+        }
+        const std::size_t count = j - i;
+
+        deduplicated.emplace_back(StringUtils::markup_escape(errorMessages[i]));
+        if (count == 2) {
+            deduplicated.emplace_back(deduplicated.back());
+        } else if (count > 2) {
+            deduplicated.emplace_back(FS(_F("<i>Above error repeated {1} times</i>") % (count - 1)));
+        }
+
+        i = j;
+    }
+
+    // Remove middle messages if the list is still too long
+    constexpr std::size_t MAX_MESSAGE_COUNT = 12;
+    if (deduplicated.size() > MAX_MESSAGE_COUNT) {
+        constexpr std::size_t BEFORE = MAX_MESSAGE_COUNT / 2;
+        constexpr std::size_t AFTER = MAX_MESSAGE_COUNT - BEFORE - 1;  // reserve one line for the overflow indication
+        deduplicated[BEFORE] =
+                FS(_F("<i>&lt;{1} more lines of error messages&gt;</i>") % (deduplicated.size() - (BEFORE + AFTER)));
+        deduplicated.erase(deduplicated.begin() + BEFORE + 1, deduplicated.end() - AFTER);
+    }
+
+    if (deduplicated.empty()) {
+        return "";
+    }
+
+    // Todo(C++23): use std::views::join_with
+    std::size_t totalSize = deduplicated.size() - 1;  // for '\n' characters
+    for (auto& str: deduplicated) {
+        totalSize += str.size();
+    }
+    std::string result;
+    result.reserve(totalSize);
+    result.append(deduplicated.front());
+    for (auto it = deduplicated.begin() + 1; it != deduplicated.end(); ++it) {
+        result.append('\n' + *it);
+    }
+    return result;
+}
+}  // namespace
+
 void Control::openXoppFile(fs::path filepath, int scrollToPage, std::function<void(bool)> callback) {
     std::unique_ptr<Document> doc{};
     std::optional<MissingPdfData> missingPdf{};
     int fileVersion{};
-    std::string errorMessages{};
+    std::vector<std::string> errorMessages{};
 
     try {
         LoadHandler loadHandler(&errorMessages);
@@ -1556,10 +1609,10 @@ void Control::openXoppFile(fs::path filepath, int scrollToPage, std::function<vo
     } catch (std::exception& e) {
         g_warning("LoadHandler failed to load document: %s", e.what());
 
-        std::string msg = FS(_F("Error opening file \"{1}\".\n"
-                                "{2}\n{3}") %
-                             filepath.u8string() % errorMessages % e.what());
-        XojMsgBox::showErrorToUser(this->getGtkWindow(), msg);
+        std::string msg = FS(_F("Error opening file \"{1}\".\n\n"
+                                "<tt>{2}</tt>\n<b>{3}</b>") %
+                             filepath.u8string() % formatErrorMessages(errorMessages) % e.what());
+        XojMsgBox::showMarkupMessageToUser(this->getGtkWindow(), msg, "", GTK_MESSAGE_ERROR);
         callback(false);
         return;
     }
@@ -1573,9 +1626,9 @@ void Control::openXoppFile(fs::path filepath, int scrollToPage, std::function<vo
                     FS(_F("There were some errors while loading the file. Some information might have been lost. "
                           "Do not overwrite your old file unless you are sure everything you need was loaded "
                           "correctly.\n\n"
-                          "Error messages:{1}") %
-                       errorMessages);
-            XojMsgBox::showMessageToUser(ctrl->getGtkWindow(), msg, GTK_MESSAGE_WARNING);
+                          "Error messages:\n<tt>{1}</tt>") %
+                       formatErrorMessages(errorMessages));
+            XojMsgBox::showMarkupMessageToUser(ctrl->getGtkWindow(), msg, "", GTK_MESSAGE_WARNING);
         }
 
         if (missingPdf && (missingPdf->wasPdfAttached || !missingPdf->missingFileName.empty())) {

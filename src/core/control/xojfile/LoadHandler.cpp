@@ -63,7 +63,7 @@ struct zip_file_deleter {
 
 using zip_file_wrapper = std::unique_ptr<zip_file_t, zip_file_deleter>;
 
-LoadHandler::LoadHandler(std::string* errorMessages):
+LoadHandler::LoadHandler(std::vector<std::string>* errorMessages):
         parsingComplete(false),
         errorMessages(errorMessages),
         attachedPdfMissing(false),
@@ -446,7 +446,7 @@ void LoadHandler::finalizeTexImage() {
 void LoadHandler::logError(const std::string& error) {
     g_warning("LoadHandler: %s", error.c_str());
     if (this->errorMessages) {
-        this->errorMessages->append("\n" + error);
+        this->errorMessages->emplace_back(error);
     }
 }
 

@@ -47,14 +47,14 @@ class InputStream;
 class LoadHandler: private DocumentBuilderInterface {
 public:
     /**
-     * @param errorMessages Either `nullptr` or a pointer to a string to which
-     *                      error messages that may be relevant for the user
-     *                      will be written. Error messages written to this
-     *                      string are also printed as warnings to the console.
-     *                      The pointer must remain valid until the LoadHandler
-     *                      object is destroyed.
+     * @param errorMessages Either `nullptr` or a pointer to an empty vector of
+     *                      strings to which non-fatal error messages that may
+     *                      be relevant for the user will be appended. Error
+     *                      messages written to that vector are also printed as
+     *                      warnings to the console. The pointer must remain
+     *                      valid until the LoadHandler object is destroyed.
      */
-    LoadHandler(std::string* errorMessages = nullptr);
+    LoadHandler(std::vector<std::string>* errorMessages = nullptr);
     virtual ~LoadHandler();
 
 public:
@@ -169,7 +169,7 @@ private:
     fs::path xournalFilepath;
 
     bool parsingComplete;
-    std::string* errorMessages;
+    std::vector<std::string>* errorMessages;
 
     fs::path missingPdf;
     bool attachedPdfMissing;

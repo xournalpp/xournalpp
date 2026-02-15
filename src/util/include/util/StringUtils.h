@@ -29,6 +29,7 @@ std::string rtrim(std::string str);
 std::string trim(std::string str);
 bool iequals(const std::string& a, const std::string& b);
 std::string ellipsize(std::string_view sv, std::size_t max_width = 100);
+std::string markup_escape(std::string_view sv);
 
 /**
  * Wrapper around an std::u8string_view that only accepts compile-time instances

@@ -103,3 +103,10 @@ auto StringUtils::ellipsize(std::string_view sv, std::size_t max_width) -> std::
     str.append(ELLIPSIS_STR);
     return str;
 }
+
+auto StringUtils::markup_escape(std::string_view sv) -> std::string {
+    auto escaped = g_markup_escape_text(sv.data(), as_signed(sv.size()));
+    std::string str{escaped};
+    g_free(escaped);
+    return str;
+}
