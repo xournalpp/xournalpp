@@ -934,9 +934,9 @@ void Control::insertPage(const PageRef& page, size_t position, bool shouldScroll
 void Control::gotoPage() {
     auto popup = xoj::popup::PopupWindowWrapper<xoj::popup::GotoDialog>(
             this->gladeSearchPath, this->getCurrentPageNo(), this->doc->getPageCount(),
-            [ctrl = this](size_t pageNumber) {
+            [scroll = this->scrollHandler](size_t pageNumber) {
                 xoj_assert(pageNumber != 0);
-                ctrl->scrollHandler->jumpToPage(pageNumber - 1);
+                scroll->jumpToPage(pageNumber - 1);
             });
     popup.show(GTK_WINDOW(this->win->getWindow()));
 }

@@ -399,7 +399,6 @@ protected:
     void saveImpl(bool saveAs, std::function<void(bool)> callback);
 
 private:
-
     /**
      * @brief Creates the specified geometric tool if it's not on the current page yet. Deletes it if it already exists.
      * @return true if a geometric tool was created
