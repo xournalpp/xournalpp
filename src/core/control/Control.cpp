@@ -1605,7 +1605,6 @@ bool Control::openPdfFile(fs::path filepath, bool attachToDocument, int scrollTo
 bool Control::openPngFile(fs::path filepath, bool attachToDocument, int scrollToPage) {
     fs::path imagePath(filepath);
     this->getCursor()->setCursorBusy(true);
-    auto doc = std::make_unique<Document>(this);
     this->replaceDocument(createNewDocument(this, std::move(filepath), std::nullopt), -1);
 
     // Put a png file directly in the page
@@ -1654,9 +1653,20 @@ bool Control::openXoptFile(fs::path filepath) {
 
 void Control::openFileWithoutSavingTheCurrentDocument(fs::path filepath, bool attachToDocument, int scrollToPage,
                                                       std::function<void(bool)> callback) {
-    if (filepath.empty() || !fs::exists(filepath)) {
-        this->replaceDocument(createNewDocument(this, std::move(filepath), std::nullopt), -1);
+    if (filepath.empty()) {
+        this->replaceDocument(createNewDocument(this, fs::path(), std::nullopt), -1);
         callback(true);
+        return;
+    }
+
+    if (std::error_code err; !fs::exists(filepath, err)) {
+        std::string message =
+                err ? FS(_F("Failed to determine if path exists \"{1}\": {2}") % filepath.u8string() % err.message()) :
+                      FS(_F("That file does not exist:\n\"{1}\"") % filepath.u8string());
+        XojMsgBox::showErrorToUser(getGtkWindow(), message);
+        // We create an empty document to avoid ever being in a "no document" state.
+        this->replaceDocument(createNewDocument(this, fs::path(), std::nullopt), -1);
+        callback(false);
         return;
     }
 
