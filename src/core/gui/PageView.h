@@ -29,6 +29,7 @@
 #include "util/raii/CairoWrappers.h"  // for CairoSurfaceSPtr
 #include "view/Mask.h"                // for Mask
 #include "view/Repaintable.h"         // for Repaintable
+#include "view/Tiling.h"              // for Tiling
 
 #include "Layout.h"            // for Layout
 #include "LegacyRedrawable.h"  // for LegacyRedrawable
@@ -92,13 +93,20 @@ public:
 
     xoj::util::Rectangle<double> toWindowCoordinates(const xoj::util::Rectangle<double>& r) const override;
 
+    /**
+     * Computes which tiles must be cached and which cached tiles must be cleared. Triggers an asynchronous rendering of
+     * the missing tiles.
+     * @param centerOfVisibleArea The center of the visible area, in pixel coordinates relative to the page's upper-left
+     *                            corner. May be out of the page.
+     * @param mustRenderRadius Tiles whose center is closer (in pixels) to centerOfVisibleArea must be cached
+     * @param mustClearRadius Tiles whose center is further away to centerOfVisibleArea must be cleared
+     * @return true if the view should be considered as having a buffer (either it has one or it scheduled one)
+     */
+    bool updateVisibilityAndCache(xoj::util::Point<int> centerOfVisibleArea, double mustRenderRadius,
+                                  double mustClearRadius);
 
     void setSelected(bool selected);
-
-    void setIsVisible(bool visible);
-
     bool isSelected() const;
-    inline bool isVisible() const { return visible; }
 
     void endText();
 
@@ -122,16 +130,6 @@ public:
      * given point on the display
      */
     bool containsPoint(int x, int y, bool local = false) const;
-
-    /**
-     * Returns Row assigned in current layout
-     */
-    int getMappedRow() const;
-
-    /**
-     * Returns Column assigned in current layout
-     */
-    int getMappedCol() const;
 
     GdkRGBA getSelectionColor() override;
     bool hasBuffer() const;
@@ -159,22 +157,11 @@ public:
     int getDisplayHeight() const;
     double getDisplayHeightDouble() const;
 
-    /**
-     * Returns the x coordinate of this XojPageView with
-     * respect to the display
-     */
-    int getX() const override;
-
-    /**
-     * Returns the y coordinate of this XojPageView with
-     * respect to the display
-     */
-    int getY() const override;
+    /// Returns the position of the upper-left corner in Widget coordinates
+    xoj::util::Point<int> getPixelPosition() const;
 
     const TexImage* getSelectedTex() const;
     const Text* getSelectedText() const;
-
-    xoj::util::Rectangle<double> getRect() const;
 
 public:  // event handler
     bool onButtonPressEvent(const PositionInputData& pos);
@@ -198,6 +185,15 @@ public:  // event handler
     bool paintPage(cairo_t* cr, GdkRectangle* rect);
 
     void deleteLaserPointerHandler();
+
+    struct CacheSize {
+        size_t nbTiles;
+        size_t estMemUsage;  ///< in MB
+    };
+    CacheSize getCacheSize() const;
+
+    void setGridCoordinates(xoj::util::Point<int> pos);
+    xoj::util::Point<int> getGridCoordinates() const;
 
 public:  // listener
     void rectChanged(xoj::util::Rectangle<double>& rect) override;
@@ -230,11 +226,6 @@ private:
      * @returns true iff a URI link exists near/at (targetX, targetY) => a popover was shown
      */
     bool displayLinkPopover(std::shared_ptr<XojPdfPage> page, double targetX, double targetY);
-
-    void setX(int x);
-    void setY(int y);
-
-    void setMappedRowCol(int row, int col);  // row, column assigned by mapper during layout.
 
     /**
      * Shows the floating toolbox at the location of an input event
@@ -279,13 +270,11 @@ private:
      */
     Text* oldtext;
 
-    bool visible = true;
     bool selected = false;
-
-    xoj::view::Mask buffer;
-    std::mutex drawingMutex;
-
     bool inEraser = false;
+
+    xoj::view::Tiling tiles;
+    std::mutex drawingMutex;  ///< Protects tiles
 
     /**
      * Vertical Space
@@ -297,17 +286,17 @@ private:
      */
     std::unique_ptr<SearchControl> search;
 
-    std::mutex repaintRectMutex;
-    std::vector<xoj::util::Rectangle<double>> rerenderRects;
-    bool rerenderComplete = false;
-    bool sizeChanged = false;
+    std::mutex rerenderDataMutex;
+    struct {
+        std::vector<xoj::util::Rectangle<double>> rerenderRects;
+        xoj::view::Tiling::RetilingData retiling;
+        bool rerenderComplete = false;
+        bool sizeChanged = false;
+        xoj::util::Point<double> centerOfVisibleArea{};  ///< In Page coordinates. May be outside the page.
+        double mustRenderRadius;                         ///< In Page coordinates
+    } rerenderData;
 
-    int dispX{};  // position on display - set in Layout::layoutPages
-    int dispY{};
-
-
-    int mappedRow{};
-    int mappedCol{};
+    xoj::util::Point<int> gridCoordinates;  ///< Coordinates in the layout grid
 
     DeviceId currentSequenceDeviceId;
 
@@ -318,6 +307,4 @@ private:
     friend class SelectObject;
     friend class PlayObject;
     friend class PdfFloatingToolbox;
-    // only function allowed to setX(), setY(), setMappedRowCol():
-    friend void Layout::layoutPages(int width, int height);
 };

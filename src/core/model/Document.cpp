@@ -64,30 +64,18 @@ auto Document::freeTreeContentEntry(GtkTreeModel* treeModel, GtkTreePath* path, 
     return false;
 }
 
-void Document::lock() {
-    this->documentLock.lock();
+void Document::lock() { this->documentLock.lock(); }
 
-    //	if(tryLock()) {
-    //		fprintf(stderr, "Locked by\n");
-    //		Stacktrace::printStacktrace();
-    //		fprintf(stderr, "\n\n\n\n");
-    //	} else {
-    //		g_mutex_lock(&this->documentLock);
-    //	}
-}
-
-void Document::unlock() {
-    this->documentLock.unlock();
-
-    //	fprintf(stderr, "Unlocked by\n");
-    //	Stacktrace::printStacktrace();
-    //	fprintf(stderr, "\n\n\n\n");
-}
+void Document::unlock() { this->documentLock.unlock(); }
 
 /*
 ** Returns true when successfully acquiring lock.
 */
 auto Document::tryLock() -> bool { return this->documentLock.try_lock(); }
+
+void Document::lock_shared() { this->documentLock.lock_shared(); }
+void Document::unlock_shared() { this->documentLock.unlock_shared(); }
+
 
 void Document::clearDocument(bool destroy) {
     if (this->preview) {
