@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-03 17:43+0000\n"
-"PO-Revision-Date: 2026-02-08 04:58\n"
+"POT-Creation-Date: 2026-02-11 09:27+0000\n"
+"PO-Revision-Date: 2026-02-15 04:56\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -2107,17 +2107,26 @@ msgstr "Fehler beim Schließen der Datei: \"{1}\""
 msgid "Error code {1}"
 msgstr "Fehlercode {1}"
 
-#: ../src/util/PathUtil.cpp:310
+#: ../src/util/PathUtil.cpp:125
+msgid "Could not open file: {1}"
+msgstr ""
+
+#: ../src/util/PathUtil.cpp:132
+msgid "Error reading \"{1}\":\n"
+"{2}"
+msgstr ""
+
+#: ../src/util/PathUtil.cpp:316
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Datei konnte nicht geöffnet werden, Sie müssen sie manuell öffnen:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:425
+#: ../src/util/PathUtil.cpp:431
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:434
+#: ../src/util/PathUtil.cpp:440
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Ordner konnte nicht erstellt werden: {1}\n"

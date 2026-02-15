@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-03 17:43+0000\n"
-"PO-Revision-Date: 2026-02-08 04:57\n"
+"POT-Creation-Date: 2026-02-11 09:27+0000\n"
+"PO-Revision-Date: 2026-02-15 04:56\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -77,7 +77,9 @@ msgstr "Atzeko planoko PDFrekin"
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
-msgstr ""
+msgstr "Zure uneko dokumentuak ez du PDF {1} zenbakia duen orria.\n"
+"Orri hau txertatu nahi duzu?\n\n"
+"Aholkua: {2} hauta dezakezu PDF orria txertatzeko."
 
 #: ../src/core/control/Control.cpp:880
 msgid "No pdf pages available to append. You may need to reopen the document first."
@@ -414,34 +416,45 @@ msgid "Export layers progressively\n"
 "                                       This results in N export pages per page with N layers,\n"
 "                                       building up the layer stack progressively.\n"
 "                                       The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "Esportatu geruzak banaka\n"
+"                                       PDFak esportatzean, aurkeztu geruzak banan bana. \n"
+"                                       Honen ondorioz n geruzako orriak n esportazio sortuko ditu, \n"
+"                                       geruza pilaketa progresiboki sortuz. \n"
+"                                       Lortutako PDF fitxategia aurkezpen baterako erabil daiteke.\n"
 
 #: ../src/core/control/XournalMain.cpp:660
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Esportatu bakarrik tarteak zehazten dituen orriak (adib.  \"2-3,5,7-\")\n"
+"                                       Ez dago eraginik -p/--create-pdf edo -i/--create-img gabe"
 
 #: ../src/core/control/XournalMain.cpp:665
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Esportatu bakarrik tarteak zehazten dituen geruzak (adib.  \"2-3,5,7-\")\n"
+"                                       Ez dago eraginik -p/--create-pdf edo -i/--create-img gabe"
 
 #: ../src/core/control/XournalMain.cpp:669
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "Zehaztu DPIa PNGak esportatzean. Balio lehenetsia 300 da\n"
+"                                       Ez dago eraginik -i/--create-img=foo.png gabe"
 
 #: ../src/core/control/XournalMain.cpp:673
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "Zehaztu orriaren zabalera PNGak esportatzean\n"
+"                                       Ez dago eraginik -i/--create-img=foo.png gabe\n"
+"                                       Ez ikusi egingo da --export-png-dpi erabiltzen bada"
 
 #: ../src/core/control/XournalMain.cpp:678
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "Zehaztu orriaren altuera PNGak esportatzean\n"
+"                                       Ez dago eraginik -i/--create-img=foo.png gabe\n"
+"                                       Ez ikusi egingo da --export-png-dpi edo --export-png-width erabiltzen bada"
 
 #: ../src/core/control/XournalMain.cpp:686
 msgid "Advanced export options"
@@ -1043,19 +1056,19 @@ msgstr "Esportatu erregistroak"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:115
 msgid "Failed to parse external editor command: {1}"
-msgstr ""
+msgstr "Ezin izan da analizatu kanpoko editorearen komandoa: {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:131
 msgid "Could not spawn editor: {1}"
-msgstr ""
+msgstr "Ezin izan da abiarazi editorea: {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:162
 msgid "Could not wait for editor: {1}"
-msgstr ""
+msgstr "Ezin izan da editorearen zain egon: {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:171
 msgid "Editor exited with bad status {1}"
-msgstr ""
+msgstr "Editorea {1} egoera txarrean irten da"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:15
 msgid "All files"
@@ -1653,7 +1666,7 @@ msgstr "Angelu-garraiagailua"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Toggle Touch Drawing"
-msgstr ""
+msgstr "Aktibatu/desaktibatu ukipenaren bidez marraztea"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
@@ -1857,15 +1870,15 @@ msgstr "Dokumentua ez da kargatu! ({1}), {2}"
 
 #: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:171
 msgid "Error: "
-msgstr ""
+msgstr "Errorea: "
 
 #: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:175
 msgid "Unrecoverable error"
-msgstr ""
+msgstr "Errore berreskuraezina"
 
 #: ../src/core/model/Image.cpp:171 ../src/core/model/Image.cpp:175
 msgid "Failed to close image stream"
-msgstr ""
+msgstr "Ezin izan da itxi irudi-jarioa"
 
 #: ../src/core/model/XojPage.cpp:173
 msgid "Background"
@@ -1889,7 +1902,7 @@ msgstr "PDF orrien kopurua tartetik kanpo dago"
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:21
 msgid "Unknown pdf backend: {1}. Available backends are: {2}. Using default backend."
-msgstr ""
+msgstr "PDF motor ezezaguna: {1}. Motor eskuragarriak {2} dira. Lehenetsitako motorra erabiltzen."
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:39
 msgid "Default"
@@ -1897,7 +1910,7 @@ msgstr "Lehenetsita"
 
 #: ../src/core/pdf/base/QPdfExport.cpp:173
 msgid "Error with overlay or final export:"
-msgstr ""
+msgstr "Errorea gainjartzearekin edo azken esportazioarekin:"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:128
 msgid "Error while finalizing the PDF Cairo surface"
@@ -2008,7 +2021,7 @@ msgstr "Orriaren atzeko planoa aldatu da"
 
 #: ../src/core/undo/PageSizeChangeUndoAction.cpp:42
 msgid "Page size changed"
-msgstr ""
+msgstr "Orriaren tamaina aldatu da"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
@@ -2094,17 +2107,26 @@ msgstr "Errore bat gertatu da \"{1}\" fitxategia ixtean."
 msgid "Error code {1}"
 msgstr "Errore kodea {1}"
 
-#: ../src/util/PathUtil.cpp:310
+#: ../src/util/PathUtil.cpp:125
+msgid "Could not open file: {1}"
+msgstr ""
+
+#: ../src/util/PathUtil.cpp:132
+msgid "Error reading \"{1}\":\n"
+"{2}"
+msgstr ""
+
+#: ../src/util/PathUtil.cpp:316
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Ezin da fitxategia ireki. Eskuz egin behar duzu:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:425
+#: ../src/util/PathUtil.cpp:431
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:434
+#: ../src/util/PathUtil.cpp:440
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Ezin izan da karpeta sortu: {1}\n"
@@ -2116,7 +2138,7 @@ msgstr "{1} errorea sistemaren komandoa exekutatzean: {2}"
 
 #: ../src/util/XojMsgBox.cpp:186
 msgid "The file {1} already exists! Do you want to replace it?"
-msgstr ""
+msgstr "{1} fitxategia dagoeneko badago! Gainidatzi nahi duzu?"
 
 #: ../src/util/XojMsgBox.cpp:190
 msgid "Select another name"
@@ -2224,11 +2246,11 @@ msgstr "Kraskaduraren txostena"
 
 #: ../ui/crashDialog.glade:23
 msgid "Oops... Xournal++ encountered a fatal error"
-msgstr ""
+msgstr "Oops... Xournal++-k errore larria topatu du"
 
 #: ../ui/crashDialog.glade:39
 msgid "Please consider filling a bug report (see button below). Attach the following log to your report."
-msgstr ""
+msgstr "Gomendatzen dizugu akatsen txosten bat betetzea (ikus beheko botoia). Erantsi hurrengo erregistroa zure txostenari."
 
 #: ../ui/crashDialog.glade:56
 msgid "Your document has been saved in:"
@@ -2240,7 +2262,7 @@ msgstr "Exekuzio erregistroa:"
 
 #: ../ui/crashDialog.glade:140
 msgid "Open your web browser with a partially pre-filled bug report"
-msgstr ""
+msgstr "Ireki zure nabigatzailea partzialki betetako errore-txosten batekin"
 
 #: ../ui/crashDialog.glade:145
 msgid "Create a bug report"
@@ -2290,7 +2312,7 @@ msgstr "Stylus-a"
 #: ../ui/deviceTestingArea.glade:136 ../ui/deviceTestingArea.glade:190
 msgctxt "the tip of the stylus"
 msgid "Tip"
-msgstr ""
+msgstr "Aholkua"
 
 #: ../ui/deviceTestingArea.glade:150 ../ui/settings.glade:1987
 msgid "Button 1"
@@ -2312,7 +2334,7 @@ msgstr "Erabiltzen ari da"
 #: ../ui/deviceTestingArea.glade:388 ../ui/deviceTestingArea.glade:402
 msgctxt "stylus hover"
 msgid "Hover"
-msgstr ""
+msgstr "Pasa gainetik"
 
 #: ../ui/deviceTestingArea.glade:443
 msgid "Show logs"
@@ -2324,16 +2346,17 @@ msgstr "Esportatu arazketaren informazioa"
 
 #: ../ui/deviceTestingArea.glade:477
 msgid "To clear the logs, simply close and reopen the settings dialog"
-msgstr ""
+msgstr "Erregistroak garbitzeko, itxi eta ireki berriro ezarpenen elkarrizketa"
 
 #: ../ui/deviceTestingArea.glade:491
 msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
 "Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
-msgstr ""
+msgstr "Hautatu aukera hau puntaren seinalea pizten ez bada arkatza erabili eta bere botoietako bat sakatzean.\n\n"
+"Deshautatu aukera hau puntaren seinalea piztuta badago arkatza gainean dagoen bitartean (baina pantaila edo tableta ukitu gabe)."
 
 #: ../ui/deviceTestingArea.glade:500
 msgid "Emulate stylus tip contact on button press"
-msgstr ""
+msgstr "Emulatu arkatz-puntako kontaktua botoia sakatzean"
 
 #: ../ui/deviceTestingArea.glade:547
 msgid "<i>Change the device class below if your device is not correctly recognized (e.g. your active stylus shows up as touchscreen)</i>"
@@ -3730,30 +3753,33 @@ msgstr "Ez ezazu denbora eta luzera laburreko sarrerak marraztu, ondoz ondo ez b
 
 #: ../ui/settings.glade:5315
 msgid "Time limit (ms)"
-msgstr ""
+msgstr "Denbora-muga (ms)"
 
 #: ../ui/settings.glade:5327
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr ""
+msgstr "Denbora-muga: luzeago sakatzeak ez du eraginik izango\n"
+"<i>Gomendatuta: 150ms</i>"
 
 #: ../ui/settings.glade:5347
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr ""
+msgstr "Luzera-muga: urrunago sakatzeak ez du eraginik izango\n\n"
+"<i>Gomendatuta: 1 mm</i>"
 
 #: ../ui/settings.glade:5367
 msgid "Length limit (mm)"
-msgstr ""
+msgstr "Luzera-muga (mm)"
 
 #: ../ui/settings.glade:5378
 msgid "Frequency limit (ms)"
-msgstr ""
+msgstr "Maiztasun-muga (ms)"
 
 #: ../ui/settings.glade:5390
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
 "<i>Recommended: 500ms</i>"
-msgstr ""
+msgstr "Maiztasun-muga: sakatze baten ondoren denbora-tarte horretan gertatzen den sakatzeek ez dute eraginik izango\n\n"
+"<i>Gomendatuta: 500ms</i>"
 
 #: ../ui/settings.glade:5407
 msgid "Try to select object first."
@@ -4461,7 +4487,7 @@ msgstr "Grafikoa ertzarekin"
 
 #: ../resources-templates/pagetemplates.ini.in:47
 msgid "Graph with border (bold every 5th)"
-msgstr ""
+msgstr "Grafikoa ertzarekin (lodia 5ean behin)"
 
 #: ../resources-templates/toolbar.ini.in:50
 msgid "All Tools"
