@@ -28,7 +28,7 @@ std::string ltrim(std::string str);
 std::string rtrim(std::string str);
 std::string trim(std::string str);
 bool iequals(const std::string& a, const std::string& b);
-bool isNumber(const std::string& input);
+std::string ellipsize(std::string_view sv, std::size_t max_width = 100);
 
 /**
  * Wrapper around an std::u8string_view that only accepts compile-time instances

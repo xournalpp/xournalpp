@@ -21,7 +21,7 @@
 #include "util/Assert.h"                               // for xoj_assert
 #include "util/Color.h"                                // for Color
 #include "util/EnumIndexedArray.h"                     // for EnumIndexedArray
-#include "util/StringUtils.h"                          // for char_cast, SV_FMT, ...
+#include "util/StringUtils.h"                          // for ellipsize
 #include "util/i18n.h"                                 // for FS, _F, _
 #include "util/safe_casts.h"                           // for as_unsigned
 #include "util/utf8_view.h"                            // for xoj::util::utf8
@@ -71,8 +71,8 @@ static bool parseDouble(const char*& it, const char* end, double& value) {
     } catch (const std::domain_error& e) {
         g_warning("XML parser: Error parsing a double:\n"
                   "\"%s\"\n"
-                  "Remaining string: \"" SV_FMT "\"",
-                  e.what(), SV_ARG(std::string_view(it, end)));
+                  "Remaining string: \"%s\"",
+                  e.what(), StringUtils::ellipsize(std::string_view(it, end)).c_str());
         return false;
     }
 }
@@ -152,7 +152,8 @@ void XmlParser::parserText(GMarkupParseContext* context, const gchar* text, gsiz
     // Check for text at document root
     if (self->hierarchy.empty()) {
         if (!isAllWhitespace(textSV)) {
-            self->builder.logError(FS(_F("Ignoring unexpected text at document root: \"{1}\"") % textSV));
+            self->builder.logError(
+                    FS(_F("Ignoring unexpected text at document root: \"{1}\"") % StringUtils::ellipsize(textSV)));
         }
         return;
     }
@@ -164,8 +165,10 @@ void XmlParser::parserText(GMarkupParseContext* context, const gchar* text, gsiz
         // special instances starting with '<', which we do not expect. This means
         // we always get the whole text in a single callback.
         (self->*parsingTable[tagType].text)(textSV);
-    } else if (tagType != TagType::TITLE && tagType != TagType::PREVIEW && !isAllWhitespace(textSV)) {
-        self->builder.logError(FS(_F("Unexpected text in {1} node: \"{2}\"") % TAG_NAMES[tagType] % textSV));
+    } else if (tagType != TagType::TITLE && tagType != TagType::PREVIEW && tagType != TagType::UNKNOWN &&
+               !isAllWhitespace(textSV)) {
+        self->builder.logError(
+                FS(_F("Unexpected text in {1} node: \"{2}\"") % TAG_NAMES[tagType] % StringUtils::ellipsize(textSV)));
     }
 }
 
