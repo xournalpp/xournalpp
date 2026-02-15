@@ -70,5 +70,4 @@ private:
     Control* control;
     std::vector<NavState> history;
     size_t historyIdx = 0;
-    bool restoring = false;
 };

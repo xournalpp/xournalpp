@@ -94,7 +94,6 @@ void NavigationHistory::prune() {
 void NavigationHistory::reset() {
     history.clear();
     historyIdx = 0;
-    restoring = false;
     updateActions();
 }
 
@@ -109,10 +108,6 @@ void NavigationHistory::updateActions() {
 }
 
 void NavigationHistory::recordNavPoint() {
-    if (restoring) {
-        return;
-    }
-
     NavState state = captureState();
     if (!state.page) {
         return;
@@ -179,10 +174,6 @@ bool NavigationHistory::scrollToState(const NavState& state) {
 }
 
 void NavigationHistory::navigate(int dir) {
-    if (restoring) {
-        return;
-    }
-
     prune();
 
     if (!canNavigate(dir)) {
@@ -202,13 +193,6 @@ void NavigationHistory::navigate(int dir) {
     }
 
     historyIdx = static_cast<size_t>(static_cast<ptrdiff_t>(historyIdx) + dir);
-
-    struct RestoringGuard {
-        NavigationHistory* nav;
-        bool prev;
-        explicit RestoringGuard(NavigationHistory* n): nav(n), prev(n->restoring) { nav->restoring = true; }
-        ~RestoringGuard() { nav->restoring = prev; }
-    } guard(this);
 
     if (!scrollToState(history[historyIdx])) {
         prune();
