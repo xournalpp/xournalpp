@@ -62,10 +62,8 @@ bool NavigationHistory::isSameState(const NavState& a, const NavState& b) const 
     }
 
     constexpr double EPSILON = 0.5;
-    return std::abs(a.rect->x - b.rect->x) < EPSILON &&
-           std::abs(a.rect->y - b.rect->y) < EPSILON &&
-           std::abs(a.rect->width - b.rect->width) < EPSILON &&
-           std::abs(a.rect->height - b.rect->height) < EPSILON;
+    return std::abs(a.rect->x - b.rect->x) < EPSILON && std::abs(a.rect->y - b.rect->y) < EPSILON &&
+           std::abs(a.rect->width - b.rect->width) < EPSILON && std::abs(a.rect->height - b.rect->height) < EPSILON;
 }
 
 void NavigationHistory::prune() {

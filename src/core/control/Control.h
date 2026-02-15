@@ -35,7 +35,7 @@
 #include "undo/UndoRedoHandler.h"                   // for UndoRedoHandler (ptr only)
 
 #include "ClipboardHandler.h"  // for ClipboardListener
-#include "NavigationHistory.h" // for NavigationHistory
+#include "NavigationHistory.h"  // for NavigationHistory
 #include "ToolHandler.h"       // for ToolListener
 #include "filesystem.h"        // for path
 
