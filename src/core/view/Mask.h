@@ -27,6 +27,11 @@ namespace xoj::view {
 class Mask {
 public:
     Mask() = default;
+    Mask(const Mask&) = delete;
+    Mask& operator=(const Mask&) = delete;
+    Mask(Mask&&) = default;
+    Mask& operator=(Mask&&) = default;
+    ~Mask() = default;
     /**
      * @brief Create a mask tailored for the specified target
      * @param target A cairo surface similar to that on which the mask will be used
@@ -78,6 +83,9 @@ public:
     void reset();
 
     inline double getZoom() const { return zoom; }
+
+    /// Get the number of bytes used by the image
+    size_t getMemorySize() const;
 
 private:
     template <typename DPIInfoType>

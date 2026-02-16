@@ -28,6 +28,7 @@
 #include "model/DocumentListener.h"        // for DocumentListener
 #include "pdf/base/XojPdfPage.h"           // for XojPdfRectangle
 #include "util/Util.h"                     // for npos
+#include "util/raii/GSourceURef.h"
 
 class Control;
 class XournalppCursor;
@@ -35,7 +36,6 @@ class Document;
 class EditSelection;
 class XojPageView;
 class XojPdfRectangle;
-class PdfCache;
 class RepaintHandler;
 class ScrollHandling;
 class TextEditor;
@@ -45,10 +45,13 @@ namespace xoj::util {
 template <class T>
 class Rectangle;
 }  // namespace xoj::util
+namespace xoj::view {
+class QuadPdfCache;
+}
 
 class XournalView: public DocumentListener, public ZoomListener {
 public:
-    XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling);
+    XournalView(GtkScrolledWindow* parent, Control* control);
     ~XournalView() override;
 
 public:
@@ -106,7 +109,7 @@ public:
     double getZoom() const;
     int getDpiScaleFactor() const;
     Document* getDocument() const;
-    PdfCache* getCache() const;
+    xoj::view::QuadPdfCache* getCache() const;
     RepaintHandler* getRepaintHandler() const;
     GtkWidget* getWidget() const;
     XournalppCursor* getCursor() const;
@@ -122,12 +125,6 @@ public:
      * Recreate the PDF cache, for example after the underlying PDF file has changed
      */
     void recreatePdfCache();
-
-    /**
-     * A pen action was detected now, therefore ignore touch events
-     * for a short time
-     */
-    void penActionDetected();
 
     /**
      * @return Helper class for Touch specific fixes
@@ -158,11 +155,10 @@ public:
 
     void onSettingsChanged();
 
+    void registerViewHasBuffer(XojPageView* view);
+    void viewNoLongerHasBuffer(const XojPageView* view);
+
 private:
-    void fireZoomChanged();
-
-    std::pair<size_t, size_t> preloadPageBounds(size_t page, size_t maxPage);
-
     static auto clearMemoryTimer(XournalView* widget) -> gboolean;
 
     void cleanupBufferCache();
@@ -171,10 +167,12 @@ private:
     /**
      * Scrollbars
      */
-    ScrollHandling* scrollHandling = nullptr;
+    std::unique_ptr<ScrollHandling> scrollHandling;
 
     GtkWidget* widget = nullptr;
 
+    // Keep above viewPages to ensure it is deleted after the views
+    std::vector<XojPageView*> viewsWithBuffer;  ///< those views of viewPages which have a non-empty buffer
     std::vector<std::unique_ptr<XojPageView>> viewPages;
 
     Control* control = nullptr;
@@ -182,7 +180,7 @@ private:
     size_t currentPage = 0;
     size_t lastSelectedPage = npos;
 
-    std::unique_ptr<PdfCache> cache;
+    std::unique_ptr<xoj::view::QuadPdfCache> pdfPagesPixelCache;
 
     /**
      * Handler for rerendering pages / repainting pages
@@ -192,7 +190,7 @@ private:
     /**
      * Memory cleanup timeout
      */
-    guint cleanupTimeout = std::numeric_limits<guint>::max();
+    xoj::util::GSourceURef cleanupTimeout;
 
     friend class Layout;
 };

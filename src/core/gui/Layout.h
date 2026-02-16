@@ -100,7 +100,7 @@ public:
      * the percentage of the visible area of the XojPageView relative
      * to its total area.
      */
-    void updateVisibility();
+    void selectMostVisiblePage();
 
     /**
      * Return the pageview containing coordinates (in pixel coordinates)
@@ -123,9 +123,6 @@ public:
 
     /// Get the zoom-dependent padding, added to center the page when zoomed out
     xoj::util::Point<int> getCenteringPadding() const;
-
-    /// Returns a list of the indices of the visible pages
-    std::vector<size_t> getVisiblePages() const;
 
     xoj::util::Point<int> getPixelCoordinatesOfEntry(xoj::util::Point<int> gridCoords) const;
     xoj::util::Point<int> getPixelCoordinatesOfEntry(size_t n) const;
@@ -193,12 +190,6 @@ private:
 
     XournalView* view = nullptr;
     ScrollHandling* scrollHandling = nullptr;
-
-    // Todo(Fabian): move to ScrollHandling also it must not depend on Layout
-    double lastScrollHorizontal = -1;
-    double lastScrollVertical = -1;
-
-    std::vector<size_t> previouslyVisiblePages;  ///< indexes of pages with XojPageView::isVisible() == true
 
     PreCalculated pc{};
 

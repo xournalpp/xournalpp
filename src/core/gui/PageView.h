@@ -27,7 +27,7 @@
 #include "model/PageRef.h"            // for PageRef
 #include "util/Rectangle.h"           // for Rectangle
 #include "util/raii/CairoWrappers.h"  // for CairoSurfaceSPtr
-#include "view/Mask.h"                // for Mask
+#include "view/QuadCache.h"           // for QuadCache
 #include "view/Repaintable.h"         // for Repaintable
 
 #include "Layout.h"            // for Layout
@@ -65,6 +65,7 @@ public:
     void addOverlayView(std::unique_ptr<xoj::view::OverlayView>);
     void rerenderPage(bool sizeChanged = false) override;
     void rerenderRect(double x, double y, double width, double height) override;
+    void scheduleMakeTile(const Range& area, unsigned depth);
 
     void repaintPage() const override;
     void repaintArea(double x1, double y1, double x2, double y2) const override;
@@ -94,11 +95,7 @@ public:
 
 
     void setSelected(bool selected);
-
-    void setIsVisible(bool visible);
-
     bool isSelected() const;
-    inline bool isVisible() const { return visible; }
 
     void endText();
 
@@ -115,7 +112,14 @@ public:
 
     bool actionDelete();
 
-    void deleteViewBuffer() override;
+    struct ProtectedCache {
+        ProtectedCache(xoj::view::QuadCache& cache, std::mutex& m): guard(m), cache(cache) {}
+        std::lock_guard<std::mutex> guard;  ///< Lock of the drawingMutex
+        xoj::view::QuadCache& cache;
+        xoj::view::QuadCache* operator->() { return &cache; }
+    };
+
+    inline ProtectedCache getCache() { return ProtectedCache(pixelCache, drawingMutex); }
 
     /**
      * Returns whether this PageView contains the
@@ -256,10 +260,9 @@ private:
      */
     Text* oldtext;
 
-    bool visible = false;
     bool selected = false;
 
-    xoj::view::Mask buffer;
+    xoj::view::QuadCache pixelCache;
     std::mutex drawingMutex;
 
     bool inEraser = false;
@@ -276,8 +279,7 @@ private:
 
     std::mutex repaintRectMutex;
     std::vector<xoj::util::Rectangle<double>> rerenderRects;
-    bool rerenderComplete = false;
-    bool sizeChanged = false;
+    std::vector<xoj::view::QuadCache::TileInfo> tilesToRender;
 
     xoj::util::Point<int> gridCoordinates;  ///< Coordinates in the layout grid
 

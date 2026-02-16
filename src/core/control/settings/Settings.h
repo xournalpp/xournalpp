@@ -404,14 +404,10 @@ public:
     int getPdfPageCacheSize() const;
     [[maybe_unused]] void setPdfPageCacheSize(int size);
 
-    unsigned int getPreloadPagesBefore() const;
-    void setPreloadPagesBefore(unsigned int n);
-
-    unsigned int getPreloadPagesAfter() const;
-    void setPreloadPagesAfter(unsigned int n);
-
-    bool isEagerPageCleanup() const;
-    void setEagerPageCleanup(bool b);
+    /// In MB
+    unsigned int getMaxViewBufferMemoryUsage() const;
+    /// in MB
+    void setMaxViewBufferMemoryUsage(unsigned int n);
 
     PageTemplateSettings const& getPageTemplateSettings() const;
     void setPageTemplateSettings(const PageTemplateSettings& pageTemplateSettings);
@@ -1153,20 +1149,8 @@ private:
      */
     std::string preferredLocale;
 
-    /**
-     * The number of pages to pre-load before the current page.
-     */
-    unsigned int preloadPagesBefore{};
-
-    /**
-     * The number of pages to pre-load after the current page.
-     */
-    unsigned int preloadPagesAfter{};
-
-    /**
-     * Whether to evict from the page buffer cache when scrolling.
-     */
-    bool eagerPageCleanup{};
+    /// Maximal RAM usage for rendered pages buffers, in MB
+    unsigned int maxViewBufferMemoryUsage{};
 
     /**
      * Stabilizer related settings

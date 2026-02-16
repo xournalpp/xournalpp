@@ -17,10 +17,8 @@
 
 #include "BackgroundView.h"  // for BackgroundView
 
+namespace xoj::view {
 class PdfCache;
-
-namespace xoj {
-namespace view {
 
 class PdfBackgroundView: public BackgroundView {
 public:
@@ -37,5 +35,4 @@ private:
     PdfCache* pdfCache = nullptr;
 };
 
-};  // namespace view
-};  // namespace xoj
+};  // namespace xoj::view

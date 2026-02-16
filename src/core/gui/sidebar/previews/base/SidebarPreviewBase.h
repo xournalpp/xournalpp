@@ -22,7 +22,10 @@
 #include "util/Util.h"
 #include "util/raii/GObjectSPtr.h"
 
+namespace xoj::view {
+class FlatPdfCache;
 class PdfCache;
+}  // namespace xoj::view
 class SidebarLayout;
 class SidebarPreviewBaseEntry;
 class Control;
@@ -64,7 +67,7 @@ public:
     /**
      * Gets the PDF cache for preview rendering
      */
-    PdfCache* getCache();
+    xoj::view::PdfCache* getCache();
 
 public:
     // DocumentListener interface (only the part handled by SidebarPreviewBase)
@@ -99,7 +102,7 @@ private:
     /**
      * For preview rendering
      */
-    std::unique_ptr<PdfCache> cache;
+    std::unique_ptr<xoj::view::FlatPdfCache> cache;
 
 protected:
     /// The scrollable area with the miniatures

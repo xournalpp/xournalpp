@@ -147,6 +147,15 @@ void Mask::wipeRange(const Range& rg) {
 
 void Mask::reset() { cr.reset(); }
 
+size_t Mask::getMemorySize() const {
+    xoj_assert(isInitialized());
+    auto* surf = cairo_get_target(cr.get());
+    return strict_cast<size_t>(cairo_image_surface_get_width(surf)) *
+           strict_cast<size_t>(cairo_image_surface_get_height(surf)) *
+           (cairo_image_surface_get_format(surf) == CAIRO_FORMAT_A8 ? 1 : 4);
+}
+
+
 #ifdef DEBUG_MASKS
 namespace {
 auto getSurfaceTypeName(cairo_surface_t* surf) -> std::string {

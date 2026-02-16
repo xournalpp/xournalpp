@@ -78,7 +78,4 @@ public:
      * Return the GTK selection color
      */
     virtual GdkRGBA getSelectionColor() = 0;
-
-
-    virtual void deleteViewBuffer() = 0;
 };

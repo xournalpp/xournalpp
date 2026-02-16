@@ -5,14 +5,14 @@
 #include <glib-object.h>  // for g_object_ref, G_CALLBACK, g_sig...
 #include <glib.h>         // for g_idle_add
 
-#include "control/Control.h"   // for Control
-#include "control/PdfCache.h"  // for PdfCache
-#include "gui/Builder.h"       // for Builder
-#include "gui/MainWindow.h"    // for MainWindow
-#include "model/Document.h"    // for Document
-#include "util/Util.h"         // for npos
-#include "util/glib_casts.h"   // for wrap_for_once_v
+#include "control/Control.h"  // for Control
+#include "gui/Builder.h"      // for Builder
+#include "gui/MainWindow.h"   // for MainWindow
+#include "model/Document.h"   // for Document
+#include "util/Util.h"        // for npos
+#include "util/glib_casts.h"  // for wrap_for_once_v
 #include "util/gtk4_helper.h"
+#include "view/FlatPdfCache.h"  // for FlatPdfCache
 
 #include "SidebarLayout.h"            // for SidebarLayout
 #include "SidebarPreviewBaseEntry.h"  // for SidebarPreviewBaseEntry
@@ -33,7 +33,7 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control, const char* menuId, con
     Document* doc = this->control->getDocument();
     doc->lock_shared();
     if (doc->getPdfPageCount() != 0) {
-        this->cache = std::make_unique<PdfCache>(doc->getPdfDocument(), control->getSettings());
+        this->cache = std::make_unique<xoj::view::FlatPdfCache>(doc->getPdfDocument());
     }
     doc->unlock_shared();
 
@@ -80,7 +80,7 @@ void SidebarPreviewBase::newWidth(double width) {
 
 auto SidebarPreviewBase::getZoom() const -> double { return this->zoom; }
 
-auto SidebarPreviewBase::getCache() -> PdfCache* { return this->cache.get(); }
+auto SidebarPreviewBase::getCache() -> xoj::view::PdfCache* { return this->cache.get(); }
 
 void SidebarPreviewBase::layout() {
     if (enabled) {
@@ -99,7 +99,7 @@ void SidebarPreviewBase::documentChanged(DocumentChangeType type) {
         Document* doc = control->getDocument();
         doc->lock_shared();
         if (doc->getPdfPageCount() != 0) {
-            this->cache = std::make_unique<PdfCache>(doc->getPdfDocument(), control->getSettings());
+            this->cache = std::make_unique<xoj::view::FlatPdfCache>(doc->getPdfDocument());
         }
         doc->unlock_shared();
         updatePreviews();

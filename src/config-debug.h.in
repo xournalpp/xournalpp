@@ -44,9 +44,14 @@
 #cmakedefine DEBUG_SHOW_PAINT_BOUNDS
 
 /**
- * Draw the mask in StrokeView
+ * Draw the masks and print info in terminal
  */
 #cmakedefine DEBUG_MASKS
+
+/**
+ * Draw the quad-tree in the main view
+ */
+#cmakedefine DEBUG_QUAD_TREE
 
 /**
  * Print info on draw requests and calls

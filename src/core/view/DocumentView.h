@@ -17,10 +17,10 @@
 #include "util/ElementRange.h"
 #include "view/background/BackgroundFlags.h"
 
-class PdfCache;
 
 namespace xoj::view {
 struct BackgroundFlags;
+class PdfCache;
 
 class DocumentView {
 public:

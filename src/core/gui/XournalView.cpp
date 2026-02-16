@@ -9,40 +9,41 @@
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_Page_Down
 #include <glib-object.h>     // for g_object_ref_sink
 
-#include "control/Control.h"                     // for Control
-#include "control/PdfCache.h"                    // for PdfCache
-#include "control/ScrollHandler.h"               // for ScrollHandler
-#include "control/ToolHandler.h"                 // for ToolHandler
-#include "control/actions/ActionDatabase.h"      // for ActionDatabase
-#include "control/jobs/XournalScheduler.h"       // for XournalScheduler
-#include "control/settings/MetadataManager.h"    // for MetadataManager
-#include "control/settings/Settings.h"           // for Settings
-#include "control/tools/CursorSelectionType.h"   // for CURSOR_SELECTION_NONE
-#include "control/tools/EditSelection.h"         // for EditSelection
-#include "control/zoom/ZoomControl.h"            // for ZoomControl
-#include "gui/MainWindow.h"                      // for MainWindow
-#include "gui/PdfFloatingToolbox.h"              // for PdfFloatingToolbox
+#include "control/Control.h"                            // for Control
+#include "control/ScrollHandler.h"                      // for ScrollHandler
+#include "control/ToolHandler.h"                        // for ToolHandler
+#include "control/actions/ActionDatabase.h"             // for ActionDatabase
+#include "control/jobs/XournalScheduler.h"              // for XournalScheduler
+#include "control/settings/MetadataManager.h"           // for MetadataManager
+#include "control/settings/Settings.h"                  // for Settings
+#include "control/tools/CursorSelectionType.h"          // for CURSOR_SELECTION_NONE
+#include "control/tools/EditSelection.h"                // for EditSelection
+#include "control/zoom/ZoomControl.h"                   // for ZoomControl
+#include "gui/MainWindow.h"                             // for MainWindow
+#include "gui/PdfFloatingToolbox.h"                     // for PdfFloatingToolbox
 #include "gui/inputdevices/GeometryToolInputHandler.h"  // for GeometryToolInputHandler
-#include "gui/inputdevices/HandRecognition.h"    // for HandRecognition
-#include "gui/inputdevices/InputContext.h"       // for InputContext
-#include "gui/scroll/ScrollHandling.h"           // for ScrollHandling
-#include "gui/toolbarMenubar/ColorToolItem.h"    // for ColorToolItem
-#include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
-#include "gui/widgets/XournalWidget.h"           // for gtk_xournal_get_layout
-#include "model/Document.h"                      // for Document
-#include "model/Element.h"                       // for Element, ELEMENT_STROKE
-#include "model/PageRef.h"                       // for PageRef
-#include "model/Stroke.h"                        // for Stroke, StrokeTool::E...
-#include "model/XojPage.h"                       // for XojPage
-#include "undo/DeleteUndoAction.h"               // for DeleteUndoAction
-#include "undo/UndoRedoHandler.h"                // for UndoRedoHandler
-#include "util/Assert.h"                         // for xoj_assert
-#include "util/Point.h"                          // for Point
-#include "util/Rectangle.h"                      // for Rectangle
-#include "util/Util.h"                           // for npos
-#include "util/glib_casts.h"                     // for wrap_v
-#include "util/gtk4_helper.h"                    // for gtk_scrolled_window_set_child
-#include "util/safe_casts.h"                     // for round_cast
+#include "gui/inputdevices/HandRecognition.h"           // for HandRecognition
+#include "gui/inputdevices/InputContext.h"              // for InputContext
+#include "gui/scroll/ScrollHandling.h"                  // for ScrollHandling
+#include "gui/toolbarMenubar/ColorToolItem.h"           // for ColorToolItem
+#include "gui/toolbarMenubar/ToolMenuHandler.h"         // for ToolMenuHandler
+#include "gui/widgets/XournalWidget.h"                  // for gtk_xournal_get_layout
+#include "model/Document.h"                             // for Document
+#include "model/Element.h"                              // for Element, ELEMENT_STROKE
+#include "model/PageRef.h"                              // for PageRef
+#include "model/Stroke.h"                               // for Stroke, StrokeTool::E...
+#include "model/XojPage.h"                              // for XojPage
+#include "undo/DeleteUndoAction.h"                      // for DeleteUndoAction
+#include "undo/UndoRedoHandler.h"                       // for UndoRedoHandler
+#include "util/Assert.h"                                // for xoj_assert
+#include "util/Point.h"                                 // for Point
+#include "util/Rectangle.h"                             // for Rectangle
+#include "util/Util.h"                                  // for npos
+#include "util/glib_casts.h"                            // for wrap_v
+#include "util/gtk4_helper.h"                           // for gtk_scrolled_window_set_child
+#include "util/safe_casts.h"                            // for round_cast
+#include "view/QuadCache.h"
+#include "view/QuadPdfCache.h"  // for QuadPdfCache
 
 #include "Layout.h"           // for Layout
 #include "PageView.h"         // for XojPageView
@@ -55,32 +56,24 @@ constexpr int REGULAR_MOVE_AMOUNT = 3;
 constexpr int SMALL_MOVE_AMOUNT = 1;
 constexpr int LARGE_MOVE_AMOUNT = 10;
 
-std::pair<size_t, size_t> XournalView::preloadPageBounds(size_t page, size_t maxPage) {
-    const size_t preloadBefore = this->control->getSettings()->getPreloadPagesBefore();
-    const size_t preloadAfter = this->control->getSettings()->getPreloadPagesAfter();
-    const size_t lower = page > preloadBefore ? page - preloadBefore : 0;
-    const size_t upper = std::min(maxPage, page + preloadAfter);
-    return {lower, upper};
-}
-
-XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling):
-        scrollHandling(scrollHandling), control(control) {
+XournalView::XournalView(GtkScrolledWindow* parent, Control* control):
+        scrollHandling(std::make_unique<ScrollHandling>(parent)), control(control) {
     Document* doc = control->getDocument();
     doc->lock_shared();
     if (doc->getPdfPageCount() != 0) {
-        this->cache = std::make_unique<PdfCache>(doc->getPdfDocument(), control->getSettings());
+        this->pdfPagesPixelCache =
+                std::make_unique<xoj::view::QuadPdfCache>(doc->getPdfDocument(), control->getSettings());
     }
     doc->unlock_shared();
 
     registerListener(control);
 
-    InputContext* inputContext = new InputContext(this, scrollHandling);
+    InputContext* inputContext = new InputContext(this, scrollHandling.get());
     this->widget = gtk_xournal_new(this, inputContext, scrollHandling->getVertical(), scrollHandling->getHorizontal());
     g_object_ref_sink(this->widget);  // take ownership without increasing the ref count
 
-    gtk_container_add(GTK_CONTAINER(parent), this->widget);
+    gtk_scrolled_window_set_child(parent, this->widget);
     gtk_widget_show(this->widget);
-
 
     g_signal_connect(getWidget(), "realize", G_CALLBACK(+[](GtkWidget* widget, gpointer) {
                          // Disable event compression
@@ -101,12 +94,10 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 
     gtk_widget_grab_focus(this->widget);
 
-    this->cleanupTimeout = g_timeout_add_seconds(5, xoj::util::wrap_v<clearMemoryTimer>, this);
+    this->cleanupTimeout = g_timeout_add_seconds(3, xoj::util::wrap_v<clearMemoryTimer>, this);
 }
 
 XournalView::~XournalView() {
-    g_source_remove(this->cleanupTimeout);
-
     gtk_widget_destroy(this->widget);
     this->widget = nullptr;
 }
@@ -118,16 +109,17 @@ auto XournalView::clearMemoryTimer(XournalView* widget) -> gboolean {
 }
 
 auto XournalView::cleanupBufferCache() -> void {
-    const auto& [pagesLower, pagesUpper] = this->preloadPageBounds(this->currentPage, this->viewPages.size());
-    xoj_assert(pagesLower <= pagesUpper);
+    xoj::view::QuadCache::pruneGroup(viewsWithBuffer, control->getSettings()->getMaxViewBufferMemoryUsage());
+    if (this->pdfPagesPixelCache) {
+        this->pdfPagesPixelCache->prune();
+    }
+}
 
-    for (size_t i = 0; i < this->viewPages.size(); i++) {
-        auto&& page = this->viewPages[i];
-        const size_t pageNum = i + 1;
-        const bool isPreload = pagesLower <= pageNum && pageNum <= pagesUpper;
-        if (!isPreload && !page->isVisible() && page->hasBuffer()) {
-            page->deleteViewBuffer();
-        }
+void XournalView::viewNoLongerHasBuffer(const XojPageView* view) { std::erase(viewsWithBuffer, view); }
+
+void XournalView::registerViewHasBuffer(XojPageView* view) {
+    if (std::find(viewsWithBuffer.begin(), viewsWithBuffer.end(), view) == viewsWithBuffer.end()) {
+        viewsWithBuffer.emplace_back(view);
     }
 }
 
@@ -340,8 +332,8 @@ auto XournalView::onKeyReleaseEvent(const KeyEvent& event) -> bool {
 }
 
 void XournalView::onSettingsChanged() {
-    if (this->cache) {
-        this->cache->updateSettings(control->getSettings());
+    if (this->pdfPagesPixelCache) {
+        this->pdfPagesPixelCache->setMaxMemoryUsage(control->getSettings()->getMaxViewBufferMemoryUsage());
     }
 }
 
@@ -400,19 +392,6 @@ void XournalView::pageSelected(size_t page) {
 
     control->updateBackgroundSizeButton();
     control->updatePageActions();
-
-    if (control->getSettings()->isEagerPageCleanup()) {
-        this->cleanupBufferCache();
-    }
-
-    // Load surrounding pages if they are not
-    const auto& [pagesLower, pagesUpper] = preloadPageBounds(page, this->viewPages.size());
-    xoj_assert(pagesLower <= pagesUpper);
-    for (size_t i = pagesLower; i < pagesUpper; i++) {
-        if (!this->viewPages[i]->hasBuffer()) {
-            this->viewPages[i]->rerenderPage();
-        }
-    }
 }
 
 auto XournalView::getControl() const -> Control* { return control; }
@@ -505,12 +484,13 @@ auto XournalView::getVisibleRect(const XojPageView* redrawable) const -> Rectang
 }
 
 void XournalView::recreatePdfCache() {
-    this->cache.reset();
+    this->pdfPagesPixelCache.reset();
 
     Document* doc = control->getDocument();
     doc->lock_shared();
     if (doc->getPdfPageCount() != 0) {
-        this->cache = std::make_unique<PdfCache>(doc->getPdfDocument(), control->getSettings());
+        this->pdfPagesPixelCache =
+                std::make_unique<xoj::view::QuadPdfCache>(doc->getPdfDocument(), control->getSettings());
     }
     doc->unlock_shared();
 }
@@ -525,7 +505,7 @@ auto XournalView::getHandRecognition() const -> HandRecognition* {
 /**
  * @return Scrollbars
  */
-auto XournalView::getScrollHandling() const -> ScrollHandling* { return scrollHandling; }
+auto XournalView::getScrollHandling() const -> ScrollHandling* { return scrollHandling.get(); }
 
 auto XournalView::getWidget() const -> GtkWidget* { return widget; }
 
@@ -595,7 +575,7 @@ auto XournalView::getTextEditor() const -> TextEditor* {
     return nullptr;
 }
 
-auto XournalView::getCache() const -> PdfCache* { return this->cache.get(); }
+auto XournalView::getCache() const -> xoj::view::QuadPdfCache* { return this->pdfPagesPixelCache.get(); }
 
 void XournalView::pageInserted(size_t page) {
     Document* doc = control->getDocument();
@@ -606,9 +586,7 @@ void XournalView::pageInserted(size_t page) {
     viewPages.insert(begin(viewPages) + as_signed(page), std::move(pageView));
 
     layoutPages();
-    // check which pages are visible and select the most visible page
-    Layout* layout = this->getLayout();
-    layout->updateVisibility();
+    this->getLayout()->selectMostVisiblePage();
 }
 
 auto XournalView::getZoom() const -> double { return control->getZoomControl()->getZoom(); }

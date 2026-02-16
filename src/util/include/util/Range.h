@@ -29,6 +29,7 @@ public:
 
     [[nodiscard]] Range unite(const Range& other) const;
     [[nodiscard]] Range intersect(const Range& other) const;
+    [[nodiscard]] bool hasIntersectionWith(const Range& other) const;
 
     [[nodiscard]] double getX() const;
     [[nodiscard]] double getY() const;
@@ -42,6 +43,8 @@ public:
     [[nodiscard]] bool isValid() const;  ///< A valid range is in particular not empty
     [[nodiscard]] bool contains(double x, double y) const;
     [[nodiscard]] bool contains(const xoj::util::Rectangle<double>& r) const;
+
+    [[nodiscard]] bool operator==(const Range& o) const = default;
 
     double minX = std::numeric_limits<double>::max();
     double minY = std::numeric_limits<double>::max();

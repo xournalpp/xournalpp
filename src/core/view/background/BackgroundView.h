@@ -20,11 +20,10 @@
 
 #include "BackgroundFlags.h"
 
-class PdfCache;
 class PageType;
 
-namespace xoj {
-namespace view {
+namespace xoj::view {
+class PdfCache;
 class BackgroundView {
 public:
     BackgroundView(double pageWidth, double pageHeight): pageWidth(pageWidth), pageHeight(pageHeight) {}
@@ -40,13 +39,11 @@ public:
     [[nodiscard]] static std::unique_ptr<BackgroundView> createRuled(double width, double height, Color backgroundColor,
                                                                      const PageType& pt, double lineWidthFactor = 1.0);
 
-    [[nodiscard]] static std::unique_ptr<BackgroundView> createForPage(ConstPageRef page,
-                                                                       xoj::view::BackgroundFlags bgFlags,
+    [[nodiscard]] static std::unique_ptr<BackgroundView> createForPage(ConstPageRef page, BackgroundFlags bgFlags,
                                                                        PdfCache* pdfCache = nullptr);
 
 protected:
     double pageWidth;
     double pageHeight;
 };
-};  // namespace view
-};  // namespace xoj
+};  // namespace xoj::view
