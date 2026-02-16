@@ -317,11 +317,10 @@ void LoadHandler::addStroke(StrokeTool tool, Color color, double width, int fill
 }
 
 void LoadHandler::setStrokePoints(std::vector<Point> pointVector, bool hasPressure) {
-    xoj_assert(this->stroke);
-
-    if (pointVector.size() < 2) {
-        g_warning("LoadHandler: Ignoring stroke with less than two points");
-        this->stroke.reset();
+    // Check if stroke still exists or has already been assigned points.
+    // In corrupt files, this function may be called more than once, and the
+    // stroke may have been deleted in a previous call.
+    if (!this->stroke || !this->stroke->getPointVector().empty()) {
         return;
     }
 
@@ -340,6 +339,13 @@ void LoadHandler::finalizeStroke() {
     // fixNullPressureValues() may have deleted the stroke. Check if it still
     // exists before accessing it.
     if (this->stroke) {
+        if (this->stroke->getPointCount() < 2) {
+            // Strokes with less than two points can't be drawn
+            g_warning("LoadHandler: Ignoring stroke with less than two points");
+            this->stroke.reset();
+            return;
+        }
+
         this->layer->addElement(std::move(this->stroke));
     }
 }
@@ -384,7 +390,7 @@ void LoadHandler::addImage(double left, double top, double right, double bottom)
 void LoadHandler::setImageData(std::string data) {
     xoj_assert(this->image);
 
-    if (this->image->hasData()) {
+    if (this->image->hasData() && !data.empty()) {
         g_warning("LoadHandler: Image data section found, but the image already has data");
     }
 
@@ -406,6 +412,12 @@ void LoadHandler::setImageAttachment(const fs::path& filename) {
 
 void LoadHandler::finalizeImage() {
     xoj_assert(this->image);
+
+    if (!this->image->hasData()) {
+        g_warning("LoadHandler: Ignoring image with no data");
+        this->image.reset();
+        return;
+    }
 
     this->layer->addElement(std::move(this->image));
 }
@@ -547,7 +559,18 @@ void LoadHandler::parseXml(std::unique_ptr<xoj::util::InputStream> xmlContentStr
     // Sanity checks for document validity
     if (!g_markup_parse_context_end_parse(context.get(), xoj::util::out_ptr(error)) || !this->parsingComplete) {
         handleGError(std::move(error));
-        throw std::runtime_error(_("Document is not complete (maybe the end is cut off)"));
+
+        // The end may be cut off. Attempt to recover contents by closing the remaining open nodes.
+        parserInterface.closeOpenNodes();
+        // If a document was created in addDocument(), finalizeDocument() must have been called now.
+        xoj_assert((this->doc != nullptr) == this->parsingComplete);
+
+        if (this->parsingComplete) {
+            logError(_("Document is not complete.\n"
+                       "We have tried recovering the data that could be read, but the last element may have been "
+                       "discarded, and the end of the file is likely missing."));
+        }
+        // Else, then this->doc == nullptr and we will throw just below
     }
     if (!this->doc) {
         throw std::runtime_error(_("Document is corrupted (no document tag found in file)"));

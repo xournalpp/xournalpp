@@ -116,30 +116,9 @@ void XmlParser::parserEndElement(GMarkupParseContext* context, const gchar* elem
 
     // GMarkup should have already risen an error if there was an error in the document structure.
     xoj_assert(!self->hierarchy.empty());
-    const auto tagType = self->hierarchy.back();
-    xoj_assert(TAG_NAMES[tagType] == xoj::util::utf8(elementName) || tagType == TagType::UNKNOWN);
-
-    // Check for unknown tags
-    if (tagType == TagType::UNKNOWN && self->hierarchy.size() == 1) {
-        // We are closing an unknown top level node. Assume it's the end of the document.
-        self->builder.finalizeDocument();
-    }
-
-    // Call parsing function
-    if (parsingTable[tagType].end) {
-        (self->builder.*parsingTable[tagType].end)();
-    }
-
-    self->hierarchy.pop_back();
-
-    // Track last valid tag
-    self->lastValidTag.reset();  // Default for empty hierarchy or no valid tag found
-    for (auto it = self->hierarchy.rbegin(); it != self->hierarchy.rend(); ++it) {
-        if (*it != TagType::UNKNOWN) {
-            self->lastValidTag = *it;
-            break;
-        }
-    }
+    xoj_assert(TAG_NAMES[self->hierarchy.back()] == xoj::util::utf8(elementName) ||
+               self->hierarchy.back() == TagType::UNKNOWN);
+    self->closeTopTag();
 }
 
 void XmlParser::parserText(GMarkupParseContext* context, const gchar* text, gsize textLen, gpointer userdata,
@@ -174,6 +153,12 @@ void XmlParser::parserText(GMarkupParseContext* context, const gchar* text, gsiz
 
 
 XmlParser::XmlParser(DocumentBuilderInterface& builder): builder(builder) {}
+
+void XmlParser::closeOpenNodes() {
+    while (!this->hierarchy.empty()) {
+        closeTopTag();
+    }
+}
 
 
 void XmlParser::parseUnknownTag(const XmlParserHelper::AttributeMap& attributeMap) {
@@ -578,4 +563,31 @@ auto XmlParser::getTagType(c_string_utf8_view name) const -> TagType {
 
     // Tag name could not be matched with an expected type
     return TagType::UNKNOWN;
+}
+
+void XmlParser::closeTopTag() {
+    xoj_assert(!this->hierarchy.empty());
+    const auto tagType = this->hierarchy.back();
+
+    // Check for unknown tags
+    if (tagType == TagType::UNKNOWN && this->hierarchy.size() == 1) {
+        // We are closing an unknown top level node. Assume it's the end of the document.
+        this->builder.finalizeDocument();
+    }
+
+    // Call parsing function
+    if (parsingTable[tagType].end) {
+        (this->builder.*parsingTable[tagType].end)();
+    }
+
+    this->hierarchy.pop_back();
+
+    // Track last valid tag
+    this->lastValidTag.reset();  // Default for empty hierarchy or no valid tag found
+    for (auto it = this->hierarchy.rbegin(); it != this->hierarchy.rend(); ++it) {
+        if (*it != TagType::UNKNOWN) {
+            this->lastValidTag = *it;
+            break;
+        }
+    }
 }

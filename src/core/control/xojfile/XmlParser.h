@@ -40,6 +40,9 @@ public:
 
     static constexpr GMarkupParser interface = {parserStartElement, parserEndElement, parserText, nullptr, nullptr};
 
+    // Attempt recovery of truncated documents by closing all open nodes
+    void closeOpenNodes();
+
 private:
     /**
      * UTF-8 Roadmap
@@ -82,6 +85,11 @@ private:
      * the tag is globally known (e.g. if a page is found under a layer).
      */
     xoj::xml_tags::Type getTagType(c_string_utf8_view name) const;
+
+    /**
+     * Close the top tag in the hierarchy
+     */
+    void closeTopTag();
 
     using StartElementFunc = void (XmlParser::*)(const XmlParserHelper::AttributeMap&);
     using TextFunc = void (XmlParser::*)(std::string_view);
