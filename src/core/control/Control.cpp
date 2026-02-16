@@ -901,6 +901,7 @@ void Control::insertPage(const PageRef& page, size_t position, bool shouldScroll
     this->doc->lock();
     this->doc->insertPage(page, position);  // insert the new page to the document and update page numbers
     this->doc->unlock();
+    undoRedo->addUndoAction(std::make_unique<InsertDeletePageUndoAction>(page, position, true));
 
     // notify document listeners about the inserted page; this creates the new XojViewPage, recalculates the layout
     // and creates a preview page in the sidebar
@@ -916,7 +917,6 @@ void Control::insertPage(const PageRef& page, size_t position, bool shouldScroll
     }
 
     updatePageActions();
-    undoRedo->addUndoAction(std::make_unique<InsertDeletePageUndoAction>(page, position, true));
 }
 
 void Control::gotoPage() {
