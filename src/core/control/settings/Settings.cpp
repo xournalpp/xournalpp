@@ -724,9 +724,9 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerFinalizeStroke")) == 0) {
         this->stabilizerFinalizeStroke = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("colorPalette")) == 0) {
-        std::string paletteConfig = std::string{reinterpret_cast<const char*>(value)};
+        std::string_view paletteConfig = std::string_view{reinterpret_cast<const char*>(value)};
         if (!paletteConfig.empty()) {
-            this->colorPaletteSetting = paletteConfig;
+            this->colorPaletteSetting = fs::path(xoj::util::utf8(paletteConfig));
         }
     }
     /**/

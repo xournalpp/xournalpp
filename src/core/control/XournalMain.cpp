@@ -475,8 +475,19 @@ void on_startup(GApplication* application, XMPtr app_data) {
             if (auto opt = Util::fromUri(gtk_recent_info_get_uri(most_recent.get()))) {
                 p = opt.value();
             }
+            if (std::error_code err; !fs::exists(p, err)) {
+                if (err) {
+                    g_warning("Failed to determine if recent path exists \"%s\": %s", char_cast(p.u8string().c_str()),
+                              err.message().c_str());
+                } else {
+                    g_warning("Tried to open the most recent file but it no longer exists:\n\"%s\"",
+                              char_cast(p.u8string().c_str()));
+                }
+                p = fs::path();
+            }
         }
     }
+
     app_data->control->openFileWithoutSavingTheCurrentDocument(
             std::move(p), app_data->attachMode, app_data->openAtPageNumber - 1,
             [ctrl = app_data->control.get(), app = GTK_APPLICATION(application)](bool) {

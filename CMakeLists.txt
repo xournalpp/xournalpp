@@ -149,7 +149,7 @@ endif (APPLE)
 list(APPEND pkg-module-spec "gthread-2.0 >= 2.4.0")
 list(APPEND pkg-module-spec "libxml-2.0 >= 2.0.0")
 list(APPEND pkg-module-spec "libzip >= 1.0.1")
-list(APPEND pkg-module-spec "librsvg-2.0 >= 2.40")
+list(APPEND pkg-module-spec "librsvg-2.0 >= 2.46")
 
 # Profiling
 option (ENABLE_PROFILING "Link with gperftools" OFF)
@@ -291,10 +291,6 @@ set(DEV_ERRORLOG_DIR "errorlogs" CACHE STRING "Directory where errorlogfiles wil
 set(DEV_FILE_FORMAT_VERSION 4 CACHE STRING "File format version" FORCE)
 
 option(DEV_ENABLE_GCOV "Build with gcov support" OFF) # Enabel gcov support – expanded in src/
-option(DEV_CHECK_GTK3_COMPAT "Adds a few compiler flags to check basic GTK3 upgradeability support (still compiles for GTK2!)")
-if (DEV_CHECK_GTK3_COMPAT)
-    add_definitions(-DGTK_DISABLE_SINGLE_INCLUDES -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGSEAL_ENABLE)
-endif ()
 
 mark_as_advanced(FORCE
         DEV_TOOLBAR_CONFIG DEV_SETTINGS_XML_FILE DEV_PRINT_CONFIG_FILE DEV_METADATA_FILE
@@ -445,7 +441,7 @@ set(CPACK_DEBIAN_PACKAGE_RELEASE 2)
 set(CPACK_DEBIAN_PACKAGE_VERSION "${CPACK_PROJECT_VERSION}")
 set(CPACK_DEBIAN_PACKAGE_SECTION "graphics")
 set(CPACK_DEBIAN_PACKAGE_DEPENDS
-        "libglib2.0-0 (>= 2.32), libgtk-3-0 (>= 3.18), libpoppler-glib8 (>= 0.41.0), libxml2 (>= 2.0.0), libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0 | liblua5.4-0, libzip4 (>= 1.0.1) | libzip5, zlib1g, libc6, qpdf (>= 10.6.0)")
+        "libglib2.0-0 (>= 2.32), libgtk-3-0 (>= 3.18), libpoppler-glib8 (>= 0.41.0), libxml2 (>= 2.0.0), libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0 | liblua5.4-0, libzip4 (>= 1.0.1) | libzip5, zlib1g, libc6, qpdf (>= 10.6.0), libgtksourceview-4-0")
 set(CPACK_DEBIAN_PACKAGE_SUGGESTS "texlive-base, texlive-latex-extra")  # Latex tool
 # Use debian's arch scheme; we only care about x86/amd64 for now but feel free to add more
 if (${PACKAGE_ARCH} STREQUAL "x86_64")

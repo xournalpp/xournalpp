@@ -289,7 +289,7 @@ void Layout::layoutPages(int width, int height) {
                         }
                     } else {  // not paired page mode - center
                         paddingLeft = XOURNAL_PADDING_BETWEEN / 2.0 + columnPadding / 2.0;  // center justify
-                        paddingRight = XOURNAL_PADDING_BETWEEN - paddingLeft + columnPadding / 2.0;
+                        paddingRight = XOURNAL_PADDING_BETWEEN - paddingLeft + columnPadding;
                     }
 
                     x += paddingLeft;
