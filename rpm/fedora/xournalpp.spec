@@ -33,7 +33,7 @@ BuildRequires:  pkgconfig(glib-2.0) >= 2.32.0
 BuildRequires:  pkgconfig(gtk+-3.0) >= 3.18.9
 BuildRequires:  pkgconfig(librsvg-2.0)
 BuildRequires:  pkgconfig(libxml-2.0) >= 2.0.0
-BuildRequires:  pkgconfig(libqpdf)} >= 11.0.0
+BuildRequires:  pkgconfig(libqpdf) >= 11.0.0
 BuildRequires:  pkgconfig(libzip) >= 1.0.1
 BuildRequires:  pkgconfig(lua) >= 5.3
 BuildRequires:  pkgconfig(poppler-glib) >= 0.41.0
