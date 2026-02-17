@@ -97,12 +97,9 @@ Multiple page background, easy selectable on the toolbar
 
 </td></tr></table>
 
-## User Manual and FAQ
+## User Guide
 
-For general usage, consult the [User
-Manual](https://github.com/xournalpp/xournalpp/wiki/User-Manual). Answers to
-some common questions can be found in the
-[FAQ](https://github.com/xournalpp/xournalpp/wiki/Frequently-Asked-Questions-&-Problem-Solving).
+Check out the [website](https://xournalpp.github.io/guide/overview/) for a detailed user guide.
 
 ## Experimental Features
 
