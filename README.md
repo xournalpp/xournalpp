@@ -101,27 +101,6 @@ Multiple page background, easy selectable on the toolbar
 
 Check out the [website](https://xournalpp.github.io/guide/overview/) for a detailed user guide.
 
-## Experimental Features
-
-Sometimes a feature is added that might not be rock solid, or the developers aren't sure if it is useful.
-Try these out and give us some feedback.
-
-Here are a few under development that you can play with now:
-
-- <img src="readme/floatingtoolboxmbmenu.png"  title="Xournal++"/> Assign a mouse button or stylus button to bring up a toolbox of toolbars right under the cursor. You can also modify what is in the toolbox through the usual View → Toolbars → Customize although **it won't appear unless you've assigned a button in preferences: mouse or stylus** (or selected a toolbar configuration that uses it).
-
-  - This is an experimental feature because not everything you can put in the toolbox behaves. So be aware.
-
-    <img src="readme/floatingtoolbox.png" width=25% />
-
-* Keep your eyes out for other experimental features in preferences as seen here:
-
-  DrawingTools: When drawing a box, circle etc, simulate ctrl or shift modifiers by the initial direction you move the mouse.
-
-  Action on Tool Tap: Allow a brief tap on the screen to bring up the floating toolbox and/or select an object. May work with pen and highlighter only.
-
-   <img src="readme/moreexperimentals.png" width=50% />
-
 ## Installing
 
 The official releases of Xournal++ can be found on the
