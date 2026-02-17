@@ -266,11 +266,26 @@ Unfortunately, the iOS app is not published yet in the Apple App Store. Read [th
 Official Windows releases are provided on the [Releases
 page](https://github.com/xournalpp/xournalpp/releases).
 
-You can also download it from the Microsoft Store
+You can also download it from the Microsoft Store (supports automated updates):
 
 <a href="https://apps.microsoft.com/detail/9nn1hhct0p1x?referrer=appbadge&mode=full" target="_blank"  rel="noopener noreferrer">
 	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
 </a>
+
+Our official GitHub release is also available via [winget](https://github.com/microsoft/winget-pkgs/tree/master/manifests/x/Xournal%2B%2B/Xournal%2B%2B). Open PowerShell and run:
+
+```sh
+winget install -e --id Xournal++.Xournal++
+```
+
+You can also install it via [Scoop](https://scoop.sh/):
+
+```sh
+scoop bucket add extras
+scoop install extras/xournalpp
+```
+You can easily update Xournal++ with winget or scoop.
+
 
 ### macOS
 
