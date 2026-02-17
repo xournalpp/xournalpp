@@ -308,17 +308,6 @@ codesign --force --deep --sign - /Applications/Xournal++.app
 ```
 And for those who type it out, don't forget to type the hyphen (`-`) between `--sign` and `/Applications/Xournal++.app`
 
-**Notes:**
-
-- There have been compatibility problems with macOS Catalina regarding both
-  file permissions and stylus support
-  ([#1772](https://github.com/xournalpp/xournalpp/issues/1772) and
-  [#1757](https://github.com/xournalpp/xournalpp/issues/1757)). Unfortunately,
-  we don't have the resources to adequately support Catalina at this time. Help
-  would be appreciated!
-- Xournal++ will be delivered with a patched GTK. Else, pressure sensitivity will not work on Mac
-  [#569](https://github.com/xournalpp/xournalpp/issues/569).
-
 ## Building
 
 We support building on three operating systems:
