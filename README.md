@@ -290,6 +290,12 @@ Unfortunately, the iOS app is not published yet in the Apple App Store. Read [th
 Official Windows releases are provided on the [Releases
 page](https://github.com/xournalpp/xournalpp/releases).
 
+You can also download it from the Microsoft Store
+
+<a href="https://apps.microsoft.com/detail/9nn1hhct0p1x?referrer=appbadge&mode=full" target="_blank"  rel="noopener noreferrer">
+	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
+</a>
+
 ### macOS
 
 Releases for macOS are provided on the [Releases
