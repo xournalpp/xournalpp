@@ -28,7 +28,7 @@ jobs:
     steps:
       - name: 'Check user permission'
         # To circumvent a security issue, only members/owners of the xournalpp team can run this CI.
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const perm = await github.rest.repos.getCollaboratorPermissionLevel({
@@ -45,7 +45,7 @@ jobs:
             }
       - name: 'Get pull request HEAD_SHA'
         id: get-sha
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             // Get the SHA of the PR's top commit so we build the right thing
@@ -57,14 +57,14 @@ jobs:
             });
             console.log('PR Head sha: ' + pr.data.head.sha)
             core.setOutput('head_sha', pr.data.head.sha)
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:  # Get the build targets **from the PR branch**
           sparse-checkout: '${{ env.build-targets-json }}'
           sparse-checkout-cone-mode: false
           ref: ${{ steps.get-sha.outputs.head_sha }}
       - name: 'Parse command and acknowledge order'
         id: parse
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           body: ${{ github.event.comment.body }} # Hardened security against code injection
         with:
@@ -185,7 +185,7 @@ jobs:
       - run: npm i @actions/artifact
       - name: 'Publish on PR page'
         id: publish
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const {DefaultArtifactClient} = require('@actions/artifact')

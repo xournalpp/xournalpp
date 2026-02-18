@@ -10,7 +10,7 @@ runs:
   steps:
   - name: 'Attempt to pull blob from cache'
     id: restore-blob
-    uses: actions/cache/restore@v4
+    uses: actions/cache/restore@v5
     with:
       path: "${{github.workspace}}/blob"
       key: ${{ runner.os }}-${{ runner.arch }}-blob-${{ hashFiles('mac-setup/CI_jhbuild.sh', 'mac-setup/jhbuild-version.lock', 'mac-setup/xournalpp.modules', 'mac-setup/gtk-osx.patch') }}
@@ -29,11 +29,11 @@ runs:
       mv xournalpp-binary-blob.tar.gz "${{github.workspace}}/blob/"
   - name: 'Push blob to cache'
     if: steps.restore-blob.outputs.cache-hit != 'true'
-    uses: actions/cache/save@v4
+    uses: actions/cache/save@v5
     with:
       key: ${{ steps.restore-blob.outputs.cache-primary-key }}
       path: "${{github.workspace}}/blob"
-  # - uses: actions/upload-artifact@v4
+  # - uses: actions/upload-artifact@v6
   #   with:
   #     name: my-artifact
   #     path: "${{github.workspace}}/blob/xournalpp-binary-blob.tar.gz"
