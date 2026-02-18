@@ -34,7 +34,7 @@ jobs:
       link: ${{ steps.publish.outputs.artifact-url }}
     steps:
       - name: 'Checkout repository'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ inputs.head_sha }}
       - name: 'Install dependencies'
@@ -65,7 +65,7 @@ jobs:
           echo "artifact=$OUTPUT" >> $GITHUB_OUTPUT
       - name: 'Publish package'
         id: publish
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: "MacOS package ${{runner.os}}-${{runner.arch}}"
           compression-level: 0

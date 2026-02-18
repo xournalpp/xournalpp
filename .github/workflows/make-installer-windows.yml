@@ -48,7 +48,7 @@ jobs:
       link_portable: ${{ steps.publish-portable.outputs.artifact-url }}
     steps:
       - name: 'Checkout repository'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ inputs.head_sha }}
       - name: 'Install dependencies'
@@ -83,7 +83,7 @@ jobs:
           fi
       - name: 'Publish package'
         id: publish
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: "Windows package ${{ runner.arch }} ${{ inputs.msys_package_env }}"
           path: "${{github.workspace}}/build/${{ steps.create-installer.outputs.artifact }}"
@@ -92,7 +92,7 @@ jobs:
       - name: 'Publish portable version'
         id: publish-portable
         if: ${{ inputs.publish_portable_version }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: "Windows package ${{ runner.arch }} ${{ inputs.msys_package_env }} (portable version)"
           path: "${{github.workspace}}/build/portable_content"

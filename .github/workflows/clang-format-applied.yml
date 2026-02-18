@@ -13,7 +13,7 @@ jobs:
     env:
       CLANG_FORMAT_VERSIONS: "19 18 17"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
