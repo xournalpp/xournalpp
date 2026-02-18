@@ -407,6 +407,8 @@ private:
     std::unique_ptr<Tool> mouseLeftButtonTool;
     std::unique_ptr<Tool> mouseMiddleButtonTool;
     std::unique_ptr<Tool> mouseRightButtonTool;
+    std::unique_ptr<Tool> mouseButton4Tool;
+    std::unique_ptr<Tool> mouseButton5Tool;
     std::unique_ptr<Tool> touchDrawingButtonTool;
 
     std::vector<ToolChangedCallback> toolChangeListeners;
