@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     name: 'Check that lua definitions file is up-to-date'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: 'Install python3'
         shell: bash
         run: |
