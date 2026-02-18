@@ -525,7 +525,9 @@ static xoj::util::Point<int> getPixelCoords(const Layout::PreCalculated& pc, con
                             zoom) +
                     strict_cast<int>(pos.col) * XOURNAL_PADDING_BETWEEN + pc.paddingLeft +
                     pc.horizontalCenteringPadding,
-            floor_cast<int>((pos.row == 0 ? 0. : pc.stretchableVerticalPixelsAfterRow[pos.row - 1]) * zoom) +
+            floor_cast<int>(((pos.row == 0 ? 0. : pc.stretchableVerticalPixelsAfterRow[pos.row - 1]) +
+                             .5 * (pc.heightRows[pos.row] - pv.getHeight())) *
+                            zoom) +
                     strict_cast<int>(pos.row) * XOURNAL_PADDING_BETWEEN + pc.paddingTop + pc.verticalCenteringPadding};
 }
 
