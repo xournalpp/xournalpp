@@ -182,7 +182,9 @@ jobs:
       pull-requests: write  # To post a comment with the results
       checks: write         # To update the check status
     steps:
-      - run: npm i @actions/artifact
+      - run: |
+          npm update
+          npm i @actions/artifact
       - name: 'Publish on PR page'
         id: publish
         uses: actions/github-script@v8
