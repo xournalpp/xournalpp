@@ -171,9 +171,6 @@ public:
      */
     int getY() const override;
 
-    const TexImage* getSelectedTex() const;
-    const Text* getSelectedText() const;
-
     xoj::util::Rectangle<double> getRect() const;
 
 public:  // event handler
@@ -286,6 +283,8 @@ private:
     std::mutex drawingMutex;
 
     bool inEraser = false;
+    bool inLatex = false;
+    double latexX, latexY;
 
     /**
      * Vertical Space

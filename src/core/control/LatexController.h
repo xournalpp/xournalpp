@@ -47,10 +47,11 @@ public:
 public:
     /**
      * Open a LatexDialog, wait for the user to provide the LaTeX formula, and
-     * insert the rendered formula into the document if the supplied LaTeX is
-     * valid.
+     * insert the rendered formula into the document at the given position if
+     * the supplied LaTeX is valid.
+     * An existing text or latex element at the given position is replaced.
      */
-    static void run(Control* ctrl);
+    static void insertLatex(PageRef page, Control* ctrl, double x, double y);
 
 private:
     /**
@@ -67,16 +68,6 @@ private:
      * Set the required LaTeX files, returning false if at least one of them is not found.
      */
     LatexController::FindDependencyStatus findTexDependencies();
-
-    /**
-     * Find a selected tex element, and load it
-     */
-    void findSelectedTexElement();
-
-    /**
-     * If a previous image/text is selected, delete it
-     */
-    void deleteOldImage();
 
     /**
      * Asynchronously runs the LaTeX command and then updates the TeX image with
@@ -190,24 +181,10 @@ private:
     double imgheight = 0;
 
     /**
-     * Document
-     */
-    Document* doc = nullptr;
-
-    /**
-     * Page View
-     */
-    XojPageView* view = nullptr;
-
-    /**
      * Selected Page
      */
     PageRef page;
 
-    /**
-     * Selected layer
-     */
-    Layer* layer = nullptr;
 
     /**
      * The directory in which the LaTeX files will be generated. Note that this

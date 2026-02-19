@@ -56,7 +56,6 @@ static const std::map<std::string_view, Action> STATELESS_ACTION_MAP = {
         {"ACTION_ZOOM_IN"sv, Action::ZOOM_IN},
         {"ACTION_ZOOM_OUT"sv, Action::ZOOM_OUT},
         {"ACTION_ZOOM_100"sv, Action::ZOOM_100},
-        {"ACTION_TEX"sv, Action::TEX},
         {"ACTION_MANAGE_TOOLBAR"sv, Action::MANAGE_TOOLBAR},
         {"ACTION_CUSTOMIZE_TOOLBAR"sv, Action::CUSTOMIZE_TOOLBAR},
         {"ACTION_AUDIO_SEEK_FORWARDS"sv, Action::AUDIO_SEEK_FORWARDS},

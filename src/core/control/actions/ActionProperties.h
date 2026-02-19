@@ -886,11 +886,6 @@ struct ActionProperties<Action::AUDIO_STOP_PLAYBACK> {
     }
 };
 
-template <>
-struct ActionProperties<Action::TEX> {
-    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->runLatex(); }
-};
-
 
 /** Plugin menu **/
 template <>

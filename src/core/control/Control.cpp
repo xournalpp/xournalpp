@@ -111,7 +111,6 @@
 #include "view/overlays/OverlayView.h"                           // for Over...
 
 #include "CrashHandler.h"                    // for emer...
-#include "LatexController.h"                 // for Late...
 #include "PageBackgroundChangeController.h"  // for Page...
 #include "PrintHandler.h"                    // for print
 #include "UndoRedoController.h"              // for Undo...
@@ -2507,16 +2506,6 @@ void Control::fontChanged(const XojFont& font) {
     if (TextEditor* editor = getTextEditor(); editor) {
         editor->setFont(font);
     }
-}
-
-/**
- * The core handler for inserting latex
- */
-void Control::runLatex() {
-    /*
-     * LatexController::run() will open a non-blocking dialog.
-     */
-    LatexController::run(this);
 }
 
 /**

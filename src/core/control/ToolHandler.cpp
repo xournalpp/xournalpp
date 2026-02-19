@@ -83,6 +83,9 @@ void ToolHandler::initTools() {
     tools[TOOL_TEXT - TOOL_PEN] =
             std::make_unique<Tool>("text", TOOL_TEXT, Colors::black, TOOL_CAP_COLOR, std::nullopt);
 
+    tools[TOOL_LATEX - TOOL_PEN] =
+            std::make_unique<Tool>("latex", TOOL_LATEX, Colors::black, TOOL_CAP_COLOR, std::nullopt);
+
     tools[TOOL_IMAGE - TOOL_PEN] =
             std::make_unique<Tool>("image", TOOL_IMAGE, Colors::black, TOOL_CAP_NONE, std::nullopt);
 
