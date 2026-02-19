@@ -4,7 +4,7 @@ Type=Application
 Name=Xournal++
 GenericName=Note-taking application
 Comment=Take handwritten notes
-Keywords=tablet;Wacom;pen input;PDF Annotation;markup
+Keywords=tablet;Wacom;pen input;PDF Annotation;markup;journal;journalpp;journal++;diary;notes;
 
 Exec=xournalpp-wrapper %f
 SingleMainWindow=false
