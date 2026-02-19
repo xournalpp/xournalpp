@@ -1,9 +1,9 @@
 #include "Control.h"
 
-#include <algorithm>   // for max
-#include <cstddef>     // for ptrdiff_t
-#include <cstdlib>     // for size_t
-#include <exception>   // for exce...
+#include <algorithm>  // for max
+#include <cstddef>    // for ptrdiff_t
+#include <cstdlib>    // for size_t
+#include <exception>  // for exce...
 #include <functional>  // for bind
 #include <iterator>    // for end
 #include <memory>      // for make...
