@@ -11,11 +11,20 @@
       "runner": "ubuntu-24.04",
       "run_ci": "false"
     },
-    "debian": {
-      "displayed_name": "Debian",
-      "runner": "ubuntu-latest",
+    "debian-13-amd64": {
+      "displayed_name": "Debian 13 amd64",
+      "runner": "self-hosted",
+      "runner_labels": ["self-hosted", "debian", "amd64"],
       "extra_packages": "build-essential lsb-release git",
-      "container_image": "ghcr.io/xournalpp/debian-latest-sudo:master",
+      "container_image": "debian:13",
+      "run_ci": "false"
+    },
+    "debian-13-arm64": {
+      "displayed_name": "Debian 13 arm64",
+      "runner": "self-hosted",
+      "runner_labels": ["self-hosted", "debian", "arm64"],
+      "extra_packages": "build-essential lsb-release git",
+      "container_image": "debian:13",
       "run_ci": "false"
     },
     "ubuntu-22-arm": {
