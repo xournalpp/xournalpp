@@ -109,6 +109,16 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     gtk_window_set_default_size(GTK_WINDOW(this->window), control->getSettings()->getMainWndWidth(),
                                 control->getSettings()->getMainWndHeight());
 
+    // Restore window position if remembered and not maximized
+    if (control->getSettings()->isRememberWindowPosition() && !control->getSettings()->isMainWndMaximized()) {
+        int x = control->getSettings()->getMainWndX();
+        int y = control->getSettings()->getMainWndY();
+        // Only restore if position was previously saved (values > -1)
+        if (x >= 0 && y >= 0) {
+            gtk_window_move(GTK_WINDOW(this->window), x, y);
+        }
+    }
+
     if (control->getSettings()->isMainWndMaximized()) {
         gtk_window_maximize(GTK_WINDOW(this->window));
     } else {

@@ -214,6 +214,13 @@ public:
     int getMainWndHeight() const;
     bool isMainWndMaximized() const;
 
+    void setMainWndPosition(int x, int y);
+    int getMainWndX() const;
+    int getMainWndY() const;
+
+    void setRememberWindowPosition(bool remember);
+    bool isRememberWindowPosition() const;
+
     bool isFullscreen() const;
 
     bool isSidebarVisible() const;
@@ -819,6 +826,21 @@ private:
      * Height of the main window
      */
     int mainWndHeight{};
+
+    /**
+     * X position of the main window
+     */
+    int mainWndX{};
+
+    /**
+     * Y position of the main window
+     */
+    int mainWndY{};
+
+    /**
+     * Remember and restore the last window position
+     */
+    bool rememberWindowPosition{};
 
     /**
      * Show the scrollbar on the left side

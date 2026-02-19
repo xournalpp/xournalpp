@@ -279,6 +279,14 @@ void Control::saveSettings() {
 
     if (!this->win->isMaximized()) {
         this->settings->setMainWndSize(width, height);
+
+        // Save window position if remember option is enabled
+        if (this->settings->isRememberWindowPosition()) {
+            gint x = 0;
+            gint y = 0;
+            gtk_window_get_position(getGtkWindow(), &x, &y);
+            this->settings->setMainWndPosition(x, y);
+        }
     }
     this->settings->setMainWndMaximized(this->win->isMaximized());
 
