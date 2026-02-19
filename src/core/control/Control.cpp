@@ -1,7 +1,6 @@
 #include "Control.h"
 
 #include <algorithm>   // for max
-#include <cmath>       // for abs
 #include <cstddef>     // for ptrdiff_t
 #include <cstdlib>     // for size_t
 #include <exception>   // for exce...
