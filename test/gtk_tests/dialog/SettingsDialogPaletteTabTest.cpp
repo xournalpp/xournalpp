@@ -39,7 +39,7 @@ class UnrenderedPaletteTabTest: public GtkTest {
         const fs::path palettePath{GET_TESTFILE(u8"palettes/xournalpp.gpl")};
 
         GladeSearchpath gladeSearchPath{};
-        gladeSearchPath.addSearchDirectory(Util::getDataPath() / "ui");
+        gladeSearchPath.addSearchDirectory(Util::getInstallUiPath());
         const std::vector<fs::path> paletteDirectories{palettePath.parent_path()};
         SettingsDialogPaletteTab paletteTab{&gladeSearchPath, paletteDirectories};
         EXPECT_EQ(paletteTab.getSelectedPalette(), std::nullopt);
@@ -57,7 +57,7 @@ class RenderedPaletteTabTest: public GtkTest {
         const fs::path palettePath{GET_TESTFILE(u8"palettes/xournalpp.gpl")};
 
         GladeSearchpath gladeSearchPath{};
-        gladeSearchPath.addSearchDirectory(Util::getDataPath() / "ui");
+        gladeSearchPath.addSearchDirectory(Util::getInstallUiPath());
         const std::vector<fs::path> paletteDirectories{palettePath.parent_path()};
         SettingsDialogPaletteTab paletteTab{&gladeSearchPath, paletteDirectories};
         paletteTab.renderPaletteTab(palettePath);

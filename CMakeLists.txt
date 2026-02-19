@@ -86,7 +86,7 @@ configure_file(
 
 find_package(PkgConfig REQUIRED)
 
-set(PACKAGE_DATA_DIR "${CMAKE_INSTALL_PREFIX}/share")
+set(PROJECT_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}")
 
 # Git repo info
 include(GitRepo)

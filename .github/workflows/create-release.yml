@@ -31,13 +31,13 @@ jobs:
       release_name: ${{ steps.parse.outputs.release-name }}
       tag: ${{ steps.parse.outputs.tag }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:  # Get the build targets
           sparse-checkout: '${{ env.build-targets-json }}'
           sparse-checkout-cone-mode: false
       - name: 'Parse targets list and setup version string'
         id: parse
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const available_targets = require('${{ env.build-targets-json }}')
@@ -101,7 +101,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v6
         with:
           merge-multiple: true
           path: ${{ github.workspace }}/artifacts
@@ -112,7 +112,7 @@ jobs:
         working-directory: ${{ github.workspace }}/artifacts
       - name: "Update tag and prepare body (Nightly builds)"
         if: ${{ needs.prepare.outputs.tag == 'nightly' }}
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             github.rest.git.updateRef({  // Move the nightly tag forward
@@ -132,7 +132,7 @@ jobs:
             }
             core.exportVariable('body', body)
       - name: Pull changelog
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         if: ${{ needs.prepare.outputs.tag != 'nightly' }}
         with:  # Get the changelog
           sparse-checkout: 'debian/changelog'
