@@ -18,6 +18,7 @@
 #include "model/Font.h"                        // for XojFont
 #include "model/Image.h"                       // for Image
 #include "model/Layer.h"                       // for Layer
+#include "model/Link.h"                        // for Link
 #include "model/PageType.h"                    // for PageType, PageTypeFormat
 #include "model/Point.h"                       // for Point
 #include "model/Stroke.h"                      // for Stroke, StrokeCapStyle
@@ -732,6 +733,37 @@ void LoadHandler::parseTexImage() {
     this->teximage->setText(string(imText, imTextLen));
 }
 
+void LoadHandler::parseLink() {
+    auto linkOwn = std::make_unique<Link>();
+    this->link = linkOwn.get();
+
+    PangoAlignment align = static_cast<PangoAlignment>(LoadHandlerHelper::getAttribInt("align", this));
+    const char* sFont = LoadHandlerHelper::getAttrib("font", false, this);
+    double fontSize = LoadHandlerHelper::getAttribDouble("size", this);
+    double x = LoadHandlerHelper::getAttribDouble("x", this);
+    double y = LoadHandlerHelper::getAttribDouble("y", this);
+    const char* url = LoadHandlerHelper::getAttrib("url", false, this);
+    const char* text = LoadHandlerHelper::getAttrib("text", false, this);
+
+    this->link->setAlignment(align);
+
+    this->link->setText(std::string(g_uri_unescape_string(text, NULL)));
+    this->link->setUrl(std::string(g_uri_unescape_string(url, NULL)));
+
+    this->link->setX(x);
+    this->link->setY(y);
+
+    XojFont& f = link->getFont();
+    f.setName(sFont);
+    f.setSize(fontSize);
+    const char* sColor = LoadHandlerHelper::getAttrib("color", false, this);
+    Color color{0U};
+    LoadHandlerHelper::parseColor(sColor, color, this);
+    link->setColor(color);
+
+    this->layer->addElement(std::move(linkOwn));
+}
+
 void LoadHandler::parseAttachment() {
     if (this->pos != PARSER_POS_IN_IMAGE && this->pos != PARSER_POS_IN_TEXIMAGE) {
         g_warning("Found attachment tag as child of a tag that should not have such a child (ignoring this tag)");
@@ -785,6 +817,9 @@ void LoadHandler::parseLayer() {
     {
         this->pos = PARSER_POS_IN_TEXIMAGE;
         parseTexImage();
+    } else if (!strcmp(elementName, "link")) {  // start of a link item
+        this->pos = PARSER_POS_IN_LINK;
+        parseLink();
     }
 }
 
@@ -919,6 +954,9 @@ void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* el
     } else if (handler->pos == PARSER_POS_IN_TEXT && strcmp(elementName, "text") == 0) {
         handler->pos = PARSER_POS_IN_LAYER;
         handler->text = nullptr;
+    } else if (handler->pos == PARSER_POS_IN_LINK && strcmp(elementName, "link") == 0) {
+        handler->pos = PARSER_POS_IN_LAYER;
+        handler->link = nullptr;
     } else if (handler->pos == PARSER_POS_IN_IMAGE && strcmp(elementName, "image") == 0) {
         xoj_assert_message(handler->image->getImage() != nullptr, "image can't be rendered");
         handler->pos = PARSER_POS_IN_LAYER;
