@@ -18,7 +18,6 @@ env:
 
 jobs:
   prepare:
-    if: github.repository == 'xournalpp/xournalpp'
     runs-on: ubuntu-latest
     name: 'Prepare jobs'
     outputs:
