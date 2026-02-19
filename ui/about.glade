@@ -183,8 +183,8 @@ Luya Tshimbalanga</property>
                     <property name="name">lbXournal</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Partially based on Xournal
-by Denis Auroux</property>
+                    <property name="label" translatable="yes">Partially based on &lt;a href="https://xournal.sourceforge.net/"&gt;Xournal&lt;/a&gt;
+by &lt;a href="https://people.math.harvard.edu/~auroux/"&gt;Denis Auroux&lt;/a&gt;</property>
                     <property name="use-markup">True</property>
                     <property name="justify">center</property>
                   </object>
