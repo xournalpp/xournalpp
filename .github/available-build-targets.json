@@ -16,7 +16,7 @@
       "runner": "self-hosted",
       "runner_labels": ["self-hosted", "debian", "amd64"],
       "extra_packages": "build-essential lsb-release git",
-      "container_image": "debian:13",
+      "container_image": "debian:13-slim",
       "run_ci": "false"
     },
     "debian-13-arm64": {
@@ -24,7 +24,7 @@
       "runner": "self-hosted",
       "runner_labels": ["self-hosted", "debian", "arm64"],
       "extra_packages": "build-essential lsb-release git",
-      "container_image": "debian:13",
+      "container_image": "debian:13-slim",
       "run_ci": "false"
     },
     "ubuntu-22-arm": {
