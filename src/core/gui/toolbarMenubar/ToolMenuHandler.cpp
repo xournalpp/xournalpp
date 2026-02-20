@@ -345,9 +345,10 @@ void ToolMenuHandler::initToolItems() {
 
     emplaceStockItem("GOTO_FIRST", Cat::NAVIGATION, Action::GOTO_FIRST, "go-first", _("Go to first page"));
     emplaceStockItem("GOTO_BACK", Cat::NAVIGATION, Action::GOTO_PREVIOUS, "go-previous", _("Back"));
-    emplaceStockItem("NAVIGATE_BACK", Cat::NAVIGATION, Action::NAVIGATE_BACK, "edit-undo", _("Jump back"));
+    emplaceCustomItem("NAVIGATE_BACK", Cat::NAVIGATION, Action::NAVIGATE_BACK, "navigate-back", _("Jump back"));
     emplaceCustomItem("GOTO_PAGE", Cat::NAVIGATION, Action::GOTO_PAGE, "go-to", _("Go to page"));
-    emplaceStockItem("NAVIGATE_FORWARD", Cat::NAVIGATION, Action::NAVIGATE_FORWARD, "edit-redo", _("Jump forward"));
+    emplaceCustomItem("NAVIGATE_FORWARD", Cat::NAVIGATION, Action::NAVIGATE_FORWARD, "navigate-forward",
+                      _("Jump forward"));
     emplaceStockItem("GOTO_NEXT", Cat::NAVIGATION, Action::GOTO_NEXT, "go-next", _("Next"));
     emplaceStockItem("GOTO_LAST", Cat::NAVIGATION, Action::GOTO_LAST, "go-last", _("Go to last page"));
 
