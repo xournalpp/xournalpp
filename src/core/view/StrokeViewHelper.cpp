@@ -59,7 +59,10 @@ double xoj::view::StrokeViewHelper::drawWithPressure(cairo_t* cr, const std::vec
             };
         }
     } else {
-        if (!dashes.empty()) {
+        if (pts.size() == 2 && pts.front().equalsPos(pts.back())) {
+            // Single dot
+            cairo_arc(cr, pts.front().x, pts.front().y, .5 * pts.front().z, 0, 2. * M_PI);
+        } else if (!dashes.empty()) {
             dashOffset = StrokeContourDashes(pts, dashes).addToCairo(cr, dashOffset);
         } else {
             StrokeContour(pts).addToCairo(cr);
