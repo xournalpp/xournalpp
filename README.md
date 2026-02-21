@@ -332,4 +332,4 @@ You can still check out the [separate repository on GitLab](https://gitlab.com/T
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md). If your pull request does not need Xournal++ to be built to test it (e.g. for a README update), you can prepend [skip ci] to the title of the pull request to disable CI running.
+See [CONTRIBUTING.md](./CONTRIBUTING.md). If your pull request does not need Xournal++ to be built to test it (e.g. for a README update), you can prepend [skip ci] to the title of the commit to disable CI running.
