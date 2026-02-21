@@ -90,7 +90,7 @@ public:
     double getHeight() const override;
     // End of Repaintable interface
 
-    xoj::util::Rectangle<double> toWindowCoordinates(const xoj::util::Rectangle<double>& r) const override;
+    xoj::util::Rectangle<double> toWidgetCoordinates(const xoj::util::Rectangle<double>& r) const override;
 
 
     void setSelected(bool selected);
@@ -149,7 +149,7 @@ public:
     int getDisplayHeight() const;
     double getDisplayHeightDouble() const;
 
-    /// Returns the position of the upper-left corner in Widget coordinates
+    /// Returns the position of the upper-left corner in Layout pixel-coordinates
     xoj::util::Point<int> getPixelPosition() const;
 
     const TexImage* getSelectedTex() const;

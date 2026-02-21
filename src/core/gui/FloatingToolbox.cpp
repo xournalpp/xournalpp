@@ -15,6 +15,7 @@
 
 #include "MainWindow.h"          // for MainWindow
 #include "ToolbarDefinitions.h"  // for ToolbarEntryDefintion
+#include "XournalView.h"
 
 
 FloatingToolbox::FloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay) {
@@ -86,13 +87,7 @@ auto FloatingToolbox::hasWidgets() -> bool {
 
 
 void FloatingToolbox::showForConfiguration() {
-    if (this->floatingToolboxActivated())  // Do not show if not being used - at least while experimental.
-    {
-        GtkWidget* boxContents = this->mainWindow->get("boxContents");
-        gint wx = 0, wy = 0;
-        gtk_widget_translate_coordinates(boxContents, gtk_widget_get_toplevel(boxContents), 0, 0, &wx, &wy);
-        this->floatingToolboxX = wx + 40;  // when configuration state these are
-        this->floatingToolboxY = wy + 40;  // topleft coordinates( otherwise center).
+    if (this->floatingToolboxActivated()) {
         this->floatingToolboxState = configuration;
         this->show();
     }
@@ -144,31 +139,8 @@ auto FloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget,
         allocation->height = natural.height;
     }
 
-    // Get scrolled window for boundary clamping
-    GtkWidget* mainBox = self->mainWindow->get("mainBox");
-    GtkWidget* boxContents = self->mainWindow->get("boxContents");
-
-    GtkWidget* scrolledWindow = nullptr;
-    GList* children = gtk_container_get_children(GTK_CONTAINER(boxContents));
-    if (children != nullptr) {
-        scrolledWindow = GTK_WIDGET(children->data);
-        g_list_free(children);
-    }
-
-    if (scrolledWindow == nullptr) {
-        // Fallback: no clamping if scrolled window not found
-        allocation->x = self->floatingToolboxX - allocation->width / 2;
-        allocation->y = self->floatingToolboxY - allocation->height / 2;
-        self->floatingToolboxState = noChange;
-        return true;
-    }
-
-    // Get scrolled window position relative to mainBox
-    gint scrollX, scrollY;
-    gtk_widget_translate_coordinates(scrolledWindow, mainBox, 0, 0, &scrollX, &scrollY);
-
-    GtkAllocation scrollAllocation;
-    gtk_widget_get_allocation(scrolledWindow, &scrollAllocation);
+    GtkWidget* scrolledWindow =
+            gtk_widget_get_ancestor(self->mainWindow->getXournal()->getWidget(), GTK_TYPE_SCROLLED_WINDOW);
 
     switch (self->floatingToolboxState) {
         case recalcSize:
@@ -179,10 +151,10 @@ auto FloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget,
 
             // Clamp to scrolled window bounds with margin
             constexpr int margin = 10;
-            int minX = scrollX + margin;
-            int maxX = scrollX + scrollAllocation.width - allocation->width - margin;
-            int minY = scrollY + margin;
-            int maxY = scrollY + scrollAllocation.height - allocation->height - margin;
+            int minX = margin;
+            int maxX = gtk_widget_get_allocated_width(scrolledWindow) - allocation->width - margin;
+            int minY = margin;
+            int maxY = gtk_widget_get_allocated_height(scrolledWindow) - allocation->height - margin;
 
             // Ensure valid clamp bounds when toolbox is larger than viewport
             maxX = std::max(maxX, minX);
@@ -195,12 +167,15 @@ auto FloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget,
         }
 
         case configuration:
-            allocation->x = self->floatingToolboxX;
-            allocation->y = self->floatingToolboxY;
+            allocation->x = 40;
+            allocation->y = 40;
             allocation->width = std::max(allocation->width + 32, 50);
             allocation->height = std::max(allocation->height, 50);
             break;
     }
+
+    gtk_widget_translate_coordinates(scrolledWindow, GTK_WIDGET(overlay), allocation->x, allocation->y, &allocation->x,
+                                     &allocation->y);
 
     return true;
 }
