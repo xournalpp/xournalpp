@@ -76,7 +76,7 @@ struct InputEvent final {
     const gchar* deviceName{};
 
     xoj::util::Point<double> absolute;  ///< In GdkSurface coordinates
-    xoj::util::Point<double> relative;  ///< In XournalWidget coordinates
+    xoj::util::Point<double> relative;  ///< In Layout pixel coordinates
 
     guint button{0};
     GdkModifierType state{};
