@@ -185,6 +185,13 @@ public:
     double getZoomStepScroll() const;
 
     /**
+     * Whether to force zoom to fit on loading document
+     */
+    void setForceZoomToFitOnLoad(bool force);
+    bool getForceZoomToFitOnLoad();
+
+
+    /**
      * Sets the screen resolution in DPI
      */
     void setDisplayDpi(int dpi);
@@ -799,6 +806,11 @@ private:
      * Zoomstep for Ctrl + Scroll zooming
      */
     double zoomStepScroll{};
+
+    /**
+     * Whether to force zoom to fit on loading document
+     */
+    bool forceZoomToFitOnLoad{};
 
     /**
      * The display resolution, in pixels per inch. -1 for automatic detection

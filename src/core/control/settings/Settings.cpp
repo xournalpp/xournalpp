@@ -424,6 +424,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->zoomStep = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomStepScroll")) == 0) {
         this->zoomStepScroll = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("forceZoomToFitOnLoad")) == 0) {
+        this->forceZoomToFitOnLoad = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("displayDpi")) == 0) {
         this->displayDpi = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("mainWndWidth")) == 0) {
@@ -1016,6 +1018,7 @@ void Settings::save() {
     SAVE_DOUBLE_PROP(edgePanMaxMult);
     SAVE_DOUBLE_PROP(zoomStep);
     SAVE_DOUBLE_PROP(zoomStepScroll);
+    SAVE_BOOL_PROP(forceZoomToFitOnLoad);
     SAVE_INT_PROP(displayDpi);
     SAVE_INT_PROP(mainWndWidth);
     SAVE_INT_PROP(mainWndHeight);
@@ -1959,6 +1962,18 @@ void Settings::setZoomStepScroll(double zoomStepScroll) {
 }
 
 auto Settings::getZoomStepScroll() const -> double { return this->zoomStepScroll; }
+
+void Settings::setForceZoomToFitOnLoad(bool force) {
+    if (this->forceZoomToFitOnLoad == force) {
+        return;
+    }
+
+    this->forceZoomToFitOnLoad = force;
+
+    save();
+}
+
+auto Settings::getForceZoomToFitOnLoad() const -> bool { return this->forceZoomToFitOnLoad; }
 
 void Settings::setEdgePanSpeed(double speed) {
     if (this->edgePanSpeed == speed) {
