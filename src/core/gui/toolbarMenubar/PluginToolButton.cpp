@@ -17,22 +17,41 @@ PluginToolButton::PluginToolButton(ToolbarButtonEntry* t):
 PluginToolButton::~PluginToolButton() = default;
 
 auto PluginToolButton::createItem(bool) -> xoj::util::WidgetSPtr {
-    xoj::util::WidgetSPtr item(gtk_button_new(), xoj::util::adopt);
-    gtk_widget_set_can_focus(item.get(), false);  // todo(gtk4) not necessary anymore
+    GtkWidget* btn = gtk_button_new();
+    gtk_widget_set_can_focus(btn, false);  // todo(gtk4) not necessary anymore
 
-    GtkButton* btn = GTK_BUTTON(item.get());
-    gtk_button_set_relief(btn, GTK_RELIEF_NONE);
-    gtk_button_set_icon_name(btn, t->iconName.c_str());
-    gtk_widget_set_tooltip_text(GTK_WIDGET(btn), t->description.c_str());
+    gtk_button_set_relief(GTK_BUTTON(btn), GTK_RELIEF_NONE);
+    gtk_button_set_icon_name(GTK_BUTTON(btn), t->iconName.c_str());
+    gtk_widget_set_tooltip_text(btn, t->description.c_str());
 
-    // Connect signal
-    g_signal_connect(item.get(), "clicked", G_CALLBACK(+[](GtkButton*, gpointer d) {
+    g_signal_connect(btn, "clicked", G_CALLBACK(+[](GtkButton*, gpointer d) {
                          auto* te = static_cast<ToolbarButtonEntry*>(d);
                          te->plugin->executeToolbarButton(te);
                      }),
                      this->t);
 
-    return item;
+    GtkToolItem* it = gtk_tool_item_new();
+    gtk_container_add(GTK_CONTAINER(it), btn);
+
+    auto createProxy = [this]() {
+        GtkWidget* proxy = gtk_menu_item_new();
+
+        auto* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+        gtk_container_add(GTK_CONTAINER(proxy), box);
+        gtk_box_append(GTK_BOX(box), getNewToolIcon());
+        gtk_box_append(GTK_BOX(box), gtk_label_new(getToolDisplayName().c_str()));
+
+        g_signal_connect(proxy, "activate", G_CALLBACK(+[](GtkMenuItem*, gpointer d) {
+                             auto* te = static_cast<ToolbarButtonEntry*>(d);
+                             te->plugin->executeToolbarButton(te);
+                         }),
+                         this->t);
+
+        return proxy;
+    };
+    gtk_tool_item_set_proxy_menu_item(it, "", createProxy());
+
+    return xoj::util::WidgetSPtr(GTK_WIDGET(it), xoj::util::adopt);
 }
 
 auto PluginToolButton::getToolDisplayName() const -> std::string { return this->t->description; }
