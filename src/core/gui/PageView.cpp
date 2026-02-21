@@ -46,6 +46,7 @@
 #include "control/tools/VerticalToolHandler.h"      // for VerticalToolHandler
 #include "gui/FloatingToolbox.h"                    // for FloatingToolbox
 #include "gui/MainWindow.h"                         // for MainWindow
+#include "gui/scroll/ScrollHandling.h"  // for ScrollHandling
 #include "gui/PdfFloatingToolbox.h"                 // for PdfFloatingToolbox
 #include "gui/SearchBar.h"                          // for SearchBar
 #include "gui/inputdevices/PositionInputData.h"     // for PositionInputData
@@ -862,7 +863,10 @@ double XojPageView::getHeight() const { return page->getHeight(); }
 auto XojPageView::toWindowCoordinates(const xoj::util::Rectangle<double>& r) const -> xoj::util::Rectangle<double> {
     double zoom = this->getZoom();
     auto p = this->getPixelPosition();
-    return {r.x * zoom + p.x, r.y * zoom + p.y, r.width * zoom, r.height * zoom};
+    auto* scrollhandling = this->getXournal()->getScrollHandling();
+    auto scrollDelta = xoj::util::Point<double>(gtk_adjustment_get_value(scrollhandling->getHorizontal()),
+                                                gtk_adjustment_get_value(scrollhandling->getVertical()));
+    return {r.x * zoom + p.x - scrollDelta.x, r.y * zoom + p.y - scrollDelta.y, r.width * zoom, r.height * zoom};
 }
 
 void XojPageView::rerenderRect(double x, double y, double width, double height) {
