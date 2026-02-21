@@ -48,6 +48,10 @@ The process for contributing code changes works as follows:
 4. After receiving maintainer approval, the PR is merged after a short grace
    period.
 
+If your pull request does not need Xournal++ to be built to test it (e.g. for a
+README update), you can prepend [skip ci] to the title of the commit to disable
+CI running.
+
 ### Creating a fork
 
 To make a code change, you'll need to first fork the repository on GitHub, if
