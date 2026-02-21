@@ -35,6 +35,7 @@
 #include "undo/UndoRedoHandler.h"                   // for UndoRedoHandler (ptr only)
 
 #include "ClipboardHandler.h"  // for ClipboardListener
+#include "NavigationHistory.h"  // for NavigationHistory
 #include "ToolHandler.h"       // for ToolListener
 #include "filesystem.h"        // for path
 
@@ -252,6 +253,11 @@ public:
      * Disable / enable page action buttons
      */
     void updatePageActions();
+
+    /**
+     * Get the navigation history handler.
+     */
+    NavigationHistory* getNavigationHistory() const;
 
     // selection handling
     void clearSelection();
@@ -557,6 +563,8 @@ private:
 
     std::unique_ptr<GeometryTool> geometryTool;
     std::unique_ptr<GeometryToolController> geometryToolController;
+
+    std::unique_ptr<NavigationHistory> navHistory;
 
     /**
      * Manage all Xournal++ plugins
