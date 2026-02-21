@@ -25,9 +25,7 @@ public:
      */
     void repaintPage(const XojPageView* view);
 
-    /**
-     * Repaint a page area, coordinates are in view coordinates
-     */
+    /// Repaint a page area, coordinates are in pixel-coordinates, relative to the page's upper-left corner
     void repaintPageArea(const XojPageView* view, int x1, int y1, int x2, int y2);
 
     /**

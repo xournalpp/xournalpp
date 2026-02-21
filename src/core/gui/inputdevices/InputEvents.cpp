@@ -82,10 +82,8 @@ auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings,
     targetEvent.deviceId = DeviceId(targetEvent.device);
 
     // Copy both coordinates of the event
-    gdk_event_get_root_coords(sourceEvent, &targetEvent.absolute.x, &targetEvent.absolute.y);
-    gdk_event_get_coords(sourceEvent, &targetEvent.relative.x, &targetEvent.relative.y);
-
-    targetEvent.relative = targetEvent.relative + relativeOffset;
+    gdk_event_get_coords(sourceEvent, &targetEvent.absolute.x, &targetEvent.absolute.y);
+    targetEvent.relative = targetEvent.absolute + relativeOffset;
 
     // Copy the event button if there is any
     if (targetEvent.type == BUTTON_PRESS_EVENT || targetEvent.type == BUTTON_RELEASE_EVENT) {

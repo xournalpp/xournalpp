@@ -132,7 +132,7 @@ public:
 
     /**
      * Execute the given function for each entry that intersects the range. entryIndex is the entry, intersection is the
-     * intersection (in widget coordinates) and pixelPosition is the entry's upper left corner in widget coordinates
+     * intersection (in pixel coordinates) and pixelPosition is the entry's upper left corner in pixel coordinates
      */
     void forEachEntriesIntersectingRange(
             const Range& rg,

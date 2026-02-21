@@ -536,9 +536,6 @@ void EditSelection::mouseUp() {
     }
 }
 
-/**
- * Handles mouse input for moving and resizing, coordinates are relative to "view"
- */
 void EditSelection::mouseDown(CursorSelectionType type, double x, double y) {
     double zoom = this->view->getXournal()->getZoom();
 
@@ -555,9 +552,6 @@ void EditSelection::mouseDown(CursorSelectionType type, double x, double y) {
     this->relMousePosRotY = y / zoom - this->snappedBounds.y;
 }
 
-/**
- * Handles mouse input for moving and resizing, coordinates are relative to "view"
- */
 void EditSelection::mouseMove(double mouseX, double mouseY, bool alt) {
     double zoom = this->view->getXournal()->getZoom();
 

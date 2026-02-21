@@ -34,9 +34,7 @@ public:
     virtual ~FloatingToolbox();
 
 public:
-    /**
-     *  show(x,y): Show Toolbox at centered at x,y relative to main window.
-     */
+    /// Show the toolbox at the provided coordinates (in widget-coordinates).
     void show(int x, int y);
 
     /**

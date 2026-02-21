@@ -8,14 +8,16 @@
  *
  * @license GNU GPLv2 or later
  */
-
 #pragma once
 
-#include <gtk/gtk.h>  // for GtkAdjustment, GtkWidget, GtkScrollable
+#include <gtk/gtk.h>
 
-class Layout;
+namespace xoj::util {
+template <typename T>
+struct Point;
+}
 
-class ScrollHandling {
+class ScrollHandling final {
 public:
     ScrollHandling(GtkAdjustment* adjHorizontal, GtkAdjustment* adjVertical);
     ScrollHandling(GtkScrolledWindow* scrollable);
@@ -24,14 +26,9 @@ public:
 public:
     GtkAdjustment* getHorizontal();
     GtkAdjustment* getVertical();
-
-    void init(GtkWidget* xournal, Layout* layout);
+    xoj::util::Point<double> getPosition() const;
 
 private:
-protected:
     GtkAdjustment* adjHorizontal = nullptr;
     GtkAdjustment* adjVertical = nullptr;
-
-    GtkWidget* xournal = nullptr;
-    Layout* layout = nullptr;
 };

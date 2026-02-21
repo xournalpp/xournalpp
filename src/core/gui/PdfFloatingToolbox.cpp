@@ -65,11 +65,7 @@ auto PdfFloatingToolbox::newSelection(double x, double y) -> const PdfElemSelect
 
 void PdfFloatingToolbox::show(int x, int y) {
     xoj_assert(this->getSelection());
-
-    // (x, y) are in the gtk window's coordinates.
-    // However, we actually show the toolbox in the overlay's coordinate system.
-    gtk_widget_translate_coordinates(gtk_widget_get_toplevel(this->floatingToolbox), GTK_WIDGET(overlay.get()), x, y,
-                                     &this->position.x, &this->position.y);
+    this->position = {x, y};
     this->show();
 }
 
@@ -95,14 +91,17 @@ auto PdfFloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widg
         // By default, we show the toolbox below and to the right of the selected text.
         // If the toolbox will go out of the window, then we'll flip the corresponding directions.
 
-        GtkAllocation windowAlloc{};
-        gtk_widget_get_allocation(GTK_WIDGET(overlay), &windowAlloc);
+        GtkWidget* scrolledWindow =
+                gtk_widget_get_ancestor(self->theMainWindow->getXournal()->getWidget(), GTK_TYPE_SCROLLED_WINDOW);
 
-        bool rightOK = self->position.x + allocation->width + gap <= windowAlloc.width;
-        bool bottomOK = self->position.y + allocation->height + gap <= windowAlloc.height;
+        bool rightOK = self->position.x + allocation->width + gap <= gtk_widget_get_allocated_width(scrolledWindow);
+        bool bottomOK = self->position.y + allocation->height + gap <= gtk_widget_get_allocated_height(scrolledWindow);
 
         allocation->x = rightOK ? self->position.x + gap : self->position.x - allocation->width - gap;
         allocation->y = bottomOK ? self->position.y + gap : self->position.y - allocation->height - gap;
+
+        gtk_widget_translate_coordinates(scrolledWindow, GTK_WIDGET(overlay), allocation->x, allocation->y,
+                                         &allocation->x, &allocation->y);
 
         return true;
     }

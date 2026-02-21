@@ -112,7 +112,10 @@ public:
     XournalppCursor* getCursor() const;
     Layout* getLayout() const;
 
+
+    /// Return the rectangle (if any) which is visible on screen in page cooordinates
     xoj::util::Rectangle<double>* getVisibleRect(size_t page) const;
+    /// Return the rectangle (if any) which is visible on screen in page cooordinates
     xoj::util::Rectangle<double>* getVisibleRect(const XojPageView* redrawable) const;
 
     /**

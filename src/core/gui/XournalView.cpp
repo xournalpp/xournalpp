@@ -491,11 +491,6 @@ void XournalView::getPasteTarget(double& x, double& y) const {
     }
 }
 
-/**
- * Return the rectangle which is visible on screen, in document cooordinates
- *
- * Or nullptr if the page is not visible
- */
 auto XournalView::getVisibleRect(size_t page) const -> Rectangle<double>* {
     if (page == npos || page >= this->viewPages.size()) {
         return nullptr;

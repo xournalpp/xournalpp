@@ -24,8 +24,8 @@ public:
     bool isAltDown() const;
 
 public:
-    double x;
-    double y;
+    double x;  ///< in pixel coordinates, relative to the page's upper-left corner
+    double y;  ///< in pixel coordinates, relative to the page's upper-left corner
     double pressure;
     guint32 timestamp;
     DeviceId deviceId;
