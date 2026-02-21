@@ -89,6 +89,9 @@ void Settings::loadDefault() {
 
     this->mainWndWidth = 800;
     this->mainWndHeight = 600;
+    this->mainWndX = -1;  // -1 means use default/system positioning
+    this->mainWndY = -1;
+    this->rememberWindowPosition = false;
 
     this->fullscreenActive = false;
 
@@ -430,8 +433,14 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->mainWndWidth = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("mainWndHeight")) == 0) {
         this->mainWndHeight = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("mainWndX")) == 0) {
+        this->mainWndX = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("mainWndY")) == 0) {
+        this->mainWndY = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("maximized")) == 0) {
         this->maximized = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("rememberWindowPosition")) == 0) {
+        this->rememberWindowPosition = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("showToolbar")) == 0) {
         this->showToolbar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("filepathShownInTitlebar")) == 0) {
@@ -1019,7 +1028,10 @@ void Settings::save() {
     SAVE_INT_PROP(displayDpi);
     SAVE_INT_PROP(mainWndWidth);
     SAVE_INT_PROP(mainWndHeight);
+    SAVE_INT_PROP(mainWndX);
+    SAVE_INT_PROP(mainWndY);
     SAVE_BOOL_PROP(maximized);
+    SAVE_BOOL_PROP(rememberWindowPosition);
 
     SAVE_BOOL_PROP(showToolbar);
 
@@ -2054,6 +2066,26 @@ void Settings::setMainWndMaximized(bool max) {
     this->maximized = max;
     save();
 }
+
+void Settings::setMainWndPosition(int x, int y) {
+    this->mainWndX = x;
+    this->mainWndY = y;
+    save();
+}
+
+auto Settings::getMainWndX() const -> int { return this->mainWndX; }
+
+auto Settings::getMainWndY() const -> int { return this->mainWndY; }
+
+void Settings::setRememberWindowPosition(bool remember) {
+    if (this->rememberWindowPosition == remember) {
+        return;
+    }
+    this->rememberWindowPosition = remember;
+    save();
+}
+
+auto Settings::isRememberWindowPosition() const -> bool { return this->rememberWindowPosition; }
 
 void Settings::setSelectedToolbar(const string& name) {
     if (this->selectedToolbar == name) {
