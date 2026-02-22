@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-11 09:27+0000\n"
-"PO-Revision-Date: 2026-02-15 04:56\n"
+"POT-Creation-Date: 2026-02-17 10:08+0000\n"
+"PO-Revision-Date: 2026-02-22 04:55\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -47,8 +47,8 @@ msgstr "Да"
 msgid "No"
 msgstr "Нет"
 
-#: ../src/core/control/Control.cpp:828 ../src/core/control/Control.cpp:1786
-#: ../src/core/control/Control.cpp:2111
+#: ../src/core/control/Control.cpp:828 ../src/core/control/Control.cpp:1792
+#: ../src/core/control/Control.cpp:2114
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -117,77 +117,86 @@ msgid "Error reading PDF file \"{1}\"\n"
 msgstr "Ошибка чтения PDF файла \"{1}\"\n"
 "{2}"
 
-#: ../src/core/control/Control.cpp:1620
+#: ../src/core/control/Control.cpp:1619
 msgid "Error reading PNG file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1766
+#: ../src/core/control/Control.cpp:1664
+msgid "Failed to determine if path exists \"{1}\": {2}"
+msgstr ""
+
+#: ../src/core/control/Control.cpp:1665
+msgid "That file does not exist:\n"
+"\"{1}\""
+msgstr ""
+
+#: ../src/core/control/Control.cpp:1772
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Не удалось найти прикрепленный файл фона. Возможно, он был перемещен, переименован или удален."
 
-#: ../src/core/control/Control.cpp:1769
+#: ../src/core/control/Control.cpp:1775
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Не удалось найти прикрепленный файл фона \"{1}\" Возможно, он был перемещен, переименован или удален. Последний раз он был виден в: \"{2}\""
 
-#: ../src/core/control/Control.cpp:1779
+#: ../src/core/control/Control.cpp:1785
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Предлагаемый файл для замены: \"{1}\""
 
-#: ../src/core/control/Control.cpp:1784
+#: ../src/core/control/Control.cpp:1790
 msgid "Select another PDF"
 msgstr "Выбрать другой PDF"
 
-#: ../src/core/control/Control.cpp:1785
+#: ../src/core/control/Control.cpp:1791
 msgid "Remove PDF Background"
 msgstr "Удалить PDF фон"
 
-#: ../src/core/control/Control.cpp:1789
+#: ../src/core/control/Control.cpp:1795
 msgid "Use proposed PDF"
 msgstr "Использовать предложенный PDF"
 
-#: ../src/core/control/Control.cpp:1792
+#: ../src/core/control/Control.cpp:1798
 msgid "Missing PDF background file"
 msgstr "Отсутствует файл фона PDF"
 
-#: ../src/core/control/Control.cpp:1924
+#: ../src/core/control/Control.cpp:1927
 msgid "Select font"
 msgstr "Выбрать шрифт"
 
-#: ../src/core/control/Control.cpp:1943
+#: ../src/core/control/Control.cpp:1946
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Выбрать цвет"
 
-#: ../src/core/control/Control.cpp:1968
+#: ../src/core/control/Control.cpp:1971
 msgid "Unsaved Document"
 msgstr "Несохранённый документ"
 
-#: ../src/core/control/Control.cpp:2104
+#: ../src/core/control/Control.cpp:2107
 msgid "Document file was removed."
 msgstr "Файл документа был удален."
 
-#: ../src/core/control/Control.cpp:2104
+#: ../src/core/control/Control.cpp:2107
 msgid "This document is not saved yet."
 msgstr "Этот документ еще не сохранен."
 
-#: ../src/core/control/Control.cpp:2106
+#: ../src/core/control/Control.cpp:2109
 msgid "Save As..."
 msgstr "Сохранить как..."
 
-#: ../src/core/control/Control.cpp:2106 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2109 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "Сохранить"
 
-#: ../src/core/control/Control.cpp:2109
+#: ../src/core/control/Control.cpp:2112
 msgid "Discard"
 msgstr "Не сохранять"
 
-#: ../src/core/control/Control.cpp:2194
+#: ../src/core/control/Control.cpp:2197
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -351,55 +360,55 @@ msgstr "Ошибка файловой системы: {1}\n"
 "К сожалению, Xournal++ не может открыть файл: {2}\n"
 "Рассмотрите возможность копирования файла в локальную директорию."
 
-#: ../src/core/control/XournalMain.cpp:606
+#: ../src/core/control/XournalMain.cpp:617
 msgid "Jump to Page (first Page: 1)"
 msgstr "Перейти на страницу (первая страница: 1)"
 
-#: ../src/core/control/XournalMain.cpp:610
+#: ../src/core/control/XournalMain.cpp:621
 msgid "Get version of xournalpp"
 msgstr "Узнать версию xournalpp"
 
-#: ../src/core/control/XournalMain.cpp:612
+#: ../src/core/control/XournalMain.cpp:623
 msgid "Disable audio for this session"
 msgstr "Отключить аудио для этой сессии"
 
-#: ../src/core/control/XournalMain.cpp:614
+#: ../src/core/control/XournalMain.cpp:625
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:618
+#: ../src/core/control/XournalMain.cpp:629
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "Сохраните xopp-файл с фоновым PDF-файлом, указанным в качестве файла"
 
-#: ../src/core/control/XournalMain.cpp:623
+#: ../src/core/control/XournalMain.cpp:634
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:632
+#: ../src/core/control/XournalMain.cpp:643
 msgid "Export FILE as PDF"
 msgstr "Экспортировать файл в PDF"
 
-#: ../src/core/control/XournalMain.cpp:635
+#: ../src/core/control/XournalMain.cpp:646
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:641
+#: ../src/core/control/XournalMain.cpp:652
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:646
+#: ../src/core/control/XournalMain.cpp:657
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:651
+#: ../src/core/control/XournalMain.cpp:662
 msgid "Export layers progressively\n"
 "                                       In PDF export, Render layers progressively one by one.\n"
 "                                       This results in N export pages per page with N layers,\n"
@@ -407,38 +416,38 @@ msgid "Export layers progressively\n"
 "                                       The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:660
+#: ../src/core/control/XournalMain.cpp:671
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:665
+#: ../src/core/control/XournalMain.cpp:676
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:669
+#: ../src/core/control/XournalMain.cpp:680
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:673
+#: ../src/core/control/XournalMain.cpp:684
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:678
+#: ../src/core/control/XournalMain.cpp:689
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:686
+#: ../src/core/control/XournalMain.cpp:697
 msgid "Advanced export options"
 msgstr "Расширенные параметры экспорта"
 
-#: ../src/core/control/XournalMain.cpp:687
+#: ../src/core/control/XournalMain.cpp:698
 msgid "Display advanced export options"
 msgstr "Показать расширенные параметры экспорта"
 
@@ -713,40 +722,40 @@ msgstr "Неизвестный тип обводки: \"{1}\", предполо�
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Неизвестный тип черты: \"{1}\", предполагается, что это перо"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:812
-#: ../src/core/control/xojfile/LoadHandler.cpp:828
-#: ../src/core/control/xojfile/LoadHandler.cpp:1141
-#: ../src/core/control/xojfile/LoadHandler.cpp:1155
+#: ../src/core/control/xojfile/LoadHandler.cpp:811
+#: ../src/core/control/xojfile/LoadHandler.cpp:827
+#: ../src/core/control/xojfile/LoadHandler.cpp:1140
+#: ../src/core/control/xojfile/LoadHandler.cpp:1154
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Не удалось открыть вложение: {1}. Сообщение об ошибке: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:821
-#: ../src/core/control/xojfile/LoadHandler.cpp:1147
-#: ../src/core/control/xojfile/LoadHandler.cpp:1166
+#: ../src/core/control/xojfile/LoadHandler.cpp:820
+#: ../src/core/control/xojfile/LoadHandler.cpp:1146
+#: ../src/core/control/xojfile/LoadHandler.cpp:1165
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Не удалось открыть вложение: {1}. Сообщение об ошибке: недопустимый размер файла"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:840
+#: ../src/core/control/xojfile/LoadHandler.cpp:839
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Не удалось открыть вложение: {1}. Сообщение об ошибке: Не удалось прочитать файл"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:849
+#: ../src/core/control/xojfile/LoadHandler.cpp:848
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Не удалось открыть вложение: {1}. Сообщение об ошибке: Не удалось записать файл"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1036
+#: ../src/core/control/xojfile/LoadHandler.cpp:1035
 msgid "Wrong count of points ({1})"
 msgstr "Неправильное количество точек ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1052
+#: ../src/core/control/xojfile/LoadHandler.cpp:1051
 msgid "xoj-File: {1}"
 msgstr "Файл xoj: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1053
+#: ../src/core/control/xojfile/LoadHandler.cpp:1052
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr "Неправильное количество значений давления, получено {1}, ожидалось {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1185
+#: ../src/core/control/xojfile/LoadHandler.cpp:1184
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Запрошенный временный файл не найден для вложения {1}"
 
