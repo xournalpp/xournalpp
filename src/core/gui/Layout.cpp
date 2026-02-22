@@ -390,9 +390,8 @@ auto Layout::getFixedPaddingBeforePoint(const xoj::util::Point<double>& ref) con
     int paddingX =
             [&](int col) {
                 if (!pc.mapper.isPairedPages()) {
-                    // No page pairing or we haven't rendered enough pages in the row for page pairing to have an
-                    // effect,
-                    return col * XOURNAL_PADDING_BETWEEN + XOURNAL_PADDING_BETWEEN / 2;
+                    // No page pairing or we haven't rendered enough pages in the row for page pairing to have an effect
+                    return col * XOURNAL_PADDING_BETWEEN;
                 } else {
                     auto columnPadding = XOURNAL_PADDING_BETWEEN + col * XOURNAL_PADDING_BETWEEN;
                     if (col % 2 == 0) {
