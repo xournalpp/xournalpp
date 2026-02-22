@@ -269,6 +269,7 @@ void Layout::updateVisibility() {
 
     auto it = visiblePages.begin();
     for (auto&& s: this->previouslyVisiblePages) {
+        xoj_assert(s < this->view->getViewPages().size());
         while (it != visiblePages.end() && *it < s) {
             it++;
         }
@@ -304,6 +305,9 @@ void Layout::computePrecalculated() {
     pc.widthCols.assign(colCount, 0);
     pc.heightRows.assign(rowCount, 0);
 
+    // When we add/remove a page, the indices in previouslyVisiblePages are invalidated
+    previouslyVisiblePages.clear();
+
     for (size_t pageIdx{}; pageIdx < len; ++pageIdx) {
         auto const& raster_p = pc.mapper.at(pageIdx);  // auto [c, r] raster = mapper.at();
         auto const& c = raster_p.col;
@@ -312,6 +316,10 @@ void Layout::computePrecalculated() {
         pc.widthCols[c] = std::max(pc.widthCols[c], v->getWidth());
         pc.heightRows[r] = std::max(pc.heightRows[r], v->getHeight());
         v->setGridCoordinates({strict_cast<int>(c), strict_cast<int>(r)});
+        if (v->isVisible()) {
+            // The page may no longer be visible after the relayout. That will be handled in updateVisibility() later
+            previouslyVisiblePages.emplace_back(pageIdx);
+        }
     }
 
     pc.stretchableHorizontalPixelsAfterColumn.clear();
