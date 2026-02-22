@@ -156,11 +156,6 @@ void TouchInputHandler::zoomStart() {
     auto center = (this->priLastAbs + this->secLastAbs) / 2.0;
     this->lastZoomScrollCenter = center;
 
-    // translate absolute window coordinates to the widget-local coordinates
-    const auto* mainWindow = inputContext->getView()->getControl()->getWindow();
-    const auto translation = mainWindow->getNegativeXournalWidgetPos();
-    center += translation;
-
     zoomControl->startZoomSequence(center);
 
     this->startZoomReady = false;

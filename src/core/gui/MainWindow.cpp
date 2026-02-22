@@ -338,10 +338,6 @@ void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
 
 auto MainWindow::getLayout() const -> Layout* { return this->xournal->getLayout(); }
 
-auto MainWindow::getNegativeXournalWidgetPos() const -> xoj::util::Point<double> {
-    return Util::toWidgetCoords(this->winXournal, xoj::util::Point{0.0, 0.0});
-}
-
 auto cancellable_cancel(GCancellable* cancel) -> bool {
     g_cancellable_cancel(cancel);
 
