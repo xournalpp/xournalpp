@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-12 17:13+0000\n"
-"PO-Revision-Date: 2026-02-15 04:56\n"
+"POT-Creation-Date: 2026-02-21 19:57+0000\n"
+"PO-Revision-Date: 2026-02-22 04:55\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -47,8 +47,8 @@ msgstr "Da"
 msgid "No"
 msgstr "Nu"
 
-#: ../src/core/control/Control.cpp:826 ../src/core/control/Control.cpp:1792
-#: ../src/core/control/Control.cpp:2117
+#: ../src/core/control/Control.cpp:826 ../src/core/control/Control.cpp:1798
+#: ../src/core/control/Control.cpp:2120
 msgid "Cancel"
 msgstr "Renunță"
 
@@ -119,82 +119,91 @@ msgid "Error reading PDF file \"{1}\"\n"
 msgstr "Eroare la citirea fișierului PDF „{1}”\n"
 "{2}"
 
-#: ../src/core/control/Control.cpp:1618
+#: ../src/core/control/Control.cpp:1617
 msgid "Error reading PNG file \"{1}\""
 msgstr "Eroare la citirea fișierului PNG „{1}”"
 
-#: ../src/core/control/Control.cpp:1653
+#: ../src/core/control/Control.cpp:1652
 msgid "Error reading template file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1772
+#: ../src/core/control/Control.cpp:1671
+msgid "Failed to determine if path exists \"{1}\": {2}"
+msgstr ""
+
+#: ../src/core/control/Control.cpp:1672
+msgid "That file does not exist:\n"
+"\"{1}\""
+msgstr ""
+
+#: ../src/core/control/Control.cpp:1778
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Fișierul fondului atașat nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau eliminat."
 
-#: ../src/core/control/Control.cpp:1775
+#: ../src/core/control/Control.cpp:1781
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Fișierul fondului „{1}” nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau eliminat.\n"
 "A fost văzut ultima dată în: „{2}”"
 
-#: ../src/core/control/Control.cpp:1785
+#: ../src/core/control/Control.cpp:1791
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Fișierul de înlocuire propus: „{1}”"
 
-#: ../src/core/control/Control.cpp:1790
+#: ../src/core/control/Control.cpp:1796
 msgid "Select another PDF"
 msgstr "Alege un alt PDF"
 
-#: ../src/core/control/Control.cpp:1791
+#: ../src/core/control/Control.cpp:1797
 msgid "Remove PDF Background"
 msgstr "Elimină fondul PDF"
 
-#: ../src/core/control/Control.cpp:1795
+#: ../src/core/control/Control.cpp:1801
 msgid "Use proposed PDF"
 msgstr "Folosește fișierul PDF propus"
 
-#: ../src/core/control/Control.cpp:1798
+#: ../src/core/control/Control.cpp:1804
 msgid "Missing PDF background file"
 msgstr "Lipsește fișierul fondului PDF"
 
-#: ../src/core/control/Control.cpp:1930
+#: ../src/core/control/Control.cpp:1933
 msgid "Select font"
 msgstr "Alege tipul de litere"
 
-#: ../src/core/control/Control.cpp:1949
+#: ../src/core/control/Control.cpp:1952
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Alege culoarea"
 
-#: ../src/core/control/Control.cpp:1974
+#: ../src/core/control/Control.cpp:1977
 msgid "Unsaved Document"
 msgstr "Document nesalvat"
 
-#: ../src/core/control/Control.cpp:2110
+#: ../src/core/control/Control.cpp:2113
 msgid "Document file was removed."
 msgstr "Fișierul documentului a fost eliminat."
 
-#: ../src/core/control/Control.cpp:2110
+#: ../src/core/control/Control.cpp:2113
 msgid "This document is not saved yet."
 msgstr "Acest document nu este salvat încă."
 
-#: ../src/core/control/Control.cpp:2112
+#: ../src/core/control/Control.cpp:2115
 msgid "Save As..."
 msgstr "Salvează ca..."
 
-#: ../src/core/control/Control.cpp:2112 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2115 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "Salvează"
 
-#: ../src/core/control/Control.cpp:2115
+#: ../src/core/control/Control.cpp:2118
 msgid "Discard"
 msgstr "Nu salva"
 
-#: ../src/core/control/Control.cpp:2200
+#: ../src/core/control/Control.cpp:2203
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr "Crearea subprocesului demonstrativ Gtk a eșuat: {1} (cod rezultat: {2})"
 
@@ -263,15 +272,15 @@ msgstr "Nu s-a putut citi fișierul modelului global. Controlează configurarea.
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "Fișierul modelului global nu este un fișier obișnuit. Controlează configurarea. "
 
-#: ../src/core/control/LatexController.cpp:244
+#: ../src/core/control/LatexController.cpp:245
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "S-a produs o eroare la generarea LaTeX: {1} (eroare: {2})"
 
-#: ../src/core/control/LatexController.cpp:313
+#: ../src/core/control/LatexController.cpp:314
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "Nu s-a putut încărca fișierul PDF LaTeX:{1}"
 
-#: ../src/core/control/LatexController.cpp:318
+#: ../src/core/control/LatexController.cpp:319
 msgid "Could not load LaTeX PDF file"
 msgstr "Nu s-a putut încărca fișierul PDF LaTeX"
 
@@ -379,29 +388,29 @@ msgstr "Eroare a sistemului de fișiere: {1}\n"
 "Xournal++ nu poate deschide fișierul: {2}\n"
 "Încearcă să copiezi fișierul într-un dosar local."
 
-#: ../src/core/control/XournalMain.cpp:608
+#: ../src/core/control/XournalMain.cpp:619
 msgid "Jump to Page (first Page: 1)"
 msgstr "Salt la pagina (prima pagină: 1)"
 
-#: ../src/core/control/XournalMain.cpp:612
+#: ../src/core/control/XournalMain.cpp:623
 msgid "Get version of xournalpp"
 msgstr "Obține versiunea xournalpp"
 
-#: ../src/core/control/XournalMain.cpp:614
+#: ../src/core/control/XournalMain.cpp:625
 msgid "Disable audio for this session"
 msgstr "Dezactivează audio pentru această sesiune"
 
-#: ../src/core/control/XournalMain.cpp:616
+#: ../src/core/control/XournalMain.cpp:627
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
 msgstr "Deschide PDF-ul ca atașat\n"
 "                                       Ignorat dacă nu este specificat niciun fișier PDF."
 
-#: ../src/core/control/XournalMain.cpp:620
+#: ../src/core/control/XournalMain.cpp:631
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "Salvează fișierul xopp cu fondul PDF specificat ca fișier"
 
-#: ../src/core/control/XournalMain.cpp:625
+#: ../src/core/control/XournalMain.cpp:636
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
@@ -409,11 +418,11 @@ msgstr "Folosește backend-ul furnizat pentru exportările în PDF.\n"
 "                                       Backend-uri disponibile: {1}\n"
 "                                       Niciun efect fără -p/--create-pdf=foo.pdf"
 
-#: ../src/core/control/XournalMain.cpp:634
+#: ../src/core/control/XournalMain.cpp:645
 msgid "Export FILE as PDF"
 msgstr "Exportă fișierul ca PDF"
 
-#: ../src/core/control/XournalMain.cpp:637
+#: ../src/core/control/XournalMain.cpp:648
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
@@ -421,7 +430,7 @@ msgstr "Exportă fișierul ca fișiere imagine (unul per pagină)\n"
 "                                 Ghicește formatul de ieșire din extensia IMGFILE\n"
 "                                 Formate acceptate: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:643
+#: ../src/core/control/XournalMain.cpp:654
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
@@ -429,13 +438,13 @@ msgstr "Exportă fără fond\n"
 "                                 Fișierul exportat are un fond transparent sau alb,\n"
 "                                 în funcție de formatul compatibil cu acesta\n"
 
-#: ../src/core/control/XournalMain.cpp:648
+#: ../src/core/control/XournalMain.cpp:659
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
 msgstr "Exportă fără liniere\n"
 "                                 Fișierul exportat nu are hârtia liniată\n"
 
-#: ../src/core/control/XournalMain.cpp:653
+#: ../src/core/control/XournalMain.cpp:664
 msgid "Export layers progressively\n"
 "                                       In PDF export, Render layers progressively one by one.\n"
 "                                       This results in N export pages per page with N layers,\n"
@@ -447,25 +456,25 @@ msgstr "Exportă straturile pe rând\n"
 "                                 construind progresiv stiva de straturi.\n"
 "                                 Fișierul PDF rezultat poate fi utilizat pentru o prezentare.\n"
 
-#: ../src/core/control/XournalMain.cpp:662
+#: ../src/core/control/XournalMain.cpp:673
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Exportă numai paginile indicate de interval (de ex. „2-3,5,7-”)\n"
 "                                 Niciun efect fără -p/--create-pdf or -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:667
+#: ../src/core/control/XournalMain.cpp:678
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Exportă numai paginile indicate de interval (de ex. „2-3,5,7-”)\n"
 "                                 Niciun efect fără -p/--create-pdf or -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:671
+#: ../src/core/control/XournalMain.cpp:682
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
 msgstr "Alege DPI-ul pentru exportările în PNG. Prestabilit este 300\n"
 "                                 Niciun efect fără -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:675
+#: ../src/core/control/XournalMain.cpp:686
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
@@ -473,7 +482,7 @@ msgstr "Alege lățimea paginii pentru exportările PNG\n"
 "                                 Niciun efect fără -i/--create-img=foo.png\n"
 "                                 Ignorat dacă --export-png-dpi este folosit"
 
-#: ../src/core/control/XournalMain.cpp:680
+#: ../src/core/control/XournalMain.cpp:691
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
@@ -481,11 +490,11 @@ msgstr "Alege înălțimea paginii pentru exportările PNG\n"
 "                                 Niciun efect fără -i/--create-img=foo.png\n"
 "                                 Ignorat dacă e folosit --export-png-dpi sau --export-png-width"
 
-#: ../src/core/control/XournalMain.cpp:688
+#: ../src/core/control/XournalMain.cpp:699
 msgid "Advanced export options"
 msgstr "Opțiuni avansate de exportare"
 
-#: ../src/core/control/XournalMain.cpp:689
+#: ../src/core/control/XournalMain.cpp:700
 msgid "Display advanced export options"
 msgstr "Arată opțiuni avansate de exportare"
 
@@ -573,11 +582,11 @@ msgstr "Exportă PDF"
 msgid "Save file error, can't backup: {1}"
 msgstr "Eroare la salvarea fișierului, nu se poate copia: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:60
+#: ../src/core/control/latex/LatexGenerator.cpp:108
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Nu s-a reușit analizarea comenzii de generare LaTeX: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:66
+#: ../src/core/control/latex/LatexGenerator.cpp:114
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
@@ -585,15 +594,15 @@ msgstr "Nu s-a putut găsi programul de generare LaTeX cu calea: {1}\n\n"
 "Deoarece Xournal++ a fost instalat din Flatpak, trebuie instalată extensia Flatpak freedesktop Tex Live. De exemplu, cu ajutorul comenzii:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:71
+#: ../src/core/control/latex/LatexGenerator.cpp:119
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Nu s-a putut găsi programul de generare LaTeX cu calea: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:79
+#: ../src/core/control/latex/LatexGenerator.cpp:127
 msgid "Could not save .tex file: {1}"
 msgstr "Nu s-a putut salva fișierul .tex: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:94
+#: ../src/core/control/latex/LatexGenerator.cpp:142
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Nu s-a putut porni {1}: {2} (eroare: {3})"
 
@@ -650,19 +659,19 @@ msgstr "%F-Notițe-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_adnotat"
 
-#: ../src/core/control/tools/EditSelection.cpp:478
+#: ../src/core/control/tools/EditSelection.cpp:462
 msgid "Arrange"
 msgstr "Aranjare"
 
-#: ../src/core/control/tools/EditSelection.cpp:493
+#: ../src/core/control/tools/EditSelection.cpp:477
 msgid "Bring forward"
 msgstr "Adu mai aproape"
 
-#: ../src/core/control/tools/EditSelection.cpp:504
+#: ../src/core/control/tools/EditSelection.cpp:488
 msgid "Send backward"
 msgstr "Trimite în plan secundar"
 
-#: ../src/core/control/tools/EditSelection.cpp:511
+#: ../src/core/control/tools/EditSelection.cpp:495
 msgid "Send to back"
 msgstr "Trimite în ultimul plan"
 
@@ -756,40 +765,40 @@ msgstr "Tip necunoscut de contur: „{1}”, se presupune a fi un cerc"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Tip necunoscut de linie: „{1}”, se presupune a fi de creion"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:812
-#: ../src/core/control/xojfile/LoadHandler.cpp:828
-#: ../src/core/control/xojfile/LoadHandler.cpp:1141
-#: ../src/core/control/xojfile/LoadHandler.cpp:1155
+#: ../src/core/control/xojfile/LoadHandler.cpp:811
+#: ../src/core/control/xojfile/LoadHandler.cpp:827
+#: ../src/core/control/xojfile/LoadHandler.cpp:1140
+#: ../src/core/control/xojfile/LoadHandler.cpp:1154
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Fișierul atașat nu a putut fi deschis: {1}. Mesaj de eroare: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:821
-#: ../src/core/control/xojfile/LoadHandler.cpp:1147
-#: ../src/core/control/xojfile/LoadHandler.cpp:1166
+#: ../src/core/control/xojfile/LoadHandler.cpp:820
+#: ../src/core/control/xojfile/LoadHandler.cpp:1146
+#: ../src/core/control/xojfile/LoadHandler.cpp:1165
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Fișierul atașat nu a putut fi deschis: {1}. Mesaj de eroare: Nicio dimensiune validă a fișierului furnizată"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:840
+#: ../src/core/control/xojfile/LoadHandler.cpp:839
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Fișierul atașat nu a putut fi deschis: {1}. Mesaj de eroare: Nu s-a putut citi fișierul"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:849
+#: ../src/core/control/xojfile/LoadHandler.cpp:848
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Fișierul atașat nu a putut fi deschis: {1}. Mesaj de eroare: Nu s-a putut scrie fișierul"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1036
+#: ../src/core/control/xojfile/LoadHandler.cpp:1035
 msgid "Wrong count of points ({1})"
 msgstr "Număr greșit de puncte ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1052
+#: ../src/core/control/xojfile/LoadHandler.cpp:1051
 msgid "xoj-File: {1}"
 msgstr "xoj-Fișier: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1053
+#: ../src/core/control/xojfile/LoadHandler.cpp:1052
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr "Numărul de valori ale presiunii este greșit; date {1}, așteptate {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1185
+#: ../src/core/control/xojfile/LoadHandler.cpp:1184
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Fișierul temporar solicitat nu a fost găsit pentru atașarea {1}"
 
@@ -843,21 +852,21 @@ msgstr "Nu s-a putut scrie fondul „{1}”. Continuă oricum."
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Eroare la încărcarea fișierului glade „{1}” (încerc să încarc „{2}”)"
 
-#: ../src/core/gui/PageView.cpp:403
+#: ../src/core/gui/PageView.cpp:399
 msgid "Unable to play audio recording {1}"
 msgstr "Imposibil de redat înregistrarea audio {1}"
 
-#: ../src/core/gui/PageView.cpp:944
+#: ../src/core/gui/PageView.cpp:938
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:145
 msgid "Loading..."
 msgstr "Se încarcă..."
 
-#: ../src/core/gui/PageView.cpp:1001
+#: ../src/core/gui/PageView.cpp:995
 msgid "Scroll to page {1}"
 msgstr "Du-te la pagina {1}"
 
-#: ../src/core/gui/PageView.cpp:1003
+#: ../src/core/gui/PageView.cpp:997
 msgid "Add missing page"
 msgstr "Adaugă pagina lipsă"
 
@@ -2128,17 +2137,26 @@ msgstr "A apărut o eroare la închiderea fișierului: „{1}”"
 msgid "Error code {1}"
 msgstr "Cod de eroare {1}"
 
-#: ../src/util/PathUtil.cpp:310
+#: ../src/util/PathUtil.cpp:125
+msgid "Could not open file: {1}"
+msgstr ""
+
+#: ../src/util/PathUtil.cpp:132
+msgid "Error reading \"{1}\":\n"
+"{2}"
+msgstr ""
+
+#: ../src/util/PathUtil.cpp:316
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Fișierul nu a putut fi deschis. Trebuie deschis manual:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:425
+#: ../src/util/PathUtil.cpp:431
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:434
+#: ../src/util/PathUtil.cpp:440
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Nu s-a putut crea dosarul: {1}\n"
@@ -2538,79 +2556,87 @@ msgstr "%%XPP_TEXT_COLOR%%"
 msgid "The current color of the Text Tool, in hex RGB format."
 msgstr "Culoarea actuală a instrumentului de text în format hexazecimal RGB."
 
-#: ../ui/latexSettings.glade:195
+#: ../ui/latexSettings.glade:194
+msgid "%%XPP_VARNAME%%"
+msgstr ""
+
+#: ../ui/latexSettings.glade:206
+msgid "Any custom variable defined with a %xpp:varname=value directive in the formula input."
+msgstr ""
+
+#: ../ui/latexSettings.glade:219
 msgid "Template file settings"
 msgstr "Configurarea fișierului modelului"
 
-#: ../ui/latexSettings.glade:224
+#: ../ui/latexSettings.glade:248
 msgid "LaTeX generation command"
 msgstr "Comanda de generare LaTeX"
 
-#: ../ui/latexSettings.glade:245
+#: ../ui/latexSettings.glade:269
 msgid "Test configuration"
 msgstr "Testează configurarea"
 
-#: ../ui/latexSettings.glade:249
+#: ../ui/latexSettings.glade:273
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr "Verifică dacă este valabilă configurarea actuală, prin executarea comenzii de generare LaTeX pe fișierul modelului global, cu o formulă de test."
 
-#: ../ui/latexSettings.glade:265
+#: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
 msgstr "Reglări executabile LaTeX"
 
-#: ../ui/latexSettings.glade:340
+#: ../ui/latexSettings.glade:364
 msgid "Line numbers"
 msgstr "Numerotare rânduri"
 
-#: ../ui/latexSettings.glade:354
+#: ../ui/latexSettings.glade:378
 msgid "Auto-indent"
 msgstr "Alineat automat"
 
-#: ../ui/latexSettings.glade:368
+#: ../ui/latexSettings.glade:392
 msgid "Syntax highlighting"
 msgstr "Evidențiere sintaxă"
 
-#: ../ui/latexSettings.glade:400
+#: ../ui/latexSettings.glade:424
 msgid "Wrap text"
 msgstr "Automat pe un rând nou"
 
-#: ../ui/latexSettings.glade:434
+#: ../ui/latexSettings.glade:458
 msgid "Use font from system theme."
 msgstr "Folosește literele sistemului."
 
-#: ../ui/latexSettings.glade:454
+#: ../ui/latexSettings.glade:478
 msgid "Font: "
 msgstr "Tipul de litere: "
 
-#: ../ui/latexSettings.glade:469
+#: ../ui/latexSettings.glade:493
 msgid "Pick the Editor's Font"
 msgstr "Alege tipul de litere"
 
-#: ../ui/latexSettings.glade:516
+#: ../ui/latexSettings.glade:540
 msgid "You can optionally use an external editor program instead of the built-in editor. If you enable the option below, the provided editor command (defaulting to $EDITOR) will start with a popup that only shows a preview and potential error message instead of the normal one with a built-in editor. The environment variable XPP_TEXT_COLOR is set to the current Text Tool color in hex RGB format."
 msgstr "Se poate folosi un program editor extern în locul editorului integrat. Dacă se activează opțiunea de mai jos, comanda de editor furnizată (prestabilit este $EDITOR) va începe cu o fereastră contextuală care afișează doar o previzualizare și un potențial mesaj de eroare, în loc de cea normală cu editorul integrat. Variabila de mediu XPP_TEXT_COLOR este stabilită la culoarea actuală a instrumentului Text Tool în format hexazecimal RGB."
 
-#: ../ui/latexSettings.glade:532
+#: ../ui/latexSettings.glade:556
 msgid "Use external Editor"
 msgstr "Folosește un editor extern"
 
-#: ../ui/latexSettings.glade:549
+#: ../ui/latexSettings.glade:573
 msgid "Editor command"
 msgstr "Comanda editorului"
 
-#: ../ui/latexSettings.glade:574
+#: ../ui/latexSettings.glade:598
 msgid "Extension of temporary file"
 msgstr "Extensia fișierului temporar"
 
-#: ../ui/latexSettings.glade:595
+#: ../ui/latexSettings.glade:619
 msgid "Automatically confirm on editor exit"
 msgstr "Confirmă automat la închiderea editorului"
 
-#: ../ui/latexSettings.glade:625
+#: ../ui/latexSettings.glade:649
 msgid "External Editor (Expert user only)"
 msgstr "Editor extern (doar pentru utilizatori experți)"
 
-#: ../ui/latexSettings.glade:641
+#: ../ui/latexSettings.glade:665
 msgid "Editor settings"
 msgstr "Reglări pentru elaboratorul LaTeX"
 
@@ -4552,8 +4578,8 @@ msgid "Take handwritten notes"
 msgstr "Ia notițe scrise de mână"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:8
-msgid "tablet;Wacom;pen input;PDF Annotation;markup"
-msgstr "tabletă;Wacom;scrie cu creionul;Însemnări pe PDF;marcare"
+msgid "tablet;Wacom;pen input;PDF Annotation;markup;journal;handwriting;diary;notes;"
+msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:8
 msgid "Xournalpp Developers"
