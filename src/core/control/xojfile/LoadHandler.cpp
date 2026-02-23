@@ -695,10 +695,9 @@ void LoadHandler::parseStroke() {
      * we've read just before.
      * Afterwards, clean the read timestamp data.
      */
-    if (loadedFilename.length() != 0) {
+    if (!loadedFilename.empty()) {
         this->stroke->setTimestamp(as_unsigned(loadedTimeStamp));
-        this->stroke->setAudioFilename(loadedFilename);
-        loadedFilename = "";
+        this->stroke->setAudioFilename(std::move(loadedFilename));
         loadedTimeStamp = 0;
     }
 }
@@ -788,9 +787,9 @@ void LoadHandler::parseAttachment() {
         g_warning("Found attachment tag as child of a tag that should not have such a child (ignoring this tag)");
         return;
     }
-    const char* path = LoadHandlerHelper::getAttrib("path", false, this);
+    fs::path path(xoj::util::utf8(LoadHandlerHelper::getAttrib("path", false, this)));
 
-    auto readResult = readZipAttachment(path);
+    auto readResult = readZipAttachment(std::move(path));
     if (!readResult) {
         return;
     }
@@ -818,7 +817,7 @@ void LoadHandler::parseLayer() {
      **/
     if (!strcmp(elementName, "timestamp")) {
         loadedTimeStamp = LoadHandlerHelper::getAttribInt("ts", this);
-        loadedFilename = LoadHandlerHelper::getAttrib("fn", false, this);
+        loadedFilename = fs::path(xoj::util::utf8(LoadHandlerHelper::getAttrib("fn", false, this)));
     }
     if (!strcmp(elementName, "stroke"))  // start of a stroke
     {
@@ -1229,7 +1228,7 @@ auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::unique_ptr
 auto LoadHandler::getTempFileForPath(fs::path const& filename) -> fs::path {
     gpointer tmpFilename = g_hash_table_lookup(this->audioFiles, filename.u8string().c_str());
     if (tmpFilename) {
-        return string(static_cast<char*>(tmpFilename));
+        return fs::path(xoj::util::utf8(static_cast<char*>(tmpFilename)));
     }
 
     error("%s", FC(_F("Requested temporary file was not found for attachment {1}") % filename.u8string()));

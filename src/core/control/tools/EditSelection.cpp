@@ -394,22 +394,6 @@ auto EditSelection::getSourcePage() const -> PageRef { return this->sourcePage; 
 auto EditSelection::getSourceLayer() const -> Layer* { return this->sourceLayer; }
 
 /**
- * Get the X coordinate in View coordinates (absolute)
- */
-auto EditSelection::getXOnViewAbsolute() const -> int {
-    double zoom = view->getXournal()->getZoom();
-    return this->view->getX() + static_cast<int>(this->getXOnView() * zoom);
-}
-
-/**
- * Get the Y coordinate in View coordinates (absolute)
- */
-auto EditSelection::getYOnViewAbsolute() const -> int {
-    double zoom = view->getXournal()->getZoom();
-    return this->view->getY() + static_cast<int>(this->getYOnView() * zoom);
-}
-
-/**
  * Sets the tool size for pen or eraser, returs an undo action
  * (or nullptr if nothing is done)
  */
@@ -760,8 +744,9 @@ auto EditSelection::getPageViewUnderCursor() -> XojPageView* {
     double zoom = view->getXournal()->getZoom();
 
     // get grabbing hand position
-    double hx = this->view->getX() + (this->snappedBounds.x + this->relMousePosX) * zoom;
-    double hy = this->view->getY() + (this->snappedBounds.y + this->relMousePosY) * zoom;
+    auto p = this->view->getPixelPosition();
+    double hx = p.x + (this->snappedBounds.x + this->relMousePosX) * zoom;
+    double hy = p.y + (this->snappedBounds.y + this->relMousePosY) * zoom;
 
 
     Layout* layout = this->view->getXournal()->getLayout();
@@ -779,27 +764,15 @@ void EditSelection::translateToView(XojPageView* v) {
 
     double ox = this->snappedBounds.x - this->x;
     double oy = this->snappedBounds.y - this->y;
-    int aX1 = getXOnViewAbsolute();
-    int aY1 = getYOnViewAbsolute();
 
-    this->x = (aX1 - v->getX()) / zoom;
-    this->y = (aY1 - v->getY()) / zoom;
+    auto diff = this->view->getPixelPosition() - v->getPixelPosition();
+
+    this->x += diff.x / zoom;
+    this->y += diff.y / zoom;
     this->snappedBounds.x = this->x + ox;
     this->snappedBounds.y = this->y + oy;
 
     this->view = v;
-
-    //	int aX2 = getXOnViewAbsolute();
-    //	int aY2 = getYOnViewAbsolute();
-    //
-    //	if (aX1 != aX2)
-    //	{
-    //		g_message("aX1 != aX2!! %i / %i", aX1, aX2);
-    //	}
-    //	if (aY1 != aY2)
-    //	{
-    //		g_message("aY1 != aY2!! %i / %i", aY1, aY2);
-    //	}
 }
 
 void EditSelection::copySelection() {
@@ -952,8 +925,8 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
         return layoutScroll;
     };
     // Compute scroll (for layout) and translation (for selection) for x and y
-    const int layoutWidth = layout->getMinimalWidth();
-    const int layoutHeight = layout->getMinimalHeight();
+    const int layoutWidth = layout->getTotalPixelWidth();
+    const int layoutHeight = layout->getTotalPixelHeight();
     const auto visRect = layout->getVisibleRect();
     const auto bbox = self->getBoundingBoxInView();
     const auto layoutScrollX =
@@ -990,8 +963,7 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
 }
 
 auto EditSelection::getBoundingBoxInView() const -> Rectangle<double> {
-    int viewx = this->view->getX();
-    int viewy = this->view->getY();
+    auto viewpos = this->view->getPixelPosition();
     double zoom = this->view->getXournal()->getZoom();
 
     double sin = std::sin(this->rotation);
@@ -1003,7 +975,7 @@ auto EditSelection::getBoundingBoxInView() const -> Rectangle<double> {
     double minx = cx - w / 2.0;
     double miny = cy - h / 2.0;
 
-    return {viewx + minx * zoom, viewy + miny * zoom, w * zoom, h * zoom};
+    return {viewpos.x + minx * zoom, viewpos.y + miny * zoom, w * zoom, h * zoom};
 }
 
 void EditSelection::ensureWithinVisibleArea() {

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-11 21:17+0000\n"
-"PO-Revision-Date: 2025-12-13 14:17\n"
+"POT-Creation-Date: 2026-02-03 08:38+0000\n"
+"PO-Revision-Date: 2026-02-03 08:53\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -47,8 +47,8 @@ msgstr "Da"
 msgid "No"
 msgstr "Nu"
 
-#: ../src/core/control/Control.cpp:828 ../src/core/control/Control.cpp:1784
-#: ../src/core/control/Control.cpp:2108
+#: ../src/core/control/Control.cpp:828 ../src/core/control/Control.cpp:1786
+#: ../src/core/control/Control.cpp:2111
 msgid "Cancel"
 msgstr "Renunță"
 
@@ -123,74 +123,74 @@ msgstr "Eroare la citirea fișierului PDF „{1}”\n"
 msgid "Error reading PNG file \"{1}\""
 msgstr "Eroare la citirea fișierului PNG „{1}”"
 
-#: ../src/core/control/Control.cpp:1764
+#: ../src/core/control/Control.cpp:1766
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Fișierul fondului atașat nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau eliminat."
 
-#: ../src/core/control/Control.cpp:1767
+#: ../src/core/control/Control.cpp:1769
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Fișierul fondului „{1}” nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau eliminat.\n"
 "A fost văzut ultima dată în: „{2}”"
 
-#: ../src/core/control/Control.cpp:1777
+#: ../src/core/control/Control.cpp:1779
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Fișierul de înlocuire propus: „{1}”"
 
-#: ../src/core/control/Control.cpp:1782
+#: ../src/core/control/Control.cpp:1784
 msgid "Select another PDF"
 msgstr "Alege un alt PDF"
 
-#: ../src/core/control/Control.cpp:1783
+#: ../src/core/control/Control.cpp:1785
 msgid "Remove PDF Background"
 msgstr "Elimină fondul PDF"
 
-#: ../src/core/control/Control.cpp:1787
+#: ../src/core/control/Control.cpp:1789
 msgid "Use proposed PDF"
 msgstr "Folosește fișierul PDF propus"
 
-#: ../src/core/control/Control.cpp:1790
+#: ../src/core/control/Control.cpp:1792
 msgid "Missing PDF background file"
 msgstr "Lipsește fișierul fondului PDF"
 
-#: ../src/core/control/Control.cpp:1922
+#: ../src/core/control/Control.cpp:1924
 msgid "Select font"
 msgstr "Alege tipul de litere"
 
-#: ../src/core/control/Control.cpp:1941
+#: ../src/core/control/Control.cpp:1943
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Alege culoarea"
 
-#: ../src/core/control/Control.cpp:1966
+#: ../src/core/control/Control.cpp:1968
 msgid "Unsaved Document"
 msgstr "Document nesalvat"
 
-#: ../src/core/control/Control.cpp:2101
+#: ../src/core/control/Control.cpp:2104
 msgid "Document file was removed."
 msgstr "Fișierul documentului a fost eliminat."
 
-#: ../src/core/control/Control.cpp:2101
+#: ../src/core/control/Control.cpp:2104
 msgid "This document is not saved yet."
 msgstr "Acest document nu este salvat încă."
 
-#: ../src/core/control/Control.cpp:2103
+#: ../src/core/control/Control.cpp:2106
 msgid "Save As..."
 msgstr "Salvează ca..."
 
-#: ../src/core/control/Control.cpp:2103 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2106 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "Salvează"
 
-#: ../src/core/control/Control.cpp:2106
+#: ../src/core/control/Control.cpp:2109
 msgid "Discard"
 msgstr "Nu salva"
 
-#: ../src/core/control/Control.cpp:2191
+#: ../src/core/control/Control.cpp:2194
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr "Crearea subprocesului demonstrativ Gtk a eșuat: {1} (cod rezultat: {2})"
 
@@ -230,11 +230,20 @@ msgstr "trackpoint"
 msgid "tablet pad"
 msgstr "tabletă grafică"
 
-#: ../src/core/control/ExportHelper.cpp:78
+#: ../src/core/control/ExportHelper.cpp:77
 msgid "Image file successfully created"
 msgstr "Fișier imagine creat cu succes"
 
-#: ../src/core/control/ExportHelper.cpp:134
+#: ../src/core/control/ExportHelper.cpp:103
+#: ../src/core/control/jobs/BaseExportJob.cpp:40
+msgid "Do not overwrite the background PDF! This will cause errors!"
+msgstr "Nu înlocui fondul PDF! Acest lucru va provoca erori!"
+
+#: ../src/core/control/ExportHelper.cpp:107
+msgid "The check for overwriting the background failed with: {1}"
+msgstr ""
+
+#: ../src/core/control/ExportHelper.cpp:127
 msgid "PDF file successfully created"
 msgstr "Fişierul PDF a fost creat cu succes"
 
@@ -263,6 +272,7 @@ msgid "Could not load LaTeX PDF file"
 msgstr "Nu s-a putut încărca fișierul PDF LaTeX"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:110
+#: ../src/core/control/XournalMain.cpp:231
 #: ../src/core/control/xojfile/LoadHandler.cpp:483
 #: ../src/core/control/xojfile/LoadHandler.cpp:499
 msgid "Error reading PDF: {1}"
@@ -310,12 +320,23 @@ msgstr "Recuperează fișierul"
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "Fișierul fondului „{1}” nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau eliminat."
 
-#: ../src/core/control/XournalMain.cpp:211
-#: ../src/core/control/XournalMain.cpp:218
-msgid "Error: {1}"
-msgstr "Eroare: {1}"
+#: ../src/core/control/XournalMain.cpp:176
+msgid "Error loading document: {1}"
+msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:351
+#: ../src/core/control/XournalMain.cpp:209
+msgid "Error exporting image: {1}"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:239
+msgid "Error saving document: {1}"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:269
+msgid "Error exporting PDF: {1}"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:375
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -329,24 +350,24 @@ msgstr "<span foreground='red' size='x-large'>Lipsește fișierul UI necesar:\n"
 "  Nici în calea de lucru\n"
 "  Nici în {2}"
 
-#: ../src/core/control/XournalMain.cpp:356
+#: ../src/core/control/XournalMain.cpp:380
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "Programul va încerca să pornească fără acest fișier."
 
-#: ../src/core/control/XournalMain.cpp:378
-#: ../src/core/control/XournalMain.cpp:439
+#: ../src/core/control/XournalMain.cpp:402
+#: ../src/core/control/XournalMain.cpp:463
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Xournal++ poate deschide doar un singur fișier pe rând.\n"
 "Altele sunt ignorate."
 
-#: ../src/core/control/XournalMain.cpp:389
+#: ../src/core/control/XournalMain.cpp:413
 msgid "File {1} does not exist."
 msgstr "Fișierul {1} nu există."
 
-#: ../src/core/control/XournalMain.cpp:393
+#: ../src/core/control/XournalMain.cpp:417
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -354,29 +375,29 @@ msgstr "Eroare a sistemului de fișiere: {1}\n"
 "Xournal++ nu poate deschide fișierul: {2}\n"
 "Încearcă să copiezi fișierul într-un dosar local."
 
-#: ../src/core/control/XournalMain.cpp:578
+#: ../src/core/control/XournalMain.cpp:602
 msgid "Jump to Page (first Page: 1)"
 msgstr "Salt la pagina (prima pagină: 1)"
 
-#: ../src/core/control/XournalMain.cpp:582
+#: ../src/core/control/XournalMain.cpp:606
 msgid "Get version of xournalpp"
 msgstr "Obține versiunea xournalpp"
 
-#: ../src/core/control/XournalMain.cpp:584
+#: ../src/core/control/XournalMain.cpp:608
 msgid "Disable audio for this session"
 msgstr "Dezactivează audio pentru această sesiune"
 
-#: ../src/core/control/XournalMain.cpp:586
+#: ../src/core/control/XournalMain.cpp:610
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
 msgstr "Deschide PDF-ul ca atașat\n"
 "                                       Ignorat dacă nu este specificat niciun fișier PDF."
 
-#: ../src/core/control/XournalMain.cpp:590
+#: ../src/core/control/XournalMain.cpp:614
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "Salvează fișierul xopp cu fondul PDF specificat ca fișier"
 
-#: ../src/core/control/XournalMain.cpp:595
+#: ../src/core/control/XournalMain.cpp:619
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
@@ -384,11 +405,11 @@ msgstr "Folosește backend-ul furnizat pentru exportările în PDF.\n"
 "                                       Backend-uri disponibile: {1}\n"
 "                                       Niciun efect fără -p/--create-pdf=foo.pdf"
 
-#: ../src/core/control/XournalMain.cpp:604
+#: ../src/core/control/XournalMain.cpp:628
 msgid "Export FILE as PDF"
 msgstr "Exportă fișierul ca PDF"
 
-#: ../src/core/control/XournalMain.cpp:607
+#: ../src/core/control/XournalMain.cpp:631
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
@@ -396,7 +417,7 @@ msgstr "Exportă fișierul ca fișiere imagine (unul per pagină)\n"
 "                                 Ghicește formatul de ieșire din extensia IMGFILE\n"
 "                                 Formate acceptate: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:613
+#: ../src/core/control/XournalMain.cpp:637
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
@@ -404,13 +425,13 @@ msgstr "Exportă fără fond\n"
 "                                 Fișierul exportat are un fond transparent sau alb,\n"
 "                                 în funcție de formatul compatibil cu acesta\n"
 
-#: ../src/core/control/XournalMain.cpp:618
+#: ../src/core/control/XournalMain.cpp:642
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
 msgstr "Exportă fără liniere\n"
 "                                 Fișierul exportat nu are hârtia liniată\n"
 
-#: ../src/core/control/XournalMain.cpp:623
+#: ../src/core/control/XournalMain.cpp:647
 msgid "Export layers progressively\n"
 "                                       In PDF export, Render layers progressively one by one.\n"
 "                                       This results in N export pages per page with N layers,\n"
@@ -422,25 +443,25 @@ msgstr "Exportă straturile pe rând\n"
 "                                 construind progresiv stiva de straturi.\n"
 "                                 Fișierul PDF rezultat poate fi utilizat pentru o prezentare.\n"
 
-#: ../src/core/control/XournalMain.cpp:632
+#: ../src/core/control/XournalMain.cpp:656
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Exportă numai paginile indicate de interval (de ex. „2-3,5,7-”)\n"
 "                                 Niciun efect fără -p/--create-pdf or -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:637
+#: ../src/core/control/XournalMain.cpp:661
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Exportă numai paginile indicate de interval (de ex. „2-3,5,7-”)\n"
 "                                 Niciun efect fără -p/--create-pdf or -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:641
+#: ../src/core/control/XournalMain.cpp:665
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
 msgstr "Alege DPI-ul pentru exportările în PNG. Prestabilit este 300\n"
 "                                 Niciun efect fără -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:645
+#: ../src/core/control/XournalMain.cpp:669
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
@@ -448,7 +469,7 @@ msgstr "Alege lățimea paginii pentru exportările PNG\n"
 "                                 Niciun efect fără -i/--create-img=foo.png\n"
 "                                 Ignorat dacă --export-png-dpi este folosit"
 
-#: ../src/core/control/XournalMain.cpp:650
+#: ../src/core/control/XournalMain.cpp:674
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
@@ -456,11 +477,11 @@ msgstr "Alege înălțimea paginii pentru exportările PNG\n"
 "                                 Niciun efect fără -i/--create-img=foo.png\n"
 "                                 Ignorat dacă e folosit --export-png-dpi sau --export-png-width"
 
-#: ../src/core/control/XournalMain.cpp:658
+#: ../src/core/control/XournalMain.cpp:682
 msgid "Advanced export options"
 msgstr "Opțiuni avansate de exportare"
 
-#: ../src/core/control/XournalMain.cpp:659
+#: ../src/core/control/XournalMain.cpp:683
 msgid "Display advanced export options"
 msgstr "Arată opțiuni avansate de exportare"
 
@@ -475,10 +496,6 @@ msgstr "Salvare automată în {1}"
 #: ../src/core/control/jobs/AutosaveJob.cpp:69
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Nu s-a putut redenumi fișierul salvat automat din „{1}” în „{2}”: {3}"
-
-#: ../src/core/control/jobs/BaseExportJob.cpp:40
-msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr "Nu înlocui fondul PDF! Acest lucru va provoca erori!"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "The check for overwriting the background failed with:\n"
@@ -810,11 +827,11 @@ msgstr "Valoarea „{1}” nu a putut fi analizată ca size_t, valoarea este nul
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "Valoarea „{1}” nu a putut fi analizată ca size_t, valoarea este „{2}”"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:253
+#: ../src/core/control/xojfile/SaveHandler.cpp:257
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Nu s-a putut scrie fondul „{1}”, {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:372
+#: ../src/core/control/xojfile/SaveHandler.cpp:376
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Nu s-a putut scrie fondul „{1}”. Continuă oricum."
 
@@ -828,7 +845,7 @@ msgstr "Imposibil de redat înregistrarea audio {1}"
 
 #: ../src/core/gui/PageView.cpp:944
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:83
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:145
 msgid "Loading..."
 msgstr "Se încarcă..."
 
@@ -1742,27 +1759,27 @@ msgstr "Subțire"
 msgid "Very Thick"
 msgstr "Foarte gros"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:175
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:172
 msgid "Show all"
 msgstr "Arată tot"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:176
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:173
 msgid "Hide all"
 msgstr "Ascunde tot"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:178
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:175
 msgid "Add a layer above the active layer"
 msgstr "Adaugă un strat deasupra stratului activ"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:179
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:176
 msgid "Add a layer below the active layer"
 msgstr "Adaugă un strat sub stratul activ"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:206
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:203
 msgid "Layer"
 msgstr "Strat"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:303
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:300
 msgid "Layer Combo"
 msgstr "Integrare straturi"
 

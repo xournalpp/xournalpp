@@ -50,6 +50,7 @@ class ToolbarDragDropHandler;
 class MetadataEntry;
 class MetadataCallbackData;
 class PageBackgroundChangeController;
+class PageTemplateSettings;
 class PageTypeHandler;
 class BaseExportJob;
 class LayerController;
@@ -138,9 +139,11 @@ public:
      * @param callback Called after trying to close the document, with param true in case of success, false otherwise.
      * @param allowDestroy Whether clicking "Discard" should destroy the current document.
      * @param allowCancel Whether the user should be able to cancel closing the document.
+     * @param forceClose Whether to skip the save dialog and unconditionally discard unsaved changes.
      * @return true if the user closed the document, otherwise false.
      */
-    void close(std::function<void(bool)> callback, bool allowDestroy = false, bool allowCancel = true);
+    void close(std::function<void(bool)> callback, bool allowDestroy = false, bool allowCancel = true,
+               bool forceClose = false);
 
     // Menu edit
     void showSettings();
@@ -230,7 +233,7 @@ public:
     size_t firePageSelected(const PageRef& page);
     void firePageSelected(size_t page);
 
-    void addDefaultPage(const std::optional<std::string>& pageTemplate, Document* doc = nullptr);
+    void addDefaultPage(const std::optional<PageTemplateSettings>& pageTemplate, Document* doc = nullptr);
     void duplicatePage();
     void insertNewPage(size_t position, bool automatedInsertion = false);
     void appendNewPdfPages();

@@ -53,7 +53,7 @@ jobs:
       image: ${{ inputs.container_image }}
     steps:
       - name: 'Checkout repository'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ inputs.head_sha }}
       - name: 'Install dependencies (for AppImage)'
@@ -100,7 +100,7 @@ jobs:
           done
       - name: 'Publish packages'
         id: publish-packages
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: "Packages ${{ inputs.displayed_name }} ${{ runner.arch }}"
           compression-level: 0
@@ -124,7 +124,7 @@ jobs:
       - name: 'Publish AppImage'
         id: publish-appimage
         if: ${{ inputs.build_appimage }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: "Linux AppImage ${{ steps.build-appimage.outputs.appimage-arch }} (built on ${{ inputs.displayed_name }})"
           compression-level: 0

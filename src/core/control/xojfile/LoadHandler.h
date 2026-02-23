@@ -158,7 +158,7 @@ private:
     const gchar* elementName;
 
     int loadedTimeStamp;
-    std::string loadedFilename;
+    fs::path loadedFilename;
 
     DocumentHandler dHanlder;
     std::unique_ptr<Document> doc;

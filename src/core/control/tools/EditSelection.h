@@ -153,16 +153,6 @@ public:
      */
     Layer* getSourceLayer() const;
 
-    /**
-     * Get the X coordinate in View coordinates (absolute)
-     */
-    int getXOnViewAbsolute() const;
-
-    /**
-     * Get the Y coordinate in View coordinates (absolute)
-     */
-    int getYOnViewAbsolute() const;
-
     inline XojPageView* getView() const { return view; }
 
 public:

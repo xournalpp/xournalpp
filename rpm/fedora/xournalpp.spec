@@ -33,6 +33,7 @@ BuildRequires:  pkgconfig(glib-2.0) >= 2.32.0
 BuildRequires:  pkgconfig(gtk+-3.0) >= 3.18.9
 BuildRequires:  pkgconfig(librsvg-2.0)
 BuildRequires:  pkgconfig(libxml-2.0) >= 2.0.0
+BuildRequires:  pkgconfig(libqpdf) >= 11.0.0
 BuildRequires:  pkgconfig(libzip) >= 1.0.1
 BuildRequires:  pkgconfig(lua) >= 5.3
 BuildRequires:  pkgconfig(poppler-glib) >= 0.41.0
@@ -68,26 +69,24 @@ The %{name}-ui package contains a graphical user interface for  %{name}.
 
 %prep
 %autosetup -n %{name}
+# We do not build nor ship the wrapper
+sed -i -e 's/xournalpp-wrapper/xournalpp/' desktop/com.github.xournalpp.xournalpp.desktop.in
 
 %build
 %cmake \
         -DDISTRO_CODENAME="Fedora Linux" \
+        -DENABLE_CPPTRACE=OFF \
         %{?_gtest: -DENABLE_GTEST=ON} \
         -DENABLE_MATHTEX=ON \
-        -DGIT_VERSION=%{build_shortcommit} \
-        -DMAC_INTEGRATION=OFF
+        -DGIT_VERSION=%{build_shortcommit}
 
 %cmake_build
 
 %install
 %cmake_install
 
-#Remove depreciated key from desktop file
-desktop-file-install \
- --remove-key="Encoding" \
- --set-key="StartupWMClass" \
- --set-value="xournalpp" \
-  %{buildroot}%{_datadir}/applications/com.github.%{name}.%{name}.desktop
+# We do not use the wrapper
+rm -f %{buildroot}%{_bindir}/%{name}-wrapper
 %find_lang %{name}
 
 # Remove unnecssary scripts
@@ -121,6 +120,11 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/com.github.%{n
 %{_datadir}/%{name}/ui
 
 %changelog
+* Mon Sep 9 2024 Luya Tshimbalanga <luya@fedoraproject.org>
+- Disable cpptrace support
+- Enable qpdf support
+- Remove unneeded wrapper
+
 * Mon Sep 9 2024 Luya Tshimbalanga <luya@fedoraproject.org>
 - Add color palettes support
 

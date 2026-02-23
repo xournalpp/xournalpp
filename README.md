@@ -1,7 +1,7 @@
-# Xournal++
+# <img src="ui/pixmaps/com.github.xournalpp.xournalpp.svg" align="left" width="100" height="100">  <br> Xournal++
+
 
 [![Build Status](https://dev.azure.com/xournalpp/xournalpp/_apis/build/status/CI?branchName=master)](https://dev.azure.com/xournalpp/xournalpp/_build/latest?definitionId=1&branchName=master)
-[![Join the chat at https://gitter.im/xournalpp/xournalpp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xournalpp/xournalpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 <img src="readme/main.png" width=550px% title="Xournal++ on GNU/Linux"/>
 
@@ -9,9 +9,9 @@
 
 Would you like to see Xournal++ in your own language? Translators are welcome to contribute to Xournal++.
 
-You can contribute translations on [Crowdin](https://crowdin.com/project/xournalpp/)
+You can contribute translations on [Crowdin](https://crowdin.com/project/xournalpp/).
 
-Interested in translating a new language? Discuss on [Gitter](https://gitter.im/xournalpp/xournalpp) or create a [new issue](https://github.com/xournalpp/xournalpp/issues) to unlock the language on Crowdin.
+Interested in translating a new language? Discuss on [Matrix](https://matrix.to/#/#xournalpp_xournalpp:gitter.im) or create a [new issue](https://github.com/xournalpp/xournalpp/issues) to unlock the language on Crowdin.
 
 **Thanks in advance!**
 
@@ -48,14 +48,6 @@ Xournal++ features:
 - Audio recording and playback alongside with handwritten notes
 - Multi language support (over 20 languages supported)
 - Plugins using Lua scripting
-
-## Mobile & web app
-
-From mid 2020 to May 2021, a Flutter-written mobile app for **Android**, **Chrome OS** and **iOS** (unreleased) and the **web**
-has been developed, which supports the file format and most of the basic features of Xournal++.
-Unfortunately development has stalled and we have lost contact to the (single) developer. The web app is no longer available.
-You can still check out the [separate repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile) or
-[Get it on Google Play](https://play.google.com/store/apps/details?id=online.xournal.mobile)
 
 
 <table>
@@ -105,42 +97,18 @@ Multiple page background, easy selectable on the toolbar
 
 </td></tr></table>
 
-## User Manual and FAQ
+## User Guide
 
-For general usage, consult the [User
-Manual](https://github.com/xournalpp/xournalpp/wiki/User-Manual). Answers to
-some common questions can be found in the
-[FAQ](https://github.com/xournalpp/xournalpp/wiki/Frequently-Asked-Questions-&-Problem-Solving).
-
-## Experimental Features
-
-Sometimes a feature is added that might not be rock solid, or the developers aren't sure if it is useful.
-Try these out and give us some feedback.
-
-Here are a few under development that you can play with now:
-
-- <img src="readme/floatingtoolboxmbmenu.png"  title="Xournal++"/> Assign a mouse button or stylus button to bring up a toolbox of toolbars right under the cursor. You can also modify what is in the toolbox through the usual View → Toolbars → Customize although **it won't appear unless you've assigned a button in preferences: mouse or stylus** (or selected a toolbar configuration that uses it).
-
-  - This is an experimental feature because not everything you can put in the toolbox behaves. So be aware.
-
-    <img src="readme/floatingtoolbox.png" width=25% />
-
-* Keep your eyes out for other experimental features in preferences as seen here:
-
-  DrawingTools: When drawing a box, circle etc, simulate ctrl or shift modifiers by the initial direction you move the mouse.
-
-  Action on Tool Tap: Allow a brief tap on the screen to bring up the floating toolbox and/or select an object. May work with pen and highlighter only.
-
-   <img src="readme/moreexperimentals.png" width=50% />
+Check out the [website](https://xournalpp.github.io/guide/overview/) for a detailed user guide.
 
 ## Installing
 
 The official releases of Xournal++ can be found on the
 [Releases](https://github.com/xournalpp/xournalpp/releases) page. We provide
-binaries for Debian, Ubuntu, MacOS and Windows.
+binaries for Debian, Ubuntu, macOS and Windows.
 For other GNU/Linux distributions (or older/newer ones), we also provide an
 AppImage that is binary compatible with any distribution released around or
-after Ubuntu 22.04. For installing Xournal++ Mobile on handheld devices, please check out [Xournal++ Mobile's instructions](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#try-it-out)
+after Ubuntu 22.04. For installing Xournal++ Mobile on handheld devices, please check out the [Mobile & web app section](#mobile--web-app)
 
 **A note for Ubuntu/Debian users**: The official binaries that we provide are
 only compatible with the _specific version of Debian or Ubuntu_ indicated by the
@@ -286,45 +254,59 @@ Flatpak-related packaging issues should be reported there.
 
 ### Android
 
-Android is supported by Xournal++ Mobile. It can be downloaded either on the [Tags page](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile/-/tags) or [from Google Play](https://play.google.com/store/apps/details?id=online.xournal.mobile).
+Android is supported by Xournal++ Mobile. It can be downloaded [from F-Droid](https://f-droid.org/en/packages/online.xournal.mobile/) or you can [build](#building-the-mobile-app) it.
 
 
 ### iOS
 
-Unfortunately, the iOS app is not published yet in the Apple App Store. See [here](#mobile--web-app) to learn, why. Anyway, in the [Building section](#building) you can learn how to build an early preview.
+Unfortunately, the iOS app is not published yet in the Apple App Store. Read [this](#mobile--web-app) to learn, why. Anyway, in the [Building section](#building-the-mobile-app) you can learn how to build an early preview.
 
 ### Windows
 
 Official Windows releases are provided on the [Releases
 page](https://github.com/xournalpp/xournalpp/releases).
 
-### Mac OS X
+You can also download it from the Microsoft Store (supports automated updates):
 
-Mac OS X releases are provided on the [Releases
+<a href="https://apps.microsoft.com/detail/9nn1hhct0p1x?referrer=appbadge&mode=full" target="_blank"  rel="noopener noreferrer">
+	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
+</a>
+
+Our official GitHub release is also available via [winget](https://github.com/microsoft/winget-pkgs/tree/master/manifests/x/Xournal%2B%2B/Xournal%2B%2B). Open PowerShell and run:
+
+```sh
+winget install -e --id Xournal++.Xournal++
+```
+
+You can also install it via [Scoop](https://scoop.sh/):
+
+```sh
+scoop bucket add extras
+scoop install extras/xournalpp
+```
+You can easily update Xournal++ with winget or scoop.
+
+
+### macOS
+
+Releases for macOS are provided on the [Releases
 page](https://github.com/xournalpp/xournalpp/releases).
-
-**Notes:**
-
-- There have been compatibility problems with Mac OS X Catalina regarding both
-  file permissions and stylus support
-  ([#1772](https://github.com/xournalpp/xournalpp/issues/1772) and
-  [#1757](https://github.com/xournalpp/xournalpp/issues/1757)). Unfortunately,
-  we don't have the resources to adequately support Catalina at this time. Help
-  would be appreciated!
-- Xournal++ will be delivered with a patched GTK. Else, pressure sensitivity will not work on Mac
-  [#569](https://github.com/xournalpp/xournalpp/issues/569).
+However, the app will refuse to run due to Apple policies (see https://github.com/xournalpp/xournalpp/issues/6185). Run the following commands one by one to make it work:
+```
+xattr -c /Applications/Xournal++.app
+codesign --force --deep --sign - /Applications/Xournal++.app
+```
+And for those who type it out, don't forget to type the hyphen (`-`) between `--sign` and `/Applications/Xournal++.app`
 
 ## Building
 
-[GNU/Linux Build](readme/LinuxBuild.md)
+We support building on three operating systems:
 
-[Mac Build](readme/MacBuild.md)
+- [Linux](readme/LinuxBuild.md)
+- [macOS](readme/MacBuild.md)
+- [Windows](readme/WindowsBuild.md)
+- [Windows on ARM (not officially supported)](readme/WindowsBuildArm.md)
 
-[Windows Build](readme/WindowsBuild.md)
-
-[Android Build](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#getting-started)
-
-[iOS Build](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#getting-started)
 
 ## File format
 
@@ -336,15 +318,18 @@ All new files will be saved as `.xopp`. If an `.xoj` file that was created by Xo
 
 **We are currently introducing a new file format that can efficiently store attached PDF files and other attachments internally. We will still allow for attachments that are linked to external files. Please refer to [#937](https://github.com/xournalpp/xournalpp/issues/937) for further details.**
 
-## Building
+## Mobile & web app
 
-We support building on three operating systems:
+From mid 2020 to May 2021, a Flutter-written mobile app for **Android** and **iOS** (unreleased) and the **web**
+has been developed, which supports the file format and most of the basic features of Xournal++.
+Unfortunately development has stalled and we have lost contact to the (single) developer. The web app is no longer available.
+You can still check out the [separate repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile) or install it from [F-Droid](https://f-droid.org/en/packages/online.xournal.mobile/).
 
-- [Linux](readme/LinuxBuild.md)
-- [MacOS](readme/MacBuild.md)
-- [Windows](readme/WindowsBuild.md)
-- [Windows on ARM (not officially supported)](readme/WindowsBuildArm.md)
+### Building the mobile app
+
+- [Android Build](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#getting-started)
+- [iOS Build](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#getting-started)
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md)
+See [CONTRIBUTING.md](./CONTRIBUTING.md). If your pull request does not need Xournal++ to be built to test it (e.g. for a README update), you can prepend [skip ci] to the title of the commit to disable CI running.

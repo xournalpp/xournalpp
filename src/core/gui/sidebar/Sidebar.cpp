@@ -103,6 +103,15 @@ void Sidebar::setSelectedTab(size_t tab) {
 
         i++;
     }
+    if (this->visibleTab) {
+        g_idle_add(
+                [](gpointer data) -> gboolean {
+                    Sidebar* sidebar = static_cast<Sidebar*>(data);
+                    sidebar->layout();
+                    return G_SOURCE_REMOVE;
+                },
+                this);
+    }
 }
 
 void Sidebar::updateVisibleTabs() {

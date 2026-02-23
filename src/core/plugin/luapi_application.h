@@ -11,7 +11,8 @@
 #pragma once
 
 #include <cstring>
-#include <limits>  // for numeric_limits
+#include <exception>  // for exception
+#include <limits>     // for numeric_limits
 #include <memory>
 #include <sstream>
 #include <unordered_set>
@@ -75,20 +76,81 @@ extern "C" {
 #include "undo/PageSizeChangeUndoAction.h"
 }
 
-
-static std::tuple<std::optional<std::string>, std::vector<const Element*>> getElementsFromHelper(
-        Control* control, const std::string& type) {
-    std::vector<const Element*> elements = {};
-    if (type == "layer") {
+/*
+ * Helper function used in the rest of this code to obtain elements from the document:
+ * - "type" is a string ("layer", "page", "selection" or "all") specifying if we want to retrieve, respectively,
+ * elements from the current layer, page, selection, or from all the document.
+ * - "elType" is the kind of elements we want to extract (ELEMENT_TEXT, ELEMENT_IMAGE, ELEMENT_STROKE...)
+ * It returns a tuple containing:
+ * - an (optional) string to check if an error occurred
+ * - a list of tuples containing for each element the element itself, and optionally (when type == all) its page and
+ * optionally (when type == all or type == page) its layer number, indexed from 1 for interoperability with the lua API.
+ */
+static std::tuple<std::optional<std::string>,       // Error
+                  std::vector<std::tuple<           // For each element
+                          const Element*,           // return the element
+                          std::optional<size_t>,    // its page when type == all
+                          std::optional<size_t>>>>  // its layer when type == all
+        getElementsFromHelper(Control* control, const std::string& type, ElementType elType) {
+    std::vector<std::tuple<const Element*, std::optional<size_t>, std::optional<size_t>>> elements = {};
+    if (type == "all") {
         auto sel = control->getWindow()->getXournal()->getSelection();
         if (sel) {
             control->clearSelection();  // otherwise texts in the selection won't be recognized
         }
-        elements = control->getCurrentPage()->getSelectedLayer()->getElementsView().clone();
+        auto* doc = control->getDocument();
+        for (size_t i = 0; i < doc->getPageCount(); i++) {
+            PageRef p = doc->getPage(i);
+            size_t layerID = 1;  // Layer 0 is for background and is not listed here
+            for (const Layer* l: p->getLayersView()) {
+                auto v = l->getElementsView();
+                for (auto e = v.begin(); e != v.end(); ++e) {
+                    if ((*e)->getType() == elType) {
+                        // Non-background layers and pages start at index 1
+                        elements.push_back(std::make_tuple(*e, std::make_optional(i + 1), std::make_optional(layerID)));
+                    }
+                }
+                layerID++;
+            }
+        }
+    } else if (type == "page") {
+        auto sel = control->getWindow()->getXournal()->getSelection();
+        if (sel) {
+            control->clearSelection();  // otherwise texts in the selection won't be recognized
+        }
+        PageRef p = control->getCurrentPage();
+        size_t layerID = 1;  // Layer 0 is for background and is not listed here
+        for (const Layer* l: p->getLayersView()) {
+            auto v = l->getElementsView();
+            for (auto e = v.begin(); e != v.end(); ++e) {
+                if ((*e)->getType() == elType) {
+                    // We index pages from 1 since this is what the Lua API assumes,
+                    // and non-background layers also start at index 1
+                    elements.push_back(std::make_tuple(*e, std::nullopt, std::make_optional(layerID)));
+                }
+            }
+            layerID++;
+        }
+    } else if (type == "layer") {
+        auto sel = control->getWindow()->getXournal()->getSelection();
+        if (sel) {
+            control->clearSelection();  // otherwise texts in the selection won't be recognized
+        }
+        auto v = control->getCurrentPage()->getSelectedLayer()->getElementsView();
+        for (auto e = v.begin(); e != v.end(); ++e) {
+            if ((*e)->getType() == elType) {
+                elements.push_back(std::make_tuple(*e, std::nullopt, std::nullopt));
+            }
+        }
     } else if (type == "selection") {
         auto sel = control->getWindow()->getXournal()->getSelection();
         if (sel) {
-            elements = sel->getElementsView().clone();
+            auto v = sel->getElementsView();
+            for (auto e = v.begin(); e != v.end(); ++e) {
+                if ((*e)->getType() == elType) {
+                    elements.push_back(std::make_tuple(*e, std::nullopt, std::nullopt));
+                }
+            }
         } else {
             return std::make_tuple(std::make_optional("There is no selection"), elements);
         }
@@ -1542,16 +1604,20 @@ static int applib_addTexts(lua_State* L) {
 }
 
 /**
- * Returns a list of lua table of the texts (from current selection / current layer).
- * Is mostly inverse to app.addTexts (except getTexts will also retrieve the width/height of the textbox)
+ * Returns a list of lua table of the texts (from current selection / current layer / current page / all pages).
+ * When called with "page" to retrieve all elements on the current page, it also adds a field "layer" for the
+ * layer containing the element, and when called with "all" it additionally adds a field "page" containing its page
+ * index together with its layer (all of them being indexed from 1).
  *
- * @param type string "selection" or "layer"
+ * Is mostly inverse to app.addTexts (except getTexts may also retrieve the width/height/page/layer of the textbox)
+ *
+ * @param type string "selection" or "layer" or "page" or "all"
  * @return {text:string, font:{name:string, size:number}, color:integer, x:number, y:number, width:number,
- * height:number, ref:lightuserdata}[] texts
+ * height:number, ref:lightuserdata, page:number|nil, layer:number|nil}[] texts
  *
- * Required argument: type ("selection" or "layer")
+ * Required argument: type ("selection" or "layer" or "page" or "all")
  *
- * Example: local texts = app.getTexts("layer")
+ * Example: local texts = app.getTexts("all")
  *
  * possible return value:
  * {
@@ -1567,6 +1633,8 @@ static int applib_addTexts(lua_State* L) {
  *     width = 55.0,
  *     height = 23.0,
  *     ref = userdata: 0x5f644c0700d0
+ *     page = 1, -- Only present when called with the "all" argument
+ *     layer = 1, -- Only present when called with the "all" or "page" argument
  *   },
  *   {
  *     text = "Testing",
@@ -1580,6 +1648,8 @@ static int applib_addTexts(lua_State* L) {
  *     width = 55.0,
  *     height = 23.0,
  *     ref = userdata: 0x5f644c0701e8
+ *     page = 2,
+ *     layer = 1,
  *   },
  * }
  *
@@ -1593,7 +1663,7 @@ static int applib_getTexts(lua_State* L) {
     lua_settop(L, 1);
     luaL_checktype(L, 1, LUA_TSTRING);
 
-    const auto& [err, elements] = getElementsFromHelper(control, type);
+    const auto& [err, elements] = getElementsFromHelper(control, type, ELEMENT_TEXT);
     if (err.has_value()) {
         return luaL_error(L, err.value().c_str());
     }
@@ -1605,63 +1675,75 @@ static int applib_getTexts(lua_State* L) {
     //  1 = type (string)
     // -1 = table of texts (to be returned)
 
-    for (const Element* e: elements) {
-        if (e->getType() == ELEMENT_TEXT) {
-            auto* t = static_cast<const Text*>(e);
-            lua_pushinteger(L, ++currTextNo);  // index for later (settable)
-            lua_newtable(L);                   // create text table
+    for (const auto [e, page_nb, layer]: elements) {
+        auto* t = static_cast<const Text*>(e);
+        lua_pushinteger(L, ++currTextNo);  // index for later (settable)
+        lua_newtable(L);                   // create text table
 
-            // stack now has following:
-            //  1 = type (string)
-            // -3 = table of texts (to be returned)
-            // -2 = index of the current text
-            // -1 = current text table
+        // stack now has following:
+        //  1 = type (string)
+        // -3 = table of texts (to be returned)
+        // -2 = index of the current text
+        // -1 = current text table
 
-            lua_pushstring(L, t->getText().c_str());
-            lua_setfield(L, -2, "text");  // add text to text element
+        lua_pushstring(L, t->getText().c_str());
+        lua_setfield(L, -2, "text");  // add text to text element
 
-            lua_newtable(L);  // font table to stack
-            lua_pushstring(L, t->getFontName().c_str());
-            lua_setfield(L, -2, "name");  // add font to text
-            lua_pushnumber(L, t->getFontSize());
-            lua_setfield(L, -2, "size");  // add size to text
-            lua_setfield(L, -2, "font");  // insert font-table to text element
+        lua_newtable(L);  // font table to stack
+        lua_pushstring(L, t->getFontName().c_str());
+        lua_setfield(L, -2, "name");  // add font to text
+        lua_pushnumber(L, t->getFontSize());
+        lua_setfield(L, -2, "size");  // add size to text
+        lua_setfield(L, -2, "font");  // insert font-table to text element
 
-            lua_pushinteger(L, as_signed(uint32_t(t->getColor()) & 0xffffffU));
-            lua_setfield(L, -2, "color");  // add color to text
+        lua_pushinteger(L, as_signed(uint32_t(t->getColor()) & 0xffffffU));
+        lua_setfield(L, -2, "color");  // add color to text
 
-            lua_pushnumber(L, t->getX());
-            lua_setfield(L, -2, "x");  // add x coordindate to text
+        lua_pushnumber(L, t->getX());
+        lua_setfield(L, -2, "x");  // add x coordindate to text
 
-            lua_pushnumber(L, t->getY());
-            lua_setfield(L, -2, "y");  // add y coordinate to text
+        lua_pushnumber(L, t->getY());
+        lua_setfield(L, -2, "y");  // add y coordinate to text
 
-            lua_pushnumber(L, t->getElementWidth());
-            lua_setfield(L, -2, "width");  // add width to text
+        lua_pushnumber(L, t->getElementWidth());
+        lua_setfield(L, -2, "width");  // add width to text
 
-            lua_pushnumber(L, t->getElementHeight());
-            lua_setfield(L, -2, "height");  // add height to text
+        lua_pushnumber(L, t->getElementHeight());
+        lua_setfield(L, -2, "height");  // add height to text
 
-            lua_pushlightuserdata(L, const_cast<void*>(static_cast<const void*>(t)));
-            lua_setfield(L, -2, "ref");
+        lua_pushlightuserdata(L, const_cast<void*>(static_cast<const void*>(t)));
+        lua_setfield(L, -2, "ref");
 
-            lua_settable(L, -3);  // add text to elements
+        if (layer.has_value()) {
+            lua_pushinteger(L, as_signed(layer.value()));
+            lua_setfield(L, -2, "layer");  // add layer to text
         }
+
+        if (page_nb.has_value()) {
+            lua_pushinteger(L, as_signed(page_nb.value()));
+            lua_setfield(L, -2, "page");  // add page to text
+        }
+
+        lua_settable(L, -3);  // add text to elements
     }
     return 1;
 }
 
 /**
- * Puts a Lua Table of the Strokes (from the selection tool / selected layer) onto the stack.
+ * Puts a Lua Table of the Strokes (from the selection tool / selected layer / selected page / all document) onto the
+ * stack. When called with "page" to retrieve all elements on the current page, it also adds a field "layer" for
+ * the layer containing the element, and when called with "all" it additionally adds a field "page" containing its page
+ * index together with its layer (all of them being indexed from 1).
+ *
  * Is inverse to app.addStrokes
  *
- * @param type string "selection" or "layer"
+ * @param type string "selection" or "layer" or "page" or "all"
  * @return {x:number[], y:number[], pressure:number[], tool:string, width:number, color:integer, fill:number,
- * linestyle:string, ref:lightuserdata}[] strokes
+ * linestyle:string, ref:lightuserdata, page:number|nil, layer:number|nil}[] strokes
  *
- * Required argument: type ("selection" or "layer")
+ * Required argument: type ("selection" or "layer" or "page" or "all")
  *
- * Example: local strokes = app.getStrokes("selection")
+ * Example: local strokes = app.getStrokes("all")
  *
  * possible return value:
  * {
@@ -1676,7 +1758,9 @@ static int applib_getTexts(lua_State* L) {
  *             ["color"] = 0xa000f0,
  *             ["fill"] = 0,
  *             ["lineStyle"] = "plain",
- *             ["ref"] = userdata: 0x5f644c02c538
+ *             ["ref"] = userdata: 0x5f644c02c538,
+ *             ["page"] = 1, -- Only present when called with "all"
+ *             ["layer"] = 1, -- Only present when called with "all" or "page"
  *         },
  *         {
  *             ["x"]         = {207, 207.5, 315.2, 315.29, 207.5844},
@@ -1687,6 +1771,8 @@ static int applib_getTexts(lua_State* L) {
  *             ["fill"]      = -1,
  *             ["lineStyle"] = "plain",
  *             ["ref"] = userdata: 0x5f644c02d440
+ *             ["page"] = 2,
+ *             ["layer"] = 1,
  *         },
  *         {
  *             ["x"]         = {387.60, 387.6042, 500.879, 500.87, 387.604},
@@ -1697,6 +1783,8 @@ static int applib_getTexts(lua_State* L) {
  *             ["fill"]      = -1,
  *             ["lineStyle"] = "plain",
  *             ["ref"] = userdata: 0x5f644c0700d0
+ *             ["page"] = 2,
+ *             ["layer"] = 2,
  *         },
  * }
  */
@@ -1709,7 +1797,7 @@ static int applib_getStrokes(lua_State* L) {
     lua_settop(L, 1);
     luaL_checktype(L, 1, LUA_TSTRING);
 
-    const auto& [err, elements] = getElementsFromHelper(control, type);
+    const auto& [err, elements] = getElementsFromHelper(control, type, ELEMENT_STROKE);
     if (err.has_value()) {
         return luaL_error(L, err.value().c_str());
     }
@@ -1722,82 +1810,90 @@ static int applib_getStrokes(lua_State* L) {
     //  1 = type (string)
     // -1 = table of strokes (to be returned)
 
-    for (const Element* e: elements) {
-        if (e->getType() == ELEMENT_STROKE) {
-            auto* s = static_cast<const Stroke*>(e);
-            lua_pushinteger(L, ++currStrokeNo);  // index for later (settable)
-            lua_newtable(L);                     // create stroke table
+    for (const auto [e, page_nb, layer]: elements) {
+        auto* s = static_cast<const Stroke*>(e);
+        lua_pushinteger(L, ++currStrokeNo);  // index for later (settable)
+        lua_newtable(L);                     // create stroke table
 
-            // stack now has following:
-            //  1 = type (string)
-            // -3 = table of strokes (to be returned)
-            // -2 = index of the current stroke
-            // -1 = current stroke
+        // stack now has following:
+        //  1 = type (string)
+        // -3 = table of strokes (to be returned)
+        // -2 = index of the current stroke
+        // -1 = current stroke
 
-            lua_newtable(L);  // create table of x-coordinates
-            for (auto p: s->getPointVector()) {
-                lua_pushinteger(L, ++currPointNo);  // key
-                lua_pushnumber(L, p.x);             // value
-                lua_settable(L, -3);                // insert
-            }
-            lua_setfield(L, -2, "x");  // add x-coordinates to stroke
-            currPointNo = 0;
-
-            lua_newtable(L);  // create table for y-coordinates
-            for (auto p: s->getPointVector()) {
-                lua_pushinteger(L, ++currPointNo);  // key
-                lua_pushnumber(L, p.y);             // value
-                lua_settable(L, -3);                // insert
-            }
-            lua_setfield(L, -2, "y");  // add y-coordinates to stroke
-            currPointNo = 0;
-
-            if (s->hasPressure()) {
-                lua_newtable(L);  // create table for pressures
-                for (auto p: s->getPointVector()) {
-                    lua_pushinteger(L, ++currPointNo);  // key
-                    lua_pushnumber(L, p.z);             // value
-                    lua_settable(L, -3);                // insert
-                }
-                lua_setfield(L, -2, "pressure");  // add pressures to stroke
-                currPointNo = 0;
-            }
-
-            // stack now has following:
-            //  1 = type (string)
-            // -3 = table of strokes (to be returned)
-            // -2 = index of the current stroke
-            // -1 = current stroke
-
-            StrokeTool tool = s->getToolType();
-            if (tool == StrokeTool::PEN) {
-                lua_pushstring(L, "pen");
-            } else if (tool == StrokeTool::ERASER) {
-                lua_pushstring(L, "eraser");
-            } else if (tool == StrokeTool::HIGHLIGHTER) {
-                lua_pushstring(L, "highlighter");
-            } else {
-                return luaL_error(L, "Unknown StrokeTool::Value.");
-            }
-            lua_setfield(L, -2, "tool");  // add tool to stroke
-
-            lua_pushnumber(L, s->getWidth());
-            lua_setfield(L, -2, "width");  // add width to stroke
-
-            lua_pushinteger(L, as_signed(uint32_t(s->getColor()) & 0xffffffU));
-            lua_setfield(L, -2, "color");  // add color to stroke
-
-            lua_pushinteger(L, s->getFill());
-            lua_setfield(L, -2, "fill");  // add fill to stroke
-
-            lua_pushstring(L, StrokeStyle::formatStyle(s->getLineStyle()).c_str());
-            lua_setfield(L, -2, "lineStyle");  // add linestyle to stroke
-
-            lua_pushlightuserdata(L, const_cast<void*>(static_cast<const void*>(s)));
-            lua_setfield(L, -2, "ref");
-
-            lua_settable(L, -3);  // add stroke to returned table
+        lua_newtable(L);  // create table of x-coordinates
+        for (auto p: s->getPointVector()) {
+            lua_pushinteger(L, ++currPointNo);  // key
+            lua_pushnumber(L, p.x);             // value
+            lua_settable(L, -3);                // insert
         }
+        lua_setfield(L, -2, "x");  // add x-coordinates to stroke
+        currPointNo = 0;
+
+        lua_newtable(L);  // create table for y-coordinates
+        for (auto p: s->getPointVector()) {
+            lua_pushinteger(L, ++currPointNo);  // key
+            lua_pushnumber(L, p.y);             // value
+            lua_settable(L, -3);                // insert
+        }
+        lua_setfield(L, -2, "y");  // add y-coordinates to stroke
+        currPointNo = 0;
+
+        if (s->hasPressure()) {
+            lua_newtable(L);  // create table for pressures
+            for (auto p: s->getPointVector()) {
+                lua_pushinteger(L, ++currPointNo);  // key
+                lua_pushnumber(L, p.z);             // value
+                lua_settable(L, -3);                // insert
+            }
+            lua_setfield(L, -2, "pressure");  // add pressures to stroke
+            currPointNo = 0;
+        }
+
+        // stack now has following:
+        //  1 = type (string)
+        // -3 = table of strokes (to be returned)
+        // -2 = index of the current stroke
+        // -1 = current stroke
+
+        StrokeTool tool = s->getToolType();
+        if (tool == StrokeTool::PEN) {
+            lua_pushstring(L, "pen");
+        } else if (tool == StrokeTool::ERASER) {
+            lua_pushstring(L, "eraser");
+        } else if (tool == StrokeTool::HIGHLIGHTER) {
+            lua_pushstring(L, "highlighter");
+        } else {
+            return luaL_error(L, "Unknown StrokeTool::Value.");
+        }
+        lua_setfield(L, -2, "tool");  // add tool to stroke
+
+        lua_pushnumber(L, s->getWidth());
+        lua_setfield(L, -2, "width");  // add width to stroke
+
+        lua_pushinteger(L, as_signed(uint32_t(s->getColor()) & 0xffffffU));
+        lua_setfield(L, -2, "color");  // add color to stroke
+
+        lua_pushinteger(L, s->getFill());
+        lua_setfield(L, -2, "fill");  // add fill to stroke
+
+        lua_pushstring(L, StrokeStyle::formatStyle(s->getLineStyle()).c_str());
+        lua_setfield(L, -2, "lineStyle");  // add linestyle to stroke
+
+        lua_pushlightuserdata(L, const_cast<void*>(static_cast<const void*>(s)));
+        lua_setfield(L, -2, "ref");
+
+        if (layer.has_value()) {
+            lua_pushinteger(L, as_signed(layer.value()));
+            lua_setfield(L, -2, "layer");  // add layer to text
+        }
+
+        if (page_nb.has_value()) {
+            lua_pushinteger(L, as_signed(page_nb.value()));
+            lua_setfield(L, -2, "page");  // add page to text
+        }
+
+        lua_settable(L, -3);  // add stroke to returned table
     }
     return 1;
 }
@@ -2189,13 +2285,13 @@ static int applib_getToolInfo(lua_State* L) {
         auto lineStyle = StrokeStyle::formatStyle(toolHandler->getLineStyle());
 
 
-        lua_pushstring(L, toolType.data());   // value
-        lua_setfield(L, -2, "type");          // insert
+        lua_pushstring(L, toolType.data());  // value
+        lua_setfield(L, -2, "type");         // insert
 
         lua_newtable(L);  // beginning of "size" table
 
-        lua_pushstring(L, toolSize.data());   // value
-        lua_setfield(L, -2, "name");          // insert
+        lua_pushstring(L, toolSize.data());  // value
+        lua_setfield(L, -2, "name");         // insert
 
         lua_pushnumber(L, thickness);  // value
         lua_setfield(L, -2, "value");  // insert
@@ -2208,11 +2304,11 @@ static int applib_getToolInfo(lua_State* L) {
         lua_pushinteger(L, fillOpacity);     // value
         lua_setfield(L, -2, "fillOpacity");  // insert
 
-        lua_pushstring(L, drawingType.data());   // value
-        lua_setfield(L, -2, "drawingType");      // insert
+        lua_pushstring(L, drawingType.data());  // value
+        lua_setfield(L, -2, "drawingType");     // insert
 
-        lua_pushstring(L, lineStyle.data());   // value
-        lua_setfield(L, -2, "lineStyle");      // insert
+        lua_pushstring(L, lineStyle.data());  // value
+        lua_setfield(L, -2, "lineStyle");     // insert
     } else if (strcmp(mode, "pen") == 0) {
         auto size = toolSizeToString(toolHandler->getPenSize());
         double thickness = toolHandler->getToolThickness(TOOL_PEN)[toolSizeFromString(size.data())];
@@ -2227,8 +2323,8 @@ static int applib_getToolInfo(lua_State* L) {
 
         lua_newtable(L);  // beginning of "size" table
 
-        lua_pushstring(L, size.data());   // value
-        lua_setfield(L, -2, "name");      // insert
+        lua_pushstring(L, size.data());  // value
+        lua_setfield(L, -2, "name");     // insert
 
         lua_pushnumber(L, thickness);  // value
         lua_setfield(L, -2, "value");  // insert
@@ -2238,8 +2334,8 @@ static int applib_getToolInfo(lua_State* L) {
         lua_pushinteger(L, as_signed(uint32_t(color) & 0xffffffU));  // value
         lua_setfield(L, -2, "color");                                // insert
 
-        lua_pushstring(L, drawingType.data());   // value
-        lua_setfield(L, -2, "drawingType");      // insert
+        lua_pushstring(L, drawingType.data());  // value
+        lua_setfield(L, -2, "drawingType");     // insert
 
         lua_pushstring(L, lineStyle.c_str());  // value
         lua_setfield(L, -2, "lineStyle");      // insert
@@ -2262,8 +2358,8 @@ static int applib_getToolInfo(lua_State* L) {
 
         lua_newtable(L);  // beginning of "size" table
 
-        lua_pushstring(L, size.data());   // value
-        lua_setfield(L, -2, "name");      // insert
+        lua_pushstring(L, size.data());  // value
+        lua_setfield(L, -2, "name");     // insert
 
         lua_pushnumber(L, thickness);  // value
         lua_setfield(L, -2, "value");  // insert
@@ -2273,8 +2369,8 @@ static int applib_getToolInfo(lua_State* L) {
         lua_pushinteger(L, as_signed(uint32_t(color) & 0xffffffU));  // value
         lua_setfield(L, -2, "color");                                // insert
 
-        lua_pushstring(L, drawingType.data());   // value
-        lua_setfield(L, -2, "drawingType");      // insert
+        lua_pushstring(L, drawingType.data());  // value
+        lua_setfield(L, -2, "drawingType");     // insert
 
         lua_pushboolean(L, filled);     // value
         lua_setfield(L, -2, "filled");  // insert
@@ -2287,13 +2383,13 @@ static int applib_getToolInfo(lua_State* L) {
         auto size = toolSizeToString(toolHandler->getEraserSize());
         double thickness = toolHandler->getToolThickness(ToolType::TOOL_ERASER)[toolSizeFromString(size.data())];
 
-        lua_pushstring(L, type.data());   // value
-        lua_setfield(L, -2, "type");      // insert
+        lua_pushstring(L, type.data());  // value
+        lua_setfield(L, -2, "type");     // insert
 
         lua_newtable(L);  // beginning of "size" table
 
-        lua_pushstring(L, size.data());   // value
-        lua_setfield(L, -2, "name");      // insert
+        lua_pushstring(L, size.data());  // value
+        lua_setfield(L, -2, "name");     // insert
 
         lua_pushnumber(L, thickness);  // value
         lua_setfield(L, -2, "value");  // insert
@@ -2884,10 +2980,14 @@ static int applib_export(lua_State* L) {
     fs::path file = fs::path(outputFile);
     auto extension = file.extension();
 
-    if (extension == ".pdf") {
-        ExportHelper::exportPdf(doc, outputFile, range, layerRange, bgType, progressiveMode);
-    } else if (extension == ".svg" || extension == ".png") {
-        ExportHelper::exportImg(doc, outputFile, range, layerRange, pngDpi, pngWidth, pngHeight, bgType);
+    try {
+        if (extension == ".pdf") {
+            ExportHelper::exportPdf(doc, outputFile, range, layerRange, bgType, progressiveMode);
+        } else if (extension == ".svg" || extension == ".png") {
+            ExportHelper::exportImg(doc, outputFile, range, layerRange, pngDpi, pngWidth, pngHeight, bgType);
+        }
+    } catch (const std::exception& e) {
+        return luaL_error(L, "Error exporting document: %s", e.what());
     }
 
     return 0;
@@ -3155,14 +3255,18 @@ static int applib_addImages(lua_State* L) {
 }
 
 /**
- * Puts a Lua Table of the Images (from the selection tool / selected layer) onto the stack.
+ * Puts a Lua Table of the Images (from the selection tool / selected layer / selected page / all document) onto the
+ * stack. When called with "page" to retrieve all elements on the current page, it also adds a field "layer" for
+ * the layer containing the element, and when called with "all" it additionally adds a field "page" containing its page
+ * index together with its layer (all of them being indexed from 1).
+ *
  * Is inverse to app.addImages
  *
- * @param type string "selection" or "layer"
+ * @param type string "selection" or "layer" or "page" or "all"
  * @return {x:number, y:number, width:number, height:number, data:string, format:string, imageWidth:number,
- * imageHeight:number, ref:lightuserdata}[] images
+ * imageHeight:number, ref:lightuserdata, page:number|nil, layer:number|nil}[] images
  *
- * Required argument: type ("selection" or "layer")
+ * Required argument: type ("selection" or "layer" or "page" or "all")
  *
  * Example: local images = app.getImages("selection")
  *
@@ -3178,6 +3282,8 @@ static int applib_addImages(lua_State* L) {
  *         ["imageWidth"] = integer,
  *         ["imageHeight"] = integer,
  *         ["ref"] = userdata: 0x5f644c0700d0
+ *         ["page"] = 1, -- Only present when called with "all"
+ *         ["layer"] = 1, -- Only present when called with "all" or "page"
  *     },
  *     {
  *         ...
@@ -3193,7 +3299,7 @@ static int applib_getImages(lua_State* L) {
     // Discard any extra arguments passed in
     lua_settop(L, 1);
 
-    const auto& [err, elements] = getElementsFromHelper(control, type);
+    const auto& [err, elements] = getElementsFromHelper(control, type, ELEMENT_IMAGE);
     if (err.has_value()) {
         return luaL_error(L, err.value().c_str());
     }
@@ -3201,49 +3307,57 @@ static int applib_getImages(lua_State* L) {
     lua_newtable(L);  // create table of all images
     int currImageNo = 0;
 
-    for (const Element* e: elements) {
-        if (e->getType() == ELEMENT_IMAGE) {
-            auto* im = static_cast<const Image*>(e);
-            lua_pushinteger(L, ++currImageNo);  // index for later (settable)
-            lua_newtable(L);                    // create table for current image
+    for (const auto [e, page_nb, layer]: elements) {
+        auto* im = static_cast<const Image*>(e);
+        lua_pushinteger(L, ++currImageNo);  // index for later (settable)
+        lua_newtable(L);                    // create table for current image
 
-            // "x": number
-            lua_pushnumber(L, im->getX());
-            lua_setfield(L, -2, "x");
+        // "x": number
+        lua_pushnumber(L, im->getX());
+        lua_setfield(L, -2, "x");
 
-            // "y": number
-            lua_pushnumber(L, im->getY());
-            lua_setfield(L, -2, "y");
+        // "y": number
+        lua_pushnumber(L, im->getY());
+        lua_setfield(L, -2, "y");
 
-            // "width": number
-            lua_pushnumber(L, im->getElementWidth());
-            lua_setfield(L, -2, "width");
+        // "width": number
+        lua_pushnumber(L, im->getElementWidth());
+        lua_setfield(L, -2, "width");
 
-            // "height": number
-            lua_pushnumber(L, im->getElementHeight());
-            lua_setfield(L, -2, "height");
+        // "height": number
+        lua_pushnumber(L, im->getElementHeight());
+        lua_setfield(L, -2, "height");
 
-            // data: string (can be optimized via lual_Buffer)
-            lua_pushlstring(L, reinterpret_cast<const char*>(im->getRawData()), im->getRawDataLength());
-            lua_setfield(L, -2, "data");
+        // data: string (can be optimized via lual_Buffer)
+        lua_pushlstring(L, reinterpret_cast<const char*>(im->getRawData()), im->getRawDataLength());
+        lua_setfield(L, -2, "data");
 
-            // format: string
-            lua_pushstring(L, gdk_pixbuf_format_get_name(im->getImageFormat()));
-            lua_setfield(L, -2, "format");
+        // format: string
+        lua_pushstring(L, gdk_pixbuf_format_get_name(im->getImageFormat()));
+        lua_setfield(L, -2, "format");
 
-            std::pair<int, int> imageSize = im->getImageSize();
-            // image width: integer
-            lua_pushinteger(L, imageSize.first);
-            lua_setfield(L, -2, "imageWidth");
-            // image height: integer
-            lua_pushinteger(L, imageSize.second);
-            lua_setfield(L, -2, "imageHeight");
+        std::pair<int, int> imageSize = im->getImageSize();
+        // image width: integer
+        lua_pushinteger(L, imageSize.first);
+        lua_setfield(L, -2, "imageWidth");
+        // image height: integer
+        lua_pushinteger(L, imageSize.second);
+        lua_setfield(L, -2, "imageHeight");
 
-            lua_pushlightuserdata(L, const_cast<void*>(static_cast<const void*>(im)));
-            lua_setfield(L, -2, "ref");
+        lua_pushlightuserdata(L, const_cast<void*>(static_cast<const void*>(im)));
+        lua_setfield(L, -2, "ref");
 
-            lua_settable(L, -3);  // add image to table
+        if (layer.has_value()) {
+            lua_pushinteger(L, as_signed(layer.value()));
+            lua_setfield(L, -2, "layer");  // add layer to text
         }
+
+        if (page_nb.has_value()) {
+            lua_pushinteger(L, as_signed(page_nb.value()));
+            lua_setfield(L, -2, "page");  // add page to text
+        }
+
+        lua_settable(L, -3);  // add image to table
     }
     return 1;
 }

@@ -2,8 +2,10 @@ name: Build
 
 on:
   pull_request:
-    branches: [ "master", "release-*" ]
-    ignores-paths:
+    branches: 
+      - "master"
+      - "release-*"
+    paths-ignore:
       - 'po/xournalpp.pot'
       - 'po/*.po'
 
@@ -21,13 +23,13 @@ jobs:
       macos_builds: ${{ steps.parse.outputs.macos_builds }}
       windows_builds: ${{ steps.parse.outputs.windows_builds }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:  # Get the build targets
           sparse-checkout: '${{ env.build-targets-json }}'
           sparse-checkout-cone-mode: false
       - name: 'Parse list of targets'
         id: parse
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const available_targets = require('${{ env.build-targets-json }}')
@@ -65,7 +67,7 @@ jobs:
       image: ${{ matrix.run.container_image }}
     name: 'Test Xournal++ on ${{ matrix.run.displayed_name }}'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: 'Install dependencies'
         uses: ./.github/actions/install_deps_ubuntu
         with:
@@ -137,7 +139,7 @@ jobs:
     runs-on: ${{ matrix.run.runner }}
     name: 'Test Xournal++ on ${{ matrix.run.displayed_name }}'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: 'Install dependencies'
         uses: ./.github/actions/install_deps_windows
         with:
@@ -167,7 +169,7 @@ jobs:
     runs-on: ${{ matrix.run.runner }}
     name: 'Test Xournal++ on ${{ matrix.run.displayed_name }}'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: 'Install dependencies'
         uses: ./.github/actions/install_deps_mac
         with:

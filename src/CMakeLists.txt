@@ -92,6 +92,10 @@ set_target_properties(xournalpp PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BIN
         MACOSX_BUNDLE $<IF:$<PLATFORM_ID:Darwin>,TRUE,${CMAKE_MACOSX_BUNDLE}>
         WIN32_EXECUTABLE $<IF:$<PLATFORM_ID:Windows>,TRUE,${CMAKE_WIN32_EXECUTABLE}>
         )
+if (WIN32)
+  # Make sure Windows executable has all symbols
+  target_link_options(xournalpp PRIVATE "-Wl,--export-all-symbols")
+endif()
 
 ###############################
 # Generate icons

@@ -666,10 +666,8 @@ void Control::setShowMenubar(bool enabled) {
 
 void Control::disableSidebarTmp(bool disabled) { this->sidebar->setTmpDisabled(disabled); }
 
-void Control::addDefaultPage(const std::optional<std::string>& pageTemplate, Document* doc) {
-    const std::string& templ = pageTemplate.value_or(settings->getPageTemplate());
-    PageTemplateSettings model;
-    model.parse(templ);
+void Control::addDefaultPage(const std::optional<PageTemplateSettings>& pageTemplate, Document* doc) {
+    const auto& model = pageTemplate.value_or(this->settings->getPageTemplateSettings());
 
     auto page = std::make_shared<XojPage>(model.getPageWidth(), model.getPageHeight());
     page->setBackgroundColor(model.getBackgroundColor());
@@ -901,6 +899,7 @@ void Control::insertPage(const PageRef& page, size_t position, bool shouldScroll
     this->doc->lock();
     this->doc->insertPage(page, position);  // insert the new page to the document and update page numbers
     this->doc->unlock();
+    undoRedo->addUndoAction(std::make_unique<InsertDeletePageUndoAction>(page, position, true));
 
     // notify document listeners about the inserted page; this creates the new XojViewPage, recalculates the layout
     // and creates a preview page in the sidebar
@@ -916,7 +915,6 @@ void Control::insertPage(const PageRef& page, size_t position, bool shouldScroll
     }
 
     updatePageActions();
-    undoRedo->addUndoAction(std::make_unique<InsertDeletePageUndoAction>(page, position, true));
 }
 
 void Control::gotoPage() {
@@ -1467,7 +1465,7 @@ void Control::showSettings() {
 }
 
 static std::unique_ptr<Document> createNewDocument(Control* ctrl, fs::path filepath,
-                                                   const std::optional<std::string>& pageTemplate) {
+                                                   const std::optional<PageTemplateSettings>& pageTemplate) {
     auto newDoc = std::make_unique<Document>(ctrl);
     if (!filepath.empty()) {
         newDoc->setFilepath(std::move(filepath));
@@ -1605,7 +1603,6 @@ bool Control::openPdfFile(fs::path filepath, bool attachToDocument, int scrollTo
 bool Control::openPngFile(fs::path filepath, bool attachToDocument, int scrollToPage) {
     fs::path imagePath(filepath);
     this->getCursor()->setCursorBusy(true);
-    auto doc = std::make_unique<Document>(this);
     this->replaceDocument(createNewDocument(this, std::move(filepath), std::nullopt), -1);
 
     // Put a png file directly in the page
@@ -1646,23 +1643,42 @@ bool Control::openXoptFile(fs::path filepath) {
     auto pageTemplate = Util::readString(filepath);
     if (!pageTemplate) {
         // Unable to read the template from the file
+        // Error message has already been displayed
         return false;
     }
-    this->replaceDocument(createNewDocument(this, std::move(filepath), pageTemplate), -1);
+
+    PageTemplateSettings model;
+    if (!model.parse(*pageTemplate)) {
+        const auto msg = FS(_F("Error reading template file \"{1}\"") % filepath.u8string());
+        XojMsgBox::showErrorToUser(this->getGtkWindow(), msg);
+        return false;
+    }
+
+    this->replaceDocument(createNewDocument(this, std::move(filepath), model), -1);
     return true;
 }
 
 void Control::openFileWithoutSavingTheCurrentDocument(fs::path filepath, bool attachToDocument, int scrollToPage,
                                                       std::function<void(bool)> callback) {
-    if (filepath.empty() || !fs::exists(filepath)) {
-        this->replaceDocument(createNewDocument(this, std::move(filepath), std::nullopt), -1);
+    if (filepath.empty()) {
+        this->replaceDocument(createNewDocument(this, fs::path(), std::nullopt), -1);
         callback(true);
         return;
     }
 
+    if (std::error_code err; !fs::exists(filepath, err)) {
+        std::string message =
+                err ? FS(_F("Failed to determine if path exists \"{1}\": {2}") % filepath.u8string() % err.message()) :
+                      FS(_F("That file does not exist:\n\"{1}\"") % filepath.u8string());
+        XojMsgBox::showErrorToUser(getGtkWindow(), message);
+        // We create an empty document to avoid ever being in a "no document" state.
+        this->replaceDocument(createNewDocument(this, fs::path(), std::nullopt), -1);
+        callback(false);
+        return;
+    }
+
     if (filepath.extension() == ".xopt") {
-        this->openXoptFile(std::move(filepath));
-        callback(true);
+        callback(this->openXoptFile(std::move(filepath)));
         return;
     }
 
@@ -1697,12 +1713,14 @@ void Control::openFile(fs::path filepath, std::function<void(bool)> callback, in
         return;
     }
 
-    this->close([ctrl = this, filepath = std::move(filepath), cb = std::move(callback),
-                 scrollToPage](bool closed) mutable {
-        if (closed) {
-            ctrl->openFileWithoutSavingTheCurrentDocument(std::move(filepath), false, scrollToPage, std::move(cb));
-        }
-    });
+    this->close(
+            [ctrl = this, filepath = std::move(filepath), cb = std::move(callback), scrollToPage](bool closed) mutable {
+                if (closed) {
+                    ctrl->openFileWithoutSavingTheCurrentDocument(std::move(filepath), false, scrollToPage,
+                                                                  std::move(cb));
+                }
+            },
+            false, true, forceOpen);
 }
 
 void Control::fileLoaded(int scrollToPage) {
@@ -1711,17 +1729,13 @@ void Control::fileLoaded(int scrollToPage) {
     this->doc->unlock();
 
     if (!filepath.empty()) {
-        MetadataEntry md = MetadataManager::getForFile(filepath);
-        if (!md.valid) {
-            md.zoom = -1;
-            md.page = 0;
+        auto md = MetadataManager::getForFile(filepath);
+        if (md) {
+            if (scrollToPage >= 0) {
+                md->page = scrollToPage;
+            }
+            loadMetadata(*md);
         }
-
-        if (scrollToPage >= 0) {
-            md.page = scrollToPage;
-        }
-
-        loadMetadata(md);
         RecentManager::addRecentFileFilename(filepath);
     } else {
         zoom->updateZoomFitValue();
@@ -1825,9 +1839,6 @@ public:
  * Load the data after processing the document...
  */
 auto Control::loadMetadataCallback(MetadataCallbackData* data) -> bool {
-    if (!data->md.valid) {
-        return false;
-    }
     ZoomControl* zoom = data->ctrl->zoom;
     if (zoom->isZoomPresentationMode()) {
         data->ctrl->setViewPresentationMode(true);
@@ -2089,12 +2100,13 @@ void Control::quit(bool allowCancel) {
     this->close(std::move(afterClosed), true, allowCancel);
 }
 
-void Control::close(std::function<void(bool)> callback, const bool allowDestroy, const bool allowCancel) {
+void Control::close(std::function<void(bool)> callback, const bool allowDestroy, const bool allowCancel,
+                    const bool forceClose) {
     clearSelectionEndText();
     metadata->documentChanged();
     resetGeometryTool();
 
-    bool safeToClose = !undoRedo->isChanged();
+    bool safeToClose = forceClose || !undoRedo->isChanged();
     if (!safeToClose) {
         fs::path path = doc->getFilepath();
         const bool fileRemoved = !path.empty() && !fs::exists(path);
@@ -2225,12 +2237,14 @@ void Control::clipboardPasteText(string text) {
 
 void Control::clipboardPasteImage(GdkPixbuf* img) {
     auto image = std::make_unique<Image>();
-    image->setImage(img);
+    xoj::util::GObjectSPtr<GdkPixbuf> pixbuf(gdk_pixbuf_apply_embedded_orientation(img), xoj::util::adopt);
+
+    image->setImage(pixbuf.get());
 
     auto zoom100 = this->getZoomControl()->getZoom100Value();
 
-    auto width = static_cast<double>(gdk_pixbuf_get_width(img)) / zoom100;
-    auto height = static_cast<double>(gdk_pixbuf_get_height(img)) / zoom100;
+    auto width = static_cast<double>(gdk_pixbuf_get_width(pixbuf.get())) / zoom100;
+    auto height = static_cast<double>(gdk_pixbuf_get_height(pixbuf.get())) / zoom100;
 
     auto pageNr = getCurrentPageNo();
     if (pageNr == npos) {

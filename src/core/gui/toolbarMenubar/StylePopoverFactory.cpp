@@ -29,12 +29,9 @@ GtkWidget* StylePopoverFactory::createPopover() const {
                                 }),
                                 popover, GConnectFlags(0));
 #else
-    GtkCheckButton* group = nullptr;
     std::string actionName = std::string("win.") + Action_toString(Action::TOOL_PEN_LINE_STYLE);
     auto appendLineStyleItem = [&](const char* label, const char* target, const char* icon) {
         GtkWidget* btn = gtk_check_button_new_with_label(layerName.c_str());
-        // Is grouping necessary here? The GTK4 doc is unclear
-        gtk_check_button_set_group(GTK_CHECK_BUTTON(btn), std::exchange(group, GTK_CHECK_BUTTON(btn));
         gtk_actionable_set_action_name(GTK_ACTIONABLE(btn), actionName.c_str());
         g_signal_connect_object(btn, "toggled", G_CALLBACK(+[](GtkCheckButton*, gpointer popover){
             gtk_popover_popdown(GTK_POPOVER(popover));}), popover, GConnectFlags(0));

@@ -28,12 +28,13 @@
 #include "model/Font.h"                          // for XojFont
 #include "util/Color.h"                          // for Color
 
-#include "LatexSettings.h"      // for LatexSettings
-#include "RecolorParameters.h"  // for RecolorParameters
-#include "SettingsEnums.h"      // for InputDeviceTypeOption
-#include "ViewModes.h"          // for ViewModes
-#include "config-features.h"    // for ENABLE_AUDIO
-#include "filesystem.h"         // for path
+#include "LatexSettings.h"         // for LatexSettings
+#include "PageTemplateSettings.h"  // for PageTemplateSettings
+#include "RecolorParameters.h"     // for RecolorParameters
+#include "SettingsEnums.h"         // for InputDeviceTypeOption
+#include "ViewModes.h"             // for ViewModes
+#include "config-features.h"       // for ENABLE_AUDIO
+#include "filesystem.h"            // for path
 
 #ifdef ENABLE_AUDIO
 #include <portaudiocpp/PortAudioCpp.hxx>  // for PaDeviceIndex
@@ -46,6 +47,7 @@ constexpr unsigned int MAX_SPACES_FOR_TAB = 8U;
 
 class ButtonConfig;
 class InputDevice;
+class PageTemplateSettings;
 
 class SAttribute {
 public:
@@ -408,8 +410,8 @@ public:
     bool isEagerPageCleanup() const;
     void setEagerPageCleanup(bool b);
 
-    std::string const& getPageTemplate() const;
-    void setPageTemplate(const std::string& pageTemplate);
+    PageTemplateSettings const& getPageTemplateSettings() const;
+    void setPageTemplateSettings(const PageTemplateSettings& pageTemplateSettings);
 
 #ifdef ENABLE_AUDIO
     fs::path const& getAudioFolder() const;
@@ -1013,9 +1015,9 @@ private:
     RecolorParameters recolorParameters{};
 
     /**
-     * Page template String
+     * Page template (format, background, color...)
      */
-    std::string pageTemplate;
+    PageTemplateSettings pageTemplateSettings;
 
     /**
      * Unit, see XOJ_UNITS

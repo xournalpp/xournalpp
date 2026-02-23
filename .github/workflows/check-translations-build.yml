@@ -1,4 +1,4 @@
-name: Build translations
+name: Check translations build
 
 on:
   pull_request:
@@ -15,7 +15,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: 'Install dependencies'
         shell: bash
         run: |

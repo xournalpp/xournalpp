@@ -81,7 +81,4 @@ public:
 
 
     virtual void deleteViewBuffer() = 0;
-
-    virtual int getX() const = 0;
-    virtual int getY() const = 0;
 };
