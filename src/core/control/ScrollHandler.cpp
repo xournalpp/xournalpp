@@ -146,5 +146,5 @@ void ScrollHandler::pageChanged(size_t page) {
     if (page == 0) {
         return;
     }
-    scrollToPage(page - 1);
+    jumpToPage(page - 1);
 }
