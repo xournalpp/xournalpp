@@ -74,6 +74,18 @@ void ScrollHandler::scrollToPage(size_t page, XojPdfRectangle rect) {
     win->getXournal()->scrollTo(page, rect);
 }
 
+void ScrollHandler::jumpToPage(const PageRef& page, XojPdfRectangle rect) {
+    Document* doc = this->control->getDocument();
+
+    doc->lock();
+    auto p = doc->indexOf(page);
+    doc->unlock();
+
+    if (p != npos) {
+        jumpToPage(p, rect);
+    }
+}
+
 void ScrollHandler::jumpToPage(size_t page, XojPdfRectangle rect) {
     this->control->getNavigationHistory()->recordNavPoint();
     scrollToPage(page, rect);

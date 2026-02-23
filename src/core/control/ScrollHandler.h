@@ -39,6 +39,7 @@ public:
      * Jump to a page, recording a navigation point first.
      * Use this for user-initiated jumps (search, goto dialog, etc.)
      */
+    void jumpToPage(const PageRef& page, XojPdfRectangle rect = {0, 0, -1, -1});
     void jumpToPage(size_t page, XojPdfRectangle rect = {0, 0, -1, -1});
 
     void scrollToAnnotatedPage(bool next);
