@@ -33,12 +33,6 @@ target_link_libraries (xournalpp-thumbnailer
 
 target_include_directories (xournalpp-thumbnailer PRIVATE ${librsvg_INCLUDE_DIRS})
 
-set (THUMBNAILER_BIN "xournalpp-thumbnailer")
-
-add_custom_command (TARGET xournalpp-thumbnailer POST_BUILD
-  COMMAND ${CMAKE_STRIP} ${THUMBNAILER_BIN}
-)
-
 ## Install ##
 
 install (TARGETS xournalpp-thumbnailer
