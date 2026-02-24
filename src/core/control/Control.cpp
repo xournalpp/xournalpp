@@ -1182,6 +1182,11 @@ void Control::toolChanged() {
     this->actionDB->enableAction(Action::TOOL_DRAW_DOUBLE_ARROW, toolHandler->hasCapability(TOOL_CAP_DOUBLE_ARROW));
     this->actionDB->enableAction(Action::TOOL_DRAW_COORDINATE_SYSTEM, toolHandler->hasCapability(TOOL_CAP_ARROW));
     this->actionDB->enableAction(Action::TOOL_DRAW_SPLINE, toolHandler->hasCapability(TOOL_CAP_SPLINE));
+    this->actionDB->enableAction(Action::TOOL_DRAW_EXP, toolHandler->hasCapability(TOOL_CAP_EXP));
+    this->actionDB->enableAction(Action::TOOL_DRAW_GAUSS, toolHandler->hasCapability(TOOL_CAP_GAUSS));
+    this->actionDB->enableAction(Action::TOOL_DRAW_POLY, toolHandler->hasCapability(TOOL_CAP_POLY));
+    this->actionDB->enableAction(Action::TOOL_DRAW_POLYNEG, toolHandler->hasCapability(TOOL_CAP_POLYNEG));
+    this->actionDB->enableAction(Action::TOOL_DRAW_SINUS, toolHandler->hasCapability(TOOL_CAP_SINUS));
     this->actionDB->enableAction(Action::TOOL_DRAW_SHAPE_RECOGNIZER, toolHandler->hasCapability(TOOL_CAP_RECOGNIZER));
 
     DrawingType dt = toolHandler->getDrawingType();
@@ -1192,6 +1197,11 @@ void Control::toolChanged() {
     this->actionDB->setActionState(Action::TOOL_DRAW_DOUBLE_ARROW, dt == DRAWING_TYPE_DOUBLE_ARROW);
     this->actionDB->setActionState(Action::TOOL_DRAW_COORDINATE_SYSTEM, dt == DRAWING_TYPE_COORDINATE_SYSTEM);
     this->actionDB->setActionState(Action::TOOL_DRAW_SPLINE, dt == DRAWING_TYPE_SPLINE);
+    this->actionDB->setActionState(Action::TOOL_DRAW_EXP, dt == DRAWING_TYPE_EXP);
+    this->actionDB->setActionState(Action::TOOL_DRAW_GAUSS, dt == DRAWING_TYPE_GAUSS);
+    this->actionDB->setActionState(Action::TOOL_DRAW_POLY, dt == DRAWING_TYPE_POLY);
+    this->actionDB->setActionState(Action::TOOL_DRAW_POLYNEG, dt == DRAWING_TYPE_POLYNEG);
+    this->actionDB->setActionState(Action::TOOL_DRAW_SINUS, dt == DRAWING_TYPE_SINUS);
     this->actionDB->setActionState(Action::TOOL_DRAW_SHAPE_RECOGNIZER, dt == DRAWING_TYPE_SHAPE_RECOGNIZER);
 
     bool enableSize = toolHandler->hasCapability(TOOL_CAP_SIZE);

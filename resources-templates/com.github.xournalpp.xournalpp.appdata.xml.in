@@ -25,7 +25,7 @@
       <li>Follow links from the background PDF</li>
       <li>Export to a variety of formats including SVG, PNG and PDF, both from the GUI and command line</li>
       <li>Different drawing tools (e.g. pen, highlighter) and stroke styles (e.g. solid, dotted)</li>
-      <li>Shape drawing (line, arrow, circle, rectangle, spline)</li>
+      <li>Shape drawing (line, arrow, circle, rectangle, spline, exp, gauss, poly, poly neg, sinus)</li>
       <li>Use the set-square and compass tools for measurements or as a guide for drawing straight lines, circular arcs and radii</li>
       <li>Fill shape functionality</li>
       <li>Shape resizing and rotation</li>

@@ -40,6 +40,11 @@ static auto makeEntries(IconNameHelper& icons, const ActionDatabase& db)
     entries[Type::COORDINATE_SYSTEM] = Entry(_("Draw coordinate system"), icons.iconName("draw-coordinate-system"), db,
                                              Action::TOOL_DRAW_COORDINATE_SYSTEM);
     entries[Type::SPLINE] = Entry(_("Draw Spline"), icons.iconName("draw-spline"), db, Action::TOOL_DRAW_SPLINE);
+    entries[Type::EXP] = Entry(_("Draw Exp"), icons.iconName("draw-exp"), db, Action::TOOL_DRAW_EXP);
+    entries[Type::GAUSS] = Entry(_("Draw Gauss"), icons.iconName("draw-gauss"), db, Action::TOOL_DRAW_GAUSS);
+    entries[Type::POLY] = Entry(_("Draw Poly"), icons.iconName("draw-poly"), db, Action::TOOL_DRAW_POLY);
+    entries[Type::POLYNEG] = Entry(_("Draw Poly Neg"), icons.iconName("draw-polyneg"), db, Action::TOOL_DRAW_POLYNEG);
+    entries[Type::SINUS] = Entry(_("Draw Sinus"), icons.iconName("draw-sinus"), db, Action::TOOL_DRAW_SINUS);
     entries[Type::SHAPE_RECOGNIZER] =
             Entry(_("Stroke recognizer"), icons.iconName("shape-recognizer"), db, Action::TOOL_DRAW_SHAPE_RECOGNIZER);
     return res;
@@ -141,6 +146,16 @@ auto DrawingTypeComboToolButton::createItem(bool horizontal) -> xoj::util::Widge
                      data.get());
     g_signal_connect((*entries)[Type::SPLINE].gAction.get(), "notify::state",
                      xoj::util::wrap_for_g_callback_v<Data::setProminentIconCallback<Type::SPLINE>>, data.get());
+    g_signal_connect((*entries)[Type::EXP].gAction.get(), "notify::state",
+                     xoj::util::wrap_for_g_callback_v<Data::setProminentIconCallback<Type::EXP>>, data.get());
+    g_signal_connect((*entries)[Type::GAUSS].gAction.get(), "notify::state",
+                     xoj::util::wrap_for_g_callback_v<Data::setProminentIconCallback<Type::GAUSS>>, data.get());
+    g_signal_connect((*entries)[Type::POLY].gAction.get(), "notify::state",
+                     xoj::util::wrap_for_g_callback_v<Data::setProminentIconCallback<Type::POLY>>, data.get());
+    g_signal_connect((*entries)[Type::POLYNEG].gAction.get(), "notify::state",
+                     xoj::util::wrap_for_g_callback_v<Data::setProminentIconCallback<Type::POLYNEG>>, data.get());
+    g_signal_connect((*entries)[Type::SINUS].gAction.get(), "notify::state",
+                     xoj::util::wrap_for_g_callback_v<Data::setProminentIconCallback<Type::SINUS>>, data.get());
     g_signal_connect((*entries)[Type::SHAPE_RECOGNIZER].gAction.get(), "notify::state",
                      xoj::util::wrap_for_g_callback_v<Data::setProminentIconCallback<Type::SHAPE_RECOGNIZER>>,
                      data.get());
@@ -157,6 +172,11 @@ auto DrawingTypeComboToolButton::createItem(bool horizontal) -> xoj::util::Widge
                 g_signal_handlers_disconnect_by_data((*data->entries)[Type::LINE].gAction.get(), d);
                 g_signal_handlers_disconnect_by_data((*data->entries)[Type::COORDINATE_SYSTEM].gAction.get(), d);
                 g_signal_handlers_disconnect_by_data((*data->entries)[Type::SPLINE].gAction.get(), d);
+                g_signal_handlers_disconnect_by_data((*data->entries)[Type::EXP].gAction.get(), d);
+                g_signal_handlers_disconnect_by_data((*data->entries)[Type::GAUSS].gAction.get(), d);
+                g_signal_handlers_disconnect_by_data((*data->entries)[Type::POLY].gAction.get(), d);
+                g_signal_handlers_disconnect_by_data((*data->entries)[Type::POLYNEG].gAction.get(), d);
+                g_signal_handlers_disconnect_by_data((*data->entries)[Type::SINUS].gAction.get(), d);
                 g_signal_handlers_disconnect_by_data((*data->entries)[Type::SHAPE_RECOGNIZER].gAction.get(), d);
                 delete data;
             },

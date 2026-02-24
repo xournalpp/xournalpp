@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="24.0px"
+   height="24.0px"
+   viewBox="0 0 24.0 24.0"
+   version="1.1"
+   id="SVGRoot"
+   sodipodi:docname="xopp-draw-sinus.svg"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs833" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="19.468295"
+     inkscape:cx="5.0338255"
+     inkscape:cy="14.844649"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="true"
+     inkscape:window-width="1366"
+     inkscape:window-height="699"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid1403"
+       originx="0"
+       originy="0"
+       spacingy="1"
+       spacingx="1"
+       units="px" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata836">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;fill-opacity:0.3;stroke:#ffffff;stroke-width:2.68369;paint-order:fill markers stroke;stroke-opacity:1"
+       d="M 2,12.000036 C 2.60606,11.048 3.21212,10.097796 3.81818,9.2967663 4.42424,8.4957363 5.0303,7.8473779 5.63636,7.451696 6.24242,7.0560142 6.84848,6.9155088 7.45455,7.0506807 c 0.60606,0.1353385 1.21212,0.5471876 1.81818,1.1705446 0.60606,0.62319 1.21207,1.456722 1.81817,2.3700897 0.6061,0.913369 1.2121,1.903907 1.8182,2.817442 0.6061,0.913535 1.2121,1.746566 1.8182,2.37009 0.606,0.623691 1.2121,1.034707 1.8182,1.170545 0.606,0.135672 1.2121,-0.0059 1.8181,-0.401015 0.6061,-0.395182 1.2122,-1.044207 1.8182,-1.845071 0.6061,-0.800698 1.2121,-1.751234 1.8182,-2.70327"
+       title="sin(x)"
+       id="path1440" />
+  </g>
+</svg>

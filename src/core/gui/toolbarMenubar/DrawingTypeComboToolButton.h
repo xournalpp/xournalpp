@@ -52,6 +52,11 @@ public:
         LINE,
         COORDINATE_SYSTEM,
         SPLINE,
+        EXP,
+        GAUSS,
+        POLY,
+        POLYNEG,
+        SINUS,
         SHAPE_RECOGNIZER,
         ENUMERATOR_COUNT
     };
