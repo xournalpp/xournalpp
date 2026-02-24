@@ -209,6 +209,8 @@ void SettingsDialog::initMouseButtonEvents(GladeSearchpath* gladeSearchPath) {
     emplaceButton("hboxLeftMouse", BUTTON_MOUSE_LEFT);
     emplaceButton("hboxMiddleMouse", BUTTON_MOUSE_MIDDLE);
     emplaceButton("hboxRightMouse", BUTTON_MOUSE_RIGHT);
+    emplaceButton("hboxMouse4", BUTTON_MOUSE_4);
+    emplaceButton("hboxMouse5", BUTTON_MOUSE_5);
     emplaceButton("hboxEraser", BUTTON_ERASER);
     emplaceButton("hboxTouch", BUTTON_TOUCH, true);
     emplaceButton("hboxPenButton1", BUTTON_STYLUS_ONE);

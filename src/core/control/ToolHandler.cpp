@@ -158,6 +158,8 @@ void ToolHandler::initTools() {
     this->stylusButton2Tool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
     this->mouseMiddleButtonTool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
     this->mouseRightButtonTool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
+    this->mouseButton4Tool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
+    this->mouseButton5Tool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
     this->touchDrawingButtonTool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
 
     this->toolbarSelectedTool = &getTool(TOOL_PEN);
@@ -671,6 +673,10 @@ auto ToolHandler::getButtonTool(Button button) const -> Tool* {
             return this->mouseMiddleButtonTool.get();
         case Button::BUTTON_MOUSE_RIGHT:
             return this->mouseRightButtonTool.get();
+        case Button::BUTTON_MOUSE_4:
+            return this->mouseButton4Tool.get();
+        case Button::BUTTON_MOUSE_5:
+            return this->mouseButton5Tool.get();
         case Button::BUTTON_TOUCH:
             return this->touchDrawingButtonTool.get();
         default:
@@ -698,6 +704,12 @@ void ToolHandler::resetButtonTool(ToolType type, Button button) {
             break;
         case Button::BUTTON_MOUSE_RIGHT:
             this->mouseRightButtonTool.reset(new Tool(tool));
+            break;
+        case Button::BUTTON_MOUSE_4:
+            this->mouseButton4Tool.reset(new Tool(tool));
+            break;
+        case Button::BUTTON_MOUSE_5:
+            this->mouseButton5Tool.reset(new Tool(tool));
             break;
         case Button::BUTTON_TOUCH:
             this->touchDrawingButtonTool.reset(new Tool(tool));

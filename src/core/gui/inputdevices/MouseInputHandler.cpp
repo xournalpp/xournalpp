@@ -105,6 +105,13 @@ void MouseInputHandler::setPressedState(InputEvent const& event) {
                 break;
             case 3:
                 this->modifier3 = true;
+                break;
+            case 8:
+                this->modifier4 = true;
+                break;
+            case 9:
+                this->modifier5 = true;
+                break;
             default:
                 break;
         }
@@ -119,6 +126,13 @@ void MouseInputHandler::setPressedState(InputEvent const& event) {
                 break;
             case 3:
                 this->modifier3 = false;
+                break;
+            case 8:
+                this->modifier4 = false;
+                break;
+            case 9:
+                this->modifier5 = false;
+                break;
             default:
                 break;
         }
@@ -136,6 +150,10 @@ auto MouseInputHandler::changeTool(InputEvent const& event) -> bool {
             toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_MOUSE_MIDDLE);
         } else if (modifier3) {
             toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_MOUSE_RIGHT);
+        } else if (modifier4) {
+            toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_MOUSE_4);
+        } else if (modifier5) {
+            toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_MOUSE_5);
         } else {
             toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_MOUSE_LEFT);
         }

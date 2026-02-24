@@ -166,6 +166,12 @@ void Settings::loadDefault() {
     // Right button
     this->buttonConfig[BUTTON_MOUSE_RIGHT] = std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE,
                                                                             DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    // 4th button
+    this->buttonConfig[BUTTON_MOUSE_4] = std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE,
+                                                                        DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    // 5th button
+    this->buttonConfig[BUTTON_MOUSE_5] = std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE,
+                                                                        DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Touch
     this->buttonConfig[BUTTON_TOUCH] = std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE,
                                                                       DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
