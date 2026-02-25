@@ -30,7 +30,7 @@ ToolHandler::ToolHandler(ToolListener* stateChangeListener, ActionDatabase* acti
 class ToolSelectPDFText: public Tool {
 public:
     ToolSelectPDFText(std::string name, ToolType type, Color color):
-            Tool(name, type, color, TOOL_CAP_COLOR | TOOL_CAP_RULER, std::nullopt) {}
+            Tool(name, type, color, TOOL_CAP_COLOR, std::nullopt) {}
 
     ~ToolSelectPDFText() override{};
 
@@ -444,7 +444,12 @@ void ToolHandler::saveSettings() const {
             st.setIntHex("color", int(uint32_t(tool->getColor())));
         }
 
-        st.setString("drawingType", drawingTypeToString(tool->getDrawingType()).data());
+        static constexpr unsigned int SHAPE_CAPS = TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_ELLIPSE |
+                                                   TOOL_CAP_ARROW | TOOL_CAP_DOUBLE_ARROW | TOOL_CAP_RECOGNIZER |
+                                                   TOOL_CAP_SPLINE;
+        if (tool->capabilities & SHAPE_CAPS) {
+            st.setString("drawingType", drawingTypeToString(tool->getDrawingType()).data());
+        }
 
         if (tool->hasCapability(TOOL_CAP_SIZE)) {
             std::string value;
