@@ -21,11 +21,11 @@
 #include "gui/IconNameHelper.h"     // for IconNameHelper
 #include "util/raii/GObjectSPtr.h"  // for WidgetSPtr
 
-#include "AbstractToolItem.h"  // for AbstractToolItem
+#include "ItemWithNamedIcon.h"  // for ItemWithNamedIcon
 
 class SpinPageListener;
 
-class ToolPageSpinner: public AbstractToolItem {
+class ToolPageSpinner: public ItemWithNamedIcon {
 public:
     ToolPageSpinner(std::string id, IconNameHelper iconNameHelper, SpinPageListener* listener);
     ~ToolPageSpinner() override;
@@ -34,16 +34,16 @@ public:
     /// Propagates the info to all instances of the Page Spinner
     void setPageInfo(size_t currentPage, size_t pageCount, size_t pdfPage);
     std::string getToolDisplayName() const override;
-    xoj::util::WidgetSPtr createItem(bool horizontal) override;
+    Widgetry createItem(ToolbarSide side) override;
 
     inline SpinPageListener* getListener() const { return listener; }
 
 protected:
-    GtkWidget* getNewToolIcon() const override;
+    const char* getIconName() const override;
 
 private:
-    IconNameHelper iconNameHelper;
     SpinPageListener* listener;
+    std::string iconName;
 
     class Instance;
     std::vector<Instance*> instances;

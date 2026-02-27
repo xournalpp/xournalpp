@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkTextBuffer" id="logbuffer"/>
+  <object class="GtkPopover" id="logpopover">
+    <property name="child">
+      <object class="GtkScrolledWindow">
+        <property name="width-request">700</property>
+        <property name="height-request">500</property>
+        <property name="focusable">1</property>
+        <property name="child">
+          <object class="GtkTextView">
+            <property name="focusable">1</property>
+            <property name="editable">0</property>
+            <property name="left-margin">8</property>
+            <property name="right-margin">8</property>
+            <property name="top-margin">8</property>
+            <property name="bottom-margin">8</property>
+            <property name="buffer">logbuffer</property>
+          </object>
+        </property>
+      </object>
+    </property>
+  </object>
+  <object class="GtkBox" id="mainBox">
+    <property name="margin-start">4</property>
+    <property name="margin-end">4</property>
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="margin-top">4</property>
+        <property name="margin-bottom">4</property>
+        <property name="label" translatable="1">Try out your devices in the area below</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkBox">
+            <property name="margin-end">8</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkGrid">
+                <property name="column-homogeneous">1</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label" translatable="1">Mouse</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">0</property>
+                      <property name="column-span">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="mouse-left">
+                    <property name="label" translatable="1" context="mouse button">Left</property>
+                    <style>
+                      <class name="setting-button-indicator"/>
+                    </style>
+                    <layout>
+                      <property name="column">1</property>
+                      <property name="row">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="mouse-middle">
+                    <property name="label" translatable="1" context="mouse button">Middle</property>
+                    <style>
+                      <class name="setting-button-indicator"/>
+                    </style>
+                    <layout>
+                      <property name="column">2</property>
+                      <property name="row">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="mouse-right">
+                    <property name="label" translatable="1" context="mouse button">Right</property>
+                    <style>
+                      <class name="setting-button-indicator"/>
+                    </style>
+                    <layout>
+                      <property name="column">3</property>
+                      <property name="row">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label" translatable="1">Stylus</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">3</property>
+                      <property name="column-span">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="stylus-tip">
+                    <property name="label" translatable="1" context="the tip of the stylus">Tip</property>
+                    <style>
+                      <class name="setting-button-indicator"/>
+                    </style>
+                    <layout>
+                      <property name="column">1</property>
+                      <property name="row">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="stylus-1">
+                    <property name="label" translatable="1">Button 1</property>
+                    <style>
+                      <class name="setting-button-indicator"/>
+                    </style>
+                    <layout>
+                      <property name="column">2</property>
+                      <property name="row">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="stylus-2">
+                    <property name="label" translatable="1">Button 2</property>
+                    <style>
+                      <class name="setting-button-indicator"/>
+                    </style>
+                    <layout>
+                      <property name="column">3</property>
+                      <property name="row">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label" translatable="1">Eraser</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">6</property>
+                      <property name="column-span">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="eraser-tip">
+                    <property name="label" translatable="1" context="the tip of the stylus">Tip</property>
+                    <style>
+                      <class name="setting-button-indicator"/>
+                    </style>
+                    <layout>
+                      <property name="column">1</property>
+                      <property name="row">7</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSeparator">
+                    <property name="margin-top">4</property>
+                    <property name="margin-bottom">4</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">2</property>
+                      <property name="column-span">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSeparator">
+                    <property name="margin-top">4</property>
+                    <property name="margin-bottom">4</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">5</property>
+                      <property name="column-span">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSeparator">
+                    <property name="margin-top">4</property>
+                    <property name="margin-bottom">16</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">11</property>
+                      <property name="column-span">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSeparator">
+                    <property name="margin-top">4</property>
+                    <property name="margin-bottom">4</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">8</property>
+                      <property name="column-span">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label" translatable="1">Touchscreen</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">9</property>
+                      <property name="column-span">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">10</property>
+                      <property name="column-span">4</property>
+                    </layout>
+                    <child>
+                      <object class="GtkLabel" id="touch-1">
+                        <property name="width-request">20</property>
+                        <property name="height-request">20</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 1"></attribute>
+                        </attributes>
+                        <style>
+                          <class name="setting-touch-indicator"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="touch-2">
+                        <property name="width-request">20</property>
+                        <property name="height-request">20</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 1"></attribute>
+                        </attributes>
+                        <style>
+                          <class name="setting-touch-indicator"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="touch-3">
+                        <property name="width-request">20</property>
+                        <property name="height-request">20</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 1"></attribute>
+                        </attributes>
+                        <style>
+                          <class name="setting-touch-indicator"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="touch-4">
+                        <property name="width-request">20</property>
+                        <property name="height-request">20</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 1"></attribute>
+                        </attributes>
+                        <style>
+                          <class name="setting-touch-indicator"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="touch-5">
+                        <property name="width-request">20</property>
+                        <property name="height-request">20</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Sans 1"></attribute>
+                        </attributes>
+                        <style>
+                          <class name="setting-touch-indicator"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="mouse-in-use">
+                    <property name="label" translatable="1">In use</property>
+                    <style>
+                      <class name="setting-button-indicator"/>
+                    </style>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="stylus-hover">
+                    <property name="label" translatable="1" context="stylus hover">Hover</property>
+                    <style>
+                      <class name="setting-button-indicator"/>
+                    </style>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="eraser-hover">
+                    <property name="label" translatable="1" context="stylus hover">Hover</property>
+                    <style>
+                      <class name="setting-button-indicator"/>
+                    </style>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">7</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="spacing">4</property>
+                <property name="homogeneous">1</property>
+                <child>
+                  <object class="GtkMenuButton">
+                    <property name="focusable">1</property>
+                    <property name="focus-on-click">0</property>
+                    <property name="receives-default">1</property>
+                    <property name="popover">logpopover</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label" translatable="1">Show logs</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="btnExportLogs">
+                    <property name="label" translatable="1">Export debug info</property>
+                    <property name="focusable">1</property>
+                    <property name="receives-default">1</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="1">To clear the logs, simply close and reopen the settings dialog</property>
+                <property name="wrap">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="cbEmulateTipContactOnButtonPress">
+                <property name="focusable">1</property>
+                <property name="tooltip-text" translatable="1">Select this option if the &quot;Tip&quot; sign does not lit up when using the stylus and pressing one of its buttons.
+
+Unselect this option if the &quot;Tip&quot; sign is on while the stylus is hovering (but not touching the screen or tablet).</property>
+                <property name="margin-top">12</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label" translatable="1">Emulate stylus tip contact on button press</property>
+                    <property name="wrap">1</property>
+                    <property name="max-width-chars">20</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkDrawingArea" id="testArea">
+            <property name="width-request">500</property>
+            <property name="height-request">300</property>
+            <property name="hexpand">1</property>
+            <property name="vexpand">1</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel">
+        <property name="margin-top">4</property>
+        <property name="margin-bottom">4</property>
+        <property name="label" translatable="1">&lt;i&gt;Change the device class below if your device is not correctly recognized (e.g. your active stylus shows up as touchscreen)&lt;/i&gt;</property>
+        <property name="use-markup">1</property>
+        <property name="wrap">1</property>
+        <property name="max-width-chars">85</property>
+        <property name="xalign">0</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox" id="boxLastDevice">
+        <child>
+          <object class="GtkLabel">
+            <property name="margin-end">8</property>
+            <property name="label" translatable="1">Last device used:</property>
+          </object>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton" id="btnAllDevices">
+        <property name="label" translatable="1">Show all known devices</property>
+        <property name="focusable">1</property>
+        <property name="receives-default">1</property>
+        <property name="margin-top">4</property>
+        <property name="margin-bottom">4</property>
+      </object>
+    </child>
+  </object>
+</interface>

@@ -2,7 +2,6 @@
 
 #include "gui/toolbarMenubar/icon/ColorIcon.h"
 #include "util/PathUtil.h"
-#include "util/gtk4_helper.h"
 #include "util/i18n.h"
 
 static const char* const G_OBJECT_PALETTE_PATH = "xournalpp.palettePath";
@@ -43,7 +42,7 @@ auto getDisplayPalettePath(const fs::path& path) -> std::string {
 // Public Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-constexpr auto UI_FILE = "paletteSettings.glade";
+constexpr auto UI_FILE = "paletteSettings.ui";
 constexpr auto UI_PANEL_NAME = "paletteSettingsPanel";
 
 SettingsDialogPaletteTab::SettingsDialogPaletteTab(GladeSearchpath* gladeSearchPath,
@@ -70,7 +69,6 @@ void SettingsDialogPaletteTab::renderPaletteTab(const fs::path& currentlySetPale
             gtk_list_box_select_row(GTK_LIST_BOX(lb), GTK_LIST_BOX_ROW(listBoxRow));
         }
     }
-    gtk_widget_show_all(GTK_WIDGET(lb));
 }
 
 
@@ -198,8 +196,7 @@ auto SettingsDialogPaletteTab::newPaletteColorIconsBox(const Palette& palette) -
     GtkWidget* colors = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
     for (unsigned long i = 0; i < palette.size(); i++) {
         const NamedColor& namedColor = palette.getColorAt(i);
-        const Color c = namedColor.getColor();
-        GtkWidget* icon = ColorIcon::newGtkImage(c, 16, true);
+        GtkWidget* icon = ColorIcon::newGtkImage(namedColor.getColor());
         gtk_box_append(GTK_BOX(colors), icon);
     }
     gtk_widget_set_halign(colors, GTK_ALIGN_END);

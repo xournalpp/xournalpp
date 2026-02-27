@@ -736,7 +736,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 }
 
 void Settings::loadDeviceClasses() {
-    SElement& s = getCustomElement("deviceClasses");
+    SElement& s = getCustomElement("deviceClassesGTK4");
     for (auto device: s.children()) {
         SElement& deviceNode = device.second;
         int deviceClass = 0;
@@ -753,7 +753,7 @@ void Settings::loadDeviceClasses() {
 }
 
 void Settings::loadButtonConfig() {
-    SElement& s = getCustomElement("buttonConfig");
+    SElement& s = getCustomElement("buttonConfigGTK4");
 
     for (int i = 0; i < BUTTON_COUNT; i++) {
         SElement& e = s.child(buttonToString(static_cast<Button>(i)));
@@ -910,7 +910,7 @@ auto Settings::saveProperty(const gchar* key, const gchar* value, xmlNodePtr par
 }
 
 void Settings::saveDeviceClasses() {
-    SElement& s = getCustomElement("deviceClasses");
+    SElement& s = getCustomElement("deviceClassesGTK4");
 
     for (auto& device: inputDeviceClasses) {
         const std::string& name = device.first;
@@ -923,7 +923,7 @@ void Settings::saveDeviceClasses() {
 }
 
 void Settings::saveButtonConfig() {
-    SElement& s = getCustomElement("buttonConfig");
+    SElement& s = getCustomElement("buttonConfigGTK4");
     s.clear();
 
     for (int i = 0; i < BUTTON_COUNT; i++) {
@@ -2394,26 +2394,22 @@ auto Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource 
 
     InputDeviceTypeOption deviceType = InputDeviceTypeOption::Disabled;
     switch (deviceSource) {
-        case GDK_SOURCE_CURSOR:
-#if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
         case GDK_SOURCE_TABLET_PAD:
-#endif
         case GDK_SOURCE_KEYBOARD:
             deviceType = InputDeviceTypeOption::Disabled;
             break;
         case GDK_SOURCE_MOUSE:
         case GDK_SOURCE_TOUCHPAD:
-#if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
         case GDK_SOURCE_TRACKPOINT:
-#endif
             deviceType = InputDeviceTypeOption::Mouse;
             break;
         case GDK_SOURCE_PEN:
             deviceType = InputDeviceTypeOption::Pen;
             break;
-        case GDK_SOURCE_ERASER:
-            deviceType = InputDeviceTypeOption::Eraser;
-            break;
+        // TODO
+        // case GDK_SOURCE_ERASER:
+        //     deviceType = InputDeviceTypeOption::Eraser;
+        //     break;
         case GDK_SOURCE_TOUCHSCREEN:
             deviceType = InputDeviceTypeOption::Touchscreen;
             break;

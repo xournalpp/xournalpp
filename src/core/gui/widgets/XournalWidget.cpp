@@ -20,6 +20,7 @@
 #include "gui/scroll/ScrollHandling.h"      // for ScrollHandling
 #include "util/Color.h"                     // for cairo_set_source_rgbi
 #include "util/Rectangle.h"                 // for Rectangle
+#include "util/raii/CairoWrappers.h"
 
 #include "config-debug.h"  // for DEBUG_DRAW_WIDGET
 
@@ -33,11 +34,9 @@
  */
 G_DEFINE_TYPE(GtkXournal, gtk_xournal, GTK_TYPE_WIDGET)
 
-static void gtk_xournal_get_preferred_width(GtkWidget* widget, gint* minimal_width, gint* natural_width);
-static void gtk_xournal_get_preferred_height(GtkWidget* widget, gint* minimal_height, gint* natural_height);
-static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocation);
-static void gtk_xournal_realize(GtkWidget* widget);
-static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean;
+static void gtk_xournal_measure(GtkWidget* widget, GtkOrientation orientation, int for_size, int* minimum, int* natural,
+                                int* minimum_baseline, int* natural_baseline);
+static void gtk_xournal_snapshot(GtkWidget* widget, GtkSnapshot* sn);
 static void gtk_xournal_dispose(GObject* object);
 
 auto gtk_xournal_new(XournalView* view, InputContext* inputContext) -> GtkWidget* {
@@ -50,18 +49,17 @@ auto gtk_xournal_new(XournalView* view, InputContext* inputContext) -> GtkWidget
 
     xoj->input->connect(GTK_WIDGET(xoj));
 
+    gtk_widget_set_hexpand(GTK_WIDGET(xoj), true);
+    gtk_widget_set_vexpand(GTK_WIDGET(xoj), true);
+
     return GTK_WIDGET(xoj);
 }
 
 static void gtk_xournal_class_init(GtkXournalClass* cptr) {
     auto* widget_class = reinterpret_cast<GtkWidgetClass*>(cptr);
 
-    widget_class->realize = gtk_xournal_realize;
-    widget_class->get_preferred_width = gtk_xournal_get_preferred_width;
-    widget_class->get_preferred_height = gtk_xournal_get_preferred_height;
-    widget_class->size_allocate = gtk_xournal_size_allocate;
-
-    widget_class->draw = gtk_xournal_draw;
+    widget_class->measure = gtk_xournal_measure;
+    widget_class->snapshot = gtk_xournal_snapshot;
 
 #ifdef DEBUG_DRAW_WIDGET
     widget_class->queue_draw_region = +[](GtkWidget* w, const cairo_region_t* reg) {
@@ -136,71 +134,21 @@ auto gtk_xournal_get_layout(GtkWidget* widget) -> Layout* {
     return xournal->layout;
 }
 
-static void gtk_xournal_init(GtkXournal* xournal) {
-    GtkWidget* widget = GTK_WIDGET(xournal);
+static void gtk_xournal_init(GtkXournal* xournal) { gtk_widget_set_focusable(GTK_WIDGET(xournal), true); }
 
-    gtk_widget_set_can_focus(widget, true);
-}
-
-static void gtk_xournal_get_preferred_width(GtkWidget* widget, gint* minimal_width, gint* natural_width) {
-    g_return_if_fail(GTK_IS_XOURNAL(widget));
-    GtkXournal* xournal = GTK_XOURNAL(widget);
-    g_return_if_fail(xournal->layout);
-    *minimal_width = *natural_width = xournal->layout->getMinimalPixelWidth();
-}
-
-static void gtk_xournal_get_preferred_height(GtkWidget* widget, gint* minimal_height, gint* natural_height) {
-    g_return_if_fail(GTK_IS_XOURNAL(widget));
-    GtkXournal* xournal = GTK_XOURNAL(widget);
-    g_return_if_fail(xournal->layout);
-    *minimal_height = *natural_height = xournal->layout->getMinimalPixelHeight();
-}
-
-/**
- * This method is called while scrolling or after the XournalWidget size has changed
- */
-static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocation) {
-    g_return_if_fail(widget != nullptr);
-    g_return_if_fail(GTK_IS_XOURNAL(widget));
-    g_return_if_fail(allocation != nullptr);
-
-    gtk_widget_set_allocation(widget, allocation);
-
-    if (gtk_widget_get_realized(widget)) {
-        gdk_window_move_resize(gtk_widget_get_window(widget), allocation->x, allocation->y, allocation->width,
-                               allocation->height);
+static void gtk_xournal_measure(GtkWidget* widget, GtkOrientation orientation, int for_size, int* minimum, int* natural,
+                                int* minimum_baseline, int* natural_baseline) {
+    *minimum_baseline = *natural_baseline = -1;  // No baseline
+    if (orientation == GTK_ORIENTATION_HORIZONTAL) {
+        *minimum = *natural = GTK_XOURNAL(widget)->layout->getMinimalPixelWidth();
+    } else {
+        *minimum = *natural = GTK_XOURNAL(widget)->layout->getMinimalPixelHeight();
     }
-
-    gtk_xournal_get_layout(widget)->recomputeCenteringPadding(allocation->width, allocation->height);
 }
 
-static void gtk_xournal_realize(GtkWidget* widget) {
-    GdkWindowAttr attributes;
+// TODO PUT THAT SOMEWHERE
+// gtk_xournal_get_layout(widget)->recomputeCenteringPadding(allocation->width, allocation->height);
 
-    g_return_if_fail(widget != nullptr);
-    g_return_if_fail(GTK_IS_XOURNAL(widget));
-
-    gtk_widget_set_realized(widget, true);
-
-    gtk_widget_set_hexpand(widget, true);
-    gtk_widget_set_vexpand(widget, true);
-
-    GtkAllocation allocation;
-    gtk_widget_get_allocation(widget, &allocation);
-    attributes.window_type = GDK_WINDOW_CHILD;
-    attributes.x = allocation.x;
-    attributes.y = allocation.y;
-    attributes.width = allocation.width;
-    attributes.height = allocation.height;
-
-    attributes.wclass = GDK_INPUT_OUTPUT;
-    attributes.event_mask = gtk_widget_get_events(widget) | GDK_EXPOSURE_MASK;
-
-    gint attributes_mask = GDK_WA_X | GDK_WA_Y;
-
-    gtk_widget_set_window(widget, gdk_window_new(gtk_widget_get_parent_window(widget), &attributes, attributes_mask));
-    gdk_window_set_user_data(gtk_widget_get_window(widget), widget);
-}
 
 static void gtk_xournal_draw_shadow(GtkXournal* xournal, cairo_t* cr, int left, int top, int width, int height,
                                     bool selected) {
@@ -226,23 +174,18 @@ void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2, int y2)
     g_return_if_fail(widget != nullptr);
     g_return_if_fail(GTK_IS_XOURNAL(widget));
 
-    if (x2 < 0 || y2 < 0) {
+    if (x2 < 0 || y2 < 0 || x1 > gtk_widget_get_width(widget) || y1 > gtk_widget_get_height(widget)) {
         return;  // outside visible area
     }
 
-    GtkAllocation alloc = {0};
-    gtk_widget_get_allocation(widget, &alloc);
-
-    if (x1 > alloc.width || y1 > alloc.height) {
-        return;  // outside visible area
-    }
-
-    gtk_widget_queue_draw_area(widget, x1, y1, x2 - x1, y2 - y1);
+    // TODO restore partial draws
+    // gtk_widget_queue_draw_area(widget, x1, y1, x2 - x1, y2 - y1);
+    gtk_widget_queue_draw(widget);
 }
 
-static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
-    g_return_val_if_fail(widget != nullptr, false);
-    g_return_val_if_fail(GTK_IS_XOURNAL(widget), false);
+static void gtk_xournal_snapshot(GtkWidget* widget, GtkSnapshot* sn) {
+    xoj_assert(widget != nullptr);
+    xoj_assert(GTK_IS_XOURNAL(widget));
 
 
 #ifdef DEBUG_DRAW_WIDGET
@@ -257,6 +200,18 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
 #endif
 
     GtkXournal* xournal = GTK_XOURNAL(widget);
+
+    GtkAdjustment* vadj = xournal->scrollHandling->getVertical();
+    GtkAdjustment* hadj = xournal->scrollHandling->getHorizontal();
+
+    auto rect = GRAPHENE_RECT_INIT_ZERO;
+    rect.origin.x = static_cast<float>(gtk_adjustment_get_value(hadj));
+    rect.origin.y = static_cast<float>(gtk_adjustment_get_value(vadj));
+    rect.size.width = static_cast<float>(gtk_adjustment_get_page_size(hadj));
+    rect.size.height = static_cast<float>(gtk_adjustment_get_page_size(vadj));
+
+    xoj::util::CairoSPtr crsafe(gtk_snapshot_append_cairo(sn, &rect), xoj::util::adopt);
+    cairo_t* cr = crsafe.get();
 
     Range clip;
     cairo_clip_extents(cr, &clip.minX, &clip.minY, &clip.maxX, &clip.maxY);
@@ -307,8 +262,6 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
     if (recolor) {
         recolor->recolorCurrentCairoRegion(cr);
     }
-
-    return true;
 }
 
 static void gtk_xournal_dispose(GObject* object) {

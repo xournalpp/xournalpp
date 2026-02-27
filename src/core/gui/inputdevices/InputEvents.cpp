@@ -6,21 +6,50 @@
 
 #include "control/settings/Settings.h"       // for Settings
 #include "control/settings/SettingsEnums.h"  // for InputDeviceTypeOption
-#include "util/Point.h"
-#include "util/gdk4_helper.h"
+#include "util/Assert.h"
+#include "util/GtkUtil.h"
 
-static auto translateEventType(GdkEventType type) -> InputEventType {
+#include "config-debug.h"  // for DEBUG_INPUT
+
+#ifdef DEBUG_INPUT
+#include "PrintEvent.h"
+
+static void printDebug(const InputEvent& e, GdkEvent* original, guint backlogSize = 0) {
+    auto print = [&]() {
+        xoj::input::printEvent(std::cout, e, 0);
+        if (backlogSize != 0) {
+            std::cout << "   Backlog size:  " << backlogSize << "\n";
+        }
+        xoj::input::printGdkEvent(std::cout, original, 0);
+    };
+#ifndef DEBUG_INPUT_PRINT_ALL_MOTION_EVENTS
+    static bool motionEventBlock = false;
+    if (e.type == MOTION_EVENT) {
+        if (!motionEventBlock) {
+            motionEventBlock = true;
+            print();
+        }
+    } else {
+        motionEventBlock = false;
+        print();
+    }
+#else
+    print();
+#endif  // DEBUG_INPUT_PRINT_ALL_MOTION_EVENTS
+}
+#else
+static void printDebug(const InputEvent& e, GdkEvent* original, guint backlogSize = 0) {}
+#endif  // DEBUG_INPUT
+
+
+static auto translateEventType(GdkEventType type, int nbPress) -> InputEventType {
     switch (type) {
         case GDK_MOTION_NOTIFY:
         case GDK_TOUCH_UPDATE:
             return MOTION_EVENT;
         case GDK_BUTTON_PRESS:
         case GDK_TOUCH_BEGIN:
-            return BUTTON_PRESS_EVENT;
-        case GDK_2BUTTON_PRESS:
-            return BUTTON_2_PRESS_EVENT;
-        case GDK_3BUTTON_PRESS:
-            return BUTTON_3_PRESS_EVENT;
+            return nbPress == 1 ? BUTTON_PRESS_EVENT : nbPress == 2 ? BUTTON_2_PRESS_EVENT : BUTTON_3_PRESS_EVENT;
         case GDK_BUTTON_RELEASE:
         case GDK_TOUCH_END:
         case GDK_TOUCH_CANCEL:
@@ -67,45 +96,80 @@ auto InputEvents::translateDeviceType(GdkDevice* device, Settings* settings) -> 
     return translateDeviceType(gdk_device_get_name(device), gdk_device_get_source(device), settings);
 }
 
-auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings) -> InputEvent {
-    InputEvent targetEvent{};
+static xoj::util::Point<double> relativeToAbsolute(const xoj::util::Point<double>& rel, GtkWidget* w) {
+    graphene_point_t p = GRAPHENE_POINT_INIT(static_cast<float>(rel.x), static_cast<float>(rel.y));
+    graphene_point_t q;
+    [[maybe_unused]] bool r = gtk_widget_compute_point(w, gtk_widget_get_ancestor(w, GTK_TYPE_SCROLLED_WINDOW), &p, &q);
+    xoj_assert(r);
+    return {q.x, q.y};
+}
+
+auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings, GtkWidget* referenceWidget, int nbPress)
+        -> std::vector<InputEvent> {
+    InputEvent eventMould{};
+
+    eventMould.device = gdk_event_get_device(sourceEvent);
 
     // Map the event type to our internal ones
     GdkEventType sourceEventType = gdk_event_get_event_type(sourceEvent);
-    targetEvent.type = translateEventType(sourceEventType);
+    eventMould.type = translateEventType(sourceEventType, nbPress);
 
-    targetEvent.device = gdk_event_get_source_device(sourceEvent);
-    targetEvent.deviceClass = translateDeviceType(targetEvent.device, settings);
+    eventMould.device = gdk_event_get_device(sourceEvent);
+    eventMould.deviceClass = translateDeviceType(eventMould.device, settings);
 
-    targetEvent.deviceName = gdk_device_get_name(targetEvent.device);
-    targetEvent.deviceId = DeviceId(targetEvent.device);
+    eventMould.deviceName = gdk_device_get_name(eventMould.device);
+    eventMould.deviceId = DeviceId(eventMould.device);
 
-    // Copy both coordinates of the event
-    gdk_event_get_root_coords(sourceEvent, &targetEvent.absolute.x, &targetEvent.absolute.y);
-    gdk_event_get_coords(sourceEvent, &targetEvent.relative.x, &targetEvent.relative.y);
+    eventMould.state = gdk_event_get_modifier_state(sourceEvent);
+    eventMould.sequence = gdk_event_get_event_sequence(sourceEvent);
+    eventMould.timestamp = gdk_event_get_time(sourceEvent);
 
-    // Copy the event button if there is any
-    if (targetEvent.type == BUTTON_PRESS_EVENT || targetEvent.type == BUTTON_RELEASE_EVENT) {
-        gdk_event_get_button(sourceEvent, &targetEvent.button);
-    }
-    if (sourceEventType == GDK_TOUCH_BEGIN || sourceEventType == GDK_TOUCH_END || sourceEventType == GDK_TOUCH_CANCEL) {
-        // As we only handle single finger events we can set the button statically to 1
-        targetEvent.button = 1;
-    }
-    targetEvent.state = gdk_event_get_modifier_state(sourceEvent);
-
-    // Copy the timestamp
-    targetEvent.timestamp = gdk_event_get_time(sourceEvent);
-
-    // Copy the pressure data
-    gdk_event_get_axis(sourceEvent, GDK_AXIS_PRESSURE, &targetEvent.pressure);
-
-    // Copy the event sequence if there is any, and report no pressure
+    bool noPressure = false;
     if (sourceEventType == GDK_TOUCH_BEGIN || sourceEventType == GDK_TOUCH_UPDATE || sourceEventType == GDK_TOUCH_END ||
         sourceEventType == GDK_TOUCH_CANCEL) {
-        targetEvent.sequence = gdk_event_get_event_sequence(sourceEvent);
-        targetEvent.pressure = Point::NO_PRESSURE;
+        // As we only handle single finger events we can set the button statically to 1
+        eventMould.button = 1;
+        noPressure = true;
+    } else if (eventMould.type == BUTTON_PRESS_EVENT || eventMould.type == BUTTON_RELEASE_EVENT) {
+        eventMould.button = gdk_button_event_get_button(sourceEvent);
+        // Nb: BUTTON_PRESS events could have a pressure value (when a stylus tip touches the tablet)
     }
 
-    return targetEvent;
+    // Copy both coordinates of the event
+    if (xoj::util::Point<double> surfCoord; gdk_event_get_position(sourceEvent, &surfCoord.x, &surfCoord.y)) {
+        eventMould.relative = xoj::util::gtk::gdkSurfaceToWidgetCoordinates(surfCoord, referenceWidget);
+        eventMould.absolute = relativeToAbsolute(eventMould.relative, referenceWidget);
+    } else if (eventMould.type != GRAB_BROKEN_EVENT) {
+        g_warning("InputEvents::translateEvent() but GdkEvent has no position");
+    }
+
+    // Copy the pressure data
+    noPressure = noPressure || !gdk_event_get_axis(sourceEvent, GDK_AXIS_PRESSURE, &eventMould.pressure);
+    if (noPressure) {
+        eventMould.pressure = Point::NO_PRESSURE;
+    }
+
+
+    if (sourceEventType == GDK_MOTION_NOTIFY) {
+        // Fetch history so we have enough events to draw smooth curves
+        guint backlogSize = 0;
+        GdkTimeCoord* backlog = gdk_event_get_history(sourceEvent, &backlogSize);
+        std::vector<InputEvent> res(backlogSize + 1, eventMould);  // One more for the latest event (= eventMould)
+        if (backlog) {
+            auto it = res.begin();
+            for (auto* ev = backlog; ev < backlog + backlogSize; ev++, it++) {
+                it->relative = xoj::util::gtk::gdkSurfaceToWidgetCoordinates(
+                        {ev->axes[GDK_AXIS_X], ev->axes[GDK_AXIS_Y]}, referenceWidget);
+                it->absolute = relativeToAbsolute(it->relative, referenceWidget);
+                it->pressure = noPressure ? Point::NO_PRESSURE : ev->axes[GDK_AXIS_PRESSURE];
+                it->timestamp = ev->time;
+            }
+            g_free(backlog);
+        }
+        printDebug(eventMould, sourceEvent, backlogSize);
+        return res;
+    } else {
+        printDebug(eventMould, sourceEvent);
+        return {eventMould};
+    }
 }

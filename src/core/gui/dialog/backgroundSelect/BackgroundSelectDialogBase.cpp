@@ -7,8 +7,7 @@
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 
 #include "gui/Builder.h"
-#include "util/Util.h"  // for paintBackgroundWhite
-#include "util/gtk4_helper.h"
+#include "util/Util.h"        // for paintBackgroundWhite
 #include "util/safe_casts.h"  // for round_cast
 
 #include "BaseElementView.h"  // for BaseElementView
@@ -16,7 +15,7 @@
 class GladeSearchpath;
 
 
-constexpr auto UI_FILE = "backgroundSelection.glade";
+constexpr auto UI_FILE = "backgroundSelection.ui";
 constexpr auto UI_DIALOG_NAME = "Dialog";
 
 BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc,

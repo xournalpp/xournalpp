@@ -39,10 +39,11 @@ class XournalView;
 class PdfFloatingToolbox;
 class FloatingToolbox;
 class GladeSearchpath;
+class ToolbarBox;
 
 class Menubar;
 
-typedef std::array<xoj::util::WidgetSPtr, TOOLBAR_DEFINITIONS_LEN> ToolbarWidgetArray;
+typedef std::array<std::unique_ptr<ToolbarBox>, TOOLBAR_DEFINITIONS.size()> ToolbarArray;
 
 class MainWindow: public GladeGui {
 public:
@@ -99,26 +100,16 @@ public:
 
     ToolbarModel* getToolbarModel() const;
     ToolMenuHandler* getToolMenuHandler() const;
+    inline const ToolbarArray& getToolbars() const { return toolbars; }
 
     void setDynamicallyGeneratedSubmenuDisabled(bool disabled);
 
     void updateToolbarMenu();
     void updateColorscheme();
 
-    const ToolbarWidgetArray& getToolbarWidgets() const;
-    const char* getToolbarName(GtkToolbar* toolbar) const;
-
     Layout* getLayout() const;
 
     [[maybe_unused]] Menubar* getMenubar() const;
-
-    /**
-     * Get the position of the top left corner of screen (X11) or the window (Wayland)
-     * relative to the Xournal Widget top left corner
-     *
-     * @see Util::toWidgetCoords()
-     */
-    xoj::util::Point<double> getNegativeXournalWidgetPos() const;
 
     /**
      * Disable kinetic scrolling if there is a touchscreen device that was manually mapped to another enabled input
@@ -137,31 +128,18 @@ private:
 
     /**
      * Update the position of the separator in the paned container, adjusting it to the saved sidebar width.
-     * @param contentWidth should be the width of the paned container. The caller should retrieve the width
-     * of the container before any modifications to it, as that will reset its allocation.
      */
-    void updatePanedPosition(int contentWidth);
+    void updatePanedPosition();
 
     /**
      * Window close Button is pressed
      */
-    static bool deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control* control);
+    static bool closeRequestCallback(GtkWidget* widget, Control* control);
 
     /**
      * Window is maximized/minimized
      */
     static void windowMaximizedCallback(GObject* window, GParamSpec*, MainWindow* win);
-
-    /**
-     * Callback for drag & drop files
-     */
-    static void dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData* data,
-                                guint info, guint time, MainWindow* win);
-
-    /**
-     * Load Overall CSS file with custom icons, other styling and potentially, user changes
-     */
-    static void loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename);
 
 private:
     Control* control;
@@ -185,15 +163,13 @@ private:
     bool darkMode = false;
     bool modifiedGtkSettingsTheme = false;
 
-    ToolbarWidgetArray toolbarWidgets;
+    ToolbarArray toolbars;
 
     bool sidebarVisible = true;
 
     /// The last monitor the window has been moved to -- used for setting dpi
     GdkMonitor* lastMonitor = nullptr;
 
-    xoj::util::WidgetSPtr boxContainerWidget;
     xoj::util::WidgetSPtr panedContainerWidget;
-    xoj::util::WidgetSPtr mainContentWidget;
     xoj::util::WidgetSPtr sidebarWidget;
 };

@@ -2,10 +2,7 @@
 
 #include <regex>
 
-#include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_new_fr...
-#include <gdk/gdk.h>                // for gdk_screen_get_de...
-#include <gio/gio.h>                // for g_cancellable_is_...
-#include <gtk/gtkcssprovider.h>     // for gtk_css_provider_...
+#include <gtk/gtk.h>
 
 #include "control/AudioController.h"                    // for AudioController
 #include "control/Control.h"                            // for Control
@@ -30,6 +27,7 @@
 #include "gui/toolbarMenubar/model/ToolbarData.h"       // for ToolbarData
 #include "gui/toolbarMenubar/model/ToolbarModel.h"      // for ToolbarModel
 #include "gui/widgets/SpinPageAdapter.h"                // for SpinPageAdapter
+#include "gui/widgets/ToolbarBox.h"                     // for ToolbarBox
 #include "gui/widgets/XournalWidget.h"                  // for gtk_xournal_get_l...
 #include "util/GListView.h"                             // for GListView, GListV...
 #include "util/GtkUtil.h"                               // for getWidgetDPI
@@ -38,7 +36,6 @@
 #include "util/Util.h"                                  // for execInUiThread, npos
 #include "util/XojMsgBox.h"                             // for XojMsgBox
 #include "util/glib_casts.h"                            // for wrap_for_once_v
-#include "util/gtk4_helper.h"                           // for gtk_widget_get_width
 #include "util/i18n.h"                                  // for FS, _F
 #include "util/raii/CStringWrapper.h"                   // for OwnedCString
 
@@ -57,68 +54,46 @@
 
 using std::string;
 
-
 static void themeCallback(GObject*, GParamSpec*, gpointer data) { static_cast<MainWindow*>(data)->updateColorscheme(); }
 
+/**
+ * Load Overall CSS file with custom icons, other styling and potentially, user changes
+ */
+static void loadCSS(GdkDisplay* display, GladeSearchpath* gladeSearchPath, const gchar* cssFilename) {
+    auto filepath = gladeSearchPath->findFile("", cssFilename);
+    xoj::util::GObjectSPtr<GtkCssProvider> provider(gtk_css_provider_new(), xoj::util::adopt);
+    gtk_css_provider_load_from_path(provider.get(), Util::toGFilename(filepath).c_str());
+    gtk_style_context_add_provider_for_display(display, GTK_STYLE_PROVIDER(provider.get()),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+}
+
+static constexpr auto CSS_FILENAME = "xournalpp.css";
+static constexpr auto UI_FILENAME = "main.ui";
+
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkApplication* parent):
-        GladeGui(gladeSearchPath, "main.glade", "mainWindow"),
+        GladeGui(gladeSearchPath, UI_FILENAME, "mainWindow"),
         control(control),
         toolbar(std::make_unique<ToolMenuHandler>(control, this)),
-        menubar(std::make_unique<Menubar>()) {
+        menubar(std::make_unique<Menubar>()),
+        panedContainerWidget(get("panedMainContents"), xoj::util::ref),
+        sidebarWidget(get("sidebar"), xoj::util::ref) {
     gtk_window_set_application(GTK_WINDOW(getWindow()), parent);
 
-    panedContainerWidget.reset(get("panelMainContents"), xoj::util::ref);
-    boxContainerWidget.reset(get("mainContentContainer"), xoj::util::ref);
-    mainContentWidget.reset(get("boxContents"), xoj::util::ref);
-    sidebarWidget.reset(get("sidebar"), xoj::util::ref);
-
-    loadMainCSS(gladeSearchPath, "xournalpp.css");
+    loadCSS(gtk_widget_get_display(this->window), gladeSearchPath, CSS_FILENAME);
 
     GtkOverlay* overlay = GTK_OVERLAY(get("mainOverlay"));
     this->pdfFloatingToolBox = std::make_unique<PdfFloatingToolbox>(this, overlay);
     this->floatingToolbox = std::make_unique<FloatingToolbox>(this, overlay);
-
-    for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-        this->toolbarWidgets[i].reset(get(TOOLBAR_DEFINITIONS[i].guiName), xoj::util::ref);
-    }
 
     initXournalWidget();
 
     setSidebarVisible(control->getSettings()->isSidebarVisible());
 
     // Window handler
-    g_signal_connect(this->window, "delete-event", xoj::util::wrap_for_g_callback_v<deleteEventCallback>,
+    g_signal_connect(this->window, "close-request", xoj::util::wrap_for_g_callback_v<closeRequestCallback>,
                      this->control);
-#if GTK_MAJOR_VERSION == 3
-    g_signal_connect(this->window, "notify::is-maximized", xoj::util::wrap_for_g_callback_v<windowMaximizedCallback>,
-                     this);
-#else
     g_signal_connect(this->window, "notify::maximized", xoj::util::wrap_for_g_callback_v<windowMaximizedCallback>,
                      this);
-#endif
-
-    g_signal_connect(
-            this->window, "configure-event", G_CALLBACK(+[](GtkWidget* widget, GdkEvent*, gpointer self) -> gboolean {
-                auto win = static_cast<MainWindow*>(self);
-                GdkWindow* gdkWindow = gtk_widget_get_window(widget);
-                GdkDisplay* display = gdkWindow ? gdk_window_get_display(gdkWindow) : nullptr;
-                GdkMonitor* monitor = display ? gdk_display_get_monitor_at_window(display, gdkWindow) : nullptr;
-                if (monitor && monitor != win->lastMonitor) {
-                    win->lastMonitor = monitor;
-                    const char* monitorName = gdk_monitor_get_model(monitor);
-                    g_debug("Window moved to monitor \"%s\"", monitorName);
-                    win->setDPI();
-                }
-                return false;
-            }),
-            this);
-
-    // "watch over" all key events
-    auto keyPropagate = +[](GtkWidget* w, GdkEvent* e, gpointer) {
-        return gtk_window_propagate_key_event(GTK_WINDOW(w), (GdkEventKey*)(e));
-    };
-    g_signal_connect(this->window, "key-press-event", G_CALLBACK(keyPropagate), nullptr);
-    g_signal_connect(this->window, "key-release-event", G_CALLBACK(keyPropagate), nullptr);
 
     updateScrollbarSidebarPosition();
 
@@ -136,14 +111,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
         control->setShowMenubar(control->getSettings()->isMenubarVisible());
     });
 
-    // Drag and Drop
-    g_signal_connect(this->window, "drag-data-received", G_CALLBACK(dragDataRecived), this);
-
-    gtk_drag_dest_set(this->window, GTK_DEST_DEFAULT_ALL, nullptr, 0, GDK_ACTION_COPY);
-    gtk_drag_dest_add_uri_targets(this->window);
-    gtk_drag_dest_add_image_targets(this->window);
-    gtk_drag_dest_add_text_targets(this->window);
-
     g_signal_connect(gtk_widget_get_settings(this->window), "notify::gtk-theme-name", G_CALLBACK(themeCallback), this);
     g_signal_connect(gtk_widget_get_settings(this->window), "notify::gtk-application-prefer-dark-theme",
                      G_CALLBACK(themeCallback), this);
@@ -152,7 +119,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
 }
 
 void MainWindow::populate(GladeSearchpath* gladeSearchPath) {
-
     toolbar->populate(gladeSearchPath);
     menubar->populate(gladeSearchPath, this);
 
@@ -273,7 +239,8 @@ void MainWindow::updateColorscheme() {
         }
 
         for (auto& p: iconLoadOrder) {
-            gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), char_cast(p.u8string().c_str()));
+            gtk_icon_theme_add_search_path(gtk_icon_theme_get_for_display(gtk_widget_get_display(this->window)),
+                                           Util::toGFilename(p).c_str());
         }
     }
 
@@ -311,20 +278,33 @@ void MainWindow::initXournalWidget() {
 
     setGtkTouchscreenScrollingForDeviceMapping();
 
-    gtk_box_append(GTK_BOX(get("boxContents")), winXournal);
-
-    GtkWidget* vpXournal = gtk_viewport_new(nullptr, nullptr);
-
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(winXournal), vpXournal);
+    gtk_paned_set_end_child(GTK_PANED(this->panedContainerWidget.get()), this->winXournal);
 
     scrollHandling = std::make_unique<ScrollHandling>(GTK_SCROLLED_WINDOW(winXournal));
 
-    this->xournal = std::make_unique<XournalView>(vpXournal, control, scrollHandling.get());
+    this->xournal = std::make_unique<XournalView>(GTK_SCROLLED_WINDOW(winXournal), control, scrollHandling.get());
 
-    control->getZoomControl()->initZoomHandler(this->window, winXournal, xournal.get(), control);
-    gtk_widget_show_all(winXournal);
+    control->getZoomControl()->initZoomHandler(GTK_SCROLLED_WINDOW(winXournal), xournal.get(), control);
 
     scrollHandling->init(this->xournal->getWidget(), this->xournal->getLayout());
+
+    // Automated DPI detection
+    g_signal_connect(winXournal, "realize", G_CALLBACK(+[](GtkWidget* w, gpointer d) {
+                    GdkSurface* surf = gtk_native_get_surface(gtk_widget_get_native(w));
+                    xoj_assert(surf);
+                    g_signal_connect(surf, "enter-monitor",
+                                    G_CALLBACK(+[](GdkSurface*, GdkMonitor* monitor, gpointer d) {
+                                        auto* self = static_cast<MainWindow*>(d);
+                                        if (monitor && monitor != self->lastMonitor) {
+                                            self->lastMonitor = monitor;
+                                            const char* monitorName = gdk_monitor_get_model(monitor);
+                                            g_debug("Window moved to monitor \"%s\"", monitorName);
+                                            self->setDPI();
+                                        }
+                                    }),
+                                    d);
+                }),
+                this);
 }
 
 void MainWindow::setGtkTouchscreenScrollingForDeviceMapping() {
@@ -343,90 +323,6 @@ void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
 }
 
 auto MainWindow::getLayout() const -> Layout* { return this->xournal->getLayout(); }
-
-auto MainWindow::getNegativeXournalWidgetPos() const -> xoj::util::Point<double> {
-    return Util::toWidgetCoords(this->winXournal, xoj::util::Point{0.0, 0.0});
-}
-
-auto cancellable_cancel(GCancellable* cancel) -> bool {
-    g_cancellable_cancel(cancel);
-
-    g_warning("Timeout... Cancel loading URL");
-
-    return false;
-}
-
-void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData* data,
-                                 guint info, guint time, MainWindow* win) {
-    GtkWidget* source = gtk_drag_get_source_widget(dragContext);
-    if (source && widget == gtk_widget_get_toplevel(source)) {
-        gtk_drag_finish(dragContext, false, false, time);
-        return;
-    }
-
-    guchar* text = gtk_selection_data_get_text(data);
-    if (text) {
-        win->control->clipboardPasteText(reinterpret_cast<const char*>(text));
-
-        g_free(text);
-        gtk_drag_finish(dragContext, true, false, time);
-        return;
-    }
-
-    xoj::util::GObjectSPtr<GdkPixbuf> image(gtk_selection_data_get_pixbuf(data), xoj::util::adopt);
-    if (image) {
-        win->control->clipboardPasteImage(image.get());
-
-        gtk_drag_finish(dragContext, true, false, time);
-        return;
-    }
-
-    gchar** uris = gtk_selection_data_get_uris(data);
-    if (uris) {
-        for (int i = 0; uris[i] != nullptr && i < 3; i++) {
-            const char* uri = uris[i];
-
-            GCancellable* cancel = g_cancellable_new();
-            auto cancelTimeout = g_timeout_add(3000, xoj::util::wrap_for_once_v<cancellable_cancel>, cancel);
-
-            xoj::util::GObjectSPtr<GFile> file(g_file_new_for_uri(uri), xoj::util::adopt);
-            GError* err = nullptr;
-            GFileInputStream* in = g_file_read(file.get(), cancel, &err);
-            if (g_cancellable_is_cancelled(cancel)) {
-                continue;
-            }
-
-            if (err == nullptr) {
-                xoj::util::GObjectSPtr<GdkPixbuf> pixbuf(
-                        gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), cancel, nullptr), xoj::util::adopt);
-                if (g_cancellable_is_cancelled(cancel)) {
-                    continue;
-                }
-                g_input_stream_close(G_INPUT_STREAM(in), cancel, nullptr);
-                if (g_cancellable_is_cancelled(cancel)) {
-                    continue;
-                }
-
-                if (pixbuf) {
-                    win->control->clipboardPasteImage(pixbuf.get());
-                }
-            } else {
-                g_error_free(err);
-            }
-
-            if (!g_cancellable_is_cancelled(cancel)) {
-                g_source_remove(cancelTimeout);
-            }
-            g_object_unref(cancel);
-        }
-
-        gtk_drag_finish(dragContext, true, false, time);
-
-        g_strfreev(uris);
-    }
-
-    gtk_drag_finish(dragContext, false, false, time);
-}
 
 auto MainWindow::getControl() const -> Control* { return control; }
 
@@ -451,68 +347,18 @@ void MainWindow::updateScrollbarSidebarPosition() {
                                                   !control->getSettings()->isScrollbarFadeoutDisabled());
     }
 
-    // Part 2: update sidebar position
-    GtkPaned* paned = GTK_PANED(this->panedContainerWidget.get());
-
-    // Allocation is reset when we switch up the contained elements. Fetch the
-    // width here in case we need it afterwards.
-    int contentWidth = gtk_widget_get_width(this->boxContainerWidget.get());
-
     bool sidebarRight = control->getSettings()->isSidebarOnRight();
-    if (sidebarRight != (gtk_paned_get_child2(paned) == this->sidebarWidget.get())) {
-        // switch sidebar and main content
-        GtkWidget* sidebar = this->sidebarWidget.get();
-        GtkWidget* mainContent = this->sidebarVisible ? this->mainContentWidget.get() : nullptr;
-#if GTK_MAJOR_VERSION == 3
-        if (this->sidebarVisible) {
-            gtk_container_remove(GTK_CONTAINER(paned), sidebar);
-            gtk_container_remove(GTK_CONTAINER(paned), mainContent);
-
-            if (sidebarRight) {
-                gtk_paned_pack1(paned, mainContent, true, false);
-                gtk_paned_pack2(paned, sidebar, false, false);
-            } else {
-                gtk_paned_pack1(paned, sidebar, false, false);
-                gtk_paned_pack2(paned, mainContent, true, false);
-            }
-        } else {
-            // The sidebar is hidden. That means the paned widget only contains the
-            // sidebar while the main contents are shown alone in the box container.
-            gtk_container_remove(GTK_CONTAINER(paned), sidebar);
-
-            if (sidebarRight) {
-                gtk_paned_pack2(paned, sidebar, false, false);
-            } else {
-                gtk_paned_pack1(paned, sidebar, false, false);
-            }
-        }
-#else
-        gtk_paned_set_start_child(paned, nullptr);
-        gtk_paned_set_end_child(paned, nullptr);
-        if (sidebarRight) {
-            gtk_paned_set_start_child(paned, mainContent);
-            gtk_paned_set_resize_start_child(paned, true);
-            gtk_paned_set_shrink_start_child(paned, false);
-            gtk_paned_set_end_child(paned, sidebar);
-            gtk_paned_set_resize_end_child(paned, false);
-            gtk_paned_set_shrink_end_child(paned, false);
-        } else {
-            gtk_paned_set_end_child(paned, mainContent);
-            gtk_paned_set_resize_end_child(paned, true);
-            gtk_paned_set_shrink_end_child(paned, false);
-            gtk_paned_set_start_child(paned, sidebar);
-            gtk_paned_set_resize_start_child(paned, false);
-            gtk_paned_set_shrink_start_child(paned, false);
-        }
-#endif
-    }
+    auto dir = sidebarRight ? GTK_TEXT_DIR_RTL : GTK_TEXT_DIR_LTR;
+    gtk_widget_set_direction(this->panedContainerWidget.get(), dir);
 
     if (this->sidebarVisible) {
-        updatePanedPosition(contentWidth);
+        updatePanedPosition();
+    } else {
+        gtk_widget_set_visible(sidebarWidget.get(), false);
     }
 }
 
-auto MainWindow::deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control* control) -> bool {
+auto MainWindow::closeRequestCallback(GtkWidget* widget, Control* control) -> bool {
     control->quit();
 
     return true;
@@ -524,101 +370,23 @@ void MainWindow::setSidebarVisible(bool visible) {
     }
 
     if (visible != this->sidebarVisible) {
-        // Due to a GTK bug, we can't just hide the sidebar widget in the GtkPaned.
-        // If we do this, we create a dead region where the pane separator was previously.
-        // In this region, we can't use the touchscreen to start horizontal strokes.
-        // As such:
-        if (!visible) {
-            // hide sidebar
-#if GTK_MAJOR_VERSION == 3
-            gtk_container_remove(GTK_CONTAINER(panedContainerWidget.get()), mainContentWidget.get());
-#else
-            if (control->getSettings()->isSidebarOnRight()) {
-                gtk_paned_set_start_child(GTK_PANED(panedContainerWidget.get()), nullptr);
-            } else {
-                gtk_paned_set_end_child(GTK_PANED(panedContainerWidget.get()), nullptr);
-            }
-#endif
-            gtk_box_remove(GTK_BOX(boxContainerWidget.get()), panedContainerWidget.get());
-            gtk_box_append(GTK_BOX(boxContainerWidget.get()), mainContentWidget.get());
-            this->sidebarVisible = false;
-        } else {
-            // show sidebar
-
-            // Allocation is reset when we switch up the contained elements. Fetch the
-            // width here in case we need it afterwards.
-            int contentWidth = gtk_widget_get_width(boxContainerWidget.get());
-
-            gtk_box_remove(GTK_BOX(boxContainerWidget.get()), mainContentWidget.get());
-
-#if GTK_MAJOR_VERSION == 3
-            if (control->getSettings()->isSidebarOnRight()) {
-                gtk_paned_pack1(GTK_PANED(panedContainerWidget.get()), mainContentWidget.get(), true, false);
-            } else {
-                gtk_paned_pack2(GTK_PANED(panedContainerWidget.get()), mainContentWidget.get(), true, false);
-            }
-#else
-            if (control->getSettings()->isSidebarOnRight()) {
-                gtk_paned_set_start_child(GTK_PANED(panedContainerWidget.get()), mainContentWidget.get());
-            } else {
-                gtk_paned_set_end_child(GTK_PANED(panedContainerWidget.get()), mainContentWidget.get());
-            }
-#endif
-
-            gtk_box_append(GTK_BOX(boxContainerWidget.get()), panedContainerWidget.get());
-            this->sidebarVisible = true;
-
-            updatePanedPosition(contentWidth);
-        }
+        this->sidebarVisible = visible;
+        updatePanedPosition();
+        gtk_widget_set_visible(sidebarWidget.get(), visible);
     }
-
-    gtk_widget_set_visible(sidebarWidget.get(), visible);
 }
 
-/**
- * Invert the position of the paned widget and disconnect from the signal.
- * @param handlerId should be the ID of the signal handler that should be disconnected.
- */
-static void invertPanedPosition(GtkWidget* widget, GtkAllocation* allocation, gulong* handlerId) {
-    int newDividerPos = allocation->width - gtk_paned_get_position(GTK_PANED(widget));
-    gtk_paned_set_position(GTK_PANED(widget), newDividerPos);
-
-    // We only need to switch the position once, so disconnect the signal right away.
-    g_signal_handler_disconnect(widget, *handlerId);
-}
-
-void MainWindow::updatePanedPosition(int contentWidth) {
-    if (!this->control->getSettings()->isSidebarOnRight()) {
-        // Sidebar is on the left side.
-        gtk_paned_set_position(GTK_PANED(this->panedContainerWidget.get()),
-                               this->control->getSettings()->getSidebarWidth());
-    } else {
-        // Sidebar is on the right side.
-        if (contentWidth > 0) {
-            int dividerPos = contentWidth - this->control->getSettings()->getSidebarWidth();
-            gtk_paned_set_position(GTK_PANED(this->panedContainerWidget.get()), dividerPos);
-        } else {
-            // Allocation is unkown (window hasn't been shown yet). We have to wait for the signal.
-            // Set position as if the sidebar was on the left side, and let the signal handler
-            // simply invert the position when the allocation is known.
-            gtk_paned_set_position(GTK_PANED(this->panedContainerWidget.get()),
-                                   this->control->getSettings()->getSidebarWidth());
-            gulong* signal_id = new gulong{};
-            *signal_id = g_signal_connect_data(
-                    this->panedContainerWidget.get(), "size-allocate",
-                    xoj::util::wrap_for_g_callback_v<invertPanedPosition>, signal_id,
-                    [](gpointer d, GClosure*) { delete reinterpret_cast<gulong*>(d); }, GConnectFlags(0));
-        }
-    }
+void MainWindow::updatePanedPosition() {
+    gtk_paned_set_position(GTK_PANED(panedContainerWidget.get()), control->getSettings()->getSidebarWidth());
 }
 
 void MainWindow::setToolbarVisible(bool visible) {
     Settings* settings = control->getSettings();
 
     settings->setToolbarVisible(visible);
-    for (auto& w: this->toolbarWidgets) {
-        if (!visible || (gtk_toolbar_get_n_items(GTK_TOOLBAR(w.get())) != 0)) {
-            gtk_widget_set_visible(w.get(), visible);
+    for (auto& tb: this->toolbars) {
+        if (!visible || !tb->empty()) {
+            gtk_widget_set_visible(tb->getWidget(), visible);
         }
     }
 }
@@ -667,8 +435,8 @@ void MainWindow::toolbarSelected(ToolbarData* d) {
 
 auto MainWindow::clearToolbar() -> const ToolbarData* {
     if (this->selectedToolbar != nullptr) {
-        for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-            ToolMenuHandler::unloadToolbar(this->toolbarWidgets[i].get());
+        for (auto& tb: this->toolbars) {
+            ToolMenuHandler::unloadToolbar(tb.get());
         }
 
         this->toolbar->freeDynamicToolbarItems();
@@ -679,9 +447,8 @@ auto MainWindow::clearToolbar() -> const ToolbarData* {
 void MainWindow::loadToolbar(ToolbarData* d) {
     this->selectedToolbar = d;
 
-    for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-        this->toolbar->load(d, this->toolbarWidgets[i].get(), TOOLBAR_DEFINITIONS[i].propName,
-                            TOOLBAR_DEFINITIONS[i].horizontal);
+    for (auto& tb: this->toolbars) {
+        this->toolbar->load(d, *tb);
     }
 
     this->floatingToolbox->flagRecalculateSizeRequired();
@@ -695,18 +462,6 @@ void MainWindow::reloadToolbars() {
 
 auto MainWindow::getSelectedToolbar() const -> ToolbarData* { return this->selectedToolbar; }
 
-auto MainWindow::getToolbarWidgets() const -> const ToolbarWidgetArray& { return toolbarWidgets; }
-
-auto MainWindow::getToolbarName(GtkToolbar* toolbar) const -> const char* {
-    for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-        if (static_cast<void*>(this->toolbarWidgets[i].get()) == static_cast<void*>(toolbar)) {
-            return TOOLBAR_DEFINITIONS[i].propName;
-        }
-    }
-
-    return "";
-}
-
 void MainWindow::setDynamicallyGeneratedSubmenuDisabled(bool disabled) { menubar->setDisabled(disabled); }
 
 void MainWindow::updateToolbarMenu() {
@@ -714,6 +469,11 @@ void MainWindow::updateToolbarMenu() {
 }
 
 void MainWindow::createToolbar() {
+    size_t i = 0;
+    for (auto&& def: TOOLBAR_DEFINITIONS) {
+        this->toolbars[i++] = std::make_unique<ToolbarBox>(def.propName, get(def.guiName));
+    }
+
     toolbarSelected(control->getSettings()->getSelectedToolbar());
 
     this->control->getScheduler()->unblockRerenderZoom();
@@ -734,14 +494,6 @@ void MainWindow::setRedoDescription(const string& description) { menubar->setRed
 auto MainWindow::getToolbarModel() const -> ToolbarModel* { return this->toolbar->getModel(); }
 
 auto MainWindow::getToolMenuHandler() const -> ToolMenuHandler* { return this->toolbar.get(); }
-
-void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename) {
-    auto filepath = gladeSearchPath->findFile("", cssFilename);
-    xoj::util::GObjectSPtr<GtkCssProvider> provider(gtk_css_provider_new(), xoj::util::adopt);
-    gtk_css_provider_load_from_path(provider.get(), char_cast(filepath.u8string().c_str()), nullptr);
-    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider.get()),
-                                              GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-}
 
 PdfFloatingToolbox* MainWindow::getPdfToolbox() const { return this->pdfFloatingToolBox.get(); }
 

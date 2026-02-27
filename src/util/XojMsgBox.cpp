@@ -7,7 +7,6 @@
 
 #include "util/PopupWindowWrapper.h"
 #include "util/Util.h"
-#include "util/gtk4_helper.h"
 #include "util/i18n.h"  // for _, FS, _F
 #include "util/raii/CStringWrapper.h"
 
@@ -33,7 +32,7 @@ XojMsgBox::XojMsgBox(GtkDialog* dialog, xoj::util::move_only_function<void(int)>
                                      // because if the callback pops up another dialog, the first one won't close...
                                      // But since gtk_window_close() triggers the destruction of *self, we first move
                                      // the callback
-                                     Util::execInUiThread([cb = std::move(self->callback), r = response]() { cb(r); });
+                                     Util::execWhenIdle([cb = std::move(self->callback), r = response]() { cb(r); });
                                  }
 
                                  // Closing the window causes another "response" signal, which we want to ignore
@@ -140,40 +139,6 @@ void XojMsgBox::showPluginMessage(const std::string& pluginName, const std::stri
     showMarkupMessageToUser(nullptr, header, msg, error ? GTK_MESSAGE_ERROR : GTK_MESSAGE_INFO);
 }
 
-auto XojMsgBox::askPluginQuestion(const std::string& pluginName, const std::string& msg,
-                                  const std::vector<Button>& buttons, bool error) -> int {
-    /*
-     * Todo(gtk4): Remove this function entirely.
-     */
-    std::string header = "<i>Warning: The plugin interface function msgbox() is deprecated and will soon be removed. "
-                         "Please adapt your plugin to use the function openDialog() instead</i>\n\n";
-    header += (error ? std::string("<b>Error in </b>") : "") + std::string("Xournal++ Plugin «") + pluginName + "»";
-
-    GtkWidget* dialog = gtk_message_dialog_new_with_markup(defaultWindow, GTK_DIALOG_MODAL,
-                                                           error ? GTK_MESSAGE_ERROR : GTK_MESSAGE_QUESTION,
-                                                           GTK_BUTTONS_NONE, nullptr);
-
-    gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), header.c_str());
-
-    if (defaultWindow != nullptr) {
-        gtk_window_set_transient_for(GTK_WINDOW(dialog), defaultWindow);
-    }
-
-    GValue val = G_VALUE_INIT;
-    g_value_init(&val, G_TYPE_STRING);
-    g_value_set_string(&val, msg.c_str());
-    g_object_set_property(G_OBJECT(dialog), "secondary-text", &val);
-    g_value_unset(&val);
-
-    for (auto& b: buttons) {
-        gtk_dialog_add_button(GTK_DIALOG(dialog), b.label.c_str(), b.response);
-    }
-
-    int res = gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
-    return res;
-}
-
 void XojMsgBox::replaceFileQuestion(GtkWindow* win, fs::path file,
                                     xoj::util::move_only_function<void(const fs::path&)> writeTofile) {
     if (!fs::exists(file)) {
@@ -204,19 +169,17 @@ constexpr auto* XOJ_HELP = "https://xournalpp.github.io/community/help/";
 void XojMsgBox::showHelp(GtkWindow* win) { openURL(win, XOJ_HELP); }
 
 void XojMsgBox::openURL(GtkWindow* win, const char* url) {
-#ifdef _WIN32
+#if GTK_CHECK_VERSION(4, 10, 0)
+    GtkUriLauncher* launcher = gtk_uri_launcher_new(XOJ_HELP);
+    gtk_uri_launcher_launch(launcher, win, nullptr, nullptr, nullptr);
+    g_object_unref(launcher);
+#else
+#ifdef _WIN32  // TODO Do we still need a separate handling for Windows?
     // gvfs is not in MSYS repositories, so we can't use gtk_show_uri.
     // Instead, we use the native API.
     ShellExecute(nullptr, "open", url, nullptr, nullptr, SW_SHOW);
 #else
-    GError* error = nullptr;
-    gtk_show_uri(gtk_window_get_screen(win), url, gtk_get_current_event_time(), &error);
-
-    if (error) {
-        std::string msg = FS(_F("Unable to open the link: {1}\n{2}") % url % error->message);
-        XojMsgBox::showErrorToUser(win, msg);
-
-        g_error_free(error);
-    }
+    gtk_show_uri(win, XOJ_HELP, GDK_CURRENT_TIME);
+#endif
 #endif
 }
