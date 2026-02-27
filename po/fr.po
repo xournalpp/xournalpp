@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-17 10:08+0000\n"
-"PO-Revision-Date: 2026-02-22 04:56\n"
+"PO-Revision-Date: 2026-02-27 21:41\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -124,12 +124,13 @@ msgstr "Erreur lors de la lecture du fichier PNG \"{1}\""
 
 #: ../src/core/control/Control.cpp:1664
 msgid "Failed to determine if path exists \"{1}\": {2}"
-msgstr ""
+msgstr "Impossible de déterminer si le chemin existe \"{1}\" : {2}"
 
 #: ../src/core/control/Control.cpp:1665
 msgid "That file does not exist:\n"
 "\"{1}\""
-msgstr ""
+msgstr "Ce fichier n'existe pas :\n"
+"\"{1}\""
 
 #: ../src/core/control/Control.cpp:1772
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
