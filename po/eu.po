@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-03 08:38+0000\n"
-"PO-Revision-Date: 2026-02-03 08:53\n"
+"POT-Creation-Date: 2026-02-23 11:46+0000\n"
+"PO-Revision-Date: 2026-02-27 21:41\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -39,55 +39,57 @@ msgstr "Tresna-barra aktiboa ezabatu duzu. Lehenetsitako tresna-barrara itzultze
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Toolbarconfiguration \"{1}\" lehenetsia dago, nahi duzu kopia bat sortu bera editatzeko?"
 
-#: ../src/core/control/Control.cpp:598 ../src/core/control/Control.cpp:1572
+#: ../src/core/control/Control.cpp:598 ../src/core/control/Control.cpp:1570
 msgid "Yes"
 msgstr "Bai"
 
-#: ../src/core/control/Control.cpp:598 ../src/core/control/Control.cpp:1572
+#: ../src/core/control/Control.cpp:598 ../src/core/control/Control.cpp:1570
 msgid "No"
 msgstr "Ez"
 
-#: ../src/core/control/Control.cpp:828 ../src/core/control/Control.cpp:1786
-#: ../src/core/control/Control.cpp:2111
+#: ../src/core/control/Control.cpp:826 ../src/core/control/Control.cpp:1798
+#: ../src/core/control/Control.cpp:2120
 msgid "Cancel"
 msgstr "Utzi"
 
-#: ../src/core/control/Control.cpp:829
+#: ../src/core/control/Control.cpp:827
 msgid "Insert after current page"
 msgstr "Txertatu uneko orrialdearen ondoren"
 
-#: ../src/core/control/Control.cpp:830
+#: ../src/core/control/Control.cpp:828
 msgid "Insert at end"
 msgstr "Txertatu bukaeran"
 
-#: ../src/core/control/Control.cpp:833
+#: ../src/core/control/Control.cpp:831
 msgid "_Journal"
 msgstr "_Koadernoa"
 
-#: ../src/core/control/Control.cpp:833
+#: ../src/core/control/Control.cpp:831
 msgid "Paper B_ackground"
 msgstr "Paperaren atzeko planoa"
 
-#: ../src/core/control/Control.cpp:834
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:41
+#: ../src/core/control/Control.cpp:832
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:42
 msgid "With PDF background"
 msgstr "Atzeko planoko PDFrekin"
 
-#: ../src/core/control/Control.cpp:837
+#: ../src/core/control/Control.cpp:835
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
-msgstr ""
+msgstr "Zure uneko dokumentuak ez du PDF {1} zenbakia duen orria.\n"
+"Orri hau txertatu nahi duzu?\n\n"
+"Aholkua: {2} hauta dezakezu PDF orria txertatzeko."
 
-#: ../src/core/control/Control.cpp:880
+#: ../src/core/control/Control.cpp:878
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Ez dago pdf orririk eransteko. Komeni da aurretik dokumentua berriro irekitzea."
 
-#: ../src/core/control/Control.cpp:894
+#: ../src/core/control/Control.cpp:892
 msgid "Unable to retrieve pdf page."
 msgstr "Ezin izan da pdf orria berreskuratu."
 
-#: ../src/core/control/Control.cpp:1496
+#: ../src/core/control/Control.cpp:1494
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -95,100 +97,113 @@ msgstr "Ez ireki automatikoki gordetako fitxategiak. Agian gainidatziko dira!\n"
 "Kopiatu fitxategiak beste karpeta batera.\n"
 "Ezin dira {1} karpetako fitxategiak ireki."
 
-#: ../src/core/control/Control.cpp:1516
+#: ../src/core/control/Control.cpp:1514
 msgid "file: {1}"
 msgstr "fitxategia: {1}"
 
-#: ../src/core/control/Control.cpp:1549
+#: ../src/core/control/Control.cpp:1547
 msgid "Error opening file \"{1}\""
 msgstr "Errorea \"{1}\" fitxategia irekitzean"
 
-#: ../src/core/control/Control.cpp:1574
+#: ../src/core/control/Control.cpp:1572
 msgid "File version mismatch"
 msgstr "Fitxategiaren bertsioa ez dator bat"
 
-#: ../src/core/control/Control.cpp:1575
+#: ../src/core/control/Control.cpp:1573
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Kargatuko den fitxategia Xournal++en uneko bertsiok onartzen duena baino bertsio berriago batez sortu da, beraz baliteke behar bezala ez kargatzea. Ireki edonola?"
 
-#: ../src/core/control/Control.cpp:1598
+#: ../src/core/control/Control.cpp:1596
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr "Errore bat gertatu da \"{1}\" PDF fitxategia irakurtzean\n"
 "{2}"
 
-#: ../src/core/control/Control.cpp:1620
+#: ../src/core/control/Control.cpp:1617
 msgid "Error reading PNG file \"{1}\""
 msgstr "Errorea \"{1}\" PNG fitxategia irakurtzean"
 
-#: ../src/core/control/Control.cpp:1766
+#: ../src/core/control/Control.cpp:1652
+msgid "Error reading template file \"{1}\""
+msgstr ""
+
+#: ../src/core/control/Control.cpp:1671
+msgid "Failed to determine if path exists \"{1}\": {2}"
+msgstr ""
+
+#: ../src/core/control/Control.cpp:1672
+msgid "That file does not exist:\n"
+"\"{1}\""
+msgstr ""
+
+#: ../src/core/control/Control.cpp:1778
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Ezin izan da erantsitako atzeko planoa aurkitu. Baliteke mugitu, izena aldatu edo ezabatu izana."
 
-#: ../src/core/control/Control.cpp:1769
+#: ../src/core/control/Control.cpp:1781
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Ezin izan da atzeko planoaren {1} fitxategia aurkitu. Baliteke mugitu, izena aldatu edo ezabatu izana.\n"
 "Ikusi zen azken aldia: \"{2}\""
 
-#: ../src/core/control/Control.cpp:1779
+#: ../src/core/control/Control.cpp:1791
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Proposatutako ordezko fitxategia: \"{1}\""
 
-#: ../src/core/control/Control.cpp:1784
+#: ../src/core/control/Control.cpp:1796
 msgid "Select another PDF"
 msgstr "Hautatu beste PDF"
 
-#: ../src/core/control/Control.cpp:1785
+#: ../src/core/control/Control.cpp:1797
 msgid "Remove PDF Background"
 msgstr "Kendu atzeko planoko PDFa"
 
-#: ../src/core/control/Control.cpp:1789
+#: ../src/core/control/Control.cpp:1801
 msgid "Use proposed PDF"
 msgstr "Erabili proposatutako PDFa"
 
-#: ../src/core/control/Control.cpp:1792
+#: ../src/core/control/Control.cpp:1804
 msgid "Missing PDF background file"
 msgstr "Atzeko planoko PDF fitxategia falta da"
 
-#: ../src/core/control/Control.cpp:1924
+#: ../src/core/control/Control.cpp:1933
 msgid "Select font"
 msgstr "Hautatu letra mota"
 
-#: ../src/core/control/Control.cpp:1943
+#: ../src/core/control/Control.cpp:1952
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Hautatu kolorea"
 
-#: ../src/core/control/Control.cpp:1968
+#: ../src/core/control/Control.cpp:1977
 msgid "Unsaved Document"
 msgstr "Gorde gabeko dokumentua"
 
-#: ../src/core/control/Control.cpp:2104
+#: ../src/core/control/Control.cpp:2113
 msgid "Document file was removed."
 msgstr "Dokumentu fitxategia kendu da."
 
-#: ../src/core/control/Control.cpp:2104
+#: ../src/core/control/Control.cpp:2113
 msgid "This document is not saved yet."
 msgstr "Dokumentu hau oraindik ez da gorde."
 
-#: ../src/core/control/Control.cpp:2106
+#: ../src/core/control/Control.cpp:2115
 msgid "Save As..."
 msgstr "Gorde honela..."
 
-#: ../src/core/control/Control.cpp:2106 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2115 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "Gorde"
 
-#: ../src/core/control/Control.cpp:2109
+#: ../src/core/control/Control.cpp:2118
 msgid "Discard"
 msgstr "Baztertu"
 
-#: ../src/core/control/Control.cpp:2194
+#: ../src/core/control/Control.cpp:2203
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr "Gtk demo azpiprozesua sortzeak huts egin du: {1} (irteera kodea: {2})"
 
@@ -228,20 +243,20 @@ msgstr "trackpoint"
 msgid "tablet pad"
 msgstr "tabletaren teklatua"
 
-#: ../src/core/control/ExportHelper.cpp:77
+#: ../src/core/control/ExportHelper.cpp:63
 msgid "Image file successfully created"
 msgstr "Irudi fitxategia behar bezala sortu da"
 
-#: ../src/core/control/ExportHelper.cpp:103
+#: ../src/core/control/ExportHelper.cpp:76
 #: ../src/core/control/jobs/BaseExportJob.cpp:40
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Ez gainidatzi atzeko planoko PDFa! Horrek akatsak eragingo ditu!"
 
-#: ../src/core/control/ExportHelper.cpp:107
+#: ../src/core/control/ExportHelper.cpp:80
 msgid "The check for overwriting the background failed with: {1}"
-msgstr ""
+msgstr "Atzeko planoa gainidazteko azterketak huts egin du: {1}"
 
-#: ../src/core/control/ExportHelper.cpp:127
+#: ../src/core/control/ExportHelper.cpp:100
 msgid "PDF file successfully created"
 msgstr "PDF fitxategia behar bezala sortu da"
 
@@ -257,26 +272,26 @@ msgstr "Huts egin du txantiloi fitxategia globala irakurtzen. Aztertu zure ezarp
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "Txantiloi fitxategi globala ez da ohiko fitxategia. Aztertu zure ezarpenak. "
 
-#: ../src/core/control/LatexController.cpp:244
+#: ../src/core/control/LatexController.cpp:245
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "Latexa sortzean errore bat aurkitu da: {1} (irteera kodea: {2})"
 
-#: ../src/core/control/LatexController.cpp:313
+#: ../src/core/control/LatexController.cpp:314
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "Ezin izan da LaTeX PDF fitxategia kargatu: {1}"
 
-#: ../src/core/control/LatexController.cpp:318
+#: ../src/core/control/LatexController.cpp:319
 msgid "Could not load LaTeX PDF file"
 msgstr "Ezin izan da LaTeX PDF fitxategia kargatu"
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:110
-#: ../src/core/control/XournalMain.cpp:231
+#: ../src/core/control/PageBackgroundChangeController.cpp:111
+#: ../src/core/control/XournalMain.cpp:230
 #: ../src/core/control/xojfile/LoadHandler.cpp:483
 #: ../src/core/control/xojfile/LoadHandler.cpp:499
 msgid "Error reading PDF: {1}"
 msgstr "Errorea {1} PDF irakurtzean"
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:271
+#: ../src/core/control/PageBackgroundChangeController.cpp:272
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
 msgstr "Ez daukazu PDF orririk hautatzeko. Utzi eragiketa.\n"
@@ -320,21 +335,21 @@ msgstr "Ezin izan da \"{1}\" atzeko planoa aurkitu. Baliteke mugitu, izena aldat
 
 #: ../src/core/control/XournalMain.cpp:176
 msgid "Error loading document: {1}"
-msgstr ""
+msgstr "Errorea {1} dokumentua kargatzean"
 
 #: ../src/core/control/XournalMain.cpp:209
 msgid "Error exporting image: {1}"
-msgstr ""
+msgstr "Errorea {1} irudia esportatzean"
 
-#: ../src/core/control/XournalMain.cpp:239
+#: ../src/core/control/XournalMain.cpp:238
 msgid "Error saving document: {1}"
-msgstr ""
+msgstr "Errorea {1} dokumentua gordetzean"
 
-#: ../src/core/control/XournalMain.cpp:269
+#: ../src/core/control/XournalMain.cpp:268
 msgid "Error exporting PDF: {1}"
-msgstr ""
+msgstr "Errorea {1} PDFa esportatzean"
 
-#: ../src/core/control/XournalMain.cpp:375
+#: ../src/core/control/XournalMain.cpp:374
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -348,24 +363,24 @@ msgstr "<span foreground='red' size='x-large'>UI fitxategia falta da:\n"
 "  Ez dago Lanerako bidean\n"
 "  Ez dago hemen: {2}"
 
-#: ../src/core/control/XournalMain.cpp:380
+#: ../src/core/control/XournalMain.cpp:379
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "Fitxategi hau gabe exekutatzen saiatuko da orain."
 
-#: ../src/core/control/XournalMain.cpp:402
-#: ../src/core/control/XournalMain.cpp:463
+#: ../src/core/control/XournalMain.cpp:401
+#: ../src/core/control/XournalMain.cpp:462
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Xournal++-ek aldi bakoitzean orri bakarra ireki dezake.\n"
 "Besteak baztertzen ditu."
 
-#: ../src/core/control/XournalMain.cpp:413
+#: ../src/core/control/XournalMain.cpp:412
 msgid "File {1} does not exist."
 msgstr "{1} fitxategia ez dago."
 
-#: ../src/core/control/XournalMain.cpp:417
+#: ../src/core/control/XournalMain.cpp:416
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -373,29 +388,29 @@ msgstr "Fitxategi-sistemaren errorea: {1}\n"
 "Barkatu, Xournal++-k ezin du fitxategia ireki: {2}\n"
 "Gomendatzen dizugu fitxategia direktorio lokal batean kopiatzea."
 
-#: ../src/core/control/XournalMain.cpp:602
+#: ../src/core/control/XournalMain.cpp:619
 msgid "Jump to Page (first Page: 1)"
 msgstr "Joan orrialde honetara (lehenengo orrialdea: 1)"
 
-#: ../src/core/control/XournalMain.cpp:606
+#: ../src/core/control/XournalMain.cpp:623
 msgid "Get version of xournalpp"
 msgstr "Eskuratu xournalpp-ren bertsioa"
 
-#: ../src/core/control/XournalMain.cpp:608
+#: ../src/core/control/XournalMain.cpp:625
 msgid "Disable audio for this session"
 msgstr "Desgaitu audioa saio honetarako"
 
-#: ../src/core/control/XournalMain.cpp:610
+#: ../src/core/control/XournalMain.cpp:627
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
 msgstr "Ireki PDFa eranskin moduan\n"
 "                                       Ez ikusi egin PDF fitxategirik zehazten ez bada."
 
-#: ../src/core/control/XournalMain.cpp:614
+#: ../src/core/control/XournalMain.cpp:631
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "Gorde xopp-fitxategia FILE gisa zehaztutako atzeko planoko PDFarekin"
 
-#: ../src/core/control/XournalMain.cpp:619
+#: ../src/core/control/XournalMain.cpp:636
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
@@ -403,11 +418,11 @@ msgstr "Erabili emandako euskarria PDF esportazioetarako.\n"
 "                                       Euskarri eskuragarriak: {1}\n"
 "                                       Ez dago efekturik -p/--llc-pdf=foo.pdf gabe"
 
-#: ../src/core/control/XournalMain.cpp:628
+#: ../src/core/control/XournalMain.cpp:645
 msgid "Export FILE as PDF"
 msgstr "Esportatu fitxategia PDF gisa"
 
-#: ../src/core/control/XournalMain.cpp:631
+#: ../src/core/control/XournalMain.cpp:648
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
@@ -415,7 +430,7 @@ msgstr "Esportatu FITXATEGIA irudi fitxategi gisa (bat orriko)\n"
 "Asmatu irteera-formatua IMGFILE luzapenetik\n"
 "Onartutako formatuak: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:637
+#: ../src/core/control/XournalMain.cpp:654
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
@@ -423,52 +438,63 @@ msgstr "Esportatu atzeko planorik gabe\n"
 "Esportatutako fitxategiak atzeko plano gardena edo zuria du,\n"
 "formatuak onartzen duenaren arabera\n"
 
-#: ../src/core/control/XournalMain.cpp:642
+#: ../src/core/control/XournalMain.cpp:659
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
 msgstr "Esportatu lerrorik gabe\n"
 "                                       Esportatutako fitxategiaren paperak ez du lerrorik\n"
 
-#: ../src/core/control/XournalMain.cpp:647
+#: ../src/core/control/XournalMain.cpp:664
 msgid "Export layers progressively\n"
 "                                       In PDF export, Render layers progressively one by one.\n"
 "                                       This results in N export pages per page with N layers,\n"
 "                                       building up the layer stack progressively.\n"
 "                                       The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "Esportatu geruzak banaka\n"
+"                                       PDFak esportatzean, aurkeztu geruzak banan bana. \n"
+"                                       Honen ondorioz n geruzako orriak n esportazio sortuko ditu, \n"
+"                                       geruza pilaketa progresiboki sortuz. \n"
+"                                       Lortutako PDF fitxategia aurkezpen baterako erabil daiteke.\n"
 
-#: ../src/core/control/XournalMain.cpp:656
+#: ../src/core/control/XournalMain.cpp:673
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Esportatu bakarrik tarteak zehazten dituen orriak (adib.  \"2-3,5,7-\")\n"
+"                                       Ez dago eraginik -p/--create-pdf edo -i/--create-img gabe"
 
-#: ../src/core/control/XournalMain.cpp:661
+#: ../src/core/control/XournalMain.cpp:678
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Esportatu bakarrik tarteak zehazten dituen geruzak (adib.  \"2-3,5,7-\")\n"
+"                                       Ez dago eraginik -p/--create-pdf edo -i/--create-img gabe"
 
-#: ../src/core/control/XournalMain.cpp:665
+#: ../src/core/control/XournalMain.cpp:682
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "Zehaztu DPIa PNGak esportatzean. Balio lehenetsia 300 da\n"
+"                                       Ez dago eraginik -i/--create-img=foo.png gabe"
 
-#: ../src/core/control/XournalMain.cpp:669
+#: ../src/core/control/XournalMain.cpp:686
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "Zehaztu orriaren zabalera PNGak esportatzean\n"
+"                                       Ez dago eraginik -i/--create-img=foo.png gabe\n"
+"                                       Ez ikusi egingo da --export-png-dpi erabiltzen bada"
 
-#: ../src/core/control/XournalMain.cpp:674
+#: ../src/core/control/XournalMain.cpp:691
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "Zehaztu orriaren altuera PNGak esportatzean\n"
+"                                       Ez dago eraginik -i/--create-img=foo.png gabe\n"
+"                                       Ez ikusi egingo da --export-png-dpi edo --export-png-width erabiltzen bada"
 
-#: ../src/core/control/XournalMain.cpp:682
+#: ../src/core/control/XournalMain.cpp:699
 msgid "Advanced export options"
 msgstr "Esportatzeko aukera aurreratuak"
 
-#: ../src/core/control/XournalMain.cpp:683
+#: ../src/core/control/XournalMain.cpp:700
 msgid "Display advanced export options"
 msgstr "Erakutsi esportatzeko aukera aurreratuak"
 
@@ -556,11 +582,11 @@ msgstr "PDF esportatzea"
 msgid "Save file error, can't backup: {1}"
 msgstr "Fitxategiaren gordetze errorea, ezin da babeskopia egin: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:60
+#: ../src/core/control/latex/LatexGenerator.cpp:108
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Huts egin du aztertzen LaTex-en komando sortzailea: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:66
+#: ../src/core/control/latex/LatexGenerator.cpp:114
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
@@ -568,15 +594,15 @@ msgstr "Ezin izan da aurkitu LaTeX edizio-programa bide honetan: {1}\n\n"
 "Flatpak-en instalazioa detektatzen denez, Flatpak freedesktop Tex Live luzapena instalatu behar duzu. Adibidez, hau exekutatuz:\n\n"
 "$ flatpak instalatu flathub org.freedesktop.Sdk.Extension.texlive"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:71
+#: ../src/core/control/latex/LatexGenerator.cpp:119
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Huts egin du LaTex programa sortzailea aurkitzen bidean: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:79
+#: ../src/core/control/latex/LatexGenerator.cpp:127
 msgid "Could not save .tex file: {1}"
 msgstr "Ezin izan da .tex fitxategia gorde: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:94
+#: ../src/core/control/latex/LatexGenerator.cpp:142
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Ezin izan da hasi {1}: {2} (irteera-kodea: {3})"
 
@@ -584,68 +610,68 @@ msgstr "Ezin izan da hasi {1}: {2} (irteera-kodea: {3})"
 msgid "Layer {1}"
 msgstr "Geruza {1}"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:26
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:27
 msgid "Could not load pagetemplates.ini file"
 msgstr "Ezin izan da pagetemplates.ini fitxategia kargatu"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:30
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Plain"
 msgstr "Arrunta"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "Ruled"
 msgstr "Lerroduna"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 msgid "Ruled with vertical line"
 msgstr "Lerroduna marra bertikalarekin"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
 msgid "Staves"
 msgstr "Pentagramak"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
 msgid "Graph"
 msgstr "Koadrikula"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
 msgid "Dotted"
 msgstr "Puntu-sareta"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:37
 msgid "Isometric Dotted"
 msgstr "Puntu-sareta isometrikoa"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:37
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:38
 msgid "Isometric Graph"
 msgstr "Koadrikula isometrikoa"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:42
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:43
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 msgid "Image"
 msgstr "Irudia"
 
-#: ../src/core/control/settings/Settings.cpp:153
+#: ../src/core/control/settings/Settings.cpp:154
 msgid "%F-Note-%H-%M"
 msgstr "%F-Ohar-%H-%M"
 
-#: ../src/core/control/settings/Settings.cpp:154
+#: ../src/core/control/settings/Settings.cpp:155
 msgid "%{name}_annotated"
 msgstr "%{name}_iruzkindua"
 
-#: ../src/core/control/tools/EditSelection.cpp:478
+#: ../src/core/control/tools/EditSelection.cpp:462
 msgid "Arrange"
 msgstr "Antolatu"
 
-#: ../src/core/control/tools/EditSelection.cpp:493
+#: ../src/core/control/tools/EditSelection.cpp:477
 msgid "Bring forward"
 msgstr "Ekarri aurrerago"
 
-#: ../src/core/control/tools/EditSelection.cpp:504
+#: ../src/core/control/tools/EditSelection.cpp:488
 msgid "Send backward"
 msgstr "Eraman atzerago"
 
-#: ../src/core/control/tools/EditSelection.cpp:511
+#: ../src/core/control/tools/EditSelection.cpp:495
 msgid "Send to back"
 msgstr "Eraman atzera"
 
@@ -739,40 +765,40 @@ msgstr "Trazu mota ezezaguna: \"{1}\", biribila suposatzen da"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Trazu mota ezezaguna: {1}, arkatza erabiliko da"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:812
-#: ../src/core/control/xojfile/LoadHandler.cpp:828
-#: ../src/core/control/xojfile/LoadHandler.cpp:1141
-#: ../src/core/control/xojfile/LoadHandler.cpp:1155
+#: ../src/core/control/xojfile/LoadHandler.cpp:811
+#: ../src/core/control/xojfile/LoadHandler.cpp:827
+#: ../src/core/control/xojfile/LoadHandler.cpp:1140
+#: ../src/core/control/xojfile/LoadHandler.cpp:1154
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Ezin izan da eranskina ireki: {1}. Errore mezua: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:821
-#: ../src/core/control/xojfile/LoadHandler.cpp:1147
-#: ../src/core/control/xojfile/LoadHandler.cpp:1166
+#: ../src/core/control/xojfile/LoadHandler.cpp:820
+#: ../src/core/control/xojfile/LoadHandler.cpp:1146
+#: ../src/core/control/xojfile/LoadHandler.cpp:1165
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Ezin izan da eranskina ireki: {1}. Errore mezua: ez da fitxategi-tamaina baliozkoa"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:840
+#: ../src/core/control/xojfile/LoadHandler.cpp:839
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Ezin izan da eranskina ireki: {1}. Errore mezua: ezin da fitxategia irakurri"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:849
+#: ../src/core/control/xojfile/LoadHandler.cpp:848
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Ezin izan da eranskina ireki: {1}. Errore mezua: ezin da fitxategia idatzi"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1036
+#: ../src/core/control/xojfile/LoadHandler.cpp:1035
 msgid "Wrong count of points ({1})"
 msgstr "Puntuen zenbaketa okerra ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1052
+#: ../src/core/control/xojfile/LoadHandler.cpp:1051
 msgid "xoj-File: {1}"
 msgstr "xoj-fitxategia: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1053
+#: ../src/core/control/xojfile/LoadHandler.cpp:1052
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr "Presio-balio kopuru okerra, eskuratua {1}, espero zen {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1185
+#: ../src/core/control/xojfile/LoadHandler.cpp:1184
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Eskatutako behin-behineko fitxategia ez da aurkitu eranskinean {1}"
 
@@ -826,21 +852,21 @@ msgstr "Ezin izan da \"{1}\" atzeko planoa idatzi. Jarraitu hala ere."
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Errorea \"{1}\" Glade fitxategia kargatzean (saiatu \"{2}\" kargatzen)"
 
-#: ../src/core/gui/PageView.cpp:403
+#: ../src/core/gui/PageView.cpp:399
 msgid "Unable to play audio recording {1}"
 msgstr "Ezin da erreproduzitu audio grabazioa {1}"
 
-#: ../src/core/gui/PageView.cpp:944
+#: ../src/core/gui/PageView.cpp:938
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:145
 msgid "Loading..."
 msgstr "Kargatzen..."
 
-#: ../src/core/gui/PageView.cpp:1001
+#: ../src/core/gui/PageView.cpp:995
 msgid "Scroll to page {1}"
 msgstr "Korritu {1} orrialdera"
 
-#: ../src/core/gui/PageView.cpp:1003
+#: ../src/core/gui/PageView.cpp:997
 msgid "Add missing page"
 msgstr "Gehitu falta den orria"
 
@@ -1060,19 +1086,19 @@ msgstr "Esportatu erregistroak"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:115
 msgid "Failed to parse external editor command: {1}"
-msgstr ""
+msgstr "Ezin izan da analizatu kanpoko editorearen komandoa: {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:131
 msgid "Could not spawn editor: {1}"
-msgstr ""
+msgstr "Ezin izan da abiarazi editorea: {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:162
 msgid "Could not wait for editor: {1}"
-msgstr ""
+msgstr "Ezin izan da editorearen zain egon: {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:171
 msgid "Editor exited with bad status {1}"
-msgstr ""
+msgstr "Editorea {1} egoera txarrean irten da"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:15
 msgid "All files"
@@ -1092,7 +1118,7 @@ msgid "Xournal++ files"
 msgstr "Xournal++ fitxategiak"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:119
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:120
 msgid "Xournal++ template"
 msgstr "Xournal++ txantiloia"
 
@@ -1137,18 +1163,18 @@ msgstr "Errorea: {1}. Aztertu {2}-ren edukiak"
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Errorea: {1} ez da ohiko fitxategia. Aztertu zure LaTex txantiloi fitxategiaren ezarpenak. "
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:115
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:84
 msgid "Save File"
 msgstr "Gorde fitxategia"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:115
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:80
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:19
 msgid "_Cancel"
 msgstr "_Utzi"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 msgid "_Save"
 msgstr "_Gorde"
 
@@ -1670,7 +1696,7 @@ msgstr "Angelu-garraiagailua"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Toggle Touch Drawing"
-msgstr ""
+msgstr "Aktibatu/desaktibatu ukipenaren bidez marraztea"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
@@ -1874,15 +1900,15 @@ msgstr "Dokumentua ez da kargatu! ({1}), {2}"
 
 #: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:171
 msgid "Error: "
-msgstr ""
+msgstr "Errorea: "
 
 #: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:175
 msgid "Unrecoverable error"
-msgstr ""
+msgstr "Errore berreskuraezina"
 
 #: ../src/core/model/Image.cpp:171 ../src/core/model/Image.cpp:175
 msgid "Failed to close image stream"
-msgstr ""
+msgstr "Ezin izan da itxi irudi-jarioa"
 
 #: ../src/core/model/XojPage.cpp:173
 msgid "Background"
@@ -1906,7 +1932,7 @@ msgstr "PDF orrien kopurua tartetik kanpo dago"
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:21
 msgid "Unknown pdf backend: {1}. Available backends are: {2}. Using default backend."
-msgstr ""
+msgstr "PDF motor ezezaguna: {1}. Motor eskuragarriak {2} dira. Lehenetsitako motorra erabiltzen."
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:39
 msgid "Default"
@@ -1914,7 +1940,7 @@ msgstr "Lehenetsita"
 
 #: ../src/core/pdf/base/QPdfExport.cpp:173
 msgid "Error with overlay or final export:"
-msgstr ""
+msgstr "Errorea gainjartzearekin edo azken esportazioarekin:"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:128
 msgid "Error while finalizing the PDF Cairo surface"
@@ -2025,7 +2051,7 @@ msgstr "Orriaren atzeko planoa aldatu da"
 
 #: ../src/core/undo/PageSizeChangeUndoAction.cpp:42
 msgid "Page size changed"
-msgstr ""
+msgstr "Orriaren tamaina aldatu da"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
@@ -2111,17 +2137,26 @@ msgstr "Errore bat gertatu da \"{1}\" fitxategia ixtean."
 msgid "Error code {1}"
 msgstr "Errore kodea {1}"
 
-#: ../src/util/PathUtil.cpp:310
+#: ../src/util/PathUtil.cpp:125
+msgid "Could not open file: {1}"
+msgstr ""
+
+#: ../src/util/PathUtil.cpp:132
+msgid "Error reading \"{1}\":\n"
+"{2}"
+msgstr ""
+
+#: ../src/util/PathUtil.cpp:316
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Ezin da fitxategia ireki. Eskuz egin behar duzu:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:425
+#: ../src/util/PathUtil.cpp:431
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:434
+#: ../src/util/PathUtil.cpp:440
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Ezin izan da karpeta sortu: {1}\n"
@@ -2133,7 +2168,7 @@ msgstr "{1} errorea sistemaren komandoa exekutatzean: {2}"
 
 #: ../src/util/XojMsgBox.cpp:186
 msgid "The file {1} already exists! Do you want to replace it?"
-msgstr ""
+msgstr "{1} fitxategia dagoeneko badago! Gainidatzi nahi duzu?"
 
 #: ../src/util/XojMsgBox.cpp:190
 msgid "Select another name"
@@ -2241,11 +2276,11 @@ msgstr "Kraskaduraren txostena"
 
 #: ../ui/crashDialog.glade:23
 msgid "Oops... Xournal++ encountered a fatal error"
-msgstr ""
+msgstr "Oops... Xournal++-k errore larria topatu du"
 
 #: ../ui/crashDialog.glade:39
 msgid "Please consider filling a bug report (see button below). Attach the following log to your report."
-msgstr ""
+msgstr "Gomendatzen dizugu akatsen txosten bat betetzea (ikus beheko botoia). Erantsi hurrengo erregistroa zure txostenari."
 
 #: ../ui/crashDialog.glade:56
 msgid "Your document has been saved in:"
@@ -2257,7 +2292,7 @@ msgstr "Exekuzio erregistroa:"
 
 #: ../ui/crashDialog.glade:140
 msgid "Open your web browser with a partially pre-filled bug report"
-msgstr ""
+msgstr "Ireki zure nabigatzailea partzialki betetako errore-txosten batekin"
 
 #: ../ui/crashDialog.glade:145
 msgid "Create a bug report"
@@ -2307,7 +2342,7 @@ msgstr "Stylus-a"
 #: ../ui/deviceTestingArea.glade:136 ../ui/deviceTestingArea.glade:190
 msgctxt "the tip of the stylus"
 msgid "Tip"
-msgstr ""
+msgstr "Aholkua"
 
 #: ../ui/deviceTestingArea.glade:150 ../ui/settings.glade:1987
 msgid "Button 1"
@@ -2329,7 +2364,7 @@ msgstr "Erabiltzen ari da"
 #: ../ui/deviceTestingArea.glade:388 ../ui/deviceTestingArea.glade:402
 msgctxt "stylus hover"
 msgid "Hover"
-msgstr ""
+msgstr "Pasa gainetik"
 
 #: ../ui/deviceTestingArea.glade:443
 msgid "Show logs"
@@ -2341,16 +2376,17 @@ msgstr "Esportatu arazketaren informazioa"
 
 #: ../ui/deviceTestingArea.glade:477
 msgid "To clear the logs, simply close and reopen the settings dialog"
-msgstr ""
+msgstr "Erregistroak garbitzeko, itxi eta ireki berriro ezarpenen elkarrizketa"
 
 #: ../ui/deviceTestingArea.glade:491
 msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
 "Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
-msgstr ""
+msgstr "Hautatu aukera hau puntaren seinalea pizten ez bada arkatza erabili eta bere botoietako bat sakatzean.\n\n"
+"Deshautatu aukera hau puntaren seinalea piztuta badago arkatza gainean dagoen bitartean (baina pantaila edo tableta ukitu gabe)."
 
 #: ../ui/deviceTestingArea.glade:500
 msgid "Emulate stylus tip contact on button press"
-msgstr ""
+msgstr "Emulatu arkatz-puntako kontaktua botoia sakatzean"
 
 #: ../ui/deviceTestingArea.glade:547
 msgid "<i>Change the device class below if your device is not correctly recognized (e.g. your active stylus shows up as touchscreen)</i>"
@@ -2520,79 +2556,87 @@ msgstr "%%XPP_TEXT_COLOR%%"
 msgid "The current color of the Text Tool, in hex RGB format."
 msgstr "Testu tresnaren uneko kolorea, hex RGB formatuan."
 
-#: ../ui/latexSettings.glade:195
+#: ../ui/latexSettings.glade:194
+msgid "%%XPP_VARNAME%%"
+msgstr ""
+
+#: ../ui/latexSettings.glade:206
+msgid "Any custom variable defined with a %xpp:varname=value directive in the formula input."
+msgstr ""
+
+#: ../ui/latexSettings.glade:219
 msgid "Template file settings"
 msgstr "Txantiloi fitxategiaren ezarpenak"
 
-#: ../ui/latexSettings.glade:224
+#: ../ui/latexSettings.glade:248
 msgid "LaTeX generation command"
 msgstr "LaTeX sortzeko komandoa"
 
-#: ../ui/latexSettings.glade:245
+#: ../ui/latexSettings.glade:269
 msgid "Test configuration"
 msgstr "Aztertu ezarpenak"
 
-#: ../ui/latexSettings.glade:249
+#: ../ui/latexSettings.glade:273
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr "Aztertu ea uneko ezarpenak baliozkoak diren LaTeX sortzeko komandoa txantiloi globala erabiliz frogako formula baten bidez."
 
-#: ../ui/latexSettings.glade:265
+#: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
 msgstr "LaTeX ezarpen exekutagarriak"
 
-#: ../ui/latexSettings.glade:340
+#: ../ui/latexSettings.glade:364
 msgid "Line numbers"
 msgstr "Lerroen numerazioa"
 
-#: ../ui/latexSettings.glade:354
+#: ../ui/latexSettings.glade:378
 msgid "Auto-indent"
 msgstr "Koska automatikoa"
 
-#: ../ui/latexSettings.glade:368
+#: ../ui/latexSettings.glade:392
 msgid "Syntax highlighting"
 msgstr "Sintaxia nabarmentzea"
 
-#: ../ui/latexSettings.glade:400
+#: ../ui/latexSettings.glade:424
 msgid "Wrap text"
 msgstr "Egokitu testua"
 
-#: ../ui/latexSettings.glade:434
+#: ../ui/latexSettings.glade:458
 msgid "Use font from system theme."
 msgstr "Erabili sistemako gaiaren letra-tipoa."
 
-#: ../ui/latexSettings.glade:454
+#: ../ui/latexSettings.glade:478
 msgid "Font: "
 msgstr "Letra-tipoa: "
 
-#: ../ui/latexSettings.glade:469
+#: ../ui/latexSettings.glade:493
 msgid "Pick the Editor's Font"
 msgstr "Aukeratu editorearen letra-tipoa"
 
-#: ../ui/latexSettings.glade:516
+#: ../ui/latexSettings.glade:540
 msgid "You can optionally use an external editor program instead of the built-in editor. If you enable the option below, the provided editor command (defaulting to $EDITOR) will start with a popup that only shows a preview and potential error message instead of the normal one with a built-in editor. The environment variable XPP_TEXT_COLOR is set to the current Text Tool color in hex RGB format."
 msgstr "Nahi izanez gero, kanpoko editorearen programa bat erabil dezakezu, integratutako editorearen ordez. Beheko aukera aktibatzen baduzu, emandako editorearen komandoa ($EDITOR lehenetsita) editorea duen mezu arruntaren ordez aurrebista eta errore potentzialaren mezua bakarrik erakusten duen popup batekin hasiko da. XPP_TEXT_COLOR ingurune-aldagaia uneko Text Tool kolorean ezartzen da, hex RGB formatuan."
 
-#: ../ui/latexSettings.glade:532
+#: ../ui/latexSettings.glade:556
 msgid "Use external Editor"
 msgstr "Erabili kanpoko editorea"
 
-#: ../ui/latexSettings.glade:549
+#: ../ui/latexSettings.glade:573
 msgid "Editor command"
 msgstr "Edizio komandoa"
 
-#: ../ui/latexSettings.glade:574
+#: ../ui/latexSettings.glade:598
 msgid "Extension of temporary file"
 msgstr "Behin behineko fitxategiaren luzapena"
 
-#: ../ui/latexSettings.glade:595
+#: ../ui/latexSettings.glade:619
 msgid "Automatically confirm on editor exit"
 msgstr "Baieztatu automatikoki editoretik irtetean"
 
-#: ../ui/latexSettings.glade:625
+#: ../ui/latexSettings.glade:649
 msgid "External Editor (Expert user only)"
 msgstr "Kanpoko editorea (adituentzat bakarrik)"
 
-#: ../ui/latexSettings.glade:641
+#: ../ui/latexSettings.glade:665
 msgid "Editor settings"
 msgstr "Editorearen ezarpenak"
 
@@ -3747,30 +3791,33 @@ msgstr "Ez ezazu denbora eta luzera laburreko sarrerak marraztu, ondoz ondo ez b
 
 #: ../ui/settings.glade:5315
 msgid "Time limit (ms)"
-msgstr ""
+msgstr "Denbora-muga (ms)"
 
 #: ../ui/settings.glade:5327
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr ""
+msgstr "Denbora-muga: luzeago sakatzeak ez du eraginik izango\n"
+"<i>Gomendatuta: 150ms</i>"
 
 #: ../ui/settings.glade:5347
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr ""
+msgstr "Luzera-muga: urrunago sakatzeak ez du eraginik izango\n\n"
+"<i>Gomendatuta: 1 mm</i>"
 
 #: ../ui/settings.glade:5367
 msgid "Length limit (mm)"
-msgstr ""
+msgstr "Luzera-muga (mm)"
 
 #: ../ui/settings.glade:5378
 msgid "Frequency limit (ms)"
-msgstr ""
+msgstr "Maiztasun-muga (ms)"
 
 #: ../ui/settings.glade:5390
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
 "<i>Recommended: 500ms</i>"
-msgstr ""
+msgstr "Maiztasun-muga: sakatze baten ondoren denbora-tarte horretan gertatzen den sakatzeek ez dute eraginik izango\n\n"
+"<i>Gomendatuta: 500ms</i>"
 
 #: ../ui/settings.glade:5407
 msgid "Try to select object first."
@@ -4478,7 +4525,7 @@ msgstr "Grafikoa ertzarekin"
 
 #: ../resources-templates/pagetemplates.ini.in:47
 msgid "Graph with border (bold every 5th)"
-msgstr ""
+msgstr "Grafikoa ertzarekin (lodia 5ean behin)"
 
 #: ../resources-templates/toolbar.ini.in:50
 msgid "All Tools"
@@ -4501,18 +4548,22 @@ msgid "Xournal++"
 msgstr "Xournal++"
 
 #: ../resources-templates/toolbar.ini.in:77
+msgid "Tablet mode"
+msgstr ""
+
+#: ../resources-templates/toolbar.ini.in:83
 msgid "Right hand Note Taking"
 msgstr "Eskuineko eskuz oharrak hartzea"
 
-#: ../resources-templates/toolbar.ini.in:80
+#: ../resources-templates/toolbar.ini.in:86
 msgid "Toolbar Left"
 msgstr "Tresna-barra ezkerrean"
 
-#: ../resources-templates/toolbar.ini.in:86
+#: ../resources-templates/toolbar.ini.in:92
 msgid "Toolbar Right"
 msgstr "Tresna-barra eskuinean"
 
-#: ../resources-templates/toolbar.ini.in:101
+#: ../resources-templates/toolbar.ini.in:107
 msgid "Empty Toolbar"
 msgstr "Tresna-barra hutsa"
 
@@ -4525,8 +4576,8 @@ msgid "Take handwritten notes"
 msgstr "Hartu oharrak eskuz"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:8
-msgid "tablet;Wacom;pen input;PDF Annotation;markup"
-msgstr "tableta;Wacom;arkatz bidezko sarrera;PDF oharpena;markup"
+msgid "tablet;Wacom;pen input;PDF Annotation;markup;journal;handwriting;diary;notes;"
+msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:8
 msgid "Xournalpp Developers"
