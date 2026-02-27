@@ -30,8 +30,6 @@ public:
     ~SidebarPreviewLayerEntry() override;
 
 public:
-    int getHeight() const override;
-
     /**
      * @return What should be rendered
      * @override
@@ -59,11 +57,6 @@ protected:
 private:
     /// Layer to render
     Layer::Index layerId;
-
-    /**
-     * Toolbar with controls
-     */
-    int toolbarHeight = 0;
 
     /// Container box for the preview and the button
     xoj::util::WidgetSPtr box;

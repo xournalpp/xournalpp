@@ -81,11 +81,14 @@ protected:
     /// The width of the sidebar has changed
     void newWidth(double width);
 
+    /// Makes sure the visible miniatures have been rendered at least once
+    void ensureVisibleAreRendered();
+
 public:
     /**
      * Opens a context menu, at the current cursor position.
      */
-    void openPreviewContextMenu(GdkEvent* currentEvent);
+    void openPreviewContextMenu(double x, double y, GtkWidget* entry);
 
 private:
     /**
