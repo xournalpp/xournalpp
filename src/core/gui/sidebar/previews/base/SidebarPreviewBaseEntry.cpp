@@ -65,7 +65,11 @@ void SidebarPreviewBaseEntry::setSelected(bool selected) {
     gtk_widget_queue_draw(this->button.get());
 }
 
-void SidebarPreviewBaseEntry::repaint() { sidebar->getControl()->getScheduler()->addRepaintSidebar(this); }
+void SidebarPreviewBaseEntry::repaint() {
+    const auto& recolorParams = sidebar->getControl()->getSettings()->getRecolorParameters();
+    auto recolor = recolorParams.recolorizeSidebarMiniatures ? std::make_optional(recolorParams.recolor) : std::nullopt;
+    sidebar->getControl()->getScheduler()->addRepaintSidebar(this, recolor);
+}
 
 void SidebarPreviewBaseEntry::drawLoadingPage() {
     this->buffer.reset(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, imageWidth, imageHeight), xoj::util::adopt);
@@ -128,18 +132,6 @@ void SidebarPreviewBaseEntry::paint(cairo_t* cr) {
     cairo_paint(cr);
 
     this->drawingMutex.unlock();
-
-    const auto& recolorParams = sidebar->getControl()->getSettings()->getRecolorParameters();
-    auto recolor = recolorParams.recolorizeSidebarMiniatures ? std::make_optional(recolorParams.recolor) : std::nullopt;
-
-    if (recolor) {
-        // encapsulate in save/restore to limit the scope of the clip operation
-        xoj::util::CairoSaveGuard const saveGuard(cr);
-        cairo_rectangle(cr, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2, width, height);
-        // constrain the area which is painted on
-        cairo_clip(cr);
-        recolor->recolorCurrentCairoRegion(cr);
-    }
 
     if (doRepaint) {
         repaint();
