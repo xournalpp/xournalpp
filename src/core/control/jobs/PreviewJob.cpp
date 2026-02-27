@@ -23,7 +23,8 @@
 #include "view/View.h"                                            // for Con...
 #include "view/background/BackgroundFlags.h"                      // for BAC...
 
-PreviewJob::PreviewJob(SidebarPreviewBaseEntry* sidebar): sidebarPreview(sidebar) {}
+PreviewJob::PreviewJob(SidebarPreviewBaseEntry* sidebar, std::optional<Recolor> recolor):
+        recolor(recolor), sidebarPreview(sidebar) {}
 
 PreviewJob::~PreviewJob() { this->sidebarPreview = nullptr; }
 
@@ -46,6 +47,10 @@ void PreviewJob::initGraphics() {
 }
 
 void PreviewJob::finishPaint() {
+    if (this->recolor) {
+        this->recolor->recolorCurrentCairoRegion(this->cr.get());
+    }
+    this->cr.reset();
     auto lock = std::lock_guard(this->sidebarPreview->drawingMutex);
     this->sidebarPreview->buffer = std::move(this->buffer);
     Util::execInUiThread([btn = this->sidebarPreview->button]() { gtk_widget_queue_draw(btn.get()); });

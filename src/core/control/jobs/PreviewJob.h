@@ -11,8 +11,11 @@
 
 #pragma once
 
+#include <optional>
+
 #include <cairo.h>  // for cairo_surface_t, cairo_t
 
+#include "util/Recolor.h"
 #include "util/raii/CairoWrappers.h"
 
 #include "Job.h"  // for Job, JobType
@@ -24,7 +27,7 @@ class SidebarPreviewBaseEntry;
  */
 class PreviewJob: public Job {
 public:
-    PreviewJob(SidebarPreviewBaseEntry* sidebar);
+    PreviewJob(SidebarPreviewBaseEntry* sidebar, std::optional<Recolor> recolor);
 
 protected:
     void onDelete() override;
@@ -53,6 +56,9 @@ private:
      * Graphics drawing
      */
     xoj::util::CairoSPtr cr;
+
+    /// Optionally applies recoloration to the generated preview
+    std::optional<Recolor> recolor;
 
     /**
      * Sidebar preview
