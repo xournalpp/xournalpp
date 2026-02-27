@@ -1,6 +1,14 @@
 xournalpp (1.3.3~dev-1) UNRELEASED; urgency=medium
 
-  * 
+  * Fix undo/redo crash with automatic page insertion
+  * Silent errors when parsing some files are no longer silent
+  * Fix more UTF-8 conversion issues
+  * Report failure to open recent files
+  * Fix rendering of single-dot strokes
+  * Fix horizontal alignment of pages
+  * Fix toolbar item "Draw line" being wrongly enabled
+  * Improve zoom/scroll responsivity
+  * Updated translations
 
  -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Tue, 03 Feb 2026 09:52:28 +0100
 
