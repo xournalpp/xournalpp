@@ -22,8 +22,6 @@ public:
     ~SidebarPreviewPageEntry() override;
 
 public:
-    int getHeight() const override;
-
     PreviewRenderType getRenderType() const override;
 
     void setIndex(size_t index);
@@ -32,14 +30,20 @@ public:
     bool isSelected() const;
     double getZoom() const;
 
+    GtkWidget* getWidget() const override;
+
 protected:
     SidebarPreviewPages* sidebar;
     void mouseButtonPressCallback() override;
-    void paint(cairo_t* cr) override;
 
 private:
+    /// Container for the preview and it potential label
+    xoj::util::WidgetSPtr widget;
+    /// Label for page numbers (may be nullptr if page numbering is set to none)
+    xoj::util::GObjectSPtr<GtkLabel> label;
+
     size_t index;
     friend class PreviewJob;
 
-    void drawEntryNumber(cairo_t* cr);
+    // void drawEntryNumber(cairo_t* cr);
 };

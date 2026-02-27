@@ -18,7 +18,7 @@
 #include <gtk/gtk.h>  // for GtkWidget
 
 #include "model/PageRef.h"  // for PageRef
-#include "util/raii/CairoWrappers.h"
+#include "util/Interval.h"
 #include "util/raii/GObjectSPtr.h"
 
 class SidebarPreviewBase;
@@ -48,8 +48,6 @@ public:
 
 public:
     virtual GtkWidget* getWidget() const;
-    virtual int getWidth() const;
-    virtual int getHeight() const;
 
     virtual void setSelected(bool selected);
 
@@ -61,24 +59,30 @@ public:
      */
     virtual PreviewRenderType getRenderType() const = 0;
 
+    void setVerticalPosition(Interval<int> pos);
+    Interval<int> getVerticalPosition() const;
+
+    void ensureRendered();  ///< Make sure the miniature has been rendered
+
 private:
     static gboolean drawCallback(GtkWidget* widget, cairo_t* cr, SidebarPreviewBaseEntry* preview);
 
 protected:
     virtual void mouseButtonPressCallback() = 0;
 
-    virtual void drawLoadingPage();
-    virtual void paint(cairo_t* cr);
+    void setMiniature(xoj::util::WidgetSPtr child);
 
 protected:
     /**
      * If this page is currently selected
      */
     bool selected = false;
+    bool neverRendered = true;  ///< Whether the miniature has been rendered at least once
 
     int imageWidth;
     int imageHeight;
     int DPIscaling;  ///< 1, maybe 2 in HiDPI setups
+    Interval<int> verticalPosition;  ///< Where the entry lies in the sidebar
 
     /**
      * The sidebar which displays the previews
@@ -89,12 +93,6 @@ protected:
      * The page which is representated
      */
     PageRef page;
-
-    /// Mutex protecting the buffer
-    std::mutex drawingMutex{};
-
-    /// Buffer because of performance reasons
-    xoj::util::CairoSurfaceSPtr buffer;
 
     /// The main widget, containing the miniature
     xoj::util::WidgetSPtr button;
