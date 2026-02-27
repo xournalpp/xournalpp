@@ -559,7 +559,11 @@ auto Control::firePageSelected(const PageRef& page) -> size_t {
     return pageId;
 }
 
-void Control::firePageSelected(size_t page) { DocumentHandler::firePageSelected(page); }
+void Control::firePageSelected(size_t page) {
+    if (page != this->getCurrentPageNo()) {
+        DocumentHandler::firePageSelected(page);
+    }
+}
 
 void Control::manageToolbars() {
     xoj::popup::PopupWindowWrapper<ToolbarManageDialog> dlg(
@@ -2097,7 +2101,13 @@ void Control::quit(bool allowCancel) {
 void Control::close(std::function<void(bool)> callback, const bool allowDestroy, const bool allowCancel,
                     const bool forceClose) {
     clearSelectionEndText();
+
+    doc->lock();
+    auto const& file = doc->getEvMetadataFilename();
+    doc->unlock();
+    metadata->storeMetadata(file, static_cast<int>(getCurrentPageNo()), zoom->getZoomReal());
     metadata->documentChanged();
+
     resetGeometryTool();
 
     bool safeToClose = forceClose || !undoRedo->isChanged();

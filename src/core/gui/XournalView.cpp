@@ -376,13 +376,6 @@ void XournalView::pageSelected(size_t page) {
         return;
     }
 
-    Document* doc = control->getDocument();
-    doc->lock();
-    auto const& file = doc->getEvMetadataFilename();
-    doc->unlock();
-
-    control->getMetadataManager()->storeMetadata(file, static_cast<int>(page), getZoom());
-
     control->getWindow()->getPdfToolbox()->userCancelSelection();
 
     if (this->lastSelectedPage != npos && this->lastSelectedPage < this->viewPages.size()) {
@@ -571,13 +564,6 @@ void XournalView::zoomChanged() {
         Layout* layout = this->getLayout();
         layout->scrollAbs(pos.x, pos.y);
     }
-
-    Document* doc = control->getDocument();
-    doc->lock();
-    auto const& file = doc->getEvMetadataFilename();
-    doc->unlock();
-
-    control->getMetadataManager()->storeMetadata(file, static_cast<int>(getCurrentPage()), zoom->getZoomReal());
 
     // Updates the Eraser's cursor icon in order to make it as big as the erasing area
     control->getCursor()->updateCursor();
