@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-21 19:57+0000\n"
-"PO-Revision-Date: 2026-02-22 04:55\n"
+"POT-Creation-Date: 2026-02-23 11:46+0000\n"
+"PO-Revision-Date: 2026-02-27 21:41\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -124,16 +124,17 @@ msgstr "Erreur lors de la lecture du fichier PNG \"{1}\""
 
 #: ../src/core/control/Control.cpp:1652
 msgid "Error reading template file \"{1}\""
-msgstr ""
+msgstr "Erreur lors de la lecture du fichier modèle \"{1}\""
 
 #: ../src/core/control/Control.cpp:1671
 msgid "Failed to determine if path exists \"{1}\": {2}"
-msgstr ""
+msgstr "Impossible de déterminer si le chemin existe \"{1}\" : {2}"
 
 #: ../src/core/control/Control.cpp:1672
 msgid "That file does not exist:\n"
 "\"{1}\""
-msgstr ""
+msgstr "Ce fichier n'existe pas :\n"
+"\"{1}\""
 
 #: ../src/core/control/Control.cpp:1778
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -2557,11 +2558,11 @@ msgstr "La couleur actuelle de l'outil de texte, au format RVB hexadécimal."
 
 #: ../ui/latexSettings.glade:194
 msgid "%%XPP_VARNAME%%"
-msgstr ""
+msgstr "%%XPP_VARNAME%%"
 
 #: ../ui/latexSettings.glade:206
 msgid "Any custom variable defined with a %xpp:varname=value directive in the formula input."
-msgstr ""
+msgstr "Toute variable personnalisée définie avec une directive %xpp:varname=value dans l'entrée de la formule."
 
 #: ../ui/latexSettings.glade:219
 msgid "Template file settings"
@@ -4551,18 +4552,22 @@ msgid "Xournal++"
 msgstr "Xournal++"
 
 #: ../resources-templates/toolbar.ini.in:77
+msgid "Tablet mode"
+msgstr "Mode tablette"
+
+#: ../resources-templates/toolbar.ini.in:83
 msgid "Right hand Note Taking"
 msgstr "Prise de note pour droitier"
 
-#: ../resources-templates/toolbar.ini.in:80
+#: ../resources-templates/toolbar.ini.in:86
 msgid "Toolbar Left"
 msgstr "Barre d'outils, à gauche"
 
-#: ../resources-templates/toolbar.ini.in:86
+#: ../resources-templates/toolbar.ini.in:92
 msgid "Toolbar Right"
 msgstr "Barre d'outils, à droite"
 
-#: ../resources-templates/toolbar.ini.in:101
+#: ../resources-templates/toolbar.ini.in:107
 msgid "Empty Toolbar"
 msgstr "Vide"
 
@@ -4576,7 +4581,7 @@ msgstr "Prendre des notes manuscrites"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:8
 msgid "tablet;Wacom;pen input;PDF Annotation;markup;journal;handwriting;diary;notes;"
-msgstr ""
+msgstr "tablette;Wacom;pen input;PDF Annotation;markup;journal;manuscrit;agenda;notes;"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:8
 msgid "Xournalpp Developers"

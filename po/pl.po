@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-21 19:57+0000\n"
-"PO-Revision-Date: 2026-02-22 04:55\n"
+"POT-Creation-Date: 2026-02-23 11:46+0000\n"
+"PO-Revision-Date: 2026-02-27 21:41\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -4490,18 +4490,22 @@ msgid "Xournal++"
 msgstr "Xournal++"
 
 #: ../resources-templates/toolbar.ini.in:77
+msgid "Tablet mode"
+msgstr ""
+
+#: ../resources-templates/toolbar.ini.in:83
 msgid "Right hand Note Taking"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:80
+#: ../resources-templates/toolbar.ini.in:86
 msgid "Toolbar Left"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:86
+#: ../resources-templates/toolbar.ini.in:92
 msgid "Toolbar Right"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:101
+#: ../resources-templates/toolbar.ini.in:107
 msgid "Empty Toolbar"
 msgstr ""
 
