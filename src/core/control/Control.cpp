@@ -1465,7 +1465,7 @@ void Control::showSettings() {
                 ctrl->win->setDPI();
 
                 if (settingsBeforeDialog.sidebarStyle != settings->getSidebarNumberingStyle()) {
-                    ctrl->getSidebar()->layout();
+                    ctrl->getSidebar()->updatePageNumberingStyle();
                 }
 
                 xournal->getHandRecognition()->reload();
