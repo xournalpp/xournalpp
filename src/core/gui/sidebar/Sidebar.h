@@ -35,10 +35,8 @@ private:
     void addTab(std::unique_ptr<AbstractSidebarPage> tab);
 
 public:
-    /**
-     * Layout sidebar
-     */
-    void layout();
+    /// Update the way the numbers are displayed depending on the value in Settings.
+    void updatePageNumberingStyle();
 
     /**
      * A page was selected, so also select this page in the sidebar
@@ -92,7 +90,6 @@ private:
      * Show/hide tabs based on whether they have content. Select first active tab (page).
      */
     void updateVisibleTabs();
-
 
 private:
     Control* control = nullptr;
