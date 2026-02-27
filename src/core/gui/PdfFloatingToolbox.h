@@ -33,8 +33,7 @@ public:
     ~PdfFloatingToolbox();
 
 public:
-    /// Show the toolbox at the provided coordinates (relative to the application GTK window).
-    ///
+    /// Show the toolbox at the provided coordinates (in widget-coordinates).
     /// Must have an active selection.
     void show(int x, int y);
 

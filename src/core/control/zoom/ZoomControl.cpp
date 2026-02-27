@@ -35,8 +35,9 @@ auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, Z
                 (event->direction == GDK_SCROLL_UP || (event->direction == GDK_SCROLL_SMOOTH && event->delta_y < 0)) ?
                         ZOOM_IN :
                         ZOOM_OUT;
-        // translate absolute window coordinates to the widget-local coordinates and start zooming
-        zoom->zoomScroll(direction, Util::toWidgetCoords(widget, xoj::util::Point{event->x_root, event->y_root}));
+        xoj::util::Point<double> center;
+        gdk_event_get_coords((GdkEvent*)event, &center.x, &center.y);
+        zoom->zoomScroll(direction, center);
         return true;
     }
 
@@ -47,13 +48,15 @@ auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, Z
 auto onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomControl* zoom) -> bool {
     if (event->type == GDK_TOUCHPAD_PINCH && event->n_fingers == 2) {
         switch (event->phase) {
-            case GDK_TOUCHPAD_GESTURE_PHASE_BEGIN:
+            case GDK_TOUCHPAD_GESTURE_PHASE_BEGIN: {
                 if (zoom->isZoomFitMode()) {
                     zoom->setZoomFitMode(false);
                 }
-                // translate absolute window coordinates to the widget-local coordinates and start zooming
-                zoom->startZoomSequence(Util::toWidgetCoords(widget, xoj::util::Point{event->x_root, event->y_root}));
+                xoj::util::Point<double> center;
+                gdk_event_get_coords((GdkEvent*)event, &center.x, &center.y);
+                zoom->startZoomSequence(center);
                 break;
+            }
             case GDK_TOUCHPAD_GESTURE_PHASE_UPDATE:
                 zoom->zoomSequenceChange(event->scale, true);
                 break;

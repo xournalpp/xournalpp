@@ -44,8 +44,8 @@ public:
     virtual double getWidth() const = 0;
     virtual double getHeight() const = 0;
 
-    // Convert a rectangle from local coordinates to global coordinates
-    virtual xoj::util::Rectangle<double> toWindowCoordinates(const xoj::util::Rectangle<double>& r) const = 0;
+    // Convert a rectangle from local coordinates to widget coordinates
+    virtual xoj::util::Rectangle<double> toWidgetCoordinates(const xoj::util::Rectangle<double>& r) const = 0;
 
     /**
      * @brief Flag a region as dirty. Dirty regions will get redrawn at the next screen refresh.

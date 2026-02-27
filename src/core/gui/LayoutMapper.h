@@ -101,7 +101,7 @@ private:
      * @param  x Row we are interested in
      * @param  y Column we are interested in
      *
-     * @return Page index to put at coordinates
+     * @return Page index to put at grid location
      */
 
 public:

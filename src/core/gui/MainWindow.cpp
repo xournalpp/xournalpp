@@ -313,18 +313,12 @@ void MainWindow::initXournalWidget() {
 
     gtk_box_append(GTK_BOX(get("boxContents")), winXournal);
 
-    GtkWidget* vpXournal = gtk_viewport_new(nullptr, nullptr);
-
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(winXournal), vpXournal);
-
     scrollHandling = std::make_unique<ScrollHandling>(GTK_SCROLLED_WINDOW(winXournal));
 
-    this->xournal = std::make_unique<XournalView>(vpXournal, control, scrollHandling.get());
+    this->xournal = std::make_unique<XournalView>(winXournal, control, scrollHandling.get());
 
     control->getZoomControl()->initZoomHandler(this->window, winXournal, xournal.get(), control);
     gtk_widget_show_all(winXournal);
-
-    scrollHandling->init(this->xournal->getWidget(), this->xournal->getLayout());
 }
 
 void MainWindow::setGtkTouchscreenScrollingForDeviceMapping() {
@@ -343,10 +337,6 @@ void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
 }
 
 auto MainWindow::getLayout() const -> Layout* { return this->xournal->getLayout(); }
-
-auto MainWindow::getNegativeXournalWidgetPos() const -> xoj::util::Point<double> {
-    return Util::toWidgetCoords(this->winXournal, xoj::util::Point{0.0, 0.0});
-}
 
 auto cancellable_cancel(GCancellable* cancel) -> bool {
     g_cancellable_cancel(cancel);

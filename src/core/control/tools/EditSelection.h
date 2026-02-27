@@ -269,12 +269,12 @@ public:
 
 public:
     /**
-     * Handles mouse input for moving and resizing, coordinates are relative to "view"
+     * Handles mouse input for moving and resizing, in pixel-coordinates relative to "view"
      */
     void mouseDown(CursorSelectionType type, double x, double y);
 
     /**
-     * Handles mouse input for moving and resizing, coordinates are relative to "view"
+     * Handles mouse input for moving and resizing, in pixel-coordinates relative to "view"
      */
     void mouseMove(double x, double y, bool alt);
 

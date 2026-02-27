@@ -18,7 +18,7 @@
 #include "util/Range.h"                 // for Range
 #include "util/Rectangle.h"             // for Rectangle
 #include "util/safe_casts.h"            // for strict_cast, as_signed, as_si...
-
+#include "util/Interval.h"  // for Interval
 #include "XournalView.h"  // for XournalView
 
 /**
@@ -40,23 +40,19 @@ constexpr auto const XOURNAL_PADDING_BETWEEN = 15;
 Layout::Layout(XournalView* view, ScrollHandling* scrollHandling): view(view), scrollHandling(scrollHandling) {
     g_signal_connect(scrollHandling->getHorizontal(), "value-changed", G_CALLBACK(horizontalScrollChanged), this);
     g_signal_connect(scrollHandling->getVertical(), "value-changed", G_CALLBACK(verticalScrollChanged), this);
-
-
-    lastScrollHorizontal = gtk_adjustment_get_value(scrollHandling->getHorizontal());
-    lastScrollVertical = gtk_adjustment_get_value(scrollHandling->getVertical());
 }
 
 void Layout::horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout) {
-    layout->lastScrollHorizontal = gtk_adjustment_get_value(adjustment);
     if (!layout->blockHorizontalCallback) {
-        layout->updateVisibility();
+        layout->view->updateVisibility();
+        gtk_widget_queue_draw(layout->view->getWidget());
     }
 }
 
 void Layout::verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout) {
-    layout->lastScrollVertical = gtk_adjustment_get_value(adjustment);
-    layout->updateVisibility();
+    layout->view->updateVisibility();
     layout->maybeAddLastPage(layout);
+    gtk_widget_queue_draw(layout->view->getWidget());
 }
 
 void Layout::maybeAddLastPage(Layout* layout) {
@@ -239,56 +235,6 @@ void Layout::forEachEntriesIntersectingRange(
     }
 }
 
-void Layout::updateVisibility() {
-    auto visibleRg = Range(getVisibleRect());
-    xoj::util::Point<int> center(round_cast<int>(.5 * (visibleRg.minX + visibleRg.maxX)),
-                                 round_cast<int>(.5 * (visibleRg.minY + visibleRg.maxY)));
-
-    // Data to select page based on visibility
-    std::optional<size_t> mostPageNr;
-    double mostPagePercent = 0;
-
-    std::vector<size_t> visiblePages;
-    forEachEntriesIntersectingRange(visibleRg, [&](size_t index, const Range& intersection, xoj::util::Point<int> pos) {
-        auto& pageView = this->view->getViewPages()[index];
-        pageView->setIsVisible(true);
-        visiblePages.emplace_back(index);
-
-        // Set the selected page
-        double percent =
-                intersection.getWidth() * intersection.getHeight() / (visibleRg.getWidth() * visibleRg.getHeight());
-
-        if (percent > mostPagePercent) {
-            mostPageNr = index;
-            mostPagePercent = percent;
-        }
-    });
-
-    std::sort(visiblePages.begin(), visiblePages.end());
-    xoj_assert(std::is_sorted(this->previouslyVisiblePages.begin(), this->previouslyVisiblePages.end()));
-
-    auto it = visiblePages.begin();
-    for (auto&& s: this->previouslyVisiblePages) {
-        xoj_assert(s < this->view->getViewPages().size());
-        while (it != visiblePages.end() && *it < s) {
-            it++;
-        }
-        if (it == visiblePages.end() || *it != s) {
-            // This page is no longer visible
-            this->view->getViewPages()[s]->setIsVisible(false);
-        }
-    }
-    this->previouslyVisiblePages = std::move(visiblePages);
-    if (mostPageNr) {
-        this->view->getControl()->firePageSelected(*mostPageNr);
-    }
-}
-
-auto Layout::getVisiblePages() const -> std::vector<size_t> {
-    // We make a copy in case previouslyVisiblePages's iterators get invalidated. The vector is typically very small.
-    return previouslyVisiblePages;
-}
-
 auto Layout::getVisibleRect() -> xoj::util::Rectangle<double> {
     return xoj::util::Rectangle<double>(gtk_adjustment_get_value(scrollHandling->getHorizontal()),
                                         gtk_adjustment_get_value(scrollHandling->getVertical()),
@@ -296,7 +242,7 @@ auto Layout::getVisibleRect() -> xoj::util::Rectangle<double> {
                                         gtk_adjustment_get_page_size(scrollHandling->getVertical()));
 }
 
-void Layout::computePrecalculated() {
+auto Layout::computePrecalculated() -> Interval<size_t> {
     auto len = view->getViewPages().size();
     pc.mapper.configureFromSettings(len, view->getControl()->getSettings());
     auto colCount = pc.mapper.getColumns();
@@ -305,20 +251,18 @@ void Layout::computePrecalculated() {
     pc.widthCols.assign(colCount, 0);
     pc.heightRows.assign(rowCount, 0);
 
-    // When we add/remove a page, the indices in previouslyVisiblePages are invalidated
-    previouslyVisiblePages.clear();
+    Interval<size_t> mayHaveBuffer{std::numeric_limits<size_t>::max(), std::numeric_limits<size_t>::lowest()};
 
     for (size_t pageIdx{}; pageIdx < len; ++pageIdx) {
         auto const& raster_p = pc.mapper.at(pageIdx);  // auto [c, r] raster = mapper.at();
         auto const& c = raster_p.col;
         auto const& r = raster_p.row;
-        auto& v = view->viewPages[pageIdx];
+        auto& v = view->getViewPages()[pageIdx];
         pc.widthCols[c] = std::max(pc.widthCols[c], v->getWidth());
         pc.heightRows[r] = std::max(pc.heightRows[r], v->getHeight());
         v->setGridCoordinates({strict_cast<int>(c), strict_cast<int>(r)});
-        if (v->isVisible()) {
-            // The page may no longer be visible after the relayout. That will be handled in updateVisibility() later
-            previouslyVisiblePages.emplace_back(pageIdx);
+        if (v->hasBuffer()) {
+            mayHaveBuffer.envelop(pageIdx);
         }
     }
 
@@ -355,6 +299,8 @@ void Layout::computePrecalculated() {
 
     recomputeCenteringPaddingUnsafe(gtk_widget_get_allocated_width(view->getWidget()),
                                     gtk_widget_get_allocated_height(view->getWidget()));
+
+    return mayHaveBuffer;
 }
 
 void Layout::recomputeCenteringPaddingUnsafe(int allocWidth, int allocHeight) {
@@ -384,11 +330,12 @@ void Layout::recomputeCenteringPadding(int allocWidth, int allocHeight) {
     gtk_adjustment_set_upper(scrollHandling->getVertical(), getTotalPixelHeightUnsafe());
 }
 
-void Layout::recalculate() {
-    computePrecalculated();
+auto Layout::recalculate() -> Interval<size_t> {
+    auto res = computePrecalculated();
     gtk_adjustment_set_upper(scrollHandling->getHorizontal(), getTotalPixelWidth());
     gtk_adjustment_set_upper(scrollHandling->getVertical(), getTotalPixelHeight());
-    gtk_widget_queue_resize(view->getWidget());
+    gtk_widget_queue_draw(view->getWidget());
+    return res;
 }
 
 auto Layout::getFixedPaddingBeforePoint(const xoj::util::Point<double>& ref) const -> xoj::util::Point<int> {

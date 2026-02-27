@@ -49,6 +49,7 @@
 #include "gui/PdfFloatingToolbox.h"                 // for PdfFloatingToolbox
 #include "gui/SearchBar.h"                          // for SearchBar
 #include "gui/inputdevices/PositionInputData.h"     // for PositionInputData
+#include "gui/scroll/ScrollHandling.h"              // for ScrollHandling
 #include "model/Document.h"                         // for Document
 #include "model/Element.h"                          // for Element, ELEMENT_...
 #include "model/Layer.h"                            // for Layer, Layer::Index
@@ -120,12 +121,44 @@ void XojPageView::addOverlayView(std::unique_ptr<xoj::view::OverlayView> overlay
     this->overlayViews.emplace_back(std::move(overlay));
 }
 
-void XojPageView::setIsVisible(bool visible) { this->visible = visible; }
+bool XojPageView::updateVisibilityAndCache(xoj::util::Point<int> centerOfVisibleArea, double mustRenderRadius,
+                                           double mustClearRadius) {
+    auto zoom = this->getZoom();
+    this->drawingMutex.lock();
+    auto retiling = this->tiles.computeRetiling(centerOfVisibleArea,
+                                                Range(0., 0., this->page->getWidth(), this->page->getHeight()),
+                                                mustRenderRadius, mustClearRadius, zoom);
+    bool noMoreTiles = this->tiles.empty();
+    this->drawingMutex.unlock();
+
+    this->rerenderDataMutex.lock();
+    this->rerenderData.centerOfVisibleArea = {centerOfVisibleArea.x / zoom, centerOfVisibleArea.y / zoom};
+    this->rerenderData.mustRenderRadius = mustRenderRadius / zoom;
+    this->rerenderData.retiling.merge(std::move(retiling));
+    bool noretiling = this->rerenderData.retiling.missingTiles.empty();
+    if (noretiling) {
+        // Take back the unused tiles to be destroyed at the end of the function
+        retiling = std::move(this->rerenderData.retiling);
+    }
+    this->rerenderDataMutex.unlock();
+
+    if (!noretiling) {
+        this->xournal->getControl()->getScheduler()->addRerenderPage(this);
+    }
+    this->bufferPending = !(noMoreTiles && noretiling);
+    return !(noMoreTiles && noretiling);
+}
 
 void XojPageView::deleteViewBuffer() {
     std::lock_guard lock(this->drawingMutex);
-    this->buffer.reset();
+    this->tiles.clear();
 }
+
+auto XojPageView::getCacheSize() const -> CacheSize {
+    auto s = tiles.getTiles().size();
+    return {s, s * xoj::view::Tiling::getEstimatedMemUsageForOneTile(this->xournal->getDpiScaleFactor()) >> 20};
+}
+
 
 auto XojPageView::containsPoint(int x, int y, bool local) const -> bool {
     if (!local) {
@@ -631,15 +664,11 @@ void XojPageView::onTapEvent(const PositionInputData& pos) {
 }
 
 auto XojPageView::showPdfToolbox(const PositionInputData& pos) -> void {
-    // Compute coords of the canvas relative to the application window origin.
-    xoj::util::Point<int> p;
-    GtkWidget* widget = xournal->getWidget();
-    gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &p.x, &p.y);
+    // Convert to the widget-coordinate system
+    auto p = xoj::util::Point{pos.x, pos.y} - this->xournal->getScrollHandling()->getPosition();
+    auto q = xoj::util::Point{round_cast<int>(p.x), round_cast<int>(p.y)} + this->getPixelPosition();
 
-    p += xoj::util::Point(round_cast<int>(pos.x), round_cast<int>(pos.y)) + this->getPixelPosition();
-
-    auto* pdfToolbox = this->xournal->getControl()->getWindow()->getPdfToolbox();
-    pdfToolbox->show(p.x, p.y);
+    this->getXournal()->getControl()->getWindow()->getPdfToolbox()->show(q.x, q.y);
 }
 
 void XojPageView::deleteView(xoj::view::OverlayView* view) {
@@ -806,8 +835,10 @@ auto XojPageView::onKeyReleaseEvent(const KeyEvent& event) -> bool {
 }
 
 void XojPageView::rerenderPage(bool sizeChanged) {
-    this->rerenderComplete = true;
-    this->sizeChanged = sizeChanged;
+    this->rerenderDataMutex.lock();
+    this->rerenderData.rerenderComplete = true;
+    this->rerenderData.sizeChanged = sizeChanged;
+    this->rerenderDataMutex.unlock();
     this->xournal->getControl()->getScheduler()->addRerenderPage(this);
 }
 
@@ -822,12 +853,16 @@ void XojPageView::repaintArea(double x1, double y1, double x2, double y2) const 
 void XojPageView::flagDirtyRegion(const Range& rg) const { repaintArea(rg.minX, rg.minY, rg.maxX, rg.maxY); }
 
 void XojPageView::drawAndDeleteToolView(xoj::view::ToolView* v, const Range& rg) {
-    if (v->isViewOf(this->inputHandler.get()) || v->isViewOf(this->verticalSpace.get()) ||
-        v->isViewOf(this->textEditor.get())) {
+    if (!rg.empty() && (v->isViewOf(this->inputHandler.get()) || v->isViewOf(this->verticalSpace.get()) ||
+                        v->isViewOf(this->textEditor.get()))) {
         // Draw the inputHandler's view onto the page buffer.
         std::lock_guard lock(this->drawingMutex);
-        if (auto cr = buffer.get(); cr) {
-            v->drawWithoutDrawingAids(cr);
+        if (!this->tiles.empty()) {
+            auto ts = this->tiles.getTilesFor(rg);
+            printf("pasting to %zu tiles\n", ts.size());
+            for (const auto& tile: ts) {
+                v->drawWithoutDrawingAids(tile->get());
+            }
         } else {
             rerenderPage();
         }
@@ -859,34 +894,35 @@ double XojPageView::getWidth() const { return page->getWidth(); }
 
 double XojPageView::getHeight() const { return page->getHeight(); }
 
-auto XojPageView::toWindowCoordinates(const xoj::util::Rectangle<double>& r) const -> xoj::util::Rectangle<double> {
+auto XojPageView::toWidgetCoordinates(const xoj::util::Rectangle<double>& r) const -> xoj::util::Rectangle<double> {
     double zoom = this->getZoom();
     auto p = this->getPixelPosition();
-    return {r.x * zoom + p.x, r.y * zoom + p.y, r.width * zoom, r.height * zoom};
+    auto scrollDelta = this->getXournal()->getScrollHandling()->getPosition();
+    return {r.x * zoom + p.x - scrollDelta.x, r.y * zoom + p.y - scrollDelta.y, r.width * zoom, r.height * zoom};
 }
 
 void XojPageView::rerenderRect(double x, double y, double width, double height) {
-    if (this->rerenderComplete) {
+    if (this->rerenderData.rerenderComplete) {
         return;
     }
 
     auto rect = Rectangle<double>{x, y, width, height};
 
-    this->repaintRectMutex.lock();
+    this->rerenderDataMutex.lock();
 
-    for (auto&& r: this->rerenderRects) {
+    for (auto&& r: this->rerenderData.rerenderRects) {
         // its faster to redraw only one rect than repaint twice the same area
         // so loop through the rectangles to be redrawn, if new rectangle
         // intersects any of them, replace it by the union with the new one
         if (r.intersects(rect)) {
             r.unite(rect);
-            this->repaintRectMutex.unlock();
+            this->rerenderDataMutex.unlock();
             return;
         }
     }
 
-    this->rerenderRects.push_back(rect);
-    this->repaintRectMutex.unlock();
+    this->rerenderData.rerenderRects.push_back(rect);
+    this->rerenderDataMutex.unlock();
 
     this->xournal->getControl()->getScheduler()->addRerenderPage(this);
 }
@@ -1027,8 +1063,9 @@ GtkWidget* XojPageView::makePopover(const XojPdfRectangle& rect, GtkWidget* chil
     gtk_popover_set_child(GTK_POPOVER(popover), child);
 
     auto p = getPixelPosition();
-    auto x = floor_cast<int>(p.x + rect.x1 * zoom);
-    auto y = floor_cast<int>(p.y + rect.y1 * zoom);
+    auto q = this->getXournal()->getScrollHandling()->getPosition();
+    auto x = floor_cast<int>(p.x - q.x + rect.x1 * zoom);
+    auto y = floor_cast<int>(p.y - q.y + rect.y1 * zoom);
     auto w = ceil_cast<int>((rect.x2 - rect.x1) * zoom);
     auto h = ceil_cast<int>((rect.y2 - rect.y1) * zoom);
 
@@ -1048,18 +1085,18 @@ auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
     {
         std::lock_guard lock(this->drawingMutex);  // Lock the mutex first
         xoj::util::CairoSaveGuard saveGuard(cr);   // see comment at the end of the scope
-        if (!this->hasBuffer()) {
+        if (this->tiles.empty()) {
             drawLoadingPage(cr);
             return true;
         }
 
-        if (this->buffer.getZoom() != zoom) {
+        if (this->tiles.getZoom() != zoom) {
             rerenderPage();
             cairo_pattern_set_filter(cairo_get_source(cr), CAIRO_FILTER_FAST);
         }
-        this->buffer.paintTo(cr);
+        this->tiles.paintTo(cr);
     }  // Restore the state of cr and then release the mutex
-       // restoring the state of cr ensures this->buffer.surface is not longer referenced as the source in cr.
+       // restoring the state of cr ensures the tiles can no longer be referenced as the source in cr.
 
     /**
      * All the overlay painters below follow the assumption:
@@ -1080,7 +1117,7 @@ auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
 
 auto XojPageView::isSelected() const -> bool { return selected; }
 
-auto XojPageView::hasBuffer() const -> bool { return this->buffer.isInitialized(); }
+auto XojPageView::hasBuffer() const -> bool { return !this->tiles.empty() || this->bufferPending; }
 
 auto XojPageView::getSelectionColor() -> GdkRGBA { return Util::rgb_to_GdkRGBA(settings->getSelectionColor()); }
 
@@ -1167,15 +1204,11 @@ void XojPageView::elementsChanged(const std::vector<const Element*>& elements, c
 }
 
 void XojPageView::showFloatingToolbox(const PositionInputData& pos) {
-    Control* control = xournal->getControl();
+    // Convert to the widget-coordinate system
+    auto p = xoj::util::Point{pos.x, pos.y} - this->xournal->getScrollHandling()->getPosition();
+    auto q = xoj::util::Point{round_cast<int>(p.x), round_cast<int>(p.y)} + this->getPixelPosition();
 
-    xoj::util::Point<int> p;
-    GtkWidget* widget = xournal->getWidget();
-    gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &p.x, &p.y);
-
-    p += xoj::util::Point(round_cast<int>(pos.x), round_cast<int>(pos.y)) + this->getPixelPosition();
-
-    control->getWindow()->getFloatingToolbox()->show(p.x, p.y);
+    this->getXournal()->getControl()->getWindow()->getFloatingToolbox()->show(q.x, q.y);
 }
 
 void XojPageView::setGridCoordinates(xoj::util::Point<int> coords) { this->gridCoordinates = coords; }
