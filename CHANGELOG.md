@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.3.3~dev (Unreleased)
+## 1.3.3
 
 * Fix undo/redo crash with automatic page insertion (#7071)
 * Fix missing GtkSourceView dependency in Ubuntu packages (#7107)
