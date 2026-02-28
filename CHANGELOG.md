@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.3.4~dev (Unreleased)
+
 ## 1.3.3
 
 * Fix undo/redo crash with automatic page insertion (#7071)

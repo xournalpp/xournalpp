@@ -1,3 +1,9 @@
+xournalpp (1.3.4~dev-1) UNRELEASED; urgency=medium
+
+  * 
+
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Sat, 28 Feb 2026 09:16:06 +0100
+
 xournalpp (1.3.3-1) unstable; urgency=medium
 
   * Fix undo/redo crash with automatic page insertion
