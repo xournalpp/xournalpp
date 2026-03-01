@@ -67,7 +67,8 @@ auto InputEvents::translateDeviceType(GdkDevice* device, Settings* settings) -> 
     return translateDeviceType(gdk_device_get_name(device), gdk_device_get_source(device), settings);
 }
 
-auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings) -> InputEvent {
+auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings,
+                                 const xoj::util::Point<double>& relativeOffset) -> InputEvent {
     InputEvent targetEvent{};
 
     // Map the event type to our internal ones
@@ -81,8 +82,8 @@ auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings) -> I
     targetEvent.deviceId = DeviceId(targetEvent.device);
 
     // Copy both coordinates of the event
-    gdk_event_get_root_coords(sourceEvent, &targetEvent.absolute.x, &targetEvent.absolute.y);
-    gdk_event_get_coords(sourceEvent, &targetEvent.relative.x, &targetEvent.relative.y);
+    gdk_event_get_coords(sourceEvent, &targetEvent.absolute.x, &targetEvent.absolute.y);
+    targetEvent.relative = targetEvent.absolute + relativeOffset;
 
     // Copy the event button if there is any
     if (targetEvent.type == BUTTON_PRESS_EVENT || targetEvent.type == BUTTON_RELEASE_EVENT) {

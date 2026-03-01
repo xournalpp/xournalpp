@@ -277,7 +277,7 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
     eventX -= h;
     eventY -= v;
 
-    GtkWidget* widget = gtk_widget_get_parent(this->inputContext->getView()->getWidget());
+    GtkWidget* widget = this->inputContext->getView()->getWidget();
     gint width = gtk_widget_get_allocated_width(widget);
     gint height = gtk_widget_get_allocated_height(widget);
 
@@ -531,7 +531,7 @@ void PenInputHandler::actionLeaveWindow(InputEvent const& event) {
         eventX -= h;
         eventY -= v;
 
-        GtkWidget* widget = gtk_widget_get_parent(this->inputContext->getView()->getWidget());
+        GtkWidget* widget = this->inputContext->getView()->getWidget();
         gint width = gtk_widget_get_allocated_width(widget);
         gint height = gtk_widget_get_allocated_height(widget);
 

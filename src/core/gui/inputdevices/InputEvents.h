@@ -75,8 +75,8 @@ struct InputEvent final {
     InputDeviceClass deviceClass{INPUT_DEVICE_IGNORE};
     const gchar* deviceName{};
 
-    xoj::util::Point<double> absolute;  ///< In GdkSurface coordinates
-    xoj::util::Point<double> relative;  ///< In XournalWidget coordinates
+    xoj::util::Point<double> absolute;  ///< In widget coordinates
+    xoj::util::Point<double> relative;  ///< In Layout pixel coordinates
 
     guint button{0};
     GdkModifierType state{};
@@ -99,5 +99,6 @@ struct InputEvents {
     static InputDeviceClass translateDeviceType(GdkDevice* device, Settings* settings);
     static InputDeviceClass translateDeviceType(const std::string& name, GdkInputSource source, Settings* settings);
 
-    static InputEvent translateEvent(GdkEvent* sourceEvent, Settings* settings);
+    static InputEvent translateEvent(GdkEvent* sourceEvent, Settings* settings,
+                                     const xoj::util::Point<double>& relativeOffset);
 };

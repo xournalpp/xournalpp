@@ -50,6 +50,7 @@ void Layout::horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout) 
     layout->lastScrollHorizontal = gtk_adjustment_get_value(adjustment);
     if (!layout->blockHorizontalCallback) {
         layout->updateVisibility();
+        gtk_widget_queue_draw(layout->view->getWidget());
     }
 }
 
@@ -57,6 +58,7 @@ void Layout::verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout) {
     layout->lastScrollVertical = gtk_adjustment_get_value(adjustment);
     layout->updateVisibility();
     layout->maybeAddLastPage(layout);
+    gtk_widget_queue_draw(layout->view->getWidget());
 }
 
 void Layout::maybeAddLastPage(Layout* layout) {
@@ -388,7 +390,7 @@ void Layout::recalculate() {
     computePrecalculated();
     gtk_adjustment_set_upper(scrollHandling->getHorizontal(), getTotalPixelWidth());
     gtk_adjustment_set_upper(scrollHandling->getVertical(), getTotalPixelHeight());
-    gtk_widget_queue_resize(view->getWidget());
+    gtk_widget_queue_draw(view->getWidget());
 }
 
 auto Layout::getFixedPaddingBeforePoint(const xoj::util::Point<double>& ref) const -> xoj::util::Point<int> {

@@ -72,7 +72,7 @@ bool TextEditionView::isViewOf(const OverlayBase* overlay) const { return overla
 
 auto TextEditionView::toWindowCoordinates(const xoj::util::Rectangle<double>& r) const -> xoj::util::Rectangle<double> {
     auto* textElement = this->textEditor->getTextElement();
-    return parent->toWindowCoordinates(r.translated(textElement->getX(), textElement->getY()));
+    return parent->toWidgetCoordinates(r.translated(textElement->getX(), textElement->getY()));
 }
 
 void TextEditionView::on(TextEditionView::FlagDirtyRegionRequest, Range rg) {
