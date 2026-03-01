@@ -11,10 +11,13 @@
 
 #pragma once
 
-#include <cstddef>  // for size_t
-#include <memory>   // for unique_ptr
-#include <string>   // for string
-#include <vector>   // for vector
+#include <cstddef>      // for size_t
+#include <memory>       // for unique_ptr
+#include <string>       // for string
+#include <string_view>  // for string_view
+#include <vector>       // for vector
+
+#include "util/StringUtils.h"  // for StaticStringView
 
 #include "Attribute.h"  // for XMLAttribute
 
@@ -23,16 +26,18 @@ class OutputStream;
 
 class XmlNode {
 public:
-    XmlNode(const char* tag);
+    XmlNode(StringUtils::StaticStringView tag);
     virtual ~XmlNode() = default;
 
 public:
-    void setAttrib(const char* attrib, std::string value);
-    void setAttrib(const char* attrib, const char* value);
-    void setAttrib(const char* attrib, double value);
-    void setAttrib(const char* attrib, int value);
-    void setAttrib(const char* attrib, size_t value);
-    void setAttrib(const char* attrib, std::vector<double> values);
+    void setAttrib(const char8_t* attrib, const std::string& value);
+    void setAttrib(const char8_t* attrib, const char* value);
+    void setAttrib(const char8_t* attrib, std::u8string value);
+    void setAttrib(const char8_t* attrib, const char8_t* value);
+    void setAttrib(const char8_t* attrib, double value);
+    void setAttrib(const char8_t* attrib, int value);
+    void setAttrib(const char8_t* attrib, size_t value);
+    void setAttrib(const char8_t* attrib, std::vector<double> values);
 
     void writeOut(OutputStream* out, ProgressListener* _listener);
 
@@ -48,5 +53,5 @@ protected:
     std::vector<std::unique_ptr<XmlNode>> children{};
     std::vector<std::unique_ptr<XMLAttribute>> attributes{};
 
-    std::string tag;
+    StringUtils::StaticStringView tag;
 };

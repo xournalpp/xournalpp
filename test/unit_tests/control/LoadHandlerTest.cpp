@@ -9,6 +9,7 @@
  * @license GNU GPLv2 or later
  */
 
+#include <array>
 #include <cmath>
 #include <filesystem>
 #include <iostream>
@@ -23,6 +24,7 @@
 #include "model/Image.h"
 #include "model/PageRef.h"
 #include "model/Stroke.h"
+#include "model/StrokeStyle.h"
 #include "model/TexImage.h"
 #include "model/Text.h"
 #include "model/XojPage.h"
@@ -34,6 +36,16 @@
 using std::string;
 
 // Common test Functions
+namespace {
+
+/**
+ * Load a test file, and verify that loading does not throw.
+ */
+std::unique_ptr<Document> loadTestDocument(const fs::path& filepath) {
+    LoadHandler handler;
+    EXPECT_NO_THROW(return handler.loadDocument(filepath)) << "Error while loading \"" << filepath << '\"';
+    return {};
+}
 
 /**
  * Unit test implementation for the "suite.xopp" file and its derivatives.
@@ -77,8 +89,7 @@ void testLoadStoreLoadHelper(const fs::path& filepath, double tol = 1e-8) {
 
         return elements;
     };
-    LoadHandler handler;
-    auto doc1 = handler.loadDocument(filepath);
+    auto doc1 = loadTestDocument(filepath);
     auto elements1 = getElements(doc1.get());
 
     SaveHandler h;
@@ -86,9 +97,7 @@ void testLoadStoreLoadHelper(const fs::path& filepath, double tol = 1e-8) {
     h.prepareSave(doc1.get(), tmp);
     h.saveTo(tmp);
 
-    // Create a second loader so the first one doesn't free the memory
-    LoadHandler handler2;
-    auto doc2 = handler2.loadDocument(tmp);
+    auto doc2 = loadTestDocument(tmp);
     auto elements2 = getElements(doc2.get());
 
     // Check that the coordinates from both files don't differ more than the precision they were saved with
@@ -135,11 +144,16 @@ void testLoadStoreLoadHelper(const fs::path& filepath, double tol = 1e-8) {
     }
 }
 
-void checkPageType(const Document* doc, size_t pageIndex, string expectedText, PageType expectedBgType) {
+void checkPageType(const Document* doc, size_t pageIndex, const string& expectedText, const PageType& expectedBgType) {
+    ASSERT_LT(pageIndex, doc->getPageCount());
     ConstPageRef page = doc->getPage(pageIndex);
 
     PageType bgType = page->getBackgroundType();
-    EXPECT_TRUE(expectedBgType == bgType);
+    EXPECT_EQ(expectedBgType, bgType);
+
+    if (!bgType.isSpecial()) {
+        EXPECT_EQ(page->getBackgroundColor(), Colors::white);
+    }
 
     EXPECT_EQ((size_t)1, page->getLayerCount());
     const Layer* layer = page->getLayersView()[0];
@@ -152,9 +166,15 @@ void checkPageType(const Document* doc, size_t pageIndex, string expectedText, P
     EXPECT_EQ(expectedText, text->getText());
 }
 
-
-void checkLayer(ConstPageRef page, size_t layerIndex, string expectedText) {
+void checkLayer(ConstPageRef page, size_t layerIndex, const std::optional<std::string>& optName,
+                const std::string& expectedText) {
+    ASSERT_LT(layerIndex, page->getLayerCount());
     const Layer* layer = page->getLayersView()[layerIndex];
+
+    EXPECT_EQ(layer->hasName(), optName.has_value());
+    if (optName) {
+        EXPECT_EQ(layer->getName(), *optName);
+    }
 
     auto* element = layer->getElementsView().front();
 
@@ -165,9 +185,59 @@ void checkLayer(ConstPageRef page, size_t layerIndex, string expectedText) {
     EXPECT_EQ(expectedText, text->getText());
 }
 
+void checkStroke(const Layer* layer, size_t elementIndex, StrokeTool tool, Color color, double width, int fill,
+                 StrokeCapStyle capStyle, const LineStyle& lineStyle,
+                 const std::vector<std::pair<size_t, Point>>& pointSamples = {}) {
+    ASSERT_LT(elementIndex, layer->getElementsView().size());
+    const auto* stroke = dynamic_cast<const Stroke*>(layer->getElementsView()[elementIndex]);
+
+    ASSERT_NE(stroke, nullptr) << "Element " << elementIndex << " should be a stroke";
+    ASSERT_EQ(stroke->getType(), ELEMENT_STROKE) << "Element " << elementIndex << " should be a stroke";
+
+    auto pointEq = [](const Point& a, const Point& b) {
+        return (std::abs(a.x - b.x) <= std::max(std::abs(a.x), 1.0) * 1e-10) &&
+               (std::abs(a.y - b.y) <= std::max(std::abs(a.y), 1.0) * 1e-10) &&
+               (std::abs(a.z - b.z) <= std::max(std::abs(a.z), 1.0) * 1e-10);
+    };
+
+    EXPECT_EQ(stroke->getToolType(), tool) << "Stroke at index " << elementIndex << " has the wrong tool";
+    EXPECT_EQ(stroke->getColor(), color) << "Stroke at index " << elementIndex << " has the wrong color";
+    EXPECT_DOUBLE_EQ(stroke->getWidth(), width) << "Stroke at index " << elementIndex << " has the wrong width";
+    EXPECT_EQ(stroke->getFill(), fill) << "Stroke at index " << elementIndex << " has the wrong fill";
+    EXPECT_EQ(stroke->getStrokeCapStyle(), capStyle)
+            << "Stroke at index " << elementIndex << " has the wrong stroke cap style";
+    EXPECT_EQ(stroke->getLineStyle(), lineStyle)
+            << "Stroke at index " << elementIndex << " has an incorrect line style";
+
+    for (const auto& sample: pointSamples) {
+        ASSERT_LT(sample.first, stroke->getPointCount());
+        EXPECT_TRUE(pointEq(stroke->getPoint(sample.first), sample.second))
+                << "Stroke at index " << elementIndex << " has incorrect points";
+    }
+}
+
+void checkImageFormat(const Image* img, const char* formatName) {
+    const auto gdkFormatName = gdk_pixbuf_format_get_name(img->getImageFormat());
+    EXPECT_STREQ(gdkFormatName, formatName);
+    g_free(gdkFormatName);
+}
+
+void checkText(const Layer* layer, size_t elementIndex, const std::string& text, Color color) {
+    ASSERT_LT(elementIndex, layer->getElementsView().size());
+    const auto* textElem = dynamic_cast<const Text*>(layer->getElementsView()[elementIndex]);
+
+    ASSERT_NE(textElem, nullptr) << "Element " << elementIndex << " should be text";
+    ASSERT_EQ(textElem->getType(), ELEMENT_TEXT) << "Element " << elementIndex << " should be text";
+
+    EXPECT_EQ(textElem->getText(), text) << "Text at index " << elementIndex << " has incorrect contents";
+    EXPECT_EQ(textElem->getColor(), color) << "Text at index " << elementIndex << " has the wrong color";
+}
+
+}  // namespace
+
 TEST(ControlLoadHandler, testLoad) {
-    LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE(u8"test1.xoj"));
+    auto doc = loadTestDocument(GET_TESTFILE(u8"test1.xoj"));
+    ASSERT_TRUE(doc);
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
@@ -185,8 +255,8 @@ TEST(ControlLoadHandler, testLoad) {
 }
 
 TEST(ControlLoadHandler, testLoadZipped) {
-    LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE(u8"packaged_xopp/test.xopp"));
+    auto doc = loadTestDocument(GET_TESTFILE(u8"packaged_xopp/test.xopp"));
+    ASSERT_TRUE(doc);
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
@@ -204,8 +274,8 @@ TEST(ControlLoadHandler, testLoadZipped) {
 }
 
 TEST(ControlLoadHandler, testLoadUnzipped) {
-    LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE(u8"test1.unzipped.xoj"));
+    auto doc = loadTestDocument(GET_TESTFILE(u8"test1.unzipped.xoj"));
+    ASSERT_TRUE(doc);
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
@@ -223,36 +293,60 @@ TEST(ControlLoadHandler, testLoadUnzipped) {
 }
 
 TEST(ControlLoadHandler, testPages) {
-    LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE(u8"load/pages.xoj"));
+    auto doc = loadTestDocument(GET_TESTFILE(u8"load/pages.xopp"));
+    ASSERT_TRUE(doc);
 
-    EXPECT_EQ((size_t)6, doc->getPageCount());
+    ASSERT_EQ(size_t{11}, doc->getPageCount());
+
+    // Check page dimensions
+    constexpr double A4_WIDTH = 595.27559, A4_HEIGHT = 841.88976;
+    for (int i = 0; i < 4; ++i) {
+        EXPECT_DOUBLE_EQ(doc->getPage(i)->getWidth(), A4_WIDTH);
+        EXPECT_DOUBLE_EQ(doc->getPage(i)->getHeight(), A4_HEIGHT);
+    }
+    EXPECT_DOUBLE_EQ(doc->getPage(10)->getWidth(), 50.0);
+    EXPECT_DOUBLE_EQ(doc->getPage(10)->getHeight(), 50.0);
 }
 
 TEST(ControlLoadHandler, testPagesZipped) {
-    LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE(u8"packaged_xopp/pages.xopp"));
+    auto doc = loadTestDocument(GET_TESTFILE(u8"packaged_xopp/pages.xopp"));
+    ASSERT_TRUE(doc);
 
     EXPECT_EQ((size_t)6, doc->getPageCount());
 }
 
 
 TEST(ControlLoadHandler, testPageType) {
-    LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE(u8"load/pages.xoj"));
+    auto doc = loadTestDocument(GET_TESTFILE(u8"load/pages.xopp"));
+    ASSERT_TRUE(doc);
 
-    EXPECT_EQ((size_t)6, doc->getPageCount());
+    ASSERT_EQ(size_t{11}, doc->getPageCount());
+
+    // Non-standard page types
+    auto rightLined = PageType(PageTypeFormat::Lined);
+    rightLined.config = "m1=-72";
+    auto graphWithBorder = PageType(PageTypeFormat::Graph);
+    graphWithBorder.config = "m1=40,rm=1";
+
     checkPageType(doc.get(), 0, "p1", PageType(PageTypeFormat::Plain));
     checkPageType(doc.get(), 1, "p2", PageType(PageTypeFormat::Ruled));
     checkPageType(doc.get(), 2, "p3", PageType(PageTypeFormat::Lined));
-    checkPageType(doc.get(), 3, "p4", PageType(PageTypeFormat::Staves));
-    checkPageType(doc.get(), 4, "p5", PageType(PageTypeFormat::Graph));
-    checkPageType(doc.get(), 5, "p6", PageType(PageTypeFormat::Image));
+    checkPageType(doc.get(), 3, "p4", rightLined);
+    checkPageType(doc.get(), 4, "p5", PageType(PageTypeFormat::Staves));
+    checkPageType(doc.get(), 5, "p6", PageType(PageTypeFormat::Graph));
+    checkPageType(doc.get(), 6, "p7", PageType(PageTypeFormat::Dotted));
+    checkPageType(doc.get(), 7, "p8", PageType(PageTypeFormat::IsoDotted));
+    checkPageType(doc.get(), 8, "p9", PageType(PageTypeFormat::IsoGraph));
+    checkPageType(doc.get(), 9, "p10", graphWithBorder);
+    checkPageType(doc.get(), 10, "p11", PageType(PageTypeFormat::Image));
+
+    EXPECT_TRUE(doc->getPage(10)->getBackgroundImage().isAttached());
+    EXPECT_EQ(doc->getPage(10)->getBackgroundImage().getFilepath().filename(), "pages.xopp.bg_1.png");
 }
 
 TEST(ControlLoadHandler, testPageTypeZipped) {
-    LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE(u8"packaged_xopp/pages.xopp"));
+    auto doc = loadTestDocument(GET_TESTFILE(u8"packaged_xopp/pages.xopp"));
+    ASSERT_TRUE(doc);
 
     EXPECT_EQ((size_t)6, doc->getPageCount());
     checkPageType(doc.get(), 0, "p1", PageType(PageTypeFormat::Plain));
@@ -261,11 +355,13 @@ TEST(ControlLoadHandler, testPageTypeZipped) {
     checkPageType(doc.get(), 3, "p4", PageType(PageTypeFormat::Staves));
     checkPageType(doc.get(), 4, "p5", PageType(PageTypeFormat::Graph));
     checkPageType(doc.get(), 5, "p6", PageType(PageTypeFormat::Image));
+
+    EXPECT_EQ(doc->getPage(5)->getBackgroundImage().getFilepath(), "attachments/bg_1.png");
 }
 
 TEST(ControlLoadHandler, testPageTypeFormatCopyFix) {
-    LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE(u8"pageTypeFormatCopy.xopp"));
+    auto doc = loadTestDocument(GET_TESTFILE(u8"pageTypeFormatCopy.xopp"));
+    ASSERT_TRUE(doc);
 
     EXPECT_EQ((size_t)3, doc->getPageCount());
     checkPageType(doc.get(), 0, "p1", PageType(PageTypeFormat::Lined));
@@ -273,97 +369,135 @@ TEST(ControlLoadHandler, testPageTypeFormatCopyFix) {
     checkPageType(doc.get(), 2, "p3", PageType(PageTypeFormat::Plain));  // PageTypeFormat::Plain in the file
 }
 
-TEST(ControlLoadHandler, testLayer) {
-    LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE(u8"load/layer.xoj"));
+TEST(ControlLoadHandler, testLayers) {
+    auto doc = loadTestDocument(GET_TESTFILE(u8"load/layers.xopp"));
+    ASSERT_TRUE(doc);
 
-    EXPECT_EQ((size_t)1, doc->getPageCount());
+    ASSERT_EQ(size_t{1}, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
 
-    EXPECT_EQ((size_t)3, page->getLayerCount());
-    checkLayer(page, 0, "l1");
-    checkLayer(page, 1, "l2");
-    checkLayer(page, 2, "l3");
+    ASSERT_EQ((size_t)3, page->getLayerCount());
+    checkLayer(page, 0, std::nullopt, "l1");
+    checkLayer(page, 1, "Named layer", "l2");
+    checkLayer(page, 2, std::nullopt, "l3");
 }
 
 TEST(ControlLoadHandler, testLayerZipped) {
-    LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE(u8"packaged_xopp/layer.xopp"));
+    auto doc = loadTestDocument(GET_TESTFILE(u8"packaged_xopp/layer.xopp"));
+    ASSERT_TRUE(doc);
 
-    EXPECT_EQ((size_t)1, doc->getPageCount());
+    ASSERT_EQ(size_t{1}, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
 
-    EXPECT_EQ((size_t)3, page->getLayerCount());
-    checkLayer(page, 0, "l1");
-    checkLayer(page, 1, "l2");
-    checkLayer(page, 2, "l3");
+    ASSERT_EQ(size_t{3}, page->getLayerCount());
+    checkLayer(page, 0, std::nullopt, "l1");
+    checkLayer(page, 1, std::nullopt, "l2");
+    checkLayer(page, 2, std::nullopt, "l3");
+}
+
+TEST(ControlLoadHandler, testStrokes) {
+    auto doc = loadTestDocument(GET_TESTFILE(u8"load/strokes.xopp"));
+    ASSERT_TRUE(doc);
+
+    EXPECT_EQ(size_t{1}, doc->getPageCount());
+    ConstPageRef page = doc->getPage(0);
+
+    ASSERT_EQ(size_t{1}, page->getLayerCount());
+    const Layer* layer = page->getLayersView().front();
+
+    ASSERT_EQ(size_t{12}, layer->getElementsView().size());
+    checkStroke(layer, 0, StrokeTool::PEN, Color(0xff002e99), 2.26, -1, StrokeCapStyle::ROUND, LineStyle{},
+                {{0, {210.17715, 200.96557, 0.41932136}},
+                 {30, {264.91445, 170.38327, 0.66099109}},
+                 {67, {377.23607, 173.27295, 0.56020856}},
+                 {68, {380.69162, 170.66197, Point::NO_PRESSURE}}});
+    checkStroke(layer, 1, StrokeTool::PEN, Color(0xff808080), 2.26, -1, StrokeCapStyle::ROUND,
+                StrokeStyle::parseStyle("dash"),
+                {{0, {396.76, 226.72, Point::NO_PRESSURE}},
+                 {1, {396.76, 141.7, Point::NO_PRESSURE}},
+                 {2, {198.38, 141.7, Point::NO_PRESSURE}},
+                 {3, {198.38, 226.72, Point::NO_PRESSURE}},
+                 {4, {396.76, 226.72, Point::NO_PRESSURE}}});
+    checkStroke(layer, 2, StrokeTool::PEN, Color(0xffed5353), 2.26, -1, StrokeCapStyle::ROUND,
+                StrokeStyle::parseStyle("dashdot"));
+    checkStroke(layer, 3, StrokeTool::PEN, Color(0xffffa154), 1.41, -1, StrokeCapStyle::ROUND,
+                StrokeStyle::parseStyle("dot"),
+                {{0, {86.46991, 248.29627, Point::NO_PRESSURE}}, {1, {518.99074, 248.29627, Point::NO_PRESSURE}}});
+    checkStroke(layer, 4, StrokeTool::PEN, Colors::black, 1.41, -1, StrokeCapStyle::ROUND, LineStyle{});
+    checkStroke(layer, 5, StrokeTool::ERASER, Colors::white, 8.5, -1, StrokeCapStyle::ROUND, LineStyle{});
+    checkStroke(layer, 6, StrokeTool::PEN, Color(0xff64baff), 0.85, 128, StrokeCapStyle::ROUND, LineStyle{});
+    checkStroke(layer, 7, StrokeTool::HIGHLIGHTER, Color(0x7fffa154), 19.84, -1, StrokeCapStyle::ROUND, LineStyle{});
+    checkStroke(layer, 8, StrokeTool::HIGHLIGHTER, Color(0x7f9bdb4d), 2.83, -1, StrokeCapStyle::ROUND, LineStyle{});
+    checkStroke(layer, 9, StrokeTool::PEN, Colors::black, 2.26, -1, StrokeCapStyle::ROUND, LineStyle{},
+                {{0, {200.23669, 358.03824, Point::NO_PRESSURE}}, {1, {200.23669, 358.03824, Point::NO_PRESSURE}}});
+    checkStroke(layer, 10, StrokeTool::HIGHLIGHTER, Color(0x7fffe16b), 10.616218, 255, StrokeCapStyle::BUTT,
+                LineStyle{},
+                {{0, {128.78249, 488.6327, Point::NO_PRESSURE}}, {1, {466.4931, 488.6327, Point::NO_PRESSURE}}});
+    checkStroke(layer, 11, StrokeTool::HIGHLIGHTER, Color(0x7f000000), 1, 230, StrokeCapStyle::BUTT, LineStyle{},
+                {{0, {143.58172, 506.94589, Point::NO_PRESSURE}}, {1, {451.69387, 506.94589, Point::NO_PRESSURE}}});
 }
 
 TEST(ControlLoadHandler, testText) {
-    LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE(u8"load/text.xml"));
+    auto doc = loadTestDocument(GET_TESTFILE(u8"load/text.xopp"));
+    ASSERT_TRUE(doc);
 
-    EXPECT_EQ((size_t)1, doc->getPageCount());
+    ASSERT_EQ(size_t{1}, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
 
-    EXPECT_EQ((size_t)1, page->getLayerCount());
-    const Layer* layer = page->getLayersView()[0];
+    ASSERT_EQ(size_t{1}, page->getLayerCount());
+    const Layer* layer = page->getLayersView().front();
 
-    auto* t1 = dynamic_cast<const Text*>(layer->getElementsView()[0]);
-    EXPECT_NE(t1, nullptr);
-    EXPECT_EQ(ELEMENT_TEXT, t1->getType());
-
-    auto* t2 = dynamic_cast<const Text*>(layer->getElementsView()[1]);
-    EXPECT_NE(t2, nullptr);
-    EXPECT_EQ(ELEMENT_TEXT, t2->getType());
-
-    auto* t3 = dynamic_cast<const Text*>(layer->getElementsView()[2]);
-    EXPECT_NE(t3, nullptr);
-    EXPECT_EQ(ELEMENT_TEXT, t3->getType());
-
-    EXPECT_EQ(string("red"), t1->getText());
-    EXPECT_EQ(string("blue"), t2->getText());
-    EXPECT_EQ(string("green"), t3->getText());
-
-    EXPECT_EQ(Color(0xffff0000U), t1->getColor());
-    EXPECT_EQ(Color(0xff3333CCU), t2->getColor());
-    EXPECT_EQ(Color(0x00f000U), t3->getColor());
+    checkText(layer, 0, "red", Colors::red);
+    checkText(layer, 1, "blue", Colors::xopp_royalblue);
+    checkText(layer, 2, "green", Color(0xff00f000U));
+    checkText(layer, 3, "multiline\ntext", Colors::black);
+    checkText(layer, 4, " \n odd  whitespace\ttext\n\n", Colors::black);
 }
 
 TEST(ControlLoadHandler, testTextZipped) {
-    LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE(u8"packaged_xopp/text.xopp"));
+    auto doc = loadTestDocument(GET_TESTFILE(u8"packaged_xopp/text.xopp"));
+    ASSERT_TRUE(doc);
 
-    EXPECT_EQ((size_t)1, doc->getPageCount());
+    ASSERT_EQ(size_t{1}, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
 
-    EXPECT_EQ((size_t)1, page->getLayerCount());
+    ASSERT_EQ(size_t{1}, page->getLayerCount());
     const Layer* layer = page->getLayersView().front();
 
-    auto* t1 = dynamic_cast<const Text*>(layer->getElementsView()[0]);
-    EXPECT_NE(t1, nullptr);
-    EXPECT_EQ(ELEMENT_TEXT, t1->getType());
+    checkText(layer, 0, "red", Colors::red);
+    checkText(layer, 1, "blue", Colors::xopp_royalblue);
+    checkText(layer, 2, "green", Color(0xff00f000U));
+}
 
-    auto* t2 = dynamic_cast<const Text*>(layer->getElementsView()[1]);
-    EXPECT_NE(t2, nullptr);
-    EXPECT_EQ(ELEMENT_TEXT, t2->getType());
+TEST(ControlLoadHandler, testImage) {
+    auto doc = loadTestDocument(GET_TESTFILE(u8"load/image.xopp"));
+    ASSERT_TRUE(doc);
 
-    auto* t3 = dynamic_cast<const Text*>(layer->getElementsView()[2]);
-    EXPECT_NE(t3, nullptr);
-    EXPECT_EQ(ELEMENT_TEXT, t3->getType());
+    EXPECT_EQ(size_t{1}, doc->getPageCount());
+    ConstPageRef page = doc->getPage(0);
 
-    EXPECT_EQ(string("red"), t1->getText());
-    EXPECT_EQ(string("blue"), t2->getText());
-    EXPECT_EQ(string("green"), t3->getText());
+    ASSERT_EQ(size_t{1}, page->getLayerCount());
+    const Layer* layer = page->getLayersView().front();
 
-    EXPECT_EQ(Color(0xffff0000U), t1->getColor());
-    EXPECT_EQ(Color(0xff3333CCU), t2->getColor());
-    EXPECT_EQ(Color(0x00f000U), t3->getColor());
+    ASSERT_EQ(layer->getElementsView().size(), 1);
+    const auto* img = dynamic_cast<const Image*>(layer->getElementsView()[0]);
+
+    ASSERT_NE(img, nullptr) << "Element should be an image";
+    ASSERT_EQ(img->getType(), ELEMENT_IMAGE) << "Element should be an image";
+
+    EXPECT_DOUBLE_EQ(img->getX(), 41.637795);
+    EXPECT_DOUBLE_EQ(img->getY(), 164.94488);
+    EXPECT_NEAR(img->getElementWidth(), 512.0, 1e-5);
+    EXPECT_NEAR(img->getElementHeight(), 512.0, 1e-5);
+
+    EXPECT_GT(img->getRawDataLength(), 0);
+    EXPECT_NE(img->getRawData(), nullptr);
+    checkImageFormat(img, "png");
 }
 
 TEST(ControlLoadHandler, testImageZipped) {
-    LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE(u8"packaged_xopp/imgAttachment/new.xopp"));
+    auto doc = loadTestDocument(GET_TESTFILE(u8"packaged_xopp/imgAttachment/new.xopp"));
+    ASSERT_TRUE(doc);
 
     EXPECT_EQ(1U, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
@@ -372,28 +506,19 @@ TEST(ControlLoadHandler, testImageZipped) {
     EXPECT_EQ(layer->getElementsView().size(), 1);
 
     const Image* img = dynamic_cast<const Image*>(layer->getElementsView()[0]);
-    EXPECT_TRUE(img);
-}
+    ASSERT_NE(img, nullptr) << "Element should be an image";
+    ASSERT_EQ(img->getType(), ELEMENT_IMAGE) << "Element should be an image";
 
-namespace {
-void checkImageFormat(const Image* img, const char* formatName) {
-    GdkPixbufLoader* imgLoader = gdk_pixbuf_loader_new();
-    ASSERT_TRUE(gdk_pixbuf_loader_write(imgLoader, img->getRawData(), img->getRawDataLength(), nullptr));
-    ASSERT_TRUE(gdk_pixbuf_loader_close(imgLoader, nullptr));
-    GdkPixbufFormat* format = gdk_pixbuf_loader_get_format(imgLoader);
-    ASSERT_TRUE(format) << "could not determine image format";
-    auto gdkFormatName = gdk_pixbuf_format_get_name(format);
-    EXPECT_STREQ(gdkFormatName, formatName);
-    g_free(gdkFormatName);
-    g_object_unref(imgLoader);
+    EXPECT_GT(img->getRawDataLength(), 0);
+    EXPECT_NE(img->getRawData(), nullptr);
+    checkImageFormat(img, "png");
 }
-}  // namespace
 
 TEST(ControlLoadHandler, imageLoadJpeg) {
     // check loading of arbitrary image format (up to whatever is supported by GdkPixbuf)
-    LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE(u8"packaged_xopp/imgAttachment/doc_with_jpg.xopp"));
+    auto doc = loadTestDocument(GET_TESTFILE(u8"packaged_xopp/imgAttachment/doc_with_jpg.xopp"));
     ASSERT_TRUE(doc) << "doc should not be null";
+
     ASSERT_EQ(1U, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
     ASSERT_EQ(1U, page->getLayerCount());
@@ -417,8 +542,7 @@ TEST(ControlLoadHandler, imageSaveJpegBackwardCompat) {
 
     // save journal containing JPEG image
     {
-        LoadHandler handler;
-        auto doc = handler.loadDocument(GET_TESTFILE(u8"packaged_xopp/imgAttachment/doc_with_jpg.xopp"));
+        auto doc = loadTestDocument(GET_TESTFILE(u8"packaged_xopp/imgAttachment/doc_with_jpg.xopp"));
         ASSERT_TRUE(doc) << "doc with jpeg should not be null";
 
         SaveHandler saver;
@@ -427,8 +551,7 @@ TEST(ControlLoadHandler, imageSaveJpegBackwardCompat) {
     }
 
     // check that the image is saved as PNG
-    LoadHandler handler;
-    auto doc = handler.loadDocument(outPath);
+    auto doc = loadTestDocument(outPath);
     ASSERT_TRUE(doc) << "saved doc should not be null";
     ASSERT_EQ(1U, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
@@ -443,6 +566,32 @@ TEST(ControlLoadHandler, imageSaveJpegBackwardCompat) {
     fs::remove(outPath);
 }
 
+TEST(ControlLoadHandler, testLatex) {
+    auto doc = loadTestDocument(GET_TESTFILE(u8"load/latex.xopp"));
+    ASSERT_TRUE(doc);
+
+    EXPECT_EQ(size_t{1}, doc->getPageCount());
+    ConstPageRef page = doc->getPage(0);
+
+    ASSERT_EQ(size_t{1}, page->getLayerCount());
+    const Layer* layer = page->getLayersView().front();
+
+    ASSERT_EQ(layer->getElementsView().size(), 1);
+    const auto* teximage = dynamic_cast<const TexImage*>(layer->getElementsView()[0]);
+
+    ASSERT_NE(teximage, nullptr) << "Element should be a TeX image";
+    ASSERT_EQ(teximage->getType(), ELEMENT_TEXIMAGE) << "Element should be a TeX image";
+
+    EXPECT_STREQ(teximage->getText().c_str(), "x^2") << "TeX image has wrong text contents";
+
+    EXPECT_DOUBLE_EQ(teximage->getX(), 14.937);
+    EXPECT_DOUBLE_EQ(teximage->getY(), 15.715);
+    EXPECT_DOUBLE_EQ(teximage->getElementWidth(), 20.126);
+    EXPECT_DOUBLE_EQ(teximage->getElementHeight(), 18.57);
+
+    EXPECT_FALSE(teximage->getBinaryData().empty());
+}
+
 TEST(ControlLoadHandler, linebreaksLatex) {
     // FIXME: use a path in CMAKE_BINARY_DIR or CMAKE_CURRENT_BINARY_DIR
     const fs::path outPath =
@@ -451,8 +600,7 @@ TEST(ControlLoadHandler, linebreaksLatex) {
 
     // save journal containing latex object with linebreaks.
     {
-        LoadHandler handler;
-        auto doc = handler.loadDocument(GET_TESTFILE(u8"load/linebreaksLatex.xopp"));
+        auto doc = loadTestDocument(GET_TESTFILE(u8"load/linebreaksLatex.xopp"));
         ASSERT_TRUE(doc) << "latex objects with linebreaks";
 
         SaveHandler saver;
@@ -461,8 +609,7 @@ TEST(ControlLoadHandler, linebreaksLatex) {
     }
 
     // check that the saved latex objects have correct linebreaks.
-    LoadHandler handler;
-    auto doc = handler.loadDocument(outPath);
+    auto doc = loadTestDocument(outPath);
     ASSERT_TRUE(doc) << "saved latex objects should have correct linebreaks";
     ASSERT_EQ(1U, doc->getPageCount());
     PageRef page = doc->getPage(0);
@@ -492,8 +639,8 @@ TEST(ControlLoadHandler, testLoadStoreLoadFloatBwCompat) {
 }
 
 TEST(ControlLoadHandler, testStrokeWidthRecovery) {
-    LoadHandler handler;
-    auto doc = handler.loadDocument(GET_TESTFILE(u8"packaged_xopp/stroke/width_recovery.xopp"));
+    auto doc = loadTestDocument(GET_TESTFILE(u8"packaged_xopp/stroke/width_recovery.xopp"));
+    ASSERT_TRUE(doc);
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
@@ -515,7 +662,7 @@ TEST(ControlLoadHandler, testStrokeWidthRecovery) {
         auto* s = static_cast<const Stroke*>(elts[n]);
         printf("Testing stroke %zu\n", n);
         EXPECT_EQ(ELEMENT_STROKE, s->getType());
-        EXPECT_EQ(Color(0x0000ff00), s->getColor());
+        EXPECT_EQ(Colors::lime, s->getColor());
         EXPECT_EQ(1.41, s->getWidth());
         auto pts = s->getPointVector();
         EXPECT_EQ(pts.size(), pressures.size());
@@ -576,7 +723,7 @@ TEST(ControlLoadHandler, testLoadStoreCJK) {
 }
 
 TEST(ControlLoadHandler, testRelativePath) {
-    auto doc = LoadHandler().loadDocument(GET_TESTFILE(u8"load/relativePaths.xopp"));
+    auto doc = loadTestDocument(GET_TESTFILE(u8"load/relativePaths.xopp"));
     ASSERT_TRUE(doc) << "Unable to load test file \"load/relativePaths.xopp\"";
     const auto& pdffile = doc->getPdfFilepath();
 

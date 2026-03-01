@@ -12,6 +12,7 @@
 #include <cstdlib>
 #include <ctime>
 
+#include <glib.h>
 #include <gtest/gtest.h>
 
 #include "util/StringUtils.h"
@@ -65,4 +66,34 @@ TEST(UtilStringUtils, testCompare) {
     EXPECT_EQ(true, StringUtils::iequals("äää", "ÄÄÄ"));
     EXPECT_EQ(true, StringUtils::iequals("ööaa", "Ööaa"));
     EXPECT_EQ(false, StringUtils::iequals("ööaa", "ööaaa"));
+}
+
+TEST(UtilStringUtils, testEllipsize) {
+    struct TestCase {
+        std::string_view str;   // original string
+        std::size_t max_width;  // in code points
+        bool ellipsized;        // expected result
+    };
+
+    constexpr std::array<TestCase, 5> cases = {{
+            {"short string", 20, false},
+            {"very looooooooong string", 20, true},
+            {"éééééaouüüüüüüöööödèèû", 10, true},
+            {"CJK \xE4\xB8\x96\xE7\x95\x8C", 6, false},
+            {"\xE4\xB8\x96\xE7\x95\x8C\xE4\xB8\x96\xE7\x95\x8C\xE4\xB8\x96\xE7\x95\x8C", 5, true},
+    }};
+    for (const auto& tc: cases) {
+        auto out = StringUtils::ellipsize(tc.str, tc.max_width);
+
+        EXPECT_TRUE(g_utf8_validate(out.c_str(), out.size(), nullptr))
+                << "Ellipsizing string \"" << tc.str << "\" produced invalid UTF-8";
+
+        if (tc.ellipsized) {
+            EXPECT_EQ(g_utf8_strlen(out.c_str(), out.size()), tc.max_width)
+                    << "Ellipsizing string \"" << tc.str << "\" produced a string of the wrong size";
+            EXPECT_TRUE(StringUtils::endsWith(out, "...")) << '"' << out << "\" does not end with an ellipsis";
+        } else {
+            EXPECT_EQ(out, tc.str) << "String should not have been ellipsized";
+        }
+    }
 }

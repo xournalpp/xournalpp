@@ -19,7 +19,7 @@ class OutputStream;
 
 class SizeTAttribute: public XMLAttribute {
 public:
-    SizeTAttribute(const char* name, size_t value);
+    SizeTAttribute(const char8_t* name, size_t value);
     ~SizeTAttribute() override;
 
 public:

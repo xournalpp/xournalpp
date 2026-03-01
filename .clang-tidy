@@ -44,7 +44,6 @@ bug*,\
 -readability-isolate-declaration"
 #WarningsAsErrors: '*'
 HeaderFilterRegex: '*.(h|hpp|hxx)'
-AnalyzeTemporaryDtors: false
 CheckOptions:
   - key:             readability-identifier-naming.AbstractClassCase
     value:           CamelCase
@@ -134,3 +133,5 @@ CheckOptions:
     value:           '1'
   - key:             cppcoreguidelines-special-member-functions.AllowMissingMoveFunctionsWhenCopyIsDeleted
     value:           '1'
+  - key:             'misc-include-cleaner.IgnoreHeaders'
+    value:           'filesystem.h'

@@ -97,3 +97,13 @@ gtest_discover_tests(test-gtk-integration
         $<$<NOT:$<STREQUAL:${TEST_GDK_PIXBUF_LOADER_CACHE},"">>:
         DEPENDS create-gdk-pixbuf-loader-cache>
 )
+
+###############################################################################
+# Define benchmarks: gtest-like app with benchmark units - not added to CTest or the `test` target
+###############################################################################
+
+file (GLOB_RECURSE benchmarks-sources benchmarks/*.cpp)
+add_executable (benchmarks EXCLUDE_FROM_ALL ${benchmarks-sources})
+target_link_libraries (benchmarks xoj::core xoj::util gtest_main gtest)
+target_include_directories(benchmarks PRIVATE "${PROJECT_BINARY_DIR}/test")
+target_compile_options(benchmarks PRIVATE "-O2") # Always optimize for benchmarks

@@ -16,7 +16,7 @@
 
 class XmlAudioNode: public XmlNode {
 public:
-    XmlAudioNode(const char* tag);
+    XmlAudioNode(StringUtils::StaticStringView tag);
     virtual ~XmlAudioNode();
 
 private:

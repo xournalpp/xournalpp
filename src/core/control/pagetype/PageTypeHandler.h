@@ -12,8 +12,9 @@
 #pragma once
 
 #include <memory>
-#include <string>  // for string
-#include <vector>  // for vector
+#include <string>       // for string
+#include <string_view>  // for string_view
+#include <vector>       // for vector
 
 #include <glib.h>  // for GKeyFile
 
@@ -37,7 +38,7 @@ public:
 public:
     const std::vector<std::unique_ptr<PageTypeInfo>>& getPageTypes();
     const std::vector<std::unique_ptr<PageTypeInfo>>& getSpecialPageTypes();
-    static PageTypeFormat getPageTypeFormatForString(const std::string& format);
+    static PageTypeFormat getPageTypeFormatForString(std::string_view format);
     static std::string getStringForPageTypeFormat(const PageTypeFormat& format);
     const PageTypeInfo* getInfoOn(const PageType& pt) const;
 

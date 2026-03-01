@@ -26,11 +26,14 @@ class EnumIndexedArray: private std::array<T, xoj::to_underlying(enum_class::ENU
 public:
     using underlying_array_type = std::array<T, xoj::to_underlying(enum_class::ENUMERATOR_COUNT)>;
 
-    T& operator[](enum_class value) {
+    template <typename... Args>
+    constexpr EnumIndexedArray(Args&&... args): underlying_array_type{std::forward<Args>(args)...} {};
+
+    constexpr T& operator[](enum_class value) {
         xoj_assert(value < enum_class::ENUMERATOR_COUNT);
         return underlying_array_type::operator[](xoj::to_underlying(value));
     }
-    const T& operator[](enum_class value) const {
+    constexpr const T& operator[](enum_class value) const {
         xoj_assert(value < enum_class::ENUMERATOR_COUNT);
         return underlying_array_type::operator[](xoj::to_underlying(value));
     }
