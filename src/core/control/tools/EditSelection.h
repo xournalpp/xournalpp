@@ -35,6 +35,8 @@
 #include "CursorSelectionType.h"     // for CursorSelectionType, CURS...
 #include "SnapToGridInputHandler.h"  // for SnapToGridInputHandler
 
+#include "filesystem.h"  // for path
+
 class UndoRedoHandler;
 class Layer;
 class XojPageView;
@@ -192,6 +194,8 @@ public:
      * (Or nullptr if nothing done, e.g. because there is only an image)
      */
     UndoActionPtr setFill(int alphaPen, int alphaHighligther);
+
+    void setAudioFilename(const fs::path& audioFile, unsigned int timestamp);
 
 public:
     /**
