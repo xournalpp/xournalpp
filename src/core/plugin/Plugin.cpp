@@ -220,6 +220,63 @@ void Plugin::addPluginToLuaPath() {
     lua_pop(lua.get(), 1);
 }
 
+
+int lua_loadfile_via_gtk4(lua_State *L, const fs::path& pluginPath) {
+    std::string filename_utf8_glib = pluginPath.u8string();
+    const gchar* filename_gchar = filename_utf8_glib.c_str();
+
+    GFile *gfile = g_file_new_for_path(filename_gchar);
+    if (!gfile) {
+        g_warning("Unable to create GFile for path: \"%s\"", filename_utf8_glib);
+        return LUA_ERRFILE;
+    }
+
+    GError *error = NULL;
+    GFileInputStream *input_stream = g_file_read(gfile, NULL, &error);
+
+    if (!input_stream) {
+        g_warning("Unable to create GFile for path: \"%s\" ( $s )", filename_utf8_glib, error->message);
+        g_error_free(error);
+        g_object_unref(gfile);
+        return LUA_ERRFILE;
+    }
+
+    gsize bytes_read = 0;
+    std::vector<char> buffer;
+    gboolean success = TRUE;
+
+    gssize current_read;
+    char temp_buffer[4096];
+    while ((current_read = g_input_stream_read(G_INPUT_STREAM(input_stream), temp_buffer, sizeof(temp_buffer), NULL, &error)) > 0) {
+        buffer.insert(buffer.end(), temp_buffer, temp_buffer + current_read);
+        bytes_read += current_read;
+    }
+
+    if (current_read == -1) {
+        g_warning("Error while reading file: \"%s\" ( \"%s\" ) ", filename_utf8_glib, error->message);
+        g_error_free(error);
+        success = FALSE;
+    }
+
+    g_input_stream_close(G_INPUT_STREAM(input_stream), NULL, NULL);
+    g_object_unref(input_stream);
+    g_object_unref(gfile);
+
+    if (!success) {
+        return LUA_ERRFILE;
+    }
+
+    buffer.push_back('\0');
+    
+    int status = luaL_loadbuffer(L, buffer.data(), bytes_read, filename_gchar);
+
+    if (status != LUA_OK) {
+        return status;
+    }
+
+    return LUA_OK;
+}
+
 void Plugin::loadScript() {
     if (mainfile.empty()) {
         this->valid = false;
@@ -245,7 +302,9 @@ void Plugin::loadScript() {
 
     // Load but don't run the Lua script
     auto luafile = path / mainfile;
-    int status = luaL_loadfile(lua.get(), luafile.string().c_str());
+
+    int status = lua_loadfile_via_gtk4(lua.get(), luafile);
+
     if (status != LUA_OK) {
         const char* errMsg = lua_tostring(lua.get(), -1);
         XojMsgBox::showPluginMessage(name, errMsg, true);
