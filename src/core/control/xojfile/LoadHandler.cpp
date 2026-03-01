@@ -457,23 +457,22 @@ void LoadHandler::finalizeTexImage() {
 
 void LoadHandler::addLink(LinkAlignment align, std::string font, double size, double x, double y, Color color,
                           std::string url, std::string text) {
-    xoj_assert(!this->link);
-    this->link = std::make_unique<Link>();
+    auto link = std::make_unique<Link>();
 
-    this->link->setAlignment(align);
+    link->setAlignment(align);
 
-    this->link->setText(std::string(g_uri_unescape_string(text.c_str(), NULL)));
-    this->link->setUrl(std::string(g_uri_unescape_string(url.c_str(), NULL)));
+    link->setText(std::string(g_uri_unescape_string(text.c_str(), NULL)));
+    link->setUrl(std::string(g_uri_unescape_string(url.c_str(), NULL)));
 
-    this->link->setX(x);
-    this->link->setY(y);
+    link->setX(x);
+    link->setY(y);
 
-    XojFont& f = this->link->getFont();
+    XojFont& f = link->getFont();
     f.setName(std::move(font));
     f.setSize(size);
-    this->link->setColor(color);
+    link->setColor(color);
 
-    this->layer->addElement(std::move(this->link));
+    this->layer->addElement(std::move(link));
 }
 
 
