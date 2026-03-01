@@ -57,7 +57,7 @@ enum AVAILABLECURSORS {
     CRSR_DRAWDIRCTRL,       // "
     CRSR_DRAWDIRSHIFTCTRL,  // "
     CRSR_RESIZE,
-    CRSR_LINK,
+    CRSR_ALIAS,
 
     CRSR_END_OF_CURSORS
 };
@@ -104,7 +104,7 @@ XournalppCursor::XournalppCursor(Control* control): control(control) {
 	cssCursors[CRSR_DRAWDIRCTRL         ] = 	{"",""};			// "
 	cssCursors[CRSR_DRAWDIRSHIFTCTRL    ] = 	{"",""};			// "
     cssCursors[CRSR_RESIZE              ] =     {"",""};            // "
-    cssCursors[CRSR_LINK                ] =     {"alias", "hand2"};
+    cssCursors[CRSR_ALIAS               ] =     {"alias", ""};
 };
 // clang-format on
 
@@ -196,6 +196,14 @@ void XournalppCursor::setInsidePage(bool insidePage) {
     updateCursor();
 }
 
+void XournalppCursor::setIsLinkHighlighted(bool highlighted) {
+    if (this->linkHighlighted == highlighted) {
+        return;
+    }
+    this->linkHighlighted = highlighted;
+
+    updateCursor();
+}
 
 void XournalppCursor::setInvisible(bool invisible) {
     if (this->invisible == invisible) {
@@ -304,7 +312,11 @@ void XournalppCursor::updateCursor() {
                 setCursor(CRSR_XTERM);
             }
         } else if (type == TOOL_LINK) {
-            setCursor(CRSR_HAND2);
+            if (this->linkHighlighted) {
+                setCursor(CRSR_ALIAS);
+            } else {
+                setCursor(CRSR_HAND2);
+            }
         } else if (type == TOOL_IMAGE) {
             setCursor(CRSR_TCROSS);
         } else if (type == TOOL_FLOATING_TOOLBOX) {

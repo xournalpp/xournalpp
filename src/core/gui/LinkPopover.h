@@ -26,7 +26,6 @@ public:
     ~LinkPopover();
     void hide();
     void show();
-    void show_all();
     void popup();
     void popdown();
     void updateLabel(bool markup);
@@ -40,7 +39,7 @@ public:
 private:
     XournalView* view;
 
-    GtkPopover* popover = nullptr;
+    GtkPopover* popover;
     GtkLabel* label = nullptr;
     Link* link = nullptr;
 

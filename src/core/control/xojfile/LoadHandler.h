@@ -38,7 +38,6 @@ class PageType;
 class Point;
 class TexImage;
 class Text;
-class Link;
 
 namespace xoj::util {
 class InputStream;
@@ -199,7 +198,6 @@ private:
     std::unique_ptr<Text> text;
     std::unique_ptr<Image> image;
     std::unique_ptr<TexImage> teximage;
-    std::unique_ptr<Link> link;
 
     DocumentHandler dHandler;
     std::unique_ptr<Document> doc;
