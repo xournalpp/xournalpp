@@ -41,7 +41,9 @@ class SearchControl;
 class Selector;
 class Settings;
 class Text;
+class Link;
 class TextEditor;
+class LinkHandler;
 class VerticalToolHandler;
 class XournalView;
 class Element;
@@ -101,6 +103,8 @@ public:
     inline bool isVisible() const { return visible; }
 
     void endText();
+
+    void endLink();
 
     void endSpline();
 
@@ -190,6 +194,8 @@ public:  // listener
 
 private:
     void startText(double x, double y);
+
+    void startLink();
 
     void drawLoadingPage(cairo_t* cr);
 
@@ -291,4 +297,9 @@ private:
     friend class SelectObject;
     friend class PlayObject;
     friend class PdfFloatingToolbox;
+
+    /**
+     * The Link Editor
+     */
+    std::unique_ptr<LinkHandler> linkHandler;
 };

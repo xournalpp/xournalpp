@@ -36,6 +36,7 @@
 #include "control/tools/ImageSizeSelection.h"       // for ImageSizeSelection
 #include "control/tools/InputHandler.h"             // for InputHandler
 #include "control/tools/LaserPointerHandler.h"      // for LaserPointerHandler
+#include "control/tools/LinkHandler.h"              // for LinkHandler
 #include "control/tools/PdfElemSelection.h"         // for PdfElemSelection
 #include "control/tools/RectangleHandler.h"         // for RectangleHandler
 #include "control/tools/RulerHandler.h"             // for RulerHandler
@@ -167,6 +168,8 @@ auto XojPageView::searchTextOnPage(const std::string& text, size_t index, size_t
 
 void XojPageView::endText() { this->textEditor.reset(); }
 
+void XojPageView::endLink() { this->linkHandler.reset(); }
+
 void XojPageView::startText(double x, double y) {
     this->xournal->endTextAllPages(this);
     this->xournal->getControl()->getSearchBar()->showSearchBar(false);
@@ -184,6 +187,13 @@ void XojPageView::startText(double x, double y) {
     if (this->textEditor == nullptr) {
         this->textEditor = std::make_unique<TextEditor>(xournal->getControl(), page, xournal->getWidget(), x, y);
         this->overlayViews.emplace_back(std::make_unique<xoj::view::TextEditionView>(this->textEditor.get(), this));
+    }
+}
+
+void XojPageView::startLink() {
+    this->xournal->endLinkAllPages(this);
+    if (this->linkHandler == nullptr) {
+        this->linkHandler = std::make_unique<LinkHandler>(xournal);
     }
 }
 
@@ -403,6 +413,9 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         }
     } else if (h->getToolType() == TOOL_TEXT) {
         startText(x, y);
+    } else if (h->getToolType() == TOOL_LINK) {
+        startLink();
+        this->linkHandler->select(this->getPage(), int(x), int(y), pos.isControlDown(), this);
     } else if (h->getToolType() == TOOL_IMAGE) {
         // start selecting the size for the image
         this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);
@@ -479,6 +492,13 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
                     this->xournal->setSelection(sel.release());
                 }
                 control->runLatex();
+            } else if (elemType == ELEMENT_LINK) {
+                this->xournal->clearSelection();
+                toolHandler->selectTool(TOOL_LINK);
+                toolHandler->fireToolChanged();
+                // Simulate a button double press; there's too many things that we
+                // could forget to do if we manually call startEditing
+                this->onButtonDoublePressEvent(pos);
             }
         }
     } else if (toolType == TOOL_TEXT) {
@@ -496,6 +516,9 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
             xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
             this->inputHandler.reset();
         }
+    } else if (toolType == TOOL_LINK) {
+        startLink();
+        this->linkHandler->startEditing(this->getPage(), int(x), int(y));
     }
 
     return true;
@@ -560,6 +583,9 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
         // used this event
     } else if (h->getToolType() == TOOL_ERASER && h->getEraserType() != ERASER_TYPE_WHITEOUT && this->inEraser) {
         this->eraser->erase(x, y);
+    } else if (h->getActiveTool()->getToolType() == TOOL_LINK) {
+        startLink();
+        this->linkHandler->highlight(this->getPage(), int(x), int(y), this);
     }
 
     return false;

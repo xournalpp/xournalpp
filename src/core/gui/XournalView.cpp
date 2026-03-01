@@ -463,6 +463,14 @@ void XournalView::endTextAllPages(XojPageView* except) const {
     }
 }
 
+void XournalView::endLinkAllPages(XojPageView* except) const {
+    for (auto& v: this->viewPages) {
+        if (except != v.get()) {
+            v->endLink();
+        }
+    }
+}
+
 void XournalView::endSplineAllPages() const {
     for (auto& v: this->viewPages) {
         v->endSpline();
