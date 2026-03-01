@@ -53,6 +53,8 @@ constexpr const char* ACTION_NAMES[] = {  // Action to string conversion map
         "goto-last",
         "goto-next-annotated-page",
         "goto-previous-annotated-page",
+        "navigate-back",
+        "navigate-forward",
         "new-page-before",
         "new-page-after",
         "new-page-at-end",

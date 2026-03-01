@@ -133,7 +133,7 @@ void SearchBar::search(Fun next) {
         const bool found = control->searchTextOnPage(text, page, indexInPage, &occurrences, &matchRect);
 
         if (found) {
-            control->getScrollHandler()->scrollToPage(page, matchRect);
+            control->getScrollHandler()->jumpToPage(page, matchRect);
             control->getScrollHandler();
             gtk_label_set_text(GTK_LABEL(lbSearchState),
                                (occurrences == 1 ? FC(_F("Text found once on page {1}") % (page + 1)) :
