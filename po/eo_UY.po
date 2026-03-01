@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 10:08+0000\n"
-"PO-Revision-Date: 2026-02-22 04:55\n"
+"POT-Creation-Date: 2026-02-28 08:17+0000\n"
+"PO-Revision-Date: 2026-03-01 04:56\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -31,63 +31,63 @@ msgstr ""
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:575
+#: ../src/core/control/Control.cpp:579
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:595
+#: ../src/core/control/Control.cpp:599
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "La ilobreta agordo «{1}» estas antaŭdifinita; ĉu krei kopion modifotan?"
 
-#: ../src/core/control/Control.cpp:598 ../src/core/control/Control.cpp:1572
+#: ../src/core/control/Control.cpp:602 ../src/core/control/Control.cpp:1576
 msgid "Yes"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:598 ../src/core/control/Control.cpp:1572
+#: ../src/core/control/Control.cpp:602 ../src/core/control/Control.cpp:1576
 msgid "No"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:828 ../src/core/control/Control.cpp:1792
-#: ../src/core/control/Control.cpp:2114
+#: ../src/core/control/Control.cpp:832 ../src/core/control/Control.cpp:1796
+#: ../src/core/control/Control.cpp:2124
 msgid "Cancel"
 msgstr "Nuligi"
 
-#: ../src/core/control/Control.cpp:829
+#: ../src/core/control/Control.cpp:833
 msgid "Insert after current page"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:830
+#: ../src/core/control/Control.cpp:834
 msgid "Insert at end"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:833
+#: ../src/core/control/Control.cpp:837
 msgid "_Journal"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:833
+#: ../src/core/control/Control.cpp:837
 msgid "Paper B_ackground"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:834
+#: ../src/core/control/Control.cpp:838
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:42
 msgid "With PDF background"
 msgstr "Kun PDF-fono"
 
-#: ../src/core/control/Control.cpp:837
+#: ../src/core/control/Control.cpp:841
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:880
+#: ../src/core/control/Control.cpp:884
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Neniu postgluebla PDF-paĝo. Eble necesas remalfermi la dokumenton."
 
-#: ../src/core/control/Control.cpp:894
+#: ../src/core/control/Control.cpp:898
 msgid "Unable to retrieve pdf page."
 msgstr "Ne eblas akiri PDF-paĝon."
 
-#: ../src/core/control/Control.cpp:1496
+#: ../src/core/control/Control.cpp:1500
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -95,107 +95,107 @@ msgstr "Ne malfermu aŭtomate konservitajn dosierojn. Ili estas superskribotaj!\
 "Kopiu la dosierojn en alian dosierujon.\n"
 "Dosieroj en la dosierujo {1} estas nemalfermendaj."
 
-#: ../src/core/control/Control.cpp:1516
+#: ../src/core/control/Control.cpp:1520
 msgid "file: {1}"
 msgstr "dosiero: {1}"
 
-#: ../src/core/control/Control.cpp:1549
+#: ../src/core/control/Control.cpp:1553
 msgid "Error opening file \"{1}\""
 msgstr "Eraro malfermante la dosieron «{1}»"
 
-#: ../src/core/control/Control.cpp:1574
+#: ../src/core/control/Control.cpp:1578
 msgid "File version mismatch"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1575
+#: ../src/core/control/Control.cpp:1579
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "La versio de la ŝargata dosiero estas pli nova ol tiuj, kiuj estas subtenataj de ĉi tiu versio de Xournal++; tial, la dosiero eble misŝargiĝos. Ĉu malfermi malgraŭ tio?"
 
-#: ../src/core/control/Control.cpp:1598
+#: ../src/core/control/Control.cpp:1602
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1619
+#: ../src/core/control/Control.cpp:1623
 msgid "Error reading PNG file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1664
+#: ../src/core/control/Control.cpp:1668
 msgid "Failed to determine if path exists \"{1}\": {2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1665
+#: ../src/core/control/Control.cpp:1669
 msgid "That file does not exist:\n"
 "\"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1772
+#: ../src/core/control/Control.cpp:1776
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1775
+#: ../src/core/control/Control.cpp:1779
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1785
+#: ../src/core/control/Control.cpp:1789
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Proponita anstataŭiga dosiero: «{1}»"
 
-#: ../src/core/control/Control.cpp:1790
+#: ../src/core/control/Control.cpp:1794
 msgid "Select another PDF"
 msgstr "Elekti alian PDF"
 
-#: ../src/core/control/Control.cpp:1791
+#: ../src/core/control/Control.cpp:1795
 msgid "Remove PDF Background"
 msgstr "Forviŝi PDF-fonon"
 
-#: ../src/core/control/Control.cpp:1795
+#: ../src/core/control/Control.cpp:1799
 msgid "Use proposed PDF"
 msgstr "Uzi proponitan PDF"
 
-#: ../src/core/control/Control.cpp:1798
+#: ../src/core/control/Control.cpp:1802
 msgid "Missing PDF background file"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1927
+#: ../src/core/control/Control.cpp:1931
 msgid "Select font"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1946
+#: ../src/core/control/Control.cpp:1950
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Elekti koloron"
 
-#: ../src/core/control/Control.cpp:1971
+#: ../src/core/control/Control.cpp:1975
 msgid "Unsaved Document"
 msgstr "Nekonservita dokumento"
 
-#: ../src/core/control/Control.cpp:2107
+#: ../src/core/control/Control.cpp:2117
 msgid "Document file was removed."
 msgstr "Dokumenta dosiero estis forigita."
 
-#: ../src/core/control/Control.cpp:2107
+#: ../src/core/control/Control.cpp:2117
 msgid "This document is not saved yet."
 msgstr "Ĉi tiu dokumento estas ankoraŭ ne konservita."
 
-#: ../src/core/control/Control.cpp:2109
+#: ../src/core/control/Control.cpp:2119
 msgid "Save As..."
 msgstr "Konservi kiel..."
 
-#: ../src/core/control/Control.cpp:2109 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2119 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "Konservi"
 
-#: ../src/core/control/Control.cpp:2112
+#: ../src/core/control/Control.cpp:2122
 msgid "Discard"
 msgstr "Forĵeti"
 
-#: ../src/core/control/Control.cpp:2197
+#: ../src/core/control/Control.cpp:2207
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
