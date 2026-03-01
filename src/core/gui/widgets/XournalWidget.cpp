@@ -229,10 +229,12 @@ static void gtk_xournal_realize(GtkWidget* widget) {
 
 static void gtk_xournal_draw_shadow(GtkXournal* xournal, cairo_t* cr, int left, int top, int width, int height,
                                     bool selected) {
+    Settings* settings = xournal->view->getControl()->getSettings();
+    bool showShadow = settings->isShowPageShadow();
     if (selected) {
-        Shadow::drawShadow(cr, left - 2, top - 2, width + 4, height + 4);
-
-        Settings* settings = xournal->view->getControl()->getSettings();
+        if (showShadow) {
+            Shadow::drawShadow(cr, left - 2, top - 2, width + 4, height + 4);
+        }
 
         // Draw border
         Util::cairo_set_source_rgbi(cr, settings->getBorderColor());
@@ -242,7 +244,7 @@ static void gtk_xournal_draw_shadow(GtkXournal* xournal, cairo_t* cr, int left, 
 
         cairo_rectangle(cr, left - 1, top - 1, width + 2, height + 2);
         cairo_stroke(cr);
-    } else {
+    } else if (showShadow) {
         Shadow::drawShadow(cr, left, top, width, height);
     }
 }
