@@ -1741,6 +1741,12 @@ void Control::fileLoaded(int scrollToPage) {
             loadMetadata(*md);
         }
         RecentManager::addRecentFileFilename(filepath);
+
+        if (settings->getForceZoomToFitOnLoad()) {
+            zoom->updateZoomFitValue();
+            zoom->setZoomFitMode(true);
+        }
+
     } else {
         zoom->updateZoomFitValue();
         zoom->setZoomFitMode(true);

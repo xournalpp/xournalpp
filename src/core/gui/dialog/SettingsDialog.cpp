@@ -445,6 +445,9 @@ void SettingsDialog::load() {
     GtkWidget* spZoomStepScroll = builder.get("spZoomStepScroll");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spZoomStepScroll), settings->getZoomStepScroll());
 
+    GtkWidget* cbForceZoomToFitOnLoad = builder.get("cbForceZoomToFitOnLoad");
+    gtk_check_button_set_active(GTK_CHECK_BUTTON(cbForceZoomToFitOnLoad), settings->getForceZoomToFitOnLoad());
+
     GtkWidget* spAddHorizontalSpaceRight = builder.get("spAddHorizontalSpaceRight");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAddHorizontalSpaceRight), settings->getAddHorizontalSpaceAmountRight());
 
@@ -958,6 +961,9 @@ void SettingsDialog::save() {
     double zoomStepScroll = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spZoomStepScroll));
     settings->setZoomStepScroll(zoomStepScroll);
 
+    GtkWidget* cbForceZoomToFitOnLoad = builder.get("cbForceZoomToFitOnLoad");
+    const bool forceZoomToFitOnLoad = gtk_check_button_get_active(GTK_CHECK_BUTTON(cbForceZoomToFitOnLoad));
+    settings->setForceZoomToFitOnLoad(forceZoomToFitOnLoad);
 
     GtkWidget* spAddHorizontalSpaceRight = builder.get("spAddHorizontalSpaceRight");
     const int addHorizontalSpaceAmountRight =
