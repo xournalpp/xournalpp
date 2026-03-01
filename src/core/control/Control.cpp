@@ -63,6 +63,7 @@
 #include "gui/menus/menubar/Menubar.h"                           // for Menubar
 #include "gui/sidebar/Sidebar.h"                                 // for Sidebar
 #include "gui/toolbarMenubar/ToolMenuHandler.h"                  // for Tool...
+#include "gui/toolbarMenubar/icon/ColorIcon.h"                   // for createColorIconResources
 #include "gui/toolbarMenubar/model/ToolbarData.h"                // for Tool...
 #include "gui/toolbarMenubar/model/ToolbarModel.h"               // for Tool...
 #include "model/BackgroundImage.h"                               // for Back...
@@ -134,6 +135,11 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     this->settings = new Settings(std::move(name));
     this->settings->load();
     this->loadPaletteFromSettings();
+
+    ColorIcon::createPaletteIconResources(this->getPalette(),
+                                          settings->getRecolorParameters().recolorizeMainView ?
+                                                  std::make_optional(settings->getRecolorParameters().recolor) :
+                                                  std::nullopt);
 
     this->pageTypes = new PageTypeHandler(gladeSearchPath);
 
@@ -1442,6 +1448,10 @@ void Control::showSettings() {
                 }
 
                 if (reloadToolbars) {
+                    ColorIcon::createPaletteIconResources(
+                            ctrl->getPalette(), settings->getRecolorParameters().recolorizeMainView ?
+                                                        std::make_optional(settings->getRecolorParameters().recolor) :
+                                                        std::nullopt);
                     ctrl->getWindow()->reloadToolbars();
                 }
 
