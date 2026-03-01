@@ -88,7 +88,7 @@ void LinkDialog::okButtonPressed(GtkButton* btn) {
 
     this->linkURL = std::string(gtk_entry_get_text(this->urlInput));
     if (!this->isUrlValid(this->linkURL)) {
-        this->linkURL = "xournalpp.github.io";
+        this->linkURL = PLACEHOLDER_HTTPS;
     }
     this->callbackOK(this);
     gtk_window_close(this->linkDialog.get());
