@@ -23,8 +23,11 @@ SidebarPreviewPageEntry::~SidebarPreviewPageEntry() {
 auto SidebarPreviewPageEntry::getRenderType() const -> PreviewRenderType { return RENDER_TYPE_PAGE_PREVIEW; }
 
 void SidebarPreviewPageEntry::mouseButtonPressCallback() {
-    sidebar->getControl()->getScrollHandler()->scrollToPage(page);
-    sidebar->getControl()->firePageSelected(page);
+    auto* control = sidebar->getControl();
+    if (control->getCurrentPageNo() != index) {
+        control->getScrollHandler()->jumpToPage(page);
+    }
+    control->firePageSelected(page);
 }
 
 void SidebarPreviewPageEntry::paint(cairo_t* cr) {

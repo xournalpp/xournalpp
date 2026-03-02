@@ -8,6 +8,7 @@
 
 #include "control/AudioController.h"
 #include "control/Control.h"
+#include "control/NavigationHistory.h"
 #include "control/ScrollHandler.h"
 #include "control/ToolEnums.h"
 #include "control/UndoRedoController.h"
@@ -464,7 +465,7 @@ struct ActionProperties<Action::ZOOM> {
 /** Navigation menu **/
 template <>
 struct ActionProperties<Action::GOTO_FIRST> {
-    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getScrollHandler()->scrollToPage(0); }
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getScrollHandler()->goToFirstPage(); }
 };
 template <>
 struct ActionProperties<Action::GOTO_PREVIOUS> {
@@ -481,9 +482,7 @@ struct ActionProperties<Action::GOTO_NEXT> {
 };
 template <>
 struct ActionProperties<Action::GOTO_LAST> {
-    static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
-        ctrl->getScrollHandler()->scrollToPage(ctrl->getDocument()->getPageCount() - 1);
-    }
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getScrollHandler()->goToLastPage(); }
 };
 
 template <>
@@ -498,6 +497,20 @@ struct ActionProperties<Action::GOTO_PREVIOUS_ANNOTATED_PAGE> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
         ctrl->getScrollHandler()->scrollToAnnotatedPage(false);
     }
+};
+
+template <>
+struct ActionProperties<Action::NAVIGATE_BACK> {
+    static bool initiallyEnabled(Control*) { return false; }
+    static constexpr const char* accelerators[] = {"<Alt>Left", nullptr};
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getNavigationHistory()->navigate(-1); }
+};
+
+template <>
+struct ActionProperties<Action::NAVIGATE_FORWARD> {
+    static bool initiallyEnabled(Control*) { return false; }
+    static constexpr const char* accelerators[] = {"<Alt>Right", nullptr};
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getNavigationHistory()->navigate(1); }
 };
 
 

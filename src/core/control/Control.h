@@ -71,6 +71,7 @@ class XojFont;
 class XojPdfRectangle;
 class Callback;
 class ActionDatabase;
+class NavigationHistory;
 
 class Control:
         public ToolListener,
@@ -252,6 +253,11 @@ public:
      * Disable / enable page action buttons
      */
     void updatePageActions();
+
+    /**
+     * Get the navigation history handler.
+     */
+    NavigationHistory* getNavigationHistory() const;
 
     // selection handling
     void clearSelection();
@@ -557,6 +563,8 @@ private:
 
     std::unique_ptr<GeometryTool> geometryTool;
     std::unique_ptr<GeometryToolController> geometryToolController;
+
+    std::unique_ptr<NavigationHistory> navHistory;
 
     /**
      * Manage all Xournal++ plugins
