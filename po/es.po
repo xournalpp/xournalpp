@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-23 11:46+0000\n"
-"PO-Revision-Date: 2026-02-27 21:41\n"
+"POT-Creation-Date: 2026-02-28 08:36+0000\n"
+"PO-Revision-Date: 2026-03-01 04:56\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -31,64 +31,64 @@ msgstr "Error en el sistema de archivos: {1}"
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "No se pudo eliminar el antiguo archivo de autoguardado \"{1}\": {2}"
 
-#: ../src/core/control/Control.cpp:575
+#: ../src/core/control/Control.cpp:579
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "Ha eliminado la barra de herramientas activa. Volviendo a la barra de herramientas predeterminada."
 
-#: ../src/core/control/Control.cpp:595
+#: ../src/core/control/Control.cpp:599
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "La configuración de barras de herramientas «{1}» es la predefinida. ¿Quiere crear una copia para editarla?"
 
-#: ../src/core/control/Control.cpp:598 ../src/core/control/Control.cpp:1570
+#: ../src/core/control/Control.cpp:602 ../src/core/control/Control.cpp:1574
 msgid "Yes"
 msgstr "Sí"
 
-#: ../src/core/control/Control.cpp:598 ../src/core/control/Control.cpp:1570
+#: ../src/core/control/Control.cpp:602 ../src/core/control/Control.cpp:1574
 msgid "No"
 msgstr "No"
 
-#: ../src/core/control/Control.cpp:826 ../src/core/control/Control.cpp:1798
-#: ../src/core/control/Control.cpp:2120
+#: ../src/core/control/Control.cpp:830 ../src/core/control/Control.cpp:1802
+#: ../src/core/control/Control.cpp:2130
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: ../src/core/control/Control.cpp:827
+#: ../src/core/control/Control.cpp:831
 msgid "Insert after current page"
 msgstr "Insertar después de la página actual"
 
-#: ../src/core/control/Control.cpp:828
+#: ../src/core/control/Control.cpp:832
 msgid "Insert at end"
 msgstr "Insertar al final"
 
-#: ../src/core/control/Control.cpp:831
+#: ../src/core/control/Control.cpp:835
 msgid "_Journal"
 msgstr "_Cuaderno"
 
-#: ../src/core/control/Control.cpp:831
+#: ../src/core/control/Control.cpp:835
 msgid "Paper B_ackground"
 msgstr "F_ondo de papel"
 
-#: ../src/core/control/Control.cpp:832
+#: ../src/core/control/Control.cpp:836
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:42
 msgid "With PDF background"
 msgstr "Con fondo PDF"
 
-#: ../src/core/control/Control.cpp:835
+#: ../src/core/control/Control.cpp:839
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
 msgstr "El documento PDF actual no contiene la página n. {1} ¿Desea insertar esta página?\n\n"
 "Consejo: puede seleccionar {2} para insertar una página PDF."
 
-#: ../src/core/control/Control.cpp:878
+#: ../src/core/control/Control.cpp:882
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "No hay páginas pdf disponibles para añadir. Es posible que sea necesario reabrir el documento primero."
 
-#: ../src/core/control/Control.cpp:892
+#: ../src/core/control/Control.cpp:896
 msgid "Unable to retrieve pdf page."
 msgstr "No se ha podido obtener la página del pdf."
 
-#: ../src/core/control/Control.cpp:1494
+#: ../src/core/control/Control.cpp:1498
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -96,113 +96,113 @@ msgstr "No abra los archivos de guardado automático; se sobrescribirán.\n"
 "Copie los archivos en otra carpeta.\n"
 "No se pueden abrir los archivos de la carpeta {1}."
 
-#: ../src/core/control/Control.cpp:1514
+#: ../src/core/control/Control.cpp:1518
 msgid "file: {1}"
 msgstr "archivo: {1}"
 
-#: ../src/core/control/Control.cpp:1547
+#: ../src/core/control/Control.cpp:1551
 msgid "Error opening file \"{1}\""
 msgstr "Error al abrir el archivo «{1}»"
 
-#: ../src/core/control/Control.cpp:1572
+#: ../src/core/control/Control.cpp:1576
 msgid "File version mismatch"
 msgstr "La versión del archivo no coincide"
 
-#: ../src/core/control/Control.cpp:1573
+#: ../src/core/control/Control.cpp:1577
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "El archivo que se está cargando tiene una versión del formato más nueva que la que está soportada por esta versión de Xournal++, así que podría no cargarse correctamente. ¿Deseas abrirlo igualmente?"
 
-#: ../src/core/control/Control.cpp:1596
+#: ../src/core/control/Control.cpp:1600
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr "Error al leer el archivo PDF \"{1}\"\n"
 "{2}"
 
-#: ../src/core/control/Control.cpp:1617
+#: ../src/core/control/Control.cpp:1621
 msgid "Error reading PNG file \"{1}\""
 msgstr "Error al leer el archivo PNG \"{1}\""
 
-#: ../src/core/control/Control.cpp:1652
+#: ../src/core/control/Control.cpp:1656
 msgid "Error reading template file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1671
+#: ../src/core/control/Control.cpp:1675
 msgid "Failed to determine if path exists \"{1}\": {2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1672
+#: ../src/core/control/Control.cpp:1676
 msgid "That file does not exist:\n"
 "\"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1778
+#: ../src/core/control/Control.cpp:1782
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "No se pudo encontrar el archivo de fondo adjunto. Podría haber sido movido, renombrado o eliminado."
 
-#: ../src/core/control/Control.cpp:1781
+#: ../src/core/control/Control.cpp:1785
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "No se ha encontrado el archivo de fondo \"{1}\". Puede haber sido movido, renombrado o eliminado.\n"
 "Fue visto por última vez en: \"{2}\""
 
-#: ../src/core/control/Control.cpp:1791
+#: ../src/core/control/Control.cpp:1795
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Archivo de reemplazo propuesto: \"{1}\""
 
-#: ../src/core/control/Control.cpp:1796
+#: ../src/core/control/Control.cpp:1800
 msgid "Select another PDF"
 msgstr "Seleccionar otro PDF"
 
-#: ../src/core/control/Control.cpp:1797
+#: ../src/core/control/Control.cpp:1801
 msgid "Remove PDF Background"
 msgstr "Quitar fondo PDF"
 
-#: ../src/core/control/Control.cpp:1801
+#: ../src/core/control/Control.cpp:1805
 msgid "Use proposed PDF"
 msgstr "Usar el PDF propuesto"
 
-#: ../src/core/control/Control.cpp:1804
+#: ../src/core/control/Control.cpp:1808
 msgid "Missing PDF background file"
 msgstr "Falta el archivo de fondo del PDF"
 
-#: ../src/core/control/Control.cpp:1933
+#: ../src/core/control/Control.cpp:1937
 msgid "Select font"
 msgstr "Seleccionar fuente"
 
-#: ../src/core/control/Control.cpp:1952
+#: ../src/core/control/Control.cpp:1956
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Seleccionar color"
 
-#: ../src/core/control/Control.cpp:1977
+#: ../src/core/control/Control.cpp:1981
 msgid "Unsaved Document"
 msgstr "Documento no guardado"
 
-#: ../src/core/control/Control.cpp:2113
+#: ../src/core/control/Control.cpp:2123
 msgid "Document file was removed."
 msgstr "Se eliminó el archivo del documento."
 
-#: ../src/core/control/Control.cpp:2113
+#: ../src/core/control/Control.cpp:2123
 msgid "This document is not saved yet."
 msgstr "Aún no se ha guardado este documento."
 
-#: ../src/core/control/Control.cpp:2115
+#: ../src/core/control/Control.cpp:2125
 msgid "Save As..."
 msgstr "Guardar como…"
 
-#: ../src/core/control/Control.cpp:2115 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2125 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "Guardar"
 
-#: ../src/core/control/Control.cpp:2118
+#: ../src/core/control/Control.cpp:2128
 msgid "Discard"
 msgstr "Descartar"
 
-#: ../src/core/control/Control.cpp:2203
+#: ../src/core/control/Control.cpp:2213
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr "La creación del subproceso de demostración de Gtk falló: {1} (código de salida: {2})"
 

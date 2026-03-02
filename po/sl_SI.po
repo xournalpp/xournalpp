@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-23 11:46+0000\n"
-"PO-Revision-Date: 2026-02-27 21:41\n"
+"POT-Creation-Date: 2026-02-28 08:36+0000\n"
+"PO-Revision-Date: 2026-03-01 04:56\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -31,63 +31,63 @@ msgstr "Napaka datotečnega sistema:{1}"
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "Ni bilko možno odstraniti stare Autosave datoteke \"{1}\": {2}"
 
-#: ../src/core/control/Control.cpp:575
+#: ../src/core/control/Control.cpp:579
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "Izbrisali ste aktivno orodno vrstico. Preklapljanje na privzeto vrstico."
 
-#: ../src/core/control/Control.cpp:595
+#: ../src/core/control/Control.cpp:599
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Nastavitev orodne vrstice {1} je določena. Želite narediti kopijo za urejanje?"
 
-#: ../src/core/control/Control.cpp:598 ../src/core/control/Control.cpp:1570
+#: ../src/core/control/Control.cpp:602 ../src/core/control/Control.cpp:1574
 msgid "Yes"
 msgstr "Da"
 
-#: ../src/core/control/Control.cpp:598 ../src/core/control/Control.cpp:1570
+#: ../src/core/control/Control.cpp:602 ../src/core/control/Control.cpp:1574
 msgid "No"
 msgstr "Ne"
 
-#: ../src/core/control/Control.cpp:826 ../src/core/control/Control.cpp:1798
-#: ../src/core/control/Control.cpp:2120
+#: ../src/core/control/Control.cpp:830 ../src/core/control/Control.cpp:1802
+#: ../src/core/control/Control.cpp:2130
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: ../src/core/control/Control.cpp:827
+#: ../src/core/control/Control.cpp:831
 msgid "Insert after current page"
 msgstr "Vstavi za trenutno stranjo"
 
-#: ../src/core/control/Control.cpp:828
+#: ../src/core/control/Control.cpp:832
 msgid "Insert at end"
 msgstr "Vstavi na koncu"
 
-#: ../src/core/control/Control.cpp:831
+#: ../src/core/control/Control.cpp:835
 msgid "_Journal"
 msgstr "_Dnevnik"
 
-#: ../src/core/control/Control.cpp:831
+#: ../src/core/control/Control.cpp:835
 msgid "Paper B_ackground"
 msgstr "O_zadje papirja"
 
-#: ../src/core/control/Control.cpp:832
+#: ../src/core/control/Control.cpp:836
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:42
 msgid "With PDF background"
 msgstr "S PDF ozadjem"
 
-#: ../src/core/control/Control.cpp:835
+#: ../src/core/control/Control.cpp:839
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:878
+#: ../src/core/control/Control.cpp:882
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Na voljo ni PDF strani za dodajanje. Morda boste morali znova odpreti dokument."
 
-#: ../src/core/control/Control.cpp:892
+#: ../src/core/control/Control.cpp:896
 msgid "Unable to retrieve pdf page."
 msgstr "Ni možno pridobiti PDF strani."
 
-#: ../src/core/control/Control.cpp:1494
+#: ../src/core/control/Control.cpp:1498
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -95,113 +95,113 @@ msgstr "Ne odpirajte Autosave datotek. Morda bodo prepisane!\n"
 "Kopirajte datoteke v drugo mapo.\n"
 "Datotek iz Mape {1} ni mogoče odpreti."
 
-#: ../src/core/control/Control.cpp:1514
+#: ../src/core/control/Control.cpp:1518
 msgid "file: {1}"
 msgstr "datoteka: {1}"
 
-#: ../src/core/control/Control.cpp:1547
+#: ../src/core/control/Control.cpp:1551
 msgid "Error opening file \"{1}\""
 msgstr "napaka pri odpiranju datoteke \"{1}\""
 
-#: ../src/core/control/Control.cpp:1572
+#: ../src/core/control/Control.cpp:1576
 msgid "File version mismatch"
 msgstr "Verziji datoteke se ne skladata"
 
-#: ../src/core/control/Control.cpp:1573
+#: ../src/core/control/Control.cpp:1577
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Datoteka, ki se nalaga je v formatu, ki je novejši od trenutno podprtega v tej verziji Xournal++ in se morda ne bo naložila pravilno. Jo še vedno odprem?"
 
-#: ../src/core/control/Control.cpp:1596
+#: ../src/core/control/Control.cpp:1600
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr "Napaka branja PDF \"{1}\"\n"
 "{2}"
 
-#: ../src/core/control/Control.cpp:1617
+#: ../src/core/control/Control.cpp:1621
 msgid "Error reading PNG file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1652
+#: ../src/core/control/Control.cpp:1656
 msgid "Error reading template file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1671
+#: ../src/core/control/Control.cpp:1675
 msgid "Failed to determine if path exists \"{1}\": {2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1672
+#: ../src/core/control/Control.cpp:1676
 msgid "That file does not exist:\n"
 "\"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1778
+#: ../src/core/control/Control.cpp:1782
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Priložene datoteke ozadja ni bilo mogoče najti. Mogoče je bila premaknjena, preimenovana ali izbrisana."
 
-#: ../src/core/control/Control.cpp:1781
+#: ../src/core/control/Control.cpp:1785
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Datoteke ozadja \"{1}\" ni bilo mogoče najti. Mogoče je bila premaknjena, preimenovana ali izbrisana.\n"
 "Nazadnje je bila na: \"{2}\""
 
-#: ../src/core/control/Control.cpp:1791
+#: ../src/core/control/Control.cpp:1795
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Predlagana zamenjava datoteke: \"{1}\""
 
-#: ../src/core/control/Control.cpp:1796
+#: ../src/core/control/Control.cpp:1800
 msgid "Select another PDF"
 msgstr "Izberite drug PDF"
 
-#: ../src/core/control/Control.cpp:1797
+#: ../src/core/control/Control.cpp:1801
 msgid "Remove PDF Background"
 msgstr "Odstrani ozadje PDF-ja"
 
-#: ../src/core/control/Control.cpp:1801
+#: ../src/core/control/Control.cpp:1805
 msgid "Use proposed PDF"
 msgstr "Uporabi predlagani PDF"
 
-#: ../src/core/control/Control.cpp:1804
+#: ../src/core/control/Control.cpp:1808
 msgid "Missing PDF background file"
 msgstr "Manjka PDF datoteka ozadja"
 
-#: ../src/core/control/Control.cpp:1933
+#: ../src/core/control/Control.cpp:1937
 msgid "Select font"
 msgstr "Izberi pisavo"
 
-#: ../src/core/control/Control.cpp:1952
+#: ../src/core/control/Control.cpp:1956
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Izberi barvo"
 
-#: ../src/core/control/Control.cpp:1977
+#: ../src/core/control/Control.cpp:1981
 msgid "Unsaved Document"
 msgstr "Neshranjen dokument"
 
-#: ../src/core/control/Control.cpp:2113
+#: ../src/core/control/Control.cpp:2123
 msgid "Document file was removed."
 msgstr "Datoteka dokumenta je bila odstranjena."
 
-#: ../src/core/control/Control.cpp:2113
+#: ../src/core/control/Control.cpp:2123
 msgid "This document is not saved yet."
 msgstr "Ta dokument še ni shranjen."
 
-#: ../src/core/control/Control.cpp:2115
+#: ../src/core/control/Control.cpp:2125
 msgid "Save As..."
 msgstr "Shrani kot..."
 
-#: ../src/core/control/Control.cpp:2115 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2125 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "Shrani"
 
-#: ../src/core/control/Control.cpp:2118
+#: ../src/core/control/Control.cpp:2128
 msgid "Discard"
 msgstr "Zavrzi"
 
-#: ../src/core/control/Control.cpp:2203
+#: ../src/core/control/Control.cpp:2213
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
