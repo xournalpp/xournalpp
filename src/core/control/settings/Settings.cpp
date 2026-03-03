@@ -62,6 +62,7 @@ void Settings::loadDefault() {
 
     this->maximized = false;
     this->showPairedPages = false;
+    this->showPageShadow = true;
     this->presentationMode = false;
 
     this->numColumns = 1;  // only one of these applies at a time
@@ -469,6 +470,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->layoutBottomToTop = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("showPairedPages")) == 0) {
         this->showPairedPages = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("showPageShadow")) == 0) {
+        this->showPageShadow = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("numPairsOffset")) == 0) {
         this->numPairsOffset = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("presentationMode")) == 0) {
@@ -1036,6 +1039,7 @@ void Settings::save() {
     SAVE_INT_PROP(numRows);
     SAVE_BOOL_PROP(viewFixedRows);
     SAVE_BOOL_PROP(showPairedPages);
+    SAVE_BOOL_PROP(showPageShadow);
     SAVE_BOOL_PROP(layoutVertical);
     SAVE_BOOL_PROP(layoutRightToLeft);
     SAVE_BOOL_PROP(layoutBottomToTop);
@@ -1802,6 +1806,17 @@ void Settings::setShowPairedPages(bool showPairedPages) {
 }
 
 auto Settings::isShowPairedPages() const -> bool { return this->showPairedPages; }
+
+void Settings::setShowPageShadow(bool showPageShadow) {
+    if (this->showPageShadow == showPageShadow) {
+        return;
+    }
+
+    this->showPageShadow = showPageShadow;
+    save();
+}
+
+auto Settings::isShowPageShadow() const -> bool { return this->showPageShadow; }
 
 void Settings::setPresentationMode(bool presentationMode) {
     if (this->presentationMode == presentationMode) {

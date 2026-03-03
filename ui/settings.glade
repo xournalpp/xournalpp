@@ -2969,7 +2969,7 @@ This setting can make it easier to draw with touch. </property>
                                         <property name="can-focus">False</property>
                                         <property name="label-xalign">0.009999999776482582</property>
                                         <child>
-                                          <!-- n-columns=2 n-rows=7 -->
+                                          <!-- n-columns=2 n-rows=8 -->
                                           <object class="GtkGrid" id="grid2">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
@@ -3203,6 +3203,21 @@ This setting can make it easier to draw with touch. </property>
                                               <packing>
                                                 <property name="left-attach">0</property>
                                                 <property name="top-attach">5</property>
+                                                <property name="width">2</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkCheckButton" id="cbShowPageShadow">
+                                                <property name="label" translatable="yes">Show shadow behind pages</property>
+                                                <property name="name">cbShowPageShadow</property>
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">True</property>
+                                                <property name="receives-default">False</property>
+                                                <property name="draw-indicator">True</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left-attach">0</property>
+                                                <property name="top-attach">7</property>
                                                 <property name="width">2</property>
                                               </packing>
                                             </child>

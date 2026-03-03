@@ -243,6 +243,9 @@ public:
     void setShowPairedPages(bool showPairedPages);
     bool isShowPairedPages() const;
 
+    void setShowPageShadow(bool showPageShadow);
+    bool isShowPageShadow() const;
+
     void setPresentationMode(bool presentationMode);
     bool isPresentationMode() const;
 
@@ -829,6 +832,11 @@ private:
      *  Pairs pages
      */
     bool showPairedPages{};
+
+    /**
+     *  Show shadow behind pages
+     */
+    bool showPageShadow{};
 
     /**
      *  Sets presentation mode
