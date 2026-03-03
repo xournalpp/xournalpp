@@ -67,4 +67,5 @@ private:
     xoj::util::GSourceURef fadeoutTimer;
     uint8_t fadeoutAlpha = 255;
     const unsigned int fadeoutStartDelay;
+    bool hasFinishedStrokes;
 };
