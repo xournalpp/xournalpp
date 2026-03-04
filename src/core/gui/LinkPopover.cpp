@@ -4,6 +4,7 @@
 
 #include "gui/PageView.h"     // for PageView
 #include "gui/XournalView.h"  // for XournalView
+#include "util/XojMsgBox.h"   // for XojMsgBox
 #include "util/i18n.h"        // for _, FS
 #include "util/safe_casts.h"  // for round_cast
 
@@ -16,6 +17,11 @@ LinkPopover::LinkPopover(XournalView* view): view(view) {
     gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(this->label), true, true, POPOVER_PADDING);
     gtk_container_add(GTK_CONTAINER(this->popover), vbox);
     gtk_widget_show_all(GTK_WIDGET(vbox));
+    g_signal_connect(this->label, "activate-link", G_CALLBACK(+[](GtkLabel*, gchar* uri, gpointer) {
+                         XojMsgBox::openURL(nullptr, uri);
+                         return true;  // default handler does not work on Windows
+                     }),
+                     nullptr);
 }
 
 LinkPopover::~LinkPopover() {

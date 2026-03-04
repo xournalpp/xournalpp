@@ -93,14 +93,7 @@ void LinkHandler::select(const PageRef& page, const int x, const int y, const bo
             Link* link = dynamic_cast<Link*>(e.get());  // link on which user clicked
 
             if (controlDown) {
-                GError* error = NULL;
-                gtk_show_uri_on_window(NULL, link->getUrl().c_str(), GDK_CURRENT_TIME, &error);
-                if (error != NULL) {
-                    auto* win = control->getGtkWindow();
-                    std::string msg = FS(_F("Error opening “{1}”: {2}") % link->getUrl() % error->message);
-                    XojMsgBox::showMessageToUser(win, msg, GTK_MESSAGE_ERROR);
-                    g_error_free(error);
-                }
+                XojMsgBox::openURL(nullptr, link->getUrl().c_str());
                 return;
             }
 
