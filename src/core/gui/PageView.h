@@ -41,7 +41,6 @@ class SearchControl;
 class Selector;
 class Settings;
 class Text;
-class Link;
 class TextEditor;
 class LinkHandler;
 class VerticalToolHandler;

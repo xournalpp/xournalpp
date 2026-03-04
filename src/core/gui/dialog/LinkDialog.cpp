@@ -8,13 +8,19 @@
 constexpr auto UI_FILE = "linkDialog.glade";
 constexpr auto UI_DIALOG_NAME = "linkDialog";
 
-void okButtonClicked(GtkButton* btn, LinkDialog* dialog) { dialog->okButtonPressed(btn); }
-void cancelButtonClicked(GtkButton* btn, LinkDialog* dialog) { dialog->cancelButtonPressed(btn); }
-void textChangedClb(GtkTextBuffer* buffer, LinkDialog* dialog) { dialog->textChanged(buffer); }
-void layoutToogledLeft(GtkToggleButton* source, LinkDialog* dialog) { dialog->layoutToggled(LinkAlignment::LEFT); };
-void layoutToogledCenter(GtkToggleButton* source, LinkDialog* dialog) { dialog->layoutToggled(LinkAlignment::CENTER); };
-void layoutToogledRight(GtkToggleButton* source, LinkDialog* dialog) { dialog->layoutToggled(LinkAlignment::RIGHT); };
-void urlPrefixChangedClb(GtkComboBoxText* source, LinkDialog* dialog) { dialog->urlPrefixChanged(source); };
+static void okButtonClicked(GtkButton* btn, LinkDialog* dialog) { dialog->okButtonPressed(btn); }
+static void cancelButtonClicked(GtkButton* btn, LinkDialog* dialog) { dialog->cancelButtonPressed(btn); }
+static void textChangedClb(GtkTextBuffer* buffer, LinkDialog* dialog) { dialog->textChanged(buffer); }
+static void layoutToogledLeft(GtkToggleButton* source, LinkDialog* dialog) {
+    dialog->layoutToggled(LinkAlignment::LEFT);
+};
+static void layoutToogledCenter(GtkToggleButton* source, LinkDialog* dialog) {
+    dialog->layoutToggled(LinkAlignment::CENTER);
+};
+static void layoutToogledRight(GtkToggleButton* source, LinkDialog* dialog) {
+    dialog->layoutToggled(LinkAlignment::RIGHT);
+};
+static void urlPrefixChangedClb(GtkComboBoxText* source, LinkDialog* dialog) { dialog->urlPrefixChanged(source); };
 
 LinkDialog::LinkDialog(Control* control, std::function<void(LinkDialog*)> callbackOK,
                        std::function<void()> callbackCancel):
@@ -22,7 +28,7 @@ LinkDialog::LinkDialog(Control* control, std::function<void(LinkDialog*)> callba
 
     Builder builder(control->getGladeSearchPath(), UI_FILE);
 
-    this->linkDialog = static_cast<xoj::util::raii::GtkWindowUPtr>(GTK_WINDOW(builder.get(UI_DIALOG_NAME)));
+    this->linkDialog.reset(GTK_WINDOW(builder.get(UI_DIALOG_NAME)));
     this->textInput = GTK_TEXT_VIEW(builder.get("inpLinkEditText"));
     this->urlInput = GTK_ENTRY(builder.get("inpLinkEditURL"));
     this->okButton = GTK_BUTTON(builder.get("btnLinkEditOk"));
