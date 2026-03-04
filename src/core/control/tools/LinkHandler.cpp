@@ -10,6 +10,7 @@
 #include "gui/LinkPopover.h"           // for LinkPopover
 #include "gui/PageView.h"              // for PageView
 #include "gui/XournalView.h"           // for XournalView
+#include "gui/XournalppCursor.h"       // for XournalppCursor
 #include "gui/dialog/LinkDialog.h"     // for LinkDialog
 #include "model/Document.h"            // for Document
 #include "model/Link.h"                // for Link
@@ -111,7 +112,6 @@ void LinkHandler::select(const PageRef& page, const int x, const int y, const bo
                 // FixMe !!
                 this->selectPopover->linkTo(link);
                 this->selectPopover->updateLabel(true);
-                this->selectPopover->show_all();
                 this->selectPopover->popup();
             } else {
                 link->setSelected(false);
@@ -154,21 +154,16 @@ void LinkHandler::highlight(const PageRef& page, const int x, const int y, XojPa
             link->setHighlighted(true);
             this->highlightPopover->linkTo(link);
             page->fireElementChanged(link);
-            GdkWindow* window = gtk_widget_get_window(view->getWidget());
-            GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window), "alias");
-            gdk_window_set_cursor(window, cursor);
+            view->getControl()->getCursor()->setIsLinkHighlighted(true);
             this->highlightPopover->updateLabel(false);
             if (!link->isSelected()) {
-                this->highlightPopover->show_all();
                 this->highlightPopover->popup();
             }
         } else if (e->getType() == ELEMENT_LINK && this->highlightPopover->getLink() == e.get()) {
             Link* link = dynamic_cast<Link*>(e.get());
             link->setHighlighted(false);
             page->fireElementChanged(link);
-            GdkWindow* window = gtk_widget_get_window(view->getWidget());
-            GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window), "hand2");
-            gdk_window_set_cursor(window, cursor);
+            view->getControl()->getCursor()->setIsLinkHighlighted(false);
             if (!this->highlightPopover->getLink()->isSelected()) {
                 this->highlightPopover->popdown();
             }
@@ -178,6 +173,6 @@ void LinkHandler::highlight(const PageRef& page, const int x, const int y, XojPa
 }
 
 void LinkHandler::zoomChanged() {
-    this->selectPopover->positionPopover();
-    this->highlightPopover->positionPopover();
+    this->selectPopover->hide();
+    this->highlightPopover->hide();
 }

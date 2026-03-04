@@ -35,7 +35,6 @@ class Layer;
 class Stroke;
 class TexImage;
 class Text;
-class Link;
 
 enum ParserPosition {
     PARSER_POS_NOT_STARTED = 1,  // Waiting for opening <xounal> tag
@@ -146,7 +145,6 @@ private:
     Layer* layer;
     Stroke* stroke;
     Text* text;
-    Link* link;
     Image* image;
     TexImage* teximage;
     GHashTable* audioFiles = nullptr;

@@ -497,9 +497,8 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
                 this->xournal->clearSelection();
                 toolHandler->selectTool(TOOL_LINK);
                 toolHandler->fireToolChanged();
-                // Simulate a button double press; there's too many things that we
-                // could forget to do if we manually call startEditing
-                this->onButtonDoublePressEvent(pos);
+                startLink();
+                this->linkHandler->startEditing(this->getPage(), int(x), int(y));
             }
         }
     } else if (toolType == TOOL_TEXT) {

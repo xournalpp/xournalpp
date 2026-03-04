@@ -734,8 +734,7 @@ void LoadHandler::parseTexImage() {
 }
 
 void LoadHandler::parseLink() {
-    auto linkOwn = std::make_unique<Link>();
-    this->link = linkOwn.get();
+    auto link = std::make_unique<Link>();
 
     PangoAlignment align = static_cast<PangoAlignment>(LoadHandlerHelper::getAttribInt("align", this));
     const char* sFont = LoadHandlerHelper::getAttrib("font", false, this);
@@ -745,13 +744,13 @@ void LoadHandler::parseLink() {
     const char* url = LoadHandlerHelper::getAttrib("url", false, this);
     const char* text = LoadHandlerHelper::getAttrib("text", false, this);
 
-    this->link->setAlignment(align);
+    link->setAlignment(align);
 
-    this->link->setText(std::string(g_uri_unescape_string(text, NULL)));
-    this->link->setUrl(std::string(g_uri_unescape_string(url, NULL)));
+    link->setText(std::string(g_uri_unescape_string(text, NULL)));
+    link->setUrl(std::string(g_uri_unescape_string(url, NULL)));
 
-    this->link->setX(x);
-    this->link->setY(y);
+    link->setX(x);
+    link->setY(y);
 
     XojFont& f = link->getFont();
     f.setName(sFont);
@@ -761,7 +760,7 @@ void LoadHandler::parseLink() {
     LoadHandlerHelper::parseColor(sColor, color, this);
     link->setColor(color);
 
-    this->layer->addElement(std::move(linkOwn));
+    this->layer->addElement(std::move(link));
 }
 
 void LoadHandler::parseAttachment() {
@@ -956,7 +955,6 @@ void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* el
         handler->text = nullptr;
     } else if (handler->pos == PARSER_POS_IN_LINK && strcmp(elementName, "link") == 0) {
         handler->pos = PARSER_POS_IN_LAYER;
-        handler->link = nullptr;
     } else if (handler->pos == PARSER_POS_IN_IMAGE && strcmp(elementName, "image") == 0) {
         xoj_assert_message(handler->image->getImage() != nullptr, "image can't be rendered");
         handler->pos = PARSER_POS_IN_LAYER;
