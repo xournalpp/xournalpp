@@ -414,9 +414,6 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         }
     } else if (h->getToolType() == TOOL_TEXT) {
         startText(x, y);
-    } else if (h->getToolType() == TOOL_LINK) {
-        startLink();
-        this->linkHandler->select(this->getPage(), int(x), int(y), pos.isControlDown(), this);
     } else if (h->getToolType() == TOOL_IMAGE) {
         // start selecting the size for the image
         this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);
@@ -494,11 +491,7 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
                 }
                 control->runLatex();
             } else if (elemType == ELEMENT_LINK) {
-                this->xournal->clearSelection();
-                toolHandler->selectTool(TOOL_LINK);
-                toolHandler->fireToolChanged();
-                startLink();
-                this->linkHandler->startEditing(this->getPage(), int(x), int(y));
+                this->startEditingOnButtonRelease = true;
             }
         }
     } else if (toolType == TOOL_TEXT) {
@@ -517,8 +510,7 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
             this->inputHandler.reset();
         }
     } else if (toolType == TOOL_LINK) {
-        startLink();
-        this->linkHandler->startEditing(this->getPage(), int(x), int(y));
+        this->startEditingOnButtonRelease = true;
     }
 
     return true;
@@ -585,7 +577,7 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
         this->eraser->erase(x, y);
     } else if (h->getActiveTool()->getToolType() == TOOL_LINK) {
         startLink();
-        this->linkHandler->highlight(this->getPage(), int(x), int(y), this);
+        this->linkHandler->highlight(this->getPage(), round_cast<int>(x), round_cast<int>(y), this);
     }
 
     return false;
@@ -673,6 +665,25 @@ void XojPageView::deleteView(xoj::view::OverlayView* view) {
 }
 
 auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
+    double zoom = xournal->getZoom();
+    auto x = round_cast<int>(pos.x / zoom);
+    auto y = round_cast<int>(pos.y / zoom);
+
+    if (this->startEditingOnButtonRelease) {
+        this->startEditingOnButtonRelease = false;
+        if (x < 0 || y < 0) {
+            return false;
+        }
+        if (this->xournal->getSelection()) {
+            this->xournal->clearSelection();
+            ToolHandler* h = this->xournal->getControl()->getToolHandler();
+            h->selectTool(TOOL_LINK);
+            h->fireToolChanged();
+        }
+        startLink();
+        this->linkHandler->startEditing(this->getPage(), x, y);
+    }
+
     if (currentSequenceDeviceId != pos.deviceId) {
         // This event is not from the device which started the sequence: reject it
         return false;
@@ -694,6 +705,12 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
     } else if (auto tt = control->getToolHandler()->getToolType();
                this->laserPointer && (tt == TOOL_LASER_POINTER_PEN || tt == TOOL_LASER_POINTER_HIGHLIGHTER)) {
         this->laserPointer->onButtonReleaseEvent(pos, xournal->getZoom());
+    } else if (control->getToolHandler()->getToolType() == TOOL_LINK) {
+        if (x < 0 || y < 0) {
+            return false;
+        }
+        startLink();
+        this->linkHandler->select(this->getPage(), x, y, pos.isControlDown(), this);
     }
 
     if (this->inEraser) {
