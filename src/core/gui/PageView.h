@@ -268,6 +268,7 @@ private:
     std::mutex drawingMutex;
 
     bool inEraser = false;
+    bool startEditingOnButtonRelease = false;
 
     /**
      * Vertical Space
