@@ -27,7 +27,7 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
                                std::function<void(size_t)> callback):
         BackgroundSelectDialogBase(gladeSearchPath, doc, settings, _("Select PDF Page")),
         callback(std::move(callback)) {
-    doc->lock();
+    doc->lock_shared();
     for (size_t i = 0; i < doc->getPdfPageCount(); i++) {
         XojPdfPageSPtr p = doc->getPdfPage(i);
         entries.emplace_back(std::make_unique<PdfElementView>(entries.size(), p, this));
@@ -50,7 +50,7 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
     }
     xoj_assert(used <= doc->getPdfPageCount());
     auto unused = doc->getPdfPageCount() - used;
-    doc->unlock();
+    doc->unlock_shared();
 
     cbUnusedOnly = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(
             (unused == 1 ? _("Show only not used pages (one unused page)") :

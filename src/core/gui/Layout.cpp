@@ -66,14 +66,12 @@ void Layout::maybeAddLastPage(Layout* layout) {
         // If the layout is 5px away from the end of the last page
         if (std::abs((layout->getMinimalHeight() - layout->getVisibleRect().y) - layout->getVisibleRect().height) < 5) {
             auto* doc = control->getDocument();
-            doc->lock();
+            doc->lock_shared();
             auto pdfPageCount = doc->getPdfPageCount();
-            doc->unlock();
+            auto lastPage = doc->getPageCount() - 1;
+            doc->unlock_shared();
             if (pdfPageCount == 0) {
                 auto currentPage = control->getCurrentPageNo();
-                doc->lock();
-                auto lastPage = doc->getPageCount() - 1;
-                doc->unlock();
                 if (currentPage == lastPage) {
                     control->insertNewPage(currentPage + 1, true);
                 }

@@ -113,7 +113,7 @@ void RenderJob::renderToBuffer(cairo_t* cr) const {
                                  TOOL_PLAY_OBJECT);
     localView.setPdfCache(this->view->xournal->getCache());
 
-    std::lock_guard<Document> lock(*this->view->xournal->getDocument());
+    std::shared_lock<Document> lock(*this->view->xournal->getDocument());
     localView.drawPage(this->view->page, cr, false);
 }
 

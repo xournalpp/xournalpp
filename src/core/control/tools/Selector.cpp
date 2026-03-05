@@ -22,7 +22,7 @@ auto Selector::finalize(PageRef page, bool disableMultilayer, Document* doc) -> 
     size_t layerId = 0;
 
     if (multiLayer && !disableMultilayer) {
-        std::lock_guard lock(*doc);
+        std::shared_lock lock(*doc);
         const auto layers = page->getLayersView();
         for (auto it = layers.rbegin(); it != layers.rend(); it++) {
             const Layer* l = *it;
@@ -44,7 +44,7 @@ auto Selector::finalize(PageRef page, bool disableMultilayer, Document* doc) -> 
             }
         }
     } else {
-        std::lock_guard lock(*doc);
+        std::shared_lock lock(*doc);
         const Layer* l = page->getSelectedLayer();
         Element::Index pos = 0;
         for (const auto& e: l->getElementsView()) {

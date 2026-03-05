@@ -59,7 +59,7 @@ void PreviewJob::drawPage() {
     PreviewRenderType type = this->sidebarPreview->getRenderType();
     Layer::Index layer = 0;
 
-    doc->lock();
+    doc->lock_shared();
 
     // getLayer is not defined for page preview
     if (type != RENDER_TYPE_PAGE_PREVIEW) {
@@ -110,7 +110,7 @@ void PreviewJob::drawPage() {
             break;
     }
 
-    doc->unlock();
+    doc->unlock_shared();
 }
 
 void PreviewJob::clipToPage() {
