@@ -112,9 +112,6 @@ private:
 [[maybe_unused]] [[nodiscard]] fs::path fromGFilename(const char* path);
 [[maybe_unused]] [[nodiscard]] GFilename toGFilename(fs::path const& path);
 
-
-void openFileWithDefaultApplication(const fs::path& filename);
-
 [[maybe_unused]] [[nodiscard]] bool isChildOrEquivalent(fs::path const& path, fs::path const& base);
 
 [[maybe_unused]] bool safeRenameFile(fs::path const& from, fs::path const& to);

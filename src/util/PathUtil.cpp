@@ -298,28 +298,6 @@ auto Util::fromGFilename(const char* path) -> fs::path { return GFilename(path).
 
 auto Util::toGFilename(fs::path const& path) -> GFilename { return GFilename(path); }
 
-void Util::openFileWithDefaultApplication(const fs::path& filename) {
-#ifdef __APPLE__
-    constexpr auto const OPEN_PATTERN = "open \"{1}\"";
-#elif _WIN32  // note the underscore: without it, it's not msdn official!
-    constexpr auto const OPEN_PATTERN = "start \"\" \"{1}\"";
-    /**
-     * start command requires a (possibly empty) title when there are quotes around the command
-     * https://stackoverflow.com/questions/27261692/how-do-i-use-quotes-in-cmd-start
-     */
-#else         // linux, unix, ...
-    constexpr auto const OPEN_PATTERN = "xdg-open \"{1}\"";
-#endif
-
-    std::string command = FS(FORMAT_STR(OPEN_PATTERN) % Util::getEscapedPath(filename));
-    if (system(command.c_str()) != 0) {
-        std::string msg = FS(_F("File couldn't be opened. You have to do it manually:\n"
-                                "URL: {1}") %
-                             filename.u8string());
-        XojMsgBox::showErrorToUser(nullptr, msg);
-    }
-}
-
 auto Util::getGettextFilepath(fs::path const& localeDir) -> fs::path {
     /// documentation of g_getenv is wrong, its UTF-8, see #5640
     const char* gettextEnv = g_getenv("TEXTDOMAINDIR");
