@@ -162,15 +162,16 @@ void PluginController::showPluginManager() const {
 #endif
 }
 
-auto PluginController::createMenuSections(GtkApplicationWindow* win) -> std::vector<GMenuModel*> {
+auto PluginController::createMenuSections(GtkApplicationWindow* win)
+        -> std::vector<std::pair<std::string, GMenuModel*>> {
 #ifdef ENABLE_PLUGINS
     size_t id = 0;
-    std::vector<GMenuModel*> sections;
+    std::vector<std::pair<std::string, GMenuModel*>> sections;
     for (auto&& p: this->plugins) {
         id = p->populateMenuSection(win, id);
         auto* section = p->getMenuSection();
         if (section) {
-            sections.emplace_back(section);
+            sections.emplace_back(p->getName(), section);
         }
     }
     return sections;

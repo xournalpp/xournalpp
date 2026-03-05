@@ -16,8 +16,10 @@ PluginsSubmenu::PluginsSubmenu(PluginController* pluginController, GtkApplicatio
 
     g_menu_append_section(submenu.get(), nullptr, G_MENU_MODEL(firstSection.get()));
 
-    for (auto* section: pluginController->createMenuSections(win)) {
-        g_menu_append_section(submenu.get(), nullptr, section);
+    for (auto& [pluginName, section]: pluginController->createMenuSections(win)) {
+        xoj::util::GObjectSPtr<GMenuItem> pluginSubmenuItem(g_menu_item_new_submenu(pluginName.c_str(), section),
+                                                            xoj::util::adopt);
+        g_menu_append_item(submenu.get(), pluginSubmenuItem.get());
     }
 }
 
