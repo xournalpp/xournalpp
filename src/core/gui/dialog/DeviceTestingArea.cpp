@@ -20,7 +20,6 @@
 #include "util/PopupWindowWrapper.h"
 #include "util/VersionInfo.h"
 #include "util/glib_casts.h"
-#include "util/gtk4_helper.h"  // for gtk_box_append, ...
 #include "util/i18n.h"
 #include "util/raii/GtkWindowUPtr.h"
 
@@ -28,7 +27,7 @@
 #include "DeviceListDialog.h"
 #include "filesystem.h"
 
-constexpr auto UI_FILE_NAME = "deviceTestingArea.glade";
+constexpr auto UI_FILE_NAME = "deviceTestingArea.ui";
 constexpr auto UI_MAIN_ID = "mainBox";
 
 static constexpr double PRESSURE_FACTOR = 20;
@@ -198,7 +197,7 @@ DeviceTestingArea::DeviceTestingArea(GladeSearchpath* gladeSearchPath, GtkBox* p
                               auto* dd = static_cast<D*>(d);
                               gtk_text_buffer_set_text(dd->view, dd->log->str().c_str(), -1);
                           }),
-                          new D{&data->ellipsizedLog, GTK_TEXT_BUFFER(builder.get<GObject>("logbuffer"))},
+                          new D{&data->ellipsizedLog, GTK_TEXT_BUFFER(builder.getObject("logbuffer"))},
                           xoj::util::closure_notify_cb<D>, GConnectFlags(0));
 
     auto* cbEmulateTipContactOnButtonPress = builder.get("cbEmulateTipContactOnButtonPress");

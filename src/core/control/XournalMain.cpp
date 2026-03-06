@@ -37,7 +37,7 @@
 #include "undo/UndoRedoHandler.h"            // for UndoRedoHandler
 #include "util/PathUtil.h"                   // for getConfigFolder, openFil...
 #include "util/PlaceholderString.h"          // for PlaceholderString
-#include "util/Util.h"                       // for execInUiThread
+#include "util/Util.h"                       // for execWhenIdle
 #include "util/VersionInfo.h"                // for getVersionInfo
 #include "util/XojMsgBox.h"                  // for XojMsgBox
 #include "util/i18n.h"                       // for _, FS, _F
@@ -428,7 +428,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
     const MigrateResult migrateResult = migrateSettings();
 
     app_data->gladePath = std::make_unique<GladeSearchpath>();
-    initResourcePath(app_data->gladePath.get(), "ui/about.glade");
+    initResourcePath(app_data->gladePath.get(), "ui/about.ui");
     initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
     initResourcePath(app_data->gladePath.get(), "ui/toolbar.ini", false);
 
@@ -447,12 +447,9 @@ void on_startup(GApplication* application, XMPtr app_data) {
     app_data->win->populate(app_data->gladePath.get());
 
     if (migrateResult.status != MigrateStatus::NotNeeded) {
-        Util::execInUiThread(
+        Util::execWhenIdle(
                 [=]() { XojMsgBox::showErrorToUser(app_data->control->getGtkWindow(), migrateResult.message); });
     }
-
-    gtk_application_set_menubar(GTK_APPLICATION(application), app_data->win->getMenuModel());
-    // Do we want stuff in gtk_application_set_app_menu?
 
     app_data->win->show(nullptr);
 
@@ -497,7 +494,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
 
                 // There is a timing issue with the layout
                 // This fixes it, see #405
-                Util::execInUiThread([ctrl]() { ctrl->getWindow()->getXournal()->layoutPages(); });
+                Util::execWhenIdle([ctrl]() { ctrl->getWindow()->getXournal()->layoutPages(); });
                 gtk_application_add_window(app, ctrl->getGtkWindow());
             });
 }

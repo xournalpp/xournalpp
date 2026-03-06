@@ -17,6 +17,7 @@
 #include <gtk/gtk.h>  // for GtkWidget
 
 #include "enums/Action.enum.h"
+#include "gui/toolbarMenubar/ToolbarSide.h"
 #include "util/raii/GObjectSPtr.h"
 #include "util/raii/GVariantSPtr.h"
 
@@ -45,18 +46,23 @@ public:
     auto operator=(AbstractToolItem&&) -> AbstractToolItem& = delete;  // Implement if desired
 
 public:
-    virtual xoj::util::WidgetSPtr createItem(bool horizontal) = 0;
-
-    xoj::util::WidgetSPtr createToolItem(bool horizontal);
+    struct Widgetry {
+        xoj::util::WidgetSPtr item;
+        xoj::util::WidgetSPtr proxy;
+    };
+    virtual Widgetry createItem(ToolbarSide s) = 0;
 
     const std::string& getId() const;
     Category getCategory() const;
+
     virtual std::string getToolDisplayName() const = 0;
 
-    /**
-     * Returns: (transfer floating)
-     */
+
+    /// Returns a floating GtkImage representing the tool
     virtual GtkWidget* getNewToolIcon() const = 0;
+
+    /// Returns a GdkPaintable representing the tool
+    virtual xoj::util::GObjectSPtr<GdkPaintable> createPaintable(GdkSurface* target) const = 0;
 
 protected:
     std::string id;
