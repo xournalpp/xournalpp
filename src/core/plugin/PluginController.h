@@ -13,6 +13,7 @@
 
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include <gtk/gtk.h>  // for GtkApplicationWindow
@@ -34,10 +35,10 @@ public:
     void registerToolbar();
 
     /**
-     * @brief Create menu sections (one per enabled plugin with menu entries)
-     * The data is owned by the Plugin's themselves - do not unref
+     * @brief Create menu entries (one submenu per enabled plugin with menu entries)
+     * The data is owned by the Plugin's themselves - do not unref the GMenuModel*
      */
-    std::vector<GMenuModel*> createMenuSections(GtkApplicationWindow* win);
+    std::vector<std::pair<std::string, GMenuModel*>> createMenuSections(GtkApplicationWindow* win);
 
     /**
      * Add toolbar buttons
