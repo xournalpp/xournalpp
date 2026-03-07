@@ -63,7 +63,7 @@ void LinkHandler::startEditing(const PageRef& page, const int x, const int y) {
         dialog.show(control->getGtkWindow());
     } else {
         this->linkElement->setHighlighted(true);
-        page->firePageChanged();
+        page->fireElementChanged(this->linkElement);
         auto dialog = xoj::popup::PopupWindowWrapper<LinkDialog>(
                 this->control,
                 [this, page = page](LinkDialog* dlg) {

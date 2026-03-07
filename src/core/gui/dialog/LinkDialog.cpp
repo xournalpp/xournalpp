@@ -56,7 +56,7 @@ LinkDialog::LinkDialog(Control* control, std::function<void(LinkDialog*)> callba
     this->setMaxDialogHeight(control->getGtkWindow());
 }
 
-LinkDialog::~LinkDialog() = default;
+LinkDialog::~LinkDialog() { this->callbackCancel(); };
 
 void LinkDialog::preset(XojFont font, std::string text, std::string url, LinkAlignment layout) {
     GtkTextBuffer* textBuffer = gtk_text_view_get_buffer(this->textInput);
@@ -100,10 +100,7 @@ void LinkDialog::okButtonPressed(GtkButton* btn) {
     gtk_window_close(this->linkDialog.get());
 }
 
-void LinkDialog::cancelButtonPressed(GtkButton* btn) {
-    this->callbackCancel();
-    gtk_window_close(this->linkDialog.get());
-}
+void LinkDialog::cancelButtonPressed(GtkButton* btn) { gtk_window_close(this->linkDialog.get()); }
 
 bool LinkDialog::isTextValid(const std::string& text) {
     return !std::all_of(text.begin(), text.end(), [](unsigned char c) { return std::isblank(c); });
