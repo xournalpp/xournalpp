@@ -15,7 +15,7 @@
 
 #include <cstddef>        // for size_t
 #include <memory>         // for unique_ptr
-#include <mutex>          // for mutex
+#include <shared_mutex>   // for shared_mutex
 #include <string>         // for string
 #include <unordered_map>  // for unordered_map
 #include <vector>         // for vector
@@ -93,12 +93,15 @@ public:
 
     bool isAttachPdf() const;
 
-    cairo_surface_t* getPreview() const;
-    void setPreview(cairo_surface_t* preview);
+    xoj::util::CairoSurfaceSPtr getPreview() const;
+    void setPreview(xoj::util::CairoSurfaceSPtr preview);
 
     void lock();
     void unlock();
-    bool tryLock();
+    bool try_lock();
+    void lock_shared();
+    void unlock_shared();
+    bool try_lock_shared();
 
     inline Util::PathStorageMode getPathStorageMode() const { return pathStorageMode; }
     inline void setPathStorageMode(Util::PathStorageMode m) { pathStorageMode = m; }
@@ -165,12 +168,12 @@ private:
     /**
      * The preview for the file
      */
-    cairo_surface_t* preview = nullptr;
+    xoj::util::CairoSurfaceSPtr preview;
 
     /**
      * The lock of the document
      */
-    std::mutex documentLock;
+    std::shared_mutex documentLock;
 };
 
 template <class InputIter>

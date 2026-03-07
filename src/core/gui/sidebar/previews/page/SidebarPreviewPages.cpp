@@ -41,14 +41,14 @@ void SidebarPreviewPages::updatePreviews() {
     this->previews.clear();
 
     Document* doc = this->getControl()->getDocument();
-    doc->lock();
+    doc->lock_shared();
     size_t len = doc->getPageCount();
     for (size_t i = 0; i < len; i++) {
         auto p = std::make_unique<SidebarPreviewPageEntry>(this, doc->getPage(i), i);
         gtk_fixed_put(this->miniaturesContainer.get(), p->getWidget(), 0, 0);
         this->previews.emplace_back(std::move(p));
     }
-    doc->unlock();
+    doc->unlock_shared();
 
     layout();
 }
@@ -90,11 +90,9 @@ void SidebarPreviewPages::pageDeleted(size_t page) {
 
 void SidebarPreviewPages::pageInserted(size_t page) {
     Document* doc = control->getDocument();
-    doc->lock();
-
+    doc->lock_shared();
     auto p = std::make_unique<SidebarPreviewPageEntry>(this, doc->getPage(page), page);
-
-    doc->unlock();
+    doc->unlock_shared();
 
     gtk_fixed_put(this->miniaturesContainer.get(), p->getWidget(), 0, 0);
     this->previews.insert(this->previews.begin() + as_signed(page), std::move(p));

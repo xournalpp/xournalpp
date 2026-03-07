@@ -57,10 +57,10 @@ void SaveHandler::prepareSave(const Document* doc, const fs::path& target) {
 
     writeHeader();
 
-    cairo_surface_t* preview = doc->getPreview();
+    auto preview = doc->getPreview();
     if (preview) {
         auto* image = new XmlImageNode("preview");
-        image->setImage(preview);
+        image->setImage(preview.get());
         this->root->addChild(image);
     }
 
@@ -281,16 +281,8 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
             background->setAttrib("domain", "attach");
             background->setAttrib("filename", filename);
 
-            backgroundImages.emplace_back(p->getBackgroundImage());
-
-            /*
-             * Because BackgroundImage is basically a wrapped pointer, the following lines actually modify
-             * *(p->getBackgroundImage().content) and thus the Document.
-             * TODO Find a better way
-             */
-            backgroundImages.back().setFilepath(filename);
-            backgroundImages.back().setCloneId(id);
-
+            // Store the changed info to update the document in updateDocumentInfo()
+            backgroundImages.emplace_back(ImageInfo{p->getBackgroundImage(), fs::path(filename), id});
             g_free(filename);
         } else {
             // "absolute" just means path. For backward compatibility, it is hard to change the word
@@ -299,14 +291,8 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
                                                            doc->getPathStorageMode());
             background->setAttrib("filename", char_cast(normalizedPath.c_str()));
 
-            BackgroundImage img = p->getBackgroundImage();
-
-            /*
-             * Because BackgroundImage is basically a wrapped pointer, the following line actually modifies
-             * *(p->getBackgroundImage().content) and thus the Document.
-             * TODO Find a better way
-             */
-            img.setCloneId(id);
+            // Store the changed info to update the document in updateDocumentInfo()
+            backgroundImages.emplace_back(ImageInfo{p->getBackgroundImage(), std::nullopt, id});
         }
     } else {
         writeSolidBackground(background, p);
@@ -359,23 +345,35 @@ void SaveHandler::saveTo(const fs::path& filepath, ProgressListener* listener) {
 }
 
 void SaveHandler::saveTo(OutputStream* out, const fs::path& filepath, ProgressListener* listener) {
-    // XMLNode should be locale-safe ( store doubles using Locale 'C' format
-
     out->write("<?xml version=\"1.0\" standalone=\"no\"?>\n");
     root->writeOut(out, listener);
 
-    for (const BackgroundImage& img: backgroundImages) {
-        auto tmpfn = (fs::path(filepath) += ".") += img.getFilepath();
-        // Are we certain that does not modify the GdkPixbuf?
-        if (!gdk_pixbuf_save(const_cast<GdkPixbuf*>(img.getPixbuf()), Util::toGFilename(tmpfn).c_str(), "png", nullptr,
-                             nullptr)) {
-            if (!this->errorMessage.empty()) {
-                this->errorMessage += "\n";
-            }
+    for (const auto& info: backgroundImages) {
+        if (info.newPath) {
+            auto tmpfn = (fs::path(filepath) += ".") += info.newPath.value();
+            // Are we certain that does not modify the GdkPixbuf?
+            if (!gdk_pixbuf_save(const_cast<GdkPixbuf*>(info.image.getPixbuf()), Util::toGFilename(tmpfn).c_str(),
+                                 "png", nullptr, nullptr)) {
+                if (!this->errorMessage.empty()) {
+                    this->errorMessage += "\n";
+                }
 
-            this->errorMessage += FS(_F("Could not write background \"{1}\". Continuing anyway.") % tmpfn.u8string());
+                this->errorMessage +=
+                        FS(_F("Could not write background \"{1}\". Continuing anyway.") % tmpfn.u8string());
+            }
         }
     }
 }
+
+void SaveHandler::updateDocumentInfo(Document* doc) {
+    for (auto& info: backgroundImages) {
+        if (info.newPath) {
+            info.image.setFilepath(std::move(info.newPath.value()));
+        }
+        info.image.setCloneId(info.newId);
+    }
+    backgroundImages.clear();
+}
+
 
 auto SaveHandler::getErrorMessage() -> const std::string& { return this->errorMessage; }

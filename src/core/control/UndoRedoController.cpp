@@ -3,6 +3,7 @@
 #include <algorithm>  // for copy, max
 #include <cstddef>    // for size_t
 #include <iterator>   // for back_insert_iterator, back_...
+#include <mutex>      // for unique_lock
 
 #include "control/tools/EditSelection.h"  // for EditSelection
 #include "gui/MainWindow.h"               // for MainWindow
@@ -61,7 +62,7 @@ void UndoRedoController::after() {
     }
     if (!remainingElements.empty()) {
         auto removedElements = layer->removeElementsAt(remainingElements);
-        lock.unlock();  // Not needed anymore. For all other paths, the lock is released via ~unique_lock()
+        lock.unlock();  // For all other paths, the lock is released via ~unique_lock()
         auto [sel, bounds] =
                 SelectionFactory::createFromFloatingElements(control, page, layer, view, std::move(removedElements));
         control->getWindow()->getXournal()->setSelection(sel.release());

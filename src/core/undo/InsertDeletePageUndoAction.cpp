@@ -62,9 +62,9 @@ auto InsertDeletePageUndoAction::deletePage(Control* control) -> bool {
     //***This might kill whatever we've got selected
     control->clearSelectionEndText();
 
-    doc->lock();
+    doc->lock_shared();
     auto pNr = doc->indexOf(page);
-    doc->unlock();
+    doc->unlock_shared();
     if (pNr == npos) {
         // this should not happen
         return false;

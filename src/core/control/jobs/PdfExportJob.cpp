@@ -29,9 +29,9 @@ void PdfExportJob::setExtensionFromFilter(fs::path& file, const char* /*filterNa
 void PdfExportJob::run() {
     Document* doc = control->getDocument();
 
-    doc->lock();
+    doc->lock_shared();
     std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, control);
-    doc->unlock();
+    doc->unlock_shared();
 
     if (!pdfe->createPdf(this->filepath, false)) {
         this->errorMsg = pdfe->getLastError();

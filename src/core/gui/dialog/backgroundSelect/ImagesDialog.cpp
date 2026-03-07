@@ -61,7 +61,7 @@ ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Sett
 ImagesDialog::~ImagesDialog() = default;
 
 void ImagesDialog::loadImagesFromPages() {
-    doc->lock();
+    doc->lock_shared();
     for (size_t i = 0; i < doc->getPageCount(); i++) {
         PageRef p = doc->getPage(i);
 
@@ -82,7 +82,7 @@ void ImagesDialog::loadImagesFromPages() {
         iv->backgroundImage = p->getBackgroundImage();
         this->entries.emplace_back(iv);
     }
-    doc->unlock();
+    doc->unlock_shared();
 }
 
 auto ImagesDialog::isImageAlreadyInTheList(BackgroundImage& image) -> bool {

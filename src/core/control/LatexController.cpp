@@ -97,15 +97,13 @@ auto LatexController::findTexDependencies() -> LatexController::FindDependencySt
  * Find a selected tex element, and load it
  */
 void LatexController::findSelectedTexElement() {
-    this->doc->lock();
+    std::shared_lock<Document> lock(*doc);
     auto pageNr = this->control->getCurrentPageNo();
     if (pageNr == npos) {
-        this->doc->unlock();
         return;
     }
     this->view = this->control->getWindow()->getXournal()->getViewFor(pageNr);
     if (view == nullptr) {
-        this->doc->unlock();
         return;
     }
 
@@ -153,7 +151,6 @@ void LatexController::findSelectedTexElement() {
             this->posy = this->page->getHeight() / 2;
         }
     }
-    this->doc->unlock();
 }
 
 void LatexController::showTexEditDialog(std::unique_ptr<LatexController> ctrl) {

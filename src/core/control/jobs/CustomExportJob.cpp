@@ -123,10 +123,10 @@ void CustomExportJob::run() {
         Document* doc = this->control->getDocument();
 
         XojExportHandler h;
-        doc->lock();
+        doc->lock_shared();
         h.prepareSave(doc, filepath);
         h.saveTo(filepath, this->control);
-        doc->unlock();
+        doc->unlock_shared();
 
         if (!h.getErrorMessage().empty()) {
             this->lastError = FS(_F("Save file error: {1}") % h.getErrorMessage());

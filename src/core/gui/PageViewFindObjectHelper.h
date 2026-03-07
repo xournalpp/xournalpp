@@ -46,7 +46,7 @@ public:
             ctrl->clearSelection();
         }
 
-        std::lock_guard lock(*ctrl->getDocument());
+        std::shared_lock lock(*ctrl->getDocument());
         if (multiLayer) {
             const auto& layers = this->view->getPage()->getLayers();
             size_t layerNo = layers.size();

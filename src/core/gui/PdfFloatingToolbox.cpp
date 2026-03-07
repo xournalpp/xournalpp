@@ -155,9 +155,9 @@ void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle w
     // Get the PDF page that the current page corresponds to.
     // It should be the same as the PDF page of the selection.
     auto doc = this->theMainWindow->getControl()->getDocument();
-    doc->lock();
+    doc->lock_shared();
     const size_t pdfPageOfCurrentPage = doc->getPage(currentPage)->getPdfPageNr();
-    doc->unlock();
+    doc->unlock_shared();
 
     if (pdfPageOfCurrentPage != pdfPageNo) {
         // There's probably a bug that violates our assumptions, so no-op.

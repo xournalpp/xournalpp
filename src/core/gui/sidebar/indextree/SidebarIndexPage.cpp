@@ -210,15 +210,15 @@ auto SidebarIndexPage::selectPageNr(size_t page, size_t pdfPage, GtkTreeIter* pa
     GtkTreeIter iter;
 
     Document* doc = control->getDocument();
-    doc->lock();
+    doc->lock_shared();
     GtkTreeModel* model = doc->getContentsModel();
     if (model == nullptr) {
-        doc->unlock();
+        doc->unlock_shared();
         return false;
     }
 
     g_object_ref(model);
-    doc->unlock();
+    doc->unlock_shared();
 
     if (parent == nullptr) {
 
@@ -290,11 +290,11 @@ void SidebarIndexPage::documentChanged(DocumentChangeType type) {
         //  there will be a deadlock: both the selectHandler and this code will
         //  lock the document.
         g_signal_handler_block(this->treeViewBookmarks, this->selectHandler);
-        doc->lock();
+        doc->lock_shared();
         GtkTreeModel* model = doc->getContentsModel();
         gtk_tree_view_set_model(GTK_TREE_VIEW(this->treeViewBookmarks), model);
         int count = expandOpenLinks(model, nullptr);
-        doc->unlock();
+        doc->unlock_shared();
         g_signal_handler_unblock(this->treeViewBookmarks, this->selectHandler);
         this->treeBookmarkSelected(GTK_TREE_VIEW(this->treeViewBookmarks), this);
 

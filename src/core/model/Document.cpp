@@ -64,40 +64,19 @@ auto Document::freeTreeContentEntry(GtkTreeModel* treeModel, GtkTreePath* path, 
     return false;
 }
 
-void Document::lock() {
-    this->documentLock.lock();
-
-    //	if(tryLock()) {
-    //		fprintf(stderr, "Locked by\n");
-    //		Stacktrace::printStacktrace();
-    //		fprintf(stderr, "\n\n\n\n");
-    //	} else {
-    //		g_mutex_lock(&this->documentLock);
-    //	}
-}
-
-void Document::unlock() {
-    this->documentLock.unlock();
-
-    //	fprintf(stderr, "Unlocked by\n");
-    //	Stacktrace::printStacktrace();
-    //	fprintf(stderr, "\n\n\n\n");
-}
-
-/*
-** Returns true when successfully acquiring lock.
-*/
-auto Document::tryLock() -> bool { return this->documentLock.try_lock(); }
+void Document::lock() { this->documentLock.lock(); }
+void Document::unlock() { this->documentLock.unlock(); }
+auto Document::try_lock() -> bool { return this->documentLock.try_lock(); }
+void Document::lock_shared() { this->documentLock.lock_shared(); }
+void Document::unlock_shared() { this->documentLock.unlock_shared(); }
+auto Document::try_lock_shared() -> bool { return this->documentLock.try_lock_shared(); }
 
 void Document::clearDocument(bool destroy) {
-    if (this->preview) {
-        cairo_surface_destroy(this->preview);
-        this->preview = nullptr;
-    }
+    this->preview.reset();
 
     if (!destroy) {
         // release lock
-        bool lastLock = tryLock();
+        bool lastLock = try_lock();
         unlock();
         this->handler->fireDocumentChanged(DOCUMENT_CHANGE_CLEARED);
         if (!lastLock)  // document was locked before
@@ -213,18 +192,9 @@ auto Document::createSaveFilename(DocumentType type, std::u8string_view defaultS
     return p;
 }
 
-auto Document::getPreview() const -> cairo_surface_t* { return this->preview; }
+auto Document::getPreview() const -> xoj::util::CairoSurfaceSPtr { return this->preview; }
 
-void Document::setPreview(cairo_surface_t* preview) {
-    if (this->preview) {
-        cairo_surface_destroy(this->preview);
-    }
-    if (preview) {
-        this->preview = cairo_surface_reference(preview);
-    } else {
-        this->preview = nullptr;
-    }
-}
+void Document::setPreview(xoj::util::CairoSurfaceSPtr preview) { this->preview = std::move(preview); }
 
 auto Document::getEvMetadataFilename() const -> fs::path {
     if (!this->filepath.empty()) {
@@ -486,7 +456,8 @@ auto Document::operator=(const Document& doc) -> Document& {
     buildContentsModel();
     updateIndexPageNumbers();
 
-    bool lastLock = tryLock();
+    bool lastLock = try_lock();
+    xoj_assert(!lastLock);
     unlock();
     this->handler->fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
     if (!lastLock)  // document was locked before

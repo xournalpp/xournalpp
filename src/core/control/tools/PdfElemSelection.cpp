@@ -28,9 +28,9 @@ PdfElemSelection::PdfElemSelection(double x, double y, Control* control):
 
     if (auto pNr = control->getCurrentPage()->getPdfPageNr(); pNr != npos) {
         Document* doc = control->getDocument();
-        doc->lock();
+        doc->lock_shared();
         this->pdf = doc->getPdfPage(pNr);
-        doc->unlock();
+        doc->unlock_shared();
 
         this->selectionPageNr = pNr;
     }
