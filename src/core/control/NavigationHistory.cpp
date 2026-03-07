@@ -32,11 +32,11 @@ NavigationHistory::NavState NavigationHistory::captureState() const {
 
     size_t pageNo = control->getCurrentPageNo();
     Document* doc = control->getDocument();
-    doc->lock();
+    doc->lock_shared();
     if (pageNo < doc->getPageCount()) {
         state.page = doc->getPage(pageNo);
     }
-    doc->unlock();
+    doc->unlock_shared();
 
     if (!state.page) {
         return state;
@@ -72,7 +72,7 @@ void NavigationHistory::prune() {
     }
 
     Document* doc = control->getDocument();
-    doc->lock();
+    doc->lock_shared();
     for (size_t i = history.size(); i > 0; --i) {
         size_t idx = i - 1;
         if (!history[idx].page || doc->indexOf(history[idx].page) == npos) {
@@ -82,7 +82,7 @@ void NavigationHistory::prune() {
             }
         }
     }
-    doc->unlock();
+    doc->unlock_shared();
 
     if (historyIdx > history.size()) {
         historyIdx = history.size();
@@ -153,9 +153,9 @@ bool NavigationHistory::scrollToState(const NavState& state) {
     }
 
     Document* doc = control->getDocument();
-    doc->lock();
+    doc->lock_shared();
     size_t pageNo = doc->indexOf(state.page);
-    doc->unlock();
+    doc->unlock_shared();
 
     if (pageNo == npos) {
         return false;

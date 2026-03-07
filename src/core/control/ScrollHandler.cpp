@@ -55,9 +55,9 @@ void ScrollHandler::goToFirstPage() {
 void ScrollHandler::scrollToPage(const PageRef& page, XojPdfRectangle rect) {
     Document* doc = this->control->getDocument();
 
-    doc->lock();
+    doc->lock_shared();
     auto p = doc->indexOf(page);
-    doc->unlock();
+    doc->unlock_shared();
 
     if (p != npos) {
         scrollToPage(p, rect);
@@ -77,9 +77,9 @@ void ScrollHandler::scrollToPage(size_t page, XojPdfRectangle rect) {
 void ScrollHandler::jumpToPage(const PageRef& page, XojPdfRectangle rect) {
     Document* doc = this->control->getDocument();
 
-    doc->lock();
+    doc->lock_shared();
     auto p = doc->indexOf(page);
-    doc->unlock();
+    doc->unlock_shared();
 
     if (p != npos) {
         jumpToPage(p, rect);
@@ -96,9 +96,9 @@ void ScrollHandler::scrollToLinkDest(const LinkDestination& dest) {
 
     if (pdfPage != npos) {
         Document* doc = control->getDocument();
-        doc->lock();
+        doc->lock_shared();
         size_t page = doc->findPdfPage(pdfPage);
-        doc->unlock();
+        doc->unlock_shared();
 
         if (page == npos) {
             control->askInsertPdfPage(pdfPage);

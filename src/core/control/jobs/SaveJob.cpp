@@ -48,9 +48,9 @@ void SaveJob::updatePreview(Control* control) {
     const int previewSize = 128;
 
     Document* doc = control->getDocument();
+    xoj::util::CairoSurfaceSPtr crBuffer;
 
-    doc->lock();
-
+    doc->lock_shared();
     if (doc->getPageCount() > 0) {
         PageRef page = doc->getPage(0);
 
@@ -67,10 +67,10 @@ void SaveJob::updatePreview(Control* control) {
         width *= zoom;
         height *= zoom;
 
-        cairo_surface_t* crBuffer =
-                cairo_image_surface_create(CAIRO_FORMAT_ARGB32, ceil_cast<int>(width), ceil_cast<int>(height));
+        crBuffer.reset(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, ceil_cast<int>(width), ceil_cast<int>(height)),
+                       xoj::util::adopt);
 
-        cairo_t* cr = cairo_create(crBuffer);
+        cairo_t* cr = cairo_create(crBuffer.get());
         cairo_scale(cr, zoom, zoom);
 
         xoj::view::BackgroundFlags flags = xoj::view::BACKGROUND_SHOW_ALL;
@@ -91,12 +91,11 @@ void SaveJob::updatePreview(Control* control) {
         DocumentView view;
         view.drawPage(page, cr, true /* don't render erasable */, flags);
         cairo_destroy(cr);
-        doc->setPreview(crBuffer);
-        cairo_surface_destroy(crBuffer);
-    } else {
-        doc->setPreview(nullptr);
     }
+    doc->unlock_shared();
 
+    doc->lock();
+    doc->setPreview(std::move(crBuffer));
     doc->unlock();
 }
 
@@ -105,12 +104,12 @@ auto SaveJob::save() -> bool {
     Document* doc = this->control->getDocument();
     SaveHandler h;
 
-    doc->lock();
+    doc->lock_shared();
     fs::path target = doc->getFilepath();
     Util::safeReplaceExtension(target, "xopp");
 
     h.prepareSave(doc, target);
-    doc->unlock();
+    doc->unlock_shared();
 
     auto const createBackup = doc->shouldCreateBackupOnSave();
 
@@ -129,8 +128,10 @@ auto SaveJob::save() -> bool {
         }
     }
 
-    doc->lock();
     h.saveTo(target, this->control);
+
+    doc->lock();
+    h.updateDocumentInfo(doc);
     doc->setFilepath(target);
     doc->unlock();
 

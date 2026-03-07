@@ -195,7 +195,7 @@ void GeometryToolInputHandler::sequenceStart(InputEvent const& event) {
     const Layer* layer = page->getSelectedLayer();
     this->lines.clear();
     Document* doc = xournal->getDocument();
-    doc->lock();
+    doc->lock_shared();
     // Performance improvement might be obtained by avoiding filtering all elements each
     // time a finger has been put onto the screen
     for (const auto& e: layer->getElementsView()) {
@@ -206,7 +206,7 @@ void GeometryToolInputHandler::sequenceStart(InputEvent const& event) {
             }
         }
     }
-    doc->unlock();
+    doc->unlock_shared();
 }
 
 void GeometryToolInputHandler::scrollMotion(InputEvent const& event) {

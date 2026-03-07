@@ -177,7 +177,7 @@ if (ENABLE_QPDF)
     if (NOT qpdf_FOUND)
         # Before version 11.0 (e.g. for ubuntu 22.04 LTS), qpdf did not provide qpdfConfig.cmake (and friends)
         # We cannot only use pkg_search_module() though: it fails to link on MacOS
-        pkg_search_module(qpdf REQUIRED libqpdf)
+        pkg_search_module(qpdf REQUIRED "libqpdf >= 10.6.0")
         add_library(qpdf_tgt INTERFACE)
         target_link_libraries(qpdf_tgt INTERFACE ${qpdf_LIBRARIES})
         target_include_directories(qpdf_tgt INTERFACE ${qpdf_INCLUDE_DIRS})

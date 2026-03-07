@@ -150,9 +150,9 @@ auto XojPageView::searchTextOnPage(const std::string& text, size_t index, size_t
         if (pNr != npos) {
             Document* doc = xournal->getControl()->getDocument();
 
-            doc->lock();
+            doc->lock_shared();
             pdf = doc->getPdfPage(pNr);
-            doc->unlock();
+            doc->unlock_shared();
         }
         this->search = std::make_unique<SearchControl>(page, pdf);
         this->overlayViews.emplace_back(std::make_unique<xoj::view::SearchResultView>(
@@ -983,9 +983,9 @@ bool XojPageView::displayLinkPopover(std::shared_ptr<XojPdfPage> page, double pa
             size_t pdfPage = dest->getPdfPage();
 
             Document* doc = xournal->getControl()->getDocument();
-            doc->lock();
+            doc->lock_shared();
             const size_t pageId = doc->findPdfPage(pdfPage);
-            doc->unlock();
+            doc->unlock_shared();
 
             GtkWidget* button{};
             if (pageId != npos) {

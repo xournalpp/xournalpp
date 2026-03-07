@@ -29,7 +29,7 @@ void AutosaveJob::run() {
 
     Document* doc = control->getDocument();
 
-    doc->lock();
+    doc->lock_shared();
     auto filepath = doc->getFilepath();
 
     if (filepath.empty()) {
@@ -41,13 +41,17 @@ void AutosaveJob::run() {
     filepath += ".autosave.xopp";
 
     handler.prepareSave(doc, filepath);
-    doc->unlock();
+    doc->unlock_shared();
 
     g_message("%s", FS(_F("Autosaving to {1}") % filepath.string()).c_str());
 
     fs::path tempfile = filepath;
     tempfile += u8"~";
     handler.saveTo(tempfile);
+
+    doc->lock();
+    handler.updateDocumentInfo(doc);
+    doc->unlock();
 
     this->error = handler.getErrorMessage();
     if (!this->error.empty()) {

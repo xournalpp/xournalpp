@@ -12,6 +12,7 @@
 #pragma once
 
 #include <memory>  // for unique_ptr
+#include <optional>
 #include <string>  // for string
 #include <vector>  // for vector
 
@@ -36,9 +37,19 @@ public:
     SaveHandler();
 
 public:
+    /// Prepare an XML tree corresponding to the document - Needs read-only access to the Document
     void prepareSave(const Document* doc, const fs::path& target);
+    /// Writes the XML to the given path. Does not access the Document instance
     void saveTo(const fs::path& filepath, ProgressListener* listener = nullptr);
+    /**
+     * Writes the XML to the given stream. Does not access the Document instance with the following exception:
+     * attached background images are written to disk. This is safe as long as we do not modify the background images
+     * anywhere
+     */
     void saveTo(OutputStream* out, const fs::path& filepath, ProgressListener* listener = nullptr);
+    /// Update document information. Requires write access to the Document.
+    void updateDocumentInfo(Document* doc);
+
     const std::string& getErrorMessage();
 
 protected:
@@ -65,5 +76,10 @@ protected:
 
     std::string errorMessage;
 
-    std::vector<BackgroundImage> backgroundImages{};
+    struct ImageInfo {
+        BackgroundImage image;  ///< This is a wrapped shared pointer
+        std::optional<fs::path> newPath;
+        int newId;
+    };
+    std::vector<ImageInfo> backgroundImages{};
 };

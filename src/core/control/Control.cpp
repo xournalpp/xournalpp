@@ -252,7 +252,7 @@ void Control::deleteLastAutosaveFile() {
 }
 
 auto Control::checkChangedDocument(Control* control) -> bool {
-    if (!control->doc->tryLock()) {
+    if (!control->doc->try_lock_shared()) {
         // call again later
         return true;
     }
@@ -265,7 +265,7 @@ auto Control::checkChangedDocument(Control* control) -> bool {
         }
     }
     control->changedPages.clear();
-    control->doc->unlock();
+    control->doc->unlock_shared();
 
     // Call again
     return true;
@@ -557,9 +557,9 @@ void Control::reorderSelection(EditSelection::OrderChange change) {
  * @return the page ID or size_t_npos if the page is not found
  */
 auto Control::firePageSelected(const PageRef& page) -> size_t {
-    this->doc->lock();
+    this->doc->lock_shared();
     size_t pageId = this->doc->indexOf(page);
-    this->doc->unlock();
+    this->doc->unlock_shared();
     if (pageId == npos) {
         return npos;
     }
@@ -710,9 +710,9 @@ void Control::deletePage() {
     // if the current page contains the geometry tool, reset it
     size_t pNr = getCurrentPageNo();
     if (geometryToolController) {
-        doc->lock();
+        doc->lock_shared();
         auto page = doc->indexOf(geometryToolController->getPage());
-        doc->unlock();
+        doc->unlock_shared();
         if (page == pNr) {
             resetGeometryTool();
         }
@@ -728,9 +728,9 @@ void Control::deletePage() {
         return;
     }
 
-    this->doc->lock();
+    this->doc->lock_shared();
     PageRef page = doc->getPage(pNr);
-    this->doc->unlock();
+    this->doc->unlock_shared();
 
     // first send event, then delete page...
     firePageDeleted(pNr);
@@ -853,11 +853,11 @@ void Control::askInsertPdfPage(size_t pdfPage) {
                                if (response == Responses::AFTER || response == Responses::END) {
                                    Document* doc = ctrl->getDocument();
 
-                                   doc->lock();
+                                   doc->lock_shared();
                                    size_t position = response == Responses::AFTER ? ctrl->getCurrentPageNo() + 1 :
                                                                                     doc->getPageCount();
                                    XojPdfPageSPtr pdf = doc->getPdfPage(pdfPage);
-                                   doc->unlock();
+                                   doc->unlock_shared();
 
                                    if (pdf) {
                                        auto page = std::make_shared<XojPage>(pdf->getWidth(), pdf->getHeight());
@@ -893,9 +893,9 @@ void Control::appendNewPdfPages() {
     }
     for (size_t i = 0; i != insertCount; ++i) {
 
-        doc->lock();
+        doc->lock_shared();
         XojPdfPageSPtr pdf = doc->getPdfPage(currentPdfPageCount + i);
-        doc->unlock();
+        doc->unlock_shared();
 
         if (pdf) {
             auto newPage = std::make_shared<XojPage>(pdf->getWidth(), pdf->getHeight());
@@ -990,9 +990,9 @@ void Control::paperFormat() {
 
 void Control::changePageBackgroundColor() {
     auto pNr = getCurrentPageNo();
-    this->doc->lock();
+    this->doc->lock_shared();
     auto const& p = this->doc->getPage(pNr);
-    this->doc->unlock();
+    this->doc->unlock_shared();
 
     if (!p) {
         return;
@@ -1125,9 +1125,9 @@ auto Control::searchTextOnPage(const std::string& text, size_t pageNumber, size_
 }
 
 auto Control::getCurrentPage() -> PageRef {
-    this->doc->lock();
+    this->doc->lock_shared();
     PageRef p = this->doc->getPage(getCurrentPageNo());
-    this->doc->unlock();
+    this->doc->unlock_shared();
 
     return p;
 }
@@ -1737,9 +1737,9 @@ void Control::openFile(fs::path filepath, std::function<void(bool)> callback, in
 }
 
 void Control::fileLoaded(int scrollToPage) {
-    this->doc->lock();
+    this->doc->lock_shared();
     auto filepath = this->doc->getEvMetadataFilename();
-    this->doc->unlock();
+    this->doc->unlock_shared();
 
     if (!filepath.empty()) {
         auto md = MetadataManager::getForFile(filepath);
@@ -1890,9 +1890,9 @@ void Control::askToAnnotatePdf() {
 }
 
 void Control::print() {
-    this->doc->lock();
+    this->doc->lock_shared();
     PrintHandler::print(this->doc, getCurrentPageNo(), this->getGtkWindow());
-    this->doc->unlock();
+    this->doc->unlock_shared();
 }
 
 void Control::block(const string& name) {
@@ -1984,7 +1984,7 @@ void Control::showColorChooserDialog() {
 void Control::updateWindowTitle() {
     std::string title{};  ///< Actually a UTF-8 string
 
-    this->doc->lock();
+    this->doc->lock_shared();
     const fs::path& refPath = doc->getFilepath().empty() ? doc->getPdfFilepath() : doc->getFilepath();
     if (refPath.empty()) {
         title = _("Unsaved Document");
@@ -2001,7 +2001,7 @@ void Control::updateWindowTitle() {
         }
         title += char_cast(refPath.filename().u8string());
     }
-    this->doc->unlock();
+    this->doc->unlock_shared();
 
     title += " - Xournal++";
 
@@ -2038,9 +2038,9 @@ void Control::saveImpl(bool saveAs, std::function<void(bool)> callback) {
     // clear selection before saving
     clearSelectionEndText();
 
-    this->doc->lock();
+    this->doc->lock_shared();
     fs::path filepath = this->doc->getFilepath();
-    this->doc->unlock();
+    this->doc->unlock_shared();
 
     auto doSave = [ctrl = this, cb = std::move(callback)]() {
         // clear selection before saving
@@ -2053,11 +2053,11 @@ void Control::saveImpl(bool saveAs, std::function<void(bool)> callback) {
 
     if (saveAs || filepath.empty()) {
         // No need to backup the old saved file, as there is none
-        this->doc->lock();
+        this->doc->lock_shared();
         this->doc->setCreateBackupOnSave(false);
         auto suggestedPath = this->doc->createSaveFoldername(this->settings->getLastSavePath());
         suggestedPath /= this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
-        this->doc->unlock();
+        this->doc->unlock_shared();
         xoj::SaveExportDialog::showSaveFileDialog(getGtkWindow(), settings, std::move(suggestedPath),
                                                   [doSave = std::move(doSave), ctrl = this](std::optional<fs::path> p) {
                                                       if (p && !p->empty()) {
@@ -2074,9 +2074,9 @@ void Control::saveImpl(bool saveAs, std::function<void(bool)> callback) {
 }
 
 void Control::resetSavedStatus() {
-    this->doc->lock();
+    this->doc->lock_shared();
     auto filepath = this->doc->getFilepath();
-    this->doc->unlock();
+    this->doc->unlock_shared();
 
     this->undoRedo->documentSaved();
     RecentManager::addRecentFileFilename(filepath);
@@ -2117,9 +2117,9 @@ void Control::close(std::function<void(bool)> callback, const bool allowDestroy,
                     const bool forceClose) {
     clearSelectionEndText();
 
-    doc->lock();
+    doc->lock_shared();
     auto const& file = doc->getEvMetadataFilename();
-    doc->unlock();
+    doc->unlock_shared();
     metadata->storeMetadata(file, static_cast<int>(getCurrentPageNo()), zoom->getZoomReal());
     metadata->documentChanged();
 
@@ -2274,11 +2274,12 @@ void Control::clipboardPasteImage(GdkPixbuf* img) {
         return;
     }
 
-    this->doc->lock();
+    this->doc->lock_shared();
     PageRef page = this->doc->getPage(pageNr);
     auto pageWidth = page->getWidth();
     auto pageHeight = page->getHeight();
-    this->doc->unlock();
+    page.reset();  // No need to hold a ref to the page anymore
+    this->doc->unlock_shared();
 
     // Size: 3/4 of the page size
     pageWidth = pageWidth * 3.0 / 4.0;
@@ -2316,10 +2317,10 @@ void Control::clipboardPaste(ElementPtr e) {
         return;
     }
 
-    this->doc->lock();
+    this->doc->lock_shared();
     PageRef page = this->doc->getPage(pageNr);
     Layer* layer = page->getSelectedLayer();
-    this->doc->unlock();
+    this->doc->unlock_shared();
 
     win->getXournal()->getPasteTarget(x, y);
 

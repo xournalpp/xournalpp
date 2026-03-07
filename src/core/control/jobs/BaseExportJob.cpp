@@ -53,11 +53,11 @@ auto BaseExportJob::checkOverwriteBackgroundPDF(fs::path const& file) const -> b
 void BaseExportJob::showFileChooser(std::function<void()> onFileSelected, std::function<void()> onCancel) {
     Settings* settings = control->getSettings();
     Document* doc = control->getDocument();
-    doc->lock();
+    doc->lock_shared();
     fs::path suggestedPath = doc->createSaveFoldername(settings->getLastSavePath());
     suggestedPath /=
             doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName(), settings->getDefaultPdfExportName());
-    doc->unlock();
+    doc->unlock_shared();
 
     auto pathValidation = [job = this](fs::path& p, const char* filterName) {
         job->setExtensionFromFilter(p, filterName);

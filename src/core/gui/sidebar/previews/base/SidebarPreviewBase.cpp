@@ -31,11 +31,11 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control, const char* menuId, con
     gtk_widget_set_vexpand(scrollableBox.get(), true);
 
     Document* doc = this->control->getDocument();
-    doc->lock();
+    doc->lock_shared();
     if (doc->getPdfPageCount() != 0) {
         this->cache = std::make_unique<PdfCache>(doc->getPdfDocument(), control->getSettings());
     }
-    doc->unlock();
+    doc->unlock_shared();
 
 
     registerListener(this->control);
@@ -97,11 +97,11 @@ void SidebarPreviewBase::documentChanged(DocumentChangeType type) {
         this->cache.reset();
 
         Document* doc = control->getDocument();
-        doc->lock();
+        doc->lock_shared();
         if (doc->getPdfPageCount() != 0) {
             this->cache = std::make_unique<PdfCache>(doc->getPdfDocument(), control->getSettings());
         }
-        doc->unlock();
+        doc->unlock_shared();
         updatePreviews();
     }
 }

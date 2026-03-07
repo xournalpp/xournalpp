@@ -66,11 +66,11 @@ std::pair<size_t, size_t> XournalView::preloadPageBounds(size_t page, size_t max
 XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling):
         scrollHandling(scrollHandling), control(control) {
     Document* doc = control->getDocument();
-    doc->lock();
+    doc->lock_shared();
     if (doc->getPdfPageCount() != 0) {
         this->cache = std::make_unique<PdfCache>(doc->getPdfDocument(), control->getSettings());
     }
-    doc->unlock();
+    doc->unlock_shared();
 
     registerListener(control);
 
@@ -508,11 +508,11 @@ void XournalView::recreatePdfCache() {
     this->cache.reset();
 
     Document* doc = control->getDocument();
-    doc->lock();
+    doc->lock_shared();
     if (doc->getPdfPageCount() != 0) {
         this->cache = std::make_unique<PdfCache>(doc->getPdfDocument(), control->getSettings());
     }
-    doc->unlock();
+    doc->unlock_shared();
 }
 
 /**
@@ -599,9 +599,9 @@ auto XournalView::getCache() const -> PdfCache* { return this->cache.get(); }
 
 void XournalView::pageInserted(size_t page) {
     Document* doc = control->getDocument();
-    doc->lock();
+    doc->lock_shared();
     auto pageView = std::make_unique<XojPageView>(this, doc->getPage(page));
-    doc->unlock();
+    doc->unlock_shared();
 
     viewPages.insert(begin(viewPages) + as_signed(page), std::move(pageView));
 
@@ -745,20 +745,19 @@ void XournalView::documentChanged(DocumentChangeType type) {
 
     clearSelection();
 
-    viewPages.clear();
-
     recreatePdfCache();
 
     Document* doc = control->getDocument();
-    doc->lock();
+    doc->lock_shared();
 
+    viewPages.clear();
     size_t pagecount = doc->getPageCount();
     viewPages.reserve(pagecount);
     for (size_t i = 0; i < pagecount; i++) {
         viewPages.emplace_back(std::make_unique<XojPageView>(this, doc->getPage(i)));
     }
 
-    doc->unlock();
+    doc->unlock_shared();
 
     layoutPages();
     scrollTo(0);
