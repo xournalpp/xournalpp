@@ -74,6 +74,7 @@ Var StartMenuFolder
 !insertmacro MUI_PAGE_LICENSE "${SCRIPT_DIR}\..\LICENSE"
 !insertmacro MULTIUSER_PAGE_INSTALLMODE
 !insertmacro MUI_PAGE_COMPONENTS
+!define MUI_PAGE_CUSTOMFUNCTION_LEAVE OnDirectoryLeave
 !insertmacro MUI_PAGE_DIRECTORY
 
 ;Start Menu Folder Page Configuration
@@ -197,6 +198,56 @@ SectionEnd
 Section "Associate .xoj files with Xournal++" SecFileXoj
 	!insertmacro SetDefaultExt ".xoj" "Xournal++.Xournal"
 SectionEnd
+
+Function OnDirectoryLeave
+    ${IfNot} ${FileExists} "$INSTDIR\*.*"
+        Return
+    ${EndIf}
+        
+    ; Initialize Flag: 1 = Empty, 0 = Not Empty
+    StrCpy $1 1 
+    
+    FindFirst $2 $3 "$INSTDIR\*.*"
+    
+	${If} $2 == ""
+		Return
+	${EndIf}
+
+    ${Do}
+        ${If} $3 != "."
+        ${AndIf} $3 != ".."
+            StrCpy $1 0
+            ${Break}
+        ${EndIf}
+        ClearErrors
+        FindNext $2 $3
+
+        ${If} ${Errors}
+            ${Break}
+        ${EndIf}
+    ${Loop}
+    FindClose $2
+
+    ; Check the result
+    ${If} $1 == 0
+        MessageBox MB_ICONEXCLAMATION|MB_YESNO|MB_DEFBUTTON2 \
+        "The folder $INSTDIR is not empty.$\r$\nDo you want to continue using this folder?" \
+        IDYES ignore
+
+        Abort
+        
+        ignore:
+    ${EndIf}
+FunctionEnd
+
+Function .onVerifyInstDir
+    ; Get last component of path
+    ${GetFileName} $INSTDIR $0
+    
+    ${If} $0 != "Xournal++"
+        StrCpy $INSTDIR "$INSTDIR\Xournal++"
+    ${EndIf}
+FunctionEnd
 
 Section "Xournal++" SecXournalpp
 	; Required
