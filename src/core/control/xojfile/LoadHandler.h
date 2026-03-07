@@ -36,7 +36,6 @@ class Stroke;
 class TexImage;
 class Text;
 
-
 enum ParserPosition {
     PARSER_POS_NOT_STARTED = 1,  // Waiting for opening <xounal> tag
     PARSER_POS_STARTED,          // Waiting for Metainfo or contents like <page>
@@ -46,6 +45,7 @@ enum ParserPosition {
     PARSER_POS_IN_TEXT,          // Starting text tag read
     PARSER_POS_IN_IMAGE,         // Starting image tag read
     PARSER_POS_IN_TEXIMAGE,      // Starting latex tag read
+    PARSER_POS_IN_LINK,          // Starting link tag read
 
     PASER_POS_FINISHED  // Document is parsed
 };
@@ -76,6 +76,7 @@ private:
     void parseText();
     void parseImage();
     void parseTexImage();
+    void parseLink();
 
 private:
     void initAttributes();
