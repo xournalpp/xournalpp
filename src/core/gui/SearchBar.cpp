@@ -67,7 +67,7 @@ SearchBar::SearchBar(Control* control): control(control) {
 
 SearchBar::~SearchBar() { this->control = nullptr; }
 
-auto SearchBar::searchTextonCurrentPage(const char* text, size_t index, size_t* occurrences, XojPdfRectangle* matchRect)
+auto SearchBar::searchTextOnCurrentPage(const char* text, size_t index, size_t* occurrences, XojPdfRectangle* matchRect)
         -> bool {
     size_t p = control->getCurrentPageNo();
     this->page = p;
@@ -83,7 +83,7 @@ void SearchBar::search(const char* text) {
     this->indexInPage = 0;
 
     if (*text != 0) {
-        found = searchTextonCurrentPage(text, 1, &this->occurrences, nullptr);
+        found = searchTextOnCurrentPage(text, 1, &this->occurrences, nullptr);
         if (found) {
             if (occurrences == 1) {
                 gtk_label_set_text(GTK_LABEL(lbSearchState), _("Text found once on this page"));
@@ -96,7 +96,7 @@ void SearchBar::search(const char* text) {
             gtk_label_set_text(GTK_LABEL(lbSearchState), _("Text not found"));
         }
     } else {
-        searchTextonCurrentPage("", 1, nullptr, nullptr);
+        searchTextOnCurrentPage("", 1, nullptr, nullptr);
         gtk_label_set_text(GTK_LABEL(lbSearchState), "");
     }
 
