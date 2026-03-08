@@ -62,4 +62,5 @@ private:
     size_t page = 0;
     size_t indexInPage = 0;
     size_t occurrences = 0;
+    bool searchActive = false;
 };

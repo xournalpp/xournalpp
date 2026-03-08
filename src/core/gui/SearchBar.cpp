@@ -7,8 +7,9 @@
 #include <glib-object.h>     // for G_CALLBACK, g_signal_connect
 #include <glib.h>            // for g_free, g_strdup_printf
 
-#include "control/Control.h"           // for Control
-#include "control/ScrollHandler.h"     // for ScrollHandler
+#include "control/Control.h"            // for Control
+#include "control/NavigationHistory.h"  // for NavigationHistory
+#include "control/ScrollHandler.h"      // for ScrollHandler
 #include "control/zoom/ZoomControl.h"  // for ZoomControl
 #include "gui/MainWindow.h"            // for MainWindow
 #include "model/Document.h"            // for Document
@@ -108,6 +109,7 @@ void SearchBar::search(const char* text) {
 }
 
 void SearchBar::searchTextChangedCallback(GtkSearchEntry* entry, SearchBar* searchBar) {
+    searchBar->searchActive = false;
     const char* text = gtk_entry_get_text(GTK_ENTRY(entry));
     searchBar->search(text);
 }
@@ -133,7 +135,11 @@ void SearchBar::search(Fun next) {
         const bool found = control->searchTextOnPage(text, page, indexInPage, &occurrences, &matchRect);
 
         if (found) {
-            control->getScrollHandler()->jumpToPage(page, matchRect);
+            if (!searchActive) {
+                control->getNavigationHistory()->recordNavPoint();
+                searchActive = true;
+            }
+            control->getScrollHandler()->scrollToPage(page, matchRect);
             gtk_label_set_text(GTK_LABEL(lbSearchState),
                                (occurrences == 1 ? FC(_F("Text found once on page {1}") % (page + 1)) :
                                                    FC(_F("Text found {1} times on page {2} ({3} of {1})") %
@@ -188,6 +194,7 @@ void SearchBar::showSearchBar(bool show) {
         gtk_widget_grab_focus(searchTextField);
         this->indexInPage = 0;
     } else {
+        searchActive = false;
         gtk_widget_hide(searchBar);
         const size_t pageCount = control->getDocument()->getPageCount();
         for (size_t i = pageCount - 1; i < pageCount; i--) {
