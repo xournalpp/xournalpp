@@ -14,6 +14,7 @@
 #include <cstddef>  // for size_t
 #include <memory>   // for unique_ptr
 #include <string>   // for string
+#include <vector>   // for vector
 
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
 #include <gtk/gtk.h>                // for GtkWidget, GtkToolItem, GTK_ORIEN...
@@ -32,7 +33,9 @@ public:
 
 public:
     /// Propagates the info to all instances of the Page Spinner
-    void setPageInfo(size_t currentPage, size_t pageCount, size_t pdfPage, const std::string& pageLabel);
+    void setPageInfo(size_t currentPage, size_t pageCount, size_t pdfPage);
+    /// Set PDF page labels for the loaded document.
+    void setPageLabels(std::vector<std::string> labels);
     std::string getToolDisplayName() const override;
     xoj::util::WidgetSPtr createItem(bool horizontal) override;
 

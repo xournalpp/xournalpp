@@ -10,6 +10,7 @@
 #include <regex>       // for regex
 #include <string>      // for string
 #include <utility>     // for move
+#include <vector>      // for vector
 
 #include "control/AudioController.h"                             // for Audi...
 #include "control/ClipboardHandler.h"                            // for Clip...
@@ -354,17 +355,7 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
         return;
     }
 
-    std::string pageLabel;
-    if (pdfPage != npos) {
-        if (auto pdfPagePtr = this->doc->getPdfPage(pdfPage)) {
-            pageLabel = pdfPagePtr->getPageLabel();
-            if (pageLabel == std::to_string(pdfPage + 1)) {
-                pageLabel.clear();
-            }
-        }
-    }
-
-    this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage, pageLabel);
+    this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
     this->sidebar->selectPageNr(page, pdfPage);
 
     this->metadata->storeMetadata(this->doc->getEvMetadataFilename(), static_cast<int>(page),
@@ -1766,9 +1757,47 @@ void Control::fileLoaded(int scrollToPage) {
     }
 
     updateWindowTitle();
+    buildAndPushPageLabels();
     win->getXournal()->forceUpdatePagenumbers();
     getCursor()->updateCursor();
     updatePageActions();
+}
+
+void Control::buildAndPushPageLabels() {
+    if (!this->win) {
+        return;
+    }
+
+    this->doc->lock_shared();
+    const size_t pageCount = this->doc->getPageCount();
+    const bool hasPdf = this->doc->getPdfPageCount() > 0;
+
+    std::vector<std::string> labels(pageCount);
+    bool anyNonStandard = false;
+    if (hasPdf) {
+        for (size_t i = 0; i < pageCount; ++i) {
+            auto xojPage = this->doc->getPage(i);
+            if (!xojPage) {
+                continue;
+            }
+            const size_t pdfPageNr = xojPage->getPdfPageNr();
+            if (pdfPageNr == npos) {
+                continue;
+            }
+            auto pdfPage = this->doc->getPdfPage(pdfPageNr);
+            if (!pdfPage) {
+                continue;
+            }
+            std::string label = pdfPage->getPageLabel();
+            if (!label.empty() && label != std::to_string(pdfPageNr + 1)) {
+                labels[i] = std::move(label);
+                anyNonStandard = true;
+            }
+        }
+    }
+    this->doc->unlock_shared();
+
+    this->win->setPageLabels(anyNonStandard ? std::move(labels) : std::vector<std::string>{});
 }
 
 enum class MissingPdfDialogOptions : gint { USE_PROPOSED, SELECT_OTHER, REMOVE, CANCEL };

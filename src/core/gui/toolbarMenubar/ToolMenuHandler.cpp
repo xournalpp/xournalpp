@@ -512,9 +512,15 @@ void ToolMenuHandler::initToolItems() {
                                 _("Very Thick"));
 }
 
-void ToolMenuHandler::setPageInfo(size_t currentPage, size_t pageCount, size_t pdfpage, const std::string& pageLabel) {
+void ToolMenuHandler::setPageInfo(size_t currentPage, size_t pageCount, size_t pdfpage) {
     if (this->toolPageSpinner) {
-        this->toolPageSpinner->setPageInfo(currentPage, pageCount, pdfpage, pageLabel);
+        this->toolPageSpinner->setPageInfo(currentPage, pageCount, pdfpage);
+    }
+}
+
+void ToolMenuHandler::setPageLabels(std::vector<std::string> labels) {
+    if (this->toolPageSpinner) {
+        this->toolPageSpinner->setPageLabels(std::move(labels));
     }
 }
 

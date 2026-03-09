@@ -401,6 +401,12 @@ protected:
 
     void saveImpl(bool saveAs, std::function<void(bool)> callback);
 
+    /**
+     * Collect PDF page labels from the loaded document and push them to the toolbar
+     * Call once after each document load
+     */
+    void buildAndPushPageLabels();
+
 private:
     /**
      * @brief Creates the specified geometric tool if it's not on the current page yet. Deletes it if it already exists.

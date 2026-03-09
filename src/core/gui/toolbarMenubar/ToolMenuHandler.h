@@ -89,7 +89,8 @@ public:
     void addPluginItem(ToolbarButtonEntry* t);
     void addPluginPlaceholderItem(ToolbarPlaceholderEntry* entry);
 
-    void setPageInfo(size_t currentPage, size_t pageCount, size_t pdfpage, const std::string& pageLabel);
+    void setPageInfo(size_t currentPage, size_t pageCount, size_t pdfpage);
+    void setPageLabels(std::vector<std::string> labels);
 
     [[maybe_unused]] void removeColorToolItem(AbstractToolItem* it);
     void addColorToolItem(std::unique_ptr<ColorToolItem> it);

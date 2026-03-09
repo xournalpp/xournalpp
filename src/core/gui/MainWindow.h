@@ -16,6 +16,7 @@
 #include <cstddef>  // for size_t
 #include <memory>   // for unique_ptr
 #include <string>   // for string
+#include <vector>   // for vector
 
 #include <gdk/gdk.h>      // for GdkDragContext, GdkEvent
 #include <glib-object.h>  // for GClosure
@@ -72,7 +73,8 @@ public:
      */
     void reloadToolbars();
 
-    void updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage, const std::string& pageLabel);
+    void updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage);
+    void setPageLabels(std::vector<std::string> labels);
 
     void setMaximized(bool maximized);
     bool isMaximized() const;
