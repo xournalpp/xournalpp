@@ -33,7 +33,7 @@ public:
 
 public:
     /// Propagates the info to all instances of the Page Spinner
-    void setPageInfo(size_t currentPage, size_t pageCount, size_t pdfPage);
+    void setPageInfo(size_t currentPage, size_t pageCount);
     /// Set PDF page labels for the loaded document.
     void setPageLabels(std::vector<std::string> labels);
     std::string getToolDisplayName() const override;

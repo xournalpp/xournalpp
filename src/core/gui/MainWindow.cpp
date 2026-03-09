@@ -709,9 +709,7 @@ void MainWindow::createToolbar() {
     this->control->getScheduler()->unblockRerenderZoom();
 }
 
-void MainWindow::updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage) {
-    toolbar->setPageInfo(page, pagecount, pdfpage);
-}
+void MainWindow::updatePageNumbers(size_t page, size_t pagecount) { toolbar->setPageInfo(page, pagecount); }
 
 void MainWindow::setPageLabels(std::vector<std::string> labels) { toolbar->setPageLabels(std::move(labels)); }
 

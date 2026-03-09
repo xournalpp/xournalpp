@@ -355,7 +355,7 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
         return;
     }
 
-    this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
+    this->win->updatePageNumbers(page, this->doc->getPageCount());
     this->sidebar->selectPageNr(page, pdfPage);
 
     this->metadata->storeMetadata(this->doc->getEvMetadataFilename(), static_cast<int>(page),
