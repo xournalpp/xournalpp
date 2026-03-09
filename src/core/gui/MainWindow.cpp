@@ -709,8 +709,8 @@ void MainWindow::createToolbar() {
     this->control->getScheduler()->unblockRerenderZoom();
 }
 
-void MainWindow::updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage) {
-    toolbar->setPageInfo(page, pagecount, pdfpage);
+void MainWindow::updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage, const std::string& pageLabel) {
+    toolbar->setPageInfo(page, pagecount, pdfpage, pageLabel);
 }
 
 auto MainWindow::getMenubar() const -> Menubar* { return menubar.get(); }

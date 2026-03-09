@@ -64,7 +64,7 @@ private:
     GtkLabel* numberLabel;
 
 public:
-    void setPageInfo(size_t currentPage, size_t pageCount, size_t pdfPage) {
+    void setPageInfo(size_t currentPage, size_t pageCount, size_t pdfPage, const std::string& pageLabel) {
         if (pageCount == 0) {
             spinner.setMinMaxPage(0, 0);
             spinner.setPage(0);
@@ -73,14 +73,16 @@ public:
             spinner.setPage(currentPage + 1);
         }
 
-        updateLabel(pageCount, pdfPage);
+        updateLabel(pageCount, pdfPage, pageLabel);
     }
     ToolPageSpinner* getHandler() const { return handler; }
 
 private:
-    void updateLabel(const size_t pageCount, const size_t pdfPage) {
+    void updateLabel(const size_t pageCount, const size_t pdfPage, const std::string& pageLabel) {
         std::string ofString = FS(C_F("Page {pagenumber} \"of {pagecount}\"", " of {1}") % pageCount);
-        if (pdfPage != npos) {
+        if (!pageLabel.empty()) {
+            ofString += std::string(" (") + pageLabel + std::string(")");
+        } else if (pdfPage != npos) {
             if (this->orientation == GTK_ORIENTATION_HORIZONTAL) {
                 ofString += std::string(", ") + FS(_F("PDF Page {1}") % (pdfPage + 1));
             } else {
@@ -100,9 +102,9 @@ ToolPageSpinner::~ToolPageSpinner() {
     }
 }
 
-void ToolPageSpinner::setPageInfo(size_t currentPage, size_t pageCount, size_t pdfPage) {
+void ToolPageSpinner::setPageInfo(size_t currentPage, size_t pageCount, size_t pdfPage, const std::string& pageLabel) {
     for (auto* i: instances) {
-        i->setPageInfo(currentPage, pageCount, pdfPage);
+        i->setPageInfo(currentPage, pageCount, pdfPage, pageLabel);
     }
 }
 

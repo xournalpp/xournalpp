@@ -32,7 +32,7 @@ public:
 
 public:
     /// Propagates the info to all instances of the Page Spinner
-    void setPageInfo(size_t currentPage, size_t pageCount, size_t pdfPage);
+    void setPageInfo(size_t currentPage, size_t pageCount, size_t pdfPage, const std::string& pageLabel);
     std::string getToolDisplayName() const override;
     xoj::util::WidgetSPtr createItem(bool horizontal) override;
 

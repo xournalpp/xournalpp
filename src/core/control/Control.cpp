@@ -354,7 +354,17 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
         return;
     }
 
-    this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
+    std::string pageLabel;
+    if (pdfPage != npos) {
+        if (auto pdfPagePtr = this->doc->getPdfPage(pdfPage)) {
+            pageLabel = pdfPagePtr->getPageLabel();
+            if (pageLabel == std::to_string(pdfPage + 1)) {
+                pageLabel.clear();
+            }
+        }
+    }
+
+    this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage, pageLabel);
     this->sidebar->selectPageNr(page, pdfPage);
 
     this->metadata->storeMetadata(this->doc->getEvMetadataFilename(), static_cast<int>(page),
