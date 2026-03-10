@@ -24,7 +24,7 @@ namespace view {
 
 class PdfBackgroundView: public BackgroundView {
 public:
-    PdfBackgroundView(double pageWidth, double pageHeight, size_t pageNo, PdfCache* pdfCache = nullptr);
+    PdfBackgroundView(double pageWidth, double pageHeight, size_t pageNo, PdfCache* pdfCache = nullptr, int pageoOrient = 0);
     virtual ~PdfBackgroundView() = default;
 
     /**
@@ -34,6 +34,7 @@ public:
 
 private:
     size_t pageNo;
+    int pageOrient;
     PdfCache* pdfCache = nullptr;
 };
 
