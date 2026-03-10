@@ -45,7 +45,7 @@
     },
     "mac-arm": {
       "displayed_name": "MacOS ARM",
-      "runner": "macos-14",
+      "runner": "macos-15",
       "run_ci": "true"
     }
   },
