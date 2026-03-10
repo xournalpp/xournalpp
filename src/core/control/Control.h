@@ -242,6 +242,8 @@ public:
     void deletePage();
     void movePageTowardsBeginning();
     void movePageTowardsEnd();
+    void rotatePageClockwise();
+    void rotatePageCounterClockwise();
 
     /**
      * Ask the user whether a page with the given id
