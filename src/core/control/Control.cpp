@@ -828,12 +828,21 @@ void Control::movePageTowardsEnd() {
     this->getScrollHandler()->scrollToPage(currentPageNo + 1);
 }
 
-void Control::rotatePageClockwise() {
-    /* TODO implementation */
-};
+void Control::rotatePageClockwise(const int n) {
+    /* TODO further implementation */
+    auto pNr = getCurrentPageNo();
+    this->doc->lock_shared();
+    auto const& p = this->doc->getPage(pNr);
+    this->doc->unlock_shared();
 
-void Control::rotatePageCounterClockwise() {
-    /* TODO implementation */
+    if (!p) {
+        return;
+    }
+
+    int orient = p->getPdfPageOrientation();
+    p->setPdfPageOrientation((orient + n + 4) % 4);
+
+    pageBackgroundChangeController->togglePageSizeRatio(p, pNr);
 };
 
 /// Remove mnemonic indicators in menu labels

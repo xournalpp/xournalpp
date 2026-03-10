@@ -549,11 +549,11 @@ struct ActionProperties<Action::MOVE_PAGE_TOWARDS_END> {
 
 template<>
 struct ActionProperties<Action::ROTATE_PAGE_CLOCKWISE> {
-    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->rotatePageClockwise(); }
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->rotatePageClockwise(1); }
 };
 template<>
 struct ActionProperties<Action::ROTATE_PAGE_COUNTER_CLOCKWISE> {
-    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->rotatePageCounterClockwise(); }
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->rotatePageClockwise(-1); }
 };
 
 template <>
