@@ -132,6 +132,10 @@ auto XojPage::getHeight() const -> double { return this->height; }
 
 auto XojPage::getPdfPageNr() const -> size_t { return this->pdfBackgroundPage; }
 
+auto XojPage::getPdfPageOrientation() const -> int {return this->pdfPageOrientation; }
+
+void XojPage::setPdfPageOrientation(int n) { this->pdfPageOrientation = n; }
+
 auto XojPage::isAnnotated() const -> bool {
     for (Layer* l: this->layer) {
         if (l->isAnnotated()) {

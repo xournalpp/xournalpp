@@ -238,8 +238,7 @@ public:
     void deletePage();
     void movePageTowardsBeginning();
     void movePageTowardsEnd();
-    void rotatePageClockwise();
-    void rotatePageCounterClockwise();
+    void rotatePageClockwise(const int n);
 
     /**
      * Ask the user whether a page with the given id

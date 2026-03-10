@@ -74,7 +74,7 @@ auto BackgroundView::createForPage(ConstPageRef page, BackgroundFlags bgFlags, P
                 break;
             case PageTypeFormat::Pdf:
                 if (bgFlags.showPDF) {
-                    return std::make_unique<PdfBackgroundView>(width, height, page->getPdfPageNr(), pdfCache);
+                    return std::make_unique<PdfBackgroundView>(width, height, page->getPdfPageNr(), pdfCache, page->getPdfPageOrientation());
                 }
                 break;
             default:
