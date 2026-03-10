@@ -95,24 +95,12 @@ void SidebarPreviewBaseEntry::drawLoadingPage() {
 }
 
 void SidebarPreviewBaseEntry::paint(cairo_t* cr) {
-    bool doRepaint = false;
-
-    this->drawingMutex.lock();
-
-    if (!this->buffer) {
-        drawLoadingPage();
-        doRepaint = true;
-    }
-
-    cairo_set_source_surface(cr, this->buffer.get(), 0, 0);
-    cairo_paint(cr);
-
-    this->drawingMutex.unlock();
-
     double height = page->getHeight() * sidebar->getZoom();
     double width = page->getWidth() * sidebar->getZoom();
 
     if (this->selected) {
+        Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(),
+                           round_cast<int>(width) + 4, round_cast<int>(height) + 4);
         // Draw border
         Util::cairo_set_source_rgbi(cr, sidebar->getControl()->getSettings()->getBorderColor());
         cairo_set_line_width(cr, 2);
@@ -123,15 +111,23 @@ void SidebarPreviewBaseEntry::paint(cairo_t* cr) {
                         height + 3);
 
         cairo_stroke(cr);
-
-        cairo_set_operator(cr, CAIRO_OPERATOR_ATOP);
-        Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(),
-                           round_cast<int>(width) + 4, round_cast<int>(height) + 4);
     } else {
-        cairo_set_operator(cr, CAIRO_OPERATOR_ATOP);
         Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2,
                            round_cast<int>(width), round_cast<int>(height));
     }
+
+    this->drawingMutex.lock();
+
+    bool doRepaint = false;
+    if (!this->buffer) {
+        drawLoadingPage();
+        doRepaint = true;
+    }
+
+    cairo_set_source_surface(cr, this->buffer.get(), 0, 0);
+    cairo_paint(cr);
+
+    this->drawingMutex.unlock();
 
     const auto& recolorParams = sidebar->getControl()->getSettings()->getRecolorParameters();
     auto recolor = recolorParams.recolorizeSidebarMiniatures ? std::make_optional(recolorParams.recolor) : std::nullopt;
