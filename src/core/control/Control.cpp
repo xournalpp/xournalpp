@@ -828,6 +828,14 @@ void Control::movePageTowardsEnd() {
     this->getScrollHandler()->scrollToPage(currentPageNo + 1);
 }
 
+void Control::rotatePageClockwise() {
+    /* TODO implementation */
+};
+
+void Control::rotatePageCounterClockwise() {
+    /* TODO implementation */
+};
+
 /// Remove mnemonic indicators in menu labels
 static std::string removeMnemonics(std::string orig) {
     std::regex reg("_(.)");

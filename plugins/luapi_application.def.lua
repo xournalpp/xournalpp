@@ -1084,6 +1084,8 @@ function app.setFont(font) end
 ---| "duplicate-page"
 ---| "move-page-towards-beginning"
 ---| "move-page-towards-end"
+---| "rotate-page-clockwise"
+---| "rotate-page-counter-clockwise"
 ---| "append-new-pdf-pages"
 ---| "configure-page-template"
 ---| "delete-page"
