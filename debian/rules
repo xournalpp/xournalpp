@@ -1,4 +1,4 @@
-#!/usr/bin/make -f
+#!/usr/bin/env -S make -f
 
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
