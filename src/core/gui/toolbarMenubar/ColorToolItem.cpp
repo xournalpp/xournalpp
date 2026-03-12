@@ -10,7 +10,7 @@
 ColorToolItem::ColorToolItem(NamedColor namedColor, const std::optional<Recolor>& recolor):
         AbstractToolItem(std::string("COLOR(") + std::to_string(namedColor.getIndex()) + ")", Category::COLORS),
         namedColor(std::move(namedColor)),
-        target(xoj::util::makeGVariantSPtr(namedColor.getColor())) {
+        target(xoj::util::makeGVariantSPtr(this->namedColor.getColor())) {
     if (recolor) {
         secondaryColor = std::make_optional(recolor->convertColor(namedColor.getColor()));
     } else {
