@@ -1,7 +1,8 @@
 #include "PdfBackgroundView.h"
 
+#include <cmath>  // for M_PI_2
+
 #include <glib.h>  // for g_warning
-#include <cmath>   // for M_PI_2
 
 #include "control/PdfCache.h"                // for PdfCache
 #include "util/Assert.h"                     // for xoj_assert
@@ -9,7 +10,8 @@
 
 using namespace xoj::view;
 
-PdfBackgroundView::PdfBackgroundView(double pageWidth, double pageHeight, size_t pageNo, PdfCache* pdfCache, int pageOrient):
+PdfBackgroundView::PdfBackgroundView(double pageWidth, double pageHeight, size_t pageNo, PdfCache* pdfCache,
+                                     int pageOrient):
         BackgroundView(pageWidth, pageHeight), pageNo(pageNo), pdfCache(pdfCache), pageOrient(pageOrient) {}
 
 void PdfBackgroundView::draw(cairo_t* cr) const {
@@ -23,21 +25,21 @@ void PdfBackgroundView::draw(cairo_t* cr) const {
         cairo_surface_get_device_scale(cairo_get_target(cr), &scaleX, &scaleY);
         xoj_assert(scaleX == scaleY);
         double pixelsPerPageUnit = matrix.xx * scaleX;
-        
+
         // rotate page if necessary
-        if(pageOrient != 0) {
+        if (pageOrient != 0) {
             cairo_save(cr);
-            cairo_translate(cr, pageWidth/2, pageHeight/2);
+            cairo_translate(cr, pageWidth / 2, pageHeight / 2);
             cairo_rotate(cr, pageOrient * M_PI_2);
-            if(pageOrient != 2)
-                cairo_translate(cr, -pageHeight/2, -pageWidth/2);
+            if (pageOrient != 2)
+                cairo_translate(cr, -pageHeight / 2, -pageWidth / 2);
             else
-                cairo_translate(cr, -pageWidth/2, -pageHeight/2);
+                cairo_translate(cr, -pageWidth / 2, -pageHeight / 2);
         }
 
         pdfCache->render(cr, pageNo, pixelsPerPageUnit, pageWidth, pageHeight);
 
-        if(pageOrient != 0)
+        if (pageOrient != 0)
             cairo_restore(cr);
     } else {
         g_warning("PdfBackgroundView::draw Missing pdf cache: cannot render the pdf page");

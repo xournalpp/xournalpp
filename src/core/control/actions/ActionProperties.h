@@ -547,11 +547,11 @@ struct ActionProperties<Action::MOVE_PAGE_TOWARDS_END> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->movePageTowardsEnd(); }
 };
 
-template<>
+template <>
 struct ActionProperties<Action::ROTATE_PAGE_CLOCKWISE> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->rotatePageClockwise(1); }
 };
-template<>
+template <>
 struct ActionProperties<Action::ROTATE_PAGE_COUNTER_CLOCKWISE> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->rotatePageClockwise(-1); }
 };

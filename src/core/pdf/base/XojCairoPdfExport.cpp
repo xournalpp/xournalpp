@@ -159,18 +159,16 @@ void XojCairoPdfExport::exportPage(size_t page, bool exportPdfBackground) {
             cairo_save(cr);
             cairo_translate(cr, width / 2, height / 2);
             cairo_rotate(cr, pgOrient * M_PI_2);
-            if (pgOrient != 2) {
+            if (pgOrient != 2)
                 cairo_translate(cr, -height / 2, -width / 2);
-            } else {
+            else
                 cairo_translate(cr, -width / 2, -height / 2);
-            }
         }
 
         popplerPage->renderForPrinting(cr);
 
-        if (pgOrient != 0) {
+        if (pgOrient != 0)
             cairo_restore(cr);
-        }
     }
 
     xoj::view::BackgroundFlags flags;
