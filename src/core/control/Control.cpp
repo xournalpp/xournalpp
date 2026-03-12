@@ -1,8 +1,8 @@
 #include "Control.h"
 
-#include <algorithm>  // for max
-#include <cstdlib>    // for size_t
-#include <exception>  // for exce...
+#include <algorithm>   // for max
+#include <cstdlib>     // for size_t
+#include <exception>   // for exce...
 #include <functional>  // for bind
 #include <iterator>    // for end
 #include <memory>      // for make...
@@ -90,6 +90,7 @@
 #include "undo/InsertDeletePageUndoAction.h"                     // for Inse...
 #include "undo/InsertUndoAction.h"                               // for Inse...
 #include "undo/MoveSelectionToLayerUndoAction.h"                 // for Move...
+#include "undo/PageRotationUndoAction.h"                         // for PageRotationUndoAction
 #include "undo/PageSizeChangeUndoAction.h"                       // for PageSizeChangeUndoAction
 #include "undo/SwapUndoAction.h"                                 // for SwapUndoAction
 #include "undo/UndoAction.h"                                     // for Undo...
@@ -829,7 +830,7 @@ void Control::movePageTowardsEnd() {
 }
 
 void Control::rotatePageClockwise(const int n) {
-    /* TODO further implementation */
+    /* TODO for another time: rotate layer elements */
     auto pNr = getCurrentPageNo();
     this->doc->lock_shared();
     auto const& p = this->doc->getPage(pNr);
@@ -840,9 +841,13 @@ void Control::rotatePageClockwise(const int n) {
     }
 
     int orient = p->getPdfPageOrientation();
-    p->setPdfPageOrientation((orient + n + 4) % 4);
+    int newOrient = (orient + n + 4) % 4;
+    p->setPdfPageOrientation(newOrient);
 
     pageBackgroundChangeController->togglePageSizeRatio(p, pNr);
+
+    this->undoRedo->addUndoAction(std::make_unique<PageRotationUndoAction>(p, orient, newOrient));
+    this->firePageSizeChanged(pNr);
 };
 
 /// Remove mnemonic indicators in menu labels
