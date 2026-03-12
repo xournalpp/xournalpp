@@ -91,6 +91,9 @@ public:
 
     void setPageInfo(size_t currentPage, size_t pageCount);
     void setPageLabels(std::vector<std::string> labels);
+    void insertPageLabel(size_t pos, std::string label);
+    void deletePageLabel(size_t pos);
+    void swapPageLabels(size_t a, size_t b);
 
     [[maybe_unused]] void removeColorToolItem(AbstractToolItem* it);
     void addColorToolItem(std::unique_ptr<ColorToolItem> it);

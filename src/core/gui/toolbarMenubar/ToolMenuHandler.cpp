@@ -524,6 +524,24 @@ void ToolMenuHandler::setPageLabels(std::vector<std::string> labels) {
     }
 }
 
+void ToolMenuHandler::insertPageLabel(size_t pos, std::string label) {
+    if (this->toolPageSpinner) {
+        this->toolPageSpinner->insertPageLabel(pos, std::move(label));
+    }
+}
+
+void ToolMenuHandler::deletePageLabel(size_t pos) {
+    if (this->toolPageSpinner) {
+        this->toolPageSpinner->deletePageLabel(pos);
+    }
+}
+
+void ToolMenuHandler::swapPageLabels(size_t a, size_t b) {
+    if (this->toolPageSpinner) {
+        this->toolPageSpinner->swapPageLabels(a, b);
+    }
+}
+
 auto ToolMenuHandler::getModel() -> ToolbarModel* { return this->tbModel.get(); }
 
 auto ToolMenuHandler::getControl() -> Control* { return this->control; }

@@ -11,11 +11,10 @@
 
 #pragma once
 
-#include <cstddef>        // for size_t
-#include <list>           // for list
-#include <string>         // for string
-#include <unordered_map>  // for unordered_map
-#include <vector>         // for vector
+#include <cstddef>  // for size_t
+#include <list>     // for list
+#include <string>   // for string
+#include <vector>   // for vector
 
 #include <glib.h>     // for guint, gulong
 #include <gtk/gtk.h>  // for GtkWidget, GtkSpinButton
@@ -43,8 +42,11 @@ public:
     void addListener(SpinPageListener* listener);
     void removeListener(SpinPageListener* listener);
 
-    /// Set PDF page labels (one per xournal page). Empty vector restores numeric mode.
     void setLabels(std::vector<std::string> labels);
+    void insertLabel(size_t pos, std::string label);
+    void deleteLabel(size_t pos);
+    void swapLabels(size_t a, size_t b);
+    bool hasAnyLabels() const;
 
 private:
     static bool pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter);
@@ -68,7 +70,6 @@ private:
     size_t max = 0;
 
     std::vector<std::string> labels;
-    std::unordered_map<std::string, size_t> labelToPage;  ///< label → 1-based xournal page number
 };
 
 class SpinPageListener {

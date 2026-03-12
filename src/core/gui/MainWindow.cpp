@@ -713,6 +713,10 @@ void MainWindow::updatePageNumbers(size_t page, size_t pagecount) { toolbar->set
 
 void MainWindow::setPageLabels(std::vector<std::string> labels) { toolbar->setPageLabels(std::move(labels)); }
 
+void MainWindow::insertPageLabel(size_t pos, std::string label) { toolbar->insertPageLabel(pos, std::move(label)); }
+void MainWindow::deletePageLabel(size_t pos) { toolbar->deletePageLabel(pos); }
+void MainWindow::swapPageLabels(size_t a, size_t b) { toolbar->swapPageLabels(a, b); }
+
 auto MainWindow::getMenubar() const -> Menubar* { return menubar.get(); }
 
 void MainWindow::show(GtkWindow* parent) { gtk_widget_show(this->window); }

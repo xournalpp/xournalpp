@@ -376,6 +376,10 @@ public:
     inline ActionDatabase* getActionDatabase() const { return actionDB.get(); }
     void loadPaletteFromSettings();
 
+    void notifyPageInserted(size_t pos, const PageRef& page);
+    void notifyPageDeleted(size_t pos);
+    void notifyPagesSwapped(size_t a, size_t b);
+
 protected:
     void setRotationSnapping(bool enable);
     void setGridSnapping(bool enable);
@@ -401,10 +405,6 @@ protected:
 
     void saveImpl(bool saveAs, std::function<void(bool)> callback);
 
-    /**
-     * Collect PDF page labels from the loaded document and push them to the toolbar
-     * Call once after each document load
-     */
     void buildAndPushPageLabels();
 
 private:

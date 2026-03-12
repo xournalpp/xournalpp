@@ -32,10 +32,11 @@ public:
     ~ToolPageSpinner() override;
 
 public:
-    /// Propagates the info to all instances of the Page Spinner
     void setPageInfo(size_t currentPage, size_t pageCount);
-    /// Set PDF page labels for the loaded document.
     void setPageLabels(std::vector<std::string> labels);
+    void insertPageLabel(size_t pos, std::string label);
+    void deletePageLabel(size_t pos);
+    void swapPageLabels(size_t a, size_t b);
     std::string getToolDisplayName() const override;
     xoj::util::WidgetSPtr createItem(bool horizontal) override;
 

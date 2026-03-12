@@ -78,8 +78,26 @@ public:
     }
 
     void setLabels(std::vector<std::string> labels) {
-        hasLabels = !labels.empty();
+        hasLabels = false;
+        for (const auto& label: labels) {
+            if (!label.empty()) {
+                hasLabels = true;
+                break;
+            }
+        }
         spinner.setLabels(std::move(labels));
+    }
+    void insertLabel(size_t pos, std::string label) {
+        spinner.insertLabel(pos, std::move(label));
+        hasLabels = spinner.hasAnyLabels();
+    }
+    void deleteLabel(size_t pos) {
+        spinner.deleteLabel(pos);
+        hasLabels = spinner.hasAnyLabels();
+    }
+    void swapLabels(size_t a, size_t b) {
+        spinner.swapLabels(a, b);
+        hasLabels = spinner.hasAnyLabels();
     }
     ToolPageSpinner* getHandler() const { return handler; }
 
@@ -87,7 +105,6 @@ private:
     void updateLabel(size_t currentPage1based, size_t pageCount) {
         std::string ofString;
         if (hasLabels) {
-            // The spinner displays the PDF label; show the physical index for cross-reference.
             ofString = std::to_string(currentPage1based) +
                        FS(C_F("Page {pagenumber} \"of {pagecount}\"", " of {1}") % pageCount);
         } else {
@@ -120,6 +137,28 @@ void ToolPageSpinner::setPageLabels(std::vector<std::string> labels) {
         (*it)->setLabels(labels);
     }
     instances.back()->setLabels(std::move(labels));
+}
+
+void ToolPageSpinner::insertPageLabel(size_t pos, std::string label) {
+    if (instances.empty()) {
+        return;
+    }
+    for (auto it = instances.begin(); it != std::prev(instances.end()); ++it) {
+        (*it)->insertLabel(pos, label);
+    }
+    instances.back()->insertLabel(pos, std::move(label));
+}
+
+void ToolPageSpinner::deletePageLabel(size_t pos) {
+    for (auto* i: instances) {
+        i->deleteLabel(pos);
+    }
+}
+
+void ToolPageSpinner::swapPageLabels(size_t a, size_t b) {
+    for (auto* i: instances) {
+        i->swapLabels(a, b);
+    }
 }
 
 auto ToolPageSpinner::getToolDisplayName() const -> std::string { return _("Page number"); }

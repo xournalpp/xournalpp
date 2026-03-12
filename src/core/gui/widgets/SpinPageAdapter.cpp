@@ -1,7 +1,9 @@
 #include "SpinPageAdapter.h"
 
+#include <algorithm>  // for min
 #include <cstdint>  // for uint64_t
-#include <string>   // for string, stoul
+#include <string>   // for string
+#include <utility>  // for swap
 
 #include <glib-object.h>  // for g_signal_handler_disconnect, G_CALLBACK
 
@@ -77,17 +79,47 @@ void SpinPageAdapter::removeListener(SpinPageListener* listener) {
 
 void SpinPageAdapter::setLabels(std::vector<std::string> newLabels) {
     this->labels = std::move(newLabels);
-    this->labelToPage.clear();
-    for (size_t i = 0; i < this->labels.size(); ++i) {
-        if (!this->labels[i].empty()) {
-            this->labelToPage[this->labels[i]] = i + 1;
-        }
-    }
     if (this->widget) {
         gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(this->widget.get()), this->labels.empty() ? TRUE : FALSE);
         gboolean did_output = FALSE;
         g_signal_emit_by_name(this->widget.get(), "output", &did_output);
     }
+}
+
+void SpinPageAdapter::insertLabel(size_t pos, std::string label) {
+    if (this->labels.empty()) {
+        if (label.empty()) {
+            return;
+        }
+        this->labels.resize(this->max);
+    }
+    if (this->labels.empty()) {
+        return;
+    }
+    this->labels.insert(this->labels.begin() + std::min(pos, this->labels.size()), std::move(label));
+}
+
+void SpinPageAdapter::deleteLabel(size_t pos) {
+    if (this->labels.empty() || pos >= this->labels.size()) {
+        return;
+    }
+    this->labels.erase(this->labels.begin() + pos);
+}
+
+void SpinPageAdapter::swapLabels(size_t a, size_t b) {
+    if (this->labels.empty() || a >= this->labels.size() || b >= this->labels.size()) {
+        return;
+    }
+    std::swap(this->labels[a], this->labels[b]);
+}
+
+auto SpinPageAdapter::hasAnyLabels() const -> bool {
+    for (const auto& lbl: this->labels) {
+        if (!lbl.empty()) {
+            return true;
+        }
+    }
+    return false;
 }
 
 gboolean SpinPageAdapter::spinOutputCallback(GtkSpinButton* spin, SpinPageAdapter* adapter) {
@@ -108,23 +140,16 @@ gint SpinPageAdapter::spinInputCallback(GtkSpinButton* spin, gdouble* newValue, 
     }
     const std::string input(gtk_entry_get_text(GTK_ENTRY(spin)));
 
-    auto it = adapter->labelToPage.find(input);
-    if (it != adapter->labelToPage.end()) {
-        *newValue = static_cast<gdouble>(it->second);
-        return TRUE;
-    }
-
-    // Fall back to numeric page index
-    try {
-        std::size_t pos = 0;
-        const unsigned long page = std::stoul(input, &pos);
-        if (pos == input.size() && page >= adapter->min && page <= adapter->max) {
-            *newValue = static_cast<gdouble>(page);
+    const size_t labelCount = adapter->labels.size();
+    const size_t startIndex = labelCount == 0 ? 0 : adapter->page % labelCount;
+    for (size_t offset = 0; offset < labelCount; ++offset) {
+        const size_t idx = (startIndex + offset) % labelCount;
+        if (adapter->labels[idx] == input) {
+            *newValue = static_cast<gdouble>(idx + 1);
             return TRUE;
         }
-    } catch (...) {}
+    }
 
-    // Invalid input, keep the current page rather than jumping to page 1
     *newValue = static_cast<gdouble>(adapter->page);
     return TRUE;
 }
