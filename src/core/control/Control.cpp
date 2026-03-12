@@ -840,8 +840,8 @@ void Control::rotatePageClockwise(const int n) {
         return;
     }
 
-    int orient = p->getPdfPageOrientation();
-    int newOrient = (orient + n + 4) % 4;
+    PageOrientation orient = p->getPdfPageOrientation();
+    PageOrientation newOrient = static_cast<PageOrientation>((static_cast<int>(orient) + n + 4) % 4);
     p->setPdfPageOrientation(newOrient);
 
     pageBackgroundChangeController->togglePageSizeRatio(p, pNr);
