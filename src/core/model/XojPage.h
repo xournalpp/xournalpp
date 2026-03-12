@@ -57,8 +57,8 @@ public:
 
     size_t getPdfPageNr() const;
 
-    int getPdfPageOrientation() const;
     void setPdfPageOrientation(int n);
+    int getPdfPageOrientation() const;
 
     bool isAnnotated() const;
 

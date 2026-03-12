@@ -41,11 +41,28 @@ void drawPage(GtkPrintOperation* /*operation*/, GtkPrintContext* context, int pa
         cairo_translate(cr, 0, -height);
     }
 
+    int pageOrient = page->getPdfPageOrientation();
+
     // For better quality printing, we use a dedicated pdf-renderer in this case
     if (page->getBackgroundType().isPdfPage()) {
         XojPdfPageSPtr popplerPage = doc->getPdfPage(page->getPdfPageNr());
         if (popplerPage) {
+            if (pageOrient != 0) {
+                cairo_save(cr);
+                cairo_translate(cr, width / 2, height / 2);
+                cairo_rotate(cr, pageOrient * M_PI_2);
+                if (pageOrient != 2) {
+                    cairo_translate(cr, -height / 2, -width / 2);
+                } else {
+                    cairo_translate(cr, -width / 2, -height / 2);
+                }
+            }
+
             popplerPage->renderForPrinting(cr);
+
+            if (pageOrient != 0) {
+                cairo_restore(cr);
+            }
         }
     }
 
