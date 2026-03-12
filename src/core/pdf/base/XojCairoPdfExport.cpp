@@ -1,6 +1,7 @@
 #include "XojCairoPdfExport.h"
 
 #include <algorithm>  // for copy, min
+#include <cmath>      // for M_PI_2
 #include <map>        // for map
 #include <memory>     // for __shared_ptr_access
 #include <sstream>    // for ostringstream, operator<<
@@ -139,7 +140,10 @@ bool XojCairoPdfExport::endPdf() {
 void XojCairoPdfExport::exportPage(size_t page, bool exportPdfBackground) {
     PageRef p = doc->getPage(page);
 
-    cairo_pdf_surface_set_size(this->surface, p->getWidth(), p->getHeight());
+    auto width = p->getWidth();
+    auto height = p->getHeight();
+
+    cairo_pdf_surface_set_size(this->surface, width, height);
 
     DocumentView view;
 
@@ -148,9 +152,25 @@ void XojCairoPdfExport::exportPage(size_t page, bool exportPdfBackground) {
     // For a better pdf quality, we use a dedicated pdf rendering
     if (exportPdfBackground && p->getBackgroundType().isPdfPage() && (exportBackground != EXPORT_BACKGROUND_NONE)) {
         auto pgNo = p->getPdfPageNr();
+        auto pgOrient = p->getPdfPageOrientation();
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
+        if (pgOrient != 0) {
+            cairo_save(cr);
+            cairo_translate(cr, width / 2, height / 2);
+            cairo_rotate(cr, pgOrient * M_PI_2);
+            if (pgOrient != 2) {
+                cairo_translate(cr, -height / 2, -width / 2);
+            } else {
+                cairo_translate(cr, -width / 2, -height / 2);
+            }
+        }
+
         popplerPage->renderForPrinting(cr);
+
+        if (pgOrient != 0) {
+            cairo_restore(cr);
+        }
     }
 
     xoj::view::BackgroundFlags flags;
