@@ -9,11 +9,16 @@
  * @license GNU GPLv2 or later
  */
 
-#include <array>
+#include <algorithm>
 #include <cmath>
+#include <cstddef>
 #include <filesystem>
 #include <iostream>
+#include <memory>
+#include <optional>
 #include <string_view>
+#include <utility>
+#include <vector>
 
 #include <config-test.h>
 #include <gtest/gtest.h>
@@ -23,17 +28,17 @@
 #include "model/Element.h"
 #include "model/Image.h"
 #include "model/PageRef.h"
+#include "model/PageType.h"
 #include "model/Stroke.h"
 #include "model/StrokeStyle.h"
 #include "model/TexImage.h"
 #include "model/Text.h"
 #include "model/XojPage.h"
+#include "util/Color.h"
 #include "util/PathUtil.h"
 #include "util/StringUtils.h"
 
 #include "filesystem.h"
-
-using std::string;
 
 // Common test Functions
 namespace {
@@ -41,9 +46,8 @@ namespace {
 /**
  * Load a test file, and verify that loading does not throw.
  */
-std::unique_ptr<Document> loadTestDocument(const fs::path& filepath) {
-    LoadHandler handler;
-    EXPECT_NO_THROW(return handler.loadDocument(filepath)) << "Error while loading \"" << filepath << '\"';
+auto loadTestDocument(const fs::path& filepath) -> std::unique_ptr<Document> {
+    EXPECT_NO_THROW(return LoadHandler{}.loadDocument(filepath)) << "Error while loading \"" << filepath << '\"';
     return {};
 }
 
@@ -144,7 +148,8 @@ void testLoadStoreLoadHelper(const fs::path& filepath, double tol = 1e-8) {
     }
 }
 
-void checkPageType(const Document* doc, size_t pageIndex, const string& expectedText, const PageType& expectedBgType) {
+void checkPageType(const Document* doc, size_t pageIndex, const std::string& expectedText,
+                   const PageType& expectedBgType) {
     ASSERT_LT(pageIndex, doc->getPageCount());
     ConstPageRef page = doc->getPage(pageIndex);
 
@@ -194,7 +199,7 @@ void checkStroke(const Layer* layer, size_t elementIndex, StrokeTool tool, Color
     ASSERT_NE(stroke, nullptr) << "Element " << elementIndex << " should be a stroke";
     ASSERT_EQ(stroke->getType(), ELEMENT_STROKE) << "Element " << elementIndex << " should be a stroke";
 
-    auto pointEq = [](const Point& a, const Point& b) {
+    auto pointEq = [](const Point& a, const Point& b) -> bool {
         return (std::abs(a.x - b.x) <= std::max(std::abs(a.x), 1.0) * 1e-10) &&
                (std::abs(a.y - b.y) <= std::max(std::abs(a.y), 1.0) * 1e-10) &&
                (std::abs(a.z - b.z) <= std::max(std::abs(a.z), 1.0) * 1e-10);
@@ -251,7 +256,7 @@ TEST(ControlLoadHandler, testLoad) {
     auto* text = dynamic_cast<const Text*>(element);
     EXPECT_NE(text, nullptr);
 
-    EXPECT_EQ(string("12345"), text->getText());
+    EXPECT_EQ(std::string("12345"), text->getText());
 }
 
 TEST(ControlLoadHandler, testLoadZipped) {
@@ -270,7 +275,7 @@ TEST(ControlLoadHandler, testLoadZipped) {
     auto* text = dynamic_cast<const Text*>(element);
     EXPECT_NE(text, nullptr);
 
-    EXPECT_EQ(string("12345"), text->getText());
+    EXPECT_EQ(std::string("12345"), text->getText());
 }
 
 TEST(ControlLoadHandler, testLoadUnzipped) {
@@ -289,7 +294,7 @@ TEST(ControlLoadHandler, testLoadUnzipped) {
     auto* text = dynamic_cast<const Text*>(element);
     EXPECT_NE(text, nullptr);
 
-    EXPECT_EQ(string("12345"), text->getText());
+    EXPECT_EQ(std::string("12345"), text->getText());
 }
 
 TEST(ControlLoadHandler, testPages) {
@@ -300,7 +305,7 @@ TEST(ControlLoadHandler, testPages) {
 
     // Check page dimensions
     constexpr double A4_WIDTH = 595.27559, A4_HEIGHT = 841.88976;
-    for (int i = 0; i < 4; ++i) {
+    for (size_t i = 0; i < 10; ++i) {
         EXPECT_DOUBLE_EQ(doc->getPage(i)->getWidth(), A4_WIDTH);
         EXPECT_DOUBLE_EQ(doc->getPage(i)->getHeight(), A4_HEIGHT);
     }

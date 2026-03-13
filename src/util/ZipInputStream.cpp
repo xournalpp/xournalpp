@@ -34,9 +34,9 @@ void ZipInputStream::open(zip_t* archive, const fs::path& filepath) {
     this->file = zip_fopen(archive, filepath.string().c_str(), 0);
 
     if (!this->file) {
-        const std::string error =
+        const auto error =
                 FS(_F("Error opening file \"{1}\" in zip archive:\n{2}") % filepath.u8string() % zip_strerror(archive));
-        throw std::runtime_error(error);
+        throw std::runtime_error{error};
     }
 }
 
@@ -49,10 +49,10 @@ void ZipInputStream::close() {
     this->file = nullptr;
 
     if (result != 0) {
-        const std::string error = FS(_F("Error occurred while closing file\n"
-                                        "Error code {1}") %
-                                     result);
-        throw std::runtime_error(error);
+        const auto error = FS(_F("Error occurred while closing file\n"
+                                 "Error code {1}") %
+                              result);
+        throw std::runtime_error{error};
     }
 }
 

@@ -31,7 +31,6 @@ class StrokeTool {
 public:
     enum Value { PEN, ERASER, HIGHLIGHTER };
     static constexpr std::array<const char8_t*, 3> NAMES = {u8"pen", u8"eraser", u8"highlighter"};
-    StrokeTool(): value(Value::PEN) {}
     StrokeTool(Value v): value(v) {}
 
     [[nodiscard]] bool isPressureSensitive() const { return value == PEN; }

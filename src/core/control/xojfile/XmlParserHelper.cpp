@@ -1,6 +1,5 @@
 #include "control/xojfile/XmlParserHelper.h"
 
-#include <algorithm>
 #include <array>
 #include <charconv>
 #include <cstddef>
@@ -12,14 +11,12 @@
 #include <string>
 #include <string_view>
 #include <system_error>
-#include <vector>
 
 #include <glib.h>
 
 #include "control/xojfile/XmlAttrs.h"
 #include "model/LineStyle.h"
 #include "model/StrokeStyle.h"
-#include "util/Assert.h"
 #include "util/Color.h"
 #include "util/StringUtils.h"
 #include "util/safe_casts.h"
@@ -46,7 +43,7 @@ auto XmlParserHelper::AttributeMap::operator[](std::u8string_view name) const ->
 using XmlParserHelper::c_string_utf8_view;
 using XmlParserHelper::string_utf8_view;
 
-// template specializations
+// Template specializations
 template <>
 auto XmlParserHelper::getAttrib<const char*>(std::u8string_view name, const AttributeMap& attributeMap)
         -> std::optional<const char*> {
@@ -69,7 +66,7 @@ auto XmlParserHelper::getAttrib<string_utf8_view>(std::u8string_view name, const
         -> std::optional<string_utf8_view> {
     const auto optCStr = attributeMap[name];
     if (optCStr) {
-        return std::string_view(*optCStr) | xoj::util::utf8;
+        return std::string_view{*optCStr} | xoj::util::utf8;
     } else {
         return std::nullopt;
     }
@@ -80,7 +77,7 @@ auto XmlParserHelper::getAttrib<fs::path>(std::u8string_view name, const Attribu
         -> std::optional<fs::path> {
     const auto optCStr = attributeMap[name];
     if (optCStr) {
-        return fs::path(*optCStr | xoj::util::utf8);
+        return fs::path{*optCStr | xoj::util::utf8};
     } else {
         return std::nullopt;
     }
@@ -91,7 +88,7 @@ auto XmlParserHelper::getAttrib<LineStyle>(std::u8string_view name, const Attrib
         -> std::optional<LineStyle> {
     const auto optCStr = attributeMap[name];
     if (optCStr) {
-        // With lots of efforts, we could avoid a copy here, but this attribute likely does
+        // With significant effort, we could avoid a copy here, but this attribute likely does
         // not show up often in regular files.
         return StrokeStyle::parseStyle(std::string{*optCStr});
     } else {
@@ -100,7 +97,7 @@ auto XmlParserHelper::getAttrib<LineStyle>(std::u8string_view name, const Attrib
 }
 
 
-// custom attribute parsing functions
+// Custom attribute parsing functions
 
 auto XmlParserHelper::getAttribColorMandatory(const AttributeMap& attributeMap, const Color& defaultValue, bool bg)
         -> Color {
@@ -124,7 +121,7 @@ auto XmlParserHelper::getAttribColorMandatory(const AttributeMap& attributeMap, 
         }
 
         // Nothing worked: fall back to default value
-        g_warning("XML parser: Unkown color \"" SV_FMT " \" found. Using default value \"%s\"", SV_ARG(*optColorSV),
+        g_warning("XML parser: Unknown color \"" SV_FMT "\" found. Using default value \"%s\"", SV_ARG(*optColorSV),
                   Util::rgb_to_hex_string(defaultValue).c_str());
         return defaultValue;
     } else {
@@ -139,12 +136,13 @@ struct PredefinedColor {
     Color color{};
 };
 
-using namespace std::literals::string_view_literals;
-constexpr std::array<PredefinedColor, 5> BACKGROUND_COLORS = {{{u8"blue"sv, Colors::xopp_paleturqoise},
-                                                               {u8"pink"sv, Colors::xopp_pink},
-                                                               {u8"green"sv, Colors::xopp_aquamarine},
-                                                               {u8"orange"sv, Colors::xopp_lightsalmon},
-                                                               {u8"yellow"sv, Colors::xopp_khaki}}};
+constexpr std::array<PredefinedColor, 5> BACKGROUND_COLORS = {{
+        {u8"blue", Colors::xopp_paleturqoise},
+        {u8"pink", Colors::xopp_pink},
+        {u8"green", Colors::xopp_aquamarine},
+        {u8"orange", Colors::xopp_lightsalmon},
+        {u8"yellow", Colors::xopp_khaki},
+}};
 
 auto XmlParserHelper::parseBgColor(string_utf8_view sv) -> std::optional<Color> {
     for (const auto& i: BACKGROUND_COLORS) {
@@ -153,7 +151,7 @@ auto XmlParserHelper::parseBgColor(string_utf8_view sv) -> std::optional<Color> 
         }
     }
 
-    // color not found in predefined background colors
+    // Color not found in predefined background colors
     return {};
 }
 
@@ -165,25 +163,27 @@ auto XmlParserHelper::parseColorCode(std::string_view sv) -> std::optional<Color
             g_warning("XML parser: Unknown color code \"" SV_FMT "\".", SV_ARG(sv));
             return {};
         }
-        // discard alpha for now
+        // Discard alpha for now
         return Color((color >> 8U) | (color << 24U));  // constructor takes AARRGGBB byte order instead of RRGGBBAA
     } else {
-        // not a color code
+        // Not a color code
         return {};
     }
 }
 
-constexpr std::array<PredefinedColor, 11> PREDEFINED_COLORS = {{{u8"black"sv, Colors::black},
-                                                                {u8"blue"sv, Colors::xopp_royalblue},
-                                                                {u8"red"sv, Colors::red},
-                                                                {u8"green"sv, Colors::green},
-                                                                {u8"gray"sv, Colors::gray},
-                                                                {u8"lightblue"sv, Colors::xopp_deepskyblue},
-                                                                {u8"lightgreen"sv, Colors::lime},
-                                                                {u8"magenta"sv, Colors::magenta},
-                                                                {u8"orange"sv, Colors::xopp_darkorange},
-                                                                {u8"yellow"sv, Colors::yellow},
-                                                                {u8"white"sv, Colors::white}}};
+constexpr std::array<PredefinedColor, 11> PREDEFINED_COLORS = {{
+        {u8"black", Colors::black},
+        {u8"blue", Colors::xopp_royalblue},
+        {u8"red", Colors::red},
+        {u8"green", Colors::green},
+        {u8"gray", Colors::gray},
+        {u8"lightblue", Colors::xopp_deepskyblue},
+        {u8"lightgreen", Colors::lime},
+        {u8"magenta", Colors::magenta},
+        {u8"orange", Colors::xopp_darkorange},
+        {u8"yellow", Colors::yellow},
+        {u8"white", Colors::white},
+}};
 
 auto XmlParserHelper::parsePredefinedColor(string_utf8_view sv) -> std::optional<Color> {
     for (const auto& i: PREDEFINED_COLORS) {
@@ -192,7 +192,7 @@ auto XmlParserHelper::parsePredefinedColor(string_utf8_view sv) -> std::optional
         }
     }
 
-    // color not found in predefined colors
+    // Color not found in predefined colors
     return {};
 }
 

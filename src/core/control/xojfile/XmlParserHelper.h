@@ -21,7 +21,6 @@
 #include <string_view>
 #include <system_error>
 #include <type_traits>
-#include <vector>
 
 #include <glib.h>
 
@@ -91,14 +90,14 @@ std::optional<LineStyle> getAttrib<LineStyle>(std::u8string_view name, const Att
 
 // "color" attribute
 Color getAttribColorMandatory(const AttributeMap& attributeMap, const Color& defaultValue, bool bg = false);
-// Attempt to match string with background-specific color "translations"
+// Attempt to match string with background-specific color aliases
 std::optional<Color> parseBgColor(string_utf8_view sv);
-// Parse str as a RGBA hex color code
+// Parse a string as a RGBA hex color code
 std::optional<Color> parseColorCode(std::string_view sv);
 // Attempt to match string with predefined color names
 std::optional<Color> parsePredefinedColor(string_utf8_view sv);
 
-// Decode C-string of Base64 encoded data into a string of binary data
+// Decode C-string of Base64-encoded data into a string of binary data
 std::string decodeBase64(std::string_view base64data);
 
 /**
@@ -107,7 +106,7 @@ std::string decodeBase64(std::string_view base64data);
  * Parses the string in the range [it, end) for a numeric value. On success,
  * `it` is updated to point to the first unparsed character.
  *
- * When available, we use std::from_chars, beacuse it is about 10x faster than
+ * When available, we use std::from_chars, because it is about 10x faster than
  * streams and about 5x faster than g_ascii_strtod.
  * @param it  Pointer to the beginning of the string, modified to point to the
  *            first unparsed character
@@ -126,7 +125,7 @@ T parseNumeric(const char*& it, const char* end) {
     if constexpr (std::is_integral_v<T> || ENABLE_FLOAT_FROM_CHARS) {
         auto [ptr, ec] = std::from_chars(it, end, value);
         if (ec != std::errc{}) {
-            throw std::domain_error(std::make_error_condition(ec).message());
+            throw std::domain_error{std::make_error_condition(ec).message()};
         }
         it = ptr;
     } else {
@@ -136,7 +135,7 @@ T parseNumeric(const char*& it, const char* end) {
         char* ptr = nullptr;
         value = static_cast<T>(g_ascii_strtod(it, &ptr));
         if (ptr == it) {
-            throw std::domain_error("g_ascii_strtod failed");
+            throw std::domain_error{"g_ascii_strtod failed"};
         }
         it = ptr;
     }
@@ -170,12 +169,12 @@ inline constexpr bool is_utf8_view_v<xoj::util::utf8_view<It, Sen>> = true;
 template <typename T>
 constexpr bool always_false = false;
 
-// Exception type for incompletely parsed attributes
+// Exception type for partially parsed attributes
 template <typename T>
 class IncompleteParseError: public std::runtime_error {
 public:
     /**
-     * Creates an exception for incompletely parsed data
+     * Creates an exception for partially parsed data
      * @param value The value that could be parsed from the input
      */
     IncompleteParseError(T value): std::runtime_error("Parsing did not consume full input"), value_(std::move(value)) {}
@@ -201,7 +200,7 @@ T parseEnum(c_string_utf8_view sv) {
     }
 
     // Value could not be found
-    throw std::domain_error("unknown value");
+    throw std::domain_error{"unknown value"};
 }
 
 // Parse numeric types
@@ -210,7 +209,7 @@ T parseNumeric(std::string_view sv) {
     auto it = sv.begin();
     auto value = ::XmlParserHelper::parseNumeric<T>(it, sv.end());
     if (it != sv.end()) {
-        throw IncompleteParseError(value);
+        throw IncompleteParseError{value};
     }
     return value;
 }
@@ -260,9 +259,9 @@ auto XmlParserHelper::getAttrib(std::u8string_view name, const AttributeMap& att
 template <typename T>
 auto XmlParserHelper::getAttribMandatory(std::u8string_view name, const AttributeMap& attributeMap,
                                          const T& defaultValue, bool warn) -> T {
-    auto optionalInt = getAttrib<T>(name, attributeMap);
-    if (optionalInt) {
-        return *optionalInt;
+    auto optionalAttr = getAttrib<T>(name, attributeMap);
+    if (optionalAttr) {
+        return *optionalAttr;
     } else {
         if (warn) {
             std::string defaultValueStr;
@@ -272,7 +271,7 @@ auto XmlParserHelper::getAttribMandatory(std::u8string_view name, const Attribut
             } else if constexpr (detail::is_utf8_view_v<T>) {
                 // We need to do a double copy to get a std::string out of a utf8_view
                 const auto u8str = defaultValue.str();
-                defaultValueStr = std::string(u8str.begin(), u8str.end());
+                defaultValueStr = std::string{u8str.begin(), u8str.end()};
             } else {
                 auto stream = serdes_stream<std::ostringstream>();
                 stream << defaultValue;

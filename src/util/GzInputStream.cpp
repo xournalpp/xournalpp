@@ -11,6 +11,8 @@
 #include "util/GzUtil.h"  // for GzUtil
 #include "util/i18n.h"    // for FS, _F
 
+#include "filesystem.h"  // for path
+
 
 namespace xoj::util {
 
@@ -43,9 +45,8 @@ void GzInputStream::open(const fs::path& filepath) {
     this->file = GzUtil::openPath(filepath, "r");
 
     if (!this->file) {
-        const std::string error =
-                FS(_F("Error opening file \"{1}\":\n{2}") % filepath.u8string() % std::strerror(errno));
-        throw std::runtime_error(error);
+        const auto error = FS(_F("Error opening file \"{1}\":\n{2}") % filepath.u8string() % std::strerror(errno));
+        throw std::runtime_error{error};
     }
 }
 
@@ -58,14 +59,14 @@ void GzInputStream::close() {
     this->file = nullptr;
 
     if (result != Z_OK) {
-        std::string error = FS(_F("Error occurred while closing file\n"
-                                  "Error code {1}") %
-                               result);
+        auto error = FS(_F("Error occurred while closing file\n"
+                           "Error code {1}") %
+                        result);
         if (result == Z_ERRNO) {
             // fs error. Fetch the precise message
             error += std::string("\n") + std::strerror(errno);
         }
-        throw std::runtime_error(error);
+        throw std::runtime_error{error};
     }
 }
 

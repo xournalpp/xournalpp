@@ -97,11 +97,11 @@ std::string demangledTypeName() {
 #ifdef XOJ_USE_CXXABI
     char* demangledName = abi::__cxa_demangle(name, nullptr, nullptr, nullptr);
     if (demangledName) {
-        auto nameStr = std::string(demangledName);
+        auto nameStr = std::string{demangledName};
         std::free(demangledName);
         return nameStr;
     } else {
-        return std::string(name) + " (demangling failed)";
+        return std::string{name} + " (demangling failed)";
     }
 #else
     // We don't know how to demangle the name, or it might not be mangled at all

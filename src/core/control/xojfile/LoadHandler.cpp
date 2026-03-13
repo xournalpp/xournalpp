@@ -47,7 +47,6 @@
 #include "util/raii/CLibrariesSPtr.h"   // for adopt
 #include "util/raii/GLibGuards.h"       // for GErrorGuard
 #include "util/raii/GObjectSPtr.h"      // for GObjectSPtr
-#include "util/utf8_view.h"             // for utf8_view
 
 #include "filesystem.h"  // for path, is_regular_file
 
@@ -57,7 +56,7 @@ constexpr size_t MAX_VERSION_LENGTH = 50;
 constexpr size_t MAX_MIMETYPE_LENGTH = 25;
 
 struct zip_file_deleter {
-    void operator()(zip_file_t* ptr) { zip_fclose(ptr); }
+    void operator()(zip_file_t* ptr) noexcept { zip_fclose(ptr); }
 };
 }  // namespace
 
@@ -86,7 +85,7 @@ void LoadHandler::addDocument(std::u8string creator, int fileVersion) {
         this->fileVersion = fileVersion;
     }
 
-    this->doc = std::make_unique<Document>(&dHanlder);
+    this->doc = std::make_unique<Document>(&this->dHandler);
 }
 
 void LoadHandler::finalizeDocument() {
@@ -107,9 +106,9 @@ void LoadHandler::addPage(double width, double height) {
 void LoadHandler::finalizePage() {
     xoj_assert(this->page);
 
-    // handle unnecessary layer insertion in case of existing layers in file
+    // Handle unnecessary layer insertion in case of existing layers in file
     if (this->page->getLayerCount() == 0) {
-        this->page->addLayer(new Layer());
+        this->page->addLayer(new Layer{});
     }
     // this->pages already holds a reference to the page
     this->page.reset();
@@ -134,7 +133,7 @@ void LoadHandler::addAudioAttachment(const fs::path& filename) {
         return;
     }
 
-    auto attachmentFile = zip_file_wrapper(zip_fopen(this->zipFp.get(), char_cast(filename.u8string().c_str()), 0));
+    auto attachmentFile = zip_file_wrapper{zip_fopen(this->zipFp.get(), char_cast(filename.u8string().c_str()), 0)};
 
     if (!attachmentFile) {
         logError(FS(_F("Could not open attachment: {1}. Error message: {2}") % filename.u8string() %
@@ -174,7 +173,7 @@ void LoadHandler::addAudioAttachment(const fs::path& filename) {
         readBytes += read;
     }
 
-    // Map the filename to the extracted temporary filepath
+    // Map the filename to the extracted temporary file path
     const char* tmpPath = g_file_peek_path(tmpFile.get());
     this->audioFiles[filename] = tmpPath;
 }
@@ -202,15 +201,15 @@ void LoadHandler::setBgPixmap(bool attach, const fs::path& filename) {
             logError(FS(_F("Could not read image: {1}. Error message: {2}") % fileToLoad.u8string() % error->message));
         }
     } else {
-        // The image is stored in an attachemt inside the zip archive
-        const auto readResult = readZipAttachment(filename);  ///< Do not remove the const qualifier - see below
+        // The image is stored in an attachment inside the zip archive
+        const auto readResult = readZipAttachment(filename);  // Do not remove the const qualifier - see below
         if (!readResult) {
             return;
         }
-        const std::string& imgData = *readResult;  ///< Do not remove the const qualifier - see below
+        const std::string& imgData = *readResult;  // Do not remove the const qualifier - see below
 
         /**
-         * To avoid an unecessary copy, the data is still managed by the std::unique_ptr<std::string> instance. The
+         * To avoid an unnecessary copy, the data is still managed by the std::unique_ptr<std::string> instance. The
          * input stream assumes the data will not be modified: do not remove the const qualifier on readResult or
          * imgData
          */
@@ -229,7 +228,7 @@ void LoadHandler::setBgPixmap(bool attach, const fs::path& filename) {
     }
     img.setAttach(attach);
     this->page->setBackgroundImage(img);
-    this->page->setBackgroundType(PageType(PageTypeFormat::Image));
+    this->page->setBackgroundType(PageType{PageTypeFormat::Image});
 }
 
 void LoadHandler::setBgPixmapCloned(size_t pageNr) {
@@ -243,7 +242,7 @@ void LoadHandler::setBgPixmapCloned(size_t pageNr) {
     if (p) {
         this->page->setBackgroundImage(p->getBackgroundImage());
     }
-    this->page->setBackgroundType(PageType(PageTypeFormat::Image));
+    this->page->setBackgroundType(PageType{PageTypeFormat::Image});
 }
 
 void LoadHandler::setBgPdf(size_t pageno) { this->page->setBackgroundPdfPageNr(pageno); }
@@ -255,15 +254,15 @@ void LoadHandler::loadBgPdf(bool attach, const fs::path& filename) {
 
         // pdfFilepath should point to the background PDF file
         if (fs::is_regular_file(pdfFilepath)) {
-            doc->readPdf(pdfFilepath, false, attach);
+            this->doc->readPdf(pdfFilepath, false, attach);
 
-            if (!doc->getLastErrorMsg().empty()) {
-                logError(FS(_F("Error reading PDF: {1}") % doc->getLastErrorMsg()));
+            if (!this->doc->getLastErrorMsg().empty()) {
+                logError(FS(_F("Error reading PDF: {1}") % this->doc->getLastErrorMsg()));
             }
         } else {
             // Even if loading the PDF failed, tell the document what should
             // have been loaded so the background is not silently removed on save
-            doc->setPdfAttributes(pdfFilepath, attach);
+            this->doc->setPdfAttributes(pdfFilepath, attach);
             if (attach) {
                 this->attachedPdfMissing = true;
             } else {
@@ -274,13 +273,13 @@ void LoadHandler::loadBgPdf(bool attach, const fs::path& filename) {
         // filename should point to an attachment inside the zip archive
         auto pdfBytes = readZipAttachment(filename);
         if (pdfBytes) {
-            doc->readPdf(filename, false, attach, std::move(pdfBytes));
+            this->doc->readPdf(filename, false, attach, std::move(pdfBytes));
 
-            if (!doc->getLastErrorMsg().empty()) {
-                logError(FS(_F("Error reading PDF: {1}") % doc->getLastErrorMsg()));
+            if (!this->doc->getLastErrorMsg().empty()) {
+                logError(FS(_F("Error reading PDF: {1}") % this->doc->getLastErrorMsg()));
             }
         } else {
-            doc->setPdfAttributes(filename, true);
+            this->doc->setPdfAttributes(filename, true);
             this->attachedPdfMissing = true;
         }
     }
@@ -466,7 +465,7 @@ void LoadHandler::logError(const std::string& error) {
 auto LoadHandler::openFile(fs::path const& filepath) -> std::unique_ptr<xoj::util::InputStream> {
     this->xournalFilepath = filepath;
     int zipError = 0;
-    this->zipFp = zip_wrapper(zip_open(char_cast(filepath.u8string().c_str()), ZIP_RDONLY, &zipError));
+    this->zipFp = zip_wrapper{zip_open(char_cast(filepath.u8string().c_str()), ZIP_RDONLY, &zipError)};
 
     // Check if file is a gzip
     if (!this->zipFp && zipError == ZIP_ER_NOZIP) {
@@ -477,47 +476,47 @@ auto LoadHandler::openFile(fs::path const& filepath) -> std::unique_ptr<xoj::uti
     // Check if file is a zip
     if (this->zipFp && !this->isGzFile) {
         // Check the mimetype
-        auto mimetypeFp = zip_file_wrapper(zip_fopen(this->zipFp.get(), "mimetype", 0));
+        auto mimetypeFp = zip_file_wrapper{zip_fopen(this->zipFp.get(), "mimetype", 0)};
         if (!mimetypeFp) {
-            throw std::runtime_error(
+            throw std::runtime_error{
                     FS(_F("The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}") %
-                       filepath.u8string() % zip_error_strerror(zip_get_error(zipFp.get()))));
+                       filepath.u8string() % zip_error_strerror(zip_get_error(this->zipFp.get())))};
         }
         std::array<char, MAX_MIMETYPE_LENGTH + 1> mimetype = {};
         // read the mimetype and a few more bytes to make sure we do not only read a subset
         zip_fread(mimetypeFp.get(), mimetype.data(), MAX_MIMETYPE_LENGTH);
         if (!strcmp(mimetype.data(), "application/xournal++")) {
-            throw std::runtime_error(FS(_F("The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\"") %
-                                        filepath.u8string() % mimetype.data()));
+            throw std::runtime_error{FS(_F("The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\"") %
+                                        filepath.u8string() % mimetype.data())};
         }
 
         // Get the file version
         auto versionFp = zip_file_wrapper(zip_fopen(this->zipFp.get(), "META-INF/version", 0));
         if (!versionFp) {
-            throw std::runtime_error(
+            throw std::runtime_error{
                     FS(_F("The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}") %
-                       filepath.u8string() % zip_error_strerror(zip_get_error(zipFp.get()))));
+                       filepath.u8string() % zip_error_strerror(zip_get_error(zipFp.get())))};
         }
         std::array<char, MAX_VERSION_LENGTH + 1> versionString = {};
         const auto length = std::max(zip_fread(versionFp.get(), versionString.data(), MAX_VERSION_LENGTH),
                                      static_cast<zip_int64_t>(0));
-        const std::regex versionRegex("current=(\\d+?)(?:\n|\r\n)min=(\\d+?)");
+        const std::regex versionRegex{"current=(\\d+?)(?:\n|\r\n)min=(\\d+?)"};
         std::match_results<char*> match;
         if (std::regex_search(versionString.data(), versionString.data() + length, match, versionRegex)) {
             this->fileVersion = std::stoi(match.str(1));
             this->minimalFileVersion = std::stoi(match.str(2));
         } else {
-            throw std::runtime_error(
+            throw std::runtime_error{
                     FS(_F("The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\"") %
-                       filepath.u8string() % std::string(versionString.data(), versionString.data() + length)));
+                       filepath.u8string() % std::string(versionString.begin(), versionString.end()))};
         }
 
         // open the main content file
         return std::make_unique<xoj::util::ZipInputStream>(this->zipFp.get(), "content.xml");
     }
 
-    // Fail if neither utility could open the file
-    throw std::runtime_error(FS(_F("Could not open file: \"{1}\"") % filepath.u8string()));
+    // Fail if neither method could open the file
+    throw std::runtime_error{FS(_F("Could not open file: \"{1}\"") % filepath.u8string())};
 }
 
 void LoadHandler::closeFile() noexcept { this->zipFp.reset(); }
@@ -527,11 +526,11 @@ XOJ_GIO_GUARD_GENERATOR_TYPE(GMarkupParseContext, g_markup_parse_context_free);
 void LoadHandler::parseXml(std::unique_ptr<xoj::util::InputStream> xmlContentStream) {
     xoj_assert(xmlContentStream);
 
-    XmlParser parserInterface(*this);
+    XmlParser parserInterface{*this};
     auto context = GMarkupParseContextGuard{g_markup_parse_context_new(
             &XmlParser::interface, static_cast<GMarkupParseFlags>(0), &parserInterface, nullptr)};
 
-    const auto handleGError = [this](xoj::util::GErrorGuard error) {
+    const auto handleGError = [this](xoj::util::GErrorGuard error) -> void {
         if (error) {
             logError(FS(_F("XML Parser error: {1}") % error->message));
         }
@@ -543,7 +542,7 @@ void LoadHandler::parseXml(std::unique_ptr<xoj::util::InputStream> xmlContentStr
     while (true) {
         len = xmlContentStream->read(buffer.data(), buffer.size());
         if (len < 0) {
-            throw std::runtime_error(_("Failed to read from compressed file"));
+            throw std::runtime_error{_("Failed to read from compressed file")};
         } else if (len == 0) {
             // Reached EOF
             break;
@@ -552,7 +551,7 @@ void LoadHandler::parseXml(std::unique_ptr<xoj::util::InputStream> xmlContentStr
         auto valid = g_markup_parse_context_parse(context.get(), buffer.data(), len, xoj::util::out_ptr(error));
         handleGError(std::move(error));
         if (!valid) {
-            throw std::runtime_error(_("Invalid XML data read"));
+            throw std::runtime_error{_("Invalid XML data read")};
         }
     }
 
@@ -573,10 +572,10 @@ void LoadHandler::parseXml(std::unique_ptr<xoj::util::InputStream> xmlContentStr
         // Else, then this->doc == nullptr and we will throw just below
     }
     if (!this->doc) {
-        throw std::runtime_error(_("Document is corrupted (no document tag found in file)"));
+        throw std::runtime_error{_("Document is corrupted (no document tag found in file)")};
     }
     if (this->doc->getPageCount() == 0) {
-        throw std::runtime_error(_("Document is corrupted (no pages found in file)"));
+        throw std::runtime_error{_("Document is corrupted (no pages found in file)")};
     }
 }
 
@@ -611,8 +610,8 @@ void LoadHandler::fixNullPressureValues(std::vector<Point> pts) {
      * Due to various bugs (see e.g. https://github.com/xournalpp/xournalpp/issues/3643), old files may contain strokes
      * with non-positive pressure values.
      *
-     * Those strokes thus fails the somewhat reasonable assumption that pressure values should be positive.
-     * The portions of stroke with non-positive pressure values are in any case invisible.
+     * Those strokes thus fail the somewhat reasonable assumption that pressure values should be positive.
+     * The portions of the stroke with non-positive pressure values are in any case invisible.
      *
      * This function fixes corrupted strokes by
      *  1- removing every point with a non-positive pressure value.
@@ -638,7 +637,7 @@ void LoadHandler::fixNullPressureValues(std::vector<Point> pts) {
     }
 
     if (strokePortions.empty()) {
-        // There was no valid pressure values! Delete the stroke entirely
+        // There were no valid pressure values! Delete the stroke entirely
         g_warning("LoadHandler: Found a stroke with only non-positive pressure values! Removing this invisible stroke");
         this->stroke.reset();
         return;
@@ -729,13 +728,13 @@ auto LoadHandler::getAbsoluteFilepath(const fs::path& filename, bool attach) con
     if (attach) {
         // For a file xyz.xopp, the PDF background is saved in the same
         // directory as xyz.xopp.[filename]
-        absolutePath = (fs::path(this->xournalFilepath) += ".") += (filename);
+        absolutePath = (fs::path{this->xournalFilepath} += ".") += filename;
     } else {
         // domain = "absolute" doesn't forcefully mean an absolute path
         if (filename.is_relative()) {
             // The path is relative to the .xopp file's location
             this->doc->setPathStorageMode(Util::PathStorageMode::AS_RELATIVE_PATH);
-            absolutePath = fs::path(this->xournalFilepath).remove_filename() / filename;
+            absolutePath = fs::path{this->xournalFilepath}.remove_filename() / filename;
         } else {
             this->doc->setPathStorageMode(Util::PathStorageMode::AS_ABSOLUTE_PATH);
             absolutePath = filename;

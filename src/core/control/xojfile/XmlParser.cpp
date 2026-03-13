@@ -3,12 +3,15 @@
 #include <algorithm>    // for all_of
 #include <cctype>       // for isspace
 #include <cstddef>      // for size_t
+#include <ranges>       // for reverse_view
+#include <stdexcept>    // for domain_error
 #include <string>       // for stod, string
 #include <string_view>  // for string_view
 #include <utility>      // for move
 #include <vector>       // for vector
 
-#include <glib.h>  // for GMarkupParseContext, g_warning...
+#include <glib.h>        // for GMarkupParseContext, g_warning...
+#include <glibconfig.h>  // for gsize
 
 #include "control/pagetype/PageTypeHandler.h"          // for PageTypeHandler
 #include "control/xojfile/DocumentBuilderInterface.h"  // for DocumentBuilderInterface
@@ -23,7 +26,6 @@
 #include "util/EnumIndexedArray.h"                     // for EnumIndexedArray
 #include "util/StringUtils.h"                          // for ellipsize
 #include "util/i18n.h"                                 // for FS, _F, _
-#include "util/safe_casts.h"                           // for as_unsigned
 #include "util/utf8_view.h"                            // for xoj::util::utf8
 
 #include "filesystem.h"  // for path
@@ -35,7 +37,7 @@ using TagType = xoj::xml_tags::Type;
 
 template <typename T>
 static auto isAllWhitespace(T string) -> bool {
-    return std::all_of(string.begin(), string.end(), [](unsigned char ch) { return std::isspace(ch); });
+    return std::all_of(string.begin(), string.end(), [](unsigned char ch) -> bool { return std::isspace(ch); });
 }
 
 /**
@@ -46,15 +48,17 @@ static auto isAllWhitespace(T string) -> bool {
  * false. If a parsing error occured, the function prints an error message and
  * returns false.
  *
- * When available, we use std::from_chars, beacuse it is about 10x faster than
+ * When available, we use std::from_chars, because it is about 10x faster than
  * streams and about 5x faster than g_ascii_strtod.
  *
  * @param it    Pointer to the beginning of the string, modified to point to the
  *              first unparsed character
  * @param end   Pointer to one character past the end of the string
  * @param value Output parameter for the parsed value
+ * @return True if parsing was successful, false if no text is left in string or
+ *         an error occured
  */
-static bool parseDouble(const char*& it, const char* end, double& value) {
+static auto parseDouble(const char*& it, const char* end, double& value) -> bool {
     // Skip any leading whitespace
     while (it != end && *it == ' ') {
         ++it;
@@ -72,7 +76,7 @@ static bool parseDouble(const char*& it, const char* end, double& value) {
         g_warning("XML parser: Error parsing a double:\n"
                   "\"%s\"\n"
                   "Remaining string: \"%s\"",
-                  e.what(), StringUtils::ellipsize(std::string_view(it, end)).c_str());
+                  e.what(), StringUtils::ellipsize(std::string_view{it, end}).c_str());
         return false;
     }
 }
@@ -143,6 +147,8 @@ void XmlParser::parserText(GMarkupParseContext* context, const gchar* text, gsiz
         // Text may come in separated chunks only if it contains comments or other
         // special instances starting with '<', which we do not expect. This means
         // we always get the whole text in a single callback.
+        // There is no hard guarantee for this, but has long been the status-quo.
+        // See also https://gitlab.gnome.org/GNOME/glib/issues/3772
         (self->*parsingTable[tagType].text)(textSV);
     } else if (tagType != TagType::TITLE && tagType != TagType::PREVIEW && tagType != TagType::UNKNOWN &&
                !isAllWhitespace(textSV)) {
@@ -242,8 +248,8 @@ void XmlParser::parseBackgroundTag(const XmlParserHelper::AttributeMap& attribut
                 xoj_assert_message(false, "All background types must be covered");
         }
     } else {
-        // It's not possible to assume a default type as other attributes have to be set in fuction of this. Not setting
-        // a background will leave the default-constructed one.
+        // It's not possible to assume a default type as other attributes have to be set in function of this. Not
+        // setting a background will leave the default-constructed one.
         this->builder.logError(_(R"(Attribute "type" not found in background tag. Ignoring tag)"));
     }
 }
@@ -353,7 +359,7 @@ void XmlParser::parseStrokeTag(const XmlParserHelper::AttributeMap& attributeMap
     // fill
     const auto fill = XmlParserHelper::getAttribMandatory<int>(xoj::xml_attrs::FILL_STR, attributeMap, -1, false);
 
-    // cap stype
+    // cap style
     const auto capStyle = XmlParserHelper::getAttribMandatory<StrokeCapStyle>(
             xoj::xml_attrs::CAPSTYLE_STR, attributeMap, StrokeCapStyle::ROUND, false);
 
@@ -398,8 +404,8 @@ void XmlParser::parseStrokeText(std::string_view text) {
         pointVector.emplace_back(x, y, p);
     }
 
-    // Check strokes with the wrong amount of coordinates or pressure points.
-    // An empty pressure buffer is valid: all points have NO_PRESSURE.
+    // Check for strokes with the wrong number of coordinates or pressure points
+    // An empty pressure buffer is valid: all points have NO_PRESSURE
     if (this->pressureBuffer.size() + 1 < pointVector.size() && !this->pressureBuffer.empty()) {
         this->builder.logError(FS(_F("Found stroke with more coordinates than pressure points: {1}, expected {2}. "
                                      "Shrinking stroke to match pressure point count") %
@@ -584,9 +590,9 @@ void XmlParser::closeTopTag() {
 
     // Track last valid tag
     this->lastValidTag.reset();  // Default for empty hierarchy or no valid tag found
-    for (auto it = this->hierarchy.rbegin(); it != this->hierarchy.rend(); ++it) {
-        if (*it != TagType::UNKNOWN) {
-            this->lastValidTag = *it;
+    for (const auto tag: std::ranges::reverse_view(this->hierarchy)) {
+        if (tag != TagType::UNKNOWN) {
+            this->lastValidTag = tag;
             break;
         }
     }

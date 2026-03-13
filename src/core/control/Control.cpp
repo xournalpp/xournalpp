@@ -1554,7 +1554,7 @@ void Control::replaceDocument(std::unique_ptr<Document> doc, int scrollToPage) {
 
 namespace {
 
-std::string formatErrorMessages(const std::vector<std::string>& errorMessages) {
+auto formatErrorMessages(const std::vector<std::string>& errorMessages) -> std::string {
     // Deduplicate identical repeated messages
     std::vector<std::string> deduplicated;
 

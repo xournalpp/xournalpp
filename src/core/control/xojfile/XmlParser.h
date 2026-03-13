@@ -11,12 +11,13 @@
 
 #pragma once
 
-#include <cstdlib>
+#include <cstddef>
 #include <optional>
 #include <string_view>
 #include <vector>
 
 #include <glib.h>
+#include <glibconfig.h>
 
 #include "control/xojfile/DocumentBuilderInterface.h"
 #include "control/xojfile/XmlParserHelper.h"
@@ -47,7 +48,7 @@ private:
     /**
      * UTF-8 Roadmap
      *
-     * Most internals of Xournal++ still use or accept std::string as
+     * Most internals of Xournal++ still use or accept std::string in
      * constructors. When that changes, you should directly retrieve
      * xoj::util::utf8_view types or their aliases below from getAttrib<T>()
      * functions instead of converting it after you already obtained a
@@ -123,7 +124,7 @@ private:
                      &DocumentBuilderInterface::finalizeImage},  // TagType::IMAGE
                     {&XmlParser::parseTexImageTag, &XmlParser::parseTexImageText,
                      &DocumentBuilderInterface::finalizeTexImage},  // TagType::TEXIMAGE
-                    {&XmlParser::parseAttachmentTag, {}, {}}        // TagType::ATTACHMENT
+                    {&XmlParser::parseAttachmentTag, {}, {}},       // TagType::ATTACHMENT
             }}};
 
     // Builder interface to which the parsed data is forwarded

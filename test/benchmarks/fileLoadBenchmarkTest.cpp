@@ -9,6 +9,9 @@
  * @license GNU GPLv2 or later
  */
 
+#include <iostream>
+#include <memory>
+
 #include <config-test.h>
 #include <glib-2.0/glib.h>
 #include <gtest/gtest.h>
@@ -16,18 +19,22 @@
 #include "control/xojfile/LoadHandler.h"
 #include "control/xojfile/SaveHandler.h"
 #include "model/Document.h"
+#include "model/PageRef.h"
 #include "model/XojPage.h"
+#include "util/PathUtil.h"
 
 #include "filesystem.h"
 
+namespace {
 void benchLoadFile(const fs::path& filename, int iterations) {
     const auto start = g_get_monotonic_time();
     for (int i = 0; i < iterations; ++i) {
-        LoadHandler().loadDocument(filename);
+        LoadHandler{}.loadDocument(filename);
     }
     const auto stop = g_get_monotonic_time();
     std::cout << "Loaded " << filename << ' ' << iterations << " times in " << (stop - start) / 1000 << "ms.\n";
 }
+}  // namespace
 
 TEST(FileLoadBenchmark, benchmarkHandwrittenText) {
     benchLoadFile(GET_TESTFILE(u8"benchmark/handwritten-text.xopp"), 25);
@@ -37,10 +44,11 @@ TEST(FileLoadBenchmark, benchmarkTypedText) { benchLoadFile(GET_TESTFILE(u8"benc
 
 TEST(FileLoadBenchmark, benchmarkLatex) { benchLoadFile(GET_TESTFILE(u8"benchmark/latex.xopp"), 50); }
 
-fs::path createTemporaryFile(void (*buildDoc)(Document&), const fs::path& filename) {
+namespace {
+auto createTemporaryFile(void (*buildDoc)(Document&), const fs::path& filename) -> fs::path {
     // Build file
     DocumentHandler dh;
-    Document doc(&dh);
+    Document doc{&dh};
     buildDoc(doc);
 
     // Save it to a temporary path
@@ -51,12 +59,13 @@ fs::path createTemporaryFile(void (*buildDoc)(Document&), const fs::path& filena
 
     return tmp_path;
 }
+}  // namespace
 
 TEST(FileLoadBenchmark, benchmarkEmpty) {
     // Create empty file (containing only one obligatory page)
     const auto tmp_path = createTemporaryFile(
-            [](Document& doc) {
-                PageRef page = std::make_shared<XojPage>(50, 50);
+            [](Document& doc) -> void {
+                const PageRef page = std::make_shared<XojPage>(50, 50);
                 doc.addPage(page);
             },
             u8"empty.xopp");
@@ -71,9 +80,9 @@ TEST(FileLoadBenchmark, benchmarkEmpty) {
 TEST(FileLoadBenchmark, benchmarkManyPages) {
     // Create a 500-page file
     const auto tmp_path = createTemporaryFile(
-            [](Document& doc) {
+            [](Document& doc) -> void {
                 for (int i = 0; i < 500; ++i) {
-                    PageRef page = std::make_shared<XojPage>(50, 50);
+                    const PageRef page = std::make_shared<XojPage>(50, 50);
                     doc.addPage(page);
                 }
             },

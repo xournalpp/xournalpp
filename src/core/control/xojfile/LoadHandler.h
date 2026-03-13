@@ -55,12 +55,12 @@ public:
      *                      valid until the LoadHandler object is destroyed.
      */
     LoadHandler(std::vector<std::string>* errorMessages = nullptr);
-    virtual ~LoadHandler();
+    ~LoadHandler() override;
 
 public:
     /**
      * Load document located at `filepath`
-     * @returns A valid pointer to a `Document`
+     * @return A valid pointer to a `Document`
      * @exception Throws a `std::runtime_error` if a fatal error is encountered.
      */
     std::unique_ptr<Document> loadDocument(fs::path const& filepath);
@@ -118,7 +118,7 @@ private:
      * Open a file for reading
      * If the file is a zip file, initializes `zipFp` for access to the other
      * files in the archive.
-     * @returns A pointer to an XML input stream, reading either directly from
+     * @return A pointer to an XML input stream, reading either directly from
      *          the gzip file, or from "content.xml" in the zip archive
      * @exception Throws a `std::runtime_error` if the file could not be opened
      *            or required contents could not be found.
@@ -147,7 +147,7 @@ private:
     void fixNullPressureValues(std::vector<Point> pressures);
 
     /**
-     * Returns the contents of the zip attachment with the given file name, or
+     * Returns the contents of the zip attachment with the given filename, or
      * nullptr if there is no such file.
      */
     std::unique_ptr<std::string> readZipAttachment(fs::path const& filename);
@@ -180,7 +180,7 @@ private:
     int minimalFileVersion;
 
     struct zip_deleter {
-        void operator()(zip_t* ptr) { zip_close(ptr); }
+        void operator()(zip_t* ptr) noexcept { zip_close(ptr); }
     };
     using zip_wrapper = std::unique_ptr<zip_t, zip_deleter>;
     zip_wrapper zipFp;
@@ -196,6 +196,6 @@ private:
     std::unique_ptr<Image> image;
     std::unique_ptr<TexImage> teximage;
 
-    DocumentHandler dHanlder;
+    DocumentHandler dHandler;
     std::unique_ptr<Document> doc;
 };
