@@ -164,7 +164,7 @@ auto XmlParserHelper::parseColorCode(std::string_view sv) -> std::optional<Color
             return {};
         }
         // Discard alpha for now
-        return Color((color >> 8U) | (color << 24U));  // constructor takes AARRGGBB byte order instead of RRGGBBAA
+        return Color{(color >> 8U) | (color << 24U)};  // constructor takes AARRGGBB byte order instead of RRGGBBAA
     } else {
         // Not a color code
         return {};
@@ -217,12 +217,5 @@ auto XmlParserHelper::decodeBase64(std::string_view base64data) -> std::string {
 // LineStyle
 auto operator<<(std::ostream& stream, const LineStyle& style) -> std::ostream& {
     stream << StrokeStyle::formatStyle(style);
-    return stream;
-}
-
-auto operator>>(std::istream& stream, LineStyle& style) -> std::istream& {
-    std::string str;
-    stream >> str;
-    style = StrokeStyle::parseStyle(str);
     return stream;
 }

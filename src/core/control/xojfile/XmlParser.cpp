@@ -3,7 +3,7 @@
 #include <algorithm>    // for all_of
 #include <cctype>       // for isspace
 #include <cstddef>      // for size_t
-#include <ranges>       // for reverse_view
+#include <ranges>       // for all_of, reverse_view
 #include <stdexcept>    // for domain_error
 #include <string>       // for stod, string
 #include <string_view>  // for string_view
@@ -35,9 +35,8 @@ static constexpr auto& TAG_NAMES = xoj::xml_tags::NAMES;
 using TagType = xoj::xml_tags::Type;
 
 
-template <typename T>
-static auto isAllWhitespace(T string) -> bool {
-    return std::all_of(string.begin(), string.end(), [](unsigned char ch) -> bool { return std::isspace(ch); });
+static auto isAllWhitespace(std::string_view string) -> bool {
+    return std::ranges::all_of(string, [](unsigned char ch) -> bool { return std::isspace(ch); });
 }
 
 /**
@@ -92,7 +91,8 @@ void XmlParser::parserStartElement(GMarkupParseContext* context, const gchar* el
     if (tagType == TagType::UNKNOWN) {
         if (!self->lastValidTag) {
             if (!self->hierarchy.empty()) {
-                self->builder.logError(FS(_F("Ignoring unexpected {1} tag at document root") % elementName));
+                self->builder.logError(
+                        FS(_F("Ignoring unexpected {1} tag inside unrecognized document structure") % elementName));
             }
             // If the hierarchy is empty, we will attempt parsing it anyways
         } else {
@@ -132,22 +132,15 @@ void XmlParser::parserText(GMarkupParseContext* context, const gchar* text, gsiz
 
     const auto textSV = std::string_view{text, textLen};
 
-    // Check for text at document root
-    if (self->hierarchy.empty()) {
-        if (!isAllWhitespace(textSV)) {
-            self->builder.logError(
-                    FS(_F("Ignoring unexpected text at document root: \"{1}\"") % StringUtils::ellipsize(textSV)));
-        }
-        return;
-    }
-
+    // GMarkup should have risen an error for text at document root
+    xoj_assert(!self->hierarchy.empty());
     const auto tagType = self->hierarchy.back();
 
     if (self->parsingTable[tagType].text) {
         // Text may come in separated chunks only if it contains comments or other
         // special instances starting with '<', which we do not expect. This means
         // we always get the whole text in a single callback.
-        // There is no hard guarantee for this, but has long been the status-quo.
+        // There is no hard guarantee for this, but it has long been the status-quo.
         // See also https://gitlab.gnome.org/GNOME/glib/issues/3772
         (self->*parsingTable[tagType].text)(textSV);
     } else if (tagType != TagType::TITLE && tagType != TagType::PREVIEW && tagType != TagType::UNKNOWN &&
@@ -200,7 +193,7 @@ void XmlParser::parseXournalTag(const XmlParserHelper::AttributeMap& attributeMa
 }
 
 void XmlParser::parseMrWriterTag(const XmlParserHelper::AttributeMap& attributeMap) {
-    auto optVersion = XmlParserHelper::getAttrib<string_utf8_view>(xoj::xml_attrs::VERSION_STR, attributeMap);
+    const auto optVersion = XmlParserHelper::getAttrib<string_utf8_view>(xoj::xml_attrs::VERSION_STR, attributeMap);
     std::u8string creator;
     if (optVersion) {
         creator = u8"MrWriter ";
@@ -220,13 +213,14 @@ void XmlParser::parsePageTag(const XmlParserHelper::AttributeMap& attributeMap) 
 }
 
 void XmlParser::parseAudioTag(const XmlParserHelper::AttributeMap& attributeMap) {
-    auto filename = XmlParserHelper::getAttribMandatory<fs::path>(xoj::xml_attrs::AUDIO_FILENAME_STR, attributeMap);
+    const auto filename =
+            XmlParserHelper::getAttribMandatory<fs::path>(xoj::xml_attrs::AUDIO_FILENAME_STR, attributeMap);
 
     this->builder.addAudioAttachment(filename);
 }
 
 void XmlParser::parseBackgroundTag(const XmlParserHelper::AttributeMap& attributeMap) {
-    auto name = XmlParserHelper::getAttrib<std::string_view>(xoj::xml_attrs::NAME_STR, attributeMap);
+    const auto name = XmlParserHelper::getAttrib<std::string_view>(xoj::xml_attrs::NAME_STR, attributeMap);
     using xoj::xml_attrs::BackgroundType;
     const auto optType = XmlParserHelper::getAttrib<BackgroundType>(xoj::xml_attrs::TYPE_STR, attributeMap);
 
@@ -340,16 +334,16 @@ void XmlParser::parseStrokeTag(const XmlParserHelper::AttributeMap& attributeMap
     auto it = widthSV.begin();
     auto end = widthSV.end();
     double width{};
-    parseDouble(it, end, width);
+    parseDouble(it, end, width);  // First number in the width attribute is the global width
 
     // pressures
-    auto pressureSV = XmlParserHelper::getAttrib<std::string_view>(xoj::xml_attrs::PRESSURES_STR, attributeMap);
+    const auto pressureSV = XmlParserHelper::getAttrib<std::string_view>(xoj::xml_attrs::PRESSURES_STR, attributeMap);
     if (pressureSV) {
         // MrWriter writes pressures in a separate field
         it = pressureSV->begin();
         end = pressureSV->end();
     }
-    // Xournal and Xournal++ use the width field. `it` pointer is already in place.
+    // Xournal and Xournal++ use the width field. `it` and `end` pointers are already in place.
 
     double pressure{};
     while (parseDouble(it, end, pressure)) {
@@ -388,7 +382,7 @@ void XmlParser::parseStrokeTag(const XmlParserHelper::AttributeMap& attributeMap
 
 void XmlParser::parseStrokeText(std::string_view text) {
     std::vector<Point> pointVector;
-    pointVector.reserve(this->pressureBuffer.size() + 1);
+    pointVector.reserve(this->pressureBuffer.size() + 1);  // The last point has no pressure value
 
     auto it = text.begin();
     const auto end = text.end();
@@ -424,7 +418,8 @@ void XmlParser::parseStrokeText(std::string_view text) {
 }
 
 void XmlParser::parseTextTag(const XmlParserHelper::AttributeMap& attributeMap) {
-    auto font = XmlParserHelper::getAttribMandatory<std::string_view>(xoj::xml_attrs::FONT_STR, attributeMap, "Sans");
+    const auto font =
+            XmlParserHelper::getAttribMandatory<std::string_view>(xoj::xml_attrs::FONT_STR, attributeMap, "Sans");
     const auto size = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::SIZE_STR, attributeMap, 12);
     const auto x = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::X_COORD_STR, attributeMap);
     const auto y = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::Y_COORD_STR, attributeMap);
@@ -502,8 +497,6 @@ void XmlParser::parseAttachmentTag(const XmlParserHelper::AttributeMap& attribut
 }
 
 auto XmlParser::getTagType(c_string_utf8_view name) const -> TagType {
-    using namespace std::literals;
-
     if (this->hierarchy.empty()) {
         // Parser is at top level
         if (TAG_NAMES[TagType::XOURNAL] == name)

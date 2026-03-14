@@ -2,8 +2,9 @@
 
 #include <cassert>
 #include <cerrno>
-#include <cstring>  // for strlen
-#include <utility>  // for move
+#include <cstring>      // for strlen
+#include <string_view>  // for string_view
+#include <utility>      // for move
 
 #include "util/GzUtil.h"  // for GzUtil
 #include "util/i18n.h"    // for FS, _F

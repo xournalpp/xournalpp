@@ -213,9 +213,9 @@ void LoadHandler::setBgPixmap(bool attach, const fs::path& filename) {
          * input stream assumes the data will not be modified: do not remove the const qualifier on readResult or
          * imgData
          */
-        const xoj::util::GObjectSPtr<GInputStream> inputStream(
+        const xoj::util::GObjectSPtr<GInputStream> inputStream{
                 g_memory_input_stream_new_from_data(imgData.data(), static_cast<gssize>(imgData.size()), nullptr),
-                xoj::util::adopt);
+                xoj::util::adopt};
 
         xoj::util::GErrorGuard error{};
         img.loadFile(inputStream.get(), filename, xoj::util::out_ptr(error));
@@ -491,7 +491,7 @@ auto LoadHandler::openFile(fs::path const& filepath) -> std::unique_ptr<xoj::uti
         }
 
         // Get the file version
-        auto versionFp = zip_file_wrapper(zip_fopen(this->zipFp.get(), "META-INF/version", 0));
+        auto versionFp = zip_file_wrapper{zip_fopen(this->zipFp.get(), "META-INF/version", 0)};
         if (!versionFp) {
             throw std::runtime_error{
                     FS(_F("The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}") %
@@ -670,7 +670,7 @@ auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::unique_ptr
     }
     const zip_uint64_t length = attachmentFileStat.size;
 
-    auto attachmentFile = zip_file_wrapper(zip_fopen(this->zipFp.get(), char_cast(filename.u8string().c_str()), 0));
+    auto attachmentFile = zip_file_wrapper{zip_fopen(this->zipFp.get(), char_cast(filename.u8string().c_str()), 0)};
     if (!attachmentFile) {
         logError(FS(_F("Could not open attachment: {1}. Error message: {2}") % filename.u8string() %
                     zip_error_strerror(zip_get_error(this->zipFp.get()))));

@@ -7,6 +7,7 @@
 #include "control/jobs/ProgressListener.h"  // for ProgressListener
 #include "control/xml/Attribute.h"          // for XMLAttribute
 #include "util/OutputStream.h"              // for OutputStream
+#include "util/StringUtils.h"               // for StaticStringView
 #include "util/utf8_view.h"                 // for utf8
 
 #include "DoubleArrayAttribute.h"  // for DoubleArrayAttribute

@@ -13,7 +13,7 @@ TextAttribute::~TextAttribute() = default;
 
 void TextAttribute::writeOut(OutputStream* out) {
     // Todo: perform entity replacement with utf-8 string, avoiding a copy
-    auto v = std::string(this->value.begin(), this->value.end());
+    auto v = std::string{this->value.begin(), this->value.end()};
     StringUtils::replaceAllChars(v, {
                                             replace_pair('&', "&amp;"),
                                             replace_pair('\"', "&quot;"),

@@ -218,11 +218,8 @@ T parseNumeric(std::string_view sv) {
 };  // namespace XmlParserHelper
 
 
-// stream operator overloads for LineStyle
-
+// output stream operator overload for LineStyle, used for default value warning
 std::ostream& operator<<(std::ostream& stream, const LineStyle& style);
-std::istream& operator>>(std::istream& stream, LineStyle& style);
-
 
 // implementations of template functions
 
@@ -240,6 +237,7 @@ auto XmlParserHelper::getAttrib(std::u8string_view name, const AttributeMap& att
             } else if constexpr (std::is_arithmetic_v<T>) {
                 return detail::parseNumeric<T>(*optionalCStr);
             } else {
+                // Type-dependent false so the static_assert only triggers if this branch is instantiated
                 static_assert(detail::always_false<T>, "No parser defined for this type");
             }
         } catch (const std::domain_error& e) {
