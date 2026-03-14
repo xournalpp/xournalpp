@@ -109,14 +109,21 @@ void MouseInputHandler::setPressedState(InputEvent const& event) {
             case 3:
                 this->modifier3 = true;
                 break;
+#if defined(_WIN32) || defined(__APPLE__)
             case 4:
-            case 8:
                 this->modifier4 = true;
                 break;
             case 5:
+                this->modifier5 = true;
+                break;
+#else
+            case 8:
+                this->modifier4 = true;
+                break;
             case 9:
                 this->modifier5 = true;
                 break;
+#endif
             default:
                 break;
         }
@@ -132,14 +139,21 @@ void MouseInputHandler::setPressedState(InputEvent const& event) {
             case 3:
                 this->modifier3 = false;
                 break;
+#if defined(_WIN32) || defined(__APPLE__)
             case 4:
-            case 8:
                 this->modifier4 = false;
                 break;
             case 5:
+                this->modifier5 = false;
+                break;
+#else
+            case 8:
+                this->modifier4 = false;
+                break;
             case 9:
                 this->modifier5 = false;
                 break;
+#endif
             default:
                 break;
         }

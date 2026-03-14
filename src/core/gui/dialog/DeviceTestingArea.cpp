@@ -37,15 +37,26 @@ static constexpr double PRESSURELESS_INDICATOR_HALF_SIZE = 3;
 
 static constexpr size_t MAX_NB_BUTTONS = 10;
 static constexpr std::bitset<MAX_NB_BUTTONS> CONSIDERED_FOR_TIP_EMULATION(0b1100);
-// Include both Windows/macOS (4/5) and Linux (8/9) numbering for 4th/5th mouse buttons.
-// Backend references (GTK):
-// - Wayland: gdk/wayland/gdkseat-wayland.c (additional buttons mapped after legacy 4-7 scroll range)
+// GDK backend button numbering differs by platform for side (4th/5th) buttons:
+// Backend references (gtk3)
+// - Wayland: gdk/wayland/gdkdevice-wayland.c (additional buttons mapped after legacy 4-7 scroll range)
 // - Win32: gdk/win32/gdkevents-win32.c (WM_XBUTTONDOWN -> button 4/5)
-// - macOS: gdk/macos/gdkmacosdisplay-translate.c (default branch returns button + 1)
-static constexpr std::bitset<MAX_NB_BUTTONS> MOUSE_BUTTONS_MASK(0b1100111110);
-/// Maps GDK button index to mouseIndicators index.
-/// Accepts both Linux (8/9) and Windows/macOS (4/5) numbering for 4th/5th buttons.
-static constexpr size_t mouseIdx(size_t b) { return b < 4 ? b : (b == 4 || b == 5) ? b : (b >= 8 ? b - 4 : 6); }
+// - macOS: gdk/quartz/gdkevents-quartz.c (default branch returns button + 1)
+// - Ref: https://gitlab.gnome.org/GNOME/gtk/-/tree/gtk-3-24/gdk
+// Backend references (gtk4), same as gtk3
+// - Wayland: gdk/wayland/gdkseat-wayland.c
+// - Win32: gdk/win32/gdkevents-win32.c
+// - macOS: gdk/macos/gdkmacosdisplay-translate.c
+// - Ref: https://gitlab.gnome.org/GNOME/gtk/-/tree/main/gdk
+#if defined(_WIN32) || defined(__APPLE__)
+static constexpr std::bitset<MAX_NB_BUTTONS> MOUSE_BUTTONS_MASK(0b111110);
+/// Maps GDK button index to mouseIndicators index (Windows/macOS: 4/5 -> 4/5)
+static constexpr size_t mouseIdx(size_t b) { return b < 4 ? b : (b <= 5 ? b : 6); }
+#else
+static constexpr std::bitset<MAX_NB_BUTTONS> MOUSE_BUTTONS_MASK(0b1100001110);
+/// Maps GDK button index to mouseIndicators index (Linux: 8/9 -> 4/5)
+static constexpr size_t mouseIdx(size_t b) { return b < 4 ? b : (b >= 8 ? b - 4 : 6); }
+#endif
 
 static constexpr unsigned int IN_USE_RESET_DELAY = 100;  ///< in ms
 
