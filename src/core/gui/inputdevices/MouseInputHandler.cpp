@@ -99,12 +99,31 @@ void MouseInputHandler::setPressedState(InputEvent const& event) {
     {
         this->deviceClassPressed = true;
 
+        // GDK backend button numbering differs by platform for side buttons:
+        // Linux backends commonly report 8/9, while Win32/macOS report 4/5.
+        // See GTK backend sources in gdk/wayland, gdk/win32, and gdk/macos.
         switch (event.button) {
             case 2:
                 this->modifier2 = true;
                 break;
             case 3:
                 this->modifier3 = true;
+                break;
+#if defined(_WIN32) || defined(__APPLE__)
+            case 4:
+                this->modifier4 = true;
+                break;
+            case 5:
+                this->modifier5 = true;
+                break;
+#else
+            case 8:
+                this->modifier4 = true;
+                break;
+            case 9:
+                this->modifier5 = true;
+                break;
+#endif
             default:
                 break;
         }
@@ -119,6 +138,22 @@ void MouseInputHandler::setPressedState(InputEvent const& event) {
                 break;
             case 3:
                 this->modifier3 = false;
+                break;
+#if defined(_WIN32) || defined(__APPLE__)
+            case 4:
+                this->modifier4 = false;
+                break;
+            case 5:
+                this->modifier5 = false;
+                break;
+#else
+            case 8:
+                this->modifier4 = false;
+                break;
+            case 9:
+                this->modifier5 = false;
+                break;
+#endif
             default:
                 break;
         }
@@ -136,6 +171,10 @@ auto MouseInputHandler::changeTool(InputEvent const& event) -> bool {
             toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_MOUSE_MIDDLE);
         } else if (modifier3) {
             toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_MOUSE_RIGHT);
+        } else if (modifier4) {
+            toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_MOUSE_4);
+        } else if (modifier5) {
+            toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_MOUSE_5);
         } else {
             toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_MOUSE_LEFT);
         }
