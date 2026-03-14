@@ -54,7 +54,7 @@ private:
     void searchPrevious();
 
     void search(const char* text);
-    bool searchTextonCurrentPage(const char* text, size_t index, size_t* occurrences, XojPdfRectangle* matchRect);
+    bool searchTextOnCurrentPage(const char* text, size_t index, size_t* occurrences, XojPdfRectangle* matchRect);
 
 private:
     Control* control;
@@ -62,4 +62,5 @@ private:
     size_t page = 0;
     size_t indexInPage = 0;
     size_t occurrences = 0;
+    bool searchActive = false;
 };
