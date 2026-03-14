@@ -23,12 +23,6 @@
 #include "view/DocumentView.h"          // for DocumentView
 #include "view/Mask.h"                  // for Mask
 
-#if defined(__has_cpp_attribute) && __has_cpp_attribute(likely)
-#define XOJ_CPP20_UNLIKELY [[unlikely]]
-#else
-#define XOJ_CPP20_UNLIKELY
-#endif
-
 using xoj::util::Rectangle;
 
 RenderJob::RenderJob(XojPageView* view): view(view) {}
@@ -46,51 +40,44 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
 
     Range maskRange(rect);
     maskRange.addPadding(RENDER_PADDING);
-    xoj::view::Mask newMask(view->xournal->getDpiScaleFactor(), maskRange, view->xournal->getZoom(),
-                            CAIRO_CONTENT_COLOR_ALPHA);
 
-    renderToBuffer(newMask.get());
+    DocumentView localView;
+    localView.setMarkAudioStroke(this->view->getXournal()->getControl()->getToolHandler()->getToolType() ==
+                                 TOOL_PLAY_OBJECT);
+    localView.setPdfCache(this->view->xournal->getCache());
 
-    std::lock_guard lock(this->view->drawingMutex);
-    if (!view->buffer.isInitialized()) {
-        // Todo: the buffer must not be uninitializable here, either by moving it into the job or by locking it at job
-        // creation a shared prt may also be suffice.
-        XOJ_CPP20_UNLIKELY return;
+    std::shared_lock<Document> doclock(*this->view->xournal->getDocument(), std::defer_lock);
+    std::unique_lock lock(this->view->drawingMutex, std::defer_lock);
+    std::lock(doclock, lock);  // Lock both mutexes at once to avoid deadlocks
+
+    for (cairo_t* cr: this->view->pixelCache.getSurfacesFor(maskRange)) {
+        xoj::util::CairoSaveGuard guard(cr);
+        cairo_rectangle(cr, maskRange.minX, maskRange.minY, maskRange.getWidth(), maskRange.getHeight());
+        cairo_clip(cr);
+        localView.drawPage(this->view->page, cr, false);
     }
-    newMask.paintTo(view->buffer.get());
 }
 
 void RenderJob::run() {
     this->view->repaintRectMutex.lock();
-
-    bool rerenderComplete = std::exchange(this->view->rerenderComplete, false);
-    bool sizeChanged = std::exchange(this->view->sizeChanged, false);
     auto rerenderRects = std::move(this->view->rerenderRects);
-
+    auto tiles = std::move(this->view->tilesToRender);
     this->view->repaintRectMutex.unlock();
 
-    if (rerenderComplete) {
-        xoj::view::Mask newMask(view->xournal->getDpiScaleFactor(),
-                                Range(0, 0, view->page->getWidth(), view->page->getHeight()), view->xournal->getZoom(),
-                                CAIRO_CONTENT_COLOR_ALPHA);
+    for (Rectangle<double> const& rect: rerenderRects) {
+        rerenderRectangle(rect);
+    }
 
-        renderToBuffer(newMask.get());
+    printf("making %zu nodes\n", tiles.size());
+    for (auto&& tileinfo: tiles) {
+        auto mask = this->view->pixelCache.makeSuitableMask(tileinfo.depth, tileinfo.area);
+        renderToBuffer(mask->get());
         {
             std::lock_guard lock(this->view->drawingMutex);
-            std::swap(this->view->buffer, newMask);
-        }
-        if (sizeChanged) {
-            // We do not have any control on what portion of the widget needs to be redrawn. Redraw it all.
-            Util::execInUiThread([w = view->xournal->getWidget()]() { gtk_widget_queue_draw(w); });
-        } else {
-            repaintPage();
-        }
-    } else {
-        for (Rectangle<double> const& rect: rerenderRects) {
-            rerenderRectangle(rect);
-            repaintPageArea(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height);
+            this->view->pixelCache.assignBufferToNode(std::move(mask), tileinfo.depth, tileinfo.area);
         }
     }
+    repaintPage();
 }
 
 static void repaintWidgetArea(GtkWidget* widget, int x1, int y1, int x2, int y2) {

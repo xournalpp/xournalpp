@@ -43,6 +43,7 @@
 #include "util/glib_casts.h"                     // for wrap_v
 #include "util/gtk4_helper.h"                    // for gtk_scrolled_window_set_child
 #include "util/safe_casts.h"                     // for round_cast
+#include "view/QuadCache.h"
 
 #include "Layout.h"           // for Layout
 #include "PageView.h"         // for XojPageView
@@ -55,16 +56,8 @@ constexpr int REGULAR_MOVE_AMOUNT = 3;
 constexpr int SMALL_MOVE_AMOUNT = 1;
 constexpr int LARGE_MOVE_AMOUNT = 10;
 
-std::pair<size_t, size_t> XournalView::preloadPageBounds(size_t page, size_t maxPage) {
-    const size_t preloadBefore = this->control->getSettings()->getPreloadPagesBefore();
-    const size_t preloadAfter = this->control->getSettings()->getPreloadPagesAfter();
-    const size_t lower = page > preloadBefore ? page - preloadBefore : 0;
-    const size_t upper = std::min(maxPage, page + preloadAfter);
-    return {lower, upper};
-}
-
-XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling):
-        scrollHandling(scrollHandling), control(control) {
+XournalView::XournalView(GtkScrolledWindow* parent, Control* control):
+        scrollHandling(std::make_unique<ScrollHandling>(parent)), control(control) {
     Document* doc = control->getDocument();
     doc->lock_shared();
     if (doc->getPdfPageCount() != 0) {
@@ -74,13 +67,12 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 
     registerListener(control);
 
-    InputContext* inputContext = new InputContext(this, scrollHandling);
+    InputContext* inputContext = new InputContext(this, scrollHandling.get());
     this->widget = gtk_xournal_new(this, inputContext, scrollHandling->getVertical(), scrollHandling->getHorizontal());
     g_object_ref_sink(this->widget);  // take ownership without increasing the ref count
 
-    gtk_container_add(GTK_CONTAINER(parent), this->widget);
+    gtk_scrolled_window_set_child(parent, this->widget);
     gtk_widget_show(this->widget);
-
 
     g_signal_connect(getWidget(), "realize", G_CALLBACK(+[](GtkWidget* widget, gpointer) {
                          // Disable event compression
@@ -118,16 +110,45 @@ auto XournalView::clearMemoryTimer(XournalView* widget) -> gboolean {
 }
 
 auto XournalView::cleanupBufferCache() -> void {
-    const auto& [pagesLower, pagesUpper] = this->preloadPageBounds(this->currentPage, this->viewPages.size());
-    xoj_assert(pagesLower <= pagesUpper);
+    std::vector<xoj::view::QuadCache::TimePoint> dates;
 
-    for (size_t i = 0; i < this->viewPages.size(); i++) {
-        auto&& page = this->viewPages[i];
-        const size_t pageNum = i + 1;
-        const bool isPreload = pagesLower <= pageNum && pageNum <= pagesUpper;
-        if (!isPreload && !page->isVisible() && page->hasBuffer()) {
-            page->deleteViewBuffer();
+    for (auto* p: viewsWithBuffer) {
+        auto d = p->getBuffersLastUsedDates();
+        if (!d.empty()) {
+            dates.reserve(dates.size() + d.size());
+            std::copy(d.begin(), d.end(), std::back_inserter(dates));
         }
+    }
+
+    printf("  *** nb buffers before pruning: %3zu -> %4zu MB in %3zu pages\n", dates.size(),
+           dates.size() * xoj::view::QuadCache::TILE_SIZE_IN_MB, viewsWithBuffer.size());
+
+    auto maxNbNodes = control->getSettings()->getMaxViewBufferMemoryUsage() / xoj::view::QuadCache::TILE_SIZE_IN_MB;
+
+    if (dates.size() > maxNbNodes) {
+        std::sort(dates.begin(), dates.end());
+        auto ref = dates[dates.size() - maxNbNodes];
+        for (auto& p: viewsWithBuffer) {
+            if (p->prune(ref)) {
+                p = nullptr;  // This view no longer has a buffer
+            }
+        }
+        std::erase(viewsWithBuffer, nullptr);
+    }
+
+    size_t n = 0;
+    for (auto& p: viewsWithBuffer) {
+        n += p->getBuffersLastUsedDates().size();
+    }
+    printf("  *** nb buffers after pruning:  %3zu -> %4zu MB in %3zu pages\n", n,
+           n * xoj::view::QuadCache::TILE_SIZE_IN_MB, viewsWithBuffer.size());
+}
+
+void XournalView::viewNoLongerHasBuffer(const XojPageView* view) { std::erase(viewsWithBuffer, view); }
+
+void XournalView::registerViewHasBuffer(XojPageView* view) {
+    if (std::find(viewsWithBuffer.begin(), viewsWithBuffer.end(), view) == viewsWithBuffer.end()) {
+        viewsWithBuffer.emplace_back(view);
     }
 }
 
@@ -400,19 +421,6 @@ void XournalView::pageSelected(size_t page) {
 
     control->updateBackgroundSizeButton();
     control->updatePageActions();
-
-    if (control->getSettings()->isEagerPageCleanup()) {
-        this->cleanupBufferCache();
-    }
-
-    // Load surrounding pages if they are not
-    const auto& [pagesLower, pagesUpper] = preloadPageBounds(page, this->viewPages.size());
-    xoj_assert(pagesLower <= pagesUpper);
-    for (size_t i = pagesLower; i < pagesUpper; i++) {
-        if (!this->viewPages[i]->hasBuffer()) {
-            this->viewPages[i]->rerenderPage();
-        }
-    }
 }
 
 auto XournalView::getControl() const -> Control* { return control; }
@@ -525,7 +533,7 @@ auto XournalView::getHandRecognition() const -> HandRecognition* {
 /**
  * @return Scrollbars
  */
-auto XournalView::getScrollHandling() const -> ScrollHandling* { return scrollHandling; }
+auto XournalView::getScrollHandling() const -> ScrollHandling* { return scrollHandling.get(); }
 
 auto XournalView::getWidget() const -> GtkWidget* { return widget; }
 
@@ -606,9 +614,7 @@ void XournalView::pageInserted(size_t page) {
     viewPages.insert(begin(viewPages) + as_signed(page), std::move(pageView));
 
     layoutPages();
-    // check which pages are visible and select the most visible page
-    Layout* layout = this->getLayout();
-    layout->updateVisibility();
+    this->getLayout()->selectMostVisiblePage();
 }
 
 auto XournalView::getZoom() const -> double { return control->getZoomControl()->getZoom(); }

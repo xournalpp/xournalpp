@@ -24,6 +24,11 @@ Range Range::intersect(const Range& o) const {
     return rg.isValid() ? rg : Range();
 }
 
+bool Range::hasIntersectionWith(const Range& o) const {
+    return minX <= o.maxX && o.minX <= maxX && minY <= o.maxY && o.minY <= maxY;
+}
+
+
 auto Range::getX() const -> double { return this->minX; }
 
 auto Range::getY() const -> double { return this->minY; }
