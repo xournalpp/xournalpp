@@ -107,7 +107,10 @@ bool QPdfExport::overlayAndSave(const fs::path& saveDestination, std::stringstre
         for (size_t n = 0, overlayPagesConsumed = 0; n < outputPageInfos.size(); n++) {
             auto [hasOverlay, bgIndex, pgOrient] = outputPageInfos[n];
             if (pgOrient != 0) {
-                outputPages[n].getObjectHandle().replaceKey("/Rotate", QPDFObjectHandle::newInteger(pgOrient * 90));
+                auto handle = outputPages[n].getObjectHandle();
+                auto rotateObj = handle.getKey("/Rotate");
+                int currRot = rotateObj.isInteger() ? rotateObj.getIntValue() : 0;
+                handle.replaceKey("/Rotate", QPDFObjectHandle::newInteger((pgOrient * 90 + currRot) % 360));
             }
             if (hasOverlay) {
                 if (bgIndex != npos) {
