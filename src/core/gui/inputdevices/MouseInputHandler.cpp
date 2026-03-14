@@ -99,6 +99,9 @@ void MouseInputHandler::setPressedState(InputEvent const& event) {
     {
         this->deviceClassPressed = true;
 
+        // GDK backend button numbering differs by platform for side buttons:
+        // Linux backends commonly report 8/9, while Win32/macOS report 4/5.
+        // See GTK backend sources in gdk/wayland, gdk/win32, and gdk/macos.
         switch (event.button) {
             case 2:
                 this->modifier2 = true;
@@ -106,9 +109,11 @@ void MouseInputHandler::setPressedState(InputEvent const& event) {
             case 3:
                 this->modifier3 = true;
                 break;
+            case 4:
             case 8:
                 this->modifier4 = true;
                 break;
+            case 5:
             case 9:
                 this->modifier5 = true;
                 break;
@@ -127,9 +132,11 @@ void MouseInputHandler::setPressedState(InputEvent const& event) {
             case 3:
                 this->modifier3 = false;
                 break;
+            case 4:
             case 8:
                 this->modifier4 = false;
                 break;
+            case 5:
             case 9:
                 this->modifier5 = false;
                 break;
