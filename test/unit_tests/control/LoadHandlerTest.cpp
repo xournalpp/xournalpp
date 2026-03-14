@@ -41,12 +41,11 @@
 #include "filesystem.h"
 
 // Common test Functions
-namespace {
 
 /**
  * Load a test file, and verify that loading does not throw.
  */
-auto loadTestDocument(const fs::path& filepath) -> std::unique_ptr<Document> {
+static auto loadTestDocument(const fs::path& filepath) -> std::unique_ptr<Document> {
     EXPECT_NO_THROW(return LoadHandler{}.loadDocument(filepath)) << "Error while loading \"" << filepath << '\"';
     return {};
 }
@@ -56,7 +55,7 @@ auto loadTestDocument(const fs::path& filepath) -> std::unique_ptr<Document> {
  * \param filepath The path to the actual file to load.
  * \param tol The absolute tolerance used when checking stroke coordinate data.
  */
-void testLoadStoreLoadHelper(const fs::path& filepath, double tol = 1e-8) {
+static void testLoadStoreLoadHelper(const fs::path& filepath, double tol = 1e-8) {
     auto getElements = [](Document* doc) {
         EXPECT_EQ((size_t)1, doc->getPageCount());
         ConstPageRef page = doc->getPage(0);
@@ -148,8 +147,8 @@ void testLoadStoreLoadHelper(const fs::path& filepath, double tol = 1e-8) {
     }
 }
 
-void checkPageType(const Document* doc, size_t pageIndex, const std::string& expectedText,
-                   const PageType& expectedBgType) {
+static void checkPageType(const Document* doc, size_t pageIndex, const std::string& expectedText,
+                          const PageType& expectedBgType) {
     ASSERT_LT(pageIndex, doc->getPageCount());
     ConstPageRef page = doc->getPage(pageIndex);
 
@@ -171,8 +170,8 @@ void checkPageType(const Document* doc, size_t pageIndex, const std::string& exp
     EXPECT_EQ(expectedText, text->getText());
 }
 
-void checkLayer(ConstPageRef page, size_t layerIndex, const std::optional<std::string>& optName,
-                const std::string& expectedText) {
+static void checkLayer(ConstPageRef page, size_t layerIndex, const std::optional<std::string>& optName,
+                       const std::string& expectedText) {
     ASSERT_LT(layerIndex, page->getLayerCount());
     const Layer* layer = page->getLayersView()[layerIndex];
 
@@ -190,9 +189,9 @@ void checkLayer(ConstPageRef page, size_t layerIndex, const std::optional<std::s
     EXPECT_EQ(expectedText, text->getText());
 }
 
-void checkStroke(const Layer* layer, size_t elementIndex, StrokeTool tool, Color color, double width, int fill,
-                 StrokeCapStyle capStyle, const LineStyle& lineStyle,
-                 const std::vector<std::pair<size_t, Point>>& pointSamples = {}) {
+static void checkStroke(const Layer* layer, size_t elementIndex, StrokeTool tool, Color color, double width, int fill,
+                        StrokeCapStyle capStyle, const LineStyle& lineStyle,
+                        const std::vector<std::pair<size_t, Point>>& pointSamples = {}) {
     ASSERT_LT(elementIndex, layer->getElementsView().size());
     const auto* stroke = dynamic_cast<const Stroke*>(layer->getElementsView()[elementIndex]);
 
@@ -221,13 +220,13 @@ void checkStroke(const Layer* layer, size_t elementIndex, StrokeTool tool, Color
     }
 }
 
-void checkImageFormat(const Image* img, const char* formatName) {
+static void checkImageFormat(const Image* img, const char* formatName) {
     const auto gdkFormatName = gdk_pixbuf_format_get_name(img->getImageFormat());
     EXPECT_STREQ(gdkFormatName, formatName);
     g_free(gdkFormatName);
 }
 
-void checkText(const Layer* layer, size_t elementIndex, const std::string& text, Color color) {
+static void checkText(const Layer* layer, size_t elementIndex, const std::string& text, Color color) {
     ASSERT_LT(elementIndex, layer->getElementsView().size());
     const auto* textElem = dynamic_cast<const Text*>(layer->getElementsView()[elementIndex]);
 
@@ -237,8 +236,6 @@ void checkText(const Layer* layer, size_t elementIndex, const std::string& text,
     EXPECT_EQ(textElem->getText(), text) << "Text at index " << elementIndex << " has incorrect contents";
     EXPECT_EQ(textElem->getColor(), color) << "Text at index " << elementIndex << " has the wrong color";
 }
-
-}  // namespace
 
 TEST(ControlLoadHandler, testLoad) {
     auto doc = loadTestDocument(GET_TESTFILE(u8"test1.xoj"));

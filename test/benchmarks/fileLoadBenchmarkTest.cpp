@@ -25,8 +25,8 @@
 
 #include "filesystem.h"
 
-namespace {
-void benchLoadFile(const fs::path& filename, int iterations) {
+
+static void benchLoadFile(const fs::path& filename, int iterations) {
     const auto start = g_get_monotonic_time();
     for (int i = 0; i < iterations; ++i) {
         LoadHandler{}.loadDocument(filename);
@@ -34,7 +34,6 @@ void benchLoadFile(const fs::path& filename, int iterations) {
     const auto stop = g_get_monotonic_time();
     std::cout << "Loaded " << filename << ' ' << iterations << " times in " << (stop - start) / 1000 << "ms.\n";
 }
-}  // namespace
 
 TEST(FileLoadBenchmark, benchmarkHandwrittenText) {
     benchLoadFile(GET_TESTFILE(u8"benchmark/handwritten-text.xopp"), 25);
@@ -44,8 +43,7 @@ TEST(FileLoadBenchmark, benchmarkTypedText) { benchLoadFile(GET_TESTFILE(u8"benc
 
 TEST(FileLoadBenchmark, benchmarkLatex) { benchLoadFile(GET_TESTFILE(u8"benchmark/latex.xopp"), 50); }
 
-namespace {
-auto createTemporaryFile(void (*buildDoc)(Document&), const fs::path& filename) -> fs::path {
+static auto createTemporaryFile(void (*buildDoc)(Document&), const fs::path& filename) -> fs::path {
     // Build file
     DocumentHandler dh;
     Document doc{&dh};
@@ -59,7 +57,6 @@ auto createTemporaryFile(void (*buildDoc)(Document&), const fs::path& filename) 
 
     return tmp_path;
 }
-}  // namespace
 
 TEST(FileLoadBenchmark, benchmarkEmpty) {
     // Create empty file (containing only one obligatory page)

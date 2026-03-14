@@ -1552,9 +1552,7 @@ void Control::replaceDocument(std::unique_ptr<Document> doc, int scrollToPage) {
     fileLoaded(scrollToPage);
 }
 
-namespace {
-
-auto formatErrorMessages(const std::vector<std::string>& errorMessages) -> std::string {
+static auto formatErrorMessages(const std::vector<std::string>& errorMessages) -> std::string {
     // Deduplicate identical repeated messages
     std::vector<std::string> deduplicated;
 
@@ -1602,7 +1600,6 @@ auto formatErrorMessages(const std::vector<std::string>& errorMessages) -> std::
     }
     return result;
 }
-}  // namespace
 
 void Control::openXoppFile(fs::path filepath, int scrollToPage, std::function<void(bool)> callback) {
     std::unique_ptr<Document> doc{};
