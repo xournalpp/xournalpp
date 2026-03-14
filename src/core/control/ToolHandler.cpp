@@ -153,6 +153,8 @@ void ToolHandler::initTools() {
             std::make_unique<Tool>("laserPointerHighlighter", TOOL_LASER_POINTER_HIGHLIGHTER, Colors::red,
                                    TOOL_CAP_COLOR | TOOL_CAP_SIZE, thickness);
 
+    tools[TOOL_LINK - TOOL_PEN] = std::make_unique<Tool>("link", TOOL_LINK, Colors::black, TOOL_CAP_NONE, std::nullopt);
+
     this->eraserButtonTool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
     this->stylusButton1Tool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
     this->stylusButton2Tool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
@@ -627,11 +629,10 @@ auto ToolHandler::isSinglePageTool() const -> bool {
              drawingType == DRAWING_TYPE_LINE || drawingType == DRAWING_TYPE_RECTANGLE ||
              drawingType == DRAWING_TYPE_SPLINE)) ||
            toolType == TOOL_SELECT_RECT || toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_MULTILAYER_RECT ||
-           toolType == TOOL_SELECT_MULTILAYER_REGION || toolType == TOOL_SELECT_OBJECT ||
-           toolType == TOOL_DRAW_RECT || toolType == TOOL_DRAW_ELLIPSE || toolType == TOOL_DRAW_COORDINATE_SYSTEM ||
-           toolType == TOOL_DRAW_ARROW || toolType == TOOL_DRAW_DOUBLE_ARROW || toolType == TOOL_FLOATING_TOOLBOX ||
-           toolType == TOOL_DRAW_SPLINE || toolType == TOOL_SELECT_PDF_TEXT_LINEAR ||
-           toolType == TOOL_SELECT_PDF_TEXT_RECT;
+           toolType == TOOL_SELECT_MULTILAYER_REGION || toolType == TOOL_SELECT_OBJECT || toolType == TOOL_DRAW_RECT ||
+           toolType == TOOL_DRAW_ELLIPSE || toolType == TOOL_DRAW_COORDINATE_SYSTEM || toolType == TOOL_DRAW_ARROW ||
+           toolType == TOOL_DRAW_DOUBLE_ARROW || toolType == TOOL_FLOATING_TOOLBOX || toolType == TOOL_DRAW_SPLINE ||
+           toolType == TOOL_SELECT_PDF_TEXT_LINEAR || toolType == TOOL_SELECT_PDF_TEXT_RECT || toolType == TOOL_LINK;
 }
 
 auto ToolHandler::acceptsOutOfPageEvents() const -> bool {

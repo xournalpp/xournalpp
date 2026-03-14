@@ -86,7 +86,6 @@ auto StylusInputHandler::handleImpl(InputEvent const& event) -> bool {
         cursor->updateCursor();
     }
 
-
     // Check if enter/leave events occur in possible locations. This is a bug of the hardware (there are such devices!)
     if ((event.type == ENTER_EVENT || event.type == LEAVE_EVENT) && this->deviceClassPressed && this->lastEvent) {
         if (std::abs(event.relative.x - lastEvent.relative.x) > 100 ||
