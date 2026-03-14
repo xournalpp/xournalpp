@@ -57,6 +57,9 @@ public:
 
     size_t getPdfPageNr() const;
 
+    void setPdfPageOrientation(int n);
+    int getPdfPageOrientation() const;
+
     bool isAnnotated() const;
 
     void setBackgroundColor(Color color);
@@ -113,9 +116,10 @@ private:
     PageType bgType;
 
     /**
-     * If the page has a PDF background, the page number of the PDF Page
+     * If the page has a PDF background, the page number and orientation of the PDF Page
      */
     size_t pdfBackgroundPage = npos;
+    int pdfPageOrientation = 0;
 
     /**
      * The background color if the background type is plain

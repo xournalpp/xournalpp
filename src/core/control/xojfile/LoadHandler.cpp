@@ -442,10 +442,15 @@ void LoadHandler::parseBgPixmap() {
 void LoadHandler::parseBgPdf() {
     xoj_assert(this->doc);
     int pageno = LoadHandlerHelper::getAttribInt("pageno", this);
+    int pageorient;
     bool attachToDocument = false;
     fs::path pdfFilename;
 
     this->page->setBackgroundPdfPageNr(as_unsigned(pageno) - 1);
+
+    if (LoadHandlerHelper::getAttribInt("pageorient", true, this, pageorient)) {
+        this->page->setPdfPageOrientation(pageorient);
+    }
 
     if (!this->pdfFilenameParsed) {
 
