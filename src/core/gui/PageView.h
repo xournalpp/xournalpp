@@ -267,7 +267,6 @@ private:
     bool inEraser = false;
     bool startEditingOnButtonRelease = false;
     bool inLatex = false;
-    double latexX, latexY;
 
     /**
      * Vertical Space
