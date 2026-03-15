@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 17:44+0000\n"
-"PO-Revision-Date: 2026-03-08 04:51\n"
+"POT-Creation-Date: 2026-03-14 10:37+0000\n"
+"PO-Revision-Date: 2026-03-15 04:58\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -848,28 +848,28 @@ msgstr "Прокрутить до {1}"
 msgid "Add missing page"
 msgstr "Добавить пропущенную страницу"
 
-#: ../src/core/gui/SearchBar.cpp:89
+#: ../src/core/gui/SearchBar.cpp:90
 msgid "Text found once on this page"
 msgstr "Текст найден один раз на этой странице"
 
-#: ../src/core/gui/SearchBar.cpp:91
+#: ../src/core/gui/SearchBar.cpp:92
 #, c-format
 msgid "Text found %zu times on this page"
 msgstr "Текст найден %zu раз на этой странице"
 
-#: ../src/core/gui/SearchBar.cpp:96
+#: ../src/core/gui/SearchBar.cpp:97
 msgid "Text not found"
 msgstr "Текст не найден"
 
-#: ../src/core/gui/SearchBar.cpp:139
+#: ../src/core/gui/SearchBar.cpp:144
 msgid "Text found once on page {1}"
 msgstr "Текст найден один раз на странице {1}"
 
-#: ../src/core/gui/SearchBar.cpp:140
+#: ../src/core/gui/SearchBar.cpp:145
 msgid "Text found {1} times on page {2} ({3} of {1})"
 msgstr "Текст найден {1} раз на странице {2} ({3} из {1})"
 
-#: ../src/core/gui/SearchBar.cpp:145
+#: ../src/core/gui/SearchBar.cpp:150
 msgid "Text not found, searched on all pages"
 msgstr "Текст не найден, поиск на всех страницах"
 

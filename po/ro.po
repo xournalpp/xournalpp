@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 17:44+0000\n"
-"PO-Revision-Date: 2026-03-08 04:51\n"
+"POT-Creation-Date: 2026-03-14 10:37+0000\n"
+"PO-Revision-Date: 2026-03-15 04:58\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -870,28 +870,28 @@ msgstr "Du-te la pagina {1}"
 msgid "Add missing page"
 msgstr "Adaugă pagina lipsă"
 
-#: ../src/core/gui/SearchBar.cpp:89
+#: ../src/core/gui/SearchBar.cpp:90
 msgid "Text found once on this page"
 msgstr "Text găsit o dată pe această pagină"
 
-#: ../src/core/gui/SearchBar.cpp:91
+#: ../src/core/gui/SearchBar.cpp:92
 #, c-format
 msgid "Text found %zu times on this page"
 msgstr "Text găsit de %zu ori pe această pagină"
 
-#: ../src/core/gui/SearchBar.cpp:96
+#: ../src/core/gui/SearchBar.cpp:97
 msgid "Text not found"
 msgstr "Textul nu a fost găsit"
 
-#: ../src/core/gui/SearchBar.cpp:139
+#: ../src/core/gui/SearchBar.cpp:144
 msgid "Text found once on page {1}"
 msgstr "Text găsit o dată pe pagina {1}"
 
-#: ../src/core/gui/SearchBar.cpp:140
+#: ../src/core/gui/SearchBar.cpp:145
 msgid "Text found {1} times on page {2} ({3} of {1})"
 msgstr "Text găsit de {1} ori pe pagina {2} ({3} din {1})"
 
-#: ../src/core/gui/SearchBar.cpp:145
+#: ../src/core/gui/SearchBar.cpp:150
 msgid "Text not found, searched on all pages"
 msgstr "Textul nu a fost găsit, căutat pe toate paginile"
 

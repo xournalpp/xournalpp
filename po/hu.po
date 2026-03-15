@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 17:44+0000\n"
-"PO-Revision-Date: 2026-03-08 04:51\n"
+"POT-Creation-Date: 2026-03-14 10:37+0000\n"
+"PO-Revision-Date: 2026-03-15 04:58\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -870,28 +870,28 @@ msgstr "Görgessen a(z) {1}. oldalra"
 msgid "Add missing page"
 msgstr "Hiányzó oldal hozzáadása"
 
-#: ../src/core/gui/SearchBar.cpp:89
+#: ../src/core/gui/SearchBar.cpp:90
 msgid "Text found once on this page"
 msgstr "Egyszer található szöveg ezen az oldalon"
 
-#: ../src/core/gui/SearchBar.cpp:91
+#: ../src/core/gui/SearchBar.cpp:92
 #, c-format
 msgid "Text found %zu times on this page"
 msgstr "Szöveg %zu alkalommal található ezen az oldalon"
 
-#: ../src/core/gui/SearchBar.cpp:96
+#: ../src/core/gui/SearchBar.cpp:97
 msgid "Text not found"
 msgstr "A keresett szöveg nem található"
 
-#: ../src/core/gui/SearchBar.cpp:139
+#: ../src/core/gui/SearchBar.cpp:144
 msgid "Text found once on page {1}"
 msgstr "A keresett szöveg egyszer megtalálható a(z) {1} oldalon"
 
-#: ../src/core/gui/SearchBar.cpp:140
+#: ../src/core/gui/SearchBar.cpp:145
 msgid "Text found {1} times on page {2} ({3} of {1})"
 msgstr "Szöveg {1} alkalommal található a {2} oldalon ({3}/{1})"
 
-#: ../src/core/gui/SearchBar.cpp:145
+#: ../src/core/gui/SearchBar.cpp:150
 msgid "Text not found, searched on all pages"
 msgstr "A keresett szöveg nem található egyik oldalon sem"
 

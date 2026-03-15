@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 17:44+0000\n"
-"PO-Revision-Date: 2026-03-08 04:52\n"
+"POT-Creation-Date: 2026-03-14 10:37+0000\n"
+"PO-Revision-Date: 2026-03-15 04:58\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -37,7 +37,7 @@ msgstr "Du raderade det aktiva verktygsfältet. Återgår till standardverktygsf
 
 #: ../src/core/control/Control.cpp:608
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
-msgstr ""
+msgstr "Verktygsfältkonfigurationen \"{1}\" är fördefinierad, vill du skapa en kopia att redigera?"
 
 #: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1583
 msgid "Yes"
@@ -66,7 +66,7 @@ msgstr "_Journal"
 
 #: ../src/core/control/Control.cpp:844
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "P_appersbakgrund"
 
 #: ../src/core/control/Control.cpp:845
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:42
@@ -77,7 +77,9 @@ msgstr "Med PDF-bakgrund"
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
-msgstr ""
+msgstr "Ditt nuvarande dokument innehåller inte PDF-sida nr {1}\n"
+"Vill du infoga den här sidan?\n\n"
+"Tips: Du kan välja {2} för att infoga en PDF-sida."
 
 #: ../src/core/control/Control.cpp:891
 msgid "No pdf pages available to append. You may need to reopen the document first."
@@ -91,7 +93,9 @@ msgstr "Det gick inte att hämta PDF-sidan."
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr ""
+msgstr "Öppna inte autosparade filer. De kan skrivas över!\n"
+"Kopiera filerna till en annan mapp.\n"
+"Filer från mappen {1} kan inte öppnas."
 
 #: ../src/core/control/Control.cpp:1527
 msgid "file: {1}"
@@ -121,7 +125,7 @@ msgstr "Fel vid läsning av PNG-fil \"{1}\""
 
 #: ../src/core/control/Control.cpp:1665
 msgid "Error reading template file \"{1}\""
-msgstr ""
+msgstr "Fel vid läsning av mallfilen \"{1}\""
 
 #: ../src/core/control/Control.cpp:1684
 msgid "Failed to determine if path exists \"{1}\": {2}"
@@ -201,7 +205,7 @@ msgstr "Släng"
 
 #: ../src/core/control/Control.cpp:2226
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
-msgstr ""
+msgstr "Kunde inte skapa underprocess för GTK-demo: {1} (slutkod: {2})"
 
 #: ../src/core/control/DeviceListHelper.cpp:97
 msgid "mouse"
@@ -233,7 +237,7 @@ msgstr "pekplatta"
 
 #: ../src/core/control/DeviceListHelper.cpp:113
 msgid "trackpoint"
-msgstr ""
+msgstr "trackpoint"
 
 #: ../src/core/control/DeviceListHelper.cpp:115
 msgid "tablet pad"
@@ -246,11 +250,11 @@ msgstr "Bildfilen har skapats"
 #: ../src/core/control/ExportHelper.cpp:76
 #: ../src/core/control/jobs/BaseExportJob.cpp:40
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr ""
+msgstr "Skriv inte över PDF:en i bakgrunden! Detta kommer att orsaka fel!"
 
 #: ../src/core/control/ExportHelper.cpp:80
 msgid "The check for overwriting the background failed with: {1}"
-msgstr ""
+msgstr "Kontrollen för överskrivning i bakgrunden misslyckades med: {1}"
 
 #: ../src/core/control/ExportHelper.cpp:100
 msgid "PDF file successfully created"
@@ -258,19 +262,19 @@ msgstr "PDF-filen har skapats"
 
 #: ../src/core/control/LatexController.cpp:80
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "Global mallfil finns inte. Kontrollera dina inställningar."
 
 #: ../src/core/control/LatexController.cpp:85
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "Kunde inte läsa global mallfil. Kontrollera dina inställningar."
 
 #: ../src/core/control/LatexController.cpp:91
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "Global mallfil är inte en normal fil. Kontrollera dina inställningar. "
 
 #: ../src/core/control/LatexController.cpp:242
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "LaTeX-genereringen stötte på ett fel: {1} (slutkod: {2})"
 
 #: ../src/core/control/LatexController.cpp:311
 msgid "Could not load LaTeX PDF file: {1}"
@@ -290,7 +294,8 @@ msgstr "Fel vid läsning av PDF: {1}"
 #: ../src/core/control/PageBackgroundChangeController.cpp:272
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
-msgstr ""
+msgstr "Du har inga PDF-sidor att markera från. Avbryt åtgärd.\n"
+"Välj en annan bakgrundstyp: Menyn \"Journal\" → \"Konfigurera sidmall\"."
 
 #: ../src/core/control/PdfCache.cpp:124
 msgid "PDF background missing"
@@ -298,7 +303,7 @@ msgstr "PDF-bakgrund saknas"
 
 #: ../src/core/control/PrintHandler.cpp:122
 msgid "Running print operation failed with {1}"
-msgstr ""
+msgstr "Utskriftåtgärden misslyckades vid körning med {1}"
 
 #: ../src/core/control/XournalMain.cpp:120
 msgid "Failed to delete file: {1}"
@@ -326,23 +331,23 @@ msgstr "Återställ fil"
 
 #: ../src/core/control/XournalMain.cpp:158
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "Bakgrundsfilen \"{1}\" kunde inte hittas. Den kan ha flyttats, bytts namn på eller raderats."
 
 #: ../src/core/control/XournalMain.cpp:176
 msgid "Error loading document: {1}"
-msgstr ""
+msgstr "Fel vid inläsning av dokument: {1}"
 
 #: ../src/core/control/XournalMain.cpp:209
 msgid "Error exporting image: {1}"
-msgstr ""
+msgstr "Fel vid bildexport: {1}"
 
 #: ../src/core/control/XournalMain.cpp:238
 msgid "Error saving document: {1}"
-msgstr ""
+msgstr "Fel när dokumentet sparades: {1}"
 
 #: ../src/core/control/XournalMain.cpp:268
 msgid "Error exporting PDF: {1}"
-msgstr ""
+msgstr "Fel vid PDF-export: {1}"
 
 #: ../src/core/control/XournalMain.cpp:374
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
@@ -402,13 +407,15 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:631
 msgid "Save xopp-file with the background PDF specified as FILE"
-msgstr ""
+msgstr "Spara xopp-fil med bakgrunds-PDF specificerad som FIL"
 
 #: ../src/core/control/XournalMain.cpp:636
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
-msgstr ""
+msgstr "Använd det tillhandahållna bakgrundssystemet för PDF-exporter.\n"
+"                                       Tillgängliga bakgrundssystem: {1}\n"
+"                                       Ingen effekt utan -p/--create-pdf=foo.pdf"
 
 #: ../src/core/control/XournalMain.cpp:645
 msgid "Export FILE as PDF"
@@ -418,13 +425,17 @@ msgstr "Exportera FIL som PDF"
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
-msgstr ""
+msgstr "Exportera FIL som bildfiler (en per sida)\n"
+"                                       Gissa utmatningsformatet utifrån IMGFILE:s tillägg\n"
+"                                       Stödda format: .png, .svg"
 
 #: ../src/core/control/XournalMain.cpp:654
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
-msgstr ""
+msgstr "Exportera utan bakgrund\n"
+"                                       Den exporterade filen har genomskinlig eller vit bakgrund\n"
+"                                       beroende på vad dess format stödjer\n"
 
 #: ../src/core/control/XournalMain.cpp:659
 msgid "Export without ruling\n"
@@ -442,29 +453,36 @@ msgstr ""
 #: ../src/core/control/XournalMain.cpp:673
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Exportera enbart sidor specificerade i OMFÅNG (t.ex. \"2-3,5,7-\")\n"
+"                                       Ingen effekt utan -p/--create-pdf or -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:678
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Exportera enbart lager specificerade i OMFÅNG (t.ex. \"2-3,5,7-\")\n"
+"                                       Ingen effekt utan -p/--create-pdf or -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:682
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "Ställ in DPI för PNG-exporter. Standard är 300\n"
+"                                       Ingen effekt utan -i/--create-img=foo.png"
 
 #: ../src/core/control/XournalMain.cpp:686
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "Ställ in sidbredd för PNG-exporter\n"
+"                                       Ingen effekt utan -i/--create-img=foo.png\n"
+"                                       Ignorerad om --export-png-dpi används"
 
 #: ../src/core/control/XournalMain.cpp:691
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "Ställ in sidhöjd för PNG-exporter.\n"
+"                                       Ingen effekt utan -i/--create-img=foo.png\n"
+"                                       Ignorerad om --export-png-dpi eller --export-png-width används"
 
 #: ../src/core/control/XournalMain.cpp:699
 msgid "Advanced export options"
@@ -484,11 +502,11 @@ msgstr "Spara automatiskt till {1}"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:73
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr ""
+msgstr "Kunde inte byta namn på den autosparade filen från \"{1}\" till \"{2}\": {3}"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "The check for overwriting the background failed with:\n"
-msgstr ""
+msgstr "Kontrollen för överskrivning i bakgrunden misslyckades med:\n"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
 msgid "Export File"
@@ -502,7 +520,7 @@ msgstr "Exportera"
 #: ../src/core/control/jobs/BaseExportJob.cpp:94
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "Kunde inte lösa filsökväg med följande fel: {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:27
 msgid "Custom Export"
@@ -543,7 +561,7 @@ msgstr "Fel vid sparande av bild #1"
 
 #: ../src/core/control/jobs/ImageExport.cpp:178
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
-msgstr ""
+msgstr "Fel under export av pdf-bakgrund: Jag kan inte hitta sidnumret i pdf:en "
 
 #: ../src/core/control/jobs/ImageExport.cpp:202
 msgid "Error save image #2"
@@ -555,7 +573,7 @@ msgstr "PDF-export"
 
 #: ../src/core/control/jobs/SaveJob.cpp:123
 msgid "Save file error, can't backup: {1}"
-msgstr ""
+msgstr "Fel vid sparande av fil, kan inte säkerhetskopiera: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:108
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -565,7 +583,9 @@ msgstr "Misslyckades att tolka LaTeX-generatorkommandot: {1}"
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
-msgstr ""
+msgstr "Kunde inte hitta program för att generera LaTeX i PATH: {1}\n\n"
+"Eftersom installationen detekteras i Flatpak behöver du installera tillägget Flatpak freedesktop Tex Live. Exempelvis genom att köra:\n\n"
+"$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:119
 msgid "Failed to find LaTeX generator program in PATH: {1}"
@@ -663,7 +683,7 @@ msgstr "Filen är ingen giltig .xopp fil (Mimetype saknas): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:143
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
-msgstr ""
+msgstr "Filen är inte en giltig .xopp-fil (fel MIME-typ): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:152
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
@@ -691,7 +711,7 @@ msgstr "Okänt parserfel"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:263
 msgid "Document is not complete (maybe the end is cut off?)"
-msgstr ""
+msgstr "Dokumentet är inte komplett (kanske slutet är avklippt?)"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:267
 msgid "Document is corrupted (no pages found in file)"
@@ -843,28 +863,28 @@ msgstr "Scrolla till sida {1}"
 msgid "Add missing page"
 msgstr "Lägg till saknad sida"
 
-#: ../src/core/gui/SearchBar.cpp:89
+#: ../src/core/gui/SearchBar.cpp:90
 msgid "Text found once on this page"
 msgstr "Text hittades en gång på denna sida"
 
-#: ../src/core/gui/SearchBar.cpp:91
+#: ../src/core/gui/SearchBar.cpp:92
 #, c-format
 msgid "Text found %zu times on this page"
 msgstr "Text hittades %zu gånger på denna sida"
 
-#: ../src/core/gui/SearchBar.cpp:96
+#: ../src/core/gui/SearchBar.cpp:97
 msgid "Text not found"
 msgstr "Text hittades inte"
 
-#: ../src/core/gui/SearchBar.cpp:139
+#: ../src/core/gui/SearchBar.cpp:144
 msgid "Text found once on page {1}"
 msgstr "Texten hittades en gång på sidan {1}"
 
-#: ../src/core/gui/SearchBar.cpp:140
+#: ../src/core/gui/SearchBar.cpp:145
 msgid "Text found {1} times on page {2} ({3} of {1})"
 msgstr ""
 
-#: ../src/core/gui/SearchBar.cpp:145
+#: ../src/core/gui/SearchBar.cpp:150
 msgid "Text not found, searched on all pages"
 msgstr "Text hittades inte, sökte på alla sidor"
 
@@ -4324,7 +4344,7 @@ msgstr "B_ild"
 
 #: ../ui/mainmenubar.xml:560
 msgid "_Default Tool"
-msgstr ""
+msgstr "Stan_dardverktyg"
 
 #: ../ui/mainmenubar.xml:567
 msgid "Drawing Type"
