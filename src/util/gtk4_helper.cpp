@@ -149,6 +149,7 @@ void gtk_button_set_icon_name(GtkButton* button, const char* iconName) {
 GtkWidget* gtk_popover_new() { return gtk_popover_new(nullptr); }
 void gtk_popover_set_child(GtkPopover* popover, GtkWidget* child) { set_child(GTK_CONTAINER(popover), child); }
 GtkWidget* gtk_popover_menu_new_from_model(GMenuModel* model) { return gtk_popover_new_from_model(nullptr, model); }
+void gtk_popover_set_autohide(GtkPopover* popover, gboolean autohide) { gtk_popover_set_modal(popover, autohide); }
 
 /**** GtkLabel ****/
 void gtk_label_set_wrap(GtkLabel* label, gboolean wrap) { gtk_label_set_line_wrap(label, wrap); }

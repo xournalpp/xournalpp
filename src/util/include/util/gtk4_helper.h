@@ -74,6 +74,7 @@ void gtk_button_set_icon_name(GtkButton* button, const char* iconName);
 GtkWidget* gtk_popover_new();
 void gtk_popover_set_child(GtkPopover* popover, GtkWidget* child);
 GtkWidget* gtk_popover_menu_new_from_model(GMenuModel* model);
+void gtk_popover_set_autohide(GtkPopover* popover, gboolean autohide);
 
 /**** GtkLabel ****/
 void gtk_label_set_wrap(GtkLabel* label, gboolean wrap);
