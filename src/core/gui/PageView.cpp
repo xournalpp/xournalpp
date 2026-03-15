@@ -406,11 +406,8 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     } else if (h->getToolType() == TOOL_TEXT) {
         startText(x, y);
     } else if (h->getToolType() == TOOL_LATEX) {
-        /* Currently, the latex dialog is opened only at the onButtonReleaseEvent (but at the location of the
-         * buttonPressevent). I'm not sure whether that's the best solution, but it was the easiest to implement. */
+        /* The latex dialog will be opened only at the onButtonReleaseEvent. */
         this->inLatex = true;
-        this->latexX = x;
-        this->latexY = y;
     } else if (h->getToolType() == TOOL_IMAGE) {
         // start selecting the size for the image
         this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);
@@ -683,7 +680,8 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
     }
     if (this->inLatex) {
         this->inLatex = false;
-        LatexController::insertLatex(this->page, control, this->latexX, this->latexY);
+        const double zoom = xournal->getZoom();
+        LatexController::insertLatex(this->page, control, pos.x / zoom, pos.y / zoom);
     }
 
     if (this->verticalSpace) {

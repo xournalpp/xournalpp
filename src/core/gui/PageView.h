@@ -261,7 +261,6 @@ private:
 
     bool inEraser = false;
     bool inLatex = false;
-    double latexX, latexY;
 
     /**
      * Vertical Space
