@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-07 16:00+0000\n"
-"PO-Revision-Date: 2026-03-08 04:51\n"
+"PO-Revision-Date: 2026-03-15 04:58\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -129,7 +129,8 @@ msgstr ""
 #: ../src/core/control/Control.cpp:1669
 msgid "That file does not exist:\n"
 "\"{1}\""
-msgstr ""
+msgstr "Ten plik nie istnieje:\n"
+"\"{1}\""
 
 #: ../src/core/control/Control.cpp:1776
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -1646,7 +1647,7 @@ msgstr "Ekierka"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Compass"
-msgstr "Kompas"
+msgstr "Kątomierz"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Toggle Touch Drawing"
@@ -2093,12 +2094,13 @@ msgstr "Kod błędu {1}"
 
 #: ../src/util/PathUtil.cpp:125
 msgid "Could not open file: {1}"
-msgstr ""
+msgstr "Nie można otworzyć pliku: \"{1}"
 
 #: ../src/util/PathUtil.cpp:132
 msgid "Error reading \"{1}\":\n"
 "{2}"
-msgstr ""
+msgstr "Błąd przy odczytywaniu pliku {1}:\n\n"
+" {2}"
 
 #: ../src/util/PathUtil.cpp:409
 msgid "xournalpp-{1}"
