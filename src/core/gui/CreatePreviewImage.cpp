@@ -19,7 +19,9 @@ auto createPreviewImage(const PageType& pt) -> GtkWidget* {
 
     auto bgView = xoj::view::BackgroundView::createRuled(PREVIEW_WIDTH / zoom, PREVIEW_HEIGHT / zoom, Colors::white, pt,
                                                          1. / zoom);
-    bgView->draw(cr);
+    if (bgView) {
+        bgView->draw(cr);
+    }
 
     cairo_identity_matrix(cr);
 
