@@ -2647,6 +2647,37 @@ static int applib_scrollToPos(lua_State* L) {
 }
 
 /**
+ * Obtains the current scroll position.
+ *
+ * @return {x:number, y:number}
+ *
+ * Example: local scrollPos = app.getScrollPos()
+ *
+ * return value:
+ * {
+ *     ["x"] = number,
+ *     ["y"] = number
+ * }
+ **/
+static int applib_getScrollPos(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    auto rect = control->getWindow()->getLayout()->getVisibleRect();
+
+    lua_newtable(L);                    // create table for current image
+
+    // "x": number
+    lua_pushnumber(L, rect.x);
+    lua_setfield(L, -2, "x");
+
+    // "y": number
+    lua_pushnumber(L, rect.y);
+    lua_setfield(L, -2, "y");
+
+    return 1;
+}
+
+/**
  * Obtains the label of the specified page in the pdf background.
  *
  * @param page integer
@@ -3821,6 +3852,7 @@ static const luaL_Reg applib[] = {
         {"getDocumentStructure", applib_getDocumentStructure},
         {"scrollToPage", applib_scrollToPage},
         {"scrollToPos", applib_scrollToPos},
+        {"getScrollPos", applib_getScrollPos},
         {"setCurrentPage", applib_setCurrentPage},
         {"setPageSize", applib_setPageSize},
         {"setCurrentLayer", applib_setCurrentLayer},

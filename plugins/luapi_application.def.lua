@@ -730,6 +730,19 @@ function app.scrollToPage(page, relative) end
 --- scrolls to page position 200pt right and 50pt down from the left page corner  (absolute mode)
 function app.scrollToPos(x, y, relative) end
 
+--- Obtains the current scroll position.
+--- 
+--- @return {x:number, y:number}
+--- 
+--- Example: local scrollPos = app.getScrollPos()
+--- 
+--- return value:
+--- {
+---     ["x"] = number,
+---     ["y"] = number
+--- }
+function app.getScrollPos() end
+
 --- Obtains the label of the specified page in the pdf background.
 --- 
 --- @param page integer
