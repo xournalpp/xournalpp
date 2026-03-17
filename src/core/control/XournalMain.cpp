@@ -77,7 +77,13 @@ void initCAndCoutLocales() {
      */
     setlocale(LC_NUMERIC, "C");
 
-    std::cout.imbue(std::locale());
+    // Use classic locale to avoid issues when the global locale is not supported (e.g., Windows ARM64)
+    // See issue #7276
+    try {
+        std::cout.imbue(std::locale::classic());
+    } catch (const std::runtime_error& e) {
+        g_warning("XournalMain: Could not imbue cout with classic locale: %s", e.what());
+    }
 }
 
 auto migrateSettings() -> MigrateResult {

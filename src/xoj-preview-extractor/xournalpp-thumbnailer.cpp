@@ -47,8 +47,18 @@ void initLocalisation() {
     textdomain(GETTEXT_PACKAGE);
 #endif  // ENABLE_NLS
 
-    std::locale::global(std::locale(""));  //"" - system default locale
-    std::cout.imbue(std::locale());
+    // Use classic locale to avoid issues when the system locale is not supported (e.g., Windows ARM64)
+    // See issue #7276
+    try {
+        std::locale::global(std::locale::classic());
+    } catch (const std::runtime_error& e) {
+        // If classic locale fails, there's nothing we can do. Continue with the default locale.
+    }
+    try {
+        std::cout.imbue(std::locale::classic());
+    } catch (const std::runtime_error& e) {
+        // If imbue fails, continue without it.
+    }
 }
 
 void logMessage(string msg, bool error) {
