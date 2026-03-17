@@ -157,7 +157,6 @@ void Element::readSerialized(ObjectInputStream& in) {
     in.endObject();
 }
 
-void Element::sizeChanged() { this->sizeCalculated = false; }
 namespace xoj {
 
 auto refElementContainer(const std::vector<ElementPtr>& elements) -> std::vector<Element*> {
