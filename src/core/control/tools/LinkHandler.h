@@ -46,7 +46,6 @@ public:
 private:
     XournalView* view;
     Control* control;
-    Link* linkElement = nullptr;
 
     // There is always at most one selected link and one highlighted link.
     // Both can be present at the same time, when one link being selected another one is highlighted.

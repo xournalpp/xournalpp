@@ -15,6 +15,8 @@
 #include "model/Document.h"            // for Document
 #include "model/Link.h"                // for Link
 #include "model/XojPage.h"             // for XojPage
+#include "undo/DeleteUndoAction.h"     // for DeleteUndoAction
+#include "undo/GroupUndoAction.h"      // for GroupUndoAction
 #include "undo/InsertUndoAction.h"     // for InsertUndoAction
 #include "util/PopupWindowWrapper.h"   // for PopupWindowWrapper
 #include "util/XojMsgBox.h"            // for XojMsgBox
@@ -30,16 +32,16 @@ LinkHandler::LinkHandler(XournalView* view): view(view), control(view->getContro
 LinkHandler::~LinkHandler() { this->control->getZoomControl()->removeZoomListener(this); }
 
 void LinkHandler::startEditing(const PageRef& page, const int x, const int y) {
-    this->linkElement = nullptr;
+    Link* linkElement = nullptr;
 
     // Find Link element
     for (auto&& e: page->getSelectedLayer()->getElements()) {
         if (e->getType() == ELEMENT_LINK && e->containsPoint(x, y)) {
-            this->linkElement = dynamic_cast<Link*>(e.get());
+            linkElement = dynamic_cast<Link*>(e.get());
         }
     }
 
-    if (this->linkElement == nullptr) {
+    if (linkElement == nullptr) {
         auto dialog = xoj::popup::PopupWindowWrapper<LinkDialog>(
                 this->control,
                 [x, y, page = page, control = control](LinkDialog* dlg) {
@@ -62,26 +64,46 @@ void LinkHandler::startEditing(const PageRef& page, const int x, const int y) {
                 []() {});
         dialog.show(control->getGtkWindow());
     } else {
-        this->linkElement->setHighlighted(true);
-        page->fireElementChanged(this->linkElement);
+        linkElement->setHighlighted(true);
+        page->fireElementChanged(linkElement);
         auto dialog = xoj::popup::PopupWindowWrapper<LinkDialog>(
                 this->control,
-                [this, page = page](LinkDialog* dlg) {
-                    this->linkElement->setText(dlg->getText());
-                    this->linkElement->setUrl(dlg->getURL());
-                    this->linkElement->setAlignment(static_cast<PangoAlignment>(dlg->getLayout()));
-                    this->linkElement->setFont(dlg->getFont());
-                    this->linkElement->sizeChanged();
-                    this->linkElement->setHighlighted(false);
+                [this, linkElement, page = page](LinkDialog* dlg) {
+                    auto linkOwn = std::make_unique<Link>();
+                    Link* link = linkOwn.get();
+                    link->setText(dlg->getText());
+                    link->setUrl(dlg->getURL());
+                    link->setAlignment(static_cast<PangoAlignment>(dlg->getLayout()));
+                    link->setFont(dlg->getFont());
+                    link->setX(linkElement->getX());
+                    link->setY(linkElement->getY());
                     page->firePageChanged();
+
+                    const auto undo = control->getUndoRedoHandler();
+                    auto groupUndoAction = std::make_unique<GroupUndoAction>();
+                    auto deleteUndoAction = std::make_unique<DeleteUndoAction>(page, false);
+
+                    Document* doc = control->getDocument();
+                    doc->lock();
+                    const auto layer = page->getSelectedLayer();
+                    layer->addElement(std::move(linkOwn));
+                    auto [orig, elementIndex] = layer->removeElement(linkElement);
+                    doc->unlock();
+
+                    if (elementIndex != Element::InvalidIndex) [[likely]] {
+                        deleteUndoAction->addElement(layer, std::move(orig), elementIndex);
+                    }
+                    groupUndoAction->addAction(std::move(deleteUndoAction));
+                    auto insertUndoAction = std::make_unique<InsertUndoAction>(page, layer, link);
+                    groupUndoAction->addAction(std::move(insertUndoAction));
+                    undo->addUndoAction(std::move(groupUndoAction));
                 },
-                [this, page = page]() {
-                    this->linkElement->setHighlighted(false);
-                    page->fireElementChanged(this->linkElement);
+                [linkElement, page = page]() {
+                    linkElement->setHighlighted(false);
+                    page->fireElementChanged(linkElement);
                 });
-        dialog.getPopup()->preset(this->linkElement->getFont(), this->linkElement->getText(),
-                                  this->linkElement->getUrl(),
-                                  static_cast<LinkAlignment>(this->linkElement->getAlignment()));
+        dialog.getPopup()->preset(linkElement->getFont(), linkElement->getText(), linkElement->getUrl(),
+                                  static_cast<LinkAlignment>(linkElement->getAlignment()));
         dialog.show(control->getGtkWindow());
     }
 }
