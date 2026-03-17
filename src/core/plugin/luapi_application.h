@@ -2664,7 +2664,8 @@ static int applib_getScrollPos(lua_State* L) {
     Control* control = plugin->getControl();
     auto rect = control->getWindow()->getLayout()->getVisibleRect();
 
-    lua_newtable(L);                    // create table for current image
+    // create table for current image
+    lua_newtable(L);
 
     // "x": number
     lua_pushnumber(L, rect.x);
