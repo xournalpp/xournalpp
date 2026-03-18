@@ -2647,7 +2647,7 @@ static int applib_scrollToPos(lua_State* L) {
 }
 
 /**
- * Obtains the current absolute scroll position (position on the whole layout) and width and height of the currently visible window.
+ * Obtains the current absolute scroll position (position on the whole layout) and width and height of the currently visible window, measured in pixels.
  *
  * @return {x:number, y:number, width:number, height:number}
  *
