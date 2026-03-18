@@ -2620,7 +2620,7 @@ static int applib_scrollToPage(lua_State* L) {
  * @param relative boolean
  *
  * Example 1: app.scrollToPos(20,10)
- * scrolls 20pt right and 10pt down from current position (relative mode)
+ * scrolls 20 pixel right and 10 pixel down from current position (relative mode)
  *
  * Example 2: app.scrollToPos(200, 50, false)
  * scrolls to absolute coordinates (200, 50) from top left corner (document origin) (absolute mode)
