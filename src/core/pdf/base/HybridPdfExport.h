@@ -34,6 +34,7 @@ public:
     struct OutputPageInfo {
         bool hasOverlay;
         size_t pdfBackgroundPageNumber;
+        int pdfBackgroundOrientation;
     };
     /// Occurrences of a given background page
     struct Occurrences {
