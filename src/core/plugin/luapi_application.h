@@ -2613,17 +2613,17 @@ static int applib_scrollToPage(lua_State* L) {
 }
 
 /**
- * Scrolls to the position on the selected page specified relatively (by default) or absolutely
+ * Scrolls to the position relatively (by default) or absolutely (whole layout)
  *
  * @param x number
  * @param y number
  * @param relative boolean
  *
  * Example 1: app.scrollToPos(20,10)
- * scrolls 20pt right and 10pt down (relative mode)
+ * scrolls 20pt right and 10pt down from current position (relative mode)
  *
  * Example 2: app.scrollToPos(200, 50, false)
- * scrolls to page position 200pt right and 50pt down from the left page corner  (absolute mode)
+ * scrolls to absolute coordinates (200, 50) from top left corner (document origin) (absolute mode)
  **/
 static int applib_scrollToPos(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
@@ -2647,7 +2647,7 @@ static int applib_scrollToPos(lua_State* L) {
 }
 
 /**
- * Obtains the current scroll position and width and height of the visible rectangle.
+ * Obtains the current absolute scroll position (position on the whole layout) and width and height of the currently visible window.
  *
  * @return {x:number, y:number, width:number, height:number}
  *
