@@ -35,9 +35,28 @@ static constexpr double PRESSURE_FACTOR = 20;
 static constexpr size_t CONTACT_BUTTON_INDEX = 1;  ///< Corresponds to button == 1 in GdkEvent
 static constexpr double PRESSURELESS_INDICATOR_HALF_SIZE = 3;
 
-static constexpr size_t MAX_NB_BUTTONS = 4;
+static constexpr size_t MAX_NB_BUTTONS = 10;
 static constexpr std::bitset<MAX_NB_BUTTONS> CONSIDERED_FOR_TIP_EMULATION(0b1100);
-static constexpr std::bitset<MAX_NB_BUTTONS> MOUSE_BUTTONS_MASK(0b1110);
+// GDK backend button numbering differs by platform for side (4th/5th) buttons:
+// Backend references (gtk3)
+// - Wayland: gdk/wayland/gdkdevice-wayland.c (additional buttons mapped after legacy 4-7 scroll range)
+// - Win32: gdk/win32/gdkevents-win32.c (WM_XBUTTONDOWN -> button 4/5)
+// - macOS: gdk/quartz/gdkevents-quartz.c (default branch returns button + 1)
+// - Ref: https://gitlab.gnome.org/GNOME/gtk/-/tree/gtk-3-24/gdk
+// Backend references (gtk4), same as gtk3
+// - Wayland: gdk/wayland/gdkseat-wayland.c
+// - Win32: gdk/win32/gdkevents-win32.c
+// - macOS: gdk/macos/gdkmacosdisplay-translate.c
+// - Ref: https://gitlab.gnome.org/GNOME/gtk/-/tree/main/gdk
+#if defined(_WIN32) || defined(__APPLE__)
+static constexpr std::bitset<MAX_NB_BUTTONS> MOUSE_BUTTONS_MASK(0b111110);
+/// Maps GDK button index to mouseIndicators index (Windows/macOS: 4/5 -> 4/5)
+static constexpr size_t mouseIdx(size_t b) { return b < 4 ? b : (b <= 5 ? b : 6); }
+#else
+static constexpr std::bitset<MAX_NB_BUTTONS> MOUSE_BUTTONS_MASK(0b1100001110);
+/// Maps GDK button index to mouseIndicators index (Linux: 8/9 -> 4/5)
+static constexpr size_t mouseIdx(size_t b) { return b < 4 ? b : (b >= 8 ? b - 4 : 6); }
+#endif
 
 static constexpr unsigned int IN_USE_RESET_DELAY = 100;  ///< in ms
 
@@ -242,6 +261,8 @@ DeviceTestingArea::DeviceTestingArea(GladeSearchpath* gladeSearchPath, GtkBox* p
     mouseIndicators[GDK_BUTTON_PRIMARY].reset(builder.get("mouse-left"), xoj::util::ref);
     mouseIndicators[GDK_BUTTON_MIDDLE].reset(builder.get("mouse-middle"), xoj::util::ref);
     mouseIndicators[GDK_BUTTON_SECONDARY].reset(builder.get("mouse-right"), xoj::util::ref);
+    mouseIndicators[4].reset(builder.get("mouse-4"), xoj::util::ref);
+    mouseIndicators[5].reset(builder.get("mouse-5"), xoj::util::ref);
     stylusIndicators[0].reset(builder.get("stylus-hover"), xoj::util::ref);
     stylusIndicators[1].reset(builder.get("stylus-tip"), xoj::util::ref);
     stylusIndicators[2].reset(builder.get("stylus-1"), xoj::util::ref);
@@ -347,9 +368,9 @@ bool DeviceTestingArea::handle(const InputEvent& e, HandlerType handlerType) {
 
     if (e.type == BUTTON_PRESS_EVENT) {
         lastDeviceClassConfig->setDevice(InputDevice(e.device));
-        if (handlerType == MOUSE && e.button < mouseIndicators.size()) {
+        if (handlerType == MOUSE && mouseIdx(e.button) < mouseIndicators.size()) {
             data->buttonsStatus[DevCategory::MOUSE].set(e.button);
-            gtk_widget_add_css_class(mouseIndicators[e.button].get(), "pressed");
+            gtk_widget_add_css_class(mouseIndicators[mouseIdx(e.button)].get(), "pressed");
             resetInUseTimer(mouseInUseTimer, mouseIndicators[0].get());
         } else if (handlerType == STYLUS) {
             if (e.deviceClass == INPUT_DEVICE_PEN && e.button < stylusIndicators.size()) {
@@ -375,9 +396,9 @@ bool DeviceTestingArea::handle(const InputEvent& e, HandlerType handlerType) {
         }
         queueEvent();
     } else if (e.type == BUTTON_RELEASE_EVENT) {
-        if (handlerType == MOUSE && e.button < mouseIndicators.size()) {
+        if (handlerType == MOUSE && mouseIdx(e.button) < mouseIndicators.size()) {
             data->buttonsStatus[DevCategory::MOUSE].reset(e.button);
-            gtk_widget_remove_css_class(mouseIndicators[e.button].get(), "pressed");
+            gtk_widget_remove_css_class(mouseIndicators[mouseIdx(e.button)].get(), "pressed");
             resetInUseTimer(mouseInUseTimer, mouseIndicators[0].get());
         } else if (handlerType == TOUCH) {
             if (data->nbTouchSequences == 0) {
