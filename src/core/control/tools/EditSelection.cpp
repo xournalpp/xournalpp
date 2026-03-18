@@ -265,25 +265,37 @@ EditSelection::~EditSelection() {
  * them to new layer if any or to the old if no new layer
  */
 void EditSelection::finalizeSelection() {
-    XojPageView* v = getPageViewUnderCursor();
-    if (v == nullptr) {  // Not on any page - move back to original page and position
-        double ox = this->snappedBounds.x - this->x;
-        double oy = this->snappedBounds.y - this->y;
-        this->x = this->contents->getOriginalX();
-        this->y = this->contents->getOriginalY();
-        this->snappedBounds.x = this->x + ox;
-        this->snappedBounds.y = this->y + oy;
-        v = this->contents->getSourceView();
+    // Always finalize on the page the selection currently belongs to.
+    // Clamp position so the selection stays at least partially on the page.
+    {
+        constexpr double MIN_OVERLAP = 20.0;
+        const PageRef page = this->view->getPage();
+        const double pageW = page->getWidth();
+        const double pageH = page->getHeight();
+        const double selW = std::abs(this->width);
+        const double selH = std::abs(this->height);
+        const double overlap = std::min({MIN_OVERLAP, selW, selH});
 
-        PageRef page = v->getPage();
-        Layer* layer = page->getSelectedLayer();
-        // Create an Undo action to compensate - avoids Segfault/Freeze if the user presses undo after this happened
-        this->contents->updateContent(this->getRect(), this->snappedBounds, this->rotation, this->preserveAspectRatio,
-                                      layer, page, this->undo, CURSOR_SELECTION_MOVE);
+        double dx = 0.0;
+        double dy = 0.0;
+        if (this->x + selW < overlap) {
+            dx = overlap - (this->x + selW);
+        } else if (this->x > pageW - overlap) {
+            dx = (pageW - overlap) - this->x;
+        }
+        if (this->y + selH < overlap) {
+            dy = overlap - (this->y + selH);
+        } else if (this->y > pageH - overlap) {
+            dy = (pageH - overlap) - this->y;
+        }
+
+        if (dx != 0 || dy != 0) {
+            this->x += dx;
+            this->y += dy;
+            this->snappedBounds.x += dx;
+            this->snappedBounds.y += dy;
+        }
     }
-
-
-    this->view = v;
 
     auto insertOrder =
             this->contents->makeMoveEffective(this->getRect(), this->snappedBounds, this->preserveAspectRatio);
