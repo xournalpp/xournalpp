@@ -10,9 +10,9 @@
 #include "control/PageBackgroundChangeController.h"
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeInfo, Pag...
 #include "gui/menus/StaticAssertActionNamespace.h"
+#include "util/compile_time_strings.h"
 #include "util/i18n.h"  // for _
 #include "util/raii/GVariantSPtr.h"
-#include "util/compile_time_strings.h"
 
 #include "Menubar.h"
 
