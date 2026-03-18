@@ -730,7 +730,8 @@ function app.scrollToPage(page, relative) end
 --- scrolls to absolute pixel coordinates (200, 50) from top left corner of the layout (absolute mode)
 function app.scrollToPos(x, y, relative) end
 
---- Obtains the current absolute scroll position (position on the whole layout) and width and height of the currently visible window, measured in pixels.
+--- Obtains the current absolute scroll position (position on the whole layout) and width and height of the currently
+--- visible window, measured in pixels.
 --- 
 --- @return {x:number, y:number, width:number, height:number}
 --- 
