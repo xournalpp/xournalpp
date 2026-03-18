@@ -62,6 +62,9 @@ protected:
 
     Range bbox;
 
+    double pageWidth = 0;
+    double pageHeight = 0;
+
     std::shared_ptr<xoj::util::DispatchPool<xoj::view::SelectorView>> viewPool;
 
     friend class EditSelection;

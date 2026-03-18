@@ -19,6 +19,8 @@ Selector::~Selector() = default;
 
 auto Selector::finalize(PageRef page, bool disableMultilayer, Document* doc) -> size_t {
     this->page = page;
+    this->pageWidth = page->getWidth();
+    this->pageHeight = page->getHeight();
     size_t layerId = 0;
 
     if (multiLayer && !disableMultilayer) {
@@ -74,7 +76,30 @@ RectangularSelector::RectangularSelector(double x, double y, bool multiLayer):
 
 RectangularSelector::~RectangularSelector() = default;
 
-auto RectangularSelector::contains(double x, double y) const -> bool { return bbox.contains(x, y); }
+auto RectangularSelector::contains(double x, double y) const -> bool {
+    // If the selection rectangle touches a page edge, extend it to infinity
+    // in that direction. This allows selecting objects that extend beyond the page.
+    constexpr double eps = 1.0;
+    constexpr double INF = 1e9;
+
+    double minX = bbox.minX;
+    double minY = bbox.minY;
+    double maxX = bbox.maxX;
+    double maxY = bbox.maxY;
+
+    if (pageWidth > 0 && pageHeight > 0) {
+        if (minX <= eps)
+            minX = -INF;
+        if (minY <= eps)
+            minY = -INF;
+        if (maxX >= pageWidth - eps)
+            maxX = INF;
+        if (maxY >= pageHeight - eps)
+            maxY = INF;
+    }
+
+    return x >= minX && x <= maxX && y >= minY && y <= maxY;
+}
 
 void RectangularSelector::currentPos(double x, double y) {
     bbox = Range(sx, sy);
