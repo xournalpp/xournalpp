@@ -77,7 +77,11 @@ void initCAndCoutLocales() {
      */
     setlocale(LC_NUMERIC, "C");
 
-    std::cout.imbue(std::locale());
+    try {
+        std::cout.imbue(std::locale());
+    } catch (const std::runtime_error& e) {
+        g_warning("Failed to imbue cout with locale: %s", e.what());
+    }
 }
 
 auto migrateSettings() -> MigrateResult {
@@ -592,14 +596,13 @@ void XournalMain::initLocalisation() {
     // Not working on GNU g++(mingww) forWindows! Only working on Linux/macOS and with msvc
     try {
         std::locale::global(std::locale(""));  // "" - system default locale
+        initCAndCoutLocales();
     } catch (const std::runtime_error& e) {
         g_warning("XournalMain: System default locale could not be set.\n - Caused by: %s\n - Note that it is not "
                   "supported to set the locale using mingw-w64 on windows.\n - This could be solved by compiling "
                   "xournalpp with msvc",
                   e.what());
     }
-
-    initCAndCoutLocales();
 }
 
 auto XournalMain::run(int argc, char** argv) -> int {
