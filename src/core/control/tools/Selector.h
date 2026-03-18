@@ -98,4 +98,14 @@ public:
     bool contains(double x, double y) const override;
     bool userTapped(double zoom) const override;
     const std::vector<BoundaryPoint>& getBoundary() const override;
+
+    /**
+     * Build an extended polygon that bulges outward to infinity where the lasso
+     * touches a page edge. Must be called after page dimensions are set.
+     */
+    void buildExtendedBoundary();
+
+private:
+    std::vector<BoundaryPoint> extendedBoundaryPoints;
+    Range extendedBbox;
 };

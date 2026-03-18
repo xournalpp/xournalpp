@@ -21,6 +21,12 @@ auto Selector::finalize(PageRef page, bool disableMultilayer, Document* doc) -> 
     this->page = page;
     this->pageWidth = page->getWidth();
     this->pageHeight = page->getHeight();
+
+    // Let subclasses prepare extended geometry now that page dimensions are known
+    if (auto* lasso = dynamic_cast<LassoSelector*>(this)) {
+        lasso->buildExtendedBoundary();
+    }
+
     size_t layerId = 0;
 
     if (multiLayer && !disableMultilayer) {
@@ -143,22 +149,90 @@ void LassoSelector::currentPos(double x, double y) {
     }
 }
 
+void LassoSelector::buildExtendedBoundary() {
+    constexpr double eps = 1.0;
+    constexpr double INF = 1e9;
+
+    if (pageWidth <= 0 || pageHeight <= 0 || boundaryPoints.size() <= 2) {
+        extendedBoundaryPoints = boundaryPoints;
+        extendedBbox = bbox;
+        return;
+    }
+
+    auto const isOnEdge = [&](BoundaryPoint const& p) -> bool {
+        return p.x <= eps || p.x >= pageWidth - eps || p.y <= eps || p.y >= pageHeight - eps;
+    };
+
+    auto const project = [&](BoundaryPoint const& p) -> BoundaryPoint {
+        double px = p.x;
+        double py = p.y;
+        if (px <= eps)
+            px = -INF;
+        if (px >= pageWidth - eps)
+            px = INF;
+        if (py <= eps)
+            py = -INF;
+        if (py >= pageHeight - eps)
+            py = INF;
+        return {px, py};
+    };
+
+    extendedBoundaryPoints.clear();
+    extendedBoundaryPoints.reserve(boundaryPoints.size() * 2);
+
+    auto const n = boundaryPoints.size();
+    for (size_t i = 0; i < n; i++) {
+        auto const& current = boundaryPoints[i];
+        auto const currentOnEdge = isOnEdge(current);
+
+        if (!currentOnEdge) {
+            extendedBoundaryPoints.push_back(current);
+            continue;
+        }
+
+        // Current point is on a page edge.
+        auto const prevOnEdge = isOnEdge(boundaryPoints[(i + n - 1) % n]);
+        auto const nextOnEdge = isOnEdge(boundaryPoints[(i + 1) % n]);
+
+        if (!prevOnEdge) {
+            // Entering an edge run: emit original, then projected
+            extendedBoundaryPoints.push_back(current);
+            extendedBoundaryPoints.push_back(project(current));
+        } else if (!nextOnEdge) {
+            // Leaving an edge run: emit projected, then original
+            extendedBoundaryPoints.push_back(project(current));
+            extendedBoundaryPoints.push_back(current);
+        } else {
+            // Interior of an edge run: emit only projected
+            extendedBoundaryPoints.push_back(project(current));
+        }
+    }
+
+    // Build extended bounding box
+    extendedBbox = Range();
+    for (auto const& p: extendedBoundaryPoints) {
+        extendedBbox.addPoint(p.x, p.y);
+    }
+}
+
 auto LassoSelector::contains(double x, double y) const -> bool {
-    if (boundaryPoints.size() <= 2 || !this->bbox.contains(x, y)) {
+    auto const& pts = extendedBoundaryPoints.empty() ? boundaryPoints : extendedBoundaryPoints;
+    auto const& bboxRef = extendedBoundaryPoints.empty() ? bbox : extendedBbox;
+
+    if (pts.size() <= 2 || !bboxRef.contains(x, y)) {
         return false;
     }
 
     int hits = 0;
 
-    const BoundaryPoint& last = boundaryPoints.back();
+    const BoundaryPoint& last = pts.back();
 
     double lastx = last.x;
     double lasty = last.y;
     double curx = NAN, cury = NAN;
 
     // Walk the edges of the polygon
-    for (auto pointIterator = boundaryPoints.begin(); pointIterator != boundaryPoints.end();
-         lastx = curx, lasty = cury, ++pointIterator) {
+    for (auto pointIterator = pts.begin(); pointIterator != pts.end(); lastx = curx, lasty = cury, ++pointIterator) {
         curx = pointIterator->x;
         cury = pointIterator->y;
 
