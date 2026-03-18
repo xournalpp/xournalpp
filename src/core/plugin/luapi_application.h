@@ -2623,7 +2623,7 @@ static int applib_scrollToPage(lua_State* L) {
  * scrolls 20 pixel right and 10 pixel down from current position (relative mode)
  *
  * Example 2: app.scrollToPos(200, 50, false)
- * scrolls to absolute coordinates (200, 50) from top left corner (document origin) (absolute mode)
+ * scrolls to absolute pixel coordinates (200, 50) from top left corner of the layout (absolute mode)
  **/
 static int applib_scrollToPos(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
