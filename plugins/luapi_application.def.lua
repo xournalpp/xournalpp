@@ -724,13 +724,13 @@ function app.scrollToPage(page, relative) end
 --- @param relative boolean
 --- 
 --- Example 1: app.scrollToPos(20,10)
---- scrolls 20pt right and 10pt down from current position (relative mode)
+--- scrolls 20 pixel right and 10 pixel down from current position (relative mode)
 --- 
 --- Example 2: app.scrollToPos(200, 50, false)
---- scrolls to absolute coordinates (200, 50) from top left corner (document origin) (absolute mode)
+--- scrolls to absolute pixel coordinates (200, 50) from top left corner of the layout (absolute mode)
 function app.scrollToPos(x, y, relative) end
 
---- Obtains the current absolute scroll position (position on the whole layout) and width and height of the currently visible window.
+--- Obtains the current absolute scroll position (position on the whole layout) and width and height of the currently visible window, measured in pixels.
 --- 
 --- @return {x:number, y:number, width:number, height:number}
 --- 
