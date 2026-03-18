@@ -730,16 +730,18 @@ function app.scrollToPage(page, relative) end
 --- scrolls to page position 200pt right and 50pt down from the left page corner  (absolute mode)
 function app.scrollToPos(x, y, relative) end
 
---- Obtains the current scroll position.
+--- Obtains the current scroll position and width and height of the visible rectangle.
 --- 
---- @return {x:number, y:number}
+--- @return {x:number, y:number, width:number, height:number}
 --- 
 --- Example: local scrollPos = app.getScrollPos()
 --- 
 --- return value:
 --- {
 ---     ["x"] = number,
----     ["y"] = number
+---     ["y"] = number,
+---     ["width"] = number,
+---     ["height"] = number,
 --- }
 function app.getScrollPos() end
 

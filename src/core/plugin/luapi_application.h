@@ -2647,16 +2647,18 @@ static int applib_scrollToPos(lua_State* L) {
 }
 
 /**
- * Obtains the current scroll position.
+ * Obtains the current scroll position and width and height of the visible rectangle.
  *
- * @return {x:number, y:number}
+ * @return {x:number, y:number, width:number, height:number}
  *
  * Example: local scrollPos = app.getScrollPos()
  *
  * return value:
  * {
  *     ["x"] = number,
- *     ["y"] = number
+ *     ["y"] = number,
+ *     ["width"] = number,
+ *     ["height"] = number,
  * }
  **/
 static int applib_getScrollPos(lua_State* L) {
@@ -2675,6 +2677,13 @@ static int applib_getScrollPos(lua_State* L) {
     lua_pushnumber(L, rect.y);
     lua_setfield(L, -2, "y");
 
+    // "width": number
+    lua_pushnumber(L, rect.width);
+    lua_setfield(L, -2, "width");
+
+    // "height": number
+    lua_pushnumber(L, rect.height);
+    lua_setfield(L, -2, "height");
     return 1;
 }
 
