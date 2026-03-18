@@ -503,7 +503,13 @@ void on_startup(GApplication* application, XMPtr app_data) {
 }
 
 auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gint {
-    initCAndCoutLocales();
+    try {
+        initCAndCoutLocales();
+    } catch (const std::runtime_error& e) {
+        g_warning("XournalMain: C locale could not be set.\n - Caused by: %s\n - Note that it is not "
+                  "supported to set the locale using mingw-w64 on windows.",
+                  e.what());
+    }
 
     auto print_version = [&] { std::cout << xoj::util::getVersionInfo() << std::endl; };
 
@@ -599,7 +605,13 @@ void XournalMain::initLocalisation() {
                   e.what());
     }
 
-    initCAndCoutLocales();
+    try {
+        initCAndCoutLocales();
+    } catch (const std::runtime_error& e) {
+        g_warning("XournalMain: C locale could not be set for streams.\n - Caused by: %s\n - Note that it is not "
+                  "supported to set the locale using mingw-w64 on windows.",
+                  e.what());
+    }
 }
 
 auto XournalMain::run(int argc, char** argv) -> int {

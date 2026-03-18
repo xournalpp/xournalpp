@@ -47,8 +47,22 @@ void initLocalisation() {
     textdomain(GETTEXT_PACKAGE);
 #endif  // ENABLE_NLS
 
-    std::locale::global(std::locale(""));  //"" - system default locale
-    std::cout.imbue(std::locale());
+    // Not working on GNU g++(mingww) forWindows! Only working on Linux/macOS and with msvc
+    try {
+        std::locale::global(std::locale(""));  //"" - system default locale
+    } catch (const std::runtime_error& e) {
+        g_warning("xoj-preview-extractor: System default locale could not be set.\n - Caused by: %s\n - Note that it is not "
+                  "supported to set the locale using mingw-w64 on windows.",
+                  e.what());
+    }
+
+    try {
+        std::cout.imbue(std::locale());
+    } catch (const std::runtime_error& e) {
+        g_warning("xoj-preview-extractor: C++ locale could not be set for std::cout.\n - Caused by: %s\n - Note that it is not "
+                  "supported to set the locale using mingw-w64 on windows.",
+                  e.what());
+    }
 }
 
 void logMessage(string msg, bool error) {
