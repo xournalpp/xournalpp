@@ -16,6 +16,7 @@
 #include <cstdio>     // for fclose, fopen, fwrite, FILE
 #include <iostream>   // for endl, ostream, basic_ostream
 #include <locale>     // for locale
+#include <stdexcept>  // for std::runtime_error
 #include <string>     // for string, basic_string, allocator
 #include <vector>     // for vector
 
@@ -47,8 +48,12 @@ void initLocalisation() {
     textdomain(GETTEXT_PACKAGE);
 #endif  // ENABLE_NLS
 
-    std::locale::global(std::locale(""));  //"" - system default locale
-    std::cout.imbue(std::locale());
+    try {
+        std::locale::global(std::locale(""));  //"" - system default locale
+    } catch (const std::runtime_error& e) {
+        // Ignore locale setup errors on systems with unsupported locales (e.g., Windows with certain configs)
+    }
+    std::cout.imbue(std::locale::classic());
 }
 
 void logMessage(string msg, bool error) {
