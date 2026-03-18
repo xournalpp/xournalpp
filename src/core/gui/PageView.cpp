@@ -36,6 +36,7 @@
 #include "control/tools/ImageSizeSelection.h"       // for ImageSizeSelection
 #include "control/tools/InputHandler.h"             // for InputHandler
 #include "control/tools/LaserPointerHandler.h"      // for LaserPointerHandler
+#include "control/tools/LinkHandler.h"              // for LinkHandler
 #include "control/tools/PdfElemSelection.h"         // for PdfElemSelection
 #include "control/tools/RectangleHandler.h"         // for RectangleHandler
 #include "control/tools/RulerHandler.h"             // for RulerHandler
@@ -168,6 +169,8 @@ auto XojPageView::searchTextOnPage(const std::string& text, size_t index, size_t
 
 void XojPageView::endText() { this->textEditor.reset(); }
 
+void XojPageView::endLink() { this->linkHandler.reset(); }
+
 void XojPageView::startText(double x, double y) {
     this->xournal->endTextAllPages(this);
     this->xournal->getControl()->getSearchBar()->showSearchBar(false);
@@ -185,6 +188,13 @@ void XojPageView::startText(double x, double y) {
     if (this->textEditor == nullptr) {
         this->textEditor = std::make_unique<TextEditor>(xournal->getControl(), page, xournal->getWidget(), x, y);
         this->overlayViews.emplace_back(std::make_unique<xoj::view::TextEditionView>(this->textEditor.get(), this));
+    }
+}
+
+void XojPageView::startLink() {
+    this->xournal->endLinkAllPages(this);
+    if (this->linkHandler == nullptr) {
+        this->linkHandler = std::make_unique<LinkHandler>(xournal);
     }
 }
 
@@ -480,6 +490,8 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
                     this->xournal->setSelection(sel.release());
                 }
                 control->runLatex();
+            } else if (elemType == ELEMENT_LINK) {
+                this->startEditingOnButtonRelease = true;
             }
         }
     } else if (toolType == TOOL_TEXT) {
@@ -497,6 +509,8 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
             xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
             this->inputHandler.reset();
         }
+    } else if (toolType == TOOL_LINK) {
+        this->startEditingOnButtonRelease = true;
     }
 
     return true;
@@ -561,6 +575,9 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
         // used this event
     } else if (h->getToolType() == TOOL_ERASER && h->getEraserType() != ERASER_TYPE_WHITEOUT && this->inEraser) {
         this->eraser->erase(x, y);
+    } else if (h->getActiveTool()->getToolType() == TOOL_LINK) {
+        startLink();
+        this->linkHandler->highlight(this->getPage(), round_cast<int>(x), round_cast<int>(y), this);
     }
 
     return false;
@@ -648,6 +665,25 @@ void XojPageView::deleteView(xoj::view::OverlayView* view) {
 }
 
 auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
+    double zoom = xournal->getZoom();
+    auto x = round_cast<int>(pos.x / zoom);
+    auto y = round_cast<int>(pos.y / zoom);
+
+    if (this->startEditingOnButtonRelease) {
+        this->startEditingOnButtonRelease = false;
+        if (x < 0 || y < 0) {
+            return false;
+        }
+        if (this->xournal->getSelection()) {
+            this->xournal->clearSelection();
+            ToolHandler* h = this->xournal->getControl()->getToolHandler();
+            h->selectTool(TOOL_LINK);
+            h->fireToolChanged();
+        }
+        startLink();
+        this->linkHandler->startEditing(this->getPage(), x, y);
+    }
+
     if (currentSequenceDeviceId != pos.deviceId) {
         // This event is not from the device which started the sequence: reject it
         return false;
@@ -669,6 +705,12 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
     } else if (auto tt = control->getToolHandler()->getToolType();
                this->laserPointer && (tt == TOOL_LASER_POINTER_PEN || tt == TOOL_LASER_POINTER_HIGHLIGHTER)) {
         this->laserPointer->onButtonReleaseEvent(pos, xournal->getZoom());
+    } else if (control->getToolHandler()->getToolType() == TOOL_LINK) {
+        if (x < 0 || y < 0) {
+            return false;
+        }
+        startLink();
+        this->linkHandler->select(this->getPage(), x, y, pos.isControlDown(), this);
     }
 
     if (this->inEraser) {
