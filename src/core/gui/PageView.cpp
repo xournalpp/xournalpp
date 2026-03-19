@@ -103,7 +103,8 @@ XojPageView::XojPageView(XournalView* xournal, const PageRef& page):
         eraser(std::make_unique<EraseHandler>(xournal->getControl()->getUndoRedoHandler(),
                                               xournal->getControl()->getDocument(), this->page,
                                               xournal->getControl()->getToolHandler(), this)),
-        oldtext(nullptr) {
+        oldtext(nullptr),
+        pixelCache(Range(0., 0., page->getWidth(), page->getHeight()), xournal->getDpiScaleFactor(), this) {
     this->registerToHandler(this->page);
 }
 
@@ -111,22 +112,29 @@ XojPageView::~XojPageView() {
     this->unregisterFromHandler();
 
     this->xournal->getControl()->getScheduler()->removePage(this);
+    this->xournal->viewNoLongerHasBuffer(this);
 
     this->overlayViews.clear();
     endText();
-    deleteViewBuffer();  // Ensures the mutex is locked during the buffer's destruction
+    {
+        std::lock_guard lock(this->drawingMutex);
+        this->pixelCache.clear();
+    }
 }
 
 void XojPageView::addOverlayView(std::unique_ptr<xoj::view::OverlayView> overlay) {
     this->overlayViews.emplace_back(std::move(overlay));
 }
 
-void XojPageView::setIsVisible(bool visible) { this->visible = visible; }
-
-void XojPageView::deleteViewBuffer() {
+auto XojPageView::getBuffersLastUsedDates() -> std::vector<xoj::view::QuadCache::TimePoint> {
     std::lock_guard lock(this->drawingMutex);
-    this->buffer.reset();
+    return this->pixelCache.getBuffersLastUsedDates();
 }
+auto XojPageView::prune(xoj::view::QuadCache::TimePoint date) -> bool {
+    std::lock_guard lock(this->drawingMutex);
+    return this->pixelCache.prune(date);
+}
+
 
 auto XojPageView::containsPoint(int x, int y, bool local) const -> bool {
     if (!local) {
@@ -803,9 +811,15 @@ auto XojPageView::onKeyReleaseEvent(const KeyEvent& event) -> bool {
 }
 
 void XojPageView::rerenderPage(bool sizeChanged) {
-    this->rerenderComplete = true;
-    this->sizeChanged = sizeChanged;
-    this->xournal->getControl()->getScheduler()->addRerenderPage(this);
+    this->drawingMutex.lock();
+    if (sizeChanged) {
+        // Discard the whole cache
+        this->pixelCache.changeArea(Range(0., 0., page->getWidth(), page->getHeight()));
+    } else {
+        this->pixelCache.markAsOutdated();
+    }
+    this->pixelCache.preload(getVisiblePart(), getZoom());
+    this->drawingMutex.unlock();
 }
 
 void XojPageView::repaintPage() const { xournal->getRepaintHandler()->repaintPage(this); }
@@ -821,12 +835,16 @@ void XojPageView::flagDirtyRegion(const Range& rg) const { repaintArea(rg.minX, 
 void XojPageView::drawAndDeleteToolView(xoj::view::ToolView* v, const Range& rg) {
     if (v->isViewOf(this->inputHandler.get()) || v->isViewOf(this->verticalSpace.get()) ||
         v->isViewOf(this->textEditor.get())) {
-        // Draw the inputHandler's view onto the page buffer.
+        // Draw the inputHandler's view onto the page buffers to avoid rerendering it all
+        /* We draw on every node of the cache.
+         * We could restrict ourselves to the nodes that would be used with the current zoom level
+         * and destroy the other buffers.
+         * This way seems better for the use-case "zoom in - write - zoom out" but it has a cost.
+         * Maybe an inbetween would be better? e.g. draw on the recent-enough (1 minute?) buffer, delete the rest
+         */
         std::lock_guard lock(this->drawingMutex);
-        if (auto cr = buffer.get(); cr) {
+        for (cairo_t* cr: this->pixelCache.getSurfacesFor(rg)) {
             v->drawWithoutDrawingAids(cr);
-        } else {
-            rerenderPage();
         }
     }
     this->deleteOverlayView(v, rg);
@@ -864,10 +882,6 @@ auto XojPageView::toWidgetCoordinates(const xoj::util::Rectangle<double>& r) con
 }
 
 void XojPageView::rerenderRect(double x, double y, double width, double height) {
-    if (this->rerenderComplete) {
-        return;
-    }
-
     auto rect = Rectangle<double>{x, y, width, height};
 
     this->repaintRectMutex.lock();
@@ -888,6 +902,21 @@ void XojPageView::rerenderRect(double x, double y, double width, double height) 
 
     this->xournal->getControl()->getScheduler()->addRerenderPage(this);
 }
+
+void XojPageView::scheduleMakeTile(const Range& area, unsigned depth) {
+    {
+        TileInfo ti{area, depth};
+        auto lock = std::unique_lock(this->repaintRectMutex);
+        if (std::find_if(this->tilesToRender.begin(), this->tilesToRender.end(), [&](const auto& t) {
+                return t.depth == ti.depth && t.area == ti.area;
+            }) == this->tilesToRender.end()) {
+            this->tilesToRender.emplace_back(TileInfo{area, depth});
+        }
+    }
+    this->xournal->registerViewHasBuffer(this);
+    this->xournal->getControl()->getScheduler()->addRerenderPage(this);
+}
+
 
 void XojPageView::setSelected(bool selected) {
     this->selected = selected;
@@ -1039,7 +1068,6 @@ GtkWidget* XojPageView::makePopover(const XojPdfRectangle& rect, GtkWidget* chil
 }
 
 auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
-
     double zoom = xournal->getZoom();
     xoj::util::CairoSaveGuard saveGuard(cr);
     cairo_scale(cr, zoom, zoom);
@@ -1047,18 +1075,13 @@ auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
     {
         std::lock_guard lock(this->drawingMutex);  // Lock the mutex first
         xoj::util::CairoSaveGuard saveGuard(cr);   // see comment at the end of the scope
-        if (!this->hasBuffer()) {
-            drawLoadingPage(cr);
-            return true;
-        }
-
-        if (this->buffer.getZoom() != zoom) {
-            rerenderPage();
-            cairo_pattern_set_filter(cairo_get_source(cr), CAIRO_FILTER_FAST);
-        }
-        this->buffer.paintTo(cr);
+        // if (!this->hasBuffer()) {
+        //     drawLoadingPage(cr);
+        //     return true;
+        // }
+        this->pixelCache.paintTo(cr);
     }  // Restore the state of cr and then release the mutex
-       // restoring the state of cr ensures this->buffer.surface is not longer referenced as the source in cr.
+       // restoring the state of cr ensures the buffers are not longer referenced as the source in cr.
 
     /**
      * All the overlay painters below follow the assumption:
@@ -1079,7 +1102,7 @@ auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
 
 auto XojPageView::isSelected() const -> bool { return selected; }
 
-auto XojPageView::hasBuffer() const -> bool { return this->buffer.isInitialized(); }
+auto XojPageView::hasBuffer() const -> bool { return true; }  // this->buffer.isInitialized(); }
 
 auto XojPageView::getSelectionColor() -> GdkRGBA { return Util::rgb_to_GdkRGBA(settings->getSelectionColor()); }
 

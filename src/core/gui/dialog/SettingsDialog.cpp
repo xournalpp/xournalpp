@@ -350,7 +350,6 @@ void SettingsDialog::load() {
     loadCheckbox("cbSnapRecognizedShapesEnabled", settings->getSnapRecognizedShapesEnabled());
     loadCheckbox("cbRestoreLineWidthEnabled", settings->getRestoreLineWidthEnabled());
     loadCheckbox("cbStockIcons", settings->areStockIconsUsed());
-    loadCheckbox("cbShowPageShadow", settings->isShowPageShadow());
     loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
     loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
     loadCheckbox("cbDisableScrollbarFadeout", settings->isScrollbarFadeoutDisabled());
@@ -621,11 +620,8 @@ void SettingsDialog::load() {
     loadCheckbox("cbShowFilepathInTitlebar", settings->isFilepathInTitlebarShown());
     loadCheckbox("cbShowPageNumberInTitlebar", settings->isPageNumberInTitlebarShown());
 
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(builder.get("preloadPagesBefore")),
-                              static_cast<double>(settings->getPreloadPagesBefore()));
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(builder.get("preloadPagesAfter")),
-                              static_cast<double>(settings->getPreloadPagesAfter()));
-    loadCheckbox("cbEagerPageCleanup", settings->isEagerPageCleanup());
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(builder.get("maxViewBufferMemoryUsage")),
+                              static_cast<double>(settings->getMaxViewBufferMemoryUsage()));
 
     disableWithCheckbox("cbUnlimitedScrolling", "cbAddVerticalSpace");
     disableWithCheckbox("cbUnlimitedScrolling", "cbAddHorizontalSpace");
@@ -756,7 +752,6 @@ void SettingsDialog::save() {
     settings->setSnapRecognizedShapesEnabled(getCheckbox("cbSnapRecognizedShapesEnabled"));
     settings->setRestoreLineWidthEnabled(getCheckbox("cbRestoreLineWidthEnabled"));
     settings->setAreStockIconsUsed(getCheckbox("cbStockIcons"));
-    settings->setShowPageShadow(getCheckbox("cbShowPageShadow"));
     settings->setPressureGuessingEnabled(getCheckbox("cbEnablePressureInference"));
     settings->setTouchDrawingEnabled(getCheckbox("cbTouchDrawing"));
     settings->setGtkTouchInertialScrollingEnabled(!getCheckbox("cbDisableGtkInertialScroll"));
@@ -913,11 +908,7 @@ void SettingsDialog::save() {
         int v = gtk_spin_button_get_value_as_int(btn);
         return v < 0 ? 0U : static_cast<unsigned int>(v);
     };
-    unsigned int preloadPagesBefore = spinAsUint(GTK_SPIN_BUTTON(builder.get("preloadPagesBefore")));
-    unsigned int preloadPagesAfter = spinAsUint(GTK_SPIN_BUTTON(builder.get("preloadPagesAfter")));
-    settings->setPreloadPagesAfter(preloadPagesAfter);
-    settings->setPreloadPagesBefore(preloadPagesBefore);
-    settings->setEagerPageCleanup(getCheckbox("cbEagerPageCleanup"));
+    settings->setMaxViewBufferMemoryUsage(spinAsUint(GTK_SPIN_BUTTON(builder.get("maxViewBufferMemoryUsage"))));
 
     settings->setDefaultSaveName(
             xoj::util::utf8(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultSaveName")))).str());

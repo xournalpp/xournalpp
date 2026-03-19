@@ -45,7 +45,7 @@ TEST(SettingsTest, testReadWrite) {
         settings.setEraserVisibility(ERASER_VISIBILITY_HOVER);         // enum
         settings.setFont(XojFont{"myfontname italic 34"});             // Font
         settings.latexSettings.editorFont = XojFont{"myfonttest 52"};  // Font
-        settings.setPreloadPagesAfter(145);                            // unsigned int
+        settings.setMaxViewBufferMemoryUsage(145);                     // unsigned int
         settings.transactionEnd();                                     // calls save()
 
         Settings loaded(outPath);
@@ -72,8 +72,7 @@ TEST(SettingsTest, testReadWrite) {
         EXPECT_EQ(settings.getFont().getSize(), loaded.getFont().getSize());                                // Font
         EXPECT_EQ(settings.latexSettings.editorFont.getName(), loaded.latexSettings.editorFont.getName());  // Font
         EXPECT_EQ(settings.latexSettings.editorFont.getSize(), loaded.latexSettings.editorFont.getSize());  // Font
-        EXPECT_EQ(settings.getPreloadPagesAfter(), loaded.getPreloadPagesAfter());    // unsigned int
-        EXPECT_EQ(settings.getPreloadPagesBefore(), loaded.getPreloadPagesBefore());  // unsigned int
+        EXPECT_EQ(settings.getMaxViewBufferMemoryUsage(), loaded.getMaxViewBufferMemoryUsage());  // unsigned int
 
         fs::remove(outPath);
     };

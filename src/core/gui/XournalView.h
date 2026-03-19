@@ -48,7 +48,7 @@ class Rectangle;
 
 class XournalView: public DocumentListener, public ZoomListener {
 public:
-    XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling);
+    XournalView(GtkScrolledWindow* parent, Control* control);
     ~XournalView() override;
 
 public:
@@ -124,12 +124,6 @@ public:
     void recreatePdfCache();
 
     /**
-     * A pen action was detected now, therefore ignore touch events
-     * for a short time
-     */
-    void penActionDetected();
-
-    /**
      * @return Helper class for Touch specific fixes
      */
     HandRecognition* getHandRecognition() const;
@@ -158,11 +152,10 @@ public:
 
     void onSettingsChanged();
 
+    void registerViewHasBuffer(XojPageView* view);
+    void viewNoLongerHasBuffer(const XojPageView* view);
+
 private:
-    void fireZoomChanged();
-
-    std::pair<size_t, size_t> preloadPageBounds(size_t page, size_t maxPage);
-
     static auto clearMemoryTimer(XournalView* widget) -> gboolean;
 
     void cleanupBufferCache();
@@ -171,11 +164,12 @@ private:
     /**
      * Scrollbars
      */
-    ScrollHandling* scrollHandling = nullptr;
+    std::unique_ptr<ScrollHandling> scrollHandling;
 
     GtkWidget* widget = nullptr;
 
     std::vector<std::unique_ptr<XojPageView>> viewPages;
+    std::vector<XojPageView*> viewsWithBuffer;  ///< those views of viewPages which have a non-empty buffer
 
     Control* control = nullptr;
 
