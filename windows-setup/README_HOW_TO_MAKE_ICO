@@ -1,0 +1,3 @@
+# Run the following command to generate xournalpp.ico in case the icon needs updating
+
+magick -density 300 -define icon:auto-resize=256,48,32,16 -background none ../ui/pixmaps/com.github.xournalpp.xournalpp.svg xournalpp.ico
