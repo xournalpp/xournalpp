@@ -50,6 +50,15 @@ public:
      */
     void setDashes(std::vector<double>&& dashes);
 
+    /**
+     * Get the dash vector with the spaces scaled to the stroke width
+     *
+     * @param strokeWidth
+     *
+     * @return dashes scaled to the stroke width
+     */
+    std::vector<double> getDashesScaledToStrokeWidth(const double strokeWidth) const;
+
 private:
     std::vector<double> dashes;
 };

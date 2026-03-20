@@ -35,7 +35,7 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
 
     const Stroke& stroke = this->erasableStroke.stroke;
 
-    const auto& dashes = stroke.getLineStyle().getDashes();
+    const auto dashes = stroke.getLineStyle().getDashesScaledToStrokeWidth(stroke.getWidth());
 
     const std::vector<Point>& data = stroke.getPointVector();
 
