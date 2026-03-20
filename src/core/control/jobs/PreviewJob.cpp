@@ -54,7 +54,7 @@ void PreviewJob::finishPaint() {
 void PreviewJob::drawPage() {
     ConstPageRef page = this->sidebarPreview->page;
     Document* doc = this->sidebarPreview->sidebar->getControl()->getDocument();
-    DocumentView view;
+    xoj::view::DocumentView view;
     view.setPdfCache(this->sidebarPreview->sidebar->getCache());
     PreviewRenderType type = this->sidebarPreview->getRenderType();
     Layer::Index layer = 0;

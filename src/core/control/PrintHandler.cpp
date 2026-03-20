@@ -52,7 +52,7 @@ void drawPage(GtkPrintOperation* /*operation*/, GtkPrintContext* context, int pa
     xoj::view::BackgroundFlags flags = xoj::view::BACKGROUND_SHOW_ALL;
     flags.showPDF = xoj::view::HIDE_PDF_BACKGROUND;  // Already printed (if any)
 
-    DocumentView view;
+    xoj::view::DocumentView view;
     view.drawPage(page, cr, true /* dont render eraseable */, flags);
 }
 

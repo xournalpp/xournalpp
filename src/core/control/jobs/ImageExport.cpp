@@ -158,7 +158,7 @@ auto ImageExport::getFilenameWithNumber(size_t no) const -> fs::path {
  * @param view A DocumentView for drawing the page
  */
 void ImageExport::exportImagePage(size_t pageId, size_t id, double zoomRatio, ExportGraphicsFormat format,
-                                  DocumentView& view) {
+                                  xoj::view::DocumentView& view) {
     std::shared_lock<Document> lock(*doc);
     ConstPageRef page = doc->getPage(pageId);
 
@@ -234,7 +234,7 @@ void ImageExport::exportGraphics(ProgressListener* stateListener) {
         zoomRatio = ((double)this->qualityParameter.getValue()) / Util::DPI_NORMALIZATION_FACTOR;
     }
 
-    DocumentView view;
+    xoj::view::DocumentView view;
     size_t current = 0;
 
     for (size_t i = 0; i < count; i++) {

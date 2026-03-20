@@ -14,6 +14,8 @@
 
 #include "LayerView.h"  // for LayerView
 
+using namespace xoj::view;
+
 /**
  * Mark stroke with Audio
  */

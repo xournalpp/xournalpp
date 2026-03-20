@@ -107,7 +107,7 @@ void RenderJob::repaintPageArea(double x1, double y1, double x2, double y2) cons
 }
 
 void RenderJob::renderToBuffer(cairo_t* cr) const {
-    DocumentView localView;
+    xoj::view::DocumentView localView;
     localView.setMarkAudioStroke(this->view->getXournal()->getControl()->getToolHandler()->getToolType() ==
                                  TOOL_PLAY_OBJECT);
     localView.setPdfCache(this->view->xournal->getCache());

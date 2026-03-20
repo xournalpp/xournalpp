@@ -141,7 +141,7 @@ void XojCairoPdfExport::exportPage(size_t page, bool exportPdfBackground) {
 
     cairo_pdf_surface_set_size(this->surface, p->getWidth(), p->getHeight());
 
-    DocumentView view;
+    xoj::view::DocumentView view;
 
     cairo_save(this->cr);
 

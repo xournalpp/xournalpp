@@ -23,7 +23,9 @@
 
 class Document;
 class ProgressListener;
+namespace xoj::view {
 class DocumentView;
+}
 
 enum ExportGraphicsFormat { EXPORT_GRAPHICS_UNDEFINED, EXPORT_GRAPHICS_PDF, EXPORT_GRAPHICS_PNG, EXPORT_GRAPHICS_SVG };
 
@@ -139,7 +141,8 @@ private:
      * @param format The format of the exported image
      * @param view A DocumentView for drawing the page
      */
-    void exportImagePage(size_t pageId, size_t id, double zoomRatio, ExportGraphicsFormat format, DocumentView& view);
+    void exportImagePage(size_t pageId, size_t id, double zoomRatio, ExportGraphicsFormat format,
+                         xoj::view::DocumentView& view);
 
     static constexpr size_t SINGLE_PAGE = size_t(-1);
 

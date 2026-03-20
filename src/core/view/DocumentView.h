@@ -21,7 +21,6 @@ class PdfCache;
 
 namespace xoj::view {
 struct BackgroundFlags;
-};
 
 class DocumentView {
 public:
@@ -37,7 +36,7 @@ public:
      * @param flags show/hide various background components
      */
     void drawPage(ConstPageRef page, cairo_t* cr, bool dontRenderEditingStroke,
-                  xoj::view::BackgroundFlags flags = xoj::view::BACKGROUND_SHOW_ALL);
+                  BackgroundFlags flags = BACKGROUND_SHOW_ALL);
 
     /**
      * Only draws the prescribed layers of the given page, regardless of the layer's current visibility.
@@ -48,8 +47,7 @@ public:
      * @param flags show/hide various background components
      */
     void drawLayersOfPage(const LayerRangeVector& layerRange, ConstPageRef page, cairo_t* cr,
-                          bool dontRenderEditingStroke,
-                          xoj::view::BackgroundFlags flags = xoj::view::BACKGROUND_SHOW_ALL);
+                          bool dontRenderEditingStroke, BackgroundFlags flags = BACKGROUND_SHOW_ALL);
 
     /**
      * Mark stroke with Audio
@@ -71,7 +69,7 @@ public:
     /**
      * Draw the background
      */
-    void drawBackground(xoj::view::BackgroundFlags bgFlags) const;
+    void drawBackground(BackgroundFlags bgFlags) const;
 
     /**
      * Draw background if there is no background shown, like in GIMP etc.
@@ -91,3 +89,4 @@ private:
     bool markAudioStroke = false;
 
 };
+}  // namespace xoj::view

@@ -88,7 +88,7 @@ void SaveJob::updatePreview(Control* control) {
             flags.forceBackgroundColor = xoj::view::FORCE_AT_LEAST_BACKGROUND_COLOR;
         }
 
-        DocumentView view;
+        xoj::view::DocumentView view;
         view.drawPage(page, cr, true /* don't render erasable */, flags);
         cairo_destroy(cr);
     }
