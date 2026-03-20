@@ -1,6 +1,6 @@
 #include "winver.h"
 
-0 ICON "xournalpp.ico"
+0 ICON "@PROJECT_SOURCE_DIR@/windows-setup/xournalpp.ico"
 
 VS_VERSION_INFO VERSIONINFO
 FILEVERSION ${PROJECT_VERSION_MAJOR}, ${PROJECT_VERSION_MINOR}, ${PROJECT_VERSION_PATCH}, 0
