@@ -190,14 +190,26 @@ xoj::view::StrokeContourDashes::~StrokeContourDashes() = default;
 
 static void noop(cairo_t*) {};
 
+// Convert a physical distance to distance normalized by stroke width
+// Thick strokes result in smaller normalized values, making dashes longer physically
+static inline double toNormalized(double physical, double strokeWidth) {
+    return physical / strokeWidth;
+}
+
+// Convert a normalized distance back to physical units
+static inline double toPhysical(double normalized, double strokeWidth) {
+    return normalized * strokeWidth;
+}
+
 template <auto xtraFun = noop>
 static inline void dashSegment(cairo_t* cr, std::vector<ReturnOp>& ops, double& dashoffset,
                                std::vector<double>::const_iterator& dashIt, const std::vector<double>& dashPattern,
                                const Point& p1, const Point& p2, double norm1, double a1, bool& on) {
-    dashoffset += norm1;
+    const double normalizedNorm = toNormalized(norm1, p1.z);
+    dashoffset += normalizedNorm;
 
     while (dashoffset >= *dashIt) {
-        Point p = p1.lineTo(p2, *dashIt - dashoffset + norm1);
+        Point p = p1.lineTo(p2, toPhysical(*dashIt - dashoffset + normalizedNorm, p1.z));
         if (on) {
             cairo_arc(cr, p.x, p.y, .5 * p1.z, a1 + M_PI_2, a1 - M_PI_2);
             for (auto it = ops.rbegin(); it < ops.rend(); it++) {
@@ -264,11 +276,11 @@ double xoj::view::StrokeContourDashes::addToCairo(cairo_t* cr, double globalDash
         dashSegment(cr, ops, dashoffset, dashIt, dashPattern, p1, p2, norm1, a1, on);
         if (on) {
             MathVect2 v3(p2, p3);
-            drawCoupling(cr, ops, p2, std::min(dashoffset, norm1), std::min(*dashIt - dashoffset, v3.norm()), a1,
-                         v3.argument(), p1.z);
+            drawCoupling(cr, ops, p2, std::min(toPhysical(dashoffset, p2.z), norm1),
+                         std::min(toPhysical(*dashIt - dashoffset, p2.z), v3.norm()), a1, v3.argument(), p1.z);
         }
 
-        globalDashOffset += norm1;
+        globalDashOffset += toNormalized(norm1, p1.z);
     }
 
     const Point& p1 = path[path.size() - 2];
@@ -276,7 +288,7 @@ double xoj::view::StrokeContourDashes::addToCairo(cairo_t* cr, double globalDash
     MathVect2 v(p2, p1);
     double a = v.argument();
     double norm = v.norm();
-    globalDashOffset += norm;
+    globalDashOffset += toNormalized(norm, p1.z);
     dashSegment(cr, ops, dashoffset, dashIt, dashPattern, p1, p2, norm, a, on);
     if (on) {
         cairo_arc(cr, p2.x, p2.y, .5 * p1.z, a + M_PI_2, a - M_PI_2);
@@ -334,8 +346,8 @@ void xoj::view::StrokeContourDashes::drawDebug(cairo_t* cr) const {
 
         if (on) {
             MathVect2 v3(p2, p3);
-            drawCoupling(cr, ops, p2, std::min(dashoffset, norm1), std::min(*dashIt - dashoffset, v3.norm()), a1,
-                         v3.argument(), p1.z);
+            drawCoupling(cr, ops, p2, std::min(toPhysical(dashoffset, p2.z), norm1),
+                         std::min(toPhysical(*dashIt - dashoffset, p2.z), v3.norm()), a1, v3.argument(), p1.z);
         }
     }
 
