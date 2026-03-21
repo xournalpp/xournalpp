@@ -77,7 +77,7 @@ void initCAndCoutLocales() {
      */
     setlocale(LC_NUMERIC, "C");
 
-    std::cout.imbue(std::locale());
+    std::cout.imbue(std::locale::classic());
 }
 
 auto migrateSettings() -> MigrateResult {
