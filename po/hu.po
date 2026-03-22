@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-14 10:37+0000\n"
-"PO-Revision-Date: 2026-03-15 04:58\n"
+"POT-Creation-Date: 2026-03-18 13:23+0000\n"
+"PO-Revision-Date: 2026-03-22 04:56\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -520,7 +520,7 @@ msgid "Export File"
 msgstr "Fájl exportálása"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
-#: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
+#: ../src/core/gui/dialog/DeviceTestingArea.cpp:181
 msgid "Export"
 msgstr "Exportálás"
 
@@ -1080,7 +1080,7 @@ msgstr "Alakzatfelismerő"
 msgid "Draw Spline"
 msgstr "Görbe rajzolása"
 
-#: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
+#: ../src/core/gui/dialog/DeviceTestingArea.cpp:181
 msgid "Export Logs"
 msgstr "Naplók exportálása"
 
@@ -1221,11 +1221,11 @@ msgid "<b>{1}</b>\n"
 msgstr "<b>{1}</b>\n"
 "{2}{3}"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:275
+#: ../src/core/gui/dialog/SettingsDialog.cpp:277
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "A beállítás módosításához engedélyezd a nyomásérzékelést vagy a nyomáskövetkeztetést!"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:279
+#: ../src/core/gui/dialog/SettingsDialog.cpp:281
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Nyomásszűrés. A nyomást a nyomási szorzóval szorozza. Ha az eredmény kevesebb a minimális értéknél, akkor a minimális nyomást alkalmazza."
 
@@ -2269,7 +2269,7 @@ msgstr "Bezárás"
 #: ../ui/goto.glade:108 ../ui/intEdTexDialog.glade:203
 #: ../ui/pageFormat.glade:346 ../ui/pageTemplate.glade:278
 #: ../ui/plugin.glade:114 ../ui/renameLayerDialog.glade:71
-#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6537
+#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6601
 msgid "Ok"
 msgstr "Rendben"
 
@@ -2318,7 +2318,7 @@ msgstr "<i>Rendeljen eszközosztályokat a rendszer minden egyes bemeneti eszkö
 msgid "Try out your devices in the area below"
 msgstr "Próbálja ki eszközeit az alábbi területen"
 
-#: ../ui/deviceTestingArea.glade:70 ../ui/settings.glade:1630
+#: ../ui/deviceTestingArea.glade:70 ../ui/settings.glade:1694
 #: ../ui/settingsDeviceClassConfig.glade:35
 msgid "Mouse"
 msgstr "Egér"
@@ -2338,68 +2338,78 @@ msgctxt "mouse button"
 msgid "Right"
 msgstr "Jobbra"
 
-#: ../ui/deviceTestingArea.glade:124 ../ui/settings.glade:2170
+#: ../ui/deviceTestingArea.glade:124
+msgctxt "mouse button"
+msgid "4th"
+msgstr "4."
+
+#: ../ui/deviceTestingArea.glade:138
+msgctxt "mouse button"
+msgid "5th"
+msgstr "5."
+
+#: ../ui/deviceTestingArea.glade:152 ../ui/settings.glade:2234
 msgid "Stylus"
 msgstr "Mutató"
 
-#: ../ui/deviceTestingArea.glade:136 ../ui/deviceTestingArea.glade:190
+#: ../ui/deviceTestingArea.glade:164 ../ui/deviceTestingArea.glade:218
 msgctxt "the tip of the stylus"
 msgid "Tip"
 msgstr "Tipp"
 
-#: ../ui/deviceTestingArea.glade:150 ../ui/settings.glade:1987
+#: ../ui/deviceTestingArea.glade:178 ../ui/settings.glade:2051
 msgid "Button 1"
 msgstr "1. gomb"
 
-#: ../ui/deviceTestingArea.glade:164 ../ui/settings.glade:2019
+#: ../ui/deviceTestingArea.glade:192 ../ui/settings.glade:2083
 msgid "Button 2"
 msgstr "2. gomb"
 
-#: ../ui/deviceTestingArea.glade:256 ../ui/settings.glade:2250
-#: ../ui/settings.glade:2838 ../ui/settingsDeviceClassConfig.glade:38
+#: ../ui/deviceTestingArea.glade:284 ../ui/settings.glade:2314
+#: ../ui/settings.glade:2902 ../ui/settingsDeviceClassConfig.glade:38
 msgid "Touchscreen"
 msgstr "Érintőképernyő"
 
-#: ../ui/deviceTestingArea.glade:374
+#: ../ui/deviceTestingArea.glade:402
 msgid "In use"
 msgstr "Használatban"
 
-#: ../ui/deviceTestingArea.glade:388 ../ui/deviceTestingArea.glade:402
+#: ../ui/deviceTestingArea.glade:416 ../ui/deviceTestingArea.glade:430
 msgctxt "stylus hover"
 msgid "Hover"
 msgstr "Lebegés"
 
-#: ../ui/deviceTestingArea.glade:443
+#: ../ui/deviceTestingArea.glade:471
 msgid "Show logs"
 msgstr "Naplók megjelenítése"
 
-#: ../ui/deviceTestingArea.glade:455
+#: ../ui/deviceTestingArea.glade:483
 msgid "Export debug info"
 msgstr "Hibakeresési adatok exportálása"
 
-#: ../ui/deviceTestingArea.glade:477
+#: ../ui/deviceTestingArea.glade:505
 msgid "To clear the logs, simply close and reopen the settings dialog"
 msgstr "A naplók törléséhez egyszerűen zárja be, majd nyissa meg újra a beállítások párbeszédpanelt"
 
-#: ../ui/deviceTestingArea.glade:491
+#: ../ui/deviceTestingArea.glade:519
 msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
 "Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
 msgstr "Jelölje ki ezt a beállítást, ha a „Tipp” jelzés nem jelenik meg az érintőceruza használatakor és annak valamelyik gombjának megnyomásakor.\n\n"
 "Törölje a beállítást, ha a „Tipp” jelzés be van kapcsolva, miközben a ceruza lebeg (de nem érinti a képernyőt vagy a táblagépet)."
 
-#: ../ui/deviceTestingArea.glade:500
+#: ../ui/deviceTestingArea.glade:528
 msgid "Emulate stylus tip contact on button press"
 msgstr "Gombnyomáskor emulálja a stylus hegyének érintését"
 
-#: ../ui/deviceTestingArea.glade:547
+#: ../ui/deviceTestingArea.glade:575
 msgid "<i>Change the device class below if your device is not correctly recognized (e.g. your active stylus shows up as touchscreen)</i>"
 msgstr "<i>Módosítsa az alábbi eszközosztályt, ha az eszközét a rendszer nem ismeri fel megfelelően (pl. az aktív stylus érintőképernyőként jelenik meg)</i>"
 
-#: ../ui/deviceTestingArea.glade:568
+#: ../ui/deviceTestingArea.glade:596
 msgid "Last device used:"
 msgstr "Utolsó használt eszköz:"
 
-#: ../ui/deviceTestingArea.glade:588
+#: ../ui/deviceTestingArea.glade:616
 msgid "Show all known devices"
 msgstr "Az összes ismert eszköz megjelenítése"
 
@@ -2416,7 +2426,7 @@ msgid "Height"
 msgstr "Magasság"
 
 #: ../ui/exportSettings.glade:53 ../ui/settings.glade:260
-#: ../ui/settings.glade:277 ../ui/settings.glade:3752
+#: ../ui/settings.glade:277 ../ui/settings.glade:3816
 msgid "None"
 msgstr "Nincs"
 
@@ -3133,612 +3143,620 @@ msgstr "Középső egérgomb"
 msgid "Right Mouse Button"
 msgstr "Jobb egérgomb"
 
-#: ../ui/settings.glade:1599
+#: ../ui/settings.glade:1615
+msgid "4th Mouse Button"
+msgstr "4. egérgomb"
+
+#: ../ui/settings.glade:1647
+msgid "5th Mouse Button"
+msgstr "5. egérgomb"
+
+#: ../ui/settings.glade:1663
 msgid "Mouse Buttons"
 msgstr "Egérgombok"
 
-#: ../ui/settings.glade:1677
+#: ../ui/settings.glade:1741
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
 msgstr "<i>A nyomásérzékenység lehetővé teszi, hogy különböző szélességű vonalakat rajzoljon, attól függően, hogy mekkora nyomást gyakorol a tollra. Ha táblagépe nem támogatja ezt a funkciót, ennek a beállításnak nincs hatása.</i>"
 
-#: ../ui/settings.glade:1691
+#: ../ui/settings.glade:1755
 msgid "Enable Pressure Sensitivity"
 msgstr "Nyomásérzékenység engedélyezése"
 
-#: ../ui/settings.glade:1721
+#: ../ui/settings.glade:1785
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
 msgstr "<i>Egyes eszközök váratlanul kicsi vagy nagy nyomást jeleznek. Ez a legkisebb nyomás beállításával vagy a készülék által jelzett nyomás méretezésével javítható.</i>"
 
-#: ../ui/settings.glade:1743
+#: ../ui/settings.glade:1807
 msgid "Minimum Pressure:"
 msgstr "Legkisebb nyomás:"
 
-#: ../ui/settings.glade:1754
+#: ../ui/settings.glade:1818
 msgid "Pressure Multiplier: "
 msgstr "Nyomásszorzó: "
 
-#: ../ui/settings.glade:1813
+#: ../ui/settings.glade:1877
 msgid "Sensitivity Scale"
 msgstr "Érzékenységi méret"
 
-#: ../ui/settings.glade:1829
+#: ../ui/settings.glade:1893
 msgid "Pressure Sensitivity"
 msgstr "Nyomásérzékenység"
 
-#: ../ui/settings.glade:1853
+#: ../ui/settings.glade:1917
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
 msgstr "<i>Bizonyos beállításokkal a tollvonások elején műtermékek vannak. Ez elkerülhető, ha figyelmen kívül hagyjuk az első néhány eseményt/vonásírás-pontot, amikor a toll megérinti a képernyőt.</i>"
 
-#: ../ui/settings.glade:1871
+#: ../ui/settings.glade:1935
 msgid "Ignore the first"
 msgstr "Az első mellőzése"
 
-#: ../ui/settings.glade:1889
+#: ../ui/settings.glade:1953
 msgid "1"
 msgstr "1"
 
-#: ../ui/settings.glade:1905
+#: ../ui/settings.glade:1969
 msgid "events"
 msgstr "események"
 
-#: ../ui/settings.glade:1926
+#: ../ui/settings.glade:1990
 msgid "Artifact workaround"
 msgstr "Műtermékek megoldása"
 
-#: ../ui/settings.glade:1953
+#: ../ui/settings.glade:2017
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
 msgstr "<i>Adja meg azokat az eszközöket, amelyek a mutató valamelyik gombjának megnyomásakor vagy a radír használatakor kiválasztásra kerülnek. A gomb elengedése után az előző eszköz kerül kiválasztásra.</i>"
 
-#: ../ui/settings.glade:2067
+#: ../ui/settings.glade:2131
 msgid "Stylus Buttons"
 msgstr "Mutató gombok"
 
-#: ../ui/settings.glade:2099
+#: ../ui/settings.glade:2163
 msgid "Stylus-based eraser is visible"
 msgstr "A ceruza alapú radír látható"
 
-#: ../ui/settings.glade:2114
+#: ../ui/settings.glade:2178
 msgctxt "eraser is never visible"
 msgid "Never"
 msgstr "Soha"
 
-#: ../ui/settings.glade:2115
+#: ../ui/settings.glade:2179
 msgctxt "eraser is always visible"
 msgid "Always"
 msgstr "Mindig"
 
-#: ../ui/settings.glade:2116
+#: ../ui/settings.glade:2180
 msgctxt "eraser is only visible when floating"
 msgid "When floating"
 msgstr "Amikor lebegő"
 
-#: ../ui/settings.glade:2117
+#: ../ui/settings.glade:2181
 msgctxt "eraser is only visible when touching the screen"
 msgid "When touching"
 msgstr "Amikor érintkező"
 
-#: ../ui/settings.glade:2139
+#: ../ui/settings.glade:2203
 msgid "Eraser visibility"
 msgstr "Radír láthatósága"
 
-#: ../ui/settings.glade:2217
+#: ../ui/settings.glade:2281
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
 msgstr "<i>A GTK által nem érintőképernyőként azonosított eszközöket beállíthatja úgy, hogy azok úgy viselkedjenek, mintha azok lennének.</i>"
 
-#: ../ui/settings.glade:2277
+#: ../ui/settings.glade:2341
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
 msgstr "<i>Ha hardvere nem támogatja a kézfelismerést, a Xournal++ letilthatja az érintőképernyőt, ha a toll a képernyő közelében van.</i>"
 
-#: ../ui/settings.glade:2291
+#: ../ui/settings.glade:2355
 msgid "Enable internal Hand Recognition"
 msgstr "Belső kézfelismerés engedélyezése"
 
-#: ../ui/settings.glade:2321
+#: ../ui/settings.glade:2385
 msgid "Disabling Method"
 msgstr "Letiltási módszer"
 
-#: ../ui/settings.glade:2332
+#: ../ui/settings.glade:2396
 msgid "Timeout"
 msgstr "Időtúllépés"
 
-#: ../ui/settings.glade:2346
+#: ../ui/settings.glade:2410
 msgid "Autodetect"
 msgstr "Automatikus felismerés"
 
-#: ../ui/settings.glade:2375
+#: ../ui/settings.glade:2439
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "s <i>(miután az érintőképernyő újra engedélyezve lesz)</i>"
 
-#: ../ui/settings.glade:2420
+#: ../ui/settings.glade:2484
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
 msgstr "<i>Adja meg azokat a parancsokat, amelyeket a kézfelismerés indításakor hívnak meg. A parancsok a felhasználói felület szálában kerülnek végrehajtásra, győződjön meg arról, hogy nem zárról!</i>"
 
-#: ../ui/settings.glade:2443
+#: ../ui/settings.glade:2507
 msgid "Enable"
 msgstr "Engedélyezés"
 
-#: ../ui/settings.glade:2454
+#: ../ui/settings.glade:2518
 msgid "Disable"
 msgstr "Letiltás"
 
-#: ../ui/settings.glade:2487 ../ui/settings.glade:2500
+#: ../ui/settings.glade:2551 ../ui/settings.glade:2564
 msgid "Test"
 msgstr "Teszt"
 
-#: ../ui/settings.glade:2533
+#: ../ui/settings.glade:2597
 msgid "Custom Commands (for Method \"Custom\")"
 msgstr "Egyéni parancsok (az „Egyéni” módszerhez)"
 
-#: ../ui/settings.glade:2556
+#: ../ui/settings.glade:2620
 msgid "Hand Recognition"
 msgstr "Kézfelismerés"
 
-#: ../ui/settings.glade:2583
+#: ../ui/settings.glade:2647
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
 msgstr "<i>Használjon csípőmozdulatokat a naplóoldalak nagyításához.</i>"
 
-#: ../ui/settings.glade:2597
+#: ../ui/settings.glade:2661
 msgid "Enable zoom gestures (requires restart)"
 msgstr "Nagyítási kézmozdulatok engedélyezése (újraindítás szükséges)"
 
-#: ../ui/settings.glade:2615
+#: ../ui/settings.glade:2679
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues.\n"
 "This setting can make it easier to draw with touch. "
 msgstr "Amikor érintéssel rajzol, a nézet pásztázására szolgáló kétujjas kézmozdulatok ehelyett nagyítást okozhatnak, ami teljesítménybeli problémákat okozhat.\n"
 "Ez a beállítás megkönnyítheti az érintéssel történő rajzolást. "
 
-#: ../ui/settings.glade:2621
+#: ../ui/settings.glade:2685
 msgid "Start zooming after a distance "
 msgstr "Távolság után kezdje el a nagyítást "
 
-#: ../ui/settings.glade:2633
+#: ../ui/settings.glade:2697
 msgid "1.0"
 msgstr "1.0"
 
-#: ../ui/settings.glade:2648
+#: ../ui/settings.glade:2712
 msgid "% greater than the initial distance between the two touches."
 msgstr "% nagyobb mint az érintések közötti kezdeti távolság."
 
-#: ../ui/settings.glade:2686
+#: ../ui/settings.glade:2750
 msgid "Zoom Gestures"
 msgstr "Nagyítási gesztusok"
 
-#: ../ui/settings.glade:2713
+#: ../ui/settings.glade:2777
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
 msgstr "<i>Használja az érintőképernyőt, mint egy többérintéses tollat.</i>"
 
-#: ../ui/settings.glade:2727
+#: ../ui/settings.glade:2791
 msgid "Enable touch drawing"
 msgstr "Érintéses rajzolás engedélyezése"
 
-#: ../ui/settings.glade:2732
+#: ../ui/settings.glade:2796
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
 msgstr "Két ujjal pásztázhat/nagyíthat és egy ujjal pedig a kiválasztott eszközt használhatja."
 
-#: ../ui/settings.glade:2747
+#: ../ui/settings.glade:2811
 msgid "Touch Drawing"
 msgstr "Rajz érintése"
 
-#: ../ui/settings.glade:2774
+#: ../ui/settings.glade:2838
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
 msgstr "<i>A GTK beépített érintőképernyős görgetésének letiltása bizonyos platformokon megkerülheti a görgetési hibákat. Fontolja meg ennek a beállításnak a módosítását, ha ugrásokat/hirtelen változást tapasztal a görgetés pozíciójában, amikor érintőképernyővel próbál görgetni.</i>"
 
-#: ../ui/settings.glade:2788
+#: ../ui/settings.glade:2852
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
 msgstr "GTK beépített inerciális görgetési funkciója letiltsa (újraindítás szükséges)."
 
-#: ../ui/settings.glade:2807
+#: ../ui/settings.glade:2871
 msgid "Touch Scrolling"
 msgstr "Görgetés érintése"
 
-#: ../ui/settings.glade:2894
+#: ../ui/settings.glade:2958
 msgid "Show Menubar on Startup"
 msgstr "Menüsor megjelenítése indításkor"
 
-#: ../ui/settings.glade:2912
+#: ../ui/settings.glade:2976
 msgid "<i>Toggle visibility of menubar with F10</i>"
 msgstr "<i>A menüsor láthatóságának váltása az F10 billentyűvel</i>"
 
-#: ../ui/settings.glade:2930
+#: ../ui/settings.glade:2994
 msgid "Show filepath in title bar"
 msgstr "Fájl elérési útjának megjelenítése a címsorban"
 
-#: ../ui/settings.glade:2945
+#: ../ui/settings.glade:3009
 msgid "Show page number in title bar"
 msgstr "Oldalszám megjelenítése a címsorban"
 
-#: ../ui/settings.glade:2985
+#: ../ui/settings.glade:3049
 msgid "Border color for current page and other selections"
 msgstr "Szegélyszín a jelenlegi oldalhoz és többi kijelöléséhez"
 
-#: ../ui/settings.glade:2999
+#: ../ui/settings.glade:3063
 msgid "Border color"
 msgstr "Szegélyszín"
 
-#: ../ui/settings.glade:3012
+#: ../ui/settings.glade:3076
 msgid "Background color between pages"
 msgstr "Háttérszín az oldalak között"
 
-#: ../ui/settings.glade:3038
+#: ../ui/settings.glade:3102
 msgid "Selection Color (Text, Stroke Selection etc.)"
 msgstr "Kijelölt szín (szöveg, vonásírás kijelölése stb.)"
 
-#: ../ui/settings.glade:3064
+#: ../ui/settings.glade:3128
 msgid "Active Selection Color (Search Results etc.)"
 msgstr "Aktív kijelölés színe (keresési eredmények stb.)"
 
-#: ../ui/settings.glade:3086
+#: ../ui/settings.glade:3150
 msgid "Use available Stock Icons (requires restart)"
 msgstr "Rendelkezésre álló részvényikonok használata (újraindítás szükséges)"
 
-#: ../ui/settings.glade:3107
+#: ../ui/settings.glade:3171
 msgid "Icon Theme"
 msgstr "Ikon téma"
 
-#: ../ui/settings.glade:3122
+#: ../ui/settings.glade:3186
 msgid "Color"
 msgstr "Szín"
 
-#: ../ui/settings.glade:3136
+#: ../ui/settings.glade:3200
 msgid "(requires restart)"
 msgstr "(újraindítás szükséges)"
 
-#: ../ui/settings.glade:3159
+#: ../ui/settings.glade:3223
 msgid "Theme Variant:"
 msgstr "Témaváltozat:"
 
-#: ../ui/settings.glade:3179
+#: ../ui/settings.glade:3243
 msgid "Use system default"
 msgstr "Rendszer alapértelmezett használata"
 
-#: ../ui/settings.glade:3180
+#: ../ui/settings.glade:3244
 msgid "Force light theme"
 msgstr "Világos téma kényszerítése"
 
-#: ../ui/settings.glade:3181
+#: ../ui/settings.glade:3245
 msgid "Force dark theme"
 msgstr "Sötét téma kényszerítése"
 
-#: ../ui/settings.glade:3194
+#: ../ui/settings.glade:3258
 msgid "(this may not work, depending on your system theme)"
 msgstr "(ez a rendszertémától függően előfordulhat, hogy nem működik)"
 
-#: ../ui/settings.glade:3211
+#: ../ui/settings.glade:3275
 msgid "Show shadow behind pages"
 msgstr "Árnyék megjelenítése az oldalak mögött"
 
-#: ../ui/settings.glade:3230
+#: ../ui/settings.glade:3294
 msgid "Colors"
 msgstr "Színek"
 
-#: ../ui/settings.glade:3246
+#: ../ui/settings.glade:3310
 msgid "Global"
 msgstr "Globális"
 
-#: ../ui/settings.glade:3274
+#: ../ui/settings.glade:3338
 msgid "Recolor Drawing Area (might introduce lags when moving selections)"
 msgstr "Rajzterület újraszínezése (a kijelölések mozgatásakor késéseket okozhat)"
 
-#: ../ui/settings.glade:3279
+#: ../ui/settings.glade:3343
 msgid "Recolors the drawing area so that light regions get the \"Light Color\" and dark regions get the \"Dark Color\". Other colors are interpolated accordingly. Can be use to implement a dark-mode."
 msgstr "Újraszínezi a rajzterületet úgy, hogy a világos területek a „Világos színt”, a sötét területek pedig a „Sötét színt” kapják. A többi szín ennek megfelelően interpolálódik. Sötét mód megvalósításához használható."
 
-#: ../ui/settings.glade:3289
+#: ../ui/settings.glade:3353
 msgid "Recolor Previews in the Sidebar"
 msgstr "Átszínezés előnézete az oldalsávon"
 
-#: ../ui/settings.glade:3294
+#: ../ui/settings.glade:3358
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) the same way as the drawing area."
 msgstr "Az oldalsávon (Oldal/Réteg előnézete) látható előnézeteket ugyanúgy színezi újra, mint a rajzterületet."
 
-#: ../ui/settings.glade:3308
+#: ../ui/settings.glade:3372
 msgid "The color light regions are translated to\n"
 "(use a dark color for a dark-mode)"
 msgstr "A világos területek színe átalakul a következőre:\n"
 "(sötét módhoz sötét színt használjon)"
 
-#: ../ui/settings.glade:3323
+#: ../ui/settings.glade:3387
 msgid "The color dark regions are translated to\n"
 "(use a light color for dark-mode)"
 msgstr "A sötét területek színe átalakul a következőre:\n"
 "(sötét módhoz világos színt használjon)"
 
-#: ../ui/settings.glade:3339
+#: ../ui/settings.glade:3403
 msgid "Dark Color"
 msgstr "Sötét szín"
 
-#: ../ui/settings.glade:3353
+#: ../ui/settings.glade:3417
 msgid "Light Color"
 msgstr "Világos szín"
 
-#: ../ui/settings.glade:3366
+#: ../ui/settings.glade:3430
 msgid "Recoloring (allows theming)"
 msgstr "Újraszínezés (témázást tesz lehetővé)"
 
-#: ../ui/settings.glade:3398
+#: ../ui/settings.glade:3462
 msgid "Cursor icon for pen"
 msgstr "Kurzor ikon a tollhoz"
 
-#: ../ui/settings.glade:3413
+#: ../ui/settings.glade:3477
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
 msgstr "Nincs ikon"
 
-#: ../ui/settings.glade:3414
+#: ../ui/settings.glade:3478
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
 msgstr "Kis toll ikonra"
 
-#: ../ui/settings.glade:3415
+#: ../ui/settings.glade:3479
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
 msgstr "Nagy toll ikonra"
 
-#: ../ui/settings.glade:3416
+#: ../ui/settings.glade:3480
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
 msgstr "Rendszer kurzor"
 
-#: ../ui/settings.glade:3441
+#: ../ui/settings.glade:3505
 msgid "Highlight cursor position"
 msgstr "Kurzor pozíciójának kiemeléséhez"
 
-#: ../ui/settings.glade:3446
+#: ../ui/settings.glade:3510
 msgid "Draw a transparent circle around the cursor"
 msgstr "Rajzolj átlátszó kört a kurzor köré"
 
-#: ../ui/settings.glade:3464 ../ui/settings.glade:3607
+#: ../ui/settings.glade:3528 ../ui/settings.glade:3671
 msgid "Choose the color to use for \"Highlight cursor position\""
 msgstr "\"Kurzorpozíció kiemelése\" színének kijelölése"
 
-#: ../ui/settings.glade:3478
+#: ../ui/settings.glade:3542
 msgid "Circle Color"
 msgstr "Kör színe"
 
-#: ../ui/settings.glade:3502 ../ui/settings.glade:3553
-#: ../ui/settings.glade:5045
+#: ../ui/settings.glade:3566 ../ui/settings.glade:3617
+#: ../ui/settings.glade:5109
 msgid "pixels"
 msgstr "képpont"
 
-#: ../ui/settings.glade:3530
+#: ../ui/settings.glade:3594
 msgid "Radius"
 msgstr "Sugár"
 
-#: ../ui/settings.glade:3566
+#: ../ui/settings.glade:3630
 msgid "30"
 msgstr "30"
 
-#: ../ui/settings.glade:3582
+#: ../ui/settings.glade:3646
 msgid "Border Width"
 msgstr "Szegélyszélesség"
 
-#: ../ui/settings.glade:3621
+#: ../ui/settings.glade:3685
 msgid "Border Color"
 msgstr "Szegélyszín"
 
-#: ../ui/settings.glade:3653
+#: ../ui/settings.glade:3717
 msgid "Cursor"
 msgstr "Kurzor"
 
-#: ../ui/settings.glade:3678
+#: ../ui/settings.glade:3742
 msgid "Show sidebar on the right side"
 msgstr "Oldalsáv megjelenítése a jobb oldalon"
 
-#: ../ui/settings.glade:3693
+#: ../ui/settings.glade:3757
 msgid "Show vertical scrollbar on the left side"
 msgstr "Függőleges görgetősáv megjelenítése a bal oldalon"
 
-#: ../ui/settings.glade:3712
+#: ../ui/settings.glade:3776
 msgid "Left / Right-Handed"
 msgstr "Bal / Jobbkezes"
 
-#: ../ui/settings.glade:3737
+#: ../ui/settings.glade:3801
 msgid "Page numbering  "
 msgstr "Oldalszámozás  "
 
-#: ../ui/settings.glade:3753
+#: ../ui/settings.glade:3817
 msgid "Below preview"
 msgstr "Előnézet alatt"
 
-#: ../ui/settings.glade:3754
+#: ../ui/settings.glade:3818
 msgid "Circle background"
 msgstr "Kör háttér"
 
-#: ../ui/settings.glade:3755
+#: ../ui/settings.glade:3819
 msgid "Square background"
 msgstr "Szögletes háttér"
 
-#: ../ui/settings.glade:3775
+#: ../ui/settings.glade:3839
 msgid "Sidebar"
 msgstr "Oldalsáv"
 
-#: ../ui/settings.glade:3801
+#: ../ui/settings.glade:3865
 msgid "Hide the horizontal scrollbar"
 msgstr "Vízszintes görgetősáv elrejtése"
 
-#: ../ui/settings.glade:3816
+#: ../ui/settings.glade:3880
 msgid "Hide the vertical scrollbar"
 msgstr "Függőleges görgetősáv elrejtése"
 
-#: ../ui/settings.glade:3831
+#: ../ui/settings.glade:3895
 msgid "Disable scrollbar fade out"
 msgstr "Görgetősáv elhalványításának letiltása"
 
-#: ../ui/settings.glade:3849
+#: ../ui/settings.glade:3913
 msgid "Scrollbars"
 msgstr "Görgetősávok"
 
-#: ../ui/settings.glade:3903
+#: ../ui/settings.glade:3967
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
 msgstr "Ha egy elemet kijelöl, és a vászon látható részén túl van mozgatva, pásztázzon a képernyőn a vászon látható részének ezen százalékával megegyező mértékben. "
 
-#: ../ui/settings.glade:3905
+#: ../ui/settings.glade:3969
 msgid "Base speed"
 msgstr "Alapsebesség"
 
-#: ../ui/settings.glade:3916
+#: ../ui/settings.glade:3980
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
 msgstr "A pásztázási sebességet legfeljebb ezzel az értékkel szorozza meg, attól függően, hogy a kijelölt elem mekkora része nem látható."
 
-#: ../ui/settings.glade:3918
+#: ../ui/settings.glade:3982
 msgid "Max multiplier"
 msgstr "Legfeljebb szorzó"
 
-#: ../ui/settings.glade:3931
+#: ../ui/settings.glade:3995
 msgid "Selection Edge Panning"
 msgstr "Kijelölés élpásztázás"
 
-#: ../ui/settings.glade:3956 ../ui/settings.glade:4030
+#: ../ui/settings.glade:4020 ../ui/settings.glade:4094
 #: ../ui/mainmenubar.xml:205
 msgid "Show Menubar"
 msgstr "Menüsor megjelenítése"
 
-#: ../ui/settings.glade:3971 ../ui/settings.glade:4045
+#: ../ui/settings.glade:4035 ../ui/settings.glade:4109
 msgid "Show Toolbar"
 msgstr "Eszköztár megjelenítése"
 
-#: ../ui/settings.glade:3986 ../ui/settings.glade:4075
+#: ../ui/settings.glade:4050 ../ui/settings.glade:4139
 #: ../ui/mainmenubar.xml:210
 msgid "Show Sidebar"
 msgstr "Oldalsáv megjelenítése"
 
-#: ../ui/settings.glade:4005 ../ui/mainmenubar.xml:193
+#: ../ui/settings.glade:4069 ../ui/mainmenubar.xml:193
 msgid "Fullscreen"
 msgstr "Teljes képernyő"
 
-#: ../ui/settings.glade:4060
+#: ../ui/settings.glade:4124
 msgid "Go Fullscreen"
 msgstr "Teljes képernyő megjelenítése"
 
-#: ../ui/settings.glade:4095
+#: ../ui/settings.glade:4159
 msgid "Select toolbar:"
 msgstr "Eszköztár kiválasztása:"
 
-#: ../ui/settings.glade:4128
+#: ../ui/settings.glade:4192
 msgid "Presentation Mode"
 msgstr "Bemutató mód"
 
-#: ../ui/settings.glade:4157
+#: ../ui/settings.glade:4221
 msgid "Pre-load pages before"
 msgstr "Oldalak-előzetes betöltése előtte"
 
-#: ../ui/settings.glade:4169
+#: ../ui/settings.glade:4233
 msgid "Pre-load pages after"
 msgstr "Oldalak-előzetes betöltése utána"
 
-#: ../ui/settings.glade:4206
+#: ../ui/settings.glade:4270
 msgid "Clear cached paged while scrolling"
 msgstr "Gyorsítótárazott oldalak törlése görgetés közben"
 
-#: ../ui/settings.glade:4233
+#: ../ui/settings.glade:4297
 msgid "Performance"
 msgstr "Teljesítmény"
 
-#: ../ui/settings.glade:4264
+#: ../ui/settings.glade:4328
 msgid "View"
 msgstr "Nézet"
 
-#: ../ui/settings.glade:4313
+#: ../ui/settings.glade:4377
 msgid "Speed for Ctrl + Scroll"
 msgstr "Ctrl+Görgetés nagyítási lépés sebessége"
 
-#: ../ui/settings.glade:4340
+#: ../ui/settings.glade:4404
 msgid "Speed for a Zoomstep"
 msgstr "Nagyítási lépés sebessége"
 
-#: ../ui/settings.glade:4400
+#: ../ui/settings.glade:4464
 msgid "Zoom Speed"
 msgstr "Nagyítás sebessége"
 
-#: ../ui/settings.glade:4427
+#: ../ui/settings.glade:4491
 msgid "<i>To make sure on 100% zoom the size of elements is natural.</i>"
 msgstr "<i>A tényleges méret megtekintésekor az elemek mérete természetes.</i>"
 
-#: ../ui/settings.glade:4447
+#: ../ui/settings.glade:4511
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
 msgstr "<i>Helyezzen egy vonalzót a képernyőre, és mozgassa a csúszkát, amíg a két vonalzó megegyezik.</i>"
 
-#: ../ui/settings.glade:4463
+#: ../ui/settings.glade:4527
 msgid "Automatic"
 msgstr "Automatikus"
 
-#: ../ui/settings.glade:4520
+#: ../ui/settings.glade:4584
 msgid "The unit of the ruler is cm"
 msgstr "A vonalzó mértékegysége cm"
 
-#: ../ui/settings.glade:4541
+#: ../ui/settings.glade:4605
 msgid "Display DPI Calibration"
 msgstr "Hüvelykenkénti pontok száma (DPI) kalibrálása megjelenítése"
 
-#: ../ui/settings.glade:4572
+#: ../ui/settings.glade:4636
 msgid "Zoom"
 msgstr "Nagyítás"
 
-#: ../ui/settings.glade:4621
+#: ../ui/settings.glade:4685
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
 msgstr "<i>Ha további helyet ad az oldalak mellé, kijelölheti a képernyő azon területét, amelyen dolgozni szeretne.</i>"
 
-#: ../ui/settings.glade:4744
+#: ../ui/settings.glade:4808
 msgid "Add additional horizontal space"
 msgstr "További vízszintes terület hozzáadása"
 
-#: ../ui/settings.glade:4760
+#: ../ui/settings.glade:4824
 msgid "Add additional vertical space"
 msgstr "További függőleges terület hozzáadása"
 
-#: ../ui/settings.glade:4778
+#: ../ui/settings.glade:4842
 msgid "<i>or</i>"
 msgstr "<i>vagy</i>"
 
-#: ../ui/settings.glade:4790
+#: ../ui/settings.glade:4854
 msgid "Unlimited scrolling"
 msgstr "Korlátlan görgetés"
 
-#: ../ui/settings.glade:4814
+#: ../ui/settings.glade:4878
 msgid "<i>The amount is specified in pixels.</i>"
 msgstr "<i>Az összeg képpontban van megadva.</i>"
 
-#: ../ui/settings.glade:4846
+#: ../ui/settings.glade:4910
 msgid "Scrolling outside the page"
 msgstr "Görgetés az oldalon kívül"
 
-#: ../ui/settings.glade:4873
+#: ../ui/settings.glade:4937
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr "Az első oldal eltolása ennyi oldallal, ha engedélyezve van az <b>Oldalak párosítása</b>"
 
-#: ../ui/settings.glade:4874
+#: ../ui/settings.glade:4938
 msgid "First Page Offset "
 msgstr "Első oldal eltolás "
 
-#: ../ui/settings.glade:4887
+#: ../ui/settings.glade:4951
 msgid "Usually 0 or 1"
 msgstr "Általában 0 vagy 1"
 
-#: ../ui/settings.glade:4906
+#: ../ui/settings.glade:4970
 msgid "Paired Pages"
 msgstr "Oldalak párosítása"
 
-#: ../ui/settings.glade:4932
+#: ../ui/settings.glade:4996
 msgid "when scrolling to end of last page"
 msgstr "amikor görgetés az utolsó oldal végére"
 
-#: ../ui/settings.glade:4947
+#: ../ui/settings.glade:5011
 msgid "when drawing on last page"
 msgstr "amikor rajzolás az utolsó oldalra"
 
-#: ../ui/settings.glade:4962
+#: ../ui/settings.glade:5026
 msgid "disabled"
 msgstr "letilva"
 
-#: ../ui/settings.glade:4980
+#: ../ui/settings.glade:5044
 msgid "Automatically Add Empty Last Page (excluding PDFs)"
 msgstr "Üres utolsó oldal automatikus hozzáadása (a PDF-fájlok kivételével)"
 
-#: ../ui/settings.glade:5004
+#: ../ui/settings.glade:5068
 msgid "Enable  with determination radius of "
 msgstr "Engedélyezés a következő meghatározási sugárral: "
 
-#: ../ui/settings.glade:5009
+#: ../ui/settings.glade:5073
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
@@ -3748,172 +3766,172 @@ msgstr "A BALRA húzás a kezdőponttól úgy működik, mintha a Shift billenty
 "Meghatározási sugár: Az a sugár, amelynél a módosítók bezáródnak a rajzolás befejezéséig.\n\n"
 "<i>Hasznos billentyűzet nélküli működéshez.</i>"
 
-#: ../ui/settings.glade:5059
+#: ../ui/settings.glade:5123
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Rajzeszközök – Módosítók beállítása rajzolási irány szerint (kísérleti)"
 
-#: ../ui/settings.glade:5076
+#: ../ui/settings.glade:5140
 msgid "Preserve line width"
 msgstr "Vonal szélességének megőrzése"
 
-#: ../ui/settings.glade:5081
+#: ../ui/settings.glade:5145
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
 msgstr "Egy kijelölés átméretezése után az összes vonásírási szélessége megegyezik az átméretezés előttivel. "
 
-#: ../ui/settings.glade:5092
+#: ../ui/settings.glade:5156
 msgid "Resizing"
 msgstr "Átméretezés"
 
-#: ../ui/settings.glade:5128
+#: ../ui/settings.glade:5192
 msgid "Rotation snapping tolerance"
 msgstr "Forgatás igazítás tűréshatára"
 
-#: ../ui/settings.glade:5140
+#: ../ui/settings.glade:5204
 msgid "Grid snapping tolerance"
 msgstr "Rács igazítás tűréshatára"
 
-#: ../ui/settings.glade:5182
+#: ../ui/settings.glade:5246
 msgid "Grid size"
 msgstr "Rácsméret"
 
-#: ../ui/settings.glade:5213
+#: ../ui/settings.glade:5277
 msgid "Use snapping for recognized shapes"
 msgstr "Igazítás használata felismert alakzatokhoz"
 
-#: ../ui/settings.glade:5217
+#: ../ui/settings.glade:5281
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
 msgstr "When activated, the shapes recognized by the shape recognizer are automatically aligned to the grid. This can lead to unexpected results if shape recognition is turned on while writing."
 
-#: ../ui/settings.glade:5232
+#: ../ui/settings.glade:5296
 msgid "Snapping"
 msgstr "Igazítás"
 
-#: ../ui/settings.glade:5260
+#: ../ui/settings.glade:5324
 msgid "Minimum Stroke Size"
 msgstr "Legkisebb vonásírás mérete"
 
-#: ../ui/settings.glade:5315
+#: ../ui/settings.glade:5379
 msgctxt "Short taps/clicks will trigger special actions"
 msgid "Enable Tap action"
 msgstr "Koppintási művelet engedélyezése"
 
-#: ../ui/settings.glade:5320
+#: ../ui/settings.glade:5384
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr "Ne rajzoljon rövid időre és hosszúságú bemenetekre, hacsak nem rövid egymásutánban érkezik. Ehelyett mutasson lebegő eszköztárat."
 
-#: ../ui/settings.glade:5332
+#: ../ui/settings.glade:5396
 msgid "Time limit (ms)"
 msgstr "Időkorlát (ms)"
 
-#: ../ui/settings.glade:5344
+#: ../ui/settings.glade:5408
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
 msgstr "Időkorlát: a hosszabb ideig tartó érintések nem váltanak ki különleges műveletet\n\n"
 "<i>Javasolt: 150 ms</i>"
 
-#: ../ui/settings.glade:5364
+#: ../ui/settings.glade:5428
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
 msgstr "Hosszkorlát: a távolabbi érintések nem váltanak ki különleges műveletet\n\n"
 "<i>Javasolt: 1 mm</i>"
 
-#: ../ui/settings.glade:5384
+#: ../ui/settings.glade:5448
 msgid "Length limit (mm)"
 msgstr "Hosszkorlát (mm)"
 
-#: ../ui/settings.glade:5395
+#: ../ui/settings.glade:5459
 msgid "Frequency limit (ms)"
 msgstr "Frekvencia korlát (ms)"
 
-#: ../ui/settings.glade:5407
+#: ../ui/settings.glade:5471
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
 "<i>Recommended: 500ms</i>"
 msgstr "Gyakoriságkorlát: A stroke után ezen időtartamon belüli érintés nem vált ki különleges műveletet.\n\n"
 "<i>Javasolt: 500 ms</i>"
 
-#: ../ui/settings.glade:5424
+#: ../ui/settings.glade:5488
 msgid "Try to select object first."
 msgstr "Először próbálja meg kiválasztani az objektumot."
 
-#: ../ui/settings.glade:5429 ../ui/settings.glade:5459
+#: ../ui/settings.glade:5493 ../ui/settings.glade:5523
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "Először próbálja meg kiválasztani az objektumot; ha nincs kiválasztva, akkor mutasson lebegő eszköztárat, ha engedélyezve van."
 
-#: ../ui/settings.glade:5442
+#: ../ui/settings.glade:5506
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr "A vonásírás figyelmen kívül hagyása előtt mindhárom feltételnek teljesülnie kell.\n"
 "Időben és hosszúságban rövidnek kell lennie, és mostanában nem hagyhattunk figyelmen kívül egy újabb vonásírást."
 
-#: ../ui/settings.glade:5445
+#: ../ui/settings.glade:5509
 msgid "Settings:"
 msgstr "Beállítások:"
 
-#: ../ui/settings.glade:5454
+#: ../ui/settings.glade:5518
 msgid "Show Floating Toolbox"
 msgstr "Lebegő eszköztár megjelenítése"
 
-#: ../ui/settings.glade:5473
+#: ../ui/settings.glade:5537
 msgid "Action on Tool Tap"
 msgstr "Eszközkoppintás művelete"
 
-#: ../ui/settings.glade:5501
+#: ../ui/settings.glade:5565
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality.\n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr "<i>A jobb megjelenítési minőség érdekében nagyítás közben gyakrabban jelenítse meg újra a PDF háttereket.\n"
 "<b>Megjegyzés:</b> Ez nem befolyásolja a nyomtatás minőségét.</i>"
 
-#: ../ui/settings.glade:5523
+#: ../ui/settings.glade:5587
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr "Ha nagy felbontású PDF-re nagyít, minden újrarenderelés hosszú ideig tarthat. Ha ezt nagy értékre állítja, ezek az újramegjelenítések ritkábban fordulnak elő.\n\n"
 "Állítsa ezt 0%-ra, ha mindig újra szeretné megjeleníteni a nagyításkor."
 
-#: ../ui/settings.glade:5526
+#: ../ui/settings.glade:5590
 msgid "Re-render when the page's zoom changes by more than "
 msgstr "Újra megjelenítés, ha az oldal nagyítása változik több mint: "
 
-#: ../ui/settings.glade:5539
+#: ../ui/settings.glade:5603
 msgid "0.00"
 msgstr "0.00"
 
-#: ../ui/settings.glade:5556
+#: ../ui/settings.glade:5620
 msgid "%."
 msgstr "%."
 
-#: ../ui/settings.glade:5577
+#: ../ui/settings.glade:5641
 msgid "PDF Cache"
 msgstr "PDF-gyorsítótár"
 
-#: ../ui/settings.glade:5608
+#: ../ui/settings.glade:5672
 msgid "Drawing Area"
 msgstr "Rajzterület"
 
-#: ../ui/settings.glade:5655
+#: ../ui/settings.glade:5719
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
 msgstr "<i>Eszköz és beállítások kijelölése az Alapértelmezett gomb megnyomásakor.</i>"
 
-#: ../ui/settings.glade:5707
+#: ../ui/settings.glade:5771
 msgid "<b>Default tool</b>"
 msgstr "<b>Alapértelmezett eszköz</b>"
 
-#: ../ui/settings.glade:5743
+#: ../ui/settings.glade:5807
 msgid "<i>The laser pointer allows to write strokes that will fade out after a short while.</i>"
 msgstr "<i>A lézermutató lehetővé teszi olyan ecsetvonások írását, amelyek rövid idő után elhalványulnak.</i>"
 
-#: ../ui/settings.glade:5764
+#: ../ui/settings.glade:5828
 msgid "Fade out delay (in ms)"
 msgstr "Elhalványulási késleltetés (ezredmásodperc)"
 
-#: ../ui/settings.glade:5816
+#: ../ui/settings.glade:5880
 msgid "<b>Laser pointer</b>"
 msgstr "<b>Lézermutató</b>"
 
-#: ../ui/settings.glade:5856
+#: ../ui/settings.glade:5920
 msgid "Tools"
 msgstr "Eszközök"
 
-#: ../ui/settings.glade:5909
+#: ../ui/settings.glade:5973
 msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required).\n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
@@ -3923,89 +3941,89 @@ msgstr "<i>\n"
 "A hang egyetlen munkamenetre történő letiltása a parancssorban található <tt>--disable-audio</tt> jelzővel érhető el.\n"
 "</i>"
 
-#: ../ui/settings.glade:5925
+#: ../ui/settings.glade:5989
 msgid "Disable Audio"
 msgstr "Hang letiltása"
 
-#: ../ui/settings.glade:5947
+#: ../ui/settings.glade:6011
 msgid "Enable or Disable Audio"
 msgstr "Hang engedélyezése vagy letiltása"
 
-#: ../ui/settings.glade:5974
+#: ../ui/settings.glade:6038
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr "<i>A hangfelvételek jelenleg egy külön mappában vannak tárolva, és a naplóból hivatkoznak rájuk.</i>"
 
-#: ../ui/settings.glade:5993 ../ui/settings.glade:6029
+#: ../ui/settings.glade:6057 ../ui/settings.glade:6093
 msgid "Storage Folder"
 msgstr "Tárolómappa"
 
-#: ../ui/settings.glade:6008
+#: ../ui/settings.glade:6072
 msgid "Select Folder"
 msgstr "Mappa kiválasztása"
 
-#: ../ui/settings.glade:6056
+#: ../ui/settings.glade:6120
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr "<i>Adja meg a hangmellékletek rögzítéséhez és lejátszásához használt hangeszközöket.\n"
 "Ha elérhető, adja meg a <small><tt>pulse</tt></small> kijelölést bemeneti/kimeneti eszközként.</i>"
 
-#: ../ui/settings.glade:6080
+#: ../ui/settings.glade:6144
 msgid "Input Device"
 msgstr "Bemeneti eszköz"
 
-#: ../ui/settings.glade:6102
+#: ../ui/settings.glade:6166
 msgid "Output Device"
 msgstr "Kimeneti eszköz"
 
-#: ../ui/settings.glade:6133
+#: ../ui/settings.glade:6197
 msgid "Audio Devices"
 msgstr "Hangeszközök"
 
-#: ../ui/settings.glade:6162
+#: ../ui/settings.glade:6226
 msgid "Sample Rate"
 msgstr "Mintavételi frekvencia"
 
-#: ../ui/settings.glade:6173
+#: ../ui/settings.glade:6237
 msgid "Gain"
 msgstr "Erősítés"
 
-#: ../ui/settings.glade:6220
+#: ../ui/settings.glade:6284
 msgid "Recording Quality"
 msgstr "Felvétel minősége"
 
-#: ../ui/settings.glade:6246
+#: ../ui/settings.glade:6310
 msgid "Default Seek Time (in seconds)"
 msgstr "Alapértelmezett keresési idő (másodperc)"
 
-#: ../ui/settings.glade:6259
+#: ../ui/settings.glade:6323
 msgid "1,00"
 msgstr "1,00"
 
-#: ../ui/settings.glade:6278
+#: ../ui/settings.glade:6342
 msgid "Playback Settings"
 msgstr "Lejátszási beállítások"
 
-#: ../ui/settings.glade:6292
+#: ../ui/settings.glade:6356
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr "<i>A változtatások csak az új felvételekre és lejátszásokra vonatkoznak.</i>"
 
-#: ../ui/settings.glade:6323
+#: ../ui/settings.glade:6387
 msgid "Audio Recording"
 msgstr "Hangfelvétel"
 
-#: ../ui/settings.glade:6396
+#: ../ui/settings.glade:6460
 msgid "<i>Select language (requires restart)</i>"
 msgstr "<i>Nyelv kiválasztása (újraindítás szükséges)</i>"
 
-#: ../ui/settings.glade:6428 ../ui/settings.glade:6474
+#: ../ui/settings.glade:6492 ../ui/settings.glade:6538
 msgid "Language"
 msgstr "Nyelv"
 
-#: ../ui/settings.glade:6444
+#: ../ui/settings.glade:6508
 msgid "Language Settings"
 msgstr "Nyelvi beállítások"
 
-#: ../ui/settings.glade:6498
+#: ../ui/settings.glade:6562
 msgid "Palette"
 msgstr "Paletta"
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-14 10:37+0000\n"
-"PO-Revision-Date: 2026-03-15 04:58\n"
+"POT-Creation-Date: 2026-03-18 13:23+0000\n"
+"PO-Revision-Date: 2026-03-22 04:56\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -498,7 +498,7 @@ msgid "Export File"
 msgstr "Izvozi datoteko"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
-#: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
+#: ../src/core/gui/dialog/DeviceTestingArea.cpp:181
 msgid "Export"
 msgstr "Izvozi"
 
@@ -1059,7 +1059,7 @@ msgstr "Prepoznavanje oblik"
 msgid "Draw Spline"
 msgstr "Nariši črto"
 
-#: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
+#: ../src/core/gui/dialog/DeviceTestingArea.cpp:181
 msgid "Export Logs"
 msgstr ""
 
@@ -1200,11 +1200,11 @@ msgid "<b>{1}</b>\n"
 msgstr "<b>{1}</b>\n"
 "{2}{3}"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:275
+#: ../src/core/gui/dialog/SettingsDialog.cpp:277
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Omogočite občutljivost na pritisk ali sklepanje o pritisku, da spremenite to nastavitev!"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:279
+#: ../src/core/gui/dialog/SettingsDialog.cpp:281
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Filtriranje vhodnega tlaka. Množenje tlaka z množiteljem tlaka. Če je nižji od minimuma, uporabi najmanjši tlak."
 
@@ -2246,7 +2246,7 @@ msgstr "Zapri"
 #: ../ui/goto.glade:108 ../ui/intEdTexDialog.glade:203
 #: ../ui/pageFormat.glade:346 ../ui/pageTemplate.glade:278
 #: ../ui/plugin.glade:114 ../ui/renameLayerDialog.glade:71
-#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6537
+#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6601
 msgid "Ok"
 msgstr "V redu"
 
@@ -2295,7 +2295,7 @@ msgstr "<i>Dodeli razrede naprav za vsako vhodno napravo vašega sistema. Te vre
 msgid "Try out your devices in the area below"
 msgstr ""
 
-#: ../ui/deviceTestingArea.glade:70 ../ui/settings.glade:1630
+#: ../ui/deviceTestingArea.glade:70 ../ui/settings.glade:1694
 #: ../ui/settingsDeviceClassConfig.glade:35
 msgid "Mouse"
 msgstr "Miška"
@@ -2315,67 +2315,77 @@ msgctxt "mouse button"
 msgid "Right"
 msgstr ""
 
-#: ../ui/deviceTestingArea.glade:124 ../ui/settings.glade:2170
+#: ../ui/deviceTestingArea.glade:124
+msgctxt "mouse button"
+msgid "4th"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:138
+msgctxt "mouse button"
+msgid "5th"
+msgstr ""
+
+#: ../ui/deviceTestingArea.glade:152 ../ui/settings.glade:2234
 msgid "Stylus"
 msgstr "Pisalo"
 
-#: ../ui/deviceTestingArea.glade:136 ../ui/deviceTestingArea.glade:190
+#: ../ui/deviceTestingArea.glade:164 ../ui/deviceTestingArea.glade:218
 msgctxt "the tip of the stylus"
 msgid "Tip"
 msgstr ""
 
-#: ../ui/deviceTestingArea.glade:150 ../ui/settings.glade:1987
+#: ../ui/deviceTestingArea.glade:178 ../ui/settings.glade:2051
 msgid "Button 1"
 msgstr "Gumb 1"
 
-#: ../ui/deviceTestingArea.glade:164 ../ui/settings.glade:2019
+#: ../ui/deviceTestingArea.glade:192 ../ui/settings.glade:2083
 msgid "Button 2"
 msgstr "Gumb 2"
 
-#: ../ui/deviceTestingArea.glade:256 ../ui/settings.glade:2250
-#: ../ui/settings.glade:2838 ../ui/settingsDeviceClassConfig.glade:38
+#: ../ui/deviceTestingArea.glade:284 ../ui/settings.glade:2314
+#: ../ui/settings.glade:2902 ../ui/settingsDeviceClassConfig.glade:38
 msgid "Touchscreen"
 msgstr "Zaslon na dotik"
 
-#: ../ui/deviceTestingArea.glade:374
+#: ../ui/deviceTestingArea.glade:402
 msgid "In use"
 msgstr ""
 
-#: ../ui/deviceTestingArea.glade:388 ../ui/deviceTestingArea.glade:402
+#: ../ui/deviceTestingArea.glade:416 ../ui/deviceTestingArea.glade:430
 msgctxt "stylus hover"
 msgid "Hover"
 msgstr ""
 
-#: ../ui/deviceTestingArea.glade:443
+#: ../ui/deviceTestingArea.glade:471
 msgid "Show logs"
 msgstr ""
 
-#: ../ui/deviceTestingArea.glade:455
+#: ../ui/deviceTestingArea.glade:483
 msgid "Export debug info"
 msgstr ""
 
-#: ../ui/deviceTestingArea.glade:477
+#: ../ui/deviceTestingArea.glade:505
 msgid "To clear the logs, simply close and reopen the settings dialog"
 msgstr ""
 
-#: ../ui/deviceTestingArea.glade:491
+#: ../ui/deviceTestingArea.glade:519
 msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
 "Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
 msgstr ""
 
-#: ../ui/deviceTestingArea.glade:500
+#: ../ui/deviceTestingArea.glade:528
 msgid "Emulate stylus tip contact on button press"
 msgstr ""
 
-#: ../ui/deviceTestingArea.glade:547
+#: ../ui/deviceTestingArea.glade:575
 msgid "<i>Change the device class below if your device is not correctly recognized (e.g. your active stylus shows up as touchscreen)</i>"
 msgstr ""
 
-#: ../ui/deviceTestingArea.glade:568
+#: ../ui/deviceTestingArea.glade:596
 msgid "Last device used:"
 msgstr ""
 
-#: ../ui/deviceTestingArea.glade:588
+#: ../ui/deviceTestingArea.glade:616
 msgid "Show all known devices"
 msgstr ""
 
@@ -2392,7 +2402,7 @@ msgid "Height"
 msgstr "Višina"
 
 #: ../ui/exportSettings.glade:53 ../ui/settings.glade:260
-#: ../ui/settings.glade:277 ../ui/settings.glade:3752
+#: ../ui/settings.glade:277 ../ui/settings.glade:3816
 msgid "None"
 msgstr "Brez"
 
@@ -3084,610 +3094,618 @@ msgstr "Srednji miškin gumb"
 msgid "Right Mouse Button"
 msgstr "Desni miškin gumb"
 
-#: ../ui/settings.glade:1599
+#: ../ui/settings.glade:1615
+msgid "4th Mouse Button"
+msgstr ""
+
+#: ../ui/settings.glade:1647
+msgid "5th Mouse Button"
+msgstr ""
+
+#: ../ui/settings.glade:1663
 msgid "Mouse Buttons"
 msgstr "Miškini gumbi"
 
-#: ../ui/settings.glade:1677
+#: ../ui/settings.glade:1741
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
 msgstr "<i>Občutljivost na pritisk vam omogoča risanje črt različnih širin, odvisno od tega, kako močno pritisnete s pisalom. Če vaša tablica ne podpira te funkcije, ta nastavitev nima učinka.</i>"
 
-#: ../ui/settings.glade:1691
+#: ../ui/settings.glade:1755
 msgid "Enable Pressure Sensitivity"
 msgstr "Omogoči občutljivost na pritisk"
 
-#: ../ui/settings.glade:1721
+#: ../ui/settings.glade:1785
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
 msgstr "<i>Nekatere naprave poročajo o nepričakovano majhnih ali velikih pritiskih. To je mogoče popraviti z nastavitvijo najnižjega tlaka ali skaliranjem tlaka, ki ga poroča naprava.</i>"
 
-#: ../ui/settings.glade:1743
+#: ../ui/settings.glade:1807
 msgid "Minimum Pressure:"
 msgstr "Najmanjši pritisk:"
 
-#: ../ui/settings.glade:1754
+#: ../ui/settings.glade:1818
 msgid "Pressure Multiplier: "
 msgstr "Množitelj tlaka: "
 
-#: ../ui/settings.glade:1813
+#: ../ui/settings.glade:1877
 msgid "Sensitivity Scale"
 msgstr "Lestvica občutljivosti"
 
-#: ../ui/settings.glade:1829
+#: ../ui/settings.glade:1893
 msgid "Pressure Sensitivity"
 msgstr "Občutljivost na pritisk"
 
-#: ../ui/settings.glade:1853
+#: ../ui/settings.glade:1917
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
 msgstr "<i>V nekaterih primerih se poteze pisala začnejo z artefakti. Temu se lahko izognemo z zanemarjanjem prvih nekaj dogodkov/poteznih-točk ko se pisalo dotakne zaslona.</i>"
 
-#: ../ui/settings.glade:1871
+#: ../ui/settings.glade:1935
 msgid "Ignore the first"
 msgstr "Ignoriraj prvega"
 
-#: ../ui/settings.glade:1889
+#: ../ui/settings.glade:1953
 msgid "1"
 msgstr "1"
 
-#: ../ui/settings.glade:1905
+#: ../ui/settings.glade:1969
 msgid "events"
 msgstr "dogodki"
 
-#: ../ui/settings.glade:1926
+#: ../ui/settings.glade:1990
 msgid "Artifact workaround"
 msgstr "Rešitev za artefakte"
 
-#: ../ui/settings.glade:1953
+#: ../ui/settings.glade:2017
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
 msgstr "<i>Določite orodja, ki bodo izbrana, če pritisnete gumb na pisalu ali uporabite radirko. Ko spustite gumb, bo izbrano prejšnje orodje.</i>"
 
-#: ../ui/settings.glade:2067
+#: ../ui/settings.glade:2131
 msgid "Stylus Buttons"
 msgstr "Gumbi pisala"
 
-#: ../ui/settings.glade:2099
+#: ../ui/settings.glade:2163
 msgid "Stylus-based eraser is visible"
 msgstr "Radirka pisala je vidna"
 
-#: ../ui/settings.glade:2114
+#: ../ui/settings.glade:2178
 msgctxt "eraser is never visible"
 msgid "Never"
 msgstr "Nikoli"
 
-#: ../ui/settings.glade:2115
+#: ../ui/settings.glade:2179
 msgctxt "eraser is always visible"
 msgid "Always"
 msgstr "Vedno"
 
-#: ../ui/settings.glade:2116
+#: ../ui/settings.glade:2180
 msgctxt "eraser is only visible when floating"
 msgid "When floating"
 msgstr "Med lebdenjem"
 
-#: ../ui/settings.glade:2117
+#: ../ui/settings.glade:2181
 msgctxt "eraser is only visible when touching the screen"
 msgid "When touching"
 msgstr "Med dotikanjem"
 
-#: ../ui/settings.glade:2139
+#: ../ui/settings.glade:2203
 msgid "Eraser visibility"
 msgstr "Vidnost radirke"
 
-#: ../ui/settings.glade:2217
+#: ../ui/settings.glade:2281
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
 msgstr "<i>Naprave, ki jih GTK ne zazna kot zaslone na dotik, lahko nastavite, da se obnašajo tako, kot da bi bili.</i>"
 
-#: ../ui/settings.glade:2277
+#: ../ui/settings.glade:2341
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
 msgstr "<i>Če vaša naprava ne podpira zaznavanja rok, lahko Xournal++ onemogoči zaslon na dotik, ko je pisalo blizu le-tega.</i>"
 
-#: ../ui/settings.glade:2291
+#: ../ui/settings.glade:2355
 msgid "Enable internal Hand Recognition"
 msgstr "Omogoči notranje prepoznavanje rok"
 
-#: ../ui/settings.glade:2321
+#: ../ui/settings.glade:2385
 msgid "Disabling Method"
 msgstr "Metoda onemogočanja"
 
-#: ../ui/settings.glade:2332
+#: ../ui/settings.glade:2396
 msgid "Timeout"
 msgstr "Časovna omejitev"
 
-#: ../ui/settings.glade:2346
+#: ../ui/settings.glade:2410
 msgid "Autodetect"
 msgstr "Samozaznava"
 
-#: ../ui/settings.glade:2375
+#: ../ui/settings.glade:2439
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "s <i>(po tem se bo zaslon na dotik znova aktiviral)</i>"
 
-#: ../ui/settings.glade:2420
+#: ../ui/settings.glade:2484
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
 msgstr "<i>Določite ukaze, ki se kličejo, ko se sproži prepoznavanje rok. Ukazi bodo izvedeni v niti uporabniškega vmesnika, poskrbite, da ne blokirajo!</i>"
 
-#: ../ui/settings.glade:2443
+#: ../ui/settings.glade:2507
 msgid "Enable"
 msgstr "Omogoči"
 
-#: ../ui/settings.glade:2454
+#: ../ui/settings.glade:2518
 msgid "Disable"
 msgstr "Onemogoči"
 
-#: ../ui/settings.glade:2487 ../ui/settings.glade:2500
+#: ../ui/settings.glade:2551 ../ui/settings.glade:2564
 msgid "Test"
 msgstr "Preizkus"
 
-#: ../ui/settings.glade:2533
+#: ../ui/settings.glade:2597
 msgid "Custom Commands (for Method \"Custom\")"
 msgstr "Ukazi po meri (za metodo \"Po meri\")"
 
-#: ../ui/settings.glade:2556
+#: ../ui/settings.glade:2620
 msgid "Hand Recognition"
 msgstr "Zaznavanje rok"
 
-#: ../ui/settings.glade:2583
+#: ../ui/settings.glade:2647
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
 msgstr "<i>Povlecite prste skupaj, da povečate strani dnevnika.</i>"
 
-#: ../ui/settings.glade:2597
+#: ../ui/settings.glade:2661
 msgid "Enable zoom gestures (requires restart)"
 msgstr "Omogoči poteze povečave (potreben je vnovičen zagon)"
 
-#: ../ui/settings.glade:2615
+#: ../ui/settings.glade:2679
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues.\n"
 "This setting can make it easier to draw with touch. "
 msgstr "Pri risanju z dotikom lahko poteze z dvema prstoma, namenjene premikanju pogleda, namesto tega povzročijo povečavo, kar povzroči težave pri delovanju.\n"
 "Ta nastavitev lahko olajša risanje z dotikom. "
 
-#: ../ui/settings.glade:2621
+#: ../ui/settings.glade:2685
 msgid "Start zooming after a distance "
 msgstr "Začni povečevati po razdalji "
 
-#: ../ui/settings.glade:2633
+#: ../ui/settings.glade:2697
 msgid "1.0"
 msgstr "1.0"
 
-#: ../ui/settings.glade:2648
+#: ../ui/settings.glade:2712
 msgid "% greater than the initial distance between the two touches."
 msgstr "% večja od začetne razdalje med obema dotikoma."
 
-#: ../ui/settings.glade:2686
+#: ../ui/settings.glade:2750
 msgid "Zoom Gestures"
 msgstr "Geste za približevanje"
 
-#: ../ui/settings.glade:2713
+#: ../ui/settings.glade:2777
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
 msgstr "<i>Uporabljajte zaslon na dotik kot pero, ki podpira večkratni dotik.</i>"
 
-#: ../ui/settings.glade:2727
+#: ../ui/settings.glade:2791
 msgid "Enable touch drawing"
 msgstr "Omogoči risanje z dotikom"
 
-#: ../ui/settings.glade:2732
+#: ../ui/settings.glade:2796
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
 msgstr "Uporabite dva prsta za premikanje/povečanje in en prst za uporabo izbranega orodja."
 
-#: ../ui/settings.glade:2747
+#: ../ui/settings.glade:2811
 msgid "Touch Drawing"
 msgstr "Risanje z dotikom"
 
-#: ../ui/settings.glade:2774
+#: ../ui/settings.glade:2838
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
 msgstr "<i>Če onemogočite drsenje po zaslonu na dotik, vgrajeno v GTK, lahko odpravite težave pri drsenju na nekaterih platformah. Razmislite o spremembi te nastavitve, če opazite preskoke/nenadne spremembe v položaju drsenja, ko se poskušate pomikati z zaslonom na dotik.</i>"
 
-#: ../ui/settings.glade:2788
+#: ../ui/settings.glade:2852
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
 msgstr "Onemogočite vgrajeno inercialno funkcijo drsenja GTK (zahteva ponovni zagon)."
 
-#: ../ui/settings.glade:2807
+#: ../ui/settings.glade:2871
 msgid "Touch Scrolling"
 msgstr "Drsenje z dotikom"
 
-#: ../ui/settings.glade:2894
+#: ../ui/settings.glade:2958
 msgid "Show Menubar on Startup"
 msgstr "Pokaži menijsko vrstico ob zagonu"
 
-#: ../ui/settings.glade:2912
+#: ../ui/settings.glade:2976
 msgid "<i>Toggle visibility of menubar with F10</i>"
 msgstr "<i>Preklopite vidnost menijske vrstice s F10</i>"
 
-#: ../ui/settings.glade:2930
+#: ../ui/settings.glade:2994
 msgid "Show filepath in title bar"
 msgstr "Prikaži pot datoteke v naslovni vrstici"
 
-#: ../ui/settings.glade:2945
+#: ../ui/settings.glade:3009
 msgid "Show page number in title bar"
 msgstr "Pokaži številko strani v naslovni vrstici"
 
-#: ../ui/settings.glade:2985
+#: ../ui/settings.glade:3049
 msgid "Border color for current page and other selections"
 msgstr "Barva obrobe trenutne strani in drugih izbir"
 
-#: ../ui/settings.glade:2999
+#: ../ui/settings.glade:3063
 msgid "Border color"
 msgstr "Barva obrobe"
 
-#: ../ui/settings.glade:3012
+#: ../ui/settings.glade:3076
 msgid "Background color between pages"
 msgstr "Barva ozadja med stranmi"
 
-#: ../ui/settings.glade:3038
+#: ../ui/settings.glade:3102
 msgid "Selection Color (Text, Stroke Selection etc.)"
 msgstr "Barva izbire (besedilo, izbira črte itd.)"
 
-#: ../ui/settings.glade:3064
+#: ../ui/settings.glade:3128
 msgid "Active Selection Color (Search Results etc.)"
 msgstr "Barva aktivnega izbora (rezultati iskanja itd.)"
 
-#: ../ui/settings.glade:3086
+#: ../ui/settings.glade:3150
 msgid "Use available Stock Icons (requires restart)"
 msgstr "Uporabite razpoložljive ikone (potreben je ponovni zagon)"
 
-#: ../ui/settings.glade:3107
+#: ../ui/settings.glade:3171
 msgid "Icon Theme"
 msgstr "Tema ikone"
 
-#: ../ui/settings.glade:3122
+#: ../ui/settings.glade:3186
 msgid "Color"
 msgstr "barva"
 
-#: ../ui/settings.glade:3136
+#: ../ui/settings.glade:3200
 msgid "(requires restart)"
 msgstr "(potreben je ponovni zagon)"
 
-#: ../ui/settings.glade:3159
+#: ../ui/settings.glade:3223
 msgid "Theme Variant:"
 msgstr "Varijacije teme:"
 
-#: ../ui/settings.glade:3179
+#: ../ui/settings.glade:3243
 msgid "Use system default"
 msgstr "Uporabi privzeto"
 
-#: ../ui/settings.glade:3180
+#: ../ui/settings.glade:3244
 msgid "Force light theme"
 msgstr "Vsili svetlo temo"
 
-#: ../ui/settings.glade:3181
+#: ../ui/settings.glade:3245
 msgid "Force dark theme"
 msgstr "Vsili temno temo"
 
-#: ../ui/settings.glade:3194
+#: ../ui/settings.glade:3258
 msgid "(this may not work, depending on your system theme)"
 msgstr "(morda ne bo delovalo glede na vašo sistemsko temo)"
 
-#: ../ui/settings.glade:3211
+#: ../ui/settings.glade:3275
 msgid "Show shadow behind pages"
 msgstr ""
 
-#: ../ui/settings.glade:3230
+#: ../ui/settings.glade:3294
 msgid "Colors"
 msgstr "Barve"
 
-#: ../ui/settings.glade:3246
+#: ../ui/settings.glade:3310
 msgid "Global"
 msgstr "Splošno"
 
-#: ../ui/settings.glade:3274
+#: ../ui/settings.glade:3338
 msgid "Recolor Drawing Area (might introduce lags when moving selections)"
 msgstr ""
 
-#: ../ui/settings.glade:3279
+#: ../ui/settings.glade:3343
 msgid "Recolors the drawing area so that light regions get the \"Light Color\" and dark regions get the \"Dark Color\". Other colors are interpolated accordingly. Can be use to implement a dark-mode."
 msgstr ""
 
-#: ../ui/settings.glade:3289
+#: ../ui/settings.glade:3353
 msgid "Recolor Previews in the Sidebar"
 msgstr ""
 
-#: ../ui/settings.glade:3294
+#: ../ui/settings.glade:3358
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) the same way as the drawing area."
 msgstr ""
 
-#: ../ui/settings.glade:3308
+#: ../ui/settings.glade:3372
 msgid "The color light regions are translated to\n"
 "(use a dark color for a dark-mode)"
 msgstr ""
 
-#: ../ui/settings.glade:3323
+#: ../ui/settings.glade:3387
 msgid "The color dark regions are translated to\n"
 "(use a light color for dark-mode)"
 msgstr ""
 
-#: ../ui/settings.glade:3339
+#: ../ui/settings.glade:3403
 msgid "Dark Color"
 msgstr ""
 
-#: ../ui/settings.glade:3353
+#: ../ui/settings.glade:3417
 msgid "Light Color"
 msgstr ""
 
-#: ../ui/settings.glade:3366
+#: ../ui/settings.glade:3430
 msgid "Recoloring (allows theming)"
 msgstr ""
 
-#: ../ui/settings.glade:3398
+#: ../ui/settings.glade:3462
 msgid "Cursor icon for pen"
 msgstr "Ikona kazalca za pisalo"
 
-#: ../ui/settings.glade:3413
+#: ../ui/settings.glade:3477
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
 msgstr "Brez ikone"
 
-#: ../ui/settings.glade:3414
+#: ../ui/settings.glade:3478
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
 msgstr "Ikona majhne pike"
 
-#: ../ui/settings.glade:3415
+#: ../ui/settings.glade:3479
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
 msgstr "Ikona velikega pisala"
 
-#: ../ui/settings.glade:3416
+#: ../ui/settings.glade:3480
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
 msgstr "Sistemski kazalec"
 
-#: ../ui/settings.glade:3441
+#: ../ui/settings.glade:3505
 msgid "Highlight cursor position"
 msgstr "Poudari položaj kazalca"
 
-#: ../ui/settings.glade:3446
+#: ../ui/settings.glade:3510
 msgid "Draw a transparent circle around the cursor"
 msgstr "Nariši prozoren krog okoli kazalca"
 
-#: ../ui/settings.glade:3464 ../ui/settings.glade:3607
+#: ../ui/settings.glade:3528 ../ui/settings.glade:3671
 msgid "Choose the color to use for \"Highlight cursor position\""
 msgstr "Izberi barvo za \"Poudari položaj kazalca\""
 
-#: ../ui/settings.glade:3478
+#: ../ui/settings.glade:3542
 msgid "Circle Color"
 msgstr "Barva kroga"
 
-#: ../ui/settings.glade:3502 ../ui/settings.glade:3553
-#: ../ui/settings.glade:5045
+#: ../ui/settings.glade:3566 ../ui/settings.glade:3617
+#: ../ui/settings.glade:5109
 msgid "pixels"
 msgstr "slikovnih pik"
 
-#: ../ui/settings.glade:3530
+#: ../ui/settings.glade:3594
 msgid "Radius"
 msgstr "Polmer"
 
-#: ../ui/settings.glade:3566
+#: ../ui/settings.glade:3630
 msgid "30"
 msgstr "30"
 
-#: ../ui/settings.glade:3582
+#: ../ui/settings.glade:3646
 msgid "Border Width"
 msgstr "Širina obrobe"
 
-#: ../ui/settings.glade:3621
+#: ../ui/settings.glade:3685
 msgid "Border Color"
 msgstr "Barva obrobe"
 
-#: ../ui/settings.glade:3653
+#: ../ui/settings.glade:3717
 msgid "Cursor"
 msgstr "Kazalec"
 
-#: ../ui/settings.glade:3678
+#: ../ui/settings.glade:3742
 msgid "Show sidebar on the right side"
 msgstr "Pokaži stransko vrstico na desni"
 
-#: ../ui/settings.glade:3693
+#: ../ui/settings.glade:3757
 msgid "Show vertical scrollbar on the left side"
 msgstr "Pokaži navpični drsnik na levi"
 
-#: ../ui/settings.glade:3712
+#: ../ui/settings.glade:3776
 msgid "Left / Right-Handed"
 msgstr "Levo / Desnoročen"
 
-#: ../ui/settings.glade:3737
+#: ../ui/settings.glade:3801
 msgid "Page numbering  "
 msgstr "Številčenje strani  "
 
-#: ../ui/settings.glade:3753
+#: ../ui/settings.glade:3817
 msgid "Below preview"
 msgstr "Pod predogledom"
 
-#: ../ui/settings.glade:3754
+#: ../ui/settings.glade:3818
 msgid "Circle background"
 msgstr "Ozadje kroga"
 
-#: ../ui/settings.glade:3755
+#: ../ui/settings.glade:3819
 msgid "Square background"
 msgstr "Ozadje kvadrata"
 
-#: ../ui/settings.glade:3775
+#: ../ui/settings.glade:3839
 msgid "Sidebar"
 msgstr "Stranska vrstica"
 
-#: ../ui/settings.glade:3801
+#: ../ui/settings.glade:3865
 msgid "Hide the horizontal scrollbar"
 msgstr "Skrij vodoravni drsnik"
 
-#: ../ui/settings.glade:3816
+#: ../ui/settings.glade:3880
 msgid "Hide the vertical scrollbar"
 msgstr "Skrij navpični drsnik"
 
-#: ../ui/settings.glade:3831
+#: ../ui/settings.glade:3895
 msgid "Disable scrollbar fade out"
 msgstr "Onemogoči bledenje drsnika"
 
-#: ../ui/settings.glade:3849
+#: ../ui/settings.glade:3913
 msgid "Scrollbars"
 msgstr "Drsniki"
 
-#: ../ui/settings.glade:3903
+#: ../ui/settings.glade:3967
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
 msgstr "Ko je element izbran in premaknjen mimo vidnega dela platna, pomaknite zaslon za količino, ki je enaka temu odstotku vidnega dela platna. "
 
-#: ../ui/settings.glade:3905
+#: ../ui/settings.glade:3969
 msgid "Base speed"
 msgstr "Osnovna hitrost"
 
-#: ../ui/settings.glade:3916
+#: ../ui/settings.glade:3980
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
 msgstr "Hitrost premikanja pomnožite s to vrednostjo glede na to, koliko izbranega elementa je izven vidnega polja."
 
-#: ../ui/settings.glade:3918
+#: ../ui/settings.glade:3982
 msgid "Max multiplier"
 msgstr "Največje množenje"
 
-#: ../ui/settings.glade:3931
+#: ../ui/settings.glade:3995
 msgid "Selection Edge Panning"
 msgstr "Premikanje robov izbire"
 
-#: ../ui/settings.glade:3956 ../ui/settings.glade:4030
+#: ../ui/settings.glade:4020 ../ui/settings.glade:4094
 #: ../ui/mainmenubar.xml:205
 msgid "Show Menubar"
 msgstr "Pokaži menijsko vrstico"
 
-#: ../ui/settings.glade:3971 ../ui/settings.glade:4045
+#: ../ui/settings.glade:4035 ../ui/settings.glade:4109
 msgid "Show Toolbar"
 msgstr "Prikaži orodno vrstico"
 
-#: ../ui/settings.glade:3986 ../ui/settings.glade:4075
+#: ../ui/settings.glade:4050 ../ui/settings.glade:4139
 #: ../ui/mainmenubar.xml:210
 msgid "Show Sidebar"
 msgstr "Prikaži stransko vrstico"
 
-#: ../ui/settings.glade:4005 ../ui/mainmenubar.xml:193
+#: ../ui/settings.glade:4069 ../ui/mainmenubar.xml:193
 msgid "Fullscreen"
 msgstr "Celozaslonski način"
 
-#: ../ui/settings.glade:4060
+#: ../ui/settings.glade:4124
 msgid "Go Fullscreen"
 msgstr "Celozaslonski način"
 
-#: ../ui/settings.glade:4095
+#: ../ui/settings.glade:4159
 msgid "Select toolbar:"
 msgstr "Izberite orodno vrstico:"
 
-#: ../ui/settings.glade:4128
+#: ../ui/settings.glade:4192
 msgid "Presentation Mode"
 msgstr "Predstavitveni način"
 
-#: ../ui/settings.glade:4157
+#: ../ui/settings.glade:4221
 msgid "Pre-load pages before"
 msgstr "Predhodno naloži strani pred"
 
-#: ../ui/settings.glade:4169
+#: ../ui/settings.glade:4233
 msgid "Pre-load pages after"
 msgstr "Predhodno naloži strani za"
 
-#: ../ui/settings.glade:4206
+#: ../ui/settings.glade:4270
 msgid "Clear cached paged while scrolling"
 msgstr "Počisti predpomnjeno stran med pomikanjem"
 
-#: ../ui/settings.glade:4233
+#: ../ui/settings.glade:4297
 msgid "Performance"
 msgstr "Učinkovitost delovanja"
 
-#: ../ui/settings.glade:4264
+#: ../ui/settings.glade:4328
 msgid "View"
 msgstr "Pogled"
 
-#: ../ui/settings.glade:4313
+#: ../ui/settings.glade:4377
 msgid "Speed for Ctrl + Scroll"
 msgstr "Hitrost za Ctrl + drsenje"
 
-#: ../ui/settings.glade:4340
+#: ../ui/settings.glade:4404
 msgid "Speed for a Zoomstep"
 msgstr "Hitrost za korak povečave"
 
-#: ../ui/settings.glade:4400
+#: ../ui/settings.glade:4464
 msgid "Zoom Speed"
 msgstr "Hitrost povečave"
 
-#: ../ui/settings.glade:4427
+#: ../ui/settings.glade:4491
 msgid "<i>To make sure on 100% zoom the size of elements is natural.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4447
+#: ../ui/settings.glade:4511
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
 msgstr "<i>Na zaslon postavite ravnilo in premikajte drsnik, dokler se ravnili ne ujemata.</i>"
 
-#: ../ui/settings.glade:4463
+#: ../ui/settings.glade:4527
 msgid "Automatic"
 msgstr ""
 
-#: ../ui/settings.glade:4520
+#: ../ui/settings.glade:4584
 msgid "The unit of the ruler is cm"
 msgstr "Enota ravnila je cm"
 
-#: ../ui/settings.glade:4541
+#: ../ui/settings.glade:4605
 msgid "Display DPI Calibration"
 msgstr "Pokaži DPI kalibracijo"
 
-#: ../ui/settings.glade:4572
+#: ../ui/settings.glade:4636
 msgid "Zoom"
 msgstr "Povečaj"
 
-#: ../ui/settings.glade:4621
+#: ../ui/settings.glade:4685
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
 msgstr "<i>Če poleg strani dodate dodaten prostor, lahko izberete območje zaslona, ​​na katerem želite delati.</i>"
 
-#: ../ui/settings.glade:4744
+#: ../ui/settings.glade:4808
 msgid "Add additional horizontal space"
 msgstr "Dodaj še več vodoravnega prostora"
 
-#: ../ui/settings.glade:4760
+#: ../ui/settings.glade:4824
 msgid "Add additional vertical space"
 msgstr "Dodaj še več navpičnega prostora"
 
-#: ../ui/settings.glade:4778
+#: ../ui/settings.glade:4842
 msgid "<i>or</i>"
 msgstr "<i>ali</i>"
 
-#: ../ui/settings.glade:4790
+#: ../ui/settings.glade:4854
 msgid "Unlimited scrolling"
 msgstr "Neomejeno drsenje"
 
-#: ../ui/settings.glade:4814
+#: ../ui/settings.glade:4878
 msgid "<i>The amount is specified in pixels.</i>"
 msgstr "<i>Količina je podana v pikslih.</i>"
 
-#: ../ui/settings.glade:4846
+#: ../ui/settings.glade:4910
 msgid "Scrolling outside the page"
 msgstr "Drsenje zunaj strani"
 
-#: ../ui/settings.glade:4873
+#: ../ui/settings.glade:4937
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr "Zamakni prvo stran za toliko strani, ko je omogočeno <b>Strani s pari</b>"
 
-#: ../ui/settings.glade:4874
+#: ../ui/settings.glade:4938
 msgid "First Page Offset "
 msgstr "Odmik prve strani "
 
-#: ../ui/settings.glade:4887
+#: ../ui/settings.glade:4951
 msgid "Usually 0 or 1"
 msgstr "Običajno 0 ali 1"
 
-#: ../ui/settings.glade:4906
+#: ../ui/settings.glade:4970
 msgid "Paired Pages"
 msgstr "Strani s pari"
 
-#: ../ui/settings.glade:4932
+#: ../ui/settings.glade:4996
 msgid "when scrolling to end of last page"
 msgstr "ko se pomaknete na konec zadnje strani"
 
-#: ../ui/settings.glade:4947
+#: ../ui/settings.glade:5011
 msgid "when drawing on last page"
 msgstr "pri risanju na zadnji strani"
 
-#: ../ui/settings.glade:4962
+#: ../ui/settings.glade:5026
 msgid "disabled"
 msgstr "onemogočeno"
 
-#: ../ui/settings.glade:4980
+#: ../ui/settings.glade:5044
 msgid "Automatically Add Empty Last Page (excluding PDFs)"
 msgstr "Samodejno dodaj prazno zadnjo stran (razen PDF-jev)"
 
-#: ../ui/settings.glade:5004
+#: ../ui/settings.glade:5068
 msgid "Enable  with determination radius of "
 msgstr "Omogoči z določitvenim polmerom "
 
-#: ../ui/settings.glade:5009
+#: ../ui/settings.glade:5073
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
@@ -3697,169 +3715,169 @@ msgstr "Vlečenje LEVO od začetne točke deluje, kot da držite tipko shift.\n"
 "Določitveni radij: polmer, pri katerem se bodo modifikatorji zaklenili, dokler risanje ni končano.\n\n"
 "<i>Uporabno za delovanje brez tipkovnice.</i>"
 
-#: ../ui/settings.glade:5059
+#: ../ui/settings.glade:5123
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Orodja za risanje – nastavitev modifikatorjev glede na smer risanja (poskusno)"
 
-#: ../ui/settings.glade:5076
+#: ../ui/settings.glade:5140
 msgid "Preserve line width"
 msgstr "Ohrani širino črte"
 
-#: ../ui/settings.glade:5081
+#: ../ui/settings.glade:5145
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
 msgstr "Po spreminjanju velikosti izbora bo širina črte vseh potez enaka kot pred operacijo spreminjanja velikosti. "
 
-#: ../ui/settings.glade:5092
+#: ../ui/settings.glade:5156
 msgid "Resizing"
 msgstr "Spreminjanje velikosti"
 
-#: ../ui/settings.glade:5128
+#: ../ui/settings.glade:5192
 msgid "Rotation snapping tolerance"
 msgstr "Toleranca zaskoka vrtenja"
 
-#: ../ui/settings.glade:5140
+#: ../ui/settings.glade:5204
 msgid "Grid snapping tolerance"
 msgstr "Toleranca zaskoka mreže"
 
-#: ../ui/settings.glade:5182
+#: ../ui/settings.glade:5246
 msgid "Grid size"
 msgstr "Velikost mreže"
 
-#: ../ui/settings.glade:5213
+#: ../ui/settings.glade:5277
 msgid "Use snapping for recognized shapes"
 msgstr "Za prepoznavne oblike uporabite zaskok"
 
-#: ../ui/settings.glade:5217
+#: ../ui/settings.glade:5281
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
 msgstr "Če je aktivirano, bodo oblike, ki jih je prepoznalo prepoznavanje oblik, samodejno pritrjene na mrežo. To lahko povzroči nepričakovane rezultate, če imate med pisanjem vklopljeno prepoznavanje oblik."
 
-#: ../ui/settings.glade:5232
+#: ../ui/settings.glade:5296
 msgid "Snapping"
 msgstr "Pripenjanje"
 
-#: ../ui/settings.glade:5260
+#: ../ui/settings.glade:5324
 msgid "Minimum Stroke Size"
 msgstr "Najmanjša velikost poteze"
 
-#: ../ui/settings.glade:5315
+#: ../ui/settings.glade:5379
 msgctxt "Short taps/clicks will trigger special actions"
 msgid "Enable Tap action"
 msgstr "Omogoči dejanje tapkanja"
 
-#: ../ui/settings.glade:5320
+#: ../ui/settings.glade:5384
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr "Ne riši za kratke vnose in dolžine, razen če pridejo v hitrem zaporedju. Namesto tega prikaži lebdečo orodjarno."
 
-#: ../ui/settings.glade:5332
+#: ../ui/settings.glade:5396
 msgid "Time limit (ms)"
 msgstr ""
 
-#: ../ui/settings.glade:5344
+#: ../ui/settings.glade:5408
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5364
+#: ../ui/settings.glade:5428
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5384
+#: ../ui/settings.glade:5448
 msgid "Length limit (mm)"
 msgstr ""
 
-#: ../ui/settings.glade:5395
+#: ../ui/settings.glade:5459
 msgid "Frequency limit (ms)"
 msgstr ""
 
-#: ../ui/settings.glade:5407
+#: ../ui/settings.glade:5471
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
 "<i>Recommended: 500ms</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5424
+#: ../ui/settings.glade:5488
 msgid "Try to select object first."
 msgstr "Najprej poskusi izbrati predmet."
 
-#: ../ui/settings.glade:5429 ../ui/settings.glade:5459
+#: ../ui/settings.glade:5493 ../ui/settings.glade:5523
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "Najprej poskusi izbrati predmet; če ni izbrano nič, pokaži plavajočo orodjarno, če je omogočena."
 
-#: ../ui/settings.glade:5442
+#: ../ui/settings.glade:5506
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr "Vsi trije pogoji morajo biti izpolnjeni, preden potezo zanemarim.\n"
 "Mora biti kratka po času in dolžini in ne moremo prezreti še ene nedavne poteze."
 
-#: ../ui/settings.glade:5445
+#: ../ui/settings.glade:5509
 msgid "Settings:"
 msgstr "Nastavitve:"
 
-#: ../ui/settings.glade:5454
+#: ../ui/settings.glade:5518
 msgid "Show Floating Toolbox"
 msgstr "Pokaži plavajočo orodjarno"
 
-#: ../ui/settings.glade:5473
+#: ../ui/settings.glade:5537
 msgid "Action on Tool Tap"
 msgstr "Dejanje ob dotiku orodja"
 
-#: ../ui/settings.glade:5501
+#: ../ui/settings.glade:5565
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality.\n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr "<i>Pogosteje znova upodobi ozadja PDF med povečavo za boljšo kakovost upodobitve.\n"
 "<b>Opomba:</b> To ne bi smelo vplivati ​​na kakovost tiskanja.</i>"
 
-#: ../ui/settings.glade:5523
+#: ../ui/settings.glade:5587
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr "Pri povečavi PDF-ja visoke ločljivosti lahko vsako ponovno upodabljanje traja dolgo. Če to nastavite na veliko vrednost, se ta ponovna upodabljanja redkeje zgodijo.\n\n"
 "To nastavite na 0 %, če želite vedno znova upodabljati ob povečavi."
 
-#: ../ui/settings.glade:5526
+#: ../ui/settings.glade:5590
 msgid "Re-render when the page's zoom changes by more than "
 msgstr "Ponovno upodobi, ko se povečava strani spremeni za več kot "
 
-#: ../ui/settings.glade:5539
+#: ../ui/settings.glade:5603
 msgid "0.00"
 msgstr "0.00"
 
-#: ../ui/settings.glade:5556
+#: ../ui/settings.glade:5620
 msgid "%."
 msgstr "%."
 
-#: ../ui/settings.glade:5577
+#: ../ui/settings.glade:5641
 msgid "PDF Cache"
 msgstr "Predpomnilnik PDF"
 
-#: ../ui/settings.glade:5608
+#: ../ui/settings.glade:5672
 msgid "Drawing Area"
 msgstr "Risalno območje"
 
-#: ../ui/settings.glade:5655
+#: ../ui/settings.glade:5719
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
 msgstr "<i>Izberite orodje in nastavitve, če pritisnete Privzeti Gumb.</i>"
 
-#: ../ui/settings.glade:5707
+#: ../ui/settings.glade:5771
 msgid "<b>Default tool</b>"
 msgstr ""
 
-#: ../ui/settings.glade:5743
+#: ../ui/settings.glade:5807
 msgid "<i>The laser pointer allows to write strokes that will fade out after a short while.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5764
+#: ../ui/settings.glade:5828
 msgid "Fade out delay (in ms)"
 msgstr ""
 
-#: ../ui/settings.glade:5816
+#: ../ui/settings.glade:5880
 msgid "<b>Laser pointer</b>"
 msgstr ""
 
-#: ../ui/settings.glade:5856
+#: ../ui/settings.glade:5920
 msgid "Tools"
 msgstr "Orodja"
 
-#: ../ui/settings.glade:5909
+#: ../ui/settings.glade:5973
 msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required).\n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
@@ -3869,89 +3887,89 @@ msgstr "<i>\n"
 "Onemogočanje zvoka za posamezno sejo lahko dosežete z zastavico <tt>--disable-audio</tt> v ukazni vrstici.\n"
 "</i>"
 
-#: ../ui/settings.glade:5925
+#: ../ui/settings.glade:5989
 msgid "Disable Audio"
 msgstr "Onemogoči zvok"
 
-#: ../ui/settings.glade:5947
+#: ../ui/settings.glade:6011
 msgid "Enable or Disable Audio"
 msgstr "Omogoči ali onemogoči zvok"
 
-#: ../ui/settings.glade:5974
+#: ../ui/settings.glade:6038
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr "<i>Zvočni posnetki so trenutno shranjeni v ločeni mapi in nanje se sklicuje dnevnik.</i>"
 
-#: ../ui/settings.glade:5993 ../ui/settings.glade:6029
+#: ../ui/settings.glade:6057 ../ui/settings.glade:6093
 msgid "Storage Folder"
 msgstr "Mapa za shranjevanje"
 
-#: ../ui/settings.glade:6008
+#: ../ui/settings.glade:6072
 msgid "Select Folder"
 msgstr "Izberi mapo"
 
-#: ../ui/settings.glade:6056
+#: ../ui/settings.glade:6120
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr "<i>Določite zvočne naprave za snemanje in predvajanje zvočnih prilog.\n"
 "Če je na voljo, izberite <small><tt>impulz</tt></small> kot vhodno/izhodno napravo.</i>"
 
-#: ../ui/settings.glade:6080
+#: ../ui/settings.glade:6144
 msgid "Input Device"
 msgstr "Vhodna naprava"
 
-#: ../ui/settings.glade:6102
+#: ../ui/settings.glade:6166
 msgid "Output Device"
 msgstr "Izhodna naprava"
 
-#: ../ui/settings.glade:6133
+#: ../ui/settings.glade:6197
 msgid "Audio Devices"
 msgstr "Zvočne naprave"
 
-#: ../ui/settings.glade:6162
+#: ../ui/settings.glade:6226
 msgid "Sample Rate"
 msgstr "Hitrost vzorčenja"
 
-#: ../ui/settings.glade:6173
+#: ../ui/settings.glade:6237
 msgid "Gain"
 msgstr "Jakost"
 
-#: ../ui/settings.glade:6220
+#: ../ui/settings.glade:6284
 msgid "Recording Quality"
 msgstr "Kvaliteta snemanja"
 
-#: ../ui/settings.glade:6246
+#: ../ui/settings.glade:6310
 msgid "Default Seek Time (in seconds)"
 msgstr "Privzeti čas iskanja (v sekundah)"
 
-#: ../ui/settings.glade:6259
+#: ../ui/settings.glade:6323
 msgid "1,00"
 msgstr "1,00"
 
-#: ../ui/settings.glade:6278
+#: ../ui/settings.glade:6342
 msgid "Playback Settings"
 msgstr "Nastavitve predvajanja"
 
-#: ../ui/settings.glade:6292
+#: ../ui/settings.glade:6356
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr "<i>Spremembe obveljajo samo za nove posnetke in predvajanja.</i>"
 
-#: ../ui/settings.glade:6323
+#: ../ui/settings.glade:6387
 msgid "Audio Recording"
 msgstr "Zvočni posnetek"
 
-#: ../ui/settings.glade:6396
+#: ../ui/settings.glade:6460
 msgid "<i>Select language (requires restart)</i>"
 msgstr "<i>Izberi jezik (potreben je ponovni zagon).</i>"
 
-#: ../ui/settings.glade:6428 ../ui/settings.glade:6474
+#: ../ui/settings.glade:6492 ../ui/settings.glade:6538
 msgid "Language"
 msgstr "Jezik"
 
-#: ../ui/settings.glade:6444
+#: ../ui/settings.glade:6508
 msgid "Language Settings"
 msgstr "Jezikovne nastavitve"
 
-#: ../ui/settings.glade:6498
+#: ../ui/settings.glade:6562
 msgid "Palette"
 msgstr "Paleta"
 
