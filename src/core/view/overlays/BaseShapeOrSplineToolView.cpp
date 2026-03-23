@@ -41,7 +41,7 @@ cairo_t* BaseShapeOrSplineToolView::prepareContext(cairo_t* cr) const {
         // https://github.com/xournalpp/xournalpp/issues/3709
         if (!mask.isInitialized()) {
             mask = createMask(cr);
-            const auto dashes = this->lineStyle.getDashesScaledToStrokeWidth(this->strokeWidth);
+            const auto& dashes = this->lineStyle.getDashes();
             Util::cairo_set_dash_from_vector(mask.get(), dashes, 0);
             cairo_set_line_width(mask.get(), this->strokeWidth);
             // operator is already set by createMask().
@@ -57,7 +57,7 @@ cairo_t* BaseShapeOrSplineToolView::prepareContext(cairo_t* cr) const {
         cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
         cairo_set_line_width(cr, this->strokeWidth);
 
-        const auto dashes = this->lineStyle.getDashesScaledToStrokeWidth(this->strokeWidth);
+        const auto& dashes = this->lineStyle.getDashes();
         Util::cairo_set_dash_from_vector(cr, dashes, 0.0);
         return cr;
     }

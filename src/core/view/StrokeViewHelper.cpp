@@ -21,7 +21,7 @@ void xoj::view::StrokeViewHelper::drawNoPressure(cairo_t* cr, const std::vector<
                                                  const LineStyle& lineStyle, double dashOffset) {
     cairo_set_line_width(cr, strokeWidth);
 
-    const auto dashes = lineStyle.getDashesScaledToStrokeWidth(strokeWidth);
+    const auto& dashes = lineStyle.getDashes();
 
     Util::cairo_set_dash_from_vector(cr, dashes, dashOffset);
 
