@@ -59,6 +59,13 @@ public:
      */
     std::vector<double> getDashesScaledToStrokeWidth(const double strokeWidth) const;
 
+    /**
+     * Scale dash vector to stroke width
+     *
+     * @param strokeWidth
+     */
+    void scaleDashesToStrokeWidth(const double strokeWidth);
+
 private:
     std::vector<double> dashes;
 };
