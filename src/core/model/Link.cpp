@@ -29,14 +29,6 @@ void Link::setUrl(std::string url) { this->url = url; }
 
 std::string Link::getUrl() const { return this->url; }
 
-void Link::setHighlighted(bool highlighted) { this->highlighted = highlighted; }
-
-bool Link::isHighlighted() const { return this->highlighted; }
-
-void Link::setSelected(bool selected) { this->selected = selected; }
-
-bool Link::isSelected() const { return this->selected; }
-
 void Link::setFont(const XojFont& font) { this->font = font; }
 
 auto Link::getFont() -> XojFont& { return this->font; }
@@ -105,8 +97,7 @@ ElementPtr Link::clone() const {
     link->height = this->height;
     link->snappedBounds = this->snappedBounds;
     link->sizeCalculated = this->sizeCalculated;
-    link->highlighted = this->highlighted;
-    return std::move(link);
+    return link;
 };
 
 void Link::calcSize() const {
