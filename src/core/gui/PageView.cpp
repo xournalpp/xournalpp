@@ -195,6 +195,7 @@ void XojPageView::startLink() {
     this->xournal->endLinkAllPages(this);
     if (this->linkHandler == nullptr) {
         this->linkHandler = std::make_unique<LinkHandler>(xournal);
+        this->overlayViews.emplace_back(this->linkHandler->createView(this));
     }
 }
 

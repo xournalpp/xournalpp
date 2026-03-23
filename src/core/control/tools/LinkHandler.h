@@ -11,12 +11,15 @@
 
 #pragma once
 
+#include <optional>
 #include <string>
+#include <vector>
 
 #include <gdk/gdk.h>  // for GdkEventKey
 #include <gtk/gtk.h>  // for GtkIMContext, GtkTextIter, GtkWidget
 
 #include "control/zoom/ZoomListener.h"  // for ZoomListener
+#include "model/OverlayBase.h"          // for OverlayBase
 #include "model/PageRef.h"              // for PageRef
 
 class Control;
@@ -24,7 +27,24 @@ class XournalView;
 class XojPageView;
 class LinkPopover;
 class Link;
-class LinkHandler: public ZoomListener {
+
+namespace xoj::util {
+template <class T>
+class Rectangle;
+}  // namespace xoj::util
+
+namespace xoj::util {
+template <class T>
+class DispatchPool;
+};
+
+namespace xoj::view {
+class OverlayView;
+class Repaintable;
+class LinkHighlightView;
+};  // namespace xoj::view
+
+class LinkHandler: public ZoomListener, public OverlayBase {
 public:
     LinkHandler(XournalView* view);
     ~LinkHandler();
@@ -43,12 +63,26 @@ public:
 
     void zoomChanged() override;
 
+    auto createView(xoj::view::Repaintable* parent) const -> std::unique_ptr<xoj::view::OverlayView>;
+
+    const std::shared_ptr<xoj::util::DispatchPool<xoj::view::LinkHighlightView>>& getViewPool() const {
+        return viewPool;
+    }
+
+    std::optional<xoj::util::Rectangle<double>> getHighlightRect() const;
+    std::optional<xoj::util::Rectangle<double>> getSelectRect() const;
+
 private:
     XournalView* view;
     Control* control;
+
+    auto isHighlighted(const Link* link) const -> bool;
+    auto isSelected(const Link* link) const -> bool;
 
     // There is always at most one selected link and one highlighted link.
     // Both can be present at the same time, when one link being selected another one is highlighted.
     std::unique_ptr<LinkPopover> highlightPopover;
     std::unique_ptr<LinkPopover> selectPopover;
+
+    std::shared_ptr<xoj::util::DispatchPool<xoj::view::LinkHighlightView>> viewPool;
 };

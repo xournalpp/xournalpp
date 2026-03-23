@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <optional>
 #include <string>
 
 #include <gtk/gtk.h>  // for GtkIMContext, GtkTextIter, GtkWidget
@@ -22,26 +23,31 @@ class XojPageView;
 
 class LinkPopover {
 public:
-    LinkPopover(XournalView* view);
+    LinkPopover(XournalView* view, bool markup);
     ~LinkPopover();
     void hide();
     void show();
     void popup();
     void popdown();
-    void updateLabel(bool markup);
-    void positionPopover();
-    bool hasLink();
+    bool hasLink() const;
+    std::optional<xoj::util::Rectangle<double>> getRect();
 
     void linkTo(Link* link);
-    inline GtkPopover* getPopover() const { return this->popover; }
     inline Link* getLink() const { return this->link; }
 
 private:
+    void positionPopover();
+    void updateRect();
+    void updateLabel();
+
+private:
     XournalView* view;
+    bool markup;
 
     GtkPopover* popover;
     GtkLabel* label = nullptr;
     Link* link = nullptr;
+    std::optional<xoj::util::Rectangle<double>> rect = std::nullopt;
 
     static constexpr int POPOVER_PADDING = 2;
 };
