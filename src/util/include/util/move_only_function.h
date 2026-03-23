@@ -36,6 +36,7 @@ public:
     move_only_function& operator=(std::nullptr_t) {
         invoke = nullptr;
         callable.reset();
+        return *this;
     }
 
     operator bool() const { return static_cast<bool>(invoke) && static_cast<bool>(callable); }
