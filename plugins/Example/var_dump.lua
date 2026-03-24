@@ -12,8 +12,8 @@ local function recurse(o, indent)
         local first = true
         for k,v in pairs(o) do
             if first == false then s = s .. ', \n' end
-            if type(k) ~= 'number' then k = string(k) end
-            s = s .. indent2 .. '[' .. k .. '] = ' .. recurse(v, indent2)
+            local l = type(k) == 'number' and k or string(k)
+            s = s .. indent2 .. '[' .. l .. '] = ' .. recurse(v, indent2)
             first = false
         end
         return s .. '\n' .. indent .. '}'
