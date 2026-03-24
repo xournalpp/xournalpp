@@ -449,7 +449,7 @@ void LoadHandler::parseBgPdf() {
     this->page->setBackgroundPdfPageNr(as_unsigned(pageno) - 1);
 
     if (LoadHandlerHelper::getAttribInt("pageorient", true, this, pageorient)) {
-        this->page->setPdfPageOrientation(pageorient);
+        this->page->setPdfPageOrientation(static_cast<PageOrientation>(pageorient));
     }
 
     if (!this->pdfFilenameParsed) {

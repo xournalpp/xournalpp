@@ -11,7 +11,7 @@
 using namespace xoj::view;
 
 PdfBackgroundView::PdfBackgroundView(double pageWidth, double pageHeight, size_t pageNo, PdfCache* pdfCache,
-                                     int pageOrient):
+                                     PageOrientation pageOrient):
         BackgroundView(pageWidth, pageHeight), pageNo(pageNo), pdfCache(pdfCache), pageOrient(pageOrient) {}
 
 void PdfBackgroundView::draw(cairo_t* cr) const {
@@ -27,20 +27,22 @@ void PdfBackgroundView::draw(cairo_t* cr) const {
         double pixelsPerPageUnit = matrix.xx * scaleX;
 
         // rotate page if necessary
-        if (pageOrient != 0) {
+        if (pageOrient != PageOrientation::UP) {
             cairo_save(cr);
             cairo_translate(cr, pageWidth / 2, pageHeight / 2);
-            cairo_rotate(cr, pageOrient * M_PI_2);
-            if (pageOrient != 2)
-                cairo_translate(cr, -pageHeight / 2, -pageWidth / 2);
-            else
+            cairo_rotate(cr, static_cast<int>(pageOrient) * M_PI_2);
+            if (pageOrient == PageOrientation::DOWN) {
                 cairo_translate(cr, -pageWidth / 2, -pageHeight / 2);
+            } else {
+                cairo_translate(cr, -pageHeight / 2, -pageWidth / 2);
+            }
         }
 
         pdfCache->render(cr, pageNo, pixelsPerPageUnit, pageWidth, pageHeight);
 
-        if (pageOrient != 0)
+        if (pageOrient != PageOrientation::UP) {
             cairo_restore(cr);
+        }
     } else {
         g_warning("PdfBackgroundView::draw Missing pdf cache: cannot render the pdf page");
         PdfCache::renderMissingPdfPage(cr, pageWidth, pageHeight);

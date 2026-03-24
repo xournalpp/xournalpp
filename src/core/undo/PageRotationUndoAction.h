@@ -14,6 +14,7 @@
 #include <string>  // for string
 
 #include "model/PageRef.h"  // for PageRef
+#include "model/XojPage.h"  // for PageOrientation
 
 #include "UndoAction.h"  // for UndoAction
 
@@ -22,7 +23,7 @@ class Control;
 
 class PageRotationUndoAction: public UndoAction {
 public:
-    PageRotationUndoAction(const PageRef& page, int oldPgOrientation, int newPgOrientation);
+    PageRotationUndoAction(const PageRef& page, PageOrientation oldPgOrientation, PageOrientation newPgOrientation);
     ~PageRotationUndoAction() override;
 
 public:
@@ -32,7 +33,7 @@ public:
     std::string getText() override;
 
 private:
-    bool applyRotation(Control* ctrl, int orientation);
-    int oldPgOrientation;
-    int newPgOrientation;
+    bool applyRotation(Control* ctrl, PageOrientation orientation);
+    PageOrientation oldPgOrientation;
+    PageOrientation newPgOrientation;
 };
