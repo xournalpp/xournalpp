@@ -155,20 +155,22 @@ void XojCairoPdfExport::exportPage(size_t page, bool exportPdfBackground) {
         auto pgOrient = p->getPdfPageOrientation();
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
-        if (pgOrient != 0) {
+        if (pgOrient != PageOrientation::UP) {
             cairo_save(cr);
             cairo_translate(cr, width / 2, height / 2);
-            cairo_rotate(cr, pgOrient * M_PI_2);
-            if (pgOrient != 2)
-                cairo_translate(cr, -height / 2, -width / 2);
-            else
+            cairo_rotate(cr, static_cast<int>(pgOrient) * M_PI_2);
+            if (pgOrient == PageOrientation::DOWN) {
                 cairo_translate(cr, -width / 2, -height / 2);
+            } else {
+                cairo_translate(cr, -height / 2, -width / 2);
+            }
         }
 
         popplerPage->renderForPrinting(cr);
 
-        if (pgOrient != 0)
+        if (pgOrient != PageOrientation::UP) {
             cairo_restore(cr);
+        }
     }
 
     xoj::view::BackgroundFlags flags;

@@ -9,14 +9,15 @@
 #include "util/Util.h"        // for npos
 #include "util/i18n.h"        // for _
 
-PageRotationUndoAction::PageRotationUndoAction(const PageRef& page, int oldPgOrientation, int newPgOrientation):
+PageRotationUndoAction::PageRotationUndoAction(const PageRef& page, PageOrientation oldPgOrientation,
+                                               PageOrientation newPgOrientation):
         UndoAction("PageRotationUndoAction"), oldPgOrientation(oldPgOrientation), newPgOrientation(newPgOrientation) {
     this->page = page;
 }
 
 PageRotationUndoAction::~PageRotationUndoAction() = default;
 
-auto PageRotationUndoAction::applyRotation(Control* control, int orientation) -> bool {
+auto PageRotationUndoAction::applyRotation(Control* control, PageOrientation orientation) -> bool {
     Document* doc = control->getDocument();
 
     doc->lock();
