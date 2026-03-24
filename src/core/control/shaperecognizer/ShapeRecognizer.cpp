@@ -6,6 +6,7 @@
 #include <span>      // for span
 #include <utility>   // for move
 #include <vector>    // for vector
+#include <numeric>   
 
 #include <glib.h>  // for g_message
 
@@ -37,6 +38,81 @@ inline double dist2(const Point& P, const Point& Q) {
     const double dx = P.x - Q.x;
     const double dy = P.y - Q.y;
     return dx * dx + dy * dy;
+}
+
+void ShapeRecognizer::reduceVerticesToFour(std::vector<Corner>& cornerList) {
+
+    if (cornerList.size() <= 5) {
+        return;
+    }
+    //save the first and last corner as these stay as they are 
+    Corner firstCorner = cornerList.front();
+    Corner lastCorner = cornerList.back();
+    
+    //create an array of indices for all interior points
+    std::vector<size_t> innerIndices(cornerList.size() - 2);
+    std::iota(innerIndices.begin(), innerIndices.end(), 1);
+    
+    //find the 3 interior corners with the most error 
+    std::nth_element(innerIndices.begin(), 
+                     innerIndices.begin() + 3, 
+                     innerIndices.end(),
+                     [&cornerList](size_t a, size_t b) {
+                         return cornerList[a].dmax > cornerList[b].dmax;
+                     });
+
+    innerIndices.resize(3);
+    std::sort(innerIndices.begin(), innerIndices.end());
+
+    std::vector<Corner> newCorners;
+    newCorners.reserve(5);
+    
+    newCorners.push_back(firstCorner);         
+    for (size_t idx : innerIndices) {
+        newCorners.push_back(cornerList[idx]); 
+    }
+    newCorners.push_back(lastCorner); 
+
+    cornerList = std::move(newCorners);
+    
+}
+
+double ShapeRecognizer::calculateDynamicEpsilon(const Point* pt, int last_idx) {
+    if (last_idx < 0)
+        return 1.0;
+
+    double minX = pt[0].x;
+    double maxX = pt[0].x;
+    double minY = pt[0].y;
+    double maxY = pt[0].y;
+
+    for (int i = 1; i <= last_idx; ++i) {
+        minX = std::min(minX, pt[i].x);
+        maxX = std::max(maxX, pt[i].x);
+        minY = std::min(minY, pt[i].y);
+        maxY = std::max(maxY, pt[i].y);
+    }
+
+    double strokeWidth = maxX - minX;
+    double strokeHeight = maxY - minY;
+    double shortestSide = std::min(strokeWidth, strokeHeight);
+
+    return std::max(1.0, shortestSide * 0.05);
+}
+
+double ShapeRecognizer::perpendicularDistance(const Point& p, const Point& a, const Point& b) {
+    const double dx = b.x - a.x;
+    const double dy = b.y - a.y;
+    const double magSq = dx * dx + dy * dy;
+
+    if (magSq < 1e-10) {
+        // a and b are effectively the same point.
+        // Return Euclidean distance: sqrt((p.x-a.x)^2 + (p.y-a.y)^2)
+        return std::hypot(p.x - a.x, p.y - a.y);
+    }
+
+    const double mag = std::sqrt(magSq);
+    return std::abs(dy * p.x - dx * p.y + b.x * a.y - b.y * a.x) / mag;
 }
 
 auto ShapeRecognizer::tryTriangle() -> std::unique_ptr<Stroke> {
@@ -175,97 +251,38 @@ auto ShapeRecognizer::tryRectangle() -> std::unique_ptr<Stroke> {
 }
 
 /**
- * Check if something is a polygonal line with at most nsides sides.
+ * Find polygonal corners using the Ramer-Douglas-Peucker algorithm.
  * [start, finish] (inclusive) specifies the range to operate on in the pt array.
+ * recursively obtains the farthest point between start and finish and
+ * if bigger than epsilon considers it a corner.
  */
-auto ShapeRecognizer::findPolygonal(const Point* pt, int start, int finish, int nsides, int* breaks, Inertia* ss)
-        -> int {
-    Inertia s;
-    int i1 = 0, i2 = 0, n1 = 0, n2 = 0;
-
-    if (finish == start) {
-        return 0;  // no way
+void ShapeRecognizer::findPolygonalRDP(const Point* pt, int start, int finish, double epsilon,
+                                       std::vector<Corner>& cornerList) {
+    if (epsilon <= 0.0) {
+        return;
     }
 
-    if (nsides <= 0) {
-        return 0;
-    }
+    double dmax = 0;
+    int index = start;
+    // loop for obtainig the farthest point
+    for (int i = start + 1; i < finish; i++) {
+        double d = perpendicularDistance(pt[i], pt[start], pt[finish]);
 
-    if (finish - start < 5) {
-        nsides = 1;  // too small for a polygon
-    }
-
-    // look for a linear piece that's big enough
-    int k = 0;
-    for (; k < nsides; k++) {
-        i1 = start + (k * (finish - start)) / nsides;
-        i2 = start + ((k + 1) * (finish - start)) / nsides;
-        s.calc(std::span<const Point>(pt + i1, pt + i2 + 1));
-        if (s.det() < SEGMENT_MAX_DET) {
-            break;
+        if (d > dmax) {
+            index = i;
+            dmax = d;
         }
     }
-    if (k == nsides) {
-        return 0;  // failed!
+    if (dmax > epsilon) {
+
+        findPolygonalRDP(pt, start, index, epsilon, cornerList);
+
+        if (std::none_of(cornerList.begin(), cornerList.end(), [index](const Corner& c) { return c.index == index; })) {
+            cornerList.push_back({index, dmax});
+        }
+
+        findPolygonalRDP(pt, index, finish, epsilon, cornerList);
     }
-
-    double det1{};
-    double det2{};
-    Inertia s1;
-    Inertia s2;
-
-    // grow the linear piece we found
-    while (true) {
-        if (i1 > start) {
-            s1 = s;
-            s1.increase(pt[i1 - 1], pt[i1], 1);
-            det1 = s1.det();
-        } else {
-            det1 = 1.0;
-        }
-
-        if (i2 < finish) {
-            s2 = s;
-            s2.increase(pt[i2], pt[i2 + 1], 1);
-            det2 = s2.det();
-        } else {
-            det2 = 1.0;
-        }
-
-        if (det1 < det2 && det1 < SEGMENT_MAX_DET) {
-            i1--;
-            s = s1;
-        } else if (det2 < det1 && det2 < SEGMENT_MAX_DET) {
-            i2++;
-            s = s2;
-        } else {
-            break;
-        }
-    }
-
-    if (i1 > start) {
-        n1 = findPolygonal(pt, start, i1, (i2 == finish) ? (nsides - 1) : (nsides - 2), breaks, ss);
-        if (n1 == 0) {
-            return 0;  // it doesn't work
-        }
-    } else {
-        n1 = 0;
-    }
-
-    breaks[n1] = i1;
-    breaks[n1 + 1] = i2;
-    ss[n1] = s;
-
-    if (i2 < finish) {
-        n2 = findPolygonal(pt, i2, finish, nsides - n1 - 1, breaks + n1 + 1, ss + n1 + 1);
-        if (n2 == 0) {
-            return 0;
-        }
-    } else {
-        n2 = 0;
-    }
-
-    return n1 + n2 + 1;
 }
 
 /**
@@ -340,13 +357,30 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) ->
     if (!isStrokeLargeEnough(stroke, strokeMinSize)) {
         return nullptr;
     }
-
+    int last_idx = static_cast<int>(stroke->getPointCount()) - 1;
     Inertia ss[4];
+    std::vector<Corner> cornerList = {{0, 0.0}};
     int brk[5] = {0};
 
+    const Point* pt = stroke->getPoints();
+
+    double epsilon = calculateDynamicEpsilon(pt, last_idx);
+
     // first see if it's a polygon
-    int n = findPolygonal(stroke->getPoints(), 0, static_cast<int>(stroke->getPointCount()) - 1, MAX_POLYGON_SIDES, brk,
-                          ss);
+    findPolygonalRDP(stroke->getPoints(), 0, last_idx, epsilon, cornerList);
+    cornerList.push_back({last_idx, 0.0});
+    std::sort(cornerList.begin(), cornerList.end(), [](const Corner& a, const Corner& b) { return a.index < b.index; });
+    cornerList.erase(std::unique(cornerList.begin(), cornerList.end(),
+                                 [](const Corner& a, const Corner& b) { return a.index == b.index; }),
+                     cornerList.end());
+    reduceVerticesToFour(cornerList);
+    int n = static_cast<int>(cornerList.size()) - 1;
+    // Copy the identified corners from cornerList to brk and calculate inertia for each segment.
+    for (int i = 0; i < n && i < 4; i++) {
+        brk[i] = cornerList[i].index;
+        brk[i + 1] = cornerList[i + 1].index;
+        ss[i].calc(std::span<const Point>(pt + brk[i], pt + brk[i + 1] + 1));
+    }
     if (n > 0) {
         optimizePolygonal(stroke->getPoints(), n, brk, ss);
 #ifdef DEBUG_RECOGNIZER
