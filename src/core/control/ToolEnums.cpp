@@ -82,6 +82,12 @@ auto strokeTypeToLineStyle(StrokeType type) -> LineStyle {
             return StrokeStyle::parseStyle("dashdot");
         case STROKE_TYPE_DOTTED:
             return StrokeStyle::parseStyle("dot");
+        case STROKE_TYPE_SCALED_DASHED:
+            return StrokeStyle::parseStyle("scaled_dash");
+        case STROKE_TYPE_SCALED_DASHDOTTED:
+            return StrokeStyle::parseStyle("scaled_dashdot");
+        case STROKE_TYPE_SCALED_DOTTED:
+            return StrokeStyle::parseStyle("scaled_dot");
         default:
             return {};
     }

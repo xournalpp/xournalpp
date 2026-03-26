@@ -49,7 +49,6 @@ std::vector<double> LineStyle::getDashesScaledToStrokeWidth(const double strokeW
     return scaledDashes;
 }
 
-
 void LineStyle::scaleDashesToStrokeWidth(const double strokeWidth) {
     for (double& dash: dashes) {
         dash *= strokeWidth;

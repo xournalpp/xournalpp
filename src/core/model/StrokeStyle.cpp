@@ -15,13 +15,15 @@ namespace {
 constexpr auto CUSTOM_KEY = "cust: ";
 
 const std::map<std::string, std::vector<double>> predefinedPatterns = {
-        {"dash", {6, 3}}, {"dashdot", {6, 3, 0.5, 3}}, {"dot", {0.5, 3}}};
+        {"dash", {6, 3}}, {"dashdot", {6, 3, 0.5, 3}}, {"dot", {0.5, 3}},
+        {"scaled_dash", {6, 3}}, {"scaled_dashdot", {6, 3, 0.5, 3}}, {"scaled_dot", {0.5, 3}}};
 
-auto formatStyle(const std::vector<double>& dashes) -> std::string {
+auto formatStyle(const std::vector<double>& dashes, bool scaleDashes) -> std::string {
 
     // Check if dashes match named predefined dashes.
     for (auto& pair: predefinedPatterns) {
         if (pair.second == dashes) {
+            if (scaleDashes && !pair.first.starts_with("scaled")) continue;
             return pair.first;
         }
     }
@@ -44,6 +46,7 @@ auto StrokeStyle::parseStyle(const std::string& style) -> LineStyle {
         LineStyle ls;
         std::vector<double> dashes = it->second;
         ls.setDashes(std::move(dashes));
+        ls.setScaleDashes(style);
         return ls;
     }
 
@@ -65,13 +68,14 @@ auto StrokeStyle::parseStyle(const std::string& style) -> LineStyle {
 
     LineStyle ls;
     ls.setDashes(std::move(dashes));
+    ls.setScaleDashes(style);
     return ls;
 }
 
 auto StrokeStyle::formatStyle(const LineStyle& style) -> std::string {
     const auto& dashes = style.getDashes();
     if (!dashes.empty()) {
-        return ::formatStyle(dashes);
+        return ::formatStyle(dashes, style.scaleDashes());
     }
 
     // Should not be returned, in this case the attribute is not written

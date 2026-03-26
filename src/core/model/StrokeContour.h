@@ -34,8 +34,8 @@ public:
     StrokeContourDashes(const std::vector<Point>& path, const std::vector<double>& dashPattern);
     ~StrokeContourDashes();
     /// Returns the new dash offset (= dashoffset + path length)
-    double addToCairo(cairo_t* cr, double dashoffset) const;
-    void drawDebug(cairo_t* cr) const;
+    double addToCairo(cairo_t* cr, double dashoffset, bool scaledDashes) const;
+    void drawDebug(cairo_t* cr, bool scaledDashes) const;
 
 private:
     const std::vector<Point>& path;

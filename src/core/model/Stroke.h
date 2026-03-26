@@ -203,6 +203,7 @@ public:
     void setStrokeCapStyle(const StrokeCapStyle capStyle);
 
     void scaleLineStyleDashesToWidth();
+    void setScaleDashes();
 
     [[maybe_unused]] void debugPrint() const;
 

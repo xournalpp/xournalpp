@@ -66,6 +66,11 @@ public:
      */
     void scaleDashesToStrokeWidth(const double strokeWidth);
 
+    void setScaleDashes() { scaleDashesToWidth = true; }
+    void setScaleDashes(const std::string& line_style) { scaleDashesToWidth = line_style.starts_with("scaled"); }
+    bool scaleDashes() const { return scaleDashesToWidth; }
+
 private:
     std::vector<double> dashes;
+    bool scaleDashesToWidth = false; // Used for pressure-sensitive dash scaling
 };

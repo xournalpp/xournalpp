@@ -866,6 +866,8 @@ void Stroke::setStrokeCapStyle(const StrokeCapStyle capStyle) { this->capStyle =
 
 void Stroke::scaleLineStyleDashesToWidth() { this->lineStyle.scaleDashesToStrokeWidth(getWidth()); }
 
+void Stroke::setScaleDashes() { this->lineStyle.setScaleDashes(); }
+
 void Stroke::debugPrint() const {
     g_message("%s", FC(FORMAT_STR("Stroke {1} / hasPressure() = {2}") % (int64_t)this % this->hasPressure()));
 
