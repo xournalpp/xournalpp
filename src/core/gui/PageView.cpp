@@ -479,10 +479,10 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
                 // could forget to do if we manually call startText
                 this->onButtonPressEvent(pos);
             } else if (elemType == ELEMENT_TEXIMAGE) {
-                this->xournal->clearSelection();
-                toolHandler->selectTool(TOOL_LATEX);
-                toolHandler->fireToolChanged();
-                LatexController::insertLatex(this->page, this->xournal->getControl(), x, y);
+                // Open latex dialog... but only after the buttonReleaseEvent
+                this->inLatexDoubleClick = true;
+                // Make sure the buttonReleaseEvent corresponding to this device gets processed
+                currentSequenceDeviceId = pos.deviceId;
             }
         }
     } else if (toolType == TOOL_TEXT) {
@@ -692,6 +692,15 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         this->inLatex = false;
         const double zoom = xournal->getZoom();
         LatexController::insertLatex(this->page, control, pos.x / zoom, pos.y / zoom);
+    }
+    if (this->inLatexDoubleClick) {
+        this->inLatexDoubleClick = false;
+        this->xournal->clearSelection();
+        const double zoom = xournal->getZoom();
+        ToolHandler* toolHandler = this->xournal->getControl()->getToolHandler();
+        toolHandler->selectTool(TOOL_LATEX);
+        toolHandler->fireToolChanged();
+        LatexController::insertLatex(this->page, this->xournal->getControl(), pos.x / zoom, pos.y / zoom);
     }
 
     if (this->verticalSpace) {

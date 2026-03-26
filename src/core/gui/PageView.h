@@ -284,6 +284,7 @@ private:
 
     bool inEraser = false;
     bool inLatex = false;
+    bool inLatexDoubleClick = false;
 
     /**
      * Vertical Space
