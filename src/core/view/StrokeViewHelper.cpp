@@ -35,6 +35,7 @@ void xoj::view::StrokeViewHelper::drawNoPressure(cairo_t* cr, const std::vector<
 double xoj::view::StrokeViewHelper::drawWithPressure(cairo_t* cr, const std::vector<Point>& pts,
                                                      const LineStyle& lineStyle, double dashOffset) {
     const auto& dashes = lineStyle.getDashes();
+    const bool scaleDashes = lineStyle.scaleDashes();
     if (cairo_surface_get_type(cairo_get_target(cr)) == CAIRO_SURFACE_TYPE_PDF) {
         // PDF documents have an equivalent of cairo_stroke(). We use it to get smaller PDF files
         auto drawSegment = [cr](const Point& p, const Point& q) {
@@ -49,9 +50,14 @@ double xoj::view::StrokeViewHelper::drawWithPressure(cairo_t* cr, const std::vec
              * Because the width varies, we need to call cairo_stroke() once per segment
              */
             for (const auto& [p, q]: PairView(pts)) {
-                const auto scaledDashes = lineStyle.getDashesScaledToStrokeWidth(p.z);
-                Util::cairo_set_dash_from_vector(cr, scaledDashes, dashOffset * p.z);
-                dashOffset += p.lineLengthTo(q) / p.z;
+                if (scaleDashes) {
+                    const auto scaledDashes = lineStyle.getDashesScaledToStrokeWidth(p.z);
+                    Util::cairo_set_dash_from_vector(cr, scaledDashes, dashOffset * p.z);
+                    dashOffset += p.lineLengthTo(q) / p.z;
+                } else {
+                    Util::cairo_set_dash_from_vector(cr, dashes, dashOffset);
+                    dashOffset += p.lineLengthTo(q);
+                }
                 drawSegment(p, q);
             }
         } else {
@@ -65,7 +71,7 @@ double xoj::view::StrokeViewHelper::drawWithPressure(cairo_t* cr, const std::vec
             // Single dot
             cairo_arc(cr, pts.front().x, pts.front().y, .5 * pts.front().z, 0, 2. * M_PI);
         } else if (!dashes.empty()) {
-            dashOffset = StrokeContourDashes(pts, dashes).addToCairo(cr, dashOffset);
+            dashOffset = StrokeContourDashes(pts, dashes).addToCairo(cr, dashOffset, scaleDashes);
         } else {
             StrokeContour(pts).addToCairo(cr);
         }

@@ -702,17 +702,17 @@
       <item>
        <attribute name="label" translatable="yes">dashed</attribute>
        <attribute name="action">win.tool-pen-line-style</attribute>
-       <attribute name="target">dash</attribute>
+       <attribute name="target">scaled_dash</attribute>
       </item>
       <item>
        <attribute name="label" translatable="yes">dash-/ dotted</attribute>
        <attribute name="action">win.tool-pen-line-style</attribute>
-       <attribute name="target">dashdot</attribute>
+       <attribute name="target">scaled_dashdot</attribute>
       </item>
       <item>
        <attribute name="label" translatable="yes">dotted</attribute>
        <attribute name="action">win.tool-pen-line-style</attribute>
-       <attribute name="target">dot</attribute>
+       <attribute name="target">scaled_dot</attribute>
       </item>
      </section>
      <section>
