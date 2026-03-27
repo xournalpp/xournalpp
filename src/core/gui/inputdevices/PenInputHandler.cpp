@@ -145,8 +145,10 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
         CursorSelectionType selType =
                 selection->getSelectionTypeForPos(selectionPos.x, selectionPos.y, xournal->view->getZoom());
         if (selType) {
-
-            if (selType == CURSOR_SELECTION_MOVE && modifier3) {
+            if (selType == CURSOR_SELECTION_MOVE && event.button == 3) {
+                if (view->showSelectedImageContextMenu(selection, selectionPos)) {
+                    return true;
+                }
                 selection->copySelection();
             }
 
