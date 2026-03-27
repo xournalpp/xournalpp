@@ -1,8 +1,8 @@
 #include "SaveHandler.h"
 
-#include <cinttypes>   // for PRIx32
-#include <cstdint>     // for uint32_t
-#include <cstdio>      // for sprintf, size_t
+#include <cinttypes>  // for PRIx32
+#include <cstdint>    // for uint32_t
+#include <cstdio>     // for sprintf, size_t
 
 #include <cairo.h>                  // for cairo_surface_t
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_save
@@ -267,6 +267,7 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
             }
         }
         background->setAttrib("pageno", p->getPdfPageNr() + 1);
+        background->setAttrib("pageorient", static_cast<int>(p->getPdfPageOrientation()));
     } else if (p->getBackgroundType().isImagePage()) {
         background->setAttrib("type", "pixmap");
 

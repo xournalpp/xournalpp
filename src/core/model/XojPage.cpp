@@ -11,7 +11,8 @@
 
 #include "BackgroundImage.h"  // for BackgroundImage
 
-XojPage::XojPage(double width, double height, bool suppressLayerCreation): width(width), height(height), bgType(PageTypeFormat::Lined) {
+XojPage::XojPage(double width, double height, bool suppressLayerCreation):
+        width(width), height(height), bgType(PageTypeFormat::Lined) {
     if (!suppressLayerCreation) {
         // ensure at least one valid layer exists
         this->addLayer(new Layer());
@@ -20,7 +21,9 @@ XojPage::XojPage(double width, double height, bool suppressLayerCreation): width
 }
 
 XojPage::~XojPage() {
-    for (Layer* l: this->layer) { delete l; }
+    for (Layer* l: this->layer) {
+        delete l;
+    }
     this->layer.clear();
 }
 
@@ -31,6 +34,7 @@ XojPage::XojPage(XojPage const& page):
         currentLayer(page.currentLayer),
         bgType(page.bgType),
         pdfBackgroundPage(page.pdfBackgroundPage),
+        pdfPageOrientation(page.pdfPageOrientation),
         backgroundColor(page.backgroundColor) {
     this->layer.reserve(page.layer.size());
     std::transform(begin(page.layer), end(page.layer), std::back_inserter(this->layer),
@@ -131,6 +135,10 @@ auto XojPage::getWidth() const -> double { return this->width; }
 auto XojPage::getHeight() const -> double { return this->height; }
 
 auto XojPage::getPdfPageNr() const -> size_t { return this->pdfBackgroundPage; }
+
+void XojPage::setPdfPageOrientation(PageOrientation orient) { this->pdfPageOrientation = orient; }
+
+auto XojPage::getPdfPageOrientation() const -> PageOrientation { return this->pdfPageOrientation; }
 
 auto XojPage::isAnnotated() const -> bool {
     for (Layer* l: this->layer) {
