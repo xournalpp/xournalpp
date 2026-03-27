@@ -37,6 +37,10 @@ auto MouseInputHandler::handleImpl(InputEvent const& event) -> bool {
         if (pressedButton == BUTTON_NONE || !inputRunning) {
             pressedButton = event.button;
             this->actionStart(event);
+            if (this->cancelButtonPressLatch) {
+                pressedButton = BUTTON_NONE;
+                this->cancelButtonPressLatch = false;
+            }
         } else if (event.button == pressedButton) {
             g_warning("MouseInputHandler: Double BUTTON_PRESS_EVENT on button %u", event.button);
         }
