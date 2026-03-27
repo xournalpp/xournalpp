@@ -497,12 +497,7 @@ auto Util::getDataPath() -> fs::path {
     }
 #endif
 
-    fs::path exeDir = getExePath();
-    if (fs::exists(exeDir / "share" / PROJECT_NAME)) {
-        return exeDir / "share" / PROJECT_NAME;
-    }
-
-    return exeDir.parent_path() / "share" / PROJECT_NAME;
+    return getExePath().parent_path() / "share" / PROJECT_NAME;
 }
 
 auto Util::getLocalePath() -> fs::path {
