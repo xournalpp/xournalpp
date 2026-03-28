@@ -1,12 +1,12 @@
 -- This is an example Xournal++ Plugin - copy this to get started
 
-var_dump = require "var_dump"
+local var_dump = require "var_dump"
 
 -- Register all Toolbar actions and initialize all UI stuff
 function initUi()
   print("Hello from Example: Plugin initUi called\n");
 
-  ref = app.registerUi({["menu"] = "Test123", ["callback"] = "exampleCallback", ["accelerator"] = "<Control>t"});
+  local ref = app.registerUi({["menu"] = "Test123", ["callback"] = "exampleCallback", ["accelerator"] = "<Control>t"});
   print("Menu reference:");
   var_dump(ref);
 
