@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-07 16:00+0000\n"
-"PO-Revision-Date: 2026-03-08 04:51\n"
+"PO-Revision-Date: 2026-03-28 17:05\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -1217,7 +1217,7 @@ msgstr "Paletes personalitzades"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:99
 msgid "<i>The palettes shown below are obtained from the <a href=\"{1}\">Built-in palettes</a> and <a href=\"{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>Les paletes que es mostren a sota s'obtenen a partir de les carpetes de les <a href=\"{1}\">paletes predefinides</a> i les <a href=\"{2}\">paletes d'usuari</a>:</i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:117
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
