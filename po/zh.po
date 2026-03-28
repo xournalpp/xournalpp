@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-28 16:29+0000\n"
-"PO-Revision-Date: 2026-03-28 17:05\n"
+"PO-Revision-Date: 2026-03-28 17:12\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1226,7 +1226,7 @@ msgstr "用户调色板"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:99
 msgid "<i>The palettes shown below are obtained from the <a href=\"{1}\">Built-in palettes</a> and <a href=\"{2}\">User palettes</a> directories:</i>\n"
-msgstr "<i>下方显示的调色板来自<a href=\"{1}\">内置调色板</a>和<a href=\"{2}\">用户调色板</a>目录：</i>"
+msgstr "<i>下方显示的调色板来自<a href=\"{1}\">内置调色板</a>和<a href=\"{2}\">用户调色板</a>目录：</i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:117
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
