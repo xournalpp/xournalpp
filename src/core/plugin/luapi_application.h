@@ -501,8 +501,8 @@ static int applib_openDialog(lua_State* L) {
 /**
  * Allow to register menupoints and toolbar buttons. This needs to be called from initUi
  *
- * @param opts {menu: string, callback: string, toolbarID: string, mode:integer, accelerator:string} options (`mode`,
- `toolbarID` and `accelerator` are optional)
+ * @param opts {menu: string, callback: string, toolbarID: string, mode:integer, accelerator:string, parentPath:string}
+ *   options (`mode`, `toolbarID`, `accelerator` and `parentPath` are optional)
  * @return {menuId:integer}
  *
  * Example 1: app.registerUi({["menu"] = "HelloWorld", callback="printMessage", mode=1, accelerator="<Control>a"})
@@ -514,8 +514,16 @@ static int applib_openDialog(lua_State* L) {
  * to a toolbar via toolbar customization or by editing the toolbar.ini file using the name "Plugin::CUSTOM_PEN_1"
  * Note that in toolbar.ini the string "Plugin::" must always be prepended to the toolbarId specified in the plugin
  *
+ * Example 3: app.registerUi({menu="Document", callback="newDoc", parentPath="File/New"})
+ * registers a menu item "Document" under a submenu "File/New" in the Plugins menu.
+ * Use "/" to create nested submenus, e.g., parentPath="File/Export/PDF" creates File > Export > PDF hierarchy.
+ *
  * The mode and accelerator are optional. When specifying the mode, the callback function should have one parameter
    that receives the mode. This is useful for callback functions that are shared among multiple menu entries.
+ *
+ * The parentPath parameter creates submenu hierarchy. Without it, the menu item appears directly in the Plugins menu.
+ * With parentPath, the item is placed under a nested submenu path. For example, parentPath="Tools/Custom"
+ * creates "Plugins > [plugin name] > Tools > Custom > [menu item]".
  */
 static int applib_registerUi(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
@@ -532,6 +540,7 @@ static int applib_registerUi(lua_State* L) {
     // the stack first. Then convert those stack values
     // into an appropriate C type.
     lua_getfield(L, 1, "accelerator");
+    lua_getfield(L, 1, "parentPath");
     lua_getfield(L, 1, "menu");
     lua_getfield(L, 1, "callback");
     lua_getfield(L, 1, "mode");
@@ -539,14 +548,16 @@ static int applib_registerUi(lua_State* L) {
     lua_getfield(L, 1, "iconName");
     // In Example 1 stack now has following:
     //    1 = {"menu"="MenuName", callback="functionName", mode=1, accelerator="<Control>a"}
-    //   -6 = "<Control>a"
+    //   -7 = "<Control>a"
+    //   -6 = "" (parentPath)
     //   -5 = "MenuName"
     //   -4 = "functionName"
     //   -3 = mode
     //   -2 = nil
     //   -1 = nil
 
-    const char* accelerator = luaL_optstring(L, -6, "");
+    const char* accelerator = luaL_optstring(L, -7, "");
+    const char* parentPath = luaL_optstring(L, -6, "");
     const char* menu = luaL_optstring(L, -5, "");
     const char* callback = luaL_optstring(L, -4, nullptr);
     const ptrdiff_t mode = luaL_optinteger(L, -3, std::numeric_limits<ptrdiff_t>::max());
@@ -556,11 +567,11 @@ static int applib_registerUi(lua_State* L) {
         return luaL_error(L, "Missing callback function!");
     }
 
-    size_t menuId = plugin->registerMenu(menu, callback, mode, accelerator);
+    size_t menuId = plugin->registerMenu(menu, callback, mode, accelerator, parentPath);
     plugin->registerToolButton(menu, toolbarId, iconName, callback, mode);
 
     // Make sure to remove all vars which are put to the stack before!
-    lua_pop(L, 6);
+    lua_pop(L, 7);
 
     // Add return value to the Stack
     lua_createtable(L, 0, 2);
