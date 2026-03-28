@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.3.5~dev (Unreleased)
+
 ## 1.3.4
 
 * Fixed a crash when invoking the floating toolbox with the Laser pointer on (#7217)
