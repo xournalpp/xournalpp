@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.3.4~dev (Unreleased)
+## 1.3.4
 
 * Fixed a crash when invoking the floating toolbox with the Laser pointer on (#7217)
 * Fixed sometimes missing page numbers in sidebar (#7254)
