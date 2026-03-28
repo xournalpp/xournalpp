@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-07 16:00+0000\n"
-"PO-Revision-Date: 2026-03-08 04:51\n"
+"PO-Revision-Date: 2026-03-28 17:12\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -125,12 +125,13 @@ msgstr "读取 PNG 文件“{1}”时出错"
 
 #: ../src/core/control/Control.cpp:1668
 msgid "Failed to determine if path exists \"{1}\": {2}"
-msgstr ""
+msgstr "无法确定路径是否存在“{1}”：{2}"
 
 #: ../src/core/control/Control.cpp:1669
 msgid "That file does not exist:\n"
 "\"{1}\""
-msgstr ""
+msgstr "该文件不存在：\n"
+"\"{1}\""
 
 #: ../src/core/control/Control.cpp:1776
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -1217,7 +1218,7 @@ msgstr "用户调色板"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:99
 msgid "<i>The palettes shown below are obtained from the <a href=\"{1}\">Built-in palettes</a> and <a href=\"{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>下方显示的调色板来自<a href=\"{1}\">内置调色板</a>和<a href=\"{2}\">用户调色板</a>目录：</i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:117
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
@@ -2117,12 +2118,13 @@ msgstr "错误代码 {1}"
 
 #: ../src/util/PathUtil.cpp:125
 msgid "Could not open file: {1}"
-msgstr ""
+msgstr "无法打开文件：{1}"
 
 #: ../src/util/PathUtil.cpp:132
 msgid "Error reading \"{1}\":\n"
 "{2}"
-msgstr ""
+msgstr "读取“{1}”时出错：\n"
+"{2}"
 
 #: ../src/util/PathUtil.cpp:409
 msgid "xournalpp-{1}"
@@ -3376,7 +3378,7 @@ msgstr "重新着色绘图区域（移动选择时可能会引入滞后）"
 
 #: ../ui/settings.glade:3264
 msgid "Recolors the drawing area so that light regions get the \"Light Color\" and dark regions get the \"Dark Color\". Other colors are interpolated accordingly. Can be use to implement a dark-mode."
-msgstr ""
+msgstr "重新着色绘图区域，使浅色区域呈现“浅色”，深色区域呈现“深色”。其他颜色则根据颜色深浅进行插值。可用于实现深色模式。"
 
 #: ../ui/settings.glade:3274
 msgid "Recolor Previews in the Sidebar"
@@ -3384,17 +3386,19 @@ msgstr "重新着色侧边栏中的预览"
 
 #: ../ui/settings.glade:3279
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) the same way as the drawing area."
-msgstr ""
+msgstr "将侧边栏（页面/图层预览）中的预览颜色与绘图区域的颜色重新着色。"
 
 #: ../ui/settings.glade:3293
 msgid "The color light regions are translated to\n"
 "(use a dark color for a dark-mode)"
-msgstr ""
+msgstr "浅色区域转换为：\n"
+"（深色模式使用深色）"
 
 #: ../ui/settings.glade:3308
 msgid "The color dark regions are translated to\n"
 "(use a light color for dark-mode)"
-msgstr ""
+msgstr "深色区域的颜色被转换成\n"
+"（深色模式使用浅色）"
 
 #: ../ui/settings.glade:3324
 msgid "Dark Color"
@@ -3406,7 +3410,7 @@ msgstr "浅色颜色"
 
 #: ../ui/settings.glade:3351
 msgid "Recoloring (allows theming)"
-msgstr ""
+msgstr "重新着色（允许主题化）"
 
 #: ../ui/settings.glade:3383
 msgid "Cursor icon for pen"

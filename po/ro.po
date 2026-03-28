@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-07 16:00+0000\n"
-"PO-Revision-Date: 2026-03-08 04:52\n"
+"PO-Revision-Date: 2026-03-28 17:05\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -125,12 +125,13 @@ msgstr "Eroare la citirea fișierului PNG „{1}”"
 
 #: ../src/core/control/Control.cpp:1668
 msgid "Failed to determine if path exists \"{1}\": {2}"
-msgstr ""
+msgstr "Nu s-a putut stabili dacă există calea „{1}”: {2}"
 
 #: ../src/core/control/Control.cpp:1669
 msgid "That file does not exist:\n"
 "\"{1}\""
-msgstr ""
+msgstr "Acest fișier nu există:\n"
+"„{1}”"
 
 #: ../src/core/control/Control.cpp:1776
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -1218,7 +1219,7 @@ msgstr "Paletele utilizatorului"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:99
 msgid "<i>The palettes shown below are obtained from the <a href=\"{1}\">Built-in palettes</a> and <a href=\"{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>Paletele de mai jos sunt obținute din dosarele <a href=\"{1}\">Palete incluse</a> și <a href=\"{2}\">Paletele utilizatorului</a>:</i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:117
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
@@ -2118,12 +2119,13 @@ msgstr "Cod de eroare {1}"
 
 #: ../src/util/PathUtil.cpp:125
 msgid "Could not open file: {1}"
-msgstr ""
+msgstr "Nu s-a putut deschide fișierul: {1}"
 
 #: ../src/util/PathUtil.cpp:132
 msgid "Error reading \"{1}\":\n"
 "{2}"
-msgstr ""
+msgstr "Eroare la citirea „{1}”:\n"
+"{2}"
 
 #: ../src/util/PathUtil.cpp:409
 msgid "xournalpp-{1}"
@@ -3380,7 +3382,7 @@ msgstr "Recolorează zona de desen (ar putea introduce întârzieri la mutarea s
 
 #: ../ui/settings.glade:3264
 msgid "Recolors the drawing area so that light regions get the \"Light Color\" and dark regions get the \"Dark Color\". Other colors are interpolated accordingly. Can be use to implement a dark-mode."
-msgstr ""
+msgstr "Recolorează zona de desen astfel încât regiunile luminoase să primească o „Culoare deschisă”, iar regiunile întunecoase să primească o „Culoare închisă”. Culorile intermediare sunt stabilite corespunzător. Poate fi folosită pentru a implementa modul întunecos."
 
 #: ../ui/settings.glade:3274
 msgid "Recolor Previews in the Sidebar"
@@ -3388,17 +3390,19 @@ msgstr "Recolorează miniaturile din panoul lateral"
 
 #: ../ui/settings.glade:3279
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) the same way as the drawing area."
-msgstr ""
+msgstr "Recolorează previzualizările din panoul lateral (Previzualizare Pagină/Strat) ca zona de desenare."
 
 #: ../ui/settings.glade:3293
 msgid "The color light regions are translated to\n"
 "(use a dark color for a dark-mode)"
-msgstr ""
+msgstr "Culorile regiunilor luminoase sunt traduse în\n"
+"(folosește o culoare închisă pentru modul întunecos)"
 
 #: ../ui/settings.glade:3308
 msgid "The color dark regions are translated to\n"
 "(use a light color for dark-mode)"
-msgstr ""
+msgstr "Culorile regiunilor întunecoase sunt traduse în\n"
+"(folosește o culoare deschisă pentru modul întunecos)"
 
 #: ../ui/settings.glade:3324
 msgid "Dark Color"
@@ -3410,7 +3414,7 @@ msgstr "Culoare deschisă"
 
 #: ../ui/settings.glade:3351
 msgid "Recoloring (allows theming)"
-msgstr ""
+msgstr "Recolorare (permite personalizarea aspectului)"
 
 #: ../ui/settings.glade:3383
 msgid "Cursor icon for pen"
