@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-28 16:29+0000\n"
-"PO-Revision-Date: 2026-03-28 17:05\n"
+"PO-Revision-Date: 2026-03-29 05:02\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -103,23 +103,25 @@ msgstr "fitxer: {1}"
 
 #: ../src/core/control/Control.cpp:1570
 msgid "<i>Above error repeated {1} times</i>"
-msgstr ""
+msgstr "<i>L'error de dalt es repeteix {1} vegades.</i>"
 
 #: ../src/core/control/Control.cpp:1582
 msgid "<i>&lt;{1} more lines of error messages&gt;</i>"
-msgstr ""
+msgstr "<i>&lt;{1} línies més de missatges d'error&gt;</i>"
 
 #: ../src/core/control/Control.cpp:1621
 msgid "Error opening file \"{1}\".\n\n"
 "<tt>{2}</tt>\n"
 "<b>{3}</b>"
-msgstr ""
+msgstr "S'ha produït un error a l'obrir el fitxer «{1}».\n\n"
+"<tt>{2}</tt>\n"
+"<b>{3}</b>"
 
 #: ../src/core/control/Control.cpp:1635
 msgid "There were some errors while loading the file. Some information might have been lost. Do not overwrite your old file unless you are sure everything you need was loaded correctly.\n\n"
 "Error messages:\n"
 "<tt>{1}</tt>"
-msgstr ""
+msgstr "S'han produït alguns errors mentre es carregava el fitxer. Es pot haver perdut informació. No sobreescriviu el fitxer a no ser que estigueu segur que tot el que necessiteu s'ha carregat correctament."
 
 #: ../src/core/control/Control.cpp:1653
 msgid "File version mismatch"
@@ -714,7 +716,7 @@ msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: No s'ha pro
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:149
 msgid "Unable to create temporary file for audio attachment"
-msgstr ""
+msgstr "El fitxer temporal per al fitxer adjunt d'àudio no s'ha pogut crear."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:161
 msgid "Could not open attachment: {1}. Error message: Could not read file"
@@ -722,7 +724,7 @@ msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: No s'ha pog
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:168
 msgid "Could not open attachment: {1}. Error message: Could not write temporary file"
-msgstr ""
+msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: El fitxer temporal no s'ha pogut escriure."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:201
 #: ../src/core/control/xojfile/LoadHandler.cpp:226
@@ -731,23 +733,23 @@ msgstr "No s'ha pogut llegir la imatge: {1}. Missatge d'error: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:236
 msgid "Cloned pixmap page background on page {1} references inexistent page {2}"
-msgstr ""
+msgstr "La imatge de fons de pàgina del pixmap clonat de la pàgina {1} referencia la pàgina inexistent {2}."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:482
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}"
-msgstr ""
+msgstr "El fitxer «{1}» no és un fitxer .xopp vàlid (falta el tipus MIME). Missatge d'error: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:489
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\""
-msgstr ""
+msgstr "El fitxer «{1}» no és un fitxer .xopp vàlid (el tipus MIME no és correcte): «{2}»"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:497
 msgid "The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}"
-msgstr ""
+msgstr "El fitxer «{1}» no és un fitxer .xopp vàlid (falta la versió). Missatge d'error: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:510
 msgid "The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\""
-msgstr ""
+msgstr "El fitxer «{1}» no és un fitxer .xopp vàlid (la cadena de versió està danyada): «{2}»"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:519
 msgid "Could not open file: \"{1}\""
@@ -759,20 +761,21 @@ msgstr "Error del processador XML: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:545
 msgid "Failed to read from compressed file"
-msgstr ""
+msgstr "El fitxer comprimit no s'ha pogut llegir."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:554
 msgid "Invalid XML data read"
-msgstr ""
+msgstr "Lectura de dades XML no vàlida"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:568
 msgid "Document is not complete.\n"
 "We have tried recovering the data that could be read, but the last element may have been discarded, and the end of the file is likely missing."
-msgstr ""
+msgstr "El document no està complet.\n"
+"S'ha intentat recuperar les dades que no es poden llegir, però l'últim element pot haver-se descartat i probablement fa falta el final del fitxer."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:575
 msgid "Document is corrupted (no document tag found in file)"
-msgstr ""
+msgstr "El document està danyat (al fitxer no s'han trobat les etiquetes del document)."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:578
 msgid "Document is corrupted (no pages found in file)"
@@ -792,47 +795,47 @@ msgstr "No s'ha pogut escriure el fons «{1}». Es continua de totes maneres."
 
 #: ../src/core/control/xojfile/XmlParser.cpp:95
 msgid "Ignoring unexpected {1} tag inside unrecognized document structure"
-msgstr ""
+msgstr "S'ignora l'etiqueta inesperada {1} dins de l'estructura de documents no reconeguda."
 
 #: ../src/core/control/xojfile/XmlParser.cpp:100
 msgid "Ignoring unexpected {1} tag under {2}"
-msgstr ""
+msgstr "S'ignora l'etiqueta inesperada {1} sota {2}"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:149
 msgid "Unexpected text in {1} node: \"{2}\""
-msgstr ""
+msgstr "Text inesperat al node {1}: «{2}»"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:247
 msgid "Attribute \"type\" not found in background tag. Ignoring tag"
-msgstr ""
+msgstr "«Tipus» d'atribut no trobat a l'etiqueta de fons. S'ignora l'etiqueta."
 
 #: ../src/core/control/xojfile/XmlParser.cpp:286
 msgid "Domain \"clone\" is invalid for PDF backgrounds. Using \"absolute\" instead"
-msgstr ""
+msgstr "El domini «clon» no és vàlid per a imatges de fons de PDF. Es fa servir «absolut»."
 
 #: ../src/core/control/xojfile/XmlParser.cpp:296
 msgid "PDF background filename is empty"
-msgstr ""
+msgstr "El nom del fitxer de la imatge de fons del PDF és buit."
 
 #: ../src/core/control/xojfile/XmlParser.cpp:316
 msgid "Discarding unused audio timestamp element. Filename: {1}"
-msgstr ""
+msgstr "Es descarta l'element de marca de temps d'àudio no utilitzat. Nom del fitxer: {1}"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:393
 msgid "Found stroke that contains an odd number of valid coordinates. Discarding the last value"
-msgstr ""
+msgstr "S'ha trobat un traç que conté un nombre estrany de coordenades vàlides. Es descarta l'últim valor."
 
 #: ../src/core/control/xojfile/XmlParser.cpp:404
 msgid "Found stroke with more coordinates than pressure points: {1}, expected {2}. Shrinking stroke to match pressure point count"
-msgstr ""
+msgstr "S'ha trobat un traç amb més coordenades que punts de pressió: {1}, se n'esperaven {2}. Es redueix el traç per tal que coincideixi amb el nombre de punts de pressió."
 
 #: ../src/core/control/xojfile/XmlParser.cpp:410
 msgid "Found stroke with too many pressure points: {1}, expected {2}. Discarding remaining pressure points"
-msgstr ""
+msgstr "S'ha trobat un traç amb massa punts de pressió: {1}, se n'esperaven {2}. Es descarten els punts de pressió restants."
 
 #: ../src/core/control/xojfile/XmlParser.cpp:494
 msgid "Ignoring attachment tag under {1}"
-msgstr ""
+msgstr "S'ignora l'etiqueta adjunta sota {1}"
 
 #: ../src/core/gui/GladeGui.cpp:25
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
@@ -2114,12 +2117,14 @@ msgstr "ElementRange::parse(): els índexos dels elements comencen per 1."
 #: ../src/util/GzInputStream.cpp:48
 msgid "Error opening file \"{1}\":\n"
 "{2}"
-msgstr ""
+msgstr "S'ha produït un error a l'obrir el fitxer «{1}»:\n"
+"{2}"
 
 #: ../src/util/GzInputStream.cpp:62 ../src/util/ZipInputStream.cpp:52
 msgid "Error occurred while closing file\n"
 "Error code {1}"
-msgstr ""
+msgstr "S'ha produïut un error mentre es tancava el fitxer.\n"
+"Codi d'error {1}"
 
 #: ../src/util/OutputStream.cpp:30
 msgid "Error opening file: \"{1}\""
@@ -2185,7 +2190,8 @@ msgstr "No s'ha pogut obrir l'enllaç: {1} {2}"
 #: ../src/util/ZipInputStream.cpp:38
 msgid "Error opening file \"{1}\" in zip archive:\n"
 "{2}"
-msgstr ""
+msgstr "S'ha produït un error a l'obrir el fitxer zip «{1}»:\n"
+"{2}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
