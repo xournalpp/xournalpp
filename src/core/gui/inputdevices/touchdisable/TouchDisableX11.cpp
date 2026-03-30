@@ -45,6 +45,7 @@ void TouchDisableX11::init() {
             touch = devices + i;
         }
     }
+    XFreeDeviceList(devices);
 
     if (touch == nullptr) {
         g_warning("Could not find touchscreen device for disabling");
