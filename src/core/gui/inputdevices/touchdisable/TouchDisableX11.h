@@ -13,6 +13,8 @@
 
 #ifdef X11_ENABLED
 
+#include <vector>  // for vector
+
 #include <X11/X.h>                  // for Atom, None
 #include <X11/Xlib.h>               // for Display
 #include <X11/extensions/XInput.h>  // for XDevice, XDeviceInfo
@@ -42,14 +44,9 @@ private:
     Atom touchAtom = None;
 
     /**
-     * Touch device
+     * Touch devices
      */
-    XDeviceInfo* touch = nullptr;
-
-    /**
-     * Touch device
-     */
-    XDevice* touchdev = nullptr;
+    std::vector<XDevice*> touchdevs;
 
     /**
      * Enable flag
