@@ -265,41 +265,77 @@ EditSelection::~EditSelection() {
  * them to new layer if any or to the old if no new layer
  */
 void EditSelection::finalizeSelection() {
-    // Always finalize on the page the selection currently belongs to.
-    // Clamp position so the selection stays at least partially on the page.
+    auto insertOrder =
+            this->contents->makeMoveEffective(this->getRect(), this->snappedBounds, this->preserveAspectRatio);
+
     {
-        constexpr double MIN_OVERLAP = 20.0;
+        // Ensure every element keeps at least MIN_OVERLAP pt on the page.
+        //
+        // Each element imposes two constraints on the horizontal shift dx:
+        // - Not too far left:  rect.x + rect.w + dx >= overlap
+        // - Not too far right: rect.x + dx <= pageW - overlap
+        //
+        // dxMin = tightest lower bound across all elements (furthest off-left element)
+        // dxMax = tightest upper bound across all elements (furthest off-right element)
+        //
+        // If dxMin <= 0 <= dxMax: all elements are on-page, dx = 0.
+        // If dxMin > 0: elements are off the left, shift right by dxMin.
+        // If dxMax < 0: elements are off the right, shift left by |dxMax|.
+        // If dxMin > dxMax: elements span wider than the page, center them.
+        //
+        // Y axis works identically.
+
+        constexpr double MIN_OVERLAP = 20.0;  // pt
         const PageRef page = this->view->getPage();
-        const double pageW = page->getWidth();
-        const double pageH = page->getHeight();
-        const double selW = std::abs(this->width);
-        const double selH = std::abs(this->height);
-        const double overlap = std::min({MIN_OVERLAP, selW, selH});
+        const double pageWidth = page->getWidth();
+        const double pageHeight = page->getHeight();
+
+        constexpr double INF = std::numeric_limits<double>::infinity();
+        double dxMin = -INF;
+        double dxMax = INF;
+        double dyMin = -INF;
+        double dyMax = INF;
+
+        for (const auto& [e, _]: insertOrder) {
+            const auto rect = e->boundingRect();
+            const double keepOnPageX = std::min(MIN_OVERLAP, rect.width);
+            const double keepOnPageY = std::min(MIN_OVERLAP, rect.height);
+
+            dxMin = std::max(dxMin, keepOnPageX - rect.x - rect.width);
+            dxMax = std::min(dxMax, pageWidth - keepOnPageX - rect.x);
+
+            dyMin = std::max(dyMin, keepOnPageY - rect.y - rect.height);
+            dyMax = std::min(dyMax, pageHeight - keepOnPageY - rect.y);
+        }
 
         double dx = 0.0;
-        double dy = 0.0;
-        if (this->x + selW < overlap) {
-            dx = overlap - (this->x + selW);
-        } else if (this->x > pageW - overlap) {
-            dx = (pageW - overlap) - this->x;
-        }
-        if (this->y + selH < overlap) {
-            dy = overlap - (this->y + selH);
-        } else if (this->y > pageH - overlap) {
-            dy = (pageH - overlap) - this->y;
+        if (dxMin > dxMax) {
+            dx = (dxMin + dxMax) / 2;
+        } else if (dxMin > 0) {
+            dx = dxMin;
+        } else if (dxMax < 0) {
+            dx = dxMax;
         }
 
-        if (dx != 0 || dy != 0) {
+        double dy = 0.0;
+        if (dyMin > dyMax) {
+            dy = (dyMin + dyMax) / 2;
+        } else if (dyMin > 0) {
+            dy = dyMin;
+        } else if (dyMax < 0) {
+            dy = dyMax;
+        }
+
+        if (dx != 0.0 || dy != 0.0) {
+            for (auto& [e, _]: insertOrder) {
+                e->move(dx, dy);
+            }
             this->x += dx;
             this->y += dy;
             this->snappedBounds.x += dx;
             this->snappedBounds.y += dy;
         }
     }
-
-    auto insertOrder =
-            this->contents->makeMoveEffective(this->getRect(), this->snappedBounds, this->preserveAspectRatio);
-
 
     auto* doc = view->getXournal()->getControl()->getDocument();
     doc->lock();
