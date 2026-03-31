@@ -2,6 +2,7 @@
 
 #include <algorithm>  // for max, min
 #include <cmath>      // for abs, NAN
+#include <limits>     // for numeric_limits
 #include <memory>     // for __shared_ptr_access
 
 #include <gdk/gdk.h>  // for GdkRGBA, gdk_cairo_set_source_rgba
@@ -22,10 +23,8 @@ auto Selector::finalize(PageRef page, bool disableMultilayer, Document* doc) -> 
     this->pageWidth = page->getWidth();
     this->pageHeight = page->getHeight();
 
-    // Let subclasses prepare extended geometry now that page dimensions are known
-    if (auto* lasso = dynamic_cast<LassoSelector*>(this)) {
-        lasso->buildExtendedBoundary();
-    }
+    // Let subclasses extend their geometry to infinity at page edges
+    this->extendAtPageEdges();
 
     size_t layerId = 0;
 
@@ -82,29 +81,24 @@ RectangularSelector::RectangularSelector(double x, double y, bool multiLayer):
 
 RectangularSelector::~RectangularSelector() = default;
 
-auto RectangularSelector::contains(double x, double y) const -> bool {
-    // If the selection rectangle touches a page edge, extend it to infinity
-    // in that direction. This allows selecting objects that extend beyond the page.
-    constexpr double eps = 1.0;
-    constexpr double INF = 1e9;
+auto RectangularSelector::contains(double x, double y) const -> bool { return extendedBbox.contains(x, y); }
 
-    double minX = bbox.minX;
-    double minY = bbox.minY;
-    double maxX = bbox.maxX;
-    double maxY = bbox.maxY;
+void RectangularSelector::extendAtPageEdges() {
+    constexpr double THRESHOLD = 1.0;  // pt
+    constexpr double INF = std::numeric_limits<double>::infinity();
+
+    extendedBbox = bbox;
 
     if (pageWidth > 0 && pageHeight > 0) {
-        if (minX <= eps)
-            minX = -INF;
-        if (minY <= eps)
-            minY = -INF;
-        if (maxX >= pageWidth - eps)
-            maxX = INF;
-        if (maxY >= pageHeight - eps)
-            maxY = INF;
+        if (extendedBbox.minX <= THRESHOLD)
+            extendedBbox.minX = -INF;
+        if (extendedBbox.minY <= THRESHOLD)
+            extendedBbox.minY = -INF;
+        if (extendedBbox.maxX >= pageWidth - THRESHOLD)
+            extendedBbox.maxX = INF;
+        if (extendedBbox.maxY >= pageHeight - THRESHOLD)
+            extendedBbox.maxY = INF;
     }
-
-    return x >= minX && x <= maxX && y >= minY && y <= maxY;
 }
 
 void RectangularSelector::currentPos(double x, double y) {
@@ -149,9 +143,9 @@ void LassoSelector::currentPos(double x, double y) {
     }
 }
 
-void LassoSelector::buildExtendedBoundary() {
-    constexpr double eps = 1.0;
-    constexpr double INF = 1e9;
+void LassoSelector::extendAtPageEdges() {
+    constexpr double THRESHOLD = 1.0;  // pt
+    constexpr double INF = std::numeric_limits<double>::infinity();
 
     if (pageWidth <= 0 || pageHeight <= 0 || boundaryPoints.size() <= 2) {
         extendedBoundaryPoints = boundaryPoints;
@@ -160,19 +154,19 @@ void LassoSelector::buildExtendedBoundary() {
     }
 
     auto const isOnEdge = [&](BoundaryPoint const& p) -> bool {
-        return p.x <= eps || p.x >= pageWidth - eps || p.y <= eps || p.y >= pageHeight - eps;
+        return p.x <= THRESHOLD || p.x >= pageWidth - THRESHOLD || p.y <= THRESHOLD || p.y >= pageHeight - THRESHOLD;
     };
 
     auto const project = [&](BoundaryPoint const& p) -> BoundaryPoint {
         double px = p.x;
         double py = p.y;
-        if (px <= eps)
+        if (px <= THRESHOLD)
             px = -INF;
-        if (px >= pageWidth - eps)
+        if (px >= pageWidth - THRESHOLD)
             px = INF;
-        if (py <= eps)
+        if (py <= THRESHOLD)
             py = -INF;
-        if (py >= pageHeight - eps)
+        if (py >= pageHeight - THRESHOLD)
             py = INF;
         return {px, py};
     };

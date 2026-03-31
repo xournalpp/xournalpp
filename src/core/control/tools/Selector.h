@@ -41,6 +41,12 @@ public:
     virtual bool userTapped(double zoom) const = 0;
     virtual const std::vector<BoundaryPoint>& getBoundary() const = 0;
 
+    /**
+     * Extend the selector's geometry to infinity where it touches a page edge.
+     * Called by finalize() after page dimensions are known. Default is a no-op.
+     */
+    virtual void extendAtPageEdges() {};
+
     inline auto getViewPool() const -> const std::shared_ptr<xoj::util::DispatchPool<xoj::view::SelectorView>>& {
         return viewPool;
     }
@@ -80,6 +86,7 @@ public:
     bool contains(double x, double y) const override;
     bool userTapped(double zoom) const override;
     const std::vector<BoundaryPoint>& getBoundary() const override;
+    void extendAtPageEdges() override;
 
 private:
     double sx;
@@ -87,6 +94,7 @@ private:
     double ex;
     double ey;
     double maxDist = 0;
+    Range extendedBbox;
 };
 
 class LassoSelector: public Selector {
@@ -99,11 +107,7 @@ public:
     bool userTapped(double zoom) const override;
     const std::vector<BoundaryPoint>& getBoundary() const override;
 
-    /**
-     * Build an extended polygon that bulges outward to infinity where the lasso
-     * touches a page edge. Must be called after page dimensions are set.
-     */
-    void buildExtendedBoundary();
+    void extendAtPageEdges() override;
 
 private:
     std::vector<BoundaryPoint> extendedBoundaryPoints;
