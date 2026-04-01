@@ -274,14 +274,11 @@ static int applib_fileDialogSave(lua_State* L) {
 
     lua_settop(L, 2);  // discard extra arguments
     const char* luaCallback = luaL_checkstring(L, 1);
-    const char* filename = luaL_optstring(L, 2, _("Untitled"));
-    if (auto s = std::string(filename);
-        s.find("/") == std::string::npos &&
-        s.find("\\") == std::string::npos) {  // relative path (contains no slashes and backslashes)
-        filename = ("./" + s).c_str();
-    }
-    fs::path suggestedPath{filename};
+    fs::path suggestedPath{luaL_optstring(L, 2, _("Untitled"))};
 
+    if (!suggestedPath.has_parent_path()) {
+        suggestedPath = "." / suggestedPath;
+    }
 
     auto pathValidation = [](fs::path& p, const char* filterName) { return true; };
 

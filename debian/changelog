@@ -1,8 +1,19 @@
-xournalpp (1.3.3+dev-1) UNRELEASED; urgency=medium
+xournalpp (1.3.4+dev-1) UNRELEASED; urgency=medium
 
   * 
 
- -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Sat, 28 Feb 2026 09:16:06 +0100
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Sat, 28 Mar 2026 18:22:15 +0100
+
+xournalpp (1.3.4-1) unstable; urgency=medium
+
+  * Fixed a crash when invoking the floating toolbox with the Laser pointer on
+  * Fixed sometimes missing page numbers in sidebar
+  * Improved scrolling/zooming performances
+  * Windows: Fixed URI activations
+  * Make default Plugins compatible with Lua 5.5
+  * Updated translations
+
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Sat, 28 Mar 2026 18:22:15 +0100
 
 xournalpp (1.3.3-1) unstable; urgency=medium
 

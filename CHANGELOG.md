@@ -1,6 +1,15 @@
 # Changelog
 
-## 1.3.3+dev (Unreleased)
+## 1.3.4+dev (Unreleased)
+
+## 1.3.4
+
+* Fixed a crash when invoking the floating toolbox with the Laser pointer on (#7217)
+* Fixed sometimes missing page numbers in sidebar (#7254)
+* Improved scrolling/zooming performances (#7230)
+* Windows: Fixed URI activations (#7221)
+* Make default Plugins compatible with Lua 5.5 (#7306)
+* Updated translations
 
 ## 1.3.3
 
