@@ -2,7 +2,6 @@
 
 #include <algorithm>  // for max, min
 #include <cmath>      // for abs, NAN
-#include <limits>     // for numeric_limits
 #include <memory>     // for __shared_ptr_access
 
 #include <gdk/gdk.h>  // for GdkRGBA, gdk_cairo_set_source_rgba
@@ -22,9 +21,33 @@ auto Selector::finalize(PageRef page, bool disableMultilayer, Document* doc) -> 
     this->page = page;
     this->pageWidth = page->getWidth();
     this->pageHeight = page->getHeight();
+    this->selectionDomain = Range();
 
-    // Let subclasses extend their geometry to infinity at page edges
-    this->extendAtPageEdges();
+    auto addToSelectionDomain = [this](const Layer* layer) {
+        if (!layer->isVisible()) {
+            return;
+        }
+        for (const auto& e: layer->getElementsView()) {
+            this->selectionDomain = this->selectionDomain.unite(Range(e->boundingRect()));
+        }
+    };
+
+    {
+        std::shared_lock lock(*doc);
+        if (multiLayer && !disableMultilayer) {
+            for (const Layer* layer: page->getLayersView()) {
+                addToSelectionDomain(layer);
+            }
+        } else {
+            addToSelectionDomain(page->getSelectedLayer());
+        }
+    }
+
+    if (this->selectionDomain.empty()) {
+        this->selectionDomain = this->bbox;
+    }
+
+    this->tailorToSelectionDomain();
 
     size_t layerId = 0;
 
@@ -83,21 +106,20 @@ RectangularSelector::~RectangularSelector() = default;
 
 auto RectangularSelector::contains(double x, double y) const -> bool { return extendedBbox.contains(x, y); }
 
-void RectangularSelector::extendAtPageEdges() {
+void RectangularSelector::tailorToSelectionDomain() {
     constexpr double THRESHOLD = 1.0;  // pt
-    constexpr double INF = std::numeric_limits<double>::infinity();
 
     extendedBbox = bbox;
 
-    if (pageWidth > 0 && pageHeight > 0) {
+    if (pageWidth > 0 && pageHeight > 0 && selectionDomain.isValid()) {
         if (extendedBbox.minX <= THRESHOLD)
-            extendedBbox.minX = -INF;
+            extendedBbox.minX = selectionDomain.minX;
         if (extendedBbox.minY <= THRESHOLD)
-            extendedBbox.minY = -INF;
+            extendedBbox.minY = selectionDomain.minY;
         if (extendedBbox.maxX >= pageWidth - THRESHOLD)
-            extendedBbox.maxX = INF;
+            extendedBbox.maxX = selectionDomain.maxX;
         if (extendedBbox.maxY >= pageHeight - THRESHOLD)
-            extendedBbox.maxY = INF;
+            extendedBbox.maxY = selectionDomain.maxY;
     }
 }
 
@@ -143,11 +165,10 @@ void LassoSelector::currentPos(double x, double y) {
     }
 }
 
-void LassoSelector::extendAtPageEdges() {
+void LassoSelector::tailorToSelectionDomain() {
     constexpr double THRESHOLD = 1.0;  // pt
-    constexpr double INF = std::numeric_limits<double>::infinity();
 
-    if (pageWidth <= 0 || pageHeight <= 0 || boundaryPoints.size() <= 2) {
+    if (pageWidth <= 0 || pageHeight <= 0 || boundaryPoints.size() <= 2 || !selectionDomain.isValid()) {
         extendedBoundaryPoints = boundaryPoints;
         extendedBbox = bbox;
         return;
@@ -161,13 +182,13 @@ void LassoSelector::extendAtPageEdges() {
         double px = p.x;
         double py = p.y;
         if (px <= THRESHOLD)
-            px = -INF;
+            px = selectionDomain.minX;
         if (px >= pageWidth - THRESHOLD)
-            px = INF;
+            px = selectionDomain.maxX;
         if (py <= THRESHOLD)
-            py = -INF;
+            py = selectionDomain.minY;
         if (py >= pageHeight - THRESHOLD)
-            py = INF;
+            py = selectionDomain.maxY;
         return {px, py};
     };
 

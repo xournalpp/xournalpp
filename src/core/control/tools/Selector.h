@@ -42,10 +42,10 @@ public:
     virtual const std::vector<BoundaryPoint>& getBoundary() const = 0;
 
     /**
-     * Extend the selector's geometry to infinity where it touches a page edge.
-     * Called by finalize() after page dimensions are known. Default is a no-op.
+     * Tailor the selector geometry to the finite selection domain on the page.
+     * Called by finalize() after page dimensions and candidate element bounds are known.
      */
-    virtual void extendAtPageEdges() {};
+    virtual void tailorToSelectionDomain() {};
 
     inline auto getViewPool() const -> const std::shared_ptr<xoj::util::DispatchPool<xoj::view::SelectorView>>& {
         return viewPool;
@@ -67,6 +67,7 @@ protected:
     PageRef page;
 
     Range bbox;
+    Range selectionDomain;
 
     double pageWidth = 0;
     double pageHeight = 0;
@@ -86,7 +87,7 @@ public:
     bool contains(double x, double y) const override;
     bool userTapped(double zoom) const override;
     const std::vector<BoundaryPoint>& getBoundary() const override;
-    void extendAtPageEdges() override;
+    void tailorToSelectionDomain() override;
 
 private:
     double sx;
@@ -107,7 +108,7 @@ public:
     bool userTapped(double zoom) const override;
     const std::vector<BoundaryPoint>& getBoundary() const override;
 
-    void extendAtPageEdges() override;
+    void tailorToSelectionDomain() override;
 
 private:
     std::vector<BoundaryPoint> extendedBoundaryPoints;
