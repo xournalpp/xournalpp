@@ -64,16 +64,14 @@ auto Util::getLongPath(const fs::path& path) -> fs::path { return path; }
 #endif
 
 
+auto Util::getExePath() -> fs::path {
 #ifdef _WIN32
-fs::path Util::getExePath() {
     wchar_t szFileName[MAX_PATH + 1];
     GetModuleFileNameW(nullptr, szFileName, MAX_PATH + 1);
 
     return fs::path{szFileName}.parent_path();
-}
 #else
 #ifdef __APPLE__
-fs::path Util::getExePath() {
     char c;
     uint32_t size = 0;
     _NSGetExecutablePath(&c, &size);
@@ -89,9 +87,7 @@ fs::path Util::getExePath() {
 
     delete[] path;
     return "";
-}
 #else
-auto Util::getExePath() -> fs::path {
 #ifndef PATH_MAX
     // This is because PATH_MAX is (per posix) not defined if there is
     // no limit, e.g., on GNU Hurd. The "right" workaround is to not use
@@ -102,9 +98,9 @@ auto Util::getExePath() -> fs::path {
     std::array<char, PATH_MAX> result{};
     ssize_t count = readlink("/proc/self/exe", result.data(), PATH_MAX);
     return fs::path{std::string(result.data(), as_unsigned(std::max(ssize_t{0}, count)))}.parent_path();
+#endif
+#endif
 }
-#endif
-#endif
 
 
 /**
@@ -490,7 +486,7 @@ void Util::safeReplaceExtension(fs::path& p, const char* newExtension) {
 }
 
 auto Util::getDataPath() -> fs::path {
-#if defined(__APPLE__)
+#ifdef __APPLE__
     fs::path p = getExePath().parent_path();
     if (fs::exists(p / "Resources")) {
         return p / "Resources";
@@ -509,6 +505,18 @@ auto Util::getLocalePath() -> fs::path {
 #endif
 
     return getDataPath().parent_path() / "locale";
+}
+
+auto Util::getOptionalComponentsPath() -> fs::path {
+#ifdef _WIN32
+    return getExePath();
+#endif
+#ifdef __APPLE__
+    if (fs::path p = getExePath().parent_path(); fs::exists(p / "Resources")) {
+        return p / "Resources" / "lib";
+    }
+#endif
+    return getExePath().parent_path() / "lib";
 }
 
 auto Util::getInstallUiPath() -> fs::path {
