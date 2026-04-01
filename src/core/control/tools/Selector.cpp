@@ -21,20 +21,23 @@ auto Selector::finalize(PageRef page, bool disableMultilayer, Document* doc) -> 
     this->page = page;
     this->pageWidth = page->getWidth();
     this->pageHeight = page->getHeight();
-    this->selectionDomain = Range();
 
-    auto addToSelectionDomain = [this](const Layer* layer) {
+    const bool useMultiLayer = multiLayer && !disableMultilayer;
+    Range selectionDomain;
+
+    // First pass: compute selectionDomain from all candidate elements
+    auto addToSelectionDomain = [&selectionDomain](const Layer* layer) {
         if (!layer->isVisible()) {
             return;
         }
         for (const auto& e: layer->getElementsView()) {
-            this->selectionDomain = this->selectionDomain.unite(Range(e->boundingRect()));
+            selectionDomain = selectionDomain.unite(Range(e->boundingRect()));
         }
     };
 
     {
         std::shared_lock lock(*doc);
-        if (multiLayer && !disableMultilayer) {
+        if (useMultiLayer) {
             for (const Layer* layer: page->getLayersView()) {
                 addToSelectionDomain(layer);
             }
@@ -43,15 +46,16 @@ auto Selector::finalize(PageRef page, bool disableMultilayer, Document* doc) -> 
         }
     }
 
-    if (this->selectionDomain.empty()) {
-        this->selectionDomain = this->bbox;
+    if (selectionDomain.empty()) {
+        selectionDomain = this->bbox;
     }
 
-    this->tailorToSelectionDomain();
+    this->tailorToSelectionDomain(selectionDomain);
 
+    // Second pass: find selected elements
     size_t layerId = 0;
 
-    if (multiLayer && !disableMultilayer) {
+    if (useMultiLayer) {
         std::shared_lock lock(*doc);
         const auto layers = page->getLayersView();
         for (auto it = layers.rbegin(); it != layers.rend(); it++) {
@@ -106,7 +110,7 @@ RectangularSelector::~RectangularSelector() = default;
 
 auto RectangularSelector::contains(double x, double y) const -> bool { return extendedBbox.contains(x, y); }
 
-void RectangularSelector::tailorToSelectionDomain() {
+void RectangularSelector::tailorToSelectionDomain(const Range& selectionDomain) {
     constexpr double THRESHOLD = 1.0;  // pt
 
     extendedBbox = bbox;
@@ -165,7 +169,7 @@ void LassoSelector::currentPos(double x, double y) {
     }
 }
 
-void LassoSelector::tailorToSelectionDomain() {
+void LassoSelector::tailorToSelectionDomain(const Range& selectionDomain) {
     constexpr double THRESHOLD = 1.0;  // pt
 
     if (pageWidth <= 0 || pageHeight <= 0 || boundaryPoints.size() <= 2 || !selectionDomain.isValid()) {

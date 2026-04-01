@@ -45,7 +45,7 @@ public:
      * Tailor the selector geometry to the finite selection domain on the page.
      * Called by finalize() after page dimensions and candidate element bounds are known.
      */
-    virtual void tailorToSelectionDomain() {};
+    virtual void tailorToSelectionDomain(const Range& selectionDomain) {};
 
     inline auto getViewPool() const -> const std::shared_ptr<xoj::util::DispatchPool<xoj::view::SelectorView>>& {
         return viewPool;
@@ -67,7 +67,6 @@ protected:
     PageRef page;
 
     Range bbox;
-    Range selectionDomain;
 
     double pageWidth = 0;
     double pageHeight = 0;
@@ -87,7 +86,7 @@ public:
     bool contains(double x, double y) const override;
     bool userTapped(double zoom) const override;
     const std::vector<BoundaryPoint>& getBoundary() const override;
-    void tailorToSelectionDomain() override;
+    void tailorToSelectionDomain(const Range& selectionDomain) override;
 
 private:
     double sx;
@@ -108,7 +107,7 @@ public:
     bool userTapped(double zoom) const override;
     const std::vector<BoundaryPoint>& getBoundary() const override;
 
-    void tailorToSelectionDomain() override;
+    void tailorToSelectionDomain(const Range& selectionDomain) override;
 
 private:
     std::vector<BoundaryPoint> extendedBoundaryPoints;
