@@ -19,8 +19,6 @@ Selector::~Selector() = default;
 
 auto Selector::finalize(PageRef page, bool disableMultilayer, Document* doc) -> size_t {
     this->page = page;
-    this->pageWidth = page->getWidth();
-    this->pageHeight = page->getHeight();
 
     const bool useMultiLayer = multiLayer && !disableMultilayer;
     Range selectionDomain;
@@ -112,6 +110,8 @@ auto RectangularSelector::contains(double x, double y) const -> bool { return ex
 
 void RectangularSelector::tailorToSelectionDomain(const Range& selectionDomain) {
     constexpr double THRESHOLD = 1.0;  // pt
+    const double pageWidth = page->getWidth();
+    const double pageHeight = page->getHeight();
 
     extendedBbox = bbox;
 
@@ -171,6 +171,8 @@ void LassoSelector::currentPos(double x, double y) {
 
 void LassoSelector::tailorToSelectionDomain(const Range& selectionDomain) {
     constexpr double THRESHOLD = 1.0;  // pt
+    const double pageWidth = page->getWidth();
+    const double pageHeight = page->getHeight();
 
     if (pageWidth <= 0 || pageHeight <= 0 || boundaryPoints.size() <= 2 || !selectionDomain.isValid()) {
         extendedBoundaryPoints = boundaryPoints;
