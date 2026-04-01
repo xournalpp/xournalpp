@@ -1,0 +1,19 @@
+version: 1
+
+project:
+  name: com.github.xournalpp.xournalpp
+  version_command: git describe --tags
+
+scripts:
+  pre_build:
+    - mkdir translations-build
+    - cd translations-build
+    - cmake "${PROJECT_ROOT}"
+    - make translations
+    - cd ..
+
+build:
+  cmake:
+
+appimage:
+  linuxdeploy:

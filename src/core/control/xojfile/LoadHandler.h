@@ -1,0 +1,201 @@
+/*
+ * Xournal++
+ *
+ * Loads a .xoj / .xopp document
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#pragma once
+
+#include <cstddef>        // for size_t
+#include <memory>         // for unique_ptr
+#include <optional>       // for optional
+#include <string>         // for string
+#include <string_view>    // for string_view
+#include <unordered_map>  // for unordered_map
+#include <vector>         // for vector
+
+#include <zip.h>  // for zip_t
+
+#include "control/xojfile/DocumentBuilderInterface.h"  // for DocumentBuilderInterface
+#include "model/Document.h"                            // for Document
+#include "model/DocumentHandler.h"                     // for DocumentHandler
+#include "model/PageRef.h"                             // for PageRef
+#include "model/Stroke.h"                              // for Stroke, StrokeTool,...
+#include "util/Color.h"                                // for Color
+
+#include "filesystem.h"  // for path
+
+class AudioElement;
+class Image;
+class Layer;
+class LineStyle;
+class PageType;
+class Point;
+class TexImage;
+class Text;
+
+namespace xoj::util {
+class InputStream;
+}
+
+
+class LoadHandler: private DocumentBuilderInterface {
+public:
+    /**
+     * @param errorMessages Either `nullptr` or a pointer to an empty vector of
+     *                      strings to which non-fatal error messages that may
+     *                      be relevant for the user will be appended. Error
+     *                      messages written to that vector are also printed as
+     *                      warnings to the console. The pointer must remain
+     *                      valid until the LoadHandler object is destroyed.
+     */
+    LoadHandler(std::vector<std::string>* errorMessages = nullptr);
+    ~LoadHandler() override;
+
+public:
+    /**
+     * Load document located at `filepath`
+     * @return A valid pointer to a `Document`
+     * @exception Throws a `std::runtime_error` if a fatal error is encountered.
+     */
+    std::unique_ptr<Document> loadDocument(fs::path const& filepath);
+
+    /**
+     * The attached PDF file was not found.
+     * Here "attached" refers to either a file in the zip archive, or a file in
+     * the same directory as the document prefixed with the filename of the
+     * document.
+     */
+    bool isAttachedPdfMissing() const;
+
+    /** @return The name of the PDF background in case it was not found */
+    const fs::path& getMissingPdfFilename() const;
+
+    /** @return The version of the loaded file */
+    int getFileVersion() const;
+
+private:
+    // interface for XmlParser
+    void addDocument(std::u8string creator, int fileVersion) override;
+    void finalizeDocument() override;
+    void addPage(double width, double height) override;
+    void finalizePage() override;
+    void addAudioAttachment(const fs::path& filename) override;
+    void setBgName(const std::string& name) override;
+    void setBgSolid(const PageType& bg, Color color) override;
+    void setBgPixmap(bool attach, const fs::path& filename) override;
+    void setBgPixmapCloned(size_t pageNr) override;
+    void setBgPdf(size_t pageno) override;
+    void loadBgPdf(bool attach, const fs::path& filename) override;
+    void addLayer(const std::optional<std::string_view>& name) override;
+    void finalizeLayer() override;
+    void addStroke(StrokeTool tool, Color color, double width, int fill, StrokeCapStyle capStyle,
+                   const LineStyle& lineStyle, fs::path filename, size_t timestamp) override;
+    void setStrokePoints(std::vector<Point> pointVector, bool hasPressure) override;
+    void finalizeStroke() override;
+    void addText(std::string font, double size, double x, double y, Color color, fs::path filename,
+                 size_t timestamp) override;
+    void setTextContents(std::string contents) override;
+    void finalizeText() override;
+    void addImage(double left, double top, double right, double bottom) override;
+    void setImageData(std::string data) override;
+    void setImageAttachment(const fs::path& filename) override;
+    void finalizeImage() override;
+    void addTexImage(double left, double top, double right, double bottom, std::string text) override;
+    void setTexImageData(std::string data) override;
+    void setTexImageAttachment(const fs::path& filename) override;
+    void finalizeTexImage() override;
+
+    void logError(const std::string& error) override;
+
+private:
+    /**
+     * Open a file for reading
+     * If the file is a zip file, initializes `zipFp` for access to the other
+     * files in the archive.
+     * @return A pointer to an XML input stream, reading either directly from
+     *          the gzip file, or from "content.xml" in the zip archive
+     * @exception Throws a `std::runtime_error` if the file could not be opened
+     *            or required contents could not be found.
+     */
+    std::unique_ptr<xoj::util::InputStream> openFile(fs::path const& filepath);
+
+    /** Reset `zipFp`, closing the zip archive if it is open. */
+    void closeFile() noexcept;
+
+    /**
+     * Parse the contents of `xmlContentStream`
+     * The document will get built during this call.
+     * @param xmlContentStream An InputStream reading from the XML file. It is
+     *                         "consumed" and destroyed at function exit.
+     * @exception Throws a `std::runtime_error` if the document is corrupted and
+     *            cannot be loaded.
+     */
+    void parseXml(std::unique_ptr<xoj::util::InputStream> xmlContentStream);
+
+    /**
+     * Remove points of the current `stroke` that have an invalid pressure.
+     * Splits up the stroke into valid segments and adds them to the layer,
+     * except for the last one, which is left in `stroke`. If no pressure points
+     * are valid, the stroke is removed entirely and `stroke` is reset.
+     */
+    void fixNullPressureValues(std::vector<Point> pressures);
+
+    /**
+     * Returns the contents of the zip attachment with the given filename, or
+     * nullptr if there is no such file.
+     */
+    std::unique_ptr<std::string> readZipAttachment(fs::path const& filename);
+
+    /** Set audio attributes for `elem`, for any file type and file version. */
+    void setAudioAttributes(AudioElement& elem, fs::path filename, size_t timestamp);
+
+    /** @return The path of a temporary file extracted from the zip archive. */
+    fs::path getTempFileForPath(fs::path const& filename);
+
+    /**
+     * Get the absolute file path for external files such as background images
+     * and PDFs. This function should not be called on the filename of an
+     * attachment in the zip file format.
+     */
+    fs::path getAbsoluteFilepath(const fs::path& filename, bool attach) const;
+
+private:
+    fs::path xournalFilepath;
+
+    bool parsingComplete;
+    std::vector<std::string>* errorMessages;
+
+    fs::path missingPdf;
+    bool attachedPdfMissing;
+    bool pdfFilenameParsed;
+
+    std::u8string creator;
+    int fileVersion;
+    int minimalFileVersion;
+
+    struct zip_deleter {
+        void operator()(zip_t* ptr) noexcept { zip_close(ptr); }
+    };
+    using zip_wrapper = std::unique_ptr<zip_t, zip_deleter>;
+    zip_wrapper zipFp;
+    bool isGzFile;
+
+    std::vector<PageRef> pages;
+    std::unordered_map<fs::path, fs::path> audioFiles;
+
+    PageRef page;
+    std::unique_ptr<Layer> layer;
+    std::unique_ptr<Stroke> stroke;
+    std::unique_ptr<Text> text;
+    std::unique_ptr<Image> image;
+    std::unique_ptr<TexImage> teximage;
+
+    DocumentHandler dHandler;
+    std::unique_ptr<Document> doc;
+};

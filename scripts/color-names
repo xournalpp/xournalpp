@@ -1,0 +1,47 @@
+#! /bin/python3
+
+from functools import partial
+from math import sqrt
+from sys import argv
+
+from matplotlib.colors import get_named_colors_mapping
+
+no_colors_to_display = 20
+usage = f"""{argv[0]} [ HEX_CODE_RGB ]
+    shows the {no_colors_to_display} css4 colors that are closest
+    to the argument by euclidean distance.
+    """
+
+def hex_to_rgb(hex_str):
+    hexval = int(hex_str, 16)
+    return (hexval >> 16, (hexval >> 8) & 0xff, hexval & 0xff)
+
+css4_colors = map(lambda t: (t[0], hex_to_rgb(t[1][1:])),
+                filter(lambda t: len(t[0]) > 1 and not t[0].startswith("xkcd"),
+                get_named_colors_mapping().items()))
+
+def eucl_dst(v1, v2):
+    return sqrt(sum([(v1_i - v2_i) ** 2 for (v1_i, v2_i) in zip(v1, v2)]))
+
+
+
+if __name__  == '__main__':
+    if (len(argv) != 2 or argv[1] in ('-h', '--help')):
+        print(usage)
+        exit(0)
+
+    point = None
+    try:
+        point = hex_to_rgb(argv[1])
+    except Exception:
+        print(f"Invalid hex code\n{usage}")
+        exit(1)
+    dist_from_point = partial(eucl_dst, point)
+    print("Point: {}".format(point))
+    for key, val in \
+            sorted(css4_colors,
+                key = lambda t: dist_from_point(t[1]))[:no_colors_to_display]:
+        print("dist = {} color: {} code: {}".format(
+            round(dist_from_point(val), 2),
+            key,
+            val))

@@ -1,0 +1,215 @@
+/*
+ * Backup before modifying
+ *
+ *
+ *  Try running Xournal++ like this:    GTK_DEBUG=interactive  xournalpp
+ *
+ *  See: https://wiki.gnome.org/action/show/Projects/GTK/Inspector
+ */
+
+#pdfFloatingToolGrid {
+    padding: 7px;
+}
+
+/*Style the Floating Toolbox!*/
+#floatingToolbox > box,
+#pdfFloatingToolGrid {
+	background-color: white;
+	border-radius: 12px;
+
+	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
+
+	/* Add a margin. If we don't have this, Gtk clips the shadow!  */
+	margin: 7px;
+}
+
+#floatingToolbox box toolbar {
+	background-color: rgba(255, 255, 255, 0);
+}
+
+#floatingToolbox button {
+	background-color: rgba(255, 255, 255, 0.8);
+	border-radius: 12px;
+}
+
+#pdfFloatingToolGrid button {
+	background: rgba(255, 255, 255, 0.8);
+	border: 12px;
+}
+
+#pdfFloatingToolGrid button:hover {
+	border-radius: 12px;
+	background: rgba(245, 245, 245, 0.8);
+	box-shadow: inset 0px 0px 2px gray;
+}
+
+/*
+	Use :checked for a selected ToggleButton.
+	See https://stackoverflow.com/questions/39824345/use-css-to-style-gtktogglebutton-depending-on-the-state
+*/
+#floatingToolbox button:checked {
+	/*background-color: lightblue;*/
+	border-color: lightblue;
+	box-shadow: inset 0px 0px 3px lightblue;
+
+	transition: background-color 0.5s ease, border-color 0.5s ease, margin 0.3s ease;
+}
+
+#floatingToolbox toolbar,
+#pdfFloatingToolGrid button {
+    /*
+      The Adaptia GTK theme adds box-shadows to toolbars.
+      Remove them to avoid horizontal lines that extend outside
+      the edge of the floating toolbox.
+     */
+
+    box-shadow: none;
+}
+
+window.darkMode #floatingToolbox button,
+window.darkMode #pdfFloatingToolGrid button {
+	background: rgba(55, 53, 53, 0.5);
+	border: none;
+}
+
+window.darkMode #floatingToolbox button:checked {
+	background: rgba(85, 85, 95, 0.1);
+	border-color: lightblue;
+	box-shadow: 0px 0px 3px lightblue;
+}
+
+window.darkMode #floatingToolbox > box,
+window.darkMode #pdfFloatingToolGrid  {
+	background-color: black;
+
+	/*
+	  Lighter gray shadow for better contrast on dark
+	  backgrounds.
+	*/
+	box-shadow: 0px 0px 5px rgba(90, 90, 90, 0.7);
+}
+
+/* Add additional padding and a border to make editing toolbars easier. */
+toolbar.editing {
+	padding-top: 4px;
+	padding-bottom: 4px;
+
+	border: 4px dashed orange;
+	border-radius: 3px;
+
+	box-shadow: inset -2px -2px 8px orange;
+}
+
+/*Fix ugly Background drop down button
+ *
+ * We need to select the button beside two labels or we will affect
+ * the pen tool when in FloatingToolbox (and can't see activation highlight).
+ *
+ * Ideally we will give name properties to all of the widgets created in
+ * code as well as specifying names in glade files.
+ *
+ * Note: in glade files, property with name="name". i.e. <property name="name">floatingToolbox</property>
+ */
+
+
+toolitem > box > label+label+button
+{
+	border-width:0;
+	box-shadow:none;
+	background-image:none;
+}
+
+toolbar button,
+popover.toolbar button {
+  padding:3px;
+}
+
+.orientationFormatBox > button > widget > box > image {
+	margin-left: 3px;
+	margin-right: 3px;
+}
+
+toolbar button:not(:checked):not(:active):not(:hover),
+popover.toolbar button:not(:checked):not(:active):not(:hover){
+  border-color:transparent;
+  box-shadow:none;
+  background-color:transparent;
+  background-image:none;
+}
+
+radiobutton.invisible radio {
+  color:transparent;
+  background-color:transparent;
+  background-image:none;
+  outline-style:none;
+  border-style:none;
+  box-shadow:none;
+}
+
+/* A spacer is a transparent separator with expand == true */
+separator.spacer {
+  color:transparent;
+  background-color:transparent;
+  background-image:none;
+  outline-style:none;
+  border-style:none;
+  box-shadow:none;
+}
+
+/*  If you want to change the size of toolbar buttons try these:
+*   All toolbars:
+*/
+
+/*
+toolbar button
+{
+	padding: 2
+}
+*/
+
+
+
+/* Or for individual toolbars: tbLeft1 tbLeft2 tbTop1 tbTop2 tbBottom1 tbFloat4 etc:
+ */
+
+/*
+#tbLeft2 button
+{
+	padding: 2
+}
+*/
+
+
+/*
+Labels for subsections of the Settings dialog
+*/
+notebook frame>label {
+    color: #666;
+    font-weight: bold;
+}
+
+menubar, toolbar {
+    -GtkWidget-window-dragging: false
+}
+
+label.setting-button-indicator {
+    border: 1px solid gray;
+    border-radius: 3px;
+    margin: 1px;
+    padding: 2px;
+}
+
+label.setting-button-indicator.pressed {
+    background-color: red;
+}
+
+label.setting-touch-indicator {
+    border: none;
+    background: radial-gradient(circle at center, alpha(gray,.7) 0%, alpha(gray,.7) 20%, alpha(gray, .1) 60%, alpha(gray, 0.) 100%);
+    border-radius: 50%;
+    margin: 1px;
+    padding: 10px;
+}
+label.setting-touch-indicator.pressed {
+    background: radial-gradient(circle at center, red 0%, red 20%, alpha(red, .1) 60%, alpha(red, 0.) 100%);
+}

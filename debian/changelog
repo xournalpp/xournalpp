@@ -1,0 +1,284 @@
+xournalpp (1.3.4+dev-1) UNRELEASED; urgency=medium
+
+  * 
+
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Sat, 28 Mar 2026 18:22:15 +0100
+
+xournalpp (1.3.4-1) unstable; urgency=medium
+
+  * Fixed a crash when invoking the floating toolbox with the Laser pointer on
+  * Fixed sometimes missing page numbers in sidebar
+  * Improved scrolling/zooming performances
+  * Windows: Fixed URI activations
+  * Make default Plugins compatible with Lua 5.5
+  * Updated translations
+
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Sat, 28 Mar 2026 18:22:15 +0100
+
+xournalpp (1.3.3-1) unstable; urgency=medium
+
+  * Fix undo/redo crash with automatic page insertion
+  * Silent errors when parsing some files are no longer silent
+  * Fix more UTF-8 conversion issues
+  * Report failure to open recent files
+  * Fix rendering of single-dot strokes
+  * Fix horizontal alignment of pages
+  * Fix toolbar item "Draw line" being wrongly enabled
+  * Improve zoom/scroll responsivity
+  * Updated translations
+
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Sat, 28 Feb 2026 09:16:06 +0100
+
+xournalpp (1.3.2-1) unstable; urgency=medium
+
+  * Fix sidebar layout when resizing and changing tab
+  * Fix graph/dotted backgrounds
+  * Restore new page behaviour with PDF background
+  * Fix crashes on Windows (UTF-8 conversion and when missing background)
+  * Fix crash on Clipboard IO error
+  * Make Plugin openFile API comply with forceOpen parameter
+  * Fix CLI behaviour on error
+  * Restore GtkSourceView support
+  * Fix recoloring when light color is lighter
+  * Fix image orientation on Drag-n-Drop pasting
+  * Fix crashes when using touchscreen in Setting->Input panel
+  * Updated translations
+
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Tue, 03 Feb 2026 09:52:28 +0100
+
+xournalpp (1.3.1-1) unstable; urgency=medium
+
+  * Restored the rendering of graph backgrounds used before the 1.3.0 release
+  * Fixed image loading on Windows
+  * Fixed clipboard pasting
+  * Fixed crashes related to saving text nodes and automatic page addition
+
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Sun, 21 Dec 2025 22:04:28 +0100
+
+xournalpp (1.3.0-1) unstable; urgency=medium
+
+  * PDF exports now preserves the background PDF's inner structure (hyperlink, comments, ...)
+  * The color palette can now be selected in the preferences
+  * Grid snapping now follows the displayed grid for all background types
+  * New graph background with periodically thicker lines
+  * New laser pointer tool, writing ephemeral strokes
+  * Allow to use an external editor for LaTeX entries
+  * Add the possibility of recoloring the screen output (e.g. for night mode or accessibility)
+  * Add the possibility of choosing the PDF marker opacity
+  * Configurable behaviour in fullscreen or presentation modes
+  * Allow to optionally scroll beyond the page's edges
+  * The toolbars can now contain several instances of the same button
+  * Major changes in the plugin interface
+  * Many smaller new features and bugfixes
+
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Thu, 11 Dec 2025 21:44:23 +0100
+
+xournalpp (1.2.10-1) unstable; urgency=medium
+
+  * Updated translations
+
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Sun, 07 Dec 2025 11:26:46 +0100
+
+xournalpp (1.2.9-1) unstable; urgency=medium
+
+  * Fixed diplay bug when mixing versions
+  * Fixed clipboard issues
+  * Fixed dangerous background overriding
+  * Fixed image attach mode
+
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Wed, 03 Dec 2025 10:36:35 +0100
+
+xournalpp (1.2.8-1) unstable; urgency=medium
+
+  * Improved the behavior of the selection tools
+  * Fixed various visual artifacts
+  * Fixed some behavior of Mouse+Keyboard combo devices
+  * Fixed filename extension stripping
+  * Fixed CLI using relative paths
+  * Fixed various crashes
+  * Made using GtkSourceView and Plugins proper CMake options
+  * Updated translations
+
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Mon, 01 Sep 2025 10:40:09 +0200
+
+xournalpp (1.2.7-1) unstable; urgency=medium
+
+  * Improved error logs
+  * Fixed some undefined behaviours and memory leaks
+  * Fixed handling of linebreaks in latex tool
+  * Linux: forward crash signals to system handler after emergency save
+  * Fixed wrong glyph spacing in texts using small fonts
+  * Fixed rasterization of Tex elements on PDF/SVG export or printing
+
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Thu, 08 May 2025 15:20:59 +0200
+
+xournalpp (1.2.6-1) unstable; urgency=medium
+
+  * Fixed compass outline drawing
+  * Exposed selected text to the windowing system
+  * Fixed loading of jpeg images and CJK and Cyrillic font rendering on MacOS
+
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Wed, 19 Feb 2025 10:59:27 +0100
+
+xournalpp (1.2.5-1) unstable; urgency=medium
+
+  * Fixed regressions when exporting to PDF
+  * Fixed crash when importing some SVG files
+  * Have geometry tools appear in the middle of the view
+  * Fixed issues with Windows installer
+  * Fixed missing translations on Windows
+
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Wed, 04 Dec 2024 16:17:08 +0100
+
+xournalpp (1.2.4-1) unstable; urgency=medium
+
+  * Fixed various dark/light theme inconsistencies
+  * Improved edge panning for large selections
+  * Fixed various crashes, freezes and memory leaks
+  * MacOS: Added support for opening xopp-files from Finder
+  * Added builds for Ubuntu 24.04 and MacOS ARM
+
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Sun, 20 Oct 2024 08:02:11 +0200
+
+xournalpp (1.2.3-1) unstable; urgency=medium
+
+  * Fixed background color and truncated text in LaTeX tool
+  * Fixed zoom jumping and zoom steps
+  * Fixed various segfaults and rendering issues
+  * Fixed pressure values and project URL when saving documents
+  * Enabled font hint metrics in PDF export to improve text alignment
+
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Thu, 29 Feb 2024 13:22:42 +0100
+
+xournalpp (1.2.2-1) unstable; urgency=medium
+
+  * Fix various memory leaks and segmentation faults.
+  * Fix some issues with input sequences mixing up devices and buttons
+  * Fix Latex tool failing to open some pdf files
+  * Fix audio output device selection
+
+ -- Benjamin Hennion <benjamin.hennion@wanadoo.fr>  Sun, 08 Oct 2023 15:53:47 +0200
+
+xournalpp (1.2.1-1) unstable; urgency=medium
+
+  * Added a default toolbar so that the app does not start without toolbar on new installations
+  * Fixed some crashes and various issues with the crash log handling
+  * Added options to the command line and preferences to disable the audio system used for audio recording
+  * The official release builds are now all built with gtksourceview styling for the LaTeX tool and in "RelWithDeb" mode. Thus failing asserts do not result in a crash anymore.
+
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Thu, 24 Aug 2023 17:22:54 +0200
+
+xournalpp (1.2.0-1) unstable; urgency=medium
+
+  * This is a new major version of Xournal++ with a lot of new features, improvements, and
+    bug fixes thanks to almost two year's worth of contributions from the community.
+  * Most notably a PDF text selection tool for interacting with the background PDF,
+    geometry tools (setsquare and compass) for geometric constructions and measurements,
+    and custom color palette support have been added. The LaTeX editor has been reimplemented
+    using the gtksourceview library, enabling multiline input, syntax highlighting, undo/redo,
+    word wrap, and a resizable code editor. Moreover the eraser has been rewritten to be much
+    faster and more reliable and the rendering system has been optimized heavily, too. The file
+    size of documents with lots of stroke data has been reduced by up to 15%. MacOS users will
+    notice a large performance boost when drawing/writing thanks to an updated Gtk version.
+  * See the full changelog located on GitHub
+
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Sat, 29 Jul 2023 23:27:45 +0100
+
+xournalpp (1.1.3-1) unstable; urgency=medium
+
+  * Fixed several crashes.
+  * Fixed a bug that closed text fields immediately after creating them with a secondary mouse or stylus button.
+  * Added a setting to disable GTK inertial scrolling to work around scrolling issues on some devices.
+
+ -- Bryan Tan <bryantan@technius.net>  Fri, 25 Nov 2022 22:01:45 -0800
+
+xournalpp (1.1.2-1) unstable; urgency=medium
+
+  * This is a new minor version of Xournal++ with many new bug fixes and improvements
+    thanks to contributions from the community.
+  * Fixed several UX problems.
+  * Fixed several crashes.
+  * Fixed PDF Attach Mode not being loaded correctly.
+  * Improved the performance of the text tool.
+  * See the full changelog located on GitHub.
+
+ -- Bryan Tan <bryantan@technius.net>  Sat, 15 Oct 2022 01:00:44 -0700
+
+xournalpp (1.1.1-1) unstable; urgency=medium
+
+  * This is a new minor version of Xournal++ with many new bug fixes and improvements
+    thanks to contributions from the community.
+  * Fixed several notable UX problems such as dark mode behavior and edge panning.
+  * Fixed several crash and freeze issues, including "random" freezes caused by the
+    sidebar scrolling logic and crashing on the gcin input method.
+  * Fixed many other miscellaneous bugs and issues.
+  * See the full changelog located on GitHub
+
+ -- Bryan Tan <bryantan@technius.net>  Sun, 13 Feb 2022 11:30:45 -0800
+
+xournalpp (1.1.0-0) unstable; urgency=medium
+
+  * This is a new major version of Xournal++ with many new features, improvements,
+    and bug fixes thanks to over one year's worth of contributions from the community.
+  * See the full changelog located on GitHub
+
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Sun, 18 Jul 2021 21:49:22 +0100
+
+xournalpp (1.0.20-hotfix) unstable; urgency=medium
+
+  * Fixed an issue with packaging info for deb packages preventing installation
+
+ -- Ulrich Huber <ulrich@huberulrich.de>  Wed, 23 Dec 2020 23:19:30 +0100
+
+xournalpp (1.0.20-0) unstable; urgency=medium
+
+  * Fixed a regression with pdf files that could not be overwritten
+  * Fixed page layout update after inserting, deleting, changing page layout or zooming
+  * Fixed incorrect rendering of pages after changing the page format
+  * Fixed blocked scrolling after saving a file
+  * Fixed presentation mode after startup
+
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Thu, 17 Dec 2020 06:28:24 +0100
+
+xournalpp (1.0.19-0) unstable; urgency=medium
+
+  * Updated changelog file for 1.0.19 to show the correct version in the PPA.
+  * This changelog reflects the changes from version 1.0.18, despite it not
+    being listed in the changelog file.
+  * Quality-of-life and usability improvements.
+  * Fixed many bugs and crashes.
+  * For more details, check the full changelog located on GitHub.
+
+ -- Bryan Tan <techniux@gmail.com>  Sat, 10 Oct 2020 19:20:54 -0700
+
+xournalpp (1.0.6-0) unstable; urgency=low
+
+  * Multiple fixes and improvements
+
+ -- Andreas Butti <andreasbutti@gmail.com>  Sun, 09 Dec 2018 13:32:00 +0100
+
+xournalpp (1.0.5-0) unstable; urgency=low
+
+  * Multiple fixes and improvements
+
+ -- Andreas Butti <andreasbutti@gmail.com>  Sun, 09 Dec 2018 13:32:00 +0100
+
+xournalpp (1.0.4-0) unstable; urgency=low
+
+  * Layer Sidebar
+  * Fill option
+  * Multiple fixes and improvements
+
+ -- Andreas Butti <andreasbutti@gmail.com>  Sun, 09 Dec 2018 13:32:00 +0100
+
+xournalpp (1.0.3-0) unstable; urgency=low
+
+  * Fixed debian dependencies
+
+ -- Andreas Butti <andreasbutti@gmail.com>  Sun, 09 Dec 2018 13:32:00 +0100
+
+xournalpp (1.0.2-0) unstable; urgency=low
+
+  * Initial release Debian Packaging
+
+ -- Andreas Butti <andreasbutti@gmail.com>  Mon, 03 Dec 2018 20:00:00 +0100

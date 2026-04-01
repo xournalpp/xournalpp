@@ -1,0 +1,50 @@
+/*
+ * Xournal++
+ *
+ * Static definitions for Xournal++
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#pragma once
+
+/**
+ * Toolbar config file name
+ */
+#define TOOLBAR_CONFIG "@DEV_TOOLBAR_CONFIG@"
+
+/**
+ * Settings file name
+ */
+#define SETTINGS_XML_FILE "@DEV_SETTINGS_XML_FILE@"
+
+/**
+ * Gimp Palette File
+ */
+#define DEFAULT_PALETTE_FILE "@DEV_DEFAULT_PALETTE_FILE@"
+
+/**
+ * Print config file name
+ */
+#define PRINT_CONFIG_FILE "@DEV_PRINT_CONFIG_FILE@"
+
+/**
+ * Metadata file name
+ */
+#define METADATA_FILE "@DEV_METADATA_FILE@"
+
+/**
+ * Directory where errorlogfiles will be placed
+ */
+#define ERRORLOG_DIR "@DEV_ERRORLOG_DIR@"
+
+
+/* --- Logging --- */
+
+/**
+ * Compile with call log
+ */
+#cmakedefine DEV_CALL_LOG

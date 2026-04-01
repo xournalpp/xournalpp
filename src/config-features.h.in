@@ -1,0 +1,32 @@
+/*
+ * Xournal++
+ *
+ * Additional features of Xournal++
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#pragma once
+
+/* --- Stable features --- */
+
+#cmakedefine ENABLE_PLUGINS
+
+#cmakedefine ENABLE_GTK_SOURCEVIEW
+
+#cmakedefine ENABLE_AUDIO
+
+#cmakedefine01 ENABLE_FLOAT_FROM_CHARS
+
+/* --- Testing features --- */
+
+#cmakedefine ENABLE_QPDF
+
+#cmakedefine ENABLE_CPPTRACE
+
+// Example: #cmakedefine NAME_FROM_Cmake_list
+// in CMakeFile.txt:
+// option (NAME_FROM_Cmake_list "Description" OFF)

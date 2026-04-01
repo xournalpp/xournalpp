@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = "configure" ]; then
+    if [ -x "`which update-desktop-database 2>/dev/null`" ]; then
+        update-desktop-database
+    fi
+    if [ -x "`which update-mime-database 2>/dev/null`" ]; then
+        update-mime-database "@CMAKE_INSTALL_PREFIX@/share/mime"
+    fi
+    if [ -x "`which gtk-update-icon-cache 2>/dev/null`" ]; then
+        gtk-update-icon-cache -f -t "@CMAKE_INSTALL_PREFIX@/share/icons/hicolor"
+    fi
+fi

@@ -1,0 +1,22 @@
+/*
+ * Xournal++
+ *
+ * Paths to resources
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#pragma once
+
+/**
+ * Path to current source directory
+ */
+#define PROJECT_SOURCE_DIR "@PROJECT_SOURCE_DIR@"
+
+/**
+ * Path to install directory (for integration test)
+ */
+#define PROJECT_INSTALL_DIR "@PROJECT_INSTALL_DIR@"

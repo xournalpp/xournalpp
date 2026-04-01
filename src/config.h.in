@@ -1,0 +1,57 @@
+/*
+ * Xournal++
+ *
+ * Static project constants
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#pragma once
+
+/* --- Project info --- */
+
+/**
+ * Full name of this project and package
+ */
+constexpr auto PROJECT_NAME = "@PROJECT_NAME@";
+
+/**
+ * Project version number
+ */
+constexpr auto PROJECT_VERSION = "@PROJECT_VERSION@";
+
+/**
+ * Address where crash reports for this project should be sent
+ */
+constexpr auto PROJECT_CRASHREPORT = "@PROJECT_CRASHREPORT@";
+
+/**
+ * Full name and version of this project
+ */
+constexpr auto PROJECT_STRING = "@PROJECT_NAME@ @PROJECT_VERSION@";
+
+/**
+ * Project URL
+ */
+constexpr auto PROJECT_HOMEPAGE_URL = "@PROJECT_HOMEPAGE_URL@";
+
+/**
+ * File format version
+ */
+constexpr int FILE_FORMAT_VERSION = @DEV_FILE_FORMAT_VERSION@;
+
+
+/* --- I18N --- */
+
+/**
+ * Enable i18n
+ */
+#cmakedefine ENABLE_NLS
+
+/**
+ * Gettext package
+ */
+constexpr auto GETTEXT_PACKAGE = "@GETTEXT_PACKAGE@";

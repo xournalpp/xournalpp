@@ -1,0 +1,11 @@
+<?xml version="1.0" standalone="no"?>
+<xournal creator="Xournal++ 1.0.1" fileversion="2">
+<title>Xournal document - see http://xournal.sourceforge.net/</title>
+<preview>iVBORw0KGgoAAAANSUhEUgAAAFoAAACACAIAAAAEb+kcAAAABmJLR0QA/wD/AP+gvaeTAAABXUlEQVR4nO3XwWnDQBRF0VGYElycK3VfJorBCUZZheguswjS4pwKho/vE162bRv8eDv6AefiHOEc4RzhHOEc4RzhHOEc4RzhHDHvz6OfcCaLv3B7YgmxhFhCLOEcYTvCdoRYwjnCdoTtCLGEWEIsIZZwjrAd8bftuI3bOtbHeFzGZR3rdVz/72WHMKVhO8J2hFhCLCGWEEuIJZwjbEfYjhBLzOfr6CecydTKnu0I2xE+tCGWEEs4R9iOsB0hlhBLiCXEEs4RtiNsR4glnCNsR9iOEEuIJcQSYgnnCNsRtiPEEs4RtiNsR4glxBJiCbGEc4TtCNsRYgnnCNsRtiPEEmIJsYRYwjnCdoTtCLGEc4TtCNsRYgmxhFhCLOEcYTvCdoRYYvpt7M1327FjO8J2hA9tiCXEEs4RtiNsR4gl5sfn0U84k+XrJZZftiNsR/jQhlhCLOEcYTvCdoRY4hv0P7IDlPDKyAAAAABJRU5ErkJggg==</preview>
+<page width="595.28" height="841.89">
+<background type="solid" color="#ffffffff" style="lined"/>
+<layer>
+<text font="Liberation Sans" size="12.00" x="95.99" y="202.53" color="#00ff00ff">12345</text>
+</layer>
+</page>
+</xournal>

@@ -1,0 +1,37 @@
+/*
+ * Xournal++
+ *
+ * Base class for device input handling
+ * Data to do an input
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#pragma once
+
+#include <gdk/gdk.h>  // for GdkModifierType
+#include <glib.h>     // for guint32
+
+#include "DeviceId.h"
+
+class PositionInputData {
+public:
+    bool isShiftDown() const;
+    bool isControlDown() const;
+    bool isAltDown() const;
+
+public:
+    double x;  ///< in pixel coordinates, relative to the page's upper-left corner
+    double y;  ///< in pixel coordinates, relative to the page's upper-left corner
+    double pressure;
+    guint32 timestamp;
+    DeviceId deviceId;
+
+    /**
+     * State flags from GDKevent (Shift down etc.)
+     */
+    GdkModifierType state;
+};

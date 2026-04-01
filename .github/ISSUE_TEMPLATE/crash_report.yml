@@ -1,0 +1,65 @@
+name: Crash Report
+description: Create a report to help us improve Xournal++.
+labels: bug,crash
+body:
+  - type: input
+    id: os
+    attributes:
+      label: Operating System/Distribution
+      description: What OS/Distribution do you use?
+      placeholder: e.g. Windows 10, MacOS 13, Ubuntu 22.04, Arch Linux, etc.
+  - type: input
+    id: desktop
+    attributes:
+      label: (Linux only) Desktop Environment
+      description: What desktop environment do you use?
+      placeholder: e.g. GNOME, KDE Plasma, etc.
+  - type: dropdown
+    id: displayserver
+    attributes:
+      label: (Linux Only) Display Server
+      description: What display server do you use?
+      options:
+        - X11
+        - Wayland
+  - type: input
+    attributes:
+      label: Installation Method
+      description: How was Xournal++ installed?
+      placeholder: e.g. Official Release, Flatpak, Snap, PPA, etc.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Xournal++ Version
+      description: What version of Xournal++ do you use? (This can be obtained by running `xournalpp --version`, or in the "About" window).
+      placeholder: e.g. 1.0.16, specific commit, specific branch etc.
+    validations:
+      required: true
+  - type: input
+    id: gtk
+    attributes:
+      label: libgtk Version
+      description: What version of libgtk do you use? (This can be obtained by running `xournalpp --version`, or in the "About" window).
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behaviour.
+      placeholder: "1. Step 1\n2. Step 2\n3. etc."
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: Crash log
+      description: Upload/Paste here the crash log (a drag-n-drop will work)
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional Context
+      description: Add any other information or context about the problem here.
+        

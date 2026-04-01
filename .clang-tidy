@@ -1,0 +1,137 @@
+Checks: "cppcoreguidelines-*,\
+modernize-*,\
+misc*,\
+performance*,\
+bug*,\
+-*-magic-numbers,\
+-*-non-private-member-variables-in-classes,\
+-cert-err58-cpp,\
+-cert-msc32-c,\
+-cert-msc51-cpp,\
+-clang-analyzer-alpha*,\
+-clang-analyzer-optin.osx*,\
+-clang-analyzer-optin.cplusplus.VirtualCall,\
+-clang-analyzer-osx*,\
+-cppcoreguidelines-owning-memory,\
+-cppcoreguidelines-pro-bounds-pointer-arithmetic,\
+-cppcoreguidelines-pro-type-cstyle-cast,\
+-cppcoreguidelines-pro-type-reinterpret-cast,\
+-cppcoreguidelines-pro-type-union-access,\
+-cppcoreguidelines-pro-type-vararg,\
+-fuchsia-overloaded-operator,\
+-fuchsia-default-arguments,\
+-fuchsia-statically-constructed-objects,\
+-fuchsia-multiple-inheritance,\
+-fuchsia-default-arguments-calls,\
+-fuchsia-trailing-return,\
+-google-build-using-namespace,\
+-google-runtime-references,\
+-hicpp-vararg,\
+-hicpp-multiway-paths-covered,\
+-hicpp-deprecated-headers,\
+-hicpp-uppercase-literal-suffix,\
+-llvm-include-order,\
+-llvm-header-guard,\
+-misc-unused-parameters,\
+-misc-use-anonymous-namespace,\
+-misc-move-const-arg,\
+-modernize-use-nodiscard,\
+-portability-simd-intrinsics,\
+-readability-identifier-naming,\
+-readability-named-parameter,\
+-readability-implicit-bool-cast,\
+-readability-implicit-bool-conversion,\
+-readability-isolate-declaration"
+#WarningsAsErrors: '*'
+HeaderFilterRegex: '*.(h|hpp|hxx)'
+CheckOptions:
+  - key:             readability-identifier-naming.AbstractClassCase
+    value:           CamelCase
+  - key:             readability-identifier-naming.ClassCase
+    value:           CamelCase
+  - key:             readability-identifier-naming.ClassConstantCase
+    value:           aNy_CasE
+  - key:             readability-identifier-naming.ConstantCase
+    value:           aNy_CasE
+  - key:             readability-identifier-naming.ConstantMemberCase
+    value:           aNy_CasE
+  - key:             readability-identifier-naming.ConstantParameterCase
+    value:           aNy_CasE
+  - key:             readability-identifier-naming.ConstexprFunctionCase
+    value:           aNy_CasE
+  - key:             readability-identifier-naming.ConstexprMethodCase
+    value:           aNy_CasE
+  - key:             readability-identifier-naming.ConstexprVariableCase
+    value:           aNy_CasE
+  - key:             readability-identifier-naming.EnumCase
+    value:           CamelCase
+  - key:             readability-identifier-naming.EnumConstantCase
+    value:           CamelCase
+  - key:             readability-identifier-naming.FunctionCase
+    value:           camelBack
+  - key:             readability-identifier-naming.GlobalConstantCase
+    value:           aNy_CasE
+  - key:             readability-identifier-naming.GlobalFunctionCase
+    value:           camelBack
+  - key:             readability-identifier-naming.GlobalVariableCase
+    value:           aNy_CasE
+  - key:             readability-identifier-naming.InlineNamespaceCase
+    value:           CamelCase
+  - key:             readability-identifier-naming.LocalConstantCase
+    value:           aNy_CasE
+  - key:             readability-identifier-naming.LocalVariableCase
+    value:           aNy_CasE
+  - key:             readability-identifier-naming.MemberCase
+    value:           camelBack
+  - key:             readability-identifier-naming.MethodCase
+    value:           camelBack
+  - key:             readability-identifier-naming.NamespaceCase
+    value:           CamelCase
+  - key:             readability-identifier-naming.ParameterCase
+    value:           camelBack
+  - key:             readability-identifier-naming.StaticConstantCase
+    value:           aNy_CasE
+  - key:             readability-identifier-naming.StaticVariableCase
+    value:           camelBack
+  - key:             readability-identifier-naming.StructCase
+    value:           CamelCase
+  - key:             readability-identifier-naming.TemplateParameterCase
+    value:           CamelCase
+  - key:             readability-identifier-naming.TemplateTemplateParameterCase
+    value:           CamelCase
+  - key:             readability-identifier-naming.TypeTemplateParameterCase
+    value:           CamelCase
+  - key:             readability-identifier-naming.TypedefCase
+    value:           CamelCase
+  - key:             readability-identifier-naming.UnionCase
+    value:           CamelCase
+  - key:             readability-identifier-naming.ValueTemplateParameterCase
+    value:           CamelCase
+  - key:             readability-identifier-naming.VariableCase
+    value:           camelBack
+  - key:             cert-oop11-cpp.IncludeStyle
+    value:           'google'
+  - key:             readability-implicit-bool-conversion.AllowIntegerConditions
+    value:           '1'
+  - key:             readability-implicit-bool-conversion.AllowPointerConditions
+    value:           '1'
+  - key:             readability-implicit-bool-cast.AllowIntegerConditions
+    value:           '1'
+  - key:             readability-implicit-bool-cast.AllowPointerConditions
+    value:           '1'
+  - key:             readability-braces-around-statements.ShortStatementLines
+    value:           '1'
+  - key:             llvm-namespace-comment.ShortNamespaceLines
+    value:           '10'
+  - key:             llvm-namespace-comment.SpacesBeforeComments
+    value:           '2'
+  - key:             misc-assert-side-effect.AssertMacros
+    value:           assert
+  - key:             cppcoreguidelines-macro-usage.AllowedRegexp
+    value:           DEBUG*|GTK_*|GDK_*|G_*|RELEASE*|assert|g_assert*
+  - key:             cppcoreguidelines-special-member-functions.AllowSoleDefaultDtor
+    value:           '1'
+  - key:             cppcoreguidelines-special-member-functions.AllowMissingMoveFunctionsWhenCopyIsDeleted
+    value:           '1'
+  - key:             'misc-include-cleaner.IgnoreHeaders'
+    value:           'filesystem.h'

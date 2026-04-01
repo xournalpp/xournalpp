@@ -1,0 +1,73 @@
+#include "StrokeViewHelper.h"
+
+#include "model/LineStyle.h"
+#include "model/Point.h"
+#include "model/StrokeContour.h"
+#include "util/Assert.h"
+#include "util/LoopUtil.h"
+#include "util/PairView.h"
+#include "util/Util.h"  // for cairo_set_dash_from_vector
+
+void xoj::view::StrokeViewHelper::pathToCairo(cairo_t* cr, const std::vector<Point>& pts) {
+    for_first_then_each(
+            pts, [cr](auto const& first) { cairo_move_to(cr, first.x, first.y); },
+            [cr](auto const& other) { cairo_line_to(cr, other.x, other.y); });
+}
+
+/**
+ * No pressure sensitivity, one line is drawn
+ */
+void xoj::view::StrokeViewHelper::drawNoPressure(cairo_t* cr, const std::vector<Point>& pts, const double strokeWidth,
+                                                 const LineStyle& lineStyle, double dashOffset) {
+    cairo_set_line_width(cr, strokeWidth);
+
+    const auto& dashes = lineStyle.getDashes();
+    Util::cairo_set_dash_from_vector(cr, dashes, dashOffset);
+
+    pathToCairo(cr, pts);
+    cairo_stroke(cr);
+}
+
+/**
+ * Draw a stroke with pressure, for this multiple lines with different widths needs to be drawn
+ */
+double xoj::view::StrokeViewHelper::drawWithPressure(cairo_t* cr, const std::vector<Point>& pts,
+                                                     const LineStyle& lineStyle, double dashOffset) {
+    const auto& dashes = lineStyle.getDashes();
+    if (cairo_surface_get_type(cairo_get_target(cr)) == CAIRO_SURFACE_TYPE_PDF) {
+        // PDF documents have an equivalent of cairo_stroke(). We use it to get smaller PDF files
+        auto drawSegment = [cr](const Point& p, const Point& q) {
+            xoj_assert(p.z > 0.0);
+            cairo_set_line_width(cr, p.z);
+            cairo_move_to(cr, p.x, p.y);
+            cairo_line_to(cr, q.x, q.y);
+            cairo_stroke(cr);
+        };
+        if (!dashes.empty()) {
+            /*
+             * Because the width varies, we need to call cairo_stroke() once per segment
+             */
+            for (const auto& [p, q]: PairView(pts)) {
+                Util::cairo_set_dash_from_vector(cr, dashes, dashOffset);
+                dashOffset += p.lineLengthTo(q);
+                drawSegment(p, q);
+            }
+        } else {
+            cairo_set_dash(cr, nullptr, 0, 0.0);
+            for (const auto& [p, q]: PairView(pts)) {
+                drawSegment(p, q);
+            };
+        }
+    } else {
+        if (pts.size() == 2 && pts.front().equalsPos(pts.back())) {
+            // Single dot
+            cairo_arc(cr, pts.front().x, pts.front().y, .5 * pts.front().z, 0, 2. * M_PI);
+        } else if (!dashes.empty()) {
+            dashOffset = StrokeContourDashes(pts, dashes).addToCairo(cr, dashOffset);
+        } else {
+            StrokeContour(pts).addToCairo(cr);
+        }
+        cairo_fill(cr);
+    }
+    return dashOffset;
+}

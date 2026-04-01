@@ -1,0 +1,71 @@
+#include "Snapping.h"
+
+#include <algorithm>  // for min, max
+#include <array>      // for array
+#include <cmath>      // for pow, atan2, cos, hypot, remainder, sin, abs
+#include <cstdlib>    // for abs
+
+#include "model/Point.h"  // for Point
+
+namespace Snapping {
+
+[[nodiscard]] inline double roundToMultiple(double val, double multiple) { return val - std::remainder(val, multiple); }
+[[nodiscard]] inline double distance(Point const& a, Point const& b) { return std::hypot(b.x - a.x, b.y - a.y); }
+
+double snapVertically(double y, double gridSize, double tolerance, double yOffset) {
+    double ySnapped = roundToMultiple(y - yOffset, gridSize) + yOffset;
+    return std::abs(ySnapped - y) < tolerance * gridSize / 2.0 ? ySnapped : y;
+}
+
+double snapHorizontally(double x, double gridSize, double tolerance, double xOffset) {
+    double xSnapped = roundToMultiple(x - xOffset, gridSize) + xOffset;
+    return std::abs(xSnapped - x) < tolerance * gridSize / 2.0 ? xSnapped : x;
+}
+
+Point snapToGrid(Point const& pos, double columnSpacing, double rowSpacing, double tolerance, double xOffset,
+                 double yOffset) {
+    // Round to nearest grid point
+    Point nearestVertex{roundToMultiple(pos.x - xOffset, columnSpacing) + xOffset,
+                        roundToMultiple(pos.y - yOffset, rowSpacing) + yOffset, pos.z};
+
+    // Only snap if within tolerance threshold (fraction of the half-diagonal)
+    const double dist = distance(pos, nearestVertex);
+    const double snapThreshold = 0.5 * std::hypot(columnSpacing, rowSpacing) * tolerance;
+    return (dist < snapThreshold) ? nearestVertex : pos;
+}
+
+double snapAngle(double radian, double tolerance) {
+    auto snapped = roundToMultiple(radian, M_PI_4 / 3.0);
+    double abs_tolerance = (M_PI_4 / 6.0) * tolerance;
+    return std::abs(snapped - radian) < abs_tolerance ? snapped : radian;
+}
+
+Point snapRotation(Point const& pos, Point const& center, double tolerance) {
+    auto const dist = distance(pos, center);
+    auto const angle = std::atan2(pos.y - center.y, pos.x - center.x);
+    auto const snappedAngle = snapAngle(angle, tolerance);
+    return {center.x + dist * std::cos(snappedAngle),  //
+            center.y + dist * std::sin(snappedAngle), pos.z};
+}
+
+Point projToLine(Point const& pos, Point const& first, Point const& second) {
+    const double scalar = ((first.x - pos.x) * (second.y - first.y) + (first.y - pos.y) * (first.x - second.x)) /
+                          (std::pow(second.y - first.y, 2) + std::pow(first.x - second.x, 2));
+    const double projX = pos.x + scalar * (second.y - first.y);
+    const double projY = pos.y + scalar * (first.x - second.x);
+    return Point(projX, projY, pos.z);
+}
+
+double distanceLine(Point const& pos, Point const& first, Point const& second) {
+    const auto proj = projToLine(pos, first, second);
+    if (std::min(first.x, second.x) <= proj.x && proj.x <= std::max(first.x, second.x) &&
+        std::min(first.y, second.y) <= proj.y && proj.y <= std::max(first.y, second.y)) {
+        return distance(pos, proj);
+    } else {
+        const double dist1 = distance(pos, first);
+        const double dist2 = distance(pos, second);
+        return std::min(dist1, dist2);
+    }
+}
+
+}  // namespace Snapping

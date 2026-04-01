@@ -1,0 +1,104 @@
+/*
+ * Xournal++
+ *
+ * [Header description]
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#pragma once
+
+#include <memory>  // for shared_ptr
+#include <string>  // for string
+
+#include <gdk/gdk.h>  // for GdkEvent, gdk_event_free, gdk_event_copy
+#include <glib.h>     // for gdouble, gchar, guint, guint32
+
+#include "model/Point.h"  // for Point::NO_PRESSURE
+#include "util/Point.h"
+
+#include "DeviceId.h"
+
+class Settings;
+
+enum InputEventType {
+    UNKNOWN,
+    BUTTON_PRESS_EVENT,
+    BUTTON_2_PRESS_EVENT,
+    BUTTON_3_PRESS_EVENT,
+    BUTTON_RELEASE_EVENT,
+    MOTION_EVENT,
+    ENTER_EVENT,
+    LEAVE_EVENT,
+    PROXIMITY_IN_EVENT,
+    PROXIMITY_OUT_EVENT,
+    SCROLL_EVENT,
+    GRAB_BROKEN_EVENT
+};
+
+enum InputDeviceClass {
+    INPUT_DEVICE_MOUSE,
+    INPUT_DEVICE_PEN,
+    INPUT_DEVICE_ERASER,
+    INPUT_DEVICE_TOUCHSCREEN,
+    INPUT_DEVICE_IGNORE
+};
+
+struct GdkEventGuard {
+    static inline GdkEvent* safeRef(GdkEvent* source) { return gdk_event_copy(source); }
+
+    GdkEventGuard() = default;
+
+    [[maybe_unused]] explicit GdkEventGuard(GdkEvent* source): event(safeRef(source), &gdk_event_free) {}
+
+    GdkEventGuard& operator=(GdkEvent* source) {
+        event = {safeRef(source), &gdk_event_free};
+        return *this;
+    }
+
+    GdkEvent* get() const { return event.get(); }
+
+    // it's more performant to manage the GdkEvent over C++ than over gdk
+    // Since the gdk_copy is extreme expansive
+    std::shared_ptr<GdkEvent> event{};
+};
+
+struct InputEvent final {
+    /*explicit(false)*/ explicit operator bool() const { return device; }
+
+    GdkDevice* device{nullptr};  ///< Source device. Avoid using if possible.
+
+    InputEventType type{UNKNOWN};
+    InputDeviceClass deviceClass{INPUT_DEVICE_IGNORE};
+    const gchar* deviceName{};
+
+    xoj::util::Point<double> absolute;  ///< In widget coordinates
+    xoj::util::Point<double> relative;  ///< In Layout pixel coordinates
+
+    guint button{0};
+    GdkModifierType state{};
+    gdouble pressure{Point::NO_PRESSURE};
+
+    GdkEventSequence* sequence{};
+    guint32 timestamp{0};
+
+    DeviceId deviceId;
+};
+
+struct KeyEvent final {
+    guint keyval{0};
+    GdkModifierType state{};  ///< Consumed modifiers have been masked out
+
+    GdkEventGuard sourceEvent;  ///< Original GdkEvent. Avoid using if possible.
+};
+
+struct InputEvents {
+    static InputDeviceClass translateDeviceType(GdkDevice* device, Settings* settings);
+    static InputDeviceClass translateDeviceType(const std::string& name, GdkInputSource source, Settings* settings);
+
+    static InputEvent translateEvent(GdkEvent* sourceEvent, Settings* settings,
+                                     const xoj::util::Point<double>& relativeOffset);
+};

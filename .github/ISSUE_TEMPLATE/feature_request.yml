@@ -1,0 +1,23 @@
+name: Feature Request
+description: Suggest an idea for Xournal+.
+labels: enhancement
+body:
+  - type: textarea
+    attributes:
+      label: Is Your Feature Request Related to a Problem?
+      description: A clear and concise description of what your problem is.
+      placeholder: Ex. I'm always frustrated when...
+  - type: textarea
+    attributes:
+      label: Feature Description
+      description: A clear and concise description of the feature that you would propose.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Alternative Solutions
+      description: Add any alternative solutions that you may have considered here.
+  - type: textarea
+    attributes:
+      label: Additional Context
+      description: Add any other contextual information for the problem here.

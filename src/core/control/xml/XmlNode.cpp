@@ -1,0 +1,108 @@
+#include "XmlNode.h"
+
+#include <utility>  // for move
+
+#include <glib.h>  // for g_free
+
+#include "control/jobs/ProgressListener.h"  // for ProgressListener
+#include "control/xml/Attribute.h"          // for XMLAttribute
+#include "util/OutputStream.h"              // for OutputStream
+#include "util/StringUtils.h"               // for StaticStringView
+#include "util/utf8_view.h"                 // for utf8
+
+#include "DoubleArrayAttribute.h"  // for DoubleArrayAttribute
+#include "DoubleAttribute.h"       // for DoubleAttribute
+#include "IntAttribute.h"          // for IntAttribute
+#include "SizeTAttribute.h"        // for SizeTAttribute
+#include "TextAttribute.h"         // for TextAttribute
+
+
+XmlNode::XmlNode(StringUtils::StaticStringView tag): tag(tag) {}
+
+void XmlNode::setAttrib(const char8_t* attrib, const char* value) {
+    if (value == nullptr) {
+        value = "";
+    }
+    putAttrib(new TextAttribute(attrib, xoj::util::utf8(value).str()));
+}
+
+void XmlNode::setAttrib(const char8_t* attrib, const std::string& value) {
+    putAttrib(new TextAttribute(attrib, xoj::util::utf8(value).str()));
+}
+
+void XmlNode::setAttrib(const char8_t* attrib, const char8_t* value) {
+    if (value == nullptr) {
+        value = u8"";
+    }
+    putAttrib(new TextAttribute(attrib, value));
+}
+
+void XmlNode::setAttrib(const char8_t* attrib, std::u8string value) {
+    putAttrib(new TextAttribute(attrib, std::move(value)));
+}
+
+void XmlNode::setAttrib(const char8_t* attrib, double value) { putAttrib(new DoubleAttribute(attrib, value)); }
+
+void XmlNode::setAttrib(const char8_t* attrib, int value) { putAttrib(new IntAttribute(attrib, value)); }
+
+void XmlNode::setAttrib(const char8_t* attrib, size_t value) { putAttrib(new SizeTAttribute(attrib, value)); }
+
+/**
+ * The double array is now owned by XmlNode and automatically deleted!
+ */
+void XmlNode::setAttrib(const char8_t* attrib, std::vector<double> values) {
+    putAttrib(new DoubleArrayAttribute(attrib, std::move(values)));
+}
+
+void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
+    out->write("<");
+    out->write(tag);
+    writeAttributes(out);
+
+    if (children.empty()) {
+        out->write("/>\n");
+    } else {
+        out->write(">\n");
+
+        if (listener) {
+            listener->setMaximumState(children.size());
+        }
+
+        size_t i = 1;
+
+        for (auto& node: children) {
+            node->writeOut(out);
+            if (listener) {
+                listener->setCurrentState(i);
+            }
+            i++;
+        }
+
+        out->write("</");
+        out->write(tag);
+        out->write(">\n");
+    }
+}
+
+void XmlNode::addChild(XmlNode* node) { children.emplace_back(node); }
+
+void XmlNode::putAttrib(XMLAttribute* a) {
+    for (auto& attrib: attributes) {
+        if (attrib->getName() == a->getName()) {
+            attrib.reset(a);
+            return;
+        }
+    }
+
+    attributes.emplace_back(a);
+}
+
+void XmlNode::writeAttributes(OutputStream* out) {
+    for (auto& attrib: attributes) {
+        out->write(" ");
+        out->write(attrib->getName());
+        out->write("=\"");
+        attrib->writeOut(out);
+        out->write("\"");
+    }
+}

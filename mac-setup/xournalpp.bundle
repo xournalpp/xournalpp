@@ -1,0 +1,149 @@
+<?xml version="1.0" standalone="no"?> <!--*- mode: xml -*-->
+<app-bundle>
+
+  <meta>
+    <prefix name="default">${env:GTKDIR}</prefix>
+    <destination overwrite="yes">.</destination>
+
+    <!-- Comment this out to keep the install names in binaries -->
+    <run-install-name-tool/>
+
+    <!-- Optionally specify a launcher script to use. If the
+         application sets up everything needed itself, like
+         environment variable, linker paths, etc, a launcher script is
+         not needed. If the source path is left out, the default
+         script will be used.
+    -->
+    <gtk>gtk+-3.0</gtk>
+  </meta>
+
+  <plist>${project}/Info.plist</plist>
+
+  <main-binary>${prefix}/bin/xournalpp-wrapper</main-binary>
+
+  <binary dest="${bundle}/Contents/MacOS">
+    ${prefix}/bin/xournalpp
+  </binary>
+
+  <binary dest="${bundle}/Contents/MacOS">
+    ${prefix}/bin/gtk3-demo
+  </binary>
+
+  <!-- Copy in the input methods. Dunno if they actually work with
+       OSX. Note the ${gtkdir} macro, which expands to the correct
+       library subdirectory for the specified gtk version. -->
+  <binary>
+    ${prefix}/lib/${gtkdir}/${pkg:${gtk}:gtk_binary_version}/immodules/*.so
+  </binary>
+
+<!-- And the print backends -->
+  <binary>
+    ${prefix}/lib/${gtkdir}/${pkg:${gtk}:gtk_binary_version}/printbackends/*.so
+  </binary>
+
+  <!-- Starting with 2.24, gdk-pixbuf installs into its own directory. -->
+  <binary>
+    ${prefix}/lib/gdk-pixbuf-2.0/${pkg:gdk-pixbuf-2.0:gdk_pixbuf_binary_version}/loaders/*.so
+  </binary>
+
+  <!-- Poppler -->
+  <binary>
+    ${prefix}/lib/libpoppler-glib*.dylib
+  </binary>
+
+  <!-- Lua-GObject and GObject-introspection dependency -->
+  <binary>
+    ${prefix}/lib/lua/5.4/LuaGObject/lua_gobject_core.so
+  </binary>
+  <binary>
+    ${prefix}/lib/libgirepository*.dylib
+  </binary>
+  <data>
+    ${prefix}/share/lua/5.4/LuaGObject.lua
+  </data>
+  <data>
+    ${prefix}/share/lua/5.4/LuaGObject/*.lua
+  </data>
+  <data>
+    ${prefix}/share/lua/5.4/LuaGObject/override/*.lua
+  </data>
+  <data>
+    ${prefix}/lib/girepository-1.0/*.typelib
+  </data>
+
+  <!-- QPDF -->
+  <binary>
+    ${prefix}/lib/libqpdf*.dylib
+  </binary>
+
+  <!-- Translation filenames, one for each program or library that you
+       want to copy in to the bundle. The "dest" attribute is
+       optional, as usual. Bundler will find all translations of that
+       library/program under the indicated directory and copy them.-->
+  <translations  name="gtk30">
+    ${prefix}/share/locale
+  </translations>
+
+  <translations  name="xournalpp">
+    ${prefix}/share/locale
+  </translations>
+
+
+  <!-- Data to copy in, usually Glade/UI files, images, sounds files
+       etc. The destination inside the bundle can be specified if the
+       files should end up at a different location, by using the
+       "dest" property. The destination must then start with the macro
+       "${bundle}", which refers to the bundle root directory.
+  -->
+  <!-- data>
+    ${prefix}/share/gtk3-demo
+  </data -->
+
+  <!--
+    Infos on how to structure the .app-file can be found on
+    https://developer.apple.com/library/archive/documentation/CoreFoundation/Conceptual/CFBundles/BundleTypes/BundleTypes.html#//apple_ref/doc/uid/20001119-110730
+  -->
+
+  <!-- Copy in the themes data. You may want to trim this to save space
+       in your bundle. -->
+  <data>
+    ${prefix}/share/themes
+  </data>
+
+  <data>
+    ${prefix}/share/icons
+  </data>
+
+  <data>
+    ${prefix}/share/gtksourceview-4
+  </data>
+
+  <data dest="${bundle}/Contents/Resources/palettes">
+    ${prefix}/share/xournalpp/palettes
+  </data>
+
+  <data>
+    ${prefix}/share/poppler
+  </data>
+
+  <data dest="${bundle}/Contents/Resources/plugins">
+    ${prefix}/share/xournalpp/plugins
+  </data>
+
+  <data dest="${bundle}/Contents/Resources">
+    ${prefix}/share/xournalpp/resources
+  </data>
+
+  <data dest="${bundle}/Contents/Resources">
+    ${project}/icon/xournalpp.icns
+  </data>
+
+  <data dest="${bundle}/Contents/Resources/share/glib-2.0/schemas">
+    ${prefix}/share/glib-2.0/schemas
+  </data>
+
+  <data dest="${bundle}/Contents/Resources/ui">
+    ${prefix}/share/xournalpp/ui
+  </data>
+
+  </app-bundle>
