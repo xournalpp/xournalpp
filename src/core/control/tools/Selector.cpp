@@ -2,6 +2,7 @@
 
 #include <algorithm>  // for max, min
 #include <cmath>      // for abs, NAN
+#include <limits>     // for numeric_limits
 #include <memory>     // for __shared_ptr_access
 
 #include <gdk/gdk.h>  // for GdkRGBA, gdk_cairo_set_source_rgba
@@ -19,8 +20,15 @@ Selector::~Selector() = default;
 
 auto Selector::finalize(PageRef page, bool disableMultilayer, Document* doc) -> size_t {
     this->page = page;
-    size_t layerId = 0;
 
+    // Trigger redraw before any geometry modifications
+    this->viewPool->dispatchAndClear(xoj::view::SelectorView::DELETE_VIEWS_REQUEST, this->bbox);
+
+    // Extend selection geometry (bbox) to infinity where touching page edges
+    this->extendAtPageEdges();
+
+    // Find selected elements
+    size_t layerId = 0;
     if (multiLayer && !disableMultilayer) {
         std::shared_lock lock(*doc);
         const auto layers = page->getLayersView();
@@ -56,8 +64,6 @@ auto Selector::finalize(PageRef page, bool disableMultilayer, Document* doc) -> 
         }
     }
 
-    this->viewPool->dispatchAndClear(xoj::view::SelectorView::DELETE_VIEWS_REQUEST, this->bbox);
-
     return layerId;
 }
 
@@ -75,6 +81,24 @@ RectangularSelector::RectangularSelector(double x, double y, bool multiLayer):
 RectangularSelector::~RectangularSelector() = default;
 
 auto RectangularSelector::contains(double x, double y) const -> bool { return bbox.contains(x, y); }
+
+void RectangularSelector::extendAtPageEdges() {
+    constexpr double THRESHOLD = 1.0;  // pt
+    constexpr double INF = std::numeric_limits<double>::infinity();
+    const double pageWidth = page->getWidth();
+    const double pageHeight = page->getHeight();
+
+    if (pageWidth > 0 && pageHeight > 0) {
+        if (bbox.minX <= THRESHOLD)
+            bbox.minX = -INF;
+        if (bbox.minY <= THRESHOLD)
+            bbox.minY = -INF;
+        if (bbox.maxX >= pageWidth - THRESHOLD)
+            bbox.maxX = INF;
+        if (bbox.maxY >= pageHeight - THRESHOLD)
+            bbox.maxY = INF;
+    }
+}
 
 void RectangularSelector::currentPos(double x, double y) {
     bbox = Range(sx, sy);
@@ -118,22 +142,88 @@ void LassoSelector::currentPos(double x, double y) {
     }
 }
 
+void LassoSelector::extendAtPageEdges() {
+    constexpr double THRESHOLD = 1.0;  // pt
+    constexpr double INF = std::numeric_limits<double>::infinity();
+    const double pageWidth = page->getWidth();
+    const double pageHeight = page->getHeight();
+
+    if (pageWidth <= 0 || pageHeight <= 0 || boundaryPoints.size() <= 2) {
+        return;
+    }
+
+    auto const isOnEdge = [&](BoundaryPoint const& p) -> bool {
+        return p.x <= THRESHOLD || p.x >= pageWidth - THRESHOLD || p.y <= THRESHOLD || p.y >= pageHeight - THRESHOLD;
+    };
+
+    auto const project = [&](BoundaryPoint const& p) -> BoundaryPoint {
+        double px = p.x;
+        double py = p.y;
+        if (px <= THRESHOLD)
+            px = -INF;
+        if (px >= pageWidth - THRESHOLD)
+            px = INF;
+        if (py <= THRESHOLD)
+            py = -INF;
+        if (py >= pageHeight - THRESHOLD)
+            py = INF;
+        return {px, py};
+    };
+
+    extendedBoundaryPoints.clear();
+    extendedBoundaryPoints.reserve(boundaryPoints.size() * 2);
+
+    auto const n = boundaryPoints.size();
+    for (size_t i = 0; i < n; i++) {
+        auto const& current = boundaryPoints[i];
+        auto const currentOnEdge = isOnEdge(current);
+
+        if (!currentOnEdge) {
+            extendedBoundaryPoints.push_back(current);
+            continue;
+        }
+
+        // Current point is on a page edge.
+        auto const prevOnEdge = isOnEdge(boundaryPoints[(i + n - 1) % n]);
+        auto const nextOnEdge = isOnEdge(boundaryPoints[(i + 1) % n]);
+
+        if (!prevOnEdge) {
+            // Entering an edge run: emit original, then projected
+            extendedBoundaryPoints.push_back(current);
+            extendedBoundaryPoints.push_back(project(current));
+        } else if (!nextOnEdge) {
+            // Leaving an edge run: emit projected, then original
+            extendedBoundaryPoints.push_back(project(current));
+            extendedBoundaryPoints.push_back(current);
+        } else {
+            // Interior of an edge run: emit only projected
+            extendedBoundaryPoints.push_back(project(current));
+        }
+    }
+
+    // Extend bounding box to infinity where needed
+    for (auto const& p: extendedBoundaryPoints) {
+        bbox.addPoint(p.x, p.y);
+    }
+}
+
 auto LassoSelector::contains(double x, double y) const -> bool {
-    if (boundaryPoints.size() <= 2 || !this->bbox.contains(x, y)) {
+    auto const& pts = extendedBoundaryPoints.empty() ? boundaryPoints : extendedBoundaryPoints;
+
+    if (pts.size() <= 2 || !bbox.contains(x, y)) {
         return false;
     }
 
     int hits = 0;
 
-    const BoundaryPoint& last = boundaryPoints.back();
+    const BoundaryPoint& last = pts.back();
 
     double lastx = last.x;
     double lasty = last.y;
     double curx = NAN, cury = NAN;
 
     // Walk the edges of the polygon
-    for (auto pointIterator = boundaryPoints.begin(); pointIterator != boundaryPoints.end();
-         lastx = curx, lasty = cury, ++pointIterator) {
+    for (auto pointIterator = pts.begin(); pointIterator != pts.end(); lastx = curx, lasty = cury, ++pointIterator) {
         curx = pointIterator->x;
         cury = pointIterator->y;
 
