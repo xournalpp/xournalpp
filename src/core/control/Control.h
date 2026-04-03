@@ -496,8 +496,6 @@ private:
 
     ScrollHandler* scrollHandler;
 
-    std::unique_ptr<AudioController> audioController;
-
     ToolbarDragDropHandler* dragDropHandler = nullptr;
 
     GApplication* gtkApp = nullptr;
@@ -565,4 +563,7 @@ private:
     std::unique_ptr<ActionDatabase> actionDB;
     template <Action a>
     friend struct ActionProperties;
+
+    // Keep after the ActionDatabase so it is destroyed first: ~AudioController refers to the ActionDatabase
+    std::unique_ptr<AudioController> audioController;
 };
