@@ -10,6 +10,7 @@
 #include <regex>       // for regex
 #include <string>      // for string
 #include <utility>     // for move
+#include <vector>      // for vector
 
 #include "control/AudioController.h"                             // for Audi...
 #include "control/ClipboardHandler.h"                            // for Clip...
@@ -354,7 +355,7 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
         return;
     }
 
-    this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
+    this->win->updatePageNumbers(page, this->doc->getPageCount());
     this->sidebar->selectPageNr(page, pdfPage);
 
     this->metadata->storeMetadata(this->doc->getEvMetadataFilename(), static_cast<int>(page),
@@ -740,6 +741,7 @@ void Control::deletePage() {
     this->doc->unlock();
 
     this->undoRedo->addUndoAction(std::make_unique<InsertDeletePageUndoAction>(page, pNr, false));
+    const size_t deletedPos = pNr;
 
     if (pNr >= this->doc->getPageCount()) {
         pNr = this->doc->getPageCount() - 1;
@@ -747,6 +749,7 @@ void Control::deletePage() {
 
     scrollHandler->scrollToPage(pNr);
     this->win->getXournal()->forceUpdatePagenumbers();
+    notifyPageDeleted(deletedPos);
 }
 
 void Control::duplicatePage() {
@@ -791,6 +794,7 @@ void Control::movePageTowardsBeginning() {
     this->firePageSelected(currentPageNo - 1);
 
     this->getScrollHandler()->scrollToPage(currentPageNo - 1);
+    notifyPagesSwapped(currentPageNo - 1, currentPageNo);
 }
 
 
@@ -826,6 +830,7 @@ void Control::movePageTowardsEnd() {
     this->firePageSelected(currentPageNo + 1);
 
     this->getScrollHandler()->scrollToPage(currentPageNo + 1);
+    notifyPagesSwapped(currentPageNo, currentPageNo + 1);
 }
 
 /// Remove mnemonic indicators in menu labels
@@ -928,6 +933,7 @@ void Control::insertPage(const PageRef& page, size_t position, bool shouldScroll
     }
 
     updatePageActions();
+    notifyPageInserted(position, page);
 }
 
 void Control::gotoPage() {
@@ -1824,9 +1830,82 @@ void Control::fileLoaded(int scrollToPage) {
     }
 
     updateWindowTitle();
+    buildAndPushPageLabels();
     win->getXournal()->forceUpdatePagenumbers();
     getCursor()->updateCursor();
     updatePageActions();
+}
+
+void Control::buildAndPushPageLabels() {
+    if (!this->win) {
+        return;
+    }
+
+    this->doc->lock_shared();
+    const size_t pageCount = this->doc->getPageCount();
+    const bool hasPdf = this->doc->getPdfPageCount() > 0;
+
+    std::vector<std::string> labels(pageCount);
+    bool anyNonStandard = false;
+    if (hasPdf) {
+        for (size_t i = 0; i < pageCount; ++i) {
+            auto xojPage = this->doc->getPage(i);
+            if (!xojPage) {
+                continue;
+            }
+            const size_t pdfPageNr = xojPage->getPdfPageNr();
+            if (pdfPageNr == npos) {
+                continue;
+            }
+            auto pdfPage = this->doc->getPdfPage(pdfPageNr);
+            if (!pdfPage) {
+                continue;
+            }
+            std::string label = pdfPage->getPageLabel();
+            if (!label.empty() && label != std::to_string(pdfPageNr + 1)) {
+                labels[i] = std::move(label);
+                anyNonStandard = true;
+            }
+        }
+    }
+    this->doc->unlock_shared();
+
+    this->win->setPageLabels(anyNonStandard ? std::move(labels) : std::vector<std::string>{});
+}
+
+void Control::notifyPageInserted(size_t pos, const PageRef& page) {
+    if (!this->win) {
+        return;
+    }
+
+    std::string label;
+    if (page) {
+        const size_t pdfPageNr = page->getPdfPageNr();
+        if (pdfPageNr != npos) {
+            this->doc->lock_shared();
+            if (auto pdfPage = this->doc->getPdfPage(pdfPageNr)) {
+                label = pdfPage->getPageLabel();
+                if (label == std::to_string(pdfPageNr + 1)) {
+                    label.clear();
+                }
+            }
+            this->doc->unlock_shared();
+        }
+    }
+
+    this->win->insertPageLabel(pos, std::move(label));
+}
+
+void Control::notifyPageDeleted(size_t pos) {
+    if (this->win) {
+        this->win->deletePageLabel(pos);
+    }
+}
+
+void Control::notifyPagesSwapped(size_t a, size_t b) {
+    if (this->win) {
+        this->win->swapPageLabels(a, b);
+    }
 }
 
 enum class MissingPdfDialogOptions : gint { USE_PROPOSED, SELECT_OTHER, REMOVE, CANCEL };
