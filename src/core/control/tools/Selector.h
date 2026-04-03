@@ -42,10 +42,10 @@ public:
     virtual const std::vector<BoundaryPoint>& getBoundary() const = 0;
 
     /**
-     * Tailor the selector geometry to the finite selection domain on the page.
-     * Called by finalize() after page dimensions and candidate element bounds are known.
+     * Extend the selector geometry to infinity at page edges.
+     * Called by finalize() before element containment checks.
      */
-    virtual void tailorToSelectionDomain(const Range& selectionDomain) {};
+    virtual void extendAtPageEdges() = 0;
 
     inline auto getViewPool() const -> const std::shared_ptr<xoj::util::DispatchPool<xoj::view::SelectorView>>& {
         return viewPool;
@@ -83,7 +83,7 @@ public:
     bool contains(double x, double y) const override;
     bool userTapped(double zoom) const override;
     const std::vector<BoundaryPoint>& getBoundary() const override;
-    void tailorToSelectionDomain(const Range& selectionDomain) override;
+    void extendAtPageEdges() override;
 
 private:
     double sx;
@@ -91,7 +91,6 @@ private:
     double ex;
     double ey;
     double maxDist = 0;
-    Range extendedBbox;
 };
 
 class LassoSelector: public Selector {
@@ -104,9 +103,8 @@ public:
     bool userTapped(double zoom) const override;
     const std::vector<BoundaryPoint>& getBoundary() const override;
 
-    void tailorToSelectionDomain(const Range& selectionDomain) override;
+    void extendAtPageEdges() override;
 
 private:
     std::vector<BoundaryPoint> extendedBoundaryPoints;
-    Range extendedBbox;
 };

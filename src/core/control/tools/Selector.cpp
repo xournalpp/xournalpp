@@ -2,6 +2,7 @@
 
 #include <algorithm>  // for max, min
 #include <cmath>      // for abs, NAN
+#include <limits>     // for numeric_limits
 #include <memory>     // for __shared_ptr_access
 
 #include <gdk/gdk.h>  // for GdkRGBA, gdk_cairo_set_source_rgba
@@ -20,40 +21,15 @@ Selector::~Selector() = default;
 auto Selector::finalize(PageRef page, bool disableMultilayer, Document* doc) -> size_t {
     this->page = page;
 
-    const bool useMultiLayer = multiLayer && !disableMultilayer;
-    Range selectionDomain;
+    // Trigger redraw before any geometry modifications
+    this->viewPool->dispatchAndClear(xoj::view::SelectorView::DELETE_VIEWS_REQUEST, this->bbox);
 
-    // First pass: compute selectionDomain from all candidate elements
-    auto addToSelectionDomain = [&selectionDomain](const Layer* layer) {
-        if (!layer->isVisible()) {
-            return;
-        }
-        for (const auto& e: layer->getElementsView()) {
-            selectionDomain = selectionDomain.unite(Range(e->boundingRect()));
-        }
-    };
+    // Extend selection geometry (bbox) to infinity where touching page edges
+    this->extendAtPageEdges();
 
-    {
-        std::shared_lock lock(*doc);
-        if (useMultiLayer) {
-            for (const Layer* layer: page->getLayersView()) {
-                addToSelectionDomain(layer);
-            }
-        } else {
-            addToSelectionDomain(page->getSelectedLayer());
-        }
-    }
-
-    if (selectionDomain.empty()) {
-        selectionDomain = this->bbox;
-    }
-
-    this->tailorToSelectionDomain(selectionDomain);
-
-    // Second pass: find selected elements
+    // Find selected elements
     size_t layerId = 0;
-
-    if (useMultiLayer) {
+    if (multiLayer && !disableMultilayer) {
         std::shared_lock lock(*doc);
         const auto layers = page->getLayersView();
         for (auto it = layers.rbegin(); it != layers.rend(); it++) {
@@ -88,8 +64,6 @@ auto Selector::finalize(PageRef page, bool disableMultilayer, Document* doc) -> 
         }
     }
 
-    this->viewPool->dispatchAndClear(xoj::view::SelectorView::DELETE_VIEWS_REQUEST, this->bbox);
-
     return layerId;
 }
 
@@ -106,24 +80,23 @@ RectangularSelector::RectangularSelector(double x, double y, bool multiLayer):
 
 RectangularSelector::~RectangularSelector() = default;
 
-auto RectangularSelector::contains(double x, double y) const -> bool { return extendedBbox.contains(x, y); }
+auto RectangularSelector::contains(double x, double y) const -> bool { return bbox.contains(x, y); }
 
-void RectangularSelector::tailorToSelectionDomain(const Range& selectionDomain) {
+void RectangularSelector::extendAtPageEdges() {
     constexpr double THRESHOLD = 1.0;  // pt
+    constexpr double INF = std::numeric_limits<double>::infinity();
     const double pageWidth = page->getWidth();
     const double pageHeight = page->getHeight();
 
-    extendedBbox = bbox;
-
-    if (pageWidth > 0 && pageHeight > 0 && selectionDomain.isValid()) {
-        if (extendedBbox.minX <= THRESHOLD)
-            extendedBbox.minX = selectionDomain.minX;
-        if (extendedBbox.minY <= THRESHOLD)
-            extendedBbox.minY = selectionDomain.minY;
-        if (extendedBbox.maxX >= pageWidth - THRESHOLD)
-            extendedBbox.maxX = selectionDomain.maxX;
-        if (extendedBbox.maxY >= pageHeight - THRESHOLD)
-            extendedBbox.maxY = selectionDomain.maxY;
+    if (pageWidth > 0 && pageHeight > 0) {
+        if (bbox.minX <= THRESHOLD)
+            bbox.minX = -INF;
+        if (bbox.minY <= THRESHOLD)
+            bbox.minY = -INF;
+        if (bbox.maxX >= pageWidth - THRESHOLD)
+            bbox.maxX = INF;
+        if (bbox.maxY >= pageHeight - THRESHOLD)
+            bbox.maxY = INF;
     }
 }
 
@@ -169,14 +142,13 @@ void LassoSelector::currentPos(double x, double y) {
     }
 }
 
-void LassoSelector::tailorToSelectionDomain(const Range& selectionDomain) {
+void LassoSelector::extendAtPageEdges() {
     constexpr double THRESHOLD = 1.0;  // pt
+    constexpr double INF = std::numeric_limits<double>::infinity();
     const double pageWidth = page->getWidth();
     const double pageHeight = page->getHeight();
 
-    if (pageWidth <= 0 || pageHeight <= 0 || boundaryPoints.size() <= 2 || !selectionDomain.isValid()) {
-        extendedBoundaryPoints = boundaryPoints;
-        extendedBbox = bbox;
+    if (pageWidth <= 0 || pageHeight <= 0 || boundaryPoints.size() <= 2) {
         return;
     }
 
@@ -188,13 +160,13 @@ void LassoSelector::tailorToSelectionDomain(const Range& selectionDomain) {
         double px = p.x;
         double py = p.y;
         if (px <= THRESHOLD)
-            px = selectionDomain.minX;
+            px = -INF;
         if (px >= pageWidth - THRESHOLD)
-            px = selectionDomain.maxX;
+            px = INF;
         if (py <= THRESHOLD)
-            py = selectionDomain.minY;
+            py = -INF;
         if (py >= pageHeight - THRESHOLD)
-            py = selectionDomain.maxY;
+            py = INF;
         return {px, py};
     };
 
@@ -229,18 +201,16 @@ void LassoSelector::tailorToSelectionDomain(const Range& selectionDomain) {
         }
     }
 
-    // Build extended bounding box
-    extendedBbox = Range();
+    // Extend bounding box to infinity where needed
     for (auto const& p: extendedBoundaryPoints) {
-        extendedBbox.addPoint(p.x, p.y);
+        bbox.addPoint(p.x, p.y);
     }
 }
 
 auto LassoSelector::contains(double x, double y) const -> bool {
     auto const& pts = extendedBoundaryPoints.empty() ? boundaryPoints : extendedBoundaryPoints;
-    auto const& bboxRef = extendedBoundaryPoints.empty() ? bbox : extendedBbox;
 
-    if (pts.size() <= 2 || !bboxRef.contains(x, y)) {
+    if (pts.size() <= 2 || !bbox.contains(x, y)) {
         return false;
     }
 
