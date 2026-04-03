@@ -36,8 +36,6 @@ shallow_clone_into_commit() {
 
 download_jhbuild_sources() {
     shallow_clone_into_commit "https://gitlab.gnome.org/GNOME/gtk-osx.git" "gtk-osx" ~/gtk-osx-custom
-    # Patch gtk-osx module sets
-    (cd ~/gtk-osx-custom && git apply "$GTK_OSX_PATCHFILE" && git status)
 
     # Make a shallow clone of jhbuild's sources. This way we detect if cloning fails and avoid the deep clone in gtk-osx-setup.sh
     JHBUILD_BRANCH=$(sed -e '/^JHBUILD_RELEASE_VERSION=/!d' -e 's/^[^=]*=//' -e 's/^\"\([^\"]*\)\"$/\1/' ~/gtk-osx-custom/gtk-osx-setup.sh)
