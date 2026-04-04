@@ -222,6 +222,18 @@ unsigned int PageTypeSelectionPopover::getComboBoxIndexForPaperSize(const std::o
     return customPaperSizeIndex;  // Custom option is returned if no matching format is found
 }
 GtkWidget* PageTypeSelectionPopover::createPopover() const {
+    /**
+     * Used to connect to GAction changes: the GAction can outlive the widget. This ensures the callback is disabled
+     * when the widget is destroyed. Like g_signal_connect_object() except the callback data contains a pointer to *this
+     */
+    auto connectToLonglivedAction = [this]<typename Widget>(auto obj, const char* signalname, GCallback cb, Widget* w) {
+        auto* closure =
+                g_cclosure_new(cb, new std::pair<Widget*, const PageTypeSelectionPopover*>(w, this),
+                               xoj::util::closure_notify_cb<std::pair<Widget*, const PageTypeSelectionPopover*>>);
+        g_object_watch_closure(G_OBJECT(w), closure);
+        g_signal_connect_closure(G_OBJECT(obj), signalname, closure, GConnectFlags(0));
+    };
+
     GtkWidget* popover = gtk_popover_new();
 
     // Todo(cpp20): constexpr this
@@ -296,6 +308,23 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
                      const_cast<PageTypeSelectionPopover*>(this));
     gtk_box_append(pageFormatBox, pageFormatComboBox);
 
+    connectToLonglivedAction(
+            this->typeSelectionAction.get(), "notify::state",
+            G_CALLBACK((+[](GObject* a, GParamSpec*, gpointer pointerTuple) {
+                auto [pageFormatCB, self] =
+                        *static_cast<std::pair<GtkWidget*, const PageTypeSelectionPopover*>*>(pointerTuple);
+                xoj::util::GVariantSPtr state(g_action_get_state(G_ACTION(a)), xoj::util::adopt);
+                auto selectedIndex = getGVariantValue<size_t>(state.get());
+                // Enable page format selection for all page types except special ones (PDF and image)
+                bool shouldPageFormatSettingsBeEnabled =
+                        selectedIndex == COPY_CURRENT_PLACEHOLDER || selectedIndex < self->types->getPageTypes().size();
+                gtk_widget_set_sensitive(pageFormatCB, shouldPageFormatSettingsBeEnabled);
+
+                g_simple_action_set_enabled(self->orientationAction.get(),
+                                            shouldPageFormatSettingsBeEnabled && self->selectedPageSize.has_value());
+            })),
+            pageFormatComboBox);
+
     gtk_box_append(box, GTK_WIDGET(specialTypesGrid));
     gtk_box_append(box, createSeparator());
     gtk_box_append(box, GTK_WIDGET(pageFormatBox));
@@ -325,38 +354,24 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
     gtk_widget_set_sensitive(applyToCurrentPageButton,
                              this->selectedPT.has_value() || this->selectedPageSize.has_value());
 
-    auto userdataPointerTuple = new std::tuple<GtkButton*, const PageTypeSelectionPopover*, GtkComboBox*>(
-            GTK_BUTTON(applyToCurrentPageButton), this, GTK_COMBO_BOX(pageFormatComboBox));
-    g_signal_connect_data(
+    connectToLonglivedAction(
             this->typeSelectionAction.get(), "notify::state",
             G_CALLBACK((+[](GObject* a, GParamSpec*, gpointer pointerTuple) {
-                auto [btn, self, pageFormatCB] =
-                        *static_cast<std::tuple<GtkButton*, const PageTypeSelectionPopover*, GtkComboBox*>*>(
-                                pointerTuple);
+                auto [btn, self] = *static_cast<std::pair<GtkButton*, const PageTypeSelectionPopover*>*>(pointerTuple);
                 xoj::util::GVariantSPtr state(g_action_get_state(G_ACTION(a)), xoj::util::adopt);
                 auto selectedIndex = getGVariantValue<size_t>(state.get());
                 gtk_widget_set_sensitive(GTK_WIDGET(btn), selectedIndex != COPY_CURRENT_PLACEHOLDER ||
                                                                   self->selectedPageSize.has_value());
-                // Enable page format selection for all page types except special ones (PDF and image)
-                bool shouldPageFormatSettingsBeEnabled =
-                        selectedIndex == COPY_CURRENT_PLACEHOLDER || selectedIndex < self->types->getPageTypes().size();
-                gtk_widget_set_sensitive(GTK_WIDGET(pageFormatCB), shouldPageFormatSettingsBeEnabled);
-
-                g_simple_action_set_enabled(self->orientationAction.get(),
-                                            shouldPageFormatSettingsBeEnabled && self->selectedPageSize.has_value());
             })),
-            userdataPointerTuple,
-            xoj::util::closure_notify_cb<std::tuple<GtkButton*, const PageTypeSelectionPopover*, GtkComboBox*>>,
-            GConnectFlags(0));
+            GTK_BUTTON(applyToCurrentPageButton));
 
-    g_signal_connect_data(
+    connectToLonglivedAction(
             this->pageSizeChangedAction.get(), "activate",
             G_CALLBACK((+[](GSimpleAction*, GVariant*, gpointer pointerTuple) {
-                auto [btn, self] = *static_cast<std::tuple<GtkWidget*, const PageTypeSelectionPopover*>*>(pointerTuple);
+                auto [btn, self] = *static_cast<std::pair<GtkWidget*, const PageTypeSelectionPopover*>*>(pointerTuple);
                 gtk_widget_set_sensitive(btn, self->selectedPT.has_value() || self->selectedPageSize.has_value());
             })),
-            new std::tuple<GtkWidget*, const PageTypeSelectionPopover*>(applyToCurrentPageButton, this),
-            xoj::util::closure_notify_cb<std::tuple<GtkWidget*, const PageTypeSelectionPopover*>>, GConnectFlags(0));
+            applyToCurrentPageButton);
 
     g_signal_connect_object(this->comboBoxChangeSelectionAction.get(), "activate",
                             G_CALLBACK(+[](GSimpleAction* action, GVariant* comboBoxIndex, gpointer comboBoxPtr) {
