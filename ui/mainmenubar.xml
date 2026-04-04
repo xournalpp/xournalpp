@@ -162,6 +162,10 @@
      <attribute name="action">app.preferences</attribute>
      <attribute name="hidden-when">macos-menubar</attribute>
     </item>
+    <item>
+     <attribute name="label" translatable="yes">Customize _Shortcuts</attribute>
+     <attribute name="action">app.customize-shortcuts</attribute>
+    </item>
     <submenu id="menuViewToolbar">
      <attribute name="label" translatable="yes">T_oolbars</attribute>
      <section>
@@ -554,7 +558,6 @@
      <attribute name="label" translatable="yes">_Image</attribute>
      <attribute name="action">win.select-tool</attribute>
      <attribute name="target" type="t">5</attribute> <!-- TOOL_IMAGE -->
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;i</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">_Default Tool</attribute>
