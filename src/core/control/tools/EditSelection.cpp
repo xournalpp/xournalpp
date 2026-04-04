@@ -265,29 +265,77 @@ EditSelection::~EditSelection() {
  * them to new layer if any or to the old if no new layer
  */
 void EditSelection::finalizeSelection() {
-    XojPageView* v = getPageViewUnderCursor();
-    if (v == nullptr) {  // Not on any page - move back to original page and position
-        double ox = this->snappedBounds.x - this->x;
-        double oy = this->snappedBounds.y - this->y;
-        this->x = this->contents->getOriginalX();
-        this->y = this->contents->getOriginalY();
-        this->snappedBounds.x = this->x + ox;
-        this->snappedBounds.y = this->y + oy;
-        v = this->contents->getSourceView();
-
-        PageRef page = v->getPage();
-        Layer* layer = page->getSelectedLayer();
-        // Create an Undo action to compensate - avoids Segfault/Freeze if the user presses undo after this happened
-        this->contents->updateContent(this->getRect(), this->snappedBounds, this->rotation, this->preserveAspectRatio,
-                                      layer, page, this->undo, CURSOR_SELECTION_MOVE);
-    }
-
-
-    this->view = v;
-
     auto insertOrder =
             this->contents->makeMoveEffective(this->getRect(), this->snappedBounds, this->preserveAspectRatio);
 
+    {
+        // Ensure every element keeps at least MIN_OVERLAP pt on the page.
+        //
+        // Each element imposes two constraints on the horizontal shift dx:
+        // - Not too far left:  rect.x + rect.w + dx >= overlap
+        // - Not too far right: rect.x + dx <= pageW - overlap
+        //
+        // dxMin = tightest lower bound across all elements (furthest off-left element)
+        // dxMax = tightest upper bound across all elements (furthest off-right element)
+        //
+        // If dxMin <= 0 <= dxMax: all elements are on-page, dx = 0.
+        // If dxMin > 0: elements are off the left, shift right by dxMin.
+        // If dxMax < 0: elements are off the right, shift left by |dxMax|.
+        // If dxMin > dxMax: elements span wider than the page, center them.
+        //
+        // Y axis works identically.
+
+        constexpr double MIN_OVERLAP = 20.0;  // pt
+        const PageRef page = this->view->getPage();
+        const double pageWidth = page->getWidth();
+        const double pageHeight = page->getHeight();
+
+        constexpr double INF = std::numeric_limits<double>::infinity();
+        double dxMin = -INF;
+        double dxMax = INF;
+        double dyMin = -INF;
+        double dyMax = INF;
+
+        for (const auto& [e, _]: insertOrder) {
+            const auto rect = e->boundingRect();
+            const double keepOnPageX = std::min(MIN_OVERLAP, rect.width);
+            const double keepOnPageY = std::min(MIN_OVERLAP, rect.height);
+
+            dxMin = std::max(dxMin, keepOnPageX - rect.x - rect.width);
+            dxMax = std::min(dxMax, pageWidth - keepOnPageX - rect.x);
+
+            dyMin = std::max(dyMin, keepOnPageY - rect.y - rect.height);
+            dyMax = std::min(dyMax, pageHeight - keepOnPageY - rect.y);
+        }
+
+        double dx = 0.0;
+        if (dxMin > dxMax) {
+            dx = (dxMin + dxMax) / 2;
+        } else if (dxMin > 0) {
+            dx = dxMin;
+        } else if (dxMax < 0) {
+            dx = dxMax;
+        }
+
+        double dy = 0.0;
+        if (dyMin > dyMax) {
+            dy = (dyMin + dyMax) / 2;
+        } else if (dyMin > 0) {
+            dy = dyMin;
+        } else if (dyMax < 0) {
+            dy = dyMax;
+        }
+
+        if (dx != 0.0 || dy != 0.0) {
+            for (auto& [e, _]: insertOrder) {
+                e->move(dx, dy);
+            }
+            this->x += dx;
+            this->y += dy;
+            this->snappedBounds.x += dx;
+            this->snappedBounds.y += dy;
+        }
+    }
 
     auto* doc = view->getXournal()->getControl()->getDocument();
     doc->lock();
