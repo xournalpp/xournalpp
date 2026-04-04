@@ -28,6 +28,7 @@ constexpr const char* ACTION_NAMES[] = {  // Action to string conversion map
         "rotation-snapping",
         "grid-snapping",
         "preferences",
+        "customize-shortcuts",
         "paired-pages-mode",
         "paired-pages-offset",
         "presentation-mode",
