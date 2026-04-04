@@ -344,6 +344,10 @@ void ShortcutDialog::onShortcutEdited(const gchar* path, guint keyval, GdkModifi
         g_free(action);
         return;
     }
+
+    // accelStr was null - cleanup and return
+    gtk_tree_path_free(treePath);
+    g_free(action);
 }
 
 // ==================== Actions ====================
