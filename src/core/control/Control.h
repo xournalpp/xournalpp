@@ -72,6 +72,7 @@ class XojPdfRectangle;
 class Callback;
 class ActionDatabase;
 class NavigationHistory;
+class ShortcutManager;
 
 class Control:
         public ToolListener,
@@ -148,6 +149,12 @@ public:
 
     // Menu edit
     void showSettings();
+    
+    /**
+     * Show the shortcut customization dialog.
+     * Called from the menu: Edit -> Customize Shortcuts
+     */
+    void showShortcutSettings();
 
     // The core handler for inserting latex
     void runLatex();
@@ -327,6 +334,7 @@ public:
     LayerController* getLayerController() const;
     PluginController* getPluginController() const;
     const Palette& getPalette() const;
+    ShortcutManager* getShortcutManager() const;
 
     /**
      * Show floating toolbox at specified coordinates
@@ -572,6 +580,8 @@ private:
     PluginController* pluginController;
 
     std::unique_ptr<ActionDatabase> actionDB;
+
+    std::unique_ptr<ShortcutManager> shortcutManager;
     template <Action a>
     friend struct ActionProperties;
 };

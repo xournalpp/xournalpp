@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk+" version="3.24"/>
+  
+  <object class="GtkWindow" id="shortcutSettings">
+    <property name="title">Customize Shortcuts</property>
+    <property name="modal">True</property>
+    <property name="default-width">1100</property>
+    <property name="default-height">650</property>
+    <property name="resizable">True</property>
+    <property name="window-position">GTK_WIN_POS_CENTER_ON_PARENT</property>
+    
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">10</property>
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+        
+        <child>
+          <object class="GtkLabel">
+            <property name="label">Double-click Current to edit. ESC to cancel. Backspace to clear.</property>
+            <property name="halign">start</property>
+          </object>
+        </child>
+        
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <property name="spacing">5</property>
+            
+            <child>
+              <object class="GtkLabel">
+                <property name="label">Search:</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkSearchEntry" id="searchEntry">
+                <property name="placeholder-text">Type to search shortcuts...</property>
+                <property name="width-chars">30</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkLabel" id="searchResultCount">
+                <property name="label">Showing all shortcuts</property>
+                <property name="halign">end</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        
+        <child>
+          <object class="GtkPaned">
+            <property name="orientation">horizontal</property>
+            <property name="wide-handle">True</property>
+            <property name="position">180</property>
+            <property name="vexpand">True</property>
+            <property name="valign">fill</property>
+            
+            <child>
+              <object class="GtkScrolledWindow">
+                <property name="width-request">150</property>
+                <property name="shadow-type">in</property>
+                <property name="vexpand">True</property>
+                
+                <child>
+                  <object class="GtkTreeView" id="categoryTreeView">
+                    <property name="headers-visible">False</property>
+                    <property name="enable-search">False</property>
+                    <property name="vexpand">True</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkScrolledWindow">
+                <property name="shadow-type">in</property>
+                <property name="hscrollbar-policy">automatic</property>
+                <property name="vscrollbar-policy">automatic</property>
+                <property name="vexpand">True</property>
+                
+                <child>
+                  <object class="GtkTreeView" id="shortcutTreeView">
+                    <property name="headers-visible">True</property>
+                    <property name="enable-search">False</property>
+                    <property name="search-column">2</property>
+                    <property name="fixed-height-mode">True</property>
+                    <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <property name="spacing">5</property>
+            <property name="halign">start</property>
+            
+            <child>
+              <object class="GtkButton" id="btnResetSelected">
+                <property name="label">Reset Selected</property>
+                <property name="tooltip-text">Reset the selected shortcut to default</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkButton" id="btnResetAll">
+                <property name="label">Reset All</property>
+                <property name="tooltip-text">Reset all shortcuts to their default values</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkSeparator">
+                <property name="orientation">vertical</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkButton" id="btnExport">
+                <property name="label">Export</property>
+                <property name="tooltip-text">Export shortcuts to a file</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkButton" id="btnImport">
+                <property name="label">Import</property>
+                <property name="tooltip-text">Import shortcuts from a file</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkSeparator">
+                <property name="orientation">vertical</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkButton" id="btnClose">
+                <property name="label">Close</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
