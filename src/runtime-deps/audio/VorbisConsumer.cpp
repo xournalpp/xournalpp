@@ -12,8 +12,8 @@
 #include <glib.h>     // for g_warning
 #include <sndfile.h>  // for SF_INFO, sf_strerror, sf_writ...
 
-#include "audio/AudioQueue.h"           // for AudioQueue
-#include "control/settings/Settings.h"  // for Settings
+#include "audio/AudioQueue.h"  // for AudioQueue
+#include "audio/AudioSettings.h"
 #include "util/StringUtils.h"
 
 #include "SNDFileCpp.h"  // for make_snd_file, xoj
@@ -31,7 +31,7 @@ auto VorbisConsumer::start(fs::path const& file) -> bool {
     SF_INFO sfInfo;
     sfInfo.channels = channels;
     sfInfo.format = SF_FORMAT_OGG | SF_FORMAT_VORBIS;
-    sfInfo.samplerate = static_cast<int>(this->settings.getAudioSampleRate());
+    sfInfo.samplerate = static_cast<int>(this->settings.audioSampleRate);
 
     auto sfFile = audio::make_snd_file(file.native(), SFM_WRITE, &sfInfo);
     if (!sfFile) {
@@ -45,7 +45,7 @@ auto VorbisConsumer::start(fs::path const& file) -> bool {
         auto buffer_size{size_t(64 * channels)};
         std::vector<float> buffer;
         buffer.reserve(buffer_size);  // efficiency
-        float audioGain = static_cast<float>(this->settings.getAudioGain());
+        float audioGain = static_cast<float>(this->settings.audioGain);
 
         while (!(this->stopConsumer || (audioQueue.hasStreamEnded() && audioQueue.empty()))) {
             audioQueue.waitForProducer(lock);

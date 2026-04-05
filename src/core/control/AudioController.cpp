@@ -1,4 +1,5 @@
 #include "AudioController.h"
+#ifdef ENABLE_AUDIO
 
 #include <array>   // for array
 #include <cstdio>  // for snprintf
@@ -7,9 +8,10 @@
 
 #include <glib.h>  // for g_get_monotonic_time
 
-#include "audio/AudioPlayer.h"                   // for AudioPlayer
-#include "audio/AudioRecorder.h"                 // for AudioRecorder
-#include "audio/DeviceInfo.h"                    // for DeviceInfo
+#include "audio/AudioPlayer.h"    // for AudioPlayer
+#include "audio/AudioRecorder.h"  // for AudioRecorder
+#include "audio/DeviceInfo.h"     // for DeviceInfo
+#include "audio/Factory.h"
 #include "control/Control.h"                     // for Control
 #include "control/actions/ActionDatabase.h"      // for ActionDatabase
 #include "control/settings/Settings.h"           // for Settings
@@ -22,11 +24,42 @@
 using std::string;
 using std::vector;
 
-AudioController::AudioController(Settings* settings, Control* control):
+static constexpr const char* XOURNALPP_AUDIO_LIB = "xournalpp-audio";
+
+auto AudioController::tryLoadingAudioLibrary(Settings* settings, Control* control) -> std::unique_ptr<AudioController> {
+    xoj::runtime::LibraryHandle lib(XOURNALPP_AUDIO_LIB);
+    if (!lib) {
+        return nullptr;
+    }
+    auto* factory = lib.getSymbol<AudioFactory*>("factory");
+    if (!factory) {
+        return nullptr;
+    }
+
+    try {
+        return std::unique_ptr<AudioController>(new AudioController(
+                settings, control, std::move(lib), factory->makeAudio(settings->getAudioSettings(), [control]() {
+                    auto* actionDB = control->getActionDatabase();
+                    actionDB->enableAction(Action::AUDIO_PAUSE_PLAYBACK, false);
+                    actionDB->enableAction(Action::AUDIO_STOP_PLAYBACK, false);
+                    actionDB->enableAction(Action::AUDIO_SEEK_FORWARDS, false);
+                    actionDB->enableAction(Action::AUDIO_SEEK_BACKWARDS, false);
+                    actionDB->setActionState(Action::AUDIO_PAUSE_PLAYBACK, false);
+                })));
+    } catch (const std::exception& e) {
+        XojMsgBox::showErrorToUser(control->getGtkWindow(), FC(_F("Error while opening audio system: {1}") % e.what()));
+        return nullptr;
+    }
+}
+
+AudioController::AudioController(Settings* settings, Control* control, xoj::runtime::LibraryHandle audioLib,
+                                 std::unique_ptr<xoj::audio::System> audio):
         settings(*settings),
         control(*control),
-        audioRecorder(std::make_unique<AudioRecorder>(*settings)),
-        audioPlayer(std::make_unique<AudioPlayer>(*control, *settings)) {}
+        audioLibrary(std::move(audioLib)),
+        audio(std::move(audio)),
+        audioRecorder(&(this->audio->recorder)),
+        audioPlayer(&(this->audio->player)) {}
 
 AudioController::~AudioController() = default;
 
@@ -50,7 +83,7 @@ auto AudioController::startRecording() -> bool {
 
         audioFilename = data;
 
-        g_message("Start recording");
+        g_debug("Start recording");
 
         bool isRecording = this->audioRecorder->start(getAudioFolder() / data);
 
@@ -69,7 +102,7 @@ auto AudioController::stopRecording() -> bool {
         audioFilename = "";
         this->timestamp = 0;
 
-        g_message("Stop recording");
+        g_debug("Stop recording");
 
         this->audioRecorder->stop();
     }
@@ -130,3 +163,5 @@ auto AudioController::getStartTime() const -> size_t { return this->timestamp; }
 auto AudioController::getOutputDevices() const -> vector<DeviceInfo> { return this->audioPlayer->getOutputDevices(); }
 
 auto AudioController::getInputDevices() const -> vector<DeviceInfo> { return this->audioRecorder->getInputDevices(); }
+
+#endif

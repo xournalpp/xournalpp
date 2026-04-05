@@ -212,11 +212,11 @@ void Settings::loadDefault() {
     // clang-format on
 
 #ifdef ENABLE_AUDIO
-    this->audioSampleRate = 44100.0;
-    this->audioInputDevice = AUDIO_INPUT_SYSTEM_DEFAULT;
-    this->audioOutputDevice = AUDIO_OUTPUT_SYSTEM_DEFAULT;
-    this->audioGain = 1.0;
-    this->defaultSeekTime = 5;
+    this->audioSettings.audioSampleRate = 44100.0;
+    this->audioSettings.audioInputDevice = AUDIO_INPUT_SYSTEM_DEFAULT;
+    this->audioSettings.audioOutputDevice = AUDIO_OUTPUT_SYSTEM_DEFAULT;
+    this->audioSettings.audioGain = 1.0;
+    this->audioSettings.defaultSeekTime = 5;
 #endif
 
     this->pluginEnabled = "";
@@ -518,8 +518,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->pageTemplateSettings.parse(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sizeUnit")) == 0) {
         this->sizeUnit = reinterpret_cast<const char*>(value);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioFolder")) == 0) {
-        this->audioFolder = fs::path(xoj::util::utf8(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveEnabled")) == 0) {
         this->autosaveEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveTimeout")) == 0) {
@@ -633,16 +631,21 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("disableAudio")) == 0) {
         this->disableAudio = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
 #ifdef ENABLE_AUDIO
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioFolder")) == 0) {
+        this->audioFolder = fs::path(xoj::util::utf8(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioSampleRate")) == 0) {
-        this->audioSampleRate = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+        this->audioSettings.audioSampleRate = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioGain")) == 0) {
-        this->audioGain = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+        this->audioSettings.audioGain = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultSeekTime")) == 0) {
-        this->defaultSeekTime = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+        this->audioSettings.defaultSeekTime =
+                strict_cast<unsigned int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioInputDevice")) == 0) {
-        this->audioInputDevice = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+        this->audioSettings.audioInputDevice =
+                strict_cast<PaDeviceIndex>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioOutputDevice")) == 0) {
-        this->audioOutputDevice = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+        this->audioSettings.audioOutputDevice =
+                strict_cast<PaDeviceIndex>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
 #endif
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("numIgnoredStylusEvents")) == 0) {
         this->numIgnoredStylusEvents =
@@ -1161,11 +1164,11 @@ void Settings::save() {
 
 #ifdef ENABLE_AUDIO
     saveProperty("audioFolder", char_cast(this->audioFolder.u8string().c_str()), root);
-    SAVE_INT_PROP(audioInputDevice);
-    SAVE_INT_PROP(audioOutputDevice);
-    SAVE_DOUBLE_PROP(audioSampleRate);
-    SAVE_DOUBLE_PROP(audioGain);
-    SAVE_INT_PROP(defaultSeekTime);
+    saveProperty("audioInputDevice", audioSettings.audioInputDevice, root);
+    saveProperty("audioOutputDevice", audioSettings.audioOutputDevice, root);
+    savePropertyDouble("audioSampleRate", audioSettings.audioSampleRate, root);
+    savePropertyDouble("audioGain", audioSettings.audioGain, root);
+    savePropertyUnsigned("defaultSeekTime", audioSettings.defaultSeekTime, root);
 #endif
 
     SAVE_STRING_PROP(pluginEnabled);
@@ -2237,55 +2240,57 @@ void Settings::setAudioFolder(fs::path audioFolder) {
     save();
 }
 
-auto Settings::getAudioInputDevice() const -> PaDeviceIndex { return this->audioInputDevice; }
+auto Settings::getAudioInputDevice() const -> PaDeviceIndex { return this->audioSettings.audioInputDevice; }
 
 void Settings::setAudioInputDevice(PaDeviceIndex deviceIndex) {
-    if (this->audioInputDevice == deviceIndex) {
+    if (this->audioSettings.audioInputDevice == deviceIndex) {
         return;
     }
-    this->audioInputDevice = deviceIndex;
+    this->audioSettings.audioInputDevice = deviceIndex;
     save();
 }
 
-auto Settings::getAudioOutputDevice() const -> PaDeviceIndex { return this->audioOutputDevice; }
+auto Settings::getAudioOutputDevice() const -> PaDeviceIndex { return this->audioSettings.audioOutputDevice; }
 
 void Settings::setAudioOutputDevice(PaDeviceIndex deviceIndex) {
-    if (this->audioOutputDevice == deviceIndex) {
+    if (this->audioSettings.audioOutputDevice == deviceIndex) {
         return;
     }
-    this->audioOutputDevice = deviceIndex;
+    this->audioSettings.audioOutputDevice = deviceIndex;
     save();
 }
 
-auto Settings::getAudioSampleRate() const -> double { return this->audioSampleRate; }
+auto Settings::getAudioSampleRate() const -> double { return this->audioSettings.audioSampleRate; }
 
 void Settings::setAudioSampleRate(double sampleRate) {
-    if (this->audioSampleRate == sampleRate) {
+    if (this->audioSettings.audioSampleRate == sampleRate) {
         return;
     }
-    this->audioSampleRate = sampleRate;
+    this->audioSettings.audioSampleRate = sampleRate;
     save();
 }
 
-auto Settings::getAudioGain() const -> double { return this->audioGain; }
+auto Settings::getAudioGain() const -> double { return this->audioSettings.audioGain; }
 
 void Settings::setAudioGain(double gain) {
-    if (this->audioGain == gain) {
+    if (this->audioSettings.audioGain == gain) {
         return;
     }
-    this->audioGain = gain;
+    this->audioSettings.audioGain = gain;
     save();
 }
 
-auto Settings::getDefaultSeekTime() const -> unsigned int { return this->defaultSeekTime; }
+auto Settings::getDefaultSeekTime() const -> unsigned int { return this->audioSettings.defaultSeekTime; }
 
 void Settings::setDefaultSeekTime(unsigned int t) {
-    if (this->defaultSeekTime == t) {
+    if (this->audioSettings.defaultSeekTime == t) {
         return;
     }
-    this->defaultSeekTime = t;
+    this->audioSettings.defaultSeekTime = t;
     save();
 }
+
+auto Settings::getAudioSettings() const -> const AudioSettings& { return audioSettings; }
 #endif
 
 auto Settings::getPluginEnabled() const -> string const& { return this->pluginEnabled; }

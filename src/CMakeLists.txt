@@ -31,6 +31,12 @@ endif (DEV_ENABLE_GCOV)
 add_subdirectory(util)
 
 ##############################
+# Runtime deps
+##############################
+
+add_subdirectory(runtime-deps)
+
+##############################
 # xournalpp-core
 ##############################
 
