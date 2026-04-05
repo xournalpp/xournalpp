@@ -146,11 +146,6 @@ def fmt_luaLS_def(file, function_name, comments = [], params = []):
             comments (list[str]): doc-comment for the function
             params (list[str]): parameters of the function in the order defined
                 in the doc-comment.
-
-        Note: The order of the parameters in the doc-comment is also being used
-            for the ordering of the function's parameter ordering. Therefore,
-            you must specify the parameters of the function in the correct order
-            in the doc-comment.
     '''
     if len(comments) > 0:
         print("\n".join(comments), file=file)
