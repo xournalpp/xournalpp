@@ -28,7 +28,13 @@ Workflow:
 from typing import Set
 import re
 import os
-import subprocess
+
+
+def _run_command_and_get_files(command: str) -> Set[str]:
+    """Execute a shell command and return stripped file paths as a set."""
+    stdout = os.popen(command).readlines()
+    return {f.strip() for f in stdout}
+
 
 def get_files_from_copyright_format(file: str) -> Set[str]:
     """Get all Files listed in a copyright file
@@ -45,33 +51,30 @@ def get_files_from_copyright_format(file: str) -> Set[str]:
             files.add(l[7:].strip())
     return files
 
-def get_all_files():
-    stdout = os.popen('rg --files').readlines()
-    files = [f.strip() for f in stdout]
-    return set(files)
 
-def get_files_containing_copyright_or_license():
+def get_all_files() -> Set[str]:
+    """Get all files tracked by git."""
+    return _run_command_and_get_files('rg --files')
+
+
+def get_files_containing_copyright_or_license() -> Set[str]:
     """Find all files containing either
      - copyright
      - license
     (case insensitive)
     Exluding .po files as they create only false positives
     """
-    stdout = os.popen('rg -i -e "copyright" -e "license" -l | rg -v "\.po"').readlines()
-    files = [f.strip() for f in stdout]
-    lc_files = set(files)
+    lc_files = _run_command_and_get_files('rg -i -e "copyright" -e "license" -l | rg -v "\\.po"')
+    xpp_files = _run_command_and_get_files('rg --files-without-match "@author Xournal\\+\\+"')
+    return lc_files & xpp_files
 
-    stdout = os.popen('rg --files-without-match "@author Xournal\+\+"').readlines()
-    files = [f.strip() for f in stdout]
-    xpp_files = set(files)
-    return (lc_files & xpp_files)
 
-def get_changed_files_since(git_hash:str):
-    stdout = os.popen(f'git diff {git_hash} HEAD --name-only').readlines()
-    files = [f.strip() for f in stdout]
-    return set(files)
+def get_changed_files_since(git_hash: str) -> Set[str]:
+    """Get files changed since the given git hash."""
+    return _run_command_and_get_files(f'git diff {git_hash} HEAD --name-only')
 
-def get_source_files_missing_license_of_header(scanned_files:Set[str], all_files:Set[str]) -> Set[str]:
+
+def get_source_files_missing_license_of_header(scanned_files: Set[str], all_files: Set[str]) -> Set[str]:
     """Return all `.cpp` files which do not have a license but their corrsponding `.h` file has.
 
     Args:
@@ -89,6 +92,7 @@ def get_source_files_missing_license_of_header(scanned_files:Set[str], all_files
     missing_source_files = scanned_header_files - scanned_source_files
     source_file_exists = lambda x: (x+'.cpp') in all_files
     return set(filter(source_file_exists, missing_source_files))
+
 
 # I: Add an entry if a file is detected automatically as a file with special
 # license/copyright, but which is actually licensed/copyrighted under the same
