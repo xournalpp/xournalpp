@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-28 16:29+0000\n"
-"PO-Revision-Date: 2026-03-28 17:12\n"
+"POT-Creation-Date: 2026-04-01 19:40+0000\n"
+"PO-Revision-Date: 2026-04-05 05:02\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -103,23 +103,27 @@ msgstr "文件： {1}"
 
 #: ../src/core/control/Control.cpp:1570
 msgid "<i>Above error repeated {1} times</i>"
-msgstr ""
+msgstr "<i>上述错误重复出现 {1} 次</i>"
 
 #: ../src/core/control/Control.cpp:1582
 msgid "<i>&lt;{1} more lines of error messages&gt;</i>"
-msgstr ""
+msgstr "<i>&lt;{1} 行错误信息&gt;</i>"
 
 #: ../src/core/control/Control.cpp:1621
 msgid "Error opening file \"{1}\".\n\n"
 "<tt>{2}</tt>\n"
 "<b>{3}</b>"
-msgstr ""
+msgstr "打开文件“{1}”时出错。\n\n"
+"<tt>{2}</tt>\n"
+"<b>{3}</b>"
 
 #: ../src/core/control/Control.cpp:1635
 msgid "There were some errors while loading the file. Some information might have been lost. Do not overwrite your old file unless you are sure everything you need was loaded correctly.\n\n"
 "Error messages:\n"
 "<tt>{1}</tt>"
-msgstr ""
+msgstr "文件加载过程中出现了一些错误。部分信息可能已丢失。除非您确定所有必要信息都已正确加载，否则请勿覆盖旧文件。\n\n"
+"错误信息：\n"
+"<tt>{1}</tt>"
 
 #: ../src/core/control/Control.cpp:1653
 msgid "File version mismatch"
@@ -715,7 +719,7 @@ msgstr "无法打开附件: {1}. 错误消息: 没有提供有效的文件大小
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:149
 msgid "Unable to create temporary file for audio attachment"
-msgstr ""
+msgstr "无法创建音频附件的临时文件"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:161
 msgid "Could not open attachment: {1}. Error message: Could not read file"
@@ -723,7 +727,7 @@ msgstr "无法打开附件: {1}. 错误消息: 无法读取文件"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:168
 msgid "Could not open attachment: {1}. Error message: Could not write temporary file"
-msgstr ""
+msgstr "无法打开附件：{1}。错误信息：无法写入临时文件"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:201
 #: ../src/core/control/xojfile/LoadHandler.cpp:226
@@ -732,23 +736,23 @@ msgstr "未能读入图像：{1}。错误提示为：{2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:236
 msgid "Cloned pixmap page background on page {1} references inexistent page {2}"
-msgstr ""
+msgstr "页面 {1} 上的克隆像素图页面背景引用了不存在的页面 {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:482
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}"
-msgstr ""
+msgstr "文件“{1}”不是有效的 .xopp 文件（缺少 Mimetype）。错误信息：{2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:489
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\""
-msgstr ""
+msgstr "文件“{1}”不是有效的 .xopp 文件（Mimetype 错误）：“{2}”"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:497
 msgid "The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}"
-msgstr ""
+msgstr "文件“{1}”不是有效的 .xopp 文件（缺少版本信息）。错误信息：{2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:510
 msgid "The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\""
-msgstr ""
+msgstr "文件“{1}”不是有效的.xopp文件（版本字符串已损坏）：“{2}”"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:519
 msgid "Could not open file: \"{1}\""
@@ -760,20 +764,21 @@ msgstr "XML 解析器错误：{1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:545
 msgid "Failed to read from compressed file"
-msgstr ""
+msgstr "读取压缩文件失败"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:554
 msgid "Invalid XML data read"
-msgstr ""
+msgstr "读取的 XML 数据无效"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:568
 msgid "Document is not complete.\n"
 "We have tried recovering the data that could be read, but the last element may have been discarded, and the end of the file is likely missing."
-msgstr ""
+msgstr "文档不完整。\n"
+"我们已尝试恢复可读取的数据，但最后一个元素可能已被丢弃，文件末尾部分可能缺失。"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:575
 msgid "Document is corrupted (no document tag found in file)"
-msgstr ""
+msgstr "文档已损坏（文件中未找到文档标签）"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:578
 msgid "Document is corrupted (no pages found in file)"
@@ -793,47 +798,47 @@ msgstr "未能写上背景\"{1}\"，不管啦继续哦..."
 
 #: ../src/core/control/xojfile/XmlParser.cpp:95
 msgid "Ignoring unexpected {1} tag inside unrecognized document structure"
-msgstr ""
+msgstr "忽略未识别文档结构中意外出现的 {1} 标签"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:100
 msgid "Ignoring unexpected {1} tag under {2}"
-msgstr ""
+msgstr "忽略 {2} 下的意外 {1} 标签"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:149
 msgid "Unexpected text in {1} node: \"{2}\""
-msgstr ""
+msgstr "{1} 节点中出现意外文本：“{2}”"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:247
 msgid "Attribute \"type\" not found in background tag. Ignoring tag"
-msgstr ""
+msgstr "background 标签中未找到属性“type”。忽略该标签。"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:286
 msgid "Domain \"clone\" is invalid for PDF backgrounds. Using \"absolute\" instead"
-msgstr ""
+msgstr "对于 PDF 背景，域“clone”无效。请改用“absolute”。"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:296
 msgid "PDF background filename is empty"
-msgstr ""
+msgstr "PDF 背景文件名为空"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:316
 msgid "Discarding unused audio timestamp element. Filename: {1}"
-msgstr ""
+msgstr "丢弃未使用的音频时间戳元素。文件名：{1}"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:393
 msgid "Found stroke that contains an odd number of valid coordinates. Discarding the last value"
-msgstr ""
+msgstr "发现一个笔画包含奇数个有效坐标。舍弃最后一个值。"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:404
 msgid "Found stroke with more coordinates than pressure points: {1}, expected {2}. Shrinking stroke to match pressure point count"
-msgstr ""
+msgstr "发现笔画坐标数量多于压力点数量：{1}，预期为 {2}。正在缩减笔画以匹配压力点数量。"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:410
 msgid "Found stroke with too many pressure points: {1}, expected {2}. Discarding remaining pressure points"
-msgstr ""
+msgstr "发现一个压力点过多的中风点：{1}，预期为{2}。已舍弃剩余的压力点。"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:494
 msgid "Ignoring attachment tag under {1}"
-msgstr ""
+msgstr "忽略 {1} 下的附件标签"
 
 #: ../src/core/gui/GladeGui.cpp:25
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
@@ -2115,12 +2120,14 @@ msgstr "ElementRange::parse(): 元素索引以1开始"
 #: ../src/util/GzInputStream.cpp:48
 msgid "Error opening file \"{1}\":\n"
 "{2}"
-msgstr ""
+msgstr "打开文件“{1}”时出错：\n"
+"{2}"
 
 #: ../src/util/GzInputStream.cpp:62 ../src/util/ZipInputStream.cpp:52
 msgid "Error occurred while closing file\n"
 "Error code {1}"
-msgstr ""
+msgstr "关闭文件时发生错误\n"
+"错误代码 {1}"
 
 #: ../src/util/OutputStream.cpp:30
 msgid "Error opening file: \"{1}\""
@@ -2187,7 +2194,8 @@ msgstr "无法打开链接: {1}\n"
 #: ../src/util/ZipInputStream.cpp:38
 msgid "Error opening file \"{1}\" in zip archive:\n"
 "{2}"
-msgstr ""
+msgstr "打开压缩文件“{1}”时出错：\n"
+"{2}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"

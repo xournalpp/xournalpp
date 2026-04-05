@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-28 16:29+0000\n"
-"PO-Revision-Date: 2026-03-28 17:05\n"
+"POT-Creation-Date: 2026-04-01 19:40+0000\n"
+"PO-Revision-Date: 2026-04-05 05:02\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -103,23 +103,27 @@ msgstr "fichier : {1}"
 
 #: ../src/core/control/Control.cpp:1570
 msgid "<i>Above error repeated {1} times</i>"
-msgstr ""
+msgstr "<i>Erreur ci-dessus répétée {1} fois</i>"
 
 #: ../src/core/control/Control.cpp:1582
 msgid "<i>&lt;{1} more lines of error messages&gt;</i>"
-msgstr ""
+msgstr "<i>&lt;{1} lignes de messages d'erreur supplémentaires&gt;</i>"
 
 #: ../src/core/control/Control.cpp:1621
 msgid "Error opening file \"{1}\".\n\n"
 "<tt>{2}</tt>\n"
 "<b>{3}</b>"
-msgstr ""
+msgstr "Erreur d'ouverture du fichier \"{1}\".\n\n"
+"<tt>{2}</tt>\n"
+"<b>{3}</b>"
 
 #: ../src/core/control/Control.cpp:1635
 msgid "There were some errors while loading the file. Some information might have been lost. Do not overwrite your old file unless you are sure everything you need was loaded correctly.\n\n"
 "Error messages:\n"
 "<tt>{1}</tt>"
-msgstr ""
+msgstr "Il y a eu des erreurs lors du chargement du fichier. Certaines informations ont peut-être été perdues. N'écrasez pas votre ancien fichier à moins que vous ne soyez sûr que tout ce dont vous avez besoin a été chargé correctement.\n\n"
+"Messages d'erreur :\n"
+"<tt>{1}</tt>"
 
 #: ../src/core/control/Control.cpp:1653
 msgid "File version mismatch"
@@ -715,7 +719,7 @@ msgstr "Impossible d'ouvrir la pièce jointe : {1}. Message d'erreur : aucune ta
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:149
 msgid "Unable to create temporary file for audio attachment"
-msgstr ""
+msgstr "Impossible de créer un fichier temporaire pour la pièce audio jointe"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:161
 msgid "Could not open attachment: {1}. Error message: Could not read file"
@@ -723,7 +727,7 @@ msgstr "Impossible d'ouvrir la pièce jointe : {1}. Message d'erreur : impossibl
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:168
 msgid "Could not open attachment: {1}. Error message: Could not write temporary file"
-msgstr ""
+msgstr "Impossible d'ouvrir la pièce jointe : {1}. Message d'erreur : Impossible d'écrire le fichier temporaire"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:201
 #: ../src/core/control/xojfile/LoadHandler.cpp:226
@@ -732,23 +736,23 @@ msgstr "Impossible de lire l'image : {1}. Message d'erreur : {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:236
 msgid "Cloned pixmap page background on page {1} references inexistent page {2}"
-msgstr ""
+msgstr "Fond de page pixmap cloné sur la page {1} références inexistantes {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:482
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}"
-msgstr ""
+msgstr "Le fichier \"{1}\" n'est pas un fichier .xopp valide (Mimetype manquant). Message d'erreur : {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:489
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\""
-msgstr ""
+msgstr "Le fichier « {1} » n'est pas un fichier .xopp valide (Mimetype erroné) : « {2} »"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:497
 msgid "The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}"
-msgstr ""
+msgstr "Le fichier \"{1}\" n'est pas un fichier .xopp valide (Version manquante). Message d'erreur : {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:510
 msgid "The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\""
-msgstr ""
+msgstr "Le fichier \"{1}\" n'est pas un fichier .xopp valide (chaîne de version corrompue) : \"{2}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:519
 msgid "Could not open file: \"{1}\""
@@ -760,20 +764,21 @@ msgstr "Erreur d'extraction XML : {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:545
 msgid "Failed to read from compressed file"
-msgstr ""
+msgstr "Échec de lecture du fichier compressé"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:554
 msgid "Invalid XML data read"
-msgstr ""
+msgstr "Lecture de données XML invalide"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:568
 msgid "Document is not complete.\n"
 "We have tried recovering the data that could be read, but the last element may have been discarded, and the end of the file is likely missing."
-msgstr ""
+msgstr "Le document est incomplet.\n"
+"Nous avons essayé de récupérer les données qui pouvaient être lues, mais le dernier élément pourrait avoir été omis, et la fin du fichier est probablement manquant."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:575
 msgid "Document is corrupted (no document tag found in file)"
-msgstr ""
+msgstr "Le document est corrompu (aucune étiquette de document trouvé dans le fichier)"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:578
 msgid "Document is corrupted (no pages found in file)"
@@ -793,47 +798,47 @@ msgstr "Impossible d'écrire l'arrière-plan \"{1}\". Poursuite."
 
 #: ../src/core/control/xojfile/XmlParser.cpp:95
 msgid "Ignoring unexpected {1} tag inside unrecognized document structure"
-msgstr ""
+msgstr "Étiquette {1} inattendue ignorée à l'intérieur d'une structure de document non reconnue"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:100
 msgid "Ignoring unexpected {1} tag under {2}"
-msgstr ""
+msgstr "Étiquette {1} inattendue ignorée dans {2}"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:149
 msgid "Unexpected text in {1} node: \"{2}\""
-msgstr ""
+msgstr "Texte inattendu dans le nœud {1} : \"{2}\""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:247
 msgid "Attribute \"type\" not found in background tag. Ignoring tag"
-msgstr ""
+msgstr "Attribut \"type\" introuvable dans l'étiquette d'arrière-plan. Étiquette ignorée"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:286
 msgid "Domain \"clone\" is invalid for PDF backgrounds. Using \"absolute\" instead"
-msgstr ""
+msgstr "Le domaine \"clone\" n'est pas valide pour les arrière-plans PDF. Utilisation d'\"absolue\" à la place"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:296
 msgid "PDF background filename is empty"
-msgstr ""
+msgstr "Le nom du fichier de fond PDF est vide"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:316
 msgid "Discarding unused audio timestamp element. Filename: {1}"
-msgstr ""
+msgstr "Suppression de l'élément d'horodatage audio non utilisé. Nom du fichier : {1}"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:393
 msgid "Found stroke that contains an odd number of valid coordinates. Discarding the last value"
-msgstr ""
+msgstr "Trait trouvé avec un nombre impair de coordonnées valides. Abandon de la dernière valeur"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:404
 msgid "Found stroke with more coordinates than pressure points: {1}, expected {2}. Shrinking stroke to match pressure point count"
-msgstr ""
+msgstr "Trait trouvé avec plus de coordonnées que les points de pression : {1}, {2} attendu. Raccourcissement du trait pour correspondre au nombre de points de pression"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:410
 msgid "Found stroke with too many pressure points: {1}, expected {2}. Discarding remaining pressure points"
-msgstr ""
+msgstr "Trait trouvé avec trop de points de pression : {1}, {2} attendu. Abandon des points de pression restants"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:494
 msgid "Ignoring attachment tag under {1}"
-msgstr ""
+msgstr "Étiquette de pièce jointe ignorée sous {1}"
 
 #: ../src/core/gui/GladeGui.cpp:25
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
@@ -2115,12 +2120,14 @@ msgstr "ElementRange::parse(): les indices de l'élément commencent par 1"
 #: ../src/util/GzInputStream.cpp:48
 msgid "Error opening file \"{1}\":\n"
 "{2}"
-msgstr ""
+msgstr "Erreur lors de l'ouverture du fichier \"{1}\" :\n"
+"{2}"
 
 #: ../src/util/GzInputStream.cpp:62 ../src/util/ZipInputStream.cpp:52
 msgid "Error occurred while closing file\n"
 "Error code {1}"
-msgstr ""
+msgstr "Une erreur s'est produite lors de la fermeture du fichier\n"
+"Code d'erreur {1}"
 
 #: ../src/util/OutputStream.cpp:30
 msgid "Error opening file: \"{1}\""
@@ -2186,7 +2193,8 @@ msgstr "Impossible d'ouvrir le lien : {1}\n"
 #: ../src/util/ZipInputStream.cpp:38
 msgid "Error opening file \"{1}\" in zip archive:\n"
 "{2}"
-msgstr ""
+msgstr "Erreur lors de l'ouverture du fichier «{1}» dans l'archive zip :\n"
+"{2}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
