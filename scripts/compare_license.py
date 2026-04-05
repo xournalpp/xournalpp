@@ -101,19 +101,19 @@ def get_source_files_missing_license_of_header(scanned_files: Set[str], all_file
 def get_whitelist_not_listed():
     """Whitelist for files containing the searched for substrings but
     are not necessary for the copyright.txt"""
-    white_list = set()
-    white_list.add("ABOUT-NLS") # false positive
-    white_list.add("copyright.txt") # copyright/license summary file
-    white_list.add("scripts/compare_license.py") # this very script
-    white_list.add("CMakeLists.txt") # false positive
-    white_list.add("LICENSE") # main license file
-    white_list.add("rpm/fedora/xournalpp.spec") # false positive
-    white_list.add("windows-setup/xournalpp.nsi") # false positive
-    white_list.add("ui/about.glade") # false positive
-    white_list.add("src/exe/win32/xpp.rc.in") # false positive
-    white_list.add("mac-setup/Info.plist") # false positive
-    white_list.add("src/core/gui/dialog/AboutDialog.cpp") # false positive
-    return white_list
+    return {
+        "ABOUT-NLS",  # false positive
+        "copyright.txt",  # copyright/license summary file
+        "scripts/compare_license.py",  # this very script
+        "CMakeLists.txt",  # false positive
+        "LICENSE",  # main license file
+        "rpm/fedora/xournalpp.spec",  # false positive
+        "windows-setup/xournalpp.nsi",  # false positive
+        "ui/about.glade",  # false positive
+        "src/exe/win32/xpp.rc.in",  # false positive
+        "mac-setup/Info.plist",  # false positive
+        "src/core/gui/dialog/AboutDialog.cpp",  # false positive
+    }
 
 # II: Add an entry to the whitelist if you added a file which has special
 # licensing/copyright but does not contain any of the substrings used to
@@ -123,45 +123,63 @@ def get_whitelist_not_listed():
 def get_whitelist_not_found():
     """Whitelist for files listed in copyright.txt but do not include
     the searched for substrings"""
-    white_list = set()
-    white_list.add("*")
-    white_list.add("debian/changelog")
-    white_list.add("debian/compat")
-    white_list.add("debian/control")
-    white_list.add("debian/docs")
-    white_list.add("debian/package_description")
-    white_list.add("debian/rules")
-    white_list.add("debian/source/format")
-    white_list.add("ui/pixmaps/application-x-xojpp.svg")
-    white_list.add("ui/pixmaps/application-x-xopp.svg")
-    white_list.add("ui/pixmaps/application-x-xopt.svg")
-    white_list.add("ui/pixmaps/com.github.xournalpp.xournalpp.png")
-    white_list.add("ui/pixmaps/com.github.xournalpp.xournalpp.svg")
-    white_list.add("ui/pixmaps/gnome-mime-application-x-xopp.svg")
-    white_list.add("ui/pixmaps/gnome-mime-application-x-xopt.svg")
-    white_list.add("ui/pixmaps/xopt.svg")
-    white_list.add("ui/iconsColor-dark/*")
-    white_list.add("ui/iconsColor-light/*")
-    white_list.add("ui/iconsLucide-dark/*")
-    white_list.add("ui/iconsLucide-light/*")
-    white_list.add("ui/iconsColor-dark/hicolor/scalable/actions/xopp-compass.svg")
-    white_list.add("ui/iconsColor-dark/hicolor/scalable/actions/xopp-setsquare.svg")
-    white_list.add("ui/iconsColor-light/hicolor/scalable/actions/xopp-Tselect-pdf-text-area.svg")
-    white_list.add("ui/iconsColor-light/hicolor/scalable/actions/xopp-Tselect-pdf-text-hd.svg")
-    white_list.add("ui/iconsLucide-dark/hicolor/scalable/actions/xopp-compass.svg")
-    white_list.add("ui/iconsLucide-dark/hicolor/scalable/actions/xopp-draw-spline.svg")
-    white_list.add("ui/iconsLucide-dark/hicolor/scalable/actions/xopp-floating-toolbox.svg")
-    white_list.add("ui/iconsLucide-dark/hicolor/scalable/actions/xopp-setsquare.svg")
-    white_list.add("ui/iconsLucide-light/hicolor/scalable/actions/xopp-compass.svg")
-    white_list.add("ui/iconsLucide-light/hicolor/scalable/actions/xopp-draw-spline.svg")
-    white_list.add("ui/iconsLucide-light/hicolor/scalable/actions/xopp-floating-toolbox.svg")
-    white_list.add("ui/iconsLucide-light/hicolor/scalable/actions/xopp-setsquare.svg")
-
-    return white_list
+    return {
+        "*",
+        "debian/changelog",
+        "debian/compat",
+        "debian/control",
+        "debian/docs",
+        "debian/package_description",
+        "debian/rules",
+        "debian/source/format",
+        "ui/pixmaps/application-x-xojpp.svg",
+        "ui/pixmaps/application-x-xopp.svg",
+        "ui/pixmaps/application-x-xopt.svg",
+        "ui/pixmaps/com.github.xournalpp.xournalpp.png",
+        "ui/pixmaps/com.github.xournalpp.xournalpp.svg",
+        "ui/pixmaps/gnome-mime-application-x-xopp.svg",
+        "ui/pixmaps/gnome-mime-application-x-xopt.svg",
+        "ui/pixmaps/xopt.svg",
+        "ui/iconsColor-dark/*",
+        "ui/iconsColor-light/*",
+        "ui/iconsLucide-dark/*",
+        "ui/iconsLucide-light/*",
+        "ui/iconsColor-dark/hicolor/scalable/actions/xopp-compass.svg",
+        "ui/iconsColor-dark/hicolor/scalable/actions/xopp-setsquare.svg",
+        "ui/iconsColor-light/hicolor/scalable/actions/xopp-Tselect-pdf-text-area.svg",
+        "ui/iconsColor-light/hicolor/scalable/actions/xopp-Tselect-pdf-text-hd.svg",
+        "ui/iconsLucide-dark/hicolor/scalable/actions/xopp-compass.svg",
+        "ui/iconsLucide-dark/hicolor/scalable/actions/xopp-draw-spline.svg",
+        "ui/iconsLucide-dark/hicolor/scalable/actions/xopp-floating-toolbox.svg",
+        "ui/iconsLucide-dark/hicolor/scalable/actions/xopp-setsquare.svg",
+        "ui/iconsLucide-light/hicolor/scalable/actions/xopp-compass.svg",
+        "ui/iconsLucide-light/hicolor/scalable/actions/xopp-draw-spline.svg",
+        "ui/iconsLucide-light/hicolor/scalable/actions/xopp-floating-toolbox.svg",
+        "ui/iconsLucide-light/hicolor/scalable/actions/xopp-setsquare.svg",
+    }
 
 # III: Update git commit hash to current commit once you checked
 # that the changes do not affect the licensing information in copyright.txt
 last_checked_git_commit_hash = "c00f7b74009716c488bd666fa8ba7587ea0fed2f"
+
+MSG_UPDATE_REQUIRED = "⚠️ Update required"
+MSG_RECHECK_REQUIRED = "⚠️ Recheck required"
+MSG_LICENSE_HEADER_REQUIRED = "⚠️ Adding license header required"
+MSG_SUCCESS = "🎉 Success"
+
+
+def _print_check_result(header: str, items: Set[str], success_msg: str) -> bool:
+    """Print check result and return True if items were found (problem detected)."""
+    if items:
+        print()
+        print(header)
+        for f in sorted(items):
+            print(" ", f)
+        return True
+    else:
+        print("- " + success_msg)
+        return False
+
 
 changed_files = get_changed_files_since(last_checked_git_commit_hash)
 
@@ -173,57 +191,48 @@ not_found = summary_files - scanned_files - get_whitelist_not_found()
 not_listed = scanned_files - summary_files - get_whitelist_not_listed()
 
 # Copyright could change with the same commit. Hence, it needs to be exluded.
-all_whitelisted = (get_whitelist_not_found() | get_whitelist_not_listed()) - set(["copyright.txt"])
+all_whitelisted = (get_whitelist_not_found() | get_whitelist_not_listed()) - {"copyright.txt"}
 # Files inside copyright.txt or mentioned in whitelist should be checked for
 # diffs affecting the license/copyright
 out_of_date = (all_whitelisted | summary_files) & changed_files
 
 missing_source_license = get_source_files_missing_license_of_header(scanned_files, get_all_files())
 
-print("Found License/Copyright both in copyright.txt and repo: ",len(found))
-if not_listed:
-    print()
-    print("No License/Copyright listed in copyright.txt (but found in repo):")
-    for f in sorted(not_listed):
-        print(" ", f)
-else:
-    print("- All automatically detected files listed or whitelisted")
+print("Found License/Copyright both in copyright.txt and repo: ", len(found))
 
+problem_detected = False
+problem_detected |= _print_check_result(
+    "No License/Copyright listed in copyright.txt (but found in repo):",
+    not_listed,
+    "All automatically detected files listed or whitelisted"
+)
+problem_detected |= _print_check_result(
+    "No License/Copyright found in repo (but listed in copyright.txt):",
+    not_found,
+    "All listed files automatically detected or whitelisted"
+)
+problem_detected |= _print_check_result(
+    "Following items are whitelisted or listed in copyright.txt but changed since last check:",
+    out_of_date,
+    "No listed file got changed since the last check."
+)
+problem_detected |= _print_check_result(
+    "Following `.cpp` files do NOT contain a license even though their accompanying `.h` file does.",
+    missing_source_license,
+    "All source files have proper license headers"
+)
 
-if not_found:
-    print()
-    print("No License/Copyright found in repo (but listed in copyright.txt):")
-    for f in sorted(not_found):
-        print(" ", f)
-else:
-    print("- All listed files automatically detected or whitelisted")
-
-
-if out_of_date:
-    print()
-    print("Following items are whitelisted or listed in copyright.txt but changed since last check:")
-    for f in sorted(out_of_date):
-        print(" ", f)
-else:
-    print("- No listed file got changed since the last check.")
-
-if missing_source_license:
-    print()
-    print("Following `.cpp` files do NOT contain a license even though their accompanying `.h` file does.")
-    for f in sorted(missing_source_license):
-        print(" ", f)
-
-if not_found or not_listed:
-    print("⚠️ Update required")
+if problem_detected:
+    print(MSG_UPDATE_REQUIRED)
     exit(1)
 
 if out_of_date:
-    "⚠️ Recheck required"
+    print(MSG_RECHECK_REQUIRED)
     exit(1)
 
 if missing_source_license:
-    "⚠️ Adding license header required"
+    print(MSG_LICENSE_HEADER_REQUIRED)
     exit(1)
 
-print("🎉 Success")
+print(MSG_SUCCESS)
 exit(0)
