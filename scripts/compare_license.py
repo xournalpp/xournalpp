@@ -20,8 +20,9 @@ Workflow:
  2. In case script exits with status 1 adapt copyright.txt or this script (see comments I, II, III in below code)
  3. Rerun script now it should exit with status 0
 
-Note: This script cannot automatically detect whether you added a file that should be licensed differently
-but does not indicate this in any way. Please refer to comment II in the code below and add it to the whitelist.
+# Known limitation: This script cannot automatically detect whether you added a file that
+# should be licensed differently but does not indicate this in any way. Please refer to
+# comment II in the code below and add it to the whitelist.
 """
 
 from typing import Set
