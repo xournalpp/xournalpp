@@ -8,6 +8,9 @@ import os.path
 # Pattern to extract string literals from C code (used by insertActions and insertValuesForEnum)
 C_STRING_PATTERN = r'"([^"]*)"'
 
+# Pattern to match C array/enum definitions
+C_ARRAY_START_PATTERN = re.compile(r'constexpr\s+const\s+char\*\s+\w+\[\]\s*=\s*{')
+
 # Output file handle (global for helper functions)
 f_out = None
 
@@ -229,8 +232,7 @@ def _extract_enum_content(file_name, name):
 
 
 def insertActions(file_name):
-    start_pattern = re.compile(r'constexpr\s+const\s+char\*\s+ACTION_NAMES\[\]\s*=\s*{')
-    strings = _extract_array_strings(file_name, start_pattern)
+    strings = _extract_array_strings(file_name, C_ARRAY_START_PATTERN)
     for s in strings:
         print(f"---| {s}", file=f_out)
 
