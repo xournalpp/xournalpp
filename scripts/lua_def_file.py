@@ -4,6 +4,10 @@ import re
 import sys
 import os.path
 
+# Constants for regex patterns (compiled once)
+# Pattern to extract string literals from C code (used by insertActions and insertValuesForEnum)
+C_STRING_PATTERN = r'"([^"]*)"'
+
 # def gather_functions(file_name:str):
 def gather_functions(file_name):
     '''
@@ -151,6 +155,15 @@ def fmt_luaLS_def(file, function_name, comments = [], params = []):
         print("\n".join(comments), file=file)
     print(f"function app.{function_name}({', '.join(params)}) end\n", file=file)
 
+
+def _extract_c_string(line):
+    """Extract a C string literal from a line of C code."""
+    match = re.search(C_STRING_PATTERN, line)
+    if match:
+        return match.group(1)
+    return None
+
+
 def insertActions(file_name):
     start_pattern = re.compile(r'constexpr\s+const\s+char\*\s+ACTION_NAMES\[\]\s*=\s*{')
 
@@ -165,10 +178,15 @@ def insertActions(file_name):
             else:
                 if '}' in line:
                     content = line[:line.find('}')]
-                    print(f"---| {re.search(r'(".*?")', content).group(1)}", file=f_out)
+                    s = _extract_c_string(content)
+                    if s:
+                        print(f"---| {s}", file=f_out)
                     break
                 else:
-                    print(f"---| {re.search(r'(".*?")', line).group(1)}", file=f_out)
+                    s = _extract_c_string(line)
+                    if s:
+                        print(f"---| {s}", file=f_out)
+
 
 def insertValuesForEnum(name, prefix, file_name):
     with open(file_name, 'r') as f:
@@ -187,8 +205,7 @@ def insertValuesForEnum(name, prefix, file_name):
         inside = match.group(1)
 
         # Find all string literals inside the braces
-        string_pattern = r'"([^"]*)"'
-        matches = re.findall(string_pattern, inside)
+        matches = re.findall(C_STRING_PATTERN, inside)
 
         count = 0
         for match in matches:
