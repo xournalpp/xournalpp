@@ -16,6 +16,11 @@ C_ARRAY_START_PATTERN = re.compile(r'constexpr\s+const\s+char\*\s+\w+\[\]\s*=\s*
 f_out = None
 
 
+def _emit(line):
+    """Helper to print a line to the output file."""
+    print(line, file=f_out)
+
+
 # def gather_functions(file_name:str):
 def gather_functions(file_name):
     '''
@@ -38,7 +43,7 @@ def gather_functions(file_name):
 
     with open(file_name, 'r') as file:
         for line in file:
-            # search for starting pattern (only if not already capturing anyhow)
+            # search for starting pattern (only if not capturing anyhow)
             if not capture and start_pattern.match(line):
                 capture = True
                 # make line fit for further detection of an API function
@@ -235,7 +240,7 @@ def _extract_enum_content(file_name, name):
 def insertActions(file_name):
     strings = _extract_array_strings(file_name, C_ARRAY_START_PATTERN)
     for s in strings:
-        print(f"---| {s}", file=f_out)
+        _emit(f"---| {s}")
 
 
 def insertValuesForEnum(name, prefix, file_name):
@@ -246,7 +251,7 @@ def insertValuesForEnum(name, prefix, file_name):
 
     count = 0
     for match in matches:
-        print(f"    {prefix}_{match} = {count},", file=f_out)
+        _emit(f"    {prefix}_{match} = {count},")
         count += 1
 
 
