@@ -4,9 +4,10 @@ import re
 import sys
 import os.path
 
-# Constants for regex patterns (compiled once)
+# Constants for regex patterns (compiled once for efficiency)
 # Pattern to extract string literals from C code (used by insertActions and insertValuesForEnum)
 C_STRING_PATTERN = r'"([^"]*)"'
+C_STRING_COMPILED = re.compile(C_STRING_PATTERN)
 
 # Pattern to match C array/enum definitions
 C_ARRAY_START_PATTERN = re.compile(r'constexpr\s+const\s+char\*\s+\w+\[\]\s*=\s*{')
@@ -165,7 +166,7 @@ def fmt_luaLS_def(file, function_name, comments = [], params = []):
 
 def _extract_c_string(line):
     """Extract a C string literal from a line of C code."""
-    match = re.search(C_STRING_PATTERN, line)
+    match = C_STRING_COMPILED.search(line)
     if match:
         return match.group(1)
     return None
@@ -241,7 +242,7 @@ def insertValuesForEnum(name, prefix, file_name):
     inside = _extract_enum_content(file_name, name)
 
     # Find all string literals inside the braces
-    matches = re.findall(C_STRING_PATTERN, inside)
+    matches = C_STRING_COMPILED.findall(inside)
 
     count = 0
     for match in matches:
