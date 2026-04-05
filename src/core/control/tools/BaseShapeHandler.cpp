@@ -129,6 +129,7 @@ void BaseShapeHandler::onButtonPressEvent(const PositionInputData& pos, double z
     this->currPoint = this->startPoint;
 
     this->stroke = createStroke(this->control);
+    stroke->scaleLineStyleDashesToWidth();
 }
 
 void BaseShapeHandler::onButtonDoublePressEvent(const PositionInputData&, double) {

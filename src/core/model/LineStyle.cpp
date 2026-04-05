@@ -36,3 +36,21 @@ auto LineStyle::getDashes() const -> const std::vector<double>& { return dashes;
 void LineStyle::setDashes(std::vector<double>&& dashes) { this->dashes = std::move(dashes); }
 
 auto LineStyle::hasDashes() const -> bool { return !dashes.empty(); }
+
+std::vector<double> LineStyle::getDashesScaledToStrokeWidth(const double strokeWidth) const {
+    std::vector<double> scaledDashes;
+    scaledDashes.reserve(dashes.size());
+
+    for (double dash: dashes) {
+        dash *= strokeWidth;
+        scaledDashes.push_back(dash);
+    }
+
+    return scaledDashes;
+}
+
+void LineStyle::scaleDashesToStrokeWidth(const double strokeWidth) {
+    for (double& dash: dashes) {
+        dash *= strokeWidth;
+    }
+}
