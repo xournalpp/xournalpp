@@ -168,15 +168,18 @@ def _extract_c_string(line):
     return None
 
 
-def _print_action_string(s):
-    """Print an action string to the output file if non-empty."""
-    if s:
-        print(f"---| {s}", file=f_out)
+def _extract_array_strings(file_name, start_pattern):
+    """
+    Extract string literals from a C array definition in a file.
 
+        Parameters:
+            file_name (str): Path to the file to process
+            start_pattern (re.Pattern): Compiled regex pattern to find the start of the array
 
-def insertActions(file_name):
-    start_pattern = re.compile(r'constexpr\s+const\s+char\*\s+ACTION_NAMES\[\]\s*=\s*{')
-
+        Returns:
+            list[str]: List of extracted string literals
+    """
+    strings = []
     with open(file_name, 'r') as file:
         inside_array = False
         for line in file:
@@ -188,10 +191,15 @@ def insertActions(file_name):
             else:
                 if '}' in line:
                     content = line[:line.find('}')]
-                    _print_action_string(_extract_c_string(content))
+                    s = _extract_c_string(content)
+                    if s:
+                        strings.append(s)
                     break
                 else:
-                    _print_action_string(_extract_c_string(line))
+                    s = _extract_c_string(line)
+                    if s:
+                        strings.append(s)
+    return strings
 
 
 def _extract_enum_content(file_name, name):
@@ -218,6 +226,13 @@ def _extract_enum_content(file_name, name):
             raise Exception(f"Enum {name} not found")
 
         return match.group(1)
+
+
+def insertActions(file_name):
+    start_pattern = re.compile(r'constexpr\s+const\s+char\*\s+ACTION_NAMES\[\]\s*=\s*{')
+    strings = _extract_array_strings(file_name, start_pattern)
+    for s in strings:
+        print(f"---| {s}", file=f_out)
 
 
 def insertValuesForEnum(name, prefix, file_name):
