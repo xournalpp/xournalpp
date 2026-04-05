@@ -168,22 +168,6 @@ def _extract_c_string(line):
     return None
 
 
-# Common helper to process strings in a file matched by C_STRING_PATTERN
-def _process_file_strings(file_name, callback):
-    """
-    Read a file and invoke callback for each C string literal found.
-
-        Parameters:
-            file_name (str): Path to the file to process
-            callback (callable): Function to call with each matched string
-    """
-    with open(file_name, 'r') as file:
-        for line in file:
-            s = _extract_c_string(line)
-            if s:
-                callback(s)
-
-
 def _print_action_string(s):
     """Print an action string to the output file if non-empty."""
     if s:
@@ -210,7 +194,17 @@ def insertActions(file_name):
                     _print_action_string(_extract_c_string(line))
 
 
-def insertValuesForEnum(name, prefix, file_name):
+def _extract_enum_content(file_name, name):
+    """
+    Extract the content inside braces for a named enum/array in C code.
+
+        Parameters:
+            file_name (str): Path to the file to process
+            name (str): The name of the enum/array to find
+
+        Returns:
+            str: The content inside the braces, or None if not found
+    """
     with open(file_name, 'r') as f:
         content = f.read()
 
@@ -221,18 +215,21 @@ def insertValuesForEnum(name, prefix, file_name):
         match = re.search(pattern, content, re.MULTILINE | re.DOTALL)
 
         if not match:
-            raise Exception (f"Enum {name} not found")
+            raise Exception(f"Enum {name} not found")
 
-        # Extract the inside of the braces
-        inside = match.group(1)
+        return match.group(1)
 
-        # Find all string literals inside the braces
-        matches = re.findall(C_STRING_PATTERN, inside)
 
-        count = 0
-        for match in matches:
-            print(f"    {prefix}_{match} = {count},", file=f_out)
-            count += 1
+def insertValuesForEnum(name, prefix, file_name):
+    inside = _extract_enum_content(file_name, name)
+
+    # Find all string literals inside the braces
+    matches = re.findall(C_STRING_PATTERN, inside)
+
+    count = 0
+    for match in matches:
+        print(f"    {prefix}_{match} = {count},", file=f_out)
+        count += 1
 
 
 
