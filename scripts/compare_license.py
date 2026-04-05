@@ -22,8 +22,7 @@ Workflow:
 
 # Known limitation: This script cannot automatically detect whether you added a file that
 # should be licensed differently but does not indicate this in any way. Please refer to
-# comment II in the code below and add it to the whitelist.
-# NOTE: Manual review required - see get_whitelist_not_found() and comment II below.
+# comment II (see get_whitelist_not_found) and add it to the whitelist if needed.
 """
 
 from typing import Set
