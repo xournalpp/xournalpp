@@ -8,6 +8,10 @@ import os.path
 # Pattern to extract string literals from C code (used by insertActions and insertValuesForEnum)
 C_STRING_PATTERN = r'"([^"]*)"'
 
+# Output file handle (global for helper functions)
+f_out = None
+
+
 # def gather_functions(file_name:str):
 def gather_functions(file_name):
     '''
@@ -164,6 +168,12 @@ def _extract_c_string(line):
     return None
 
 
+def _print_action_string(s):
+    """Print an action string to the output file if non-empty."""
+    if s:
+        print(f"---| {s}", file=f_out)
+
+
 def insertActions(file_name):
     start_pattern = re.compile(r'constexpr\s+const\s+char\*\s+ACTION_NAMES\[\]\s*=\s*{')
 
@@ -178,14 +188,10 @@ def insertActions(file_name):
             else:
                 if '}' in line:
                     content = line[:line.find('}')]
-                    s = _extract_c_string(content)
-                    if s:
-                        print(f"---| {s}", file=f_out)
+                    _print_action_string(_extract_c_string(content))
                     break
                 else:
-                    s = _extract_c_string(line)
-                    if s:
-                        print(f"---| {s}", file=f_out)
+                    _print_action_string(_extract_c_string(line))
 
 
 def insertValuesForEnum(name, prefix, file_name):
