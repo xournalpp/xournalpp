@@ -290,6 +290,12 @@ public:
 
     void copySelection();
 
+    /**
+     * Resize the current selection if it contains exactly one image element.
+     * The image keeps its top-left corner fixed and an undo action is recorded.
+     */
+    bool resizeSingleSelectedImage(double width, double height);
+
 public:
     XojPageView* getView();
 

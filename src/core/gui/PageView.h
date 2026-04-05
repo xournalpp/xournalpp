@@ -45,6 +45,7 @@ class TextEditor;
 class VerticalToolHandler;
 class XournalView;
 class Element;
+class EditSelection;
 class PositionInputData;
 class Range;
 class TexImage;
@@ -169,6 +170,8 @@ public:  // event handler
      * if no input sequence is actively running and a stylus button was pressed
      */
     bool onButtonClickEvent(const PositionInputData& pos);
+
+    bool showSelectedImageContextMenu(EditSelection* selection, const PositionInputData& pos);
 
     /**
      * This method actually repaints the XojPageView, triggering

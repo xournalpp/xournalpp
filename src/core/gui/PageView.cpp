@@ -48,6 +48,7 @@
 #include "gui/MainWindow.h"                         // for MainWindow
 #include "gui/PdfFloatingToolbox.h"                 // for PdfFloatingToolbox
 #include "gui/SearchBar.h"                          // for SearchBar
+#include "gui/dialog/ImageElementPropertiesDialog.h"
 #include "gui/inputdevices/PositionInputData.h"     // for PositionInputData
 #include "gui/scroll/ScrollHandling.h"              // for ScrollHandling
 #include "model/Document.h"                         // for Document
@@ -72,8 +73,10 @@
 #include "util/Range.h"                             // for Range
 #include "util/Rectangle.h"                         // for Rectangle
 #include "util/Util.h"                              // for npos
+#include "util/PopupWindowWrapper.h"
 #include "util/XojMsgBox.h"                         // for XojMsgBox
 #include "util/gtk4_helper.h"                       // for gtk_box_append
+#include "util/glib_casts.h"
 #include "util/i18n.h"                              // for _F, FC, FS, _
 #include "util/raii/CLibrariesSPtr.h"               // for adopt
 #include "util/safe_casts.h"                        // for ceil_cast, floor_cast, round_cast
@@ -95,6 +98,19 @@ class OverlayBase;
 
 using std::string;
 using xoj::util::Rectangle;
+
+static auto getSingleSelectedImage(EditSelection* selection) -> const Element* {
+    if (!selection) {
+        return nullptr;
+    }
+
+    auto elements = selection->getElementsView();
+    if (elements.size() != 1 || elements.front()->getType() != ELEMENT_IMAGE) {
+        return nullptr;
+    }
+
+    return elements.front();
+}
 
 XojPageView::XojPageView(XournalView* xournal, const PageRef& page):
         page(page),
@@ -525,6 +541,65 @@ auto XojPageView::onButtonTriplePressEvent(const PositionInputData& pos) -> bool
             selection->currentPos(x, y, pdfToolbox->selectionStyle);
         }
     }
+    return true;
+}
+
+bool XojPageView::showSelectedImageContextMenu(EditSelection* selection, const PositionInputData& pos) {
+    if (!getSingleSelectedImage(selection)) {
+        return false;
+    }
+    GtkWidget* popover = gtk_popover_new(this->getXournal()->getWidget());
+    GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
+    GtkWidget* propertiesButton = gtk_button_new_with_label(_("Properties"));
+    GtkWidget* cloneButton = gtk_button_new_with_label(_("Clone"));
+    gtk_popover_set_child(GTK_POPOVER(popover), box);
+    gtk_box_append(GTK_BOX(box), propertiesButton);
+    gtk_box_append(GTK_BOX(box), cloneButton);
+
+    auto p = xoj::util::Point{pos.x, pos.y} - this->xournal->getScrollHandling()->getPosition();
+    auto q = xoj::util::Point{round_cast<int>(p.x), round_cast<int>(p.y)} + this->getPixelPosition();
+    GdkRectangle rect{q.x, q.y, 1, 1};
+    gtk_popover_set_pointing_to(GTK_POPOVER(popover), &rect);
+    gtk_popover_set_constrain_to(GTK_POPOVER(popover), GTK_POPOVER_CONSTRAINT_WINDOW);
+
+    using State = std::tuple<XojPageView*, EditSelection*, GtkWidget*>;
+    g_signal_connect_data(
+            cloneButton, "clicked", G_CALLBACK(+[](GtkButton*, gpointer data) {
+                auto* state = static_cast<State*>(data);
+                XojPageView* self = std::get<0>(*state);
+                EditSelection* currentSelection = std::get<1>(*state);
+                GtkWidget* currentPopover = std::get<2>(*state);
+                currentSelection->copySelection();
+                self->getXournal()->repaintSelection();
+                gtk_popover_popdown(GTK_POPOVER(currentPopover));
+            }),
+            new State(this, selection, popover), xoj::util::closure_notify_cb<State>, GConnectFlags(0));
+
+    g_signal_connect_data(
+            propertiesButton, "clicked", G_CALLBACK(+[](GtkButton*, gpointer data) {
+                auto* state = static_cast<State*>(data);
+                XojPageView* self = std::get<0>(*state);
+                EditSelection* currentSelection = std::get<1>(*state);
+                GtkWidget* currentPopover = std::get<2>(*state);
+                const Element* currentImage = getSingleSelectedImage(currentSelection);
+                gtk_popover_popdown(GTK_POPOVER(currentPopover));
+                if (!currentImage) {
+                    return;
+                }
+
+                auto popup = xoj::popup::PopupWindowWrapper<xoj::popup::ImageElementPropertiesDialog>(
+                        self->getXournal()->getControl()->getGladeSearchPath(),
+                        self->getXournal()->getControl()->getSettings(), currentSelection->getSnappedBounds().width,
+                        currentSelection->getSnappedBounds().height,
+                        [currentSelection](double width, double height) {
+                            currentSelection->resizeSingleSelectedImage(width, height);
+                        });
+                popup.show(self->getXournal()->getControl()->getGtkWindow());
+            }),
+            new State(this, selection, popover), xoj::util::closure_notify_cb<State>, GConnectFlags(0));
+
+    gtk_widget_show_all(popover);
+    gtk_popover_popup(GTK_POPOVER(popover));
     return true;
 }
 

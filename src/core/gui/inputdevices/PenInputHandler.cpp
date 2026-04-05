@@ -82,6 +82,7 @@ void PenInputHandler::handleScrollEvent(InputEvent const& event) {
 
 auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     this->inputContext->focusWidget();
+    this->cancelButtonPressLatch = false;
 
     this->lastActionStartTimeStamp = event.timestamp;
     this->sequenceStartPosition = event.absolute;
@@ -101,27 +102,7 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
     ToolType toolType = toolHandler->getToolType();
 
-    //
-    if (toolType != TOOL_IMAGE) {
-        this->inputRunning = true;
-    } else {
-        this->deviceClassPressed = false;
-    }
-
-    this->penInWidget = true;
-
     GtkXournal* xournal = this->inputContext->getXournal();
-
-    XournalppCursor* cursor = xournal->view->getCursor();
-    cursor->setMouseDown(true);
-
-
-    // Save the starting offset when hand-tool is selected to get a reference for the scroll-offset
-    if (toolType == TOOL_HAND) {
-        this->scrollStartPosition = event.absolute;
-    }
-
-    this->sequenceStartPage = currentPage;
 
     // hand tool don't change the selection, so you can scroll e.g. with your touchscreen without remove the selection
     bool changeSelection = xournal->selection && toolHandler->getToolType() != TOOL_HAND;
@@ -145,10 +126,32 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
         CursorSelectionType selType =
                 selection->getSelectionTypeForPos(selectionPos.x, selectionPos.y, xournal->view->getZoom());
         if (selType) {
-
-            if (selType == CURSOR_SELECTION_MOVE && modifier3) {
+            if (selType == CURSOR_SELECTION_MOVE && event.button == 3) {
+                if (view->showSelectedImageContextMenu(selection, selectionPos)) {
+                    this->deviceClassPressed = false;
+                    this->modifier3 = false;
+                    this->cancelButtonPressLatch = true;
+                    return true;
+                }
                 selection->copySelection();
             }
+
+            if (toolType != TOOL_IMAGE) {
+                this->inputRunning = true;
+            } else {
+                this->deviceClassPressed = false;
+            }
+
+            this->penInWidget = true;
+
+            XournalppCursor* cursor = xournal->view->getCursor();
+            cursor->setMouseDown(true);
+
+            if (toolType == TOOL_HAND) {
+                this->scrollStartPosition = event.absolute;
+            }
+
+            this->sequenceStartPage = currentPage;
 
             xournal->selection->mouseDown(selType, selectionPos.x, selectionPos.y);
             return true;
@@ -161,6 +164,25 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
             return true;
         }
     }
+
+    //
+    if (toolType != TOOL_IMAGE) {
+        this->inputRunning = true;
+    } else {
+        this->deviceClassPressed = false;
+    }
+
+    this->penInWidget = true;
+
+    XournalppCursor* cursor = xournal->view->getCursor();
+    cursor->setMouseDown(true);
+
+    // Save the starting offset when hand-tool is selected to get a reference for the scroll-offset
+    if (toolType == TOOL_HAND) {
+        this->scrollStartPosition = event.absolute;
+    }
+
+    this->sequenceStartPage = currentPage;
 
     // Forward event to page
     if (currentPage) {
