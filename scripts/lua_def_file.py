@@ -168,6 +168,22 @@ def _extract_c_string(line):
     return None
 
 
+# Common helper to process strings in a file matched by C_STRING_PATTERN
+def _process_file_strings(file_name, callback):
+    """
+    Read a file and invoke callback for each C string literal found.
+
+        Parameters:
+            file_name (str): Path to the file to process
+            callback (callable): Function to call with each matched string
+    """
+    with open(file_name, 'r') as file:
+        for line in file:
+            s = _extract_c_string(line)
+            if s:
+                callback(s)
+
+
 def _print_action_string(s):
     """Print an action string to the output file if non-empty."""
     if s:
