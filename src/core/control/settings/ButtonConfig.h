@@ -38,7 +38,7 @@ public:
      * @return true if some action was selected
      * @return false if no action was selected
      */
-    bool applyNoChangeSettings(ToolHandler* toolHandler, Button button);
+    bool applyNoChangeSettings(ToolHandler* toolHandler, Button button) const;
 
     /**
      * @brief Initialize Button tool
@@ -48,7 +48,7 @@ public:
      * @param toolHandler
      * @param button
      */
-    void initButton(ToolHandler* toolHandler, Button button);
+    void initButton(ToolHandler* toolHandler, Button button) const;
 
     /**
      * @brief Apply the Config to the toolbar Tool
@@ -56,12 +56,12 @@ public:
      *
      * @param toolHandler
      */
-    void applyConfigToToolbarTool(ToolHandler* toolHandler);
+    void applyConfigToToolbarTool(ToolHandler* toolHandler) const;
 
 
-    ToolType getAction();
+    ToolType getAction() const;
     bool getDisableDrawing() const;
-    DrawingType getDrawingType();
+    DrawingType getDrawingType() const;
 
 private:
     ToolType action;
