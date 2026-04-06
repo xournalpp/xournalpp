@@ -333,6 +333,7 @@ void SettingsDialog::showStabilizerPreprocessorOptions(StrokeStabilizer::Preproc
 void SettingsDialog::load() {
     loadCheckbox("cbSettingPresureSensitivity", settings->isPressureSensitivity());
     loadCheckbox("cbEnableZoomGestures", settings->isZoomGesturesEnabled());
+    loadCheckbox("cbForceZoomToFitOnLoad", settings->getForceZoomToFitOnLoad());
     loadCheckbox("cbShowSidebarRight", settings->isSidebarOnRight());
     loadCheckbox("cbShowScrollbarLeft", settings->isScrollbarOnLeft());
     loadCheckbox("cbAutoloadMostRecent", settings->isAutoloadMostRecent());
@@ -444,9 +445,6 @@ void SettingsDialog::load() {
 
     GtkWidget* spZoomStepScroll = builder.get("spZoomStepScroll");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spZoomStepScroll), settings->getZoomStepScroll());
-
-    GtkWidget* cbForceZoomToFitOnLoad = builder.get("cbForceZoomToFitOnLoad");
-    gtk_check_button_set_active(GTK_CHECK_BUTTON(cbForceZoomToFitOnLoad), settings->getForceZoomToFitOnLoad());
 
     GtkWidget* spAddHorizontalSpaceRight = builder.get("spAddHorizontalSpaceRight");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAddHorizontalSpaceRight), settings->getAddHorizontalSpaceAmountRight());
