@@ -186,7 +186,7 @@ public:
      * Whether to force zoom to fit on loading document
      */
     void setForceZoomToFitOnLoad(bool force);
-    bool getForceZoomToFitOnLoad();
+    bool getForceZoomToFitOnLoad() const;
 
 
     /**
