@@ -310,6 +310,15 @@ void ButtonConfigGui::enableDisableTools() {
             gtk_widget_set_visible(cbStrokeType, false);
             break;
 
+        case TOOL_LASER_POINTER_PEN:
+        case TOOL_LASER_POINTER_HIGHLIGHTER:
+            gtk_widget_set_visible(cbThickness, true);
+            gtk_widget_set_visible(colorButton, true);
+            gtk_widget_set_visible(cbDrawingType, false);
+            gtk_widget_set_visible(cbEraserType, false);
+            gtk_widget_set_visible(cbStrokeType, false);
+            break;
+
         case TOOL_NONE:
         case TOOL_IMAGE:
             // case TOOL_DRAW_RECT:
@@ -327,6 +336,7 @@ void ButtonConfigGui::enableDisableTools() {
             gtk_widget_set_visible(cbStrokeType, false);
             break;
         default:
+            g_warning("Unhandled tool in ButtonConfigGui");
             break;
     }
 }
