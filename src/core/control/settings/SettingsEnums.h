@@ -24,6 +24,8 @@ enum Button {
     BUTTON_MOUSE_LEFT,
     BUTTON_MOUSE_MIDDLE,
     BUTTON_MOUSE_RIGHT,
+    BUTTON_MOUSE_4,
+    BUTTON_MOUSE_5,
     BUTTON_TOUCH,
     BUTTON_DEFAULT,
     BUTTON_STYLUS_ONE,
@@ -118,6 +120,10 @@ constexpr auto buttonToString(Button button) -> const char* {
             return "middle";
         case BUTTON_MOUSE_RIGHT:
             return "right";
+        case BUTTON_MOUSE_4:
+            return "mouse4";
+        case BUTTON_MOUSE_5:
+            return "mouse5";
         case BUTTON_TOUCH:
             return "touch";
         case BUTTON_DEFAULT:

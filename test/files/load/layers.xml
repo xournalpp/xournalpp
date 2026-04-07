@@ -1,0 +1,17 @@
+<?xml version="1.0" standalone="no"?>
+<xournal creator="xournalpp 1.2.7+dev" fileversion="4">
+<title>Xournal++ document - see https://xournalpp.github.io/</title>
+<preview>iVBORw0KGgoAAAANSUhEUgAAAGMAAACACAIAAACQiUDuAAAABmJLR0QA/wD/AP+gvaeTAAAB2UlEQVR4nO3ZQUrDUBSF4Zv2NRIdOHGSJYhuJcvOSHEbmUjASaG2NO7A+2MrRt7/je8gHHoOD22WZYnvve/j4Ta5qcDmrz/g3zApyqQok6JMijIpyqQok6JMijIpyqSo8nFILprPWLKbGpT7m+ykjUhvKmD7KJOi3CnKnaJsH2VSlDtF/cpOTdPU9/1PP2mlGv83A7lTlDtF+Z6ibB9lUpQ7RblTlO2jTIpypyh3irJ9lElR7hR1zZ0ax3Ge52EYLv6qNfLvU5Q7RblTlO8pyvZRto+yfZTto0yKcqcod4qyfZRJUVfeqbfXl67rHp+eL/ysFfJvCZTto0yK8j1F+Z6ibB9lUpQ7RblTlO2jTIpypyh3irJ9lElR7hTlTlG2jzIpyp2i3CnK9lFlf0wummMs2U0Nyi79VW385UVElN02O9lGpDcV8NdC+UqgfCVQto8yKcqdotwpyvZRJkW5U5Q7Rdk+yqQod4pypyjbR5kU5U5R7hRl+yiTotwpyp2ibB9lUpQ7RblTlO2jyumcnZwj0psKlMMpuWhOsWQ3NSh3bXbSRqQ3FXCnKF8JlK8EyvZRJkW5U5Q7Rdk+yqQod4pypyjbR5kUZVKUSVEmRZkUZVKUSVEmRX0Bbk2xQHs35FIAAAAASUVORK5CYII=</preview>
+<page width="612" height="792">
+<background type="solid" color="#ffffffff" style="lined"/>
+<layer>
+<text font="Sans" size="12" x="171.75" y="122.25" color="#000000ff">l1</text>
+</layer>
+<layer name="Named layer">
+<text font="Sans" size="12" x="156" y="223.5" color="#000000ff">l2</text>
+</layer>
+<layer>
+<text font="Sans" size="12" x="162" y="309.75" color="#000000ff">l3</text>
+</layer>
+</page>
+</xournal>

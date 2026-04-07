@@ -29,10 +29,12 @@ protected:
      */
     bool deviceClassPressed = false;
     /**
-     * modifier variables storing whether button 2 and 3 are pressed
+     * modifier variables storing whether button 2, 3, 4, and 5 are pressed
      */
     bool modifier2 = false;
     bool modifier3 = false;
+    bool modifier4 = false;
+    bool modifier5 = false;
 
     /**
      * Reference to the last event

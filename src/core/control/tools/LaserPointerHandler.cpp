@@ -29,7 +29,8 @@ LaserPointerHandler::LaserPointerHandler(XojPageView* pageView, Control* control
         ctrl(control),
         page(page),
         pageView(pageView),
-        fadeoutStartDelay(control->getSettings()->getLaserPointerFadeOutTime()) {}
+        fadeoutStartDelay(control->getSettings()->getLaserPointerFadeOutTime()),
+        hasFinishedStrokes(false) {}
 
 LaserPointerHandler::~LaserPointerHandler() = default;
 
@@ -54,6 +55,7 @@ void LaserPointerHandler::onButtonReleaseEvent(const PositionInputData& pos, dou
     if (!strokehandler) {
         return;  // This could happen if the tool changed between button press and release
     }
+    this->hasFinishedStrokes = true;
     this->strokehandler->finalizeStroke(pos.pressure);
     this->viewPool->dispatch(xoj::view::LaserPointerView::FINISH_STROKE_REQUEST,
                              Range(this->strokehandler->getStroke()->boundingRect()));
@@ -72,8 +74,10 @@ void LaserPointerHandler::onSequenceCancelEvent() {
         Range rg(s->getStroke()->boundingRect());
         this->viewPool->dispatch(xoj::view::LaserPointerView::INPUT_CANCELLATION_REQUEST, rg);
     }
-    this->fadeoutTimer =
-            g_timeout_add(this->fadeoutStartDelay, xoj::util::wrap_for_once_v<triggerFadeoutCallback>, this);
+    if (this->hasFinishedStrokes) {
+        this->fadeoutTimer =
+                g_timeout_add(this->fadeoutStartDelay, xoj::util::wrap_for_once_v<triggerFadeoutCallback>, this);
+    }
 }
 
 void LaserPointerHandler::triggerFadeoutCallback(LaserPointerHandler* self) {

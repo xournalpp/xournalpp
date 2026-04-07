@@ -46,7 +46,7 @@ private:
     xoj::util::WidgetSPtr drawingArea;
 
     /// Indicators for button status
-    std::array<xoj::util::WidgetSPtr, 4> mouseIndicators;   ///< 0 = in use, 1 = left, 2 = middle, 3 = right
+    std::array<xoj::util::WidgetSPtr, 6> mouseIndicators;   ///< 0=in-use, 1=left, 2=middle, 3=right, 4=4th, 5=5th
     std::array<xoj::util::WidgetSPtr, 4> stylusIndicators;  ///< 0 = in use, 1 = tip, 2 = button-1, 3 = button-2
     std::array<xoj::util::WidgetSPtr, 2> eraserIndicators;  ///< 0 = in use, 1 = tip
     std::array<xoj::util::WidgetSPtr, 5> touchIndicators;

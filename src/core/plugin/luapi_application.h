@@ -274,14 +274,11 @@ static int applib_fileDialogSave(lua_State* L) {
 
     lua_settop(L, 2);  // discard extra arguments
     const char* luaCallback = luaL_checkstring(L, 1);
-    const char* filename = luaL_optstring(L, 2, _("Untitled"));
-    if (auto s = std::string(filename);
-        s.find("/") == std::string::npos &&
-        s.find("\\") == std::string::npos) {  // relative path (contains no slashes and backslashes)
-        filename = ("./" + s).c_str();
-    }
-    fs::path suggestedPath{filename};
+    fs::path suggestedPath{luaL_optstring(L, 2, _("Untitled"))};
 
+    if (!suggestedPath.has_parent_path()) {
+        suggestedPath = "." / suggestedPath;
+    }
 
     auto pathValidation = [](fs::path& p, const char* filterName) { return true; };
 
@@ -2613,17 +2610,17 @@ static int applib_scrollToPage(lua_State* L) {
 }
 
 /**
- * Scrolls to the position on the selected page specified relatively (by default) or absolutely
+ * Scrolls to the position relatively (by default) or absolutely (whole layout)
  *
  * @param x number
  * @param y number
  * @param relative boolean
  *
  * Example 1: app.scrollToPos(20,10)
- * scrolls 20pt right and 10pt down (relative mode)
+ * scrolls 20 pixel right and 10 pixel down from current position (relative mode)
  *
  * Example 2: app.scrollToPos(200, 50, false)
- * scrolls to page position 200pt right and 50pt down from the left page corner  (absolute mode)
+ * scrolls to absolute pixel coordinates (200, 50) from top left corner of the layout (absolute mode)
  **/
 static int applib_scrollToPos(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
@@ -2644,6 +2641,48 @@ static int applib_scrollToPos(lua_State* L) {
     }
 
     return 0;
+}
+
+/**
+ * Obtains the current absolute scroll position (position on the whole layout) and width and height of the currently
+ * visible window, measured in pixels.
+ *
+ * @return {x:number, y:number, width:number, height:number}
+ *
+ * Example: local scrollPos = app.getScrollPos()
+ *
+ * return value:
+ * {
+ *     ["x"] = number,
+ *     ["y"] = number,
+ *     ["width"] = number,
+ *     ["height"] = number,
+ * }
+ **/
+static int applib_getScrollPos(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    auto rect = control->getWindow()->getLayout()->getVisibleRect();
+
+    // create table for current image
+    lua_newtable(L);
+
+    // "x": number
+    lua_pushnumber(L, rect.x);
+    lua_setfield(L, -2, "x");
+
+    // "y": number
+    lua_pushnumber(L, rect.y);
+    lua_setfield(L, -2, "y");
+
+    // "width": number
+    lua_pushnumber(L, rect.width);
+    lua_setfield(L, -2, "width");
+
+    // "height": number
+    lua_pushnumber(L, rect.height);
+    lua_setfield(L, -2, "height");
+    return 1;
 }
 
 /**
@@ -3821,6 +3860,7 @@ static const luaL_Reg applib[] = {
         {"getDocumentStructure", applib_getDocumentStructure},
         {"scrollToPage", applib_scrollToPage},
         {"scrollToPos", applib_scrollToPos},
+        {"getScrollPos", applib_getScrollPos},
         {"setCurrentPage", applib_setCurrentPage},
         {"setPageSize", applib_setPageSize},
         {"setCurrentLayer", applib_setCurrentLayer},
