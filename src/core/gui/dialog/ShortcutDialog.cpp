@@ -152,28 +152,7 @@ void ShortcutDialog::initShortcutList() {
         dialog->onShortcutEditCancelled(path);
     }), this);
     
-    // Use cell data func for red conflict indicator
     gtk_tree_view_insert_column_with_attributes(shortcutView, -1, _("Current"), accelRenderer, "text", 3, nullptr);
-    gtk_tree_view_column_set_cell_data_func(gtk_tree_view_get_column(shortcutView, 2), accelRenderer,
-        +[](GtkTreeViewColumn*, GtkCellRenderer* renderer, GtkTreeModel* model, GtkTreeIter* iter, gpointer) {
-            gchar* text = nullptr;
-            gtk_tree_model_get(model, iter, 3, &text, -1);
-            if (text) {
-                std::string str(text);
-                g_free(text);
-                // Strip any existing "(conflict)" before re-adding
-                size_t pos = str.find(" (conflict)");
-                if (pos != std::string::npos) {
-                    str = str.substr(0, pos);
-                }
-                if (str.find(" (conflict)") == std::string::npos && str != "(none)") {
-                    std::string marked = "<span foreground=\"red\">" + str + " (conflict)</span>";
-                    g_object_set(renderer, "markup", marked.c_str(), nullptr);
-                } else {
-                    g_object_set(renderer, "markup", str.c_str(), nullptr);
-                }
-            }
-        }, nullptr, nullptr);
     GtkTreeViewColumn* col3 = gtk_tree_view_get_column(shortcutView, 2);
     if (col3) {
         gtk_tree_view_column_set_resizable(col3, TRUE);
@@ -368,9 +347,16 @@ void ShortcutDialog::onShortcutEdited(const gchar* path, guint keyval, GdkModifi
             gchar* originalAccel = nullptr;
             gtk_tree_model_get(model, &iter, 3, &originalAccel, -1);
             if (originalAccel) {
-                std::string display = std::string(originalAccel) + " (conflict)";
-                gtk_list_store_set(GTK_LIST_STORE(model), &iter, 3, display.c_str(), -1);
+                std::string str(originalAccel);
                 g_free(originalAccel);
+                // Strip existing "(conflict)" if present
+                size_t pos = str.find(" (conflict)");
+                if (pos != std::string::npos) {
+                    str = str.substr(0, pos);
+                }
+                if (str.empty()) str = "(none)";
+                std::string display = str + " (conflict)";
+                gtk_list_store_set(GTK_LIST_STORE(model), &iter, 3, display.c_str(), -1);
             }
         }
         gtk_tree_path_free(treePath);
