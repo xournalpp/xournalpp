@@ -147,7 +147,7 @@ void ShortcutDialog::initShortcutList() {
         auto* dialog = static_cast<ShortcutDialog*>(data);
         dialog->onShortcutEdited(path, keyval, mask);
     }), this);
-    g_signal_connect(accelRenderer, "accel-cancelled", G_CALLBACK(+[](GtkCellRendererAccel* r, gchar* path, gpointer data) {
+    g_signal_connect(accelRenderer, "accel-cleared", G_CALLBACK(+[](GtkCellRendererAccel* r, gchar* path, gpointer data) {
         auto* dialog = static_cast<ShortcutDialog*>(data);
         dialog->onShortcutEditCancelled(path);
     }), this);
