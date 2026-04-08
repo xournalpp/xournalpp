@@ -209,6 +209,12 @@ void XojPageView::endSpline() {
     }
 }
 
+void XojPageView::clearLaserPointer() {
+    if (this->laserPointer) {
+        this->laserPointer->clearNow();
+    }
+}
+
 void XojPageView::deleteLaserPointerHandler() {
     xoj_assert(hasNoViewOf(overlayViews, laserPointer.get()));
     laserPointer.reset();
