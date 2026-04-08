@@ -275,7 +275,7 @@ struct ActionProperties<Action::PREFERENCES> {
 template <>
 struct ActionProperties<Action::CUSTOMIZE_SHORTCUTS> {
     using app_namespace = std::true_type;
-    static constexpr const char* accelerators[] = {nullptr};
+    static constexpr const char* accelerators[] = {"<Ctrl><Alt>s", nullptr};
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->showShortcutSettings(); }
 };
 
