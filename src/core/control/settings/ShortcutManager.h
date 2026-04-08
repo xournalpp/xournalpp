@@ -216,6 +216,36 @@ private:
     // Maps category name to list of action names in that category
     std::unordered_map<std::string, std::vector<std::string>> categories_;
     
+    // Maps expanded action name to its base action name (e.g., "select-tool(pen)" -> "win.select-tool")
+    std::unordered_map<std::string, std::string> expandedToBase_;
+    
+    // Maps expanded action name to GVariant parameter (ownership retained)
+    std::unordered_map<std::string, GVariant*> expandedParams_;
+    
+    /**
+     * Register a parameterized (expanded) shortcut entry.
+     * Used for actions like SELECT_TOOL where each parameter value needs its own entry.
+     * 
+     * @param expandedName Full expanded name with parameter, e.g. "select-tool(pen)"
+     * @param baseName Base action name with namespace, e.g. "win.select-tool"
+     * @param category Category for grouping in UI
+     * @param displayName Human-readable name for display
+     * @param defaultAccel Default accelerator string
+     * @param param GVariant parameter to pass when action is triggered
+     */
+    void registerExpandedShortcut(const std::string& expandedName,
+                                  const std::string& baseName,
+                                  const std::string& category,
+                                  const std::string& displayName,
+                                  const std::string& defaultAccel,
+                                  GVariant* param);
+    
+    /**
+     * Create a virtual GSimpleAction for a parameterized shortcut.
+     * The virtual action wraps the base action and passes the stored parameter.
+     */
+    void createVirtualAction(const std::string& expandedName, const std::string& baseName, GVariant* param);
+    
     /**
      * Parse a GTK accelerator string into keyval and modifier state.
      * 

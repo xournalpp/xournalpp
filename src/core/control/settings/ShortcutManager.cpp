@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cstring>
+#include <map>
 #include <sstream>
 #include <iomanip>
 #include <type_traits>
@@ -13,6 +14,7 @@
 #include "control/actions/ActionDatabase.h"
 #include "control/actions/ActionProperties.h"
 #include "control/settings/Settings.h"
+#include "control/ToolEnums.h"
 #include "enums/Action.enum.h"
 
 ShortcutManager::ShortcutManager(Control* control): control(control) {}
@@ -310,16 +312,49 @@ template <Action a>
 typename std::enable_if_t<HasAccelerators<a>::value> registerSingleShortcut(ShortcutManager* sm) {
     constexpr const char* const* accels = ActionProperties<a>::accelerators;
     // Construct full action name with namespace prefix
-    std::string actionName = ActionNamespaceHelper<a>::NAMESPACE;
-    actionName += Action_toString(a);
+    std::string baseActionName = ActionNamespaceHelper<a>::NAMESPACE;
+    baseActionName += Action_toString(a);
     
     // Use human-readable display name and determine category
-    std::string displayName = actionToDisplayName(actionName);
-    std::string category = getActionCategory(actionName);
+    std::string baseDisplayName = actionToDisplayName(baseActionName);
+    std::string category = getActionCategory(baseActionName);
     
-    // Register with first accelerator if available, otherwise empty (still shows in dialog)
-    std::string defaultAccel = (accels && accels[0] != nullptr) ? accels[0] : "";
-    sm->registerShortcut(actionName, category, displayName, defaultAccel);
+    // For SELECT_TOOL, expand into individual entries per tool type
+    if constexpr (a == Action::SELECT_TOOL) {
+        // toolNames[0] = "none", toolNames[1] = "pen", etc.
+        // accels array has entries like {"<Ctrl><Shift>p", "<Ctrl><Shift>e", ...}
+        for (int i = 1; i < TOOL_END_ENTRY; i++) {  // Start from 1, skip TOOL_NONE
+            ToolType toolType = static_cast<ToolType>(i);
+            std::string toolName(toolNames[static_cast<size_t>(i)]);
+            std::string expandedAction = baseActionName + "(" + toolName + ")";
+            std::string expandedDisplay = baseDisplayName + " (" + toolName + ")";
+            
+            // Get the accelerator for this tool - accels[0] is Ctrl+Shift+p, accels[1] is Ctrl+Shift+e, etc.
+            // But the mapping isn't direct - we need to find the accel that matches this tool
+            // For now, use the menu accelerators from mainmenubar.xml
+            std::string accel;
+            if (i == TOOL_PEN) accel = "<Ctrl><Shift>p";
+            else if (i == TOOL_ERASER) accel = "<Ctrl><Shift>e";
+            else if (i == TOOL_HIGHLIGHTER) accel = "<Ctrl><Shift>h";
+            else if (i == TOOL_TEXT) accel = "<Ctrl><Shift>t";
+            else if (i == TOOL_SELECT_PDF_TEXT_LINEAR) accel = "<Ctrl><Shift>w";
+            else if (i == TOOL_SELECT_PDF_TEXT_RECT) accel = "<Ctrl><Shift>y";
+            else if (i == TOOL_DRAW_RECT) accel = "<Ctrl>2";
+            else if (i == TOOL_DRAW_ELLIPSE) accel = "<Ctrl>3";
+            else if (i == TOOL_DRAW_ARROW) accel = "<Ctrl>4";
+            else if (i == TOOL_DRAW_DOUBLE_ARROW) accel = "<Ctrl>5";
+            else if (i == TOOL_DRAW_COORDINATE_SYSTEM) accel = "<Ctrl>6";
+            else accel = "";  // No default for other tools
+            
+            // Create GVariant parameter for this tool
+            GVariant* param = g_variant_new_uint32(static_cast<guint32>(i));
+            sm->registerExpandedShortcut(expandedAction, baseActionName, category, expandedDisplay, accel, param);
+        }
+    } else {
+        // Default behavior for non-expanded actions
+        std::string defaultAccel = (accels && accels[0] != nullptr) ? accels[0] : "";
+        sm->registerShortcut(baseActionName, category, baseDisplayName, defaultAccel);
+    }
 }
 
 /**
@@ -417,6 +452,73 @@ bool ShortcutManager::setShortcut(const std::string& action, const std::string& 
     setGtkAccelerator(app, action.c_str(), accelerator);
     
     return true;
+}
+
+void ShortcutManager::registerExpandedShortcut(const std::string& expandedName,
+                                              const std::string& baseName,
+                                              const std::string& category,
+                                              const std::string& displayName,
+                                              const std::string& defaultAccel,
+                                              GVariant* param) {
+    // Store the mapping
+    expandedToBase_[expandedName] = baseName;
+    
+    // Store the parameter (take ownership)
+    expandedParams_[expandedName] = g_variant_ref_sink(param);
+    
+    // Register in normal maps
+    registerShortcut(expandedName, category, displayName, defaultAccel);
+    
+    // Create virtual action for this expanded shortcut
+    createVirtualAction(expandedName, baseName, param);
+}
+
+void ShortcutManager::createVirtualAction(const std::string& expandedName,
+                                        const std::string& baseName,
+                                        GVariant* param) {
+    // Get the action database to find the original action's parameter type
+    // We'll create a GSimpleAction that wraps the base action with a fixed parameter
+    // When triggered, it will call the base action with our parameter
+    
+    // Create a new GSimpleAction with parameter type
+    auto* action = g_simple_action_new(
+        expandedName.c_str(),
+        g_variant_get_type(param)
+    );
+    
+    // Set up the callback
+    // Use a static map to store lookup data for callbacks keyed by action name
+    static std::map<std::string, std::pair<ShortcutManager*, std::string>> callbackMap;
+    callbackMap[expandedName] = {this, baseName};
+    
+    // Callback retrieves ShortcutManager via static map lookup by action name
+    g_signal_connect(action, "activate", G_CALLBACK(+[](GSimpleAction* sa, GVariant*, gpointer) {
+        const char* name = g_action_get_name(G_ACTION(sa));
+        auto it = callbackMap.find(name);
+        if (it == callbackMap.end()) return;
+        
+        auto* sm = it->second.first;
+        const std::string& baseName = it->second.second;
+        
+        auto paramIt = sm->expandedParams_.find(name);
+        if (paramIt == sm->expandedParams_.end()) return;
+        
+        // Activate the base action with our stored parameter
+        g_action_group_activate_action(
+            G_ACTION_GROUP(gtk_window_get_application(sm->control->getGtkWindow())),
+            baseName.c_str(),
+            g_variant_ref(paramIt->second)
+        );
+    }), nullptr);
+    
+    // Add to action map so GTK can find it
+    g_action_map_add_action(G_ACTION_MAP(gtk_window_get_application(control->getGtkWindow())), G_ACTION(action));
+    
+    // Register any existing shortcut for this expanded action
+    auto shortcutIt = shortcuts_.find(expandedName);
+    if (shortcutIt != shortcuts_.end() && shortcutIt->second.enabled && !shortcutIt->second.accelerator.empty()) {
+        setGtkAccelerator(gtk_window_get_application(control->getGtkWindow()), expandedName.c_str(), shortcutIt->second.accelerator);
+    }
 }
 
 void ShortcutManager::resetToDefault(const std::string& action) {
