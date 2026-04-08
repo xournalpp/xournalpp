@@ -8,6 +8,7 @@
 #include "ShortcutDialog.h"
 
 #include <cstring>
+#include <string>
 #include <algorithm>
 
 #include <gtk/gtk.h>
@@ -20,6 +21,12 @@
 
 // UI definition file for the shortcut settings dialog
 constexpr auto UI_FILE = "shortcutSettings.glade";
+
+// ==================== Local Types ====================
+struct DialogInfo {
+    GtkWidget* dialog;
+    std::string accel;
+};
 
 // ==================== Constructor / Destructor ====================
 
@@ -330,15 +337,21 @@ void ShortcutDialog::onShortcutEdited(const gchar* path, guint keyval, GdkModifi
             // Update the display
             gtk_list_store_set(GTK_LIST_STORE(model), &iter, 3, accel.c_str(), -1);
         } else {
-            // Show conflict warning - blocking until user clicks OK
-            GtkWidget* errDialog = gtk_message_dialog_new(GTK_WINDOW(window),
-                                                        GTK_DIALOG_DESTROY_WITH_PARENT,
-                                                        GTK_MESSAGE_WARNING,
-                                                        GTK_BUTTONS_OK,
-                                                        _("Shortcut '%s' conflicts with another shortcut!"), 
-                                                        accel.c_str());
-            gtk_dialog_run(GTK_DIALOG(errDialog));
-            gtk_widget_destroy(errDialog);
+            // Defer dialog to next idle, so cell editing fully completes first
+            std::string accelCopy = accel;
+            g_timeout_add(0, +[](gpointer data) -> gboolean {
+                auto* info = static_cast<DialogInfo*>(data);
+                GtkWidget* errDialog = gtk_message_dialog_new(GTK_WINDOW(info->dialog),
+                                                            GTK_DIALOG_DESTROY_WITH_PARENT,
+                                                            GTK_MESSAGE_WARNING,
+                                                            GTK_BUTTONS_OK,
+                                                            _("Shortcut '%s' conflicts with another shortcut!"),
+                                                            info->accel.c_str());
+                gtk_dialog_run(GTK_DIALOG(errDialog));
+                gtk_widget_destroy(errDialog);
+                delete info;
+                return G_SOURCE_REMOVE;
+            }, new DialogInfo{window, std::move(accelCopy)});
         }
         gtk_tree_path_free(treePath);
         g_free(action);
