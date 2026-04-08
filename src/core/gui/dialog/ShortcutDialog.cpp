@@ -440,7 +440,7 @@ void ShortcutDialog::importShortcuts() {
     // Add filter for JSON files only
     GtkFileFilter* filter = gtk_file_filter_new();
     gtk_file_filter_add_pattern(filter, "*.json");
-    gtk_file_filter_set_name(filter, "JSON files");
+    gtk_file_filter_set_name(filter, _("JSON files"));
     gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
     
     gint response = gtk_dialog_run(GTK_DIALOG(dialog));
