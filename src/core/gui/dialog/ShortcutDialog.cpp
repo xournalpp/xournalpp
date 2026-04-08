@@ -348,8 +348,8 @@ void ShortcutDialog::onShortcutEdited(const gchar* path, guint keyval, GdkModifi
                                                             GTK_BUTTONS_OK,
                                                             _("Shortcut '%s' conflicts with another shortcut!"),
                                                             info->accel.c_str());
-                g_signal_connect(errDialog, "response", G_CALLBACK(+[](GtkDialog*, gint, gpointer) {
-                    gtk_widget_destroy(errDialog);
+                g_signal_connect(errDialog, "response", G_CALLBACK(+[](GtkDialog* dialog, gint, gpointer) {
+                    gtk_widget_destroy(GTK_WIDGET(dialog));
                 }), nullptr);
                 gtk_widget_show(errDialog);
                 delete info;
