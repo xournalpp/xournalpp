@@ -20,6 +20,8 @@
 #include "control/SetsquareController.h"                         // for Sets...
 #include "control/Tool.h"                                        // for Tool
 #include "control/ToolHandler.h"                                 // for Tool...
+#include "control/settings/ShortcutManager.h"
+#include "gui/dialog/ShortcutDialog.h"
 #include "control/actions/ActionDatabase.h"                      // for Acti...
 #include "control/jobs/AutosaveJob.h"                            // for Auto...
 #include "control/jobs/BaseExportJob.h"                          // for Base...
@@ -288,6 +290,14 @@ void Control::saveSettings() {
 
 void Control::initWindow(MainWindow* win) {
     this->win = win;
+
+    // Initialize ShortcutManager BEFORE ActionDatabase, since ActionDatabase
+    // calls getShortcutManager()->getShortcut() in its constructor.
+    this->shortcutManager = std::make_unique<ShortcutManager>(this);
+
+    // Register all default shortcuts from ActionProperties, then load custom shortcuts from settings
+    this->shortcutManager->registerDefaultShortcuts();
+    this->shortcutManager->loadFromSettings();
 
     this->actionDB = std::make_unique<ActionDatabase>(this);
     this->navHistory = std::make_unique<NavigationHistory>(this);
@@ -1474,6 +1484,11 @@ void Control::showSettings() {
                 ctrl->getActionDatabase()->setActionState(Action::TOGGLE_TOUCH_DRAWING,
                                                           settings->getTouchDrawingEnabled());
             });
+    dlg.show(GTK_WINDOW(this->win->getWindow()));
+}
+
+void Control::showShortcutSettings() {
+    ShortcutDialog dlg(this->gladeSearchPath, this);
     dlg.show(GTK_WINDOW(this->win->getWindow()));
 }
 
@@ -2696,4 +2711,8 @@ auto Control::loadPaletteFromSettings() -> void {
         this->palette->parseErrorDialog(e);
         this->palette->load_default();
     }
+}
+
+ShortcutManager* Control::getShortcutManager() const {
+    return shortcutManager.get();
 }

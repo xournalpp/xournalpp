@@ -72,6 +72,7 @@ class SElement final {
         std::map<std::string, SAttribute> attributes;
         std::map<std::string, SElement> children;
         friend class SElement;
+        friend class ShortcutManager;
     };
 
 public:
@@ -127,6 +128,8 @@ private:
 
     void saveButtonConfig();
     void loadButtonConfig();
+
+    friend class ShortcutManager;
 
 public:
     // View Mode
@@ -1191,4 +1194,33 @@ private:
     unsigned int numberOfSpacesForTab{};
 
     unsigned int laserPointerFadeOutTime{};  ///< Time in ms before the laser pointer strokes start fading out
+
+    // Custom keyboard shortcuts storage
+    // Maps action name (e.g. "win.quit") to custom accelerator string
+    std::map<std::string, std::string> customAccelerators;
+
+    /**
+     * Get custom accelerator for a specific action.
+     * @param action Action name
+     * @return Custom accelerator string, or empty if none
+     */
+    std::string getCustomAccelerator(const std::string& action) const;
+    
+    /**
+     * Set custom accelerator for an action.
+     * @param action Action name
+     * @param accel Accelerator string (empty to remove)
+     */
+    void setCustomAccelerator(const std::string& action, const std::string& accel);
+    
+    /**
+     * Get all custom shortcuts.
+     * @return Map of action -> accelerator
+     */
+    const std::map<std::string, std::string>& getCustomAccelerators() const;
+    
+    /**
+     * Clear all custom shortcuts.
+     */
+    void clearCustomAccelerators();
 };
