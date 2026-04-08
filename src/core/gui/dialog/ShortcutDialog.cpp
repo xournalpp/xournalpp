@@ -18,6 +18,7 @@
 #include "control/settings/Settings.h"
 #include "gui/Builder.h"
 #include "gui/GladeSearchpath.h"
+#include "util/i18n.h"
 
 // UI definition file for the shortcut settings dialog
 constexpr auto UI_FILE = "shortcutSettings.glade";
