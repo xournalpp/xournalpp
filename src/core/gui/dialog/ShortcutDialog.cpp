@@ -330,15 +330,15 @@ void ShortcutDialog::onShortcutEdited(const gchar* path, guint keyval, GdkModifi
             // Update the display
             gtk_list_store_set(GTK_LIST_STORE(model), &iter, 3, accel.c_str(), -1);
         } else {
-            // Show conflict warning - non-blocking
+            // Show conflict warning - blocking until user clicks OK
             GtkWidget* errDialog = gtk_message_dialog_new(GTK_WINDOW(window),
                                                         GTK_DIALOG_DESTROY_WITH_PARENT,
                                                         GTK_MESSAGE_WARNING,
                                                         GTK_BUTTONS_OK,
                                                         _("Shortcut '%s' conflicts with another shortcut!"), 
                                                         accel.c_str());
-            g_signal_connect_swapped(errDialog, "response", G_CALLBACK(gtk_widget_destroy), errDialog);
-            gtk_widget_show_all(errDialog);
+            gtk_dialog_run(GTK_DIALOG(errDialog));
+            gtk_widget_destroy(errDialog);
         }
         gtk_tree_path_free(treePath);
         g_free(action);
