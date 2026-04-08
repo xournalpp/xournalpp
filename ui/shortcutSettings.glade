@@ -3,7 +3,7 @@
   <requires lib="gtk+" version="3.24"/>
   
   <object class="GtkWindow" id="shortcutSettings">
-    <property name="title">Customize Shortcuts</property>
+    <property name="title" translatable="yes">Customize Shortcuts</property>
     <property name="modal">True</property>
     <property name="default-width">1100</property>
     <property name="default-height">650</property>
@@ -21,7 +21,7 @@
         
         <child>
           <object class="GtkLabel">
-            <property name="label">Double-click Current to edit. ESC to cancel. Backspace to clear.</property>
+            <property name="label" translatable="yes">Double-click Current to edit. ESC to cancel. Backspace to clear.</property>
             <property name="halign">start</property>
           </object>
         </child>
@@ -33,20 +33,20 @@
             
             <child>
               <object class="GtkLabel">
-                <property name="label">Search:</property>
+                <property name="label" translatable="yes">Search:</property>
               </object>
             </child>
             
             <child>
               <object class="GtkSearchEntry" id="searchEntry">
-                <property name="placeholder-text">Type to search shortcuts...</property>
+                <property name="placeholder-text" translatable="yes">Type to search shortcuts...</property>
                 <property name="width-chars">30</property>
               </object>
             </child>
             
             <child>
               <object class="GtkLabel" id="searchResultCount">
-                <property name="label">Showing all shortcuts</property>
+                <property name="label" translatable="yes">Showing all shortcuts</property>
                 <property name="halign">end</property>
               </object>
             </child>
@@ -107,14 +107,14 @@
             
             <child>
               <object class="GtkButton" id="btnResetSelected">
-                <property name="label">Reset Selected</property>
+                <property name="label" translatable="yes">Reset Selected</property>
                 <property name="tooltip-text">Reset the selected shortcut to default</property>
               </object>
             </child>
             
             <child>
               <object class="GtkButton" id="btnResetAll">
-                <property name="label">Reset All</property>
+                <property name="label" translatable="yes">Reset All</property>
                 <property name="tooltip-text">Reset all shortcuts to their default values</property>
               </object>
             </child>
@@ -127,14 +127,14 @@
             
             <child>
               <object class="GtkButton" id="btnExport">
-                <property name="label">Export</property>
+                <property name="label" translatable="yes">Export</property>
                 <property name="tooltip-text">Export shortcuts to a file</property>
               </object>
             </child>
             
             <child>
               <object class="GtkButton" id="btnImport">
-                <property name="label">Import</property>
+                <property name="label" translatable="yes">Import</property>
                 <property name="tooltip-text">Import shortcuts from a file</property>
               </object>
             </child>
@@ -147,7 +147,7 @@
             
             <child>
               <object class="GtkButton" id="btnClose">
-                <property name="label">Close</property>
+                <property name="label" translatable="yes">Close</property>
               </object>
             </child>
           </object>
