@@ -91,6 +91,7 @@ private:
      * @param mask Modifier keys (Ctrl, Shift, Alt, etc.)
      */
     void onShortcutEdited(const gchar* path, guint keyval, GdkModifierType mask);
+    void onShortcutEditCancelled(const gchar* path);
     
     // ==================== Actions ====================
     
