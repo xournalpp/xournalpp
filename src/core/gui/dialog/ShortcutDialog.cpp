@@ -337,9 +337,9 @@ void ShortcutDialog::onShortcutEdited(const gchar* path, guint keyval, GdkModifi
             // Update the display
             gtk_list_store_set(GTK_LIST_STORE(model), &iter, 3, accel.c_str(), -1);
         } else {
-            // Defer dialog to next idle, so cell editing fully completes first
+            // Show conflict warning after cell editing fully completes
             std::string accelCopy = accel;
-            g_timeout_add(0, +[](gpointer data) -> gboolean {
+            g_idle_add_full(G_PRIORITY_HIGH, +[](gpointer data) -> gint {
                 auto* info = static_cast<DialogInfo*>(data);
                 GtkWidget* errDialog = gtk_message_dialog_new(GTK_WINDOW(info->dialog),
                                                             GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -347,11 +347,13 @@ void ShortcutDialog::onShortcutEdited(const gchar* path, guint keyval, GdkModifi
                                                             GTK_BUTTONS_OK,
                                                             _("Shortcut '%s' conflicts with another shortcut!"),
                                                             info->accel.c_str());
-                gtk_dialog_run(GTK_DIALOG(errDialog));
-                gtk_widget_destroy(errDialog);
+                g_signal_connect(errDialog, "response", G_CALLBACK(+[](GtkDialog*, gint, gpointer) {
+                    gtk_widget_destroy(errDialog);
+                }), nullptr);
+                gtk_widget_show(errDialog);
                 delete info;
                 return G_SOURCE_REMOVE;
-            }, new DialogInfo{window, std::move(accelCopy)});
+            }, new DialogInfo{window, std::move(accelCopy)}, nullptr);
         }
         gtk_tree_path_free(treePath);
         g_free(action);
