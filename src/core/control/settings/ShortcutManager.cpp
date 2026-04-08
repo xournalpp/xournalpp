@@ -82,12 +82,12 @@ static std::string getActionCategory(const std::string& actionName) {
     if (action == "new-file" || action == "open" || action == "save" || action == "save-as" ||
         action == "export-as" || action == "export-as-pdf" || action == "print" || action == "quit" ||
         action == "annotate-pdf" || action == "append-new-pdf-pages")
-        return "File";
+        return _("File");
     
     // Edit operations
     if (action == "undo" || action == "redo" || action == "cut" || action == "copy" || action == "paste" ||
         action == "delete" || action == "select-all" || action == "search")
-        return "Edit";
+        return _("Edit");
     
     // View operations
     if (action == "fullscreen" || action == "presentation-mode" || action == "show-sidebar" ||
@@ -96,7 +96,7 @@ static std::string getActionCategory(const std::string& actionName) {
         action == "toggle-touch-drawing" || action == "position-highlighting" ||
         action == "set-layout-vertical" || action == "set-layout-right-to-left" ||
         action == "set-layout-bottom-to-top" || action == "set-columns-or-rows")
-        return "View";
+        return _("View");
     
     // Page operations
     if (action == "goto-first" || action == "goto-previous" || action == "goto-next" ||
@@ -106,7 +106,7 @@ static std::string getActionCategory(const std::string& actionName) {
         action == "delete-page" || action == "move-page-towards-beginning" ||
         action == "move-page-towards-end" || action == "paper-format" ||
         action == "paper-background-color" || action == "configure-page-template")
-        return "Page";
+        return _("Page");
     
     // Layer operations
     if (action == "layer-new" || action == "layer-delete" || action == "layer-show-all" ||
@@ -114,7 +114,7 @@ static std::string getActionCategory(const std::string& actionName) {
         action == "layer-move-up" || action == "layer-move-down" || action == "layer-goto-next" ||
         action == "layer-goto-previous" || action == "layer-goto-top" || action == "layer-active" ||
         action == "layer-rename")
-        return "Layer";
+        return _("Layer");
     
     // Tool operations
     if (action == "select-tool" || action == "select-default-tool" ||
@@ -128,20 +128,20 @@ static std::string getActionCategory(const std::string& actionName) {
         action == "tool-draw-double-arrow" || action == "tool-draw-line" ||
         action == "tool-draw-spline" || action == "tool-draw-coordinate-system" ||
         action == "compass" || action == "setsquare")
-        return "Tools";
+        return _("Tools");
     
     // Zoom operations
     if (action == "zoom-in" || action == "zoom-out" || action == "zoom-100" || action == "zoom-fit" || action == "zoom")
-        return "Zoom";
+        return _("Zoom");
     
     // Navigation
     if (action == "navigate-back" || action == "navigate-forward")
-        return "Navigation";
+        return _("Navigation");
     
     // Audio
     if (action == "audio-record" || action == "audio-playback" || action == "audio-stop" ||
         action == "audio-seek-forwards" || action == "audio-seek-backwards")
-        return "Audio";
+        return _("Audio");
     
     // Special
     if (action == "preferences" || action == "customize-shortcuts" || action == "customize-toolbar" ||
@@ -149,9 +149,9 @@ static std::string getActionCategory(const std::string& actionName) {
         action == "font" || action == "select-font" || action == "select-color" || action == "tex" ||
         action == "arrange-selection-order" || action == "move-selection-layer-up" ||
         action == "move-selection-layer-down")
-        return "Special";
+        return _("Special");
     
-    return "General";
+    return _("General");
 }
 
 /**

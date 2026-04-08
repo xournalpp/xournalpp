@@ -76,7 +76,7 @@ void ShortcutDialog::initCategoryList() {
     
     // Add text renderer for the category column
     GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-    gtk_tree_view_insert_column_with_attributes(categoryView, -1, "Category", renderer, "text", 0, nullptr);
+    gtk_tree_view_insert_column_with_attributes(categoryView, -1, _("Category"), renderer, "text", 0, nullptr);
     
     // Populate categories from ShortcutManager
     auto* sm = control->getShortcutManager();
@@ -113,7 +113,7 @@ void ShortcutDialog::initShortcutList() {
     
     // Column 1: Category (read-only text)
     GtkCellRenderer* catRenderer = gtk_cell_renderer_text_new();
-    gtk_tree_view_insert_column_with_attributes(shortcutView, -1, "Category", catRenderer, "text", 1, nullptr);
+    gtk_tree_view_insert_column_with_attributes(shortcutView, -1, _("Category"), catRenderer, "text", 1, nullptr);
     GtkTreeViewColumn* col1 = gtk_tree_view_get_column(shortcutView, 0);
     if (col1) {
         gtk_tree_view_column_set_resizable(col1, TRUE);
@@ -123,7 +123,7 @@ void ShortcutDialog::initShortcutList() {
     
     // Column 2: Display name (read-only text)
     GtkCellRenderer* textRenderer = gtk_cell_renderer_text_new();
-    gtk_tree_view_insert_column_with_attributes(shortcutView, -1, "Action", textRenderer, "text", 2, nullptr);
+    gtk_tree_view_insert_column_with_attributes(shortcutView, -1, _("Action"), textRenderer, "text", 2, nullptr);
     GtkTreeViewColumn* col2 = gtk_tree_view_get_column(shortcutView, 1);
     if (col2) {
         gtk_tree_view_column_set_resizable(col2, TRUE);
@@ -139,7 +139,7 @@ void ShortcutDialog::initShortcutList() {
         auto* dialog = static_cast<ShortcutDialog*>(data);
         dialog->onShortcutEdited(path, keyval, mask);
     }), this);
-    gtk_tree_view_insert_column_with_attributes(shortcutView, -1, "Current", accelRenderer, "text", 3, nullptr);
+    gtk_tree_view_insert_column_with_attributes(shortcutView, -1, _("Current"), accelRenderer, "text", 3, nullptr);
     GtkTreeViewColumn* col3 = gtk_tree_view_get_column(shortcutView, 2);
     if (col3) {
         gtk_tree_view_column_set_resizable(col3, TRUE);
@@ -149,7 +149,7 @@ void ShortcutDialog::initShortcutList() {
     
     // Column 4: Default accelerator (read-only text)
     GtkCellRenderer* defaultRenderer = gtk_cell_renderer_text_new();
-    gtk_tree_view_insert_column_with_attributes(shortcutView, -1, "Default", defaultRenderer, "text", 4, nullptr);
+    gtk_tree_view_insert_column_with_attributes(shortcutView, -1, _("Default"), defaultRenderer, "text", 4, nullptr);
     GtkTreeViewColumn* col4 = gtk_tree_view_get_column(shortcutView, 3);
     if (col4) {
         gtk_tree_view_column_set_resizable(col4, TRUE);
@@ -159,7 +159,7 @@ void ShortcutDialog::initShortcutList() {
     
     // Column 5: Description (read-only text)
     GtkCellRenderer* descRenderer = gtk_cell_renderer_text_new();
-    gtk_tree_view_insert_column_with_attributes(shortcutView, -1, "Description", descRenderer, "text", 5, nullptr);
+    gtk_tree_view_insert_column_with_attributes(shortcutView, -1, _("Description"), descRenderer, "text", 5, nullptr);
     GtkTreeViewColumn* col5 = gtk_tree_view_get_column(shortcutView, 4);
     if (col5) {
         gtk_tree_view_column_set_resizable(col5, TRUE);
@@ -266,9 +266,9 @@ void ShortcutDialog::updateShortcutList() {
     // Update result count label
     GtkWidget* countLabel = GTK_WIDGET(builder->get("searchResultCount"));
     if (searchText.empty()) {
-        gtk_label_set_text(GTK_LABEL(countLabel), "Showing all shortcuts");
+        gtk_label_set_text(GTK_LABEL(countLabel), _("Showing all shortcuts"));
     } else {
-        std::string text = "Showing " + std::to_string(count) + " of " + std::to_string(shortcuts.size()) + " shortcuts";
+        std::string text = g_strdup_printf(_("Showing %d of %d shortcuts"), count, static_cast<int>(shortcuts.size()));
         gtk_label_set_text(GTK_LABEL(countLabel), text.c_str());
     }
 }
@@ -335,7 +335,7 @@ void ShortcutDialog::onShortcutEdited(const gchar* path, guint keyval, GdkModifi
                                                         GTK_DIALOG_DESTROY_WITH_PARENT,
                                                         GTK_MESSAGE_WARNING,
                                                         GTK_BUTTONS_OK,
-                                                        "Shortcut '%s' conflicts with another shortcut!", 
+                                                        _("Shortcut '%s' conflicts with another shortcut!"), 
                                                         accel.c_str());
             g_signal_connect_swapped(errDialog, "response", G_CALLBACK(gtk_widget_destroy), errDialog);
             gtk_widget_show_all(errDialog);
@@ -379,7 +379,7 @@ void ShortcutDialog::resetAll() {
                                               GTK_DIALOG_DESTROY_WITH_PARENT,
                                               GTK_MESSAGE_QUESTION,
                                               GTK_BUTTONS_YES_NO,
-                                              "Reset all shortcuts to default?");
+                                              _("Reset all shortcuts to default?"));
     
     gint response = gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
@@ -392,7 +392,7 @@ void ShortcutDialog::resetAll() {
 }
 
 void ShortcutDialog::exportShortcuts() {
-    GtkWidget* dialog = gtk_file_chooser_dialog_new("Export Shortcuts",
+    GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Export Shortcuts"),
                                                     GTK_WINDOW(window),
                                                     GTK_FILE_CHOOSER_ACTION_SAVE,
                                                     "_Cancel", GTK_RESPONSE_CANCEL,
@@ -416,7 +416,7 @@ void ShortcutDialog::exportShortcuts() {
                                                          GTK_DIALOG_DESTROY_WITH_PARENT,
                                                          GTK_MESSAGE_ERROR,
                                                          GTK_BUTTONS_OK,
-                                                         "Failed to export: %s", 
+                                                         _("Failed to export: %s"), 
                                                          error->message);
             gtk_dialog_run(GTK_DIALOG(errDialog));
             gtk_widget_destroy(errDialog);
@@ -430,7 +430,7 @@ void ShortcutDialog::exportShortcuts() {
 }
 
 void ShortcutDialog::importShortcuts() {
-    GtkWidget* dialog = gtk_file_chooser_dialog_new("Import Shortcuts",
+    GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Import Shortcuts"),
                                                     GTK_WINDOW(window),
                                                     GTK_FILE_CHOOSER_ACTION_OPEN,
                                                     "_Cancel", GTK_RESPONSE_CANCEL,
@@ -464,7 +464,7 @@ void ShortcutDialog::importShortcuts() {
                                                             GTK_DIALOG_DESTROY_WITH_PARENT,
                                                             GTK_MESSAGE_INFO,
                                                             GTK_BUTTONS_OK,
-                                                            "Shortcuts imported successfully!");
+                                                            _("Shortcuts imported successfully!"));
                 gtk_dialog_run(GTK_DIALOG(msgDialog));
                 gtk_widget_destroy(msgDialog);
             } else {
@@ -472,7 +472,7 @@ void ShortcutDialog::importShortcuts() {
                                                             GTK_DIALOG_DESTROY_WITH_PARENT,
                                                             GTK_MESSAGE_ERROR,
                                                             GTK_BUTTONS_OK,
-                                                            "Invalid shortcuts file format!");
+                                                            _("Invalid shortcuts file format!"));
                 gtk_dialog_run(GTK_DIALOG(errDialog));
                 gtk_widget_destroy(errDialog);
             }
@@ -483,7 +483,7 @@ void ShortcutDialog::importShortcuts() {
                                                         GTK_DIALOG_DESTROY_WITH_PARENT,
                                                         GTK_MESSAGE_ERROR,
                                                         GTK_BUTTONS_OK,
-                                                        "Failed to read file: %s", 
+                                                        _("Failed to read file: %s"), 
                                                         error->message);
             gtk_dialog_run(GTK_DIALOG(errDialog));
             gtk_widget_destroy(errDialog);
