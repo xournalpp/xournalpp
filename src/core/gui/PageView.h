@@ -103,6 +103,7 @@ public:
     void endText();
 
     void endSpline();
+    void clearLaserPointer();
 
     bool searchTextOnPage(const std::string& text, size_t index, size_t* occurrences, XojPdfRectangle* matchRect);
 

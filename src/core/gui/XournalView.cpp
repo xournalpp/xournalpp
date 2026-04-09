@@ -9,40 +9,40 @@
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_Page_Down
 #include <glib-object.h>     // for g_object_ref_sink
 
-#include "control/Control.h"                     // for Control
-#include "control/PdfCache.h"                    // for PdfCache
-#include "control/ScrollHandler.h"               // for ScrollHandler
-#include "control/ToolHandler.h"                 // for ToolHandler
-#include "control/actions/ActionDatabase.h"      // for ActionDatabase
-#include "control/jobs/XournalScheduler.h"       // for XournalScheduler
-#include "control/settings/MetadataManager.h"    // for MetadataManager
-#include "control/settings/Settings.h"           // for Settings
-#include "control/tools/CursorSelectionType.h"   // for CURSOR_SELECTION_NONE
-#include "control/tools/EditSelection.h"         // for EditSelection
-#include "control/zoom/ZoomControl.h"            // for ZoomControl
-#include "gui/MainWindow.h"                      // for MainWindow
-#include "gui/PdfFloatingToolbox.h"              // for PdfFloatingToolbox
+#include "control/Control.h"                            // for Control
+#include "control/PdfCache.h"                           // for PdfCache
+#include "control/ScrollHandler.h"                      // for ScrollHandler
+#include "control/ToolHandler.h"                        // for ToolHandler
+#include "control/actions/ActionDatabase.h"             // for ActionDatabase
+#include "control/jobs/XournalScheduler.h"              // for XournalScheduler
+#include "control/settings/MetadataManager.h"           // for MetadataManager
+#include "control/settings/Settings.h"                  // for Settings
+#include "control/tools/CursorSelectionType.h"          // for CURSOR_SELECTION_NONE
+#include "control/tools/EditSelection.h"                // for EditSelection
+#include "control/zoom/ZoomControl.h"                   // for ZoomControl
+#include "gui/MainWindow.h"                             // for MainWindow
+#include "gui/PdfFloatingToolbox.h"                     // for PdfFloatingToolbox
 #include "gui/inputdevices/GeometryToolInputHandler.h"  // for GeometryToolInputHandler
-#include "gui/inputdevices/HandRecognition.h"    // for HandRecognition
-#include "gui/inputdevices/InputContext.h"       // for InputContext
-#include "gui/scroll/ScrollHandling.h"           // for ScrollHandling
-#include "gui/toolbarMenubar/ColorToolItem.h"    // for ColorToolItem
-#include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
-#include "gui/widgets/XournalWidget.h"           // for gtk_xournal_get_layout
-#include "model/Document.h"                      // for Document
-#include "model/Element.h"                       // for Element, ELEMENT_STROKE
-#include "model/PageRef.h"                       // for PageRef
-#include "model/Stroke.h"                        // for Stroke, StrokeTool::E...
-#include "model/XojPage.h"                       // for XojPage
-#include "undo/DeleteUndoAction.h"               // for DeleteUndoAction
-#include "undo/UndoRedoHandler.h"                // for UndoRedoHandler
-#include "util/Assert.h"                         // for xoj_assert
-#include "util/Point.h"                          // for Point
-#include "util/Rectangle.h"                      // for Rectangle
-#include "util/Util.h"                           // for npos
-#include "util/glib_casts.h"                     // for wrap_v
-#include "util/gtk4_helper.h"                    // for gtk_scrolled_window_set_child
-#include "util/safe_casts.h"                     // for round_cast
+#include "gui/inputdevices/HandRecognition.h"           // for HandRecognition
+#include "gui/inputdevices/InputContext.h"              // for InputContext
+#include "gui/scroll/ScrollHandling.h"                  // for ScrollHandling
+#include "gui/toolbarMenubar/ColorToolItem.h"           // for ColorToolItem
+#include "gui/toolbarMenubar/ToolMenuHandler.h"         // for ToolMenuHandler
+#include "gui/widgets/XournalWidget.h"                  // for gtk_xournal_get_layout
+#include "model/Document.h"                             // for Document
+#include "model/Element.h"                              // for Element, ELEMENT_STROKE
+#include "model/PageRef.h"                              // for PageRef
+#include "model/Stroke.h"                               // for Stroke, StrokeTool::E...
+#include "model/XojPage.h"                              // for XojPage
+#include "undo/DeleteUndoAction.h"                      // for DeleteUndoAction
+#include "undo/UndoRedoHandler.h"                       // for UndoRedoHandler
+#include "util/Assert.h"                                // for xoj_assert
+#include "util/Point.h"                                 // for Point
+#include "util/Rectangle.h"                             // for Rectangle
+#include "util/Util.h"                                  // for npos
+#include "util/glib_casts.h"                            // for wrap_v
+#include "util/gtk4_helper.h"                           // for gtk_scrolled_window_set_child
+#include "util/safe_casts.h"                            // for round_cast
 
 #include "Layout.h"           // for Layout
 #include "PageView.h"         // for XojPageView
@@ -467,6 +467,12 @@ void XournalView::endTextAllPages(XojPageView* except) const {
 void XournalView::endSplineAllPages() const {
     for (auto& v: this->viewPages) {
         v->endSpline();
+    }
+}
+
+void XournalView::clearLaserPointers() const {
+    for (auto& v: this->viewPages) {
+        v->clearLaserPointer();
     }
 }
 

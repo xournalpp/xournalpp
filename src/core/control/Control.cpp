@@ -1,8 +1,8 @@
 #include "Control.h"
 
-#include <algorithm>  // for max
-#include <cstdlib>    // for size_t
-#include <exception>  // for exce...
+#include <algorithm>   // for max
+#include <cstdlib>     // for size_t
+#include <exception>   // for exce...
 #include <functional>  // for bind
 #include <iterator>    // for end
 #include <memory>      // for make...
@@ -1151,6 +1151,7 @@ void Control::undoRedoPageChanged(PageRef page) {
 void Control::selectTool(ToolType type) {
     // keep text-selection when switching from text to seletion tool
     auto oldTool = getToolHandler()->getActiveTool();
+    auto oldToolType = oldTool ? oldTool->getToolType() : TOOL_NONE;
     if (oldTool && win && isSelectToolType(type) && oldTool->getToolType() == ToolType::TOOL_TEXT &&
         this->win->getXournal()->getTextEditor() && !(this->win->getXournal()->getTextEditor()->bufferEmpty())) {
         auto xournal = this->win->getXournal();
@@ -1164,6 +1165,10 @@ void Control::selectTool(ToolType type) {
         auto sel = SelectionFactory::createFromElementOnActiveLayer(this, page, view, textobj);
 
         xournal->setSelection(sel.release());
+    }
+
+    if (win && oldToolType == type && (type == TOOL_LASER_POINTER_PEN || type == TOOL_LASER_POINTER_HIGHLIGHTER)) {
+        win->getXournal()->clearLaserPointers();
     }
 
     toolHandler->selectTool(type);
