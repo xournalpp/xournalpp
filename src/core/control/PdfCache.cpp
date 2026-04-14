@@ -37,13 +37,24 @@ public:
     xoj::view::Mask buffer;
 };
 
+namespace {
+double getPercentZoomChange(double oldZoom, double newZoom) {
+    double averagedZoom = (oldZoom + newZoom) / 2.0;
+    return std::abs(oldZoom - newZoom) * 100.0 / averagedZoom;
+}
+}  // namespace
+
 PdfCache::PdfCache(const XojPdfDocument& doc, Settings* settings): pdfDocument(doc) { updateSettings(settings); }
 
 PdfCache::~PdfCache() = default;
 
-void PdfCache::setRefreshThreshold(double threshold) { this->zoomRefreshThreshold = threshold; }
+void PdfCache::setRefreshThreshold(double threshold) {
+    std::lock_guard<std::mutex> lock(this->renderMutex);
+    this->zoomRefreshThreshold = threshold;
+}
 
 void PdfCache::setMaxSize(size_t newSize) {
+    std::lock_guard<std::mutex> lock(this->renderMutex);
     this->maxSize = newSize;
     if (this->data.size() > this->maxSize) {
         this->data.resize(this->maxSize);
@@ -57,6 +68,17 @@ void PdfCache::updateSettings(Settings* settings) {
     }
 }
 
+void PdfCache::evict(size_t pdfPageNo) {
+    std::lock_guard<std::mutex> lock(this->renderMutex);
+
+    this->data.erase(std::remove_if(this->data.begin(), this->data.end(),
+                                    [pdfPageNo](const auto& entry) {
+                                        return entry && entry->popplerPage &&
+                                               static_cast<size_t>(entry->popplerPage->getPageId()) == pdfPageNo;
+                                    }),
+                     this->data.end());
+}
+
 auto PdfCache::lookup(size_t pdfPageNo) const -> const PdfCacheEntry* {
     for (auto& e: this->data) {
         if (static_cast<size_t>(e->popplerPage->getPageId()) == pdfPageNo) {
@@ -68,8 +90,21 @@ auto PdfCache::lookup(size_t pdfPageNo) const -> const PdfCacheEntry* {
 }
 
 auto PdfCache::cache(XojPdfPageSPtr popplerPage, xoj::view::Mask&& buffer) -> const PdfCacheEntry* {
-    if (this->data.size() > this->maxSize) {
-        this->data.resize(this->maxSize);
+    const auto pageId = popplerPage ? popplerPage->getPageId() : -1;
+
+    this->data.erase(std::remove_if(this->data.begin(), this->data.end(),
+                                    [pageId](const auto& entry) {
+                                        return entry && entry->popplerPage && entry->popplerPage->getPageId() == pageId;
+                                    }),
+                     this->data.end());
+
+    if (this->maxSize == 0) {
+        this->data.clear();
+        return nullptr;
+    }
+
+    if (this->data.size() >= this->maxSize) {
+        this->data.resize(this->maxSize - 1);
     }
 
     this->data.emplace_front(
@@ -86,12 +121,10 @@ void PdfCache::render(cairo_t* cr, size_t pdfPageNo, double zoom, double pageWid
     bool needsRefresh = cacheResult == nullptr;
 
     if (!needsRefresh) {
-        double averagedZoom = (zoom + cacheResult->buffer.getZoom()) / 2.0;
-        double percentZoomChange = std::abs(cacheResult->buffer.getZoom() - zoom) * 100.0 / averagedZoom;
-
         // If we do have a cached result, is its rendering quality
         // acceptable for our current zoom?
-        needsRefresh = (zoom > 1.0 && percentZoomChange > this->zoomRefreshThreshold);
+        needsRefresh = (zoom > 1.0 &&
+                        getPercentZoomChange(cacheResult->buffer.getZoom(), zoom) > this->zoomRefreshThreshold);
     }
 
     if (needsRefresh) {
@@ -108,7 +141,12 @@ void PdfCache::render(cairo_t* cr, size_t pdfPageNo, double zoom, double pageWid
         xoj::view::Mask buffer(cairo_get_target(cr), Range(0, 0, popplerPage->getWidth(), popplerPage->getHeight()),
                                renderZoom, CAIRO_CONTENT_COLOR_ALPHA);
         popplerPage->render(buffer.get());
-        cacheResult = cache(popplerPage, std::move(buffer));
+        if (this->maxSize == 0) {
+            buffer.paintTo(cr);
+            return;
+        } else {
+            cacheResult = cache(popplerPage, std::move(buffer));
+        }
     }
 
     cacheResult->buffer.paintTo(cr);

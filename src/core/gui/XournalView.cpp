@@ -4,6 +4,7 @@
 #include <iterator>   // for begin
 #include <memory>     // for unique_ptr, make_unique
 #include <optional>   // for optional
+#include <unordered_set>
 
 #include <gdk/gdk.h>         // for GdkEventKey, GDK_SHIF...
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_Page_Down
@@ -55,10 +56,14 @@ constexpr int SMALL_MOVE_AMOUNT = 1;
 constexpr int LARGE_MOVE_AMOUNT = 10;
 
 std::pair<size_t, size_t> XournalView::preloadPageBounds(size_t page, size_t maxPage) {
+    if (page == npos || page >= maxPage) {
+        return {0, 0};
+    }
+
     const size_t preloadBefore = this->control->getSettings()->getPreloadPagesBefore();
     const size_t preloadAfter = this->control->getSettings()->getPreloadPagesAfter();
     const size_t lower = page > preloadBefore ? page - preloadBefore : 0;
-    const size_t upper = std::min(maxPage, page + preloadAfter);
+    const size_t upper = std::min(maxPage, page + preloadAfter + 1);
     return {lower, upper};
 }
 
@@ -120,12 +125,42 @@ auto XournalView::cleanupBufferCache() -> void {
     const auto& [pagesLower, pagesUpper] = this->preloadPageBounds(this->currentPage, this->viewPages.size());
     xoj_assert(pagesLower <= pagesUpper);
 
+    std::unordered_set<size_t> retainedPdfPages;
+    std::unordered_set<size_t> evictedPdfPages;
+
+    // Collect retained PDF pages first so shared PDF backgrounds are kept as long as
+    // at least one visible or preloaded XojPageView still refers to them.
     for (size_t i = 0; i < this->viewPages.size(); i++) {
         auto&& page = this->viewPages[i];
-        const size_t pageNum = i + 1;
-        const bool isPreload = pagesLower <= pageNum && pageNum <= pagesUpper;
-        if (!isPreload && !page->isVisible() && page->hasBuffer()) {
+        const bool isPreload = pagesLower <= i && i < pagesUpper;
+        const bool shouldRetain = isPreload || page->isVisible();
+        const size_t pdfPageNo = page->getPage()->getPdfPageNr();
+
+        if (shouldRetain) {
+            if (pdfPageNo != npos) {
+                retainedPdfPages.insert(pdfPageNo);
+            }
+        }
+    }
+
+    for (size_t i = 0; i < this->viewPages.size(); i++) {
+        auto&& page = this->viewPages[i];
+        const bool isPreload = pagesLower <= i && i < pagesUpper;
+        const bool shouldRetain = isPreload || page->isVisible();
+        const size_t pdfPageNo = page->getPage()->getPdfPageNr();
+
+        if (shouldRetain) {
+            continue;
+        }
+
+        if (page->hasBuffer()) {
             page->deleteViewBuffer();
+        }
+
+        if (this->cache && pdfPageNo != npos && retainedPdfPages.find(pdfPageNo) == retainedPdfPages.end() &&
+            evictedPdfPages.find(pdfPageNo) == evictedPdfPages.end()) {
+            this->cache->evict(pdfPageNo);
+            evictedPdfPages.insert(pdfPageNo);
         }
     }
 }

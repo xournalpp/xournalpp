@@ -61,6 +61,11 @@ public:
     void updateSettings(Settings* settings);
 
     /**
+     * @brief Remove the cached rendering of a specific PDF page.
+     */
+    void evict(size_t pdfPageNo);
+
+    /**
      * @brief Renders an error background, for when the pdf page cannot be rendered
      */
     static void renderMissingPdfPage(cairo_t* cr, double pageWidth, double pageHeight);
