@@ -123,8 +123,8 @@ void PdfCache::render(cairo_t* cr, size_t pdfPageNo, double zoom, double pageWid
     if (!needsRefresh) {
         // If we do have a cached result, is its rendering quality
         // acceptable for our current zoom?
-        needsRefresh = (zoom > 1.0 &&
-                        getPercentZoomChange(cacheResult->buffer.getZoom(), zoom) > this->zoomRefreshThreshold);
+        needsRefresh =
+                (zoom > 1.0 && getPercentZoomChange(cacheResult->buffer.getZoom(), zoom) > this->zoomRefreshThreshold);
     }
 
     if (needsRefresh) {
