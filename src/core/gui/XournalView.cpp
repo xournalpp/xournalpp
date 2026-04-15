@@ -126,10 +126,7 @@ auto XournalView::cleanupBufferCache() -> void {
     xoj_assert(pagesLower <= pagesUpper);
 
     std::unordered_set<size_t> retainedPdfPages;
-    std::unordered_set<size_t> evictedPdfPages;
 
-    // Collect retained PDF pages first so shared PDF backgrounds are kept as long as
-    // at least one visible or preloaded XojPageView still refers to them.
     for (size_t i = 0; i < this->viewPages.size(); i++) {
         auto&& page = this->viewPages[i];
         const bool isPreload = pagesLower <= i && i < pagesUpper;
@@ -140,28 +137,16 @@ auto XournalView::cleanupBufferCache() -> void {
             if (pdfPageNo != npos) {
                 retainedPdfPages.insert(pdfPageNo);
             }
-        }
-    }
-
-    for (size_t i = 0; i < this->viewPages.size(); i++) {
-        auto&& page = this->viewPages[i];
-        const bool isPreload = pagesLower <= i && i < pagesUpper;
-        const bool shouldRetain = isPreload || page->isVisible();
-        const size_t pdfPageNo = page->getPage()->getPdfPageNr();
-
-        if (shouldRetain) {
             continue;
         }
 
         if (page->hasBuffer()) {
             page->deleteViewBuffer();
         }
+    }
 
-        if (this->cache && pdfPageNo != npos && retainedPdfPages.find(pdfPageNo) == retainedPdfPages.end() &&
-            evictedPdfPages.find(pdfPageNo) == evictedPdfPages.end()) {
-            this->cache->evict(pdfPageNo);
-            evictedPdfPages.insert(pdfPageNo);
-        }
+    if (this->cache) {
+        this->cache->evictAllExcept(retainedPdfPages);
     }
 }
 

@@ -68,15 +68,21 @@ void PdfCache::updateSettings(Settings* settings) {
     }
 }
 
-void PdfCache::evict(size_t pdfPageNo) {
+void PdfCache::evictAllExcept(const std::unordered_set<size_t>& retainedPdfPages) {
     std::lock_guard<std::mutex> lock(this->renderMutex);
 
-    this->data.erase(std::remove_if(this->data.begin(), this->data.end(),
-                                    [pdfPageNo](const auto& entry) {
-                                        return entry && entry->popplerPage &&
-                                               static_cast<size_t>(entry->popplerPage->getPageId()) == pdfPageNo;
-                                    }),
-                     this->data.end());
+    for (auto& entry: this->data) {
+        if (!entry || !entry->popplerPage) {
+            continue;
+        }
+
+        const size_t pdfPageNo = static_cast<size_t>(entry->popplerPage->getPageId());
+        if (retainedPdfPages.find(pdfPageNo) == retainedPdfPages.end()) {
+            entry.reset();
+        }
+    }
+
+    this->data.erase(std::remove(this->data.begin(), this->data.end(), nullptr), this->data.end());
 }
 
 auto PdfCache::lookup(size_t pdfPageNo) const -> const PdfCacheEntry* {

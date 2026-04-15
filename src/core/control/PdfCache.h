@@ -14,6 +14,7 @@
 #include <cstddef>  // for size_t
 #include <deque>    // for deque
 #include <mutex>    // for mutex
+#include <unordered_set>
 
 #include <cairo.h>  // for cairo_t, cairo_surface_t
 
@@ -61,9 +62,9 @@ public:
     void updateSettings(Settings* settings);
 
     /**
-     * @brief Remove the cached rendering of a specific PDF page.
+     * @brief Remove cached renderings for PDF pages that are not retained.
      */
-    void evict(size_t pdfPageNo);
+    void evictAllExcept(const std::unordered_set<size_t>& retainedPdfPages);
 
     /**
      * @brief Renders an error background, for when the pdf page cannot be rendered
