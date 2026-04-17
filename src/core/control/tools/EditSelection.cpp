@@ -263,9 +263,9 @@ EditSelection::~EditSelection() {
 void EditSelection::clampSelectionToPage() {
     constexpr double MIN_OVERLAP = 5.0;  // pt
     const PageRef page = this->view->getPage();
-    const auto [dx, dy] = this->contents->computePageClampOffset(this->getRect(), this->snappedBounds,
-                                                                 this->preserveAspectRatio, page->getWidth(),
-                                                                 page->getHeight(), MIN_OVERLAP);
+    const auto [dx, dy] =
+            this->contents->computePageClampOffset(this->getRect(), this->snappedBounds, this->preserveAspectRatio,
+                                                   page->getWidth(), page->getHeight(), MIN_OVERLAP);
 
     if (dx != 0.0 || dy != 0.0) {
         this->x += dx;
