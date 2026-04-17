@@ -11,6 +11,7 @@
 
 #include "control/settings/Settings.h"  // for Settings
 #include "pdf/base/XojPdfDocument.h"    // for XojPdfDocument
+#include "util/Assert.h"                // for xoj_assert
 #include "util/Range.h"                 // for Range
 #include "util/i18n.h"                  // for _
 #include "util/safe_casts.h"            // for as_unsigned
@@ -72,9 +73,8 @@ void PdfCache::evictAllExcept(const std::unordered_set<size_t>& retainedPdfPages
     std::lock_guard<std::mutex> lock(this->renderMutex);
 
     for (auto& entry: this->data) {
-        if (!entry || !entry->popplerPage) {
-            continue;
-        }
+        xoj_assert(entry);
+        xoj_assert(entry->popplerPage);
 
         const size_t pdfPageNo = static_cast<size_t>(entry->popplerPage->getPageId());
         if (retainedPdfPages.find(pdfPageNo) == retainedPdfPages.end()) {
@@ -96,13 +96,15 @@ auto PdfCache::lookup(size_t pdfPageNo) const -> const PdfCacheEntry* {
 }
 
 auto PdfCache::cache(XojPdfPageSPtr popplerPage, xoj::view::Mask&& buffer) -> const PdfCacheEntry* {
-    const auto pageId = popplerPage ? popplerPage->getPageId() : -1;
+    xoj_assert(popplerPage);
+    const auto pageId = popplerPage->getPageId();
 
-    this->data.erase(std::remove_if(this->data.begin(), this->data.end(),
-                                    [pageId](const auto& entry) {
-                                        return entry && entry->popplerPage && entry->popplerPage->getPageId() == pageId;
-                                    }),
-                     this->data.end());
+    auto existingIt = std::find_if(this->data.begin(), this->data.end(), [pageId](const auto& entry) {
+        return entry->popplerPage->getPageId() == pageId;
+    });
+    if (existingIt != this->data.end()) {
+        this->data.erase(existingIt);
+    }
 
     if (this->maxSize == 0) {
         this->data.clear();
