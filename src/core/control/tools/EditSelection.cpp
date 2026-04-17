@@ -260,6 +260,21 @@ EditSelection::~EditSelection() {
     finalizeSelection();
 }
 
+void EditSelection::clampSelectionToPage() {
+    constexpr double MIN_OVERLAP = 20.0;  // pt
+    const PageRef page = this->view->getPage();
+    const auto [dx, dy] = this->contents->computePageClampOffset(this->getRect(), this->snappedBounds,
+                                                                 this->preserveAspectRatio, page->getWidth(),
+                                                                 page->getHeight(), MIN_OVERLAP);
+
+    if (dx != 0.0 || dy != 0.0) {
+        this->x += dx;
+        this->y += dy;
+        this->snappedBounds.x += dx;
+        this->snappedBounds.y += dy;
+    }
+}
+
 /**
  * Finishes all pending changes, move the elements, scale the elements and add
  * them to new layer if any or to the old if no new layer
@@ -267,75 +282,6 @@ EditSelection::~EditSelection() {
 void EditSelection::finalizeSelection() {
     auto insertOrder =
             this->contents->makeMoveEffective(this->getRect(), this->snappedBounds, this->preserveAspectRatio);
-
-    {
-        // Ensure every element keeps at least MIN_OVERLAP pt on the page.
-        //
-        // Each element imposes two constraints on the horizontal shift dx:
-        // - Not too far left:  rect.x + rect.w + dx >= overlap
-        // - Not too far right: rect.x + dx <= pageW - overlap
-        //
-        // dxMin = tightest lower bound across all elements (furthest off-left element)
-        // dxMax = tightest upper bound across all elements (furthest off-right element)
-        //
-        // If dxMin <= 0 <= dxMax: all elements are on-page, dx = 0.
-        // If dxMin > 0: elements are off the left, shift right by dxMin.
-        // If dxMax < 0: elements are off the right, shift left by |dxMax|.
-        // If dxMin > dxMax: elements span wider than the page, center them.
-        //
-        // Y axis works identically.
-
-        constexpr double MIN_OVERLAP = 20.0;  // pt
-        const PageRef page = this->view->getPage();
-        const double pageWidth = page->getWidth();
-        const double pageHeight = page->getHeight();
-
-        constexpr double INF = std::numeric_limits<double>::infinity();
-        double dxMin = -INF;
-        double dxMax = INF;
-        double dyMin = -INF;
-        double dyMax = INF;
-
-        for (const auto& [e, _]: insertOrder) {
-            const auto rect = e->boundingRect();
-            const double keepOnPageX = std::min(MIN_OVERLAP, rect.width);
-            const double keepOnPageY = std::min(MIN_OVERLAP, rect.height);
-
-            dxMin = std::max(dxMin, keepOnPageX - rect.x - rect.width);
-            dxMax = std::min(dxMax, pageWidth - keepOnPageX - rect.x);
-
-            dyMin = std::max(dyMin, keepOnPageY - rect.y - rect.height);
-            dyMax = std::min(dyMax, pageHeight - keepOnPageY - rect.y);
-        }
-
-        double dx = 0.0;
-        if (dxMin > dxMax) {
-            dx = (dxMin + dxMax) / 2;
-        } else if (dxMin > 0) {
-            dx = dxMin;
-        } else if (dxMax < 0) {
-            dx = dxMax;
-        }
-
-        double dy = 0.0;
-        if (dyMin > dyMax) {
-            dy = (dyMin + dyMax) / 2;
-        } else if (dyMin > 0) {
-            dy = dyMin;
-        } else if (dyMax < 0) {
-            dy = dyMax;
-        }
-
-        if (dx != 0.0 || dy != 0.0) {
-            for (auto& [e, _]: insertOrder) {
-                e->move(dx, dy);
-            }
-            this->x += dx;
-            this->y += dy;
-            this->snappedBounds.x += dx;
-            this->snappedBounds.y += dy;
-        }
-    }
 
     auto* doc = view->getXournal()->getControl()->getDocument();
     doc->lock();
@@ -571,13 +517,15 @@ void EditSelection::mouseUp() {
     this->sourcePage = page;
     this->sourceLayer = layer;
 
+    const bool wasEdgePanning = this->isEdgePanning();
+    this->setEdgePan(false);
+
+    clampSelectionToPage();
     this->contents->updateContent(this->getRect(), this->snappedBounds, this->rotation, this->preserveAspectRatio,
                                   layer, page, this->undo, this->mouseDownType);
 
     this->mouseDownType = CURSOR_SELECTION_NONE;
 
-    const bool wasEdgePanning = this->isEdgePanning();
-    this->setEdgePan(false);
     updateMatrix();
     if (wasEdgePanning) {
         this->ensureWithinVisibleArea();

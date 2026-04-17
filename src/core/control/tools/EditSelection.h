@@ -326,6 +326,8 @@ private:
      */
     void finalizeSelection();
 
+    void clampSelectionToPage();
+
     /**
      * Gets the PageView under the cursor
      */

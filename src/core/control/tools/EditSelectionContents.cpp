@@ -382,6 +382,82 @@ InsertionOrder EditSelectionContents::makeMoveEffective(const xoj::util::Rectang
     return std::move(this->insertionOrder);
 }
 
+auto EditSelectionContents::computePageClampOffset(const xoj::util::Rectangle<double>& bounds,
+                                                   const xoj::util::Rectangle<double>& snappedBounds,
+                                                   bool preserveAspectRatio, double pageWidth, double pageHeight,
+                                                   double minOverlap) const -> std::pair<double, double> {
+    if (this->insertionOrder.empty()) {
+        return {0.0, 0.0};
+    }
+
+    double fx = bounds.width / this->originalBounds.width;
+    double fy = bounds.height / this->originalBounds.height;
+
+    if (preserveAspectRatio) {
+        double f = (fx + fy) / 2;
+        fx = f;
+        fy = f;
+    }
+
+    bool scale = (bounds.width != this->originalBounds.width || bounds.height != this->originalBounds.height);
+    bool rotate = (std::abs(this->rotation) > std::numeric_limits<double>::epsilon());
+
+    double mx = bounds.x - this->originalBounds.x;
+    double my = bounds.y - this->originalBounds.y;
+    bool move = mx != 0 || my != 0;
+
+    constexpr double INF = std::numeric_limits<double>::infinity();
+    double dxMin = -INF;
+    double dxMax = INF;
+    double dyMin = -INF;
+    double dyMax = INF;
+
+    for (const auto& [e, _]: this->insertionOrder) {
+        auto transformed = e->clone();
+
+        if (move) {
+            transformed->move(mx, my);
+        }
+        if (scale) {
+            transformed->scale(bounds.x, bounds.y, fx, fy, 0, this->restoreLineWidth);
+        }
+        if (rotate) {
+            transformed->rotate(snappedBounds.x + this->lastSnappedBounds.width / 2,
+                                snappedBounds.y + this->lastSnappedBounds.height / 2, this->rotation);
+        }
+
+        const auto rect = transformed->boundingRect();
+        const double keepOnPageX = std::min(minOverlap, rect.width);
+        const double keepOnPageY = std::min(minOverlap, rect.height);
+
+        dxMin = std::max(dxMin, keepOnPageX - rect.x - rect.width);
+        dxMax = std::min(dxMax, pageWidth - keepOnPageX - rect.x);
+
+        dyMin = std::max(dyMin, keepOnPageY - rect.y - rect.height);
+        dyMax = std::min(dyMax, pageHeight - keepOnPageY - rect.y);
+    }
+
+    double dx = 0.0;
+    if (dxMin > dxMax) {
+        dx = (dxMin + dxMax) / 2;
+    } else if (dxMin > 0) {
+        dx = dxMin;
+    } else if (dxMax < 0) {
+        dx = dxMax;
+    }
+
+    double dy = 0.0;
+    if (dyMin > dyMax) {
+        dy = (dyMin + dyMax) / 2;
+    } else if (dyMin > 0) {
+        dy = dyMin;
+    } else if (dyMax < 0) {
+        dy = dyMax;
+    }
+
+    return {dx, dy};
+}
+
 auto EditSelectionContents::getOriginalX() const -> double { return this->originalBounds.x; }
 
 auto EditSelectionContents::getOriginalY() const -> double { return this->originalBounds.y; }
