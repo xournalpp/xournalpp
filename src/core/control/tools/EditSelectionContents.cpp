@@ -390,19 +390,6 @@ auto EditSelectionContents::computePageClampOffset(const xoj::util::Rectangle<do
         return {0.0, 0.0};
     }
 
-    // Fast path: if the overall transformed content box is already fully inside the page
-    // with the required overlap, every element is necessarily inside as well.
-    const double keepOnPageX = std::min(minOverlap, std::abs(snappedBounds.width));
-    const double keepOnPageY = std::min(minOverlap, std::abs(snappedBounds.height));
-    const double minX = std::min(snappedBounds.x, snappedBounds.x + snappedBounds.width);
-    const double maxX = std::max(snappedBounds.x, snappedBounds.x + snappedBounds.width);
-    const double minY = std::min(snappedBounds.y, snappedBounds.y + snappedBounds.height);
-    const double maxY = std::max(snappedBounds.y, snappedBounds.y + snappedBounds.height);
-    if (minX >= keepOnPageX && maxX <= pageWidth - keepOnPageX && minY >= keepOnPageY &&
-        maxY <= pageHeight - keepOnPageY) {
-        return {0.0, 0.0};
-    }
-
     double fx = bounds.width / this->originalBounds.width;
     double fy = bounds.height / this->originalBounds.height;
 
@@ -415,6 +402,33 @@ auto EditSelectionContents::computePageClampOffset(const xoj::util::Rectangle<do
     bool scale = (bounds.width != this->originalBounds.width || bounds.height != this->originalBounds.height);
     bool rotate = (std::abs(this->rotation) > std::numeric_limits<double>::epsilon());
 
+    // For non-rotated selections, the transformed overall content box is both exact
+    // and sufficient for clamping.
+    if (!rotate) {
+        const double keepOnPageX = std::min(minOverlap, std::abs(snappedBounds.width));
+        const double keepOnPageY = std::min(minOverlap, std::abs(snappedBounds.height));
+        const double minX = std::min(snappedBounds.x, snappedBounds.x + snappedBounds.width);
+        const double maxX = std::max(snappedBounds.x, snappedBounds.x + snappedBounds.width);
+        const double minY = std::min(snappedBounds.y, snappedBounds.y + snappedBounds.height);
+        const double maxY = std::max(snappedBounds.y, snappedBounds.y + snappedBounds.height);
+
+        double dx = 0.0;
+        if (maxX < keepOnPageX) {
+            dx = keepOnPageX - maxX;
+        } else if (minX > pageWidth - keepOnPageX) {
+            dx = pageWidth - keepOnPageX - minX;
+        }
+
+        double dy = 0.0;
+        if (maxY < keepOnPageY) {
+            dy = keepOnPageY - maxY;
+        } else if (minY > pageHeight - keepOnPageY) {
+            dy = pageHeight - keepOnPageY - minY;
+        }
+
+        return {dx, dy};
+    }
+
     double mx = bounds.x - this->originalBounds.x;
     double my = bounds.y - this->originalBounds.y;
     bool move = mx != 0 || my != 0;
@@ -424,6 +438,26 @@ auto EditSelectionContents::computePageClampOffset(const xoj::util::Rectangle<do
     double dxMax = INF;
     double dyMin = -INF;
     double dyMax = INF;
+
+    if (rotate) {
+        const double w = std::abs(snappedBounds.width);
+        const double h = std::abs(snappedBounds.height);
+        const double cx = snappedBounds.x + snappedBounds.width / 2;
+        const double cy = snappedBounds.y + snappedBounds.height / 2;
+        const double rotatedWidth = std::abs(w * std::cos(this->rotation)) + std::abs(h * std::sin(this->rotation));
+        const double rotatedHeight = std::abs(w * std::sin(this->rotation)) + std::abs(h * std::cos(this->rotation));
+        const double minX = cx - rotatedWidth / 2;
+        const double maxX = cx + rotatedWidth / 2;
+        const double minY = cy - rotatedHeight / 2;
+        const double maxY = cy + rotatedHeight / 2;
+        const double keepOnPageX = std::min(minOverlap, rotatedWidth);
+        const double keepOnPageY = std::min(minOverlap, rotatedHeight);
+
+        dxMin = std::max(dxMin, keepOnPageX - minX);
+        dxMax = std::min(dxMax, pageWidth - keepOnPageX - maxX);
+        dyMin = std::max(dyMin, keepOnPageY - minY);
+        dyMax = std::min(dyMax, pageHeight - keepOnPageY - maxY);
+    }
 
     for (const auto& [e, _]: this->insertionOrder) {
         auto transformed = e->clone();
