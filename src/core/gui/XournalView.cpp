@@ -131,9 +131,9 @@ auto XournalView::cleanupBufferCache() -> void {
         auto&& page = this->viewPages[i];
         const bool isPreload = pagesLower <= i && i < pagesUpper;
         const bool shouldRetain = isPreload || page->isVisible();
-        const size_t pdfPageNo = page->getPage()->getPdfPageNr();
 
         if (shouldRetain) {
+            const size_t pdfPageNo = page->getPage()->getPdfPageNr();
             if (pdfPageNo != npos) {
                 retainedPdfPages.insert(pdfPageNo);
             }
