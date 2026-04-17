@@ -390,6 +390,19 @@ auto EditSelectionContents::computePageClampOffset(const xoj::util::Rectangle<do
         return {0.0, 0.0};
     }
 
+    // Fast path: if the overall transformed content box is already fully inside the page
+    // with the required overlap, every element is necessarily inside as well.
+    const double keepOnPageX = std::min(minOverlap, std::abs(snappedBounds.width));
+    const double keepOnPageY = std::min(minOverlap, std::abs(snappedBounds.height));
+    const double minX = std::min(snappedBounds.x, snappedBounds.x + snappedBounds.width);
+    const double maxX = std::max(snappedBounds.x, snappedBounds.x + snappedBounds.width);
+    const double minY = std::min(snappedBounds.y, snappedBounds.y + snappedBounds.height);
+    const double maxY = std::max(snappedBounds.y, snappedBounds.y + snappedBounds.height);
+    if (minX >= keepOnPageX && maxX <= pageWidth - keepOnPageX && minY >= keepOnPageY &&
+        maxY <= pageHeight - keepOnPageY) {
+        return {0.0, 0.0};
+    }
+
     double fx = bounds.width / this->originalBounds.width;
     double fy = bounds.height / this->originalBounds.height;
 
