@@ -158,6 +158,12 @@ void LassoSelector::extendAtPageEdges() {
         return;
     }
 
+    if (bbox.minX > THRESHOLD && bbox.minY > THRESHOLD && bbox.maxX < pageWidth - THRESHOLD &&
+        bbox.maxY < pageHeight - THRESHOLD) {
+        extendedBoundaryPoints.clear();
+        return;
+    }
+
     auto const isOnEdge = [&](BoundaryPoint const& p) -> bool {
         return p.x <= THRESHOLD || p.x >= pageWidth - THRESHOLD || p.y <= THRESHOLD || p.y >= pageHeight - THRESHOLD;
     };
