@@ -13,6 +13,8 @@
 #include "model/XojPage.h"         // for XojPage
 #include "util/safe_casts.h"       // for as_unsigned
 
+static_assert(std::numeric_limits<double>::is_iec559);
+
 Selector::Selector(bool multiLayer):
         multiLayer(multiLayer), viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::SelectorView>>()) {}
 
