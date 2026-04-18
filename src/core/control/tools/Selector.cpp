@@ -91,14 +91,18 @@ void RectangularSelector::extendAtPageEdges() {
     const double pageHeight = page->getHeight();
 
     if (pageWidth > 0 && pageHeight > 0) {
-        if (bbox.minX <= THRESHOLD)
+        if (bbox.minX <= THRESHOLD) {
             bbox.minX = -INF;
-        if (bbox.minY <= THRESHOLD)
+        }
+        if (bbox.minY <= THRESHOLD) {
             bbox.minY = -INF;
-        if (bbox.maxX >= pageWidth - THRESHOLD)
+        }
+        if (bbox.maxX >= pageWidth - THRESHOLD) {
             bbox.maxX = INF;
-        if (bbox.maxY >= pageHeight - THRESHOLD)
+        }
+        if (bbox.maxY >= pageHeight - THRESHOLD) {
             bbox.maxY = INF;
+        }
     }
 }
 
@@ -158,18 +162,18 @@ void LassoSelector::extendAtPageEdges() {
         return p.x <= THRESHOLD || p.x >= pageWidth - THRESHOLD || p.y <= THRESHOLD || p.y >= pageHeight - THRESHOLD;
     };
 
+    auto const extendCoordinate = [&](double value, double pageExtent) -> double {
+        if (value <= THRESHOLD) {
+            return -INF;
+        }
+        if (value >= pageExtent - THRESHOLD) {
+            return INF;
+        }
+        return value;
+    };
+
     auto const project = [&](BoundaryPoint const& p) -> BoundaryPoint {
-        double px = p.x;
-        double py = p.y;
-        if (px <= THRESHOLD)
-            px = -INF;
-        if (px >= pageWidth - THRESHOLD)
-            px = INF;
-        if (py <= THRESHOLD)
-            py = -INF;
-        if (py >= pageHeight - THRESHOLD)
-            py = INF;
-        return {px, py};
+        return {extendCoordinate(p.x, pageWidth), extendCoordinate(p.y, pageHeight)};
     };
 
     extendedBoundaryPoints.clear();
