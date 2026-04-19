@@ -162,4 +162,3 @@ void PdfCache::renderMissingPdfPage(cairo_t* cr, double pageWidth, double pageHe
     cairo_move_to(cr, pageWidth / 2 - extents.width / 2, pageHeight / 2 - extents.height / 2);
     cairo_text_path(cr, strMissing.c_str());
 }
-
