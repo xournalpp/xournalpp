@@ -152,6 +152,7 @@ void LassoSelector::extendAtPageEdges() {
     const double pageWidth = page->getWidth();
     const double pageHeight = page->getHeight();
 
+    // Skip extension when the page geometry is invalid or the lasso cannot form a polygon.
     if (pageWidth <= 0 || pageHeight <= 0 || boundaryPoints.size() <= 2) {
         return;
     }
@@ -167,6 +168,7 @@ void LassoSelector::extendAtPageEdges() {
                p.y <= EDGE_TOUCHING_THRESHOLD || p.y >= pageHeight - EDGE_TOUCHING_THRESHOLD;
     };
 
+    // Project edge-touching coordinates to infinity while leaving interior coordinates unchanged.
     auto const extendCoordinate = [&](double value, double pageExtent) -> double {
         if (value <= EDGE_TOUCHING_THRESHOLD) {
             return -INF;
@@ -181,14 +183,17 @@ void LassoSelector::extendAtPageEdges() {
         return {extendCoordinate(p.x, pageWidth), extendCoordinate(p.y, pageHeight)};
     };
 
+    // Build the final polygon in a scratch buffer because one input point may emit multiple output points.
     std::vector<BoundaryPoint> newBoundaryPoints;
     newBoundaryPoints.reserve(boundaryPoints.size() * 2);
 
-    auto const appendExtendedPoint = [&](BoundaryPoint const& p) {
+    // Keep the extended polygon and bbox in sync as points are emitted.
+    auto const appendExtendedPoint = [&](BoundaryPoint const& p) -> void {
         newBoundaryPoints.push_back(p);
         bbox.addPoint(p.x, p.y);
     };
 
+    // Walk the original lasso and splice in projected points for runs that touch the page edge.
     auto const n = boundaryPoints.size();
     for (size_t i = 0; i < n; i++) {
         auto const& current = boundaryPoints[i];
@@ -217,6 +222,7 @@ void LassoSelector::extendAtPageEdges() {
         }
     }
 
+    // Replace the original lasso with the extended polygon used for containment checks.
     boundaryPoints = std::move(newBoundaryPoints);
 }
 
