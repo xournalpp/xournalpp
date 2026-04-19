@@ -56,10 +56,6 @@ constexpr int SMALL_MOVE_AMOUNT = 1;
 constexpr int LARGE_MOVE_AMOUNT = 10;
 
 std::pair<size_t, size_t> XournalView::preloadPageBounds(size_t page, size_t maxPage) {
-    if (page == npos || page >= maxPage) {
-        return {0, 0};
-    }
-
     const size_t preloadBefore = this->control->getSettings()->getPreloadPagesBefore();
     const size_t preloadAfter = this->control->getSettings()->getPreloadPagesAfter();
     const size_t lower = page > preloadBefore ? page - preloadBefore : 0;
