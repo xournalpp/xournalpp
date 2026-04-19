@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-29 07:46+0000\n"
-"PO-Revision-Date: 2026-04-05 05:02\n"
+"POT-Creation-Date: 2026-04-16 09:31+0000\n"
+"PO-Revision-Date: 2026-04-19 05:13\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1386,7 +1386,7 @@ msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr "Fehler beim Laden der Menüleiste XML-Datei (versuche \"{1}\" zu laden)"
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:369
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:384
 msgid "Apply to all pages"
 msgstr "Auf alle Seiten anwenden"
 
@@ -1430,11 +1430,11 @@ msgstr "Ein einziges Dokument verwerfen"
 msgid "Copy current page"
 msgstr "Kopiere aktuelle Seite"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:261
 msgid "Copy current background"
 msgstr "Aktuellen Hintergrund kopieren"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:303
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:332
 msgid "Apply to current page"
 msgstr "Auf aktuelle Seite anwenden"
 
