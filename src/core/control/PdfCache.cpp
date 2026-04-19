@@ -38,12 +38,10 @@ public:
     xoj::view::Mask buffer;
 };
 
-namespace {
-double getPercentZoomChange(double oldZoom, double newZoom) {
+static double getPercentZoomChange(double oldZoom, double newZoom) {
     double averagedZoom = (oldZoom + newZoom) / 2.0;
     return std::abs(oldZoom - newZoom) * 100.0 / averagedZoom;
 }
-}  // namespace
 
 PdfCache::PdfCache(const XojPdfDocument& doc, Settings* settings): pdfDocument(doc) { updateSettings(settings); }
 
