@@ -104,7 +104,4 @@ public:
     const std::vector<BoundaryPoint>& getBoundary() const override;
 
     void extendAtPageEdges() override;
-
-private:
-    std::vector<BoundaryPoint> extendedBoundaryPoints;
 };

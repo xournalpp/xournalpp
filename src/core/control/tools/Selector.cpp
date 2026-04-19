@@ -160,7 +160,6 @@ void LassoSelector::extendAtPageEdges() {
 
     if (bbox.minX > THRESHOLD && bbox.minY > THRESHOLD && bbox.maxX < pageWidth - THRESHOLD &&
         bbox.maxY < pageHeight - THRESHOLD) {
-        extendedBoundaryPoints.clear();
         return;
     }
 
@@ -182,11 +181,11 @@ void LassoSelector::extendAtPageEdges() {
         return {extendCoordinate(p.x, pageWidth), extendCoordinate(p.y, pageHeight)};
     };
 
-    extendedBoundaryPoints.clear();
-    extendedBoundaryPoints.reserve(boundaryPoints.size() * 2);
+    std::vector<BoundaryPoint> newBoundaryPoints;
+    newBoundaryPoints.reserve(boundaryPoints.size() * 2);
 
     auto const appendExtendedPoint = [&](BoundaryPoint const& p) {
-        extendedBoundaryPoints.push_back(p);
+        newBoundaryPoints.push_back(p);
         bbox.addPoint(p.x, p.y);
     };
 
@@ -217,25 +216,26 @@ void LassoSelector::extendAtPageEdges() {
             appendExtendedPoint(project(current));
         }
     }
+
+    boundaryPoints = std::move(newBoundaryPoints);
 }
 
 auto LassoSelector::contains(double x, double y) const -> bool {
-    auto const& pts = extendedBoundaryPoints.empty() ? boundaryPoints : extendedBoundaryPoints;
-
-    if (pts.size() <= 2 || !bbox.contains(x, y)) {
+    if (boundaryPoints.size() <= 2 || !bbox.contains(x, y)) {
         return false;
     }
 
     int hits = 0;
 
-    const BoundaryPoint& last = pts.back();
+    const BoundaryPoint& last = boundaryPoints.back();
 
     double lastx = last.x;
     double lasty = last.y;
     double curx = NAN, cury = NAN;
 
     // Walk the edges of the polygon
-    for (auto pointIterator = pts.begin(); pointIterator != pts.end(); lastx = curx, lasty = cury, ++pointIterator) {
+    for (auto pointIterator = boundaryPoints.begin(); pointIterator != boundaryPoints.end();
+         lastx = curx, lasty = cury, ++pointIterator) {
         curx = pointIterator->x;
         cury = pointIterator->y;
 
