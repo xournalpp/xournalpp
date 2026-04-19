@@ -85,22 +85,21 @@ RectangularSelector::~RectangularSelector() = default;
 auto RectangularSelector::contains(double x, double y) const -> bool { return bbox.contains(x, y); }
 
 void RectangularSelector::extendAtPageEdges() {
-    constexpr double THRESHOLD = 1.0;  // pt
     constexpr double INF = std::numeric_limits<double>::infinity();
     const double pageWidth = page->getWidth();
     const double pageHeight = page->getHeight();
 
     if (pageWidth > 0 && pageHeight > 0) {
-        if (bbox.minX <= THRESHOLD) {
+        if (bbox.minX <= EDGE_TOUCHING_THRESHOLD) {
             bbox.minX = -INF;
         }
-        if (bbox.minY <= THRESHOLD) {
+        if (bbox.minY <= EDGE_TOUCHING_THRESHOLD) {
             bbox.minY = -INF;
         }
-        if (bbox.maxX >= pageWidth - THRESHOLD) {
+        if (bbox.maxX >= pageWidth - EDGE_TOUCHING_THRESHOLD) {
             bbox.maxX = INF;
         }
-        if (bbox.maxY >= pageHeight - THRESHOLD) {
+        if (bbox.maxY >= pageHeight - EDGE_TOUCHING_THRESHOLD) {
             bbox.maxY = INF;
         }
     }
@@ -149,7 +148,6 @@ void LassoSelector::currentPos(double x, double y) {
 }
 
 void LassoSelector::extendAtPageEdges() {
-    constexpr double THRESHOLD = 1.0;  // pt
     constexpr double INF = std::numeric_limits<double>::infinity();
     const double pageWidth = page->getWidth();
     const double pageHeight = page->getHeight();
@@ -158,20 +156,22 @@ void LassoSelector::extendAtPageEdges() {
         return;
     }
 
-    if (bbox.minX > THRESHOLD && bbox.minY > THRESHOLD && bbox.maxX < pageWidth - THRESHOLD &&
-        bbox.maxY < pageHeight - THRESHOLD) {
+    // Fast path: Most lassos stay fully inside the page, so avoid the projection work in that common case.
+    if (bbox.minX > EDGE_TOUCHING_THRESHOLD && bbox.minY > EDGE_TOUCHING_THRESHOLD &&
+        bbox.maxX < pageWidth - EDGE_TOUCHING_THRESHOLD && bbox.maxY < pageHeight - EDGE_TOUCHING_THRESHOLD) {
         return;
     }
 
     auto const isOnEdge = [&](BoundaryPoint const& p) -> bool {
-        return p.x <= THRESHOLD || p.x >= pageWidth - THRESHOLD || p.y <= THRESHOLD || p.y >= pageHeight - THRESHOLD;
+        return p.x <= EDGE_TOUCHING_THRESHOLD || p.x >= pageWidth - EDGE_TOUCHING_THRESHOLD ||
+               p.y <= EDGE_TOUCHING_THRESHOLD || p.y >= pageHeight - EDGE_TOUCHING_THRESHOLD;
     };
 
     auto const extendCoordinate = [&](double value, double pageExtent) -> double {
-        if (value <= THRESHOLD) {
+        if (value <= EDGE_TOUCHING_THRESHOLD) {
             return -INF;
         }
-        if (value >= pageExtent - THRESHOLD) {
+        if (value >= pageExtent - EDGE_TOUCHING_THRESHOLD) {
             return INF;
         }
         return value;

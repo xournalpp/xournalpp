@@ -57,6 +57,11 @@ public:
      */
     auto releaseElements() -> InsertionOrderRef;
 
+    /**
+     * If the selector touches page edges, the selection area is extended to infinity along the touching edge.
+     * Define a threshold in pt for the vicinity the selection area must be in to trigger extension.
+     */
+    static constexpr double EDGE_TOUCHING_THRESHOLD = 1.0;  // pt
 private:
 protected:
     std::vector<BoundaryPoint> boundaryPoints;
