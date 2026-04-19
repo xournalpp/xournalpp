@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-01 19:40+0000\n"
-"PO-Revision-Date: 2026-04-05 05:02\n"
+"PO-Revision-Date: 2026-04-19 05:13\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -28,11 +28,11 @@ msgstr "檔案系統錯誤：{1}"
 
 #: ../src/core/control/Control.cpp:247
 msgid "Could not remove old autosave file \"{1}\": {2}"
-msgstr ""
+msgstr "無法刪除舊的自動儲存檔案「{1}」：{2}"
 
 #: ../src/core/control/Control.cpp:588
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
-msgstr ""
+msgstr "您已刪除活動工具列，請切換為預設工具列。"
 
 #: ../src/core/control/Control.cpp:608
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
@@ -40,11 +40,11 @@ msgstr "工具條配置\"{1}\"是預置的，要產生一個拷貝到編輯?"
 
 #: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1651
 msgid "Yes"
-msgstr ""
+msgstr "確定"
 
 #: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1651
 msgid "No"
-msgstr ""
+msgstr "取消"
 
 #: ../src/core/control/Control.cpp:839 ../src/core/control/Control.cpp:1879
 #: ../src/core/control/Control.cpp:2207
@@ -76,7 +76,9 @@ msgstr "使用PDF背景"
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
-msgstr ""
+msgstr "您目前的檔案中不包含 PDF 第 {1} 頁。\n"
+"是否要插入此頁面？\n\n"
+"提示：您可以選擇 {2} 來插入 PDF 頁面。"
 
 #: ../src/core/control/Control.cpp:891
 msgid "No pdf pages available to append. You may need to reopen the document first."
@@ -100,27 +102,30 @@ msgstr "檔案: {1}"
 
 #: ../src/core/control/Control.cpp:1570
 msgid "<i>Above error repeated {1} times</i>"
-msgstr ""
+msgstr "<i>上述錯誤已重複出現 {1} 次</i>"
 
 #: ../src/core/control/Control.cpp:1582
 msgid "<i>&lt;{1} more lines of error messages&gt;</i>"
-msgstr ""
+msgstr "<i>&lt;{1} 行以上的錯誤訊息&gt;</i>"
 
 #: ../src/core/control/Control.cpp:1621
 msgid "Error opening file \"{1}\".\n\n"
 "<tt>{2}</tt>\n"
 "<b>{3}</b>"
-msgstr ""
+msgstr "開啟檔案「{1}」時發生錯誤。\n\n"
+"<tt>{2}</tt>\n"
+"<b>{3}</b>"
 
 #: ../src/core/control/Control.cpp:1635
 msgid "There were some errors while loading the file. Some information might have been lost. Do not overwrite your old file unless you are sure everything you need was loaded correctly.\n\n"
 "Error messages:\n"
 "<tt>{1}</tt>"
-msgstr ""
+msgstr "載入檔案時發生錯誤，部分資訊可能已經遺失。除非您確定所有需要的內容都已正確載入，否則請勿覆蓋原有的舊檔。\n\n"
+"錯誤訊息：<tt>{1}</tt>"
 
 #: ../src/core/control/Control.cpp:1653
 msgid "File version mismatch"
-msgstr ""
+msgstr "檔案版本衝突"
 
 #: ../src/core/control/Control.cpp:1654
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
@@ -129,24 +134,25 @@ msgstr "正在開啟的檔案格式版本筆目前Xournal++支持的文件格式
 #: ../src/core/control/Control.cpp:1677
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
+msgstr "讀取 PDF 檔案「{1}」時發生錯誤\n"
+"{2}"
 
 #: ../src/core/control/Control.cpp:1698
 msgid "Error reading PNG file \"{1}\""
-msgstr ""
+msgstr "讀取 PNG 檔案「{1}」時發生錯誤"
 
 #: ../src/core/control/Control.cpp:1733
 msgid "Error reading template file \"{1}\""
-msgstr ""
+msgstr "讀取範本檔案「{1}」時發生錯誤"
 
 #: ../src/core/control/Control.cpp:1752
 msgid "Failed to determine if path exists \"{1}\": {2}"
-msgstr ""
+msgstr "無法確定路徑是否存在「{1}」：{2}"
 
 #: ../src/core/control/Control.cpp:1753
 msgid "That file does not exist:\n"
 "\"{1}\""
-msgstr ""
+msgstr "該檔案不存在：「{1}」"
 
 #: ../src/core/control/Control.cpp:1859
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -313,7 +319,7 @@ msgstr "PDF背景丟失"
 
 #: ../src/core/control/PrintHandler.cpp:122
 msgid "Running print operation failed with {1}"
-msgstr ""
+msgstr "使用{1}進行列印作業失敗"
 
 #: ../src/core/control/XournalMain.cpp:120
 msgid "Failed to delete file: {1}"
@@ -341,7 +347,7 @@ msgstr "還原檔案"
 
 #: ../src/core/control/XournalMain.cpp:158
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "找不到背景檔案「{1}」。該檔案可能已被移動、重新命名或刪除。"
 
 #: ../src/core/control/XournalMain.cpp:173
 msgid "Error loading document: {1}"
@@ -349,15 +355,15 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:206
 msgid "Error exporting image: {1}"
-msgstr ""
+msgstr "匯出影像時發生錯誤：{1}"
 
 #: ../src/core/control/XournalMain.cpp:235
 msgid "Error saving document: {1}"
-msgstr ""
+msgstr "儲存文件時發生錯誤：{1}"
 
 #: ../src/core/control/XournalMain.cpp:265
 msgid "Error exporting PDF: {1}"
-msgstr ""
+msgstr "匯出 PDF 時發生錯誤：{1}"
 
 #: ../src/core/control/XournalMain.cpp:371
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
@@ -505,7 +511,7 @@ msgstr "覆蓋背景失敗：\n"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
 msgid "Export File"
-msgstr ""
+msgstr "匯出檔案"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
 #: ../src/core/gui/dialog/DeviceTestingArea.cpp:181
@@ -783,11 +789,11 @@ msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:296
 msgid "PDF background filename is empty"
-msgstr ""
+msgstr "PDF 背景檔案名稱為空"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:316
 msgid "Discarding unused audio timestamp element. Filename: {1}"
-msgstr ""
+msgstr "捨棄未使用的音訊時間戳記元件。檔案名稱：{1}"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:393
 msgid "Found stroke that contains an odd number of valid coordinates. Discarding the last value"
@@ -799,11 +805,11 @@ msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:410
 msgid "Found stroke with too many pressure points: {1}, expected {2}. Discarding remaining pressure points"
-msgstr ""
+msgstr "偵測到筆劃包含過多壓力點：{1}（預期值為 {2}）。已捨棄剩餘的壓力點。"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:494
 msgid "Ignoring attachment tag under {1}"
-msgstr ""
+msgstr "忽略 {1} 下方的附件標籤"
 
 #: ../src/core/gui/GladeGui.cpp:25
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
@@ -821,7 +827,7 @@ msgstr "加載中..."
 
 #: ../src/core/gui/PageView.cpp:993
 msgid "Scroll to page {1}"
-msgstr ""
+msgstr "捲動至第 {1} 頁"
 
 #: ../src/core/gui/PageView.cpp:995
 msgid "Add missing page"
@@ -829,12 +835,12 @@ msgstr "新增遺失的頁面"
 
 #: ../src/core/gui/SearchBar.cpp:90
 msgid "Text found once on this page"
-msgstr ""
+msgstr "在此頁面中找到一處符合的文字"
 
 #: ../src/core/gui/SearchBar.cpp:92
 #, c-format
 msgid "Text found %zu times on this page"
-msgstr ""
+msgstr "在此頁面中找到 %zu 處符合的文字"
 
 #: ../src/core/gui/SearchBar.cpp:97
 msgid "Text not found"
@@ -846,7 +852,7 @@ msgstr "文本在第{1}頁上找到"
 
 #: ../src/core/gui/SearchBar.cpp:145
 msgid "Text found {1} times on page {2} ({3} of {1})"
-msgstr ""
+msgstr "在第 {2} 頁找到 {1} 處符合的文字（第 {3} 處，共 {1} 處）"
 
 #: ../src/core/gui/SearchBar.cpp:150
 msgid "Text not found, searched on all pages"
@@ -878,7 +884,7 @@ msgstr "GNU 公用授權條款第 2 版或較後版本"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:30
 msgid "Thickness - don't change"
-msgstr ""
+msgstr "粗細 - 請勿變更"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:32
 msgid "Very thin"
@@ -1195,7 +1201,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:99
 msgid "<i>The palettes shown below are obtained from the <a href=\"{1}\">Built-in palettes</a> and <a href=\"{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>下方顯示的調色盤來自<a href=\"{1}\">內建調色盤</a>和<a href=\"{2}\">使用者調色盤</a>目錄：</i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:117
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
@@ -2112,12 +2118,13 @@ msgstr ""
 
 #: ../src/util/PathUtil.cpp:125
 msgid "Could not open file: {1}"
-msgstr ""
+msgstr "無法開啟檔案：{1}"
 
 #: ../src/util/PathUtil.cpp:132
 msgid "Error reading \"{1}\":\n"
 "{2}"
-msgstr ""
+msgstr "讀取「{1}」時發生錯誤：\n"
+"{2}"
 
 #: ../src/util/PathUtil.cpp:409
 msgid "xournalpp-{1}"
@@ -3355,7 +3362,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3343
 msgid "Recolors the drawing area so that light regions get the \"Light Color\" and dark regions get the \"Dark Color\". Other colors are interpolated accordingly. Can be use to implement a dark-mode."
-msgstr ""
+msgstr "重新著色繪圖區域，使淺色區域呈現「淺色」，深色區域呈現「深色」。其他顏色則根據顏色深淺進行內插。可用於執行深色模式。"
 
 #: ../ui/settings.glade:3353
 msgid "Recolor Previews in the Sidebar"
@@ -3363,17 +3370,19 @@ msgstr ""
 
 #: ../ui/settings.glade:3358
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) the same way as the drawing area."
-msgstr ""
+msgstr "將側邊欄（頁面、圖層預覽）中的預覽顏色與繪圖區域的顏色重新著色。"
 
 #: ../ui/settings.glade:3372
 msgid "The color light regions are translated to\n"
 "(use a dark color for a dark-mode)"
-msgstr ""
+msgstr "淺色區域的顏色轉換為：\n"
+"（深色模式使用深色）"
 
 #: ../ui/settings.glade:3387
 msgid "The color dark regions are translated to\n"
 "(use a light color for dark-mode)"
-msgstr ""
+msgstr "深色區域的顏色轉換為：\n"
+"（深色模式使用淺色）"
 
 #: ../ui/settings.glade:3403
 msgid "Dark Color"
@@ -3385,7 +3394,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3430
 msgid "Recoloring (allows theming)"
-msgstr ""
+msgstr "重新著色（允許主題化）"
 
 #: ../ui/settings.glade:3462
 msgid "Cursor icon for pen"
