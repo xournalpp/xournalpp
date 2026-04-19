@@ -13,6 +13,7 @@
 #include "model/XojPage.h"         // for XojPage
 #include "util/safe_casts.h"       // for as_unsigned
 
+// Ensures that `-std::numeric_limits<double>::infinity()` behaves as minus infinity
 static_assert(std::numeric_limits<double>::is_iec559);
 
 Selector::Selector(bool multiLayer):
