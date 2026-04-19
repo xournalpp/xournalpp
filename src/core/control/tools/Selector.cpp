@@ -185,13 +185,18 @@ void LassoSelector::extendAtPageEdges() {
     extendedBoundaryPoints.clear();
     extendedBoundaryPoints.reserve(boundaryPoints.size() * 2);
 
+    auto const appendExtendedPoint = [&](BoundaryPoint const& p) {
+        extendedBoundaryPoints.push_back(p);
+        bbox.addPoint(p.x, p.y);
+    };
+
     auto const n = boundaryPoints.size();
     for (size_t i = 0; i < n; i++) {
         auto const& current = boundaryPoints[i];
         auto const currentOnEdge = isOnEdge(current);
 
         if (!currentOnEdge) {
-            extendedBoundaryPoints.push_back(current);
+            appendExtendedPoint(current);
             continue;
         }
 
@@ -201,21 +206,16 @@ void LassoSelector::extendAtPageEdges() {
 
         if (!prevOnEdge) {
             // Entering an edge run: emit original, then projected
-            extendedBoundaryPoints.push_back(current);
-            extendedBoundaryPoints.push_back(project(current));
+            appendExtendedPoint(current);
+            appendExtendedPoint(project(current));
         } else if (!nextOnEdge) {
             // Leaving an edge run: emit projected, then original
-            extendedBoundaryPoints.push_back(project(current));
-            extendedBoundaryPoints.push_back(current);
+            appendExtendedPoint(project(current));
+            appendExtendedPoint(current);
         } else {
             // Interior of an edge run: emit only projected
-            extendedBoundaryPoints.push_back(project(current));
+            appendExtendedPoint(project(current));
         }
-    }
-
-    // Extend bounding box to infinity where needed
-    for (auto const& p: extendedBoundaryPoints) {
-        bbox.addPoint(p.x, p.y);
     }
 }
 
