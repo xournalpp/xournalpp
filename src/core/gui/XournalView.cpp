@@ -138,9 +138,7 @@ auto XournalView::cleanupBufferCache() -> void {
                 retainedPdfPages.insert(pdfPageNo);
             }
             continue;
-        }
-
-        if (page->hasBuffer()) {
+        } else if (page->hasBuffer()) {
             page->deleteViewBuffer();
         }
     }
