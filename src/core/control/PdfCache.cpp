@@ -94,6 +94,7 @@ auto PdfCache::lookup(size_t pdfPageNo) const -> const PdfCacheEntry* {
 }
 
 auto PdfCache::cache(XojPdfPageSPtr popplerPage, xoj::view::Mask&& buffer) -> const PdfCacheEntry* {
+    xoj_assert(this->maxSize > 0);
     xoj_assert(popplerPage);
     const auto pageId = popplerPage->getPageId();
 
@@ -101,11 +102,6 @@ auto PdfCache::cache(XojPdfPageSPtr popplerPage, xoj::view::Mask&& buffer) -> co
                                    [pageId](const auto& entry) { return entry->popplerPage->getPageId() == pageId; });
     if (existingIt != this->data.end()) {
         this->data.erase(existingIt);
-    }
-
-    if (this->maxSize == 0) {
-        this->data.clear();
-        return nullptr;
     }
 
     if (this->data.size() >= this->maxSize) {
@@ -149,9 +145,9 @@ void PdfCache::render(cairo_t* cr, size_t pdfPageNo, double zoom, double pageWid
         if (this->maxSize == 0) {
             buffer.paintTo(cr);
             return;
-        } else {
-            cacheResult = cache(popplerPage, std::move(buffer));
         }
+
+        cacheResult = cache(popplerPage, std::move(buffer));
     }
 
     cacheResult->buffer.paintTo(cr);
