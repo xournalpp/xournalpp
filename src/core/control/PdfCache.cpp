@@ -99,9 +99,8 @@ auto PdfCache::cache(XojPdfPageSPtr popplerPage, xoj::view::Mask&& buffer) -> co
     xoj_assert(popplerPage);
     const auto pageId = popplerPage->getPageId();
 
-    auto existingIt = std::find_if(this->data.begin(), this->data.end(), [pageId](const auto& entry) {
-        return entry->popplerPage->getPageId() == pageId;
-    });
+    auto existingIt = std::find_if(this->data.begin(), this->data.end(),
+                                   [pageId](const auto& entry) { return entry->popplerPage->getPageId() == pageId; });
     if (existingIt != this->data.end()) {
         this->data.erase(existingIt);
     }
