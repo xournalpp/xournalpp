@@ -47,13 +47,9 @@ PdfCache::PdfCache(const XojPdfDocument& doc, Settings* settings): pdfDocument(d
 
 PdfCache::~PdfCache() = default;
 
-void PdfCache::setRefreshThreshold(double threshold) {
-    std::lock_guard<std::mutex> lock(this->renderMutex);
-    this->zoomRefreshThreshold = threshold;
-}
+void PdfCache::setRefreshThreshold(double threshold) { this->zoomRefreshThreshold = threshold; }
 
 void PdfCache::setMaxSize(size_t newSize) {
-    std::lock_guard<std::mutex> lock(this->renderMutex);
     this->maxSize = newSize;
     if (this->data.size() > this->maxSize) {
         this->data.resize(this->maxSize);
