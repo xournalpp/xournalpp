@@ -4,6 +4,7 @@
 #include <iterator>   // for begin
 #include <memory>     // for unique_ptr, make_unique
 #include <optional>   // for optional
+#include <unordered_set>
 
 #include <gdk/gdk.h>         // for GdkEventKey, GDK_SHIF...
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_Page_Down
@@ -59,7 +60,7 @@ std::pair<size_t, size_t> XournalView::preloadPageBounds(size_t page, size_t max
     const size_t preloadBefore = this->control->getSettings()->getPreloadPagesBefore();
     const size_t preloadAfter = this->control->getSettings()->getPreloadPagesAfter();
     const size_t lower = page > preloadBefore ? page - preloadBefore : 0;
-    const size_t upper = std::min(maxPage, page + preloadAfter);
+    const size_t upper = std::min(maxPage, page + preloadAfter + 1);
     return {lower, upper};
 }
 
@@ -121,13 +122,26 @@ auto XournalView::cleanupBufferCache() -> void {
     const auto& [pagesLower, pagesUpper] = this->preloadPageBounds(this->currentPage, this->viewPages.size());
     xoj_assert(pagesLower <= pagesUpper);
 
+    std::unordered_set<size_t> retainedPdfPages;
+
     for (size_t i = 0; i < this->viewPages.size(); i++) {
         auto&& page = this->viewPages[i];
-        const size_t pageNum = i + 1;
-        const bool isPreload = pagesLower <= pageNum && pageNum <= pagesUpper;
-        if (!isPreload && !page->isVisible() && page->hasBuffer()) {
+        const bool isPreload = pagesLower <= i && i < pagesUpper;
+        const bool shouldRetain = isPreload || page->isVisible();
+
+        if (shouldRetain) {
+            const size_t pdfPageNo = page->getPage()->getPdfPageNr();
+            if (pdfPageNo != npos) {
+                retainedPdfPages.insert(pdfPageNo);
+            }
+            continue;
+        } else if (page->hasBuffer()) {
             page->deleteViewBuffer();
         }
+    }
+
+    if (this->cache) {
+        this->cache->evictAllExcept(retainedPdfPages);
     }
 }
 
