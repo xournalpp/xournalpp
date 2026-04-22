@@ -59,7 +59,7 @@ static auto isAllWhitespace(std::string_view string) -> bool {
  */
 static auto parseDouble(const char*& it, const char* end, double& value) -> bool {
     // Skip any leading whitespace
-    while (it != end && *it == ' ') {
+    while (it != end && (*it == ' ' || *it == '\n')) {
         ++it;
     }
 
