@@ -640,6 +640,27 @@ TEST(ControlLoadHandler, testLoadStoreLoadFloatBwCompat) {
     testLoadStoreLoadHelper(GET_TESTFILE(u8"packaged_xopp/suite_float_bw_compat.xopp"), /*tol=*/1e-5);
 }
 
+// Old Xournal files may include line returns in stroke data. See https://github.com/xournalpp/xournalpp/issues/7407
+TEST(ControlLoadHandler, testLoadStoreLoadStrokeLineReturn) {
+    auto doc = loadTestDocument(GET_TESTFILE(u8"load/compatibility/stroke_line_return.xoj"));
+    ASSERT_TRUE(doc);
+
+    EXPECT_EQ(size_t{1}, doc->getPageCount());
+    ConstPageRef page = doc->getPage(0);
+
+    ASSERT_EQ(size_t{1}, page->getLayerCount());
+    const Layer* layer = page->getLayersView().front();
+
+    ASSERT_EQ(size_t{1}, layer->getElementsView().size());
+    checkStroke(layer, 0, StrokeTool::PEN, Colors::black, 1.41, -1, StrokeCapStyle::ROUND, LineStyle{},
+                {{0, {80.53, 240.42}},
+                 {10, {81.86, 240.55}},
+                 {20, {84.21, 237.96}},
+                 {30, {81.97, 236.95}},
+                 {40, {78.40, 244.35}},
+                 {50, {84.79, 245.97}}});
+}
+
 TEST(ControlLoadHandler, testStrokeWidthRecovery) {
     auto doc = loadTestDocument(GET_TESTFILE(u8"packaged_xopp/stroke/width_recovery.xopp"));
     ASSERT_TRUE(doc);
