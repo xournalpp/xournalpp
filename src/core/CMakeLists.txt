@@ -16,5 +16,8 @@ target_link_libraries(xournalpp-core
         PRIVATE xoj::util ${xournalpp_LDFLAGS}
         PUBLIC xoj::defaults xoj::external_modules
         )
+if (CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    target_link_libraries(xournalpp-core PUBLIC atomic)
+endif ()
 target_include_directories(xournalpp-core PUBLIC ${xournalpp_include_dirs})
 add_library(xoj::core ALIAS xournalpp-core)
