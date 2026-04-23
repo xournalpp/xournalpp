@@ -93,7 +93,7 @@ auto SidebarPreviewBase::hasData() -> bool { return true; }
 auto SidebarPreviewBase::getWidget() -> GtkWidget* { return this->mainBox.get(); }
 
 void SidebarPreviewBase::documentChanged(DocumentChangeType type) {
-    if (type == DOCUMENT_CHANGE_COMPLETE || type == DOCUMENT_CHANGE_CLEARED) {
+    if (type == DOCUMENT_CHANGE_COMPLETE || type == DOCUMENT_CHANGE_CLEARED || type == DOCUMENT_CHANGE_PDF_CONTENT) {
         this->cache.reset();
 
         Document* doc = control->getDocument();

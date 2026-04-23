@@ -15,6 +15,7 @@
 
 #include <cstddef>        // for size_t
 #include <memory>         // for unique_ptr
+#include <optional>       // for optional
 #include <shared_mutex>   // for shared_mutex
 #include <string>         // for string
 #include <unordered_map>  // for unordered_map
@@ -47,6 +48,9 @@ public:
     bool readPdf(const fs::path& filename, bool initPages, bool attachToDocument,
                  std::unique_ptr<std::string> data = {});
     void resetPdf();
+    bool reloadPdf();
+    bool canAutoReloadPdf() const;
+    std::optional<fs::file_time_type> getPdfLastModifiedTime() const;
 
     size_t getPageCount() const;
     size_t getPdfPageCount() const;
@@ -114,6 +118,7 @@ private:
     void buildTreeContentsModel(GtkTreeIter* parent, XojPdfBookmarkIterator* iter);
     void updateIndexPageNumbers();
     static bool fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc);
+    void updatePdfLastModifiedTime();
 
 private:
     DocumentHandler* handler = nullptr;
@@ -123,6 +128,7 @@ private:
     fs::path filepath;
     fs::path pdfFilepath;
     bool attachPdf = false;
+    std::optional<fs::file_time_type> pdfLastModifiedTime;
 
     Util::PathStorageMode pathStorageMode = Util::PathStorageMode::AS_RELATIVE_PATH;
 

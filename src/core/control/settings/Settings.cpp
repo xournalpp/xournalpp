@@ -194,6 +194,9 @@ void Settings::loadDefault() {
     this->touchZoomStartThreshold = 0.0;
 
     this->pageRerenderThreshold = 5.0;
+    this->pdfAutoReloadEnabled = true;
+    this->pdfAutoReloadIntervalMs = PDF_AUTO_RELOAD_INTERVAL_DEFAULT_MS;
+    this->pdfAutoReloadDebounceMs = PDF_AUTO_RELOAD_INTERVAL_DEFAULT_MS;
     this->pdfPageCacheSize = 10;
     this->preloadPagesBefore = 3U;
     this->preloadPagesAfter = 5U;
@@ -537,6 +540,14 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->touchZoomStartThreshold = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pageRerenderThreshold")) == 0) {
         this->pageRerenderThreshold = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pdfAutoReloadEnabled")) == 0) {
+        this->pdfAutoReloadEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pdfAutoReloadIntervalMs")) == 0) {
+        this->pdfAutoReloadIntervalMs = std::max<int>(
+                g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10), PDF_AUTO_RELOAD_INTERVAL_MIN_MS);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pdfAutoReloadDebounceMs")) == 0) {
+        this->pdfAutoReloadDebounceMs = std::max<int>(
+                g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10), PDF_AUTO_RELOAD_INTERVAL_MIN_MS);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pdfPageCacheSize")) == 0) {
         this->pdfPageCacheSize = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("preloadPagesBefore")) == 0) {
@@ -1146,6 +1157,9 @@ void Settings::save() {
 
     SAVE_DOUBLE_PROP(touchZoomStartThreshold);
     SAVE_DOUBLE_PROP(pageRerenderThreshold);
+    SAVE_BOOL_PROP(pdfAutoReloadEnabled);
+    SAVE_INT_PROP(pdfAutoReloadIntervalMs);
+    xmlNode = savePropertyUnsigned("pdfAutoReloadDebounceMs", getPdfAutoReloadDebounceMs(), root);
 
     SAVE_INT_PROP(pdfPageCacheSize);
     ATTACH_COMMENT("The count of rendered PDF pages which will be cached.");
@@ -2124,6 +2138,52 @@ void Settings::setPDFPageRerenderThreshold(double threshold) {
     }
 
     this->pageRerenderThreshold = threshold;
+    save();
+}
+
+auto Settings::getPdfAutoReloadEnabled() const -> bool { return this->pdfAutoReloadEnabled; }
+
+void Settings::setPdfAutoReloadEnabled(bool enabled) {
+    if (this->pdfAutoReloadEnabled == enabled) {
+        return;
+    }
+
+    this->pdfAutoReloadEnabled = enabled;
+    save();
+}
+
+auto Settings::getPdfAutoReloadIntervalMs() const -> unsigned int { return this->pdfAutoReloadIntervalMs; }
+
+void Settings::setPdfAutoReloadIntervalMs(unsigned int intervalMs) {
+    if (this->pdfAutoReloadIntervalMs == intervalMs) {
+        return;
+    }
+
+    if (intervalMs < PDF_AUTO_RELOAD_INTERVAL_MIN_MS) {
+        g_warning("Settings::Invalid PDF auto-reload interval (%u ms). Minimum value is %u ms. Using minimum instead!",
+                  intervalMs, PDF_AUTO_RELOAD_INTERVAL_MIN_MS);
+        intervalMs = PDF_AUTO_RELOAD_INTERVAL_MIN_MS;
+    }
+
+    this->pdfAutoReloadIntervalMs = intervalMs;
+    save();
+}
+
+auto Settings::getPdfAutoReloadDebounceMs() const -> unsigned int { return this->pdfAutoReloadDebounceMs; }
+
+void Settings::setPdfAutoReloadDebounceMs(unsigned int debounceMs) {
+    if (debounceMs < PDF_AUTO_RELOAD_INTERVAL_MIN_MS) {
+        g_warning("Settings::Invalid PDF auto-reload debounce interval (%u ms). Minimum value is %u ms. Using minimum "
+                  "instead!",
+                  debounceMs, PDF_AUTO_RELOAD_INTERVAL_MIN_MS);
+        debounceMs = PDF_AUTO_RELOAD_INTERVAL_MIN_MS;
+    }
+
+    if (this->pdfAutoReloadDebounceMs == debounceMs) {
+        return;
+    }
+
+    this->pdfAutoReloadDebounceMs = debounceMs;
     save();
 }
 
