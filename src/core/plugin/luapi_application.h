@@ -39,6 +39,7 @@
 #include "enums/Action.enum.h"
 #include "gui/Layout.h"
 #include "gui/MainWindow.h"
+#include "gui/PageView.h"
 #include "gui/XournalView.h"
 #include "gui/dialog/FileChooserFiltersHelper.h"
 #include "gui/dialog/XojOpenDlg.h"  // for XojO...
@@ -2644,8 +2645,9 @@ static int applib_scrollToPos(lua_State* L) {
 }
 
 /**
- * Obtains the current absolute scroll position (position on the whole layout) and width and height of the currently
- * visible window, measured in pixels.
+ * Obtains the current absolute scroll position (position of the upper left corner of the currently visible window on
+ * the whole layout) and width and height of the currently visible window, measured in pixels. Visible window here means
+ * the operating window where the document is displayed.
  *
  * @return {x:number, y:number, width:number, height:number}
  *
@@ -2682,6 +2684,86 @@ static int applib_getScrollPos(lua_State* L) {
     // "height": number
     lua_pushnumber(L, rect.height);
     lua_setfield(L, -2, "height");
+    return 1;
+}
+
+/**
+ * Obtains the current absolute page position (position of the upper left corner of the current page on the whole
+ * layout) width and height of the specified page, measured in pixels.
+ *
+ * @param pageNr integer (optional) The page number (1-indexed). If not specified, uses the current page.
+ * @return {x:number, y:number, width:number, height:number}|nil Returns the position and dimensions on success and
+ * (nil, message) if page number is out of range or page view cannot be obtained.
+ * @return string Error message if the operation fails
+ *
+ * Example 1: local pageRect = app.getPagePos(1) -- gets position data about page 1
+ *
+ * Example 2: local pageRect = app.getPagePos() -- gets position data about the current page
+ *
+ * return value:
+ * {
+ *     ["x"] = number,
+ *     ["y"] = number,
+ *     ["width"] = number,
+ *     ["height"] = number,
+ * }
+ **/
+static int applib_getPagePos(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+
+    // Get page number from Lua (or use current page if not specified)
+    size_t pageNr;
+    if (lua_isnoneornil(L, 1)) {
+        // No argument provided, use current page
+        pageNr = control->getCurrentPageNo();
+    } else {
+        // Argument provided, use it (1-indexed from Lua, convert to 0-indexed)
+        pageNr = static_cast<size_t>(luaL_checkinteger(L, 1)) - 1;
+    }
+
+    // Check if page number is valid
+    const size_t pageCount = control->getDocument()->getPageCount();
+    if (pageNr >= pageCount) {
+        lua_pushnil(L);
+        lua_pushfstring(L, "page nr %zu is out of range (document has %zu pages)", pageNr + 1, pageCount);
+        return 2;
+    }
+
+    // Get the XournalView and the PageView for the specified page
+    XournalView* xournal = control->getWindow()->getXournal();
+    XojPageView* pageView = xournal->getViewFor(pageNr);
+
+    if (!pageView) {
+        lua_pushnil(L);
+        lua_pushfstring(L, "could not get view for page nr %zu", pageNr + 1);
+        return 2;
+    }
+
+    // Get the page's position and dimensions
+    auto pos = pageView->getPixelPosition();
+    int width = pageView->getDisplayWidth();
+    int height = pageView->getDisplayHeight();
+
+    // Create table for return value
+    lua_newtable(L);
+
+    // "x": number
+    lua_pushnumber(L, pos.x);
+    lua_setfield(L, -2, "x");
+
+    // "y": number
+    lua_pushnumber(L, pos.y);
+    lua_setfield(L, -2, "y");
+
+    // "width": number
+    lua_pushnumber(L, width);
+    lua_setfield(L, -2, "width");
+
+    // "height": number
+    lua_pushnumber(L, height);
+    lua_setfield(L, -2, "height");
+
     return 1;
 }
 
@@ -3861,6 +3943,7 @@ static const luaL_Reg applib[] = {
         {"scrollToPage", applib_scrollToPage},
         {"scrollToPos", applib_scrollToPos},
         {"getScrollPos", applib_getScrollPos},
+        {"getPagePos", applib_getPagePos},
         {"setCurrentPage", applib_setCurrentPage},
         {"setPageSize", applib_setPageSize},
         {"setCurrentLayer", applib_setCurrentLayer},

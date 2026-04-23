@@ -730,8 +730,9 @@ function app.scrollToPage(page, relative) end
 --- scrolls to absolute pixel coordinates (200, 50) from top left corner of the layout (absolute mode)
 function app.scrollToPos(x, y, relative) end
 
---- Obtains the current absolute scroll position (position on the whole layout) and width and height of the currently
---- visible window, measured in pixels.
+--- Obtains the current absolute scroll position (position of the upper left corner of the currently visible window on
+--- the whole layout) and width and height of the currently visible window, measured in pixels. Visible window here means
+--- the operating window where the document is displayed.
 --- 
 --- @return {x:number, y:number, width:number, height:number}
 --- 
@@ -745,6 +746,27 @@ function app.scrollToPos(x, y, relative) end
 ---     ["height"] = number,
 --- }
 function app.getScrollPos() end
+
+--- Obtains the current absolute page position (position of the upper left corner of the current page on the whole
+--- layout) width and height of the specified page, measured in pixels.
+--- 
+--- @param pageNr integer (optional) The page number (1-indexed). If not specified, uses the current page.
+--- @return {x:number, y:number, width:number, height:number}|nil Returns the position and dimensions on success and
+--- (nil, message) if page number is out of range or page view cannot be obtained.
+--- @return string Error message if the operation fails
+--- 
+--- Example 1: local pageRect = app.getPagePos(1) -- gets position data about page 1
+--- 
+--- Example 2: local pageRect = app.getPagePos() -- gets position data about the current page
+--- 
+--- return value:
+--- {
+---     ["x"] = number,
+---     ["y"] = number,
+---     ["width"] = number,
+---     ["height"] = number,
+--- }
+function app.getPagePos(pageNr) end
 
 --- Obtains the label of the specified page in the pdf background.
 --- 
