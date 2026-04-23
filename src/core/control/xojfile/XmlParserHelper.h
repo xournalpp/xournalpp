@@ -204,9 +204,10 @@ T parseEnum(c_string_utf8_view sv) {
 // Parse numeric types
 template <typename T>
 T parseNumeric(std::string_view sv) {
-    auto it = sv.begin();
-    auto value = ::XmlParserHelper::parseNumeric<T>(it, sv.end());
-    if (it != sv.end()) {
+    auto it = sv.data();
+    const auto end = sv.data() + sv.size();
+    auto value = ::XmlParserHelper::parseNumeric<T>(it, end);
+    if (it != end) {
         throw IncompleteParseError{value};
     }
     return value;

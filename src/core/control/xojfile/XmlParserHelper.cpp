@@ -158,8 +158,8 @@ auto XmlParserHelper::parseBgColor(string_utf8_view sv) -> std::optional<Color> 
 auto XmlParserHelper::parseColorCode(std::string_view sv) -> std::optional<Color> {
     if ((!sv.empty()) && (sv[0] == '#')) {
         uint32_t color{};
-        auto [ptr, ec] = std::from_chars(sv.begin() + 1, sv.end(), color, 16);
-        if (ec != std::errc{} || ptr != sv.end()) {
+        auto [ptr, ec] = std::from_chars(sv.data() + 1, sv.data() + sv.size(), color, 16);
+        if (ec != std::errc{} || ptr != (sv.data() + sv.size())) {
             g_warning("XML parser: Unknown color code \"" SV_FMT "\".", SV_ARG(sv));
             return {};
         }
