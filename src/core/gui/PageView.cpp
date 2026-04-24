@@ -802,17 +802,12 @@ auto XojPageView::onKeyReleaseEvent(const KeyEvent& event) -> bool {
     return false;
 }
 
-void XojPageView::rerenderPage(bool sizeChanged) {
+void XojPageView::rerenderPage() {
     this->rerenderComplete = true;
-    // We must preserve this flag until the pending RenderJob executes, even if ordinary
-    // rerender requests occur in the meantime.
-    //
-    // Note: While PageBackgroundChangeController::resizePagesToPdf may set this to true,
-    // it might be reset to false later in XournalView::pageSelected. Therefore, we strictly
-    // enforce the flag here to ensure the resize is handled correctly.
-    this->sizeChanged = this->sizeChanged || sizeChanged;
     this->xournal->getControl()->getScheduler()->addRerenderPage(this);
 }
+
+void XojPageView::markSizeChanged() { this->sizeChanged = true; }
 
 void XojPageView::repaintPage() const { xournal->getRepaintHandler()->repaintPage(this); }
 
