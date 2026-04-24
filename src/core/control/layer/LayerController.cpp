@@ -1,6 +1,7 @@
 #include "LayerController.h"
 
 #include <memory>   // for __shared_ptr_access, make...
+#include <mutex>    // for unique_lock
 #include <utility>  // for move
 #include <vector>   // for vector
 
@@ -8,16 +9,16 @@
 #include "control/actions/ActionDatabase.h"  // for ActionDatabase
 #include "gui/MainWindow.h"                  // for MainWindow
 #include "gui/XournalView.h"                 // for XournalView
-#include "model/Document.h"                 // for Document
-#include "model/XojPage.h"                  // for XojPage
-#include "undo/InsertLayerUndoAction.h"     // for InsertLayerUndoAction
-#include "undo/MergeLayerDownUndoAction.h"  // for MergeLayerDownUndoAction
-#include "undo/MoveLayerUndoAction.h"       // for MoveLayerUndoAction
-#include "undo/RemoveLayerUndoAction.h"     // for RemoveLayerUndoAction
-#include "undo/UndoAction.h"                // for UndoActionPtr, UndoAction
-#include "undo/UndoRedoHandler.h"           // for UndoRedoHandler
-#include "util/Util.h"                      // for npos
-#include "util/i18n.h"                      // for FS, _F
+#include "model/Document.h"                  // for Document
+#include "model/XojPage.h"                   // for XojPage
+#include "undo/InsertLayerUndoAction.h"      // for InsertLayerUndoAction
+#include "undo/MergeLayerDownUndoAction.h"   // for MergeLayerDownUndoAction
+#include "undo/MoveLayerUndoAction.h"        // for MoveLayerUndoAction
+#include "undo/RemoveLayerUndoAction.h"      // for RemoveLayerUndoAction
+#include "undo/UndoAction.h"                 // for UndoActionPtr, UndoAction
+#include "undo/UndoRedoHandler.h"            // for UndoRedoHandler
+#include "util/Util.h"                       // for npos
+#include "util/i18n.h"                       // for FS, _F
 
 #include "LayerCtrlListener.h"  // for LayerCtrlListener
 
@@ -39,12 +40,16 @@ void LayerController::pageSelected(size_t page) {
 }
 
 void LayerController::insertLayer(PageRef page, Layer* layer, Layer::Index layerPos) {
+    control->getDocument()->lock();
     page->insertLayer(layer, layerPos);
+    control->getDocument()->unlock();
     fireRebuildLayerMenu();
 }
 
 void LayerController::removeLayer(PageRef page, Layer* layer) {
+    control->getDocument()->lock();
     page->removeLayer(layer);
+    control->getDocument()->unlock();
     fireRebuildLayerMenu();
 }
 
@@ -104,14 +109,18 @@ void LayerController::hideAllLayer() { showOrHideAllLayer(false); }
  * Show / Hide all layer on the current page
  */
 void LayerController::showOrHideAllLayer(bool show) {
+    auto lock = std::unique_lock(*control->getDocument());
     PageRef page = getCurrentPage();
     for (Layer::Index i = 1; i <= page->getLayerCount(); i++) { page->setLayerVisible(i, show); }
+    lock.unlock();
 
     fireLayerVisibilityChanged();
 }
 
 void LayerController::addNewLayer(bool belowCurrentLayer) {
     control->clearSelectionEndText();
+
+    auto lock = std::unique_lock(*control->getDocument());
     PageRef p = getCurrentPage();
     if (!p) {
         return;
@@ -121,6 +130,7 @@ void LayerController::addNewLayer(bool belowCurrentLayer) {
     xoj_assert(p->getSelectedLayerId() > 0);
     auto layerPos = belowCurrentLayer ? p->getSelectedLayerId() - 1 : p->getSelectedLayerId();
     p->insertLayer(l, layerPos);
+    lock.unlock();
 
     control->getUndoRedoHandler()->addUndoAction(std::make_unique<InsertLayerUndoAction>(this, p, l, layerPos));
 
@@ -131,6 +141,7 @@ void LayerController::addNewLayer(bool belowCurrentLayer) {
 void LayerController::deleteCurrentLayer() {
     control->clearSelectionEndText();
 
+    auto lock = std::unique_lock(*control->getDocument());
     PageRef p = getCurrentPage();
     auto pId = selectedPage;
     if (!p) {
@@ -144,6 +155,7 @@ void LayerController::deleteCurrentLayer() {
     Layer* l = p->getSelectedLayer();
 
     p->removeLayer(l);
+    lock.unlock();
 
     MainWindow* win = control->getWindow();
     if (win) {
@@ -158,6 +170,7 @@ void LayerController::deleteCurrentLayer() {
 void LayerController::moveCurrentLayer(bool up) {
     control->clearSelectionEndText();
 
+    auto lock = std::unique_lock(*control->getDocument());
     PageRef p = getCurrentPage();
     auto pId = selectedPage;
     if (!p) {
@@ -188,6 +201,7 @@ void LayerController::moveCurrentLayer(bool up) {
     // index 0 in the vector... confusing...
     auto newIndex = up ? lId : lId - 2;
     p->insertLayer(currentLayer, newIndex);
+    lock.unlock();
 
     MainWindow* win = control->getWindow();
     if (win) {
@@ -203,6 +217,7 @@ void LayerController::moveCurrentLayer(bool up) {
 void LayerController::mergeCurrentLayerDown() {
     control->clearSelectionEndText();
 
+    auto lock = std::unique_lock(*control->getDocument());
     PageRef page = getCurrentPage();
     auto pageID = selectedPage;
     if (page == nullptr) {
@@ -241,6 +256,7 @@ void LayerController::mergeCurrentLayerDown() {
     UndoActionPtr undo_redo_action =
             std::make_unique<MergeLayerDownUndoAction>(this, page, currentLayer, layerID - 1, layerBelow, pageID);
     undo_redo_action->redo(this->control);
+    lock.unlock();
 
     control->getUndoRedoHandler()->addUndoAction(std::move(undo_redo_action));
 
@@ -250,6 +266,7 @@ void LayerController::mergeCurrentLayerDown() {
 void LayerController::copyCurrentLayer() {
     control->clearSelectionEndText();
 
+    auto lock = std::unique_lock(*control->getDocument());
     PageRef p = getCurrentPage();
     auto pId = selectedPage;
     if (!p) {
@@ -264,6 +281,7 @@ void LayerController::copyCurrentLayer() {
     Layer* cloned = l->clone();
 
     p->insertLayer(cloned, lId);
+    lock.unlock();
 
     MainWindow* win = control->getWindow();
     if (win) {
@@ -296,12 +314,14 @@ void LayerController::switchToLay(Layer::Index layerId, bool hideShow, bool clea
         control->clearSelectionEndText();
     }
 
+    auto lock = std::shared_lock(*control->getDocument());
     PageRef p = getCurrentPage();
     if (!p) {
         return;
     }
 
     p->setSelectedLayerId(layerId);
+    lock.unlock();
     fireSelectedLayerChanged();
 
     if (hideShow) {
@@ -334,25 +354,30 @@ auto LayerController::getCurrentLayerId() const -> Layer::Index {
     return page->getSelectedLayerId();
 }
 
-auto LayerController::getCurrentLayerName() const -> std::string {
-    PageRef page = getCurrentPage();
-
-    if (page == nullptr) {
+/// Make sure the document's mutex is locked when calling this
+static std::string getLayerNameOnPage(const PageRef& page, Layer::Index id) {
+    if (page == nullptr || id > page->getLayerCount()) {
         return "Unknown layer name";
-    }
-
-    auto currentID = getCurrentLayerId();
-
-    if (currentID == 0) {  // If is background
+    } else if (id == 0) {  // If is background
         return page->getBackgroundName();
-    } else if (auto layer = page->getSelectedLayer(); layer->hasName()) {
+    } else if (auto layer = page->getLayersView()[id - 1]; layer->hasName()) {
         return layer->getName();
     } else {
-        return FS(_F("Layer {1}") % static_cast<long>(currentID));
+        return FS(_F("Layer {1}") % static_cast<long>(id));
     }
 }
 
+auto LayerController::getCurrentLayerName() const -> std::string {
+    auto lock = std::shared_lock(*control->getDocument());
+    return getLayerNameOnPage(getCurrentPage(), getCurrentLayerId());
+}
+std::string LayerController::getLayerNameById(Layer::Index id) const {
+    auto lock = std::shared_lock(*control->getDocument());
+    return getLayerNameOnPage(getCurrentPage(), id);
+}
+
 void LayerController::setCurrentLayerName(const std::string& newName) {
+    auto lock = std::unique_lock(*control->getDocument());
     PageRef page = getCurrentPage();
 
     if (page == nullptr) {
@@ -364,28 +389,7 @@ void LayerController::setCurrentLayerName(const std::string& newName) {
     } else {  // Any other layer
         page->getSelectedLayer()->setName(newName);
     }
+    lock.unlock();
 
     fireRebuildLayerMenu();
-}
-
-std::string LayerController::getLayerNameById(Layer::Index id) const {
-    PageRef page = getCurrentPage();
-
-    if (page == nullptr) {
-        return "Unknown layer name";
-    }
-
-    if (id == 0) {
-        return page->getBackgroundName();
-    }
-
-    auto previousId = page->getSelectedLayerId();
-    if (previousId == id) {
-        return getCurrentLayerName();
-    }
-    page->setSelectedLayerId(id);
-    std::string name = getCurrentLayerName();
-    page->setSelectedLayerId(previousId);
-
-    return name;
 }
