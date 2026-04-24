@@ -480,7 +480,7 @@
     </item>
     <item>
      <attribute name="label" translatable="yes">Merge Layer Down</attribute>
-     <attribute name="action">win.merge-layer-down</attribute>
+     <attribute name="action">win.layer-merge-down</attribute>
      <attribute name="accel">&lt;Ctrl&gt;m</attribute>
     </item>
     <item>

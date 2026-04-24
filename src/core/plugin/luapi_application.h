@@ -610,7 +610,11 @@ static int applib_changeActionState(lua_State* L) {
     if (actionStr == nullptr) {
         return luaL_error(L, "Missing action!");
     }
-    Action action = Action_fromString(actionStr);
+    auto optAction = Action_fromString(actionStr);
+    if (!optAction) {
+        return luaL_error(L, "Invalid action name: \"%s\"", actionStr);
+    }
+    Action action = optAction.value();
 
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* control = plugin->getControl();
@@ -645,7 +649,11 @@ static int applib_getActionState(lua_State* L) {
     if (actionStr == nullptr) {
         return luaL_error(L, "Missing action!");
     }
-    Action action = Action_fromString(actionStr);
+    auto optAction = Action_fromString(actionStr);
+    if (!optAction) {
+        return luaL_error(L, "Invalid action name: \"%s\"", actionStr);
+    }
+    Action action = optAction.value();
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* control = plugin->getControl();
     auto* actionDB = control->getActionDatabase();
@@ -672,10 +680,14 @@ static int applib_activateAction(lua_State* L) {
     if (actionStr == nullptr) {
         return luaL_error(L, "Missing action!");
     }
+    auto optAction = Action_fromString(actionStr);
+    if (!optAction) {
+        return luaL_error(L, "Invalid action name: \"%s\"", actionStr);
+    }
+    Action action = optAction.value();
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* control = plugin->getControl();
     auto* actionDB = control->getActionDatabase();
-    Action action = Action_fromString(actionStr);
     GAction* gAction = G_ACTION(actionDB->getAction(action).get());
 
     auto* type = g_action_get_parameter_type(gAction);
