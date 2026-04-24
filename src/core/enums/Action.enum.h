@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <optional>
 #include <string>
 
 #include <glib.h>  // for g_warning
@@ -184,11 +185,11 @@ constexpr auto Action_toString(Action value) -> const char* {
     return ACTION_NAMES[static_cast<size_t>(value)];
 }
 
-constexpr auto Action_fromString(const std::string_view value) -> Action {
+constexpr auto Action_fromString(const std::string_view value) -> std::optional<Action> {
     for (size_t n = 0; n < xoj::to_underlying(Action::ENUMERATOR_COUNT); n++) {
         if (value == ACTION_NAMES[n]) {
             return static_cast<Action>(n);
         }
     }
-    return Action::NEW_FILE;
+    return std::nullopt;
 }
