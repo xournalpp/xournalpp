@@ -34,8 +34,6 @@ public:
     std::string getText() override;
 
 private:
-    void triggerUIUpdate(Control* control);
-
     LayerController* layerController;
 
     Layer* upperLayer;
