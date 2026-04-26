@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-16 09:31+0000\n"
-"PO-Revision-Date: 2026-04-19 05:13\n"
+"POT-Creation-Date: 2026-04-20 13:06+0000\n"
+"PO-Revision-Date: 2026-04-26 05:20\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -280,7 +280,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "У вас нет PDF страниц для выбора. Отмена операции.\n"
 "Пожалуйста, выберите другой тип фона: Меню «Журнал → Настройка шаблона страницы»."
 
-#: ../src/core/control/PdfCache.cpp:124
+#: ../src/core/control/PdfCache.cpp:159
 msgid "PDF background missing"
 msgstr "Отсутствует PDF фон"
 

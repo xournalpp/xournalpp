@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-16 09:31+0000\n"
-"PO-Revision-Date: 2026-04-19 05:13\n"
+"POT-Creation-Date: 2026-04-20 13:06+0000\n"
+"PO-Revision-Date: 2026-04-26 05:20\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -278,7 +278,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "आपके पास चुनने के लिए कोई PDF पेज नहीं है। रद्द करना\n"
 "कृपया एक अन्य पृष्ठभूमि प्रकार का चयन करें: मेनू \"Journal\" → \"पृष्ठ टेम्पलेट को कॉन्फ़िगर करें\"।"
 
-#: ../src/core/control/PdfCache.cpp:124
+#: ../src/core/control/PdfCache.cpp:159
 msgid "PDF background missing"
 msgstr ""
 

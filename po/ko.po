@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-16 09:31+0000\n"
-"PO-Revision-Date: 2026-04-19 05:13\n"
+"POT-Creation-Date: 2026-04-20 13:06+0000\n"
+"PO-Revision-Date: 2026-04-26 05:20\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -281,7 +281,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "선택할 PDF 페이지가 없습니다. 작업을 취소합니다.\n"
 "\"저널\" → \"페이지 템플릿 설정\"에서 다른 배경 타입을 선택하십시오."
 
-#: ../src/core/control/PdfCache.cpp:124
+#: ../src/core/control/PdfCache.cpp:159
 msgid "PDF background missing"
 msgstr "PDF 백그라운드 누락됨"
 
