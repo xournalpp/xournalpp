@@ -53,7 +53,6 @@ constexpr Color DARK_PREVIEW_BACKGROUND = Colors::black;
 LatexController::LatexController(Control* control):
         control(control),
         settings(control->getSettings()->latexSettings),
-        doc(control->getDocument()),
         texTmpDir(Util::getTmpDirSubfolder("tex")),
         generator(settings) {
     Util::ensureFolderExists(this->texTmpDir);
