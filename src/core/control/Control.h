@@ -149,9 +149,6 @@ public:
     // Menu edit
     void showSettings();
 
-    // The core handler for inserting latex
-    void runLatex();
-
     // Menu Help
     void showAbout();
     void showGtkDemo();
