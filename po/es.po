@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-01 19:40+0000\n"
-"PO-Revision-Date: 2026-04-05 05:02\n"
+"PO-Revision-Date: 2026-04-26 05:20\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -144,7 +144,7 @@ msgstr "Error al leer el archivo de plantilla \"{1}\""
 
 #: ../src/core/control/Control.cpp:1752
 msgid "Failed to determine if path exists \"{1}\": {2}"
-msgstr "Error al determinar si la ruta existe \"{1}\": {2}"
+msgstr "Error al determinar si la ruta existe\"{1}\": {2}"
 
 #: ../src/core/control/Control.cpp:1753
 msgid "That file does not exist:\n"

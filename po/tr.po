@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-01 19:40+0000\n"
-"PO-Revision-Date: 2026-04-05 05:02\n"
+"PO-Revision-Date: 2026-04-26 05:20\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -144,12 +144,13 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:1752
 msgid "Failed to determine if path exists \"{1}\": {2}"
-msgstr ""
+msgstr "Yolun varoluşunun belirlenişinde hata \"{1}\": {2}"
 
 #: ../src/core/control/Control.cpp:1753
 msgid "That file does not exist:\n"
 "\"{1}\""
-msgstr ""
+msgstr "O dosya mevcut değil:\n"
+"\"{1}\""
 
 #: ../src/core/control/Control.cpp:1859
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -1209,7 +1210,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:99
 msgid "<i>The palettes shown below are obtained from the <a href=\"{1}\">Built-in palettes</a> and <a href=\"{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>Aşağıda gösterilen paletler <a href=\"{1}\">Yerleşik paletler</a> ve <a href=\"{2}\">Kullanıcı paletleri</a> klasörlerinden elde edilmiştir:</i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:117
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
@@ -2126,12 +2127,13 @@ msgstr "Hata kodu {1}"
 
 #: ../src/util/PathUtil.cpp:125
 msgid "Could not open file: {1}"
-msgstr ""
+msgstr "{1} dosyası açılamadı"
 
 #: ../src/util/PathUtil.cpp:132
 msgid "Error reading \"{1}\":\n"
 "{2}"
-msgstr ""
+msgstr "\"{1}\" dosyası okunurken hata oluştu:\n"
+"{2}"
 
 #: ../src/util/PathUtil.cpp:409
 msgid "xournalpp-{1}"
@@ -3403,7 +3405,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3358
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) the same way as the drawing area."
-msgstr ""
+msgstr "Çizim alanında olduğu gibi yan paneldeki (Sayfa/Katman ön izlemesi) ön izlemeleri yeniden renklendirir."
 
 #: ../ui/settings.glade:3372
 msgid "The color light regions are translated to\n"
