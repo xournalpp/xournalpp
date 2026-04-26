@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 16:00+0000\n"
-"PO-Revision-Date: 2026-03-28 17:05\n"
+"POT-Creation-Date: 2026-04-20 13:06+0000\n"
+"PO-Revision-Date: 2026-04-26 05:20\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -28,11 +28,11 @@ msgstr "檔案系統錯誤：{1}"
 
 #: ../src/core/control/Control.cpp:246
 msgid "Could not remove old autosave file \"{1}\": {2}"
-msgstr ""
+msgstr "無法刪除舊的自動儲存檔案「{1}」：{2}"
 
 #: ../src/core/control/Control.cpp:579
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
-msgstr ""
+msgstr "您已刪除活動工具列，請切換為預設工具列。"
 
 #: ../src/core/control/Control.cpp:599
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
@@ -40,11 +40,11 @@ msgstr "工具條配置\"{1}\"是預置的，要產生一個拷貝到編輯?"
 
 #: ../src/core/control/Control.cpp:602 ../src/core/control/Control.cpp:1576
 msgid "Yes"
-msgstr ""
+msgstr "確定"
 
 #: ../src/core/control/Control.cpp:602 ../src/core/control/Control.cpp:1576
 msgid "No"
-msgstr ""
+msgstr "取消"
 
 #: ../src/core/control/Control.cpp:832 ../src/core/control/Control.cpp:1796
 #: ../src/core/control/Control.cpp:2124
@@ -76,7 +76,9 @@ msgstr "使用PDF背景"
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
-msgstr ""
+msgstr "您目前的檔案中不包含 PDF 第 {1} 頁。\n"
+"是否要插入此頁面？\n\n"
+"提示：您可以選擇 {2} 來插入 PDF 頁面。"
 
 #: ../src/core/control/Control.cpp:884
 msgid "No pdf pages available to append. You may need to reopen the document first."
@@ -104,7 +106,7 @@ msgstr "打開檔案\"{1}\"出錯"
 
 #: ../src/core/control/Control.cpp:1578
 msgid "File version mismatch"
-msgstr ""
+msgstr "檔案版本衝突"
 
 #: ../src/core/control/Control.cpp:1579
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
@@ -113,20 +115,21 @@ msgstr "正在開啟的檔案格式版本筆目前Xournal++支持的文件格式
 #: ../src/core/control/Control.cpp:1602
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
+msgstr "讀取 PDF 檔案「{1}」時發生錯誤\n"
+"{2}"
 
 #: ../src/core/control/Control.cpp:1623
 msgid "Error reading PNG file \"{1}\""
-msgstr ""
+msgstr "讀取 PNG 檔案「{1}」時發生錯誤"
 
 #: ../src/core/control/Control.cpp:1668
 msgid "Failed to determine if path exists \"{1}\": {2}"
-msgstr ""
+msgstr "無法確定路徑是否存在「{1}」：{2}"
 
 #: ../src/core/control/Control.cpp:1669
 msgid "That file does not exist:\n"
 "\"{1}\""
-msgstr ""
+msgstr "該檔案不存在：「{1}」"
 
 #: ../src/core/control/Control.cpp:1776
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -277,13 +280,13 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "您没有任何可以選擇的 PDF 頁面。操作取消。\n"
 "請選擇另一個背景類型：點擊“日记”菜單 → “配置頁面模板”。"
 
-#: ../src/core/control/PdfCache.cpp:124
+#: ../src/core/control/PdfCache.cpp:159
 msgid "PDF background missing"
 msgstr "PDF背景丟失"
 
 #: ../src/core/control/PrintHandler.cpp:122
 msgid "Running print operation failed with {1}"
-msgstr ""
+msgstr "使用{1}進行列印作業失敗"
 
 #: ../src/core/control/XournalMain.cpp:120
 msgid "Failed to delete file: {1}"
@@ -311,7 +314,7 @@ msgstr "還原檔案"
 
 #: ../src/core/control/XournalMain.cpp:158
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "找不到背景檔案「{1}」。該檔案可能已被移動、重新命名或刪除。"
 
 #: ../src/core/control/XournalMain.cpp:222
 #: ../src/core/control/XournalMain.cpp:230
@@ -468,7 +471,7 @@ msgstr "覆蓋背景失敗：\n"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
 msgid "Export File"
-msgstr ""
+msgstr "匯出檔案"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
 #: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
@@ -745,7 +748,7 @@ msgstr "xoj-File: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1052
 msgid "Wrong number of pressure values, got {1}, expected {2}"
-msgstr ""
+msgstr "筆壓值不正確。預期值為 {2}，但實際設定為 {1}。"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1184
 msgid "Requested temporary file was not found for attachment {1}"
@@ -813,7 +816,7 @@ msgstr "加載中..."
 
 #: ../src/core/gui/PageView.cpp:1001
 msgid "Scroll to page {1}"
-msgstr ""
+msgstr "捲動至第 {1} 頁"
 
 #: ../src/core/gui/PageView.cpp:1003
 msgid "Add missing page"
@@ -821,12 +824,12 @@ msgstr "新增遺失的頁面"
 
 #: ../src/core/gui/SearchBar.cpp:89
 msgid "Text found once on this page"
-msgstr ""
+msgstr "在此頁面中找到一處符合的文字"
 
 #: ../src/core/gui/SearchBar.cpp:91
 #, c-format
 msgid "Text found %zu times on this page"
-msgstr ""
+msgstr "在此頁面中找到 %zu 處符合的文字"
 
 #: ../src/core/gui/SearchBar.cpp:96
 msgid "Text not found"
@@ -838,7 +841,7 @@ msgstr "文本在第{1}頁上找到"
 
 #: ../src/core/gui/SearchBar.cpp:140
 msgid "Text found {1} times on page {2} ({3} of {1})"
-msgstr ""
+msgstr "在第 {2} 頁找到 {1} 處符合的文字（第 {3} 處，共 {1} 處）"
 
 #: ../src/core/gui/SearchBar.cpp:145
 msgid "Text not found, searched on all pages"
@@ -870,7 +873,7 @@ msgstr "GNU 公用授權條款第 2 版或較後版本"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:30
 msgid "Thickness - don't change"
-msgstr ""
+msgstr "粗細 - 請勿變更"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:32
 msgid "Very thin"
@@ -1187,7 +1190,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:99
 msgid "<i>The palettes shown below are obtained from the <a href=\"{1}\">Built-in palettes</a> and <a href=\"{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>下方顯示的調色盤來自<a href=\"{1}\">內建調色盤</a>和<a href=\"{2}\">使用者調色盤</a>目錄：</i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:117
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
@@ -1354,7 +1357,7 @@ msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr ""
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:369
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:384
 msgid "Apply to all pages"
 msgstr "套用到所有頁面"
 
@@ -1398,11 +1401,11 @@ msgstr ""
 msgid "Copy current page"
 msgstr ""
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:261
 msgid "Copy current background"
 msgstr ""
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:303
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:332
 msgid "Apply to current page"
 msgstr "套用到目前的頁面"
 
@@ -2086,12 +2089,13 @@ msgstr ""
 
 #: ../src/util/PathUtil.cpp:125
 msgid "Could not open file: {1}"
-msgstr ""
+msgstr "無法開啟檔案：{1}"
 
 #: ../src/util/PathUtil.cpp:132
 msgid "Error reading \"{1}\":\n"
 "{2}"
-msgstr ""
+msgstr "讀取「{1}」時發生錯誤：\n"
+"{2}"
 
 #: ../src/util/PathUtil.cpp:409
 msgid "xournalpp-{1}"
@@ -3294,7 +3298,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3264
 msgid "Recolors the drawing area so that light regions get the \"Light Color\" and dark regions get the \"Dark Color\". Other colors are interpolated accordingly. Can be use to implement a dark-mode."
-msgstr ""
+msgstr "重新著色繪圖區域，使淺色區域呈現「淺色」，深色區域呈現「深色」。其他顏色則根據顏色深淺進行內插。可用於執行深色模式。"
 
 #: ../ui/settings.glade:3274
 msgid "Recolor Previews in the Sidebar"
@@ -3302,17 +3306,19 @@ msgstr ""
 
 #: ../ui/settings.glade:3279
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) the same way as the drawing area."
-msgstr ""
+msgstr "將側邊欄（頁面、圖層預覽）中的預覽顏色與繪圖區域的顏色重新著色。"
 
 #: ../ui/settings.glade:3293
 msgid "The color light regions are translated to\n"
 "(use a dark color for a dark-mode)"
-msgstr ""
+msgstr "淺色區域的顏色轉換為：\n"
+"（深色模式使用深色）"
 
 #: ../ui/settings.glade:3308
 msgid "The color dark regions are translated to\n"
 "(use a light color for dark-mode)"
-msgstr ""
+msgstr "深色區域的顏色轉換為：\n"
+"（深色模式使用淺色）"
 
 #: ../ui/settings.glade:3324
 msgid "Dark Color"
@@ -3324,7 +3330,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3351
 msgid "Recoloring (allows theming)"
-msgstr ""
+msgstr "重新著色（允許主題化）"
 
 #: ../ui/settings.glade:3383
 msgid "Cursor icon for pen"
@@ -4453,7 +4459,7 @@ msgstr ""
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:8
 msgid "tablet;Wacom;pen input;PDF Annotation;markup"
-msgstr ""
+msgstr "平板電腦；Wacom；筆輸入；PDF 註釋；標記"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:8
 msgid "Xournalpp Developers"

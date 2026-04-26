@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 16:00+0000\n"
-"PO-Revision-Date: 2026-03-28 17:05\n"
+"POT-Creation-Date: 2026-04-20 13:06+0000\n"
+"PO-Revision-Date: 2026-04-26 05:20\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -280,7 +280,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "У вас нет PDF страниц для выбора. Отмена операции.\n"
 "Пожалуйста, выберите другой тип фона: Меню «Журнал → Настройка шаблона страницы»."
 
-#: ../src/core/control/PdfCache.cpp:124
+#: ../src/core/control/PdfCache.cpp:159
 msgid "PDF background missing"
 msgstr "Отсутствует PDF фон"
 
@@ -882,7 +882,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:32
 msgid "Very thin"
-msgstr ""
+msgstr "Очень тонкий"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:34
 msgid "Thin"
@@ -1175,7 +1175,8 @@ msgstr "Маркер текста PDF"
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:49
 msgid "<b>{1}</b>\n"
 "{2}{3}"
-msgstr ""
+msgstr "<b>{1}</b>\n"
+"{2}{3}"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:275
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
@@ -1363,7 +1364,7 @@ msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr ""
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:369
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:384
 msgid "Apply to all pages"
 msgstr "Применить ко всем страницам"
 
@@ -1407,11 +1408,11 @@ msgstr "Отклонить один документ"
 msgid "Copy current page"
 msgstr "Копировать текущую страницу"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:261
 msgid "Copy current background"
 msgstr "Копировать текущий фон"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:303
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:332
 msgid "Apply to current page"
 msgstr "Применить к текущей странице"
 
@@ -1884,7 +1885,7 @@ msgstr "Не удалось инициализировать поверхнос�
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:110
 msgid "PDF page number is out of range"
-msgstr ""
+msgstr "Номер страницы PDF вне диапазона"
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:21
 msgid "Unknown pdf backend: {1}. Available backends are: {2}. Using default backend."
@@ -2007,7 +2008,7 @@ msgstr "Фон страницы изменен"
 
 #: ../src/core/undo/PageSizeChangeUndoAction.cpp:42
 msgid "Page size changed"
-msgstr ""
+msgstr "Размер страницы изменен"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
@@ -2221,11 +2222,11 @@ msgstr "OK"
 
 #: ../ui/crashDialog.glade:7
 msgid "Crash report"
-msgstr ""
+msgstr "Отчёт об ошибке"
 
 #: ../ui/crashDialog.glade:23
 msgid "Oops... Xournal++ encountered a fatal error"
-msgstr ""
+msgstr "Упс... Xournal++ столкнулся с фатальной ошибкой"
 
 #: ../ui/crashDialog.glade:39
 msgid "Please consider filling a bug report (see button below). Attach the following log to your report."
@@ -2245,7 +2246,7 @@ msgstr ""
 
 #: ../ui/crashDialog.glade:145
 msgid "Create a bug report"
-msgstr ""
+msgstr "Создать отчет об ошибке"
 
 #: ../ui/crashDialog.glade:164
 msgctxt "github is a name - do not try to translate it"
@@ -2254,7 +2255,7 @@ msgstr ""
 
 #: ../ui/deviceList.glade:7
 msgid "Known devices"
-msgstr ""
+msgstr "Известные устройства"
 
 #: ../ui/deviceList.glade:46
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -2317,7 +2318,7 @@ msgstr ""
 
 #: ../ui/deviceTestingArea.glade:443
 msgid "Show logs"
-msgstr ""
+msgstr "Показать логи"
 
 #: ../ui/deviceTestingArea.glade:455
 msgid "Export debug info"
@@ -2438,7 +2439,7 @@ msgstr "Результат, производимый командой LaTeX."
 
 #: ../ui/extEdTexDialog.glade:138
 msgid "Continue Editing"
-msgstr ""
+msgstr "Продолжить редактирование"
 
 #: ../ui/goto.glade:23
 msgid "Go to Page"
@@ -2558,7 +2559,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:532
 msgid "Use external Editor"
-msgstr ""
+msgstr "Использовать внешний редактор"
 
 #: ../ui/latexSettings.glade:549
 msgid "Editor command"
@@ -2984,7 +2985,7 @@ msgstr "Стабилизация ввода"
 
 #: ../ui/settings.glade:1345
 msgid "Indent using spaces"
-msgstr ""
+msgstr "Отступ с помощью пробелов"
 
 #: ../ui/settings.glade:1367
 msgid "Number of Spaces : "
@@ -3012,7 +3013,7 @@ msgstr "<i>Задайте, какие инструменты будут выбр
 
 #: ../ui/settings.glade:1519
 msgid "Left Mouse Button"
-msgstr ""
+msgstr "Левая кнопка мыши"
 
 #: ../ui/settings.glade:1551
 msgid "Middle Mouse Button"
@@ -3327,11 +3328,11 @@ msgstr ""
 
 #: ../ui/settings.glade:3324
 msgid "Dark Color"
-msgstr ""
+msgstr "Темный цвет"
 
 #: ../ui/settings.glade:3338
 msgid "Light Color"
-msgstr ""
+msgstr "Светлый цвет"
 
 #: ../ui/settings.glade:3351
 msgid "Recoloring (allows theming)"
@@ -3416,7 +3417,7 @@ msgstr "Левша / правша"
 
 #: ../ui/settings.glade:3722
 msgid "Page numbering  "
-msgstr ""
+msgstr "Нумерация страниц  "
 
 #: ../ui/settings.glade:3738
 msgid "Below preview"
@@ -3432,7 +3433,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3760
 msgid "Sidebar"
-msgstr ""
+msgstr "Боковая панель"
 
 #: ../ui/settings.glade:3786
 msgid "Hide the horizontal scrollbar"
@@ -3477,7 +3478,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3956 ../ui/settings.glade:4030
 msgid "Show Toolbar"
-msgstr ""
+msgstr "Показать панель инструментов"
 
 #: ../ui/settings.glade:3971 ../ui/settings.glade:4060
 #: ../ui/mainmenubar.xml:210
@@ -3490,7 +3491,7 @@ msgstr "Во весь экран"
 
 #: ../ui/settings.glade:4045
 msgid "Go Fullscreen"
-msgstr ""
+msgstr "На весь экран"
 
 #: ../ui/settings.glade:4080
 msgid "Select toolbar:"
@@ -3542,7 +3543,7 @@ msgstr "<i>Разместите линейку на экране и переме
 
 #: ../ui/settings.glade:4448
 msgid "Automatic"
-msgstr ""
+msgstr "Автоматически"
 
 #: ../ui/settings.glade:4505
 msgid "The unit of the ruler is cm"
@@ -3574,7 +3575,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4775
 msgid "Unlimited scrolling"
-msgstr ""
+msgstr "Неограниченная прокрутка"
 
 #: ../ui/settings.glade:4799
 msgid "<i>The amount is specified in pixels.</i>"
@@ -3926,7 +3927,7 @@ msgstr "Отключено"
 
 #: ../ui/settingsDeviceClassConfig.glade:54
 msgid "Apply"
-msgstr ""
+msgstr "Применить"
 
 #: ../ui/toolbarCustomizeDialog.glade:30
 msgid "Drag and drop Components from here to the toolbars and back."
@@ -3971,7 +3972,7 @@ msgstr "Выйти"
 
 #: ../ui/mainmenubar.xml:61
 msgid "_Edit"
-msgstr ""
+msgstr "_Редактировать"
 
 #: ../ui/mainmenubar.xml:93
 msgid "Select All"
@@ -4179,7 +4180,7 @@ msgstr "_Перейти на страницу"
 
 #: ../ui/mainmenubar.xml:393
 msgid "_Next Page"
-msgstr ""
+msgstr "_Следующая страница"
 
 #: ../ui/mainmenubar.xml:398
 msgid "_Last Page"
@@ -4267,7 +4268,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:516
 msgid "_Eraser"
-msgstr ""
+msgstr "_Ластик"
 
 #: ../ui/mainmenubar.xml:522
 msgid "Select Linear Text"
@@ -4287,7 +4288,7 @@ msgstr "_Текст"
 
 #: ../ui/mainmenubar.xml:546
 msgid "_Image"
-msgstr ""
+msgstr "_Изображение"
 
 #: ../ui/mainmenubar.xml:552
 msgid "_Default Tool"
@@ -4307,7 +4308,7 @@ msgstr "Нарисовать _линию"
 
 #: ../ui/mainmenubar.xml:632
 msgid "_Vertical Space"
-msgstr ""
+msgstr "_Вертикальный отступ"
 
 #: ../ui/mainmenubar.xml:644
 msgid "H_and Tool"
@@ -4400,7 +4401,7 @@ msgstr "Помощь"
 
 #: ../ui/mainmenubar.xml:863
 msgid "Run Gtk3 demo"
-msgstr ""
+msgstr "Запустить Gtk3 демо"
 
 #: ../ui/mainmenubar.xml:867
 msgid "About"
@@ -4436,7 +4437,7 @@ msgstr "Минимальный вверх"
 
 #: ../resources-templates/toolbar.ini.in:69
 msgid "Xournal++"
-msgstr ""
+msgstr "Xournal++"
 
 #: ../resources-templates/toolbar.ini.in:77
 msgid "Right hand Note Taking"
@@ -4456,7 +4457,7 @@ msgstr "Пустая панель инструментов"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:6
 msgid "Note-taking application"
-msgstr ""
+msgstr "Приложение для создания заметок"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:7
 msgid "Take handwritten notes"
@@ -4468,7 +4469,7 @@ msgstr "планшет;Wacom;ввод ручкой;PDF Аннотации;раз
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:8
 msgid "Xournalpp Developers"
-msgstr ""
+msgstr "Разработчики Xournalpp"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:10
 msgid "Xournal++ is a hand note-taking software written in C++ with the target of flexibility, functionality and speed. Stroke recognizer and other parts are based on Xournal Code, which you can find at sourceforge. It supports GNU/Linux (e.g. Ubuntu, Debian, Arch, SUSE), macOS and Windows. Supports pen input from devices such as Wacom Tablets."
