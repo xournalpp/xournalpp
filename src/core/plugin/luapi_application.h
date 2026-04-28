@@ -2954,7 +2954,7 @@ static int applib_setZoom(lua_State* L) {
 /**
  * Exports the current document as a pdf or as a svg or png image
  *
- * @param opts {outputFile:string, range:string, background:string, progressiveMode: boolean}
+ * @param opts {outputFile:string, range:string, background:string, progressiveMode: boolean, backend: string}
  *
  * Example 1:
  * app.export({["outputFile"] = "Test.pdf", ["range"] = "2-5; 7", ["background"] = "none", ["progressiveMode"] = true})
@@ -2966,6 +2966,10 @@ static int applib_setZoom(lua_State* L) {
  *
  * Example 3:
  * app.export({["outputFile"] = "Test.png", ["layerRange"] = "1-2", ["background"] = "all", ["pngWidth"] = 800})
+ *
+ * Example 4:
+ * app.export({["outputFile"] = "Test.pdf", ["backend"] = "cairo"})
+ * uses the cairo backend for the PDF export, which has a proper support for cropped pages.
  **/
 static int applib_export(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
@@ -2976,6 +2980,7 @@ static int applib_export(lua_State* L) {
     lua_settop(L, 1);
     luaL_checktype(L, 1, LUA_TTABLE);
 
+    lua_getfield(L, 1, "backend");
     lua_getfield(L, 1, "outputFile");
     lua_getfield(L, 1, "range");
     lua_getfield(L, 1, "layerRange");
@@ -2987,6 +2992,7 @@ static int applib_export(lua_State* L) {
 
     // stack now has following:
     //    1 = param table
+    //   -9 = backend
     //   -8 = outputFile
     //   -7 = range
     //   -6 = layerRange
@@ -3000,6 +3006,7 @@ static int applib_export(lua_State* L) {
     const char* range = luaL_optstring(L, -7, nullptr);
     const char* layerRange = luaL_optstring(L, -6, nullptr);
     const char* background = luaL_optstring(L, -5, "all");
+    const char* backend = luaL_optstring(L, -9, "default");
     bool progressiveMode = lua_toboolean(L, -4);  // true unless nil or false
     int pngDpi = static_cast<int>(luaL_optinteger(L, -3, -1));
     int pngWidth = static_cast<int>(luaL_optinteger(L, -2, -1));
@@ -3012,6 +3019,15 @@ static int applib_export(lua_State* L) {
         bgType = EXPORT_BACKGROUND_NONE;
     }
 
+
+    /* "backend" selects the PDF export backend ("qpdf" or "cairo").
+         The Cairo backend correctly handles cropped PDF pages where the crop box
+         origin differs from the media box, avoiding text shifting on export (#7316).
+         Defaults to "qpdf" for backwards compatibility. */
+
+    ExportBackend backendType = ExportBackend::DEFAULT;
+    backendType = ExportBackend::fromString(backend);
+
     if (outputFile == nullptr) {
         return luaL_error(L, "Missing output file!");
     }
@@ -3021,7 +3037,7 @@ static int applib_export(lua_State* L) {
 
     try {
         if (extension == ".pdf") {
-            ExportHelper::exportPdf(doc, outputFile, range, layerRange, bgType, progressiveMode);
+            ExportHelper::exportPdf(doc, outputFile, range, layerRange, bgType, progressiveMode, backendType);
         } else if (extension == ".svg" || extension == ".png") {
             ExportHelper::exportImg(doc, outputFile, range, layerRange, pngDpi, pngWidth, pngHeight, bgType);
         }
@@ -3031,6 +3047,7 @@ static int applib_export(lua_State* L) {
 
     return 0;
 }
+
 
 /**
  * Opens a file and by default asks the user what to do with the old document.
