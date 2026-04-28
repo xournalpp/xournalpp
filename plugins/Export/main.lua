@@ -9,8 +9,10 @@ local DEFAULT_PATH = "/tmp/temp"  -- change this to get a different default path
 
 function exportPdf()
   local pdfName = getStem() .. "_export.pdf"
-  app.export({["outputFile"] = pdfName})
-  -- use the "range", "background" and "progressiveMode" fields for more customization
+  app.export({
+      ["outputFile"] = pdfName,
+      ["backend"] = "cairo",
+  })  -- use the "range", "background" and "progressiveMode" fields for more customization
 end
 
 function exportSvg()  

@@ -840,7 +840,7 @@ function app.setZoom(zoom) end
 
 --- Exports the current document as a pdf or as a svg or png image
 --- 
---- @param opts {outputFile:string, range:string, background:string, progressiveMode: boolean}
+--- @param opts {outputFile:string, range:string, background:string, progressiveMode: boolean, backend: string}
 --- 
 --- Example 1:
 --- app.export({["outputFile"] = "Test.pdf", ["range"] = "2-5; 7", ["background"] = "none", ["progressiveMode"] = true})
@@ -852,6 +852,10 @@ function app.setZoom(zoom) end
 --- 
 --- Example 3:
 --- app.export({["outputFile"] = "Test.png", ["layerRange"] = "1-2", ["background"] = "all", ["pngWidth"] = 800})
+--- 
+--- Example 4:
+--- app.export({["outputFile"] = "Test.pdf", ["backend"] = "cairo"})
+--- uses the cairo backend for the PDF export, which has a proper support for cropped pages.
 function app.export(opts) end
 
 --- Opens a file and by default asks the user what to do with the old document.
