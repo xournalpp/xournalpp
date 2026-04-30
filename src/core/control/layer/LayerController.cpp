@@ -40,18 +40,75 @@ void LayerController::pageSelected(size_t page) {
 }
 
 void LayerController::insertLayer(PageRef page, Layer* layer, Layer::Index layerPos) {
+    xoj_assert(layer);
+    bool empty = layer->getElements().empty();
     control->getDocument()->lock();
     page->insertLayer(layer, layerPos);
+    auto id = empty ? npos : control->getDocument()->indexOf(page);
     control->getDocument()->unlock();
     fireRebuildLayerMenu();
+    if (!empty) {
+        // Rerender the page
+        control->getWindow()->getXournal()->layerChanged(id);
+    }
 }
 
 void LayerController::removeLayer(PageRef page, Layer* layer) {
     control->getDocument()->lock();
+    bool empty = layer->getElements().empty();
     page->removeLayer(layer);
+    auto id = empty ? npos : control->getDocument()->indexOf(page);
     control->getDocument()->unlock();
     fireRebuildLayerMenu();
+    if (!empty) {
+        // Rerender the page
+        control->getWindow()->getXournal()->layerChanged(id);
+    }
 }
+
+void LayerController::moveLayer(PageRef page, Layer* layer, Layer::Index newPos) {
+    control->getDocument()->lock();
+    page->removeLayer(layer);
+    page->insertLayer(layer, newPos);
+    auto id = control->getDocument()->indexOf(page);
+    control->getDocument()->unlock();
+    fireRebuildLayerMenu();
+    // Rerender the page
+    control->getWindow()->getXournal()->layerChanged(id);
+}
+
+void LayerController::mergeLayers(PageRef page, Layer* bottomLayer, Layer* topLayer) {
+    control->getDocument()->lock();
+    page->removeLayer(topLayer);
+
+    for (auto&& elem: topLayer->clearNoFree()) {
+        bottomLayer->addElement(std::move(elem));
+    }
+    auto id = control->getDocument()->indexOf(page);
+    control->getDocument()->unlock();
+
+    fireRebuildLayerMenu();
+    control->getWindow()->getXournal()->layerChanged(id);  // Rerender the page
+}
+
+void LayerController::moveElementsFromLayerToFreeLayer(PageRef page, Layer* layer,
+                                                       const std::vector<const Element*>& elts, Layer* freeLayer,
+                                                       Layer::Index newLayerId) {
+    control->getDocument()->lock();
+
+    for (const Element* elem: elts) {
+        freeLayer->addElement(layer->removeElement(elem).e);
+    }
+
+    // add the upper layer back at its old pos
+    page->insertLayer(freeLayer, newLayerId);
+    auto id = control->getDocument()->indexOf(page);
+    control->getDocument()->unlock();
+
+    fireRebuildLayerMenu();
+    control->getWindow()->getXournal()->layerChanged(id);  // Rerender the page
+}
+
 
 void LayerController::addListener(LayerCtrlListener* listener) { this->listener.push_back(listener); }
 
@@ -217,7 +274,7 @@ void LayerController::moveCurrentLayer(bool up) {
 void LayerController::mergeCurrentLayerDown() {
     control->clearSelectionEndText();
 
-    auto lock = std::unique_lock(*control->getDocument());
+    auto lock = std::shared_lock(*control->getDocument());
     PageRef page = getCurrentPage();
     auto pageID = selectedPage;
     if (page == nullptr) {
@@ -255,8 +312,9 @@ void LayerController::mergeCurrentLayerDown() {
 
     UndoActionPtr undo_redo_action =
             std::make_unique<MergeLayerDownUndoAction>(this, page, currentLayer, layerID - 1, layerBelow, pageID);
-    undo_redo_action->redo(this->control);
     lock.unlock();
+    // The mutex is locked in RW in redo()
+    undo_redo_action->redo(this->control);
 
     control->getUndoRedoHandler()->addUndoAction(std::move(undo_redo_action));
 
@@ -355,7 +413,7 @@ auto LayerController::getCurrentLayerId() const -> Layer::Index {
 }
 
 /// Make sure the document's mutex is locked when calling this
-static std::string getLayerNameOnPage(const PageRef& page, Layer::Index id) {
+static auto getLayerNameOnPage(const PageRef& page, Layer::Index id) -> std::string {
     if (page == nullptr || id > page->getLayerCount()) {
         return "Unknown layer name";
     } else if (id == 0) {  // If is background
@@ -371,7 +429,7 @@ auto LayerController::getCurrentLayerName() const -> std::string {
     auto lock = std::shared_lock(*control->getDocument());
     return getLayerNameOnPage(getCurrentPage(), getCurrentLayerId());
 }
-std::string LayerController::getLayerNameById(Layer::Index id) const {
+auto LayerController::getLayerNameById(Layer::Index id) const -> std::string {
     auto lock = std::shared_lock(*control->getDocument());
     return getLayerNameOnPage(getCurrentPage(), id);
 }
