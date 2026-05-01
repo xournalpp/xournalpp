@@ -331,8 +331,8 @@ void XmlParser::parseStrokeTag(const XmlParserHelper::AttributeMap& attributeMap
 
     // width
     auto widthSV = XmlParserHelper::getAttribMandatory<std::string_view>(xoj::xml_attrs::WIDTH_STR, attributeMap, "1");
-    auto it = widthSV.begin();
-    auto end = widthSV.end();
+    auto it = widthSV.data();
+    auto end = widthSV.data() + widthSV.size();
     double width{};
     parseDouble(it, end, width);  // First number in the width attribute is the global width
 
@@ -340,8 +340,8 @@ void XmlParser::parseStrokeTag(const XmlParserHelper::AttributeMap& attributeMap
     const auto pressureSV = XmlParserHelper::getAttrib<std::string_view>(xoj::xml_attrs::PRESSURES_STR, attributeMap);
     if (pressureSV) {
         // MrWriter writes pressures in a separate field
-        it = pressureSV->begin();
-        end = pressureSV->end();
+        it = pressureSV->data();
+        end = pressureSV->data() + pressureSV->size();
     }
     // Xournal and Xournal++ use the width field. `it` and `end` pointers are already in place.
 
@@ -384,8 +384,8 @@ void XmlParser::parseStrokeText(std::string_view text) {
     std::vector<Point> pointVector;
     pointVector.reserve(this->pressureBuffer.size() + 1);  // The last point has no pressure value
 
-    auto it = text.begin();
-    const auto end = text.end();
+    auto it = text.data();
+    const auto end = text.data() + text.size();
     auto pit = pressureBuffer.begin();
     double x{}, y{};
     while (parseDouble(it, end, x)) {

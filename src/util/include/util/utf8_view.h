@@ -3,6 +3,7 @@
 
 #include <iterator>
 #include <ranges>
+#include <string_view>
 #include <type_traits>
 
 #include "util/ViewIteratorBase.h"
@@ -101,6 +102,13 @@ struct utf8_t {
         return utf8_view{std::begin(r), std::end(r)};
     }
 
+    // Ensure that string views will always return a utf8_view<const char*, const char*> even if the iterator is
+    // wrapped.
+    template <is_byte T>
+    auto operator()(std::basic_string_view<T> const& r) const {
+        return utf8_view{r.data(), r.data() + r.size()};
+    }
+
     // For some reason, gcc 11 (default on ubuntu 22 LTS) does not recognize std::string as a viewable_range
     template <is_byte T>
     auto operator()(std::basic_string<T> const& r) const {
@@ -117,7 +125,7 @@ inline constexpr utf8_t utf8;
 
 template <std::ranges::viewable_range R>
 constexpr auto operator|(R r, utf8_t const&) {
-    return utf8_view{std::begin(r), std::end(r)};
+    return utf8_t{}(std::forward<R>(r));
 }
 
 template <is_byte T>
