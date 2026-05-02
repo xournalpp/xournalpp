@@ -4,6 +4,23 @@ import re
 import sys
 import os.path
 
+# Constants for regex patterns (compiled once for efficiency)
+# Pattern to extract string literals from C code (used by insertActions and insertValuesForEnum)
+C_STRING_PATTERN = r'"([^"]*)"'
+C_STRING_COMPILED = re.compile(C_STRING_PATTERN)
+
+# Pattern to match C array/enum definitions
+C_ARRAY_START_PATTERN = re.compile(r'constexpr\s+const\s+char\*\s+\w+\[\]\s*=\s*{')
+
+# Output file handle (global for helper functions)
+f_out = None
+
+
+def _emit(line):
+    """Helper to print a line to the output file."""
+    print(line, file=f_out)
+
+
 # def gather_functions(file_name:str):
 def gather_functions(file_name):
     '''
@@ -26,7 +43,7 @@ def gather_functions(file_name):
 
     with open(file_name, 'r') as file:
         for line in file:
-            # search for starting pattern (only if not already capturing anyhow)
+            # search for starting pattern (only if not capturing anyhow)
             if not capture and start_pattern.match(line):
                 capture = True
                 # make line fit for further detection of an API function
@@ -146,19 +163,32 @@ def fmt_luaLS_def(file, function_name, comments = [], params = []):
             comments (list[str]): doc-comment for the function
             params (list[str]): parameters of the function in the order defined
                 in the doc-comment.
-
-        Note: The order of the parameters in the doc-comment is also being used
-            for the ordering of the function's parameter ordering. Therefore,
-            you must specify the parameters of the function in the correct order
-            in the doc-comment.
     '''
     if len(comments) > 0:
         print("\n".join(comments), file=file)
     print(f"function app.{function_name}({', '.join(params)}) end\n", file=file)
 
-def insertActions(file_name):
-    start_pattern = re.compile(r'constexpr\s+const\s+char\*\s+ACTION_NAMES\[\]\s*=\s*{')
 
+def _extract_c_string(line):
+    """Extract a C string literal from a line of C code."""
+    match = C_STRING_COMPILED.search(line)
+    if match:
+        return match.group(1)
+    return None
+
+
+def _extract_array_strings(file_name, start_pattern):
+    """
+    Extract string literals from a C array definition in a file.
+
+        Parameters:
+            file_name (str): Path to the file to process
+            start_pattern (re.Pattern): Compiled regex pattern to find the start of the array
+
+        Returns:
+            list[str]: List of extracted string literals
+    """
+    strings = []
     with open(file_name, 'r') as file:
         inside_array = False
         for line in file:
@@ -170,12 +200,28 @@ def insertActions(file_name):
             else:
                 if '}' in line:
                     content = line[:line.find('}')]
-                    print(f"---| {re.search(r'(".*?")', content).group(1)}", file=f_out)
+                    s = _extract_c_string(content)
+                    if s:
+                        strings.append(s)
                     break
                 else:
-                    print(f"---| {re.search(r'(".*?")', line).group(1)}", file=f_out)
+                    s = _extract_c_string(line)
+                    if s:
+                        strings.append(s)
+    return strings
 
-def insertValuesForEnum(name, prefix, file_name):
+
+def _extract_enum_content(file_name, name):
+    """
+    Extract the content inside braces for a named enum/array in C code.
+
+        Parameters:
+            file_name (str): Path to the file to process
+            name (str): The name of the enum/array to find
+
+        Returns:
+            str: The content inside the braces, or None if not found
+    """
     with open(file_name, 'r') as f:
         content = f.read()
 
@@ -186,19 +232,27 @@ def insertValuesForEnum(name, prefix, file_name):
         match = re.search(pattern, content, re.MULTILINE | re.DOTALL)
 
         if not match:
-            raise Exception (f"Enum {name} not found")
+            raise Exception(f"Enum {name} not found")
 
-        # Extract the inside of the braces
-        inside = match.group(1)
+        return match.group(1)
 
-        # Find all string literals inside the braces
-        string_pattern = r'"([^"]*)"'
-        matches = re.findall(string_pattern, inside)
 
-        count = 0
-        for match in matches:
-            print(f"    {prefix}_{match} = {count},", file=f_out)
-            count += 1
+def insertActions(file_name):
+    strings = _extract_array_strings(file_name, C_ARRAY_START_PATTERN)
+    for s in strings:
+        _emit(f"---| {s}")
+
+
+def insertValuesForEnum(name, prefix, file_name):
+    inside = _extract_enum_content(file_name, name)
+
+    # Find all string literals inside the braces
+    matches = C_STRING_COMPILED.findall(inside)
+
+    count = 0
+    for match in matches:
+        _emit(f"    {prefix}_{match} = {count},")
+        count += 1
 
 
 

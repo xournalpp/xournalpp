@@ -362,6 +362,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         return;
     }
 
+    // Skip customShortcuts - handled separately in load()
+    if (!xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("customShortcuts"))) {
+        return;
+    }
+
     if (xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("property"))) {
         g_warning("Settings::Unknown XML node: %s\n", cur->name);
         return;
@@ -871,6 +876,32 @@ auto Settings::load() -> bool {
         cur = cur->next;
     }
 
+    // Load custom keyboard shortcuts from settings file
+    // Format: <customShortcuts><actionName>accelerator_string</actionName>...</customShortcuts>
+    // Note: Must be done before xmlFreeDoc() since we need to access the document
+    {
+        xmlNodePtr cur2 = xmlDocGetRootElement(doc);
+        cur2 = cur2->xmlChildrenNode;
+        while (cur2 != nullptr) {
+            if (!xmlStrcmp(cur2->name, reinterpret_cast<const xmlChar*>("customShortcuts"))) {
+                xmlNodePtr child = cur2->xmlChildrenNode;
+                while (child != nullptr) {
+                    if (child->type == XML_ELEMENT_NODE) {
+                        char* actionName = (char*)child->name;
+                        char* accel = (char*)xmlNodeGetContent(child);
+                        if (actionName && accel) {
+                            this->customAccelerators[actionName] = accel;
+                            xmlFree(accel);
+                        }
+                    }
+                    child = child->next;
+                }
+                break;
+            }
+            cur2 = cur2->next;
+        }
+    }
+
     xmlFreeDoc(doc);
 
     loadButtonConfig();
@@ -1249,6 +1280,14 @@ void Settings::save() {
         saveData(root, p.first, p.second);
     }
 
+
+    // Save custom keyboard shortcuts to settings file
+    // Each custom shortcut is saved as a child element with the action name as tag
+    xmlNodePtr shortcutsNode = xmlNewChild(root, nullptr, reinterpret_cast<const xmlChar*>("customShortcuts"), nullptr);
+    for (const auto& [action, accel] : customAccelerators) {
+        xmlNewChild(shortcutsNode, nullptr, reinterpret_cast<const xmlChar*>(action.c_str()),
+                   reinterpret_cast<const xmlChar*>(accel.c_str()));
+    }
     xmlSaveFormatFileEnc(char_cast(filepath.u8string().c_str()), doc, "UTF-8", 1);
     xmlFreeDoc(doc);
 }
@@ -2711,3 +2750,52 @@ void Settings::setLaserPointerFadeOutTime(unsigned int timeInMs) {
 }
 
 unsigned int Settings::getLaserPointerFadeOutTime() const { return this->laserPointerFadeOutTime; }
+
+// ==================== Custom Shortcuts ====================
+
+/**
+ * Get the custom accelerator for a specific action.
+ * 
+ * @param action Full action name (e.g. "win.quit")
+ * @return Custom accelerator string, or empty string if none
+ */
+std::string Settings::getCustomAccelerator(const std::string& action) const {
+    auto it = customAccelerators.find(action);
+    if (it != customAccelerators.end()) {
+        return it->second;
+    }
+    return "";
+}
+
+/**
+ * Set a custom accelerator for an action.
+ * Note: Does not persist to disk immediately. Caller should call save() after batch operations.
+ * 
+ * @param action Full action name
+ * @param accel Accelerator string (empty to remove custom shortcut)
+ */
+void Settings::setCustomAccelerator(const std::string& action, const std::string& accel) {
+    if (accel.empty()) {
+        customAccelerators.erase(action);
+    } else {
+        customAccelerators[action] = accel;
+    }
+    // Note: caller should call save() after batch operations
+}
+
+/**
+ * Get all custom shortcuts as a map.
+ * 
+ * @return Map of action name to accelerator string
+ */
+const std::map<std::string, std::string>& Settings::getCustomAccelerators() const {
+    return customAccelerators;
+}
+
+/**
+ * Clear all custom shortcuts.
+ * Note: Does not persist to disk immediately. Caller should call save() after clearing.
+ */
+void Settings::clearCustomAccelerators() {
+    customAccelerators.clear();
+}
