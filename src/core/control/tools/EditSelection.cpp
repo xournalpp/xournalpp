@@ -784,6 +784,37 @@ void EditSelection::copySelection() {
     undo->addUndoAction(std::make_unique<InsertsUndoAction>(page, layer, getElementsView().clone()));
 }
 
+bool EditSelection::resizeSingleSelectedImage(double newWidth, double newHeight) {
+    if (newWidth <= 0 || newHeight <= 0) {
+        return false;
+    }
+
+    auto elements = getElementsView();
+    if (elements.size() != 1 || elements.front()->getType() != ELEMENT_IMAGE) {
+        return false;
+    }
+
+    if (this->snappedBounds.width == newWidth && this->snappedBounds.height == newHeight) {
+        return false;
+    }
+
+    this->width += newWidth - this->snappedBounds.width;
+    this->height += newHeight - this->snappedBounds.height;
+    this->snappedBounds.width = newWidth;
+    this->snappedBounds.height = newHeight;
+
+    PageRef page = this->view->getPage();
+    Layer* layer = page->getSelectedLayer();
+    this->sourcePage = page;
+    this->sourceLayer = layer;
+
+    updateMatrix();
+    this->contents->updateContent(this->getRect(), this->snappedBounds, this->rotation, false, layer, page, this->undo,
+                                  CURSOR_SELECTION_BOTTOM_RIGHT);
+    this->view->getXournal()->repaintSelection();
+    return true;
+}
+
 /**
  * If the selection should moved (or rescaled)
  */
