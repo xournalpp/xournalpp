@@ -66,7 +66,12 @@ void exploreMenu(GMenuModel* m) {
             EXPECT_TRUE(pos != 0);
             std::string prefix = value.substr(0, pos);
             std::string action = value.substr(pos + 1);
-            Action a = Action_fromString(action);
+            auto opta = Action_fromString(action);
+            EXPECT_TRUE(opta) << "Invalid action name in menu: \"" << action << "\"";
+            if (!opta) {
+                continue;
+            }
+            auto a = opta.value();
 
             xoj::util::GVariantSPtr target(g_menu_model_get_item_attribute_value(m, i, "target", nullptr),
                                            xoj::util::adopt);

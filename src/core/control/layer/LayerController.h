@@ -37,6 +37,13 @@ public:
     void insertLayer(PageRef page, Layer* layer, Layer::Index layerPos);
     /// Remove a layer, without adding an UndoAction
     void removeLayer(PageRef page, Layer* layer);
+    /// Moves a Layer to a new index, without adding an UndoAction. Assumes `layer` is in `page`
+    void moveLayer(PageRef page, Layer* layer, Layer::Index newPos);
+    /// Move every elements of topLayer onto bottomLayer and removes topLayer, without adding an UndoAction
+    void mergeLayers(PageRef page, Layer* bottomLayer, Layer* topLayer);
+    /// Move the given elements from `layer` to `freeLayer` and add `freeLayer` to the page at the given position
+    void moveElementsFromLayerToFreeLayer(PageRef page, Layer* layer, const std::vector<const Element*>& elts,
+                                          Layer* freeLayer, Layer::Index newLayerId);
 
     // Listener handling
 public:
