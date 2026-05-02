@@ -50,6 +50,7 @@ class ToolbarDragDropHandler;
 class MetadataEntry;
 class MetadataCallbackData;
 class PageBackgroundChangeController;
+class PdfAutoReloadController;
 class PageTemplateSettings;
 class PageTypeHandler;
 class BaseExportJob;
@@ -327,6 +328,8 @@ public:
     LayerController* getLayerController() const;
     PluginController* getPluginController() const;
     const Palette& getPalette() const;
+    void firePdfContentChanged();
+    void refreshAfterPdfChange();
 
     /**
      * Show floating toolbox at specified coordinates
@@ -502,6 +505,7 @@ private:
     ToolHandler* toolHandler;
 
     ScrollHandler* scrollHandler;
+    std::unique_ptr<PdfAutoReloadController> pdfAutoReloadController;
 
     ToolbarDragDropHandler* dragDropHandler = nullptr;
 

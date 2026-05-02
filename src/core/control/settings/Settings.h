@@ -45,6 +45,12 @@ struct Palette;
 constexpr auto DEFAULT_GRID_SIZE = 14.17;
 constexpr unsigned int MAX_SPACES_FOR_TAB = 8U;
 
+/**
+ * PDF auto-reload polling interval settings
+ */
+constexpr guint PDF_AUTO_RELOAD_INTERVAL_DEFAULT_MS = 200;
+constexpr guint PDF_AUTO_RELOAD_INTERVAL_MIN_MS = 50;
+
 class ButtonConfig;
 class InputDevice;
 class PageTemplateSettings;
@@ -397,6 +403,15 @@ public:
     // Re-render pages if document zoom differs from the last render zoom by the given threshold.
     double getPDFPageRerenderThreshold() const;
     void setPDFPageRerenderThreshold(double threshold);
+
+    bool getPdfAutoReloadEnabled() const;
+    void setPdfAutoReloadEnabled(bool enabled);
+
+    unsigned int getPdfAutoReloadIntervalMs() const;
+    void setPdfAutoReloadIntervalMs(unsigned int intervalMs);
+
+    unsigned int getPdfAutoReloadDebounceMs() const;
+    void setPdfAutoReloadDebounceMs(unsigned int debounceMs);
 
     double getTouchZoomStartThreshold() const;
     void setTouchZoomStartThreshold(double threshold);
@@ -987,6 +1002,21 @@ private:
      * for PDF pages to re-render while zooming.
      */
     double pageRerenderThreshold{};
+
+    /**
+     * Whether Xournal++ should detect changes to external PDF backgrounds and reload them automatically.
+     */
+    bool pdfAutoReloadEnabled;
+
+    /**
+     * Polling interval in milliseconds for checking whether the external PDF has changed on disk.
+     */
+    unsigned int pdfAutoReloadIntervalMs;
+
+    /**
+     * Time in milliseconds that a detected PDF file modification must remain unchanged before reloading.
+     */
+    unsigned int pdfAutoReloadDebounceMs;
 
     /**
      * Don't start zooming with touch until the difference in distances between the

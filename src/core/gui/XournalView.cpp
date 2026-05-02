@@ -575,7 +575,8 @@ void XournalView::zoomChanged() {
 void XournalView::pageSizeChanged(size_t page) {
     layoutPages();
     if (page != npos && page < this->viewPages.size()) {
-        this->viewPages[page]->rerenderPage(/* sizeChanged */ true);
+        this->viewPages[page]->markSizeChanged();
+        this->viewPages[page]->rerenderPage();
     }
 }
 
@@ -749,7 +750,8 @@ auto XournalView::isPageVisible(size_t page, int* visibleHeight) const -> bool {
 }
 
 void XournalView::documentChanged(DocumentChangeType type) {
-    if (type != DOCUMENT_CHANGE_CLEARED && type != DOCUMENT_CHANGE_COMPLETE) {
+
+    if (type != DOCUMENT_CHANGE_CLEARED && type != DOCUMENT_CHANGE_COMPLETE && type != DOCUMENT_CHANGE_PDF_CONTENT) {
         return;
     }
 
@@ -761,20 +763,31 @@ void XournalView::documentChanged(DocumentChangeType type) {
 
     recreatePdfCache();
 
-    Document* doc = control->getDocument();
-    doc->lock_shared();
+    if (type == DOCUMENT_CHANGE_PDF_CONTENT) {
+        // PDF reload keeps the existing document pages alive. Re-render in place so active overlays
+        // such as TextEditor are not destroyed just to refresh the background PDF content.
+        for (auto& viewPage: viewPages) {
+            viewPage->rerenderPage();
+        }
+    } else {
+        Document* doc = control->getDocument();
+        doc->lock_shared();
 
-    viewPages.clear();
-    size_t pagecount = doc->getPageCount();
-    viewPages.reserve(pagecount);
-    for (size_t i = 0; i < pagecount; i++) {
-        viewPages.emplace_back(std::make_unique<XojPageView>(this, doc->getPage(i)));
+        viewPages.clear();
+        size_t pagecount = doc->getPageCount();
+        viewPages.reserve(pagecount);
+        for (size_t i = 0; i < pagecount; i++) {
+            viewPages.emplace_back(std::make_unique<XojPageView>(this, doc->getPage(i)));
+        }
+
+        doc->unlock_shared();
     }
 
-    doc->unlock_shared();
-
     layoutPages();
-    scrollTo(0);
+
+    if (type != DOCUMENT_CHANGE_PDF_CONTENT) {
+        scrollTo(0);
+    }
 
     scheduler->unlock();
 }

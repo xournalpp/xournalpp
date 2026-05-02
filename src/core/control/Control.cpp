@@ -114,6 +114,7 @@
 #include "CrashHandler.h"                    // for emer...
 #include "LatexController.h"                 // for Late...
 #include "PageBackgroundChangeController.h"  // for Page...
+#include "PdfAutoReloadController.h"
 #include "PrintHandler.h"                    // for print
 #include "UndoRedoController.h"              // for Undo...
 #include "config-dev.h"                      // for SETT...
@@ -162,12 +163,14 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     this->toolHandler->loadSettings();
     this->initButtonTool();
 
+    this->pageBackgroundChangeController = std::make_unique<PageBackgroundChangeController>(this);
+    this->pdfAutoReloadController = std::make_unique<PdfAutoReloadController>(this);
+
     /**
      * This is needed to update the previews
      */
     this->changeTimout = g_timeout_add_seconds(5, xoj::util::wrap_v<checkChangedDocument>, this);
-
-    this->pageBackgroundChangeController = std::make_unique<PageBackgroundChangeController>(this);
+    this->pdfAutoReloadController->startMonitoring();
 
     this->layerController = new LayerController(this);
     this->layerController->registerListener(this);
@@ -270,6 +273,13 @@ auto Control::checkChangedDocument(Control* control) -> bool {
     // Call again
     return true;
 }
+
+void Control::firePdfContentChanged() {
+    xoj_assert(this->win);
+    this->fireDocumentChanged(DOCUMENT_CHANGE_PDF_CONTENT);
+}
+
+void Control::refreshAfterPdfChange() { this->pdfAutoReloadController->onPdfChanged(); }
 
 void Control::saveSettings() {
     this->toolHandler->saveSettings();
@@ -1459,6 +1469,7 @@ void Control::showSettings() {
                 ctrl->updateWindowTitle();
 
                 ctrl->enableAutosave(settings->isAutosaveEnabled());
+                ctrl->refreshAfterPdfChange();
 
                 ctrl->zoom->setZoomStep(settings->getZoomStep() / 100.0);
                 ctrl->zoom->setZoomStepScroll(settings->getZoomStepScroll() / 100.0);
@@ -1541,6 +1552,7 @@ void Control::replaceDocument(std::unique_ptr<Document> doc, int scrollToPage) {
     this->doc->unlock();
 
     setEmergencyDocument(this->doc);
+    refreshAfterPdfChange();
 
     // Set folder as last save path, so the next save will be at the current document location
     // This is important because of the new .xopp format, where Xournal .xoj handled as import,

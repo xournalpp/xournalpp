@@ -31,6 +31,11 @@ class UndoAction;
 
 class PageBackgroundChangeController: public DocumentListener {
 public:
+    struct PdfPageResizeStats {
+        size_t resizedCount = 0;
+        size_t skippedCount = 0;
+    };
+
     PageBackgroundChangeController(Control* control);
     ~PageBackgroundChangeController() override = default;
 
@@ -56,6 +61,14 @@ public:
     void applyPageSizeToAllPages(const PaperSize& paperSize);
     void changePdfPagesBackground(const fs::path& filepath, bool attachPdf);
     void insertNewPage(size_t position, bool automatedInsertion = false);
+
+    /**
+     * Resize pages to match external PDF dimensions.
+     */
+    void resizePagesToMatchPdf();
+
+private:
+    void showPdfBackgroundSizeChangeMessage(const PdfPageResizeStats& stats) const;
 
     // DocumentListener
 public:

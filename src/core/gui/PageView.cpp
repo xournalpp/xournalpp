@@ -802,11 +802,12 @@ auto XojPageView::onKeyReleaseEvent(const KeyEvent& event) -> bool {
     return false;
 }
 
-void XojPageView::rerenderPage(bool sizeChanged) {
+void XojPageView::rerenderPage() {
     this->rerenderComplete = true;
-    this->sizeChanged = sizeChanged;
     this->xournal->getControl()->getScheduler()->addRerenderPage(this);
 }
+
+void XojPageView::markSizeChanged() { this->sizeChanged = true; }
 
 void XojPageView::repaintPage() const { xournal->getRepaintHandler()->repaintPage(this); }
 

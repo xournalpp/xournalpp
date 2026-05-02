@@ -43,6 +43,8 @@ TEST(SettingsTest, testReadWrite) {
         settings.setBackgroundColor(Color(123, 45, 67));               // Color
         settings.setColorPaletteSetting("foo/bar€_palette");           // path
         settings.setEraserVisibility(ERASER_VISIBILITY_HOVER);         // enum
+        settings.setPdfAutoReloadEnabled(false);                       // bool
+        settings.setPdfAutoReloadIntervalMs(750);                      // unsigned int
         settings.setFont(XojFont{"myfontname italic 34"});             // Font
         settings.latexSettings.editorFont = XojFont{"myfonttest 52"};  // Font
         settings.setPreloadPagesAfter(145);                            // unsigned int
@@ -54,11 +56,13 @@ TEST(SettingsTest, testReadWrite) {
         // For each type, we test one that has been changed and one that should be default
         EXPECT_EQ(settings.isAudioDisabled(), loaded.isAudioDisabled());                                    // bool
         EXPECT_EQ(settings.isAutoloadPdfXoj(), loaded.isAutoloadPdfXoj());                                  // bool
+        EXPECT_EQ(settings.getPdfAutoReloadEnabled(), loaded.getPdfAutoReloadEnabled());                    // bool
         EXPECT_EQ(settings.getDefaultSaveName(), loaded.getDefaultSaveName());                              // u8string
         EXPECT_EQ(settings.getDefaultPdfExportName(), loaded.getDefaultPdfExportName());                    // u8string
         EXPECT_EQ(settings.getPreferredLocale(), loaded.getPreferredLocale());                              // string
         EXPECT_EQ(settings.getPageTemplateSettings(), loaded.getPageTemplateSettings());                    // string
         EXPECT_EQ(settings.getDisplayDpi(), loaded.getDisplayDpi());                                        // int
+        EXPECT_EQ(settings.getPdfAutoReloadIntervalMs(), loaded.getPdfAutoReloadIntervalMs());  // unsigned int
         EXPECT_EQ(settings.getAddHorizontalSpaceAmountLeft(), loaded.getAddHorizontalSpaceAmountLeft());    // int
         EXPECT_EQ(settings.getStabilizerDrag(), loaded.getStabilizerDrag());                                // double
         EXPECT_EQ(settings.getCursorHighlightBorderWidth(), loaded.getCursorHighlightBorderWidth());        // double

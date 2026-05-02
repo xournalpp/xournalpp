@@ -1,8 +1,10 @@
 #include "PageBackgroundChangeController.h"
 
+#include <cmath>    // for std::abs
 #include <memory>   // for __shared_ptr...
 #include <string>   // for allocator
 #include <utility>  // for move
+#include <vector>   // for vector
 
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_g...
 #include <gio/gio.h>                // for GFile
@@ -41,6 +43,8 @@ PageBackgroundChangeController::PageBackgroundChangeController(Control* control)
         control(control), pageTypeForNewPages(control->getSettings()->getPageTemplateSettings().getPageInsertType()) {
     registerListener(control);
 }
+
+static void setPagePdfBackground(const PageRef& page, size_t pdfPageNr, Document* doc);
 
 void PageBackgroundChangeController::applyBackgroundToAllPages(const PageType& pt) {
     control->clearSelectionEndText();
@@ -112,12 +116,78 @@ void PageBackgroundChangeController::changePdfPagesBackground(const fs::path& fi
         XojMsgBox::showErrorToUser(this->control->getGtkWindow(), msg);
         return;
     }
-    this->control->getWindow()->getXournal()->recreatePdfCache();
 
-    this->control->fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
+    this->control->firePdfContentChanged();
+    this->control->refreshAfterPdfChange();
 
     auto undoAction = std::make_unique<MissingPdfUndoAction>(oldFilepath, oldAttachPdf);
     this->control->getUndoRedoHandler()->addUndoAction(std::move(undoAction));
+}
+
+void PageBackgroundChangeController::showPdfBackgroundSizeChangeMessage(const PdfPageResizeStats& stats) const {
+    if (stats.skippedCount == 0) {
+        return;
+    }
+
+    std::string message = FS(_F("Detected updated external PDF dimensions. "
+                                "Resized {1} page(s) without annotations and kept {2} annotated page(s) "
+                                "unchanged to avoid moving handwritten content.") %
+                             stats.resizedCount % stats.skippedCount);
+    XojMsgBox::showMessageToUser(control->getGtkWindow(), message, GTK_MESSAGE_WARNING);
+}
+
+
+void PageBackgroundChangeController::resizePagesToMatchPdf() {
+    PdfPageResizeStats stats;
+    std::vector<size_t> resizedPages;
+
+    Document* doc = control->getDocument();
+    doc->lock();
+    const size_t pageCount = doc->getPageCount();
+
+    for (size_t pageNo = 0; pageNo < pageCount; ++pageNo) {
+        auto page = doc->getPage(pageNo);
+        if (!page || !page->getBackgroundType().isPdfPage()) {
+            continue;
+        }
+
+        const size_t pdfPageNr = page->getPdfPageNr();
+        if (pdfPageNr >= doc->getPdfPageCount()) {
+            continue;
+        }
+
+        auto pdfPage = doc->getPdfPage(pdfPageNr);
+        if (!pdfPage) {
+            continue;
+        }
+
+        const double width = pdfPage->getWidth();
+        const double height = pdfPage->getHeight();
+        // Allow small floating-point differences (0.1) between stored page sizes and PDF-reported dimensions.
+        const bool isSameSizeAsPdf =
+                std::abs(page->getWidth() - width) < 0.1 && std::abs(page->getHeight() - height) < 0.1;
+        if (isSameSizeAsPdf) {
+            continue;
+        }
+
+        if (page->isAnnotated()) {
+            stats.skippedCount++;  // pdf page is resized but has annotation, skip it.
+            continue;
+        }
+
+        setPagePdfBackground(page, pdfPageNr, doc);
+        resizedPages.push_back(pageNo);
+        stats.resizedCount++;
+    }
+    doc->unlock();
+
+    if (stats.resizedCount > 0) {
+        for (size_t pageNo: resizedPages) {
+            control->firePageSizeChanged(pageNo);
+        }
+    }
+
+    showPdfBackgroundSizeChangeMessage(stats);
 }
 
 void PageBackgroundChangeController::changeCurrentPageBackground(const PageType& pt) {

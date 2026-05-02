@@ -163,6 +163,9 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                              }),
                              this);
 
+    g_signal_connect_swapped(builder.get("cbPdfAutoReload"), "toggled",
+                             G_CALLBACK(+[](SettingsDialog* self) { self->pdfAutoReloadToggled(); }), this);
+
     g_signal_connect_swapped(builder.get("cbStylusCursorType"), "changed",
                              G_CALLBACK(+[](SettingsDialog* self) { self->customStylusIconTypeChanged(); }), this);
 
@@ -297,6 +300,8 @@ void SettingsDialog::customStylusIconTypeChanged() {
             (stylusCursorType != STYLUS_CURSOR_NONE && stylusCursorType != STYLUS_CURSOR_ARROW);
     gtk_widget_set_sensitive(builder.get("highlightCursorGrid"), showCursorHighlightOptions);
 }
+
+void SettingsDialog::pdfAutoReloadToggled() { enableWithCheckbox("cbPdfAutoReload", "boxPdfAutoReloadInterval"); }
 
 void SettingsDialog::showStabilizerAvMethodOptions(StrokeStabilizer::AveragingMethod method) {
     bool showArithmetic = method == StrokeStabilizer::AveragingMethod::ARITHMETIC;
@@ -465,6 +470,13 @@ void SettingsDialog::load() {
 
     GtkWidget* spReRenderThreshold = builder.get("spReRenderThreshold");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spReRenderThreshold), settings->getPDFPageRerenderThreshold());
+
+    loadCheckbox("cbPdfAutoReload", settings->getPdfAutoReloadEnabled());
+    GtkWidget* spPdfAutoReloadInterval = builder.get("spPdfAutoReloadInterval");
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spPdfAutoReloadInterval), settings->getPdfAutoReloadIntervalMs());
+    GtkWidget* spPdfAutoReloadDebounce = builder.get("spPdfAutoReloadDebounce");
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spPdfAutoReloadDebounce), settings->getPdfAutoReloadDebounceMs());
+    pdfAutoReloadToggled();
 
     GtkWidget* spTouchZoomStartThreshold = builder.get("spTouchZoomStartThreshold");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spTouchZoomStartThreshold), settings->getTouchZoomStartThreshold());
@@ -1003,6 +1015,14 @@ void SettingsDialog::save() {
     GtkWidget* spReRenderThreshold = builder.get("spReRenderThreshold");
     double rerenderThreshold = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spReRenderThreshold));
     settings->setPDFPageRerenderThreshold(rerenderThreshold);
+
+    settings->setPdfAutoReloadEnabled(getCheckbox("cbPdfAutoReload"));
+    GtkWidget* spPdfAutoReloadInterval = builder.get("spPdfAutoReloadInterval");
+    settings->setPdfAutoReloadIntervalMs(
+            static_cast<unsigned int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spPdfAutoReloadInterval))));
+    GtkWidget* spPdfAutoReloadDebounce = builder.get("spPdfAutoReloadDebounce");
+    settings->setPdfAutoReloadDebounceMs(
+            static_cast<unsigned int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spPdfAutoReloadDebounce))));
 
     settings->setDisplayDpi(gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get("zoomCallibAutomaticCb"))) ? -1 :
                                                                                                                   dpi);

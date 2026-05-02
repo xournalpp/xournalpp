@@ -63,7 +63,8 @@ public:
 
 public:
     void addOverlayView(std::unique_ptr<xoj::view::OverlayView>);
-    void rerenderPage(bool sizeChanged = false) override;
+    void rerenderPage() override;
+    void markSizeChanged();
     void rerenderRect(double x, double y, double width, double height) override;
 
     void repaintPage() const override;
