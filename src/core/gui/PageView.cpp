@@ -19,6 +19,7 @@
 
 #include "control/AudioController.h"                // for AudioController
 #include "control/Control.h"                        // for Control
+#include "control/LatexController.h"                // for LatexController
 #include "control/ScrollHandler.h"                  // for ScrollHandler
 #include "control/SearchControl.h"                  // for SearchControl
 #include "control/Tool.h"                           // for Tool
@@ -404,6 +405,9 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         }
     } else if (h->getToolType() == TOOL_TEXT) {
         startText(x, y);
+    } else if (h->getToolType() == TOOL_LATEX) {
+        /* The latex dialog will be opened only at the onButtonReleaseEvent. */
+        this->inLatex = true;
     } else if (h->getToolType() == TOOL_IMAGE) {
         // start selecting the size for the image
         this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);
@@ -472,14 +476,10 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
                 // could forget to do if we manually call startText
                 this->onButtonPressEvent(pos);
             } else if (elemType == ELEMENT_TEXIMAGE) {
-                Control* control = this->xournal->getControl();
-                if (elems.size() > 1) {
-                    // Deselect the other elements
-                    this->xournal->clearSelection();
-                    auto sel = SelectionFactory::createFromElementOnActiveLayer(control, getPage(), this, object);
-                    this->xournal->setSelection(sel.release());
-                }
-                control->runLatex();
+                // Open latex dialog... but only after the buttonReleaseEvent
+                this->inLatexDoubleClick = true;
+                // Make sure the buttonReleaseEvent corresponding to this device gets processed
+                currentSequenceDeviceId = pos.deviceId;
             }
         }
     } else if (toolType == TOOL_TEXT) {
@@ -677,6 +677,20 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         doc->lock();
         this->eraser->finalize();
         doc->unlock();
+    }
+    if (this->inLatex) {
+        this->inLatex = false;
+        const double zoom = xournal->getZoom();
+        LatexController::insertLatex(this->page, control, pos.x / zoom, pos.y / zoom);
+    }
+    if (this->inLatexDoubleClick) {
+        this->inLatexDoubleClick = false;
+        this->xournal->clearSelection();
+        const double zoom = xournal->getZoom();
+        ToolHandler* toolHandler = this->xournal->getControl()->getToolHandler();
+        toolHandler->selectTool(TOOL_LATEX);
+        toolHandler->fireToolChanged();
+        LatexController::insertLatex(this->page, this->xournal->getControl(), pos.x / zoom, pos.y / zoom);
     }
 
     if (this->verticalSpace) {
@@ -1105,34 +1119,6 @@ auto XojPageView::getDisplayWidthDouble() const -> double { return this->page->g
 
 auto XojPageView::getDisplayHeightDouble() const -> double {
     return this->page->getHeight() * this->xournal->getZoom();
-}
-
-auto XojPageView::getSelectedTex() const -> const TexImage* {
-    EditSelection* theSelection = this->xournal->getSelection();
-    if (!theSelection) {
-        return nullptr;
-    }
-
-    for (const Element* e: theSelection->getElementsView()) {
-        if (e->getType() == ELEMENT_TEXIMAGE) {
-            return dynamic_cast<const TexImage*>(e);
-        }
-    }
-    return nullptr;
-}
-
-auto XojPageView::getSelectedText() const -> const Text* {
-    EditSelection* theSelection = this->xournal->getSelection();
-    if (!theSelection) {
-        return nullptr;
-    }
-
-    for (const Element* e: theSelection->getElementsView()) {
-        if (e->getType() == ELEMENT_TEXT) {
-            return dynamic_cast<const Text*>(e);
-        }
-    }
-    return nullptr;
 }
 
 void XojPageView::rectChanged(Rectangle<double>& rect) { rerenderRect(rect.x, rect.y, rect.width, rect.height); }
