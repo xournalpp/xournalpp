@@ -1,21 +1,16 @@
 #include "AudioPlayer.h"
 
-#include "audio/AudioQueue.h"                // for AudioQueue
-#include "audio/DeviceInfo.h"                // for DeviceInfo
-#include "audio/PortAudioConsumer.h"         // for PortAudioConsumer
-#include "audio/VorbisProducer.h"            // for VorbisProducer
-#include "control/Control.h"                 // for Control
-#include "control/actions/ActionDatabase.h"  // for ActionDatabase
-#include "gui/MainWindow.h"                  // for MainWindow
+#include "audio/AudioQueue.h"         // for AudioQueue
+#include "audio/DeviceInfo.h"         // for DeviceInfo
+#include "audio/PortAudioConsumer.h"  // for PortAudioConsumer
+#include "audio/VorbisProducer.h"     // for VorbisProducer
 
-class Settings;
-
-AudioPlayer::AudioPlayer(Control& control, Settings& settings):
-        control(control),
+AudioPlayer::AudioPlayer(const AudioSettings& settings, std::function<void()> onStop):
         settings(settings),
         audioQueue(std::make_unique<AudioQueue<float>>()),
         portAudioConsumer(std::make_unique<PortAudioConsumer>(*this, *audioQueue)),
-        vorbisProducer(std::make_unique<VorbisProducer>(*audioQueue)) {}
+        vorbisProducer(std::make_unique<VorbisProducer>(*audioQueue)),
+        onStop(std::move(onStop)) {}
 
 AudioPlayer::~AudioPlayer() { this->stop(); }
 
@@ -31,7 +26,7 @@ auto AudioPlayer::start(fs::path const& file, unsigned int timestamp) -> bool {
     return status;
 }
 
-auto AudioPlayer::isPlaying() -> bool { return this->portAudioConsumer->isPlaying(); }
+auto AudioPlayer::isPlaying() const -> bool { return this->portAudioConsumer->isPlaying(); }
 
 void AudioPlayer::pause() {
     if (!this->portAudioConsumer->isPlaying()) {
@@ -50,19 +45,14 @@ auto AudioPlayer::play() -> bool {
     return this->portAudioConsumer->startPlaying();
 }
 
-void AudioPlayer::disableAudioPlaybackButtons() {
-    if (this->audioQueue->hasStreamEnded()) {
-        auto* actionDB = this->control.getActionDatabase();
-        actionDB->enableAction(Action::AUDIO_PAUSE_PLAYBACK, false);
-        actionDB->enableAction(Action::AUDIO_STOP_PLAYBACK, false);
-        actionDB->enableAction(Action::AUDIO_SEEK_FORWARDS, false);
-        actionDB->enableAction(Action::AUDIO_SEEK_BACKWARDS, false);
-        actionDB->setActionState(Action::AUDIO_PAUSE_PLAYBACK, false);
+void AudioPlayer::fireOnStop() {
+    if (onStop) {
+        onStop();
     }
 }
 
 void AudioPlayer::stop() {
-    disableAudioPlaybackButtons();
+    fireOnStop();
     // Stop playing audio
     this->portAudioConsumer->stopPlaying();
 
@@ -82,4 +72,4 @@ void AudioPlayer::seek(int seconds) {
 
 auto AudioPlayer::getOutputDevices() -> std::vector<DeviceInfo> { return this->portAudioConsumer->getOutputDevices(); }
 
-auto AudioPlayer::getSettings() -> Settings& { return this->settings; }
+auto AudioPlayer::getSettings() const -> const AudioSettings& { return this->settings; }

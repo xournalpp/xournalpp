@@ -37,7 +37,7 @@
 #include "filesystem.h"            // for path
 
 #ifdef ENABLE_AUDIO
-#include <portaudiocpp/PortAudioCpp.hxx>  // for PaDeviceIndex
+#include "audio/AudioSettings.h"
 #endif
 
 struct Palette;
@@ -436,6 +436,8 @@ public:
 
     unsigned int getDefaultSeekTime() const;
     void setDefaultSeekTime(unsigned int t);
+
+    const AudioSettings& getAudioSettings() const;
 #endif
 
     std::string const& getPluginEnabled() const;
@@ -1033,11 +1035,6 @@ private:
     std::string sizeUnit;
 
     /**
-     * Audio folder for audio recording
-     */
-    fs::path audioFolder;
-
-    /**
      * Snap tolerance for the graph/dotted grid
      */
     double snapGridTolerance{};
@@ -1069,30 +1066,11 @@ private:
     bool pressureGuessing{};
 
 #ifdef ENABLE_AUDIO
-    /**
-     * The index of the audio device used for recording
-     */
-    PaDeviceIndex audioInputDevice{};
+    /// Settings for audio recording
+    AudioSettings audioSettings;
 
-    /**
-     * The index of the audio device used for playback
-     */
-    PaDeviceIndex audioOutputDevice{};
-
-    /**
-     * The sample rate used for recording
-     */
-    double audioSampleRate{};
-
-    /**
-     * The gain by which to amplify the recorded audio samples
-     */
-    double audioGain{};
-
-    /**
-     * The default time by which the playback will seek backwards and forwards
-     */
-    unsigned int defaultSeekTime{};
+    /// Folder for audio recording
+    fs::path audioFolder;
 #endif
 
     /**

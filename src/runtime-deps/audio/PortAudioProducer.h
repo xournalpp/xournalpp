@@ -18,14 +18,15 @@
 
 #include "DeviceInfo.h"  // for DeviceInfo
 
-class Settings;
+struct AudioSettings;
 template <typename T>
 class AudioQueue;
 
 
 class PortAudioProducer {
 public:
-    PortAudioProducer(Settings& settings, AudioQueue<float>& audioQueue): settings(settings), audioQueue(audioQueue){};
+    PortAudioProducer(const AudioSettings& settings, AudioQueue<float>& audioQueue):
+            settings(settings), audioQueue(audioQueue) {};
 
     std::vector<DeviceInfo> getInputDevices() const;
 
@@ -42,7 +43,7 @@ public:
 
 private:
     portaudio::System& sys{portaudio::System::instance()};
-    Settings& settings;
+    const AudioSettings& settings;
 
     AudioQueue<float>& audioQueue;
 

@@ -16,13 +16,13 @@
 
 #include "filesystem.h"  // for path
 
-class Settings;
+struct AudioSettings;
 template <typename T>
 class AudioQueue;
 
 class VorbisConsumer final {
 public:
-    explicit VorbisConsumer(Settings& settings, AudioQueue<float>& audioQueue):
+    explicit VorbisConsumer(const AudioSettings& settings, AudioQueue<float>& audioQueue):
             settings(settings), audioQueue(audioQueue) {}
 
 public:
@@ -31,8 +31,9 @@ public:
     void stop();
 
 private:
-    Settings& settings;
+    const AudioSettings& settings;
     AudioQueue<float>& audioQueue;
+
 
     std::thread consumerThread{};
     std::atomic<bool> stopConsumer{false};

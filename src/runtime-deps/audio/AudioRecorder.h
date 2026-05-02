@@ -20,22 +20,22 @@ template <typename T>
 class AudioQueue;
 class DeviceInfo;
 class PortAudioProducer;
-class Settings;
+struct AudioSettings;
 class VorbisConsumer;
 
-class AudioRecorder final {
+class AudioRecorder {
 public:
-    explicit AudioRecorder(Settings& settings);
+    explicit AudioRecorder(const AudioSettings& settings);
     AudioRecorder(AudioRecorder const&) = delete;
     AudioRecorder(AudioRecorder&&) = delete;
     auto operator=(AudioRecorder const&) -> AudioRecorder& = delete;
     auto operator=(AudioRecorder&&) -> AudioRecorder& = delete;
-    ~AudioRecorder();
+    virtual ~AudioRecorder();
 
-    bool start(fs::path const& file);
-    void stop();
-    [[nodiscard]] bool isRecording() const;
-    std::vector<DeviceInfo> getInputDevices() const;
+    virtual bool start(fs::path const& file);
+    virtual void stop();
+    [[nodiscard]] virtual bool isRecording() const;
+    [[nodiscard]] virtual std::vector<DeviceInfo> getInputDevices() const;
 
 private:
     std::unique_ptr<AudioQueue<float>> audioQueue;
