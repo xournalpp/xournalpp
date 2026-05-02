@@ -41,6 +41,12 @@ public:
     virtual bool userTapped(double zoom) const = 0;
     virtual const std::vector<BoundaryPoint>& getBoundary() const = 0;
 
+    /**
+     * Extend the selector geometry to infinity at page edges.
+     * Called by finalize() before element containment checks.
+     */
+    virtual void extendAtPageEdges() = 0;
+
     inline auto getViewPool() const -> const std::shared_ptr<xoj::util::DispatchPool<xoj::view::SelectorView>>& {
         return viewPool;
     }
@@ -51,6 +57,11 @@ public:
      */
     auto releaseElements() -> InsertionOrderRef;
 
+    /**
+     * If the selector touches page edges, the selection area is extended to infinity along the touching edge.
+     * Define a threshold in pt for the vicinity the selection area must be in to trigger extension.
+     */
+    static constexpr double EDGE_TOUCHING_THRESHOLD = 1.0;  // pt
 private:
 protected:
     std::vector<BoundaryPoint> boundaryPoints;
@@ -77,6 +88,7 @@ public:
     bool contains(double x, double y) const override;
     bool userTapped(double zoom) const override;
     const std::vector<BoundaryPoint>& getBoundary() const override;
+    void extendAtPageEdges() override;
 
 private:
     double sx;
@@ -95,4 +107,6 @@ public:
     bool contains(double x, double y) const override;
     bool userTapped(double zoom) const override;
     const std::vector<BoundaryPoint>& getBoundary() const override;
+
+    void extendAtPageEdges() override;
 };

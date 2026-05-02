@@ -2,6 +2,7 @@
 
 #include <algorithm>  // for max, min
 #include <cmath>      // for abs, NAN
+#include <limits>     // for numeric_limits
 #include <memory>     // for __shared_ptr_access
 
 #include <gdk/gdk.h>  // for GdkRGBA, gdk_cairo_set_source_rgba
@@ -12,6 +13,9 @@
 #include "model/XojPage.h"         // for XojPage
 #include "util/safe_casts.h"       // for as_unsigned
 
+// Ensures that `-std::numeric_limits<double>::infinity()` behaves as minus infinity
+static_assert(std::numeric_limits<double>::is_iec559);
+
 Selector::Selector(bool multiLayer):
         multiLayer(multiLayer), viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::SelectorView>>()) {}
 
@@ -19,8 +23,15 @@ Selector::~Selector() = default;
 
 auto Selector::finalize(PageRef page, bool disableMultilayer, Document* doc) -> size_t {
     this->page = page;
-    size_t layerId = 0;
 
+    // Trigger redraw before any geometry modifications
+    this->viewPool->dispatchAndClear(xoj::view::SelectorView::DELETE_VIEWS_REQUEST, this->bbox);
+
+    // Extend selection geometry (bbox) to infinity where touching page edges
+    this->extendAtPageEdges();
+
+    // Find selected elements
+    size_t layerId = 0;
     if (multiLayer && !disableMultilayer) {
         std::shared_lock lock(*doc);
         const auto layers = page->getLayersView();
@@ -56,8 +67,6 @@ auto Selector::finalize(PageRef page, bool disableMultilayer, Document* doc) -> 
         }
     }
 
-    this->viewPool->dispatchAndClear(xoj::view::SelectorView::DELETE_VIEWS_REQUEST, this->bbox);
-
     return layerId;
 }
 
@@ -75,6 +84,27 @@ RectangularSelector::RectangularSelector(double x, double y, bool multiLayer):
 RectangularSelector::~RectangularSelector() = default;
 
 auto RectangularSelector::contains(double x, double y) const -> bool { return bbox.contains(x, y); }
+
+void RectangularSelector::extendAtPageEdges() {
+    constexpr double INF = std::numeric_limits<double>::infinity();
+    const double pageWidth = page->getWidth();
+    const double pageHeight = page->getHeight();
+
+    if (pageWidth > 0 && pageHeight > 0) {
+        if (bbox.minX <= EDGE_TOUCHING_THRESHOLD) {
+            bbox.minX = -INF;
+        }
+        if (bbox.minY <= EDGE_TOUCHING_THRESHOLD) {
+            bbox.minY = -INF;
+        }
+        if (bbox.maxX >= pageWidth - EDGE_TOUCHING_THRESHOLD) {
+            bbox.maxX = INF;
+        }
+        if (bbox.maxY >= pageHeight - EDGE_TOUCHING_THRESHOLD) {
+            bbox.maxY = INF;
+        }
+    }
+}
 
 void RectangularSelector::currentPos(double x, double y) {
     bbox = Range(sx, sy);
@@ -118,8 +148,87 @@ void LassoSelector::currentPos(double x, double y) {
     }
 }
 
+void LassoSelector::extendAtPageEdges() {
+    constexpr double INF = std::numeric_limits<double>::infinity();
+    const double pageWidth = page->getWidth();
+    const double pageHeight = page->getHeight();
+
+    // Skip extension when the page geometry is invalid or the lasso cannot form a polygon.
+    if (pageWidth <= 0 || pageHeight <= 0 || boundaryPoints.size() <= 2) {
+        return;
+    }
+
+    // Fast path: Most lassos stay fully inside the page, so avoid the projection work in that common case.
+    if (bbox.minX > EDGE_TOUCHING_THRESHOLD && bbox.minY > EDGE_TOUCHING_THRESHOLD &&
+        bbox.maxX < pageWidth - EDGE_TOUCHING_THRESHOLD && bbox.maxY < pageHeight - EDGE_TOUCHING_THRESHOLD) {
+        return;
+    }
+
+    auto const isOnEdge = [&](BoundaryPoint const& p) -> bool {
+        return p.x <= EDGE_TOUCHING_THRESHOLD || p.x >= pageWidth - EDGE_TOUCHING_THRESHOLD ||
+               p.y <= EDGE_TOUCHING_THRESHOLD || p.y >= pageHeight - EDGE_TOUCHING_THRESHOLD;
+    };
+
+    // Project edge-touching coordinates to infinity while leaving interior coordinates unchanged.
+    auto const extendCoordinate = [&](double value, double pageExtent) -> double {
+        if (value <= EDGE_TOUCHING_THRESHOLD) {
+            return -INF;
+        }
+        if (value >= pageExtent - EDGE_TOUCHING_THRESHOLD) {
+            return INF;
+        }
+        return value;
+    };
+
+    auto const project = [&](BoundaryPoint const& p) -> BoundaryPoint {
+        return {extendCoordinate(p.x, pageWidth), extendCoordinate(p.y, pageHeight)};
+    };
+
+    // Build the final polygon in a scratch buffer because one input point may emit multiple output points.
+    std::vector<BoundaryPoint> newBoundaryPoints;
+    newBoundaryPoints.reserve(boundaryPoints.size() * 2);
+
+    // Keep the extended polygon and bbox in sync as points are emitted.
+    auto const appendExtendedPoint = [&](BoundaryPoint const& p) -> void {
+        newBoundaryPoints.push_back(p);
+        bbox.addPoint(p.x, p.y);
+    };
+
+    // Walk the original lasso and splice in projected points for runs that touch the page edge.
+    auto const n = boundaryPoints.size();
+    for (size_t i = 0; i < n; i++) {
+        auto const& current = boundaryPoints[i];
+        auto const currentOnEdge = isOnEdge(current);
+
+        if (!currentOnEdge) {
+            appendExtendedPoint(current);
+            continue;
+        }
+
+        // Current point is on a page edge.
+        auto const prevOnEdge = isOnEdge(boundaryPoints[(i + n - 1) % n]);
+        auto const nextOnEdge = isOnEdge(boundaryPoints[(i + 1) % n]);
+
+        if (!prevOnEdge) {
+            // Entering an edge run: emit original, then projected
+            appendExtendedPoint(current);
+            appendExtendedPoint(project(current));
+        } else if (!nextOnEdge) {
+            // Leaving an edge run: emit projected, then original
+            appendExtendedPoint(project(current));
+            appendExtendedPoint(current);
+        } else {
+            // Interior of an edge run: emit only projected
+            appendExtendedPoint(project(current));
+        }
+    }
+
+    // Replace the original lasso with the extended polygon used for containment checks.
+    boundaryPoints = std::move(newBoundaryPoints);
+}
+
 auto LassoSelector::contains(double x, double y) const -> bool {
-    if (boundaryPoints.size() <= 2 || !this->bbox.contains(x, y)) {
+    if (boundaryPoints.size() <= 2 || !bbox.contains(x, y)) {
         return false;
     }
 
