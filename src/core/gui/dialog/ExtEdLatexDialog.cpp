@@ -20,7 +20,7 @@
 
 #include "AbstractLatexDialog.h"
 
-constexpr auto UI_FILE_NAME = "extEdTexDialog.glade";
+constexpr auto UI_FILE_NAME = "extEdTexDialog.ui";
 constexpr auto UI_DIALOG_ID = "extEdTexDialog";
 
 ExtEdLatexDialog::ExtEdLatexDialog(GladeSearchpath* gladeSearchPath, std::unique_ptr<LatexController> ctrl):
