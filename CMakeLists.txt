@@ -215,8 +215,8 @@ check_cxx_source_compiles([[
     int main() {
         const std::string_view sv = "7.381450";
         double val{};
-        auto [ptr, ec] = std::from_chars(sv.begin(), sv.end(), val);
-        return ptr != sv.end() || ec != std::errc{};
+        auto [ptr, ec] = std::from_chars(sv.data(), sv.data() + sv.size(), val);
+        return ptr != (sv.data() + sv.size()) || ec != std::errc{};
     }
 ]] HAVE_FLOAT_FROM_CHARS)
 if (HAVE_FLOAT_FROM_CHARS)
