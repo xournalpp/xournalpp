@@ -52,6 +52,14 @@ public:
      */
     static void run(Control* ctrl);
 
+    /**
+     * Render a LaTeX string to a TexImage without opening the editor dialog.
+     * Returns nullptr on failure and optionally writes a human-readable error.
+     */
+    static std::unique_ptr<TexImage> renderTexImage(Control* ctrl, std::string latex, double x, double y,
+                                                    double width = 0, double height = 0,
+                                                    std::string* errorMessage = nullptr);
+
 private:
     /**
      * Provides information about whether a particular dependency was found or not.
