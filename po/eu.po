@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 19:40+0000\n"
-"PO-Revision-Date: 2026-04-05 05:02\n"
+"POT-Creation-Date: 2026-05-02 10:00+0000\n"
+"PO-Revision-Date: 2026-05-03 05:27\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -313,7 +313,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "Ez daukazu PDF orririk hautatzeko. Utzi eragiketa.\n"
 "Hautatu beste atzeko plano mota bat: \"Koadernoa\" menua → \"Konfiguratu orri-txantiloia\"."
 
-#: ../src/core/control/PdfCache.cpp:124
+#: ../src/core/control/PdfCache.cpp:159
 msgid "PDF background missing"
 msgstr "Atzeko planoko PDFa falta da"
 
@@ -1394,7 +1394,7 @@ msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr "Errore bat gertatu da menu-barrako XML fitxategia kargatzean (saiatu \"{1}\" kargatzen)"
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:369
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:384
 msgid "Apply to all pages"
 msgstr "Aplikatu orri guztiei"
 
@@ -1438,11 +1438,11 @@ msgstr "Baztertu dokumentu bakarra"
 msgid "Copy current page"
 msgstr "Kopiatu uneko orria"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:261
 msgid "Copy current background"
 msgstr "Kopiatu uneko atzeko planoa"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:303
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:332
 msgid "Apply to current page"
 msgstr "Aplikatu uneko orriari"
 

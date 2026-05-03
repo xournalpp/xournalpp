@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 19:40+0000\n"
-"PO-Revision-Date: 2026-04-05 05:02\n"
+"POT-Creation-Date: 2026-05-02 10:00+0000\n"
+"PO-Revision-Date: 2026-05-03 05:27\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -308,7 +308,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "Anda tidak memiliki halaman PDF yang dapat dipilih. Batalkan operasi.\n"
 "Silakan pilih tipe latar belakang yang lain: Menu \"Jurnal\" → \"Konfigurasi Templat Halaman\"."
 
-#: ../src/core/control/PdfCache.cpp:124
+#: ../src/core/control/PdfCache.cpp:159
 msgid "PDF background missing"
 msgstr "Latar belakang PDF tidak ada"
 
@@ -1363,7 +1363,7 @@ msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr ""
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:369
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:384
 msgid "Apply to all pages"
 msgstr "Terapkan ke semua halaman"
 
@@ -1407,11 +1407,11 @@ msgstr ""
 msgid "Copy current page"
 msgstr ""
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:261
 msgid "Copy current background"
 msgstr ""
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:303
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:332
 msgid "Apply to current page"
 msgstr "Terapkan ke halaman ini"
 

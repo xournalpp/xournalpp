@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 19:40+0000\n"
-"PO-Revision-Date: 2026-04-05 05:02\n"
+"POT-Creation-Date: 2026-05-02 10:00+0000\n"
+"PO-Revision-Date: 2026-05-03 05:27\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -311,7 +311,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "Na voljo ni PDF datotek. Preklic operacije.\n"
 "Prosimo izberite drugačen tip ozadja: Menu \"Journal\" → \"Configure Page Template\"."
 
-#: ../src/core/control/PdfCache.cpp:124
+#: ../src/core/control/PdfCache.cpp:159
 msgid "PDF background missing"
 msgstr "PDF ozadje manjka"
 
@@ -1373,7 +1373,7 @@ msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr "Napaka pri nalaganju XML datoteke menijske vrstice (poskusite naložiti »{1}«)"
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:369
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:384
 msgid "Apply to all pages"
 msgstr "Uporabi za vse strani"
 
@@ -1417,11 +1417,11 @@ msgstr "Zapri en dokument"
 msgid "Copy current page"
 msgstr ""
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:261
 msgid "Copy current background"
 msgstr "Kopiraj trenutno ozadje"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:303
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:332
 msgid "Apply to current page"
 msgstr "Uporabi za trenutno stran"
 
