@@ -50,6 +50,27 @@ public:
      */
     void setDashes(std::vector<double>&& dashes);
 
+    /**
+     * Get the dash vector with the spaces scaled to the stroke width
+     *
+     * @param strokeWidth
+     *
+     * @return dashes scaled to the stroke width
+     */
+    std::vector<double> getDashesScaledToStrokeWidth(const double strokeWidth) const;
+
+    /**
+     * Scale dash vector to stroke width
+     *
+     * @param strokeWidth
+     */
+    void scaleDashesToStrokeWidth(const double strokeWidth);
+
+    void setScaleDashes() { scaleDashesToWidth = true; }
+    void setScaleDashes(const std::string& line_style) { scaleDashesToWidth = line_style.starts_with("scaled"); }
+    bool scaleDashes() const { return scaleDashesToWidth; }
+
 private:
     std::vector<double> dashes;
+    bool scaleDashesToWidth = false; // Used for pressure-sensitive dash scaling
 };

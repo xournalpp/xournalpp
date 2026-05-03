@@ -270,6 +270,12 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos, double zoom
 
     this->hasPressure = this->stroke->getToolType().isPressureSensitive() && pos.pressure != Point::NO_PRESSURE;
 
+    if (this->hasPressure) {
+        this->stroke->setScaleDashes();
+    } else {
+        this->stroke->scaleLineStyleDashesToWidth();
+    }
+
     const double width = this->hasPressure ? pos.pressure * stroke->getWidth() : Point::NO_PRESSURE;
     stroke->addPoint(Point(this->buttonDownPoint.x, this->buttonDownPoint.y, width));
 

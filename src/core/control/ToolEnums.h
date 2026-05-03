@@ -180,10 +180,15 @@ enum StrokeType {
     STROKE_TYPE_STANDARD = 1,
     STROKE_TYPE_DASHED = 2,
     STROKE_TYPE_DASHDOTTED = 3,
-    STROKE_TYPE_DOTTED = 4
+    STROKE_TYPE_DOTTED = 4,
+    STROKE_TYPE_SCALED_DASHED = 5,
+    STROKE_TYPE_SCALED_DASHDOTTED = 6,
+    STROKE_TYPE_SCALED_DOTTED = 7,
 };
 
-static constexpr std::array<std::string_view, 5> strokeTypeNames{"none", "standard", "dashed", "dashdot", "dot"};
+static constexpr std::array<std::string_view, 8> strokeTypeNames{
+    "none", "standard", "dashed", "dashdot", "dot", "scaled_dashed", "scaled_dashdot", "scaled_dot"
+};
 
 auto strokeTypeFromString(const std::string& type) -> StrokeType;
 auto strokeTypeToLineStyle(StrokeType type) -> LineStyle;

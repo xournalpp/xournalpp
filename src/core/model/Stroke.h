@@ -202,6 +202,9 @@ public:
     StrokeCapStyle getStrokeCapStyle() const;
     void setStrokeCapStyle(const StrokeCapStyle capStyle);
 
+    void scaleLineStyleDashesToWidth();
+    void setScaleDashes();
+
     [[maybe_unused]] void debugPrint() const;
 
 public:
