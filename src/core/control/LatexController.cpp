@@ -328,6 +328,8 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
             img->setWidth(imgheight * ratio);
         }
         img->setHeight(imgheight);
+    } else if (std::abs(imgwidth) > 1024 * std::numeric_limits<double>::epsilon()) {
+        img->setWidth(imgwidth);
     }
 
     return img;
@@ -364,4 +366,79 @@ void LatexController::run(Control* ctrl) {
 
     self->findSelectedTexElement();
     showTexEditDialog(std::move(self));
+}
+
+auto LatexController::renderTexImage(Control* ctrl, std::string latex, double x, double y, double width, double height,
+                                     std::string* errorMessage) -> std::unique_ptr<TexImage> {
+    LatexController self(ctrl);
+
+    auto depStatus = self.findTexDependencies();
+    if (!depStatus.success) {
+        if (errorMessage) {
+            *errorMessage = depStatus.errorMsg;
+        }
+        return nullptr;
+    }
+
+    self.posx = x;
+    self.posy = y;
+    self.imgwidth = width;
+    self.imgheight = height;
+
+    Color textColor = ctrl->getToolHandler()->getTool(TOOL_TEXT).getColor();
+    const std::string texContents = LatexGenerator::templateSub(latex, self.latexTemplate, textColor);
+    auto result = self.generator.asyncRun(self.texTmpDir, texContents);
+    if (auto* err = std::get_if<LatexGenerator::GenError>(&result)) {
+        if (errorMessage) {
+            *errorMessage = err->message;
+        }
+        return nullptr;
+    }
+
+    auto* proc = std::get<GSubprocess*>(result);
+    GError* err = nullptr;
+    char* procStdout = nullptr;
+    bool procExited = g_subprocess_communicate_utf8(proc, nullptr, nullptr, &procStdout, nullptr, &err);
+
+    if (procStdout != nullptr) {
+        self.texProcessOutput = procStdout;
+        free(procStdout);
+    }
+
+    if (err != nullptr) {
+        if (errorMessage) {
+            if (g_error_matches(err, G_SPAWN_EXIT_ERROR, 1)) {
+                *errorMessage = self.texProcessOutput.empty() ? err->message : self.texProcessOutput;
+            } else {
+                *errorMessage = FS(_F("Latex generation encountered an error: {1} (exit code: {2})") % err->message %
+                                   err->code);
+            }
+        }
+        g_error_free(err);
+        g_object_unref(proc);
+        return nullptr;
+    }
+
+    if (!procExited || g_subprocess_get_exit_status(proc) != 0) {
+        if (errorMessage) {
+            if (!self.texProcessOutput.empty()) {
+                *errorMessage = self.texProcessOutput;
+            } else {
+                *errorMessage = FS(_F("Latex generation failed with exit code {1}") %
+                                   g_subprocess_get_exit_status(proc));
+            }
+        }
+        g_object_unref(proc);
+        fs::remove(self.texTmpDir / "tex.pdf");
+        return nullptr;
+    }
+
+    g_object_unref(proc);
+    self.isValidTex = true;
+
+    auto img = self.loadRendered(std::move(latex));
+    if (!img && errorMessage && errorMessage->empty()) {
+        *errorMessage = _("Could not load rendered LaTeX output.");
+    }
+    return img;
 }
