@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-28 16:29+0000\n"
-"PO-Revision-Date: 2026-03-28 17:05\n"
+"POT-Creation-Date: 2026-05-02 10:00+0000\n"
+"PO-Revision-Date: 2026-05-03 05:27\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -307,7 +307,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
 msgstr ""
 
-#: ../src/core/control/PdfCache.cpp:124
+#: ../src/core/control/PdfCache.cpp:159
 msgid "PDF background missing"
 msgstr "רקע PDF לא נמצא"
 
@@ -1381,7 +1381,7 @@ msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr "שגיאה בטעינת קובץ ה־XML של שורת התפריטים (לנסות לטעון את „{1}”)"
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:369
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:384
 msgid "Apply to all pages"
 msgstr "יישם לכל הדפים"
 
@@ -1425,11 +1425,11 @@ msgstr "התעלמות ממסמך בודד"
 msgid "Copy current page"
 msgstr "העתקת העמוד הנוכחי"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:261
 msgid "Copy current background"
 msgstr "העתקת הרקע הנוכחי"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:303
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:332
 msgid "Apply to current page"
 msgstr "יישם לדף הנוכחי"
 
