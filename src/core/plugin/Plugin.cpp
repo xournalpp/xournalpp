@@ -95,63 +95,56 @@ size_t Plugin::populateMenuSection(GtkApplicationWindow* win, size_t startId) {
     GMenu* const rootMenu = menuSection.get();
     submenuMap[""] = rootMenu;
 
-    // Helper to get or create parent menu for a given path
-    auto getOrCreateParent = [&submenuMap, rootMenu](const std::string& parentPath) -> GMenu* {
-        GMenu* parentMenu = rootMenu;
+    auto normalizePath = [](const std::string& path) {
+        std::string normalized;
+        normalized.reserve(path.size());
 
-        // Lambda to create or reuse a submenu for a given segment and path prefix
-        auto createOrGetSubmenu = [&submenuMap](GMenu*& parent, const std::string& seg,
-                                                const std::string& builtPath) -> GMenu* {
-            auto it = submenuMap.find(builtPath);
-            if (it != submenuMap.end()) {
-                return it->second;
-            }
-            GMenu* submenu = g_menu_new();
-            xoj::util::GObjectSPtr<GMenuItem> item(g_menu_item_new_submenu(seg.c_str(), G_MENU_MODEL(submenu)),
-                                                   xoj::util::adopt);
-            g_menu_append_item(parent, item.get());
-            submenuMap[builtPath] = submenu;
-            return submenu;
-        };
-
-        std::string path = parentPath;
-        while (!path.empty() && path.back() == PATH_SEP) {
-            path.pop_back();
-        }
-        if (path.empty()) {
-            return parentMenu;
-        }
-
-        std::string builtPath;
-        size_t start = 0;
-        size_t end = path.find(PATH_SEP);
-
-        while (true) {
-            if (end == std::string::npos) {
-                end = path.size();
-            }
-            if (end > start) {
-                std::string segment = path.substr(start, end - start);
-                if (!segment.empty()) {
-                    if (!builtPath.empty()) {
-                        builtPath += PATH_SEP;
-                    }
-                    builtPath += segment;
-                    parentMenu = createOrGetSubmenu(parentMenu, segment, builtPath);
+        bool lastWasSep = true;
+        for (char c: path) {
+            if (c == PATH_SEP) {
+                if (!lastWasSep) {
+                    normalized += c;
                 }
+                lastWasSep = true;
+            } else {
+                normalized += c;
+                lastWasSep = false;
             }
-            if (end == path.size()) {
-                break;
-            }
-            start = end + 1;
-            end = path.find(PATH_SEP, start);
         }
 
-        return parentMenu;
+        if (!normalized.empty() && normalized.back() == PATH_SEP) {
+            normalized.pop_back();
+        }
+
+        return normalized;
+    };
+
+    // Helper to get or create parent menu for a given path
+    auto getOrCreateParent = [&submenuMap, rootMenu](auto& self, const std::string& parentPath) -> GMenu* {
+        if (parentPath.empty()) {
+            return rootMenu;
+        }
+
+        auto it = submenuMap.find(parentPath);
+        if (it != submenuMap.end()) {
+            return it->second;
+        }
+
+        size_t sep = parentPath.rfind(PATH_SEP);
+        std::string parentPrefix = sep == std::string::npos ? std::string() : parentPath.substr(0, sep);
+        std::string segment = sep == std::string::npos ? parentPath : parentPath.substr(sep + 1);
+
+        GMenu* parentMenu = self(self, parentPrefix);
+        GMenu* submenu = g_menu_new();
+        xoj::util::GObjectSPtr<GMenuItem> item(g_menu_item_new_submenu(segment.c_str(), G_MENU_MODEL(submenu)),
+                                               xoj::util::adopt);
+        g_menu_append_item(parentMenu, item.get());
+        submenuMap[parentPath] = submenu;
+        return submenu;
     };
 
     for (auto& m: menuEntries) {
-        GMenu* parentMenu = getOrCreateParent(m.parentPath);
+        GMenu* parentMenu = getOrCreateParent(getOrCreateParent, normalizePath(m.parentPath));
 
         std::string actionName = G_ACTION_NAME_PREFIX;
         actionName += std::to_string(startId++);
