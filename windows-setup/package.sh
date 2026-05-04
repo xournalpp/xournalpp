@@ -83,14 +83,14 @@ cp "$prefix"/bin/gtk3-demo.exe "$setup_dir"/bin
 
 echo "copy lua-gobject and dependencies"
 cp "$prefix"/bin/libgirepository-2.0-0.dll "$setup_dir"/bin
-mkdir -p "$setup_dir"/lib/lua/5.4/LuaGObject
-cp "$prefix"/lib/lua/5.4/LuaGObject/lua_gobject_core.dll "$setup_dir"/lib/lua/5.4/LuaGObject
+mkdir -p "$setup_dir"/lib/lua/5.5/LuaGObject
+cp "$prefix"/lib/lua/5.5/LuaGObject/lua_gobject_core.dll "$setup_dir"/lib/lua/5.5/LuaGObject
 cp "$prefix"/lib/libgirepository-2.0.dll.a "$setup_dir"/lib
 mkdir "$setup_dir"/lib/girepository-1.0
 cp "$prefix"/lib/girepository-1.0/*.typelib "$setup_dir"/lib/girepository-1.0
-mkdir -p "$setup_dir"/share/lua/5.4
-cp "$prefix"/share/lua/5.4/LuaGObject.lua "$setup_dir"/share/lua/5.4
-cp -r "$prefix"/share/lua/5.4/LuaGObject/ "$setup_dir"/share/lua/5.4
+mkdir -p "$setup_dir"/share/lua/5.5
+cp "$prefix"/share/lua/5.5/LuaGObject.lua "$setup_dir"/share/lua/5.5
+cp -r "$prefix"/share/lua/5.5/LuaGObject/ "$setup_dir"/share/lua/5.5
 
 echo "copy qpdf"
 cp "$prefix"/bin/libqpdf*.dll "$setup_dir"/bin
