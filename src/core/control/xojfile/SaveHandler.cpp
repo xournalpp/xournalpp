@@ -274,6 +274,7 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
             }
         }
         background->setAttrib(xoj::xml_attrs::PAGE_NUMBER_STR, p->getPdfPageNr() + 1);
+        background->setAttrib(xoj::xml_attrs::PAGE_ORIENTATION_STR, static_cast<int>(p->getPdfPageOrientation()));
     } else if (p->getBackgroundType().isImagePage()) {
         background->setAttrib(xoj::xml_attrs::TYPE_STR, BackgroundType::NAMES[BackgroundType::PIXMAP]);
 
