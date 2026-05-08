@@ -52,15 +52,22 @@ std::unique_ptr<xoj::view::OverlayView> LinkHandler::createView(xoj::view::Repai
     return view;
 }
 
-void LinkHandler::startEditing(const PageRef& page, const int x, const int y) {
-    Link* linkElement = nullptr;
-
-    // Find Link element
+/*
+ * Finds the first link on a given page at given coordinates
+ * and returns a pointer to it.
+ * Returns nullptr if no link has been found there.
+ */
+static Link* findLinkAtPos(const PageRef& page, int x, int y) {
     for (auto&& e: page->getSelectedLayer()->getElements()) {
-        if (e->getType() == ELEMENT_LINK && e->containsPoint(x, y)) {
-            linkElement = dynamic_cast<Link*>(e.get());
+        if (e->getType() == ELEMENT_LINK && e->hasBoundingBoxContaining(x, y)) {
+            return dynamic_cast<Link*>(e.get());
         }
     }
+    return nullptr;
+}
+
+void LinkHandler::startEditing(const PageRef& page, const int x, const int y) {
+    Link* linkElement = findLinkAtPos(page, x, y);
 
     if (linkElement == nullptr) {
         auto dialog = xoj::popup::PopupWindowWrapper<LinkDialog>(
@@ -97,7 +104,6 @@ void LinkHandler::startEditing(const PageRef& page, const int x, const int y) {
                     link->setFont(dlg->getFont());
                     link->setX(linkElement->getX());
                     link->setY(linkElement->getY());
-                    page->fireElementChanged(link);
 
                     const auto undo = control->getUndoRedoHandler();
                     auto groupUndoAction = std::make_unique<GroupUndoAction>();
@@ -109,12 +115,14 @@ void LinkHandler::startEditing(const PageRef& page, const int x, const int y) {
                     layer->addElement(std::move(linkOwn));
                     auto [orig, elementIndex] = layer->removeElement(linkElement);
                     doc->unlock();
-                    page->fireElementChanged(linkElement);  // rerender region around previous element
+                    Range oldRange(linkElement->getSnappedBounds());
+                    Range newRange(link->getSnappedBounds());
+                    Range repaintRange = oldRange.unite(newRange);
+                    page->fireRangeChanged(repaintRange);
 
                     this->highlightPopover->linkTo(link);
                     this->selectPopover->linkTo(nullptr);
                     this->selectPopover->popdown();
-                    page->fireElementChanged(link);
 
                     if (elementIndex != Element::InvalidIndex) [[likely]] {
                         deleteUndoAction->addElement(layer, std::move(orig), elementIndex);
@@ -133,68 +141,42 @@ void LinkHandler::startEditing(const PageRef& page, const int x, const int y) {
 }
 
 void LinkHandler::select(const PageRef& page, const int x, const int y, const bool controlDown, XojPageView* pageView) {
-    bool noSelection = true;
-    for (auto&& e: page->getSelectedLayer()->getElements()) {
-        if (e->getType() == ELEMENT_LINK && e->containsPoint(x, y)) {
-            Link* link = dynamic_cast<Link*>(e.get());  // link on which user clicked
+    Link* link = findLinkAtPos(page, x, y);
 
-            if (controlDown) {
-                XojMsgBox::openURL(nullptr, link->getUrl().c_str());
-                return;
-            }
-
-            if (!isSelected(link)) {
-                if (isHighlighted(link)) {
-                    this->highlightPopover->hide();
-                }
-                this->selectPopover->linkTo(link);
-                this->selectPopover->popup();
-            } else {
-                if (isHighlighted(link)) {
-                    this->selectPopover->hide();
-                    this->highlightPopover->show();
-                } else {
-                    this->selectPopover->popdown();
-                }
-                this->selectPopover->linkTo(nullptr);
-            }
-            noSelection = false;
-        } else if (e->getType() == ELEMENT_LINK) {
-            Link* link = dynamic_cast<Link*>(e.get());
-            if (isSelected(link)) {
-                this->selectPopover->linkTo(nullptr);
-            }
-        }
-    }
-
-    if (noSelection) {
+    if (link == nullptr) {
         this->selectPopover->popdown();
         bool preselection = this->selectPopover->hasLink();
         this->selectPopover->linkTo(nullptr);
         if (!preselection) {
             startEditing(page, x, y);
         }
+    } else if (controlDown) {
+        XojMsgBox::openURL(nullptr, link->getUrl().c_str());
+    } else if (isSelected(link)) {
+        this->selectPopover->hide();
+        this->highlightPopover->show();
+        this->selectPopover->linkTo(nullptr);
+    } else {
+        if (isHighlighted(link)) {
+            this->highlightPopover->hide();
+        }
+        this->selectPopover->linkTo(link);
+        this->selectPopover->popup();
     }
 }
 
 void LinkHandler::highlight(const PageRef& page, const int x, const int y, XojPageView* pageView) {
-    for (auto&& e: page->getSelectedLayer()->getElements()) {
-        if (e->getType() == ELEMENT_LINK && e->containsPoint(x, y)) {
-            Link* link = dynamic_cast<Link*>(e.get());
-            if (isHighlighted(link)) {
-                continue;
-            }
-            this->highlightPopover->linkTo(link);
-            view->getControl()->getCursor()->setIsLinkHighlighted(true);
-            if (!isSelected(link)) {
-                this->highlightPopover->popup();
-            }
-        } else if (e->getType() == ELEMENT_LINK && isHighlighted(dynamic_cast<Link*>(e.get()))) {
-            view->getControl()->getCursor()->setIsLinkHighlighted(false);
-            if (!isSelected(this->highlightPopover->getLink())) {
-                this->highlightPopover->hide();
-            }
-            this->highlightPopover->linkTo(nullptr);
+    Link* link = findLinkAtPos(page, x, y);
+
+    if (link == nullptr) {
+        view->getControl()->getCursor()->setIsLinkHighlighted(false);
+        this->highlightPopover->hide();
+        this->highlightPopover->linkTo(nullptr);
+    } else if (!isHighlighted(link)) {
+        this->highlightPopover->linkTo(link);
+        view->getControl()->getCursor()->setIsLinkHighlighted(true);
+        if (!isSelected(link)) {
+            this->highlightPopover->popup();
         }
     }
 }

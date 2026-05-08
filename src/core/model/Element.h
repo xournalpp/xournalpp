@@ -72,7 +72,7 @@ public:
     virtual bool intersectsArea(double x, double y, double width, double height) const;
     /// Returns the distance between the element "as drawn" and the point (x,y)
     virtual double distanceTo(double x, double y) const;
-    virtual bool containsPoint(double x, double y) const;
+    virtual bool hasBoundingBoxContaining(double x, double y) const;
 
     virtual bool isInSelection(ShapeContainer* container) const;
 
