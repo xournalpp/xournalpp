@@ -672,9 +672,6 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
 
     if (this->startEditingOnButtonRelease) {
         this->startEditingOnButtonRelease = false;
-        if (x < 0 || y < 0) {
-            return false;
-        }
         if (this->xournal->getSelection()) {
             this->xournal->clearSelection();
             ToolHandler* h = this->xournal->getControl()->getToolHandler();
@@ -707,9 +704,6 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
                this->laserPointer && (tt == TOOL_LASER_POINTER_PEN || tt == TOOL_LASER_POINTER_HIGHLIGHTER)) {
         this->laserPointer->onButtonReleaseEvent(pos, xournal->getZoom());
     } else if (control->getToolHandler()->getToolType() == TOOL_LINK) {
-        if (x < 0 || y < 0) {
-            return false;
-        }
         startLink();
         this->linkHandler->select(this->getPage(), x, y, pos.isControlDown(), this);
     }
