@@ -26,9 +26,9 @@ void prependPathToLua(const char* name, const std::string& path) {
     const char* currentVal = g_getenv(name);
     std::string newVar;
     if (currentVal == nullptr || strlen(currentVal) == 0) {
-        newVar = path + ";;";
+        newVar = std::string(Util::toGFilename(path).c_str()) + ";;";
     } else {
-        newVar = path + ";" + currentVal;
+        newVar = std::string(Util::toGFilename(path).c_str()) + ";" + currentVal;
     }
     g_setenv(name, newVar.c_str(), true);
 }
@@ -42,7 +42,11 @@ void setupEnvironment() {
     auto base = Util::getExePath().parent_path();  // Xournal++.app/Contents or $HOME/gtk/inst or e.g. build/inst (via
                                                    // Homebrew or MacPorts)
 
-    bool isAppBundle = fs::exists(base / "Resources");
+    std::error_code err;
+    bool isAppBundle = fs::exists(base / "Resources", err);
+    if (err) {
+        g_warning("Failed to determine if the app runs as an app bundle: %s", err.message().c_str());
+    }
     bool underJHBuild = g_strcmp0(g_getenv("UNDER_JHBUILD"), "true") == 0;
 
     if (isAppBundle) {
@@ -65,19 +69,19 @@ void setupEnvironment() {
 
         prependPathToEnvVar("XDG_CONFIG_DIRS", xdgPath);
         prependPathToEnvVar("XDG_DATA_DIRS", dataPath);
-        g_setenv("GTK_DATA_PREFIX", base.string().c_str(), 1);
-        g_setenv("GTK_EXE_PREFIX", base.string().c_str(), 1);
-        g_setenv("GTK_PATH", base.string().c_str(), 1);
+        g_setenv("GTK_DATA_PREFIX", Util::toGFilename(base).c_str(), 1);
+        g_setenv("GTK_EXE_PREFIX", Util::toGFilename(base).c_str(), 1);
+        g_setenv("GTK_PATH", Util::toGFilename(base).c_str(), 1);
 
-        g_setenv("GTK_IM_MODULE_FILE", imModuleFile.string().c_str(), 0);
-        g_setenv("GDK_PIXBUF_MODULE_FILE", pixbufModuleFile.string().c_str(), 0);
+        g_setenv("GTK_IM_MODULE_FILE", Util::toGFilename(imModuleFile).c_str(), 0);
+        g_setenv("GDK_PIXBUF_MODULE_FILE", Util::toGFilename(pixbufModuleFile).c_str(), 0);
 
-        g_setenv("GI_TYPELIB_PATH", typelibPath.string().c_str(), 0);
+        g_setenv("GI_TYPELIB_PATH", Util::toGFilename(typelibPath).c_str(), 0);
     }
 
     if (isAppBundle || underJHBuild) {  // in both cases we have non-standard paths for Lua
-        std::string luaPath = dataPath.string() + "/lua/5.4/?.lua";
-        std::string luaCPath = libPath.string() + "/lua/5.4/?.so";
+        std::string luaPath = std::string(Util::toGFilename(dataPath).c_str()) + "/lua/5.4/?.lua";
+        std::string luaCPath = std::string(Util::toGFilename(libPath).c_str()) + "/lua/5.4/?.so";
 
         prependPathToLua("LUA_PATH", luaPath);
         prependPathToLua("LUA_CPATH", luaCPath);
@@ -118,8 +122,8 @@ void setupEnvironment() {
                 }
                 lang += ".UTF-8";  // e.g. "de_DE.UTF-8"
                 g_message("Setting LANG and LC_MESSAGES to %s", lang.c_str());
-                setenv("LANG", lang.c_str(), 0);
-                setenv("LC_MESSAGES", lang.c_str(), 0);
+                g_setenv("LANG", lang.c_str(), 0);
+                g_setenv("LC_MESSAGES", lang.c_str(), 0);
             }
         }
     }
