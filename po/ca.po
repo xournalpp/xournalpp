@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-20 13:06+0000\n"
-"PO-Revision-Date: 2026-04-26 05:20\n"
+"POT-Creation-Date: 2026-05-05 08:12+0000\n"
+"PO-Revision-Date: 2026-05-10 05:28\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -584,7 +584,7 @@ msgstr "No s'ha pogut desar el fitxer .tex: {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "No s'ha pogut iniciar {1}: {2} (codi de sortida: {3})"
 
-#: ../src/core/control/layer/LayerController.cpp:351
+#: ../src/core/control/layer/LayerController.cpp:424
 msgid "Layer {1}"
 msgstr "Capa {1}"
 
@@ -1979,7 +1979,7 @@ msgstr "S'ha afegit una pàgina."
 msgid "Page deleted"
 msgstr "La pàgina s'ha eliminat."
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:29
+#: ../src/core/undo/InsertLayerUndoAction.cpp:25
 msgid "Insert layer"
 msgstr "Afegeix una capa"
 
@@ -2007,7 +2007,7 @@ msgstr "Canvia el nom de la capa"
 msgid "Change line style"
 msgstr "Canvia l'estil de línia"
 
-#: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:37
 msgid "Merge layer down"
 msgstr "Fusiona la capa cap avall"
 
@@ -2015,7 +2015,7 @@ msgstr "Fusiona la capa cap avall"
 msgid "Replace missing PDF"
 msgstr "Reemplaça el PDF que falta"
 
-#: ../src/core/undo/MoveLayerUndoAction.cpp:28
+#: ../src/core/undo/MoveLayerUndoAction.cpp:24
 msgid "Move layer"
 msgstr "Mou la capa"
 
@@ -2031,7 +2031,7 @@ msgstr "El fons de la pàgina s'ha canviat."
 msgid "Page size changed"
 msgstr "La mida del full ha canviat."
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:23
 msgid "Delete layer"
 msgstr "Elimina la capa"
 

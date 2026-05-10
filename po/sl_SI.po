@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-20 13:06+0000\n"
-"PO-Revision-Date: 2026-04-26 05:20\n"
+"POT-Creation-Date: 2026-05-05 08:12+0000\n"
+"PO-Revision-Date: 2026-05-10 05:28\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -564,7 +564,7 @@ msgstr "Ni bilo mogoče shraniti datoteke .tex: {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "{1} ni bilo mogoče zagnati: {2} (izhodna koda: {3})"
 
-#: ../src/core/control/layer/LayerController.cpp:351
+#: ../src/core/control/layer/LayerController.cpp:424
 msgid "Layer {1}"
 msgstr "Sloj {1}"
 
@@ -1959,7 +1959,7 @@ msgstr "Stran vstavljena"
 msgid "Page deleted"
 msgstr "Stran izbrisana"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:29
+#: ../src/core/undo/InsertLayerUndoAction.cpp:25
 msgid "Insert layer"
 msgstr "Vstavi sloj"
 
@@ -1987,7 +1987,7 @@ msgstr "Preimenuj sloj"
 msgid "Change line style"
 msgstr "Spremeni slog črte"
 
-#: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:37
 msgid "Merge layer down"
 msgstr "Združi s spodnjim slojem"
 
@@ -1995,7 +1995,7 @@ msgstr "Združi s spodnjim slojem"
 msgid "Replace missing PDF"
 msgstr "Zamenjaj manjkajoči PDF"
 
-#: ../src/core/undo/MoveLayerUndoAction.cpp:28
+#: ../src/core/undo/MoveLayerUndoAction.cpp:24
 msgid "Move layer"
 msgstr "Premakni Sloj"
 
@@ -2011,7 +2011,7 @@ msgstr "Ozadje strani spremenjeno"
 msgid "Page size changed"
 msgstr ""
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:23
 msgid "Delete layer"
 msgstr "Izbriši sloj"
 

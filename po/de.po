@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-20 13:06+0000\n"
-"PO-Revision-Date: 2026-04-26 05:20\n"
+"POT-Creation-Date: 2026-05-05 08:12+0000\n"
+"PO-Revision-Date: 2026-05-10 05:28\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -585,7 +585,7 @@ msgstr "Konnte .tex Datei \"{1}\" nicht speichern"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Konnte {1} nicht starten: {2} (Ausstiegscode: {3})"
 
-#: ../src/core/control/layer/LayerController.cpp:351
+#: ../src/core/control/layer/LayerController.cpp:424
 msgid "Layer {1}"
 msgstr "Ebene {1}"
 
@@ -1980,7 +1980,7 @@ msgstr "Seite hinzugefügt"
 msgid "Page deleted"
 msgstr "Seite gelöscht"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:29
+#: ../src/core/undo/InsertLayerUndoAction.cpp:25
 msgid "Insert layer"
 msgstr "Ebene einfügen"
 
@@ -2008,7 +2008,7 @@ msgstr "Ebene umbenennen"
 msgid "Change line style"
 msgstr "Linienstil ändern"
 
-#: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:37
 msgid "Merge layer down"
 msgstr "Ebene nach unten zusammenführen"
 
@@ -2016,7 +2016,7 @@ msgstr "Ebene nach unten zusammenführen"
 msgid "Replace missing PDF"
 msgstr "Fehlende PDF ersetzen"
 
-#: ../src/core/undo/MoveLayerUndoAction.cpp:28
+#: ../src/core/undo/MoveLayerUndoAction.cpp:24
 msgid "Move layer"
 msgstr "Ebene verschieben"
 
@@ -2032,7 +2032,7 @@ msgstr "Seitenhintergrund geändert"
 msgid "Page size changed"
 msgstr "Seitengröße geändert"
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:23
 msgid "Delete layer"
 msgstr "Ebene löschen"
 

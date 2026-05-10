@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-20 13:06+0000\n"
-"PO-Revision-Date: 2026-04-26 05:20\n"
+"POT-Creation-Date: 2026-05-05 08:12+0000\n"
+"PO-Revision-Date: 2026-05-10 05:28\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -585,7 +585,7 @@ msgstr "Impossible d'enregistrer le fichier .tex : {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Impossible de démarrer {1} : {2} (code de sortie : {3})"
 
-#: ../src/core/control/layer/LayerController.cpp:351
+#: ../src/core/control/layer/LayerController.cpp:424
 msgid "Layer {1}"
 msgstr "Calque {1}"
 
@@ -1980,7 +1980,7 @@ msgstr "Page insérée"
 msgid "Page deleted"
 msgstr "Page supprimée"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:29
+#: ../src/core/undo/InsertLayerUndoAction.cpp:25
 msgid "Insert layer"
 msgstr "Insérer un calque"
 
@@ -2008,7 +2008,7 @@ msgstr "Renommer le calque"
 msgid "Change line style"
 msgstr "Changer le style de ligne"
 
-#: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:37
 msgid "Merge layer down"
 msgstr "Fusionner avec le calque inférieur"
 
@@ -2016,7 +2016,7 @@ msgstr "Fusionner avec le calque inférieur"
 msgid "Replace missing PDF"
 msgstr "Remplacer le PDF manquant"
 
-#: ../src/core/undo/MoveLayerUndoAction.cpp:28
+#: ../src/core/undo/MoveLayerUndoAction.cpp:24
 msgid "Move layer"
 msgstr "Déplacez le calque"
 
@@ -2032,7 +2032,7 @@ msgstr "Arrière-plan de la page modifié"
 msgid "Page size changed"
 msgstr "Taille de page modifiée"
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:23
 msgid "Delete layer"
 msgstr "Supprimer le calque"
 

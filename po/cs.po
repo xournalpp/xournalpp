@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-20 13:06+0000\n"
-"PO-Revision-Date: 2026-04-26 05:20\n"
+"POT-Creation-Date: 2026-05-05 08:12+0000\n"
+"PO-Revision-Date: 2026-05-10 05:28\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -565,7 +565,7 @@ msgstr "Soubor .tex nebylo možno uložit: {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Nelze spustit {1}: {2} (návratový kód: {3})"
 
-#: ../src/core/control/layer/LayerController.cpp:351
+#: ../src/core/control/layer/LayerController.cpp:424
 msgid "Layer {1}"
 msgstr "Vrstva {1}"
 
@@ -1958,7 +1958,7 @@ msgstr "Stránka vložena"
 msgid "Page deleted"
 msgstr "Stránka smazána"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:29
+#: ../src/core/undo/InsertLayerUndoAction.cpp:25
 msgid "Insert layer"
 msgstr "Vložit vrstvu"
 
@@ -1986,7 +1986,7 @@ msgstr "Přejmenovat vrstvu"
 msgid "Change line style"
 msgstr "Změnit styl linky"
 
-#: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:37
 msgid "Merge layer down"
 msgstr "Připojit vrstvu dolů"
 
@@ -1994,7 +1994,7 @@ msgstr "Připojit vrstvu dolů"
 msgid "Replace missing PDF"
 msgstr ""
 
-#: ../src/core/undo/MoveLayerUndoAction.cpp:28
+#: ../src/core/undo/MoveLayerUndoAction.cpp:24
 msgid "Move layer"
 msgstr "Přesunout vrstvu"
 
@@ -2010,7 +2010,7 @@ msgstr "Pozadí stránky změněno"
 msgid "Page size changed"
 msgstr ""
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:23
 msgid "Delete layer"
 msgstr "Smazat vrstvu"
 
