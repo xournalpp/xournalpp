@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-02 10:00+0000\n"
-"PO-Revision-Date: 2026-05-03 05:27\n"
+"PO-Revision-Date: 2026-05-10 05:28\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -29,7 +29,7 @@ msgstr "Dosya sistemi hatası: {1}"
 
 #: ../src/core/control/Control.cpp:247
 msgid "Could not remove old autosave file \"{1}\": {2}"
-msgstr "Eski otomatik kayıt dosyası \"{1}\" kaldırılamadı: {2}"
+msgstr "Eski otomatik kayıt dosyası “{1}” kaldırılamadı: {2}"
 
 #: ../src/core/control/Control.cpp:588
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
@@ -37,7 +37,7 @@ msgstr "Aktif araç çubuğunu sildiniz. Varsayılan araç çubuğuna geri dön�
 
 #: ../src/core/control/Control.cpp:608
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
-msgstr "\"{1}\" Araç Çubuğu yapılandırması önceden tanımlandı, düzenlemek için bir kopya oluşturur musunuz?"
+msgstr "Araç çubuğu yapılandırması “{1}” önceden tanımlanmış, düzenlemek için bir kopya oluşturmak ister misiniz?"
 
 #: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1651
 msgid "Yes"
@@ -77,12 +77,13 @@ msgstr "PDF arka planı ile"
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
-msgstr "Mevcut belgenizde {1} numaralı PDF sayfası bulunmuyor\n\n"
-"İpucu: {2} Bu sayfayı eklemek ister misiniz."
+msgstr "Geçerli belgenizde {1} numaralı PDF sayfası bulunmuyor.\n"
+"Bu sayfayı eklemek ister misiniz?\n\n"
+"İpucu: Bir PDF sayfası eklemek için {2} ögesini seçebilirsiniz."
 
 #: ../src/core/control/Control.cpp:891
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr "Eklemeye uygun pdf sayfası yok. Dosyayı tekrar baştan açmanız gerekebilir."
+msgstr "Eklemeye uygun PDF sayfası yok. Dosyayı tekrar baştan açmanız gerekebilir."
 
 #: ../src/core/control/Control.cpp:905
 msgid "Unable to retrieve pdf page."
@@ -102,23 +103,27 @@ msgstr "dosya: {1}"
 
 #: ../src/core/control/Control.cpp:1570
 msgid "<i>Above error repeated {1} times</i>"
-msgstr ""
+msgstr "<i>Yukarıdaki hata {1} kez yinelendi</i>"
 
 #: ../src/core/control/Control.cpp:1582
 msgid "<i>&lt;{1} more lines of error messages&gt;</i>"
-msgstr ""
+msgstr "<i>&lt;{1} satır hata mesajı&gt;</i>"
 
 #: ../src/core/control/Control.cpp:1621
 msgid "Error opening file \"{1}\".\n\n"
 "<tt>{2}</tt>\n"
 "<b>{3}</b>"
-msgstr ""
+msgstr "“{1}” dosyası açılırken hata.\n\n"
+"<tt>{2}</tt>\n"
+"<b>{3}</b>"
 
 #: ../src/core/control/Control.cpp:1635
 msgid "There were some errors while loading the file. Some information might have been lost. Do not overwrite your old file unless you are sure everything you need was loaded correctly.\n\n"
 "Error messages:\n"
 "<tt>{1}</tt>"
-msgstr ""
+msgstr "Dosya yüklenirken bazı hatalar oluştu. Bazı bilgiler kaybolmuş olabilir. Gereksiniminiz olan her şeyin doğru şekilde yüklendiğinden emin olmadığınız sürece eski dosyanızın üzerine yazmayın.\n\n"
+"Hata mesajları:\n"
+"<tt>{1}</tt>"
 
 #: ../src/core/control/Control.cpp:1653
 msgid "File version mismatch"
@@ -131,16 +136,16 @@ msgstr "Açılmakta olan dosya şu anki Xournal++ sürümünden daha yeni bir s�
 #: ../src/core/control/Control.cpp:1677
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
-msgstr "\"{1}\" PDF dosyası okunurken hata oluştu\n"
+msgstr "“{1}” PDF dosyası okunurken hata\n"
 "{2}"
 
 #: ../src/core/control/Control.cpp:1698
 msgid "Error reading PNG file \"{1}\""
-msgstr "\"{1}\" dosyası okunurken hata oluştu"
+msgstr "“{1}” dosyası okunurken hata oluştu"
 
 #: ../src/core/control/Control.cpp:1733
 msgid "Error reading template file \"{1}\""
-msgstr ""
+msgstr "“{1}” şablon dosyası okunurken hata"
 
 #: ../src/core/control/Control.cpp:1752
 msgid "Failed to determine if path exists \"{1}\": {2}"
@@ -159,14 +164,14 @@ msgstr "Eklenmiş arka plan dosyası bulunamadı. Taşınmış, yeniden adlandı
 #: ../src/core/control/Control.cpp:1862
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
-msgstr "Arka plan dosyası {1} bulunamadı. Taşınmış, yeniden adlandırılmış veya silinmiş olabilir.\n"
-"En son şurada görüldü: {2}\""
+msgstr "Arka plan dosyası “{1}” bulunamadı. Taşınmış, yeniden adlandırılmış veya silinmiş olabilir.\n"
+"En son şurada görüldü: “{2}”"
 
 #: ../src/core/control/Control.cpp:1872
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
-"Önerilen yedek dosya: \"{1}\""
+"Önerilen yedek dosya: “{1}”"
 
 #: ../src/core/control/Control.cpp:1877
 msgid "Select another PDF"
@@ -221,7 +226,7 @@ msgstr "Gözden Çıkar"
 
 #: ../src/core/control/Control.cpp:2294
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
-msgstr ""
+msgstr "GTK demo alt süreci oluşturulamadı: {1} (çıkış kodu: {2})"
 
 #: ../src/core/control/DeviceListHelper.cpp:97
 msgid "mouse"
@@ -270,7 +275,7 @@ msgstr "Arka plan PDF' sinin üzerine yazmayın! Bu hatalara neden olur!"
 
 #: ../src/core/control/ExportHelper.cpp:80
 msgid "The check for overwriting the background failed with: {1}"
-msgstr ""
+msgstr "Arka planın üzerine yazma, şununla başarısız oldu: {1}"
 
 #: ../src/core/control/ExportHelper.cpp:100
 msgid "PDF file successfully created"
@@ -290,7 +295,7 @@ msgstr "Genel şablon dosyası düzenli bir dosya degil. Lütfen ayarlarınızı
 
 #: ../src/core/control/LatexController.cpp:242
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr "Latex oluşturulurken bir hatayla karşılaştı: {1} (çıkış kodu: {2})"
+msgstr "LaTeX oluşturulurken bir hatayla karşılaştı: {1} (çıkış kodu: {2})"
 
 #: ../src/core/control/LatexController.cpp:311
 msgid "Could not load LaTeX PDF file: {1}"
@@ -347,7 +352,7 @@ msgstr "Dosyayı geri yükle"
 
 #: ../src/core/control/XournalMain.cpp:158
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr "Arka plan dosyası \"{1}\" bulunamadı. Taşınmış, yeniden adlandırılmış veya silinmiş olabilir."
+msgstr "Arka plan dosyası “{1}” bulunamadı. Taşınmış, yeniden adlandırılmış veya silinmiş olabilir."
 
 #: ../src/core/control/XournalMain.cpp:173
 msgid "Error loading document: {1}"
@@ -355,7 +360,7 @@ msgstr "Belge okunurken hata oluştu: {1}"
 
 #: ../src/core/control/XournalMain.cpp:206
 msgid "Error exporting image: {1}"
-msgstr "Görsel dışarı aktarılırken hata oluştu: {1}"
+msgstr "Görsel dışa aktarılırken hata oluştu: {1}"
 
 #: ../src/core/control/XournalMain.cpp:235
 msgid "Error saving document: {1}"
@@ -363,7 +368,7 @@ msgstr "Belge kaydedilirken hata oluştu: {1}"
 
 #: ../src/core/control/XournalMain.cpp:265
 msgid "Error exporting PDF: {1}"
-msgstr "PDF dışarı aktarılırken hata oluştu: {1}"
+msgstr "PDF dışa aktarılırken hata oluştu: {1}"
 
 #: ../src/core/control/XournalMain.cpp:371
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
@@ -424,13 +429,15 @@ msgstr "PDF'yi ekleme modunda aç\n"
 
 #: ../src/core/control/XournalMain.cpp:628
 msgid "Save xopp-file with the background PDF specified as FILE"
-msgstr ""
+msgstr "Belirtilen arka plan PDF’siyle xopp dosyasını DOSYA olarak kaydedin"
 
 #: ../src/core/control/XournalMain.cpp:633
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
-msgstr ""
+msgstr "PDF dışa aktarma için sağlanan arka ucu kullanın.\n"
+"                                       Kullanılabilir arka uçlar: {1}\n"
+"                                       -p/--create-pdf=foo.pdf olmadan etkisi yoktur"
 
 #: ../src/core/control/XournalMain.cpp:642
 msgid "Export FILE as PDF"
@@ -720,19 +727,19 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:482
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}"
-msgstr ""
+msgstr "“{1}” dosyası, geçerli bir .xopp dosyası değil (MIME türü eksik). Hata mesajı: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:489
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\""
-msgstr ""
+msgstr "“{1}” dosyası, geçerli bir .xopp dosyası değil (MIME türü yanlış): “{2}”"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:497
 msgid "The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}"
-msgstr ""
+msgstr "“{1}” dosyası, geçerli bir .xopp dosyası değil (sürüm eksik). Hata mesajı: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:510
 msgid "The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\""
-msgstr ""
+msgstr "“{1}” dosyası, geçerli bir .xopp dosyası değil (sürüm dizisi hasar görmüş): “{2}”"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:519
 msgid "Could not open file: \"{1}\""
@@ -769,11 +776,11 @@ msgstr "{1} eki için istenen geçici dosya bulunamadı"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:264
 msgid "Could not write background \"{1}\", {2}"
-msgstr "\"{1}\" arka planı yazılamadı, {2}"
+msgstr "“{1}” arka planı yazılamadı, {2}"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:371
 msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr "Arka plan \"{1}\" yazılamadı. Yine de devam ediliyor."
+msgstr "Arka plan “{1}” yazılamadı. Yine de devam ediliyor."
 
 #: ../src/core/control/xojfile/XmlParser.cpp:95
 msgid "Ignoring unexpected {1} tag inside unrecognized document structure"
@@ -785,7 +792,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:149
 msgid "Unexpected text in {1} node: \"{2}\""
-msgstr ""
+msgstr "{1} düğümde beklenmedik metin: “{2}”"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:247
 msgid "Attribute \"type\" not found in background tag. Ignoring tag"
@@ -821,11 +828,11 @@ msgstr ""
 
 #: ../src/core/gui/GladeGui.cpp:25
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr "\"{1}\" glade dosyası yüklenirken hata oluştu (\"{2}\" yüklemeyi deneyin)"
+msgstr "“{1}” glade dosyası yüklenirken hata oluştu (“{2}” yüklemeyi deneyin)"
 
 #: ../src/core/gui/PageView.cpp:400
 msgid "Unable to play audio recording {1}"
-msgstr "Ses kaydı oynatılamıyor {1}"
+msgstr "Ses kaydı {1} çalınamıyor"
 
 #: ../src/core/gui/PageView.cpp:936
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:83
@@ -892,7 +899,7 @@ msgstr "GNU GPLv2 veya üstü"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:30
 msgid "Thickness - don't change"
-msgstr "Kalınlık - değiştirmeyin"
+msgstr "Kalınlık — değiştirmeyin"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:32
 msgid "Very thin"
@@ -922,7 +929,7 @@ msgstr "Aygıt yok"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:78
 msgid "Tool - don't change"
-msgstr "Araç - değiştirmeyin"
+msgstr "Araç — değiştirmeyin"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:79
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:381
@@ -953,11 +960,11 @@ msgstr "Resim ekle"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 msgid "Laser Pointer - Pen"
-msgstr "Lazer İşaretçisi - Kalem"
+msgstr "Lazer İşaretçisi — Kalem"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 msgid "Laser Pointer - Hightlighter"
-msgstr "Lazer İşaretçisi - Vurgulayıcı"
+msgstr "Lazer İşaretçisi — Vurgulayıcı"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 msgid "Vertical space"
@@ -998,7 +1005,7 @@ msgstr "PDF'den Metin Alanını Seç"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Drawing Type - don't change"
-msgstr "Çizim Türü - değiştirmeyin"
+msgstr "Çizim Türü — değiştirmeyin"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
 msgid "Normal drawing"
@@ -1285,7 +1292,7 @@ msgstr "Dosya yükle"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:107
 msgid "This image could not be loaded. Error message: {1}"
-msgstr "Bu resim yüklenemedi. Hata mesajı: {1}"
+msgstr "Bu resim yüklenemedi. Hata iletisi: {1}"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:113
 msgid "This image could not be loaded."
@@ -1305,19 +1312,19 @@ msgstr "Yalnızca kullanılmayan sayfaları göster ({1} kullanılmayan sayfa)"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:162
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr "{1} araç öğesi {2} Araç Çubuğundan kaldırıldı ID {3}"
+msgstr "{1} araç öğesi {2} araç çubuğundan kaldırıldı, kimlik: {3}"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:164
 msgid "Removed tool item from Toolbar {1} ID {2}"
-msgstr "Araç öğesi {1} ID {2} Araç Çubuğundan kaldırıldı"
+msgstr "Araç öğesi, {1} araç çubuğundan kaldırıldı, kimlik {2}"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:168
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr "{3} konumundaki {1} araç öğesi, {2} Araç Çubuğundan kaldırılamadı"
+msgstr "{3} konumundaki {1} araç öğesi, {2} araç çubuğundan kaldırılamadı"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:173
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr "{2} konumundaki Araç öğesi {1} Araç Çubuğundan kaldırılamadı"
+msgstr "{2} konumundaki araç öğesi, {1} araç çubuğundan kaldırılamadı"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:61
 msgid "Separator"
@@ -1374,7 +1381,7 @@ msgstr "Eklentiler"
 
 #: ../src/core/gui/menus/menubar/Menubar.cpp:54
 msgid "Error loading menubar XML file (try to load \"{1}\")"
-msgstr "Menü çubuğu XML dosyası yüklenirken hata (\"{1}\" yüklemeyi deneyin)"
+msgstr "Menü çubuğu XML dosyası yüklenirken hata (“{1}” yüklemeyi deneyin)"
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:384
@@ -1465,7 +1472,7 @@ msgstr "Yazı tipi"
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "Genel toolbar.ini dosyası ayrıştırılamadı: {1}\n"
-"Hiçbir Araç Çubuğu kullanılamayacak"
+"Hiçbir araç çubuğu kullanılamayacak"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:78
 msgid "Could not parse custom toolbar.ini file: {1}\n"
@@ -1689,12 +1696,12 @@ msgstr "Dikdörtgen Seç"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Select Multi-Layer Region"
-msgstr "Çok-Katmanlı Bölge Seç"
+msgstr "Çok Katmanlı Bölge Seç"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:443
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Select Multi-Layer Rectangle"
-msgstr "Çok-Katmanlı Dikdörtgen Seç"
+msgstr "Çok Katmanlı Dikdörtgen Seç"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:445
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
@@ -1896,7 +1903,7 @@ msgstr "Arka plan"
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:244
 msgid "No pages to export!"
-msgstr "Dışarıya aktarılacak sayfalar bulunamadı!"
+msgstr "Dışa aktarılacak sayfa yok!"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:54
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:207
@@ -2098,7 +2105,8 @@ msgstr "ElementRange::parse(): öge indeksleri 1 ile başlar"
 #: ../src/util/GzInputStream.cpp:48
 msgid "Error opening file \"{1}\":\n"
 "{2}"
-msgstr ""
+msgstr "“{1}” dosyası açılırken hata:\n"
+"{2}"
 
 #: ../src/util/GzInputStream.cpp:62 ../src/util/ZipInputStream.cpp:52
 msgid "Error occurred while closing file\n"
@@ -2107,19 +2115,19 @@ msgstr ""
 
 #: ../src/util/OutputStream.cpp:30
 msgid "Error opening file: \"{1}\""
-msgstr "Dosya açılırken hata oluştu: \"{1}\""
+msgstr "Dosya açılırken hata oluştu: “{1}”"
 
 #: ../src/util/OutputStream.cpp:51
 msgid "Error writing data to file: \"{1}\""
-msgstr "Veri dosyaya yazılırken hata: \"{1}\""
+msgstr "Veri dosyaya yazılırken hata: “{1}”"
 
 #: ../src/util/OutputStream.cpp:52
 msgid "Error code {1}. Message:"
-msgstr "Hata kodu {1}. Mesaj:"
+msgstr "Hata kodu {1}. İleti:"
 
 #: ../src/util/OutputStream.cpp:72
 msgid "Error occurred while closing file: \"{1}\""
-msgstr "Dosya kapatılırken sorun oluştu: \"{1}\""
+msgstr "Dosya kapatılırken sorun oluştu: “{1}”"
 
 #: ../src/util/OutputStream.cpp:73
 msgid "Error code {1}"
@@ -2177,15 +2185,15 @@ msgstr "xoj-preview-extractor: GİRDİ.xoj ÇIKTI.png ile çağırın"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:134
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr "xoj-preview-extractor: \"{1}\" dosyası .xoj dosyası değil"
+msgstr "xoj-preview-extractor: “{1}” dosyası .xoj dosyası değil"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:138
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
-msgstr "xoj-preview-extractor: \"{1}\" girdi dosyası açılamadı"
+msgstr "xoj-preview-extractor: “{1}” girdi dosyası açılamadı"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:142
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
-msgstr "xoj-preview-extractor: \"{1}\" dosyası önizleme içermiyor"
+msgstr "xoj-preview-extractor: “{1}” dosyası önizleme içermiyor"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:147
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
@@ -2193,11 +2201,11 @@ msgstr "xoj-preview-extractor: önizleme ve sayfa bulunamadı, geçersiz bir dos
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:187
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
-msgstr "xoj-preview-extractor: \"{1}\" simgesi bulunamadı"
+msgstr "xoj-preview-extractor: “{1}” simgesi bulunamadı"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:205
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
-msgstr "xoj-preview-extractor: \"{1}\" çıktı dosyası açılamadı"
+msgstr "xoj-preview-extractor: “{1}” çıktı dosyası açılamadı"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:212
 msgid "xoj-preview-extractor: successfully extracted"
@@ -2288,7 +2296,7 @@ msgstr ""
 #: ../ui/crashDialog.glade:164
 msgctxt "github is a name - do not try to translate it"
 msgid "(this will open github in your browser)"
-msgstr ""
+msgstr "(bu, Github’u tarayıcınızda açacaktır)"
 
 #: ../ui/deviceList.glade:7
 msgid "Known devices"
@@ -2449,7 +2457,7 @@ msgstr "Sayfalar:"
 
 #: ../ui/exportSettings.glade:209
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
-msgstr "<i>Örnek:</i> 1-3 veya 1,3,5-7 vb."
+msgstr "<i>Örnek:</i> 1–3 veya 1,3,5–7 vb."
 
 #: ../ui/exportSettings.glade:279
 msgid "dpi"
@@ -2486,7 +2494,7 @@ msgstr "LaTeX komutu tarafından oluşturulan çıktı."
 
 #: ../ui/extEdTexDialog.glade:138
 msgid "Continue Editing"
-msgstr ""
+msgstr "Düzenlemeyi Sürdür"
 
 #: ../ui/goto.glade:23
 msgid "Go to Page"
@@ -2870,21 +2878,21 @@ msgstr "%a Haftanın kısaltılmış adı (örn. Per)\n"
 "%b Ayın kısaltılmış adı (örn. Ağu)\n"
 "%B Ayın tam adı (örn. Ağustos)\n"
 "%c Tarih ve saat gösterimi (örn. Per Ağu 23 14:55:02 2001)\n"
-"%d Ayın günü (01-31)\n"
-"%F Tarih biçimi (örn. 2001-08-23)\n"
-"%H 24 saatlik saat biçimi (00-23)\n"
-"%I 12 saatlik saat biçimi (01-12)\n"
-"%j Yılın günü (001-366)\n"
-"%m Ondalık ay numarası (01-12)\n"
-"%M Dakika (00-59)\n"
+"%d Ayın günü (01–31)\n"
+"%F Tarih biçimi (örn. 2001‒08‒23)\n"
+"%H 24 saatlik saat biçimi (00–23)\n"
+"%I 12 saatlik saat biçimi (01–12)\n"
+"%j Yılın günü (001–366)\n"
+"%m Ondalık ay numarası (01–12)\n"
+"%M Dakika (00–59)\n"
 "%p ÖÖ/ÖS belirtimi (örn. ÖS)\n"
-"%S Saniye (00-61)\n"
-"%U Haftanın numarası, ilk Pazar hafta başı (00-53)\n"
-"%w Haftanın günü, Pazar = 0 (0-6)\n"
-"%W Haftanın numarası, ilk Pazartesi hafta başı (00-53)\n"
+"%S Saniye (00–61)\n"
+"%U Haftanın numarası, ilk Pazar hafta başı (00–53)\n"
+"%w Haftanın günü, Pazar = 0 (0–6)\n"
+"%W Haftanın numarası, ilk Pazartesi hafta başı (00–53)\n"
 "%x Tarih gösterimi (örn. 23.08.01)\n"
 "%X Saat gösterimi (örn. 14:55:02)\n"
-"%y Yıl, son iki hane (00-99)\n"
+"%y Yıl, son iki hane (00–99)\n"
 "%Y Yıl (örn. 2001)\n"
 "%Z Zaman dilimi adı veya kısaltması (örn. GMT)\n"
 "%% %\n"
@@ -2933,7 +2941,7 @@ msgstr ""
 
 #: ../ui/settings.glade:788
 msgid "Default Pdf export name"
-msgstr "Varsayılan Pdf dışa aktarma adı"
+msgstr "Varsayılan PDF dışa aktarma adı"
 
 #: ../ui/settings.glade:813
 msgid "Enable Autoloading of Journals"
@@ -2949,7 +2957,7 @@ msgstr "Uygulama başlangıcında en son dosyanın otomatik açılmasını etkin
 
 #: ../ui/settings.glade:834
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
-msgstr "Eğer etkinleştirilirse, Xournal++ düzenlemeye devam edebileceğiniz en son kaydedilen belgeyi otomatik olarak açacaktır."
+msgstr "Eğer etkinleştirilirse Xournal++, düzenlemeyi sürdürebileceğiniz en son kaydedilen belgeyi otomatik olarak açacaktır."
 
 #: ../ui/settings.glade:849
 msgid "Autoloading"
@@ -3297,11 +3305,11 @@ msgstr "Dokunarak Çizme"
 
 #: ../ui/settings.glade:2838
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
-msgstr "<i>GTK'nın yerleşik dokunmatik ekran kaydırmasını devre dışı bırakmak, bazı platformlarda kaydırma hatalarını giderebilir. Dokunmatik ekranla kaydırmaya çalışırken kaydırma konumunda atlamalar/ani değişiklikler yaşıyorsanız bu ayarı değiştirmeyi düşünün.</i>"
+msgstr "<i>GTK’nın yerleşik dokunmatik ekran kaydırmasını devre dışı bırakmak, bazı platformlarda kaydırma hatalarını giderebilir. Dokunmatik ekranla kaydırmaya çalışırken kaydırma konumunda atlamalar/ani değişiklikler yaşıyorsanız bu ayarı değiştirmeyi düşünün.</i>"
 
 #: ../ui/settings.glade:2852
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
-msgstr "GTK'nın yerleşik ivmeli kaydırma işlevini devre dışı bırakın (yeniden başlatma gerektirir)."
+msgstr "GTK’nın yerleşik ivmeli kaydırma işlevini devre dışı bırakın (yeniden başlatma gerektirir)."
 
 #: ../ui/settings.glade:2871
 msgid "Touch Scrolling"
@@ -3724,7 +3732,7 @@ msgstr "Başlangıç noktasından SOLA sürükleme, üst karakter tuşu basılı
 
 #: ../ui/settings.glade:5123
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
-msgstr "Çizim Araçları - Değiştiricileri Çizim Yönüne Göre Ayarla (Deneysel)"
+msgstr "Çizim Araçları — Değiştiricileri Çizim Yönüne Göre Ayarla (Deneysel)"
 
 #: ../ui/settings.glade:5140
 msgid "Preserve line width"
@@ -3840,8 +3848,8 @@ msgstr "<i>PDF üzerine yazılırken, yakınlaştırma yapıldığında daha kal
 #: ../ui/settings.glade:5587
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
-msgstr "Yüksek çözünürlüklü bir PDF'e yakınlaştırıldığında, her yeniden oluşturma işlemi uzun zaman alabilir. Bunu büyük bir değere ayarlamak, bu yeniden oluşturmaların daha az sıklıkta gerçekleşmesine neden olur.\n\n"
-"Yakınlaştırmada her zaman yeniden işlemek için bunu %0'a ayarlayın."
+msgstr "Yüksek çözünürlüklü bir PDF’ye yakınlaştırıldığında, her yeniden oluşturma işlemi uzun zaman alabilir. Bunu büyük bir değere ayarlamak, bu yeniden oluşturmaların daha az sıklıkta gerçekleşmesine neden olur.\n\n"
+"Yakınlaştırmada her zaman yeniden işlemek için bunu %0 olarak ayarlayın."
 
 #: ../ui/settings.glade:5590
 msgid "Re-render when the page's zoom changes by more than "
@@ -3993,7 +4001,7 @@ msgstr "Buaygıt için çizimi devre dışı bırak"
 
 #: ../ui/settingsButtonConfig.glade:125
 msgid "Eraser Type - don't change"
-msgstr "Silgi Türü - değiştirmeyin"
+msgstr "Silgi Türü — değiştirmeyin"
 
 #: ../ui/settingsButtonConfig.glade:126 ../ui/settingsButtonConfig.glade:144
 msgid "Standard"
@@ -4009,7 +4017,7 @@ msgstr "Konturu sil"
 
 #: ../ui/settingsButtonConfig.glade:143
 msgid "Stroke Type - don't change"
-msgstr "Darbe Türü - değiştirme"
+msgstr "Darbe Türü — değiştirme"
 
 #: ../ui/settingsButtonConfig.glade:145
 msgid "Dashed"
@@ -4070,7 +4078,7 @@ msgstr "Çık"
 
 #: ../ui/mainmenubar.xml:61
 msgid "_Edit"
-msgstr "Düz_enle"
+msgstr "Dü_zen"
 
 #: ../ui/mainmenubar.xml:93
 msgid "Select All"
@@ -4599,7 +4607,7 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:23
 msgid "Annotate on top of PDFs"
-msgstr "PDF'ler üzerine açıklama ve notlar ekle"
+msgstr "PDF’ler üzerine açıklama ve notlar ekle"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:24
 msgid "Select text from the background PDF, copy, highlight or underline it or strike it through"
@@ -4607,7 +4615,7 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:25
 msgid "Follow links from the background PDF"
-msgstr "Arka plan PDF'deki bağlantıları izle"
+msgstr "Arka plan PDF’deki bağlantıları izle"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:26
 msgid "Export to a variety of formats including SVG, PNG and PDF, both from the GUI and command line"
