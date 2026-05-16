@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Windows packaging script. This does the following:
 # 1. Run "install" target from CMake into setup folder
