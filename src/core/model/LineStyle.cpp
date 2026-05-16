@@ -19,6 +19,7 @@ void LineStyle::serialize(ObjectOutputStream& out) const {
     out.writeObject("LineStyle");
 
     out.writeData(this->dashes);
+    out.writeInt(this->scaleDashesToWidth ? 1 : 0);
 
     out.endObject();
 }
@@ -27,6 +28,7 @@ void LineStyle::readSerialized(ObjectInputStream& in) {
     in.readObject("LineStyle");
 
     in.readData(dashes);
+    this->scaleDashesToWidth = in.readInt() != 0;
 
     in.endObject();
 }
