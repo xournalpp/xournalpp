@@ -89,6 +89,10 @@ public:
 
     static constexpr char PLACEHOLDER_HTTPS[] = "xournalpp.github.io";
     static constexpr char PLACEHOLDER_MAIL[] = "email-address@provider.domain";
+#if defined(_WIN32)
+    static constexpr char PLACEHOLDER_FILE[] = "/C:/foo/bar";
+#else
     static constexpr char PLACEHOLDER_FILE[] = "/absolute/path/to/file";
+#endif
     static constexpr char PLACEHOLDER_OTHER[] = "https://www.xournalpp.github.io";
 };

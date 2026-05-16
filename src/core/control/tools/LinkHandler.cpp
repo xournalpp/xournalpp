@@ -67,9 +67,11 @@ static Link* findLinkAtPos(const PageRef& page, int x, int y) {
 }
 
 void LinkHandler::startEditing(const PageRef& page, const int x, const int y) {
+    std::shared_lock<Document> lock(*this->control->getDocument());
     Link* linkElement = findLinkAtPos(page, x, y);
 
     if (linkElement == nullptr) {
+        lock.unlock();
         auto dialog = xoj::popup::PopupWindowWrapper<LinkDialog>(
                 this->control,
                 [x, y, page = page, control = control](LinkDialog* dlg) {
@@ -92,18 +94,22 @@ void LinkHandler::startEditing(const PageRef& page, const int x, const int y) {
                 []() {});
         dialog.show(control->getGtkWindow());
     } else {
+        double posX = linkElement->getX();
+        double posY = linkElement->getY();
+        lock.unlock();
+
         this->highlightPopover->linkTo(linkElement);
         auto dialog = xoj::popup::PopupWindowWrapper<LinkDialog>(
                 this->control,
-                [this, linkElement, page = page](LinkDialog* dlg) {
+                [this, linkElement, page = page, posX, posY](LinkDialog* dlg) {
                     auto linkOwn = std::make_unique<Link>();
                     Link* link = linkOwn.get();
                     link->setText(dlg->getText());
                     link->setUrl(dlg->getURL());
                     link->setAlignment(dlg->getLayout());
                     link->setFont(dlg->getFont());
-                    link->setX(linkElement->getX());
-                    link->setY(linkElement->getY());
+                    link->setX(posX);
+                    link->setY(posY);
 
                     const auto undo = control->getUndoRedoHandler();
                     auto groupUndoAction = std::make_unique<GroupUndoAction>();
@@ -141,7 +147,9 @@ void LinkHandler::startEditing(const PageRef& page, const int x, const int y) {
 }
 
 void LinkHandler::select(const PageRef& page, const int x, const int y, const bool controlDown, XojPageView* pageView) {
+    std::shared_lock<Document> lock(*this->control->getDocument());
     Link* link = findLinkAtPos(page, x, y);
+    lock.unlock();
 
     if (link == nullptr) {
         this->selectPopover->popdown();
@@ -166,7 +174,9 @@ void LinkHandler::select(const PageRef& page, const int x, const int y, const bo
 }
 
 void LinkHandler::highlight(const PageRef& page, const int x, const int y, XojPageView* pageView) {
+    std::shared_lock<Document> lock(*this->control->getDocument());
     Link* link = findLinkAtPos(page, x, y);
+    lock.unlock();
 
     if (link == nullptr) {
         view->getControl()->getCursor()->setIsLinkHighlighted(false);
