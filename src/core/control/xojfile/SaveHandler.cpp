@@ -224,14 +224,14 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
 
             const XojFont& f = l->getFont();
 
-            link->setAttrib(xoj::xml_attrs::ALIGN_STR, l->getAlignment());
+            link->setAttrib(xoj::xml_attrs::ALIGN_STR, LinkAlignment::NAMES[l->getAlignment()]);
             link->setAttrib(xoj::xml_attrs::FONT_STR, f.getName().c_str());
             link->setAttrib(xoj::xml_attrs::SIZE_STR, f.getSize());
             link->setAttrib(xoj::xml_attrs::X_COORD_STR, l->getX());
             link->setAttrib(xoj::xml_attrs::Y_COORD_STR, l->getY());
             link->setAttrib(xoj::xml_attrs::COLOR_STR, getColorStr(l->getColor()).c_str());
-            link->setAttrib(xoj::xml_attrs::URL_STR, g_uri_escape_string(l->getUrl().c_str(), NULL, false));
-            link->setAttrib(xoj::xml_attrs::TEXT_STR, g_uri_escape_string(l->getText().c_str(), NULL, false));
+            link->setAttrib(xoj::xml_attrs::URL_STR, l->getUrl().c_str());
+            link->setAttrib(xoj::xml_attrs::TEXT_STR, l->getText().c_str());
         }
     }
 }

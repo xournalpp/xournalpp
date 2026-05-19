@@ -461,8 +461,8 @@ void LoadHandler::addLink(LinkAlignment align, std::string font, double size, do
 
     link->setAlignment(align);
 
-    link->setText(std::string(g_uri_unescape_string(text.c_str(), NULL)));
-    link->setUrl(std::string(g_uri_unescape_string(url.c_str(), NULL)));
+    link->setText(std::string(text.c_str()));
+    link->setUrl(std::string(url.c_str()));
 
     link->setX(x);
     link->setY(y);
