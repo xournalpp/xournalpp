@@ -7,7 +7,7 @@ contact: https://github.com/xournalpp/xournalpp/issues
 issues: https://github.com/xournalpp/xournalpp/issues
 website: https://xournalpp.github.io/
 source-code: https://github.com/xournalpp/xournalpp.git
-icon: snap/gui/com.github.xournalpp.xournalpp.svg
+icon: ui/pixmaps/com.github.xournalpp.xournalpp.svg
 platforms:
   amd64:
   arm64:
