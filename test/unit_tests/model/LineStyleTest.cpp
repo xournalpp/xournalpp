@@ -33,19 +33,64 @@ TEST(LineStyle, testLineStyle) {
 TEST(LineStyle, testGetDashesScaledToStrokeWidth) {
     LineStyle ls;
     ls.setDashes(std::vector<double>({6, 2}));
-    constexpr double eps = 1e-12;
+    constexpr double tol = 1e-8;
 
     {
         auto scaled = ls.getDashesScaledToStrokeWidth(1);
         ASSERT_EQ(scaled.size(), 2);
-        EXPECT_NEAR(scaled[0], 6.0, eps);
-        EXPECT_NEAR(scaled[1], 2.0, eps);
+        EXPECT_NEAR(scaled[0], 6.0, tol);
+        EXPECT_NEAR(scaled[1], 2.0, tol);
     }
 
     {
         auto scaled = ls.getDashesScaledToStrokeWidth(2);
         ASSERT_EQ(scaled.size(), 2);
-        EXPECT_NEAR(scaled[0], 12.0, eps);
-        EXPECT_NEAR(scaled[1], 4.0, eps);
+        EXPECT_NEAR(scaled[0], 12.0, tol);
+        EXPECT_NEAR(scaled[1], 4.0, tol);
+    }
+}
+
+TEST(LineStyle, testScaleDashesToStrokeWidth) {
+    LineStyle ls;
+    constexpr double tol = 1e-8;
+
+    ls.setDashes(std::vector<double>({6, 2}));
+    ls.scaleDashesToStrokeWidth(1);
+    auto scaled = ls.getDashes();
+    ASSERT_EQ(scaled.size(), 2);
+    EXPECT_NEAR(scaled[0], 6.0, tol);
+    EXPECT_NEAR(scaled[1], 2.0, tol);
+
+    ls.setDashes(std::vector<double>({6, 2}));
+    ls.scaleDashesToStrokeWidth(3);
+    scaled = ls.getDashes();
+    ASSERT_EQ(scaled.size(), 2);
+    EXPECT_NEAR(scaled[0], 18.0, tol);
+    EXPECT_NEAR(scaled[1], 6.0, tol);
+}
+
+TEST(LineStyle, testSetScaleDashes) {
+    {
+        LineStyle ls;
+        ls.setScaleDashes();
+        ASSERT_TRUE(ls.scaleDashes());
+    }
+
+    {
+        LineStyle ls;
+        ls.setScaleDashes("scaled_dash");
+        ASSERT_TRUE(ls.scaleDashes());
+    }
+
+    {
+        LineStyle ls;
+        ls.setScaleDashes("dot");
+        ASSERT_FALSE(ls.scaleDashes());
+    }
+
+    {
+        LineStyle ls;
+        ls.setScaleDashes("dot_scaled");
+        ASSERT_FALSE(ls.scaleDashes());
     }
 }

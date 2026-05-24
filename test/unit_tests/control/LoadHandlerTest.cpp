@@ -818,3 +818,90 @@ TEST(ControlLoadHandler, testUrlLink) {
     check_link(3, u8"Other non-ASCII characters:\nHæuñßéř, dǒńg-bǎǐ, łúčný, qǐng-wèn, vò-địâ",
                u8"mailto:françois.rené@café-crème.fr", LinkAlignment::RIGHT);
 }
+
+TEST(ControlLoadHandler, testOldDashesStayUnscaled) {
+    LoadHandler handler;
+    auto doc = handler.loadDocument(GET_TESTFILE(u8"load/unscaled-dashes.xopp"));
+
+    ASSERT_NE(doc.get(), nullptr);
+    EXPECT_EQ(1, doc->getPageCount());
+
+    PageRef page = doc->getPage(0);
+    EXPECT_EQ(1, page->getLayerCount());
+
+    const Layer* layer = page->getLayersView()[0];
+    auto elements = layer->getElementsView();
+
+    constexpr size_t expectedNumElements = 15;
+    ASSERT_TRUE(elements.size() == expectedNumElements);
+
+    for (size_t i = 0; i < expectedNumElements; ++i) {
+
+        const auto* s = dynamic_cast<const Stroke*>(elements[i]);
+        ASSERT_NE(s, nullptr);
+
+        const LineStyle& ls = s->getLineStyle();
+
+        // Pressure strokes (the first 3)
+        if (i < 3) {
+            EXPECT_FALSE(ls.scaleDashes());
+            EXPECT_FALSE(StrokeStyle::formatStyle(ls).starts_with("scaled"));
+        }
+
+        // No pressure strokes (all others)
+        else {
+            EXPECT_FALSE(StrokeStyle::formatStyle(ls).starts_with("cust:"));
+        }
+    }
+}
+
+TEST(ControlLoadHandler, testScaledDashesLoadStoreLoad) {
+    LoadHandler handler1;
+    auto doc1 = handler1.loadDocument(GET_TESTFILE(u8"load/scaled-dashes.xopp"));
+    ASSERT_NE(doc1.get(), nullptr);
+
+    SaveHandler saver;
+    auto tmpFile = Util::getTmpDirSubfolder() / "test_scaled_save.xopp";
+    saver.prepareSave(doc1.get(), tmpFile);
+    saver.saveTo(tmpFile);
+
+    LoadHandler handler2;
+    auto doc2 = handler2.loadDocument(tmpFile);
+    ASSERT_NE(doc2.get(), nullptr);
+
+    auto elements1 = doc1->getPage(0)->getLayersView()[0]->getElementsView();
+    auto elements2 = doc2->getPage(0)->getLayersView()[0]->getElementsView();
+
+    ASSERT_EQ(elements1.size(), elements2.size());
+    ASSERT_GT(elements1.size(), 0);
+
+    constexpr double tol = 1e-8;
+
+    // Compare the strokes to ensure they are exactly the same
+    for (size_t i = 0; i < elements1.size(); i++) {
+        auto s1 = dynamic_cast<const Stroke*>(elements1[i]);
+        auto s2 = dynamic_cast<const Stroke*>(elements2[i]);
+
+        ASSERT_NE(s1, nullptr);
+        ASSERT_NE(s2, nullptr);
+
+        EXPECT_EQ(s1->getToolType(), s2->getToolType());
+        EXPECT_NEAR(s1->getWidth(), s2->getWidth(), tol);
+
+        LineStyle ls1 = s1->getLineStyle();
+        LineStyle ls2 = s2->getLineStyle();
+
+        EXPECT_EQ(ls1.hasDashes(), ls2.hasDashes());
+        EXPECT_EQ(ls1.scaleDashes(), ls2.scaleDashes());
+        EXPECT_EQ(StrokeStyle::formatStyle(ls1), StrokeStyle::formatStyle(ls2));
+
+        EXPECT_EQ(s1->getPointCount(), s2->getPointCount());
+        for (size_t j = 0; j < s1->getPointCount(); j++) {
+            EXPECT_NEAR(s1->getPoint(j).x, s2->getPoint(j).x, tol);
+            EXPECT_NEAR(s1->getPoint(j).y, s2->getPoint(j).y, tol);
+            EXPECT_NEAR(s1->getPoint(j).z, s2->getPoint(j).z, tol);
+        }
+    }
+
+    fs::remove(tmpFile);
+}

@@ -67,7 +67,7 @@ public:
     void scaleDashesToStrokeWidth(const double strokeWidth);
 
     void setScaleDashes() { scaleDashesToWidth = true; }
-    void setScaleDashes(const std::string& line_style) { scaleDashesToWidth = line_style.starts_with("scaled"); }
+    void setScaleDashes(const std::string& lineStyle) { scaleDashesToWidth = lineStyle.starts_with("scaled"); }
     bool scaleDashes() const { return scaleDashesToWidth; }
 
 private:

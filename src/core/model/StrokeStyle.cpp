@@ -22,8 +22,7 @@ auto formatStyle(const std::vector<double>& dashes, bool scaleDashes) -> std::st
 
     // Check if dashes match named predefined dashes.
     for (auto& pair: predefinedPatterns) {
-        if (pair.second == dashes) {
-            if (scaleDashes && !pair.first.starts_with("scaled")) continue;
+        if (pair.second == dashes && scaleDashes == pair.first.starts_with("scaled")) {
             return pair.first;
         }
     }
