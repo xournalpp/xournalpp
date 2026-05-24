@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-02 10:00+0000\n"
-"PO-Revision-Date: 2026-05-17 05:34\n"
+"PO-Revision-Date: 2026-05-24 05:40\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -778,7 +778,7 @@ msgstr "Dokumentua ez dago osatuta.\n"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:575
 msgid "Document is corrupted (no document tag found in file)"
-msgstr ""
+msgstr "Dokumentua hondatuta dago (ez da dokumentuaren etiketa aurkitu fitxategian)"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:578
 msgid "Document is corrupted (no pages found in file)"
@@ -798,47 +798,47 @@ msgstr "Ezin izan da \"{1}\" atzeko planoa idatzi. Jarraitu hala ere."
 
 #: ../src/core/control/xojfile/XmlParser.cpp:95
 msgid "Ignoring unexpected {1} tag inside unrecognized document structure"
-msgstr ""
+msgstr "Ezikusi egiten ustekabeko {1} etiketari dokumentuaren egituraren barruan"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:100
 msgid "Ignoring unexpected {1} tag under {2}"
-msgstr ""
+msgstr "Ezikusi ustekabeko {1} etiketa {2} azpian"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:149
 msgid "Unexpected text in {1} node: \"{2}\""
-msgstr ""
+msgstr "Ustekabeko testua {1} nodoan: \"{2}\""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:247
 msgid "Attribute \"type\" not found in background tag. Ignoring tag"
-msgstr ""
+msgstr "Ez da \"mota\" atributua aurkitu atzeko planoko etiketan. Etiketa alde batera utzita"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:286
 msgid "Domain \"clone\" is invalid for PDF backgrounds. Using \"absolute\" instead"
-msgstr ""
+msgstr "\"clone\" domeinua ez da baliozkoa PDF atzeko planoetarako. Horren ordez \"absolute\" erabiltzen"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:296
 msgid "PDF background filename is empty"
-msgstr ""
+msgstr "PDF atzeko planoko fitxategi-izena hutsik dago"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:316
 msgid "Discarding unused audio timestamp element. Filename: {1}"
-msgstr ""
+msgstr "Erabiltzen ez den audioaren denbora-zigiluaren elementua baztertzen. Fitxategiaren izena: {1}"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:393
 msgid "Found stroke that contains an odd number of valid coordinates. Discarding the last value"
-msgstr ""
+msgstr "Baliozko koordenatu kopuru bakoitia duen trazua aurkitu da. Azken balioa baztertzen"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:404
 msgid "Found stroke with more coordinates than pressure points: {1}, expected {2}. Shrinking stroke to match pressure point count"
-msgstr ""
+msgstr "Presio puntuak baino koordenatu gehiago dituen trazua aurkitu da: {1}, {2} espero zen. Trazua murrizten da presio puntu kopuruarekin bat etortzeko"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:410
 msgid "Found stroke with too many pressure points: {1}, expected {2}. Discarding remaining pressure points"
-msgstr ""
+msgstr "Presio puntu gehiegi dituen trazua aurkitu da: {1}, {2} espero zen. Gainerako presio puntuak baztertzen"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:494
 msgid "Ignoring attachment tag under {1}"
-msgstr ""
+msgstr "{1} azpian dagoen eranskinaren etiketa ez ikusiarena egiten"
 
 #: ../src/core/gui/GladeGui.cpp:25
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
@@ -1598,7 +1598,7 @@ msgstr "Aurrekoa"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:348
 msgid "Jump back"
-msgstr ""
+msgstr "Jauzi atzera"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:349
 msgid "Go to page"
@@ -1606,7 +1606,7 @@ msgstr "Joan orrira"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:351
 msgid "Jump forward"
-msgstr ""
+msgstr "Jauzi aurrera"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:352
 msgid "Next"
@@ -2120,12 +2120,13 @@ msgstr "ElementRange::parse(): elementuen indizeak 1etik hasten dira"
 #: ../src/util/GzInputStream.cpp:48
 msgid "Error opening file \"{1}\":\n"
 "{2}"
-msgstr ""
+msgstr "Errorea \"{1}\" fitxategia irekitzean: {2}"
 
 #: ../src/util/GzInputStream.cpp:62 ../src/util/ZipInputStream.cpp:52
 msgid "Error occurred while closing file\n"
 "Error code {1}"
-msgstr ""
+msgstr "Errorea gertatu da fitxategia ixtean\n"
+"{1} errore-kodea"
 
 #: ../src/util/OutputStream.cpp:30
 msgid "Error opening file: \"{1}\""
@@ -2191,7 +2192,7 @@ msgstr "Ezin izan da esteka ireki: {1}\n"
 #: ../src/util/ZipInputStream.cpp:38
 msgid "Error opening file \"{1}\" in zip archive:\n"
 "{2}"
-msgstr ""
+msgstr "Errorea \"{1}\" fitxategia irekitzean zip artxiboan: {2}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
@@ -2347,12 +2348,12 @@ msgstr "Eskuin"
 #: ../ui/deviceTestingArea.glade:124
 msgctxt "mouse button"
 msgid "4th"
-msgstr ""
+msgstr "4.a"
 
 #: ../ui/deviceTestingArea.glade:138
 msgctxt "mouse button"
 msgid "5th"
-msgstr ""
+msgstr "5.a"
 
 #: ../ui/deviceTestingArea.glade:152 ../ui/settings.glade:2234
 msgid "Stylus"
@@ -2577,11 +2578,11 @@ msgstr "Testu tresnaren uneko kolorea, hex RGB formatuan."
 
 #: ../ui/latexSettings.glade:194
 msgid "%%XPP_VARNAME%%"
-msgstr ""
+msgstr "%%XPP_VARNAME%%"
 
 #: ../ui/latexSettings.glade:206
 msgid "Any custom variable defined with a %xpp:varname=value directive in the formula input."
-msgstr ""
+msgstr "Formula sarreran %xpp:varname=value direktiba batekin definitutako edozein aldagai pertsonalizatua."
 
 #: ../ui/latexSettings.glade:219
 msgid "Template file settings"
@@ -3150,11 +3151,11 @@ msgstr "Saguaren eskuin klik"
 
 #: ../ui/settings.glade:1615
 msgid "4th Mouse Button"
-msgstr ""
+msgstr "Saguaren 4. botoia"
 
 #: ../ui/settings.glade:1647
 msgid "5th Mouse Button"
-msgstr ""
+msgstr "Saguaren 5. botoia"
 
 #: ../ui/settings.glade:1663
 msgid "Mouse Buttons"
@@ -3428,7 +3429,7 @@ msgstr "(baliteke honek ez funtzionatzea, zure sistemaren gaiaren arabera)"
 
 #: ../ui/settings.glade:3275
 msgid "Show shadow behind pages"
-msgstr ""
+msgstr "Erakutsi itzala orrien atzean"
 
 #: ../ui/settings.glade:3294
 msgid "Colors"
@@ -4317,7 +4318,7 @@ msgstr "_Aurreko orria"
 
 #: ../ui/mainmenubar.xml:388
 msgid "Jump _Back"
-msgstr ""
+msgstr "Jauzi _atzera"
 
 #: ../ui/mainmenubar.xml:392
 msgid "_Goto Page"
@@ -4325,7 +4326,7 @@ msgstr "_Joan orrira"
 
 #: ../ui/mainmenubar.xml:397
 msgid "Jump _Forward"
-msgstr ""
+msgstr "Jauzi a_urrera"
 
 #: ../ui/mainmenubar.xml:401
 msgid "_Next Page"
@@ -4590,7 +4591,7 @@ msgstr "Xournal++"
 
 #: ../resources-templates/toolbar.ini.in:77
 msgid "Tablet mode"
-msgstr ""
+msgstr "Tableta modua"
 
 #: ../resources-templates/toolbar.ini.in:83
 msgid "Right hand Note Taking"
@@ -4618,7 +4619,7 @@ msgstr "Hartu oharrak eskuz"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:8
 msgid "tablet;Wacom;pen input;PDF Annotation;markup;journal;handwriting;diary;notes;"
-msgstr ""
+msgstr "tableta;Wacom;arkatz sarrera;PDF oharrak;markup;journal;eskuz idaztea;egunkaria;oharrak;"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:8
 msgid "Xournalpp Developers"

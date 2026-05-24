@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-02 10:00+0000\n"
-"PO-Revision-Date: 2026-05-03 05:27\n"
+"PO-Revision-Date: 2026-05-24 05:40\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -148,7 +148,7 @@ msgstr ""
 #: ../src/core/control/Control.cpp:1753
 msgid "That file does not exist:\n"
 "\"{1}\""
-msgstr ""
+msgstr "Файл не существует: \"{1}\""
 
 #: ../src/core/control/Control.cpp:1859
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -2123,7 +2123,7 @@ msgstr "Код ошибки {1}"
 
 #: ../src/util/PathUtil.cpp:125
 msgid "Could not open file: {1}"
-msgstr ""
+msgstr "Не удалось открыть файл: {1}"
 
 #: ../src/util/PathUtil.cpp:132
 msgid "Error reading \"{1}\":\n"
