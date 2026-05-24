@@ -45,7 +45,6 @@ auto StrokeStyle::parseStyle(const std::string& style) -> LineStyle {
         LineStyle ls;
         std::vector<double> dashes = it->second;
         ls.setDashes(std::move(dashes));
-        ls.setScaleDashes(style);
         return ls;
     }
 
@@ -67,7 +66,6 @@ auto StrokeStyle::parseStyle(const std::string& style) -> LineStyle {
 
     LineStyle ls;
     ls.setDashes(std::move(dashes));
-    ls.setScaleDashes(style);
     return ls;
 }
 

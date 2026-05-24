@@ -263,7 +263,15 @@ auto EditSelectionContents::setLineStyle(LineStyle style) -> UndoActionPtr {
         if (e->getType() == ELEMENT_STROKE) {
             auto s = static_cast<Stroke*>(e);
             auto lastLineStyle = s->getLineStyle();
+
             s->setLineStyle(style);
+
+            if (s->hasPressure()) {
+                s->setScaleDashes();
+            } else {
+                s->scaleLineStyleDashesToWidth();
+            }
+
             undo->addStroke(s, lastLineStyle, s->getLineStyle());
 
             found = true;
