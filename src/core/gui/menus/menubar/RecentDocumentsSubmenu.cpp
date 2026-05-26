@@ -29,18 +29,29 @@ constexpr auto REMOVE_ACTION_NAME = "remove-file-at";
 constexpr auto DISABLED_ACTION_NAME = "always-disabled-action";
 constexpr auto CLEAR_LIST_ACTION_NAME = "clear-recent-files";
 
+constexpr size_t MAX_PATH_DISPLAY_LENGTH = 80;
+
 void recentManagerChangedCallback(GtkRecentManager* /*manager*/, RecentDocumentsSubmenu* recentDocsSubmenu) {
     recentDocsSubmenu->updateMenu();
 }
 
 void clearRecentFilesCallback(GSimpleAction*, GVariant*, gpointer) { RecentManager::clearRecentFiles(); }
 
-auto createRecentMenuItem(const GtkRecentInfo* info, size_t i) {
-    std::string display_name = gtk_recent_info_get_display_name(const_cast<GtkRecentInfo*>(info));
+auto getRecentDisplayLabel(const GtkRecentInfo* info) -> std::string {
+    std::string label;
+    if (auto path = Util::fromUri(gtk_recent_info_get_uri(const_cast<GtkRecentInfo*>(info)))) {
+        auto u8path = path->u8string();
+        label = StringUtils::ellipsizeLeft(char_cast(u8path), MAX_PATH_DISPLAY_LENGTH);
+    } else {
+        label = gtk_recent_info_get_display_name(const_cast<GtkRecentInfo*>(info));
+    }
 
-    // escape underscore
-    StringUtils::replaceAllChars(display_name, {replace_pair('_', "__")});
-    std::string label = FS(FORMAT_STR("{1}. {2}") % (i + 1) % display_name);
+    StringUtils::replaceAllChars(label, {replace_pair('_', "__")});
+    return label;
+}
+
+auto createRecentMenuItem(const GtkRecentInfo* info, size_t i) {
+    std::string label = FS(FORMAT_STR("{1}. {2}") % (i + 1) % getRecentDisplayLabel(info));
 
     std::string action = G_ACTION_NAMESPACE;
     action += OPEN_ACTION_NAME;
@@ -52,13 +63,10 @@ auto createRecentMenuItem(const GtkRecentInfo* info, size_t i) {
 }
 
 auto createRemoveMenuItem(const GtkRecentInfo* info, size_t i) {
-    std::string display_name = gtk_recent_info_get_display_name(const_cast<GtkRecentInfo*>(info));
-
-    // escape underscore
-    StringUtils::replaceAllChars(display_name, {replace_pair('_', "__")});
     std::string label =
-            FS(FORMAT_STR("{1}. {2} {3}") % (i + 1) %
-               C_("The selected document will be removed from the recent files list", "Dismiss") % display_name);
+        FS(FORMAT_STR("{1}. {2} {3}") % (i + 1) %
+           C_("The selected document will be removed from the recent files list", "Dismiss") %
+           getRecentDisplayLabel(info));
 
     std::string action = G_ACTION_NAMESPACE;
     action += REMOVE_ACTION_NAME;

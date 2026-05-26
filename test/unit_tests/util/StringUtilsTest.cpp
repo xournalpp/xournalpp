@@ -97,3 +97,36 @@ TEST(UtilStringUtils, testEllipsize) {
         }
     }
 }
+
+TEST(UtilStringUtils, testEllipsizeLeft) {
+    struct TestCase {
+        std::string_view str;   // original string
+        std::size_t max_width;  // in code points
+        bool ellipsized;        // expected result
+    };
+
+    constexpr std::array<TestCase, 5> cases = {{
+            {"short string", 20, false},
+            {"very looooooooong string", 20, true},
+            {"éééééaouüüüüüüöööödèèû", 10, true},
+            {"CJK \xE4\xB8\x96\xE7\x95\x8C", 6, false},
+            {"\xE4\xB8\x96\xE7\x95\x8C\xE4\xB8\x96\xE7\x95\x8C\xE4\xB8\x96\xE7\x95\x8C", 5, true},
+    }};
+    for (const auto& tc: cases) {
+        auto out = StringUtils::ellipsizeLeft(tc.str, tc.max_width);
+
+        EXPECT_TRUE(g_utf8_validate(out.c_str(), out.size(), nullptr))
+                << "Ellipsizing string \"" << tc.str << "\" produced invalid UTF-8";
+
+        if (tc.ellipsized) {
+            EXPECT_EQ(g_utf8_strlen(out.c_str(), out.size()), tc.max_width)
+                    << "Ellipsizing string \"" << tc.str << "\" produced a string of the wrong size";
+            EXPECT_TRUE(StringUtils::startsWith(out, "...")) << '"' << out << "\" does not start with an ellipsis";
+            // The trailing part of the original string must be preserved.
+            EXPECT_TRUE(StringUtils::endsWith(tc.str, std::string_view(out).substr(3)))
+                    << '"' << out << "\" does not keep the end of the original string";
+        } else {
+            EXPECT_EQ(out, tc.str) << "String should not have been ellipsized";
+        }
+    }
+}
