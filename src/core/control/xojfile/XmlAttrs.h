@@ -25,6 +25,7 @@ constexpr auto FILEVERSION_STR = u8"fileversion";
 // page
 constexpr auto WIDTH_STR = u8"width";  // also in stroke
 constexpr auto HEIGHT_STR = u8"height";
+constexpr auto BOOKMARK_STR = u8"bookmark";
 
 // background
 constexpr auto NAME_STR = u8"name";  // also in layer

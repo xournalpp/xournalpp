@@ -66,6 +66,20 @@
                 <attribute name="action">win.delete-page</attribute>
             </item>
         </section>
+        <section>
+            <item>
+                <attribute name="label" translatable="yes">Add Bookmark</attribute>
+                <attribute name="action">win.add-bookmark</attribute>
+            </item>
+            <item>
+                <attribute name="label" translatable="yes">Edit Bookmark</attribute>
+                <attribute name="action">win.edit-bookmark</attribute>
+            </item>
+            <item>
+                <attribute name="label" translatable="yes">Delete Bookmark</attribute>
+                <attribute name="action">win.delete-bookmark</attribute>
+            </item>
+        </section>
     </menu>
     <object class="GtkBox" id="PreviewLayersToolbar">
         <style>

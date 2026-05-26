@@ -80,6 +80,10 @@ public:
     bool backgroundHasName() const;
     void setBackgroundName(const std::string& newName);
 
+    const std::optional<std::string>& getBookmark() const;
+    void setBookmark(const std::string& name);
+    void deleteBookmark();
+
     /**
      * Copies this page an all it's contents to a new page
      */
@@ -131,6 +135,11 @@ private:
      * Background name
      */
     std::optional<std::string> backgroundName;
+
+    /**
+     * Bookmark name
+     */
+    std::optional<std::string> bookmark;
 
     // Allow LoadHandler to add layers directly
     friend class LoadHandler;

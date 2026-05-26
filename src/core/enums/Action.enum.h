@@ -102,6 +102,11 @@ enum class Action : size_t {
     PAPER_FORMAT,
     PAPER_BACKGROUND_COLOR,
 
+    // Bookmarks
+    ADD_BOOKMARK,
+    EDIT_BOOKMARK,
+    DELETE_BOOKMARK,
+
     // Menu Tools
     SELECT_TOOL,
     SELECT_DEFAULT_TOOL,

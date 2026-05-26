@@ -513,7 +513,6 @@ struct ActionProperties<Action::NAVIGATE_FORWARD> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getNavigationHistory()->navigate(1); }
 };
 
-
 /** Journal Menu **/
 template <>
 struct ActionProperties<Action::NEW_PAGE_BEFORE> {
@@ -569,6 +568,33 @@ struct ActionProperties<Action::PAPER_BACKGROUND_COLOR> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->changePageBackgroundColor(); }
 };
 
+/**Bookmarks **/
+template <>
+struct ActionProperties<Action::ADD_BOOKMARK> {
+    static bool initiallyEnabled(Control*) { return true; }
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
+        size_t pageIndex = ctrl->getCurrentPageNo();
+        ctrl->setBookmark(pageIndex);
+    }
+};
+
+template <>
+struct ActionProperties<Action::EDIT_BOOKMARK> {
+    static bool initiallyEnabled(Control*) { return true; }
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
+        size_t pageIndex = ctrl->getCurrentPageNo();
+        ctrl->setBookmark(pageIndex);
+    }
+};
+
+template <>
+struct ActionProperties<Action::DELETE_BOOKMARK> {
+    static bool initiallyEnabled(Control*) { return true; }
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
+        size_t pageIndex = ctrl->getCurrentPageNo();
+        ctrl->deleteBookmark(pageIndex);
+    }
+};
 
 /** Tool menu **/
 template <>

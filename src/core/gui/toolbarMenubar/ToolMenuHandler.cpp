@@ -461,6 +461,7 @@ void ToolMenuHandler::initToolItems() {
                       _("Forward"));
     emplaceCustomItem("AUDIO_SEEK_BACKWARDS", Cat::AUDIO, Action::AUDIO_SEEK_BACKWARDS, "audio-seek-backwards",
                       _("Back"));
+    emplaceCustomItem("ADD_BOOKMARK", Cat::TOOLS, Action::ADD_BOOKMARK, "bookmark", _("Add Bookmark"));
 
 
     ///////////////////////////////////////////////////////////////////////////

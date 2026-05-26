@@ -51,6 +51,12 @@ private:
      * This requires features available only in cairo 1.16 or newer.
      */
     void populatePdfOutline();
+
+    /**
+     * Populate the outline of the generated PDF with the
+     * Xournal++ native bookmarks.
+     */
+    void populateNativeBookmarksOutline();
 #endif
 
 protected:

@@ -243,6 +243,10 @@ public:
     void movePageTowardsBeginning();
     void movePageTowardsEnd();
 
+    // Bookmarks
+    void setBookmark(size_t pageIndex);
+    void deleteBookmark(size_t pageIndex);
+
     /**
      * Ask the user whether a page with the given id
      * should be added to the document.
@@ -375,6 +379,7 @@ public:
     void registerPluginToolButtons(ToolMenuHandler* toolMenuHandler);
     inline ActionDatabase* getActionDatabase() const { return actionDB.get(); }
     void loadPaletteFromSettings();
+
 
 protected:
     void setRotationSnapping(bool enable);

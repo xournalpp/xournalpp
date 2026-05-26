@@ -241,6 +241,11 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
     page->setAttrib(xoj::xml_attrs::WIDTH_STR, p->getWidth());
     page->setAttrib(xoj::xml_attrs::HEIGHT_STR, p->getHeight());
 
+    auto bookmark = p->getBookmark();
+    if (bookmark.has_value()) {
+        page->setAttrib(xoj::xml_attrs::BOOKMARK_STR, bookmark.value());
+    }
+
     auto* background = new XmlNode(TAG_NAMES[TagType::BACKGROUND]);
     page->addChild(background);
 

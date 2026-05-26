@@ -6,6 +6,8 @@
 #include "gui/PagePreviewDecoration.h"                      // for Drawing  ...
 #include "gui/sidebar/previews/page/SidebarPreviewPages.h"  // for SidebarPr...
 #include "util/gtk4_helper.h"
+#include "model/Document.h"                                 // for Document
+#include "model/XojPage.h"                                  // for XojPage
 
 SidebarPreviewPageEntry::SidebarPreviewPageEntry(SidebarPreviewPages* sidebar, const PageRef& page, size_t index):
         SidebarPreviewBaseEntry(sidebar, page), sidebar(sidebar), index(index) {
@@ -35,7 +37,43 @@ void SidebarPreviewPageEntry::paint(cairo_t* cr) {
     if (sidebar->getControl()->getSettings()->getSidebarNumberingStyle() == SidebarNumberingStyle::NONE) {
         return;
     }
+
+    auto* doc = sidebar->getControl()->getDocument();
+
+    doc->lock_shared();
+    bool hasBookmark = this->page->getBookmark().has_value();
+    doc->unlock_shared();
+
+    if (hasBookmark) drawBookmarkIcon(cr);
+
     drawEntryNumber(cr);
+}
+
+void SidebarPreviewPageEntry::drawBookmarkIcon(cairo_t* cr) {
+    IconNameHelper iconNameHelper(sidebar->getControl()->getSettings());
+    std::string iconName = iconNameHelper.iconName("bookmark");
+
+    int iconSize = 24;
+    int padding = 9;
+    int x = this->imageWidth - iconSize - padding - 10;
+    int y = padding;
+
+    GtkIconTheme* theme = gtk_icon_theme_get_default();
+    GError* error = nullptr;
+
+    GdkPixbuf* pixbuf = gtk_icon_theme_load_icon(theme, iconName.c_str(), iconSize,
+                                                 GTK_ICON_LOOKUP_FORCE_SIZE, &error);
+    if (pixbuf) {
+        cairo_save(cr);
+
+        gdk_cairo_set_source_pixbuf(cr, pixbuf, x, y);
+        cairo_paint(cr);
+
+        cairo_restore(cr);
+        g_object_unref(pixbuf);
+    } else if (error) {
+        g_error_free(error);
+    }
 }
 
 void SidebarPreviewPageEntry::drawEntryNumber(cairo_t* cr) {

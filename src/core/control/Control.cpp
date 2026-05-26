@@ -47,6 +47,7 @@
 #include "gui/XournalView.h"                                     // for Xour...
 #include "gui/XournalppCursor.h"                                 // for Xour...
 #include "gui/dialog/AboutDialog.h"                              // for Abou...
+#include "gui/dialog/BookmarkDialog.h"                           // for Book...
 #include "gui/dialog/FormatDialog.h"                             // for Form...
 #include "gui/dialog/GotoDialog.h"                               // for Goto...
 #include "gui/dialog/PageTemplateDialog.h"                       // for Page...
@@ -63,6 +64,7 @@
 #include "gui/inputdevices/SetsquareInputHandler.h"              // for Sets...
 #include "gui/menus/menubar/Menubar.h"                           // for Menubar
 #include "gui/sidebar/Sidebar.h"                                 // for Sidebar
+#include "gui/sidebar/bookmarks/SidebarBookmarks.h"
 #include "gui/toolbarMenubar/ToolMenuHandler.h"                  // for Tool...
 #include "gui/toolbarMenubar/model/ToolbarData.h"                // for Tool...
 #include "gui/toolbarMenubar/model/ToolbarModel.h"               // for Tool...
@@ -94,6 +96,7 @@
 #include "undo/PageSizeChangeUndoAction.h"                       // for PageSizeChangeUndoAction
 #include "undo/SwapUndoAction.h"                                 // for SwapUndoAction
 #include "undo/UndoAction.h"                                     // for Undo...
+#include "undo/BookmarkUndoAction.h"                             // for BookmarkUndoAction
 #include "util/Assert.h"                                         // for xoj_assert
 #include "util/Color.h"                                          // for oper...
 #include "util/PathUtil.h"                                       // for clea...
@@ -703,6 +706,17 @@ void Control::updatePageActions() {
     this->actionDB->enableAction(Action::DELETE_PAGE, nbPages > 1);
     this->actionDB->enableAction(Action::MOVE_PAGE_TOWARDS_BEGINNING, currentPage != 0);
     this->actionDB->enableAction(Action::MOVE_PAGE_TOWARDS_END, currentPage < nbPages - 1);
+
+    bool hasBookmark = false;
+    if (nbPages > 0) {
+        doc->lock_shared();
+        PageRef page = doc->getPage(currentPage);
+        hasBookmark = page && page->getBookmark().has_value();
+        doc->unlock_shared();
+    }
+    this->actionDB->enableAction(Action::ADD_BOOKMARK, nbPages > 0 && !hasBookmark);
+    this->actionDB->enableAction(Action::EDIT_BOOKMARK, nbPages > 0 && hasBookmark);
+    this->actionDB->enableAction(Action::DELETE_BOOKMARK, nbPages > 0 && hasBookmark);
 }
 
 void Control::deletePage() {
@@ -827,6 +841,45 @@ void Control::movePageTowardsEnd() {
     this->firePageSelected(currentPageNo + 1);
 
     this->getScrollHandler()->scrollToPage(currentPageNo + 1);
+}
+
+void Control::setBookmark(size_t pageIndex) {
+    BookmarkDialog dialog(getGtkWindow());
+    if (!dialog.run()) return;
+
+    std::string name = dialog.getName();
+
+    doc->lock();
+    auto oldBookmark = doc->setBookmark(name, pageIndex);
+    doc->unlock();
+
+    auto newBookmark = std::optional<std::string>(std::move(name));
+    auto undo = std::make_unique<BookmarkUndoAction>(pageIndex, std::move(oldBookmark),
+                                                     std::move(newBookmark));
+
+    getUndoRedoHandler()->addUndoAction(std::move(undo));
+
+    this->fireDocumentChanged(DOCUMENT_CHANGE_BOOKMARKS);
+    this->updatePageActions();
+}
+
+void Control::deleteBookmark(size_t pageIndex) {
+    doc->lock();
+    auto oldBookmark = doc->deleteBookmark(pageIndex);
+
+    DocumentChangeType docChangeType = doc->listBookmarks().empty()
+        ? DOCUMENT_CHANGE_NO_BOOKMARKS  // Forces the entire sidebar to refresh
+        : DOCUMENT_CHANGE_BOOKMARKS;
+
+    doc->unlock();
+
+    auto undo = std::make_unique<BookmarkUndoAction>(pageIndex, std::move(oldBookmark),
+                                                     std::nullopt);
+
+    getUndoRedoHandler()->addUndoAction(std::move(undo));
+
+    this->fireDocumentChanged(docChangeType);
+    this->updatePageActions();
 }
 
 /// Remove mnemonic indicators in menu labels
