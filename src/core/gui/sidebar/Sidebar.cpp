@@ -12,7 +12,9 @@
 #include "control/Control.h"                         // for Control
 #include "control/settings/Settings.h"               // for Settings
 #include "gui/GladeGui.h"                            // for GladeGui
+#include "gui/IconNameHelper.h"
 #include "gui/sidebar/AbstractSidebarPage.h"         // for AbstractSidebar...
+#include "gui/sidebar/bookmarks/SidebarBookmarks.h"
 #include "gui/sidebar/indextree/SidebarIndexPage.h"  // for SidebarIndexPage
 #include "model/Document.h"                          // for Document
 #include "model/XojPage.h"                           // for XojPage
@@ -40,6 +42,7 @@ void Sidebar::initTabs(GtkWidget* sidebarContents) {
     addTab(std::make_unique<SidebarPreviewPages>(this->control));
     addTab(std::make_unique<SidebarPreviewLayers>(this->control, false));
     addTab(std::make_unique<SidebarPreviewLayers>(this->control, true));
+    addTab(std::make_unique<SidebarBookmarks>(this->control));
 
     // Init toolbar with icons
 
@@ -156,7 +159,9 @@ size_t Sidebar::getSelectedTab() const { return this->currentTabIdx; }
 auto Sidebar::getControl() -> Control* { return this->control; }
 
 void Sidebar::documentChanged(DocumentChangeType type) {
-    if (type == DOCUMENT_CHANGE_CLEARED || type == DOCUMENT_CHANGE_COMPLETE || type == DOCUMENT_CHANGE_PDF_BOOKMARKS) {
+    if (type == DOCUMENT_CHANGE_CLEARED || type == DOCUMENT_CHANGE_COMPLETE ||
+        type == DOCUMENT_CHANGE_PDF_BOOKMARKS || type == DOCUMENT_CHANGE_NO_BOOKMARKS) {
+
         updateVisibleTabs();
     }
 }

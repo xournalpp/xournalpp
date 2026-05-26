@@ -22,6 +22,7 @@
 
 #include "gui/IconNameHelper.h"                            // for IconNameHe...
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"  // for SidebarPre...
+#include "model/DocumentChangeType.h"
 #include "util/raii/GObjectSPtr.h"
 
 class Control;
@@ -59,6 +60,7 @@ public:
     void pageSelected(size_t page) override;
     void pageInserted(size_t page) override;
     void pageDeleted(size_t page) override;
+    void documentChanged(DocumentChangeType docChangeType) override;
 
 private:
     /**

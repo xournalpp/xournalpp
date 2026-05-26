@@ -36,6 +36,7 @@ protected:
     SidebarPreviewPages* sidebar;
     void mouseButtonPressCallback() override;
     void paint(cairo_t* cr) override;
+    void drawBookmarkIcon(cairo_t* cr);
 
 private:
     size_t index;
