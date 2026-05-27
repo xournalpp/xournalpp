@@ -79,7 +79,7 @@ void ShapeRecognizer::reduceVerticesToFour(std::vector<Corner>& cornerList) {
 
 double ShapeRecognizer::calculateDynamicEpsilon(const Point* pt, int last_idx) {
     if (last_idx < 0)
-        return 1.0;
+        return 5.0;
 
     double minX = pt[0].x;
     double maxX = pt[0].x;
@@ -97,7 +97,7 @@ double ShapeRecognizer::calculateDynamicEpsilon(const Point* pt, int last_idx) {
     double strokeHeight = maxY - minY;
     double shortestSide = std::min(strokeWidth, strokeHeight);
 
-    return std::max(1.0, shortestSide * 0.05);
+    return std::max(5.0, shortestSide * 0.05);
 }
 
 double ShapeRecognizer::perpendicularDistance(const Point& p, const Point& a, const Point& b) {
