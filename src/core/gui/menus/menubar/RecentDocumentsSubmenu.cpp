@@ -46,6 +46,7 @@ auto getRecentDisplayLabel(const GtkRecentInfo* info) -> std::string {
         label = gtk_recent_info_get_display_name(const_cast<GtkRecentInfo*>(info));
     }
 
+    // escape underscore
     StringUtils::replaceAllChars(label, {replace_pair('_', "__")});
     return label;
 }
