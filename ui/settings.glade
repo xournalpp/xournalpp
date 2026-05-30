@@ -1364,7 +1364,7 @@ Illegal characters are replaced with "_"</property>
                                                 <property name="can-focus">False</property>
                                                 <property name="margin-start">6</property>
                                                 <property name="margin-end">6</property>
-                                                <property name="label" translatable="yes">Number of Spaces : </property>
+                                                <property name="label" translatable="yes">Number of Spaces:</property>
                                               </object>
                                               <packing>
                                                 <property name="expand">False</property>
@@ -2613,7 +2613,7 @@ Illegal characters are replaced with "_"</property>
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
                                         <property name="tooltip-text" translatable="yes">When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues.
-This setting can make it easier to draw with touch. </property>
+This setting can make it easier to draw with touch.</property>
                                         <child>
                                           <object class="GtkLabel" id="label2">
                                             <property name="visible">True</property>
