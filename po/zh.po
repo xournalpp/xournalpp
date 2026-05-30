@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-05 08:12+0000\n"
-"PO-Revision-Date: 2026-05-10 05:28\n"
+"POT-Creation-Date: 2026-05-30 07:49+0000\n"
+"PO-Revision-Date: 2026-05-30 08:31\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -947,7 +947,7 @@ msgstr "橡皮"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:495
 msgid "Highlighter"
-msgstr "高亮"
+msgstr "荧光笔"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:82
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
@@ -964,7 +964,7 @@ msgid "Laser Pointer - Pen"
 msgstr "激光笔 - Pen"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
-msgid "Laser Pointer - Hightlighter"
+msgid "Laser Pointer - Highlighter"
 msgstr "激光笔 - 荧光笔"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
@@ -1654,7 +1654,7 @@ msgstr "插入/编辑TeX"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 msgid "Default Tool"
-msgstr "缺省工具"
+msgstr "默认工具"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:14
@@ -2352,7 +2352,7 @@ msgid "To clear the logs, simply close and reopen the settings dialog"
 msgstr "要清除日志，只需关闭并重新打开首选项"
 
 #: ../ui/deviceTestingArea.glade:491
-msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
+msgid "Select this option if the \"Tip\" sign does not light up when using the stylus and pressing one of its buttons.\n\n"
 "Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
 msgstr "如果在使用触控笔并按下其中一个按钮时“按下”没有亮起，请选择此选项。\n\n"
 "如果触控笔悬停时“按下”亮起(但不触摸屏幕或触控板)，请取消选择此选项。"
@@ -3059,7 +3059,7 @@ msgid "Indent using spaces"
 msgstr "使用空格缩进"
 
 #: ../ui/settings.glade:1367
-msgid "Number of Spaces : "
+msgid "Number of Spaces:"
 msgstr "空格数："
 
 #: ../ui/settings.glade:1379
@@ -3244,7 +3244,7 @@ msgstr "启用手势缩放(需要重启)"
 
 #: ../ui/settings.glade:2615
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues.\n"
-"This setting can make it easier to draw with touch. "
+"This setting can make it easier to draw with touch."
 msgstr "通过触摸绘图时，用于平移视图的两指手势可能会导致视图缩放，从而导致性能问题。\n"
 "此设置可以使触摸绘图更加容易。"
 

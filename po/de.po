@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-05 08:12+0000\n"
-"PO-Revision-Date: 2026-05-24 05:40\n"
+"POT-Creation-Date: 2026-05-30 07:49+0000\n"
+"PO-Revision-Date: 2026-05-30 08:31\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -125,12 +125,13 @@ msgstr "Fehler beim Lesen der PNG-Datei \"{1}\""
 
 #: ../src/core/control/Control.cpp:1668
 msgid "Failed to determine if path exists \"{1}\": {2}"
-msgstr ""
+msgstr "Fehler beim Ermitteln des Pfades \"{1}\": {2}"
 
 #: ../src/core/control/Control.cpp:1669
 msgid "That file does not exist:\n"
 "\"{1}\""
-msgstr ""
+msgstr "Diese Datei existiert nicht:\n"
+"\"{1}\""
 
 #: ../src/core/control/Control.cpp:1776
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -964,7 +965,7 @@ msgid "Laser Pointer - Pen"
 msgstr "Laserpointer - Stift"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
-msgid "Laser Pointer - Hightlighter"
+msgid "Laser Pointer - Highlighter"
 msgstr "Laser Zeiger - Highlighter"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
@@ -1218,7 +1219,7 @@ msgstr "Benutzerpaletten"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:99
 msgid "<i>The palettes shown below are obtained from the <a href=\"{1}\">Built-in palettes</a> and <a href=\"{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>Die unten angezeigten Paletten stammen von den <a href=\"{1}\">Stan­dard Paletten</a> und <a href=\"{2}\">Benutzerpaletten</a> Verzeichnissen:</i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:117
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
@@ -2118,7 +2119,7 @@ msgstr "Fehlercode {1}"
 
 #: ../src/util/PathUtil.cpp:125
 msgid "Could not open file: {1}"
-msgstr ""
+msgstr "Diese Datei konnte nicht geöffnet werden: {1}"
 
 #: ../src/util/PathUtil.cpp:132
 msgid "Error reading \"{1}\":\n"
@@ -2353,7 +2354,7 @@ msgid "To clear the logs, simply close and reopen the settings dialog"
 msgstr "Um die Logs zu löschen, schließen und öffnen Sie einfach den Einstellungsdialog"
 
 #: ../ui/deviceTestingArea.glade:491
-msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
+msgid "Select this option if the \"Tip\" sign does not light up when using the stylus and pressing one of its buttons.\n\n"
 "Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
 msgstr "Wählen Sie diese Option, wenn das \"Kontakt\" Anzeige nicht aufleuchtet, wenn Sie den Stift verwenden und eine der Tasten drücken.\n\n"
 "Deaktivieren Sie diese Option, wenn das \"Kontakt\" Anzeige leuchtet, während der Stift schwebt (aber nicht den Bildschirm oder das Tablet berührt)."
@@ -3060,7 +3061,7 @@ msgid "Indent using spaces"
 msgstr "Mit Leerzeichen einrücken"
 
 #: ../ui/settings.glade:1367
-msgid "Number of Spaces : "
+msgid "Number of Spaces:"
 msgstr "Anzahl der Leerzeichen: "
 
 #: ../ui/settings.glade:1379
@@ -3245,7 +3246,7 @@ msgstr "Zoom-Gesten aktivieren (erfordert Neustart)"
 
 #: ../ui/settings.glade:2615
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues.\n"
-"This setting can make it easier to draw with touch. "
+"This setting can make it easier to draw with touch."
 msgstr "Beim Zeichnen mit Touchscreen sind Zweifinger-Gesten zum Verschieben gedacht. Es kann allerdings dazu kommen, dass diese als Zoomen erkannt werden, was zu Leistungsproblemen führt. \n"
 "Diese Einstellung kann das Zeichnen mit Touchscreen vereinfachen. "
 
@@ -3379,7 +3380,7 @@ msgstr "Zeichenfläche neu einfärben (kann zu Verzögerungen beim Schieben von 
 
 #: ../ui/settings.glade:3264
 msgid "Recolors the drawing area so that light regions get the \"Light Color\" and dark regions get the \"Dark Color\". Other colors are interpolated accordingly. Can be use to implement a dark-mode."
-msgstr ""
+msgstr "Färbt den Zeichnungsbereich, so das die hellen Bereiche die \"Helle Farbe\" und die dunklen Bereiche die \"Dunkle Farbe\" erhalten. Andere Farben werden entsprechend interpoliert. Kann verwendet werden, um einen Dunkelmodus zu implementieren."
 
 #: ../ui/settings.glade:3274
 msgid "Recolor Previews in the Sidebar"
@@ -3387,17 +3388,17 @@ msgstr "Vorschau in der Seitenleiste neu einfärben"
 
 #: ../ui/settings.glade:3279
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) the same way as the drawing area."
-msgstr ""
+msgstr "Färbt die Vorschau in der Seitenleiste (Seiten/Schicht Vorschau) wie die Zeichenfläche."
 
 #: ../ui/settings.glade:3293
 msgid "The color light regions are translated to\n"
 "(use a dark color for a dark-mode)"
-msgstr ""
+msgstr "Die hell gefärbten Regionen werden dunkel gefärbt (Verwenden sie eine Dunkle Farbe für den Dunkelmodus)"
 
 #: ../ui/settings.glade:3308
 msgid "The color dark regions are translated to\n"
 "(use a light color for dark-mode)"
-msgstr ""
+msgstr "Die dunkel gefärbten Regionen werden hell gefärbt (Verwenden sie eine helle Farbe für den Dunkelmodus)"
 
 #: ../ui/settings.glade:3324
 msgid "Dark Color"
@@ -3409,7 +3410,7 @@ msgstr "Helle Farbe"
 
 #: ../ui/settings.glade:3351
 msgid "Recoloring (allows theming)"
-msgstr ""
+msgstr "Einfärben (Erlaubt Theming)"
 
 #: ../ui/settings.glade:3383
 msgid "Cursor icon for pen"
