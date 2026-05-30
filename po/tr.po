@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-02 10:00+0000\n"
-"PO-Revision-Date: 2026-05-10 05:28\n"
+"POT-Creation-Date: 2026-05-30 08:27+0000\n"
+"PO-Revision-Date: 2026-05-30 08:31\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -613,7 +613,7 @@ msgstr ".tex dosyası kaydedilemedi: {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Başlatılamadı {1}: {2} (çıkış kodu: {3})"
 
-#: ../src/core/control/layer/LayerController.cpp:351
+#: ../src/core/control/layer/LayerController.cpp:424
 msgid "Layer {1}"
 msgstr "Katman {1}"
 
@@ -963,7 +963,7 @@ msgid "Laser Pointer - Pen"
 msgstr "Lazer İşaretçisi — Kalem"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
-msgid "Laser Pointer - Hightlighter"
+msgid "Laser Pointer - Highlighter"
 msgstr "Lazer İşaretçisi — Vurgulayıcı"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
@@ -1986,7 +1986,7 @@ msgstr "Sayfa eklendi"
 msgid "Page deleted"
 msgstr "Sayfa silindi"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:29
+#: ../src/core/undo/InsertLayerUndoAction.cpp:25
 msgid "Insert layer"
 msgstr "Katman ekle"
 
@@ -2014,7 +2014,7 @@ msgstr "Katmanı yeniden adlandır"
 msgid "Change line style"
 msgstr "Çizgi biçimini değiştir"
 
-#: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:37
 msgid "Merge layer down"
 msgstr "Altındaki Katmanla Birleştir"
 
@@ -2022,7 +2022,7 @@ msgstr "Altındaki Katmanla Birleştir"
 msgid "Replace missing PDF"
 msgstr "Kayıp PDF' yi değiştir"
 
-#: ../src/core/undo/MoveLayerUndoAction.cpp:28
+#: ../src/core/undo/MoveLayerUndoAction.cpp:24
 msgid "Move layer"
 msgstr "Katmanı taşı"
 
@@ -2038,7 +2038,7 @@ msgstr "Sayfa arka planı değişti"
 msgid "Page size changed"
 msgstr "Sayfa boyutu değiştirildi"
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:23
 msgid "Delete layer"
 msgstr "Katmanı sil"
 
@@ -2384,7 +2384,7 @@ msgid "To clear the logs, simply close and reopen the settings dialog"
 msgstr ""
 
 #: ../ui/deviceTestingArea.glade:519
-msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
+msgid "Select this option if the \"Tip\" sign does not light up when using the stylus and pressing one of its buttons.\n\n"
 "Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
 msgstr ""
 
@@ -3074,7 +3074,7 @@ msgid "Indent using spaces"
 msgstr "Boşluklarla girintile"
 
 #: ../ui/settings.glade:1367
-msgid "Number of Spaces : "
+msgid "Number of Spaces:"
 msgstr "Boşluk Sayısı: "
 
 #: ../ui/settings.glade:1379
@@ -3267,7 +3267,7 @@ msgstr "Yakınlaştırma hareketlerini etkinleştir (yeniden başlatma gerekir)"
 
 #: ../ui/settings.glade:2679
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues.\n"
-"This setting can make it easier to draw with touch. "
+"This setting can make it easier to draw with touch."
 msgstr "Dokunarak çizim yapılırken, sayfayı kaydırmaya yönelik olan iki parmak hareketi, yakınlaştırmaya hareketi ile karıştırılabilir. Bu da performans sorunlarına neden olabilir. \n"
 "Bu ayar dokunarak çizmeyi kolaylaştırır. "
 

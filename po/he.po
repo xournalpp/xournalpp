@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-02 10:00+0000\n"
-"PO-Revision-Date: 2026-05-03 05:27\n"
+"POT-Creation-Date: 2026-05-30 08:27+0000\n"
+"PO-Revision-Date: 2026-05-30 08:31\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -609,7 +609,7 @@ msgstr "לא ניתן לשמור קובץ ‎.tex:‏ {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "התחלת {1}: {2} לא צלחה (קוד יציאה: {3})"
 
-#: ../src/core/control/layer/LayerController.cpp:351
+#: ../src/core/control/layer/LayerController.cpp:424
 msgid "Layer {1}"
 msgstr "שכבה {1}"
 
@@ -959,7 +959,7 @@ msgid "Laser Pointer - Pen"
 msgstr "מצביע לייזר - עט"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
-msgid "Laser Pointer - Hightlighter"
+msgid "Laser Pointer - Highlighter"
 msgstr "מצביע לייזר - מדגש"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
@@ -1983,7 +1983,7 @@ msgstr "דף הוכנס"
 msgid "Page deleted"
 msgstr "דף נמחק"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:29
+#: ../src/core/undo/InsertLayerUndoAction.cpp:25
 msgid "Insert layer"
 msgstr "הכנס שכבה"
 
@@ -2011,7 +2011,7 @@ msgstr "שינוי שם שכבה"
 msgid "Change line style"
 msgstr "שנה סגנון שורה"
 
-#: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:37
 msgid "Merge layer down"
 msgstr ""
 
@@ -2019,7 +2019,7 @@ msgstr ""
 msgid "Replace missing PDF"
 msgstr "החלפת PDF חסר"
 
-#: ../src/core/undo/MoveLayerUndoAction.cpp:28
+#: ../src/core/undo/MoveLayerUndoAction.cpp:24
 msgid "Move layer"
 msgstr "העברת שכבה"
 
@@ -2035,7 +2035,7 @@ msgstr "רקע השתנה"
 msgid "Page size changed"
 msgstr "גודל הדף השתנה"
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:23
 msgid "Delete layer"
 msgstr "מחק שכבה"
 
@@ -2378,7 +2378,7 @@ msgid "To clear the logs, simply close and reopen the settings dialog"
 msgstr "כדי לפנות את היומנים, יש לסגור ולפתוח מחדש את חלונית ההגדרות"
 
 #: ../ui/deviceTestingArea.glade:519
-msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
+msgid "Select this option if the \"Tip\" sign does not light up when using the stylus and pressing one of its buttons.\n\n"
 "Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
 msgstr "יש לבחור את האפשרות הזאת אם הסימן „חוד” לא נדלק בעת שימוש בעט המגע ולחיצה על הכפתורים שלו.\n\n"
 "יש לבטל את האפשרות הזאת אם הסימן „חוד” פעיל כשעט המגע לא מרחף מעל (אבל לא נוגע במסך או בלוח הציור)."
@@ -3043,7 +3043,7 @@ msgid "Indent using spaces"
 msgstr "הזחה ברווחים"
 
 #: ../ui/settings.glade:1367
-msgid "Number of Spaces : "
+msgid "Number of Spaces:"
 msgstr "מספר הרווחים: "
 
 #: ../ui/settings.glade:1379
@@ -3236,7 +3236,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2679
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues.\n"
-"This setting can make it easier to draw with touch. "
+"This setting can make it easier to draw with touch."
 msgstr "בעת ציור במגע, מחוות שתי אצבעות שמיועדות להסטת התצוגה עלולות להתקרב או להתרחק, מה שגורם לבעיות ביצועים.\n"
 "ההגדרה הזאת עשויה להקל על ציור בעזרת מגע. "
 
