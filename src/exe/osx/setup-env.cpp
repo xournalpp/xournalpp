@@ -10,60 +10,99 @@
 
 #include "filesystem.h"
 
+namespace {
+void prependPathToEnvVar(const char* name, fs::path const& path) {
+    const char* currentVal = g_getenv(name);
+    std::string newVar;
+    if (currentVal == nullptr || strlen(currentVal) == 0) {
+        newVar = path.string();
+    } else {
+        newVar = path.string() + ":" + currentVal;
+    }
+    g_setenv(name, newVar.c_str(), 1);
+}
+
+void prependPathToLua(const char* name, const std::string& path) {
+    const char* currentVal = g_getenv(name);
+    std::string newVar;
+    if (currentVal == nullptr || strlen(currentVal) == 0) {
+        newVar = std::string(Util::toGFilename(path).c_str()) + ";;";
+    } else {
+        newVar = std::string(Util::toGFilename(path).c_str()) + ";" + currentVal;
+    }
+    g_setenv(name, newVar.c_str(), true);
+}
+}  // end namespace
+
 void setupEnvironment() {
     /**
      * see https://gitlab.gnome.org/GNOME/gtk-mac-bundler/-/blob/master/examples/gtk3-launcher.sh
      * and https://gitlab.gnome.org/GNOME/gtk-mac-bundler/-/issues/12
      */
-    auto base = Util::getExePath().parent_path();  // Xournal++.app/Contents or $HOME/gtk/inst
+    auto base = Util::getExePath().parent_path();  // Xournal++.app/Contents or $HOME/gtk/inst or e.g. build/inst (via
+                                                   // Homebrew or MacPorts)
 
-    if (fs::exists(base / "Resources")) {  // app-bundle
-        base = base / "Resources";
-        // Set poppler data directory for (relocatable) app bundles. Otherwise a compile time value is used.
-        auto popplerDataDir = base / "share" / "poppler";
-        poppler::set_data_dir(popplerDataDir.string().c_str());
-    }  // Now base is Xournal++.app/Contents/Resources or $HOME/gtk/inst
+    std::error_code err;
+    bool isAppBundle = fs::exists(base / "Resources", err);
+    if (err) {
+        g_warning("Failed to determine if the app runs as an app bundle: %s", err.message().c_str());
+    }
+    bool underJHBuild = g_strcmp0(g_getenv("UNDER_JHBUILD"), "true") == 0;
+
+    if (isAppBundle) {
+        base = base / "Resources";  // Now base is Xournal++.app/Contents/Resources
+    }
 
     auto libPath = base / "lib";
     auto dataPath = base / "share";
-    auto xdgPath = base / "etc" / "xdg";
 
-    auto imModuleFile = libPath / "gtk-3.0" / "3.0.0" / "immodules.cache";
-    auto pixbufModuleFile = libPath / "gdk-pixbuf-2.0" / "2.10.0" / "loaders.cache";
+    if (isAppBundle) {
+        // Set poppler data directory for (relocatable) app bundles. Otherwise a compile time value is used.
+        auto popplerDataDir = dataPath / "poppler";
+        poppler::set_data_dir(popplerDataDir.string().c_str());
 
-    auto typelibPath = libPath / "girepository-1.0";
+        auto imModuleFile = libPath / "gtk-3.0" / "3.0.0" / "immodules.cache";
+        auto pixbufModuleFile = libPath / "gdk-pixbuf-2.0" / "2.10.0" / "loaders.cache";
 
-    std::string luaPath = dataPath.string() + "/lua/5.4/?.lua";
-    std::string luaCPath = libPath.string() + "/lua/5.4/?.so";
+        auto typelibPath = libPath / "girepository-1.0";
+        auto xdgPath = base / "etc" / "xdg";
 
-    setenv("XDG_CONFIG_DIRS", xdgPath.string().c_str(), 1);
-    setenv("XDG_DATA_DIRS", dataPath.string().c_str(), 1);
-    setenv("GTK_DATA_PREFIX", base.string().c_str(), 1);
-    setenv("GTK_EXE_PREFIX", base.string().c_str(), 1);
-    setenv("GTK_PATH", base.string().c_str(), 1);
+        prependPathToEnvVar("XDG_CONFIG_DIRS", xdgPath);
+        prependPathToEnvVar("XDG_DATA_DIRS", dataPath);
+        g_setenv("GTK_DATA_PREFIX", Util::toGFilename(base).c_str(), 1);
+        g_setenv("GTK_EXE_PREFIX", Util::toGFilename(base).c_str(), 1);
+        g_setenv("GTK_PATH", Util::toGFilename(base).c_str(), 1);
 
-    setenv("GTK_IM_MODULE_FILE", imModuleFile.string().c_str(), 0);
-    setenv("GDK_PIXBUF_MODULE_FILE", pixbufModuleFile.string().c_str(), 0);
+        g_setenv("GTK_IM_MODULE_FILE", Util::toGFilename(imModuleFile).c_str(), 0);
+        g_setenv("GDK_PIXBUF_MODULE_FILE", Util::toGFilename(pixbufModuleFile).c_str(), 0);
 
-    setenv("GI_TYPELIB_PATH", typelibPath.string().c_str(), 0);
+        g_setenv("GI_TYPELIB_PATH", Util::toGFilename(typelibPath).c_str(), 0);
+    }
 
-    setenv("LUA_PATH", luaPath.c_str(), 0);
-    setenv("LUA_CPATH", luaCPath.c_str(), 0);
+    if (isAppBundle || underJHBuild) {  // in both cases we have non-standard paths for Lua
+        std::string luaPath = std::string(Util::toGFilename(dataPath).c_str()) + "/lua/5.4/?.lua";
+        std::string luaCPath = std::string(Util::toGFilename(libPath).c_str()) + "/lua/5.4/?.so";
 
-    auto environ = g_get_environ();
-    const char* usedPixbufModuleFile = g_environ_getenv(environ, "GDK_PIXBUF_MODULE_FILE");
-    const char* usedTypelibPath = g_environ_getenv(environ, "GI_TYPELIB_PATH");
+        prependPathToLua("LUA_PATH", luaPath);
+        prependPathToLua("LUA_CPATH", luaCPath);
+    }
+
+    const char* usedPixbufModuleFile = g_getenv("GDK_PIXBUF_MODULE_FILE");
+    const char* usedXDGDataDirs = g_getenv("XDG_DATA_DIRS");
+    const char* usedTypelibPath = g_getenv("GI_TYPELIB_PATH");
     // The DYLD_LIBRARY_PATH is only read when the process is started, so it can't be set here. It is set in
     // the Info.plist therefore, which only takes effect when running the App from Finder or using the "open" command.
-    const char* usedDYLDLibraryPath = g_environ_getenv(environ, "DYLD_LIBRARY_PATH");
-    const char* usedLuaPath = g_environ_getenv(environ, "LUA_PATH");
-    const char* usedLuaCPath = g_environ_getenv(environ, "LUA_CPATH");
-    g_message("Continue with GDK_PIXBUF_MODULE_FILE = %s\n"
-              "GI_TYPELIB_PATH = %s\n"
-              "DYLD_LIBRARY_PATH = %s\n"
-              "LUA_PATH = %s\n"
-              "LUA_CPATH = %s",
-              usedPixbufModuleFile, usedTypelibPath, usedDYLDLibraryPath, usedLuaPath, usedLuaCPath);
+    const char* usedDYLDLibraryPath = g_getenv("DYLD_LIBRARY_PATH");
+    const char* usedLuaPath = g_getenv("LUA_PATH");
+    const char* usedLuaCPath = g_getenv("LUA_CPATH");
+    g_debug("Continue with:\n"
+            "GDK_PIXBUF_MODULE_FILE = %s\n"
+            "XDG_DATA_DIRS = %s\n"
+            "GI_TYPELIB_PATH = %s\n"
+            "DYLD_LIBRARY_PATH = %s\n"
+            "LUA_PATH = %s\n"
+            "LUA_CPATH = %s",
+            usedPixbufModuleFile, usedXDGDataDirs, usedTypelibPath, usedDYLDLibraryPath, usedLuaPath, usedLuaCPath);
 
     /**
      * set LANG and LC_MESSAGES in order to detect the default language
@@ -83,8 +122,8 @@ void setupEnvironment() {
                 }
                 lang += ".UTF-8";  // e.g. "de_DE.UTF-8"
                 g_message("Setting LANG and LC_MESSAGES to %s", lang.c_str());
-                setenv("LANG", lang.c_str(), 0);
-                setenv("LC_MESSAGES", lang.c_str(), 0);
+                g_setenv("LANG", lang.c_str(), 0);
+                g_setenv("LC_MESSAGES", lang.c_str(), 0);
             }
         }
     }

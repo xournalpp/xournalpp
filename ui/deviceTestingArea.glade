@@ -516,7 +516,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">False</property>
-                <property name="tooltip-text" translatable="yes">Select this option if the "Tip" sign does not lit up when using the stylus and pressing one of its buttons.
+                <property name="tooltip-text" translatable="yes">Select this option if the "Tip" sign does not light up when using the stylus and pressing one of its buttons.
 
 Unselect this option if the "Tip" sign is on while the stylus is hovering (but not touching the screen or tablet).</property>
                 <property name="margin-top">12</property>

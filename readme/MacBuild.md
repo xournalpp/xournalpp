@@ -39,33 +39,34 @@ git clone http://github.com/xournalpp/xournalpp.git
 cd xournalpp
 mkdir build
 cd build
-cmake .. -GNinja -DCMAKE_INSTALL_PREFIX="$(brew --prefix)"
+cmake .. -GNinja -DCMAKE_INSTALL_PREFIX=inst
 ninja install
 ````
 
-Here `"$(brew --prefix)"` where Xournal++ gets installed defaults to `/usr/local` on MacOS Intel and to `/opt/homebrew` on MacOS ARM.
-This installation prefix is essential when running the binary, since otherwise pixbuf loaders don't work properly.
 
 ### Run Xournal++:
 
-On MacOS Intel:
+From the build folder run:
 ```sh
-/usr/local/bin/xournalpp
+inst/bin/xournalpp
 ```
 or using the wrapper (in the development version):
 ```sh
-/usr/local/bin/xournalpp-wrapper
+inst/bin/xournalpp-wrapper
 ```
 
-On MacOS ARM:
+### Using plugins with LuaGObject:
 
+For plugins that offer a graphical user interface using LuaGObject you can install LuaGObject via
 ```sh
-/opt/homebrew/bin/xournalpp
+brew install luarocks
+sudo luarocks install LuaGObject
 ```
-or using the wrapper:
+In order that LuaGObject can load dynamic libraries you should set the `DYLD_LIBRARY_PATH`:
 ```sh
-/opt/homebrew/bin/xournalpp-wrapper
+export DYLD_LIBRARY_PATH = $(brew --prefix)/lib:$DYLD_LIBRARY_PATH
 ```
+To make it permanent add that line to ~/.zshenv
 
 
 ## Bundling Xournal++ into a `.app` with gtk-osx
@@ -260,10 +261,9 @@ jhbuild run bash ./build-app.sh "$HOME"/gtk
 Once the `Xournal++.app` bundle is created, you can install it in your
 Applications directory and run it.
 
-At the time of writing, it is not possible to run the application from the
-`build` folder (at least if you're using the special build user). If you have
-found a nice way to get this to run, it would be great if you could contribute
-the steps to this document!
+If the application is installed in a different folder than $HOME/gtk/inst, 
+it will crash unless in GDK_PIXBUF_MODULE_FILE relative paths are replaced
+by absolute paths.
 
 ### FAQ
 
