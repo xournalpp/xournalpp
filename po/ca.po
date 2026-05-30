@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-28 16:29+0000\n"
-"PO-Revision-Date: 2026-03-29 05:02\n"
+"POT-Creation-Date: 2026-05-02 10:00+0000\n"
+"PO-Revision-Date: 2026-05-03 05:27\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -314,7 +314,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "No teniu pàgines PDF seleccionables. L'operació es cancel·la.\n"
 "Trieu un altre tipus de fons des del menú: «Quadern → Configura la plantilla de pàgina»."
 
-#: ../src/core/control/PdfCache.cpp:124
+#: ../src/core/control/PdfCache.cpp:159
 msgid "PDF background missing"
 msgstr "Falta el fons de PDF."
 
@@ -1396,7 +1396,7 @@ msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr "Error al carregar el fitxer XML de la barra de menús (s'intenta carregar «{1}»)."
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:369
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:384
 msgid "Apply to all pages"
 msgstr "Aplica a totes les pàgines"
 
@@ -1440,11 +1440,11 @@ msgstr "Descarta un sol document"
 msgid "Copy current page"
 msgstr "Copia el de la pàgina actual"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:261
 msgid "Copy current background"
 msgstr "Copia el fons actual"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:303
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:332
 msgid "Apply to current page"
 msgstr "Aplica a la pàgina actual"
 
