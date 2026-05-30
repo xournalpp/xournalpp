@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-02 10:00+0000\n"
-"PO-Revision-Date: 2026-05-03 05:27\n"
+"POT-Creation-Date: 2026-05-30 08:27+0000\n"
+"PO-Revision-Date: 2026-05-30 08:31\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -626,7 +626,7 @@ msgstr "Impossible d'enregistrer le fichier .tex : {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Impossible de démarrer {1} : {2} (code de sortie : {3})"
 
-#: ../src/core/control/layer/LayerController.cpp:351
+#: ../src/core/control/layer/LayerController.cpp:424
 msgid "Layer {1}"
 msgstr "Calque {1}"
 
@@ -977,7 +977,7 @@ msgid "Laser Pointer - Pen"
 msgstr "Pointeur laser - Stylo"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
-msgid "Laser Pointer - Hightlighter"
+msgid "Laser Pointer - Highlighter"
 msgstr "Pointeur laser - Surligneur"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
@@ -2001,7 +2001,7 @@ msgstr "Page insérée"
 msgid "Page deleted"
 msgstr "Page supprimée"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:29
+#: ../src/core/undo/InsertLayerUndoAction.cpp:25
 msgid "Insert layer"
 msgstr "Insérer un calque"
 
@@ -2029,7 +2029,7 @@ msgstr "Renommer le calque"
 msgid "Change line style"
 msgstr "Changer le style de ligne"
 
-#: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:37
 msgid "Merge layer down"
 msgstr "Fusionner avec le calque inférieur"
 
@@ -2037,7 +2037,7 @@ msgstr "Fusionner avec le calque inférieur"
 msgid "Replace missing PDF"
 msgstr "Remplacer le PDF manquant"
 
-#: ../src/core/undo/MoveLayerUndoAction.cpp:28
+#: ../src/core/undo/MoveLayerUndoAction.cpp:24
 msgid "Move layer"
 msgstr "Déplacez le calque"
 
@@ -2053,7 +2053,7 @@ msgstr "Arrière-plan de la page modifié"
 msgid "Page size changed"
 msgstr "Taille de page modifiée"
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:23
 msgid "Delete layer"
 msgstr "Supprimer le calque"
 
@@ -2401,7 +2401,7 @@ msgid "To clear the logs, simply close and reopen the settings dialog"
 msgstr "Pour effacer les journaux, il suffit de fermer et de rouvrir la boîte de dialogue des paramètres"
 
 #: ../ui/deviceTestingArea.glade:519
-msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
+msgid "Select this option if the \"Tip\" sign does not light up when using the stylus and pressing one of its buttons.\n\n"
 "Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
 msgstr "Sélectionnez cette option si le voyant \"Pointe\" ne s'allume pas lorsque vous utilisez le stylet et appuyez sur l'un de ses boutons.\n\n"
 "Désélectionnez cette option si le voyant \"Pointe\" est allumé pendant que le stylet survole (mais sans toucher à l'écran ou à la tablette)."
@@ -3116,8 +3116,8 @@ msgid "Indent using spaces"
 msgstr "Indenter avec des espaces"
 
 #: ../ui/settings.glade:1367
-msgid "Number of Spaces : "
-msgstr "Nombre d'espaces : "
+msgid "Number of Spaces:"
+msgstr "Nombre d'espaces :"
 
 #: ../ui/settings.glade:1379
 msgid "Number of spaces inserted with tab."
@@ -3309,9 +3309,9 @@ msgstr "Activer les gestes de zoom (nécessite le redémarrage)"
 
 #: ../ui/settings.glade:2679
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues.\n"
-"This setting can make it easier to draw with touch. "
+"This setting can make it easier to draw with touch."
 msgstr "Lorsque vous dessinez au toucher, les gestes à deux doigts destinés à déplacer la vue peuvent parfois la faire zoomer, causant des problèmes de performance. \n"
-"Ce paramètre peut faciliter le dessin tactile. "
+"Ce paramètre peut faciliter le dessin tactile."
 
 #: ../ui/settings.glade:2685
 msgid "Start zooming after a distance "

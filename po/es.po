@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-02 10:00+0000\n"
-"PO-Revision-Date: 2026-05-03 05:27\n"
+"POT-Creation-Date: 2026-05-30 08:27+0000\n"
+"PO-Revision-Date: 2026-05-30 08:31\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -622,7 +622,7 @@ msgstr "No se pudo guardar el archivo .tex: {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "No se pudo iniciar {1}: {2} (código de salida: {3})"
 
-#: ../src/core/control/layer/LayerController.cpp:351
+#: ../src/core/control/layer/LayerController.cpp:424
 msgid "Layer {1}"
 msgstr "Capa {1}"
 
@@ -972,7 +972,7 @@ msgid "Laser Pointer - Pen"
 msgstr "Puntero láser - Boli"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
-msgid "Laser Pointer - Hightlighter"
+msgid "Laser Pointer - Highlighter"
 msgstr "Puntero láser - Resaltador"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
@@ -1996,7 +1996,7 @@ msgstr "Se insertó una página"
 msgid "Page deleted"
 msgstr "Se eliminó la página"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:29
+#: ../src/core/undo/InsertLayerUndoAction.cpp:25
 msgid "Insert layer"
 msgstr "Insertar capa"
 
@@ -2024,7 +2024,7 @@ msgstr "Renombrar capa"
 msgid "Change line style"
 msgstr "Cambiar estilo de línea"
 
-#: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:37
 msgid "Merge layer down"
 msgstr "Combinar capa hacia abajo"
 
@@ -2032,7 +2032,7 @@ msgstr "Combinar capa hacia abajo"
 msgid "Replace missing PDF"
 msgstr "Reemplazar PDF faltante"
 
-#: ../src/core/undo/MoveLayerUndoAction.cpp:28
+#: ../src/core/undo/MoveLayerUndoAction.cpp:24
 msgid "Move layer"
 msgstr "Mover capa"
 
@@ -2048,7 +2048,7 @@ msgstr "Se cambió el fondo de la página"
 msgid "Page size changed"
 msgstr "Tamaño de página cambiado"
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:23
 msgid "Delete layer"
 msgstr "Eliminar capa"
 
@@ -2394,7 +2394,7 @@ msgid "To clear the logs, simply close and reopen the settings dialog"
 msgstr "Para borrar los registros, simplemente cierre y vuelva a abrir el diálogo de ajustes"
 
 #: ../ui/deviceTestingArea.glade:519
-msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
+msgid "Select this option if the \"Tip\" sign does not light up when using the stylus and pressing one of its buttons.\n\n"
 "Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
 msgstr "Seleccione esta opción si el símbolo de \"Punta\" no se ilumina al usar el lápiz y presionar uno de sus botones.\n\n"
 "Desmarque esta opción si el símbolo de \"Punta\" se ilumina al pasar el lápiz por encima (pero sin tocar la pantalla ni la tableta)."
@@ -3109,7 +3109,7 @@ msgid "Indent using spaces"
 msgstr "Indentar usando espacios"
 
 #: ../ui/settings.glade:1367
-msgid "Number of Spaces : "
+msgid "Number of Spaces:"
 msgstr "Número de Espacios: "
 
 #: ../ui/settings.glade:1379
@@ -3302,7 +3302,7 @@ msgstr "Activar gestos de escala (es necesario reiniciar)"
 
 #: ../ui/settings.glade:2679
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues.\n"
-"This setting can make it easier to draw with touch. "
+"This setting can make it easier to draw with touch."
 msgstr "Al dibujar con el táctil, los gestos con dos dedos destinados a desplazar la vista pueden hacer que se amplíe la vista, provocando problemas de rendimiento.\n"
 "Esta configuración puede facilitar el dibujo usando el táctil. "
 
