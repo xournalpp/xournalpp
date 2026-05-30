@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 16:00+0000\n"
-"PO-Revision-Date: 2026-03-28 17:12\n"
+"POT-Creation-Date: 2026-05-05 08:12+0000\n"
+"PO-Revision-Date: 2026-05-10 05:28\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -284,7 +284,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "您没有任何可以选择的 PDF 页面。操作取消。\n"
 "请选择另一个背景类型：点击“日记”菜单 → “配置页面模板”。"
 
-#: ../src/core/control/PdfCache.cpp:124
+#: ../src/core/control/PdfCache.cpp:159
 msgid "PDF background missing"
 msgstr "PDF背景丢失"
 
@@ -585,7 +585,7 @@ msgstr "无法保存 .tex 文件：{1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "无法启动 {1}: {2} (退出代码: {3})"
 
-#: ../src/core/control/layer/LayerController.cpp:351
+#: ../src/core/control/layer/LayerController.cpp:424
 msgid "Layer {1}"
 msgstr "{1}图层"
 
@@ -1386,7 +1386,7 @@ msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr "加载菜单栏 XML 文件时出错（尝试加载“{1}”）"
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:369
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:384
 msgid "Apply to all pages"
 msgstr "应用到所有页面"
 
@@ -1430,11 +1430,11 @@ msgstr "单独移除文档"
 msgid "Copy current page"
 msgstr "复制当前页"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:261
 msgid "Copy current background"
 msgstr "复制当前背景"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:303
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:332
 msgid "Apply to current page"
 msgstr "应用到当前页面"
 
@@ -1980,7 +1980,7 @@ msgstr "页面插入"
 msgid "Page deleted"
 msgstr "页面删除"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:29
+#: ../src/core/undo/InsertLayerUndoAction.cpp:25
 msgid "Insert layer"
 msgstr "插入层"
 
@@ -2008,7 +2008,7 @@ msgstr "重命名图层"
 msgid "Change line style"
 msgstr "更改线条样式"
 
-#: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:37
 msgid "Merge layer down"
 msgstr "向下合并图层"
 
@@ -2016,7 +2016,7 @@ msgstr "向下合并图层"
 msgid "Replace missing PDF"
 msgstr "替换缺失的 PDF"
 
-#: ../src/core/undo/MoveLayerUndoAction.cpp:28
+#: ../src/core/undo/MoveLayerUndoAction.cpp:24
 msgid "Move layer"
 msgstr "移动图层"
 
@@ -2032,7 +2032,7 @@ msgstr "页面背景改变"
 msgid "Page size changed"
 msgstr "页面大小已更改"
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:23
 msgid "Delete layer"
 msgstr "删除层"
 

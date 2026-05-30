@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 16:00+0000\n"
-"PO-Revision-Date: 2026-03-28 17:05\n"
+"POT-Creation-Date: 2026-05-05 08:12+0000\n"
+"PO-Revision-Date: 2026-05-10 05:28\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -281,7 +281,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "선택할 PDF 페이지가 없습니다. 작업을 취소합니다.\n"
 "\"저널\" → \"페이지 템플릿 설정\"에서 다른 배경 타입을 선택하십시오."
 
-#: ../src/core/control/PdfCache.cpp:124
+#: ../src/core/control/PdfCache.cpp:159
 msgid "PDF background missing"
 msgstr "PDF 백그라운드 누락됨"
 
@@ -564,7 +564,7 @@ msgstr ".tex 파일을 저장하지 못했습니다: {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "{1} 을 시작할 수 없습니다:{2} (exit code {3})"
 
-#: ../src/core/control/layer/LayerController.cpp:351
+#: ../src/core/control/layer/LayerController.cpp:424
 msgid "Layer {1}"
 msgstr "{1} 레이어"
 
@@ -1365,7 +1365,7 @@ msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr "메뉴바 XML 파일 {1} 의 불러오기 오류"
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:369
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:384
 msgid "Apply to all pages"
 msgstr "모든 페이지에 적용"
 
@@ -1409,11 +1409,11 @@ msgstr "1개 문서 무시하고 닫기"
 msgid "Copy current page"
 msgstr ""
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:261
 msgid "Copy current background"
 msgstr "현재 배경 복사"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:303
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:332
 msgid "Apply to current page"
 msgstr "현재 페이지에 적용"
 
@@ -1959,7 +1959,7 @@ msgstr "페이지 추가됨"
 msgid "Page deleted"
 msgstr "페이지 삭제됨"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:29
+#: ../src/core/undo/InsertLayerUndoAction.cpp:25
 msgid "Insert layer"
 msgstr "레이서 추가"
 
@@ -1987,7 +1987,7 @@ msgstr "레이어 이름 변경"
 msgid "Change line style"
 msgstr "줄 표시 변경"
 
-#: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:37
 msgid "Merge layer down"
 msgstr "레이어 합치기"
 
@@ -1995,7 +1995,7 @@ msgstr "레이어 합치기"
 msgid "Replace missing PDF"
 msgstr "누락된 PDF 대체"
 
-#: ../src/core/undo/MoveLayerUndoAction.cpp:28
+#: ../src/core/undo/MoveLayerUndoAction.cpp:24
 msgid "Move layer"
 msgstr "레이어 이동"
 
@@ -2011,7 +2011,7 @@ msgstr "페이지 배경 변경됨"
 msgid "Page size changed"
 msgstr ""
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:23
 msgid "Delete layer"
 msgstr "레이어 삭제"
 

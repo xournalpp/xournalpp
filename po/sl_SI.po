@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 16:00+0000\n"
-"PO-Revision-Date: 2026-03-28 17:05\n"
+"POT-Creation-Date: 2026-05-05 08:12+0000\n"
+"PO-Revision-Date: 2026-05-10 05:28\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -281,7 +281,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "Na voljo ni PDF datotek. Preklic operacije.\n"
 "Prosimo izberite drugačen tip ozadja: Menu \"Journal\" → \"Configure Page Template\"."
 
-#: ../src/core/control/PdfCache.cpp:124
+#: ../src/core/control/PdfCache.cpp:159
 msgid "PDF background missing"
 msgstr "PDF ozadje manjka"
 
@@ -564,7 +564,7 @@ msgstr "Ni bilo mogoče shraniti datoteke .tex: {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "{1} ni bilo mogoče zagnati: {2} (izhodna koda: {3})"
 
-#: ../src/core/control/layer/LayerController.cpp:351
+#: ../src/core/control/layer/LayerController.cpp:424
 msgid "Layer {1}"
 msgstr "Sloj {1}"
 
@@ -1365,7 +1365,7 @@ msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr "Napaka pri nalaganju XML datoteke menijske vrstice (poskusite naložiti »{1}«)"
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:369
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:384
 msgid "Apply to all pages"
 msgstr "Uporabi za vse strani"
 
@@ -1409,11 +1409,11 @@ msgstr "Zapri en dokument"
 msgid "Copy current page"
 msgstr ""
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:261
 msgid "Copy current background"
 msgstr "Kopiraj trenutno ozadje"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:303
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:332
 msgid "Apply to current page"
 msgstr "Uporabi za trenutno stran"
 
@@ -1959,7 +1959,7 @@ msgstr "Stran vstavljena"
 msgid "Page deleted"
 msgstr "Stran izbrisana"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:29
+#: ../src/core/undo/InsertLayerUndoAction.cpp:25
 msgid "Insert layer"
 msgstr "Vstavi sloj"
 
@@ -1987,7 +1987,7 @@ msgstr "Preimenuj sloj"
 msgid "Change line style"
 msgstr "Spremeni slog črte"
 
-#: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:37
 msgid "Merge layer down"
 msgstr "Združi s spodnjim slojem"
 
@@ -1995,7 +1995,7 @@ msgstr "Združi s spodnjim slojem"
 msgid "Replace missing PDF"
 msgstr "Zamenjaj manjkajoči PDF"
 
-#: ../src/core/undo/MoveLayerUndoAction.cpp:28
+#: ../src/core/undo/MoveLayerUndoAction.cpp:24
 msgid "Move layer"
 msgstr "Premakni Sloj"
 
@@ -2011,7 +2011,7 @@ msgstr "Ozadje strani spremenjeno"
 msgid "Page size changed"
 msgstr ""
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:23
 msgid "Delete layer"
 msgstr "Izbriši sloj"
 

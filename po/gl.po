@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 16:00+0000\n"
-"PO-Revision-Date: 2026-03-28 17:05\n"
+"POT-Creation-Date: 2026-05-05 08:12+0000\n"
+"PO-Revision-Date: 2026-05-10 05:28\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Language: gl_ES\n"
@@ -279,7 +279,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "Non ten ningunha páxina de PDF da que seleccionar. Anular a operación.\n"
 "Seleccione outro tipo de fondo: Menú «Caderno» → «Configurar modelo de páxina»."
 
-#: ../src/core/control/PdfCache.cpp:124
+#: ../src/core/control/PdfCache.cpp:159
 msgid "PDF background missing"
 msgstr "Falta o fondo do PDF"
 
@@ -560,7 +560,7 @@ msgstr "Non foi posíbel gardar o ficheiro .tex: {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Non foi posíbel inicial {1}: {2} (código de saída: {3})"
 
-#: ../src/core/control/layer/LayerController.cpp:351
+#: ../src/core/control/layer/LayerController.cpp:424
 msgid "Layer {1}"
 msgstr "Capa {1}"
 
@@ -1359,7 +1359,7 @@ msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr ""
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:369
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:384
 msgid "Apply to all pages"
 msgstr "Aplicar a todas as páxinas"
 
@@ -1403,11 +1403,11 @@ msgstr ""
 msgid "Copy current page"
 msgstr ""
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:261
 msgid "Copy current background"
 msgstr "Copiar fondo actual"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:303
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:332
 msgid "Apply to current page"
 msgstr "Aplicar á páxina actual"
 
@@ -1951,7 +1951,7 @@ msgstr "Páxina inserida"
 msgid "Page deleted"
 msgstr "Páxina eliminada"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:29
+#: ../src/core/undo/InsertLayerUndoAction.cpp:25
 msgid "Insert layer"
 msgstr "Inserir capa"
 
@@ -1979,7 +1979,7 @@ msgstr "Renomear capa"
 msgid "Change line style"
 msgstr "Cambiar o estilo da liña"
 
-#: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:37
 msgid "Merge layer down"
 msgstr "Fusionar capa para abaixo"
 
@@ -1987,7 +1987,7 @@ msgstr "Fusionar capa para abaixo"
 msgid "Replace missing PDF"
 msgstr ""
 
-#: ../src/core/undo/MoveLayerUndoAction.cpp:28
+#: ../src/core/undo/MoveLayerUndoAction.cpp:24
 msgid "Move layer"
 msgstr "Mover capa"
 
@@ -2003,7 +2003,7 @@ msgstr "Cambiou o fondo da páxina"
 msgid "Page size changed"
 msgstr ""
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:23
 msgid "Delete layer"
 msgstr "Eliminar a capa"
 

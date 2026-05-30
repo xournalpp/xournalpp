@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 16:00+0000\n"
-"PO-Revision-Date: 2026-03-28 17:05\n"
+"POT-Creation-Date: 2026-05-05 08:12+0000\n"
+"PO-Revision-Date: 2026-05-10 05:28\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -282,7 +282,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "Você não tem nenhuma página PDF para selecionar. Cancelar operação.\n"
 "Selecione outro tipo de fundo: Menu \"Journal\" → \"Configurar modelo de página\"."
 
-#: ../src/core/control/PdfCache.cpp:124
+#: ../src/core/control/PdfCache.cpp:159
 msgid "PDF background missing"
 msgstr "Está faltando fundo no PDF"
 
@@ -583,7 +583,7 @@ msgstr "Não foi possível salvar o arquivo .tex: {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Não foi possível iniciar o {1}: {2} (Código de saída: {3})"
 
-#: ../src/core/control/layer/LayerController.cpp:351
+#: ../src/core/control/layer/LayerController.cpp:424
 msgid "Layer {1}"
 msgstr "Camada {1}"
 
@@ -1384,7 +1384,7 @@ msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr "Erro ao carregar arquivo XML da barra de menu (tente carregar \"{1}\")"
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:369
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:384
 msgid "Apply to all pages"
 msgstr "Aplicar a todas as páginas"
 
@@ -1428,11 +1428,11 @@ msgstr "Descartar um único documento"
 msgid "Copy current page"
 msgstr "Copiar a página atual"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:261
 msgid "Copy current background"
 msgstr "Copiar o fundo atual"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:303
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:332
 msgid "Apply to current page"
 msgstr "Aplicar à página atual"
 
@@ -1978,7 +1978,7 @@ msgstr "Página inserida"
 msgid "Page deleted"
 msgstr "Página excluída"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:29
+#: ../src/core/undo/InsertLayerUndoAction.cpp:25
 msgid "Insert layer"
 msgstr "Inserir camada"
 
@@ -2006,7 +2006,7 @@ msgstr "Renomear camada"
 msgid "Change line style"
 msgstr "Alterar estilo da linha"
 
-#: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:37
 msgid "Merge layer down"
 msgstr "Mesclar camada para abaixo"
 
@@ -2014,7 +2014,7 @@ msgstr "Mesclar camada para abaixo"
 msgid "Replace missing PDF"
 msgstr "Modificar PDF Faltando"
 
-#: ../src/core/undo/MoveLayerUndoAction.cpp:28
+#: ../src/core/undo/MoveLayerUndoAction.cpp:24
 msgid "Move layer"
 msgstr "Mover camada"
 
@@ -2030,7 +2030,7 @@ msgstr "Plano de fundo da página alterado"
 msgid "Page size changed"
 msgstr "O tamanho da página foi alterado"
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:23
 msgid "Delete layer"
 msgstr "Excluir camada"
 

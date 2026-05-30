@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 16:00+0000\n"
-"PO-Revision-Date: 2026-03-28 17:05\n"
+"POT-Creation-Date: 2026-05-05 08:12+0000\n"
+"PO-Revision-Date: 2026-05-17 05:34\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -125,7 +125,7 @@ msgstr "خطأ بقراءة ملف PNG {1}"
 
 #: ../src/core/control/Control.cpp:1668
 msgid "Failed to determine if path exists \"{1}\": {2}"
-msgstr ""
+msgstr "أخفق في تحديد وجود المكان {2}:\"{1}\""
 
 #: ../src/core/control/Control.cpp:1669
 msgid "That file does not exist:\n"
@@ -283,7 +283,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "ليس لديك أي صفحات PDF للاختيار منها. تم إلغاء العملية.\n"
 "الرجاء اختيار نوع خلفية آخر: قائمة جورنال ← إعداد قالب الصفحة."
 
-#: ../src/core/control/PdfCache.cpp:124
+#: ../src/core/control/PdfCache.cpp:159
 msgid "PDF background missing"
 msgstr "خلفية PDF مفقودة"
 
@@ -567,7 +567,7 @@ msgstr "تعذر حفظ ملف .tex: {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "تعذر بدء تشغيل {1}: {2} (رمز الخروج: {3})"
 
-#: ../src/core/control/layer/LayerController.cpp:351
+#: ../src/core/control/layer/LayerController.cpp:424
 msgid "Layer {1}"
 msgstr "الطبقة {1}"
 
@@ -679,7 +679,7 @@ msgstr "خطأ إعراب مجهول"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:263
 msgid "Document is not complete (maybe the end is cut off?)"
-msgstr "المستند غير مكتمل (ربما النهاية مجتزئة؟)"
+msgstr "المستند غير مكتمل (ربما النهاية متروكة؟)"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:267
 msgid "Document is corrupted (no pages found in file)"
@@ -1367,7 +1367,7 @@ msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr "تعذّر تحميل ملف XML لشريط القوائم (حاوِل تحميل \"{1}\")"
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:369
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:384
 msgid "Apply to all pages"
 msgstr "طبق على كافة الصفحات"
 
@@ -1411,11 +1411,11 @@ msgstr "تجاهل مستندا واحدا"
 msgid "Copy current page"
 msgstr ""
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:261
 msgid "Copy current background"
 msgstr "نسخ الخلفية الحالية"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:303
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:332
 msgid "Apply to current page"
 msgstr "طبق على الصفحة الحالية"
 
@@ -1961,7 +1961,7 @@ msgstr "تم إدراج الصفحة"
 msgid "Page deleted"
 msgstr "تم حذف الصفحة"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:29
+#: ../src/core/undo/InsertLayerUndoAction.cpp:25
 msgid "Insert layer"
 msgstr "إدراج طبقة"
 
@@ -1989,7 +1989,7 @@ msgstr "إعادة تسمية طبقة"
 msgid "Change line style"
 msgstr "تغيير نمط الخط"
 
-#: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:37
 msgid "Merge layer down"
 msgstr "دمج الطبقة لأسفل"
 
@@ -1997,7 +1997,7 @@ msgstr "دمج الطبقة لأسفل"
 msgid "Replace missing PDF"
 msgstr "استبدال ملف PDF المفقود"
 
-#: ../src/core/undo/MoveLayerUndoAction.cpp:28
+#: ../src/core/undo/MoveLayerUndoAction.cpp:24
 msgid "Move layer"
 msgstr "تحريك طبقة"
 
@@ -2013,7 +2013,7 @@ msgstr "تم تغيير خلفية الصفحة"
 msgid "Page size changed"
 msgstr "حجم الصفحة قد تغير"
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:23
 msgid "Delete layer"
 msgstr "حذف الطبقة"
 

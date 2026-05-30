@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 16:00+0000\n"
-"PO-Revision-Date: 2026-03-28 17:05\n"
+"POT-Creation-Date: 2026-05-05 08:12+0000\n"
+"PO-Revision-Date: 2026-05-10 05:28\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -284,7 +284,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "Nincsenek PDF-oldalak, amelyek közül választhat. A művelet megszakítása.\n"
 "Kérjük, válasszon másik háttértípust: Menü „Napló” → „Oldalsablon beállítása”."
 
-#: ../src/core/control/PdfCache.cpp:124
+#: ../src/core/control/PdfCache.cpp:159
 msgid "PDF background missing"
 msgstr "PDF-háttér hiányzik"
 
@@ -585,7 +585,7 @@ msgstr "Nem sikerült elmenteni a .tex fájlt: {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "A(z) {1} elindítása sikertelen: {2} (visszatérési érték: {3})"
 
-#: ../src/core/control/layer/LayerController.cpp:351
+#: ../src/core/control/layer/LayerController.cpp:424
 msgid "Layer {1}"
 msgstr "{1}. réteg"
 
@@ -1386,7 +1386,7 @@ msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr "Hiba történt a menüsor XML-fájljának betöltésekor (próbálja meg betölteni a következőt: „{1}”)"
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:369
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:384
 msgid "Apply to all pages"
 msgstr "Alkalmazás az összes oldalra"
 
@@ -1430,11 +1430,11 @@ msgstr "Egyetlen dokumentum elvetése"
 msgid "Copy current page"
 msgstr "Jelenlegi oldal másolása"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:261
 msgid "Copy current background"
 msgstr "Jelenlegi háttér másolása"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:303
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:332
 msgid "Apply to current page"
 msgstr "Alkalmazás a jelenlegi oldalra"
 
@@ -1980,7 +1980,7 @@ msgstr "Oldal beszúrva"
 msgid "Page deleted"
 msgstr "Oldal törölve"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:29
+#: ../src/core/undo/InsertLayerUndoAction.cpp:25
 msgid "Insert layer"
 msgstr "Réteg beszúrása"
 
@@ -2008,7 +2008,7 @@ msgstr "Réteg átnevezése"
 msgid "Change line style"
 msgstr "Vonalstílus módosítása"
 
-#: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:37
 msgid "Merge layer down"
 msgstr "Rétegek egyesítése lefelé"
 
@@ -2016,7 +2016,7 @@ msgstr "Rétegek egyesítése lefelé"
 msgid "Replace missing PDF"
 msgstr "Hiányzó PDF csere"
 
-#: ../src/core/undo/MoveLayerUndoAction.cpp:28
+#: ../src/core/undo/MoveLayerUndoAction.cpp:24
 msgid "Move layer"
 msgstr "Réteg Mozgatása"
 
@@ -2032,7 +2032,7 @@ msgstr "Háttérkép megváltozott"
 msgid "Page size changed"
 msgstr "Oldalméret megváltoztatva"
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:23
 msgid "Delete layer"
 msgstr "Réteg törlése"
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 16:00+0000\n"
-"PO-Revision-Date: 2026-03-28 17:05\n"
+"POT-Creation-Date: 2026-05-05 08:12+0000\n"
+"PO-Revision-Date: 2026-05-10 05:28\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -283,7 +283,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "Vous n'avez pas de pages PDF à sélectionner. Annuler l'opération.\n"
 "Veuillez sélectionner un autre type de fond : Menu \"Journal\" → \"Configurer le modèle de page\"."
 
-#: ../src/core/control/PdfCache.cpp:124
+#: ../src/core/control/PdfCache.cpp:159
 msgid "PDF background missing"
 msgstr "Fond PDF manquant"
 
@@ -585,7 +585,7 @@ msgstr "Impossible d'enregistrer le fichier .tex : {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Impossible de démarrer {1} : {2} (code de sortie : {3})"
 
-#: ../src/core/control/layer/LayerController.cpp:351
+#: ../src/core/control/layer/LayerController.cpp:424
 msgid "Layer {1}"
 msgstr "Calque {1}"
 
@@ -1386,7 +1386,7 @@ msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr "Erreur lors du chargement du fichier XML de la barre de menu (essayez de charger «{1}»)"
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:369
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:384
 msgid "Apply to all pages"
 msgstr "Appliquer à toutes les pages"
 
@@ -1430,11 +1430,11 @@ msgstr "Rejeter un seul document"
 msgid "Copy current page"
 msgstr "Copier la page actuelle"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:261
 msgid "Copy current background"
 msgstr "Copier l'arrière-plan actuel"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:303
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:332
 msgid "Apply to current page"
 msgstr "Appliquer à la page actuelle"
 
@@ -1980,7 +1980,7 @@ msgstr "Page insérée"
 msgid "Page deleted"
 msgstr "Page supprimée"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:29
+#: ../src/core/undo/InsertLayerUndoAction.cpp:25
 msgid "Insert layer"
 msgstr "Insérer un calque"
 
@@ -2008,7 +2008,7 @@ msgstr "Renommer le calque"
 msgid "Change line style"
 msgstr "Changer le style de ligne"
 
-#: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:37
 msgid "Merge layer down"
 msgstr "Fusionner avec le calque inférieur"
 
@@ -2016,7 +2016,7 @@ msgstr "Fusionner avec le calque inférieur"
 msgid "Replace missing PDF"
 msgstr "Remplacer le PDF manquant"
 
-#: ../src/core/undo/MoveLayerUndoAction.cpp:28
+#: ../src/core/undo/MoveLayerUndoAction.cpp:24
 msgid "Move layer"
 msgstr "Déplacez le calque"
 
@@ -2032,7 +2032,7 @@ msgstr "Arrière-plan de la page modifié"
 msgid "Page size changed"
 msgstr "Taille de page modifiée"
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:23
 msgid "Delete layer"
 msgstr "Supprimer le calque"
 
