@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-05 08:12+0000\n"
-"PO-Revision-Date: 2026-05-10 05:28\n"
+"POT-Creation-Date: 2026-05-30 07:49+0000\n"
+"PO-Revision-Date: 2026-05-30 08:31\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -945,7 +945,7 @@ msgid "Laser Pointer - Pen"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
-msgid "Laser Pointer - Hightlighter"
+msgid "Laser Pointer - Highlighter"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
@@ -2333,7 +2333,7 @@ msgid "To clear the logs, simply close and reopen the settings dialog"
 msgstr ""
 
 #: ../ui/deviceTestingArea.glade:491
-msgid "Select this option if the \"Tip\" sign does not lit up when using the stylus and pressing one of its buttons.\n\n"
+msgid "Select this option if the \"Tip\" sign does not light up when using the stylus and pressing one of its buttons.\n\n"
 "Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
 msgstr ""
 
@@ -3040,7 +3040,7 @@ msgid "Indent using spaces"
 msgstr "Rientro usando gli spazi"
 
 #: ../ui/settings.glade:1367
-msgid "Number of Spaces : "
+msgid "Number of Spaces:"
 msgstr "Numero di spazi: "
 
 #: ../ui/settings.glade:1379
@@ -3229,7 +3229,7 @@ msgstr "Attiva i gesti per lo zoom (necessita riavvio)"
 
 #: ../ui/settings.glade:2615
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues.\n"
-"This setting can make it easier to draw with touch. "
+"This setting can make it easier to draw with touch."
 msgstr "Quando si disegna con il tocco, i gesti a due dita destinati a muovere la vista possono invece causare lo zoom, causando problemi. \n"
 "Questa impostazione può rendere più facile il disegno con il tocco. "
 

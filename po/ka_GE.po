@@ -3,33 +3,32 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-30 07:49+0000\n"
-"PO-Revision-Date: 2026-05-30 08:31\n"
+"PO-Revision-Date: 2026-05-30 08:50\n"
 "Last-Translator: \n"
-"Language-Team: Hindi\n"
-"Language: hi_IN\n"
+"Language-Team: Georgian\n"
+"Language: ka_GE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
-"X-Crowdin-Language: hi\n"
+"X-Crowdin-Language: ka\n"
 "X-Crowdin-File: /release-1.3/xournalpp.pot\n"
 "X-Crowdin-File-ID: 52\n"
 
 #: ../src/core/control/AudioController.cpp:120
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr "ऑडियो फोल्डर चुना नहीं गया है या अमान्य है!! रिकॉर्डिंग काम नहीं करेगी!\n"
-"कृपया \"वरीयताएँ > ऑडियो रिकॉर्डिंग\" के तहत रिकॉर्डिंग फ़ोल्डर का चुनाव करें |"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:234
 msgid "Filesystem error: {1}"
-msgstr "फ़ाइल सिस्टम एरर: {1}"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:246
 msgid "Could not remove old autosave file \"{1}\": {2}"
-msgstr "पुरानी खुद बा खुद सहज हुई फाइल \"{1}\" को नहीं हटाया जा सका: {2}"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:579
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
@@ -41,16 +40,16 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:602 ../src/core/control/Control.cpp:1576
 msgid "Yes"
-msgstr "हाँ"
+msgstr "დიახ"
 
 #: ../src/core/control/Control.cpp:602 ../src/core/control/Control.cpp:1576
 msgid "No"
-msgstr "नहीं"
+msgstr "არა"
 
 #: ../src/core/control/Control.cpp:832 ../src/core/control/Control.cpp:1796
 #: ../src/core/control/Control.cpp:2124
 msgid "Cancel"
-msgstr "रद्द करें"
+msgstr "გაუქმება"
 
 #: ../src/core/control/Control.cpp:833
 msgid "Insert after current page"
@@ -81,7 +80,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:884
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr "संलग्न करने के लिए कोई पीडीएफ पृष्ठ उपलब्ध नहीं है। आपको पहले दस्तावेज़ को फिर से खोलना पड़ सकता है।"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:898
 msgid "Unable to retrieve pdf page."
@@ -91,9 +90,7 @@ msgstr ""
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr "Autosave files खुला नहीं. वे अतिव्यापी हो सकते हैं!\n"
-"फ़ाइलों को किसी अन्य फ़ोल्डर में कॉपी करें।\n"
-"फ़ोल्डर {1} से फ़ाइलें खोल नहीं जा सकती हैं।"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:1520
 msgid "file: {1}"
@@ -101,7 +98,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:1553
 msgid "Error opening file \"{1}\""
-msgstr ""
+msgstr "ფაილის \"{1}\" დამუშავების შეცდომა"
 
 #: ../src/core/control/Control.cpp:1578
 msgid "File version mismatch"
@@ -122,12 +119,13 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:1668
 msgid "Failed to determine if path exists \"{1}\": {2}"
-msgstr ""
+msgstr "ბილიკის არსებობის დადგენის შეცდომა \"{1}\": {2}"
 
 #: ../src/core/control/Control.cpp:1669
 msgid "That file does not exist:\n"
 "\"{1}\""
-msgstr ""
+msgstr "ის ფაილი არ არსებობს:\n"
+"\"{1}\""
 
 #: ../src/core/control/Control.cpp:1776
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -145,7 +143,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:1794
 msgid "Select another PDF"
-msgstr "एक और PDF का चयन करें"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:1795
 msgid "Remove PDF Background"
@@ -161,12 +159,12 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:1931
 msgid "Select font"
-msgstr "फॉन्ट चुनें"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:1950
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
-msgstr "रंग चुनें"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:1975
 msgid "Unsaved Document"
@@ -174,7 +172,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2117
 msgid "Document file was removed."
-msgstr "दस्तावेज़ फ़ाइल को हटा दिया गया था।."
+msgstr ""
 
 #: ../src/core/control/Control.cpp:2117
 msgid "This document is not saved yet."
@@ -182,17 +180,17 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2119
 msgid "Save As..."
-msgstr "के रूप में सहेजें..."
+msgstr ""
 
 #: ../src/core/control/Control.cpp:2119 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
-msgstr "सहेजें"
+msgstr "შენახვა"
 
 #: ../src/core/control/Control.cpp:2122
 msgid "Discard"
-msgstr "रद्द करें"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:2207
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
@@ -200,27 +198,27 @@ msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:97
 msgid "mouse"
-msgstr ""
+msgstr "თაგუნა"
 
 #: ../src/core/control/DeviceListHelper.cpp:99
 msgid "pen"
-msgstr "कलम"
+msgstr "კალამი"
 
 #: ../src/core/control/DeviceListHelper.cpp:101
 msgid "eraser"
-msgstr "मिटानेकारबर"
+msgstr "საშლელი"
 
 #: ../src/core/control/DeviceListHelper.cpp:103
 msgid "cursor"
-msgstr "कर्सर"
+msgstr "კურსორი"
 
 #: ../src/core/control/DeviceListHelper.cpp:106
 msgid "keyboard"
-msgstr "कीबोर्ड"
+msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:108
 msgid "touchscreen"
-msgstr "टचस्क्रीन"
+msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:110
 msgid "touchpad"
@@ -236,7 +234,7 @@ msgstr ""
 
 #: ../src/core/control/ExportHelper.cpp:63
 msgid "Image file successfully created"
-msgstr "छवि फ़ाइल सफलतापूर्वक बनाई गई।"
+msgstr ""
 
 #: ../src/core/control/ExportHelper.cpp:105
 msgid "PDF file successfully created"
@@ -244,7 +242,7 @@ msgstr ""
 
 #: ../src/core/control/LatexController.cpp:80
 msgid "Global template file does not exist. Please check your settings."
-msgstr "ग्लोबल टेम्पलेट फ़ाइल मौजूद नहीं है। कृपया अपनी सेटिंग्स को चेक करें।"
+msgstr ""
 
 #: ../src/core/control/LatexController.cpp:85
 msgid "Failed to read global template file. Please check your settings."
@@ -252,19 +250,19 @@ msgstr ""
 
 #: ../src/core/control/LatexController.cpp:91
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr "ग्लोबल टेम्पलेट फ़ाइल एक नियमित फ़ाइल नहीं है। कृपया अपनी सेटिंग्स को चेक करें। "
+msgstr ""
 
 #: ../src/core/control/LatexController.cpp:241
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr "लेटेक्स पीढ़ी ने एक त्रुटि का सामना किया: {1} (exit code: {2})"
+msgstr ""
 
 #: ../src/core/control/LatexController.cpp:310
 msgid "Could not load LaTeX PDF file: {1}"
-msgstr "LaTeX PDF फ़ाइल को लोड नहीं कर सका: {1}"
+msgstr ""
 
 #: ../src/core/control/LatexController.cpp:315
 msgid "Could not load LaTeX PDF file"
-msgstr "LaTeX PDF फाइल को लोड नहीं कर सका"
+msgstr ""
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:111
 #: ../src/core/control/xojfile/LoadHandler.cpp:483
@@ -275,8 +273,7 @@ msgstr ""
 #: ../src/core/control/PageBackgroundChangeController.cpp:272
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
-msgstr "आपके पास चुनने के लिए कोई PDF पेज नहीं है। रद्द करना\n"
-"कृपया एक अन्य पृष्ठभूमि प्रकार का चयन करें: मेनू \"Journal\" → \"पृष्ठ टेम्पलेट को कॉन्फ़िगर करें\"।"
+msgstr ""
 
 #: ../src/core/control/PdfCache.cpp:159
 msgid "PDF background missing"
@@ -296,7 +293,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:134
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr "पिछले समय Xournal++ दुर्घटनाग्रस्त हो गया। क्या आप पिछले संपादित फ़ाइल को पुनर्स्थापित करना चाहते हैं?"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:137
 msgid "Recovery file detected"
@@ -304,11 +301,11 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:138
 msgid "Delete file"
-msgstr "फ़ाइल हटाएँ"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:138
 msgid "Restore file"
-msgstr "फाइल से रीस्टोर"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:158
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
@@ -317,7 +314,7 @@ msgstr ""
 #: ../src/core/control/XournalMain.cpp:222
 #: ../src/core/control/XournalMain.cpp:230
 msgid "Error: {1}"
-msgstr "त्रुटि: {1}"
+msgstr "შეცდომა: {1}"
 
 #: ../src/core/control/XournalMain.cpp:372
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
@@ -326,25 +323,18 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not relative\n"
 "  Not in the Working Path\n"
 "  Not in {2}"
-msgstr "<span foreground='red' size='x-large'>ui  की एक महेत्वपूर्ण फाइल मिल नहीं रही हैं:\n"
-"<b>{1}</b></span>\n"
-"कहीं भी नहीं मिले \n"
-"नोट रेलटिव\n"
-"वर्किंग पाठ मेइन नहीं \n"
-"{2} मैं नहीं"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:377
 msgid "\n\n"
 "Will now attempt to run without this file."
-msgstr "\n\n"
-"अभी यह फाइल के बिना चलाने की कोशिस करेंगे ।"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:399
 #: ../src/core/control/XournalMain.cpp:460
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
-msgstr "Sorry, Xournal++ केवल एक ही बार में एक फ़ाइल खोल सकते हैं।\n"
-"अन्य लोगों को नजरअंदाज कर दिया जाता है।"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:410
 msgid "File {1} does not exist."
@@ -358,11 +348,11 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:617
 msgid "Jump to Page (first Page: 1)"
-msgstr "पृष्ठ पर कूदो (पहली पृष्ठ: 1)"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:621
 msgid "Get version of xournalpp"
-msgstr "xournalpp का संस्करण प्राप्त करें"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:623
 msgid "Disable audio for this session"
@@ -385,7 +375,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:643
 msgid "Export FILE as PDF"
-msgstr "वहनीय दस्तावेज़ फ़ाइल के रूप में फ़ाइल निर्यात करें"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:646
 msgid "Export FILE as image files (one per page)\n"
@@ -441,27 +431,27 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:697
 msgid "Advanced export options"
-msgstr "उन्नत निर्यात विकल्प"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:698
 msgid "Display advanced export options"
-msgstr "उन्नत निर्यात विकल्प प्रदर्शित करें"
+msgstr ""
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:21
 msgid "Error while autosaving: {1}"
-msgstr "स्वत: सहेजते समय त्रुटि"
+msgstr ""
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:46
 msgid "Autosaving to {1}"
-msgstr "{1} को autosave हो रहा है"
+msgstr ""
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:73
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr "{1} से {2} तक ऑटोसेव फ़ाइल का नाम बदल नहीं सकता: {3}"
+msgstr ""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:40
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr "पृष्ठभूमि पीडीएफ को ओवरराइट नहीं करें! इससे त्रुटियां होंगी!"
+msgstr ""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "The check for overwriting the background failed with:\n"
@@ -474,7 +464,7 @@ msgstr ""
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
 #: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
 msgid "Export"
-msgstr ""
+msgstr "გატანა"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:94
 msgid "Failed to resolve path with the following error:\n"
@@ -483,7 +473,7 @@ msgstr ""
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:27
 msgid "Custom Export"
-msgstr "कस्टम निर्यात"
+msgstr ""
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:29
 #: ../src/core/control/jobs/PdfExportJob.cpp:20
@@ -499,16 +489,16 @@ msgstr ""
 #: ../src/core/control/jobs/CustomExportJob.cpp:31
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:35
 msgid "SVG graphics"
-msgstr "SVG ग्राफिक्स"
+msgstr ""
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:32
 msgid "Xournal (Compatibility)"
-msgstr "Xournal (संगतता)"
+msgstr ""
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:132
 #: ../src/core/control/jobs/SaveJob.cpp:139
 msgid "Save file error: {1}"
-msgstr "फ़ाइल त्रुटि सहेजें: {1}"
+msgstr ""
 
 #: ../src/core/control/jobs/ImageExport.cpp:110
 msgid "Unsupported graphics format: "
@@ -516,7 +506,7 @@ msgstr ""
 
 #: ../src/core/control/jobs/ImageExport.cpp:169
 msgid "Error save image #1"
-msgstr "छवि सहेजने में त्रुटि # \t१"
+msgstr ""
 
 #: ../src/core/control/jobs/ImageExport.cpp:178
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
@@ -524,7 +514,7 @@ msgstr ""
 
 #: ../src/core/control/jobs/ImageExport.cpp:202
 msgid "Error save image #2"
-msgstr "छवि सहेजने में त्रुटि # २"
+msgstr ""
 
 #: ../src/core/control/jobs/PdfExportJob.cpp:15
 msgid "PDF Export"
@@ -550,60 +540,60 @@ msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:79
 msgid "Could not save .tex file: {1}"
-msgstr ".tex फ़ाइल को नहीं सहेज सकता: {1}"
+msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:94
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr "{1} नहीं शुरू हो सकता है: {2} (exit code: {3})"
+msgstr ""
 
 #: ../src/core/control/layer/LayerController.cpp:424
 msgid "Layer {1}"
-msgstr "परत {1}"
+msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:27
 msgid "Could not load pagetemplates.ini file"
-msgstr "pagetemplates.ini फ़ाइल लोड नहीं कर सकता"
+msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Plain"
-msgstr "सादा"
+msgstr "უბრალო"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "Ruled"
-msgstr "रेखा"
+msgstr "გაზომილი"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 msgid "Ruled with vertical line"
-msgstr "ऊर्ध्वाधर लाइन के साथ लाइन"
+msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:34
 msgid "Staves"
-msgstr "स्टुफ"
+msgstr "ხუთხაზა"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:35
 msgid "Graph"
-msgstr "लेखाचित्र"
+msgstr "გრაფიკი"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:36
 msgid "Dotted"
-msgstr "बिंदुकित"
+msgstr "წერტილოვანი"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:37
 msgid "Isometric Dotted"
-msgstr "Isometric Dotted"
+msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:38
 msgid "Isometric Graph"
-msgstr "सममितीय ग्राफ़"
+msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:43
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 msgid "Image"
-msgstr "चित्र"
+msgstr "გამოსახულება"
 
 #: ../src/core/control/settings/Settings.cpp:154
 msgid "%F-Note-%H-%M"
-msgstr "लेख"
+msgstr ""
 
 #: ../src/core/control/settings/Settings.cpp:155
 msgid "%{name}_annotated"
@@ -611,19 +601,19 @@ msgstr ""
 
 #: ../src/core/control/tools/EditSelection.cpp:478
 msgid "Arrange"
-msgstr "व्यवस्थित करें"
+msgstr ""
 
 #: ../src/core/control/tools/EditSelection.cpp:493
 msgid "Bring forward"
-msgstr "सामने लाएं"
+msgstr ""
 
 #: ../src/core/control/tools/EditSelection.cpp:504
 msgid "Send backward"
-msgstr "पीचे भीजे"
+msgstr ""
 
 #: ../src/core/control/tools/EditSelection.cpp:511
 msgid "Send to back"
-msgstr "पीछे भेजें"
+msgstr ""
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
 #: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:165
@@ -636,167 +626,167 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:135
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr ""
+msgstr "ფაილი სწორი .xopp ფაილი არაა (MIME ტიპი მითითებული არაა): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:143
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
-msgstr ""
+msgstr "ფაილი სწორი .xopp ფაილი არაა (MIME ტიპი არასწორია): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:152
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
-msgstr ""
+msgstr "ფაილი სწორი .xopp ფაილი არაა (აკლია ვერსია): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:165
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
-msgstr ""
+msgstr "ფაილი სწორი .xopp ფაილი არაა (ვერსიის სტრიქონი დაზიანებულია): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:174
 msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr ""
+msgstr "content.xml-ის გახსნის შეცდომა zip არქივში: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:182
 msgid "Could not open file: \"{1}\""
-msgstr "फ़ाइल को खोला नहीं जा सका: \"{1}\""
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:249
 msgid "XML Parser error: {1}"
-msgstr "XML पार्सिंग त्रुटि: {1}"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:252
 msgid "Unknown parser error"
-msgstr ""
+msgstr "დამმუშავებლის უცნობი შეცდომა"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:263
 msgid "Document is not complete (maybe the end is cut off?)"
-msgstr ""
+msgstr "დოკუმენტი დასრულებული არაა (შეიძლება, ბოლო მოაჭრეს?)"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:267
 msgid "Document is corrupted (no pages found in file)"
-msgstr "दस्तावेज अपमिश्रित (दस्तावेज़ में कोई पृष्ठ नहीं मिला)"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:312
 msgid "Unexpected root tag: {1}"
-msgstr ""
+msgstr "მოულოდნელი საწყისი ჭდე: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:333
 msgid "Unexpected tag in document: \"{1}\""
-msgstr ""
+msgstr "მოულოდნელი ჭდე დოკუმენტში: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:387
 #: ../src/core/control/xojfile/LoadHandler.cpp:417
 msgid "Could not read image: {1}. Error message: {2}"
-msgstr "छवि नहीं पढ़ सकता: {1}। त्रुटि संदेश: {2}"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:428
 msgid "Could not read page number for cloned background image: {1}."
-msgstr "क्लोन पृष्ठभूमि छवि के लिए पृष्ठ संख्या नहीं पढ़ सकता: {1}।"
+msgstr "შეუძლებელია გვერდის ნომრის წაკითხვა დაკლონილი ფონის გამოსახულებისთვის: {1}."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:436
 msgid "Unknown pixmap::domain type: {1}"
-msgstr ""
+msgstr "pixmap::domain-ის უცნობი ტიპი: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:490
 msgid "Unknown domain type: {1}"
-msgstr ""
+msgstr "უცნობი დომენის ტიპი: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:528
 msgid "Unknown background type: {1}"
-msgstr ""
+msgstr "უცნობი ფონის ტიპი: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:553
 msgid "Error reading width of a stroke: {1}"
-msgstr ""
+msgstr "შტრიხის სიგანის წაკითხვის შეცდომა: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:622
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "უცნობი შტრიხის თავაკის ტიპი: \"{1}\". იგულისხმება მრგვალი"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:640
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr ""
+msgstr "უცნობი შტრიხის ტიპი: \"{1}\". იგულისხმება კალამი"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:811
 #: ../src/core/control/xojfile/LoadHandler.cpp:827
 #: ../src/core/control/xojfile/LoadHandler.cpp:1140
 #: ../src/core/control/xojfile/LoadHandler.cpp:1154
 msgid "Could not open attachment: {1}. Error message: {2}"
-msgstr "Could not open attachment: {1}. Error message: {2}"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:820
 #: ../src/core/control/xojfile/LoadHandler.cpp:1146
 #: ../src/core/control/xojfile/LoadHandler.cpp:1165
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
-msgstr "नहीं खुल सकता: {1}। त्रुटि संदेश: उपलब्ध नहीं है"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:839
 msgid "Could not open attachment: {1}. Error message: Could not read file"
-msgstr "{1} नहीं खुल सकता। त्रुटि संदेश: फ़ाइल को नहीं पढ़ सकता"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:848
 msgid "Could not open attachment: {1}. Error message: Could not write file"
-msgstr "नहीं खुल सकता: {1}। त्रुटि संदेश: फ़ाइल नहीं लिख सकता"
+msgstr "დანართის გახსნა შეუძლებელია: {1}. შეცდომის შეტყობინება: ფაილის ჩაწერა შეუძლებელია"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1035
 msgid "Wrong count of points ({1})"
-msgstr ""
+msgstr "წერტილების არასწორი რაოდენობა ({1})"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1051
 msgid "xoj-File: {1}"
-msgstr ""
+msgstr "xoj-ფაილი: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1052
 msgid "Wrong number of pressure values, got {1}, expected {2}"
-msgstr ""
+msgstr "წნევის მნიშვნელობების არასწორი რაოდენობა. მივიღე: {1}, ველოდებოდი: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1184
 msgid "Requested temporary file was not found for attachment {1}"
-msgstr "अनुरोधित अस्थायी फ़ाइल संलग्नक के लिए नहीं मिली थी {1}"
+msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:72
 msgid "Attribute color not set!"
-msgstr "अग्रदूत color सेट नहीं है"
+msgstr "ატრიბუტის ფერი დაყენებული არაა!"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Unknown color value \"{1}\""
-msgstr ""
+msgstr "უცნობი ფერის მნიშვნელობა \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:96
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr "रंग {1} अज्ञात (रंग सूची में परिभाषित नहीं है!)"
+msgstr "ფერი \"{1}\" უცნობია (ნაგულისხმევი ფერების სიაში არაა)!"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:123
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr "अग्रदूत \"{1}\" को double के रूप में पार नहीं किया जा सकता, इसका मूल्य \"nullptr\" है"
+msgstr "ატრიბუტის \"{1}\" double-ის სახით დამუშავება შეუძლებელია. მნიშვნელობა არის nullptr"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:130
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr "अग्रदूत \"{1}\" को double के रूप में पार नहीं किया जा सकता, इसका मूल्य \"{2}\" है"
+msgstr "ატრიბუტის \"{1}\" double-ის სახით დამუშავება შეუძლებელია. მნიშვნელობა უდრის: \"{2}\""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:140
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
-msgstr "अग्रदूत \"{1}\" को int के रूप में पार नहीं किया जा सकता, इसका मूल्य \"nullptr\" है"
+msgstr "ატრიბუტის \"{1}\" int-ის სახით დამუშავება შეუძლებელია. მნიშვნელობა არის nullptr"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:147
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:166
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr "अग्रदूत \"{1}\" को double के रूप में पार नहीं किया जा सकता, इसका मूल्य \"{2}\" है"
+msgstr "ატრიბუტის \"{1}\" int-ის სახით დამუშავება შეუძლებელია. მნიშვნელობა უდრის: \"{2}\""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:178
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr "अग्रदूत \"{1}\" को size_t के रूप में पार नहीं किया जा सकता, इसका मूल्य \"nullptr\" है"
+msgstr "ატრიბუტის \"{1}\" size_t-ის სახით დამუშავება შეუძლებელია. მნიშვნელობა არის nullptr"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:185
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:205
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr "अग्रदूत \"{1}\" को size_t के रूप में पार नहीं किया जा सकता, इसका मूल्य \"{2}\" है"
+msgstr "ატრიბუტის \"{1}\" size_t-ის სახით დამუშავება შეუძლებელია. მნიშვნელობა უდრის: \"{2}\""
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:257
 msgid "Could not write background \"{1}\", {2}"
-msgstr "पृष्ठभूमि नहीं लिख सकता है {1}: {2}"
+msgstr ""
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:362
 msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr "पृष्ठभूमि {1} नहीं लिखा जा सकता। वैसे भी जारी रहना।"
+msgstr ""
 
 #: ../src/core/gui/GladeGui.cpp:25
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
@@ -810,7 +800,7 @@ msgstr ""
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:145
 msgid "Loading..."
-msgstr "लोड हो रहा है..."
+msgstr ""
 
 #: ../src/core/gui/PageView.cpp:1001
 msgid "Scroll to page {1}"
@@ -879,17 +869,17 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:34
 msgid "Thin"
-msgstr ""
+msgstr "თხელი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:506
 msgid "Medium"
-msgstr "मध्यम"
+msgstr "საშუალო"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:38
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:507
 msgid "Thick"
-msgstr ""
+msgstr "სქელი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:40
 msgid "Very thick"
@@ -897,7 +887,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:57
 msgid "No device"
-msgstr "उपकरण नहीं"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:78
 msgid "Tool - don't change"
@@ -907,28 +897,28 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:378
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:494
 msgid "Pen"
-msgstr "कलम"
+msgstr "კალამი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:80
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:387
 msgid "Eraser"
-msgstr "मिटाने के लिए"
+msgstr "საშლელი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:495
 msgid "Highlighter"
-msgstr "हाइलाइट"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:82
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
 msgid "Text"
-msgstr "शब्द"
+msgstr "ტექსტი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/core/undo/InsertUndoAction.cpp:29
 msgid "Insert image"
-msgstr "तस्वीर डालें"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 msgid "Laser Pointer - Pen"
@@ -944,11 +934,11 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
 msgid "Select region"
-msgstr "क्षेत्र चुनें"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
 msgid "Select rectangle"
-msgstr "आयत चुनें"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
 msgid "Select multi layer region"
@@ -961,11 +951,11 @@ msgstr ""
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:447
 msgid "Hand"
-msgstr "हाथ"
+msgstr "ხელი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
 msgid "Floating Toolbox (experimental)"
-msgstr "फ्लोटिंग टूलबॉक्स (विशेषज्ञ)"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Select Text from pdf"
@@ -981,31 +971,31 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
 msgid "Normal drawing"
-msgstr "सामान्य चित्रकारी"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Draw Line"
-msgstr "रेखा खींचें"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw Rectangle"
-msgstr "आयत बनाएं"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Draw Ellipse"
-msgstr "दीर्घवृत्त बनाए"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Draw Arrow"
-msgstr "तीर का चिन्ह बनाए"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
@@ -1022,7 +1012,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
-msgstr "आकार Recognizer"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
@@ -1052,25 +1042,25 @@ msgstr ""
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:15
 msgid "All files"
-msgstr "सभी फाइलें"
+msgstr ""
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:22
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:203
 msgid "Supported files"
-msgstr "सभी समर्थित फाइलें"
+msgstr ""
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:32
 msgid "Xournal files"
-msgstr "Xournal फ़ाइलें"
+msgstr ""
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:33
 msgid "Xournal++ files"
-msgstr "Xournal++ फ़ाइलें"
+msgstr ""
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:120
 msgid "Xournal++ template"
-msgstr "Xournal++ टेम्पलेट"
+msgstr ""
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:40
 msgid "Image files"
@@ -1079,11 +1069,11 @@ msgstr ""
 #: ../src/core/gui/dialog/FormatDialog.cpp:50
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:163
 msgid "Custom"
-msgstr "निजीकृत"
+msgstr "მორგებული"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:49
 msgid "System Default"
-msgstr "सिस्टम निर्धारित"
+msgstr ""
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:67
 msgid "Previously selected language not available anymore!"
@@ -1103,7 +1093,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:169
 msgid "Sample LaTeX file generated successfully."
-msgstr "नमूना LaTeX फ़ाइल सफलतापूर्वक उत्पन्न हुई।"
+msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:171
 msgid "Error: {1}. Please check the contents of {2}"
@@ -1116,17 +1106,17 @@ msgstr ""
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:84
 msgid "Save File"
-msgstr "फ़ाइल सेव करें"
+msgstr ""
 
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:80
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:19
 msgid "_Cancel"
-msgstr "_कैंसेल"
+msgstr ""
 
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 msgid "_Save"
-msgstr "_सहेजें"
+msgstr "_შენახვა"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:28
 msgid "default enabled"
@@ -1138,7 +1128,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:62
 msgid "Select background color"
-msgstr "पृष्ठभूमि रंग चुनें"
+msgstr ""
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:27
 msgid "Select opacity for: "
@@ -1176,7 +1166,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:279
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr "फ़िल्टर इनपुट दबाव। दबाव गुणक द्वारा दबाव को गुणा करना। यदि न्यूनतम से कम हो, तो न्यूनतम दबाव का उपयोग करें।"
+msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:31
 msgid "Built-in palettes"
@@ -1188,7 +1178,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:99
 msgid "<i>The palettes shown below are obtained from the <a href=\"{1}\">Built-in palettes</a> and <a href=\"{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>ნაჩვენები პალიტრები აღებულია <a href=\"{1}\">ჩაშენებული პალიტრებიდან</a> და <a href=\"{2}\">მომხმარებლის პალიტრის</a> საქაღალდეებიდან:</i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:117
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
@@ -1197,11 +1187,11 @@ msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:159
 msgid "Error"
-msgstr ""
+msgstr "შეცდომა"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:171
 msgid "Name"
-msgstr ""
+msgstr "სახელი"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:174
 msgid "Palette has no Name"
@@ -1209,11 +1199,11 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:27
 msgid "Predefined"
-msgstr "पूर्व-निर्धारित"
+msgstr ""
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:39
 msgid "Customized"
-msgstr "अनुकूलित"
+msgstr ""
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:65
 msgid "Toolbars"
@@ -1221,15 +1211,15 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:87
 msgid "New"
-msgstr "नया"
+msgstr "ახალი"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:49
 msgid "Attach file to the journal"
-msgstr "फाइल कौ जरनल में जौडें"
+msgstr ""
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:81
 msgid "_Open"
-msgstr "_खुला"
+msgstr "_გახსნა"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:123
 msgid "Open template file"
@@ -1275,11 +1265,11 @@ msgstr ""
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:56
 msgid "Show only not used pages (one unused page)"
-msgstr "केवल इस्तेमाल किए जाने वाले पृष्ठों (एक अप्रयुक्त पृष्ठ) को दिखाएं"
+msgstr ""
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:57
 msgid "Show only not used pages ({1} unused pages)"
-msgstr "केवल इस्तेमाल किए जाने वाले पृष्ठों ({1} अप्रयुक्त पृष्ठ) को दिखाएं"
+msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:162
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
@@ -1291,34 +1281,34 @@ msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:168
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr "टूलबार {2} से टूल आइटम {1} को पोजीशन {3} पर नहीं हटा सका"
+msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:173
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr "टूलबार {1} से टूल आइटम को पोजीशन {2} पर नहीं हटा सकता"
+msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:61
 msgid "Separator"
-msgstr "विभाजक"
+msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
 msgid "Spacer"
-msgstr ""
+msgstr "გამყოფი"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:79
 msgctxt "Item category in toolbar customization dialog"
 msgid "Audio"
-msgstr ""
+msgstr "აუდიო"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:80
 msgctxt "Item category in toolbar customization dialog"
 msgid "Colors"
-msgstr ""
+msgstr "ფერები"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:81
 msgctxt "Item category in toolbar customization dialog"
 msgid "Files"
-msgstr ""
+msgstr "ფაილები"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:82
 msgctxt "Item category in toolbar customization dialog"
@@ -1338,7 +1328,7 @@ msgstr ""
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:85
 msgctxt "Item category in toolbar customization dialog"
 msgid "Tools"
-msgstr ""
+msgstr "ხელსაწყოები"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:86
 msgctxt "Item category in toolbar customization dialog"
@@ -1357,7 +1347,7 @@ msgstr ""
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:384
 msgid "Apply to all pages"
-msgstr "सभी उत्पादों के लिए लागू करें"
+msgstr ""
 
 #: ../src/core/gui/menus/menubar/PluginsSubmenu.cpp:15
 msgid "Plugin Manager"
@@ -1365,7 +1355,7 @@ msgstr ""
 
 #: ../src/core/gui/menus/menubar/PluginsSubmenu.cpp:32
 msgid "Plugin"
-msgstr ""
+msgstr "დამატება"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:61
 msgctxt "The selected document will be removed from the recent files list"
@@ -1405,19 +1395,19 @@ msgstr ""
 
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:332
 msgid "Apply to current page"
-msgstr "इस पूष्ठ में जौडें"
+msgstr ""
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:169
 msgid "Contents"
-msgstr "अन्तर्वस्तु"
+msgstr ""
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:37
 msgid "Layerstack Preview"
-msgstr "परतदार पूर्वावलोकन"
+msgstr ""
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:37
 msgid "Layer Preview"
-msgstr "परत पूर्वावलोकन"
+msgstr ""
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:36
 msgid "Page Preview"
@@ -1425,11 +1415,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
 msgid "Draw coordinate system"
-msgstr "निर्देश तंत्र बनाए"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
 msgid "Stroke recognizer"
-msgstr "स्ट्रोक Recognizer"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:58
 msgid "Drawing Type Combo"
@@ -1437,23 +1427,21 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/FontButton.cpp:74
 msgid "Font"
-msgstr "फ़ॉन्ट"
+msgstr "ფონტი"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:69
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
-msgstr "सामान्य toolbar.ini फ़ाइल को पार्स नहीं कर सका: {1}\n"
-"टूलबार उपलब्ध नहीं होगा"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:78
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
-msgstr "कस्टम toolbar.ini फ़ाइल को पार्स नहीं कर सका: {1}\n"
-"टूलबार उपलब्ध नहीं होगा"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:289
 msgid "New Xournal"
-msgstr "न्यू ज़ौरनल"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:292
 msgid "Export as PDF"
@@ -1461,47 +1449,47 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:293
 msgid "Print"
-msgstr ""
+msgstr "ბეჭდვა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:302
 #: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo"
-msgstr ""
+msgstr "დაბრუნება"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:305
 #: ../src/core/undo/UndoRedoHandler.cpp:191
 msgid "Redo"
-msgstr ""
+msgstr "გამეორება"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:308
 msgid "Cut"
-msgstr "कट"
+msgstr "ამოჭრა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:309
 msgid "Copy"
-msgstr "प्रतिलिपि बनाएँ"
+msgstr "კოპირება"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:310
 #: ../src/core/undo/AddUndoAction.cpp:72
 msgid "Paste"
-msgstr "लगाएँ"
+msgstr "ჩასმა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:312
 msgid "Search"
-msgstr "खोजें"
+msgstr "ძებნა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:314
 #: ../src/core/undo/DeleteUndoAction.cpp:74
 msgid "Delete"
-msgstr "मिटाए"
+msgstr "წაშლა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:317
 msgid "Rotation Snapping"
-msgstr "रोटेशन स्नैपिंग"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:318
 msgid "Grid Snapping"
-msgstr "ग्रिड स्नैपिंग"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:326
 msgid "Paired pages"
@@ -1521,72 +1509,72 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:332
 msgid "Manage Toolbars"
-msgstr "टूलबार प्रबंधित करें"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:334
 msgid "Customize Toolbars"
-msgstr "टूलबार को अनुकूलित करें"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Zoom out"
-msgstr "छोटा करें"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 msgid "Zoom in"
-msgstr "बड़ा करें"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:338
 msgid "Zoom fit to screen"
-msgstr "स्क्रीन पर ज़ूम करें"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:339
 msgid "Zoom to 100%"
-msgstr "जूम 100%"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:346
 msgid "Go to first page"
-msgstr "प्रथम पृष्ठ पर जाएँ"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:347
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
 msgid "Back"
-msgstr "पीछे"
+msgstr "უკან"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:348
 msgid "Go to page"
-msgstr "पेज में जाओ"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:349
 msgid "Next"
-msgstr "अगला"
+msgstr "შემდეგი"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:350
 msgid "Go to last page"
-msgstr "अंतिम पृष्ठ पर जाएँ"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:353
 msgid "Go to previous layer"
-msgstr "पिछले परत पर जाएँ"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:354
 msgid "Go to next layer"
-msgstr "अगले परत पर जाएँ"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:355
 msgid "Go to top layer"
-msgstr "ऊपरी परत पर जाएँ"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:358
 msgid "Next annotated page"
-msgstr "अगला टिप्पणी पृष्ठ"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:364
 msgid "Insert page"
-msgstr "पृष्ठ जोड़ें"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:366
 msgid "Delete current page"
-msgstr "वर्तमान पृष्ठ हटाएँ"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:383
@@ -1597,7 +1585,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:375
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:393
 msgid "dashed"
-msgstr ""
+msgstr "დაშტრიხული"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:376
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
@@ -1607,7 +1595,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:377
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:397
 msgid "dotted"
-msgstr ""
+msgstr "წერტილოვანი"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:384
 msgid "whiteout"
@@ -1623,7 +1611,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 msgid "Default Tool"
-msgstr "साधारण उपकरण:"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:14
@@ -1649,12 +1637,12 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
 msgid "Select Region"
-msgstr "क्षेत्र का चयन करें"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:12
 msgid "Select Rectangle"
-msgstr "आयत चुनें"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
@@ -1669,7 +1657,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 msgid "Select Object"
-msgstr "वस्तुओं का चयन करना"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Vertical Space"
@@ -1690,11 +1678,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:455
 msgid "Stop"
-msgstr "रुकें"
+msgstr "გაჩერება"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:457
 msgid "Forward"
-msgstr "आगे बढें।"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:493
 msgid "Laser pointer"
@@ -1702,7 +1690,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:499
 msgid "Fill"
-msgstr "भरें"
+msgstr "შევსება"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:500
 msgid "Fill Opacity"
@@ -1714,7 +1702,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:504
 msgid "Fine"
-msgstr "पतली"
+msgstr "ზუსტი"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:509
 msgid "Very Thick"
@@ -1722,11 +1710,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:172
 msgid "Show all"
-msgstr "सभी दिखाएँ"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:173
 msgid "Hide all"
-msgstr "सभी छुपाएँ"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:175
 msgid "Add a layer above the active layer"
@@ -1738,20 +1726,20 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:203
 msgid "Layer"
-msgstr "परत"
+msgstr "ფენა"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:300
 msgid "Layer Combo"
-msgstr "परत कॉम्बो"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:26
 msgid "Page"
-msgstr ""
+msgstr "გვერდი"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:82
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr " {1} का"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:85
 msgid "PDF Page {1}"
@@ -1779,17 +1767,17 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:70
 msgid "Zoom Slider"
-msgstr "ज़ूम स्लाइडर"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:120
 msgctxt "Color"
 msgid "Black"
-msgstr ""
+msgstr "შავი"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:121
 msgctxt "Color"
 msgid "Green"
-msgstr ""
+msgstr "მწვანე"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:122
 msgctxt "Color"
@@ -1804,17 +1792,17 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:124
 msgctxt "Color"
 msgid "Blue"
-msgstr ""
+msgstr "ლურჯი"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:125
 msgctxt "Color"
 msgid "Gray"
-msgstr ""
+msgstr "ნაცრისფერი"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:126
 msgctxt "Color"
 msgid "Red"
-msgstr ""
+msgstr "წითელი"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:127
 msgctxt "Color"
@@ -1824,22 +1812,22 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:128
 msgctxt "Color"
 msgid "Orange"
-msgstr ""
+msgstr "ნარინჯისფერი"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:129
 msgctxt "Color"
 msgid "Yellow"
-msgstr ""
+msgstr "ყვითელი"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:130
 msgctxt "Color"
 msgid "White"
-msgstr ""
+msgstr "თეთრი"
 
 #: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:76
 msgctxt "as a noun: a copy of"
 msgid "Copy"
-msgstr "प्रतिलिपि बनाएँ"
+msgstr "კოპირება"
 
 #: ../src/core/model/Document.cpp:330 ../src/core/model/Document.cpp:339
 #: ../src/core/model/Document.cpp:342
@@ -1860,13 +1848,13 @@ msgstr ""
 
 #: ../src/core/model/XojPage.cpp:173
 msgid "Background"
-msgstr "पृष्ठभूमि"
+msgstr ""
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:46
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:244
 msgid "No pages to export!"
-msgstr "निर्यात करने के लिए कोई पृष्ठ नहीं"
+msgstr ""
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:54
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:207
@@ -1898,7 +1886,7 @@ msgstr ""
 #: ../src/core/undo/DeleteUndoAction.cpp:71
 #: ../src/core/undo/EraseUndoAction.cpp:64
 msgid "Erase stroke"
-msgstr "लिखाई मिटाएँ"
+msgstr ""
 
 #: ../src/core/undo/AddUndoAction.cpp:80
 #: ../src/core/undo/DeleteUndoAction.cpp:82
@@ -1908,38 +1896,38 @@ msgstr ""
 #: ../src/core/undo/AddUndoAction.cpp:88
 #: ../src/core/undo/DeleteUndoAction.cpp:90
 msgid "stroke"
-msgstr ""
+msgstr "შტრიხი"
 
 #: ../src/core/undo/AddUndoAction.cpp:91
 #: ../src/core/undo/DeleteUndoAction.cpp:93
 msgid "image"
-msgstr ""
+msgstr "გამოსახულება"
 
 #: ../src/core/undo/AddUndoAction.cpp:94
 #: ../src/core/undo/DeleteUndoAction.cpp:96
 msgid "latex"
-msgstr ""
+msgstr "latex"
 
 #: ../src/core/undo/AddUndoAction.cpp:97
 #: ../src/core/undo/DeleteUndoAction.cpp:99
 msgid "text"
-msgstr ""
+msgstr "ტექსტი"
 
 #: ../src/core/undo/ColorUndoAction.cpp:97
 msgid "Change color"
-msgstr "रंग बदलें"
+msgstr ""
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
-msgstr "आपातकालीन दस्तावेज़ बचा ले"
+msgstr ""
 
 #: ../src/core/undo/FillUndoAction.cpp:88
 msgid "Change stroke fill"
-msgstr "\"स्ट्रोक भरना\" बदलें"
+msgstr ""
 
 #: ../src/core/undo/FontUndoAction.cpp:118
 msgid "Change font"
-msgstr "फ़ॉन्ट बदलें"
+msgstr ""
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:83
 msgid "Page inserted"
@@ -1951,7 +1939,7 @@ msgstr ""
 
 #: ../src/core/undo/InsertLayerUndoAction.cpp:25
 msgid "Insert layer"
-msgstr "परत जोड़ें"
+msgstr ""
 
 #: ../src/core/undo/InsertUndoAction.cpp:25
 msgid "Draw stroke"
@@ -1963,11 +1951,11 @@ msgstr ""
 
 #: ../src/core/undo/InsertUndoAction.cpp:31
 msgid "Insert latex"
-msgstr "Latex डालें"
+msgstr ""
 
 #: ../src/core/undo/InsertUndoAction.cpp:70
 msgid "Insert elements"
-msgstr "तत्वों को सम्मिलित करें"
+msgstr ""
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:20
 msgid "Rename layer"
@@ -1975,7 +1963,7 @@ msgstr ""
 
 #: ../src/core/undo/LineStyleUndoAction.cpp:86
 msgid "Change line style"
-msgstr "लाइन शैली बदलें"
+msgstr ""
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:37
 msgid "Merge layer down"
@@ -1987,11 +1975,11 @@ msgstr ""
 
 #: ../src/core/undo/MoveLayerUndoAction.cpp:24
 msgid "Move layer"
-msgstr "पर्त को स्थानांतरित करे"
+msgstr ""
 
 #: ../src/core/undo/MoveUndoAction.cpp:20
 msgid "Move"
-msgstr "स्थानांतरित करें"
+msgstr "გადატანა"
 
 #: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:97
 msgid "Page background changed"
@@ -2003,50 +1991,49 @@ msgstr ""
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:23
 msgid "Delete layer"
-msgstr "परत मिटाएँ"
+msgstr ""
 
 #: ../src/core/undo/RotateUndoAction.cpp:58
 msgid "Rotation"
-msgstr "घुमाव"
+msgstr ""
 
 #: ../src/core/undo/ScaleUndoAction.cpp:62
 msgid "Scale"
-msgstr "पैमाना"
+msgstr "მასშტაბი"
 
 #: ../src/core/undo/SizeUndoAction.cpp:118
 msgid "Change stroke width"
-msgstr "स्ट्रोक चौड़ाई बदलें"
+msgstr ""
 
 #: ../src/core/undo/SwapUndoAction.cpp:67
 msgid "Move page upwards"
-msgstr "पृष्ठ को ऊपर की ओर ले जाएँ"
+msgstr ""
 
 #: ../src/core/undo/SwapUndoAction.cpp:67
 msgid "Move page downwards"
-msgstr "पेज विज़ार्ड खिसकाए"
+msgstr ""
 
 #: ../src/core/undo/TextBoxUndoAction.cpp:26
 msgid "Edit text"
-msgstr "लिखित में बदलाव"
+msgstr ""
 
 #: ../src/core/undo/UndoRedoHandler.cpp:114
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr "Could not undo \"{1}\". कुछ गलत हो गया... कृपया एक bug report लिखें..."
+msgstr ""
 
 #: ../src/core/undo/UndoRedoHandler.cpp:140
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr "नहीं रह सकता {1}\n"
-"कुछ गलत हो गया... कृपया एक बग रिपोर्ट लिखें..."
+msgstr ""
 
 #: ../src/core/undo/UndoRedoHandler.cpp:174
 msgid "Undo: "
-msgstr ""
+msgstr "დაბრუნება: "
 
 #: ../src/core/undo/UndoRedoHandler.cpp:186
 msgid "Redo: "
-msgstr ""
+msgstr "გამეორება: "
 
 #: ../src/util/ElementRange.cpp:91
 msgid "ElementRange::parse(): invalid element range."
@@ -2086,12 +2073,13 @@ msgstr ""
 
 #: ../src/util/PathUtil.cpp:125
 msgid "Could not open file: {1}"
-msgstr ""
+msgstr "ფაილის გახსნის შედომა: {1}"
 
 #: ../src/util/PathUtil.cpp:132
 msgid "Error reading \"{1}\":\n"
 "{2}"
-msgstr ""
+msgstr "\"{1}\"-ის წაკითხვის შეცდომა:\n"
+"{2}"
 
 #: ../src/util/PathUtil.cpp:409
 msgid "xournalpp-{1}"
@@ -2100,12 +2088,11 @@ msgstr ""
 #: ../src/util/PathUtil.cpp:418
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr "{1} फ़ोल्डर नहीं बना सकता\n"
-"त्रुटि के साथ विफल: {2}"
+msgstr ""
 
 #: ../src/util/Util.cpp:76
 msgid "Error {1} executing system command: {2}"
-msgstr "सिस्टम कमांड निष्पादित करने में त्रुटि:"
+msgstr ""
 
 #: ../src/util/XojMsgBox.cpp:186
 msgid "The file {1} already exists! Do you want to replace it?"
@@ -2113,7 +2100,7 @@ msgstr ""
 
 #: ../src/util/XojMsgBox.cpp:190
 msgid "Select another name"
-msgstr "एक और नाम चयन करें"
+msgstr ""
 
 #: ../src/util/XojMsgBox.cpp:191
 msgid "Replace"
@@ -2197,7 +2184,7 @@ msgstr ""
 #: ../ui/about.glade:397 ../ui/crashDialog.glade:174
 #: ../ui/toolbarCustomizeDialog.glade:73 ../ui/toolbarManageDialog.glade:134
 msgid "Close"
-msgstr ""
+msgstr "დახურვა"
 
 #: ../ui/backgroundSelection.glade:49 ../ui/deviceList.glade:94
 #: ../ui/exportSettings.glade:457 ../ui/extEdTexDialog.glade:168
@@ -2206,7 +2193,7 @@ msgstr ""
 #: ../ui/plugin.glade:114 ../ui/renameLayerDialog.glade:71
 #: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6522
 msgid "Ok"
-msgstr ""
+msgstr "დიახ"
 
 #: ../ui/crashDialog.glade:7
 msgid "Crash report"
@@ -2256,31 +2243,31 @@ msgstr ""
 #: ../ui/deviceTestingArea.glade:70 ../ui/settings.glade:1630
 #: ../ui/settingsDeviceClassConfig.glade:35
 msgid "Mouse"
-msgstr ""
+msgstr "თაგუნა"
 
 #: ../ui/deviceTestingArea.glade:82
 msgctxt "mouse button"
 msgid "Left"
-msgstr ""
+msgstr "მარცხენა"
 
 #: ../ui/deviceTestingArea.glade:96
 msgctxt "mouse button"
 msgid "Middle"
-msgstr ""
+msgstr "შუა"
 
 #: ../ui/deviceTestingArea.glade:110
 msgctxt "mouse button"
 msgid "Right"
-msgstr ""
+msgstr "მარჯვენა"
 
 #: ../ui/deviceTestingArea.glade:124 ../ui/settings.glade:2170
 msgid "Stylus"
-msgstr ""
+msgstr "სტილუსი"
 
 #: ../ui/deviceTestingArea.glade:136 ../ui/deviceTestingArea.glade:190
 msgctxt "the tip of the stylus"
 msgid "Tip"
-msgstr ""
+msgstr "რჩევა"
 
 #: ../ui/deviceTestingArea.glade:150 ../ui/settings.glade:1987
 msgid "Button 1"
@@ -2297,12 +2284,12 @@ msgstr ""
 
 #: ../ui/deviceTestingArea.glade:374
 msgid "In use"
-msgstr ""
+msgstr "გამოიყენება"
 
 #: ../ui/deviceTestingArea.glade:388 ../ui/deviceTestingArea.glade:402
 msgctxt "stylus hover"
 msgid "Hover"
-msgstr ""
+msgstr "ზემოდან გაჩერება"
 
 #: ../ui/deviceTestingArea.glade:443
 msgid "Show logs"
@@ -2339,20 +2326,20 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:36
 msgid "Resolution"
-msgstr "रिज़ॉल्यूशन"
+msgstr ""
 
 #: ../ui/exportSettings.glade:39
 msgid "Width"
-msgstr ""
+msgstr "სიგანე"
 
 #: ../ui/exportSettings.glade:42
 msgid "Height"
-msgstr ""
+msgstr "სიმაღლე"
 
 #: ../ui/exportSettings.glade:53 ../ui/settings.glade:260
 #: ../ui/settings.glade:277 ../ui/settings.glade:3737
 msgid "None"
-msgstr ""
+msgstr "არცერთი"
 
 #: ../ui/exportSettings.glade:56
 msgid "No ruling"
@@ -2360,7 +2347,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:59
 msgid "All"
-msgstr ""
+msgstr "ყველა"
 
 #: ../ui/exportSettings.glade:91
 msgid "<b>Document export settings</b>\n"
@@ -2373,7 +2360,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:129
 msgid "Range"
-msgstr ""
+msgstr "შუალედი"
 
 #: ../ui/exportSettings.glade:143
 msgid "All pages"
@@ -2385,7 +2372,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:175
 msgid "Pages:"
-msgstr ""
+msgstr "გვერდები:"
 
 #: ../ui/exportSettings.glade:209
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
@@ -2393,7 +2380,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:279
 msgid "dpi"
-msgstr ""
+msgstr "dpi"
 
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:321
@@ -2534,7 +2521,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:454
 msgid "Font: "
-msgstr ""
+msgstr "ფონტი: "
 
 #: ../ui/latexSettings.glade:469
 msgid "Pick the Editor's Font"
@@ -2619,7 +2606,7 @@ msgstr ""
 
 #: ../ui/pageFormat.glade:146
 msgid "Width:"
-msgstr ""
+msgstr "სიგანე:"
 
 #: ../ui/pageFormat.glade:169
 msgid "Height:"
@@ -2627,7 +2614,7 @@ msgstr ""
 
 #: ../ui/pageFormat.glade:315
 msgid "Reset"
-msgstr ""
+msgstr "ჩამოყრა"
 
 #: ../ui/pageTemplate.glade:27
 msgid "Configure new page template"
@@ -2643,7 +2630,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:92
 msgid "Change"
-msgstr ""
+msgstr "შეცვლა"
 
 #: ../ui/pageTemplate.glade:109
 msgid "Select Background Color"
@@ -2752,11 +2739,11 @@ msgstr ""
 
 #: ../ui/settings.glade:394
 msgid "every"
-msgstr "प्रत्येक"
+msgstr "ყოველ"
 
 #: ../ui/settings.glade:421
 msgid "minutes"
-msgstr "मिनट"
+msgstr ""
 
 #: ../ui/settings.glade:449
 msgid "Autosaving"
@@ -2901,7 +2888,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1098
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../ui/settings.glade:1115
 msgid "Deadzone radius"
@@ -2909,7 +2896,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1127
 msgid "1,30"
-msgstr ""
+msgstr "1.30"
 
 #: ../ui/settings.glade:1145 ../ui/settings.glade:1157
 msgctxt "Drag = Noun: force opposing the movement"
@@ -2919,11 +2906,11 @@ msgstr ""
 #: ../ui/settings.glade:1146
 msgctxt "Noun: force opposing the movement"
 msgid "Drag"
-msgstr ""
+msgstr "გადათრევა"
 
 #: ../ui/settings.glade:1159
 msgid "0,4"
-msgstr ""
+msgstr "0.4"
 
 #: ../ui/settings.glade:1177 ../ui/settings.glade:1189
 msgctxt "Mass = Noun: physics term, related to weight"
@@ -2933,11 +2920,11 @@ msgstr ""
 #: ../ui/settings.glade:1178
 msgctxt "Noun: physics term, related to weight"
 msgid "Mass"
-msgstr ""
+msgstr "წონა"
 
 #: ../ui/settings.glade:1191
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../ui/settings.glade:1209 ../ui/settings.glade:1229
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
@@ -2945,7 +2932,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1211
 msgid "0,50"
-msgstr ""
+msgstr "0.50"
 
 #: ../ui/settings.glade:1243
 msgid "Preprocessor"
@@ -2981,11 +2968,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1381
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: ../ui/settings.glade:1409
 msgid "Tab"
-msgstr ""
+msgstr "Tab"
 
 #: ../ui/settings.glade:1440
 msgid "Input System"
@@ -3049,7 +3036,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1889
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../ui/settings.glade:1905
 msgid "events"
@@ -3074,7 +3061,7 @@ msgstr ""
 #: ../ui/settings.glade:2114
 msgctxt "eraser is never visible"
 msgid "Never"
-msgstr ""
+msgstr "არასდროს"
 
 #: ../ui/settings.glade:2115
 msgctxt "eraser is always visible"
@@ -3137,7 +3124,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2487 ../ui/settings.glade:2500
 msgid "Test"
-msgstr ""
+msgstr "ტესტი"
 
 #: ../ui/settings.glade:2533
 msgid "Custom Commands (for Method \"Custom\")"
@@ -3166,7 +3153,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2633
 msgid "1.0"
-msgstr ""
+msgstr "1.0"
 
 #: ../ui/settings.glade:2648
 msgid "% greater than the initial distance between the two touches."
@@ -3250,7 +3237,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3122
 msgid "Color"
-msgstr ""
+msgstr "ფერი"
 
 #: ../ui/settings.glade:3136
 msgid "(requires restart)"
@@ -3278,7 +3265,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3215
 msgid "Colors"
-msgstr ""
+msgstr "ფერები"
 
 #: ../ui/settings.glade:3231
 msgid "Global"
@@ -3290,7 +3277,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3264
 msgid "Recolors the drawing area so that light regions get the \"Light Color\" and dark regions get the \"Dark Color\". Other colors are interpolated accordingly. Can be use to implement a dark-mode."
-msgstr ""
+msgstr "თავიდან გააფერადებს სახატავ არეს ისე, რომ ღია რეგიონები იღებენ \"ღია ფერს\", მუქი რეგიონები კი - \"მუქ ფერს\". სხვა ფერების ინტერპოლაცია შესაბამისად ხდება. შეიძლება, გამოყენებული იყოს მუქი რეჯიმის განხორციელებისთვის."
 
 #: ../ui/settings.glade:3274
 msgid "Recolor Previews in the Sidebar"
@@ -3298,17 +3285,19 @@ msgstr ""
 
 #: ../ui/settings.glade:3279
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) the same way as the drawing area."
-msgstr ""
+msgstr "თავიდან გაფერადებს მინიატურებს გვერდით პანელში (გვერდის/ფენის მინიატურა) იგივენაირად, როგორც ეს სახატავ არეშია."
 
 #: ../ui/settings.glade:3293
 msgid "The color light regions are translated to\n"
 "(use a dark color for a dark-mode)"
-msgstr ""
+msgstr "ფერადი მუქი რეგიონები ითარგმნება, როგორც\n"
+"(მუქი ფერის გამოყენება მუქი რეჟიმისთვის)"
 
 #: ../ui/settings.glade:3308
 msgid "The color dark regions are translated to\n"
 "(use a light color for dark-mode)"
-msgstr ""
+msgstr "ფერადი მუქი რეგიონები ითარგმნება, როგორც\n"
+"(ღია ფერის გამოყენება მუქი რეჟიმისთვის)"
 
 #: ../ui/settings.glade:3324
 msgid "Dark Color"
@@ -3320,7 +3309,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3351
 msgid "Recoloring (allows theming)"
-msgstr ""
+msgstr "თავიდან გაფერადება (იძლევა თემების გამოყენების საშუალებას)"
 
 #: ../ui/settings.glade:3383
 msgid "Cursor icon for pen"
@@ -3373,7 +3362,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3551
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: ../ui/settings.glade:3567
 msgid "Border Width"
@@ -3503,7 +3492,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4249
 msgid "View"
-msgstr ""
+msgstr "ხედი"
 
 #: ../ui/settings.glade:4298
 msgid "Speed for Ctrl + Scroll"
@@ -3539,7 +3528,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4557
 msgid "Zoom"
-msgstr ""
+msgstr "გადიდება"
 
 #: ../ui/settings.glade:4606
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
@@ -3733,11 +3722,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5524
 msgid "0.00"
-msgstr ""
+msgstr "0.00"
 
 #: ../ui/settings.glade:5541
 msgid "%."
-msgstr ""
+msgstr "%."
 
 #: ../ui/settings.glade:5562
 msgid "PDF Cache"
@@ -3769,7 +3758,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5841
 msgid "Tools"
-msgstr ""
+msgstr "ხელსაწყოები"
 
 #: ../ui/settings.glade:5894
 msgid "<i>\n"
@@ -3821,7 +3810,7 @@ msgstr ""
 
 #: ../ui/settings.glade:6158
 msgid "Gain"
-msgstr ""
+msgstr "გაძლიერება"
 
 #: ../ui/settings.glade:6205
 msgid "Recording Quality"
@@ -3833,7 +3822,7 @@ msgstr ""
 
 #: ../ui/settings.glade:6244
 msgid "1,00"
-msgstr ""
+msgstr "1.00"
 
 #: ../ui/settings.glade:6263
 msgid "Playback Settings"
@@ -3905,7 +3894,7 @@ msgstr ""
 
 #: ../ui/settingsDeviceClassConfig.glade:54
 msgid "Apply"
-msgstr ""
+msgstr "გადატარება"
 
 #: ../ui/toolbarCustomizeDialog.glade:30
 msgid "Drag and drop Components from here to the toolbars and back."
@@ -3917,11 +3906,11 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:5
 msgid "_File"
-msgstr ""
+msgstr "_ფაილი"
 
 #: ../ui/mainmenubar.xml:13
 msgid "Open"
-msgstr ""
+msgstr "გახსნა"
 
 #. Filled dynamically
 #: ../ui/mainmenubar.xml:19
@@ -3946,11 +3935,11 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:54
 msgid "Quit"
-msgstr ""
+msgstr "გასვლა"
 
 #: ../ui/mainmenubar.xml:61
 msgid "_Edit"
-msgstr ""
+msgstr "ჩასწორ_ება"
 
 #: ../ui/mainmenubar.xml:93
 msgid "Select All"
@@ -3958,7 +3947,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:100
 msgid "Find"
-msgstr ""
+msgstr "ძებნა"
 
 #: ../ui/mainmenubar.xml:114
 msgid "Arrange Selection"
@@ -4006,7 +3995,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:181
 msgid "_View"
-msgstr ""
+msgstr "_ხედი"
 
 #: ../ui/mainmenubar.xml:184
 msgid "_Pair Pages"
@@ -4118,7 +4107,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:339
 msgid "_7 Rows"
-msgstr ""
+msgstr "_7 მწკრივი"
 
 #: ../ui/mainmenubar.xml:344
 msgid "_8 Rows"
@@ -4242,7 +4231,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:510
 msgid "_Pen"
-msgstr ""
+msgstr "_კალამი"
 
 #: ../ui/mainmenubar.xml:516
 msgid "_Eraser"
@@ -4262,7 +4251,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:540
 msgid "_Text"
-msgstr ""
+msgstr "_ტექსტი"
 
 #: ../ui/mainmenubar.xml:546
 msgid "_Image"
@@ -4304,7 +4293,7 @@ msgstr ""
 #: ../ui/mainmenubar.xml:668 ../ui/mainmenubar.xml:730
 #: ../ui/mainmenubar.xml:777
 msgid "_fine"
-msgstr ""
+msgstr "_ზუსტი"
 
 #: ../ui/mainmenubar.xml:673 ../ui/mainmenubar.xml:735
 #: ../ui/mainmenubar.xml:782
@@ -4323,7 +4312,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:712 ../ui/mainmenubar.xml:799
 msgid "Fi_ll"
-msgstr ""
+msgstr "შე_ვსება"
 
 #: ../ui/mainmenubar.xml:716 ../ui/mainmenubar.xml:803
 msgid "Fill opacity"
@@ -4367,15 +4356,15 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:828
 msgid "Pause"
-msgstr ""
+msgstr "შეჩერება"
 
 #: ../ui/mainmenubar.xml:855
 msgid "_Help"
-msgstr ""
+msgstr "_დახმარება"
 
 #: ../ui/mainmenubar.xml:859
 msgid "Help"
-msgstr ""
+msgstr "დახმარება"
 
 #: ../ui/mainmenubar.xml:863
 msgid "Run Gtk3 demo"
@@ -4383,7 +4372,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:867
 msgid "About"
-msgstr ""
+msgstr "შესახებ"
 
 #: ../resources-templates/pagetemplates.ini.in:17
 msgid "Ruled with vertical line on the right"
@@ -4443,7 +4432,7 @@ msgstr ""
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:8
 msgid "tablet;Wacom;pen input;PDF Annotation;markup"
-msgstr ""
+msgstr "ტაბლეტი;Wacom;კალმით სეყვანა;PDF ანიტაცია;მარკირება"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:8
 msgid "Xournalpp Developers"
