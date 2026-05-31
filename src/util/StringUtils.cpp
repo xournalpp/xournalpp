@@ -100,8 +100,8 @@ auto ellipsize(std::string_view sv, std::size_t max_width, bool fromLeft) -> std
 
     const auto kept = as_signed(max_width - ELLIPSIS_STR.size());
     const char* boundary = g_utf8_offset_to_pointer(sv.data(), fromLeft ? length - kept : kept);
-    const std::string_view keptPart =
-            fromLeft ? sv.substr(static_cast<std::size_t>(boundary - sv.data())) : sv.substr(0, static_cast<std::size_t>(boundary - sv.data()));
+    const std::string_view keptPart = fromLeft ? sv.substr(static_cast<std::size_t>(boundary - sv.data())) :
+                                                 sv.substr(0, static_cast<std::size_t>(boundary - sv.data()));
 
     std::string str;
     str.reserve(keptPart.size() + ELLIPSIS_STR.size());

@@ -64,10 +64,9 @@ auto createRecentMenuItem(const GtkRecentInfo* info, size_t i) {
 }
 
 auto createRemoveMenuItem(const GtkRecentInfo* info, size_t i) {
-    std::string label =
-        FS(FORMAT_STR("{1}. {2} {3}") % (i + 1) %
-           C_("The selected document will be removed from the recent files list", "Dismiss") %
-           getRecentDisplayLabel(info));
+    std::string label = FS(FORMAT_STR("{1}. {2} {3}") % (i + 1) %
+                           C_("The selected document will be removed from the recent files list", "Dismiss") %
+                           getRecentDisplayLabel(info));
 
     std::string action = G_ACTION_NAMESPACE;
     action += REMOVE_ACTION_NAME;
