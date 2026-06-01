@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone="no"?>
+<xournal creator="xournalpp 1.3.4+dev" fileversion="5">
+<title>Xournal++ document - see https://xournalpp.github.io/</title>
+<preview>iVBORw0KGgoAAAANSUhEUgAAAFsAAACACAIAAADrrYIiAAAABmJLR0QA/wD/AP+gvaeTAAAC3klEQVR4nO3YTWtcZRzG4SvTNC99GWPEvilKVerKjbgQ3Sn4Ifx+LvwMXbhxa6HQZWhjsTS0Qus0iSZNMq4C9c4UKk1mSnNfuxnOOfPnNzPPczhz4/FYvWAw6wHeOC2SWiS1SGqRNJ9v/MJjBtzlC9b5mjU2+ZjvZjDilM3l7rvOzkuOnefTEx9o5o4UOfW6jqQWSS2SWiQd2X1xE/zNu2ywxCrfTneu2TlSZMRHL7y8NPmot1h33zTp2/+JXRb5cerjvAEm/Wu+wuldc48UGfI7j1hgmRHb7IHPuMsBKwy5NvVhp+LIOjLi4Suct8r7JzPRrHVlTad1tXi5FkktklokHVORDX5jg9vHc70ZmnTP+jNXuc0KO1xmh1XmucM1RlzlDp8z4D1wi3tvw03Kkd13n7X/f5ld9ljiDDeOabQZ6f1I6sqaWiRNq8gm21P6qNc0aa/5kxHzzHGGc2yyyA5Dxgx4xBLvMOLg8MQhTzjLmHkWWeAxZ1nnAd+zyUX22GbMkAOecZElBmxxwBYXuMQ6C+yzzJgdDrjAEtuc5Ql7DA8f9722SSvrr9znE25xgxXuc+Ew0JgFdnnKBzznKc+4zDbn+IPr7DNgn3UWGXAO/MU3PGSdVTZZ5hlXeM6QNT5kxAJfcpMh/7DMGda4xnXmeMB5FrjHFX44uSJbhw9ETshTVia9v8nSf3+1r3jkDuc5fzzTdfdN3WtSi6QWSS2SWiS1SGqR1CKpRVKLpBZJLZJaJLVIapHUIqlFUoukFkktkloktUhqkdQiqUVSi6QWSS2SWiS1SGqR1CKpRVKLpBZJLZJaJLVIapHUIqlFUoukFkktkloktUhqkdQiqUVSi6QWSS2SWiS1SGqR1CKpRVKLpBZJLZJaJLVIapHUIqlFUoukFkktkloktUhqkdQiqUVSi6QWSS2SWiS1SGqR1CKpRVKLpBZJLZJaJLVIapHUIqlFUoukFkktkv4FdoaNJeTpCe4AAAAASUVORK5CYII=</preview>
+<page width="595.27559" height="841.88976">
+<background type="solid" color="#ffffffff" style="plain"/>
+<layer>
+<link align="left" font="Sans" size="12" x="32" y="31" color="#ff00ffff" url="https://xournalpp.github.io" text="Simple Link"/>
+<link align="left" font="Sans" size="12" x="35" y="79" color="#ff00ffff" url="https://johndoe:secret@www.example.com:8080/documentation/index.html?p1=A&amp;p2=B#ressource" text="Multiline&#10;Link&#10;with three lines"/>
+<link align="left" font="Sans" size="12" x="36.919563" y="162.02367" color="#ff00ffff" url="http://見.香港/" text="Chinese characters: 测试"/>
+<link align="left" font="Sans" size="12" x="39" y="207" color="#ff00ffff" url="mailto:françois.rené@café-crème.fr" text="Other non-ASCII characters: Hæuñßéř, dǒńg-bǎǐ, łúčný, qǐng-wèn, vò-địâ"/>
+</layer>
+</page>
+</xournal>
