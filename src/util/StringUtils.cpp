@@ -86,8 +86,11 @@ auto StringUtils::iequals(const string& a, const string& b) -> bool {
     return result == 0;
 }
 
-auto StringUtils::ellipsize(std::string_view sv, std::size_t max_width) -> std::string {
-    constexpr std::string_view ELLIPSIS_STR = "...";
+namespace {
+
+constexpr std::string_view ELLIPSIS_STR = "...";
+
+auto ellipsize(std::string_view sv, std::size_t max_width, bool fromLeft) -> std::string {
     xoj_assert(max_width > ELLIPSIS_STR.size());
     const auto length = g_utf8_strlen(sv.data(), as_signed(sv.size()));
 
@@ -95,13 +98,31 @@ auto StringUtils::ellipsize(std::string_view sv, std::size_t max_width) -> std::
         return std::string{sv};
     }
 
-    const auto bytes_kept = static_cast<std::size_t>(
-            g_utf8_offset_to_pointer(sv.data(), as_signed(max_width - ELLIPSIS_STR.size())) - sv.data());
+    const auto kept = as_signed(max_width - ELLIPSIS_STR.size());
+    const char* boundary = g_utf8_offset_to_pointer(sv.data(), fromLeft ? length - kept : kept);
+    const std::string_view keptPart = fromLeft ? sv.substr(static_cast<std::size_t>(boundary - sv.data())) :
+                                                 sv.substr(0, static_cast<std::size_t>(boundary - sv.data()));
+
     std::string str;
-    str.reserve(bytes_kept + ELLIPSIS_STR.size());
-    str.append(sv.data(), bytes_kept);
-    str.append(ELLIPSIS_STR);
+    str.reserve(keptPart.size() + ELLIPSIS_STR.size());
+    if (fromLeft) {
+        str.append(ELLIPSIS_STR);
+        str.append(keptPart);
+    } else {
+        str.append(keptPart);
+        str.append(ELLIPSIS_STR);
+    }
     return str;
+}
+
+}  // namespace
+
+auto StringUtils::ellipsize(std::string_view sv, std::size_t max_width) -> std::string {
+    return ::ellipsize(sv, max_width, false);
+}
+
+auto StringUtils::ellipsizeLeft(std::string_view sv, std::size_t max_width) -> std::string {
+    return ::ellipsize(sv, max_width, true);
 }
 
 auto StringUtils::markup_escape(std::string_view sv) -> std::string {
