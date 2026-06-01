@@ -82,13 +82,70 @@ size_t Plugin::populateMenuSection(GtkApplicationWindow* win, size_t startId) {
         return startId;
     }
 
+    constexpr char PATH_SEP = '/';
+
     // The menu should never be populated twice.
     // If this assert ever fails, do not recreate the GSimpleAction's below
     xoj_assert(!menuSection);
 
     this->menuSection.reset(g_menu_new(), xoj::util::adopt);
 
+    // Non-owning map from parent path to submenu GMenu
+    std::map<std::string, GMenu*> submenuMap;
+    GMenu* const rootMenu = menuSection.get();
+    submenuMap[""] = rootMenu;
+
+    auto normalizePath = [](const std::string& path) {
+        std::string normalized;
+        normalized.reserve(path.size());
+
+        bool lastWasSep = true;
+        for (char c: path) {
+            if (c == PATH_SEP) {
+                if (!lastWasSep) {
+                    normalized += c;
+                }
+                lastWasSep = true;
+            } else {
+                normalized += c;
+                lastWasSep = false;
+            }
+        }
+
+        if (!normalized.empty() && normalized.back() == PATH_SEP) {
+            normalized.pop_back();
+        }
+
+        return normalized;
+    };
+
+    // Helper to get or create parent menu for a given path
+    auto getOrCreateParent = [&submenuMap, rootMenu](auto& self, const std::string& parentPath) -> GMenu* {
+        if (parentPath.empty()) {
+            return rootMenu;
+        }
+
+        auto it = submenuMap.find(parentPath);
+        if (it != submenuMap.end()) {
+            return it->second;
+        }
+
+        size_t sep = parentPath.rfind(PATH_SEP);
+        std::string parentPrefix = sep == std::string::npos ? std::string() : parentPath.substr(0, sep);
+        std::string segment = sep == std::string::npos ? parentPath : parentPath.substr(sep + 1);
+
+        GMenu* parentMenu = self(self, parentPrefix);
+        GMenu* submenu = g_menu_new();
+        xoj::util::GObjectSPtr<GMenuItem> item(g_menu_item_new_submenu(segment.c_str(), G_MENU_MODEL(submenu)),
+                                               xoj::util::adopt);
+        g_menu_append_item(parentMenu, item.get());
+        submenuMap[parentPath] = submenu;
+        return submenu;
+    };
+
     for (auto& m: menuEntries) {
+        GMenu* parentMenu = getOrCreateParent(getOrCreateParent, normalizePath(m.parentPath));
+
         std::string actionName = G_ACTION_NAME_PREFIX;
         actionName += std::to_string(startId++);
         m.action.reset(g_simple_action_new(actionName.c_str(), nullptr), xoj::util::adopt);
@@ -96,7 +153,7 @@ size_t Plugin::populateMenuSection(GtkApplicationWindow* win, size_t startId) {
         actionName = "win." + actionName;
         xoj::util::GObjectSPtr<GMenuItem> entry(g_menu_item_new(m.label.c_str(), actionName.c_str()), xoj::util::adopt);
 
-        g_menu_append_item(menuSection.get(), entry.get());
+        g_menu_append_item(parentMenu, entry.get());
 
         // This might fail, when the vector reallocates, but then the order of initialisation is violated
         g_signal_connect(
@@ -116,8 +173,10 @@ size_t Plugin::populateMenuSection(GtkApplicationWindow* win, size_t startId) {
 
 void Plugin::executeMenuEntry(MenuEntry* entry) { callFunction(entry->callback, entry->mode); }
 
-auto Plugin::registerMenu(std::string menu, std::string callback, ptrdiff_t mode, std::string accelerator) -> size_t {
-    menuEntries.emplace_back(this, std::move(menu), std::move(callback), mode, std::move(accelerator));
+auto Plugin::registerMenu(std::string label, std::string callback, ptrdiff_t mode, std::string accelerator,
+                          std::string parentPath) -> size_t {
+    menuEntries.emplace_back(this, std::move(label), std::move(callback), mode, std::move(accelerator),
+                             std::move(parentPath));
     return menuEntries.size() - 1;
 }
 

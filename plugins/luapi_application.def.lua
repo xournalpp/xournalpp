@@ -96,8 +96,8 @@ function app.openDialog(message, options, cb, error) end
 
 --- Allow to register menupoints and toolbar buttons. This needs to be called from initUi
 --- 
---- @param opts {menu: string, callback: string, toolbarID: string, mode:integer, accelerator:string} options (`mode`,
----  `toolbarID` and `accelerator` are optional)
+--- @param opts {menu: string, callback: string, toolbarID: string, mode:integer, accelerator:string, parentPath:string}
+---   options (`mode`, `toolbarID`, `accelerator` and `parentPath` are optional)
 --- @return {menuId:integer}
 --- 
 --- Example 1: app.registerUi({["menu"] = "HelloWorld", callback="printMessage", mode=1, accelerator="<Control>a"})
@@ -109,8 +109,16 @@ function app.openDialog(message, options, cb, error) end
 --- to a toolbar via toolbar customization or by editing the toolbar.ini file using the name "Plugin::CUSTOM_PEN_1"
 --- Note that in toolbar.ini the string "Plugin::" must always be prepended to the toolbarId specified in the plugin
 --- 
+--- Example 3: app.registerUi({menu="Document", callback="newDoc", parentPath="File/New"})
+--- registers a menu item "Document" under a submenu "File/New" in the Plugins menu.
+--- Use "/" to create nested submenus, e.g., parentPath="File/Export/PDF" creates File > Export > PDF hierarchy.
+--- 
 --- The mode and accelerator are optional. When specifying the mode, the callback function should have one parameter
 ---    that receives the mode. This is useful for callback functions that are shared among multiple menu entries.
+--- 
+--- The parentPath parameter creates submenu hierarchy. Without it, the menu item appears directly in the Plugins menu.
+--- With parentPath, the item is placed under a nested submenu path. For example, parentPath="Tools/Custom"
+--- creates "Plugins > [plugin name] > Tools > Custom > [menu item]".
 function app.registerUi(opts) end
 
 --- *

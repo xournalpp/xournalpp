@@ -40,15 +40,18 @@ class ToolMenuHandler;
 
 struct MenuEntry final {
     MenuEntry() = default;
-    MenuEntry(Plugin* plugin, std::string label, std::string callback, ptrdiff_t mode, std::string accelerator):
+    MenuEntry(Plugin* plugin, std::string label, std::string callback, ptrdiff_t mode, std::string accelerator,
+              std::string parentPath = ""):
             plugin(plugin),
             label(std::move(label)),
+            parentPath(std::move(parentPath)),
             callback(std::move(callback)),
             mode(mode),
             accelerator(std::move(accelerator)) {}
 
     Plugin* plugin = nullptr;                               ///< The Plugin
     std::string label{};                                    ///< Menu display name
+    std::string parentPath{};                               ///< Submenu path (e.g., "File/Tools"), empty = root
     std::string callback{};                                 ///< Callback function name
     ptrdiff_t mode{std::numeric_limits<ptrdiff_t>::max()};  ///< mode in which the callback function is run
     /**
@@ -166,8 +169,14 @@ public:
     auto isInInitUi() const -> bool;
 
     /// Register a menu item
+    /// @param label Menu display name
+    /// @param callback Callback function name
+    /// @param mode Mode in which callback is run
+    /// @param accelerator Accelerator key
+    /// @param parentPath Submenu path (e.g., "File/Tools"), empty = root
     /// @return Internal ID, can e.g. be used to disable the menu
-    auto registerMenu(std::string menu, std::string callback, ptrdiff_t mode, std::string accelerator) -> size_t;
+    auto registerMenu(std::string label, std::string callback, ptrdiff_t mode, std::string accelerator,
+                      std::string parentPath = "") -> size_t;
 
     ///@return The main controller
     auto getControl() const -> Control*;
