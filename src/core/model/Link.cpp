@@ -44,6 +44,8 @@ void Link::serialize(ObjectOutputStream& out) const {
 
     out.writeString(this->url);
 
+    out.writeInt(this->alignment);
+
     font.serialize(out);
 
     out.endObject();
@@ -57,6 +59,8 @@ void Link::readSerialized(ObjectInputStream& in) {
     this->text = in.readString();
 
     this->url = in.readString();
+
+    this->alignment = static_cast<LinkAlignment::Value>(in.readInt());
 
     font.readSerialized(in);
 
