@@ -219,7 +219,7 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
             image->setAttrib(xoj::xml_attrs::BOTTOM_POS_STR, i->getY() + i->getElementHeight());
         } else if (e->getType() == ELEMENT_LINK) {
             auto* l = dynamic_cast<const Link*>(e);
-            auto* link = new XmlNode(TAG_NAMES[TagType::LINK]);
+            auto* link = new XmlTextNode(TAG_NAMES[TagType::LINK], l->getText());
             layer->addChild(link);
 
             const XojFont& f = l->getFont();
@@ -231,7 +231,6 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
             link->setAttrib(xoj::xml_attrs::Y_COORD_STR, l->getY());
             link->setAttrib(xoj::xml_attrs::COLOR_STR, getColorStr(l->getColor()).c_str());
             link->setAttrib(xoj::xml_attrs::URL_STR, l->getUrl().c_str());
-            link->setAttrib(xoj::xml_attrs::TEXT_STR, l->getText().c_str());
         }
     }
 }

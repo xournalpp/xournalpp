@@ -5,10 +5,12 @@
 <page width="595.27559" height="841.88976">
 <background type="solid" color="#ffffffff" style="plain"/>
 <layer>
-<link align="left" font="Sans" size="12" x="32" y="31" color="#ff00ffff" url="https://xournalpp.github.io" text="Simple Link"/>
-<link align="left" font="Sans" size="12" x="35" y="79" color="#ff00ffff" url="https://johndoe:secret@www.example.com:8080/documentation/index.html?p1=A&amp;p2=B#ressource" text="Multiline&#10;Link&#10;with three lines"/>
-<link align="left" font="Sans" size="12" x="36.919563" y="162.02367" color="#ff00ffff" url="http://見.香港/" text="Chinese characters: 测试"/>
-<link align="left" font="Sans" size="12" x="39" y="207" color="#ff00ffff" url="mailto:françois.rené@café-crème.fr" text="Other non-ASCII characters: Hæuñßéř, dǒńg-bǎǐ, łúčný, qǐng-wèn, vò-địâ"/>
+<link align="left" font="Sans" size="12" x="32" y="31" color="#ff00ffff" url="https://xournalpp.github.io">Simple Link</link>
+<link align="left" font="Sans" size="12" x="35" y="79" color="#ff00ffff" url="https://johndoe:secret@www.example.com:8080/documentation/index.html?p1=A&amp;p2=B#ressource">Multiline
+Link
+with three lines</link>
+<link align="left" font="Sans" size="12" x="36.919563" y="162.02367" color="#ff00ffff" url="http://見.香港/">Chinese characters: 测试</link>
+<link align="left" font="Sans" size="12" x="39" y="207" color="#ff00ffff" url="mailto:françois.rené@café-crème.fr">Other non-ASCII characters: Hæuñßéř, dǒńg-bǎǐ, łúčný, qǐng-wèn, vò-địâ</link>
 </layer>
 </page>
 </xournal>

@@ -64,7 +64,9 @@ public:
     virtual void setTexImageAttachment(const fs::path& filename) = 0;
     virtual void finalizeTexImage() = 0;
     virtual void addLink(LinkAlignment align, std::string font, double size, double x, double y, Color color,
-                         std::string url, std::string text) = 0;
+                         std::string url) = 0;
+    virtual void setLinkContent(std::string contents) = 0;
+    virtual void finalizeLink() = 0;
 
     /**
      * Store an error for retrieval through `getErrorMessages()` and print it

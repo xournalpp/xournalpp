@@ -456,23 +456,32 @@ void LoadHandler::finalizeTexImage() {
 }
 
 void LoadHandler::addLink(LinkAlignment align, std::string font, double size, double x, double y, Color color,
-                          std::string url, std::string text) {
-    auto link = std::make_unique<Link>();
+                          std::string url) {
+    this->link = std::make_unique<Link>();
 
-    link->setAlignment(align);
+    this->link->setAlignment(align);
 
-    link->setText(std::string(text.c_str()));
-    link->setUrl(std::string(url.c_str()));
+    this->link->setUrl(std::string(url.c_str()));
 
-    link->setX(x);
-    link->setY(y);
+    this->link->setX(x);
+    this->link->setY(y);
 
-    XojFont& f = link->getFont();
+    XojFont& f = this->link->getFont();
     f.setName(std::move(font));
     f.setSize(size);
-    link->setColor(color);
+    this->link->setColor(color);
+}
 
-    this->layer->addElement(std::move(link));
+void LoadHandler::setLinkContent(std::string contents) {
+    xoj_assert(this->link);
+
+    this->link->setText(std::move(contents));
+}
+
+void LoadHandler::finalizeLink() {
+    xoj_assert(this->link);
+
+    this->layer->addElement(std::move(this->link));
 }
 
 

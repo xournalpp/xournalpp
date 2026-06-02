@@ -491,10 +491,11 @@ void XmlParser::parseLinkTag(const XmlParserHelper::AttributeMap& attributeMap) 
     const auto color = XmlParserHelper::getAttribColorMandatory(attributeMap, Colors::black);
 
     auto url = XmlParserHelper::getAttribMandatory<std::string_view>(xoj::xml_attrs::URL_STR, attributeMap);
-    auto text = XmlParserHelper::getAttribMandatory<std::string_view>(xoj::xml_attrs::TEXT_STR, attributeMap);
 
-    this->builder.addLink(align, std::string{font}, size, x, y, color, std::string{url}, std::string{text});
+    this->builder.addLink(align, std::string{font}, size, x, y, color, std::string{url});
 }
+
+void XmlParser::parseLinkText(std::string_view text) { this->builder.setLinkContent(std::string{text}); }
 
 void XmlParser::parseAttachmentTag(const XmlParserHelper::AttributeMap& attributeMap) {
     const auto path = XmlParserHelper::getAttribMandatory<fs::path>(xoj::xml_attrs::PATH_STR, attributeMap);
