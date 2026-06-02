@@ -274,9 +274,9 @@ auto Control::checkChangedDocument(Control* control) -> bool {
 void Control::saveSettings() {
     this->toolHandler->saveSettings();
 
-    gint width = 0;
-    gint height = 0;
-    gtk_window_get_size(getGtkWindow(), &width, &height);
+    int width = 0;
+    int height = 0;
+    gtk_window_get_default_size(getGtkWindow(), &width, &height);
 
     if (!this->win->isMaximized()) {
         this->settings->setMainWndSize(width, height);
@@ -430,7 +430,7 @@ void Control::showFloatingToolbox(int x, int y) {
     GtkWidget* mainWindow = GTK_WIDGET(this->getGtkWindow());
     GtkWidget* mainBox = this->getWindow()->get("mainBox");
 
-    gint mainBoxX, mainBoxY;
+    double mainBoxX, mainBoxY;
     gtk_widget_translate_coordinates(mainWindow, mainBox, x, y, &mainBoxX, &mainBoxY);
 
     this->getWindow()->getFloatingToolbox()->show(mainBoxX, mainBoxY);
@@ -1465,7 +1465,7 @@ void Control::showSettings() {
                 ctrl->win->setDPI();
 
                 if (settingsBeforeDialog.sidebarStyle != settings->getSidebarNumberingStyle()) {
-                    ctrl->getSidebar()->layout();
+                    ctrl->getSidebar()->updatePageNumberingStyle();
                 }
 
                 xournal->getHandRecognition()->reload();
@@ -2271,7 +2271,7 @@ static void onGtkDemoShown(GObject* proc_object, GAsyncResult* res, gpointer) {
 }
 
 void Control::showGtkDemo() {
-    std::string binary = "gtk3-demo";
+    std::string binary = "gtk4-demo";
 #ifdef __APPLE__
     if (!xoj::util::OwnedCString::assumeOwnership(g_find_program_in_path(binary.c_str()))) {
         // Try absolute path for binary
@@ -2282,7 +2282,8 @@ void Control::showGtkDemo() {
 #endif
     gchar* prog = g_find_program_in_path(binary.c_str());
     if (!prog) {
-        XojMsgBox::showErrorToUser(getGtkWindow(), "gtk3-demo was not found in path");
+        std::string message = FS(_F("Executable \"{1}\" was not found in path") % binary);
+        XojMsgBox::showErrorToUser(getGtkWindow(), message);
         return;
     }
     GError* err = nullptr;
@@ -2346,7 +2347,6 @@ void Control::clipboardPasteImage(GdkPixbuf* img) {
     PageRef page = this->doc->getPage(pageNr);
     auto pageWidth = page->getWidth();
     auto pageHeight = page->getHeight();
-    page.reset();  // No need to hold a ref to the page anymore
     this->doc->unlock_shared();
 
     // Size: 3/4 of the page size

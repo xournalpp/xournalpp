@@ -28,7 +28,6 @@
 #include "undo/UndoAction.h"        // for UndoAction
 #include "undo/UndoRedoHandler.h"   // for UndoRedoHandler
 #include "util/Assert.h"            // for xoj_assert
-#include "util/gtk4_helper.h"       // for gtk_widget_get_clipboard
 
 #include "MainWindow.h"  // for MainWindow
 
@@ -37,7 +36,6 @@ PdfFloatingToolbox::PdfFloatingToolbox(MainWindow* theMainWindow, GtkOverlay* ov
     this->floatingToolbox = theMainWindow->get("pdfFloatingToolbox");
 
     gtk_overlay_add_overlay(overlay, this->floatingToolbox);
-    gtk_overlay_set_overlay_pass_through(overlay, this->floatingToolbox, true);
 
     g_signal_connect(overlay, "get-child-position", G_CALLBACK(this->getOverlayPosition), this);
 
@@ -63,7 +61,7 @@ auto PdfFloatingToolbox::newSelection(double x, double y) -> const PdfElemSelect
     return this->pdfElemSelection.get();
 }
 
-void PdfFloatingToolbox::show(int x, int y) {
+void PdfFloatingToolbox::show(double x, double y) {
     xoj_assert(this->getSelection());
     this->position = {x, y};
     this->show();
@@ -97,11 +95,12 @@ auto PdfFloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widg
         bool rightOK = self->position.x + allocation->width + gap <= gtk_widget_get_allocated_width(scrolledWindow);
         bool bottomOK = self->position.y + allocation->height + gap <= gtk_widget_get_allocated_height(scrolledWindow);
 
-        allocation->x = rightOK ? self->position.x + gap : self->position.x - allocation->width - gap;
-        allocation->y = bottomOK ? self->position.y + gap : self->position.y - allocation->height - gap;
+        double x = rightOK ? self->position.x + gap : self->position.x - allocation->width - gap;
+        double y = bottomOK ? self->position.y + gap : self->position.y - allocation->height - gap;
 
-        gtk_widget_translate_coordinates(scrolledWindow, GTK_WIDGET(overlay), allocation->x, allocation->y,
-                                         &allocation->x, &allocation->y);
+        gtk_widget_translate_coordinates(scrolledWindow, GTK_WIDGET(overlay), x, y, &x, &y);
+        allocation->x = round_cast<int>(x);
+        allocation->y = round_cast<int>(y);
 
         return true;
     }
@@ -135,15 +134,12 @@ void PdfFloatingToolbox::strikethroughCb(GtkButton* button, PdfFloatingToolbox* 
     pft->userCancelSelection();
 }
 
-void PdfFloatingToolbox::show() {
-    gtk_widget_hide(this->floatingToolbox);  // force showing in new position
-    gtk_widget_show_all(this->floatingToolbox);
-}
+void PdfFloatingToolbox::show() { gtk_widget_show(this->floatingToolbox); }
 
 void PdfFloatingToolbox::copyTextToClipboard() {
-    GtkClipboard* clipboard = gtk_widget_get_clipboard(this->theMainWindow->getWindow());
+    GdkClipboard* clipboard = gtk_widget_get_clipboard(this->theMainWindow->getWindow());
     if (const std::string& text = this->pdfElemSelection->getSelectedText(); !text.empty()) {
-        gtk_clipboard_set_text(clipboard, text.c_str(), -1);
+        gdk_clipboard_set_text(clipboard, text.c_str());
     }
 }
 

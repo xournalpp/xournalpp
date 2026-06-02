@@ -11,16 +11,15 @@
 
 #pragma once
 
-#include <memory>  // for unique_ptr
 #include <string>  // for string
 
 #include <gtk/gtk.h>  // for GtkToolItem, GtkRange
 
 #include "control/actions/ActionRef.h"
 
-#include "AbstractToolItem.h"  // for AbstractToolItem
+#include "ItemWithNamedIcon.h"  // for ItemWithNamedIcon
 
-class AbstractSliderItem: public AbstractToolItem {
+class AbstractSliderItem: public ItemWithNamedIcon {
 public:
     struct SliderRange {
         // Internal units: minimum and maximum slider values.
@@ -38,12 +37,16 @@ public:
      * @param range The minimum/maximum/step in internal units. {@see #scaleFunc}.
      * @param gAction A GAction whose (double) state is synced with the slider's value
      */
-    AbstractSliderItem(std::string id, Category cat, SliderRange range, ActionRef gAction);
+    AbstractSliderItem(std::string id, Category cat, SliderRange range, ActionRef gAction, std::string iconName);
     ~AbstractSliderItem() override = default;
+
+protected:
+    const char* getIconName() const override;
 
 protected:
     SliderRange range;
     ActionRef gAction;
+    std::string iconName;
 
     template <class FinalSliderType>
     friend class SliderItemCreationHelper;

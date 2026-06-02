@@ -15,7 +15,6 @@
 #include <vector>
 
 class Control;
-class ToolbarAdapter;
 class ToolbarCustomizeDialog;
 
 class ToolbarDragDropHandler {
@@ -37,6 +36,5 @@ public:
 private:
     Control* control;
 
-    std::vector<std::unique_ptr<ToolbarAdapter>> toolbars;
     std::unique_ptr<ToolbarCustomizeDialog> customizeDialog;
 };
