@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-30 08:27+0000\n"
-"PO-Revision-Date: 2026-05-31 05:46\n"
+"POT-Creation-Date: 2026-06-01 15:40+0000\n"
+"PO-Revision-Date: 2026-06-07 05:51\n"
 "Last-Translator: \n"
 "Language-Team: Georgian\n"
 "Language: ka_GE\n"
@@ -70,7 +70,7 @@ msgstr "ფურცლის ფ_ონი"
 #: ../src/core/control/Control.cpp:845
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:43
 msgid "With PDF background"
-msgstr ""
+msgstr "ინვერსიული ორმხრივი ბეჭედი"
 
 #: ../src/core/control/Control.cpp:848
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -543,7 +543,7 @@ msgstr ""
 
 #: ../src/core/control/jobs/ImageExport.cpp:169
 msgid "Error save image #1"
-msgstr ""
+msgstr "#1 გამოსახულების შენახვის შეცდომა"
 
 #: ../src/core/control/jobs/ImageExport.cpp:178
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
@@ -551,7 +551,7 @@ msgstr ""
 
 #: ../src/core/control/jobs/ImageExport.cpp:202
 msgid "Error save image #2"
-msgstr ""
+msgstr "#2 გამოსახულების შენახვის შეცდომა"
 
 #: ../src/core/control/jobs/PdfExportJob.cpp:15
 msgid "PDF Export"
@@ -899,7 +899,7 @@ msgstr "მოწყობილობების გარეშე"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:78
 msgid "Tool - don't change"
-msgstr ""
+msgstr "ხელსაწყო - არ შეცვალოთ"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:79
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:381
@@ -930,7 +930,7 @@ msgstr "გამოსახულების ჩასმა"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 msgid "Laser Pointer - Pen"
-msgstr ""
+msgstr "ლაზერული საჩვენებელი - კალამი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 msgid "Laser Pointer - Highlighter"
@@ -1089,7 +1089,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:56
 msgid "LaTeX editor theme:"
-msgstr ""
+msgstr "LaTeX-ის რედაქტორის თემა:"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:66
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
@@ -1144,7 +1144,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:32
 msgid "Highlighter Options"
-msgstr ""
+msgstr "გამომკვეთის მორგება"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:33
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:37
@@ -1204,7 +1204,7 @@ msgstr "სახელი"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:174
 msgid "Palette has no Name"
-msgstr ""
+msgstr "პალიტრას სახელი არ აქვს"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:27
 msgid "Predefined"
@@ -1366,30 +1366,30 @@ msgstr "დამატებების მმართველი"
 msgid "Plugin"
 msgstr "დამატება"
 
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:61
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:68
 msgctxt "The selected document will be removed from the recent files list"
 msgid "Dismiss"
 msgstr "მოცილება"
 
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:100
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:108
 msgid "No recent files"
 msgstr "უახლესი ფაილების გარეშე"
 
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:110
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:118
 msgid "Clear list"
 msgstr "სიის გასუფთავება"
 
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:182
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:190
 msgctxt "In the submenu for removing recent documents, this will display on top of the list xournal++ files to separate them from PDF files"
 msgid "Xournal++ Files"
 msgstr "Xournal++-ის ფაილები"
 
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:191
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:199
 msgctxt "In the submenu for removing recent documents, this will display on top of the list PDF files to separate them from xournal++ files"
 msgid "PDF Files"
 msgstr "PDF ფაილები"
 
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:198
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:206
 msgctxt "This opens a submenu of the recent files list, and clicking on individual entries in this submenu will remove it from the recent files list"
 msgid "Dismiss a single document"
 msgstr ""
@@ -1583,7 +1583,7 @@ msgstr "ზედა ფენაზე გადასვლა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:361
 msgid "Next annotated page"
-msgstr ""
+msgstr "შემდეგი ანოტაციის მქონე გვერდი"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:367
 msgid "Insert page"
@@ -1591,7 +1591,7 @@ msgstr "გვერდის ჩასმა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Delete current page"
-msgstr ""
+msgstr "მიმდინარე გვერდის წაშლა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:377
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:386
@@ -1857,7 +1857,7 @@ msgstr "შეცდომა: "
 
 #: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:175
 msgid "Unrecoverable error"
-msgstr ""
+msgstr "აღუდგენადი შეცდომა"
 
 #: ../src/core/model/Image.cpp:171 ../src/core/model/Image.cpp:175
 msgid "Failed to close image stream"
@@ -1871,7 +1871,7 @@ msgstr "ფონი"
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:244
 msgid "No pages to export!"
-msgstr ""
+msgstr "გასატანი გვერდების გარეშე!"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:54
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:207
@@ -1988,7 +1988,7 @@ msgstr "ქვედა ფენასთან შერწყმა"
 
 #: ../src/core/undo/MissingPdfUndoAction.cpp:66
 msgid "Replace missing PDF"
-msgstr ""
+msgstr "ნაკლული PDF-ის ჩანაცვლება"
 
 #: ../src/core/undo/MoveLayerUndoAction.cpp:24
 msgid "Move layer"
@@ -2487,7 +2487,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:76
 msgid "Default LaTeX Text"
-msgstr ""
+msgstr "ნაგულისხმევი LaTeX-ის ტექსტი"
 
 #: ../ui/latexSettings.glade:105
 msgid "The LaTeX file to use as a template for the LaTeX tool."
@@ -2503,7 +2503,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:133
 msgid "%%XPP_TOOL_INPUT%%"
-msgstr ""
+msgstr "%%XPP_TOOL_INPUT%%"
 
 #: ../ui/latexSettings.glade:145
 msgid "The math mode formula typed in the LaTeX tool."
@@ -2515,7 +2515,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:170
 msgid "%%XPP_TEXT_COLOR%%"
-msgstr ""
+msgstr "%%XPP_TEXT_COLOR%%"
 
 #: ../ui/latexSettings.glade:182
 msgid "The current color of the Text Tool, in hex RGB format."
@@ -2539,7 +2539,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:269
 msgid "Test configuration"
-msgstr ""
+msgstr "კონფიგურაციის შემოწმება"
 
 #: ../ui/latexSettings.glade:273
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
@@ -2624,7 +2624,7 @@ msgstr ""
 
 #: ../ui/main.glade:645
 msgid "Copy selected text"
-msgstr ""
+msgstr "მონიშნული ტექსტის კოპირება"
 
 #: ../ui/main.glade:667
 msgid "Highlight selected text"
@@ -3042,7 +3042,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1583
 msgid "Right Mouse Button"
-msgstr ""
+msgstr "თაგუნას მარჯვენა ღილაკი"
 
 #: ../ui/settings.glade:1615
 msgid "4th Mouse Button"
@@ -3299,7 +3299,7 @@ msgstr "ფერი"
 
 #: ../ui/settings.glade:3200
 msgid "(requires restart)"
-msgstr ""
+msgstr "(საჭიროებს გადატვირთვას)"
 
 #: ../ui/settings.glade:3223
 msgid "Theme Variant:"
@@ -3307,7 +3307,7 @@ msgstr "თემის ვარიანტი:"
 
 #: ../ui/settings.glade:3243
 msgid "Use system default"
-msgstr ""
+msgstr "ნაგულისხმევი სისტემური პარამეტრების გამოყენება"
 
 #: ../ui/settings.glade:3244
 msgid "Force light theme"
@@ -3626,7 +3626,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4938
 msgid "First Page Offset "
-msgstr ""
+msgstr "პირველი გვერდის წანაცვლება "
 
 #: ../ui/settings.glade:4951
 msgid "Usually 0 or 1"
@@ -3766,7 +3766,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5537
 msgid "Action on Tool Tap"
-msgstr ""
+msgstr "ქმედება ხელსაწყოზე დატყაპუნებისას"
 
 #: ../ui/settings.glade:5565
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality.\n"
@@ -4065,7 +4065,7 @@ msgstr "გვერდების _წყვილი"
 
 #: ../ui/mainmenubar.xml:188
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "_პრეზენტაციის რეჟიმი"
 
 #: ../ui/mainmenubar.xml:200
 msgid "Show Toolbars"
@@ -4309,7 +4309,7 @@ msgstr "საშლ_ელი"
 
 #: ../ui/mainmenubar.xml:530
 msgid "Select Linear Text"
-msgstr ""
+msgstr "წრფივი ტექსტის მონიშვნა"
 
 #: ../ui/mainmenubar.xml:536
 msgid "Select Text In Rectangle"
