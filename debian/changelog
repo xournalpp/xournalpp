@@ -1,6 +1,19 @@
 xournalpp (1.3.5~dev-1) UNRELEASED; urgency=medium
 
-  * 
+  * Fixed crash when exiting after playing sound
+  * Fixed some button-to-tools configuration issues
+  * Fixed crash involving page background selection
+  * Added multidevice support for X11 palm rejection
+  * Reduced PDF cache retention for off-screen pages
+  * Fixed moving display when selecting "Fit to Screen"
+  * Fixed disabled "Merge layer" menu entry
+  * Fixed a concurrency crash when using layers
+  * Improved setting up environment on MacOS
+  * Fixed typos in some displayed strings
+  * Fixed "Missing background" display when missing PDF page
+  * Bumped dependency versions on MacOS and Windows
+  * Added Georgian translations
+  * Updated translations
 
  -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Sat, 28 Mar 2026 18:22:15 +0100
 
