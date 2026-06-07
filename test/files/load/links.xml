@@ -1,16 +1,17 @@
 <?xml version="1.0" standalone="no"?>
 <xournal creator="xournalpp 1.3.4+dev" fileversion="5">
 <title>Xournal++ document - see https://xournalpp.github.io/</title>
-<preview>iVBORw0KGgoAAAANSUhEUgAAAFsAAACACAIAAADrrYIiAAAABmJLR0QA/wD/AP+gvaeTAAAC3klEQVR4nO3YTWtcZRzG4SvTNC99GWPEvilKVerKjbgQ3Sn4Ifx+LvwMXbhxa6HQZWhjsTS0Qus0iSZNMq4C9c4UKk1mSnNfuxnOOfPnNzPPczhz4/FYvWAw6wHeOC2SWiS1SGqRNJ9v/MJjBtzlC9b5mjU2+ZjvZjDilM3l7rvOzkuOnefTEx9o5o4UOfW6jqQWSS2SWiQd2X1xE/zNu2ywxCrfTneu2TlSZMRHL7y8NPmot1h33zTp2/+JXRb5cerjvAEm/Wu+wuldc48UGfI7j1hgmRHb7IHPuMsBKwy5NvVhp+LIOjLi4Suct8r7JzPRrHVlTad1tXi5FkktklokHVORDX5jg9vHc70ZmnTP+jNXuc0KO1xmh1XmucM1RlzlDp8z4D1wi3tvw03Kkd13n7X/f5ld9ljiDDeOabQZ6f1I6sqaWiRNq8gm21P6qNc0aa/5kxHzzHGGc2yyyA5Dxgx4xBLvMOLg8MQhTzjLmHkWWeAxZ1nnAd+zyUX22GbMkAOecZElBmxxwBYXuMQ6C+yzzJgdDrjAEtuc5Ql7DA8f9722SSvrr9znE25xgxXuc+Ew0JgFdnnKBzznKc+4zDbn+IPr7DNgn3UWGXAO/MU3PGSdVTZZ5hlXeM6QNT5kxAJfcpMh/7DMGda4xnXmeMB5FrjHFX44uSJbhw9ETshTVia9v8nSf3+1r3jkDuc5fzzTdfdN3WtSi6QWSS2SWiS1SGqR1CKpRVKLpBZJLZJaJLVIapHUIqlFUoukFkktkloktUhqkdQiqUVSi6QWSS2SWiS1SGqR1CKpRVKLpBZJLZJaJLVIapHUIqlFUoukFkktkloktUhqkdQiqUVSi6QWSS2SWiS1SGqR1CKpRVKLpBZJLZJaJLVIapHUIqlFUoukFkktkloktUhqkdQiqUVSi6QWSS2SWiS1SGqR1CKpRVKLpBZJLZJaJLVIapHUIqlFUoukFkktkv4FdoaNJeTpCe4AAAAASUVORK5CYII=</preview>
+<preview>iVBORw0KGgoAAAANSUhEUgAAAFsAAACACAIAAADrrYIiAAAABmJLR0QA/wD/AP+gvaeTAAACyklEQVR4nO3YT09cZRjG4QvkX4USijS1xEiMSd1oTXcmboxfwZ3f0KVrE125VFPbjQlBkqbaSqVIKA04FFdNmhsoNYUZove1PJk585xfcs77zhk7PDxULxgf9QAXToukFkktklokTeSB79hgnDU+Yp1PWGWHFT4fwYhDNpar7zp7J3x2gvfPfaCRO1Lkf6/PkdQiqUVSi6Qjq++LvuYmdzhkjl0W+XRYo43IyWvNJhtHDs6wcs4TjVpX3/TSuwY/scocj/lyKBON2mlF3uVNMH3+s1wMxxW5wx9M8R7b7DIAc6zxjAXmWR7upMNy5Dmyze+v8L1Frp7PRKPWJ2vqDi21SGqR1CLpjIo84AcecPtszjdCx+1HvuI6t1lgj2vsscgEd1lmm+vc5QPGeQv8yK//hU3KkdX3gNV/f5p9BszwBjfOaLQR6X4k9cmaWiS1SGqRdNr7kZPs8j2PGXCFq+ywwSQrbDJgwBwDxtgFl7nH5ecvbp9x68L9hz5trfmWmywdOb7P09f75S0WuMTU653nrB1X5Gc2WWeFAX9xjSd8xjfM8gR8yBqzLHOfv7nCb7zNPPe4z8esM2CSaW7wEOxzwEO+GOK1vprjivzCBgMOWGLr+b01xQ6TTLDFO2wwzYB5HjHJFIdM8ZRx9lniETNMssslDpjlTw65xcLQL/qlRrpD27uIr2+7Z01dfVOLpBZJLZJaJLVIapHUIqlFUoukFkktkloktUhqkdQiqUVSi6QWSS2SWiS1SGqR1CKpRVKLpBZJLZJaJLVIapHUIqlFUoukFkktkloktUhqkdQiqUVSi6QWSS2SWiS1SGqR1CKpRVKLpBZJLZJaJLVIapHUIqlFUoukFkktkloktUhqkdQiqUVSi6QWSS2SWiS1SGqR1CKpRVKLpBZJLZJaJLVIapHUIqlFUoukFkktkloktUhqkdQiqUXSPxIUje7gftVVAAAAAElFTkSuQmCC</preview>
 <page width="595.27559" height="841.88976">
 <background type="solid" color="#ffffffff" style="plain"/>
 <layer>
 <link align="left" font="Sans" size="12" x="32" y="31" color="#ff00ffff" url="https://xournalpp.github.io">Simple Link</link>
-<link align="left" font="Sans" size="12" x="35" y="79" color="#ff00ffff" url="https://johndoe:secret@www.example.com:8080/documentation/index.html?p1=A&amp;p2=B#ressource">Multiline
+<link align="center" font="Sans" size="12" x="35" y="79" color="#ff00ffff" url="https://johndoe:secret@www.example.com:8080/documentation/index.html?p1=A&amp;p2=B#ressource">Multiline
 Link
 with three lines</link>
 <link align="left" font="Sans" size="12" x="36.919563" y="162.02367" color="#ff00ffff" url="http://見.香港/">Chinese characters: 测试</link>
-<link align="left" font="Sans" size="12" x="39" y="207" color="#ff00ffff" url="mailto:françois.rené@café-crème.fr">Other non-ASCII characters: Hæuñßéř, dǒńg-bǎǐ, łúčný, qǐng-wèn, vò-địâ</link>
+<link align="right" font="Sans" size="12" x="39" y="207" color="#ff00ffff" url="mailto:françois.rené@café-crème.fr">Other non-ASCII characters:
+Hæuñßéř, dǒńg-bǎǐ, łúčný, qǐng-wèn, vò-địâ</link>
 </layer>
 </page>
 </xournal>
