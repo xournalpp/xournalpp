@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.3.6~dev (Unreleased)
+
 ## 1.3.5
 
 * Fixed crash when exiting after playing sound (#7352)
