@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.3.5~dev (Unreleased)
+## 1.3.5
 
 * Fixed crash when exiting after playing sound (#7352)
 * Fixed some button-to-tools configuration issues (#7365)
