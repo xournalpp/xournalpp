@@ -801,18 +801,20 @@ TEST(ControlLoadHandler, testUrlLink) {
     auto elements = layer->getElementsView();
     ASSERT_EQ((size_t)4, layer->getElementsView().size());
 
-    auto check_link = [&](size_t i, const auto* text, const auto* url) {
+    auto check_link = [&](size_t i, const auto* text, const auto* url, LinkAlignment align) {
         EXPECT_EQ(ELEMENT_LINK, elements[i]->getType());
         auto* link = dynamic_cast<const Link*>(elements[i]);
         ASSERT_NE(link, nullptr);
         EXPECT_STREQ(link->getText().c_str(), char_cast(text));
         EXPECT_STREQ(link->getUrl().c_str(), char_cast(url));
+        EXPECT_EQ(link->getAlignment(), align);
     };
 
-    check_link(0, u8"Simple Link", u8"https://xournalpp.github.io");
+    check_link(0, u8"Simple Link", u8"https://xournalpp.github.io", LinkAlignment::LEFT);
     check_link(1, u8"Multiline\nLink\nwith three lines",
-               u8"https://johndoe:secret@www.example.com:8080/documentation/index.html?p1=A&p2=B#ressource");
-    check_link(2, u8"Chinese characters: 测试", u8"http://見.香港/");
-    check_link(3, u8"Other non-ASCII characters: Hæuñßéř, dǒńg-bǎǐ, łúčný, qǐng-wèn, vò-địâ",
-               u8"mailto:françois.rené@café-crème.fr");
+               u8"https://johndoe:secret@www.example.com:8080/documentation/index.html?p1=A&p2=B#ressource",
+               LinkAlignment::CENTER);
+    check_link(2, u8"Chinese characters: 测试", u8"http://見.香港/", LinkAlignment::LEFT);
+    check_link(3, u8"Other non-ASCII characters:\nHæuñßéř, dǒńg-bǎǐ, łúčný, qǐng-wèn, vò-địâ",
+               u8"mailto:françois.rené@café-crème.fr", LinkAlignment::RIGHT);
 }
