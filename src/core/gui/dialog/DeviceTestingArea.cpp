@@ -133,7 +133,7 @@ static void draw(GtkDrawingArea*, cairo_t* cr, int width, int height, gpointer l
 static void saveLog(const std::stringstream& fullLog, const std::stringstream& ellipsizedLog,
                     const std::stringstream& gdkeventslog, GtkWidget* parent, Settings* settings) {
 
-    auto pathValidation = [](fs::path& p, const char* filterName) {
+    auto pathValidation = [](fs::path& p, const char*) {
         Util::clearExtensions(p, ".zip");
         p += ".zip";
         return true;

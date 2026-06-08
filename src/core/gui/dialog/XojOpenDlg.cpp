@@ -252,10 +252,13 @@ void xoj::OpenDlg::showOpenImageDialog(GtkWindow* parent, Settings* settings,
                     }
                 },
                 [parent, settings, cb = std::move(callback)](fs::path path) mutable {
-                    if (auto folder = path.parent_path(); !folder.empty()) {
-                        settings->setLastImagePath(folder);
-                    }
-                    askAttachFile(parent, std::move(path), std::move(cb));
+                    askAttachFile(parent, std::move(path),
+                                  [settings, cb = std::move(cb)](fs::path p, bool attach) mutable {
+                                      if (auto folder = p.parent_path(); !folder.empty()) {
+                                          settings->setLastImagePath(folder);
+                                      }
+                                      cb(std::move(p), attach);
+                                  });
                 });
         return;
     }

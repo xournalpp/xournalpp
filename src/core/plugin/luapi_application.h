@@ -280,7 +280,7 @@ static int applib_fileDialogSave(lua_State* L) {
         suggestedPath = "." / suggestedPath;
     }
 
-    auto pathValidation = [](fs::path& p, const char* filterName) { return true; };
+    auto pathValidation = [](fs::path&, const char*) { return true; };
 
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* ctrl = plugin->getControl();
