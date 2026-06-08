@@ -1,13 +1,51 @@
 #include "FileChooserFiltersHelper.h"
 
+#include <algorithm>
+#include <cctype>
+#include <string>
+
 #include "util/i18n.h"
 
 namespace xoj {
+namespace {
+void addExtensionPattern(GtkFileFilter* filter, const char* extension) {
+    std::string lowerPattern = "*";
+    lowerPattern += extension;
+    gtk_file_filter_add_pattern(filter, lowerPattern.c_str());
+
+    std::string upperExt = extension;
+    std::transform(upperExt.begin(), upperExt.end(), upperExt.begin(),
+                   [](unsigned char c) { return static_cast<char>(std::toupper(c)); });
+    if (upperExt != extension) {
+        std::string upperPattern = "*";
+        upperPattern += upperExt;
+        gtk_file_filter_add_pattern(filter, upperPattern.c_str());
+    }
+}
+}  // namespace
+
+bool useNativeFileChooser() {
+#if GTK_CHECK_VERSION(3, 20, 0) && (defined(_WIN32) || defined(__APPLE__))
+    return true;
+#else
+    return false;
+#endif
+}
+
 static void addMimeTypeFilter(GtkFileChooser* fc, const char* name, const char* mime) {
     GtkFileFilter* filterPdf = gtk_file_filter_new();
     gtk_file_filter_set_name(filterPdf, name);
     gtk_file_filter_add_mime_type(filterPdf, mime);
     gtk_file_chooser_add_filter(fc, filterPdf);
+}
+
+void addFilterByExtension(GtkFileChooser* fc, const char* name, std::initializer_list<const char*> extensions) {
+    GtkFileFilter* filter = gtk_file_filter_new();
+    gtk_file_filter_set_name(filter, name);
+    for (const char* extension: extensions) {
+        addExtensionPattern(filter, extension);
+    }
+    gtk_file_chooser_add_filter(fc, filter);
 }
 
 void addFilterAllFiles(GtkFileChooser* fc) {
@@ -16,6 +54,14 @@ void addFilterAllFiles(GtkFileChooser* fc) {
     gtk_file_filter_add_pattern(filterAll, "*");
     gtk_file_chooser_add_filter(fc, filterAll);
 }
+
+void addFilterSupportedByExtension(GtkFileChooser* fc) {
+    addFilterByExtension(fc, _("Supported files"), {".xopp", ".xoj", ".xopt", ".pdf", ".moj"});
+}
+void addFilterPdfByExtension(GtkFileChooser* fc) { addFilterByExtension(fc, _("PDF files"), {".pdf"}); }
+void addFilterXojByExtension(GtkFileChooser* fc) { addFilterByExtension(fc, _("Xournal files"), {".xoj"}); }
+void addFilterXoppByExtension(GtkFileChooser* fc) { addFilterByExtension(fc, _("Xournal++ files"), {".xopp"}); }
+void addFilterXoptByExtension(GtkFileChooser* fc) { addFilterByExtension(fc, _("Xournal++ template"), {".xopt"}); }
 
 void addFilterSupported(GtkFileChooser* fc) {
     GtkFileFilter* filterSupported = gtk_file_filter_new();

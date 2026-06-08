@@ -1,8 +1,10 @@
 #include "XojSaveDlg.h"
 
 #include <optional>
+#include <utility>
 
 #include "control/settings/Settings.h"
+#include "gui/dialog/FileChooserFiltersHelper.h"
 #include "util/PathUtil.h"            // for fromGFile, toGFile
 #include "util/PopupWindowWrapper.h"  // for PopupWindowWrapper
 #include "util/Util.h"
@@ -11,8 +13,6 @@
 #include "util/i18n.h"                // for _
 #include "util/raii/GObjectSPtr.h"    // for GObjectSPtr
 #include "util/raii/GtkWindowUPtr.h"  // for GtkWindowUPtr
-
-#include "FileChooserFiltersHelper.h"
 
 static GtkWindow* makeWindow(Settings* settings, fs::path suggestedPath, const char* windowTitle,
                              const char* buttonLabel) {
@@ -31,6 +31,13 @@ static GtkWindow* makeWindow(Settings* settings, fs::path suggestedPath, const c
     }
 
     return GTK_WINDOW(dialog);
+}
+
+static void setSuggestedSavePath(GtkFileChooser* fc, const fs::path& suggestedPath) {
+    if (!suggestedPath.empty()) {
+        gtk_file_chooser_set_current_folder(fc, Util::toGFile(suggestedPath.parent_path()).get(), nullptr);
+        gtk_file_chooser_set_current_name(fc, Util::toGFilename(suggestedPath.filename()).c_str());
+    }
 }
 
 xoj::SaveExportDialog::SaveExportDialog(Settings* settings, fs::path suggestedPath, const char* windowTitle,
@@ -81,6 +88,37 @@ static bool xoppPathValidation(fs::path& p, const char*) {
 
 void xoj::SaveExportDialog::showSaveFileDialog(GtkWindow* parent, Settings* settings, fs::path suggestedPath,
                                                std::function<void(std::optional<fs::path>)> callback) {
+#if GTK_CHECK_VERSION(3, 20, 0)
+    if (xoj::useNativeFileChooser()) {
+        xoj::util::GObjectSPtr<GtkFileChooserNative> dialog(
+                gtk_file_chooser_native_new(_("Save File"), parent, GTK_FILE_CHOOSER_ACTION_SAVE, _("Save"),
+                                            _("_Cancel")),
+                xoj::util::adopt);
+        auto* fc = GTK_FILE_CHOOSER(dialog.get());
+
+        setSuggestedSavePath(fc, suggestedPath);
+        gtk_file_chooser_set_do_overwrite_confirmation(fc, TRUE);
+        xoj::addFilterXoppByExtension(fc);
+
+        if (gtk_native_dialog_run(GTK_NATIVE_DIALOG(dialog.get())) != GTK_RESPONSE_ACCEPT) {
+            callback(std::nullopt);
+            return;
+        }
+
+        auto file =
+                Util::fromGFile(xoj::util::GObjectSPtr<GFile>(gtk_file_chooser_get_file(fc), xoj::util::adopt).get());
+        if (!xoppPathValidation(file, nullptr)) {
+            callback(std::nullopt);
+            return;
+        }
+
+        XojMsgBox::replaceFileQuestion(
+                parent, std::move(file), [callback](const fs::path& path) { callback(path); },
+                [callback] { callback(std::nullopt); });
+        return;
+    }
+#endif
+
     auto popup = xoj::popup::PopupWindowWrapper<SaveExportDialog>(settings, std::move(suggestedPath), _("Save File"),
                                                                   _("Save"), xoppPathValidation, std::move(callback));
 

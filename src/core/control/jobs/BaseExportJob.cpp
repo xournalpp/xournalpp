@@ -8,19 +8,28 @@
 #include "control/jobs/BlockingJob.h"   // for BlockingJob
 #include "control/settings/Settings.h"  // for Settings
 #include "gui/MainWindow.h"             // for MainWindow
+#include "gui/dialog/FileChooserFiltersHelper.h"
 #include "gui/dialog/XojSaveDlg.h"
-#include "model/Document.h"             // for Document, Document::PDF
-#include "util/PathUtil.h"              // for clearExtensions
-#include "util/PopupWindowWrapper.h"    // for PopupWindowWrapper
-#include "util/XojMsgBox.h"             // for XojMsgBox
-#include "util/glib_casts.h"            // for wrap_for_g_callback_v
-#include "util/i18n.h"                  // for _, FS, _F
+#include "model/Document.h"           // for Document, Document::PDF
+#include "util/PathUtil.h"            // for clearExtensions
+#include "util/PopupWindowWrapper.h"  // for PopupWindowWrapper
+#include "util/Util.h"                // for fromGFile, toGFile
+#include "util/XojMsgBox.h"           // for XojMsgBox
+#include "util/glib_casts.h"          // for wrap_for_g_callback_v
+#include "util/i18n.h"                // for _, FS, _F
+#include "util/raii/GObjectSPtr.h"    // for GObjectSPtr
 
 BaseExportJob::BaseExportJob(Control* control, const std::string& name): BlockingJob(control, name) {}
 
 BaseExportJob::~BaseExportJob() = default;
 
-void BaseExportJob::addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const std::string& mime) {
+void BaseExportJob::addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const std::string& mime,
+                                          const std::string& extension) {
+    if (xoj::useNativeFileChooser()) {
+        xoj::addFilterByExtension(dialog, name.c_str(), {extension.c_str()});
+        return;
+    }
+
     GtkFileFilter* filter = gtk_file_filter_new();
     gtk_file_filter_set_name(filter, name.c_str());
     gtk_file_filter_add_mime_type(filter, mime.c_str());
@@ -73,6 +82,42 @@ void BaseExportJob::showFileChooser(std::function<void()> onFileSelected, std::f
             onCancel();
         }
     };
+
+#if GTK_CHECK_VERSION(3, 20, 0)
+    if (xoj::useNativeFileChooser()) {
+        xoj::util::GObjectSPtr<GtkFileChooserNative> dialog(
+                gtk_file_chooser_native_new(_("Export File"), GTK_WINDOW(this->control->getWindow()->getWindow()),
+                                            GTK_FILE_CHOOSER_ACTION_SAVE, _("Export"), _("_Cancel")),
+                xoj::util::adopt);
+        auto* fc = GTK_FILE_CHOOSER(dialog.get());
+
+        if (!suggestedPath.empty()) {
+            gtk_file_chooser_set_current_folder(fc, Util::toGFile(suggestedPath.parent_path()).get(), nullptr);
+            gtk_file_chooser_set_current_name(fc, Util::toGFilename(suggestedPath.filename()).c_str());
+        }
+        gtk_file_chooser_set_do_overwrite_confirmation(fc, TRUE);
+        addFilterToDialog(fc);
+
+        if (gtk_native_dialog_run(GTK_NATIVE_DIALOG(dialog.get())) != GTK_RESPONSE_ACCEPT) {
+            callback(std::nullopt);
+            return;
+        }
+
+        auto file =
+                Util::fromGFile(xoj::util::GObjectSPtr<GFile>(gtk_file_chooser_get_file(fc), xoj::util::adopt).get());
+        auto* filter = gtk_file_chooser_get_filter(fc);
+        const char* filterName = filter ? gtk_file_filter_get_name(filter) : nullptr;
+
+        if (pathValidation(file, filterName)) {
+            XojMsgBox::replaceFileQuestion(
+                    GTK_WINDOW(this->control->getWindow()->getWindow()), std::move(file),
+                    [callback](const fs::path& path) { callback(path); }, [callback] { callback(std::nullopt); });
+        } else {
+            callback(std::nullopt);
+        }
+        return;
+    }
+#endif
 
     auto popup = xoj::popup::PopupWindowWrapper<xoj::SaveExportDialog>(control->getSettings(), std::move(suggestedPath),
                                                                        _("Export File"), _("Export"),

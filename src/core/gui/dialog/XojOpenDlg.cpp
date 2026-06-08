@@ -1,5 +1,7 @@
 #include "XojOpenDlg.h"
 
+#include <optional>
+
 #include "control/settings/Settings.h"  // for Settings
 #include "util/PathUtil.h"              // for fromGFile, toGFile
 #include "util/PopupWindowWrapper.h"    // for PopupWindowWrapper
@@ -82,6 +84,23 @@ static GtkWindow* makeWindow(const char* title) {
     return GTK_WINDOW(win);
 }
 
+#if GTK_CHECK_VERSION(3, 20, 0)
+static std::optional<fs::path> runNativeOpenDialog(GtkWindow* parent, const char* title,
+                                                   std::function<void(GtkFileChooser*)> configure) {
+    xoj::util::GObjectSPtr<GtkFileChooserNative> dialog(
+            gtk_file_chooser_native_new(title, parent, GTK_FILE_CHOOSER_ACTION_OPEN, _("_Open"), _("_Cancel")),
+            xoj::util::adopt);
+    auto* fc = GTK_FILE_CHOOSER(dialog.get());
+    configure(fc);
+
+    if (gtk_native_dialog_run(GTK_NATIVE_DIALOG(dialog.get())) != GTK_RESPONSE_ACCEPT) {
+        return std::nullopt;
+    }
+
+    return Util::fromGFile(xoj::util::GObjectSPtr<GFile>(gtk_file_chooser_get_file(fc), xoj::util::adopt).get());
+}
+#endif
+
 FileDlg::FileDlg(const char* title, std::function<void(fs::path, bool)> callback):
         window(makeWindow(title)), callback(std::move(callback)) {
     this->signalId = g_signal_connect(
@@ -120,6 +139,21 @@ FileDlg::FileDlg(const char* title, std::function<void(fs::path)> callback):
 
 void xoj::OpenDlg::showOpenTemplateDialog(GtkWindow* parent, Settings* settings,
                                           std::function<void(fs::path)> callback) {
+#if GTK_CHECK_VERSION(3, 20, 0)
+    if (xoj::useNativeFileChooser()) {
+        auto cb = addSetLastSavePathToCallback(std::move(callback), settings);
+        auto path = runNativeOpenDialog(parent, _("Open template file"), [settings](GtkFileChooser* fc) {
+            xoj::addFilterAllFiles(fc);
+            xoj::addFilterXoptByExtension(fc);
+            setCurrentFolderToLastOpenPath(fc, settings);
+        });
+        if (path) {
+            cb(std::move(*path));
+        }
+        return;
+    }
+#endif
+
     auto popup = xoj::popup::PopupWindowWrapper<FileDlg>(_("Open template file"),
                                                          addSetLastSavePathToCallback(std::move(callback), settings));
 
@@ -133,6 +167,25 @@ void xoj::OpenDlg::showOpenTemplateDialog(GtkWindow* parent, Settings* settings,
 
 
 void xoj::OpenDlg::showOpenFileDialog(GtkWindow* parent, Settings* settings, std::function<void(fs::path)> callback) {
+#if GTK_CHECK_VERSION(3, 20, 0)
+    if (xoj::useNativeFileChooser()) {
+        auto cb = addSetLastSavePathToCallback(std::move(callback), settings);
+        auto path = runNativeOpenDialog(parent, _("Open file"), [settings](GtkFileChooser* fc) {
+            xoj::addFilterSupportedByExtension(fc);
+            xoj::addFilterXojByExtension(fc);
+            xoj::addFilterXoptByExtension(fc);
+            xoj::addFilterXoppByExtension(fc);
+            xoj::addFilterPdfByExtension(fc);
+            xoj::addFilterAllFiles(fc);
+            setCurrentFolderToLastOpenPath(fc, settings);
+        });
+        if (path) {
+            cb(std::move(*path));
+        }
+        return;
+    }
+#endif
+
     auto popup = xoj::popup::PopupWindowWrapper<FileDlg>(_("Open file"),
                                                          addSetLastSavePathToCallback(std::move(callback), settings));
 
@@ -194,6 +247,25 @@ void xoj::OpenDlg::showOpenImageDialog(GtkWindow* parent, Settings* settings,
 
 void xoj::OpenDlg::showMultiFormatDialog(GtkWindow* parent, std::vector<std::string> formats,
                                          std::function<void(fs::path)> callback) {
+#if GTK_CHECK_VERSION(3, 20, 0)
+    if (xoj::useNativeFileChooser()) {
+        auto path = runNativeOpenDialog(parent, _("Open file"), [&formats](GtkFileChooser* fc) {
+            if (!formats.empty()) {
+                GtkFileFilter* filterSupported = gtk_file_filter_new();
+                gtk_file_filter_set_name(filterSupported, _("Supported files"));
+                for (const std::string& format: formats) {
+                    gtk_file_filter_add_pattern(filterSupported, format.c_str());
+                }
+                gtk_file_chooser_add_filter(fc, filterSupported);
+            }
+        });
+        if (path) {
+            callback(std::move(*path));
+        }
+        return;
+    }
+#endif
+
     auto popup = xoj::popup::PopupWindowWrapper<FileDlg>(_("Open file"), std::move(callback));
 
     auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getWindow());

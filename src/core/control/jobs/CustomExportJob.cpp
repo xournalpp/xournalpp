@@ -10,19 +10,23 @@
 #include "control/xojfile/XojExportHandler.h"  // for XojExportHandler
 #include "gui/MainWindow.h"                    // for MainWindow
 #include "gui/dialog/ExportDialog.h"           // for ExportDialog
-#include "model/Document.h"                    // for Document
-#include "pdf/base/XojPdfExport.h"             // for XojPdfExport
-#include "pdf/base/XojPdfExportFactory.h"      // for XojPdfExportFactory
-#include "util/PathUtil.h"                     // for clearExtensions
-#include "util/PopupWindowWrapper.h"           // for PopupWindowWrapper
-#include "util/Util.h"                         // for execInUiThread
-#include "util/XojMsgBox.h"                    // for XojMsgBox
-#include "util/i18n.h"                         // for _, FS, _F
+#include "gui/dialog/FileChooserFiltersHelper.h"
+#include "model/Document.h"                // for Document
+#include "pdf/base/XojPdfExport.h"         // for XojPdfExport
+#include "pdf/base/XojPdfExportFactory.h"  // for XojPdfExportFactory
+#include "util/PathUtil.h"                 // for clearExtensions
+#include "util/PopupWindowWrapper.h"       // for PopupWindowWrapper
+#include "util/Util.h"                     // for execInUiThread
+#include "util/XojMsgBox.h"                // for XojMsgBox
+#include "util/i18n.h"                     // for _, FS, _F
 
 #include "ImageExport.h"  // for ImageExport, EXPORT_GR...
 #include "SaveJob.h"      // for SaveJob
 #include "XournalScheduler.h"
 
+namespace {
+constexpr int FILTER_RESPONSE_OFFSET = 1000;
+}
 
 CustomExportJob::CustomExportJob(Control* control): BaseExportJob(control, _("Custom Export")) {
     // Supported filters
@@ -35,13 +39,23 @@ CustomExportJob::CustomExportJob(Control* control): BaseExportJob(control, _("Cu
 CustomExportJob::~CustomExportJob() = default;
 
 void CustomExportJob::addFilterToDialog(GtkFileChooser* dialog) {
+    if (xoj::useNativeFileChooser() && !chosenFilterName.empty()) {
+        const auto& filter = filters.at(chosenFilterName);
+        addFileFilterToDialog(dialog, chosenFilterName, filter.mimeType, filter.extension);
+        return;
+    }
+
     // Runs on every filter inside the filters map
     for (auto& filter: filters) {
-        addFileFilterToDialog(dialog, filter.first, filter.second.mimeType);
+        addFileFilterToDialog(dialog, filter.first, filter.second.mimeType, filter.second.extension);
     }
 }
 
 void CustomExportJob::setExtensionFromFilter(fs::path& file, const char* filterName) const {
+    if (!chosenFilterName.empty()) {
+        filterName = chosenFilterName.c_str();
+    }
+
     // Extract the file filter selected
     const auto& chosenFilter = filters.at(filterName);
 
@@ -51,6 +65,32 @@ void CustomExportJob::setExtensionFromFilter(fs::path& file, const char* filterN
 }
 
 void CustomExportJob::showDialogAndRun() {
+    if (xoj::useNativeFileChooser()) {
+        GtkWidget* dialog =
+                gtk_message_dialog_new(GTK_WINDOW(control->getWindow()->getWindow()), GTK_DIALOG_MODAL,
+                                       GTK_MESSAGE_QUESTION, GTK_BUTTONS_CANCEL, "%s", _("Select export format"));
+        int response = FILTER_RESPONSE_OFFSET;
+        for (const auto& filter: filters) {
+            gtk_dialog_add_button(GTK_DIALOG(dialog), filter.first.c_str(), response++);
+        }
+
+        response = gtk_dialog_run(GTK_DIALOG(dialog));
+        gtk_widget_destroy(dialog);
+
+        if (response < FILTER_RESPONSE_OFFSET) {
+            control->unblock();
+            unref();
+            return;
+        }
+
+        auto filter = std::next(filters.begin(), response - FILTER_RESPONSE_OFFSET);
+        if (filter == filters.end()) {
+            control->unblock();
+            unref();
+            return;
+        }
+        chosenFilterName = filter->first;
+    }
 
     auto onFileSelected = [job = this]() {
         Util::execInUiThread([job]() {
