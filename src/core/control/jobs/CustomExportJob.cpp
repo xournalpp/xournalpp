@@ -11,6 +11,7 @@
 #include "gui/MainWindow.h"                    // for MainWindow
 #include "gui/dialog/ExportDialog.h"           // for ExportDialog
 #include "gui/dialog/FileChooserFiltersHelper.h"
+#include "gui/dialog/NativeFileChooserHelper.h"
 #include "model/Document.h"                // for Document
 #include "pdf/base/XojPdfExport.h"         // for XojPdfExport
 #include "pdf/base/XojPdfExportFactory.h"  // for XojPdfExportFactory
@@ -65,84 +66,88 @@ void CustomExportJob::setExtensionFromFilter(fs::path& file, const char* filterN
 }
 
 void CustomExportJob::showDialogAndRun() {
-    if (xoj::useNativeFileChooser()) {
-        GtkWidget* dialog =
-                gtk_message_dialog_new(GTK_WINDOW(control->getWindow()->getWindow()), GTK_DIALOG_MODAL,
-                                       GTK_MESSAGE_QUESTION, GTK_BUTTONS_CANCEL, "%s", _("Select export format"));
-        int response = FILTER_RESPONSE_OFFSET;
-        for (const auto& filter: filters) {
-            gtk_dialog_add_button(GTK_DIALOG(dialog), filter.first.c_str(), response++);
-        }
+    auto showFileChooser = [job = this]() {
+        auto onFileSelected = [job]() {
+            Util::execInUiThread([job]() {
+                if (job->filepath.extension() == ".xoj") {
+                    job->exportTypeXoj = true;
+                    job->control->getScheduler()->addJob(job, JOB_PRIORITY_NONE);
+                    return;
+                }
 
-        response = gtk_dialog_run(GTK_DIALOG(dialog));
-        gtk_widget_destroy(dialog);
+                if (auto ext = job->filepath.extension(); ext == ".pdf") {
+                    job->format = EXPORT_GRAPHICS_PDF;
+                } else if (ext == ".svg") {
+                    job->format = EXPORT_GRAPHICS_SVG;
+                } else if (ext == ".png") {
+                    job->format = EXPORT_GRAPHICS_PNG;
+                } else {
+                    g_warning("Unknown extension");
+                }
 
-        if (response < FILTER_RESPONSE_OFFSET) {
-            control->unblock();
-            unref();
-            return;
-        }
+                auto* ctrl = job->control;
+                xoj::popup::PopupWindowWrapper<xoj::popup::ExportDialog> popup(
+                        ctrl->getGladeSearchPath(), job->format, ctrl->getCurrentPageNo() + 1,
+                        ctrl->getDocument()->getPageCount(), !ctrl->getDocument()->getPdfFilepath().empty(),
+                        [job](const xoj::popup::ExportDialog& dialog) {
+                            if (dialog.isConfirmed()) {
+                                job->exportRange = dialog.getRange();
+                                job->progressiveMode = dialog.progressiveModeSelected();
+                                job->exportBackground = dialog.getBackgroundType();
+                                job->pdfExportBackend = dialog.getPdfExportBackend();
 
-        auto filter = std::next(filters.begin(), response - FILTER_RESPONSE_OFFSET);
-        if (filter == filters.end()) {
-            control->unblock();
-            unref();
-            return;
-        }
-        chosenFilterName = filter->first;
+                                if (job->format == EXPORT_GRAPHICS_PNG) {
+                                    job->pngQualityParameter = dialog.getPngQualityParameter();
+                                }
+
+                                job->control->getScheduler()->addJob(job, JOB_PRIORITY_NONE);
+                            } else {
+                                // The job blocked, so we have to unblock, because the job
+                                // unblocks only after run
+                                job->control->unblock();
+                            }
+                            job->unref();
+                        });
+                popup.show(GTK_WINDOW(job->control->getWindow()->getWindow()));
+            });
+        };
+
+        auto onCancel = [job]() {
+            job->control->unblock();
+            job->unref();
+        };
+
+        job->BaseExportJob::showFileChooser(std::move(onFileSelected), std::move(onCancel));
+    };
+
+    if (!xoj::NativeFileChooser::isAvailable()) {
+        showFileChooser();
+        return;
     }
 
-    auto onFileSelected = [job = this]() {
-        Util::execInUiThread([job]() {
-            if (job->filepath.extension() == ".xoj") {
-                job->exportTypeXoj = true;
-                job->control->getScheduler()->addJob(job, JOB_PRIORITY_NONE);
-                return;
-            }
+    std::vector<XojMsgBox::Button> buttons = {{_("_Cancel"), GTK_RESPONSE_CANCEL}};
+    int response = FILTER_RESPONSE_OFFSET;
+    for (const auto& filter: filters) {
+        buttons.emplace_back(filter.first, response++);
+    }
 
-            if (auto ext = job->filepath.extension(); ext == ".pdf") {
-                job->format = EXPORT_GRAPHICS_PDF;
-            } else if (ext == ".svg") {
-                job->format = EXPORT_GRAPHICS_SVG;
-            } else if (ext == ".png") {
-                job->format = EXPORT_GRAPHICS_PNG;
-            } else {
-                g_warning("Unknown extension");
-            }
+    XojMsgBox::askQuestion(GTK_WINDOW(control->getWindow()->getWindow()), _("Select export format"), "", buttons,
+                           [job = this, showFileChooser = std::move(showFileChooser)](int response) mutable {
+                               if (response < FILTER_RESPONSE_OFFSET) {
+                                   job->control->unblock();
+                                   job->unref();
+                                   return;
+                               }
 
-            auto* ctrl = job->control;
-            xoj::popup::PopupWindowWrapper<xoj::popup::ExportDialog> popup(
-                    ctrl->getGladeSearchPath(), job->format, ctrl->getCurrentPageNo() + 1,
-                    ctrl->getDocument()->getPageCount(), !ctrl->getDocument()->getPdfFilepath().empty(),
-                    [job](const xoj::popup::ExportDialog& dialog) {
-                        if (dialog.isConfirmed()) {
-                            job->exportRange = dialog.getRange();
-                            job->progressiveMode = dialog.progressiveModeSelected();
-                            job->exportBackground = dialog.getBackgroundType();
-                            job->pdfExportBackend = dialog.getPdfExportBackend();
-
-                            if (job->format == EXPORT_GRAPHICS_PNG) {
-                                job->pngQualityParameter = dialog.getPngQualityParameter();
-                            }
-
-                            job->control->getScheduler()->addJob(job, JOB_PRIORITY_NONE);
-                        } else {
-                            // The job blocked, so we have to unblock, because the job
-                            // unblocks only after run
-                            job->control->unblock();
-                        }
-                        job->unref();
-                    });
-            popup.show(GTK_WINDOW(job->control->getWindow()->getWindow()));
-        });
-    };
-
-    auto onCancel = [job = this]() {
-        job->control->unblock();
-        job->unref();
-    };
-
-    BaseExportJob::showFileChooser(std::move(onFileSelected), std::move(onCancel));
+                               auto filter = std::next(job->filters.begin(), response - FILTER_RESPONSE_OFFSET);
+                               if (filter == job->filters.end()) {
+                                   job->control->unblock();
+                                   job->unref();
+                                   return;
+                               }
+                               job->chosenFilterName = filter->first;
+                               showFileChooser();
+                           });
 }
 
 /**

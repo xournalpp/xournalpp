@@ -6,6 +6,8 @@
 
 #include "util/i18n.h"
 
+#include "NativeFileChooserHelper.h"
+
 namespace xoj {
 namespace {
 void addExtensionPattern(GtkFileFilter* filter, const char* extension) {
@@ -24,13 +26,7 @@ void addExtensionPattern(GtkFileFilter* filter, const char* extension) {
 }
 }  // namespace
 
-bool useNativeFileChooser() {
-#if GTK_CHECK_VERSION(3, 20, 0) && (defined(_WIN32) || defined(__APPLE__))
-    return true;
-#else
-    return false;
-#endif
-}
+bool useNativeFileChooser() { return xoj::NativeFileChooser::isAvailable(); }
 
 static void addMimeTypeFilter(GtkFileChooser* fc, const char* name, const char* mime) {
     GtkFileFilter* filterPdf = gtk_file_filter_new();
@@ -62,6 +58,25 @@ void addFilterPdfByExtension(GtkFileChooser* fc) { addFilterByExtension(fc, _("P
 void addFilterXojByExtension(GtkFileChooser* fc) { addFilterByExtension(fc, _("Xournal files"), {".xoj"}); }
 void addFilterXoppByExtension(GtkFileChooser* fc) { addFilterByExtension(fc, _("Xournal++ files"), {".xopp"}); }
 void addFilterXoptByExtension(GtkFileChooser* fc) { addFilterByExtension(fc, _("Xournal++ template"), {".xopt"}); }
+void addFilterImagesByExtension(GtkFileChooser* fc) {
+    GtkFileFilter* filter = gtk_file_filter_new();
+    gtk_file_filter_set_name(filter, _("Image files"));
+
+    GSList* formats = gdk_pixbuf_get_formats();
+    for (GSList* iter = formats; iter != nullptr; iter = iter->next) {
+        auto* format = static_cast<GdkPixbufFormat*>(iter->data);
+        char** extensions = gdk_pixbuf_format_get_extensions(format);
+        for (char** extension = extensions; extension && *extension; extension++) {
+            std::string patternExtension = ".";
+            patternExtension += *extension;
+            addExtensionPattern(filter, patternExtension.c_str());
+        }
+        g_strfreev(extensions);
+    }
+    g_slist_free(formats);
+
+    gtk_file_chooser_add_filter(fc, filter);
+}
 
 void addFilterSupported(GtkFileChooser* fc) {
     GtkFileFilter* filterSupported = gtk_file_filter_new();

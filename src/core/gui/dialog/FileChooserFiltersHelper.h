@@ -24,6 +24,7 @@ void addFilterPdfByExtension(GtkFileChooser* fc);
 void addFilterXojByExtension(GtkFileChooser* fc);
 void addFilterXoppByExtension(GtkFileChooser* fc);
 void addFilterXoptByExtension(GtkFileChooser* fc);
+void addFilterImagesByExtension(GtkFileChooser* fc);
 void addFilterSupported(GtkFileChooser* fc);
 void addFilterPdf(GtkFileChooser* fc);
 void addFilterXoj(GtkFileChooser* fc);
