@@ -1,21 +1,17 @@
 #include "XojOpenDlg.h"
 
-#include <cstring>  // for strcmp
-#include <utility>
-
 #include "control/settings/Settings.h"  // for Settings
 #include "util/PathUtil.h"              // for fromGFile, toGFile
-#include "util/Util.h"                  // for execInUiThread
-#include "util/gtk4_helper.h"           // for gtk_file_chooser_set_current_folder
-#include "util/i18n.h"                  // for _
-#include "util/raii/GObjectSPtr.h"      // for GObjectSPtr
+#include "util/PopupWindowWrapper.h"    // for PopupWindowWrapper
+#include "util/Util.h"
+#include "util/gtk4_helper.h"         // for gtk_file_chooser_set_current_folder
+#include "util/i18n.h"                // for _
+#include "util/raii/GObjectSPtr.h"    // for GObjectSPtr
+#include "util/raii/GtkWindowUPtr.h"  // for GtkWindowUPtr
 
 #include "FileChooserFiltersHelper.h"
-#include "NativeFileChooserHelper.h"
 
-namespace {
-
-void addlastSavePathShortcut(GtkFileChooser* fc, Settings* settings) {
+static void addlastSavePathShortcut(GtkFileChooser* fc, Settings* settings) {
     auto lastSavePath = settings->getLastSavePath();
     if (!lastSavePath.empty()) {
 #if GTK_MAJOR_VERSION == 3
@@ -26,7 +22,7 @@ void addlastSavePathShortcut(GtkFileChooser* fc, Settings* settings) {
     }
 }
 
-void setCurrentFolderToLastOpenPath(GtkFileChooser* fc, Settings* settings) {
+static void setCurrentFolderToLastOpenPath(GtkFileChooser* fc, Settings* settings) {
     xoj::util::GObjectSPtr<GFile> currentFolder;
     if (settings && !settings->getLastOpenPath().empty()) {
         currentFolder = Util::toGFile(settings->getLastOpenPath());
@@ -37,8 +33,8 @@ void setCurrentFolderToLastOpenPath(GtkFileChooser* fc, Settings* settings) {
 }
 
 template <class... Args>
-std::function<void(fs::path, Args...)> addSetLastSavePathToCallback(std::function<void(fs::path, Args...)> callback,
-                                                                    Settings* settings) {
+static std::function<void(fs::path, Args...)> addSetLastSavePathToCallback(
+        std::function<void(fs::path, Args...)> callback, Settings* settings) {
     return [cb = std::move(callback), settings](fs::path path, Args... args) {
         if (settings && !path.empty()) {
             settings->setLastOpenPath(path.parent_path());
@@ -47,66 +43,100 @@ std::function<void(fs::path, Args...)> addSetLastSavePathToCallback(std::functio
     };
 }
 
-constexpr auto ATTACH_CHOICE_ID = "attachPdfChoice";
 
-void addAttachChoice(GtkFileChooser* fc) {
-    // Native backends vary in how much GtkFileChooser "choice" UI they can expose. If a
-    // backend can't render the toggle, the stored default ("false") is still returned by
-    // gtk_file_chooser_get_choice() when the response handler reads it back, so the flow
-    // degrades gracefully.
+constexpr auto ATTACH_CHOICE_ID = "attachPdfChoice";
+static void addAttachChoice(GtkFileChooser* fc) {
     gtk_file_chooser_add_choice(fc, ATTACH_CHOICE_ID, _("Attach file to the journal"), nullptr, nullptr);
     gtk_file_chooser_set_choice(fc, ATTACH_CHOICE_ID, "false");
 }
 
-xoj::util::GObjectSPtr<GtkFileChooserNative> makeOpenDialog(const char* title) {
-    return xoj::util::GObjectSPtr<GtkFileChooserNative>(
-            gtk_file_chooser_native_new(title, nullptr, GTK_FILE_CHOOSER_ACTION_OPEN, nullptr, nullptr),
-            xoj::util::adopt);
+// Helper class, for a single open dialog
+class FileDlg {
+public:
+    /**
+     * Creates an open file dialog. The callback is only called if a file is actually chosen
+     * @param callback(path, attachPdf)
+     */
+    FileDlg(const char* title, std::function<void(fs::path, bool)> callback);
+    /**
+     * Creates an open file dialog. The callback is only called if a file is actually chosen
+     * @param callback(path)
+     */
+    FileDlg(const char* title, std::function<void(fs::path)> callback);
+    ~FileDlg() = default;
+
+    inline GtkWindow* getWindow() const { return window.get(); }
+
+private:
+    xoj::util::GtkWindowUPtr window;
+
+    std::function<void(fs::path, bool)> callback;
+    gulong signalId{};
+};
+
+static GtkWindow* makeWindow(const char* title) {
+    // Todo(maybe)
+    // Restore previews using https://discourse.gnome.org/t/file-chooser-gtk-4-image-preview/11510/2
+    auto* win = gtk_file_chooser_dialog_new(title, nullptr, GTK_FILE_CHOOSER_ACTION_OPEN, _("_Cancel"),
+                                            GTK_RESPONSE_CANCEL, _("_Open"), GTK_RESPONSE_OK, nullptr);
+    return GTK_WINDOW(win);
 }
 
-/// Build a response handler that extracts the selected path and the attach-choice, then forwards
-/// them to @p callback. The callback is posted via Util::execInUiThread so that any follow-up
-/// dialog is spawned after the native chooser is fully destroyed.
-auto makeOpenHandler(std::function<void(fs::path, bool)> callback)
-        -> xoj::util::move_only_function<void(GtkFileChooser*, gint)> {
-    return [cb = std::move(callback)](GtkFileChooser* fc, gint response) mutable {
-        if (response != GTK_RESPONSE_ACCEPT) {
-            return;
-        }
-        auto path =
-                Util::fromGFile(xoj::util::GObjectSPtr<GFile>(gtk_file_chooser_get_file(fc), xoj::util::adopt).get());
+FileDlg::FileDlg(const char* title, std::function<void(fs::path, bool)> callback):
+        window(makeWindow(title)), callback(std::move(callback)) {
+    this->signalId = g_signal_connect(
+            window.get(), "response", G_CALLBACK(+[](GtkDialog* win, int response, gpointer data) {
+                auto* self = static_cast<FileDlg*>(data);
 
-        bool attach = false;
-        if (const char* choice = gtk_file_chooser_get_choice(fc, ATTACH_CHOICE_ID)) {
-            attach = std::strcmp(choice, "true") == 0;
-        }
+                if (response == GTK_RESPONSE_OK) {
+                    auto path =
+                            Util::fromGFile(xoj::util::GObjectSPtr<GFile>(
+                                                    gtk_file_chooser_get_file(GTK_FILE_CHOOSER(win)), xoj::util::adopt)
+                                                    .get());
 
-        Util::execInUiThread(
-                [cb = std::move(cb), path = std::move(path), attach]() mutable { cb(std::move(path), attach); });
-    };
+                    bool attach = false;
+                    if (const char* choice = gtk_file_chooser_get_choice(GTK_FILE_CHOOSER(win), ATTACH_CHOICE_ID);
+                        choice) {
+                        attach = std::strcmp(choice, "true") == 0;
+                    }
+
+                    // We need to call gtk_window_close() before invoking the callback, because if the callback pops up
+                    // another dialog, the first one won't close...
+                    // So we postpone the callback
+                    Util::execInUiThread([cb = std::move(self->callback), path = std::move(path), attach]() {
+                        cb(std::move(path), attach);
+                    });
+                }
+                // Closing the window causes another "response" signal, which we want to ignore
+                g_signal_handler_disconnect(win, self->signalId);
+                gtk_window_close(self->getWindow());  // Destroys *self. Beware!
+            }),
+            this);
 }
 
-}  // namespace
+FileDlg::FileDlg(const char* title, std::function<void(fs::path)> callback):
+        FileDlg(title, [cb = std::move(callback)](fs::path path, bool) { cb(std::move(path)); }) {}
+
 
 void xoj::OpenDlg::showOpenTemplateDialog(GtkWindow* parent, Settings* settings,
                                           std::function<void(fs::path)> callback) {
-    auto dialog = makeOpenDialog(_("Open template file"));
-    auto* fc = GTK_FILE_CHOOSER(dialog.get());
+    auto popup = xoj::popup::PopupWindowWrapper<FileDlg>(_("Open template file"),
+                                                         addSetLastSavePathToCallback(std::move(callback), settings));
 
+    auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getWindow());
     xoj::addFilterAllFiles(fc);
     xoj::addFilterXopt(fc);
     setCurrentFolderToLastOpenPath(fc, settings);
 
-    auto wrapped = addSetLastSavePathToCallback(std::move(callback), settings);
-    xoj::dlg::showNativeFileChooser(
-            std::move(dialog), parent,
-            makeOpenHandler([cb = std::move(wrapped)](fs::path path, bool) mutable { cb(std::move(path)); }));
+    popup.show(parent);
 }
 
-void xoj::OpenDlg::showOpenFileDialog(GtkWindow* parent, Settings* settings, std::function<void(fs::path)> callback) {
-    auto dialog = makeOpenDialog(_("Open file"));
-    auto* fc = GTK_FILE_CHOOSER(dialog.get());
 
+void xoj::OpenDlg::showOpenFileDialog(GtkWindow* parent, Settings* settings, std::function<void(fs::path)> callback) {
+    auto popup = xoj::popup::PopupWindowWrapper<FileDlg>(_("Open file"),
+                                                         addSetLastSavePathToCallback(std::move(callback), settings));
+
+    auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getWindow());
     xoj::addFilterSupported(fc);
     xoj::addFilterXoj(fc);
     xoj::addFilterXopt(fc);
@@ -117,16 +147,15 @@ void xoj::OpenDlg::showOpenFileDialog(GtkWindow* parent, Settings* settings, std
     addlastSavePathShortcut(fc, settings);
     setCurrentFolderToLastOpenPath(fc, settings);
 
-    auto wrapped = addSetLastSavePathToCallback(std::move(callback), settings);
-    xoj::dlg::showNativeFileChooser(
-            std::move(dialog), parent,
-            makeOpenHandler([cb = std::move(wrapped)](fs::path path, bool) mutable { cb(std::move(path)); }));
+    popup.show(parent);
 }
 
 void xoj::OpenDlg::showAnnotatePdfDialog(GtkWindow* parent, Settings* settings,
                                          std::function<void(fs::path, bool)> callback) {
-    auto dialog = makeOpenDialog(_("Annotate Pdf file"));
-    auto* fc = GTK_FILE_CHOOSER(dialog.get());
+    auto popup = xoj::popup::PopupWindowWrapper<FileDlg>(_("Annotate Pdf file"),
+                                                         addSetLastSavePathToCallback(std::move(callback), settings));
+
+    auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getWindow());
 
     xoj::addFilterPdf(fc);
     xoj::addFilterAllFiles(fc);
@@ -136,14 +165,20 @@ void xoj::OpenDlg::showAnnotatePdfDialog(GtkWindow* parent, Settings* settings,
 
     addAttachChoice(fc);
 
-    auto wrapped = addSetLastSavePathToCallback(std::move(callback), settings);
-    xoj::dlg::showNativeFileChooser(std::move(dialog), parent, makeOpenHandler(std::move(wrapped)));
+    popup.show(parent);
 }
 
 void xoj::OpenDlg::showOpenImageDialog(GtkWindow* parent, Settings* settings,
                                        std::function<void(fs::path, bool)> callback) {
-    auto dialog = makeOpenDialog(_("Choose image file"));
-    auto* fc = GTK_FILE_CHOOSER(dialog.get());
+    auto popup = xoj::popup::PopupWindowWrapper<FileDlg>(_("Choose image file"),
+                                                         [cb = std::move(callback), settings](fs::path p, bool attach) {
+                                                             if (auto folder = p.parent_path(); !folder.empty()) {
+                                                                 settings->setLastImagePath(folder);
+                                                             }
+                                                             cb(std::move(p), attach);
+                                                         });
+
+    auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getWindow());
 
     xoj::addFilterImages(fc);
     xoj::addFilterAllFiles(fc);
@@ -154,21 +189,14 @@ void xoj::OpenDlg::showOpenImageDialog(GtkWindow* parent, Settings* settings,
 
     addAttachChoice(fc);
 
-    auto rememberImagePath = [settings, cb = std::move(callback)](fs::path path, bool attach) mutable {
-        if (settings && !path.empty()) {
-            if (auto folder = path.parent_path(); !folder.empty()) {
-                settings->setLastImagePath(folder);
-            }
-        }
-        cb(std::move(path), attach);
-    };
-    xoj::dlg::showNativeFileChooser(std::move(dialog), parent, makeOpenHandler(std::move(rememberImagePath)));
+    popup.show(parent);
 }
 
 void xoj::OpenDlg::showMultiFormatDialog(GtkWindow* parent, std::vector<std::string> formats,
                                          std::function<void(fs::path)> callback) {
-    auto dialog = makeOpenDialog(_("Open file"));
-    auto* fc = GTK_FILE_CHOOSER(dialog.get());
+    auto popup = xoj::popup::PopupWindowWrapper<FileDlg>(_("Open file"), std::move(callback));
+
+    auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getWindow());
 
     if (formats.size() > 0) {
         GtkFileFilter* filterSupported = gtk_file_filter_new();
@@ -179,7 +207,5 @@ void xoj::OpenDlg::showMultiFormatDialog(GtkWindow* parent, std::vector<std::str
         gtk_file_chooser_add_filter(fc, filterSupported);
     }
 
-    xoj::dlg::showNativeFileChooser(
-            std::move(dialog), parent,
-            makeOpenHandler([cb = std::move(callback)](fs::path path, bool) mutable { cb(std::move(path)); }));
+    popup.show(parent);
 }

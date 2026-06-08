@@ -88,10 +88,8 @@ public:
 
     /**
      * @brief Calls writeToFile(file) if either file is not already present in the filesystem, or is the user answers
-     * "Overwrite" to a popup dialog. If the user declines to overwrite, @p onCancel is invoked instead; by default
-     * this is a no-op.
+     * "Overwrite" to a popup dialog.
      */
-    static void replaceFileQuestion(
-            GtkWindow* win, fs::path file, xoj::util::move_only_function<void(const fs::path&)> writeToFile,
-            xoj::util::move_only_function<void()> onCancel = []() {});
+    static void replaceFileQuestion(GtkWindow* win, fs::path file,
+                                    xoj::util::move_only_function<void(const fs::path&)> writeToFile);
 };

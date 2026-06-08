@@ -1,54 +1,13 @@
 #include "FileChooserFiltersHelper.h"
 
-#include <algorithm>
-#include <cctype>
-#include <string>
-
 #include "util/i18n.h"
 
 namespace xoj {
-
-namespace {
-
-/**
- * Add a glob for @p extension (with leading dot) to @p filter, plus an uppercase sibling.
- *
- * Rationale for the uppercase duplicate:
- *  - Linux GTK: gtk_file_filter_add_pattern() goes through glib's g_pattern_spec, which
- *    matches case-sensitively. Without the sibling, a file named SCAN.PDF is hidden.
- *  - Win32 native (IFileDialog): file system matching is case-insensitive, so the sibling
- *    is redundant but harmless -- critically, it is still a plain pattern glob, which
- *    keeps the filter translatable to COMDLG_FILTERSPEC and prevents the fallback to the
- *    built-in GtkFileChooserDialog.
- *  - macOS native: also case-insensitive by default; same reasoning applies.
- *
- * Only the extension portion is upper-cased; the leading "*." is locale-invariant and is
- * appended verbatim to keep the pattern syntactically identical.
- */
-void addExtensionPattern(GtkFileFilter* filter, const char* extension) {
-    std::string lowerPattern = "*";
-    lowerPattern += extension;
-    gtk_file_filter_add_pattern(filter, lowerPattern.c_str());
-
-    std::string upperExt = extension;
-    std::transform(upperExt.begin(), upperExt.end(), upperExt.begin(),
-                   [](unsigned char c) { return static_cast<char>(std::toupper(c)); });
-    if (upperExt != extension) {
-        std::string upperPattern = "*";
-        upperPattern += upperExt;
-        gtk_file_filter_add_pattern(filter, upperPattern.c_str());
-    }
-}
-
-}  // namespace
-
-void addFilterByExtension(GtkFileChooser* fc, const char* name, std::initializer_list<const char*> extensions) {
-    GtkFileFilter* filter = gtk_file_filter_new();
-    gtk_file_filter_set_name(filter, name);
-    for (const char* extension: extensions) {
-        addExtensionPattern(filter, extension);
-    }
-    gtk_file_chooser_add_filter(fc, filter);
+static void addMimeTypeFilter(GtkFileChooser* fc, const char* name, const char* mime) {
+    GtkFileFilter* filterPdf = gtk_file_filter_new();
+    gtk_file_filter_set_name(filterPdf, name);
+    gtk_file_filter_add_mime_type(filterPdf, mime);
+    gtk_file_chooser_add_filter(fc, filterPdf);
 }
 
 void addFilterAllFiles(GtkFileChooser* fc) {
@@ -59,41 +18,27 @@ void addFilterAllFiles(GtkFileChooser* fc) {
 }
 
 void addFilterSupported(GtkFileChooser* fc) {
-    addFilterByExtension(fc, _("Supported files"),
-                         {
-                                 ".xopp",
-                                 ".xoj",
-                                 ".xopt",
-                                 ".pdf",
-                                 ".moj",  // MrWriter
-                         });
+    GtkFileFilter* filterSupported = gtk_file_filter_new();
+    gtk_file_filter_set_name(filterSupported, _("Supported files"));
+    gtk_file_filter_add_mime_type(filterSupported, "application/x-xojpp");
+    gtk_file_filter_add_mime_type(filterSupported, "application/x-xopp");
+    gtk_file_filter_add_mime_type(filterSupported, "application/x-xopt");
+    gtk_file_filter_add_mime_type(filterSupported, "application/pdf");
+    gtk_file_filter_add_pattern(filterSupported, "*.moj");  // MrWriter
+    gtk_file_chooser_add_filter(fc, filterSupported);
 }
 
-void addFilterPdf(GtkFileChooser* fc) { addFilterByExtension(fc, _("PDF files"), {".pdf"}); }
-void addFilterXoj(GtkFileChooser* fc) { addFilterByExtension(fc, _("Xournal files"), {".xoj"}); }
-void addFilterXopp(GtkFileChooser* fc) { addFilterByExtension(fc, _("Xournal++ files"), {".xopp"}); }
-void addFilterXopt(GtkFileChooser* fc) { addFilterByExtension(fc, _("Xournal++ template"), {".xopt"}); }
-void addFilterSvg(GtkFileChooser* fc) { addFilterByExtension(fc, _("SVG graphics"), {".svg"}); }
-void addFilterPng(GtkFileChooser* fc) { addFilterByExtension(fc, _("PNG graphics"), {".png"}); }
-void addFilterZip(GtkFileChooser* fc) { addFilterByExtension(fc, _("ZIP archive"), {".zip"}); }
+void addFilterPdf(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("PDF files"), "application/pdf"); }
+void addFilterXoj(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("Xournal files"), "application/x-xojpp"); }
+void addFilterXopp(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("Xournal++ files"), "application/x-xopp"); }
+void addFilterXopt(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("Xournal++ template"), "application/x-xopt"); }
+void addFilterSvg(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("SVG graphics"), "image/svg+xml"); }
+void addFilterPng(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("PNG graphics"), "image/png"); }
 
 void addFilterImages(GtkFileChooser* fc) {
-    // gtk_file_filter_add_pixbuf_formats() would be shorter, but the resulting filter is
-    // backed by GTK's pixbuf loader introspection rather than a plain extension glob, so
-    // the Win32 native backend cannot translate it and GTK falls back to its own dialog.
-    // Hard-coding the extensions keeps the native file picker alive.
-    addFilterByExtension(fc, _("Image files"),
-                         {
-                                 ".png",
-                                 ".jpg",
-                                 ".jpeg",
-                                 ".bmp",
-                                 ".gif",
-                                 ".tif",
-                                 ".tiff",
-                                 ".webp",
-                                 ".svg",
-                                 ".ico",
-                         });
+    GtkFileFilter* filter = gtk_file_filter_new();
+    gtk_file_filter_set_name(filter, _("Image files"));
+    gtk_file_filter_add_pixbuf_formats(filter);
+    gtk_file_chooser_add_filter(fc, filter);
 }
 };  // namespace xoj

@@ -2126,15 +2126,16 @@ void Control::saveImpl(bool saveAs, std::function<void(bool)> callback) {
         auto suggestedPath = this->doc->createSaveFoldername(this->settings->getLastSavePath());
         suggestedPath /= this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
         this->doc->unlock_shared();
-        xoj::dlg::showXoppSaveDialog(getGtkWindow(), settings, std::move(suggestedPath),
-                                     [doSave = std::move(doSave), ctrl = this](std::optional<fs::path> p) {
-                                         if (p && !p->empty()) {
-                                             ctrl->doc->lock();
-                                             ctrl->doc->setFilepath(std::move(p.value()));
-                                             ctrl->doc->unlock();
-                                             doSave();
-                                         }
-                                     });
+        xoj::SaveExportDialog::showSaveFileDialog(getGtkWindow(), settings, std::move(suggestedPath),
+                                                  [doSave = std::move(doSave), ctrl = this](std::optional<fs::path> p) {
+                                                      if (p && !p->empty()) {
+                                                          ctrl->settings->setLastSavePath(p->parent_path());
+                                                          ctrl->doc->lock();
+                                                          ctrl->doc->setFilepath(std::move(p.value()));
+                                                          ctrl->doc->unlock();
+                                                          doSave();
+                                                      }
+                                                  });
     } else {
         doSave();
     }

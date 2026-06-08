@@ -16,7 +16,9 @@ PdfExportJob::PdfExportJob(Control* control): BaseExportJob(control, _("PDF Expo
 
 PdfExportJob::~PdfExportJob() = default;
 
-void PdfExportJob::addFilterToDialog(GtkFileChooser* dialog) { addFileFilterToDialog(dialog, _("PDF files"), ".pdf"); }
+void PdfExportJob::addFilterToDialog(GtkFileChooser* dialog) {
+    addFileFilterToDialog(dialog, _("PDF files"), "application/pdf");
+}
 
 void PdfExportJob::setExtensionFromFilter(fs::path& file, const char* /*filterName*/) const {
     // Remove any pre-existing extension and adds .pdf

@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Native save/export file chooser helpers.
+ * GTK Save/Export dialog to select destination file
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -16,41 +16,41 @@
 
 #include <gtk/gtk.h>  // for GtkWindow
 
-#include "util/move_only_function.h"
+#include "util/raii/GtkWindowUPtr.h"
 
 #include "filesystem.h"  // for path
 
 class Settings;
 
-namespace xoj::dlg {
+namespace xoj {
+/// Helper class, for a single dialog
+class SaveExportDialog {
+public:
+    /**
+     * Shows a save file dialog. The callback is called with std::nullopt if no path were selected
+     */
+    static void showSaveFileDialog(GtkWindow* parent, Settings* settings, fs::path suggestedPath,
+                                   std::function<void(std::optional<fs::path>)> callback);
 
-/// Predicate used to post-process and validate the path returned by the save dialog.
-/// Implementations may modify @p path (for example, appending a file extension based on the chosen
-/// filter) and return whether the result is acceptable.
-using SavePathValidator = std::function<bool(fs::path& path, const char* filterName)>;
+    /**
+     * Creates a save or export file dialog. The callback is called with std::nullopt if no path were selected
+     * @param pathValidation May modify the given path. Returns true if the path is (now) valid for saving/exporting.
+     * @param callback(path)
+     */
+    SaveExportDialog(Settings* settings, fs::path suggestedPath, const char* windowTitle, const char* buttonLabel,
+                     std::function<bool(fs::path&, const char* filterName)> pathValidation,
+                     std::function<void(std::optional<fs::path>)> callback);
+    ~SaveExportDialog() = default;
 
-/// Invoked after the save dialog closes. The argument holds the chosen path on success, or
-/// std::nullopt if the user cancelled or closed the dialog.
-using SavePathCallback = std::function<void(std::optional<fs::path>)>;
+    inline GtkWindow* getWindow() const { return window.get(); }
 
-/// Optional hook run on the dialog before it is shown. Lets callers add filters, shortcuts, or
-/// other chooser-specific configuration in one place.
-using SaveConfigurator = xoj::util::move_only_function<void(GtkFileChooser*)>;
+private:
+    /// Closes the dialog and calls the callback on `path`
+    void close(std::optional<fs::path> path);
 
-/**
- * Show a native save/export file chooser.
- *
- * The dialog uses @p suggestedPath to seed the current folder and filename, honours the optional
- * @p configure hook, and prompts the user about overwriting an existing file before invoking
- * @p callback. The overwrite prompt also catches the case where @p pathValidation appends an
- * extension that changes the target path after the native dialog's own confirmation.
- *
- * @p callback is invoked with std::nullopt on cancel/close.
- */
-void showSaveDialog(GtkWindow* parent, Settings* settings, fs::path suggestedPath, const char* title,
-                    SaveConfigurator configure, SavePathValidator pathValidation, SavePathCallback callback);
-
-/// Convenience wrapper for the main ".xopp" save flow.
-void showXoppSaveDialog(GtkWindow* parent, Settings* settings, fs::path suggestedPath, SavePathCallback callback);
-
-}  // namespace xoj::dlg
+    xoj::util::GtkWindowUPtr window;
+    std::function<void(std::optional<fs::path>)> callback;
+    std::function<bool(fs::path&, const char* filterName)> pathValidation;
+    gulong signalId{};
+};
+};  // namespace xoj

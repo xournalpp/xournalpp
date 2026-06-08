@@ -1,103 +1,91 @@
 #include "XojSaveDlg.h"
 
-#include <utility>
+#include <optional>
 
 #include "control/settings/Settings.h"
-#include "util/PathUtil.h"  // for fromGFile, toGFile, clearExtensions
+#include "util/PathUtil.h"            // for fromGFile, toGFile
+#include "util/PopupWindowWrapper.h"  // for PopupWindowWrapper
+#include "util/Util.h"
 #include "util/XojMsgBox.h"
-#include "util/gtk4_helper.h"       // for gtk_file_chooser_set_current_folder
-#include "util/i18n.h"              // for _
-#include "util/raii/GObjectSPtr.h"  // for GObjectSPtr
+#include "util/gtk4_helper.h"         // for gtk_file_chooser_set_current_folder
+#include "util/i18n.h"                // for _
+#include "util/raii/GObjectSPtr.h"    // for GObjectSPtr
+#include "util/raii/GtkWindowUPtr.h"  // for GtkWindowUPtr
 
 #include "FileChooserFiltersHelper.h"
-#include "NativeFileChooserHelper.h"
 
-namespace {
-
-xoj::util::GObjectSPtr<GtkFileChooserNative> makeSaveDialog(Settings* settings, const fs::path& suggestedPath,
-                                                            const char* title) {
-    xoj::util::GObjectSPtr<GtkFileChooserNative> dialog(
-            gtk_file_chooser_native_new(title, nullptr, GTK_FILE_CHOOSER_ACTION_SAVE, nullptr, nullptr),
-            xoj::util::adopt);
-
-    auto* fc = GTK_FILE_CHOOSER(dialog.get());
-
-    // Let the native dialog show its own "file exists" prompt when it can. The post-dialog
-    // replaceFileQuestion() still runs because pathValidation may append an extension that
-    // turns the chosen name into a pre-existing file, which the OS dialog cannot foresee.
-    gtk_file_chooser_set_do_overwrite_confirmation(fc, TRUE);
+static GtkWindow* makeWindow(Settings* settings, fs::path suggestedPath, const char* windowTitle,
+                             const char* buttonLabel) {
+    GtkWidget* dialog = gtk_file_chooser_dialog_new(windowTitle, nullptr, GTK_FILE_CHOOSER_ACTION_SAVE, _("_Cancel"),
+                                                    GTK_RESPONSE_CANCEL, buttonLabel, GTK_RESPONSE_OK, nullptr);
 
     if (!suggestedPath.empty()) {
-        gtk_file_chooser_set_current_folder(fc, Util::toGFile(suggestedPath.parent_path()).get(), nullptr);
-        gtk_file_chooser_set_current_name(fc, Util::toGFilename(suggestedPath.filename()).c_str());
+        gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFile(suggestedPath.parent_path()).get(),
+                                            nullptr);
+        gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog),
+                                          Util::toGFilename(suggestedPath.filename()).c_str());
     }
     if (settings) {
-#if !defined(__APPLE__)
-        // Shortcut folders are honoured by the Win32 native backend (mapped to IFileDialog
-        // "places") but the macOS native panel does not support them at all, so skip the
-        // call there to avoid touching features that could still surprise the backend.
-        if (!settings->getLastOpenPath().empty()) {
-            gtk_file_chooser_add_shortcut_folder(fc, Util::toGFile(settings->getLastOpenPath()).get(), nullptr);
-        }
-#endif
+        gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog), Util::toGFile(settings->getLastOpenPath()).get(),
+                                             nullptr);
     }
 
-    return dialog;
+    return GTK_WINDOW(dialog);
 }
 
-bool xoppPathValidation(fs::path& p, const char* /*filterName*/) {
+xoj::SaveExportDialog::SaveExportDialog(Settings* settings, fs::path suggestedPath, const char* windowTitle,
+                                        const char* buttonLabel,
+                                        std::function<bool(fs::path&, const char* filterName)> pathValidation,
+                                        std::function<void(std::optional<fs::path>)> callback):
+        window(makeWindow(settings, std::move(suggestedPath), windowTitle, buttonLabel)),
+        callback(std::move(callback)),
+        pathValidation(std::move(pathValidation)) {
+    this->signalId = g_signal_connect(
+            window.get(), "response", G_CALLBACK(+[](GtkDialog* win, int response, gpointer data) {
+                auto* self = static_cast<SaveExportDialog*>(data);
+                auto* fc = GTK_FILE_CHOOSER(win);
+                if (response == GTK_RESPONSE_OK) {
+                    auto file = Util::fromGFile(
+                            xoj::util::GObjectSPtr<GFile>(gtk_file_chooser_get_file(fc), xoj::util::adopt).get());
+
+                    if (self->pathValidation(file, gtk_file_filter_get_name(gtk_file_chooser_get_filter(fc)))) {
+                        XojMsgBox::replaceFileQuestion(
+                                GTK_WINDOW(win), std::move(file),
+                                std::bind(&SaveExportDialog::close, self, std::placeholders::_1));
+                    }  // else the dialog stays on until a suitable destination is found or cancel is hit.
+                } else {
+                    self->close(std::nullopt);
+                }
+            }),
+            this);
+}
+
+void xoj::SaveExportDialog::close(std::optional<fs::path> path) {
+    // We need to call gtk_window_close() before invoking the callback, because if the callback pops up another dialog,
+    // the first one won't close...
+    // But since gtk_window_close() triggers the destruction of *this, we first move the callback
+    auto cb = std::move(this->callback);
+
+    // Closing the window causes another "response" signal, which we want to ignore
+    g_signal_handler_disconnect(window.get(), signalId);
+    gtk_window_close(window.get());  // Destroys *this. Don't do anything after this call
+
+    cb(std::move(path));
+}
+
+static bool xoppPathValidation(fs::path& p, const char*) {
     Util::clearExtensions(p);
     p += ".xopp";
     return true;
 }
 
-}  // namespace
+void xoj::SaveExportDialog::showSaveFileDialog(GtkWindow* parent, Settings* settings, fs::path suggestedPath,
+                                               std::function<void(std::optional<fs::path>)> callback) {
+    auto popup = xoj::popup::PopupWindowWrapper<SaveExportDialog>(settings, std::move(suggestedPath), _("Save File"),
+                                                                  _("Save"), xoppPathValidation, std::move(callback));
 
-void xoj::dlg::showSaveDialog(GtkWindow* parent, Settings* settings, fs::path suggestedPath, const char* title,
-                              SaveConfigurator configure, SavePathValidator pathValidation, SavePathCallback callback) {
-    auto dialog = makeSaveDialog(settings, suggestedPath, title);
-    if (configure) {
-        configure(GTK_FILE_CHOOSER(dialog.get()));
-    }
+    auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getWindow());
+    xoj::addFilterXopp(fc);
 
-    showNativeFileChooser(
-            std::move(dialog), parent,
-            [parent, settings, pathValidation = std::move(pathValidation), callback = std::move(callback)](
-                    GtkFileChooser* fc, gint response) mutable {
-                if (response != GTK_RESPONSE_ACCEPT) {
-                    callback(std::nullopt);
-                    return;
-                }
-
-                auto file = Util::fromGFile(
-                        xoj::util::GObjectSPtr<GFile>(gtk_file_chooser_get_file(fc), xoj::util::adopt).get());
-                const char* filterName = nullptr;
-                if (GtkFileFilter* filter = gtk_file_chooser_get_filter(fc)) {
-                    filterName = gtk_file_filter_get_name(filter);
-                }
-
-                if (!pathValidation(file, filterName)) {
-                    // Validation rejected the path (e.g. writing over the background PDF).
-                    callback(std::nullopt);
-                    return;
-                }
-
-                if (settings && !file.empty()) {
-                    settings->setLastSavePath(file.parent_path());
-                }
-
-                // Post-dialog overwrite confirmation. Also covers the case where
-                // pathValidation appended an extension that turns the target into an
-                // already-existing file, which the native dialog could not anticipate.
-                auto onReplace = [callback](const fs::path& confirmed) { callback(confirmed); };
-                auto onDecline = [callback = std::move(callback)]() { callback(std::nullopt); };
-                XojMsgBox::replaceFileQuestion(parent, std::move(file), std::move(onReplace), std::move(onDecline));
-            });
-}
-
-void xoj::dlg::showXoppSaveDialog(GtkWindow* parent, Settings* settings, fs::path suggestedPath,
-                                  SavePathCallback callback) {
-    showSaveDialog(
-            parent, settings, std::move(suggestedPath), _("Save File"),
-            [](GtkFileChooser* fc) { xoj::addFilterXopp(fc); }, xoppPathValidation, std::move(callback));
+    popup.show(parent);
 }
