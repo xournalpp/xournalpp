@@ -3,6 +3,7 @@
 #include <algorithm>  // for find, remove_if
 
 #include "model/StrokeStyle.h"
+#include "util/Assert.h"
 
 
 auto toolSizeFromString(const std::string& size) -> ToolSize {
@@ -97,4 +98,45 @@ auto strokeTypeFromString(const std::string& type) -> StrokeType {
 
 bool xoj::tool::isPdfSelectionTool(ToolType toolType) {
     return toolType == TOOL_SELECT_PDF_TEXT_LINEAR || toolType == TOOL_SELECT_PDF_TEXT_RECT;
+}
+
+static constexpr auto makeToolCaps() {
+    std::array<std::underlying_type_t<ToolCapabilities>, TOOL_COUNT> caps;
+
+    caps[TOOL_PEN - TOOL_PEN] = TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE |
+                                TOOL_CAP_ELLIPSE | TOOL_CAP_ARROW | TOOL_CAP_DOUBLE_ARROW | TOOL_CAP_SPLINE |
+                                TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL | TOOL_CAP_LINE_STYLE;
+    caps[TOOL_ERASER - TOOL_PEN] = TOOL_CAP_SIZE;
+    caps[TOOL_HIGHLIGHTER - TOOL_PEN] = TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE |
+                                        TOOL_CAP_ELLIPSE | TOOL_CAP_ARROW | TOOL_CAP_DOUBLE_ARROW | TOOL_CAP_SPLINE |
+                                        TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL;
+    caps[TOOL_TEXT - TOOL_PEN] = TOOL_CAP_COLOR;
+    caps[TOOL_IMAGE - TOOL_PEN] = TOOL_CAP_NONE;
+    caps[TOOL_SELECT_RECT - TOOL_PEN] = TOOL_CAP_NONE;
+    caps[TOOL_SELECT_REGION - TOOL_PEN] = TOOL_CAP_NONE;
+    caps[TOOL_SELECT_MULTILAYER_RECT - TOOL_PEN] = TOOL_CAP_NONE;
+    caps[TOOL_SELECT_MULTILAYER_REGION - TOOL_PEN] = TOOL_CAP_NONE;
+    caps[TOOL_SELECT_OBJECT - TOOL_PEN] = TOOL_CAP_NONE;
+    caps[TOOL_VERTICAL_SPACE - TOOL_PEN] = TOOL_CAP_NONE;
+    caps[TOOL_HAND - TOOL_PEN] = TOOL_CAP_NONE;
+    caps[TOOL_PLAY_OBJECT - TOOL_PEN] = TOOL_CAP_NONE;
+    caps[TOOL_DRAW_RECT - TOOL_PEN] = TOOL_CAP_NONE;
+    caps[TOOL_DRAW_ELLIPSE - TOOL_PEN] = TOOL_CAP_NONE;
+    caps[TOOL_DRAW_ARROW - TOOL_PEN] = TOOL_CAP_NONE;
+    caps[TOOL_DRAW_DOUBLE_ARROW - TOOL_PEN] = TOOL_CAP_NONE;
+    caps[TOOL_DRAW_COORDINATE_SYSTEM - TOOL_PEN] = TOOL_CAP_NONE;
+    caps[TOOL_DRAW_SPLINE - TOOL_PEN] = TOOL_CAP_NONE;
+    caps[TOOL_FLOATING_TOOLBOX - TOOL_PEN] = TOOL_CAP_NONE;
+    caps[TOOL_SELECT_PDF_TEXT_LINEAR - TOOL_PEN] = TOOL_CAP_COLOR;
+    caps[TOOL_SELECT_PDF_TEXT_RECT - TOOL_PEN] = TOOL_CAP_COLOR;
+    caps[TOOL_LASER_POINTER_PEN - TOOL_PEN] = TOOL_CAP_COLOR | TOOL_CAP_SIZE;
+    caps[TOOL_LASER_POINTER_HIGHLIGHTER - TOOL_PEN] = TOOL_CAP_COLOR | TOOL_CAP_SIZE;
+
+    return caps;
+}
+
+auto xoj::tool::typeToCapabilities(ToolType type) -> ToolCapabilities {
+    static constexpr auto caps = makeToolCaps();
+    xoj_assert(type >= TOOL_PEN && type - TOOL_PEN < TOOL_COUNT);
+    return static_cast<ToolCapabilities>(caps[type - TOOL_PEN]);
 }
