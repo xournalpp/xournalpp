@@ -11,16 +11,17 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
 #include <cstdint>
 #include <string>
+
+#include <gtk/gtk.h>
 
 #include "gui/IconNameHelper.h"
 #include "gui/sidebar/AbstractSidebarPage.h"
 
 class Control;
 
-class SidebarBookmarks : public AbstractSidebarPage {
+class SidebarBookmarks: public AbstractSidebarPage {
 public:
     SidebarBookmarks(Control* control);
     ~SidebarBookmarks() override;
@@ -47,15 +48,13 @@ private:
     static void onAddClicked(GtkButton* button, SidebarBookmarks* self);
     static void onEditClicked(GtkButton* button, SidebarBookmarks* self);
     static void onDeleteClicked(GtkButton* button, SidebarBookmarks* self);
-    static void onRowActivated(GtkTreeView* treeView, GtkTreePath* path,
-                               GtkTreeViewColumn* column, SidebarBookmarks* self);
+    static void onRowActivated(GtkTreeView* treeView, GtkTreePath* path, GtkTreeViewColumn* column,
+                               SidebarBookmarks* self);
 
     void updateButtonSensitivity();
     void navigateToSelectedBookmark();
 
-    enum EditOrDelete : std::uint8_t {
-        EDIT, DELETE
-    };
+    enum EditOrDelete : std::uint8_t { EDIT, DELETE };
 
     void editOrDeleteSelectedBookmark(EditOrDelete mode);
 

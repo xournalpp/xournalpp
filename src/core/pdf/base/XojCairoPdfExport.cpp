@@ -123,17 +123,12 @@ void XojCairoPdfExport::populatePdfOutline() {
 }
 
 void XojCairoPdfExport::populateNativeBookmarksOutline() {
-    for (const auto& bm : doc->listBookmarks()) {
+    for (const auto& bm: doc->listBookmarks()) {
         std::ostringstream linkAttr;
         linkAttr << "page=" << (bm.second + 1);
 
-        cairo_pdf_surface_add_outline(
-            this->surface,
-            CAIRO_PDF_OUTLINE_ROOT,
-            bm.first.c_str(),
-            linkAttr.str().c_str(),
-            CAIRO_PDF_OUTLINE_FLAG_OPEN
-        );
+        cairo_pdf_surface_add_outline(this->surface, CAIRO_PDF_OUTLINE_ROOT, bm.first.c_str(), linkAttr.str().c_str(),
+                                      CAIRO_PDF_OUTLINE_FLAG_OPEN);
     }
 }
 #endif

@@ -11,8 +11,9 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
 #include <string>
+
+#include <gtk/gtk.h>
 
 class BookmarkDialog {
 public:

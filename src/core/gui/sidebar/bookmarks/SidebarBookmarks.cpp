@@ -1,14 +1,15 @@
 #include "SidebarBookmarks.h"
-#include <glib/gi18n.h> // For the _() macro
+
+#include <glib/gi18n.h>  // For the _() macro
 #include <gtk/gtk.h>
 
-#include "control/Control.h" // for Control
-#include "control/ScrollHandler.h" // for ScrollHandler
-#include "undo/BookmarkUndoAction.h" // for BookmarkUndoAction
+#include "control/Control.h"        // for Control
+#include "control/ScrollHandler.h"  // for ScrollHandler
 #include "gui/sidebar/Sidebar.h"
-#include "model/XojPage.h"  // for XojPage
-#include "model/PageRef.h"  // for PageRef
-#include "model/Document.h"  // for Document
+#include "model/Document.h"           // for Document
+#include "model/PageRef.h"            // for PageRef
+#include "model/XojPage.h"            // for XojPage
+#include "undo/BookmarkUndoAction.h"  // for BookmarkUndoAction
 
 static auto makeIconButton(const char* iconName, const char* tooltip) -> GtkWidget* {
     GtkWidget* button = gtk_button_new();
@@ -21,21 +22,17 @@ static auto makeIconButton(const char* iconName, const char* tooltip) -> GtkWidg
 }
 
 SidebarBookmarks::SidebarBookmarks(Control* control):
-    AbstractSidebarPage(control),
-    iconNameHelper(control->getSettings())
-{
+        AbstractSidebarPage(control), iconNameHelper(control->getSettings()) {
     mainBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 
     scrolledWindow = gtk_scrolled_window_new(nullptr, nullptr);
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledWindow),
-                                   GTK_POLICY_AUTOMATIC,
-                                   GTK_POLICY_AUTOMATIC);
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledWindow), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 
     // Claim all available vertical space
     gtk_widget_set_vexpand(scrolledWindow, TRUE);
 
     listStore = gtk_list_store_new(NUM_COLUMNS, G_TYPE_STRING, G_TYPE_INT);
-    treeView  = gtk_tree_view_new_with_model(GTK_TREE_MODEL(listStore));
+    treeView = gtk_tree_view_new_with_model(GTK_TREE_MODEL(listStore));
     gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeView), FALSE);
     gtk_tree_view_set_activate_on_single_click(GTK_TREE_VIEW(treeView), TRUE);
 
@@ -47,13 +44,11 @@ SidebarBookmarks::SidebarBookmarks(Control* control):
     auto* rendererLabel = static_cast<GtkCellRenderer*>(
             g_object_new(GTK_TYPE_CELL_RENDERER_TEXT, "ellipsize", PANGO_ELLIPSIZE_END, nullptr));
     gtk_tree_view_column_pack_start(GTK_TREE_VIEW_COLUMN(column), rendererLabel, TRUE);
-    gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN(column), rendererLabel,
-                                        "text", COLUMN_LABEL, nullptr);
+    gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN(column), rendererLabel, "text", COLUMN_LABEL, nullptr);
 
     GtkCellRenderer* rendererPage = gtk_cell_renderer_text_new();
     gtk_tree_view_column_pack_end(GTK_TREE_VIEW_COLUMN(column), rendererPage, FALSE);
-    gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN(column), rendererPage,
-                                        "text", COLUMN_PAGE_NUM, nullptr);
+    gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN(column), rendererPage, "text", COLUMN_PAGE_NUM, nullptr);
     g_object_set(G_OBJECT(rendererPage), "style", PANGO_STYLE_ITALIC, nullptr);
 
     gtk_container_add(GTK_CONTAINER(scrolledWindow), treeView);
@@ -103,35 +98,22 @@ SidebarBookmarks::~SidebarBookmarks() {
 }
 
 
+auto SidebarBookmarks::getWidget() -> GtkWidget* { return mainBox; }
 
-auto SidebarBookmarks::getWidget() -> GtkWidget* {
-    return mainBox;
-}
+auto SidebarBookmarks::getName() -> std::string { return _("Bookmarks"); }
 
-auto SidebarBookmarks::getName() -> std::string {
-    return _("Bookmarks");
-}
+auto SidebarBookmarks::getIconName() -> std::string { return iconNameHelper.iconName("bookmark"); }
 
-auto SidebarBookmarks::getIconName() -> std::string  {
-    return iconNameHelper.iconName("bookmark");
-}
-
-void SidebarBookmarks::enableSidebar() {
-    refresh();
-}
+void SidebarBookmarks::enableSidebar() { refresh(); }
 
 void SidebarBookmarks::disableSidebar() {}
 
 void SidebarBookmarks::layout() {}
 
-auto SidebarBookmarks::hasData() -> bool {
-    return hasBookmarks;
-}
+auto SidebarBookmarks::hasData() -> bool { return hasBookmarks; }
 
 
-
-void SidebarBookmarks::onSelectionChanged(GtkTreeSelection* /*selection*/,
-                                          SidebarBookmarks* self) {
+void SidebarBookmarks::onSelectionChanged(GtkTreeSelection* /*selection*/, SidebarBookmarks* self) {
     self->updateButtonSensitivity();
 }
 
@@ -154,7 +136,6 @@ void SidebarBookmarks::updateButtonSensitivity() {
 }
 
 
-
 void SidebarBookmarks::onAddClicked(GtkButton* /*button*/, SidebarBookmarks* self) {
     Control* control = self->getControl();
     size_t pageIndex = control->getCurrentPageNo();
@@ -175,7 +156,8 @@ void SidebarBookmarks::editOrDeleteSelectedBookmark(EditOrDelete mode) {
     GtkTreeModel* model = nullptr;
     GtkTreeIter iter;
 
-    if (!gtk_tree_selection_get_selected(select, &model, &iter)) return;
+    if (!gtk_tree_selection_get_selected(select, &model, &iter))
+        return;
 
     gchar* label = nullptr;
     gint pageNum = 0;
@@ -194,9 +176,8 @@ void SidebarBookmarks::editOrDeleteSelectedBookmark(EditOrDelete mode) {
 }
 
 
-
-void SidebarBookmarks::onRowActivated(GtkTreeView* /*treeView*/, GtkTreePath* /*path*/,
-                                      GtkTreeViewColumn* /*column*/, SidebarBookmarks* self) {
+void SidebarBookmarks::onRowActivated(GtkTreeView* /*treeView*/, GtkTreePath* /*path*/, GtkTreeViewColumn* /*column*/,
+                                      SidebarBookmarks* self) {
     self->navigateToSelectedBookmark();
 }
 
@@ -204,7 +185,8 @@ void SidebarBookmarks::navigateToSelectedBookmark() {
     GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeView));
     GtkTreeModel* model = nullptr;
     GtkTreeIter iter;
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter)) return;
+    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
+        return;
 
     gint pageNum = 0;
     gtk_tree_model_get(model, &iter, COLUMN_PAGE_NUM, &pageNum, -1);
@@ -213,26 +195,21 @@ void SidebarBookmarks::navigateToSelectedBookmark() {
 }
 
 
-
 void SidebarBookmarks::documentChanged(DocumentChangeType type) {
     if (type == DOCUMENT_CHANGE_CLEARED) {
         gtk_list_store_clear(listStore);
         updateButtonSensitivity();
 
     } else if (type == DOCUMENT_CHANGE_COMPLETE || type == DOCUMENT_CHANGE_BOOKMARKS ||
-        type == DOCUMENT_CHANGE_NO_BOOKMARKS) {
+               type == DOCUMENT_CHANGE_NO_BOOKMARKS) {
 
         refresh();
     }
 }
 
-void SidebarBookmarks::pageInserted(size_t /*pageIndex*/) {
-    refresh();
-}
+void SidebarBookmarks::pageInserted(size_t /*pageIndex*/) { refresh(); }
 
-void SidebarBookmarks::pageDeleted(size_t /*pageIndex*/) {
-    refresh();
-}
+void SidebarBookmarks::pageDeleted(size_t /*pageIndex*/) { refresh(); }
 
 void SidebarBookmarks::pageSelected(size_t pageIndex) {
     GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeView));
@@ -258,7 +235,6 @@ void SidebarBookmarks::pageSelected(size_t pageIndex) {
 }
 
 
-
 void SidebarBookmarks::refresh() {
     if (idleRefreshId == 0) {
         idleRefreshId = g_idle_add(idleRefreshCallback, this);
@@ -276,11 +252,11 @@ auto SidebarBookmarks::idleRefreshCallback(gpointer data) -> gboolean {
 
 void SidebarBookmarks::doRefresh() {
     GtkTreeSelection* sel = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeView));
-    gulong handlerId = g_signal_handler_find(
-        sel, G_SIGNAL_MATCH_FUNC, 0, 0, nullptr, (gpointer)onSelectionChanged, nullptr
-    );
+    gulong handlerId =
+            g_signal_handler_find(sel, G_SIGNAL_MATCH_FUNC, 0, 0, nullptr, (gpointer)onSelectionChanged, nullptr);
 
-    if (handlerId) g_signal_handler_block(sel, handlerId);
+    if (handlerId)
+        g_signal_handler_block(sel, handlerId);
 
     gtk_list_store_clear(listStore);
 
@@ -290,15 +266,15 @@ void SidebarBookmarks::doRefresh() {
     doc->unlock_shared();
 
     hasBookmarks = !bookmarks.empty();
-    for (const auto& bookmarkPair : bookmarks) {
+    for (const auto& bookmarkPair: bookmarks) {
         GtkTreeIter iter;
         gtk_list_store_append(listStore, &iter);
-        gtk_list_store_set(listStore, &iter,
-                           COLUMN_PAGE_NUM, bookmarkPair.second + 1,
-                           COLUMN_LABEL, bookmarkPair.first.c_str(), -1);
+        gtk_list_store_set(listStore, &iter, COLUMN_PAGE_NUM, bookmarkPair.second + 1, COLUMN_LABEL,
+                           bookmarkPair.first.c_str(), -1);
     }
 
-    if (handlerId) g_signal_handler_unblock(sel, handlerId);
+    if (handlerId)
+        g_signal_handler_unblock(sel, handlerId);
 
     updateButtonSensitivity();
 

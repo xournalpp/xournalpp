@@ -15,12 +15,9 @@ BookmarkDialog::~BookmarkDialog() {
 }
 
 void BookmarkDialog::build(GtkWindow* parent, const char* title, const std::string& initialName) {
-    dialog = gtk_dialog_new_with_buttons(
-        title, parent,
-        static_cast<GtkDialogFlags>(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
-        _("_Cancel"), GTK_RESPONSE_CANCEL,
-        _("_OK"),     GTK_RESPONSE_ACCEPT,
-        nullptr);
+    dialog = gtk_dialog_new_with_buttons(title, parent,
+                                         static_cast<GtkDialogFlags>(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+                                         _("_Cancel"), GTK_RESPONSE_CANCEL, _("_OK"), GTK_RESPONSE_ACCEPT, nullptr);
 
     okButton = gtk_dialog_get_widget_for_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
     gtk_widget_set_can_default(okButton, TRUE);

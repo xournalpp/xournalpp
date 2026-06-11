@@ -159,8 +159,8 @@ size_t Sidebar::getSelectedTab() const { return this->currentTabIdx; }
 auto Sidebar::getControl() -> Control* { return this->control; }
 
 void Sidebar::documentChanged(DocumentChangeType type) {
-    if (type == DOCUMENT_CHANGE_CLEARED || type == DOCUMENT_CHANGE_COMPLETE ||
-        type == DOCUMENT_CHANGE_PDF_BOOKMARKS || type == DOCUMENT_CHANGE_NO_BOOKMARKS) {
+    if (type == DOCUMENT_CHANGE_CLEARED || type == DOCUMENT_CHANGE_COMPLETE || type == DOCUMENT_CHANGE_PDF_BOOKMARKS ||
+        type == DOCUMENT_CHANGE_NO_BOOKMARKS) {
 
         updateVisibleTabs();
     }
