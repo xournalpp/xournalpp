@@ -13,8 +13,8 @@
 #include <gtest/gtest.h>
 
 #include "model/Document.h"
-#include "model/XojPage.h"
 #include "model/PageRef.h"
+#include "model/XojPage.h"
 
 using Bm = std::pair<std::string, size_t>;
 

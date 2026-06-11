@@ -142,7 +142,7 @@ void SidebarPreviewPages::documentChanged(DocumentChangeType type) {
     SidebarPreviewBase::documentChanged(type);
 
     if (type == DOCUMENT_CHANGE_BOOKMARKS || type == DOCUMENT_CHANGE_NO_BOOKMARKS) {
-        for (auto& preview : this->previews) {
+        for (auto& preview: this->previews) {
             preview->repaint();
         }
     }

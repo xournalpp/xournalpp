@@ -213,7 +213,7 @@ void XmlParser::parsePageTag(const XmlParserHelper::AttributeMap& attributeMap) 
     const auto bookmark = XmlParserHelper::getAttrib<std::string>(xoj::xml_attrs::BOOKMARK_STR, attributeMap);
 
     this->builder.addPage(width, height);
-    this->builder.setBookmark(bookmark); // Sets if bookmark has value
+    this->builder.setBookmark(bookmark);  // Sets if bookmark has value
 }
 
 void XmlParser::parseAudioTag(const XmlParserHelper::AttributeMap& attributeMap) {

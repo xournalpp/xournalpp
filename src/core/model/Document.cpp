@@ -474,7 +474,7 @@ auto Document::shouldCreateBackupOnSave() const -> bool { return this->createBac
 auto Document::listBookmarks() const -> std::vector<std::pair<std::string, size_t>> {
     std::vector<std::pair<std::string, size_t>> bookmarks;
     size_t pageNum = 0;
-    for (const PageRef& page : pages) {
+    for (const PageRef& page: pages) {
         const auto bookmark = page->getBookmark();
         if (bookmark.has_value()) {
             bookmarks.emplace_back(bookmark.value(), pageNum);
@@ -487,7 +487,8 @@ auto Document::listBookmarks() const -> std::vector<std::pair<std::string, size_
 
 auto Document::setBookmark(const std::string& name, size_t pageIndex) -> std::optional<std::string> {
     PageRef page = getPage(pageIndex);
-    if (!page) return std::nullopt;
+    if (!page)
+        return std::nullopt;
 
     std::optional<std::string> oldBookmark = page->getBookmark();
     page->setBookmark(name);
@@ -497,7 +498,8 @@ auto Document::setBookmark(const std::string& name, size_t pageIndex) -> std::op
 
 auto Document::deleteBookmark(size_t pageIndex) -> std::optional<std::string> {
     PageRef page = getPage(pageIndex);
-    if (!page) return std::nullopt;
+    if (!page)
+        return std::nullopt;
 
     std::optional<std::string> oldBookmark = page->getBookmark();
     page->deleteBookmark();

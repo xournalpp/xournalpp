@@ -9,8 +9,7 @@ class Control;
 
 class BookmarkUndoAction: public UndoAction {
 public:
-    BookmarkUndoAction(size_t pageIndex,
-                       std::optional<std::string> oldBookmark,
+    BookmarkUndoAction(size_t pageIndex, std::optional<std::string> oldBookmark,
                        std::optional<std::string> newBookmark);
 
     ~BookmarkUndoAction() override = default;

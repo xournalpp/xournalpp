@@ -6,28 +6,24 @@
 #include "model/XojPage.h"
 #include "util/i18n.h"
 
-BookmarkUndoAction::BookmarkUndoAction(
-    size_t pageIndex, std::optional<std::string> oldBookmark,
-    std::optional<std::string> newBookmark
-):
-    UndoAction("BookmarkUndoAction"),
-    pageIndex(pageIndex),
-    oldBookmark(std::move(oldBookmark)),
-    newBookmark(std::move(newBookmark)) {}
+BookmarkUndoAction::BookmarkUndoAction(size_t pageIndex, std::optional<std::string> oldBookmark,
+                                       std::optional<std::string> newBookmark):
+        UndoAction("BookmarkUndoAction"),
+        pageIndex(pageIndex),
+        oldBookmark(std::move(oldBookmark)),
+        newBookmark(std::move(newBookmark)) {}
 
 auto BookmarkUndoAction::getText() -> std::string {
-    if (!oldBookmark.has_value()) return _("Add bookmark");
-    if (!newBookmark.has_value()) return _("Delete bookmark");
+    if (!oldBookmark.has_value())
+        return _("Add bookmark");
+    if (!newBookmark.has_value())
+        return _("Delete bookmark");
     return _("Rename bookmark");
 }
 
-auto BookmarkUndoAction::undo(Control* control) -> bool {
-    return apply(control, oldBookmark);
-}
+auto BookmarkUndoAction::undo(Control* control) -> bool { return apply(control, oldBookmark); }
 
-auto BookmarkUndoAction::redo(Control* control) -> bool {
-    return apply(control, newBookmark);
-}
+auto BookmarkUndoAction::redo(Control* control) -> bool { return apply(control, newBookmark); }
 
 auto BookmarkUndoAction::apply(Control* control, const std::optional<std::string>& bm) -> bool {
 
@@ -41,7 +37,7 @@ auto BookmarkUndoAction::apply(Control* control, const std::optional<std::string
     } else {
         page->deleteBookmark();
         if (doc->listBookmarks().empty()) {
-            docChangeType = DOCUMENT_CHANGE_NO_BOOKMARKS; // To force the entire sidebar to update
+            docChangeType = DOCUMENT_CHANGE_NO_BOOKMARKS;  // To force the entire sidebar to update
         }
     }
     doc->unlock();

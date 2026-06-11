@@ -5,9 +5,9 @@
 #include "control/settings/Settings.h"                      // for Settings
 #include "gui/PagePreviewDecoration.h"                      // for Drawing  ...
 #include "gui/sidebar/previews/page/SidebarPreviewPages.h"  // for SidebarPr...
-#include "util/gtk4_helper.h"
 #include "model/Document.h"                                 // for Document
 #include "model/XojPage.h"                                  // for XojPage
+#include "util/gtk4_helper.h"
 
 SidebarPreviewPageEntry::SidebarPreviewPageEntry(SidebarPreviewPages* sidebar, const PageRef& page, size_t index):
         SidebarPreviewBaseEntry(sidebar, page), sidebar(sidebar), index(index) {
@@ -44,7 +44,8 @@ void SidebarPreviewPageEntry::paint(cairo_t* cr) {
     bool hasBookmark = this->page->getBookmark().has_value();
     doc->unlock_shared();
 
-    if (hasBookmark) drawBookmarkIcon(cr);
+    if (hasBookmark)
+        drawBookmarkIcon(cr);
 
     drawEntryNumber(cr);
 }
@@ -61,8 +62,7 @@ void SidebarPreviewPageEntry::drawBookmarkIcon(cairo_t* cr) {
     GtkIconTheme* theme = gtk_icon_theme_get_default();
     GError* error = nullptr;
 
-    GdkPixbuf* pixbuf = gtk_icon_theme_load_icon(theme, iconName.c_str(), iconSize,
-                                                 GTK_ICON_LOOKUP_FORCE_SIZE, &error);
+    GdkPixbuf* pixbuf = gtk_icon_theme_load_icon(theme, iconName.c_str(), iconSize, GTK_ICON_LOOKUP_FORCE_SIZE, &error);
     if (pixbuf) {
         cairo_save(cr);
 
