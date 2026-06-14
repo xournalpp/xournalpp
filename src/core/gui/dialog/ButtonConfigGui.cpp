@@ -285,8 +285,6 @@ void ButtonConfigGui::enableDisableTools() {
             gtk_widget_set_visible(cbStrokeType, true);
             break;
         case TOOL_HIGHLIGHTER:
-        case TOOL_SELECT_PDF_TEXT_LINEAR:
-        case TOOL_SELECT_PDF_TEXT_RECT:
             gtk_widget_set_visible(cbThickness, true);
             gtk_widget_set_visible(colorButton, true);
             gtk_widget_set_visible(cbDrawingType, true);
@@ -303,6 +301,8 @@ void ButtonConfigGui::enableDisableTools() {
             break;
 
         case TOOL_TEXT:
+        case TOOL_SELECT_PDF_TEXT_LINEAR:
+        case TOOL_SELECT_PDF_TEXT_RECT:
             gtk_widget_set_visible(cbThickness, false);
             gtk_widget_set_visible(colorButton, true);
             gtk_widget_set_visible(cbDrawingType, false);

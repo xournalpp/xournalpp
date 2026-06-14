@@ -71,6 +71,9 @@ void PdfFloatingToolbox::show(int x, int y) {
     gtk_widget_translate_coordinates(gtk_widget_get_toplevel(this->floatingToolbox), GTK_WIDGET(overlay.get()), x, y,
                                      &this->position.x, &this->position.y);
     this->show();
+
+    // Record the color now: the active tool may change while the toolbox is up (e.g. if the tool is linked to a button)
+    this->color = theMainWindow->getXournal()->getControl()->getToolHandler()->getColor();
 }
 
 void PdfFloatingToolbox::hide() {
@@ -174,8 +177,6 @@ void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle w
     PageRef page = control->getCurrentPage();
     Layer* layer = page->getSelectedLayer();
 
-    auto color = theMainWindow->getXournal()->getControl()->getToolHandler()->getColor();
-
     Range dirtyRange;
     std::vector<ElementPtr> strokes;
     for (XojPdfRectangle rect: textRects) {
@@ -192,7 +193,7 @@ void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle w
         const double w = width == PdfMarkerStyle::WIDTH_TEXT_LINE ? 1 : rectWidth;
 
         auto stroke = std::make_unique<Stroke>();
-        stroke->setColor(color);
+        stroke->setColor(this->color);
         stroke->setFill(markerOpacity);
         stroke->setToolType(StrokeTool::HIGHLIGHTER);
         stroke->setWidth(w);
