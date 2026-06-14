@@ -68,8 +68,8 @@ SearchBar::SearchBar(Control* control): control(control) {
 
 SearchBar::~SearchBar() { this->control = nullptr; }
 
-auto SearchBar::searchTextOnCurrentPage(const char* text, size_t index, size_t* occurrences, XojPdfRectangle* matchRect)
-        -> bool {
+auto SearchBar::searchTextOnCurrentPage(const char* text, size_t index, size_t* occurrences,
+                                        XojPdfRectangle* matchRect) -> bool {
     size_t p = control->getCurrentPageNo();
     this->page = p;
 

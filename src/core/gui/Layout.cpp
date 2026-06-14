@@ -469,8 +469,8 @@ auto Layout::getPageViewAt(int x, int y) const -> XojPageView* {
     return nullptr;
 }
 
-auto Layout::getPageWithRelativePosition(size_t referencePageNumber, int columnOffset, int rowOffset) const
-        -> std::optional<size_t> {
+auto Layout::getPageWithRelativePosition(size_t referencePageNumber, int columnOffset,
+                                         int rowOffset) const -> std::optional<size_t> {
     auto pos = pc.mapper.at(referencePageNumber);
     return pc.mapper.at({as_unsigned(as_signed(pos.col) + columnOffset), as_unsigned(as_signed(pos.row) + rowOffset)});
 }

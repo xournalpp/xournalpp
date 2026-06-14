@@ -43,8 +43,8 @@ static void gtk_xournal_dispose(GObject* object);
 static void gtk_xournal_set_property(GObject* object, guint prop_id, const GValue* value, GParamSpec* pspec);
 static void gtk_xournal_get_property(GObject* object, guint prop_id, GValue* value, GParamSpec* pspec);
 
-auto gtk_xournal_new(XournalView* view, InputContext* inputContext, GtkAdjustment* vadj, GtkAdjustment* hadj)
-        -> GtkWidget* {
+auto gtk_xournal_new(XournalView* view, InputContext* inputContext, GtkAdjustment* vadj,
+                     GtkAdjustment* hadj) -> GtkWidget* {
     GtkXournal* xoj = GTK_XOURNAL(g_object_new(gtk_xournal_get_type(), nullptr));
     xoj->view = view;
     xoj->scrollHandling = inputContext->getScrollHandling();

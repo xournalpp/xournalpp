@@ -24,6 +24,7 @@
 #include "gui/XournalView.h"                 // for XournalView
 #include "gui/dialog/ExtEdLatexDialog.h"     // for ExtEdLatexDialog
 #include "gui/dialog/IntEdLatexDialog.h"     // for IntEdLatexDialog
+#include "model/Document.h"                  // for Document
 #include "model/Element.h"                   // for Element
 #include "model/Layer.h"                     // for Layer
 #include "model/TexImage.h"                  // for TexImage
@@ -267,6 +268,7 @@ void LatexController::insertTexImage() {
     xoj_assert(this->isValidTex);
     xoj_assert(this->temporaryRender != nullptr);
 
+    auto lock = std::shared_lock(*this->control->getDocument());
     Layer* layer = page->getSelectedLayer();
     XournalView* xournal = this->control->getWindow()->getXournal();
     auto pageNr = xournal->getCurrentPage();
@@ -276,6 +278,7 @@ void LatexController::insertTexImage() {
         g_warning("Active page changed while you edited the tex code. Aborting.");
         return;
     }
+    lock.unlock();
 
     /* Clearing the old image and creating the new one creates two separate undo actions; I don't
        know yet how to merge that to one. (That bug was already present before.) */
@@ -314,7 +317,8 @@ void LatexController::insertLatex(PageRef page, Control* ctrl, double x, double 
 
     // Is there already a teximage at the click location? If yes, find the most recent one.
     self->selectedElem = nullptr;
-    auto &el = page->getSelectedLayer()->getElements();
+    auto lock = std::shared_lock(*self->control->getDocument());
+    auto& el = page->getSelectedLayer()->getElements();
     for (auto e = el.rbegin(); e != el.rend(); ++e) {
         if ((*e)->getType() == ELEMENT_TEXIMAGE || (*e)->getType() == ELEMENT_TEXT) {
             GdkRectangle matchRect = {gint(x), gint(y), 1, 1};
@@ -347,7 +351,7 @@ void LatexController::insertLatex(PageRef page, Control* ctrl, double x, double 
         self->posx = x;
         self->posy = y;
     }
-
+    lock.unlock();
 
     showTexEditDialog(std::move(self));
 }
