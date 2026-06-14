@@ -1,15 +1,15 @@
 #pragma once
 
-#include <cstdint>    // for uint8_t
-#include <memory>     // for unique_ptr
+#include <cstdint>  // for uint8_t
+#include <memory>   // for unique_ptr
 
 #include <gdk/gdk.h>  // for GdkRectangle
 #include <glib.h>     // for gboolean
 #include <gtk/gtk.h>  // for GtkButton, GtkOverlay
 
 #include "pdf/base/XojPdfPage.h"    // for XojPdfPageSelectionStyle
+#include "util/Color.h"             // for Color
 #include "util/raii/GObjectSPtr.h"  // for GObjectSPtr
-#include "util/Color.h"  // for Color
 
 class MainWindow;
 class PdfElemSelection;
