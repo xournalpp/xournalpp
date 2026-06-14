@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-01 15:40+0000\n"
-"PO-Revision-Date: 2026-06-07 05:51\n"
+"POT-Creation-Date: 2026-06-10 14:58+0000\n"
+"PO-Revision-Date: 2026-06-14 05:55\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -23,57 +23,57 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 msgstr "No s'ha establert una carpeta d'àudio o bé no és vàlida! La gravació no funcionarà!\n"
 "Configureu la carpeta d'enregistrament a «Configuració → Gravació d'àudio»."
 
-#: ../src/core/control/Control.cpp:235
+#: ../src/core/control/Control.cpp:236
 msgid "Filesystem error: {1}"
 msgstr "Error del sistema de fitxers: {1}"
 
-#: ../src/core/control/Control.cpp:247
+#: ../src/core/control/Control.cpp:248
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "El fitxer d'autodesada «{1}» no s'ha pogut esborrar: {2}"
 
-#: ../src/core/control/Control.cpp:588
+#: ../src/core/control/Control.cpp:589
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "Heu esborrat la barra d'eines activa. S'aplica la barra d'eines per defecte."
 
-#: ../src/core/control/Control.cpp:608
+#: ../src/core/control/Control.cpp:609
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "La configuració de barres d'eines predefinida «{1}» no es pot modificar. En voleu fer una còpia i editar-la?"
 
-#: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1651
+#: ../src/core/control/Control.cpp:612 ../src/core/control/Control.cpp:1657
 msgid "Yes"
 msgstr "Sí"
 
-#: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1651
+#: ../src/core/control/Control.cpp:612 ../src/core/control/Control.cpp:1657
 msgid "No"
 msgstr "No"
 
-#: ../src/core/control/Control.cpp:839 ../src/core/control/Control.cpp:1879
-#: ../src/core/control/Control.cpp:2207
+#: ../src/core/control/Control.cpp:840 ../src/core/control/Control.cpp:1885
+#: ../src/core/control/Control.cpp:2213
 msgid "Cancel"
 msgstr "Cancel·la"
 
-#: ../src/core/control/Control.cpp:840
+#: ../src/core/control/Control.cpp:841
 msgid "Insert after current page"
 msgstr "Afegeix després de la pàgina actual"
 
-#: ../src/core/control/Control.cpp:841
+#: ../src/core/control/Control.cpp:842
 msgid "Insert at end"
 msgstr "Afegeix al final"
 
-#: ../src/core/control/Control.cpp:844
+#: ../src/core/control/Control.cpp:845
 msgid "_Journal"
 msgstr "_Quadern"
 
-#: ../src/core/control/Control.cpp:844
+#: ../src/core/control/Control.cpp:845
 msgid "Paper B_ackground"
 msgstr "_Fons del paper"
 
-#: ../src/core/control/Control.cpp:845
+#: ../src/core/control/Control.cpp:846
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:43
 msgid "With PDF background"
 msgstr "Amb fons de PDF"
 
-#: ../src/core/control/Control.cpp:848
+#: ../src/core/control/Control.cpp:849
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
@@ -81,15 +81,15 @@ msgstr "El document actual no té pàgina PDF número {1}.\n"
 "Voleu afegir aquesta pàgina?\n\n"
 "Consell: Podeu seleccionar {2} per a afegir una pàgina PDF."
 
-#: ../src/core/control/Control.cpp:891
+#: ../src/core/control/Control.cpp:892
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "No hi ha pàgines PDF disponibles per a afegir. És possible que primer calgui reobrir el document."
 
-#: ../src/core/control/Control.cpp:905
+#: ../src/core/control/Control.cpp:906
 msgid "Unable to retrieve pdf page."
 msgstr "La pagina del pdf no es pot recuperar."
 
-#: ../src/core/control/Control.cpp:1507
+#: ../src/core/control/Control.cpp:1513
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -97,19 +97,19 @@ msgstr "No obriu els fitxers de desada automàtica. Es poden sobreescriure!\n"
 "Copieu els fitxers a una altra carpeta.\n"
 "Els fitxers de la carpeta {1} no es poden obrir."
 
-#: ../src/core/control/Control.cpp:1527
+#: ../src/core/control/Control.cpp:1533
 msgid "file: {1}"
 msgstr "fitxer: {1}"
 
-#: ../src/core/control/Control.cpp:1570
+#: ../src/core/control/Control.cpp:1576
 msgid "<i>Above error repeated {1} times</i>"
 msgstr "<i>L'error de dalt es repeteix {1} vegades.</i>"
 
-#: ../src/core/control/Control.cpp:1582
+#: ../src/core/control/Control.cpp:1588
 msgid "<i>&lt;{1} more lines of error messages&gt;</i>"
 msgstr "<i>&lt;{1} línies més de missatges d'error&gt;</i>"
 
-#: ../src/core/control/Control.cpp:1621
+#: ../src/core/control/Control.cpp:1627
 msgid "Error opening file \"{1}\".\n\n"
 "<tt>{2}</tt>\n"
 "<b>{3}</b>"
@@ -117,110 +117,110 @@ msgstr "S'ha produït un error a l'obrir el fitxer «{1}».\n\n"
 "<tt>{2}</tt>\n"
 "<b>{3}</b>"
 
-#: ../src/core/control/Control.cpp:1635
+#: ../src/core/control/Control.cpp:1641
 msgid "There were some errors while loading the file. Some information might have been lost. Do not overwrite your old file unless you are sure everything you need was loaded correctly.\n\n"
 "Error messages:\n"
 "<tt>{1}</tt>"
 msgstr "S'han produït alguns errors mentre es carregava el fitxer. Es pot haver perdut informació. No sobreescriviu el fitxer a no ser que estigueu segur que tot el que necessiteu s'ha carregat correctament."
 
-#: ../src/core/control/Control.cpp:1653
+#: ../src/core/control/Control.cpp:1659
 msgid "File version mismatch"
 msgstr "La versió del fitxer és incompatible."
 
-#: ../src/core/control/Control.cpp:1654
+#: ../src/core/control/Control.cpp:1660
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "El fitxer que s'ha carregat té un format de fitxer amb una versió posterior a la que suporta aquesta versió del Xournal++ i potser no es pugui carregar bé. Voleu obrir-lo igualment?"
 
-#: ../src/core/control/Control.cpp:1677
+#: ../src/core/control/Control.cpp:1683
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr "S'ha produït un error al llegir el fitxer PDF «{1}»."
 
-#: ../src/core/control/Control.cpp:1698
+#: ../src/core/control/Control.cpp:1704
 msgid "Error reading PNG file \"{1}\""
 msgstr "S'ha produït un error al llegir el fitxer PNG «{1}»."
 
-#: ../src/core/control/Control.cpp:1733
+#: ../src/core/control/Control.cpp:1739
 msgid "Error reading template file \"{1}\""
 msgstr "S'ha produït un error al llegir el plantilla «{1}»."
 
-#: ../src/core/control/Control.cpp:1752
+#: ../src/core/control/Control.cpp:1758
 msgid "Failed to determine if path exists \"{1}\": {2}"
 msgstr "No s'ha pogut determinar si el camí «{1}» existeix: {2}"
 
-#: ../src/core/control/Control.cpp:1753
+#: ../src/core/control/Control.cpp:1759
 msgid "That file does not exist:\n"
 "\"{1}\""
 msgstr "El fitxer no existeix:\n"
 "«{1}»"
 
-#: ../src/core/control/Control.cpp:1859
+#: ../src/core/control/Control.cpp:1865
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "El fitxer de fons adjunt no s'ha pogut trobar. Potser s'ha mogut, se li ha canviat el nom o s'ha esborrat."
 
-#: ../src/core/control/Control.cpp:1862
+#: ../src/core/control/Control.cpp:1868
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "El fitxer de fons «1» no s'ha pogut trobar. Potser s'ha mogut, se li ha canviat el nom o s'ha esborrat. L'última ubicació on es va veure és «{2}»."
 
-#: ../src/core/control/Control.cpp:1872
+#: ../src/core/control/Control.cpp:1878
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Arxiu de recanvi proposat: «{1}»"
 
-#: ../src/core/control/Control.cpp:1877
+#: ../src/core/control/Control.cpp:1883
 msgid "Select another PDF"
 msgstr "Tria un altre PDF"
 
-#: ../src/core/control/Control.cpp:1878
+#: ../src/core/control/Control.cpp:1884
 msgid "Remove PDF Background"
 msgstr "Elimina el fons PDF"
 
-#: ../src/core/control/Control.cpp:1882
+#: ../src/core/control/Control.cpp:1888
 msgid "Use proposed PDF"
 msgstr "Fes servir el PDF proposat"
 
-#: ../src/core/control/Control.cpp:1885
+#: ../src/core/control/Control.cpp:1891
 msgid "Missing PDF background file"
 msgstr "Falta el fitxer PDF de fons."
 
-#: ../src/core/control/Control.cpp:2014
+#: ../src/core/control/Control.cpp:2020
 msgid "Select font"
 msgstr "Tria una font"
 
-#: ../src/core/control/Control.cpp:2033
+#: ../src/core/control/Control.cpp:2039
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Tria un color"
 
-#: ../src/core/control/Control.cpp:2058
+#: ../src/core/control/Control.cpp:2064
 msgid "Unsaved Document"
 msgstr "Document sense desar"
 
-#: ../src/core/control/Control.cpp:2200
+#: ../src/core/control/Control.cpp:2206
 msgid "Document file was removed."
 msgstr "S'ha eliminat el fitxer del document."
 
-#: ../src/core/control/Control.cpp:2200
+#: ../src/core/control/Control.cpp:2206
 msgid "This document is not saved yet."
 msgstr "Aquest document encara no s'ha desat."
 
-#: ../src/core/control/Control.cpp:2202
+#: ../src/core/control/Control.cpp:2208
 msgid "Save As..."
 msgstr "Anomena i desa..."
 
-#: ../src/core/control/Control.cpp:2202 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2208 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "Desa"
 
-#: ../src/core/control/Control.cpp:2205
+#: ../src/core/control/Control.cpp:2211
 msgid "Discard"
 msgstr "Descarta"
 
-#: ../src/core/control/Control.cpp:2294
+#: ../src/core/control/Control.cpp:2300
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr "No s'ha progut crear el subproceś de demostració de Gtk: {1} (codi d'error: {2})"
 
@@ -303,8 +303,8 @@ msgstr "El fitxer PDF de LaTeX no s'ha pogut carregar."
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:111
 #: ../src/core/control/XournalMain.cpp:227
-#: ../src/core/control/xojfile/LoadHandler.cpp:260
-#: ../src/core/control/xojfile/LoadHandler.cpp:279
+#: ../src/core/control/xojfile/LoadHandler.cpp:261
+#: ../src/core/control/xojfile/LoadHandler.cpp:280
 msgid "Error reading PDF: {1}"
 msgstr "S'ha produït un error al llegir el PDF: {1}"
 
@@ -664,7 +664,7 @@ msgid "Isometric Graph"
 msgstr "Quadrícula isomètrica"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:44
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Image"
 msgstr "Imatge"
 
@@ -701,139 +701,139 @@ msgstr "No s'ha pogut carregar la imatge."
 msgid "Error while opening image file: "
 msgstr "S'ha produït un error mentre s'obria el fitxer d'imatge: "
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:122
-#: ../src/core/control/xojfile/LoadHandler.cpp:139
-#: ../src/core/control/xojfile/LoadHandler.cpp:661
-#: ../src/core/control/xojfile/LoadHandler.cpp:675
+#: ../src/core/control/xojfile/LoadHandler.cpp:123
+#: ../src/core/control/xojfile/LoadHandler.cpp:140
+#: ../src/core/control/xojfile/LoadHandler.cpp:692
+#: ../src/core/control/xojfile/LoadHandler.cpp:706
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:131
-#: ../src/core/control/xojfile/LoadHandler.cpp:667
-#: ../src/core/control/xojfile/LoadHandler.cpp:685
+#: ../src/core/control/xojfile/LoadHandler.cpp:132
+#: ../src/core/control/xojfile/LoadHandler.cpp:698
+#: ../src/core/control/xojfile/LoadHandler.cpp:716
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: No s'ha proporcionat una mida de fitxer vàlida."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:149
+#: ../src/core/control/xojfile/LoadHandler.cpp:150
 msgid "Unable to create temporary file for audio attachment"
 msgstr "El fitxer temporal per al fitxer adjunt d'àudio no s'ha pogut crear."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:161
+#: ../src/core/control/xojfile/LoadHandler.cpp:162
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: No s'ha pogut llegir el fitxer."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:168
+#: ../src/core/control/xojfile/LoadHandler.cpp:169
 msgid "Could not open attachment: {1}. Error message: Could not write temporary file"
 msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: El fitxer temporal no s'ha pogut escriure."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:201
-#: ../src/core/control/xojfile/LoadHandler.cpp:226
+#: ../src/core/control/xojfile/LoadHandler.cpp:202
+#: ../src/core/control/xojfile/LoadHandler.cpp:227
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "No s'ha pogut llegir la imatge: {1}. Missatge d'error: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:236
+#: ../src/core/control/xojfile/LoadHandler.cpp:237
 msgid "Cloned pixmap page background on page {1} references inexistent page {2}"
 msgstr "La imatge de fons de pàgina del pixmap clonat de la pàgina {1} referencia la pàgina inexistent {2}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:482
+#: ../src/core/control/xojfile/LoadHandler.cpp:513
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}"
 msgstr "El fitxer «{1}» no és un fitxer .xopp vàlid (falta el tipus MIME). Missatge d'error: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:489
+#: ../src/core/control/xojfile/LoadHandler.cpp:520
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\""
 msgstr "El fitxer «{1}» no és un fitxer .xopp vàlid (el tipus MIME no és correcte): «{2}»"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:497
+#: ../src/core/control/xojfile/LoadHandler.cpp:528
 msgid "The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}"
 msgstr "El fitxer «{1}» no és un fitxer .xopp vàlid (falta la versió). Missatge d'error: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:510
+#: ../src/core/control/xojfile/LoadHandler.cpp:541
 msgid "The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\""
 msgstr "El fitxer «{1}» no és un fitxer .xopp vàlid (la cadena de versió està danyada): «{2}»"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:519
+#: ../src/core/control/xojfile/LoadHandler.cpp:550
 msgid "Could not open file: \"{1}\""
 msgstr "El fitxer «{1}» no s'ha pogut obrir."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:535
+#: ../src/core/control/xojfile/LoadHandler.cpp:566
 msgid "XML Parser error: {1}"
 msgstr "Error del processador XML: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:545
+#: ../src/core/control/xojfile/LoadHandler.cpp:576
 msgid "Failed to read from compressed file"
 msgstr "El fitxer comprimit no s'ha pogut llegir."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:554
+#: ../src/core/control/xojfile/LoadHandler.cpp:585
 msgid "Invalid XML data read"
 msgstr "Lectura de dades XML no vàlida"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:568
+#: ../src/core/control/xojfile/LoadHandler.cpp:599
 msgid "Document is not complete.\n"
 "We have tried recovering the data that could be read, but the last element may have been discarded, and the end of the file is likely missing."
 msgstr "El document no està complet.\n"
 "S'ha intentat recuperar les dades que no es poden llegir, però l'últim element pot haver-se descartat i probablement fa falta el final del fitxer."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:575
+#: ../src/core/control/xojfile/LoadHandler.cpp:606
 msgid "Document is corrupted (no document tag found in file)"
 msgstr "El document està danyat (al fitxer no s'han trobat les etiquetes del document)."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:578
+#: ../src/core/control/xojfile/LoadHandler.cpp:609
 msgid "Document is corrupted (no pages found in file)"
 msgstr "El document està danyat (al fitxer no s'ha trobat cap pàgina)."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:718
+#: ../src/core/control/xojfile/LoadHandler.cpp:749
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "El fitxer temporal sol·licitat per a l'adjunt {1} no s'ha pogut trobar."
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:264
+#: ../src/core/control/xojfile/SaveHandler.cpp:279
 msgid "Could not write background \"{1}\", {2}"
 msgstr "No s'ha pogut escriure el fons «{1}», {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:371
+#: ../src/core/control/xojfile/SaveHandler.cpp:386
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "No s'ha pogut escriure el fons «{1}». Es continua de totes maneres."
 
-#: ../src/core/control/xojfile/XmlParser.cpp:95
+#: ../src/core/control/xojfile/XmlParser.cpp:96
 msgid "Ignoring unexpected {1} tag inside unrecognized document structure"
 msgstr "S'ignora l'etiqueta inesperada {1} dins de l'estructura de documents no reconeguda."
 
-#: ../src/core/control/xojfile/XmlParser.cpp:100
+#: ../src/core/control/xojfile/XmlParser.cpp:101
 msgid "Ignoring unexpected {1} tag under {2}"
 msgstr "S'ignora l'etiqueta inesperada {1} sota {2}"
 
-#: ../src/core/control/xojfile/XmlParser.cpp:149
+#: ../src/core/control/xojfile/XmlParser.cpp:150
 msgid "Unexpected text in {1} node: \"{2}\""
 msgstr "Text inesperat al node {1}: «{2}»"
 
-#: ../src/core/control/xojfile/XmlParser.cpp:247
+#: ../src/core/control/xojfile/XmlParser.cpp:248
 msgid "Attribute \"type\" not found in background tag. Ignoring tag"
 msgstr "«Tipus» d'atribut no trobat a l'etiqueta de fons. S'ignora l'etiqueta."
 
-#: ../src/core/control/xojfile/XmlParser.cpp:286
+#: ../src/core/control/xojfile/XmlParser.cpp:287
 msgid "Domain \"clone\" is invalid for PDF backgrounds. Using \"absolute\" instead"
 msgstr "El domini «clon» no és vàlid per a imatges de fons de PDF. Es fa servir «absolut»."
 
-#: ../src/core/control/xojfile/XmlParser.cpp:296
+#: ../src/core/control/xojfile/XmlParser.cpp:297
 msgid "PDF background filename is empty"
 msgstr "El nom del fitxer de la imatge de fons del PDF és buit."
 
-#: ../src/core/control/xojfile/XmlParser.cpp:316
+#: ../src/core/control/xojfile/XmlParser.cpp:317
 msgid "Discarding unused audio timestamp element. Filename: {1}"
 msgstr "Es descarta l'element de marca de temps d'àudio no utilitzat. Nom del fitxer: {1}"
 
-#: ../src/core/control/xojfile/XmlParser.cpp:393
+#: ../src/core/control/xojfile/XmlParser.cpp:394
 msgid "Found stroke that contains an odd number of valid coordinates. Discarding the last value"
 msgstr "S'ha trobat un traç que conté un nombre estrany de coordenades vàlides. Es descarta l'últim valor."
 
-#: ../src/core/control/xojfile/XmlParser.cpp:404
+#: ../src/core/control/xojfile/XmlParser.cpp:405
 msgid "Found stroke with more coordinates than pressure points: {1}, expected {2}. Shrinking stroke to match pressure point count"
 msgstr "S'ha trobat un traç amb més coordenades que punts de pressió: {1}, se n'esperaven {2}. Es redueix el traç per tal que coincideixi amb el nombre de punts de pressió."
 
-#: ../src/core/control/xojfile/XmlParser.cpp:410
+#: ../src/core/control/xojfile/XmlParser.cpp:411
 msgid "Found stroke with too many pressure points: {1}, expected {2}. Discarding remaining pressure points"
 msgstr "S'ha trobat un traç amb massa punts de pressió: {1}, se n'esperaven {2}. Es descarten els punts de pressió restants."
 
-#: ../src/core/control/xojfile/XmlParser.cpp:494
+#: ../src/core/control/xojfile/XmlParser.cpp:512
 msgid "Ignoring attachment tag under {1}"
 msgstr "S'ignora l'etiqueta adjunta sota {1}"
 
@@ -841,21 +841,25 @@ msgstr "S'ignora l'etiqueta adjunta sota {1}"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Error al carregar el fitxer de glade «{1}» (s'intentarà carregar \"{2}\")."
 
-#: ../src/core/gui/PageView.cpp:400
+#: ../src/core/gui/LinkPopover.cpp:70
+msgid "Double click to edit. CTRL + click to open."
+msgstr "Feu-hi doble clic per a editar-ho. Amb Ctrl+clic, s'obre."
+
+#: ../src/core/gui/PageView.cpp:411
 msgid "Unable to play audio recording {1}"
 msgstr "No es pot reproduir la gravació de so {1}"
 
-#: ../src/core/gui/PageView.cpp:936
+#: ../src/core/gui/PageView.cpp:973
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:145
 msgid "Loading..."
 msgstr "Es carrega..."
 
-#: ../src/core/gui/PageView.cpp:993
+#: ../src/core/gui/PageView.cpp:1030
 msgid "Scroll to page {1}"
 msgstr "Desplaça fins a la pàgina {1}"
 
-#: ../src/core/gui/PageView.cpp:995
+#: ../src/core/gui/PageView.cpp:1032
 msgid "Add missing page"
 msgstr "Afegeix la pàgina que falta"
 
@@ -921,12 +925,12 @@ msgid "Thin"
 msgstr "Fi"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:509
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:510
 msgid "Medium"
 msgstr "Normal"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:510
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:511
 msgid "Thick"
 msgstr "Gruixut"
 
@@ -944,7 +948,7 @@ msgstr "Eina ‒ sense canviar-ne el tipus"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:79
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:381
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:497
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:498
 msgid "Pen"
 msgstr "Llapis"
 
@@ -955,7 +959,7 @@ msgstr "Goma d'esborrar"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:498
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:499
 msgid "Highlighter"
 msgstr "Subratllador"
 
@@ -998,7 +1002,7 @@ msgid "Select multi layer rect"
 msgstr "Selecciona un rectangle multicapa"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:450
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:451
 msgid "Hand"
 msgstr "Mà"
 
@@ -1024,48 +1028,48 @@ msgstr "Dibuix normal"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:431
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 msgid "Draw Line"
 msgstr "Dibuixa línies"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Draw Rectangle"
 msgstr "Dibuixa rectangles"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 msgid "Draw Ellipse"
 msgstr "Dibuixa el·lipses"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Draw Arrow"
 msgstr "Dibuixa fletxes"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Draw Double Arrow"
 msgstr "Dibuixa fletxes dobles"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:430
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:431
 msgid "Draw Coordinate System"
 msgstr "Dibuixa sistemes de coordenades"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
 msgstr "Reconeixedor de traços"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 msgid "Draw Spline"
 msgstr "Dibuixa corbes spline"
 
@@ -1589,7 +1593,7 @@ msgid "Go to first page"
 msgstr "Vés a la primera pàgina"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:347
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:462
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:463
 msgid "Back"
 msgstr "Anterior"
 
@@ -1667,105 +1671,109 @@ msgid "delete stroke"
 msgstr "Esborra traços sencers"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
+msgid "Add/Edit Link"
+msgstr "Afegeix/Edita enllaç"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Add/Edit TeX"
 msgstr "Afegeix/Edita TeX"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Default Tool"
 msgstr "Eina predeterminada"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:411
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:14
 msgid "Select Linear PDF Text"
 msgstr "Selecciona text PDF en línia"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Select PDF Text in Rectangle"
 msgstr "Selecciona text PDF en àrea rectangular"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Setsquare"
 msgstr "Transportador cartabó"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Compass"
 msgstr "Transportador rodó"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Toggle Touch Drawing"
 msgstr "Commuta el dibuix tàctil"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:435
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
 msgid "Select Region"
 msgstr "Selecciona una regió"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:12
 msgid "Select Rectangle"
 msgstr "Selecciona una àrea rectangular"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:440
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Select Multi-Layer Region"
 msgstr "Selecciona una regió multicapa"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:443
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Select Multi-Layer Rectangle"
 msgstr "Selecciona una àrea rectangular multicapa"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:445
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 msgid "Select Object"
 msgstr "Selecciona un objecte"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:447
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:448
 msgid "Vertical Space"
 msgstr "Espai vertical"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:449
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:450
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 msgid "Play Object"
 msgstr "Reprodueix un objecte"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:455
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:456
 msgid "Record Audio / Stop Recording"
 msgstr "Enregistra àudio/Atura l'enregistrament"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:457
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:458
 msgid "Pause / Play"
 msgstr "Reprodueix/Posa en pausa"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:458
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
 msgid "Stop"
 msgstr "Para"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:460
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Forward"
 msgstr "Següent"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:496
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:497
 msgid "Laser pointer"
 msgstr "Punter làser"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:502
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:503
 msgid "Fill"
 msgstr "Omple"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:503
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:504
 msgid "Fill Opacity"
 msgstr "Opacitat del farciment"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:506
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:507
 msgid "Very Fine"
 msgstr "Molt fi"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:507
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:508
 msgid "Fine"
 msgstr "Fi"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:512
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:513
 msgid "Very Thick"
 msgstr "Molt gruixut"
 
@@ -1973,6 +1981,11 @@ msgstr "latex"
 #: ../src/core/undo/DeleteUndoAction.cpp:99
 msgid "text"
 msgstr "text"
+
+#: ../src/core/undo/AddUndoAction.cpp:100
+#: ../src/core/undo/DeleteUndoAction.cpp:102
+msgid "link"
+msgstr "enllaç"
 
 #: ../src/core/undo/ColorUndoAction.cpp:97
 msgid "Change color"
@@ -2658,6 +2671,34 @@ msgstr "Editor extern (només per a usuaris experts)"
 #: ../ui/latexSettings.glade:665
 msgid "Editor settings"
 msgstr "Configuració de l'editor"
+
+#: ../ui/linkDialog.glade:53
+msgid "Text:"
+msgstr "Text:"
+
+#: ../ui/linkDialog.glade:188
+msgid "URL:"
+msgstr "URL:"
+
+#: ../ui/linkDialog.glade:207
+msgid "http://"
+msgstr "http://"
+
+#: ../ui/linkDialog.glade:208
+msgid "https://"
+msgstr "https://"
+
+#: ../ui/linkDialog.glade:209
+msgid "mailto:"
+msgstr "mailto:"
+
+#: ../ui/linkDialog.glade:210
+msgid "file://"
+msgstr "file://"
+
+#: ../ui/linkDialog.glade:211
+msgid "<custom>"
+msgstr "<custom>"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
@@ -4440,123 +4481,127 @@ msgid "_Text"
 msgstr "_Text"
 
 #: ../ui/mainmenubar.xml:554
+msgid "_Link"
+msgstr "_Link"
+
+#: ../ui/mainmenubar.xml:560
 msgid "_Image"
 msgstr "_Imatge"
 
-#: ../ui/mainmenubar.xml:560
+#: ../ui/mainmenubar.xml:566
 msgid "_Default Tool"
 msgstr "Eina per _defecte"
 
-#: ../ui/mainmenubar.xml:567
+#: ../ui/mainmenubar.xml:573
 msgid "Drawing Type"
 msgstr "Tipus de dibuix"
 
-#: ../ui/mainmenubar.xml:569
+#: ../ui/mainmenubar.xml:575
 msgid "_Shape Recognizer"
 msgstr "_Reconeixedor de traços"
 
-#: ../ui/mainmenubar.xml:599
+#: ../ui/mainmenubar.xml:605
 msgid "Draw _Line"
 msgstr "Dibuixa _línies"
 
-#: ../ui/mainmenubar.xml:640
+#: ../ui/mainmenubar.xml:646
 msgid "_Vertical Space"
 msgstr "Espai _vertical"
 
-#: ../ui/mainmenubar.xml:652
+#: ../ui/mainmenubar.xml:658
 msgid "H_and Tool"
 msgstr "Eina _mà"
 
-#: ../ui/mainmenubar.xml:668
+#: ../ui/mainmenubar.xml:674
 msgid "Pen _Options"
 msgstr "Opcions del lla_pis"
 
-#: ../ui/mainmenubar.xml:671 ../ui/mainmenubar.xml:733
-#: ../ui/mainmenubar.xml:780
+#: ../ui/mainmenubar.xml:677 ../ui/mainmenubar.xml:739
+#: ../ui/mainmenubar.xml:786
 msgid "_very fine"
 msgstr "_Molt fi"
 
-#: ../ui/mainmenubar.xml:676 ../ui/mainmenubar.xml:738
-#: ../ui/mainmenubar.xml:785
+#: ../ui/mainmenubar.xml:682 ../ui/mainmenubar.xml:744
+#: ../ui/mainmenubar.xml:791
 msgid "_fine"
 msgstr "_Fi"
 
-#: ../ui/mainmenubar.xml:681 ../ui/mainmenubar.xml:743
-#: ../ui/mainmenubar.xml:790
+#: ../ui/mainmenubar.xml:687 ../ui/mainmenubar.xml:749
+#: ../ui/mainmenubar.xml:796
 msgid "_medium"
 msgstr "_Normal"
 
-#: ../ui/mainmenubar.xml:686 ../ui/mainmenubar.xml:748
-#: ../ui/mainmenubar.xml:795
+#: ../ui/mainmenubar.xml:692 ../ui/mainmenubar.xml:754
+#: ../ui/mainmenubar.xml:801
 msgid "_thick"
 msgstr "_Gruixut"
 
-#: ../ui/mainmenubar.xml:691 ../ui/mainmenubar.xml:753
-#: ../ui/mainmenubar.xml:800
+#: ../ui/mainmenubar.xml:697 ../ui/mainmenubar.xml:759
+#: ../ui/mainmenubar.xml:806
 msgid "ver_y thick"
 msgstr "Mol_t gruixut"
 
-#: ../ui/mainmenubar.xml:720 ../ui/mainmenubar.xml:807
+#: ../ui/mainmenubar.xml:726 ../ui/mainmenubar.xml:813
 msgid "Fi_ll"
 msgstr "_Omple"
 
-#: ../ui/mainmenubar.xml:724 ../ui/mainmenubar.xml:811
+#: ../ui/mainmenubar.xml:730 ../ui/mainmenubar.xml:817
 msgid "Fill opacity"
 msgstr "Opacitat del farciment"
 
-#: ../ui/mainmenubar.xml:730
+#: ../ui/mainmenubar.xml:736
 msgid "Eraser Optio_ns"
 msgstr "Opcions de la goma d'es_borrar"
 
-#: ../ui/mainmenubar.xml:760
+#: ../ui/mainmenubar.xml:766
 msgid "_standard"
 msgstr "_Estàndard"
 
-#: ../ui/mainmenubar.xml:765
+#: ../ui/mainmenubar.xml:771
 msgid "_whiteout"
 msgstr "_Pinta (com si fos líquid corrector)"
 
-#: ../ui/mainmenubar.xml:770
+#: ../ui/mainmenubar.xml:776
 msgid "_delete strokes"
 msgstr "_Esborra traços sencers"
 
-#: ../ui/mainmenubar.xml:777
+#: ../ui/mainmenubar.xml:783
 msgid "Highlighter Opti_ons"
 msgstr "_Opcions del subratllador"
 
-#: ../ui/mainmenubar.xml:817
+#: ../ui/mainmenubar.xml:823
 msgid "Select PDF Text Options"
 msgstr "Opcions del text PDF"
 
-#: ../ui/mainmenubar.xml:820
+#: ../ui/mainmenubar.xml:826
 msgid "Marker Opacity"
 msgstr "Opacitat del subratllador"
 
-#: ../ui/mainmenubar.xml:826
+#: ../ui/mainmenubar.xml:832
 msgid "Text Font..."
 msgstr "Tipus de lletra..."
 
-#: ../ui/mainmenubar.xml:831
+#: ../ui/mainmenubar.xml:837
 msgid "Record / Stop"
 msgstr "Grava/Para"
 
-#: ../ui/mainmenubar.xml:836
+#: ../ui/mainmenubar.xml:842
 msgid "Pause"
 msgstr "Posa en pausa"
 
-#: ../ui/mainmenubar.xml:863
+#: ../ui/mainmenubar.xml:869
 msgid "_Help"
 msgstr "_Ajuda"
 
-#: ../ui/mainmenubar.xml:867
+#: ../ui/mainmenubar.xml:873
 msgid "Help"
 msgstr "Ajuda"
 
-#: ../ui/mainmenubar.xml:871
+#: ../ui/mainmenubar.xml:877
 msgid "Run Gtk3 demo"
 msgstr "Executa la demostració Gtk3"
 
-#: ../ui/mainmenubar.xml:875
+#: ../ui/mainmenubar.xml:881
 msgid "About"
 msgstr "Quant a"
 
