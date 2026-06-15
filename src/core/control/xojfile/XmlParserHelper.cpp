@@ -45,8 +45,8 @@ using XmlParserHelper::string_utf8_view;
 
 // Template specializations
 template <>
-auto XmlParserHelper::getAttrib<const char*>(std::u8string_view name,
-                                             const AttributeMap& attributeMap) -> std::optional<const char*> {
+auto XmlParserHelper::getAttrib<const char*>(std::u8string_view name, const AttributeMap& attributeMap)
+        -> std::optional<const char*> {
     return attributeMap[name];
 }
 
@@ -62,8 +62,8 @@ auto XmlParserHelper::getAttrib<c_string_utf8_view>(std::u8string_view name, con
 }
 
 template <>
-auto XmlParserHelper::getAttrib<string_utf8_view>(std::u8string_view name,
-                                                  const AttributeMap& attributeMap) -> std::optional<string_utf8_view> {
+auto XmlParserHelper::getAttrib<string_utf8_view>(std::u8string_view name, const AttributeMap& attributeMap)
+        -> std::optional<string_utf8_view> {
     const auto optCStr = attributeMap[name];
     if (optCStr) {
         return std::string_view{*optCStr} | xoj::util::utf8;
@@ -73,8 +73,8 @@ auto XmlParserHelper::getAttrib<string_utf8_view>(std::u8string_view name,
 }
 
 template <>
-auto XmlParserHelper::getAttrib<fs::path>(std::u8string_view name,
-                                          const AttributeMap& attributeMap) -> std::optional<fs::path> {
+auto XmlParserHelper::getAttrib<fs::path>(std::u8string_view name, const AttributeMap& attributeMap)
+        -> std::optional<fs::path> {
     const auto optCStr = attributeMap[name];
     if (optCStr) {
         return fs::path{*optCStr | xoj::util::utf8};
@@ -84,8 +84,8 @@ auto XmlParserHelper::getAttrib<fs::path>(std::u8string_view name,
 }
 
 template <>
-auto XmlParserHelper::getAttrib<LineStyle>(std::u8string_view name,
-                                           const AttributeMap& attributeMap) -> std::optional<LineStyle> {
+auto XmlParserHelper::getAttrib<LineStyle>(std::u8string_view name, const AttributeMap& attributeMap)
+        -> std::optional<LineStyle> {
     const auto optCStr = attributeMap[name];
     if (optCStr) {
         // With significant effort, we could avoid a copy here, but this attribute likely does
@@ -99,8 +99,8 @@ auto XmlParserHelper::getAttrib<LineStyle>(std::u8string_view name,
 
 // Custom attribute parsing functions
 
-auto XmlParserHelper::getAttribColorMandatory(const AttributeMap& attributeMap, const Color& defaultValue,
-                                              bool bg) -> Color {
+auto XmlParserHelper::getAttribColorMandatory(const AttributeMap& attributeMap, const Color& defaultValue, bool bg)
+        -> Color {
     const auto optColorSV = getAttrib<std::string_view>(xoj::xml_attrs::COLOR_STR, attributeMap);
 
     if (optColorSV) {
