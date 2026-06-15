@@ -29,8 +29,7 @@ public:
      */
     static constexpr int toolSizes = 5;
 
-    Tool(std::string name, ToolType type, Color color, unsigned int capabilities,
-         std::optional<std::array<double, Tool::toolSizes>> thickness);
+    Tool(std::string name, ToolType type, Color color, std::optional<std::array<double, Tool::toolSizes>> thickness);
     /**
      * @brief Construct a new Tool object based on another tool.
      * @param t tool to use as basis for new copy.
@@ -61,7 +60,7 @@ public:
     bool isDrawingTool() const;
 
 protected:
-    void setCapability(unsigned int capability, bool enabled);
+    void setCapability(ToolCapabilities capability, bool enabled);
 
 private:
     void operator=(const Tool& t);
@@ -72,7 +71,7 @@ private:
 
     std::optional<std::array<double, toolSizes>> thickness;
 
-    unsigned int capabilities;
+    ToolCapabilities capabilities;
 
     friend class ToolHandler;
 };

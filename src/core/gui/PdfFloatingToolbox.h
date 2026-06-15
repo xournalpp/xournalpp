@@ -1,13 +1,14 @@
 #pragma once
 
-#include <cstdint>    // for uint8_t
-#include <memory>     // for unique_ptr
+#include <cstdint>  // for uint8_t
+#include <memory>   // for unique_ptr
 
 #include <gdk/gdk.h>  // for GdkRectangle
 #include <glib.h>     // for gboolean
 #include <gtk/gtk.h>  // for GtkButton, GtkOverlay
 
 #include "pdf/base/XojPdfPage.h"    // for XojPdfPageSelectionStyle
+#include "util/Color.h"             // for Color
 #include "util/raii/GObjectSPtr.h"  // for GObjectSPtr
 
 class MainWindow;
@@ -82,6 +83,7 @@ private:
 private:
     GtkWidget* floatingToolbox;
     MainWindow* theMainWindow;
+    Color color;  ///< Used for strokes/highlighting
 
     /// The overlay that the toolbox should be displayed in.
     xoj::util::GObjectSPtr<GtkOverlay> overlay;
