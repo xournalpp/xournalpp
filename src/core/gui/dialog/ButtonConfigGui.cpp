@@ -276,9 +276,9 @@ void ButtonConfigGui::enableDisableTools() {
     gtk_tree_model_get_value(model, &iter, 2, &value);
     auto action = static_cast<ToolType>(g_value_get_int(&value));
 
-    gtk_widget_set_visible(cbThickness, xoj::tool::hasCapability(action, TOOL_CAP_SIZE));
-    gtk_widget_set_visible(colorButton, xoj::tool::hasCapability(action, TOOL_CAP_COLOR));
-    gtk_widget_set_visible(cbDrawingType, xoj::tool::hasCapability(action, TOOL_CAP_RECTANGLE));
+    gtk_widget_set_visible(cbThickness, action != TOOL_NONE && xoj::tool::hasCapability(action, TOOL_CAP_SIZE));
+    gtk_widget_set_visible(colorButton, action != TOOL_NONE && xoj::tool::hasCapability(action, TOOL_CAP_COLOR));
+    gtk_widget_set_visible(cbDrawingType, action != TOOL_NONE && xoj::tool::hasCapability(action, TOOL_CAP_RECTANGLE));
     gtk_widget_set_visible(cbEraserType, action == TOOL_ERASER);
     gtk_widget_set_visible(cbStrokeType, action == TOOL_PEN);
 }
