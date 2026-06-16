@@ -174,7 +174,7 @@ TEST(LineStyle, testStrokeScalingOnLineStyle) {
         const LineStyle originalStyle = baseStroke->getLineStyle();
         const double originalWidth = baseStroke->getWidth();
 
-        std::unique_ptr<Stroke> s(static_cast<Stroke*>(baseStroke->clone().release()));
+        std::unique_ptr<Stroke> s(dynamic_cast<Stroke*>(baseStroke->clone().release()));
         ASSERT_NE(s, nullptr);
 
         s->scale(0.0, 0.0, factor, factor, 0.0, false);
@@ -190,7 +190,7 @@ TEST(LineStyle, testStrokeScalingOnLineStyle) {
             EXPECT_EQ(scaledStyle, originalStyle);
             pressureSensitive = false;
         } else {
-            auto originalDashes = originalStyle.getDashes();
+            const auto& originalDashes = originalStyle.getDashes();
             auto scaledDashes = scaledStyle.getDashes();
             EXPECT_TRUE(collinearVectors(originalDashes, scaledDashes));
             EXPECT_NEAR(originalDashes[0] * factor, scaledDashes[0], tol);

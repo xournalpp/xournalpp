@@ -41,10 +41,17 @@ auto formatStyle(const std::vector<double>& dashes, bool scaleDashes) -> std::st
 
 auto StrokeStyle::parseStyle(const std::string& style) -> LineStyle {
     auto it = predefinedPatterns.find(style);
+    bool scale_dashes = style.starts_with("scaled");
+
     if (it != predefinedPatterns.end()) {
         LineStyle ls;
         std::vector<double> dashes = it->second;
         ls.setDashes(std::move(dashes));
+
+        if (scale_dashes) {
+            ls.setScaleDashes();
+        }
+
         return ls;
     }
 
@@ -66,6 +73,11 @@ auto StrokeStyle::parseStyle(const std::string& style) -> LineStyle {
 
     LineStyle ls;
     ls.setDashes(std::move(dashes));
+
+    if (scale_dashes) {
+        ls.setScaleDashes();
+    }
+
     return ls;
 }
 
