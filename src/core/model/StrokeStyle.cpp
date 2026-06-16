@@ -15,7 +15,7 @@ namespace {
 constexpr auto CUSTOM_KEY = "cust: ";
 
 const std::map<std::string, std::vector<double>> predefinedPatterns = {
-        {"dash", {6, 3}}, {"dashdot", {6, 3, 0.5, 3}}, {"dot", {0.5, 3}},
+        {"dash", {6, 3}},        {"dashdot", {6, 3, 0.5, 3}},        {"dot", {0.5, 3}},
         {"scaled_dash", {6, 3}}, {"scaled_dashdot", {6, 3, 0.5, 3}}, {"scaled_dot", {0.5, 3}}};
 
 auto formatStyle(const std::vector<double>& dashes, bool scaleDashes) -> std::string {

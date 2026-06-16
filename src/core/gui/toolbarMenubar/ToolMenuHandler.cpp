@@ -374,10 +374,11 @@ void ToolMenuHandler::initToolItems() {
      */
     this->penLineStylePopover = std::make_unique<StylePopoverFactory>(
             Action::TOOL_PEN_LINE_STYLE,
-            std::vector<StylePopoverFactory::Entry>{{_("standard"), iconName("line-style-plain"), "plain"},
-                                                    {_("dashed"), iconName("line-style-dash"), "scaled_dash"},
-                                                    {_("dash-/ dotted"), iconName("line-style-dash-dot"), "scaled_dashdot"},
-                                                    {_("dotted"), iconName("line-style-dot"), "scaled_dot"}});
+            std::vector<StylePopoverFactory::Entry>{
+                    {_("standard"), iconName("line-style-plain"), "plain"},
+                    {_("dashed"), iconName("line-style-dash"), "scaled_dash"},
+                    {_("dash-/ dotted"), iconName("line-style-dash-dot"), "scaled_dashdot"},
+                    {_("dotted"), iconName("line-style-dot"), "scaled_dot"}});
     emplaceCustomItemWithTargetAndMenu("PEN", Cat::TOOLS, Action::SELECT_TOOL, TOOL_PEN, "tool-pencil", _("Pen"),
                                        this->penLineStylePopover.get());
 
@@ -392,12 +393,12 @@ void ToolMenuHandler::initToolItems() {
     // Add individual line styles as toolbar items
     emplaceCustomItemWithTarget("PLAIN", Cat::TOOLS, Action::TOOL_PEN_LINE_STYLE, "plain", "line-style-plain-with-pen",
                                 _("standard"));
-    emplaceCustomItemWithTarget("DASHED", Cat::TOOLS, Action::TOOL_PEN_LINE_STYLE, "scaled_dash", "line-style-dash-with-pen",
-                                _("dashed"));
+    emplaceCustomItemWithTarget("DASHED", Cat::TOOLS, Action::TOOL_PEN_LINE_STYLE, "scaled_dash",
+                                "line-style-dash-with-pen", _("dashed"));
     emplaceCustomItemWithTarget("DASH-/ DOTTED", Cat::TOOLS, Action::TOOL_PEN_LINE_STYLE, "scaled_dashdot",
                                 "line-style-dash-dot-with-pen", _("dash-/ dotted"));
-    emplaceCustomItemWithTarget("DOTTED", Cat::TOOLS, Action::TOOL_PEN_LINE_STYLE, "scaled_dot", "line-style-dot-with-pen",
-                                _("dotted"));
+    emplaceCustomItemWithTarget("DOTTED", Cat::TOOLS, Action::TOOL_PEN_LINE_STYLE, "scaled_dot",
+                                "line-style-dot-with-pen", _("dotted"));
 
 
     emplaceCustomItemWithTarget("HIGHLIGHTER", Cat::TOOLS, Action::SELECT_TOOL, TOOL_HIGHLIGHTER, "tool-highlighter",

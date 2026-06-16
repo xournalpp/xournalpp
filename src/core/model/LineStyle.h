@@ -72,5 +72,5 @@ public:
 
 private:
     std::vector<double> dashes;
-    bool scaleDashesToWidth = false; // Used for pressure-sensitive dash scaling
+    bool scaleDashesToWidth = false;  // Used for pressure-sensitive dash scaling
 };

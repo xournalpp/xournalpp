@@ -102,7 +102,8 @@ TEST(LineStyle, testSetScaleDashes) {
 }
 
 TEST(LineStyle, testCopyPasteMantainsLineStyle) {
-    constexpr std::array<size_t, 2> strokeIndexes = {0, 5}; // One pressure sensitive and one pressure insensitive stroke
+    constexpr std::array<size_t, 2> strokeIndexes = {0,
+                                                     5};  // One pressure sensitive and one pressure insensitive stroke
 
     LoadHandler loadHandler;
     auto doc = loadHandler.loadDocument(GET_TESTFILE(u8"load/scaled-dashes.xopp"));
@@ -111,7 +112,7 @@ TEST(LineStyle, testCopyPasteMantainsLineStyle) {
     auto elems = doc->getPage(0)->getLayersView()[0]->getElementsView();
     ASSERT_GT(elems.size(), 5);
 
-    for (size_t i : strokeIndexes) {
+    for (size_t i: strokeIndexes) {
         auto s = dynamic_cast<const Stroke*>(elems[i]);
         ASSERT_NE(s, nullptr);
 
@@ -137,23 +138,28 @@ TEST(LineStyle, testCopyPasteMantainsLineStyle) {
 }
 
 TEST(LineStyle, testStrokeScalingOnLineStyle) {
-    constexpr std::array<size_t, 2> strokeIndexes = {2, 3}; // One pressure sensitive and one pressure insensitive stroke
+    constexpr std::array<size_t, 2> strokeIndexes = {2,
+                                                     3};  // One pressure sensitive and one pressure insensitive stroke
     constexpr double tol = 1e-8;
     constexpr double factor = 5.0;
 
     auto collinearVectors = [](const std::vector<double>& v1, const std::vector<double>& v2) -> bool {
-        if (v1.size() == 0) return false;
-        if (v1.size() != v2.size()) return false;
+        if (v1.size() == 0)
+            return false;
+        if (v1.size() != v2.size())
+            return false;
 
         size_t i = 0;
         while (i < v1.size() && std::abs(v1[i]) < tol) ++i;
 
-        if (i == v1.size()) return true;
+        if (i == v1.size())
+            return true;
 
         double k = v2[i] / v1[i];
 
         for (size_t j = 0; j < v1.size(); ++j) {
-            if (std::abs(v2[j] - k * v1[j]) > tol) return false;
+            if (std::abs(v2[j] - k * v1[j]) > tol)
+                return false;
         }
 
         return true;
@@ -167,7 +173,7 @@ TEST(LineStyle, testStrokeScalingOnLineStyle) {
     ASSERT_GT(elems.size(), 0);
 
     bool pressureSensitive = true;
-    for (size_t i : strokeIndexes) {
+    for (size_t i: strokeIndexes) {
         auto baseStroke = dynamic_cast<const Stroke*>(elems[i]);
         ASSERT_NE(baseStroke, nullptr);
 

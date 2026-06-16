@@ -193,13 +193,15 @@ static void noop(cairo_t*) {};
 // Convert a physical distance to distance normalized by stroke width
 // Thick strokes result in smaller normalized values, making dashes longer physically
 static inline double toNormalized(double physical, double strokeWidth, bool scaleDashes) {
-    if (!scaleDashes) return physical;
+    if (!scaleDashes)
+        return physical;
     return physical / strokeWidth;
 }
 
 // Convert a normalized distance back to physical units
 static inline double toPhysical(double normalized, double strokeWidth, bool scaleDashes) {
-    if (!scaleDashes) return normalized;
+    if (!scaleDashes)
+        return normalized;
     return normalized * strokeWidth;
 }
 
@@ -279,7 +281,8 @@ double xoj::view::StrokeContourDashes::addToCairo(cairo_t* cr, double globalDash
         if (on) {
             MathVect2 v3(p2, p3);
             drawCoupling(cr, ops, p2, std::min(toPhysical(dashoffset, p2.z, scaleDashes), norm1),
-                         std::min(toPhysical(*dashIt - dashoffset, p2.z, scaleDashes), v3.norm()), a1, v3.argument(), p1.z);
+                         std::min(toPhysical(*dashIt - dashoffset, p2.z, scaleDashes), v3.norm()), a1, v3.argument(),
+                         p1.z);
         }
 
         globalDashOffset += toNormalized(norm1, p1.z, scaleDashes);
@@ -349,7 +352,8 @@ void xoj::view::StrokeContourDashes::drawDebug(cairo_t* cr, bool scaleDashes) co
         if (on) {
             MathVect2 v3(p2, p3);
             drawCoupling(cr, ops, p2, std::min(toPhysical(dashoffset, p2.z, scaleDashes), norm1),
-                         std::min(toPhysical(*dashIt - dashoffset, p2.z, scaleDashes), v3.norm()), a1, v3.argument(), p1.z);
+                         std::min(toPhysical(*dashIt - dashoffset, p2.z, scaleDashes), v3.norm()), a1, v3.argument(),
+                         p1.z);
         }
     }
 
