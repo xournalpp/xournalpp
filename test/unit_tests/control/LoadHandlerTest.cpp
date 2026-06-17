@@ -667,13 +667,13 @@ TEST(ControlLoadHandler, testBookmarksLoadStoreLoad) {
     ASSERT_TRUE(doc1);
 
     const auto bookmarks1 = doc1->listBookmarks();
-    ASSERT_EQ(size_t{2}, bookmarks1.size());
 
-    EXPECT_EQ(std::string("Bm1"), bookmarks1[0].first);
-    EXPECT_EQ(size_t{0}, bookmarks1[0].second);
+    std::vector<std::pair<std::string, size_t>> expectedBookmarks = {
+        {"Bm1", 0},
+        {"Bm2", 2}
+    };
 
-    EXPECT_EQ(std::string("Bm2"), bookmarks1[1].first);
-    EXPECT_EQ(size_t{2}, bookmarks1[1].second);
+    EXPECT_EQ(expectedBookmarks, bookmarks1);
 
     const fs::path outPath = fs::temp_directory_path() / "xournalpp-test-bookmarks.xopp";
     ASSERT_FALSE(fs::exists(outPath));

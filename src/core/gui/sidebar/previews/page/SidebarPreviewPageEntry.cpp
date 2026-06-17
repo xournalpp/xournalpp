@@ -44,8 +44,9 @@ void SidebarPreviewPageEntry::paint(cairo_t* cr) {
     bool hasBookmark = this->page->getBookmark().has_value();
     doc->unlock_shared();
 
-    if (hasBookmark)
+    if (hasBookmark) {
         drawBookmarkIcon(cr);
+    }
 
     drawEntryNumber(cr);
 }
@@ -54,15 +55,16 @@ void SidebarPreviewPageEntry::drawBookmarkIcon(cairo_t* cr) {
     IconNameHelper iconNameHelper(sidebar->getControl()->getSettings());
     std::string iconName = iconNameHelper.iconName("bookmark");
 
-    int iconSize = 24;
-    int padding = 9;
-    int x = this->imageWidth - iconSize - padding - 10;
-    int y = padding;
+    constexpr int ICON_SIZE = 24;
+    constexpr int PADDING = 9;
+    constexpr int X_EXTRA_PADDING = 10;
+    const int x = this->imageWidth - ICON_SIZE - PADDING - X_EXTRA_PADDING;
+    const int y = PADDING;
 
     GtkIconTheme* theme = gtk_icon_theme_get_default();
     GError* error = nullptr;
 
-    GdkPixbuf* pixbuf = gtk_icon_theme_load_icon(theme, iconName.c_str(), iconSize, GTK_ICON_LOOKUP_FORCE_SIZE, &error);
+    GdkPixbuf* pixbuf = gtk_icon_theme_load_icon(theme, iconName.c_str(), ICON_SIZE, GTK_ICON_LOOKUP_FORCE_SIZE, &error);
     if (pixbuf) {
         cairo_save(cr);
 
