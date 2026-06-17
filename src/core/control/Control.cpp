@@ -136,10 +136,8 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     auto saveName = Util::getConfigFile(SETTINGS_XML_FILE);
 
     if (name != saveName) {
-        g_message("Loading settings from system config: %s", name.string().c_str());
         this->settings = new Settings(std::move(saveName), std::move(name));
     } else {
-        g_message("Loading settings from user config: %s", name.string().c_str());
         this->settings = new Settings(std::move(name));
     }
     this->settings->load();
