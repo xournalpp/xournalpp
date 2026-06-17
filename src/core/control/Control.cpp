@@ -1,8 +1,8 @@
 #include "Control.h"
 
-#include <algorithm>  // for max
-#include <cstdlib>    // for size_t
-#include <exception>  // for exce...
+#include <algorithm>   // for max
+#include <cstdlib>     // for size_t
+#include <exception>   // for exce...
 #include <functional>  // for bind
 #include <iterator>    // for end
 #include <memory>      // for make...
@@ -132,8 +132,16 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     this->metadata = new MetadataManager();
     this->cursor = new XournalppCursor(this);
 
-    auto name = Util::getConfigFile(SETTINGS_XML_FILE);
-    this->settings = new Settings(std::move(name));
+    auto name = Util::getConfigFileWithFallback(SETTINGS_XML_FILE);
+    auto saveName = Util::getConfigFile(SETTINGS_XML_FILE);
+
+    if (name != saveName) {
+        g_message("Loading settings from system config: %s", name.string().c_str());
+        this->settings = new Settings(std::move(saveName), std::move(name));
+    } else {
+        g_message("Loading settings from user config: %s", name.string().c_str());
+        this->settings = new Settings(std::move(name));
+    }
     this->settings->load();
     this->loadPaletteFromSettings();
 

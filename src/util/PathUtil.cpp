@@ -398,6 +398,33 @@ auto Util::getConfigFile(const fs::path& relativeFileName) -> fs::path {
     return p;
 }
 
+auto Util::getConfigFileWithFallback(const fs::path& relativeFileName) -> fs::path {
+    // Try user config home
+    fs::path userConfigPath = getConfigFile(relativeFileName);
+    if (fs::exists(userConfigPath)) {
+        g_message("Found user config file at: %s", userConfigPath.string().c_str());
+        return userConfigPath;
+    }
+
+    // Look in system config directories
+    g_message("Looking for config file in system config directories");
+    const gchar* const* systemConfigDirs = g_get_system_config_dirs();
+    if (systemConfigDirs != nullptr) {
+        for (int i = 0; systemConfigDirs[i] != nullptr; i++) {
+            fs::path systemConfigPath = GFilename(systemConfigDirs[i]).toPath().value_or(fs::path());
+            systemConfigPath /= CONFIG_FOLDER_NAME;
+            systemConfigPath /= relativeFileName;
+
+            if (fs::exists(systemConfigPath)) {
+                g_message("Found system config file at: %s", systemConfigPath.string().c_str());
+                return systemConfigPath;
+            }
+        }
+    }
+
+    return userConfigPath;
+}
+
 auto Util::getCacheFile(const fs::path& relativeFileName) -> fs::path {
     fs::path p = getCacheSubfolder(relativeFileName.parent_path());
     p /= relativeFileName.filename();

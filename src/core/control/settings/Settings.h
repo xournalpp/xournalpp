@@ -104,6 +104,7 @@ private:
 class Settings {
 public:
     /*[[implicit]]*/ Settings(fs::path filepath);
+    /*[[implicit]]*/ Settings(fs::path filepath, fs::path loadPath);
     Settings(const Settings& settings) = delete;
     void operator=(const Settings& settings) = delete;
     virtual ~Settings();
@@ -615,13 +616,19 @@ public:
 
     LatexSettings latexSettings{};
 
-    inline const fs::path& getSettingsFile() const { return filepath; }
+    inline const fs::path& getSettingsFile() const { return savePath; }
 
 private:
     /**
-     *  The config filepath
+     *  The config file path used for saving
      */
-    fs::path filepath;
+    fs::path savePath;
+
+    /**
+     *  The config file path used for loading, may differ from savePath
+     *  when falling back to system directories
+     */
+    fs::path loadPath;
 
 private:
     /**
