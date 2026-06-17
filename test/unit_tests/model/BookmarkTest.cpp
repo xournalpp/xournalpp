@@ -131,6 +131,8 @@ TEST(Bookmark, testSetEmptyDifferentFromDelete) {
 
     EXPECT_FALSE(page->getBookmark().has_value());
     EXPECT_TRUE(cloned->getBookmark().has_value());
+
+    delete cloned;
 }
 
 TEST(Bookmark, testCloneWithNoBookmark) {

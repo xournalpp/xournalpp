@@ -28,10 +28,11 @@ auto BookmarkUndoAction::redo(Control* control) -> bool { return apply(control, 
 auto BookmarkUndoAction::apply(Control* control, const std::optional<std::string>& bm) -> bool {
 
     Document* doc = control->getDocument();
-    PageRef page = doc->getPage(pageIndex);
 
     doc->lock();
+    PageRef page = doc->getPage(pageIndex);
     DocumentChangeType docChangeType = DOCUMENT_CHANGE_BOOKMARKS;
+
     if (bm.has_value()) {
         page->setBookmark(bm.value());
     } else {
