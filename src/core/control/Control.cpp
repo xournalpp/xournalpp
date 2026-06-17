@@ -843,24 +843,22 @@ void Control::movePageTowardsEnd() {
 }
 
 void Control::setBookmark(size_t pageIndex) {
-    BookmarkDialog dialog(getGtkWindow());
-    if (!dialog.run())
-        return;
+    auto popup = xoj::popup::PopupWindowWrapper<BookmarkDialog>(
+            getGladeSearchPath(), "", [this, pageIndex](const std::string& name) {
+                doc->lock();
+                auto oldBookmark = doc->setBookmark(name, pageIndex);
+                doc->unlock();
 
-    std::string name = dialog.getName();
+                auto newBookmark = std::optional<std::string>(name);
+                auto undo =
+                        std::make_unique<BookmarkUndoAction>(pageIndex, std::move(oldBookmark), std::move(newBookmark));
+                getUndoRedoHandler()->addUndoAction(std::move(undo));
 
-    doc->lock();
-    auto oldBookmark = doc->setBookmark(name, pageIndex);
-    doc->unlock();
-
-    auto newBookmark = std::optional<std::string>(std::move(name));
-    auto undo = std::make_unique<BookmarkUndoAction>(pageIndex, std::move(oldBookmark), std::move(newBookmark));
-
-    getUndoRedoHandler()->addUndoAction(std::move(undo));
-
-    this->fireDocumentChanged(DOCUMENT_CHANGE_BOOKMARKS);
-    this->firePageChanged(pageIndex);
-    this->updatePageActions();
+                this->fireDocumentChanged(DOCUMENT_CHANGE_BOOKMARKS);
+                this->firePageChanged(pageIndex);
+                this->updatePageActions();
+            });
+    popup.show(getGtkWindow());
 }
 
 void Control::deleteBookmark(size_t pageIndex) {

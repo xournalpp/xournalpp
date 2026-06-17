@@ -51,7 +51,7 @@ SidebarBookmarks::SidebarBookmarks(Control* control):
 
     g_signal_connect(treeView, "row-activated", G_CALLBACK(onRowActivated), this);
 
-    gtk_widget_show_all(mainBox);
+    gtk_widget_set_visible(mainBox, TRUE);
 
     registerListener(control);
 }

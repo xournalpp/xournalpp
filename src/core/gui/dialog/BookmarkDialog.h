@@ -11,30 +11,30 @@
 
 #pragma once
 
+#include <functional>
 #include <string>
 
 #include <gtk/gtk.h>
+
+#include "util/raii/GtkWindowUPtr.h"  // for GtkWindowUPtr
+
+class GladeSearchpath;
 
 class BookmarkDialog {
 public:
     static constexpr int MAX_NAME_LENGTH = 500;
 
-    BookmarkDialog(GtkWindow* parent, const std::string& initialName = "");
+    BookmarkDialog(GladeSearchpath* gladeSearchPath, const std::string& initialName,
+                   std::function<void(std::string)> callback);
 
-    ~BookmarkDialog();
-
-    auto run() -> bool;
-    auto getName() const -> std::string;
+    GtkWindow* getWindow() const { return window.get(); }
 
 private:
-    void build(GtkWindow* parent, const char* title, const std::string& initialName);
-
     static void onNameChanged(GtkEditable* editable, BookmarkDialog* self);
     void updateOkSensitivity();
 
-    GtkWidget* dialog = nullptr;
+    xoj::util::GtkWindowUPtr window;
     GtkWidget* nameEntry = nullptr;
     GtkWidget* okButton = nullptr;
-
-    std::string resultName;
+    std::function<void(std::string)> callback;
 };

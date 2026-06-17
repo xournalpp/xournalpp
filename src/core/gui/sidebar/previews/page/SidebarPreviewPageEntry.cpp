@@ -61,22 +61,44 @@ void SidebarPreviewPageEntry::drawBookmarkIcon(cairo_t* cr) {
     const int x = this->imageWidth - ICON_SIZE - PADDING - X_EXTRA_PADDING;
     const int y = PADDING;
 
+#if GTK_MAJOR_VERSION == 3
     GtkIconTheme* theme = gtk_icon_theme_get_default();
     GError* error = nullptr;
-
     GdkPixbuf* pixbuf =
             gtk_icon_theme_load_icon(theme, iconName.c_str(), ICON_SIZE, GTK_ICON_LOOKUP_FORCE_SIZE, &error);
     if (pixbuf) {
         cairo_save(cr);
-
         gdk_cairo_set_source_pixbuf(cr, pixbuf, x, y);
         cairo_paint(cr);
-
         cairo_restore(cr);
         g_object_unref(pixbuf);
     } else if (error) {
         g_error_free(error);
     }
+#else
+    GtkIconTheme* theme = gtk_icon_theme_get_for_display(gdk_display_get_default());
+    GtkIconPaintable* paintable = gtk_icon_theme_lookup_icon(theme, iconName.c_str(), nullptr, ICON_SIZE, 1,
+                                                             GTK_TEXT_DIR_NONE, static_cast<GtkIconLookupFlags>(0));
+    if (paintable) {
+        GdkTexture* texture = gtk_icon_paintable_download_texture(paintable, nullptr);
+        if (texture) {
+            const int stride = cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, ICON_SIZE);
+            std::vector<guchar> pixels(static_cast<size_t>(stride * ICON_SIZE));
+            gdk_texture_download(texture, pixels.data(), static_cast<gsize>(stride));
+            cairo_surface_t* surface = cairo_image_surface_create_for_data(pixels.data(), CAIRO_FORMAT_ARGB32,
+                                                                           ICON_SIZE, ICON_SIZE, stride);
+            if (cairo_surface_status(surface) == CAIRO_STATUS_SUCCESS) {
+                cairo_save(cr);
+                cairo_set_source_surface(cr, surface, x, y);
+                cairo_paint(cr);
+                cairo_restore(cr);
+            }
+            cairo_surface_destroy(surface);
+            g_object_unref(texture);
+        }
+        g_object_unref(paintable);
+    }
+#endif
 }
 
 void SidebarPreviewPageEntry::drawEntryNumber(cairo_t* cr) {
