@@ -668,10 +668,7 @@ TEST(ControlLoadHandler, testBookmarksLoadStoreLoad) {
 
     const auto bookmarks1 = doc1->listBookmarks();
 
-    std::vector<std::pair<std::string, size_t>> expectedBookmarks = {
-        {"Bm1", 0},
-        {"Bm2", 2}
-    };
+    std::vector<std::pair<std::string, size_t>> expectedBookmarks = {{"Bm1", 0}, {"Bm2", 2}};
 
     EXPECT_EQ(expectedBookmarks, bookmarks1);
 

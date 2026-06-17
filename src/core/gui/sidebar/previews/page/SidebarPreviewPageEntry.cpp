@@ -64,7 +64,8 @@ void SidebarPreviewPageEntry::drawBookmarkIcon(cairo_t* cr) {
     GtkIconTheme* theme = gtk_icon_theme_get_default();
     GError* error = nullptr;
 
-    GdkPixbuf* pixbuf = gtk_icon_theme_load_icon(theme, iconName.c_str(), ICON_SIZE, GTK_ICON_LOOKUP_FORCE_SIZE, &error);
+    GdkPixbuf* pixbuf =
+            gtk_icon_theme_load_icon(theme, iconName.c_str(), ICON_SIZE, GTK_ICON_LOOKUP_FORCE_SIZE, &error);
     if (pixbuf) {
         cairo_save(cr);
 

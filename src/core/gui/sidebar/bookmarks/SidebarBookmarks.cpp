@@ -3,40 +3,29 @@
 #include <glib/gi18n.h>  // For the _() macro
 #include <gtk/gtk.h>
 
-#include "control/Control.h"        // for Control
-#include "control/ScrollHandler.h"  // for ScrollHandler
-#include "gui/sidebar/Sidebar.h"
+#include "control/Control.h"          // for Control
+#include "control/ScrollHandler.h"    // for ScrollHandler
+#include "gui/Builder.h"              // for Builder
+#include "gui/sidebar/Sidebar.h"      // for Sidebar
 #include "model/Document.h"           // for Document
 #include "model/PageRef.h"            // for PageRef
 #include "model/XojPage.h"            // for XojPage
 #include "undo/BookmarkUndoAction.h"  // for BookmarkUndoAction
 
-static auto makeIconButton(const char* iconName, const char* tooltip) -> GtkWidget* {
-    GtkWidget* button = gtk_button_new();
-    GtkWidget* image = gtk_image_new_from_icon_name(iconName, GTK_ICON_SIZE_BUTTON);
-    gtk_widget_set_visible(image, TRUE);
-    gtk_widget_set_can_focus(image, FALSE);
-    gtk_container_add(GTK_CONTAINER(button), image);
-    gtk_widget_set_tooltip_text(button, tooltip);
-    return button;
-}
-
 SidebarBookmarks::SidebarBookmarks(Control* control):
         AbstractSidebarPage(control), iconNameHelper(control->getSettings()) {
-    mainBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    Builder builder(control->getGladeSearchPath(), "sidebarBookmarks.glade");
 
-    scrolledWindow = gtk_scrolled_window_new(nullptr, nullptr);
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledWindow), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-
-    // Claim all available vertical space
-    gtk_widget_set_vexpand(scrolledWindow, TRUE);
+    mainBox = GTK_WIDGET(g_object_ref(builder.get("SidebarBookmarksMainBox")));
+    scrolledWindow = builder.get("bookmarksScrolledWindow");
+    treeView = builder.get("bookmarksTreeView");
+    buttonAdd = builder.get("buttonAdd");
+    buttonEdit = builder.get("buttonEdit");
+    buttonDelete = builder.get("buttonDelete");
 
     listStore = gtk_list_store_new(NUM_COLUMNS, G_TYPE_STRING, G_TYPE_INT);
-    treeView = gtk_tree_view_new_with_model(GTK_TREE_MODEL(listStore));
-    gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeView), FALSE);
-    gtk_tree_view_set_activate_on_single_click(GTK_TREE_VIEW(treeView), TRUE);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(treeView), GTK_TREE_MODEL(listStore));
 
-    // Create a column to hold the label and the page number
     GtkTreeViewColumn* column = gtk_tree_view_column_new();
     gtk_tree_view_column_set_expand(GTK_TREE_VIEW_COLUMN(column), TRUE);
     gtk_tree_view_append_column(GTK_TREE_VIEW(treeView), column);
@@ -50,24 +39,6 @@ SidebarBookmarks::SidebarBookmarks(Control* control):
     gtk_tree_view_column_pack_end(GTK_TREE_VIEW_COLUMN(column), rendererPage, FALSE);
     gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN(column), rendererPage, "text", COLUMN_PAGE_NUM, nullptr);
     g_object_set(G_OBJECT(rendererPage), "style", PANGO_STYLE_ITALIC, nullptr);
-
-    gtk_container_add(GTK_CONTAINER(scrolledWindow), treeView);
-    gtk_box_pack_start(GTK_BOX(mainBox), scrolledWindow, TRUE, TRUE, 0);
-
-    // Bottom buttons
-    GtkWidget* buttons = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_style_context_add_class(gtk_widget_get_style_context(buttons), "bottom_buttons");
-    gtk_style_context_add_class(gtk_widget_get_style_context(buttons), "linked");
-
-    buttonAdd = makeIconButton("bookmark-new", nullptr);
-    buttonEdit = makeIconButton("document-edit-symbolic", nullptr);
-    buttonDelete = makeIconButton("edit-delete", nullptr);
-
-    gtk_box_pack_start(GTK_BOX(buttons), buttonAdd, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(buttons), buttonEdit, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(buttons), buttonDelete, FALSE, FALSE, 0);
-
-    gtk_box_pack_start(GTK_BOX(mainBox), buttons, FALSE, FALSE, 0);
 
     updateButtonSensitivity();
 
@@ -94,6 +65,11 @@ SidebarBookmarks::~SidebarBookmarks() {
     if (listStore) {
         g_object_unref(listStore);
         listStore = nullptr;
+    }
+
+    if (mainBox) {
+        g_object_unref(mainBox);
+        mainBox = nullptr;
     }
 }
 
