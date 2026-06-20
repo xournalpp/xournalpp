@@ -103,8 +103,8 @@ private:
 
 class Settings {
 public:
-    /*[[implicit]]*/ Settings(fs::path savePath);
-    /*[[implicit]]*/ Settings(fs::path savePath, fs::path loadPath);
+    explicit Settings(fs::path savePath);
+    Settings(fs::path savePath, fs::path loadPath);
     Settings(const Settings& settings) = delete;
     void operator=(const Settings& settings) = delete;
     virtual ~Settings();
