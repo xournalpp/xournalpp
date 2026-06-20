@@ -1,7 +1,8 @@
 #include "util/PathUtil.h"
 
 #include <algorithm>
-#include <cstdlib>      // for system
+#include <cstdlib>  // for system
+#include <filesystem>
 #include <fstream>      // for ifstream, char_traits, basic_ist...
 #include <iterator>     // for begin
 #include <sstream>      // for stringstream
@@ -401,9 +402,14 @@ auto Util::getConfigFile(const fs::path& relativeFileName) -> fs::path {
 auto Util::getConfigFileWithFallback(const fs::path& relativeFileName) -> fs::path {
     // Try user config home
     fs::path userConfigPath = getConfigFile(relativeFileName);
-    if (fs::exists(userConfigPath)) {
+    std::error_code ec;
+    if (fs::exists(userConfigPath, ec)) {
         g_message("Found user config file at: %s", userConfigPath.string().c_str());
         return userConfigPath;
+    }
+    if (ec) {
+        g_warning("Error checking config path existence (%s): %s", userConfigPath.string().c_str(),
+                  ec.message().c_str());
     }
 
     // Look in system config directories
@@ -411,13 +417,22 @@ auto Util::getConfigFileWithFallback(const fs::path& relativeFileName) -> fs::pa
     const gchar* const* systemConfigDirs = g_get_system_config_dirs();
     if (systemConfigDirs != nullptr) {
         for (int i = 0; systemConfigDirs[i] != nullptr; i++) {
-            fs::path systemConfigPath = GFilename(systemConfigDirs[i]).toPath().value_or(fs::path());
+            auto p = GFilename(systemConfigDirs[i]).toPath();
+            if (!p) {
+                g_warning("Could not convert system config dir to path: %s", systemConfigDirs[i]);
+                continue;
+            }
+            fs::path systemConfigPath = *p;
             systemConfigPath /= CONFIG_FOLDER_NAME;
             systemConfigPath /= relativeFileName;
 
-            if (fs::exists(systemConfigPath)) {
+            if (fs::exists(systemConfigPath, ec)) {
                 g_message("Found system config file at: %s", systemConfigPath.string().c_str());
                 return systemConfigPath;
+            }
+            if (ec) {
+                g_warning("Error checking system config path existence (%s): %s", systemConfigPath.string().c_str(),
+                          ec.message().c_str());
             }
         }
     }
