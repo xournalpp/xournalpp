@@ -8,6 +8,7 @@ on:
       - 'src/core/control/tools/EditSelection.h'
       - 'src/core/enums/generated/Action.NameMap.generated.h'
       - 'src/core/plugin/luapi_application.h'
+      - 'plugins/luapi_application.def.lua'
 
 
 jobs:
