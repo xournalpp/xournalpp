@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-10 14:58+0000\n"
-"PO-Revision-Date: 2026-06-14 05:55\n"
+"PO-Revision-Date: 2026-06-21 05:57\n"
 "Last-Translator: \n"
 "Language-Team: Georgian\n"
 "Language: ka_GE\n"
@@ -1628,7 +1628,7 @@ msgstr "შტრიხის წაშლა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Add/Edit Link"
-msgstr ""
+msgstr "ბმულის დამატება/ჩასწორება"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Add/Edit TeX"
@@ -1941,7 +1941,7 @@ msgstr "ტექსტი"
 #: ../src/core/undo/AddUndoAction.cpp:100
 #: ../src/core/undo/DeleteUndoAction.cpp:102
 msgid "link"
-msgstr ""
+msgstr "ბმული"
 
 #: ../src/core/undo/ColorUndoAction.cpp:97
 msgid "Change color"
@@ -2033,7 +2033,7 @@ msgstr "მასშტაბი"
 
 #: ../src/core/undo/SizeUndoAction.cpp:118
 msgid "Change stroke width"
-msgstr ""
+msgstr "დაშტრიხვის სიგანის შეცვლა"
 
 #: ../src/core/undo/SwapUndoAction.cpp:67
 msgid "Move page upwards"
@@ -2041,7 +2041,7 @@ msgstr "გვერდის ატანა"
 
 #: ../src/core/undo/SwapUndoAction.cpp:67
 msgid "Move page downwards"
-msgstr ""
+msgstr "გვერდის ჩამოტანა"
 
 #: ../src/core/undo/TextBoxUndoAction.cpp:26
 msgid "Edit text"
@@ -2140,7 +2140,7 @@ msgstr ""
 
 #: ../src/util/XojMsgBox.cpp:190
 msgid "Select another name"
-msgstr ""
+msgstr "აირჩიეთ სხვა სახელი"
 
 #: ../src/util/XojMsgBox.cpp:191
 msgid "Replace"
@@ -2266,7 +2266,7 @@ msgstr ""
 
 #: ../ui/crashDialog.glade:145
 msgid "Create a bug report"
-msgstr ""
+msgstr "ანგარიშის შექმნა შეცდომის შესახებ"
 
 #: ../ui/crashDialog.glade:164
 msgctxt "github is a name - do not try to translate it"
@@ -2572,7 +2572,7 @@ msgstr "ავტოშეწევა"
 
 #: ../ui/latexSettings.glade:392
 msgid "Syntax highlighting"
-msgstr ""
+msgstr "სინტაქსის გამოკვეთა"
 
 #: ../ui/latexSettings.glade:424
 msgid "Wrap text"
@@ -2596,7 +2596,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:556
 msgid "Use external Editor"
-msgstr ""
+msgstr "გარე რედაქტორის გამოყენება"
 
 #: ../ui/latexSettings.glade:573
 msgid "Editor command"
@@ -2620,31 +2620,31 @@ msgstr "რედაქტორის მორგება"
 
 #: ../ui/linkDialog.glade:53
 msgid "Text:"
-msgstr ""
+msgstr "ტექსტი:"
 
 #: ../ui/linkDialog.glade:188
 msgid "URL:"
-msgstr ""
+msgstr "URL:"
 
 #: ../ui/linkDialog.glade:207
 msgid "http://"
-msgstr ""
+msgstr "http://"
 
 #: ../ui/linkDialog.glade:208
 msgid "https://"
-msgstr ""
+msgstr "https://"
 
 #: ../ui/linkDialog.glade:209
 msgid "mailto:"
-msgstr ""
+msgstr "mailto:"
 
 #: ../ui/linkDialog.glade:210
 msgid "file://"
-msgstr ""
+msgstr "file://"
 
 #: ../ui/linkDialog.glade:211
 msgid "<custom>"
-msgstr ""
+msgstr "<custom>"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
@@ -3035,7 +3035,7 @@ msgstr "წვეტების დადგენა"
 
 #: ../ui/settings.glade:1291
 msgid "Finalize the stroke"
-msgstr ""
+msgstr "დაშტრიხვის დასრულება"
 
 #: ../ui/settings.glade:1296
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
@@ -4366,7 +4366,7 @@ msgstr "_ტექსტი"
 
 #: ../ui/mainmenubar.xml:554
 msgid "_Link"
-msgstr ""
+msgstr "ბმუ_ლი"
 
 #: ../ui/mainmenubar.xml:560
 msgid "_Image"
