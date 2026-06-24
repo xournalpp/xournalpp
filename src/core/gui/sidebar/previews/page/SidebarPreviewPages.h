@@ -22,7 +22,6 @@
 
 #include "gui/IconNameHelper.h"                            // for IconNameHe...
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"  // for SidebarPre...
-#include "util/raii/GObjectSPtr.h"
 
 class Control;
 class GladeGui;

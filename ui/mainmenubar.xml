@@ -436,6 +436,13 @@
      <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;Page_Up</attribute>
     </item>
    </section>
+   <section>
+    <item>
+     <attribute name="label" translatable="yes">Add _Bookmark to Current Page</attribute>
+     <attribute name="action">win.add-bookmark</attribute>
+     <attribute name="accel">&lt;Ctrl&gt;b</attribute>
+    </item>
+   </section>
   </submenu>
   <submenu>
    <attribute name="label" translatable="yes">_Journal</attribute>

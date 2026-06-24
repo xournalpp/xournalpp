@@ -662,6 +662,33 @@ TEST(ControlLoadHandler, testLoadStoreLoadStrokeLineReturn) {
                  {50, {84.79, 245.97}}});
 }
 
+TEST(ControlLoadHandler, testBookmarksLoadStoreLoad) {
+    auto doc1 = loadTestDocument(GET_TESTFILE(u8"load/bookmarks.xopp"));
+    ASSERT_TRUE(doc1);
+
+    const auto bookmarks1 = doc1->listBookmarks();
+
+    std::vector<std::pair<std::string, size_t>> expectedBookmarks = {{"Bm1", 0}, {"Bm2", 2}};
+
+    EXPECT_EQ(expectedBookmarks, bookmarks1);
+
+    const fs::path outPath = fs::temp_directory_path() / "xournalpp-test-bookmarks.xopp";
+    ASSERT_FALSE(fs::exists(outPath));
+
+    SaveHandler saver;
+    saver.prepareSave(doc1.get(), outPath);
+    saver.saveTo(outPath);
+
+    auto doc2 = loadTestDocument(outPath);
+    ASSERT_TRUE(doc2);
+
+    const auto bookmarks2 = doc2->listBookmarks();
+    ASSERT_EQ(bookmarks1.size(), bookmarks2.size());
+    EXPECT_EQ(bookmarks1, bookmarks2);
+
+    fs::remove(outPath);
+}
+
 TEST(ControlLoadHandler, testStrokeWidthRecovery) {
     auto doc = loadTestDocument(GET_TESTFILE(u8"packaged_xopp/stroke/width_recovery.xopp"));
     ASSERT_TRUE(doc);

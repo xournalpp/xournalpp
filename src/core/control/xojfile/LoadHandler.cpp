@@ -104,6 +104,12 @@ void LoadHandler::addPage(double width, double height) {
     this->pages.emplace_back(this->page);
 }
 
+void LoadHandler::setBookmark(const std::optional<std::string>& bookmark) {
+    if (bookmark.has_value()) {
+        this->page->setBookmark(bookmark.value());
+    }
+}
+
 void LoadHandler::finalizePage() {
     xoj_assert(this->page);
 

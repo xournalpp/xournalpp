@@ -72,6 +72,8 @@ void XojCairoPdfExport::configureCairoFontOptions() {
 
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
 void XojCairoPdfExport::populatePdfOutline() {
+    populateNativeBookmarksOutline();
+
     auto tocModel = doc->getContentsModel();
     if (tocModel == nullptr)
         return;
@@ -117,6 +119,16 @@ void XojCairoPdfExport::populatePdfOutline() {
         if (gtk_tree_model_iter_next(tocModel, &iter)) {
             nodeStack.push(std::make_pair(iter, parentId));
         }
+    }
+}
+
+void XojCairoPdfExport::populateNativeBookmarksOutline() {
+    for (const auto& bm: doc->listBookmarks()) {
+        std::ostringstream linkAttr;
+        linkAttr << "page=" << (bm.second + 1);
+
+        cairo_pdf_surface_add_outline(this->surface, CAIRO_PDF_OUTLINE_ROOT, bm.first.c_str(), linkAttr.str().c_str(),
+                                      CAIRO_PDF_OUTLINE_FLAG_OPEN);
     }
 }
 #endif

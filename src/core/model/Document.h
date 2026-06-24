@@ -106,6 +106,23 @@ public:
     inline Util::PathStorageMode getPathStorageMode() const { return pathStorageMode; }
     inline void setPathStorageMode(Util::PathStorageMode m) { pathStorageMode = m; }
 
+    /**
+     * @return A vector with the name and page number of each bookmark
+     */
+    auto listBookmarks() const -> std::vector<std::pair<std::string, size_t>>;
+
+    /**
+     * Sets the bookmark of the respective page
+     * @return The previous bookmark name
+     */
+    auto setBookmark(const std::string& name, size_t pageIndex) -> std::optional<std::string>;
+
+    /**
+     * Deletes the bookmark of the respective page
+     * @return The previous bookmark name
+     */
+    auto deleteBookmark(size_t pageIndex) -> std::optional<std::string>;
+
 private:
     void buildContentsModel();
     void freeTreeContentModel();

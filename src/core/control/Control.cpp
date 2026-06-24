@@ -47,6 +47,7 @@
 #include "gui/XournalView.h"                                     // for Xour...
 #include "gui/XournalppCursor.h"                                 // for Xour...
 #include "gui/dialog/AboutDialog.h"                              // for Abou...
+#include "gui/dialog/BookmarkDialog.h"                           // for Book...
 #include "gui/dialog/FormatDialog.h"                             // for Form...
 #include "gui/dialog/GotoDialog.h"                               // for Goto...
 #include "gui/dialog/PageTemplateDialog.h"                       // for Page...
@@ -88,6 +89,7 @@
 #include "plugin/PluginController.h"                             // for Plug...
 #include "settings/RecolorParameters.h"                          // for RecolorParameters
 #include "undo/AddUndoAction.h"                                  // for AddU...
+#include "undo/BookmarkUndoAction.h"                             // for BookmarkUndoAction
 #include "undo/InsertDeletePageUndoAction.h"                     // for Inse...
 #include "undo/InsertUndoAction.h"                               // for Inse...
 #include "undo/MoveSelectionToLayerUndoAction.h"                 // for Move...
@@ -703,6 +705,17 @@ void Control::updatePageActions() {
     this->actionDB->enableAction(Action::DELETE_PAGE, nbPages > 1);
     this->actionDB->enableAction(Action::MOVE_PAGE_TOWARDS_BEGINNING, currentPage != 0);
     this->actionDB->enableAction(Action::MOVE_PAGE_TOWARDS_END, currentPage < nbPages - 1);
+
+    bool hasBookmark = false;
+    if (nbPages > 0) {
+        doc->lock_shared();
+        PageRef page = doc->getPage(currentPage);
+        hasBookmark = page && page->getBookmark().has_value();
+        doc->unlock_shared();
+    }
+    this->actionDB->enableAction(Action::ADD_BOOKMARK, nbPages > 0 && !hasBookmark);
+    this->actionDB->enableAction(Action::EDIT_BOOKMARK, hasBookmark);
+    this->actionDB->enableAction(Action::DELETE_BOOKMARK, hasBookmark);
 }
 
 void Control::deletePage() {
@@ -827,6 +840,45 @@ void Control::movePageTowardsEnd() {
     this->firePageSelected(currentPageNo + 1);
 
     this->getScrollHandler()->scrollToPage(currentPageNo + 1);
+}
+
+void Control::setBookmark(size_t pageIndex) {
+    auto popup = xoj::popup::PopupWindowWrapper<BookmarkDialog>(
+            getGladeSearchPath(), "", [this, pageIndex](const std::string& name) {
+                doc->lock();
+                auto oldBookmark = doc->setBookmark(name, pageIndex);
+                doc->unlock();
+
+                auto newBookmark = std::optional<std::string>(name);
+                auto undo =
+                        std::make_unique<BookmarkUndoAction>(pageIndex, std::move(oldBookmark), std::move(newBookmark));
+                getUndoRedoHandler()->addUndoAction(std::move(undo));
+
+                this->fireDocumentChanged(DOCUMENT_CHANGE_BOOKMARKS);
+                this->firePageChanged(pageIndex);
+                this->updatePageActions();
+            });
+    popup.show(getGtkWindow());
+}
+
+void Control::deleteBookmark(size_t pageIndex) {
+    doc->lock();
+    auto oldBookmark = doc->deleteBookmark(pageIndex);
+
+    DocumentChangeType docChangeType = doc->listBookmarks().empty() ?
+                                               DOCUMENT_CHANGE_NO_BOOKMARKS  // Forces the entire sidebar to refresh
+                                               :
+                                               DOCUMENT_CHANGE_BOOKMARKS;
+
+    doc->unlock();
+
+    auto undo = std::make_unique<BookmarkUndoAction>(pageIndex, std::move(oldBookmark), std::nullopt);
+
+    getUndoRedoHandler()->addUndoAction(std::move(undo));
+
+    this->fireDocumentChanged(docChangeType);
+    this->firePageChanged(pageIndex);
+    this->updatePageActions();
 }
 
 /// Remove mnemonic indicators in menu labels
