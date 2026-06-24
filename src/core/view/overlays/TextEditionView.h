@@ -41,7 +41,8 @@ public:
 
     bool isViewOf(const OverlayBase* overlay) const override;
 
-    xoj::util::Rectangle<double> toWindowCoordinates(const xoj::util::Rectangle<double>& r) const;
+    xoj::util::Rectangle<double> toWidgetCoordinates(const xoj::util::Rectangle<double>& r) const;
+    double getZoom() const;
 
     /**
      * Listener interface

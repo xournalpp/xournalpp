@@ -17,6 +17,7 @@
 #include <pango/pango.h>
 
 #include "model/Element.h"
+#include "util/Point.h"
 #include "util/raii/GObjectSPtr.h"
 
 #include "AudioElement.h"  // for AudioElement
@@ -26,6 +27,7 @@ class Element;
 class ObjectInputStream;
 class ObjectOutputStream;
 class XojPdfRectangle;
+
 
 class Text: public AudioElement {
 public:
@@ -42,9 +44,6 @@ public:
     const std::string& getText() const;
     void setText(std::string text);
 
-    void setWidth(double width);
-    void setHeight(double height);
-
     void setInEditing(bool inEditing);
     bool isInEditing() const;
 
@@ -55,6 +54,12 @@ public:
     void rotate(double x0, double y0, double th) override;
 
     bool rescaleOnlyAspectRatio() const override;
+
+    /// Set the text's wrapping width. Use Text::NO_WRAP to disable wrapping
+    void setWrap(double wrap);
+
+    /// Return Text::NO_WRAP if wrapping is disabled
+    inline double getWrap() const { return wrapWidth; }
 
     auto cloneText() const -> std::unique_ptr<Text>;
     auto clone() const -> ElementPtr override;
@@ -71,10 +76,14 @@ protected:
 public:
     std::vector<XojPdfRectangle> findText(const std::string& search) const;
 
+    static constexpr double NO_WRAP = -1;
+
 private:
     XojFont font;
 
     std::string text;
+
+    double wrapWidth = NO_WRAP;  ///< NO_WRAP for no wrap
 
     bool inEditing = false;
 };
