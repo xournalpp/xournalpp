@@ -213,7 +213,7 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
                                      self->layoutStatus = LayoutStatus::NEEDS_WRAP_WIDTH_UPDATE;
                                      self->repaintEditor(true);
                                  }),
-                                 nullptr));
+                                 this));
         return icon;
     }();
     this->extendIcon = [&]() {
@@ -263,7 +263,7 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
                                              self->layoutStatus = LayoutStatus::NEEDS_WRAP_WIDTH_UPDATE;
                                              self->repaintEditor(true);
                                          }),
-                                         nullptr));
+                                         this));
         return icon;
     }();
 }

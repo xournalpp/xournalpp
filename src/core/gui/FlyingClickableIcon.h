@@ -22,12 +22,6 @@
 
 class MainWindow;
 
-/************************
- * FlyingClickableIcon:
- *  Uses a GtkOverlay to show a widget containing toolbars.
- *  The getOverlayPosition callback is used to position the toolbox widget relative to the users input device.
- */
-
 class FlyingClickableIcon {
 public:
     enum class Anchor { NORTH_EAST, NORTH, NORTH_WEST, EAST, CENTER, WEST, SOUTH_EAST, SOUTH, SOUTH_WEST };
@@ -38,8 +32,6 @@ public:
 public:
     /// Move the icon at the provided coordinates (in widget-coordinates).
     void setPosition(xoj::util::Point<int> position);
-    void show();
-    void hide();
 
     inline GtkWidget* getWidget() { return widget.get(); }
     /// Signals added this way will be disconnected upon destruction

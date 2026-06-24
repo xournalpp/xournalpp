@@ -1,6 +1,6 @@
 #include "FlyingClickableIcon.h"
 
-#include <gdk/gdk.h>      // for GdkRectangle, GDK_LEAVE_...
+#include <gdk/gdk.h>      // for GdkRectangle
 #include <glib-object.h>  // for G_CALLBACK, g_signal_con...
 
 #include "util/Assert.h"
@@ -9,6 +9,7 @@
 
 #include "MainWindow.h"  // for MainWindow
 #include "XournalView.h"
+
 
 static xoj::util::Point<char> anchorToPoint(FlyingClickableIcon::Anchor a) {
     switch (a) {
@@ -70,16 +71,10 @@ void FlyingClickableIcon::setPosition(xoj::util::Point<int> position) {
     }
 }
 
-void FlyingClickableIcon::show() { gtk_widget_show(this->widget.get()); }
-
-void FlyingClickableIcon::hide() { gtk_widget_hide(this->widget.get()); }
-
 void FlyingClickableIcon::addSignal(GObject* o, gulong sig) { signals.emplace_back(std::make_pair(o, sig)); }
 
-
 /**
- * getOverlayPosition - this is how we position the widget in the overlay under the mouse
- *
+ * getOverlayPosition - this is how we position the widget
  * The requested location is communicated via the FlyingClickableIcon member variable `position`
  */
 auto FlyingClickableIcon::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget, GdkRectangle* allocation,
