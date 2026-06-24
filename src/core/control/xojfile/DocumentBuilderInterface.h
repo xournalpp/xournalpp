@@ -51,8 +51,8 @@ public:
                            const LineStyle& lineStyle, fs::path filename, size_t timestamp) = 0;
     virtual void setStrokePoints(std::vector<Point> pointVector, bool hasPressure) = 0;
     virtual void finalizeStroke() = 0;
-    virtual void addText(std::string font, double size, double x, double y, Color color, fs::path filename,
-                         size_t timestamp) = 0;
+    virtual void addText(std::string font, double size, double x, double y, Color color, std::optional<double> wrap,
+                         fs::path filename, size_t timestamp) = 0;
     virtual void setTextContents(std::string contents) = 0;
     virtual void finalizeText() = 0;
     virtual void addImage(double left, double top, double right, double bottom) = 0;

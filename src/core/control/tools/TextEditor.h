@@ -32,10 +32,13 @@ class XojFont;
 class Control;
 class TextEditorCallbacks;
 struct KeyEvent;
+class FlyingClickableIcon;
 
 namespace xoj::util {
 template <class T>
 class DispatchPool;
+template <class T>
+struct Point;
 };
 
 namespace xoj::view {
@@ -84,6 +87,8 @@ public:
     void cutToClipboard();
     void pasteFromClipboard();
     void selectAtCursor(TextEditor::SelectType ty);
+
+    void onViewCreation() const;  ///< Call upon creation of a view
 
 private:
     void toggleOverwrite();
@@ -143,6 +148,7 @@ private:
 
     void contentsChanged(bool forceCreateUndoAction = false);
     void updateCursorBox();
+    void updateDraggableIcons() const;  ///< Update the position of the handles
 
     void updateTextElementContent();
 
@@ -167,7 +173,7 @@ private:
     xoj::util::GObjectSPtr<GtkTextBuffer> buffer;
     xoj::util::GObjectSPtr<PangoLayout> layout;
 
-    enum class LayoutStatus { UP_TO_DATE, NEEDS_ATTRIBUTES_UPDATE, NEEDS_COMPLETE_UPDATE };
+    enum class LayoutStatus { UP_TO_DATE, NEEDS_ATTRIBUTES_UPDATE, NEEDS_WRAP_WIDTH_UPDATE, NEEDS_COMPLETE_UPDATE };
     mutable LayoutStatus layoutStatus;
 
     // InputMethod preedit data
@@ -185,6 +191,11 @@ private:
     Range cursorBox;
 
     std::shared_ptr<xoj::util::DispatchPool<xoj::view::TextEditionView>> viewPool;
+
+    std::unique_ptr<FlyingClickableIcon> moveIcon;
+    std::unique_ptr<FlyingClickableIcon> extendIcon;
+
+    double currentWrapWidth;  ///< Wrap width. May differ from textElement->getWrap() when resizing the text area
 
     /**
      * @brief Coordinate of the virtual cursor, in Pango coordinates.

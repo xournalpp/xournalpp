@@ -11,6 +11,7 @@ using namespace xoj::view;
 TextEditionView::TextEditionView(const TextEditor* textEditor, Repaintable* parent):
         ToolView(parent), textEditor(textEditor) {
     this->registerToPool(textEditor->getViewPool());
+    textEditor->onViewCreation();
     this->on(FLAG_DIRTY_REGION, textEditor->getContentBoundingBox());
 }
 
@@ -70,10 +71,11 @@ void TextEditionView::drawWithoutDrawingAids(cairo_t* cr) const {
 
 bool TextEditionView::isViewOf(const OverlayBase* overlay) const { return overlay == this->textEditor; }
 
-auto TextEditionView::toWindowCoordinates(const xoj::util::Rectangle<double>& r) const -> xoj::util::Rectangle<double> {
-    auto* textElement = this->textEditor->getTextElement();
-    return parent->toWidgetCoordinates(r.translated(textElement->getX(), textElement->getY()));
+auto TextEditionView::toWidgetCoordinates(const xoj::util::Rectangle<double>& r) const -> xoj::util::Rectangle<double> {
+    return parent->toWidgetCoordinates(r);
 }
+
+auto TextEditionView::getZoom() const -> double { return parent->getZoom(); }
 
 void TextEditionView::on(TextEditionView::FlagDirtyRegionRequest, Range rg) {
     const double padding = std::max(BORDER_WIDTH_IN_PIXELS + PADDING_IN_PIXELS, INSERTION_CURSOR_WIDTH_IN_PIXELS) /

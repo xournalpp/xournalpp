@@ -49,6 +49,7 @@ constexpr auto CAPSTYLE_STR = u8"capStyle";
 // text
 constexpr auto FONT_STR = u8"font";  // also in link
 constexpr auto SIZE_STR = u8"size";  // also in link
+constexpr auto WRAP_STR = u8"wrap";
 constexpr auto X_COORD_STR = u8"x";  // also in link
 constexpr auto Y_COORD_STR = u8"y";  // also in link
 
