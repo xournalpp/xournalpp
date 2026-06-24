@@ -144,6 +144,11 @@ void gtk_button_set_icon_name(GtkButton* button, const char* iconName) {
     gtk_button_set_image(button, gtk_image_new_from_icon_name(iconName, GTK_ICON_SIZE_LARGE_TOOLBAR));
 }
 
+GtkWidget* gtk_button_new_from_icon_name(const char* iconName) {
+    return gtk_button_new_from_icon_name(iconName, GTK_ICON_SIZE_LARGE_TOOLBAR);
+}
+
+
 /**** GtkPopover ****/
 
 GtkWidget* gtk_popover_new() { return gtk_popover_new(nullptr); }
@@ -194,4 +199,14 @@ const char* gtk_editable_get_text(GtkEditable* e) {
 void gtk_editable_set_text(GtkEditable* e, const char* text) {
     xoj_assert(GTK_IS_ENTRY(e));
     return gtk_entry_set_text(GTK_ENTRY(e), text);
+}
+
+/**** GtkImage ****/
+GtkWidget* gtk_image_new_from_icon_name(const char* name) {
+    return gtk_image_new_from_icon_name(name, GTK_ICON_SIZE_LARGE_TOOLBAR);
+}
+
+/**** GtkOverlay ***/
+void gtk_overlay_remove_overlay(GtkOverlay* overlay, GtkWidget* widget) {
+    gtk_container_remove(GTK_CONTAINER(overlay), widget);
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone="no"?>
-<xournal creator="xournalpp 1.2.7+dev" fileversion="4">
+<xournal creator="xournalpp 1.3.5+dev" fileversion="5">
 <title>Xournal++ document - see https://xournalpp.github.io/</title>
-<preview>iVBORw0KGgoAAAANSUhEUgAAAGMAAACACAIAAACQiUDuAAAABmJLR0QA/wD/AP+gvaeTAAACnUlEQVR4nO3XPU4bURSG4XuHwUaJHIpEQkKWqeiSFSA6FsEeWBMbIAUdFQWLcAp6SixiS7bCeDI3BRJduC/BPzjzPiUc4dEnn48zMaUUXnY/C18+ZGZaoFj3A2wMk6JMijIpyqQok6JMiirX8qk39c2gGNyn+yY0gzjYL/bX8hivEr08IbePMimqHD9mJmIVUm6mDcrdbm6kE0J2pgXcPmo9V8Kz4XD68FAXRTg62l3vk2TFn78yV0IczdLnv14JWz+GYTIOvU+/v35b9LO9L95TlD1FmRTlPUV5T1Er2r6qqqqqWs1nLcnS76nLy8vxeDybzaqq6vV63W63LMvT09Nlf+7CvfWeykopxRibpimKzf7vsfSeurj4XhTF3t7e8fHxv/+Vd8DLk9rsjVgl7ynKe4py+yiTouwpyp6ilrJ9KaXpdPrCwNNvN+tlcAHvfefn55PJJMZ4dnZ2dXV1e3vb7/fn8/nTDzudzmg0Ojw8rOv6+XXv+vr67u5uZ2fn5OTk4ODg7c+wAkt/7/tv2FOUVwJlUpT3FGVPUW4f5fZRbh/l9lEmRdlTlD1FuX2USVH2FGVPUW4fZVKUPUXZU5TbR5kUZU9R9hTl9lEmRdlTlD1FuX2USVH2FGVPUW4fZVKUPUXZU5TbR5WzeWYizkPKzbRBuZ39VhV+80IIodzeyo1shZCdaQG/LZRXAuWVQLl9lElR9hRlT1FuH2VSlD1F2VOU20eZFGVPUfYU5fZRJkXZU5Q9Rbl9lElR9hRlT1FuH2VSlD1F2VOU20eVdZMbaULIzrRA+VhnJmIdUm6mDcqPndxIJ4TsTAvYU5RXAuWVQLl9lElR9hRlT1FuH2VSlD1F2VOU20eZFGVSlElRJkWZFGVSlElRJkX9AUu6AwFdt6ozAAAAAElFTkSuQmCC</preview>
+<preview>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</preview>
 <page width="612" height="792">
 <background type="solid" color="#ffffffff" style="lined"/>
 <layer>
@@ -10,10 +10,11 @@
 <text font="Sans" size="12" x="240.75" y="42" color="#00f000ff">green</text>
 <text font="Sans" size="12" x="196.26678" y="137.84693" color="#000000ff">multiline
 text</text>
-<text font="Sans" size="12" x="135.38428" y="197.98843" color="#000000ff"> 
+<text font="Sans" size="12" x="135.38428" y="197.98843" color="#000000ff">
  odd  whitespace	text
 
 </text>
+<text font="Sans" size="12" x="135.38428" y="250" color="#000000ff" wrap="130.13533">Xournal++ (/ˌzɚnl̟ˌplʌsˈplʌs/) is an open-source and cross-platform note-taking software that is fast, flexible, and functional. A modern rewrite and a more feature-rich version of the wonderful Xournal program.</text>
 </layer>
 </page>
 </xournal>

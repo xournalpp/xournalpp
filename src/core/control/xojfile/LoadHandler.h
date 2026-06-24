@@ -99,8 +99,8 @@ private:
                    const LineStyle& lineStyle, fs::path filename, size_t timestamp) override;
     void setStrokePoints(std::vector<Point> pointVector, bool hasPressure) override;
     void finalizeStroke() override;
-    void addText(std::string font, double size, double x, double y, Color color, fs::path filename,
-                 size_t timestamp) override;
+    void addText(std::string font, double size, double x, double y, Color color, std::optional<double> wrap,
+                 fs::path filename, size_t timestamp) override;
     void setTextContents(std::string contents) override;
     void finalizeText() override;
     void addImage(double left, double top, double right, double bottom) override;

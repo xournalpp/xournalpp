@@ -8,9 +8,13 @@
 
 using namespace xoj::view;
 
+static constexpr double EPSILON = 1e-4;
+static constexpr double WRAP_LINE_DASH_LENGTH = 1.;
+
 TextEditionView::TextEditionView(const TextEditor* textEditor, Repaintable* parent):
         ToolView(parent), textEditor(textEditor) {
     this->registerToPool(textEditor->getViewPool());
+    textEditor->onViewCreation();
     this->on(FLAG_DIRTY_REGION, textEditor->getContentBoundingBox());
 }
 
@@ -19,14 +23,25 @@ TextEditionView::~TextEditionView() noexcept { this->unregisterFromPool(); }
 void TextEditionView::draw(cairo_t* cr) const {
     xoj::util::CairoSaveGuard saveGuard(cr);
 
-    // Draw the frame
     double zoom = parent->getZoom();
     cairo_set_line_width(cr, BORDER_WIDTH_IN_PIXELS / zoom);
     Util::cairo_set_source_argb(cr, this->textEditor->getSelectionColor());
-    Range frame = textEditor->getContentBoundingBox();
-    frame.addPadding(PADDING_IN_PIXELS / zoom);
-    cairo_rectangle(cr, frame.getX(), frame.getY(), frame.getWidth(), frame.getHeight());
+    Range box = textEditor->getContentBoundingBox();
+
+    // Draw the wrap limit line if needed
+    if (auto w = this->textEditor->getCurrentWrapWidth(); w != Text::NO_WRAP && w < box.getWidth() - EPSILON) {
+        xoj::util::CairoSaveGuard saveGuard(cr);
+        cairo_move_to(cr, box.getX() + this->textEditor->getCurrentWrapWidth(), box.getY());
+        cairo_rel_line_to(cr, 0, box.getHeight());
+        cairo_set_dash(cr, &WRAP_LINE_DASH_LENGTH, 1, 0.);
+        cairo_stroke(cr);
+    }
+
+    // Draw the frame
+    box.addPadding(PADDING_IN_PIXELS / zoom);
+    cairo_rectangle(cr, box.getX(), box.getY(), box.getWidth(), box.getHeight());
     cairo_stroke(cr);
+
 
     // Draw the text itself
     this->drawWithoutDrawingAids(cr);
@@ -70,10 +85,11 @@ void TextEditionView::drawWithoutDrawingAids(cairo_t* cr) const {
 
 bool TextEditionView::isViewOf(const OverlayBase* overlay) const { return overlay == this->textEditor; }
 
-auto TextEditionView::toWindowCoordinates(const xoj::util::Rectangle<double>& r) const -> xoj::util::Rectangle<double> {
-    auto* textElement = this->textEditor->getTextElement();
-    return parent->toWidgetCoordinates(r.translated(textElement->getX(), textElement->getY()));
+auto TextEditionView::toWidgetCoordinates(const xoj::util::Rectangle<double>& r) const -> xoj::util::Rectangle<double> {
+    return parent->toWidgetCoordinates(r);
 }
+
+auto TextEditionView::getZoom() const -> double { return parent->getZoom(); }
 
 void TextEditionView::on(TextEditionView::FlagDirtyRegionRequest, Range rg) {
     const double padding = std::max(BORDER_WIDTH_IN_PIXELS + PADDING_IN_PIXELS, INSERTION_CURSOR_WIDTH_IN_PIXELS) /
