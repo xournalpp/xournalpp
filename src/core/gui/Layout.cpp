@@ -378,10 +378,13 @@ void Layout::recomputeCenteringPadding(int allocWidth, int allocHeight) {
         allocWidth = round_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getHorizontal()));
         allocHeight = round_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getVertical()));
     }
-    std::lock_guard g{pc.m};
+    std::unique_lock g{pc.m};
     recomputeCenteringPaddingUnsafe(allocWidth, allocHeight);
-    gtk_adjustment_set_upper(scrollHandling->getHorizontal(), getTotalPixelWidthUnsafe());
-    gtk_adjustment_set_upper(scrollHandling->getVertical(), getTotalPixelHeightUnsafe());
+    auto width = getTotalPixelWidthUnsafe();
+    auto height = getTotalPixelHeightUnsafe();
+    g.unlock();
+    gtk_adjustment_set_upper(scrollHandling->getHorizontal(), width);
+    gtk_adjustment_set_upper(scrollHandling->getVertical(), height);
 }
 
 void Layout::recalculate() {

@@ -183,37 +183,34 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
         gtk_widget_add_controller(w, GTK_EVENT_CONTROLLER(drag));
 #endif
 
-        icon->addSignal(G_OBJECT(drag),
-                        g_signal_connect(drag, "drag-update",
-                                         G_CALLBACK(+[](GtkGestureDrag*, gdouble offsetX, gdouble offsetY, gpointer p) {
-                                             // Warning: because the icon is moved, the parameters offsetX and offsetY
-                                             // are NOT relative to the starting point, but rather to the last update's
-                                             // position.
-                                             auto* self = static_cast<TextEditor*>(p);
-                                             if (!self->viewPool->empty()) {
-                                                 // We use the first view as the main view
-                                                 auto zoom = self->viewPool->front().getZoom();
-                                                 self->textElement->move(offsetX / zoom, offsetY / zoom);
-                                                 self->repaintEditor(true);
-                                             }
-                                         }),
-                                         this));
-        icon->addSignal(G_OBJECT(drag),
-                        g_signal_connect(drag, "drag-end",
-                                         G_CALLBACK(+[](GtkGestureDrag*, gdouble offsetX, gdouble offsetY, gpointer p) {
-                                             auto* self = static_cast<TextEditor*>(p);
-                                             self->textElement->setWrap(self->currentWrapWidth);
-                                         }),
-                                         this));
         icon->addSignal(
                 G_OBJECT(drag),
-                g_signal_connect(drag, "cancel", G_CALLBACK(+[](GtkGesture*, GdkEventSequence* seq, gpointer p) {
+                g_signal_connect(drag, "drag-update",
+                                 G_CALLBACK(+[](GtkGestureDrag*, gdouble offsetX, gdouble offsetY, gpointer p) {
+                                     // Warning: because the icon is moved, the parameters offsetX and offsetY
+                                     // are NOT relative to the starting point, but rather to the last update's
+                                     // position.
                                      auto* self = static_cast<TextEditor*>(p);
-                                     self->currentWrapWidth = self->textElement->getWrap();
-                                     self->layoutStatus = LayoutStatus::NEEDS_WRAP_WIDTH_UPDATE;
-                                     self->repaintEditor(true);
+                                     if (!self->viewPool->empty()) {
+                                         // We use the first view as the main view
+                                         auto* text = self->getTextElement();
+                                         auto zoom = self->viewPool->front().getZoom();
+                                         double dx = offsetX / zoom;
+                                         double dy = offsetY / zoom;
+                                         if (text->getX() + dx > 0 &&
+                                             text->getX() + dx < self->page->getWidth() -
+                                                                         self->getContentBoundingBox().getWidth() &&
+                                             text->getY() + dy > 0 &&
+                                             text->getY() + dy < self->page->getHeight() -
+                                                                         self->getContentBoundingBox().getHeight()) {
+                                             // The text stays entirely in the page
+                                             text->move(dx, dy);
+                                             self->repaintEditor(true);
+                                         }
+                                     }
                                  }),
                                  this));
+        // Should we implement signals drag-end/cancel here?
         return icon;
     }();
     this->extendIcon = [&]() {
@@ -241,7 +238,9 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
                                                  // We use the first view as the main view
                                                  if (double newVal = self->currentWrapWidth +
                                                                      offsetX / self->viewPool->front().getZoom();
-                                                     newVal > 0) {
+                                                     newVal > 0 &&
+                                                     newVal < self->page->getWidth() - self->getTextElement()->getX()) {
+                                                     // The new width does not overflow out of the page
                                                      self->currentWrapWidth = newVal;
                                                      self->layoutStatus = LayoutStatus::NEEDS_WRAP_WIDTH_UPDATE;
                                                      self->repaintEditor(true);
@@ -264,6 +263,14 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
                                              self->repaintEditor(true);
                                          }),
                                          this));
+        // Move both icons when scrolling/zooming
+        auto cb = G_CALLBACK(+[](GtkAdjustment*, gpointer p) { static_cast<TextEditor*>(p)->updateDraggableIcons(); });
+        auto* hadj = G_OBJECT(gtk_scrollable_get_hadjustment(GTK_SCROLLABLE(xournalWidget)));
+        icon->addSignal(hadj, g_signal_connect(hadj, "value-changed", cb, this));
+        icon->addSignal(hadj, g_signal_connect(hadj, "changed", cb, this));
+        auto* vadj = G_OBJECT(gtk_scrollable_get_vadjustment(GTK_SCROLLABLE(xournalWidget)));
+        icon->addSignal(vadj, g_signal_connect(vadj, "value-changed", cb, this));
+        icon->addSignal(vadj, g_signal_connect(vadj, "changed", cb, this));
         return icon;
     }();
 }
