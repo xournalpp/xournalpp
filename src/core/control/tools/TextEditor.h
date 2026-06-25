@@ -79,6 +79,7 @@ public:
 
     const Range& getCursorBox() const;
     const Range& getContentBoundingBox() const;
+    inline double getCurrentWrapWidth() const { return currentWrapWidth; }
 
     bool isCursorVisible() const;
 
@@ -195,7 +196,7 @@ private:
     std::unique_ptr<FlyingClickableIcon> moveIcon;
     std::unique_ptr<FlyingClickableIcon> extendIcon;
 
-    double currentWrapWidth;  ///< Wrap width. May differ from textElement->getWrap() when resizing the text area
+    double currentWrapWidth;  ///< Wrap width. May differ from textElement->getWrap() while resizing the text area
 
     /**
      * @brief Coordinate of the virtual cursor, in Pango coordinates.

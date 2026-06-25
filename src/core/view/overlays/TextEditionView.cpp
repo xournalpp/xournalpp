@@ -8,6 +8,9 @@
 
 using namespace xoj::view;
 
+static constexpr double EPSILON = 1e-4;
+static constexpr double WRAP_LINE_DASH_LENGTH = 1.;
+
 TextEditionView::TextEditionView(const TextEditor* textEditor, Repaintable* parent):
         ToolView(parent), textEditor(textEditor) {
     this->registerToPool(textEditor->getViewPool());
@@ -20,14 +23,25 @@ TextEditionView::~TextEditionView() noexcept { this->unregisterFromPool(); }
 void TextEditionView::draw(cairo_t* cr) const {
     xoj::util::CairoSaveGuard saveGuard(cr);
 
-    // Draw the frame
     double zoom = parent->getZoom();
     cairo_set_line_width(cr, BORDER_WIDTH_IN_PIXELS / zoom);
     Util::cairo_set_source_argb(cr, this->textEditor->getSelectionColor());
-    Range frame = textEditor->getContentBoundingBox();
-    frame.addPadding(PADDING_IN_PIXELS / zoom);
-    cairo_rectangle(cr, frame.getX(), frame.getY(), frame.getWidth(), frame.getHeight());
+    Range box = textEditor->getContentBoundingBox();
+
+    // Draw the wrap limit line if needed
+    if (this->textEditor->getCurrentWrapWidth() < box.getWidth() - EPSILON) {
+        xoj::util::CairoSaveGuard saveGuard(cr);
+        cairo_move_to(cr, box.getX() + this->textEditor->getCurrentWrapWidth(), box.getY());
+        cairo_rel_line_to(cr, 0, box.getHeight());
+        cairo_set_dash(cr, &WRAP_LINE_DASH_LENGTH, 1, 0.);
+        cairo_stroke(cr);
+    }
+
+    // Draw the frame
+    box.addPadding(PADDING_IN_PIXELS / zoom);
+    cairo_rectangle(cr, box.getX(), box.getY(), box.getWidth(), box.getHeight());
     cairo_stroke(cr);
+
 
     // Draw the text itself
     this->drawWithoutDrawingAids(cr);
