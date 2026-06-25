@@ -40,6 +40,7 @@ public:
     LaserPointerHandler(XojPageView* pageView, Control* control, const PageRef& page);
     ~LaserPointerHandler() override;
 
+    void clearNow();
     void onSequenceCancelEvent();
     bool onMotionNotifyEvent(const PositionInputData& pos, double zoom);
     void onButtonReleaseEvent(const PositionInputData& pos, double zoom);
