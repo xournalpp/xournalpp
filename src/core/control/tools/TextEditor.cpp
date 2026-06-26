@@ -35,8 +35,8 @@
 class UndoAction;
 
 static constexpr double ORIGINAL_WRAP_WIDTH = 100;
-static constexpr auto MOVE_ICON_NAME = "transform-move";
-static constexpr auto EXTEND_ICON_NAME = "animal";
+static constexpr auto MOVE_ICON_NAME = "xopp-move";
+static constexpr auto EXTEND_ICON_NAME = "xopp-wrap";
 
 /** GtkTextBuffer helper functions **/
 static auto getIteratorAtCursor(GtkTextBuffer* buffer) -> GtkTextIter {

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="24"
+   height="24"
+   fill="none"
+   stroke="currentColor"
+   stroke-linecap="round"
+   stroke-linejoin="round"
+   stroke-width="2"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="xopp-move.svg"
+   inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="32.125"
+     inkscape:cx="8.4980545"
+     inkscape:cy="10.63035"
+     inkscape:window-width="1644"
+     inkscape:window-height="1022"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <g
+     id="g3"
+     style="stroke:#bdbdbd;stroke-opacity:1">
+    <path
+       style="fill:none;stroke:#bdbdbd;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;fill-opacity:1;stroke-dasharray:none"
+       d="M 4 12 h 5"
+       id="path1"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#bdbdbd;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;fill-opacity:1;stroke-dasharray:none"
+       d="M 6.5 9.5 4 12 6.5 14.5"
+       id="path2" />
+  </g>
+  <use
+     x="0"
+     y="0"
+     xlink:href="#g3"
+     id="use3"
+     transform="matrix(-1,0,0,1,24,0)"
+     style="stroke:#bdbdbd;stroke-opacity:1" />
+  <use
+     x="0"
+     y="0"
+     xlink:href="#use3"
+     id="use4"
+     transform="rotate(90,12,12)"
+     style="stroke:#bdbdbd;stroke-opacity:1" />
+  <use
+     x="0"
+     y="0"
+     xlink:href="#use4"
+     id="use5"
+     transform="matrix(1,0,0,-1,0,24)"
+     style="stroke:#bdbdbd;stroke-opacity:1" />
+  <path
+     style="fill:none;stroke:#bdbdbd;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;stroke-dasharray:none"
+     d="M 12 12 h 0"
+     id="path5" />
+</svg>
