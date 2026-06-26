@@ -227,7 +227,7 @@ static void checkImageFormat(const Image* img, const char* formatName) {
     g_free(gdkFormatName);
 }
 
-static void checkText(const Layer* layer, size_t elementIndex, const std::string& text, Color color) {
+static void checkText(const Layer* layer, size_t elementIndex, const std::string& text, Color color, double wrap) {
     ASSERT_LT(elementIndex, layer->getElementsView().size());
     const auto* textElem = dynamic_cast<const Text*>(layer->getElementsView()[elementIndex]);
 
@@ -236,6 +236,7 @@ static void checkText(const Layer* layer, size_t elementIndex, const std::string
 
     EXPECT_EQ(textElem->getText(), text) << "Text at index " << elementIndex << " has incorrect contents";
     EXPECT_EQ(textElem->getColor(), color) << "Text at index " << elementIndex << " has the wrong color";
+    EXPECT_EQ(textElem->getWrap(), wrap) << "Text at index " << elementIndex << " has the wrong wrap width";
 }
 
 TEST(ControlLoadHandler, testLoad) {
@@ -450,11 +451,16 @@ TEST(ControlLoadHandler, testText) {
     ASSERT_EQ(size_t{1}, page->getLayerCount());
     const Layer* layer = page->getLayersView().front();
 
-    checkText(layer, 0, "red", Colors::red);
-    checkText(layer, 1, "blue", Colors::xopp_royalblue);
-    checkText(layer, 2, "green", Color(0xff00f000U));
-    checkText(layer, 3, "multiline\ntext", Colors::black);
-    checkText(layer, 4, " \n odd  whitespace\ttext\n\n", Colors::black);
+    checkText(layer, 0, "red", Colors::red, Text::NO_WRAP);
+    checkText(layer, 1, "blue", Colors::xopp_royalblue, Text::NO_WRAP);
+    checkText(layer, 2, "green", Color(0xff00f000U), Text::NO_WRAP);
+    checkText(layer, 3, "multiline\ntext", Colors::black, Text::NO_WRAP);
+    checkText(layer, 4, " \n odd  whitespace\ttext\n\n", Colors::black, Text::NO_WRAP);
+    checkText(layer, 5,
+              char_cast(u8"Xournal++ (/ˌzɚnl̟ˌplʌsˈplʌs/) is an open-source and cross-platform note-taking software "
+                        u8"that is fast, flexible, and functional. A modern rewrite and a more feature-rich version of "
+                        u8"the wonderful Xournal program."),
+              Colors::black, 130.13533);
 }
 
 TEST(ControlLoadHandler, testTextZipped) {
@@ -467,9 +473,9 @@ TEST(ControlLoadHandler, testTextZipped) {
     ASSERT_EQ(size_t{1}, page->getLayerCount());
     const Layer* layer = page->getLayersView().front();
 
-    checkText(layer, 0, "red", Colors::red);
-    checkText(layer, 1, "blue", Colors::xopp_royalblue);
-    checkText(layer, 2, "green", Color(0xff00f000U));
+    checkText(layer, 0, "red", Colors::red, Text::NO_WRAP);
+    checkText(layer, 1, "blue", Colors::xopp_royalblue, Text::NO_WRAP);
+    checkText(layer, 2, "green", Color(0xff00f000U), Text::NO_WRAP);
 }
 
 TEST(ControlLoadHandler, testImage) {
