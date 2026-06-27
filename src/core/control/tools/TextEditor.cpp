@@ -34,7 +34,6 @@
 
 class UndoAction;
 
-static constexpr double ORIGINAL_WRAP_WIDTH = 100;
 static constexpr auto MOVE_ICON_NAME = "xopp-move";
 static constexpr auto EXTEND_ICON_NAME = "xopp-wrap";
 
@@ -227,6 +226,15 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
         gtk_widget_add_controller(w, GTK_EVENT_CONTROLLER(drag));
 #endif
 
+        icon->addSignal(G_OBJECT(drag),
+                        g_signal_connect(drag, "drag-begin",
+                                         G_CALLBACK(+[](GtkGestureDrag*, gdouble startX, gdouble startY, gpointer p) {
+                                             auto* self = static_cast<TextEditor*>(p);
+                                             if (self->currentWrapWidth == Text::NO_WRAP) {
+                                                 self->currentWrapWidth = self->getContentBoundingBox().getWidth();
+                                             }
+                                         }),
+                                         this));
         icon->addSignal(G_OBJECT(drag),
                         g_signal_connect(drag, "drag-update",
                                          G_CALLBACK(+[](GtkGestureDrag*, gdouble offsetX, gdouble offsetY, gpointer p) {
@@ -784,8 +792,9 @@ void TextEditor::updateDraggableIcons() const {
         // We use the first view as the main view
         auto box = viewPool->front().toWidgetCoordinates(xoj::util::Rectangle<double>(this->getContentBoundingBox()));
         auto zoom = viewPool->front().getZoom();
+        double extendIconPos = this->currentWrapWidth == Text::NO_WRAP ? box.width : this->currentWrapWidth * zoom;
         moveIcon->setPosition({floor_cast<int>(box.x), floor_cast<int>(box.y)});
-        extendIcon->setPosition({ceil_cast<int>(box.x + this->currentWrapWidth * zoom), floor_cast<int>(box.y)});
+        extendIcon->setPosition({ceil_cast<int>(box.x + extendIconPos), floor_cast<int>(box.y)});
     }
 }
 
@@ -1211,7 +1220,6 @@ void TextEditor::initializeEditionAt(double x, double y) {
         this->textElement->setFont(control->getSettings()->getFont());
         this->textElement->setX(x);
         this->textElement->setY(y - this->textElement->getElementHeight() / 2);
-        this->textElement->setWrap(ORIGINAL_WRAP_WIDTH);
 
 #ifdef ENABLE_AUDIO
         if (auto audioController = control->getAudioController(); audioController && audioController->isRecording()) {

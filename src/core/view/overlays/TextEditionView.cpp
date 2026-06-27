@@ -29,7 +29,7 @@ void TextEditionView::draw(cairo_t* cr) const {
     Range box = textEditor->getContentBoundingBox();
 
     // Draw the wrap limit line if needed
-    if (this->textEditor->getCurrentWrapWidth() < box.getWidth() - EPSILON) {
+    if (auto w = this->textEditor->getCurrentWrapWidth(); w != Text::NO_WRAP && w < box.getWidth() - EPSILON) {
         xoj::util::CairoSaveGuard saveGuard(cr);
         cairo_move_to(cr, box.getX() + this->textEditor->getCurrentWrapWidth(), box.getY());
         cairo_rel_line_to(cr, 0, box.getHeight());
