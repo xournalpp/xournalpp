@@ -199,11 +199,13 @@ private:
     double currentWrapWidth;  ///< Wrap width. May differ from textElement->getWrap() while resizing the text area
 
     /**
-     * @brief Coordinate of the virtual cursor, in Pango coordinates.
      * (The virtual cursor is used when moving the cursor vertically (e.g. pressing up arrow), to get a good "vertical
      * move" feeling, even if we pass by (say) an empty line)
      */
-    int virtualCursorAbscissa = 0;
+    struct VirtualCursorPosition {
+        int pangoLineNumber = 0;  ///< Line number in displayed text
+        int abscissa = 0;         ///< In Pango coordinates
+    } virtualCursorPosition;
 
     // cursor blinking timings. In millisecond.
     unsigned int cursorBlinkingTimeOn = 0;

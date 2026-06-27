@@ -559,23 +559,6 @@ void TextEditor::selectAtCursor(TextEditor::SelectType ty) {
 void TextEditor::moveCursor(GtkMovementStep step, int count, bool extendSelection) {
     resetImContext();
 
-    // Not possible, but we have to handle the events, else the page gets scrolled
-    //	if (step == GTK_MOVEMENT_PAGES) {
-    //		if (!gtk_text_view_scroll_pages(text_view, count, extend_selection))
-    //			gtk_widget_error_bell(GTK_WIDGET (text_view));
-    //
-    //		gtk_text_view_check_cursor_blink(text_view);
-    //		gtk_text_view_pend_cursor_blink(text_view);
-    //		return;
-    //	} else if (step == GTK_MOVEMENT_HORIZONTAL_PAGES) {
-    //		if (!gtk_text_view_scroll_hpages(text_view, count, extend_selection))
-    //			gtk_widget_error_bell(GTK_WIDGET (text_view));
-    //
-    //		gtk_text_view_check_cursor_blink(text_view);
-    //		gtk_text_view_pend_cursor_blink(text_view);
-    //		return;
-    //	}
-
     GtkTextIter insert = getIteratorAtCursor(this->buffer.get());
     GtkTextIter newplace = insert;
 
@@ -707,20 +690,20 @@ void TextEditor::mouseMoved(double x, double y) {
 void TextEditor::mouseReleased() { this->mouseDown = false; }
 
 void TextEditor::jumpALine(GtkTextIter* textIter, int count) {
-    int cursorLine = gtk_text_iter_get_line(textIter);
-
-    if (cursorLine + count < 0) {
+    count += this->virtualCursorPosition.pangoLineNumber;
+    if (count < 0) {
         return;
     }
 
-    PangoLayoutLine* line = pango_layout_get_line_readonly(this->layout.get(), cursorLine + count);
+    PangoLayoutLine* line = pango_layout_get_line_readonly(this->layout.get(), count);
     if (line == nullptr) {
         return;
     }
+    this->virtualCursorPosition.pangoLineNumber = count;
 
     int index = 0;
     int trailing = 0;
-    pango_layout_line_x_to_index(line, this->virtualCursorAbscissa, &index, &trailing);
+    pango_layout_line_x_to_index(line, this->virtualCursorPosition.abscissa, &index, &trailing);
     /*
      * trailing is non-zero iff the abscissa is past the middle of the grapheme.
      * In this case, it contains the length of the grapheme in utf8 char count.
@@ -732,9 +715,8 @@ void TextEditor::jumpALine(GtkTextIter* textIter, int count) {
 void TextEditor::computeVirtualCursorPosition() {
     int offset = getByteOffsetOfCursor(this->buffer.get());
 
-    PangoRectangle rect = {0};
-    pango_layout_index_to_pos(this->getUpToDateLayout(), offset, &rect);
-    this->virtualCursorAbscissa = rect.x;
+    pango_layout_index_to_line_x(this->getUpToDateLayout(), offset, 0, &this->virtualCursorPosition.pangoLineNumber,
+                                 &this->virtualCursorPosition.abscissa);
 }
 
 void TextEditor::moveCursorIterator(const GtkTextIter* newLocation, gboolean extendSelection) {
