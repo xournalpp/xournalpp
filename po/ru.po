@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-30 08:27+0000\n"
-"PO-Revision-Date: 2026-05-30 08:31\n"
+"POT-Creation-Date: 2026-06-24 17:06+0000\n"
+"PO-Revision-Date: 2026-06-28 05:45\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -23,71 +23,71 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 msgstr "Папка для аудио не установлена! Записи не будут сохранены!\n"
 "Пожалуйста, задайте папку для аудиозаписей в разделе «Настройки > Запись аудио»"
 
-#: ../src/core/control/Control.cpp:235
+#: ../src/core/control/Control.cpp:236
 msgid "Filesystem error: {1}"
 msgstr "Ошибка файловой системы: {1}"
 
-#: ../src/core/control/Control.cpp:247
+#: ../src/core/control/Control.cpp:248
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "Не удалось удалить старый файл автосохранения \"{1}\": {2}"
 
-#: ../src/core/control/Control.cpp:588
+#: ../src/core/control/Control.cpp:589
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "Вы удалили активную панель инструментов. Возврат к панели инструментов по умолчанию."
 
-#: ../src/core/control/Control.cpp:608
+#: ../src/core/control/Control.cpp:609
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Конфигурация панели инструментов \"{1}\" предопределена. Создать копию для редактирования?"
 
-#: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1651
+#: ../src/core/control/Control.cpp:612 ../src/core/control/Control.cpp:1657
 msgid "Yes"
 msgstr "Да"
 
-#: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1651
+#: ../src/core/control/Control.cpp:612 ../src/core/control/Control.cpp:1657
 msgid "No"
 msgstr "Нет"
 
-#: ../src/core/control/Control.cpp:839 ../src/core/control/Control.cpp:1879
-#: ../src/core/control/Control.cpp:2207
+#: ../src/core/control/Control.cpp:840 ../src/core/control/Control.cpp:1891
+#: ../src/core/control/Control.cpp:2219
 msgid "Cancel"
 msgstr "Отмена"
 
-#: ../src/core/control/Control.cpp:840
+#: ../src/core/control/Control.cpp:841
 msgid "Insert after current page"
 msgstr "Вставить после текущей страницы"
 
-#: ../src/core/control/Control.cpp:841
+#: ../src/core/control/Control.cpp:842
 msgid "Insert at end"
 msgstr "Вставить в конце"
 
-#: ../src/core/control/Control.cpp:844
+#: ../src/core/control/Control.cpp:845
 msgid "_Journal"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:844
+#: ../src/core/control/Control.cpp:845
 msgid "Paper B_ackground"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:845
+#: ../src/core/control/Control.cpp:846
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:43
 msgid "With PDF background"
 msgstr "С PDF фоном"
 
-#: ../src/core/control/Control.cpp:848
+#: ../src/core/control/Control.cpp:849
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:891
+#: ../src/core/control/Control.cpp:892
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Нет доступных страниц pdf для добавления. Вам может потребоваться открыть документ заново."
 
-#: ../src/core/control/Control.cpp:905
+#: ../src/core/control/Control.cpp:906
 msgid "Unable to retrieve pdf page."
 msgstr "Не удалось извлечь страницу pdf."
 
-#: ../src/core/control/Control.cpp:1507
+#: ../src/core/control/Control.cpp:1513
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -95,128 +95,128 @@ msgstr "Не открывайте автоматически сохранённ�
 "Скопируйте эти файлы в другое место.\n"
 "Файлы из папки {1} не могут быть открыты."
 
-#: ../src/core/control/Control.cpp:1527
+#: ../src/core/control/Control.cpp:1533
 msgid "file: {1}"
 msgstr "файл: {1}"
 
-#: ../src/core/control/Control.cpp:1570
+#: ../src/core/control/Control.cpp:1576
 msgid "<i>Above error repeated {1} times</i>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1582
+#: ../src/core/control/Control.cpp:1588
 msgid "<i>&lt;{1} more lines of error messages&gt;</i>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1621
+#: ../src/core/control/Control.cpp:1627
 msgid "Error opening file \"{1}\".\n\n"
 "<tt>{2}</tt>\n"
 "<b>{3}</b>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1635
+#: ../src/core/control/Control.cpp:1641
 msgid "There were some errors while loading the file. Some information might have been lost. Do not overwrite your old file unless you are sure everything you need was loaded correctly.\n\n"
 "Error messages:\n"
 "<tt>{1}</tt>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1653
+#: ../src/core/control/Control.cpp:1659
 msgid "File version mismatch"
 msgstr "Версии файлов не совпадают"
 
-#: ../src/core/control/Control.cpp:1654
+#: ../src/core/control/Control.cpp:1660
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Загружаемый файл имеет более новую версию файлового формата, чем поддерживаемый этой версией Xournal++, так что он может загрузиться некорректно. Всё равно открыть?"
 
-#: ../src/core/control/Control.cpp:1677
+#: ../src/core/control/Control.cpp:1683
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr "Ошибка чтения PDF файла \"{1}\"\n"
 "{2}"
 
-#: ../src/core/control/Control.cpp:1698
+#: ../src/core/control/Control.cpp:1704
 msgid "Error reading PNG file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1733
+#: ../src/core/control/Control.cpp:1739
 msgid "Error reading template file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1752
+#: ../src/core/control/Control.cpp:1758
 msgid "Failed to determine if path exists \"{1}\": {2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1753
+#: ../src/core/control/Control.cpp:1759
 msgid "That file does not exist:\n"
 "\"{1}\""
 msgstr "Файл не существует: \"{1}\""
 
-#: ../src/core/control/Control.cpp:1859
+#: ../src/core/control/Control.cpp:1871
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Не удалось найти прикрепленный файл фона. Возможно, он был перемещен, переименован или удален."
 
-#: ../src/core/control/Control.cpp:1862
+#: ../src/core/control/Control.cpp:1874
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Не удалось найти прикрепленный файл фона \"{1}\" Возможно, он был перемещен, переименован или удален. Последний раз он был виден в: \"{2}\""
 
-#: ../src/core/control/Control.cpp:1872
+#: ../src/core/control/Control.cpp:1884
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Предлагаемый файл для замены: \"{1}\""
 
-#: ../src/core/control/Control.cpp:1877
+#: ../src/core/control/Control.cpp:1889
 msgid "Select another PDF"
 msgstr "Выбрать другой PDF"
 
-#: ../src/core/control/Control.cpp:1878
+#: ../src/core/control/Control.cpp:1890
 msgid "Remove PDF Background"
 msgstr "Удалить PDF фон"
 
-#: ../src/core/control/Control.cpp:1882
+#: ../src/core/control/Control.cpp:1894
 msgid "Use proposed PDF"
 msgstr "Использовать предложенный PDF"
 
-#: ../src/core/control/Control.cpp:1885
+#: ../src/core/control/Control.cpp:1897
 msgid "Missing PDF background file"
 msgstr "Отсутствует файл фона PDF"
 
-#: ../src/core/control/Control.cpp:2014
+#: ../src/core/control/Control.cpp:2026
 msgid "Select font"
 msgstr "Выбрать шрифт"
 
-#: ../src/core/control/Control.cpp:2033
+#: ../src/core/control/Control.cpp:2045
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Выбрать цвет"
 
-#: ../src/core/control/Control.cpp:2058
+#: ../src/core/control/Control.cpp:2070
 msgid "Unsaved Document"
 msgstr "Несохранённый документ"
 
-#: ../src/core/control/Control.cpp:2200
+#: ../src/core/control/Control.cpp:2212
 msgid "Document file was removed."
 msgstr "Файл документа был удален."
 
-#: ../src/core/control/Control.cpp:2200
+#: ../src/core/control/Control.cpp:2212
 msgid "This document is not saved yet."
 msgstr "Этот документ еще не сохранен."
 
-#: ../src/core/control/Control.cpp:2202
+#: ../src/core/control/Control.cpp:2214
 msgid "Save As..."
 msgstr "Сохранить как..."
 
-#: ../src/core/control/Control.cpp:2202 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2214 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "Сохранить"
 
-#: ../src/core/control/Control.cpp:2205
+#: ../src/core/control/Control.cpp:2217
 msgid "Discard"
 msgstr "Не сохранять"
 
-#: ../src/core/control/Control.cpp:2294
+#: ../src/core/control/Control.cpp:2306
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -299,8 +299,8 @@ msgstr "Не удалось загрузить LaTeX PDF файл"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:111
 #: ../src/core/control/XournalMain.cpp:227
-#: ../src/core/control/xojfile/LoadHandler.cpp:260
-#: ../src/core/control/xojfile/LoadHandler.cpp:279
+#: ../src/core/control/xojfile/LoadHandler.cpp:261
+#: ../src/core/control/xojfile/LoadHandler.cpp:280
 msgid "Error reading PDF: {1}"
 msgstr "Ошибка при чтении PDF: {1}"
 
@@ -641,7 +641,7 @@ msgid "Isometric Graph"
 msgstr "Изометрия (сетка)"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:44
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Image"
 msgstr "Изображение"
 
@@ -678,138 +678,138 @@ msgstr "Ошибка загрузки изображения"
 msgid "Error while opening image file: "
 msgstr "Ошибка при открытии файла изображения: "
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:122
-#: ../src/core/control/xojfile/LoadHandler.cpp:139
-#: ../src/core/control/xojfile/LoadHandler.cpp:661
-#: ../src/core/control/xojfile/LoadHandler.cpp:675
+#: ../src/core/control/xojfile/LoadHandler.cpp:123
+#: ../src/core/control/xojfile/LoadHandler.cpp:140
+#: ../src/core/control/xojfile/LoadHandler.cpp:692
+#: ../src/core/control/xojfile/LoadHandler.cpp:706
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Не удалось открыть вложение: {1}. Сообщение об ошибке: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:131
-#: ../src/core/control/xojfile/LoadHandler.cpp:667
-#: ../src/core/control/xojfile/LoadHandler.cpp:685
+#: ../src/core/control/xojfile/LoadHandler.cpp:132
+#: ../src/core/control/xojfile/LoadHandler.cpp:698
+#: ../src/core/control/xojfile/LoadHandler.cpp:716
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Не удалось открыть вложение: {1}. Сообщение об ошибке: недопустимый размер файла"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:149
+#: ../src/core/control/xojfile/LoadHandler.cpp:150
 msgid "Unable to create temporary file for audio attachment"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:161
+#: ../src/core/control/xojfile/LoadHandler.cpp:162
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Не удалось открыть вложение: {1}. Сообщение об ошибке: Не удалось прочитать файл"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:168
+#: ../src/core/control/xojfile/LoadHandler.cpp:169
 msgid "Could not open attachment: {1}. Error message: Could not write temporary file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:201
-#: ../src/core/control/xojfile/LoadHandler.cpp:226
+#: ../src/core/control/xojfile/LoadHandler.cpp:202
+#: ../src/core/control/xojfile/LoadHandler.cpp:227
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Не удалось прочитать изображение: {1}. Сообщение об ошибке: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:236
+#: ../src/core/control/xojfile/LoadHandler.cpp:237
 msgid "Cloned pixmap page background on page {1} references inexistent page {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:482
+#: ../src/core/control/xojfile/LoadHandler.cpp:513
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:489
+#: ../src/core/control/xojfile/LoadHandler.cpp:520
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:497
+#: ../src/core/control/xojfile/LoadHandler.cpp:528
 msgid "The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:510
+#: ../src/core/control/xojfile/LoadHandler.cpp:541
 msgid "The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:519
+#: ../src/core/control/xojfile/LoadHandler.cpp:550
 msgid "Could not open file: \"{1}\""
 msgstr "Не удалось открыть файл: «{1}»"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:535
+#: ../src/core/control/xojfile/LoadHandler.cpp:566
 msgid "XML Parser error: {1}"
 msgstr "Ошибка XML парсера: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:545
+#: ../src/core/control/xojfile/LoadHandler.cpp:576
 msgid "Failed to read from compressed file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:554
+#: ../src/core/control/xojfile/LoadHandler.cpp:585
 msgid "Invalid XML data read"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:568
+#: ../src/core/control/xojfile/LoadHandler.cpp:599
 msgid "Document is not complete.\n"
 "We have tried recovering the data that could be read, but the last element may have been discarded, and the end of the file is likely missing."
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:575
+#: ../src/core/control/xojfile/LoadHandler.cpp:606
 msgid "Document is corrupted (no document tag found in file)"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:578
+#: ../src/core/control/xojfile/LoadHandler.cpp:609
 msgid "Document is corrupted (no pages found in file)"
 msgstr "Документ повреждён (в файле не найдено страниц)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:718
+#: ../src/core/control/xojfile/LoadHandler.cpp:749
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Запрошенный временный файл не найден для вложения {1}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:264
+#: ../src/core/control/xojfile/SaveHandler.cpp:279
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Не удалось записать фон «{1}», {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:371
+#: ../src/core/control/xojfile/SaveHandler.cpp:386
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Не удалось записать фон «{1}». Тем не менее, продолжаем."
 
-#: ../src/core/control/xojfile/XmlParser.cpp:95
+#: ../src/core/control/xojfile/XmlParser.cpp:96
 msgid "Ignoring unexpected {1} tag inside unrecognized document structure"
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:100
+#: ../src/core/control/xojfile/XmlParser.cpp:101
 msgid "Ignoring unexpected {1} tag under {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:149
+#: ../src/core/control/xojfile/XmlParser.cpp:150
 msgid "Unexpected text in {1} node: \"{2}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:247
+#: ../src/core/control/xojfile/XmlParser.cpp:248
 msgid "Attribute \"type\" not found in background tag. Ignoring tag"
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:286
+#: ../src/core/control/xojfile/XmlParser.cpp:287
 msgid "Domain \"clone\" is invalid for PDF backgrounds. Using \"absolute\" instead"
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:296
+#: ../src/core/control/xojfile/XmlParser.cpp:297
 msgid "PDF background filename is empty"
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:316
+#: ../src/core/control/xojfile/XmlParser.cpp:317
 msgid "Discarding unused audio timestamp element. Filename: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:393
+#: ../src/core/control/xojfile/XmlParser.cpp:394
 msgid "Found stroke that contains an odd number of valid coordinates. Discarding the last value"
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:404
+#: ../src/core/control/xojfile/XmlParser.cpp:405
 msgid "Found stroke with more coordinates than pressure points: {1}, expected {2}. Shrinking stroke to match pressure point count"
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:410
+#: ../src/core/control/xojfile/XmlParser.cpp:411
 msgid "Found stroke with too many pressure points: {1}, expected {2}. Discarding remaining pressure points"
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:494
+#: ../src/core/control/xojfile/XmlParser.cpp:512
 msgid "Ignoring attachment tag under {1}"
 msgstr ""
 
@@ -817,21 +817,25 @@ msgstr ""
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Ошибка загрузки glade файла «{1}» (попробуйте загрузить «{2}»)"
 
-#: ../src/core/gui/PageView.cpp:400
+#: ../src/core/gui/LinkPopover.cpp:70
+msgid "Double click to edit. CTRL + click to open."
+msgstr ""
+
+#: ../src/core/gui/PageView.cpp:411
 msgid "Unable to play audio recording {1}"
 msgstr "Не удалось воспроизвести аудиозапись {1}"
 
-#: ../src/core/gui/PageView.cpp:936
+#: ../src/core/gui/PageView.cpp:973
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:145
 msgid "Loading..."
 msgstr "Загрузка..."
 
-#: ../src/core/gui/PageView.cpp:993
+#: ../src/core/gui/PageView.cpp:1030
 msgid "Scroll to page {1}"
 msgstr "Прокрутить до {1}"
 
-#: ../src/core/gui/PageView.cpp:995
+#: ../src/core/gui/PageView.cpp:1032
 msgid "Add missing page"
 msgstr "Добавить пропущенную страницу"
 
@@ -897,12 +901,12 @@ msgid "Thin"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:509
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:510
 msgid "Medium"
 msgstr "Средний"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:510
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:511
 msgid "Thick"
 msgstr "Жирный"
 
@@ -920,7 +924,7 @@ msgstr "Инструмент - не изменять"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:79
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:381
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:497
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:498
 msgid "Pen"
 msgstr "Перо"
 
@@ -931,7 +935,7 @@ msgstr "Ластик"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:498
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:499
 msgid "Highlighter"
 msgstr "Маркер"
 
@@ -974,7 +978,7 @@ msgid "Select multi layer rect"
 msgstr "Выбор многослойной прямой"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:450
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:451
 msgid "Hand"
 msgstr "Рука"
 
@@ -1000,48 +1004,48 @@ msgstr "Обычный рисунок"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:431
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 msgid "Draw Line"
 msgstr "Нарисовать линию"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Draw Rectangle"
 msgstr "Нарисовать прямоугольник"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 msgid "Draw Ellipse"
 msgstr "Нарисовать эллипс"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Draw Arrow"
 msgstr "Нарисовать стрелку"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Draw Double Arrow"
 msgstr "Нарисовать двойную стрелу"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:430
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:431
 msgid "Draw Coordinate System"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
 msgstr "Распознавание форм"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 msgid "Draw Spline"
 msgstr "Построить сплайн"
 
@@ -1384,30 +1388,30 @@ msgstr "Менеджер плагинов"
 msgid "Plugin"
 msgstr "Плагин"
 
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:61
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:68
 msgctxt "The selected document will be removed from the recent files list"
 msgid "Dismiss"
 msgstr "Отменить"
 
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:100
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:108
 msgid "No recent files"
 msgstr "Нет недавних файлов"
 
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:110
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:118
 msgid "Clear list"
 msgstr "Очистить список"
 
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:182
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:190
 msgctxt "In the submenu for removing recent documents, this will display on top of the list xournal++ files to separate them from PDF files"
 msgid "Xournal++ Files"
 msgstr "Файлы Xournal++"
 
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:191
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:199
 msgctxt "In the submenu for removing recent documents, this will display on top of the list PDF files to separate them from xournal++ files"
 msgid "PDF Files"
 msgstr "Файлы PDF"
 
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:198
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:206
 msgctxt "This opens a submenu of the recent files list, and clicking on individual entries in this submenu will remove it from the recent files list"
 msgid "Dismiss a single document"
 msgstr "Отклонить один документ"
@@ -1565,7 +1569,7 @@ msgid "Go to first page"
 msgstr "Перейти на первую страницу"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:347
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:462
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:463
 msgid "Back"
 msgstr "Назад"
 
@@ -1643,105 +1647,109 @@ msgid "delete stroke"
 msgstr "удалить черту"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
+msgid "Add/Edit Link"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Add/Edit TeX"
 msgstr "Добавить/редактировать Tex"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Default Tool"
 msgstr "Инструмент по умолчанию"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:411
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:14
 msgid "Select Linear PDF Text"
 msgstr "Выбрать линейный PDF текст"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Select PDF Text in Rectangle"
 msgstr "Выбрать PDF текст в прямоугольнике"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Setsquare"
 msgstr "Setsquare"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Compass"
 msgstr "Компас"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Toggle Touch Drawing"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:435
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
 msgid "Select Region"
 msgstr "Выделение лассо"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:12
 msgid "Select Rectangle"
 msgstr "Прямоугольное выделение"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:440
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Select Multi-Layer Region"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:443
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Select Multi-Layer Rectangle"
 msgstr "Выбрать мультислойный прямоугольник"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:445
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 msgid "Select Object"
 msgstr "Выбрать объект"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:447
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:448
 msgid "Vertical Space"
 msgstr "Вертикальный отступ"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:449
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:450
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 msgid "Play Object"
 msgstr "Воспроизвести объект"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:455
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:456
 msgid "Record Audio / Stop Recording"
 msgstr "Запись аудио / Остановить запись"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:457
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:458
 msgid "Pause / Play"
 msgstr "Пауза / воспроизведение"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:458
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
 msgid "Stop"
 msgstr "Остановить"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:460
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Forward"
 msgstr "Далее"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:496
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:497
 msgid "Laser pointer"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:502
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:503
 msgid "Fill"
 msgstr "Заливка"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:503
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:504
 msgid "Fill Opacity"
 msgstr "Прозрачность заливки"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:506
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:507
 msgid "Very Fine"
 msgstr "Очень тонкий"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:507
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:508
 msgid "Fine"
 msgstr "Тонкий"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:512
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:513
 msgid "Very Thick"
 msgstr "Очень жирный"
 
@@ -1949,6 +1957,11 @@ msgstr "latex"
 #: ../src/core/undo/DeleteUndoAction.cpp:99
 msgid "text"
 msgstr "текст"
+
+#: ../src/core/undo/AddUndoAction.cpp:100
+#: ../src/core/undo/DeleteUndoAction.cpp:102
+msgid "link"
+msgstr ""
 
 #: ../src/core/undo/ColorUndoAction.cpp:97
 msgid "Change color"
@@ -2249,7 +2262,7 @@ msgstr "Закрыть"
 #: ../ui/goto.glade:108 ../ui/intEdTexDialog.glade:203
 #: ../ui/pageFormat.glade:346 ../ui/pageTemplate.glade:278
 #: ../ui/plugin.glade:114 ../ui/renameLayerDialog.glade:71
-#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6601
+#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6645
 msgid "Ok"
 msgstr "OK"
 
@@ -2631,6 +2644,34 @@ msgstr ""
 #: ../ui/latexSettings.glade:665
 msgid "Editor settings"
 msgstr "Настройки редактора"
+
+#: ../ui/linkDialog.glade:53
+msgid "Text:"
+msgstr ""
+
+#: ../ui/linkDialog.glade:188
+msgid "URL:"
+msgstr ""
+
+#: ../ui/linkDialog.glade:207
+msgid "http://"
+msgstr ""
+
+#: ../ui/linkDialog.glade:208
+msgid "https://"
+msgstr ""
+
+#: ../ui/linkDialog.glade:209
+msgid "mailto:"
+msgstr ""
+
+#: ../ui/linkDialog.glade:210
+msgid "file://"
+msgstr ""
+
+#: ../ui/linkDialog.glade:211
+msgid "<custom>"
+msgstr ""
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
@@ -3442,7 +3483,7 @@ msgid "Circle Color"
 msgstr "Цвет круга"
 
 #: ../ui/settings.glade:3566 ../ui/settings.glade:3617
-#: ../ui/settings.glade:5109
+#: ../ui/settings.glade:5153
 msgid "pixels"
 msgstr "пикс."
 
@@ -3596,95 +3637,103 @@ msgstr "Скорость для шага масштабирования"
 msgid "Zoom Speed"
 msgstr "Скорость приближения"
 
-#: ../ui/settings.glade:4491
+#: ../ui/settings.glade:4489
+msgid "Force zoom to fit on document load"
+msgstr ""
+
+#: ../ui/settings.glade:4508
+msgid "Default Zoom"
+msgstr ""
+
+#: ../ui/settings.glade:4535
 msgid "<i>To make sure on 100% zoom the size of elements is natural.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4511
+#: ../ui/settings.glade:4555
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
 msgstr "<i>Разместите линейку на экране и перемещайте ползунок до тех пор, пока обе линейки не совпадут.</i>"
 
-#: ../ui/settings.glade:4527
+#: ../ui/settings.glade:4571
 msgid "Automatic"
 msgstr "Автоматически"
 
-#: ../ui/settings.glade:4584
+#: ../ui/settings.glade:4628
 msgid "The unit of the ruler is cm"
 msgstr "Единицы измерения линейки - см"
 
-#: ../ui/settings.glade:4605
+#: ../ui/settings.glade:4649
 msgid "Display DPI Calibration"
 msgstr "Калибровка DPI дисплея"
 
-#: ../ui/settings.glade:4636
+#: ../ui/settings.glade:4680
 msgid "Zoom"
 msgstr "Приближение"
 
-#: ../ui/settings.glade:4685
+#: ../ui/settings.glade:4729
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
 msgstr "<i>Если вы добавите дополнительное пространство рядом со страницами, вы сможете выбрать область экрана, на которой хотите работать.</i>"
 
-#: ../ui/settings.glade:4808
+#: ../ui/settings.glade:4852
 msgid "Add additional horizontal space"
 msgstr ""
 
-#: ../ui/settings.glade:4824
+#: ../ui/settings.glade:4868
 msgid "Add additional vertical space"
 msgstr ""
 
-#: ../ui/settings.glade:4842
+#: ../ui/settings.glade:4886
 msgid "<i>or</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4854
+#: ../ui/settings.glade:4898
 msgid "Unlimited scrolling"
 msgstr "Неограниченная прокрутка"
 
-#: ../ui/settings.glade:4878
+#: ../ui/settings.glade:4922
 msgid "<i>The amount is specified in pixels.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4910
+#: ../ui/settings.glade:4954
 msgid "Scrolling outside the page"
 msgstr "Прокрутка за пределами страницы"
 
-#: ../ui/settings.glade:4937
+#: ../ui/settings.glade:4981
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr "Переместить первую страницу на столько страниц, если включено <b>Парные страницы</b>"
 
-#: ../ui/settings.glade:4938
+#: ../ui/settings.glade:4982
 msgid "First Page Offset "
 msgstr "Отступ первой страницы "
 
-#: ../ui/settings.glade:4951
+#: ../ui/settings.glade:4995
 msgid "Usually 0 or 1"
 msgstr "Обычно 0 или 1"
 
-#: ../ui/settings.glade:4970
+#: ../ui/settings.glade:5014
 msgid "Paired Pages"
 msgstr "Парные страницы"
 
-#: ../ui/settings.glade:4996
+#: ../ui/settings.glade:5040
 msgid "when scrolling to end of last page"
 msgstr ""
 
-#: ../ui/settings.glade:5011
+#: ../ui/settings.glade:5055
 msgid "when drawing on last page"
 msgstr ""
 
-#: ../ui/settings.glade:5026
+#: ../ui/settings.glade:5070
 msgid "disabled"
 msgstr ""
 
-#: ../ui/settings.glade:5044
+#: ../ui/settings.glade:5088
 msgid "Automatically Add Empty Last Page (excluding PDFs)"
 msgstr ""
 
-#: ../ui/settings.glade:5068
+#: ../ui/settings.glade:5112
 msgid "Enable  with determination radius of "
 msgstr "Включить с радиусом определения "
 
-#: ../ui/settings.glade:5073
+#: ../ui/settings.glade:5117
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
@@ -3694,257 +3743,257 @@ msgstr "Перетаскивание ВЛЕВО из начальной точк
 "Радиус определения: радиус, при котором модификаторы будут блокироваться до завершения рисования.\n\n"
 "<i>Полезно для работы без клавиатуры.</i>"
 
-#: ../ui/settings.glade:5123
+#: ../ui/settings.glade:5167
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Инструменты рисования - настройка параметров с помощью направления рисования (экспериментально)"
 
-#: ../ui/settings.glade:5140
+#: ../ui/settings.glade:5184
 msgid "Preserve line width"
 msgstr "Сохранить ширину линии"
 
-#: ../ui/settings.glade:5145
+#: ../ui/settings.glade:5189
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
 msgstr "После изменения размера выделения, ширина линии всех черт будет такой же, как и перед изменением размера. "
 
-#: ../ui/settings.glade:5156
+#: ../ui/settings.glade:5200
 msgid "Resizing"
 msgstr "Изменение размера"
 
-#: ../ui/settings.glade:5192
+#: ../ui/settings.glade:5236
 msgid "Rotation snapping tolerance"
 msgstr "Допуск при фиксации поворота"
 
-#: ../ui/settings.glade:5204
+#: ../ui/settings.glade:5248
 msgid "Grid snapping tolerance"
 msgstr "Допуск при привязке к сетке"
 
-#: ../ui/settings.glade:5246
+#: ../ui/settings.glade:5290
 msgid "Grid size"
 msgstr "Размер сетки"
 
-#: ../ui/settings.glade:5277
+#: ../ui/settings.glade:5321
 msgid "Use snapping for recognized shapes"
 msgstr "Использовать привязку для распознанных фигур"
 
-#: ../ui/settings.glade:5281
+#: ../ui/settings.glade:5325
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
 msgstr "Если включено, фигуры, распознанные распознаванием форм, будут автоматически привязаны к сетке. Это может привести к неожиданным результатам, если распознаватние форм было включено во время написания."
 
-#: ../ui/settings.glade:5296
+#: ../ui/settings.glade:5340
 msgid "Snapping"
 msgstr "Привязка"
 
-#: ../ui/settings.glade:5324
+#: ../ui/settings.glade:5368
 msgid "Minimum Stroke Size"
 msgstr ""
 
-#: ../ui/settings.glade:5379
+#: ../ui/settings.glade:5423
 msgctxt "Short taps/clicks will trigger special actions"
 msgid "Enable Tap action"
 msgstr "Включить действие по нажатию"
 
-#: ../ui/settings.glade:5384
+#: ../ui/settings.glade:5428
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr "Игнорировать короткие (по времени и по длине) входные данные, если они не происходят в быстрой последовательности. Вместо этого показать плавающий набор инструментов."
 
-#: ../ui/settings.glade:5396
+#: ../ui/settings.glade:5440
 msgid "Time limit (ms)"
 msgstr ""
 
-#: ../ui/settings.glade:5408
+#: ../ui/settings.glade:5452
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5428
+#: ../ui/settings.glade:5472
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5448
+#: ../ui/settings.glade:5492
 msgid "Length limit (mm)"
 msgstr ""
 
-#: ../ui/settings.glade:5459
+#: ../ui/settings.glade:5503
 msgid "Frequency limit (ms)"
 msgstr ""
 
-#: ../ui/settings.glade:5471
+#: ../ui/settings.glade:5515
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
 "<i>Recommended: 500ms</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5488
+#: ../ui/settings.glade:5532
 msgid "Try to select object first."
 msgstr "Сначала попробуйте выбрать объект."
 
-#: ../ui/settings.glade:5493 ../ui/settings.glade:5523
+#: ../ui/settings.glade:5537 ../ui/settings.glade:5567
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "Сначала попробуйте выбрать объект; если ничего не выбрано, то будет показан плавающий набор инструментов, если включено."
 
-#: ../ui/settings.glade:5506
+#: ../ui/settings.glade:5550
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr "Все три условия должны быть выполнены прежде чем штрих будет проигнорирован.\n"
 "Штрих должен быть коротким по времени и по длине, и не должно быть недавно проигнорированных штрихов."
 
-#: ../ui/settings.glade:5509
+#: ../ui/settings.glade:5553
 msgid "Settings:"
 msgstr "Настройки:"
 
-#: ../ui/settings.glade:5518
+#: ../ui/settings.glade:5562
 msgid "Show Floating Toolbox"
 msgstr "Показать плавающую панель инструментов"
 
-#: ../ui/settings.glade:5537
+#: ../ui/settings.glade:5581
 msgid "Action on Tool Tap"
 msgstr "Действие по нажатию на инструмент"
 
-#: ../ui/settings.glade:5565
+#: ../ui/settings.glade:5609
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality.\n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5587
+#: ../ui/settings.glade:5631
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr "При приближении в формате PDF с высоким разрешением, каждая перерисовка может занять много времени. Установка большого значения приведёт к тому, что эти перерисовки будут случаться реже.\n\n"
 "Установите значение 0%, чтобы всегда перерисовывать при приближении."
 
-#: ../ui/settings.glade:5590
+#: ../ui/settings.glade:5634
 msgid "Re-render when the page's zoom changes by more than "
 msgstr "Рендерить страницу заново когда масштаб меняется более чем на "
 
-#: ../ui/settings.glade:5603
+#: ../ui/settings.glade:5647
 msgid "0.00"
 msgstr "0.00"
 
-#: ../ui/settings.glade:5620
+#: ../ui/settings.glade:5664
 msgid "%."
 msgstr "%."
 
-#: ../ui/settings.glade:5641
+#: ../ui/settings.glade:5685
 msgid "PDF Cache"
 msgstr "Кэш PDF"
 
-#: ../ui/settings.glade:5672
+#: ../ui/settings.glade:5716
 msgid "Drawing Area"
 msgstr "Область рисования"
 
-#: ../ui/settings.glade:5719
+#: ../ui/settings.glade:5763
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
 msgstr "<i>Выберите инструмент и настройки, которые вы хотите установить по умолчанию.</i>"
 
-#: ../ui/settings.glade:5771
+#: ../ui/settings.glade:5815
 msgid "<b>Default tool</b>"
 msgstr ""
 
-#: ../ui/settings.glade:5807
+#: ../ui/settings.glade:5851
 msgid "<i>The laser pointer allows to write strokes that will fade out after a short while.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5828
+#: ../ui/settings.glade:5872
 msgid "Fade out delay (in ms)"
 msgstr ""
 
-#: ../ui/settings.glade:5880
+#: ../ui/settings.glade:5924
 msgid "<b>Laser pointer</b>"
 msgstr ""
 
-#: ../ui/settings.glade:5920
+#: ../ui/settings.glade:5964
 msgid "Tools"
 msgstr "Инструменты"
 
-#: ../ui/settings.glade:5973
+#: ../ui/settings.glade:6017
 msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required).\n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
 "</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5989
+#: ../ui/settings.glade:6033
 msgid "Disable Audio"
 msgstr "Выключить звук"
 
-#: ../ui/settings.glade:6011
+#: ../ui/settings.glade:6055
 msgid "Enable or Disable Audio"
 msgstr ""
 
-#: ../ui/settings.glade:6038
+#: ../ui/settings.glade:6082
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr "<i>Аудиозаписи хранятся в отдельной папке, ссылки на них содержатся в журнале.</i>"
 
-#: ../ui/settings.glade:6057 ../ui/settings.glade:6093
+#: ../ui/settings.glade:6101 ../ui/settings.glade:6137
 msgid "Storage Folder"
 msgstr "Место хранения"
 
-#: ../ui/settings.glade:6072
+#: ../ui/settings.glade:6116
 msgid "Select Folder"
 msgstr "Выбор папки"
 
-#: ../ui/settings.glade:6120
+#: ../ui/settings.glade:6164
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr "<i>Укажите аудио устройства, используемые для записи и воспроизведения аудио вложений. \n"
 "Если доступно, выберите <small><tt>pulse</tt></small> как входное / выходное устройство.</i>"
 
-#: ../ui/settings.glade:6144
+#: ../ui/settings.glade:6188
 msgid "Input Device"
 msgstr "Устройство ввода"
 
-#: ../ui/settings.glade:6166
+#: ../ui/settings.glade:6210
 msgid "Output Device"
 msgstr "Устройство вывода"
 
-#: ../ui/settings.glade:6197
+#: ../ui/settings.glade:6241
 msgid "Audio Devices"
 msgstr "Аудио устройства"
 
-#: ../ui/settings.glade:6226
+#: ../ui/settings.glade:6270
 msgid "Sample Rate"
 msgstr "Частота дискретизации"
 
-#: ../ui/settings.glade:6237
+#: ../ui/settings.glade:6281
 msgid "Gain"
 msgstr "Коэффициент усиления"
 
-#: ../ui/settings.glade:6284
+#: ../ui/settings.glade:6328
 msgid "Recording Quality"
 msgstr "Качество записи"
 
-#: ../ui/settings.glade:6310
+#: ../ui/settings.glade:6354
 msgid "Default Seek Time (in seconds)"
 msgstr "Перемотка в начале воспроизведения (секунды)"
 
-#: ../ui/settings.glade:6323
+#: ../ui/settings.glade:6367
 msgid "1,00"
 msgstr "1,00"
 
-#: ../ui/settings.glade:6342
+#: ../ui/settings.glade:6386
 msgid "Playback Settings"
 msgstr "Параметры воспроизведения"
 
-#: ../ui/settings.glade:6356
+#: ../ui/settings.glade:6400
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr "<i>Изменения вступят в силу только для новой записи и воспроизведения.</i>"
 
-#: ../ui/settings.glade:6387
+#: ../ui/settings.glade:6431
 msgid "Audio Recording"
 msgstr "Аудиозапись"
 
-#: ../ui/settings.glade:6460
+#: ../ui/settings.glade:6504
 msgid "<i>Select language (requires restart)</i>"
 msgstr "<i>Выбор языка (требуется перезапуск)</i>"
 
-#: ../ui/settings.glade:6492 ../ui/settings.glade:6538
+#: ../ui/settings.glade:6536 ../ui/settings.glade:6582
 msgid "Language"
 msgstr "Язык"
 
-#: ../ui/settings.glade:6508
+#: ../ui/settings.glade:6552
 msgid "Language Settings"
 msgstr "Настройка языка"
 
-#: ../ui/settings.glade:6562
+#: ../ui/settings.glade:6606
 msgid "Palette"
 msgstr ""
 
@@ -4358,123 +4407,127 @@ msgid "_Text"
 msgstr "_Текст"
 
 #: ../ui/mainmenubar.xml:554
+msgid "_Link"
+msgstr ""
+
+#: ../ui/mainmenubar.xml:560
 msgid "_Image"
 msgstr "_Изображение"
 
-#: ../ui/mainmenubar.xml:560
+#: ../ui/mainmenubar.xml:566
 msgid "_Default Tool"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:567
+#: ../ui/mainmenubar.xml:573
 msgid "Drawing Type"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:569
+#: ../ui/mainmenubar.xml:575
 msgid "_Shape Recognizer"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:599
+#: ../ui/mainmenubar.xml:605
 msgid "Draw _Line"
 msgstr "Нарисовать _линию"
 
-#: ../ui/mainmenubar.xml:640
+#: ../ui/mainmenubar.xml:646
 msgid "_Vertical Space"
 msgstr "_Вертикальный отступ"
 
-#: ../ui/mainmenubar.xml:652
+#: ../ui/mainmenubar.xml:658
 msgid "H_and Tool"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:668
+#: ../ui/mainmenubar.xml:674
 msgid "Pen _Options"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:671 ../ui/mainmenubar.xml:733
-#: ../ui/mainmenubar.xml:780
+#: ../ui/mainmenubar.xml:677 ../ui/mainmenubar.xml:739
+#: ../ui/mainmenubar.xml:786
 msgid "_very fine"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:676 ../ui/mainmenubar.xml:738
-#: ../ui/mainmenubar.xml:785
+#: ../ui/mainmenubar.xml:682 ../ui/mainmenubar.xml:744
+#: ../ui/mainmenubar.xml:791
 msgid "_fine"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:681 ../ui/mainmenubar.xml:743
-#: ../ui/mainmenubar.xml:790
+#: ../ui/mainmenubar.xml:687 ../ui/mainmenubar.xml:749
+#: ../ui/mainmenubar.xml:796
 msgid "_medium"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:686 ../ui/mainmenubar.xml:748
-#: ../ui/mainmenubar.xml:795
+#: ../ui/mainmenubar.xml:692 ../ui/mainmenubar.xml:754
+#: ../ui/mainmenubar.xml:801
 msgid "_thick"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:691 ../ui/mainmenubar.xml:753
-#: ../ui/mainmenubar.xml:800
+#: ../ui/mainmenubar.xml:697 ../ui/mainmenubar.xml:759
+#: ../ui/mainmenubar.xml:806
 msgid "ver_y thick"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:720 ../ui/mainmenubar.xml:807
+#: ../ui/mainmenubar.xml:726 ../ui/mainmenubar.xml:813
 msgid "Fi_ll"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:724 ../ui/mainmenubar.xml:811
+#: ../ui/mainmenubar.xml:730 ../ui/mainmenubar.xml:817
 msgid "Fill opacity"
 msgstr "Непрозрачность заливки"
 
-#: ../ui/mainmenubar.xml:730
+#: ../ui/mainmenubar.xml:736
 msgid "Eraser Optio_ns"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:760
+#: ../ui/mainmenubar.xml:766
 msgid "_standard"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:765
+#: ../ui/mainmenubar.xml:771
 msgid "_whiteout"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:770
+#: ../ui/mainmenubar.xml:776
 msgid "_delete strokes"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:777
+#: ../ui/mainmenubar.xml:783
 msgid "Highlighter Opti_ons"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:817
+#: ../ui/mainmenubar.xml:823
 msgid "Select PDF Text Options"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:820
+#: ../ui/mainmenubar.xml:826
 msgid "Marker Opacity"
 msgstr "Непрозрачность маркера"
 
-#: ../ui/mainmenubar.xml:826
+#: ../ui/mainmenubar.xml:832
 msgid "Text Font..."
 msgstr "Шрифт текста..."
 
-#: ../ui/mainmenubar.xml:831
+#: ../ui/mainmenubar.xml:837
 msgid "Record / Stop"
 msgstr "Запись / Стоп"
 
-#: ../ui/mainmenubar.xml:836
+#: ../ui/mainmenubar.xml:842
 msgid "Pause"
 msgstr "Пауза"
 
-#: ../ui/mainmenubar.xml:863
+#: ../ui/mainmenubar.xml:869
 msgid "_Help"
 msgstr "_Справка"
 
-#: ../ui/mainmenubar.xml:867
+#: ../ui/mainmenubar.xml:873
 msgid "Help"
 msgstr "Помощь"
 
-#: ../ui/mainmenubar.xml:871
+#: ../ui/mainmenubar.xml:877
 msgid "Run Gtk3 demo"
 msgstr "Запустить Gtk3 демо"
 
-#: ../ui/mainmenubar.xml:875
+#: ../ui/mainmenubar.xml:881
 msgid "About"
 msgstr "О программе"
 
