@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-10 14:58+0000\n"
-"PO-Revision-Date: 2026-06-14 05:55\n"
+"POT-Creation-Date: 2026-06-24 17:06+0000\n"
+"PO-Revision-Date: 2026-06-28 05:45\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -46,8 +46,8 @@ msgstr "確定"
 msgid "No"
 msgstr "取消"
 
-#: ../src/core/control/Control.cpp:840 ../src/core/control/Control.cpp:1885
-#: ../src/core/control/Control.cpp:2213
+#: ../src/core/control/Control.cpp:840 ../src/core/control/Control.cpp:1891
+#: ../src/core/control/Control.cpp:2219
 msgid "Cancel"
 msgstr "取消"
 
@@ -154,72 +154,72 @@ msgid "That file does not exist:\n"
 "\"{1}\""
 msgstr "該檔案不存在：「{1}」"
 
-#: ../src/core/control/Control.cpp:1865
+#: ../src/core/control/Control.cpp:1871
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1868
+#: ../src/core/control/Control.cpp:1874
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1878
+#: ../src/core/control/Control.cpp:1884
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1883
+#: ../src/core/control/Control.cpp:1889
 msgid "Select another PDF"
 msgstr "選擇其他PDF"
 
-#: ../src/core/control/Control.cpp:1884
+#: ../src/core/control/Control.cpp:1890
 msgid "Remove PDF Background"
 msgstr "去掉PDF背景"
 
-#: ../src/core/control/Control.cpp:1888
+#: ../src/core/control/Control.cpp:1894
 msgid "Use proposed PDF"
 msgstr "使用建議的PDF"
 
-#: ../src/core/control/Control.cpp:1891
+#: ../src/core/control/Control.cpp:1897
 msgid "Missing PDF background file"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2020
+#: ../src/core/control/Control.cpp:2026
 msgid "Select font"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2039
+#: ../src/core/control/Control.cpp:2045
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "選色"
 
-#: ../src/core/control/Control.cpp:2064
+#: ../src/core/control/Control.cpp:2070
 msgid "Unsaved Document"
 msgstr "未保存文檔"
 
-#: ../src/core/control/Control.cpp:2206
+#: ../src/core/control/Control.cpp:2212
 msgid "Document file was removed."
 msgstr "文檔已刪除。"
 
-#: ../src/core/control/Control.cpp:2206
+#: ../src/core/control/Control.cpp:2212
 msgid "This document is not saved yet."
 msgstr "此文件尚未存檔"
 
-#: ../src/core/control/Control.cpp:2208
+#: ../src/core/control/Control.cpp:2214
 msgid "Save As..."
 msgstr "另存為..."
 
-#: ../src/core/control/Control.cpp:2208 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2214 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "保存"
 
-#: ../src/core/control/Control.cpp:2211
+#: ../src/core/control/Control.cpp:2217
 msgid "Discard"
 msgstr "丟棄"
 
-#: ../src/core/control/Control.cpp:2300
+#: ../src/core/control/Control.cpp:2306
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -2256,7 +2256,7 @@ msgstr ""
 #: ../ui/goto.glade:108 ../ui/intEdTexDialog.glade:203
 #: ../ui/pageFormat.glade:346 ../ui/pageTemplate.glade:278
 #: ../ui/plugin.glade:114 ../ui/renameLayerDialog.glade:71
-#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6601
+#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6645
 msgid "Ok"
 msgstr ""
 
@@ -3478,7 +3478,7 @@ msgid "Circle Color"
 msgstr "圓圈顏色"
 
 #: ../ui/settings.glade:3566 ../ui/settings.glade:3617
-#: ../ui/settings.glade:5109
+#: ../ui/settings.glade:5153
 msgid "pixels"
 msgstr "畫素"
 
@@ -3632,95 +3632,103 @@ msgstr "縮放速度"
 msgid "Zoom Speed"
 msgstr "縮放速度"
 
-#: ../ui/settings.glade:4491
+#: ../ui/settings.glade:4489
+msgid "Force zoom to fit on document load"
+msgstr ""
+
+#: ../ui/settings.glade:4508
+msgid "Default Zoom"
+msgstr ""
+
+#: ../ui/settings.glade:4535
 msgid "<i>To make sure on 100% zoom the size of elements is natural.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4511
+#: ../ui/settings.glade:4555
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
 msgstr "<i>將尺放在屏幕上並移動滑塊，直到兩個尺匹配。</i>"
 
-#: ../ui/settings.glade:4527
+#: ../ui/settings.glade:4571
 msgid "Automatic"
 msgstr ""
 
-#: ../ui/settings.glade:4584
+#: ../ui/settings.glade:4628
 msgid "The unit of the ruler is cm"
 msgstr "標尺的單位是釐米"
 
-#: ../ui/settings.glade:4605
+#: ../ui/settings.glade:4649
 msgid "Display DPI Calibration"
 msgstr "顯示器校準"
 
-#: ../ui/settings.glade:4636
+#: ../ui/settings.glade:4680
 msgid "Zoom"
 msgstr "縮放"
 
-#: ../ui/settings.glade:4685
+#: ../ui/settings.glade:4729
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
 msgstr "<i>如果您在頁面旁邊添加額外的空間，您可以選擇您想要處理的屏幕區域。</i>"
 
-#: ../ui/settings.glade:4808
+#: ../ui/settings.glade:4852
 msgid "Add additional horizontal space"
 msgstr ""
 
-#: ../ui/settings.glade:4824
+#: ../ui/settings.glade:4868
 msgid "Add additional vertical space"
 msgstr ""
 
-#: ../ui/settings.glade:4842
+#: ../ui/settings.glade:4886
 msgid "<i>or</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4854
+#: ../ui/settings.glade:4898
 msgid "Unlimited scrolling"
 msgstr ""
 
-#: ../ui/settings.glade:4878
+#: ../ui/settings.glade:4922
 msgid "<i>The amount is specified in pixels.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4910
+#: ../ui/settings.glade:4954
 msgid "Scrolling outside the page"
 msgstr "在頁面外滾動"
 
-#: ../ui/settings.glade:4937
+#: ../ui/settings.glade:4981
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr "當啟用 <b>雙頁</b> 顯示時，偏移多個頁面中的第一頁"
 
-#: ../ui/settings.glade:4938
+#: ../ui/settings.glade:4982
 msgid "First Page Offset "
 msgstr "第一頁偏移 "
 
-#: ../ui/settings.glade:4951
+#: ../ui/settings.glade:4995
 msgid "Usually 0 or 1"
 msgstr "通常為 0 或 1"
 
-#: ../ui/settings.glade:4970
+#: ../ui/settings.glade:5014
 msgid "Paired Pages"
 msgstr "雙頁模式"
 
-#: ../ui/settings.glade:4996
+#: ../ui/settings.glade:5040
 msgid "when scrolling to end of last page"
 msgstr ""
 
-#: ../ui/settings.glade:5011
+#: ../ui/settings.glade:5055
 msgid "when drawing on last page"
 msgstr ""
 
-#: ../ui/settings.glade:5026
+#: ../ui/settings.glade:5070
 msgid "disabled"
 msgstr ""
 
-#: ../ui/settings.glade:5044
+#: ../ui/settings.glade:5088
 msgid "Automatically Add Empty Last Page (excluding PDFs)"
 msgstr ""
 
-#: ../ui/settings.glade:5068
+#: ../ui/settings.glade:5112
 msgid "Enable  with determination radius of "
 msgstr "啟用並將半徑設為 "
 
-#: ../ui/settings.glade:5073
+#: ../ui/settings.glade:5117
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
@@ -3730,257 +3738,257 @@ msgstr "從起點向左拖動就像按住 shift 鍵一樣。\n"
 " 確定半徑：修改器在繪製完成之前鎖定的半徑。\n\n"
 "<i>適用於無鍵盤操作。</i>"
 
-#: ../ui/settings.glade:5123
+#: ../ui/settings.glade:5167
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "繪圖工具 - 按繪製方向設置修改器（實驗性）"
 
-#: ../ui/settings.glade:5140
+#: ../ui/settings.glade:5184
 msgid "Preserve line width"
 msgstr "保留線寬"
 
-#: ../ui/settings.glade:5145
+#: ../ui/settings.glade:5189
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
 msgstr "調整所選區域大小後，所有筆劃將保持操作前的相同寬度。 "
 
-#: ../ui/settings.glade:5156
+#: ../ui/settings.glade:5200
 msgid "Resizing"
 msgstr "縮放"
 
-#: ../ui/settings.glade:5192
+#: ../ui/settings.glade:5236
 msgid "Rotation snapping tolerance"
 msgstr "旋轉捕捉範圍"
 
-#: ../ui/settings.glade:5204
+#: ../ui/settings.glade:5248
 msgid "Grid snapping tolerance"
 msgstr "網格捕捉範圍"
 
-#: ../ui/settings.glade:5246
+#: ../ui/settings.glade:5290
 msgid "Grid size"
 msgstr "網格尺寸"
 
-#: ../ui/settings.glade:5277
+#: ../ui/settings.glade:5321
 msgid "Use snapping for recognized shapes"
 msgstr "對已識別的形狀使用捕捉"
 
-#: ../ui/settings.glade:5281
+#: ../ui/settings.glade:5325
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
 msgstr "如果激活，已被形狀識別器識別的形狀將自動捕捉到網格。 如果您在書寫時打開了形狀識別器，這可能會導致意外結果。"
 
-#: ../ui/settings.glade:5296
+#: ../ui/settings.glade:5340
 msgid "Snapping"
 msgstr "對齊"
 
-#: ../ui/settings.glade:5324
+#: ../ui/settings.glade:5368
 msgid "Minimum Stroke Size"
 msgstr "最小筆刷尺寸"
 
-#: ../ui/settings.glade:5379
+#: ../ui/settings.glade:5423
 msgctxt "Short taps/clicks will trigger special actions"
 msgid "Enable Tap action"
 msgstr "啟用點擊動作"
 
-#: ../ui/settings.glade:5384
+#: ../ui/settings.glade:5428
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr "不要為短時間和長度的輸入畫圖，而是顯示浮動工具箱，除非它是連續短時間出現的。"
 
-#: ../ui/settings.glade:5396
+#: ../ui/settings.glade:5440
 msgid "Time limit (ms)"
 msgstr ""
 
-#: ../ui/settings.glade:5408
+#: ../ui/settings.glade:5452
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5428
+#: ../ui/settings.glade:5472
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5448
+#: ../ui/settings.glade:5492
 msgid "Length limit (mm)"
 msgstr ""
 
-#: ../ui/settings.glade:5459
+#: ../ui/settings.glade:5503
 msgid "Frequency limit (ms)"
 msgstr ""
 
-#: ../ui/settings.glade:5471
+#: ../ui/settings.glade:5515
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
 "<i>Recommended: 500ms</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5488
+#: ../ui/settings.glade:5532
 msgid "Try to select object first."
 msgstr "請先選擇物件"
 
-#: ../ui/settings.glade:5493 ../ui/settings.glade:5523
+#: ../ui/settings.glade:5537 ../ui/settings.glade:5567
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "嘗試先選擇對象； 如果未選擇任何內容，則如果啟用則顯示浮動工具箱。"
 
-#: ../ui/settings.glade:5506
+#: ../ui/settings.glade:5550
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr "在忽略筆劃之前，必須滿足三個條件。\n"
 "它必須是短時間、短距離，且最近没有可忽略的另一条筆劃。"
 
-#: ../ui/settings.glade:5509
+#: ../ui/settings.glade:5553
 msgid "Settings:"
 msgstr "設定："
 
-#: ../ui/settings.glade:5518
+#: ../ui/settings.glade:5562
 msgid "Show Floating Toolbox"
 msgstr "顯示浮動工具箱"
 
-#: ../ui/settings.glade:5537
+#: ../ui/settings.glade:5581
 msgid "Action on Tool Tap"
 msgstr "點擊工具時的動作"
 
-#: ../ui/settings.glade:5565
+#: ../ui/settings.glade:5609
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality.\n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5587
+#: ../ui/settings.glade:5631
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr "當PDF放大至高分辨率时，每次重新渲染都可能需要很長時間，設置該值可以减少重新渲染的次數。\n"
 "設置为0時，縮放總是重新渲染。"
 
-#: ../ui/settings.glade:5590
+#: ../ui/settings.glade:5634
 msgid "Re-render when the page's zoom changes by more than "
 msgstr "重新渲染，當頁面縮放超過時 "
 
-#: ../ui/settings.glade:5603
+#: ../ui/settings.glade:5647
 msgid "0.00"
 msgstr "0.00"
 
-#: ../ui/settings.glade:5620
+#: ../ui/settings.glade:5664
 msgid "%."
 msgstr "%."
 
-#: ../ui/settings.glade:5641
+#: ../ui/settings.glade:5685
 msgid "PDF Cache"
 msgstr "PDF 快取"
 
-#: ../ui/settings.glade:5672
+#: ../ui/settings.glade:5716
 msgid "Drawing Area"
 msgstr "繪圖區域"
 
-#: ../ui/settings.glade:5719
+#: ../ui/settings.glade:5763
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
 msgstr "<i>選擇按下預設按鍵的設定及工具</i>"
 
-#: ../ui/settings.glade:5771
+#: ../ui/settings.glade:5815
 msgid "<b>Default tool</b>"
 msgstr ""
 
-#: ../ui/settings.glade:5807
+#: ../ui/settings.glade:5851
 msgid "<i>The laser pointer allows to write strokes that will fade out after a short while.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5828
+#: ../ui/settings.glade:5872
 msgid "Fade out delay (in ms)"
 msgstr ""
 
-#: ../ui/settings.glade:5880
+#: ../ui/settings.glade:5924
 msgid "<b>Laser pointer</b>"
 msgstr ""
 
-#: ../ui/settings.glade:5920
+#: ../ui/settings.glade:5964
 msgid "Tools"
 msgstr ""
 
-#: ../ui/settings.glade:5973
+#: ../ui/settings.glade:6017
 msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required).\n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
 "</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5989
+#: ../ui/settings.glade:6033
 msgid "Disable Audio"
 msgstr ""
 
-#: ../ui/settings.glade:6011
+#: ../ui/settings.glade:6055
 msgid "Enable or Disable Audio"
 msgstr ""
 
-#: ../ui/settings.glade:6038
+#: ../ui/settings.glade:6082
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr "<i>錄音現在儲存在獨立的資料夾裏, 並可以在您的日記中引用.</i>"
 
-#: ../ui/settings.glade:6057 ../ui/settings.glade:6093
+#: ../ui/settings.glade:6101 ../ui/settings.glade:6137
 msgid "Storage Folder"
 msgstr "儲存資料夾位置"
 
-#: ../ui/settings.glade:6072
+#: ../ui/settings.glade:6116
 msgid "Select Folder"
 msgstr "選擇資料夾"
 
-#: ../ui/settings.glade:6120
+#: ../ui/settings.glade:6164
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr "<i>指定用於錄製和播放音頻附件的音頻設備。\n"
 "如果可用，請選擇 <small><tt>pulse</tt></small> 作為輸入/輸出設備。</i>"
 
-#: ../ui/settings.glade:6144
+#: ../ui/settings.glade:6188
 msgid "Input Device"
 msgstr "輸入設備"
 
-#: ../ui/settings.glade:6166
+#: ../ui/settings.glade:6210
 msgid "Output Device"
 msgstr "輸出裝置"
 
-#: ../ui/settings.glade:6197
+#: ../ui/settings.glade:6241
 msgid "Audio Devices"
 msgstr "音訊裝置"
 
-#: ../ui/settings.glade:6226
+#: ../ui/settings.glade:6270
 msgid "Sample Rate"
 msgstr "採樣率"
 
-#: ../ui/settings.glade:6237
+#: ../ui/settings.glade:6281
 msgid "Gain"
 msgstr "增益"
 
-#: ../ui/settings.glade:6284
+#: ../ui/settings.glade:6328
 msgid "Recording Quality"
 msgstr "錄製品質"
 
-#: ../ui/settings.glade:6310
+#: ../ui/settings.glade:6354
 msgid "Default Seek Time (in seconds)"
 msgstr "預設搜尋時間（秒）"
 
-#: ../ui/settings.glade:6323
+#: ../ui/settings.glade:6367
 msgid "1,00"
 msgstr "1,00"
 
-#: ../ui/settings.glade:6342
+#: ../ui/settings.glade:6386
 msgid "Playback Settings"
 msgstr "播放設定"
 
-#: ../ui/settings.glade:6356
+#: ../ui/settings.glade:6400
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr "<i>更改只會在新的錄製和播放時生效。</i>"
 
-#: ../ui/settings.glade:6387
+#: ../ui/settings.glade:6431
 msgid "Audio Recording"
 msgstr "音訊錄製"
 
-#: ../ui/settings.glade:6460
+#: ../ui/settings.glade:6504
 msgid "<i>Select language (requires restart)</i>"
 msgstr "<i>選擇語言（需要重啟）</i>"
 
-#: ../ui/settings.glade:6492 ../ui/settings.glade:6538
+#: ../ui/settings.glade:6536 ../ui/settings.glade:6582
 msgid "Language"
 msgstr "語言"
 
-#: ../ui/settings.glade:6508
+#: ../ui/settings.glade:6552
 msgid "Language Settings"
 msgstr "語言設定"
 
-#: ../ui/settings.glade:6562
+#: ../ui/settings.glade:6606
 msgid "Palette"
 msgstr ""
 
