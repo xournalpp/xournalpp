@@ -101,6 +101,17 @@ TEST(LineStyle, testSetScaleDashes) {
     }
 }
 
+TEST(LineStyle, SettingCustSetsScaleDashesToFalse) {
+    LineStyle ls2;
+    ls2.setScaleDashes();
+    ls2.setDashes(std::vector<double>({5, 2}));
+    ls2.scaleDashesToStrokeWidth(3);
+
+    // The scaling is baked in the pattern directly,
+    // the scale flag should be false
+    EXPECT_FALSE(ls2.scaleDashes());
+}
+
 TEST(LineStyle, testCopyPasteMantainsLineStyle) {
     constexpr std::array<size_t, 2> strokeIndexes = {0,
                                                      5};  // One pressure sensitive and one pressure insensitive stroke

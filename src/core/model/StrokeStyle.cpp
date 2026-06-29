@@ -13,6 +13,7 @@
 namespace {
 
 constexpr auto CUSTOM_KEY = "cust: ";
+constexpr auto SCALED_CUSTOM_KEY = "scaled_cust: ";
 
 const std::map<std::string, std::vector<double>> predefinedPatterns = {
         {"dash", {6, 3}},        {"dashdot", {6, 3, 0.5, 3}},        {"dot", {0.5, 3}},
@@ -30,7 +31,7 @@ auto formatStyle(const std::vector<double>& dashes, bool scaleDashes) -> std::st
     // Else generate custom dashes string
     auto custom = serdes_stream<std::ostringstream>();
     custom << std::setprecision(2) << std::fixed;
-    custom << CUSTOM_KEY;
+    custom << (scaleDashes ? SCALED_CUSTOM_KEY : CUSTOM_KEY);
     std::copy(dashes.begin(), dashes.end(), std::ostream_iterator<double>(custom, " "));
 
     // Return dashes string with traling space removed.
@@ -41,28 +42,29 @@ auto formatStyle(const std::vector<double>& dashes, bool scaleDashes) -> std::st
 
 auto StrokeStyle::parseStyle(const std::string& style) -> LineStyle {
     auto it = predefinedPatterns.find(style);
-    bool scale_dashes = style.starts_with("scaled");
+    bool scaleDashes = style.starts_with("scaled");
 
     if (it != predefinedPatterns.end()) {
         LineStyle ls;
         std::vector<double> dashes = it->second;
         ls.setDashes(std::move(dashes));
 
-        if (scale_dashes) {
+        if (scaleDashes) {
             ls.setScaleDashes();
         }
 
         return ls;
     }
 
-    if (style.substr(0, strlen(CUSTOM_KEY)) != CUSTOM_KEY) {
+    const char* customKey = scaleDashes ? SCALED_CUSTOM_KEY : CUSTOM_KEY;
+    if (style.substr(0, strlen(customKey)) != customKey) {
         return LineStyle();
     }
 
     auto dashStream = serdes_stream<std::stringstream>(style);
     std::vector<double> dashes;
 
-    dashStream.seekg(strlen(CUSTOM_KEY));
+    dashStream.seekg(strlen(customKey));
     for (double value; dashStream >> value;) {
         dashes.push_back(value);
     }
@@ -74,7 +76,7 @@ auto StrokeStyle::parseStyle(const std::string& style) -> LineStyle {
     LineStyle ls;
     ls.setDashes(std::move(dashes));
 
-    if (scale_dashes) {
+    if (scaleDashes) {
         ls.setScaleDashes();
     }
 

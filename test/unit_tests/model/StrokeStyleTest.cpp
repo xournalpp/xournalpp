@@ -68,5 +68,5 @@ TEST(StrokeStyle, testScaledFormatStyle) {
     LineStyle custLine;
     custLine.setScaleDashes();
     custLine.setDashes(std::vector<double>(custPattern, custPattern + 3));
-    EXPECT_EQ(StrokeStyle::formatStyle(custLine), "cust: 0.01 -1.00 0.01");
+    EXPECT_EQ(StrokeStyle::formatStyle(custLine), "scaled_cust: 0.01 -1.00 0.01");
 }

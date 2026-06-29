@@ -56,4 +56,6 @@ void LineStyle::scaleDashesToStrokeWidth(const double strokeWidth) {
     for (double& dash: dashes) {
         dash *= strokeWidth;
     }
+    // The scaling is already baken in the pattern
+    this->scaleDashesToWidth = false;
 }
