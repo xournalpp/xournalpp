@@ -48,3 +48,25 @@ TEST(StrokeStyle, testFormatStyle) {
     custLine.setDashes(std::vector<double>(custPattern, custPattern + 3));
     EXPECT_EQ(StrokeStyle::formatStyle(custLine), "cust: 0.01 -1.00 0.01");
 }
+
+TEST(StrokeStyle, testScaledFormatStyle) {
+    LineStyle dashLine;
+    dashLine.setScaleDashes();
+    dashLine.setDashes(std::vector<double>(dashLinePattern, dashLinePattern + 2));
+    EXPECT_EQ(StrokeStyle::formatStyle(dashLine), "scaled_dash");
+
+    LineStyle dashDot;
+    dashDot.setScaleDashes();
+    dashDot.setDashes(std::vector<double>(dashDotLinePattern, dashDotLinePattern + 4));
+    EXPECT_EQ(StrokeStyle::formatStyle(dashDot), "scaled_dashdot");
+
+    LineStyle dotLine;
+    dotLine.setScaleDashes();
+    dotLine.setDashes(std::vector<double>(dotLinePattern, dotLinePattern + 2));
+    EXPECT_EQ(StrokeStyle::formatStyle(dotLine), "scaled_dot");
+
+    LineStyle custLine;
+    custLine.setScaleDashes();
+    custLine.setDashes(std::vector<double>(custPattern, custPattern + 3));
+    EXPECT_EQ(StrokeStyle::formatStyle(custLine), "scaled_cust: 0.01 -1.00 0.01");
+}

@@ -677,6 +677,7 @@ void lua_push_gvariant(lua_State* L, GVariant* state, const GVariantType* typeHi
  * Example 4: app.changeActionState("tool-color", 0xff0000)         # red color
  * Example 5: app.changeActionState("zoom", 2.25)
  * Example 6: app.changeActionState("tool-pen-line-style", "cust: 1 5 3 5")
+ * Example 7: app.changeActionState("tool-pen-line-style", "scaled_cust: 1 5 3 5")  # dashes scale with stroke width
  */
 static int applib_changeActionState(lua_State* L) {
     const char* actionStr = luaL_checkstring(L, 1);

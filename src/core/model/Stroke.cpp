@@ -366,6 +366,10 @@ void Stroke::scale(double x0, double y0, double fx, double fy, double rotation, 
     }
     this->width *= fz;
 
+    if (!hasPressure()) {
+        this->scaleLineStyleDashes(fz);
+    }
+
     this->sizeCalculated = false;
 }
 
@@ -863,6 +867,12 @@ void Stroke::setErasable(ErasableStroke* erasable) { this->erasable = erasable; 
 auto Stroke::getStrokeCapStyle() const -> StrokeCapStyle { return this->capStyle; }
 
 void Stroke::setStrokeCapStyle(const StrokeCapStyle capStyle) { this->capStyle = capStyle; }
+
+void Stroke::scaleLineStyleDashes(double x) { this->lineStyle.scaleDashesToStrokeWidth(x); };
+
+void Stroke::scaleLineStyleDashesToWidth() { this->lineStyle.scaleDashesToStrokeWidth(getWidth()); }
+
+void Stroke::setScaleDashes() { this->lineStyle.setScaleDashes(); }
 
 void Stroke::debugPrint() const {
     g_message("%s", FC(FORMAT_STR("Stroke {1} / hasPressure() = {2}") % (int64_t)this % this->hasPressure()));
