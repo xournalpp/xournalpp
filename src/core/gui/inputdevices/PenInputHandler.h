@@ -25,6 +25,12 @@ enum class PressureMode { NO_PRESSURE, DEVICE_PRESSURE, INFERRED_PRESSURE };
 class PenInputHandler: public AbstractInputHandler {
 protected:
     /**
+     * Mouse-specific hint: opening a context popover may swallow the matching
+     * release event, so subclasses can clear any latched pressed-button state.
+     */
+    bool cancelButtonPressLatch = false;
+
+    /**
      * Whether the current device class has a device with button 1 in pressed state
      */
     bool deviceClassPressed = false;
