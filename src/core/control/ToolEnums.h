@@ -198,4 +198,7 @@ static constexpr auto strokeTypeToString(StrokeType type) -> std::string_view {
 namespace xoj::tool {
 /// \return Whether the provided tool is used for selecting objects on a PDF.
 bool isPdfSelectionTool(ToolType toolType);
+
+ToolCapabilities typeToCapabilities(ToolType type);
+static inline bool hasCapability(ToolType type, ToolCapabilities cap) { return typeToCapabilities(type) & cap; }
 }  // namespace xoj::tool

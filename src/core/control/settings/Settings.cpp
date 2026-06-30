@@ -766,7 +766,7 @@ void Settings::loadDeviceClasses() {
 void Settings::loadButtonConfig() {
     SElement& s = getCustomElement("buttonConfig");
 
-    for (int i = 0; i < BUTTON_COUNT; i++) {
+    for (size_t i = 0; i < BUTTON_COUNT; i++) {
         SElement& e = s.child(buttonToString(static_cast<Button>(i)));
         const auto& cfg = buttonConfig[i];
 
@@ -775,48 +775,44 @@ void Settings::loadButtonConfig() {
             ToolType type = toolTypeFromString(sType);
             cfg->action = type;
 
-            if (type == TOOL_PEN) {
-                string strokeType;
-                cfg->strokeType =
-                        e.getString("strokeType", strokeType) ? strokeTypeFromString(strokeType) : STROKE_TYPE_NONE;
-            }
-
-            if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER) {
-                string drawingType;
-                if (e.getString("drawingType", drawingType)) {
-                    cfg->drawingType = drawingTypeFromString(drawingType);
+            if (type != TOOL_NONE) {
+                if (type == TOOL_PEN) {
+                    string strokeType;
+                    cfg->strokeType =
+                            e.getString("strokeType", strokeType) ? strokeTypeFromString(strokeType) : STROKE_TYPE_NONE;
                 }
 
-                string sSize;
-                if (e.getString("size", sSize)) {
-                    cfg->size = toolSizeFromString(sSize);
-                } else {
-                    // If not specified: do not change
-                    cfg->size = TOOL_SIZE_NONE;
-                }
-            }
-
-            if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER || type == TOOL_TEXT) {
-                if (int iColor; e.getInt("color", iColor)) {
-                    cfg->color = Color(as_unsigned(iColor));
-                }
-            }
-
-            if (type == TOOL_ERASER) {
-                string sEraserMode;
-                if (e.getString("eraserMode", sEraserMode)) {
-                    cfg->eraserMode = eraserTypeFromString(sEraserMode);
-                } else {
-                    // If not specified: do not change
-                    cfg->eraserMode = ERASER_TYPE_NONE;
+                if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER) {
+                    string drawingType;
+                    if (e.getString("drawingType", drawingType)) {
+                        cfg->drawingType = drawingTypeFromString(drawingType);
+                    }
                 }
 
-                string sSize;
-                if (e.getString("size", sSize)) {
-                    cfg->size = toolSizeFromString(sSize);
-                } else {
-                    // If not specified: do not change
-                    cfg->size = TOOL_SIZE_NONE;
+                if (type == TOOL_ERASER) {
+                    std::string sEraserMode;
+                    if (e.getString("eraserMode", sEraserMode)) {
+                        cfg->eraserMode = eraserTypeFromString(sEraserMode);
+                    } else {
+                        // If not specified: do not change
+                        cfg->eraserMode = ERASER_TYPE_NONE;
+                    }
+                }
+
+                if (xoj::tool::hasCapability(type, TOOL_CAP_SIZE)) {
+                    std::string sSize;
+                    if (e.getString("size", sSize)) {
+                        cfg->size = toolSizeFromString(sSize);
+                    } else {
+                        // If not specified: do not change
+                        cfg->size = TOOL_SIZE_NONE;
+                    }
+                }
+
+                if (xoj::tool::hasCapability(type, TOOL_CAP_COLOR)) {
+                    if (int iColor; e.getInt("color", iColor)) {
+                        cfg->color = Color(as_unsigned(iColor));
+                    }
                 }
             }
 
@@ -937,29 +933,33 @@ void Settings::saveButtonConfig() {
     SElement& s = getCustomElement("buttonConfig");
     s.clear();
 
-    for (int i = 0; i < BUTTON_COUNT; i++) {
+    for (size_t i = 0; i < BUTTON_COUNT; i++) {
         SElement& e = s.child(buttonToString(static_cast<Button>(i)));
         const auto& cfg = buttonConfig[i];
 
         ToolType const type = cfg->action;
         e.setString("tool", toolTypeToString(type).data());
 
-        if (type == TOOL_PEN) {
-            e.setString("strokeType", strokeTypeToString(cfg->strokeType).data());
-        }
+        if (type != TOOL_NONE) {
+            if (type == TOOL_PEN) {
+                e.setString("strokeType", strokeTypeToString(cfg->strokeType).data());
+            }
 
-        if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER) {
-            e.setString("drawingType", drawingTypeToString(cfg->drawingType).data());
-            e.setString("size", toolSizeToString(cfg->size).data());
-        }
+            if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER) {
+                e.setString("drawingType", drawingTypeToString(cfg->drawingType).data());
+            }
 
-        if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER || type == TOOL_TEXT) {
-            e.setIntHex("color", int32_t(uint32_t(cfg->color)));
-        }
+            if (type == TOOL_ERASER) {
+                e.setString("eraserMode", eraserTypeToString(cfg->eraserMode).data());
+            }
 
-        if (type == TOOL_ERASER) {
-            e.setString("eraserMode", eraserTypeToString(cfg->eraserMode).data());
-            e.setString("size", toolSizeToString(cfg->size).data());
+            if (xoj::tool::hasCapability(type, TOOL_CAP_SIZE)) {
+                e.setString("size", toolSizeToString(cfg->size).data());
+            }
+
+            if (xoj::tool::hasCapability(type, TOOL_CAP_COLOR)) {
+                e.setIntHex("color", int32_t(uint32_t(cfg->color)));
+            }
         }
 
         // Touch device

@@ -35,6 +35,16 @@
       "displayed_name": "Ubuntu 24.04 ARM",
       "runner": "ubuntu-24.04-arm",
       "run_ci": "false"
+    },
+    "ubuntu-26": {
+      "displayed_name": "Ubuntu 26.04",
+      "runner": "ubuntu-26.04",
+      "run_ci": "false"
+    },
+    "ubuntu-26-arm": {
+      "displayed_name": "Ubuntu 26.04 ARM",
+      "runner": "ubuntu-26.04-arm",
+      "run_ci": "false"
     }
   },
   "macos_targets": {

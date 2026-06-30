@@ -276,67 +276,9 @@ void ButtonConfigGui::enableDisableTools() {
     gtk_tree_model_get_value(model, &iter, 2, &value);
     auto action = static_cast<ToolType>(g_value_get_int(&value));
 
-    switch (action) {
-        case TOOL_PEN:
-            gtk_widget_set_visible(cbThickness, true);
-            gtk_widget_set_visible(colorButton, true);
-            gtk_widget_set_visible(cbDrawingType, true);
-            gtk_widget_set_visible(cbEraserType, false);
-            gtk_widget_set_visible(cbStrokeType, true);
-            break;
-        case TOOL_HIGHLIGHTER:
-        case TOOL_SELECT_PDF_TEXT_LINEAR:
-        case TOOL_SELECT_PDF_TEXT_RECT:
-            gtk_widget_set_visible(cbThickness, true);
-            gtk_widget_set_visible(colorButton, true);
-            gtk_widget_set_visible(cbDrawingType, true);
-            gtk_widget_set_visible(cbEraserType, false);
-            gtk_widget_set_visible(cbStrokeType, false);
-            break;
-
-        case TOOL_ERASER:
-            gtk_widget_set_visible(cbThickness, true);
-            gtk_widget_set_visible(colorButton, false);
-            gtk_widget_set_visible(cbDrawingType, false);
-            gtk_widget_set_visible(cbEraserType, true);
-            gtk_widget_set_visible(cbStrokeType, false);
-            break;
-
-        case TOOL_TEXT:
-            gtk_widget_set_visible(cbThickness, false);
-            gtk_widget_set_visible(colorButton, true);
-            gtk_widget_set_visible(cbDrawingType, false);
-            gtk_widget_set_visible(cbEraserType, false);
-            gtk_widget_set_visible(cbStrokeType, false);
-            break;
-
-        case TOOL_LASER_POINTER_PEN:
-        case TOOL_LASER_POINTER_HIGHLIGHTER:
-            gtk_widget_set_visible(cbThickness, true);
-            gtk_widget_set_visible(colorButton, true);
-            gtk_widget_set_visible(cbDrawingType, false);
-            gtk_widget_set_visible(cbEraserType, false);
-            gtk_widget_set_visible(cbStrokeType, false);
-            break;
-
-        case TOOL_NONE:
-        case TOOL_IMAGE:
-            // case TOOL_DRAW_RECT:
-            // case TOOL_DRAW_ELLIPSE:
-        case TOOL_SELECT_RECT:
-        case TOOL_SELECT_REGION:
-        case TOOL_SELECT_MULTILAYER_RECT:
-        case TOOL_SELECT_MULTILAYER_REGION:
-        case TOOL_VERTICAL_SPACE:
-        case TOOL_HAND:
-            gtk_widget_set_visible(cbThickness, false);
-            gtk_widget_set_visible(colorButton, false);
-            gtk_widget_set_visible(cbDrawingType, false);
-            gtk_widget_set_visible(cbEraserType, false);
-            gtk_widget_set_visible(cbStrokeType, false);
-            break;
-        default:
-            g_warning("Unhandled tool in ButtonConfigGui");
-            break;
-    }
+    gtk_widget_set_visible(cbThickness, action != TOOL_NONE && xoj::tool::hasCapability(action, TOOL_CAP_SIZE));
+    gtk_widget_set_visible(colorButton, action != TOOL_NONE && xoj::tool::hasCapability(action, TOOL_CAP_COLOR));
+    gtk_widget_set_visible(cbDrawingType, action != TOOL_NONE && xoj::tool::hasCapability(action, TOOL_CAP_RECTANGLE));
+    gtk_widget_set_visible(cbEraserType, action == TOOL_ERASER);
+    gtk_widget_set_visible(cbStrokeType, action == TOOL_PEN);
 }

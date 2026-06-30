@@ -1123,7 +1123,10 @@ static void addStrokeHelper(lua_State* L, std::unique_ptr<Stroke> stroke) {
     lua_pop(L, 5);  // Finally done with all that Lua data.
 
     // Add the stroke
-    layer->addElement(std::move(stroke));
+    {
+        std::lock_guard lock(*ctrl->getDocument());
+        layer->addElement(std::move(stroke));
+    }
     return;
 }
 
@@ -1605,7 +1608,10 @@ static int applib_addTexts(lua_State* L) {
 
         // Finish building the Text and apply it to the layer.
         texts.push_back(text.get());
-        layer->addElement(std::move(text));
+        {
+            std::lock_guard lock(*control->getDocument());
+            layer->addElement(std::move(text));
+        }
         // Onto the next text
     }
 
@@ -2122,6 +2128,8 @@ static int applib_changeBackgroundPdfPageNr(lua_State* L) {
         }
     }
     if (selected < doc->getPdfPageCount()) {
+        std::lock_guard lock(*doc);
+
         // no need to set a type, if we set the page number the type is also set
         page->setBackgroundPdfPageNr(selected);
 
@@ -2910,6 +2918,7 @@ static int applib_setBackgroundName(lua_State* L) {
 
     if (lua_isstring(L, 1)) {
         auto name = lua_tostring(L, 1);
+        std::lock_guard lock(*control->getDocument());
         page->setBackgroundName(name);
     }
 
