@@ -557,6 +557,12 @@
      <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;u</attribute>
     </item>
     <item>
+     <attribute name="label" translatable="yes">LaTe_X</attribute>
+     <attribute name="action">win.select-tool</attribute>
+     <attribute name="target" type="t">26</attribute> <!-- TOOL_LATEX -->
+     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;x</attribute>
+    </item>
+    <item>
      <attribute name="label" translatable="yes">_Image</attribute>
      <attribute name="action">win.select-tool</attribute>
      <attribute name="target" type="t">5</attribute> <!-- TOOL_IMAGE -->
@@ -857,11 +863,6 @@
      <attribute name="label" translatable="yes">Back</attribute>
      <attribute name="action">win.audio-seek-backwards</attribute>
      <attribute name="class">audio</attribute> <!-- Gets removed when audio is disabled -->
-    </item>
-    <item>
-     <attribute name="label" translatable="yes">Add/Edit TeX</attribute>
-     <attribute name="action">win.tex</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;x</attribute>
     </item>
    </section>
   </submenu>
