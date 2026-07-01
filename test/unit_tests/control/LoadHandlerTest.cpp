@@ -832,7 +832,7 @@ TEST(ControlLoadHandler, testOldDashesStayUnscaled) {
     const Layer* layer = page->getLayersView()[0];
     auto elements = layer->getElementsView();
 
-    constexpr size_t expectedNumElements = 15;
+    constexpr size_t expectedNumElements = 16;
     ASSERT_TRUE(elements.size() == expectedNumElements);
 
     for (size_t i = 0; i < expectedNumElements; ++i) {
@@ -843,7 +843,8 @@ TEST(ControlLoadHandler, testOldDashesStayUnscaled) {
         const LineStyle& ls = s->getLineStyle();
 
         // Pressure strokes (the first 3)
-        if (i < 3) {
+        // Stroke index 15 is cust with pressure
+        if (i < 3 || i == 15) {
             EXPECT_FALSE(ls.scaleDashes());
             EXPECT_FALSE(StrokeStyle::formatStyle(ls).starts_with("scaled"));
         }
