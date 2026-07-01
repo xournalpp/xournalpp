@@ -58,10 +58,9 @@ public:
     virtual void repaintPage() const = 0;
 
     /**
-     * Rerender our buffer, then redraw the widget
-     * @param sizeChanged whether or not this rerendering is caused by the size of the page changing
+     * Rerender our buffer, then redraw the widget.
      */
-    virtual void rerenderPage(bool sizeChanged = false) = 0;
+    virtual void rerenderPage() = 0;
 
     /**
      * Call this if you add an element, remove an element etc.

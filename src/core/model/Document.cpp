@@ -91,6 +91,7 @@ void Document::clearDocument(bool destroy) {
 
     this->filepath = fs::path{};
     this->pdfFilepath = fs::path{};
+    this->pdfLastModifiedTime.reset();
 }
 
 /**
@@ -317,6 +318,7 @@ void Document::updateIndexPageNumbers() {
 void Document::setPdfAttributes(const fs::path& filename, bool attachToDocument) {
     this->pdfFilepath = filename;
     this->attachPdf = attachToDocument;
+    updatePdfLastModifiedTime();
 }
 
 auto Document::readPdf(const fs::path& filename, bool initPages, bool attachToDocument,
@@ -348,6 +350,7 @@ auto Document::readPdf(const fs::path& filename, bool initPages, bool attachToDo
 
     this->pdfFilepath = filename;
     this->attachPdf = attachToDocument;
+    updatePdfLastModifiedTime();
     lastError = "";
 
     if (initPages) {
@@ -368,13 +371,27 @@ auto Document::readPdf(const fs::path& filename, bool initPages, bool attachToDo
     updateIndexPageNumbers();
 
     unlock();
-
     this->handler->fireDocumentChanged(DOCUMENT_CHANGE_PDF_BOOKMARKS);
-
     return true;
 }
 
-void Document::resetPdf() { pdfDocument.reset(); }
+void Document::resetPdf() {
+    pdfDocument.reset();
+    pdfLastModifiedTime.reset();
+}
+
+auto Document::reloadPdf() -> bool { return readPdf(this->pdfFilepath, false, this->attachPdf); }
+
+auto Document::canAutoReloadPdf() const -> bool {
+    if (this->attachPdf || this->pdfFilepath.empty()) {
+        return false;
+    }
+
+    std::error_code ec;
+    return fs::is_regular_file(this->pdfFilepath, ec);
+}
+
+auto Document::getPdfLastModifiedTime() const -> std::optional<fs::file_time_type> { return this->pdfLastModifiedTime; }
 
 void Document::setPageSize(PageRef p, double width, double height) { p->setSize(width, height); }
 
@@ -447,6 +464,7 @@ auto Document::operator=(const Document& doc) -> Document& {
     this->password = doc.password;
     this->createBackupOnSave = doc.createBackupOnSave;
     this->pdfFilepath = doc.pdfFilepath;
+    this->pdfLastModifiedTime = doc.pdfLastModifiedTime;
     this->filepath = doc.filepath;
     this->pages = doc.pages;
     this->attachPdf = doc.attachPdf;
@@ -470,3 +488,19 @@ auto Document::operator=(const Document& doc) -> Document& {
 void Document::setCreateBackupOnSave(bool backup) { this->createBackupOnSave = backup; }
 
 auto Document::shouldCreateBackupOnSave() const -> bool { return this->createBackupOnSave; }
+
+void Document::updatePdfLastModifiedTime() {
+    if (this->attachPdf || this->pdfFilepath.empty()) {
+        return;
+    }
+
+    std::error_code ec;
+    if (!fs::is_regular_file(this->pdfFilepath, ec)) {
+        return;
+    }
+
+    auto modified = fs::last_write_time(this->pdfFilepath, ec);
+    if (!ec) {
+        this->pdfLastModifiedTime = modified;
+    }
+}
