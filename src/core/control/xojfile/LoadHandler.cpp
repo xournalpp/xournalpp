@@ -246,7 +246,10 @@ void LoadHandler::setBgPixmapCloned(size_t pageNr) {
     this->page->setBackgroundType(PageType{PageTypeFormat::Image});
 }
 
-void LoadHandler::setBgPdf(size_t pageno) { this->page->setBackgroundPdfPageNr(pageno); }
+void LoadHandler::setBgPdf(size_t pageno, int pageorient) { 
+    this->page->setBackgroundPdfPageNr(pageno);
+    this->page->setPdfPageOrientation(static_cast<PageOrientation>(pageorient));
+}
 
 void LoadHandler::loadBgPdf(bool attach, const fs::path& filename) {
     if (this->isGzFile || !attach) {
