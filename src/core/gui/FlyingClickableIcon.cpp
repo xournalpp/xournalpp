@@ -43,7 +43,6 @@ FlyingClickableIcon::FlyingClickableIcon(MainWindow* theMainWindow, const char* 
         widget(gtk_button_new_from_icon_name(icon), xoj::util::adopt),
         anchor(anchorToPoint(a)) {
     gtk_widget_add_css_class(widget.get(), "flying-icon");
-    gtk_widget_set_can_focus(widget.get(), false);
 
     // position overlay widgets
     signals.emplace_back(std::make_pair(G_OBJECT(overlay),
@@ -53,6 +52,7 @@ FlyingClickableIcon::FlyingClickableIcon(MainWindow* theMainWindow, const char* 
     gtk_overlay_add_overlay(overlay, this->widget.get());
 
 #if GTK_MAJOR_VERSION == 3
+    gtk_widget_set_can_focus(widget.get(), false);
     gtk_widget_show_all(this->widget.get());
 #endif
 }
