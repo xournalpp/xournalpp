@@ -215,7 +215,10 @@ void TextEditor::iMCommitCallback(GtkIMContext* context, const gchar* str, TextE
     gtk_text_buffer_begin_user_action(te->buffer.get());
 
     bool hadSelection = gtk_text_buffer_get_has_selection(te->buffer.get());
-    gtk_text_buffer_delete_selection(te->buffer.get(), true, true);
+    if (hadSelection) {
+        gtk_text_buffer_delete_selection(te->buffer.get(), true, true);
+        te->control->setCopyCutEnabled(false);
+    }
 
     if (!strcmp(str, "\n")) {
         if (!gtk_text_buffer_insert_interactive_at_cursor(te->buffer.get(), "\n", 1, true)) {
@@ -430,6 +433,8 @@ void TextEditor::selectAtCursor(TextEditor::SelectType ty) {
 
     gtk_text_buffer_select_range(this->buffer.get(), &startPos, &endPos);
 
+    control->setCopyCutEnabled(gtk_text_buffer_get_has_selection(this->buffer.get()));
+
     // Selection highlighting is handled through Pango attributes
     this->layoutStatus = LayoutStatus::NEEDS_ATTRIBUTES_UPDATE;
     this->repaintEditor(false);
@@ -624,7 +629,7 @@ void TextEditor::moveCursorIterator(const GtkTextIter* newLocation, gboolean ext
             return;
         }
         gtk_text_buffer_move_mark_by_name(this->buffer.get(), "insert", newLocation);
-        control->setCopyCutEnabled(true);
+        control->setCopyCutEnabled(gtk_text_buffer_get_has_selection(this->buffer.get()));
     } else {
         // if !extendSelection, we clear the selection even if the cursor does not move
         selectionChanged = gtk_text_buffer_get_has_selection(this->buffer.get());
@@ -690,6 +695,7 @@ void TextEditor::deleteFromCursor(GtkDeleteType type, int count) {
     if (type == GTK_DELETE_CHARS) {
         // Char delete deletes the selection, if one exists
         if (gtk_text_buffer_delete_selection(this->buffer.get(), true, true)) {
+            control->setCopyCutEnabled(false);
             this->contentsChanged(true);
             this->repaintEditor();
             return;
@@ -800,6 +806,7 @@ void TextEditor::backspace() {
 
     // Backspace deletes the selection, if one exists
     if (gtk_text_buffer_delete_selection(this->buffer.get(), true, true)) {
+        control->setCopyCutEnabled(false);
         this->contentsChanged();
         this->repaintEditor();
         return;
