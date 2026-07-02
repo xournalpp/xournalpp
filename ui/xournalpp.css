@@ -214,14 +214,14 @@ label.setting-touch-indicator.pressed {
     background: radial-gradient(circle at center, red 0%, red 20%, alpha(red, .1) 60%, alpha(red, 0.) 100%);
 }
 
-button.flying-icon {
+image.flying-icon {
     padding: 0px;
     margin: 1px;  /* Avoids graphical artifacts when moving those icons around... */
 }
 
-button.flying-icon.TL {
+image.flying-icon.TL {
     border-radius: 50% 50% 0% 50%;
 }
-button.flying-icon.TR {
+image.flying-icon.TR {
     border-radius: 50% 50% 50% 0%;
 }

@@ -40,21 +40,27 @@ static xoj::util::Point<char> anchorToPoint(FlyingClickableIcon::Anchor a) {
 FlyingClickableIcon::FlyingClickableIcon(MainWindow* theMainWindow, const char* icon, Anchor a):
         mainWindow(theMainWindow),
         overlay(GTK_OVERLAY(gtk_widget_get_ancestor(mainWindow->getXournal()->getWidget(), GTK_TYPE_OVERLAY))),
-        widget(gtk_button_new_from_icon_name(icon), xoj::util::adopt),
+        widget(gtk_image_new_from_icon_name(icon), xoj::util::adopt),
         anchor(anchorToPoint(a)) {
     gtk_widget_add_css_class(widget.get(), "flying-icon");
+    gtk_widget_add_css_class(widget.get(), "background");
+
+#if GTK_MAJOR_VERSION == 3
+    // Wrap the GtkImage in a GtkEventBox so we receive events...
+    auto* w = gtk_event_box_new();
+    gtk_event_box_set_visible_window(GTK_EVENT_BOX(w), false);
+    gtk_container_add(GTK_CONTAINER(w), this->widget.get());
+    this->widget.reset(w, xoj::util::adopt);
+
+    gtk_widget_set_can_focus(widget.get(), false);
+    gtk_widget_show_all(this->widget.get());
+#endif
 
     // position overlay widgets
     signals.emplace_back(std::make_pair(G_OBJECT(overlay),
                                         g_signal_connect(overlay, "get-child-position",
                                                          xoj::util::wrap_for_g_callback_v<getOverlayPosition>, this)));
-
     gtk_overlay_add_overlay(overlay, this->widget.get());
-
-#if GTK_MAJOR_VERSION == 3
-    gtk_widget_set_can_focus(widget.get(), false);
-    gtk_widget_show_all(this->widget.get());
-#endif
 }
 
 FlyingClickableIcon::~FlyingClickableIcon() {

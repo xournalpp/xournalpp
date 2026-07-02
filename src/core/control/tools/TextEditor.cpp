@@ -173,11 +173,12 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
                                                           FlyingClickableIcon::Anchor::SOUTH_EAST);
 
         GtkWidget* w = icon->getWidget();
-        gtk_widget_add_css_class(w, "TL");
 
 #if GTK_MAJOR_VERSION == 3
+        gtk_widget_add_css_class(gtk_bin_get_child(GTK_BIN(w)), "TL");
         GtkGesture* drag = gtk_gesture_drag_new(w);
 #else
+        gtk_widget_add_css_class(w, "TL");
         GtkGesture* drag = gtk_gesture_drag_new();
         gtk_widget_add_controller(w, GTK_EVENT_CONTROLLER(drag));
 #endif
@@ -217,11 +218,12 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
                                                           FlyingClickableIcon::Anchor::SOUTH_WEST);
 
         GtkWidget* w = icon->getWidget();
-        gtk_widget_add_css_class(w, "TR");
 
 #if GTK_MAJOR_VERSION == 3
+        gtk_widget_add_css_class(gtk_bin_get_child(GTK_BIN(w)), "TR");
         GtkGesture* drag = gtk_gesture_drag_new(w);
 #else
+        gtk_widget_add_css_class(w, "TR");
         GtkGesture* drag = gtk_gesture_drag_new();
         gtk_widget_add_controller(w, GTK_EVENT_CONTROLLER(drag));
 #endif
