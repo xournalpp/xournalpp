@@ -14,6 +14,7 @@
 #include "util/Stacktrace.h"      // for Stacktrace
 #include "util/StringUtils.h"
 #include "util/raii/GObjectSPtr.h"
+#include "util/safe_casts.h"                      // for round_cast
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
@@ -39,6 +40,7 @@ auto Text::cloneText() const -> std::unique_ptr<Text> {
     text->snappedBounds = this->snappedBounds;
     text->sizeCalculated = this->sizeCalculated;
     text->inEditing = this->inEditing;
+    text->wrapWidth = this->wrapWidth;
 
     return text;
 }
@@ -64,6 +66,11 @@ void Text::setText(std::string text) {
     sizeCalculated = false;
 }
 
+void Text::setWrap(double wrap) {
+    this->wrapWidth = wrap;
+    sizeCalculated = false;
+}
+
 void Text::calcSize() const {
     auto layout = createPangoLayout();
     pango_layout_set_text(layout.get(), this->text.c_str(), static_cast<int>(this->text.length()));
@@ -75,16 +82,6 @@ void Text::calcSize() const {
     this->updateSnapping();
 }
 
-void Text::setWidth(double width) {
-    this->width = width;
-    this->updateSnapping();
-}
-
-void Text::setHeight(double height) {
-    this->height = height;
-    this->updateSnapping();
-}
-
 void Text::setInEditing(bool inEditing) { this->inEditing = inEditing; }
 
 auto Text::createPangoLayout() const -> xoj::util::GObjectSPtr<PangoLayout> {
@@ -92,6 +89,9 @@ auto Text::createPangoLayout() const -> xoj::util::GObjectSPtr<PangoLayout> {
                                            xoj::util::adopt);
     pango_context_set_round_glyph_positions(c.get(), false);  // Avoid weird glyph positioning on small fonts
     xoj::util::GObjectSPtr<PangoLayout> layout(pango_layout_new(c.get()), xoj::util::adopt);
+
+    pango_layout_set_width(layout.get(),
+                           this->wrapWidth == NO_WRAP ? -1 : round_cast<int>(this->wrapWidth * PANGO_SCALE));
 
 #if PANGO_VERSION_CHECK(1, 48, 5)  // see https://gitlab.gnome.org/GNOME/pango/-/issues/499
     pango_layout_set_line_spacing(layout.get(), 1.0);
@@ -146,6 +146,8 @@ void Text::serialize(ObjectOutputStream& out) const {
 
     font.serialize(out);
 
+    out.writeDouble(this->wrapWidth);
+
     out.endObject();
 }
 
@@ -157,6 +159,8 @@ void Text::readSerialized(ObjectInputStream& in) {
     this->text = in.readString();
 
     font.readSerialized(in);
+
+    this->wrapWidth = in.readDouble();
 
     in.endObject();
 }

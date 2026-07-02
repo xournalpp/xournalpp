@@ -11,6 +11,7 @@
 #include "control/AudioController.h"
 #include "control/Control.h"  // for Control
 #include "control/settings/Settings.h"
+#include "gui/FlyingClickableIcon.h"
 #include "gui/XournalppCursor.h"  // for XournalppCursor
 #include "model/Document.h"       // for Document
 #include "model/Font.h"           // for XojFont
@@ -32,6 +33,9 @@
 #include "TextEditorKeyBindings.h"
 
 class UndoAction;
+
+static constexpr auto MOVE_ICON_NAME = "xopp-move";
+static constexpr auto EXTEND_ICON_NAME = "xopp-wrap";
 
 /** GtkTextBuffer helper functions **/
 static auto getIteratorAtCursor(GtkTextBuffer* buffer) -> GtkTextIter {
@@ -132,7 +136,6 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
     gtk_text_buffer_add_selection_clipboard(buffer.get(), gtk_clipboard_get(GDK_SELECTION_PRIMARY));
 
     this->initializeEditionAt(x, y);
-
     g_signal_connect(this->buffer.get(), "paste-done", G_CALLBACK(bufferPasteDoneCallback), this);
 
     {  // Get cursor blinking settings
@@ -164,6 +167,122 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
     } else {
         this->cursorVisible = true;
     }
+
+    this->moveIcon = [&]() {
+        auto icon = std::make_unique<FlyingClickableIcon>(control->getWindow(), MOVE_ICON_NAME,
+                                                          FlyingClickableIcon::Anchor::SOUTH_EAST);
+
+        GtkWidget* w = icon->getWidget();
+
+#if GTK_MAJOR_VERSION == 3
+        gtk_widget_add_css_class(gtk_bin_get_child(GTK_BIN(w)), "TL");
+        GtkGesture* drag = gtk_gesture_drag_new(w);
+#else
+        gtk_widget_add_css_class(w, "TL");
+        GtkGesture* drag = gtk_gesture_drag_new();
+        gtk_widget_add_controller(w, GTK_EVENT_CONTROLLER(drag));
+#endif
+
+        icon->addSignal(
+                G_OBJECT(drag),
+                g_signal_connect(drag, "drag-update",
+                                 G_CALLBACK(+[](GtkGestureDrag*, gdouble offsetX, gdouble offsetY, gpointer p) {
+                                     // Warning: because the icon is moved, the parameters offsetX and offsetY
+                                     // are NOT relative to the starting point, but rather to the last update's
+                                     // position.
+                                     auto* self = static_cast<TextEditor*>(p);
+                                     if (!self->viewPool->empty()) {
+                                         // We use the first view as the main view
+                                         auto* text = self->getTextElement();
+                                         auto zoom = self->viewPool->front().getZoom();
+                                         double dx = offsetX / zoom;
+                                         double dy = offsetY / zoom;
+                                         if (text->getX() + dx > 0 &&
+                                             text->getX() + dx < self->page->getWidth() -
+                                                                         self->getContentBoundingBox().getWidth() &&
+                                             text->getY() + dy > 0 &&
+                                             text->getY() + dy < self->page->getHeight() -
+                                                                         self->getContentBoundingBox().getHeight()) {
+                                             // The text stays entirely in the page
+                                             text->move(dx, dy);
+                                             self->repaintEditor(true);
+                                         }
+                                     }
+                                 }),
+                                 this));
+        // Should we implement signals drag-end/cancel here?
+        return icon;
+    }();
+    this->extendIcon = [&]() {
+        auto icon = std::make_unique<FlyingClickableIcon>(control->getWindow(), EXTEND_ICON_NAME,
+                                                          FlyingClickableIcon::Anchor::SOUTH_WEST);
+
+        GtkWidget* w = icon->getWidget();
+
+#if GTK_MAJOR_VERSION == 3
+        gtk_widget_add_css_class(gtk_bin_get_child(GTK_BIN(w)), "TR");
+        GtkGesture* drag = gtk_gesture_drag_new(w);
+#else
+        gtk_widget_add_css_class(w, "TR");
+        GtkGesture* drag = gtk_gesture_drag_new();
+        gtk_widget_add_controller(w, GTK_EVENT_CONTROLLER(drag));
+#endif
+
+        icon->addSignal(G_OBJECT(drag),
+                        g_signal_connect(drag, "drag-begin",
+                                         G_CALLBACK(+[](GtkGestureDrag*, gdouble startX, gdouble startY, gpointer p) {
+                                             auto* self = static_cast<TextEditor*>(p);
+                                             if (self->currentWrapWidth == Text::NO_WRAP) {
+                                                 self->currentWrapWidth = self->getContentBoundingBox().getWidth();
+                                             }
+                                         }),
+                                         this));
+        icon->addSignal(G_OBJECT(drag),
+                        g_signal_connect(drag, "drag-update",
+                                         G_CALLBACK(+[](GtkGestureDrag*, gdouble offsetX, gdouble offsetY, gpointer p) {
+                                             // Warning: because the icon is moved, the parameters offsetX and offsetY
+                                             // are NOT relative to the starting point, but rather to the last update's
+                                             // position.
+                                             auto* self = static_cast<TextEditor*>(p);
+                                             if (!self->viewPool->empty()) {
+                                                 // We use the first view as the main view
+                                                 if (double newVal = self->currentWrapWidth +
+                                                                     offsetX / self->viewPool->front().getZoom();
+                                                     newVal > 0 &&
+                                                     newVal < self->page->getWidth() - self->getTextElement()->getX()) {
+                                                     // The new width does not overflow out of the page
+                                                     self->currentWrapWidth = newVal;
+                                                     self->layoutStatus = LayoutStatus::NEEDS_WRAP_WIDTH_UPDATE;
+                                                     self->repaintEditor(true);
+                                                 }
+                                             }
+                                         }),
+                                         this));
+        icon->addSignal(G_OBJECT(drag),
+                        g_signal_connect(drag, "drag-end",
+                                         G_CALLBACK(+[](GtkGestureDrag*, gdouble offsetX, gdouble offsetY, gpointer p) {
+                                             auto* self = static_cast<TextEditor*>(p);
+                                             self->textElement->setWrap(self->currentWrapWidth);
+                                         }),
+                                         this));
+        icon->addSignal(G_OBJECT(drag),
+                        g_signal_connect(drag, "cancel", G_CALLBACK(+[](GtkGesture*, GdkEventSequence*, gpointer p) {
+                                             auto* self = static_cast<TextEditor*>(p);
+                                             self->currentWrapWidth = self->textElement->getWrap();
+                                             self->layoutStatus = LayoutStatus::NEEDS_WRAP_WIDTH_UPDATE;
+                                             self->repaintEditor(true);
+                                         }),
+                                         this));
+        // Move both icons when scrolling/zooming
+        auto cb = G_CALLBACK(+[](GtkAdjustment*, gpointer p) { static_cast<TextEditor*>(p)->updateDraggableIcons(); });
+        auto* hadj = G_OBJECT(gtk_scrollable_get_hadjustment(GTK_SCROLLABLE(xournalWidget)));
+        icon->addSignal(hadj, g_signal_connect(hadj, "value-changed", cb, this));
+        icon->addSignal(hadj, g_signal_connect(hadj, "changed", cb, this));
+        auto* vadj = G_OBJECT(gtk_scrollable_get_vadjustment(GTK_SCROLLABLE(xournalWidget)));
+        icon->addSignal(vadj, g_signal_connect(vadj, "value-changed", cb, this));
+        icon->addSignal(vadj, g_signal_connect(vadj, "changed", cb, this));
+        return icon;
+    }();
 }
 
 TextEditor::~TextEditor() {
@@ -179,6 +298,10 @@ TextEditor::~TextEditor() {
 
 auto TextEditor::getViewPool() const -> const std::shared_ptr<xoj::util::DispatchPool<xoj::view::TextEditionView>>& {
     return viewPool;
+}
+
+void TextEditor::onViewCreation() const {
+    this->updateDraggableIcons();  // The icons are placed on the first view. The view must have been created for that
 }
 
 auto TextEditor::getTextElement() const -> Text* { return this->textElement.get(); }
@@ -438,23 +561,6 @@ void TextEditor::selectAtCursor(TextEditor::SelectType ty) {
 void TextEditor::moveCursor(GtkMovementStep step, int count, bool extendSelection) {
     resetImContext();
 
-    // Not possible, but we have to handle the events, else the page gets scrolled
-    //	if (step == GTK_MOVEMENT_PAGES) {
-    //		if (!gtk_text_view_scroll_pages(text_view, count, extend_selection))
-    //			gtk_widget_error_bell(GTK_WIDGET (text_view));
-    //
-    //		gtk_text_view_check_cursor_blink(text_view);
-    //		gtk_text_view_pend_cursor_blink(text_view);
-    //		return;
-    //	} else if (step == GTK_MOVEMENT_HORIZONTAL_PAGES) {
-    //		if (!gtk_text_view_scroll_hpages(text_view, count, extend_selection))
-    //			gtk_widget_error_bell(GTK_WIDGET (text_view));
-    //
-    //		gtk_text_view_check_cursor_blink(text_view);
-    //		gtk_text_view_pend_cursor_blink(text_view);
-    //		return;
-    //	}
-
     GtkTextIter insert = getIteratorAtCursor(this->buffer.get());
     GtkTextIter newplace = insert;
 
@@ -586,20 +692,20 @@ void TextEditor::mouseMoved(double x, double y) {
 void TextEditor::mouseReleased() { this->mouseDown = false; }
 
 void TextEditor::jumpALine(GtkTextIter* textIter, int count) {
-    int cursorLine = gtk_text_iter_get_line(textIter);
-
-    if (cursorLine + count < 0) {
+    count += this->virtualCursorPosition.pangoLineNumber;
+    if (count < 0) {
         return;
     }
 
-    PangoLayoutLine* line = pango_layout_get_line_readonly(this->layout.get(), cursorLine + count);
+    PangoLayoutLine* line = pango_layout_get_line_readonly(this->layout.get(), count);
     if (line == nullptr) {
         return;
     }
+    this->virtualCursorPosition.pangoLineNumber = count;
 
     int index = 0;
     int trailing = 0;
-    pango_layout_line_x_to_index(line, this->virtualCursorAbscissa, &index, &trailing);
+    pango_layout_line_x_to_index(line, this->virtualCursorPosition.abscissa, &index, &trailing);
     /*
      * trailing is non-zero iff the abscissa is past the middle of the grapheme.
      * In this case, it contains the length of the grapheme in utf8 char count.
@@ -611,9 +717,8 @@ void TextEditor::jumpALine(GtkTextIter* textIter, int count) {
 void TextEditor::computeVirtualCursorPosition() {
     int offset = getByteOffsetOfCursor(this->buffer.get());
 
-    PangoRectangle rect = {0};
-    pango_layout_index_to_pos(this->getUpToDateLayout(), offset, &rect);
-    this->virtualCursorAbscissa = rect.x;
+    pango_layout_index_to_line_x(this->getUpToDateLayout(), offset, 0, &this->virtualCursorPosition.pangoLineNumber,
+                                 &this->virtualCursorPosition.abscissa);
 }
 
 void TextEditor::moveCursorIterator(const GtkTextIter* newLocation, gboolean extendSelection) {
@@ -654,7 +759,8 @@ void TextEditor::updateCursorBox() {
     if (!viewPool->empty()) {
         // Inform the IM of the cursor location (for word selection popup's location)
         // We use the first view as the main view, as far as the IM is concerned
-        auto box = viewPool->front().toWindowCoordinates(xoj::util::Rectangle<double>(this->cursorBox));
+        auto box = viewPool->front().toWidgetCoordinates(
+                xoj::util::Rectangle<double>(this->cursorBox).translated(textElement->getX(), textElement->getY()));
 
         GdkRectangle cursorRect;  // cursor position in window coordinates
         cursorRect.x = static_cast<int>(box.x);
@@ -662,6 +768,17 @@ void TextEditor::updateCursorBox() {
         cursorRect.height = static_cast<int>(box.height);
         cursorRect.width = static_cast<int>(box.width);
         gtk_im_context_set_cursor_location(this->imContext.get(), &cursorRect);
+    }
+}
+
+void TextEditor::updateDraggableIcons() const {
+    if (!viewPool->empty()) {
+        // We use the first view as the main view
+        auto box = viewPool->front().toWidgetCoordinates(xoj::util::Rectangle<double>(this->getContentBoundingBox()));
+        auto zoom = viewPool->front().getZoom();
+        double extendIconPos = this->currentWrapWidth == Text::NO_WRAP ? box.width : this->currentWrapWidth * zoom;
+        moveIcon->setPosition({floor_cast<int>(box.x), floor_cast<int>(box.y)});
+        extendIcon->setPosition({ceil_cast<int>(box.x + extendIconPos), floor_cast<int>(box.y)});
     }
 }
 
@@ -934,7 +1051,11 @@ auto TextEditor::computeBoundingBox() const -> Range {
     double x = textElement->getX();
     double y = textElement->getY();
 
-    // Warning: width can be negative (e.g. for languages written from right to left)
+    // Warning: `width` can be negative (e.g. for languages written from right to left)
+
+    if (double wrap = this->currentWrapWidth; wrap != Text::NO_WRAP) {
+        width = std::copysign(std::max(std::abs(width), wrap), width);
+    }
     Range res(x, y);
     res.addPoint(x + width, y + height);
     return res;
@@ -947,6 +1068,9 @@ auto TextEditor::getUpToDateLayout() const -> PangoLayout* {
             break;
         case LayoutStatus::NEEDS_ATTRIBUTES_UPDATE:
             setSelectionAttributesToPangoLayout(this->layout.get());
+            break;
+        case LayoutStatus::NEEDS_WRAP_WIDTH_UPDATE:
+            pango_layout_set_width(this->layout.get(), round_cast<int>(this->currentWrapWidth * PANGO_SCALE));
             break;
         case LayoutStatus::UP_TO_DATE:
             break;
@@ -985,6 +1109,7 @@ void TextEditor::repaintEditor(bool sizeChanged) {
         dirtyRange = dirtyRange.unite(this->previousBoundingBox);
     }
     this->updateCursorBox();
+    this->updateDraggableIcons();
     this->viewPool->dispatch(xoj::view::TextEditionView::FLAG_DIRTY_REGION, dirtyRange);
 }
 
@@ -1099,7 +1224,8 @@ void TextEditor::initializeEditionAt(double x, double y) {
         text->setInEditing(true);
         this->page->fireElementChanged(text);
     }
+    this->currentWrapWidth = this->textElement->getWrap();
     this->layout = this->textElement->createPangoLayout();
-    this->previousBoundingBox = Range(this->textElement->boundingRect());
     this->replaceBufferContent(this->textElement->getText());
+    this->previousBoundingBox = this->computeBoundingBox();
 }
