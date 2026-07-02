@@ -27,7 +27,8 @@
 #include "util/gtk4_helper.h"
 #include "util/i18n.h"  // for _
 
-#include "AbstractToolItem.h"            // for AbstractToolItem
+#include "AbstractToolItem.h"  // for AbstractToolItem
+#include "AdaptativeToolkit.h"
 #include "ColorSelectorToolItem.h"       // for ColorSelectorToolItem
 #include "ColorToolItem.h"               // for ColorToolItem
 #include "DrawingTypeComboToolButton.h"  // for DrawingTypeComboToolButton
@@ -64,7 +65,7 @@ ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui):
                                                                           GTK_APPLICATION_WINDOW(parent))) {}
 
 void ToolMenuHandler::populate(const GladeSearchpath* gladeSearchPath) {
-    initToolItems();
+    initToolFactories();
 
     auto file = gladeSearchPath->findFile("", "toolbar.ini");
     if (!tbModel->parse(file, true, this->control->getPalette())) {
@@ -141,7 +142,7 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
                 }
 
                 bool found = false;
-                for (auto& item: this->toolItems) {
+                for (auto& item: this->toolFactories) {
                     if (name == item->getId()) {
                         count++;
                         auto it = item->createToolItem(horizontal);
@@ -182,7 +183,8 @@ void ToolMenuHandler::addColorToolItem(std::unique_ptr<ColorToolItem> it) {
 
 template <class tool_item, class... Args>
 tool_item& ToolMenuHandler::emplaceItem(Args&&... args) {
-    return static_cast<tool_item&>(*toolItems.emplace_back(std::make_unique<tool_item>(std::forward<Args>(args)...)));
+    return static_cast<tool_item&>(
+            *toolFactories.emplace_back(std::make_unique<tool_item>(std::forward<Args>(args)...)));
 }
 
 #ifdef ENABLE_PLUGINS
@@ -193,7 +195,7 @@ void ToolMenuHandler::addPluginPlaceholderItem(ToolbarPlaceholderEntry* entry) {
 #endif /* ENABLE_PLUGINS */
 
 
-void ToolMenuHandler::initToolItems() {
+void ToolMenuHandler::initToolFactories() {
     using Cat = AbstractToolItem::Category;
     /**
      * @brief Simple button, with a GTK stock icon name
@@ -496,6 +498,8 @@ void ToolMenuHandler::initToolItems() {
 
     emplaceItem<SeparatorItem>("SEPARATOR");
     emplaceItem<SpacerItem>("SPACER");
+
+    emplaceItem<AdaptativeToolkit>("ADAPTATIVE", this);
 }
 
 void ToolMenuHandler::setPageInfo(size_t currentPage, size_t pageCount, size_t pdfpage) {
@@ -508,8 +512,8 @@ auto ToolMenuHandler::getModel() -> ToolbarModel* { return this->tbModel.get(); 
 
 auto ToolMenuHandler::getControl() -> Control* { return this->control; }
 
-auto ToolMenuHandler::getToolItems() const -> const std::vector<std::unique_ptr<AbstractToolItem>>& {
-    return this->toolItems;
+auto ToolMenuHandler::getToolFactories() const -> const std::vector<std::unique_ptr<AbstractToolItem>>& {
+    return this->toolFactories;
 }
 
 auto ToolMenuHandler::getColorToolItems() const -> const std::vector<std::unique_ptr<ColorToolItem>>& {
