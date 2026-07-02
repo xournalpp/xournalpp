@@ -103,6 +103,8 @@ auto StylusInputHandler::handleImpl(InputEvent const& event) -> bool {
     if (event.type == LEAVE_EVENT) {
         this->inputContext->getHandRecognition()->unblock();
         this->actionLeaveWindow(event);
+        this->modifier2 = false;
+        this->modifier3 = false;
     }
 
     // Trigger end of action if pen tip leaves screen or mouse button is released
