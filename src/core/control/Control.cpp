@@ -140,7 +140,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
 
 #ifdef ENABLE_AUDIO
     if (!(disableAudio || this->settings->isAudioDisabled())) {
-        this->audioController = std::make_unique<AudioController>(this->settings, this);
+        this->audioController = AudioController::tryLoadingAudioLibrary(this->settings, this);
     }
 #endif
 

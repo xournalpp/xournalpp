@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <functional>
 #include <memory>  // for make_unique, unique_ptr
 #include <vector>  // for vector
 
@@ -18,39 +19,39 @@
 
 template <typename T>
 class AudioQueue;
-class Control;
 class DeviceInfo;
 class PortAudioConsumer;
-class Settings;
+struct AudioSettings;
 class VorbisProducer;
 
 
-class AudioPlayer final {
+class AudioPlayer {
 public:
-    explicit AudioPlayer(Control& control, Settings& settings);
+    explicit AudioPlayer(const AudioSettings& settings, std::function<void()> onStop);
     AudioPlayer(AudioPlayer const&) = delete;
     AudioPlayer(AudioPlayer&&) = delete;
     auto operator=(AudioPlayer const&) -> AudioPlayer& = delete;
     auto operator=(AudioPlayer&&) -> AudioPlayer& = delete;
-    ~AudioPlayer();
+    virtual ~AudioPlayer();
 
-    bool start(fs::path const& file, unsigned int timestamp = 0);
-    bool isPlaying();
-    void stop();
-    bool play();
-    void pause();
-    void seek(int seconds);
+    virtual bool start(fs::path const& file, unsigned int timestamp = 0);
+    [[nodiscard]] virtual bool isPlaying() const;
+    virtual void stop();
+    virtual bool play();
+    virtual void pause();
+    virtual void seek(int seconds);
 
-    std::vector<DeviceInfo> getOutputDevices();
+    virtual std::vector<DeviceInfo> getOutputDevices();
 
-    Settings& getSettings();
-    void disableAudioPlaybackButtons();
+    const AudioSettings& getSettings() const;
+    void fireOnStop();
 
 private:
-    Control& control;
-    Settings& settings;
+    const AudioSettings& settings;
 
     std::unique_ptr<AudioQueue<float>> audioQueue;
     std::unique_ptr<PortAudioConsumer> portAudioConsumer;
     std::unique_ptr<VorbisProducer> vorbisProducer;
+
+    std::function<void()> onStop;
 };
