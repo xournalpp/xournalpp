@@ -119,7 +119,7 @@ void ExtEdLatexDialog::openEditor() {
     xoj::util::GObjectSPtr<GSubprocessLauncher> launcher(g_subprocess_launcher_new(G_SUBPROCESS_FLAGS_NONE),
                                                          xoj::util::adopt);
 
-    Color textColor = texCtrl->control->getToolHandler()->getTool(TOOL_TEXT).getColor();
+    Color textColor = texCtrl->control->getToolHandler()->getTool(TOOL_LATEX).getColor();
     std::string colorStr = Util::rgb_to_hex_string(textColor).substr(1);
 
     g_subprocess_launcher_setenv(launcher.get(), "XPP_TEXT_COLOR", colorStr.c_str(), TRUE);
