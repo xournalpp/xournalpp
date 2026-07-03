@@ -15,6 +15,7 @@
 #include "util/raii/GVariantSPtr.h"
 #include "util/serdesstream.h"
 
+static constexpr const char* ICON_NAME = "xopp-font-button";
 
 FontButton::FontButton(std::string id, ActionDatabase& db):
         AbstractToolItem(std::move(id), Category::TOOLS), gAction(db.getAction(Action::FONT)) {}
@@ -39,19 +40,26 @@ static GtkWidget* makeChild(const char* desc) {
 auto FontButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
     GtkWidget* btn = gtk_button_new();
     gtk_widget_set_can_focus(btn, false);  // todo(gtk4) not necessary anymore
-    xoj::util::GVariantSPtr font(g_action_get_state(G_ACTION(gAction.get())), xoj::util::adopt);
-    const char* desc = g_variant_get_string(font.get(), nullptr);
-    gtk_button_set_child(GTK_BUTTON(btn), makeChild(desc));
     gtk_widget_set_tooltip_text(btn, getToolDisplayName().c_str());
     gtk_actionable_set_action_name(GTK_ACTIONABLE(btn),
                                    (std::string("win.") + Action_toString(Action::SELECT_FONT)).c_str());
 
-    g_signal_connect_object(gAction.get(), "notify::state", G_CALLBACK(+[](GObject* action, GParamSpec*, gpointer btn) {
-                                xoj::util::GVariantSPtr font(g_action_get_state(G_ACTION(action)), xoj::util::adopt);
-                                const char* desc = g_variant_get_string(font.get(), nullptr);
-                                gtk_button_set_child(GTK_BUTTON(btn), makeChild(desc));
-                            }),
-                            btn, GConnectFlags(0));
+    if (horizontal) {
+        xoj::util::GVariantSPtr font(g_action_get_state(G_ACTION(gAction.get())), xoj::util::adopt);
+        const char* desc = g_variant_get_string(font.get(), nullptr);
+        gtk_button_set_child(GTK_BUTTON(btn), makeChild(desc));
+
+        g_signal_connect_object(
+                gAction.get(), "notify::state", G_CALLBACK(+[](GObject* action, GParamSpec*, gpointer btn) {
+                    xoj::util::GVariantSPtr font(g_action_get_state(G_ACTION(action)), xoj::util::adopt);
+                    const char* desc = g_variant_get_string(font.get(), nullptr);
+                    gtk_button_set_child(GTK_BUTTON(btn), makeChild(desc));
+                }),
+                btn, GConnectFlags(0));
+    } else {
+        // In a vertical toolbar, we do not have the space to describe the font in the button
+        gtk_button_set_icon_name(GTK_BUTTON(btn), ICON_NAME);
+    }
 
     GtkToolItem* it = gtk_tool_item_new();
     gtk_container_add(GTK_CONTAINER(it), btn);
@@ -74,5 +82,5 @@ auto FontButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
 auto FontButton::getToolDisplayName() const -> std::string { return _("Font"); }
 
 auto FontButton::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name("font-x-generic", GTK_ICON_SIZE_LARGE_TOOLBAR);
+    return gtk_image_new_from_icon_name(ICON_NAME, GTK_ICON_SIZE_LARGE_TOOLBAR);
 }
