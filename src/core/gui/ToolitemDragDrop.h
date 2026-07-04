@@ -19,7 +19,7 @@
 class AbstractToolItem;
 struct NamedColor;
 
-enum ToolItemType { TOOL_ITEM_SEPARATOR = 0, TOOL_ITEM_SPACER, TOOL_ITEM_ITEM, TOOL_ITEM_COLOR };
+enum ToolItemType { TOOL_ITEM_ITEM, TOOL_ITEM_COLOR };
 
 #define ToolItemDragDropData_Identify 0xFA090201
 
@@ -38,7 +38,6 @@ private:
 
 public:
     static void attachMetadata(GtkWidget* w, int id, AbstractToolItem* ait);
-    static void attachMetadata(GtkWidget* w, int id, ToolItemType type);
     static void attachMetadataColor(GtkWidget* w, int id, size_t paletteColorIndex, AbstractToolItem* item);
 
 public:
