@@ -16,7 +16,6 @@
 #include "gui/toolbarMenubar/AbstractToolItem.h"            // for AbstractT...
 #include "gui/toolbarMenubar/ToolMenuHandler.h"             // for ToolMenuH...
 #include "gui/toolbarMenubar/icon/ColorIcon.h"              // for ColorIcon
-#include "gui/toolbarMenubar/icon/ToolbarSeparatorImage.h"  // for getNewToo...
 #include "gui/toolbarMenubar/model/ColorPalette.h"          // for Palette
 #include "util/Assert.h"                                    // for xoj_assert
 #include "util/Color.h"                                     // for Color
@@ -49,18 +48,6 @@ struct ToolbarCustomizeDialog::ColorToolItemDragData {
     size_t paletteColorIndex;
     xoj::util::WidgetSPtr ebox;
 };
-
-// Separator and spacer
-struct ToolbarCustomizeDialog::SeparatorData {
-    ToolItemType type;
-    SeparatorType separator;
-    const char* label;
-};
-
-std::array<ToolbarCustomizeDialog::SeparatorData, 2> ToolbarCustomizeDialog::separators = {
-        ToolbarCustomizeDialog::SeparatorData{TOOL_ITEM_SEPARATOR, SeparatorType::SEPARATOR, _("Separator")},
-        ToolbarCustomizeDialog::SeparatorData{TOOL_ITEM_SPACER, SeparatorType::SPACER, _("Spacer")}};
-
 
 constexpr auto UI_FILE = "toolbarCustomizeDialog.glade";
 constexpr auto UI_DIALOG_NAME = "DialogCustomizeToolbar";
@@ -110,28 +97,7 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
         addEntry(data.ebox.get(), Cat::COLORS);
     }
 
-    // init separator and spacer
-    for (SeparatorData& data: separators) {
-        GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2));
-        gtk_box_append(box, ToolbarSeparatorImage::newImage(data.separator));
-        gtk_box_append(box, gtk_label_new(data.label));
-
-        GtkWidget* ebox = gtk_event_box_new();
-        gtk_container_add(GTK_CONTAINER(ebox), GTK_WIDGET(box));
-        gtk_widget_show_all(ebox);
-
-        // make ebox a drag source
-        gtk_drag_source_set(ebox, GDK_BUTTON1_MASK, &ToolbarDragDropHelper::dropTargetEntry, 1, GDK_ACTION_MOVE);
-        ToolbarDragDropHelper::dragSourceAddToolbar(ebox);
-
-        g_signal_connect(ebox, "drag-begin", G_CALLBACK(toolitemDragBeginSeparator), &data);
-        g_signal_connect(ebox, "drag-end", G_CALLBACK(toolitemDragEndSeparator), &data);
-        g_signal_connect(ebox, "drag-data-get", G_CALLBACK(toolitemDragDataGetSeparator), &data);
-
-        addEntry(ebox, Cat::SEPARATORS);
-    }
-
-    GtkWidget* target = GTK_WIDGET(notebook);  // builder.get("viewport1");
+    GtkWidget* target = GTK_WIDGET(notebook);
     // prepare drag & drop
     gtk_drag_dest_set(target, GTK_DEST_DEFAULT_ALL, nullptr, 0, GDK_ACTION_MOVE);
     ToolbarDragDropHelper::dragDestAddToolbar(target);
@@ -144,29 +110,6 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
 }
 
 ToolbarCustomizeDialog::~ToolbarCustomizeDialog() = default;
-
-void ToolbarCustomizeDialog::toolitemDragBeginSeparator(GtkWidget* widget, GdkDragContext* context, void* data) {
-    SeparatorData* sepData = static_cast<SeparatorData*>(data);
-    ToolItemDragCurrentData::setData(sepData->type, -1, nullptr);
-    GdkPixbuf* pixbuf = ToolbarSeparatorImage::getNewToolPixbuf(sepData->separator);
-    gtk_drag_set_icon_pixbuf(context, pixbuf, -2, -2);
-    g_object_unref(pixbuf);
-}
-
-void ToolbarCustomizeDialog::toolitemDragEndSeparator(GtkWidget* widget, GdkDragContext* context, void* unused) {
-    ToolItemDragCurrentData::clearData();
-}
-
-void ToolbarCustomizeDialog::toolitemDragDataGetSeparator(GtkWidget* widget, GdkDragContext* context,
-                                                          GtkSelectionData* selection_data, guint info, guint time,
-                                                          void* data) {
-    SeparatorData* sepData = static_cast<SeparatorData*>(data);
-    auto it = ToolitemDragDrop::ToolItemDragDropData_new(nullptr);
-    it->type = sepData->type;
-
-    gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0,
-                           reinterpret_cast<const guchar*>(it.get()), sizeof(ToolItemDragDropData));
-}
 
 /**
  * Drag a Toolitem from dialog
