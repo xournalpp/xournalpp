@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-08 00:59+0000\n"
-"PO-Revision-Date: 2026-06-14 05:55\n"
+"PO-Revision-Date: 2026-07-05 05:40\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -25,7 +25,7 @@ msgstr "Pasta de áudio não definida ou inválida! A gravação não funcionar�
 
 #: ../src/core/control/Control.cpp:234
 msgid "Filesystem error: {1}"
-msgstr ""
+msgstr "Erro no sistema de ficheiros: {1}"
 
 #: ../src/core/control/Control.cpp:246
 msgid "Could not remove old autosave file \"{1}\": {2}"
@@ -58,7 +58,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:834
 msgid "Insert at end"
-msgstr ""
+msgstr "Inserir no final"
 
 #: ../src/core/control/Control.cpp:837
 msgid "_Journal"
@@ -118,7 +118,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:1623
 msgid "Error reading PNG file \"{1}\""
-msgstr ""
+msgstr "Erro ao ler ficheiro PNG"
 
 #: ../src/core/control/Control.cpp:1668
 msgid "Failed to determine if path exists \"{1}\": {2}"
@@ -349,7 +349,7 @@ msgstr "Desculpe, Xournal++ só pode abrir um ficheiro de cada vez.\n"
 
 #: ../src/core/control/XournalMain.cpp:410
 msgid "File {1} does not exist."
-msgstr ""
+msgstr "Ficheiro {1} inexistente."
 
 #: ../src/core/control/XournalMain.cpp:414
 msgid "Filesystem error: {1}\n"
@@ -470,7 +470,7 @@ msgstr ""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
 msgid "Export File"
-msgstr ""
+msgstr "Exportar Ficheiro"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
 #: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
@@ -876,7 +876,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:32
 msgid "Very thin"
-msgstr ""
+msgstr "Muito fino"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:34
 msgid "Thin"
@@ -1075,7 +1075,7 @@ msgstr "Modelo Xournal++"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:40
 msgid "Image files"
-msgstr ""
+msgstr "Ficheiros de imagem"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:50
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:163
@@ -1389,7 +1389,7 @@ msgstr ""
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:191
 msgctxt "In the submenu for removing recent documents, this will display on top of the list PDF files to separate them from xournal++ files"
 msgid "PDF Files"
-msgstr ""
+msgstr "Ficheiros PDF"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:198
 msgctxt "This opens a submenu of the recent files list, and clicking on individual entries in this submenu will remove it from the recent files list"
@@ -2264,7 +2264,7 @@ msgstr "Rato"
 #: ../ui/deviceTestingArea.glade:82
 msgctxt "mouse button"
 msgid "Left"
-msgstr ""
+msgstr "Esquerda"
 
 #: ../ui/deviceTestingArea.glade:96
 msgctxt "mouse button"
@@ -2518,7 +2518,7 @@ msgstr "Configurações do executável LaTeX"
 
 #: ../ui/latexSettings.glade:340
 msgid "Line numbers"
-msgstr ""
+msgstr "Número de linhas"
 
 #: ../ui/latexSettings.glade:354
 msgid "Auto-indent"
@@ -3078,7 +3078,7 @@ msgstr ""
 #: ../ui/settings.glade:2114
 msgctxt "eraser is never visible"
 msgid "Never"
-msgstr ""
+msgstr "Nunca"
 
 #: ../ui/settings.glade:2115
 msgctxt "eraser is always visible"
@@ -3769,7 +3769,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5801
 msgid "<b>Laser pointer</b>"
-msgstr ""
+msgstr "<b>Ponteiro Laser</b>"
 
 #: ../ui/settings.glade:5841
 msgid "Tools"
@@ -3800,7 +3800,7 @@ msgstr "Pasta de armazenamento"
 
 #: ../ui/settings.glade:5993
 msgid "Select Folder"
-msgstr ""
+msgstr "Selecionar Pasta"
 
 #: ../ui/settings.glade:6041
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
@@ -3909,7 +3909,7 @@ msgstr "Desativado"
 
 #: ../ui/settingsDeviceClassConfig.glade:54
 msgid "Apply"
-msgstr ""
+msgstr "Aplica"
 
 #: ../ui/toolbarCustomizeDialog.glade:30
 msgid "Drag and drop Components from here to the toolbars and back."
@@ -3925,7 +3925,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:13
 msgid "Open"
-msgstr ""
+msgstr "Abrir"
 
 #. Filled dynamically
 #: ../ui/mainmenubar.xml:19
@@ -3970,7 +3970,7 @@ msgstr "Organizar seleção"
 
 #: ../ui/mainmenubar.xml:117
 msgid "Bring to Front"
-msgstr ""
+msgstr "Trazer para a Frente"
 
 #: ../ui/mainmenubar.xml:122
 msgid "Bring Forward"
@@ -3994,7 +3994,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:161
 msgid "Preferences"
-msgstr ""
+msgstr "Preferências"
 
 #: ../ui/mainmenubar.xml:166
 msgid "T_oolbars"
@@ -4230,7 +4230,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:487
 msgid "Rename Layer"
-msgstr ""
+msgstr "Renomear Camada"
 
 #: ../ui/mainmenubar.xml:494
 msgid "Paper _Format"
@@ -4367,19 +4367,19 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:823
 msgid "Record / Stop"
-msgstr ""
+msgstr "Gravar / Parar"
 
 #: ../ui/mainmenubar.xml:828
 msgid "Pause"
-msgstr ""
+msgstr "Pausar"
 
 #: ../ui/mainmenubar.xml:855
 msgid "_Help"
-msgstr ""
+msgstr "_Ajuda"
 
 #: ../ui/mainmenubar.xml:859
 msgid "Help"
-msgstr ""
+msgstr "Ajuda"
 
 #: ../ui/mainmenubar.xml:863
 msgid "Run Gtk3 demo"
@@ -4387,7 +4387,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:867
 msgid "About"
-msgstr ""
+msgstr "Sobre"
 
 #: ../resources-templates/pagetemplates.ini.in:17
 msgid "Ruled with vertical line on the right"

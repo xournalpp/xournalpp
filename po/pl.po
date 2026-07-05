@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-08 00:59+0000\n"
-"PO-Revision-Date: 2026-06-14 05:55\n"
+"PO-Revision-Date: 2026-07-05 05:40\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -107,7 +107,7 @@ msgstr "Błąd przy otwieraniu pliku \"{1}\""
 
 #: ../src/core/control/Control.cpp:1578
 msgid "File version mismatch"
-msgstr ""
+msgstr "Niezgodność wersji pliku"
 
 #: ../src/core/control/Control.cpp:1579
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
@@ -116,11 +116,12 @@ msgstr "Załadowany plik ma nowszą wersję formatu niż ta obecnie obsługiwana
 #: ../src/core/control/Control.cpp:1602
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
+msgstr "Błąd odczytu pliku PDF \"{1}\"\n"
+"{2}"
 
 #: ../src/core/control/Control.cpp:1623
 msgid "Error reading PNG file \"{1}\""
-msgstr ""
+msgstr "Błąd przy otwieraniu pliku PNG \"{1}\""
 
 #: ../src/core/control/Control.cpp:1668
 msgid "Failed to determine if path exists \"{1}\": {2}"
@@ -166,7 +167,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:1931
 msgid "Select font"
-msgstr ""
+msgstr "Wybierz czcionkę"
 
 #: ../src/core/control/Control.cpp:1950
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
@@ -289,7 +290,7 @@ msgstr "Nie znaleziono pliku PDF w tle"
 
 #: ../src/core/control/PrintHandler.cpp:122
 msgid "Running print operation failed with {1}"
-msgstr ""
+msgstr "Operacja drukowania nie powiodła się z {1}"
 
 #: ../src/core/control/XournalMain.cpp:120
 msgid "Failed to delete file: {1}"
@@ -353,7 +354,7 @@ msgstr "Przepraszamy, Xournal++ może mieć otwarty tylko jeden plik na raz.\n"
 
 #: ../src/core/control/XournalMain.cpp:410
 msgid "File {1} does not exist."
-msgstr ""
+msgstr "Plik {1} nie istnieje."
 
 #: ../src/core/control/XournalMain.cpp:414
 msgid "Filesystem error: {1}\n"
@@ -474,7 +475,7 @@ msgstr "Próba nadpisania tła wywołała błąd:\n"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
 msgid "Export File"
-msgstr ""
+msgstr "Eksportuj plik"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
 #: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
@@ -635,11 +636,11 @@ msgstr "Przenieś na tył"
 #: ../src/core/control/tools/ImageHandler.cpp:41
 #: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:165
 msgid "Failed to load image"
-msgstr ""
+msgstr "Nie udało się załadować obrazu"
 
 #: ../src/core/control/tools/ImageHandler.cpp:69
 msgid "Error while opening image file: "
-msgstr ""
+msgstr "Błąd podczas otwierania pliku obrazu: "
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:135
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
