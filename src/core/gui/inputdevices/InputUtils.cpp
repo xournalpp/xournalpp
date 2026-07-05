@@ -7,6 +7,7 @@
 #include "control/settings/ButtonConfig.h"   // for ButtonConfig
 #include "control/settings/Settings.h"       // for Settings
 #include "control/settings/SettingsEnums.h"  // for Button, BUTTON_TOUCH
+#include "util/Assert.h"
 
 
 bool InputUtils::applyButton(ToolHandler* toolHandler, Settings* settings, Button button) {
@@ -16,11 +17,8 @@ bool InputUtils::applyButton(ToolHandler* toolHandler, Settings* settings, Butto
         toolChanged = true;
         ButtonConfig* cfg = settings->getButtonConfig(button);
 
-        // if ToolChange is not activated for this button stay with ToolBartool
-        if (cfg->getAction() == TOOL_NONE)
-            toolChanged = toolHandler->pointActiveToolToToolbarTool();
-        else
-            cfg->applyNoChangeSettings(toolHandler, button);
+        xoj_assert(cfg->getAction() != TOOL_NONE);
+        cfg->applyNoChangeSettings(toolHandler, button);
     }
     return toolChanged;
 }
