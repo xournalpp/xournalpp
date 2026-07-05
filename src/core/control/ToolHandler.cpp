@@ -558,8 +558,9 @@ void ToolHandler::loadSettings() {
 
 bool ToolHandler::pointActiveToolToButtonTool(Button button) {
     Tool* tool = getButtonTool(button);
-    if (this->activeTool == tool)
+    if (!tool || this->activeTool == tool) {
         return false;
+    }
     this->activeTool = tool;
     return true;
 }
