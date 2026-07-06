@@ -31,8 +31,12 @@ auto PortAudioProducer::getInputDevices() const -> std::vector<DeviceInfo> {
 }
 
 auto PortAudioProducer::getSelectedInputDevice() const -> DeviceInfo {
+    PaDeviceIndex idx = this->settings.getAudioInputDevice();
+    if (idx == -1) {
+        return DeviceInfo(&sys.defaultInputDevice(), true);
+    }
     try {
-        return DeviceInfo(&sys.deviceByIndex(this->settings.getAudioInputDevice()), true);
+        return DeviceInfo(&sys.deviceByIndex(idx), true);
     } catch (const portaudio::PaException& e) {
         g_message(
                 "PortAudioProducer: Selected input device not found - fallback to default input device\nCaused by: %s",

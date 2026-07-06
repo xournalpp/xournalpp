@@ -30,8 +30,12 @@ auto PortAudioConsumer::getOutputDevices() const -> std::vector<DeviceInfo> {
 }
 
 auto PortAudioConsumer::getSelectedOutputDevice() const -> DeviceInfo {
+    PaDeviceIndex idx = this->audioPlayer.getSettings().getAudioOutputDevice();
+    if (idx == -1) {
+        return DeviceInfo(&sys.defaultOutputDevice(), true);
+    }
     try {
-        return DeviceInfo(&sys.deviceByIndex(this->audioPlayer.getSettings().getAudioOutputDevice()), true);
+        return DeviceInfo(&sys.deviceByIndex(idx), true);
     } catch (const portaudio::PaException& e) {
         g_warning("PortAudioConsumer: Selected output device was not found - fallback to default output device\nCaused "
                   "by: %s",
