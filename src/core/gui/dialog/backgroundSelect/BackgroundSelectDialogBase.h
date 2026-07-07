@@ -33,6 +33,8 @@ public:
     Settings* getSettings();
     void setSelected(size_t selected);
 
+    void ok();  ///< As if the Ok button was clicked
+
     inline GtkWindow* getWindow() const { return window.get(); }
 
 protected:

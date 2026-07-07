@@ -107,3 +107,5 @@ void BackgroundSelectDialogBase::setSelected(size_t selected) {
         gtk_widget_set_sensitive(okButton, true);
     }
 }
+
+void BackgroundSelectDialogBase::ok() { gtk_button_clicked(GTK_BUTTON(okButton)); }

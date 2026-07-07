@@ -22,9 +22,13 @@ BaseElementView::BaseElementView(size_t id, BackgroundSelectDialogBase* dlg): dl
 #if GTK_MAJOR_VERSION == 3
     gtk_widget_show(this->widget);
     gtk_widget_add_events(widget, GDK_BUTTON_PRESS_MASK);
-    g_signal_connect(this->widget, "button-press-event", G_CALLBACK(+[](GtkWidget*, GdkEventButton*, gpointer d) {
+    g_signal_connect(this->widget, "button-press-event", G_CALLBACK(+[](GtkWidget*, GdkEventButton* e, gpointer d) {
                          auto* element = static_cast<BaseElementView*>(d);
-                         element->dlg->setSelected(element->id);
+                         if (e->type == GDK_BUTTON_PRESS) {
+                             element->dlg->setSelected(element->id);
+                         } else if (e->type == GDK_2BUTTON_PRESS) {
+                             element->dlg->ok();
+                         }
                          return true;
                      }),
                      this);
@@ -34,9 +38,11 @@ BaseElementView::BaseElementView(size_t id, BackgroundSelectDialogBase* dlg): dl
     gtk_gesture_single_set_button(GTK_GESTURE_SINGLE(ctrl), GDK_BUTTON_PRIMARY);
     g_signal_connect(ctrl, "pressed",
                      G_CALLBACK(+[](GtkGestureClick* g, gint n_press, gdouble x, gdouble y, gpointer d) {
+                         auto* element = static_cast<BaseElementView*>(d);
                          if (n_press == 1) {
-                             auto* element = static_cast<BaseElementView*>(d);
                              element->dlg->setSelected(element->id);
+                         } else if (n_press == 2) {
+                             element->dlg->ok();
                          }
                      }),
                      this);
