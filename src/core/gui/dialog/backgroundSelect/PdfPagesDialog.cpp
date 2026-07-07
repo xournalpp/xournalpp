@@ -91,4 +91,8 @@ void PdfPagesDialog::onlyNotUsedCallback(GtkToggleButton* tb, PdfPagesDialog* dl
 
     dlg->layout();
     dlg->updateOkButton();
+
+    // For some reason (a bug in GtkViewport, maybe?), the GtkFixed's size is not always updated here.
+    // This hack seems to fix that...
+    gtk_widget_queue_resize(gtk_widget_get_parent(GTK_WIDGET(dlg->container)));
 }
