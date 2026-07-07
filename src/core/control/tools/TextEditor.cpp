@@ -974,6 +974,13 @@ void TextEditor::pasteFromClipboard() {
 void TextEditor::bufferPasteDoneCallback(GtkTextBuffer* buffer, GtkClipboard* clipboard, TextEditor* te) {
     te->contentsChanged(true);
     te->repaintEditor();
+
+    if (te->textElement->getWrap() == Text::NO_WRAP && te->getContentBoundingBox().maxX > te->page->getWidth()) {
+        te->textElement->setWrap(te->page->getWidth() - te->getContentBoundingBox().minX);
+        te->currentWrapWidth = te->textElement->getWrap();
+        te->layoutStatus = LayoutStatus::NEEDS_WRAP_WIDTH_UPDATE;
+        te->repaintEditor(true);
+    }
 }
 
 void TextEditor::resetImContext() {
