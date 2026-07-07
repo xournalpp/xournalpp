@@ -2,6 +2,16 @@
 <!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
+  <object class="GtkImage" id="iconCancel">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">dialog-cancel</property>
+  </object>
+  <object class="GtkImage" id="iconOk">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">dialog-ok</property>
+  </object>
   <object class="GtkImage" id="imgJustifyCenter">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -94,14 +104,13 @@
                 <property name="can-focus">False</property>
                 <property name="halign">end</property>
                 <property name="valign">center</property>
-                <property name="spacing">10</property>
                 <child>
                   <object class="GtkFontButton" id="btnFontChooser">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="margin-end">10</property>
                     <property name="font">Sans 12</property>
-                    <property name="language">de-de</property>
                     <property name="preview-text"/>
                   </object>
                   <packing>
@@ -111,62 +120,46 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButtonBox" id="btnGroupLayout">
+                  <object class="GtkToggleButton" id="btnLeftLayout">
                     <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="homogeneous">True</property>
-                    <property name="layout-style">expand</property>
-                    <child>
-                      <object class="GtkToggleButton" id="btnLeftLayout">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="receives-default">True</property>
-                        <property name="image">imgJustifyLeft</property>
-                        <property name="always-show-image">True</property>
-                        <property name="active">True</property>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkToggleButton" id="btnCenterLayout">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="receives-default">True</property>
-                        <property name="image">imgJustifyCenter</property>
-                        <property name="always-show-image">True</property>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkToggleButton" id="btnRightLayout">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="receives-default">True</property>
-                        <property name="image">imgJustifyRight</property>
-                        <property name="always-show-image">True</property>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">2</property>
-                      </packing>
-                    </child>
-                    <style>
-                      <class name="GTK_STYLE_CLASS_LINKED"/>
-                    </style>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="image">imgJustifyLeft</property>
+                    <property name="always-show-image">True</property>
+                    <property name="active">True</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="fill">False</property>
+                    <property name="fill">True</property>
                     <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btnCenterLayout">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="image">imgJustifyCenter</property>
+                    <property name="always-show-image">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btnRightLayout">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="image">imgJustifyRight</property>
+                    <property name="always-show-image">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
               </object>
@@ -255,18 +248,21 @@
           </packing>
         </child>
         <child>
-          <object class="GtkButtonBox">
+          <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="halign">end</property>
+            <property name="spacing">4</property>
             <property name="homogeneous">True</property>
-            <property name="layout-style">end</property>
             <child>
-              <object class="GtkButton" id="btnLinkEditCancel">
-                <property name="label">gtk-cancel</property>
+              <object class="GtkButton" id="btCancel">
+                <property name="label" translatable="yes">Cancel</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="can-default">True</property>
                 <property name="receives-default">True</property>
-                <property name="use-stock">True</property>
+                <property name="image">iconCancel</property>
+                <accelerator key="Escape" signal="activate"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -275,12 +271,14 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="btnLinkEditOk">
-                <property name="label">gtk-ok</property>
+              <object class="GtkButton" id="btOk">
+                <property name="label" translatable="yes">Ok</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="can-default">True</property>
+                <property name="has-default">True</property>
                 <property name="receives-default">True</property>
-                <property name="use-stock">True</property>
+                <property name="image">iconOk</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -291,7 +289,7 @@
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="fill">False</property>
+            <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
         </child>
