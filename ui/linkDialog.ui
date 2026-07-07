@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkWindow" id="linkDialog">
+    <property name="modal">1</property>
+    <property name="default-width">600</property>
+    <property name="default-height">400</property>
+    <property name="default-widget">btOk</property>
+    <property name="child">
+      <object class="GtkBox" id="boxLinkMain">
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkBox" id="boxLinkEditMain">
+            <property name="vexpand">1</property>
+            <property name="margin-bottom">5</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">4</property>
+            <child>
+              <object class="GtkBox" id="boxTextLayout">
+                <property name="halign">end</property>
+                <property name="valign">center</property>
+                <child>
+                  <object class="GtkFontButton" id="btnFontChooser">
+                    <property name="focusable">1</property>
+                    <property name="receives-default">1</property>
+                    <property name="margin-end">10</property>
+                    <property name="font">Sans 12</property>
+                    <property name="preview-text"></property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btnLeftLayout">
+                    <property name="icon-name">format-justify-left</property>
+                    <property name="focusable">1</property>
+                    <property name="receives-default">1</property>
+                    <property name="active">1</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btnCenterLayout">
+                    <property name="icon-name">format-justify-center</property>
+                    <property name="hexpand">1</property>
+                    <property name="focusable">1</property>
+                    <property name="receives-default">1</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btnRightLayout">
+                    <property name="icon-name">format-justify-right</property>
+                    <property name="hexpand">1</property>
+                    <property name="focusable">1</property>
+                    <property name="receives-default">1</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="boxLinkEditText">
+                <property name="vexpand">1</property>
+                <property name="spacing">4</property>
+                <child>
+                  <object class="GtkLabel" id="lblLinkEditText">
+                    <property name="valign">start</property>
+                    <property name="margin-top">5</property>
+                    <property name="label" translatable="1">Text:</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow" id="scrLinkEditText">
+                    <property name="hexpand">1</property>
+                    <property name="focusable">1</property>
+                    <property name="propagate-natural-height">1</property>
+                    <property name="child">
+                      <object class="GtkTextView" id="inpLinkEditText">
+                        <property name="focusable">1</property>
+                        <property name="left-margin">5</property>
+                        <property name="right-margin">5</property>
+                        <property name="top-margin">5</property>
+                        <property name="bottom-margin">5</property>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="boxLinkEditURL">
+                <property name="spacing">4</property>
+                <child>
+                  <object class="GtkLabel" id="lblLinkEditURL">
+                    <property name="label" translatable="1">URL:</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox" id="boxLinkEditURL2">
+                    <property name="hexpand">1</property>
+                    <style>
+                      <class name="linked"/>
+                    </style>
+                    <child>
+                      <object class="GtkComboBoxText" id="cbLinkPrefix">
+                        <property name="popup-fixed-width">0</property>
+                        <items>
+                          <item id="1" translatable="yes">http://</item>
+                          <item id="2" translatable="yes">https://</item>
+                          <item id="3" translatable="yes">mailto:</item>
+                          <item id="4" translatable="yes">file://</item>
+                          <item id="0" translatable="yes">&lt;custom&gt;</item>
+                        </items>
+                        <property name="active">1</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="inpLinkEditURL">
+                        <property name="hexpand">1</property>
+                        <property name="focusable">1</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="halign">end</property>
+            <property name="spacing">4</property>
+            <property name="homogeneous">1</property>
+            <child>
+              <object class="GtkButton" id="btCancel">
+                <property name="hexpand">1</property>
+                <property name="label" translatable="1">Cancel</property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <child>
+                  <object class='GtkShortcutController'>
+                    <property name='scope'>managed</property>
+                    <child>
+                      <object class='GtkShortcut'>
+                        <property name='trigger'>Escape</property>
+                        <property name='action'>activate</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="btOk">
+                <property name="hexpand">1</property>
+                <property name="label" translatable="1">Ok</property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+</interface>
