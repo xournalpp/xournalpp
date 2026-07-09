@@ -66,29 +66,23 @@ auto AdaptativeToolkit::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
     GtkWidget* stack = gtk_stack_new();
     auto orientation = horizontal ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
 
-    const auto& action = handler->getControl()->getActionDatabase()->getAction(Action::SELECT_TOOL);
-
     for (ToolType tool = TOOL_PEN; tool < TOOL_END_ENTRY; tool = static_cast<ToolType>(tool + 1)) {
         auto* tb = gtk_toolbar_new();
         gtk_orientable_set_orientation(GTK_ORIENTABLE(tb), orientation);
-        gtk_toolbar_set_show_arrow(GTK_TOOLBAR(tb), false);
 
         for (const char* it: ELEMENTS[tool - TOOL_PEN]) {
             auto fact =
                     std::find_if(factories.begin(), factories.end(), [it](const auto& f) { return f->getId() == it; });
             if (fact != factories.end()) {
                 gtk_toolbar_insert(GTK_TOOLBAR(tb), GTK_TOOL_ITEM((*fact)->createToolItem(horizontal).get()), -1);
-            } else {
-                if (std::string_view(it) == ALL_COLORS_ID) {
-                    const auto& palette = handler->getControl()->getPalette();
-                    const auto& recolorParams = handler->getControl()->getSettings()->getRecolorParameters();
-                    auto recolor =
-                            recolorParams.recolorizeMainView ? std::make_optional(recolorParams.recolor) : std::nullopt;
+            } else if (std::string_view(it) == ALL_COLORS_ID) {
+                const auto& palette = handler->getControl()->getPalette();
+                const auto& recParams = handler->getControl()->getSettings()->getRecolorParameters();
+                auto recolor = recParams.recolorizeMainView ? std::make_optional(recParams.recolor) : std::nullopt;
 
-                    for (auto&& c: palette.getColors()) {
-                        ColorToolItem i(c, recolor);
-                        gtk_toolbar_insert(GTK_TOOLBAR(tb), GTK_TOOL_ITEM(i.createToolItem(horizontal).get()), -1);
-                    }
+                for (auto&& c: palette.getColors()) {
+                    ColorToolItem i(c, recolor);
+                    gtk_toolbar_insert(GTK_TOOLBAR(tb), GTK_TOOL_ITEM(i.createToolItem(horizontal).get()), -1);
                 }
             }
         }
@@ -96,7 +90,8 @@ auto AdaptativeToolkit::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
         gtk_stack_add_named(GTK_STACK(stack), tb, toolTypeToString(tool).data());
     }
 
-    // This box is only visible if the right tool is selected
+    // Synchronize the stack's visible widget with the selected tool
+    const auto& action = handler->getControl()->getActionDatabase()->getAction(Action::SELECT_TOOL);
     g_object_bind_property_full(
             G_OBJECT(action.get()), "state", stack, "visible-child-name", G_BINDING_DEFAULT,
             +[](GBinding*, const GValue* from, GValue* to, gpointer) -> gboolean {
@@ -113,7 +108,11 @@ auto AdaptativeToolkit::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
                             }),
                             action.get(), GConnectFlags(0));
 
-    return xoj::util::WidgetSPtr(stack, xoj::util::adopt);
+    auto* it = gtk_tool_item_new();
+    gtk_container_add(GTK_CONTAINER(it), stack);
+    gtk_tool_item_set_expand(it, true);
+
+    return xoj::util::WidgetSPtr(GTK_WIDGET(it), xoj::util::adopt);
 }
 
 auto AdaptativeToolkit::getToolDisplayName() const -> std::string { return "Adaptative toolkit"; }
