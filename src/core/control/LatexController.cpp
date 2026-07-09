@@ -300,8 +300,8 @@ void LatexController::insertTexImage() {
         auto insertUndoAction = std::make_unique<InsertUndoAction>(page, layer, this->temporaryRender.get());
         groupUndoAction->addAction(std::move(insertUndoAction));
         undo->addUndoAction(std::move(groupUndoAction));
-        Range oldRange(selectedElem->getSnappedBounds());
-        Range newRange(temporaryRender->getSnappedBounds());
+        Range oldRange(selectedElem->boundingRect());
+        Range newRange(temporaryRender->boundingRect());
         Range repaintRange = oldRange.unite(newRange);
         page->fireRangeChanged(repaintRange);
     } else {
