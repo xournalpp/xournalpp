@@ -10,6 +10,8 @@ KeyboardInputHandler::KeyboardInputHandler(InputContext* inputContext): inputCon
 
 KeyboardInputHandler::~KeyboardInputHandler() = default;
 
-bool KeyboardInputHandler::keyPressed(KeyEvent e) const { return inputContext->getView()->onKeyPressEvent(e); }
+bool KeyboardInputHandler::keyPressed(const KeyEvent& e) const { return inputContext->getView()->onKeyPressEvent(e); }
 
-bool KeyboardInputHandler::keyReleased(KeyEvent e) const { return inputContext->getView()->onKeyReleaseEvent(e); }
+bool KeyboardInputHandler::keyReleased(const KeyEvent& e) const {
+    return inputContext->getView()->onKeyReleaseEvent(e);
+}
