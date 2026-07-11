@@ -3,6 +3,7 @@
 #include "control/Control.h"           // for Control
 #include "gui/Builder.h"               // for Builder
 #include "gui/GladeSearchpath.h"       // for GladeSearchPath
+#include "util/glib_casts.h"           // for wrap_for_g_callback_v
 #include "util/raii/CStringWrapper.h"  // for OwnedCString
 
 constexpr auto UI_FILE = "linkDialog.glade";
@@ -10,9 +11,9 @@ constexpr auto UI_DIALOG_NAME = "linkDialog";
 
 static void okButtonClicked(GtkButton*, LinkDialog* dialog) { dialog->okButtonPressed(); }
 static void cancelButtonClicked(GtkButton*, LinkDialog* dialog) { dialog->cancelButtonPressed(); }
-static void layoutToogledLeft(GtkButton*, LinkDialog* dialog) { dialog->layoutToggled(LinkAlignment::LEFT); };
-static void layoutToogledCenter(GtkButton*, LinkDialog* dialog) { dialog->layoutToggled(LinkAlignment::CENTER); };
-static void layoutToogledRight(GtkButton*, LinkDialog* dialog) { dialog->layoutToggled(LinkAlignment::RIGHT); };
+static void layoutToggledLeft(GtkButton*, LinkDialog* dialog) { dialog->layoutToggled(LinkAlignment::LEFT); };
+static void layoutToggledCenter(GtkButton*, LinkDialog* dialog) { dialog->layoutToggled(LinkAlignment::CENTER); };
+static void layoutToggledRight(GtkButton*, LinkDialog* dialog) { dialog->layoutToggled(LinkAlignment::RIGHT); };
 static void urlPrefixChangedClb(GtkComboBoxText* source, LinkDialog* dialog) { dialog->urlPrefixChanged(source); };
 
 LinkDialog::LinkDialog(Control* control, std::function<void(LinkDialog*)> callbackOK,
@@ -37,20 +38,20 @@ LinkDialog::LinkDialog(Control* control, std::function<void(LinkDialog*)> callba
     this->linkTypeChooser = GTK_COMBO_BOX_TEXT(builder.get("cbLinkPrefix"));
     this->urlPrefixChanged(this->linkTypeChooser);
 
-    g_signal_connect(G_OBJECT(okButton), "clicked", G_CALLBACK(okButtonClicked), this);
-    g_signal_connect(G_OBJECT(cancelButton), "clicked", G_CALLBACK(cancelButtonClicked), this);
+    g_signal_connect(G_OBJECT(okButton), "clicked", xoj::util::wrap_for_g_callback_v<okButtonClicked>, this);
+    g_signal_connect(G_OBJECT(cancelButton), "clicked", xoj::util::wrap_for_g_callback_v<cancelButtonClicked>, this);
 
 #if GTK_MAJOR_VERSION == 3
-    g_signal_connect(G_OBJECT(layoutLeft), "released", G_CALLBACK(layoutToogledLeft), this);
-    g_signal_connect(G_OBJECT(layoutCenter), "released", G_CALLBACK(layoutToogledCenter), this);
-    g_signal_connect(G_OBJECT(layoutRight), "released", G_CALLBACK(layoutToogledRight), this);
+    g_signal_connect(G_OBJECT(layoutLeft), "released", xoj::util::wrap_for_g_callback_v<layoutToggledLeft>, this);
+    g_signal_connect(G_OBJECT(layoutCenter), "released", xoj::util::wrap_for_g_callback_v<layoutToggledCenter>, this);
+    g_signal_connect(G_OBJECT(layoutRight), "released", xoj::util::wrap_for_g_callback_v<layoutToggledRight>, this);
 #else
-    g_signal_connect(G_OBJECT(layoutLeft), "clicked", G_CALLBACK(layoutToogledLeft), this);
-    g_signal_connect(G_OBJECT(layoutCenter), "clicked", G_CALLBACK(layoutToogledCenter), this);
-    g_signal_connect(G_OBJECT(layoutRight), "clicked", G_CALLBACK(layoutToogledRight), this);
+    g_signal_connect(G_OBJECT(layoutLeft), "clicked", xoj::util::wrap_for_g_callback_v<layoutToggledLeft>, this);
+    g_signal_connect(G_OBJECT(layoutCenter), "clicked", xoj::util::wrap_for_g_callback_v<layoutToggledCenter>, this);
+    g_signal_connect(G_OBJECT(layoutRight), "clicked", xoj::util::wrap_for_g_callback_v<layoutToggledRight>, this);
 #endif
 
-    g_signal_connect(G_OBJECT(linkTypeChooser), "changed", G_CALLBACK(urlPrefixChangedClb), this);
+    g_signal_connect(G_OBJECT(linkTypeChooser), "changed", xoj::util::wrap_for_g_callback_v<urlPrefixChangedClb>, this);
 }
 
 LinkDialog::~LinkDialog() { this->callbackCancel(); };
