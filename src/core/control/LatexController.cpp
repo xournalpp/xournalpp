@@ -30,6 +30,8 @@
 #include "model/TexImage.h"                  // for TexImage
 #include "model/Text.h"                      // for Text
 #include "model/XojPage.h"                   // for XojPage
+#include "undo/DeleteUndoAction.h"           // for DeleteUndoAction
+#include "undo/GroupUndoAction.h"            // for GroupUndoAction
 #include "undo/InsertUndoAction.h"           // for InsertUndoAction
 #include "undo/UndoRedoHandler.h"            // for UndoRedoHandler
 #include "util/Assert.h"                     // for xoj_assert
@@ -268,7 +270,9 @@ void LatexController::insertTexImage() {
     xoj_assert(this->isValidTex);
     xoj_assert(this->temporaryRender != nullptr);
 
-    auto lock = std::shared_lock(*this->control->getDocument());
+    Document* doc = this->control->getDocument();
+
+    auto lock = std::shared_lock(*doc);
     Layer* layer = page->getSelectedLayer();
     XournalView* xournal = this->control->getWindow()->getXournal();
     auto pageNr = xournal->getCurrentPage();
@@ -280,18 +284,31 @@ void LatexController::insertTexImage() {
     }
     lock.unlock();
 
-    /* Clearing the old image and creating the new one creates two separate undo actions; I don't
-       know yet how to merge that to one. (That bug was already present before.) */
-
     this->control->clearSelectionEndText();
     if (this->selectedElem) {
-        auto sel = SelectionFactory::createFromElementOnActiveLayer(control, page, view, selectedElem);
-        view->getXournal()->deleteSelection(sel.release());
-        this->selectedElem = nullptr;
+        const auto undo = control->getUndoRedoHandler();
+        auto groupUndoAction = std::make_unique<GroupUndoAction>();
+        auto deleteUndoAction = std::make_unique<DeleteUndoAction>(page, false);
+        doc->lock();
+        auto [orig, elementIndex] = layer->removeElement(selectedElem);
+        doc->unlock();
+        if (elementIndex != Element::InvalidIndex) [[likely]] {
+            deleteUndoAction->addElement(layer, std::move(orig), elementIndex);
+        }
+        groupUndoAction->addAction(std::move(deleteUndoAction));
+
+        auto insertUndoAction = std::make_unique<InsertUndoAction>(page, layer, this->temporaryRender.get());
+        groupUndoAction->addAction(std::move(insertUndoAction));
+        undo->addUndoAction(std::move(groupUndoAction));
+        Range oldRange(selectedElem->boundingRect());
+        Range newRange(temporaryRender->boundingRect());
+        Range repaintRange = oldRange.unite(newRange);
+        page->fireRangeChanged(repaintRange);
+    } else {
+        control->getUndoRedoHandler()->addUndoAction(
+                std::make_unique<InsertUndoAction>(page, layer, this->temporaryRender.get()));
     }
 
-    control->getUndoRedoHandler()->addUndoAction(
-            std::make_unique<InsertUndoAction>(page, layer, this->temporaryRender.get()));
 
     // Select element
     auto selection =
