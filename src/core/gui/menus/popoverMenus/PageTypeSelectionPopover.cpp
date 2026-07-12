@@ -338,9 +338,7 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
                     self->controller->changeCurrentPageBackground(self->selectedPT.value());
                 }
                 if (self->selectedPageSize && (!self->selectedPT.has_value() || !self->selectedPT->isSpecial())) {
-                    gtk_popover_set_modal(popover, false);
                     self->controller->changeCurrentPageSize(self->selectedPageSize.value());
-                    gtk_popover_set_modal(popover, true);
                 }
             })),
             new std::tuple<const PageTypeSelectionPopover*, GtkPopover*>(this, GTK_POPOVER(popover)),
@@ -386,20 +384,14 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
             applyToAllPagesButton, "clicked", G_CALLBACK((+[](GtkWidget*, gpointer pointerTuple) {
                 auto [self, popover] =
                         *static_cast<std::tuple<const PageTypeSelectionPopover*, GtkPopover*>*>(pointerTuple);
-                if (self->selectedPT) {
-                    self->controller->applyBackgroundToAllPages(self->selectedPT.value());
-                } else {
-                    self->controller->applyCurrentPageBackgroundToAll();
-                }
+                const PageRef currentPage = self->control->getCurrentPage();
+                PageType pt = self->selectedPT.value_or(currentPage->getBackgroundType());
+                self->controller->applyBackgroundToAllPages(pt);
 
-                gtk_popover_set_modal(popover, false);
-                if (self->selectedPageSize) {
-                    self->controller->applyPageSizeToAllPages(self->selectedPageSize.value());
-                } else {
-                    const PageRef page = self->control->getCurrentPage();
-                    self->controller->applyPageSizeToAllPages(PaperSize(page->getWidth(), page->getHeight()));
+                if (!pt.isSpecial()) {  // Special backgrounds come with their size
+                    self->controller->applyPageSizeToAllPages(self->selectedPageSize.value_or(
+                            PaperSize(currentPage->getWidth(), currentPage->getHeight())));
                 }
-                gtk_popover_set_modal(popover, true);
             })),
             new std::tuple<const PageTypeSelectionPopover*, GtkPopover*>(this, GTK_POPOVER(popover)),
             xoj::util::closure_notify_cb<std::tuple<const PageTypeSelectionPopover*, GtkPopover*>>, GConnectFlags(0));
