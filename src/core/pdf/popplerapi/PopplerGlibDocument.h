@@ -12,7 +12,9 @@
 #pragma once
 
 #include <cstddef>  // for size_t
-#include <string>   // for string
+#include <memory>
+#include <mutex>
+#include <string>  // for string
 
 #include <glib.h>     // for GError, gpointer, gsize
 #include <poppler.h>  // for PopplerDocument
@@ -47,4 +49,5 @@ public:
 
 private:
     PopplerDocument* document = nullptr;
+    std::shared_ptr<std::mutex> mutex;
 };
