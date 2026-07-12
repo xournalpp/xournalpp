@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-30 12:17+0000\n"
-"PO-Revision-Date: 2026-07-05 05:40\n"
+"PO-Revision-Date: 2026-07-12 05:26\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -3719,11 +3719,11 @@ msgstr "缩放速度"
 
 #: ../ui/settings.glade:4489
 msgid "Force zoom to fit on document load"
-msgstr ""
+msgstr "加载文档时自动缩放以适应页面"
 
 #: ../ui/settings.glade:4508
 msgid "Default Zoom"
-msgstr ""
+msgstr "默认缩放"
 
 #: ../ui/settings.glade:4535
 msgid "<i>To make sure on 100% zoom the size of elements is natural.</i>"
@@ -4498,7 +4498,7 @@ msgstr "链接(_L)"
 
 #: ../ui/mainmenubar.xml:560
 msgid "LaTe_X"
-msgstr ""
+msgstr "LaTe_X"
 
 #: ../ui/mainmenubar.xml:566
 msgid "_Image"
