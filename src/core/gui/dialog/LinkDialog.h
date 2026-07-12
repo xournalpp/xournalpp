@@ -40,9 +40,8 @@ public:
     XojFont getFont();
 
 public:
-    void okButtonPressed(GtkButton* btn);
-    void cancelButtonPressed(GtkButton* btn);
-    void textChanged(GtkTextBuffer* buffer);
+    void okButtonPressed();
+    void cancelButtonPressed();
     void layoutToggled(LinkAlignment l);
     void urlPrefixChanged(GtkComboBoxText* source);
 
@@ -51,9 +50,6 @@ private:
     bool isUrlValid(const std::string& url);
     URLPrefix identifyAndShortenURL(std::string& url);
 
-    void setMaxDialogHeight(GtkWindow* window);
-    int getLineHeight();
-
 private:
     xoj::util::GtkWindowUPtr linkDialog;
     std::function<void(LinkDialog*)> callbackOK;
@@ -61,9 +57,6 @@ private:
 
     GtkTextView* textInput = nullptr;
     GtkEntry* urlInput = nullptr;
-
-    GtkButton* okButton = nullptr;
-    GtkButton* cancelButton = nullptr;
 
     GtkFontChooser* fontChooser = nullptr;
 
@@ -76,8 +69,6 @@ private:
     std::string linkText;
     std::string linkURL;
     LinkAlignment layout = LinkAlignment::LEFT;
-
-    int maxDialogHeight = 0;
 
 public:
     inline GtkWindow* getWindow() const { return linkDialog.get(); }
