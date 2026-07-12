@@ -38,6 +38,7 @@ class PageType;
 class Point;
 class TexImage;
 class Text;
+class TextAlignment;
 class Link;
 
 namespace xoj::util {
@@ -112,7 +113,7 @@ private:
     void setTexImageAttachment(const fs::path& filename) override;
     void finalizeTexImage() override;
 
-    void addLink(LinkAlignment align, std::string font, double size, double x, double y, Color color,
+    void addLink(TextAlignment align, std::string font, double size, double x, double y, Color color,
                  std::string url) override;
     void setLinkContent(std::string contents) override;
     void finalizeLink() override;

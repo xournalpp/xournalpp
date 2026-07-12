@@ -9,6 +9,8 @@
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
+#include "TextAlignment.h"
+
 Link::Link(): Element(ELEMENT_LINK) {
     this->font.setName("Sans");
     this->font.setSize(12);
@@ -60,7 +62,8 @@ void Link::readSerialized(ObjectInputStream& in) {
 
     this->url = in.readString();
 
-    this->alignment = static_cast<LinkAlignment::Value>(in.readInt());
+    this->alignment = static_cast<TextAlignment::Value>(in.readInt());
+    this->alignment.validate();
 
     font.readSerialized(in);
 
@@ -129,9 +132,7 @@ auto Link::createPangoLayout() const -> xoj::util::GObjectSPtr<PangoLayout> {
     pango_layout_set_font_description(layout.get(), font);
     pango_font_description_free(font);
 
-    PangoAlignment alignment = PANGO_ALIGNMENT[this->alignment];
-
-    pango_layout_set_alignment(layout.get(), alignment);
+    pango_layout_set_alignment(layout.get(), alignment.toPango());
 
     return layout;
 }
@@ -140,6 +141,6 @@ auto Link::rescaleOnlyAspectRatio() const -> bool { return true; }
 
 auto Link::rescaleWithMirror() const -> bool { return true; }
 
-void Link::setAlignment(LinkAlignment alignment) { this->alignment = alignment; }
+void Link::setAlignment(TextAlignment alignment) { this->alignment = alignment; }
 
-LinkAlignment Link::getAlignment() const { return this->alignment; }
+TextAlignment Link::getAlignment() const { return this->alignment; }

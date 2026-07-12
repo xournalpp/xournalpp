@@ -10,6 +10,7 @@
 
 #include "model/Link.h"
 #include "model/Stroke.h"
+#include "model/TextAlignment.h"
 #include "util/StringUtils.h"
 #include "util/serializing/BinObjectEncoding.h"
 #include "util/serializing/HexObjectEncoding.h"
@@ -432,11 +433,11 @@ TEST(UtilObjectIOStream, testReadLink) {
 
     links[2].setText("Multiline\nLink");
     links[2].setUrl("mailto:john.doe@provider.com");
-    links[2].setAlignment(LinkAlignment::CENTER);
+    links[2].setAlignment(TextAlignment::CENTER);
 
     links[3].setText("Chinese characters\n测试");
     links[3].setUrl("https://http://見.香港/");
-    links[3].setAlignment(LinkAlignment::RIGHT);
+    links[3].setAlignment(TextAlignment::RIGHT);
 
     size_t i = 0;
     try {

@@ -20,20 +20,7 @@
 
 #include "Element.h"  // for Element
 #include "Font.h"     // for XojFont
-
-class LinkAlignment {
-public:
-    enum Value { LEFT, CENTER, RIGHT };
-    static constexpr std::array<const char8_t*, 3> NAMES = {u8"left", u8"center", u8"right"};
-    LinkAlignment(Value v): value(v) {}
-
-    // Implicit conversion to underlying enum type
-    operator const Value&() const { return value; }
-    operator Value&() { return value; }
-
-private:
-    Value value;
-};
+#include "TextAlignment.h"
 
 class Element;
 class ObjectInputStream;
@@ -57,8 +44,8 @@ public:
     XojFont& getFont();
     const XojFont& getFont() const;
 
-    void setAlignment(LinkAlignment alignment);
-    LinkAlignment getAlignment() const;
+    void setAlignment(TextAlignment alignment);
+    TextAlignment getAlignment() const;
 
     xoj::util::GObjectSPtr<PangoLayout> createPangoLayout() const;
 
@@ -80,10 +67,6 @@ public:
 
     static constexpr double PADDING = 2.0;  // space around text including painted border
 
-    //  Must match the enum LinkAlignment
-    static constexpr PangoAlignment PANGO_ALIGNMENT[] = {PANGO_ALIGN_LEFT, PANGO_ALIGN_CENTER, PANGO_ALIGN_RIGHT};
-
-
 protected:
     void calcSize() const override;
 
@@ -91,5 +74,5 @@ private:
     XojFont font;
     std::string text;
     std::string url;
-    LinkAlignment alignment = LinkAlignment::LEFT;
+    TextAlignment alignment = TextAlignment::LEFT;
 };
