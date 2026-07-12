@@ -19,18 +19,18 @@
 #include "PopplerGlibAction.h"  // for PopplerGlibAction
 #include "cairo.h"              // for cairo_region_create, cairo_reg...
 
-PopplerGlibPage::PopplerGlibPage(PopplerPage* page, PopplerDocument* parentDoc): page(page), document(parentDoc) {
+PopplerGlibPage::PopplerGlibPage(PopplerPage* page, PopplerDocument* parentDoc, std::shared_ptr<std::mutex> mutex):
+        page(page), document(parentDoc), mutex(mutex) {
     if (page != nullptr) {
         g_object_ref(page);
     }
 }
 
-PopplerGlibPage::PopplerGlibPage(const PopplerGlibPage& other): page(other.page), document(other.document) {
+PopplerGlibPage::PopplerGlibPage(const PopplerGlibPage& other):
+        page(other.page), document(other.document), mutex(other.mutex) {
     if (page != nullptr) {
         g_object_ref(page);
     }
-
-    document = nullptr;
 }
 
 PopplerGlibPage::~PopplerGlibPage() {
@@ -55,6 +55,7 @@ PopplerGlibPage& PopplerGlibPage::operator=(const PopplerGlibPage& other) {
     }
 
     document = other.document;
+    mutex = other.mutex;
 
     return *this;
 }
@@ -74,6 +75,7 @@ auto PopplerGlibPage::getHeight() const -> double {
 }
 
 void PopplerGlibPage::render(cairo_t* cr) const {
+    std::lock_guard guard(*mutex);
     cairo_save(cr);
     cairo_set_source_rgb(cr, 1., 1., 1.);
     cairo_paint(cr);
@@ -81,7 +83,10 @@ void PopplerGlibPage::render(cairo_t* cr) const {
     cairo_restore(cr);
 }
 
-void PopplerGlibPage::renderForPrinting(cairo_t* cr) const { poppler_page_render_for_printing(page, cr); }
+void PopplerGlibPage::renderForPrinting(cairo_t* cr) const {
+    std::lock_guard guard(*mutex);
+    poppler_page_render_for_printing(page, cr);
+}
 
 auto PopplerGlibPage::getPageId() const -> int { return poppler_page_get_index(page); }
 

@@ -15,9 +15,9 @@ class XojPdfBookmarkIterator;
 
 using std::string;
 
-PopplerGlibDocument::PopplerGlibDocument() = default;
+PopplerGlibDocument::PopplerGlibDocument(): mutex(std::make_shared<std::mutex>()) {}
 
-PopplerGlibDocument::PopplerGlibDocument(const PopplerGlibDocument& doc): document(doc.document) {
+PopplerGlibDocument::PopplerGlibDocument(const PopplerGlibDocument& doc): document(doc.document), mutex(doc.mutex) {
     if (document) {
         g_object_ref(document);
     }
@@ -35,10 +35,13 @@ void PopplerGlibDocument::assign(XojPdfDocumentInterface* doc) {
         g_object_unref(document);
     }
 
-    document = (dynamic_cast<PopplerGlibDocument*>(doc))->document;
+    auto* popplerdoc = dynamic_cast<PopplerGlibDocument*>(doc);
+    document = popplerdoc->document;
     if (document) {
         g_object_ref(document);
     }
+
+    mutex = popplerdoc->mutex;
 }
 
 auto PopplerGlibDocument::equals(XojPdfDocumentInterface* doc) const -> bool {
@@ -65,10 +68,10 @@ auto PopplerGlibDocument::load(fs::path const& file, string password, GError** e
 
     if (document) {
         g_object_unref(document);
-        document = nullptr;
     }
 
     this->document = poppler_document_new_from_file(uri->c_str(), password.c_str(), error);
+
     return this->document != nullptr;
 }
 
@@ -104,7 +107,7 @@ auto PopplerGlibDocument::getPage(size_t page) const -> XojPdfPageSPtr {
     if (pg == nullptr) {
         return nullptr;
     }
-    XojPdfPageSPtr pageptr = std::make_shared<PopplerGlibPage>(pg, document);
+    XojPdfPageSPtr pageptr = std::make_shared<PopplerGlibPage>(pg, document, mutex);
     g_object_unref(pg);
 
     return pageptr;
