@@ -351,7 +351,7 @@ void LoadHandler::finalizeStroke() {
 }
 
 void LoadHandler::addText(std::string font, double size, double x, double y, Color color, std::optional<double> wrap,
-                          fs::path filename, size_t timestamp) {
+                          std::optional<TextAlignment> align, bool justify, fs::path filename, size_t timestamp) {
     xoj_assert(!this->text);
     this->text = std::make_unique<Text>();
 
@@ -361,6 +361,8 @@ void LoadHandler::addText(std::string font, double size, double x, double y, Col
     this->text->setOrigin(x, y);
     this->text->setColor(color);
     this->text->setWrap(wrap.value_or(Text::NO_WRAP));
+    this->text->setAlignment(align.value_or(TextAlignment::LEFT));
+    this->text->setJustify(justify);
 
     setAudioAttributes(*this->text, std::move(filename), timestamp);
 }

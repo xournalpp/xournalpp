@@ -17,7 +17,7 @@
 #include "control/xml/XmlTextNode.h"           // for XmlTextNode
 #include "control/xojfile/XmlAttrs.h"          // for xml_attrs
 #include "control/xojfile/XmlTags.h"           // for xml_tags
-#include "control/xojfile/XmlTags.h"           // for XmlTags
+#include "control/xojfile/XmlValues.h"         // for xml_values
 #include "model/AudioElement.h"                // for AudioElement
 #include "model/BackgroundImage.h"             // for BackgroundImage
 #include "model/Document.h"                    // for Document
@@ -197,6 +197,12 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
             text->setAttrib(xoj::xml_attrs::COLOR_STR, getColorStr(t->getColor()).c_str());
             if (auto w = t->getWrap(); w != Text::NO_WRAP) {
                 text->setAttrib(xoj::xml_attrs::WRAP_STR, w);
+            }
+            if (auto al = t->getAlign(); al != TextAlignment::LEFT) {
+                text->setAttrib(xoj::xml_attrs::ALIGN_STR, TextAlignment::NAMES[al]);
+            }
+            if (t->getJustify()) {
+                text->setAttrib(xoj::xml_attrs::JUSTIFY_STR, xoj::xml_values::TRUE_STR);
             }
 
             writeTimestamp(text, t);

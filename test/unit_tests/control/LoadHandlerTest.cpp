@@ -228,7 +228,8 @@ static void checkImageFormat(const Image* img, const char* formatName) {
     g_free(gdkFormatName);
 }
 
-static void checkText(const Layer* layer, size_t elementIndex, const std::string& text, Color color, double wrap) {
+static void checkText(const Layer* layer, size_t elementIndex, const std::string& text, Color color, double wrap,
+                      TextAlignment al = TextAlignment::LEFT, bool justify = false) {
     ASSERT_LT(elementIndex, layer->getElementsView().size());
     const auto* textElem = dynamic_cast<const Text*>(layer->getElementsView()[elementIndex]);
 
@@ -238,6 +239,8 @@ static void checkText(const Layer* layer, size_t elementIndex, const std::string
     EXPECT_EQ(textElem->getText(), text) << "Text at index " << elementIndex << " has incorrect contents";
     EXPECT_EQ(textElem->getColor(), color) << "Text at index " << elementIndex << " has the wrong color";
     EXPECT_EQ(textElem->getWrap(), wrap) << "Text at index " << elementIndex << " has the wrong wrap width";
+    EXPECT_EQ(textElem->getAlign(), al) << "Text at index " << elementIndex << " has the wrong alignment";
+    EXPECT_EQ(textElem->getJustify(), justify) << "Text at index " << elementIndex << " has the wrong justify flag";
 }
 
 TEST(ControlLoadHandler, testLoad) {
@@ -462,6 +465,21 @@ TEST(ControlLoadHandler, testText) {
                         u8"that is fast, flexible, and functional. A modern rewrite and a more feature-rich version of "
                         u8"the wonderful Xournal program."),
               Colors::black, 130.13533);
+    checkText(layer, 6,
+              char_cast(u8"Xournal++ (/ˌzɚnl̟ˌplʌsˈplʌs/) is an open-source and cross-platform note-taking software "
+                        u8"that is fast, flexible, and functional. A modern rewrite and a more feature-rich version of "
+                        u8"the wonderful Xournal program."),
+              Colors::black, 140.34657, TextAlignment::LEFT, true);
+    checkText(layer, 7,
+              char_cast(u8"Xournal++ (/ˌzɚnl̟ˌplʌsˈplʌs/) is an open-source and cross-platform note-taking software "
+                        u8"that is fast, flexible, and functional. A modern rewrite and a more feature-rich version of "
+                        u8"the wonderful Xournal program."),
+              Colors::black, 140.34657, TextAlignment::CENTER, false);
+    checkText(layer, 8,
+              char_cast(u8"Xournal++ (/ˌzɚnl̟ˌplʌsˈplʌs/) is an open-source and cross-platform note-taking software "
+                        u8"that is fast, flexible, and functional. A modern rewrite and a more feature-rich version of "
+                        u8"the wonderful Xournal program."),
+              Colors::black, 140.34657, TextAlignment::RIGHT, true);
 }
 
 TEST(ControlLoadHandler, testTextZipped) {

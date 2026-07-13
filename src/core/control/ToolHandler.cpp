@@ -13,6 +13,7 @@
 #include "control/actions/ActionDatabase.h"
 #include "control/settings/Settings.h"  // for SElement, Settings
 #include "model/StrokeStyle.h"          // for StrokeStyle
+#include "model/TextAlignment.h"
 #include "util/Color.h"
 #include "util/Stacktrace.h"  // for Stac...
 #include "util/safe_casts.h"  // for as_unsigned
@@ -315,6 +316,14 @@ auto ToolHandler::getSelectPDFTextMarkerOpacity() const -> int {
     return this->getTool(TOOL_SELECT_PDF_TEXT_LINEAR).getColor().alpha;
 }
 
+void ToolHandler::setTextAlignment(TextAlignment a) { this->getTool(TOOL_TEXT).setTextAlignment(a); }
+
+auto ToolHandler::getTextAlignment() const -> TextAlignment { return this->getTool(TOOL_TEXT).getTextAlignment(); }
+
+void ToolHandler::setTextJustify(bool j) { this->getTool(TOOL_TEXT).setTextJustify(j); }
+
+auto ToolHandler::getTextJustify() const -> bool { return this->getTool(TOOL_TEXT).getTextJustify(); }
+
 auto ToolHandler::getThickness() const -> double {
     Tool* tool = this->activeTool;
     if (tool->thickness) {
@@ -472,7 +481,7 @@ void ToolHandler::saveSettings() const {
             st.setInt("fillAlpha", tool->getFillAlpha());
         }
 
-        if (tool->type == TOOL_PEN) {
+        if (tool->hasCapability(TOOL_CAP_LINE_STYLE)) {
             st.setString("style", StrokeStyle::formatStyle(tool->getLineStyle()));
         }
 
@@ -485,6 +494,14 @@ void ToolHandler::saveSettings() const {
             {
                 st.setString("type", "default");
             }
+        }
+
+        if (tool->hasCapability(TOOL_CAP_ALIGN)) {
+            st.setInt("align", static_cast<int>(tool->getTextAlignment()));
+        }
+
+        if (tool->hasCapability(TOOL_CAP_JUSTIFY)) {
+            st.setBool("justify", tool->getTextJustify());
         }
     }
 
@@ -557,6 +574,18 @@ void ToolHandler::loadSettings() {
                     }
                     eraserTypeChanged();
                 }
+            }
+
+            int align;
+            if (tool->hasCapability(TOOL_CAP_ALIGN) && st.getInt("align", align)) {
+                TextAlignment al = static_cast<TextAlignment::Value>(align);
+                al.validate();
+                tool->setTextAlignment(al);
+            }
+
+            bool justify;
+            if (tool->hasCapability(TOOL_CAP_JUSTIFY) && st.getBool("justify", justify)) {
+                tool->setTextJustify(justify);
             }
         }
     }

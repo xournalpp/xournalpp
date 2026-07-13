@@ -233,6 +233,16 @@ void ToolMenuHandler::initToolItems() {
      *      The corresponding action in ActionDatabase[action] should have a state and a parameter. The button is "on"
      *when the action state matches `target`.
      **/
+    auto emplaceStockItemWithTarget = [this](const char* name, Cat c, Action action, auto target, const char* icon,
+                                             std::string description) {
+        emplaceItem<ToolButton>(name, c, action, makeGVariant(target), icon, description);
+    };
+
+    /**
+     * @brief Toggle button linked to others sharing the same action (with a custom loaded icon)
+     *      The corresponding action in ActionDatabase[action] should have a state and a parameter. The button is "on"
+     *when the action state matches `target`.
+     **/
     auto emplaceCustomItemWithTarget = [this](const char* name, Cat c, Action action, auto target, const char* icon,
                                               std::string description) {
         emplaceItem<ToolButton>(name, c, action, makeGVariant(target), iconName(icon), description);
@@ -433,6 +443,13 @@ void ToolMenuHandler::initToolItems() {
     emplaceCustomItemWithTarget("HAND", Cat::SELECTION, Action::SELECT_TOOL, TOOL_HAND, "hand", _("Hand"));
 
     emplaceItem<FontButton>("SELECT_FONT", *control->getActionDatabase());
+    emplaceStockItemTgl("FORMAT_JUSTIFY", Cat::TOOLS, Action::TEXT_JUSTIFY, "format-justify-fill", _("Justify text"));
+    emplaceStockItemWithTarget("FORMAT_ALIGN_LEFT", Cat::TOOLS, Action::TEXT_ALIGNMENT, TextAlignment::LEFT,
+                               "format-justify-left", _("Align text to the left"));
+    emplaceStockItemWithTarget("FORMAT_ALIGN_CENTER", Cat::TOOLS, Action::TEXT_ALIGNMENT, TextAlignment::CENTER,
+                               "format-justify-center", _("Center text"));
+    emplaceStockItemWithTarget("FORMAT_ALIGN_RIGHT", Cat::TOOLS, Action::TEXT_ALIGNMENT, TextAlignment::RIGHT,
+                               "format-justify-right", _("Align text to the right"));
 
     emplaceCustomItemTgl("AUDIO_RECORDING", Cat::AUDIO, Action::AUDIO_RECORD, "audio-record",
                          _("Record Audio / Stop Recording"));

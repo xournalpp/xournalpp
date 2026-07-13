@@ -22,8 +22,8 @@
 #include "util/safe_casts.h"
 #include "util/utf8_view.h"
 
+#include "XmlValues.h"
 #include "filesystem.h"
-
 
 XmlParserHelper::AttributeMap::AttributeMap(const char** attributeNames, const char** attributeValues):
         names(attributeNames), values(attributeValues) {}
@@ -44,6 +44,23 @@ using XmlParserHelper::c_string_utf8_view;
 using XmlParserHelper::string_utf8_view;
 
 // Template specializations
+template <>
+auto XmlParserHelper::getAttrib<bool>(std::u8string_view name, const AttributeMap& attributeMap)
+        -> std::optional<bool> {
+    const auto optCStr = attributeMap[name];
+    if (optCStr) {
+        if (auto sv = std::string_view(*optCStr); sv == xoj::xml_values::TRUE_STR) {
+            return true;
+        } else if (sv == xoj::xml_values::FALSE_STR) {
+            return false;
+        } else {
+            return std::nullopt;
+        }
+    } else {
+        return std::nullopt;
+    }
+}
+
 template <>
 auto XmlParserHelper::getAttrib<const char*>(std::u8string_view name, const AttributeMap& attributeMap)
         -> std::optional<const char*> {
