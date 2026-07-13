@@ -2,6 +2,17 @@
 
 ## 1.3.6~dev (Unreleased)
 
+* Fixed several issues with button configuration (#7526)
+* Added mutex locks for lua write functions (#7551)
+* Updated Debian dependency for libxml2 (#7418,#7578)
+* Added Ubuntu 26.04 (resolute) build target (#7450)
+* Fixed enable/disable copy/cut actions when selecting text in TextEdition (#7575)
+* Fixed data-race related segfault in RenderJob::renderToBuffer() (#7581)
+* Fixed "System default" audio device resolving to null device instead of default (#7591)
+* Fixed compilation warnings (#7600)
+* Fixed several issues with the "Add Pdf Page" dialog (#7592,#7602)
+* Updated translations
+
 ## 1.3.5
 
 * Fixed crash when exiting after playing sound (#7352)
