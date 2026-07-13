@@ -20,7 +20,7 @@ using namespace xoj::view;
 StrokeToolView::StrokeToolView(const StrokeHandler* strokeHandler, const Stroke& stroke, Repaintable* parent):
         BaseStrokeToolView(parent, stroke), strokeHandler(strokeHandler), pointBuffer(stroke.getPointVector()) {
     this->registerToPool(strokeHandler->getViewPool());
-    parent->flagDirtyRegion(Range(stroke.boundingRect()));
+    parent->flagDirtyRegion(Range(stroke.getBoundingBox()));
 }
 
 StrokeToolView::~StrokeToolView() noexcept { this->unregisterFromPool(); }

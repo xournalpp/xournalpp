@@ -39,27 +39,19 @@ auto ColorUndoAction::undo(Control* control) -> bool {
         return true;
     }
 
+    Range range;
     Document* doc = control->getDocument();
     doc->lock();
-    ColorUndoActionEntry* e = this->data.front();
-    double x1 = e->e->getX();
-    double x2 = e->e->getX() + e->e->getElementWidth();
-    double y1 = e->e->getY();
-    double y2 = e->e->getY() + e->e->getElementHeight();
 
     for (ColorUndoActionEntry* e: this->data) {
         e->e->setColor(e->oldColor);
-
-        x1 = std::min(x1, e->e->getX());
-        x2 = std::max(x2, e->e->getX() + e->e->getElementWidth());
-        y1 = std::min(y1, e->e->getY());
-        y2 = std::max(y2, e->e->getY() + e->e->getElementHeight());
+        range = range.unite(Range(e->e->getBoundingBox()));
     }
 
     doc->unlock();
 
-    Rectangle rect(x1, y1, x2 - x1, y2 - y1);
-    this->page->fireRectChanged(rect);
+    xoj_assert(!range.empty());
+    this->page->fireRangeChanged(range);
 
     return true;
 }
@@ -69,27 +61,19 @@ auto ColorUndoAction::redo(Control* control) -> bool {
         return true;
     }
 
+    Range range;
     Document* doc = control->getDocument();
     doc->lock();
-    ColorUndoActionEntry* e = this->data.front();
-    double x1 = e->e->getX();
-    double x2 = e->e->getX() + e->e->getElementWidth();
-    double y1 = e->e->getY();
-    double y2 = e->e->getY() + e->e->getElementHeight();
 
     for (ColorUndoActionEntry* e: this->data) {
         e->e->setColor(e->newColor);
-
-        x1 = std::min(x1, e->e->getX());
-        x2 = std::max(x2, e->e->getX() + e->e->getElementWidth());
-        y1 = std::min(y1, e->e->getY());
-        y2 = std::max(y2, e->e->getY() + e->e->getElementHeight());
+        range = range.unite(Range(e->e->getBoundingBox()));
     }
 
     doc->unlock();
 
-    Rectangle rect(x1, y1, x2 - x1, y2 - y1);
-    this->page->fireRectChanged(rect);
+    xoj_assert(!range.empty());
+    this->page->fireRangeChanged(range);
 
     return true;
 }

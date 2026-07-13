@@ -1597,12 +1597,10 @@ static int applib_addTexts(lua_State* L) {
         if (!lua_isnumber(L, -2)) {  // Check if x was provided
             return luaL_error(L, "Missing X-Coordinate!/must be a number");
         }
-        text->setX(lua_tonumber(L, -2));
-
         if (!lua_isnumber(L, -1)) {  // Check if y was provided
             return luaL_error(L, "Missing Y-Coordinate!/must be a number");
         }
-        text->setY(lua_tonumber(L, -1));
+        text->setOrigin(lua_tonumber(L, -2), lua_tonumber(L, -1));
 
         lua_pop(L, 8);  // remove values read out from the text table + text-table itself
 
@@ -1725,16 +1723,18 @@ static int applib_getTexts(lua_State* L) {
         lua_pushinteger(L, as_signed(uint32_t(t->getColor()) & 0xffffffU));
         lua_setfield(L, -2, "color");  // add color to text
 
-        lua_pushnumber(L, t->getX());
+        auto [x, y] = t->getOrigin();
+        lua_pushnumber(L, x);
         lua_setfield(L, -2, "x");  // add x coordindate to text
 
-        lua_pushnumber(L, t->getY());
+        lua_pushnumber(L, y);
         lua_setfield(L, -2, "y");  // add y coordinate to text
 
-        lua_pushnumber(L, t->getElementWidth());
+        const auto& box = t->getBoundingBox();
+        lua_pushnumber(L, box.width);
         lua_setfield(L, -2, "width");  // add width to text
 
-        lua_pushnumber(L, t->getElementHeight());
+        lua_pushnumber(L, box.height);
         lua_setfield(L, -2, "height");  // add height to text
 
         lua_pushlightuserdata(L, const_cast<void*>(static_cast<const void*>(t)));
@@ -3279,8 +3279,7 @@ static int applib_addImages(lua_State* L) {
         }
 
         auto [width, height] = img->getImageSize();
-        img->setX(x);
-        img->setY(y);
+        img->setOrigin(x, y);
 
         // apply width/height parameter
         if (maxWidthParam != -1 && maxHeightParam != -1) {
@@ -3400,20 +3399,23 @@ static int applib_getImages(lua_State* L) {
         lua_pushinteger(L, ++currImageNo);  // index for later (settable)
         lua_newtable(L);                    // create table for current image
 
+
+        auto [x, y] = im->getOrigin();
         // "x": number
-        lua_pushnumber(L, im->getX());
+        lua_pushnumber(L, x);
         lua_setfield(L, -2, "x");
 
         // "y": number
-        lua_pushnumber(L, im->getY());
+        lua_pushnumber(L, y);
         lua_setfield(L, -2, "y");
 
+        const auto& box = im->getBoundingBox();
         // "width": number
-        lua_pushnumber(L, im->getElementWidth());
+        lua_pushnumber(L, box.width);
         lua_setfield(L, -2, "width");
 
         // "height": number
-        lua_pushnumber(L, im->getElementHeight());
+        lua_pushnumber(L, box.height);
         lua_setfield(L, -2, "height");
 
         // data: string (can be optimized via lual_Buffer)

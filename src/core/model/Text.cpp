@@ -32,10 +32,7 @@ auto Text::cloneText() const -> std::unique_ptr<Text> {
     text->font = this->font;
     text->text = this->text;
     text->setColor(this->getColor());
-    text->x = this->x;
-    text->y = this->y;
-    text->width = this->width;
-    text->height = this->height;
+    text->boundingBox = this->boundingBox;
     text->cloneAudioData(this);
     text->snappedBounds = this->snappedBounds;
     text->sizeCalculated = this->sizeCalculated;
@@ -77,8 +74,8 @@ void Text::calcSize() const {
     int w = 0;
     int h = 0;
     pango_layout_get_size(layout.get(), &w, &h);
-    this->width = (static_cast<double>(w)) / PANGO_SCALE;
-    this->height = (static_cast<double>(h)) / PANGO_SCALE;
+    this->boundingBox.width = (static_cast<double>(w)) / PANGO_SCALE;
+    this->boundingBox.height = (static_cast<double>(h)) / PANGO_SCALE;
     this->updateSnapping();
 }
 
@@ -118,12 +115,12 @@ void Text::scale(double x0, double y0, double fx, double fy, double rotation,
         Stacktrace::printStacktrace();
     }
 
-    this->x -= x0;
-    this->x *= fx;
-    this->x += x0;
-    this->y -= y0;
-    this->y *= fy;
-    this->y += y0;
+    this->boundingBox.x -= x0;
+    this->boundingBox.x *= fx;
+    this->boundingBox.x += x0;
+    this->boundingBox.y -= y0;
+    this->boundingBox.y *= fy;
+    this->boundingBox.y += y0;
 
     double size = this->font.getSize() * fx;
     this->font.setSize(size);
@@ -169,9 +166,7 @@ void Text::readSerialized(ObjectInputStream& in) {
     in.endObject();
 }
 
-void Text::updateSnapping() const {
-    this->snappedBounds = Rectangle<double>(this->x, this->y, this->width, this->height);
-}
+void Text::updateSnapping() const { this->snappedBounds = this->boundingBox; }
 
 auto Text::findText(const std::string& search) const -> std::vector<XojPdfRectangle> {
     size_t patternLength = search.length();
@@ -184,8 +179,9 @@ auto Text::findText(const std::string& search) const -> std::vector<XojPdfRectan
 
 
     std::string text = StringUtils::toLowerCase(this->text);
-
     std::string pattern = StringUtils::toLowerCase(search);
+
+    const auto& origin = this->getOrigin();
 
     std::vector<XojPdfRectangle> list;
 
@@ -193,12 +189,12 @@ auto Text::findText(const std::string& search) const -> std::vector<XojPdfRectan
         XojPdfRectangle mark;
         PangoRectangle rect = {0};
         pango_layout_index_to_pos(layout.get(), static_cast<int>(pos), &rect);
-        mark.x1 = (static_cast<double>(rect.x)) / PANGO_SCALE + this->getX();
-        mark.y1 = (static_cast<double>(rect.y)) / PANGO_SCALE + this->getY();
+        mark.x1 = (static_cast<double>(rect.x)) / PANGO_SCALE + origin.x;
+        mark.y1 = (static_cast<double>(rect.y)) / PANGO_SCALE + origin.y;
 
         pango_layout_index_to_pos(layout.get(), static_cast<int>(pos + patternLength - 1), &rect);
-        mark.x2 = (static_cast<double>(rect.x) + rect.width) / PANGO_SCALE + this->getX();
-        mark.y2 = (static_cast<double>(rect.y) + rect.height) / PANGO_SCALE + this->getY();
+        mark.x2 = (static_cast<double>(rect.x) + rect.width) / PANGO_SCALE + origin.x;
+        mark.y2 = (static_cast<double>(rect.y) + rect.height) / PANGO_SCALE + origin.y;
 
         list.push_back(mark);
     }

@@ -180,7 +180,7 @@ void XojPageView::startText(double x, double y) {
         if (const auto& box = this->textEditor->getContentBoundingBox(); !box.contains(x, y)) {
             endText();
         } else {
-            this->textEditor->mousePressed(x - box.getX(), y - box.getY());
+            this->textEditor->mousePressed(x, y);
         }
     }
 
@@ -568,8 +568,7 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
         XournalppCursor* cursor = getXournal()->getCursor();
         cursor->setInvisible(false);
 
-        const Text* text = this->textEditor->getTextElement();
-        this->textEditor->mouseMoved(x - text->getX(), y - text->getY());
+        this->textEditor->mouseMoved(x, y);
     } else if (this->laserPointer && this->laserPointer->onMotionNotifyEvent(pos, zoom)) {
         // used this event
     } else if (h->getToolType() == TOOL_ERASER && h->getEraserType() != ERASER_TYPE_WHITEOUT && this->inEraser) {
@@ -1174,7 +1173,7 @@ void XojPageView::elementChanged(const Element* elem) {
      */
     const bool noRerender = inputHandler && elem == inputHandler->getStroke() &&
                             page->getSelectedLayerId() == page->getLayerCount() &&
-                            getVisiblePart().contains(elem->boundingRect());
+                            getVisiblePart().contains(elem->getBoundingBox());
     if (!noRerender) {
         rerenderElement(elem);
     }

@@ -250,11 +250,11 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
         return nullptr;
     }
 
-    img->setX(posx);
-    img->setY(posy);
+    img->setOrigin(posx, posy);
     img->setText(std::move(renderedTex));
     if (std::abs(imgheight) > 1024 * std::numeric_limits<double>::epsilon()) {
-        double ratio = img->getElementWidth() / img->getElementHeight();
+        const auto& box = img->getBoundingBox();
+        double ratio = box.width / box.height;
         if (ratio == 0) {
             img->setWidth(imgwidth == 0 ? 10 : imgwidth);
         } else {
@@ -300,8 +300,8 @@ void LatexController::insertTexImage() {
         auto insertUndoAction = std::make_unique<InsertUndoAction>(page, layer, this->temporaryRender.get());
         groupUndoAction->addAction(std::move(insertUndoAction));
         undo->addUndoAction(std::move(groupUndoAction));
-        Range oldRange(selectedElem->boundingRect());
-        Range newRange(temporaryRender->boundingRect());
+        Range oldRange(selectedElem->getBoundingBox());
+        Range newRange(temporaryRender->getBoundingBox());
         Range repaintRange = oldRange.unite(newRange);
         page->fireRangeChanged(repaintRange);
     } else {
@@ -338,8 +338,7 @@ void LatexController::insertLatex(PageRef page, Control* ctrl, double x, double 
     auto& el = page->getSelectedLayer()->getElements();
     for (auto e = el.rbegin(); e != el.rend(); ++e) {
         if ((*e)->getType() == ELEMENT_TEXIMAGE || (*e)->getType() == ELEMENT_TEXT) {
-            GdkRectangle matchRect = {gint(x), gint(y), 1, 1};
-            if ((*e)->intersectsArea(&matchRect)) {
+            if ((*e)->hasBoundingBoxContaining(x, y)) {
                 self->selectedElem = (*e).get();
                 break;
             }
@@ -361,8 +360,8 @@ void LatexController::insertLatex(PageRef page, Control* ctrl, double x, double 
             xoj_assert(false);
         }
 
-        self->imgwidth = self->selectedElem->getElementWidth();
-        self->imgheight = self->selectedElem->getElementHeight();
+        self->imgwidth = self->selectedElem->getBoundingBox().width;
+        self->imgheight = self->selectedElem->getBoundingBox().height;
 
     } else {
         self->posx = x;

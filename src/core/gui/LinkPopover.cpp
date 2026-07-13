@@ -58,7 +58,7 @@ void LinkPopover::updateRect() {
         this->rect = std::nullopt;
         return;
     }
-    this->rect = this->link->boundingRect();
+    this->rect = this->link->getBoundingBox();
 }
 
 void LinkPopover::updateLabel() {

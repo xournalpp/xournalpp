@@ -24,6 +24,11 @@
 class ObjectInputStream;
 class ObjectOutputStream;
 
+namespace xoj::util {
+template <class T>
+class Point;
+};
+
 enum ElementType { ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_TEXT, ELEMENT_LINK };
 
 class ShapeContainer {
@@ -49,10 +54,9 @@ public:
 public:
     ElementType getType() const;
 
-    void setX(double x);
-    void setY(double y);
-    double getX() const;
-    double getY() const;
+    /// Move the element to (x,y).
+    virtual void setOrigin(double x, double y);
+    virtual const xoj::util::Point<double>& getOrigin() const;
 
     virtual void move(double dx, double dy);
     virtual void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) = 0;
@@ -61,14 +65,10 @@ public:
     void setColor(Color color);
     Color getColor() const;
 
-    double getElementWidth() const;
-    double getElementHeight() const;
+    const xoj::util::Rectangle<double>& getSnappedBounds() const;
 
-    xoj::util::Rectangle<double> getSnappedBounds() const;
+    const xoj::util::Rectangle<double>& getBoundingBox() const;
 
-    xoj::util::Rectangle<double> boundingRect() const;
-
-    virtual bool intersectsArea(const GdkRectangle* src) const;
     virtual bool intersectsArea(double x, double y, double width, double height) const;
     /// Returns the distance between the element "as drawn" and the point (x,y)
     virtual double distanceTo(double x, double y) const;
@@ -92,17 +92,13 @@ protected:
     virtual void calcSize() const = 0;
 
 protected:
-    // If the size has been calculated
+    /// Whether the size has been calculated or not
     mutable bool sizeCalculated = false;
 
-    mutable double width = 0;
-    mutable double height = 0;
+    /// Rectangular area containing the element as drawn
+    mutable xoj::util::Rectangle<double> boundingBox{};
 
-    // The position on the screen
-    mutable double x = 0;
-    mutable double y = 0;
-
-    // The position and dimensions on the screen used for snapping
+    /// The position and dimensions on the screen used for snapping
     mutable xoj::util::Rectangle<double> snappedBounds{};
 
 private:

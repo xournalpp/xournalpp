@@ -40,18 +40,18 @@ void RotateUndoAction::applyRotation(double rotation, Document* doc) {
         return;
     }
 
+    Range r;
     doc->lock();
-    Range r(elements.front()->getX(), elements.front()->getY());
 
     for (Element* e: this->elements) {
-        r.addPoint(e->getX(), e->getY());
-        r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
+        r = r.unite(Range(e->getBoundingBox()));
         e->rotate(this->x0, this->y0, rotation);
-        r.addPoint(e->getX(), e->getY());
-        r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
+        r = r.unite(Range(e->getBoundingBox()));
     }
 
     doc->unlock();
+
+    xoj_assert(!r.empty());
     this->page->fireRangeChanged(r);
 }
 

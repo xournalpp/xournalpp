@@ -58,7 +58,7 @@ void LaserPointerHandler::onButtonReleaseEvent(const PositionInputData& pos, dou
     this->hasFinishedStrokes = true;
     this->strokehandler->finalizeStroke(pos.pressure);
     this->viewPool->dispatch(xoj::view::LaserPointerView::FINISH_STROKE_REQUEST,
-                             Range(this->strokehandler->getStroke()->boundingRect()));
+                             Range(this->strokehandler->getStroke()->getBoundingBox()));
     this->strokehandler.reset();
     this->fadeoutTimer =
             g_timeout_add(this->fadeoutStartDelay, xoj::util::wrap_for_once_v<triggerFadeoutCallback>, this);
@@ -71,7 +71,7 @@ bool LaserPointerHandler::onMotionNotifyEvent(const PositionInputData& pos, doub
 void LaserPointerHandler::onSequenceCancelEvent() {
     auto s = std::move(this->strokehandler);
     if (s && s->getStroke()) {
-        Range rg(s->getStroke()->boundingRect());
+        Range rg(s->getStroke()->getBoundingBox());
         this->viewPool->dispatch(xoj::view::LaserPointerView::INPUT_CANCELLATION_REQUEST, rg);
     }
     if (this->hasFinishedStrokes) {

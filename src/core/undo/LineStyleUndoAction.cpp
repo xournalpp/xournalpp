@@ -28,27 +28,19 @@ auto LineStyleUndoAction::undo(Control* control) -> bool {
         return true;
     }
 
+    Range r;
     Document* doc = control->getDocument();
     doc->lock();
-    LineStyleUndoActionEntry e = this->data.front();
-    double x1 = e.s->getX();
-    double x2 = e.s->getX() + e.s->getElementWidth();
-    double y1 = e.s->getY();
-    double y2 = e.s->getY() + e.s->getElementHeight();
 
     for (LineStyleUndoActionEntry& e: this->data) {
         e.s->setLineStyle(e.oldStyle);
-
-        x1 = std::min(x1, e.s->getX());
-        x2 = std::max(x2, e.s->getX() + e.s->getElementWidth());
-        y1 = std::min(y1, e.s->getY());
-        y2 = std::max(y2, e.s->getY() + e.s->getElementHeight());
+        r = r.unite(Range(e.s->getBoundingBox()));
     }
 
     doc->unlock();
 
-    Rectangle rect(x1, y1, x2 - x1, y2 - y1);
-    this->page->fireRectChanged(rect);
+    xoj_assert(!r.empty());
+    this->page->fireRangeChanged(r);
 
     return true;
 }
@@ -58,27 +50,19 @@ auto LineStyleUndoAction::redo(Control* control) -> bool {
         return true;
     }
 
+    Range r;
     Document* doc = control->getDocument();
     doc->lock();
-    LineStyleUndoActionEntry e = this->data.front();
-    double x1 = e.s->getX();
-    double x2 = e.s->getX() + e.s->getElementWidth();
-    double y1 = e.s->getY();
-    double y2 = e.s->getY() + e.s->getElementHeight();
 
     for (LineStyleUndoActionEntry& e: this->data) {
         e.s->setLineStyle(e.newStyle);
-
-        x1 = std::min(x1, e.s->getX());
-        x2 = std::max(x2, e.s->getX() + e.s->getElementWidth());
-        y1 = std::min(y1, e.s->getY());
-        y2 = std::max(y2, e.s->getY() + e.s->getElementHeight());
+        r = r.unite(Range(e.s->getBoundingBox()));
     }
 
     doc->unlock();
 
-    Rectangle rect(x1, y1, x2 - x1, y2 - y1);
-    this->page->fireRectChanged(rect);
+    xoj_assert(!r.empty());
+    this->page->fireRangeChanged(r);
 
     return true;
 }

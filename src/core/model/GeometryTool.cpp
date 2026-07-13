@@ -40,9 +40,7 @@ void GeometryTool::setStroke(Stroke* s) { this->stroke = s; }
 auto GeometryTool::computeRepaintRange(Range rg) const -> Range {
     Range lastRange = this->lastRepaintRange;
     if (this->stroke) {
-        rg.addPoint(this->stroke->getX(), this->stroke->getY());
-        rg.addPoint(this->stroke->getX() + this->stroke->getElementWidth(),
-                    this->stroke->getY() + this->stroke->getElementHeight());
+        rg = rg.unite(Range(this->stroke->getBoundingBox()));
     }
     this->lastRepaintRange = rg;
     return rg.unite(lastRange);

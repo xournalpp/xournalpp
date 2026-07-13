@@ -55,8 +55,8 @@ public:
 
     bool onKeyPressEvent(const KeyEvent& event);
     bool onKeyReleaseEvent(const KeyEvent& event);
-    void mousePressed(double x, double y);
-    void mouseMoved(double x, double y);
+    void mousePressed(double x, double y);  ///< Coordinates are in Page coordinates
+    void mouseMoved(double x, double y);    ///< Coordinates are in Page coordinates
     void mouseReleased();
 
     /**
@@ -122,7 +122,7 @@ private:
 
     /**
      * @brief Compute the cursor's location
-     * @return The bounding box of the cursor, in TextBox coordinates (i.e relative to the text box upper left corner)
+     * @return The bounding box of the cursor, in TextBox coordinates (i.e relative to the text's getOrigin())
      *          The bounding box is returned even if the cursor is currently not visible (blinking...)
      * WARNING: The returned box may have width == 0 (if in insertion mode or at the end of a line). In this case, the
      *          width of the displayed cursor should be decided by the view class (depending on zoom for instance)

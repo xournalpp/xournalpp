@@ -73,8 +73,7 @@ void GeometryToolController::markOrigin() {
     const auto undo = control->getUndoRedoHandler();
     undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, ptr));
 
-
-    const Rectangle<double> rect{ptr->getX(), ptr->getY(), ptr->getElementWidth(), ptr->getElementHeight()};
+    const Rectangle<double>& rect = ptr->getBoundingBox();
     view->rerenderRect(rect.x, rect.y, rect.width, rect.height);
 }
 
@@ -92,7 +91,7 @@ void GeometryToolController::addStrokeToLayer() {
 
     const auto undo = control->getUndoRedoHandler();
     undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, ptr));
-    const Rectangle<double> rect{ptr->getX(), ptr->getY(), ptr->getElementWidth(), ptr->getElementHeight()};
+    const Rectangle<double>& rect = ptr->getBoundingBox();
     view->rerenderRect(rect.x, rect.y, rect.width, rect.height);
     geometryTool->setStroke(nullptr);
     xournal->getCursor()->updateCursor();

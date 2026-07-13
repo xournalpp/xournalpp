@@ -28,8 +28,8 @@ auto TextBoxUndoAction::getText() -> std::string { return _("Edit text"); }
 auto TextBoxUndoAction::undo(Control* control) -> bool {
     Document* doc = control->getDocument();
     doc->lock();
-    auto rect = element->boundingRect();
-    rect.unite(oldelement->boundingRect());
+    auto rect = element->getBoundingBox();
+    rect.unite(oldelement->getBoundingBox());
 
     // swap them to be memory safe
     auto elementPtr = this->layer->removeElement(std::exchange(this->element, this->oldelement.get())).e;

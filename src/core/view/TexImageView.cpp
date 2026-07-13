@@ -2,11 +2,12 @@
 
 #include <string>  // for string
 
-#include <cairo.h>             // for cairo_paint_with_alpha, cairo_scale
-#include <glib.h>              // for g_warning
-#include <poppler.h>           // for PopplerPage, PopplerDocument, g_clear_...
+#include <cairo.h>    // for cairo_paint_with_alpha, cairo_scale
+#include <glib.h>     // for g_warning
+#include <poppler.h>  // for PopplerPage, PopplerDocument, g_clear_...
 
 #include "model/TexImage.h"  // for TexImage
+#include "util/Point.h"      // for Point
 #include "view/View.h"       // for Context, OPACITY_NO_AUDIO, view
 
 using namespace xoj::view;
@@ -22,6 +23,8 @@ void TexImageView::draw(const Context& ctx) const {
 
     PopplerDocument* pdf = texImage->getPdf();
     cairo_surface_t* img = texImage->getImage();
+    const auto& origin = texImage->getOrigin();
+    const auto& box = texImage->getBoundingBox();
 
     if (pdf != nullptr) {
         if (poppler_document_get_n_pages(pdf) < 1) {
@@ -35,11 +38,11 @@ void TexImageView::draw(const Context& ctx) const {
         double pageHeight = 0;
         poppler_page_get_size(page, &pageWidth, &pageHeight);
 
-        double xFactor = texImage->getElementWidth() / pageWidth;
-        double yFactor = texImage->getElementHeight() / pageHeight;
+        double xFactor = box.width / pageWidth;
+        double yFactor = box.height / pageHeight;
 
         cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-        cairo_translate(cr, texImage->getX(), texImage->getY());
+        cairo_translate(cr, origin.x, origin.y);
         cairo_scale(cr, xFactor, yFactor);
 
         auto surfType = cairo_surface_get_type(cairo_get_target(cr));
@@ -74,12 +77,12 @@ void TexImageView::draw(const Context& ctx) const {
 
         cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 
-        double xFactor = texImage->getElementWidth() / width;
-        double yFactor = texImage->getElementHeight() / height;
+        double xFactor = box.width / width;
+        double yFactor = box.height / height;
 
         cairo_scale(cr, xFactor, yFactor);
 
-        cairo_set_source_surface(cr, img, texImage->getX() / xFactor, texImage->getY() / yFactor);
+        cairo_set_source_surface(cr, img, origin.x / xFactor, origin.y / yFactor);
         // Make TeX images translucent when highlighting audio strokes as they can not have audio
         if (ctx.fadeOutNonAudio) {
             cairo_paint_with_alpha(cr, OPACITY_NO_AUDIO);

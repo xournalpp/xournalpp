@@ -204,44 +204,19 @@ auto EditSelectionContents::setFill(int alphaPen, int alphaHighligther) -> UndoA
  * (or nullptr if there are no Text elements)
  */
 auto EditSelectionContents::setFont(const XojFont& font) -> UndoActionPtr {
-    double x1 = std::numeric_limits<double>::quiet_NaN();
-    double x2 = std::numeric_limits<double>::quiet_NaN();
-    double y1 = std::numeric_limits<double>::quiet_NaN();
-    double y2 = std::numeric_limits<double>::quiet_NaN();
-
     auto undo = std::make_unique<FontUndoAction>(this->sourcePage, this->sourceLayer);
+    bool foundOne = false;
 
     for (Element* e: this->selected) {
         if (e->getType() == ELEMENT_TEXT) {
             Text* t = dynamic_cast<Text*>(e);
             undo->addStroke(t, t->getFont(), font);
-
-            if (std::isnan(x1)) {
-                x1 = t->getX();
-                y1 = t->getY();
-                x2 = t->getX() + t->getElementWidth();
-                y2 = t->getY() + t->getElementHeight();
-            } else {
-                // size with old font
-                x1 = std::min(x1, t->getX());
-                y1 = std::min(y1, t->getY());
-
-                x2 = std::max(x2, t->getX() + t->getElementWidth());
-                y2 = std::max(y2, t->getY() + t->getElementHeight());
-            }
-
             t->setFont(font);
-
-            // size with new font
-            x1 = std::min(x1, t->getX());
-            y1 = std::min(y1, t->getY());
-
-            x2 = std::max(x2, t->getX() + t->getElementWidth());
-            y2 = std::max(y2, t->getY() + t->getElementHeight());
+            foundOne = true;
         }
     }
 
-    if (!std::isnan(x1)) {
+    if (foundOne) {
         this->deleteViewBuffer();
         this->sourceView->getXournal()->repaintSelection();
         return undo;

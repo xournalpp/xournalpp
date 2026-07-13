@@ -30,11 +30,8 @@ void TexImage::freeImageAndPdf() {
 auto TexImage::cloneTexImage() const -> std::unique_ptr<TexImage> {
 
     auto img = std::make_unique<TexImage>();
-    img->x = this->x;
-    img->y = this->y;
+    img->boundingBox = this->boundingBox;
     img->setColor(this->getColor());
-    img->width = this->width;
-    img->height = this->height;
     img->text = this->text;
     img->snappedBounds = this->snappedBounds;
     img->sizeCalculated = this->sizeCalculated;
@@ -53,12 +50,12 @@ auto TexImage::cloneTexImage() const -> std::unique_ptr<TexImage> {
 auto TexImage::clone() const -> ElementPtr { return cloneTexImage(); }
 
 void TexImage::setWidth(double width) {
-    this->width = width;
+    this->boundingBox.width = width;
     this->calcSize();
 }
 
 void TexImage::setHeight(double height) {
-    this->height = height;
+    this->boundingBox.height = height;
     this->calcSize();
 }
 
@@ -99,9 +96,9 @@ auto TexImage::loadData(std::string&& bytes, GError** err) -> bool {
         if (!pdf.get() || poppler_document_get_n_pages(this->pdf.get()) < 1) {
             return false;
         }
-        if (std::abs(this->width * this->height) <= std::numeric_limits<double>::epsilon()) {
+        if (std::abs(this->boundingBox.area()) <= std::numeric_limits<double>::epsilon()) {
             xoj::util::GObjectSPtr<PopplerPage> page(poppler_document_get_page(this->pdf.get(), 0), xoj::util::adopt);
-            poppler_page_get_size(page.get(), &this->width, &this->height);
+            poppler_page_get_size(page.get(), &this->boundingBox.width, &this->boundingBox.height);
         }
     } else if (type == "PNG") {
         this->image = cairo_image_surface_create_from_png_stream(
@@ -120,11 +117,11 @@ auto TexImage::getPdf() const -> PopplerDocument* { return this->pdf.get(); }
 void TexImage::scale(double x0, double y0, double fx, double fy, double rotation,
                      bool) {  // line width scaling option is not used
 
-    this->x = (this->x - x0) * fx + x0;
-    this->y = (this->y - y0) * fy + y0;
+    this->boundingBox.x = (this->boundingBox.x - x0) * fx + x0;
+    this->boundingBox.y = (this->boundingBox.y - y0) * fy + y0;
 
-    this->width *= fx;
-    this->height *= fy;
+    this->boundingBox.width *= fx;
+    this->boundingBox.height *= fy;
     this->calcSize();
 }
 
@@ -137,8 +134,8 @@ void TexImage::serialize(ObjectOutputStream& out) const {
 
     this->Element::serialize(out);
 
-    out.writeDouble(this->width);
-    out.writeDouble(this->height);
+    out.writeDouble(this->boundingBox.width);
+    out.writeDouble(this->boundingBox.height);
     out.writeString(this->text);
 
     out.writeString(this->binaryData);
@@ -151,8 +148,8 @@ void TexImage::readSerialized(ObjectInputStream& in) {
 
     this->Element::readSerialized(in);
 
-    this->width = in.readDouble();
-    this->height = in.readDouble();
+    this->boundingBox.width = in.readDouble();
+    this->boundingBox.height = in.readDouble();
     this->text = in.readString();
 
     freeImageAndPdf();
@@ -165,6 +162,6 @@ void TexImage::readSerialized(ObjectInputStream& in) {
 }
 
 void TexImage::calcSize() const {
-    this->snappedBounds = Rectangle<double>(this->x, this->y, this->width, this->height);
+    this->snappedBounds = this->boundingBox;
     this->sizeCalculated = true;
 }

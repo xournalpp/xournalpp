@@ -75,12 +75,12 @@ auto SizeUndoAction::undo(Control* control) -> bool {
 
     Range range;
     for (SizeUndoActionEntry* e: this->data) {
-        range = range.unite(Range(e->s->boundingRect()));
+        range = range.unite(Range(e->s->getBoundingBox()));
 
         e->s->setWidth(e->originalWidth);
         e->s->setPressure(e->originalPressure);
 
-        range = range.unite(Range(e->s->boundingRect()));
+        range = range.unite(Range(e->s->getBoundingBox()));
     }
 
     doc->unlock();
@@ -100,12 +100,12 @@ auto SizeUndoAction::redo(Control* control) -> bool {
 
     Range range;
     for (SizeUndoActionEntry* e: this->data) {
-        range = range.unite(Range(e->s->boundingRect()));
+        range = range.unite(Range(e->s->getBoundingBox()));
 
         e->s->setWidth(e->newWidth);
         e->s->setPressure(e->newPressure);
 
-        range = range.unite(Range(e->s->boundingRect()));
+        range = range.unite(Range(e->s->getBoundingBox()));
     }
 
     doc->unlock();
