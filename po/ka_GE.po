@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-30 08:27+0000\n"
-"PO-Revision-Date: 2026-05-30 08:50\n"
+"POT-Creation-Date: 2026-06-30 12:17+0000\n"
+"PO-Revision-Date: 2026-07-05 05:40\n"
 "Last-Translator: \n"
 "Language-Team: Georgian\n"
 "Language: ka_GE\n"
@@ -38,16 +38,16 @@ msgstr ""
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1651
+#: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1656
 msgid "Yes"
 msgstr "დიახ"
 
-#: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1651
+#: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1656
 msgid "No"
 msgstr "არა"
 
-#: ../src/core/control/Control.cpp:839 ../src/core/control/Control.cpp:1879
-#: ../src/core/control/Control.cpp:2207
+#: ../src/core/control/Control.cpp:839 ../src/core/control/Control.cpp:1890
+#: ../src/core/control/Control.cpp:2218
 msgid "Cancel"
 msgstr "გაუქმება"
 
@@ -57,20 +57,20 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:841
 msgid "Insert at end"
-msgstr ""
+msgstr "ბოლოში ჩასმა"
 
 #: ../src/core/control/Control.cpp:844
 msgid "_Journal"
-msgstr ""
+msgstr "_ჟურნალი"
 
 #: ../src/core/control/Control.cpp:844
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "ფურცლის ფ_ონი"
 
 #: ../src/core/control/Control.cpp:845
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:43
 msgid "With PDF background"
-msgstr ""
+msgstr "ინვერსიული ორმხრივი ბეჭედი"
 
 #: ../src/core/control/Control.cpp:848
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -86,133 +86,133 @@ msgstr ""
 msgid "Unable to retrieve pdf page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1507
+#: ../src/core/control/Control.cpp:1512
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1527
+#: ../src/core/control/Control.cpp:1532
 msgid "file: {1}"
-msgstr ""
+msgstr "ფაილი: {1}"
 
-#: ../src/core/control/Control.cpp:1570
+#: ../src/core/control/Control.cpp:1575
 msgid "<i>Above error repeated {1} times</i>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1582
+#: ../src/core/control/Control.cpp:1587
 msgid "<i>&lt;{1} more lines of error messages&gt;</i>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1621
+#: ../src/core/control/Control.cpp:1626
 msgid "Error opening file \"{1}\".\n\n"
 "<tt>{2}</tt>\n"
 "<b>{3}</b>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1635
+#: ../src/core/control/Control.cpp:1640
 msgid "There were some errors while loading the file. Some information might have been lost. Do not overwrite your old file unless you are sure everything you need was loaded correctly.\n\n"
 "Error messages:\n"
 "<tt>{1}</tt>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1653
+#: ../src/core/control/Control.cpp:1658
 msgid "File version mismatch"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1654
+#: ../src/core/control/Control.cpp:1659
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1677
+#: ../src/core/control/Control.cpp:1682
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1698
+#: ../src/core/control/Control.cpp:1703
 msgid "Error reading PNG file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1733
+#: ../src/core/control/Control.cpp:1738
 msgid "Error reading template file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1752
+#: ../src/core/control/Control.cpp:1757
 msgid "Failed to determine if path exists \"{1}\": {2}"
 msgstr "ბილიკის არსებობის დადგენის შეცდომა \"{1}\": {2}"
 
-#: ../src/core/control/Control.cpp:1753
+#: ../src/core/control/Control.cpp:1758
 msgid "That file does not exist:\n"
 "\"{1}\""
 msgstr "ის ფაილი არ არსებობს:\n"
 "\"{1}\""
 
-#: ../src/core/control/Control.cpp:1859
+#: ../src/core/control/Control.cpp:1870
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1862
+#: ../src/core/control/Control.cpp:1873
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1872
+#: ../src/core/control/Control.cpp:1883
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1877
+#: ../src/core/control/Control.cpp:1888
 msgid "Select another PDF"
-msgstr ""
+msgstr "კიდევ ერთი PDF-ის არჩევა"
 
-#: ../src/core/control/Control.cpp:1878
+#: ../src/core/control/Control.cpp:1889
 msgid "Remove PDF Background"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1882
+#: ../src/core/control/Control.cpp:1893
 msgid "Use proposed PDF"
-msgstr ""
+msgstr "შეთავაზებული PDF-ის გამოყენება"
 
-#: ../src/core/control/Control.cpp:1885
+#: ../src/core/control/Control.cpp:1896
 msgid "Missing PDF background file"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2014
+#: ../src/core/control/Control.cpp:2025
 msgid "Select font"
-msgstr ""
+msgstr "ფონტის არჩევა"
 
-#: ../src/core/control/Control.cpp:2033
+#: ../src/core/control/Control.cpp:2044
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
-msgstr ""
+msgstr "ფერის არჩევა"
 
-#: ../src/core/control/Control.cpp:2058
+#: ../src/core/control/Control.cpp:2069
 msgid "Unsaved Document"
-msgstr ""
+msgstr "შეუნახავი დოკუმენტი"
 
-#: ../src/core/control/Control.cpp:2200
+#: ../src/core/control/Control.cpp:2211
 msgid "Document file was removed."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2200
+#: ../src/core/control/Control.cpp:2211
 msgid "This document is not saved yet."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2202
+#: ../src/core/control/Control.cpp:2213
 msgid "Save As..."
-msgstr ""
+msgstr "შენახვა, როგორც..."
 
-#: ../src/core/control/Control.cpp:2202 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2213 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Save"
 msgstr "შენახვა"
 
-#: ../src/core/control/Control.cpp:2205
+#: ../src/core/control/Control.cpp:2216
 msgid "Discard"
-msgstr ""
+msgstr "მოცილება"
 
-#: ../src/core/control/Control.cpp:2294
+#: ../src/core/control/Control.cpp:2305
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -234,23 +234,23 @@ msgstr "კურსორი"
 
 #: ../src/core/control/DeviceListHelper.cpp:106
 msgid "keyboard"
-msgstr ""
+msgstr "კლავიატურა"
 
 #: ../src/core/control/DeviceListHelper.cpp:108
 msgid "touchscreen"
-msgstr ""
+msgstr "სენსორული ეკრანი"
 
 #: ../src/core/control/DeviceListHelper.cpp:110
 msgid "touchpad"
-msgstr ""
+msgstr "თაჩპედი"
 
 #: ../src/core/control/DeviceListHelper.cpp:113
 msgid "trackpoint"
-msgstr ""
+msgstr "trackpoint"
 
 #: ../src/core/control/DeviceListHelper.cpp:115
 msgid "tablet pad"
-msgstr ""
+msgstr "პლანშეტი"
 
 #: ../src/core/control/ExportHelper.cpp:63
 msgid "Image file successfully created"
@@ -269,34 +269,34 @@ msgstr ""
 msgid "PDF file successfully created"
 msgstr ""
 
-#: ../src/core/control/LatexController.cpp:80
+#: ../src/core/control/LatexController.cpp:79
 msgid "Global template file does not exist. Please check your settings."
 msgstr ""
 
-#: ../src/core/control/LatexController.cpp:85
+#: ../src/core/control/LatexController.cpp:84
 msgid "Failed to read global template file. Please check your settings."
 msgstr ""
 
-#: ../src/core/control/LatexController.cpp:91
+#: ../src/core/control/LatexController.cpp:90
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr ""
 
-#: ../src/core/control/LatexController.cpp:242
+#: ../src/core/control/LatexController.cpp:181
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr ""
 
-#: ../src/core/control/LatexController.cpp:311
+#: ../src/core/control/LatexController.cpp:242
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr ""
 
-#: ../src/core/control/LatexController.cpp:316
+#: ../src/core/control/LatexController.cpp:247
 msgid "Could not load LaTeX PDF file"
 msgstr ""
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:111
 #: ../src/core/control/XournalMain.cpp:227
-#: ../src/core/control/xojfile/LoadHandler.cpp:260
-#: ../src/core/control/xojfile/LoadHandler.cpp:279
+#: ../src/core/control/xojfile/LoadHandler.cpp:261
+#: ../src/core/control/xojfile/LoadHandler.cpp:280
 msgid "Error reading PDF: {1}"
 msgstr ""
 
@@ -331,11 +331,11 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:138
 msgid "Delete file"
-msgstr ""
+msgstr "ფაილის წაშლა"
 
 #: ../src/core/control/XournalMain.cpp:138
 msgid "Restore file"
-msgstr ""
+msgstr "ფაილის აღდგენა"
 
 #: ../src/core/control/XournalMain.cpp:158
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
@@ -416,7 +416,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:642
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "მითითებული ფაილის გატანა PDF-ში"
 
 #: ../src/core/control/XournalMain.cpp:645
 msgid "Export FILE as image files (one per page)\n"
@@ -484,7 +484,7 @@ msgstr ""
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:46
 msgid "Autosaving to {1}"
-msgstr ""
+msgstr "ავტოშენახვა ფაილში {1}"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:73
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
@@ -496,7 +496,7 @@ msgstr ""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
 msgid "Export File"
-msgstr ""
+msgstr "ფაილის გატანა"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:78
 #: ../src/core/gui/dialog/DeviceTestingArea.cpp:181
@@ -510,23 +510,23 @@ msgstr ""
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:27
 msgid "Custom Export"
-msgstr ""
+msgstr "მორგებული გატანა"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:29
 #: ../src/core/control/jobs/PdfExportJob.cpp:20
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:31
 msgid "PDF files"
-msgstr ""
+msgstr "PDF ფაილები"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:30
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:36
 msgid "PNG graphics"
-msgstr ""
+msgstr "PNG გრაფიკა"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:31
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:35
 msgid "SVG graphics"
-msgstr ""
+msgstr "SVG გრაფიკა"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:32
 msgid "Xournal (Compatibility)"
@@ -543,7 +543,7 @@ msgstr ""
 
 #: ../src/core/control/jobs/ImageExport.cpp:169
 msgid "Error save image #1"
-msgstr ""
+msgstr "#1 გამოსახულების შენახვის შეცდომა"
 
 #: ../src/core/control/jobs/ImageExport.cpp:178
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
@@ -551,11 +551,11 @@ msgstr ""
 
 #: ../src/core/control/jobs/ImageExport.cpp:202
 msgid "Error save image #2"
-msgstr ""
+msgstr "#2 გამოსახულების შენახვის შეცდომა"
 
 #: ../src/core/control/jobs/PdfExportJob.cpp:15
 msgid "PDF Export"
-msgstr ""
+msgstr "PDF-ში გატანა"
 
 #: ../src/core/control/jobs/SaveJob.cpp:123
 msgid "Save file error, can't backup: {1}"
@@ -585,7 +585,7 @@ msgstr ""
 
 #: ../src/core/control/layer/LayerController.cpp:424
 msgid "Layer {1}"
-msgstr ""
+msgstr "ფენა {1}"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:28
 msgid "Could not load pagetemplates.ini file"
@@ -617,40 +617,40 @@ msgstr "წერტილოვანი"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:38
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "იზომეტრიული წერტილებიანი"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:39
 msgid "Isometric Graph"
-msgstr ""
+msgstr "იზომეტრიული გრაფიკი"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:44
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Image"
 msgstr "გამოსახულება"
 
 #: ../src/core/control/settings/Settings.cpp:155
 msgid "%F-Note-%H-%M"
-msgstr ""
+msgstr "%F-შენიშვნა-%H-%M"
 
 #: ../src/core/control/settings/Settings.cpp:156
 msgid "%{name}_annotated"
-msgstr ""
+msgstr "%{name}_ანოტაციით"
 
 #: ../src/core/control/tools/EditSelection.cpp:462
 msgid "Arrange"
-msgstr ""
+msgstr "წესრიგში მოყვანა"
 
 #: ../src/core/control/tools/EditSelection.cpp:477
 msgid "Bring forward"
-msgstr ""
+msgstr "წინ გამოტანა"
 
 #: ../src/core/control/tools/EditSelection.cpp:488
 msgid "Send backward"
-msgstr ""
+msgstr "უკან წაღება"
 
 #: ../src/core/control/tools/EditSelection.cpp:495
 msgid "Send to back"
-msgstr ""
+msgstr "უკანა პლანზე გადატანა"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
 #: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:165
@@ -661,138 +661,138 @@ msgstr ""
 msgid "Error while opening image file: "
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:122
-#: ../src/core/control/xojfile/LoadHandler.cpp:139
-#: ../src/core/control/xojfile/LoadHandler.cpp:661
-#: ../src/core/control/xojfile/LoadHandler.cpp:675
+#: ../src/core/control/xojfile/LoadHandler.cpp:123
+#: ../src/core/control/xojfile/LoadHandler.cpp:140
+#: ../src/core/control/xojfile/LoadHandler.cpp:692
+#: ../src/core/control/xojfile/LoadHandler.cpp:706
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:131
-#: ../src/core/control/xojfile/LoadHandler.cpp:667
-#: ../src/core/control/xojfile/LoadHandler.cpp:685
+#: ../src/core/control/xojfile/LoadHandler.cpp:132
+#: ../src/core/control/xojfile/LoadHandler.cpp:698
+#: ../src/core/control/xojfile/LoadHandler.cpp:716
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:149
+#: ../src/core/control/xojfile/LoadHandler.cpp:150
 msgid "Unable to create temporary file for audio attachment"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:161
+#: ../src/core/control/xojfile/LoadHandler.cpp:162
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:168
+#: ../src/core/control/xojfile/LoadHandler.cpp:169
 msgid "Could not open attachment: {1}. Error message: Could not write temporary file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:201
-#: ../src/core/control/xojfile/LoadHandler.cpp:226
+#: ../src/core/control/xojfile/LoadHandler.cpp:202
+#: ../src/core/control/xojfile/LoadHandler.cpp:227
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:236
+#: ../src/core/control/xojfile/LoadHandler.cpp:237
 msgid "Cloned pixmap page background on page {1} references inexistent page {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:482
+#: ../src/core/control/xojfile/LoadHandler.cpp:513
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:489
+#: ../src/core/control/xojfile/LoadHandler.cpp:520
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:497
+#: ../src/core/control/xojfile/LoadHandler.cpp:528
 msgid "The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:510
+#: ../src/core/control/xojfile/LoadHandler.cpp:541
 msgid "The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:519
+#: ../src/core/control/xojfile/LoadHandler.cpp:550
 msgid "Could not open file: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:535
+#: ../src/core/control/xojfile/LoadHandler.cpp:566
 msgid "XML Parser error: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:545
+#: ../src/core/control/xojfile/LoadHandler.cpp:576
 msgid "Failed to read from compressed file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:554
+#: ../src/core/control/xojfile/LoadHandler.cpp:585
 msgid "Invalid XML data read"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:568
+#: ../src/core/control/xojfile/LoadHandler.cpp:599
 msgid "Document is not complete.\n"
 "We have tried recovering the data that could be read, but the last element may have been discarded, and the end of the file is likely missing."
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:575
+#: ../src/core/control/xojfile/LoadHandler.cpp:606
 msgid "Document is corrupted (no document tag found in file)"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:578
+#: ../src/core/control/xojfile/LoadHandler.cpp:609
 msgid "Document is corrupted (no pages found in file)"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:718
+#: ../src/core/control/xojfile/LoadHandler.cpp:749
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:264
+#: ../src/core/control/xojfile/SaveHandler.cpp:279
 msgid "Could not write background \"{1}\", {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:371
+#: ../src/core/control/xojfile/SaveHandler.cpp:386
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:95
+#: ../src/core/control/xojfile/XmlParser.cpp:96
 msgid "Ignoring unexpected {1} tag inside unrecognized document structure"
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:100
+#: ../src/core/control/xojfile/XmlParser.cpp:101
 msgid "Ignoring unexpected {1} tag under {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:149
+#: ../src/core/control/xojfile/XmlParser.cpp:150
 msgid "Unexpected text in {1} node: \"{2}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:247
+#: ../src/core/control/xojfile/XmlParser.cpp:248
 msgid "Attribute \"type\" not found in background tag. Ignoring tag"
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:286
+#: ../src/core/control/xojfile/XmlParser.cpp:287
 msgid "Domain \"clone\" is invalid for PDF backgrounds. Using \"absolute\" instead"
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:296
+#: ../src/core/control/xojfile/XmlParser.cpp:297
 msgid "PDF background filename is empty"
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:316
+#: ../src/core/control/xojfile/XmlParser.cpp:317
 msgid "Discarding unused audio timestamp element. Filename: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:393
+#: ../src/core/control/xojfile/XmlParser.cpp:394
 msgid "Found stroke that contains an odd number of valid coordinates. Discarding the last value"
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:404
+#: ../src/core/control/xojfile/XmlParser.cpp:405
 msgid "Found stroke with more coordinates than pressure points: {1}, expected {2}. Shrinking stroke to match pressure point count"
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:410
+#: ../src/core/control/xojfile/XmlParser.cpp:411
 msgid "Found stroke with too many pressure points: {1}, expected {2}. Discarding remaining pressure points"
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:494
+#: ../src/core/control/xojfile/XmlParser.cpp:512
 msgid "Ignoring attachment tag under {1}"
 msgstr ""
 
@@ -800,23 +800,27 @@ msgstr ""
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:400
+#: ../src/core/gui/LinkPopover.cpp:70
+msgid "Double click to edit. CTRL + click to open."
+msgstr ""
+
+#: ../src/core/gui/PageView.cpp:412
 msgid "Unable to play audio recording {1}"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:936
+#: ../src/core/gui/PageView.cpp:987
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:145
 msgid "Loading..."
-msgstr ""
+msgstr "იტვირთება..."
 
-#: ../src/core/gui/PageView.cpp:993
+#: ../src/core/gui/PageView.cpp:1044
 msgid "Scroll to page {1}"
-msgstr ""
+msgstr "გადახვევა გვერდზე {1}"
 
-#: ../src/core/gui/PageView.cpp:995
+#: ../src/core/gui/PageView.cpp:1046
 msgid "Add missing page"
-msgstr ""
+msgstr "ნაკლული გვერდის დამატება"
 
 #: ../src/core/gui/SearchBar.cpp:90
 msgid "Text found once on this page"
@@ -829,7 +833,7 @@ msgstr ""
 
 #: ../src/core/gui/SearchBar.cpp:97
 msgid "Text not found"
-msgstr ""
+msgstr "ტექსტი ვერ მოიძებნა"
 
 #: ../src/core/gui/SearchBar.cpp:144
 msgid "Text found once on page {1}"
@@ -845,19 +849,19 @@ msgstr ""
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:41
 msgid "Version"
-msgstr ""
+msgstr "ვერსია"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:44
 msgid "Built on"
-msgstr ""
+msgstr "აგებულია"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:47
 msgid "GTK Version"
-msgstr ""
+msgstr "GTK-ის ვერსია"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:54
 msgid "Git commit"
-msgstr ""
+msgstr "Git კომიტი (Commit)"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:61
 msgid "See the full list of contributors"
@@ -865,7 +869,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:63
 msgid "GNU GPLv2 or later"
-msgstr ""
+msgstr "GNU GPLv2 ან უფრო ახალი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:30
 msgid "Thickness - don't change"
@@ -873,37 +877,37 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:32
 msgid "Very thin"
-msgstr ""
+msgstr "ძალიან თხელი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:34
 msgid "Thin"
 msgstr "თხელი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:509
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:511
 msgid "Medium"
 msgstr "საშუალო"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:510
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:512
 msgid "Thick"
 msgstr "სქელი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:40
 msgid "Very thick"
-msgstr ""
+msgstr "ძალიან სქელი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:57
 msgid "No device"
-msgstr ""
+msgstr "მოწყობილობების გარეშე"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:78
 msgid "Tool - don't change"
-msgstr ""
+msgstr "ხელსაწყო - არ შეცვალოთ"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:79
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:381
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:497
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:499
 msgid "Pen"
 msgstr "კალამი"
 
@@ -914,9 +918,9 @@ msgstr "საშლელი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:81
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:498
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:500
 msgid "Highlighter"
-msgstr ""
+msgstr "გამომკვეთი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:82
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
@@ -926,11 +930,11 @@ msgstr "ტექსტი"
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/core/undo/InsertUndoAction.cpp:29
 msgid "Insert image"
-msgstr ""
+msgstr "გამოსახულების ჩასმა"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 msgid "Laser Pointer - Pen"
-msgstr ""
+msgstr "ლაზერული საჩვენებელი - კალამი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 msgid "Laser Pointer - Highlighter"
@@ -938,15 +942,15 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 msgid "Vertical space"
-msgstr ""
+msgstr "ვერტიკალური სივრცე"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
 msgid "Select region"
-msgstr ""
+msgstr "რეგიონის მონიშვნა"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
 msgid "Select rectangle"
-msgstr ""
+msgstr "მართკუთხედით მონიშვნა"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
 msgid "Select multi layer region"
@@ -957,7 +961,7 @@ msgid "Select multi layer rect"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:450
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:452
 msgid "Hand"
 msgstr "ხელი"
 
@@ -979,58 +983,58 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
 msgid "Normal drawing"
-msgstr ""
+msgstr "ჩვეულებრივი ნახატი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:431
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 msgid "Draw Line"
-msgstr ""
+msgstr "ხაზის დახატვა"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 msgid "Draw Rectangle"
-msgstr ""
+msgstr "ოთხკუთხედის დახატვა"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Draw Ellipse"
-msgstr ""
+msgstr "ოვალის დახატვა"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Draw Arrow"
-msgstr ""
+msgstr "ისრის დახატვა"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 msgid "Draw Double Arrow"
-msgstr ""
+msgstr "ორმაგი ისრის დახატვა"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:430
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 msgid "Draw Coordinate System"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
-msgstr ""
+msgstr "მოხაზულობის ამომცნობი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Draw Spline"
-msgstr ""
+msgstr "სპლაინის დახატვა"
 
 #: ../src/core/gui/dialog/DeviceTestingArea.cpp:181
 msgid "Export Logs"
-msgstr ""
+msgstr "ჟურნალის გატანა"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:115
 msgid "Failed to parse external editor command: {1}"
@@ -1050,29 +1054,29 @@ msgstr ""
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:15
 msgid "All files"
-msgstr ""
+msgstr "ყველა ფაილი"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:22
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:203
 msgid "Supported files"
-msgstr ""
+msgstr "მხარდაჭერილი ფაილები"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:32
 msgid "Xournal files"
-msgstr ""
+msgstr "Xournal-ის ფაილები"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:33
 msgid "Xournal++ files"
-msgstr ""
+msgstr "Xournal++-ის ფაილები"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:120
 msgid "Xournal++ template"
-msgstr ""
+msgstr "Xournal++-ის ნიმუში"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:40
 msgid "Image files"
-msgstr ""
+msgstr "გამოსახულების ფაილები"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:50
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:163
@@ -1081,7 +1085,7 @@ msgstr "მორგებული"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:49
 msgid "System Default"
-msgstr ""
+msgstr "სისტემის ნაგულისხმევი"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:67
 msgid "Previously selected language not available anymore!"
@@ -1089,7 +1093,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:56
 msgid "LaTeX editor theme:"
-msgstr ""
+msgstr "LaTeX-ის რედაქტორის თემა:"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:66
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
@@ -1114,13 +1118,13 @@ msgstr ""
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:84
 msgid "Save File"
-msgstr ""
+msgstr "ფაილის შენახვა"
 
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:80
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:19
 msgid "_Cancel"
-msgstr ""
+msgstr "გა_უქმება"
 
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 msgid "_Save"
@@ -1128,11 +1132,11 @@ msgstr "_შენახვა"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:28
 msgid "default enabled"
-msgstr ""
+msgstr "ნაგულისხმევად ჩართულია"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:28
 msgid "default disabled"
-msgstr ""
+msgstr "ნაგულისხმევად გამორთულია"
 
 #: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:62
 msgid "Select background color"
@@ -1144,29 +1148,30 @@ msgstr ""
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:32
 msgid "Highlighter Options"
-msgstr ""
+msgstr "გამომკვეთის მორგება"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:33
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:37
 msgid "Fill color"
-msgstr ""
+msgstr "შევსების ფერი"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:36
 msgid "Pen Options"
-msgstr ""
+msgstr "კალმის მორგება"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:40
 msgid "PDF Text Options"
-msgstr ""
+msgstr "PDF-ის ტექსტის მორგება"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:41
 msgid "PDF Text Marker"
-msgstr ""
+msgstr "PDF ტექსტის მარკერი"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:49
 msgid "<b>{1}</b>\n"
 "{2}{3}"
-msgstr ""
+msgstr "<b>{1}</b>\n"
+"{2}{3}"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:277
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
@@ -1178,11 +1183,11 @@ msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:31
 msgid "Built-in palettes"
-msgstr ""
+msgstr "ჩაშენებული პალიტრები"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:34
 msgid "User palettes"
-msgstr ""
+msgstr "მომხმარებლის პალიტრები"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:99
 msgid "<i>The palettes shown below are obtained from the <a href=\"{1}\">Built-in palettes</a> and <a href=\"{2}\">User palettes</a> directories:</i>\n"
@@ -1203,19 +1208,19 @@ msgstr "სახელი"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:174
 msgid "Palette has no Name"
-msgstr ""
+msgstr "პალიტრას სახელი არ აქვს"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:27
 msgid "Predefined"
-msgstr ""
+msgstr "წინასწარ განსაზღვრული"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:39
 msgid "Customized"
-msgstr ""
+msgstr "მორგებული"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:65
 msgid "Toolbars"
-msgstr ""
+msgstr "ხელსაწყოთა პანელები"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:87
 msgid "New"
@@ -1231,25 +1236,25 @@ msgstr "_გახსნა"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:123
 msgid "Open template file"
-msgstr ""
+msgstr "შაბლონის ფაილის გახსნა"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:136
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:197
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:290
 msgid "Open file"
-msgstr ""
+msgstr "ფაილის გახსნა"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:155
 msgid "Annotate Pdf file"
-msgstr ""
+msgstr "PDF ფაილის ანოტაცია"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:173
 msgid "Choose image file"
-msgstr ""
+msgstr "გამოსახულების ფაილის არჩევა"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:30
 msgid "Select Image"
-msgstr ""
+msgstr "აირჩიეთ გამოსახულება"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:33
 msgid "<b>... or select already used Image:</b>"
@@ -1257,7 +1262,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:37
 msgid "Load file"
-msgstr ""
+msgstr "ფაილის ჩატვირთვა"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:107
 msgid "This image could not be loaded. Error message: {1}"
@@ -1269,7 +1274,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:28
 msgid "Select PDF Page"
-msgstr ""
+msgstr "PDF გვერდის არჩევა"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:56
 msgid "Show only not used pages (one unused page)"
@@ -1297,7 +1302,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:61
 msgid "Separator"
-msgstr ""
+msgstr "გამყოფი"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
 msgid "Spacer"
@@ -1321,17 +1326,17 @@ msgstr "ფაილები"
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:82
 msgctxt "Item category in toolbar customization dialog"
 msgid "Miscellaneous"
-msgstr ""
+msgstr "სხვადასხვა"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:83
 msgctxt "Item category in toolbar customization dialog"
 msgid "Navigation"
-msgstr ""
+msgstr "ნავიგაცია"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:84
 msgctxt "Item category in toolbar customization dialog"
 msgid "Selection"
-msgstr ""
+msgstr "მონიშნული"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:85
 msgctxt "Item category in toolbar customization dialog"
@@ -1341,12 +1346,12 @@ msgstr "ხელსაწყოები"
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:86
 msgctxt "Item category in toolbar customization dialog"
 msgid "Separators"
-msgstr ""
+msgstr "გამყოფები"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:87
 msgctxt "Item category in toolbar customization dialog"
 msgid "Plugins"
-msgstr ""
+msgstr "დამატებები"
 
 #: ../src/core/gui/menus/menubar/Menubar.cpp:54
 msgid "Error loading menubar XML file (try to load \"{1}\")"
@@ -1355,47 +1360,47 @@ msgstr ""
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:384
 msgid "Apply to all pages"
-msgstr ""
+msgstr "ყველა გვერდზე გადატარება"
 
 #: ../src/core/gui/menus/menubar/PluginsSubmenu.cpp:15
 msgid "Plugin Manager"
-msgstr ""
+msgstr "დამატებების მმართველი"
 
 #: ../src/core/gui/menus/menubar/PluginsSubmenu.cpp:34
 msgid "Plugin"
 msgstr "დამატება"
 
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:61
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:68
 msgctxt "The selected document will be removed from the recent files list"
 msgid "Dismiss"
-msgstr ""
+msgstr "მოცილება"
 
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:100
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:108
 msgid "No recent files"
-msgstr ""
+msgstr "უახლესი ფაილების გარეშე"
 
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:110
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:118
 msgid "Clear list"
-msgstr ""
+msgstr "სიის გასუფთავება"
 
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:182
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:190
 msgctxt "In the submenu for removing recent documents, this will display on top of the list xournal++ files to separate them from PDF files"
 msgid "Xournal++ Files"
-msgstr ""
+msgstr "Xournal++-ის ფაილები"
 
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:191
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:199
 msgctxt "In the submenu for removing recent documents, this will display on top of the list PDF files to separate them from xournal++ files"
 msgid "PDF Files"
-msgstr ""
+msgstr "PDF ფაილები"
 
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:198
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:206
 msgctxt "This opens a submenu of the recent files list, and clicking on individual entries in this submenu will remove it from the recent files list"
 msgid "Dismiss a single document"
 msgstr ""
 
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:165
 msgid "Copy current page"
-msgstr ""
+msgstr "მიმდინარე გვერდის კოპირება"
 
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:261
 msgid "Copy current background"
@@ -1407,19 +1412,19 @@ msgstr ""
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:169
 msgid "Contents"
-msgstr ""
+msgstr "შემცველობა"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:37
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "ფენების ნაკრების მინიატურა"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:37
 msgid "Layer Preview"
-msgstr ""
+msgstr "ფენის მინიატურა"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:36
 msgid "Page Preview"
-msgstr ""
+msgstr "გვერდის მინიატურა"
 
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
 msgid "Draw coordinate system"
@@ -1427,11 +1432,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
 msgid "Stroke recognizer"
-msgstr ""
+msgstr "შტრიხის ამომცნობი"
 
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:58
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "ხატვის კომბინირებული ტიპი"
 
 #: ../src/core/gui/toolbarMenubar/FontButton.cpp:74
 msgid "Font"
@@ -1449,11 +1454,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:289
 msgid "New Xournal"
-msgstr ""
+msgstr "ახალი Xournal"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:292
 msgid "Export as PDF"
-msgstr ""
+msgstr "PDF-ში გატანა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:293
 msgid "Print"
@@ -1493,72 +1498,72 @@ msgstr "წაშლა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:317
 msgid "Rotation Snapping"
-msgstr ""
+msgstr "ბრუნვის მიმაგრება"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:318
 msgid "Grid Snapping"
-msgstr ""
+msgstr "ბადეზე მიმაგრება"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:326
 msgid "Paired pages"
-msgstr ""
+msgstr "დაწყვილებული გვერდები"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:328
 msgid "Presentation mode"
-msgstr ""
+msgstr "პრეზენტაციის რეჟიმი"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Toggle fullscreen"
-msgstr ""
+msgstr "სრულეკრანიანი რეჟიმის გადართვა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:330
 msgid "Toggle sidebar"
-msgstr ""
+msgstr "გვერდითი პანელის გადართვა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:332
 msgid "Manage Toolbars"
-msgstr ""
+msgstr "ხელსაწყოს პანელების მართვა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:334
 msgid "Customize Toolbars"
-msgstr ""
+msgstr "ხელსაწყოს პანელების მორგება"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Zoom out"
-msgstr ""
+msgstr "დაპატარავება"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 msgid "Zoom in"
-msgstr ""
+msgstr "გადიდება"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:338
 msgid "Zoom fit to screen"
-msgstr ""
+msgstr "გადიდება ეკრანზე დასატევად"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:339
 msgid "Zoom to 100%"
-msgstr ""
+msgstr "გადიდება 100%-მდე"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:346
 msgid "Go to first page"
-msgstr ""
+msgstr "პირველ გვერდზე გადასვლა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:347
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:462
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
 msgid "Back"
 msgstr "უკან"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:348
 msgid "Jump back"
-msgstr ""
+msgstr "უკან გადასვლა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:349
 msgid "Go to page"
-msgstr ""
+msgstr "გადასვლა გვერდზე"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:351
 msgid "Jump forward"
-msgstr ""
+msgstr "წინ გადასვლა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:352
 msgid "Next"
@@ -1566,7 +1571,7 @@ msgstr "შემდეგი"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:353
 msgid "Go to last page"
-msgstr ""
+msgstr "ბოლო გვერდზე გადასვლა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:356
 msgid "Go to previous layer"
@@ -1574,29 +1579,29 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:357
 msgid "Go to next layer"
-msgstr ""
+msgstr "შემდეგ ფენაზე გადასვლა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:358
 msgid "Go to top layer"
-msgstr ""
+msgstr "ზედა ფენაზე გადასვლა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:361
 msgid "Next annotated page"
-msgstr ""
+msgstr "შემდეგი ანოტაციის მქონე გვერდი"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:367
 msgid "Insert page"
-msgstr ""
+msgstr "გვერდის ჩასმა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Delete current page"
-msgstr ""
+msgstr "მიმდინარე გვერდის წაშლა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:377
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:386
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:394
 msgid "standard"
-msgstr ""
+msgstr "სტანდარტული"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:378
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
@@ -1606,7 +1611,7 @@ msgstr "დაშტრიხული"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:398
 msgid "dash-/ dotted"
-msgstr ""
+msgstr "ტირეთი / წერტილით"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:400
@@ -1615,122 +1620,126 @@ msgstr "წერტილოვანი"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:387
 msgid "whiteout"
-msgstr ""
+msgstr "გათეთრება"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:388
 msgid "delete stroke"
-msgstr ""
+msgstr "შტრიხის წაშლა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
-msgid "Add/Edit TeX"
-msgstr ""
+msgid "Add/Edit Link"
+msgstr "ბმულის დამატება/ჩასწორება"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
-msgid "Default Tool"
-msgstr ""
+msgid "Add/Edit TeX"
+msgstr "TeX-ის დამატება/ჩასწორება"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:411
+msgid "Default Tool"
+msgstr "ნაგულისხმევი ხელსაწყო"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:14
 msgid "Select Linear PDF Text"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Select PDF Text in Rectangle"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Setsquare"
-msgstr ""
+msgstr "მართკუთხა სახაზავი სამკუთხედი"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Compass"
-msgstr ""
+msgstr "კომპასი"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Toggle Touch Drawing"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:435
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
 msgid "Select Region"
-msgstr ""
+msgstr "რეგიონის მონიშვნა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:12
 msgid "Select Rectangle"
-msgstr ""
+msgstr "მართკუთხედით მონიშვნა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:440
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Select Multi-Layer Region"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:443
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:445
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Select Multi-Layer Rectangle"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:445
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:447
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 msgid "Select Object"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:447
-msgid "Vertical Space"
-msgstr ""
+msgstr "ობიექტის მონიშვნა"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:449
+msgid "Vertical Space"
+msgstr "ვერტიკალური სივრცე"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:451
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 msgid "Play Object"
-msgstr ""
+msgstr "ობიექტის დაკვრა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:455
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:457
 msgid "Record Audio / Stop Recording"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:457
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
 msgid "Pause / Play"
-msgstr ""
+msgstr "შეჩერება / დაკვრა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:458
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:460
 msgid "Stop"
 msgstr "გაჩერება"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:460
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:462
 msgid "Forward"
-msgstr ""
+msgstr "წინ"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:496
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:498
 msgid "Laser pointer"
-msgstr ""
+msgstr "ლაზერული მაჩვენებელი"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:502
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:504
 msgid "Fill"
 msgstr "შევსება"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:503
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:505
 msgid "Fill Opacity"
-msgstr ""
+msgstr "შევსების ბუნდოვნობა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:506
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:508
 msgid "Very Fine"
-msgstr ""
+msgstr "ძალიან ზუსტი"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:507
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:509
 msgid "Fine"
 msgstr "ზუსტი"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:512
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:514
 msgid "Very Thick"
-msgstr ""
+msgstr "ძალიან სქელი"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:172
 msgid "Show all"
-msgstr ""
+msgstr "ყველას ჩვენება"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:173
 msgid "Hide all"
-msgstr ""
+msgstr "ყველას დამალვა"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:175
 msgid "Add a layer above the active layer"
@@ -1746,7 +1755,7 @@ msgstr "ფენა"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:300
 msgid "Layer Combo"
-msgstr ""
+msgstr "ფენების კომბო"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:26
 msgid "Page"
@@ -1755,19 +1764,19 @@ msgstr "გვერდი"
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:82
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr ""
+msgstr " {1}-დან"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:85
 msgid "PDF Page {1}"
-msgstr ""
+msgstr "PDF გვერდი {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:87
 msgid "PDF {1}"
-msgstr ""
+msgstr "PDF {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:109
 msgid "Page number"
-msgstr ""
+msgstr "გვერდის ნომერი"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:13
 msgid "PDF text selection dropdown menu"
@@ -1783,7 +1792,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:70
 msgid "Zoom Slider"
-msgstr ""
+msgstr "გადიდების ჩოჩია"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:120
 msgctxt "Color"
@@ -1798,12 +1807,12 @@ msgstr "მწვანე"
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:122
 msgctxt "Color"
 msgid "Light Blue"
-msgstr ""
+msgstr "ღია ლურჯი"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:123
 msgctxt "Color"
 msgid "Light Green"
-msgstr ""
+msgstr "ღია მწვანე"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:124
 msgctxt "Color"
@@ -1823,7 +1832,7 @@ msgstr "წითელი"
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:127
 msgctxt "Color"
 msgid "Magenta"
-msgstr ""
+msgstr "მოიისფრო ვარდისფერი"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:128
 msgctxt "Color"
@@ -1852,11 +1861,11 @@ msgstr ""
 
 #: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:171
 msgid "Error: "
-msgstr ""
+msgstr "შეცდომა: "
 
 #: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:175
 msgid "Unrecoverable error"
-msgstr ""
+msgstr "აღუდგენადი შეცდომა"
 
 #: ../src/core/model/Image.cpp:171 ../src/core/model/Image.cpp:175
 msgid "Failed to close image stream"
@@ -1864,13 +1873,13 @@ msgstr ""
 
 #: ../src/core/model/XojPage.cpp:173
 msgid "Background"
-msgstr ""
+msgstr "ფონი"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:46
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:244
 msgid "No pages to export!"
-msgstr ""
+msgstr "გასატანი გვერდების გარეშე!"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:54
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:207
@@ -1888,7 +1897,7 @@ msgstr ""
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:39
 msgid "Default"
-msgstr ""
+msgstr "ნაგულისხმევი"
 
 #: ../src/core/pdf/base/QPdfExport.cpp:173
 msgid "Error with overlay or final export:"
@@ -1902,12 +1911,12 @@ msgstr ""
 #: ../src/core/undo/DeleteUndoAction.cpp:71
 #: ../src/core/undo/EraseUndoAction.cpp:64
 msgid "Erase stroke"
-msgstr ""
+msgstr "შტრიხის წაშლა"
 
 #: ../src/core/undo/AddUndoAction.cpp:80
 #: ../src/core/undo/DeleteUndoAction.cpp:82
 msgid "elements"
-msgstr ""
+msgstr "ელემენტები"
 
 #: ../src/core/undo/AddUndoAction.cpp:88
 #: ../src/core/undo/DeleteUndoAction.cpp:90
@@ -1929,9 +1938,14 @@ msgstr "latex"
 msgid "text"
 msgstr "ტექსტი"
 
+#: ../src/core/undo/AddUndoAction.cpp:100
+#: ../src/core/undo/DeleteUndoAction.cpp:102
+msgid "link"
+msgstr "ბმული"
+
 #: ../src/core/undo/ColorUndoAction.cpp:97
 msgid "Change color"
-msgstr ""
+msgstr "ფერის შეცვლა"
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
@@ -1939,59 +1953,59 @@ msgstr ""
 
 #: ../src/core/undo/FillUndoAction.cpp:88
 msgid "Change stroke fill"
-msgstr ""
+msgstr "დაშტრიხვის შევსების შეცვლა"
 
 #: ../src/core/undo/FontUndoAction.cpp:118
 msgid "Change font"
-msgstr ""
+msgstr "ფონტის შეცვლა"
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:83
 msgid "Page inserted"
-msgstr ""
+msgstr "გვერდი ჩასმულია"
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:87
 msgid "Page deleted"
-msgstr ""
+msgstr "გვერდი წაიშალა"
 
 #: ../src/core/undo/InsertLayerUndoAction.cpp:25
 msgid "Insert layer"
-msgstr ""
+msgstr "ფენის ჩასმა"
 
 #: ../src/core/undo/InsertUndoAction.cpp:25
 msgid "Draw stroke"
-msgstr ""
+msgstr "შტრიხის დახატვა"
 
 #: ../src/core/undo/InsertUndoAction.cpp:27
 msgid "Write text"
-msgstr ""
+msgstr "ტექსტის დაწერა"
 
 #: ../src/core/undo/InsertUndoAction.cpp:31
 msgid "Insert latex"
-msgstr ""
+msgstr "latex-ის ჩასმა"
 
 #: ../src/core/undo/InsertUndoAction.cpp:70
 msgid "Insert elements"
-msgstr ""
+msgstr "ელემენტების ჩასმა"
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:20
 msgid "Rename layer"
-msgstr ""
+msgstr "ფენის სახელის გადარქმევა"
 
 #: ../src/core/undo/LineStyleUndoAction.cpp:86
 msgid "Change line style"
-msgstr ""
+msgstr "ხაზის სტილის შეცვლა"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:37
 msgid "Merge layer down"
-msgstr ""
+msgstr "ქვედა ფენასთან შერწყმა"
 
 #: ../src/core/undo/MissingPdfUndoAction.cpp:66
 msgid "Replace missing PDF"
-msgstr ""
+msgstr "ნაკლული PDF-ის ჩანაცვლება"
 
 #: ../src/core/undo/MoveLayerUndoAction.cpp:24
 msgid "Move layer"
-msgstr ""
+msgstr "ფენის გადატაანა"
 
 #: ../src/core/undo/MoveUndoAction.cpp:20
 msgid "Move"
@@ -2003,15 +2017,15 @@ msgstr ""
 
 #: ../src/core/undo/PageSizeChangeUndoAction.cpp:42
 msgid "Page size changed"
-msgstr ""
+msgstr "გვერდის ზომა შეიცვალა"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:23
 msgid "Delete layer"
-msgstr ""
+msgstr "ფენის წაშლა"
 
 #: ../src/core/undo/RotateUndoAction.cpp:58
 msgid "Rotation"
-msgstr ""
+msgstr "შებრუნება"
 
 #: ../src/core/undo/ScaleUndoAction.cpp:62
 msgid "Scale"
@@ -2019,19 +2033,19 @@ msgstr "მასშტაბი"
 
 #: ../src/core/undo/SizeUndoAction.cpp:118
 msgid "Change stroke width"
-msgstr ""
+msgstr "დაშტრიხვის სიგანის შეცვლა"
 
 #: ../src/core/undo/SwapUndoAction.cpp:67
 msgid "Move page upwards"
-msgstr ""
+msgstr "გვერდის ატანა"
 
 #: ../src/core/undo/SwapUndoAction.cpp:67
 msgid "Move page downwards"
-msgstr ""
+msgstr "გვერდის ჩამოტანა"
 
 #: ../src/core/undo/TextBoxUndoAction.cpp:26
 msgid "Edit text"
-msgstr ""
+msgstr "ტექსტის ჩასწორება"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:114
 msgid "Could not undo \"{1}\"\n"
@@ -2095,7 +2109,7 @@ msgstr ""
 
 #: ../src/util/OutputStream.cpp:73
 msgid "Error code {1}"
-msgstr ""
+msgstr "შეცდომის კოდი {1}"
 
 #: ../src/util/PathUtil.cpp:125
 msgid "Could not open file: {1}"
@@ -2109,7 +2123,7 @@ msgstr "\"{1}\"-ის წაკითხვის შეცდომა:\n"
 
 #: ../src/util/PathUtil.cpp:409
 msgid "xournalpp-{1}"
-msgstr ""
+msgstr "xournalpp-{1}"
 
 #: ../src/util/PathUtil.cpp:418
 msgid "Could not create folder: {1}\n"
@@ -2126,11 +2140,11 @@ msgstr ""
 
 #: ../src/util/XojMsgBox.cpp:190
 msgid "Select another name"
-msgstr ""
+msgstr "აირჩიეთ სხვა სახელი"
 
 #: ../src/util/XojMsgBox.cpp:191
 msgid "Replace"
-msgstr ""
+msgstr "ჩანაცვლება"
 
 #: ../src/util/XojMsgBox.cpp:216
 msgid "Unable to open the link: {1}\n"
@@ -2176,7 +2190,7 @@ msgstr ""
 
 #: ../ui/about.glade:12
 msgid "About Xournal++"
-msgstr ""
+msgstr "Xournal++-ის შესახებ"
 
 #: ../ui/about.glade:93
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
@@ -2185,7 +2199,7 @@ msgstr ""
 
 #: ../ui/about.glade:133
 msgid "Icon Designers"
-msgstr ""
+msgstr "ხატულას დიზაინერები"
 
 #: ../ui/about.glade:186
 msgid "Partially based on Xournal\n"
@@ -2194,7 +2208,7 @@ msgstr ""
 
 #: ../ui/about.glade:218
 msgid "Website"
-msgstr ""
+msgstr "ვებსაიტი"
 
 #: ../ui/about.glade:246
 msgid "Source Code / Bug Tracker"
@@ -2206,11 +2220,11 @@ msgstr ""
 
 #: ../ui/about.glade:311
 msgid "License"
-msgstr ""
+msgstr "ლიცენზია"
 
 #: ../ui/about.glade:339
 msgid "Authors"
-msgstr ""
+msgstr "ავტორები"
 
 #: ../ui/about.glade:397 ../ui/crashDialog.glade:174
 #: ../ui/toolbarCustomizeDialog.glade:73 ../ui/toolbarManageDialog.glade:134
@@ -2222,13 +2236,13 @@ msgstr "დახურვა"
 #: ../ui/goto.glade:108 ../ui/intEdTexDialog.glade:203
 #: ../ui/pageFormat.glade:346 ../ui/pageTemplate.glade:278
 #: ../ui/plugin.glade:114 ../ui/renameLayerDialog.glade:71
-#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6601
+#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6645
 msgid "Ok"
 msgstr "დიახ"
 
 #: ../ui/crashDialog.glade:7
 msgid "Crash report"
-msgstr ""
+msgstr "ავარიული დახურვის ანგარიში"
 
 #: ../ui/crashDialog.glade:23
 msgid "Oops... Xournal++ encountered a fatal error"
@@ -2244,7 +2258,7 @@ msgstr ""
 
 #: ../ui/crashDialog.glade:92
 msgid "Execution log:"
-msgstr ""
+msgstr "შესრულების ჟურნალი:"
 
 #: ../ui/crashDialog.glade:140
 msgid "Open your web browser with a partially pre-filled bug report"
@@ -2252,7 +2266,7 @@ msgstr ""
 
 #: ../ui/crashDialog.glade:145
 msgid "Create a bug report"
-msgstr ""
+msgstr "ანგარიშის შექმნა შეცდომის შესახებ"
 
 #: ../ui/crashDialog.glade:164
 msgctxt "github is a name - do not try to translate it"
@@ -2261,7 +2275,7 @@ msgstr ""
 
 #: ../ui/deviceList.glade:7
 msgid "Known devices"
-msgstr ""
+msgstr "ცნობილი მოწყობილობები"
 
 #: ../ui/deviceList.glade:46
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -2312,16 +2326,16 @@ msgstr "რჩევა"
 
 #: ../ui/deviceTestingArea.glade:178 ../ui/settings.glade:2051
 msgid "Button 1"
-msgstr ""
+msgstr "ღილაკი 1"
 
 #: ../ui/deviceTestingArea.glade:192 ../ui/settings.glade:2083
 msgid "Button 2"
-msgstr ""
+msgstr "ღილაკი 2"
 
 #: ../ui/deviceTestingArea.glade:284 ../ui/settings.glade:2314
 #: ../ui/settings.glade:2902 ../ui/settingsDeviceClassConfig.glade:38
 msgid "Touchscreen"
-msgstr ""
+msgstr "სენსორული ეკრანი"
 
 #: ../ui/deviceTestingArea.glade:402
 msgid "In use"
@@ -2334,11 +2348,11 @@ msgstr "ზემოდან გაჩერება"
 
 #: ../ui/deviceTestingArea.glade:471
 msgid "Show logs"
-msgstr ""
+msgstr "ჟურნალის ჩვენება"
 
 #: ../ui/deviceTestingArea.glade:483
 msgid "Export debug info"
-msgstr ""
+msgstr "გამართვის ინფორმაციის გატანა"
 
 #: ../ui/deviceTestingArea.glade:505
 msgid "To clear the logs, simply close and reopen the settings dialog"
@@ -2359,7 +2373,7 @@ msgstr ""
 
 #: ../ui/deviceTestingArea.glade:596
 msgid "Last device used:"
-msgstr ""
+msgstr "ბოლოს გამოყენებული მოწყობილობა:"
 
 #: ../ui/deviceTestingArea.glade:616
 msgid "Show all known devices"
@@ -2367,7 +2381,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:36
 msgid "Resolution"
-msgstr ""
+msgstr "გაფართოება"
 
 #: ../ui/exportSettings.glade:39
 msgid "Width"
@@ -2384,7 +2398,7 @@ msgstr "არცერთი"
 
 #: ../ui/exportSettings.glade:56
 msgid "No ruling"
-msgstr ""
+msgstr "გაზომვის გარეშე"
 
 #: ../ui/exportSettings.glade:59
 msgid "All"
@@ -2397,7 +2411,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:114
 msgid "Image quality"
-msgstr ""
+msgstr "გამოსახულების ხარისხი"
 
 #: ../ui/exportSettings.glade:129
 msgid "Range"
@@ -2405,11 +2419,11 @@ msgstr "შუალედი"
 
 #: ../ui/exportSettings.glade:143
 msgid "All pages"
-msgstr ""
+msgstr "ყველა გვერდი"
 
 #: ../ui/exportSettings.glade:159
 msgid "Current page"
-msgstr ""
+msgstr "მიმდინარე გვერდი"
 
 #: ../ui/exportSettings.glade:175
 msgid "Pages:"
@@ -2438,11 +2452,11 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:379
 msgid "Backend"
-msgstr ""
+msgstr "უკანაბოლო"
 
 #: ../ui/extEdTexDialog.glade:23 ../ui/intEdTexDialog.glade:18
 msgid "Insert Latex"
-msgstr ""
+msgstr "latex-ის ჩასმა"
 
 #: ../ui/extEdTexDialog.glade:42
 msgid "Enter / edit LaTeX Text in external Editor"
@@ -2454,11 +2468,11 @@ msgstr ""
 
 #: ../ui/extEdTexDialog.glade:138
 msgid "Continue Editing"
-msgstr ""
+msgstr "ჩასწორების გაგრძელება"
 
 #: ../ui/goto.glade:23
 msgid "Go to Page"
-msgstr ""
+msgstr "გადასვლა გვერდზე"
 
 #: ../ui/intEdTexDialog.glade:37
 msgid "Enter / edit LaTeX Text"
@@ -2466,11 +2480,11 @@ msgstr ""
 
 #: ../ui/intEdTexDialog.glade:98
 msgid "TeX Source"
-msgstr ""
+msgstr "TeX-ის წყარო"
 
 #: ../ui/intEdTexDialog.glade:136
 msgid "Command Output"
-msgstr ""
+msgstr "ბრძანების გამონატანი"
 
 #: ../ui/latexSettings.glade:36
 msgid "Always check LaTeX dependencies before running"
@@ -2486,7 +2500,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:76
 msgid "Default LaTeX Text"
-msgstr ""
+msgstr "ნაგულისხმევი LaTeX-ის ტექსტი"
 
 #: ../ui/latexSettings.glade:105
 msgid "The LaTeX file to use as a template for the LaTeX tool."
@@ -2502,7 +2516,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:133
 msgid "%%XPP_TOOL_INPUT%%"
-msgstr ""
+msgstr "%%XPP_TOOL_INPUT%%"
 
 #: ../ui/latexSettings.glade:145
 msgid "The math mode formula typed in the LaTeX tool."
@@ -2514,7 +2528,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:170
 msgid "%%XPP_TEXT_COLOR%%"
-msgstr ""
+msgstr "%%XPP_TEXT_COLOR%%"
 
 #: ../ui/latexSettings.glade:182
 msgid "The current color of the Text Tool, in hex RGB format."
@@ -2522,7 +2536,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:194
 msgid "%%XPP_VARNAME%%"
-msgstr ""
+msgstr "%%XPP_VARNAME%%"
 
 #: ../ui/latexSettings.glade:206
 msgid "Any custom variable defined with a %xpp:varname=value directive in the formula input."
@@ -2538,7 +2552,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:269
 msgid "Test configuration"
-msgstr ""
+msgstr "კონფიგურაციის შემოწმება"
 
 #: ../ui/latexSettings.glade:273
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
@@ -2550,19 +2564,19 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:364
 msgid "Line numbers"
-msgstr ""
+msgstr "ხაზის ნომრები"
 
 #: ../ui/latexSettings.glade:378
 msgid "Auto-indent"
-msgstr ""
+msgstr "ავტოშეწევა"
 
 #: ../ui/latexSettings.glade:392
 msgid "Syntax highlighting"
-msgstr ""
+msgstr "სინტაქსის გამოკვეთა"
 
 #: ../ui/latexSettings.glade:424
 msgid "Wrap text"
-msgstr ""
+msgstr "ტექსტის გადატანა"
 
 #: ../ui/latexSettings.glade:458
 msgid "Use font from system theme."
@@ -2582,11 +2596,11 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:556
 msgid "Use external Editor"
-msgstr ""
+msgstr "გარე რედაქტორის გამოყენება"
 
 #: ../ui/latexSettings.glade:573
 msgid "Editor command"
-msgstr ""
+msgstr "რედაქტორის ბრძანება"
 
 #: ../ui/latexSettings.glade:598
 msgid "Extension of temporary file"
@@ -2602,7 +2616,35 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:665
 msgid "Editor settings"
-msgstr ""
+msgstr "რედაქტორის მორგება"
+
+#: ../ui/linkDialog.glade:53
+msgid "Text:"
+msgstr "ტექსტი:"
+
+#: ../ui/linkDialog.glade:188
+msgid "URL:"
+msgstr "URL:"
+
+#: ../ui/linkDialog.glade:207
+msgid "http://"
+msgstr "http://"
+
+#: ../ui/linkDialog.glade:208
+msgid "https://"
+msgstr "https://"
+
+#: ../ui/linkDialog.glade:209
+msgid "mailto:"
+msgstr "mailto:"
+
+#: ../ui/linkDialog.glade:210
+msgid "file://"
+msgstr "file://"
+
+#: ../ui/linkDialog.glade:211
+msgid "<custom>"
+msgstr "<custom>"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
@@ -2623,7 +2665,7 @@ msgstr ""
 
 #: ../ui/main.glade:645
 msgid "Copy selected text"
-msgstr ""
+msgstr "მონიშნული ტექსტის კოპირება"
 
 #: ../ui/main.glade:667
 msgid "Highlight selected text"
@@ -2643,15 +2685,15 @@ msgstr ""
 
 #: ../ui/pageFormat.glade:28
 msgid "Paper Format"
-msgstr ""
+msgstr "ფურცლის ფორმატი"
 
 #: ../ui/pageFormat.glade:57
 msgid "Template:"
-msgstr ""
+msgstr "ნიმუში:"
 
 #: ../ui/pageFormat.glade:98
 msgid "<b>Pagesize</b>"
-msgstr ""
+msgstr "<b>გვერდის ზომა</b>"
 
 #: ../ui/pageFormat.glade:146
 msgid "Width:"
@@ -2659,7 +2701,7 @@ msgstr "სიგანე:"
 
 #: ../ui/pageFormat.glade:169
 msgid "Height:"
-msgstr ""
+msgstr "სიმაღლე:"
 
 #: ../ui/pageFormat.glade:315
 msgid "Reset"
@@ -2675,7 +2717,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:67
 msgid "<b>Page size</b>"
-msgstr ""
+msgstr "<b>გვერდის ზომა</b>"
 
 #: ../ui/pageTemplate.glade:92
 msgid "Change"
@@ -2699,7 +2741,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:192
 msgid "<b>Background</b>"
-msgstr ""
+msgstr "<b>ფონი</b>"
 
 #: ../ui/pageTemplate.glade:203
 msgid "Copy current page size instead"
@@ -2711,19 +2753,19 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:233
 msgid "Save to file"
-msgstr ""
+msgstr "ფაილში შენახვა"
 
 #: ../ui/pageTemplate.glade:247
 msgid "Load from file"
-msgstr ""
+msgstr "ფაილიდან ჩატვირთვა"
 
 #: ../ui/paletteSettings.glade:76
 msgid "Color Palettes"
-msgstr ""
+msgstr "ფერის პალიტრები"
 
 #: ../ui/plugin.glade:22
 msgid "Plugins"
-msgstr ""
+msgstr "დამატებები"
 
 #: ../ui/plugin.glade:81
 msgid "Plugin changes are only applied after Xournal++ is restarted"
@@ -2731,19 +2773,19 @@ msgstr ""
 
 #: ../ui/pluginEntry.glade:59
 msgid "Author: "
-msgstr ""
+msgstr "ავტორი: "
 
 #: ../ui/pluginEntry.glade:97
 msgid "Path: "
-msgstr ""
+msgstr "ბილიკი: "
 
 #: ../ui/pluginEntry.glade:134
 msgid "Version: "
-msgstr ""
+msgstr "ვერსია: "
 
 #: ../ui/pluginEntry.glade:170
 msgid "enabled,"
-msgstr ""
+msgstr "ჩართულია,"
 
 #: ../ui/renameLayerDialog.glade:17
 msgid "Rename selected layer"
@@ -2751,15 +2793,15 @@ msgstr ""
 
 #: ../ui/renameLayerDialog.glade:38
 msgid "Sample layer name"
-msgstr ""
+msgstr "ფენის მაგალითის სახელი"
 
 #: ../ui/selectOpacity.glade:23
 msgid "Opacity settings"
-msgstr ""
+msgstr "გაუმჭვირვალობის მორგება"
 
 #: ../ui/settings.glade:263
 msgid "Arithmetic mean"
-msgstr ""
+msgstr "არითმეტიკული საშუალო"
 
 #: ../ui/settings.glade:266
 msgid "Velocity based Gaussian weights"
@@ -2767,11 +2809,11 @@ msgstr ""
 
 #: ../ui/settings.glade:280
 msgid "Deadzone"
-msgstr ""
+msgstr "მკვდარი ზონა"
 
 #: ../ui/settings.glade:283
 msgid "Inertia"
-msgstr ""
+msgstr "ინერცია"
 
 #: ../ui/settings.glade:291
 msgid "Xournal++ Preferences"
@@ -2784,7 +2826,7 @@ msgstr ""
 
 #: ../ui/settings.glade:371
 msgid "Enable Autosaving"
-msgstr ""
+msgstr "ავტოშენახვის ჩართვა"
 
 #: ../ui/settings.glade:394
 msgid "every"
@@ -2792,11 +2834,11 @@ msgstr "ყოველ"
 
 #: ../ui/settings.glade:421
 msgid "minutes"
-msgstr ""
+msgstr "წუთი"
 
 #: ../ui/settings.glade:449
 msgid "Autosaving"
-msgstr ""
+msgstr "ავტოშენახვა"
 
 #: ../ui/settings.glade:475
 msgid "<i>This name will be proposed if you save a new document.</i>"
@@ -2804,7 +2846,7 @@ msgstr ""
 
 #: ../ui/settings.glade:508 ../ui/settings.glade:677
 msgid "Default name: "
-msgstr ""
+msgstr "ნაგულისხმევი სახელი: "
 
 #: ../ui/settings.glade:547
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -2839,7 +2881,7 @@ msgstr ""
 
 #: ../ui/settings.glade:618
 msgid "Default Save Name"
-msgstr ""
+msgstr "ნაგულისხმევი შენახვის სახელი"
 
 #: ../ui/settings.glade:644
 msgid "<i>This name will be proposed if you export a document to PDF.</i>"
@@ -2896,15 +2938,15 @@ msgstr ""
 
 #: ../ui/settings.glade:849
 msgid "Autoloading"
-msgstr ""
+msgstr "ავტოჩატვირთვა"
 
 #: ../ui/settings.glade:877
 msgid "Load / Save"
-msgstr ""
+msgstr "ჩატვირთვა / შენახვა"
 
 #: ../ui/settings.glade:929
 msgid "Input Devices"
-msgstr ""
+msgstr "შეყვანის მოწყობილობები"
 
 #: ../ui/settings.glade:963
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
@@ -2921,11 +2963,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1007
 msgid "Options"
-msgstr ""
+msgstr "პარამეტრები"
 
 #: ../ui/settings.glade:1037
 msgid "Averaging method"
-msgstr ""
+msgstr "გასაშუალოების მეთოდი"
 
 #: ../ui/settings.glade:1070
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
@@ -2933,7 +2975,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1086
 msgid "Buffersize"
-msgstr ""
+msgstr "ბუფერის ზომა"
 
 #: ../ui/settings.glade:1098
 msgid "20"
@@ -2941,7 +2983,7 @@ msgstr "20"
 
 #: ../ui/settings.glade:1115
 msgid "Deadzone radius"
-msgstr ""
+msgstr "მკვდარი ზონის რადიუსი"
 
 #: ../ui/settings.glade:1127
 msgid "1,30"
@@ -2985,15 +3027,15 @@ msgstr "0.50"
 
 #: ../ui/settings.glade:1243
 msgid "Preprocessor"
-msgstr ""
+msgstr "პრეპროცესორი"
 
 #: ../ui/settings.glade:1274
 msgid "Cusp detection"
-msgstr ""
+msgstr "წვეტების დადგენა"
 
 #: ../ui/settings.glade:1291
 msgid "Finalize the stroke"
-msgstr ""
+msgstr "დაშტრიხვის დასრულება"
 
 #: ../ui/settings.glade:1296
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
@@ -3009,7 +3051,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1367
 msgid "Number of Spaces:"
-msgstr ""
+msgstr "ჰარეების რაოდენობა:"
 
 #: ../ui/settings.glade:1379
 msgid "Number of spaces inserted with tab."
@@ -3025,7 +3067,7 @@ msgstr "Tab"
 
 #: ../ui/settings.glade:1440
 msgid "Input System"
-msgstr ""
+msgstr "შეყვანის სისტემა"
 
 #: ../ui/settings.glade:1485
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
@@ -3033,7 +3075,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1519
 msgid "Left Mouse Button"
-msgstr ""
+msgstr "თაგუნას მარცხენა ღილაკი"
 
 #: ../ui/settings.glade:1551
 msgid "Middle Mouse Button"
@@ -3041,19 +3083,19 @@ msgstr ""
 
 #: ../ui/settings.glade:1583
 msgid "Right Mouse Button"
-msgstr ""
+msgstr "თაგუნას მარჯვენა ღილაკი"
 
 #: ../ui/settings.glade:1615
 msgid "4th Mouse Button"
-msgstr ""
+msgstr "თაგუნას მეოთხე ღილაკი"
 
 #: ../ui/settings.glade:1647
 msgid "5th Mouse Button"
-msgstr ""
+msgstr "თაგუნას მეხუთე ღილაკი"
 
 #: ../ui/settings.glade:1663
 msgid "Mouse Buttons"
-msgstr ""
+msgstr "თაგუნას ღილაკები"
 
 #: ../ui/settings.glade:1741
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
@@ -3069,7 +3111,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1807
 msgid "Minimum Pressure:"
-msgstr ""
+msgstr "მინიმალური წნევა:"
 
 #: ../ui/settings.glade:1818
 msgid "Pressure Multiplier: "
@@ -3077,7 +3119,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1877
 msgid "Sensitivity Scale"
-msgstr ""
+msgstr "მგრძნობელობის მასშტაბი"
 
 #: ../ui/settings.glade:1893
 msgid "Pressure Sensitivity"
@@ -3089,7 +3131,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1935
 msgid "Ignore the first"
-msgstr ""
+msgstr "პირველის გამოტოვება"
 
 #: ../ui/settings.glade:1953
 msgid "1"
@@ -3097,7 +3139,7 @@ msgstr "1"
 
 #: ../ui/settings.glade:1969
 msgid "events"
-msgstr ""
+msgstr "მოვლენები"
 
 #: ../ui/settings.glade:1990
 msgid "Artifact workaround"
@@ -3109,7 +3151,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2131
 msgid "Stylus Buttons"
-msgstr ""
+msgstr "სტილუსის ღილაკები"
 
 #: ../ui/settings.glade:2163
 msgid "Stylus-based eraser is visible"
@@ -3123,21 +3165,21 @@ msgstr "არასდროს"
 #: ../ui/settings.glade:2179
 msgctxt "eraser is always visible"
 msgid "Always"
-msgstr ""
+msgstr "ყოველთვის"
 
 #: ../ui/settings.glade:2180
 msgctxt "eraser is only visible when floating"
 msgid "When floating"
-msgstr ""
+msgstr "ტივტივისას"
 
 #: ../ui/settings.glade:2181
 msgctxt "eraser is only visible when touching the screen"
 msgid "When touching"
-msgstr ""
+msgstr "შეხებისას"
 
 #: ../ui/settings.glade:2203
 msgid "Eraser visibility"
-msgstr ""
+msgstr "საშლელის ხილვადობა"
 
 #: ../ui/settings.glade:2281
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
@@ -3153,15 +3195,15 @@ msgstr ""
 
 #: ../ui/settings.glade:2385
 msgid "Disabling Method"
-msgstr ""
+msgstr "გათიშვის მეთოდი"
 
 #: ../ui/settings.glade:2396
 msgid "Timeout"
-msgstr ""
+msgstr "მოლოდინის ვადა ამოიწურა"
 
 #: ../ui/settings.glade:2410
 msgid "Autodetect"
-msgstr ""
+msgstr "ავტოამოცნობა"
 
 #: ../ui/settings.glade:2439
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
@@ -3173,11 +3215,11 @@ msgstr ""
 
 #: ../ui/settings.glade:2507
 msgid "Enable"
-msgstr ""
+msgstr "ჩართვა"
 
 #: ../ui/settings.glade:2518
 msgid "Disable"
-msgstr ""
+msgstr "გათიშვა"
 
 #: ../ui/settings.glade:2551 ../ui/settings.glade:2564
 msgid "Test"
@@ -3189,7 +3231,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2620
 msgid "Hand Recognition"
-msgstr ""
+msgstr "ხელის ამოცნობა"
 
 #: ../ui/settings.glade:2647
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
@@ -3218,7 +3260,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2750
 msgid "Zoom Gestures"
-msgstr ""
+msgstr "გადიდების ჟესტები"
 
 #: ../ui/settings.glade:2777
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
@@ -3234,7 +3276,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2811
 msgid "Touch Drawing"
-msgstr ""
+msgstr "შეხებით ხატვა"
 
 #: ../ui/settings.glade:2838
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
@@ -3246,7 +3288,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2871
 msgid "Touch Scrolling"
-msgstr ""
+msgstr "შეხებით გადახვევა"
 
 #: ../ui/settings.glade:2958
 msgid "Show Menubar on Startup"
@@ -3270,7 +3312,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3063
 msgid "Border color"
-msgstr ""
+msgstr "საზღვრის ფერი"
 
 #: ../ui/settings.glade:3076
 msgid "Background color between pages"
@@ -3290,7 +3332,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3171
 msgid "Icon Theme"
-msgstr ""
+msgstr "ხატულას თემა"
 
 #: ../ui/settings.glade:3186
 msgid "Color"
@@ -3298,23 +3340,23 @@ msgstr "ფერი"
 
 #: ../ui/settings.glade:3200
 msgid "(requires restart)"
-msgstr ""
+msgstr "(საჭიროებს გადატვირთვას)"
 
 #: ../ui/settings.glade:3223
 msgid "Theme Variant:"
-msgstr ""
+msgstr "თემის ვარიანტი:"
 
 #: ../ui/settings.glade:3243
 msgid "Use system default"
-msgstr ""
+msgstr "ნაგულისხმევი სისტემური პარამეტრების გამოყენება"
 
 #: ../ui/settings.glade:3244
 msgid "Force light theme"
-msgstr ""
+msgstr "ღია თემა ნაძალადევად"
 
 #: ../ui/settings.glade:3245
 msgid "Force dark theme"
-msgstr ""
+msgstr "მუქი თემა ნაძალადევად"
 
 #: ../ui/settings.glade:3258
 msgid "(this may not work, depending on your system theme)"
@@ -3330,7 +3372,7 @@ msgstr "ფერები"
 
 #: ../ui/settings.glade:3310
 msgid "Global"
-msgstr ""
+msgstr "გლობალური"
 
 #: ../ui/settings.glade:3338
 msgid "Recolor Drawing Area (might introduce lags when moving selections)"
@@ -3362,11 +3404,11 @@ msgstr "ფერადი მუქი რეგიონები ითარ
 
 #: ../ui/settings.glade:3403
 msgid "Dark Color"
-msgstr ""
+msgstr "მუქი ფერი"
 
 #: ../ui/settings.glade:3417
 msgid "Light Color"
-msgstr ""
+msgstr "ღია ფერი"
 
 #: ../ui/settings.glade:3430
 msgid "Recoloring (allows theming)"
@@ -3379,22 +3421,22 @@ msgstr ""
 #: ../ui/settings.glade:3477
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
-msgstr ""
+msgstr "ხატულას გარეშე"
 
 #: ../ui/settings.glade:3478
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
-msgstr ""
+msgstr "პატარა წერტილი"
 
 #: ../ui/settings.glade:3479
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
-msgstr ""
+msgstr "დიდი კალმის ხატულა"
 
 #: ../ui/settings.glade:3480
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
-msgstr ""
+msgstr "სისტემური კურსორი"
 
 #: ../ui/settings.glade:3505
 msgid "Highlight cursor position"
@@ -3410,16 +3452,16 @@ msgstr ""
 
 #: ../ui/settings.glade:3542
 msgid "Circle Color"
-msgstr ""
+msgstr "წრის ფერი"
 
 #: ../ui/settings.glade:3566 ../ui/settings.glade:3617
-#: ../ui/settings.glade:5109
+#: ../ui/settings.glade:5153
 msgid "pixels"
-msgstr ""
+msgstr "პიქსელები"
 
 #: ../ui/settings.glade:3594
 msgid "Radius"
-msgstr ""
+msgstr "რადიუსი"
 
 #: ../ui/settings.glade:3630
 msgid "30"
@@ -3427,15 +3469,15 @@ msgstr "30"
 
 #: ../ui/settings.glade:3646
 msgid "Border Width"
-msgstr ""
+msgstr "საზღვრის სიგანე"
 
 #: ../ui/settings.glade:3685
 msgid "Border Color"
-msgstr ""
+msgstr "საზღვრის ფერი"
 
 #: ../ui/settings.glade:3717
 msgid "Cursor"
-msgstr ""
+msgstr "კურსორი"
 
 #: ../ui/settings.glade:3742
 msgid "Show sidebar on the right side"
@@ -3451,23 +3493,23 @@ msgstr ""
 
 #: ../ui/settings.glade:3801
 msgid "Page numbering  "
-msgstr ""
+msgstr "გვერდის დანომვრა  "
 
 #: ../ui/settings.glade:3817
 msgid "Below preview"
-msgstr ""
+msgstr "მინიატურის ქვეშ"
 
 #: ../ui/settings.glade:3818
 msgid "Circle background"
-msgstr ""
+msgstr "წრიული ფონი"
 
 #: ../ui/settings.glade:3819
 msgid "Square background"
-msgstr ""
+msgstr "კვადრატული ფონი"
 
 #: ../ui/settings.glade:3839
 msgid "Sidebar"
-msgstr ""
+msgstr "გვერდითი პანელი"
 
 #: ../ui/settings.glade:3865
 msgid "Hide the horizontal scrollbar"
@@ -3483,7 +3525,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3913
 msgid "Scrollbars"
-msgstr ""
+msgstr "ჩოჩიები"
 
 #: ../ui/settings.glade:3967
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
@@ -3491,7 +3533,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3969
 msgid "Base speed"
-msgstr ""
+msgstr "საბაზისო სიჩქარე"
 
 #: ../ui/settings.glade:3980
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
@@ -3499,7 +3541,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3982
 msgid "Max multiplier"
-msgstr ""
+msgstr "მაქს. მამრავლი"
 
 #: ../ui/settings.glade:3995
 msgid "Selection Edge Panning"
@@ -3508,32 +3550,32 @@ msgstr ""
 #: ../ui/settings.glade:4020 ../ui/settings.glade:4094
 #: ../ui/mainmenubar.xml:205
 msgid "Show Menubar"
-msgstr ""
+msgstr "მენიუს ზოლის ჩვენება"
 
 #: ../ui/settings.glade:4035 ../ui/settings.glade:4109
 msgid "Show Toolbar"
-msgstr ""
+msgstr "ხელსაწყოების პანელის ჩვენება"
 
 #: ../ui/settings.glade:4050 ../ui/settings.glade:4139
 #: ../ui/mainmenubar.xml:210
 msgid "Show Sidebar"
-msgstr ""
+msgstr "გვერდითა პანელის ჩვენება"
 
 #: ../ui/settings.glade:4069 ../ui/mainmenubar.xml:193
 msgid "Fullscreen"
-msgstr ""
+msgstr "სრული ეკრანი"
 
 #: ../ui/settings.glade:4124
 msgid "Go Fullscreen"
-msgstr ""
+msgstr "სრული ეკრანზე გადასვლა"
 
 #: ../ui/settings.glade:4159
 msgid "Select toolbar:"
-msgstr ""
+msgstr "აირჩიეთ ხელსაწყოთა პანელი:"
 
 #: ../ui/settings.glade:4192
 msgid "Presentation Mode"
-msgstr ""
+msgstr "პრეზენტაციის რეჟიმი"
 
 #: ../ui/settings.glade:4221
 msgid "Pre-load pages before"
@@ -3549,7 +3591,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4297
 msgid "Performance"
-msgstr ""
+msgstr "წარმადობა"
 
 #: ../ui/settings.glade:4328
 msgid "View"
@@ -3565,357 +3607,365 @@ msgstr ""
 
 #: ../ui/settings.glade:4464
 msgid "Zoom Speed"
+msgstr "გადიდების სიჩქარე"
+
+#: ../ui/settings.glade:4489
+msgid "Force zoom to fit on document load"
 msgstr ""
 
-#: ../ui/settings.glade:4491
+#: ../ui/settings.glade:4508
+msgid "Default Zoom"
+msgstr ""
+
+#: ../ui/settings.glade:4535
 msgid "<i>To make sure on 100% zoom the size of elements is natural.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4511
+#: ../ui/settings.glade:4555
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4527
+#: ../ui/settings.glade:4571
 msgid "Automatic"
-msgstr ""
+msgstr "ავტომატური"
 
-#: ../ui/settings.glade:4584
+#: ../ui/settings.glade:4628
 msgid "The unit of the ruler is cm"
 msgstr ""
 
-#: ../ui/settings.glade:4605
+#: ../ui/settings.glade:4649
 msgid "Display DPI Calibration"
 msgstr ""
 
-#: ../ui/settings.glade:4636
+#: ../ui/settings.glade:4680
 msgid "Zoom"
 msgstr "გადიდება"
 
-#: ../ui/settings.glade:4685
+#: ../ui/settings.glade:4729
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4808
+#: ../ui/settings.glade:4852
 msgid "Add additional horizontal space"
 msgstr ""
 
-#: ../ui/settings.glade:4824
+#: ../ui/settings.glade:4868
 msgid "Add additional vertical space"
 msgstr ""
 
-#: ../ui/settings.glade:4842
+#: ../ui/settings.glade:4886
 msgid "<i>or</i>"
-msgstr ""
+msgstr "<i>ან</i>"
 
-#: ../ui/settings.glade:4854
+#: ../ui/settings.glade:4898
 msgid "Unlimited scrolling"
 msgstr ""
 
-#: ../ui/settings.glade:4878
+#: ../ui/settings.glade:4922
 msgid "<i>The amount is specified in pixels.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4910
+#: ../ui/settings.glade:4954
 msgid "Scrolling outside the page"
 msgstr ""
 
-#: ../ui/settings.glade:4937
+#: ../ui/settings.glade:4981
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr ""
 
-#: ../ui/settings.glade:4938
+#: ../ui/settings.glade:4982
 msgid "First Page Offset "
-msgstr ""
+msgstr "პირველი გვერდის წანაცვლება "
 
-#: ../ui/settings.glade:4951
+#: ../ui/settings.glade:4995
 msgid "Usually 0 or 1"
-msgstr ""
+msgstr "ჩვეულებრივ 0, ან 1"
 
-#: ../ui/settings.glade:4970
+#: ../ui/settings.glade:5014
 msgid "Paired Pages"
-msgstr ""
+msgstr "დაწყვილებული გვერდები"
 
-#: ../ui/settings.glade:4996
+#: ../ui/settings.glade:5040
 msgid "when scrolling to end of last page"
 msgstr ""
 
-#: ../ui/settings.glade:5011
+#: ../ui/settings.glade:5055
 msgid "when drawing on last page"
 msgstr ""
 
-#: ../ui/settings.glade:5026
+#: ../ui/settings.glade:5070
 msgid "disabled"
-msgstr ""
+msgstr "გათიშულია"
 
-#: ../ui/settings.glade:5044
+#: ../ui/settings.glade:5088
 msgid "Automatically Add Empty Last Page (excluding PDFs)"
 msgstr ""
 
-#: ../ui/settings.glade:5068
+#: ../ui/settings.glade:5112
 msgid "Enable  with determination radius of "
 msgstr ""
 
-#: ../ui/settings.glade:5073
+#: ../ui/settings.glade:5117
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "<i>Useful for operating without keyboard.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5123
+#: ../ui/settings.glade:5167
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr ""
 
-#: ../ui/settings.glade:5140
+#: ../ui/settings.glade:5184
 msgid "Preserve line width"
 msgstr ""
 
-#: ../ui/settings.glade:5145
+#: ../ui/settings.glade:5189
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
 msgstr ""
 
-#: ../ui/settings.glade:5156
+#: ../ui/settings.glade:5200
 msgid "Resizing"
-msgstr ""
+msgstr "ზომის შეცვლა"
 
-#: ../ui/settings.glade:5192
+#: ../ui/settings.glade:5236
 msgid "Rotation snapping tolerance"
 msgstr ""
 
-#: ../ui/settings.glade:5204
+#: ../ui/settings.glade:5248
 msgid "Grid snapping tolerance"
 msgstr ""
 
-#: ../ui/settings.glade:5246
+#: ../ui/settings.glade:5290
 msgid "Grid size"
-msgstr ""
+msgstr "ბადის ზომა"
 
-#: ../ui/settings.glade:5277
+#: ../ui/settings.glade:5321
 msgid "Use snapping for recognized shapes"
 msgstr ""
 
-#: ../ui/settings.glade:5281
+#: ../ui/settings.glade:5325
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
 msgstr ""
 
-#: ../ui/settings.glade:5296
+#: ../ui/settings.glade:5340
 msgid "Snapping"
-msgstr ""
+msgstr "მიმაგრება"
 
-#: ../ui/settings.glade:5324
+#: ../ui/settings.glade:5368
 msgid "Minimum Stroke Size"
 msgstr ""
 
-#: ../ui/settings.glade:5379
+#: ../ui/settings.glade:5423
 msgctxt "Short taps/clicks will trigger special actions"
 msgid "Enable Tap action"
-msgstr ""
+msgstr "დატყაპუნების ქმედების ჩართვა"
 
-#: ../ui/settings.glade:5384
+#: ../ui/settings.glade:5428
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr ""
 
-#: ../ui/settings.glade:5396
+#: ../ui/settings.glade:5440
 msgid "Time limit (ms)"
-msgstr ""
+msgstr "დროის ლიმიტი (მწმ)"
 
-#: ../ui/settings.glade:5408
+#: ../ui/settings.glade:5452
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5428
+#: ../ui/settings.glade:5472
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5448
+#: ../ui/settings.glade:5492
 msgid "Length limit (mm)"
-msgstr ""
+msgstr "სიგრძის ლიმიტი (მმ)"
 
-#: ../ui/settings.glade:5459
+#: ../ui/settings.glade:5503
 msgid "Frequency limit (ms)"
 msgstr ""
 
-#: ../ui/settings.glade:5471
+#: ../ui/settings.glade:5515
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
 "<i>Recommended: 500ms</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5488
+#: ../ui/settings.glade:5532
 msgid "Try to select object first."
 msgstr ""
 
-#: ../ui/settings.glade:5493 ../ui/settings.glade:5523
+#: ../ui/settings.glade:5537 ../ui/settings.glade:5567
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr ""
 
-#: ../ui/settings.glade:5506
+#: ../ui/settings.glade:5550
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr ""
 
-#: ../ui/settings.glade:5509
+#: ../ui/settings.glade:5553
 msgid "Settings:"
-msgstr ""
+msgstr "პარამეტრები:"
 
-#: ../ui/settings.glade:5518
+#: ../ui/settings.glade:5562
 msgid "Show Floating Toolbox"
 msgstr ""
 
-#: ../ui/settings.glade:5537
+#: ../ui/settings.glade:5581
 msgid "Action on Tool Tap"
-msgstr ""
+msgstr "ქმედება ხელსაწყოზე დატყაპუნებისას"
 
-#: ../ui/settings.glade:5565
+#: ../ui/settings.glade:5609
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality.\n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5587
+#: ../ui/settings.glade:5631
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr ""
 
-#: ../ui/settings.glade:5590
+#: ../ui/settings.glade:5634
 msgid "Re-render when the page's zoom changes by more than "
 msgstr ""
 
-#: ../ui/settings.glade:5603
+#: ../ui/settings.glade:5647
 msgid "0.00"
 msgstr "0.00"
 
-#: ../ui/settings.glade:5620
+#: ../ui/settings.glade:5664
 msgid "%."
 msgstr "%."
 
-#: ../ui/settings.glade:5641
+#: ../ui/settings.glade:5685
 msgid "PDF Cache"
-msgstr ""
+msgstr "PDF კეში"
 
-#: ../ui/settings.glade:5672
+#: ../ui/settings.glade:5716
 msgid "Drawing Area"
-msgstr ""
+msgstr "სახატავი არე"
 
-#: ../ui/settings.glade:5719
+#: ../ui/settings.glade:5763
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5771
+#: ../ui/settings.glade:5815
 msgid "<b>Default tool</b>"
 msgstr ""
 
-#: ../ui/settings.glade:5807
+#: ../ui/settings.glade:5851
 msgid "<i>The laser pointer allows to write strokes that will fade out after a short while.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5828
+#: ../ui/settings.glade:5872
 msgid "Fade out delay (in ms)"
 msgstr ""
 
-#: ../ui/settings.glade:5880
+#: ../ui/settings.glade:5924
 msgid "<b>Laser pointer</b>"
 msgstr ""
 
-#: ../ui/settings.glade:5920
+#: ../ui/settings.glade:5964
 msgid "Tools"
 msgstr "ხელსაწყოები"
 
-#: ../ui/settings.glade:5973
+#: ../ui/settings.glade:6017
 msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required).\n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
 "</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5989
+#: ../ui/settings.glade:6033
 msgid "Disable Audio"
-msgstr ""
+msgstr "აუდიოს გამორთვა"
 
-#: ../ui/settings.glade:6011
+#: ../ui/settings.glade:6055
 msgid "Enable or Disable Audio"
 msgstr ""
 
-#: ../ui/settings.glade:6038
+#: ../ui/settings.glade:6082
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:6057 ../ui/settings.glade:6093
+#: ../ui/settings.glade:6101 ../ui/settings.glade:6137
 msgid "Storage Folder"
-msgstr ""
+msgstr "საცავის საქაღალდე"
 
-#: ../ui/settings.glade:6072
+#: ../ui/settings.glade:6116
 msgid "Select Folder"
-msgstr ""
+msgstr "საქაღალდის არჩევა"
 
-#: ../ui/settings.glade:6120
+#: ../ui/settings.glade:6164
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:6144
+#: ../ui/settings.glade:6188
 msgid "Input Device"
-msgstr ""
+msgstr "შეყვანის მოწყობილობა"
 
-#: ../ui/settings.glade:6166
+#: ../ui/settings.glade:6210
 msgid "Output Device"
-msgstr ""
+msgstr "გამოტანის მოწყობილობა"
 
-#: ../ui/settings.glade:6197
+#: ../ui/settings.glade:6241
 msgid "Audio Devices"
-msgstr ""
+msgstr "აუდიომოწყობილობები"
 
-#: ../ui/settings.glade:6226
+#: ../ui/settings.glade:6270
 msgid "Sample Rate"
-msgstr ""
+msgstr "დისკრეტიზაციის სიხშირე"
 
-#: ../ui/settings.glade:6237
+#: ../ui/settings.glade:6281
 msgid "Gain"
 msgstr "გაძლიერება"
 
-#: ../ui/settings.glade:6284
+#: ../ui/settings.glade:6328
 msgid "Recording Quality"
-msgstr ""
+msgstr "ჩაწერის ხარისხი"
 
-#: ../ui/settings.glade:6310
+#: ../ui/settings.glade:6354
 msgid "Default Seek Time (in seconds)"
 msgstr ""
 
-#: ../ui/settings.glade:6323
+#: ../ui/settings.glade:6367
 msgid "1,00"
 msgstr "1.00"
 
-#: ../ui/settings.glade:6342
+#: ../ui/settings.glade:6386
 msgid "Playback Settings"
-msgstr ""
+msgstr "დაკვრის მორგება"
 
-#: ../ui/settings.glade:6356
+#: ../ui/settings.glade:6400
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:6387
+#: ../ui/settings.glade:6431
 msgid "Audio Recording"
-msgstr ""
+msgstr "აუდიოჩანაწერი"
 
-#: ../ui/settings.glade:6460
+#: ../ui/settings.glade:6504
 msgid "<i>Select language (requires restart)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:6492 ../ui/settings.glade:6538
+#: ../ui/settings.glade:6536 ../ui/settings.glade:6582
 msgid "Language"
-msgstr ""
+msgstr "ენა"
 
-#: ../ui/settings.glade:6508
+#: ../ui/settings.glade:6552
 msgid "Language Settings"
-msgstr ""
+msgstr "ენის პარამეტრები"
 
-#: ../ui/settings.glade:6562
+#: ../ui/settings.glade:6606
 msgid "Palette"
-msgstr ""
+msgstr "პალიტრა"
 
 #: ../ui/settingsButtonConfig.glade:20
 msgid "Device"
-msgstr ""
+msgstr "მოწყობილობა"
 
 #: ../ui/settingsButtonConfig.glade:44
 msgid "Disable drawing for this device"
@@ -3927,15 +3977,15 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:126 ../ui/settingsButtonConfig.glade:144
 msgid "Standard"
-msgstr ""
+msgstr "სტანდარტული"
 
 #: ../ui/settingsButtonConfig.glade:127
 msgid "Whiteout"
-msgstr ""
+msgstr "გათეთრება"
 
 #: ../ui/settingsButtonConfig.glade:128
 msgid "Delete stroke"
-msgstr ""
+msgstr "შტრიხის წაშლა"
 
 #: ../ui/settingsButtonConfig.glade:143
 msgid "Stroke Type - don't change"
@@ -3943,15 +3993,15 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:145
 msgid "Dashed"
-msgstr ""
+msgstr "დაშტრიხული"
 
 #: ../ui/settingsButtonConfig.glade:146
 msgid "Dash-dotted"
-msgstr ""
+msgstr "წერტილშტრიხით"
 
 #: ../ui/settingsDeviceClassConfig.glade:34
 msgid "Disabled"
-msgstr ""
+msgstr "გათიშულია"
 
 #: ../ui/settingsDeviceClassConfig.glade:54
 msgid "Apply"
@@ -3963,7 +4013,7 @@ msgstr ""
 
 #: ../ui/toolbarManageDialog.glade:28
 msgid "Manage Toolbar"
-msgstr ""
+msgstr "ხელსაწყოთა პანელის მართვა"
 
 #: ../ui/mainmenubar.xml:5
 msgid "_File"
@@ -3976,23 +4026,23 @@ msgstr "გახსნა"
 #. Filled dynamically
 #: ../ui/mainmenubar.xml:19
 msgid "Recent _Documents"
-msgstr ""
+msgstr "უახლესი _დოკუმენტები"
 
 #: ../ui/mainmenubar.xml:22
 msgid "_Annotate PDF"
-msgstr ""
+msgstr "PDF-ის _ანოტაცია"
 
 #: ../ui/mainmenubar.xml:31
 msgid "Save As"
-msgstr ""
+msgstr "შენახვა, როგორც"
 
 #: ../ui/mainmenubar.xml:38
 msgid "_Export as PDF"
-msgstr ""
+msgstr "_PDF-ში გატანა"
 
 #: ../ui/mainmenubar.xml:42
 msgid "Export as..."
-msgstr ""
+msgstr "გატანა, როგორც..."
 
 #: ../ui/mainmenubar.xml:54
 msgid "Quit"
@@ -4004,7 +4054,7 @@ msgstr "ჩასწორ_ება"
 
 #: ../ui/mainmenubar.xml:93
 msgid "Select All"
-msgstr ""
+msgstr "ყველას მონიშვნა"
 
 #: ../ui/mainmenubar.xml:100
 msgid "Find"
@@ -4012,23 +4062,23 @@ msgstr "ძებნა"
 
 #: ../ui/mainmenubar.xml:114
 msgid "Arrange Selection"
-msgstr ""
+msgstr "მონიშნულის დალაგება"
 
 #: ../ui/mainmenubar.xml:117
 msgid "Bring to Front"
-msgstr ""
+msgstr "წინ გამოტანა"
 
 #: ../ui/mainmenubar.xml:122
 msgid "Bring Forward"
-msgstr ""
+msgstr "წინ გამოტანა"
 
 #: ../ui/mainmenubar.xml:127
 msgid "Send Backward"
-msgstr ""
+msgstr "უკან წაღება"
 
 #: ../ui/mainmenubar.xml:132
 msgid "Send to Back"
-msgstr ""
+msgstr "უკანა პლანზე გადატანა"
 
 #: ../ui/mainmenubar.xml:141
 msgid "Move Selection Layer Up"
@@ -4040,19 +4090,19 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:161
 msgid "Preferences"
-msgstr ""
+msgstr "მორგება"
 
 #: ../ui/mainmenubar.xml:166
 msgid "T_oolbars"
-msgstr ""
+msgstr "ხელსაწ_ყოთა პანელები"
 
 #: ../ui/mainmenubar.xml:169
 msgid "_Manage"
-msgstr ""
+msgstr "_მართვა"
 
 #: ../ui/mainmenubar.xml:173
 msgid "_Customize"
-msgstr ""
+msgstr "მ_ორგება"
 
 #: ../ui/mainmenubar.xml:181
 msgid "_View"
@@ -4060,179 +4110,179 @@ msgstr "_ხედი"
 
 #: ../ui/mainmenubar.xml:184
 msgid "_Pair Pages"
-msgstr ""
+msgstr "გვერდების _წყვილი"
 
 #: ../ui/mainmenubar.xml:188
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "_პრეზენტაციის რეჟიმი"
 
 #: ../ui/mainmenubar.xml:200
 msgid "Show Toolbars"
-msgstr ""
+msgstr "ხელსაწყოს პანელების ჩვენება"
 
 #: ../ui/mainmenubar.xml:217
 msgid "Layout"
-msgstr ""
+msgstr "განლაგება"
 
 #: ../ui/mainmenubar.xml:220
 msgid "_Horizontal"
-msgstr ""
+msgstr "_ჰორიზონტალური"
 
 #: ../ui/mainmenubar.xml:225
 msgid "_Vertical"
-msgstr ""
+msgstr "_ვერტიკალური"
 
 #: ../ui/mainmenubar.xml:232
 msgid "_Left to Right"
-msgstr ""
+msgstr "მარც_ხნიდან მარჯვნივ"
 
 #: ../ui/mainmenubar.xml:237
 msgid "_Right to Left"
-msgstr ""
+msgstr "მა_რჯვნიდან მარცხნივ"
 
 #: ../ui/mainmenubar.xml:244
 msgid "_Top to Bottom"
-msgstr ""
+msgstr "ზემოდან _ქვემოთ"
 
 #: ../ui/mainmenubar.xml:249
 msgid "_Bottom to Top"
-msgstr ""
+msgstr "ქვემო_დან ზემოთ"
 
 #: ../ui/mainmenubar.xml:256
 msgid "_Cols/Rows"
-msgstr ""
+msgstr "სვეტები/მ_წკრივები"
 
 #: ../ui/mainmenubar.xml:259
 msgid "Set Columns"
-msgstr ""
+msgstr "სვეტების დაყენება"
 
 #: ../ui/mainmenubar.xml:263
 msgid "_1 Column"
-msgstr ""
+msgstr "_1 სვეტი"
 
 #: ../ui/mainmenubar.xml:268
 msgid "_2 Columns"
-msgstr ""
+msgstr "_2 სვეტი"
 
 #: ../ui/mainmenubar.xml:273
 msgid "_3 Columns"
-msgstr ""
+msgstr "_3 სვეტი"
 
 #: ../ui/mainmenubar.xml:278
 msgid "_4 Columns"
-msgstr ""
+msgstr "_4 სვეტი"
 
 #: ../ui/mainmenubar.xml:283
 msgid "_5 Columns"
-msgstr ""
+msgstr "_5 სვეტი"
 
 #: ../ui/mainmenubar.xml:288
 msgid "_6 Columns"
-msgstr ""
+msgstr "_6 სვეტი"
 
 #: ../ui/mainmenubar.xml:293
 msgid "_7 Columns"
-msgstr ""
+msgstr "_7 სვეტი"
 
 #: ../ui/mainmenubar.xml:298
 msgid "_8 Columns"
-msgstr ""
+msgstr "_8 სვეტი"
 
 #: ../ui/mainmenubar.xml:305
 msgid "Set Rows"
-msgstr ""
+msgstr "მწკრივების დაყენება"
 
 #: ../ui/mainmenubar.xml:309
 msgid "_1 Row"
-msgstr ""
+msgstr "_1 მწკრივი"
 
 #: ../ui/mainmenubar.xml:314
 msgid "_2 Rows"
-msgstr ""
+msgstr "_2 მწკრივი"
 
 #: ../ui/mainmenubar.xml:319
 msgid "_3 Rows"
-msgstr ""
+msgstr "_3 მწკრივი"
 
 #: ../ui/mainmenubar.xml:324
 msgid "_4 Rows"
-msgstr ""
+msgstr "_4 მწკრივი"
 
 #: ../ui/mainmenubar.xml:329
 msgid "_5 Rows"
-msgstr ""
+msgstr "_5 მწკრივი"
 
 #: ../ui/mainmenubar.xml:334
 msgid "_6 Rows"
-msgstr ""
+msgstr "_6 მწკრივი"
 
 #: ../ui/mainmenubar.xml:339
 msgid "_7 Rows"
-msgstr ""
+msgstr "_7 მწკრივი"
 
 #: ../ui/mainmenubar.xml:344
 msgid "_8 Rows"
-msgstr ""
+msgstr "_8 მწკრივი"
 
 #: ../ui/mainmenubar.xml:355
 msgid "Zoom In"
-msgstr ""
+msgstr "გადიდება"
 
 #: ../ui/mainmenubar.xml:360
 msgid "Zoom Out"
-msgstr ""
+msgstr "დაპატარავება"
 
 #: ../ui/mainmenubar.xml:365
 msgid "Normal Size"
-msgstr ""
+msgstr "ნორმალური ზომა"
 
 #: ../ui/mainmenubar.xml:369
 msgid "Zoom to Fit"
-msgstr ""
+msgstr "გადიდება ჩატევამდე"
 
 #: ../ui/mainmenubar.xml:375
 msgid "_Navigation"
-msgstr ""
+msgstr "_ნავიგაცია"
 
 #: ../ui/mainmenubar.xml:378
 msgid "_First Page"
-msgstr ""
+msgstr "_პირველი გვერდი"
 
 #: ../ui/mainmenubar.xml:383
 msgid "_Previous Page"
-msgstr ""
+msgstr "_წინა გვერდი"
 
 #: ../ui/mainmenubar.xml:388
 msgid "Jump _Back"
-msgstr ""
+msgstr "უ_კან გადასვლა"
 
 #: ../ui/mainmenubar.xml:392
 msgid "_Goto Page"
-msgstr ""
+msgstr "_გადასვლა გვერდზე"
 
 #: ../ui/mainmenubar.xml:397
 msgid "Jump _Forward"
-msgstr ""
+msgstr "_წინ გადასვლა"
 
 #: ../ui/mainmenubar.xml:401
 msgid "_Next Page"
-msgstr ""
+msgstr "შემდეგი გ_ვერდი"
 
 #: ../ui/mainmenubar.xml:406
 msgid "_Last Page"
-msgstr ""
+msgstr "ბო_ლო გვერდი"
 
 #: ../ui/mainmenubar.xml:413
 msgid "_Previous Layer"
-msgstr ""
+msgstr "_წინა ფენა"
 
 #: ../ui/mainmenubar.xml:418
 msgid "_Next Layer"
-msgstr ""
+msgstr "შემდეგი ფე_ნა"
 
 #: ../ui/mainmenubar.xml:423
 msgid "_Top Layer"
-msgstr ""
+msgstr "_ზედა ფენა"
 
 #: ../ui/mainmenubar.xml:429
 msgid "N_ext Annotated Page"
@@ -4244,19 +4294,19 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:444
 msgid "New Page _Before"
-msgstr ""
+msgstr "ახალი გვერდი მა_ნამდე"
 
 #: ../ui/mainmenubar.xml:448
 msgid "New Page _After"
-msgstr ""
+msgstr "_ახალი გვერდი რის შემდეგ"
 
 #: ../ui/mainmenubar.xml:453
 msgid "New Page at _End"
-msgstr ""
+msgstr "ახალი გვ_ერდი ბოლოში"
 
 #: ../ui/mainmenubar.xml:457
 msgid "Duplicate Page"
-msgstr ""
+msgstr "გვერდის დუბლირება"
 
 #: ../ui/mainmenubar.xml:461
 msgid "Append New PDF Pages"
@@ -4268,7 +4318,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:469
 msgid "_Delete Page"
-msgstr ""
+msgstr "გვერ_დის წაშლა"
 
 #: ../ui/mainmenubar.xml:476
 msgid "Add a _Layer above the active layer"
@@ -4276,27 +4326,27 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:485
 msgid "Delete Layer"
-msgstr ""
+msgstr "ფენის წაშლა"
 
 #: ../ui/mainmenubar.xml:490
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "ქვედა ფენასთან შერწყმა"
 
 #: ../ui/mainmenubar.xml:495
 msgid "Rename Layer"
-msgstr ""
+msgstr "ფენის სახელის გადარქმევა"
 
 #: ../ui/mainmenubar.xml:502
 msgid "Paper _Format"
-msgstr ""
+msgstr "_ფურცლის ფორმატი"
 
 #: ../ui/mainmenubar.xml:506
 msgid "Paper _Color"
-msgstr ""
+msgstr "_ქაღალდის ფერი"
 
 #: ../ui/mainmenubar.xml:515
 msgid "_Tools"
-msgstr ""
+msgstr "_ხელსაწყოები"
 
 #: ../ui/mainmenubar.xml:518
 msgid "_Pen"
@@ -4304,11 +4354,11 @@ msgstr "_კალამი"
 
 #: ../ui/mainmenubar.xml:524
 msgid "_Eraser"
-msgstr ""
+msgstr "საშლ_ელი"
 
 #: ../ui/mainmenubar.xml:530
 msgid "Select Linear Text"
-msgstr ""
+msgstr "წრფივი ტექსტის მონიშვნა"
 
 #: ../ui/mainmenubar.xml:536
 msgid "Select Text In Rectangle"
@@ -4316,130 +4366,138 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:542
 msgid "_Highlighter"
-msgstr ""
+msgstr "გამ_ომკვეთი"
 
 #: ../ui/mainmenubar.xml:548
 msgid "_Text"
 msgstr "_ტექსტი"
 
 #: ../ui/mainmenubar.xml:554
-msgid "_Image"
-msgstr ""
+msgid "_Link"
+msgstr "ბმუ_ლი"
 
 #: ../ui/mainmenubar.xml:560
+msgid "LaTe_X"
+msgstr ""
+
+#: ../ui/mainmenubar.xml:566
+msgid "_Image"
+msgstr "გამოსა_ხულება"
+
+#: ../ui/mainmenubar.xml:572
 msgid "_Default Tool"
-msgstr ""
+msgstr "_ნაგულისხმევი ხელსაწყო"
 
-#: ../ui/mainmenubar.xml:567
+#: ../ui/mainmenubar.xml:579
 msgid "Drawing Type"
-msgstr ""
+msgstr "ნახატის ტიპი"
 
-#: ../ui/mainmenubar.xml:569
+#: ../ui/mainmenubar.xml:581
 msgid "_Shape Recognizer"
-msgstr ""
+msgstr "_მოხაზულობის ამომცნობი"
 
-#: ../ui/mainmenubar.xml:599
+#: ../ui/mainmenubar.xml:611
 msgid "Draw _Line"
-msgstr ""
-
-#: ../ui/mainmenubar.xml:640
-msgid "_Vertical Space"
-msgstr ""
+msgstr "ხაზის დახა_ტვა"
 
 #: ../ui/mainmenubar.xml:652
+msgid "_Vertical Space"
+msgstr "_ვერტიკალური სივრცე"
+
+#: ../ui/mainmenubar.xml:664
 msgid "H_and Tool"
-msgstr ""
+msgstr "ხელის ხელს_აწყო"
 
-#: ../ui/mainmenubar.xml:668
+#: ../ui/mainmenubar.xml:680
 msgid "Pen _Options"
-msgstr ""
+msgstr "კალმის მ_ორგება"
 
-#: ../ui/mainmenubar.xml:671 ../ui/mainmenubar.xml:733
-#: ../ui/mainmenubar.xml:780
+#: ../ui/mainmenubar.xml:683 ../ui/mainmenubar.xml:745
+#: ../ui/mainmenubar.xml:792
 msgid "_very fine"
-msgstr ""
+msgstr "_ძალიან ზუსტი"
 
-#: ../ui/mainmenubar.xml:676 ../ui/mainmenubar.xml:738
-#: ../ui/mainmenubar.xml:785
+#: ../ui/mainmenubar.xml:688 ../ui/mainmenubar.xml:750
+#: ../ui/mainmenubar.xml:797
 msgid "_fine"
 msgstr "_ზუსტი"
 
-#: ../ui/mainmenubar.xml:681 ../ui/mainmenubar.xml:743
-#: ../ui/mainmenubar.xml:790
+#: ../ui/mainmenubar.xml:693 ../ui/mainmenubar.xml:755
+#: ../ui/mainmenubar.xml:802
 msgid "_medium"
-msgstr ""
+msgstr "საშ_უალო"
 
-#: ../ui/mainmenubar.xml:686 ../ui/mainmenubar.xml:748
-#: ../ui/mainmenubar.xml:795
+#: ../ui/mainmenubar.xml:698 ../ui/mainmenubar.xml:760
+#: ../ui/mainmenubar.xml:807
 msgid "_thick"
-msgstr ""
+msgstr "_სქელი"
 
-#: ../ui/mainmenubar.xml:691 ../ui/mainmenubar.xml:753
-#: ../ui/mainmenubar.xml:800
+#: ../ui/mainmenubar.xml:703 ../ui/mainmenubar.xml:765
+#: ../ui/mainmenubar.xml:812
 msgid "ver_y thick"
-msgstr ""
+msgstr "ძალიან ს_ქელი"
 
-#: ../ui/mainmenubar.xml:720 ../ui/mainmenubar.xml:807
+#: ../ui/mainmenubar.xml:732 ../ui/mainmenubar.xml:819
 msgid "Fi_ll"
 msgstr "შე_ვსება"
 
-#: ../ui/mainmenubar.xml:724 ../ui/mainmenubar.xml:811
+#: ../ui/mainmenubar.xml:736 ../ui/mainmenubar.xml:823
 msgid "Fill opacity"
-msgstr ""
+msgstr "შევსების ბუნდოვნობა"
 
-#: ../ui/mainmenubar.xml:730
+#: ../ui/mainmenubar.xml:742
 msgid "Eraser Optio_ns"
-msgstr ""
+msgstr "საშლელის _მორგება"
 
-#: ../ui/mainmenubar.xml:760
+#: ../ui/mainmenubar.xml:772
 msgid "_standard"
-msgstr ""
-
-#: ../ui/mainmenubar.xml:765
-msgid "_whiteout"
-msgstr ""
-
-#: ../ui/mainmenubar.xml:770
-msgid "_delete strokes"
-msgstr ""
+msgstr "_სტანდარტული"
 
 #: ../ui/mainmenubar.xml:777
+msgid "_whiteout"
+msgstr "_გათეთრება"
+
+#: ../ui/mainmenubar.xml:782
+msgid "_delete strokes"
+msgstr "_შტრიხების წაშლა"
+
+#: ../ui/mainmenubar.xml:789
 msgid "Highlighter Opti_ons"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:817
+#: ../ui/mainmenubar.xml:829
 msgid "Select PDF Text Options"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:820
+#: ../ui/mainmenubar.xml:832
 msgid "Marker Opacity"
-msgstr ""
+msgstr "მარკერის გაუმჭვირვალობა"
 
-#: ../ui/mainmenubar.xml:826
+#: ../ui/mainmenubar.xml:838
 msgid "Text Font..."
-msgstr ""
+msgstr "ტექსტის ფონტი..."
 
-#: ../ui/mainmenubar.xml:831
+#: ../ui/mainmenubar.xml:843
 msgid "Record / Stop"
-msgstr ""
+msgstr "ჩაწერა / გაჩერება"
 
-#: ../ui/mainmenubar.xml:836
+#: ../ui/mainmenubar.xml:848
 msgid "Pause"
 msgstr "შეჩერება"
 
-#: ../ui/mainmenubar.xml:863
+#: ../ui/mainmenubar.xml:870
 msgid "_Help"
 msgstr "_დახმარება"
 
-#: ../ui/mainmenubar.xml:867
+#: ../ui/mainmenubar.xml:874
 msgid "Help"
 msgstr "დახმარება"
 
-#: ../ui/mainmenubar.xml:871
+#: ../ui/mainmenubar.xml:878
 msgid "Run Gtk3 demo"
-msgstr ""
+msgstr "GTK3 დემოს გაშვება"
 
-#: ../ui/mainmenubar.xml:875
+#: ../ui/mainmenubar.xml:882
 msgid "About"
 msgstr "შესახებ"
 
@@ -4449,7 +4507,7 @@ msgstr ""
 
 #: ../resources-templates/pagetemplates.ini.in:42
 msgid "Graph with border"
-msgstr ""
+msgstr "გრაფიკი საზღვრით"
 
 #: ../resources-templates/pagetemplates.ini.in:47
 msgid "Graph with border (bold every 5th)"
@@ -4457,27 +4515,27 @@ msgstr ""
 
 #: ../resources-templates/toolbar.ini.in:50
 msgid "All Tools"
-msgstr ""
+msgstr "ყველა ხელსაწყო"
 
 #: ../resources-templates/toolbar.ini.in:55
 msgid "Portrait"
-msgstr ""
+msgstr "პორტრეტი"
 
 #: ../resources-templates/toolbar.ini.in:61
 msgid "Minimal Left"
-msgstr ""
+msgstr "მინიმალურად მარცხნივ"
 
 #: ../resources-templates/toolbar.ini.in:65
 msgid "Minimal Top"
-msgstr ""
+msgstr "მინიმალურად ზემოთ"
 
 #: ../resources-templates/toolbar.ini.in:69
 msgid "Xournal++"
-msgstr ""
+msgstr "Xournal++"
 
 #: ../resources-templates/toolbar.ini.in:77
 msgid "Tablet mode"
-msgstr ""
+msgstr "ტაბლეტის რეჟიმი"
 
 #: ../resources-templates/toolbar.ini.in:83
 msgid "Right hand Note Taking"
@@ -4485,15 +4543,15 @@ msgstr ""
 
 #: ../resources-templates/toolbar.ini.in:86
 msgid "Toolbar Left"
-msgstr ""
+msgstr "მარცხენა პანელი"
 
 #: ../resources-templates/toolbar.ini.in:92
 msgid "Toolbar Right"
-msgstr ""
+msgstr "ხელსაწყოთა პანელი მარჯვნივ"
 
 #: ../resources-templates/toolbar.ini.in:107
 msgid "Empty Toolbar"
-msgstr ""
+msgstr "ცარიელი ხელსაწყოთა პანელი"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:6
 msgid "Note-taking application"
@@ -4625,11 +4683,11 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:57
 msgid "Note taking"
-msgstr ""
+msgstr "შენიშვნების ჩაწერა"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:61
 msgid "PDF annotation"
-msgstr ""
+msgstr "PDF ანოტაცია"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:65
 msgid "LaTeX with customized preamble"
@@ -4637,7 +4695,7 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.xml.in:4
 msgid "Xournal note file"
-msgstr ""
+msgstr "Xournal-ის შენიშვნის ფაილი"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.xml.in:8
 msgid "Xournal++ note file"
