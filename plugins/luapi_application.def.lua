@@ -353,8 +353,8 @@ function app.addStrokes(opts) end
 ---   - allowUndoRedoAction string: Decides how the change gets introduced into the undoRedo action list "individual",
 --- "grouped" or "none"
 --- 
---- @param opts {texts:{text:string, font:{name:string, size:number}, color:integer, x:number, y:number}[],
---- allowUndoRedoAction:string}
+--- @param opts {texts:{text:string, font:{name:string, size:number}, color:integer, x:number, y:number,
+--- wrap:number|nil}[], allowUndoRedoAction:string}
 --- @return lightuserdata[] references to the created text elements
 --- 
 --- Parameters per textbox:
@@ -363,6 +363,7 @@ function app.addStrokes(opts) end
 ---   - color integer: RGB hex code for the text-color (default: color of text tool)
 ---   - x number: x-position of the box (upper left corner) (required)
 ---   - y number: y-position of the box (upper left corner) (required)
+---   - wrap number|nil: width of the wrap (default: no wrap)
 --- 
 --- Example:
 --- 
@@ -375,11 +376,12 @@ function app.addStrokes(opts) end
 ---     y = 50.0,
 ---   },
 ---   {
----     text="Testing",
+---     text="Testing some long text that may need wrapping",
 ---     font={name="Noto Sans Mono Medium", size=8.0},
 ---     color=0x0,
 ---     x = 150.0,
 ---     y = 50.0,
+---     wrap = 200.0,
 ---   },
 --- }
 function app.addTexts(opts) end
@@ -392,7 +394,7 @@ function app.addTexts(opts) end
 --- Is mostly inverse to app.addTexts (except getTexts may also retrieve the width/height/page/layer of the textbox)
 --- 
 --- @param type string "selection" or "layer" or "page" or "all"
---- @return {text:string, font:{name:string, size:number}, color:integer, x:number, y:number, width:number,
+--- @return {text:string, font:{name:string, size:number}, color:integer, x:number, y:number, wrap: number, width:number,
 --- height:number, ref:lightuserdata, page:number|nil, layer:number|nil}[] texts
 --- 
 --- Required argument: type ("selection" or "layer" or "page" or "all")
@@ -410,6 +412,7 @@ function app.addTexts(opts) end
 ---     color = 0x1259b9,
 ---     x = 127.0,
 ---     y = 70.0,
+---     wrap = -1.0, -- No wrapping
 ---     width = 55.0,
 ---     height = 23.0,
 ---     ref = userdata: 0x5f644c0700d0
@@ -417,7 +420,7 @@ function app.addTexts(opts) end
 ---     layer = 1, -- Only present when called with the "all" or "page" argument
 ---   },
 ---   {
----     text = "Testing",
+---     text = "Testing some long text that may need wrapping",
 ---     font = {
 ---             name = "Noto Sans Mono Medium",
 ---             size = 8.0,
@@ -425,6 +428,7 @@ function app.addTexts(opts) end
 ---     color = 0x0,
 ---     x = 150.0,
 ---     y = 70.0,
+---     wrap = 200.0,
 ---     width = 55.0,
 ---     height = 23.0,
 ---     ref = userdata: 0x5f644c0701e8
