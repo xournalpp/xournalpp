@@ -11,7 +11,6 @@
 
 #pragma once
 
-#include <memory>  // for shared_ptr
 #include <string>  // for string
 
 #include <gdk/gdk.h>  // for GdkEvent, gdk_event_free, gdk_event_copy
@@ -47,25 +46,6 @@ enum InputDeviceClass {
     INPUT_DEVICE_IGNORE
 };
 
-struct GdkEventGuard {
-    static inline GdkEvent* safeRef(GdkEvent* source) { return gdk_event_copy(source); }
-
-    GdkEventGuard() = default;
-
-    [[maybe_unused]] explicit GdkEventGuard(GdkEvent* source): event(safeRef(source), &gdk_event_free) {}
-
-    GdkEventGuard& operator=(GdkEvent* source) {
-        event = {safeRef(source), &gdk_event_free};
-        return *this;
-    }
-
-    GdkEvent* get() const { return event.get(); }
-
-    // it's more performant to manage the GdkEvent over C++ than over gdk
-    // Since the gdk_copy is extreme expansive
-    std::shared_ptr<GdkEvent> event{};
-};
-
 struct InputEvent final {
     /*explicit(false)*/ explicit operator bool() const { return device; }
 
@@ -92,7 +72,7 @@ struct KeyEvent final {
     guint keyval{0};
     GdkModifierType state{};  ///< Consumed modifiers have been masked out
 
-    GdkEventGuard sourceEvent;  ///< Original GdkEvent. Avoid using if possible.
+    GdkEvent* sourceEvent;  ///< Original GdkEvent. Avoid using if possible. Will be destroyed when the callback returns
 };
 
 struct InputEvents {

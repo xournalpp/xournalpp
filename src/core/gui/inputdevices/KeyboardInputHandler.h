@@ -19,8 +19,8 @@ private:
 public:
     explicit KeyboardInputHandler(InputContext* inputContext);
     ~KeyboardInputHandler();
-    bool keyPressed(KeyEvent e) const;
-    bool keyReleased(KeyEvent e) const;
+    bool keyPressed(const KeyEvent& e) const;
+    bool keyReleased(const KeyEvent& e) const;
 
 private:
     InputContext* inputContext;

@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <memory>
+#include <mutex>
 #include <string>  // for string
 #include <vector>  // for vector
 
@@ -22,7 +24,7 @@
 
 class PopplerGlibPage: public XojPdfPage {
 public:
-    PopplerGlibPage(PopplerPage* page, PopplerDocument* doc);
+    PopplerGlibPage(PopplerPage* page, PopplerDocument* doc, std::shared_ptr<std::mutex> mutex);
     PopplerGlibPage(const PopplerGlibPage& other);
     virtual ~PopplerGlibPage();
     PopplerGlibPage& operator=(const PopplerGlibPage& other);
@@ -51,4 +53,5 @@ public:
 private:
     PopplerPage* page;
     PopplerDocument* document;
+    std::shared_ptr<std::mutex> mutex;  ///< Poppler doesn't support parallel renderings. Lock this mutex when rendering
 };

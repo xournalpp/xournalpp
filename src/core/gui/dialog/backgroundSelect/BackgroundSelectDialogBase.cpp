@@ -59,7 +59,6 @@ void BackgroundSelectDialogBase::layout() {
     int x = 0;
     int y = 0;
     int row_height = 0;
-    int max_row_width = 0;
 
     auto width = gtk_adjustment_get_page_size(gtk_scrolled_window_get_hadjustment(scrolledWindow));
 
@@ -69,7 +68,6 @@ void BackgroundSelectDialogBase::layout() {
         }
 
         if (x + p->getWidth() > width) {
-            max_row_width = std::max(max_row_width, x);
             y += row_height;
             x = 0;
             row_height = 0;
@@ -79,9 +77,6 @@ void BackgroundSelectDialogBase::layout() {
         row_height = std::max(row_height, p->getHeight());
         x += p->getWidth();
     }
-    max_row_width = std::max(max_row_width, x);
-
-    gtk_widget_set_size_request(GTK_WIDGET(this->container), max_row_width, y + row_height);
 }
 
 void BackgroundSelectDialogBase::populate() {
@@ -112,3 +107,5 @@ void BackgroundSelectDialogBase::setSelected(size_t selected) {
         gtk_widget_set_sensitive(okButton, true);
     }
 }
+
+void BackgroundSelectDialogBase::ok() { gtk_button_clicked(GTK_BUTTON(okButton)); }

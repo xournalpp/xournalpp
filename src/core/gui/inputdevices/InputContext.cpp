@@ -67,7 +67,7 @@ InputContext::InputContext(Settings* settings, DeviceTestingArea& testing):
     }
 }
 
-template <bool (KeyboardInputHandler::*handler)(KeyEvent) const>
+template <bool (KeyboardInputHandler::*handler)(const KeyEvent&) const>
 static gboolean keyboardCallback(GtkEventControllerKey* self, guint keyval, guint, GdkModifierType state, gpointer d) {
     auto* gdkEvent = gtk_event_controller_get_current_event(GTK_EVENT_CONTROLLER(self));
     KeyEvent e;
