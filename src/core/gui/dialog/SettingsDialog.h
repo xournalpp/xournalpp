@@ -17,7 +17,6 @@
 
 #include <gtk/gtk.h>  // for GtkWidget, GtkWindow
 
-#include "audio/DeviceInfo.h"                    // for DeviceInfo
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
 #include "gui/Builder.h"
 #include "util/raii/GtkWindowUPtr.h"
@@ -28,6 +27,10 @@
 #include "SettingsDialogPaletteTab.h"
 #include "config-features.h"  // for ENABLE_AUDIO
 #include "filesystem.h"       // for path
+
+#ifdef ENABLE_AUDIO
+#include "audio/DeviceInfo.h"  // for DeviceInfo
+#endif
 
 class Control;
 class Settings;

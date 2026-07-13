@@ -12,9 +12,6 @@
 
 #include <string>  // for string
 
-#include "config-features.h"
-
-#ifdef ENABLE_AUDIO
 #include <portaudiocpp/PortAudioCpp.hxx>  // for PaDeviceIndex
 
 
@@ -23,9 +20,9 @@ public:
     DeviceInfo(portaudio::Device* device, bool selected);
 
 public:
-    const std::string& getDeviceName() const;
-    PaDeviceIndex getIndex() const;
-    bool getSelected() const;
+    inline const std::string& getDeviceName() const { return deviceName; }
+    inline PaDeviceIndex getIndex() const { return index; }
+    inline bool getSelected() const { return selected; }
 
 private:
     const std::string deviceName;
@@ -34,4 +31,3 @@ private:
     const int inputChannels{};
     const int outputChannels{};
 };
-#endif

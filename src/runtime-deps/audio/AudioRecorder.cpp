@@ -5,7 +5,7 @@
 #include "audio/PortAudioProducer.h"  // for PortAudioProducer
 #include "audio/VorbisConsumer.h"     // for VorbisConsumer
 
-AudioRecorder::AudioRecorder(Settings& settings):
+AudioRecorder::AudioRecorder(const AudioSettings& settings):
         audioQueue(std::make_unique<AudioQueue<float>>()),
         portAudioProducer(std::make_unique<PortAudioProducer>(settings, *audioQueue)),
         vorbisConsumer(std::make_unique<VorbisConsumer>(settings, *audioQueue)) {}

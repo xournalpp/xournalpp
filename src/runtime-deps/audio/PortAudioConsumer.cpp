@@ -7,10 +7,10 @@
 
 #include <glib.h>  // for g_warning
 
-#include "audio/AudioQueue.h"           // for AudioQueue
-#include "audio/DeviceInfo.h"           // for DeviceInfo
-#include "control/settings/Settings.h"  // for Settings
-#include "util/safe_casts.h"            // for as_unsigned
+#include "audio/AudioQueue.h"     // for AudioQueue
+#include "audio/AudioSettings.h"  // for AudioSettings
+#include "audio/DeviceInfo.h"     // for DeviceInfo
+#include "util/safe_casts.h"      // for as_unsigned
 
 #include "AudioPlayer.h"  // for AudioPlayer
 
@@ -22,7 +22,7 @@ auto PortAudioConsumer::getOutputDevices() const -> std::vector<DeviceInfo> {
 
     for (auto i = this->sys.devicesBegin(); i != sys.devicesEnd(); ++i) {
         if (i->isFullDuplexDevice() || i->isOutputOnlyDevice()) {
-            DeviceInfo deviceInfo(&(*i), this->audioPlayer.getSettings().getAudioOutputDevice() == i->index());
+            DeviceInfo deviceInfo(&(*i), this->audioPlayer.getSettings().audioOutputDevice == i->index());
             deviceList.push_back(deviceInfo);
         }
     }
@@ -31,7 +31,7 @@ auto PortAudioConsumer::getOutputDevices() const -> std::vector<DeviceInfo> {
 
 auto PortAudioConsumer::getSelectedOutputDevice() const -> DeviceInfo {
     try {
-        return DeviceInfo(&sys.deviceByIndex(this->audioPlayer.getSettings().getAudioOutputDevice()), true);
+        return DeviceInfo(&sys.deviceByIndex(this->audioPlayer.getSettings().audioOutputDevice), true);
     } catch (const portaudio::PaException& e) {
         g_warning("PortAudioConsumer: Selected output device was not found - fallback to default output device\nCaused "
                   "by: %s",
@@ -126,7 +126,7 @@ auto PortAudioConsumer::playCallback(const void* /*inputBuffer*/, void* outputBu
 
         // Continue playback if there is still data available
         if (this->audioQueue.hasStreamEnded() && this->audioQueue.empty()) {
-            this->audioPlayer.disableAudioPlaybackButtons();
+            this->audioPlayer.fireOnStop();
             return paComplete;
         }
 
@@ -136,7 +136,7 @@ auto PortAudioConsumer::playCallback(const void* /*inputBuffer*/, void* outputBu
 
     // The output buffer is no longer available - Abort!
     this->audioQueue.signalEndOfStream();
-    this->audioPlayer.disableAudioPlaybackButtons();
+    this->audioPlayer.fireOnStop();
     return paAbort;
 }
 

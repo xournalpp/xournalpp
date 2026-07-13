@@ -18,20 +18,27 @@
 #include <memory>   // for make_unique, unique_ptr
 #include <vector>   // for vector
 
-#include <portaudiocpp/PortAudioCpp.hxx>  // for AutoSystem
-
+#include "LibraryHandle.h"
 #include "filesystem.h"  // for path
 
-class AudioPlayer;
-class AudioRecorder;
 class Control;
 class DeviceInfo;
 class Settings;
+class AudioPlayer;
+class AudioRecorder;
+
+namespace xoj::audio {
+class System;
+}
 
 class AudioController final {
+    // Keep private: use the factory below
+    AudioController(Settings* settings, Control* control, xoj::runtime::LibraryHandle audioLib,
+                    std::unique_ptr<xoj::audio::System> audio);
+
 public:
-    // Todo convert Pointers to reference (changes to control.cpp are necessary)
-    AudioController(Settings* settings, Control* control);
+    /// Creates an AudioController instance if PortAudio (and deps) is found at runtime
+    static std::unique_ptr<AudioController> tryLoadingAudioLibrary(Settings* settings, Control* control);
     ~AudioController();
 
     bool startRecording();
@@ -56,13 +63,10 @@ private:
     Settings& settings;
     Control& control;
 
-    /**
-     * RAII initializer don't move below the portaudio::System::instance() calls in
-     * AudioRecorder and AudioPlayer
-     * */
-    portaudio::AutoSystem autoSys;
-    std::unique_ptr<AudioRecorder> audioRecorder;
-    std::unique_ptr<AudioPlayer> audioPlayer;
+    xoj::runtime::LibraryHandle audioLibrary;
+    std::unique_ptr<xoj::audio::System> audio;
+    AudioRecorder* audioRecorder;
+    AudioPlayer* audioPlayer;
 
     fs::path audioFilename;
     size_t timestamp = 0;
