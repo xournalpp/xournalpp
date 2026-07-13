@@ -104,5 +104,5 @@ enum {
 #define IS_LINK_DEST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), TYPE_LINK_DEST))
 #define LINK_DEST_GET_CLASS(object) (G_TYPE_INSTANCE_GET_CLASS((object), TYPE_LINK_DEST, XojLinkDestClass))
 
-GType link_dest_get_type(void) G_GNUC_CONST;
+GType link_dest_get_type(void);
 XojLinkDest* link_dest_new();
