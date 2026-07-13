@@ -1147,6 +1147,8 @@ function app.setFont(font) end
 ---| "audio-seek-backwards"
 ---| "select-font"
 ---| "font"
+---| "text-alignment"
+---| "text-justify"
 ---| "plugin-manager"
 ---| "help"
 ---| "demo"

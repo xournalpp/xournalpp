@@ -25,6 +25,7 @@
 class LineStyle;
 class Settings;
 class ActionDatabase;
+class TextAlignment;
 
 
 // enum for ptrs that are dynamically pointing to different tools
@@ -219,6 +220,11 @@ public:
 
     void setSelectPDFTextMarkerOpacity(int alpha);
     int getSelectPDFTextMarkerOpacity() const;
+
+    TextAlignment getTextAlignment() const;
+    void setTextAlignment(TextAlignment a);
+    bool getTextJustify() const;
+    void setTextJustify(bool j);
 
     /**
      * @brief Set the toolbar selected tool to the type

@@ -140,6 +140,8 @@ enum class Action : size_t {
 
     SELECT_FONT,
     FONT,  ///< Action whose state is the font's description
+    TEXT_ALIGNMENT,
+    TEXT_JUSTIFY,
 
     // Plugin Menu
     PLUGIN_MANAGER,

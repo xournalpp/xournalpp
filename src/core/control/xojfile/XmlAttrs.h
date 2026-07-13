@@ -52,6 +52,8 @@ constexpr auto SIZE_STR = u8"size";  // also in link
 constexpr auto WRAP_STR = u8"wrap";
 constexpr auto X_COORD_STR = u8"x";  // also in link
 constexpr auto Y_COORD_STR = u8"y";  // also in link
+constexpr auto ALIGN_STR = u8"align";  // also in link
+constexpr auto JUSTIFY_STR = u8"justify";
 
 // image
 constexpr auto LEFT_POS_STR = u8"left";      // also in teximage
@@ -63,7 +65,6 @@ constexpr auto BOTTOM_POS_STR = u8"bottom";  // also in teximage
 constexpr auto TEXT_STR = u8"text";
 
 // link
-constexpr auto ALIGN_STR = u8"align";
 constexpr auto URL_STR = u8"url";
 
 // attachment

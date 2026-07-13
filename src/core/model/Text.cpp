@@ -38,6 +38,8 @@ auto Text::cloneText() const -> std::unique_ptr<Text> {
     text->sizeCalculated = this->sizeCalculated;
     text->inEditing = this->inEditing;
     text->wrapWidth = this->wrapWidth;
+    text->align = this->align;
+    text->justify = this->justify;
 
     return text;
 }
@@ -68,15 +70,53 @@ void Text::setWrap(double wrap) {
     sizeCalculated = false;
 }
 
+void Text::setAlignment(TextAlignment a) {
+    this->align = a;
+    sizeCalculated = false;
+}
+
+Text::Boxes Text::computeBoxesForLayout(PangoLayout* layout, xoj::util::Point<double> origin, double wrapWidth) {
+    PangoRectangle box;
+    pango_layout_get_extents(layout, nullptr, &box);
+
+    xoj::util::Point<double> offset{static_cast<double>(box.x) / PANGO_SCALE, static_cast<double>(box.y) / PANGO_SCALE};
+
+    Boxes res;
+
+    res.bounds.width = static_cast<double>(box.width) / PANGO_SCALE;
+    res.bounds.height = static_cast<double>(box.height) / PANGO_SCALE;
+    res.bounds.x = origin.x + offset.x;
+    res.bounds.y = origin.y + offset.y;
+
+    res.snap.x = origin.x;
+    res.snap.y = origin.y;
+
+    if (wrapWidth != NO_WRAP) {
+        res.snap.width = wrapWidth;
+    } else {
+        res.snap.width = res.bounds.width + offset.x;
+    }
+    res.snap.height = res.bounds.height + offset.y;
+
+    return res;
+}
+
+void Text::setOrigin(double x, double y) {
+    this->snappedBounds.x = x;
+    this->snappedBounds.y = y;
+    this->sizeCalculated = false;  // Recompute Element::x,y
+}
+
+auto Text::getOrigin() const -> const xoj::util::Point<double>& { return this->snappedBounds.getOrigin(); }
+
 void Text::calcSize() const {
     auto layout = createPangoLayout();
     pango_layout_set_text(layout.get(), this->text.c_str(), static_cast<int>(this->text.length()));
-    int w = 0;
-    int h = 0;
-    pango_layout_get_size(layout.get(), &w, &h);
-    this->boundingBox.width = (static_cast<double>(w)) / PANGO_SCALE;
-    this->boundingBox.height = (static_cast<double>(h)) / PANGO_SCALE;
-    this->updateSnapping();
+
+    auto boxes = computeBoxesForLayout(layout.get(), {this->snappedBounds.x, this->snappedBounds.y}, this->wrapWidth);
+
+    this->boundingBox = boxes.bounds;
+    this->snappedBounds = boxes.snap;
 }
 
 void Text::setInEditing(bool inEditing) { this->inEditing = inEditing; }
@@ -89,6 +129,9 @@ auto Text::createPangoLayout() const -> xoj::util::GObjectSPtr<PangoLayout> {
 
     pango_layout_set_width(layout.get(),
                            this->wrapWidth == NO_WRAP ? -1 : round_cast<int>(this->wrapWidth * PANGO_SCALE));
+
+    pango_layout_set_justify(layout.get(), this->justify);
+    pango_layout_set_alignment(layout.get(), this->align.toPango());
 
 #if PANGO_VERSION_CHECK(1, 48, 5)  // see https://gitlab.gnome.org/GNOME/pango/-/issues/499
     pango_layout_set_line_spacing(layout.get(), 1.0);
@@ -148,6 +191,8 @@ void Text::serialize(ObjectOutputStream& out) const {
     font.serialize(out);
 
     out.writeDouble(this->wrapWidth);
+    out.writeInt(static_cast<int>(this->align));
+    out.writeInt(this->justify);
 
     out.endObject();
 }
@@ -162,11 +207,12 @@ void Text::readSerialized(ObjectInputStream& in) {
     font.readSerialized(in);
 
     this->wrapWidth = in.readDouble();
+    this->align = static_cast<TextAlignment::Value>(in.readInt());
+    this->align.validate();
+    this->justify = in.readInt() != 0;
 
     in.endObject();
 }
-
-void Text::updateSnapping() const { this->snappedBounds = this->boundingBox; }
 
 auto Text::findText(const std::string& search) const -> std::vector<XojPdfRectangle> {
     size_t patternLength = search.length();
