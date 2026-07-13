@@ -456,7 +456,7 @@ void LoadHandler::finalizeTexImage() {
     this->layer->addElement(std::move(this->teximage));
 }
 
-void LoadHandler::addLink(LinkAlignment align, std::string font, double size, double x, double y, Color color,
+void LoadHandler::addLink(TextAlignment align, std::string font, double size, double x, double y, Color color,
                           std::string url) {
     this->link = std::make_unique<Link>();
 

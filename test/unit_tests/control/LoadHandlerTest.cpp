@@ -34,6 +34,7 @@
 #include "model/StrokeStyle.h"
 #include "model/TexImage.h"
 #include "model/Text.h"
+#include "model/TextAlignment.h"
 #include "model/XojPage.h"
 #include "util/Color.h"
 #include "util/PathUtil.h"
@@ -807,7 +808,7 @@ TEST(ControlLoadHandler, testUrlLink) {
     auto elements = layer->getElementsView();
     ASSERT_EQ((size_t)4, layer->getElementsView().size());
 
-    auto check_link = [&](size_t i, const auto* text, const auto* url, LinkAlignment align) {
+    auto check_link = [&](size_t i, const auto* text, const auto* url, TextAlignment align) {
         EXPECT_EQ(ELEMENT_LINK, elements[i]->getType());
         auto* link = dynamic_cast<const Link*>(elements[i]);
         ASSERT_NE(link, nullptr);
@@ -816,11 +817,11 @@ TEST(ControlLoadHandler, testUrlLink) {
         EXPECT_EQ(link->getAlignment(), align);
     };
 
-    check_link(0, u8"Simple Link", u8"https://xournalpp.github.io", LinkAlignment::LEFT);
+    check_link(0, u8"Simple Link", u8"https://xournalpp.github.io", TextAlignment::LEFT);
     check_link(1, u8"Multiline\nLink\nwith three lines",
                u8"https://johndoe:secret@www.example.com:8080/documentation/index.html?p1=A&p2=B#ressource",
-               LinkAlignment::CENTER);
-    check_link(2, u8"Chinese characters: 测试", u8"http://見.香港/", LinkAlignment::LEFT);
+               TextAlignment::CENTER);
+    check_link(2, u8"Chinese characters: 测试", u8"http://見.香港/", TextAlignment::LEFT);
     check_link(3, u8"Other non-ASCII characters:\nHæuñßéř, dǒńg-bǎǐ, łúčný, qǐng-wèn, vò-địâ",
-               u8"mailto:françois.rené@café-crème.fr", LinkAlignment::RIGHT);
+               u8"mailto:françois.rené@café-crème.fr", TextAlignment::RIGHT);
 }

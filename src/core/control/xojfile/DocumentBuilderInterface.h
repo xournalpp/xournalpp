@@ -27,7 +27,7 @@ class PageType;
 class Point;
 class StrokeCapStyle;
 class StrokeTool;
-class LinkAlignment;
+class TextAlignment;
 
 class DocumentBuilderInterface {
 public:
@@ -63,7 +63,7 @@ public:
     virtual void setTexImageData(std::string data) = 0;
     virtual void setTexImageAttachment(const fs::path& filename) = 0;
     virtual void finalizeTexImage() = 0;
-    virtual void addLink(LinkAlignment align, std::string font, double size, double x, double y, Color color,
+    virtual void addLink(TextAlignment align, std::string font, double size, double x, double y, Color color,
                          std::string url) = 0;
     virtual void setLinkContent(std::string contents) = 0;
     virtual void finalizeLink() = 0;

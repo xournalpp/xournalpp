@@ -11,9 +11,9 @@ constexpr auto UI_DIALOG_NAME = "linkDialog";
 
 static void okButtonClicked(GtkButton*, LinkDialog* dialog) { dialog->okButtonPressed(); }
 static void cancelButtonClicked(GtkButton*, LinkDialog* dialog) { dialog->cancelButtonPressed(); }
-static void layoutToggledLeft(GtkButton*, LinkDialog* dialog) { dialog->layoutToggled(LinkAlignment::LEFT); };
-static void layoutToggledCenter(GtkButton*, LinkDialog* dialog) { dialog->layoutToggled(LinkAlignment::CENTER); };
-static void layoutToggledRight(GtkButton*, LinkDialog* dialog) { dialog->layoutToggled(LinkAlignment::RIGHT); };
+static void layoutToggledLeft(GtkButton*, LinkDialog* dialog) { dialog->layoutToggled(TextAlignment::LEFT); };
+static void layoutToggledCenter(GtkButton*, LinkDialog* dialog) { dialog->layoutToggled(TextAlignment::CENTER); };
+static void layoutToggledRight(GtkButton*, LinkDialog* dialog) { dialog->layoutToggled(TextAlignment::RIGHT); };
 static void urlPrefixChangedClb(GtkComboBoxText* source, LinkDialog* dialog) { dialog->urlPrefixChanged(source); };
 
 LinkDialog::LinkDialog(Control* control, std::function<void(LinkDialog*)> callbackOK,
@@ -56,7 +56,7 @@ LinkDialog::LinkDialog(Control* control, std::function<void(LinkDialog*)> callba
 
 LinkDialog::~LinkDialog() { this->callbackCancel(); };
 
-void LinkDialog::preset(XojFont font, std::string text, std::string url, LinkAlignment layout) {
+void LinkDialog::preset(XojFont font, std::string text, std::string url, TextAlignment layout) {
     GtkTextBuffer* textBuffer = gtk_text_view_get_buffer(this->textInput);
     GtkTextIter start, end;
     gtk_text_buffer_get_bounds(textBuffer, &start, &end);
@@ -106,14 +106,14 @@ bool LinkDialog::isTextValid(const std::string& text) {
 
 bool LinkDialog::isUrlValid(const std::string& url) { return !url.empty(); }
 
-void LinkDialog::layoutToggled(LinkAlignment layout) {
+void LinkDialog::layoutToggled(TextAlignment layout) {
     this->layout = layout;
-    gtk_toggle_button_set_active(this->layoutLeft, layout == LinkAlignment::LEFT);
-    gtk_toggle_button_set_active(this->layoutCenter, layout == LinkAlignment::CENTER);
-    gtk_toggle_button_set_active(this->layoutRight, layout == LinkAlignment::RIGHT);
+    gtk_toggle_button_set_active(this->layoutLeft, layout == TextAlignment::LEFT);
+    gtk_toggle_button_set_active(this->layoutCenter, layout == TextAlignment::CENTER);
+    gtk_toggle_button_set_active(this->layoutRight, layout == TextAlignment::RIGHT);
 }
 
-LinkAlignment LinkDialog::getLayout() { return this->layout; }
+TextAlignment LinkDialog::getLayout() { return this->layout; }
 
 XojFont LinkDialog::getFont() {
     auto font = xoj::util::OwnedCString::assumeOwnership(gtk_font_chooser_get_font(this->fontChooser));

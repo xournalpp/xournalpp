@@ -18,7 +18,7 @@
 #include <gtk/gtk.h>  // for GtkIMContext, GtkTextIter, GtkWidget
 
 #include "model/Font.h"  // for XojFont
-#include "model/Link.h"  // for LinkAlignment
+#include "model/TextAlignment.h"
 #include "util/raii/GtkWindowUPtr.h"
 
 class Control;
@@ -33,16 +33,16 @@ public:
     ~LinkDialog();
 
 public:
-    void preset(XojFont font, std::string text, std::string url, LinkAlignment layout = LinkAlignment::LEFT);
+    void preset(XojFont font, std::string text, std::string url, TextAlignment layout = TextAlignment::LEFT);
     std::string getText();
     std::string getURL();
-    LinkAlignment getLayout();
+    TextAlignment getLayout();
     XojFont getFont();
 
 public:
     void okButtonPressed();
     void cancelButtonPressed();
-    void layoutToggled(LinkAlignment l);
+    void layoutToggled(TextAlignment l);
     void urlPrefixChanged(GtkComboBoxText* source);
 
 private:
@@ -68,7 +68,7 @@ private:
 
     std::string linkText;
     std::string linkURL;
-    LinkAlignment layout = LinkAlignment::LEFT;
+    TextAlignment layout = TextAlignment::LEFT;
 
 public:
     inline GtkWindow* getWindow() const { return linkDialog.get(); }
