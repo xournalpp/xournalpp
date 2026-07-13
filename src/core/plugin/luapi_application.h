@@ -1471,8 +1471,8 @@ static int applib_addStrokes(lua_State* L) {
  *   - allowUndoRedoAction string: Decides how the change gets introduced into the undoRedo action list "individual",
  * "grouped" or "none"
  *
- * @param opts {texts:{text:string, font:{name:string, size:number}, color:integer, x:number, y:number}[],
- * allowUndoRedoAction:string}
+ * @param opts {texts:{text:string, font:{name:string, size:number}, color:integer, x:number, y:number,
+ * wrap:number|nil}[], allowUndoRedoAction:string}
  * @return lightuserdata[] references to the created text elements
  *
  * Parameters per textbox:
@@ -1481,6 +1481,7 @@ static int applib_addStrokes(lua_State* L) {
  *   - color integer: RGB hex code for the text-color (default: color of text tool)
  *   - x number: x-position of the box (upper left corner) (required)
  *   - y number: y-position of the box (upper left corner) (required)
+ *   - wrap number|nil: width of the wrap (default: no wrap)
  *
  * Example:
  *
@@ -1493,11 +1494,12 @@ static int applib_addStrokes(lua_State* L) {
  *     y = 50.0,
  *   },
  *   {
- *     text="Testing",
+ *     text="Testing some long text that may need wrapping",
  *     font={name="Noto Sans Mono Medium", size=8.0},
  *     color=0x0,
  *     x = 150.0,
  *     y = 50.0,
+ *     wrap = 200.0,
  *   },
  * }
  */
@@ -1557,52 +1559,56 @@ static int applib_addTexts(lua_State* L) {
         lua_getfield(L, -5, "color");
         lua_getfield(L, -6, "x");
         lua_getfield(L, -7, "y");
+        lua_getfield(L, -8, "wrap");
 
         // stack now has following:
         //    1 = global params table
-        //   -9 = texts array
-        //   -8 = current text-params table
-        //   -7 = text
-        //   -6 = font-table
-        //   -5 = fontname
-        //   -4 = fontsize
-        //   -3 = color
-        //   -2 = x
-        //   -1 = y
+        //   -10 = texts array
+        //   -9 = current text-params table
+        //   -8 = text
+        //   -7 = font-table
+        //   -6 = fontname
+        //   -5 = fontsize
+        //   -4 = color
+        //   -3 = x
+        //   -2 = y
+        //   -1 = wrap
 
-        if (!lua_isstring(L, -7)) {
+        if (!lua_isstring(L, -8)) {
             return luaL_error(L, "Missing text!/'text' must be a string");
         }
-        text->setText(lua_tostring(L, -7));
+        text->setText(lua_tostring(L, -8));
 
         XojFont font{};
-        font.setName(luaL_optstring(L, -5, default_font.getName().c_str()));
-        font.setSize(luaL_optnumber(L, -4, default_font.getSize()));
+        font.setName(luaL_optstring(L, -6, default_font.getName().c_str()));
+        font.setSize(luaL_optnumber(L, -5, default_font.getSize()));
         text->setFont(font);
 
-        if (lua_isinteger(L, -3)) {  // Check if the color was provided
-            uint32_t color = static_cast<uint32_t>(as_unsigned(lua_tointeger(L, -3)));
+        if (lua_isinteger(L, -4)) {  // Check if the color was provided
+            uint32_t color = static_cast<uint32_t>(as_unsigned(lua_tointeger(L, -4)));
             if (color > 0xffffff) {
                 std::stringstream msg;
                 msg << "Color 0x" << std::hex << color << " is no valid RGB color.";
                 return luaL_error(L, msg.str().c_str());  // luaL_error does not support %x for hex numbers
             }
             text->setColor(Color(color | 0xff000000U));
-        } else if (lua_isnil(L, -3)) {
+        } else if (lua_isnil(L, -4)) {
             text->setColor(default_color);
         } else {
             return luaL_error(L, "'color' must be an integer/hex-code or unset");
         }
 
-        if (!lua_isnumber(L, -2)) {  // Check if x was provided
+        if (!lua_isnumber(L, -3)) {  // Check if x was provided
             return luaL_error(L, "Missing X-Coordinate!/must be a number");
         }
-        if (!lua_isnumber(L, -1)) {  // Check if y was provided
+        if (!lua_isnumber(L, -2)) {  // Check if y was provided
             return luaL_error(L, "Missing Y-Coordinate!/must be a number");
         }
-        text->setOrigin(lua_tonumber(L, -2), lua_tonumber(L, -1));
+        text->setOrigin(lua_tonumber(L, -3), lua_tonumber(L, -2));
 
-        lua_pop(L, 8);  // remove values read out from the text table + text-table itself
+        text->setWrap(luaL_optnumber(L, -1, Text::NO_WRAP));
+
+        lua_pop(L, 9);  // remove values read out from the text table + text-table itself
 
         // Finish building the Text and apply it to the layer.
         texts.push_back(text.get());
@@ -1636,7 +1642,7 @@ static int applib_addTexts(lua_State* L) {
  * Is mostly inverse to app.addTexts (except getTexts may also retrieve the width/height/page/layer of the textbox)
  *
  * @param type string "selection" or "layer" or "page" or "all"
- * @return {text:string, font:{name:string, size:number}, color:integer, x:number, y:number, width:number,
+ * @return {text:string, font:{name:string, size:number}, color:integer, x:number, y:number, wrap: number, width:number,
  * height:number, ref:lightuserdata, page:number|nil, layer:number|nil}[] texts
  *
  * Required argument: type ("selection" or "layer" or "page" or "all")
@@ -1654,6 +1660,7 @@ static int applib_addTexts(lua_State* L) {
  *     color = 0x1259b9,
  *     x = 127.0,
  *     y = 70.0,
+ *     wrap = -1.0, -- No wrapping
  *     width = 55.0,
  *     height = 23.0,
  *     ref = userdata: 0x5f644c0700d0
@@ -1661,7 +1668,7 @@ static int applib_addTexts(lua_State* L) {
  *     layer = 1, -- Only present when called with the "all" or "page" argument
  *   },
  *   {
- *     text = "Testing",
+ *     text = "Testing some long text that may need wrapping",
  *     font = {
  *             name = "Noto Sans Mono Medium",
  *             size = 8.0,
@@ -1669,6 +1676,7 @@ static int applib_addTexts(lua_State* L) {
  *     color = 0x0,
  *     x = 150.0,
  *     y = 70.0,
+ *     wrap = 200.0,
  *     width = 55.0,
  *     height = 23.0,
  *     ref = userdata: 0x5f644c0701e8
@@ -1729,6 +1737,9 @@ static int applib_getTexts(lua_State* L) {
 
         lua_pushnumber(L, y);
         lua_setfield(L, -2, "y");  // add y coordinate to text
+
+        lua_pushnumber(L, t->getWrap());
+        lua_setfield(L, -2, "wrap");  // add wrap to text
 
         const auto& box = t->getBoundingBox();
         lua_pushnumber(L, box.width);
