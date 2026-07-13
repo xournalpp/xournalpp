@@ -50,6 +50,7 @@
 #include "model/Element.h"
 #include "model/Font.h"
 #include "model/Image.h"
+#include "model/Link.h"
 #include "model/SplineSegment.h"
 #include "model/Stroke.h"
 #include "model/StrokeStyle.h"
@@ -1762,6 +1763,146 @@ static int applib_getTexts(lua_State* L) {
         }
 
         lua_settable(L, -3);  // add text to elements
+    }
+    return 1;
+}
+
+
+/**
+ * Returns a list of lua table of the url links (from current selection / current layer / current page / all pages).
+ * When called with "page" to retrieve all elements on the current page, it also adds a field "layer" for the
+ * layer containing the element, and when called with "all" it additionally adds a field "page" containing its page
+ * index together with its layer (all of them being indexed from 1).
+ *
+ * Is mostly inverse to app.addLinks (except getLinks may also retrieve the width/height/page/layer of the link box)
+ *
+ * @param type string "selection" or "layer" or "page" or "all"
+ * @return {text:string, url:string, alignment:integer, font:{name:string, size:number}, color:integer, x:number,
+ * y:number, width:number, height:number, ref:lightuserdata, page:number|nil, layer:number|nil}[] links
+ *
+ * Required argument: type ("selection" or "layer" or "page" or "all")
+ *
+ * Example: local links = app.getLinks("all")
+ *
+ * possible return value:
+ * {
+ *   {
+ *     text = "Xournal++ Website",
+ *     url  = "https://xournalpp.github.io",
+ *     alignment = 0,  -- app.C.Alignment_left
+ *     font = {
+ *             name = "Noto Sans Mono Medium",
+ *             size = 8.0,
+ *            },
+ *     color = 0x1259b9,
+ *     x = 50.0,
+ *     y = 50.0,
+ *     width = 89.0,
+ *     height = 16.0,
+ *     ref = userdata: 0x5f644c0700d0
+ *     page = 1, -- Only present when called with the "all" argument
+ *     layer = 1, -- Only present when called with the "all" or "page" argument
+ *   },
+ *   {
+ *     text = "email address",
+ *     url  = "mailto:admin@example.com",
+ *     alignment = 1 -- app.C.Alignment_center
+ *     font = {
+ *             name = "Noto Sans Mono Medium",
+ *             size = 8.0,
+ *            },
+ *     color = 0x0,
+ *     x = 150.0,
+ *     y = 50.0,
+ *     width = 69.0,
+ *     height = 16.0,
+ *     ref = userdata: 0x5f644c0701e8
+ *     page = 2,
+ *     layer = 1,
+ *   },
+ * }
+ *
+ */
+static int applib_getLinks(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    std::string type = luaL_checkstring(L, 1);
+    Control* control = plugin->getControl();
+
+    // Discard any extra arguments passed in
+    lua_settop(L, 1);
+    luaL_checktype(L, 1, LUA_TSTRING);
+
+    const auto& [err, elements] = getElementsFromHelper(control, type, ELEMENT_LINK);
+    if (err.has_value()) {
+        return luaL_error(L, err.value().c_str());
+    }
+
+    lua_newtable(L);  // create table of the elements
+    int currLinkNo = 0;
+
+    // stack now has following:
+    //  1 = type (string)
+    // -1 = table of links (to be returned)
+
+    for (const auto [e, page_nb, layer]: elements) {
+        auto* l = static_cast<const Link*>(e);
+        lua_pushinteger(L, ++currLinkNo);  // index for later (settable)
+        lua_newtable(L);                   // create link table
+
+        // stack now has following:
+        //  1 = type (string)
+        // -3 = table of links (to be returned)
+        // -2 = index of the current link
+        // -1 = current link table
+
+        lua_pushstring(L, l->getText().c_str());
+        lua_setfield(L, -2, "text");  // add text to link element
+
+        lua_pushstring(L, l->getUrl().c_str());
+        lua_setfield(L, -2, "url");  // add url to link element
+
+        lua_pushinteger(L, l->getAlignment());
+        lua_setfield(L, -2, "alignment");  // add alignment to link element
+
+        lua_newtable(L);  // font table to stack
+        auto font = l->getFont();
+        lua_pushstring(L, font.getName().c_str());
+        lua_setfield(L, -2, "name");  // add font to link
+        lua_pushnumber(L, font.getSize());
+        lua_setfield(L, -2, "size");  // add size to link
+        lua_setfield(L, -2, "font");  // insert font-table to link element
+
+        lua_pushinteger(L, as_signed(uint32_t(l->getColor()) & 0xffffffU));
+        lua_setfield(L, -2, "color");  // add color to link
+
+        auto [x, y] = l->getOrigin();
+        lua_pushnumber(L, x);
+        lua_setfield(L, -2, "x");  // add x coordindate to link
+
+        lua_pushnumber(L, y);
+        lua_setfield(L, -2, "y");  // add y coordinate to link
+
+        const auto& box = l->getBoundingBox();
+        lua_pushnumber(L, box.width);
+        lua_setfield(L, -2, "width");  // add width to link
+
+        lua_pushnumber(L, box.height);
+        lua_setfield(L, -2, "height");  // add height to link
+
+        lua_pushlightuserdata(L, const_cast<void*>(static_cast<const void*>(l)));
+        lua_setfield(L, -2, "ref");
+
+        if (layer.has_value()) {
+            lua_pushinteger(L, as_signed(layer.value()));
+            lua_setfield(L, -2, "layer");  // add layer to link
+        }
+
+        if (page_nb.has_value()) {
+            lua_pushinteger(L, as_signed(page_nb.value()));
+            lua_setfield(L, -2, "page");  // add page to link
+        }
+
+        lua_settable(L, -3);  // add link to elements
     }
     return 1;
 }
@@ -3945,6 +4086,7 @@ static const luaL_Reg applib[] = {
         {"getStrokes", applib_getStrokes},
         {"getImages", applib_getImages},
         {"getTexts", applib_getTexts},
+        {"getLinks", applib_getLinks},
         {"openFile", applib_openFile},
         {"registerPlaceholder", applib_registerPlaceholder},
         {"setPlaceholderValue", applib_setPlaceholderValue},

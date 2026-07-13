@@ -439,6 +439,61 @@ function app.addTexts(opts) end
 --- 
 function app.getTexts(type) end
 
+--- Returns a list of lua table of the url links (from current selection / current layer / current page / all pages).
+--- When called with "page" to retrieve all elements on the current page, it also adds a field "layer" for the
+--- layer containing the element, and when called with "all" it additionally adds a field "page" containing its page
+--- index together with its layer (all of them being indexed from 1).
+--- 
+--- Is mostly inverse to app.addLinks (except getLinks may also retrieve the width/height/page/layer of the link box)
+--- 
+--- @param type string "selection" or "layer" or "page" or "all"
+--- @return {text:string, url:string, alignment:integer, font:{name:string, size:number}, color:integer, x:number,
+--- y:number, width:number, height:number, ref:lightuserdata, page:number|nil, layer:number|nil}[] links
+--- 
+--- Required argument: type ("selection" or "layer" or "page" or "all")
+--- 
+--- Example: local links = app.getLinks("all")
+--- 
+--- possible return value:
+--- {
+---   {
+---     text = "Xournal++ Website",
+---     url  = "https://xournalpp.github.io",
+---     alignment = 0,  -- app.C.Alignment_left
+---     font = {
+---             name = "Noto Sans Mono Medium",
+---             size = 8.0,
+---            },
+---     color = 0x1259b9,
+---     x = 50.0,
+---     y = 50.0,
+---     width = 89.0,
+---     height = 16.0,
+---     ref = userdata: 0x5f644c0700d0
+---     page = 1, -- Only present when called with the "all" argument
+---     layer = 1, -- Only present when called with the "all" or "page" argument
+---   },
+---   {
+---     text = "email address",
+---     url  = "mailto:admin@example.com",
+---     alignment = 1 -- app.C.Alignment_center
+---     font = {
+---             name = "Noto Sans Mono Medium",
+---             size = 8.0,
+---            },
+---     color = 0x0,
+---     x = 150.0,
+---     y = 50.0,
+---     width = 69.0,
+---     height = 16.0,
+---     ref = userdata: 0x5f644c0701e8
+---     page = 2,
+---     layer = 1,
+---   },
+--- }
+--- 
+function app.getLinks(type) end
+
 --- Puts a Lua Table of the Strokes (from the selection tool / selected layer / selected page / all document) onto the
 --- stack. When called with "page" to retrieve all elements on the current page, it also adds a field "layer" for
 --- the layer containing the element, and when called with "all" it additionally adds a field "page" containing its page
