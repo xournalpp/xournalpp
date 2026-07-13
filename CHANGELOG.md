@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.3.6~dev (Unreleased)
+## 1.3.6
 
 * Fixed several issues with button configuration (#7526)
 * Added mutex locks for lua write functions (#7551)
