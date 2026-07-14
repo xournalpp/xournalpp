@@ -27,24 +27,27 @@
 #include "util/gtk4_helper.h"
 #include "util/i18n.h"  // for _
 
-#include "AbstractToolItem.h"            // for AbstractToolItem
+#include "AbstractToolItem.h"  // for AbstractToolItem
+#include "AdaptativeToolkit.h"
 #include "ColorSelectorToolItem.h"       // for ColorSelectorToolItem
 #include "ColorToolItem.h"               // for ColorToolItem
 #include "DrawingTypeComboToolButton.h"  // for DrawingTypeComboToolButton
 #include "FontButton.h"                  // for FontButton
 #include "PluginPlaceholderLabel.h"      // for PluginPlaceholderLabel
 #include "PluginToolButton.h"            // for PluginToolButton
-#include "StylePopoverFactory.h"         // for ToolButtonWithStylePopover
-#include "ToolButton.h"                  // for ToolButton
-#include "ToolPageLayer.h"               // for ToolPageLayer
-#include "ToolPageSpinner.h"             // for ToolPageSpinner
-#include "ToolPdfCombocontrol.h"         // for ToolPdfCombocontrol
-#include "ToolSelectCombocontrol.h"      // for ToolSelectComboc...
-#include "ToolZoomSlider.h"              // for ToolZoomSlider
-#include "TooltipToolButton.h"           // for TooltipToolButton
-#include "config-dev.h"                  // for TOOLBAR_CONFIG
-#include "config-features.h"             // for ENABLE_PLUGINS
-#include "filesystem.h"                  // for exists
+#include "SeparatorItem.h"
+#include "SpacerItem.h"
+#include "StylePopoverFactory.h"     // for ToolButtonWithStylePopover
+#include "ToolButton.h"              // for ToolButton
+#include "ToolPageLayer.h"           // for ToolPageLayer
+#include "ToolPageSpinner.h"         // for ToolPageSpinner
+#include "ToolPdfCombocontrol.h"     // for ToolPdfCombocontrol
+#include "ToolSelectCombocontrol.h"  // for ToolSelectComboc...
+#include "ToolZoomSlider.h"          // for ToolZoomSlider
+#include "TooltipToolButton.h"       // for TooltipToolButton
+#include "config-dev.h"              // for TOOLBAR_CONFIG
+#include "config-features.h"         // for ENABLE_PLUGINS
+#include "filesystem.h"              // for exists
 
 
 using std::string;
@@ -62,7 +65,7 @@ ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui):
                                                                           GTK_APPLICATION_WINDOW(parent))) {}
 
 void ToolMenuHandler::populate(const GladeSearchpath* gladeSearchPath) {
-    initToolItems();
+    initToolFactories();
 
     auto file = gladeSearchPath->findFile("", "toolbar.ini");
     if (!tbModel->parse(file, true, this->control->getPalette())) {
@@ -114,27 +117,6 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
                     continue;
                 }
 
-                if (name == "SEPARATOR") {
-                    GtkToolItem* it = gtk_separator_tool_item_new();
-                    gtk_widget_show(GTK_WIDGET(it));
-                    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), it, -1);
-
-                    ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem.getId(), TOOL_ITEM_SEPARATOR);
-
-                    continue;
-                }
-
-                if (name == "SPACER") {
-                    GtkToolItem* toolItem = gtk_separator_tool_item_new();
-                    gtk_separator_tool_item_set_draw(GTK_SEPARATOR_TOOL_ITEM(toolItem), false);
-                    gtk_tool_item_set_expand(toolItem, true);
-                    gtk_widget_show(GTK_WIDGET(toolItem));
-                    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), toolItem, -1);
-
-                    ToolitemDragDrop::attachMetadata(GTK_WIDGET(toolItem), dataItem.getId(), TOOL_ITEM_SPACER);
-
-                    continue;
-                }
                 if (StringUtils::startsWith(name, "COLOR(") && StringUtils::endsWith(name, ")")) {
                     std::string arg = name.substr(6, name.length() - 7);
 
@@ -160,7 +142,7 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
                 }
 
                 bool found = false;
-                for (auto& item: this->toolItems) {
+                for (auto& item: this->toolFactories) {
                     if (name == item->getId()) {
                         count++;
                         auto it = item->createToolItem(horizontal);
@@ -201,7 +183,8 @@ void ToolMenuHandler::addColorToolItem(std::unique_ptr<ColorToolItem> it) {
 
 template <class tool_item, class... Args>
 tool_item& ToolMenuHandler::emplaceItem(Args&&... args) {
-    return static_cast<tool_item&>(*toolItems.emplace_back(std::make_unique<tool_item>(std::forward<Args>(args)...)));
+    return static_cast<tool_item&>(
+            *toolFactories.emplace_back(std::make_unique<tool_item>(std::forward<Args>(args)...)));
 }
 
 #ifdef ENABLE_PLUGINS
@@ -212,7 +195,7 @@ void ToolMenuHandler::addPluginPlaceholderItem(ToolbarPlaceholderEntry* entry) {
 #endif /* ENABLE_PLUGINS */
 
 
-void ToolMenuHandler::initToolItems() {
+void ToolMenuHandler::initToolFactories() {
     using Cat = AbstractToolItem::Category;
     /**
      * @brief Simple button, with a GTK stock icon name
@@ -445,8 +428,8 @@ void ToolMenuHandler::initToolItems() {
                                 _("Select Multi-Layer Rectangle"));
     emplaceCustomItemWithTarget("SELECT_OBJECT", Cat::SELECTION, Action::SELECT_TOOL, TOOL_SELECT_OBJECT,
                                 "object-select", _("Select Object"));
-    emplaceCustomItemWithTarget("VERTICAL_SPACE", Cat::SELECTION, Action::SELECT_TOOL, TOOL_VERTICAL_SPACE, "spacer",
-                                _("Vertical Space"));
+    emplaceCustomItemWithTarget("VERTICAL_SPACE", Cat::SELECTION, Action::SELECT_TOOL, TOOL_VERTICAL_SPACE,
+                                "vertical-space", _("Vertical Space"));
     emplaceCustomItemWithTarget("PLAY_OBJECT", Cat::SELECTION, Action::SELECT_TOOL, TOOL_PLAY_OBJECT, "object-play",
                                 _("Play Object"));
     emplaceCustomItemWithTarget("HAND", Cat::SELECTION, Action::SELECT_TOOL, TOOL_HAND, "hand", _("Hand"));
@@ -512,6 +495,11 @@ void ToolMenuHandler::initToolItems() {
     emplaceCustomItemWithTarget("THICK", Cat::TOOLS, Action::TOOL_SIZE, TOOL_SIZE_THICK, "thickness-thick", _("Thick"));
     emplaceCustomItemWithTarget("VERY_THICK", Cat::TOOLS, Action::TOOL_SIZE, TOOL_SIZE_VERY_THICK, "thickness-thicker",
                                 _("Very Thick"));
+
+    emplaceItem<SeparatorItem>("SEPARATOR");
+    emplaceItem<SpacerItem>("SPACER");
+
+    emplaceItem<AdaptativeToolkit>("ADAPTATIVE", this);
 }
 
 void ToolMenuHandler::setPageInfo(size_t currentPage, size_t pageCount, size_t pdfpage) {
@@ -524,8 +512,8 @@ auto ToolMenuHandler::getModel() -> ToolbarModel* { return this->tbModel.get(); 
 
 auto ToolMenuHandler::getControl() -> Control* { return this->control; }
 
-auto ToolMenuHandler::getToolItems() const -> const std::vector<std::unique_ptr<AbstractToolItem>>& {
-    return this->toolItems;
+auto ToolMenuHandler::getToolFactories() const -> const std::vector<std::unique_ptr<AbstractToolItem>>& {
+    return this->toolFactories;
 }
 
 auto ToolMenuHandler::getColorToolItems() const -> const std::vector<std::unique_ptr<ColorToolItem>>& {

@@ -231,13 +231,6 @@ auto ToolbarAdapter::toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* co
         GtkWidget* iconWidget = d->item->getNewToolIcon();
         GtkToolItem* it = gtk_tool_button_new(iconWidget, "");
         gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
-    } else if (d->type == TOOL_ITEM_SEPARATOR) {
-        GtkToolItem* it = gtk_separator_tool_item_new();
-        gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
-    } else if (d->type == TOOL_ITEM_SPACER) {
-        GtkToolItem* it = gtk_separator_tool_item_new();
-        gtk_tool_item_set_expand(it, true);
-        gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
     } else if (d->type == TOOL_ITEM_COLOR) {
         auto namedColor = adapter->palette.getColorAt(d->paletteColorIndex);
         GtkWidget* iconWidget = ColorIcon::newGtkImage(namedColor.getColor(), 16, true);
@@ -298,30 +291,6 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
         ToolitemDragDrop::attachMetadataColor(it.get(), newId, d->paletteColorIndex, item.get());
 
         adapter->window->getToolMenuHandler()->addColorToolItem(std::move(item));
-    } else if (d->type == TOOL_ITEM_SEPARATOR) {
-        GtkToolItem* it = gtk_separator_tool_item_new();
-        gtk_widget_show_all(GTK_WIDGET(it));
-        gtk_toolbar_insert(toolbar, it, pos);
-        adapter->prepareToolItem(it);
-
-        ToolbarData* tb = adapter->window->getSelectedToolbar();
-        const char* name = adapter->window->getToolbarName(toolbar);
-
-        int newId = tb->insertItem(name, "SEPARATOR", pos);
-        ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), newId, TOOL_ITEM_SEPARATOR);
-    } else if (d->type == TOOL_ITEM_SPACER) {
-        GtkToolItem* it = gtk_separator_tool_item_new();
-        gtk_separator_tool_item_set_draw(GTK_SEPARATOR_TOOL_ITEM(it), false);
-        gtk_tool_item_set_expand(it, true);
-        gtk_widget_show_all(GTK_WIDGET(it));
-        gtk_toolbar_insert(toolbar, it, pos);
-        adapter->prepareToolItem(it);
-
-        ToolbarData* tb = adapter->window->getSelectedToolbar();
-        const char* name = adapter->window->getToolbarName(toolbar);
-
-        int newId = tb->insertItem(name, "SPACER", pos);
-        ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), newId, TOOL_ITEM_SPACER);
     } else {
         g_warning("toolbarDragDataReceivedCb: ToolItemType %i not handled!", d->type);
     }
