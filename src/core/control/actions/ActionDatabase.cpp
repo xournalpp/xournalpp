@@ -6,6 +6,7 @@
 #include <gobject/gsignal.h>
 
 #include "control/Control.h"
+#include "control/settings/ShortcutManager.h"
 #include "gui/MainWindow.h"
 #include "util/GVariantTemplate.h"
 #include "util/safe_casts.h"  // for to_underlying Todo(cpp20) remove
@@ -65,11 +66,31 @@ class ActionDatabase::Populator {
                 "ActionProperties<a>::accelerators must be null terminated");
 
         static inline void setup(Control* ctrl) {
+            // Construct the full action name (e.g., "win.quit" or "app.preferences")
             // Todo(cpp20) constexpr this concatenation
             std::string fullActionName = ActionNamespace<a>::ACTION_NAMESPACE;
             fullActionName += Action_toString(a);
-            gtk_application_set_accels_for_action(GTK_APPLICATION(gtk_window_get_application(ctrl->getGtkWindow())),
-                                                  fullActionName.c_str(), ActionProperties<a>::accelerators);
+            
+            // Check if there's a custom shortcut configured for this action
+            // If so, use the custom accelerator; otherwise, use the default from ActionProperties
+            auto* sm = ctrl->getShortcutManager();
+            auto config = sm->getShortcut(fullActionName);
+            
+            if (config.enabled && !config.accelerator.empty()) {
+                // Use custom shortcut
+                static const char* accels[2] = {nullptr, nullptr};
+                accels[0] = config.accelerator.c_str();
+                gtk_application_set_accels_for_action(
+                    GTK_APPLICATION(gtk_window_get_application(ctrl->getGtkWindow())),
+                    fullActionName.c_str(), 
+                    accels);
+            } else {
+                // Use default shortcut from ActionProperties
+                gtk_application_set_accels_for_action(
+                    GTK_APPLICATION(gtk_window_get_application(ctrl->getGtkWindow())),
+                    fullActionName.c_str(), 
+                    ActionProperties<a>::accelerators);
+            }
         }
     };
 

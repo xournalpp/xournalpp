@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Xournal++ (本地编译)
+Comment=手写笔记应用 (本地开发版本)
+Exec=/home/gql/xournalpp-src/build/install/bin/xournalpp %f
+Icon=/home/gql/xournalpp-src/ui/pixmaps/com.github.xournalpp.xournalpp.svg
+Terminal=false
+Categories=Office;GTK;
+MimeType=application/x-xoj;application/x-xojpp;application/x-xopp;application/x-xopt;application/pdf;
+StartupWMClass=xournalpp
