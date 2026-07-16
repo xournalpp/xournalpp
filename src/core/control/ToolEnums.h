@@ -94,6 +94,7 @@ enum ToolType {
     TOOL_LASER_POINTER_HIGHLIGHTER = 24,
     TOOL_LINK = 25,
     TOOL_LATEX = 26,
+    TOOL_ZOOM_DRAW = 27,
 
     TOOL_END_ENTRY
 };
@@ -123,7 +124,8 @@ static constexpr std::array<std::string_view, TOOL_END_ENTRY> toolNames{"none",
                                                                         "laserPointerPen",
                                                                         "laserPointerHighlighter",
                                                                         "link",
-                                                                        "latex"};
+                                                                        "latex",
+                                                                        "zoomDraw"};
 
 auto isSelectToolType(ToolType type) -> bool;
 auto isSelectToolTypeSingleLayer(ToolType type) -> bool;

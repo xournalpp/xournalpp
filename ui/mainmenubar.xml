@@ -563,6 +563,12 @@
      <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;x</attribute>
     </item>
     <item>
+     <attribute name="label" translatable="yes">_Zoom Draw</attribute>
+     <attribute name="action">win.select-tool</attribute>
+     <attribute name="target" type="t">27</attribute> <!-- TOOL_ZOOM_DRAW -->
+     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;z</attribute>
+    </item>
+    <item>
      <attribute name="label" translatable="yes">_Image</attribute>
      <attribute name="action">win.select-tool</attribute>
      <attribute name="target" type="t">5</attribute> <!-- TOOL_IMAGE -->

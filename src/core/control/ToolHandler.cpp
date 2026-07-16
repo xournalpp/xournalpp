@@ -76,6 +76,15 @@ void ToolHandler::initTools() {
 
     tools[TOOL_IMAGE - TOOL_PEN] = std::make_unique<Tool>("image", TOOL_IMAGE, Colors::black, std::nullopt);
 
+    // Same thickness scale as the pen, since the Zoom Draw popup is used to draw fine detail annotations
+    thickness[TOOL_SIZE_VERY_FINE] = 0.42;
+    thickness[TOOL_SIZE_FINE] = 0.85;
+    thickness[TOOL_SIZE_MEDIUM] = 1.41;
+    thickness[TOOL_SIZE_THICK] = 2.26;
+    thickness[TOOL_SIZE_VERY_THICK] = 5.67;
+    tools[TOOL_ZOOM_DRAW - TOOL_PEN] =
+            std::make_unique<Tool>("zoomDraw", TOOL_ZOOM_DRAW, Colors::xopp_royalblue, thickness);
+
     tools[TOOL_SELECT_RECT - TOOL_PEN] =
             std::make_unique<Tool>("selectRect", TOOL_SELECT_RECT, Colors::black, std::nullopt);
 
@@ -564,9 +573,8 @@ void ToolHandler::loadSettings() {
 
 bool ToolHandler::pointActiveToolToButtonTool(Button button) {
     Tool* tool = getButtonTool(button);
-    if (!tool || this->activeTool == tool) {
+    if (this->activeTool == tool)
         return false;
-    }
     this->activeTool = tool;
     return true;
 }

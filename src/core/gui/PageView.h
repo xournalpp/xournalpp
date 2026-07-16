@@ -268,6 +268,7 @@ private:
     bool startEditingOnButtonRelease = false;
     bool inLatex = false;
     bool inLatexDoubleClick = false;
+    bool inZoomDraw = false;
 
     /**
      * Vertical Space

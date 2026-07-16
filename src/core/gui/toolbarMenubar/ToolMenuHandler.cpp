@@ -407,6 +407,8 @@ void ToolMenuHandler::initToolItems() {
     emplaceCustomItemWithTarget("LINK", Cat::TOOLS, Action::SELECT_TOOL, TOOL_LINK, "tool-link", _("Add/Edit Link"));
     emplaceCustomItemWithTarget("MATH_TEX", Cat::TOOLS, Action::SELECT_TOOL, TOOL_LATEX, "tool-math-tex",
                                 _("Add/Edit TeX"));
+    emplaceCustomItemWithTarget("ZOOM_DRAW", Cat::TOOLS, Action::SELECT_TOOL, TOOL_ZOOM_DRAW, "tool-zoom-draw",
+                                _("Zoom Draw"));
     emplaceCustomItemWithTarget("IMAGE", Cat::TOOLS, Action::SELECT_TOOL, TOOL_IMAGE, "tool-image", _("Image"));
     emplaceCustomItem("DEFAULT_TOOL", Cat::TOOLS, Action::SELECT_DEFAULT_TOOL, "default", _("Default Tool"));
     emplaceCustomItemWithTarget("SELECT_PDF_TEXT_LINEAR", Cat::SELECTION, Action::SELECT_TOOL,

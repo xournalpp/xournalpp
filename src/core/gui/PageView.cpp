@@ -20,6 +20,7 @@
 #include "control/AudioController.h"                // for AudioController
 #include "control/Control.h"                        // for Control
 #include "control/LatexController.h"                // for LatexController
+#include "control/ZoomDrawController.h"              // for ZoomDrawController
 #include "control/ScrollHandler.h"                  // for ScrollHandler
 #include "control/SearchControl.h"                  // for SearchControl
 #include "control/Tool.h"                           // for Tool
@@ -417,6 +418,9 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     } else if (h->getToolType() == TOOL_LATEX) {
         /* The latex dialog will be opened only at the onButtonReleaseEvent. */
         this->inLatex = true;
+    } else if (h->getToolType() == TOOL_ZOOM_DRAW) {
+        /* The zoom draw popup will be opened only at the onButtonReleaseEvent. */
+        this->inZoomDraw = true;
     } else if (h->getToolType() == TOOL_IMAGE) {
         // start selecting the size for the image
         this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);
@@ -717,6 +721,11 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         this->inLatex = false;
         const double zoom = xournal->getZoom();
         LatexController::insertLatex(this->page, control, pos.x / zoom, pos.y / zoom);
+    }
+    if (this->inZoomDraw) {
+        this->inZoomDraw = false;
+        const double zoom = xournal->getZoom();
+        ZoomDrawController::activate(this->page, control, pos.x / zoom, pos.y / zoom);
     }
     if (this->inLatexDoubleClick) {
         this->inLatexDoubleClick = false;

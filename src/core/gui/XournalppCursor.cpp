@@ -321,6 +321,8 @@ void XournalppCursor::updateCursor() {
             setCursor(CRSR_XTERM);
         } else if (type == TOOL_IMAGE) {
             setCursor(CRSR_TCROSS);
+        } else if (type == TOOL_ZOOM_DRAW) {
+            setCursor(CRSR_TCROSS);
         } else if (type == TOOL_FLOATING_TOOLBOX) {
             setCursor(CRSR_DEFAULT);
         } else if (type == TOOL_VERTICAL_SPACE) {

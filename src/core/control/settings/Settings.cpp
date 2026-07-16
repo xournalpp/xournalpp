@@ -149,6 +149,8 @@ void Settings::loadDefault() {
 
     this->strokeRecognizerMinSize = 40;
 
+    this->zoomDrawFactor = 8.0;
+
     this->touchDrawing = false;
     this->gtkTouchInertialScrolling = true;
 
@@ -614,6 +616,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->snapGridTolerance = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("strokeRecognizerMinSize")) == 0) {
         this->strokeRecognizerMinSize = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomDrawFactor")) == 0) {
+        this->zoomDrawFactor = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchDrawing")) == 0) {
         this->touchDrawing = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("gtkTouchInertialScrolling")) == 0) {
@@ -1132,6 +1136,7 @@ void Settings::save() {
     SAVE_DOUBLE_PROP(snapGridSize);
 
     SAVE_DOUBLE_PROP(strokeRecognizerMinSize);
+    SAVE_DOUBLE_PROP(zoomDrawFactor);
 
     SAVE_BOOL_PROP(touchDrawing);
     SAVE_BOOL_PROP(gtkTouchInertialScrolling);
@@ -1644,6 +1649,19 @@ void Settings::setStrokeRecognizerMinSize(double value) {
     }
 
     this->strokeRecognizerMinSize = value;
+    save();
+};
+
+auto Settings::getZoomDrawFactor() const -> double { return this->zoomDrawFactor; };
+void Settings::setZoomDrawFactor(double value) {
+    // Keep the magnification within a sane, usable range
+    value = std::clamp(value, 2.0, 32.0);
+
+    if (this->zoomDrawFactor == value) {
+        return;
+    }
+
+    this->zoomDrawFactor = value;
     save();
 };
 

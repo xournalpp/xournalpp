@@ -337,6 +337,12 @@ public:
     double getStrokeRecognizerMinSize() const;
     void setStrokeRecognizerMinSize(double value);
 
+    /**
+     * Magnification factor used by the "Zoom Draw" tool's popup annotation window
+     */
+    double getZoomDrawFactor() const;
+    void setZoomDrawFactor(double value);
+
     StylusCursorType getStylusCursorType() const;
     void setStylusCursorType(StylusCursorType stylusCursorType);
 
@@ -1066,6 +1072,11 @@ private:
      * Minimum size of stroke to detect shape
      */
     double strokeRecognizerMinSize{};
+
+    /**
+     * Magnification factor used by the "Zoom Draw" tool's popup annotation window
+     */
+    double zoomDrawFactor{};
 
     /// Touchscreens act like multi-touch-aware pens.
     bool touchDrawing{};
