@@ -47,8 +47,14 @@ void initLocalisation() {
     textdomain(GETTEXT_PACKAGE);
 #endif  // ENABLE_NLS
 
-    std::locale::global(std::locale(""));  //"" - system default locale
-    std::cout.imbue(std::locale());
+    try {
+        std::locale::global(std::locale(""));  // "" - system default locale
+        std::cout.imbue(std::locale());
+    } catch (const std::runtime_error& e) {
+        // Fallback to classic locale if system locale is not supported
+        std::locale::global(std::locale::classic());
+        std::cout.imbue(std::locale::classic());
+    }
 }
 
 void logMessage(string msg, bool error) {
