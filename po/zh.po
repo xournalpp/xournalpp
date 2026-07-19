@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-08 00:59+0000\n"
-"PO-Revision-Date: 2026-06-28 05:45\n"
+"POT-Creation-Date: 2026-07-13 20:30+0000\n"
+"PO-Revision-Date: 2026-07-19 05:25\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1386,7 +1386,7 @@ msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr "加载菜单栏 XML 文件时出错（尝试加载“{1}”）"
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:384
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:382
 msgid "Apply to all pages"
 msgstr "应用到所有页面"
 
