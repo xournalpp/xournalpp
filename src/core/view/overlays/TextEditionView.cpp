@@ -9,7 +9,7 @@
 using namespace xoj::view;
 
 static constexpr double EPSILON = 1e-4;
-static constexpr double WRAP_LINE_DASH_LENGTH = 1.;
+static constexpr double WRAP_LINE_DASH_LENGTH = 2.;
 
 TextEditionView::TextEditionView(const TextEditor* textEditor, Repaintable* parent):
         ToolView(parent), textEditor(textEditor) {
@@ -23,25 +23,47 @@ TextEditionView::~TextEditionView() noexcept { this->unregisterFromPool(); }
 void TextEditionView::draw(cairo_t* cr) const {
     xoj::util::CairoSaveGuard saveGuard(cr);
 
-    double zoom = parent->getZoom();
+    const double zoom = parent->getZoom();
     cairo_set_line_width(cr, BORDER_WIDTH_IN_PIXELS / zoom);
     Util::cairo_set_source_argb(cr, this->textEditor->getSelectionColor());
     Range box = textEditor->getContentBoundingBox();
 
-    // Draw the wrap limit line if needed
+    const double padding = PADDING_IN_PIXELS / zoom;
+
     if (auto w = this->textEditor->getCurrentWrapWidth(); w != Text::NO_WRAP && w < box.getWidth() - EPSILON) {
-        xoj::util::CairoSaveGuard saveGuard(cr);
-        cairo_move_to(cr, box.getX() + this->textEditor->getCurrentWrapWidth(), box.getY());
-        cairo_rel_line_to(cr, 0, box.getHeight());
+        xoj::util::CairoSaveGuard guard(cr);
+        // The text goes beyond the wrap limit: draw a hard snap box and a dashed bounding box
+        auto snap = this->textEditor->getTextElement()->getSnappedBounds();
+        snap.x -= padding;
+        snap.y -= padding;
+        snap.width = this->textEditor->getCurrentWrapWidth() + 2 * padding;
+        snap.height = box.getHeight() + 2 * padding;
+
+        // Hard snap box
+        cairo_rectangle(cr, snap.x, snap.y, snap.width, snap.height);
+        cairo_stroke(cr);
+
+        // Extension
         cairo_set_dash(cr, &WRAP_LINE_DASH_LENGTH, 1, 0.);
+        auto al = this->textEditor->getTextElement()->getAlign();
+        if (al != TextAlignment::RIGHT) {
+            cairo_move_to(cr, snap.x + snap.width, box.minY);
+            cairo_line_to(cr, box.maxX, box.minY);
+            cairo_line_to(cr, box.maxX, box.maxY);
+            cairo_line_to(cr, snap.x + snap.width, box.maxY);
+        }
+        if (al != TextAlignment::LEFT) {
+            cairo_move_to(cr, snap.x, box.minY);
+            cairo_line_to(cr, box.minX, box.minY);
+            cairo_line_to(cr, box.minX, box.maxY);
+            cairo_line_to(cr, snap.x, box.maxY);
+        }
+        cairo_stroke(cr);
+    } else {
+        box.addPadding(padding);
+        cairo_rectangle(cr, box.getX(), box.getY(), box.getWidth(), box.getHeight());
         cairo_stroke(cr);
     }
-
-    // Draw the frame
-    box.addPadding(PADDING_IN_PIXELS / zoom);
-    cairo_rectangle(cr, box.getX(), box.getY(), box.getWidth(), box.getHeight());
-    cairo_stroke(cr);
-
 
     // Draw the text itself
     this->drawWithoutDrawingAids(cr);

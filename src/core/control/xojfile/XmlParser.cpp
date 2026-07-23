@@ -426,6 +426,9 @@ void XmlParser::parseTextTag(const XmlParserHelper::AttributeMap& attributeMap) 
     const auto y = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::Y_COORD_STR, attributeMap);
     const auto color = XmlParserHelper::getAttribColorMandatory(attributeMap, Colors::black);
     const auto wrap = XmlParserHelper::getAttrib<double>(xoj::xml_attrs::WRAP_STR, attributeMap);
+    const auto align = XmlParserHelper::getAttrib<TextAlignment>(xoj::xml_attrs::ALIGN_STR, attributeMap);
+    const bool justify =
+            XmlParserHelper::getAttribMandatory<int>(xoj::xml_attrs::JUSTIFY_STR, attributeMap, false, false);
 
     // audio filename and timestamp
     const auto optFilename = XmlParserHelper::getAttrib<fs::path>(xoj::xml_attrs::AUDIO_FILENAME_STR, attributeMap);
@@ -438,7 +441,8 @@ void XmlParser::parseTextTag(const XmlParserHelper::AttributeMap& attributeMap) 
                 XmlParserHelper::getAttribMandatory<size_t>(xoj::xml_attrs::TIMESTAMP_STR, attributeMap, 0UL);
     }
 
-    this->builder.addText(std::string{font}, size, x, y, color, wrap, std::move(tempFilename), tempTimestamp);
+    this->builder.addText(std::string{font}, size, x, y, color, wrap, align, justify, std::move(tempFilename),
+                          tempTimestamp);
 
     this->tempTimestamp = 0;
 }

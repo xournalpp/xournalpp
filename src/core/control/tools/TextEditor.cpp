@@ -10,12 +10,14 @@
 
 #include "control/AudioController.h"
 #include "control/Control.h"  // for Control
+#include "control/actions/ActionDatabase.h"
 #include "control/settings/Settings.h"
 #include "gui/FlyingClickableIcon.h"
 #include "gui/XournalppCursor.h"  // for XournalppCursor
 #include "model/Document.h"       // for Document
 #include "model/Font.h"           // for XojFont
 #include "model/Text.h"           // for Text
+#include "model/TextAlignment.h"  // for TextAlignment
 #include "model/XojPage.h"        // for XojPage
 #include "undo/DeleteUndoAction.h"
 #include "undo/InsertUndoAction.h"
@@ -254,7 +256,7 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
                                                                       self->getTextElement()->getOrigin().x) {
                                                      // The new width does not overflow out of the page
                                                      self->currentWrapWidth = newVal;
-                                                     self->layoutStatus = LayoutStatus::NEEDS_WRAP_WIDTH_UPDATE;
+                                                     self->layoutStatus = LayoutStatus::NEEDS_PARAMETERS_UPDATE;
                                                      self->repaintEditor(true);
                                                  }
                                              }
@@ -271,7 +273,7 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
                         g_signal_connect(drag, "cancel", G_CALLBACK(+[](GtkGesture*, GdkEventSequence*, gpointer p) {
                                              auto* self = static_cast<TextEditor*>(p);
                                              self->currentWrapWidth = self->textElement->getWrap();
-                                             self->layoutStatus = LayoutStatus::NEEDS_WRAP_WIDTH_UPDATE;
+                                             self->layoutStatus = LayoutStatus::NEEDS_PARAMETERS_UPDATE;
                                              self->repaintEditor(true);
                                          }),
                                          this));
@@ -328,6 +330,18 @@ void TextEditor::setColor(Color color) {
 void TextEditor::setFont(XojFont font) {
     this->textElement->setFont(font);
     afterFontChange();
+}
+
+void TextEditor::setAlignment(TextAlignment al) {
+    this->textElement->setAlignment(al);
+    this->layoutStatus = LayoutStatus::NEEDS_PARAMETERS_UPDATE;
+    repaintEditor(true);  // The size may change if the text overflows
+}
+
+void TextEditor::setJustify(bool justify) {
+    this->textElement->setJustify(justify);
+    this->layoutStatus = LayoutStatus::NEEDS_PARAMETERS_UPDATE;
+    repaintEditor(false);
 }
 
 void TextEditor::afterFontChange() {
@@ -784,7 +798,9 @@ void TextEditor::updateCursorBox() {
 void TextEditor::updateDraggableIcons() const {
     if (!viewPool->empty()) {
         // We use the first view as the main view
-        auto box = viewPool->front().toWidgetCoordinates(xoj::util::Rectangle<double>(this->getContentBoundingBox()));
+        Range range = this->getContentBoundingBox();
+        range.minX = textElement->getSnappedBounds().x;
+        auto box = viewPool->front().toWidgetCoordinates(xoj::util::Rectangle<double>(range));
         auto zoom = viewPool->front().getZoom();
         double extendIconPos = this->currentWrapWidth == Text::NO_WRAP ? box.width : this->currentWrapWidth * zoom;
         moveIcon->setPosition({floor_cast<int>(box.x), floor_cast<int>(box.y)});
@@ -990,7 +1006,7 @@ void TextEditor::bufferPasteDoneCallback(GtkTextBuffer* buffer, GtkClipboard* cl
     if (te->textElement->getWrap() == Text::NO_WRAP && te->getContentBoundingBox().maxX > te->page->getWidth()) {
         te->textElement->setWrap(te->page->getWidth() - te->getContentBoundingBox().minX);
         te->currentWrapWidth = te->textElement->getWrap();
-        te->layoutStatus = LayoutStatus::NEEDS_WRAP_WIDTH_UPDATE;
+        te->layoutStatus = LayoutStatus::NEEDS_PARAMETERS_UPDATE;
         te->repaintEditor(true);
     }
 }
@@ -1063,21 +1079,8 @@ auto TextEditor::computeBoundingBox() const -> Range {
      * NB: we cannot rely on Text::calcSize directly, since it would not take the size changes due to the IM
      * preeditString into account.
      */
-    int w = 0;
-    int h = 0;
-    pango_layout_get_size(getUpToDateLayout(), &w, &h);
-    double width = (static_cast<double>(w)) / PANGO_SCALE;
-    double height = (static_cast<double>(h)) / PANGO_SCALE;
-    const auto& p = textElement->getOrigin();
-
-    // Warning: `width` can be negative (e.g. for languages written from right to left)
-
-    if (double wrap = this->currentWrapWidth; wrap != Text::NO_WRAP) {
-        width = std::copysign(std::max(std::abs(width), wrap), width);
-    }
-    Range res(p.x, p.y);
-    res.addPoint(p.x + width, p.y + height);
-    return res;
+    auto boxes = Text::computeBoxesForLayout(getUpToDateLayout(), textElement->getOrigin(), this->currentWrapWidth);
+    return Range(boxes.bounds);
 }
 
 auto TextEditor::getUpToDateLayout() const -> PangoLayout* {
@@ -1088,8 +1091,10 @@ auto TextEditor::getUpToDateLayout() const -> PangoLayout* {
         case LayoutStatus::NEEDS_ATTRIBUTES_UPDATE:
             setSelectionAttributesToPangoLayout(this->layout.get());
             break;
-        case LayoutStatus::NEEDS_WRAP_WIDTH_UPDATE:
+        case LayoutStatus::NEEDS_PARAMETERS_UPDATE:
             pango_layout_set_width(this->layout.get(), round_cast<int>(this->currentWrapWidth * PANGO_SCALE));
+            pango_layout_set_justify(layout.get(), this->textElement->getJustify());
+            pango_layout_set_alignment(layout.get(), this->textElement->getAlign().toPango());
             break;
         case LayoutStatus::UP_TO_DATE:
             break;
@@ -1144,10 +1149,15 @@ void TextEditor::repaintCursorAfterChange() {
 
 void TextEditor::finalizeEdition() {
 
+    auto* db = this->control->getActionDatabase();
+    auto* th = this->control->getToolHandler();
+    db->setActionState(Action::FONT, this->control->getSettings()->getFont().asString().c_str());
+    db->setActionState(Action::TEXT_ALIGNMENT, th->getTextAlignment());
+    db->setActionState(Action::TEXT_JUSTIFY, th->getTextJustify());
+    db->setActionState(Action::TOOL_COLOR, th->getColorMaskAlpha());
+
     auto* doc = this->control->getDocument();
     UndoRedoHandler* undo = this->control->getUndoRedoHandler();
-
-    this->control->setFontSelected(this->control->getSettings()->getFont());
 
     if (this->bufferEmpty()) {
         // Delete the edited element from layer
@@ -1206,6 +1216,7 @@ void TextEditor::finalizeEdition() {
 void TextEditor::initializeEditionAt(double x, double y) {
     // Is there already a textfield?
     Text* text = nullptr;
+    std::shared_lock lock(*this->control->getDocument());
 
     // Should we reverse this loop to select the most recent text rather than the oldest?
     for (auto&& e: this->page->getSelectedLayer()->getElements()) {
@@ -1216,11 +1227,14 @@ void TextEditor::initializeEditionAt(double x, double y) {
     }
 
     if (text == nullptr) {
+        lock.unlock();
         ToolHandler* h = this->control->getToolHandler();
         this->textElement = std::make_unique<Text>();
         this->textElement->setColor(h->getColor());
         this->textElement->setFont(control->getSettings()->getFont());
         this->textElement->setOrigin(x, y - this->textElement->getBoundingBox().height / 2);
+        this->textElement->setAlignment(h->getTextAlignment());
+        this->textElement->setJustify(h->getTextJustify());
 
 #ifdef ENABLE_AUDIO
         if (auto audioController = control->getAudioController(); audioController && audioController->isRecording()) {
@@ -1233,12 +1247,19 @@ void TextEditor::initializeEditionAt(double x, double y) {
 #endif
         this->originalTextElement = nullptr;
     } else {
-        this->control->setFontSelected(text->getFont());
         this->originalTextElement = text;
-
         this->textElement = text->cloneText();
-
         text->setInEditing(true);
+        lock.unlock();
+
+        auto* db = this->control->getActionDatabase();
+        db->setActionState(Action::FONT, this->textElement->getFont().asString().c_str());
+        db->setActionState(Action::TEXT_ALIGNMENT, this->textElement->getAlign());
+        db->setActionState(Action::TEXT_JUSTIFY, this->textElement->getJustify());
+        Color c = this->textElement->getColor();
+        c.alpha = 0xff;
+        db->setActionState(Action::TOOL_COLOR, c);
+
         this->page->fireElementChanged(text);
     }
     this->currentWrapWidth = this->textElement->getWrap();

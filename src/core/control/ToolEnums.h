@@ -176,7 +176,9 @@ enum ToolCapabilities : unsigned int {
     TOOL_CAP_FILL = 1 << 8,
     TOOL_CAP_COORDINATE_SYSTEM = 1 << 9,
     TOOL_CAP_SPLINE = 1 << 10,
-    TOOL_CAP_LINE_STYLE = 1 << 11
+    TOOL_CAP_LINE_STYLE = 1 << 11,
+    TOOL_CAP_ALIGN = 1 << 12,
+    TOOL_CAP_JUSTIFY = 1 << 13
 };
 
 enum StrokeType {

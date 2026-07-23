@@ -198,6 +198,12 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
             if (auto w = t->getWrap(); w != Text::NO_WRAP) {
                 text->setAttrib(xoj::xml_attrs::WRAP_STR, w);
             }
+            if (auto al = t->getAlign(); al != TextAlignment::LEFT) {
+                text->setAttrib(xoj::xml_attrs::ALIGN_STR, al);
+            }
+            if (t->getJustify()) {
+                text->setAttrib(xoj::xml_attrs::JUSTIFY_STR, 1);
+            }
 
             writeTimestamp(text, t);
         } else if (e->getType() == ELEMENT_IMAGE) {

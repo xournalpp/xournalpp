@@ -1179,10 +1179,6 @@ void Control::selectDefaultTool() {
     }
 }
 
-void Control::setFontSelected(const XojFont& font) {
-    this->actionDB->setActionState(Action::FONT, font.asString().c_str());
-}
-
 void Control::toolChanged() {
     ToolType type = toolHandler->getToolType();
 
@@ -1228,6 +1224,17 @@ void Control::toolChanged() {
     this->actionDB->enableAction(Action::SELECT_COLOR, enableColor);
     if (enableColor) {
         toolColorChanged();
+    }
+
+    bool enableTextAlign = toolHandler->hasCapability(TOOL_CAP_ALIGN);
+    this->actionDB->enableAction(Action::TEXT_ALIGNMENT, enableTextAlign);
+    if (enableTextAlign) {
+        this->actionDB->setActionState(Action::TEXT_ALIGNMENT, toolHandler->getActiveTool()->getTextAlignment());
+    }
+    bool enableTextJustify = toolHandler->hasCapability(TOOL_CAP_JUSTIFY);
+    this->actionDB->enableAction(Action::TEXT_JUSTIFY, enableTextJustify);
+    if (enableTextAlign) {
+        this->actionDB->setActionState(Action::TEXT_JUSTIFY, toolHandler->getActiveTool()->getTextJustify());
     }
 
     getCursor()->updateCursor();
@@ -2333,6 +2340,8 @@ void Control::clipboardPasteText(string text) {
     t->setText(std::move(text));
     t->setFont(settings->getFont());
     t->setColor(toolHandler->getTool(TOOL_TEXT).getColor());
+    t->setAlignment(toolHandler->getTool(TOOL_TEXT).getTextAlignment());
+    t->setJustify(toolHandler->getTool(TOOL_TEXT).getTextJustify());
 
     clipboardPaste(std::move(t));
 }
