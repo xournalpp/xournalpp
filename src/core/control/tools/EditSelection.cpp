@@ -62,7 +62,7 @@ static auto computeBoxes(const InsertionOrder& elts) -> std::pair<Range, Range> 
             [](auto&& p, auto&& q) {
                 return std::pair<Range, Range>(p.first.unite(q.first), p.second.unite(q.second));
             },
-            [](auto&& e) { return std::make_pair(Range(e.e->boundingRect()), Range(e.e->getSnappedBounds())); });
+            [](auto&& e) { return std::make_pair(Range(e.e->getBoundingBox()), Range(e.e->getSnappedBounds())); });
 }
 
 auto createFromFloatingElement(Control* ctrl, const PageRef& page, Layer* layer, XojPageView* view, ElementPtr eOwn)
@@ -70,7 +70,7 @@ auto createFromFloatingElement(Control* ctrl, const PageRef& page, Layer* layer,
     auto* e = eOwn.get();  // Order of parameter evaluation is unspecified, eOwn.get() must be evaluated before moving
     InsertionOrder i{1};
     i[0] = InsertionPosition{std::move(eOwn)};
-    return std::make_unique<EditSelection>(ctrl, std::move(i), page, layer, view, Range(e->boundingRect()),
+    return std::make_unique<EditSelection>(ctrl, std::move(i), page, layer, view, Range(e->getBoundingBox()),
                                            Range(e->getSnappedBounds()));
 }
 
@@ -94,7 +94,7 @@ auto createFromElementOnActiveLayer(Control* ctrl, const PageRef& page, XojPageV
         return layer->removeElementAt(e, pos);
     }();
     page->fireElementChanged(e);
-    return std::make_unique<EditSelection>(ctrl, std::move(i), page, layer, view, Range(e->boundingRect()),
+    return std::make_unique<EditSelection>(ctrl, std::move(i), page, layer, view, Range(e->getBoundingBox()),
                                            Range(e->getSnappedBounds()));
 }
 

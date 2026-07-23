@@ -3,8 +3,9 @@
 #include "model/Element.h"  // for Element
 #include "util/Range.h"     // for Range
 
-void LegacyRedrawable::repaintElement(Element* e) const {
-    repaintArea(e->getX(), e->getY(), e->getElementWidth() + e->getX(), e->getElementHeight() + e->getY());
+void LegacyRedrawable::repaintElement(const Element* e) const {
+    Range r(e->getBoundingBox());
+    repaintArea(r.minX, r.minY, r.maxX, r.maxY);
 }
 
 void LegacyRedrawable::repaintRect(double x, double y, double width, double height) const {
@@ -14,5 +15,6 @@ void LegacyRedrawable::repaintRect(double x, double y, double width, double heig
 void LegacyRedrawable::rerenderRange(const Range& r) { rerenderRect(r.getX(), r.getY(), r.getWidth(), r.getHeight()); }
 
 void LegacyRedrawable::rerenderElement(const Element* e) {
-    rerenderRect(e->getX(), e->getY(), e->getElementWidth(), e->getElementHeight());
+    const auto& rect = e->getBoundingBox();
+    rerenderRect(rect.x, rect.y, rect.width, rect.height);
 }

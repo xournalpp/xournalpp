@@ -105,12 +105,11 @@ bool ImageHandler::addImageToDocument(std::unique_ptr<Image> img, PageRef page, 
 
 void ImageHandler::automaticScaling(Image& img, PageRef page, int width, int height) {
     double zoom = 1;
-    double x = img.getX();
-    double y = img.getY();
+    const auto& p = img.getOrigin();
 
-    if (x + width > page->getWidth() || y + height > page->getHeight()) {
-        double const maxZoomX = (page->getWidth() - x) / width;
-        double const maxZoomY = (page->getHeight() - y) / height;
+    if (p.x + width > page->getWidth() || p.y + height > page->getHeight()) {
+        double const maxZoomX = (page->getWidth() - p.x) / width;
+        double const maxZoomY = (page->getHeight() - p.y) / height;
         zoom = std::min(maxZoomX, maxZoomY);
     }
 
@@ -127,8 +126,7 @@ void ImageHandler::automaticScaling(Image& img, PageRef page) {
 void ImageHandler::insertImageWithSize(PageRef page, const xoj::util::Rectangle<double>& space) {
     chooseAndCreateImage([space, page, ctrl = control](std::unique_ptr<Image> img) {
         xoj_assert(img);
-        img->setX(space.x);
-        img->setY(space.y);
+        img->setOrigin(space.x, space.y);
         auto [width, height] = img->getImageSize();
 
         if (static_cast<int>(space.width) != 0 && static_cast<int>(space.height) != 0) {
@@ -138,12 +136,15 @@ void ImageHandler::insertImageWithSize(PageRef page, const xoj::util::Rectangle<
             img->setHeight(scaling * height);
 
             // center
-            if (img->getElementHeight() < space.height) {
-                img->setY(img->getY() + ((space.height - img->getElementHeight()) * 0.5));
+            const auto& box = img->getBoundingBox();
+            xoj::util::Point<double> move(0, 0);
+            if (box.height < space.height) {
+                move.y = (space.height - box.height) * 0.5;
             }
-            if (img->getElementWidth() < space.width) {
-                img->setX(img->getX() + ((space.width - img->getElementWidth()) * 0.5));
+            if (box.width < space.width) {
+                move.x = (space.width - box.width) * 0.5;
             }
+            img->move(move.x, move.y);
         } else {
             // zero space is selected, scale original image size down to fit on the page
             automaticScaling(*img, page);

@@ -46,34 +46,20 @@ auto FontUndoAction::undo(Control* control) -> bool {
         return true;
     }
 
+    Range r;
     Document* doc = control->getDocument();
     doc->lock();
-    FontUndoActionEntry* e = this->data.front();
-    double x1 = e->e->getX();
-    double x2 = e->e->getX() + e->e->getElementWidth();
-    double y1 = e->e->getY();
-    double y2 = e->e->getY() + e->e->getElementHeight();
 
     for (FontUndoActionEntry* e: this->data) {
-        // size with old font
-        x1 = std::min(x1, e->e->getX());
-        x2 = std::max(x2, e->e->getX() + e->e->getElementWidth());
-        y1 = std::min(y1, e->e->getY());
-        y2 = std::max(y2, e->e->getY() + e->e->getElementHeight());
-
+        r = r.unite(Range(e->e->getBoundingBox()));
         e->e->setFont(e->oldFont);
-
-        // size with new font
-        x1 = std::min(x1, e->e->getX());
-        x2 = std::max(x2, e->e->getX() + e->e->getElementWidth());
-        y1 = std::min(y1, e->e->getY());
-        y2 = std::max(y2, e->e->getY() + e->e->getElementHeight());
+        r = r.unite(Range(e->e->getBoundingBox()));
     }
 
     doc->unlock();
 
-    Rectangle<double> rect(x1, y1, x2 - x1, y2 - y1);
-    this->page->fireRectChanged(rect);
+    xoj_assert(!r.empty());
+    this->page->fireRangeChanged(r);
 
     return true;
 }
@@ -83,34 +69,20 @@ auto FontUndoAction::redo(Control* control) -> bool {
         return true;
     }
 
+    Range r;
     Document* doc = control->getDocument();
     doc->lock();
-    FontUndoActionEntry* e = this->data.front();
-    double x1 = e->e->getX();
-    double x2 = e->e->getX() + e->e->getElementWidth();
-    double y1 = e->e->getY();
-    double y2 = e->e->getY() + e->e->getElementHeight();
 
     for (FontUndoActionEntry* e: this->data) {
-        // size with old font
-        x1 = std::min(x1, e->e->getX());
-        x2 = std::max(x2, e->e->getX() + e->e->getElementWidth());
-        y1 = std::min(y1, e->e->getY());
-        y2 = std::max(y2, e->e->getY() + e->e->getElementHeight());
-
+        r = r.unite(Range(e->e->getBoundingBox()));
         e->e->setFont(e->newFont);
-
-        // size with new font
-        x1 = std::min(x1, e->e->getX());
-        x2 = std::max(x2, e->e->getX() + e->e->getElementWidth());
-        y1 = std::min(y1, e->e->getY());
-        y2 = std::max(y2, e->e->getY() + e->e->getElementHeight());
+        r = r.unite(Range(e->e->getBoundingBox()));
     }
 
     doc->unlock();
 
-    Rectangle<double> rect(x1, y1, x2 - x1, y2 - y1);
-    this->page->fireRectChanged(rect);
+    xoj_assert(!r.empty());
+    this->page->fireRangeChanged(r);
 
     return true;
 }

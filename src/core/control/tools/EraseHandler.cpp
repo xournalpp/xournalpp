@@ -45,20 +45,22 @@ EraseHandler::~EraseHandler() {
  */
 void EraseHandler::erase(double x, double y) {
     this->halfEraserSize = this->handler->getThickness();
-    GdkRectangle eraserRect = {gint(x - halfEraserSize), gint(y - halfEraserSize), gint(halfEraserSize * 2),
-                               gint(halfEraserSize * 2)};
+    xoj::util::Rectangle<double> eraserRect(x - halfEraserSize, y - halfEraserSize, 2 * halfEraserSize,
+                                            2 * halfEraserSize);
 
-    Range range(x, y);
+    Range rerenderRange;
 
     Layer* l = page->getSelectedLayer();
 
     for (Element* e: xoj::refElementContainer(l->getElements())) {
-        if (e->getType() == ELEMENT_STROKE && e->intersectsArea(&eraserRect)) {
-            eraseStroke(l, dynamic_cast<Stroke*>(e), x, y, range);
+        if (e->getType() == ELEMENT_STROKE && e->getBoundingBox().intersects(eraserRect)) {
+            eraseStroke(l, dynamic_cast<Stroke*>(e), x, y, rerenderRange);
         }
     }
 
-    this->view->rerenderRange(range);
+    if (!rerenderRange.empty()) {
+        this->view->rerenderRange(rerenderRange);
+    }
 }
 
 void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range& range) {
@@ -78,8 +80,7 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range& r
             if (pos == -1) {
                 return;
             }
-            range.addPoint(s->getX(), s->getY());
-            range.addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
+            range = range.unite(Range(s->getBoundingBox()));
 
             // removed the if statement - this prevents us from putting multiple elements into a
             // stroke erase operation, but it also prevents the crashing and layer issues!

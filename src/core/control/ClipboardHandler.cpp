@@ -77,10 +77,9 @@ auto ClipboardHandler::cut() -> bool {
 }
 
 auto ElementCompareFunc(const Element* a, const Element* b) -> bool {
-    if (a->getY() == b->getY()) {
-        return (a->getX() - b->getX()) < 0;
-    }
-    return (a->getY() - b->getY()) < 0;
+    const auto& pa = a->getOrigin();
+    const auto& pb = b->getOrigin();
+    return pa.y < pb.y || (pa.y == pb.y && pa.x < pb.x);
 }
 
 static GdkAtom atomSvg1 = gdk_atom_intern_static_string("image/svg");

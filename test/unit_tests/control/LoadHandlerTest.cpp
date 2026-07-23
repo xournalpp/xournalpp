@@ -112,10 +112,10 @@ static void testLoadStoreLoadHelper(const fs::path& filepath, double tol = 1e-8)
         const Element* a = elements1[i];
         const Element* b = elements2[i];
         EXPECT_EQ(a->getType(), b->getType());
-        EXPECT_TRUE(coordEq(a->getX(), b->getX()));
-        EXPECT_TRUE(coordEq(a->getY(), b->getY()));
-        EXPECT_TRUE(coordEq(a->getElementWidth(), b->getElementWidth()));
-        EXPECT_TRUE(coordEq(a->getElementHeight(), b->getElementHeight()));
+        EXPECT_TRUE(coordEq(a->getOrigin().x, b->getOrigin().x));
+        EXPECT_TRUE(coordEq(a->getOrigin().y, b->getOrigin().y));
+        EXPECT_TRUE(coordEq(a->getBoundingBox().width, b->getBoundingBox().width));
+        EXPECT_TRUE(coordEq(a->getBoundingBox().height, b->getBoundingBox().height));
         EXPECT_EQ(a->getColor(), b->getColor());
         switch (a->getType()) {
             case ELEMENT_STROKE: {
@@ -495,10 +495,10 @@ TEST(ControlLoadHandler, testImage) {
     ASSERT_NE(img, nullptr) << "Element should be an image";
     ASSERT_EQ(img->getType(), ELEMENT_IMAGE) << "Element should be an image";
 
-    EXPECT_DOUBLE_EQ(img->getX(), 41.637795);
-    EXPECT_DOUBLE_EQ(img->getY(), 164.94488);
-    EXPECT_NEAR(img->getElementWidth(), 512.0, 1e-5);
-    EXPECT_NEAR(img->getElementHeight(), 512.0, 1e-5);
+    EXPECT_DOUBLE_EQ(img->getOrigin().x, 41.637795);
+    EXPECT_DOUBLE_EQ(img->getOrigin().y, 164.94488);
+    EXPECT_NEAR(img->getBoundingBox().width, 512.0, 1e-5);
+    EXPECT_NEAR(img->getBoundingBox().height, 512.0, 1e-5);
 
     EXPECT_GT(img->getRawDataLength(), 0);
     EXPECT_NE(img->getRawData(), nullptr);
@@ -594,10 +594,10 @@ TEST(ControlLoadHandler, testLatex) {
 
     EXPECT_STREQ(teximage->getText().c_str(), "x^2") << "TeX image has wrong text contents";
 
-    EXPECT_DOUBLE_EQ(teximage->getX(), 14.937);
-    EXPECT_DOUBLE_EQ(teximage->getY(), 15.715);
-    EXPECT_DOUBLE_EQ(teximage->getElementWidth(), 20.126);
-    EXPECT_DOUBLE_EQ(teximage->getElementHeight(), 18.57);
+    EXPECT_DOUBLE_EQ(teximage->getOrigin().x, 14.937);
+    EXPECT_DOUBLE_EQ(teximage->getOrigin().y, 15.715);
+    EXPECT_DOUBLE_EQ(teximage->getBoundingBox().width, 20.126);
+    EXPECT_DOUBLE_EQ(teximage->getBoundingBox().height, 18.57);
 
     EXPECT_FALSE(teximage->getBinaryData().empty());
 }

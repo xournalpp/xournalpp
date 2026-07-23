@@ -38,11 +38,8 @@ Image::~Image() {
 auto Image::clone() const -> ElementPtr {
     auto img = std::make_unique<Image>();
 
-    img->x = this->x;
-    img->y = this->y;
+    img->boundingBox = this->boundingBox;
     img->setColor(this->getColor());
-    img->width = this->width;
-    img->height = this->height;
     img->data = this->data;
 
     img->image = cairo_surface_reference(this->image);
@@ -53,12 +50,12 @@ auto Image::clone() const -> ElementPtr {
 }
 
 void Image::setWidth(double width) {
-    this->width = width;
+    this->boundingBox.width = width;
     this->calcSize();
 }
 
 void Image::setHeight(double height) {
-    this->height = height;
+    this->boundingBox.height = height;
     this->calcSize();
 }
 
@@ -206,15 +203,15 @@ auto Image::getImage() const -> cairo_surface_t* {
 
 void Image::scale(double x0, double y0, double fx, double fy, double rotation,
                   bool) {  // line width scaling option is not used
-    this->x -= x0;
-    this->x *= fx;
-    this->x += x0;
-    this->y -= y0;
-    this->y *= fy;
-    this->y += y0;
+    this->boundingBox.x -= x0;
+    this->boundingBox.x *= fx;
+    this->boundingBox.x += x0;
+    this->boundingBox.y -= y0;
+    this->boundingBox.y *= fy;
+    this->boundingBox.y += y0;
 
-    this->width *= fx;
-    this->height *= fy;
+    this->boundingBox.width *= fx;
+    this->boundingBox.height *= fy;
     this->calcSize();
 }
 
@@ -225,8 +222,8 @@ void Image::serialize(ObjectOutputStream& out) const {
 
     this->Element::serialize(out);
 
-    out.writeDouble(this->width);
-    out.writeDouble(this->height);
+    out.writeDouble(this->boundingBox.width);
+    out.writeDouble(this->boundingBox.height);
 
     out.writeImage(this->data);
 
@@ -238,8 +235,8 @@ void Image::readSerialized(ObjectInputStream& in) {
 
     this->Element::readSerialized(in);
 
-    this->width = in.readDouble();
-    this->height = in.readDouble();
+    this->boundingBox.width = in.readDouble();
+    this->boundingBox.height = in.readDouble();
 
     if (this->image) {
         cairo_surface_destroy(this->image);
@@ -253,7 +250,7 @@ void Image::readSerialized(ObjectInputStream& in) {
 }
 
 void Image::calcSize() const {
-    this->snappedBounds = Rectangle<double>(this->x, this->y, this->width, this->height);
+    this->snappedBounds = this->boundingBox;
     this->sizeCalculated = true;
 }
 

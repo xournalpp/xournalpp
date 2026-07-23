@@ -69,9 +69,7 @@ void ErasableStroke::beginErasure(const IntersectionParametersContainer& paddedI
                 range.addPoint(p2.x, p2.y);
             } else {
                 // The stroke was split in two or more (and possibly shrank). Need to rerender its entire box.
-                range.addPoint(this->stroke.getX(), this->stroke.getY());
-                range.addPoint(this->stroke.getX() + this->stroke.getElementWidth(),
-                               this->stroke.getY() + this->stroke.getElementHeight());
+                range = range.unite(Range(this->stroke.getBoundingBox()));
             }
         } else if (subsections.size() > 1) {
             /**

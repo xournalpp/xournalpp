@@ -14,8 +14,8 @@
 // No include needed, this is included after PageView.h
 
 #include <limits>
-#include <mutex>
 #include <optional>
+#include <shared_mutex>
 
 #include "control/AudioController.h"
 #include "control/Control.h"

@@ -161,7 +161,7 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
 
     if (this->originalTextElement) {
         // If editing a preexisting text, put the cursor at the right location
-        this->mousePressed(x - textElement->getX(), y - textElement->getY());
+        this->mousePressed(x, y);
     } else if (this->cursorBlink) {
         blinkCallback(this);
     } else {
@@ -194,17 +194,18 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
                                      if (!self->viewPool->empty()) {
                                          // We use the first view as the main view
                                          auto* text = self->getTextElement();
-                                         auto zoom = self->viewPool->front().getZoom();
-                                         double dx = offsetX / zoom;
-                                         double dy = offsetY / zoom;
-                                         if (text->getX() + dx > 0 &&
-                                             text->getX() + dx < self->page->getWidth() -
-                                                                         self->getContentBoundingBox().getWidth() &&
-                                             text->getY() + dy > 0 &&
-                                             text->getY() + dy < self->page->getHeight() -
-                                                                         self->getContentBoundingBox().getHeight()) {
+                                         const auto zoom = self->viewPool->front().getZoom();
+                                         const xoj::util::Point<double> move(offsetX / zoom, offsetY / zoom);
+                                         const auto newOrigin = text->getOrigin() + move;
+                                         const double width = self->currentWrapWidth == Text::NO_WRAP ?
+                                                                      self->getContentBoundingBox().getWidth() :
+                                                                      self->currentWrapWidth;
+                                         if (newOrigin.x > 0 && newOrigin.x + width < self->page->getWidth() &&
+                                             newOrigin.y > 0 &&
+                                             newOrigin.y + self->getContentBoundingBox().getHeight() <
+                                                     self->page->getHeight()) {
                                              // The text stays entirely in the page
-                                             text->move(dx, dy);
+                                             text->move(move.x, move.y);
                                              self->repaintEditor(true);
                                          }
                                      }
@@ -249,7 +250,8 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
                                                  if (double newVal = self->currentWrapWidth +
                                                                      offsetX / self->viewPool->front().getZoom();
                                                      newVal > 0 &&
-                                                     newVal < self->page->getWidth() - self->getTextElement()->getX()) {
+                                                     newVal < self->page->getWidth() -
+                                                                      self->getTextElement()->getOrigin().x) {
                                                      // The new width does not overflow out of the page
                                                      self->currentWrapWidth = newVal;
                                                      self->layoutStatus = LayoutStatus::NEEDS_WRAP_WIDTH_UPDATE;
@@ -685,12 +687,14 @@ void TextEditor::markPos(double x, double y, bool extendSelection) {
 void TextEditor::mousePressed(double x, double y) {
     this->mouseDown = true;
     // Todo select if SHIFT is pressed
-    markPos(x, y, false);
+    const auto& origin = textElement->getOrigin();
+    this->markPos(x - origin.x, y - origin.y, false);
 }
 
 void TextEditor::mouseMoved(double x, double y) {
     if (this->mouseDown) {
-        markPos(x, y, true);
+        const auto& origin = textElement->getOrigin();
+        this->markPos(x - origin.x, y - origin.y, true);
     }
 }
 
@@ -764,8 +768,9 @@ void TextEditor::updateCursorBox() {
     if (!viewPool->empty()) {
         // Inform the IM of the cursor location (for word selection popup's location)
         // We use the first view as the main view, as far as the IM is concerned
+        const auto& origin = textElement->getOrigin();
         auto box = viewPool->front().toWidgetCoordinates(
-                xoj::util::Rectangle<double>(this->cursorBox).translated(textElement->getX(), textElement->getY()));
+                xoj::util::Rectangle<double>(this->cursorBox).translated(origin.x, origin.y));
 
         GdkRectangle cursorRect;  // cursor position in window coordinates
         cursorRect.x = static_cast<int>(box.x);
@@ -1006,7 +1011,8 @@ void TextEditor::blinkCallback(TextEditor* te) {
     te->blinkTimer = g_timeout_add(time, xoj::util::wrap_for_once_v<blinkCallback>, te);
 
     Range dirtyRange = te->cursorBox;
-    dirtyRange.translate(te->textElement->getX(), te->textElement->getY());
+    const auto& origin = te->textElement->getOrigin();
+    dirtyRange.translate(origin.x, origin.y);
     te->viewPool->dispatch(xoj::view::TextEditionView::FLAG_DIRTY_REGION, dirtyRange);
 }
 
@@ -1062,16 +1068,15 @@ auto TextEditor::computeBoundingBox() const -> Range {
     pango_layout_get_size(getUpToDateLayout(), &w, &h);
     double width = (static_cast<double>(w)) / PANGO_SCALE;
     double height = (static_cast<double>(h)) / PANGO_SCALE;
-    double x = textElement->getX();
-    double y = textElement->getY();
+    const auto& p = textElement->getOrigin();
 
     // Warning: `width` can be negative (e.g. for languages written from right to left)
 
     if (double wrap = this->currentWrapWidth; wrap != Text::NO_WRAP) {
         width = std::copysign(std::max(std::abs(width), wrap), width);
     }
-    Range res(x, y);
-    res.addPoint(x + width, y + height);
+    Range res(p.x, p.y);
+    res.addPoint(p.x + width, p.y + height);
     return res;
 }
 
@@ -1131,7 +1136,9 @@ void TextEditor::repaintCursorAfterChange() {
     Range dirtyRange = this->cursorBox;
     this->updateCursorBox();
     dirtyRange = dirtyRange.unite(this->cursorBox);
-    dirtyRange.translate(this->textElement->getX(), this->textElement->getY());
+    const auto& origin = this->textElement->getOrigin();
+
+    dirtyRange.translate(origin.x, origin.y);
     this->viewPool->dispatch(xoj::view::TextEditionView::FLAG_DIRTY_REGION, dirtyRange);
 }
 
@@ -1202,12 +1209,9 @@ void TextEditor::initializeEditionAt(double x, double y) {
 
     // Should we reverse this loop to select the most recent text rather than the oldest?
     for (auto&& e: this->page->getSelectedLayer()->getElements()) {
-        if (e->getType() == ELEMENT_TEXT) {
-            GdkRectangle matchRect = {gint(x), gint(y), 1, 1};
-            if (e->intersectsArea(&matchRect)) {
-                text = dynamic_cast<Text*>(e.get());
-                break;
-            }
+        if (e->getType() == ELEMENT_TEXT && e->hasBoundingBoxContaining(x, y)) {
+            text = dynamic_cast<Text*>(e.get());
+            break;
         }
     }
 
@@ -1216,8 +1220,7 @@ void TextEditor::initializeEditionAt(double x, double y) {
         this->textElement = std::make_unique<Text>();
         this->textElement->setColor(h->getColor());
         this->textElement->setFont(control->getSettings()->getFont());
-        this->textElement->setX(x);
-        this->textElement->setY(y - this->textElement->getElementHeight() / 2);
+        this->textElement->setOrigin(x, y - this->textElement->getBoundingBox().height / 2);
 
 #ifdef ENABLE_AUDIO
         if (auto audioController = control->getAudioController(); audioController && audioController->isRecording()) {

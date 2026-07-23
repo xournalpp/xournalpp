@@ -43,7 +43,8 @@ void TextView::draw(const Context& ctx) const {
         Util::cairo_set_source_rgbi(ctx.cr, text->getColor());
     }
 
-    cairo_translate(ctx.cr, text->getX(), text->getY());
+    const auto& origin = text->getOrigin();
+    cairo_translate(ctx.cr, origin.x, origin.y);
 
     auto layout = initPango(ctx.cr, text);
     const std::string& content = text->getText();

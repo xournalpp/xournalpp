@@ -15,17 +15,18 @@
 #include <iosfwd>
 #include <optional>
 
+#include "util/Point.h"
 #include "util/Range.h"
 
 namespace xoj::util {  // Rectangle is already defined in windows.h
 
 template <class T>
-class Rectangle final {
+class Rectangle final: private Point<T> {
 public:
     constexpr Rectangle() = default;
-    constexpr Rectangle(T x, T y, T width, T height): x(x), y(y), width(width), height(height) {}
+    constexpr Rectangle(T x, T y, T width, T height): Point<T>(x, y), width(width), height(height) {}
     constexpr explicit Rectangle(const Range& rect):
-            x(rect.getX()), y(rect.getY()), width(rect.getWidth()), height(rect.getHeight()) {}
+            Point<T>(rect.getX(), rect.getY()), width(rect.getWidth()), height(rect.getHeight()) {}
 
     constexpr auto operator==(const Rectangle& other) const -> bool {
         return x == other.x && y == other.y && width == other.width && height == other.height;
@@ -83,10 +84,12 @@ public:
      */
     constexpr auto area() const -> T { return width * height; }
 
-    T x{};
-    T y{};
+    const Point<T>& getOrigin() const { return *this; }
+
     T width{};
     T height{};
+    using Point<T>::x;
+    using Point<T>::y;
 };
 
 }  // namespace xoj::util

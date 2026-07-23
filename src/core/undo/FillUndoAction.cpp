@@ -44,19 +44,18 @@ auto FillUndoAction::undo(Control* control) -> bool {
         return true;
     }
 
+    Range range;
     Document* doc = control->getDocument();
     doc->lock();
-    FillUndoActionEntry* e = this->data.front();
-    Range range(e->s->getX(), e->s->getY());
 
     for (FillUndoActionEntry* e: this->data) {
         e->s->setFill(e->originalFill);
-
-        range.addPoint(e->s->getX(), e->s->getY());
-        range.addPoint(e->s->getX() + e->s->getElementWidth(), e->s->getY() + e->s->getElementHeight());
+        range = range.unite(Range(e->s->getBoundingBox()));
     }
 
     doc->unlock();
+
+    xoj_assert(!range.empty());
     this->page->fireRangeChanged(range);
 
     return true;
@@ -67,19 +66,18 @@ auto FillUndoAction::redo(Control* control) -> bool {
         return true;
     }
 
+    Range range;
     Document* doc = control->getDocument();
     doc->lock();
-    FillUndoActionEntry* e = this->data.front();
-    Range range(e->s->getX(), e->s->getY());
 
     for (FillUndoActionEntry* e: this->data) {
         e->s->setFill(e->newFill);
-
-        range.addPoint(e->s->getX(), e->s->getY());
-        range.addPoint(e->s->getX() + e->s->getElementWidth(), e->s->getY() + e->s->getElementHeight());
+        range = range.unite(Range(e->s->getBoundingBox()));
     }
 
     doc->unlock();
+
+    xoj_assert(!range.empty());
     this->page->fireRangeChanged(range);
 
     return true;

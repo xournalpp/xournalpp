@@ -94,22 +94,20 @@ void LinkHandler::startEditing(const PageRef& page, const int x, const int y) {
                 []() {});
         dialog.show(control->getGtkWindow());
     } else {
-        double posX = linkElement->getX();
-        double posY = linkElement->getY();
+        auto pos = linkElement->getOrigin();  // Copy before unlocking the mutex
         lock.unlock();
 
         this->highlightPopover->linkTo(linkElement);
         auto dialog = xoj::popup::PopupWindowWrapper<LinkDialog>(
                 this->control,
-                [this, linkElement, page = page, posX, posY](LinkDialog* dlg) {
+                [this, linkElement, page = page, pos](LinkDialog* dlg) {
                     auto linkOwn = std::make_unique<Link>();
                     Link* link = linkOwn.get();
                     link->setText(dlg->getText());
                     link->setUrl(dlg->getURL());
                     link->setAlignment(dlg->getLayout());
                     link->setFont(dlg->getFont());
-                    link->setX(posX);
-                    link->setY(posY);
+                    link->setOrigin(pos.x, pos.y);
 
                     const auto undo = control->getUndoRedoHandler();
                     auto groupUndoAction = std::make_unique<GroupUndoAction>();

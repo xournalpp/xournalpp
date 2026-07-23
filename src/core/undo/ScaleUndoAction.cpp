@@ -45,14 +45,12 @@ void ScaleUndoAction::applyScale(double fx, double fy, bool restoreLineWidth, Do
     }
 
     doc->lock();
-    Range r(elements.front()->getX(), elements.front()->getY());
+    Range r;
 
     for (Element* e: this->elements) {
-        r.addPoint(e->getX(), e->getY());
-        r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
+        r = r.unite(Range(e->getBoundingBox()));
         e->scale(this->x0, this->y0, fx, fy, this->rotation, restoreLineWidth);
-        r.addPoint(e->getX(), e->getY());
-        r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
+        r = r.unite(Range(e->getBoundingBox()));
     }
     doc->unlock();
 

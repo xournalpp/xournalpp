@@ -127,7 +127,7 @@ void StrokeHandler::drawSegmentTo(const Point& point) {
 void StrokeHandler::onSequenceCancelEvent() {
     if (this->stroke) {
         this->viewPool->dispatchAndClear(xoj::view::StrokeToolView::CANCELLATION_REQUEST,
-                                         Range(this->stroke->boundingRect()));
+                                         Range(this->stroke->getBoundingBox()));
         stroke.reset();
     }
 }
@@ -245,12 +245,7 @@ void StrokeHandler::strokeRecognizerDetected(std::unique_ptr<Stroke> recognized,
     layer->addElement(std::move(recognized));
     doc->unlock();
 
-    Range range(recognizedPtr->getX(), recognizedPtr->getY());
-    range.addPoint(recognizedPtr->getX() + recognizedPtr->getElementWidth(),
-                   recognizedPtr->getY() + recognizedPtr->getElementHeight());
-
-    range.addPoint(strokePtr->getX(), strokePtr->getY());
-    range.addPoint(strokePtr->getX() + strokePtr->getElementWidth(), strokePtr->getY() + strokePtr->getElementHeight());
+    Range range = Range(recognizedPtr->getBoundingBox()).unite(Range(strokePtr->getBoundingBox()));
 
     this->viewPool->dispatch(xoj::view::StrokeToolView::STROKE_REPLACEMENT_REQUEST, *recognizedPtr);
 

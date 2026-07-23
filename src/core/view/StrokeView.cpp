@@ -72,7 +72,7 @@ void StrokeView::draw(const Context& ctx) const {
         /**
          * Create a mask tailored to the stroke's bounding box
          */
-        mask = Mask(cairo_get_target(ctx.cr), Range(s->boundingRect()), zoom);
+        mask = Mask(cairo_get_target(ctx.cr), Range(s->getBoundingBox()), zoom);
         cr = mask.get();
     }
 

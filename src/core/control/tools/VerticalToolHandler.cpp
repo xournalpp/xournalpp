@@ -48,8 +48,9 @@ void VerticalToolHandler::adoptElements(const Side side) {
 
     // Add new elements based on position
     for (const Element* e: this->layer->getElementsView().clone()) {
-        if ((side == Side::Below && e->getY() >= this->startY) ||
-            (side == Side::Above && e->getY() + e->getElementHeight() <= this->startY)) {
+        const auto& box = e->getBoundingBox();
+        if ((side == Side::Below && box.y >= this->startY) ||
+            (side == Side::Above && box.y + box.height <= this->startY)) {
             this->elements.push_back(this->layer->removeElement(e).e);
         }
     }
@@ -105,7 +106,7 @@ void VerticalToolHandler::forEachElement(std::function<void(const Element*)> f) 
 auto VerticalToolHandler::computeElementsBoundingBox() const -> Range {
     Range rg;
     for (auto const& e: this->elements) {
-        rg = rg.unite(Range(e->boundingRect()));
+        rg = rg.unite(Range(e->getBoundingBox()));
     }
     return rg;
 }

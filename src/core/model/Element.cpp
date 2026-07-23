@@ -6,6 +6,7 @@
 
 #include <glib.h>  // for gint
 
+#include "util/Point.h"
 #include "util/safe_casts.h"                      // for as_unsigned
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
@@ -16,32 +17,15 @@ Element::Element(ElementType type): type(type) {}
 
 auto Element::getType() const -> ElementType { return this->type; }
 
-void Element::setX(double x) {
-    this->x = x;
-    this->sizeCalculated = false;
-}
-
-void Element::setY(double y) {
-    this->y = y;
-    this->sizeCalculated = false;
-}
-
-auto Element::getX() const -> double {
+auto Element::getBoundingBox() const -> const Rectangle<double>& {
     if (!this->sizeCalculated) {
         this->sizeCalculated = true;
         calcSize();
     }
-    return x;
+    return this->boundingBox;
 }
 
-auto Element::getY() const -> double {
-    if (!this->sizeCalculated) {
-        this->sizeCalculated = true;
-        calcSize();
-    }
-    return y;
-}
-auto Element::getSnappedBounds() const -> Rectangle<double> {
+auto Element::getSnappedBounds() const -> const Rectangle<double>& {
     if (!this->sizeCalculated) {
         this->sizeCalculated = true;
         calcSize();
@@ -49,83 +33,51 @@ auto Element::getSnappedBounds() const -> Rectangle<double> {
     return this->snappedBounds;
 }
 
+void Element::setOrigin(double x, double y) {
+    this->boundingBox.x = x;
+    this->boundingBox.y = y;
+    this->sizeCalculated = false;
+}
+
+auto Element::getOrigin() const -> const xoj::util::Point<double>& { return boundingBox.getOrigin(); }
+
 void Element::move(double dx, double dy) {
-    this->x += dx;
-    this->y += dy;
+    this->boundingBox = this->boundingBox.translated(dx, dy);
     this->snappedBounds = this->snappedBounds.translated(dx, dy);
-}
-
-auto Element::getElementWidth() const -> double {
-    if (!this->sizeCalculated) {
-        this->sizeCalculated = true;
-        calcSize();
-    }
-    return this->width;
-}
-
-auto Element::getElementHeight() const -> double {
-    if (!this->sizeCalculated) {
-        this->sizeCalculated = true;
-        calcSize();
-    }
-    return this->height;
-}
-
-auto Element::boundingRect() const -> Rectangle<double> {
-    return Rectangle<double>(getX(), getY(), getElementWidth(), getElementHeight());
 }
 
 void Element::setColor(Color color) { this->color = color; }
 
 auto Element::getColor() const -> Color { return this->color; }
 
-auto Element::intersectsArea(const GdkRectangle* src) const -> bool {
-    // compute the smallest rectangle with integer coordinates containing the bounding box and having width, height > 0
-    auto x = getX();
-    auto y = getY();
-    auto x1 = gint(std::floor(getX()));
-    auto y1 = gint(std::floor(getY()));
-    auto x2 = gint(std::ceil(x + getElementWidth()));
-    auto y2 = gint(std::ceil(y + getElementHeight()));
-    GdkRectangle rect = {x1, y1, std::max(1, x2 - x1), std::max(1, y2 - y1)};
-
-    return gdk_rectangle_intersect(src, &rect, nullptr);
-}
-
 auto Element::intersectsArea(double x, double y, double width, double height) const -> bool {
-    double dest_x = NAN, dest_y = NAN;
-    double dest_w = NAN, dest_h = NAN;
-
-    dest_x = std::max(getX(), x);
-    dest_y = std::max(getY(), y);
-    dest_w = std::min(getX() + getElementWidth(), x + width) - dest_x;
-    dest_h = std::min(getY() + getElementHeight(), y + height) - dest_y;
-
-    return (dest_w > 0 && dest_h > 0);
+    return this->getBoundingBox().intersects(xoj::util::Rectangle<double>(x, y, width, height)).has_value();
 }
 
 auto Element::distanceTo(double x, double y) const -> double {
-    // Coordinates of the point in the bounding rectangle that is the closest to (x,y).
-    double projX = std::clamp(x, getX(), getX() + getElementWidth());
-    double projY = std::clamp(y, getY(), getY() + getElementHeight());
+    const auto& box = this->getBoundingBox();
+    // Coordinates of the point in the bounding box that is the closest to (x,y).
+    double projX = std::clamp(x, box.x, box.x + box.width);
+    double projY = std::clamp(y, box.y, box.y + box.height);
     return std::hypot(x - projX, y - projY);
 }
 
 auto Element::hasBoundingBoxContaining(double x, double y) const -> bool {
-    return x >= getX() && x <= getX() + getElementWidth() && y >= getY() && y <= getY() + getElementHeight();
+    return Range(this->getBoundingBox()).contains(x, y);
 }
 
 auto Element::isInSelection(ShapeContainer* container) const -> bool {
-    if (!container->contains(getX(), getY())) {
+    const auto& box = this->getBoundingBox();
+    if (!container->contains(box.x, box.y)) {
         return false;
     }
-    if (!container->contains(getX() + getElementWidth(), getY())) {
+    if (!container->contains(box.x + box.width, box.y)) {
         return false;
     }
-    if (!container->contains(getX(), getY() + getElementHeight())) {
+    if (!container->contains(box.x, box.y + box.height)) {
         return false;
     }
-    if (!container->contains(getX() + getElementWidth(), getY() + getElementHeight())) {
+    if (!container->contains(box.x + box.width, box.y + box.height)) {
         return false;
     }
 
@@ -138,8 +90,9 @@ auto Element::rescaleWithMirror() const -> bool { return false; }
 void Element::serialize(ObjectOutputStream& out) const {
     out.writeObject("Element");
 
-    out.writeDouble(this->x);
-    out.writeDouble(this->y);
+    const auto& pt = getOrigin();
+    out.writeDouble(pt.x);
+    out.writeDouble(pt.y);
     out.writeUInt(uint32_t(this->color));
 
     out.endObject();
@@ -148,8 +101,9 @@ void Element::serialize(ObjectOutputStream& out) const {
 void Element::readSerialized(ObjectInputStream& in) {
     in.readObject("Element");
 
-    this->x = in.readDouble();
-    this->y = in.readDouble();
+    double x = in.readDouble();
+    double y = in.readDouble();
+    setOrigin(x, y);
     this->color = Color(in.readUInt());
 
     in.endObject();

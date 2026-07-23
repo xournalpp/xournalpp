@@ -2403,14 +2403,12 @@ void Control::clipboardPaste(ElementPtr e) {
 
     win->getXournal()->getPasteTarget(x, y);
 
-    double width = e->getElementWidth();
-    double height = e->getElementHeight();
+    const auto& box = e->getBoundingBox();
 
-    x = std::max(0.0, x - width / 2);
-    y = std::max(0.0, y - height / 2);
+    x = std::max(0.0, x - box.width / 2);
+    y = std::max(0.0, y - box.height / 2);
 
-    e->setX(x);
-    e->setY(y);
+    e->setOrigin(x, y);
 
     undoRedo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, e.get()));
     auto sel = SelectionFactory::createFromFloatingElement(this, page, layer, view, std::move(e));
