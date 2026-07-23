@@ -92,7 +92,7 @@ private:
     void setBgSolid(const PageType& bg, Color color) override;
     void setBgPixmap(bool attach, const fs::path& filename) override;
     void setBgPixmapCloned(size_t pageNr) override;
-    void setBgPdf(size_t pageno) override;
+    void setBgPdf(size_t pageno, int pageorient) override;
     void loadBgPdf(bool attach, const fs::path& filename) override;
     void addLayer(const std::optional<std::string_view>& name) override;
     void finalizeLayer() override;

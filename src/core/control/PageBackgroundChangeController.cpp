@@ -170,6 +170,11 @@ void PageBackgroundChangeController::setPaperSizeForNewPages(const std::optional
     this->paperSizeForNewPages = ps;
 }
 
+void PageBackgroundChangeController::togglePageSizeRatio(const PageRef& page, const size_t pNr) {
+    PaperSize* ps = new PaperSize(page->getHeight(), page->getWidth());
+    this->commitPageSizeChange(pNr, *ps);
+}
+
 static void setPageImageBackground(const PageRef& page, BackgroundImage img) {
     page->setBackgroundImage(std::move(img));
     page->setBackgroundType(PageType(PageTypeFormat::Image));

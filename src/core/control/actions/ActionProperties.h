@@ -548,6 +548,15 @@ struct ActionProperties<Action::MOVE_PAGE_TOWARDS_END> {
 };
 
 template <>
+struct ActionProperties<Action::ROTATE_PAGE_CLOCKWISE> {
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->rotatePageClockwise(1); }
+};
+template <>
+struct ActionProperties<Action::ROTATE_PAGE_COUNTER_CLOCKWISE> {
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->rotatePageClockwise(-1); }
+};
+
+template <>
 struct ActionProperties<Action::APPEND_NEW_PDF_PAGES> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->appendNewPdfPages(); }
 };
