@@ -43,7 +43,8 @@ public:
 
 protected:
     virtual void addFilterToDialog(GtkFileChooser* dialog) = 0;
-    static void addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const std::string& mimetype);
+    static void addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const std::string& mimetype,
+                                      const std::string& extension);
     bool checkOverwriteBackgroundPDF(fs::path const& file) const;
 
     virtual void setExtensionFromFilter(fs::path& p, const char* filterName) const = 0;
