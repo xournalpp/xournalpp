@@ -1767,6 +1767,186 @@ static int applib_getTexts(lua_State* L) {
     return 1;
 }
 
+/**
+ * Adds url links as specified to the current layer.
+ *
+ * Global parameters:
+ *   - links table: array of link-parameter-tables
+ *   - allowUndoRedoAction string: Decides how the change gets introduced into the undoRedo action list "individual",
+ * "grouped" or "none"
+ *
+ * @param opts {links:{text:string, url:string, alignment:integer|nil, font:{name:string, size:number}, color:integer,
+ * x:number, y:number}[], allowUndoRedoAction:string}
+ * @return lightuserdata[] references to the created link elements
+ *
+ * Parameters per link:
+ *   - text string: displayed text (required)
+ *   - url string: url this link refers to (required)
+ *   - alignment integer: text alignment, use app.C.Alignment_* (default: app.C.Alignment_left = 0)
+ *   - font table {name string, size number} (default: currently configured font/size from the settings)
+ *   - color integer: RGB hex code for the text-color (default: color of text tool)
+ *   - x number: x-position of the box (upper left corner) (required)
+ *   - y number: y-position of the box (upper left corner) (required)
+ *
+ * Example:
+ *
+ * local refs = app.addLinks{links={
+ *   {
+ *     text="Xournal++ Website",
+ *     url="https://xournalpp.github.io",
+ *     alignment=app.C.Alignment_left,
+ *     font={name="Noto Sans Mono Medium", size=8.0},
+ *     color=0x1259b9,
+ *     x = 50.0,
+ *     y = 50.0,
+ *   },
+ *   {
+ *     text="email address",
+ *     url="mailto:admin@example.com",
+ *     alignment=app.C.Alignment_center,
+ *     font={name="Noto Sans Mono Medium", size=8.0},
+ *     color=0x0,
+ *     x = 150.0,
+ *     y = 50.0,
+ *   },
+ * }
+ */
+static int applib_addLinks(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    PageRef const& page = control->getCurrentPage();
+    Layer* layer = page->getSelectedLayer();
+    Settings* settings = control->getSettings();
+
+    std::vector<const Element*> links;
+
+    // Discard any extra arguments passed in
+    lua_settop(L, 1);
+    luaL_checktype(L, 1, LUA_TTABLE);
+
+    lua_getfield(L, 1, "links");
+    if (!lua_istable(L, -1)) {
+        return luaL_error(L, "Missing link table!");
+    }
+
+    // stack now has following:
+    //  1 = table arg
+    // -1 = links array
+
+    // get default color
+    ToolHandler* toolHandler = control->getToolHandler();
+    Tool& tool = toolHandler->getTool(TOOL_LINK);
+    Color default_color = tool.getColor();
+    // default font
+    XojFont& default_font = settings->getFont();
+
+    size_t numLinks = lua_rawlen(L, -1);
+    for (size_t a = 1; a <= numLinks; a++) {
+        auto link = std::make_unique<Link>();
+
+        // Fetch table of X values from the Lua stack
+        lua_pushinteger(L, as_signed(a));
+        lua_gettable(L, -2);  // get current link
+        luaL_checktype(L, -1, LUA_TTABLE);
+
+        lua_getfield(L, -1, "text");
+        lua_getfield(L, -2, "url");
+        lua_getfield(L, -3, "alignment");
+
+        // handle font table
+        lua_getfield(L, -4, "font");  // {name="", size=0}
+        if (lua_istable(L, -1)) {
+            lua_getfield(L, -1, "name");
+            lua_getfield(L, -2, "size");
+        } else if (lua_isnil(L, -1)) {
+            // push two dummy values if font is unset/no table
+            lua_pushnil(L);
+            lua_pushnil(L);
+        } else {
+            return luaL_error(L, "'font' value must be a table!");
+        }
+
+        lua_getfield(L, -7, "color");
+        lua_getfield(L, -8, "x");
+        lua_getfield(L, -9, "y");
+
+        // stack now has following:
+        //    1 = global params table
+        //   -11 = links array
+        //   -10 = current link-params table
+        //   -9 = text
+        //   -8 = url
+        //   -7 = alignment
+        //   -6 = font-table
+        //   -5 = fontname
+        //   -4 = fontsize
+        //   -3 = color
+        //   -2 = x
+        //   -1 = y
+
+        if (!lua_isstring(L, -9)) {
+            return luaL_error(L, "Missing text!/'text' must be a string");
+        }
+        link->setText(lua_tostring(L, -9));
+
+        if (!lua_isstring(L, -8)) {
+            return luaL_error(L, "Missing url!/'url' must be a string");
+        }
+        link->setUrl(lua_tostring(L, -8));
+
+        link->setAlignment(static_cast<TextAlignment::Value>(luaL_optinteger(L, -7, TextAlignment::LEFT)));
+
+        XojFont font{};
+        font.setName(luaL_optstring(L, -5, default_font.getName().c_str()));
+        font.setSize(luaL_optnumber(L, -4, default_font.getSize()));
+        link->setFont(font);
+
+        if (lua_isinteger(L, -3)) {  // Check if the color was provided
+            uint32_t color = static_cast<uint32_t>(as_unsigned(lua_tointeger(L, -3)));
+            if (color > 0xffffff) {
+                std::stringstream msg;
+                msg << "Color 0x" << std::hex << color << " is no valid RGB color.";
+                return luaL_error(L, msg.str().c_str());  // luaL_error does not support %x for hex numbers
+            }
+            link->setColor(Color(color | 0xff000000U));
+        } else if (lua_isnil(L, -3)) {
+            link->setColor(default_color);
+        } else {
+            return luaL_error(L, "'color' must be an integer/hex-code or unset");
+        }
+
+        if (!lua_isnumber(L, -2)) {  // Check if x was provided
+            return luaL_error(L, "Missing X-Coordinate!/must be a number");
+        }
+        if (!lua_isnumber(L, -1)) {  // Check if y was provided
+            return luaL_error(L, "Missing Y-Coordinate!/must be a number");
+        }
+        link->setOrigin(lua_tonumber(L, -2), lua_tonumber(L, -1));
+
+        lua_pop(L, 10);  // remove values read out from the link table + link-table itself
+
+        // Finish building the Link and apply it to the layer.
+        links.push_back(link.get());
+        {
+            std::lock_guard lock(*control->getDocument());
+            layer->addElement(std::move(link));
+        }
+        // Onto the next link
+    }
+
+    // stack now has following:
+    //  1 = table arg
+    // -1 = links array
+
+
+    lua_getfield(L, 1, "allowUndoRedoAction");
+    const char* allowUndoRedoAction = luaL_optstring(L, -1, "grouped");
+    lua_pop(L, 1);
+    handleUndoRedoActionHelper(L, control, allowUndoRedoAction, links);
+
+    refsHelper(L, links);
+    return 1;
+}
 
 /**
  * Returns a list of lua table of the url links (from current selection / current layer / current page / all pages).
@@ -4078,6 +4258,7 @@ static const luaL_Reg applib[] = {
         {"addSplines", applib_addSplines},
         {"addImages", applib_addImages},
         {"addTexts", applib_addTexts},
+        {"addLinks", applib_addLinks},
         {"addToSelection", applib_addToSelection},
         {"clearSelection", applib_clearSelection},
         {"getFilePath", applib_getFilePath},  // Todo(gtk4) remove this deprecated function
