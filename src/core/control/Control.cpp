@@ -12,6 +12,9 @@
 #include <utility>     // for move
 
 #include "control/AudioController.h"                             // for Audi...
+#ifdef ENABLE_AUDIO
+#include <portaudiocpp/PortAudioCpp.hxx>  // for PaException
+#endif
 #include "control/ClipboardHandler.h"                            // for Clip...
 #include "control/CompassController.h"                           // for Comp...
 #include "control/NavigationHistory.h"                           // for Navi...
@@ -140,7 +143,13 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
 
 #ifdef ENABLE_AUDIO
     if (!(disableAudio || this->settings->isAudioDisabled())) {
-        this->audioController = std::make_unique<AudioController>(this->settings, this);
+        try {
+            this->audioController = std::make_unique<AudioController>(this->settings, this);
+        } catch (const portaudio::PaException& e) {
+            g_warning("Audio initialization failed: %s. Continuing without audio support.", e.what());
+        } catch (const std::exception& e) {
+            g_warning("Audio initialization failed: %s. Continuing without audio support.", e.what());
+        }
     }
 #endif
 
