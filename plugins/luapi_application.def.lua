@@ -439,6 +439,50 @@ function app.addTexts(opts) end
 --- 
 function app.getTexts(type) end
 
+--- Adds url links as specified to the current layer.
+--- 
+--- Global parameters:
+---   - links table: array of link-parameter-tables
+---   - allowUndoRedoAction string: Decides how the change gets introduced into the undoRedo action list "individual",
+--- "grouped" or "none"
+--- 
+--- @param opts {links:{text:string, url:string, alignment:integer|nil, font:{name:string, size:number}, color:integer,
+--- x:number, y:number}[], allowUndoRedoAction:string}
+--- @return lightuserdata[] references to the created link elements
+--- 
+--- Parameters per link:
+---   - text string: displayed text (required)
+---   - url string: url this link refers to (required)
+---   - alignment integer: text alignment, use app.C.Alignment_* (default: app.C.Alignment_left = 0)
+---   - font table {name string, size number} (default: currently configured font/size from the settings)
+---   - color integer: RGB hex code for the text-color (default: color of text tool)
+---   - x number: x-position of the box (upper left corner) (required)
+---   - y number: y-position of the box (upper left corner) (required)
+--- 
+--- Example:
+--- 
+--- local refs = app.addLinks{links={
+---   {
+---     text="Xournal++ Website",
+---     url="https://xournalpp.github.io",
+---     alignment=app.C.Alignment_left,
+---     font={name="Noto Sans Mono Medium", size=8.0},
+---     color=0x1259b9,
+---     x = 50.0,
+---     y = 50.0,
+---   },
+---   {
+---     text="email address",
+---     url="mailto:admin@example.com",
+---     alignment=app.C.Alignment_center,
+---     font={name="Noto Sans Mono Medium", size=8.0},
+---     color=0x0,
+---     x = 150.0,
+---     y = 50.0,
+---   },
+--- }
+function app.addLinks(opts) end
+
 --- Returns a list of lua table of the url links (from current selection / current layer / current page / all pages).
 --- When called with "page" to retrieve all elements on the current page, it also adds a field "layer" for the
 --- layer containing the element, and when called with "all" it additionally adds a field "page" containing its page
