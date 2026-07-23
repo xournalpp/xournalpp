@@ -1940,7 +1940,10 @@ static int applib_changeToolColor(lua_State* L) {
     ToolType toolType = toolHandler->getToolType();
     const char* toolStr = luaL_optstring(L, -2, nullptr);
     if (toolStr != nullptr) {
-        toolType = toolTypeFromString(StringUtils::toLowerCase(toolStr));
+        toolType = toolTypeFromString(toolStr);
+        if (toolType == TOOL_NONE) {  // for backwards compatibility
+            toolType = toolTypeFromString(StringUtils::toLowerCase(toolStr));
+        }
     }
 
     if (toolType == TOOL_NONE) {
