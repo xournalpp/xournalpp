@@ -50,6 +50,7 @@
 #include "model/Element.h"
 #include "model/Font.h"
 #include "model/Image.h"
+#include "model/Link.h"
 #include "model/SplineSegment.h"
 #include "model/Stroke.h"
 #include "model/StrokeStyle.h"
@@ -1471,8 +1472,8 @@ static int applib_addStrokes(lua_State* L) {
  *   - allowUndoRedoAction string: Decides how the change gets introduced into the undoRedo action list "individual",
  * "grouped" or "none"
  *
- * @param opts {texts:{text:string, font:{name:string, size:number}, color:integer, x:number, y:number}[],
- * allowUndoRedoAction:string}
+ * @param opts {texts:{text:string, font:{name:string, size:number}, color:integer, x:number, y:number,
+ * wrap:number|nil}[], allowUndoRedoAction:string}
  * @return lightuserdata[] references to the created text elements
  *
  * Parameters per textbox:
@@ -1481,6 +1482,7 @@ static int applib_addStrokes(lua_State* L) {
  *   - color integer: RGB hex code for the text-color (default: color of text tool)
  *   - x number: x-position of the box (upper left corner) (required)
  *   - y number: y-position of the box (upper left corner) (required)
+ *   - wrap number|nil: width of the wrap (default: no wrap)
  *
  * Example:
  *
@@ -1493,11 +1495,12 @@ static int applib_addStrokes(lua_State* L) {
  *     y = 50.0,
  *   },
  *   {
- *     text="Testing",
+ *     text="Testing some long text that may need wrapping",
  *     font={name="Noto Sans Mono Medium", size=8.0},
  *     color=0x0,
  *     x = 150.0,
  *     y = 50.0,
+ *     wrap = 200.0,
  *   },
  * }
  */
@@ -1557,52 +1560,56 @@ static int applib_addTexts(lua_State* L) {
         lua_getfield(L, -5, "color");
         lua_getfield(L, -6, "x");
         lua_getfield(L, -7, "y");
+        lua_getfield(L, -8, "wrap");
 
         // stack now has following:
         //    1 = global params table
-        //   -9 = texts array
-        //   -8 = current text-params table
-        //   -7 = text
-        //   -6 = font-table
-        //   -5 = fontname
-        //   -4 = fontsize
-        //   -3 = color
-        //   -2 = x
-        //   -1 = y
+        //   -10 = texts array
+        //   -9 = current text-params table
+        //   -8 = text
+        //   -7 = font-table
+        //   -6 = fontname
+        //   -5 = fontsize
+        //   -4 = color
+        //   -3 = x
+        //   -2 = y
+        //   -1 = wrap
 
-        if (!lua_isstring(L, -7)) {
+        if (!lua_isstring(L, -8)) {
             return luaL_error(L, "Missing text!/'text' must be a string");
         }
-        text->setText(lua_tostring(L, -7));
+        text->setText(lua_tostring(L, -8));
 
         XojFont font{};
-        font.setName(luaL_optstring(L, -5, default_font.getName().c_str()));
-        font.setSize(luaL_optnumber(L, -4, default_font.getSize()));
+        font.setName(luaL_optstring(L, -6, default_font.getName().c_str()));
+        font.setSize(luaL_optnumber(L, -5, default_font.getSize()));
         text->setFont(font);
 
-        if (lua_isinteger(L, -3)) {  // Check if the color was provided
-            uint32_t color = static_cast<uint32_t>(as_unsigned(lua_tointeger(L, -3)));
+        if (lua_isinteger(L, -4)) {  // Check if the color was provided
+            uint32_t color = static_cast<uint32_t>(as_unsigned(lua_tointeger(L, -4)));
             if (color > 0xffffff) {
                 std::stringstream msg;
                 msg << "Color 0x" << std::hex << color << " is no valid RGB color.";
                 return luaL_error(L, msg.str().c_str());  // luaL_error does not support %x for hex numbers
             }
             text->setColor(Color(color | 0xff000000U));
-        } else if (lua_isnil(L, -3)) {
+        } else if (lua_isnil(L, -4)) {
             text->setColor(default_color);
         } else {
             return luaL_error(L, "'color' must be an integer/hex-code or unset");
         }
 
-        if (!lua_isnumber(L, -2)) {  // Check if x was provided
+        if (!lua_isnumber(L, -3)) {  // Check if x was provided
             return luaL_error(L, "Missing X-Coordinate!/must be a number");
         }
-        if (!lua_isnumber(L, -1)) {  // Check if y was provided
+        if (!lua_isnumber(L, -2)) {  // Check if y was provided
             return luaL_error(L, "Missing Y-Coordinate!/must be a number");
         }
-        text->setOrigin(lua_tonumber(L, -2), lua_tonumber(L, -1));
+        text->setOrigin(lua_tonumber(L, -3), lua_tonumber(L, -2));
 
-        lua_pop(L, 8);  // remove values read out from the text table + text-table itself
+        text->setWrap(luaL_optnumber(L, -1, Text::NO_WRAP));
+
+        lua_pop(L, 9);  // remove values read out from the text table + text-table itself
 
         // Finish building the Text and apply it to the layer.
         texts.push_back(text.get());
@@ -1636,7 +1643,7 @@ static int applib_addTexts(lua_State* L) {
  * Is mostly inverse to app.addTexts (except getTexts may also retrieve the width/height/page/layer of the textbox)
  *
  * @param type string "selection" or "layer" or "page" or "all"
- * @return {text:string, font:{name:string, size:number}, color:integer, x:number, y:number, width:number,
+ * @return {text:string, font:{name:string, size:number}, color:integer, x:number, y:number, wrap: number, width:number,
  * height:number, ref:lightuserdata, page:number|nil, layer:number|nil}[] texts
  *
  * Required argument: type ("selection" or "layer" or "page" or "all")
@@ -1654,6 +1661,7 @@ static int applib_addTexts(lua_State* L) {
  *     color = 0x1259b9,
  *     x = 127.0,
  *     y = 70.0,
+ *     wrap = -1.0, -- No wrapping
  *     width = 55.0,
  *     height = 23.0,
  *     ref = userdata: 0x5f644c0700d0
@@ -1661,7 +1669,7 @@ static int applib_addTexts(lua_State* L) {
  *     layer = 1, -- Only present when called with the "all" or "page" argument
  *   },
  *   {
- *     text = "Testing",
+ *     text = "Testing some long text that may need wrapping",
  *     font = {
  *             name = "Noto Sans Mono Medium",
  *             size = 8.0,
@@ -1669,6 +1677,7 @@ static int applib_addTexts(lua_State* L) {
  *     color = 0x0,
  *     x = 150.0,
  *     y = 70.0,
+ *     wrap = 200.0,
  *     width = 55.0,
  *     height = 23.0,
  *     ref = userdata: 0x5f644c0701e8
@@ -1730,6 +1739,9 @@ static int applib_getTexts(lua_State* L) {
         lua_pushnumber(L, y);
         lua_setfield(L, -2, "y");  // add y coordinate to text
 
+        lua_pushnumber(L, t->getWrap());
+        lua_setfield(L, -2, "wrap");  // add wrap to text
+
         const auto& box = t->getBoundingBox();
         lua_pushnumber(L, box.width);
         lua_setfield(L, -2, "width");  // add width to text
@@ -1751,6 +1763,326 @@ static int applib_getTexts(lua_State* L) {
         }
 
         lua_settable(L, -3);  // add text to elements
+    }
+    return 1;
+}
+
+/**
+ * Adds url links as specified to the current layer.
+ *
+ * Global parameters:
+ *   - links table: array of link-parameter-tables
+ *   - allowUndoRedoAction string: Decides how the change gets introduced into the undoRedo action list "individual",
+ * "grouped" or "none"
+ *
+ * @param opts {links:{text:string, url:string, alignment:integer|nil, font:{name:string, size:number}, color:integer,
+ * x:number, y:number}[], allowUndoRedoAction:string}
+ * @return lightuserdata[] references to the created link elements
+ *
+ * Parameters per link:
+ *   - text string: displayed text (required)
+ *   - url string: url this link refers to (required)
+ *   - alignment integer: text alignment, use app.C.Alignment_* (default: app.C.Alignment_left = 0)
+ *   - font table {name string, size number} (default: currently configured font/size from the settings)
+ *   - color integer: RGB hex code for the text-color (default: color of text tool)
+ *   - x number: x-position of the box (upper left corner) (required)
+ *   - y number: y-position of the box (upper left corner) (required)
+ *
+ * Example:
+ *
+ * local refs = app.addLinks{links={
+ *   {
+ *     text="Xournal++ Website",
+ *     url="https://xournalpp.github.io",
+ *     alignment=app.C.Alignment_left,
+ *     font={name="Noto Sans Mono Medium", size=8.0},
+ *     color=0x1259b9,
+ *     x = 50.0,
+ *     y = 50.0,
+ *   },
+ *   {
+ *     text="email address",
+ *     url="mailto:admin@example.com",
+ *     alignment=app.C.Alignment_center,
+ *     font={name="Noto Sans Mono Medium", size=8.0},
+ *     color=0x0,
+ *     x = 150.0,
+ *     y = 50.0,
+ *   },
+ * }
+ */
+static int applib_addLinks(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    PageRef const& page = control->getCurrentPage();
+    Layer* layer = page->getSelectedLayer();
+    Settings* settings = control->getSettings();
+
+    std::vector<const Element*> links;
+
+    // Discard any extra arguments passed in
+    lua_settop(L, 1);
+    luaL_checktype(L, 1, LUA_TTABLE);
+
+    lua_getfield(L, 1, "links");
+    if (!lua_istable(L, -1)) {
+        return luaL_error(L, "Missing link table!");
+    }
+
+    // stack now has following:
+    //  1 = table arg
+    // -1 = links array
+
+    // get default color
+    ToolHandler* toolHandler = control->getToolHandler();
+    Tool& tool = toolHandler->getTool(TOOL_LINK);
+    Color default_color = tool.getColor();
+    // default font
+    XojFont& default_font = settings->getFont();
+
+    size_t numLinks = lua_rawlen(L, -1);
+    for (size_t a = 1; a <= numLinks; a++) {
+        auto link = std::make_unique<Link>();
+
+        // Fetch table of X values from the Lua stack
+        lua_pushinteger(L, as_signed(a));
+        lua_gettable(L, -2);  // get current link
+        luaL_checktype(L, -1, LUA_TTABLE);
+
+        lua_getfield(L, -1, "text");
+        lua_getfield(L, -2, "url");
+        lua_getfield(L, -3, "alignment");
+
+        // handle font table
+        lua_getfield(L, -4, "font");  // {name="", size=0}
+        if (lua_istable(L, -1)) {
+            lua_getfield(L, -1, "name");
+            lua_getfield(L, -2, "size");
+        } else if (lua_isnil(L, -1)) {
+            // push two dummy values if font is unset/no table
+            lua_pushnil(L);
+            lua_pushnil(L);
+        } else {
+            return luaL_error(L, "'font' value must be a table!");
+        }
+
+        lua_getfield(L, -7, "color");
+        lua_getfield(L, -8, "x");
+        lua_getfield(L, -9, "y");
+
+        // stack now has following:
+        //    1 = global params table
+        //   -11 = links array
+        //   -10 = current link-params table
+        //   -9 = text
+        //   -8 = url
+        //   -7 = alignment
+        //   -6 = font-table
+        //   -5 = fontname
+        //   -4 = fontsize
+        //   -3 = color
+        //   -2 = x
+        //   -1 = y
+
+        if (!lua_isstring(L, -9)) {
+            return luaL_error(L, "Missing text!/'text' must be a string");
+        }
+        link->setText(lua_tostring(L, -9));
+
+        if (!lua_isstring(L, -8)) {
+            return luaL_error(L, "Missing url!/'url' must be a string");
+        }
+        link->setUrl(lua_tostring(L, -8));
+
+        link->setAlignment(static_cast<TextAlignment::Value>(luaL_optinteger(L, -7, TextAlignment::LEFT)));
+
+        XojFont font{};
+        font.setName(luaL_optstring(L, -5, default_font.getName().c_str()));
+        font.setSize(luaL_optnumber(L, -4, default_font.getSize()));
+        link->setFont(font);
+
+        if (lua_isinteger(L, -3)) {  // Check if the color was provided
+            uint32_t color = static_cast<uint32_t>(as_unsigned(lua_tointeger(L, -3)));
+            if (color > 0xffffff) {
+                std::stringstream msg;
+                msg << "Color 0x" << std::hex << color << " is no valid RGB color.";
+                return luaL_error(L, msg.str().c_str());  // luaL_error does not support %x for hex numbers
+            }
+            link->setColor(Color(color | 0xff000000U));
+        } else if (lua_isnil(L, -3)) {
+            link->setColor(default_color);
+        } else {
+            return luaL_error(L, "'color' must be an integer/hex-code or unset");
+        }
+
+        if (!lua_isnumber(L, -2)) {  // Check if x was provided
+            return luaL_error(L, "Missing X-Coordinate!/must be a number");
+        }
+        if (!lua_isnumber(L, -1)) {  // Check if y was provided
+            return luaL_error(L, "Missing Y-Coordinate!/must be a number");
+        }
+        link->setOrigin(lua_tonumber(L, -2), lua_tonumber(L, -1));
+
+        lua_pop(L, 10);  // remove values read out from the link table + link-table itself
+
+        // Finish building the Link and apply it to the layer.
+        links.push_back(link.get());
+        {
+            std::lock_guard lock(*control->getDocument());
+            layer->addElement(std::move(link));
+        }
+        // Onto the next link
+    }
+
+    // stack now has following:
+    //  1 = table arg
+    // -1 = links array
+
+
+    lua_getfield(L, 1, "allowUndoRedoAction");
+    const char* allowUndoRedoAction = luaL_optstring(L, -1, "grouped");
+    lua_pop(L, 1);
+    handleUndoRedoActionHelper(L, control, allowUndoRedoAction, links);
+
+    refsHelper(L, links);
+    return 1;
+}
+
+/**
+ * Returns a list of lua table of the url links (from current selection / current layer / current page / all pages).
+ * When called with "page" to retrieve all elements on the current page, it also adds a field "layer" for the
+ * layer containing the element, and when called with "all" it additionally adds a field "page" containing its page
+ * index together with its layer (all of them being indexed from 1).
+ *
+ * Is mostly inverse to app.addLinks (except getLinks may also retrieve the width/height/page/layer of the link box)
+ *
+ * @param type string "selection" or "layer" or "page" or "all"
+ * @return {text:string, url:string, alignment:integer, font:{name:string, size:number}, color:integer, x:number,
+ * y:number, width:number, height:number, ref:lightuserdata, page:number|nil, layer:number|nil}[] links
+ *
+ * Required argument: type ("selection" or "layer" or "page" or "all")
+ *
+ * Example: local links = app.getLinks("all")
+ *
+ * possible return value:
+ * {
+ *   {
+ *     text = "Xournal++ Website",
+ *     url  = "https://xournalpp.github.io",
+ *     alignment = 0,  -- app.C.Alignment_left
+ *     font = {
+ *             name = "Noto Sans Mono Medium",
+ *             size = 8.0,
+ *            },
+ *     color = 0x1259b9,
+ *     x = 50.0,
+ *     y = 50.0,
+ *     width = 89.0,
+ *     height = 16.0,
+ *     ref = userdata: 0x5f644c0700d0
+ *     page = 1, -- Only present when called with the "all" argument
+ *     layer = 1, -- Only present when called with the "all" or "page" argument
+ *   },
+ *   {
+ *     text = "email address",
+ *     url  = "mailto:admin@example.com",
+ *     alignment = 1 -- app.C.Alignment_center
+ *     font = {
+ *             name = "Noto Sans Mono Medium",
+ *             size = 8.0,
+ *            },
+ *     color = 0x0,
+ *     x = 150.0,
+ *     y = 50.0,
+ *     width = 69.0,
+ *     height = 16.0,
+ *     ref = userdata: 0x5f644c0701e8
+ *     page = 2,
+ *     layer = 1,
+ *   },
+ * }
+ *
+ */
+static int applib_getLinks(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    std::string type = luaL_checkstring(L, 1);
+    Control* control = plugin->getControl();
+
+    // Discard any extra arguments passed in
+    lua_settop(L, 1);
+    luaL_checktype(L, 1, LUA_TSTRING);
+
+    const auto& [err, elements] = getElementsFromHelper(control, type, ELEMENT_LINK);
+    if (err.has_value()) {
+        return luaL_error(L, err.value().c_str());
+    }
+
+    lua_newtable(L);  // create table of the elements
+    int currLinkNo = 0;
+
+    // stack now has following:
+    //  1 = type (string)
+    // -1 = table of links (to be returned)
+
+    for (const auto [e, page_nb, layer]: elements) {
+        auto* l = static_cast<const Link*>(e);
+        lua_pushinteger(L, ++currLinkNo);  // index for later (settable)
+        lua_newtable(L);                   // create link table
+
+        // stack now has following:
+        //  1 = type (string)
+        // -3 = table of links (to be returned)
+        // -2 = index of the current link
+        // -1 = current link table
+
+        lua_pushstring(L, l->getText().c_str());
+        lua_setfield(L, -2, "text");  // add text to link element
+
+        lua_pushstring(L, l->getUrl().c_str());
+        lua_setfield(L, -2, "url");  // add url to link element
+
+        lua_pushinteger(L, l->getAlignment());
+        lua_setfield(L, -2, "alignment");  // add alignment to link element
+
+        lua_newtable(L);  // font table to stack
+        auto font = l->getFont();
+        lua_pushstring(L, font.getName().c_str());
+        lua_setfield(L, -2, "name");  // add font to link
+        lua_pushnumber(L, font.getSize());
+        lua_setfield(L, -2, "size");  // add size to link
+        lua_setfield(L, -2, "font");  // insert font-table to link element
+
+        lua_pushinteger(L, as_signed(uint32_t(l->getColor()) & 0xffffffU));
+        lua_setfield(L, -2, "color");  // add color to link
+
+        auto [x, y] = l->getOrigin();
+        lua_pushnumber(L, x);
+        lua_setfield(L, -2, "x");  // add x coordindate to link
+
+        lua_pushnumber(L, y);
+        lua_setfield(L, -2, "y");  // add y coordinate to link
+
+        const auto& box = l->getBoundingBox();
+        lua_pushnumber(L, box.width);
+        lua_setfield(L, -2, "width");  // add width to link
+
+        lua_pushnumber(L, box.height);
+        lua_setfield(L, -2, "height");  // add height to link
+
+        lua_pushlightuserdata(L, const_cast<void*>(static_cast<const void*>(l)));
+        lua_setfield(L, -2, "ref");
+
+        if (layer.has_value()) {
+            lua_pushinteger(L, as_signed(layer.value()));
+            lua_setfield(L, -2, "layer");  // add layer to link
+        }
+
+        if (page_nb.has_value()) {
+            lua_pushinteger(L, as_signed(page_nb.value()));
+            lua_setfield(L, -2, "page");  // add page to link
+        }
+
+        lua_settable(L, -3);  // add link to elements
     }
     return 1;
 }
@@ -3926,6 +4258,7 @@ static const luaL_Reg applib[] = {
         {"addSplines", applib_addSplines},
         {"addImages", applib_addImages},
         {"addTexts", applib_addTexts},
+        {"addLinks", applib_addLinks},
         {"addToSelection", applib_addToSelection},
         {"clearSelection", applib_clearSelection},
         {"getFilePath", applib_getFilePath},  // Todo(gtk4) remove this deprecated function
@@ -3934,6 +4267,7 @@ static const luaL_Reg applib[] = {
         {"getStrokes", applib_getStrokes},
         {"getImages", applib_getImages},
         {"getTexts", applib_getTexts},
+        {"getLinks", applib_getLinks},
         {"openFile", applib_openFile},
         {"registerPlaceholder", applib_registerPlaceholder},
         {"setPlaceholderValue", applib_setPlaceholderValue},
