@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkAdjustment" id="adjustment1">
+    <property name="lower">5</property>
+    <property name="upper">100</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+  <object class="GtkWindow" id="selectOpacityDialog">
+    <property name="title" translatable="1">Opacity settings</property>
+    <property name="resizable">0</property>
+    <property name="modal">1</property>
+    <property name="destroy-with-parent">1</property>
+    <property name="default-widget">btOk</property>
+    <property name="focus-widget">scaleAlpha</property>
+    <property name="child">
+      <object class="GtkBox" id="dialog-main-box">
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">4</property>
+        <child>
+          <object class="GtkBox" id="vbox1">
+            <property name="vexpand">1</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">10</property>
+            <child>
+              <object class="GtkLabel" id="label1">
+                <property name="label">{Dynamic label set in SelectOpacityDialog}&quot;</property>
+                <property name="use-markup">1</property>
+                <property name="xalign">0</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="box1">
+                <property name="vexpand">1</property>
+                <property name="margin-top">12</property>
+                <property name="margin-bottom">12</property>
+                <property name="spacing">10</property>
+                <child>
+                  <object class="GtkPicture" id="imgPreview">
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkScale" id="scaleAlpha">
+                    <property name="hexpand">1</property>
+                    <property name="draw-value">1</property>
+                    <property name="name">scaleAlpha</property>
+                    <property name="focusable">1</property>
+                    <property name="adjustment">adjustment1</property>
+                    <property name="show-fill-level">1</property>
+                    <property name="fill-level">100</property>
+                    <property name="round-digits">0</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="buttonBox">
+            <property name="halign">end</property>
+            <property name="spacing">4</property>
+            <property name="homogeneous">1</property>
+            <child>
+              <object class="GtkButton" id="btCancel">
+                <property name="label" translatable="1">Cancel</property>
+                <property name="focusable">1</property>
+                <child>
+                  <object class='GtkShortcutController'>
+                    <property name='scope'>managed</property>
+                    <child>
+                      <object class='GtkShortcut'>
+                        <property name='trigger'>Escape</property>
+                        <property name='action'>activate</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="btOk">
+                <property name="label" translatable="1">Ok</property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+</interface>

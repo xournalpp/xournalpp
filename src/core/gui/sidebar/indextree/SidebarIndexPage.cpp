@@ -11,7 +11,6 @@
 #include "model/LinkDestination.h"  // for XojLinkDest
 #include "util/Assert.h"            // for xoj_assert
 #include "util/glib_casts.h"        // for wrap_v
-#include "util/gtk4_helper.h"       //
 #include "util/i18n.h"              // for _
 #include "util/safe_casts.h"        // for as_unsigned
 
@@ -55,8 +54,6 @@ SidebarIndexPage::SidebarIndexPage(Control* control):
 
     this->selectHandler = g_signal_connect(treeViewBookmarks, "cursor-changed", G_CALLBACK(treeBookmarkSelected), this);
     xoj_assert(this->selectHandler != 0);
-
-    gtk_widget_show(this->treeViewBookmarks);
 
     registerListener(control);
 }
