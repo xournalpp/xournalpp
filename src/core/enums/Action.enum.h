@@ -57,6 +57,7 @@ enum class Action : size_t {
     ROTATION_SNAPPING,
     GRID_SNAPPING,
     PREFERENCES,
+    CUSTOMIZE_SHORTCUTS,
 
     // Menu View
     PAIRED_PAGES_MODE,
