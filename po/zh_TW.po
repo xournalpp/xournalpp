@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-14 19:47+0000\n"
-"PO-Revision-Date: 2026-07-19 05:25\n"
+"POT-Creation-Date: 2026-07-23 12:52+0000\n"
+"PO-Revision-Date: 2026-07-26 05:27\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -32,7 +32,7 @@ msgstr "無法刪除舊的自動儲存檔案「{1}」：{2}"
 
 #: ../src/core/control/Control.cpp:588
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
-msgstr "您已刪除活動工具列，請切換為預設工具列。"
+msgstr "選擇的工具列已刪除，切換為預設工具列。"
 
 #: ../src/core/control/Control.cpp:608
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
@@ -61,11 +61,11 @@ msgstr "在結尾插入"
 
 #: ../src/core/control/Control.cpp:844
 msgid "_Journal"
-msgstr ""
+msgstr "日誌"
 
 #: ../src/core/control/Control.cpp:844
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "頁面背景"
 
 #: ../src/core/control/Control.cpp:845
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:43
@@ -78,7 +78,7 @@ msgid "Your current document does not contain PDF Page no {1}\n"
 "Tip: You can select {2} to insert a PDF page."
 msgstr "您目前的檔案中不包含 PDF 第 {1} 頁。\n"
 "是否要插入此頁面？\n\n"
-"提示：您可以選擇 {2} 來插入 PDF 頁面。"
+"提示：您可以由 {2} 來插入 PDF 頁面。"
 
 #: ../src/core/control/Control.cpp:891
 msgid "No pdf pages available to append. You may need to reopen the document first."
@@ -98,7 +98,7 @@ msgstr "請勿開啟自動保存檔案，否則它們可能會被覆寫！\n"
 
 #: ../src/core/control/Control.cpp:1532
 msgid "file: {1}"
-msgstr "檔案: {1}"
+msgstr "檔案：{1}"
 
 #: ../src/core/control/Control.cpp:1575
 msgid "<i>Above error repeated {1} times</i>"
@@ -129,7 +129,7 @@ msgstr "檔案版本衝突"
 
 #: ../src/core/control/Control.cpp:1659
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr "正在開啟的檔案格式版本筆目前Xournal++支持的文件格式版本更新， 可能無法正確開啟，仍要開啟？"
+msgstr "正在開啟的檔案格式版本較目前Xournal++支援的版本新，可能無法正確開啟。仍要開啟嗎？"
 
 #: ../src/core/control/Control.cpp:1682
 msgid "Error reading PDF file \"{1}\"\n"
@@ -161,7 +161,8 @@ msgstr ""
 #: ../src/core/control/Control.cpp:1873
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
-msgstr ""
+msgstr "無法找到背景檔「{1}」。可能已經被移動、改名或刪除。\n"
+"最後位置：{2}"
 
 #: ../src/core/control/Control.cpp:1883
 msgid "\n"
@@ -186,7 +187,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2025
 msgid "Select font"
-msgstr ""
+msgstr "選擇字型"
 
 #: ../src/core/control/Control.cpp:2044
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
@@ -203,11 +204,11 @@ msgstr "文檔已刪除。"
 
 #: ../src/core/control/Control.cpp:2211
 msgid "This document is not saved yet."
-msgstr "此文件尚未存檔"
+msgstr "此文件尚未儲存。"
 
 #: ../src/core/control/Control.cpp:2213
 msgid "Save As..."
-msgstr "另存為..."
+msgstr "另存為……"
 
 #: ../src/core/control/Control.cpp:2213 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
@@ -221,7 +222,7 @@ msgstr "丟棄"
 
 #: ../src/core/control/Control.cpp:2305
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
-msgstr ""
+msgstr "無法執行GTK示範程式：{1}（錯誤碼：{2}）"
 
 #: ../src/core/control/DeviceListHelper.cpp:97
 msgid "mouse"
@@ -261,16 +262,16 @@ msgstr "繪圖板"
 
 #: ../src/core/control/ExportHelper.cpp:63
 msgid "Image file successfully created"
-msgstr "圖片檔案成功建立"
+msgstr "圖片建立成功"
 
 #: ../src/core/control/ExportHelper.cpp:76
 #: ../src/core/control/jobs/BaseExportJob.cpp:40
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr "請勿覆寫背景 PDF 檔！這樣可能導致錯誤！"
+msgstr "請勿覆寫背景 PDF 檔！可能導致錯誤！"
 
 #: ../src/core/control/ExportHelper.cpp:80
 msgid "The check for overwriting the background failed with: {1}"
-msgstr ""
+msgstr "覆蓋背景檢查失敗：{1}"
 
 #: ../src/core/control/ExportHelper.cpp:100
 msgid "PDF file successfully created"
@@ -355,7 +356,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:206
 msgid "Error exporting image: {1}"
-msgstr "匯出影像時發生錯誤：{1}"
+msgstr "匯出圖片時發生錯誤：{1}"
 
 #: ../src/core/control/XournalMain.cpp:235
 msgid "Error saving document: {1}"
@@ -394,7 +395,7 @@ msgstr "抱歉，Xournal++ 一次只能開啟一個檔案。\n"
 
 #: ../src/core/control/XournalMain.cpp:409
 msgid "File {1} does not exist."
-msgstr ""
+msgstr "檔案{1}不存在。"
 
 #: ../src/core/control/XournalMain.cpp:413
 msgid "Filesystem error: {1}\n"
@@ -668,7 +669,7 @@ msgid "Send to back"
 msgstr "置於底層"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
-#: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:165
+#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:162
 msgid "Failed to load image"
 msgstr ""
 
@@ -678,14 +679,14 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:123
 #: ../src/core/control/xojfile/LoadHandler.cpp:140
-#: ../src/core/control/xojfile/LoadHandler.cpp:693
-#: ../src/core/control/xojfile/LoadHandler.cpp:707
+#: ../src/core/control/xojfile/LoadHandler.cpp:689
+#: ../src/core/control/xojfile/LoadHandler.cpp:703
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "無法開啟附件: {1}. 錯誤訊息: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:132
-#: ../src/core/control/xojfile/LoadHandler.cpp:699
-#: ../src/core/control/xojfile/LoadHandler.cpp:717
+#: ../src/core/control/xojfile/LoadHandler.cpp:695
+#: ../src/core/control/xojfile/LoadHandler.cpp:713
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "無法開啟附件: {1}. 錯誤訊息：未提供有效檔案大小"
 
@@ -710,60 +711,60 @@ msgstr "未能讀入圖像：{1}。錯誤提示為：{2}"
 msgid "Cloned pixmap page background on page {1} references inexistent page {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:514
+#: ../src/core/control/xojfile/LoadHandler.cpp:510
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:521
+#: ../src/core/control/xojfile/LoadHandler.cpp:517
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:529
+#: ../src/core/control/xojfile/LoadHandler.cpp:525
 msgid "The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:542
+#: ../src/core/control/xojfile/LoadHandler.cpp:538
 msgid "The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:551
+#: ../src/core/control/xojfile/LoadHandler.cpp:547
 msgid "Could not open file: \"{1}\""
 msgstr "不能打開檔案\"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:567
+#: ../src/core/control/xojfile/LoadHandler.cpp:563
 msgid "XML Parser error: {1}"
 msgstr "XML 分析错误：{1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:577
+#: ../src/core/control/xojfile/LoadHandler.cpp:573
 msgid "Failed to read from compressed file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:586
+#: ../src/core/control/xojfile/LoadHandler.cpp:582
 msgid "Invalid XML data read"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:600
+#: ../src/core/control/xojfile/LoadHandler.cpp:596
 msgid "Document is not complete.\n"
 "We have tried recovering the data that could be read, but the last element may have been discarded, and the end of the file is likely missing."
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:607
+#: ../src/core/control/xojfile/LoadHandler.cpp:603
 msgid "Document is corrupted (no document tag found in file)"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:610
+#: ../src/core/control/xojfile/LoadHandler.cpp:606
 msgid "Document is corrupted (no pages found in file)"
 msgstr "檔案損毀 (檔案中找不到頁面)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:750
+#: ../src/core/control/xojfile/LoadHandler.cpp:746
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "找不到附件所需的暫存檔{1}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:282
+#: ../src/core/control/xojfile/SaveHandler.cpp:286
 msgid "Could not write background \"{1}\", {2}"
 msgstr "未能寫上背景\"{1}\", {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:389
+#: ../src/core/control/xojfile/SaveHandler.cpp:393
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "未能寫上背景\"{1}\"，不管啦繼續哦..."
 
@@ -823,17 +824,17 @@ msgstr ""
 msgid "Unable to play audio recording {1}"
 msgstr "無法播放錄音{1}"
 
-#: ../src/core/gui/PageView.cpp:985
+#: ../src/core/gui/PageView.cpp:984
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:145
 msgid "Loading..."
 msgstr "加載中..."
 
-#: ../src/core/gui/PageView.cpp:1042
+#: ../src/core/gui/PageView.cpp:1041
 msgid "Scroll to page {1}"
 msgstr "捲動至第 {1} 頁"
 
-#: ../src/core/gui/PageView.cpp:1044
+#: ../src/core/gui/PageView.cpp:1043
 msgid "Add missing page"
 msgstr "新增遺失的頁面"
 
@@ -1875,15 +1876,15 @@ msgstr "拷貝"
 msgid "Document not loaded! ({1}), {2}"
 msgstr "文檔未加載！({1}), {2}"
 
-#: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:171
+#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
 msgid "Error: "
 msgstr ""
 
-#: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:175
+#: ../src/core/model/Image.cpp:162 ../src/core/model/Image.cpp:172
 msgid "Unrecoverable error"
 msgstr ""
 
-#: ../src/core/model/Image.cpp:171 ../src/core/model/Image.cpp:175
+#: ../src/core/model/Image.cpp:168 ../src/core/model/Image.cpp:172
 msgid "Failed to close image stream"
 msgstr ""
 
@@ -1959,7 +1960,7 @@ msgstr "文本"
 msgid "link"
 msgstr ""
 
-#: ../src/core/undo/ColorUndoAction.cpp:97
+#: ../src/core/undo/ColorUndoAction.cpp:81
 msgid "Change color"
 msgstr "改變顏色"
 
@@ -1967,11 +1968,11 @@ msgstr "改變顏色"
 msgid "Emergency saved document"
 msgstr "緊急保存檔案"
 
-#: ../src/core/undo/FillUndoAction.cpp:88
+#: ../src/core/undo/FillUndoAction.cpp:86
 msgid "Change stroke fill"
 msgstr "改變筆劃粗細"
 
-#: ../src/core/undo/FontUndoAction.cpp:118
+#: ../src/core/undo/FontUndoAction.cpp:90
 msgid "Change font"
 msgstr "改變字型"
 
@@ -2007,7 +2008,7 @@ msgstr "插入元素"
 msgid "Rename layer"
 msgstr "重新命名圖層"
 
-#: ../src/core/undo/LineStyleUndoAction.cpp:86
+#: ../src/core/undo/LineStyleUndoAction.cpp:70
 msgid "Change line style"
 msgstr "變更線條格式"
 
@@ -2043,7 +2044,7 @@ msgstr "刪除層"
 msgid "Rotation"
 msgstr "旋轉"
 
-#: ../src/core/undo/ScaleUndoAction.cpp:62
+#: ../src/core/undo/ScaleUndoAction.cpp:60
 msgid "Scale"
 msgstr "縮放"
 
@@ -3308,7 +3309,7 @@ msgstr "<i>禁用 GTK 的內置觸摸屏滾動可以解決某些平台上的滾�
 
 #: ../ui/settings.glade:2852
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
-msgstr "禁用 GTK 内置的管性滾動功能。（需要重啟）"
+msgstr "禁用 GTK 内置的管性滾動功能（需要重啟）。"
 
 #: ../ui/settings.glade:2871
 msgid "Touch Scrolling"
@@ -3436,7 +3437,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3430
 msgid "Recoloring (allows theming)"
-msgstr "重新著色（允許主題化）"
+msgstr "重新著色（允許使用主題）"
 
 #: ../ui/settings.glade:3462
 msgid "Cursor icon for pen"
@@ -4525,7 +4526,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:878
 msgid "Run Gtk3 demo"
-msgstr ""
+msgstr "執行GTK3示範程式"
 
 #: ../ui/mainmenubar.xml:882
 msgid "About"

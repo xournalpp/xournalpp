@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-14 19:47+0000\n"
-"PO-Revision-Date: 2026-07-19 05:25\n"
+"POT-Creation-Date: 2026-07-23 12:52+0000\n"
+"PO-Revision-Date: 2026-07-26 05:27\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -693,7 +693,7 @@ msgid "Send to back"
 msgstr "Envia al fons"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
-#: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:165
+#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:162
 msgid "Failed to load image"
 msgstr "No s'ha pogut carregar la imatge."
 
@@ -703,14 +703,14 @@ msgstr "S'ha produït un error mentre s'obria el fitxer d'imatge: "
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:123
 #: ../src/core/control/xojfile/LoadHandler.cpp:140
-#: ../src/core/control/xojfile/LoadHandler.cpp:693
-#: ../src/core/control/xojfile/LoadHandler.cpp:707
+#: ../src/core/control/xojfile/LoadHandler.cpp:689
+#: ../src/core/control/xojfile/LoadHandler.cpp:703
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:132
-#: ../src/core/control/xojfile/LoadHandler.cpp:699
-#: ../src/core/control/xojfile/LoadHandler.cpp:717
+#: ../src/core/control/xojfile/LoadHandler.cpp:695
+#: ../src/core/control/xojfile/LoadHandler.cpp:713
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: No s'ha proporcionat una mida de fitxer vàlida."
 
@@ -735,61 +735,61 @@ msgstr "No s'ha pogut llegir la imatge: {1}. Missatge d'error: {2}"
 msgid "Cloned pixmap page background on page {1} references inexistent page {2}"
 msgstr "La imatge de fons de pàgina del pixmap clonat de la pàgina {1} referencia la pàgina inexistent {2}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:514
+#: ../src/core/control/xojfile/LoadHandler.cpp:510
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}"
 msgstr "El fitxer «{1}» no és un fitxer .xopp vàlid (falta el tipus MIME). Missatge d'error: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:521
+#: ../src/core/control/xojfile/LoadHandler.cpp:517
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\""
 msgstr "El fitxer «{1}» no és un fitxer .xopp vàlid (el tipus MIME no és correcte): «{2}»"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:529
+#: ../src/core/control/xojfile/LoadHandler.cpp:525
 msgid "The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}"
 msgstr "El fitxer «{1}» no és un fitxer .xopp vàlid (falta la versió). Missatge d'error: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:542
+#: ../src/core/control/xojfile/LoadHandler.cpp:538
 msgid "The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\""
 msgstr "El fitxer «{1}» no és un fitxer .xopp vàlid (la cadena de versió està danyada): «{2}»"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:551
+#: ../src/core/control/xojfile/LoadHandler.cpp:547
 msgid "Could not open file: \"{1}\""
 msgstr "El fitxer «{1}» no s'ha pogut obrir."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:567
+#: ../src/core/control/xojfile/LoadHandler.cpp:563
 msgid "XML Parser error: {1}"
 msgstr "Error del processador XML: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:577
+#: ../src/core/control/xojfile/LoadHandler.cpp:573
 msgid "Failed to read from compressed file"
 msgstr "El fitxer comprimit no s'ha pogut llegir."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:586
+#: ../src/core/control/xojfile/LoadHandler.cpp:582
 msgid "Invalid XML data read"
 msgstr "Lectura de dades XML no vàlida"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:600
+#: ../src/core/control/xojfile/LoadHandler.cpp:596
 msgid "Document is not complete.\n"
 "We have tried recovering the data that could be read, but the last element may have been discarded, and the end of the file is likely missing."
 msgstr "El document no està complet.\n"
 "S'ha intentat recuperar les dades que no es poden llegir, però l'últim element pot haver-se descartat i probablement fa falta el final del fitxer."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:607
+#: ../src/core/control/xojfile/LoadHandler.cpp:603
 msgid "Document is corrupted (no document tag found in file)"
 msgstr "El document està danyat (al fitxer no s'han trobat les etiquetes del document)."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:610
+#: ../src/core/control/xojfile/LoadHandler.cpp:606
 msgid "Document is corrupted (no pages found in file)"
 msgstr "El document està danyat (al fitxer no s'ha trobat cap pàgina)."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:750
+#: ../src/core/control/xojfile/LoadHandler.cpp:746
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "El fitxer temporal sol·licitat per a l'adjunt {1} no s'ha pogut trobar."
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:282
+#: ../src/core/control/xojfile/SaveHandler.cpp:286
 msgid "Could not write background \"{1}\", {2}"
 msgstr "No s'ha pogut escriure el fons «{1}», {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:389
+#: ../src/core/control/xojfile/SaveHandler.cpp:393
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "No s'ha pogut escriure el fons «{1}». Es continua de totes maneres."
 
@@ -849,17 +849,17 @@ msgstr "Feu-hi doble clic per a editar-ho. Amb Ctrl+clic, s'obre."
 msgid "Unable to play audio recording {1}"
 msgstr "No es pot reproduir la gravació de so {1}"
 
-#: ../src/core/gui/PageView.cpp:985
+#: ../src/core/gui/PageView.cpp:984
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:145
 msgid "Loading..."
 msgstr "Es carrega..."
 
-#: ../src/core/gui/PageView.cpp:1042
+#: ../src/core/gui/PageView.cpp:1041
 msgid "Scroll to page {1}"
 msgstr "Desplaça fins a la pàgina {1}"
 
-#: ../src/core/gui/PageView.cpp:1044
+#: ../src/core/gui/PageView.cpp:1043
 msgid "Add missing page"
 msgstr "Afegeix la pàgina que falta"
 
@@ -1903,15 +1903,15 @@ msgstr "Copia"
 msgid "Document not loaded! ({1}), {2}"
 msgstr "El document no s'ha carregat! ({1}), {2}"
 
-#: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:171
+#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
 msgid "Error: "
 msgstr "Error: "
 
-#: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:175
+#: ../src/core/model/Image.cpp:162 ../src/core/model/Image.cpp:172
 msgid "Unrecoverable error"
 msgstr "Error sense recuperació possible"
 
-#: ../src/core/model/Image.cpp:171 ../src/core/model/Image.cpp:175
+#: ../src/core/model/Image.cpp:168 ../src/core/model/Image.cpp:172
 msgid "Failed to close image stream"
 msgstr "No s'ha pogut tancar el flux de la imatge."
 
@@ -1987,7 +1987,7 @@ msgstr "text"
 msgid "link"
 msgstr "enllaç"
 
-#: ../src/core/undo/ColorUndoAction.cpp:97
+#: ../src/core/undo/ColorUndoAction.cpp:81
 msgid "Change color"
 msgstr "Canvia de color"
 
@@ -1995,11 +1995,11 @@ msgstr "Canvia de color"
 msgid "Emergency saved document"
 msgstr "Document de desada d'emergència"
 
-#: ../src/core/undo/FillUndoAction.cpp:88
+#: ../src/core/undo/FillUndoAction.cpp:86
 msgid "Change stroke fill"
 msgstr "Canvia l'emplenament del traç"
 
-#: ../src/core/undo/FontUndoAction.cpp:118
+#: ../src/core/undo/FontUndoAction.cpp:90
 msgid "Change font"
 msgstr "Canvia el tipus de lletra"
 
@@ -2035,7 +2035,7 @@ msgstr "Insereix elements"
 msgid "Rename layer"
 msgstr "Canvia el nom de la capa"
 
-#: ../src/core/undo/LineStyleUndoAction.cpp:86
+#: ../src/core/undo/LineStyleUndoAction.cpp:70
 msgid "Change line style"
 msgstr "Canvia l'estil de línia"
 
@@ -2071,7 +2071,7 @@ msgstr "Elimina la capa"
 msgid "Rotation"
 msgstr "Rotació"
 
-#: ../src/core/undo/ScaleUndoAction.cpp:62
+#: ../src/core/undo/ScaleUndoAction.cpp:60
 msgid "Scale"
 msgstr "Escala"
 

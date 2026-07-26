@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-14 19:47+0000\n"
-"PO-Revision-Date: 2026-07-19 05:25\n"
+"POT-Creation-Date: 2026-07-23 12:52+0000\n"
+"PO-Revision-Date: 2026-07-26 05:27\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -674,7 +674,7 @@ msgid "Send to back"
 msgstr "إرسال إلى المؤخرة"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
-#: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:165
+#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:162
 msgid "Failed to load image"
 msgstr "تعذّر تحميل الصورة"
 
@@ -684,14 +684,14 @@ msgstr "حدث خطأ عند فتح ملف الصورة: "
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:123
 #: ../src/core/control/xojfile/LoadHandler.cpp:140
-#: ../src/core/control/xojfile/LoadHandler.cpp:693
-#: ../src/core/control/xojfile/LoadHandler.cpp:707
+#: ../src/core/control/xojfile/LoadHandler.cpp:689
+#: ../src/core/control/xojfile/LoadHandler.cpp:703
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "تعذر فتح المرفق: {1}. رسالة خطأ: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:132
-#: ../src/core/control/xojfile/LoadHandler.cpp:699
-#: ../src/core/control/xojfile/LoadHandler.cpp:717
+#: ../src/core/control/xojfile/LoadHandler.cpp:695
+#: ../src/core/control/xojfile/LoadHandler.cpp:713
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "تعذر فتح المرفق: {1}. رسالة خطأ: لم يتم توفير حجم ملف صحيح"
 
@@ -716,60 +716,60 @@ msgstr "تعذرت قراءة الصورة: {1}. رسالة خطأ: {2}"
 msgid "Cloned pixmap page background on page {1} references inexistent page {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:514
+#: ../src/core/control/xojfile/LoadHandler.cpp:510
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:521
+#: ../src/core/control/xojfile/LoadHandler.cpp:517
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:529
+#: ../src/core/control/xojfile/LoadHandler.cpp:525
 msgid "The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:542
+#: ../src/core/control/xojfile/LoadHandler.cpp:538
 msgid "The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:551
+#: ../src/core/control/xojfile/LoadHandler.cpp:547
 msgid "Could not open file: \"{1}\""
 msgstr "تعذر فتح الملف: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:567
+#: ../src/core/control/xojfile/LoadHandler.cpp:563
 msgid "XML Parser error: {1}"
 msgstr "خطأ في إعراب XML مفاده: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:577
+#: ../src/core/control/xojfile/LoadHandler.cpp:573
 msgid "Failed to read from compressed file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:586
+#: ../src/core/control/xojfile/LoadHandler.cpp:582
 msgid "Invalid XML data read"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:600
+#: ../src/core/control/xojfile/LoadHandler.cpp:596
 msgid "Document is not complete.\n"
 "We have tried recovering the data that could be read, but the last element may have been discarded, and the end of the file is likely missing."
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:607
+#: ../src/core/control/xojfile/LoadHandler.cpp:603
 msgid "Document is corrupted (no document tag found in file)"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:610
+#: ../src/core/control/xojfile/LoadHandler.cpp:606
 msgid "Document is corrupted (no pages found in file)"
 msgstr "المستند تالف (لم يتم العثور على صفحات في ملفه)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:750
+#: ../src/core/control/xojfile/LoadHandler.cpp:746
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "تعذر إيجاد الملف المؤقت المطلوب للمرفق {1}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:282
+#: ../src/core/control/xojfile/SaveHandler.cpp:286
 msgid "Could not write background \"{1}\", {2}"
 msgstr "تعذر كتابة الخلفية\"{1}\"، {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:389
+#: ../src/core/control/xojfile/SaveHandler.cpp:393
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "تعذر كتابة الخلفية «{1}». سنتابع على أيّة حال."
 
@@ -829,17 +829,17 @@ msgstr ""
 msgid "Unable to play audio recording {1}"
 msgstr "تعذر تشغيل التسجيل الصوتي {1}"
 
-#: ../src/core/gui/PageView.cpp:985
+#: ../src/core/gui/PageView.cpp:984
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:145
 msgid "Loading..."
 msgstr "يجري التحميل..."
 
-#: ../src/core/gui/PageView.cpp:1042
+#: ../src/core/gui/PageView.cpp:1041
 msgid "Scroll to page {1}"
 msgstr "مرر إلى الصفحة {1}"
 
-#: ../src/core/gui/PageView.cpp:1044
+#: ../src/core/gui/PageView.cpp:1043
 msgid "Add missing page"
 msgstr "ضافة الصفحة المفقودة"
 
@@ -1882,15 +1882,15 @@ msgstr "نسخة"
 msgid "Document not loaded! ({1}), {2}"
 msgstr "لم يتم قراءة المستند بواسطة التطبيق بشكل صحيح! ({1})، {2}"
 
-#: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:171
+#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
 msgid "Error: "
 msgstr "خطأ: "
 
-#: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:175
+#: ../src/core/model/Image.cpp:162 ../src/core/model/Image.cpp:172
 msgid "Unrecoverable error"
 msgstr "لا يوجد إمكانية لاسترجاع الخطأ"
 
-#: ../src/core/model/Image.cpp:171 ../src/core/model/Image.cpp:175
+#: ../src/core/model/Image.cpp:168 ../src/core/model/Image.cpp:172
 msgid "Failed to close image stream"
 msgstr "خطأ بإغلاق التدفق الصوري"
 
@@ -1966,7 +1966,7 @@ msgstr "نص"
 msgid "link"
 msgstr ""
 
-#: ../src/core/undo/ColorUndoAction.cpp:97
+#: ../src/core/undo/ColorUndoAction.cpp:81
 msgid "Change color"
 msgstr "تغيير اللون"
 
@@ -1974,11 +1974,11 @@ msgstr "تغيير اللون"
 msgid "Emergency saved document"
 msgstr "المستند المحفوظ اضطراريا"
 
-#: ../src/core/undo/FillUndoAction.cpp:88
+#: ../src/core/undo/FillUndoAction.cpp:86
 msgid "Change stroke fill"
 msgstr "تغيير عرض الخط"
 
-#: ../src/core/undo/FontUndoAction.cpp:118
+#: ../src/core/undo/FontUndoAction.cpp:90
 msgid "Change font"
 msgstr "تغيير الخط"
 
@@ -2014,7 +2014,7 @@ msgstr "إدراج عناصر"
 msgid "Rename layer"
 msgstr "إعادة تسمية طبقة"
 
-#: ../src/core/undo/LineStyleUndoAction.cpp:86
+#: ../src/core/undo/LineStyleUndoAction.cpp:70
 msgid "Change line style"
 msgstr "تغيير نمط الخط"
 
@@ -2050,7 +2050,7 @@ msgstr "حذف الطبقة"
 msgid "Rotation"
 msgstr "تدوير"
 
-#: ../src/core/undo/ScaleUndoAction.cpp:62
+#: ../src/core/undo/ScaleUndoAction.cpp:60
 msgid "Scale"
 msgstr "تحجيم"
 

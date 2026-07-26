@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-14 19:47+0000\n"
-"PO-Revision-Date: 2026-07-19 05:25\n"
+"POT-Creation-Date: 2026-07-23 12:52+0000\n"
+"PO-Revision-Date: 2026-07-26 05:27\n"
 "Last-Translator: \n"
 "Language-Team: Malayalam\n"
 "Language: ml_IN\n"
@@ -662,7 +662,7 @@ msgid "Send to back"
 msgstr "പിന്നോട്ടയക്കുക"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
-#: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:165
+#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:162
 msgid "Failed to load image"
 msgstr ""
 
@@ -672,14 +672,14 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:123
 #: ../src/core/control/xojfile/LoadHandler.cpp:140
-#: ../src/core/control/xojfile/LoadHandler.cpp:693
-#: ../src/core/control/xojfile/LoadHandler.cpp:707
+#: ../src/core/control/xojfile/LoadHandler.cpp:689
+#: ../src/core/control/xojfile/LoadHandler.cpp:703
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "അറ്റാച്ച്മെന്റ് തുറക്കാൻ സാധിച്ചില്ല: {1}. പിശകിനെ സംബന്ധിച്ച സന്ദേശം: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:132
-#: ../src/core/control/xojfile/LoadHandler.cpp:699
-#: ../src/core/control/xojfile/LoadHandler.cpp:717
+#: ../src/core/control/xojfile/LoadHandler.cpp:695
+#: ../src/core/control/xojfile/LoadHandler.cpp:713
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "അറ്റാച്ച്മെന്റ് തുറക്കാൻ സാധിച്ചില്ല: {1}. പിശകിനെ സംബന്ധിച്ച സന്ദേശം: ഫയലിന്റെ വലിപ്പം നൽകിയില്ല"
 
@@ -704,60 +704,60 @@ msgstr "ചിത്രം വായിക്കാൻ സാധിച്ചി�
 msgid "Cloned pixmap page background on page {1} references inexistent page {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:514
+#: ../src/core/control/xojfile/LoadHandler.cpp:510
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:521
+#: ../src/core/control/xojfile/LoadHandler.cpp:517
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:529
+#: ../src/core/control/xojfile/LoadHandler.cpp:525
 msgid "The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:542
+#: ../src/core/control/xojfile/LoadHandler.cpp:538
 msgid "The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:551
+#: ../src/core/control/xojfile/LoadHandler.cpp:547
 msgid "Could not open file: \"{1}\""
 msgstr "ഫയൽ തുറക്കാൻ സാധിച്ചില്ല: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:567
+#: ../src/core/control/xojfile/LoadHandler.cpp:563
 msgid "XML Parser error: {1}"
 msgstr "എക്സ്എംഎൽ വായിക്കുന്നതിൽ പിശക്: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:577
+#: ../src/core/control/xojfile/LoadHandler.cpp:573
 msgid "Failed to read from compressed file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:586
+#: ../src/core/control/xojfile/LoadHandler.cpp:582
 msgid "Invalid XML data read"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:600
+#: ../src/core/control/xojfile/LoadHandler.cpp:596
 msgid "Document is not complete.\n"
 "We have tried recovering the data that could be read, but the last element may have been discarded, and the end of the file is likely missing."
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:607
+#: ../src/core/control/xojfile/LoadHandler.cpp:603
 msgid "Document is corrupted (no document tag found in file)"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:610
+#: ../src/core/control/xojfile/LoadHandler.cpp:606
 msgid "Document is corrupted (no pages found in file)"
 msgstr "ഡോക്യുമെന്റ് അസാധുവായിരിക്കുന്നു (ഫയലിൽ ഒരു താള് പോലും കണ്ടെത്തിയില്ല)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:750
+#: ../src/core/control/xojfile/LoadHandler.cpp:746
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "ആവശ്യപ്പെട്ട താത്കാലിക ഫയൽ അറ്റാച്മെന്റിനു വേണ്ടി കണ്ടെത്താൻ സാധിച്ചില്ല {1}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:282
+#: ../src/core/control/xojfile/SaveHandler.cpp:286
 msgid "Could not write background \"{1}\", {2}"
 msgstr "പശ്ചാത്തലം എഴുതാൻ സാധിച്ചില്ല \"{1}\", {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:389
+#: ../src/core/control/xojfile/SaveHandler.cpp:393
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "പശ്ചാത്തലം എഴുതാൻ സാധിച്ചില്ല \"{1}\". എന്നിരുന്നാലും തുടരുന്നു."
 
@@ -817,17 +817,17 @@ msgstr ""
 msgid "Unable to play audio recording {1}"
 msgstr "ഓഡിയോ റെക്കോർഡിങ് പ്രവർത്തിപ്പിക്കാൻ സാധിക്കുന്നില്ല {1}"
 
-#: ../src/core/gui/PageView.cpp:985
+#: ../src/core/gui/PageView.cpp:984
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:145
 msgid "Loading..."
 msgstr "ലോഡ് ചെയ്യുന്നു..."
 
-#: ../src/core/gui/PageView.cpp:1042
+#: ../src/core/gui/PageView.cpp:1041
 msgid "Scroll to page {1}"
 msgstr "{1}-ആം താളിലേക്ക് സ്ക്രോൾ ചെയ്യുക"
 
-#: ../src/core/gui/PageView.cpp:1044
+#: ../src/core/gui/PageView.cpp:1043
 msgid "Add missing page"
 msgstr "കാണാതായ താൾ ചേർക്കുക"
 
@@ -1867,15 +1867,15 @@ msgstr "പകർത്തുക"
 msgid "Document not loaded! ({1}), {2}"
 msgstr "ഡോക്യുമെന്റ് തുറക്കപ്പെട്ടില്ല! ({1}), {2}"
 
-#: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:171
+#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
 msgid "Error: "
 msgstr ""
 
-#: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:175
+#: ../src/core/model/Image.cpp:162 ../src/core/model/Image.cpp:172
 msgid "Unrecoverable error"
 msgstr ""
 
-#: ../src/core/model/Image.cpp:171 ../src/core/model/Image.cpp:175
+#: ../src/core/model/Image.cpp:168 ../src/core/model/Image.cpp:172
 msgid "Failed to close image stream"
 msgstr ""
 
@@ -1951,7 +1951,7 @@ msgstr "ടെക്സ്റ്റ്"
 msgid "link"
 msgstr ""
 
-#: ../src/core/undo/ColorUndoAction.cpp:97
+#: ../src/core/undo/ColorUndoAction.cpp:81
 msgid "Change color"
 msgstr "നിറം മാറ്റുക"
 
@@ -1959,11 +1959,11 @@ msgstr "നിറം മാറ്റുക"
 msgid "Emergency saved document"
 msgstr "അടിയന്തിരമായി സേവ് ചെയ്ത ഡോക്യുമെന്റ്"
 
-#: ../src/core/undo/FillUndoAction.cpp:88
+#: ../src/core/undo/FillUndoAction.cpp:86
 msgid "Change stroke fill"
 msgstr "സ്ട്രോക്ക് ഫിൽ മാറ്റുക"
 
-#: ../src/core/undo/FontUndoAction.cpp:118
+#: ../src/core/undo/FontUndoAction.cpp:90
 msgid "Change font"
 msgstr "ഫോണ്ട് മാറ്റുക"
 
@@ -1999,7 +1999,7 @@ msgstr "എലെമെന്റുകൾ ചേർക്കുക"
 msgid "Rename layer"
 msgstr "പാളി പുനർനാമകരണം ചെയ്യുക"
 
-#: ../src/core/undo/LineStyleUndoAction.cpp:86
+#: ../src/core/undo/LineStyleUndoAction.cpp:70
 msgid "Change line style"
 msgstr "ലൈൻ ശൈലി മാറ്റുക"
 
@@ -2035,7 +2035,7 @@ msgstr "പാളി നീക്കം ചെയ്യുക"
 msgid "Rotation"
 msgstr "കറക്കം"
 
-#: ../src/core/undo/ScaleUndoAction.cpp:62
+#: ../src/core/undo/ScaleUndoAction.cpp:60
 msgid "Scale"
 msgstr "സ്കെയിൽ"
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-14 19:47+0000\n"
-"PO-Revision-Date: 2026-07-19 05:25\n"
+"POT-Creation-Date: 2026-07-23 12:52+0000\n"
+"PO-Revision-Date: 2026-07-26 05:27\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -683,7 +683,7 @@ msgid "Send to back"
 msgstr "En arkaya gönder"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
-#: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:165
+#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:162
 msgid "Failed to load image"
 msgstr "Görsel yüklenemedi"
 
@@ -693,14 +693,14 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:123
 #: ../src/core/control/xojfile/LoadHandler.cpp:140
-#: ../src/core/control/xojfile/LoadHandler.cpp:693
-#: ../src/core/control/xojfile/LoadHandler.cpp:707
+#: ../src/core/control/xojfile/LoadHandler.cpp:689
+#: ../src/core/control/xojfile/LoadHandler.cpp:703
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Ek açılamadı: {1}. Hata mesajı: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:132
-#: ../src/core/control/xojfile/LoadHandler.cpp:699
-#: ../src/core/control/xojfile/LoadHandler.cpp:717
+#: ../src/core/control/xojfile/LoadHandler.cpp:695
+#: ../src/core/control/xojfile/LoadHandler.cpp:713
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Ek açılamadı: {1}. Hata mesajı: Geçerli bir dosya boyutu sağlanmadı"
 
@@ -725,60 +725,60 @@ msgstr "Resim okunamadı: {1}. Hata mesajı: {2}"
 msgid "Cloned pixmap page background on page {1} references inexistent page {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:514
+#: ../src/core/control/xojfile/LoadHandler.cpp:510
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}"
 msgstr "“{1}” dosyası, geçerli bir .xopp dosyası değil (MIME türü eksik). Hata mesajı: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:521
+#: ../src/core/control/xojfile/LoadHandler.cpp:517
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\""
 msgstr "“{1}” dosyası, geçerli bir .xopp dosyası değil (MIME türü yanlış): “{2}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:529
+#: ../src/core/control/xojfile/LoadHandler.cpp:525
 msgid "The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}"
 msgstr "“{1}” dosyası, geçerli bir .xopp dosyası değil (sürüm eksik). Hata mesajı: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:542
+#: ../src/core/control/xojfile/LoadHandler.cpp:538
 msgid "The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\""
 msgstr "“{1}” dosyası, geçerli bir .xopp dosyası değil (sürüm dizisi hasar görmüş): “{2}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:551
+#: ../src/core/control/xojfile/LoadHandler.cpp:547
 msgid "Could not open file: \"{1}\""
 msgstr "Dosya açılamadı: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:567
+#: ../src/core/control/xojfile/LoadHandler.cpp:563
 msgid "XML Parser error: {1}"
 msgstr "XML Ayrıştırıcı hatası: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:577
+#: ../src/core/control/xojfile/LoadHandler.cpp:573
 msgid "Failed to read from compressed file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:586
+#: ../src/core/control/xojfile/LoadHandler.cpp:582
 msgid "Invalid XML data read"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:600
+#: ../src/core/control/xojfile/LoadHandler.cpp:596
 msgid "Document is not complete.\n"
 "We have tried recovering the data that could be read, but the last element may have been discarded, and the end of the file is likely missing."
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:607
+#: ../src/core/control/xojfile/LoadHandler.cpp:603
 msgid "Document is corrupted (no document tag found in file)"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:610
+#: ../src/core/control/xojfile/LoadHandler.cpp:606
 msgid "Document is corrupted (no pages found in file)"
 msgstr "Belge bozuk (dosyada sayfa bulunamadı)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:750
+#: ../src/core/control/xojfile/LoadHandler.cpp:746
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "{1} eki için istenen geçici dosya bulunamadı"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:282
+#: ../src/core/control/xojfile/SaveHandler.cpp:286
 msgid "Could not write background \"{1}\", {2}"
 msgstr "“{1}” arka planı yazılamadı, {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:389
+#: ../src/core/control/xojfile/SaveHandler.cpp:393
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Arka plan “{1}” yazılamadı. Yine de devam ediliyor."
 
@@ -838,17 +838,17 @@ msgstr ""
 msgid "Unable to play audio recording {1}"
 msgstr "Ses kaydı {1} çalınamıyor"
 
-#: ../src/core/gui/PageView.cpp:985
+#: ../src/core/gui/PageView.cpp:984
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:145
 msgid "Loading..."
 msgstr "Yükleniyor..."
 
-#: ../src/core/gui/PageView.cpp:1042
+#: ../src/core/gui/PageView.cpp:1041
 msgid "Scroll to page {1}"
 msgstr "{1}. sayfaya kaydırın"
 
-#: ../src/core/gui/PageView.cpp:1044
+#: ../src/core/gui/PageView.cpp:1043
 msgid "Add missing page"
 msgstr "Eksik sayfa ekle"
 
@@ -1891,15 +1891,15 @@ msgstr "Kopyala"
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Belge yüklenmedi! ({1}), {2}"
 
-#: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:171
+#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
 msgid "Error: "
 msgstr "Hata: "
 
-#: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:175
+#: ../src/core/model/Image.cpp:162 ../src/core/model/Image.cpp:172
 msgid "Unrecoverable error"
 msgstr "Geri alınamaz hata"
 
-#: ../src/core/model/Image.cpp:171 ../src/core/model/Image.cpp:175
+#: ../src/core/model/Image.cpp:168 ../src/core/model/Image.cpp:172
 msgid "Failed to close image stream"
 msgstr "Görsel akışı kapatılamadı"
 
@@ -1975,7 +1975,7 @@ msgstr "metin"
 msgid "link"
 msgstr ""
 
-#: ../src/core/undo/ColorUndoAction.cpp:97
+#: ../src/core/undo/ColorUndoAction.cpp:81
 msgid "Change color"
 msgstr "Rengi değiştir"
 
@@ -1983,11 +1983,11 @@ msgstr "Rengi değiştir"
 msgid "Emergency saved document"
 msgstr "Acil durum kaydedilmiş belge"
 
-#: ../src/core/undo/FillUndoAction.cpp:88
+#: ../src/core/undo/FillUndoAction.cpp:86
 msgid "Change stroke fill"
 msgstr "Kontur dolgusunu değiştir"
 
-#: ../src/core/undo/FontUndoAction.cpp:118
+#: ../src/core/undo/FontUndoAction.cpp:90
 msgid "Change font"
 msgstr "Yazı tipini değiştir"
 
@@ -2023,7 +2023,7 @@ msgstr "Element ekle"
 msgid "Rename layer"
 msgstr "Katmanı yeniden adlandır"
 
-#: ../src/core/undo/LineStyleUndoAction.cpp:86
+#: ../src/core/undo/LineStyleUndoAction.cpp:70
 msgid "Change line style"
 msgstr "Çizgi biçimini değiştir"
 
@@ -2059,7 +2059,7 @@ msgstr "Katmanı sil"
 msgid "Rotation"
 msgstr "Döndür"
 
-#: ../src/core/undo/ScaleUndoAction.cpp:62
+#: ../src/core/undo/ScaleUndoAction.cpp:60
 msgid "Scale"
 msgstr "Ölçek"
 

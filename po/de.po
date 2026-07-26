@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-14 19:47+0000\n"
-"PO-Revision-Date: 2026-07-19 05:25\n"
+"POT-Creation-Date: 2026-07-23 12:52+0000\n"
+"PO-Revision-Date: 2026-07-26 05:27\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -103,7 +103,7 @@ msgstr "Datei: {1}"
 
 #: ../src/core/control/Control.cpp:1575
 msgid "<i>Above error repeated {1} times</i>"
-msgstr ""
+msgstr "<i>Obiger Fehler wurde {1} mal wiederholt</i>"
 
 #: ../src/core/control/Control.cpp:1587
 msgid "<i>&lt;{1} more lines of error messages&gt;</i>"
@@ -113,7 +113,9 @@ msgstr ""
 msgid "Error opening file \"{1}\".\n\n"
 "<tt>{2}</tt>\n"
 "<b>{3}</b>"
-msgstr ""
+msgstr "Fehler beim Öffnen der Datei \"{1}\".\n\n"
+"<tt>{2}</tt>\n"
+"<b>{3}</b>"
 
 #: ../src/core/control/Control.cpp:1640
 msgid "There were some errors while loading the file. Some information might have been lost. Do not overwrite your old file unless you are sure everything you need was loaded correctly.\n\n"
@@ -141,7 +143,7 @@ msgstr "Fehler beim Lesen der PNG-Datei \"{1}\""
 
 #: ../src/core/control/Control.cpp:1738
 msgid "Error reading template file \"{1}\""
-msgstr ""
+msgstr "Fehler beim Lesen der Vorlagendatei \"{1}\""
 
 #: ../src/core/control/Control.cpp:1757
 msgid "Failed to determine if path exists \"{1}\": {2}"
@@ -352,19 +354,19 @@ msgstr "Die Hintergrunddatei \"{1}\" konnte nicht gefunden werden. Sie wurde mö
 
 #: ../src/core/control/XournalMain.cpp:173
 msgid "Error loading document: {1}"
-msgstr ""
+msgstr "Fehler beim Laden des Dokuments: {1}"
 
 #: ../src/core/control/XournalMain.cpp:206
 msgid "Error exporting image: {1}"
-msgstr ""
+msgstr "Fehler beim Export des Bildes: {1}"
 
 #: ../src/core/control/XournalMain.cpp:235
 msgid "Error saving document: {1}"
-msgstr ""
+msgstr "Fehler beim Speichern des Dokuments: {1}"
 
 #: ../src/core/control/XournalMain.cpp:265
 msgid "Error exporting PDF: {1}"
-msgstr ""
+msgstr "Fehler beim Export des PDFs: {1}"
 
 #: ../src/core/control/XournalMain.cpp:371
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
@@ -693,7 +695,7 @@ msgid "Send to back"
 msgstr "In den Hintergrund"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
-#: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:165
+#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:162
 msgid "Failed to load image"
 msgstr "Das Bild konnte nicht geladen werden"
 
@@ -703,14 +705,14 @@ msgstr "Fehler beim Öffnen der Bilddatei: "
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:123
 #: ../src/core/control/xojfile/LoadHandler.cpp:140
-#: ../src/core/control/xojfile/LoadHandler.cpp:693
-#: ../src/core/control/xojfile/LoadHandler.cpp:707
+#: ../src/core/control/xojfile/LoadHandler.cpp:689
+#: ../src/core/control/xojfile/LoadHandler.cpp:703
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Der Anhang {1} konnte nicht geladen werden. Fehlermeldung: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:132
-#: ../src/core/control/xojfile/LoadHandler.cpp:699
-#: ../src/core/control/xojfile/LoadHandler.cpp:717
+#: ../src/core/control/xojfile/LoadHandler.cpp:695
+#: ../src/core/control/xojfile/LoadHandler.cpp:713
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Der Anhang {1} konnte nicht geladen werden. Fehlermeldung: Keine gültige Größe angegeben"
 
@@ -724,7 +726,7 @@ msgstr "Der Anhang {1} konnte nicht geladen werden. Fehlermeldung: Konnte Datei 
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:169
 msgid "Could not open attachment: {1}. Error message: Could not write temporary file"
-msgstr ""
+msgstr "Anhang {1} konnte nicht geöffnet werden. Fehlermeldung: Temporäre Datei konnte nicht bearbeitet werden"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:202
 #: ../src/core/control/xojfile/LoadHandler.cpp:227
@@ -733,62 +735,63 @@ msgstr "Das Bild {1} konnte nicht geladen werden. Fehlermeldung: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:237
 msgid "Cloned pixmap page background on page {1} references inexistent page {2}"
-msgstr ""
+msgstr "Hintergrund der geklonten Pixmap-Seite auf Seite {1} Referenzen nicht vorhandener Seite {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:514
+#: ../src/core/control/xojfile/LoadHandler.cpp:510
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}"
-msgstr ""
+msgstr "Die Datei \"{1}\" ist keine gültige .xopp Datei (Mimetype fehlt). Fehlermeldung: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:521
+#: ../src/core/control/xojfile/LoadHandler.cpp:517
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\""
-msgstr ""
+msgstr "Die Datei \"{1}\" ist keine gültige .xopp Datei (falscher Mimetype): \"{2}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:529
+#: ../src/core/control/xojfile/LoadHandler.cpp:525
 msgid "The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}"
-msgstr ""
+msgstr "Die Datei \"{1}\" ist keine gültige .xopp Datei (Fehlende Version). Fehlermeldung: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:542
+#: ../src/core/control/xojfile/LoadHandler.cpp:538
 msgid "The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\""
-msgstr ""
+msgstr "Die Datei \"{1}\" ist keine gültige .xopp Datei (Version string beschädigt). Fehlermeldung: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:551
+#: ../src/core/control/xojfile/LoadHandler.cpp:547
 msgid "Could not open file: \"{1}\""
 msgstr "Konnte die Datei nicht öffnen: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:567
+#: ../src/core/control/xojfile/LoadHandler.cpp:563
 msgid "XML Parser error: {1}"
 msgstr "XML Parser Fehler: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:577
+#: ../src/core/control/xojfile/LoadHandler.cpp:573
 msgid "Failed to read from compressed file"
-msgstr ""
+msgstr "Konnte komprimierte Datei nicht lesen"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:586
+#: ../src/core/control/xojfile/LoadHandler.cpp:582
 msgid "Invalid XML data read"
-msgstr ""
+msgstr "Ungültige XML Daten gelesen"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:600
+#: ../src/core/control/xojfile/LoadHandler.cpp:596
 msgid "Document is not complete.\n"
 "We have tried recovering the data that could be read, but the last element may have been discarded, and the end of the file is likely missing."
-msgstr ""
+msgstr "Das Dokument ist nicht vollständig.\n"
+"Wir haben versucht die Daten zu sicherzustellen, die gelesen werden konnten, aber das letzte Element wurde vielleicht verworfen, und das Ende der Datei fehlt wahrscheinlich."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:607
+#: ../src/core/control/xojfile/LoadHandler.cpp:603
 msgid "Document is corrupted (no document tag found in file)"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:610
+#: ../src/core/control/xojfile/LoadHandler.cpp:606
 msgid "Document is corrupted (no pages found in file)"
 msgstr "Dokument ist beschädigt (keine Seiten in Datei gefunden)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:750
+#: ../src/core/control/xojfile/LoadHandler.cpp:746
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Angefragte temporäre Datei für Anhang {1} nicht gefunden"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:282
+#: ../src/core/control/xojfile/SaveHandler.cpp:286
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Konnte Hintergrund \"{1}\" nicht speichern, {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:389
+#: ../src/core/control/xojfile/SaveHandler.cpp:393
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Konnte Hintergrund nicht speichern \"{1}\". Fahre trotzdem fort."
 
@@ -802,7 +805,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:150
 msgid "Unexpected text in {1} node: \"{2}\""
-msgstr ""
+msgstr "Unerwarteter Text in {1} Knoten: \"{2}\""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:248
 msgid "Attribute \"type\" not found in background tag. Ignoring tag"
@@ -848,17 +851,17 @@ msgstr ""
 msgid "Unable to play audio recording {1}"
 msgstr "Audioaufnahme {1} kann nicht abgespielt werden"
 
-#: ../src/core/gui/PageView.cpp:985
+#: ../src/core/gui/PageView.cpp:984
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:145
 msgid "Loading..."
 msgstr "Laden..."
 
-#: ../src/core/gui/PageView.cpp:1042
+#: ../src/core/gui/PageView.cpp:1041
 msgid "Scroll to page {1}"
 msgstr "Zu Seite {1} gehen"
 
-#: ../src/core/gui/PageView.cpp:1044
+#: ../src/core/gui/PageView.cpp:1043
 msgid "Add missing page"
 msgstr "Fehlende Seite hinzufügen"
 
@@ -1671,7 +1674,7 @@ msgstr "Linie löschen"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:388
 msgid "Add/Edit Link"
-msgstr ""
+msgstr "Link hinzufügen/bearbeiten"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:390
 msgid "Add/Edit TeX"
@@ -1902,15 +1905,15 @@ msgstr "Kopieren"
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Dokument nicht geladen! ({1}), {2}"
 
-#: ../src/core/model/Image.cpp:161 ../src/core/model/Image.cpp:171
+#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
 msgid "Error: "
 msgstr "Fehler: "
 
-#: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:175
+#: ../src/core/model/Image.cpp:162 ../src/core/model/Image.cpp:172
 msgid "Unrecoverable error"
 msgstr "Unbehebbarer Fehler"
 
-#: ../src/core/model/Image.cpp:171 ../src/core/model/Image.cpp:175
+#: ../src/core/model/Image.cpp:168 ../src/core/model/Image.cpp:172
 msgid "Failed to close image stream"
 msgstr "Fehler beim Schließen des Bild-Streams"
 
@@ -1984,9 +1987,9 @@ msgstr "Text"
 #: ../src/core/undo/AddUndoAction.cpp:100
 #: ../src/core/undo/DeleteUndoAction.cpp:102
 msgid "link"
-msgstr ""
+msgstr "Link"
 
-#: ../src/core/undo/ColorUndoAction.cpp:97
+#: ../src/core/undo/ColorUndoAction.cpp:81
 msgid "Change color"
 msgstr "Farbe ändern"
 
@@ -1994,11 +1997,11 @@ msgstr "Farbe ändern"
 msgid "Emergency saved document"
 msgstr "Im Notfall gespeichertes Dokument"
 
-#: ../src/core/undo/FillUndoAction.cpp:88
+#: ../src/core/undo/FillUndoAction.cpp:86
 msgid "Change stroke fill"
 msgstr "Füllung ändern"
 
-#: ../src/core/undo/FontUndoAction.cpp:118
+#: ../src/core/undo/FontUndoAction.cpp:90
 msgid "Change font"
 msgstr "Schriftart ändern"
 
@@ -2034,7 +2037,7 @@ msgstr "Elemente einfügen"
 msgid "Rename layer"
 msgstr "Ebene umbenennen"
 
-#: ../src/core/undo/LineStyleUndoAction.cpp:86
+#: ../src/core/undo/LineStyleUndoAction.cpp:70
 msgid "Change line style"
 msgstr "Linienstil ändern"
 
@@ -2070,7 +2073,7 @@ msgstr "Ebene löschen"
 msgid "Rotation"
 msgstr "Drehung"
 
-#: ../src/core/undo/ScaleUndoAction.cpp:62
+#: ../src/core/undo/ScaleUndoAction.cpp:60
 msgid "Scale"
 msgstr "Skalieren"
 
@@ -2129,12 +2132,14 @@ msgstr "ElementRange::parse(): Elementindizes beginnen mit 1"
 #: ../src/util/GzInputStream.cpp:48
 msgid "Error opening file \"{1}\":\n"
 "{2}"
-msgstr ""
+msgstr "Fehler beim Öffnen der Datei \"{1}\":\n"
+"{2}"
 
 #: ../src/util/GzInputStream.cpp:62 ../src/util/ZipInputStream.cpp:52
 msgid "Error occurred while closing file\n"
 "Error code {1}"
-msgstr ""
+msgstr "Fehler beim Schliessen der Datei.\n"
+"Fehlercode {1}"
 
 #: ../src/util/OutputStream.cpp:30
 msgid "Error opening file: \"{1}\""
@@ -2672,27 +2677,27 @@ msgstr "Editoreinstellungen"
 
 #: ../ui/linkDialog.glade:63
 msgid "Text:"
-msgstr ""
+msgstr "Text:"
 
 #: ../ui/linkDialog.glade:181
 msgid "URL:"
-msgstr ""
+msgstr "URL:"
 
 #: ../ui/linkDialog.glade:200
 msgid "http://"
-msgstr ""
+msgstr "http://"
 
 #: ../ui/linkDialog.glade:201
 msgid "https://"
-msgstr ""
+msgstr "https://"
 
 #: ../ui/linkDialog.glade:202
 msgid "mailto:"
-msgstr ""
+msgstr "mailto:"
 
 #: ../ui/linkDialog.glade:203
 msgid "file://"
-msgstr ""
+msgstr "file://"
 
 #: ../ui/linkDialog.glade:204
 msgid "<custom>"
