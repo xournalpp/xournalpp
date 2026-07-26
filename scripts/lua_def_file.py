@@ -254,4 +254,5 @@ if __name__ == "__main__":
         insertValuesForEnum("toolNames", "Tool", "src/core/control/ToolEnums.h")
         insertValuesForEnum("eraserTypeNames", "EraserType", "src/core/control/ToolEnums.h")
         insertValuesForEnum("orderChangeNames", "OrderChange", "src/core/control/tools/EditSelection.h")
+        insertValuesForEnum("NAMES", "Alignment", "src/core/model/TextAlignment.h")
         print("}", file=f_out)

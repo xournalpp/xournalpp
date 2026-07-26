@@ -15,10 +15,18 @@
 #include <glib.h>  // for g_warning
 #include <pango/pango.h>
 
+#include "util/StringUtils.h"  // for char_cast
+
 class TextAlignment {
 public:
     enum Value { LEFT, CENTER, RIGHT };
     static constexpr std::array<const char8_t*, 3> NAMES = {u8"left", u8"center", u8"right"};
+    static constexpr std::array<Value, 3> allAlignments = {LEFT, CENTER, RIGHT};
+
+    static auto alignmentToString(const TextAlignment align) -> std::string_view {
+        return char_cast(NAMES.at(static_cast<size_t>(align)));
+    }
+
     constexpr TextAlignment(Value v): value(v) {}
 
     // Implicit conversion to underlying enum type
