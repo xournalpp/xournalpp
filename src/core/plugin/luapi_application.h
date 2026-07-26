@@ -4317,6 +4317,16 @@ inline int luaopen_app(lua_State* L) {
         lua_setfield(L, -2, key.c_str());
     }
 
+
+    // TextAlignment enum
+    for (auto align: TextAlignment::allAlignments) {
+        std::string s = TextAlignment::alignmentToString(align).data();
+        std::string key = "Alignment_" + s;
+        lua_pushinteger(L, static_cast<int>(align));  // value
+        lua_setfield(L, -2, key.c_str());
+    }
+
+
     lua_setfield(L, -2, "C");
 
     return 1;

@@ -1318,4 +1318,7 @@ app.C = {
     OrderChange_bringForward = 1,
     OrderChange_sendBackward = 2,
     OrderChange_sendToBack = 3,
+    Alignment_left = 0,
+    Alignment_center = 1,
+    Alignment_right = 2,
 }
