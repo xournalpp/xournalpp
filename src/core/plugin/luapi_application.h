@@ -1815,7 +1815,6 @@ static int applib_addLinks(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* control = plugin->getControl();
     PageRef const& page = control->getCurrentPage();
-    Layer* layer = page->getSelectedLayer();
     Settings* settings = control->getSettings();
 
     std::vector<const Element*> links;
@@ -1929,6 +1928,7 @@ static int applib_addLinks(lua_State* L) {
         links.push_back(link.get());
         {
             std::lock_guard lock(*control->getDocument());
+            Layer* layer = page->getSelectedLayer();
             layer->addElement(std::move(link));
         }
         // Onto the next link
@@ -2012,6 +2012,7 @@ static int applib_getLinks(lua_State* L) {
     lua_settop(L, 1);
     luaL_checktype(L, 1, LUA_TSTRING);
 
+    auto lock = std::shared_lock(*control->getDocument());
     const auto& [err, elements] = getElementsFromHelper(control, type, ELEMENT_LINK);
     if (err.has_value()) {
         return luaL_error(L, err.value().c_str());
