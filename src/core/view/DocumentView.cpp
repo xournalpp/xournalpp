@@ -74,6 +74,9 @@ void DocumentView::drawPage(ConstPageRef page, cairo_t* cr, bool dontRenderEditi
 
     xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
                                (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
+    const auto& bgColor = page->getBackgroundColor();
+    // calculate luminance using the ITU-R BT.709 luminance formula, bgColor is in range [0,255] the formula expect [0,1] so divide result by 255
+    context.backgroundColorLuminance = (0.2126 * bgColor.red + 0.7152 * bgColor.green + 0.0722 * bgColor.blue) / 255.0;
     for (const Layer* layer: page->getLayersView()) {
         if (layer->isVisible()) {
             xoj::view::LayerView layerView(layer);

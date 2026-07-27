@@ -119,7 +119,14 @@ void StrokeView::draw(const Context& ctx) const {
          * Highlighter without filling.
          */
         Util::cairo_set_source_rgbi(cr, s->getColor(), OPACITY_HIGHLIGHTER);
-        cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
+        // Use luminance value from context to determine the operator
+        if (ctx.backgroundColorLuminance > 0.5) {
+            cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
+        } else {
+            // The screen operator lightens the bakcground and keeps text visilbe
+            //   which is expected when highlighting dark backgrounds.
+            cairo_set_operator(cr, CAIRO_OPERATOR_SCREEN);
+        }
     } else {
         /**
          * Normal pen

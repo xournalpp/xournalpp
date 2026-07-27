@@ -30,6 +30,7 @@ public:
     NonAudioTreatment fadeOutNonAudio;
     EditionTreatment showCurrentEdition;
     ColorTreatment noColor;
+    double backgroundColorLuminance = 1.0; // setting default once to white (1.0)
 
     static Context createDefault(cairo_t* cr) { return {cr, NORMAL_NON_AUDIO, HIDE_CURRENT_EDITING, NORMAL_COLOR}; }
     static Context createColorBlind(cairo_t* cr) { return {cr, NORMAL_NON_AUDIO, HIDE_CURRENT_EDITING, COLORBLIND}; }
