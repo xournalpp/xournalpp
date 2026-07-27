@@ -32,6 +32,10 @@ public:
     ColorTreatment noColor;
     double backgroundColorLuminance = 1.0; // setting default once to white (1.0)
 
+    [[nodiscard]] cairo_operator_t getHighlighterOperator() const noexcept {
+        return (backgroundColorLuminance > 0.5) ? CAIRO_OPERATOR_MULTIPLY : CAIRO_OPERATOR_SCREEN;
+    }
+
     static Context createDefault(cairo_t* cr) { return {cr, NORMAL_NON_AUDIO, HIDE_CURRENT_EDITING, NORMAL_COLOR}; }
     static Context createColorBlind(cairo_t* cr) { return {cr, NORMAL_NON_AUDIO, HIDE_CURRENT_EDITING, COLORBLIND}; }
 };
