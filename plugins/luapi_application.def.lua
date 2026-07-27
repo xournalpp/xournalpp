@@ -394,8 +394,8 @@ function app.addTexts(opts) end
 --- Is mostly inverse to app.addTexts (except getTexts may also retrieve the width/height/page/layer of the textbox)
 --- 
 --- @param type string "selection" or "layer" or "page" or "all"
---- @return {text:string, font:{name:string, size:number}, color:integer, x:number, y:number, wrap: number, width:number,
---- height:number, ref:lightuserdata, page:number|nil, layer:number|nil}[] texts
+--- @return {text:string, font:{name:string, size:number}, color:integer, x:number, y:number, wrap:number|nil,
+--- width:number, height:number, ref:lightuserdata, page:number|nil, layer:number|nil}[] texts
 --- 
 --- Required argument: type ("selection" or "layer" or "page" or "all")
 --- 
@@ -412,7 +412,6 @@ function app.addTexts(opts) end
 ---     color = 0x1259b9,
 ---     x = 127.0,
 ---     y = 70.0,
----     wrap = -1.0, -- No wrapping
 ---     width = 55.0,
 ---     height = 23.0,
 ---     ref = userdata: 0x5f644c0700d0

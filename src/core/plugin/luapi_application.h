@@ -1643,8 +1643,8 @@ static int applib_addTexts(lua_State* L) {
  * Is mostly inverse to app.addTexts (except getTexts may also retrieve the width/height/page/layer of the textbox)
  *
  * @param type string "selection" or "layer" or "page" or "all"
- * @return {text:string, font:{name:string, size:number}, color:integer, x:number, y:number, wrap: number, width:number,
- * height:number, ref:lightuserdata, page:number|nil, layer:number|nil}[] texts
+ * @return {text:string, font:{name:string, size:number}, color:integer, x:number, y:number, wrap:number|nil,
+ * width:number, height:number, ref:lightuserdata, page:number|nil, layer:number|nil}[] texts
  *
  * Required argument: type ("selection" or "layer" or "page" or "all")
  *
@@ -1661,7 +1661,6 @@ static int applib_addTexts(lua_State* L) {
  *     color = 0x1259b9,
  *     x = 127.0,
  *     y = 70.0,
- *     wrap = -1.0, -- No wrapping
  *     width = 55.0,
  *     height = 23.0,
  *     ref = userdata: 0x5f644c0700d0
@@ -1739,8 +1738,11 @@ static int applib_getTexts(lua_State* L) {
         lua_pushnumber(L, y);
         lua_setfield(L, -2, "y");  // add y coordinate to text
 
-        lua_pushnumber(L, t->getWrap());
-        lua_setfield(L, -2, "wrap");  // add wrap to text
+        auto wrap = t->getWrap();
+        if (wrap != Text::NO_WRAP) {
+            lua_pushnumber(L, t->getWrap());
+            lua_setfield(L, -2, "wrap");  // add wrap to text
+        }
 
         const auto& box = t->getBoundingBox();
         lua_pushnumber(L, box.width);
