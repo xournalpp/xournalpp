@@ -3,7 +3,6 @@
 #include <algorithm>    // for all_of
 #include <cctype>       // for isspace
 #include <cstddef>      // for size_t
-#include <cstdio>
 #include <ranges>       // for all_of, reverse_view
 #include <stdexcept>    // for domain_error
 #include <string>       // for stod, string

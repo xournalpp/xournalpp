@@ -30,8 +30,8 @@ SidebarBookmarks::SidebarBookmarks(Control* control):
     gtk_tree_view_column_set_expand(GTK_TREE_VIEW_COLUMN(column), TRUE);
     gtk_tree_view_append_column(GTK_TREE_VIEW(treeView), column);
 
-    auto* rendererLabel = static_cast<GtkCellRenderer*>(
-            g_object_new(GTK_TYPE_CELL_RENDERER_TEXT, "ellipsize", PANGO_ELLIPSIZE_END, nullptr));
+    GtkCellRenderer* rendererLabel = gtk_cell_renderer_text_new();
+    g_object_set(G_OBJECT(rendererLabel), "ellipsize", PANGO_ELLIPSIZE_END, nullptr);
     gtk_tree_view_column_pack_start(GTK_TREE_VIEW_COLUMN(column), rendererLabel, TRUE);
     gtk_tree_view_column_set_attributes(GTK_TREE_VIEW_COLUMN(column), rendererLabel, "text", COLUMN_LABEL, nullptr);
 
@@ -132,8 +132,9 @@ void SidebarBookmarks::editOrDeleteSelectedBookmark(EditOrDelete mode) {
     GtkTreeModel* model = nullptr;
     GtkTreeIter iter;
 
-    if (!gtk_tree_selection_get_selected(select, &model, &iter))
+    if (!gtk_tree_selection_get_selected(select, &model, &iter)) {
         return;
+    }
 
     gchar* label = nullptr;
     gint pageNum = 0;
@@ -161,8 +162,9 @@ void SidebarBookmarks::navigateToSelectedBookmark() {
     GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeView));
     GtkTreeModel* model = nullptr;
     GtkTreeIter iter;
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
+    if (!gtk_tree_selection_get_selected(selection, &model, &iter)) {
         return;
+    }
 
     gint pageNum = 0;
     gtk_tree_model_get(model, &iter, COLUMN_PAGE_NUM, &pageNum, -1);
@@ -231,8 +233,9 @@ void SidebarBookmarks::doRefresh() {
     gulong handlerId =
             g_signal_handler_find(sel, G_SIGNAL_MATCH_FUNC, 0, 0, nullptr, (gpointer)onSelectionChanged, nullptr);
 
-    if (handlerId)
+    if (handlerId) {
         g_signal_handler_block(sel, handlerId);
+    }
 
     gtk_list_store_clear(listStore);
 
@@ -249,8 +252,9 @@ void SidebarBookmarks::doRefresh() {
                            bookmarkPair.first.c_str(), -1);
     }
 
-    if (handlerId)
+    if (handlerId) {
         g_signal_handler_unblock(sel, handlerId);
+    }
 
     updateButtonSensitivity();
 

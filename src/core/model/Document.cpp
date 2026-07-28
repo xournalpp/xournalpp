@@ -487,8 +487,9 @@ auto Document::listBookmarks() const -> std::vector<std::pair<std::string, size_
 
 auto Document::setBookmark(const std::string& name, size_t pageIndex) -> std::optional<std::string> {
     PageRef page = getPage(pageIndex);
-    if (!page)
+    if (!page) {
         return std::nullopt;
+    }
 
     std::optional<std::string> oldBookmark = page->getBookmark();
     page->setBookmark(name);
@@ -498,8 +499,9 @@ auto Document::setBookmark(const std::string& name, size_t pageIndex) -> std::op
 
 auto Document::deleteBookmark(size_t pageIndex) -> std::optional<std::string> {
     PageRef page = getPage(pageIndex);
-    if (!page)
+    if (!page) {
         return std::nullopt;
+    }
 
     std::optional<std::string> oldBookmark = page->getBookmark();
     page->deleteBookmark();

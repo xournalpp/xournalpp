@@ -14,10 +14,12 @@ BookmarkUndoAction::BookmarkUndoAction(size_t pageIndex, std::optional<std::stri
         newBookmark(std::move(newBookmark)) {}
 
 auto BookmarkUndoAction::getText() -> std::string {
-    if (!oldBookmark.has_value())
+    if (!oldBookmark.has_value()) {
         return _("Add bookmark");
-    if (!newBookmark.has_value())
+    }
+    if (!newBookmark.has_value()) {
         return _("Delete bookmark");
+    }
     return _("Rename bookmark");
 }
 

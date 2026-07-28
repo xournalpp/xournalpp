@@ -56,7 +56,7 @@ private:
      * Populate the outline of the generated PDF with the
      * Xournal++ native bookmarks.
      */
-    void populateNativeBookmarksOutline();
+    void populateCustomBookmarksOutline();
 #endif
 
 protected:
