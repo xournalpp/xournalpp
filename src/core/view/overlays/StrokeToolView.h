@@ -30,7 +30,7 @@ class Repaintable;
 
 class StrokeToolView: public BaseStrokeToolView, public xoj::util::Listener<StrokeToolView> {
 public:
-    StrokeToolView(const StrokeHandler* strokeHandler, const Stroke& stroke, Repaintable* parent);
+    StrokeToolView(const StrokeHandler* strokeHandler, const Stroke& stroke, Repaintable* parent, cairo_operator_t op = CAIRO_OPERATOR_OVER);
     virtual ~StrokeToolView() noexcept;
 
     bool isViewOf(const OverlayBase* overlay) const override;

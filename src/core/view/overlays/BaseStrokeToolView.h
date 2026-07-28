@@ -25,7 +25,7 @@ class Repaintable;
 
 class BaseStrokeToolView: public ToolView {
 protected:
-    BaseStrokeToolView(Repaintable* parent, const Stroke& stroke);
+    BaseStrokeToolView(Repaintable* parent, const Stroke& stroke, cairo_operator_t op = CAIRO_OPERATOR_OVER);
     ~BaseStrokeToolView() noexcept override;
 
     /**
