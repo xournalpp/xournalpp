@@ -58,6 +58,7 @@ public:
     void pageSelected(size_t page) override;
     void pageInserted(size_t page) override;
     void pageDeleted(size_t page) override;
+    void bookmarkChanged(size_t page) override;
 
 private:
     /**

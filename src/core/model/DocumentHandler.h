@@ -32,6 +32,7 @@ public:
     void firePageDeleted(size_t page);
     // void firePageLoaded(PageRef page);
     void firePageSelected(size_t page);
+    void fireBookmarkChanged(size_t page);
 
 private:
     void addListener(DocumentListener* l);

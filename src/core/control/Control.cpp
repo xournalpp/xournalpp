@@ -854,7 +854,7 @@ void Control::setBookmark(size_t pageIndex) {
                 getUndoRedoHandler()->addUndoAction(std::move(undo));
 
                 this->fireDocumentChanged(DOCUMENT_CHANGE_BOOKMARKS);
-                this->firePageChanged(pageIndex);
+                this->fireBookmarkChanged(pageIndex);
                 this->updatePageActions();
             });
     popup.show(getGtkWindow());
@@ -876,7 +876,7 @@ void Control::deleteBookmark(size_t pageIndex) {
     getUndoRedoHandler()->addUndoAction(std::move(undo));
 
     this->fireDocumentChanged(docChangeType);
-    this->firePageChanged(pageIndex);
+    this->fireBookmarkChanged(pageIndex);
     this->updatePageActions();
 }
 

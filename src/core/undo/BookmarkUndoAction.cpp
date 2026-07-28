@@ -45,6 +45,7 @@ auto BookmarkUndoAction::apply(Control* control, const std::optional<std::string
 
     control->getUndoRedoHandler()->fireUpdateUndoRedoButtons({page});
     control->fireDocumentChanged(docChangeType);
+    control->fireBookmarkChanged(pageIndex);
 
     return true;
 }
