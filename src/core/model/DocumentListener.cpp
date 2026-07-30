@@ -30,3 +30,5 @@ void DocumentListener::pageInserted(size_t page) {}
 void DocumentListener::pageDeleted(size_t page) {}
 
 void DocumentListener::pageSelected(size_t page) {}
+
+void DocumentListener::bookmarkChanged(size_t page) {}

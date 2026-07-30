@@ -31,3 +31,7 @@ void DocumentHandler::firePageDeleted(size_t page) {
 void DocumentHandler::firePageSelected(size_t page) {
     for (DocumentListener* dl: this->listener) { dl->pageSelected(page); }
 }
+
+void DocumentHandler::fireBookmarkChanged(size_t page) {
+    for (DocumentListener* dl: this->listener) { dl->bookmarkChanged(page); }
+}

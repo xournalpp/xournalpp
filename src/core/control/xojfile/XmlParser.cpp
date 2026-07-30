@@ -209,8 +209,10 @@ void XmlParser::parseMrWriterTag(const XmlParserHelper::AttributeMap& attributeM
 void XmlParser::parsePageTag(const XmlParserHelper::AttributeMap& attributeMap) {
     const auto width = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::WIDTH_STR, attributeMap);
     const auto height = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::HEIGHT_STR, attributeMap);
+    const auto bookmark = XmlParserHelper::getAttrib<std::string>(xoj::xml_attrs::BOOKMARK_STR, attributeMap);
 
     this->builder.addPage(width, height);
+    this->builder.setBookmark(bookmark);  // Sets if bookmark has value
 }
 
 void XmlParser::parseAudioTag(const XmlParserHelper::AttributeMap& attributeMap) {

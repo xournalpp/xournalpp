@@ -32,6 +32,7 @@ public:
     virtual void pageInserted(size_t page);
     virtual void pageDeleted(size_t page);
     virtual void pageSelected(size_t page);
+    virtual void bookmarkChanged(size_t page);
 
 private:
     DocumentHandler* handler = nullptr;

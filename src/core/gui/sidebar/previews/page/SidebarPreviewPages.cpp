@@ -73,6 +73,15 @@ void SidebarPreviewPages::pageChanged(size_t page) {
     p->repaint();
 }
 
+void SidebarPreviewPages::bookmarkChanged(size_t page) {
+    if (page == npos || page >= this->previews.size()) {
+        return;
+    }
+
+    auto& p = this->previews[page];
+    p->repaint();
+}
+
 void SidebarPreviewPages::pageDeleted(size_t page) {
     if (page >= previews.size()) {
         return;

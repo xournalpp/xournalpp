@@ -31,7 +31,8 @@ XojPage::XojPage(XojPage const& page):
         currentLayer(page.currentLayer),
         bgType(page.bgType),
         pdfBackgroundPage(page.pdfBackgroundPage),
-        backgroundColor(page.backgroundColor) {
+        backgroundColor(page.backgroundColor),
+        bookmark(page.bookmark) {
     this->layer.reserve(page.layer.size());
     std::transform(begin(page.layer), end(page.layer), std::back_inserter(this->layer),
                    [](auto* layer) { return layer->clone(); });
@@ -175,3 +176,9 @@ auto XojPage::getBackgroundName() const -> std::string { return backgroundName.v
 auto XojPage::backgroundHasName() const -> bool { return backgroundName.has_value(); }
 
 void XojPage::setBackgroundName(const std::string& newName) { backgroundName = newName; }
+
+auto XojPage::getBookmark() const -> const std::optional<std::string>& { return bookmark; }
+
+void XojPage::setBookmark(const std::string& name) { bookmark = name; }
+
+void XojPage::deleteBookmark() { bookmark.reset(); }
