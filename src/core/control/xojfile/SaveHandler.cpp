@@ -230,7 +230,7 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
 
             const XojFont& f = l->getFont();
 
-            link->setAttrib(xoj::xml_attrs::ALIGN_STR, l->getAlignment());
+            link->setAttrib(xoj::xml_attrs::ALIGN_STR, TextAlignment::NAMES[l->getAlignment()]);
             link->setAttrib(xoj::xml_attrs::FONT_STR, f.getName().c_str());
             link->setAttrib(xoj::xml_attrs::SIZE_STR, f.getSize());
             const auto& origin = l->getOrigin();
