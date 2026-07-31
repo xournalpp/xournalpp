@@ -26,3 +26,37 @@ TEST(XojPageTest, SetBackgroundTypeResetsColorForSpecialBackgrounds) {
     // 5. Verify color is reset to white again
     EXPECT_EQ(page.getBackgroundColor(), Colors::white);
 }
+
+TEST(PageBackgroundTest, HighlighterOperatorUpdatesOnBackgroundTransitions) {
+    XojPage page(595.0, 842.0);
+    PageType imageBg(PageTypeFormat::Image);
+    PageType pdfBg(PageTypeFormat::Pdf);
+    constexpr Color lightBg{0xf1f1f1};
+    constexpr Color darkBg{0x1e1e1e};
+
+    // Light Page tests (Multiply):
+    //    plain, PDF, plain, Image
+    page.setBackgroundColor(lightBg);
+    EXPECT_FALSE(page.getBackgroundColor().isDark());
+    EXPECT_EQ(page.getBackgroundColor().getHighlighterOperator(), CAIRO_OPERATOR_MULTIPLY);
+
+    page.setBackgroundType(pdfBg);
+    EXPECT_EQ(page.getBackgroundColor().getHighlighterOperator(), CAIRO_OPERATOR_MULTIPLY);
+
+    page.setBackgroundColor(lightBg);
+    page.setBackgroundType(imageBg);
+    EXPECT_EQ(page.getBackgroundColor().getHighlighterOperator(), CAIRO_OPERATOR_MULTIPLY);
+
+    // Dark Page tests (Screen):
+    //    plain, PDF, plain, Image
+    page.setBackgroundColor(darkBg);
+    EXPECT_TRUE(page.getBackgroundColor().isDark());
+    EXPECT_EQ(page.getBackgroundColor().getHighlighterOperator(), CAIRO_OPERATOR_SCREEN);
+
+    page.setBackgroundType(pdfBg);
+    EXPECT_EQ(page.getBackgroundColor().getHighlighterOperator(), CAIRO_OPERATOR_MULTIPLY);
+
+    page.setBackgroundColor(darkBg);
+    page.setBackgroundType(imageBg);
+    EXPECT_EQ(page.getBackgroundColor().getHighlighterOperator(), CAIRO_OPERATOR_MULTIPLY);
+}
