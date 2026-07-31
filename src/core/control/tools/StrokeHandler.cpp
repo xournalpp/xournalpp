@@ -127,7 +127,9 @@ void StrokeHandler::drawSegmentTo(const Point& point) {
         double projectionLength = vpx * dx + vpy * dy;
         double distToRuler = std::abs(vpx * (-dy) + vpy * dx);
 
-        if (distToRuler < 30.0) { 
+        // If pen is within 10 pixels of the TOP EDGE, snap it
+        // A smaller radius prevents sudden perpendicular "jumps"
+        if (distToRuler < 5.0) { 
             snappedPoint.x = RulerGlobals::rx + projectionLength * dx;
             snappedPoint.y = RulerGlobals::ry + projectionLength * dy;
         }
