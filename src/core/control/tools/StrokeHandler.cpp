@@ -278,13 +278,10 @@ void StrokeHandler::onButtonDoublePressEvent(const PositionInputData&, double) {
 auto StrokeHandler::createView(xoj::view::Repaintable* parent) const -> std::unique_ptr<xoj::view::OverlayView> {
     xoj_assert(this->stroke);
     const Stroke& s = *this->stroke;
-
-    // Calculate operator based on background luminance for highlighters
     cairo_operator_t op = CAIRO_OPERATOR_OVER;
+
     if (s.getToolType() == StrokeTool::HIGHLIGHTER) {
-        const auto& bgColor = page->getBackgroundColor();
-        double luminance = (0.2126 * bgColor.red + 0.7152 * bgColor.green + 0.0722 * bgColor.blue) / 255.0;
-        op = (luminance > 0.5) ? CAIRO_OPERATOR_MULTIPLY : CAIRO_OPERATOR_SCREEN;
+        op = page->getBackgroundColor().getHighlighterOperator();
     }
 
     if (s.getFill() != -1) {
