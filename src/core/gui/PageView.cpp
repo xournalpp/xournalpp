@@ -1,4 +1,5 @@
 #include "PageView.h"
+#include "util/RulerData.h"
 
 #include <algorithm>  // for max, find_if
 #include <cinttypes>  // for int64_t
@@ -529,6 +530,16 @@ auto XojPageView::onButtonTriplePressEvent(const PositionInputData& pos) -> bool
 }
 
 auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
+    // --- TRAD RULER MOVEMENT ---
+    // If you hold Shift and move the pen/mouse, the ruler follows you!
+    if (pos.isShiftDown()) {
+        double zoom = xournal->getZoom();
+        RulerGlobals::rx = pos.x / zoom;
+        RulerGlobals::ry = pos.y / zoom;
+        repaintPage(); // Redraw the screen to show the new position
+        return true;   // Tell Xournal we handled this event
+    }
+    // ---------------------------
     if (currentSequenceDeviceId && currentSequenceDeviceId != pos.deviceId) {
         // This motion event is not from the device which started the sequence: reject it
         return false;
@@ -751,6 +762,36 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
 }
 
 auto XojPageView::onKeyPressEvent(const KeyEvent& event) -> bool {
+    // --- TRAD RULER ADVANCED CONTROLS ---
+    
+    // Toggle Ruler Visibility with 'R'
+    if (event.keyval == GDK_KEY_r || event.keyval == GDK_KEY_R) {
+        RulerGlobals::enabled = !RulerGlobals::enabled;
+        repaintPage();
+        return true;
+    }
+
+    if (RulerGlobals::enabled) {
+        // Precise Rotation
+        if (event.keyval == GDK_KEY_bracketright) {
+            RulerGlobals::angle += 1.0;
+            repaintPage();
+            return true;
+        }
+        if (event.keyval == GDK_KEY_bracketleft) {
+            RulerGlobals::angle -= 1.0;
+            repaintPage();
+            return true;
+        }
+
+        // Snap to 45-degree increments with 'S'
+        if (event.keyval == GDK_KEY_s || event.keyval == GDK_KEY_S) {
+            RulerGlobals::angle = std::round(RulerGlobals::angle / 45.0) * 45.0;
+            repaintPage();
+            return true;
+        }
+    }
+    // -------------------------------------
     if (this->textEditor) {
         if (this->textEditor->onKeyPressEvent(event)) {
             return true;
@@ -1039,14 +1080,13 @@ GtkWidget* XojPageView::makePopover(const XojPdfRectangle& rect, GtkWidget* chil
 }
 
 auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
-
     double zoom = xournal->getZoom();
-    xoj::util::CairoSaveGuard saveGuard(cr);
+    xoj::util::CairoSaveGuard globalSave(cr);
     cairo_scale(cr, zoom, zoom);
 
+    // 1. Render the Paper/Ink Buffer
     {
-        std::lock_guard lock(this->drawingMutex);  // Lock the mutex first
-        xoj::util::CairoSaveGuard saveGuard(cr);   // see comment at the end of the scope
+        std::lock_guard lock(this->drawingMutex);
         if (!this->hasBuffer()) {
             drawLoadingPage(cr);
             return true;
@@ -1057,17 +1097,112 @@ auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
             cairo_pattern_set_filter(cairo_get_source(cr), CAIRO_FILTER_FAST);
         }
         this->buffer.paintTo(cr);
-    }  // Restore the state of cr and then release the mutex
-       // restoring the state of cr ensures this->buffer.surface is not longer referenced as the source in cr.
+    } 
 
-    /**
-     * All the overlay painters below follow the assumption:
-     *  * The given cairo context is in page coordinates: no further scaling/offset is ever required.
-     *
-     * To anyone adding another painter here: please keep this assumption true
-     */
+    // 2. Draw standard overlays (Selection boxes, etc.)
     for (const auto& v: this->overlayViews) {
         v->draw(cr);
+    }
+
+    // 3. TRAD PHYSICAL RULER 5.0 (Edge-Aligned & Clean)
+    if (RulerGlobals::enabled) {
+        cairo_save(cr);
+        
+        double angleRad = RulerGlobals::angle * (M_PI / 180.0);
+        cairo_translate(cr, RulerGlobals::rx, RulerGlobals::ry);
+        cairo_rotate(cr, angleRad);
+
+        const double rulerLen = 4000.0;
+        const double rulerThick = 55.0; 
+        
+        // --- A. Ruler Body (Shifted so Y=0 is the TOP EDGE) ---
+        cairo_set_source_rgba(cr, 0.98, 0.98, 0.95, 0.85); // Ivory body
+        cairo_rectangle(cr, -rulerLen / 2, 0, rulerLen, rulerThick); 
+        cairo_fill_preserve(cr);
+        
+        cairo_set_source_rgba(cr, 0.2, 0.2, 0.2, 0.6);    // Subtle Border
+        cairo_set_line_width(cr, 0.8);
+        cairo_stroke(cr);
+
+        // --- B. Measurement Scale (Drawing from the Top Edge) ---
+        const double pixelsPerCm = 28.35;
+        const double mmStep = pixelsPerCm / 10.0;
+        cairo_set_source_rgba(cr, 0.1, 0.1, 0.1, 1.0);
+
+        for (double x = -rulerLen / 2; x < rulerLen / 2; x += mmStep) {
+            int mmFromCenter = static_cast<int>(std::round(x / mmStep));
+            bool isZero = (mmFromCenter == 0);
+            
+            // Ticks now grow DOWN into the ruler body
+            double tickHeight = (mmFromCenter % 10 == 0) ? 18.0 : (mmFromCenter % 5 == 0 ? 10.0 : 5.0);
+
+            if (mmFromCenter % 10 == 0 && (mmFromCenter / 10) % 2 == 0 && !isZero) {
+                cairo_set_font_size(cr, 10.0);
+                // Position numbers near the bottom edge
+                cairo_move_to(cr, x - 5, rulerThick - 10);
+                cairo_show_text(cr, std::to_string(mmFromCenter / 10).c_str());
+            }
+
+            cairo_move_to(cr, x, 0); // Start at Top Edge
+            cairo_line_to(cr, x, tickHeight);
+            cairo_stroke(cr);
+        }
+
+        // --- C. Dashboard Cluster (Logo & Degrees) - "Clean & Proper" Version ---
+        const std::string brandText = "TRAD";
+        const double circleRadius = 10.0;
+        const double horizontalGap = 15.0;
+
+        // Switching to 'Sans' for a professional, clean aesthetic
+        cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+        cairo_set_font_size(cr, 10.0);
+        
+        cairo_text_extents_t teB;
+        cairo_text_extents(cr, brandText.c_str(), &teB);
+
+        // Math for perfect horizontal centering
+        double totalWidth = teB.width + horizontalGap + (circleRadius * 2);
+        double startX = -totalWidth / 2;
+        double clusterY = rulerThick / 2 + 5; // Balanced vertically in the body
+
+        // --- Brand Label ---
+        cairo_set_source_rgba(cr, 0.15, 0.15, 0.15, 1.0); // Soft Charcoal
+        cairo_move_to(cr, startX, clusterY);
+        cairo_show_text(cr, brandText.c_str());
+
+        // --- Subtle Vertical Divider ---
+        cairo_set_source_rgba(cr, 0.0, 0.0, 0.0, 0.2); // Very faint divider
+        cairo_set_line_width(cr, 0.8);
+        cairo_move_to(cr, startX + teB.width + (horizontalGap / 2), clusterY - 10);
+        cairo_line_to(cr, startX + teB.width + (horizontalGap / 2), clusterY + 2);
+        cairo_stroke(cr);
+
+        // --- Degree Bubble ---
+        double dialX = startX + teB.width + horizontalGap + circleRadius;
+        double dialY = clusterY - 3.5; // Vertical alignment with text baseline
+
+        // Discrete Circle
+        cairo_set_source_rgba(cr, 0.1, 0.4, 0.8, 0.12); // Very light blue fill
+        cairo_arc(cr, dialX, dialY, circleRadius, 0, 2 * M_PI);
+        cairo_fill_preserve(cr);
+        cairo_set_source_rgba(cr, 0.1, 0.4, 0.8, 0.5); // Muted blue border
+        cairo_set_line_width(cr, 1.0);
+        cairo_stroke(cr);
+
+        // Angle Value
+        int displayAngle = static_cast<int>(std::round(-RulerGlobals::angle)) % 360;
+        if (displayAngle < 0) displayAngle += 360;
+        std::string angleLabel = std::to_string(displayAngle) + "°";
+        
+        cairo_set_font_size(cr, 8.5);
+        cairo_text_extents_t teA;
+        cairo_text_extents(cr, angleLabel.c_str(), &teA);
+        cairo_set_source_rgba(cr, 0.05, 0.3, 0.7, 0.9); // Deep blue text
+        cairo_move_to(cr, dialX - teA.width / 2 - teA.x_bearing, 
+                         dialY - teA.height / 2 - teA.y_bearing);
+        cairo_show_text(cr, angleLabel.c_str());
+
+        cairo_restore(cr);
     }
 
     return true;

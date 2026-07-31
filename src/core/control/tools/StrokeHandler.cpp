@@ -1,4 +1,5 @@
 #include "StrokeHandler.h"
+#include "util/RulerData.h"
 
 #include <algorithm>  // for max, min
 #include <cmath>      // for ceil, pow, abs
@@ -71,10 +72,7 @@ auto StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos, double zoo
 }
 
 void StrokeHandler::paintTo(Point point) {
-    if (this->hasPressure && point.z > 0.0) {
-        point.z *= this->stroke->getWidth();
-    }
-
+    
     size_t pointCount = stroke->getPointCount();
 
     if (pointCount > 0) {
@@ -118,10 +116,26 @@ void StrokeHandler::paintTo(Point point) {
 }
 
 void StrokeHandler::drawSegmentTo(const Point& point) {
+    Point snappedPoint = point;
 
-    this->stroke->addPoint(this->hasPressure ? point : Point(point.x, point.y));
+    if (RulerGlobals::enabled) {
+        double angleRad = RulerGlobals::angle * (3.1415926535 / 180.0);
+        double dx = cos(angleRad);
+        double dy = sin(angleRad);
+        double vpx = point.x - RulerGlobals::rx;
+        double vpy = point.y - RulerGlobals::ry;
+        double projectionLength = vpx * dx + vpy * dy;
+        double distToRuler = std::abs(vpx * (-dy) + vpy * dx);
+
+        if (distToRuler < 30.0) { 
+            snappedPoint.x = RulerGlobals::rx + projectionLength * dx;
+            snappedPoint.y = RulerGlobals::ry + projectionLength * dy;
+        }
+    }
+    // ... the rest of the original function ...
+
+    this->stroke->addPoint(this->hasPressure ? snappedPoint : Point(snappedPoint.x, snappedPoint.y));
     this->viewPool->dispatch(xoj::view::StrokeToolView::ADD_POINT_REQUEST, this->stroke->getPointVector().back());
-    return;
 }
 
 void StrokeHandler::onSequenceCancelEvent() {

@@ -1,5 +1,6 @@
 #include "StrokeToolView.h"
-
+#include <cmath>   
+#define PI 3.14159265358979323846 // Safe fallback for M_PI
 #include <functional>
 #include <memory>
 #include <numeric>
@@ -28,22 +29,15 @@ StrokeToolView::~StrokeToolView() noexcept { this->unregisterFromPool(); }
 bool StrokeToolView::isViewOf(const OverlayBase* overlay) const { return overlay == this->strokeHandler; }
 
 void StrokeToolView::draw(cairo_t* cr) const {
-
+    // 1. Original code logic starts here (Ruler guide removed to fix glitches)
     std::vector<Point> pts = this->flushBuffer();
     if (pts.empty()) {
-        // The input sequence has probably been cancelled. This view should soon be deleted
         return;
     }
-    // pts.front() is the last point we painted on the mask during the last iteration (see flushBuffer())
 
     if (!mask.isInitialized()) {
-        // Initialize the mask on first call
         mask = createMask(cr);
         if (!mask.isInitialized()) {
-            /*
-             * The user might be drawing on a page that is not visible at all:
-             * e.g. https://github.com/xournalpp/xournalpp/pull/4158#issuecomment-1385954494
-             */
             return;
         }
     }
@@ -51,17 +45,15 @@ void StrokeToolView::draw(cairo_t* cr) const {
     xoj::util::CairoSaveGuard saveGuard(cr);
     cairo_set_operator(cr, this->cairoOp);
 
-    this->drawFilling(cr, pts);  // Noop in the base class.
+    this->drawFilling(cr, pts);
 
     Util::cairo_set_source_argb(cr, strokeColor);
 
     if (pts.size() > 1) {
-        // Draw the new segments on the mask
         if (pts.front().z == Point::NO_PRESSURE) {
             StrokeViewHelper::drawNoPressure(this->mask.get(), pts, this->strokeWidth, this->lineStyle,
                                              this->dashOffset);
             if (this->lineStyle.hasDashes()) {
-                // Keep the offset up to date, so we do not have to redraw the entire stroke every time.
                 PairView segments(pts);
                 this->dashOffset =
                         std::transform_reduce(segments.begin(), segments.end(), this->dashOffset, std::plus<>(),
@@ -76,7 +68,8 @@ void StrokeToolView::draw(cairo_t* cr) const {
     }
 
     this->mask.blitTo(cr);
-}
+} // <--- MAKE SURE THIS BRACE IS HERE TO CLOSE THE DRAW FUNCTION!
+
 
 void StrokeToolView::on(StrokeToolView::AddPointRequest, const Point& p) {
     this->singleDot = false;
