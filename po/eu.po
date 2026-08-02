@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-23 12:52+0000\n"
-"PO-Revision-Date: 2026-07-26 05:27\n"
+"PO-Revision-Date: 2026-08-02 05:26\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -846,7 +846,7 @@ msgstr "Errorea \"{1}\" Glade fitxategia kargatzean (saiatu \"{2}\" kargatzen)"
 
 #: ../src/core/gui/LinkPopover.cpp:70
 msgid "Double click to edit. CTRL + click to open."
-msgstr ""
+msgstr "Egin klik bikoitza editatzeko. CTRL + klik irekitzeko."
 
 #: ../src/core/gui/PageView.cpp:410
 msgid "Unable to play audio recording {1}"
@@ -1675,7 +1675,7 @@ msgstr "ezabatu trazua"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:388
 msgid "Add/Edit Link"
-msgstr ""
+msgstr "Gehitu/Editatu esteka"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:390
 msgid "Add/Edit TeX"
@@ -1988,7 +1988,7 @@ msgstr "testua"
 #: ../src/core/undo/AddUndoAction.cpp:100
 #: ../src/core/undo/DeleteUndoAction.cpp:102
 msgid "link"
-msgstr ""
+msgstr "esteka"
 
 #: ../src/core/undo/ColorUndoAction.cpp:81
 msgid "Change color"
@@ -2676,31 +2676,31 @@ msgstr "Editorearen ezarpenak"
 
 #: ../ui/linkDialog.glade:63
 msgid "Text:"
-msgstr ""
+msgstr "Testua:"
 
 #: ../ui/linkDialog.glade:181
 msgid "URL:"
-msgstr ""
+msgstr "URLa:"
 
 #: ../ui/linkDialog.glade:200
 msgid "http://"
-msgstr ""
+msgstr "http://"
 
 #: ../ui/linkDialog.glade:201
 msgid "https://"
-msgstr ""
+msgstr "https://"
 
 #: ../ui/linkDialog.glade:202
 msgid "mailto:"
-msgstr ""
+msgstr "mailto:"
 
 #: ../ui/linkDialog.glade:203
 msgid "file://"
-msgstr ""
+msgstr "file://"
 
 #: ../ui/linkDialog.glade:204
 msgid "<custom>"
-msgstr ""
+msgstr "<custom>"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
@@ -3716,11 +3716,11 @@ msgstr "Zoomaren abiadura"
 
 #: ../ui/settings.glade:4489
 msgid "Force zoom to fit on document load"
-msgstr ""
+msgstr "Behartu zooma dokumentua doitzeko"
 
 #: ../ui/settings.glade:4508
 msgid "Default Zoom"
-msgstr ""
+msgstr "Zoom maila lehenetsia"
 
 #: ../ui/settings.glade:4535
 msgid "<i>To make sure on 100% zoom the size of elements is natural.</i>"
@@ -4488,11 +4488,11 @@ msgstr "_Testua"
 
 #: ../ui/mainmenubar.xml:554
 msgid "_Link"
-msgstr ""
+msgstr "_Esteka"
 
 #: ../ui/mainmenubar.xml:560
 msgid "LaTe_X"
-msgstr ""
+msgstr "LaTe_X"
 
 #: ../ui/mainmenubar.xml:566
 msgid "_Image"
