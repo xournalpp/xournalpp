@@ -97,12 +97,18 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     // Used for pressure inference
     this->lastPressure = 0.0;
 
-    // Flag running input
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
+
+    // If the input starts outside a page, we make it act as hand tool instead.
+    if (currentPage == nullptr && toolHandler->pointActiveToolToToolType(TOOL_HAND)) {
+        this->inputStartedOutsidePageArea = true;
+        toolHandler->fireToolChanged();
+    }
+    
     ToolType toolType = toolHandler->getToolType();
 
-    //
     if (toolType != TOOL_IMAGE) {
+        // Flag running input
         this->inputRunning = true;
     } else {
         this->deviceClassPressed = false;
@@ -124,7 +130,7 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     this->sequenceStartPage = currentPage;
 
     // hand tool don't change the selection, so you can scroll e.g. with your touchscreen without remove the selection
-    bool changeSelection = xournal->selection && toolHandler->getToolType() != TOOL_HAND;
+    bool changeSelection = xournal->selection && toolType != TOOL_HAND;
     if ((event.state & GDK_SHIFT_MASK)) {
         // When tap single selection is enabled
         if (toolHandler->supportsTapFilter() && inputContext->getSettings()->getStrokeFilterEnabled()) {
@@ -290,7 +296,10 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
     GtkXournal* xournal = this->inputContext->getXournal();
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
 
-    this->changeTool(event);
+    // If this is a drag starting outside the page area, we'd have set active tool to HAND.
+    // In this case we don't want changeTool to change it back to the toolbar / button tool.
+    if (!this->inputStartedOutsidePageArea)
+        this->changeTool(event);
 
     if (toolHandler->getToolType() == TOOL_HAND) {
         if (this->deviceClassPressed) {
@@ -407,6 +416,8 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
     EditSelection* selection = xournal->view->getSelection();
 
     cursor->setMouseDown(false);
+
+    this->inputStartedOutsidePageArea = false;
 
     bool cancelAction = isCurrentTapSelection(event);
 
