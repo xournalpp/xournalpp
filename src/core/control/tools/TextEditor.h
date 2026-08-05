@@ -33,6 +33,7 @@ class Control;
 class TextEditorCallbacks;
 struct KeyEvent;
 class FlyingClickableIcon;
+class TextAlignment;
 
 namespace xoj::util {
 template <class T>
@@ -70,6 +71,8 @@ public:
 
     void setFont(XojFont font);
     void setColor(Color color);
+    void setAlignment(TextAlignment al);
+    void setJustify(bool justify);
 
     PangoLayout* getUpToDateLayout() const;
 
@@ -174,7 +177,7 @@ private:
     xoj::util::GObjectSPtr<GtkTextBuffer> buffer;
     xoj::util::GObjectSPtr<PangoLayout> layout;
 
-    enum class LayoutStatus { UP_TO_DATE, NEEDS_ATTRIBUTES_UPDATE, NEEDS_WRAP_WIDTH_UPDATE, NEEDS_COMPLETE_UPDATE };
+    enum class LayoutStatus { UP_TO_DATE, NEEDS_ATTRIBUTES_UPDATE, NEEDS_PARAMETERS_UPDATE, NEEDS_COMPLETE_UPDATE };
     mutable LayoutStatus layoutStatus;
 
     // InputMethod preedit data

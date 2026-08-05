@@ -75,6 +75,8 @@ T getAttribMandatory(std::u8string_view name, const AttributeMap& attributeMap, 
                      bool warn = true);
 // specializations
 template <>
+std::optional<bool> getAttrib<bool>(std::u8string_view name, const AttributeMap& attributeMap);
+template <>
 std::optional<const char*> getAttrib<const char*>(std::u8string_view name, const AttributeMap& attributeMap);
 template <>
 std::optional<c_string_utf8_view> getAttrib<c_string_utf8_view>(std::u8string_view name,

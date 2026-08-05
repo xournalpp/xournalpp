@@ -97,6 +97,13 @@ struct GVariantWrapperImpl<T, std::enable_if_t<std::is_enum_v<T>, void>> {  // e
     static inline GVariant* make(T v) { return g_variant_new_uint64(static_cast<guint64>(v)); }
 };
 
+template <class T>
+struct GVariantWrapperImpl<T, std::enable_if_t<std::is_enum_v<typename T::Value>, void>> {  // custom enum types
+    static inline T getValue(GVariant* v) { return static_cast<T>(g_variant_get_uint64(v)); }
+    static inline const GVariantType* getType() { return G_VARIANT_TYPE_UINT64; }
+    static inline GVariant* make(T v) { return g_variant_new_uint64(static_cast<guint64>(v)); }
+};
+
 template <>
 struct GVariantWrapperImpl<Color> {
     static_assert(sizeof(guint32) == sizeof(Color));

@@ -12,8 +12,9 @@
 
 #pragma once
 
-#include "model/LineStyle.h"  // for LineStyle
-#include "util/Color.h"       // for Color
+#include "model/LineStyle.h"
+#include "model/TextAlignment.h"
+#include "util/Color.h"
 
 #include "ToolEnums.h"  // for DrawingType, EraserType, ToolSize, DRAW...
 
@@ -102,6 +103,12 @@ public:
      */
     void setLineStyle(const LineStyle& style);
 
+    inline TextAlignment getTextAlignment() const { return textAlignment; }
+    inline void setTextAlignment(TextAlignment al) { textAlignment = al; }
+
+    inline bool getTextJustify() const { return textJustify; }
+    inline void setTextJustify(bool j) { textJustify = j; }
+
 private:
     /**
      * Color of the tool for all drawing tools
@@ -137,4 +144,7 @@ private:
      * Style of the line drawing
      */
     LineStyle lineStyle;
+
+    TextAlignment textAlignment = TextAlignment::LEFT;
+    bool textJustify = false;
 };

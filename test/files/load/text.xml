@@ -10,11 +10,14 @@
 <text font="Sans" size="12" x="240.75" y="42" color="#00f000ff">green</text>
 <text font="Sans" size="12" x="196.26678" y="137.84693" color="#000000ff">multiline
 text</text>
-<text font="Sans" size="12" x="135.38428" y="197.98843" color="#000000ff">
+<text font="Sans" size="12" x="135.38428" y="197.98843" color="#000000ff"> 
  odd  whitespace	text
 
 </text>
 <text font="Sans" size="12" x="135.38428" y="250" color="#000000ff" wrap="130.13533">Xournal++ (/ˌzɚnl̟ˌplʌsˈplʌs/) is an open-source and cross-platform note-taking software that is fast, flexible, and functional. A modern rewrite and a more feature-rich version of the wonderful Xournal program.</text>
+<text font="Sans" size="12" x="335.38428" y="250" color="#000000ff" wrap="140.34657" justify="true">Xournal++ (/ˌzɚnl̟ˌplʌsˈplʌs/) is an open-source and cross-platform note-taking software that is fast, flexible, and functional. A modern rewrite and a more feature-rich version of the wonderful Xournal program.</text>
+<text font="Sans" size="12" x="35.38428" y="500" color="#000000ff" wrap="140.34657" align="center">Xournal++ (/ˌzɚnl̟ˌplʌsˈplʌs/) is an open-source and cross-platform note-taking software that is fast, flexible, and functional. A modern rewrite and a more feature-rich version of the wonderful Xournal program.</text>
+<text font="Sans" size="12" x="335.38428" y="500" color="#000000ff" wrap="140.34657" justify="true" align="right">Xournal++ (/ˌzɚnl̟ˌplʌsˈplʌs/) is an open-source and cross-platform note-taking software that is fast, flexible, and functional. A modern rewrite and a more feature-rich version of the wonderful Xournal program.</text>
 </layer>
 </page>
 </xournal>
