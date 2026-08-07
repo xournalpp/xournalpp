@@ -13,9 +13,11 @@
 #include "control/actions/ActionDatabase.h"
 #include "control/settings/Settings.h"  // for SElement, Settings
 #include "model/StrokeStyle.h"          // for StrokeStyle
+#include "util/Assert.h"
 #include "util/Color.h"
 #include "util/Stacktrace.h"  // for Stac...
 #include "util/safe_casts.h"  // for as_unsigned
+
 
 class LineStyle;
 
@@ -138,13 +140,6 @@ void ToolHandler::initTools() {
     tools[TOOL_LASER_POINTER_HIGHLIGHTER - TOOL_PEN] =
             std::make_unique<Tool>("laserPointerHighlighter", TOOL_LASER_POINTER_HIGHLIGHTER, Colors::red, thickness);
 
-    this->eraserButtonTool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
-    this->stylusButton1Tool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
-    this->stylusButton2Tool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
-    this->mouseMiddleButtonTool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
-    this->mouseRightButtonTool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
-    this->touchDrawingButtonTool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
-
     this->toolbarSelectedTool = &getTool(TOOL_PEN);
     this->activeTool = &getTool(TOOL_PEN);
 }
@@ -162,6 +157,7 @@ void ToolHandler::setEraserType(EraserType eraserType) {
 
 void ToolHandler::setButtonEraserType(EraserType eraserType, Button button) {
     Tool* tool = getButtonTool(button);
+    xoj_assert(tool);
     tool->setEraserType(eraserType);
 }
 
@@ -335,6 +331,7 @@ void ToolHandler::setButtonSize(ToolSize size, Button button) {
         g_warning("ToolHandler::setSize: Invalid size! %i", size);
 
     Tool* tool = getButtonTool(button);
+    xoj_assert(tool);
     tool->setSize(clippedSize);
 }
 
@@ -361,6 +358,7 @@ void ToolHandler::setColor(Color color, bool userSelection) {
 
 void ToolHandler::setButtonColor(Color color, Button button) {
     Tool* tool = this->getButtonTool(button);
+    xoj_assert(tool);
     tool->setColor(color);
 }
 
@@ -403,6 +401,7 @@ void ToolHandler::setDrawingType(DrawingType drawingType) {
 
 void ToolHandler::setButtonDrawingType(DrawingType drawingType, Button button) {
     Tool* tool = getButtonTool(button);
+    xoj_assert(tool);
     tool->setDrawingType(drawingType);
 }
 
@@ -412,6 +411,7 @@ void ToolHandler::setButtonStrokeType(StrokeType strokeType, Button button) {
 
 void ToolHandler::setButtonStrokeType(const LineStyle& lineStyle, Button button) {
     Tool* tool = getButtonTool(button);
+    xoj_assert(tool);
     tool->setLineStyle(lineStyle);
 }
 
@@ -670,28 +670,28 @@ auto ToolHandler::getButtonTool(Button button) const -> Tool* {
 }
 
 void ToolHandler::resetButtonTool(ToolType type, Button button) {
-    auto& tool = *(tools[type - TOOL_PEN]);
+    auto t = type == TOOL_NONE ? nullptr : std::make_unique<Tool>(*tools[type - TOOL_PEN]);
     switch (button) {
         case Button::BUTTON_ERASER:
-            this->eraserButtonTool.reset(new Tool(tool));
+            this->eraserButtonTool = std::move(t);
             break;
         case Button::BUTTON_STYLUS_ONE:
-            this->stylusButton1Tool.reset(new Tool(tool));
+            this->stylusButton1Tool = std::move(t);
             break;
         case Button::BUTTON_STYLUS_TWO:
-            this->stylusButton2Tool.reset(new Tool(tool));
+            this->stylusButton2Tool = std::move(t);
             break;
         case Button::BUTTON_MOUSE_LEFT:
-            this->mouseLeftButtonTool.reset(new Tool(tool));
+            this->mouseLeftButtonTool = std::move(t);
             break;
         case Button::BUTTON_MOUSE_MIDDLE:
-            this->mouseMiddleButtonTool.reset(new Tool(tool));
+            this->mouseMiddleButtonTool = std::move(t);
             break;
         case Button::BUTTON_MOUSE_RIGHT:
-            this->mouseRightButtonTool.reset(new Tool(tool));
+            this->mouseRightButtonTool = std::move(t);
             break;
         case Button::BUTTON_TOUCH:
-            this->touchDrawingButtonTool.reset(new Tool(tool));
+            this->touchDrawingButtonTool = std::move(t);
             break;
         default:
             g_error("This button is not defined for ToolHandler.");
