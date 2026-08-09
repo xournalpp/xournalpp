@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 12:52+0000\n"
-"PO-Revision-Date: 2026-07-26 05:27\n"
+"POT-Creation-Date: 2026-08-05 07:48+0000\n"
+"PO-Revision-Date: 2026-08-09 04:42\n"
 "Last-Translator: \n"
 "Language-Team: Georgian\n"
 "Language: ka_GE\n"
@@ -38,16 +38,16 @@ msgstr ""
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1656
+#: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1663
 msgid "Yes"
 msgstr "დიახ"
 
-#: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1656
+#: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1663
 msgid "No"
 msgstr "არა"
 
-#: ../src/core/control/Control.cpp:839 ../src/core/control/Control.cpp:1890
-#: ../src/core/control/Control.cpp:2218
+#: ../src/core/control/Control.cpp:839 ../src/core/control/Control.cpp:1897
+#: ../src/core/control/Control.cpp:2225
 msgid "Cancel"
 msgstr "გაუქმება"
 
@@ -86,133 +86,133 @@ msgstr ""
 msgid "Unable to retrieve pdf page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1512
+#: ../src/core/control/Control.cpp:1519
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1532
+#: ../src/core/control/Control.cpp:1539
 msgid "file: {1}"
 msgstr "ფაილი: {1}"
 
-#: ../src/core/control/Control.cpp:1575
+#: ../src/core/control/Control.cpp:1582
 msgid "<i>Above error repeated {1} times</i>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1587
+#: ../src/core/control/Control.cpp:1594
 msgid "<i>&lt;{1} more lines of error messages&gt;</i>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1626
+#: ../src/core/control/Control.cpp:1633
 msgid "Error opening file \"{1}\".\n\n"
 "<tt>{2}</tt>\n"
 "<b>{3}</b>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1640
+#: ../src/core/control/Control.cpp:1647
 msgid "There were some errors while loading the file. Some information might have been lost. Do not overwrite your old file unless you are sure everything you need was loaded correctly.\n\n"
 "Error messages:\n"
 "<tt>{1}</tt>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1658
+#: ../src/core/control/Control.cpp:1665
 msgid "File version mismatch"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1659
+#: ../src/core/control/Control.cpp:1666
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1682
+#: ../src/core/control/Control.cpp:1689
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1703
+#: ../src/core/control/Control.cpp:1710
 msgid "Error reading PNG file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1738
+#: ../src/core/control/Control.cpp:1745
 msgid "Error reading template file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1757
+#: ../src/core/control/Control.cpp:1764
 msgid "Failed to determine if path exists \"{1}\": {2}"
 msgstr "ბილიკის არსებობის დადგენის შეცდომა \"{1}\": {2}"
 
-#: ../src/core/control/Control.cpp:1758
+#: ../src/core/control/Control.cpp:1765
 msgid "That file does not exist:\n"
 "\"{1}\""
 msgstr "ის ფაილი არ არსებობს:\n"
 "\"{1}\""
 
-#: ../src/core/control/Control.cpp:1870
+#: ../src/core/control/Control.cpp:1877
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1873
+#: ../src/core/control/Control.cpp:1880
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1883
+#: ../src/core/control/Control.cpp:1890
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1888
+#: ../src/core/control/Control.cpp:1895
 msgid "Select another PDF"
 msgstr "კიდევ ერთი PDF-ის არჩევა"
 
-#: ../src/core/control/Control.cpp:1889
+#: ../src/core/control/Control.cpp:1896
 msgid "Remove PDF Background"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1893
+#: ../src/core/control/Control.cpp:1900
 msgid "Use proposed PDF"
 msgstr "შეთავაზებული PDF-ის გამოყენება"
 
-#: ../src/core/control/Control.cpp:1896
+#: ../src/core/control/Control.cpp:1903
 msgid "Missing PDF background file"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2025
+#: ../src/core/control/Control.cpp:2032
 msgid "Select font"
 msgstr "ფონტის არჩევა"
 
-#: ../src/core/control/Control.cpp:2044
+#: ../src/core/control/Control.cpp:2051
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "ფერის არჩევა"
 
-#: ../src/core/control/Control.cpp:2069
+#: ../src/core/control/Control.cpp:2076
 msgid "Unsaved Document"
 msgstr "შეუნახავი დოკუმენტი"
 
-#: ../src/core/control/Control.cpp:2211
+#: ../src/core/control/Control.cpp:2218
 msgid "Document file was removed."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2211
+#: ../src/core/control/Control.cpp:2218
 msgid "This document is not saved yet."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2213
+#: ../src/core/control/Control.cpp:2220
 msgid "Save As..."
 msgstr "შენახვა, როგორც..."
 
-#: ../src/core/control/Control.cpp:2213 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2220 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:272
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
 msgid "Save"
 msgstr "შენახვა"
 
-#: ../src/core/control/Control.cpp:2216
+#: ../src/core/control/Control.cpp:2223
 msgid "Discard"
 msgstr "მოცილება"
 
-#: ../src/core/control/Control.cpp:2305
+#: ../src/core/control/Control.cpp:2312
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -624,7 +624,7 @@ msgid "Isometric Graph"
 msgstr "იზომეტრიული გრაფიკი"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:44
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:391
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Image"
 msgstr "გამოსახულება"
 
@@ -663,14 +663,14 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:123
 #: ../src/core/control/xojfile/LoadHandler.cpp:140
-#: ../src/core/control/xojfile/LoadHandler.cpp:689
-#: ../src/core/control/xojfile/LoadHandler.cpp:703
+#: ../src/core/control/xojfile/LoadHandler.cpp:691
+#: ../src/core/control/xojfile/LoadHandler.cpp:705
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:132
-#: ../src/core/control/xojfile/LoadHandler.cpp:695
-#: ../src/core/control/xojfile/LoadHandler.cpp:713
+#: ../src/core/control/xojfile/LoadHandler.cpp:697
+#: ../src/core/control/xojfile/LoadHandler.cpp:715
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr ""
 
@@ -695,60 +695,60 @@ msgstr ""
 msgid "Cloned pixmap page background on page {1} references inexistent page {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:510
+#: ../src/core/control/xojfile/LoadHandler.cpp:512
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:517
+#: ../src/core/control/xojfile/LoadHandler.cpp:519
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:525
+#: ../src/core/control/xojfile/LoadHandler.cpp:527
 msgid "The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:538
+#: ../src/core/control/xojfile/LoadHandler.cpp:540
 msgid "The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:547
+#: ../src/core/control/xojfile/LoadHandler.cpp:549
 msgid "Could not open file: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:563
+#: ../src/core/control/xojfile/LoadHandler.cpp:565
 msgid "XML Parser error: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:573
+#: ../src/core/control/xojfile/LoadHandler.cpp:575
 msgid "Failed to read from compressed file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:582
+#: ../src/core/control/xojfile/LoadHandler.cpp:584
 msgid "Invalid XML data read"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:596
+#: ../src/core/control/xojfile/LoadHandler.cpp:598
 msgid "Document is not complete.\n"
 "We have tried recovering the data that could be read, but the last element may have been discarded, and the end of the file is likely missing."
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:603
+#: ../src/core/control/xojfile/LoadHandler.cpp:605
 msgid "Document is corrupted (no document tag found in file)"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:606
+#: ../src/core/control/xojfile/LoadHandler.cpp:608
 msgid "Document is corrupted (no pages found in file)"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:746
+#: ../src/core/control/xojfile/LoadHandler.cpp:748
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:286
+#: ../src/core/control/xojfile/SaveHandler.cpp:292
 msgid "Could not write background \"{1}\", {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:393
+#: ../src/core/control/xojfile/SaveHandler.cpp:399
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr ""
 
@@ -792,7 +792,7 @@ msgstr ""
 msgid "Found stroke with too many pressure points: {1}, expected {2}. Discarding remaining pressure points"
 msgstr ""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:513
+#: ../src/core/control/xojfile/XmlParser.cpp:517
 msgid "Ignoring attachment tag under {1}"
 msgstr ""
 
@@ -884,12 +884,12 @@ msgid "Thin"
 msgstr "თხელი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:492
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:509
 msgid "Medium"
 msgstr "საშუალო"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:493
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:510
 msgid "Thick"
 msgstr "სქელი"
 
@@ -906,24 +906,24 @@ msgid "Tool - don't change"
 msgstr "ხელსაწყო - არ შეცვალოთ"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:79
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:362
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:372
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:497
 msgid "Pen"
 msgstr "კალამი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:80
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:371
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 msgid "Eraser"
 msgstr "საშლელი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:81
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:385
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:481
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:498
 msgid "Highlighter"
 msgstr "გამომკვეთი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:82
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:387
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:397
 msgid "Text"
 msgstr "ტექსტი"
 
@@ -961,7 +961,7 @@ msgid "Select multi layer rect"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:433
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:443
 msgid "Hand"
 msgstr "ხელი"
 
@@ -987,48 +987,48 @@ msgstr "ჩვეულებრივი ნახატი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Draw Line"
 msgstr "ხაზის დახატვა"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Draw Rectangle"
 msgstr "ოთხკუთხედის დახატვა"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Draw Ellipse"
 msgstr "ოვალის დახატვა"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Draw Arrow"
 msgstr "ისრის დახატვა"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:411
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw Double Arrow"
 msgstr "ორმაგი ისრის დახატვა"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Draw Coordinate System"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
 msgstr "მოხაზულობის ამომცნობი"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Draw Spline"
 msgstr "სპლაინის დახატვა"
 
@@ -1240,7 +1240,7 @@ msgstr "შაბლონის ფაილის გახსნა"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:136
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:197
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:271
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:281
 msgid "Open file"
 msgstr "ფაილის გახსნა"
 
@@ -1452,284 +1452,300 @@ msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:270
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:280
 msgid "New Xournal"
 msgstr "ახალი Xournal"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:273
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:283
 msgid "Export as PDF"
 msgstr "PDF-ში გატანა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:274
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:284
 msgid "Print"
 msgstr "ბეჭდვა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:283
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:293
 #: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo"
 msgstr "დაბრუნება"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:286
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:296
 #: ../src/core/undo/UndoRedoHandler.cpp:191
 msgid "Redo"
 msgstr "გამეორება"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:289
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:299
 msgid "Cut"
 msgstr "ამოჭრა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:290
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:300
 msgid "Copy"
 msgstr "კოპირება"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:301
 #: ../src/core/undo/AddUndoAction.cpp:72
 msgid "Paste"
 msgstr "ჩასმა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:293
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:303
 msgid "Search"
 msgstr "ძებნა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:295
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:305
 #: ../src/core/undo/DeleteUndoAction.cpp:74
 msgid "Delete"
 msgstr "წაშლა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:298
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:308
 msgid "Rotation Snapping"
 msgstr "ბრუნვის მიმაგრება"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:299
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:309
 msgid "Grid Snapping"
 msgstr "ბადეზე მიმაგრება"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:307
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:317
 msgid "Paired pages"
 msgstr "დაწყვილებული გვერდები"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:309
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:319
 msgid "Presentation mode"
 msgstr "პრეზენტაციის რეჟიმი"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:310
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:320
 msgid "Toggle fullscreen"
 msgstr "სრულეკრანიანი რეჟიმის გადართვა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:311
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:321
 msgid "Toggle sidebar"
 msgstr "გვერდითი პანელის გადართვა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:313
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:323
 msgid "Manage Toolbars"
 msgstr "ხელსაწყოს პანელების მართვა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:315
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:325
 msgid "Customize Toolbars"
 msgstr "ხელსაწყოს პანელების მორგება"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:317
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:327
 msgid "Zoom out"
 msgstr "დაპატარავება"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:318
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:328
 msgid "Zoom in"
 msgstr "გადიდება"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:319
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Zoom fit to screen"
 msgstr "გადიდება ეკრანზე დასატევად"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:320
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:330
 msgid "Zoom to 100%"
 msgstr "გადიდება 100%-მდე"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:327
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 msgid "Go to first page"
 msgstr "პირველ გვერდზე გადასვლა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:328
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:445
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:338
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:462
 msgid "Back"
 msgstr "უკან"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:329
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:339
 msgid "Jump back"
 msgstr "უკან გადასვლა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:330
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:340
 msgid "Go to page"
 msgstr "გადასვლა გვერდზე"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:332
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:342
 msgid "Jump forward"
 msgstr "წინ გადასვლა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:333
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:343
 msgid "Next"
 msgstr "შემდეგი"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:334
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:344
 msgid "Go to last page"
 msgstr "ბოლო გვერდზე გადასვლა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:347
 msgid "Go to previous layer"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:338
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:348
 msgid "Go to next layer"
 msgstr "შემდეგ ფენაზე გადასვლა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:339
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:349
 msgid "Go to top layer"
 msgstr "ზედა ფენაზე გადასვლა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:342
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:352
 msgid "Next annotated page"
 msgstr "შემდეგი ანოტაციის მქონე გვერდი"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:348
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:358
 msgid "Insert page"
 msgstr "გვერდის ჩასმა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:350
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:360
 msgid "Delete current page"
 msgstr "მიმდინარე გვერდის წაშლა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:358
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:367
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:375
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:368
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:377
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:385
 msgid "standard"
 msgstr "სტანდარტული"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:359
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:377
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:387
 msgid "dashed"
 msgstr "დაშტრიხული"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:360
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:379
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:370
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:389
 msgid "dash-/ dotted"
 msgstr "ტირეთი / წერტილით"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:361
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:381
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:371
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:391
 msgid "dotted"
 msgstr "წერტილოვანი"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:368
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:378
 msgid "whiteout"
 msgstr "გათეთრება"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 msgid "delete stroke"
 msgstr "შტრიხის წაშლა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:388
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:398
 msgid "Add/Edit Link"
 msgstr "ბმულის დამატება/ჩასწორება"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:390
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 msgid "Add/Edit TeX"
 msgstr "TeX-ის დამატება/ჩასწორება"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:392
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:402
 msgid "Default Tool"
 msgstr "ნაგულისხმევი ხელსაწყო"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:394
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:14
 msgid "Select Linear PDF Text"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 msgid "Select PDF Text in Rectangle"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:398
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Setsquare"
 msgstr "მართკუთხა სახაზავი სამკუთხედი"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:399
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Compass"
 msgstr "კომპასი"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:402
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Toggle Touch Drawing"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:418
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
 msgid "Select Region"
 msgstr "რეგიონის მონიშვნა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:12
 msgid "Select Rectangle"
 msgstr "მართკუთხედით მონიშვნა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Select Multi-Layer Region"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Select Multi-Layer Rectangle"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 msgid "Select Object"
 msgstr "ობიექტის მონიშვნა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:430
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Vertical Space"
 msgstr "ვერტიკალური სივრცე"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 msgid "Play Object"
 msgstr "ობიექტის დაკვრა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
+msgid "Justify text"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:448
+msgid "Align text to the left"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:450
+msgid "Center text"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:452
+msgid "Align text to the right"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:455
 msgid "Record Audio / Stop Recording"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:440
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:457
 msgid "Pause / Play"
 msgstr "შეჩერება / დაკვრა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:441
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:458
 msgid "Stop"
 msgstr "გაჩერება"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:443
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:460
 msgid "Forward"
 msgstr "წინ"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:496
 msgid "Laser pointer"
 msgstr "ლაზერული მაჩვენებელი"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:502
 msgid "Fill"
 msgstr "შევსება"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:486
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:503
 msgid "Fill Opacity"
 msgstr "შევსების ბუნდოვნობა"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:489
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:506
 msgid "Very Fine"
 msgstr "ძალიან ზუსტი"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:490
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:507
 msgid "Fine"
 msgstr "ზუსტი"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:495
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:512
 msgid "Very Thick"
 msgstr "ძალიან სქელი"
 
@@ -4514,43 +4530,43 @@ msgstr "გრაფიკი საზღვრით"
 msgid "Graph with border (bold every 5th)"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:50
+#: ../resources-templates/toolbar.ini.in:51
 msgid "All Tools"
 msgstr "ყველა ხელსაწყო"
 
-#: ../resources-templates/toolbar.ini.in:55
+#: ../resources-templates/toolbar.ini.in:56
 msgid "Portrait"
 msgstr "პორტრეტი"
 
-#: ../resources-templates/toolbar.ini.in:61
+#: ../resources-templates/toolbar.ini.in:62
 msgid "Minimal Left"
 msgstr "მინიმალურად მარცხნივ"
 
-#: ../resources-templates/toolbar.ini.in:65
+#: ../resources-templates/toolbar.ini.in:66
 msgid "Minimal Top"
 msgstr "მინიმალურად ზემოთ"
 
-#: ../resources-templates/toolbar.ini.in:69
+#: ../resources-templates/toolbar.ini.in:70
 msgid "Xournal++"
 msgstr "Xournal++"
 
-#: ../resources-templates/toolbar.ini.in:77
+#: ../resources-templates/toolbar.ini.in:78
 msgid "Tablet mode"
 msgstr "ტაბლეტის რეჟიმი"
 
-#: ../resources-templates/toolbar.ini.in:83
+#: ../resources-templates/toolbar.ini.in:84
 msgid "Right hand Note Taking"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:86
+#: ../resources-templates/toolbar.ini.in:87
 msgid "Toolbar Left"
 msgstr "მარცხენა პანელი"
 
-#: ../resources-templates/toolbar.ini.in:92
+#: ../resources-templates/toolbar.ini.in:93
 msgid "Toolbar Right"
 msgstr "ხელსაწყოთა პანელი მარჯვნივ"
 
-#: ../resources-templates/toolbar.ini.in:107
+#: ../resources-templates/toolbar.ini.in:108
 msgid "Empty Toolbar"
 msgstr "ცარიელი ხელსაწყოთა პანელი"
 
