@@ -1,6 +1,8 @@
 xournalpp (1.3.7~dev-1) UNRELEASED; urgency=medium
 
-  * 
+  * Fixed Lua API changeToolColor not recognizing some tool names
+  * Fixed failing assertion when right clicking
+  * Updated translations
 
  -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Mon, 13 Jul 2026 13:43:51 +0200
 
