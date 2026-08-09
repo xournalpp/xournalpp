@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.3.8~dev (Unreleased)
+
 ## 1.3.7
 
 * Fixed Lua API changeToolColor not recognizing some tool names (#7631)
