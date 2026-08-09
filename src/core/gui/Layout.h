@@ -194,14 +194,10 @@ private:
     XournalView* view = nullptr;
     ScrollHandling* scrollHandling = nullptr;
 
-    // Todo(Fabian): move to ScrollHandling also it must not depend on Layout
-    double lastScrollHorizontal = -1;
-    double lastScrollVertical = -1;
-
     std::vector<size_t> previouslyVisiblePages;  ///< indexes of pages with XojPageView::isVisible() == true
 
     PreCalculated pc{};
 
     /// Used to have only one call when zooming in/out
-    bool blockHorizontalCallback = false;
+    enum class DelayStatus { NO_DELAY, DELAY, MUST_RUN_AFTER } delayUpdate = DelayStatus::NO_DELAY;
 };

@@ -38,27 +38,32 @@ constexpr auto const XOURNAL_PADDING_BETWEEN = 15;
 
 
 Layout::Layout(XournalView* view, ScrollHandling* scrollHandling): view(view), scrollHandling(scrollHandling) {
-    g_signal_connect(scrollHandling->getHorizontal(), "value-changed", G_CALLBACK(horizontalScrollChanged), this);
-    g_signal_connect(scrollHandling->getVertical(), "value-changed", G_CALLBACK(verticalScrollChanged), this);
-
-
-    lastScrollHorizontal = gtk_adjustment_get_value(scrollHandling->getHorizontal());
-    lastScrollVertical = gtk_adjustment_get_value(scrollHandling->getVertical());
+    g_signal_connect(scrollHandling->getHorizontal(), "value-changed",
+                     xoj::util::wrap_for_g_callback_v<horizontalScrollChanged>, this);
+    g_signal_connect(scrollHandling->getVertical(), "value-changed",
+                     xoj::util::wrap_for_g_callback_v<verticalScrollChanged>, this);
 }
 
-void Layout::horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout) {
-    layout->lastScrollHorizontal = gtk_adjustment_get_value(adjustment);
-    if (!layout->blockHorizontalCallback) {
-        layout->updateVisibility();
-        gtk_widget_queue_draw(layout->view->getWidget());
+static inline void afterMove(Layout* layout, GtkWidget* w) {
+    layout->updateVisibility();
+    gtk_widget_queue_draw(w);
+}
+
+void Layout::horizontalScrollChanged(GtkAdjustment*, Layout* layout) {
+    if (layout->delayUpdate == DelayStatus::NO_DELAY) {
+        afterMove(layout, layout->view->getWidget());
+    } else {
+        layout->delayUpdate = DelayStatus::MUST_RUN_AFTER;
     }
 }
 
-void Layout::verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout) {
-    layout->lastScrollVertical = gtk_adjustment_get_value(adjustment);
-    layout->updateVisibility();
+void Layout::verticalScrollChanged(GtkAdjustment*, Layout* layout) {
     layout->maybeAddLastPage(layout);
-    gtk_widget_queue_draw(layout->view->getWidget());
+    if (layout->delayUpdate == DelayStatus::NO_DELAY) {
+        afterMove(layout, layout->view->getWidget());
+    } else {
+        layout->delayUpdate = DelayStatus::MUST_RUN_AFTER;
+    }
 }
 
 void Layout::maybeAddLastPage(Layout* layout) {
@@ -431,19 +436,27 @@ void Layout::scrollAbs(double x, double y) {
         return;
     }
 
-    // We block the horizontal callback to avoid calling updateVisibility() twice
-    this->blockHorizontalCallback = true;
+    // We delay the update to avoid calling updateVisibility() twice
+    this->delayUpdate = DelayStatus::DELAY;
     gtk_adjustment_set_value(scrollHandling->getHorizontal(), x);
     gtk_adjustment_set_value(scrollHandling->getVertical(), y);
-    this->blockHorizontalCallback = false;
+    if (delayUpdate == DelayStatus::MUST_RUN_AFTER) {
+        // At least one of the two values really was changed. Update
+        afterMove(this, this->view->getWidget());
+    }
+    this->delayUpdate = DelayStatus::NO_DELAY;
 }
 
 void Layout::ensureRectIsVisible(int x, int y, int width, int height) {
-    // We block the horizontal callback to avoid calling updateVisibility() twice
-    this->blockHorizontalCallback = true;
+    // We delay the update to avoid calling updateVisibility() twice
+    this->delayUpdate = DelayStatus::DELAY;
     gtk_adjustment_clamp_page(scrollHandling->getHorizontal(), x - 5, x + width + 10);
     gtk_adjustment_clamp_page(scrollHandling->getVertical(), y - 5, y + height + 10);
-    this->blockHorizontalCallback = false;
+    if (delayUpdate == DelayStatus::MUST_RUN_AFTER) {
+        // At least one of the two values really was changed. Update
+        afterMove(this, this->view->getWidget());
+    }
+    this->delayUpdate = DelayStatus::NO_DELAY;
 }
 
 auto Layout::getGridPositionAtUnsafe(const xoj::util::Point<double>& p) const -> GridPosition {
