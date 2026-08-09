@@ -22,11 +22,12 @@ auto ButtonConfig::getDrawingType() const -> DrawingType { return this->drawingT
 auto ButtonConfig::getAction() const -> ToolType { return this->action; }
 
 void ButtonConfig::initButton(ToolHandler* toolHandler, Button button) const {
+    toolHandler->resetButtonTool(this->action, button);
+
     if (this->action == TOOL_NONE) {
         return;
     }
 
-    toolHandler->resetButtonTool(this->action, button);
     const Tool& t = toolHandler->getTool(this->action);
 
     if (t.hasCapability(TOOL_CAP_SIZE) && this->size != TOOL_SIZE_NONE) {

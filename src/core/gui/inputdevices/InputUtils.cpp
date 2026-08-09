@@ -11,16 +11,15 @@
 
 
 bool InputUtils::applyButton(ToolHandler* toolHandler, Settings* settings, Button button) {
-    bool toolChanged = false;
     // if active tool already points to the correct tool nothing needs to be done
     if (toolHandler->pointActiveToolToButtonTool(button)) {
-        toolChanged = true;
         ButtonConfig* cfg = settings->getButtonConfig(button);
 
         xoj_assert(cfg->getAction() != TOOL_NONE);
         cfg->applyNoChangeSettings(toolHandler, button);
+        return true;
     }
-    return toolChanged;
+    return false;
 }
 
 bool InputUtils::touchDrawingDisallowed(ToolHandler* toolHandler, Settings* settings) {
