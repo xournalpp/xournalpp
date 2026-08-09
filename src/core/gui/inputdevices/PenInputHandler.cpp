@@ -94,6 +94,8 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     if (!changeTool(event))
         return false;
 
+    this->inputStartedOutsidePageArea = currentPage == nullptr;
+
     // Used for pressure inference
     this->lastPressure = 0.0;
 
@@ -116,15 +118,17 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     cursor->setMouseDown(true);
 
 
-    // Save the starting offset when hand-tool is selected to get a reference for the scroll-offset
-    if (toolType == TOOL_HAND) {
+    // Save the starting offset when hand-tool is selected (or the input starts outside a page area and thus
+    // acts like the hand tool) to get a reference for the scroll-offset
+    if (toolType == TOOL_HAND || this->inputStartedOutsidePageArea) {
         this->scrollStartPosition = event.absolute;
     }
 
     this->sequenceStartPage = currentPage;
 
     // hand tool don't change the selection, so you can scroll e.g. with your touchscreen without remove the selection
-    bool changeSelection = xournal->selection && toolHandler->getToolType() != TOOL_HAND;
+    bool changeSelection =
+            xournal->selection && toolHandler->getToolType() != TOOL_HAND && !this->inputStartedOutsidePageArea;
     if ((event.state & GDK_SHIFT_MASK)) {
         // When tap single selection is enabled
         if (toolHandler->supportsTapFilter() && inputContext->getSettings()->getStrokeFilterEnabled()) {
@@ -292,7 +296,7 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
 
     this->changeTool(event);
 
-    if (toolHandler->getToolType() == TOOL_HAND) {
+    if (toolHandler->getToolType() == TOOL_HAND || this->inputStartedOutsidePageArea) {
         if (this->deviceClassPressed) {
             this->handleScrollEvent(event);
             return true;
@@ -407,6 +411,8 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
     EditSelection* selection = xournal->view->getSelection();
 
     cursor->setMouseDown(false);
+
+    this->inputStartedOutsidePageArea = false;
 
     bool cancelAction = isCurrentTapSelection(event);
 
