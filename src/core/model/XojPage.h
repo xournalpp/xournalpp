@@ -25,6 +25,8 @@
 #include "PageHandler.h"      // for PageHandler
 #include "PageType.h"         // for PageType
 
+enum class PageOrientation : int { UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3 };
+
 class XojPage: public PageHandler {
 public:
     XojPage(double width, double height, bool suppressLayerCreation = false);
@@ -56,6 +58,9 @@ public:
     double getHeight() const;
 
     size_t getPdfPageNr() const;
+
+    void setPdfPageOrientation(PageOrientation orient);
+    PageOrientation getPdfPageOrientation() const;
 
     bool isAnnotated() const;
 
@@ -113,9 +118,10 @@ private:
     PageType bgType;
 
     /**
-     * If the page has a PDF background, the page number of the PDF Page
+     * If the page has a PDF background, the page number and orientation of the PDF Page
      */
     size_t pdfBackgroundPage = npos;
+    PageOrientation pdfPageOrientation = PageOrientation::UP;
 
     /**
      * The background color if the background type is plain
