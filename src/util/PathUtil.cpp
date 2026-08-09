@@ -398,6 +398,47 @@ auto Util::getConfigFile(const fs::path& relativeFileName) -> fs::path {
     return p;
 }
 
+auto Util::getConfigFileWithFallback(const fs::path& relativeFileName) -> fs::path {
+    // Try user config home
+    fs::path userConfigPath = getConfigFile(relativeFileName);
+    std::error_code ec;
+    if (fs::exists(userConfigPath, ec)) {
+        g_message("Found user config file at: %s", userConfigPath.string().c_str());
+        return userConfigPath;
+    }
+    if (ec) {
+        g_warning("Error checking config path existence (%s): %s", userConfigPath.string().c_str(),
+                  ec.message().c_str());
+    }
+
+    // Look in system config directories
+    g_message("Looking for config file in system config directories");
+    const gchar* const* systemConfigDirs = g_get_system_config_dirs();
+    if (systemConfigDirs != nullptr) {
+        for (int i = 0; systemConfigDirs[i] != nullptr; i++) {
+            auto p = GFilename(systemConfigDirs[i]).toPath();
+            if (!p) {
+                g_warning("Could not convert system config dir to path: %s", systemConfigDirs[i]);
+                continue;
+            }
+            fs::path systemConfigPath = *p;
+            systemConfigPath /= CONFIG_FOLDER_NAME;
+            systemConfigPath /= relativeFileName;
+
+            if (fs::exists(systemConfigPath, ec)) {
+                g_message("Found system config file at: %s", systemConfigPath.string().c_str());
+                return systemConfigPath;
+            }
+            if (ec) {
+                g_warning("Error checking system config path existence (%s): %s", systemConfigPath.string().c_str(),
+                          ec.message().c_str());
+            }
+        }
+    }
+
+    return userConfigPath;
+}
+
 auto Util::getCacheFile(const fs::path& relativeFileName) -> fs::path {
     fs::path p = getCacheSubfolder(relativeFileName.parent_path());
     p /= relativeFileName.filename();

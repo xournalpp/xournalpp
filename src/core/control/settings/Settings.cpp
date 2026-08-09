@@ -21,9 +21,9 @@
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "model/FormatDefinitions.h"                // for FormatUnits, XOJ_...
 #include "util/Color.h"
-#include "util/PathUtil.h"  // for getConfigFile
-#include "util/Util.h"      // for PRECISION_FORMAT_...
-#include "util/i18n.h"      // for _
+#include "util/PathUtil.h"    // for getConfigFile
+#include "util/Util.h"        // for PRECISION_FORMAT_...
+#include "util/i18n.h"        // for _
 #include "util/safe_casts.h"  // for as_unsigned
 #include "util/utf8_view.h"   // for utf8_view
 
@@ -49,7 +49,11 @@ constexpr auto DEFAULT_TOOLBAR = "Portrait";
     com = xmlNewComment((const xmlChar*)(var)); \
     xmlAddPrevSibling(xmlNode, com);
 
-Settings::Settings(fs::path filepath): filepath(std::move(filepath)) { loadDefault(); }
+Settings::Settings(fs::path savePath): savePath(std::move(savePath)), loadPath(this->savePath) { loadDefault(); }
+
+Settings::Settings(fs::path savePath, fs::path loadPath): savePath(std::move(savePath)), loadPath(std::move(loadPath)) {
+    loadDefault();
+}
 
 Settings::~Settings() = default;
 
@@ -833,12 +837,12 @@ void Settings::loadButtonConfig() {
 auto Settings::load() -> bool {
     xmlKeepBlanksDefault(0);
 
-    if (!fs::exists(filepath)) {
-        g_warning("Settings file %s does not exist. Regenerating. ", filepath.string().c_str());
+    if (!fs::exists(loadPath)) {
+        g_warning("Settings file %s does not exist. Regenerating. ", loadPath.string().c_str());
         save();
     }
 
-    xmlDocPtr doc = xmlParseFile(char_cast(filepath.u8string().c_str()));
+    xmlDocPtr doc = xmlParseFile(char_cast(loadPath.u8string().c_str()));
 
     if (doc == nullptr) {
         g_warning("Settings::load:: doc == null, could not load Settings!\n");
@@ -847,14 +851,14 @@ auto Settings::load() -> bool {
 
     xmlNodePtr cur = xmlDocGetRootElement(doc);
     if (cur == nullptr) {
-        g_message("The settings file \"%s\" is empty", filepath.string().c_str());
+        g_message("The settings file \"%s\" is empty", loadPath.string().c_str());
         xmlFreeDoc(doc);
 
         return false;
     }
 
     if (xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("settings"))) {
-        g_message("File \"%s\" is of the wrong type", filepath.string().c_str());
+        g_message("File \"%s\" is of the wrong type", loadPath.string().c_str());
         xmlFreeDoc(doc);
 
         return false;
@@ -1252,7 +1256,7 @@ void Settings::save() {
         saveData(root, p.first, p.second);
     }
 
-    xmlSaveFormatFileEnc(char_cast(filepath.u8string().c_str()), doc, "UTF-8", 1);
+    xmlSaveFormatFileEnc(char_cast(savePath.u8string().c_str()), doc, "UTF-8", 1);
     xmlFreeDoc(doc);
 }
 
