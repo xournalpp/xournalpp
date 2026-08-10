@@ -203,7 +203,7 @@ void Settings::loadDefault() {
     this->selectionMarkerColor = Colors::xopp_cornflowerblue;
     this->activeSelectionColor = Colors::lawngreen;
 
-    this->recolorParameters = {false, false, Recolor(ColorU8{198, 208, 245}, ColorU8{48, 52, 70})};
+    this->recolorParameters = {false, false, Recolor(ColorU8{198, 208, 245}, ColorU8{48, 52, 70}, false)};
 
     this->backgroundColor = Colors::xopp_gainsboro02;
 
@@ -559,15 +559,21 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("recolor.sidebar")) == 0) {
         this->recolorParameters.recolorizeSidebarMiniatures =
                 xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("recolor.hues")) == 0) {
+        this->recolorParameters.recolor =
+                Recolor(this->recolorParameters.recolor.getLight(),
+                        this->recolorParameters.recolor.getDark(),
+                        xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("recolor.light")) == 0) {
         this->recolorParameters.recolor =
                 Recolor(ColorU8(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10)),
-                        this->recolorParameters.recolor.getDark());
+                        this->recolorParameters.recolor.getDark(),
+                        this->recolorParameters.recolor.getKeepHues());
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("recolor.dark")) == 0) {
         this->recolorParameters.recolor =
                 Recolor(this->recolorParameters.recolor.getLight(),
-                        ColorU8(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10)));
-
+                        ColorU8(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10)),
+                        this->recolorParameters.recolor.getKeepHues());
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("backgroundColor")) == 0) {
         this->backgroundColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpace")) == 0) {
@@ -1139,6 +1145,7 @@ void Settings::save() {
 
     xmlNode = saveProperty("recolor.enabled", recolorParameters.recolorizeMainView ? "true" : "false", root);
     xmlNode = saveProperty("recolor.sidebar", recolorParameters.recolorizeSidebarMiniatures ? "true" : "false", root);
+    xmlNode = saveProperty("recolor.hues", recolorParameters.recolor.getKeepHues() ? "true" : "false", root);
     xmlNode = savePropertyUnsigned("recolor.dark", uint32_t(recolorParameters.recolor.getDark()), root);
     xmlNode = savePropertyUnsigned("recolor.light", uint32_t(recolorParameters.recolor.getLight()), root);
 
