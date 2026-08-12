@@ -43,7 +43,25 @@ void BaseShapeHandler::updateShape(bool isAltDown, bool isShiftDown, bool isCont
     viewPool->dispatch(xoj::view::ShapeToolView::FLAG_DIRTY_REGION, repaintRange);
 }
 
+void BaseShapeHandler::translateShape(double dx, double dy) {
+    if (this->shape.empty() || (dx == 0.0 && dy == 0.0)) {
+        return;
+    }
+
+    for (Point& point: this->shape) {
+        point.x += dx;
+        point.y += dy;
+    }
+
+    Range repaintRange = this->lastSnappingRange;
+    this->lastSnappingRange.translate(dx, dy);
+    repaintRange = repaintRange.unite(this->lastSnappingRange);
+    repaintRange.addPadding(0.5 * this->stroke->getWidth());
+    this->viewPool->dispatch(xoj::view::ShapeToolView::FLAG_DIRTY_REGION, repaintRange);
+}
+
 void BaseShapeHandler::cancelStroke() {
+    this->modSpace = false;
     this->shape.clear();
     Range repaintRange = this->lastSnappingRange;
     repaintRange.addPadding(0.5 * this->stroke->getWidth());
@@ -62,9 +80,19 @@ auto BaseShapeHandler::onKeyEvent(const KeyEvent& event, bool pressed) -> bool {
         isControlDown = pressed;
     } else if (event.keyval == GDK_KEY_Alt_L || event.keyval == GDK_KEY_Alt_R) {
         isAltDown = pressed;
+    } else if (event.keyval == GDK_KEY_space) {
+        this->modSpace = pressed;
+        return true;
     } else {
         return false;
     }
+
+    // While moving with Space, keep the current geometry frozen.
+    // Recompute only after Space is released and pointer moves again.
+    if (this->modSpace) {
+        return true;
+    }
+
     this->updateShape(isAltDown, isShiftDown, isControlDown);
 
     return true;
@@ -78,6 +106,15 @@ auto BaseShapeHandler::onKeyReleaseEvent(const KeyEvent& event) -> bool { return
 auto BaseShapeHandler::onMotionNotifyEvent(const PositionInputData& pos, double zoom) -> bool {
     Point newPoint(pos.x / zoom, pos.y / zoom);
     if (!validMotion(newPoint, this->currPoint)) {
+        return true;
+    }
+    if (this->modSpace) {
+        const double dx = newPoint.x - this->currPoint.x;
+        const double dy = newPoint.y - this->currPoint.y;
+        this->startPoint.x += dx;
+        this->startPoint.y += dy;
+        this->currPoint = newPoint;
+        this->translateShape(dx, dy);
         return true;
     }
     this->currPoint = newPoint;
@@ -122,6 +159,7 @@ void BaseShapeHandler::onButtonReleaseEvent(const PositionInputData& pos, double
 
 void BaseShapeHandler::onButtonPressEvent(const PositionInputData& pos, double zoom) {
     xoj_assert(this->viewPool->empty());
+    this->modSpace = false;
     this->buttonDownPoint.x = pos.x / zoom;
     this->buttonDownPoint.y = pos.y / zoom;
 
