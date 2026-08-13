@@ -4,13 +4,14 @@
 #include <memory>     // for allocator
 
 #include <gdk/gdk.h>      // for GdkRectangle, GDK_LEAVE_...
-#include <glib-object.h>  // for G_CALLBACK, g_signal_con...
+#include <glib-object.h>  // for g_signal_connect
 
 #include "control/Control.h"                 // for Control
 #include "control/ToolEnums.h"               // for TOOL_FLOATING_TOOLBOX
 #include "control/settings/ButtonConfig.h"   // for ButtonConfig
 #include "control/settings/Settings.h"       // for Settings
 #include "control/settings/SettingsEnums.h"  // for BUTTON_COUNT
+#include "gui/widgets/ToolbarBox.h"
 #include "util/glib_casts.h"
 
 #include "MainWindow.h"          // for MainWindow
@@ -26,10 +27,11 @@ FloatingToolbox::FloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay)
     this->floatingToolboxState = recalcSize;
 
     gtk_overlay_add_overlay(overlay, this->floatingToolbox);
-    gtk_overlay_set_overlay_pass_through(overlay, this->floatingToolbox, true);
-    gtk_widget_add_events(this->floatingToolbox, GDK_LEAVE_NOTIFY_MASK);
-    g_signal_connect(this->floatingToolbox, "leave-notify-event",
-                     xoj::util::wrap_for_g_callback_v<handleLeaveFloatingToolbox>, this);
+
+    auto* ctrl = gtk_event_controller_motion_new();
+    g_signal_connect(ctrl, "leave", xoj::util::wrap_for_g_callback_v<handleLeaveFloatingToolbox>, this);
+    gtk_widget_add_controller(this->floatingToolbox, ctrl);
+
     // position overlay widgets
     g_signal_connect(overlay, "get-child-position", xoj::util::wrap_for_g_callback_v<getOverlayPosition>, this);
 }
@@ -38,7 +40,7 @@ FloatingToolbox::FloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay)
 FloatingToolbox::~FloatingToolbox() = default;
 
 
-void FloatingToolbox::show(int x, int y) {
+void FloatingToolbox::show(double x, double y) {
     this->floatingToolboxX = x;
     this->floatingToolboxY = y;
     this->show();
@@ -76,9 +78,11 @@ auto FloatingToolbox::floatingToolboxActivated() -> bool {
 
 
 auto FloatingToolbox::hasWidgets() -> bool {
-    for (int index = TBFloatFirst; index <= TBFloatLast; index++) {
-        GtkToolbar* toolbar1 = GTK_TOOLBAR(this->mainWindow->get(TOOLBAR_DEFINITIONS[index].guiName));
-        if (gtk_toolbar_get_n_items(toolbar1) > 0) {
+    const auto& tbs = mainWindow->getToolbars();
+    static_assert(std::tuple_size<ToolbarArray>() == std::tuple_size<decltype(TOOLBAR_DEFINITIONS)>() &&
+                  std::tuple_size<ToolbarArray>() > TBFloatLast);
+    for (size_t index = TBFloatFirst; index <= TBFloatLast; index++) {
+        if (!tbs[index]->empty()) {
             return true;
         }
     }
@@ -95,7 +99,7 @@ void FloatingToolbox::showForConfiguration() {
 
 
 void FloatingToolbox::show() {
-    gtk_widget_show_all(this->floatingToolbox);
+    gtk_widget_show(this->floatingToolbox);
     gtk_widget_set_visible(this->mainWindow->get("labelFloatingToolbox"), this->floatingToolboxState == configuration);
     gtk_widget_set_visible(this->mainWindow->get("showIfEmpty"),
                            this->floatingToolboxState != configuration && !hasWidgets());
@@ -146,8 +150,8 @@ auto FloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget,
         case recalcSize:
             [[fallthrough]];
         case noChange: {
-            int centerX = self->floatingToolboxX - allocation->width / 2;
-            int centerY = self->floatingToolboxY - allocation->height / 2;
+            int centerX = round_cast<int>(self->floatingToolboxX - allocation->width / 2.);
+            int centerY = round_cast<int>(self->floatingToolboxY - allocation->height / 2.);
 
             // Clamp to scrolled window bounds with margin
             constexpr int margin = 10;
@@ -174,19 +178,19 @@ auto FloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget,
             break;
     }
 
-    gtk_widget_translate_coordinates(scrolledWindow, GTK_WIDGET(overlay), allocation->x, allocation->y, &allocation->x,
-                                     &allocation->y);
+    // Get scrolled window position relative to overlay
+    double x, y;
+    gtk_widget_translate_coordinates(scrolledWindow, GTK_WIDGET(overlay), allocation->x, allocation->y, &x, &y);
+    allocation->x = round_cast<int>(x);
+    allocation->y = round_cast<int>(y);
 
     return true;
 }
 
-
-bool FloatingToolbox::handleLeaveFloatingToolbox(GtkWidget* floatingToolbox, GdkEvent* event, FloatingToolbox* self) {
-    if (floatingToolbox == self->floatingToolbox) {
+void FloatingToolbox::handleLeaveFloatingToolbox(GtkEventControllerMotion* ectrl, FloatingToolbox* self) {
+    if (gtk_event_controller_get_widget(GTK_EVENT_CONTROLLER(ectrl)) == self->floatingToolbox) {
         if (self->floatingToolboxState != configuration) {
             self->hide();
         }
-        return true;
     }
-    return false;
 }

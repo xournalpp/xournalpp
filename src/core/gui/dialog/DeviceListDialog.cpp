@@ -2,11 +2,10 @@
 
 #include "control/settings/Settings.h"
 #include "gui/Builder.h"
-#include "util/gtk4_helper.h"  // for gtk_box_append, ...
 
 #include "DeviceClassConfigGui.h"
 
-constexpr auto UI_FILE_NAME = "deviceList.glade";
+constexpr auto UI_FILE_NAME = "deviceList.ui";
 constexpr auto UI_MAIN_ID = "deviceListDialog";
 constexpr auto UI_CONTENT_BOX = "contentBox";
 

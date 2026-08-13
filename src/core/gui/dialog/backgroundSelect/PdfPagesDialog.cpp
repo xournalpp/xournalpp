@@ -58,10 +58,6 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
 
     gtk_box_prepend(vbox, GTK_WIDGET(cbUnusedOnly));
 
-#if GTK_MAJOR_VERSION == 3
-    gtk_widget_show_all(GTK_WIDGET(vbox));
-#endif
-
     g_signal_connect(cbUnusedOnly, "toggled", G_CALLBACK(onlyNotUsedCallback), this);
 
     g_signal_connect_swapped(okButton, "clicked", G_CALLBACK(+[](PdfPagesDialog* self) {

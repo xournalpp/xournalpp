@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkScrolledWindow" id="paletteSettingsPanel">
+    <property name="focusable">1</property>
+    <property name="min-content-width">500</property>
+    <property name="min-content-height">450</property>
+    <property name="child">
+      <object class="GtkViewport">
+        <property name="child">
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkFrame" id="frame1">
+                <property name="label-xalign">0.01</property>
+                <property name="margin-bottom">8</property>
+                <property name="margin-start">12</property>
+                <property name="margin-end">12</property>
+                <child>
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <property name="margin-bottom">8</property>
+                    <property name="margin-start">12</property>
+                    <property name="margin-end">12</property>
+                    <child>
+                      <object class="GtkLabel" id="colorPaletteExplainLabel">
+                        <property name="halign">start</property>
+                        <property name="use-markup">1</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkListBox" id="paletteListBox"/>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child type="label">
+              <object class="GtkLabel">
+                <property name="label" translatable="1">Color Palettes</property>
+              </object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </property>
+  </object>
+</interface>

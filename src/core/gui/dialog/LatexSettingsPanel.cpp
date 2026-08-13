@@ -17,29 +17,29 @@
 #include "control/latex/LatexGenerator.h"    // for LatexGenerator::GenError
 #include "control/settings/LatexSettings.h"  // for LatexSettings
 #include "gui/Builder.h"
+#include "gui/dialog/XojOpenDlg.h"
 #include "model/Font.h"              // for XojFont
 #include "util/Color.h"              // for Color
 #include "util/PathUtil.h"           // for fromGFile, getTmpDir...
 #include "util/PlaceholderString.h"  // for PlaceholderString
 #include "util/XojMsgBox.h"
-#include "util/gtk4_helper.h"
 #include "util/i18n.h"  // for FS, _F, _
 #include "util/raii/CStringWrapper.h"
+#include "util/raii/GObjectSPtr.h"
 
 #include "filesystem.h"  // for path, is_regular_file
 
 class GladeSearchpath;
 
-constexpr auto UI_FILE = "latexSettings.glade";
+constexpr auto UI_FILE = "latexSettings.ui";
 constexpr auto UI_PANEL_NAME = "latexSettingsPanel";
 
 LatexSettingsPanel::LatexSettingsPanel(GladeSearchpath* gladeSearchPath):
         builder(gladeSearchPath, UI_FILE),
         panel(GTK_SCROLLED_WINDOW(builder.get(UI_PANEL_NAME))),
         cbAutoDepCheck(GTK_CHECK_BUTTON(builder.get("latexSettingsRunCheck"))),
-        // Todo(gtk4): replace this GtkFileChooserButton (by what?)
-        globalTemplateChooser(GTK_FILE_CHOOSER(builder.get("latexSettingsTemplateFile"))),
-        cbUseSystemFont(GTK_CHECK_BUTTON(builder.get("cbUseSystemFont"))) {
+        cbUseSystemFont(GTK_CHECK_BUTTON(builder.get("cbUseSystemFont"))),
+        templateFileButton(GTK_BUTTON(builder.get("latexSettingsTemplateFile"))) {
 
     g_signal_connect_swapped(builder.get("latexSettingsTestBtn"), "clicked",
                              G_CALLBACK(+[](LatexSettingsPanel* self) { self->checkDeps(); }), this);
@@ -48,17 +48,20 @@ LatexSettingsPanel::LatexSettingsPanel(GladeSearchpath* gladeSearchPath):
     g_signal_connect_swapped(builder.get("cbUseExternalEditor"), "toggled",
                              G_CALLBACK(+[](LatexSettingsPanel* self) { self->updateWidgetSensitivity(); }), this);
 
+    g_signal_connect(templateFileButton, "clicked", G_CALLBACK(+[](GtkButton* btn, gpointer d) {
+                         auto* self = static_cast<LatexSettingsPanel*>(d);
+                         xoj::OpenDlg::showOpenTexDialog(
+                                 GTK_WINDOW(gtk_widget_get_ancestor(GTK_WIDGET(btn), GTK_TYPE_WINDOW)),
+                                 self->latexTemplateFile, [self](fs::path p) { self->setTemplateFile(p); });
+                     }),
+                     this);
+
 #ifdef ENABLE_GTK_SOURCEVIEW
     GtkBox* themeSelectionBox = GTK_BOX(builder.get("bxThemeSelectionContainer"));
     this->sourceViewThemeSelector = gtk_source_style_scheme_chooser_button_new();
     gtk_box_append(themeSelectionBox, sourceViewThemeSelector);
 
     gtk_label_set_text(GTK_LABEL(builder.get("lbSourceviewSettingsDescription")), _("LaTeX editor theme:"));
-
-#if GTK_MAJOR_VERSION == 3
-    // Widgets are visible by default in gtk4
-    gtk_widget_show(sourceViewThemeSelector);
-#endif
 #else
     this->sourceViewThemeSelector = nullptr;
 
@@ -72,8 +75,7 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
     gtk_check_button_set_active(this->cbAutoDepCheck, settings.autoCheckDependencies);
     gtk_editable_set_text(GTK_EDITABLE(builder.get("latexDefaultEntry")), settings.defaultText.c_str());
     if (!settings.globalTemplatePath.empty()) {
-        gtk_file_chooser_set_file(this->globalTemplateChooser, Util::toGFile(settings.globalTemplatePath).get(),
-                                  nullptr);
+        setTemplateFile(settings.globalTemplatePath);
     }
     gtk_editable_set_text(GTK_EDITABLE(builder.get("latexSettingsGenCmd")), settings.genCmd.c_str());
 
@@ -116,9 +118,7 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
 void LatexSettingsPanel::save(LatexSettings& settings) {
     settings.autoCheckDependencies = gtk_check_button_get_active(this->cbAutoDepCheck);
     settings.defaultText = gtk_editable_get_text(GTK_EDITABLE(builder.get("latexDefaultEntry")));
-    settings.globalTemplatePath = Util::fromGFile(
-            xoj::util::GObjectSPtr<GFile>(gtk_file_chooser_get_file(this->globalTemplateChooser), xoj::util::adopt)
-                    .get());
+    settings.globalTemplatePath = latexTemplateFile;
     settings.genCmd = gtk_editable_get_text(GTK_EDITABLE(builder.get("latexSettingsGenCmd")));
 
 #ifdef ENABLE_GTK_SOURCEVIEW
@@ -184,8 +184,8 @@ void LatexSettingsPanel::checkDeps() {
         fail = true;
     }
 
-    GtkWindow* win = GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(panel)));
-    XojMsgBox::showMessageToUser(win, msg, fail ? GTK_MESSAGE_ERROR : GTK_MESSAGE_INFO);
+    XojMsgBox::showMessageToUser(GTK_WINDOW(gtk_widget_get_ancestor(GTK_WIDGET(panel), GTK_TYPE_WINDOW)), msg,
+                                 fail ? GTK_MESSAGE_ERROR : GTK_MESSAGE_INFO);
 }
 
 void LatexSettingsPanel::updateWidgetSensitivity() {
@@ -202,4 +202,9 @@ void LatexSettingsPanel::updateWidgetSensitivity() {
     gtk_widget_set_sensitive(builder.get("cbExternalEditorAutoConfirm"), useExternalEditor);
     gtk_widget_set_sensitive(builder.get("latexExternalEditorCmd"), useExternalEditor);
     gtk_widget_set_sensitive(builder.get("latexTemporaryFileExt"), useExternalEditor);
+}
+
+void LatexSettingsPanel::setTemplateFile(fs::path p) {
+    gtk_button_set_label(templateFileButton, char_cast(p.u8string()).data());
+    latexTemplateFile = std::move(p);
 }

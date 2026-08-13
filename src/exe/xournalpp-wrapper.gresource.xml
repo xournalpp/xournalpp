@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/org/xournalpp/wrapper">
-    <file compressed="false">ui/crashDialog.glade</file>
+    <file compressed="false">ui/crashDialog.ui</file>
   </gresource>
 </gresources>

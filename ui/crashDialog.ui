@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkApplicationWindow" id="crashDialog">
+    <property name="title" translatable="1">Crash report</property>
+    <child>
+      <object class="GtkBox">
+        <property name="margin-start">4</property>
+        <property name="margin-end">4</property>
+        <property name="margin-top">4</property>
+        <property name="margin-bottom">4</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="margin-bottom">8</property>
+            <property name="label" translatable="1">Oops... Xournal++ encountered a fatal error</property>
+            <attributes>
+              <attribute name="weight" value="bold"></attribute>
+            </attributes>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="margin-bottom">8</property>
+            <property name="label" translatable="1">Please consider filling a bug report (see button below). Attach the following log to your report.</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="boxEmergencySave">
+            <child>
+              <object class="GtkLabel">
+                <property name="margin-end">4</property>
+                <property name="label" translatable="1">Your document has been saved in:</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkEntry" id="entryPathEmergencySave">
+                <property name="focusable">1</property>
+                <property name="margin-start">4</property>
+                <property name="hexpand">1</property>
+                <property name="editable">0</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="halign">start</property>
+            <property name="margin-top">4</property>
+            <property name="label" translatable="1">Execution log:</property>
+            <attributes>
+              <attribute name="weight" value="bold"></attribute>
+            </attributes>
+          </object>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="width-request">800</property>
+            <property name="height-request">500</property>
+            <property name="focusable">1</property>
+            <property name="hexpand">1</property>
+            <property name="vexpand">1</property>
+            <property name="child">
+              <object class="GtkTextView" id="textViewLog">
+                <property name="focusable">1</property>
+                <property name="margin-start">4</property>
+                <property name="margin-end">4</property>
+                <property name="margin-top">4</property>
+                <property name="margin-bottom">4</property>
+                <property name="editable">0</property>
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkCenterBox">
+            <property name="margin-top">4</property>
+            <property name="start-widget">
+              <object class="GtkBox">
+                <child>
+                  <object class="GtkButton" id="reportBtn">
+                    <property name="focusable">1</property>
+                    <property name="receives-default">1</property>
+                    <property name="tooltip-text" translatable="1">Open your web browser with a partially pre-filled bug report</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label" translatable="1">Create a bug report</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"></attribute>
+                        </attributes>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="margin-start">4</property>
+                    <property name="margin-end">10</property>
+                    <property name="label" translatable="1" context="github is a name - do not try to translate it">(this will open github in your browser)</property>
+                  </object>
+                </child>
+              </object>
+            </property>
+            <property name="end-widget">
+              <object class="GtkBox">
+                <child>
+                  <object class="GtkButton" id="closeBtn">
+                    <property name="label" translatable="1">Close</property>
+                    <property name="focusable">1</property>
+                    <property name="receives-default">1</property>
+                    <property name="margin-start">4</property>
+                    <child>
+                      <object class='GtkShortcutController'>
+                        <property name='scope'>managed</property>
+                        <child>
+                          <object class='GtkShortcut'>
+                            <property name='trigger'>Escape</property>
+                            <property name='action'>activate</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
