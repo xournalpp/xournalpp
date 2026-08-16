@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-05 07:48+0000\n"
-"PO-Revision-Date: 2026-08-09 04:42\n"
+"POT-Creation-Date: 2026-08-09 15:16+0000\n"
+"PO-Revision-Date: 2026-08-16 04:27\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -148,7 +148,7 @@ msgstr ""
 #: ../src/core/control/Control.cpp:1765
 msgid "That file does not exist:\n"
 "\"{1}\""
-msgstr ""
+msgstr "그 파일은 없는 파일입니다: {1}"
 
 #: ../src/core/control/Control.cpp:1877
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -2152,7 +2152,7 @@ msgstr "오류 코드 {1}"
 
 #: ../src/util/PathUtil.cpp:125
 msgid "Could not open file: {1}"
-msgstr ""
+msgstr "\"{1}\" 파일을 열 수 없습니다"
 
 #: ../src/util/PathUtil.cpp:132
 msgid "Error reading \"{1}\":\n"
