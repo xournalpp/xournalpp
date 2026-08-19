@@ -121,7 +121,7 @@ bool QPdfExport::overlayAndSave(const fs::path& saveDestination, std::stringstre
                     // Generate content to place the form XObject centered within destination page's trim box.
                     QPDFMatrix m;
                     std::string content =
-                            page.placeFormXObject(localXObj, name, page.getMediaBox().getArrayAsRectangle(), m);
+                            page.placeFormXObject(localXObj, name, page.getCropBox().getArrayAsRectangle(), m);
                     if (!content.empty()) {
                         // Append the content to the page's content. Surround the original content with q...Q to
                         // the new content from the page's original content.
