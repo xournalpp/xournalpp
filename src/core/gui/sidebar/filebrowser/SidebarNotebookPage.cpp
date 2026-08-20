@@ -43,6 +43,8 @@ SidebarNotebookPage::SidebarNotebookPage(Control* control):
     gtk_box_append(GTK_BOX(this->mainBox), this->scrolledWindow);
 
     updateList();
+
+    gtk_widget_show_all(this->mainBox);
 }
 
 SidebarNotebookPage::~SidebarNotebookPage() = default;
@@ -78,7 +80,7 @@ void SidebarNotebookPage::updateList() {
     }
 
     std::vector<fs::path> files;
-    for (const auto& entry : fs::directory_iterator(notebookFolder)) {
+    for (const auto& entry : fs::recursive_directory_iterator(notebookFolder)) {
         if (entry.is_regular_file() && entry.path().extension() == ".xopp") {
             files.push_back(entry.path());
         }
