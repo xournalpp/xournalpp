@@ -40,11 +40,18 @@ public:
     void updateList();
 
 private:
-    static void onRowActivated(GtkListBox* box, GtkListBoxRow* row, SidebarNotebookPage* sidebar);
+    static void onRowActivated(GtkTreeView* treeView, GtkTreePath* path, GtkTreeViewColumn* column, SidebarNotebookPage* sidebar);
     static void onNewNotebook(GtkButton* button, SidebarNotebookPage* sidebar);
 
     IconNameHelper iconNameHelper;
     GtkWidget* mainBox;
     GtkWidget* scrolledWindow;
-    GtkWidget* listBox;
+    GtkWidget* treeView;
+    GtkTreeStore* treeStore;
+
+    enum Columns {
+        COLUMN_NAME,
+        COLUMN_FILEPATH,
+        NUM_COLUMNS
+    };
 };
