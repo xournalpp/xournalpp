@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="115" height="100" viewBox="0 0 115 100" xmlns="http://www.w3.org/2000/svg">
+<line x1="0" y1="30" x2="20" y2="30" stroke="black" stroke-width="2" /><line x1="0" y1="70" x2="20" y2="70" stroke="black" stroke-width="2" /><path d="M 10 10 Q 30 50 10 90" fill="none" stroke="black" stroke-width="2" /><path d="M 15 10 Q 35 50 15 90 Q 65 90 95 50 Q 65 10 15 10" fill="none" stroke="black" stroke-width="2" /><circle cx="100" cy="50" r="5" fill="none" stroke="black" stroke-width="2" /><line x1="105" y1="50" x2="115" y2="50" stroke="black" stroke-width="2" /></svg>

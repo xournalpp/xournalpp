@@ -1,0 +1,10 @@
+GIMP Palette
+Name: Electronics Engineering Palette
+Columns: 6
+#
+  0   0   0 Circuit Black
+211  47  47 VCC / Power Red
+ 25 118 212 Ground / Return Blue
+ 56 142  60 Signal Green
+251 192  45 Component Highlight Yellow
+123  31 162 Annotation Purple

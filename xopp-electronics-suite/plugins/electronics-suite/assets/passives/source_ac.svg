@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<line x1="50" y1="0" x2="50" y2="20" stroke="black" stroke-width="2" /><circle cx="50" cy="50" r="30" fill="none" stroke="black" stroke-width="2" /><line x1="50" y1="80" x2="50" y2="100" stroke="black" stroke-width="2" /><path d="M 35 50 Q 42.5 35 50 50 T 65 50" fill="none" stroke="black" stroke-width="2" /></svg>
