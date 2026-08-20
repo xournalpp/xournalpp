@@ -149,7 +149,7 @@ void SidebarNotebookPage::onNewNotebook(GtkButton* button, SidebarNotebookPage* 
             [sidebar](std::optional<fs::path> p) {
                 if (p && !p->empty()) {
                     sidebar->control->getSettings()->setLastSavePath(p->parent_path());
-                    sidebar->control->newFile(p.value());
+                    sidebar->control->newFile(p.value()); sidebar->control->save([](bool){});
                 }
             });
 }
