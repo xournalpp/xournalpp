@@ -12,6 +12,8 @@
 #include "util/i18n.h"
 #include "util/gtk4_helper.h"
 #include "util/glib_casts.h"
+#include "gui/dialog/XojSaveDlg.h"
+#include "model/Document.h"
 
 SidebarNotebookPage::SidebarNotebookPage(Control* control):
         AbstractSidebarPage(control), iconNameHelper(control->getSettings()) {
@@ -111,5 +113,21 @@ void SidebarNotebookPage::onRowActivated(GtkListBox* box, GtkListBoxRow* row, Si
 }
 
 void SidebarNotebookPage::onNewNotebook(GtkButton* button, SidebarNotebookPage* sidebar) {
-    sidebar->control->newFile();
+    fs::path notebookFolder = sidebar->control->getSettings()->getNotebookFolder();
+    if (notebookFolder.empty()) {
+        sidebar->control->newFile();
+        return;
+    }
+
+    // Determine a suggested path for the new notebook
+    fs::path suggestedPath = notebookFolder / sidebar->control->getDocument()->createSaveFilename(Document::XOPP, sidebar->control->getSettings()->getDefaultSaveName());
+
+    xoj::SaveExportDialog::showSaveFileDialog(
+            sidebar->control->getGtkWindow(), sidebar->control->getSettings(), std::move(suggestedPath),
+            [sidebar](std::optional<fs::path> p) {
+                if (p && !p->empty()) {
+                    sidebar->control->getSettings()->setLastSavePath(p->parent_path());
+                    sidebar->control->newFile(p.value());
+                }
+            });
 }
