@@ -520,6 +520,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->pageTemplateSettings.parse(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sizeUnit")) == 0) {
         this->sizeUnit = reinterpret_cast<const char*>(value);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("notebookFolder")) == 0) {
+        this->notebookFolder = fs::path(xoj::util::utf8(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioFolder")) == 0) {
         this->audioFolder = fs::path(xoj::util::utf8(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveEnabled")) == 0) {
@@ -1161,6 +1163,8 @@ void Settings::save() {
     ATTACH_COMMENT("Config for new pages");
 
     SAVE_STRING_PROP(sizeUnit);
+
+    saveProperty("notebookFolder", char_cast(this->notebookFolder.u8string().c_str()), root);
 
 #ifdef ENABLE_AUDIO
     saveProperty("audioFolder", char_cast(this->audioFolder.u8string().c_str()), root);
@@ -2236,6 +2240,18 @@ auto Settings::getFont() -> XojFont& { return this->font; }
 
 void Settings::setFont(const XojFont& font) {
     this->font = font;
+    save();
+}
+
+auto Settings::getNotebookFolder() const -> fs::path const& { return this->notebookFolder; }
+
+void Settings::setNotebookFolder(fs::path notebookFolder) {
+    if (this->notebookFolder == notebookFolder) {
+        return;
+    }
+
+    this->notebookFolder = std::move(notebookFolder);
+
     save();
 }
 
