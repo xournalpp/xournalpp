@@ -119,6 +119,9 @@ void ToolHandler::initTools() {
     tools[TOOL_DRAW_SPLINE - TOOL_PEN] =
             std::make_unique<Tool>("drawSpline", TOOL_DRAW_SPLINE, Colors::black, std::nullopt);
 
+    tools[TOOL_DRAW_ELECTRONICS - TOOL_PEN] =
+            std::make_unique<Tool>("drawElectronics", TOOL_DRAW_ELECTRONICS, Colors::black, std::nullopt);
+
     tools[TOOL_FLOATING_TOOLBOX - TOOL_PEN] =
             std::make_unique<Tool>("showFloatingToolbox", TOOL_FLOATING_TOOLBOX, Colors::black, std::nullopt);
 
@@ -649,6 +652,7 @@ auto ToolHandler::isSinglePageTool() const -> bool {
            toolType == TOOL_SELECT_MULTILAYER_REGION || toolType == TOOL_SELECT_OBJECT || toolType == TOOL_DRAW_RECT ||
            toolType == TOOL_DRAW_ELLIPSE || toolType == TOOL_DRAW_COORDINATE_SYSTEM || toolType == TOOL_DRAW_ARROW ||
            toolType == TOOL_DRAW_DOUBLE_ARROW || toolType == TOOL_FLOATING_TOOLBOX || toolType == TOOL_DRAW_SPLINE ||
+           toolType == TOOL_DRAW_ELECTRONICS ||
            toolType == TOOL_SELECT_PDF_TEXT_LINEAR || toolType == TOOL_SELECT_PDF_TEXT_RECT || toolType == TOOL_LINK;
 }
 
@@ -666,7 +670,7 @@ auto ToolHandler::supportsTapFilter() const -> bool {
     return toolType == TOOL_PEN || toolType == TOOL_HIGHLIGHTER || toolType == TOOL_LASER_POINTER_PEN ||
            toolType == TOOL_LASER_POINTER_HIGHLIGHTER || toolType == TOOL_HAND || toolType == TOOL_DRAW_RECT ||
            toolType == TOOL_DRAW_ELLIPSE || toolType == TOOL_DRAW_COORDINATE_SYSTEM || toolType == TOOL_DRAW_ARROW ||
-           toolType == TOOL_DRAW_DOUBLE_ARROW || toolType == TOOL_DRAW_SPLINE;
+           toolType == TOOL_DRAW_DOUBLE_ARROW || toolType == TOOL_DRAW_SPLINE || toolType == TOOL_DRAW_ELECTRONICS;
 }
 
 auto ToolHandler::getSelectedTool(SelectedTool selectedTool) const -> Tool* {
