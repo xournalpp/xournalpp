@@ -7,37 +7,8 @@
 #include "control/actions/ActionDatabase.h"
 #include "control/Tool.h"
 
-ElectronicsComboToolButton::Entry::Entry(std::string name, ElectronicsComponentType type)
-    : name(std::move(name)), type(type) {}
-
 ElectronicsComboToolButton::ElectronicsComboToolButton(std::string id, ActionDatabase* db)
-    : AbstractToolItem(std::move(id), Category::TOOLS), db(db) {
-
-    entries.emplace_back(_("Sine Wave"), ELEC_WAVE_SINE);
-    entries.emplace_back(_("Square Wave"), ELEC_WAVE_SQUARE);
-    entries.emplace_back(_("Triangle Wave"), ELEC_WAVE_TRIANGLE);
-    entries.emplace_back(_("Resistor (US)"), ELEC_RESISTOR_US);
-    entries.emplace_back(_("Resistor (EU)"), ELEC_RESISTOR_EU);
-    entries.emplace_back(_("Capacitor"), ELEC_CAPACITOR_NP);
-    entries.emplace_back(_("Inductor"), ELEC_INDUCTOR);
-    entries.emplace_back(_("Diode"), ELEC_DIODE);
-    entries.emplace_back(_("LED"), ELEC_DIODE_LED);
-    entries.emplace_back(_("NPN Transistor"), ELEC_BJT_NPN);
-    entries.emplace_back(_("PNP Transistor"), ELEC_BJT_PNP);
-    entries.emplace_back(_("N-MOSFET"), ELEC_MOSFET_N);
-    entries.emplace_back(_("Op-Amp"), ELEC_OPAMP);
-    entries.emplace_back(_("AND Gate"), ELEC_GATE_AND);
-    entries.emplace_back(_("OR Gate"), ELEC_GATE_OR);
-    entries.emplace_back(_("NOT Gate"), ELEC_GATE_NOT);
-    entries.emplace_back(_("NAND Gate"), ELEC_GATE_NAND);
-    entries.emplace_back(_("NOR Gate"), ELEC_GATE_NOR);
-    entries.emplace_back(_("XOR Gate"), ELEC_GATE_XOR);
-    entries.emplace_back(_("D Flip-Flop"), ELEC_FF_D);
-    entries.emplace_back(_("Ground (Earth)"), ELEC_GND_EARTH);
-    entries.emplace_back(_("Ground (Signal)"), ELEC_GND_SIGNAL);
-    entries.emplace_back(_("DC Source"), ELEC_SOURCE_DC);
-    entries.emplace_back(_("AC Source"), ELEC_SOURCE_AC);
-}
+    : AbstractToolItem(std::move(id), Category::TOOLS), db(db) {}
 
 ElectronicsComboToolButton::~ElectronicsComboToolButton() = default;
 
@@ -51,19 +22,16 @@ GtkWidget* ElectronicsComboToolButton::getNewToolIcon() const {
 
 void ElectronicsComboToolButton::onComponentSelected(GtkWidget* widget, gpointer data) {
     auto* self = static_cast<ElectronicsComboToolButton*>(data);
+    auto type = static_cast<ElectronicsComponentType>(GPOINTER_TO_INT(g_object_get_data(G_OBJECT(widget), "comp_type")));
 
-    // GtkComboBoxText handling
-    int active = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
-    if (active >= 0 && active < static_cast<int>(self->entries.size())) {
-        auto type = self->entries[active].type;
-        self->db->setActionState(Action::TOOL_DRAW_ELECTRONICS, true);
-
-        // Expose method natively
-        if (auto* t = self->db->control->getToolHandler()->getActiveTool()) {
-            t->setElectronicsComponentType(type);
-            self->db->control->getToolHandler()->setDrawingType(DRAWING_TYPE_ELECTRONICS);
-        }
+    // Set the component type for the handler
+    if (auto* t = self->db->control->getToolHandler()->getActiveTool()) {
+        t->setElectronicsComponentType(type);
     }
+
+    // Activate the tool action
+    self->db->setActionState(Action::TOOL_DRAW_ELECTRONICS, true);
+    self->db->control->getToolHandler()->setDrawingType(DRAWING_TYPE_ELECTRONICS);
 }
 
 xoj::util::WidgetSPtr ElectronicsComboToolButton::createItem(bool horizontal) {
@@ -76,17 +44,66 @@ xoj::util::WidgetSPtr ElectronicsComboToolButton::createItem(bool horizontal) {
     gtk_actionable_set_action_name(GTK_ACTIONABLE(button), "win.tool-draw-electronics");
     gtk_box_pack_start(GTK_BOX(box), button, FALSE, FALSE, 0);
 
-    // Combo box for component selection
-    GtkWidget* combo = gtk_combo_box_text_new();
-    for (const auto& entry : entries) {
-        gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combo), entry.name.c_str());
-    }
-    gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 0); // Default to first item
+    // Menu button for selection
+    GtkWidget* menuButton = gtk_menu_button_new();
+    gtk_widget_set_tooltip_text(menuButton, _("Select Electronics Component"));
 
-    g_signal_connect(combo, "changed", G_CALLBACK(onComponentSelected), this);
+    GtkWidget* menu = gtk_menu_new();
 
-    gtk_box_pack_start(GTK_BOX(box), combo, FALSE, FALSE, 0);
+    // Helper to create submenus
+    auto createSubMenu = [&](const char* title) {
+        GtkWidget* menuItem = gtk_menu_item_new_with_label(title);
+        GtkWidget* subMenu = gtk_menu_new();
+        gtk_menu_item_set_submenu(GTK_MENU_ITEM(menuItem), subMenu);
+        gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuItem);
+        return subMenu;
+    };
 
+    auto addItem = [&](GtkWidget* parentMenu, const char* label, ElectronicsComponentType type) {
+        GtkWidget* item = gtk_menu_item_new_with_label(label);
+        g_object_set_data(G_OBJECT(item), "comp_type", GINT_TO_POINTER(type));
+        g_signal_connect(item, "activate", G_CALLBACK(onComponentSelected), this);
+        gtk_menu_shell_append(GTK_MENU_SHELL(parentMenu), item);
+    };
+
+    // --- Categories ---
+    GtkWidget* waveMenu = createSubMenu(_("Waveforms"));
+    addItem(waveMenu, _("Sine Wave"), ELEC_WAVE_SINE);
+    addItem(waveMenu, _("Square Wave"), ELEC_WAVE_SQUARE);
+    addItem(waveMenu, _("Triangle Wave"), ELEC_WAVE_TRIANGLE);
+
+    GtkWidget* passiveMenu = createSubMenu(_("Passives & Sources"));
+    addItem(passiveMenu, _("Resistor (US)"), ELEC_RESISTOR_US);
+    addItem(passiveMenu, _("Resistor (EU)"), ELEC_RESISTOR_EU);
+    addItem(passiveMenu, _("Capacitor"), ELEC_CAPACITOR_NP);
+    addItem(passiveMenu, _("Inductor"), ELEC_INDUCTOR);
+    addItem(passiveMenu, _("Ground (Earth)"), ELEC_GND_EARTH);
+    addItem(passiveMenu, _("Ground (Signal)"), ELEC_GND_SIGNAL);
+    addItem(passiveMenu, _("DC Source"), ELEC_SOURCE_DC);
+    addItem(passiveMenu, _("AC Source"), ELEC_SOURCE_AC);
+
+    GtkWidget* semiMenu = createSubMenu(_("Semiconductors"));
+    addItem(semiMenu, _("Diode"), ELEC_DIODE);
+    addItem(semiMenu, _("LED"), ELEC_DIODE_LED);
+    addItem(semiMenu, _("NPN Transistor"), ELEC_BJT_NPN);
+    addItem(semiMenu, _("PNP Transistor"), ELEC_BJT_PNP);
+    addItem(semiMenu, _("N-MOSFET"), ELEC_MOSFET_N);
+    addItem(semiMenu, _("Op-Amp"), ELEC_OPAMP);
+
+    GtkWidget* logicMenu = createSubMenu(_("Logic Gates"));
+    addItem(logicMenu, _("AND Gate"), ELEC_GATE_AND);
+    addItem(logicMenu, _("OR Gate"), ELEC_GATE_OR);
+    addItem(logicMenu, _("NOT Gate"), ELEC_GATE_NOT);
+    addItem(logicMenu, _("NAND Gate"), ELEC_GATE_NAND);
+    addItem(logicMenu, _("NOR Gate"), ELEC_GATE_NOR);
+    addItem(logicMenu, _("XOR Gate"), ELEC_GATE_XOR);
+    addItem(logicMenu, _("D Flip-Flop"), ELEC_FF_D);
+
+    gtk_widget_show_all(menu);
+    gtk_menu_button_set_popup(GTK_MENU_BUTTON(menuButton), menu);
+
+    gtk_box_pack_start(GTK_BOX(box), menuButton, FALSE, FALSE, 0);
     gtk_widget_show_all(box);
+
     return xoj::util::WidgetSPtr(box, xoj::util::adopt);
 }

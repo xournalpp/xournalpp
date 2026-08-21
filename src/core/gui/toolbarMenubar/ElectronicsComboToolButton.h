@@ -34,6 +34,5 @@ protected:
 private:
     static void onComponentSelected(GtkWidget* widget, gpointer data);
 
-    std::vector<Entry> entries;
     ActionDatabase* db;
 };

@@ -23,7 +23,8 @@
 #include "control/ScrollHandler.h"                  // for ScrollHandler
 #include "control/SearchControl.h"                  // for SearchControl
 #include "control/Tool.h"                           // for Tool
-#include "control/ToolEnums.h"                      // for DRAWING_TYPE_SPLINE
+#include "control/ToolEnums.h"
+#include "control/tools/ElectronicsHandler.h"                      // for DRAWING_TYPE_SPLINE
 #include "control/ToolHandler.h"                    // for ToolHandler
 #include "control/jobs/XournalScheduler.h"          // for XournalScheduler
 #include "control/layer/LayerController.h"          // for LayerControl
@@ -254,7 +255,8 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     cursor->setMouseDown(true);
 
     if (((h->getToolType() == TOOL_PEN || h->getToolType() == TOOL_HIGHLIGHTER) &&
-         h->getDrawingType() != DRAWING_TYPE_SPLINE) ||
+         h->getDrawingType() != DRAWING_TYPE_SPLINE && h->getDrawingType() != DRAWING_TYPE_ELECTRONICS) ||
+        (h->getToolType() == TOOL_DRAW_ELECTRONICS) ||
         (h->getToolType() == TOOL_ERASER && h->getEraserType() == ERASER_TYPE_WHITEOUT)) {
 
         if (this->inputHandler) {
@@ -288,6 +290,9 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
                 break;
             case DRAWING_TYPE_COORDINATE_SYSTEM:
                 this->inputHandler = std::make_unique<CoordinateSystemHandler>(control, getPage());
+                break;
+            case DRAWING_TYPE_ELECTRONICS:
+                this->inputHandler = std::make_unique<ElectronicsHandler>(control, getPage());
                 break;
             default:
                 this->inputHandler = std::make_unique<StrokeHandler>(control, getPage());
