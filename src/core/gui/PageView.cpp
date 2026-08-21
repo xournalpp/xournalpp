@@ -254,9 +254,8 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     XournalppCursor* cursor = xournal->getCursor();
     cursor->setMouseDown(true);
 
-    if (((h->getToolType() == TOOL_PEN || h->getToolType() == TOOL_HIGHLIGHTER) &&
-         h->getDrawingType() != DRAWING_TYPE_SPLINE && h->getDrawingType() != DRAWING_TYPE_ELECTRONICS) ||
-        (h->getToolType() == TOOL_DRAW_ELECTRONICS) ||
+    if (((h->getToolType() == TOOL_PEN || h->getToolType() == TOOL_HIGHLIGHTER || h->getToolType() == TOOL_DRAW_ELECTRONICS) &&
+         h->getDrawingType() != DRAWING_TYPE_SPLINE) ||
         (h->getToolType() == TOOL_ERASER && h->getEraserType() == ERASER_TYPE_WHITEOUT)) {
 
         if (this->inputHandler) {
