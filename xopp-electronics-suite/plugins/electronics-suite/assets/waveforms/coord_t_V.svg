@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-<line x1="10" y1="90" x2="190" y2="90" stroke="black" stroke-width="2" /><path d="M185 85 L190 90 L185 95" fill="none" stroke="black" stroke-width="2" /><line x1="10" y1="90" x2="10" y2="10" stroke="black" stroke-width="2" /><path d="M5 15 L10 10 L15 15" fill="none" stroke="black" stroke-width="2" /><text x="190" y="105" font-size="12" font-family="sans-serif" text-anchor="middle">t</text><text x="5" y="20" font-size="12" font-family="sans-serif" text-anchor="middle">V</text><text x="5" y="95" font-size="12" font-family="sans-serif" text-anchor="middle">0</text></svg>
