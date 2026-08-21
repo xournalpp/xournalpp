@@ -52,8 +52,10 @@ std::pair<std::vector<Point>, Range> ElectronicsHandler::createShape(bool isAltD
             if (std::abs(dx) < 1.0) dx = 1.0;
             double amplitude = std::abs(dy) / 2.0;
             if (amplitude < 10.0) amplitude = 10.0;
+            // Calculate number of periods based on horizontal drag width.
+            // Assuming 100px per period is a good base scale.
             int periods = std::max(1, static_cast<int>(std::abs(dx) / 100.0));
-            double periodWidth = dx / periods;
+            double periodWidth = dx / periods; // Each period scales dynamically to fit exactly
             int pointsPerPeriod = 40;
             double step = periodWidth / pointsPerPeriod;
 
@@ -63,9 +65,9 @@ std::pair<std::vector<Point>, Range> ElectronicsHandler::createShape(bool isAltD
                     double lx = step * i;
                     double val = std::sin((lx / periodWidth) * 2 * M_PI);
                     double px = (p * periodWidth) + lx;
-                    double py = -(val * amplitude);
+                    double py = -(val * amplitude); // Invert y because screen coordinates go down
 
-                    Point pt(sx + px, sy + py);
+                    Point pt(sx + px, sy + py + dy/2.0); // Offset by half dy to center vertically on the startPoint
                     shape.push_back(pt);
                     if (p == 0 && i == 0) range = Range(pt.x, pt.y, pt.x, pt.y);
                     else range = range.unite(Range(pt.x, pt.y, pt.x, pt.y));
@@ -74,21 +76,61 @@ std::pair<std::vector<Point>, Range> ElectronicsHandler::createShape(bool isAltD
             break;
         }
         case ELEC_WAVE_SQUARE: {
-            double w = dx; double h = dy;
-            if(w==0) w=1;
-            addPt(0, 0); addPt(0, h); addPt(w/2, h); addPt(w/2, 0); addPt(w, 0); addPt(w, h);
+            if (std::abs(dx) < 1.0) dx = 1.0;
+            double amplitude = std::abs(dy);
+            int periods = std::max(1, static_cast<int>(std::abs(dx) / 100.0));
+            double periodWidth = dx / periods;
+
+            for (int p = 0; p < periods; ++p) {
+                double offset = p * periodWidth;
+                if (p == 0) {
+                    addPt(offset, 0);
+                }
+                addPt(offset, amplitude);
+                addPt(offset + periodWidth/2.0, amplitude);
+                addPt(offset + periodWidth/2.0, 0);
+                addPt(offset + periodWidth, 0);
+                if (p == periods - 1) {
+                    addPt(offset + periodWidth, amplitude);
+                }
+            }
             break;
         }
         case ELEC_WAVE_TRIANGLE: {
-            double w = dx; double h = dy;
-            if(w==0) w=1;
-            addPt(0, h/2); addPt(w/4, 0); addPt(3*w/4, h); addPt(w, h/2);
+            if (std::abs(dx) < 1.0) dx = 1.0;
+            double amplitude = std::abs(dy);
+            int periods = std::max(1, static_cast<int>(std::abs(dx) / 100.0));
+            double periodWidth = dx / periods;
+
+            for (int p = 0; p < periods; ++p) {
+                double offset = p * periodWidth;
+                if (p == 0) addPt(offset, amplitude/2.0);
+                addPt(offset + periodWidth/4.0, 0);
+                addPt(offset + 3.0*periodWidth/4.0, amplitude);
+                addPt(offset + periodWidth, amplitude/2.0);
+            }
             break;
         }
         case ELEC_WAVE_SAWTOOTH: {
-            double w = dx; double h = dy;
-            if(w==0) w=1;
-            addPt(0, h); addPt(w/2, 0); addPt(w/2, h); addPt(w, 0); addPt(w, h);
+            if (std::abs(dx) < 1.0) dx = 1.0;
+            double amplitude = std::abs(dy);
+            int periods = std::max(1, static_cast<int>(std::abs(dx) / 100.0));
+            double periodWidth = dx / periods;
+
+            for (int p = 0; p < periods; ++p) {
+                double offset = p * periodWidth;
+                if (p == 0) {
+                    addPt(offset, amplitude);
+                } else {
+                    addPt(offset, amplitude);
+                }
+                addPt(offset + periodWidth/2.0, 0);
+                addPt(offset + periodWidth/2.0, amplitude);
+                addPt(offset + periodWidth, 0);
+                if (p == periods - 1) {
+                    addPt(offset + periodWidth, amplitude);
+                }
+            }
             break;
         }
         case ELEC_RESISTOR_US: {
