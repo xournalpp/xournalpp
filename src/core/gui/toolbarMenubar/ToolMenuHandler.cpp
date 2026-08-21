@@ -29,7 +29,8 @@
 
 #include "AbstractToolItem.h"            // for AbstractToolItem
 #include "ColorSelectorToolItem.h"       // for ColorSelectorToolItem
-#include "ColorToolItem.h"               // for ColorToolItem
+#include "ColorToolItem.h"
+#include "ElectronicsComboToolButton.h"               // for ColorToolItem
 #include "DrawingTypeComboToolButton.h"  // for DrawingTypeComboToolButton
 #include "FontButton.h"                  // for FontButton
 #include "PluginPlaceholderLabel.h"      // for PluginPlaceholderLabel
@@ -423,7 +424,7 @@ void ToolMenuHandler::initToolItems() {
                          "draw-coordinate-system", _("Draw Coordinate System"));
     emplaceCustomItemTgl("RULER", Cat::TOOLS, Action::TOOL_DRAW_LINE, "draw-line", _("Draw Line"));
     emplaceCustomItemTgl("DRAW_SPLINE", Cat::TOOLS, Action::TOOL_DRAW_SPLINE, "draw-spline", _("Draw Spline"));
-    emplaceCustomItemTgl("DRAW_ELECTRONICS", Cat::TOOLS, Action::TOOL_DRAW_ELECTRONICS, "draw-spline", _("Draw Electronics"));
+    emplaceItem<ElectronicsComboToolButton>("DRAW_ELECTRONICS", control->getActionDatabase());
 
     emplaceCustomItemWithTarget("SELECT_REGION", Cat::SELECTION, Action::SELECT_TOOL, TOOL_SELECT_REGION,
                                 "select-lasso", _("Select Region"));
