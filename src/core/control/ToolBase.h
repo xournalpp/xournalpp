@@ -60,6 +60,16 @@ public:
     void setDrawingType(DrawingType drawingType);
 
     /**
+     * @return Active electronics component
+     */
+    ElectronicsComponentType getElectronicsComponentType() const;
+
+    /**
+     * @param type Active electronics component
+     */
+    void setElectronicsComponentType(ElectronicsComponentType type);
+
+    /**
      * @brief Get the Eraser Type object
      *
      * @return EraserType
@@ -124,6 +134,11 @@ private:
      * Draw special shape
      */
     DrawingType drawingType = DRAWING_TYPE_DEFAULT;
+
+    /**
+     * Active electronics component
+     */
+    ElectronicsComponentType electronicsComponentType = ELEC_WAVE_SINE;
 
     /**
      * Eraser type

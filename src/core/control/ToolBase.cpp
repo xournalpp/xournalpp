@@ -36,6 +36,10 @@ auto ToolBase::getDrawingType() const -> DrawingType { return this->drawingType;
  */
 void ToolBase::setDrawingType(DrawingType drawingType) { this->drawingType = drawingType; }
 
+auto ToolBase::getElectronicsComponentType() const -> ElectronicsComponentType { return this->electronicsComponentType; }
+
+void ToolBase::setElectronicsComponentType(ElectronicsComponentType type) { this->electronicsComponentType = type; }
+
 /**
  * @return Eraser Type
  */
