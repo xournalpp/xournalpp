@@ -661,7 +661,7 @@ auto ToolHandler::acceptsOutOfPageEvents() const -> bool {
     DrawingType drawingType = this->getDrawingType();
 
     return ((toolType == TOOL_PEN || toolType == TOOL_HIGHLIGHTER) && (drawingType == DRAWING_TYPE_SPLINE)) ||
-           (toolType == TOOL_DRAW_SPLINE);
+           (toolType == TOOL_DRAW_SPLINE) || (toolType == TOOL_DRAW_ELECTRONICS);
 }
 
 auto ToolHandler::supportsTapFilter() const -> bool {

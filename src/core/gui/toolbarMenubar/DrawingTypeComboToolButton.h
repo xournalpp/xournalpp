@@ -52,7 +52,6 @@ public:
         LINE,
         COORDINATE_SYSTEM,
         SPLINE,
-        ELECTRONICS,
         SHAPE_RECOGNIZER,
         ENUMERATOR_COUNT
     };

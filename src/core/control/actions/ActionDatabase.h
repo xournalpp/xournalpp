@@ -112,7 +112,9 @@ public:
 private:
     EnumIndexedArray<ActionRef, Action> gActions;
     EnumIndexedArray<gulong, Action> signalIds;
+public:
     Control* control;
+private:
     GtkApplicationWindow* win;
 
     class Populator;
