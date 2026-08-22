@@ -186,14 +186,41 @@ void ElectronicsHandler::onButtonReleaseEvent(const PositionInputData& pos, doub
             addRotPt(100, 0);
             break;
         }
-        case ELEC_SOURCE_DC:
-        case ELEC_SOURCE_AC:
+        case ELEC_SOURCE_DC: {
+            addRotPt(0, 0); addRotPt(20, 0);
+            newShape();
+            for(int i=0; i<=360; i+=10) addRotPt(50 + 30*std::cos(i*M_PI/180), 30*std::sin(i*M_PI/180));
+            newShape();
+            addRotPt(80, 0); addRotPt(100, 0);
+            newShape();
+            addRotPt(35, -15); addRotPt(45, -15); // + horizontal
+            newShape();
+            addRotPt(40, -20); addRotPt(40, -10); // + vertical
+            newShape();
+            addRotPt(55, -15); addRotPt(65, -15); // - horizontal
+            break;
+        }
+        case ELEC_SOURCE_AC: {
+            addRotPt(0, 0); addRotPt(20, 0);
+            newShape();
+            for(int i=0; i<=360; i+=10) addRotPt(50 + 30*std::cos(i*M_PI/180), 30*std::sin(i*M_PI/180));
+            newShape();
+            addRotPt(80, 0); addRotPt(100, 0);
+            newShape();
+            // Sine wave inside
+            for(int i=-180; i<=180; i+=20) addRotPt(50 + i*15.0/180.0, 10*std::sin(i*M_PI/180));
+            break;
+        }
         case ELEC_SOURCE_CURRENT: {
             addRotPt(0, 0); addRotPt(20, 0);
             newShape();
             for(int i=0; i<=360; i+=10) addRotPt(50 + 30*std::cos(i*M_PI/180), 30*std::sin(i*M_PI/180));
             newShape();
             addRotPt(80, 0); addRotPt(100, 0);
+            newShape();
+            addRotPt(35, 0); addRotPt(65, 0); // arrow line
+            newShape();
+            addRotPt(55, -5); addRotPt(65, 0); addRotPt(55, 5); // arrow tip
             break;
         }
         case ELEC_DIODE:
@@ -332,6 +359,26 @@ void ElectronicsHandler::onButtonReleaseEvent(const PositionInputData& pos, doub
             for(int i=1; i<16; ++i) { newShape(); addRotPt(i*20, 0); addRotPt(i*20, 40); }
             break;
         }
+        case ELEC_GND_EARTH: {
+            addRotPt(50, 0); addRotPt(50, 40);
+            newShape(); addRotPt(20, 40); addRotPt(80, 40);
+            newShape(); addRotPt(30, 50); addRotPt(70, 50);
+            newShape(); addRotPt(40, 60); addRotPt(60, 60);
+            break;
+        }
+        case ELEC_GND_CHASSIS: {
+            addRotPt(50, 0); addRotPt(50, 40);
+            newShape(); addRotPt(20, 40); addRotPt(80, 40);
+            newShape(); addRotPt(20, 40); addRotPt(10, 60);
+            newShape(); addRotPt(50, 40); addRotPt(40, 60);
+            newShape(); addRotPt(80, 40); addRotPt(70, 60);
+            break;
+        }
+        case ELEC_GND_SIGNAL: {
+            addRotPt(50, 0); addRotPt(50, 40);
+            newShape(); addRotPt(20, 40); addRotPt(80, 40); addRotPt(50, 70); addRotPt(20, 40);
+            break;
+        }
         case ELEC_FLOW_START:
         case ELEC_FLOW_PROCESS:
         case ELEC_BLOCK_MIXER:
@@ -342,8 +389,6 @@ void ElectronicsHandler::onButtonReleaseEvent(const PositionInputData& pos, doub
         case ELEC_BLOCK_ANTENNA:
         case ELEC_FLOW_DECISION:
         case ELEC_FLOW_IO:
-        case ELEC_GND_CHASSIS:
-        case ELEC_GND_SIGNAL:
         case ELEC_SWITCH_SPST:
         case ELEC_SWITCH_SPDT:
         default: {
@@ -530,12 +575,28 @@ std::pair<std::vector<Point>, Range> ElectronicsHandler::createShape(bool isAltD
             addRotPt(100, 0);
             break;
         }
-        case ELEC_SOURCE_DC:
-        case ELEC_SOURCE_AC:
+        case ELEC_SOURCE_DC: {
+            addRotPt(0, 0); addRotPt(20, 0);
+            for(int i=0; i<=360; i+=10) addRotPt(50 + 30*std::cos(i*M_PI/180), 30*std::sin(i*M_PI/180));
+            addRotPt(80, 0); addRotPt(100, 0);
+            addRotPt(35, -15); addRotPt(45, -15);
+            addRotPt(40, -20); addRotPt(40, -10);
+            addRotPt(55, -15); addRotPt(65, -15);
+            break;
+        }
+        case ELEC_SOURCE_AC: {
+            addRotPt(0, 0); addRotPt(20, 0);
+            for(int i=0; i<=360; i+=10) addRotPt(50 + 30*std::cos(i*M_PI/180), 30*std::sin(i*M_PI/180));
+            addRotPt(80, 0); addRotPt(100, 0);
+            for(int i=-180; i<=180; i+=20) addRotPt(50 + i*15.0/180.0, 10*std::sin(i*M_PI/180));
+            break;
+        }
         case ELEC_SOURCE_CURRENT: {
             addRotPt(0, 0); addRotPt(20, 0);
             for(int i=0; i<=360; i+=10) addRotPt(50 + 30*std::cos(i*M_PI/180), 30*std::sin(i*M_PI/180));
             addRotPt(80, 0); addRotPt(100, 0);
+            addRotPt(35, 0); addRotPt(65, 0);
+            addRotPt(55, -5); addRotPt(65, 0); addRotPt(55, 5);
             break;
         }
         case ELEC_DIODE:
@@ -665,6 +726,26 @@ std::pair<std::vector<Point>, Range> ElectronicsHandler::createShape(bool isAltD
             for(int i=1; i<16; ++i) { addRotPt(i*20, 0); addRotPt(i*20, 40); }
             break;
         }
+        case ELEC_GND_EARTH: {
+            addRotPt(50, 0); addRotPt(50, 40);
+            addRotPt(20, 40); addRotPt(80, 40);
+            addRotPt(30, 50); addRotPt(70, 50);
+            addRotPt(40, 60); addRotPt(60, 60);
+            break;
+        }
+        case ELEC_GND_CHASSIS: {
+            addRotPt(50, 0); addRotPt(50, 40);
+            addRotPt(20, 40); addRotPt(80, 40);
+            addRotPt(20, 40); addRotPt(10, 60);
+            addRotPt(50, 40); addRotPt(40, 60);
+            addRotPt(80, 40); addRotPt(70, 60);
+            break;
+        }
+        case ELEC_GND_SIGNAL: {
+            addRotPt(50, 0); addRotPt(50, 40);
+            addRotPt(20, 40); addRotPt(80, 40); addRotPt(50, 70); addRotPt(20, 40);
+            break;
+        }
         case ELEC_FLOW_START:
         case ELEC_FLOW_PROCESS:
         case ELEC_BLOCK_MIXER:
@@ -675,8 +756,6 @@ std::pair<std::vector<Point>, Range> ElectronicsHandler::createShape(bool isAltD
         case ELEC_BLOCK_ANTENNA:
         case ELEC_FLOW_DECISION:
         case ELEC_FLOW_IO:
-        case ELEC_GND_CHASSIS:
-        case ELEC_GND_SIGNAL:
         case ELEC_SWITCH_SPST:
         case ELEC_SWITCH_SPDT:
         default: {
