@@ -30,6 +30,7 @@ public:
     std::unique_ptr<xoj::view::OverlayView> createView(xoj::view::Repaintable* parent) const override;
 
     const std::vector<std::vector<Point>>& getShapes() const { return shapes; }
+    Color getPreviewColor() const { return previewColor; }
     Control* getControl() const { return control; }
 
 private:
@@ -39,5 +40,6 @@ private:
     Point startPoint;
     Point currPoint;
     std::vector<std::vector<Point>> shapes;
+    Color previewColor = Colors::black;
     Range lastRepaintRange;
 };

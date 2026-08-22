@@ -20,21 +20,13 @@ public:
 
     bool isViewOf(const OverlayBase* overlay) const override { return false; }
 
-    void draw(cairo_t* cr) const override {
+        void draw(cairo_t* cr) const override {
         if (!handler || handler->getShapes().empty()) return;
 
         cairo_save(cr);
-        cairo_set_source_rgba(cr, 0, 0, 0, 1);
+        Color color = handler->getPreviewColor();
+        cairo_set_source_rgba(cr, color.red / 255.0, color.green / 255.0, color.blue / 255.0, color.alpha / 255.0);
         cairo_set_line_width(cr, 2.0); // Simple preview line width
-
-        // Match the current tool color
-        auto tool = handler->getControl()->getToolHandler()->getActiveTool();
-
-        if (tool) {
-            Color color = tool->getColor();
-            // Just use a solid color for preview, since Color API is tricky here and we don't have Color::getRed() handy.
-        }
-
 
         for (const auto& shape : handler->getShapes()) {
             if (shape.empty()) continue;
@@ -80,6 +72,10 @@ void ElectronicsHandler::onButtonPressEvent(const PositionInputData& pos, double
     startPoint.y = pos.y / zoom;
     currPoint = startPoint;
     shapes.clear();
+
+    if (auto tool = control->getToolHandler()->getActiveTool()) {
+        previewColor = tool->getColor();
+    }
 }
 
 bool ElectronicsHandler::onMotionNotifyEvent(const PositionInputData& pos, double zoom) {
