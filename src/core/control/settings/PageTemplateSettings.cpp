@@ -14,6 +14,7 @@ PageTemplateSettings::PageTemplateSettings():
         pageHeight(841.889764),
         backgroundColor(Colors::white) {
     backgroundType.format = PageTypeFormat::Lined;
+    backgroundType.config = "m1=-72";
 }
 
 PageTemplateSettings::~PageTemplateSettings() = default;

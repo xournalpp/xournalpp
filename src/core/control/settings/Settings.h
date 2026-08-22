@@ -423,6 +423,9 @@ public:
     PageTemplateSettings const& getPageTemplateSettings() const;
     void setPageTemplateSettings(const PageTemplateSettings& pageTemplateSettings);
 
+    fs::path const& getNotebookFolder() const;
+    void setNotebookFolder(fs::path notebookFolder);
+
 #ifdef ENABLE_AUDIO
     fs::path const& getAudioFolder() const;
     void setAudioFolder(fs::path audioFolder);
@@ -1043,6 +1046,11 @@ private:
      * Unit, see XOJ_UNITS
      */
     std::string sizeUnit;
+
+    /**
+     * Notebook folder
+     */
+    fs::path notebookFolder;
 
     /**
      * Audio folder for audio recording

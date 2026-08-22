@@ -678,6 +678,9 @@ void SettingsDialog::load() {
     touch.getInt("timeout", timeoutMs);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(builder.get("spTouchDisableTimeout")), timeoutMs / 1000.0);
 
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(builder.get("fcNotebookPath")),
+                                        Util::toGFilename(settings->getNotebookFolder()).c_str());
+
 #ifdef ENABLE_AUDIO
     gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(builder.get("fcAudioPath")),
                                         Util::toGFilename(settings->getAudioFolder()).c_str());
@@ -1048,6 +1051,15 @@ void SettingsDialog::save() {
 
     settings->setStrokeRecognizerMinSize(
             static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(builder.get("spStrokeRecognizerMinSize")))));
+
+    auto notebookFile = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(builder.get("fcNotebookPath")));
+    if (notebookFile) {
+        auto notebookPath = Util::fromGFile(notebookFile);
+        g_object_unref(notebookFile);
+        if (fs::is_directory(notebookPath)) {
+            settings->setNotebookFolder(notebookPath);
+        }
+    }
 
 #ifdef ENABLE_AUDIO
     auto file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(builder.get("fcAudioPath")));
