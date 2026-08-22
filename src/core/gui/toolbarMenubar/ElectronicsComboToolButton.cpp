@@ -38,7 +38,7 @@ xoj::util::WidgetSPtr ElectronicsComboToolButton::createItem(bool horizontal) {
     GtkWidget* box = gtk_box_new(horizontal ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL, 0);
 
     // Primary action button (activates the tool)
-    GtkWidget* button = gtk_button_new();
+    GtkWidget* button = gtk_toggle_button_new();
     gtk_button_set_image(GTK_BUTTON(button), getNewToolIcon());
     gtk_widget_set_tooltip_text(button, _("Draw Electronics Component"));
     gtk_actionable_set_action_name(GTK_ACTIONABLE(button), "win.tool-draw-electronics");
