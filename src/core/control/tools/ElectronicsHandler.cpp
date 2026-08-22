@@ -4,186 +4,69 @@
 #include "control/Control.h"
 #include "control/ToolHandler.h"
 #include "control/Tool.h"
-#include "model/XojPage.h"
 #include "model/Layer.h"
 #include "undo/InsertUndoAction.h"
+#include "undo/GroupUndoAction.h"
 #include "undo/UndoRedoHandler.h"
 #include "gui/inputdevices/PositionInputData.h"
-#include "control/jobs/RenderJob.h"
-#include "control/jobs/XournalScheduler.h"
-
-class ElectronicsOverlayView : public xoj::view::OverlayView {
-public:
-    ElectronicsOverlayView(xoj::view::Repaintable* parent, const ElectronicsHandler* handler)
-        : xoj::view::OverlayView(parent), handler(handler) {}
-
-
-    bool isViewOf(const OverlayBase* overlay) const override { return false; }
-
-        void draw(cairo_t* cr) const override {
-        if (!handler || handler->getShapes().empty()) return;
-
-        cairo_save(cr);
-        Color color = handler->getPreviewColor();
-        cairo_set_source_rgba(cr, color.red / 255.0, color.green / 255.0, color.blue / 255.0, color.alpha / 255.0);
-        cairo_set_line_width(cr, 2.0); // Simple preview line width
-
-        for (const auto& shape : handler->getShapes()) {
-            if (shape.empty()) continue;
-            cairo_move_to(cr, shape[0].x, shape[0].y);
-            for (size_t i = 1; i < shape.size(); ++i) {
-                cairo_line_to(cr, shape[i].x, shape[i].y);
-            }
-            cairo_stroke(cr);
-        }
-        cairo_restore(cr);
-    }
-
-private:
-    const ElectronicsHandler* handler;
-};
+#include "model/XojPage.h"
 
 ElectronicsHandler::ElectronicsHandler(Control* control, const PageRef& page)
-    : InputHandler(control, page) {
+    : BaseShapeHandler(control, page) {
 }
 
-ElectronicsHandler::~ElectronicsHandler() {
-    cancelStroke();
-}
-
-std::unique_ptr<xoj::view::OverlayView> ElectronicsHandler::createView(xoj::view::Repaintable* parent) const {
-    return std::make_unique<ElectronicsOverlayView>(parent, this);
-}
-
-void ElectronicsHandler::onSequenceCancelEvent() {
-    cancelStroke();
-}
-
-void ElectronicsHandler::cancelStroke() {
-    shapes.clear();
-    lastRepaintRange = Range();
-}
-
-void ElectronicsHandler::onButtonDoublePressEvent(const PositionInputData& pos, double zoom) {
-}
-
-void ElectronicsHandler::onButtonPressEvent(const PositionInputData& pos, double zoom) {
-    startPoint.x = pos.x / zoom;
-    startPoint.y = pos.y / zoom;
-    currPoint = startPoint;
-    shapes.clear();
-
-    if (auto tool = control->getToolHandler()->getActiveTool()) {
-        previewColor = tool->getColor();
-    }
-}
-
-bool ElectronicsHandler::onMotionNotifyEvent(const PositionInputData& pos, double zoom) {
-    currPoint.x = pos.x / zoom;
-    currPoint.y = pos.y / zoom;
-
-    // We only want to generate the shape data when moving, and notify the repaint system
-    generateShapes();
-    return true;
-}
+ElectronicsHandler::~ElectronicsHandler() = default;
 
 void ElectronicsHandler::onButtonReleaseEvent(const PositionInputData& pos, double zoom) {
-    currPoint.x = pos.x / zoom;
-    currPoint.y = pos.y / zoom;
-
-    generateShapes();
-
-    if (shapes.empty()) return;
+    if (this->shape.size() <= 1) {
+        BaseShapeHandler::onButtonReleaseEvent(pos, zoom);
+        return;
+    }
 
     Layer* layer = page->getSelectedLayer();
     if (!layer) {
-        cancelStroke();
+        BaseShapeHandler::onButtonReleaseEvent(pos, zoom);
         return;
     }
 
-    std::vector<Element*> addedElements;
+    // Cancel the single-stroke preview from BaseShapeHandler
+    std::vector<Point> finalShape = this->shape;
 
-    Tool* activeTool = control->getToolHandler()->getActiveTool();
-    if (!activeTool) {
-        cancelStroke();
-        return;
-    }
+    // Call the base cancel explicitly to safely destroy the preview overlay and viewPool
+    this->onSequenceCancelEvent();
 
-        Color color = activeTool->getColor();
-    const LineStyle& style = activeTool->getLineStyle();
-
-    for (const auto& shape_pts : shapes) {
-        if (shape_pts.empty()) continue;
-
-        Stroke* stroke = new Stroke();
-        stroke->setToolType(StrokeTool::PEN); // Always serialize as standard stroke so it's fully backwards compatible
-        stroke->setColor(color);
-        stroke->setWidth(control->getToolHandler()->getThickness());
-        stroke->setLineStyle(style);
-
-        // Add points
-        for (const auto& pt : shape_pts) {
-            stroke->addPoint(pt);
-        }
-        addedElements.push_back(stroke);
-    }
-
-
-
-        for (auto elem : addedElements) {
-            auto elemPtr = std::unique_ptr<Element>(elem);
-            auto undoAction = std::make_unique<InsertUndoAction>(this->page, layer, elem);
-            layer->addElement(std::move(elemPtr));
-            control->getUndoRedoHandler()->addUndoAction(std::move(undoAction));
-        }
-        // Force redraw
-        // Redraw handled by undo system
-
-
-
-    cancelStroke();
-}
-
-void ElectronicsHandler::generateShapes() {
-    shapes.clear();
-
+    // Now, we regenerate the disjoint multi-strokes
     ElectronicsComponentType component = this->control->getToolHandler()->getActiveTool()->getElectronicsComponentType();
 
     double dx = currPoint.x - startPoint.x;
     double dy = currPoint.y - startPoint.y;
     double len = std::sqrt(dx * dx + dy * dy);
-
     if (len < 1.0) len = 1.0;
-
     double sx = startPoint.x;
     double sy = startPoint.y;
-
-    // Scale factor to map standard 100x100 grid shapes to the drag distance
     double scale = len / 100.0;
-    // Rotation angle
     double theta = std::atan2(dy, dx);
     double cT = std::cos(theta);
     double sT = std::sin(theta);
 
+    std::vector<std::vector<Point>> disjointShapes;
     std::vector<Point> currentShape;
 
     auto newShape = [&]() {
         if (!currentShape.empty()) {
-            shapes.push_back(currentShape);
+            disjointShapes.push_back(currentShape);
             currentShape.clear();
         }
     };
 
-    auto addPt = [&](double nx, double ny, double pressure = Point::NO_PRESSURE) {
-        Point p(sx + nx, sy + ny, pressure);
-        currentShape.push_back(p);
+    auto addPt = [&](double nx, double ny) {
+        currentShape.push_back(Point(sx + nx, sy + ny, Point::NO_PRESSURE));
     };
 
-    // Helper to rotate and scale
-    auto addRotPt = [&](double lx, double ly, double pressure = Point::NO_PRESSURE) {
+    auto addRotPt = [&](double lx, double ly) {
         double nx = (lx * cT - ly * sT) * scale;
         double ny = (lx * sT + ly * cT) * scale;
-        addPt(nx, ny, pressure);
+        addPt(nx, ny);
     };
 
     switch (component) {
@@ -195,7 +78,6 @@ void ElectronicsHandler::generateShapes() {
             double periodWidth = dx / periods;
             int pointsPerPeriod = 40;
             double step = periodWidth / pointsPerPeriod;
-
             for (int p = 0; p < periods; ++p) {
                 for (int i = 0; i <= pointsPerPeriod; ++i) {
                     if (p > 0 && i == 0) continue;
@@ -203,9 +85,7 @@ void ElectronicsHandler::generateShapes() {
                     double val = std::sin((lx / periodWidth) * 2 * M_PI);
                     double px = (p * periodWidth) + lx;
                     double py = -(val * amplitude);
-
-                    Point pt(sx + px, sy + py + dy/2.0);
-                    currentShape.push_back(pt);
+                    currentShape.push_back(Point(sx + px, sy + py + dy/2.0, Point::NO_PRESSURE));
                 }
             }
             break;
@@ -215,19 +95,14 @@ void ElectronicsHandler::generateShapes() {
             double amplitude = std::abs(dy);
             int periods = std::max(1, static_cast<int>(std::abs(dx) / 15.0));
             double periodWidth = dx / periods;
-
             for (int p = 0; p < periods; ++p) {
                 double offset = p * periodWidth;
-                if (p == 0) {
-                    addPt(offset, 0);
-                }
+                if (p == 0) addPt(offset, 0);
                 addPt(offset, amplitude);
                 addPt(offset + periodWidth/2.0, amplitude);
                 addPt(offset + periodWidth/2.0, 0);
                 addPt(offset + periodWidth, 0);
-                if (p == periods - 1) {
-                    addPt(offset + periodWidth, amplitude);
-                }
+                if (p == periods - 1) addPt(offset + periodWidth, amplitude);
             }
             break;
         }
@@ -236,7 +111,6 @@ void ElectronicsHandler::generateShapes() {
             double amplitude = std::abs(dy);
             int periods = std::max(1, static_cast<int>(std::abs(dx) / 15.0));
             double periodWidth = dx / periods;
-
             for (int p = 0; p < periods; ++p) {
                 double offset = p * periodWidth;
                 if (p == 0) addPt(offset, amplitude/2.0);
@@ -251,21 +125,14 @@ void ElectronicsHandler::generateShapes() {
             double amplitude = std::abs(dy);
             int periods = std::max(1, static_cast<int>(std::abs(dx) / 15.0));
             double periodWidth = dx / periods;
-
             for (int p = 0; p < periods; ++p) {
                 double offset = p * periodWidth;
-                if (p == 0) {
-                    addPt(offset, amplitude);
-                } else {
-                    newShape();
-                    addPt(offset, amplitude);
-                }
+                if (p == 0) addPt(offset, amplitude);
+                else { newShape(); addPt(offset, amplitude); }
                 addPt(offset + periodWidth/2.0, 0);
                 addPt(offset + periodWidth/2.0, amplitude);
                 addPt(offset + periodWidth, 0);
-                if (p == periods - 1) {
-                    addPt(offset + periodWidth, amplitude);
-                }
+                if (p == periods - 1) addPt(offset + periodWidth, amplitude);
             }
             break;
         }
@@ -284,7 +151,6 @@ void ElectronicsHandler::generateShapes() {
             addRotPt(0, 0); addRotPt(20, 0); addRotPt(25, -20); addRotPt(35, 20);
             addRotPt(45, -20); addRotPt(55, 20); addRotPt(65, -20); addRotPt(75, 20);
             addRotPt(80, 0); addRotPt(100, 0);
-
             newShape();
             addRotPt(50, 40); addRotPt(50, -30); addRotPt(45, -20); addRotPt(55, -20); addRotPt(50, -30);
             break;
@@ -365,75 +231,47 @@ void ElectronicsHandler::generateShapes() {
         }
         case ELEC_GATE_AND:
         case ELEC_GATE_NAND: {
-            // Inputs
-            addRotPt(0, 30); addRotPt(20, 30); addRotPt(20, 10);
-            // Top straight edge
-            addRotPt(50, 10);
-            // Semicircle right
+            addRotPt(0, 30); addRotPt(20, 30); addRotPt(20, 10); addRotPt(50, 10);
             for(int i=-90; i<=90; i+=10) addRotPt(50 + 40*std::cos(i*M_PI/180), 50 + 40*std::sin(i*M_PI/180));
-            // Bottom straight edge
-            addRotPt(20, 90);
-            // Flat back
-            addRotPt(20, 10);
+            addRotPt(20, 90); addRotPt(20, 10);
+            newShape(); addRotPt(20, 70); addRotPt(0, 70);
             newShape();
-            // Input 2
-            addRotPt(20, 70); addRotPt(0, 70);
-            newShape();
-            // Output
             if (component == ELEC_GATE_NAND) {
-                addRotPt(90, 50);
-                for(int i=0; i<=360; i+=30) addRotPt(90 + 5*std::cos(i*M_PI/180), 50 + 5*std::sin(i*M_PI/180));
-                newShape();
-                addRotPt(95, 50); addRotPt(110, 50);
-            } else {
-                addRotPt(90, 50); addRotPt(110, 50);
-            }
+                addRotPt(90, 50); for(int i=0; i<=360; i+=30) addRotPt(90 + 5*std::cos(i*M_PI/180), 50 + 5*std::sin(i*M_PI/180));
+                newShape(); addRotPt(95, 50); addRotPt(110, 50);
+            } else { addRotPt(90, 50); addRotPt(110, 50); }
             break;
         }
         case ELEC_GATE_OR:
         case ELEC_GATE_NOR: {
-            // US OR Gate: curved back, sharp curved front
-            addRotPt(0, 30); addRotPt(25, 30); // Top input
+            addRotPt(0, 30); addRotPt(25, 30);
+            newShape(); addRotPt(0, 70); addRotPt(25, 70);
             newShape();
-            addRotPt(0, 70); addRotPt(25, 70); // Bottom input
-            newShape();
-
             for(int i=-90; i<=90; i+=15) addRotPt(10 + 20*std::cos(i*M_PI/180), 50 + 40*std::sin(i*M_PI/180));
-
-            // Bottom to tip
             for(int i=90; i>=0; i-=10) addRotPt(10 + 90*std::cos(i*M_PI/180), 10 + 80*std::sin(i*M_PI/180));
-
-            // Tip to top
             for(int i=0; i<=90; i+=10) addRotPt(10 + 90*std::cos(i*M_PI/180), 90 - 80*std::sin(i*M_PI/180));
-
             newShape();
             if (component == ELEC_GATE_NOR) {
                 for(int i=0; i<=360; i+=30) addRotPt(100 + 5*std::cos(i*M_PI/180), 50 + 5*std::sin(i*M_PI/180));
-                newShape();
-                addRotPt(105, 50); addRotPt(120, 50);
-            } else {
-                addRotPt(100, 50); addRotPt(120, 50);
-            }
+                newShape(); addRotPt(105, 50); addRotPt(120, 50);
+            } else { addRotPt(100, 50); addRotPt(120, 50); }
             break;
         }
         case ELEC_GATE_NOT: {
             addRotPt(0, 50); addRotPt(20, 50); addRotPt(20, 20); addRotPt(70, 50); addRotPt(20, 80); addRotPt(20, 50);
             newShape();
             for(int i=0; i<=360; i+=20) addRotPt(75 + 5*std::cos(i*M_PI/180), 50 + 5*std::sin(i*M_PI/180));
-            newShape();
-            addRotPt(80, 50); addRotPt(100, 50);
+            newShape(); addRotPt(80, 50); addRotPt(100, 50);
             break;
         }
         case ELEC_GATE_XOR:
         case ELEC_GATE_XNOR: {
-            // US XOR gate
             addRotPt(0, 30); addRotPt(15, 30); addRotPt(15, 10);
             for(int i=-90; i<=90; i+=10) addRotPt(15 + 80*std::cos(i*M_PI/180), 50 + 80*std::sin(i*M_PI/180));
             addRotPt(15, 90); addRotPt(15, 70); addRotPt(0, 70);
             newShape();
             for(int i=-90; i<=90; i+=10) addRotPt(10 + 20*std::cos(i*M_PI/180), 50 + 40*std::sin(i*M_PI/180));
-            newShape();
-            addRotPt(95, 50); addRotPt(105, 50);
+            newShape(); addRotPt(95, 50); addRotPt(105, 50);
             break;
         }
         case ELEC_FF_D:
@@ -507,17 +345,63 @@ void ElectronicsHandler::generateShapes() {
         case ELEC_GND_SIGNAL:
         case ELEC_SWITCH_SPST:
         case ELEC_SWITCH_SPDT:
-        default: { // Fallback standard rectangle to avoid crashing
-            addPt(0,0);
-            addPt(dx, 0);
-            addPt(dx, dy);
-            addPt(0, dy);
-            addPt(0, 0);
+        default: {
+            addPt(0,0); addPt(dx, 0); addPt(dx, dy); addPt(0, dy); addPt(0, 0);
             break;
         }
     }
+    newShape();
 
-    if (!currentShape.empty()) {
-        shapes.push_back(currentShape);
+    Tool* activeTool = control->getToolHandler()->getActiveTool();
+    if (!activeTool) return;
+
+    std::vector<Element*> addedElements;
+    for (const auto& shape_pts : disjointShapes) {
+        if (shape_pts.empty()) continue;
+
+        Stroke* stroke = new Stroke();
+        stroke->setToolType(StrokeTool::PEN);
+        stroke->setColor(activeTool->getColor());
+        stroke->setWidth(control->getToolHandler()->getThickness());
+        stroke->setLineStyle(activeTool->getLineStyle());
+        for (const auto& pt : shape_pts) stroke->addPoint(pt);
+        addedElements.push_back(stroke);
     }
+
+    if (!addedElements.empty()) {
+        auto groupAction = std::make_unique<GroupUndoAction>();
+        for (auto elem : addedElements) {
+            auto elemPtr = std::unique_ptr<Element>(elem);
+            auto undoAction = std::make_unique<InsertUndoAction>(this->page, layer, elem);
+            groupAction->addAction(std::move(undoAction));
+            layer->addElement(std::move(elemPtr));
+        }
+        control->getUndoRedoHandler()->addUndoAction(std::move(groupAction));
+    }
+}
+
+std::pair<std::vector<Point>, Range> ElectronicsHandler::createShape(bool isAltDown, bool isShiftDown, bool isControlDown) {
+    std::vector<Point> previewShape;
+    Range range;
+
+    double dx = currPoint.x - startPoint.x;
+    double dy = currPoint.y - startPoint.y;
+    double sx = startPoint.x;
+    double sy = startPoint.y;
+
+    auto addPt = [&](double nx, double ny) {
+        Point p(sx + nx, sy + ny, Point::NO_PRESSURE);
+        previewShape.push_back(p);
+        if (previewShape.size() == 1) range = Range(p.x, p.y, p.x, p.y);
+        else range = range.unite(Range(p.x, p.y, p.x, p.y));
+    };
+
+    // We just draw a bounding box preview so there are NO GTK overlay crashes!
+    addPt(0, 0);
+    addPt(dx, 0);
+    addPt(dx, dy);
+    addPt(0, dy);
+    addPt(0, 0);
+
+    return {previewShape, range};
 }
