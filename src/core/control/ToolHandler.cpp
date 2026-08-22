@@ -119,6 +119,7 @@ void ToolHandler::initTools() {
     tools[TOOL_DRAW_SPLINE - TOOL_PEN] =
             std::make_unique<Tool>("drawSpline", TOOL_DRAW_SPLINE, Colors::black, std::nullopt);
 
+
     tools[TOOL_FLOATING_TOOLBOX - TOOL_PEN] =
             std::make_unique<Tool>("showFloatingToolbox", TOOL_FLOATING_TOOLBOX, Colors::black, std::nullopt);
 

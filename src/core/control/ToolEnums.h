@@ -35,6 +35,64 @@ static constexpr std::string_view toolSizeToString(ToolSize size) {
 ToolSize toolSizeFromString(const std::string& size);
 
 
+enum ElectronicsComponentType {
+    ELEC_WAVE_SINE,
+    ELEC_WAVE_SQUARE,
+    ELEC_WAVE_TRIANGLE,
+    ELEC_WAVE_SAWTOOTH,
+    ELEC_RESISTOR_US,
+    ELEC_RESISTOR_EU,
+    ELEC_POTENTIOMETER,
+    ELEC_CAPACITOR_NP,
+    ELEC_CAPACITOR_POL,
+    ELEC_INDUCTOR,
+    ELEC_SOURCE_DC_BATT,
+    ELEC_SOURCE_DC,
+    ELEC_SOURCE_AC,
+    ELEC_SOURCE_CURRENT,
+    ELEC_GND_EARTH,
+    ELEC_GND_CHASSIS,
+    ELEC_GND_SIGNAL,
+    ELEC_SWITCH_SPST,
+    ELEC_SWITCH_SPDT,
+    ELEC_DIODE,
+    ELEC_DIODE_ZENER,
+    ELEC_DIODE_SCHOTTKY,
+    ELEC_DIODE_LED,
+    ELEC_BJT_NPN,
+    ELEC_BJT_PNP,
+    ELEC_MOSFET_N,
+    ELEC_MOSFET_P,
+    ELEC_OPAMP,
+    ELEC_GATE_AND,
+    ELEC_GATE_OR,
+    ELEC_GATE_NOT,
+    ELEC_GATE_NAND,
+    ELEC_GATE_NOR,
+    ELEC_GATE_XOR,
+    ELEC_GATE_XNOR,
+    ELEC_FF_D,
+    ELEC_FF_JK,
+    ELEC_KMAP_2X2,
+    ELEC_KMAP_2X4,
+    ELEC_KMAP_4X4,
+    ELEC_TIMING_GRID,
+    ELEC_TRUTH_TABLE,
+    ELEC_REGISTER_8BIT,
+    ELEC_REGISTER_16BIT,
+    ELEC_FLOW_START,
+    ELEC_FLOW_PROCESS,
+    ELEC_FLOW_DECISION,
+    ELEC_FLOW_IO,
+    ELEC_BLOCK_MIXER,
+    ELEC_BLOCK_AMPLIFIER,
+    ELEC_BLOCK_FILTER_LPF,
+    ELEC_BLOCK_FILTER_HPF,
+    ELEC_BLOCK_OSCILLATOR,
+    ELEC_BLOCK_ANTENNA,
+    ELEC_END_ENTRY
+};
+
 enum DrawingType {
     /**
      * For config entry, don't change value
@@ -52,11 +110,12 @@ enum DrawingType {
     DRAWING_TYPE_DOUBLE_ARROW,
     DRAWING_TYPE_COORDINATE_SYSTEM,
     DRAWING_TYPE_SHAPE_RECOGNIZER,
-    DRAWING_TYPE_SPLINE
+    DRAWING_TYPE_SPLINE,
+    DRAWING_TYPE_ELECTRONICS
 };
-static constexpr std::array<std::string_view, 10> drawingTypeNames{
+static constexpr std::array<std::string_view, 11> drawingTypeNames{
         "dontChange",           "default",          "line",  "rectangle", "ellipse", "arrow", "doubleArrow",
-        "drawCoordinateSystem", "strokeRecognizer", "spline"};
+        "drawCoordinateSystem", "strokeRecognizer", "spline", "electronics"};
 
 static constexpr std::string_view drawingTypeToString(DrawingType type) {
     return drawingTypeNames.at(static_cast<size_t>(type));
@@ -123,7 +182,8 @@ static constexpr std::array<std::string_view, TOOL_END_ENTRY> toolNames{"none",
                                                                         "laserPointerPen",
                                                                         "laserPointerHighlighter",
                                                                         "link",
-                                                                        "latex"};
+                                                                        "latex",
+};
 
 auto isSelectToolType(ToolType type) -> bool;
 auto isSelectToolTypeSingleLayer(ToolType type) -> bool;
@@ -178,7 +238,8 @@ enum ToolCapabilities : unsigned int {
     TOOL_CAP_SPLINE = 1 << 10,
     TOOL_CAP_LINE_STYLE = 1 << 11,
     TOOL_CAP_ALIGN = 1 << 12,
-    TOOL_CAP_JUSTIFY = 1 << 13
+    TOOL_CAP_JUSTIFY = 1 << 13,
+    TOOL_CAP_ELECTRONICS = 1 << 14
 };
 
 enum StrokeType {

@@ -13,6 +13,7 @@
 #include "control/settings/Settings.h"               // for Settings
 #include "gui/GladeGui.h"                            // for GladeGui
 #include "gui/sidebar/AbstractSidebarPage.h"         // for AbstractSidebar...
+#include "gui/sidebar/filebrowser/SidebarNotebookPage.h"
 #include "gui/sidebar/indextree/SidebarIndexPage.h"  // for SidebarIndexPage
 #include "model/Document.h"                          // for Document
 #include "model/XojPage.h"                           // for XojPage
@@ -38,6 +39,7 @@ Sidebar::Sidebar(GladeGui* gui, Control* control): control(control) {
 void Sidebar::initTabs(GtkWidget* sidebarContents) {
     addTab(std::make_unique<SidebarIndexPage>(this->control));
     addTab(std::make_unique<SidebarPreviewPages>(this->control));
+    addTab(std::make_unique<SidebarNotebookPage>(this->control));
     addTab(std::make_unique<SidebarPreviewLayers>(this->control, false));
     addTab(std::make_unique<SidebarPreviewLayers>(this->control, true));
 
