@@ -5,6 +5,7 @@
 #include "control/ToolHandler.h"
 #include "control/Tool.h"
 #include "model/Layer.h"
+#include "model/Document.h"
 #include "undo/InsertUndoAction.h"
 #include "undo/GroupUndoAction.h"
 #include "undo/UndoRedoHandler.h"
@@ -364,18 +365,26 @@ void ElectronicsHandler::onButtonReleaseEvent(const PositionInputData& pos, doub
         stroke->setColor(activeTool->getColor());
         stroke->setWidth(control->getToolHandler()->getThickness());
         stroke->setLineStyle(activeTool->getLineStyle());
-        for (const auto& pt : shape_pts) stroke->addPoint(pt);
+        stroke->setPointVector(shape_pts, nullptr);
         addedElements.push_back(stroke);
     }
 
     if (!addedElements.empty()) {
         auto groupAction = std::make_unique<GroupUndoAction>();
+        Document* doc = control->getDocument();
+        doc->lock();
         for (auto elem : addedElements) {
             auto elemPtr = std::unique_ptr<Element>(elem);
             auto undoAction = std::make_unique<InsertUndoAction>(this->page, layer, elem);
             groupAction->addAction(std::move(undoAction));
             layer->addElement(std::move(elemPtr));
         }
+        doc->unlock();
+
+        for (auto elem : addedElements) {
+            page->fireElementChanged(elem);
+        }
+
         control->getUndoRedoHandler()->addUndoAction(std::move(groupAction));
     }
 }
