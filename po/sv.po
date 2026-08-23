@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-08-09 11:30+0000\n"
-"PO-Revision-Date: 2026-08-16 04:28\n"
+"PO-Revision-Date: 2026-08-23 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -125,12 +125,13 @@ msgstr "Fel vid läsning av PNG-fil \"{1}\""
 
 #: ../src/core/control/Control.cpp:1668
 msgid "Failed to determine if path exists \"{1}\": {2}"
-msgstr ""
+msgstr "Kunde inte avgöra om filsökväg existerar \"{1}\": {2}"
 
 #: ../src/core/control/Control.cpp:1669
 msgid "That file does not exist:\n"
 "\"{1}\""
-msgstr ""
+msgstr "Den filen existerar inte:\n"
+"\"{1}\""
 
 #: ../src/core/control/Control.cpp:1776
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -727,15 +728,15 @@ msgstr "Okänd bakgrundstyp: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:553
 msgid "Error reading width of a stroke: {1}"
-msgstr "Fel vid läsning av bredden på ett streck: {1}"
+msgstr "Fel vid läsning av bredden på ett objekt: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:622
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "Okänd typ av objektända: \"{1}\", antar rund"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:640
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr ""
+msgstr "Okänd objekttyp: \"{1}\", antar penna"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:811
 #: ../src/core/control/xojfile/LoadHandler.cpp:827
@@ -760,7 +761,7 @@ msgstr "Kunde inte öppna bilaga: {1}. Felmeddelande: Kunde inte skriva till fil
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1035
 msgid "Wrong count of points ({1})"
-msgstr ""
+msgstr "Fel antal punkter ({1})"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1051
 msgid "xoj-File: {1}"
@@ -768,7 +769,7 @@ msgstr "xoj-fil: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1052
 msgid "Wrong number of pressure values, got {1}, expected {2}"
-msgstr ""
+msgstr "Fel antal tryckvärden, fick {1}, förväntade {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1184
 msgid "Requested temporary file was not found for attachment {1}"
@@ -999,7 +1000,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Drawing Type - don't change"
-msgstr ""
+msgstr "Ritläge – ändra inte"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
 msgid "Normal drawing"
@@ -1211,7 +1212,7 @@ msgstr "Användarpaletter"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:99
 msgid "<i>The palettes shown below are obtained from the <a href=\"{1}\">Built-in palettes</a> and <a href=\"{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>Paletterna som visas nedan är hämtade från katalogerna för de <a href=\"{1}\">inbyggda paletterna</a> och <a href=\"{2}\">användarpaletterna</a></i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:117
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
@@ -1929,7 +1930,7 @@ msgstr "element"
 #: ../src/core/undo/AddUndoAction.cpp:88
 #: ../src/core/undo/DeleteUndoAction.cpp:90
 msgid "stroke"
-msgstr "streck"
+msgstr "objekt"
 
 #: ../src/core/undo/AddUndoAction.cpp:91
 #: ../src/core/undo/DeleteUndoAction.cpp:93
@@ -2107,12 +2108,13 @@ msgstr "Felkod {1}"
 
 #: ../src/util/PathUtil.cpp:125
 msgid "Could not open file: {1}"
-msgstr ""
+msgstr "Kunde inte öppna fil: {1}"
 
 #: ../src/util/PathUtil.cpp:132
 msgid "Error reading \"{1}\":\n"
 "{2}"
-msgstr ""
+msgstr "Fel vid läsning \"{1}\":\n"
+"{2}"
 
 #: ../src/util/PathUtil.cpp:409
 msgid "xournalpp-{1}"
@@ -3315,7 +3317,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3264
 msgid "Recolors the drawing area so that light regions get the \"Light Color\" and dark regions get the \"Dark Color\". Other colors are interpolated accordingly. Can be use to implement a dark-mode."
-msgstr ""
+msgstr "Färgar om ritområdet så att ljusa delar går får \"Ljus färg\" och mörka regioner får \"Mörk färg\". Andra färger interpoleras därefter. Kan användas för att implementera ett mörkt läge."
 
 #: ../ui/settings.glade:3274
 msgid "Recolor Previews in the Sidebar"
@@ -3323,17 +3325,19 @@ msgstr ""
 
 #: ../ui/settings.glade:3279
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) the same way as the drawing area."
-msgstr ""
+msgstr "Färgar om förhandsvisningar i sidofältet (Förhandsgranska sida/lager) på samma sätt som ritområdet."
 
 #: ../ui/settings.glade:3293
 msgid "The color light regions are translated to\n"
 "(use a dark color for a dark-mode)"
-msgstr ""
+msgstr "Färgen som ljusa delar översätts till\n"
+"(använd en mörk färg för mörkt läge)"
 
 #: ../ui/settings.glade:3308
 msgid "The color dark regions are translated to\n"
 "(use a light color for dark-mode)"
-msgstr ""
+msgstr "Färgen som mörka delar översätts till\n"
+"(använd en ljus färg för mörkt läge)"
 
 #: ../ui/settings.glade:3324
 msgid "Dark Color"
@@ -3345,7 +3349,7 @@ msgstr "Ljus färg"
 
 #: ../ui/settings.glade:3351
 msgid "Recoloring (allows theming)"
-msgstr ""
+msgstr "Omfärgning (möjliggör teman)"
 
 #: ../ui/settings.glade:3383
 msgid "Cursor icon for pen"
@@ -4299,7 +4303,7 @@ msgstr "Stan_dardverktyg"
 
 #: ../ui/mainmenubar.xml:559
 msgid "Drawing Type"
-msgstr ""
+msgstr "Ritläge"
 
 #: ../ui/mainmenubar.xml:561
 msgid "_Shape Recognizer"
@@ -4468,7 +4472,7 @@ msgstr "Ta handskrivna anteckningar"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:8
 msgid "tablet;Wacom;pen input;PDF Annotation;markup"
-msgstr ""
+msgstr "surfplatta;Wacom;penninmatning;PDF-annotering;markering"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:8
 msgid "Xournalpp Developers"
