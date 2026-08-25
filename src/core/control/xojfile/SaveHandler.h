@@ -25,12 +25,11 @@
 
 class XmlPointNode;
 class ProgressListener;
-class AudioElement;
+class AudioContent;
 class Document;
 class Layer;
 class OutputStream;
 class Stroke;
-class XmlAudioNode;
 
 class SaveHandler {
 public:
@@ -66,7 +65,7 @@ protected:
 
     virtual void writeHeader();
     virtual void writeSolidBackground(XmlNode* background, ConstPageRef p);
-    virtual void writeTimestamp(XmlAudioNode* xmlAudioNode, const AudioElement* audioElement);
+    virtual void writeAudio(XmlNode* node, const AudioContent& audio);
     virtual void writeBackgroundName(XmlNode* background, ConstPageRef p);
 
 protected:

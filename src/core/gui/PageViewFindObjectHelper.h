@@ -163,11 +163,10 @@ protected:
     bool checkLayer(const Layer* l) override {
         bool found = false;
         for (auto&& e: l->getElementsView()) {
-            if (auto* audio = dynamic_cast<const AudioElement*>(e); audio) {
+            if (auto* audio = dynamic_cast<const AudioContent*>(e); audio) {
                 // First perform a rough check to avoid expensive calls to Stroke::distanceTo()
-                if (audio->intersectsArea(x - ACTION_RADIUS, y - ACTION_RADIUS, 2. * ACTION_RADIUS,
-                                          2. * ACTION_RADIUS)) {
-                    double d = audio->distanceTo(x, y);
+                if (e->intersectsArea(x - ACTION_RADIUS, y - ACTION_RADIUS, 2. * ACTION_RADIUS, 2. * ACTION_RADIUS)) {
+                    double d = e->distanceTo(x, y);
                     if (d < ACTION_RADIUS) {
                         found = playElement(audio) || found;
                     }
@@ -177,7 +176,7 @@ protected:
         return found;
     }
 
-    bool playElement(const AudioElement* s) {
+    bool playElement(const AudioContent* s) {
 #ifdef ENABLE_AUDIO
         size_t ts = s->getTimestamp();
 

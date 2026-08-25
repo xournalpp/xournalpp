@@ -16,9 +16,8 @@
 
 #include "SaveHandler.h"  // for SaveHandler
 
-class AudioElement;
+class AudioContent;
 class Stroke;
-class XmlAudioNode;
 class XmlNode;
 class XmlPointNode;
 
@@ -35,7 +34,7 @@ protected:
     void visitStrokeExtended(XmlPointNode* stroke, const Stroke* s) override;
     void writeHeader() override;
     void writeSolidBackground(XmlNode* background, ConstPageRef p) override;
-    void writeTimestamp(XmlAudioNode* xmlAudioNode, const AudioElement* audioElement) override;
+    void writeAudio(XmlNode* node, const AudioContent& audio) override;
     void writeBackgroundName(XmlNode* background, ConstPageRef p) override;
 
 private:

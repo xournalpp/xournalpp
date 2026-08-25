@@ -9,7 +9,6 @@
 #include <glib.h>                   // for g_free, g_strdup_printf
 
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeHandler
-#include "control/xml/XmlAudioNode.h"          // for XmlAudioNode
 #include "control/xml/XmlImageNode.h"          // for XmlImageNode
 #include "control/xml/XmlNode.h"               // for XmlNode
 #include "control/xml/XmlPointNode.h"          // for XmlPointNode
@@ -18,7 +17,7 @@
 #include "control/xojfile/XmlAttrs.h"          // for xml_attrs
 #include "control/xojfile/XmlTags.h"           // for xml_tags
 #include "control/xojfile/XmlValues.h"         // for xml_values
-#include "model/AudioElement.h"                // for AudioElement
+#include "model/AudioContent.h"                // for AudioContent
 #include "model/BackgroundImage.h"             // for BackgroundImage
 #include "model/Document.h"                    // for Document
 #include "model/Element.h"                     // for Element, ELEMENT_IMAGE
@@ -97,12 +96,12 @@ auto SaveHandler::getColorStr(Color c, unsigned char alpha) -> std::string {
     return color;
 }
 
-void SaveHandler::writeTimestamp(XmlAudioNode* xmlAudioNode, const AudioElement* audioElement) {
-    if (!audioElement->getAudioFilename().empty()) {
+void SaveHandler::writeAudio(XmlNode* node, const AudioContent& audio) {
+    if (!audio.getAudioFilename().empty()) {
         /** set stroke timestamp value to the XmlPointNode */
-        xmlAudioNode->setAttrib(xoj::xml_attrs::TIMESTAMP_STR, audioElement->getTimestamp());
-        auto audioFilename = audioElement->getAudioFilename().generic_u8string();
-        xmlAudioNode->setAttrib(xoj::xml_attrs::AUDIO_FILENAME_STR, audioFilename);
+        node->setAttrib(xoj::xml_attrs::TIMESTAMP_STR, audio.getTimestamp());
+        auto audioFilename = audio.getAudioFilename().generic_u8string();
+        node->setAttrib(xoj::xml_attrs::AUDIO_FILENAME_STR, audioFilename);
     }
 }
 
@@ -119,7 +118,7 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, const Stroke* s) {
     stroke->setAttrib(xoj::xml_attrs::TOOL_STR, StrokeTool::NAMES[t]);
 
     if (t == StrokeTool::PEN) {
-        writeTimestamp(stroke, s);
+        writeAudio(stroke, *s);
     } else if (t == StrokeTool::HIGHLIGHTER) {
         alpha = 0x7f;
     }
@@ -205,7 +204,7 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
                 text->setAttrib(xoj::xml_attrs::JUSTIFY_STR, xoj::xml_values::TRUE_STR);
             }
 
-            writeTimestamp(text, t);
+            writeAudio(text, *t);
         } else if (e->getType() == ELEMENT_IMAGE) {
             auto* i = dynamic_cast<const Image*>(e);
             auto* image = new XmlImageNode(TAG_NAMES[TagType::IMAGE]);

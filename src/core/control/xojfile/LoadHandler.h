@@ -159,8 +159,8 @@ private:
      */
     std::unique_ptr<std::string> readZipAttachment(fs::path const& filename);
 
-    /** Set audio attributes for `elem`, for any file type and file version. */
-    void setAudioAttributes(AudioElement& elem, fs::path filename, size_t timestamp);
+    /** Set audio attributes for `audio`, for any file type and file version. */
+    void setAudioAttributes(AudioContent& audio, fs::path filename, size_t timestamp);
 
     /** @return The path of a temporary file extracted from the zip archive. */
     fs::path getTempFileForPath(fs::path const& filename);

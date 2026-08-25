@@ -16,13 +16,11 @@
 #include <memory>   // for unique_ptr
 #include <vector>   // for vector
 
-#include "model/Element.h"
-
-#include "AudioElement.h"  // for AudioElement
+#include "AudioContent.h"  // for AudioContent
+#include "Element.h"       // for Element
 #include "LineStyle.h"     // for LineStyle
 #include "Point.h"         // for Point
 
-class Element;
 class ObjectInputStream;
 class ObjectOutputStream;
 class ShapeContainer;
@@ -69,7 +67,7 @@ class SmallVector;
 
 using IntersectionParametersContainer = SmallVector<PathParameter, 4>;
 
-class Stroke: public AudioElement {
+class Stroke: public Element, public AudioContent {
 public:
     Stroke();
     Stroke(Stroke const&) = default;

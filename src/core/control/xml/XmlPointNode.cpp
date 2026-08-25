@@ -3,12 +3,11 @@
 #include <algorithm>  // for max
 #include <utility>    // for move
 
-#include "control/xml/XmlAudioNode.h"  // for XmlAudioNode
 #include "util/OutputStream.h"         // for OutputStream
 #include "util/StringUtils.h"          // for StaticStringView
 #include "util/Util.h"                 // for writeCoordinateString
 
-XmlPointNode::XmlPointNode(StringUtils::StaticStringView tag): XmlAudioNode(tag) {}
+XmlPointNode::XmlPointNode(StringUtils::StaticStringView tag): XmlNode(tag) {}
 
 void XmlPointNode::setPoints(std::vector<Point> pts) { this->points = std::move(pts); }
 

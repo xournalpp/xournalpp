@@ -723,21 +723,21 @@ auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::unique_ptr
     return data;
 }
 
-void LoadHandler::setAudioAttributes(AudioElement& elem, fs::path filename, size_t timestamp) {
+void LoadHandler::setAudioAttributes(AudioContent& audio, fs::path filename, size_t timestamp) {
     if (!filename.empty()) {
         if (this->isGzFile) {
-            elem.setAudioFilename(std::move(filename));
+            audio.setAudioFilename(std::move(filename));
         } else {
             auto tempFile = getTempFileForPath(filename);
             if (!tempFile.empty()) {
-                elem.setAudioFilename(std::move(tempFile));
+                audio.setAudioFilename(std::move(tempFile));
             }
         }
 
         if (this->fileVersion < 4) {
             timestamp *= 1000;
         }
-        elem.setTimestamp(timestamp);
+        audio.setTimestamp(timestamp);
     }
 }
 

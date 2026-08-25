@@ -15,11 +15,11 @@
 
 #include "model/Point.h"  // for Point
 
-#include "XmlAudioNode.h"  // for XmlAudioNode
+#include "XmlNode.h"
 
 class OutputStream;
 
-class XmlPointNode: public XmlAudioNode {
+class XmlPointNode: public XmlNode {
 public:
     XmlPointNode(StringUtils::StaticStringView tag);
 

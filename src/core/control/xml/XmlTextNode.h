@@ -13,11 +13,11 @@
 
 #include <string>  // for string
 
-#include "XmlAudioNode.h"  // for XmlAudioNode
+#include "XmlNode.h"
 
 class OutputStream;
 
-class XmlTextNode: public XmlAudioNode {
+class XmlTextNode: public XmlNode {
 public:
     XmlTextNode(StringUtils::StaticStringView tag, std::string text);
     explicit XmlTextNode(StringUtils::StaticStringView tag);

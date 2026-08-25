@@ -14,7 +14,7 @@
 #include <glib.h>   // for g_free, g_message
 
 #include "eraser/PaddedBox.h"                     // for PaddedBox
-#include "model/AudioElement.h"                   // for AudioElement
+#include "model/AudioContent.h"                   // for AudioContent
 #include "model/Element.h"                        // for Element, ELEMENT_ST...
 #include "model/LineStyle.h"                      // for LineStyle
 #include "model/Point.h"                          // for Point, Point::NO_PR...
@@ -80,7 +80,7 @@ constexpr void updateSnappedBounds(Rectangle<Float>& snap, Point const& p) {
 }
 
 
-Stroke::Stroke(): AudioElement(ELEMENT_STROKE) {}
+Stroke::Stroke(): Element(ELEMENT_STROKE) {}
 
 Stroke::~Stroke() = default;
 
@@ -95,7 +95,7 @@ void Stroke::applyStyleFrom(const Stroke* other) {
     setStrokeCapStyle(other->getStrokeCapStyle());
     setLineStyle(other->getLineStyle());
 
-    cloneAudioData(other);
+    static_cast<AudioContent&>(*this) = *other;
 }
 
 auto Stroke::cloneStroke() const -> std::unique_ptr<Stroke> {
@@ -166,7 +166,8 @@ std::unique_ptr<Stroke> Stroke::cloneCircularSectionOfClosedStroke(const PathPar
 void Stroke::serialize(ObjectOutputStream& out) const {
     out.writeObject("Stroke");
 
-    this->AudioElement::serialize(out);
+    this->Element::serialize(out);
+    this->AudioContent::serialize(out);
 
     out.writeDouble(this->width);
 
@@ -186,7 +187,8 @@ void Stroke::serialize(ObjectOutputStream& out) const {
 void Stroke::readSerialized(ObjectInputStream& in) {
     in.readObject("Stroke");
 
-    this->AudioElement::readSerialized(in);
+    this->Element::readSerialized(in);
+    this->AudioContent::readSerialized(in);
 
     this->width = in.readDouble();
 

@@ -13,7 +13,7 @@
 
 #include "config.h"  // for PROJECT_STRING, PROJEC...
 
-class AudioElement;
+class AudioContent;
 class Stroke;
 class XmlAudioNode;
 class XmlPointNode;
@@ -56,8 +56,8 @@ void XojExportHandler::writeSolidBackground(XmlNode* background, ConstPageRef p)
     background->setAttrib(xoj::xml_attrs::STYLE_STR, format);
 }
 
-void XojExportHandler::writeTimestamp(XmlAudioNode* xmlAudioNode, const AudioElement* audioElement) {
-    // Do nothing since timestamp are not supported by Xournal
+void XojExportHandler::writeAudio(XmlNode* node, const AudioContent& audio) {
+    // Do nothing since audio is not supported by Xournal
 }
 
 void XojExportHandler::writeBackgroundName(XmlNode* background, ConstPageRef p) {
