@@ -13,6 +13,8 @@
 
 #include <string>  // for string
 
+#include <cairo.h>  // for cairo_t
+
 #include "util/Color.h"  // for Color
 
 #include "PlainBackgroundView.h"  // for PlainBackgroundView
@@ -35,8 +37,21 @@ protected:
      */
     static Color getColorOr(const BackgroundConfig& config, const std::string& str, const Color& defaultColor);
 
+    /**
+     * @brief Load the color of a vertical margin line from the config (keys "f2"/"af2").
+     */
+    void loadVLineColor(const BackgroundConfig& config, Color defaultLightColor, Color defaultDarkColor);
+
+    /**
+     * @brief Draw a vertical margin line at x=margin, from the top to the bottom of the page.
+     * A negative margin puts the line on the right hand side. The line is drawn with the color
+     * previously set via loadVLineColor.
+     */
+    void drawVerticalMarginLine(cairo_t* cr, double margin, double lineWidth) const;
+
 protected:
     Color foregroundColor;
+    Color vLineColor;
     double lineWidth;
 };
 };  // namespace xoj::view
