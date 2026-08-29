@@ -23,13 +23,13 @@
 #include "util/Size.h"
 #include "util/raii/CairoWrappers.h"
 
-#include "Element.h"  // for Element
+#include "RectangularElement.h"
 
 class ObjectInputStream;
 class ObjectOutputStream;
 
 
-class Image: public Element {
+class Image: public RectangularElement {
 public:
     Image();
     Image(const Image&) = delete;
@@ -61,9 +61,6 @@ public:
 
     /// Returns the internal surface that contains the rendered image data.
     cairo_surface_t* getImage() const;
-
-    void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
-    void rotate(double x0, double y0, double th) override;
 
     auto clone() const -> ElementPtr override;
 

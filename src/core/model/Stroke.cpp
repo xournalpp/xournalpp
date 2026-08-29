@@ -332,6 +332,11 @@ void Stroke::move(double dx, double dy) {
     Element::snappedBounds = Element::snappedBounds.translated(dx, dy);
 }
 
+auto Stroke::getOrigin() const -> const xoj::util::Point<double>& {
+    xoj_assert(!this->points.empty());
+    return points.front().getPosition();
+}
+
 void Stroke::rotate(double x0, double y0, double th) {
     cairo_matrix_t rotMatrix;
     cairo_matrix_init_identity(&rotMatrix);

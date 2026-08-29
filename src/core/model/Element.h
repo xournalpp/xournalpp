@@ -26,7 +26,7 @@ class ObjectOutputStream;
 
 namespace xoj::util {
 template <class T>
-class Point;
+struct Point;
 };
 
 enum ElementType { ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_TEXT, ELEMENT_LINK };
@@ -44,6 +44,10 @@ using ElementPtr = std::unique_ptr<Element>;
 class Element: public Serializable {
 protected:
     Element(ElementType type);
+    Element(const Element&) = default;
+    Element& operator=(const Element&) = default;
+    Element(Element&&) = default;
+    Element& operator=(Element&&) = default;
 
 public:
     ~Element() override = default;
@@ -54,11 +58,9 @@ public:
 public:
     ElementType getType() const;
 
-    /// Move the element to (x,y).
-    virtual void setOrigin(double x, double y);
-    virtual const xoj::util::Point<double>& getOrigin() const;
+    virtual const xoj::util::Point<double>& getOrigin() const = 0;
 
-    virtual void move(double dx, double dy);
+    virtual void move(double dx, double dy) = 0;
     virtual void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) = 0;
     virtual void rotate(double x0, double y0, double th) = 0;
 
@@ -69,12 +71,13 @@ public:
 
     const xoj::util::Rectangle<double>& getBoundingBox() const;
 
-    virtual bool intersectsArea(double x, double y, double width, double height) const;
-    /// Returns the distance between the element "as drawn" and the point (x,y)
-    virtual double distanceTo(double x, double y) const;
-    virtual bool hasBoundingBoxContaining(double x, double y) const;
+    /// Returns true if the element's bounding box intersects the given rectangle, in Page coordinates
+    bool intersectsArea(double x, double y, double width, double height) const;
+    /// Returns the distance between the element "as drawn" and the point (x,y), in Page coordinates
+    virtual double distanceTo(double x, double y) const = 0;
+    bool hasBoundingBoxContaining(double x, double y) const;
 
-    virtual bool isInSelection(ShapeContainer* container) const;
+    virtual bool isInSelection(ShapeContainer* container) const = 0;
 
     virtual bool rescaleOnlyAspectRatio() const;
     virtual bool rescaleWithMirror() const;

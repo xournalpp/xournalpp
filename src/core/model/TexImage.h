@@ -21,13 +21,13 @@
 #include "util/raii/CairoWrappers.h"
 #include "util/raii/GObjectSPtr.h"  // for GObjectSPtr
 
-#include "Element.h"  // for Element
+#include "RectangularElement.h"
 
 class ObjectInputStream;
 class ObjectOutputStream;
 
 
-class TexImage: public Element {
+class TexImage: public RectangularElement {
 public:
     TexImage();
     TexImage(const TexImage&) = delete;
@@ -56,9 +56,6 @@ public:
      * The document needs to be referenced, if it will be hold somewhere
      */
     PopplerDocument* getPdf() const;
-
-    void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
-    void rotate(double x0, double y0, double th) override;
 
     // text tag to alow latex
     void setText(std::string text);

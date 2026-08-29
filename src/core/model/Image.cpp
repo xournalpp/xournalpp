@@ -21,7 +21,7 @@
 
 using xoj::util::Rectangle;
 
-Image::Image(): Element(ELEMENT_IMAGE) {}
+Image::Image(): RectangularElement(ELEMENT_IMAGE) {}
 
 Image::~Image() {
     if (this->format) {
@@ -32,25 +32,21 @@ Image::~Image() {
 
 auto Image::clone() const -> ElementPtr {
     auto img = std::make_unique<Image>();
+    static_cast<RectangularElement&>(*img) = *this;
 
-    img->boundingBox = this->boundingBox;
-    img->setColor(this->getColor());
     img->data = this->data;
-
     img->image = this->image;
-    img->snappedBounds = this->snappedBounds;
-    img->sizeCalculated = this->sizeCalculated;
 
     return img;
 }
 
 void Image::setWidth(double width) {
-    this->boundingBox.width = width;
+    this->snappedBounds.width = width;
     this->calcSize();
 }
 
 void Image::setHeight(double height) {
-    this->boundingBox.height = height;
+    this->snappedBounds.height = height;
     this->calcSize();
 }
 
@@ -186,29 +182,13 @@ auto Image::getImage() const -> cairo_surface_t* {
     return this->image.get();
 }
 
-void Image::scale(double x0, double y0, double fx, double fy, double rotation,
-                  bool) {  // line width scaling option is not used
-    this->boundingBox.x -= x0;
-    this->boundingBox.x *= fx;
-    this->boundingBox.x += x0;
-    this->boundingBox.y -= y0;
-    this->boundingBox.y *= fy;
-    this->boundingBox.y += y0;
-
-    this->boundingBox.width *= fx;
-    this->boundingBox.height *= fy;
-    this->calcSize();
-}
-
-void Image::rotate(double x0, double y0, double th) {}
-
 void Image::serialize(ObjectOutputStream& out) const {
     out.writeObject("Image");
 
-    this->Element::serialize(out);
+    this->RectangularElement::serialize(out);
 
-    out.writeDouble(this->boundingBox.width);
-    out.writeDouble(this->boundingBox.height);
+    out.writeDouble(this->snappedBounds.width);
+    out.writeDouble(this->snappedBounds.height);
 
     out.writeImage(this->data);
 
@@ -218,10 +198,10 @@ void Image::serialize(ObjectOutputStream& out) const {
 void Image::readSerialized(ObjectInputStream& in) {
     in.readObject("Image");
 
-    this->Element::readSerialized(in);
+    this->RectangularElement::readSerialized(in);
 
-    this->boundingBox.width = in.readDouble();
-    this->boundingBox.height = in.readDouble();
+    this->snappedBounds.width = in.readDouble();
+    this->snappedBounds.height = in.readDouble();
 
     this->image.reset();
     this->data = in.readImage();
@@ -231,7 +211,7 @@ void Image::readSerialized(ObjectInputStream& in) {
 }
 
 void Image::calcSize() const {
-    this->snappedBounds = this->boundingBox;
+    this->boundingBox = this->snappedBounds;
     this->sizeCalculated = true;
 }
 

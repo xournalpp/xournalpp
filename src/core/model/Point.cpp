@@ -4,9 +4,9 @@
 
 #include "util/Rectangle.h"  // for Rectangle
 
-Point::Point(double x, double y): x(x), y(y) {}
+Point::Point(double x, double y): xoj::util::Point<double>(x, y) {}
 
-Point::Point(double x, double y, double z): x(x), y(y), z(z) {}
+Point::Point(double x, double y, double z): xoj::util::Point<double>(x, y), z(z) {}
 
 auto Point::lineLengthTo(const Point& p) const -> double { return std::hypot(this->x - p.x, this->y - p.y); }
 

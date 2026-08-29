@@ -1,6 +1,5 @@
 #include "Link.h"
 
-#include "model/Element.h"                        // for ELEMENT_TEXT, Eleme...
 #include "model/Font.h"                           // for XojFont
 #include "util/Color.h"                           // for Colors
 #include "util/Point.h"                           // for Point
@@ -11,7 +10,7 @@
 
 #include "TextAlignment.h"
 
-Link::Link(): Element(ELEMENT_LINK) {
+Link::Link(): RectangularElement(ELEMENT_LINK) {
     this->font.setName("Sans");
     this->font.setSize(12);
     this->setColor(Colors::magenta);
@@ -22,7 +21,11 @@ void Link::setText(std::string text) { this->text = text; }
 
 std::string Link::getText() const { return this->text; }
 
-void Link::setTextPos(double x, double y) { this->setOrigin(x - PADDING, y - PADDING); }
+void Link::setTextPos(double x, double y) {
+    this->snappedBounds.x = x;
+    this->snappedBounds.y = y;
+    this->sizeCalculated = false;
+}
 
 void Link::setUrl(std::string url) { this->url = url; }
 
@@ -37,7 +40,7 @@ auto Link::getFont() const -> const XojFont& { return this->font; }
 void Link::serialize(ObjectOutputStream& out) const {
     out.writeObject("Link");
 
-    Element::serialize(out);
+    RectangularElement::serialize(out);
 
     out.writeString(this->text);
 
@@ -53,7 +56,7 @@ void Link::serialize(ObjectOutputStream& out) const {
 void Link::readSerialized(ObjectInputStream& in) {
     in.readObject("Link");
 
-    Element::readSerialized(in);
+    RectangularElement::readSerialized(in);
 
     this->text = in.readString();
 
@@ -74,12 +77,8 @@ void Link::scale(double x0, double y0, double fx, double fy, double rotation, bo
         Stacktrace::printStacktrace();
     }
 
-    xoj::util::Point<double> textPos{this->snappedBounds.x, this->snappedBounds.y};
-    textPos -= xoj::util::Point(x0, y0);
-    textPos *= fx;
-    textPos += xoj::util::Point(x0, y0);
-    this->boundingBox.x = textPos.x - PADDING;
-    this->boundingBox.y = textPos.y - PADDING;
+    this->snappedBounds.x = (this->snappedBounds.x - x0) * fx + x0;
+    this->snappedBounds.y = (this->snappedBounds.y - y0) * fy + y0;
 
     double size = this->font.getSize() * fx;
     this->font.setSize(size);
@@ -87,17 +86,13 @@ void Link::scale(double x0, double y0, double fx, double fy, double rotation, bo
     sizeCalculated = false;
 };
 
-void Link::rotate(double x0, double y0, double th) {};
-
 ElementPtr Link::clone() const {
     auto link = std::make_unique<Link>();
+    static_cast<RectangularElement&>(*link) = *this;
+
     link->font = this->font;
     link->text = this->text;
     link->url = this->url;
-    link->setColor(this->getColor());
-    link->boundingBox = this->boundingBox;
-    link->snappedBounds = this->snappedBounds;
-    link->sizeCalculated = this->sizeCalculated;
     return link;
 };
 
@@ -106,12 +101,12 @@ void Link::calcSize() const {
     pango_layout_set_text(layout.get(), this->text.c_str(), static_cast<int>(this->text.length()));
     int w = 0, h = 0;
     pango_layout_get_size(layout.get(), &w, &h);
-    double textWidth = (static_cast<double>(w)) / PANGO_SCALE;
-    double textHeight = (static_cast<double>(h)) / PANGO_SCALE;
-    this->boundingBox.width = textWidth + 2 * PADDING;
-    this->boundingBox.height = textHeight + 2 * PADDING;
-    this->snappedBounds = xoj::util::Rectangle<double>(this->boundingBox.x + PADDING, this->boundingBox.y + PADDING,
-                                                       textWidth, textHeight);
+    this->snappedBounds.width = static_cast<double>(w) / PANGO_SCALE;
+    this->snappedBounds.height = static_cast<double>(h) / PANGO_SCALE;
+    this->boundingBox = xoj::util::Rectangle<double>(this->snappedBounds.x - PADDING, this->snappedBounds.y - PADDING,
+                                                     this->snappedBounds.width + 2 * PADDING,
+                                                     this->snappedBounds.height + 2 * PADDING);
+    sizeCalculated = true;
 };
 
 auto Link::createPangoLayout() const -> xoj::util::GObjectSPtr<PangoLayout> {
