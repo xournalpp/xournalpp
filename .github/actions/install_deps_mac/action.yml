@@ -10,13 +10,13 @@ runs:
   steps:
   - name: 'Attempt to pull blob from cache'
     id: restore-blob
-    uses: actions/cache/restore@v5
+    uses: actions/cache/restore@v6
     with:
       path: "${{github.workspace}}/blob"
       key: ${{ runner.os }}-${{ runner.arch }}-blob-${{ hashFiles('mac-setup/CI_jhbuild.sh', 'mac-setup/jhbuild-version.lock', 'mac-setup/xournalpp.modules', 'mac-setup/gtk-osx.patch') }}
   - name: 'Install Perl XML::Parser' # Needed for compilation of Intltool in the blob
     if: steps.restore-blob.outputs.cache-hit != 'true'
-    uses: perl-actions/install-with-cpm@v1
+    uses: perl-actions/install-with-cpm@v2
     with:
       install: XML::Parser
   - name: 'Compile blob'
@@ -29,7 +29,7 @@ runs:
       mv xournalpp-binary-blob.tar.gz "${{github.workspace}}/blob/"
   - name: 'Push blob to cache'
     if: steps.restore-blob.outputs.cache-hit != 'true'
-    uses: actions/cache/save@v5
+    uses: actions/cache/save@v6
     with:
       key: ${{ steps.restore-blob.outputs.cache-primary-key }}
       path: "${{github.workspace}}/blob"
