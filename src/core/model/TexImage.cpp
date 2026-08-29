@@ -12,23 +12,16 @@
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
-using xoj::util::Rectangle;
-
 TexImage::TexImage(): Element(ELEMENT_TEXIMAGE) { this->sizeCalculated = true; }
 
 TexImage::~TexImage() { freeImageAndPdf(); }
 
 void TexImage::freeImageAndPdf() {
-    if (this->image) {
-        cairo_surface_destroy(this->image);
-        this->image = nullptr;
-    }
-
+    this->image.reset();
     this->pdf.reset();
 }
 
 auto TexImage::cloneTexImage() const -> std::unique_ptr<TexImage> {
-
     auto img = std::make_unique<TexImage>();
     img->boundingBox = this->boundingBox;
     img->setColor(this->getColor());
@@ -101,8 +94,9 @@ auto TexImage::loadData(std::string&& bytes, GError** err) -> bool {
             poppler_page_get_size(page.get(), &this->boundingBox.width, &this->boundingBox.height);
         }
     } else if (type == "PNG") {
-        this->image = cairo_image_surface_create_from_png_stream(
-                reinterpret_cast<cairo_read_func_t>(&cairoReadFunction), this);
+        this->image.reset(cairo_image_surface_create_from_png_stream(
+                                  reinterpret_cast<cairo_read_func_t>(&cairoReadFunction), this),
+                          xoj::util::adopt);
     } else {
         g_warning("Unknown Latex image type: \"%s\"", type.c_str());
     }
@@ -110,7 +104,7 @@ auto TexImage::loadData(std::string&& bytes, GError** err) -> bool {
     return true;
 }
 
-auto TexImage::getImage() const -> cairo_surface_t* { return this->image; }
+auto TexImage::getImage() const -> cairo_surface_t* { return this->image.get(); }
 
 auto TexImage::getPdf() const -> PopplerDocument* { return this->pdf.get(); }
 
@@ -151,8 +145,6 @@ void TexImage::readSerialized(ObjectInputStream& in) {
     this->boundingBox.width = in.readDouble();
     this->boundingBox.height = in.readDouble();
     this->text = in.readString();
-
-    freeImageAndPdf();
 
     std::string data = in.readString();
     this->loadData(std::move(data), nullptr);
