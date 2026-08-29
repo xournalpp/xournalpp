@@ -12,7 +12,7 @@
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
-TexImage::TexImage(): Element(ELEMENT_TEXIMAGE) { this->sizeCalculated = true; }
+TexImage::TexImage(): RectangularElement(ELEMENT_TEXIMAGE) { this->sizeCalculated = true; }
 
 TexImage::~TexImage() { freeImageAndPdf(); }
 
@@ -23,11 +23,9 @@ void TexImage::freeImageAndPdf() {
 
 auto TexImage::cloneTexImage() const -> std::unique_ptr<TexImage> {
     auto img = std::make_unique<TexImage>();
-    img->boundingBox = this->boundingBox;
-    img->setColor(this->getColor());
+    static_cast<RectangularElement&>(*img) = *this;
+
     img->text = this->text;
-    img->snappedBounds = this->snappedBounds;
-    img->sizeCalculated = this->sizeCalculated;
 
     // Clone has a copy of our PDF.
     img->pdf = this->pdf;
@@ -43,12 +41,12 @@ auto TexImage::cloneTexImage() const -> std::unique_ptr<TexImage> {
 auto TexImage::clone() const -> ElementPtr { return cloneTexImage(); }
 
 void TexImage::setWidth(double width) {
-    this->boundingBox.width = width;
+    this->snappedBounds.width = width;
     this->calcSize();
 }
 
 void TexImage::setHeight(double height) {
-    this->boundingBox.height = height;
+    this->snappedBounds.height = height;
     this->calcSize();
 }
 
@@ -89,9 +87,9 @@ auto TexImage::loadData(std::string&& bytes, GError** err) -> bool {
         if (!pdf.get() || poppler_document_get_n_pages(this->pdf.get()) < 1) {
             return false;
         }
-        if (std::abs(this->boundingBox.area()) <= std::numeric_limits<double>::epsilon()) {
+        if (std::abs(this->snappedBounds.area()) <= std::numeric_limits<double>::epsilon()) {
             xoj::util::GObjectSPtr<PopplerPage> page(poppler_document_get_page(this->pdf.get(), 0), xoj::util::adopt);
-            poppler_page_get_size(page.get(), &this->boundingBox.width, &this->boundingBox.height);
+            poppler_page_get_size(page.get(), &this->snappedBounds.width, &this->snappedBounds.height);
         }
     } else if (type == "PNG") {
         this->image.reset(cairo_image_surface_create_from_png_stream(
@@ -108,28 +106,13 @@ auto TexImage::getImage() const -> cairo_surface_t* { return this->image.get(); 
 
 auto TexImage::getPdf() const -> PopplerDocument* { return this->pdf.get(); }
 
-void TexImage::scale(double x0, double y0, double fx, double fy, double rotation,
-                     bool) {  // line width scaling option is not used
-
-    this->boundingBox.x = (this->boundingBox.x - x0) * fx + x0;
-    this->boundingBox.y = (this->boundingBox.y - y0) * fy + y0;
-
-    this->boundingBox.width *= fx;
-    this->boundingBox.height *= fy;
-    this->calcSize();
-}
-
-void TexImage::rotate(double x0, double y0, double th) {
-    // Rotation for TexImages not yet implemented
-}
-
 void TexImage::serialize(ObjectOutputStream& out) const {
     out.writeObject("TexImage");
 
-    this->Element::serialize(out);
+    this->RectangularElement::serialize(out);
 
-    out.writeDouble(this->boundingBox.width);
-    out.writeDouble(this->boundingBox.height);
+    out.writeDouble(this->snappedBounds.width);
+    out.writeDouble(this->snappedBounds.height);
     out.writeString(this->text);
 
     out.writeString(this->binaryData);
@@ -140,10 +123,10 @@ void TexImage::serialize(ObjectOutputStream& out) const {
 void TexImage::readSerialized(ObjectInputStream& in) {
     in.readObject("TexImage");
 
-    this->Element::readSerialized(in);
+    this->RectangularElement::readSerialized(in);
 
-    this->boundingBox.width = in.readDouble();
-    this->boundingBox.height = in.readDouble();
+    this->snappedBounds.width = in.readDouble();
+    this->snappedBounds.height = in.readDouble();
     this->text = in.readString();
 
     std::string data = in.readString();
@@ -154,6 +137,6 @@ void TexImage::readSerialized(ObjectInputStream& in) {
 }
 
 void TexImage::calcSize() const {
-    this->snappedBounds = this->boundingBox;
+    this->boundingBox = this->snappedBounds;
     this->sizeCalculated = true;
 }

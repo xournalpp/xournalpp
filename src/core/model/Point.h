@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "util/Point.h"
 
 namespace xoj::util {
 template <class T>
@@ -21,7 +22,7 @@ class Rectangle;
  * @class Point
  * @brief Representation of a point.
  */
-class Point {
+class Point: private xoj::util::Point<double> {
 public:
     Point() = default;
     ~Point() = default;
@@ -82,16 +83,21 @@ public:
      */
     bool isInside(const xoj::util::Rectangle<double>& rect) const;
 
+    /**
+     * @brief Get the position of the point
+     */
+    inline const xoj::util::Point<double>& getPosition() const { return *this; }
+
 public:
     /**
      * @brief Private storage for x coordinate.
      */
-    double x = 0;
+    using xoj::util::Point<double>::x;
 
     /**
      * @brief Private storage for y coordinate.
      */
-    double y = 0;
+    using xoj::util::Point<double>::y;
 
     /**
      * @brief Private storage for pressure.

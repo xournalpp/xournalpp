@@ -20,15 +20,15 @@
 #include "util/raii/GObjectSPtr.h"
 
 #include "AudioContent.h"
-#include "Element.h"
-#include "Font.h"          // for XojFont
+#include "Font.h"  // for XojFont
+#include "RectangularElement.h"
 #include "TextAlignment.h"
 
 class ObjectInputStream;
 class ObjectOutputStream;
 class XojPdfRectangle;
 
-class Text: public Element, public AudioContent {
+class Text: public RectangularElement, public AudioContent {
 public:
     Text();
     ~Text() override;
@@ -52,10 +52,6 @@ public:
     void updatePangoFont(PangoLayout* layout) const;
 
     void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
-    void rotate(double x0, double y0, double th) override;
-
-    void setOrigin(double x, double y) override;
-    const xoj::util::Point<double>& getOrigin() const override;
 
     bool rescaleOnlyAspectRatio() const override;
 

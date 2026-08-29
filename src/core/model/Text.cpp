@@ -20,7 +20,7 @@
 
 using xoj::util::Rectangle;
 
-Text::Text(): Element(ELEMENT_TEXT) {
+Text::Text(): RectangularElement(ELEMENT_TEXT) {
     this->font.setName("Sans");
     this->font.setSize(12);
 }
@@ -29,13 +29,11 @@ Text::~Text() = default;
 
 auto Text::cloneText() const -> std::unique_ptr<Text> {
     auto text = std::make_unique<Text>();
+    static_cast<RectangularElement&>(*text) = *this;
     static_cast<AudioContent&>(*text) = *this;
+
     text->font = this->font;
     text->text = this->text;
-    text->setColor(this->getColor());
-    text->boundingBox = this->boundingBox;
-    text->snappedBounds = this->snappedBounds;
-    text->sizeCalculated = this->sizeCalculated;
     text->inEditing = this->inEditing;
     text->wrapWidth = this->wrapWidth;
     text->align = this->align;
@@ -101,14 +99,6 @@ Text::Boxes Text::computeBoxesForLayout(PangoLayout* layout, xoj::util::Point<do
     return res;
 }
 
-void Text::setOrigin(double x, double y) {
-    this->snappedBounds.x = x;
-    this->snappedBounds.y = y;
-    this->sizeCalculated = false;  // Recompute Element::x,y
-}
-
-auto Text::getOrigin() const -> const xoj::util::Point<double>& { return this->snappedBounds.getOrigin(); }
-
 void Text::calcSize() const {
     auto layout = createPangoLayout();
     pango_layout_set_text(layout.get(), this->text.c_str(), static_cast<int>(this->text.length()));
@@ -158,12 +148,8 @@ void Text::scale(double x0, double y0, double fx, double fy, double rotation,
         Stacktrace::printStacktrace();
     }
 
-    this->boundingBox.x -= x0;
-    this->boundingBox.x *= fx;
-    this->boundingBox.x += x0;
-    this->boundingBox.y -= y0;
-    this->boundingBox.y *= fy;
-    this->boundingBox.y += y0;
+    this->snappedBounds.x = (this->snappedBounds.x - x0) * fx + x0;
+    this->snappedBounds.y = (this->snappedBounds.y - y0) * fy + y0;
 
     double size = this->font.getSize() * fx;
     this->font.setSize(size);
@@ -175,8 +161,6 @@ void Text::scale(double x0, double y0, double fx, double fy, double rotation,
     sizeCalculated = false;
 }
 
-void Text::rotate(double x0, double y0, double th) {}
-
 auto Text::isInEditing() const -> bool { return this->inEditing; }
 
 auto Text::rescaleOnlyAspectRatio() const -> bool { return true; }
@@ -184,7 +168,7 @@ auto Text::rescaleOnlyAspectRatio() const -> bool { return true; }
 void Text::serialize(ObjectOutputStream& out) const {
     out.writeObject("Text");
 
-    this->Element::serialize(out);
+    this->RectangularElement::serialize(out);
     this->AudioContent::serialize(out);
 
     out.writeString(this->text);
@@ -201,7 +185,7 @@ void Text::serialize(ObjectOutputStream& out) const {
 void Text::readSerialized(ObjectInputStream& in) {
     in.readObject("Text");
 
-    this->Element::readSerialized(in);
+    this->RectangularElement::readSerialized(in);
     this->AudioContent::readSerialized(in);
 
     this->text = in.readString();

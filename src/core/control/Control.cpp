@@ -2417,7 +2417,7 @@ void Control::clipboardPaste(ElementPtr e) {
     x = std::max(0.0, x - box.width / 2);
     y = std::max(0.0, y - box.height / 2);
 
-    e->setOrigin(x, y);
+    e->move(x, y);
 
     undoRedo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, e.get()));
     auto sel = SelectionFactory::createFromFloatingElement(this, page, layer, view, std::move(e));

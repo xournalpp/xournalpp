@@ -18,15 +18,14 @@
 
 #include "util/raii/GObjectSPtr.h"  // For GObjectSPtr
 
-#include "Element.h"  // for Element
-#include "Font.h"     // for XojFont
+#include "Font.h"  // for XojFont
+#include "RectangularElement.h"
 #include "TextAlignment.h"
 
-class Element;
 class ObjectInputStream;
 class ObjectOutputStream;
 
-class Link: public Element {
+class Link: public RectangularElement {
 public:
     Link();
     ~Link() override = default;
@@ -50,16 +49,9 @@ public:
     xoj::util::GObjectSPtr<PangoLayout> createPangoLayout() const;
 
 public:
-    /**
-     * @override (required)
-     */
     void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
-    void rotate(double x0, double y0, double th) override;
     ElementPtr clone() const override;
 
-    /**
-     * @override (optional)
-     */
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;
     bool rescaleOnlyAspectRatio() const override;

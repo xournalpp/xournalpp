@@ -285,8 +285,8 @@ void LatexController::insertTexImage() {
         if (elementIndex != Element::InvalidIndex) [[likely]] {
             xoj_assert(orig.get() == this->selectedElem);
             // Set the size: preserve the height and aspect ratio
-            const auto& origBox = this->selectedElem->getBoundingBox();
-            const auto& nativeSize = this->temporaryRender->getBoundingBox();
+            const auto& origBox = this->selectedElem->getSnappedBounds();
+            const auto& nativeSize = this->temporaryRender->getSnappedBounds();
             this->temporaryRender->setWidth(nativeSize.width != 0 && nativeSize.height != 0 ?
                                                     nativeSize.width * origBox.height / nativeSize.height :
                                                     10.);
