@@ -16,6 +16,8 @@ class ZoomControl;
 namespace xoj::util {
 template <typename T>
 class Rectangle;
+template <typename T>
+struct Point;
 };
 
 namespace xoj::view {
@@ -44,6 +46,8 @@ public:
     virtual double getWidth() const = 0;
     virtual double getHeight() const = 0;
 
+    // Convert a Point from local coordinates to widget coordinates
+    virtual xoj::util::Point<double> toWidgetCoordinates(const xoj::util::Point<double>& p) const = 0;
     // Convert a rectangle from local coordinates to widget coordinates
     virtual xoj::util::Rectangle<double> toWidgetCoordinates(const xoj::util::Rectangle<double>& r) const = 0;
 

@@ -738,7 +738,6 @@ function app.changeBackgroundPdfPageNr(pageNr, relative) end
 ---      "y"      = number
 ---   }
 ---   "rotation" = number
----   "isRotationSupported" = bool
 --- }
 --- 
 --- Example 1: local penInfo = app.getToolInfo("pen")

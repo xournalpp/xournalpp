@@ -36,7 +36,7 @@ void ImageHandler::chooseAndCreateImage(std::function<void(std::unique_ptr<Image
                                       [cb = std::move(callback), ctrl = control](fs::path p, bool) {
                                           auto img = ImageHandler::createImageFromFile(p);
 
-                                          if (!img || img->getImageSize() == Image::NOSIZE) {
+                                          if (!img) {
                                               XojMsgBox::showErrorToUser(ctrl->getGtkWindow(),
                                                                          _("Failed to load image"));
                                               return;
@@ -103,51 +103,53 @@ bool ImageHandler::addImageToDocument(std::unique_ptr<Image> img, PageRef page, 
     return true;
 }
 
-void ImageHandler::automaticScaling(Image& img, PageRef page, int width, int height) {
-    double zoom = 1;
-    const auto& p = img.getOrigin();
-
-    if (p.x + width > page->getWidth() || p.y + height > page->getHeight()) {
-        double const maxZoomX = (page->getWidth() - p.x) / width;
-        double const maxZoomY = (page->getHeight() - p.y) / height;
-        zoom = std::min(maxZoomX, maxZoomY);
+static inline double getScalingToFitInPage(const xoj::util::Rectangle<double>& frame, PageRef page) {
+    if (frame.x + frame.width > page->getWidth() || frame.y + frame.height > page->getHeight()) {
+        double const maxScalingX = (page->getWidth() - frame.x) / frame.width;
+        double const maxScalingY = (page->getHeight() - frame.y) / frame.height;
+        return std::min(maxScalingX, maxScalingY);
     }
-
-    img.setWidth(width * zoom);
-    img.setHeight(height * zoom);
+    return 1.;
 }
 
-void ImageHandler::automaticScaling(Image& img, PageRef page) {
-    auto [width, height] = img.getImageSize();
-    automaticScaling(img, page, width, height);
+void ImageHandler::automaticScaling(Image& img, const xoj::util::Point<double>& p, PageRef page) {
+    double scaling = getScalingToFitInPage({p, img.getNaturalSize()}, page);
+    img.setTransformation({scaling, 0, 0, scaling, p});
 }
 
+void ImageHandler::automaticScaling(Image& img, const xoj::util::Rectangle<double>& frame, PageRef page) {
+    double scaling = getScalingToFitInPage(frame, page);
+
+    if (auto [width, height] = img.getNaturalSize(); width > 0 && height > 0) [[likely]] {
+        img.setTransformation(
+                {scaling * frame.width / width, 0, 0, scaling * frame.height / height, frame.getOrigin()});
+    } else {
+        img.setTransformation({scaling, 0, 0, scaling, frame.getOrigin()});
+    }
+}
 
 void ImageHandler::insertImageWithSize(PageRef page, const xoj::util::Rectangle<double>& space) {
     chooseAndCreateImage([space, page, ctrl = control](std::unique_ptr<Image> img) {
         xoj_assert(img);
-        img->setOrigin(space.x, space.y);
-        auto [width, height] = img->getImageSize();
 
         if (static_cast<int>(space.width) != 0 && static_cast<int>(space.height) != 0) {
             // scale down
+            auto [width, height] = img->getNaturalSize();
             const double scaling = std::min(space.height / height, space.width / width);
-            img->setWidth(scaling * width);
-            img->setHeight(scaling * height);
 
             // center
-            const auto& box = img->getBoundingBox();
-            xoj::util::Point<double> move(0, 0);
-            if (box.height < space.height) {
-                move.y = (space.height - box.height) * 0.5;
+            xoj::util::Point<double> move = space.getOrigin();
+            if (scaling * height < space.height) {
+                move.y += (space.height - scaling * height) * 0.5;
             }
-            if (box.width < space.width) {
-                move.x = (space.width - box.width) * 0.5;
+            if (scaling * width < space.width) {
+                move.x += (space.width - scaling * width) * 0.5;
             }
-            img->move(move.x, move.y);
+
+            img->setTransformation({scaling, 0, 0, scaling, move});
         } else {
             // zero space is selected, scale original image size down to fit on the page
-            automaticScaling(*img, page);
+            automaticScaling(*img, space.getOrigin(), page);
         }
         addImageToDocument(std::move(img), page, ctrl, true);
     });

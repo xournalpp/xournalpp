@@ -5,6 +5,7 @@
 
 #include "model/Text.h"           // for Text
 #include "util/Color.h"           // for cairo_set_source_rgbi
+#include "util/Matrix.h"          // for Matrix
 #include "util/StringUtils.h"     // for StringUtils
 #include "util/raii/CairoWrappers.h"
 #include "util/raii/GObjectSPtr.h"
@@ -43,8 +44,7 @@ void TextView::draw(const Context& ctx) const {
         Util::cairo_set_source_rgbi(ctx.cr, text->getColor());
     }
 
-    const auto& origin = text->getOrigin();
-    cairo_translate(ctx.cr, origin.x, origin.y);
+    text->getTransformation().transformCairo(ctx.cr);
 
     auto layout = initPango(ctx.cr, text);
     const std::string& content = text->getText();

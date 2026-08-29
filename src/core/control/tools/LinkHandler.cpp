@@ -60,7 +60,11 @@ std::unique_ptr<xoj::view::OverlayView> LinkHandler::createView(xoj::view::Repai
 static Link* findLinkAtPos(const PageRef& page, int x, int y) {
     for (auto&& e: page->getSelectedLayer()->getElements()) {
         if (e->getType() == ELEMENT_LINK && e->hasBoundingBoxContaining(x, y)) {
-            return dynamic_cast<Link*>(e.get());
+            auto* link = static_cast<Link*>(e.get());
+            auto p = link->getTransformation().inverse() * xoj::util::Point<double>(x, y);
+            if (p.x >= 0 && p.x <= link->getNaturalSize().width && p.y >= 0 && p.y <= link->getNaturalSize().height) {
+                return link;
+            }
         }
     }
     return nullptr;
@@ -81,7 +85,7 @@ void LinkHandler::startEditing(const PageRef& page, const int x, const int y) {
                     link->setUrl(dlg->getURL());
                     link->setAlignment(dlg->getLayout());
                     link->setFont(dlg->getFont());
-                    link->setTextPos(x, y);
+                    link->move(x, y);
                     Document* doc = control->getDocument();
                     doc->lock();
                     const auto layer = page->getSelectedLayer();
@@ -107,7 +111,7 @@ void LinkHandler::startEditing(const PageRef& page, const int x, const int y) {
                     link->setUrl(dlg->getURL());
                     link->setAlignment(dlg->getLayout());
                     link->setFont(dlg->getFont());
-                    link->setOrigin(pos.x, pos.y);
+                    link->move(pos.x, pos.y);
 
                     const auto undo = control->getUndoRedoHandler();
                     auto groupUndoAction = std::make_unique<GroupUndoAction>();
