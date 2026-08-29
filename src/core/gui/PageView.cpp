@@ -177,7 +177,7 @@ void XojPageView::startText(double x, double y) {
     this->xournal->getControl()->getSearchBar()->showSearchBar(false);
 
     if (this->textEditor != nullptr) {
-        if (const auto& box = this->textEditor->getContentBoundingBox(); !box.contains(x, y)) {
+        if (!this->textEditor->isEventInEditor(x, y)) {
             endText();
         } else {
             this->textEditor->mousePressed(x, y);
@@ -471,8 +471,9 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
         double origx = x - (selection->getXOnView() - selection->getOriginalXOnView());
         double origy = y - (selection->getYOnView() - selection->getOriginalYOnView());
         auto elems = selection->getElementsView();
-        auto it = std::find_if(elems.begin(), elems.end(),
-                               [&](const Element* elem) { return elem->intersectsArea(origx - 5, origy - 5, 5, 5); });
+        auto it = std::find_if(elems.begin(), elems.end(), [&](const Element* elem) {
+            return elem->intersectsArea(origx - 5, origy - 5, 5, 5) && elem->distanceTo(x, y) < 5;
+        });
         if (it != elems.end()) {
             // Enter editing mode on the selected object
             const Element* object = *it;
@@ -904,6 +905,12 @@ double XojPageView::getWidth() const { return page->getWidth(); }
 
 double XojPageView::getHeight() const { return page->getHeight(); }
 
+auto XojPageView::toWidgetCoordinates(const xoj::util::Point<double>& q) const -> xoj::util::Point<double> {
+    double zoom = this->getZoom();
+    auto p = this->getPixelPosition();
+    auto scrollDelta = this->getXournal()->getScrollHandling()->getPosition();
+    return {q.x * zoom + p.x - scrollDelta.x, q.y * zoom + p.y - scrollDelta.y};
+}
 auto XojPageView::toWidgetCoordinates(const xoj::util::Rectangle<double>& r) const -> xoj::util::Rectangle<double> {
     double zoom = this->getZoom();
     auto p = this->getPixelPosition();

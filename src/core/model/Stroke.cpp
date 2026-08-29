@@ -6,9 +6,9 @@
 #include <iterator>   // for back_insert_iterator
 #include <limits>     // for numeric_limits
 #include <memory>
-#include <numeric>    // for accumulate
-#include <optional>   // for optional, nullopt
-#include <string>     // for to_string, operator<<
+#include <numeric>   // for accumulate
+#include <optional>  // for optional, nullopt
+#include <string>    // for to_string, operator<<
 
 #include <cairo.h>  // for cairo_matrix_translate
 #include <glib.h>   // for g_free, g_message
@@ -21,6 +21,7 @@
 #include "util/Assert.h"                          // for xoj_assert
 #include "util/BasePointerIterator.h"             // for BasePointerIterator
 #include "util/Interval.h"                        // for Interval
+#include "util/Matrix.h"                          // for Matrix
 #include "util/PairView.h"                        // for PairView<>::BaseIte...
 #include "util/PairView.h"                        // for PairView
 #include "util/PlaceholderString.h"               // for PlaceholderString
@@ -229,14 +230,9 @@ void Stroke::setWidth(double width) {
 
 auto Stroke::getWidth() const -> double { return this->width; }
 
-auto Stroke::rescaleWithMirror() const -> bool { return true; }
-
 auto Stroke::isInSelection(ShapeContainer* container) const -> bool {
-    for (auto&& p: this->points) {
-        double px = p.x;
-        double py = p.y;
-
-        if (!container->contains(px, py)) {
+    for (const auto& p: this->points) {
+        if (!container->contains(p.x, p.y)) {
             return false;
         }
     }
@@ -338,14 +334,14 @@ auto Stroke::getOrigin() const -> const xoj::util::Point<double>& {
 }
 
 void Stroke::rotate(double x0, double y0, double th) {
-    cairo_matrix_t rotMatrix;
-    cairo_matrix_init_identity(&rotMatrix);
-    cairo_matrix_translate(&rotMatrix, x0, y0);
-    cairo_matrix_rotate(&rotMatrix, th);
-    cairo_matrix_translate(&rotMatrix, -x0, -y0);
+    auto matrix = xoj::util::Matrix::TRANSLATION(x0, y0);
+    matrix = matrix.rotate(th);
+    matrix = matrix.translate(-x0, -y0);
 
     for (auto&& p: points) {
-        cairo_matrix_transform_point(&rotMatrix, &p.x, &p.y);
+        auto coords = matrix * p.getPosition();
+        p.x = coords.x;
+        p.y = coords.y;
     }
     this->sizeCalculated = false;
     // Width and Height will likely be changed after this operation
@@ -353,17 +349,17 @@ void Stroke::rotate(double x0, double y0, double th) {
 
 void Stroke::scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) {
     double fz = (restoreLineWidth) ? 1 : sqrt(std::abs(fx * fy));
-    cairo_matrix_t scaleMatrix;
-    cairo_matrix_init_identity(&scaleMatrix);
-    cairo_matrix_translate(&scaleMatrix, x0, y0);
-    cairo_matrix_rotate(&scaleMatrix, rotation);
-    cairo_matrix_scale(&scaleMatrix, fx, fy);
-    cairo_matrix_rotate(&scaleMatrix, -rotation);
-    cairo_matrix_translate(&scaleMatrix, -x0, -y0);
+
+    auto matrix = xoj::util::Matrix::TRANSLATION(x0, y0);
+    matrix = matrix.rotate(rotation);
+    matrix = matrix.scale(fx, fy);
+    matrix = matrix.rotate(-rotation);
+    matrix = matrix.translate(-x0, -y0);
 
     for (auto&& p: points) {
-        cairo_matrix_transform_point(&scaleMatrix, &p.x, &p.y);
-
+        auto coords = matrix * p.getPosition();
+        p.x = coords.x;
+        p.y = coords.y;
         if (p.z != Point::NO_PRESSURE) {
             p.z *= fz;
         }

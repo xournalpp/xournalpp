@@ -20,6 +20,7 @@
 
 #include "model/OverlayBase.h"
 #include "model/PageRef.h"  // for PageRef
+#include "model/Text.h"
 #include "util/Color.h"     // for Color
 #include "util/Range.h"
 #include "util/raii/CStringWrapper.h"
@@ -27,7 +28,6 @@
 #include "util/raii/GSourceURef.h"
 #include "util/raii/PangoSPtr.h"
 
-class Text;
 class XojFont;
 class Control;
 class TextEditorCallbacks;
@@ -60,6 +60,8 @@ public:
     void mouseMoved(double x, double y);    ///< Coordinates are in Page coordinates
     void mouseReleased();
 
+    bool isEventInEditor(double x, double y) const;  ///< Coordinates are in Page coordinates
+
     /**
      * @brief Returns a pointer to the edited Text element.
      * Warning: The content of the Text element does not need to be up to date with the buffer's content
@@ -81,7 +83,8 @@ public:
     Color getSelectionColor() const;
 
     const Range& getCursorBox() const;
-    const Range& getContentBoundingBox() const;
+    inline const Range& getContentBoundingBox() const { return previousBoundingBox; }
+    inline const Text::Boxes& getBoxes() const { return boxes; }
     inline double getCurrentWrapWidth() const { return currentWrapWidth; }
 
     bool isCursorVisible() const;
@@ -120,12 +123,12 @@ private:
 
     void setSelectionAttributesToPangoLayout(PangoLayout* pl) const;
 
-    Range computeBoundingBox() const;
+    void updateBoxes();
     void repaintEditor(bool sizeChanged = true);
 
     /**
      * @brief Compute the cursor's location
-     * @return The bounding box of the cursor, in TextBox coordinates (i.e relative to the text's getOrigin())
+     * @return The bounding box of the cursor, in TextBox coordinates (i.e before applying this->transformationMatrix)
      *          The bounding box is returned even if the cursor is currently not visible (blinking...)
      * WARNING: The returned box may have width == 0 (if in insertion mode or at the end of a line). In this case, the
      *          width of the displayed cursor should be decided by the view class (depending on zoom for instance)
@@ -148,7 +151,7 @@ private:
     void jumpALine(GtkTextIter* textIter, int count);
 
     void findPos(GtkTextIter* iter, double x, double y) const;
-    void markPos(double x, double y, bool extendSelection);
+    void markPos(double x, double y, bool extendSelection);  ///< Coordinates are in Text coordinates
 
     void contentsChanged(bool forceCreateUndoAction = false);
     void updateCursorBox();
@@ -192,7 +195,11 @@ private:
      * we need to repaint the union of the current and previous bboxes.
      */
     Range previousBoundingBox;
-    Range cursorBox;
+
+    /// @brief Tracks the Pango boxes of the editor from the last render.
+    Text::Boxes boxes;
+
+    Range cursorBox;  ///< in Text coordinates
 
     std::shared_ptr<xoj::util::DispatchPool<xoj::view::TextEditionView>> viewPool;
 

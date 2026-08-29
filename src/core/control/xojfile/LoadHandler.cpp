@@ -41,6 +41,7 @@
 #include "util/Color.h"                 // for Color
 #include "util/GzInputStream.h"         // for GzInputStream
 #include "util/LoopUtil.h"              // for for_first_then_each
+#include "util/Matrix.h"                // for Matrix
 #include "util/PathUtil.h"              // for PathStorageMode
 #include "util/StringUtils.h"           // for char_cast
 #include "util/ZipInputStream.h"        // for ZipInputStream
@@ -350,15 +351,16 @@ void LoadHandler::finalizeStroke() {
     }
 }
 
-void LoadHandler::addText(std::string font, double size, double x, double y, Color color, std::optional<double> wrap,
-                          std::optional<TextAlignment> align, bool justify, fs::path filename, size_t timestamp) {
+void LoadHandler::addText(std::string font, double size, xoj::util::Matrix matrix, Color color,
+                          std::optional<double> wrap, std::optional<TextAlignment> align, bool justify,
+                          fs::path filename, size_t timestamp) {
     xoj_assert(!this->text);
     this->text = std::make_unique<Text>();
 
     XojFont& f = this->text->getFont();
     f.setName(std::move(font));
     f.setSize(size);
-    this->text->setOrigin(x, y);
+    this->text->setTransformation(matrix);
     this->text->setColor(color);
     this->text->setWrap(wrap.value_or(Text::NO_WRAP));
     this->text->setAlignment(align.value_or(TextAlignment::LEFT));
@@ -379,13 +381,16 @@ void LoadHandler::finalizeText() {
     this->layer->addElement(std::move(this->text));
 }
 
-void LoadHandler::addImage(double left, double top, double right, double bottom) {
+void LoadHandler::addImageLegacy(double left, double top, double right, double bottom) {
     xoj_assert(!this->image);
     this->image = std::make_unique<Image>();
+    this->currentElementFrameLegacy = {left, top, right - left, bottom - top};
+}
 
-    this->image->setOrigin(left, top);
-    this->image->setWidth(right - left);
-    this->image->setHeight(bottom - top);
+void LoadHandler::addImage(xoj::util::Matrix matrix) {
+    xoj_assert(!this->image);
+    this->image = std::make_unique<Image>();
+    this->image->setTransformation(matrix);
 }
 
 void LoadHandler::setImageData(std::string data) {
@@ -420,17 +425,34 @@ void LoadHandler::finalizeImage() {
         return;
     }
 
+    if (currentElementFrameLegacy) {
+        // We need to load the image to deduce the transformation matrix, hence forbidding lazy loading... :-(
+        auto [width, height] = this->image->getNaturalSize();  // Effectively loads the image
+        if (width != 0 && height != 0) {
+            this->image->setTransformation(xoj::util::Matrix::SCALING(currentElementFrameLegacy->width / width,
+                                                                      currentElementFrameLegacy->height / height));
+        }
+        this->image->move(currentElementFrameLegacy->x, currentElementFrameLegacy->y);
+
+        currentElementFrameLegacy = std::nullopt;
+    }
+
     this->layer->addElement(std::move(this->image));
 }
 
-void LoadHandler::addTexImage(double left, double top, double right, double bottom, std::string text) {
+void LoadHandler::addTexImageLegacy(double left, double top, double right, double bottom, std::string text) {
     xoj_assert(!this->teximage);
     this->teximage = std::make_unique<TexImage>();
 
-    this->teximage->setOrigin(left, top);
-    this->teximage->setWidth(right - left);
-    this->teximage->setHeight(bottom - top);
+    this->currentElementFrameLegacy = {left, top, right - left, bottom - top};
 
+    this->teximage->setText(std::move(text));
+}
+
+void LoadHandler::addTexImage(xoj::util::Matrix matrix, std::string text) {
+    xoj_assert(!this->teximage);
+    this->teximage = std::make_unique<TexImage>();
+    this->teximage->setTransformation(matrix);
     this->teximage->setText(std::move(text));
 }
 
@@ -452,10 +474,20 @@ void LoadHandler::setTexImageAttachment(const fs::path& filename) {
 void LoadHandler::finalizeTexImage() {
     xoj_assert(this->teximage);
 
+    if (currentElementFrameLegacy) {
+        if (auto [width, height] = this->teximage->getNativeSize(); width != 0 && height != 0) [[likely]] {
+            this->teximage->setTransformation(xoj::util::Matrix::SCALING(currentElementFrameLegacy->width / width,
+                                                                         currentElementFrameLegacy->height / height));
+        }
+        this->teximage->move(currentElementFrameLegacy->x, currentElementFrameLegacy->y);
+
+        currentElementFrameLegacy = std::nullopt;
+    }
+
     this->layer->addElement(std::move(this->teximage));
 }
 
-void LoadHandler::addLink(TextAlignment align, std::string font, double size, double x, double y, Color color,
+void LoadHandler::addLink(TextAlignment align, std::string font, double size, xoj::util::Matrix matrix, Color color,
                           std::string url) {
     this->link = std::make_unique<Link>();
 
@@ -463,7 +495,7 @@ void LoadHandler::addLink(TextAlignment align, std::string font, double size, do
 
     this->link->setUrl(std::string(url.c_str()));
 
-    this->link->setOrigin(x, y);
+    this->link->setTransformation(matrix);
 
     XojFont& f = this->link->getFont();
     f.setName(std::move(font));

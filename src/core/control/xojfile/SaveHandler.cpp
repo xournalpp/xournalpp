@@ -164,6 +164,11 @@ void SaveHandler::visitStrokeExtended(XmlPointNode* stroke, const Stroke* s) {
     }
 }
 
+static inline std::vector<double> makeMatrixVector(const RectangularElement& e) {
+    const auto& m = e.getTransformation();
+    return std::vector<double>{m.xx, m.yx, m.xy, m.yy, m.shift.x, m.shift.y};
+}
+
 void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
     auto* layer = new XmlNode(TAG_NAMES[TagType::LAYER]);
     page->addChild(layer);
@@ -190,9 +195,7 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
 
             text->setAttrib(xoj::xml_attrs::FONT_STR, f.getName().c_str());
             text->setAttrib(xoj::xml_attrs::SIZE_STR, f.getSize());
-            const auto& origin = t->getOrigin();
-            text->setAttrib(xoj::xml_attrs::X_COORD_STR, origin.x);
-            text->setAttrib(xoj::xml_attrs::Y_COORD_STR, origin.y);
+            text->setAttrib(xoj::xml_attrs::MATRIX_STR, makeMatrixVector(*t));
             text->setAttrib(xoj::xml_attrs::COLOR_STR, getColorStr(t->getColor()).c_str());
             if (auto w = t->getWrap(); w != Text::NO_WRAP) {
                 text->setAttrib(xoj::xml_attrs::WRAP_STR, w);
@@ -211,23 +214,14 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
             layer->addChild(image);
 
             image->setImage(i->getImage());
-
-            Range r(i->getBoundingBox());
-            image->setAttrib(xoj::xml_attrs::LEFT_POS_STR, r.minX);
-            image->setAttrib(xoj::xml_attrs::TOP_POS_STR, r.minY);
-            image->setAttrib(xoj::xml_attrs::RIGHT_POS_STR, r.maxX);
-            image->setAttrib(xoj::xml_attrs::BOTTOM_POS_STR, r.maxY);
+            image->setAttrib(xoj::xml_attrs::MATRIX_STR, makeMatrixVector(*i));
         } else if (e->getType() == ELEMENT_TEXIMAGE) {
             auto* i = dynamic_cast<const TexImage*>(e);
             auto* image = new XmlTexNode(TAG_NAMES[TagType::TEXIMAGE], std::string(i->getBinaryData()));
             layer->addChild(image);
 
             image->setAttrib(xoj::xml_attrs::TEXT_STR, i->getText().c_str());
-            Range r(i->getBoundingBox());
-            image->setAttrib(xoj::xml_attrs::LEFT_POS_STR, r.minX);
-            image->setAttrib(xoj::xml_attrs::TOP_POS_STR, r.minY);
-            image->setAttrib(xoj::xml_attrs::RIGHT_POS_STR, r.maxX);
-            image->setAttrib(xoj::xml_attrs::BOTTOM_POS_STR, r.maxY);
+            image->setAttrib(xoj::xml_attrs::MATRIX_STR, makeMatrixVector(*i));
         } else if (e->getType() == ELEMENT_LINK) {
             auto* l = dynamic_cast<const Link*>(e);
             auto* link = new XmlTextNode(TAG_NAMES[TagType::LINK], l->getText());
@@ -238,9 +232,7 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
             link->setAttrib(xoj::xml_attrs::ALIGN_STR, TextAlignment::NAMES[l->getAlignment()]);
             link->setAttrib(xoj::xml_attrs::FONT_STR, f.getName().c_str());
             link->setAttrib(xoj::xml_attrs::SIZE_STR, f.getSize());
-            const auto& origin = l->getOrigin();
-            link->setAttrib(xoj::xml_attrs::X_COORD_STR, origin.x);
-            link->setAttrib(xoj::xml_attrs::Y_COORD_STR, origin.y);
+            link->setAttrib(xoj::xml_attrs::MATRIX_STR, makeMatrixVector(*l));
             link->setAttrib(xoj::xml_attrs::COLOR_STR, getColorStr(l->getColor()).c_str());
             link->setAttrib(xoj::xml_attrs::URL_STR, l->getUrl().c_str());
         }

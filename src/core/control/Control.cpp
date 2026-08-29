@@ -2373,21 +2373,17 @@ void Control::clipboardPasteImage(GdkPixbuf* img) {
     pageWidth = pageWidth * 3.0 / 4.0;
     pageHeight = pageHeight * 3.0 / 4.0;
 
-    auto scaledWidth = width;
-    auto scaledHeight = height;
+
+    double scaling = 1;
 
     if (width > pageWidth) {
-        scaledWidth = pageWidth;
-        scaledHeight = (scaledWidth * height) / width;
+        scaling = pageWidth / width;
+    }
+    if (height > pageHeight) {
+        scaling = std::max(scaling, pageHeight / height);
     }
 
-    if (scaledHeight > pageHeight) {
-        scaledHeight = pageHeight;
-        scaledWidth = (scaledHeight * width) / height;
-    }
-
-    image->setWidth(scaledWidth);
-    image->setHeight(scaledHeight);
+    image->setTransformation(xoj::util::Matrix::SCALING(scaling, scaling));
 
     clipboardPaste(std::move(image));
 }

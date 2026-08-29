@@ -13,6 +13,7 @@
 #include <cairo.h>  // for cairo_t
 
 #include "util/DispatchPool.h"  // for Listener
+#include "util/Point.h"
 #include "view/overlays/OverlayView.h"
 
 class OverlayBase;
@@ -41,6 +42,7 @@ public:
 
     bool isViewOf(const OverlayBase* overlay) const override;
 
+    xoj::util::Point<double> toWidgetCoordinates(const xoj::util::Point<double>& r) const;
     xoj::util::Rectangle<double> toWidgetCoordinates(const xoj::util::Rectangle<double>& r) const;
     double getZoom() const;
 
@@ -57,6 +59,8 @@ public:
 
 private:
     const TextEditor* textEditor;
+    /// Margin added to all repaint operations to encompass the borders. In pixels
+    const double repaintMargin;
 
 public:
     // Padding between the text logical box and the frame

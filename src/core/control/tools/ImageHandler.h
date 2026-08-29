@@ -38,11 +38,10 @@ public:
 
     static bool addImageToDocument(std::unique_ptr<Image> img, PageRef page, Control* ctrl, bool addUndoAction);
 
-    /// applies (potentially adjusted) width/height to the image: scale down (only if necessary) the image so that it
-    /// then fits on the page
-    static void automaticScaling(Image& img, PageRef page, int width, int height);
-    /// Same as above, but width and height are inferred from the image file.
-    static void automaticScaling(Image& img, PageRef page);
+    /// Position the image and insures it fits in the page (scaling down if needed)
+    static void automaticScaling(Image& img, const xoj::util::Point<double>& position, PageRef page);
+    /// Position the image, gives it the provided size and insures it fits in the page (scaling down if needed)
+    static void automaticScaling(Image& img, const xoj::util::Rectangle<double>& frame, PageRef page);
 
     /// lets the user choose an image file, creates the image and calls the callback
     void chooseAndCreateImage(std::function<void(std::unique_ptr<Image>)> callback);

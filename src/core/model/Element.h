@@ -17,7 +17,8 @@
 
 #include <gdk/gdk.h>  // for GdkRectangle
 
-#include "util/Color.h"                     // for Color
+#include "util/Color.h"  // for Color
+#include "util/Matrix.h"
 #include "util/Rectangle.h"                 // for Rectangle
 #include "util/serializing/Serializable.h"  // for Serializable
 
@@ -78,10 +79,6 @@ public:
     bool hasBoundingBoxContaining(double x, double y) const;
 
     virtual bool isInSelection(ShapeContainer* container) const = 0;
-
-    virtual bool rescaleOnlyAspectRatio() const;
-    virtual bool rescaleWithMirror() const;
-
     /**
      * Take 1:1 copy of this element
      */
@@ -105,14 +102,10 @@ protected:
     mutable xoj::util::Rectangle<double> snappedBounds{};
 
 private:
-    /**
-     * Type of this element
-     */
+    /// Type of this element
     ElementType type;
 
-    /**
-     * The color in RGB format
-     */
+    /// The color in RGB format
     Color color{0U};
 };
 

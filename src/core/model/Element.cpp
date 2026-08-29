@@ -45,9 +45,6 @@ auto Element::hasBoundingBoxContaining(double x, double y) const -> bool {
     return Range(this->getBoundingBox()).contains(x, y);
 }
 
-auto Element::rescaleOnlyAspectRatio() const -> bool { return false; }
-auto Element::rescaleWithMirror() const -> bool { return false; }
-
 void Element::serialize(ObjectOutputStream& out) const {
     out.writeObject("Element");
 

@@ -81,6 +81,20 @@ static auto parseDouble(const char*& it, const char* end, double& value) -> bool
     }
 }
 
+static auto getMatrix(const XmlParserHelper::AttributeMap& attributeMap) -> std::optional<xoj::util::Matrix> {
+    const auto sv = XmlParserHelper::getAttrib<std::string_view>(xoj::xml_attrs::MATRIX_STR, attributeMap);
+    if (!sv) {
+        return std::nullopt;
+    }
+    auto it = sv->data();
+    auto end = sv->data() + sv->size();
+
+    xoj::util::Matrix m;
+    bool success = parseDouble(it, end, m.xx) && parseDouble(it, end, m.yx) && parseDouble(it, end, m.xy) &&
+                   parseDouble(it, end, m.yy) && parseDouble(it, end, m.shift.x) && parseDouble(it, end, m.shift.y);
+    return success ? std::make_optional(m) : std::nullopt;
+}
+
 void XmlParser::parserStartElement(GMarkupParseContext* context, const gchar* elementName, const gchar** attributeNames,
                                    const gchar** attributeValues, gpointer userdata, GError** error) {
     auto self = static_cast<XmlParser*>(userdata);
@@ -422,8 +436,6 @@ void XmlParser::parseTextTag(const XmlParserHelper::AttributeMap& attributeMap) 
     const auto font =
             XmlParserHelper::getAttribMandatory<std::string_view>(xoj::xml_attrs::FONT_STR, attributeMap, "Sans");
     const auto size = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::SIZE_STR, attributeMap, 12);
-    const auto x = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::X_COORD_STR, attributeMap);
-    const auto y = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::Y_COORD_STR, attributeMap);
     const auto color = XmlParserHelper::getAttribColorMandatory(attributeMap, Colors::black);
     const auto wrap = XmlParserHelper::getAttrib<double>(xoj::xml_attrs::WRAP_STR, attributeMap);
     const auto align = XmlParserHelper::getAttrib<TextAlignment>(xoj::xml_attrs::ALIGN_STR, attributeMap);
@@ -441,7 +453,16 @@ void XmlParser::parseTextTag(const XmlParserHelper::AttributeMap& attributeMap) 
                 XmlParserHelper::getAttribMandatory<size_t>(xoj::xml_attrs::TIMESTAMP_STR, attributeMap, 0UL);
     }
 
-    this->builder.addText(std::string{font}, size, x, y, color, wrap, align, justify, std::move(tempFilename),
+    auto matrix = getMatrix(attributeMap);
+
+    if (!matrix) {
+        // Legacy code - to open file version <= 4
+        const auto x = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::X_COORD_STR, attributeMap);
+        const auto y = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::Y_COORD_STR, attributeMap);
+        matrix = xoj::util::Matrix::TRANSLATION(x, y);
+    }
+
+    this->builder.addText(std::string{font}, size, matrix.value(), color, wrap, align, justify, std::move(tempFilename),
                           tempTimestamp);
 
     this->tempTimestamp = 0;
@@ -450,12 +471,19 @@ void XmlParser::parseTextTag(const XmlParserHelper::AttributeMap& attributeMap) 
 void XmlParser::parseTextText(std::string_view text) { this->builder.setTextContents(std::string{text}); }
 
 void XmlParser::parseImageTag(const XmlParserHelper::AttributeMap& attributeMap) {
+    if (const auto matrix = getMatrix(attributeMap); matrix) {
+        // File format version >= 5. Single attribute with the transformation matrix
+        this->builder.addImage(matrix.value());
+        return;
+    }
+
+    // Legacy code - to open file version <= 4
     const auto left = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::LEFT_POS_STR, attributeMap);
     const auto top = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::TOP_POS_STR, attributeMap);
     const auto right = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::RIGHT_POS_STR, attributeMap);
     const auto bottom = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::BOTTOM_POS_STR, attributeMap);
 
-    this->builder.addImage(left, top, right, bottom);
+    this->builder.addImageLegacy(left, top, right, bottom);
 }
 
 void XmlParser::parseImageText(std::string_view text) {
@@ -466,16 +494,21 @@ void XmlParser::parseImageText(std::string_view text) {
 }
 
 void XmlParser::parseTexImageTag(const XmlParserHelper::AttributeMap& attributeMap) {
+    auto text = XmlParserHelper::getAttribMandatory<std::string_view>(xoj::xml_attrs::TEXT_STR, attributeMap);
+
+    if (const auto matrix = getMatrix(attributeMap); matrix) {
+        // File format version >= 5. Single attribute with the transformation matrix
+        this->builder.addTexImage(matrix.value(), std::string(text));
+        return;
+    }
+
+    // Legacy code - to open file version <= 4
     const auto left = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::LEFT_POS_STR, attributeMap);
     const auto top = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::TOP_POS_STR, attributeMap);
     const auto right = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::RIGHT_POS_STR, attributeMap);
     const auto bottom = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::BOTTOM_POS_STR, attributeMap);
 
-    auto text = XmlParserHelper::getAttribMandatory<std::string_view>(xoj::xml_attrs::TEXT_STR, attributeMap);
-
-    // Attribute "texlength" found in earlier parsers was a workaround from 098a67b to bdd0ec2
-
-    this->builder.addTexImage(left, top, right, bottom, std::string{text});
+    this->builder.addTexImageLegacy(left, top, right, bottom, std::string{text});
 }
 
 void XmlParser::parseTexImageText(std::string_view text) {
@@ -491,13 +524,20 @@ void XmlParser::parseLinkTag(const XmlParserHelper::AttributeMap& attributeMap) 
     const auto font =
             XmlParserHelper::getAttribMandatory<std::string_view>(xoj::xml_attrs::FONT_STR, attributeMap, "Sans");
     const auto size = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::SIZE_STR, attributeMap, 12);
-    const auto x = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::X_COORD_STR, attributeMap);
-    const auto y = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::Y_COORD_STR, attributeMap);
     const auto color = XmlParserHelper::getAttribColorMandatory(attributeMap, Colors::black);
 
     auto url = XmlParserHelper::getAttribMandatory<std::string_view>(xoj::xml_attrs::URL_STR, attributeMap);
 
-    this->builder.addLink(align, std::string{font}, size, x, y, color, std::string{url});
+    auto matrix = getMatrix(attributeMap);
+
+    if (!matrix) {
+        // Legacy code - to open file version <= 4
+        const auto x = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::X_COORD_STR, attributeMap);
+        const auto y = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::Y_COORD_STR, attributeMap);
+        matrix = xoj::util::Matrix::TRANSLATION(x, y);
+    }
+
+    this->builder.addLink(align, std::string{font}, size, matrix.value(), color, std::string{url});
 }
 
 void XmlParser::parseLinkText(std::string_view text) { this->builder.setLinkContent(std::string{text}); }

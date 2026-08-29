@@ -28,7 +28,7 @@ class LinkHighlightView: public OverlayView, public xoj::util::Listener<LinkHigh
 
 public:
     LinkHighlightView(const LinkHandler* handler, Repaintable* parent);
-    ~LinkHighlightView() noexcept;
+    ~LinkHighlightView();
 
     void draw(cairo_t* cr) const override;
     bool isViewOf(const OverlayBase* overlay) const override;
