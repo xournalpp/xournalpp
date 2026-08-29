@@ -33,9 +33,6 @@ public:
 public:
     void setText(std::string text);
     std::string getText() const;
-
-    void setTextPos(double x, double y);
-
     void setUrl(std::string url);
     std::string getUrl() const;
 
@@ -49,13 +46,10 @@ public:
     xoj::util::GObjectSPtr<PangoLayout> createPangoLayout() const;
 
 public:
-    void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
     ElementPtr clone() const override;
 
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;
-    bool rescaleOnlyAspectRatio() const override;
-    bool rescaleWithMirror() const override;
 
     static constexpr double PADDING = 2.0;  // space around text including painted border
 

@@ -40,6 +40,9 @@ constexpr auto PAGE_NUMBER_STR = u8"pageno";
 constexpr auto AUDIO_FILENAME_STR = u8"fn";  // also in stroke, text and audio
 constexpr auto TIMESTAMP_STR = u8"ts";       // also in stroke and text
 
+// rectangular element
+constexpr auto MATRIX_STR = u8"matrix";
+
 // stroke
 constexpr auto TOOL_STR = u8"tool";
 constexpr auto PRESSURES_STR = u8"pressures";

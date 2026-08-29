@@ -29,6 +29,10 @@ class StrokeCapStyle;
 class StrokeTool;
 class TextAlignment;
 
+namespace xoj::util {
+struct Matrix;
+}
+
 class DocumentBuilderInterface {
 public:
     DocumentBuilderInterface() = default;
@@ -51,19 +55,22 @@ public:
                            const LineStyle& lineStyle, fs::path filename, size_t timestamp) = 0;
     virtual void setStrokePoints(std::vector<Point> pointVector, bool hasPressure) = 0;
     virtual void finalizeStroke() = 0;
-    virtual void addText(std::string font, double size, double x, double y, Color color, std::optional<double> wrap,
-                         std::optional<TextAlignment> align, bool justify, fs::path filename, size_t timestamp) = 0;
+    virtual void addText(std::string font, double size, xoj::util::Matrix matrix, Color color,
+                         std::optional<double> wrap, std::optional<TextAlignment> align, bool justify,
+                         fs::path filename, size_t timestamp) = 0;
     virtual void setTextContents(std::string contents) = 0;
     virtual void finalizeText() = 0;
-    virtual void addImage(double left, double top, double right, double bottom) = 0;
+    virtual void addImageLegacy(double left, double top, double right, double bottom) = 0;
+    virtual void addImage(xoj::util::Matrix matrix) = 0;
     virtual void setImageData(std::string data) = 0;
     virtual void setImageAttachment(const fs::path& filename) = 0;
     virtual void finalizeImage() = 0;
-    virtual void addTexImage(double left, double top, double right, double bottom, std::string text) = 0;
+    virtual void addTexImageLegacy(double left, double top, double right, double bottom, std::string text) = 0;
+    virtual void addTexImage(xoj::util::Matrix matrix, std::string text) = 0;
     virtual void setTexImageData(std::string data) = 0;
     virtual void setTexImageAttachment(const fs::path& filename) = 0;
     virtual void finalizeTexImage() = 0;
-    virtual void addLink(TextAlignment align, std::string font, double size, double x, double y, Color color,
+    virtual void addLink(TextAlignment align, std::string font, double size, xoj::util::Matrix matrix, Color color,
                          std::string url) = 0;
     virtual void setLinkContent(std::string contents) = 0;
     virtual void finalizeLink() = 0;

@@ -5,6 +5,7 @@
 #include "util/Point.h"                           // for Point
 #include "util/Rectangle.h"                       // for Rectangle
 #include "util/Stacktrace.h"                      // for Stacktrace
+#include "util/matrix/RectangleMultiply.h"        // for operator*
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
@@ -20,12 +21,6 @@ Link::Link(): RectangularElement(ELEMENT_LINK) {
 void Link::setText(std::string text) { this->text = text; }
 
 std::string Link::getText() const { return this->text; }
-
-void Link::setTextPos(double x, double y) {
-    this->snappedBounds.x = x;
-    this->snappedBounds.y = y;
-    this->sizeCalculated = false;
-}
 
 void Link::setUrl(std::string url) { this->url = url; }
 
@@ -70,22 +65,6 @@ void Link::readSerialized(ObjectInputStream& in) {
     in.endObject();
 }
 
-void Link::scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) {
-    // only proportional scale allowed...
-    if (fx != fy) {
-        g_warning("rescale font with fx != fy not supported: %lf / %lf", fx, fy);
-        Stacktrace::printStacktrace();
-    }
-
-    this->snappedBounds.x = (this->snappedBounds.x - x0) * fx + x0;
-    this->snappedBounds.y = (this->snappedBounds.y - y0) * fy + y0;
-
-    double size = this->font.getSize() * fx;
-    this->font.setSize(size);
-
-    sizeCalculated = false;
-};
-
 ElementPtr Link::clone() const {
     auto link = std::make_unique<Link>();
     static_cast<RectangularElement&>(*link) = *this;
@@ -101,8 +80,8 @@ void Link::calcSize() const {
     pango_layout_set_text(layout.get(), this->text.c_str(), static_cast<int>(this->text.length()));
     int w = 0, h = 0;
     pango_layout_get_size(layout.get(), &w, &h);
-    this->snappedBounds.width = static_cast<double>(w) / PANGO_SCALE;
-    this->snappedBounds.height = static_cast<double>(h) / PANGO_SCALE;
+    this->naturalSize = {static_cast<double>(w) / PANGO_SCALE, static_cast<double>(h) / PANGO_SCALE};
+    this->snappedBounds = this->transformationMatrix * xoj::util::Rectangle<double>({0, 0}, this->naturalSize);
     this->boundingBox = xoj::util::Rectangle<double>(this->snappedBounds.x - PADDING, this->snappedBounds.y - PADDING,
                                                      this->snappedBounds.width + 2 * PADDING,
                                                      this->snappedBounds.height + 2 * PADDING);
@@ -126,10 +105,6 @@ auto Link::createPangoLayout() const -> xoj::util::GObjectSPtr<PangoLayout> {
 
     return layout;
 }
-
-auto Link::rescaleOnlyAspectRatio() const -> bool { return true; }
-
-auto Link::rescaleWithMirror() const -> bool { return true; }
 
 void Link::setAlignment(TextAlignment alignment) { this->alignment = alignment; }
 

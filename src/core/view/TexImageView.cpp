@@ -7,8 +7,9 @@
 #include <poppler.h>  // for PopplerPage, PopplerDocument, g_clear_...
 
 #include "model/TexImage.h"  // for TexImage
-#include "util/Point.h"      // for Point
-#include "view/View.h"       // for Context, OPACITY_NO_AUDIO, view
+#include "util/Matrix.h"     // for Matrix
+#include "util/raii/CairoWrappers.h"
+#include "view/View.h"  // for Context, OPACITY_NO_AUDIO, view
 
 using namespace xoj::view;
 
@@ -17,33 +18,19 @@ TexImageView::TexImageView(const TexImage* texImage): texImage(texImage) {}
 TexImageView::~TexImageView() = default;
 
 void TexImageView::draw(const Context& ctx) const {
-
     cairo_t* cr = ctx.cr;
-    cairo_save(cr);
+    xoj::util::CairoSaveGuard save(cr);
 
-    PopplerDocument* pdf = texImage->getPdf();
-    cairo_surface_t* img = texImage->getImage();
-    const auto& origin = texImage->getOrigin();
-    const auto& box = texImage->getBoundingBox();
+    cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+    texImage->getTransformation().transformCairo(cr);
 
-    if (pdf != nullptr) {
+    if (PopplerDocument* pdf = texImage->getPdf(); pdf != nullptr) {
         if (poppler_document_get_n_pages(pdf) < 1) {
             g_warning("Got latex PDF without pages!: %s", texImage->getText().c_str());
             return;
         }
 
         PopplerPage* page = poppler_document_get_page(pdf, 0);
-
-        double pageWidth = 0;
-        double pageHeight = 0;
-        poppler_page_get_size(page, &pageWidth, &pageHeight);
-
-        double xFactor = box.width / pageWidth;
-        double yFactor = box.height / pageHeight;
-
-        cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-        cairo_translate(cr, origin.x, origin.y);
-        cairo_scale(cr, xFactor, yFactor);
 
         auto surfType = cairo_surface_get_type(cairo_get_target(cr));
         auto pageRenderFunction =
@@ -71,18 +58,9 @@ void TexImageView::draw(const Context& ctx) const {
         }
 
         g_clear_object(&page);
-    } else if (img != nullptr) {
-        int width = cairo_image_surface_get_width(img);
-        int height = cairo_image_surface_get_height(img);
+    } else if (cairo_surface_t* img = texImage->getImage(); img != nullptr) {
+        cairo_set_source_surface(cr, img, 0, 0);
 
-        cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-
-        double xFactor = box.width / width;
-        double yFactor = box.height / height;
-
-        cairo_scale(cr, xFactor, yFactor);
-
-        cairo_set_source_surface(cr, img, origin.x / xFactor, origin.y / yFactor);
         // Make TeX images translucent when highlighting audio strokes as they can not have audio
         if (ctx.fadeOutNonAudio) {
             cairo_paint_with_alpha(cr, OPACITY_NO_AUDIO);
@@ -90,6 +68,4 @@ void TexImageView::draw(const Context& ctx) const {
             cairo_paint(cr);
         }
     }
-
-    cairo_restore(cr);
 }

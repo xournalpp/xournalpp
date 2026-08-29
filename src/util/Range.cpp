@@ -15,6 +15,8 @@ void Range::addPoint(double x, double y) {
     this->maxY = std::max(this->maxY, y);
 }
 
+void Range::addPoint(const xoj::util::Point<double>& p) { addPoint(p.x, p.y); }
+
 Range Range::unite(const Range& o) const {
     return Range(std::min(minX, o.minX), std::min(minY, o.minY), std::max(maxX, o.maxX), std::max(maxY, o.maxY));
 }

@@ -91,6 +91,7 @@ public:
     double getHeight() const override;
     // End of Repaintable interface
 
+    xoj::util::Point<double> toWidgetCoordinates(const xoj::util::Point<double>& p) const override;
     xoj::util::Rectangle<double> toWidgetCoordinates(const xoj::util::Rectangle<double>& r) const override;
 
 

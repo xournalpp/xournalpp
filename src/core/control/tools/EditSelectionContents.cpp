@@ -323,16 +323,10 @@ void EditSelectionContents::deleteViewBuffer() {
 }
 
 InsertionOrder EditSelectionContents::makeMoveEffective(const xoj::util::Rectangle<double>& bounds,
-                                                        const xoj::util::Rectangle<double>& snappedBounds,
-                                                        bool preserveAspectRatio) {
+                                                        const xoj::util::Rectangle<double>& snappedBounds) {
     double fx = bounds.width / this->originalBounds.width;
     double fy = bounds.height / this->originalBounds.height;
 
-    if (preserveAspectRatio) {
-        double f = (fx + fy) / 2;
-        fx = f;
-        fy = f;
-    }
     bool scale = (bounds.width != this->originalBounds.width || bounds.height != this->originalBounds.height);
     bool rotate = (std::abs(this->rotation) > std::numeric_limits<double>::epsilon());
 
@@ -369,8 +363,8 @@ auto EditSelectionContents::getSourceView() -> XojPageView* { return this->sourc
 
 
 void EditSelectionContents::updateContent(Rectangle<double> bounds, Rectangle<double> snappedBounds, double rotation,
-                                          bool aspectRatio, Layer* layer, const PageRef& targetPage,
-                                          UndoRedoHandler* undo, CursorSelectionType type) {
+                                          Layer* layer, const PageRef& targetPage, UndoRedoHandler* undo,
+                                          CursorSelectionType type) {
     double mx = snappedBounds.x - this->lastSnappedBounds.x;
     double my = snappedBounds.y - this->lastSnappedBounds.y;
     bool move = mx != 0 || my != 0;
@@ -379,12 +373,6 @@ void EditSelectionContents::updateContent(Rectangle<double> bounds, Rectangle<do
 
     double fx = snappedBounds.width / this->lastSnappedBounds.width;
     double fy = snappedBounds.height / this->lastSnappedBounds.height;
-
-    if (aspectRatio) {
-        double f = (fx + fy) / 2;
-        fx = f;
-        fy = f;
-    }
 
     bool rotate = (std::abs(this->rotation - this->lastRotation) > std::numeric_limits<double>::epsilon());
     bool scale = (snappedBounds.width != this->lastSnappedBounds.width ||
