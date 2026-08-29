@@ -24,11 +24,6 @@ using xoj::util::Rectangle;
 Image::Image(): Element(ELEMENT_IMAGE) {}
 
 Image::~Image() {
-    if (this->image) {
-        cairo_surface_destroy(this->image);
-        this->image = nullptr;
-    }
-
     if (this->format) {
         gdk_pixbuf_format_free(this->format);
         this->format = nullptr;
@@ -42,7 +37,7 @@ auto Image::clone() const -> ElementPtr {
     img->setColor(this->getColor());
     img->data = this->data;
 
-    img->image = cairo_surface_reference(this->image);
+    img->image = this->image;
     img->snappedBounds = this->snappedBounds;
     img->sizeCalculated = this->sizeCalculated;
 
@@ -62,10 +57,7 @@ void Image::setHeight(double height) {
 void Image::setImage(std::string_view data) { setImage(std::string(data)); }
 
 void Image::setImage(std::string&& data) {
-    if (this->image) {
-        cairo_surface_destroy(this->image);
-        this->image = nullptr;
-    }
+    this->image.reset();
     this->data = std::move(data);
 
     if (this->format) {
@@ -101,28 +93,32 @@ void Image::setImage(std::string&& data) {
     this->format = gdk_pixbuf_format_copy(this->format);
 }
 
-void Image::setImage(GdkPixbuf* img) {
-    if (this->image) {
-        cairo_surface_destroy(this->image);
-        this->image = nullptr;
-    }
-    this->imageSize = {gdk_pixbuf_get_width(img), gdk_pixbuf_get_height(img)};
-
-    this->image = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->imageSize.first, this->imageSize.second);
-    xoj_assert(this->image != nullptr);
+static xoj::util::CairoSurfaceSPtr bufferFromPixbuf(GdkPixbuf* img) {
+    xoj::util::CairoSurfaceSPtr res(
+            cairo_image_surface_create(CAIRO_FORMAT_ARGB32, gdk_pixbuf_get_width(img), gdk_pixbuf_get_height(img)),
+            xoj::util::adopt);
+    xoj_assert(res);
 
     // Paint the pixbuf on to the surface
-    cairo_t* cr = cairo_create(this->image);
+    // NOTE: we do this manually instead of using gdk_cairo_surface_create_from_pixbuf
+    // since this does not work in CLI mode.
+    cairo_t* cr = cairo_create(res.get());
     gdk_cairo_set_source_pixbuf(cr, img, 0, 0);
     cairo_paint(cr);
     cairo_destroy(cr);
+    return res;
+}
+
+void Image::setImage(GdkPixbuf* img) {
+    this->imageSize = xoj::util::Size<int>(gdk_pixbuf_get_width(img), gdk_pixbuf_get_height(img));
+    this->image = bufferFromPixbuf(img);
 
     const cairo_write_func_t writeFunc = [](void* bufferPtr, const unsigned char* data,
                                             unsigned int length) -> cairo_status_t {
         reinterpret_cast<decltype(Image::data)*>(bufferPtr)->append(reinterpret_cast<const char*>(data), length);
         return CAIRO_STATUS_SUCCESS;
     };
-    cairo_surface_write_to_png_stream(image, writeFunc, &data);
+    cairo_surface_write_to_png_stream(image.get(), writeFunc, &data);
 }
 
 auto Image::renderBuffer() const -> std::optional<std::string> {
@@ -173,23 +169,12 @@ auto Image::renderBuffer() const -> std::optional<std::string> {
         }
     }
 
-    GdkPixbuf* tmp = gdk_pixbuf_loader_get_pixbuf(loader.get());
+    GdkPixbuf* tmp = gdk_pixbuf_loader_get_pixbuf(loader.get());  // Owned by the GdkPixbufLoader
     xoj_assert(tmp != nullptr);
     xoj::util::GObjectSPtr<GdkPixbuf> pixbuf(gdk_pixbuf_apply_embedded_orientation(tmp), xoj::util::adopt);
 
     this->imageSize = {gdk_pixbuf_get_width(pixbuf.get()), gdk_pixbuf_get_height(pixbuf.get())};
-
-    // TODO: pass in window once this code is refactored into ImageView
-    this->image = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->imageSize.first, this->imageSize.second);
-    g_assert(this->image != nullptr);
-
-    // Paint the pixbuf on to the surface
-    // NOTE: we do this manually instead of using gdk_cairo_surface_create_from_pixbuf
-    // since this does not work in CLI mode.
-    cairo_t* cr = cairo_create(this->image);
-    gdk_cairo_set_source_pixbuf(cr, pixbuf.get(), 0, 0);
-    cairo_paint(cr);
-    cairo_destroy(cr);
+    this->image = bufferFromPixbuf(pixbuf.get());
     return std::nullopt;
 }
 
@@ -198,7 +183,7 @@ auto Image::getImage() const -> cairo_surface_t* {
         // An error occurred
         g_warning("%s", opt->c_str());
     }
-    return this->image;
+    return this->image.get();
 }
 
 void Image::scale(double x0, double y0, double fx, double fy, double rotation,
@@ -238,11 +223,7 @@ void Image::readSerialized(ObjectInputStream& in) {
     this->boundingBox.width = in.readDouble();
     this->boundingBox.height = in.readDouble();
 
-    if (this->image) {
-        cairo_surface_destroy(this->image);
-        this->image = nullptr;
-    }
-
+    this->image.reset();
     this->data = in.readImage();
 
     in.endObject();
@@ -260,6 +241,6 @@ const unsigned char* Image::getRawData() const { return reinterpret_cast<const u
 
 size_t Image::getRawDataLength() const { return this->data.size(); }
 
-std::pair<int, int> Image::getImageSize() const { return this->imageSize; }
+xoj::util::Size<int> Image::getImageSize() const { return this->imageSize; }
 
 GdkPixbufFormat* Image::getImageFormat() const { return this->format; }

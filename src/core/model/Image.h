@@ -20,6 +20,9 @@
 #include <cairo.h>                  // for cairo_surface_t, cairo_status_t
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbufFormat, GdkPixbuf
 
+#include "util/Size.h"
+#include "util/raii/CairoWrappers.h"
+
 #include "Element.h"  // for Element
 
 class ObjectInputStream;
@@ -72,12 +75,12 @@ public:
     /// Return the length of the raw data.
     size_t getRawDataLength() const;
 
-    /// Return the size of the raw image, or (-1, -1) if the image has not been rendered yet.
-    std::pair<int, int> getImageSize() const;
+    /// Return the size of the raw image, or Image::NO_SIZE if the image has not been rendered yet.
+    xoj::util::Size<int> getImageSize() const;
 
     [[maybe_unused]] GdkPixbufFormat* getImageFormat() const;
 
-    static constexpr std::pair<int, int> NOSIZE = std::make_pair(-1, -1);
+    static constexpr auto NOSIZE = xoj::util::Size<int>{-1, -1};
 
 public:
     // Serialize interface
@@ -89,11 +92,11 @@ private:
 
 private:
     /// Temporary surface used as a render buffer.
-    mutable cairo_surface_t* image = nullptr;
+    mutable xoj::util::raii::CairoSurfaceSPtr image;
 
     /// Image format information.
     mutable GdkPixbufFormat* format = nullptr;
-    mutable std::pair<int, int> imageSize = {-1, -1};
+    mutable xoj::util::Size<int> imageSize = NOSIZE;
 
     std::string data;
 };

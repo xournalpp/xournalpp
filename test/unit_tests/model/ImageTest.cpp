@@ -34,8 +34,8 @@ TEST(Image, testGetImageApplyOrientation) {
     GdkPixbuf* pixbuf = gdk_pixbuf_loader_get_pixbuf(loader);
 
     // Image size before  orientation
-    auto origImageSize = std::make_pair(gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf));
-    auto rotatedImageSize = std::make_pair(origImageSize.second, origImageSize.first);
+    auto origImageSize = xoj::util::Size<int>(gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf));
+    auto rotatedImageSize = xoj::util::Size<int>(origImageSize.height, origImageSize.width);
     g_object_unref(loader);
 
     image.setImage(imageData);
@@ -48,7 +48,7 @@ TEST(Image, testGetImageApplyOrientation) {
 
     // Test image now have the correct size - which is the image has been rotated.
     EXPECT_EQ(image.getImageSize(), rotatedImageSize);
-    EXPECT_EQ(image.getImageSize(), std::make_pair(130, 500));
-    EXPECT_EQ(std::make_pair(cairo_image_surface_get_width(surface), cairo_image_surface_get_height(surface)),
+    EXPECT_EQ(image.getImageSize(), xoj::util::Size<int>(130, 500));
+    EXPECT_EQ(xoj::util::Size<int>(cairo_image_surface_get_width(surface), cairo_image_surface_get_height(surface)),
               rotatedImageSize);
 }

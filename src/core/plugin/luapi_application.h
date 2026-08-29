@@ -3764,12 +3764,12 @@ static int applib_getImages(lua_State* L) {
         lua_pushstring(L, gdk_pixbuf_format_get_name(im->getImageFormat()));
         lua_setfield(L, -2, "format");
 
-        std::pair<int, int> imageSize = im->getImageSize();
+        auto imageSize = im->getImageSize();
         // image width: integer
-        lua_pushinteger(L, imageSize.first);
+        lua_pushinteger(L, imageSize.width);
         lua_setfield(L, -2, "imageWidth");
         // image height: integer
-        lua_pushinteger(L, imageSize.second);
+        lua_pushinteger(L, imageSize.height);
         lua_setfield(L, -2, "imageHeight");
 
         lua_pushlightuserdata(L, const_cast<void*>(static_cast<const void*>(im)));
