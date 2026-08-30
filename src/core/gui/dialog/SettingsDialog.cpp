@@ -530,6 +530,7 @@ void SettingsDialog::load() {
         const auto& recolor = settings->getRecolorParameters();
         loadCheckbox("cbRecolorDrawingArea", recolor.recolorizeMainView);
         loadCheckbox("cbRecolorPreviewSidebar", recolor.recolorizeSidebarMiniatures);
+        loadCheckbox("cbKeepHues", recolor.recolor.getKeepHues());
         color = Util::argb_to_GdkRGBA(recolor.recolor.getLight());
         gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(builder.get("recolorLight")), &color);
         color = Util::argb_to_GdkRGBA(recolor.recolor.getDark());
@@ -824,7 +825,7 @@ void SettingsDialog::save() {
         gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(builder.get("recolorDark")), &color2);
 
         settings->setRecolorParameters({getCheckbox("cbRecolorDrawingArea"), getCheckbox("cbRecolorPreviewSidebar"),
-                                        Recolor(Util::GdkRGBA_to_argb(color), Util::GdkRGBA_to_argb(color2))});
+                                        Recolor(Util::GdkRGBA_to_argb(color), Util::GdkRGBA_to_argb(color2), getCheckbox("cbKeepHues"))});
     }
 
     settings->setHighlightPosition(getCheckbox("cbHighlightPosition"));
