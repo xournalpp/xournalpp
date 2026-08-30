@@ -92,7 +92,7 @@
             checkoutdir="libopus-1.5.2"/>
   </cmake>
 
-  <cmake id="libsndfile" cmakeargs="-DBUILD_PROGRAMS=off -DBUILD_EXAMPLES=off -DBUILD_SHARED_LIBS=ON -DENABLE_EXTERNAL_LIBS=ON">
+  <cmake id="libsndfile" cmakeargs="-DBUILD_PROGRAMS=off -DBUILD_EXAMPLES=off -DBUILD_SHARED_LIBS=ON -DENABLE_EXTERNAL_LIBS=ON -DCMAKE_POLICY_VERSION_MINIMUM=3.6">
     <branch repo="github-tarball"
             version="1.2.2"
             module="libsndfile/libsndfile/archive/1.2.2.tar.gz"
