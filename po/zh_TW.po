@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-09 15:16+0000\n"
-"PO-Revision-Date: 2026-08-16 04:27\n"
+"POT-Creation-Date: 2026-08-29 12:29+0000\n"
+"PO-Revision-Date: 2026-08-30 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -760,11 +760,11 @@ msgstr "檔案損毀 (檔案中找不到頁面)"
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "找不到附件所需的暫存檔{1}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:292
+#: ../src/core/control/xojfile/SaveHandler.cpp:291
 msgid "Could not write background \"{1}\", {2}"
 msgstr "未能寫上背景\"{1}\", {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:399
+#: ../src/core/control/xojfile/SaveHandler.cpp:398
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "未能寫上背景\"{1}\"，不管啦繼續哦..."
 
