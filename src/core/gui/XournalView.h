@@ -88,6 +88,7 @@ public:
     void endLinkAllPages(XojPageView* except = nullptr) const;
 
     void endSplineAllPages() const;
+    void clearLaserPointers() const;
 
     int getDisplayWidth() const;
     int getDisplayHeight() const;
