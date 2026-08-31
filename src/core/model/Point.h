@@ -29,6 +29,7 @@ public:
     Point(const Point& p) = default;
 
     Point& operator=(Point const&) = default;
+    bool operator==(Point const&) const = default;
 
     /**
      * @brief Point from two values.
