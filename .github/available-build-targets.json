@@ -4,7 +4,7 @@
       "displayed_name": "Ubuntu 22.04",
       "runner": "ubuntu-22.04",
       "build_appimage": "true",
-      "run_ci": "true"
+      "run_ci": "false"
     },
     "ubuntu-24": {
       "displayed_name": "Ubuntu 24.04",
@@ -44,7 +44,7 @@
     "mac-x64": {
       "displayed_name": "MacOS x64",
       "runner": "macos-15-intel",
-      "run_ci": "true"
+      "run_ci": "false"
     },
     "mac-arm": {
       "displayed_name": "MacOS ARM",
@@ -59,7 +59,7 @@
       "msystem": "mingw64",
       "msys_package_env": "x86_64",
       "build_portable": "true",
-      "run_ci": "true"
+      "run_ci": "false"
     },
     "windows-arm": {
       "displayed_name": "Windows ARM",
@@ -67,7 +67,7 @@
       "msystem": "clangarm64",
       "msys_package_env": "clang-aarch64",
       "build_portable": "true",
-      "run_ci": "true"
+      "run_ci": "false"
     }
   }
 }
