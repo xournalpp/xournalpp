@@ -42,6 +42,8 @@
 
 #include "filesystem.h"
 
+static constexpr double DOUBLE_COMPARE_ERROR = 1e-8;
+
 // Common test Functions
 
 /**
@@ -57,7 +59,7 @@ static auto loadTestDocument(const fs::path& filepath) -> std::unique_ptr<Docume
  * \param filepath The path to the actual file to load.
  * \param tol The absolute tolerance used when checking stroke coordinate data.
  */
-static void testLoadStoreLoadHelper(const fs::path& filepath, double tol = 1e-8) {
+static void testLoadStoreLoadHelper(const fs::path& filepath, double tol = DOUBLE_COMPARE_ERROR) {
     auto getElements = [](Document* doc) {
         EXPECT_EQ((size_t)1, doc->getPageCount());
         ConstPageRef page = doc->getPage(0);
@@ -241,6 +243,166 @@ static void checkText(const Layer* layer, size_t elementIndex, const std::string
     EXPECT_EQ(textElem->getWrap(), wrap) << "Text at index " << elementIndex << " has the wrong wrap width";
     EXPECT_EQ(textElem->getAlign(), al) << "Text at index " << elementIndex << " has the wrong alignment";
     EXPECT_EQ(textElem->getJustify(), justify) << "Text at index " << elementIndex << " has the wrong justify flag";
+}
+
+static void compareSizes(const xoj::util::Size<double>& s1, const xoj::util::Size<double>& s2) {
+    EXPECT_NEAR(s1.width, s2.width, DOUBLE_COMPARE_ERROR);
+    EXPECT_NEAR(s1.height, s2.height, DOUBLE_COMPARE_ERROR);
+}
+
+static void compareRectangles(const xoj::util::Rectangle<double>& r1, const xoj::util::Rectangle<double>& r2,
+                              double tol = DOUBLE_COMPARE_ERROR) {
+    EXPECT_NEAR(r1.x, r2.x, tol);
+    EXPECT_NEAR(r1.y, r2.y, tol);
+    EXPECT_NEAR(r1.width, r2.width, tol);
+    EXPECT_NEAR(r1.height, r2.height, tol);
+}
+
+static void compareMatrices(const xoj::util::Matrix& m1, const xoj::util::Matrix& m2) {
+    EXPECT_NEAR(m1.xx, m2.xx, DOUBLE_COMPARE_ERROR);
+    EXPECT_NEAR(m1.yx, m2.yx, DOUBLE_COMPARE_ERROR);
+    EXPECT_NEAR(m1.xy, m2.xy, DOUBLE_COMPARE_ERROR);
+    EXPECT_NEAR(m1.yy, m2.yy, DOUBLE_COMPARE_ERROR);
+    EXPECT_NEAR(m1.shift.x, m2.shift.x, DOUBLE_COMPARE_ERROR);
+    EXPECT_NEAR(m1.shift.y, m2.shift.y, DOUBLE_COMPARE_ERROR);
+}
+
+/// Saves the document to a temporary location, reloads it and compares with the original
+static void checkSaveAndReload(const std::unique_ptr<Document>& doc) {
+    const fs::path outPath = fs::temp_directory_path() / "xournalpp-test-units.xopp";
+    ASSERT_TRUE(!fs::exists(outPath));
+
+    {
+        SaveHandler saver;
+        saver.prepareSave(doc.get(), outPath);
+        saver.saveTo(outPath);
+    }
+    // Ensure the file we just created gets deleted even if an assertion fails
+    struct DeleteFileUponReturn {
+        ~DeleteFileUponReturn() { EXPECT_NO_THROW(fs::remove(file)) << "Failed to remove the temporary file"; }
+        fs::path file;
+    } safeguard(outPath);
+
+    auto reloadedDoc = loadTestDocument(outPath);
+    ASSERT_TRUE(reloadedDoc) << "Failed to reload Document \"" << char_cast(doc->getFilepath().u8string()) << "\"";
+
+    /// Test if two elements are the same
+    auto compareElements = [&](const Element& e1, const Element& e2) {
+        ASSERT_EQ(e1.getType(), e2.getType());
+        compareRectangles(e1.getBoundingBox(), e2.getBoundingBox(), 1e-5);  // also ensures calcSize() has been called
+
+        if (auto* audio1 = dynamic_cast<const AudioContent*>(&e1); audio1) {
+            auto* audio2 = dynamic_cast<const AudioContent*>(&e2);
+            ASSERT_TRUE(audio2) << "Different inheritance despite same type";
+            EXPECT_EQ(audio1->getTimestamp(), audio2->getTimestamp());
+            EXPECT_EQ(audio1->getAudioFilename(), audio2->getAudioFilename());
+        } else {
+            EXPECT_FALSE(dynamic_cast<const AudioContent*>(&e2)) << "Different inheritance despite same type";
+        }
+        if (auto* r1 = dynamic_cast<const RectangularElement*>(&e1); r1) {
+            auto* r2 = dynamic_cast<const RectangularElement*>(&e2);
+            ASSERT_TRUE(r2) << "Different inheritance despite same type";
+            compareMatrices(r1->getTransformation(), r2->getTransformation());
+            compareSizes(r1->getNaturalSize(), r2->getNaturalSize());
+        } else {
+            EXPECT_FALSE(dynamic_cast<const RectangularElement*>(&e2)) << "Different inheritance despite same type";
+        }
+
+        switch (e1.getType()) {
+            case ELEMENT_STROKE:
+                EXPECT_NO_THROW({
+                    auto& s1 = dynamic_cast<const Stroke&>(e1);
+                    auto& s2 = dynamic_cast<const Stroke&>(e2);
+                    EXPECT_EQ(s1.getColor(), s2.getColor());
+                    EXPECT_EQ(s1.getStrokeCapStyle(), s2.getStrokeCapStyle());
+                    EXPECT_EQ(s1.getLineStyle(), s2.getLineStyle());
+                    EXPECT_EQ(s1.getWidth(), s2.getWidth());
+                    EXPECT_EQ(s1.getFill(), s2.getFill());
+                    EXPECT_EQ(s1.getToolType(), s2.getToolType());
+                    const auto& v1 = s1.getPointVector();
+                    const auto& v2 = s2.getPointVector();
+                    ASSERT_EQ(v1.size(), v2.size());
+                    for (size_t n = 0; n < v1.size(); n++) {
+                        const auto& p1 = v1[n];
+                        const auto& p2 = v2[n];
+                        EXPECT_NEAR(p1.x, p2.x, DOUBLE_COMPARE_ERROR);
+                        EXPECT_NEAR(p1.y, p2.y, DOUBLE_COMPARE_ERROR);
+                        EXPECT_NEAR(p1.z, p2.z, DOUBLE_COMPARE_ERROR);
+                    }
+                });
+                break;
+            case ELEMENT_TEXT:
+                EXPECT_NO_THROW({
+                    auto& t1 = dynamic_cast<const Text&>(e1);
+                    auto& t2 = dynamic_cast<const Text&>(e2);
+                    EXPECT_EQ(t1.getColor(), t2.getColor());
+                    EXPECT_EQ(t1.getFont(), t2.getFont());
+                    EXPECT_EQ(t1.getText(), t2.getText());
+                    EXPECT_DOUBLE_EQ(t1.getWrap(), t2.getWrap());
+                    EXPECT_EQ(t1.getAlign(), t2.getAlign());
+                    EXPECT_EQ(t1.getJustify(), t2.getJustify());
+                });
+                break;
+            case ELEMENT_LINK:
+                EXPECT_NO_THROW({
+                    auto& l1 = dynamic_cast<const Link&>(e1);
+                    auto& l2 = dynamic_cast<const Link&>(e2);
+                    EXPECT_EQ(l1.getText(), l2.getText());
+                    EXPECT_EQ(l1.getUrl(), l2.getUrl());
+                    EXPECT_EQ(l1.getAlignment(), l2.getAlignment());
+                    EXPECT_EQ(l1.getFont(), l2.getFont());
+                });
+                break;
+            case ELEMENT_TEXIMAGE:
+                EXPECT_NO_THROW({
+                    auto& i1 = dynamic_cast<const TexImage&>(e1);
+                    auto& i2 = dynamic_cast<const TexImage&>(e2);
+                    EXPECT_EQ(i1.getText(), i2.getText());
+                    EXPECT_EQ(i1.getBinaryData(), i2.getBinaryData());
+                });
+                break;
+            case ELEMENT_IMAGE:
+                EXPECT_NO_THROW({
+                    auto& i1 = dynamic_cast<const Image&>(e1);
+                    auto& i2 = dynamic_cast<const Image&>(e2);
+                    EXPECT_EQ(i1.getBinaryData(), i2.getBinaryData());
+                });
+                break;
+            default:
+                EXIT_FAILURE;
+        }
+    };
+
+    /// Test if the two layers are the same
+    auto compareLayers = [&](Layer& l1, Layer& l2) {
+        const auto& el1 = l1.getElements();
+        const auto& el2 = l2.getElements();
+        ASSERT_EQ(el1.size(), el2.size());
+        for (size_t n = 0; n < el1.size(); n++) {
+            compareElements(*el1[n], *el2[n]);
+        }
+    };
+
+    /// Test if the two pages are the same
+    auto comparePages = [&](PageRef p1, PageRef p2) {
+        EXPECT_EQ(p1->getWidth(), p2->getWidth());
+        EXPECT_EQ(p1->getHeight(), p2->getHeight());
+
+        EXPECT_EQ(p1->getBackgroundType(), p2->getBackgroundType());
+        if (!p1->getBackgroundType().isSpecial()) {
+            EXPECT_EQ(p1->getBackgroundColor(), p2->getBackgroundColor());
+        }
+
+        ASSERT_EQ(p1->getLayerCount(), p2->getLayerCount());
+        for (Layer::Index i = 0; i < p1->getLayerCount(); i++) {
+            compareLayers(*p1->getLayers()[i], *p2->getLayers()[i]);
+        }
+    };
+
+    ASSERT_EQ(doc->getPageCount(), reloadedDoc->getPageCount());
+    for (size_t n = 0; n < doc->getPageCount(); n++) {
+        comparePages(doc->getPage(n), reloadedDoc->getPage(n));
+    }
 }
 
 TEST(ControlLoadHandler, testLoad) {
@@ -443,10 +605,12 @@ TEST(ControlLoadHandler, testStrokes) {
                 {{0, {128.78249, 488.6327, Point::NO_PRESSURE}}, {1, {466.4931, 488.6327, Point::NO_PRESSURE}}});
     checkStroke(layer, 11, StrokeTool::HIGHLIGHTER, Color(0x7f000000), 1, 230, StrokeCapStyle::BUTT, LineStyle{},
                 {{0, {143.58172, 506.94589, Point::NO_PRESSURE}}, {1, {451.69387, 506.94589, Point::NO_PRESSURE}}});
+
+    checkSaveAndReload(doc);
 }
 
-TEST(ControlLoadHandler, testText) {
-    auto doc = loadTestDocument(GET_TESTFILE(u8"load/text.xopp"));
+TEST(ControlLoadHandler, testText_v4) {
+    auto doc = loadTestDocument(GET_TESTFILE(u8"load/text-fileversion-4.xopp"));
     ASSERT_TRUE(doc);
 
     ASSERT_EQ(size_t{1}, doc->getPageCount());
@@ -455,31 +619,76 @@ TEST(ControlLoadHandler, testText) {
     ASSERT_EQ(size_t{1}, page->getLayerCount());
     const Layer* layer = page->getLayersView().front();
 
+    ASSERT_EQ(layer->getElementsView().size(), 6);
+
     checkText(layer, 0, "red", Colors::red, Text::NO_WRAP);
     checkText(layer, 1, "blue", Colors::xopp_royalblue, Text::NO_WRAP);
     checkText(layer, 2, "green", Color(0xff00f000U), Text::NO_WRAP);
     checkText(layer, 3, "multiline\ntext", Colors::black, Text::NO_WRAP);
     checkText(layer, 4, " \n odd  whitespace\ttext\n\n", Colors::black, Text::NO_WRAP);
-    checkText(layer, 5,
-              char_cast(u8"Xournal++ (/ˌzɚnl̟ˌplʌsˈplʌs/) is an open-source and cross-platform note-taking software "
-                        u8"that is fast, flexible, and functional. A modern rewrite and a more feature-rich version of "
-                        u8"the wonderful Xournal program."),
-              Colors::black, 130.13533);
+    checkText(layer, 5, "Other font", Colors::black, Text::NO_WRAP);
+
+    auto* t = dynamic_cast<const Text*>(layer->getElementsView()[5]);
+    ASSERT_TRUE(t);
+    EXPECT_EQ(t->getFont().getName(), "Times New Roman, Bold");
+    EXPECT_DOUBLE_EQ(t->getFont().getSize(), 12.34);
+
+    checkSaveAndReload(doc);
+}
+
+TEST(ControlLoadHandler, testText_v5) {
+    auto doc = loadTestDocument(GET_TESTFILE(u8"load/text-fileversion-5.xopp"));
+    ASSERT_TRUE(doc);
+
+    ASSERT_EQ(size_t{1}, doc->getPageCount());
+    ConstPageRef page = doc->getPage(0);
+
+    ASSERT_EQ(size_t{1}, page->getLayerCount());
+    const Layer* layer = page->getLayersView().front();
+
+    ASSERT_EQ(layer->getElementsView().size(), 11);
+
+    checkText(layer, 0, "red", Colors::red, Text::NO_WRAP);
+    checkText(layer, 1, "blue", Colors::xopp_royalblue, Text::NO_WRAP);
+    checkText(layer, 2, "green", Color(0xff00f000U), Text::NO_WRAP);
+    checkText(layer, 3, "multiline\ntext", Colors::black, Text::NO_WRAP);
+    checkText(layer, 4, " \n odd  whitespace\ttext\n\n", Colors::black, Text::NO_WRAP);
+    checkText(layer, 5, "Other font", Colors::black, Text::NO_WRAP);
+
+    auto* t = dynamic_cast<const Text*>(layer->getElementsView()[5]);
+    ASSERT_TRUE(t);
+    EXPECT_EQ(t->getFont().getName(), "Times New Roman, Bold");
+    EXPECT_DOUBLE_EQ(t->getFont().getSize(), 12.34);
+
+    // Check wrapping and alignment
     checkText(layer, 6,
               char_cast(u8"Xournal++ (/ˌzɚnl̟ˌplʌsˈplʌs/) is an open-source and cross-platform note-taking software "
                         u8"that is fast, flexible, and functional. A modern rewrite and a more feature-rich version of "
                         u8"the wonderful Xournal program."),
-              Colors::black, 140.34657, TextAlignment::LEFT, true);
+              Colors::black, 130.13533);
     checkText(layer, 7,
               char_cast(u8"Xournal++ (/ˌzɚnl̟ˌplʌsˈplʌs/) is an open-source and cross-platform note-taking software "
                         u8"that is fast, flexible, and functional. A modern rewrite and a more feature-rich version of "
                         u8"the wonderful Xournal program."),
-              Colors::black, 140.34657, TextAlignment::CENTER, false);
+              Colors::black, 140.34657, TextAlignment::LEFT, true);
     checkText(layer, 8,
               char_cast(u8"Xournal++ (/ˌzɚnl̟ˌplʌsˈplʌs/) is an open-source and cross-platform note-taking software "
                         u8"that is fast, flexible, and functional. A modern rewrite and a more feature-rich version of "
                         u8"the wonderful Xournal program."),
+              Colors::black, 140.34657, TextAlignment::CENTER, false);
+    checkText(layer, 9,
+              char_cast(u8"Xournal++ (/ˌzɚnl̟ˌplʌsˈplʌs/) is an open-source and cross-platform note-taking software "
+                        u8"that is fast, flexible, and functional. A modern rewrite and a more feature-rich version of "
+                        u8"the wonderful Xournal program."),
               Colors::black, 140.34657, TextAlignment::RIGHT, true);
+
+    // Check matrix
+    checkText(layer, 10, "matrix stuff", Colors::black, 17.931203, TextAlignment::CENTER, false);
+    t = dynamic_cast<const Text*>(layer->getElementsView()[10]);
+    ASSERT_TRUE(t);
+    compareMatrices(t->getTransformation(), {1.7863004, 0.30889206, -0.98584827, 0.91838835, {411.44259, 141.8153}});
+
+    checkSaveAndReload(doc);
 }
 
 TEST(ControlLoadHandler, testTextZipped) {
@@ -497,8 +706,8 @@ TEST(ControlLoadHandler, testTextZipped) {
     checkText(layer, 2, "green", Color(0xff00f000U), Text::NO_WRAP);
 }
 
-TEST(ControlLoadHandler, testImage) {
-    auto doc = loadTestDocument(GET_TESTFILE(u8"load/image.xopp"));
+TEST(ControlLoadHandler, testImage_v4) {
+    auto doc = loadTestDocument(GET_TESTFILE(u8"load/image-fileversion-4.xopp"));
     ASSERT_TRUE(doc);
 
     EXPECT_EQ(size_t{1}, doc->getPageCount());
@@ -521,6 +730,33 @@ TEST(ControlLoadHandler, testImage) {
     EXPECT_GT(img->getRawDataLength(), 0);
     EXPECT_NE(img->getRawData(), nullptr);
     checkImageFormat(img, "png");
+
+    checkSaveAndReload(doc);
+}
+
+TEST(ControlLoadHandler, testImage_v5) {
+    auto doc = loadTestDocument(GET_TESTFILE(u8"load/image-fileversion-5.xopp"));
+    ASSERT_TRUE(doc);
+
+    EXPECT_EQ(size_t{1}, doc->getPageCount());
+    ConstPageRef page = doc->getPage(0);
+
+    ASSERT_EQ(size_t{1}, page->getLayerCount());
+    const Layer* layer = page->getLayersView().front();
+
+    ASSERT_EQ(layer->getElementsView().size(), 1);
+    const auto* img = dynamic_cast<const Image*>(layer->getElementsView()[0]);
+
+    ASSERT_NE(img, nullptr) << "Element should be an image";
+    ASSERT_EQ(img->getType(), ELEMENT_IMAGE) << "Element should be an image";
+
+    compareMatrices(img->getTransformation(), {0.51833354, -0.30330446, 0.16498469, 0.9528937, {84.812933, 227.95502}});
+
+    EXPECT_GT(img->getRawDataLength(), 0);
+    EXPECT_NE(img->getRawData(), nullptr);
+    checkImageFormat(img, "png");
+
+    checkSaveAndReload(doc);
 }
 
 TEST(ControlLoadHandler, testImageZipped) {
@@ -594,8 +830,8 @@ TEST(ControlLoadHandler, imageSaveJpegBackwardCompat) {
     fs::remove(outPath);
 }
 
-TEST(ControlLoadHandler, testLatex) {
-    auto doc = loadTestDocument(GET_TESTFILE(u8"load/latex.xopp"));
+TEST(ControlLoadHandler, testLatex_v4) {
+    auto doc = loadTestDocument(GET_TESTFILE(u8"load/latex-fileversion-4.xopp"));
     ASSERT_TRUE(doc);
 
     EXPECT_EQ(size_t{1}, doc->getPageCount());
@@ -618,6 +854,42 @@ TEST(ControlLoadHandler, testLatex) {
     EXPECT_DOUBLE_EQ(teximage->getBoundingBox().height, 18.57);
 
     EXPECT_FALSE(teximage->getBinaryData().empty());
+
+    checkSaveAndReload(doc);
+}
+
+TEST(ControlLoadHandler, testLatex_v5) {
+    auto doc = loadTestDocument(GET_TESTFILE(u8"load/latex-fileversion-5.xopp"));
+    ASSERT_TRUE(doc);
+
+    EXPECT_EQ(size_t{1}, doc->getPageCount());
+    ConstPageRef page = doc->getPage(0);
+
+    ASSERT_EQ(size_t{1}, page->getLayerCount());
+    const Layer* layer = page->getLayersView().front();
+
+    ASSERT_EQ(layer->getElementsView().size(), 2);
+    const auto* teximage = dynamic_cast<const TexImage*>(layer->getElementsView()[0]);
+
+    ASSERT_NE(teximage, nullptr) << "Element should be a TeX image";
+    ASSERT_EQ(teximage->getType(), ELEMENT_TEXIMAGE) << "Element should be a TeX image";
+
+    EXPECT_STREQ(teximage->getText().c_str(), "x^2") << "TeX image has wrong text contents";
+
+    EXPECT_DOUBLE_EQ(teximage->getOrigin().x, 14.937);
+    EXPECT_DOUBLE_EQ(teximage->getOrigin().y, 15.715);
+    EXPECT_DOUBLE_EQ(teximage->getBoundingBox().width, 20.126);
+    EXPECT_DOUBLE_EQ(teximage->getBoundingBox().height, 18.57);
+
+    EXPECT_FALSE(teximage->getBinaryData().empty());
+
+    teximage = dynamic_cast<const TexImage*>(layer->getElementsView()[1]);
+    ASSERT_TRUE(teximage) << "Element should be a TeX image";
+    EXPECT_EQ(teximage->getText(), "y^3");
+    compareMatrices(teximage->getTransformation(),
+                    {0.44300944, -0.29072843, 0.18959284, 0.93972233, {28.173364, 17.287205}});
+
+    checkSaveAndReload(doc);
 }
 
 TEST(ControlLoadHandler, linebreaksLatex) {
@@ -813,9 +1085,9 @@ TEST(ControlLoadHandler, testRelativePath) {
     saveReloadTest(fs::current_path());
 }
 
-TEST(ControlLoadHandler, testUrlLink) {
-    auto doc = loadTestDocument(GET_TESTFILE(u8"load/links.xopp"));
-    ASSERT_TRUE(doc) << "Unable to load test file \"load/links.xopp\"";
+TEST(ControlLoadHandler, testUrlLink_v5) {
+    auto doc = loadTestDocument(GET_TESTFILE(u8"load/links-fileversion-5.xopp"));
+    ASSERT_TRUE(doc) << "Unable to load test file \"load/links-fileversion-5.xopp\"";
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
@@ -824,22 +1096,33 @@ TEST(ControlLoadHandler, testUrlLink) {
     const auto* layer = page->getLayersView()[0];
 
     auto elements = layer->getElementsView();
-    ASSERT_EQ((size_t)4, layer->getElementsView().size());
+    ASSERT_EQ((size_t)6, layer->getElementsView().size());
 
-    auto check_link = [&](size_t i, const auto* text, const auto* url, TextAlignment align) {
+    auto check_link = [&](size_t i, const auto* text, const auto* url, TextAlignment align, const char* font,
+                          double fontSize) {
         EXPECT_EQ(ELEMENT_LINK, elements[i]->getType());
         auto* link = dynamic_cast<const Link*>(elements[i]);
         ASSERT_NE(link, nullptr);
         EXPECT_STREQ(link->getText().c_str(), char_cast(text));
         EXPECT_STREQ(link->getUrl().c_str(), char_cast(url));
         EXPECT_EQ(link->getAlignment(), align);
+        EXPECT_EQ(link->getFont().getName(), std::string_view(font));
+        EXPECT_DOUBLE_EQ(link->getFont().getSize(), fontSize);
     };
 
-    check_link(0, u8"Simple Link", u8"https://xournalpp.github.io", TextAlignment::LEFT);
+    check_link(0, u8"Simple Link", u8"https://xournalpp.github.io", TextAlignment::LEFT, "Sans", 12.);
     check_link(1, u8"Multiline\nLink\nwith three lines",
                u8"https://johndoe:secret@www.example.com:8080/documentation/index.html?p1=A&p2=B#ressource",
-               TextAlignment::CENTER);
-    check_link(2, u8"Chinese characters: 测试", u8"http://見.香港/", TextAlignment::LEFT);
+               TextAlignment::CENTER, "Sans", 12.);
+    check_link(2, u8"Chinese characters: 测试", u8"http://見.香港/", TextAlignment::LEFT, "Sans", 12.);
     check_link(3, u8"Other non-ASCII characters:\nHæuñßéř, dǒńg-bǎǐ, łúčný, qǐng-wèn, vò-địâ",
-               u8"mailto:françois.rené@café-crème.fr", TextAlignment::RIGHT);
+               u8"mailto:françois.rené@café-crème.fr", TextAlignment::RIGHT, "Sans", 12.);
+    check_link(4, u8"Transformation Matrix", u8"https://xournalpp.github.io", TextAlignment::LEFT, "Sans", 12.);
+    check_link(5, u8"Other font", u8"https://xournalpp.github.io", TextAlignment::LEFT, "System-ui Italic", 15.649);
+
+    auto& link = dynamic_cast<const Link&>(*elements[4]);
+    compareMatrices(link.getTransformation(),
+                    {0.73051218, 0.32708413, -0.25284672, 0.94499522, {347.95598, 144.02478}});
+
+    checkSaveAndReload(doc);
 }
