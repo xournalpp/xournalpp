@@ -68,6 +68,9 @@ public:
     /// Return the length of the raw data.
     size_t getRawDataLength() const;
 
+    /// Returns the raw data
+    inline const std::string& getBinaryData() const { return data; }
+
     [[maybe_unused]] GdkPixbufFormat* getImageFormat() const;
 
 public:
