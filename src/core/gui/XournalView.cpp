@@ -136,10 +136,25 @@ auto XournalView::getCurrentPage() const -> size_t { return currentPage; }
 const int scrollKeySize = 30;
 
 auto XournalView::onKeyPressEvent(const KeyEvent& event) -> bool {
+    if (event.keyval == GDK_KEY_space) {
+        this->isSpaceDown = true;
+    }
+
     size_t p = getCurrentPage();
     if (p != npos && p < this->viewPages.size()) {
-        auto& v = this->viewPages[p];
-        if (v->onKeyPressEvent(event)) {
+        if (this->viewPages[p]->onKeyPressEvent(event)) {
+            if (event.keyval == GDK_KEY_space) {
+                this->spaceConsumedByTool = true;
+            }
+            return true;
+        }
+    }
+
+    for (size_t i = 0; i < this->viewPages.size(); ++i) {
+        if (i != p && this->viewPages[i]->onKeyPressEvent(event)) {
+            if (event.keyval == GDK_KEY_space) {
+                this->spaceConsumedByTool = true;
+            }
             return true;
         }
     }
@@ -203,6 +218,16 @@ auto XournalView::onKeyPressEvent(const KeyEvent& event) -> bool {
     }
 
     if (keyval == GDK_KEY_space) {
+        if (this->spaceConsumedByTool) {
+            return true;
+        }
+
+        for (const auto& v : this->viewPages) {
+            if (v->hasActiveInput()) {
+                return true;
+            }
+        }
+
         GtkAllocation alloc = {0};
         gtk_widget_get_allocation(gtk_widget_get_parent(this->widget), &alloc);
         int windowHeight = alloc.height - scrollKeySize;
@@ -328,10 +353,20 @@ auto XournalView::onKeyPressEvent(const KeyEvent& event) -> bool {
 auto XournalView::getRepaintHandler() const -> RepaintHandler* { return this->repaintHandler.get(); }
 
 auto XournalView::onKeyReleaseEvent(const KeyEvent& event) -> bool {
+    if (event.keyval == GDK_KEY_space) {
+        this->isSpaceDown = false;
+        this->spaceConsumedByTool = false;
+    }
+
     size_t p = getCurrentPage();
     if (p != npos && p < this->viewPages.size()) {
-        auto& v = this->viewPages[p];
-        if (v->onKeyReleaseEvent(event)) {
+        if (this->viewPages[p]->onKeyReleaseEvent(event)) {
+            return true;
+        }
+    }
+
+    for (size_t i = 0; i < this->viewPages.size(); ++i) {
+        if (i != p && this->viewPages[i]->onKeyReleaseEvent(event)) {
             return true;
         }
     }

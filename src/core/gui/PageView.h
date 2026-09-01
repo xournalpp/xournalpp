@@ -108,6 +108,7 @@ public:
 
     bool onKeyPressEvent(const KeyEvent& event);
     bool onKeyReleaseEvent(const KeyEvent& event);
+    bool hasActiveInput() const { return this->inputHandler != nullptr; }
 
     bool cut();
     bool copy();

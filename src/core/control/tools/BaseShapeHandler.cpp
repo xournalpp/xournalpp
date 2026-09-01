@@ -10,6 +10,8 @@
 #include "control/settings/Settings.h"             // for Settings
 #include "control/tools/InputHandler.h"            // for InputHandler
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHandler
+#include "gui/MainWindow.h"                        // for MainWindow
+#include "gui/XournalView.h"                       // for XournalView
 #include "gui/XournalppCursor.h"                   // for XournalppCursor
 #include "gui/inputdevices/PositionInputData.h"    // for PositionInputData
 #include "model/Document.h"                        // for Document
@@ -159,7 +161,8 @@ void BaseShapeHandler::onButtonReleaseEvent(const PositionInputData& pos, double
 
 void BaseShapeHandler::onButtonPressEvent(const PositionInputData& pos, double zoom) {
     xoj_assert(this->viewPool->empty());
-    this->modSpace = false;
+    this->modSpace = this->control && this->control->getWindow() && this->control->getWindow()->getXournal() &&
+                     this->control->getWindow()->getXournal()->isSpaceKeyDown();
     this->buttonDownPoint.x = pos.x / zoom;
     this->buttonDownPoint.y = pos.y / zoom;
 
