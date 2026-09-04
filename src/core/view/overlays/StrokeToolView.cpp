@@ -17,8 +17,8 @@
 
 using namespace xoj::view;
 
-StrokeToolView::StrokeToolView(const StrokeHandler* strokeHandler, const Stroke& stroke, Repaintable* parent):
-        BaseStrokeToolView(parent, stroke), strokeHandler(strokeHandler), pointBuffer(stroke.getPointVector()) {
+StrokeToolView::StrokeToolView(const StrokeHandler* strokeHandler, const Stroke& stroke, Repaintable* parent, cairo_operator_t op):
+        BaseStrokeToolView(parent, stroke, op), strokeHandler(strokeHandler), pointBuffer(stroke.getPointVector()) {
     this->registerToPool(strokeHandler->getViewPool());
     parent->flagDirtyRegion(Range(stroke.getBoundingBox()));
 }
@@ -113,7 +113,7 @@ void StrokeToolView::on(StrokeToolView::StrokeReplacementRequest, const Stroke& 
     xoj_assert(this->strokeColor == strokeColorWithAlpha(newStroke));
     xoj_assert(this->lineStyle == newStroke.getLineStyle());
     xoj_assert(this->cairoOp ==
-               (newStroke.getToolType() == StrokeTool::HIGHLIGHTER ? CAIRO_OPERATOR_MULTIPLY : CAIRO_OPERATOR_OVER));
+               (newStroke.getToolType() == StrokeTool::HIGHLIGHTER ? this->cairoOp : CAIRO_OPERATOR_OVER));
 }
 
 void StrokeToolView::deleteOn(StrokeToolView::FinalizationRequest, const Range& rg) {
