@@ -42,7 +42,6 @@ BuildRequires:  pkgconfig(sndfile) >= 1.0.25
 BuildRequires:  pkgconfig(zlib)
 BuildRequires:  pkgconfig(gtksourceview-4) >= 4.0
 Recommends:     texlive-scheme-basic
-Recommends:     texlive-dvipng
 Recommends:     texlive-standalone
 Requires:       hicolor-icon-theme
 Requires:       %{name}-plugins = %{version}-%{release}

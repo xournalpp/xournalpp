@@ -24,28 +24,28 @@ sudo pacman -S cmake ninja gtk3 base-devel libxml2 portaudio libsndfile \
 #### For Fedora:
 ```sh
 sudo dnf install gcc-c++ cmake ninja-build gtk3-devel libxml2-devel portaudio-devel libsndfile-devel \
-  poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext libzip-devel \
+  poppler-glib-devel texlive-scheme-basic 'tex(standalone.cls)' gettext libzip-devel \
   librsvg2-devel lua-devel gtksourceview4-devel help2man qpdf-devel
 ```
 
 #### For CentOS/RHEL:
 ```sh
 sudo dnf install gcc-c++ cmake ninja-build gtk3-devel libxml2-devel cppunit-devel portaudio-devel libsndfile-devel \
-  poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext libzip-devel \
+  poppler-glib-devel texlive-scheme-basic 'tex(standalone.cls)' gettext libzip-devel \
   librsvg2-devel gtksourceview4-devel qpdf-devel
 ```
 
 #### For Ubuntu/Debian and Raspberry Pi OS:
 ```sh
 sudo apt-get install cmake ninja-build libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev \
-  dvipng texlive libxml2-dev liblua5.4-dev libzip-dev librsvg2-dev gettext \
+  texlive libxml2-dev liblua5.4-dev libzip-dev librsvg2-dev gettext \
   libgtksourceview-4-dev help2man libqpdf-dev
 ```
 
 #### For openSUSE:
 ```sh
 sudo zypper install gcc-c++ cmake ninja gtk3-devel portaudio-devel libsndfile-devel \
-  texlive-dvipng texlive libxml2-devel libpoppler-glib-devel libzip-devel librsvg-devel lua-devel \
+  texlive libxml2-devel libpoppler-glib-devel libzip-devel librsvg-devel lua-devel \
   gtksourceview4-devel lsb-release help2man qpdf-devel
 ```
 
