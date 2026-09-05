@@ -85,7 +85,7 @@ public:
      */
     void updateColorToolItemsRecoloring(const std::optional<Recolor>& recolor);
 
-    void initToolItems();
+    void initToolFactories();
     void addPluginItem(ToolbarButtonEntry* t);
     void addPluginPlaceholderItem(ToolbarPlaceholderEntry* entry);
 
@@ -96,7 +96,7 @@ public:
 
     ToolbarModel* getModel();
 
-    const std::vector<std::unique_ptr<AbstractToolItem>>& getToolItems() const;
+    const std::vector<std::unique_ptr<AbstractToolItem>>& getToolFactories() const;
     const std::vector<std::unique_ptr<ColorToolItem>>& getColorToolItems() const;
 
     Control* getControl();
@@ -119,7 +119,7 @@ private:
     std::vector<std::unique_ptr<ColorToolItem>> toolbarColorItems;
     GtkWindow* parent = nullptr;
 
-    std::vector<std::unique_ptr<AbstractToolItem>> toolItems;
+    std::vector<std::unique_ptr<AbstractToolItem>> toolFactories;
 
     ToolPageSpinner* toolPageSpinner = nullptr;
 
