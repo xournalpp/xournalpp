@@ -1698,6 +1698,8 @@ static int applib_addTexts(lua_State* L) {
 static int applib_addTexImages(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* control = plugin->getControl();
+    PageRef const& page = control->getCurrentPage();
+    Layer* layer = page->getSelectedLayer();
 
     // get default color
     ToolHandler* toolHandler = control->getToolHandler();
@@ -1805,7 +1807,7 @@ static int applib_addTexImages(lua_State* L) {
         LatexController::renderTexImage(
                 control, formula, col,
                 [control, texItems, index, numItems, plugin, callbackRef, x, y, allowUndoRedoAction, width, height,
-                 args, texImagesOwn, count](CallbackArg arg) {
+                 args, texImagesOwn, count, page, layer](CallbackArg arg) {
                     if (std::holds_alternative<std::string>(arg)) {
                         std::string msg = std::get<std::string>(arg);
                         if (msg.empty()) {
@@ -1835,10 +1837,20 @@ static int applib_addTexImages(lua_State* L) {
                         args->at(index - 1) = texImagePtr;
                     }
                     if (++(*count) == numItems) {
-                        PageRef const& page = control->getCurrentPage();
-                        Layer* layer = page->getSelectedLayer();
-                        UndoRedoHandler* undo = control->getUndoRedoHandler();
+                        auto p = control->getDocument()->indexOf(page);
+                        if (p == npos) {
+                            g_warning("Page does not exist any more. Cannot insert TeX images");
+                            plugin->unrefFunction(callbackRef);
+                            return;
+                        }
+                        auto layers = page->getLayers();
+                        if (std::find(layers.begin(), layers.end(), layer) == layers.end()) {
+                            g_warning("Layer does not exist any more. Cannot insert TeX images");
+                            plugin->unrefFunction(callbackRef);
+                            return;
+                        }
 
+                        UndoRedoHandler* undo = control->getUndoRedoHandler();
                         {
                             std::lock_guard lock(*control->getDocument());
                             for (auto& img: *texImagesOwn) {
