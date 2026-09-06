@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-29 12:29+0000\n"
-"PO-Revision-Date: 2026-08-30 04:28\n"
+"POT-Creation-Date: 2026-08-30 09:09+0000\n"
+"PO-Revision-Date: 2026-09-06 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -696,7 +696,7 @@ msgid "Send to back"
 msgstr "Eraman atzera"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
-#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:162
+#: ../src/core/model/Image.cpp:154 ../src/core/model/Image.cpp:158
 msgid "Failed to load image"
 msgstr "Ezin izan da irudia kargatu"
 
@@ -1922,15 +1922,15 @@ msgstr "Kopiatu"
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Dokumentua ez da kargatu! ({1}), {2}"
 
-#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
+#: ../src/core/model/Image.cpp:154 ../src/core/model/Image.cpp:164
 msgid "Error: "
 msgstr "Errorea: "
 
-#: ../src/core/model/Image.cpp:162 ../src/core/model/Image.cpp:172
+#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
 msgid "Unrecoverable error"
 msgstr "Errore berreskuraezina"
 
-#: ../src/core/model/Image.cpp:168 ../src/core/model/Image.cpp:172
+#: ../src/core/model/Image.cpp:164 ../src/core/model/Image.cpp:168
 msgid "Failed to close image stream"
 msgstr "Ezin izan da itxi irudi-jarioa"
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-29 12:29+0000\n"
-"PO-Revision-Date: 2026-08-30 04:28\n"
+"POT-Creation-Date: 2026-08-30 09:09+0000\n"
+"PO-Revision-Date: 2026-09-06 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -670,7 +670,7 @@ msgid "Send to back"
 msgstr "На задний план"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
-#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:162
+#: ../src/core/model/Image.cpp:154 ../src/core/model/Image.cpp:158
 msgid "Failed to load image"
 msgstr "Ошибка загрузки изображения"
 
@@ -1895,15 +1895,15 @@ msgstr "Копировать"
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Документ не загружен! ({1}), {2}"
 
-#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
+#: ../src/core/model/Image.cpp:154 ../src/core/model/Image.cpp:164
 msgid "Error: "
 msgstr "Ошибка: "
 
-#: ../src/core/model/Image.cpp:162 ../src/core/model/Image.cpp:172
+#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
 msgid "Unrecoverable error"
 msgstr ""
 
-#: ../src/core/model/Image.cpp:168 ../src/core/model/Image.cpp:172
+#: ../src/core/model/Image.cpp:164 ../src/core/model/Image.cpp:168
 msgid "Failed to close image stream"
 msgstr ""
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-29 12:29+0000\n"
-"PO-Revision-Date: 2026-08-30 04:28\n"
+"POT-Creation-Date: 2026-08-30 09:09+0000\n"
+"PO-Revision-Date: 2026-09-06 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -693,7 +693,7 @@ msgid "Send to back"
 msgstr "Envia al fons"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
-#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:162
+#: ../src/core/model/Image.cpp:154 ../src/core/model/Image.cpp:158
 msgid "Failed to load image"
 msgstr "No s'ha pogut carregar la imatge."
 
@@ -1919,15 +1919,15 @@ msgstr "Copia"
 msgid "Document not loaded! ({1}), {2}"
 msgstr "El document no s'ha carregat! ({1}), {2}"
 
-#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
+#: ../src/core/model/Image.cpp:154 ../src/core/model/Image.cpp:164
 msgid "Error: "
 msgstr "Error: "
 
-#: ../src/core/model/Image.cpp:162 ../src/core/model/Image.cpp:172
+#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
 msgid "Unrecoverable error"
 msgstr "Error sense recuperació possible"
 
-#: ../src/core/model/Image.cpp:168 ../src/core/model/Image.cpp:172
+#: ../src/core/model/Image.cpp:164 ../src/core/model/Image.cpp:168
 msgid "Failed to close image stream"
 msgstr "No s'ha pogut tancar el flux de la imatge."
 
