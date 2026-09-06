@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-05 07:48+0000\n"
-"PO-Revision-Date: 2026-08-09 04:42\n"
+"POT-Creation-Date: 2026-08-30 09:09+0000\n"
+"PO-Revision-Date: 2026-09-06 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n==2 ? 1 : 2);\n"
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: he\n"
@@ -679,7 +679,7 @@ msgid "Send to back"
 msgstr "הרחקה לרקע"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
-#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:162
+#: ../src/core/model/Image.cpp:154 ../src/core/model/Image.cpp:158
 msgid "Failed to load image"
 msgstr "טעינת התמונה נכשלה"
 
@@ -770,11 +770,11 @@ msgstr ""
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:292
+#: ../src/core/control/xojfile/SaveHandler.cpp:291
 msgid "Could not write background \"{1}\", {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:399
+#: ../src/core/control/xojfile/SaveHandler.cpp:398
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr ""
 
@@ -1904,15 +1904,15 @@ msgstr "העתקה"
 msgid "Document not loaded! ({1}), {2}"
 msgstr ""
 
-#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
+#: ../src/core/model/Image.cpp:154 ../src/core/model/Image.cpp:164
 msgid "Error: "
 msgstr ""
 
-#: ../src/core/model/Image.cpp:162 ../src/core/model/Image.cpp:172
+#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
 msgid "Unrecoverable error"
 msgstr ""
 
-#: ../src/core/model/Image.cpp:168 ../src/core/model/Image.cpp:172
+#: ../src/core/model/Image.cpp:164 ../src/core/model/Image.cpp:168
 msgid "Failed to close image stream"
 msgstr ""
 

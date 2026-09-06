@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-05 07:48+0000\n"
-"PO-Revision-Date: 2026-08-09 04:42\n"
+"POT-Creation-Date: 2026-08-30 09:09+0000\n"
+"PO-Revision-Date: 2026-09-06 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -696,7 +696,7 @@ msgid "Send to back"
 msgstr "Eraman atzera"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
-#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:162
+#: ../src/core/model/Image.cpp:154 ../src/core/model/Image.cpp:158
 msgid "Failed to load image"
 msgstr "Ezin izan da irudia kargatu"
 
@@ -788,11 +788,11 @@ msgstr "Dokumentua hondatuta dago (fitxategian ez da orririk aurkitu)"
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Eskatutako behin-behineko fitxategia ez da aurkitu eranskinean {1}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:292
+#: ../src/core/control/xojfile/SaveHandler.cpp:291
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Ezin izan da atzeko planoa idatzi \"{1}\", {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:399
+#: ../src/core/control/xojfile/SaveHandler.cpp:398
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Ezin izan da \"{1}\" atzeko planoa idatzi. Jarraitu hala ere."
 
@@ -1742,19 +1742,19 @@ msgstr "Erreproduzitu objektua"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 msgid "Justify text"
-msgstr ""
+msgstr "Justifikatu testua"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:448
 msgid "Align text to the left"
-msgstr ""
+msgstr "Lerrokatu testua ezkerrean"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:450
 msgid "Center text"
-msgstr ""
+msgstr "Lerrokatu testua erdian"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:452
 msgid "Align text to the right"
-msgstr ""
+msgstr "Lerrokatu testua eskuinean"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:455
 msgid "Record Audio / Stop Recording"
@@ -1922,15 +1922,15 @@ msgstr "Kopiatu"
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Dokumentua ez da kargatu! ({1}), {2}"
 
-#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
+#: ../src/core/model/Image.cpp:154 ../src/core/model/Image.cpp:164
 msgid "Error: "
 msgstr "Errorea: "
 
-#: ../src/core/model/Image.cpp:162 ../src/core/model/Image.cpp:172
+#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
 msgid "Unrecoverable error"
 msgstr "Errore berreskuraezina"
 
-#: ../src/core/model/Image.cpp:168 ../src/core/model/Image.cpp:172
+#: ../src/core/model/Image.cpp:164 ../src/core/model/Image.cpp:168
 msgid "Failed to close image stream"
 msgstr "Ezin izan da itxi irudi-jarioa"
 

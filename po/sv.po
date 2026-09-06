@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-05 07:48+0000\n"
-"PO-Revision-Date: 2026-08-09 04:42\n"
+"POT-Creation-Date: 2026-08-30 09:09+0000\n"
+"PO-Revision-Date: 2026-09-06 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -145,12 +145,13 @@ msgstr "Fel vid läsning av mallfilen \"{1}\""
 
 #: ../src/core/control/Control.cpp:1764
 msgid "Failed to determine if path exists \"{1}\": {2}"
-msgstr ""
+msgstr "Kunde inte avgöra om filsökväg existerar \"{1}\": {2}"
 
 #: ../src/core/control/Control.cpp:1765
 msgid "That file does not exist:\n"
 "\"{1}\""
-msgstr ""
+msgstr "Den filen existerar inte:\n"
+"\"{1}\""
 
 #: ../src/core/control/Control.cpp:1877
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -685,7 +686,7 @@ msgid "Send to back"
 msgstr "Flytta längst bak"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
-#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:162
+#: ../src/core/model/Image.cpp:154 ../src/core/model/Image.cpp:158
 msgid "Failed to load image"
 msgstr "Kunde inte läsa in bild"
 
@@ -776,11 +777,11 @@ msgstr "Dokumentet är skadat (inga sidor finns i filen)"
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:292
+#: ../src/core/control/xojfile/SaveHandler.cpp:291
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Kunde inte skriva bakgrund \"{1}\", {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:399
+#: ../src/core/control/xojfile/SaveHandler.cpp:398
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Kunde inte skriva bakgrund \"{1}\". Fortsätter ändå."
 
@@ -1011,7 +1012,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Drawing Type - don't change"
-msgstr ""
+msgstr "Ritläge – ändra inte"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
 msgid "Normal drawing"
@@ -1223,7 +1224,7 @@ msgstr "Användarpaletter"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:99
 msgid "<i>The palettes shown below are obtained from the <a href=\"{1}\">Built-in palettes</a> and <a href=\"{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>Paletterna som visas nedan är hämtade från katalogerna för de <a href=\"{1}\">inbyggda paletterna</a> och <a href=\"{2}\">användarpaletterna</a></i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:117
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
@@ -1907,15 +1908,15 @@ msgstr "Kopiera"
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Dokumentet är inte laddat! ({1}), {2}"
 
-#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
+#: ../src/core/model/Image.cpp:154 ../src/core/model/Image.cpp:164
 msgid "Error: "
 msgstr "Fel: "
 
-#: ../src/core/model/Image.cpp:162 ../src/core/model/Image.cpp:172
+#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
 msgid "Unrecoverable error"
 msgstr "Oåterställbart fel"
 
-#: ../src/core/model/Image.cpp:168 ../src/core/model/Image.cpp:172
+#: ../src/core/model/Image.cpp:164 ../src/core/model/Image.cpp:168
 msgid "Failed to close image stream"
 msgstr "Kunde inte stänga bildström"
 
@@ -1969,7 +1970,7 @@ msgstr "element"
 #: ../src/core/undo/AddUndoAction.cpp:88
 #: ../src/core/undo/DeleteUndoAction.cpp:90
 msgid "stroke"
-msgstr "streck"
+msgstr "objekt"
 
 #: ../src/core/undo/AddUndoAction.cpp:91
 #: ../src/core/undo/DeleteUndoAction.cpp:93
@@ -2162,12 +2163,13 @@ msgstr "Felkod {1}"
 
 #: ../src/util/PathUtil.cpp:125
 msgid "Could not open file: {1}"
-msgstr ""
+msgstr "Kunde inte öppna fil: {1}"
 
 #: ../src/util/PathUtil.cpp:132
 msgid "Error reading \"{1}\":\n"
 "{2}"
-msgstr ""
+msgstr "Fel vid läsning \"{1}\":\n"
+"{2}"
 
 #: ../src/util/PathUtil.cpp:409
 msgid "xournalpp-{1}"
@@ -3434,7 +3436,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3343
 msgid "Recolors the drawing area so that light regions get the \"Light Color\" and dark regions get the \"Dark Color\". Other colors are interpolated accordingly. Can be use to implement a dark-mode."
-msgstr ""
+msgstr "Färgar om ritområdet så att ljusa delar går får \"Ljus färg\" och mörka regioner får \"Mörk färg\". Andra färger interpoleras därefter. Kan användas för att implementera ett mörkt läge."
 
 #: ../ui/settings.glade:3353
 msgid "Recolor Previews in the Sidebar"
@@ -3442,17 +3444,19 @@ msgstr ""
 
 #: ../ui/settings.glade:3358
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) the same way as the drawing area."
-msgstr ""
+msgstr "Färgar om förhandsvisningar i sidofältet (Förhandsgranska sida/lager) på samma sätt som ritområdet."
 
 #: ../ui/settings.glade:3372
 msgid "The color light regions are translated to\n"
 "(use a dark color for a dark-mode)"
-msgstr ""
+msgstr "Färgen som ljusa delar översätts till\n"
+"(använd en mörk färg för mörkt läge)"
 
 #: ../ui/settings.glade:3387
 msgid "The color dark regions are translated to\n"
 "(use a light color for dark-mode)"
-msgstr ""
+msgstr "Färgen som mörka delar översätts till\n"
+"(använd en ljus färg för mörkt läge)"
 
 #: ../ui/settings.glade:3403
 msgid "Dark Color"
@@ -3464,7 +3468,7 @@ msgstr "Ljus färg"
 
 #: ../ui/settings.glade:3430
 msgid "Recoloring (allows theming)"
-msgstr ""
+msgstr "Omfärgning (möjliggör teman)"
 
 #: ../ui/settings.glade:3462
 msgid "Cursor icon for pen"
@@ -4442,7 +4446,7 @@ msgstr "Stan_dardverktyg"
 
 #: ../ui/mainmenubar.xml:579
 msgid "Drawing Type"
-msgstr ""
+msgstr "Ritläge"
 
 #: ../ui/mainmenubar.xml:581
 msgid "_Shape Recognizer"

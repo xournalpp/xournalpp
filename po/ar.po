@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-05 07:48+0000\n"
-"PO-Revision-Date: 2026-08-09 04:42\n"
+"POT-Creation-Date: 2026-08-30 09:09+0000\n"
+"PO-Revision-Date: 2026-09-06 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -674,7 +674,7 @@ msgid "Send to back"
 msgstr "إرسال إلى المؤخرة"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
-#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:162
+#: ../src/core/model/Image.cpp:154 ../src/core/model/Image.cpp:158
 msgid "Failed to load image"
 msgstr "تعذّر تحميل الصورة"
 
@@ -765,11 +765,11 @@ msgstr "المستند تالف (لم يتم العثور على صفحات في
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "تعذر إيجاد الملف المؤقت المطلوب للمرفق {1}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:292
+#: ../src/core/control/xojfile/SaveHandler.cpp:291
 msgid "Could not write background \"{1}\", {2}"
 msgstr "تعذر كتابة الخلفية\"{1}\"، {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:399
+#: ../src/core/control/xojfile/SaveHandler.cpp:398
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "تعذر كتابة الخلفية «{1}». سنتابع على أيّة حال."
 
@@ -1898,15 +1898,15 @@ msgstr "نسخة"
 msgid "Document not loaded! ({1}), {2}"
 msgstr "لم يتم قراءة المستند بواسطة التطبيق بشكل صحيح! ({1})، {2}"
 
-#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
+#: ../src/core/model/Image.cpp:154 ../src/core/model/Image.cpp:164
 msgid "Error: "
 msgstr "خطأ: "
 
-#: ../src/core/model/Image.cpp:162 ../src/core/model/Image.cpp:172
+#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
 msgid "Unrecoverable error"
 msgstr "لا يوجد إمكانية لاسترجاع الخطأ"
 
-#: ../src/core/model/Image.cpp:168 ../src/core/model/Image.cpp:172
+#: ../src/core/model/Image.cpp:164 ../src/core/model/Image.cpp:168
 msgid "Failed to close image stream"
 msgstr "خطأ بإغلاق التدفق الصوري"
 
