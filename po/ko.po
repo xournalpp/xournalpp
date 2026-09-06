@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-13 20:30+0000\n"
-"PO-Revision-Date: 2026-07-19 05:25\n"
+"POT-Creation-Date: 2026-08-09 11:30+0000\n"
+"PO-Revision-Date: 2026-08-16 04:28\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -128,7 +128,7 @@ msgstr ""
 #: ../src/core/control/Control.cpp:1669
 msgid "That file does not exist:\n"
 "\"{1}\""
-msgstr ""
+msgstr "그 파일은 없는 파일입니다: {1}"
 
 #: ../src/core/control/Control.cpp:1776
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -684,11 +684,11 @@ msgstr "이 문서는 손상되었습니다. (파일에 페이지가 없습니�
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:312
 msgid "Unexpected root tag: {1}"
-msgstr ""
+msgstr "예상치 못한 루트 태그: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:333
 msgid "Unexpected tag in document: \"{1}\""
-msgstr ""
+msgstr "문서에 예상치 못한 태그가 있습니다: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:387
 #: ../src/core/control/xojfile/LoadHandler.cpp:417
@@ -705,15 +705,15 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:490
 msgid "Unknown domain type: {1}"
-msgstr ""
+msgstr "알 수 없는 도메인 타입: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:528
 msgid "Unknown background type: {1}"
-msgstr ""
+msgstr "알 수 없는 백그라운드 타입: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:553
 msgid "Error reading width of a stroke: {1}"
-msgstr ""
+msgstr "선의 굵기를 읽을 수 없습니다: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:622
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
@@ -2097,7 +2097,7 @@ msgstr "오류 코드 {1}"
 
 #: ../src/util/PathUtil.cpp:125
 msgid "Could not open file: {1}"
-msgstr ""
+msgstr "\"{1}\" 파일을 열 수 없습니다"
 
 #: ../src/util/PathUtil.cpp:132
 msgid "Error reading \"{1}\":\n"
