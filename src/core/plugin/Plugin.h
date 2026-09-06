@@ -15,9 +15,11 @@
 #include <cstddef>    // for size_t
 #include <limits>     // for numeric_limits
 #include <memory>     // for unique_ptr
+#include <ranges>
 #include <type_traits>
 #include <unordered_map>
 #include <utility>
+#include <variant>
 
 #include "config-features.h"  // for ENABLE_PLUGINS
 
@@ -108,7 +110,17 @@ struct LuaDeleter {
 namespace detail {
 template <typename T>
 constexpr bool always_false = false;
-}
+
+// Trait to detect if a type is a std::variant
+template <typename T>
+struct is_variant: std::false_type {};
+template <typename... Ts>
+struct is_variant<std::variant<Ts...>>: std::true_type {};
+
+template <typename T>
+inline constexpr bool is_variant_v = is_variant<T>::value;
+}  // namespace detail
+
 class Plugin final {
 public:
     Plugin(Control* control, std::string name, fs::path path);
@@ -232,6 +244,16 @@ private:
         } else if constexpr (std::is_integral_v<CleanA>) {  // integral arg except of bool
             ptrdiff_t n = static_cast<ptrdiff_t>(arg);
             lua_pushinteger(lua.get(), n);
+        } else if constexpr (std::ranges::forward_range<CleanA>) {  // list, vector, ...
+            lua_newtable(lua.get());
+            int i = 1;
+            for (auto const& item: arg) {
+                lua_pushinteger(lua.get(), i++);  // key
+                pushArgument(item);               // value
+                lua_settable(lua.get(), -3);      // insert
+            }
+        } else if constexpr (detail::is_variant_v<CleanA>) {
+            std::visit([this](auto&& a) { pushArgument(a); }, arg);
         } else {
             static_assert(detail::always_false<A>, "Unhandled case for specifying argument");
         }

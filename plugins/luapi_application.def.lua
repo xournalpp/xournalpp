@@ -394,7 +394,7 @@ function app.addTexts(opts) end
 ---   - allowUndoRedoAction string: Decides how the change gets introduced into the undoRedo action list "individual",
 --- "grouped" or "none"
 --- 
---- @param opts {textItems:{formula:string, color:integer, x:number, y:number, width:number|nil, height:number|nil}[],
+--- @param opts {texItems:{formula:string, color:integer, x:number, y:number, width:number|nil, height:number|nil}[],
 --- cb:function, allowUndoRedoAction:string}
 --- 
 --- Parameters per texImage:
@@ -405,9 +405,9 @@ function app.addTexts(opts) end
 ---   - width number: the width (default: auto)
 ---   - height number: the height (default: auto)
 --- 
---- cb: callback function(ref_or_msg:userdata|string, no:int) to call when a TexImage has been added
----     The first argument is either a reference to the TexImage or the error message/Tex generator output
----     The second argument specifies the corresponding position in the texItems table
+--- cb: callback function({userdata|string}[]) to call when all TexImages have been added
+---     The argument passed to the callback function is an array of the same size (and order)
+---     as texItems, consisting of references to the TexImages and error messages/Tex generator outputs
 --- 
 --- Example:
 --- 
@@ -429,13 +429,15 @@ function app.addTexts(opts) end
 --- 
 ---   app.addTexImages{
 ---       texItems=texItems,
----       cb=function(ref_or_msg, no)
----              if type(ref_or_msg) == "userdata" then
----                  print("Added TexImage: ", no)
----                  print("Address: ", ref_or_msg)
----              else
----                  print("An error occured with item: ", no)
----                  print("TeX generator output: ", ref_or_msg)
+---       cb=function(tbl)
+---              for no, ref_or_msg in ipairs(tbl) do
+---                  if type(ref_or_msg) == "userdata" then
+---                      print("Added TexImage: ", no)
+---                      print("Address: ", ref_or_msg)
+---                  else
+---                      print("An error occured with item: ", no)
+---                      print("TeX generator output: ", ref_or_msg)
+---                  end
 ---              end
 ---              app.refreshPage()
 ---          end

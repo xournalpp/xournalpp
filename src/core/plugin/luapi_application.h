@@ -16,6 +16,7 @@
 #include <memory>
 #include <sstream>
 #include <unordered_set>
+#include <variant>
 
 #include <gtk/gtk.h>
 #include <pango/pango.h>
@@ -1645,7 +1646,7 @@ static int applib_addTexts(lua_State* L) {
  *   - allowUndoRedoAction string: Decides how the change gets introduced into the undoRedo action list "individual",
  * "grouped" or "none"
 
- * @param opts {textItems:{formula:string, color:integer, x:number, y:number, width:number|nil, height:number|nil}[],
+ * @param opts {texItems:{formula:string, color:integer, x:number, y:number, width:number|nil, height:number|nil}[],
  * cb:function, allowUndoRedoAction:string}
  *
  * Parameters per texImage:
@@ -1656,9 +1657,9 @@ static int applib_addTexts(lua_State* L) {
  *   - width number: the width (default: auto)
  *   - height number: the height (default: auto)
  *
- * cb: callback function(ref_or_msg:userdata|string, no:int) to call when a TexImage has been added
- *     The first argument is either a reference to the TexImage or the error message/Tex generator output
- *     The second argument specifies the corresponding position in the texItems table
+ * cb: callback function({userdata|string}[]) to call when all TexImages have been added
+ *     The argument passed to the callback function is an array of the same size (and order)
+ *     as texItems, consisting of references to the TexImages and error messages/Tex generator outputs
  *
  * Example:
  *
@@ -1680,13 +1681,15 @@ static int applib_addTexts(lua_State* L) {
  *
  *   app.addTexImages{
  *       texItems=texItems,
- *       cb=function(ref_or_msg, no)
- *              if type(ref_or_msg) == "userdata" then
- *                  print("Added TexImage: ", no)
- *                  print("Address: ", ref_or_msg)
- *              else
- *                  print("An error occured with item: ", no)
- *                  print("TeX generator output: ", ref_or_msg)
+ *       cb=function(tbl)
+ *              for no, ref_or_msg in ipairs(tbl) do
+ *                  if type(ref_or_msg) == "userdata" then
+ *                      print("Added TexImage: ", no)
+ *                      print("Address: ", ref_or_msg)
+ *                  else
+ *                      print("An error occured with item: ", no)
+ *                      print("TeX generator output: ", ref_or_msg)
+ *                  end
  *              end
  *              app.refreshPage()
  *          end
@@ -1695,9 +1698,6 @@ static int applib_addTexts(lua_State* L) {
 static int applib_addTexImages(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* control = plugin->getControl();
-    PageRef const& page = control->getCurrentPage();
-    Layer* layer = page->getSelectedLayer();
-    UndoRedoHandler* undo = control->getUndoRedoHandler();
 
     // get default color
     ToolHandler* toolHandler = control->getToolHandler();
@@ -1730,7 +1730,12 @@ static int applib_addTexImages(lua_State* L) {
         return luaL_error(L, "Missing texItems table!");
     }
 
-    size_t numItems = lua_rawlen(L, -1);
+    const size_t numItems = lua_rawlen(L, -1);
+    auto args = std::make_shared<std::vector<std::variant<std::string, TexImage*>>>(numItems, nullptr);
+    auto texImagesOwn = std::make_shared<std::vector<std::unique_ptr<TexImage>>>();
+    texImagesOwn->resize(numItems);
+    auto count = std::make_shared<size_t>(0);
+
     for (size_t index = 1; index <= numItems; index++) {
         lua_pushinteger(L, as_signed(index));
         lua_gettable(L, -2);
@@ -1799,50 +1804,58 @@ static int applib_addTexImages(lua_State* L) {
 
         LatexController::renderTexImage(
                 control, formula, col,
-                [control, page, layer, undo, texItems, index, numItems, plugin, callbackRef, x, y, allowUndoRedoAction,
-                 width, height](CallbackArg arg) {
+                [control, texItems, index, numItems, plugin, callbackRef, x, y, allowUndoRedoAction, width, height,
+                 args, texImagesOwn, count](CallbackArg arg) {
                     if (std::holds_alternative<std::string>(arg)) {
                         std::string msg = std::get<std::string>(arg);
                         if (msg.empty()) {
                             msg = "TexItem could not be added";
                         }
-                        if (allowUndoRedoAction == "grouped" && index == numItems) {
-                            undo->addUndoAction(std::make_unique<InsertsUndoAction>(page, layer, *texItems.get()));
+                        args->at(index - 1) = msg;
+                    } else {
+                        auto texImage = std::get<std::unique_ptr<TexImage>>(std::move(arg));
+                        texImage->setOrigin(x, y);
+
+                        const auto& box = texImage->getBoundingBox();
+                        if (width != 0 && height != 0) {
+                            texImage->setWidth(width);
+                            texImage->setHeight(height);
+                        } else if (height != 0) {
+                            double ratio = box.width / box.height;
+                            texImage->setHeight(height);
+                            texImage->setWidth(box.width != 0 ? height * ratio : 10);
+                        } else if (width != 0) {
+                            const double ratio = box.height / box.width;
+                            texImage->setWidth(width);
+                            texImage->setHeight(box.height != 0 ? width * ratio : 10);
                         }
-                        plugin->callFunction(callbackRef, msg, index);
-                        return;
+                        auto* texImagePtr = texImage.get();
+                        texItems->push_back(texImagePtr);
+                        texImagesOwn->at(index - 1) = std::move(texImage);
+                        args->at(index - 1) = texImagePtr;
                     }
-                    auto texImage = std::get<std::unique_ptr<TexImage>>(std::move(arg));
-                    texImage->setOrigin(x, y);
+                    if (++(*count) == numItems) {
+                        PageRef const& page = control->getCurrentPage();
+                        Layer* layer = page->getSelectedLayer();
+                        UndoRedoHandler* undo = control->getUndoRedoHandler();
 
-                    const auto& box = texImage->getBoundingBox();
-                    if (width != 0 && height != 0) {
-                        texImage->setWidth(width);
-                        texImage->setHeight(height);
-                    } else if (height != 0) {
-                        double ratio = box.width / box.height;
-                        texImage->setHeight(height);
-                        texImage->setWidth(box.width != 0 ? height * ratio : 10);
-                    } else if (width != 0) {
-                        const double ratio = box.height / box.width;
-                        texImage->setWidth(width);
-                        texImage->setHeight(box.height != 0 ? width * ratio : 10);
-                    }
-                    auto* texImagePtr = texImage.get();
-                    texItems->push_back(texImagePtr);
-                    {
-                        std::lock_guard lock(*control->getDocument());
-                        layer->addElement(std::move(texImage));
-                    }
-                    if (allowUndoRedoAction == "individual") {
-                        undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, texImagePtr));
-                    } else if (allowUndoRedoAction == "grouped" && index == numItems) {
-                        undo->addUndoAction(std::make_unique<InsertsUndoAction>(page, layer, *texItems.get()));
-                    }
-
-                    plugin->callFunction(callbackRef, texImagePtr, index);
-
-                    if (texItems->size() == numItems) {
+                        {
+                            std::lock_guard lock(*control->getDocument());
+                            for (auto& img: *texImagesOwn) {
+                                if (!img) {
+                                    continue;
+                                }
+                                layer->addElement(std::move(img));
+                            }
+                        }
+                        if (allowUndoRedoAction == "individual") {
+                            for (auto& img: *texItems) {
+                                undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, img));
+                            }
+                        } else if (allowUndoRedoAction == "grouped") {
+                            undo->addUndoAction(std::make_unique<InsertsUndoAction>(page, layer, *texItems));
+                        }
+                        plugin->callFunction(callbackRef, *args);
                         plugin->unrefFunction(callbackRef);
                     }
                 },
