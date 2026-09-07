@@ -13,6 +13,8 @@
 
 /* --- Stable features --- */
 
+#cmakedefine ENABLE_X11
+
 #cmakedefine ENABLE_PLUGINS
 
 #cmakedefine ENABLE_GTK_SOURCEVIEW
