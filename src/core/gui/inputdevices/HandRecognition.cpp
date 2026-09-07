@@ -12,13 +12,14 @@
 #include "util/glib_casts.h"                                      // for wrap_v
 #include "util/safe_casts.h"                                      // for as_unsigned
 
-#include "InputContext.h"  // for Inp...
+#include "InputContext.h"     // for Inp...
+#include "config-features.h"  // for ENABLE_X11
 
 using std::string;
 
 HandRecognition::HandRecognition(InputContext* inputContext):
         inputContext(inputContext), settings(inputContext->getSettings()) {
-#ifdef X11_ENABLED
+#ifdef ENABLE_X11
     const char* sessionType = g_getenv("XDG_SESSION_TYPE");
     if (sessionType != nullptr && strcmp(sessionType, "x11") == 0) {
         x11Session = true;
@@ -70,7 +71,7 @@ void HandRecognition::reload() {
             enabled = false;
             return;
         }
-#ifdef X11_ENABLED
+#ifdef ENABLE_X11
         touchImpl = new TouchDisableX11();
 #endif
     } else if (disableMethod == "custom") {
@@ -82,7 +83,7 @@ void HandRecognition::reload() {
         touchImpl = new TouchDisableCustom(enableCommand, disableCommand);
     } else  // Auto detect
     {
-#ifdef X11_ENABLED
+#ifdef ENABLE_X11
         if (x11Session) {
             touchImpl = new TouchDisableX11();
         }

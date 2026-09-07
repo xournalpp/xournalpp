@@ -1,6 +1,7 @@
 #include "TouchDisableX11.h"
 
-#ifdef X11_ENABLED
+#include "config-features.h"  // for ENABLE_X11
+#ifdef ENABLE_X11
 
 #include <vector>  // for vector
 
