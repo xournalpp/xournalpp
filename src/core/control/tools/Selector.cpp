@@ -1,20 +1,15 @@
 #include "Selector.h"
 
 #include <algorithm>  // for max, min
-#include <cmath>      // for abs, NAN
+#include <cmath>      // for abs
 #include <limits>     // for numeric_limits
 #include <memory>     // for __shared_ptr_access
-
-#include <gdk/gdk.h>  // for GdkRGBA, gdk_cairo_set_source_rgba
 
 #include "gui/LegacyRedrawable.h"  // for Redrawable
 #include "model/Document.h"        // for Document
 #include "model/Layer.h"           // for Layer
 #include "model/XojPage.h"         // for XojPage
 #include "util/safe_casts.h"       // for as_unsigned
-
-// Ensures that `-std::numeric_limits<double>::infinity()` behaves as minus infinity
-static_assert(std::numeric_limits<double>::is_iec559);
 
 Selector::Selector(bool multiLayer):
         multiLayer(multiLayer), viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::SelectorView>>()) {}
@@ -86,22 +81,22 @@ RectangularSelector::~RectangularSelector() = default;
 auto RectangularSelector::contains(double x, double y) const -> bool { return bbox.contains(x, y); }
 
 void RectangularSelector::extendAtPageEdges() {
-    constexpr double INF = std::numeric_limits<double>::infinity();
     const double pageWidth = page->getWidth();
     const double pageHeight = page->getHeight();
 
     if (pageWidth > 0 && pageHeight > 0) {
         if (bbox.minX <= EDGE_TOUCHING_THRESHOLD) {
-            bbox.minX = -INF;
+            bbox.minX = std::numeric_limits<double>::lowest();
         }
         if (bbox.minY <= EDGE_TOUCHING_THRESHOLD) {
-            bbox.minY = -INF;
+            bbox.minY = std::numeric_limits<double>::lowest();
         }
         if (bbox.maxX >= pageWidth - EDGE_TOUCHING_THRESHOLD) {
-            bbox.maxX = INF;
+            bbox.maxX = std::numeric_limits<double>::max();
         }
         if (bbox.maxY >= pageHeight - EDGE_TOUCHING_THRESHOLD) {
-            bbox.maxY = INF;
+            bbox.maxY = std::numeric_limits<double>::max();
+            ;
         }
     }
 }
@@ -149,7 +144,6 @@ void LassoSelector::currentPos(double x, double y) {
 }
 
 void LassoSelector::extendAtPageEdges() {
-    constexpr double INF = std::numeric_limits<double>::infinity();
     const double pageWidth = page->getWidth();
     const double pageHeight = page->getHeight();
 
@@ -172,10 +166,10 @@ void LassoSelector::extendAtPageEdges() {
     // Project edge-touching coordinates to infinity while leaving interior coordinates unchanged.
     auto const extendCoordinate = [&](double value, double pageExtent) -> double {
         if (value <= EDGE_TOUCHING_THRESHOLD) {
-            return -INF;
+            return std::numeric_limits<double>::lowest();
         }
         if (value >= pageExtent - EDGE_TOUCHING_THRESHOLD) {
-            return INF;
+            return std::numeric_limits<double>::max();
         }
         return value;
     };
@@ -233,65 +227,45 @@ auto LassoSelector::contains(double x, double y) const -> bool {
     }
 
     int hits = 0;
+    auto hitSign = [](const BoundaryPoint& last, const BoundaryPoint& current) {
+        return current.y > last.y ? 1 : current.y < last.y ? -1 : current.x < last.x ? 1 : -1;
+    };
 
-    const BoundaryPoint& last = boundaryPoints.back();
-
-    double lastx = last.x;
-    double lasty = last.y;
-    double curx = NAN, cury = NAN;
+    const BoundaryPoint* last = &boundaryPoints.back();
 
     // Walk the edges of the polygon
-    for (auto pointIterator = boundaryPoints.begin(); pointIterator != boundaryPoints.end();
-         lastx = curx, lasty = cury, ++pointIterator) {
-        curx = pointIterator->x;
-        cury = pointIterator->y;
-
-        if (cury == lasty) {
+    for (auto current = boundaryPoints.begin(); current != boundaryPoints.end(); last = &*current, ++current) {
+        // Change `hits` by +/-1 if {x,y} is in the horizontal half-stripe going left, delimited by the current segment
+        if (auto [min, max] = std::minmax(current->y, last->y); y < min || y > max) {
+            // Not in the horizontal stripe
+            continue;
+        }
+        if (auto [min, max] = std::minmax(current->x, last->x); x < min) {
+            // Left of the segment's bounding box: in the half stripe
+            hits += hitSign(*last, *current);
+            continue;
+        } else if (x > max) {
+            // Right of the segment's bounding box: out of the half stripe
             continue;
         }
 
-        int leftx = 0;
-        if (curx < lastx) {
-            if (x >= lastx) {
-                continue;
-            }
-            leftx = static_cast<int>(curx);
-        } else {
-            if (x >= curx) {
-                continue;
-            }
-            leftx = static_cast<int>(lastx);
+        // Now, the point is in the bounding box of the segment
+
+        if (current->y == last->y) {
+            // Horizontal segment: the bounding box is everything
+            hits += hitSign(*last, *current);
+            continue;
         }
 
-        double test1 = NAN, test2 = NAN;
-        if (cury < lasty) {
-            if (y < cury || y >= lasty) {
-                continue;
-            }
-            if (x < leftx) {
-                hits++;
-                continue;
-            }
-            test1 = x - curx;
-            test2 = y - cury;
-        } else {
-            if (y < lasty || y >= cury) {
-                continue;
-            }
-            if (x < leftx) {
-                hits++;
-                continue;
-            }
-            test1 = x - lastx;
-            test2 = y - lasty;
-        }
-
-        if (test1 < (test2 / (lasty - cury) * (lastx - curx))) {
-            hits++;
+        // Abscissa of the projection of the point onto the horizontal line passing through *current
+        // The projection is parallel to the vector (*current - *last)
+        double projX = x + (current->x - last->x) * (current->y - y) / (current->y - last->y);
+        if (projX <= current->x) {
+            hits += hitSign(*last, *current);
         }
     }
 
-    return (hits & 1) != 0;
+    return hits != 0;
 }
 
 auto LassoSelector::userTapped(double zoom) const -> bool {
