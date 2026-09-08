@@ -16,6 +16,7 @@
 #include <memory>
 #include <sstream>
 #include <unordered_set>
+#include <variant>
 
 #include <gtk/gtk.h>
 #include <pango/pango.h>
@@ -24,6 +25,7 @@
 
 #include "control/Control.h"
 #include "control/ExportHelper.h"
+#include "control/LatexController.h"
 #include "control/PageBackgroundChangeController.h"
 #include "control/ScrollHandler.h"
 #include "control/Tool.h"
@@ -54,6 +56,7 @@
 #include "model/SplineSegment.h"
 #include "model/Stroke.h"
 #include "model/StrokeStyle.h"
+#include "model/TexImage.h"
 #include "model/Text.h"
 #include "model/XojPage.h"  // IWYU pragma: keep for XojPage
 #include "plugin/Plugin.h"
@@ -1632,6 +1635,251 @@ static int applib_addTexts(lua_State* L) {
 
     refsHelper(L, texts);
     return 1;
+}
+
+/**
+ * Asynchronously adds rendered LaTeX elements as specified to the current layer.
+ *
+ * Global parameters:
+ *   - texItems table: array of TeX-parameter-tables
+ *   - cb function: Callback function run after a TexImage has been added
+ *   - allowUndoRedoAction string: Decides how the change gets introduced into the undoRedo action list "individual",
+ * "grouped" or "none"
+
+ * @param opts {texItems:{formula:string, color:integer, x:number, y:number, width:number|nil, height:number|nil}[],
+ * cb:function, allowUndoRedoAction:string}
+ *
+ * Parameters per texImage:
+ *   - formula string: the tex formula (required)
+ *   - color integer: RGB hex code for the text-color (default: color of latex tool)
+ *   - x number: x-position of the box (upper left corner) (required)
+ *   - y number: y-position of the box (upper left corner) (required)
+ *   - width number: the width (default: auto)
+ *   - height number: the height (default: auto)
+ *
+ * cb: callback function({userdata|string}[]) to call when all TexImages have been added
+ *     The argument passed to the callback function is an array of the same size (and order)
+ *     as texItems, consisting of references to the TexImages and error messages/Tex generator outputs
+ *
+ * Example:
+ *
+ *   local texItems = {
+ *       {
+ *        formula = [[\int_a^b f(x)\ dx]],
+ *        x=100,
+ *        y=50,
+ *        color=0x990000
+ *       },
+ *       {
+ *        formula = [[\mathrm{e}^{i\pi} + 1 = 0]],
+ *        x=100,
+ *        y=100,
+ *        color=0x006600,
+ *        height=50,
+ *       },
+ *   }
+ *
+ *   app.addTexImages{
+ *       texItems=texItems,
+ *       cb=function(tbl)
+ *              for no, ref_or_msg in ipairs(tbl) do
+ *                  if type(ref_or_msg) == "userdata" then
+ *                      print("Added TexImage: ", no)
+ *                      print("Address: ", ref_or_msg)
+ *                  else
+ *                      print("An error occured with item: ", no)
+ *                      print("TeX generator output: ", ref_or_msg)
+ *                  end
+ *              end
+ *              app.refreshPage()
+ *          end
+ *   }
+ */
+static int applib_addTexImages(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    PageRef const& page = control->getCurrentPage();
+    Layer* layer = page->getSelectedLayer();
+
+    // get default color
+    ToolHandler* toolHandler = control->getToolHandler();
+    Tool& tool = toolHandler->getTool(TOOL_LATEX);
+    Color default_color = tool.getColor();
+
+    auto texItems = std::make_shared<std::vector<Element const*>>();
+
+    lua_settop(L, 1);
+    luaL_checktype(L, 1, LUA_TTABLE);
+
+    lua_getfield(L, 1, "cb");
+    if (!lua_isfunction(L, -1)) {
+        return luaL_error(L, "Missing callback function!/'cb' must be a function!");
+    }
+    int callbackRef =
+            luaL_ref(L, LUA_REGISTRYINDEX);  // stores the function in the Lua registry and pops it from the stack
+
+    // Check how the user wants to handle undoing
+    lua_getfield(L, 1, "allowUndoRedoAction");
+    std::string allowUndoRedoAction = luaL_optstring(L, -1, "grouped");
+    if (allowUndoRedoAction != "grouped" && allowUndoRedoAction != "individual" && allowUndoRedoAction != "none") {
+        return luaL_error(L, "Unrecognized undo/redo option: %s", allowUndoRedoAction.c_str());
+    }
+    lua_pop(L, 1);
+
+
+    lua_getfield(L, 1, "texItems");
+    if (!lua_istable(L, -1)) {
+        return luaL_error(L, "Missing texItems table!");
+    }
+
+    const size_t numItems = lua_rawlen(L, -1);
+    auto args = std::make_shared<std::vector<std::variant<std::string, TexImage*>>>(numItems, nullptr);
+    auto texImagesOwn = std::make_shared<std::vector<std::unique_ptr<TexImage>>>();
+    texImagesOwn->resize(numItems);
+    auto count = std::make_shared<size_t>(0);
+
+    for (size_t index = 1; index <= numItems; index++) {
+        lua_pushinteger(L, as_signed(index));
+        lua_gettable(L, -2);
+        luaL_checktype(L, -1, LUA_TTABLE);
+
+        lua_getfield(L, -1, "formula");
+        lua_getfield(L, -2, "x");
+        lua_getfield(L, -3, "y");
+        lua_getfield(L, -4, "width");
+        lua_getfield(L, -5, "height");
+        lua_getfield(L, -6, "color");
+
+        // stack now has following:
+        //    1 = global params table
+        //   -8 = textItems array
+        //   -7 = current tex-params table
+        //   -6 = formula
+        //   -5 = x
+        //   -4 = y
+        //   -3 = width
+        //   -2 = height
+        //   -1 = color
+
+        if (!lua_isstring(L, -6)) {
+            return luaL_error(L, "Missing formula!/'formula' must be a string");
+        }
+        std::string formula = lua_tostring(L, -6);
+
+        if (!lua_isnumber(L, -5)) {
+            return luaL_error(L, "Missing X-Coordinate!/must be a number");
+        }
+        double x = lua_tonumber(L, -5);
+
+        if (!lua_isnumber(L, -4)) {
+            return luaL_error(L, "Missing Y-Coordinate!/must be a number");
+        }
+        double y = lua_tonumber(L, -4);
+
+        if (!lua_isnil(L, -3) && !lua_isnumber(L, -3)) {
+            return luaL_error(L, "'width' must be a number or unset");
+        }
+        double width = luaL_optnumber(L, -3, 0);
+
+        if (!lua_isnil(L, -2) && !lua_isnumber(L, -2)) {
+            return luaL_error(L, "'height' must be a number or unset");
+        }
+        double height = luaL_optnumber(L, -2, 0);
+
+        Color col;
+        if (lua_isinteger(L, -1)) {  // Check if the color was provided
+            auto color = static_cast<uint32_t>(as_unsigned(lua_tointeger(L, -1)));
+            if (color > 0xffffff) {
+                std::stringstream msg;
+                msg << "Color 0x" << std::hex << color << " is no valid RGB color.";
+                return luaL_error(L, msg.str().c_str());  // luaL_error does not support %x for hex numbers
+            }
+            col = Color(color | 0xff000000U);
+        } else if (lua_isnil(L, -3)) {
+            col = default_color;
+        } else {
+            return luaL_error(L, "'color' must be an integer/hex-code or unset");
+        }
+
+
+        std::string errorMessage;
+
+        LatexController::renderTexImage(
+                control, formula, col,
+                [control, texItems, index, numItems, plugin, callbackRef, x, y, allowUndoRedoAction, width, height,
+                 args, texImagesOwn, count, page, layer](CallbackArg arg) {
+                    if (std::holds_alternative<std::string>(arg)) {
+                        std::string msg = std::get<std::string>(arg);
+                        if (msg.empty()) {
+                            msg = "TexItem could not be added";
+                        }
+                        args->at(index - 1) = msg;
+                    } else {
+                        auto texImage = std::get<std::unique_ptr<TexImage>>(std::move(arg));
+                        texImage->setOrigin(x, y);
+
+                        const auto& box = texImage->getBoundingBox();
+                        if (width != 0 && height != 0) {
+                            texImage->setWidth(width);
+                            texImage->setHeight(height);
+                        } else if (height != 0) {
+                            double ratio = box.width / box.height;
+                            texImage->setHeight(height);
+                            texImage->setWidth(box.width != 0 ? height * ratio : 10);
+                        } else if (width != 0) {
+                            const double ratio = box.height / box.width;
+                            texImage->setWidth(width);
+                            texImage->setHeight(box.height != 0 ? width * ratio : 10);
+                        }
+                        auto* texImagePtr = texImage.get();
+                        texItems->push_back(texImagePtr);
+                        texImagesOwn->at(index - 1) = std::move(texImage);
+                        args->at(index - 1) = texImagePtr;
+                    }
+                    if (++(*count) == numItems) {
+                        auto p = control->getDocument()->indexOf(page);
+                        if (p == npos) {
+                            g_warning("Page does not exist any more. Cannot insert TeX images");
+                            plugin->unrefFunction(callbackRef);
+                            return;
+                        }
+                        auto layers = page->getLayers();
+                        if (std::find(layers.begin(), layers.end(), layer) == layers.end()) {
+                            g_warning("Layer does not exist any more. Cannot insert TeX images");
+                            plugin->unrefFunction(callbackRef);
+                            return;
+                        }
+
+                        UndoRedoHandler* undo = control->getUndoRedoHandler();
+                        {
+                            std::lock_guard lock(*control->getDocument());
+                            for (auto& img: *texImagesOwn) {
+                                if (!img) {
+                                    continue;
+                                }
+                                layer->addElement(std::move(img));
+                            }
+                        }
+                        if (allowUndoRedoAction == "individual") {
+                            for (auto& img: *texItems) {
+                                undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, img));
+                            }
+                        } else if (allowUndoRedoAction == "grouped") {
+                            undo->addUndoAction(std::make_unique<InsertsUndoAction>(page, layer, *texItems));
+                        }
+                        plugin->callFunction(callbackRef, *args);
+                        plugin->unrefFunction(callbackRef);
+                    }
+                },
+                &errorMessage);
+
+        if (!errorMessage.empty()) {
+            return luaL_error(L, "%s", errorMessage.c_str());
+        }
+        lua_pop(L, 7);  // pop values read out from the texItems table + texItems-table itself
+    }
+
+    return 0;
 }
 
 /**
@@ -4263,6 +4511,7 @@ static const luaL_Reg applib[] = {
         {"addStrokes", applib_addStrokes},
         {"addSplines", applib_addSplines},
         {"addImages", applib_addImages},
+        {"addTexImages", applib_addTexImages},
         {"addTexts", applib_addTexts},
         {"addLinks", applib_addLinks},
         {"addToSelection", applib_addToSelection},

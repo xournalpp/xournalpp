@@ -11,10 +11,15 @@
 
 #pragma once
 
-#include <cstddef>  // for size_t
-#include <limits>   // for numeric_limits
-#include <memory>   // for unique_ptr
+#include <algorithm>  // for max
+#include <cstddef>    // for size_t
+#include <limits>     // for numeric_limits
+#include <memory>     // for unique_ptr
+#include <ranges>
+#include <type_traits>
 #include <unordered_map>
+#include <utility>
+#include <variant>
 
 #include "config-features.h"  // for ENABLE_PLUGINS
 
@@ -26,6 +31,7 @@
 
 #include <gtk/gtk.h>  // for GtkWidget, GtkWindow
 
+#include "util/XojMsgBox.h"  // for XojMsgBox
 #include "util/raii/GObjectSPtr.h"
 
 #include "filesystem.h"  // for path
@@ -100,6 +106,20 @@ inline std::string getDisplayId(const std::string& toolbarId) {
 struct LuaDeleter {
     void operator()(lua_State* ptr) const { lua_close(ptr); }
 };
+
+namespace detail {
+template <typename T>
+constexpr bool always_false = false;
+
+// Trait to detect if a type is a std::variant
+template <typename T>
+struct is_variant: std::false_type {};
+template <typename... Ts>
+struct is_variant<std::variant<Ts...>>: std::true_type {};
+
+template <typename T>
+inline constexpr bool is_variant_v = is_variant<T>::value;
+}  // namespace detail
 
 class Plugin final {
 public:
@@ -191,13 +211,79 @@ private:
     /// Add the plugin folder to the lua path
     void addPluginToLuaPath();
 
+    /// Helpers for calling Lua functions
+
+    template <typename F>
+    void pushFunction(F&& function) {
+        using CleanF = std::decay_t<F>;
+        // push the function onto the stack
+        if constexpr (std::is_convertible_v<CleanF, std::string_view>) {  // global function given by its name
+            std::string_view functionName(function);
+            lua_getglobal(lua.get(), functionName.data());
+        } else if constexpr (std::is_same_v<CleanF, int>) {  // function given through its ref on the Lua registry
+            int callbackRef = static_cast<int>(function);
+            lua_rawgeti(lua.get(), LUA_REGISTRYINDEX, callbackRef);
+        } else {
+            static_assert(detail::always_false<F>, "Unhandled case for specifying function");
+        }
+    }
+
+    template <typename A>
+    void pushArgument(A&& arg) {
+        using CleanA = std::decay_t<A>;
+        // push the argument onto the stack
+        if constexpr (std::is_convertible_v<CleanA, std::string_view>) {  // string arg
+            std::string_view str(arg);
+            lua_pushstring(lua.get(), str.data());
+        } else if constexpr (std::is_pointer_v<CleanA>) {  // pointer arg
+            void* ptr = const_cast<void*>(static_cast<const void*>(arg));
+            lua_pushlightuserdata(lua.get(), ptr);
+        } else if constexpr (std::is_same_v<CleanA, bool>) {  // boolean arg
+            bool b = static_cast<bool>(arg);
+            lua_pushboolean(lua.get(), b);
+        } else if constexpr (std::is_integral_v<CleanA>) {  // integral arg except of bool
+            ptrdiff_t n = static_cast<ptrdiff_t>(arg);
+            lua_pushinteger(lua.get(), n);
+        } else if constexpr (std::ranges::forward_range<CleanA>) {  // list, vector, ...
+            lua_newtable(lua.get());
+            int i = 1;
+            for (auto const& item: arg) {
+                lua_pushinteger(lua.get(), i++);  // key
+                pushArgument(item);               // value
+                lua_settable(lua.get(), -3);      // insert
+            }
+        } else if constexpr (detail::is_variant_v<CleanA>) {
+            std::visit([this](auto&& a) { pushArgument(a); }, arg);
+        } else {
+            static_assert(detail::always_false<A>, "Unhandled case for specifying argument");
+        }
+    }
+
 public:
     /// Get Plugin from lua engine
     static auto getPluginFromLua(lua_State* lua) -> Plugin*;
 
-    /// Execute lua function
-    auto callFunction(const std::string& fnc, ptrdiff_t mode = std::numeric_limits<ptrdiff_t>::max()) -> bool;
-    auto callFunction(const std::string& fnc, const char* s) -> bool;
+    /// Call a Lua function either given through the name of a global function or through its ref on the Lua registry
+    template <typename F, typename... Args>
+    bool callFunction(F&& function, Args&&... args) {
+        // Push function and arguments
+        pushFunction(std::forward<F>(function));
+        (pushArgument(std::forward<Args>(args)), ...);
+
+        // Run the function
+        constexpr int argCount = sizeof...(Args);
+        if (lua_pcall(lua.get(), argCount, 0, 0) != LUA_OK) {  // extra arguments are discarded
+            const char* errMsg = lua_tostring(lua.get(), -1);
+            XojMsgBox::showPluginMessage(name, errMsg, true);
+
+            g_warning("Error in Plugin: \"%s\", error: \"%s\"", name.c_str(), errMsg);
+            return false;
+        }
+
+        return true;
+    }
+
+    void unrefFunction(int callbackRef);
 
 private:
     Control* control;                                      ///< The main controller

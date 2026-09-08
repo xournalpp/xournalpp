@@ -404,9 +404,9 @@ auto Util::getCacheFile(const fs::path& relativeFileName) -> fs::path {
     return p;
 }
 
-auto Util::getTmpDirSubfolder(const fs::path& subfolder) -> fs::path {
+auto Util::getTmpDirSubfolder(const fs::path& subfolder, int jobNo) -> fs::path {
     auto p = GFilename(g_get_tmp_dir()).toPath().value_or(fs::path());
-    p /= FS(_F("xournalpp-{1}") % Util::getPid());
+    p /= FS(_F("xournalpp-{1}-job-{2}") % Util::getPid() % jobNo);
     p /= subfolder;
     return Util::ensureFolderExists(p);
 }
