@@ -293,6 +293,7 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
     this->changeTool(event);
 
     if (toolHandler->getToolType() == TOOL_HAND) {
+        this->updateLastEvent(event);
         if (this->deviceClassPressed) {
             this->handleScrollEvent(event);
             return true;
