@@ -54,6 +54,7 @@
 #include "model/SplineSegment.h"
 #include "model/Stroke.h"
 #include "model/StrokeStyle.h"
+#include "model/TexImage.h"
 #include "model/Text.h"
 #include "model/XojPage.h"  // IWYU pragma: keep for XojPage
 #include "plugin/Plugin.h"
@@ -1768,6 +1769,124 @@ static int applib_getTexts(lua_State* L) {
     }
     return 1;
 }
+
+
+/**
+ * Returns a list of lua table of the TexImages (from current selection / current layer / current page / all pages).
+ * When called with "page" to retrieve all elements on the current page, it also adds a field "layer" for the
+ * layer containing the element, and when called with "all" it additionally adds a field "page" containing its page
+ * index together with its layer (all of them being indexed from 1).
+ *
+ * Is mostly inverse to app.addTexImages (except getTexImages may also retrieve the width/height/page/layer of the
+ * TexImage box)
+ *
+ * @param type string "selection" or "layer" or "page" or "all"
+ * @return {formula:string, font:{name:string, size:number}, color:integer, x:number, y:number,
+ * width:number, height:number, ref:lightuserdata, page:number|nil, layer:number|nil}[] texImages
+ *
+ * Required argument: type ("selection" or "layer" or "page" or "all")
+ *
+ * Example: local texImages = app.getTexImages("all")
+ *
+ * possible return value:
+ * {
+ *   {
+ *     formula = "2+3=5",
+ *     color = 0x1259b9,
+ *     x = 127.0,
+ *     y = 70.0,
+ *     width = 55.0,
+ *     height = 23.0,
+ *     ref = userdata: 0x5f644c0700d0
+ *     page = 1, -- Only present when called with the "all" argument
+ *     layer = 1, -- Only present when called with the "all" or "page" argument
+ *   },
+ *   {
+ *     formula = [[\cos(x)+\sin(x)]],
+ *     color = 0x0,
+ *     x = 150.0,
+ *     y = 70.0,
+ *     wrap = 200.0,
+ *     width = 55.0,
+ *     height = 23.0,
+ *     ref = userdata: 0x5f644c0701e8
+ *     page = 2,
+ *     layer = 1,
+ *   },
+ * }
+ *
+ */
+static int applib_getTexImages(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    std::string type = luaL_checkstring(L, 1);
+    Control* control = plugin->getControl();
+
+    // Discard any extra arguments passed in
+    lua_settop(L, 1);
+    luaL_checktype(L, 1, LUA_TSTRING);
+
+    auto lock = std::shared_lock(*control->getDocument());
+    const auto& [err, elements] = getElementsFromHelper(control, type, ELEMENT_TEXIMAGE);
+    if (err.has_value()) {
+        return luaL_error(L, err.value().c_str());
+    }
+
+    lua_newtable(L);  // create table of the elements
+    int currTexImageNo = 0;
+
+    // stack now has following:
+    //  1 = type (string)
+    // -1 = table of teximages (to be returned)
+
+    for (const auto [e, page_nb, layer]: elements) {
+        auto* t = static_cast<const TexImage*>(e);
+        lua_pushinteger(L, ++currTexImageNo);  // index for later (settable)
+        lua_newtable(L);                       // create text table
+
+        // stack now has following:
+        //  1 = type (string)
+        // -3 = table of texImages (to be returned)
+        // -2 = index of the current texImage
+        // -1 = current texImage table
+
+        lua_pushstring(L, t->getText().c_str());
+        lua_setfield(L, -2, "formula");  // add formula to texImage element
+
+        lua_pushinteger(L, as_signed(uint32_t(t->getColor()) & 0xffffffU));
+        lua_setfield(L, -2, "color");  // add color to texImage
+
+        auto [x, y] = t->getOrigin();
+        lua_pushnumber(L, x);
+        lua_setfield(L, -2, "x");  // add x coordindate to texImage
+
+        lua_pushnumber(L, y);
+        lua_setfield(L, -2, "y");  // add y coordinate to texImage
+
+        const auto& box = t->getBoundingBox();
+        lua_pushnumber(L, box.width);
+        lua_setfield(L, -2, "width");  // add width to texImage
+
+        lua_pushnumber(L, box.height);
+        lua_setfield(L, -2, "height");  // add height to texImage
+
+        lua_pushlightuserdata(L, const_cast<void*>(static_cast<const void*>(t)));
+        lua_setfield(L, -2, "ref");
+
+        if (layer.has_value()) {
+            lua_pushinteger(L, as_signed(layer.value()));
+            lua_setfield(L, -2, "layer");  // add layer to text
+        }
+
+        if (page_nb.has_value()) {
+            lua_pushinteger(L, as_signed(page_nb.value()));
+            lua_setfield(L, -2, "page");  // add page to text
+        }
+
+        lua_settable(L, -3);  // add text to elements
+    }
+    return 1;
+}
+
 
 /**
  * Adds url links as specified to the current layer.
@@ -4274,6 +4393,7 @@ static const luaL_Reg applib[] = {
         {"getImages", applib_getImages},
         {"getTexts", applib_getTexts},
         {"getLinks", applib_getLinks},
+        {"getTexImages", applib_getTexImages},
         {"openFile", applib_openFile},
         {"registerPlaceholder", applib_registerPlaceholder},
         {"setPlaceholderValue", applib_setPlaceholderValue},

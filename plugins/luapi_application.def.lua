@@ -438,6 +438,51 @@ function app.addTexts(opts) end
 --- 
 function app.getTexts(type) end
 
+--- Returns a list of lua table of the TexImages (from current selection / current layer / current page / all pages).
+--- When called with "page" to retrieve all elements on the current page, it also adds a field "layer" for the
+--- layer containing the element, and when called with "all" it additionally adds a field "page" containing its page
+--- index together with its layer (all of them being indexed from 1).
+--- 
+--- Is mostly inverse to app.addTexImages (except getTexImages may also retrieve the width/height/page/layer of the
+--- TexImage box)
+--- 
+--- @param type string "selection" or "layer" or "page" or "all"
+--- @return {formula:string, font:{name:string, size:number}, color:integer, x:number, y:number,
+--- width:number, height:number, ref:lightuserdata, page:number|nil, layer:number|nil}[] texImages
+--- 
+--- Required argument: type ("selection" or "layer" or "page" or "all")
+--- 
+--- Example: local texImages = app.getTexImages("all")
+--- 
+--- possible return value:
+--- {
+---   {
+---     formula = "2+3=5",
+---     color = 0x1259b9,
+---     x = 127.0,
+---     y = 70.0,
+---     width = 55.0,
+---     height = 23.0,
+---     ref = userdata: 0x5f644c0700d0
+---     page = 1, -- Only present when called with the "all" argument
+---     layer = 1, -- Only present when called with the "all" or "page" argument
+---   },
+---   {
+---     formula = [[\cos(x)+\sin(x)]],
+---     color = 0x0,
+---     x = 150.0,
+---     y = 70.0,
+---     wrap = 200.0,
+---     width = 55.0,
+---     height = 23.0,
+---     ref = userdata: 0x5f644c0701e8
+---     page = 2,
+---     layer = 1,
+---   },
+--- }
+--- 
+function app.getTexImages(type) end
+
 --- Adds url links as specified to the current layer.
 --- 
 --- Global parameters:
