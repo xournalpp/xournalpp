@@ -39,6 +39,8 @@
 #include "view/ElementContainerView.h"            // for ElementContainerView
 #include "view/View.h"                            // for Context
 
+#include "filesystem.h"  // for path
+
 class XojFont;
 
 using std::vector;
@@ -197,6 +199,15 @@ auto EditSelectionContents::setFill(int alphaPen, int alphaHighligther) -> UndoA
     }
 
     return nullptr;
+}
+
+void  EditSelectionContents::setAudioFilename(const fs::path& audioFile, unsigned int timestamp) {
+    for (Element* e: this->selected) {
+        if (auto* audio = dynamic_cast<AudioElement*>(e); audio) {
+            audio->setAudioFilename(audioFile);
+            audio->setTimestamp(timestamp);
+        }
+    }
 }
 
 /**
