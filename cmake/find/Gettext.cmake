@@ -76,9 +76,6 @@
 # XMLFILES
 #   List of .xml.in files for shared-mime-info and metainfo
 #
-# ITSDIR
-#   Additional directory where gettext's .loc/.its files will be looked for in order to process the XML files
-#
 # Either SRCFILES or GLADEFILES or DESKTOPFILES (or all)
 # have to be filled with some files.
 #
@@ -207,10 +204,8 @@ set(XGETTEXT_XML_OPTIONS)
 
 if(XGETTEXT_FOUND)
   macro(gettext_create_pot potfile)
-    # The variable =${ARGS_ITSDIR} is used to find the .loc and .its files in po/its/
-    # This is only necessary for Ubuntu 20.04. On more up-to-date distributions, the package shared-mime-info contains those .loc and .its files.
     cmake_parse_arguments(ARGS "" "PACKAGE;VERSION;WORKING_DIRECTORY"
-      "OPTIONS;CPP_OPTIONS;VALA_OPTIONS;GLADE_OPTIONS;SRCFILES;GLADEFILES;DESKTOPFILES;INIFILES;XMLFILES;ITSDIR" ${ARGN})
+      "OPTIONS;CPP_OPTIONS;VALA_OPTIONS;GLADE_OPTIONS;SRCFILES;GLADEFILES;DESKTOPFILES;INIFILES;XMLFILES" ${ARGN})
 
     if(ARGS_PACKAGE)
       set(package_name "${ARGS_PACKAGE}")
@@ -452,9 +447,7 @@ if(XGETTEXT_FOUND)
           OUTPUT
             "${CMAKE_CURRENT_BINARY_DIR}/_xml.pot"
           COMMAND
-            # The variable "GETTEXTDATADIRS=${ARGS_ITSDIR}" is used to find the .loc and .its files in po/its/
-            # This is only necessary for Ubuntu 20.04. On more up-to-date distributions, the package shared-mime-info contains those .loc and .its files.
-            "GETTEXTDATADIRS=${ARGS_ITSDIR}" "${XGETTEXT_EXECUTABLE}" ${xgettext_options} ${XGETTEXT_XML_OPTIONS} "-o" "${CMAKE_CURRENT_BINARY_DIR}/_xml.pot" ${xml_list}
+            "${XGETTEXT_EXECUTABLE}" ${xgettext_options} ${XGETTEXT_XML_OPTIONS} "-o" "${CMAKE_CURRENT_BINARY_DIR}/_xml.pot" ${xml_list}
           COMMAND
             "${CMAKE_COMMAND}" -E touch "${CMAKE_CURRENT_BINARY_DIR}/_xml.pot"
           DEPENDS
@@ -667,9 +660,7 @@ if(XGETTEXT_FOUND)
           OUTPUT
             "${xmlfile_abs}"
           COMMAND
-            # The variable "GETTEXTDATADIRS=${ARGS_ITSDIR}" is used to find the .loc and .its files in po/its/
-            # This is only necessary for Ubuntu 20.04. On more up-to-date distributions, the package shared-mime-info contains those .loc and .its files.
-            "GETTEXTDATADIRS=${ARGS_ITSDIR}" "${GETTEXT_MSGFMT_EXECUTABLE}" "--xml" "--template=${CMAKE_CURRENT_SOURCE_DIR}/${xmlfileIN}" -d "${CMAKE_CURRENT_BINARY_DIR}" -o "${xmlfile_abs}"
+            "${GETTEXT_MSGFMT_EXECUTABLE}" "--xml" "--template=${CMAKE_CURRENT_SOURCE_DIR}/${xmlfileIN}" -d "${CMAKE_CURRENT_BINARY_DIR}" -o "${xmlfile_abs}"
           DEPENDS
             "${CMAKE_CURRENT_SOURCE_DIR}/${xmlfileIN}"
           DEPENDS
