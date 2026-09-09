@@ -123,6 +123,11 @@ public:
     InsertionOrder makeMoveEffective(const xoj::util::Rectangle<double>& bounds,
                                      const xoj::util::Rectangle<double>& snappedBounds, bool preserveAspectRatio);
 
+    auto computePageClampOffset(const xoj::util::Rectangle<double>& bounds,
+                                const xoj::util::Rectangle<double>& snappedBounds, bool preserveAspectRatio,
+                                double pageWidth, double pageHeight, double minOverlap) const
+            -> std::pair<double, double>;
+
     void updateContent(xoj::util::Rectangle<double> bounds, xoj::util::Rectangle<double> snappedBounds, double rotation,
                        bool aspectRatio, Layer* layer, const PageRef& targetPage, UndoRedoHandler* undo,
                        CursorSelectionType type);
