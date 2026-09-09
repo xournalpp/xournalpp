@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<its:rules xmlns:its="http://www.w3.org/2005/11/its"
-           xmlns:gt="https://www.gnu.org/s/gettext/ns/its/extensions/1.0"
-           xmlns:mi="http://www.freedesktop.org/standards/shared-mime-info"
-           version="2.0">
-    <its:translateRule translate="yes" selector="//mi:comment"/>
-    <its:translateRule translate="no" selector="//mi:expanded-acronym"/>
-    <its:translateRule translate="no" selector="//mi:acronym"/>
-</its:rules>
