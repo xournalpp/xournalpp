@@ -52,7 +52,9 @@ runs:
     shell: bash
     run: |
       brew install meson
-      which glib-compile-resources
+  - name: 'Make sure glib-compile-resources is available to meson'
+    shell: bash
+    run: |
       cp $(which glib-compile-resources) ${{inputs.install_path}}/gtk/inst/bin/glib-compile-resources
   - name: 'Setup ENV for future steps'
     shell: bash
