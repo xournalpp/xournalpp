@@ -301,7 +301,10 @@ void XmlParser::parseBgPdf(const XmlParserHelper::AttributeMap& attributeMap) {
     const auto pageno =
             XmlParserHelper::getAttribMandatory<size_t>(xoj::xml_attrs::PAGE_NUMBER_STR, attributeMap, 1) - 1;
 
-    this->builder.setBgPdf(pageno);
+    const int pageorient = 
+            XmlParserHelper::getAttribMandatory<int>(xoj::xml_attrs::PAGE_ORIENTATION_STR, attributeMap, 0, false); 
+
+    this->builder.setBgPdf(pageno, pageorient);
 }
 
 void XmlParser::parseLayerTag(const XmlParserHelper::AttributeMap& attributeMap) {

@@ -14,6 +14,7 @@
 #include <cstddef>  // for size_t
 #include <sstream>
 
+#include "model/XojPage.h"      // for PageOrientation
 #include "util/ElementRange.h"  // for PageRangeVector
 
 #include "XojCairoPdfExport.h"  // for XojPdfExport
@@ -34,6 +35,7 @@ public:
     struct OutputPageInfo {
         bool hasOverlay;
         size_t pdfBackgroundPageNumber;
+        PageOrientation pdfBackgroundOrientation;
     };
     /// Occurrences of a given background page
     struct Occurrences {
