@@ -52,6 +52,7 @@ runs:
     shell: bash
     run: |
       brew install meson
+      which glib-compile-resources
       cp /opt/homebrew/bin/glib-compile-resources ${{inputs.install_path}}/gtk/inst/bin/glib-compile-resources
   - name: 'Setup ENV for future steps'
     shell: bash
