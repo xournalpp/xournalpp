@@ -33,10 +33,10 @@ runs:
     with:
       key: ${{ steps.restore-blob.outputs.cache-primary-key }}
       path: "${{github.workspace}}/blob"
-  # - uses: actions/upload-artifact@v6
-  #   with:
-  #     name: my-artifact
-  #     path: "${{github.workspace}}/blob/xournalpp-binary-blob.tar.gz"
+  - uses: actions/upload-artifact@v6
+    with:
+      name: my-artifact
+      path: "${{github.workspace}}/blob/xournalpp-binary-blob.tar.gz"
   - name: 'Extract blob'
     shell: bash
     run: |
@@ -48,6 +48,11 @@ runs:
       curl -L -o ninja-mac.zip https://github.com/ninja-build/ninja/releases/download/v1.11.1/ninja-mac.zip
       unzip ninja-mac.zip -d "${{inputs.install_path}}/gtk/inst/bin"
       rm ninja-mac.zip
+  - name: 'Install meson'
+    shell: bash
+    run: |
+      brew install meson
+      cp /opt/homebrew/bin/glib-compile-resources ${{inputs.install_path}}/gtk/inst/bin/glib-compile-resources
   - name: 'Setup ENV for future steps'
     shell: bash
     run: |

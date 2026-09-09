@@ -27,7 +27,7 @@ runs:
           librsvg2-dev
           gcc${{ steps.gcc.outputs.gcc_postfix }}
           g++${{ steps.gcc.outputs.gcc_postfix }}
-          cmake ninja-build
+          ninja-build
           libgtk-3-dev
           libpoppler-glib-dev
           portaudio19-dev
@@ -42,6 +42,7 @@ runs:
       run: |
         sudo apt-get update
         sudo apt-get install -y ${{env.packages}}
+        pip3 install --user meson
     - name: 'Set environment variables'
       shell: bash
       run: |
