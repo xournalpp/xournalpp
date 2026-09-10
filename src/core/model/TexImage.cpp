@@ -7,7 +7,7 @@
 #include <poppler-page.h>      // for poppler_page_get_size
 
 #include "model/Element.h"                        // for Element, ELEMENT_TE...
-#include "util/Rectangle.h"                       // for Rectangle 
+#include "util/Rectangle.h"                       // for Rectangle
 #include "util/matrix/RectangleMultiply.h"        // for operator*
 #include "util/raii/GObjectSPtr.h"                // for GObjectSPtr
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
