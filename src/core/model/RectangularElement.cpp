@@ -1,11 +1,8 @@
 #include "RectangularElement.h"
 
-#include <algorithm>  // for max, min
-#include <cmath>      // for ceil, floor, NAN
-#include <cstdint>    // for uint32_t
+#include <algorithm>  // for clamp
 
 #include "util/Point.h"
-#include "util/safe_casts.h"                      // for as_unsigned
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 

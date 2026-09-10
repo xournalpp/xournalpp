@@ -50,7 +50,7 @@ void TextEditionView::draw(cairo_t* cr) const {
     const auto& boxes = textEditor->getBoxes();
 
 
-    // We will apply the matrix be hand to the points when drawing the box(es), so that the line width is not deformed
+    // We will apply the matrix by hand to the points when drawing the box(es), so that the line width is not deformed
     const auto& m = this->textEditor->getTextElement()->getTransformation();
 
     // Compute the padding so it does not scale with the text

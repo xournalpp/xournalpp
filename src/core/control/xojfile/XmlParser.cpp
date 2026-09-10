@@ -25,6 +25,7 @@
 #include "util/Assert.h"                               // for xoj_assert
 #include "util/Color.h"                                // for Color
 #include "util/EnumIndexedArray.h"                     // for EnumIndexedArray
+#include "util/Matrix.h"                               // for Matrix
 #include "util/StringUtils.h"                          // for ellipsize
 #include "util/i18n.h"                                 // for FS, _F, _
 #include "util/utf8_view.h"                            // for xoj::util::utf8

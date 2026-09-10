@@ -6,9 +6,9 @@
 #include <poppler-document.h>  // for poppler_document_ge...
 #include <poppler-page.h>      // for poppler_page_get_size
 
-#include "model/Element.h"   // for Element, ELEMENT_TE...
-#include "util/Rectangle.h"  // for Rectangle
-#include "util/matrix/RectangleMultiply.h"
+#include "model/Element.h"                        // for Element, ELEMENT_TE...
+#include "util/Rectangle.h"                       // for Rectangle 
+#include "util/matrix/RectangleMultiply.h"        // for operator*
 #include "util/raii/GObjectSPtr.h"                // for GObjectSPtr
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
@@ -58,7 +58,7 @@ auto TexImage::getNativeSize() const -> xoj::util::Size<double> {
         return xoj::util::Size<double>(cairo_image_surface_get_width(image.get()),
                                        cairo_image_surface_get_height(image.get()));
     }
-    g_warning("TexImage without PDF nor Image...");
+    g_warning("TexImage with no PDF nor Image...");
     return {0, 0};
 }
 

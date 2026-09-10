@@ -2380,8 +2380,10 @@ void Control::clipboardPasteImage(GdkPixbuf* img) {
         scaling = pageWidth / width;
     }
     if (height > pageHeight) {
-        scaling = std::max(scaling, pageHeight / height);
+        scaling = std::min(scaling, pageHeight / height);
     }
+
+    scaling /= zoom100;
 
     image->setTransformation(xoj::util::Matrix::SCALING(scaling, scaling));
 

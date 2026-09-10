@@ -17,8 +17,7 @@
 
 #include <gdk/gdk.h>  // for GdkRectangle
 
-#include "util/Color.h"  // for Color
-#include "util/Matrix.h"
+#include "util/Color.h"                     // for Color
 #include "util/Rectangle.h"                 // for Rectangle
 #include "util/serializing/Serializable.h"  // for Serializable
 
