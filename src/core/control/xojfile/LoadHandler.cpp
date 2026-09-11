@@ -381,10 +381,12 @@ void LoadHandler::finalizeText() {
     this->layer->addElement(std::move(this->text));
 }
 
-void LoadHandler::addImageLegacy(double left, double top, double right, double bottom) {
+void LoadHandler::addImageLegacy(double left, double top, double right, double bottom,
+                                 std::optional<xoj::util::Size<double>> size) {
     xoj_assert(!this->image);
     this->image = std::make_unique<Image>();
     this->currentElementFrameLegacy = {left, top, right - left, bottom - top};
+    this->currentElementNaturalSizeLegacy = size;
 }
 
 void LoadHandler::addImage(xoj::util::Matrix matrix) {
@@ -426,8 +428,11 @@ void LoadHandler::finalizeImage() {
     }
 
     if (currentElementFrameLegacy) {
-        // We need to load the image to deduce the transformation matrix, hence forbidding lazy loading... :-(
-        auto [width, height] = this->image->getNaturalSize();  // Effectively loads the image
+        // To compute the transformation matrix, we need the natural size of the image
+        // If it has been read from the xml file, use it, otherwise, we need to load the iamge via getNaturalSize()
+        auto [width, height] = currentElementNaturalSizeLegacy ?
+                                       *currentElementNaturalSizeLegacy :
+                                       this->image->getNaturalSize();  // Effectively loads the image
         if (width != 0 && height != 0) {
             this->image->setTransformation(xoj::util::Matrix::SCALING(currentElementFrameLegacy->width / width,
                                                                       currentElementFrameLegacy->height / height));
@@ -435,16 +440,19 @@ void LoadHandler::finalizeImage() {
         this->image->move(currentElementFrameLegacy->x, currentElementFrameLegacy->y);
 
         currentElementFrameLegacy = std::nullopt;
+        currentElementNaturalSizeLegacy = std::nullopt;
     }
 
     this->layer->addElement(std::move(this->image));
 }
 
-void LoadHandler::addTexImageLegacy(double left, double top, double right, double bottom, std::string text) {
+void LoadHandler::addTexImageLegacy(double left, double top, double right, double bottom, std::string text,
+                                    std::optional<xoj::util::Size<double>> size) {
     xoj_assert(!this->teximage);
     this->teximage = std::make_unique<TexImage>();
 
     this->currentElementFrameLegacy = {left, top, right - left, bottom - top};
+    this->currentElementNaturalSizeLegacy = size;
 
     this->teximage->setText(std::move(text));
 }
@@ -475,13 +483,16 @@ void LoadHandler::finalizeTexImage() {
     xoj_assert(this->teximage);
 
     if (currentElementFrameLegacy) {
-        if (auto [width, height] = this->teximage->getNativeSize(); width != 0 && height != 0) [[likely]] {
+        auto [width, height] =
+                currentElementNaturalSizeLegacy ? *currentElementNaturalSizeLegacy : this->teximage->getNaturalSize();
+        if (width != 0 && height != 0) [[likely]] {
             this->teximage->setTransformation(xoj::util::Matrix::SCALING(currentElementFrameLegacy->width / width,
                                                                          currentElementFrameLegacy->height / height));
         }
         this->teximage->move(currentElementFrameLegacy->x, currentElementFrameLegacy->y);
 
         currentElementFrameLegacy = std::nullopt;
+        currentElementNaturalSizeLegacy = std::nullopt;
     }
 
     this->layer->addElement(std::move(this->teximage));

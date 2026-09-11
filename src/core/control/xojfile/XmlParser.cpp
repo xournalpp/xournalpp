@@ -26,6 +26,7 @@
 #include "util/Color.h"                                // for Color
 #include "util/EnumIndexedArray.h"                     // for EnumIndexedArray
 #include "util/Matrix.h"                               // for Matrix
+#include "util/Size.h"                                 // for Size
 #include "util/StringUtils.h"                          // for ellipsize
 #include "util/i18n.h"                                 // for FS, _F, _
 #include "util/utf8_view.h"                            // for xoj::util::utf8
@@ -94,6 +95,20 @@ static auto getMatrix(const XmlParserHelper::AttributeMap& attributeMap) -> std:
     bool success = parseDouble(it, end, m.xx) && parseDouble(it, end, m.yx) && parseDouble(it, end, m.xy) &&
                    parseDouble(it, end, m.yy) && parseDouble(it, end, m.shift.x) && parseDouble(it, end, m.shift.y);
     return success ? std::make_optional(m) : std::nullopt;
+}
+
+static auto getNaturalSize(const XmlParserHelper::AttributeMap& attributeMap)
+        -> std::optional<xoj::util::Size<double>> {
+    const auto sv = XmlParserHelper::getAttrib<std::string_view>(xoj::xml_attrs::NATURAL_SIZE_STR, attributeMap);
+    if (!sv) {
+        return std::nullopt;
+    }
+    auto it = sv->data();
+    auto end = sv->data() + sv->size();
+
+    xoj::util::Size<double> s;
+    bool success = parseDouble(it, end, s.width) && parseDouble(it, end, s.height);
+    return success ? std::make_optional(s) : std::nullopt;
 }
 
 void XmlParser::parserStartElement(GMarkupParseContext* context, const gchar* elementName, const gchar** attributeNames,
@@ -484,7 +499,9 @@ void XmlParser::parseImageTag(const XmlParserHelper::AttributeMap& attributeMap)
     const auto right = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::RIGHT_POS_STR, attributeMap);
     const auto bottom = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::BOTTOM_POS_STR, attributeMap);
 
-    this->builder.addImageLegacy(left, top, right, bottom);
+    auto size = getNaturalSize(attributeMap);
+
+    this->builder.addImageLegacy(left, top, right, bottom, size);
 }
 
 void XmlParser::parseImageText(std::string_view text) {
@@ -509,7 +526,8 @@ void XmlParser::parseTexImageTag(const XmlParserHelper::AttributeMap& attributeM
     const auto right = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::RIGHT_POS_STR, attributeMap);
     const auto bottom = XmlParserHelper::getAttribMandatory<double>(xoj::xml_attrs::BOTTOM_POS_STR, attributeMap);
 
-    this->builder.addTexImageLegacy(left, top, right, bottom, std::string{text});
+    auto size = getNaturalSize(attributeMap);
+    this->builder.addTexImageLegacy(left, top, right, bottom, std::string{text}, size);
 }
 
 void XmlParser::parseTexImageText(std::string_view text) {

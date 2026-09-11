@@ -42,6 +42,7 @@ constexpr auto TIMESTAMP_STR = u8"ts";       // also in stroke and text
 
 // rectangular element
 constexpr auto MATRIX_STR = u8"matrix";
+constexpr auto NATURAL_SIZE_STR = u8"natural_size";
 
 // stroke
 constexpr auto TOOL_STR = u8"tool";
