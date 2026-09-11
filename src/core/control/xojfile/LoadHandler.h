@@ -27,6 +27,7 @@
 #include "model/PageRef.h"                             // for PageRef
 #include "model/Stroke.h"                              // for Stroke, StrokeTool,...
 #include "util/Color.h"                                // for Color
+#include "util/Rectangle.h"                            // for Rectangle
 
 #include "filesystem.h"  // for path
 
