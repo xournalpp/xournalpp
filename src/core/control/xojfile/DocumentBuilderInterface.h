@@ -31,7 +31,9 @@ class TextAlignment;
 
 namespace xoj::util {
 struct Matrix;
-}
+template <typename T>
+struct Size;
+}  // namespace xoj::util
 
 class DocumentBuilderInterface {
 public:
@@ -60,12 +62,14 @@ public:
                          fs::path filename, size_t timestamp) = 0;
     virtual void setTextContents(std::string contents) = 0;
     virtual void finalizeText() = 0;
-    virtual void addImageLegacy(double left, double top, double right, double bottom) = 0;
+    virtual void addImageLegacy(double left, double top, double right, double bottom,
+                                std::optional<xoj::util::Size<double>> size) = 0;
     virtual void addImage(xoj::util::Matrix matrix) = 0;
     virtual void setImageData(std::string data) = 0;
     virtual void setImageAttachment(const fs::path& filename) = 0;
     virtual void finalizeImage() = 0;
-    virtual void addTexImageLegacy(double left, double top, double right, double bottom, std::string text) = 0;
+    virtual void addTexImageLegacy(double left, double top, double right, double bottom, std::string text,
+                                   std::optional<xoj::util::Size<double>> size) = 0;
     virtual void addTexImage(xoj::util::Matrix matrix, std::string text) = 0;
     virtual void setTexImageData(std::string data) = 0;
     virtual void setTexImageAttachment(const fs::path& filename) = 0;

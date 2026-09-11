@@ -169,6 +169,18 @@ static inline std::vector<double> makeMatrixVector(const RectangularElement& e) 
     return std::vector<double>{m.xx, m.yx, m.xy, m.yy, m.shift.x, m.shift.y};
 }
 
+static inline bool nearEnough(double a, double b) { return std::abs(a - b) < 1e-8; };
+
+static inline bool isMatrixHomogeneousScaling(const RectangularElement& e) {
+    const auto& m = e.getTransformation();
+    return nearEnough(m.yx, 0.) && nearEnough(m.xy, 0.) && nearEnough(m.xx, m.yy) && m.xx > 0.;
+}
+
+static inline bool isMatrixPositiveScaling(const RectangularElement& e) {
+    const auto& m = e.getTransformation();
+    return nearEnough(m.yx, 0.) && nearEnough(m.xy, 0.) && m.xx > 0.;
+}
+
 void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
     auto* layer = new XmlNode(TAG_NAMES[TagType::LAYER]);
     page->addChild(layer);
@@ -194,8 +206,16 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
             const XojFont& f = t->getFont();
 
             text->setAttrib(xoj::xml_attrs::FONT_STR, f.getName().c_str());
-            text->setAttrib(xoj::xml_attrs::SIZE_STR, f.getSize());
-            text->setAttrib(xoj::xml_attrs::MATRIX_STR, makeMatrixVector(*t));
+            if (isMatrixHomogeneousScaling(*t)) {
+                // Save as file version 4 for backward compatibility
+                text->setAttrib(xoj::xml_attrs::SIZE_STR, t->getTransformation().xx * f.getSize());
+                const auto& origin = t->getTransformation().shift;
+                text->setAttrib(xoj::xml_attrs::X_COORD_STR, origin.x);
+                text->setAttrib(xoj::xml_attrs::Y_COORD_STR, origin.y);
+            } else {
+                text->setAttrib(xoj::xml_attrs::SIZE_STR, f.getSize());
+                text->setAttrib(xoj::xml_attrs::MATRIX_STR, makeMatrixVector(*t));
+            }
             text->setAttrib(xoj::xml_attrs::COLOR_STR, getColorStr(t->getColor()).c_str());
             if (auto w = t->getWrap(); w != Text::NO_WRAP) {
                 text->setAttrib(xoj::xml_attrs::WRAP_STR, w);
@@ -214,14 +234,38 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
             layer->addChild(image);
 
             image->setImage(i->getImage());
-            image->setAttrib(xoj::xml_attrs::MATRIX_STR, makeMatrixVector(*i));
+            if (isMatrixPositiveScaling(*i)) {
+                // Save as file version 4 for backward compatibility
+                Range r(i->getBoundingBox());
+                image->setAttrib(xoj::xml_attrs::LEFT_POS_STR, r.minX);
+                image->setAttrib(xoj::xml_attrs::TOP_POS_STR, r.minY);
+                image->setAttrib(xoj::xml_attrs::RIGHT_POS_STR, r.maxX);
+                image->setAttrib(xoj::xml_attrs::BOTTOM_POS_STR, r.maxY);
+                // Add metadata to allow for lazy loading
+                const auto& s = i->getNaturalSize();
+                image->setAttrib(xoj::xml_attrs::NATURAL_SIZE_STR, std::vector<double>{s.width, s.height});
+            } else {
+                image->setAttrib(xoj::xml_attrs::MATRIX_STR, makeMatrixVector(*i));
+            }
         } else if (e->getType() == ELEMENT_TEXIMAGE) {
             auto* i = dynamic_cast<const TexImage*>(e);
             auto* image = new XmlTexNode(TAG_NAMES[TagType::TEXIMAGE], std::string(i->getBinaryData()));
             layer->addChild(image);
 
             image->setAttrib(xoj::xml_attrs::TEXT_STR, i->getText().c_str());
-            image->setAttrib(xoj::xml_attrs::MATRIX_STR, makeMatrixVector(*i));
+            if (isMatrixPositiveScaling(*i)) {
+                // Save as file version 4 for backward compatibility
+                Range r(i->getBoundingBox());
+                image->setAttrib(xoj::xml_attrs::LEFT_POS_STR, r.minX);
+                image->setAttrib(xoj::xml_attrs::TOP_POS_STR, r.minY);
+                image->setAttrib(xoj::xml_attrs::RIGHT_POS_STR, r.maxX);
+                image->setAttrib(xoj::xml_attrs::BOTTOM_POS_STR, r.maxY);
+                // Add metadata to allow for lazy loading
+                const auto& s = i->getNaturalSize();
+                image->setAttrib(xoj::xml_attrs::NATURAL_SIZE_STR, std::vector<double>{s.width, s.height});
+            } else {
+                image->setAttrib(xoj::xml_attrs::MATRIX_STR, makeMatrixVector(*i));
+            }
         } else if (e->getType() == ELEMENT_LINK) {
             auto* l = dynamic_cast<const Link*>(e);
             auto* link = new XmlTextNode(TAG_NAMES[TagType::LINK], l->getText());

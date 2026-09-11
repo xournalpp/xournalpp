@@ -28,6 +28,7 @@
 #include "model/Stroke.h"                              // for Stroke, StrokeTool,...
 #include "util/Color.h"                                // for Color
 #include "util/Rectangle.h"                            // for Rectangle
+#include "util/Size.h"                                 // for Size
 
 #include "filesystem.h"  // for path
 
@@ -105,12 +106,14 @@ private:
                  std::optional<TextAlignment> align, bool justify, fs::path filename, size_t timestamp) override;
     void setTextContents(std::string contents) override;
     void finalizeText() override;
-    void addImageLegacy(double left, double top, double right, double bottom) override;
+    void addImageLegacy(double left, double top, double right, double bottom,
+                        std::optional<xoj::util::Size<double>> size) override;
     void addImage(xoj::util::Matrix matrix) override;
     void setImageData(std::string data) override;
     void setImageAttachment(const fs::path& filename) override;
     void finalizeImage() override;
-    void addTexImageLegacy(double left, double top, double right, double bottom, std::string text) override;
+    void addTexImageLegacy(double left, double top, double right, double bottom, std::string text,
+                           std::optional<xoj::util::Size<double>> size) override;
     void addTexImage(xoj::util::Matrix matrix, std::string text) override;
     void setTexImageData(std::string data) override;
     void setTexImageAttachment(const fs::path& filename) override;
@@ -209,6 +212,7 @@ private:
 
     /// File format version <= 4 stores Image/TexImage's position as a rectangle to put the image into
     std::optional<xoj::util::Rectangle<double>> currentElementFrameLegacy;
+    std::optional<xoj::util::Size<double>> currentElementNaturalSizeLegacy;
 
     DocumentHandler dHandler;
     std::unique_ptr<Document> doc;
