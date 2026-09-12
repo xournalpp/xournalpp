@@ -89,8 +89,8 @@ auto StylusInputHandler::handleImpl(InputEvent const& event) -> bool {
 
     // Check if enter/leave events occur in possible locations. This is a bug of the hardware (there are such devices!)
     if ((event.type == ENTER_EVENT || event.type == LEAVE_EVENT) && this->deviceClassPressed && this->lastEvent) {
-        if (std::abs(event.relative.x - lastEvent.relative.x) > 100 ||
-            std::abs(event.relative.y - lastEvent.relative.y) > 100) {
+        if (std::abs(event.absolute.x - lastEvent.absolute.x) > 100 ||
+            std::abs(event.absolute.y - lastEvent.absolute.y) > 100) {
             g_message("Discard impossible event - this is a sign of bugged hardware or drivers");
             return true;
         }
