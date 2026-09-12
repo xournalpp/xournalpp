@@ -14,9 +14,13 @@ config.log
 config.status
 config.h*
 !config.h.in
+!config.h.meson.in
 configure
-po/POTFILES
 stamp-h1
+
+# Meson subprojects
+subprojects/*
+!subprojects/*.wrap
 
 # Eclipse
 .autotools

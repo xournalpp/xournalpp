@@ -27,8 +27,8 @@ on:
         default: ''
       build_type:
         type: string
-        default: 'RelWithDebInfo'
-      extra_cmake_flags:
+        default: 'debugoptimized'
+      extra_meson_flags:
         type: string
         default: ''
       artifact_version_suffix:  # Additional version string appended to 1.2.3+dev (for instance) in artifacts names
@@ -80,10 +80,10 @@ jobs:
         uses: ./.github/actions/build
         with:
           build_type: ${{ inputs.build_type }}
-          cmake_flags: >-
-            -DCMAKE_INSTALL_PREFIX=/usr
+          meson_flags: >-
+            --prefix=/usr
             -DCPACK_GENERATOR="TGZ;DEB"
-          extra_cmake_flags: ${{ inputs.extra_cmake_flags }}
+          extra_meson_flags: ${{ inputs.extra_meson_flags }}
           cmake_commands: '--target package'
       - name: 'Rename assets'
         if: ${{ inputs.artifact_version_suffix != '' }}

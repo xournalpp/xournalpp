@@ -1,0 +1,5 @@
+[wrap-file]
+directory = cpptrace-1.0.4
+source_url = https://github.com/jeremy-rifkin/cpptrace/archive/refs/tags/v1.0.4.tar.gz
+source_filename = v1.0.4.tar.gz
+source_hash = 5c9f5b301e903714a4d01f1057b9543fa540f7bfcc5e3f8bd1748e652e24f9ea

@@ -11,8 +11,8 @@ on:
 
 env:
   build-targets-json: '.github/available-build-targets.json'
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Debug
+  # Customize the meson build type here ("debug", "debugoptimized", "release", "minsize", etc.)
+  BUILD_TYPE: debug
 
 jobs:
   prepare:
@@ -77,11 +77,11 @@ jobs:
         uses: ./.github/actions/build
         with:
           build_type: ${{env.BUILD_TYPE}}
-          extra_cmake_flags: ${{ matrix.run.extra_cmake_flags }}
+          extra_meson_flags: ${{ matrix.run.extra_meson_flags }}
       - name: 'Build tests'
         id: build-test
         run: |
-          cmake --build . --target test-units
+          meson compile test-units
         working-directory: ${{github.workspace}}/build
       - name: 'Run tests'
         if: always() && steps.build-test.outcome == 'success'  # Run the test in every locale even if it failed in another
@@ -126,9 +126,9 @@ jobs:
         # Todo: Port this to MacOS and Windows
         run: |
           sudo apt install xvfb
-          cmake .. -DCMAKE_INSTALL_PREFIX=install
-          cmake --build . --target install
-          cmake --build . --target test-gtk-integration
+          meson setup --reconfigure --prefix=$(pwd)/install
+          meson install
+          meson compile test-gtk-integration
           CI=true xvfb-run -a ./test/test-gtk-integration
         working-directory: ${{github.workspace}}/build
   Windows:
@@ -149,12 +149,12 @@ jobs:
         uses: ./.github/actions/build
         with:
           build_type: ${{env.BUILD_TYPE}}
-          extra_cmake_flags: ${{ matrix.run.extra_cmake_flags }}
+          extra_meson_flags: ${{ matrix.run.extra_meson_flags }}
           shell: msys2 {0}
       - name: 'Build tests'
         shell: msys2 {0}
         run: |
-          cmake --build . --target test-units
+          meson compile test-units
         working-directory: ${{github.workspace}}/build
       - name: 'Run tests'
         shell: msys2 {0}
@@ -178,11 +178,11 @@ jobs:
         uses: ./.github/actions/build
         with:
           build_type: ${{env.BUILD_TYPE}}
-          extra_cmake_flags: ${{ matrix.run.extra_cmake_flags }}
+          extra_meson_flags: ${{ matrix.run.extra_meson_flags }}
       - name: 'Build tests'
         shell: bash
         run: |
-          cmake --build . --target test-units
+          meson compile test-units
         working-directory: ${{github.workspace}}/build
       - name: 'Run tests'
         shell: bash
