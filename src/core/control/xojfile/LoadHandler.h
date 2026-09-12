@@ -27,6 +27,8 @@
 #include "model/PageRef.h"                             // for PageRef
 #include "model/Stroke.h"                              // for Stroke, StrokeTool,...
 #include "util/Color.h"                                // for Color
+#include "util/Rectangle.h"                            // for Rectangle
+#include "util/Size.h"                                 // for Size
 
 #include "filesystem.h"  // for path
 
@@ -100,20 +102,24 @@ private:
                    const LineStyle& lineStyle, fs::path filename, size_t timestamp) override;
     void setStrokePoints(std::vector<Point> pointVector, bool hasPressure) override;
     void finalizeStroke() override;
-    void addText(std::string font, double size, double x, double y, Color color, std::optional<double> wrap,
+    void addText(std::string font, double size, xoj::util::Matrix matrix, Color color, std::optional<double> wrap,
                  std::optional<TextAlignment> align, bool justify, fs::path filename, size_t timestamp) override;
     void setTextContents(std::string contents) override;
     void finalizeText() override;
-    void addImage(double left, double top, double right, double bottom) override;
+    void addImageLegacy(double left, double top, double right, double bottom,
+                        std::optional<xoj::util::Size<double>> size) override;
+    void addImage(xoj::util::Matrix matrix) override;
     void setImageData(std::string data) override;
     void setImageAttachment(const fs::path& filename) override;
     void finalizeImage() override;
-    void addTexImage(double left, double top, double right, double bottom, std::string text) override;
+    void addTexImageLegacy(double left, double top, double right, double bottom, std::string text,
+                           std::optional<xoj::util::Size<double>> size) override;
+    void addTexImage(xoj::util::Matrix matrix, std::string text) override;
     void setTexImageData(std::string data) override;
     void setTexImageAttachment(const fs::path& filename) override;
     void finalizeTexImage() override;
 
-    void addLink(TextAlignment align, std::string font, double size, double x, double y, Color color,
+    void addLink(TextAlignment align, std::string font, double size, xoj::util::Matrix matrix, Color color,
                  std::string url) override;
     void setLinkContent(std::string contents) override;
     void finalizeLink() override;
@@ -203,6 +209,10 @@ private:
     std::unique_ptr<Image> image;
     std::unique_ptr<TexImage> teximage;
     std::unique_ptr<Link> link;
+
+    /// File format version <= 4 stores Image/TexImage's position as a rectangle to put the image into
+    std::optional<xoj::util::Rectangle<double>> currentElementFrameLegacy;
+    std::optional<xoj::util::Size<double>> currentElementNaturalSizeLegacy;
 
     DocumentHandler dHandler;
     std::unique_ptr<Document> doc;

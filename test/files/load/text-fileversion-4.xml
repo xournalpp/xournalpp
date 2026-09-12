@@ -1,0 +1,20 @@
+<?xml version="1.0" standalone="no"?>
+<xournal creator="xournalpp 1.3.7" fileversion="4">
+<title>Xournal++ document - see https://xournalpp.github.io/</title>
+<preview>iVBORw0KGgoAAAANSUhEUgAAAGMAAACACAIAAACQiUDuAAAABmJLR0QA/wD/AP+gvaeTAAAC1klEQVR4nO3dTWsTYRTF8TuTmUmMpG2wIloF32rUZenat/QDCNIv1c8j4qLbgiiUbtQKWqtQ3NinSkPamcx03Lnsc9BMY5z/b31hJoe5h7tLUJalne770ObbnpkaCCf9AlODpFQkpSIpFUmpSEpFUqpoIk9dS9d6Ye/QDl3pukF3NV5tWWsib6ILuDxFbJ+KpFTRz9QzEWRW+mbqIJpt+kYSM+9MDbB9qslcCb9tbg7Myna7MRgUy8udyb7M6YIfx54rIdgflhe4Ev6+p7a2zDk7PraVFUuScb7aP4bLU0Wjq7inVNxTKrZPVfk9tbGx0W63u93uYDAoiiJN006nc3R0tLS0VPWjx4t7SkVPqSrfvvX19SzLwjDs9/txHFf9uOpweaqm9Z7afvd29/PO7Nxc2GjMdGac22+2WvlolKbpw8f9Kp44rT01e65xf/G6c67ZjK9d6jaDUVEUw5N08c4N/y/6I2yfistTNa09dfamtafOHtunIinVGHrq65fdnU8fkyTJ8/zBoycvXzxPkmR+/mI2yr7t7V1eWDhwLkvTm7duf9h+//TZ6pvXrw6ci+O4d/felYWrY/wxleJKULF9KpJScU+puKdUbJ+K7VOxfSq2T0VSKnpKRU+p2D4VSanoKRU9pWL7VCSloqdU9JSK7VORlIqeUtFTKrZPRVIqekpFT6nYPhVJqegpFT2lYvtUJKWip1T0lIrtU0XDkWciGFnpm6mDKPZ+VSFfnplZFDd8Iw0z70wN8LWouBJUXAkqtk9FUip6SkVPqdg+FUmp6CkVPaVi+1QkpaKnVPSUiu1TkZSKnlLRUyq2T0VSKnpKRU+p2D4VSanoKRU9pWL7VFF+4hs5MfPO1ECU5p6JILfSN1MH0Xnv/w4lZv/zfxOp6CkVV4KKK0HF9qlISkVPqegpFdunIikVPaWip1Rsn4qkVCSlIikVSalISkVSKpJSkZTqF0JdFnJjKME5AAAAAElFTkSuQmCC</preview>
+<page width="612" height="792">
+<background type="solid" color="#ffffffff" style="lined"/>
+<layer>
+<text font="Sans" size="12" x="130.5" y="96.75" color="#ff0000ff">red</text>
+<text font="Sans" size="12" x="258.75" y="87" color="#3333ccff">blue</text>
+<text font="Sans" size="12" x="240.75" y="42" color="#00f000ff">green</text>
+<text font="Sans" size="12" x="196.26678" y="137.84693" color="#000000ff">multiline
+text</text>
+<text font="Sans" size="12" x="135.38428" y="197.98843" color="#000000ff"> 
+ odd  whitespace	text
+
+</text>
+<text font="Times New Roman, Bold" size="12.34" x="374.66352" y="172.072" color="#000000ff">Other font</text>
+</layer>
+</page>
+</xournal>

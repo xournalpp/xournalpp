@@ -121,11 +121,10 @@ public:
 
     /// Applies the transformation to the selected elements, empties the selection and return the modified elements
     InsertionOrder makeMoveEffective(const xoj::util::Rectangle<double>& bounds,
-                                     const xoj::util::Rectangle<double>& snappedBounds, bool preserveAspectRatio);
+                                     const xoj::util::Rectangle<double>& snappedBounds);
 
     void updateContent(xoj::util::Rectangle<double> bounds, xoj::util::Rectangle<double> snappedBounds, double rotation,
-                       bool aspectRatio, Layer* layer, const PageRef& targetPage, UndoRedoHandler* undo,
-                       CursorSelectionType type);
+                       Layer* layer, const PageRef& targetPage, UndoRedoHandler* undo, CursorSelectionType type);
 
 private:
     /**

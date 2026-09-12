@@ -2,6 +2,7 @@
 
 #include "model/Link.h"               // for Link
 #include "util/Color.h"               // for cairo_set_source_rgbi
+#include "util/Matrix.h"              // for Matrix
 #include "util/raii/CairoWrappers.h"  // for CairoSaveGuard
 
 using namespace xoj::view;
@@ -24,8 +25,7 @@ void LinkView::draw(const Context& ctx) const {
 
     cairo_tag_begin(ctx.cr, CAIRO_TAG_LINK, ("uri='" + link->getUrl() + "'").c_str());
 
-    auto rect = link->getSnappedBounds();
-    cairo_translate(ctx.cr, rect.x, rect.y);
+    link->getTransformation().transformCairo(ctx.cr);
 
     auto layout = initPango(ctx.cr, link);
     const std::string& content = link->getText();

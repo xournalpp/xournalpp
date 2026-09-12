@@ -32,7 +32,7 @@ class TexImage;
 class Document;
 class XojPageView;
 class Layer;
-class Element;
+class RectangularElement;
 class LatexSettings;
 class IntEdLatexDialog;
 
@@ -185,7 +185,7 @@ private:
     /**
      * The element that is currently being edited.
      */
-    const Element* selectedElem = nullptr;
+    const RectangularElement* selectedElem = nullptr;
 
     /**
      * The controller owns the rendered preview in order to be able to delete it

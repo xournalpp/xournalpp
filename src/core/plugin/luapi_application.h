@@ -1605,7 +1605,7 @@ static int applib_addTexts(lua_State* L) {
         if (!lua_isnumber(L, -2)) {  // Check if y was provided
             return luaL_error(L, "Missing Y-Coordinate!/must be a number");
         }
-        text->setOrigin(lua_tonumber(L, -3), lua_tonumber(L, -2));
+        text->move(lua_tonumber(L, -3), lua_tonumber(L, -2));
 
         text->setWrap(luaL_optnumber(L, -1, Text::NO_WRAP));
 
@@ -1922,7 +1922,7 @@ static int applib_addLinks(lua_State* L) {
         if (!lua_isnumber(L, -1)) {  // Check if y was provided
             return luaL_error(L, "Missing Y-Coordinate!/must be a number");
         }
-        link->setOrigin(lua_tonumber(L, -2), lua_tonumber(L, -1));
+        link->setTransformation(xoj::util::Matrix::TRANSLATION(lua_tonumber(L, -2), lua_tonumber(L, -1)));
 
         lua_pop(L, 10);  // remove values read out from the link table + link-table itself
 
@@ -2588,7 +2588,6 @@ static void pushRectangleHelper(lua_State* L, xoj::util::Rectangle<double> rect)
  *      "y"      = number
  *   }
  *   "rotation" = number
- *   "isRotationSupported" = bool
  * }
  *
  * Example 1: local penInfo = app.getToolInfo("pen")
@@ -2792,9 +2791,6 @@ static int applib_getToolInfo(lua_State* L) {
 
         lua_pushnumber(L, sel->getRotation());
         lua_setfield(L, -2, "rotation");
-
-        lua_pushboolean(L, sel->isRotationSupported());
-        lua_setfield(L, -2, "isRotationSupported");
 
         lua_newtable(L);  // create originalBounds table
         pushRectangleHelper(L, sel->getOriginalBounds());
@@ -3613,22 +3609,20 @@ static int applib_addImages(lua_State* L) {
         } else {  // data was provided instead
             img = std::make_unique<Image>();
             img->setImage(std::string(data, dataLen));
-            img->getImage();  // render image first to get the proper width and height
         }
 
-        auto [width, height] = img->getImageSize();
-        img->setOrigin(x, y);
+        auto [width, height] = img->getNaturalSize();
 
         // apply width/height parameter
         if (maxWidthParam != -1 && maxHeightParam != -1) {
             // both width and height are set
             if (aspectRatio) {
-                double scale_y{static_cast<double>(maxHeightParam) / static_cast<double>(height)};
-                double scale_x{static_cast<double>(maxWidthParam) / static_cast<double>(width)};
+                double scale_y{static_cast<double>(maxHeightParam) / height};
+                double scale_x{static_cast<double>(maxWidthParam) / width};
                 double scale{std::min(scale_y, scale_x)};
 
-                height = round_cast<int>(height * scale);
-                width = round_cast<int>(width * scale);
+                height *= scale;
+                width *= scale;
             } else {
                 width = maxWidthParam;
                 height = maxHeightParam;
@@ -3636,27 +3630,27 @@ static int applib_addImages(lua_State* L) {
         } else if (maxWidthParam != -1 && maxHeightParam == -1) {
             // maxHeight is set
             if (aspectRatio) {
-                height = round_cast<int>(static_cast<double>(height) / static_cast<double>(width) * maxWidthParam);
+                height = height / width * maxWidthParam;
             }
             width = maxWidthParam;
         } else if (maxHeightParam != -1 && maxWidthParam == -1) {
             // maxWidth is set
             if (aspectRatio) {
-                width = round_cast<int>(static_cast<double>(width) / static_cast<double>(height) * maxHeightParam);
+                width = width / height * maxHeightParam;
             }
             height = maxHeightParam;
         }
 
         // apply scale option
-        width = round_cast<int>(width * scale);
-        height = round_cast<int>(height * scale);
+        width *= scale;
+        height *= scale;
 
         PageRef page = control->getCurrentPage();
 
         // scale down keeping the current aspect ratio after the manual scaling to fit the image on the page
         // if the image already fits on the screen, no other scaling is applied here
         // already sets width/height in the image
-        ImageHandler::automaticScaling(*img, page, width, height);
+        ImageHandler::automaticScaling(*img, {x, y, width, height}, page);
 
         // store the image to later build the undo/redo action chain
         images.push_back(img.get());
@@ -3764,12 +3758,12 @@ static int applib_getImages(lua_State* L) {
         lua_pushstring(L, gdk_pixbuf_format_get_name(im->getImageFormat()));
         lua_setfield(L, -2, "format");
 
-        auto imageSize = im->getImageSize();
+        auto imageSize = im->getNaturalSize();
         // image width: integer
-        lua_pushinteger(L, imageSize.width);
+        lua_pushinteger(L, round_cast<int>(imageSize.width));
         lua_setfield(L, -2, "imageWidth");
         // image height: integer
-        lua_pushinteger(L, imageSize.height);
+        lua_pushinteger(L, round_cast<int>(imageSize.height));
         lua_setfield(L, -2, "imageHeight");
 
         lua_pushlightuserdata(L, const_cast<void*>(static_cast<const void*>(im)));

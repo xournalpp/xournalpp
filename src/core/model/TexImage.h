@@ -37,8 +37,8 @@ public:
     ~TexImage() override;
 
 public:
-    void setWidth(double width);
-    void setHeight(double height);
+    /// Get the size [width, height] of the content, ignoring any resizing done in the app
+    xoj::util::Size<double> getNativeSize() const;
 
     /**
      * Returns the binary data (PDF or PNG (deprecated)).

@@ -25,8 +25,8 @@
 #include "gui/dialog/ExtEdLatexDialog.h"     // for ExtEdLatexDialog
 #include "gui/dialog/IntEdLatexDialog.h"     // for IntEdLatexDialog
 #include "model/Document.h"                  // for Document
-#include "model/Element.h"                   // for Element
 #include "model/Layer.h"                     // for Layer
+#include "model/RectangularElement.h"        // for RectangularElement
 #include "model/TexImage.h"                  // for TexImage
 #include "model/Text.h"                      // for Text
 #include "model/XojPage.h"                   // for XojPage
@@ -274,8 +274,6 @@ void LatexController::insertTexImage() {
     lock.unlock();
 
     this->control->clearSelectionEndText();
-    this->temporaryRender->setOrigin(posx, posy);
-
     if (this->selectedElem) {
         const auto undo = control->getUndoRedoHandler();
         doc->lock();
@@ -284,13 +282,7 @@ void LatexController::insertTexImage() {
 
         if (elementIndex != Element::InvalidIndex) [[likely]] {
             xoj_assert(orig.get() == this->selectedElem);
-            // Set the size: preserve the height and aspect ratio
-            const auto& origBox = this->selectedElem->getSnappedBounds();
-            const auto& nativeSize = this->temporaryRender->getSnappedBounds();
-            this->temporaryRender->setWidth(nativeSize.width != 0 && nativeSize.height != 0 ?
-                                                    nativeSize.width * origBox.height / nativeSize.height :
-                                                    10.);
-            this->temporaryRender->setHeight(origBox.height);
+            this->temporaryRender->setTransformation(this->selectedElem->getTransformation());
 
             auto groupUndoAction = std::make_unique<GroupUndoAction>();
             auto deleteUndoAction = std::make_unique<DeleteUndoAction>(page, false);
@@ -302,10 +294,12 @@ void LatexController::insertTexImage() {
             page->fireElementChanged(selectedElem);
         } else {
             // Fallback as if there was no original TexImage...
+            this->temporaryRender->setTransformation(xoj::util::Matrix::TRANSLATION(posx, posy));
             control->getUndoRedoHandler()->addUndoAction(
                     std::make_unique<InsertUndoAction>(page, layer, this->temporaryRender.get()));
         }
     } else {
+        this->temporaryRender->setTransformation(xoj::util::Matrix::TRANSLATION(posx, posy));
         control->getUndoRedoHandler()->addUndoAction(
                 std::make_unique<InsertUndoAction>(page, layer, this->temporaryRender.get()));
     }
@@ -338,8 +332,10 @@ void LatexController::insertLatex(PageRef page, Control* ctrl, double x, double 
     auto& el = page->getSelectedLayer()->getElements();
     for (auto e = el.rbegin(); e != el.rend(); ++e) {
         if ((*e)->getType() == ELEMENT_TEXIMAGE || (*e)->getType() == ELEMENT_TEXT) {
+            static_assert(std::is_base_of_v<RectangularElement, TexImage> &&
+                          std::is_base_of_v<RectangularElement, Text>);
             if ((*e)->hasBoundingBoxContaining(x, y)) {
-                self->selectedElem = (*e).get();
+                self->selectedElem = static_cast<RectangularElement*>((*e).get());
                 break;
             }
         }

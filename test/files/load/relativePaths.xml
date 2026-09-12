@@ -1,0 +1,17 @@
+<?xml version="1.0" standalone="no"?>
+<xournal creator="xournalpp 1.2.7+dev" fileversion="4">
+<title>Xournal++ document - see https://xournalpp.github.io/</title>
+<page width="612" height="792">
+<background type="pdf" domain="absolute" filename="./././../cjk/测试.pdf" pageno="1"/>
+<layer>
+<text font="Sans" size="12" x="354.45242" y="34.896256" color="#000000ff">Test</text>
+<text font="Sans" size="12" x="355.93136" y="62.01014" color="#000000ff">测试</text>
+<text font="Sans" size="12" x="412.13105" y="52.150546" color="#000000ff">テスト</text>
+<text font="Nimbus Sans" size="27" x="353.34385" y="165.41721" color="#3333ccff">Text çç</text>
+</layer>
+</page>
+<page width="612" height="792">
+<background type="pdf" pageno="2"/>
+<layer/>
+</page>
+</xournal>

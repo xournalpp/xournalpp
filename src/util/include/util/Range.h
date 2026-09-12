@@ -16,6 +16,8 @@
 namespace xoj::util {
 template <typename Float>
 class Rectangle;
+template <typename Float>
+struct Point;
 };
 
 class Range final {
@@ -26,6 +28,7 @@ public:
     explicit Range(const xoj::util::Rectangle<double>& r);
 
     void addPoint(double x, double y);
+    void addPoint(const xoj::util::Point<double>& p);
 
     [[nodiscard]] Range unite(const Range& other) const;
     [[nodiscard]] Range intersect(const Range& other) const;

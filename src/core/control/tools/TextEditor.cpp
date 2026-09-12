@@ -28,6 +28,7 @@
 #include "util/Range.h"
 #include "util/glib_casts.h"  // for wrap_for_once_v
 #include "util/gtk4_helper.h"
+#include "util/matrix/RectangleMultiply.h"
 #include "util/raii/CStringWrapper.h"
 #include "util/safe_casts.h"  // for round_cast, as_unsigned
 #include "view/overlays/TextEditionView.h"
@@ -198,14 +199,10 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
                                          auto* text = self->getTextElement();
                                          const auto zoom = self->viewPool->front().getZoom();
                                          const xoj::util::Point<double> move(offsetX / zoom, offsetY / zoom);
-                                         const auto newOrigin = text->getOrigin() + move;
-                                         const double width = self->currentWrapWidth == Text::NO_WRAP ?
-                                                                      self->getContentBoundingBox().getWidth() :
-                                                                      self->currentWrapWidth;
-                                         if (newOrigin.x > 0 && newOrigin.x + width < self->page->getWidth() &&
-                                             newOrigin.y > 0 &&
-                                             newOrigin.y + self->getContentBoundingBox().getHeight() <
-                                                     self->page->getHeight()) {
+                                         auto newBox = self->previousBoundingBox;
+                                         newBox.translate(move.x, move.y);
+                                         if (newBox.minX > 0 && newBox.maxX < self->page->getWidth() &&
+                                             newBox.minY > 0 && newBox.maxY < self->page->getHeight()) {
                                              // The text stays entirely in the page
                                              text->move(move.x, move.y);
                                              self->repaintEditor(true);
@@ -236,7 +233,7 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
                                          G_CALLBACK(+[](GtkGestureDrag*, gdouble startX, gdouble startY, gpointer p) {
                                              auto* self = static_cast<TextEditor*>(p);
                                              if (self->currentWrapWidth == Text::NO_WRAP) {
-                                                 self->currentWrapWidth = self->getContentBoundingBox().getWidth();
+                                                 self->currentWrapWidth = self->previousBoundingBox.getWidth();
                                              }
                                          }),
                                          this));
@@ -247,19 +244,34 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
                                              // are NOT relative to the starting point, but rather to the last update's
                                              // position.
                                              auto* self = static_cast<TextEditor*>(p);
-                                             if (!self->viewPool->empty()) {
-                                                 // We use the first view as the main view
-                                                 if (double newVal = self->currentWrapWidth +
-                                                                     offsetX / self->viewPool->front().getZoom();
-                                                     newVal > 0 &&
-                                                     newVal < self->page->getWidth() -
-                                                                      self->getTextElement()->getOrigin().x) {
-                                                     // The new width does not overflow out of the page
-                                                     self->currentWrapWidth = newVal;
-                                                     self->layoutStatus = LayoutStatus::NEEDS_PARAMETERS_UPDATE;
-                                                     self->repaintEditor(true);
-                                                 }
+                                             if (self->viewPool->empty()) {
+                                                 // We use the first view as the main view. Return if there is none.
+                                                 return;
                                              }
+                                             auto o = xoj::util::Point<double>(offsetX, offsetY) /
+                                                      self->viewPool->front().getZoom();
+                                             auto wrapVector =
+                                                     self->getTextElement()->getTransformation().applyToVector(
+                                                             {self->currentWrapWidth, 0});
+                                             double len = wrapVector.distance({0, 0});
+                                             /// signed length of the projection of the offset onto the wrap vector
+                                             double ps = (wrapVector.x * o.x + wrapVector.y * o.y) / len;
+                                             if (ps <= -len) {
+                                                 // This means non-positive wrapping width
+                                                 return;
+                                             }
+                                             double ratio = 1. + ps / len;
+                                             auto newWrapPos = wrapVector * ratio + self->getTextElement()->getOrigin();
+                                             if (newWrapPos.x < 0 || newWrapPos.x > self->page->getWidth() ||
+                                                 newWrapPos.y < 0 || newWrapPos.y > self->page->getHeight()) {
+                                                 // The wrapping handle lands out of the page
+                                                 return;
+                                             }
+
+                                             // The move is valid
+                                             self->currentWrapWidth *= ratio;
+                                             self->layoutStatus = LayoutStatus::NEEDS_PARAMETERS_UPDATE;
+                                             self->repaintEditor(true);
                                          }),
                                          this));
         icon->addSignal(G_OBJECT(drag),
@@ -701,18 +713,23 @@ void TextEditor::markPos(double x, double y, bool extendSelection) {
 void TextEditor::mousePressed(double x, double y) {
     this->mouseDown = true;
     // Todo select if SHIFT is pressed
-    const auto& origin = textElement->getOrigin();
-    this->markPos(x - origin.x, y - origin.y, false);
+    auto p = this->textElement->getTransformation().inverse() * xoj::util::Point<double>(x, y);
+    this->markPos(p.x, p.y, false);
 }
 
 void TextEditor::mouseMoved(double x, double y) {
     if (this->mouseDown) {
-        const auto& origin = textElement->getOrigin();
-        this->markPos(x - origin.x, y - origin.y, true);
+        auto p = this->textElement->getTransformation().inverse() * xoj::util::Point<double>(x, y);
+        this->markPos(p.x, p.y, true);
     }
 }
 
 void TextEditor::mouseReleased() { this->mouseDown = false; }
+
+bool TextEditor::isEventInEditor(double x, double y) const {
+    return this->boxes.effectiveBounds.contains(this->textElement->getTransformation().inverse() *
+                                                xoj::util::Point<double>(x, y));
+}
 
 void TextEditor::jumpALine(GtkTextIter* textIter, int count) {
     count += this->virtualCursorPosition.pangoLineNumber;
@@ -782,9 +799,8 @@ void TextEditor::updateCursorBox() {
     if (!viewPool->empty()) {
         // Inform the IM of the cursor location (for word selection popup's location)
         // We use the first view as the main view, as far as the IM is concerned
-        const auto& origin = textElement->getOrigin();
-        auto box = viewPool->front().toWidgetCoordinates(
-                xoj::util::Rectangle<double>(this->cursorBox).translated(origin.x, origin.y));
+        auto box = viewPool->front().toWidgetCoordinates(textElement->getTransformation() *
+                                                         xoj::util::Rectangle<double>(this->cursorBox));
 
         GdkRectangle cursorRect;  // cursor position in window coordinates
         cursorRect.x = static_cast<int>(box.x);
@@ -798,13 +814,12 @@ void TextEditor::updateCursorBox() {
 void TextEditor::updateDraggableIcons() const {
     if (!viewPool->empty()) {
         // We use the first view as the main view
-        Range range = this->getContentBoundingBox();
-        range.minX = textElement->getSnappedBounds().x;
-        auto box = viewPool->front().toWidgetCoordinates(xoj::util::Rectangle<double>(range));
-        auto zoom = viewPool->front().getZoom();
-        double extendIconPos = this->currentWrapWidth == Text::NO_WRAP ? box.width : this->currentWrapWidth * zoom;
-        moveIcon->setPosition({floor_cast<int>(box.x), floor_cast<int>(box.y)});
-        extendIcon->setPosition({ceil_cast<int>(box.x + extendIconPos), floor_cast<int>(box.y)});
+        auto moveIconPos = viewPool->front().toWidgetCoordinates(textElement->getTransformation().shift);
+        auto extendIconPos = viewPool->front().toWidgetCoordinates(
+                textElement->getTransformation() * xoj::util::Point<double>(boxes.theoreticalSize.width, 0));
+
+        moveIcon->setPosition({round_cast<int>(moveIconPos.x), round_cast<int>(moveIconPos.y)});
+        extendIcon->setPosition({round_cast<int>(extendIconPos.x), round_cast<int>(extendIconPos.y)});
     }
 }
 
@@ -1003,8 +1018,8 @@ void TextEditor::bufferPasteDoneCallback(GtkTextBuffer* buffer, GtkClipboard* cl
     te->contentsChanged(true);
     te->repaintEditor();
 
-    if (te->textElement->getWrap() == Text::NO_WRAP && te->getContentBoundingBox().maxX > te->page->getWidth()) {
-        te->textElement->setWrap(te->page->getWidth() - te->getContentBoundingBox().minX);
+    if (te->textElement->getWrap() == Text::NO_WRAP && te->previousBoundingBox.maxX > te->page->getWidth()) {
+        te->textElement->setWrap(te->page->getWidth() - te->previousBoundingBox.minX);
         te->currentWrapWidth = te->textElement->getWrap();
         te->layoutStatus = LayoutStatus::NEEDS_PARAMETERS_UPDATE;
         te->repaintEditor(true);
@@ -1026,9 +1041,7 @@ void TextEditor::blinkCallback(TextEditor* te) {
     auto time = te->cursorVisible ? te->cursorBlinkingTimeOn : te->cursorBlinkingTimeOff;
     te->blinkTimer = g_timeout_add(time, xoj::util::wrap_for_once_v<blinkCallback>, te);
 
-    Range dirtyRange = te->cursorBox;
-    const auto& origin = te->textElement->getOrigin();
-    dirtyRange.translate(origin.x, origin.y);
+    auto dirtyRange = Range(te->textElement->getTransformation() * xoj::util::Rectangle<double>(te->cursorBox));
     te->viewPool->dispatch(xoj::view::TextEditionView::FLAG_DIRTY_REGION, dirtyRange);
 }
 
@@ -1074,13 +1087,15 @@ void TextEditor::setSelectionAttributesToPangoLayout(PangoLayout* pl) const {
     pango_layout_set_attributes(pl, attrlist.get());
 }
 
-auto TextEditor::computeBoundingBox() const -> Range {
+void TextEditor::updateBoxes() {
     /*
      * NB: we cannot rely on Text::calcSize directly, since it would not take the size changes due to the IM
      * preeditString into account.
      */
-    auto boxes = Text::computeBoxesForLayout(getUpToDateLayout(), textElement->getOrigin(), this->currentWrapWidth);
-    return Range(boxes.bounds);
+    this->boxes = Text::computeBoxesForLayout(getUpToDateLayout(), this->currentWrapWidth);
+    auto edBounds = boxes.effectiveBounds;
+    edBounds.width = std::max(edBounds.width, boxes.theoreticalSize.width);
+    this->previousBoundingBox = Range(this->textElement->getTransformation() * edBounds);
 }
 
 auto TextEditor::getUpToDateLayout() const -> PangoLayout* {
@@ -1105,8 +1120,6 @@ auto TextEditor::getUpToDateLayout() const -> PangoLayout* {
 
 auto TextEditor::getCursorBox() const -> const Range& { return this->cursorBox; }
 
-auto TextEditor::getContentBoundingBox() const -> const Range& { return this->previousBoundingBox; }
-
 bool TextEditor::isCursorVisible() const { return cursorVisible; }
 
 auto TextEditor::computeCursorBox() const -> Range {
@@ -1129,7 +1142,7 @@ auto TextEditor::computeCursorBox() const -> Range {
 void TextEditor::repaintEditor(bool sizeChanged) {
     Range dirtyRange(this->previousBoundingBox);
     if (sizeChanged) {
-        this->previousBoundingBox = this->computeBoundingBox();
+        this->updateBoxes();
         dirtyRange = dirtyRange.unite(this->previousBoundingBox);
     }
     this->updateCursorBox();
@@ -1138,12 +1151,10 @@ void TextEditor::repaintEditor(bool sizeChanged) {
 }
 
 void TextEditor::repaintCursorAfterChange() {
-    Range dirtyRange = this->cursorBox;
+    const auto& m = this->textElement->getTransformation();
+    auto dirtyRange = Range(m * xoj::util::Rectangle<double>(this->cursorBox));
     this->updateCursorBox();
-    dirtyRange = dirtyRange.unite(this->cursorBox);
-    const auto& origin = this->textElement->getOrigin();
-
-    dirtyRange.translate(origin.x, origin.y);
+    dirtyRange = dirtyRange.unite(Range(m * xoj::util::Rectangle<double>(this->cursorBox)));
     this->viewPool->dispatch(xoj::view::TextEditionView::FLAG_DIRTY_REGION, dirtyRange);
 }
 
@@ -1232,7 +1243,8 @@ void TextEditor::initializeEditionAt(double x, double y) {
         this->textElement = std::make_unique<Text>();
         this->textElement->setColor(h->getColor());
         this->textElement->setFont(control->getSettings()->getFont());
-        this->textElement->setOrigin(x, y - this->textElement->getBoundingBox().height / 2);
+        this->textElement->setTransformation(
+                xoj::util::Matrix::TRANSLATION(x, y - this->textElement->getBoundingBox().height / 2));
         this->textElement->setAlignment(h->getTextAlignment());
         this->textElement->setJustify(h->getTextJustify());
 
@@ -1265,5 +1277,5 @@ void TextEditor::initializeEditionAt(double x, double y) {
     this->currentWrapWidth = this->textElement->getWrap();
     this->layout = this->textElement->createPangoLayout();
     this->replaceBufferContent(this->textElement->getText());
-    this->previousBoundingBox = this->computeBoundingBox();
+    this->updateBoxes();
 }

@@ -13,6 +13,7 @@
 #include "util/Rectangle.h"       // for Rectangle
 #include "util/Stacktrace.h"      // for Stacktrace
 #include "util/StringUtils.h"
+#include "util/matrix/RectangleMultiply.h"
 #include "util/raii/GObjectSPtr.h"
 #include "util/safe_casts.h"                      // for round_cast
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
@@ -73,7 +74,7 @@ void Text::setAlignment(TextAlignment a) {
     sizeCalculated = false;
 }
 
-Text::Boxes Text::computeBoxesForLayout(PangoLayout* layout, xoj::util::Point<double> origin, double wrapWidth) {
+Text::Boxes Text::computeBoxesForLayout(PangoLayout* layout, double wrapWidth) {
     PangoRectangle box;
     pango_layout_get_extents(layout, nullptr, &box);
 
@@ -81,20 +82,17 @@ Text::Boxes Text::computeBoxesForLayout(PangoLayout* layout, xoj::util::Point<do
 
     Boxes res;
 
-    res.bounds.width = static_cast<double>(box.width) / PANGO_SCALE;
-    res.bounds.height = static_cast<double>(box.height) / PANGO_SCALE;
-    res.bounds.x = origin.x + offset.x;
-    res.bounds.y = origin.y + offset.y;
-
-    res.snap.x = origin.x;
-    res.snap.y = origin.y;
+    res.effectiveBounds.width = static_cast<double>(box.width) / PANGO_SCALE;
+    res.effectiveBounds.height = static_cast<double>(box.height) / PANGO_SCALE;
+    res.effectiveBounds.x = offset.x;
+    res.effectiveBounds.y = offset.y;
 
     if (wrapWidth != NO_WRAP) {
-        res.snap.width = wrapWidth;
+        res.theoreticalSize.width = wrapWidth;
     } else {
-        res.snap.width = res.bounds.width + offset.x;
+        res.theoreticalSize.width = res.effectiveBounds.width + offset.x;
     }
-    res.snap.height = res.bounds.height + offset.y;
+    res.theoreticalSize.height = res.effectiveBounds.height + offset.y;
 
     return res;
 }
@@ -103,10 +101,15 @@ void Text::calcSize() const {
     auto layout = createPangoLayout();
     pango_layout_set_text(layout.get(), this->text.c_str(), static_cast<int>(this->text.length()));
 
-    auto boxes = computeBoxesForLayout(layout.get(), this->getOrigin(), this->wrapWidth);
+    auto boxes = computeBoxesForLayout(layout.get(), this->wrapWidth);
+    this->naturalSize = boxes.theoreticalSize;
+    this->effectiveBounds = boxes.effectiveBounds;
 
-    this->boundingBox = boxes.bounds;
-    this->snappedBounds = boxes.snap;
+    const auto& matrix = this->getTransformation();
+    this->boundingBox = matrix * this->effectiveBounds;
+    this->snappedBounds = matrix * xoj::util::Rectangle<double>{{0, 0}, this->naturalSize};
+
+    this->sizeCalculated = true;
 }
 
 void Text::setInEditing(bool inEditing) { this->inEditing = inEditing; }
@@ -140,30 +143,7 @@ void Text::updatePangoFont(PangoLayout* layout) const {
     pango_font_description_free(desc);
 }
 
-void Text::scale(double x0, double y0, double fx, double fy, double rotation,
-                 bool) {  // line width scaling option is not used
-    // only proportional scale allowed...
-    if (fx != fy) {
-        g_warning("rescale font with fx != fy not supported: %lf / %lf", fx, fy);
-        Stacktrace::printStacktrace();
-    }
-
-    this->snappedBounds.x = (this->snappedBounds.x - x0) * fx + x0;
-    this->snappedBounds.y = (this->snappedBounds.y - y0) * fy + y0;
-
-    double size = this->font.getSize() * fx;
-    this->font.setSize(size);
-
-    if (this->wrapWidth != NO_WRAP) {
-        this->wrapWidth *= fx;
-    }
-
-    sizeCalculated = false;
-}
-
 auto Text::isInEditing() const -> bool { return this->inEditing; }
-
-auto Text::rescaleOnlyAspectRatio() const -> bool { return true; }
 
 void Text::serialize(ObjectOutputStream& out) const {
     out.writeObject("Text");

@@ -139,11 +139,6 @@ public:
     double getRotation() const;
 
     /**
-     * Get if the selection supports being rotated
-     */
-    bool isRotationSupported() const;
-
-    /**
      * Get the source page (where the selection was done)
      */
     PageRef getSourcePage() const;
@@ -392,22 +387,6 @@ private:  // DATA
     double relMousePosY{};
     double relMousePosRotX{};
     double relMousePosRotY{};
-
-    /**
-     * If both scale axes should have the same scale factor, e.g. for Text
-     * (we can only set the font size for text)
-     */
-    bool preserveAspectRatio = false;
-
-    /**
-     * If mirrors are allowed e.g. for strokes
-     */
-    bool supportMirroring = true;
-
-    /**
-     * Support rotation
-     */
-    bool supportRotation = true;
 
     /**
      * Size of the editing handles

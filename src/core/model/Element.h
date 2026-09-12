@@ -78,10 +78,6 @@ public:
     bool hasBoundingBoxContaining(double x, double y) const;
 
     virtual bool isInSelection(ShapeContainer* container) const = 0;
-
-    virtual bool rescaleOnlyAspectRatio() const;
-    virtual bool rescaleWithMirror() const;
-
     /**
      * Take 1:1 copy of this element
      */
@@ -105,14 +101,10 @@ protected:
     mutable xoj::util::Rectangle<double> snappedBounds{};
 
 private:
-    /**
-     * Type of this element
-     */
+    /// Type of this element
     ElementType type;
 
-    /**
-     * The color in RGB format
-     */
+    /// The color in RGB format
     Color color{0U};
 };
 
