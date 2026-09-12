@@ -5,7 +5,7 @@
 
 #include "util/Assert.h"
 #include "util/glib_casts.h"
-#include "util/gtk4_helper.h"
+#include "util/safe_casts.h"
 
 #include "MainWindow.h"  // for MainWindow
 #include "XournalView.h"
@@ -99,8 +99,10 @@ auto FlyingClickableIcon::getOverlayPosition(GtkOverlay* overlay, GtkWidget* wid
     // Then translate into Overlay coordinates
     GtkWidget* scrolledWindow =
             gtk_widget_get_ancestor(self->mainWindow->getXournal()->getWidget(), GTK_TYPE_SCROLLED_WINDOW);
-    gtk_widget_translate_coordinates(scrolledWindow, GTK_WIDGET(overlay), allocation->x, allocation->y, &allocation->x,
-                                     &allocation->y);
+    double x, y;
+    gtk_widget_translate_coordinates(scrolledWindow, GTK_WIDGET(overlay), allocation->x, allocation->y, &x, &y);
+    allocation->x = round_cast<int>(x);
+    allocation->y = round_cast<int>(y);
 
     return true;
 }

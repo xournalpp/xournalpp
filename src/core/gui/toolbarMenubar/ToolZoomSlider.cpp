@@ -22,8 +22,8 @@ constexpr auto SLIDER_RANGE =
         AbstractSliderItem::SliderRange{DEFAULT_ZOOM_MIN, DEFAULT_ZOOM_MAX, FINE_STEP_COUNT, COARSE_STEP_COUNT};
 
 ToolZoomSlider::ToolZoomSlider(std::string id, ZoomControl* zoom, IconNameHelper iconNameHelper, ActionDatabase& db):
-        AbstractSliderItem{std::move(id), Category::NAVIGATION, SLIDER_RANGE, db.getAction(Action::ZOOM)},
-        iconName(iconNameHelper.iconName("zoom-slider")),
+        AbstractSliderItem{std::move(id), Category::NAVIGATION, SLIDER_RANGE, db.getAction(Action::ZOOM),
+                           iconNameHelper.iconName("zoom-slider")},
         zoomCtrl(zoom) {}
 
 auto ToolZoomSlider::formatSliderValue(double value) -> std::string {
@@ -33,45 +33,52 @@ auto ToolZoomSlider::formatSliderValue(double value) -> std::string {
     return out.str();
 }
 
-auto ToolZoomSlider::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
-    auto item = SliderItemCreationHelper<ToolZoomSlider>::createItem(this, horizontal);
+auto ToolZoomSlider::createItem(ToolbarSide side) -> Widgetry {
+    auto makeOneScale = [this](ToolbarSide side) {
+        auto item = SliderItemCreationHelper<ToolZoomSlider>::createItem(this, side);
 
-    class Listener: public ZoomListener {
-    public:
-        Listener(GtkScale* slider, ZoomControl* zoomCtrl): slider(slider), zoomCtrl(zoomCtrl) {
-            zoomCtrl->addZoomListener(this);
-        }
-        ~Listener() override { zoomCtrl->removeZoomListener(this); }
-        void zoomChanged() override {}  // No need to do anything here. Handled by the GAction
-        void zoomRangeValuesChanged() override {
-            gtk_scale_clear_marks(slider);
-            auto position = gtk_orientable_get_orientation(GTK_ORIENTABLE(slider)) == GTK_ORIENTATION_HORIZONTAL ?
-                                    GTK_POS_BOTTOM :
-                                    GTK_POS_RIGHT;
-            gtk_scale_add_mark(slider, scaleFunction(1.0), position, nullptr);
-            gtk_scale_add_mark(slider, scaleFunction(zoomCtrl->getZoomFitValue() / zoomCtrl->getZoom100Value()),
-                               position, nullptr);
-        }
+        class Listener: public ZoomListener {
+        public:
+            Listener(GtkScale* slider, ZoomControl* zoomCtrl): slider(slider), zoomCtrl(zoomCtrl) {
+                zoomCtrl->addZoomListener(this);
+            }
+            ~Listener() override { zoomCtrl->removeZoomListener(this); }
+            void zoomChanged() override {}  // No need to do anything here. Handled by the GAction
+            void zoomRangeValuesChanged() override {
+                gtk_scale_clear_marks(slider);
+                auto position = gtk_orientable_get_orientation(GTK_ORIENTABLE(slider)) == GTK_ORIENTATION_HORIZONTAL ?
+                                        GTK_POS_TOP :
+                                        GTK_POS_RIGHT;
+                gtk_scale_add_mark(slider, scaleFunction(1.0), position, nullptr);
+                gtk_scale_add_mark(slider, scaleFunction(zoomCtrl->getZoomFitValue() / zoomCtrl->getZoom100Value()),
+                                   position, nullptr);
+            }
 
-        GtkScale* slider;  ///< Parent to this data
-        ZoomControl* zoomCtrl;
+            GtkScale* slider;  ///< Parent to this data
+            ZoomControl* zoomCtrl;
+        };
+
+        auto data = std::make_unique<Listener>(GTK_SCALE(item.get()), zoomCtrl);
+        data->zoomRangeValuesChanged();  // Set up the marks
+
+        // Destroy *data if the widget is destroyed
+        g_object_weak_ref(
+                G_OBJECT(item.get()), +[](gpointer d, GObject*) { delete static_cast<Listener*>(d); }, data.release());
+        return item;
     };
 
-    auto data = std::make_unique<Listener>(GTK_SCALE(item.get()), zoomCtrl);
-    data->zoomRangeValuesChanged();  // Set up the marks
+    auto proxyScale = makeOneScale(ToolbarSide::BOTTOM);
+    gtk_widget_add_css_class(proxyScale.get(), "model");
+    GtkWidget* proxy = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+    gtk_box_append(GTK_BOX(proxy), gtk_label_new(_("Zoom")));
+    gtk_box_append(GTK_BOX(proxy), proxyScale.get());
 
-    // Destroy *data if the widget is destroyed
-    g_object_weak_ref(
-            G_OBJECT(item.get()), +[](gpointer d, GObject*) { delete static_cast<Listener*>(d); }, data.release());
-
-    return item;
+    return {makeOneScale(side), xoj::util::WidgetSPtr(proxy, xoj::util::adopt)};
 }
 
 auto ToolZoomSlider::getToolDisplayName() const -> std::string { return _("Zoom Slider"); }
 
-auto ToolZoomSlider::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name(iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
-}
+auto ToolZoomSlider::getNewToolIcon() const -> GtkWidget* { return gtk_image_new_from_icon_name(iconName.c_str()); }
 
 auto ToolZoomSlider::scaleFunction(double x) -> double { return std::log(x - SCALE_LOG_OFFSET); }
 

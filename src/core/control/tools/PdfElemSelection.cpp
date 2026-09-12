@@ -61,8 +61,7 @@ bool PdfElemSelection::finalizeSelection(XojPdfPageSelectionStyle style) {
     this->selectedTextRects = std::move(selection.rects);
     this->selectedText = this->pdf->selectText(this->bounds, style);
     // Informs the windowing system of the selection -- i.e. for accessibility purposes
-    gtk_clipboard_set_text(gtk_clipboard_get(GDK_SELECTION_PRIMARY), this->selectedText.c_str(),
-                           strict_cast<gint>(this->selectedText.length()));
+    gdk_clipboard_set_text(gdk_display_get_primary_clipboard(gdk_display_get_default()), this->selectedText.c_str());
     return !this->selectedTextRects.empty();
 }
 

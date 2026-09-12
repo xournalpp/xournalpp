@@ -35,7 +35,7 @@ public:
 
 public:
     /// Show the toolbox at the provided coordinates (in widget-coordinates).
-    void show(int x, int y);
+    void show(double x, double y);
 
     /**
      * showForConfiguration
@@ -59,7 +59,7 @@ private:
     /**
      * Callback to hide floating Toolbar when mouse leaves it
      */
-    static bool handleLeaveFloatingToolbox(GtkWidget* floatingToolbox, GdkEvent* event, FloatingToolbox* self);
+    static void handleLeaveFloatingToolbox(GtkEventControllerMotion* ectrl, FloatingToolbox* self);
 
     /**
      * Show the Floating Toolbox
@@ -86,7 +86,7 @@ private:
     /**
      * Communicating with getOverlayPosition callback
      * */
-    int floatingToolboxX = 0;
-    int floatingToolboxY = 0;
+    double floatingToolboxX = 0;
+    double floatingToolboxY = 0;
     FloatingToolBoxState floatingToolboxState = recalcSize;
 };

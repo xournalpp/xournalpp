@@ -15,9 +15,9 @@
 #include <string>  // for string
 
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
-#include <gdk/gdk.h>                // for GdkAtom, GdkEvent
+#include <gdk/gdk.h>                // for GdkEvent, GdkClipboard
 #include <glib.h>                   // for gchar, gulong
-#include <gtk/gtk.h>                // for GtkClipboard, GtkSelectionData
+#include <gtk/gtk.h>                // for GtkWidget
 
 class ObjectInputStream;
 class EditSelection;
@@ -27,7 +27,7 @@ public:
     virtual void clipboardCutCopyEnabled(bool enabled) = 0;
     virtual void clipboardPasteEnabled(bool enabled) = 0;
     virtual void clipboardPasteText(std::string text) = 0;
-    virtual void clipboardPasteImage(GdkPixbuf* img) = 0;
+    virtual void clipboardPasteImage(GdkPixbuf* img) = 0;  ///< Data is owned by the caller
     virtual void clipboardPasteXournal(ObjectInputStream& in) = 0;
     virtual void deleteSelection() = 0;
 
@@ -49,25 +49,16 @@ public:
     void setCopyCutEnabled(bool enabled);
 
 private:
-    static void ownerChangedCallback(GtkClipboard* clip, GdkEvent* event, ClipboardHandler* handler);
-    void clipboardUpdated(GdkAtom atom);
-    static void receivedClipboardContents(GtkClipboard* clipboard, GtkSelectionData* selectionData,
-                                          ClipboardHandler* handler);
-
-    static void pasteClipboardContents(GtkClipboard* clipboard, GtkSelectionData* selectionData,
-                                       ClipboardHandler* handler);
-    static void pasteClipboardImage(GtkClipboard* clipboard, GdkPixbuf* pixbuf, ClipboardHandler* handler);
-
-    static void pasteClipboardText(GtkClipboard* clipboard, const gchar* text, ClipboardHandler* handler);
+    void checkFormats();
 
 private:
     ClipboardListener* listener = nullptr;
-    GtkClipboard* clipboard = nullptr;
-    gulong handlerId = std::numeric_limits<gulong>::max();
+    GdkClipboard* clipboard = nullptr;
+    gulong handlerId = 0;
 
     EditSelection* selection = nullptr;
 
     bool containsText = false;
-    bool containsXournal = false;
+    bool containsXopp = false;
     bool containsImage = false;
 };

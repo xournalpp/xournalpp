@@ -7,7 +7,6 @@
 #include "util/PopupWindowWrapper.h"  // for PopupWindowWrapper
 #include "util/Util.h"
 #include "util/XojMsgBox.h"
-#include "util/gtk4_helper.h"         // for gtk_file_chooser_set_current_folder
 #include "util/i18n.h"                // for _
 #include "util/raii/GObjectSPtr.h"    // for GObjectSPtr
 #include "util/raii/GtkWindowUPtr.h"  // for GtkWindowUPtr

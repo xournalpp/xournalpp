@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkAdjustment" id="adjustment1">
+    <property name="upper">100</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">1</property>
+  </object>
+  <object class="GtkImage" id="iconCancel">
+    <property name="icon-name">dialog-cancel</property>
+  </object>
+  <object class="GtkImage" id="iconOk">
+    <property name="icon-name">dialog-ok</property>
+  </object>
+  <object class="GtkWindow" id="pluginDialog">
+    <property name="title" translatable="1">Plugins</property>
+    <property name="modal">1</property>
+    <property name="destroy-with-parent">1</property>
+    <property name="child">
+      <object class="GtkBox" id="dialog-main-box">
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="vexpand">1</property>
+            <property name="focusable">1</property>
+            <property name="min-content-width">400</property>
+            <property name="min-content-height">300</property>
+            <property name="child">
+              <object class="GtkViewport">
+                <property name="child">
+                  <object class="GtkBox" id="pluginBox">
+                    <property name="name">pluginBox</property>
+                    <property name="orientation">vertical</property>
+                  </object>
+                </property>
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="margin-top">5</property>
+            <property name="margin-bottom">5</property>
+            <property name="wrap">true</property>
+            <property name="label" translatable="1">Plugin changes are only applied after Xournal++ is restarted</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="halign">end</property>
+            <property name="spacing">4</property>
+            <property name="homogeneous">1</property>
+            <child>
+              <object class="GtkButton" id="btCancel">
+                <property name="hexpand">1</property>
+                <property name="label" translatable="1">Cancel</property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <child>
+                  <object class='GtkShortcutController'>
+                    <property name='scope'>managed</property>
+                    <child>
+                      <object class='GtkShortcut'>
+                        <property name='trigger'>Escape</property>
+                        <property name='action'>activate</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="btOk">
+                <property name="hexpand">1</property>
+                <property name="label" translatable="1">Ok</property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+</interface>

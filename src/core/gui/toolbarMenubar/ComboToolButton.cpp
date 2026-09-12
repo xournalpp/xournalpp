@@ -6,18 +6,14 @@
 
 #include <gtk/gtk.h>
 
-#include "util/GtkUtil.h"  // for setToggleButtonUnreleasable
 #include "util/glib_casts.h"
-#include "util/gtk4_helper.h"  // for gtk_popover_new
 
 /// Returns a floating ref
 static GtkWidget* createEmptyButton(GSimpleAction* a, const ComboToolButton::Entry& e) {
     GtkWidget* btn = gtk_toggle_button_new();
     gtk_actionable_set_action_name(GTK_ACTIONABLE(btn), (std::string("win.") + g_action_get_name(G_ACTION(a))).c_str());
     gtk_actionable_set_action_target_value(GTK_ACTIONABLE(btn), e.target.get());
-    xoj::util::gtk::setToggleButtonUnreleasable(GTK_TOGGLE_BUTTON(btn));
     gtk_widget_set_tooltip_text(btn, e.name.c_str());
-    gtk_widget_set_can_focus(btn, false);  // todo(gtk4) not necessary anymore
     return btn;
 }
 /// Returns a floating ref
@@ -25,7 +21,7 @@ static GtkWidget* createPopoverEntry(GSimpleAction* a, const ComboToolButton::En
     GtkWidget* entry = createEmptyButton(a, e);
 
     GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6));
-    gtk_box_append(box, gtk_image_new_from_icon_name(e.icon.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR));
+    gtk_box_append(box, gtk_image_new_from_icon_name(e.icon.c_str()));
     gtk_box_append(box, gtk_label_new(e.name.c_str()));
     gtk_button_set_child(GTK_BUTTON(entry), GTK_WIDGET(box));
 
@@ -34,7 +30,7 @@ static GtkWidget* createPopoverEntry(GSimpleAction* a, const ComboToolButton::En
 
 ComboToolButton::ComboToolButton(std::string id, Category cat, std::string iconName, std::string description,
                                  Entries entries, ActionRef gAction):
-        AbstractToolItem(std::move(id), cat),
+        ItemWithNamedIcon(std::move(id), cat),
         entries(std::move(entries)),
         gAction(std::move(gAction)),
         iconName(std::move(iconName)),
@@ -61,8 +57,7 @@ static void setProminentIconCallback(GObject* a, GParamSpec*, ComboToolInstanceD
     }
 };
 
-auto ComboToolButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
-
+auto ComboToolButton::createItem(ToolbarSide side) -> Widgetry {
     auto data = std::make_unique<ComboToolInstanceData>();
     data->entries = &this->entries;
     data->action = G_ACTION(this->gAction.get());
@@ -70,6 +65,9 @@ auto ComboToolButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
     {  // Create popover
         data->popover = GTK_POPOVER(gtk_popover_new());
         gtk_widget_add_css_class(GTK_WIDGET(data->popover), "toolbar");
+        gtk_popover_set_has_arrow(data->popover, false);
+        gtk_widget_set_halign(GTK_WIDGET(data->popover), GTK_ALIGN_START);
+        gtk_widget_set_valign(GTK_WIDGET(data->popover), GTK_ALIGN_START);
 
         GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_VERTICAL, 0));
         gtk_popover_set_child(data->popover, GTK_WIDGET(box));
@@ -77,8 +75,6 @@ auto ComboToolButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
         for (const Entry& t: this->entries) {
             gtk_box_append(box, createPopoverEntry(gAction.get(), t));
         }
-
-        gtk_widget_show_all(GTK_WIDGET(box));
     }
 
     {                                      // Create prominent button
@@ -89,16 +85,13 @@ auto ComboToolButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
 
     // Create item
     GtkMenuButton* menubutton = GTK_MENU_BUTTON(gtk_menu_button_new());
-    gtk_widget_set_can_focus(GTK_WIDGET(menubutton), false);  // todo(gtk4) not necessary anymore
     gtk_menu_button_set_popover(menubutton, GTK_WIDGET(data->popover));
-    gtk_menu_button_set_direction(menubutton,
-                                  horizontal ? GTK_ARROW_DOWN : GTK_ARROW_RIGHT);  // TODO: fix directions
+    setMenuButtonDirection(menubutton, side);
+    gtk_menu_button_set_always_show_arrow(menubutton, true);
 
-    GtkBox* box = GTK_BOX(gtk_box_new(horizontal ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL, 0));
+    GtkBox* box = GTK_BOX(gtk_box_new(to_Orientation(side), 0));
     gtk_box_append(box, GTK_WIDGET(data->btn));
     gtk_box_append(box, GTK_WIDGET(menubutton));
-
-    auto item = xoj::util::WidgetSPtr(GTK_WIDGET(box), xoj::util::adopt);
 
     // Set up the prominent button according to the action state
     setProminentIconCallback(G_OBJECT(gAction.get()), nullptr, data.get());
@@ -108,7 +101,7 @@ auto ComboToolButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
 
     // Disconnect the signal and destroy *data if the widget is destroyed
     g_object_weak_ref(
-            G_OBJECT(item.get()),
+            G_OBJECT(box),
             +[](gpointer d, GObject* item) {
                 auto* data = static_cast<ComboToolInstanceData*>(d);
                 g_signal_handlers_disconnect_by_data(data->action, d);
@@ -116,11 +109,9 @@ auto ComboToolButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
             },
             data.release());
 
-    return item;
+    return {xoj::util::WidgetSPtr(GTK_WIDGET(box), xoj::util::adopt), nullptr};
 }
 
 auto ComboToolButton::getToolDisplayName() const -> std::string { return this->description; }
 
-auto ComboToolButton::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name(iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
-}
+auto ComboToolButton::getIconName() const -> const char* { return iconName.c_str(); }

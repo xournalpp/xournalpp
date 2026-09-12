@@ -9,11 +9,10 @@
 #include "control/settings/SettingsEnums.h"  // for InputDeviceTypeOption
 #include "gui/Builder.h"                     // for Builder
 #include "util/Assert.h"                     // for xoj_assert
-#include "util/gtk4_helper.h"                // for gtk_box_append
 
 class GladeSearchpath;
 
-constexpr auto UI_FILE = "settingsDeviceClassConfig.glade";
+constexpr auto UI_FILE = "settingsDeviceClassConfig.ui";
 constexpr auto UI_WIDGET_NAME = "deviceClassBox";
 
 DeviceClassConfigGui::DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, GtkBox* box, Settings* settings,

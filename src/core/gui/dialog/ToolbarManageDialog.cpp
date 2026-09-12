@@ -14,7 +14,7 @@
 
 class GladeSearchpath;
 
-constexpr auto UI_FILE = "toolbarManageDialog.glade";
+constexpr auto UI_FILE = "toolbarManageDialog.ui";
 constexpr auto UI_DIALOG_NAME = "manageToolbarsDialog";
 
 enum { COLUMN_STRING, COLUMN_BOLD, COLUMN_POINTER, COLUMN_EDITABLE, N_COLUMNS };
