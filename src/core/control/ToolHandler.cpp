@@ -598,6 +598,13 @@ bool ToolHandler::pointActiveToolToButtonTool(Button button) {
     return true;
 }
 
+bool ToolHandler::pointActiveToolToToolType(ToolType type) {
+    if (this->activeTool->type == type)
+        return false;
+    this->activeTool = &getTool(type);
+    return true;
+}
+
 bool ToolHandler::pointActiveToolToToolbarTool() {
     if (this->activeTool == this->toolbarSelectedTool)
         return false;
