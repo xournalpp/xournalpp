@@ -14,7 +14,7 @@
 #include <string>  // for string
 
 
-enum class PageTypeFormat { Plain, Ruled, Lined, Staves, Graph, Dotted, IsoDotted, IsoGraph, Pdf, Image };
+enum class PageTypeFormat { Plain, Ruled, Lined, Staves, Graph, Dotted, IsoDotted, IsoGraph, LinedGraph, Pdf, Image };
 
 class PageType {
 public:
