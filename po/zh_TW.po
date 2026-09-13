@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-30 09:09+0000\n"
-"PO-Revision-Date: 2026-09-06 04:28\n"
+"POT-Creation-Date: 2026-09-07 17:08+0000\n"
+"PO-Revision-Date: 2026-09-13 04:29\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -693,7 +693,7 @@ msgid "Send to back"
 msgstr "置於底層"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
-#: ../src/core/model/Image.cpp:154 ../src/core/model/Image.cpp:158
+#: ../src/core/model/Image.cpp:150 ../src/core/model/Image.cpp:154
 msgid "Failed to load image"
 msgstr "無法載入圖片"
 
@@ -1919,15 +1919,15 @@ msgstr "拷貝"
 msgid "Document not loaded! ({1}), {2}"
 msgstr "文檔未加載！({1}), {2}"
 
-#: ../src/core/model/Image.cpp:154 ../src/core/model/Image.cpp:164
+#: ../src/core/model/Image.cpp:150 ../src/core/model/Image.cpp:160
 msgid "Error: "
 msgstr "錯誤： "
 
-#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
+#: ../src/core/model/Image.cpp:154 ../src/core/model/Image.cpp:164
 msgid "Unrecoverable error"
 msgstr "無法復原的錯誤"
 
-#: ../src/core/model/Image.cpp:164 ../src/core/model/Image.cpp:168
+#: ../src/core/model/Image.cpp:160 ../src/core/model/Image.cpp:164
 msgid "Failed to close image stream"
 msgstr "無法關閉影像串流"
 
