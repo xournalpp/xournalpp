@@ -11,7 +11,6 @@
 #include <utility>      // for move
 #include <variant>
 
-#include <config-paths.h>  // for PROJECT_INSTALL_DIR
 #include <glib.h>          // for gchar, g_free, g_filename_to_uri
 
 #include "util/PlaceholderString.h"  // for PlaceholderString
@@ -509,11 +508,6 @@ auto Util::getLocalePath() -> fs::path {
 #endif
 
     return getDataPath().parent_path() / "locale";
-}
-
-auto Util::getInstallUiPath() -> fs::path {
-    fs::path p = PROJECT_INSTALL_DIR;
-    return p / "share" / PROJECT_NAME / "ui";
 }
 
 auto Util::getBuiltInPaletteDirectoryPath() -> fs::path { return getDataPath() / "palettes"; }

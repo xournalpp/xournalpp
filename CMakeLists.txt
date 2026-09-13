@@ -86,8 +86,6 @@ configure_file(
 
 find_package(PkgConfig REQUIRED)
 
-set(PROJECT_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}")
-
 # Git repo info
 include(GitRepo)
 
@@ -351,12 +349,6 @@ configure_file(
 configure_file(
         src/config-git.h.in
         src/config-git.h
-        ESCAPE_QUOTES @ONLY
-)
-
-configure_file(
-        src/config-paths.h.in
-        src/config-paths.h
         ESCAPE_QUOTES @ONLY
 )
 
