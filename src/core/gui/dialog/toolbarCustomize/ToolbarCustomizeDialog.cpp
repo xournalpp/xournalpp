@@ -54,7 +54,7 @@ constexpr auto UI_DIALOG_NAME = "DialogCustomizeToolbar";
 
 ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath, MainWindow* win,
                                                ToolbarDragDropHandler* handler):
-        itemData(buildToolDataVector(win->getToolMenuHandler()->getToolItems())),
+        itemData(buildToolDataVector(win->getToolMenuHandler()->getToolFactories())),
         colorItemData(buildColorDataVector(handler->getControl()->getPalette())),
         palette(handler->getControl()->getPalette()) {
     Builder builder(gladeSearchPath, UI_FILE);
