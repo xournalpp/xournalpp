@@ -992,8 +992,6 @@ void Settings::save() {
     xmlNodePtr root = nullptr;
     xmlNodePtr xmlNode = nullptr;
 
-    xmlIndentTreeOutput = true;
-
     doc = xmlNewDoc(reinterpret_cast<const xmlChar*>("1.0"));
     if (doc == nullptr) {
         return;
@@ -1252,7 +1250,7 @@ void Settings::save() {
         saveData(root, p.first, p.second);
     }
 
-    xmlSaveFormatFileEnc(char_cast(filepath.u8string().c_str()), doc, "UTF-8", 1);
+    xmlSaveFormatFileEnc(char_cast(filepath.u8string().c_str()), doc, "UTF-8", true);
     xmlFreeDoc(doc);
 }
 
