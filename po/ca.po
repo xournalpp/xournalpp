@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-05 07:48+0000\n"
-"PO-Revision-Date: 2026-08-09 04:42\n"
+"POT-Creation-Date: 2026-09-07 17:08+0000\n"
+"PO-Revision-Date: 2026-09-13 04:29\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -693,7 +693,7 @@ msgid "Send to back"
 msgstr "Envia al fons"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
-#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:162
+#: ../src/core/model/Image.cpp:150 ../src/core/model/Image.cpp:154
 msgid "Failed to load image"
 msgstr "No s'ha pogut carregar la imatge."
 
@@ -785,11 +785,11 @@ msgstr "El document està danyat (al fitxer no s'ha trobat cap pàgina)."
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "El fitxer temporal sol·licitat per a l'adjunt {1} no s'ha pogut trobar."
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:292
+#: ../src/core/control/xojfile/SaveHandler.cpp:291
 msgid "Could not write background \"{1}\", {2}"
 msgstr "No s'ha pogut escriure el fons «{1}», {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:399
+#: ../src/core/control/xojfile/SaveHandler.cpp:398
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "No s'ha pogut escriure el fons «{1}». Es continua de totes maneres."
 
@@ -1739,19 +1739,19 @@ msgstr "Reprodueix un objecte"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 msgid "Justify text"
-msgstr ""
+msgstr "Justifica el text"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:448
 msgid "Align text to the left"
-msgstr ""
+msgstr "Alinea el text a l'esquerra"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:450
 msgid "Center text"
-msgstr ""
+msgstr "Centra el text"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:452
 msgid "Align text to the right"
-msgstr ""
+msgstr "Alinea el text a la dreta"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:455
 msgid "Record Audio / Stop Recording"
@@ -1919,15 +1919,15 @@ msgstr "Copia"
 msgid "Document not loaded! ({1}), {2}"
 msgstr "El document no s'ha carregat! ({1}), {2}"
 
-#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
+#: ../src/core/model/Image.cpp:150 ../src/core/model/Image.cpp:160
 msgid "Error: "
 msgstr "Error: "
 
-#: ../src/core/model/Image.cpp:162 ../src/core/model/Image.cpp:172
+#: ../src/core/model/Image.cpp:154 ../src/core/model/Image.cpp:164
 msgid "Unrecoverable error"
 msgstr "Error sense recuperació possible"
 
-#: ../src/core/model/Image.cpp:168 ../src/core/model/Image.cpp:172
+#: ../src/core/model/Image.cpp:160 ../src/core/model/Image.cpp:164
 msgid "Failed to close image stream"
 msgstr "No s'ha pogut tancar el flux de la imatge."
 
