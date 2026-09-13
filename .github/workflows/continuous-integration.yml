@@ -126,8 +126,6 @@ jobs:
         # Todo: Port this to MacOS and Windows
         run: |
           sudo apt install xvfb
-          cmake .. -DCMAKE_INSTALL_PREFIX=install
-          cmake --build . --target install
           cmake --build . --target test-gtk-integration
           CI=true xvfb-run -a ./test/test-gtk-integration
         working-directory: ${{github.workspace}}/build
