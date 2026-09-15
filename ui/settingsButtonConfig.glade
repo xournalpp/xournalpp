@@ -63,7 +63,7 @@
       </packing>
     </child>
     <child>
-      <!-- n-columns=3 n-rows=2 -->
+      <!-- n-columns=4 n-rows=3 -->
       <object class="GtkGrid" id="grid2">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
@@ -92,14 +92,27 @@
           </packing>
         </child>
         <child>
+          <object class="GtkComboBoxText" id="cbColor">
+            <property name="name">cbColor</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="hexpand">True</property>
+          </object>
+          <packing>
+            <property name="left-attach">2</property>
+            <property name="top-attach">0</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkColorButton" id="colorButton">
             <property name="name">colorButton</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <property name="hexpand">False</property>
           </object>
           <packing>
-            <property name="left-attach">2</property>
+            <property name="left-attach">3</property>
             <property name="top-attach">0</property>
           </packing>
         </child>

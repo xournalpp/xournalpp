@@ -812,6 +812,9 @@ void Settings::loadButtonConfig() {
                 if (xoj::tool::hasCapability(type, TOOL_CAP_COLOR)) {
                     if (int iColor; e.getInt("color", iColor)) {
                         cfg->color = Color(as_unsigned(iColor));
+                    } else {
+                        // If not specified: do not change
+                        cfg->color = std::nullopt;
                     }
                 }
             }
@@ -957,8 +960,8 @@ void Settings::saveButtonConfig() {
                 e.setString("size", toolSizeToString(cfg->size).data());
             }
 
-            if (xoj::tool::hasCapability(type, TOOL_CAP_COLOR)) {
-                e.setIntHex("color", int32_t(uint32_t(cfg->color)));
+            if (xoj::tool::hasCapability(type, TOOL_CAP_COLOR) && cfg->color) {
+                e.setIntHex("color", int32_t(uint32_t(*cfg->color)));
             }
         }
 
