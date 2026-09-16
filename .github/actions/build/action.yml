@@ -33,7 +33,7 @@ runs:
     run: |
       meson setup build -Dbuildtype=${{ inputs.build_type }} ${{ inputs.meson_flags }} ${{ inputs.extra_meson_flags }}
       # Make sure pot is up to date with sources
-      meson compile pot -C build
+      meson compile xournalpp-pot -C build
       meson compile translations -C build
       # Build Xournal++
       meson compile -C build ${{ inputs.meson_targets }}
