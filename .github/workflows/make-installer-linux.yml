@@ -82,7 +82,7 @@ jobs:
         run: |
           mkdir -p build/packages
           # Append our extra flags to the debian/rules file
-          sed -i 's/\(\tdh_auto_configure.*-DENABLE_CPPTRACE=\)false\(.*\)$/\1true \2 ${{ inputs.extra_meson_flags }}/' debian/rules
+          sed -i 's/\(\tdh_auto_configure.*-DENABLE_CPPTRACE=\)false\(.*\)$/\1true -DDOWNLOAD_CPPTRACE=true \2 --wrap-mode=default ${{ inputs.extra_meson_flags }}/' debian/rules
           DEB_BUILD_OPTIONS="nostrip" dpkg-buildpackage -b
           PACKAGE_FILE=$(find ../xournalpp_*.deb -printf "%f\n" | head -n 1)
           mv "../$PACKAGE_FILE" build/packages/
