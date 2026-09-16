@@ -14,7 +14,7 @@
 #include "ToolbarSelectionSubmenu.h"
 #include "config-features.h"  // for ENABLE_PLUGINS
 
-constexpr auto MENU_XML_FILE = "mainmenubar.xml";
+constexpr auto MENU_XML_FILE = "mainmenubar.ui";
 constexpr auto MENU_ID = "menubar";
 constexpr auto UNDO_REDO_SECTION_ID = "sectionUndoRedo";
 

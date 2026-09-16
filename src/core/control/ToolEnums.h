@@ -63,7 +63,7 @@ static constexpr std::string_view drawingTypeToString(DrawingType type) {
 }
 DrawingType drawingTypeFromString(const std::string& type);
 
-// The numbers must agree with the action's targets in ui/mainmenubar.xml
+// The numbers must agree with the action's targets in ui/mainmenubar.ui
 enum ToolType {
     TOOL_NONE = 0,
 
