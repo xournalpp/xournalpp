@@ -4,7 +4,7 @@ project(
     'cpp',
     'c',
     version: '1.3.7+dev',
-    meson_version: '>= 1.10.0',
+    meson_version: '>= 0.61.2',
     default_options: [
         'default_library=static',
         'cpp_std=c++20',
