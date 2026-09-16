@@ -10,11 +10,13 @@
  */
 
 
+#include <cctype>
 #include <filesystem>
 
 #include <gtest/gtest.h>
 
 #include "util/PathUtil.h"
+#include "util/StringUtils.h"
 #include "util/raii/CStringWrapper.h"
 
 #include "filesystem.h"
@@ -222,3 +224,57 @@ TEST(UtilPath, pathGFilenameConvertion) {
     test(u8"foo/µbar/Ñ/ë€ds测试q.pdf");
     test(u8"/foo/µbar/Ñ/ë€ds测试q.pdf");
 }
+
+#ifdef _WIN32
+
+TEST(UtilPath, stdFsAbsolute) {
+    EXPECT_EQ(fs::absolute("C:\\Windows\\System32"), "C:\\Windows\\System32");
+    EXPECT_EQ(fs::absolute("\\\\server\\some\\path"), "\\\\server\\some\\path");
+}
+
+TEST(UtilPath, stdFsIsAbsolute) {
+    EXPECT_TRUE(fs::path("C:\\Windows\\System32").is_absolute());
+    EXPECT_FALSE(fs::path("C:\\Windows\\System32").is_relative());
+
+#ifdef XOURNALPP_WRAP_STD_FS_ABSOLUTE
+    bool hasCorrectImpl = false;
+#else
+    bool hasCorrectImpl = true;
+#endif
+
+    EXPECT_EQ(fs::path("\\\\server\\some\\path").is_absolute(), hasCorrectImpl);
+    EXPECT_EQ(fs::path("\\\\server\\some\\path").is_relative(), !hasCorrectImpl);
+
+    EXPECT_EQ(fs::path("\\\\server\\some\\path\\..\\other").is_absolute(), hasCorrectImpl);
+    EXPECT_EQ(fs::path("\\\\server\\some\\path\\..\\other").is_relative(), !hasCorrectImpl);
+
+    // too many slashes
+    EXPECT_FALSE(fs::path("\\\\\\server\\some\\path").is_absolute());
+    EXPECT_TRUE(fs::path("\\\\\\server\\some\\path").is_relative());
+
+    // too few slashes
+    EXPECT_FALSE(fs::path("\\server\\some\\path").is_absolute());
+    EXPECT_TRUE(fs::path("\\server\\some\\path").is_relative());
+}
+
+TEST(UtilPath, stdFsWeaklyCanonical) {
+    // Already canonical
+    EXPECT_EQ(fs::weakly_canonical("C:\\Windows\\System32"), "C:\\Windows\\System32");
+
+    EXPECT_EQ(fs::weakly_canonical("C:\\Windows\\System32\\..\\System32"), "C:\\Windows\\System32");
+
+#ifdef XOURNALPP_WRAP_STD_FS_ABSOLUTE
+    // UNC paths should stay if they're canonical
+    EXPECT_EQ(fs::weakly_canonical("\\\\?\\C:\\Windows\\System32"), "\\\\?\\C:\\Windows\\System32");
+
+    // otherwise, they get mangled when we use the wrapped FS functions
+    fs::path mangled = fs::weakly_canonical("\\\\?\\C:\\Windows\\System32\\..\\System32");
+    EXPECT_EQ(StringUtils::toLowerCase(mangled.string().substr(1)), ":\\?\\c:\\windows\\system32") << mangled;
+    EXPECT_TRUE(std::isalpha(mangled.string()[0])) << mangled;
+#else
+    EXPECT_EQ(fs::weakly_canonical("\\\\?\\C:\\Windows\\System32"), "C:\\Windows\\System32");
+    EXPECT_EQ(fs::weakly_canonical("\\\\?\\C:\\Windows\\System32\\..\\System32"), "C:\\Windows\\System32");
+#endif
+}
+
+#endif  // _WIN32
