@@ -91,7 +91,8 @@ module_cmakeargs['freetype'] = ' -DFT_DISABLE_BROTLI=TRUE '
 # portaudio may fail with parallel build, so disable parallel building.
 module_makeargs['portaudio'] = ' -j1 '
 
-repos['ftp.gnu.org'] = 'https://ftpmirror.gnu.org/gnu/'
+# Uncomment when ftp.gnu.org is out...
+# repos['ftp.gnu.org'] = 'https://ftpmirror.gnu.org/gnu/'
 
 ### END
 EOF
