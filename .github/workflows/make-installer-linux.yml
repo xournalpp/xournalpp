@@ -27,8 +27,8 @@ on:
         default: ''
       build_type:
         type: string
-        default: 'RelWithDebInfo'
-      extra_cmake_flags:
+        default: 'debugoptimized'
+      extra_meson_flags:
         type: string
         default: ''
       artifact_version_suffix:  # Additional version string appended to 1.2.3+dev (for instance) in artifacts names
@@ -82,7 +82,7 @@ jobs:
         run: |
           mkdir -p build/packages
           # Append our extra flags to the debian/rules file
-          sed -i 's/\(\tdh_auto_configure.*-DENABLE_CPPTRACE=\)false\(.*\)$/\1true \2 ${{ inputs.extra_cmake_flags }}/' debian/rules
+          sed -i 's/\(\tdh_auto_configure.*-DENABLE_CPPTRACE=\)false\(.*\)$/\1true \2 ${{ inputs.extra_meson_flags }}/' debian/rules
           DEB_BUILD_OPTIONS="nostrip" dpkg-buildpackage -b
           PACKAGE_FILE=$(find ../xournalpp_*.deb -printf "%f\n" | head -n 1)
           mv "../$PACKAGE_FILE" build/packages/
