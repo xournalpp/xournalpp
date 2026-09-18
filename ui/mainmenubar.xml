@@ -458,6 +458,14 @@
      <attribute name="action">win.duplicate-page</attribute>
     </item>
     <item>
+     <attribute name="label" translatable="yes">Move Page _Up</attribute>
+     <attribute name="action">win.move-page-towards-beginning</attribute>
+    </item>
+    <item>
+     <attribute name="label" translatable="yes">Move Page _Down</attribute>
+     <attribute name="action">win.move-page-towards-end</attribute>
+    </item>
+    <item>
      <attribute name="label" translatable="yes">Append New PDF Pages</attribute>
      <attribute name="action">win.append-new-pdf-pages</attribute>
     </item>
