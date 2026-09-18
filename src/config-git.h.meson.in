@@ -1,0 +1,40 @@
+/*
+ * Xournal++
+ *
+ * Current git repo info
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#pragma once
+
+
+/* --- Current git repo info --- */
+
+/**
+ * Origin URL of current repository
+ */
+constexpr auto GIT_ORIGIN_URL = "@GIT_ORIGIN_URL@";
+
+/**
+ * Git origin repo owner
+ */
+constexpr auto GIT_ORIGIN_OWNER = "@GIT_ORIGIN_OWNER@";
+
+/**
+ * Git origin repo name
+ */
+constexpr auto GIT_ORIGIN_REPO = "@GIT_ORIGIN_REPO@";
+
+/**
+ * Current branch of git repo
+ */
+constexpr auto GIT_BRANCH = "@GIT_BRANCH@";
+
+/**
+ * Current git commit id (with "-dirty" appended if dirty source tree)
+ */
+constexpr auto GIT_COMMIT_ID = "@RELEASE_IDENTIFIER@";
