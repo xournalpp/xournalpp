@@ -64,6 +64,13 @@ protected:
     xoj::util::Point<double> scrollOffsetVector{0., 0.};
 
     /**
+     * Whether the current input sequence started outside of a page area (e.g. on the margins between or beside
+     * pages). Such input sequences act as if the hand tool were selected: dragging scrolls the view, independent
+     * of the currently active tool.
+     */
+    bool inputStartedOutsidePageArea = false;
+
+    /**
      * Flag whether pen is within the widget
      */
     bool penInWidget = false;
