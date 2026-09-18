@@ -28,7 +28,8 @@ mkdir "$setup_dir"
 mkdir "$setup_dir"/lib
 
 echo "copy installed files"
-(cd $build_dir && cmake --install . --prefix "$setup_dir")
+(cd "$build_dir" && meson setup --reconfigure --prefix="$setup_dir")
+meson install -C "$build_dir"
 
 echo "copy libraries"
 ldd "$build_dir/xournalpp.exe" | grep "${prefix}.*\.dll" -o | sort -u | xargs -I{} cp "{}" "$setup_dir"/bin/
