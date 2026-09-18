@@ -337,6 +337,14 @@ public:
      */
     bool pointActiveToolToButtonTool(Button button);
     /**
+     * @brief Point the active tool to the tool of the given type
+     *
+     * @param type ToolType the tool type to switch to
+     * @return true if the active toolpointer was changed
+     * @return false if the active toolpointer was not changed (it was already pointing to the given tool type)
+     */
+    bool pointActiveToolToToolType(ToolType type);
+    /**
      * @brief Point the active tool to tool selected in the toolbar
      *
      * @return true if the active toolpointer was changed
