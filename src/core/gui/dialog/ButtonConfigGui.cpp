@@ -225,6 +225,8 @@ void ButtonConfigGui::loadSettings() {
 
         gtk_check_button_set_active(GTK_CHECK_BUTTON(cbDisableDrawing), cfg->disableDrawing);
     }
+
+    enableDisableTools();
 }
 
 void ButtonConfigGui::saveSettings() {
@@ -297,7 +299,8 @@ void ButtonConfigGui::enableDisableTools() {
     gtk_widget_set_visible(cbThickness, action != TOOL_NONE && xoj::tool::hasCapability(action, TOOL_CAP_SIZE));
     bool hasColor = action != TOOL_NONE && xoj::tool::hasCapability(action, TOOL_CAP_COLOR);
     gtk_widget_set_visible(cbColor, hasColor);
-    gtk_widget_set_visible(colorButton, hasColor && gtk_combo_box_get_active(GTK_COMBO_BOX(cbColor)) == 1);
+    gtk_widget_set_visible(colorButton, hasColor);
+    gtk_widget_set_sensitive(colorButton, gtk_combo_box_get_active(GTK_COMBO_BOX(cbColor)) == 1);
     gtk_widget_set_visible(cbDrawingType, action != TOOL_NONE && xoj::tool::hasCapability(action, TOOL_CAP_RECTANGLE));
     gtk_widget_set_visible(cbEraserType, action == TOOL_ERASER);
     gtk_widget_set_visible(cbStrokeType, action == TOOL_PEN);
