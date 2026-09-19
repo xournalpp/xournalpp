@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk+" version="3.20"/>
+  <object class="GtkWindow" id="imagePropertiesDialog">
+    <property name="title" translatable="yes">Image Properties</property>
+    <property name="modal">True</property>
+    <property name="resizable">False</property>
+    <property name="default-width">320</property>
+    <child>
+      <object class="GtkBox" id="dialog-main-box">
+        <property name="visible">True</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">12</property>
+        <property name="margin-start">16</property>
+        <property name="margin-end">16</property>
+        <property name="margin-top">16</property>
+        <property name="margin-bottom">16</property>
+        <child>
+          <object class="GtkLabel" id="lbTitle">
+            <property name="visible">True</property>
+            <property name="halign">start</property>
+            <property name="label" translatable="yes">&lt;b&gt;Resize image&lt;/b&gt;</property>
+            <property name="use-markup">True</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkGrid" id="gridDimensions">
+            <property name="visible">True</property>
+            <property name="row-spacing">8</property>
+            <property name="column-spacing">8</property>
+            <child>
+              <object class="GtkLabel" id="lbWidth">
+                <property name="visible">True</property>
+                <property name="halign">start</property>
+                <property name="label" translatable="yes">Width</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="spinWidth">
+                <property name="visible">True</property>
+                <property name="numeric">True</property>
+                <property name="digits">2</property>
+                <property name="adjustment">adjustmentWidth</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="lbHeight">
+                <property name="visible">True</property>
+                <property name="halign">start</property>
+                <property name="label" translatable="yes">Height</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="spinHeight">
+                <property name="visible">True</property>
+                <property name="numeric">True</property>
+                <property name="digits">2</property>
+                <property name="adjustment">adjustmentHeight</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="lbUnit">
+                <property name="visible">True</property>
+                <property name="halign">start</property>
+                <property name="label" translatable="yes">Unit</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="lbUnitValue">
+                <property name="visible">True</property>
+                <property name="halign">start</property>
+                <property name="label">points</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">2</property>
+              </packing>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="cbKeepAspectRatio">
+            <property name="visible">True</property>
+            <property name="active">True</property>
+            <property name="label" translatable="yes">Keep proportions</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButtonBox" id="buttonBox">
+            <property name="visible">True</property>
+            <property name="layout-style">end</property>
+            <child>
+              <object class="GtkButton" id="btCancel">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Cancel</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="btOk">
+                <property name="visible">True</property>
+                <property name="can-default">True</property>
+                <property name="receives-default">True</property>
+                <property name="label" translatable="yes">OK</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentWidth">
+    <property name="lower">0.01</property>
+    <property name="upper">100000</property>
+    <property name="step-increment">0.1</property>
+    <property name="page-increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentHeight">
+    <property name="lower">0.01</property>
+    <property name="upper">100000</property>
+    <property name="step-increment">0.1</property>
+    <property name="page-increment">1</property>
+  </object>
+</interface>
