@@ -75,7 +75,23 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
         gtk_file_chooser_set_file(this->globalTemplateChooser, Util::toGFile(settings.globalTemplatePath).get(),
                                   nullptr);
     }
-    gtk_editable_set_text(GTK_EDITABLE(builder.get("latexSettingsGenCmd")), settings.genCmd.c_str());
+
+    switch (settings.type) {
+        case LatexSettings::type_t::pdflatex:
+            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(builder.get("latexSettingsTemplateLaTeX")), 1);
+            break;
+
+        case LatexSettings::type_t::typst:
+            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(builder.get("latexSettingsTemplateTypst")), 1);
+            break;
+        case LatexSettings::type_t::custom:
+            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(builder.get("latexSettingsTemplateCustom")), 1);
+            break;
+    }
+
+    gtk_editable_set_text(GTK_EDITABLE(builder.get("latexSettingsGenCmdBin")), settings.genCmd.c_str());
+
+    gtk_editable_set_text(GTK_EDITABLE(builder.get("latexSettingsGenCmdArgs")), settings.genArgs.c_str());
 
 
 #ifdef ENABLE_GTK_SOURCEVIEW
@@ -111,6 +127,22 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
     gtk_editable_set_text(GTK_EDITABLE(builder.get("latexTemporaryFileExt")), settings.temporaryFileExt.c_str());
 
     this->updateWidgetSensitivity();
+
+    const bool enabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(builder.get("latexSettingsTemplateCustom")));
+    gtk_widget_set_sensitive(builder.get("latexSettingsTemplateCustomGrid"), enabled);
+
+    const auto box_refresh = +[](GtkToggleButton*, const gpointer user_data) {
+        const auto* self = static_cast<LatexSettingsPanel*>(user_data);
+        auto builder = self->builder;
+
+        const bool enable = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(builder.get("latexSettingsTemplateCustom")));
+
+        gtk_widget_set_sensitive(builder.get("latexSettingsTemplateCustomGrid"), enable);
+    };
+
+    g_signal_connect(builder.get("latexSettingsTemplateLaTeX"), "toggled", G_CALLBACK(box_refresh), this);
+    g_signal_connect(builder.get("latexSettingsTemplateTypst"), "toggled", G_CALLBACK(box_refresh), this);
+    g_signal_connect(builder.get("latexSettingsTemplateCustom"), "toggled", G_CALLBACK(box_refresh), this);
 }
 
 void LatexSettingsPanel::save(LatexSettings& settings) {
@@ -119,7 +151,16 @@ void LatexSettingsPanel::save(LatexSettings& settings) {
     settings.globalTemplatePath = Util::fromGFile(
             xoj::util::GObjectSPtr<GFile>(gtk_file_chooser_get_file(this->globalTemplateChooser), xoj::util::adopt)
                     .get());
-    settings.genCmd = gtk_editable_get_text(GTK_EDITABLE(builder.get("latexSettingsGenCmd")));
+    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(builder.get("latexSettingsTemplateLaTeX")))) {
+        settings.applyTemplate(LatexSettings::type_t::pdflatex);
+    } else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(builder.get("latexSettingsTemplateTypst")))) {
+        settings.applyTemplate(LatexSettings::type_t::typst);
+    } else {
+        settings.applyTemplate(LatexSettings::type_t::custom);
+
+        settings.genCmd = gtk_editable_get_text(GTK_EDITABLE(builder.get("latexSettingsGenCmdBin")));
+        settings.genArgs = gtk_editable_get_text(GTK_EDITABLE(builder.get("latexSettingsGenCmdArgs")));
+    }
 
 #ifdef ENABLE_GTK_SOURCEVIEW
     GtkSourceStyleScheme* theme = gtk_source_style_scheme_chooser_get_style_scheme(
