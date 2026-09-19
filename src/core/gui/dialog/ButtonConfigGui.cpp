@@ -114,6 +114,14 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkBox* box, 
 
     this->colorButton = builder.get("colorButton");
 
+    this->cbColor = builder.get("cbColor");
+    // 0: don't change
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbColor), _("Color - don't change"));
+    // 1: custom color
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbColor), _("Custom color"));
+    gtk_combo_box_set_active(GTK_COMBO_BOX(this->cbColor), 0);
+    g_signal_connect(cbColor, "changed", G_CALLBACK(&cbColorCallback), this);
+
     this->cbDrawingType = builder.get("cbDrawingType");
     // DRAWING_TYPE_DONT_CHANGE
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Drawing Type - don't change"));
@@ -183,8 +191,10 @@ void ButtonConfigGui::loadSettings() {
         }
     }
 
-    GdkRGBA color = Util::rgb_to_GdkRGBA(cfg->color);
+    GdkRGBA color = Util::rgb_to_GdkRGBA(cfg->color.value_or(Colors::black));
     gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(colorButton), &color);
+
+    gtk_combo_box_set_active(GTK_COMBO_BOX(cbColor), cfg->color.has_value() ? 1 : 0);
 
     gtk_combo_box_set_active(GTK_COMBO_BOX(this->cbDrawingType), cfg->drawingType);
 
@@ -215,6 +225,8 @@ void ButtonConfigGui::loadSettings() {
 
         gtk_check_button_set_active(GTK_CHECK_BUTTON(cbDisableDrawing), cfg->disableDrawing);
     }
+
+    enableDisableTools();
 }
 
 void ButtonConfigGui::saveSettings() {
@@ -236,9 +248,13 @@ void ButtonConfigGui::saveSettings() {
         cfg->size = toolSizeIndexMap[thickness];
     }
 
-    GdkRGBA color;
-    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(colorButton), &color);
-    cfg->color = Util::GdkRGBA_to_argb(color);
+    if (gtk_combo_box_get_active(GTK_COMBO_BOX(cbColor)) != 1) {
+        cfg->color = std::nullopt;
+    } else {
+        GdkRGBA color;
+        gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(colorButton), &color);
+        cfg->color = Util::GdkRGBA_to_argb(color);
+    }
 
     cfg->drawingType = static_cast<DrawingType>(gtk_combo_box_get_active(GTK_COMBO_BOX(this->cbDrawingType)));
 
@@ -267,9 +283,13 @@ void ButtonConfigGui::saveSettings() {
 
 void ButtonConfigGui::cbSelectCallback(GtkComboBox*, ButtonConfigGui* gui) { gui->enableDisableTools(); }
 
+void ButtonConfigGui::cbColorCallback(GtkComboBox*, ButtonConfigGui* gui) { gui->enableDisableTools(); }
+
 void ButtonConfigGui::enableDisableTools() {
     GtkTreeIter iter;
-    gtk_combo_box_get_active_iter(GTK_COMBO_BOX(cbTool), &iter);
+    if (!gtk_combo_box_get_active_iter(GTK_COMBO_BOX(cbTool), &iter)) {
+        return;
+    }
     GtkTreeModel* model = gtk_combo_box_get_model(GTK_COMBO_BOX(cbTool));
 
     GValue value = {0};
@@ -277,7 +297,10 @@ void ButtonConfigGui::enableDisableTools() {
     auto action = static_cast<ToolType>(g_value_get_int(&value));
 
     gtk_widget_set_visible(cbThickness, action != TOOL_NONE && xoj::tool::hasCapability(action, TOOL_CAP_SIZE));
-    gtk_widget_set_visible(colorButton, action != TOOL_NONE && xoj::tool::hasCapability(action, TOOL_CAP_COLOR));
+    bool hasColor = action != TOOL_NONE && xoj::tool::hasCapability(action, TOOL_CAP_COLOR);
+    gtk_widget_set_visible(cbColor, hasColor);
+    gtk_widget_set_visible(colorButton, hasColor);
+    gtk_widget_set_sensitive(colorButton, gtk_combo_box_get_active(GTK_COMBO_BOX(cbColor)) == 1);
     gtk_widget_set_visible(cbDrawingType, action != TOOL_NONE && xoj::tool::hasCapability(action, TOOL_CAP_RECTANGLE));
     gtk_widget_set_visible(cbEraserType, action == TOOL_ERASER);
     gtk_widget_set_visible(cbStrokeType, action == TOOL_PEN);
