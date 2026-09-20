@@ -400,6 +400,19 @@ void on_open_files(GApplication* application, gpointer f, gint numFiles, gchar* 
         XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
     }
 
+    const char* uri = g_file_get_uri(files[0]);
+
+if (uri != nullptr) {
+    const std::string uriString(uri);
+
+    if (uriString.find("xournalexam") != std::string::npos) {
+        XojMsgBox::showErrorToUser(
+                GTK_WINDOW(app_data->win->getWindow()),
+                "MoodleExam URI erkannt:\n" + uriString);
+        return;
+    }
+}
+    
     const fs::path p = Util::fromGFile(files[0]);
 
     try {
