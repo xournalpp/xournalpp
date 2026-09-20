@@ -384,47 +384,7 @@ void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFi
     }
 }
 
-void on_activate(GApplication*, XMPtr) {}
-
-gint on_command_line(GApplication*, GApplicationCommandLine*, XMPtr) {
-    g_message("XournalMain::on_command_line: This should never happen, please file a bugreport with a detailed "
-              "description how to reproduce this message");
-    // Todo: implement this, if someone files the bug report
-    return 0;
-}
-
-void on_open_files(GApplication* application, gpointer f, gint numFiles, gchar* hint, XMPtr app_data) {
-    if (numFiles <= 0) {
-        return;
-    }
-    auto* files = (GFile**)f;
-    if (numFiles != 1) {
-        const std::string msg = _("Sorry, Xournal++ can only open one file at once.\n"
-                                  "Others are ignored.");
-        XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
-    }
-
-    const fs::path p = Util::fromGFile(files[0]);
-
-    try {
-        if (fs::exists(p)) {
-            app_data->control->openFile(fs::absolute(p));
-        } else {
-            const std::string msg = FS(_F("File {1} does not exist.") % p.u8string());
-            XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
-        }
-    } catch (const fs::filesystem_error& e) {
-        const std::string msg = FS(_F("Filesystem error: {1}\n"
-                                      "Sorry, Xournal++ cannot open the file: {2}\n"
-                                      "Consider copying the file to a local directory.") %
-                                   e.what() % p.u8string());
-        XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
-    }
-    gtk_window_present(GTK_WINDOW(app_data->win->getWindow()));
-}
-
-void on_startup(GApplication* application, XMPtr app_data) {
-    XournalMain::initLocalisation();
+void ensureWindow(GApplication* application, XMPtr app_data) {
     ensure_input_model_compatibility();
     const MigrateResult migrateResult = migrateSettings();
 
@@ -456,6 +416,11 @@ void on_startup(GApplication* application, XMPtr app_data) {
     // Do we want stuff in gtk_application_set_app_menu?
 
     app_data->win->show(nullptr);
+    g_message("shown");
+
+    if (migrateResult.status != MigrateStatus::NotNeeded) {
+        XojMsgBox::showErrorToUser(app_data->control->getGtkWindow(), migrateResult.message);
+    }
 
     fs::path p;
     if (app_data->optFilename) {
@@ -490,11 +455,11 @@ void on_startup(GApplication* application, XMPtr app_data) {
     }
 
     app_data->control->openFileWithoutSavingTheCurrentDocument(
-            std::move(p), app_data->attachMode, app_data->openAtPageNumber - 1,
-            [ctrl = app_data->control.get(), app = GTK_APPLICATION(application)](bool) {
-                ctrl->getScheduler()->start();
+        std::move(p), app_data->attachMode, app_data->openAtPageNumber - 1,
+                                                               [ctrl = app_data->control.get(), app = GTK_APPLICATION(application)](bool) {
+                                                                   ctrl->getScheduler()->start();
 
-                checkForEmergencySave(ctrl);
+                                                                   checkForEmergencySave(ctrl);
 
                 // There is a timing issue with the layout
                 // This fixes it, see #405
@@ -503,7 +468,57 @@ void on_startup(GApplication* application, XMPtr app_data) {
             });
 }
 
+void on_activate(GApplication* application, XMPtr app_data) {
+    g_message("on_activate");
+    ensureWindow(application, app_data);
+}
+
+gint on_command_line(GApplication*, GApplicationCommandLine*, XMPtr) {
+    g_message("XournalMain::on_command_line: This should never happen, please file a bugreport with a detailed "
+              "description how to reproduce this message");
+    // Todo: implement this, if someone files the bug report
+    return 0;
+}
+
+void on_open_files(GApplication* application, gpointer f, gint numFiles, gchar* hint, XMPtr app_data) {
+    g_message("on_open_files");
+    if (numFiles <= 0) {
+        return;
+    }
+    ensureWindow(application, app_data);
+    auto* files = (GFile**)f;
+    if (numFiles != 1) {
+        const std::string msg = _("Sorry, Xournal++ can only open one file at once.\n"
+                                  "Others are ignored.");
+        XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
+    }
+
+    const fs::path p = Util::fromGFile(files[0]);
+
+    try {
+        if (fs::exists(p)) {
+            app_data->control->openFile(fs::absolute(p));
+        } else {
+            const std::string msg = FS(_F("File {1} does not exist.") % p.u8string());
+            XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
+        }
+    } catch (const fs::filesystem_error& e) {
+        const std::string msg = FS(_F("Filesystem error: {1}\n"
+                                      "Sorry, Xournal++ cannot open the file: {2}\n"
+                                      "Consider copying the file to a local directory.") %
+                                   e.what() % p.u8string());
+        XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
+    }
+    gtk_window_present(GTK_WINDOW(app_data->win->getWindow()));
+}
+
+void on_startup(GApplication* application, XMPtr app_data) {
+    g_message("on_startup");
+    XournalMain::initLocalisation();
+}
+
 auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gint {
+    g_message("on_handle_local_options");
     initCAndCoutLocales();
 
     auto print_version = [&] { std::cout << xoj::util::getVersionInfo() << std::endl; };
