@@ -715,7 +715,7 @@ void MainWindow::updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage
 
 auto MainWindow::getMenubar() const -> Menubar* { return menubar.get(); }
 
-void MainWindow::show(GtkWindow* parent) { gtk_widget_show(this->window); }
+void MainWindow::show(GtkWindow* parent) { gtk_window_present(GTK_WINDOW(this->window)); }
 
 void MainWindow::setUndoDescription(const string& description) { menubar->setUndoDescription(description); }
 
