@@ -3,8 +3,8 @@
 #include "control/Tool.h"         // for Tool
 #include "control/ToolHandler.h"  // for ToolHandler
 
-ButtonConfig::ButtonConfig(ToolType action, Color color, ToolSize size, DrawingType drawingType, EraserType eraserMode,
-                           StrokeType strokeType):
+ButtonConfig::ButtonConfig(ToolType action, std::optional<Color> color, ToolSize size, DrawingType drawingType,
+                           EraserType eraserMode, StrokeType strokeType):
         action(action),
         color(color),
         size(size),
@@ -33,8 +33,8 @@ void ButtonConfig::initButton(ToolHandler* toolHandler, Button button) const {
     if (t.hasCapability(TOOL_CAP_SIZE) && this->size != TOOL_SIZE_NONE) {
         toolHandler->setButtonSize(this->size, button);
     }
-    if (t.hasCapability(TOOL_CAP_COLOR)) {
-        toolHandler->setButtonColor(this->color, button);
+    if (t.hasCapability(TOOL_CAP_COLOR) && this->color) {
+        toolHandler->setButtonColor(*this->color, button);
     }
     if (t.hasCapability(TOOL_CAP_LINE_STYLE) && this->strokeType != STROKE_TYPE_NONE) {
         toolHandler->setButtonStrokeType(this->strokeType, button);
@@ -60,8 +60,8 @@ void ButtonConfig::applyConfigToToolbarTool(ToolHandler* toolHandler) const {
     if (t->hasCapability(TOOL_CAP_SIZE) && this->size != TOOL_SIZE_NONE) {
         toolHandler->setSize(this->size);
     }
-    if (t->hasCapability(TOOL_CAP_COLOR)) {
-        toolHandler->setColor(this->color, false);
+    if (t->hasCapability(TOOL_CAP_COLOR) && this->color) {
+        toolHandler->setColor(*this->color, false);
     }
     if (t->hasCapability(TOOL_CAP_LINE_STYLE) && this->strokeType != STROKE_TYPE_NONE) {
         toolHandler->setLineStyle(strokeTypeToLineStyle(this->strokeType));
@@ -85,6 +85,9 @@ auto ButtonConfig::applyNoChangeSettings(ToolHandler* toolHandler, Button button
 
     if (t.hasCapability(TOOL_CAP_SIZE) && this->size == TOOL_SIZE_NONE) {
         toolHandler->setButtonSize(t.getSize(), button);
+    }
+    if (t.hasCapability(TOOL_CAP_COLOR) && !this->color) {
+        toolHandler->setButtonColor(t.getColor(), button);
     }
     if (t.hasCapability(TOOL_CAP_LINE_STYLE) && this->strokeType == STROKE_TYPE_NONE) {
         toolHandler->setButtonStrokeType(t.getLineStyle(), button);

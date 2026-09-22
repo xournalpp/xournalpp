@@ -11,7 +11,8 @@
 
 #pragma once
 
-#include <string>  // for string
+#include <optional>  // for optional, nullopt
+#include <string>    // for string
 
 #include "control/ToolEnums.h"               // for DrawingType, ToolType
 #include "control/settings/SettingsEnums.h"  // for Button
@@ -22,16 +23,16 @@ class ToolHandler;
 
 class ButtonConfig {
 public:
-    ButtonConfig(ToolType action, Color color, ToolSize size, DrawingType drawingType, EraserType eraserMode,
-                 StrokeType strokeType = STROKE_TYPE_NONE);
+    ButtonConfig(ToolType action, std::optional<Color> color, ToolSize size, DrawingType drawingType,
+                 EraserType eraserMode, StrokeType strokeType = STROKE_TYPE_NONE);
     virtual ~ButtonConfig();
 
 public:
     /**
      * @brief Apply Changes to the button tool in case "Don't Change" was selected for one of it's properties
      * This is usually used after switching to a button tool from the toolbar tool
-     * Note: In case of the setting "Don't Change" for Size/DrawingType/EraserType the
-     * Size/DrawingType/EraserType of the corresponding tool in the toolbar is used.
+     * Note: In case of the setting "Don't Change" for Size/Color/DrawingType/EraserType/StrokeType the
+     * Size/Color/DrawingType/EraserType/StrokeType of the corresponding tool in the toolbar is used.
      *
      * @param toolHandler
      * @param button button to be applied
@@ -65,7 +66,7 @@ public:
 
 private:
     ToolType action;
-    Color color{};
+    std::optional<Color> color = std::nullopt;
     ToolSize size;
     EraserType eraserMode;
     DrawingType drawingType;

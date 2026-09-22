@@ -35,6 +35,7 @@ public:
 
 private:
     static void cbSelectCallback(GtkComboBox* widget, ButtonConfigGui* gui);
+    static void cbColorCallback(GtkComboBox* widget, ButtonConfigGui* gui);
     void enableDisableTools();
     std::string toolSizeToLabel(ToolSize size);
 
@@ -46,6 +47,7 @@ private:
 
     GtkWidget* cbTool;
     GtkWidget* cbThickness;
+    GtkWidget* cbColor;
     GtkWidget* colorButton;
     GtkWidget* cbEraserType;
     GtkWidget* cbDrawingType;
