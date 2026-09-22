@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-05 07:48+0000\n"
-"PO-Revision-Date: 2026-08-09 04:42\n"
+"POT-Creation-Date: 2026-09-18 12:48+0000\n"
+"PO-Revision-Date: 2026-09-20 04:30\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -306,8 +306,8 @@ msgstr "Impossible de charger le fichier PDF LaTeX"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:111
 #: ../src/core/control/XournalMain.cpp:227
-#: ../src/core/control/xojfile/LoadHandler.cpp:261
-#: ../src/core/control/xojfile/LoadHandler.cpp:280
+#: ../src/core/control/xojfile/LoadHandler.cpp:262
+#: ../src/core/control/xojfile/LoadHandler.cpp:281
 msgid "Error reading PDF: {1}"
 msgstr "Erreur lors de la lecture du PDF : {1}"
 
@@ -679,24 +679,24 @@ msgstr "%F-Note-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_annoté"
 
-#: ../src/core/control/tools/EditSelection.cpp:462
+#: ../src/core/control/tools/EditSelection.cpp:446
 msgid "Arrange"
 msgstr "Classer par"
 
-#: ../src/core/control/tools/EditSelection.cpp:477
+#: ../src/core/control/tools/EditSelection.cpp:461
 msgid "Bring forward"
 msgstr "Mettre en avant"
 
-#: ../src/core/control/tools/EditSelection.cpp:488
+#: ../src/core/control/tools/EditSelection.cpp:472
 msgid "Send backward"
 msgstr "Mettre en arrière"
 
-#: ../src/core/control/tools/EditSelection.cpp:495
+#: ../src/core/control/tools/EditSelection.cpp:479
 msgid "Send to back"
 msgstr "Mettre en arrière-plan"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
-#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:162
+#: ../src/core/model/Image.cpp:141 ../src/core/model/Image.cpp:145
 msgid "Failed to load image"
 msgstr "Échec du chargement de l'image"
 
@@ -704,139 +704,139 @@ msgstr "Échec du chargement de l'image"
 msgid "Error while opening image file: "
 msgstr "Erreur lors de l'ouverture du fichier image : "
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:123
-#: ../src/core/control/xojfile/LoadHandler.cpp:140
-#: ../src/core/control/xojfile/LoadHandler.cpp:691
-#: ../src/core/control/xojfile/LoadHandler.cpp:705
+#: ../src/core/control/xojfile/LoadHandler.cpp:124
+#: ../src/core/control/xojfile/LoadHandler.cpp:141
+#: ../src/core/control/xojfile/LoadHandler.cpp:734
+#: ../src/core/control/xojfile/LoadHandler.cpp:748
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Impossible d'ouvrir la pièce jointe : {1}. Message d'erreur : {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:132
-#: ../src/core/control/xojfile/LoadHandler.cpp:697
-#: ../src/core/control/xojfile/LoadHandler.cpp:715
+#: ../src/core/control/xojfile/LoadHandler.cpp:133
+#: ../src/core/control/xojfile/LoadHandler.cpp:740
+#: ../src/core/control/xojfile/LoadHandler.cpp:758
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Impossible d'ouvrir la pièce jointe : {1}. Message d'erreur : aucune taille de fichier valide fournie"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:150
+#: ../src/core/control/xojfile/LoadHandler.cpp:151
 msgid "Unable to create temporary file for audio attachment"
 msgstr "Impossible de créer un fichier temporaire pour la pièce audio jointe"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:162
+#: ../src/core/control/xojfile/LoadHandler.cpp:163
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Impossible d'ouvrir la pièce jointe : {1}. Message d'erreur : impossible de lire le fichier"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:169
+#: ../src/core/control/xojfile/LoadHandler.cpp:170
 msgid "Could not open attachment: {1}. Error message: Could not write temporary file"
 msgstr "Impossible d'ouvrir la pièce jointe : {1}. Message d'erreur : Impossible d'écrire le fichier temporaire"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:202
-#: ../src/core/control/xojfile/LoadHandler.cpp:227
+#: ../src/core/control/xojfile/LoadHandler.cpp:203
+#: ../src/core/control/xojfile/LoadHandler.cpp:228
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Impossible de lire l'image : {1}. Message d'erreur : {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:237
+#: ../src/core/control/xojfile/LoadHandler.cpp:238
 msgid "Cloned pixmap page background on page {1} references inexistent page {2}"
 msgstr "Fond de page pixmap cloné sur la page {1} références inexistantes {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:512
+#: ../src/core/control/xojfile/LoadHandler.cpp:555
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}"
 msgstr "Le fichier \"{1}\" n'est pas un fichier .xopp valide (Mimetype manquant). Message d'erreur : {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:519
+#: ../src/core/control/xojfile/LoadHandler.cpp:562
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\""
 msgstr "Le fichier « {1} » n'est pas un fichier .xopp valide (Mimetype erroné) : « {2} »"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:527
+#: ../src/core/control/xojfile/LoadHandler.cpp:570
 msgid "The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}"
 msgstr "Le fichier \"{1}\" n'est pas un fichier .xopp valide (Version manquante). Message d'erreur : {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:540
+#: ../src/core/control/xojfile/LoadHandler.cpp:583
 msgid "The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\""
 msgstr "Le fichier \"{1}\" n'est pas un fichier .xopp valide (chaîne de version corrompue) : \"{2}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:549
+#: ../src/core/control/xojfile/LoadHandler.cpp:592
 msgid "Could not open file: \"{1}\""
 msgstr "Impossible d'ouvrir le fichier: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:565
+#: ../src/core/control/xojfile/LoadHandler.cpp:608
 msgid "XML Parser error: {1}"
 msgstr "Erreur d'extraction XML : {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:575
+#: ../src/core/control/xojfile/LoadHandler.cpp:618
 msgid "Failed to read from compressed file"
 msgstr "Échec de lecture du fichier compressé"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:584
+#: ../src/core/control/xojfile/LoadHandler.cpp:627
 msgid "Invalid XML data read"
 msgstr "Lecture de données XML invalide"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:598
+#: ../src/core/control/xojfile/LoadHandler.cpp:641
 msgid "Document is not complete.\n"
 "We have tried recovering the data that could be read, but the last element may have been discarded, and the end of the file is likely missing."
 msgstr "Le document est incomplet.\n"
 "Nous avons essayé de récupérer les données qui pouvaient être lues, mais le dernier élément pourrait avoir été omis, et la fin du fichier est probablement manquant."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:605
+#: ../src/core/control/xojfile/LoadHandler.cpp:648
 msgid "Document is corrupted (no document tag found in file)"
 msgstr "Le document est corrompu (aucune étiquette de document trouvé dans le fichier)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:608
+#: ../src/core/control/xojfile/LoadHandler.cpp:651
 msgid "Document is corrupted (no pages found in file)"
 msgstr "Le document est corrompu (aucune page trouvée dans le fichier)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:748
+#: ../src/core/control/xojfile/LoadHandler.cpp:791
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Le fichier temporaire demandé n'a pas été trouvé pour la pièce jointe {1}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:292
+#: ../src/core/control/xojfile/SaveHandler.cpp:327
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Impossible d'écrire l'arrière-plan \"{1}\", {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:399
+#: ../src/core/control/xojfile/SaveHandler.cpp:434
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Impossible d'écrire l'arrière-plan \"{1}\". Poursuite."
 
-#: ../src/core/control/xojfile/XmlParser.cpp:96
+#: ../src/core/control/xojfile/XmlParser.cpp:126
 msgid "Ignoring unexpected {1} tag inside unrecognized document structure"
 msgstr "Étiquette {1} inattendue ignorée à l'intérieur d'une structure de document non reconnue"
 
-#: ../src/core/control/xojfile/XmlParser.cpp:101
+#: ../src/core/control/xojfile/XmlParser.cpp:131
 msgid "Ignoring unexpected {1} tag under {2}"
 msgstr "Étiquette {1} inattendue ignorée dans {2}"
 
-#: ../src/core/control/xojfile/XmlParser.cpp:150
+#: ../src/core/control/xojfile/XmlParser.cpp:180
 msgid "Unexpected text in {1} node: \"{2}\""
 msgstr "Texte inattendu dans le nœud {1} : \"{2}\""
 
-#: ../src/core/control/xojfile/XmlParser.cpp:248
+#: ../src/core/control/xojfile/XmlParser.cpp:278
 msgid "Attribute \"type\" not found in background tag. Ignoring tag"
 msgstr "Attribut \"type\" introuvable dans l'étiquette d'arrière-plan. Étiquette ignorée"
 
-#: ../src/core/control/xojfile/XmlParser.cpp:287
+#: ../src/core/control/xojfile/XmlParser.cpp:317
 msgid "Domain \"clone\" is invalid for PDF backgrounds. Using \"absolute\" instead"
 msgstr "Le domaine \"clone\" n'est pas valide pour les arrière-plans PDF. Utilisation d'\"absolue\" à la place"
 
-#: ../src/core/control/xojfile/XmlParser.cpp:297
+#: ../src/core/control/xojfile/XmlParser.cpp:327
 msgid "PDF background filename is empty"
 msgstr "Le nom du fichier de fond PDF est vide"
 
-#: ../src/core/control/xojfile/XmlParser.cpp:317
+#: ../src/core/control/xojfile/XmlParser.cpp:347
 msgid "Discarding unused audio timestamp element. Filename: {1}"
 msgstr "Suppression de l'élément d'horodatage audio non utilisé. Nom du fichier : {1}"
 
-#: ../src/core/control/xojfile/XmlParser.cpp:394
+#: ../src/core/control/xojfile/XmlParser.cpp:424
 msgid "Found stroke that contains an odd number of valid coordinates. Discarding the last value"
 msgstr "Trait trouvé avec un nombre impair de coordonnées valides. Abandon de la dernière valeur"
 
-#: ../src/core/control/xojfile/XmlParser.cpp:405
+#: ../src/core/control/xojfile/XmlParser.cpp:435
 msgid "Found stroke with more coordinates than pressure points: {1}, expected {2}. Shrinking stroke to match pressure point count"
 msgstr "Trait trouvé avec plus de coordonnées que les points de pression : {1}, {2} attendu. Raccourcissement du trait pour correspondre au nombre de points de pression"
 
-#: ../src/core/control/xojfile/XmlParser.cpp:411
+#: ../src/core/control/xojfile/XmlParser.cpp:441
 msgid "Found stroke with too many pressure points: {1}, expected {2}. Discarding remaining pressure points"
 msgstr "Trait trouvé avec trop de points de pression : {1}, {2} attendu. Abandon des points de pression restants"
 
-#: ../src/core/control/xojfile/XmlParser.cpp:517
+#: ../src/core/control/xojfile/XmlParser.cpp:576
 msgid "Ignoring attachment tag under {1}"
 msgstr "Étiquette de pièce jointe ignorée sous {1}"
 
@@ -852,17 +852,17 @@ msgstr "Double-cliquez pour modifier. CTRL + cliquez pour ouvrir."
 msgid "Unable to play audio recording {1}"
 msgstr "Impossible de lire l'enregistrement audio {1}"
 
-#: ../src/core/gui/PageView.cpp:984
+#: ../src/core/gui/PageView.cpp:991
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:145
 msgid "Loading..."
 msgstr "Chargement en cours..."
 
-#: ../src/core/gui/PageView.cpp:1041
+#: ../src/core/gui/PageView.cpp:1048
 msgid "Scroll to page {1}"
 msgstr "Défiler vers la page {1}"
 
-#: ../src/core/gui/PageView.cpp:1043
+#: ../src/core/gui/PageView.cpp:1050
 msgid "Add missing page"
 msgstr "Ajouter la page manquante"
 
@@ -1922,15 +1922,15 @@ msgstr "Copier"
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Document non chargé ! ({1}), {2}"
 
-#: ../src/core/model/Image.cpp:158 ../src/core/model/Image.cpp:168
+#: ../src/core/model/Image.cpp:141 ../src/core/model/Image.cpp:151
 msgid "Error: "
 msgstr "Erreur : "
 
-#: ../src/core/model/Image.cpp:162 ../src/core/model/Image.cpp:172
+#: ../src/core/model/Image.cpp:145 ../src/core/model/Image.cpp:155
 msgid "Unrecoverable error"
 msgstr "Erreur irrécupérable"
 
-#: ../src/core/model/Image.cpp:168 ../src/core/model/Image.cpp:172
+#: ../src/core/model/Image.cpp:151 ../src/core/model/Image.cpp:155
 msgid "Failed to close image stream"
 msgstr "Impossible de fermer le flux de l'image"
 
@@ -2178,20 +2178,20 @@ msgstr "Une erreur s'est produite lors de la fermeture du fichier : \"{1}\""
 msgid "Error code {1}"
 msgstr "Code d'erreur {1}"
 
-#: ../src/util/PathUtil.cpp:125
+#: ../src/util/PathUtil.cpp:124
 msgid "Could not open file: {1}"
 msgstr "Impossible d'ouvrir le fichier : {1}"
 
-#: ../src/util/PathUtil.cpp:132
+#: ../src/util/PathUtil.cpp:131
 msgid "Error reading \"{1}\":\n"
 "{2}"
 msgstr "Erreur de lecture \"{1}\" : {2}"
 
-#: ../src/util/PathUtil.cpp:409
+#: ../src/util/PathUtil.cpp:408
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:418
+#: ../src/util/PathUtil.cpp:417
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Impossible de créer le dossier : {1}\n"
@@ -4447,195 +4447,203 @@ msgid "Duplicate Page"
 msgstr "Dupliquer la page"
 
 #: ../ui/mainmenubar.xml:461
+msgid "Move Page _Up"
+msgstr ""
+
+#: ../ui/mainmenubar.xml:465
+msgid "Move Page _Down"
+msgstr ""
+
+#: ../ui/mainmenubar.xml:469
 msgid "Append New PDF Pages"
 msgstr "Ajouter de nouvelles pages PDF"
 
-#: ../ui/mainmenubar.xml:465
+#: ../ui/mainmenubar.xml:473
 msgid "Configure Page Template"
 msgstr "Configurer le modèle de page"
 
-#: ../ui/mainmenubar.xml:469
+#: ../ui/mainmenubar.xml:477
 msgid "_Delete Page"
 msgstr "_Supprimer la page"
 
-#: ../ui/mainmenubar.xml:476
+#: ../ui/mainmenubar.xml:484
 msgid "Add a _Layer above the active layer"
 msgstr "Ajouter un _Calque au-dessus du calque actif"
 
-#: ../ui/mainmenubar.xml:485
+#: ../ui/mainmenubar.xml:493
 msgid "Delete Layer"
 msgstr "Supprimer le calque"
 
-#: ../ui/mainmenubar.xml:490
+#: ../ui/mainmenubar.xml:498
 msgid "Merge Layer Down"
 msgstr "Fusionner avec le calque inférieur"
 
-#: ../ui/mainmenubar.xml:495
+#: ../ui/mainmenubar.xml:503
 msgid "Rename Layer"
 msgstr "Renommer le Calque"
 
-#: ../ui/mainmenubar.xml:502
+#: ../ui/mainmenubar.xml:510
 msgid "Paper _Format"
 msgstr "_Format de papier"
 
-#: ../ui/mainmenubar.xml:506
+#: ../ui/mainmenubar.xml:514
 msgid "Paper _Color"
 msgstr "_Couleur du papier"
 
-#: ../ui/mainmenubar.xml:515
+#: ../ui/mainmenubar.xml:523
 msgid "_Tools"
 msgstr "_Outils"
 
-#: ../ui/mainmenubar.xml:518
+#: ../ui/mainmenubar.xml:526
 msgid "_Pen"
 msgstr "_Stylo"
 
-#: ../ui/mainmenubar.xml:524
+#: ../ui/mainmenubar.xml:532
 msgid "_Eraser"
 msgstr "_Gomme"
 
-#: ../ui/mainmenubar.xml:530
+#: ../ui/mainmenubar.xml:538
 msgid "Select Linear Text"
 msgstr "Sélectionner des lignes de texte PDF"
 
-#: ../ui/mainmenubar.xml:536
+#: ../ui/mainmenubar.xml:544
 msgid "Select Text In Rectangle"
 msgstr "Sélectionner un rectangle de texte PDF"
 
-#: ../ui/mainmenubar.xml:542
+#: ../ui/mainmenubar.xml:550
 msgid "_Highlighter"
 msgstr "_Surligneur"
 
-#: ../ui/mainmenubar.xml:548
+#: ../ui/mainmenubar.xml:556
 msgid "_Text"
 msgstr "_Texte"
 
-#: ../ui/mainmenubar.xml:554
+#: ../ui/mainmenubar.xml:562
 msgid "_Link"
 msgstr "_Lien"
 
-#: ../ui/mainmenubar.xml:560
+#: ../ui/mainmenubar.xml:568
 msgid "LaTe_X"
 msgstr "LaTe_X"
 
-#: ../ui/mainmenubar.xml:566
+#: ../ui/mainmenubar.xml:574
 msgid "_Image"
 msgstr "_Image"
 
-#: ../ui/mainmenubar.xml:572
+#: ../ui/mainmenubar.xml:580
 msgid "_Default Tool"
 msgstr "_Outil par défaut"
 
-#: ../ui/mainmenubar.xml:579
+#: ../ui/mainmenubar.xml:587
 msgid "Drawing Type"
 msgstr "Type de dessin"
 
-#: ../ui/mainmenubar.xml:581
+#: ../ui/mainmenubar.xml:589
 msgid "_Shape Recognizer"
 msgstr "_Reconnaissance de forme"
 
-#: ../ui/mainmenubar.xml:611
+#: ../ui/mainmenubar.xml:619
 msgid "Draw _Line"
 msgstr "Tracer une _ligne"
 
-#: ../ui/mainmenubar.xml:652
+#: ../ui/mainmenubar.xml:660
 msgid "_Vertical Space"
 msgstr "Espace _vertical"
 
-#: ../ui/mainmenubar.xml:664
+#: ../ui/mainmenubar.xml:672
 msgid "H_and Tool"
 msgstr "Main"
 
-#: ../ui/mainmenubar.xml:680
+#: ../ui/mainmenubar.xml:688
 msgid "Pen _Options"
 msgstr "_Option du stylo"
 
-#: ../ui/mainmenubar.xml:683 ../ui/mainmenubar.xml:745
-#: ../ui/mainmenubar.xml:792
+#: ../ui/mainmenubar.xml:691 ../ui/mainmenubar.xml:753
+#: ../ui/mainmenubar.xml:800
 msgid "_very fine"
 msgstr "_Très Fin"
 
-#: ../ui/mainmenubar.xml:688 ../ui/mainmenubar.xml:750
-#: ../ui/mainmenubar.xml:797
+#: ../ui/mainmenubar.xml:696 ../ui/mainmenubar.xml:758
+#: ../ui/mainmenubar.xml:805
 msgid "_fine"
 msgstr "Fin"
 
-#: ../ui/mainmenubar.xml:693 ../ui/mainmenubar.xml:755
-#: ../ui/mainmenubar.xml:802
+#: ../ui/mainmenubar.xml:701 ../ui/mainmenubar.xml:763
+#: ../ui/mainmenubar.xml:810
 msgid "_medium"
 msgstr "_Moyen"
 
-#: ../ui/mainmenubar.xml:698 ../ui/mainmenubar.xml:760
-#: ../ui/mainmenubar.xml:807
+#: ../ui/mainmenubar.xml:706 ../ui/mainmenubar.xml:768
+#: ../ui/mainmenubar.xml:815
 msgid "_thick"
 msgstr "É_pais"
 
-#: ../ui/mainmenubar.xml:703 ../ui/mainmenubar.xml:765
-#: ../ui/mainmenubar.xml:812
+#: ../ui/mainmenubar.xml:711 ../ui/mainmenubar.xml:773
+#: ../ui/mainmenubar.xml:820
 msgid "ver_y thick"
 msgstr "Trè_s épais"
 
-#: ../ui/mainmenubar.xml:732 ../ui/mainmenubar.xml:819
+#: ../ui/mainmenubar.xml:740 ../ui/mainmenubar.xml:827
 msgid "Fi_ll"
 msgstr "Remp_lir"
 
-#: ../ui/mainmenubar.xml:736 ../ui/mainmenubar.xml:823
+#: ../ui/mainmenubar.xml:744 ../ui/mainmenubar.xml:831
 msgid "Fill opacity"
 msgstr "Opacité du remplissage"
 
-#: ../ui/mainmenubar.xml:742
+#: ../ui/mainmenubar.xml:750
 msgid "Eraser Optio_ns"
 msgstr "Optio_ns de la gomme"
 
-#: ../ui/mainmenubar.xml:772
+#: ../ui/mainmenubar.xml:780
 msgid "_standard"
 msgstr "_standard"
 
-#: ../ui/mainmenubar.xml:777
+#: ../ui/mainmenubar.xml:785
 msgid "_whiteout"
 msgstr "_blanc"
 
-#: ../ui/mainmenubar.xml:782
+#: ../ui/mainmenubar.xml:790
 msgid "_delete strokes"
 msgstr "_suppression de traits"
 
-#: ../ui/mainmenubar.xml:789
+#: ../ui/mainmenubar.xml:797
 msgid "Highlighter Opti_ons"
 msgstr "_Options de surligneur"
 
-#: ../ui/mainmenubar.xml:829
+#: ../ui/mainmenubar.xml:837
 msgid "Select PDF Text Options"
 msgstr "Options du sélecteur de texte PDF"
 
-#: ../ui/mainmenubar.xml:832
+#: ../ui/mainmenubar.xml:840
 msgid "Marker Opacity"
 msgstr "Opacité du marqueur"
 
-#: ../ui/mainmenubar.xml:838
+#: ../ui/mainmenubar.xml:846
 msgid "Text Font..."
 msgstr "Police du texte..."
 
-#: ../ui/mainmenubar.xml:843
+#: ../ui/mainmenubar.xml:851
 msgid "Record / Stop"
 msgstr "Enregistrer / Arrêter"
 
-#: ../ui/mainmenubar.xml:848
+#: ../ui/mainmenubar.xml:856
 msgid "Pause"
 msgstr "Pause"
 
-#: ../ui/mainmenubar.xml:870
+#: ../ui/mainmenubar.xml:878
 msgid "_Help"
 msgstr "_Aide"
 
-#: ../ui/mainmenubar.xml:874
+#: ../ui/mainmenubar.xml:882
 msgid "Help"
 msgstr "Aide"
 
-#: ../ui/mainmenubar.xml:878
+#: ../ui/mainmenubar.xml:886
 msgid "Run Gtk3 demo"
 msgstr "Exécuter la démo Gtk3"
 
-#: ../ui/mainmenubar.xml:882
+#: ../ui/mainmenubar.xml:890
 msgid "About"
 msgstr "À propos"
 
