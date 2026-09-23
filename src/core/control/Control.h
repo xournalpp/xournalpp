@@ -37,6 +37,7 @@
 #include "ClipboardHandler.h"  // for ClipboardListener
 #include "ToolHandler.h"       // for ToolListener
 #include "filesystem.h"        // for path
+#include "settings/RecolorParameters.h"                          // for RecolorParameters
 
 class LoadHandler;
 class GeometryToolController;
@@ -73,6 +74,22 @@ class Callback;
 class ActionDatabase;
 class NavigationHistory;
 
+struct SettingsBefore {
+        Color selectionColor;
+        bool verticalSpace;
+        int verticalSpaceAmountAbove;
+        int verticalSpaceAmountBelow;
+        bool horizontalSpace;
+        int horizontalSpaceAmountRight;
+        int horizontalSpaceAmountLeft;
+        bool unlimitedScrolling;
+        StylusCursorType stylusCursorType;
+        bool highlightPosition;
+        SidebarNumberingStyle sidebarStyle;
+        std::optional<std::filesystem::path> colorPaletteSetting;
+        RecolorParameters recolorParameters;
+};
+
 class Control:
         public ToolListener,
         public DocumentHandler,
@@ -88,8 +105,13 @@ public:
     ~Control() override;
 
     void initWindow(MainWindow* win);
-
+private:
+    static Control *instance;
+    static void SigUsr1Handler(int sig);
+    SettingsBefore getSettingsBefore();
 public:
+    void LoadSettings();
+    void reloadSettings(const SettingsBefore&);
     /// Asymchronously closes the current document and replaces it by a new file
     void newFile(fs::path filepath = {});
 
