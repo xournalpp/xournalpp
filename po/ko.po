@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 12:48+0000\n"
-"PO-Revision-Date: 2026-09-20 04:30\n"
+"POT-Creation-Date: 2026-09-22 11:55+0000\n"
+"PO-Revision-Date: 2026-09-23 09:44\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -996,55 +996,63 @@ msgid "Select Area Text from pdf"
 msgstr "PDF로부터 영역 텍스트 선택"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
+msgid "Color - don't change"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
+msgid "Custom color"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 msgid "Drawing Type - don't change"
 msgstr "그리기 타입 - 바꾸지 않기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 msgid "Normal drawing"
 msgstr "일반 그리기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Draw Line"
 msgstr "선 그리기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Draw Rectangle"
 msgstr "직사각형 그리기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Draw Ellipse"
 msgstr "타원 그리기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Draw Arrow"
 msgstr "화살표 그리기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw Double Arrow"
 msgstr "양쪽 화살표 그리기"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Draw Coordinate System"
 msgstr ""
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
 msgstr "도형 자동인식"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:145
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Draw Spline"
@@ -4012,31 +4020,31 @@ msgstr "장치"
 msgid "Disable drawing for this device"
 msgstr "이 장치에서 그리기 비활성화"
 
-#: ../ui/settingsButtonConfig.glade:125
+#: ../ui/settingsButtonConfig.glade:138
 msgid "Eraser Type - don't change"
 msgstr "지우개 타입 - 바꾸지 않기"
 
-#: ../ui/settingsButtonConfig.glade:126 ../ui/settingsButtonConfig.glade:144
+#: ../ui/settingsButtonConfig.glade:139 ../ui/settingsButtonConfig.glade:157
 msgid "Standard"
 msgstr "일반"
 
-#: ../ui/settingsButtonConfig.glade:127
+#: ../ui/settingsButtonConfig.glade:140
 msgid "Whiteout"
 msgstr "흰색 덧칠"
 
-#: ../ui/settingsButtonConfig.glade:128
+#: ../ui/settingsButtonConfig.glade:141
 msgid "Delete stroke"
 msgstr "획 삭제"
 
-#: ../ui/settingsButtonConfig.glade:143
+#: ../ui/settingsButtonConfig.glade:156
 msgid "Stroke Type - don't change"
 msgstr "획 타입 - 바꾸지 않기"
 
-#: ../ui/settingsButtonConfig.glade:145
+#: ../ui/settingsButtonConfig.glade:158
 msgid "Dashed"
 msgstr "파선"
 
-#: ../ui/settingsButtonConfig.glade:146
+#: ../ui/settingsButtonConfig.glade:159
 msgid "Dash-dotted"
 msgstr "1점 쇄선"
 
