@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-09-13 06:33+0000\n"
-"PO-Revision-Date: 2026-09-20 04:30\n"
+"PO-Revision-Date: 2026-09-23 09:43\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -125,12 +125,13 @@ msgstr "Errore nel leggere il file PNG \"{1}\""
 
 #: ../src/core/control/Control.cpp:1668
 msgid "Failed to determine if path exists \"{1}\": {2}"
-msgstr ""
+msgstr "Impossibile determinare se il percorso esiste \"{1}\": {2}"
 
 #: ../src/core/control/Control.cpp:1669
 msgid "That file does not exist:\n"
 "\"{1}\""
-msgstr ""
+msgstr "Il file non esiste:\n"
+"\"{1}\""
 
 #: ../src/core/control/Control.cpp:1776
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -1199,7 +1200,7 @@ msgstr "Tavolozze utente"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:99
 msgid "<i>The palettes shown below are obtained from the <a href=\"{1}\">Built-in palettes</a> and <a href=\"{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>Le tavolozze mostrate di seguito sono ottenute dalle cartelle <a href=“file://{1}”>Tavolozze integrate</a> e <a href=“file://{2}”>Tavolozze utente</a>:</i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:117
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
@@ -2099,12 +2100,13 @@ msgstr "Codice di errore {1}"
 
 #: ../src/util/PathUtil.cpp:125
 msgid "Could not open file: {1}"
-msgstr ""
+msgstr "Impossibile aprire il file: {1}"
 
 #: ../src/util/PathUtil.cpp:132
 msgid "Error reading \"{1}\":\n"
 "{2}"
-msgstr ""
+msgstr "Errore nella lettura \"{1}\":\n"
+"{2}"
 
 #: ../src/util/PathUtil.cpp:409
 msgid "xournalpp-{1}"
@@ -3363,7 +3365,7 @@ msgstr "Ricolora l'area di disegno (potrebbe causare ritardo durante lo spostame
 
 #: ../ui/settings.glade:3264
 msgid "Recolors the drawing area so that light regions get the \"Light Color\" and dark regions get the \"Dark Color\". Other colors are interpolated accordingly. Can be use to implement a dark-mode."
-msgstr ""
+msgstr "Ricolora l'area di disegno in modo che le regioni chiare ottengano il \"Colore Chiaro\" e le regioni scure ottengano il \"Colore Scuro\". Altri colori sono interpolati di conseguenza. Può essere utilizzato per implementare una modalità scura."
 
 #: ../ui/settings.glade:3274
 msgid "Recolor Previews in the Sidebar"
@@ -3371,17 +3373,19 @@ msgstr "Ricolora anteprime nella barra laterale"
 
 #: ../ui/settings.glade:3279
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) the same way as the drawing area."
-msgstr ""
+msgstr "Ricolora le anteprime nella barra laterale (Pagina/Anteprima del livello) allo stesso modo dell'area di disegno."
 
 #: ../ui/settings.glade:3293
 msgid "The color light regions are translated to\n"
 "(use a dark color for a dark-mode)"
-msgstr ""
+msgstr "Le regioni di colore chiaro sono tradotte in\n"
+"(usa un colore scuro per una modalità scuro)"
 
 #: ../ui/settings.glade:3308
 msgid "The color dark regions are translated to\n"
 "(use a light color for dark-mode)"
-msgstr ""
+msgstr "Le regioni scure del colore sono tradotte in\n"
+"(usa un colore chiaro per la modalità scura)"
 
 #: ../ui/settings.glade:3324
 msgid "Dark Color"
@@ -3393,7 +3397,7 @@ msgstr "Colore chiaro"
 
 #: ../ui/settings.glade:3351
 msgid "Recoloring (allows theming)"
-msgstr ""
+msgstr "Ricolorare (permette il tema)"
 
 #: ../ui/settings.glade:3383
 msgid "Cursor icon for pen"
