@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-13 20:30+0000\n"
-"PO-Revision-Date: 2026-07-19 05:25\n"
+"POT-Creation-Date: 2026-09-13 06:33+0000\n"
+"PO-Revision-Date: 2026-09-20 04:30\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -125,12 +125,13 @@ msgstr "Fel vid läsning av PNG-fil \"{1}\""
 
 #: ../src/core/control/Control.cpp:1668
 msgid "Failed to determine if path exists \"{1}\": {2}"
-msgstr ""
+msgstr "Kunde inte avgöra om filsökväg existerar \"{1}\": {2}"
 
 #: ../src/core/control/Control.cpp:1669
 msgid "That file does not exist:\n"
 "\"{1}\""
-msgstr ""
+msgstr "Den filen existerar inte:\n"
+"\"{1}\""
 
 #: ../src/core/control/Control.cpp:1776
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -291,40 +292,40 @@ msgstr "PDF-bakgrund saknas"
 msgid "Running print operation failed with {1}"
 msgstr "Utskriftåtgärden misslyckades vid körning med {1}"
 
-#: ../src/core/control/XournalMain.cpp:120
+#: ../src/core/control/XournalMain.cpp:124
 msgid "Failed to delete file: {1}"
 msgstr "Kunde inte radera filen: {1}"
 
-#: ../src/core/control/XournalMain.cpp:122
+#: ../src/core/control/XournalMain.cpp:126
 msgid "Please delete the file manually"
 msgstr "Vänligen radera filen manuellt"
 
-#: ../src/core/control/XournalMain.cpp:134
+#: ../src/core/control/XournalMain.cpp:138
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ kraschade förra gången. Vill du återställa den senast redigerade filen?"
 
-#: ../src/core/control/XournalMain.cpp:137
+#: ../src/core/control/XournalMain.cpp:141
 msgid "Recovery file detected"
 msgstr "Återställningsfil upptäckt"
 
-#: ../src/core/control/XournalMain.cpp:138
+#: ../src/core/control/XournalMain.cpp:142
 msgid "Delete file"
 msgstr "Ta bort fil"
 
-#: ../src/core/control/XournalMain.cpp:138
+#: ../src/core/control/XournalMain.cpp:142
 msgid "Restore file"
 msgstr "Återställ fil"
 
-#: ../src/core/control/XournalMain.cpp:158
+#: ../src/core/control/XournalMain.cpp:162
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "Bakgrundsfilen \"{1}\" kunde inte hittas. Den kan ha flyttats, bytts namn på eller raderats."
 
-#: ../src/core/control/XournalMain.cpp:222
-#: ../src/core/control/XournalMain.cpp:230
+#: ../src/core/control/XournalMain.cpp:226
+#: ../src/core/control/XournalMain.cpp:234
 msgid "Error: {1}"
 msgstr "Fel: {1}"
 
-#: ../src/core/control/XournalMain.cpp:372
+#: ../src/core/control/XournalMain.cpp:376
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -338,24 +339,24 @@ msgstr "<span foreground='red' size='x-large'>Saknar den nödvändiga användarg
 "  Inte i arbetssökvägen\n"
 "  Inte i {2}"
 
-#: ../src/core/control/XournalMain.cpp:377
+#: ../src/core/control/XournalMain.cpp:381
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "Kommer nu att försöka köra utan denna fil."
 
-#: ../src/core/control/XournalMain.cpp:399
-#: ../src/core/control/XournalMain.cpp:460
+#: ../src/core/control/XournalMain.cpp:403
+#: ../src/core/control/XournalMain.cpp:464
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Tyvärr kan Xournal++ bara öppna en fil åt gången.\n"
 "De andra ignoreras."
 
-#: ../src/core/control/XournalMain.cpp:410
+#: ../src/core/control/XournalMain.cpp:414
 msgid "File {1} does not exist."
 msgstr "Filen {1} existerar inte."
 
-#: ../src/core/control/XournalMain.cpp:414
+#: ../src/core/control/XournalMain.cpp:418
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -363,28 +364,28 @@ msgstr "Filsystemfel: {1}\n"
 "Tyvärr, Xournal++ kan inte öppna filen: {2}\n"
 "Överväg att kopiera filen till en lokal katalog."
 
-#: ../src/core/control/XournalMain.cpp:617
+#: ../src/core/control/XournalMain.cpp:620
 msgid "Jump to Page (first Page: 1)"
 msgstr "Hoppa till sida (första sidan: 1)"
 
-#: ../src/core/control/XournalMain.cpp:621
+#: ../src/core/control/XournalMain.cpp:624
 msgid "Get version of xournalpp"
 msgstr "Hämta version av xournalpp"
 
-#: ../src/core/control/XournalMain.cpp:623
+#: ../src/core/control/XournalMain.cpp:626
 msgid "Disable audio for this session"
 msgstr "Inaktivera ljud för den här sessionen"
 
-#: ../src/core/control/XournalMain.cpp:625
+#: ../src/core/control/XournalMain.cpp:628
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:629
+#: ../src/core/control/XournalMain.cpp:632
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "Spara xopp-fil med bakgrunds-PDF specificerad som FIL"
 
-#: ../src/core/control/XournalMain.cpp:634
+#: ../src/core/control/XournalMain.cpp:637
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
@@ -392,11 +393,11 @@ msgstr "Använd det tillhandahållna bakgrundssystemet för PDF-exporter.\n"
 "                                       Tillgängliga bakgrundssystem: {1}\n"
 "                                       Ingen effekt utan -p/--create-pdf=foo.pdf"
 
-#: ../src/core/control/XournalMain.cpp:643
+#: ../src/core/control/XournalMain.cpp:646
 msgid "Export FILE as PDF"
 msgstr "Exportera FIL som PDF"
 
-#: ../src/core/control/XournalMain.cpp:646
+#: ../src/core/control/XournalMain.cpp:649
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
@@ -404,7 +405,7 @@ msgstr "Exportera FIL som bildfiler (en per sida)\n"
 "                                       Gissa utmatningsformatet utifrån IMGFILE:s tillägg\n"
 "                                       Stödda format: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:652
+#: ../src/core/control/XournalMain.cpp:655
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
@@ -412,12 +413,12 @@ msgstr "Exportera utan bakgrund\n"
 "                                       Den exporterade filen har genomskinlig eller vit bakgrund\n"
 "                                       beroende på vad dess format stödjer\n"
 
-#: ../src/core/control/XournalMain.cpp:657
+#: ../src/core/control/XournalMain.cpp:660
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:662
+#: ../src/core/control/XournalMain.cpp:665
 msgid "Export layers progressively\n"
 "                                       In PDF export, Render layers progressively one by one.\n"
 "                                       This results in N export pages per page with N layers,\n"
@@ -425,25 +426,25 @@ msgid "Export layers progressively\n"
 "                                       The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:671
+#: ../src/core/control/XournalMain.cpp:674
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Exportera enbart sidor specificerade i OMFÅNG (t.ex. \"2-3,5,7-\")\n"
 "                                       Ingen effekt utan -p/--create-pdf or -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:676
+#: ../src/core/control/XournalMain.cpp:679
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Exportera enbart lager specificerade i OMFÅNG (t.ex. \"2-3,5,7-\")\n"
 "                                       Ingen effekt utan -p/--create-pdf or -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:680
+#: ../src/core/control/XournalMain.cpp:683
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
 msgstr "Ställ in DPI för PNG-exporter. Standard är 300\n"
 "                                       Ingen effekt utan -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:684
+#: ../src/core/control/XournalMain.cpp:687
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
@@ -451,7 +452,7 @@ msgstr "Ställ in sidbredd för PNG-exporter\n"
 "                                       Ingen effekt utan -i/--create-img=foo.png\n"
 "                                       Ignorerad om --export-png-dpi används"
 
-#: ../src/core/control/XournalMain.cpp:689
+#: ../src/core/control/XournalMain.cpp:692
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
@@ -459,11 +460,11 @@ msgstr "Ställ in sidhöjd för PNG-exporter.\n"
 "                                       Ingen effekt utan -i/--create-img=foo.png\n"
 "                                       Ignorerad om --export-png-dpi eller --export-png-width används"
 
-#: ../src/core/control/XournalMain.cpp:697
+#: ../src/core/control/XournalMain.cpp:700
 msgid "Advanced export options"
 msgstr "Avancerade exportalternativ"
 
-#: ../src/core/control/XournalMain.cpp:698
+#: ../src/core/control/XournalMain.cpp:701
 msgid "Display advanced export options"
 msgstr "Visa avancerade exportalternativ"
 
@@ -727,15 +728,15 @@ msgstr "Okänd bakgrundstyp: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:553
 msgid "Error reading width of a stroke: {1}"
-msgstr "Fel vid läsning av bredden på ett streck: {1}"
+msgstr "Fel vid läsning av bredden på ett objekt: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:622
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "Okänd typ av objektända: \"{1}\", antar rund"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:640
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr ""
+msgstr "Okänd objekttyp: \"{1}\", antar penna"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:811
 #: ../src/core/control/xojfile/LoadHandler.cpp:827
@@ -760,7 +761,7 @@ msgstr "Kunde inte öppna bilaga: {1}. Felmeddelande: Kunde inte skriva till fil
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1035
 msgid "Wrong count of points ({1})"
-msgstr ""
+msgstr "Fel antal punkter ({1})"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1051
 msgid "xoj-File: {1}"
@@ -768,7 +769,7 @@ msgstr "xoj-fil: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1052
 msgid "Wrong number of pressure values, got {1}, expected {2}"
-msgstr ""
+msgstr "Fel antal tryckvärden, fick {1}, förväntade {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1184
 msgid "Requested temporary file was not found for attachment {1}"
@@ -999,7 +1000,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Drawing Type - don't change"
-msgstr ""
+msgstr "Ritläge – ändra inte"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
 msgid "Normal drawing"
@@ -1211,7 +1212,7 @@ msgstr "Användarpaletter"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:99
 msgid "<i>The palettes shown below are obtained from the <a href=\"{1}\">Built-in palettes</a> and <a href=\"{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>Paletterna som visas nedan är hämtade från katalogerna för de <a href=\"{1}\">inbyggda paletterna</a> och <a href=\"{2}\">användarpaletterna</a></i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:117
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
@@ -1929,7 +1930,7 @@ msgstr "element"
 #: ../src/core/undo/AddUndoAction.cpp:88
 #: ../src/core/undo/DeleteUndoAction.cpp:90
 msgid "stroke"
-msgstr "streck"
+msgstr "objekt"
 
 #: ../src/core/undo/AddUndoAction.cpp:91
 #: ../src/core/undo/DeleteUndoAction.cpp:93
@@ -2107,12 +2108,13 @@ msgstr "Felkod {1}"
 
 #: ../src/util/PathUtil.cpp:125
 msgid "Could not open file: {1}"
-msgstr ""
+msgstr "Kunde inte öppna fil: {1}"
 
 #: ../src/util/PathUtil.cpp:132
 msgid "Error reading \"{1}\":\n"
 "{2}"
-msgstr ""
+msgstr "Fel vid läsning \"{1}\":\n"
+"{2}"
 
 #: ../src/util/PathUtil.cpp:409
 msgid "xournalpp-{1}"
@@ -2146,35 +2148,35 @@ msgid "Unable to open the link: {1}\n"
 msgstr "Kunde inte öppna länken: {1}\n"
 "{2}"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:127
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:134
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:140
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
 msgstr "xoj-preview-extractor: filen \"{1}\" är inte en .xoj-fil"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:138
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:144
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:142
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:148
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:147
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:153
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:187
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:193
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
 msgstr "xoj-preview-extractor: kunde inte hitta ikonen \"{1}\""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:205
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:211
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:212
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:218
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr ""
 
@@ -3315,7 +3317,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3264
 msgid "Recolors the drawing area so that light regions get the \"Light Color\" and dark regions get the \"Dark Color\". Other colors are interpolated accordingly. Can be use to implement a dark-mode."
-msgstr ""
+msgstr "Färgar om ritområdet så att ljusa delar går får \"Ljus färg\" och mörka regioner får \"Mörk färg\". Andra färger interpoleras därefter. Kan användas för att implementera ett mörkt läge."
 
 #: ../ui/settings.glade:3274
 msgid "Recolor Previews in the Sidebar"
@@ -3323,17 +3325,19 @@ msgstr ""
 
 #: ../ui/settings.glade:3279
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) the same way as the drawing area."
-msgstr ""
+msgstr "Färgar om förhandsvisningar i sidofältet (Förhandsgranska sida/lager) på samma sätt som ritområdet."
 
 #: ../ui/settings.glade:3293
 msgid "The color light regions are translated to\n"
 "(use a dark color for a dark-mode)"
-msgstr ""
+msgstr "Färgen som ljusa delar översätts till\n"
+"(använd en mörk färg för mörkt läge)"
 
 #: ../ui/settings.glade:3308
 msgid "The color dark regions are translated to\n"
 "(use a light color for dark-mode)"
-msgstr ""
+msgstr "Färgen som mörka delar översätts till\n"
+"(använd en ljus färg för mörkt läge)"
 
 #: ../ui/settings.glade:3324
 msgid "Dark Color"
@@ -3345,7 +3349,7 @@ msgstr "Ljus färg"
 
 #: ../ui/settings.glade:3351
 msgid "Recoloring (allows theming)"
-msgstr ""
+msgstr "Omfärgning (möjliggör teman)"
 
 #: ../ui/settings.glade:3383
 msgid "Cursor icon for pen"
@@ -4299,7 +4303,7 @@ msgstr "Stan_dardverktyg"
 
 #: ../ui/mainmenubar.xml:559
 msgid "Drawing Type"
-msgstr ""
+msgstr "Ritläge"
 
 #: ../ui/mainmenubar.xml:561
 msgid "_Shape Recognizer"
@@ -4468,7 +4472,7 @@ msgstr "Ta handskrivna anteckningar"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:8
 msgid "tablet;Wacom;pen input;PDF Annotation;markup"
-msgstr ""
+msgstr "surfplatta;Wacom;penninmatning;PDF-annotering;markering"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:8
 msgid "Xournalpp Developers"
