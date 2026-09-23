@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 12:48+0000\n"
-"PO-Revision-Date: 2026-09-20 04:30\n"
+"POT-Creation-Date: 2026-09-22 11:55+0000\n"
+"PO-Revision-Date: 2026-09-23 09:44\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -1015,55 +1015,63 @@ msgid "Select Area Text from pdf"
 msgstr "Selecionar Área de Texto do PDF"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
+msgid "Color - don't change"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
+msgid "Custom color"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 msgid "Drawing Type - don't change"
 msgstr "Tipo de Desenho - não mude"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 msgid "Normal drawing"
 msgstr "Desenho normal"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Draw Line"
 msgstr "Desenhar Linha"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Draw Rectangle"
 msgstr "Desenhar Retângulo"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Draw Ellipse"
 msgstr "Desenhar Elipse"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Draw Arrow"
 msgstr "Desenhar Seta"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw Double Arrow"
 msgstr "Desenhar Seta Dupla"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Draw Coordinate System"
 msgstr "Desenhar Sistema de Coordenadas"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
 msgstr "Reconhecimento de forma"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:145
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Draw Spline"
@@ -4073,31 +4081,31 @@ msgstr "Dispositivo"
 msgid "Disable drawing for this device"
 msgstr "Desativar desenho para este dispositivo"
 
-#: ../ui/settingsButtonConfig.glade:125
+#: ../ui/settingsButtonConfig.glade:138
 msgid "Eraser Type - don't change"
 msgstr "Tipo de borracha - não mudar"
 
-#: ../ui/settingsButtonConfig.glade:126 ../ui/settingsButtonConfig.glade:144
+#: ../ui/settingsButtonConfig.glade:139 ../ui/settingsButtonConfig.glade:157
 msgid "Standard"
 msgstr "Padrão"
 
-#: ../ui/settingsButtonConfig.glade:127
+#: ../ui/settingsButtonConfig.glade:140
 msgid "Whiteout"
 msgstr "Borracha pontual"
 
-#: ../ui/settingsButtonConfig.glade:128
+#: ../ui/settingsButtonConfig.glade:141
 msgid "Delete stroke"
 msgstr "Excluir traço"
 
-#: ../ui/settingsButtonConfig.glade:143
+#: ../ui/settingsButtonConfig.glade:156
 msgid "Stroke Type - don't change"
 msgstr "Estilo de Traço — não alterar"
 
-#: ../ui/settingsButtonConfig.glade:145
+#: ../ui/settingsButtonConfig.glade:158
 msgid "Dashed"
 msgstr "Tracejado"
 
-#: ../ui/settingsButtonConfig.glade:146
+#: ../ui/settingsButtonConfig.glade:159
 msgid "Dash-dotted"
 msgstr "Pontilhado"
 

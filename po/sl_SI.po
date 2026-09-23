@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 12:48+0000\n"
-"PO-Revision-Date: 2026-09-20 04:30\n"
+"POT-Creation-Date: 2026-09-22 11:55+0000\n"
+"PO-Revision-Date: 2026-09-23 09:44\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -996,55 +996,63 @@ msgid "Select Area Text from pdf"
 msgstr "Izberi Besedilo iz pdf"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
+msgid "Color - don't change"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
+msgid "Custom color"
+msgstr ""
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 msgid "Drawing Type - don't change"
 msgstr "Vrsta risanja - ne spremeni"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 msgid "Normal drawing"
 msgstr "Navadno risanje"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Draw Line"
 msgstr "Nariši črto"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Draw Rectangle"
 msgstr "Nariši pravokotnik"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Draw Ellipse"
 msgstr "Nariši elipso"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Draw Arrow"
 msgstr "Nariši puščico"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw Double Arrow"
 msgstr "Nariši dvojno puščico"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Draw Coordinate System"
 msgstr "Nariši koordinatni sistem"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
 msgstr "Prepoznavanje oblik"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:145
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Draw Spline"
@@ -4049,31 +4057,31 @@ msgstr "Naprava"
 msgid "Disable drawing for this device"
 msgstr "Onemogoči risanje za to napravo"
 
-#: ../ui/settingsButtonConfig.glade:125
+#: ../ui/settingsButtonConfig.glade:138
 msgid "Eraser Type - don't change"
 msgstr "Vrsta radirke - ne spremeni"
 
-#: ../ui/settingsButtonConfig.glade:126 ../ui/settingsButtonConfig.glade:144
+#: ../ui/settingsButtonConfig.glade:139 ../ui/settingsButtonConfig.glade:157
 msgid "Standard"
 msgstr "Običajno"
 
-#: ../ui/settingsButtonConfig.glade:127
+#: ../ui/settingsButtonConfig.glade:140
 msgid "Whiteout"
 msgstr "Korekturno sredstvo"
 
-#: ../ui/settingsButtonConfig.glade:128
+#: ../ui/settingsButtonConfig.glade:141
 msgid "Delete stroke"
 msgstr "Izbriši potezo"
 
-#: ../ui/settingsButtonConfig.glade:143
+#: ../ui/settingsButtonConfig.glade:156
 msgid "Stroke Type - don't change"
 msgstr "Vrsta poteze - ne spremeni"
 
-#: ../ui/settingsButtonConfig.glade:145
+#: ../ui/settingsButtonConfig.glade:158
 msgid "Dashed"
 msgstr "Črtkano"
 
-#: ../ui/settingsButtonConfig.glade:146
+#: ../ui/settingsButtonConfig.glade:159
 msgid "Dash-dotted"
 msgstr "Črtkano-pikčast"
 
