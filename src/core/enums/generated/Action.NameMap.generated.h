@@ -23,6 +23,8 @@ constexpr const char* ACTION_NAMES[] = {  // Action to string conversion map
         "search",
         "select-all",
         "delete",
+        "mirror-horizontally",
+        "mirror-vertically",
         "move-selection-layer-up",
         "move-selection-layer-down",
         "rotation-snapping",
