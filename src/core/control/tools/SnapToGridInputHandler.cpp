@@ -73,6 +73,7 @@ void SnapToGridInputHandler::calculateGridOffsets(double& xOffset, double& yOffs
             yOffset = RULED_HEADER_SIZE;
             break;
         case PageTypeFormat::Graph:
+        case PageTypeFormat::LinedGraph:
         case PageTypeFormat::Dotted:
         case PageTypeFormat::Staves:
         case PageTypeFormat::Plain:
