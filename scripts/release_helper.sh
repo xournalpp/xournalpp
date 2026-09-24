@@ -190,6 +190,12 @@ function bump_version() {
 
     # Update Fedora xournalpp.spec
     sed -i "s/%global	version_string ${prior_version}/%global	version_string $(current_version)/g" "${SCRIPT_PATH}/../rpm/fedora/xournalpp.spec"
+
+    # Update github translation workflow branch
+    if [$(current_major_version) -neq $(parse_major_version "$1") ] || [$(current_minor_version) -neq $(parse_minor_version "$1") ]; then
+        sed -i "s/release-$(current_major_version).$(current_minor_version)/release-$(parse_major_version "$1").$(parse_minor_version "$1")/g" "${SCRIPT_PATH}/../.github/workflows/download-translations-from-crowdin.yml"
+    fi
+
 }
 
 # Prepares a new version

@@ -120,13 +120,8 @@ followed when publishing a release:
   * [ ] Directly push the HEAD commit of the PR to the release branch. **Do not
         create a merge commit, the commit should be fast-forwarded.**
   * [ ] Push the tag.
-* [ ] A tag push should trigger a run of the "Release" pipeline on Azure
-      Pipelines (not to be confused with the "Releases" tab); ensure that it
-      succeeds.
-  * [ ] Check that the "Release" pipeline succeeds.
-  * [ ] Go to "Releases" tab (not the pipeline) and trigger a manual deployment
-        with "Create Release".
-  * [ ] Check that the deployment successfully creates a GitHub release draft.
+* [ ] A tag push should trigger a run of the "Release" pipeline.
+      If the pipeline is successful, a draft release will be automatically added on GitHub.
 * [ ] Last checks on the GitHub release draft
   * [ ] Update the release description.
   * [ ] Test the release draft artifacts for obvious issues.
@@ -134,7 +129,10 @@ followed when publishing a release:
 * [ ] Check that the [FlatHub release][flathub] is built successfully.
 * [ ] Update the version on [the website repository][website].
 * [ ] After the release is created, merge back the release branch into `master`.
+* [ ] After a major or minor release, update [Crowdin][crowdin]
+  * [ ] Check that the Github action "Upload translatable strings to Crowdin" created a version branch on Crowdin. Otherwise, create one (TODO make sure what's needed here when we make the next release)
 
 
 [flathub]: https://github.com/flathub/com.github.xournalpp.xournalpp
 [website]: https://github.com/xournalpp/xournalpp.github.io
+[crowdin]: https://crowdin.com/project/xournalpp
