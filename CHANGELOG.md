@@ -2,6 +2,13 @@
 
 ## 1.3.8~dev (Unreleased)
 
+* Fix QPDF export when background PDF has a CropBox (#7701)
+* Fix crash when setting locale up fails (#7702)
+* Fix memory leaks (#7756)
+* Fix locale-dependent parsing of metadata files (#7756)
+* Update dependencies in OSX bundles (#7724)
+* Updated translations - Rename language zh to zh_CN
+
 ## 1.3.7
 
 * Fixed Lua API changeToolColor not recognizing some tool names (#7631)
