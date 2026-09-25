@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.3.8~dev (Unreleased)
+## 1.3.8
 
 * Fix QPDF export when background PDF has a CropBox (#7701)
 * Fix crash when setting locale up fails (#7702)
