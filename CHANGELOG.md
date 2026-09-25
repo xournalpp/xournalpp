@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.3.9~dev (Unreleased)
+
 ## 1.3.8
 
 * Fix QPDF export when background PDF has a CropBox (#7701)
