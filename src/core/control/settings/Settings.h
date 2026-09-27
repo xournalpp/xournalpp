@@ -395,6 +395,10 @@ public:
     Color getBackgroundColor() const;
     void setBackgroundColor(Color color);
 
+    /// Background painted behind a PDF page on screen. Printing is unchanged.
+    Color getPdfRenderBackgroundColor() const;
+    void setPdfRenderBackgroundColor(Color color);
+
     Color getActiveSelectionColor() const;
     void setActiveSelectionColor(Color color);
 
@@ -1027,6 +1031,12 @@ private:
      * The color for Xournal page background
      */
     Color backgroundColor{};
+
+    /**
+     * Color painted behind PDF content when rendering to the screen.
+     * Default matches the previous hardcoded cream background.
+     */
+    Color pdfRenderBackgroundColor{0xF2, 0xE5, 0xBC};
 
     /**
      * The parameters for the recoloring logic

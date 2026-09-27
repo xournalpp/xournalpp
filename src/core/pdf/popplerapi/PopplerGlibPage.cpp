@@ -9,8 +9,10 @@
 #include <poppler-page.h>  // for _PopplerRectangle, _PopplerLin...
 #include <poppler.h>       // for PopplerRectangle, g_object_ref
 
-#include "pdf/base/XojPdfAction.h"     // for XojPdfAction
-#include "pdf/base/XojPdfPage.h"       // for XojPdfRectangle, XojPdfPage::Link
+#include "control/settings/Settings.h"  // for Settings
+#include "pdf/base/XojPdfAction.h"      // for XojPdfAction
+#include "pdf/base/XojPdfPage.h"        // for XojPdfRectangle, XojPdfPage::Link
+#include "util/Color.h"                 // for Color
 #include "util/Assert.h"               // for xoj_assert
 #include "util/GListView.h"            // for GListView, GListView<>::GListV...
 #include "util/raii/CLibrariesSPtr.h"  // for adopt
@@ -18,6 +20,14 @@
 
 #include "PopplerGlibAction.h"  // for PopplerGlibAction
 #include "cairo.h"              // for cairo_region_create, cairo_reg...
+
+namespace {
+Settings* renderSettings = nullptr;
+/// Used before Control has attached Settings, and if no settings object exists.
+constexpr Color DEFAULT_PDF_RENDER_BACKGROUND{0xF2, 0xE5, 0xBC};
+}  // namespace
+
+void PopplerGlibPage::useSettings(Settings* settings) { renderSettings = settings; }
 
 PopplerGlibPage::PopplerGlibPage(PopplerPage* page, PopplerDocument* parentDoc, std::shared_ptr<std::mutex> mutex):
         page(page), document(parentDoc), mutex(mutex) {
@@ -77,7 +87,9 @@ auto PopplerGlibPage::getHeight() const -> double {
 void PopplerGlibPage::render(cairo_t* cr) const {
     std::lock_guard guard(*mutex);
     cairo_save(cr);
-    cairo_set_source_rgb(cr, 1., 1., 1.);
+    const Color background =
+            renderSettings != nullptr ? renderSettings->getPdfRenderBackgroundColor() : DEFAULT_PDF_RENDER_BACKGROUND;
+    cairo_set_source_rgb(cr, background.red / 255.0, background.green / 255.0, background.blue / 255.0);
     cairo_paint(cr);
     poppler_page_render(page, cr);
     cairo_restore(cr);
