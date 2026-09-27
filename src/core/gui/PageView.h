@@ -11,11 +11,12 @@
 
 #pragma once
 
-#include <cstddef>  // for size_t
-#include <memory>   // for unique_ptr, shared_ptr
-#include <mutex>    // for mutex
-#include <string>   // for string
-#include <vector>   // for vector
+#include <cstddef>     // for size_t
+#include <functional>  // for function
+#include <memory>      // for unique_ptr, shared_ptr
+#include <mutex>       // for mutex
+#include <string>      // for string
+#include <vector>      // for vector
 
 #include <cairo.h>    // for cairo_t
 #include <gdk/gdk.h>  // for GdkEventKey, GdkRGBA, GdkRectangle
@@ -190,6 +191,11 @@ public:  // listener
     void elementsChanged(const std::vector<const Element*>& elements, const Range& range) override;
 
 private:
+    /// Other windows' views of this same page.
+    void forEachOtherPageView(const std::function<void(XojPageView*)>& fn) const;
+    /// Shows the in-progress stroke on every other window that displays this page.
+    void mirrorInputHandlerToOtherWindows();
+
     void startText(double x, double y);
 
     void startLink();

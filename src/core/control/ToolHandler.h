@@ -12,8 +12,10 @@
 #pragma once
 
 #include <array>       // for array
+#include <cstddef>     // for size_t
 #include <functional>  // for function
 #include <memory>      // for unique_ptr
+#include <utility>     // for pair
 #include <vector>      // for vector
 
 #include "control/ToolEnums.h"               // for ToolSize, ToolType, Draw...
@@ -254,10 +256,11 @@ public:
      * Different from the listener given to the constructor -- [listener]
      * here only listens for when the current tool is changed to another.
      *
-     * @param listener A callback, called when the user/client
-     *  changes tools.
+     * @param listener A callback, called when the user/client changes tools.
+     * @return An id that removeToolChangedListener() accepts.
      */
-    void addToolChangedListener(ToolChangedCallback listener);
+    size_t addToolChangedListener(ToolChangedCallback listener);
+    void removeToolChangedListener(size_t id);
 
     /**
      * @brief Get the Tool of a certain type
@@ -425,7 +428,8 @@ private:
     std::unique_ptr<Tool> mouseButton5Tool;
     std::unique_ptr<Tool> touchDrawingButtonTool;
 
-    std::vector<ToolChangedCallback> toolChangeListeners;
+    std::vector<std::pair<size_t, ToolChangedCallback>> toolChangeListeners;
+    size_t nextToolListenerId = 1;
 
     ToolListener* stateChangeListener = nullptr;
     ActionDatabase* actionDB = nullptr;

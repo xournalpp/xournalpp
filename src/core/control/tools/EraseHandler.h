@@ -18,15 +18,13 @@ class Document;
 class EraseUndoAction;
 class Layer;
 class Range;
-class LegacyRedrawable;
 class Stroke;
 class ToolHandler;
 class UndoRedoHandler;
 
 class EraseHandler {
 public:
-    EraseHandler(UndoRedoHandler* undo, Document* doc, const PageRef& page, ToolHandler* handler,
-                 LegacyRedrawable* view);
+    EraseHandler(UndoRedoHandler* undo, Document* doc, const PageRef& page, ToolHandler* handler);
     virtual ~EraseHandler();
 
 public:
@@ -39,7 +37,6 @@ private:
 private:
     PageRef page;
     ToolHandler* handler;
-    LegacyRedrawable* view;
     Document* doc;
     UndoRedoHandler* undo;
 

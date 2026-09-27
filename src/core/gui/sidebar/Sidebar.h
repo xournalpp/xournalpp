@@ -23,6 +23,7 @@
 class AbstractSidebarPage;
 class Control;
 class GladeGui;
+class MainWindow;
 class SidebarTabButton;
 
 class Sidebar: public DocumentListener {
@@ -46,6 +47,12 @@ public:
     void selectPageNr(size_t page, size_t pdfPage);
 
     Control* getControl();
+
+    void setMainWindow(MainWindow* window) { this->mainWindow = window; }
+    MainWindow* getMainWindow() const { return this->mainWindow; }
+
+    /// Fills tabs from the document already open. Used when a new view is created.
+    void synchronizeWithDocument();
 
     /**
      * Temporary disable Sidebar (e.g. while saving)
@@ -96,6 +103,7 @@ private:
 
 private:
     Control* control = nullptr;
+    MainWindow* mainWindow = nullptr;
 
     /**
      * The sidebar pages
@@ -126,6 +134,9 @@ private:
      * The sidebarContents widget
      */
     GtkWidget* sidebarContents = nullptr;
+
+    /// Idle callback that lays this sidebar out. Removed in the destructor.
+    guint layoutIdle = 0;
 };
 
 class SidebarTabButton {

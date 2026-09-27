@@ -111,6 +111,9 @@ public:
     void setCurrentLayerName(const std::string& newName);
 
 private:
+    /// Rerenders `page` in every window. Layer edits change the shared page, so one window is not enough.
+    void rerenderPageInAllWindows(size_t page) const;
+
     Control* control;
 
     std::list<LayerCtrlListener*> listener;

@@ -104,7 +104,7 @@ XojPageView::XojPageView(XournalView* xournal, const PageRef& page):
         settings(xournal->getControl()->getSettings()),
         eraser(std::make_unique<EraseHandler>(xournal->getControl()->getUndoRedoHandler(),
                                               xournal->getControl()->getDocument(), this->page,
-                                              xournal->getControl()->getToolHandler(), this)),
+                                              xournal->getControl()->getToolHandler())),
         oldtext(nullptr) {
     this->registerToHandler(this->page);
 }
@@ -211,6 +211,40 @@ static void eraseViewsOf(std::vector<std::unique_ptr<xoj::view::OverlayView>>& v
     xoj_assert(hasNoViewOf(views, o));
 }
 
+void XojPageView::forEachOtherPageView(const std::function<void(XojPageView*)>& fn) const {
+    Control* control = this->xournal->getControl();
+    if (control->getWindowCount() < 2) {
+        return;
+    }
+
+    Document* doc = control->getDocument();
+    doc->lock_shared();
+    const size_t pageNo = doc->indexOf(this->page);
+    doc->unlock_shared();
+    if (pageNo == npos) {
+        return;
+    }
+
+    control->forEachWindow([&](MainWindow& window) {
+        XournalView* view = window.getXournal();
+        if (view == nullptr || view == this->xournal) {
+            return;
+        }
+        if (XojPageView* other = view->getViewFor(pageNo)) {
+            fn(other);
+        }
+    });
+}
+
+void XojPageView::mirrorInputHandlerToOtherWindows() {
+    if (!this->inputHandler) {
+        return;
+    }
+    this->forEachOtherPageView([this](XojPageView* other) {
+        other->addOverlayView(this->inputHandler->createView(other));
+    });
+}
+
 void XojPageView::endSpline() {
     if (SplineHandler* h = dynamic_cast<SplineHandler*>(this->inputHandler.get()); h) {
         h->finalizeSpline();
@@ -234,6 +268,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     Control* control = xournal->getControl();
 
     if (!this->selected) {
+        control->focusWindowFrom(xournal->getWidget());
         control->firePageSelected(this->page);
     }
 
@@ -266,6 +301,9 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
              */
             g_warning("InputHandler already exists upon XojPageView::onButtonPressEvent. Deleting it (and its views)");
             eraseViewsOf(this->overlayViews, this->inputHandler.get());
+            this->forEachOtherPageView([handler = this->inputHandler.get()](XojPageView* other) {
+                eraseViewsOf(other->overlayViews, handler);
+            });
             this->inputHandler.reset();
         }
 
@@ -294,13 +332,16 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         }
         this->inputHandler->onButtonPressEvent(pos, zoom);
         this->overlayViews.emplace_back(this->inputHandler->createView(this));
+        this->mirrorInputHandlerToOtherWindows();
 
     } else if ((h->getToolType() == TOOL_PEN || h->getToolType() == TOOL_HIGHLIGHTER) &&
                h->getDrawingType() == DRAWING_TYPE_SPLINE) {
         if (!this->inputHandler) {
-            this->inputHandler = std::make_unique<SplineHandler>(this->xournal->getControl(), getPage());
+            this->inputHandler =
+                    std::make_unique<SplineHandler>(this->xournal->getControl(), getPage(), xournal->getZoomControl());
             this->inputHandler->onButtonPressEvent(pos, zoom);
             this->overlayViews.emplace_back(this->inputHandler->createView(this));
+            this->mirrorInputHandlerToOtherWindows();
         } else {
             this->inputHandler->onButtonPressEvent(pos, zoom);
         }
@@ -320,7 +361,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
             control->getUndoRedoHandler()->addUndoAction(this->verticalSpace->finalize());
             this->verticalSpace.reset();
         }
-        auto* zoomControl = this->getXournal()->getControl()->getZoomControl();
+        auto* zoomControl = this->getXournal()->getZoomControl();
         this->verticalSpace = std::make_unique<VerticalToolHandler>(this->page, this->getXournal()->getControl(), y,
                                                                     pos.isControlDown());
         this->overlayViews.emplace_back(this->verticalSpace->createView(this, zoomControl, this->settings));
@@ -868,17 +909,22 @@ void XojPageView::repaintArea(double x1, double y1, double x2, double y2) const 
 void XojPageView::flagDirtyRegion(const Range& rg) const { repaintArea(rg.minX, rg.minY, rg.maxX, rg.maxY); }
 
 void XojPageView::drawAndDeleteToolView(xoj::view::ToolView* v, const Range& rg) {
-    if (v->isViewOf(this->inputHandler.get()) || v->isViewOf(this->verticalSpace.get()) ||
-        v->isViewOf(this->textEditor.get())) {
-        // Draw the inputHandler's view onto the page buffer.
+    // The window that owns the tool bakes it via isViewOf(). Other windows only have a mirrored
+    // stroke view, which still has to be baked so the stroke does not vanish when the overlay goes.
+    const bool bake = v->commitsToBuffer() || v->isViewOf(this->inputHandler.get()) ||
+                      v->isViewOf(this->verticalSpace.get()) || v->isViewOf(this->textEditor.get());
+    bool baked = false;
+    if (bake) {
         std::lock_guard lock(this->drawingMutex);
         if (auto cr = buffer.get(); cr) {
             v->drawWithoutDrawingAids(cr);
-        } else {
-            rerenderPage();
+            baked = true;
         }
     }
     this->deleteOverlayView(v, rg);
+    if (bake && !baked) {
+        rerenderPage();
+    }
 }
 
 void XojPageView::deleteOverlayView(xoj::view::OverlayView* v, const Range& rg) {
@@ -891,7 +937,7 @@ void XojPageView::deleteOverlayView(xoj::view::OverlayView* v, const Range& rg) 
 
 double XojPageView::getZoom() const { return xournal->getZoom(); }
 
-ZoomControl* XojPageView::getZoomControl() const { return this->getXournal()->getControl()->getZoomControl(); }
+ZoomControl* XojPageView::getZoomControl() const { return this->getXournal()->getZoomControl(); }
 
 Range XojPageView::getVisiblePart() const {
     std::unique_ptr<xoj::util::Rectangle<double>> rect(xournal->getVisibleRect(this));

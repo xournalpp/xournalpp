@@ -64,8 +64,8 @@ std::pair<size_t, size_t> XournalView::preloadPageBounds(size_t page, size_t max
     return {lower, upper};
 }
 
-XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling):
-        scrollHandling(scrollHandling), control(control) {
+XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling, ZoomControl* zoomControl):
+        scrollHandling(scrollHandling), control(control), zoomControl(zoomControl) {
     Document* doc = control->getDocument();
     doc->lock_shared();
     if (doc->getPdfPageCount() != 0) {
@@ -95,7 +95,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 
     this->repaintHandler = std::make_unique<RepaintHandler>(this);
 
-    control->getZoomControl()->addZoomListener(this);
+    this->zoomControl->addZoomListener(this);
 
     gtk_widget_set_can_default(this->widget, true);
     gtk_widget_grab_default(this->widget);
@@ -106,10 +106,25 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 }
 
 XournalView::~XournalView() {
+    if (this->zoomControl != nullptr) {
+        this->zoomControl->removeZoomListener(this);
+    }
+
     g_source_remove(this->cleanupTimeout);
+
+    // Put selected strokes back into the page before the widget is destroyed. Finalizing during
+    // widget dispose reads adjustments and the layout that dispose has already cleared.
+    if (this->widget != nullptr && this->getSelection() != nullptr) {
+        this->clearSelection();
+    }
 
     gtk_widget_destroy(this->widget);
     this->widget = nullptr;
+
+    // Widget teardown can point this window's zoom control back at the dying view.
+    if (this->zoomControl != nullptr && this->zoomControl->getView() == this) {
+        this->zoomControl->setView(nullptr);
+    }
 }
 
 
@@ -386,12 +401,19 @@ auto XournalView::getViewFor(size_t pageNr) const -> XojPageView* {
     return this->viewPages[pageNr].get();
 }
 
-void XournalView::pageSelected(size_t page) {
+bool XournalView::isActive() const {
+    MainWindow* active = control->getWindow();
+    return active != nullptr && active->getXournal() == this;
+}
+
+void XournalView::applyPageSelection(size_t page) {
     if (this->currentPage == page && this->lastSelectedPage == page) {
         return;
     }
 
-    control->getWindow()->getPdfToolbox()->userCancelSelection();
+    if (isActive() && control->getWindow()) {
+        control->getWindow()->getPdfToolbox()->userCancelSelection();
+    }
 
     if (this->lastSelectedPage != npos && this->lastSelectedPage < this->viewPages.size()) {
         this->viewPages[this->lastSelectedPage]->setSelected(false);
@@ -410,10 +432,14 @@ void XournalView::pageSelected(size_t page) {
         pdfPage = vp->getPage()->getPdfPageNr();
     }
 
-    control->updatePageNumbers(currentPage, pdfPage);
-
-    control->updateBackgroundSizeButton();
-    control->updatePageActions();
+    if (isActive()) {
+        control->updatePageNumbers(currentPage, pdfPage);
+        control->updateBackgroundSizeButton();
+        control->updatePageActions();
+    } else {
+        // Background windows keep their own page in the title bar and the Window menu.
+        control->updateWindowTitle();
+    }
 
     if (control->getSettings()->isEagerPageCleanup()) {
         this->cleanupBufferCache();
@@ -427,6 +453,25 @@ void XournalView::pageSelected(size_t page) {
             this->viewPages[i]->rerenderPage();
         }
     }
+}
+
+void XournalView::notifyVisiblePage(size_t page) {
+    if (page == this->currentPage && this->lastSelectedPage == page) {
+        return;
+    }
+    if (isActive()) {
+        // Other views ignore this broadcast and keep their own selected page.
+        control->firePageSelected(page);
+    } else {
+        applyPageSelection(page);
+    }
+}
+
+void XournalView::pageSelected(size_t page) {
+    if (!isActive()) {
+        return;
+    }
+    applyPageSelection(page);
 }
 
 auto XournalView::getControl() const -> Control* { return control; }
@@ -456,8 +501,7 @@ void XournalView::scrollTo(size_t pageNo, XojPdfRectangle rect) {
 
     layout->ensureRectIsVisible(x, y, width, height);
 
-    // Select the page
-    control->firePageSelected(pageNo);
+    notifyVisiblePage(pageNo);
 }
 
 
@@ -557,23 +601,28 @@ void XournalView::ensureRectIsVisible(int x, int y, int width, int height) {
 }
 
 void XournalView::zoomChanged() {
-    ZoomControl* zoom = control->getZoomControl();
+    ZoomControl* zoom = this->zoomControl;
     this->getLayout()->recomputeCenteringPadding();
 
     if (zoom->isZoomPresentationMode()) {
         scrollTo(this->getCurrentPage());
-    } else if (zoom->isZoomSequenceActive()) {
+    } else if (zoom->isZoomSequenceActive() && zoom->getView() == this) {
+        // The zoom anchor belongs to the view that started the gesture. Other views keep their scroll position.
         auto pos = zoom->getScrollPositionAfterZoom();
         Layout* layout = this->getLayout();
         layout->scrollAbs(pos.x, pos.y);
     }
 
-    // Updates the Eraser's cursor icon in order to make it as big as the erasing area
-    control->getCursor()->updateCursor();
+    if (isActive()) {
+        // Updates the Eraser's cursor icon in order to make it as big as the erasing area
+        control->getCursor()->updateCursor();
 
-    // if we changed the zoom of the page, we should hide the pdf floating toolbox
-    // and if user clicked the selection again, the floating toolbox shows again
-    control->getWindow()->getPdfToolbox()->hide();
+        // if we changed the zoom of the page, we should hide the pdf floating toolbox
+        // and if user clicked the selection again, the floating toolbox shows again
+        if (control->getWindow()) {
+            control->getWindow()->getPdfToolbox()->hide();
+        }
+    }
 
     this->control->getScheduler()->blockRerenderZoom();
 
@@ -594,16 +643,30 @@ void XournalView::pageChanged(size_t page) {
 }
 
 void XournalView::pageDeleted(size_t page) {
-    const size_t currentPageNo = control->getCurrentPageNo();
+    const size_t previous = this->currentPage;
 
     viewPages.erase(begin(viewPages) + static_cast<long>(page));
 
     layoutPages();
 
-    if (currentPageNo > page) {
-        control->getScrollHandler()->scrollToPage(currentPageNo - 1);
+    if (viewPages.empty()) {
+        this->currentPage = 0;
+        this->lastSelectedPage = npos;
+        return;
+    }
+
+    size_t next = previous;
+    if (previous == npos || previous >= viewPages.size()) {
+        next = viewPages.size() - 1;
+    } else if (previous > page) {
+        next = previous - 1;
+    }
+
+    // Only the active view may drive the shared scroll handler. Other views keep their own place.
+    if (isActive()) {
+        control->getScrollHandler()->scrollToPage(next);
     } else {
-        control->getScrollHandler()->scrollToPage(currentPageNo);
+        scrollTo(next);
     }
 }
 
@@ -633,7 +696,7 @@ void XournalView::pageInserted(size_t page) {
     layout->updateVisibility();
 }
 
-auto XournalView::getZoom() const -> double { return control->getZoomControl()->getZoom(); }
+auto XournalView::getZoom() const -> double { return this->zoomControl->getZoom(); }
 
 auto XournalView::getDpiScaleFactor() const -> int { return gtk_widget_get_scale_factor(widget); }
 
@@ -711,18 +774,18 @@ void XournalView::setSelection(EditSelection* selection) {
 }
 
 void XournalView::repaintSelection(bool evenWithoutSelection) {
-    if (evenWithoutSelection) {
-        gtk_widget_queue_draw(this->widget);
+    if (!evenWithoutSelection && getSelection() == nullptr) {
         return;
     }
 
-    EditSelection* selection = getSelection();
-    if (selection == nullptr) {
-        return;
-    }
-
-    // repaint always the whole widget
-    gtk_widget_queue_draw(this->widget);
+    auto redraw = [](XournalView* view) {
+        if (view != nullptr && view->getWidget() != nullptr) {
+            gtk_widget_queue_draw(view->getWidget());
+        }
+    };
+    redraw(this);
+    // Selected strokes are not in the page buffer, so every other window has to redraw them too.
+    this->control->forEachWindow([&](MainWindow& window) { redraw(window.getXournal()); });
 }
 
 void XournalView::layoutPages() { this->getLayout()->recalculate(); }
@@ -756,17 +819,8 @@ auto XournalView::isPageVisible(size_t page, int* visibleHeight) const -> bool {
     return false;
 }
 
-void XournalView::documentChanged(DocumentChangeType type) {
-    if (type != DOCUMENT_CHANGE_CLEARED && type != DOCUMENT_CHANGE_COMPLETE) {
-        return;
-    }
-
-    XournalScheduler* scheduler = this->control->getScheduler();
-    scheduler->lock();
-    scheduler->removeAllJobs();
-
+void XournalView::rebuildPageViews() {
     clearSelection();
-
     recreatePdfCache();
 
     Document* doc = control->getDocument();
@@ -781,10 +835,19 @@ void XournalView::documentChanged(DocumentChangeType type) {
 
     doc->unlock_shared();
 
+    this->currentPage = 0;
+    this->lastSelectedPage = npos;
     layoutPages();
-    scrollTo(0);
+}
 
-    scheduler->unlock();
+void XournalView::documentChanged(DocumentChangeType type) {
+    if (type != DOCUMENT_CHANGE_CLEARED && type != DOCUMENT_CHANGE_COMPLETE) {
+        return;
+    }
+
+    // Render jobs are stopped once for every view in Control::fireDocumentChanged.
+    rebuildPageViews();
+    scrollTo(0);
 }
 
 auto XournalView::cut() -> bool {

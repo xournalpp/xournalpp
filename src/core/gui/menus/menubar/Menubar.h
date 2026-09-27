@@ -57,7 +57,7 @@ public:
 
 private:
     xoj::util::GObjectSPtr<GtkBuilder> builder;
-    GMenuModel* menu;  // owned by `builder`
+    GMenuModel* menu = nullptr;  // owned by `builder`
 
     // Dynamically created submenus -- also add to forEachSubmenu() below
     std::unique_ptr<RecentDocumentsSubmenu> recentDocumentsSubmenu;

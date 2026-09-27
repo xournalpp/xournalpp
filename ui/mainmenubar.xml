@@ -875,6 +875,18 @@
    </section>
   </submenu>
   <submenu>
+   <attribute name="label" translatable="yes">_Window</attribute>
+   <section>
+    <item>
+     <attribute name="label" translatable="yes">New _Window</attribute>
+     <attribute name="action">win.new-window</attribute>
+     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;n</attribute>
+    </item>
+   </section>
+   <section id="menuWindowList">
+   </section>
+  </submenu>
+  <submenu>
    <attribute name="label" translatable="yes">_Help</attribute>
    <attribute name="accel">&lt;Ctrl&gt;h</attribute>
    <section id="menu3">

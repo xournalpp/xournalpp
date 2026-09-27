@@ -44,6 +44,7 @@
 #include "gui/PageView.h"                                        // for XojP...
 #include "gui/PdfFloatingToolbox.h"                              // for PdfF...
 #include "gui/SearchBar.h"                                       // for Sear...
+#include "gui/scroll/ScrollHandling.h"                           // for Scro...
 #include "gui/XournalView.h"                                     // for Xour...
 #include "gui/XournalppCursor.h"                                 // for Xour...
 #include "gui/dialog/AboutDialog.h"                              // for Abou...
@@ -156,10 +157,6 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     setEmergencyDocument(this->doc);
 
 
-    this->zoom = new ZoomControl();
-    this->zoom->setZoomStep(this->settings->getZoomStep() / 100.0);
-    this->zoom->setZoomStepScroll(this->settings->getZoomStepScroll() / 100.0);
-
     this->toolHandler = new ToolHandler(this, this->actionDB.get(), this->settings);
     this->toolHandler->loadSettings();
     this->initButtonTool();
@@ -190,14 +187,35 @@ Control::~Control() {
     this->pluginController = nullptr;
     delete this->clipboardHandler;
     this->clipboardHandler = nullptr;
+    // Views unregister document listeners and own their sidebars and zoom controls. Drop them before the document.
+    this->sidebar = nullptr;
+    this->win = nullptr;
+    this->zoom = nullptr;
+    if (this->windowListMenuIdle != 0) {
+        g_source_remove(this->windowListMenuIdle);
+        this->windowListMenuIdle = 0;
+    }
+    if (this->windowMenuAction != nullptr) {
+        g_signal_handlers_disconnect_by_data(this->windowMenuAction, this);
+    }
+    detachWindowListMenu(this->installedMenubar);
+    this->windows.clear();
+    this->installedMenubar = nullptr;
+    this->retainedMenubar.reset();
+    if (this->windowMenuAction != nullptr) {
+        g_object_unref(this->windowMenuAction);
+        this->windowMenuAction = nullptr;
+    }
+    if (this->windowListSection != nullptr) {
+        g_object_unref(this->windowListSection);
+        this->windowListSection = nullptr;
+    }
     delete this->undoRedo;
     this->undoRedo = nullptr;
     delete this->settings;
     this->settings = nullptr;
     delete this->toolHandler;
     this->toolHandler = nullptr;
-    delete this->sidebar;
-    this->sidebar = nullptr;
 
     setEmergencyDocument(nullptr);
     delete this->doc;
@@ -212,8 +230,6 @@ Control::~Control() {
     this->metadata = nullptr;
     delete this->cursor;
     this->cursor = nullptr;
-    delete this->zoom;
-    this->zoom = nullptr;
     delete this->scheduler;
     this->scheduler = nullptr;
     delete this->dragDropHandler;
@@ -288,14 +304,217 @@ void Control::saveSettings() {
     this->sidebar->saveSize();
 }
 
+void Control::fireDocumentChanged(DocumentChangeType type) {
+    const bool reload = type == DOCUMENT_CHANGE_CLEARED || type == DOCUMENT_CHANGE_COMPLETE;
+    if (reload && this->scheduler != nullptr) {
+        // One cancel covers every view. Each view then rebuilds its own pages.
+        this->scheduler->lock();
+        this->scheduler->removeAllJobs();
+    }
+    DocumentHandler::fireDocumentChanged(type);
+    if (reload && this->scheduler != nullptr) {
+        this->scheduler->unlock();
+    }
+}
+
+void Control::createInitialWindow(GtkApplication* app) {
+    auto owned = std::make_unique<MainWindow>(this->gladeSearchPath, this, app);
+    MainWindow* raw = owned.get();
+    this->windows.emplace_back(std::move(owned));
+    initWindow(raw);
+    raw->populate(this->gladeSearchPath);
+    this->installedMenubar = raw->getMenubar();
+    updateWindowListMenu();
+}
+
+void Control::openNewWindow() {
+    if (this->windows.empty() || this->gtkApp == nullptr) {
+        return;
+    }
+
+    const size_t page = getCurrentPageNo();
+    XournalView* source = this->win != nullptr ? this->win->getXournal() : nullptr;
+    const double scrollX =
+            source != nullptr ? gtk_adjustment_get_value(source->getScrollHandling()->getHorizontal()) : 0;
+    const double scrollY =
+            source != nullptr ? gtk_adjustment_get_value(source->getScrollHandling()->getVertical()) : 0;
+
+    auto owned = std::make_unique<MainWindow>(this->gladeSearchPath, this, GTK_APPLICATION(this->gtkApp));
+    MainWindow* created = owned.get();
+    this->windows.emplace_back(std::move(owned));
+
+    created->registerNewWindowAction();
+    if (this->actionDB) {
+        this->actionDB->replicateTo(GTK_APPLICATION_WINDOW(created->getWindow()));
+    }
+    created->populate(this->gladeSearchPath);
+    created->createSidebar();
+    if (this->searchBar) {
+        this->searchBar->attachTo(created);
+    }
+    if (created->getXournal() != nullptr) {
+        created->getXournal()->rebuildPageViews();
+    }
+    if (created->getSidebar() != nullptr) {
+        created->getSidebar()->synchronizeWithDocument();
+    }
+    if (ZoomControl* sourceZoom = this->zoom; sourceZoom != nullptr && created->getZoomControl() != nullptr) {
+        created->getZoomControl()->copyFrom(*sourceZoom);
+    }
+
+    gtk_application_add_window(GTK_APPLICATION(this->gtkApp), GTK_WINDOW(created->getWindow()));
+    created->show(nullptr);
+    gtk_window_present(GTK_WINDOW(created->getWindow()));
+
+    Util::execInUiThread([this, created, scrollX, scrollY, page]() {
+        const bool alive = std::any_of(this->windows.begin(), this->windows.end(),
+                                        [created](const auto& candidate) { return candidate.get() == created; });
+        if (!alive || created->getXournal() == nullptr) {
+            return;
+        }
+        created->getXournal()->getLayout()->scrollAbs(scrollX, scrollY);
+        if (created->getXournal()->getCurrentPage() != page) {
+            created->getXournal()->scrollTo(page);
+        }
+    });
+    updateWindowTitle();
+}
+
+auto Control::getWindowForView(const XournalView* view) const -> MainWindow* {
+    if (view == nullptr) {
+        return nullptr;
+    }
+    for (const auto& window: this->windows) {
+        if (window->getXournal() == view) {
+            return window.get();
+        }
+    }
+    return nullptr;
+}
+
+void Control::focusWindowFrom(GtkWidget* widget) {
+    if (widget == nullptr) {
+        return;
+    }
+    GtkWidget* toplevel = gtk_widget_get_toplevel(widget);
+    for (const auto& window: this->windows) {
+        if (window->getWindow() == toplevel) {
+            setActiveWindow(window.get());
+            return;
+        }
+    }
+}
+
+void Control::setActiveWindow(MainWindow* window) {
+    if (window == nullptr) {
+        return;
+    }
+    const bool alreadyActive = window == this->win;
+    this->win = window;
+    this->sidebar = window->getSidebar();
+    this->zoom = window->getZoomControl();
+    if (!alreadyActive && this->zoom != nullptr && this->actionDB != nullptr) {
+        this->actionDB->setActionState(Action::ZOOM, this->zoom->getZoomReal());
+        this->actionDB->setActionState(Action::ZOOM_FIT, this->zoom->isZoomFitMode());
+    }
+    if (!alreadyActive) {
+        syncWindowMenuState();
+    }
+    if (alreadyActive) {
+        return;
+    }
+    XojMsgBox::setDefaultWindow(GTK_WINDOW(window->getWindow()));
+
+    auto* view = window->getXournal();
+    if (view == nullptr) {
+        return;
+    }
+    size_t pdfPage = npos;
+    if (auto* pageView = view->getViewFor(view->getCurrentPage()); pageView != nullptr && pageView->getPage()) {
+        pdfPage = pageView->getPage()->getPdfPageNr();
+    }
+    updatePageNumbers(view->getCurrentPage(), pdfPage);
+    if (this->layerController != nullptr) {
+        this->layerController->pageSelected(view->getCurrentPage());
+    }
+}
+
+void Control::closeWindow(MainWindow* window) {
+    if (window == nullptr) {
+        return;
+    }
+    if (this->windows.size() <= 1) {
+        quit();
+        return;
+    }
+
+    // Drop the window from the list before destroying it, then refresh the shared Window menu.
+    std::unique_ptr<MainWindow> closing;
+    for (auto it = this->windows.begin(); it != this->windows.end(); ++it) {
+        if (it->get() == window) {
+            closing = std::move(*it);
+            this->windows.erase(it);
+            break;
+        }
+    }
+    if (closing == nullptr) {
+        return;
+    }
+
+    // Every window shows this one menubar. Keep it when its window closes, or GTK frees the model
+    // the shell is still tracking and the Window list stops matching the open windows.
+    if (this->installedMenubar != nullptr && closing->getMenubar() == this->installedMenubar) {
+        this->retainedMenubar = closing->releaseMenubar();
+        this->installedMenubar = this->retainedMenubar.get();
+    }
+
+    if (this->win == closing.get()) {
+        setActiveWindow(this->windows.front().get());
+        gtk_window_present(GTK_WINDOW(this->windows.front()->getWindow()));
+    }
+
+    rebuildWindowListMenu();
+    updateWindowTitle();
+    closing.reset();
+}
+
+auto Control::getWindowCount() const -> size_t { return this->windows.size(); }
+
+void Control::forEachWindow(const std::function<void(MainWindow&)>& fn) const {
+    for (const auto& window: this->windows) {
+        if (window) {
+            fn(*window);
+        }
+    }
+}
+
+void Control::refreshOtherWindowColorschemes(MainWindow* except) {
+    for (const auto& other: this->windows) {
+        if (other.get() != except) {
+            other->applyWindowColorscheme();
+        }
+    }
+}
+
+void Control::relayoutViews() {
+    for (const auto& window: this->windows) {
+        if (window->getXournal() != nullptr) {
+            window->getXournal()->layoutPages();
+        }
+    }
+}
+
 void Control::initWindow(MainWindow* win) {
     this->win = win;
+    this->zoom = win->getZoomControl();
 
     this->actionDB = std::make_unique<ActionDatabase>(this);
     this->navHistory = std::make_unique<NavigationHistory>(this);
 
     selectTool(toolHandler->getToolType());
-    this->sidebar = new Sidebar(win, this);
+    win->registerNewWindowAction();
+    win->createSidebar();
+    this->sidebar = win->getSidebar();
 
     XojMsgBox::setDefaultWindow(getGtkWindow());
 
@@ -357,17 +576,26 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
     }
 
     this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
-    this->sidebar->selectPageNr(page, pdfPage);
+    if (this->sidebar != nullptr) {
+        this->sidebar->selectPageNr(page, pdfPage);
+    }
 
-    this->metadata->storeMetadata(this->doc->getEvMetadataFilename(), static_cast<int>(page),
-                                  getZoomControl()->getZoomReal());
+    if (ZoomControl* windowZoom = getZoomControl()) {
+        this->metadata->storeMetadata(this->doc->getEvMetadataFilename(), static_cast<int>(page),
+                                      windowZoom->getZoomReal());
+    }
     if (settings->isPageNumberInTitlebarShown()) {
         this->updateWindowTitle();
+    } else {
+        updateWindowListMenu();
     }
 
     auto current = getCurrentPageNo();
     auto count = this->doc->getPageCount();
 
+    if (this->actionDB == nullptr) {
+        return;
+    }
     this->actionDB->enableAction(Action::GOTO_FIRST, current != 0);
     this->actionDB->enableAction(Action::GOTO_PREVIOUS, current != 0);
     this->actionDB->enableAction(Action::GOTO_PREVIOUS_ANNOTATED_PAGE, current != 0);
@@ -1016,7 +1244,7 @@ void Control::changePageBackgroundColor() {
 
 void Control::setViewPairedPages(bool enabled) {
     settings->setShowPairedPages(enabled);
-    win->getXournal()->layoutPages();
+    relayoutViews();
     scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
@@ -1031,12 +1259,6 @@ void Control::setViewFullscreenMode(bool enabled) {
 void Control::setViewPresentationMode(bool enabled) {
     if (enabled) {
         this->loadViewMode(VIEW_MODE_PRESENTATION);
-
-        bool success = zoom->updateZoomPresentationValue();
-        if (!success) {
-            g_warning("Error calculating zoom value");
-            return;
-        }
     } else {
         this->loadViewMode(VIEW_MODE_DEFAULT);
 
@@ -1050,7 +1272,16 @@ void Control::setViewPresentationMode(bool enabled) {
         setViewLayoutR2L(settings->getViewLayoutR2L());
         setViewLayoutB2T(settings->getViewLayoutB2T());
     }
-    zoom->setZoomPresentationMode(enabled);
+    for (const auto& window: this->windows) {
+        ZoomControl* windowZoom = window->getZoomControl();
+        if (windowZoom == nullptr) {
+            continue;
+        }
+        if (enabled && !windowZoom->updateZoomPresentationValue()) {
+            g_warning("Error calculating zoom value");
+        }
+        windowZoom->setZoomPresentationMode(enabled);
+    }
     settings->setPresentationMode(enabled);
 
     // Disable Zoom
@@ -1072,45 +1303,45 @@ void Control::setViewPresentationMode(bool enabled) {
     // TODO Figure out how to replace this
     // fireEnableAction(ACTION_TOOL_HAND, !enabled);
 
-    win->getXournal()->layoutPages();
+    relayoutViews();
     scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setPairsOffset(int numOffset) {
     settings->setPairsOffset(numOffset);
-    win->getXournal()->layoutPages();
+    relayoutViews();
     scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewColumns(int numColumns) {
     settings->setViewColumns(numColumns);
     settings->setViewFixedRows(false);
-    win->getXournal()->layoutPages();
+    relayoutViews();
     scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewRows(int numRows) {
     settings->setViewRows(numRows);
     settings->setViewFixedRows(true);
-    win->getXournal()->layoutPages();
+    relayoutViews();
     scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewLayoutVert(bool vert) {
     settings->setViewLayoutVert(vert);
-    win->getXournal()->layoutPages();
+    relayoutViews();
     scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewLayoutR2L(bool r2l) {
     settings->setViewLayoutR2L(r2l);
-    win->getXournal()->layoutPages();
+    relayoutViews();
     scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewLayoutB2T(bool b2t) {
     settings->setViewLayoutB2T(b2t);
-    win->getXournal()->layoutPages();
+    relayoutViews();
     scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
@@ -1138,8 +1369,10 @@ void Control::undoRedoChanged() {
     this->actionDB->enableAction(Action::UNDO, undoRedo->canUndo());
     this->actionDB->enableAction(Action::REDO, undoRedo->canRedo());
 
-    win->setUndoDescription(undoRedo->undoDescription());
-    win->setRedoDescription(undoRedo->redoDescription());
+    if (Menubar* bar = getDisplayedMenubar()) {
+        bar->setUndoDescription(undoRedo->undoDescription());
+        bar->setRedoDescription(undoRedo->redoDescription());
+    }
 
     updateWindowTitle();
 }
@@ -1409,7 +1642,7 @@ void Control::showSettings() {
                      settingsBeforeDialog.horizontalSpaceAmountRight != settings->getAddHorizontalSpaceAmountRight() ||
                      settingsBeforeDialog.verticalSpaceAmountBelow != settings->getAddVerticalSpaceAmountBelow() ||
                      settingsBeforeDialog.horizontalSpaceAmountLeft != settings->getAddHorizontalSpaceAmountLeft())) {
-                    xournal->layoutPages();
+                    ctrl->relayoutViews();
                     double const xChange =
                             (settings->getAddHorizontalSpace() ? settings->getAddHorizontalSpaceAmountLeft() : 0) -
                             (settingsBeforeDialog.horizontalSpace ? settingsBeforeDialog.horizontalSpaceAmountLeft : 0);
@@ -1440,7 +1673,7 @@ void Control::showSettings() {
                                                           settingsBeforeDialog.verticalSpaceAmountAbove :
                                                           0);
 
-                    xournal->layoutPages();
+                    ctrl->relayoutViews();
                     win->getLayout()->scrollRelative(xChange, yChange);
                 }
 
@@ -1489,9 +1722,13 @@ void Control::showSettings() {
 
                 ctrl->enableAutosave(settings->isAutosaveEnabled());
 
-                ctrl->zoom->setZoomStep(settings->getZoomStep() / 100.0);
-                ctrl->zoom->setZoomStepScroll(settings->getZoomStepScroll() / 100.0);
-                ctrl->win->setDPI();
+                for (const auto& window: ctrl->windows) {
+                    if (ZoomControl* windowZoom = window->getZoomControl()) {
+                        windowZoom->setZoomStep(settings->getZoomStep() / 100.0);
+                        windowZoom->setZoomStepScroll(settings->getZoomStepScroll() / 100.0);
+                    }
+                    window->setDPI();
+                }
 
                 if (settingsBeforeDialog.sidebarStyle != settings->getSidebarNumberingStyle()) {
                     ctrl->getSidebar()->layout();
@@ -2085,30 +2322,208 @@ void Control::showColorChooserDialog() {
 }
 
 void Control::updateWindowTitle() {
-    std::string title{};  ///< Actually a UTF-8 string
-
     this->doc->lock_shared();
     const fs::path& refPath = doc->getFilepath().empty() ? doc->getPdfFilepath() : doc->getFilepath();
-    if (refPath.empty()) {
-        title = _("Unsaved Document");
+    const bool unnamed = refPath.empty();
+    const size_t pageCount = doc->getPageCount();
+    std::string filePart;
+    if (unnamed) {
+        filePart = _("Unsaved Document");
     } else {
-        if (settings->isPageNumberInTitlebarShown()) {
-            title = "[" + std::to_string(getCurrentPageNo() + 1) + "/" + std::to_string(doc->getPageCount()) + "]  ";
-        }
-        if (undoRedo->isChanged()) {
-            title += "*";
-        }
-
         if (settings->isFilepathInTitlebarShown()) {
-            title += std::string("[") + char_cast(refPath.parent_path().u8string().c_str()) + "] - ";
+            filePart += std::string("[") + char_cast(refPath.parent_path().u8string().c_str()) + "] - ";
         }
-        title += char_cast(refPath.filename().u8string());
+        filePart += char_cast(refPath.filename().u8string());
     }
     this->doc->unlock_shared();
 
-    title += " - Xournal++";
+    const bool changed = undoRedo->isChanged();
+    size_t index = 1;
+    for (const auto& window: this->windows) {
+        std::string windowTitle;
+        if (!unnamed && settings->isPageNumberInTitlebarShown() && window->getXournal() != nullptr) {
+            const size_t page = window->getXournal()->getCurrentPage();
+            windowTitle = "[" + std::to_string(page + 1) + "/" + std::to_string(pageCount) + "]  ";
+        }
+        if (!unnamed && changed) {
+            windowTitle += "*";
+        }
+        windowTitle += filePart;
+        if (this->windows.size() > 1) {
+            windowTitle += " :" + std::to_string(index);
+        }
+        windowTitle += " - Xournal++";
+        gtk_window_set_title(GTK_WINDOW(window->getWindow()), windowTitle.c_str());
+        index++;
+    }
+    updateWindowListMenu();
+}
 
-    gtk_window_set_title(getGtkWindow(), title.c_str());
+void Control::ensureWindowMenuAction(GtkApplicationWindow* window) {
+    if (window == nullptr) {
+        return;
+    }
+    if (this->windowMenuAction == nullptr) {
+        this->windowMenuAction =
+                g_simple_action_new_stateful("current-window", G_VARIANT_TYPE_UINT64, g_variant_new_uint64(0));
+        g_signal_connect(this->windowMenuAction, "change-state",
+                         G_CALLBACK(+[](GSimpleAction*, GVariant* value, gpointer data) {
+                             if (value == nullptr) {
+                                 return;
+                             }
+                             static_cast<Control*>(data)->activateWindowAt(
+                                     static_cast<size_t>(g_variant_get_uint64(value)));
+                         }),
+                         this);
+    }
+    if (g_action_map_lookup_action(G_ACTION_MAP(window), "current-window") == nullptr) {
+        g_action_map_add_action(G_ACTION_MAP(window), G_ACTION(this->windowMenuAction));
+    }
+}
+
+void Control::activateWindowAt(size_t index) {
+    if (index >= this->windows.size()) {
+        syncWindowMenuState();
+        return;
+    }
+    MainWindow* window = this->windows[index].get();
+    setActiveWindow(window);
+    gtk_window_present(GTK_WINDOW(window->getWindow()));
+}
+
+static GMenu* windowListPlaceholder(Menubar* bar) {
+    if (bar == nullptr || bar->getModel() == nullptr) {
+        return nullptr;
+    }
+    return bar->get<GMenu>("menuWindowList", [](auto* object) { return G_MENU(object); });
+}
+
+void Control::linkWindowListMenu(Menubar* bar) {
+    GMenu* placeholder = windowListPlaceholder(bar);
+    if (placeholder == nullptr || g_menu_model_get_n_items(G_MENU_MODEL(placeholder)) > 0) {
+        return;
+    }
+    g_menu_append_section(placeholder, nullptr, G_MENU_MODEL(ensureWindowListSection()));
+}
+
+void Control::detachWindowListMenu(Menubar* bar) {
+    GMenu* placeholder = windowListPlaceholder(bar);
+    if (placeholder == nullptr) {
+        return;
+    }
+    while (g_menu_model_get_n_items(G_MENU_MODEL(placeholder)) > 0) {
+        g_menu_remove(placeholder, 0);
+    }
+}
+
+GMenu* Control::ensureWindowListSection() {
+    if (this->windowListSection == nullptr) {
+        this->windowListSection = g_menu_new();
+    }
+    return this->windowListSection;
+}
+
+void Control::attachWindowListMenu(Menubar* bar) {
+    // Only the installed application menubar is shown. Linking the same section into every window,
+    // then destroying one of those windows, crashes when the next window rebuilds the list.
+    if (this->windows.size() != 1) {
+        return;
+    }
+    linkWindowListMenu(bar);
+}
+
+void Control::syncWindowMenuState() {
+    if (this->windowMenuAction == nullptr) {
+        return;
+    }
+    size_t activeIndex = 0;
+    for (size_t i = 0; i < this->windows.size(); i++) {
+        if (this->windows[i].get() == this->win) {
+            activeIndex = i;
+            break;
+        }
+    }
+    g_simple_action_set_state(this->windowMenuAction, g_variant_new_uint64(activeIndex));
+}
+
+void Control::updateWindowListMenu() {
+    this->windowListMenuDirty = true;
+    if (this->windowMenuAction == nullptr || this->windowListMenuIdle != 0) {
+        return;
+    }
+    // Rebuilding the menu from a menu-item callback crashes GTK. Do it on the next idle instead.
+    this->windowListMenuIdle = g_idle_add(
+            +[](gpointer data) -> gboolean {
+                auto* ctrl = static_cast<Control*>(data);
+                ctrl->windowListMenuIdle = 0;
+                if (ctrl->windowListMenuDirty) {
+                    ctrl->rebuildWindowListMenu();
+                }
+                return G_SOURCE_REMOVE;
+            },
+            this);
+}
+
+void Control::rebuildWindowListMenu() {
+    if (this->windowMenuAction == nullptr) {
+        return;
+    }
+    this->windowListMenuDirty = false;
+    Menubar* bar = this->installedMenubar;
+    // Unlink and relink so the visible menubar sees the new items. Editing the section alone
+    // can leave the shell showing a stale list.
+    detachWindowListMenu(bar);
+    GMenu* section = ensureWindowListSection();
+    g_menu_remove_all(section);
+    for (size_t i = 0; i < this->windows.size(); i++) {
+        const std::string label = makeWindowMenuLabel(*this->windows[i], i);
+        GMenuItem* item = g_menu_item_new(label.c_str(), nullptr);
+        g_menu_item_set_action_and_target_value(item, "win.current-window", g_variant_new_uint64(i));
+        g_menu_append_item(section, item);
+        g_object_unref(item);
+    }
+    linkWindowListMenu(bar);
+    syncWindowMenuState();
+    if (this->windowListMenuDirty) {
+        updateWindowListMenu();
+    }
+}
+
+auto Control::getDisplayedMenubar() const -> Menubar* { return this->installedMenubar; }
+
+std::string Control::makeWindowMenuLabel(const MainWindow& window, size_t index) const {
+    this->doc->lock_shared();
+    const fs::path& refPath = doc->getFilepath().empty() ? doc->getPdfFilepath() : doc->getFilepath();
+    const bool unnamed = refPath.empty();
+    const size_t pageCount = doc->getPageCount();
+    std::string filePart;
+    if (unnamed) {
+        filePart = _("Unsaved Document");
+    } else {
+        filePart = std::string(char_cast(refPath.filename().u8string()));
+    }
+    this->doc->unlock_shared();
+
+    std::string label = std::to_string(index + 1) + ". ";
+    if (!unnamed && window.getXournal() != nullptr && pageCount > 0) {
+        const size_t page = window.getXournal()->getCurrentPage();
+        label += "[" + std::to_string(page + 1) + "/" + std::to_string(pageCount) + "] ";
+    }
+    if (!unnamed && this->undoRedo != nullptr && this->undoRedo->isChanged()) {
+        label += "*";
+    }
+    label += filePart;
+
+    std::string escaped;
+    escaped.reserve(label.size());
+    for (char c: label) {
+        if (c == '_') {
+            escaped += "__";
+        } else {
+            escaped += c;
+        }
+    }
+    return escaped;
 }
 
 void Control::exportAsPdf() {

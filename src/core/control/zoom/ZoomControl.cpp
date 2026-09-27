@@ -21,7 +21,17 @@
 
 using xoj::util::Rectangle;
 
+ZoomControl::~ZoomControl() {
+    // Slider widgets are finalized with the GtkWindow, after this object is destroyed.
+    if (this->alive) {
+        *this->alive = false;
+    }
+}
+
 auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, ZoomControl* zoom) -> bool {
+    if (auto* view = static_cast<XournalView*>(g_object_get_data(G_OBJECT(widget), "xoj-zoom-view"))) {
+        zoom->setView(view);
+    }
     auto state =
             gdk_event_get_modifier_state(reinterpret_cast<GdkEvent*>(event)) & gtk_accelerator_get_default_mod_mask();
 
@@ -46,6 +56,9 @@ auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, Z
 }
 
 auto onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomControl* zoom) -> bool {
+    if (auto* view = static_cast<XournalView*>(g_object_get_data(G_OBJECT(widget), "xoj-zoom-view"))) {
+        zoom->setView(view);
+    }
     if (event->type == GDK_TOUCHPAD_PINCH && event->n_fingers == 2) {
         switch (event->phase) {
             case GDK_TOUCHPAD_GESTURE_PHASE_BEGIN: {
@@ -125,6 +138,9 @@ void ZoomControl::startZoomSequence() {
 }
 
 void ZoomControl::startZoomSequence(xoj::util::Point<double> zoomCenter) {
+    if (this->view == nullptr) {
+        return;
+    }
     // * set zoom center and zoom startlevel
     this->zoomWidgetPos = zoomCenter;  // widget space coordinates of the zoomCenter!
     this->zoomSequenceStart = this->zoom;
@@ -186,7 +202,12 @@ void ZoomControl::cancelZoomSequence() {
 
 auto ZoomControl::isZoomSequenceActive() const -> bool { return zoomSequenceStart != -1; }
 
-auto ZoomControl::getVisibleRect() -> Rectangle<double> { return view->getLayout()->getVisibleRect(); }
+auto ZoomControl::getVisibleRect() -> Rectangle<double> {
+    if (this->view == nullptr) {
+        return {};
+    }
+    return view->getLayout()->getVisibleRect();
+}
 
 auto ZoomControl::getScrollPositionAfterZoom() const -> xoj::util::Point<double> {
     //  If we aren't in a zoomSequence, `unscaledPixels`, `scrollPosition`, and `zoomWidgetPos
@@ -212,24 +233,40 @@ void ZoomControl::removeZoomListener(ZoomListener* l) {
 }
 
 void ZoomControl::initZoomHandler(GtkWidget* window, GtkWidget* widget, XournalView* v, Control* c) {
+    const bool firstView = this->control == nullptr;
     this->control = c;
-    this->view = v;
+    if (firstView) {
+        this->view = v;
+        registerListener(this->control);
+    }
+    g_object_set_data(G_OBJECT(widget), "xoj-zoom-view", v);
     gtk_widget_add_events(widget, GDK_TOUCHPAD_GESTURE_MASK);
     g_signal_connect(widget, "scroll-event", xoj::util::wrap_for_g_callback_v<onScrolledwindowMainScrollEvent>, this);
     g_signal_connect(widget, "event", xoj::util::wrap_for_g_callback_v<onTouchpadPinchEvent>, this);
-    g_signal_connect(v->getScrollHandling()->getHorizontal(), "notify::page-size",
-                     G_CALLBACK(+[](GObject*, GParamSpec*, gpointer self) {
-                         static_cast<ZoomControl*>(self)->updateZoomFitValue();
-                         static_cast<ZoomControl*>(self)->updateZoomPresentationValue();
-                     }),
-                     this);
-    g_signal_connect(v->getScrollHandling()->getVertical(), "notify::page-size",
-                     G_CALLBACK(+[](GObject*, GParamSpec*, gpointer self) {
-                         static_cast<ZoomControl*>(self)->updateZoomPresentationValue();
-                     }),
-                     this);
 
-    registerListener(this->control);
+    auto* horizontal = v->getScrollHandling()->getHorizontal();
+    auto* vertical = v->getScrollHandling()->getVertical();
+    g_object_set_data(G_OBJECT(horizontal), "xoj-zoom-view", v);
+    g_object_set_data(G_OBJECT(vertical), "xoj-zoom-view", v);
+    g_signal_connect(horizontal, "notify::page-size",
+                     G_CALLBACK(+[](GObject* adj, GParamSpec*, gpointer self) {
+                         auto* zoom = static_cast<ZoomControl*>(self);
+                         if (auto* view = static_cast<XournalView*>(g_object_get_data(adj, "xoj-zoom-view"))) {
+                             zoom->setView(view);
+                         }
+                         zoom->updateZoomFitValue();
+                         zoom->updateZoomPresentationValue();
+                     }),
+                     this);
+    g_signal_connect(vertical, "notify::page-size",
+                     G_CALLBACK(+[](GObject* adj, GParamSpec*, gpointer self) {
+                         auto* zoom = static_cast<ZoomControl*>(self);
+                         if (auto* view = static_cast<XournalView*>(g_object_get_data(adj, "xoj-zoom-view"))) {
+                             zoom->setView(view);
+                         }
+                         zoom->updateZoomPresentationValue();
+                     }),
+                     this);
 }
 
 void ZoomControl::fireZoomChanged() {
@@ -254,8 +291,36 @@ void ZoomControl::setZoom(double zoomI) {
         return;
     }
     this->zoom = zoomI;
-    this->control->getActionDatabase()->setActionState(Action::ZOOM, getZoomReal());
+    // Only the focused window drives the shared zoom action. Other windows keep their own sliders.
+    if (this->control != nullptr && this->control->getActionDatabase() != nullptr &&
+        this->control->getZoomControl() == this) {
+        this->control->getActionDatabase()->setActionState(Action::ZOOM, getZoomReal());
+    }
     fireZoomChanged();
+}
+
+void ZoomControl::copyFrom(const ZoomControl& src) {
+    if (this == &src) {
+        return;
+    }
+    setZoomStep(src.zoomStep);
+    setZoomStepScroll(src.zoomStepScroll);
+    setZoom100Value(src.zoom100Value);
+    this->zoomFitMode = src.zoomFitMode;
+    this->zoomPresentationMode = src.zoomPresentationMode;
+    setZoom(src.zoom);
+    if (this->view == nullptr) {
+        return;
+    }
+    if (this->zoomPresentationMode) {
+        if (updateZoomPresentationValue()) {
+            zoomPresentation();
+        }
+    } else if (isZoomFitMode()) {
+        if (updateZoomFitValue()) {
+            zoomFit();
+        }
+    }
 }
 
 void ZoomControl::setZoom100Value(double zoom100Val) {
@@ -267,6 +332,9 @@ void ZoomControl::setZoom100Value(double zoom100Val) {
 }
 
 auto ZoomControl::updateZoomFitValue(size_t pageNo) -> bool {
+    if (this->view == nullptr) {
+        return false;
+    }
     if (pageNo == 0) {
         pageNo = view->getCurrentPage();
     }
@@ -289,6 +357,9 @@ auto ZoomControl::updateZoomFitValue(size_t pageNo) -> bool {
 auto ZoomControl::getZoomFitValue() const -> double { return this->zoomFitValue; }
 
 auto ZoomControl::updateZoomPresentationValue(size_t pageNo) -> bool {
+    if (this->view == nullptr) {
+        return false;
+    }
     XojPageView* page = view->getViewFor(view->getCurrentPage());
     if (!page) {
         if (!view->getViewPages().empty()) {
@@ -351,7 +422,10 @@ void ZoomControl::zoomPresentation() {
 void ZoomControl::setZoomFitMode(bool isZoomFitMode) {
     if (this->zoomFitMode != isZoomFitMode) {
         this->zoomFitMode = isZoomFitMode;
-        this->control->getActionDatabase()->setActionState(Action::ZOOM_FIT, this->zoomFitMode);
+        if (this->control != nullptr && this->control->getActionDatabase() != nullptr &&
+            this->control->getZoomControl() == this) {
+            this->control->getActionDatabase()->setActionState(Action::ZOOM_FIT, this->zoomFitMode);
+        }
     }
 
     if (this->isZoomFitMode()) {
@@ -366,7 +440,8 @@ auto ZoomControl::isZoomFitMode() const -> bool {
     //               We decided to deactivate it in PR#2821 & I#2770. instead of fixing it, to get release 1.1.0 ready.
     //               Zoom presentation mode is also excluded, because it was never intended to work together.
     //               It is also excluded everywhere else (duplicate code).
-    auto infiniteLoopFixup = !this->zoomPresentationMode && !this->control->getSettings()->isShowPairedPages();
+    auto infiniteLoopFixup = !this->zoomPresentationMode &&
+                              (this->control == nullptr || !this->control->getSettings()->isShowPairedPages());
     return this->zoomFitMode && infiniteLoopFixup;
 }
 
@@ -390,6 +465,9 @@ void ZoomControl::pageSizeChanged(size_t page) {
 }
 
 void ZoomControl::pageSelected(size_t page) {
+    if (this->view == nullptr) {
+        return;
+    }
     // Todo (fabian): page selected should do nothing here, since Zoom Controls, which page is selected.
     //                This results in a logical loop. See PR#2821 & I#2770
     if (current_page != page) {

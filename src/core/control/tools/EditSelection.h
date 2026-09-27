@@ -247,9 +247,10 @@ public:
 
     /**
      * Paints the selection to cr, with the given zoom factor. The coordinates of cr
-     * should be relative to the provided view by getView() (use translateEvent())
+     * should be relative to the provided view by getView() (use translateEvent()).
+     * Other windows pass drawFrame == false so they show the strokes without selection handles.
      */
-    void paint(cairo_t* cr, double zoom);
+    void paint(cairo_t* cr, double zoom, bool drawFrame = true);
 
     /**
      * Gets the selection's bounding box in view coordinates. This takes document zoom

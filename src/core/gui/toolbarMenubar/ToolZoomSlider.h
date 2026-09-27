@@ -32,25 +32,24 @@ public:
 
     xoj::util::WidgetSPtr createItem(bool horizontal) override;
 
-protected:
-    static constexpr bool DISPLAY_VALUE = true;
-    static std::string formatSliderValue(double value);
-
-    std::string getToolDisplayName() const override;
-
-protected:
-    GtkWidget* getNewToolIcon() const override;
-
-protected:
     /**
-     * @brief Function to convert from the GAction's state value to the slider's position. (e.g. for log scaling)
+     * @brief Function to convert from the zoom scale to the slider's position. (e.g. for log scaling)
      */
     static double scaleFunction(double x);
 
     /**
-     * @brief Function to convert from the slider's position to the GAction's state value. (e.g. for log scaling)
+     * @brief Function to convert from the slider's position to the zoom scale. (e.g. for log scaling)
      */
     static double scaleInverseFunction(double x);
+
+    static std::string formatSliderValue(double value);
+
+protected:
+    static constexpr bool DISPLAY_VALUE = true;
+
+    std::string getToolDisplayName() const override;
+
+    GtkWidget* getNewToolIcon() const override;
 
 protected:
     std::string iconName;

@@ -285,7 +285,7 @@ void Layout::updateVisibility() {
     }
     this->previouslyVisiblePages = std::move(visiblePages);
     if (mostPageNr) {
-        this->view->getControl()->firePageSelected(*mostPageNr);
+        this->view->notifyVisiblePage(*mostPageNr);
     }
 }
 

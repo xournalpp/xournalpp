@@ -26,15 +26,20 @@
 
 class Control;
 class GladeGui;
+class Sidebar;
 
 
 class SidebarPreviewPages: public SidebarPreviewBase {
 public:
-    SidebarPreviewPages(Control* control);
+    SidebarPreviewPages(Control* control, Sidebar* host);
     ~SidebarPreviewPages() override;
 
 public:
     void enableSidebar() override;
+
+    void selectPageNr(size_t page, size_t pdfPage) override;
+
+    Sidebar* getHost() const { return this->host; }
 
     /**
      * @overwrite
@@ -73,4 +78,5 @@ private:
 
 private:
     IconNameHelper iconNameHelper;
+    Sidebar* host = nullptr;
 };

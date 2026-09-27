@@ -207,14 +207,15 @@ auto addElementsFromActiveLayer(Control* ctrl, EditSelection* base, const Insert
 }
 };  // namespace SelectionFactory
 
-static int getBtnWidth(Control* c) {
-    return std::max(10, round_cast<int>(c->getZoomControl()->getZoom100Value() * Util::DPI_NORMALIZATION_FACTOR / 8));
+static int getBtnWidth(const XojPageView* view) {
+    return std::max(10, round_cast<int>(view->getXournal()->getZoomControl()->getZoom100Value() *
+                                        Util::DPI_NORMALIZATION_FACTOR / 8));
 }
 
 EditSelection::EditSelection(Control* ctrl, InsertionOrder elts, const PageRef& page, Layer* layer, XojPageView* view,
                              const Range& bounds, const Range& snappingBounds):
         snappedBounds(snappingBounds),
-        btnWidth(getBtnWidth(ctrl)),
+        btnWidth(getBtnWidth(view)),
         sourcePage(page),
         sourceLayer(layer),
         view(view),
@@ -240,7 +241,7 @@ EditSelection::EditSelection(Control* ctrl, InsertionOrder elts, const PageRef& 
 
 EditSelection::EditSelection(Control* ctrl, const PageRef& page, Layer* layer, XojPageView* view):
         snappedBounds(Rectangle<double>{}),
-        btnWidth(getBtnWidth(ctrl)),
+        btnWidth(getBtnWidth(view)),
         sourcePage(page),
         sourceLayer(layer),
         view(view),
@@ -305,6 +306,11 @@ void EditSelection::finalizeSelection() {
 
 
     this->view->rerenderRect(this->x - addW / 2.0, this->y - addH / 2.0, this->width + addW, this->height + addH);
+
+    // The strokes were removed from the shared page. Every window of that page has to draw them again.
+    Range refresh(Rectangle<double>(this->x - addW / 2.0, this->y - addH / 2.0, this->width + addW,
+                                    this->height + addH));
+    this->view->getPage()->fireRangeChanged(refresh);
 
     // This is needed if the selection not was 100% on a page
     this->view->getXournal()->repaintSelection(true);
@@ -830,7 +836,7 @@ void EditSelection::setEdgePan(bool pan) {
 bool EditSelection::isEdgePanning() const { return this->edgePanHandler; }
 
 bool EditSelection::handleEdgePan(EditSelection* self) {
-    if (self->view->getXournal()->getControl()->getZoomControl()->isZoomPresentationMode()) {
+    if (self->view->getXournal()->getZoomControl()->isZoomPresentationMode()) {
         self->edgePanHandler.consume();
         self->edgePanInhibitNext = false;
         return false;
@@ -1033,7 +1039,7 @@ auto EditSelection::getSelectionTypeForPos(double x, double y, double zoom) -> C
  * Paints the selection to cr, with the given zoom factor. The coordinates of cr
  * should be relative to the provided view by getView() (use translateEvent())
  */
-void EditSelection::paint(cairo_t* cr, double zoom) {
+void EditSelection::paint(cairo_t* cr, double zoom, bool drawFrame) {
     double x = this->x;
     double y = this->y;
 
@@ -1056,6 +1062,10 @@ void EditSelection::paint(cairo_t* cr, double zoom) {
         cairo_translate(cr, -rx, -ry);
     }
     this->contents->paint(cr, x, y, this->rotation, this->width, this->height, zoom);
+
+    if (!drawFrame) {
+        return;
+    }
 
     cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 

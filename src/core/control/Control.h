@@ -11,11 +11,12 @@
 
 #pragma once
 
-#include <cstddef>   // for size_t
-#include <memory>    // for unique_ptr
-#include <optional>  // for optional
-#include <string>    // for string, allocator
-#include <vector>    // for vector
+#include <cstddef>      // for size_t
+#include <functional>   // for function
+#include <memory>       // for unique_ptr
+#include <optional>     // for optional
+#include <string>       // for string, allocator
+#include <vector>       // for vector
 
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
 #include <gio/gio.h>                // for GApplication
@@ -48,6 +49,7 @@ class MetadataManager;
 class XournalppCursor;
 class ToolbarDragDropHandler;
 class MetadataEntry;
+class Menubar;
 class MetadataCallbackData;
 class PageBackgroundChangeController;
 class PageTemplateSettings;
@@ -59,6 +61,7 @@ class Document;
 class EditSelection;
 class Element;
 class MainWindow;
+class XournalView;
 class ObjectInputStream;
 class ScrollHandler;
 class SearchBar;
@@ -88,6 +91,32 @@ public:
     ~Control() override;
 
     void initWindow(MainWindow* win);
+
+    void fireDocumentChanged(DocumentChangeType type) override;
+
+    /// Creates the first document window. Further views use openNewWindow().
+    void createInitialWindow(GtkApplication* app);
+    /// Opens another window onto the same document, with its own scroll position, zoom, and selected page.
+    void openNewWindow();
+    /// Shared radio action for the Window menu. The same action is installed on every window.
+    void ensureWindowMenuAction(GtkApplicationWindow* window);
+    /// Links the application menubar's Window menu to the shared list of open windows.
+    void attachWindowListMenu(Menubar* bar);
+    /// The menubar GTK actually shows. It outlives the window that created it.
+    Menubar* getDisplayedMenubar() const;
+    /// Closes one view. The last window asks to save and quits.
+    void closeWindow(MainWindow* window);
+    /// Commands, toolbars and the page spinner follow this window.
+    void setActiveWindow(MainWindow* window);
+    /// Makes the window that contains `widget` the active view.
+    void focusWindowFrom(GtkWidget* widget);
+    size_t getWindowCount() const;
+    /// Calls `fn` for every open document window.
+    void forEachWindow(const std::function<void(MainWindow&)>& fn) const;
+    MainWindow* getWindowForView(const XournalView* view) const;
+    /// Reapplies the current theme to every view except `except`.
+    void refreshOtherWindowColorschemes(MainWindow* except);
+    void relayoutViews();
 
 public:
     /// Asymchronously closes the current document and replaces it by a new file
@@ -398,6 +427,15 @@ protected:
     void saveImpl(bool saveAs, std::function<void(bool)> callback);
 
 private:
+    void updateWindowListMenu();
+    void rebuildWindowListMenu();
+    void syncWindowMenuState();
+    void linkWindowListMenu(Menubar* bar);
+    void detachWindowListMenu(Menubar* bar);
+    GMenu* ensureWindowListSection();
+    void activateWindowAt(size_t index);
+    std::string makeWindowMenuLabel(const MainWindow& window, size_t index) const;
+
     /**
      * @brief Creates the specified geometric tool if it's not on the current page yet. Deletes it if it already exists.
      * @return true if a geometric tool was created
@@ -484,10 +522,22 @@ private:
     auto getLineStyleToSelect() -> std::optional<std::string> const;
 
     UndoRedoHandler* undoRedo = nullptr;
+    /// Focused window's zoom. Owned by that MainWindow, not by Control.
     ZoomControl* zoom = nullptr;
+    /// Stateful radio action "current-window". Not owned by any single window's action map.
+    GSimpleAction* windowMenuAction = nullptr;
+    /// One section of the displayed menubar. Items are indices into `windows`.
+    GMenu* windowListSection = nullptr;
+    guint windowListMenuIdle = 0;
+    bool windowListMenuDirty = false;
+    /// Menubar installed on the GtkApplication. Not freed when its window closes.
+    Menubar* installedMenubar = nullptr;
+    std::unique_ptr<Menubar> retainedMenubar;
 
     Settings* settings = nullptr;
     std::unique_ptr<Palette> palette;
+    /// Every view of the open document. `win` is the one that currently has focus.
+    std::vector<std::unique_ptr<MainWindow>> windows;
     MainWindow* win = nullptr;
 
     Document* doc = nullptr;

@@ -143,7 +143,7 @@ void TouchInputHandler::zoomStart() {
     // hasn't changed enough).
     this->canBlockZoom = true;
 
-    ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
+    ZoomControl* zoomControl = this->inputContext->getView()->getZoomControl();
 
     // Disable zoom fit as we are zooming currently
     // TODO(fabian): this should happen internally!!!
@@ -183,7 +183,7 @@ void TouchInputHandler::zoomMotion(InputEvent const& event) {
         this->canBlockZoom = false;
     }
 
-    ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
+    ZoomControl* zoomControl = this->inputContext->getView()->getZoomControl();
     const auto center = (this->priLastAbs + this->secLastAbs) / 2;
     zoomControl->zoomSequenceChange(zoom, true, center - lastZoomScrollCenter);
     lastZoomScrollCenter = center;
@@ -191,7 +191,7 @@ void TouchInputHandler::zoomMotion(InputEvent const& event) {
 
 void TouchInputHandler::zoomEnd() {
     this->zooming = false;
-    ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
+    ZoomControl* zoomControl = this->inputContext->getView()->getZoomControl();
     zoomControl->endZoomSequence();
 }
 

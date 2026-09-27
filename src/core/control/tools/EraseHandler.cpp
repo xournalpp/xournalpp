@@ -9,7 +9,6 @@
 
 #include "control/ToolEnums.h"            // for ERASER_TYPE_DELETE_STROKE
 #include "control/ToolHandler.h"          // for ToolHandler
-#include "gui/LegacyRedrawable.h"         // for Redrawable
 #include "model/Document.h"               // for Document
 #include "model/Element.h"                // for Element, ELEMENT_STROKE
 #include "model/Layer.h"                  // for Layer
@@ -23,11 +22,9 @@
 #include "util/Range.h"                   // for Range
 #include "util/SmallVector.h"             // for SmallVector
 
-EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, const PageRef& page, ToolHandler* handler,
-                           LegacyRedrawable* view):
+EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, const PageRef& page, ToolHandler* handler):
         page(page),
         handler(handler),
-        view(view),
         doc(doc),
         undo(undo),
         eraseDeleteUndoAction(nullptr),
@@ -59,7 +56,8 @@ void EraseHandler::erase(double x, double y) {
     }
 
     if (!rerenderRange.empty()) {
-        this->view->rerenderRange(rerenderRange);
+        // Every window that shows this page is a listener, so they all repaint the erased area.
+        this->page->fireRangeChanged(rerenderRange);
     }
 }
 

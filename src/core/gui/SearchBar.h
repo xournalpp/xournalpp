@@ -15,6 +15,7 @@
 #include <gtk/gtkcssprovider.h>  // for GtkCssProvider
 
 class Control;
+class MainWindow;
 class XojPdfRectangle;
 
 class SearchBar {
@@ -23,6 +24,9 @@ public:
     virtual ~SearchBar();
 
     void showSearchBar(bool show);
+
+    /// Connects this search bar to a document window. Each view has its own entry widgets.
+    void attachTo(MainWindow* win);
 
 private:
     static void buttonCloseSearchClicked(GtkButton* button, SearchBar* searchBar);
@@ -58,7 +62,7 @@ private:
 
 private:
     Control* control;
-    GtkCssProvider* cssTextFild;
+    GtkCssProvider* cssTextFild = nullptr;
     size_t page = 0;
     size_t indexInPage = 0;
     size_t occurrences = 0;

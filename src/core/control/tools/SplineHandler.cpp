@@ -29,16 +29,17 @@
 #include "util/DispatchPool.h"
 #include "view/overlays/SplineToolView.h"
 
-SplineHandler::SplineHandler(Control* control, const PageRef& page):
+SplineHandler::SplineHandler(Control* control, const PageRef& page, ZoomControl* zoomControl):
         InputHandler(control, page),
         snappingHandler(control->getSettings()),
-        viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::SplineToolView>>()) {
+        viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::SplineToolView>>()),
+        zoomCtrl(zoomControl) {
     snappingHandler.setPageRef(page);
-    this->control->getZoomControl()->addZoomListener(this);
-    this->knotsAttractionRadius = KNOTS_ATTRACTION_RADIUS_IN_PIXELS / this->control->getZoomControl()->getZoom();
+    this->zoomCtrl->addZoomListener(this);
+    this->knotsAttractionRadius = KNOTS_ATTRACTION_RADIUS_IN_PIXELS / this->zoomCtrl->getZoom();
 }
 
-SplineHandler::~SplineHandler() { this->control->getZoomControl()->removeZoomListener(this); }
+SplineHandler::~SplineHandler() { this->zoomCtrl->removeZoomListener(this); }
 
 std::unique_ptr<xoj::view::OverlayView> SplineHandler::createView(xoj::view::Repaintable* parent) const {
     return std::make_unique<xoj::view::SplineToolView>(this, parent);
@@ -291,7 +292,7 @@ void SplineHandler::finalizeSpline() {
 }
 
 void SplineHandler::zoomChanged() {
-    this->knotsAttractionRadius = KNOTS_ATTRACTION_RADIUS_IN_PIXELS / this->control->getZoomControl()->getZoom();
+    this->knotsAttractionRadius = KNOTS_ATTRACTION_RADIUS_IN_PIXELS / this->zoomCtrl->getZoom();
 }
 
 void SplineHandler::addKnot(const Point& p) { addKnotWithTangent(p, Point(0, 0)); }

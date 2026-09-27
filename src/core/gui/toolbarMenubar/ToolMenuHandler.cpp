@@ -51,10 +51,10 @@
 
 using std::string;
 
-ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui):
+ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, ZoomControl* zoomControl):
         parent(GTK_WINDOW(gui->getWindow())),
         control(control),
-        zoom(control->getZoomControl()),
+        zoom(zoomControl),
         gui(gui),
         toolHandler(control->getToolHandler()),
         tbModel(std::make_unique<ToolbarModel>()),

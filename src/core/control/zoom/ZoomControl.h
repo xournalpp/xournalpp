@@ -12,6 +12,7 @@
 #pragma once
 
 #include <cstddef>  // for size_t
+#include <memory>   // for shared_ptr
 #include <vector>   // for vector
 
 #include <gdk/gdk.h>  // for GdkEvent, GdkEventScroll, GdkEve...
@@ -35,7 +36,10 @@ class ZoomListener;
 class ZoomControl: public DocumentListener {
 public:
     ZoomControl() = default;
-    ~ZoomControl() override = default;
+    ~ZoomControl() override;
+
+    /// Stays false once destruction has started. Toolbar widgets can outlive this object.
+    std::shared_ptr<bool> aliveFlag() const { return this->alive; }
 
     /**
      * Zoom one step
@@ -99,6 +103,9 @@ public:
      */
     void setZoom100Value(double zoom100Val);
 
+    /// Copies zoom level, fit mode, and DPI scale. Fit and presentation are then applied to this window.
+    void copyFrom(const ZoomControl& src);
+
     /**
      * @return zoom value for zoom 100% depending zoom100Value
      */
@@ -121,6 +128,9 @@ public:
     void removeZoomListener(ZoomListener* listener);
 
     void initZoomHandler(GtkWidget* window, GtkWidget* widget, XournalView* v, Control* c);
+
+    void setView(XournalView* v) { this->view = v; }
+    XournalView* getView() const { return this->view; }
 
     /**
      * Call this before any zoom is done, it saves the current page and position
@@ -205,6 +215,8 @@ private:
     XournalView* view = nullptr;
     Control* control = nullptr;
     std::vector<ZoomListener*> listener;
+    /// Shared so listeners can see destruction after this ZoomControl is gone.
+    std::shared_ptr<bool> alive = std::make_shared<bool>(true);
 
     /**
      * current Zoom value

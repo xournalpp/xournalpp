@@ -195,13 +195,23 @@ void ToolHandler::selectTool(ToolType type) {
 }
 
 void ToolHandler::fireToolChanged() const {
-    for (auto&& listener: this->toolChangeListeners) { listener(this->activeTool->type); }
+    // A listener may unregister itself. Iterate a copy so that removal does not invalidate this loop.
+    const auto listeners = this->toolChangeListeners;
+    for (const auto& listener: listeners) {
+        listener.second(this->activeTool->type);
+    }
 
     stateChangeListener->toolChanged();
 }
 
-void ToolHandler::addToolChangedListener(ToolChangedCallback listener) {
-    toolChangeListeners.emplace_back(std::move(listener));
+auto ToolHandler::addToolChangedListener(ToolChangedCallback listener) -> size_t {
+    const size_t id = this->nextToolListenerId++;
+    this->toolChangeListeners.emplace_back(id, std::move(listener));
+    return id;
+}
+
+void ToolHandler::removeToolChangedListener(size_t id) {
+    std::erase_if(this->toolChangeListeners, [id](const auto& entry) { return entry.first == id; });
 }
 
 auto ToolHandler::getTool(ToolType type) const -> Tool& { return *(this->tools[type - TOOL_PEN]); }

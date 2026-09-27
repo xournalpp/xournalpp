@@ -24,6 +24,17 @@
 
 LayerController::LayerController(Control* control): control(control), selectedPage(npos) {}
 
+void LayerController::rerenderPageInAllWindows(size_t page) const {
+    if (page == npos) {
+        return;
+    }
+    this->control->forEachWindow([page](MainWindow& window) {
+        if (XournalView* view = window.getXournal()) {
+            view->layerChanged(page);
+        }
+    });
+}
+
 void LayerController::documentChanged(DocumentChangeType type) {
     if (type == DOCUMENT_CHANGE_CLEARED || type == DOCUMENT_CHANGE_COMPLETE) {
         fireRebuildLayerMenu();
@@ -48,8 +59,7 @@ void LayerController::insertLayer(PageRef page, Layer* layer, Layer::Index layer
     control->getDocument()->unlock();
     fireRebuildLayerMenu();
     if (!empty) {
-        // Rerender the page
-        control->getWindow()->getXournal()->layerChanged(id);
+        this->rerenderPageInAllWindows(id);
     }
 }
 
@@ -61,8 +71,7 @@ void LayerController::removeLayer(PageRef page, Layer* layer) {
     control->getDocument()->unlock();
     fireRebuildLayerMenu();
     if (!empty) {
-        // Rerender the page
-        control->getWindow()->getXournal()->layerChanged(id);
+        this->rerenderPageInAllWindows(id);
     }
 }
 
@@ -73,8 +82,7 @@ void LayerController::moveLayer(PageRef page, Layer* layer, Layer::Index newPos)
     auto id = control->getDocument()->indexOf(page);
     control->getDocument()->unlock();
     fireRebuildLayerMenu();
-    // Rerender the page
-    control->getWindow()->getXournal()->layerChanged(id);
+    this->rerenderPageInAllWindows(id);
 }
 
 void LayerController::mergeLayers(PageRef page, Layer* bottomLayer, Layer* topLayer) {
@@ -88,7 +96,7 @@ void LayerController::mergeLayers(PageRef page, Layer* bottomLayer, Layer* topLa
     control->getDocument()->unlock();
 
     fireRebuildLayerMenu();
-    control->getWindow()->getXournal()->layerChanged(id);  // Rerender the page
+    this->rerenderPageInAllWindows(id);
 }
 
 void LayerController::moveElementsFromLayerToFreeLayer(PageRef page, Layer* layer,
@@ -106,7 +114,7 @@ void LayerController::moveElementsFromLayerToFreeLayer(PageRef page, Layer* laye
     control->getDocument()->unlock();
 
     fireRebuildLayerMenu();
-    control->getWindow()->getXournal()->layerChanged(id);  // Rerender the page
+    this->rerenderPageInAllWindows(id);
 }
 
 
@@ -141,8 +149,7 @@ void LayerController::fireRebuildLayerMenu() {
 void LayerController::fireLayerVisibilityChanged() {
     for (LayerCtrlListener* l: this->listener) { l->layerVisibilityChanged(); }
 
-    // Rerenders the page - Todo: make this another listener
-    control->getWindow()->getXournal()->layerChanged(selectedPage);
+    this->rerenderPageInAllWindows(this->selectedPage);
 }
 
 void LayerController::fireSelectedLayerChanged() {
@@ -214,10 +221,7 @@ void LayerController::deleteCurrentLayer() {
     p->removeLayer(l);
     lock.unlock();
 
-    MainWindow* win = control->getWindow();
-    if (win) {
-        win->getXournal()->layerChanged(pId);
-    }
+    this->rerenderPageInAllWindows(pId);
 
     control->getUndoRedoHandler()->addUndoAction(std::make_unique<RemoveLayerUndoAction>(this, p, l, lId - 1));
 
@@ -260,10 +264,7 @@ void LayerController::moveCurrentLayer(bool up) {
     p->insertLayer(currentLayer, newIndex);
     lock.unlock();
 
-    MainWindow* win = control->getWindow();
-    if (win) {
-        win->getXournal()->layerChanged(pId);
-    }
+    this->rerenderPageInAllWindows(pId);
 
     control->getUndoRedoHandler()->addUndoAction(
             std::make_unique<MoveLayerUndoAction>(this, p, currentLayer, lId - 1, newIndex));
@@ -341,10 +342,7 @@ void LayerController::copyCurrentLayer() {
     p->insertLayer(cloned, lId);
     lock.unlock();
 
-    MainWindow* win = control->getWindow();
-    if (win) {
-        win->getXournal()->layerChanged(pId);
-    }
+    this->rerenderPageInAllWindows(pId);
 
     control->getUndoRedoHandler()->addUndoAction(std::make_unique<InsertLayerUndoAction>(this, p, cloned, lId));
 

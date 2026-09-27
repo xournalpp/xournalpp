@@ -97,6 +97,7 @@ void SidebarIndexPage::treeBookmarkSelected(GtkTreeView* treeview, SidebarIndexP
             if (link && link->dest) {
                 LinkDestination* dest = link->dest;
 
+                sidebar->control->focusWindowFrom(GTK_WIDGET(treeview));
                 sidebar->control->getScrollHandler()->scrollToLinkDest(*dest);
             }
             g_object_unref(link);

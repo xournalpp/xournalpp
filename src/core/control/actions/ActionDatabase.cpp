@@ -180,6 +180,31 @@ ActionDatabase::~ActionDatabase() {
 }
 
 
+void ActionDatabase::replicateTo(GtkApplicationWindow* target) const {
+    if (target == nullptr) {
+        return;
+    }
+    // A later window can be allocated at the address of one that was closed. Skip an action only
+    // when this window already has it.
+    auto* app = gtk_window_get_application(GTK_WINDOW(target));
+    for (const auto& action: gActions) {
+        if (!action) {
+            continue;
+        }
+        const char* name = g_action_get_name(G_ACTION(action.get()));
+        if (name == nullptr) {
+            continue;
+        }
+        if (app != nullptr && g_action_map_lookup_action(G_ACTION_MAP(app), name) != nullptr) {
+            continue;
+        }
+        if (g_action_map_lookup_action(G_ACTION_MAP(target), name) != nullptr) {
+            continue;
+        }
+        g_action_map_add_action(G_ACTION_MAP(target), G_ACTION(action.get()));
+    }
+}
+
 void ActionDatabase::enableAction(Action action, bool enable) {
     xoj_assert(gActions[action]);
     g_simple_action_set_enabled(gActions[action].get(), enable);

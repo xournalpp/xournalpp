@@ -41,5 +41,11 @@ public:
      * @brief Draws without putative drawing aids (e.g. spline knots and tangents, text frame)
      */
     virtual void drawWithoutDrawingAids(cairo_t* cr) const { this->draw(cr); }
+
+    /**
+     * @brief Paint this tool into the page buffer when it finishes.
+     * Stroke tools do this even on windows that do not own the input handler.
+     */
+    virtual bool commitsToBuffer() const { return false; }
 };
 };  // namespace xoj::view

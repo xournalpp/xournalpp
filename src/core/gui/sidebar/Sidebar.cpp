@@ -37,7 +37,7 @@ Sidebar::Sidebar(GladeGui* gui, Control* control): control(control) {
 
 void Sidebar::initTabs(GtkWidget* sidebarContents) {
     addTab(std::make_unique<SidebarIndexPage>(this->control));
-    addTab(std::make_unique<SidebarPreviewPages>(this->control));
+    addTab(std::make_unique<SidebarPreviewPages>(this->control, this));
     addTab(std::make_unique<SidebarPreviewLayers>(this->control, false));
     addTab(std::make_unique<SidebarPreviewLayers>(this->control, true));
 
@@ -76,7 +76,12 @@ void Sidebar::buttonClicked(GtkButton* button, SidebarTabButton* buttonData) {
 
 void Sidebar::addTab(std::unique_ptr<AbstractSidebarPage> tab) { this->tabs.push_back(std::move(tab)); }
 
-Sidebar::~Sidebar() = default;
+Sidebar::~Sidebar() {
+    if (this->layoutIdle != 0) {
+        g_source_remove(this->layoutIdle);
+        this->layoutIdle = 0;
+    }
+}
 
 void Sidebar::selectPageNr(size_t page, size_t pdfPage) {
     for (auto&& p: this->tabs) {
@@ -103,10 +108,11 @@ void Sidebar::setSelectedTab(size_t tab) {
 
         i++;
     }
-    if (this->visibleTab) {
-        g_idle_add(
+    if (this->visibleTab && this->layoutIdle == 0) {
+        this->layoutIdle = g_idle_add(
                 [](gpointer data) -> gboolean {
                     Sidebar* sidebar = static_cast<Sidebar*>(data);
+                    sidebar->layoutIdle = 0;
                     sidebar->layout();
                     return G_SOURCE_REMOVE;
                 },
@@ -159,6 +165,14 @@ void Sidebar::documentChanged(DocumentChangeType type) {
     if (type == DOCUMENT_CHANGE_CLEARED || type == DOCUMENT_CHANGE_COMPLETE || type == DOCUMENT_CHANGE_PDF_BOOKMARKS) {
         updateVisibleTabs();
     }
+}
+
+void Sidebar::synchronizeWithDocument() {
+    for (auto&& tab: this->tabs) {
+        tab->documentChanged(DOCUMENT_CHANGE_COMPLETE);
+        tab->documentChanged(DOCUMENT_CHANGE_PDF_BOOKMARKS);
+    }
+    updateVisibleTabs();
 }
 
 SidebarTabButton::SidebarTabButton(Sidebar* sidebar, size_t index, AbstractSidebarPage* page):
