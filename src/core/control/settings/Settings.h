@@ -396,6 +396,9 @@ public:
     void setBackgroundColor(Color color);
 
     /// Background painted behind a PDF page on screen. Printing is unchanged.
+    /// When disabled, rendering uses white.
+    bool isPdfRenderBackgroundEnabled() const;
+    void setPdfRenderBackgroundEnabled(bool enabled);
     Color getPdfRenderBackgroundColor() const;
     void setPdfRenderBackgroundColor(Color color);
 
@@ -1031,6 +1034,12 @@ private:
      * The color for Xournal page background
      */
     Color backgroundColor{};
+
+    /**
+     * When true, PDF screen rendering paints pdfRenderBackgroundColor behind the page.
+     * When false, that background is white.
+     */
+    bool pdfRenderBackgroundEnabled = false;
 
     /**
      * Color painted behind PDF content when rendering to the screen.

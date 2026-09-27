@@ -1605,6 +1605,7 @@ void Control::showSettings() {
         SidebarNumberingStyle sidebarStyle;
         std::optional<std::filesystem::path> colorPaletteSetting;
         RecolorParameters recolorParameters;
+        bool pdfRenderBackgroundEnabled;
         Color pdfRenderBackgroundColor;
     } settingsBeforeDialog = {
             settings->getBorderColor(),
@@ -1620,6 +1621,7 @@ void Control::showSettings() {
             settings->getSidebarNumberingStyle(),
             settings->getColorPaletteSetting(),
             settings->getRecolorParameters(),
+            settings->isPdfRenderBackgroundEnabled(),
             settings->getPdfRenderBackgroundColor(),
     };
 
@@ -1691,7 +1693,8 @@ void Control::showSettings() {
                     reloadToolbars = true;
                 }
 
-                if (settingsBeforeDialog.pdfRenderBackgroundColor != settings->getPdfRenderBackgroundColor()) {
+                if (settingsBeforeDialog.pdfRenderBackgroundEnabled != settings->isPdfRenderBackgroundEnabled() ||
+                    settingsBeforeDialog.pdfRenderBackgroundColor != settings->getPdfRenderBackgroundColor()) {
                     ctrl->forEachWindow([](MainWindow& window) {
                         XournalView* view = window.getXournal();
                         if (view == nullptr) {
