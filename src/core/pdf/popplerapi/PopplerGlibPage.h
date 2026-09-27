@@ -22,8 +22,13 @@
 #include "pdf/base/XojPdfPage.h"  // for XojPdfRectangle (ptr only), XojPdfP...
 
 
+class Settings;
+
 class PopplerGlibPage: public XojPdfPage {
 public:
+    /// Screen rendering reads the PDF background color from these settings.
+    static void useSettings(Settings* settings);
+
     PopplerGlibPage(PopplerPage* page, PopplerDocument* doc, std::shared_ptr<std::mutex> mutex);
     PopplerGlibPage(const PopplerGlibPage& other);
     virtual ~PopplerGlibPage();
