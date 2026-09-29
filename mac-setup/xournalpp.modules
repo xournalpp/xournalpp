@@ -15,10 +15,10 @@
 
   <cmake id="openjpeg">
     <branch repo="github-tarball"
-            module="uclouvain/openjpeg/archive/v2.5.3.tar.gz"
-            version="2.5.3"
-            checkoutdir="openjpeg-2.5.3"
-            hash="sha256:368fe0468228e767433c9ebdea82ad9d801a3ad1e4234421f352c8b06e7aa707"/>
+            module="uclouvain/openjpeg/archive/v2.5.4.tar.gz"
+            version="2.5.4"
+            checkoutdir="openjpeg-2.5.4"
+            hash="sha256:a695fbe19c0165f295a8531b1e4e855cd94d0875d2f88ec4b61080677e27188a"/>
   </cmake>
 
   <cmake id="poppler-data">
@@ -31,9 +31,9 @@
   <!-- For poppler-glib -->
   <cmake id="poppler" cmakeargs="-DENABLE_NSS3=off -DENABLE_GPGME=off -DENABLE_QT5=OFF -DENABLE_QT6=OFF -DBUILD_QT5_TESTS=off -DBUILD_QT6_TESTS=off -DBUILD_CPP_TESTS=off -DENABLE_LCMS=off -DENABLE_LIBCURL=off -DENABLE_BOOST=OFF -DENABLE_CPP=ON -DENABLE_CMS=none -DENABLE_LIBTIFF=off -DCMAKE_INSTALL_NAME_DIR='&#36;&lt;INSTALL_PREFIX&gt;/lib'">
     <branch repo="poppler"
-            version="25.06.0"
-            module="poppler-25.06.0.tar.xz"
-            hash="sha256:8199532d38984fab46dbd0020ec9c40f20e928e33e9b4cc6043572603a821d83"/>
+            version="26.08.0"
+            module="poppler-26.08.0.tar.xz"
+            hash="sha256:dc906e68cea698109706ac6aa3d2c9d4512fcfcac42d90b8afcda486d1b9abd0"/>
     <dependencies>
       <dep package="poppler-data"/>
       <dep package="openjpeg"/>
@@ -64,7 +64,7 @@
             checkoutdir="libogg-1.3.6"/>
   </cmake>
 
-  <cmake id="libvorbis" cmakeargs="">
+  <cmake id="libvorbis" cmakeargs="-DCMAKE_POLICY_VERSION_MINIMUM=3.6">
     <branch repo="github-tarball"
             version="1.3.7"
             module="xiph/vorbis/releases/download/v1.3.7/libvorbis-1.3.7.tar.gz"
@@ -76,23 +76,23 @@
   </cmake>
   <cmake id="libflac" cmakeargs="-DBUILD_PROGRAMS=off -DBUILD_EXAMPLES=off -DBUILD_TESTING=off -DINSTALL_MANPAGES=off">
     <branch repo="github-tarball"
-            version="1.4.3"
-            module="xiph/flac/releases/download/1.4.3/flac-1.4.3.tar.xz"
-            hash="sha256:6c58e69cd22348f441b861092b825e591d0b822e106de6eb0ee4d05d27205b70"
-            checkoutdir="libflac-1.4.3"/>
+            version="1.5.0"
+            module="xiph/flac/releases/download/1.5.0/flac-1.5.0.tar.xz"
+            hash="sha256:f2c1c76592a82ffff8413ba3c4a1299b6c7ab06c734dee03fd88630485c2b920"
+            checkoutdir="libflac-1.5.0"/>
     <dependencies>
       <dep package="libogg"/>
     </dependencies>
   </cmake>
   <cmake id="libopus" cmakeargs="">
     <branch repo="github-tarball"
-            version="1.4"
-            module="xiph/opus/archive/refs/tags/v1.4.tar.gz"
-            hash="sha256:659e6b223e42a51b0a898632b9a5f406ccd5c2e00aa526ddd1264789774b94e5"
-            checkoutdir="libopus-1.4"/>
+            version="1.5.2"
+            module="xiph/opus/releases/download/v1.5.2/opus-1.5.2.tar.gz"
+            hash="sha256:65c1d2f78b9f2fb20082c38cbe47c951ad5839345876e46941612ee87f9a7ce1"
+            checkoutdir="libopus-1.5.2"/>
   </cmake>
 
-  <cmake id="libsndfile" cmakeargs="-DBUILD_PROGRAMS=off -DBUILD_EXAMPLES=off -DBUILD_SHARED_LIBS=ON -DENABLE_EXTERNAL_LIBS=ON">
+  <cmake id="libsndfile" cmakeargs="-DBUILD_PROGRAMS=off -DBUILD_EXAMPLES=off -DBUILD_SHARED_LIBS=ON -DENABLE_EXTERNAL_LIBS=ON -DCMAKE_POLICY_VERSION_MINIMUM=3.6">
     <branch repo="github-tarball"
             version="1.2.2"
             module="libsndfile/libsndfile/archive/1.2.2.tar.gz"
@@ -108,10 +108,10 @@
 
   <cmake id="libqpdf" cmakeargs="-DBUILD_SHARED_LIBS=true -DCMAKE_BUILD_TYPE=RelWithDebInfo">
     <branch repo="github-tarball"
-            version="12.2.0"
-            module="qpdf/qpdf/archive/refs/tags/v12.2.0.tar.gz"
-            hash="sha256:2d004611699a94030a594318393f08a7352ab1cf3cee337c5312d4e7eb7f8a4f"
-            checkoutdir="libqpdf-12.2.0"/>
+            version="12.4.1"
+            module="qpdf/qpdf/archive/refs/tags/v12.4.1.tar.gz"
+            hash="sha256:ebab3840fa8f370a1d4a1b4b7b08fad5baebeb5b5fa3cbbda88cd81e4fccecc9"
+            checkoutdir="libqpdf-12.4.1"/>
     <dependencies>
       <dep package="zlib"/>
       <dep package="libjpeg"/>
@@ -127,22 +127,22 @@
              makeinstallargs="INSTALL_TOP='$(DESTDIR)/${prefix}' install"
   >
     <branch repo="lua"
-            version="5.4.8"
-            module="lua-5.4.8.tar.gz"
-            hash="sha256:4f18ddae154e793e46eeab727c59ef1c0c0c2b744e7b94219710d76f530629ae"
-            checkoutdir="lua-5.4.8"/>
+            version="5.5.1"
+            module="lua-5.5.1.tar.gz"
+            hash="sha256:1c4b4068d67061f2a2231ad2b5422e77acea1487ea9890f6320af614f4373dce"
+            checkoutdir="lua-5.5.1"/>
   </autotools>
 
   <autotools id="lua-gobject"
              skip-autogen="true"
              supports-non-srcdir-builds="no"
-             makeinstallargs='LUA_VERSION=5.4 PREFIX="${prefix}" install'
+             makeinstallargs='LUA_VERSION=5.5 PREFIX="${prefix}" install'
   >
     <branch repo="github-tarball"
-            module="vtrlx/LuaGObject/archive/refs/tags/0.10.0.tar.gz"
-            hash="sha256:0b94b6d254a92827cc2efc80fbf40cc237ae7f1c4e1677f8f658c8d4fe393d0c"
-            version="0.10.0"
-            checkoutdir="LuaGObject-0.10.0">
+            module="vtrlx/LuaGObject/archive/refs/tags/0.10.5.tar.gz"
+            hash="sha256:e386fe8e95b1205e83b2c31eb2657142840ea1acfd416973ba010fa27579d581"
+            version="0.10.5"
+            checkoutdir="LuaGObject-0.10.5">
     </branch>
     <dependencies>
       <dep package="lua"/>

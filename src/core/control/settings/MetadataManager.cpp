@@ -1,7 +1,6 @@
 #include "MetadataManager.h"
 
 #include <algorithm>  // for sort
-#include <cstdlib>    // for strtoll, strtod
 #include <fstream>    // for operator<<, basic_ostream, basic_stringb...
 #include <memory>     // for allocator_traits<>::value_type
 #include <sstream>    // for istringstream
@@ -137,7 +136,7 @@ auto MetadataManager::loadMetadataFile(fs::path const& path) -> std::optional<Me
     std::ifstream infile(path);
 
     auto time = path.stem().string();
-    entry.time = strtoll(time.c_str(), nullptr, 10);
+    entry.time = g_ascii_strtoll(time.c_str(), nullptr, 10);
 
     if (!getline(infile, line) || line != "XOJ-METADATA/1.0") {
         // Not valid
@@ -157,13 +156,13 @@ auto MetadataManager::loadMetadataFile(fs::path const& path) -> std::optional<Me
         // Not valid
         return std::nullopt;
     }
-    entry.page = static_cast<int>(strtoll(line.substr(5).c_str(), nullptr, 10));
+    entry.page = static_cast<int>(g_ascii_strtoll(line.substr(5).c_str(), nullptr, 10));
 
     if (!getline(infile, line) || line.length() < 6 || line.substr(0, 5) != "zoom=") {
         // Not valid
         return std::nullopt;
     }
-    entry.zoom = strtod(line.substr(5).c_str(), nullptr);
+    entry.zoom = g_ascii_strtod(line.substr(5).c_str(), nullptr);
 
     return entry;
 }

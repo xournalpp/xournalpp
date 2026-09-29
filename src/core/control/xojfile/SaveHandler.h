@@ -34,6 +34,7 @@ class Stroke;
 class SaveHandler {
 public:
     SaveHandler();
+    virtual ~SaveHandler() = default;
 
 public:
     /// Prepare an XML tree corresponding to the document - Needs read-only access to the Document

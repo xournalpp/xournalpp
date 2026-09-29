@@ -61,6 +61,8 @@ public:
         std::unique_ptr<XojPdfAction> action;
     };
 
+    virtual ~XojPdfPage() = default;
+
     virtual double getWidth() const = 0;
     virtual double getHeight() const = 0;
 

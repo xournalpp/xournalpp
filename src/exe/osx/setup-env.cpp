@@ -80,8 +80,8 @@ void setupEnvironment() {
     }
 
     if (isAppBundle || underJHBuild) {  // in both cases we have non-standard paths for Lua
-        std::string luaPath = std::string(Util::toGFilename(dataPath).c_str()) + "/lua/5.4/?.lua";
-        std::string luaCPath = std::string(Util::toGFilename(libPath).c_str()) + "/lua/5.4/?.so";
+        std::string luaPath = std::string(Util::toGFilename(dataPath).c_str()) + "/lua/5.5/?.lua";
+        std::string luaCPath = std::string(Util::toGFilename(libPath).c_str()) + "/lua/5.5/?.so";
 
         prependPathToLua("LUA_PATH", luaPath);
         prependPathToLua("LUA_CPATH", luaCPath);

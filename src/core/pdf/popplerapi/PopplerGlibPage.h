@@ -26,7 +26,7 @@ class PopplerGlibPage: public XojPdfPage {
 public:
     PopplerGlibPage(PopplerPage* page, PopplerDocument* doc, std::shared_ptr<std::mutex> mutex);
     PopplerGlibPage(const PopplerGlibPage& other);
-    virtual ~PopplerGlibPage();
+    ~PopplerGlibPage() override;
     PopplerGlibPage& operator=(const PopplerGlibPage& other);
 
 public:

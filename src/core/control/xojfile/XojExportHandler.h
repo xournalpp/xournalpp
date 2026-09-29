@@ -25,7 +25,7 @@ class XmlPointNode;
 class XojExportHandler: public SaveHandler {
 public:
     XojExportHandler();
-    virtual ~XojExportHandler();
+    ~XojExportHandler() override;
 
 protected:
     /**
