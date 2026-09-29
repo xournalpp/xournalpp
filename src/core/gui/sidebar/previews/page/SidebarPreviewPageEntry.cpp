@@ -24,6 +24,7 @@ auto SidebarPreviewPageEntry::getRenderType() const -> PreviewRenderType { retur
 
 void SidebarPreviewPageEntry::mouseButtonPressCallback() {
     auto* control = sidebar->getControl();
+    control->focusWindowFrom(this->getWidget());
     if (control->getCurrentPageNo() != index) {
         control->getScrollHandler()->jumpToPage(page);
     }

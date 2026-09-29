@@ -67,7 +67,9 @@ void PageBackgroundChangeController::applyBackgroundToAllPages(const PageType& p
             (control->*fire)(n);
         }
         control->updateBackgroundSizeButton();
-        control->getWindow()->getMenubar()->getPageTypeSubmenu().setSelectedPT(std::move(pt));
+        if (Menubar* bar = control->getDisplayedMenubar()) {
+            bar->getPageTypeSubmenu().setSelectedPT(std::move(pt));
+        }
     };
 
     if (pt.isImagePage()) {
@@ -142,7 +144,9 @@ void PageBackgroundChangeController::changeCurrentPageBackground(const PageType&
             control->firePageChanged(pageNr);
         }
         control->updateBackgroundSizeButton();
-        control->getWindow()->getMenubar()->getPageTypeSubmenu().setSelectedPT(std::move(pt));
+        if (Menubar* bar = control->getDisplayedMenubar()) {
+            bar->getPageTypeSubmenu().setSelectedPT(std::move(pt));
+        }
     };
 
     if (pt.isImagePage()) {
@@ -375,5 +379,7 @@ void PageBackgroundChangeController::pageSelected(size_t page) {
         return;
     }
 
-    control->getWindow()->getMenubar()->getPageTypeSubmenu().setSelectedPT(current->getBackgroundType());
+    if (Menubar* bar = control->getDisplayedMenubar()) {
+        bar->getPageTypeSubmenu().setSelectedPT(current->getBackgroundType());
+    }
 }

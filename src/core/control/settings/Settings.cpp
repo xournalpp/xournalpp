@@ -206,6 +206,8 @@ void Settings::loadDefault() {
     this->recolorParameters = {false, false, Recolor(ColorU8{198, 208, 245}, ColorU8{48, 52, 70})};
 
     this->backgroundColor = Colors::xopp_gainsboro02;
+    this->pdfRenderBackgroundEnabled = false;
+    this->pdfRenderBackgroundColor = Color(0xF2, 0xE5, 0xBC);
 
     // clang-format off
 	this->pageTemplateSettings.parse("xoj/template\ncopyLastPageSettings=true\nsize=595.275591x841.889764\nbackgroundType=lined\nbackgroundColor=#ffffff\n");
@@ -570,6 +572,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("backgroundColor")) == 0) {
         this->backgroundColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pdfRenderBackground.enabled")) == 0) {
+        this->pdfRenderBackgroundEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pdfRenderBackgroundColor")) == 0) {
+        this->pdfRenderBackgroundColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpace")) == 0) {
         this->addHorizontalSpace = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpaceAmount")) == 0) {
@@ -1145,6 +1151,8 @@ void Settings::save() {
 
     xmlNode = savePropertyUnsigned("selectionBorderColor", uint32_t(selectionBorderColor), root);
     xmlNode = savePropertyUnsigned("backgroundColor", uint32_t(backgroundColor), root);
+    xmlNode = saveProperty("pdfRenderBackground.enabled", pdfRenderBackgroundEnabled ? "true" : "false", root);
+    xmlNode = savePropertyUnsigned("pdfRenderBackgroundColor", uint32_t(pdfRenderBackgroundColor), root);
     xmlNode = savePropertyUnsigned("selectionMarkerColor", uint32_t(selectionMarkerColor), root);
     xmlNode = savePropertyUnsigned("activeSelectionColor", uint32_t(activeSelectionColor), root);
 
@@ -2220,6 +2228,26 @@ void Settings::setRecolorParameters(RecolorParameters&& recolor) {
         return;
     }
     this->recolorParameters = recolor;
+    save();
+}
+
+auto Settings::isPdfRenderBackgroundEnabled() const -> bool { return this->pdfRenderBackgroundEnabled; }
+
+void Settings::setPdfRenderBackgroundEnabled(bool enabled) {
+    if (this->pdfRenderBackgroundEnabled == enabled) {
+        return;
+    }
+    this->pdfRenderBackgroundEnabled = enabled;
+    save();
+}
+
+auto Settings::getPdfRenderBackgroundColor() const -> Color { return this->pdfRenderBackgroundColor; }
+
+void Settings::setPdfRenderBackgroundColor(Color color) {
+    if (this->pdfRenderBackgroundColor == color) {
+        return;
+    }
+    this->pdfRenderBackgroundColor = color;
     save();
 }
 

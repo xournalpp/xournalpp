@@ -58,13 +58,19 @@
 using std::string;
 
 
-static void themeCallback(GObject*, GParamSpec*, gpointer data) { static_cast<MainWindow*>(data)->updateColorscheme(); }
+static void themeCallback(GObject*, GParamSpec*, gpointer data) {
+    // GtkSettings is shared by every window. Rewriting it from this notify reloads CSS forever.
+    static_cast<MainWindow*>(data)->applyWindowColorscheme();
+}
 
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkApplication* parent):
         GladeGui(gladeSearchPath, "main.glade", "mainWindow"),
         control(control),
-        toolbar(std::make_unique<ToolMenuHandler>(control, this)),
+        zoomControl(std::make_unique<ZoomControl>()),
+        toolbar(std::make_unique<ToolMenuHandler>(control, this, zoomControl.get())),
         menubar(std::make_unique<Menubar>()) {
+    this->zoomControl->setZoomStep(control->getSettings()->getZoomStep() / 100.0);
+    this->zoomControl->setZoomStepScroll(control->getSettings()->getZoomStepScroll() / 100.0);
     gtk_window_set_application(GTK_WINDOW(getWindow()), parent);
 
     panedContainerWidget.reset(get("panelMainContents"), xoj::util::ref);
@@ -87,8 +93,16 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     setSidebarVisible(control->getSettings()->isSidebarVisible());
 
     // Window handler
-    g_signal_connect(this->window, "delete-event", xoj::util::wrap_for_g_callback_v<deleteEventCallback>,
-                     this->control);
+    g_signal_connect(this->window, "delete-event", xoj::util::wrap_for_g_callback_v<deleteEventCallback>, this);
+    g_signal_connect(this->window, "focus-in-event", G_CALLBACK(+[](GtkWidget*, GdkEvent*, gpointer self) -> gboolean {
+                         auto* win = static_cast<MainWindow*>(self);
+                         // Focus can arrive before Control::initWindow has created the sidebar and actions.
+                         if (win->getSidebar() != nullptr) {
+                             win->control->setActiveWindow(win);
+                         }
+                         return false;
+                     }),
+                     this);
 #if GTK_MAJOR_VERSION == 3
     g_signal_connect(this->window, "notify::is-maximized", xoj::util::wrap_for_g_callback_v<windowMaximizedCallback>,
                      this);
@@ -144,11 +158,18 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     gtk_drag_dest_add_image_targets(this->window);
     gtk_drag_dest_add_text_targets(this->window);
 
-    g_signal_connect(gtk_widget_get_settings(this->window), "notify::gtk-theme-name", G_CALLBACK(themeCallback), this);
-    g_signal_connect(gtk_widget_get_settings(this->window), "notify::gtk-application-prefer-dark-theme",
-                     G_CALLBACK(themeCallback), this);
+    this->themeNameHandler = g_signal_connect(gtk_widget_get_settings(this->window), "notify::gtk-theme-name",
+                                              G_CALLBACK(themeCallback), this);
+    this->themeDarkHandler = g_signal_connect(gtk_widget_get_settings(this->window),
+                                              "notify::gtk-application-prefer-dark-theme", G_CALLBACK(themeCallback),
+                                              this);
 
-    updateColorscheme();
+    // GtkSettings is process-wide. Only the first window may reset it; doing so again reloads CSS recursively.
+    if (control->getWindowCount() == 0) {
+        updateColorscheme();
+    } else {
+        applyWindowColorscheme();
+    }
 }
 
 void MainWindow::populate(GladeSearchpath* gladeSearchPath) {
@@ -164,9 +185,25 @@ void MainWindow::populate(GladeSearchpath* gladeSearchPath) {
     setToolbarVisible(control->getSettings()->isToolbarVisible());
 }
 
-GMenuModel* MainWindow::getMenuModel() const { return menubar->getModel(); }
+GMenuModel* MainWindow::getMenuModel() const { return this->menubar != nullptr ? this->menubar->getModel() : nullptr; }
 
-MainWindow::~MainWindow() = default;
+MainWindow::~MainWindow() {
+    if (this->window == nullptr) {
+        return;
+    }
+    GtkSettings* settings = gtk_widget_get_settings(this->window);
+    if (settings == nullptr) {
+        return;
+    }
+    if (this->themeNameHandler != 0) {
+        g_signal_handler_disconnect(settings, this->themeNameHandler);
+        this->themeNameHandler = 0;
+    }
+    if (this->themeDarkHandler != 0) {
+        g_signal_handler_disconnect(settings, this->themeDarkHandler);
+        this->themeDarkHandler = 0;
+    }
+}
 
 struct ThemeProperties {
     bool dark;
@@ -277,19 +314,18 @@ void MainWindow::updateColorscheme() {
         }
     }
 
-    GtkStyleContext* context = gtk_widget_get_style_context(GTK_WIDGET(this->window));
-
     if (this->darkMode) {
-        gtk_style_context_add_class(context, "darkMode");
         g_object_set(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme", true, nullptr);
     } else {
-        gtk_style_context_remove_class(context, "darkMode");
         g_object_set(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme", false, nullptr);
         if (props.darkSuffix) {  // The active theme is all dark. Remove the trailing "-dark"
             g_object_set(gtk_widget_get_settings(this->window), "gtk-theme-name", props.rootname.c_str(), nullptr);
             modifiedGtkSettingsTheme = true;
         }
     }
+
+    applyWindowColorscheme();
+    control->refreshOtherWindowColorschemes(this);
 
     {
         gchar* name = nullptr;
@@ -306,6 +342,19 @@ void MainWindow::updateColorscheme() {
                                       this);
 }
 
+void MainWindow::applyWindowColorscheme() {
+    auto variant = control->getSettings()->getThemeVariant();
+    auto props = getThemeProperties(this->window);
+    this->darkMode = (props.dark && variant != THEME_VARIANT_FORCE_LIGHT) || variant == THEME_VARIANT_FORCE_DARK;
+
+    GtkStyleContext* context = gtk_widget_get_style_context(GTK_WIDGET(this->window));
+    if (this->darkMode) {
+        gtk_style_context_add_class(context, "darkMode");
+    } else {
+        gtk_style_context_remove_class(context, "darkMode");
+    }
+}
+
 void MainWindow::initXournalWidget() {
     winXournal = gtk_scrolled_window_new();
 
@@ -315,9 +364,9 @@ void MainWindow::initXournalWidget() {
 
     scrollHandling = std::make_unique<ScrollHandling>(GTK_SCROLLED_WINDOW(winXournal));
 
-    this->xournal = std::make_unique<XournalView>(winXournal, control, scrollHandling.get());
+    this->xournal = std::make_unique<XournalView>(winXournal, control, scrollHandling.get(), this->zoomControl.get());
 
-    control->getZoomControl()->initZoomHandler(this->window, winXournal, xournal.get(), control);
+    this->zoomControl->initZoomHandler(this->window, winXournal, xournal.get(), control);
     gtk_widget_show_all(winXournal);
 }
 
@@ -502,15 +551,51 @@ void MainWindow::updateScrollbarSidebarPosition() {
     }
 }
 
-auto MainWindow::deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control* control) -> bool {
-    control->quit();
+auto MainWindow::deleteEventCallback(GtkWidget* widget, GdkEvent* event, MainWindow* win) -> bool {
+    if (win->closing) {
+        return true;
+    }
+    if (win->control->getWindowCount() <= 1) {
+        win->control->quit();
+        return true;
+    }
 
+    // Destroying the widget inside its own delete-event is unsafe. Drop the view on the next idle tick.
+    win->closing = true;
+    g_idle_add(
+            +[](gpointer data) -> gboolean {
+                auto* window = static_cast<MainWindow*>(data);
+                window->getControl()->closeWindow(window);
+                return G_SOURCE_REMOVE;
+            },
+            win);
     return true;
 }
 
+void MainWindow::createSidebar() {
+    this->sidebar = std::make_unique<Sidebar>(this, this->control);
+    this->sidebar->setMainWindow(this);
+}
+
+void MainWindow::registerNewWindowAction() {
+    this->control->ensureWindowMenuAction(GTK_APPLICATION_WINDOW(this->window));
+    if (g_action_map_lookup_action(G_ACTION_MAP(this->window), "new-window") != nullptr) {
+        return;
+    }
+    auto* newWindowAction = g_simple_action_new("new-window", nullptr);
+    g_signal_connect(newWindowAction, "activate", G_CALLBACK(+[](GSimpleAction*, GVariant*, gpointer data) {
+                         static_cast<Control*>(data)->openNewWindow();
+                     }),
+                     this->control);
+    g_action_map_add_action(G_ACTION_MAP(this->window), G_ACTION(newWindowAction));
+    g_object_unref(newWindowAction);
+}
+
+auto MainWindow::getSidebar() const -> Sidebar* { return this->sidebar.get(); }
+
 void MainWindow::setSidebarVisible(bool visible) {
-    if (!visible && (this->control->getSidebar() != nullptr)) {
-        this->control->getSidebar()->saveSize();
+    if (!visible && this->sidebar) {
+        this->sidebar->saveSize();
     }
 
     if (visible != this->sidebarVisible) {
@@ -633,6 +718,8 @@ auto MainWindow::isDarkTheme() const -> bool { return this->darkMode; }
 
 auto MainWindow::getXournal() const -> XournalView* { return xournal.get(); }
 
+auto MainWindow::getZoomControl() const -> ZoomControl* { return this->zoomControl.get(); }
+
 auto MainWindow::windowMaximizedCallback(GObject* window, GParamSpec*, MainWindow* win) -> void {
     win->setMaximized(gtk_window_is_maximized(GTK_WINDOW(window)));
 }
@@ -697,10 +784,16 @@ auto MainWindow::getToolbarName(GtkToolbar* toolbar) const -> const char* {
     return "";
 }
 
-void MainWindow::setDynamicallyGeneratedSubmenuDisabled(bool disabled) { menubar->setDisabled(disabled); }
+void MainWindow::setDynamicallyGeneratedSubmenuDisabled(bool disabled) {
+    if (Menubar* bar = menuForDisplay()) {
+        bar->setDisabled(disabled);
+    }
+}
 
 void MainWindow::updateToolbarMenu() {
-    menubar->getToolbarSelectionSubmenu().update(toolbar.get(), this->selectedToolbar);
+    if (Menubar* bar = menuForDisplay()) {
+        bar->getToolbarSelectionSubmenu().update(toolbar.get(), this->selectedToolbar);
+    }
 }
 
 void MainWindow::createToolbar() {
@@ -715,17 +808,52 @@ void MainWindow::updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage
 
 auto MainWindow::getMenubar() const -> Menubar* { return menubar.get(); }
 
-void MainWindow::show(GtkWindow* parent) { gtk_widget_show(this->window); }
+auto MainWindow::releaseMenubar() -> std::unique_ptr<Menubar> { return std::move(this->menubar); }
 
-void MainWindow::setUndoDescription(const string& description) { menubar->setUndoDescription(description); }
+auto MainWindow::menuForDisplay() const -> Menubar* {
+    if (this->control != nullptr) {
+        if (Menubar* displayed = this->control->getDisplayedMenubar()) {
+            return displayed;
+        }
+    }
+    return this->menubar.get();
+}
 
-void MainWindow::setRedoDescription(const string& description) { menubar->setRedoDescription(description); }
+void MainWindow::show(GtkWindow* parent) {
+    gtk_widget_show(this->window);
+    // The PDF toolbox widget is visible in the UI file. Hide it again once the window is on screen
+    // when this view has not selected any PDF text.
+    if (this->pdfFloatingToolBox != nullptr && !this->pdfFloatingToolBox->hasSelection()) {
+        this->pdfFloatingToolBox->hide();
+    }
+    if (this->xournal != nullptr) {
+        gtk_widget_grab_focus(this->xournal->getWidget());
+    }
+}
+
+void MainWindow::setUndoDescription(const string& description) {
+    if (Menubar* bar = menuForDisplay()) {
+        bar->setUndoDescription(description);
+    }
+}
+
+void MainWindow::setRedoDescription(const string& description) {
+    if (Menubar* bar = menuForDisplay()) {
+        bar->setRedoDescription(description);
+    }
+}
 
 auto MainWindow::getToolbarModel() const -> ToolbarModel* { return this->toolbar->getModel(); }
 
 auto MainWindow::getToolMenuHandler() const -> ToolMenuHandler* { return this->toolbar.get(); }
 
 void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename) {
+    static bool loaded = false;
+    if (loaded) {
+        return;
+    }
+    loaded = true;
+
     auto filepath = gladeSearchPath->findFile("", cssFilename);
     xoj::util::GObjectSPtr<GtkCssProvider> provider(gtk_css_provider_new(), xoj::util::adopt);
     gtk_css_provider_load_from_path(provider.get(), char_cast(filepath.u8string().c_str()), nullptr);
@@ -738,11 +866,14 @@ PdfFloatingToolbox* MainWindow::getPdfToolbox() const { return this->pdfFloating
 FloatingToolbox* MainWindow::getFloatingToolbox() const { return this->floatingToolbox.get(); }
 
 void MainWindow::setDPI() const {
+    if (this->zoomControl == nullptr) {
+        return;
+    }
     if (auto dpi = this->getControl()->getSettings()->getDisplayDpi(); dpi == -1) {
         auto res = xoj::util::gtk::getWidgetDPI(this->window);
-        this->getControl()->getZoomControl()->setZoom100Value(res.value_or(Util::DPI_NORMALIZATION_FACTOR) /
-                                                              Util::DPI_NORMALIZATION_FACTOR);
+        this->zoomControl->setZoom100Value(res.value_or(Util::DPI_NORMALIZATION_FACTOR) /
+                                           Util::DPI_NORMALIZATION_FACTOR);
     } else {
-        this->getControl()->getZoomControl()->setZoom100Value(dpi / Util::DPI_NORMALIZATION_FACTOR);
+        this->zoomControl->setZoom100Value(dpi / Util::DPI_NORMALIZATION_FACTOR);
     }
 }

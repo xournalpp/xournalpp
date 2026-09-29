@@ -35,6 +35,8 @@ public:
 
     bool isViewOf(const OverlayBase* overlay) const override;
 
+    bool commitsToBuffer() const override { return true; }
+
     void draw(cairo_t* cr) const override;
 
     /**

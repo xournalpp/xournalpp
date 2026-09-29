@@ -22,10 +22,10 @@ class DocumentHandler {
 public:
     DocumentHandler() = default;
 
-    ~DocumentHandler() = default;
+    virtual ~DocumentHandler() = default;
 
 public:
-    void fireDocumentChanged(DocumentChangeType type);
+    virtual void fireDocumentChanged(DocumentChangeType type);
     void firePageSizeChanged(size_t page);
     void firePageChanged(size_t page);
     void firePageInserted(size_t page);

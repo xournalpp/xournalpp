@@ -320,6 +320,7 @@ void EditSelectionContents::deleteViewBuffer() {
         cairo_surface_destroy(this->crBuffer);
         this->crBuffer = nullptr;
     }
+    this->bufferZoom = 0;
 }
 
 InsertionOrder EditSelectionContents::makeMoveEffective(const xoj::util::Rectangle<double>& bounds,
@@ -454,7 +455,12 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
         this->rotation = rotation;
     }
 
+    if (this->crBuffer != nullptr && this->bufferZoom != zoom) {
+        this->deleteViewBuffer();
+    }
+
     if (this->crBuffer == nullptr) {
+        this->bufferZoom = zoom;
         this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int>(std::abs(width) * zoom),
                                                     static_cast<int>(std::abs(height) * zoom));
         cairo_t* cr2 = cairo_create(this->crBuffer);

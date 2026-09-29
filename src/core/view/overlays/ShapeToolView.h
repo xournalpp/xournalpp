@@ -36,6 +36,8 @@ public:
 
     bool isViewOf(const OverlayBase* overlay) const override;
 
+    bool commitsToBuffer() const override { return true; }
+
     /**
      * Listener interface
      */

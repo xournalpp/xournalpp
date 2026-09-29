@@ -13,6 +13,7 @@
 #include "control/tools/EditSelection.h"    // for EditSelection
 #include "gui/Layout.h"                     // for Layout
 #include "gui/LegacyRedrawable.h"           // for Redrawable
+#include "gui/MainWindow.h"                 // for MainWindow
 #include "gui/PageView.h"                   // for XojPageView
 #include "gui/Shadow.h"                     // for Shadow
 #include "gui/XournalView.h"                // for XournalView
@@ -249,9 +250,38 @@ static void gtk_xournal_draw_shadow(GtkXournal* xournal, cairo_t* cr, int left, 
     }
 }
 
+static void paintSelection(cairo_t* cr, EditSelection* selection, XournalView* target, bool drawFrame) {
+    XojPageView* anchor = selection->getView();
+    if (anchor == nullptr) {
+        return;
+    }
+    const PageRef page = anchor->getPage();
+    XojPageView* local = nullptr;
+    for (const auto& candidate: target->getViewPages()) {
+        if (candidate->getPage() == page) {
+            local = candidate.get();
+            break;
+        }
+    }
+    if (local == nullptr) {
+        return;
+    }
+
+    cairo_save(cr);
+    auto pos = local->getPixelPosition();
+    cairo_translate(cr, pos.x, pos.y);
+    selection->paint(cr, target->getZoom(), drawFrame);
+    cairo_restore(cr);
+}
+
 void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2, int y2) {
     g_return_if_fail(widget != nullptr);
     g_return_if_fail(GTK_IS_XOURNAL(widget));
+
+    GtkXournal* xournal = GTK_XOURNAL(widget);
+    if (xournal->hadjustment == nullptr || xournal->vadjustment == nullptr) {
+        return;
+    }
 
     Range rg(x1, y1, x2, y2);
     if (!rg.isValid()) {
@@ -294,6 +324,10 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
 #endif
 
     GtkXournal* xournal = GTK_XOURNAL(widget);
+    if (xournal->hadjustment == nullptr || xournal->vadjustment == nullptr || xournal->layout == nullptr ||
+        xournal->view == nullptr) {
+        return true;
+    }
 
     cairo_translate(cr, -gtk_adjustment_get_value(xournal->hadjustment),
                     -gtk_adjustment_get_value(xournal->vadjustment));
@@ -330,15 +364,18 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
     }
 
     if (xournal->selection) {
-        cairo_save(cr);
-        double zoom = xournal->view->getZoom();
-
-        auto pos = xournal->selection->getView()->getPixelPosition();
-        cairo_translate(cr, pos.x, pos.y);
-
-        xournal->selection->paint(cr, zoom);
-        cairo_restore(cr);
+        paintSelection(cr, xournal->selection, xournal->view, true);
     }
+    // Strokes in a selection are removed from the page, so other windows must paint that selection too.
+    xournal->view->getControl()->forEachWindow([&](MainWindow& window) {
+        XournalView* other = window.getXournal();
+        if (other == nullptr || other == xournal->view || other->getWidget() == nullptr) {
+            return;
+        }
+        if (EditSelection* sel = other->getSelection()) {
+            paintSelection(cr, sel, xournal->view, false);
+        }
+    });
 
     std::optional<Recolor> recolor = settings->getRecolorParameters().recolorizeMainView ?
                                              std::make_optional(settings->getRecolorParameters().recolor) :

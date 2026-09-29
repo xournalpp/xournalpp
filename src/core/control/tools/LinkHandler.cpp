@@ -32,11 +32,11 @@ LinkHandler::LinkHandler(XournalView* view):
         highlightPopover(std::make_unique<LinkPopover>(view, false)),
         selectPopover(std::make_unique<LinkPopover>(view, true)),
         viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::LinkHighlightView>>()) {
-    this->control->getZoomControl()->addZoomListener(this);
+    this->view->getZoomControl()->addZoomListener(this);
 }
 
 LinkHandler::~LinkHandler() {
-    this->control->getZoomControl()->removeZoomListener(this);
+    this->view->getZoomControl()->removeZoomListener(this);
     Range rg;
     if (auto rect = this->getHighlightRect(); rect.has_value()) {
         rg = Range(rect.value());

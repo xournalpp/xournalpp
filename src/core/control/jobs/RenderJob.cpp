@@ -94,7 +94,20 @@ void RenderJob::run() {
 }
 
 static void repaintWidgetArea(GtkWidget* widget, int x1, int y1, int x2, int y2) {
-    Util::execInUiThread([=]() { gtk_xournal_repaint_area(widget, x1, y1, x2, y2); });
+    // The widget may be destroyed before this idle runs. A weak ref becomes null instead of dangling.
+    auto* weak = new GWeakRef();
+    g_weak_ref_init(weak, widget);
+    Util::execInUiThread([weak, x1, y1, x2, y2]() {
+        auto* live = static_cast<GtkWidget*>(g_weak_ref_get(weak));
+        if (live != nullptr) {
+            if (!gtk_widget_in_destruction(live)) {
+                gtk_xournal_repaint_area(live, x1, y1, x2, y2);
+            }
+            g_object_unref(live);
+        }
+        g_weak_ref_clear(weak);
+        delete weak;
+    });
 }
 
 void RenderJob::repaintPage() const { repaintPageArea(0, 0, view->getWidth(), view->getHeight()); }

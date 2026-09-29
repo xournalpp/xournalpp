@@ -74,6 +74,9 @@ public:
     /// Set the actions enabled flag depending on ActionProperties::initiallyEnabled()
     void resetEnableStatus();
 
+    /// Inserts this database's window actions into another view so its menu and toolbars resolve `win.*`.
+    void replicateTo(GtkApplicationWindow* target) const;
+
     /**
      * @brief Set the action's state, without triggering callbacks
      */

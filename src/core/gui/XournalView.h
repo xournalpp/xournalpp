@@ -39,6 +39,7 @@ class PdfCache;
 class RepaintHandler;
 class ScrollHandling;
 class TextEditor;
+class ZoomControl;
 class HandRecognition;
 class Layout;
 namespace xoj::util {
@@ -48,7 +49,7 @@ class Rectangle;
 
 class XournalView: public DocumentListener, public ZoomListener {
 public:
-    XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling);
+    XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling, ZoomControl* zoomControl);
     ~XournalView() override;
 
 public:
@@ -56,6 +57,14 @@ public:
     void layoutPages();
 
     void scrollTo(size_t pageNo, XojPdfRectangle rect = {0, 0, -1, -1});
+
+    /// Selects `page` in this view only. The active view also updates shared chrome (sidebar, page spinner).
+    void notifyVisiblePage(size_t page);
+
+    /// Rebuilds page widgets from the current document without cancelling render jobs.
+    void rebuildPageViews();
+
+    bool isActive() const;
 
     // Relative navigation in current layout:
     void pageRelativeXY(int offCol, int offRow);
@@ -105,6 +114,7 @@ public:
     std::vector<std::unique_ptr<XojPageView>> const& getViewPages() const;
 
     Control* getControl() const;
+    ZoomControl* getZoomControl() const { return this->zoomControl; }
     double getZoom() const;
     int getDpiScaleFactor() const;
     Document* getDocument() const;
@@ -161,6 +171,8 @@ public:
     void onSettingsChanged();
 
 private:
+    void applyPageSelection(size_t page);
+
     void fireZoomChanged();
 
     std::pair<size_t, size_t> preloadPageBounds(size_t page, size_t maxPage);
@@ -180,6 +192,7 @@ private:
     std::vector<std::unique_ptr<XojPageView>> viewPages;
 
     Control* control = nullptr;
+    ZoomControl* zoomControl = nullptr;
 
     size_t currentPage = 0;
     size_t lastSelectedPage = npos;

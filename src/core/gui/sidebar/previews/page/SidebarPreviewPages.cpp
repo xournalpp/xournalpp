@@ -18,12 +18,13 @@
 #include "util/safe_casts.h"  // for as_signed
 
 #include "SidebarPreviewPageEntry.h"  // for Sideb...
+#include "gui/sidebar/Sidebar.h"       // for Sidebar
 
 constexpr auto MENU_ID = "PreviewPagesContextMenu";
 constexpr auto TOOLBAR_ID = "PreviewPagesToolbar";
 
-SidebarPreviewPages::SidebarPreviewPages(Control* control):
-        SidebarPreviewBase(control, MENU_ID, TOOLBAR_ID), iconNameHelper(control->getSettings()) {}
+SidebarPreviewPages::SidebarPreviewPages(Control* control, Sidebar* host):
+        SidebarPreviewBase(control, MENU_ID, TOOLBAR_ID), iconNameHelper(control->getSettings()), host(host) {}
 
 SidebarPreviewPages::~SidebarPreviewPages() = default;
 
@@ -114,7 +115,13 @@ void SidebarPreviewPages::unselectPage() {
     }
 }
 
+void SidebarPreviewPages::selectPageNr(size_t page, size_t) { this->pageSelected(page); }
+
 void SidebarPreviewPages::pageSelected(size_t page) {
+    // Each window's preview list follows that window's selected page.
+    if (this->host != nullptr && control->getSidebar() != this->host) {
+        return;
+    }
     if (this->selectedEntry != npos && this->selectedEntry < this->previews.size()) {
         this->previews[this->selectedEntry]->setSelected(false);
     }

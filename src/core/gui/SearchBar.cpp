@@ -16,9 +16,7 @@
 #include "util/PlaceholderString.h"    // for PlaceholderString
 #include "util/i18n.h"                 // for _, FC, _F
 
-SearchBar::SearchBar(Control* control): control(control) {
-    MainWindow* win = control->getWindow();
-
+void SearchBar::attachTo(MainWindow* win) {
     GtkWidget* close = win->get("buttonCloseSearch");
     g_signal_connect(close, "clicked", G_CALLBACK(buttonCloseSearchClicked), this);
 
@@ -47,9 +45,13 @@ SearchBar::SearchBar(Control* control): control(control) {
                      }),
                      this);
 #if GTK_MAJOR_VERSION == 3
-    GtkBindingSet* bindingSet = gtk_binding_set_by_class(GTK_SEARCH_ENTRY_GET_CLASS(searchTextField));
-    gtk_binding_entry_add_signal(bindingSet, GDK_KEY_Return, GdkModifierType(0), "next-match", 0);
-    gtk_binding_entry_add_signal(bindingSet, GDK_KEY_Return, GDK_SHIFT_MASK, "previous-match", 0);
+    static bool bindingsInstalled = false;
+    if (!bindingsInstalled) {
+        bindingsInstalled = true;
+        GtkBindingSet* bindingSet = gtk_binding_set_by_class(GTK_SEARCH_ENTRY_GET_CLASS(searchTextField));
+        gtk_binding_entry_add_signal(bindingSet, GDK_KEY_Return, GdkModifierType(0), "next-match", 0);
+        gtk_binding_entry_add_signal(bindingSet, GDK_KEY_Return, GDK_SHIFT_MASK, "previous-match", 0);
+    }
 #else
     GtkEventController* ctrl = gtk_shortcut_controller_new();
     gtk_shortcut_controller_add_shortcut(GTK_SHORTCUT_CONTROLLER(ctrl),
@@ -61,10 +63,14 @@ SearchBar::SearchBar(Control* control): control(control) {
     gtk_widget_add_controller(searchTextField, ctrl);
 #endif
 
-    cssTextFild = gtk_css_provider_new();
+    if (cssTextFild == nullptr) {
+        cssTextFild = gtk_css_provider_new();
+    }
     gtk_style_context_add_provider(gtk_widget_get_style_context(win->get("searchTextField")),
                                    GTK_STYLE_PROVIDER(cssTextFild), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
+
+SearchBar::SearchBar(Control* control): control(control) { attachTo(control->getWindow()); }
 
 SearchBar::~SearchBar() { this->control = nullptr; }
 

@@ -209,6 +209,9 @@ private:
      */
     cairo_surface_t* crBuffer = nullptr;
 
+    /// Zoom at which crBuffer was rendered. A different window may paint at another zoom.
+    double bufferZoom = 0;
+
     /**
      * The source id for the rescaling task
      */

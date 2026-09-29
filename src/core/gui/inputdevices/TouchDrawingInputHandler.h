@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <cstddef>  // for size_t
+
 #include <gdk/gdk.h>  // for GdkEventSequence
 
 #include "PenInputHandler.h"  // for PenInputHandler
@@ -41,4 +43,7 @@ protected:
 
 private:
     void updateKineticScrollingEnabled();
+
+    /// Id of the callback registered on the shared ToolHandler. Removed in the destructor.
+    size_t toolChangedListenerId = 0;
 };

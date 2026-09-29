@@ -6,11 +6,14 @@
 
 #include <glib.h>  // for g_get_monotonic_time
 
+#include "control/Control.h"
 #include "control/actions/ActionDatabase.h"
 #include "control/zoom/ZoomControl.h"  // for ZoomControl, DEFA...
-#include "util/i18n.h"                 // for _
-
-#include "SliderItemCreationHelper.h"
+#include "gui/XournalView.h"
+#include "util/GtkUtil.h"
+#include "util/gtk4_helper.h"
+#include "util/i18n.h"  // for _
+#include "util/raii/GObjectSPtr.h"
 
 constexpr double SCALE_LOG_OFFSET = 0.20753;
 
@@ -33,37 +36,103 @@ auto ToolZoomSlider::formatSliderValue(double value) -> std::string {
     return out.str();
 }
 
+namespace {
+void onZoomSliderValueChanged(GtkRange* range, gpointer data);
+
+class ZoomSliderBinding: public ZoomListener {
+public:
+    ZoomSliderBinding(GtkScale* slider, ZoomControl* zoomCtrl):
+            slider(slider), zoomCtrl(zoomCtrl), alive(zoomCtrl->aliveFlag()) {
+        zoomCtrl->addZoomListener(this);
+    }
+    ~ZoomSliderBinding() override {
+        // The GtkWindow finalizes this slider after ZoomControl has already been destroyed.
+        if (this->alive && *this->alive && this->zoomCtrl != nullptr) {
+            this->zoomCtrl->removeZoomListener(this);
+        }
+    }
+    void syncThumb() {
+        if (!this->alive || !*this->alive) {
+            return;
+        }
+        g_signal_handlers_block_by_func(slider, reinterpret_cast<gpointer>(onZoomSliderValueChanged), this);
+        gtk_range_set_value(GTK_RANGE(slider), ToolZoomSlider::scaleFunction(zoomCtrl->getZoomReal()));
+        g_signal_handlers_unblock_by_func(slider, reinterpret_cast<gpointer>(onZoomSliderValueChanged), this);
+    }
+    void zoomChanged() override { syncThumb(); }
+    void zoomRangeValuesChanged() override {
+        if (!this->alive || !*this->alive) {
+            return;
+        }
+        gtk_scale_clear_marks(slider);
+        auto position = gtk_orientable_get_orientation(GTK_ORIENTABLE(slider)) == GTK_ORIENTATION_HORIZONTAL ?
+                                GTK_POS_BOTTOM :
+                                GTK_POS_RIGHT;
+        gtk_scale_add_mark(slider, ToolZoomSlider::scaleFunction(1.0), position, nullptr);
+        gtk_scale_add_mark(slider,
+                           ToolZoomSlider::scaleFunction(zoomCtrl->getZoomFitValue() / zoomCtrl->getZoom100Value()),
+                           position, nullptr);
+        syncThumb();
+    }
+
+    GtkScale* slider;
+    ZoomControl* zoomCtrl;
+    std::shared_ptr<bool> alive;
+};
+
+void onZoomSliderValueChanged(GtkRange* range, gpointer data) {
+    auto* binding = static_cast<ZoomSliderBinding*>(data);
+    if (binding == nullptr || !binding->alive || !*binding->alive) {
+        return;
+    }
+    ZoomControl* zoom = binding->zoomCtrl;
+    const double scale = ToolZoomSlider::scaleInverseFunction(gtk_range_get_value(range));
+    if (XournalView* view = zoom->getView(); view != nullptr) {
+        view->getControl()->focusWindowFrom(view->getWidget());
+    }
+    zoom->setZoomFitMode(false);
+    zoom->startZoomSequence();
+    zoom->zoomSequenceChange(zoom->getZoom100Value() * scale, false);
+    zoom->endZoomSequence();
+}
+}  // namespace
+
 auto ToolZoomSlider::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
-    auto item = SliderItemCreationHelper<ToolZoomSlider>::createItem(this, horizontal);
+    GtkOrientation orientation = horizontal ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
+    const double min = scaleFunction(this->range.min);
+    const double max = scaleFunction(this->range.max);
+    const double fineStepSize = (max - min) / this->range.nbFineSteps;
+    const double coarseStepSize = (max - min) / this->range.nbCoarseSteps;
 
-    class Listener: public ZoomListener {
-    public:
-        Listener(GtkScale* slider, ZoomControl* zoomCtrl): slider(slider), zoomCtrl(zoomCtrl) {
-            zoomCtrl->addZoomListener(this);
-        }
-        ~Listener() override { zoomCtrl->removeZoomListener(this); }
-        void zoomChanged() override {}  // No need to do anything here. Handled by the GAction
-        void zoomRangeValuesChanged() override {
-            gtk_scale_clear_marks(slider);
-            auto position = gtk_orientable_get_orientation(GTK_ORIENTABLE(slider)) == GTK_ORIENTATION_HORIZONTAL ?
-                                    GTK_POS_BOTTOM :
-                                    GTK_POS_RIGHT;
-            gtk_scale_add_mark(slider, scaleFunction(1.0), position, nullptr);
-            gtk_scale_add_mark(slider, scaleFunction(zoomCtrl->getZoomFitValue() / zoomCtrl->getZoom100Value()),
-                               position, nullptr);
-        }
+    GtkRange* slider = GTK_RANGE(gtk_scale_new_with_range(orientation, min, max, fineStepSize));
+    gtk_range_set_increments(slider, fineStepSize, coarseStepSize);
+    if (horizontal) {
+        gtk_widget_set_size_request(GTK_WIDGET(slider), 120, 16);
+    } else {
+        gtk_widget_set_size_request(GTK_WIDGET(slider), 16, 120);
+    }
+    gtk_widget_set_can_focus(GTK_WIDGET(slider), false);
 
-        GtkScale* slider;  ///< Parent to this data
-        ZoomControl* zoomCtrl;
-    };
+    // The thumb follows this window's ZoomControl. The shared zoom action would move every window's slider.
+    auto data = std::make_unique<ZoomSliderBinding>(GTK_SCALE(slider), zoomCtrl);
+    gtk_range_set_value(slider, scaleFunction(this->zoomCtrl->getZoomReal()));
+    g_signal_connect(slider, "value-changed", G_CALLBACK(onZoomSliderValueChanged), data.get());
 
-    auto data = std::make_unique<Listener>(GTK_SCALE(item.get()), zoomCtrl);
-    data->zoomRangeValuesChanged();  // Set up the marks
+    // Presentation mode disables the shared zoom action, which should disable every slider.
+    xoj::util::gtk::setWidgetFollowActionEnabled(GTK_WIDGET(slider), G_ACTION(this->gAction.get()));
 
-    // Destroy *data if the widget is destroyed
+    gtk_scale_set_draw_value(GTK_SCALE(slider), true);
+    gtk_scale_set_format_value_func(
+            GTK_SCALE(slider),
+            +[](GtkScale*, double value, gpointer) -> char* { return g_strdup(formatSliderValue(value).c_str()); },
+            nullptr, nullptr);
+
+    data->zoomRangeValuesChanged();
+
+    xoj::util::WidgetSPtr item(GTK_WIDGET(slider), xoj::util::adopt);
     g_object_weak_ref(
-            G_OBJECT(item.get()), +[](gpointer d, GObject*) { delete static_cast<Listener*>(d); }, data.release());
-
+            G_OBJECT(item.get()), +[](gpointer d, GObject*) { delete static_cast<ZoomSliderBinding*>(d); },
+            data.release());
     return item;
 }
 

@@ -305,7 +305,6 @@ struct XournalMainPrivate {
     gchar* exportPdfBackend{};
     std::unique_ptr<GladeSearchpath> gladePath;
     std::unique_ptr<Control> control;
-    std::unique_ptr<MainWindow> win;
 };
 using XMPtr = XournalMainPrivate*;
 
@@ -401,7 +400,7 @@ void on_open_files(GApplication* application, gpointer f, gint numFiles, gchar* 
     if (numFiles != 1) {
         const std::string msg = _("Sorry, Xournal++ can only open one file at once.\n"
                                   "Others are ignored.");
-        XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
+        XojMsgBox::showErrorToUser(app_data->control->getGtkWindow(), msg);
     }
 
     const fs::path p = Util::fromGFile(files[0]);
@@ -411,16 +410,16 @@ void on_open_files(GApplication* application, gpointer f, gint numFiles, gchar* 
             app_data->control->openFile(fs::absolute(p));
         } else {
             const std::string msg = FS(_F("File {1} does not exist.") % p.u8string());
-            XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
+            XojMsgBox::showErrorToUser(app_data->control->getGtkWindow(), msg);
         }
     } catch (const fs::filesystem_error& e) {
         const std::string msg = FS(_F("Filesystem error: {1}\n"
                                       "Sorry, Xournal++ cannot open the file: {2}\n"
                                       "Consider copying the file to a local directory.") %
                                    e.what() % p.u8string());
-        XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
+        XojMsgBox::showErrorToUser(app_data->control->getGtkWindow(), msg);
     }
-    gtk_window_present(GTK_WINDOW(app_data->win->getWindow()));
+    gtk_window_present(app_data->control->getGtkWindow());
 }
 
 void on_startup(GApplication* application, XMPtr app_data) {
@@ -442,27 +441,24 @@ void on_startup(GApplication* application, XMPtr app_data) {
         app_data->control->getSettings()->save();
     }
 
-    app_data->win = std::make_unique<MainWindow>(app_data->gladePath.get(), app_data->control.get(),
-                                                 GTK_APPLICATION(application));
-    app_data->control->initWindow(app_data->win.get());
-    app_data->win->populate(app_data->gladePath.get());
+    app_data->control->createInitialWindow(GTK_APPLICATION(application));
 
     if (migrateResult.status != MigrateStatus::NotNeeded) {
         Util::execInUiThread(
                 [=]() { XojMsgBox::showErrorToUser(app_data->control->getGtkWindow(), migrateResult.message); });
     }
 
-    gtk_application_set_menubar(GTK_APPLICATION(application), app_data->win->getMenuModel());
+    gtk_application_set_menubar(GTK_APPLICATION(application), app_data->control->getWindow()->getMenuModel());
     // Do we want stuff in gtk_application_set_app_menu?
 
-    app_data->win->show(nullptr);
+    app_data->control->getWindow()->show(nullptr);
 
     fs::path p;
     if (app_data->optFilename) {
         if (g_strv_length(app_data->optFilename) != 1) {
             const std::string msg = _("Sorry, Xournal++ can only open one file at once.\n"
                                       "Others are ignored.");
-            XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
+            XojMsgBox::showErrorToUser(app_data->control->getGtkWindow(), msg);
         }
         p = Util::fromGFilename(app_data->optFilename[0]);
         try {
@@ -568,7 +564,9 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
 
 void on_shutdown(GApplication*, XMPtr app_data) {
     app_data->control->saveSettings();
-    app_data->win->getXournal()->clearSelection();
+    if (MainWindow* win = app_data->control->getWindow()) {
+        win->getXournal()->clearSelection();
+    }
     app_data->control->getScheduler()->stop();
 }
 

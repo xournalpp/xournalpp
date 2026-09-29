@@ -51,7 +51,7 @@ class Recolor;
 
 class ToolMenuHandler {
 public:
-    ToolMenuHandler(Control* control, GladeGui* gui);
+    ToolMenuHandler(Control* control, GladeGui* gui, ZoomControl* zoom);
     virtual ~ToolMenuHandler();
 
     void populate(const GladeSearchpath* gladeSearchPath);

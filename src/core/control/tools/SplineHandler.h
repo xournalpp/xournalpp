@@ -64,9 +64,11 @@ struct SplineHandlerData {
  * The last knot and tangent can be modified using the keyboard.
  */
 
+class ZoomControl;
+
 class SplineHandler: public InputHandler, public ZoomListener {
 public:
-    SplineHandler(Control* control, const PageRef& page);
+    SplineHandler(Control* control, const PageRef& page, ZoomControl* zoomControl);
     ~SplineHandler() override;
 
     std::unique_ptr<xoj::view::OverlayView> createView(xoj::view::Repaintable* parent) const override;
@@ -124,6 +126,7 @@ private:
     SnapToGridInputHandler snappingHandler;
 
     std::shared_ptr<xoj::util::DispatchPool<xoj::view::SplineToolView>> viewPool;
+    ZoomControl* zoomCtrl = nullptr;
 
     static constexpr double KNOTS_ATTRACTION_RADIUS_IN_PIXELS = 10.0;  // for circling the spline's knots
 };

@@ -25,7 +25,7 @@
 #include "InputUtils.h"    // for InputUtils
 
 TouchDrawingInputHandler::TouchDrawingInputHandler(InputContext* inputContext): PenInputHandler(inputContext) {
-    inputContext->getToolHandler()->addToolChangedListener([&](ToolType newToolType) {
+    this->toolChangedListenerId = inputContext->getToolHandler()->addToolChangedListener([this](ToolType) {
         InputDeviceClass touchscreenClass =
                 DeviceListHelper::getSourceMapping(GDK_SOURCE_TOUCHSCREEN, this->inputContext->getSettings());
 
@@ -36,7 +36,17 @@ TouchDrawingInputHandler::TouchDrawingInputHandler(InputContext* inputContext): 
     });
 }
 
-TouchDrawingInputHandler::~TouchDrawingInputHandler() = default;
+TouchDrawingInputHandler::~TouchDrawingInputHandler() {
+    if (this->toolChangedListenerId == 0 || this->inputContext == nullptr) {
+        return;
+    }
+    XournalView* view = this->inputContext->getView();
+    if (view == nullptr || view->getControl() == nullptr || view->getControl()->getToolHandler() == nullptr) {
+        return;
+    }
+    view->getControl()->getToolHandler()->removeToolChangedListener(this->toolChangedListenerId);
+    this->toolChangedListenerId = 0;
+}
 
 auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
@@ -147,12 +157,16 @@ auto TouchDrawingInputHandler::changeTool(InputEvent const& event) -> bool {
 }
 
 void TouchDrawingInputHandler::updateKineticScrollingEnabled() {
-    auto* control = inputContext->getView()->getControl();
-    auto* mainWindow = control->getWindow();
+    XournalView* view = this->inputContext->getView();
+    if (view == nullptr || view->getControl() == nullptr) {
+        return;
+    }
+    Control* control = view->getControl();
+    MainWindow* mainWindow = control->getWindowForView(view);
     auto* toolHandler = this->inputContext->getToolHandler();
 
     // Kinetic scrolling is nice; however, we need to disable it so we can draw (it steals single-finger input).
-    if (mainWindow != nullptr && control->getSettings()->getTouchDrawingEnabled()) {
+    if (mainWindow != nullptr && toolHandler != nullptr && control->getSettings()->getTouchDrawingEnabled()) {
         mainWindow->setGtkTouchscreenScrollingEnabled(toolHandler->getToolType() == TOOL_HAND);
     }
 }

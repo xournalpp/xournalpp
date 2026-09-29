@@ -83,6 +83,7 @@ void Menubar::populate(const GladeSearchpath* gladeSearchPath, MainWindow* win) 
     }
 
     undoRedoSection = G_MENU(gtk_builder_get_object(builder.get(), UNDO_REDO_SECTION_ID));
+    ctrl->attachWindowListMenu(this);
 }
 
 void Menubar::setUndoDescription(const std::string& description) {
