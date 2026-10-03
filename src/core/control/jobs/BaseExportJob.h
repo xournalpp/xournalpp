@@ -11,20 +11,10 @@
 
 #pragma once
 
-#include <functional>
 #include <string>  // for string
-
-#include <gtk/gtk.h>  // for GtkWidget
 
 #include "BlockingJob.h"  // for BlockingJob
 #include "filesystem.h"   // for path
-
-/**
- *  @brief List of types for the export of background components.
- *  The order must agree with the corresponding listBackgroundType in ui/exportSettings.glade.
- *  It is constructed so that one can check for intermediate types using comparison.
- */
-enum ExportBackgroundType { EXPORT_BACKGROUND_NONE, EXPORT_BACKGROUND_UNRULED, EXPORT_BACKGROUND_ALL };
 
 class Control;
 
@@ -38,24 +28,16 @@ protected:
 public:
     void afterRun() override;
 
-public:
-    virtual void showFileChooser(std::function<void()> onFileSelected, std::function<void()> onCancel);
-
 protected:
-    virtual void addFilterToDialog(GtkFileChooser* dialog) = 0;
-    static void addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const std::string& mimetype);
     bool checkOverwriteBackgroundPDF(fs::path const& file) const;
 
-    virtual void setExtensionFromFilter(fs::path& p, const char* filterName) const = 0;
-
     /**
-     * Test if the given path is valid and records the path for the instance's later export tasks.
+     * Test if the given path is valid
      *
      * Returns true if the path is validated.
      */
-    bool testAndSetFilepath(const fs::path& file);
+    bool testFilepath(const fs::path& file) const;
 
-private:
 protected:
     fs::path filepath;
 
@@ -63,12 +45,4 @@ protected:
      * Error message to show to the user
      */
     std::string errorMsg;
-
-    class ExportType {
-    public:
-        std::string extension;
-        std::string mimeType;
-
-        ExportType(std::string ext, std::string mime): extension(std::move(ext)), mimeType(std::move(mime)) {}
-    };
 };

@@ -26,5 +26,5 @@ private:
 
 public:
     static std::unique_ptr<XojPdfExport> createExport(const Document* doc, ProgressListener* listener,
-                                                      ExportBackend backend = ExportBackend::DEFAULT);
+                                                      PdfExportBackend backend = PdfExportBackend::DEFAULT);
 };

@@ -97,7 +97,7 @@ auto ImagesDialog::isImageAlreadyInTheList(BackgroundImage& image) -> bool {
 }
 
 void ImagesDialog::filechooserButtonCallback(GtkButton*, ImagesDialog* dlg) {
-    xoj::OpenDlg::showOpenImageDialog(dlg->window.get(), dlg->settings, [dlg](fs::path p, bool attach) {
+    xoj::OpenDlg::showOpenImageDialog(dlg->window.get(), dlg->settings, true, [dlg](fs::path p, bool attach) {
         BackgroundImage img;
         GError* err = nullptr;
         img.loadFile(p, &err);
