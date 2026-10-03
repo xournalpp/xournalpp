@@ -1,6 +1,7 @@
 #include "MetadataManager.h"
 
 #include <algorithm>  // for sort
+#include <cmath>      // for isnan
 #include <fstream>    // for operator<<, basic_ostream, basic_stringb...
 #include <memory>     // for allocator_traits<>::value_type
 #include <sstream>    // for istringstream
@@ -8,7 +9,7 @@
 
 #include <glib.h>  // for g_get_real_time, g_message, g_warning, gint64
 
-#include "util/PathUtil.h"   // for getConfigSubfolder, getStateSubfolder
+#include "util/PathUtil.h"  // for getConfigSubfolder, getStateSubfolder
 #include "util/StringUtils.h"
 #include "util/XojMsgBox.h"  // for XojMsgBox
 #include "util/serdesstream.h"
@@ -162,7 +163,10 @@ auto MetadataManager::loadMetadataFile(fs::path const& path) -> std::optional<Me
         // Not valid
         return std::nullopt;
     }
-    entry.zoom = g_ascii_strtod(line.substr(5).c_str(), nullptr);
+    const auto zoom = g_ascii_strtod(line.substr(5).c_str(), nullptr);
+    if (!std::isnan(zoom)) {
+        entry.zoom = zoom;
+    }
 
     return entry;
 }
