@@ -42,13 +42,14 @@ public:
                      std::function<void(std::optional<fs::path>)> callback);
     ~SaveExportDialog() = default;
 
-    inline GtkWindow* getWindow() const { return window.get(); }
+    inline GtkNativeDialog* getNativeDialog() const { return window.get(); }
+    inline GtkFileChooser* getFileChooser() const { return GTK_FILE_CHOOSER(window.get()); }
 
 private:
     /// Closes the dialog and calls the callback on `path`
     void close(std::optional<fs::path> path);
 
-    xoj::util::GtkWindowUPtr window;
+    xoj::util::GtkNativeDialogUPtr window;
     std::function<void(std::optional<fs::path>)> callback;
     std::function<bool(fs::path&, const char* filterName)> pathValidation;
     gulong signalId{};

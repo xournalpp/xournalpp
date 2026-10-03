@@ -78,10 +78,10 @@ void BaseExportJob::showFileChooser(std::function<void()> onFileSelected, std::f
                                                                        _("Export File"), _("Export"),
                                                                        std::move(pathValidation), std::move(callback));
 
-    auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getWindow());
+    auto* fc = popup.getPopup()->getFileChooser();
     addFilterToDialog(fc);
 
-    popup.show(GTK_WINDOW(this->control->getWindow()->getWindow()));
+    popup.showNative(GTK_WINDOW(this->control->getWindow()->getWindow()));
 }
 
 auto BaseExportJob::testAndSetFilepath(const fs::path& file) -> bool {

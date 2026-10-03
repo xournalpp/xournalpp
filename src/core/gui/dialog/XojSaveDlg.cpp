@@ -14,10 +14,9 @@
 
 #include "FileChooserFiltersHelper.h"
 
-static GtkWindow* makeWindow(Settings* settings, fs::path suggestedPath, const char* windowTitle,
+static GtkNativeDialog* makeWindow(Settings* settings, fs::path suggestedPath, const char* windowTitle,
                              const char* buttonLabel) {
-    GtkWidget* dialog = gtk_file_chooser_dialog_new(windowTitle, nullptr, GTK_FILE_CHOOSER_ACTION_SAVE, _("_Cancel"),
-                                                    GTK_RESPONSE_CANCEL, buttonLabel, GTK_RESPONSE_OK, nullptr);
+    auto* dialog = gtk_file_chooser_native_new(windowTitle, nullptr, GTK_FILE_CHOOSER_ACTION_SAVE, buttonLabel, _("_Cancel"));
 
     if (!suggestedPath.empty()) {
         gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFile(suggestedPath.parent_path()).get(),
@@ -30,7 +29,7 @@ static GtkWindow* makeWindow(Settings* settings, fs::path suggestedPath, const c
                                              nullptr);
     }
 
-    return GTK_WINDOW(dialog);
+    return GTK_NATIVE_DIALOG(dialog);
 }
 
 xoj::SaveExportDialog::SaveExportDialog(Settings* settings, fs::path suggestedPath, const char* windowTitle,
@@ -44,7 +43,7 @@ xoj::SaveExportDialog::SaveExportDialog(Settings* settings, fs::path suggestedPa
             window.get(), "response", G_CALLBACK(+[](GtkDialog* win, int response, gpointer data) {
                 auto* self = static_cast<SaveExportDialog*>(data);
                 auto* fc = GTK_FILE_CHOOSER(win);
-                if (response == GTK_RESPONSE_OK) {
+                if (response == GTK_RESPONSE_ACCEPT) {
                     auto file = Util::fromGFile(
                             xoj::util::GObjectSPtr<GFile>(gtk_file_chooser_get_file(fc), xoj::util::adopt).get());
 
@@ -68,7 +67,8 @@ void xoj::SaveExportDialog::close(std::optional<fs::path> path) {
 
     // Closing the window causes another "response" signal, which we want to ignore
     g_signal_handler_disconnect(window.get(), signalId);
-    gtk_window_close(window.get());  // Destroys *this. Don't do anything after this call
+    this->window.reset();  // Dropping the ref will close it all
+    delete this;
 
     cb(std::move(path));
 }
@@ -84,8 +84,8 @@ void xoj::SaveExportDialog::showSaveFileDialog(GtkWindow* parent, Settings* sett
     auto popup = xoj::popup::PopupWindowWrapper<SaveExportDialog>(settings, std::move(suggestedPath), _("Save File"),
                                                                   _("Save"), xoppPathValidation, std::move(callback));
 
-    auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getWindow());
+    auto* fc = popup.getPopup()->getFileChooser();
     xoj::addFilterXopp(fc);
 
-    popup.show(parent);
+    popup.showNative(parent);
 }
