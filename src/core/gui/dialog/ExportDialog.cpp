@@ -7,6 +7,7 @@
 
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 
+#include "control/jobs/ExportParameters.h"
 #include "gui/Builder.h"
 #include "util/ElementRange.h"  // for parse, PageRangeVector
 #include "util/gtk4_helper.h"
@@ -18,9 +19,25 @@ constexpr auto UI_DIALOG_NAME = "exportDialog";
 
 using namespace xoj::popup;
 
-ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, ExportGraphicsFormat format, size_t currentPage,
-                           size_t pageCount, bool hasPdfBackground,
-                           std::function<void(const ExportDialog&)> callbackFun):
+static ExportFormat readFormat(GtkComboBox* cb) {
+    const char* id = gtk_combo_box_get_active_id(cb);
+    if (!id) {
+        return EXPORT_GRAPHICS_UNDEFINED;
+    } else if (std::string_view sv(id); sv == "svg") {
+        return EXPORT_GRAPHICS_SVG;
+    } else if (sv == "png") {
+        return EXPORT_GRAPHICS_PNG;
+    } else if (sv == "pdf") {
+        return EXPORT_GRAPHICS_PDF;
+    } else if (sv == "xoj") {
+        return EXPORT_XOJ;
+    }
+    g_warning("Unable to convert id to export format: \"%s\"", id);
+    return EXPORT_GRAPHICS_UNDEFINED;
+}
+
+ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, size_t currentPage, size_t pageCount,
+                           bool hasPdfBackground, std::function<void(std::unique_ptr<ExportParameters>)> callbackFun):
         currentPage(currentPage), pageCount(pageCount), builder(gladeSearchPath, UI_FILE), callbackFun(callbackFun) {
     window.reset(GTK_WINDOW(builder.get(UI_DIALOG_NAME)));
 
@@ -32,30 +49,28 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, ExportGraphicsForma
     gtk_widget_show_all(builder.get("dialog-main-box"));
 #endif
 
-    auto removeQualitySetting = [&builder = this->builder]() {
-        gtk_widget_hide(builder.get("lbQuality"));
-        gtk_widget_hide(builder.get("boxQuality"));
-        gtk_widget_hide(builder.get("cbQuality"));
+    auto visibilityCb = +[](GtkComboBox* cb, ExportDialog* self) {
+        auto fmt = readFormat(cb);
+        bool isPNG = fmt == EXPORT_GRAPHICS_PNG;
+        bool isPDF = fmt == EXPORT_GRAPHICS_PDF;
+        gtk_widget_set_visible(self->builder.get("lbQuality"), isPNG);
+        gtk_widget_set_visible(self->builder.get("boxQuality"), isPNG);
+        gtk_widget_set_visible(self->builder.get("cbQuality"), isPNG);
+        gtk_widget_set_visible(self->builder.get("cbProgressiveMode"), isPDF);
+        gtk_widget_set_visible(self->builder.get("boxPdfBackend"), isPDF);
     };
+    visibilityCb(GTK_COMBO_BOX(builder.get("cbtExportFormat")), this);
+    g_signal_connect(builder.get("cbtExportFormat"), "changed", G_CALLBACK(visibilityCb), this);
 
-    if (format == EXPORT_GRAPHICS_PDF) {
-        removeQualitySetting();
-        auto* cbt = GTK_COMBO_BOX_TEXT(builder.get("cbtPdfExportBackend"));
-        for (auto&& [id, name]: ExportBackend::getPrettyNamesOfAvailableBackends()) {
-            gtk_combo_box_text_append(cbt, id, name);
-        }
-        gtk_combo_box_set_active_id(GTK_COMBO_BOX(cbt), ExportBackend::DEFAULT_ID_STRING);
-        if (!hasPdfBackground) {
-            // No need for backend selection if no pdf background is present.
-            gtk_widget_set_sensitive(builder.get("boxPdfBackend"), false);
-        }
-    } else if (format == EXPORT_GRAPHICS_PNG) {
-        gtk_widget_hide(builder.get("cbProgressiveMode"));
-        gtk_widget_hide(builder.get("boxPdfBackend"));
-    } else {  // (format == EXPORT_GRAPHICS_SVG)
-        removeQualitySetting();
-        gtk_widget_hide(builder.get("cbProgressiveMode"));
-        gtk_widget_hide(builder.get("boxPdfBackend"));
+    //  Populate the PDF backend menu
+    auto* cbt = GTK_COMBO_BOX_TEXT(builder.get("cbtPdfExportBackend"));
+    for (auto&& [id, name]: PdfExportBackend::getPrettyNamesOfAvailableBackends()) {
+        gtk_combo_box_text_append(cbt, id, name);
+    }
+    gtk_combo_box_set_active_id(GTK_COMBO_BOX(cbt), PdfExportBackend::DEFAULT_ID_STRING);
+    if (!hasPdfBackground) {
+        // No need for backend selection if no pdf background is present.
+        gtk_widget_set_sensitive(builder.get("boxPdfBackend"), false);
     }
 
     // rdRangePages toggled signal handler
@@ -110,20 +125,21 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, ExportGraphicsForma
     g_signal_connect_swapped(builder.get("btOk"), "clicked", G_CALLBACK(ExportDialog::onSuccessCallback), this);
 
     /**
-     * By calling this->callbackFun() here, we make sure that `control->unblock()` is run even if the user clicks on
-     * the close-window button.
-     *
      * The callback returns `false` so that the PopupWindowManager callback deleting `this` gets called as well.
      */
 #if GTK_MAJOR_VERSION == 3
     g_signal_connect_swapped(window.get(), "delete-event", G_CALLBACK(+[](ExportDialog* self) {
-                                 self->callbackFun(*self);
+                                 if (self->confirmed && self->parameters) {
+                                     self->callbackFun(std::move(self->parameters));
+                                 }
                                  return false;
                              }),
                              this);
 #else
     g_signal_connect_swapped(window.get(), "close-request", G_CALLBACK(+[](ExportDialog* self) {
-                                 self->callbackFun(*self);
+                                 if (self->confirmed && self->parameters) {
+                                     self->callbackFun(std::move(self->parameters));
+                                 }
                                  return false;
                              }),
                              this);
@@ -151,10 +167,12 @@ void ExportDialog::selectQualityCriterion(GtkComboBox* comboBox, ExportDialog* s
 
 void ExportDialog::onSuccessCallback(ExportDialog* self) {
     self->confirmed = true;
-    self->progressiveMode = gtk_check_button_get_active(GTK_CHECK_BUTTON(self->builder.get("cbProgressiveMode")));
-    self->backgroundType = static_cast<ExportBackgroundType>(
+    self->parameters = std::make_unique<ExportParameters>();
+    self->parameters->progressiveMode =
+            gtk_check_button_get_active(GTK_CHECK_BUTTON(self->builder.get("cbProgressiveMode")));
+    self->parameters->backgroundType = static_cast<ExportBackgroundType>(
             gtk_combo_box_get_active(GTK_COMBO_BOX(self->builder.get("cbBackgroundType"))));
-    self->pageRanges = [self]() {
+    self->parameters->pageRanges = [self]() {
         GtkWidget* rdRangeCurrent = self->builder.get("rdRangeCurrent");
         GtkWidget* rdRangePages = self->builder.get("rdRangePages");
 
@@ -172,21 +190,12 @@ void ExportDialog::onSuccessCallback(ExportDialog* self) {
         range.emplace_back(0, self->pageCount - 1);
         return range;
     }();
-    self->pdfExportBackend = ExportBackend::fromString(
+    self->parameters->pdfExportBackend = PdfExportBackend::fromString(
             gtk_combo_box_get_active_id(GTK_COMBO_BOX(self->builder.get("cbtPdfExportBackend"))));
-    self->qualityParameter = RasterImageQualityParameter(
+    self->parameters->qualityParameter = RasterImageQualityParameter(
             static_cast<ExportQualityCriterion>(
                     gtk_combo_box_get_active(GTK_COMBO_BOX(self->builder.get("cbQuality")))),
             gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(self->builder.get("sbQualityValue"))));
+    self->parameters->format = readFormat(GTK_COMBO_BOX(self->builder.get("cbtExportFormat")));
     gtk_window_close(self->window.get());
 }
-
-auto ExportDialog::getPngQualityParameter() const -> RasterImageQualityParameter { return qualityParameter; }
-
-auto ExportDialog::isConfirmed() const -> bool { return this->confirmed; }
-
-auto ExportDialog::progressiveModeSelected() const -> bool { return this->progressiveMode; }
-
-auto ExportDialog::getBackgroundType() const -> ExportBackgroundType { return backgroundType; }
-
-auto ExportDialog::getRange() const -> const PageRangeVector& { return pageRanges; }

@@ -8,6 +8,7 @@
 #include <gio/gio.h>  // for g_file_new_for_commandlin...
 #include <glib.h>     // for g_message, g_error
 
+#include "control/jobs/ExportParameters.h"  // for EXPORT_FORMAT
 #include "control/jobs/ImageExport.h"       // for ImageExport, EXPORT_GRAPH...
 #include "control/jobs/ProgressListener.h"  // for DummyProgressListener
 #include "model/Document.h"                 // for Document
@@ -24,7 +25,7 @@ namespace ExportHelper {
 void exportImg(Document* doc, fs::path outfile, const char* range, const char* layerRange, int pngDpi, int pngWidth,
                int pngHeight, ExportBackgroundType exportBackground) {
 
-    ExportGraphicsFormat format = EXPORT_GRAPHICS_PNG;
+    ExportFormat format = EXPORT_GRAPHICS_PNG;
 
     if (outfile.extension() == ".svg") {
         format = EXPORT_GRAPHICS_SVG;
@@ -64,7 +65,7 @@ void exportImg(Document* doc, fs::path outfile, const char* range, const char* l
 }
 
 void exportPdf(Document* doc, const fs::path& output, const char* range, const char* layerRange,
-               ExportBackgroundType exportBackground, bool progressiveMode, ExportBackend backend) {
+               ExportBackgroundType exportBackground, bool progressiveMode, PdfExportBackend backend) {
     std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, nullptr, backend);
     pdfe->setExportBackground(exportBackground);
 
