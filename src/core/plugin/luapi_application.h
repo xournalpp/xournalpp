@@ -298,10 +298,10 @@ static int applib_fileDialogSave(lua_State* L) {
                                                                        _("Save File"), _("Save"),
                                                                        std::move(pathValidation), std::move(callback));
 
-    auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getWindow());
+    auto* fc = popup.getPopup()->getFileChooser();
     xoj::addFilterAllFiles(fc);
 
-    popup.show(GTK_WINDOW(ctrl->getWindow()->getWindow()));
+    popup.showNative(GTK_WINDOW(ctrl->getWindow()->getWindow()));
 
     return 0;
 }
