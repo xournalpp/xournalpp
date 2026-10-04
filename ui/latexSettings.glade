@@ -2,12 +2,6 @@
 <!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
-  <object class="GtkFileFilter" id="filefilter1">
-    <mime-types>
-      <mime-type>application/x-latex</mime-type>
-      <mime-type>text/x-tex</mime-type>
-    </mime-types>
-  </object>
   <object class="GtkScrolledWindow" id="latexSettingsPanel">
     <property name="visible">True</property>
     <property name="can-focus">True</property>
@@ -150,12 +144,10 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkFileChooserButton" id="latexSettingsTemplateFile">
+                      <object class="GtkButton" id="latexSettingsTemplateFile">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="hexpand">True</property>
-                        <property name="filter">filefilter1</property>
-                        <property name="title" translatable="yes">Choose a global LaTeX template file</property>
                       </object>
                       <packing>
                         <property name="left-attach">1</property>
