@@ -51,10 +51,9 @@ xoj::SaveExportDialog::SaveExportDialog(Settings* settings, fs::path suggestedPa
                         XojMsgBox::replaceFileQuestion(
                                 GTK_WINDOW(win), std::move(file),
                                 std::bind(&SaveExportDialog::close, self, std::placeholders::_1));
-                    }  // else the dialog stays on until a suitable destination is found or cancel is hit.
-                } else {
-                    self->close(std::nullopt);
+                    }
                 }
+                self->close(std::nullopt);
             }),
             this);
 }

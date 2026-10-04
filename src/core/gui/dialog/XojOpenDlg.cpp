@@ -106,9 +106,7 @@ FileDlg::FileDlg(Type type, const char* title, std::function<void(fs::path, bool
                         cb(std::move(path), attach);
                     });
                 }
-                // Closing the window causes another "response" signal, which we want to ignore
-                g_signal_handler_disconnect(win, self->signalId);
-                self->window.reset();  // Dropping the ref will close it all
+                self->window.reset();  // Dropping the ref will destroy it all
                 delete self;
             }),
             this);
