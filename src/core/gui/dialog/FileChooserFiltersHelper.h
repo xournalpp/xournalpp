@@ -23,4 +23,5 @@ void addFilterXopt(GtkFileChooser* fc);
 void addFilterSvg(GtkFileChooser* fc);
 void addFilterPng(GtkFileChooser* fc);
 void addFilterImages(GtkFileChooser* fc);  ///< All images supported by GdkPixbuf
+void addFilterTex(GtkFileChooser* fc);
 };  // namespace xoj
