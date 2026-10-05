@@ -4,28 +4,28 @@
 
 namespace xoj {
 void addFilterAllFiles(GtkFileChooser* fc) {
-    GtkFileFilter* filterAll = gtk_file_filter_new();
-    gtk_file_filter_set_name(filterAll, _("All files"));
-    gtk_file_filter_add_pattern(filterAll, "*");
-    gtk_file_chooser_add_filter(fc, filterAll);
+    GtkFileFilter* filter = gtk_file_filter_new();
+    gtk_file_filter_set_name(filter, _("All files"));
+    gtk_file_filter_add_pattern(filter, "*");
+    gtk_file_chooser_add_filter(fc, filter);
 }
 
 void addFilterSupported(GtkFileChooser* fc) {
-    GtkFileFilter* filterSupported = gtk_file_filter_new();
-    gtk_file_filter_set_name(filterSupported, _("Supported files"));
+    GtkFileFilter* filter = gtk_file_filter_new();
+    gtk_file_filter_set_name(filter, _("Supported files"));
 #ifndef _WIN32
-    gtk_file_filter_add_mime_type(filterSupported, FileTypes::XOJ.mimetype);
-    gtk_file_filter_add_mime_type(filterSupported, FileTypes::XOPP.mimetype);
-    gtk_file_filter_add_mime_type(filterSupported, FileTypes::XOPT.mimetype);
-    gtk_file_filter_add_mime_type(filterSupported, FileTypes::PDF.mimetype);
+    gtk_file_filter_add_mime_type(filter, FileTypes::XOJ.mimetype);
+    gtk_file_filter_add_mime_type(filter, FileTypes::XOPP.mimetype);
+    gtk_file_filter_add_mime_type(filter, FileTypes::XOPT.mimetype);
+    gtk_file_filter_add_mime_type(filter, FileTypes::PDF.mimetype);
 #else
-    gtk_file_filter_add_pattern(filterSupported, (std::string("*.") + FileTypes::XOJ.extension).c_str());
-    gtk_file_filter_add_pattern(filterSupported, (std::string("*.") + FileTypes::XOPP.extension).c_str());
-    gtk_file_filter_add_pattern(filterSupported, (std::string("*.") + FileTypes::XOPT.extension).c_str());
-    gtk_file_filter_add_pattern(filterSupported, (std::string("*.") + FileTypes::PDF.extension).c_str());
+    gtk_file_filter_add_pattern(filter, (std::string("*.") + FileTypes::XOJ.extension).c_str());
+    gtk_file_filter_add_pattern(filter, (std::string("*.") + FileTypes::XOPP.extension).c_str());
+    gtk_file_filter_add_pattern(filter, (std::string("*.") + FileTypes::XOPT.extension).c_str());
+    gtk_file_filter_add_pattern(filter, (std::string("*.") + FileTypes::PDF.extension).c_str());
 #endif
-    gtk_file_filter_add_pattern(filterSupported, "*.moj");  // MrWriter
-    gtk_file_chooser_add_filter(fc, filterSupported);
+    gtk_file_filter_add_pattern(filter, "*.moj");  // MrWriter
+    gtk_file_chooser_add_filter(fc, filter);
 }
 
 void addFilterForFile(GtkFileChooser* fc, const FileType& f) {
@@ -34,7 +34,7 @@ void addFilterForFile(GtkFileChooser* fc, const FileType& f) {
 #ifndef _WIN32
     gtk_file_filter_add_mime_type(filter, f.mimetype);
 #else
-    gtk_file_filter_add_pattern(filterSupported, (std::string("*.") + f.extension).c_str());
+    gtk_file_filter_add_pattern(filter, (std::string("*.") + f.extension).c_str());
 #endif
     gtk_file_chooser_add_filter(fc, filter);
 }
@@ -53,7 +53,7 @@ void addFilterTex(GtkFileChooser* fc) {
     gtk_file_filter_add_mime_type(filter, "application/x-latex");
     gtk_file_filter_add_mime_type(filter, "text/x-tex");
 #else
-    gtk_file_filter_add_pattern(filterSupported, "*.tex");
+    gtk_file_filter_add_pattern(filter, "*.tex");
 #endif
     gtk_file_chooser_add_filter(fc, filter);
 }
