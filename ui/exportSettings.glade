@@ -411,6 +411,7 @@ Set export parameters</property>
                       <item id="pdf" translatable="yes">PDF</item>
                       <item id="png" translatable="yes">PNG</item>
                       <item id="svg" translatable="yes">SVG</item>
+                      <item id="xoj" translatable="yes">XOJ</item>
                     </items>
                   </object>
                   <packing>
