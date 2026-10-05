@@ -43,7 +43,7 @@ xoj::SaveExportDialog::SaveExportDialog(Settings* settings, fs::path suggestedPa
         window(makeWindow(settings, std::move(suggestedPath), windowTitle, buttonLabel)),
         callback(std::move(callback)) {
     this->signalId = g_signal_connect(
-            window.get(), "response", G_CALLBACK(+[](GtkDialog* win, int response, gpointer data) {
+            window.get(), "response", G_CALLBACK(+[](GtkNativeDialog* win, int response, gpointer data) {
                 auto* self = static_cast<SaveExportDialog*>(data);
                 auto* fc = GTK_FILE_CHOOSER(win);
                 if (response == GTK_RESPONSE_ACCEPT) {
@@ -53,7 +53,6 @@ xoj::SaveExportDialog::SaveExportDialog(Settings* settings, fs::path suggestedPa
                 } else {
                     self->callback(std::nullopt);
                 }
-                self->window.reset();  // Dropping the ref will destroy it all
                 delete self;
             }),
             this);

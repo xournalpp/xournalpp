@@ -39,12 +39,6 @@ static std::function<void(fs::path, Args...)> addSetLastSavePathToCallback(
     };
 }
 
-constexpr auto ATTACH_CHOICE_ID = "attachPdfChoice";
-static void addAttachChoice(GtkFileChooser* fc) {
-    gtk_file_chooser_add_choice(fc, ATTACH_CHOICE_ID, _("Attach file to the journal"), nullptr, nullptr);
-    gtk_file_chooser_set_choice(fc, ATTACH_CHOICE_ID, "false");
-}
-
 // Helper class, for a single open dialog
 class FileDlg {
 public:
@@ -64,16 +58,24 @@ public:
     inline GtkFileChooser* getFileChooser() const { return GTK_FILE_CHOOSER(window.get()); }
     inline GtkNativeDialog* getNativeDialog() const { return GTK_NATIVE_DIALOG(window.get()); }
 
+
+    static constexpr auto ATTACH_CHOICE_ID = "attachPdfChoice";
+    inline void addAttachChoice() {
+        hasAttachChoice = true;
+        gtk_file_chooser_add_choice(getFileChooser(), ATTACH_CHOICE_ID, _("Attach file to the journal"), nullptr,
+                                    nullptr);
+        gtk_file_chooser_set_choice(getFileChooser(), ATTACH_CHOICE_ID, "false");
+    }
+
 private:
     xoj::util::GtkNativeDialogUPtr window;
+    bool hasAttachChoice = false;
 
     std::function<void(fs::path, bool)> callback;
     gulong signalId{};
 };
 
 static GtkNativeDialog* makeWindow(FileDlg::Type type, const char* title) {
-    // Todo(maybe)
-    // Restore previews using https://discourse.gnome.org/t/file-chooser-gtk-4-image-preview/11510/2
     return GTK_NATIVE_DIALOG(gtk_file_chooser_native_new(
             title, nullptr,
             type == FileDlg::Type::FILE ? GTK_FILE_CHOOSER_ACTION_OPEN : GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
@@ -84,7 +86,7 @@ static GtkNativeDialog* makeWindow(FileDlg::Type type, const char* title) {
 FileDlg::FileDlg(Type type, const char* title, std::function<void(fs::path, bool)> callback):
         window(makeWindow(type, title)), callback(std::move(callback)) {
     this->signalId = g_signal_connect(
-            window.get(), "response", G_CALLBACK(+[](GtkDialog* win, int response, gpointer data) {
+            window.get(), "response", G_CALLBACK(+[](GtkNativeDialog* win, int response, gpointer data) {
                 auto* self = static_cast<FileDlg*>(data);
 
                 if (response == GTK_RESPONSE_ACCEPT) {
@@ -94,20 +96,16 @@ FileDlg::FileDlg(Type type, const char* title, std::function<void(fs::path, bool
                                                     .get());
 
                     bool attach = false;
-                    if (const char* choice = gtk_file_chooser_get_choice(GTK_FILE_CHOOSER(win), ATTACH_CHOICE_ID);
-                        choice) {
-                        attach = std::strcmp(choice, "true") == 0;
+                    if (self->hasAttachChoice) {
+                        const char* choice = gtk_file_chooser_get_choice(GTK_FILE_CHOOSER(win), ATTACH_CHOICE_ID);
+                        if (choice) {
+                            attach = std::strcmp(choice, "true") == 0;
+                        }
                     }
 
-                    // We need to call gtk_window_close() before invoking the callback, because if the callback pops up
-                    // another dialog, the first one won't close...
-                    // So we postpone the callback
-                    Util::execInUiThread([cb = std::move(self->callback), path = std::move(path), attach]() {
-                        cb(std::move(path), attach);
-                    });
+                    self->callback(std::move(path), attach);
                 }
-                self->window.reset();  // Dropping the ref will destroy it all
-                delete self;
+                delete self;  // Dropping the ref will destroy it all
             }),
             this);
 }
@@ -161,7 +159,7 @@ void xoj::OpenDlg::showAnnotatePdfDialog(GtkWindow* parent, Settings* settings,
     addlastSavePathShortcut(fc, settings);
     setCurrentFolderToLastOpenPath(fc, settings);
 
-    addAttachChoice(fc);
+    popup.getPopup()->addAttachChoice();
 
     popup.showNative(parent);
 }
@@ -185,7 +183,7 @@ void xoj::OpenDlg::showOpenImageDialog(GtkWindow* parent, Settings* settings,
         gtk_file_chooser_set_current_folder(fc, Util::toGFile(settings->getLastImagePath()).get(), nullptr);
     }
 
-    addAttachChoice(fc);
+    popup.getPopup()->addAttachChoice();
 
     popup.showNative(parent);
 }
