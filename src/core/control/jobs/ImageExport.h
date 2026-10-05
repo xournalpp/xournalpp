@@ -16,6 +16,7 @@
 
 #include <cairo.h>  // for cairo_surface_t, cairo_t
 
+#include "control/jobs/ExportParameters.h"
 #include "util/ElementRange.h"  // for PageRangeVector, LayerRangeVector
 
 #include "BaseExportJob.h"  // for ExportBackgroundType, EXPORT_BACKGROUND_ALL
@@ -25,49 +26,12 @@ class Document;
 class ProgressListener;
 class DocumentView;
 
-enum ExportGraphicsFormat { EXPORT_GRAPHICS_UNDEFINED, EXPORT_GRAPHICS_PDF, EXPORT_GRAPHICS_PNG, EXPORT_GRAPHICS_SVG };
-
-/**
- * @brief List of available criterion for determining a PNG export quality.
- * The order must agree with the corresponding listAvailableCriterion in ui/exportSettings.glade
- */
-enum ExportQualityCriterion { EXPORT_QUALITY_DPI, EXPORT_QUALITY_WIDTH, EXPORT_QUALITY_HEIGHT };
-
-/**
- * @brief A class storing the available quality parameters for PNG export
- */
-class RasterImageQualityParameter {
-public:
-    RasterImageQualityParameter(ExportQualityCriterion criterion, int value);
-    RasterImageQualityParameter();
-    ~RasterImageQualityParameter();
-
-    /**
-     * @brief Get the quality criterion of this parameter
-     * @return The quality criterion
-     */
-    ExportQualityCriterion getQualityCriterion();
-
-    /**
-     * @brief Get the target value of this parameter
-     * @return The target value
-     */
-    int getValue();
-
-private:
-    /**
-     * @brief Default quality is: DPI=300
-     */
-    ExportQualityCriterion qualityCriterion = EXPORT_QUALITY_DPI;
-    int value = 300;
-};
-
 /**
  * @brief A class handling export as images
  */
 class ImageExport {
 public:
-    ImageExport(Document* doc, fs::path file, ExportGraphicsFormat format, ExportBackgroundType exportBackground,
+    ImageExport(Document* doc, fs::path file, ExportFormat format, ExportBackgroundType exportBackground,
                 const PageRangeVector& exportRange);
     virtual ~ImageExport();
 
@@ -139,7 +103,7 @@ private:
      * @param format The format of the exported image
      * @param view A DocumentView for drawing the page
      */
-    void exportImagePage(size_t pageId, size_t id, double zoomRatio, ExportGraphicsFormat format, DocumentView& view);
+    void exportImagePage(size_t pageId, size_t id, double zoomRatio, ExportFormat format, DocumentView& view);
 
     static constexpr size_t SINGLE_PAGE = size_t(-1);
 
@@ -157,7 +121,7 @@ public:
     /**
      * Export graphics format
      */
-    ExportGraphicsFormat format = EXPORT_GRAPHICS_UNDEFINED;
+    ExportFormat format = EXPORT_GRAPHICS_UNDEFINED;
 
     /**
      * Do not export the Background

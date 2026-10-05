@@ -27,8 +27,8 @@
 using std::string;
 
 
-ImageExport::ImageExport(Document* doc, fs::path file, ExportGraphicsFormat format,
-                         ExportBackgroundType exportBackground, const PageRangeVector& exportRange):
+ImageExport::ImageExport(Document* doc, fs::path file, ExportFormat format, ExportBackgroundType exportBackground,
+                         const PageRangeVector& exportRange):
         doc(doc), file(std::move(file)), format(format), exportBackground(exportBackground), exportRange(exportRange) {}
 
 ImageExport::~ImageExport() = default;
@@ -157,8 +157,7 @@ auto ImageExport::getFilenameWithNumber(size_t no) const -> fs::path {
  * @param format The format of the exported image
  * @param view A DocumentView for drawing the page
  */
-void ImageExport::exportImagePage(size_t pageId, size_t id, double zoomRatio, ExportGraphicsFormat format,
-                                  DocumentView& view) {
+void ImageExport::exportImagePage(size_t pageId, size_t id, double zoomRatio, ExportFormat format, DocumentView& view) {
     std::shared_lock<Document> lock(*doc);
     ConstPageRef page = doc->getPage(pageId);
 
@@ -249,12 +248,3 @@ void ImageExport::exportGraphics(ProgressListener* stateListener) {
         }
     }
 }
-
-RasterImageQualityParameter::RasterImageQualityParameter() = default;
-RasterImageQualityParameter::RasterImageQualityParameter(ExportQualityCriterion criterion, int value):
-        qualityCriterion(criterion), value(value) {}
-RasterImageQualityParameter::~RasterImageQualityParameter() = default;
-
-auto RasterImageQualityParameter::getQualityCriterion() -> ExportQualityCriterion { return qualityCriterion; }
-
-auto RasterImageQualityParameter::getValue() -> int { return value; }

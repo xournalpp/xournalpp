@@ -30,6 +30,7 @@
 #include "control/ToolEnums.h"               // for ToolSize, ToolType
 #include "control/actions/ActionDatabase.h"  // for ActionDatabase
 #include "control/actions/ActionProperties.h"
+#include "control/jobs/ExportParameters.h"
 #include "control/layer/LayerController.h"
 #include "control/pagetype/PageTypeHandler.h"
 #include "control/settings/Settings.h"
@@ -281,8 +282,6 @@ static int applib_fileDialogSave(lua_State* L) {
         suggestedPath = "." / suggestedPath;
     }
 
-    auto pathValidation = [](fs::path& p, const char* filterName) { return true; };
-
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* ctrl = plugin->getControl();
 
@@ -295,12 +294,7 @@ static int applib_fileDialogSave(lua_State* L) {
     };
 
     auto popup = xoj::popup::PopupWindowWrapper<xoj::SaveExportDialog>(ctrl->getSettings(), std::move(suggestedPath),
-                                                                       _("Save File"), _("Save"),
-                                                                       std::move(pathValidation), std::move(callback));
-
-    auto* fc = popup.getPopup()->getFileChooser();
-    xoj::addFilterAllFiles(fc);
-
+                                                                       _("Save File"), _("Save"), std::move(callback));
     popup.showNative(GTK_WINDOW(ctrl->getWindow()->getWindow()));
 
     return 0;
@@ -3391,8 +3385,8 @@ static int applib_export(lua_State* L) {
          origin differs from the media box, avoiding text shifting on export (#7316).
          Defaults to "qpdf" for backwards compatibility. */
 
-    ExportBackend backendType = ExportBackend::DEFAULT;
-    backendType = ExportBackend::fromString(backend);
+    PdfExportBackend backendType = PdfExportBackend::DEFAULT;
+    backendType = PdfExportBackend::fromString(backend);
 
     if (outputFile == nullptr) {
         return luaL_error(L, "Missing output file!");

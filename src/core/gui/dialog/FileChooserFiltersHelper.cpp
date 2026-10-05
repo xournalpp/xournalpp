@@ -3,13 +3,6 @@
 #include "util/i18n.h"
 
 namespace xoj {
-static void addMimeTypeFilter(GtkFileChooser* fc, const char* name, const char* mime) {
-    GtkFileFilter* filterPdf = gtk_file_filter_new();
-    gtk_file_filter_set_name(filterPdf, name);
-    gtk_file_filter_add_mime_type(filterPdf, mime);
-    gtk_file_chooser_add_filter(fc, filterPdf);
-}
-
 void addFilterAllFiles(GtkFileChooser* fc) {
     GtkFileFilter* filterAll = gtk_file_filter_new();
     gtk_file_filter_set_name(filterAll, _("All files"));
@@ -20,20 +13,31 @@ void addFilterAllFiles(GtkFileChooser* fc) {
 void addFilterSupported(GtkFileChooser* fc) {
     GtkFileFilter* filterSupported = gtk_file_filter_new();
     gtk_file_filter_set_name(filterSupported, _("Supported files"));
-    gtk_file_filter_add_mime_type(filterSupported, "application/x-xojpp");
-    gtk_file_filter_add_mime_type(filterSupported, "application/x-xopp");
-    gtk_file_filter_add_mime_type(filterSupported, "application/x-xopt");
-    gtk_file_filter_add_mime_type(filterSupported, "application/pdf");
+#ifndef _WIN32
+    gtk_file_filter_add_mime_type(filterSupported, FileTypes::XOJ.mimetype);
+    gtk_file_filter_add_mime_type(filterSupported, FileTypes::XOPP.mimetype);
+    gtk_file_filter_add_mime_type(filterSupported, FileTypes::XOPT.mimetype);
+    gtk_file_filter_add_mime_type(filterSupported, FileTypes::PDF.mimetype);
+#else
+    gtk_file_filter_add_pattern(filterSupported, (std::string("*.") + FileTypes::XOJ.extension).c_str());
+    gtk_file_filter_add_pattern(filterSupported, (std::string("*.") + FileTypes::XOPP.extension).c_str());
+    gtk_file_filter_add_pattern(filterSupported, (std::string("*.") + FileTypes::XOPT.extension).c_str());
+    gtk_file_filter_add_pattern(filterSupported, (std::string("*.") + FileTypes::PDF.extension).c_str());
+#endif
     gtk_file_filter_add_pattern(filterSupported, "*.moj");  // MrWriter
     gtk_file_chooser_add_filter(fc, filterSupported);
 }
 
-void addFilterPdf(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("PDF files"), "application/pdf"); }
-void addFilterXoj(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("Xournal files"), "application/x-xojpp"); }
-void addFilterXopp(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("Xournal++ files"), "application/x-xopp"); }
-void addFilterXopt(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("Xournal++ template"), "application/x-xopt"); }
-void addFilterSvg(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("SVG graphics"), "image/svg+xml"); }
-void addFilterPng(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("PNG graphics"), "image/png"); }
+void addFilterForFile(GtkFileChooser* fc, const FileType& f) {
+    GtkFileFilter* filter = gtk_file_filter_new();
+    gtk_file_filter_set_name(filter, fetch_translation(f.description));
+#ifndef _WIN32
+    gtk_file_filter_add_mime_type(filter, f.mimetype);
+#else
+    gtk_file_filter_add_pattern(filterSupported, (std::string("*.") + f.extension).c_str());
+#endif
+    gtk_file_chooser_add_filter(fc, filter);
+}
 
 void addFilterImages(GtkFileChooser* fc) {
     GtkFileFilter* filter = gtk_file_filter_new();
@@ -45,8 +49,12 @@ void addFilterImages(GtkFileChooser* fc) {
 void addFilterTex(GtkFileChooser* fc) {
     GtkFileFilter* filter = gtk_file_filter_new();
     gtk_file_filter_set_name(filter, _("Latex files"));
+#ifndef _WIN32
     gtk_file_filter_add_mime_type(filter, "application/x-latex");
     gtk_file_filter_add_mime_type(filter, "text/x-tex");
+#else
+    gtk_file_filter_add_pattern(filterSupported, "*.tex");
+#endif
     gtk_file_chooser_add_filter(fc, filter);
 }
 };  // namespace xoj

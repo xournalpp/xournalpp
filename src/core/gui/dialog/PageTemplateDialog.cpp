@@ -10,11 +10,11 @@
 #include <gdk/gdk.h>      // for GdkRGBA
 #include <glib-object.h>  // for G_CALLBACK, g_signal_c...
 
-#include "control/pagetype/PageTypeHandler.h"  // for PageTypeInfo, PageType...
-#include "control/settings/Settings.h"         // for Settings
-#include "gui/Builder.h"                       // for Builder
-#include "gui/dialog/XojOpenDlg.h"             // for XojOpenDlg
-#include "gui/dialog/FileChooserFiltersHelper.h"             // for addFilterXopt
+#include "control/pagetype/PageTypeHandler.h"     // for PageTypeInfo, PageType...
+#include "control/settings/Settings.h"            // for Settings
+#include "gui/Builder.h"                          // for Builder
+#include "gui/dialog/FileChooserFiltersHelper.h"  // for addFilterXopt
+#include "gui/dialog/XojOpenDlg.h"                // for XojOpenDlg
 #include "gui/menus/popoverMenus/PageTypeSelectionPopoverGridOnly.h"
 #include "gui/toolbarMenubar/ToolMenuHandler.h"
 #include "model/FormatDefinitions.h"  // for FormatUnits, XOJ_UNITS
@@ -27,8 +27,8 @@
 #include "util/serdesstream.h"        // for serdes_stream
 
 #include "FormatDialog.h"  // for FormatDialog
-#include "filesystem.h"    // for path
 #include "XojSaveDlg.h"
+#include "filesystem.h"  // for path
 
 class GladeSearchpath;
 
@@ -111,12 +111,6 @@ void PageTemplateDialog::saveToModel() {
     model.setBackgroundColor(Util::GdkRGBA_to_argb(color));
 }
 
-static bool xoptPathValidation(fs::path& p, const char*) {
-    Util::clearExtensions(p, ".xopt");
-    p += ".xopt";
-    return true;
-}
-
 void PageTemplateDialog::saveToFile() {
     saveToModel();
 
@@ -138,11 +132,7 @@ void PageTemplateDialog::saveToFile() {
         }
     };
     auto popup = xoj::popup::PopupWindowWrapper<SaveExportDialog>(settings, std::move(saveFilename), _("Save File"),
-                                                                  _("Save"), xoptPathValidation, std::move(callback));
-
-    auto* fc = popup.getPopup()->getFileChooser();
-    xoj::addFilterXopt(fc);
-
+                                                                  _("Save"), xoj::FileTypes::XOPT, std::move(callback));
     popup.showNative(GTK_WINDOW(this->getWindow()));
 }
 

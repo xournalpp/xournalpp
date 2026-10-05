@@ -4,17 +4,17 @@
 
 #include "config-features.h"
 
-ExportBackend ExportBackend::fromString(const char* str) {
-    return str != nullptr ? fromString(std::string_view(str)) : ExportBackend(ExportBackend::DEFAULT);
+PdfExportBackend PdfExportBackend::fromString(const char* str) {
+    return str != nullptr ? fromString(std::string_view(str)) : PdfExportBackend(PdfExportBackend::DEFAULT);
 }
 
-ExportBackend ExportBackend::fromString(std::string_view str) {
+PdfExportBackend PdfExportBackend::fromString(std::string_view str) {
     if (str == "cairo") {
-        return ExportBackend::CAIRO;
+        return PdfExportBackend::CAIRO;
     }
 #ifdef ENABLE_QPDF
     if (str == "qpdf") {
-        return ExportBackend::QPDF;
+        return PdfExportBackend::QPDF;
     }
 #endif
     if (str != DEFAULT_ID_STRING && !str.empty()) {
@@ -22,10 +22,10 @@ ExportBackend ExportBackend::fromString(std::string_view str) {
                          listAvailableBackends())
                                 .c_str());
     }
-    return ExportBackend::DEFAULT;
+    return PdfExportBackend::DEFAULT;
 }
 
-const char* ExportBackend::listAvailableBackends() {
+const char* PdfExportBackend::listAvailableBackends() {
     static const char* availablePdfExportBackends = "cairo"
 #ifdef ENABLE_QPDF
                                                     " qpdf"
@@ -34,7 +34,7 @@ const char* ExportBackend::listAvailableBackends() {
     return availablePdfExportBackends;
 }
 
-std::vector<std::pair<const char*, const char*>> ExportBackend::getPrettyNamesOfAvailableBackends() {
+std::vector<std::pair<const char*, const char*>> PdfExportBackend::getPrettyNamesOfAvailableBackends() {
     std::vector<std::pair<const char*, const char*>> res;
     res.emplace_back(DEFAULT_ID_STRING, _("Default"));
     res.emplace_back("cairo", "Cairo");

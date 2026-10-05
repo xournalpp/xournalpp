@@ -12,19 +12,11 @@
 #include "util/PathUtil.h"                 // for clearExtensions
 #include "util/i18n.h"                     // for _
 
-PdfExportJob::PdfExportJob(Control* control): BaseExportJob(control, _("PDF Export")) {}
+PdfExportJob::PdfExportJob(Control* control, fs::path filepath): BaseExportJob(control, _("PDF Export")) {
+    this->filepath = std::move(filepath);
+}
 
 PdfExportJob::~PdfExportJob() = default;
-
-void PdfExportJob::addFilterToDialog(GtkFileChooser* dialog) {
-    addFileFilterToDialog(dialog, _("PDF files"), "application/pdf");
-}
-
-void PdfExportJob::setExtensionFromFilter(fs::path& file, const char* /*filterName*/) const {
-    // Remove any pre-existing extension and adds .pdf
-    Util::clearExtensions(file, ".pdf");
-    file += ".pdf";
-}
 
 void PdfExportJob::run() {
     Document* doc = control->getDocument();
@@ -33,10 +25,12 @@ void PdfExportJob::run() {
     std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, control);
     doc->unlock_shared();
 
-    if (!pdfe->createPdf(this->filepath, false)) {
+    if (testFilepath(this->filepath) && !pdfe->createPdf(this->filepath, false)) {
+        // The path is valid but the export failed...
         this->errorMsg = pdfe->getLastError();
-        if (control->getWindow()) {
-            callAfterRun();
-        }
+    }
+    if (control->getWindow()) {
+        // Will show putative error message
+        callAfterRun();
     }
 }
