@@ -79,8 +79,7 @@ static GtkNativeDialog* makeWindow(FileDlg::Type type, const char* title) {
     return GTK_NATIVE_DIALOG(gtk_file_chooser_native_new(
             title, nullptr,
             type == FileDlg::Type::FILE ? GTK_FILE_CHOOSER_ACTION_OPEN : GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
-            type == FileDlg::Type::FILE ? _("_Open") : _("Select folder"),
-            _("_Cancel")));
+            type == FileDlg::Type::FILE ? _("_Open") : _("Select folder"), _("_Cancel")));
 }
 
 FileDlg::FileDlg(Type type, const char* title, std::function<void(fs::path, bool)> callback):

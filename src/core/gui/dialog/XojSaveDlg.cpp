@@ -15,8 +15,9 @@
 #include "FileChooserFiltersHelper.h"
 
 static GtkNativeDialog* makeWindow(Settings* settings, fs::path suggestedPath, const char* windowTitle,
-                             const char* buttonLabel) {
-    auto* dialog = gtk_file_chooser_native_new(windowTitle, nullptr, GTK_FILE_CHOOSER_ACTION_SAVE, buttonLabel, _("_Cancel"));
+                                   const char* buttonLabel) {
+    auto* dialog =
+            gtk_file_chooser_native_new(windowTitle, nullptr, GTK_FILE_CHOOSER_ACTION_SAVE, buttonLabel, _("_Cancel"));
 
 #if GTK_MAJOR_VERSION == 3
     // On GTK4, this is enabled by default and can no longer be configured.
