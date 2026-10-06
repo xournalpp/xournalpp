@@ -163,7 +163,7 @@ void xoj::OpenDlg::showAnnotatePdfDialog(GtkWindow* parent, Settings* settings,
     popup.showNative(parent);
 }
 
-void xoj::OpenDlg::showOpenImageDialog(GtkWindow* parent, Settings* settings,
+void xoj::OpenDlg::showOpenImageDialog(GtkWindow* parent, Settings* settings, bool addAttachQuestion,
                                        std::function<void(fs::path, bool)> callback) {
     auto popup = xoj::popup::PopupWindowWrapper<FileDlg>(FileDlg::Type::FILE, _("Choose image file"),
                                                          [cb = std::move(callback), settings](fs::path p, bool attach) {
@@ -182,7 +182,9 @@ void xoj::OpenDlg::showOpenImageDialog(GtkWindow* parent, Settings* settings,
         gtk_file_chooser_set_current_folder(fc, Util::toGFile(settings->getLastImagePath()).get(), nullptr);
     }
 
-    popup.getPopup()->addAttachChoice();
+    if (addAttachQuestion) {
+        popup.getPopup()->addAttachChoice();
+    }
 
     popup.showNative(parent);
 }

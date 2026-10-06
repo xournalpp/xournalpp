@@ -28,7 +28,8 @@ void showAnnotatePdfDialog(GtkWindow* parent, Settings* settings, std::function<
 void showOpenTemplateDialog(GtkWindow* parent, Settings* settings, std::function<void(fs::path)> callback);
 
 /// @param callback(path, attachImg)
-void showOpenImageDialog(GtkWindow* parent, Settings* settings, std::function<void(fs::path, bool)> callback);
+void showOpenImageDialog(GtkWindow* parent, Settings* settings, bool addAttachQuestion,
+                         std::function<void(fs::path, bool)> callback);
 
 void showMultiFormatDialog(GtkWindow* parent, std::vector<std::string> formats, std::function<void(fs::path)> callback);
 
