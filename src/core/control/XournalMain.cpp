@@ -384,117 +384,68 @@ void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFi
     }
 }
 
-void ensureWindow(GApplication* application, XMPtr app_data) {
-    ensure_input_model_compatibility();
-    const MigrateResult migrateResult = migrateSettings();
+/// Returns true if there was no window (and thus a window was just created)
+bool ensureWindow(GApplication* application, XMPtr app_data) {
+    if (!app_data->win) {
+        ensure_input_model_compatibility();
+        const MigrateResult migrateResult = migrateSettings();
 
-    app_data->gladePath = std::make_unique<GladeSearchpath>();
-    initResourcePath(app_data->gladePath.get(), "ui/about.glade");
-    initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
-    initResourcePath(app_data->gladePath.get(), "ui/toolbar.ini", false);
+        app_data->gladePath = std::make_unique<GladeSearchpath>();
+        initResourcePath(app_data->gladePath.get(), "ui/about.glade");
+        initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
+        initResourcePath(app_data->gladePath.get(), "ui/toolbar.ini", false);
 
-    app_data->control = std::make_unique<Control>(application, app_data->gladePath.get(), app_data->disableAudio);
+        app_data->control = std::make_unique<Control>(application, app_data->gladePath.get(), app_data->disableAudio);
 
-    auto& globalLatexTemplatePath = app_data->control->getSettings()->latexSettings.globalTemplatePath;
-    if (globalLatexTemplatePath.empty()) {
-        globalLatexTemplatePath = findResourcePath("resources/") / "default_template.tex";
-        g_message("Using default latex template in %s", globalLatexTemplatePath.string().c_str());
-        app_data->control->getSettings()->save();
-    }
-
-    app_data->win = std::make_unique<MainWindow>(app_data->gladePath.get(), app_data->control.get(),
-                                                 GTK_APPLICATION(application));
-    app_data->control->initWindow(app_data->win.get());
-    app_data->win->populate(app_data->gladePath.get());
-
-    if (migrateResult.status != MigrateStatus::NotNeeded) {
-        Util::execInUiThread(
-                [=]() { XojMsgBox::showErrorToUser(app_data->control->getGtkWindow(), migrateResult.message); });
-    }
-
-    gtk_application_set_menubar(GTK_APPLICATION(application), app_data->win->getMenuModel());
-    // Do we want stuff in gtk_application_set_app_menu?
-
-    app_data->win->show(nullptr);
-    g_message("shown");
-
-    if (migrateResult.status != MigrateStatus::NotNeeded) {
-        XojMsgBox::showErrorToUser(app_data->control->getGtkWindow(), migrateResult.message);
-    }
-
-    fs::path p;
-    if (app_data->optFilename) {
-        if (g_strv_length(app_data->optFilename) != 1) {
-            const std::string msg = _("Sorry, Xournal++ can only open one file at once.\n"
-                                      "Others are ignored.");
-            XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
+        auto& globalLatexTemplatePath = app_data->control->getSettings()->latexSettings.globalTemplatePath;
+        if (globalLatexTemplatePath.empty()) {
+            globalLatexTemplatePath = findResourcePath("resources/") / "default_template.tex";
+            g_message("Using default latex template in %s", globalLatexTemplatePath.string().c_str());
+            app_data->control->getSettings()->save();
         }
-        p = Util::fromGFilename(app_data->optFilename[0]);
-        try {
-            p = fs::absolute(p);
-        } catch (const fs::filesystem_error& e) {
-            g_warning("Unable to convert path %s to absolute path: %s", app_data->optFilename[0], e.what());
+
+        app_data->win = std::make_unique<MainWindow>(app_data->gladePath.get(), app_data->control.get(),
+                                                     GTK_APPLICATION(application));
+        app_data->control->initWindow(app_data->win.get());
+        app_data->win->populate(app_data->gladePath.get());
+
+        gtk_application_set_menubar(GTK_APPLICATION(application), app_data->win->getMenuModel());
+        // Do we want stuff in gtk_application_set_app_menu?
+
+        gtk_application_add_window(GTK_APPLICATION(application), GTK_WINDOW(app_data->win->getWindow()));
+
+        app_data->win->show(nullptr);
+
+        if (migrateResult.status != MigrateStatus::NotNeeded) {
+            XojMsgBox::showErrorToUser(app_data->control->getGtkWindow(), migrateResult.message);
         }
-    } else if (app_data->control->getSettings()->isAutoloadMostRecent()) {
-        auto most_recent = RecentManager::getMostRecent();
-        if (most_recent) {
-            if (auto opt = Util::fromUri(gtk_recent_info_get_uri(most_recent.get()))) {
-                p = opt.value();
-            }
-            if (std::error_code err; !fs::exists(p, err)) {
-                if (err) {
-                    g_warning("Failed to determine if recent path exists \"%s\": %s", char_cast(p.u8string().c_str()),
-                              err.message().c_str());
-                } else {
-                    g_warning("Tried to open the most recent file but it no longer exists:\n\"%s\"",
-                              char_cast(p.u8string().c_str()));
-                }
-                p = fs::path();
-            }
-        }
+
+        app_data->control->getScheduler()->start();
+
+        return true;
+    } else {
+        app_data->win->show(nullptr);  // Bring the window forward
+        return false;
     }
-
-    app_data->control->openFileWithoutSavingTheCurrentDocument(
-        std::move(p), app_data->attachMode, app_data->openAtPageNumber - 1,
-                                                               [ctrl = app_data->control.get(), app = GTK_APPLICATION(application)](bool) {
-                                                                   ctrl->getScheduler()->start();
-
-                                                                   checkForEmergencySave(ctrl);
-
-                // There is a timing issue with the layout
-                // This fixes it, see #405
-                Util::execInUiThread([ctrl]() { ctrl->getWindow()->getXournal()->layoutPages(); });
-                gtk_application_add_window(app, ctrl->getGtkWindow());
-            });
 }
 
-void on_activate(GApplication* application, XMPtr app_data) {
-    g_message("on_activate");
-    ensureWindow(application, app_data);
-}
-
-gint on_command_line(GApplication*, GApplicationCommandLine*, XMPtr) {
-    g_message("XournalMain::on_command_line: This should never happen, please file a bugreport with a detailed "
-              "description how to reproduce this message");
-    // Todo: implement this, if someone files the bug report
-    return 0;
-}
-
-void on_open_files(GApplication* application, gpointer f, gint numFiles, gchar* hint, XMPtr app_data) {
-    g_message("on_open_files");
-    if (numFiles <= 0) {
-        return;
-    }
-    ensureWindow(application, app_data);
-    auto* files = (GFile**)f;
-    if (numFiles != 1) {
+fs::path getFirstOptFilename(XMPtr app_data) {
+    if (g_strv_length(app_data->optFilename) != 1) {
         const std::string msg = _("Sorry, Xournal++ can only open one file at once.\n"
                                   "Others are ignored.");
         XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
     }
+    fs::path p = Util::fromGFilename(app_data->optFilename[0]);
+    try {
+        p = fs::absolute(p);
+    } catch (const fs::filesystem_error& e) {
+        g_warning("Unable to convert path %s to absolute path: %s", app_data->optFilename[0], e.what());
+    }
+    return p;
+}
 
-    const fs::path p = Util::fromGFile(files[0]);
-
+///  Tries to open a file, asking to save any pre-existing opened file first
+void tryOpeningFile(XMPtr app_data, const fs::path& p) {
     try {
         if (fs::exists(p)) {
             app_data->control->openFile(fs::absolute(p));
@@ -509,16 +460,77 @@ void on_open_files(GApplication* application, gpointer f, gint numFiles, gchar* 
                                    e.what() % p.u8string());
         XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
     }
-    gtk_window_present(GTK_WINDOW(app_data->win->getWindow()));
 }
 
-void on_startup(GApplication* application, XMPtr app_data) {
-    g_message("on_startup");
+void on_activate(GApplication* application, XMPtr app_data) {
+    g_debug("XournalMain::on_activate");
+    if (ensureWindow(application, app_data)) {
+        // The app was just opened: open any file given as parameter or the most recent file
+        fs::path p;
+        if (app_data->optFilename) {
+            p = getFirstOptFilename(app_data);
+        } else if (app_data->control->getSettings()->isAutoloadMostRecent()) {
+            auto most_recent = RecentManager::getMostRecent();
+            if (most_recent) {
+                if (auto opt = Util::fromUri(gtk_recent_info_get_uri(most_recent.get()))) {
+                    p = opt.value();
+                }
+                if (std::error_code err; !fs::exists(p, err)) {
+                    if (err) {
+                        g_warning("Failed to determine if recent path exists \"%s\": %s",
+                                  char_cast(p.u8string().c_str()), err.message().c_str());
+                    } else {
+                        g_warning("Tried to open the most recent file but it no longer exists:\n\"%s\"",
+                                  char_cast(p.u8string().c_str()));
+                    }
+                    p = fs::path();
+                }
+            }
+        }
+
+        app_data->control->openFileWithoutSavingTheCurrentDocument(
+                std::move(p), app_data->attachMode, app_data->openAtPageNumber - 1,
+                [ctrl = app_data->control.get()](bool) { checkForEmergencySave(ctrl); });
+    } else {
+        if (app_data->optFilename) {
+            fs::path p = getFirstOptFilename(app_data);
+            tryOpeningFile(app_data, p);
+        }
+    }
+}
+
+gint on_command_line(GApplication*, GApplicationCommandLine*, XMPtr) {
+    g_message("XournalMain::on_command_line: This should never happen, please file a bugreport with a detailed "
+              "description how to reproduce this message");
+    // Todo: implement this, if someone files the bug report
+    return 0;
+}
+
+void on_open_files(GApplication* application, gpointer f, gint numFiles, gchar* hint, XMPtr app_data) {
+    g_debug("XournalMain::on_open_files");
+    ensureWindow(application, app_data);
+
+    if (numFiles <= 0) {
+        return;
+    }
+    auto* files = (GFile**)f;
+    if (numFiles != 1) {
+        const std::string msg = _("Sorry, Xournal++ can only open one file at once.\n"
+                                  "Others are ignored.");
+        XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
+    }
+
+    const fs::path p = Util::fromGFile(files[0]);
+    tryOpeningFile(app_data, p);
+}
+
+void on_startup(GApplication*, XMPtr) {
+    g_debug("XournalMain::on_startup");
     XournalMain::initLocalisation();
 }
 
 auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gint {
-    g_message("on_handle_local_options");
+    g_debug("XournalMain::on_handle_local_options");
     initCAndCoutLocales();
 
     auto print_version = [&] { std::cout << xoj::util::getVersionInfo() << std::endl; };
