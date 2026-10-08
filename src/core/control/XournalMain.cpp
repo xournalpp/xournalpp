@@ -497,9 +497,7 @@ void on_open_files(GApplication* application, gpointer f, gint numFiles, gchar* 
     }
 }
 
-void on_startup(GApplication*, XMPtr) {
-    g_debug("XournalMain::on_startup");
-}
+void on_startup(GApplication*, XMPtr) { g_debug("XournalMain::on_startup"); }
 
 auto on_handle_local_options(GApplication* app, GVariantDict*, XMPtr app_data) -> gint {
     g_debug("XournalMain::on_handle_local_options");
