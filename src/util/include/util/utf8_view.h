@@ -1,6 +1,7 @@
 // UTF-8 string view
 #pragma once
 
+#include <algorithm>
 #include <iterator>
 #include <ranges>
 #include <string_view>

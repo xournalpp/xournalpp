@@ -12,6 +12,8 @@
 #pragma once
 
 #include <functional>
+#include <string>
+#include <vector>
 
 #include <gtk/gtk.h>  // for GtkWindow
 

@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <condition_variable>
 #include <deque>
+#include <iterator>
 #include <limits>
 #include <mutex>
 
