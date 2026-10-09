@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <utility>
 
 namespace xoj::util {
