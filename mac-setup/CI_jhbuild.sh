@@ -93,6 +93,7 @@ module_makeargs['portaudio'] = ' -j1 '
 
 # Uncomment when ftp.gnu.org is out...
 # repos['ftp.gnu.org'] = 'https://ftpmirror.gnu.org/gnu/'
+repos['ftp.gnu.org'] = 'https://raw.githubusercontent.com/xournalpp/xournalpp-pipeline-dependencies/refs/heads/gnu.org.source.mirror/gnu-sources/ftp.gnu.org/gnu/'
 
 ### END
 EOF
