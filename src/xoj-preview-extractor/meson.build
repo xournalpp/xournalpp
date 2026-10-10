@@ -1,5 +1,8 @@
 ## xournalpp-thumbnailer executable ##
-if get_option('ENABLE_THUMBNAILER') and host_machine.system() not in ['windows', 'cygwin']
+if get_option('ENABLE_THUMBNAILER') and host_machine.system() not in [
+    'windows',
+    'cygwin',
+]
     xournalpp_thumbnailer_exe = executable(
         'xournalpp-thumbnailer',
         'xournalpp-thumbnailer.cpp',
