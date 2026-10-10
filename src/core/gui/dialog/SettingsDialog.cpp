@@ -534,6 +534,9 @@ void SettingsDialog::load() {
         gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(builder.get("recolorLight")), &color);
         color = Util::argb_to_GdkRGBA(recolor.recolor.getDark());
         gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(builder.get("recolorDark")), &color);
+        loadCheckbox("cbPdfRenderBackground", settings->isPdfRenderBackgroundEnabled());
+        color = Util::rgb_to_GdkRGBA(settings->getPdfRenderBackgroundColor());
+        gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(builder.get("pdfRenderBackground")), &color);
     }
 
     loadCheckbox("cbHighlightPosition", settings->isHighlightPosition());
@@ -825,6 +828,9 @@ void SettingsDialog::save() {
 
         settings->setRecolorParameters({getCheckbox("cbRecolorDrawingArea"), getCheckbox("cbRecolorPreviewSidebar"),
                                         Recolor(Util::GdkRGBA_to_argb(color), Util::GdkRGBA_to_argb(color2))});
+        settings->setPdfRenderBackgroundEnabled(getCheckbox("cbPdfRenderBackground"));
+        gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(builder.get("pdfRenderBackground")), &color);
+        settings->setPdfRenderBackgroundColor(Util::GdkRGBA_to_argb(color));
     }
 
     settings->setHighlightPosition(getCheckbox("cbHighlightPosition"));

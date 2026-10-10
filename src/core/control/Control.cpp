@@ -85,6 +85,7 @@
 #include "model/Text.h"                                          // for Text
 #include "model/XojPage.h"                                       // for XojPage
 #include "pdf/base/XojPdfPage.h"                                 // for XojP...
+#include "pdf/popplerapi/PopplerGlibPage.h"                      // for Popp...
 #include "plugin/PluginController.h"                             // for Plug...
 #include "settings/RecolorParameters.h"                          // for RecolorParameters
 #include "undo/AddUndoAction.h"                                  // for AddU...
@@ -134,6 +135,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     auto name = Util::getConfigFile(SETTINGS_XML_FILE);
     this->settings = new Settings(std::move(name));
     this->settings->load();
+    PopplerGlibPage::useSettings(this->settings);
     this->loadPaletteFromSettings();
 
     this->pageTypes = new PageTypeHandler(gladeSearchPath);
@@ -1370,6 +1372,8 @@ void Control::showSettings() {
         SidebarNumberingStyle sidebarStyle;
         std::optional<std::filesystem::path> colorPaletteSetting;
         RecolorParameters recolorParameters;
+        bool pdfRenderBackgroundEnabled;
+        Color pdfRenderBackgroundColor;
     } settingsBeforeDialog = {
             settings->getBorderColor(),
             settings->getAddVerticalSpace(),
@@ -1384,6 +1388,8 @@ void Control::showSettings() {
             settings->getSidebarNumberingStyle(),
             settings->getColorPaletteSetting(),
             settings->getRecolorParameters(),
+            settings->isPdfRenderBackgroundEnabled(),
+            settings->getPdfRenderBackgroundColor(),
     };
 
     auto dlg = xoj::popup::PopupWindowWrapper<SettingsDialog>(
@@ -1452,6 +1458,20 @@ void Control::showSettings() {
                     ctrl->loadPaletteFromSettings();
                     ctrl->getWindow()->getToolMenuHandler()->updateColorToolItems(ctrl->getPalette());
                     reloadToolbars = true;
+                }
+
+                if (settingsBeforeDialog.pdfRenderBackgroundEnabled != settings->isPdfRenderBackgroundEnabled() ||
+                    settingsBeforeDialog.pdfRenderBackgroundColor != settings->getPdfRenderBackgroundColor()) {
+                    ctrl->forEachWindow([](MainWindow& window) {
+                        XournalView* view = window.getXournal();
+                        if (view == nullptr) {
+                            return;
+                        }
+                        view->recreatePdfCache();
+                        for (const auto& page: view->getViewPages()) {
+                            page->rerenderPage();
+                        }
+                    });
                 }
 
                 if (settingsBeforeDialog.recolorParameters != settings->getRecolorParameters()) {
