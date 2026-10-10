@@ -25,6 +25,15 @@ format=staves
 name=Graph
 format=graph
 
+[predefinedLinedGraph]
+name=Graph with vertical line
+format=linedgraph
+
+[predefinedRightLinedGraph]
+name=Graph with vertical line on the right
+format=linedgraph
+config=m1=-72
+
 [predefinedDotted]
 name=Dotted
 format=dotted
