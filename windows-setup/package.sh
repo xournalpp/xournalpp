@@ -98,7 +98,7 @@ cp "$prefix"/bin/libqpdf*.dll "$setup_dir"/bin
 cp "$prefix"/lib/libqpdf* "$setup_dir"/lib
 
 echo "create installer"
-version=$(cat "$build_dir/VERSION" | sed '1!d')
+version=$(sed -e '/version/!d' -e 's/^[^=]*=//' "$build_dir/VERSION_FILE")
 "/c/Program Files (x86)/NSIS/Bin/makensis.exe" -NOCD       \
     -DXOURNALPP_VERSION="$version"                         \
     -DSETUP_DIR="$setup_dir"                               \
