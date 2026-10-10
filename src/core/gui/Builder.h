@@ -25,14 +25,13 @@ class Builder final {
 public:
     Builder(GladeSearchpath* gladeSearchPath, const std::string& uiFile);
 
-    template <class GObjectType>
-    GObjectType* get(const std::string& name) {
-        GObjectType* res = static_cast<GObjectType*>(gtk_builder_get_object(builder.get(), name.c_str()));
-        xoj_assert_message(res, "ERROR: Builder::get: Could not find UI object: " + name + "\n");
+    inline GObject* getObject(std::string_view name) {
+        GObject* res = gtk_builder_get_object(builder.get(), name.data());
+        xoj_assert_message(res, std::string("ERROR: Builder::get: Could not find UI object: ") + name.data() + "\n");
         return res;
     }
 
-    inline GtkWidget* get(const std::string& name) { return GTK_WIDGET(get<GObject>(name)); }
+    inline GtkWidget* get(const std::string& name) { return GTK_WIDGET(getObject(name)); }
 
 private:
     /**
