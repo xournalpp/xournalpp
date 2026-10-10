@@ -1,0 +1,81 @@
+name: Snap
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+  release:
+    types:
+      - published
+  workflow_dispatch:
+
+concurrency:
+  group: snap-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build snap
+    runs-on: ubuntu-24.04
+    outputs:
+      snap-file: ${{ steps.build-snap.outputs.snap }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref }}
+
+      - name: Build snap
+        id: build-snap
+        uses: snapcore/action-build@v1
+
+      - name: Upload snap artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: snap-${{ github.run_id }}
+          compression-level: 0
+          path: ${{ steps.build-snap.outputs.snap }}
+          if-no-files-found: error
+
+  publish-edge:
+    name: Publish snap to edge
+    needs: build
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Download snap artifact
+        uses: actions/download-artifact@v6
+        with:
+          name: snap-${{ github.run_id }}
+          path: .
+
+      - name: Publish snap
+        uses: snapcore/action-publish@v1
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.STORE_LOGIN }}
+        with:
+          snap: ${{ needs.build.outputs.snap-file }}
+          release: edge
+
+  publish-candidate:
+    name: Publish snap to candidate
+    needs: build
+    if: ${{ github.event_name == 'release' && github.event.action == 'published' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Download snap artifact
+        uses: actions/download-artifact@v6
+        with:
+          name: snap-${{ github.run_id }}
+          path: .
+
+      - name: Publish snap
+        uses: snapcore/action-publish@v1
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.STORE_LOGIN }}
+        with:
+          snap: ${{ needs.build.outputs.snap-file }}
+          release: candidate
