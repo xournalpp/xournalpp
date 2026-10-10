@@ -15,6 +15,8 @@
 
 #include <cairo.h>  // for cairo_t
 
+#include "model/XojPage.h"  // for PageOrientation
+
 #include "BackgroundView.h"  // for BackgroundView
 
 class PdfCache;
@@ -24,7 +26,8 @@ namespace view {
 
 class PdfBackgroundView: public BackgroundView {
 public:
-    PdfBackgroundView(double pageWidth, double pageHeight, size_t pageNo, PdfCache* pdfCache = nullptr);
+    PdfBackgroundView(double pageWidth, double pageHeight, size_t pageNo, PdfCache* pdfCache = nullptr,
+                      PageOrientation pageoOrient = PageOrientation::UP);
     virtual ~PdfBackgroundView() = default;
 
     /**
@@ -35,6 +38,7 @@ public:
 private:
     size_t pageNo;
     PdfCache* pdfCache = nullptr;
+    PageOrientation pageOrient;
 };
 
 };  // namespace view

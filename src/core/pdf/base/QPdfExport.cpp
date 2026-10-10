@@ -16,6 +16,7 @@
 #include <qpdf/QPDFWriter.hh>
 
 #include "model/Document.h"   // for Document
+#include "model/XojPage.h"    // for PageOrientation
 #include "util/Assert.h"      // for xoj_assert
 #include "util/Util.h"        // for npos
 #include "util/i18n.h"        // for _
@@ -105,7 +106,14 @@ bool QPdfExport::overlayAndSave(const fs::path& saveDestination, std::stringstre
 
         auto outputPages = QPDFPageDocumentHelper(background).getAllPages();
         for (size_t n = 0, overlayPagesConsumed = 0; n < outputPageInfos.size(); n++) {
-            auto [hasOverlay, bgIndex] = outputPageInfos[n];
+            auto [hasOverlay, bgIndex, pgOrient] = outputPageInfos[n];
+            if (pgOrient != PageOrientation::UP) {
+                auto handle = outputPages[n].getObjectHandle();
+                auto rotateObj = handle.getKey("/Rotate");
+                int currRot = rotateObj.isInteger() ? static_cast<int>(rotateObj.getIntValue()) : 0;
+                handle.replaceKey("/Rotate",
+                                  QPDFObjectHandle::newInteger((static_cast<int>(pgOrient) * 90 + currRot) % 360));
+            }
             if (hasOverlay) {
                 if (bgIndex != npos) {
                     auto page = QPDFPageObjectHelper(background.getAllPages()[n]);
