@@ -14,18 +14,25 @@
 #include <string>
 
 #include "model/Font.h"
+
 #include "filesystem.h"
+
+#ifdef __APPLE__
+constexpr std::string_view defaultPdflatexPath = "/Library/TeX/texbin/pdflatex";
+#else
+constexpr std::string_view defaultPdflatexPath = "/usr/bin/pdflatex";
+#endif
 
 class LatexSettings {
 public:
     bool autoCheckDependencies{true};
     std::string defaultText{"x^2"};
     fs::path globalTemplatePath{};
-#ifdef __APPLE__
-    std::string genCmd{"/Library/TeX/texbin/pdflatex -halt-on-error -interaction=nonstopmode '{}'"};
-#else
-    std::string genCmd{"pdflatex -halt-on-error -interaction=nonstopmode '{}'"};
-#endif
+    std::string genCmd{defaultPdflatexPath};
+    std::string genArgs{" -halt-on-error -interaction=nonstopmode '{}'"};
+
+    enum class type_t { pdflatex, typst, custom };
+    type_t type{type_t::pdflatex};
 
     /**
      * LaTeX editor theme. Only used if linked with the GtkSourceView
@@ -48,4 +55,6 @@ public:
     bool externalEditorAutoConfirm{false};
     std::string externalEditorCmd{};
     std::string temporaryFileExt{"tex"};
+
+    void applyTemplate(type_t templateType);
 };
