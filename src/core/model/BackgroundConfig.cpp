@@ -16,7 +16,7 @@ BackgroundConfig::BackgroundConfig(const string& config) {
         if (dotPos != string::npos) {
             string key = s.substr(0, dotPos);
             string value = s.substr(dotPos + 1);
-            data[key] = value;
+            data.emplace(std::pair{std::move(key), std::move(value)});
         }
     }
 }
