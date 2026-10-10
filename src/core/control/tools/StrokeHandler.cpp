@@ -278,6 +278,12 @@ void StrokeHandler::onButtonDoublePressEvent(const PositionInputData&, double) {
 auto StrokeHandler::createView(xoj::view::Repaintable* parent) const -> std::unique_ptr<xoj::view::OverlayView> {
     xoj_assert(this->stroke);
     const Stroke& s = *this->stroke;
+    cairo_operator_t op = CAIRO_OPERATOR_OVER;
+
+    if (s.getToolType() == StrokeTool::HIGHLIGHTER) {
+        op = page->getBackgroundColor().getHighlighterOperator();
+    }
+
     if (s.getFill() != -1) {
         if (s.getToolType() == StrokeTool::HIGHLIGHTER) {
             // Filled highlighter requires to wipe the mask entirely at every iteration
@@ -287,7 +293,7 @@ auto StrokeHandler::createView(xoj::view::Repaintable* parent) const -> std::uni
             return std::make_unique<xoj::view::StrokeToolFilledView>(this, s, parent);
         }
     } else {
-        return std::make_unique<xoj::view::StrokeToolView>(this, s, parent);
+        return std::make_unique<xoj::view::StrokeToolView>(this, s, parent, op);
     }
 }
 
