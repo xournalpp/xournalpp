@@ -42,6 +42,21 @@ std::unique_ptr<xoj::view::OverlayView> LaserPointerHandler::createView(xoj::vie
     return view;
 }
 
+void LaserPointerHandler::clearNow() {
+    this->fadeoutTimer.cancel();
+
+    auto s = std::move(this->strokehandler);
+    if (s && s->getStroke()) {
+        this->viewPool->dispatch(xoj::view::LaserPointerView::INPUT_CANCELLATION_REQUEST,
+                                 Range(s->getStroke()->boundingRect()));
+    }
+
+    this->fadeoutAlpha = 255;
+    this->hasFinishedStrokes = false;
+    this->viewPool->dispatchAndClear(xoj::view::LaserPointerView::FINALIZATION_REQUEST);
+    this->pageView->deleteLaserPointerHandler();
+}
+
 void LaserPointerHandler::onButtonPressEvent(const PositionInputData& pos, double zoom) {
     this->strokehandler = std::make_unique<TemporaryStrokeHandler>(ctrl, page);
     this->strokehandler->onButtonPressEvent(pos, zoom);
