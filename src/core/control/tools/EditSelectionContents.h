@@ -83,6 +83,12 @@ public:
      */
     UndoActionPtr setFill(int alphaPen, int alphaHighligther);
 
+    /**
+     * Executes needed operations to achieve the
+     * mirroring of the selection, such as `EditSelectionContents::deleteViewBuffer`
+     */
+    void mirror();
+
 public:
     /**
      * Add an element to the this selection
