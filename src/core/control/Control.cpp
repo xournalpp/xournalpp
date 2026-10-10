@@ -36,6 +36,7 @@
 #include "control/settings/Settings.h"                           // for Sett...
 #include "control/settings/SettingsEnums.h"                      // for Button
 #include "control/settings/ViewModes.h"                          // for ViewM..
+#include "control/tools/SnapToGridInputHandler.h"                // for Snap...
 #include "control/tools/TextEditor.h"                            // for Text...
 #include "control/xojfile/LoadHandler.h"                         // for Load...
 #include "control/zoom/ZoomControl.h"                            // for Zoom...
@@ -78,6 +79,7 @@
 #include "model/LineStyle.h"                                     // for Line...
 #include "model/Link.h"                                          // for Link
 #include "model/PageType.h"                                      // for Page...
+#include "model/Point.h"                                         // for Point
 #include "model/Setsquare.h"                                     // for Sets...
 #include "model/Stroke.h"                                        // for Stroke
 #include "model/StrokeStyle.h"                                   // for Stro...
@@ -407,13 +409,19 @@ bool Control::toggleGeometryTool() {
     auto geometryToolInputHandler =
             std::make_unique<InputHandlerClass>(this->win->getXournal(), geometryToolController.get());
     Range range = view->getVisiblePart();
+    xoj::util::Point<double> spawn;
     if (range.isValid()) {
-        double originX = (range.minX + range.maxX) * .5;
-        double originY = (range.minY + range.maxY) * .5;
-        geometryToolController->translate({originX, originY});
+        spawn = {(range.minX + range.maxX) * .5, (range.minY + range.maxY) * .5};
     } else {
-        geometryToolController->translate({view->getWidth() * .5, view->getHeight() * .5});
+        spawn = {view->getWidth() * .5, view->getHeight() * .5};
     }
+    if (settings) {
+        SnapToGridInputHandler snap(settings);
+        snap.setPageRef(view->getPage());
+        const Point snapped = snap.snapToGrid(Point(spawn.x, spawn.y), false);
+        spawn = {snapped.x, snapped.y};
+    }
+    geometryToolController->translate(spawn);
     xournal->input->setGeometryToolInputHandler(std::move(geometryToolInputHandler));
     geometryTool->notify();
     return true;
