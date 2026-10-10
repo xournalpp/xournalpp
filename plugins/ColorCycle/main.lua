@@ -1,8 +1,7 @@
 -- Register all Toolbar actions and initialize all UI stuff
 function initUi()
-  app.registerUi({["menu"] = "Cycle through color list", ["callback"] = "cycle", ["accelerator"] = "<Alt>c"});
-  -- if you want to have multiple color lists you must use the app.registerUi function multiple times
-  -- with different callback functions and accelerators
+  app.registerUi({["menu"] = "Cycle forward through color list", ["callback"] = "cycleForward", ["accelerator"] = "<Alt>c"})
+  app.registerUi({["menu"] = "Cycle backward through color list", ["callback"] = "cycleBackward", ["accelerator"] = "<Shift><Alt>c"})
 end
 
 -- Predefined colors copied from LoadHandlerHelper.cpp 
@@ -21,18 +20,31 @@ local colorList = {
   {"white", 0xffffff}
 }
 
--- start with first color
+-- start with first color (0 = uninitialized)
 local currentColor = 0 
 
-function cycle()
+local function applyCurrentColor()
+  -- apply color to currently used tool and allow coloring of elements from selections
+  app.changeToolColor({["color"] = colorList[currentColor][2], ["selection"] = true})
+end
+
+function cycleForward()
   if (currentColor < #colorList) then
     currentColor = currentColor + 1
   else
     currentColor = 1
   end
-  -- apply color to currently used tool and allow coloring of elements from selections
-  app.changeToolColor({["color"] = colorList[currentColor][2], ["selection"] = true})
-  -- use app.changeToolColor({["color"] = colorList[currentColor][2], ["tool"] = "pen"}) 
-  -- instead if you only want to change pen color
-  -- similarly if you want to change highlighter color or the color from another tool with color capabilities.
+  applyCurrentColor()
+end
+
+-- Backward compatibility alias
+cycle = cycleForward
+
+function cycleBackward()
+  if (currentColor > 1) then
+    currentColor = currentColor - 1
+  else
+    currentColor = #colorList
+  end
+  applyCurrentColor()
 end
