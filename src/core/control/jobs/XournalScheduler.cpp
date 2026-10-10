@@ -6,6 +6,7 @@
 #include <string>  // for string
 
 #include "control/jobs/Scheduler.h"  // for JOB_PRIORITY_URGENT, JOB_PRIORIT...
+#include "util/Recolor.h"
 
 #include "PreviewJob.h"  // for PreviewJob
 #include "RenderJob.h"   // for RenderJob
@@ -98,12 +99,12 @@ auto XournalScheduler::existsSource(void* source, JobType type, JobPriority prio
     return exists;
 }
 
-void XournalScheduler::addRepaintSidebar(SidebarPreviewBaseEntry* preview) {
+void XournalScheduler::addRepaintSidebar(SidebarPreviewBaseEntry* preview, std::optional<Recolor> recolor) {
     if (existsSource(preview, JOB_TYPE_PREVIEW, JOB_PRIORITY_HIGH)) {
         return;
     }
 
-    auto* job = new PreviewJob(preview);
+    auto* job = new PreviewJob(preview, recolor);
     addJob(job, JOB_PRIORITY_HIGH);
     job->unref();
 }

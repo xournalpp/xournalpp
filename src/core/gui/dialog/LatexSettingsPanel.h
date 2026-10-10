@@ -15,6 +15,8 @@
 
 #include "gui/Builder.h"
 
+#include "filesystem.h"
+
 class GladeSearchpath;
 class LatexSettings;
 
@@ -40,11 +42,15 @@ private:
      */
     void updateWidgetSensitivity();
 
+    void setTemplateFile(fs::path p);
+
     Builder builder;
     GtkScrolledWindow* panel;
 
     GtkCheckButton* cbAutoDepCheck;
-    GtkFileChooser* globalTemplateChooser;
     GtkWidget* sourceViewThemeSelector;
     GtkCheckButton* cbUseSystemFont;
+
+    GtkButton* templateFileButton;
+    fs::path latexTemplateFile;
 };

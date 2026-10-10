@@ -34,6 +34,6 @@ auto createPreviewImage(const PageType& pt) -> GtkWidget* {
 
     xoj::util::GObjectSPtr<GdkPixbuf> pixbuf(
             gdk_pixbuf_get_from_surface(surface.get(), 0, 0, PREVIEW_WIDTH, PREVIEW_HEIGHT), xoj::util::adopt);
-    return gtk_image_new_from_pixbuf(pixbuf.get());
+    return gtk_picture_new_for_pixbuf(pixbuf.get());
 }
 };  // namespace xoj::helper

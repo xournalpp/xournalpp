@@ -13,7 +13,7 @@
 
 class GladeSearchpath;
 
-constexpr auto UI_FILE = "selectOpacity.glade";
+constexpr auto UI_FILE = "selectOpacity.ui";
 constexpr auto UI_DIALOG_NAME = "selectOpacityDialog";
 
 static int percentToByte(double percent) { return round_cast<int>(percent * 2.55); }
@@ -57,7 +57,7 @@ xoj::popup::SelectOpacityDialog::SelectOpacityDialog(GladeSearchpath* gladeSearc
     this->window.reset(GTK_WINDOW(builder.get(UI_DIALOG_NAME)));
 
     buildLabel(builder, opacityFeature);
-    previewImage = GTK_IMAGE(builder.get("imgPreview"));
+    previewImage = GTK_PICTURE(builder.get("imgPreview"));
     alphaRange = GTK_RANGE(builder.get("scaleAlpha"));
 
     gtk_range_set_value(alphaRange, byteToPercent(alpha));
@@ -77,11 +77,6 @@ xoj::popup::SelectOpacityDialog::SelectOpacityDialog(GladeSearchpath* gladeSearc
                          gtk_window_close(self->window.get());
                      }),
                      this);
-
-#if GTK_MAJOR_VERSION == 3
-    // Widgets are visible by default in gtk4
-    gtk_widget_show_all(builder.get("dialog-main-box"));
-#endif
 }
 
 xoj::popup::SelectOpacityDialog::~SelectOpacityDialog() = default;
@@ -117,5 +112,5 @@ void xoj::popup::SelectOpacityDialog::setPreviewImage(int alpha) {
 
     xoj::util::GObjectSPtr<GdkPixbuf> pixbuf(
             gdk_pixbuf_get_from_surface(surface.get(), 0, 0, PREVIEW_WIDTH, PREVIEW_HEIGTH), xoj::util::adopt);
-    gtk_image_set_from_pixbuf(previewImage, pixbuf.get());
+    gtk_picture_set_pixbuf(previewImage, pixbuf.get());
 }

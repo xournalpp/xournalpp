@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkWindow" id="Dialog">
+    <property name="default-widget">btOk</property>
+    <property name="child">
+      <object class="GtkBox" id="vbox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkScrolledWindow" id="scrollContents">
+            <property name="vexpand">1</property>
+            <property name="focusable">1</property>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="valign">center</property>
+            <property name="halign">end</property>
+            <property name="spacing">4</property>
+            <property name="homogeneous">1</property>
+            <child>
+              <object class="GtkButton" id="btCancel">
+                <property name="label" translatable="1">Cancel</property>
+                <property name="focusable">1</property>
+                <child>
+                  <object class='GtkShortcutController'>
+                    <property name='scope'>managed</property>
+                    <child>
+                      <object class='GtkShortcut'>
+                        <property name='trigger'>Escape</property>
+                        <property name='action'>activate</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="btOk">
+                <property name="label" translatable="1">Ok</property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+</interface>

@@ -12,9 +12,7 @@
 #include "gui/toolbarMenubar/AbstractToolItem.h"  // for AbstractToolItem
 #include "model/PageRef.h"                        // for PageRef
 #include "model/XojPage.h"                        // for XojPage
-#include "util/GtkUtil.h"                         // for setRadioButtonActionName
 #include "util/glib_casts.h"                      // for closure_notify_cb
-#include "util/gtk4_helper.h"                     // for gtk_box_append
 #include "util/i18n.h"                            // for _
 #include "util/raii/PangoSPtr.h"                  // for PangoAttrListSPtr
 
@@ -32,15 +30,14 @@ public:
 };
 
 ShowLayerEntry::ShowLayerEntry(LayerController* lc, Layer::Index id) noexcept: checkButton(gtk_check_button_new()) {
-    gtk_widget_set_can_focus(checkButton, false);  // todo(gtk4) not necessary anymore
     struct Data {
         LayerController* lc;
         Layer::Index id;
     };
     this->callbackHandler =
-            g_signal_connect_data(checkButton, "toggled", G_CALLBACK(+[](GtkToggleButton* btn, gpointer data) {
+            g_signal_connect_data(checkButton, "toggled", G_CALLBACK(+[](GtkCheckButton* btn, gpointer data) {
                                       Data* d = reinterpret_cast<Data*>(data);
-                                      d->lc->setLayerVisible(d->id, gtk_toggle_button_get_active(btn));
+                                      d->lc->setLayerVisible(d->id, gtk_check_button_get_active(btn));
                                   }),
                                   new Data{lc, id}, xoj::util::closure_notify_cb<Data>, GConnectFlags(0));
     gtk_widget_set_margin_end(checkButton, 4);
@@ -58,86 +55,54 @@ auto ShowLayerEntry::operator=(ShowLayerEntry&& e) noexcept -> ShowLayerEntry& {
 ShowLayerEntry::~ShowLayerEntry() noexcept = default;
 
 /// @return The GtkWidget* is a floating ref
-static std::tuple<GtkWidget*, std::vector<ShowLayerEntry>, std::vector<std::pair<GtkWidget*, gulong>>> createGrid(
-        LayerController* lc, GtkPopover* popover) {
+static std::tuple<GtkWidget*, std::vector<ShowLayerEntry>> createGrid(LayerController* lc, GtkPopover* popover) {
 
-#if GTK_MAJOR_VERSION == 3
-    GtkRadioButton* group = nullptr;
-    auto createLayerRadioButton = [&group, popover](const std::string& layerName,
-                                                    Layer::Index id) -> std::pair<GtkWidget*, gulong> {
-        GtkWidget* btn = gtk_radio_button_new_with_label_from_widget(group, layerName.c_str());
-        gtk_widget_set_can_focus(btn, false);
-        group = GTK_RADIO_BUTTON(btn);
-
-        gtk_actionable_set_action_target_value(GTK_ACTIONABLE(btn), xoj::util::makeGVariantSPtr(id).get());
-        /**
-         * RadioButton's and GAction don't work as expected in GTK3
-         * To circumvent this, we have our own GAction/RadioButton interactions
-         */
-        xoj::util::gtk::setRadioButtonActionName(GTK_RADIO_BUTTON(btn), "win", Action_toString(Action::LAYER_ACTIVE));
-
-        // Callback to hide the popover when a new layer is selected
-        auto sig = g_signal_connect_object(btn, "toggled", G_CALLBACK(+[](GtkToggleButton*, gpointer popover) {
-                                               gtk_popover_popdown(GTK_POPOVER(popover));
-                                           }),
-                                           popover, GConnectFlags(0));
-        // Block this callback for now, otherwise it is called when the grid is added to the popover
-        g_signal_handler_block(btn, sig);
-
-        return {btn, sig};
-    };
-
-    auto createBackgroundRadioButton = [](LayerController* lc) {
-        GtkWidget* btn = gtk_radio_button_new_with_label(nullptr, lc->getLayerNameById(0U).c_str());
-        gtk_widget_set_can_focus(btn, false);
-        gtk_widget_add_css_class(btn, "invisible");
-        gtk_widget_set_hexpand(btn, true);
-        return btn;
-    };
-#else  // GTK4
     std::string actionName = std::string("win.") + Action_toString(Action::LAYER_ACTIVE);  // Todo(cpp20) constexpr
-    auto createLayerRadioButton = [&actionName, popover](const std::string& layerName,
-                                                         Layer::Index id) -> std::pair<GtkWidget*, gulong> {
+    auto createLayerRadioButton = [&actionName, popover](const std::string& layerName, Layer::Index id) {
         GtkWidget* btn = gtk_check_button_new_with_label(layerName.c_str());
         gtk_actionable_set_action_name(GTK_ACTIONABLE(btn), actionName.c_str());
         gtk_actionable_set_action_target_value(GTK_ACTIONABLE(btn), xoj::util::makeGVariantSPtr(id).get());
-        // Callback to hide the popover when a new layer is selected
-        auto sig = g_signal_connect_object(btn, "toggled", G_CALLBACK(+[](GtkToggleButton*, gpointer popover) {
-            gtk_popover_popdown(GTK_POPOVER(popover)); }), popover, GConnectFlags(0));
-        // Block this callback for now, otherwise it is called when the grid is added to the popover
-        g_signal_handler_block(btn, sig);
 
-        return {btn, sig};
+        // Callback to hide the popover when a new layer is selected
+        GtkGesture* click = gtk_gesture_click_new();
+        gtk_gesture_single_set_button(GTK_GESTURE_SINGLE(click), 1);
+        gtk_widget_add_controller(btn, GTK_EVENT_CONTROLLER(click));
+        // Anything later than CAPTURE and the default handler has grabbed the sequence
+        gtk_event_controller_set_propagation_phase(GTK_EVENT_CONTROLLER(click), GTK_PHASE_CAPTURE);
+        g_signal_connect_object(click, "released",
+                                G_CALLBACK(+[](GtkGestureClick*, int n_press, double, double, gpointer popover) {
+                                    if (n_press == 1) {
+                                        // Wait for the default callback to have run before hiding the popover
+                                        Util::execWhenIdle([popover]() { gtk_popover_popdown(GTK_POPOVER(popover)); });
+                                    }
+                                }),
+                                popover, GConnectFlags(0));
+
+        return btn;
     };
     auto createBackgroundRadioButton = [](LayerController* lc) {
         GtkWidget* btn = gtk_check_button_new_with_label(lc->getLayerNameById(0U).c_str());
-        // Todo(gtk4): adapt the css class
         gtk_widget_add_css_class(btn, "invisible");
         gtk_widget_set_hexpand(btn, true);
         return btn;
     };
-#endif
 
     GtkGrid* grid = GTK_GRID(gtk_grid_new());
 
     auto layerCount = lc->getLayerCount();
     std::vector<ShowLayerEntry> entries;
     entries.reserve(layerCount + 1);
-    std::vector<std::pair<GtkWidget*, gulong>> radioButtons;
-    radioButtons.reserve(layerCount);
     // Handle the background separately, as it cannot be selected
     gtk_grid_attach(grid, createBackgroundRadioButton(lc), 0, static_cast<int>(layerCount), 1, 1);
     gtk_grid_attach(grid, entries.emplace_back(lc, 0).checkButton, 1, static_cast<int>(layerCount), 1, 1);
     // Then the other layers
     for (Layer::Index id = 1; id <= layerCount; id++) {
         int y = static_cast<int>(layerCount - id);
-        auto [btn, _] = radioButtons.emplace_back(createLayerRadioButton(lc->getLayerNameById(id), id));
-        gtk_grid_attach(grid, btn, 0, y, 1, 1);
+        gtk_grid_attach(grid, createLayerRadioButton(lc->getLayerNameById(id), id), 0, y, 1, 1);
         gtk_grid_attach(grid, entries.emplace_back(lc, id).checkButton, 1, y, 1, 1);
     }
 
-    gtk_widget_show_all(GTK_WIDGET(grid));
-    return {GTK_WIDGET(grid), std::move(entries), std::move(radioButtons)};
+    return {GTK_WIDGET(grid), std::move(entries)};
 }
 
 /// @return floating ref
@@ -152,7 +117,6 @@ static GtkLabel* makeLabel() {
 /// @brief Appends to `box` a button with bold label `name` activating the Action `action`
 static void addSpecialButton(GtkBox* box, const std::string& name, Action action) {
     GtkWidget* btn = gtk_button_new();
-    gtk_widget_set_can_focus(btn, false);  // todo(gtk4) not necessary anymore
     GtkWidget* lb = gtk_label_new(name.c_str());
     gtk_widget_set_halign(lb, GTK_ALIGN_START);
 
@@ -175,7 +139,6 @@ static GtkBox* makePopoverContent() {
     addSpecialButton(box, _("Add a layer above the active layer"), Action::LAYER_NEW_ABOVE_CURRENT);
     addSpecialButton(box, _("Add a layer below the active layer"), Action::LAYER_NEW_BELOW_CURRENT);
     gtk_box_append(box, gtk_separator_new(GTK_ORIENTATION_HORIZONTAL));
-    gtk_widget_show_all(GTK_WIDGET(box));
     return box;
 }
 
@@ -183,6 +146,10 @@ static GtkBox* makePopoverContent() {
 static GtkPopover* makePopover(GtkBox* content) {
     auto popover = GTK_POPOVER(gtk_popover_new());
     gtk_widget_add_css_class(GTK_WIDGET(popover), "toolbar");
+    gtk_popover_set_has_arrow(popover, false);
+    gtk_widget_set_halign(GTK_WIDGET(popover), GTK_ALIGN_START);
+    gtk_widget_set_valign(GTK_WIDGET(popover), GTK_ALIGN_START);
+
     gtk_popover_set_child(popover, GTK_WIDGET(content));
     return popover;
 }
@@ -197,24 +164,19 @@ public:
             grid(nullptr) {}
     ~InstanceData() = default;
 
-    xoj::util::WidgetSPtr makeWidget(bool horizontal) {
-        xoj::util::WidgetSPtr item(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1), xoj::util::adopt);
-        GtkBox* hbox = GTK_BOX(item.get());
+    xoj::util::WidgetSPtr makeWidget(ToolbarSide side) {
+        GtkBox* hbox = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1));
         GtkWidget* lbl = gtk_label_new(_("Layer"));
         gtk_widget_set_margin_start(lbl, 7);
         gtk_widget_set_margin_end(lbl, 7);
         gtk_box_append(hbox, lbl);
+
         GtkWidget* menuButton = gtk_menu_button_new();
-#if GTK_MAJOR_VERSION == 3
-        gtk_widget_set_can_focus(menuButton, false);
-        gtk_box_append(hbox, GTK_WIDGET(this->label));
-#else
         gtk_menu_button_set_child(GTK_MENU_BUTTON(menuButton), GTK_WIDGET(this->label));
         gtk_menu_button_set_always_show_arrow(GTK_MENU_BUTTON(menuButton), true);
-#endif
         gtk_box_append(hbox, menuButton);
-        // TODO: fix orientation
-        gtk_menu_button_set_direction(GTK_MENU_BUTTON(menuButton), horizontal ? GTK_ARROW_DOWN : GTK_ARROW_RIGHT);
+
+        setMenuButtonDirection(GTK_MENU_BUTTON(menuButton), side);
         gtk_menu_button_set_popover(GTK_MENU_BUTTON(menuButton), GTK_WIDGET(this->popover));
 
         LayerCtrlListener::registerListener(lc);
@@ -225,7 +187,7 @@ public:
 
         updateSelectedLayer();
 
-        return item;
+        return xoj::util::WidgetSPtr(GTK_WIDGET(hbox), xoj::util::adopt);
     }
 
     static void popoverShown(GtkWidget*, InstanceData* data) {
@@ -235,20 +197,17 @@ public:
     static void popoverHidden(GtkWidget*, InstanceData* data) {
         if (data->grid) {
             data->showLayerItems.clear();
-            gtk_box_remove(data->popoverBox, data->grid);
-            data->grid = nullptr;
+            gtk_box_remove(data->popoverBox, std::exchange(data->grid, nullptr));
         }
     }
 
 private:
     void setupLayersGrid() {
-        auto [grid, entries, radioButtons] = createGrid(lc, popover);
+        auto [grid, entries] = createGrid(lc, popover);
         this->grid = grid;
         gtk_box_append(this->popoverBox, grid);
+        xoj_assert(GTK_WIDGET(this->popoverBox) == gtk_widget_get_parent(grid));
         this->showLayerItems = std::move(entries);
-        for (auto [btn, sig]: radioButtons) {
-            g_signal_handler_unblock(btn, sig);
-        }
 
         layerVisibilityChanged();
     }
@@ -257,9 +216,7 @@ private:
         if (grid) {
             // Only rebuild if the popover is shown
             showLayerItems.clear();
-            gtk_box_remove(popoverBox, grid);
-            grid = nullptr;
-
+            gtk_box_remove(popoverBox, std::exchange(grid, nullptr));
             setupLayersGrid();
         }
         updateSelectedLayer();
@@ -291,7 +248,7 @@ private:
 
 
 ToolPageLayer::ToolPageLayer(std::string id, LayerController* lc, IconNameHelper iconNameHelper):
-        AbstractToolItem(std::move(id), Category::NAVIGATION),
+        ItemWithNamedIcon(std::move(id), Category::NAVIGATION),
         lc(lc),
         iconName(iconNameHelper.iconName("combo-layer")) {}
 
@@ -299,17 +256,15 @@ ToolPageLayer::~ToolPageLayer() = default;
 
 auto ToolPageLayer::getToolDisplayName() const -> std::string { return _("Layer Combo"); }
 
-auto ToolPageLayer::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name(this->iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
-}
+auto ToolPageLayer::getIconName() const -> const char* { return this->iconName.c_str(); }
 
-auto ToolPageLayer::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
+auto ToolPageLayer::createItem(ToolbarSide side) -> Widgetry {
     auto data = std::make_unique<InstanceData>(lc);
-    auto item = data->makeWidget(horizontal);
+    auto item = data->makeWidget(side);
 
     // Destroy *data if the widget is destroyed
     g_object_weak_ref(
             G_OBJECT(item.get()), +[](gpointer d, GObject*) { delete static_cast<InstanceData*>(d); }, data.release());
 
-    return item;
+    return {std::move(item), nullptr};
 }

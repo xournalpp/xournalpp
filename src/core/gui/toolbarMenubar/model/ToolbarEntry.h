@@ -18,6 +18,7 @@ class ToolbarItem;
 
 typedef std::vector<ToolbarItem> ToolbarItemVector;
 
+/// Corresponds to to one ToolbarBox
 class ToolbarEntry {
 public:
     ToolbarEntry();
@@ -32,16 +33,7 @@ public:
     std::string getName() const;
     void setName(std::string name);
 
-    /**
-     * Adds a new item and return the ID of the item
-     */
-    int addItem(std::string item);
-    bool removeItemById(int id);
-
-    /**
-     * Insert a new item and return the ID of the item
-     */
-    int insertItem(std::string item, int position);
+    void addItem(std::string item);
 
     const ToolbarItemVector& getItems() const;
 
