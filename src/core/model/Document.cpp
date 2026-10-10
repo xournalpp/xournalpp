@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <ctime>  // for size_t, localtime, strf...
 #include <iomanip>
+#include <locale>
 #include <memory>
 #include <sstream>
 #include <string>  // for string
