@@ -3,8 +3,7 @@
 #include <algorithm>  // for max, min, minmax
 #include <memory>     // for __shared_ptr_access
 
-#include <cairo.h>           // for cairo_fill, cairo_...
-#include <gdk/gdkkeysyms.h>  // for GDK_KEY_Control_L
+#include <gdk/gdk.h>  // for GDK_KEY_Control_L
 
 #include "control/Control.h"                       // for Control
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
