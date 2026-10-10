@@ -30,6 +30,7 @@ runs:
           mingw-w64-${{inputs.msys_package_env}}-lua
           mingw-w64-${{inputs.msys_package_env}}-gtksourceview4
           mingw-w64-${{inputs.msys_package_env}}-imagemagick
+          mingw-w64-${{inputs.msys_package_env}}-meson
           make
           mingw-w64-${{inputs.msys_package_env}}-gobject-introspection-runtime
           mingw-w64-${{inputs.msys_package_env}}-lua-luarocks

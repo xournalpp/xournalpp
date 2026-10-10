@@ -51,13 +51,13 @@
     "mac-x64": {
       "displayed_name": "MacOS x64",
       "runner": "macos-15-intel",
-      "extra_cmake_flags": "-DENABLE_FLOAT_FROM_CHARS=off",
+      "extra_meson_flags": "-DENABLE_FLOAT_FROM_CHARS=false",
       "run_ci": "true"
     },
     "mac-arm": {
       "displayed_name": "MacOS ARM",
       "runner": "macos-15",
-      "extra_cmake_flags": "-DENABLE_FLOAT_FROM_CHARS=off",
+      "extra_meson_flags": "-DENABLE_FLOAT_FROM_CHARS=false",
       "run_ci": "true"
     }
   },
