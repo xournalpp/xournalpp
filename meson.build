@@ -69,8 +69,6 @@ config.set('PROJECT_NAME', meson.project_name())
 config.set('PROJECT_VERSION', meson.project_version())
 config.set('PROJECT_HOMEPAGE_URL', 'https://xournalpp.github.io/')
 
-# string(['TIMESTAMP', 'PACKAGE_TIMESTAMP', '%Y%m%d.%H%M', 'UTC'])
-
 ## I18n ##
 subdir('po')
 if not get_option('ONLY_CONFIGURE_FOR_TARGET_POT')
@@ -265,10 +263,9 @@ if not get_option('ONLY_CONFIGURE_FOR_TARGET_POT')
     # Generate VERSION file for packaging scripts
     config.set('PACKAGE_ARCH', host_machine.cpu_family())
     configure_file(
-        input: 'cmake/VERSION.in',
+        input: 'VERSION_FILE.in',
         configuration: config,
-        format: 'cmake@',
-        output: 'VERSION',
+        output: 'VERSION_FILE',
     )
 
     ## Source building ##

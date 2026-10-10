@@ -56,7 +56,7 @@ jobs:
           meson install -C build
           (cd mac-setup && ./build-app.sh $HOME/gtk)                    # populates a folder mac-setup/Xournal++.app
 
-          export VERSION=$(cat build/VERSION | sed '1q;d')
+          export VERSION=$(sed -e '/version/!d' -e 's/^[^=]*=//' "build/VERSION_FILE")
           export OUTPUT="xournalpp-$VERSION${{ inputs.artifact_version_suffix }}-macOS-${{runner.arch}}.dmg"
 
           (cd mac-setup && ./build-dmg.sh Xournal++.app $OUTPUT)  # makes an installer out of this folder

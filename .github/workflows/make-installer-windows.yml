@@ -71,8 +71,8 @@ jobs:
         run: |
           bash -lc "../windows-setup/package.sh"
 
-          export VERSION=$(cat VERSION | sed '1q;d')
-          export ARCH=$(cat VERSION | sed '4q;d')
+          export VERSION=$(sed -e "/version/!d" -e 's/^[^=]*=//' "VERSION_FILE")
+          export ARCH=$(sed -e '/arch/!d' -e 's/^[^=]*=//' "VERSION_FILE")
           export FULL_VERSION_STRING="$VERSION${{ inputs.artifact_version_suffix }}"
           export INSTALLER_FILENAME="xournalpp-$FULL_VERSION_STRING-windows-setup-$ARCH.exe"
 
