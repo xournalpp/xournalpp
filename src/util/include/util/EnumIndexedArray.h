@@ -15,7 +15,7 @@
 #include <type_traits>
 
 #include "util/Assert.h"
-#include "util/safe_casts.h"  // for to_underlying Todo(cpp20) use <utility>
+#include "util/safe_casts.h"  // for to_underlying Todo(cpp23) use <utility>
 
 
 template <class T, typename enum_class,

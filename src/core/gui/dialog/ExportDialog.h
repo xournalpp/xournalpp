@@ -13,39 +13,24 @@
 
 #include <cstddef>  // for size_t
 #include <functional>
+#include <memory>
 
 #include <gtk/gtk.h>  // for GtkComboBox, GtkWindow
 
-#include "control/jobs/BaseExportJob.h"  // for ExportBackgroundType
-#include "control/jobs/ImageExport.h"    // for RasterImageQualityParameter
 #include "gui/Builder.h"
-#include "pdf/base/PdfExportBackend.h"
-#include "util/ElementRange.h"  // for PageRangeVector
 #include "util/raii/GtkWindowUPtr.h"
 
 class GladeSearchpath;
+struct ExportParameters;
 
 namespace xoj::popup {
 class ExportDialog {
 public:
-    ExportDialog(GladeSearchpath* gladeSearchPath, ExportGraphicsFormat format, size_t currentPage, size_t pageCount,
-                 bool hasPdfBackground, std::function<void(const ExportDialog&)> callbackFun);
+    ExportDialog(GladeSearchpath* gladeSearchPath, size_t currentPage, size_t pageCount, bool hasPdfBackground,
+                 std::function<void(std::unique_ptr<ExportParameters>)> callbackFun);
     ~ExportDialog();
 
 public:
-    bool isConfirmed() const;
-    const PageRangeVector& getRange() const;
-    bool progressiveModeSelected() const;
-    ExportBackgroundType getBackgroundType() const;
-    inline ExportBackend getPdfExportBackend() const { return pdfExportBackend; }
-
-    /**
-     * @brief Reads the quality parameter from the dialog
-     *
-     * @return The selected quality parameter
-     */
-    RasterImageQualityParameter getPngQualityParameter() const;
-
     inline GtkWindow* getWindow() const { return window.get(); }
 
 private:
@@ -63,14 +48,10 @@ private:
     size_t pageCount = 0;
 
     bool confirmed = false;
-    bool progressiveMode;
-    ExportBackgroundType backgroundType;
-    ExportBackend pdfExportBackend;
-    RasterImageQualityParameter qualityParameter;
-    PageRangeVector pageRanges;
+    std::unique_ptr<ExportParameters> parameters;
 
     Builder builder;
 
-    std::function<void(const ExportDialog&)> callbackFun;
+    std::function<void(std::unique_ptr<ExportParameters>)> callbackFun;
 };
 };  // namespace xoj::popup

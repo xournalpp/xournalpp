@@ -28,8 +28,16 @@ struct GtkWindowDeleter {
         }
     }
 };
+struct GtkNativeDialogDeleter {
+    void operator()(GtkNativeDialog* w) {
+        if (w) {
+            gtk_native_dialog_destroy(w);
+        }
+    }
+};
 };  // namespace specialization
 using GtkWindowUPtr = std::unique_ptr<GtkWindow, specialization::GtkWindowDeleter>;
+using GtkNativeDialogUPtr = std::unique_ptr<GtkNativeDialog, specialization::GtkNativeDialogDeleter>;
 
 
 };  // namespace raii

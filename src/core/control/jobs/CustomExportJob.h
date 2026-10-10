@@ -11,22 +11,18 @@
 
 #pragma once
 
-#include <map>     // for map
+#include <memory>  // for unique_ptr
 #include <string>  // for string
 
-#include "pdf/base/PdfExportBackend.h"
-#include "util/ElementRange.h"  // for PageRangeVector
-
-#include "BaseExportJob.h"  // for BaseExportJob, EXPORT_BACKGROUND_ALL
-#include "ImageExport.h"    // for RasterImageQualityParameter, EXPORT_GRAP...
+#include "BaseExportJob.h"  // for BaseExportJob
 #include "filesystem.h"     // for path
 
 class Control;
-
+struct ExportParameters;
 
 class CustomExportJob: public BaseExportJob {
 public:
-    CustomExportJob(Control* control);
+    CustomExportJob(Control* control, fs::path output, std::unique_ptr<ExportParameters> params);
 
 protected:
     ~CustomExportJob() override;
@@ -34,14 +30,8 @@ protected:
 public:
     void run() override;
 
-public:
-    void showDialogAndRun();
-
 protected:
     void afterRun() override;
-
-    void addFilterToDialog(GtkFileChooser* dialog) override;
-    void setExtensionFromFilter(fs::path& p, const char* filterName) const override;
 
     /**
      * Create one Graphics file per page
@@ -50,42 +40,7 @@ protected:
 
 
 private:
-    /**
-     * The range to export
-     */
-    PageRangeVector exportRange;
-
-    /**
-     * @brief Quality parameter for PNG exports
-     */
-    RasterImageQualityParameter pngQualityParameter = RasterImageQualityParameter();
-
-    /**
-     * Export graphics format
-     */
-    ExportGraphicsFormat format = EXPORT_GRAPHICS_UNDEFINED;
-
-    /**
-     * XOJ Export, else PNG Export
-     */
-    bool exportTypeXoj = false;
-
-    /**
-     * Background export type
-     */
-    ExportBackgroundType exportBackground = EXPORT_BACKGROUND_ALL;
-
-    /// Backend used for exporting the PDF background to PDF
-    ExportBackend pdfExportBackend = ExportBackend::DEFAULT;
-
-    /**
-     * Export all Layers progressively
-     */
-    bool progressiveMode = false;
+    std::unique_ptr<ExportParameters> parameters;
 
     std::string lastError;
-
-    std::string chosenFilterName;
-
-    std::map<std::string, ExportType> filters;
 };

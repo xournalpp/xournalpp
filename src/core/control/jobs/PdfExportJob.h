@@ -18,15 +18,11 @@ class Control;
 
 class PdfExportJob: public BaseExportJob {
 public:
-    PdfExportJob(Control* control);
+    PdfExportJob(Control* control, fs::path filepath);
 
 protected:
     ~PdfExportJob() override;
 
 public:
     void run() override;
-
-protected:
-    void addFilterToDialog(GtkFileChooser* dialog) override;
-    void setExtensionFromFilter(fs::path& p, const char* filterName) const override;
 };
