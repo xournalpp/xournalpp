@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-29 20:46+0000\n"
-"PO-Revision-Date: 2026-10-04 05:57\n"
+"POT-Creation-Date: 2026-10-10 05:07+0000\n"
+"PO-Revision-Date: 2026-10-11 04:35\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -1890,8 +1890,8 @@ msgctxt "as a noun: a copy of"
 msgid "Copy"
 msgstr "Copiar"
 
-#: ../src/core/model/Document.cpp:330 ../src/core/model/Document.cpp:339
-#: ../src/core/model/Document.cpp:342
+#: ../src/core/model/Document.cpp:331 ../src/core/model/Document.cpp:340
+#: ../src/core/model/Document.cpp:343
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Documento não carregado! ({1}), {2}"
 
