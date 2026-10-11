@@ -476,7 +476,7 @@ set(CPACK_DEBIAN_PACKAGE_DEPENDS
         "libglib2.0-0 (>= 2.32), libgtk-3-0 (>= 3.18), libpoppler-glib8 (>= 0.41.0), ${_LIBXML2_DEP}, libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0 | liblua5.4-0, libzip4 (>= 1.0.1) | libzip5, zlib1g, libc6, qpdf (>= 10.6.0), libgtksourceview-4-0")
 set(CPACK_DEBIAN_PACKAGE_SUGGESTS "texlive-base, texlive-latex-extra")  # Latex tool
 # Use debian's arch scheme; we only care about x86/amd64 for now but feel free to add more
-if (${PACKAGE_ARCH} STREQUAL "x86_64")
+if (PACKAGE_ARCH STREQUAL "x86_64")
     set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
 endif ()
 
