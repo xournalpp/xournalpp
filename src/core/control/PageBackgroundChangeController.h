@@ -51,6 +51,7 @@ public:
      *      If the page size is not set, newly created pages will have the same format as the current page.
      */
     void setPaperSizeForNewPages(const std::optional<PaperSize>& paperSize);
+    void togglePageSizeRatio(const PageRef& page, const size_t pNr);
     void applyCurrentPageBackgroundToAll();
     void applyBackgroundToAllPages(const PageType& pt);
     void applyPageSizeToAllPages(const PaperSize& paperSize);
