@@ -131,8 +131,14 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     this->metadata = new MetadataManager();
     this->cursor = new XournalppCursor(this);
 
-    auto name = Util::getConfigFile(SETTINGS_XML_FILE);
-    this->settings = new Settings(std::move(name));
+    auto name = Util::getConfigFileWithFallback(SETTINGS_XML_FILE);
+    auto saveName = Util::getConfigFile(SETTINGS_XML_FILE);
+
+    if (name != saveName) {
+        this->settings = new Settings(std::move(saveName), std::move(name));
+    } else {
+        this->settings = new Settings(std::move(name));
+    }
     this->settings->load();
     this->loadPaletteFromSettings();
 
