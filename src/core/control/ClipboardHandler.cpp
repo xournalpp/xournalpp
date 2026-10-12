@@ -23,6 +23,13 @@
 
 #include "config.h"  // for PROJECT_STRING
 
+#ifdef G_OS_WIN32
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#endif
+
 using std::string;
 
 ClipboardListener::~ClipboardListener() = default;
@@ -43,6 +50,69 @@ ClipboardHandler::~ClipboardHandler() { g_signal_handler_disconnect(this->clipbo
 
 static GdkAtom atomXournal = gdk_atom_intern_static_string("application/xournal");
 
+#ifdef G_OS_WIN32
+/**
+ * GTK3's Win32 backend decodes color-indexed (paletted) clipboard bitmaps incorrectly:
+ * gdk/win32/gdkselection-win32.c computes the pixel offset as
+ *     sizeof(BITMAPFILEHEADER) + biSize + biClrUsed * sizeof(RGBQUAD)
+ * but per the Windows API a biClrUsed of zero means "the maximum number of colors for the
+ * given biBitCount" (e.g. 256 for 8 bpp), not "no palette". The computed offset therefore
+ * points into the color table, and the decoded image comes out black (or garbled).
+ * See https://gitlab.gnome.org/GNOME/gtk/-/issues/6685 - this was fixed in GTK4 but never in
+ * the GTK3 branch, so every GTK3 application pasting such a bitmap is affected (for example a
+ * screenshot copied with FastStone Capture).
+ *
+ * Work around it here by wrapping the DIB in a BMP container with a corrected pixel offset and
+ * letting gdk-pixbuf decode it. Only bitmaps that trigger the GTK3 bug (paletted, biClrUsed == 0)
+ * are handled here; everything else keeps using the regular GTK code path unchanged.
+ */
+static GdkPixbuf* win32PalettedDibToPixbuf() {
+    if (!OpenClipboard(nullptr)) {
+        return nullptr;
+    }
+    GdkPixbuf* pixbuf = nullptr;
+    HANDLE handle = GetClipboardData(CF_DIB);
+    if (handle == nullptr) {
+        handle = GetClipboardData(CF_DIBV5);
+    }
+    if (handle != nullptr) {
+        const SIZE_T size = GlobalSize(handle);
+        const auto* bi = static_cast<const BITMAPINFOHEADER*>(GlobalLock(handle));
+        if (bi != nullptr && size >= sizeof(BITMAPINFOHEADER) && bi->biSize >= sizeof(BITMAPINFOHEADER) &&
+            bi->biCompression == BI_RGB && bi->biBitCount >= 1 && bi->biBitCount <= 8 && bi->biClrUsed == 0) {
+            const DWORD paletteColors = 1u << bi->biBitCount;
+            const DWORD offset = static_cast<DWORD>(sizeof(BITMAPFILEHEADER) + bi->biSize + paletteColors * 4);
+            const DWORD total = static_cast<DWORD>(sizeof(BITMAPFILEHEADER) + size);
+            guchar* buffer = static_cast<guchar*>(g_try_malloc(total));
+            if (buffer != nullptr) {
+                auto* header = reinterpret_cast<BITMAPFILEHEADER*>(buffer);
+                header->bfType = 0x4d42;  // "BM"
+                header->bfSize = total;
+                header->bfReserved1 = 0;
+                header->bfReserved2 = 0;
+                header->bfOffBits = offset;
+                memcpy(buffer + sizeof(BITMAPFILEHEADER), bi, size);
+
+                GdkPixbufLoader* loader = gdk_pixbuf_loader_new_with_type("bmp", nullptr);
+                if (gdk_pixbuf_loader_write(loader, buffer, total, nullptr) &&
+                    gdk_pixbuf_loader_close(loader, nullptr)) {
+                    if (GdkPixbuf* decoded = gdk_pixbuf_loader_get_pixbuf(loader)) {
+                        pixbuf = GDK_PIXBUF(g_object_ref(decoded));
+                    }
+                }
+                g_object_unref(loader);
+                g_free(buffer);
+            }
+        }
+        if (bi != nullptr) {
+            GlobalUnlock(handle);
+        }
+    }
+    CloseClipboard();
+    return pixbuf;
+}
+#endif  // G_OS_WIN32
+
 auto ClipboardHandler::paste() -> bool {
     /* Request targets again, since the owner-change signal is not emitted on MacOS and under X11 with no XFIXES
      * extension. See https://docs.gtk.org/gdk3/struct.EventOwnerChange.html and
@@ -61,6 +131,13 @@ auto ClipboardHandler::paste() -> bool {
         return true;
     }
     if (this->containsImage) {
+#ifdef G_OS_WIN32
+        if (GdkPixbuf* paletted = win32PalettedDibToPixbuf()) {
+            this->listener->clipboardPasteImage(paletted);
+            g_object_unref(paletted);
+            return true;
+        }
+#endif
         gtk_clipboard_request_image(this->clipboard,
                                     reinterpret_cast<GtkClipboardImageReceivedFunc>(pasteClipboardImage), this);
         return true;
