@@ -54,6 +54,8 @@ private:
     static void receivedClipboardContents(GtkClipboard* clipboard, GtkSelectionData* selectionData,
                                           ClipboardHandler* handler);
 
+    void dispatchPaste();
+
     static void pasteClipboardContents(GtkClipboard* clipboard, GtkSelectionData* selectionData,
                                        ClipboardHandler* handler);
     static void pasteClipboardImage(GtkClipboard* clipboard, GdkPixbuf* pixbuf, ClipboardHandler* handler);
@@ -70,4 +72,5 @@ private:
     bool containsText = false;
     bool containsXournal = false;
     bool containsImage = false;
+    bool pastePending = false;
 };
