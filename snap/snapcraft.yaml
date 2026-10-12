@@ -1,0 +1,175 @@
+name: xournalpp
+adopt-info: xournalpp
+grade: stable
+confinement: strict
+base: core24
+contact: https://github.com/xournalpp/xournalpp/issues
+issues: https://github.com/xournalpp/xournalpp/issues
+website: https://xournalpp.github.io/
+source-code: https://github.com/xournalpp/xournalpp.git
+icon: ui/pixmaps/com.github.xournalpp.xournalpp.svg
+platforms:
+  amd64:
+  arm64:
+
+slots:
+  dbus-xournalpp:
+    interface: dbus
+    bus: session
+    name: com.github.xournalpp.xournalpp
+
+layout:
+  /usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/alsa-lib:
+    bind: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/alsa-lib
+  /etc/asound.conf:
+    bind-file: $SNAP/etc/asound.conf
+  /usr/share/alsa/alsa.conf:
+    bind-file: $SNAP/usr/share/alsa/alsa.conf
+  /usr/share/poppler:
+    bind: $SNAP/usr/share/poppler
+
+apps:
+  xournalpp:
+    command: usr/bin/xournalpp
+    desktop: usr/share/applications/com.github.xournalpp.xournalpp.desktop
+    common-id: com.github.xournalpp.xournalpp
+    extensions: [gnome]
+    environment:
+      PATH: $PATH:$SNAP/usr/bin:$SNAP/bin:$SNAP/usr/share/.TinyTeX/bin/x86_64-linux:$SNAP/usr/share/.TinyTeX/bin/aarch64-linux
+      TEXTDOMAINDIR: $SNAP/usr/share/locale
+      # Make the bundled lua-lgi work
+      LUA_PATH: $SNAP/usr/share/lua/5.4/?.lua
+      LUA_CPATH: $SNAP/usr/lib/x86_64-linux-gnu/lua/5.4/?.so;$SNAP/usr/lib/aarch64-linux-gnu/lua/5.4/?.so
+      TEXMFVAR: $SNAP_USER_COMMON/.cache/texmf-var  # The default is not a writeable directory
+
+    plugs:
+      - alsa
+      - home
+      - network
+      - opengl
+      - pulseaudio
+      - removable-media
+
+parts:
+  alsa:
+    plugin: nil
+    source: https://github.com/diddledan/snapcraft-alsa.git
+    override-pull: |
+      cat > asound.conf <<EOF
+      pcm.!default {
+        type pulse
+        fallback "sysdefault"
+        hint {
+          show on
+          description "Default ALSA Output (currently PulseAudio Sound Server)"
+        }
+      }
+      ctl.!default {
+        type pulse
+        fallback "sysdefault"
+      }
+      EOF
+    override-build: |
+      install -m644 -D -t $CRAFT_PART_INSTALL/etc asound.conf
+    build-packages:
+      - libasound2-dev
+    stage-packages:
+      - libasound2
+      - libasound2-plugins
+
+  lua-gobject:
+    source: https://github.com/vtrlx/LuaGObject.git
+    source-tag: 0.10.5
+    plugin: meson
+    meson-parameters:
+      - --prefix=/usr
+      - -Dlua-bin=lua5.4
+    build-packages:
+      - liblua5.4-dev
+      - lua5.4
+
+  xournalpp:
+    after: [alsa, lua-gobject]
+    plugin: cmake
+    source: .
+    cmake-parameters:
+      - "-DCMAKE_INSTALL_PREFIX=/usr"
+    parse-info: [usr/share/metainfo/com.github.xournalpp.xournalpp.appdata.xml]
+    organize:
+       snap/xournalpp/current/usr: usr
+    build-packages:
+      - portaudio19-dev
+      - libsndfile-dev
+      - liblua5.4-dev
+      - libzip-dev
+      - dvipng
+      - libgtksourceview-4-dev
+      - libqpdf-dev
+      - lsb-release
+      - help2man
+    stage-packages:
+      - binutils
+      - libzip4
+      - libxrender1
+      - libvorbisenc2
+      - libvorbis0a
+      - libtiff6
+      - libthai0
+      - libsndfile1
+      - libportaudio2
+      - libportaudiocpp0
+      - poppler-data
+      - libogg0
+      - libnss3
+      - libnspr4
+      - liblua5.4-0
+      - liblcms2-2
+      - libjpeg-turbo8
+      - libjbig0
+      - libjack-jackd2-0
+      - libicu74
+      - libgraphite2-3
+      - libflac12t64
+      - libdatrie1
+      - libxi6
+      - libgtksourceview-4-0
+      - libqpdf29t64
+    override-build: |
+      craftctl default
+      sed -i 's|Icon=com.github.xournalpp.xournalpp|Icon=${SNAP}/usr/share/icons/hicolor/scalable/apps/com.github.xournalpp.xournalpp.svg|' ${CRAFT_PART_INSTALL}/usr/share/applications/com.github.xournalpp.xournalpp.desktop
+      rm -f $CRAFT_PART_INSTALL/usr/lib/*/libasound*
+
+  tinytex:    # this is based on TinyTeX, available on https://github.com/yihui/tinytex
+    plugin: nil
+    build-packages: 
+      - wget
+    build-environment:
+      - TEXDIR: "${CRAFT_PART_INSTALL}/usr/share/.TinyTeX"
+      - PKGLIST: ${CRAFT_PROJECT_DIR}/pkgs-custom.txt                 # added some packages to https://github.com/yihui/tinytex/blob/master/tools/pkgs-custom.txt
+    override-build: |     # this is a shortened version of https://github.com/yihui/tinytex/blob/master/tools/install-unx.sh 
+      PREVWD=${PWD}
+      cd ${TMPDIR:-/tmp}
+
+      rm -f install-tl-unx.tar.gz tinytex.profile
+      wget -qO- https://yihui.org/gh/tinytex/tools/install-base.sh | sh -s - "$@"
+
+      rm -rf $TEXDIR
+      mkdir -p $TEXDIR
+      mv texlive/* $TEXDIR
+      rm -r texlive
+      # finished base
+
+      $TEXDIR/bin/*/tlmgr install $(cat $PKGLIST | tr '\n' ' ')
+      # added additional packages
+  
+  # Find files provided by the base and platform snap and ensure they aren't
+  # duplicated in this snap
+  cleanup:
+    after: [xournalpp]
+    plugin: nil
+    build-snaps: [core24, gnome-46-2404]
+    override-prime: |
+      set -eux
+      for snap in "core24" "gnome-46-2404"; do
+        cd "/snap/$snap/current" && find . -type f,l -name *.so.* -exec rm -f "$CRAFT_PRIME/{}" \;
+      done
