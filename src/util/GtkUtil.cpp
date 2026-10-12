@@ -1,6 +1,7 @@
 #include "util/GtkUtil.h"
 
 #include <algorithm>
+#include <cmath>
 #include <string>
 #include <string_view>
 
@@ -82,6 +83,12 @@ std::optional<double> getWidgetDPI(GtkWidget* w) {
             int h = gdk_monitor_get_height_mm(mon);
             GdkRectangle r;
             gdk_monitor_get_geometry(mon, &r);
+            // Some setups (e.g. RDP sessions or missing EDID data on Windows) report a null physical size, which
+            // would produce an infinite or NaN DPI and break e.g. pasted image scaling
+            if (h <= 0 || r.height <= 0) {
+                g_debug("Automatic DPI conf: invalid monitor data - height %d mm - pixel height %d", h, r.height);
+                return std::nullopt;
+            }
             auto res = static_cast<double>(r.height) * 25.4 / static_cast<double>(h);
             g_debug("Automatic DPI conf: monitor height %d mm - DPI = %f", h, res);
             // I assume some monitors may not return the right value: clamp to avoid wild values that could cause very
