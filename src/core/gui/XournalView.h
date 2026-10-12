@@ -157,6 +157,7 @@ public:
 public:
     bool onKeyPressEvent(const KeyEvent& event);
     bool onKeyReleaseEvent(const KeyEvent& event);
+    bool isSpaceKeyDown() const { return this->isSpaceDown; }
 
     void onSettingsChanged();
 
@@ -183,6 +184,18 @@ private:
 
     size_t currentPage = 0;
     size_t lastSelectedPage = npos;
+
+    /**
+     * Tracks whether the Space key is currently held down.
+     */
+    bool isSpaceDown = false;
+
+    /**
+     * Set to true when Space key was consumed by an active tool (e.g. shape translation).
+     * Prevents subsequent auto-repeat key-press-events from triggering the Space scroll shortcut
+     * if the mouse is released before the Space key.
+     */
+    bool spaceConsumedByTool = false;
 
     std::unique_ptr<PdfCache> cache;
 
