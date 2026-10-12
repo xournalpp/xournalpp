@@ -30,7 +30,8 @@ void setWidgetFollowActionEnabled(GtkWidget* w, GAction* a);
 
 /**
  * @brief returns the user-space DPI (i.e. scaled by HiDPI scaling) of the monitor the widget is on.
- * Return std::nullopt if the widget is not realized
+ * Return std::nullopt if the widget is not realized, or if the monitor reports an invalid physical size
+ * (e.g. RDP sessions or monitors with missing EDID data)
  */
 std::optional<double> getWidgetDPI(GtkWidget* w);
 

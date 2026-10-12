@@ -438,7 +438,14 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("forceZoomToFitOnLoad")) == 0) {
         this->forceZoomToFitOnLoad = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("displayDpi")) == 0) {
-        this->displayDpi = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+        int dpi = static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
+        // -1 means automatic detection; anything else must be within the calibration slider's range
+        // (0 or negative values would break pasting/scaling, see https://github.com/xournalpp/xournalpp/issues/6720)
+        if (dpi != -1 && (dpi < 50 || dpi > 400)) {
+            g_warning("Settings::Invalid displayDpi value \"%s\". Reset to automatic detection.", value);
+            dpi = -1;
+        }
+        this->displayDpi = dpi;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("mainWndWidth")) == 0) {
         this->mainWndWidth = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("mainWndHeight")) == 0) {
