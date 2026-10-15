@@ -590,13 +590,13 @@ void XournalMain::initLocalisation() {
 
 #endif  // ENABLE_NLS
 
-    // Not working on GNU g++(mingww) forWindows! Only working on Linux/macOS and with msvc
+    // Not working on GNU g++(ucrt64) for Windows! Only working on Linux/macOS and with msvc
     try {
         std::locale::global(std::locale(""));  // "" - system default locale
         initCAndCoutLocales();
     } catch (const std::runtime_error& e) {
         g_warning("XournalMain: System default locale could not be set.\n - Caused by: %s\n - Note that it is not "
-                  "supported to set the locale using mingw-w64 on windows.\n - This could be solved by compiling "
+                  "supported to set the locale using mingw-w64-ucrt on windows.\n - This could be solved by compiling "
                   "xournalpp with msvc",
                   e.what());
     }
