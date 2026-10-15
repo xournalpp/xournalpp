@@ -1,8 +1,9 @@
 #include "Control.h"
 
-#include <algorithm>  // for max
-#include <cstdlib>    // for size_t
-#include <exception>  // for exce...
+#include <algorithm>   // for max
+#include <cmath>       // for isfinite
+#include <cstdlib>     // for size_t
+#include <exception>   // for exce...
 #include <functional>  // for bind
 #include <iterator>    // for end
 #include <memory>      // for make...
@@ -2358,7 +2359,13 @@ void Control::clipboardPasteImage(GdkPixbuf* img) {
 
     image->setImage(pixbuf.get());
 
-    auto zoom100 = this->getZoomControl()->getZoom100Value();
+    // Guard against invalid zoom values: they would produce Inf/NaN scaling and a corrupted document view
+    // (see https://github.com/xournalpp/xournalpp/issues/6720)
+    double zoom100 = this->getZoomControl()->getZoom100Value();
+    if (!std::isfinite(zoom100) || zoom100 <= 0.0) {
+        g_warning("Pasting image with invalid zoom100Value %f - using 1.0 instead", zoom100);
+        zoom100 = 1.0;
+    }
 
     auto width = static_cast<double>(gdk_pixbuf_get_width(pixbuf.get())) / zoom100;
     auto height = static_cast<double>(gdk_pixbuf_get_height(pixbuf.get())) / zoom100;
@@ -2390,6 +2397,11 @@ void Control::clipboardPasteImage(GdkPixbuf* img) {
     }
 
     scaling /= zoom100;
+
+    if (!std::isfinite(scaling) || scaling <= 0.0) {
+        g_warning("Pasting image resulted in invalid scaling %f - using 1.0 instead", scaling);
+        scaling = 1.0;
+    }
 
     image->setTransformation(xoj::util::Matrix::SCALING(scaling, scaling));
 
