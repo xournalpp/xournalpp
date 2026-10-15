@@ -106,7 +106,6 @@ auto SaveJob::save() -> bool {
 
     doc->lock_shared();
     fs::path target = doc->getFilepath();
-    Util::safeReplaceExtension(target, "xopp");
 
     h.prepareSave(doc, target);
     doc->unlock_shared();
