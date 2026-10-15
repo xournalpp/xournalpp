@@ -78,8 +78,8 @@ export GTKDIR="$1/inst"
 
 "$GTK_MAC_BUNDLER" xournalpp.bundle
 
-echo "Replace Ctrl by Meta in mainmenubar.xml"
-sed -i -e 's/Ctrl/Meta/g' ./Xournal++.app/Contents/Resources/ui/mainmenubar.xml
+echo "Replace Ctrl by Meta in mainmenubar.ui"
+sed -i -e 's/Ctrl/Meta/g' ./Xournal++.app/Contents/Resources/ui/mainmenubar.ui
 
 echo "Create zip"
 zip --filesync -r Xournal++.zip Xournal++.app

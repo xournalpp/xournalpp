@@ -28,7 +28,8 @@ mkdir "$setup_dir"
 mkdir "$setup_dir"/lib
 
 echo "copy installed files"
-(cd $build_dir && cmake --install . --prefix "$setup_dir")
+(cd "$build_dir" && meson setup --reconfigure --prefix="$setup_dir")
+meson install -C "$build_dir"
 
 echo "copy libraries"
 ldd "$build_dir/xournalpp.exe" | grep "${prefix}.*\.dll" -o | sort -u | xargs -I{} cp "{}" "$setup_dir"/bin/
@@ -97,7 +98,7 @@ cp "$prefix"/bin/libqpdf*.dll "$setup_dir"/bin
 cp "$prefix"/lib/libqpdf* "$setup_dir"/lib
 
 echo "create installer"
-version=$(cat "$build_dir/VERSION" | sed '1!d')
+version=$(sed -e '/version/!d' -e 's/^[^=]*=//' "$build_dir/VERSION_FILE")
 "/c/Program Files (x86)/NSIS/Bin/makensis.exe" -NOCD       \
     -DXOURNALPP_VERSION="$version"                         \
     -DSETUP_DIR="$setup_dir"                               \

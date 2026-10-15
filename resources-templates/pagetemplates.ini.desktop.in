@@ -1,49 +1,49 @@
 ## Page Background Config
 
 [predefinedPlain]
-name=Plain
+Name=Plain
 format=plain
 
 [predefinedRuled]
-name=Ruled
+Name=Ruled
 format=ruled
 
 [predefinedLined]
-name=Ruled with vertical line
+Name=Ruled with vertical line
 format=lined
 
 [predefinedRightLined]
-name=Ruled with vertical line on the right
+Name=Ruled with vertical line on the right
 format=lined
 config=m1=-72
 
 [predefinedStaves]
-name=Staves
+Name=Staves
 format=staves
 
 [predefinedGraph]
-name=Graph
+Name=Graph
 format=graph
 
 [predefinedDotted]
-name=Dotted
+Name=Dotted
 format=dotted
 
 [predefinedIsoDotted]
-name=Isometric Dotted
+Name=Isometric Dotted
 format=isodotted
 
 [predefinedIsoGraph]
-name=Isometric Graph
+Name=Isometric Graph
 format=isograph
 
 [graphWithBorder]
-name=Graph with border
+Name=Graph with border
 format=graph
 config=m1=40,rm=1
 
 [graphWithBorderBold5]
-name=Graph with border (bold every 5th)
+Name=Graph with border (bold every 5th)
 format=graph
 config=m1=20,rm=1,bli=5,blw=1
 
