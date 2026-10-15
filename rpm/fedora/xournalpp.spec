@@ -1,5 +1,6 @@
-# Force out of source build
-%global __cmake_in_source_build 0
+# Request an out-of-source build even where RPM macros default to in-source builds.
+# This macro is checked for existence, so defining it as 0 still enables it.
+%undefine __cmake_in_source_build
 
 #This spec file is intended for daily development snapshot release
 %global build_shortcommit {{{ git rev-parse --short HEAD }}}
@@ -76,7 +77,6 @@ sed -i -e 's/xournalpp-wrapper/xournalpp/' desktop/com.github.xournalpp.xournalp
         -DDISTRO_CODENAME="Fedora Linux" \
         -DENABLE_CPPTRACE=OFF \
         %{?_gtest: -DENABLE_GTEST=ON} \
-        -DENABLE_MATHTEX=ON \
         -DGIT_VERSION=%{build_shortcommit}
 
 %cmake_build
@@ -119,6 +119,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/com.github.%{n
 %{_datadir}/%{name}/ui
 
 %changelog
+* Thu Oct 15 2026 Luya Tshimbalanga <luya@fedoraproject.org>
+- Fix RPM out-of-source builds and remove unused CMake option
+
 * Mon Sep 9 2024 Luya Tshimbalanga <luya@fedoraproject.org>
 - Disable cpptrace support
 - Enable qpdf support
