@@ -16,7 +16,7 @@ setup_dir="$build_dir/$setup_dir_name"
 script_dir=$(dirname $(readlink -f "$0"))
 echo "Installing to $setup_dir and making installer $build_dir/$installer_name"
 
-prefix=${MSYSTEM_PREFIX:-/mingw64}
+prefix=${MSYSTEM_PREFIX:-/ucrt64}
 echo "Set prefix to ${prefix}"
 
 # delete old setup, if there

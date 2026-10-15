@@ -65,8 +65,8 @@
     "windows": {
       "displayed_name": "Windows x86_64",
       "runner": "windows-2022",
-      "msystem": "mingw64",
-      "msys_package_env": "x86_64",
+      "msystem": "ucrt64",
+      "msys_package_env": "ucrt-x86_64",
       "build_portable": "true",
       "run_ci": "true"
     },
