@@ -188,6 +188,14 @@ public:
      */
     UndoActionPtr setFill(int alphaPen, int alphaHighligther);
 
+    /** 
+     * Mirrors the selection through `EditSelection::scaleShift`
+     * and triggers undo/redo events
+     * @param fx: Scale factor on X axis
+     * @param fy: Scale factor on Y axis
+     */
+    void mirror(double fx, double fy);
+
 public:
     /**
      * Add an element to the this selection
@@ -340,7 +348,7 @@ private:
     /**
      * scales and shifts to update bounding boxes
      */
-    void scaleShift(double fx, double fy, bool changeLeft, bool changeTop);
+    void scaleShift(double fx, double fy, bool changeLeft, bool changeTop, bool symmetricalMirror = false);
 
     /**
      * Set edge panning signal.

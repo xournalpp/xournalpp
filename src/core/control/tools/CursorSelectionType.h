@@ -16,6 +16,8 @@ enum CursorSelectionType {
     // Inside the selection
     CURSOR_SELECTION_MOVE = 1,
 
+    CURSOR_SELECTION_MIRROR,
+
     // Edges
     CURSOR_SELECTION_TOP_LEFT,
     CURSOR_SELECTION_TOP_RIGHT,
