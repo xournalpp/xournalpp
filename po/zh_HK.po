@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-10 05:07+0000\n"
-"PO-Revision-Date: 2026-10-11 04:35\n"
+"POT-Creation-Date: 2026-10-12 13:51+0000\n"
+"PO-Revision-Date: 2026-10-18 04:29\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional, Hong Kong\n"
 "Language: zh_HK\n"
@@ -23,71 +23,71 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 msgstr "音效資料夾未設置！錄音無法使用！\n"
 "請於 \"偏好設定 > 錄製音效\" 下設定錄音資料夾"
 
-#: ../src/core/control/Control.cpp:235
+#: ../src/core/control/Control.cpp:241
 msgid "Filesystem error: {1}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:247
+#: ../src/core/control/Control.cpp:253
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:588
+#: ../src/core/control/Control.cpp:594
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "你刪咗用緊嘅工具列。會用返預設工具列。"
 
-#: ../src/core/control/Control.cpp:608
+#: ../src/core/control/Control.cpp:614
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "工具條配置\"{1}\"是預置的，要產生一個拷貝到編輯?"
 
-#: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1663
+#: ../src/core/control/Control.cpp:617 ../src/core/control/Control.cpp:1669
 msgid "Yes"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1663
+#: ../src/core/control/Control.cpp:617 ../src/core/control/Control.cpp:1669
 msgid "No"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:839 ../src/core/control/Control.cpp:1897
-#: ../src/core/control/Control.cpp:2225
+#: ../src/core/control/Control.cpp:845 ../src/core/control/Control.cpp:1903
+#: ../src/core/control/Control.cpp:2231
 msgid "Cancel"
 msgstr "取消"
 
-#: ../src/core/control/Control.cpp:840
+#: ../src/core/control/Control.cpp:846
 msgid "Insert after current page"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:841
+#: ../src/core/control/Control.cpp:847
 msgid "Insert at end"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:844
+#: ../src/core/control/Control.cpp:850
 msgid "_Journal"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:844
+#: ../src/core/control/Control.cpp:850
 msgid "Paper B_ackground"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:845
+#: ../src/core/control/Control.cpp:851
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:43
 msgid "With PDF background"
 msgstr "使用PDF背景"
 
-#: ../src/core/control/Control.cpp:848
+#: ../src/core/control/Control.cpp:854
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:891
+#: ../src/core/control/Control.cpp:897
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:905
+#: ../src/core/control/Control.cpp:911
 msgid "Unable to retrieve pdf page."
 msgstr "無法獲取PDF頁面。"
 
-#: ../src/core/control/Control.cpp:1519
+#: ../src/core/control/Control.cpp:1525
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -95,126 +95,126 @@ msgstr "不要打開自動儲存檔案。它們有機會被覆寫！\n"
 "複製檔案至另一個資料夾。\n"
 "資料夾 {1} 中的檔案無法被打開。"
 
-#: ../src/core/control/Control.cpp:1539
+#: ../src/core/control/Control.cpp:1545
 msgid "file: {1}"
 msgstr "檔案: {1}"
 
-#: ../src/core/control/Control.cpp:1582
+#: ../src/core/control/Control.cpp:1588
 msgid "<i>Above error repeated {1} times</i>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1594
+#: ../src/core/control/Control.cpp:1600
 msgid "<i>&lt;{1} more lines of error messages&gt;</i>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1633
+#: ../src/core/control/Control.cpp:1639
 msgid "Error opening file \"{1}\".\n\n"
 "<tt>{2}</tt>\n"
 "<b>{3}</b>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1647
+#: ../src/core/control/Control.cpp:1653
 msgid "There were some errors while loading the file. Some information might have been lost. Do not overwrite your old file unless you are sure everything you need was loaded correctly.\n\n"
 "Error messages:\n"
 "<tt>{1}</tt>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1665
+#: ../src/core/control/Control.cpp:1671
 msgid "File version mismatch"
 msgstr "檔案版本不符"
 
-#: ../src/core/control/Control.cpp:1666
+#: ../src/core/control/Control.cpp:1672
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1689
+#: ../src/core/control/Control.cpp:1695
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1710
+#: ../src/core/control/Control.cpp:1716
 msgid "Error reading PNG file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1745
+#: ../src/core/control/Control.cpp:1751
 msgid "Error reading template file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1764
+#: ../src/core/control/Control.cpp:1770
 msgid "Failed to determine if path exists \"{1}\": {2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1765
+#: ../src/core/control/Control.cpp:1771
 msgid "That file does not exist:\n"
 "\"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1877
+#: ../src/core/control/Control.cpp:1883
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1880
+#: ../src/core/control/Control.cpp:1886
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1890
+#: ../src/core/control/Control.cpp:1896
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1895
+#: ../src/core/control/Control.cpp:1901
 msgid "Select another PDF"
 msgstr "選擇其他PDF"
 
-#: ../src/core/control/Control.cpp:1896
+#: ../src/core/control/Control.cpp:1902
 msgid "Remove PDF Background"
 msgstr "去掉PDF背景"
 
-#: ../src/core/control/Control.cpp:1900
+#: ../src/core/control/Control.cpp:1906
 msgid "Use proposed PDF"
 msgstr "使用建議的PDF"
 
-#: ../src/core/control/Control.cpp:1903
+#: ../src/core/control/Control.cpp:1909
 msgid "Missing PDF background file"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2032
+#: ../src/core/control/Control.cpp:2038
 msgid "Select font"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2051
+#: ../src/core/control/Control.cpp:2057
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "選色"
 
-#: ../src/core/control/Control.cpp:2076
+#: ../src/core/control/Control.cpp:2082
 msgid "Unsaved Document"
 msgstr "未保存文檔"
 
-#: ../src/core/control/Control.cpp:2218
+#: ../src/core/control/Control.cpp:2224
 msgid "Document file was removed."
 msgstr "文檔已刪除。"
 
-#: ../src/core/control/Control.cpp:2218
+#: ../src/core/control/Control.cpp:2224
 msgid "This document is not saved yet."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2220
+#: ../src/core/control/Control.cpp:2226
 msgid "Save As..."
 msgstr "另存新檔..."
 
-#: ../src/core/control/Control.cpp:2220 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2226 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
 msgid "Save"
 msgstr "保存"
 
-#: ../src/core/control/Control.cpp:2223
+#: ../src/core/control/Control.cpp:2229
 msgid "Discard"
 msgstr "丟棄"
 
-#: ../src/core/control/Control.cpp:2312
+#: ../src/core/control/Control.cpp:2318
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -637,11 +637,11 @@ msgstr ""
 msgid "Image"
 msgstr "圖片"
 
-#: ../src/core/control/settings/Settings.cpp:155
+#: ../src/core/control/settings/Settings.cpp:159
 msgid "%F-Note-%H-%M"
 msgstr "%F-筆記-%H-%M"
 
-#: ../src/core/control/settings/Settings.cpp:156
+#: ../src/core/control/settings/Settings.cpp:160
 msgid "%{name}_annotated"
 msgstr ""
 
@@ -2156,11 +2156,11 @@ msgid "Error reading \"{1}\":\n"
 "{2}"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:408
+#: ../src/util/PathUtil.cpp:449
 msgid "xournalpp-{1}"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:417
+#: ../src/util/PathUtil.cpp:458
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr ""
