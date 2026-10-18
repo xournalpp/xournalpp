@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-13 06:33+0000\n"
-"PO-Revision-Date: 2026-09-20 04:30\n"
+"POT-Creation-Date: 2026-09-25 06:14+0000\n"
+"PO-Revision-Date: 2026-10-18 04:29\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -122,12 +122,12 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:1668
 msgid "Failed to determine if path exists \"{1}\": {2}"
-msgstr ""
+msgstr "Kesalahan dalam menentukan keberadaan jalur \"{1}\":{2}"
 
 #: ../src/core/control/Control.cpp:1669
 msgid "That file does not exist:\n"
 "\"{1}\""
-msgstr ""
+msgstr "File tidak ada: \"{1}\""
 
 #: ../src/core/control/Control.cpp:1776
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -652,7 +652,7 @@ msgstr "Bukan berkas .xopp yang valid (String versi rusak): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:174
 msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr ""
+msgstr "Kesalahan membuka content.xml dalam arsip zip: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:182
 msgid "Could not open file: \"{1}\""
@@ -709,7 +709,7 @@ msgstr "Kesalahan saat membaca lebar goresan: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:622
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "Tipe goresan tidak diketahui: \"{1}\", diasumsikan pena"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:640
 msgid "Unknown stroke type: \"{1}\", assuming pen"
@@ -746,7 +746,7 @@ msgstr "xoj-File: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1052
 msgid "Wrong number of pressure values, got {1}, expected {2}"
-msgstr ""
+msgstr "Kesalahan perhitungan titik, mendapatkan {1}, menduga {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1184
 msgid "Requested temporary file was not found for attachment {1}"
@@ -1188,7 +1188,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:99
 msgid "<i>The palettes shown below are obtained from the <a href=\"{1}\">Built-in palettes</a> and <a href=\"{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>Palet-palet yang ditunjukkan di bawah didapatkan dari <a href=\"{1}\">Palet-palet bawaan</a> dan <a href=\"{2}\">Palet-palet pengguna</a> direktori:</i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:117
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
@@ -2087,12 +2087,12 @@ msgstr ""
 
 #: ../src/util/PathUtil.cpp:125
 msgid "Could not open file: {1}"
-msgstr ""
+msgstr "Tidak dapat membuka file: {1}"
 
 #: ../src/util/PathUtil.cpp:132
 msgid "Error reading \"{1}\":\n"
 "{2}"
-msgstr ""
+msgstr "Kesalahan saat membaca PDF: {1}"
 
 #: ../src/util/PathUtil.cpp:409
 msgid "xournalpp-{1}"
@@ -3293,7 +3293,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3264
 msgid "Recolors the drawing area so that light regions get the \"Light Color\" and dark regions get the \"Dark Color\". Other colors are interpolated accordingly. Can be use to implement a dark-mode."
-msgstr ""
+msgstr "Mewarnai ulang area menggambar sehingga bagian terang mendapatkan \"Warna Terang\" dan bagian gelap mendapatkan \"Warna Gelap\". Warna lainnya diinterpolasi menyesuaikan. Dapat digunakan untuk mengimplementasikan sebuah mode gelap."
 
 #: ../ui/settings.glade:3274
 msgid "Recolor Previews in the Sidebar"
@@ -3301,17 +3301,19 @@ msgstr ""
 
 #: ../ui/settings.glade:3279
 msgid "Recolors the previews in the sidebar (Page/Layer Preview) the same way as the drawing area."
-msgstr ""
+msgstr "Mewarnai ulang pratinjau di bilah sisi (Pratinjau Halaman/Lapisan) sesuai dengan area menggambar."
 
 #: ../ui/settings.glade:3293
 msgid "The color light regions are translated to\n"
 "(use a dark color for a dark-mode)"
-msgstr ""
+msgstr "Wilayah warna terang ditranslasi ke \n"
+"(gunakan warna gelap untuk mode gelap)"
 
 #: ../ui/settings.glade:3308
 msgid "The color dark regions are translated to\n"
 "(use a light color for dark-mode)"
-msgstr ""
+msgstr "Wilayah warna gelap ditranslasi ke \n"
+"(gunakan warna terang untuk mode gelap)"
 
 #: ../ui/settings.glade:3324
 msgid "Dark Color"
@@ -3323,7 +3325,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3351
 msgid "Recoloring (allows theming)"
-msgstr ""
+msgstr "Pewarnaan ulang (Memungkinkan penerapan tema)"
 
 #: ../ui/settings.glade:3383
 msgid "Cursor icon for pen"
@@ -4450,7 +4452,7 @@ msgstr ""
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:8
 msgid "tablet;Wacom;pen input;PDF Annotation;markup"
-msgstr ""
+msgstr "tablet;Wacom;input pena;Anotasi PDF;markup"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:8
 msgid "Xournalpp Developers"
