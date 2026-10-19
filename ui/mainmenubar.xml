@@ -745,6 +745,12 @@
        <attribute name="action">win.tool-pen-fill-opacity</attribute>
       </item>
      </section>
+     <section>
+      <item>
+        <attribute name="label" translatable="yes">Scale with Zoom</attribute>
+        <attribute name="action">win.tool-pen-zoom-scaling</attribute>
+      </item>
+     </section>
     </submenu>
     <submenu>
      <attribute name="label" translatable="yes">Eraser Optio_ns</attribute>
@@ -792,6 +798,12 @@
        <attribute name="target" type="t">3</attribute> <!-- ERASER_TYPE_DELETE_STROKE -->
       </item>
      </section>
+     <section>
+      <item>
+        <attribute name="label" translatable="yes">Scale with Zoom</attribute>
+        <attribute name="action">win.tool-eraser-zoom-scaling</attribute>
+      </item>
+     </section>
     </submenu>
     <submenu>
      <attribute name="label" translatable="yes">Highlighter Opti_ons</attribute>
@@ -831,6 +843,12 @@
              <attribute name="label" translatable="yes">Fill opacity</attribute>
              <attribute name="action">win.tool-highlighter-fill-opacity</attribute>
          </item>
+     </section>
+     <section>
+       <item>
+         <attribute name="label" translatable="yes">Scale with Zoom</attribute>
+         <attribute name="action">win.tool-highlighter-zoom-scaling</attribute>
+       </item>
      </section>
     </submenu>
     <submenu>

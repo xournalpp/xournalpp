@@ -21,6 +21,7 @@
 #include "gui/MainWindow.h"
 #include "gui/SearchBar.h"
 #include "gui/XournalView.h"
+#include "gui/XournalppCursor.h"
 #include "gui/dialog/RenameLayerDialog.h"
 #include "gui/toolbarMenubar/ToolMenuHandler.h"
 #include "model/Document.h"
@@ -704,6 +705,21 @@ template <>
 struct ActionProperties<Action::TOOL_PEN_FILL_OPACITY> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->selectAlpha(OPACITY_FILL_PEN); }
 };
+
+template <>
+struct ActionProperties<Action::TOOL_PEN_ZOOM_SCALING> {
+    using state_type = bool;
+    static state_type initialState(Control* ctrl) { return ctrl->getToolHandler()->getTool(TOOL_PEN).isZoomScaling(); }
+    static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
+        g_simple_action_set_state(ga, p);
+        bool enabled = g_variant_get_boolean(p);
+        ctrl->getToolHandler()->getTool(TOOL_PEN).setZoomScaling(enabled);
+        if (ctrl->getCursor()) {
+            ctrl->getCursor()->updateCursor();
+        }
+    }
+};
+
 // Eraser submenu
 template <>
 struct ActionProperties<Action::TOOL_ERASER_SIZE> {
@@ -728,6 +744,22 @@ struct ActionProperties<Action::TOOL_ERASER_TYPE> {
         g_simple_action_set_state(ga, p);
         EraserType type = getGVariantValue<EraserType>(p);
         ctrl->setEraserType(type);
+    }
+};
+
+template <>
+struct ActionProperties<Action::TOOL_ERASER_ZOOM_SCALING> {
+    using state_type = bool;
+    static state_type initialState(Control* ctrl) {
+        return ctrl->getToolHandler()->getTool(TOOL_ERASER).isZoomScaling();
+    }
+    static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
+        g_simple_action_set_state(ga, p);
+        bool enabled = g_variant_get_boolean(p);
+        ctrl->getToolHandler()->getTool(TOOL_ERASER).setZoomScaling(enabled);
+        if (ctrl->getCursor()) {
+            ctrl->getCursor()->updateCursor();
+        }
     }
 };
 
@@ -763,6 +795,23 @@ template <>
 struct ActionProperties<Action::TOOL_HIGHLIGHTER_FILL_OPACITY> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->selectAlpha(OPACITY_FILL_HIGHLIGHTER); }
 };
+
+template <>
+struct ActionProperties<Action::TOOL_HIGHLIGHTER_ZOOM_SCALING> {
+    using state_type = bool;
+    static state_type initialState(Control* ctrl) {
+        return ctrl->getToolHandler()->getTool(TOOL_HIGHLIGHTER).isZoomScaling();
+    }
+    static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
+        g_simple_action_set_state(ga, p);
+        bool enabled = g_variant_get_boolean(p);
+        ctrl->getToolHandler()->getTool(TOOL_HIGHLIGHTER).setZoomScaling(enabled);
+        if (ctrl->getCursor()) {
+            ctrl->getCursor()->updateCursor();
+        }
+    }
+};
+
 
 template <>
 struct ActionProperties<Action::TOOL_SELECT_PDF_TEXT_MARKER_OPACITY> {
