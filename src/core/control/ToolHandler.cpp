@@ -484,6 +484,7 @@ void ToolHandler::saveSettings() const {
             }
 
             st.setString("size", value);
+            st.setBool("zoomScaling", tool->isZoomScaling());
         }
 
         if (tool->hasCapability(TOOL_CAP_FILL)) {
@@ -569,6 +570,11 @@ void ToolHandler::loadSettings() {
                 } else {
                     g_warning("Settings::Unknown tool size: %s\n", value.c_str());
                 }
+            }
+
+            bool zoomScaling = false;
+            if (tool->hasCapability(TOOL_CAP_SIZE) && st.getBool("zoomScaling", zoomScaling)) {
+                tool->setZoomScaling(zoomScaling);
             }
 
             if (tool->type == TOOL_ERASER) {
