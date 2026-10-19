@@ -277,6 +277,14 @@ public:
     Tool& getTool(ToolType type) const;
 
     /**
+     * @brief Get the Button Tool pointer based on enum
+     *
+     * @param button
+     * @return Tool*
+     */
+    Tool* getButtonTool(Button button) const;
+
+    /**
      * @brief Get the active Tool, returns nullptr if no tool is active
      *
      * @return Tool*
@@ -400,14 +408,6 @@ protected:
 
 private:
     std::array<std::unique_ptr<Tool>, TOOL_COUNT> tools;
-
-    /**
-     * @brief Get the Button Tool pointer based on enum
-     *
-     * @param button
-     * @return Tool*
-     */
-    Tool* getButtonTool(Button button) const;
 
     /**
      * @brief Get the Selected Tool pointer based on enum

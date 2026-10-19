@@ -17,9 +17,11 @@
 #include "control/ToolEnums.h"               // for DrawingType, ToolType
 #include "control/settings/SettingsEnums.h"  // for Button
 #include "model/LineStyle.h"
-#include "util/Color.h"                      // for Color
+#include "util/Color.h"  // for Color
 
 class ToolHandler;
+
+enum class ZoomScalingMode { DONT_CHANGE = 0, ENABLED = 1, DISABLED = 2 };
 
 class ButtonConfig {
 public:
@@ -63,6 +65,8 @@ public:
     ToolType getAction() const;
     bool getDisableDrawing() const;
     DrawingType getDrawingType() const;
+    ZoomScalingMode getZoomScalingMode() const;
+    void setZoomScalingMode(ZoomScalingMode mode);
 
 private:
     ToolType action;
@@ -71,6 +75,7 @@ private:
     EraserType eraserMode;
     DrawingType drawingType;
     StrokeType strokeType;
+    ZoomScalingMode zoomScalingMode = ZoomScalingMode::DONT_CHANGE;
 
     bool disableDrawing;
 
