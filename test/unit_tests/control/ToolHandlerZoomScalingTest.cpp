@@ -24,6 +24,13 @@ public:
     void toolChanged() override {}
 };
 
+class FakeZoomControl: public ZoomControl {
+public:
+    double customZoomReal = 1.0;
+    void setCustomZoomReal(double val) { customZoomReal = val; }
+    double getZoomReal() const override { return customZoomReal; }
+};
+
 TEST(ToolHandlerZoomScalingTest, ThicknessWithoutZoomScaling) {
     DummyToolListener listener;
     ToolHandler handler(&listener, nullptr, nullptr);
@@ -64,8 +71,58 @@ TEST(ToolHandlerZoomScalingTest, ThicknessWithZoomScaling) {
     // At 50% zoom (zoomReal = 0.5)
     zoom.setZoom(0.5);
     EXPECT_NEAR(handler.getThickness(), baseThickness / 0.5, 1e-5);
+}
 
-    // Extreme zoom safety clamp (near zero)
-    zoom.setZoom(0.00001);
-    EXPECT_GE(handler.getThickness(), 0.01);
+TEST(ToolHandlerZoomScalingTest, MinimumThicknessClamp) {
+    DummyToolListener listener;
+    ToolHandler handler(&listener, nullptr, nullptr);
+    FakeZoomControl zoom;
+    handler.setZoomControl(&zoom);
+
+    handler.selectTool(TOOL_PEN);
+    handler.setSize(TOOL_SIZE_MEDIUM);
+
+    handler.getActiveTool()->setZoomScaling(true);
+
+    // High zoom: t / zoomReal falls below 0.01 (e.g. zoomReal = 700.0)
+    zoom.setCustomZoomReal(700.0);
+    EXPECT_DOUBLE_EQ(handler.getThickness(), 0.01);
+}
+
+TEST(ToolHandlerZoomScalingTest, NullZoomControlFallback) {
+    DummyToolListener listener;
+    ToolHandler handler(&listener, nullptr, nullptr);
+    handler.setZoomControl(nullptr);
+
+    handler.selectTool(TOOL_PEN);
+    handler.setSize(TOOL_SIZE_MEDIUM);
+    double baseThickness = handler.getThickness();
+
+    handler.getActiveTool()->setZoomScaling(true);
+    EXPECT_DOUBLE_EQ(handler.getThickness(), baseThickness);
+}
+
+TEST(ToolHandlerZoomScalingTest, ZoomRealNearZeroFallback) {
+    DummyToolListener listener;
+    ToolHandler handler(&listener, nullptr, nullptr);
+    FakeZoomControl zoom;
+    handler.setZoomControl(&zoom);
+
+    handler.selectTool(TOOL_PEN);
+    handler.setSize(TOOL_SIZE_MEDIUM);
+    double baseThickness = handler.getThickness();
+
+    handler.getActiveTool()->setZoomScaling(true);
+
+    // Exactly at threshold 0.001
+    zoom.setCustomZoomReal(0.001);
+    EXPECT_DOUBLE_EQ(handler.getThickness(), baseThickness);
+
+    // Below threshold 0.001
+    zoom.setCustomZoomReal(0.0001);
+    EXPECT_DOUBLE_EQ(handler.getThickness(), baseThickness);
+
+    // Exactly zero
+    zoom.setCustomZoomReal(0.0);
+    EXPECT_DOUBLE_EQ(handler.getThickness(), baseThickness);
 }

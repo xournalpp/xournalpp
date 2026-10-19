@@ -80,7 +80,7 @@ public:
     /**
      * @return real zoom value in percent
      */
-    double getZoomReal() const;
+    virtual double getZoomReal() const;
 
     /**
      * Set the current zoom, does not preserve the current page position.
