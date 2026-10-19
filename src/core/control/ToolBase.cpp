@@ -75,3 +75,7 @@ auto ToolBase::getLineStyle() const -> const LineStyle& { return this->lineStyle
  * @param style Style of the line drawing
  */
 void ToolBase::setLineStyle(const LineStyle& style) { this->lineStyle = style; }
+
+auto ToolBase::isZoomScaling() const -> bool { return this->zoomScaling; }
+
+void ToolBase::setZoomScaling(bool enabled) { this->zoomScaling = enabled; }
