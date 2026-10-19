@@ -715,6 +715,12 @@
      </section>
      <section>
       <item>
+        <attribute name="label" translatable="yes">Scale with Zoom</attribute>
+        <attribute name="action">win.tool-pen-zoom-scaling</attribute>
+      </item>
+     </section>
+     <section>
+      <item>
        <attribute name="label" translatable="yes">standard</attribute>
        <attribute name="action">win.tool-pen-line-style</attribute>
        <attribute name="target">plain</attribute>
@@ -733,22 +739,16 @@
        <attribute name="label" translatable="yes">dotted</attribute>
        <attribute name="action">win.tool-pen-line-style</attribute>
        <attribute name="target">dot</attribute>
-      </item>
+     </item>
      </section>
      <section>
       <item>
        <attribute name="label" translatable="yes">Fi_ll</attribute>
        <attribute name="action">win.tool-pen-fill</attribute>
-   </item>
+    </item>
       <item>
        <attribute name="label" translatable="yes">Fill opacity</attribute>
        <attribute name="action">win.tool-pen-fill-opacity</attribute>
-      </item>
-     </section>
-     <section>
-      <item>
-        <attribute name="label" translatable="yes">Scale with Zoom</attribute>
-        <attribute name="action">win.tool-pen-zoom-scaling</attribute>
       </item>
      </section>
     </submenu>
@@ -783,6 +783,12 @@
      </section>
      <section>
       <item>
+        <attribute name="label" translatable="yes">Scale with Zoom</attribute>
+        <attribute name="action">win.tool-eraser-zoom-scaling</attribute>
+      </item>
+     </section>
+     <section>
+      <item>
        <attribute name="label" translatable="yes">_standard</attribute>
        <attribute name="action">win.tool-eraser-type</attribute>
        <attribute name="target" type="t">1</attribute> <!-- ERASER_TYPE_DEFAULT -->
@@ -796,12 +802,6 @@
        <attribute name="label" translatable="yes">_delete strokes</attribute>
        <attribute name="action">win.tool-eraser-type</attribute>
        <attribute name="target" type="t">3</attribute> <!-- ERASER_TYPE_DELETE_STROKE -->
-      </item>
-     </section>
-     <section>
-      <item>
-        <attribute name="label" translatable="yes">Scale with Zoom</attribute>
-        <attribute name="action">win.tool-eraser-zoom-scaling</attribute>
       </item>
      </section>
     </submenu>
@@ -835,6 +835,12 @@
         </item>
      </section>
      <section>
+       <item>
+         <attribute name="label" translatable="yes">Scale with Zoom</attribute>
+         <attribute name="action">win.tool-highlighter-zoom-scaling</attribute>
+       </item>
+     </section>
+     <section>
          <item>
              <attribute name="label" translatable="yes">Fi_ll</attribute>
              <attribute name="action">win.tool-highlighter-fill</attribute>
@@ -843,12 +849,6 @@
              <attribute name="label" translatable="yes">Fill opacity</attribute>
              <attribute name="action">win.tool-highlighter-fill-opacity</attribute>
          </item>
-     </section>
-     <section>
-       <item>
-         <attribute name="label" translatable="yes">Scale with Zoom</attribute>
-         <attribute name="action">win.tool-highlighter-zoom-scaling</attribute>
-       </item>
      </section>
     </submenu>
     <submenu>
