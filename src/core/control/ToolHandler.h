@@ -26,6 +26,8 @@ class LineStyle;
 class Settings;
 class ActionDatabase;
 class TextAlignment;
+class ZoomControl;
+
 
 
 // enum for ptrs that are dynamically pointing to different tools
@@ -191,6 +193,13 @@ public:
      * @param button size will be applied to
      */
     void setButtonSize(ToolSize size, Button button);
+
+    /**
+     * @brief Set the Zoom Control for zoom-aware tool sizing
+     *
+     * @param zoomControl
+     */
+    void setZoomControl(ZoomControl* zoomControl);
 
     /**
      * @brief Get the Thickness of the active tool
@@ -430,4 +439,5 @@ private:
     ToolListener* stateChangeListener = nullptr;
     ActionDatabase* actionDB = nullptr;
     Settings* settings = nullptr;
+    ZoomControl* zoomControl = nullptr;
 };

@@ -12,6 +12,7 @@
 #include "control/Tool.h"  // for Tool, Tool::toolSizes
 #include "control/actions/ActionDatabase.h"
 #include "control/settings/Settings.h"  // for SElement, Settings
+#include "control/zoom/ZoomControl.h"
 #include "model/StrokeStyle.h"          // for StrokeStyle
 #include "model/TextAlignment.h"
 #include "util/Assert.h"
@@ -318,10 +319,21 @@ void ToolHandler::setTextJustify(bool j) { this->getTool(TOOL_TEXT).setTextJusti
 
 auto ToolHandler::getTextJustify() const -> bool { return this->getTool(TOOL_TEXT).getTextJustify(); }
 
+void ToolHandler::setZoomControl(ZoomControl* zoomControl) {
+    this->zoomControl = zoomControl;
+}
+
 auto ToolHandler::getThickness() const -> double {
     Tool* tool = this->activeTool;
     if (tool->thickness) {
-        return tool->thickness.value()[tool->getSize()];
+        double t = tool->thickness.value()[tool->getSize()];
+        if (tool->isZoomScaling() && this->zoomControl) {
+            double zoomReal = this->zoomControl->getZoomReal();
+            if (zoomReal > 0.001) {
+                return std::max(0.01, t / zoomReal);
+            }
+        }
+        return t;
     }
 
     g_warning("Request size of \"%s\"", tool->getName().c_str());
