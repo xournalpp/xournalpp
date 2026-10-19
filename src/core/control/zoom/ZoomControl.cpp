@@ -1,6 +1,7 @@
 #include "ZoomControl.h"
 
 #include <algorithm>  // for find, max
+#include <cmath>      // for isfinite
 
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 #include <glib.h>         // for g_warning, guint
@@ -259,6 +260,16 @@ void ZoomControl::setZoom(double zoomI) {
 }
 
 void ZoomControl::setZoom100Value(double zoom100Val) {
+    // Reject invalid values: they would zero out zoomMin/zoomMax and poison paste/selection math with NaNs/Infs
+    // (e.g. corrupted displayDpi settings, or bogus monitor metrics on Windows)
+    if (!std::isfinite(zoom100Val) || zoom100Val <= 0.0) {
+        g_warning("Ignoring invalid zoom100Value: %f", zoom100Val);
+        return;
+    }
+    // zoom100Value = DPI / Util::DPI_NORMALIZATION_FACTOR, so these bounds mirror the [36, 720] DPI range the
+    // automatic detection clamps to in xoj::util::gtk::getWidgetDPI() (36 / 72 = 0.5, 720 / 72 = 10.0). They also
+    // contain the manual calibration slider's range [50, 400] DPI (see the adjustmentZoom in settings.glade).
+    zoom100Val = std::clamp(zoom100Val, 0.5, 10.0);
     auto setWithRelZoom = [zoomOld = this->zoom100Value, zoom100Val](double& val) { val = val / zoomOld * zoom100Val; };
     setWithRelZoom(this->zoomMax);
     setWithRelZoom(this->zoomMin);
