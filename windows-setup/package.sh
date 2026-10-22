@@ -57,8 +57,24 @@ echo "copy pixbuf libs"
 cp -r "$prefix"/lib/gdk-pixbuf-2.0 "$setup_dir"/lib/
 
 echo "copy pixbuf lib dependencies"
-# most of the dependencies are not linked directly, using strings to find them
-find "$prefix/lib/gdk-pixbuf-2.0" -type f -name "*.dll" -exec strings {} \; | grep "^lib.*\.dll$" | grep -v "libpixbufloader" | sort | uniq | xargs -I{} cp "$prefix/bin/{}" "$setup_dir/bin/"
+# These modules are loaded dynamically, so ldd on xournalpp.exe does not cover
+# their dependencies. Follow indirect dependencies too (e.g. the SVG loader
+# needs librsvg, which in turn needs libunwind on ARM64).
+declare -A copied_pixbuf_dependencies
+mapfile -d '' pixbuf_libraries < <(find "$prefix/lib/gdk-pixbuf-2.0" -type f -name "*.dll" -print0)
+for ((i = 0; i < ${#pixbuf_libraries[@]}; ++i)); do
+    while IFS= read -r dependency; do
+        if [[ -n ${copied_pixbuf_dependencies[$dependency]+copied} ]]; then
+            continue
+        fi
+        copied_pixbuf_dependencies[$dependency]=1
+        # Only bundle libraries from MSYS2, not Windows system DLLs.
+        if [[ -f "$prefix/bin/$dependency" ]]; then
+            cp "$prefix/bin/$dependency" "$setup_dir/bin/" || exit 1
+            pixbuf_libraries+=("$prefix/bin/$dependency")
+        fi
+    done < <(strings -a "${pixbuf_libraries[$i]}" | grep -Ei '^[[:alnum:]_+.-]+\.dll$' | sort -u)
+done
 
 echo "copy icons"
 cp -r "$prefix"/share/icons "$setup_dir"/share/
