@@ -81,6 +81,11 @@ public:
 
     bool isDarkTheme() const;
 
+    /**
+     * Toggles dark mode and synchronizes both UI and canvas recoloring
+     */
+    void setDarkMode(bool dark);
+
     XournalView* getXournal() const;
 
     void setMenubarVisible(bool visible);

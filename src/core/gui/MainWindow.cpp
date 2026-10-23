@@ -53,6 +53,11 @@
 #define Point Point_CF
 #include <CoreFoundation/CoreFoundation.h>
 #undef Point
+#elif defined(_WIN32)
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <windows.h>
 #endif
 
 using std::string;
@@ -217,7 +222,26 @@ static ThemeProperties getThemeProperties(GtkWidget* w) {
         }
     }
 #else
+#if defined(_WIN32)
+    // On Windows, query AppsUseLightTheme from the registry to match system dark theme
+    if (!useEnv) {
+        HKEY hKey = nullptr;
+        if (RegOpenKeyExW(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", 0, KEY_READ, &hKey) == ERROR_SUCCESS) {
+            DWORD appsUseLightTheme = 1;
+            DWORD dataSize = sizeof(appsUseLightTheme);
+            if (RegQueryValueExW(hKey, L"AppsUseLightTheme", nullptr, nullptr, reinterpret_cast<LPBYTE>(&appsUseLightTheme), &dataSize) == ERROR_SUCCESS) {
+                dark = (appsUseLightTheme == 0);
+            }
+            RegCloseKey(hKey);
+        } else {
+            g_object_get(gtk_widget_get_settings(w), "gtk-application-prefer-dark-theme", &dark, nullptr);
+        }
+    } else {
+        g_object_get(gtk_widget_get_settings(w), "gtk-application-prefer-dark-theme", &dark, nullptr);
+    }
+#else
     g_object_get(gtk_widget_get_settings(w), "gtk-application-prefer-dark-theme", &dark, nullptr);
+#endif
 #endif
 
     g_debug("Extracted theme info: Name = %s, rootname = %s, dark = %s", name.get(), props.rootname.c_str(),
@@ -243,6 +267,17 @@ void MainWindow::updateColorscheme() {
     auto props = getThemeProperties(this->window);
 
     this->darkMode = (props.dark && variant != THEME_VARIANT_FORCE_LIGHT) || variant == THEME_VARIANT_FORCE_DARK;
+
+    {
+        // Synchronize canvas recolor parameters and viewport background color with active dark mode
+        RecolorParameters recolor = control->getSettings()->getRecolorParameters();
+        if (recolor.recolorizeMainView != this->darkMode || recolor.recolorizeSidebarMiniatures != this->darkMode) {
+            recolor.recolorizeMainView = this->darkMode;
+            recolor.recolorizeSidebarMiniatures = this->darkMode;
+            control->getSettings()->setRecolorParameters(std::move(recolor));
+        }
+        control->getSettings()->setBackgroundColor(this->darkMode ? 0x24273a : Colors::xopp_gainsboro02);
+    }
 
     // Set up icons
     {
@@ -301,6 +336,13 @@ void MainWindow::updateColorscheme() {
         g_object_get(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme", &gtkdark, nullptr);
         g_debug("Theme variant: %s", gtkdark ? "dark" : "light");
         g_debug("Icon theme: %s", iconThemeToString(control->getSettings()->getIconTheme()));
+    }
+    if (control->getActionDatabase()) {
+        // Update toggle dark mode action state and trigger redraw
+        control->getActionDatabase()->setActionState(Action::TOGGLE_DARK_MODE, this->darkMode);
+    }
+    if (this->window) {
+        gtk_widget_queue_draw(GTK_WIDGET(this->window));
     }
     g_signal_handlers_unblock_by_func(gtk_widget_get_settings(this->window), reinterpret_cast<gpointer>(themeCallback),
                                       this);
@@ -630,6 +672,11 @@ auto MainWindow::setFullscreen(bool enabled) const -> void {
 }
 
 auto MainWindow::isDarkTheme() const -> bool { return this->darkMode; }
+
+void MainWindow::setDarkMode(bool dark) {
+    control->getSettings()->setThemeVariant(dark ? THEME_VARIANT_FORCE_DARK : THEME_VARIANT_FORCE_LIGHT);
+    updateColorscheme();
+}
 
 auto MainWindow::getXournal() const -> XournalView* { return xournal.get(); }
 

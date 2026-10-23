@@ -1137,3 +1137,18 @@ struct ActionProperties<Action::POSITION_HIGHLIGHTING> {
         ctrl->getSettings()->setHighlightPosition(enable);
     }
 };
+
+template <>
+struct ActionProperties<Action::TOGGLE_DARK_MODE> {
+    using state_type = bool;
+    static state_type initialState(Control* ctrl) {
+        return ctrl->getWindow() ? ctrl->getWindow()->isDarkTheme() : false;
+    }
+    static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
+        bool enable = g_variant_get_boolean(p);
+        g_simple_action_set_state(ga, p);
+        if (auto* win = ctrl->getWindow()) {
+            win->setDarkMode(enable);
+        }
+    }
+};

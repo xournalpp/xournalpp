@@ -1,227 +1,504 @@
 /*
- * Backup before modifying
- *
- *
- *  Try running Xournal++ like this:    GTK_DEBUG=interactive  xournalpp
- *
- *  See: https://wiki.gnome.org/action/show/Projects/GTK/Inspector
+ * Xournal++ Modern UI Stylesheet
+ * Next-generation design system with contemporary palettes, rounded geometries,
+ * sleek toolbars, floating cards, and polished dark/light themes.
  */
 
-#pdfFloatingToolGrid {
-    padding: 7px;
+/* ==========================================================================
+   1. GLOBAL & WINDOW FOUNDATION
+   ========================================================================== */
+
+window {
+    -GtkWindow-resize-grip-width: 0;
+    -GtkWindow-resize-grip-height: 0;
 }
 
-/*Style the Floating Toolbox!*/
+/* Light theme base variables */
+window:not(.darkMode) {
+    background-color: #f8fafc;
+    color: #1e293b;
+}
+
+/* Dark theme base variables */
+window.darkMode {
+    background-color: #18181b;
+    color: #f4f4f5;
+}
+
+/* Menubars and toolbars should not drag the window */
+menubar,
+toolbar {
+    -GtkWidget-window-dragging: false;
+}
+
+/* ==========================================================================
+   2. TOOLBARS & TOOL ITEMS
+   ========================================================================== */
+
+toolbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 3px 6px;
+    box-shadow: none;
+    border-style: solid;
+}
+
+window.darkMode toolbar {
+    background-color: #1e1e24;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+}
+
+#tbBottom1,
+#tbBottom2 {
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: none;
+}
+
+window.darkMode #tbBottom1,
+window.darkMode #tbBottom2 {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: none;
+}
+
+#tbLeft1, #tbLeft2 {
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: none;
+}
+
+window.darkMode #tbLeft1,
+window.darkMode #tbLeft2 {
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: none;
+}
+
+#tbRight1, #tbRight2 {
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: none;
+}
+
+window.darkMode #tbRight1,
+window.darkMode #tbRight2 {
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: none;
+}
+
+/* Toolbar Buttons - Clean Modern Rounded Rectangles */
+toolbar button,
+popover.toolbar button {
+    border-radius: 8px;
+    padding: 5px 6px;
+    margin: 1px 2px;
+    border: 1px solid transparent;
+    background-color: transparent;
+    background-image: none;
+    box-shadow: none;
+    color: #334155;
+    transition: all 120ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+window.darkMode toolbar button,
+window.darkMode popover.toolbar button {
+    color: #e4e4e7;
+    border: 1px solid transparent;
+}
+
+/* Hover State */
+toolbar button:hover,
+popover.toolbar button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+window.darkMode toolbar button:hover,
+window.darkMode popover.toolbar button:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.04);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+/* Active / Pressed State */
+toolbar button:active,
+popover.toolbar button:active {
+    background-color: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.1);
+    transform: translateY(1px);
+}
+
+window.darkMode toolbar button:active,
+window.darkMode popover.toolbar button:active {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.12);
+    transform: translateY(1px);
+}
+
+/* Checked / Selected Toggle Buttons (Active Tool, Dark Mode, Snapping, etc.) */
+toolbar button:checked,
+popover.toolbar button:checked {
+    background-color: #e0f2fe;
+    border-color: #7dd3fc;
+    color: #0284c7;
+    box-shadow: 0 1px 3px rgba(2, 132, 199, 0.15);
+}
+
+window.darkMode toolbar button:checked,
+window.darkMode popover.toolbar button:checked {
+    background-color: rgba(56, 189, 248, 0.18);
+    border-color: rgba(56, 189, 248, 0.45);
+    color: #38bdf8;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+toolbar button:checked:hover,
+popover.toolbar button:checked:hover {
+    background-color: #bae6fd;
+    border-color: #38bdf8;
+}
+
+window.darkMode toolbar button:checked:hover,
+window.darkMode popover.toolbar button:checked:hover {
+    background-color: rgba(56, 189, 248, 0.25);
+    border-color: rgba(56, 189, 248, 0.6);
+}
+
+/* Disabled buttons */
+toolbar button:disabled,
+popover.toolbar button:disabled {
+    opacity: 0.38;
+}
+
+/* Clean Separators */
+toolbar separator {
+    min-width: 1px;
+    min-height: 18px;
+    margin: 4px 6px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+window.darkMode toolbar separator {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Transparent Spacer */
+separator.spacer {
+    color: transparent;
+    background-color: transparent;
+    background-image: none;
+    outline-style: none;
+    border-style: none;
+    box-shadow: none;
+}
+
+/* Editing Mode for Toolbar Customization */
+toolbar.editing {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    border: 2px dashed #f97316;
+    border-radius: 10px;
+    background-color: rgba(249, 115, 22, 0.05);
+}
+
+/* ==========================================================================
+   3. FLOATING TOOLBOX & TOOL GRIDS (FLOATING HUD)
+   ========================================================================== */
+
 #floatingToolbox > box,
 #pdfFloatingToolGrid {
-	background-color: white;
-	border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06);
+    padding: 6px;
+    margin: 8px;
+}
 
-	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
-
-	/* Add a margin. If we don't have this, Gtk clips the shadow!  */
-	margin: 7px;
+window.darkMode #floatingToolbox > box,
+window.darkMode #pdfFloatingToolGrid {
+    background-color: rgba(28, 28, 35, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.3);
+    padding: 6px;
+    margin: 8px;
 }
 
 #floatingToolbox box toolbar {
-	background-color: rgba(255, 255, 255, 0);
+    background-color: transparent;
+    border: none;
+    padding: 0px;
 }
 
-#floatingToolbox button {
-	background-color: rgba(255, 255, 255, 0.8);
-	border-radius: 12px;
-}
-
+#floatingToolbox button,
 #pdfFloatingToolGrid button {
-	background: rgba(255, 255, 255, 0.8);
-	border: 12px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    margin: 2px;
+    padding: 5px;
+    transition: all 120ms ease;
 }
 
-#pdfFloatingToolGrid button:hover {
-	border-radius: 12px;
-	background: rgba(245, 245, 245, 0.8);
-	box-shadow: inset 0px 0px 2px gray;
-}
-
-/*
-	Use :checked for a selected ToggleButton.
-	See https://stackoverflow.com/questions/39824345/use-css-to-style-gtktogglebutton-depending-on-the-state
-*/
-#floatingToolbox button:checked {
-	/*background-color: lightblue;*/
-	border-color: lightblue;
-	box-shadow: inset 0px 0px 3px lightblue;
-
-	transition: background-color 0.5s ease, border-color 0.5s ease, margin 0.3s ease;
-}
-
-#floatingToolbox toolbar,
-#pdfFloatingToolGrid button {
-    /*
-      The Adaptia GTK theme adds box-shadows to toolbars.
-      Remove them to avoid horizontal lines that extend outside
-      the edge of the floating toolbox.
-     */
-
-    box-shadow: none;
+#pdfFloatingToolGrid button:hover,
+#floatingToolbox button:hover {
+    background-color: rgba(241, 245, 249, 0.9);
+    border-color: rgba(0, 0, 0, 0.1);
 }
 
 window.darkMode #floatingToolbox button,
 window.darkMode #pdfFloatingToolGrid button {
-	background: rgba(55, 53, 53, 0.5);
-	border: none;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #e4e4e7;
 }
 
-window.darkMode #floatingToolbox button:checked {
-	background: rgba(85, 85, 95, 0.1);
-	border-color: lightblue;
-	box-shadow: 0px 0px 3px lightblue;
+window.darkMode #pdfFloatingToolGrid button:hover,
+window.darkMode #floatingToolbox button:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.12);
 }
 
-window.darkMode #floatingToolbox > box,
-window.darkMode #pdfFloatingToolGrid  {
-	background-color: black;
-
-	/*
-	  Lighter gray shadow for better contrast on dark
-	  backgrounds.
-	*/
-	box-shadow: 0px 0px 5px rgba(90, 90, 90, 0.7);
+#floatingToolbox button:checked,
+#pdfFloatingToolGrid button:checked {
+    background-color: #e0f2fe;
+    border-color: #38bdf8;
+    color: #0284c7;
+    box-shadow: 0 0 0 1px #38bdf8;
 }
 
-/* Add additional padding and a border to make editing toolbars easier. */
-toolbar.editing {
-	padding-top: 4px;
-	padding-bottom: 4px;
-
-	border: 4px dashed orange;
-	border-radius: 3px;
-
-	box-shadow: inset -2px -2px 8px orange;
+window.darkMode #floatingToolbox button:checked,
+window.darkMode #pdfFloatingToolGrid button:checked {
+    background-color: rgba(56, 189, 248, 0.22);
+    border-color: #38bdf8;
+    color: #38bdf8;
+    box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.5);
 }
 
-/*Fix ugly Background drop down button
- *
- * We need to select the button beside two labels or we will affect
- * the pen tool when in FloatingToolbox (and can't see activation highlight).
- *
- * Ideally we will give name properties to all of the widgets created in
- * code as well as specifying names in glade files.
- *
- * Note: in glade files, property with name="name". i.e. <property name="name">floatingToolbox</property>
- */
-
-
-toolitem > box > label+label+button
-{
-	border-width:0;
-	box-shadow:none;
-	background-image:none;
+#floatingToolbox toolbar,
+#pdfFloatingToolGrid button {
+    box-shadow: none;
 }
 
-toolbar button,
-popover.toolbar button {
-  padding:3px;
+/* ==========================================================================
+   4. SIDEBAR & MINIATURES (PAGE PREVIEWS)
+   ========================================================================== */
+
+#sidebarContents {
+    background-color: #f1f5f9;
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+window.darkMode #sidebarContents {
+    background-color: #141417;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#bxSidebarTopActions {
+    padding: 6px 8px;
+    background-color: #f8fafc;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+window.darkMode #bxSidebarTopActions {
+    background-color: #1a1a1f;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#bxSidebarTopActions button {
+    border-radius: 8px;
+    padding: 4px 8px;
+    border: 1px solid transparent;
+}
+
+#bxSidebarTopActions button:checked {
+    background-color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+window.darkMode #bxSidebarTopActions button:checked {
+    background-color: #27272e;
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Page preview buttons */
+#sidebarContents button {
+    border-radius: 6px;
+    border: none;
+    background-color: transparent;
+    padding: 4px;
+}
+
+#sidebarContents button:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+window.darkMode #sidebarContents button:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ==========================================================================
+   5. SLEEK MODERN SCROLLBARS
+   ========================================================================== */
+
+scrollbar {
+    background-color: transparent;
+    border: none;
+    transition: all 200ms ease-in-out;
+}
+
+scrollbar trough {
+    background-color: transparent;
+    border: none;
+}
+
+scrollbar slider {
+    min-width: 6px;
+    min-height: 6px;
+    border-radius: 9999px;
+    background-color: rgba(0, 0, 0, 0.22);
+    border: 2px solid transparent;
+    transition: all 150ms ease-in-out;
+}
+
+scrollbar slider:hover {
+    background-color: rgba(0, 0, 0, 0.45);
+    min-width: 8px;
+    min-height: 8px;
+}
+
+window.darkMode scrollbar slider {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+window.darkMode scrollbar slider:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* ==========================================================================
+   6. SEARCH BAR & FLOATING OVERLAYS
+   ========================================================================== */
+
+#searchBar {
+    background-color: #ffffff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 6px 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+window.darkMode #searchBar {
+    background-color: #1e1e24;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+#searchBar entry {
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    padding: 4px 8px;
+    background-color: #f8fafc;
+}
+
+window.darkMode #searchBar entry {
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background-color: #121215;
+    color: #f4f4f5;
+}
+
+#searchBar entry:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25);
+}
+
+/* ==========================================================================
+   7. POPOVERS & MENUS
+   ========================================================================== */
+
+popover {
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.08);
+    padding: 6px;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+window.darkMode popover {
+    background-color: #22222a;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+}
+
+/* ==========================================================================
+   8. SPECIFIC ENGINE UTILITY SELECTORS (PRESERVED)
+   ========================================================================== */
+
+toolitem > box > label+label+button {
+    border-width: 0;
+    box-shadow: none;
+    background-image: none;
 }
 
 .orientationFormatBox > button > widget > box > image {
-	margin-left: 3px;
-	margin-right: 3px;
-}
-
-toolbar button:not(:checked):not(:active):not(:hover),
-popover.toolbar button:not(:checked):not(:active):not(:hover){
-  border-color:transparent;
-  box-shadow:none;
-  background-color:transparent;
-  background-image:none;
+    margin-left: 3px;
+    margin-right: 3px;
 }
 
 radiobutton.invisible radio {
-  color:transparent;
-  background-color:transparent;
-  background-image:none;
-  outline-style:none;
-  border-style:none;
-  box-shadow:none;
+    color: transparent;
+    background-color: transparent;
+    background-image: none;
+    outline-style: none;
+    border-style: none;
+    box-shadow: none;
 }
 
-/* A spacer is a transparent separator with expand == true */
-separator.spacer {
-  color:transparent;
-  background-color:transparent;
-  background-image:none;
-  outline-style:none;
-  border-style:none;
-  box-shadow:none;
-}
-
-/*  If you want to change the size of toolbar buttons try these:
-*   All toolbars:
-*/
-
-/*
-toolbar button
-{
-	padding: 2
-}
-*/
-
-
-
-/* Or for individual toolbars: tbLeft1 tbLeft2 tbTop1 tbTop2 tbBottom1 tbFloat4 etc:
- */
-
-/*
-#tbLeft2 button
-{
-	padding: 2
-}
-*/
-
-
-/*
-Labels for subsections of the Settings dialog
-*/
-notebook frame>label {
-    color: #666;
+notebook frame > label {
+    color: #64748b;
     font-weight: bold;
 }
 
-menubar, toolbar {
-    -GtkWidget-window-dragging: false
+window.darkMode notebook frame > label {
+    color: #a1a1aa;
 }
 
 label.setting-button-indicator {
-    border: 1px solid gray;
-    border-radius: 3px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
     margin: 1px;
-    padding: 2px;
+    padding: 2px 4px;
+}
+
+window.darkMode label.setting-button-indicator {
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 label.setting-button-indicator.pressed {
-    background-color: red;
+    background-color: #ef4444;
+    color: #ffffff;
 }
 
 label.setting-touch-indicator {
     border: none;
-    background: radial-gradient(circle at center, alpha(gray,.7) 0%, alpha(gray,.7) 20%, alpha(gray, .1) 60%, alpha(gray, 0.) 100%);
+    background: radial-gradient(circle at center, rgba(148, 163, 184, 0.7) 0%, rgba(148, 163, 184, 0.7) 20%, rgba(148, 163, 184, 0.1) 60%, rgba(148, 163, 184, 0) 100%);
     border-radius: 50%;
     margin: 1px;
     padding: 10px;
 }
+
 label.setting-touch-indicator.pressed {
-    background: radial-gradient(circle at center, red 0%, red 20%, alpha(red, .1) 60%, alpha(red, 0.) 100%);
+    background: radial-gradient(circle at center, #ef4444 0%, #ef4444 20%, rgba(239, 68, 68, 0.1) 60%, rgba(239, 68, 68, 0) 100%);
 }
 
 image.flying-icon {
     padding: 0px;
-    margin: 1px;  /* Avoids graphical artifacts when moving those icons around... */
+    margin: 1px;
 }
 
 image.flying-icon.TL {
     border-radius: 50% 50% 0% 50%;
 }
+
 image.flying-icon.TR {
     border-radius: 50% 50% 50% 0%;
 }
