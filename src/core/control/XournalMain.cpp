@@ -433,7 +433,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
     initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
     initResourcePath(app_data->gladePath.get(), "ui/toolbar.ini", false);
 
-    app_data->control = std::make_unique<Control>(application, app_data->gladePath.get(), app_data->disableAudio);
+    app_data->control = std::make_unique<Control>(application, app_data->gladePath.get());
 
     auto& globalLatexTemplatePath = app_data->control->getSettings()->latexSettings.globalTemplatePath;
     if (globalLatexTemplatePath.empty()) {
@@ -444,7 +444,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
 
     app_data->win = std::make_unique<MainWindow>(app_data->gladePath.get(), app_data->control.get(),
                                                  GTK_APPLICATION(application));
-    app_data->control->initWindow(app_data->win.get());
+    app_data->control->initWindow(app_data->win.get(), app_data->disableAudio);
     app_data->win->populate(app_data->gladePath.get());
 
     if (migrateResult.status != MigrateStatus::NotNeeded) {
