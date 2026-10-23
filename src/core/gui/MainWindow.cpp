@@ -226,10 +226,12 @@ static ThemeProperties getThemeProperties(GtkWidget* w) {
     // On Windows, query AppsUseLightTheme from the registry to match system dark theme
     if (!useEnv) {
         HKEY hKey = nullptr;
-        if (RegOpenKeyExW(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", 0, KEY_READ, &hKey) == ERROR_SUCCESS) {
+        if (RegOpenKeyExW(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", 0,
+                          KEY_READ, &hKey) == ERROR_SUCCESS) {
             DWORD appsUseLightTheme = 1;
             DWORD dataSize = sizeof(appsUseLightTheme);
-            if (RegQueryValueExW(hKey, L"AppsUseLightTheme", nullptr, nullptr, reinterpret_cast<LPBYTE>(&appsUseLightTheme), &dataSize) == ERROR_SUCCESS) {
+            if (RegQueryValueExW(hKey, L"AppsUseLightTheme", nullptr, nullptr,
+                                 reinterpret_cast<LPBYTE>(&appsUseLightTheme), &dataSize) == ERROR_SUCCESS) {
                 dark = (appsUseLightTheme == 0);
             }
             RegCloseKey(hKey);
