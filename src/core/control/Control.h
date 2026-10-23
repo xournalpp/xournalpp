@@ -80,14 +80,14 @@ class Control:
         public ClipboardListener,
         public ProgressListener {
 public:
-    Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool disableAudio);
+    Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath);
     Control(Control const&) = delete;
     Control(Control&&) = delete;
     auto operator=(Control const&) -> Control& = delete;
     auto operator=(Control&&) -> Control& = delete;
     ~Control() override;
 
-    void initWindow(MainWindow* win);
+    void initWindow(MainWindow* win, bool disableAudio);
 
 public:
     /// Asymchronously closes the current document and replaces it by a new file

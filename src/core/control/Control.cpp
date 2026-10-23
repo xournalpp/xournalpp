@@ -121,7 +121,7 @@
 
 using std::string;
 
-Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool disableAudio): gtkApp(gtkApp) {
+Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp(gtkApp) {
     this->undoRedo = new UndoRedoHandler(this);
     this->undoRedo->addUndoRedoListener(this);
     this->isBlocking = false;
@@ -143,12 +143,6 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     this->loadPaletteFromSettings();
 
     this->pageTypes = new PageTypeHandler(gladeSearchPath);
-
-#ifdef ENABLE_AUDIO
-    if (!(disableAudio || this->settings->isAudioDisabled())) {
-        this->audioController = std::make_unique<AudioController>(this->settings, this);
-    }
-#endif
 
     this->scrollHandler = new ScrollHandler(this);
 
@@ -292,8 +286,21 @@ void Control::saveSettings() {
     this->sidebar->saveSize();
 }
 
-void Control::initWindow(MainWindow* win) {
+void Control::initWindow(MainWindow* win, bool disableAudio) {
     this->win = win;
+
+#ifdef ENABLE_AUDIO
+    if (!(disableAudio || this->settings->isAudioDisabled())) {
+        try {
+            this->audioController = std::make_unique<AudioController>(this->settings, this);
+        } catch (const std::exception& e) {
+            XojMsgBox::showErrorToUser(
+                    GTK_WINDOW(win->getWindow()),
+                    FC(_F("Initialization of audio devices failed. You can disable audio support in Settings->Audio") %
+                       e.what()));
+        }
+    }
+#endif
 
     this->actionDB = std::make_unique<ActionDatabase>(this);
     this->navHistory = std::make_unique<NavigationHistory>(this);
