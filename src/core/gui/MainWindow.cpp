@@ -269,14 +269,14 @@ void MainWindow::updateColorscheme() {
     this->darkMode = (props.dark && variant != THEME_VARIANT_FORCE_LIGHT) || variant == THEME_VARIANT_FORCE_DARK;
 
     {
-        // Synchronize canvas recolor parameters and viewport background color with active dark mode
+        // Keep paper and strokes untouched, and set workspace background to pure black in dark mode
         RecolorParameters recolor = control->getSettings()->getRecolorParameters();
-        if (recolor.recolorizeMainView != this->darkMode || recolor.recolorizeSidebarMiniatures != this->darkMode) {
-            recolor.recolorizeMainView = this->darkMode;
-            recolor.recolorizeSidebarMiniatures = this->darkMode;
+        if (recolor.recolorizeMainView || recolor.recolorizeSidebarMiniatures) {
+            recolor.recolorizeMainView = false;
+            recolor.recolorizeSidebarMiniatures = false;
             control->getSettings()->setRecolorParameters(std::move(recolor));
         }
-        control->getSettings()->setBackgroundColor(this->darkMode ? 0x24273a : Colors::xopp_gainsboro02);
+        control->getSettings()->setBackgroundColor(this->darkMode ? Colors::black : Colors::xopp_gainsboro02);
     }
 
     // Set up icons

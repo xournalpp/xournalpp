@@ -3,7 +3,7 @@
 ## 1.3.8+dev (Unreleased)
 
 * Modernized user interface styling with rounded controls, soft shadows, and clean palettes
-* Added dark mode toggle button in the top toolbar to switch UI and canvas theme on the fly
+* Added dark mode toggle button in the top toolbar to switch UI and workspace background on the fly
 * Added Windows system light/dark theme preference detection at startup
 * Changed default icon theme to Lucide for a minimal, modern look
 

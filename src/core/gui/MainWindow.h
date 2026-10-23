@@ -82,7 +82,7 @@ public:
     bool isDarkTheme() const;
 
     /**
-     * Toggles dark mode and synchronizes both UI and canvas recoloring
+     * Toggles dark mode and synchronizes both UI and workspace background
      */
     void setDarkMode(bool dark);
 

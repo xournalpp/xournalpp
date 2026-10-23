@@ -25,6 +25,13 @@ window.darkMode {
     color: #f4f4f5;
 }
 
+/* Canvas area container and scrolled window background */
+window.darkMode scrolledwindow,
+window.darkMode scrolledwindow viewport,
+window.darkMode #boxContents {
+    background-color: #000000;
+}
+
 /* Menubars and toolbars should not drag the window */
 menubar,
 toolbar {
