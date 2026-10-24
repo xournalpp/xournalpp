@@ -3324,7 +3324,7 @@ This setting can make it easier to draw with touch.</property>
                                 <property name="can-focus">False</property>
                                 <property name="label-xalign">0.009999999776482582</property>
                                 <child>
-                                  <!-- n-columns=3 n-rows=2 -->
+                                  <!-- n-columns=3 n-rows=3 -->
                                   <object class="GtkGrid">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
@@ -3333,6 +3333,49 @@ This setting can make it easier to draw with touch.</property>
                                     <property name="margin-end">12</property>
                                     <property name="margin-bottom">8</property>
                                     <property name="row-homogeneous">True</property>
+                                    <property name="column-spacing">8</property>
+                                    <child>
+                                      <object class="GtkBox" id="boxPdfRenderBackground">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="spacing">8</property>
+                                        <property name="halign">start</property>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbPdfRenderBackground">
+                                            <property name="label" translatable="yes">Recolor PDF background for rendering only.</property>
+                                            <property name="name">cbPdfRenderBackground</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">False</property>
+                                            <property name="draw-indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkColorButton" id="pdfRenderBackground">
+                                            <property name="name">pdfRenderBackground</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">True</property>
+                                            <property name="halign">start</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="left-attach">0</property>
+                                        <property name="top-attach">0</property>
+                                        <property name="width">3</property>
+                                      </packing>
+                                    </child>
                                     <child>
                                       <object class="GtkCheckButton" id="cbRecolorDrawingArea">
                                         <property name="label" translatable="yes">Recolor Drawing Area (might introduce lags when moving selections)</property>
@@ -3345,7 +3388,7 @@ This setting can make it easier to draw with touch.</property>
                                       </object>
                                       <packing>
                                         <property name="left-attach">0</property>
-                                        <property name="top-attach">0</property>
+                                        <property name="top-attach">1</property>
                                       </packing>
                                     </child>
                                     <child>
@@ -3360,7 +3403,7 @@ This setting can make it easier to draw with touch.</property>
                                       </object>
                                       <packing>
                                         <property name="left-attach">0</property>
-                                        <property name="top-attach">1</property>
+                                        <property name="top-attach">2</property>
                                       </packing>
                                     </child>
                                     <child>
@@ -3375,7 +3418,7 @@ This setting can make it easier to draw with touch.</property>
                                       </object>
                                       <packing>
                                         <property name="left-attach">2</property>
-                                        <property name="top-attach">0</property>
+                                        <property name="top-attach">1</property>
                                       </packing>
                                     </child>
                                     <child>
@@ -3390,7 +3433,7 @@ This setting can make it easier to draw with touch.</property>
                                       </object>
                                       <packing>
                                         <property name="left-attach">2</property>
-                                        <property name="top-attach">1</property>
+                                        <property name="top-attach">2</property>
                                       </packing>
                                     </child>
                                     <child>
@@ -3404,7 +3447,7 @@ This setting can make it easier to draw with touch.</property>
                                       </object>
                                       <packing>
                                         <property name="left-attach">1</property>
-                                        <property name="top-attach">1</property>
+                                        <property name="top-attach">2</property>
                                       </packing>
                                     </child>
                                     <child>
@@ -3418,7 +3461,7 @@ This setting can make it easier to draw with touch.</property>
                                       </object>
                                       <packing>
                                         <property name="left-attach">1</property>
-                                        <property name="top-attach">0</property>
+                                        <property name="top-attach">1</property>
                                       </packing>
                                     </child>
                                   </object>
