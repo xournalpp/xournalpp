@@ -57,6 +57,7 @@
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
+#include <gdk/gdkwin32.h>
 #include <windows.h>
 #endif
 
@@ -64,6 +65,19 @@ using std::string;
 
 
 static void themeCallback(GObject*, GParamSpec*, gpointer data) { static_cast<MainWindow*>(data)->updateColorscheme(); }
+
+#ifdef _WIN32
+static GdkFilterReturn win32ThemeChangeFilter(GdkXEvent* xevent, GdkEvent*, gpointer data) {
+    auto* msg = static_cast<MSG*>(xevent);
+    if (msg && msg->message == WM_SETTINGCHANGE) {
+        if (msg->lParam && wcscmp(reinterpret_cast<LPCWSTR>(msg->lParam), L"ImmersiveColorSet") == 0) {
+            auto* win = static_cast<MainWindow*>(data);
+            win->updateColorscheme();
+        }
+    }
+    return GDK_FILTER_CONTINUE;
+}
+#endif
 
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkApplication* parent):
         GladeGui(gladeSearchPath, "main.glade", "mainWindow"),
@@ -125,6 +139,16 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     g_signal_connect(this->window, "key-press-event", G_CALLBACK(keyPropagate), nullptr);
     g_signal_connect(this->window, "key-release-event", G_CALLBACK(keyPropagate), nullptr);
 
+#ifdef _WIN32
+    g_signal_connect(this->window, "realize", G_CALLBACK(+[](GtkWidget* widget, gpointer self) {
+                         GdkWindow* gdkWin = gtk_widget_get_window(widget);
+                         if (gdkWin) {
+                             gdk_window_add_filter(gdkWin, win32ThemeChangeFilter, self);
+                         }
+                     }),
+                     this);
+#endif
+
     updateScrollbarSidebarPosition();
 
     gtk_window_set_default_size(GTK_WINDOW(this->window), control->getSettings()->getMainWndWidth(),
@@ -171,7 +195,16 @@ void MainWindow::populate(GladeSearchpath* gladeSearchPath) {
 
 GMenuModel* MainWindow::getMenuModel() const { return menubar->getModel(); }
 
-MainWindow::~MainWindow() = default;
+MainWindow::~MainWindow() {
+#ifdef _WIN32
+    if (this->window && gtk_widget_get_realized(this->window)) {
+        GdkWindow* gdkWin = gtk_widget_get_window(this->window);
+        if (gdkWin) {
+            gdk_window_remove_filter(gdkWin, win32ThemeChangeFilter, this);
+        }
+    }
+#endif
+}
 
 struct ThemeProperties {
     bool dark;
@@ -270,16 +303,8 @@ void MainWindow::updateColorscheme() {
 
     this->darkMode = (props.dark && variant != THEME_VARIANT_FORCE_LIGHT) || variant == THEME_VARIANT_FORCE_DARK;
 
-    {
-        // Keep paper and strokes untouched, and set workspace background to pure black in dark mode
-        RecolorParameters recolor = control->getSettings()->getRecolorParameters();
-        if (recolor.recolorizeMainView || recolor.recolorizeSidebarMiniatures) {
-            recolor.recolorizeMainView = false;
-            recolor.recolorizeSidebarMiniatures = false;
-            control->getSettings()->setRecolorParameters(std::move(recolor));
-        }
-        control->getSettings()->setBackgroundColor(this->darkMode ? Colors::black : Colors::xopp_gainsboro02);
-    }
+    // Set workspace background to pure black in dark mode
+    control->getSettings()->setBackgroundColor(this->darkMode ? Colors::black : Colors::xopp_gainsboro02);
 
     // Set up icons
     {
