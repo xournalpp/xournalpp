@@ -715,6 +715,12 @@
      </section>
      <section>
       <item>
+        <attribute name="label" translatable="yes">Scale with Zoom</attribute>
+        <attribute name="action">win.tool-pen-zoom-scaling</attribute>
+      </item>
+     </section>
+     <section>
+      <item>
        <attribute name="label" translatable="yes">standard</attribute>
        <attribute name="action">win.tool-pen-line-style</attribute>
        <attribute name="target">plain</attribute>
@@ -733,13 +739,13 @@
        <attribute name="label" translatable="yes">dotted</attribute>
        <attribute name="action">win.tool-pen-line-style</attribute>
        <attribute name="target">dot</attribute>
-      </item>
+     </item>
      </section>
      <section>
       <item>
        <attribute name="label" translatable="yes">Fi_ll</attribute>
        <attribute name="action">win.tool-pen-fill</attribute>
-   </item>
+    </item>
       <item>
        <attribute name="label" translatable="yes">Fill opacity</attribute>
        <attribute name="action">win.tool-pen-fill-opacity</attribute>
@@ -773,6 +779,12 @@
              <attribute name="label" translatable="yes">ver_y thick</attribute>
              <attribute name="action">win.tool-eraser-size</attribute>
              <attribute name="target" type="t">4</attribute> <!-- TOOL_SIZE_VERY_THICK -->
+      </item>
+     </section>
+     <section>
+      <item>
+        <attribute name="label" translatable="yes">Scale with Zoom</attribute>
+        <attribute name="action">win.tool-eraser-zoom-scaling</attribute>
       </item>
      </section>
      <section>
@@ -821,6 +833,12 @@
              <attribute name="action">win.tool-highlighter-size</attribute>
              <attribute name="target" type="t">4</attribute> <!-- TOOL_SIZE_VERY_THICK -->
         </item>
+     </section>
+     <section>
+       <item>
+         <attribute name="label" translatable="yes">Scale with Zoom</attribute>
+         <attribute name="action">win.tool-highlighter-zoom-scaling</attribute>
+       </item>
      </section>
      <section>
          <item>
