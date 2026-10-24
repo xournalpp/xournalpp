@@ -17,7 +17,7 @@
 namespace {
 constexpr auto G_ACTION_NAMESPACE = "win.";
 constexpr auto G_ACTION_NAME = "select-toolbar";
-/// id from ui/mainmenubar.xml
+/// id from ui/mainmenubar.ui
 constexpr auto SUBMENU_ID = "menuViewToolbar";
 
 auto createToolbarSelectionMenuItem(const ToolbarData* toolbarData) {
