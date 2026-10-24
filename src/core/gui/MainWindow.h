@@ -186,6 +186,8 @@ private:
 
     bool sidebarVisible = true;
 
+    xoj::util::GObjectSPtr<GtkCssProvider> darkModeCssProvider;
+
     /// The last monitor the window has been moved to -- used for setting dpi
     GdkMonitor* lastMonitor = nullptr;
 

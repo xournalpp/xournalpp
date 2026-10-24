@@ -319,9 +319,57 @@ void MainWindow::updateColorscheme() {
     if (this->darkMode) {
         gtk_style_context_add_class(context, "darkMode");
         g_object_set(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme", true, nullptr);
+        if (!this->darkModeCssProvider) {
+            this->darkModeCssProvider.reset(gtk_css_provider_new(), xoj::util::adopt);
+            const char* darkMenuCss = "menu, .menu {\n"
+                                      "    background-color: #1e1e24;\n"
+                                      "    color: #f4f4f5;\n"
+                                      "    border: 1px solid rgba(255, 255, 255, 0.12);\n"
+                                      "    border-radius: 8px;\n"
+                                      "    padding: 4px;\n"
+                                      "}\n"
+                                      "menuitem {\n"
+                                      "    color: #e4e4e7;\n"
+                                      "    padding: 5px 12px;\n"
+                                      "    border-radius: 6px;\n"
+                                      "}\n"
+                                      "menuitem label {\n"
+                                      "    color: #e4e4e7;\n"
+                                      "}\n"
+                                      "menuitem:hover, menuitem:selected {\n"
+                                      "    background-color: #0284c7;\n"
+                                      "    color: #ffffff;\n"
+                                      "}\n"
+                                      "menuitem:hover label, menuitem:selected label {\n"
+                                      "    color: #ffffff;\n"
+                                      "}\n"
+                                      "menuitem:disabled, menuitem:disabled label {\n"
+                                      "    color: rgba(255, 255, 255, 0.35);\n"
+                                      "}\n"
+                                      "menuitem accelerator {\n"
+                                      "    color: rgba(255, 255, 255, 0.5);\n"
+                                      "}\n"
+                                      "menuitem:hover accelerator, menuitem:selected accelerator {\n"
+                                      "    color: #ffffff;\n"
+                                      "}\n"
+                                      "menu separator {\n"
+                                      "    min-height: 1px;\n"
+                                      "    background-color: rgba(255, 255, 255, 0.1);\n"
+                                      "    margin: 4px 6px;\n"
+                                      "}\n";
+            gtk_css_provider_load_from_data(this->darkModeCssProvider.get(), darkMenuCss, -1, nullptr);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(),
+                                                      GTK_STYLE_PROVIDER(this->darkModeCssProvider.get()),
+                                                      GTK_STYLE_PROVIDER_PRIORITY_APPLICATION + 2);
+        }
     } else {
         gtk_style_context_remove_class(context, "darkMode");
         g_object_set(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme", false, nullptr);
+        if (this->darkModeCssProvider) {
+            gtk_style_context_remove_provider_for_screen(gdk_screen_get_default(),
+                                                         GTK_STYLE_PROVIDER(this->darkModeCssProvider.get()));
+            this->darkModeCssProvider.reset();
+        }
         if (props.darkSuffix) {  // The active theme is all dark. Remove the trailing "-dark"
             g_object_set(gtk_widget_get_settings(this->window), "gtk-theme-name", props.rootname.c_str(), nullptr);
             modifiedGtkSettingsTheme = true;

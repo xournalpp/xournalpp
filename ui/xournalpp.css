@@ -38,6 +38,39 @@ toolbar {
     -GtkWidget-window-dragging: false;
 }
 
+menubar {
+    background-color: #ffffff;
+    color: #1e293b;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 2px 4px;
+}
+
+window.darkMode menubar {
+    background-color: #18181b;
+    color: #f4f4f5;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+menubar > menuitem {
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: inherit;
+}
+
+menubar > menuitem:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+window.darkMode menubar > menuitem:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+menubar > menuitem:checked,
+menubar > menuitem:active {
+    background-color: #0284c7;
+    color: #ffffff;
+}
+
 /* ==========================================================================
    2. TOOLBARS & TOOL ITEMS
    ========================================================================== */
@@ -434,6 +467,58 @@ window.darkMode popover {
     background-color: #22222a;
     border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+}
+
+/* Base Light Menu Popup Styling */
+menu,
+.menu {
+    background-color: #ffffff;
+    color: #1e293b;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 4px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+menuitem {
+    color: #1e293b;
+    padding: 5px 12px;
+    border-radius: 6px;
+}
+
+menuitem label {
+    color: #1e293b;
+}
+
+menuitem:hover,
+menuitem:selected {
+    background-color: #e0f2fe;
+    color: #0284c7;
+}
+
+menuitem:hover label,
+menuitem:selected label {
+    color: #0284c7;
+}
+
+menuitem:disabled,
+menuitem:disabled label {
+    color: rgba(30, 41, 59, 0.38);
+}
+
+menuitem accelerator {
+    color: rgba(30, 41, 59, 0.5);
+}
+
+menuitem:hover accelerator,
+menuitem:selected accelerator {
+    color: #0284c7;
+}
+
+menu separator {
+    min-height: 1px;
+    background-color: rgba(0, 0, 0, 0.08);
+    margin: 4px 6px;
 }
 
 /* ==========================================================================
