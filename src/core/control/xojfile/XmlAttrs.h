@@ -35,6 +35,7 @@ constexpr auto COLOR_STR = u8"color";  // also in stroke, text and link
 constexpr auto DOMAIN_STR = u8"domain";
 constexpr auto FILENAME_STR = u8"filename";
 constexpr auto PAGE_NUMBER_STR = u8"pageno";
+constexpr auto PAGE_ORIENTATION_STR = u8"pageorient";
 
 // timestamp
 constexpr auto AUDIO_FILENAME_STR = u8"fn";  // also in stroke, text and audio
