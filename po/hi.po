@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-22 11:55+0000\n"
-"PO-Revision-Date: 2026-09-23 09:43\n"
+"POT-Creation-Date: 2026-10-12 13:51+0000\n"
+"PO-Revision-Date: 2026-10-18 04:29\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -23,71 +23,71 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 msgstr "ऑडियो फोल्डर चुना नहीं गया है या अमान्य है!! रिकॉर्डिंग काम नहीं करेगी!\n"
 "कृपया \"वरीयताएँ > ऑडियो रिकॉर्डिंग\" के तहत रिकॉर्डिंग फ़ोल्डर का चुनाव करें |"
 
-#: ../src/core/control/Control.cpp:235
+#: ../src/core/control/Control.cpp:241
 msgid "Filesystem error: {1}"
 msgstr "फ़ाइल सिस्टम एरर: {1}"
 
-#: ../src/core/control/Control.cpp:247
+#: ../src/core/control/Control.cpp:253
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "पुरानी खुद बा खुद सहज हुई फाइल \"{1}\" को नहीं हटाया जा सका: {2}"
 
-#: ../src/core/control/Control.cpp:588
+#: ../src/core/control/Control.cpp:594
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:608
+#: ../src/core/control/Control.cpp:614
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1663
+#: ../src/core/control/Control.cpp:617 ../src/core/control/Control.cpp:1669
 msgid "Yes"
 msgstr "हाँ"
 
-#: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1663
+#: ../src/core/control/Control.cpp:617 ../src/core/control/Control.cpp:1669
 msgid "No"
 msgstr "नहीं"
 
-#: ../src/core/control/Control.cpp:839 ../src/core/control/Control.cpp:1897
-#: ../src/core/control/Control.cpp:2225
+#: ../src/core/control/Control.cpp:845 ../src/core/control/Control.cpp:1903
+#: ../src/core/control/Control.cpp:2231
 msgid "Cancel"
 msgstr "रद्द करें"
 
-#: ../src/core/control/Control.cpp:840
+#: ../src/core/control/Control.cpp:846
 msgid "Insert after current page"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:841
+#: ../src/core/control/Control.cpp:847
 msgid "Insert at end"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:844
+#: ../src/core/control/Control.cpp:850
 msgid "_Journal"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:844
+#: ../src/core/control/Control.cpp:850
 msgid "Paper B_ackground"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:845
+#: ../src/core/control/Control.cpp:851
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:43
 msgid "With PDF background"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:848
+#: ../src/core/control/Control.cpp:854
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:891
+#: ../src/core/control/Control.cpp:897
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "संलग्न करने के लिए कोई पीडीएफ पृष्ठ उपलब्ध नहीं है। आपको पहले दस्तावेज़ को फिर से खोलना पड़ सकता है।"
 
-#: ../src/core/control/Control.cpp:905
+#: ../src/core/control/Control.cpp:911
 msgid "Unable to retrieve pdf page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1519
+#: ../src/core/control/Control.cpp:1525
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -95,126 +95,126 @@ msgstr "Autosave files खुला नहीं. वे अतिव्या�
 "फ़ाइलों को किसी अन्य फ़ोल्डर में कॉपी करें।\n"
 "फ़ोल्डर {1} से फ़ाइलें खोल नहीं जा सकती हैं।"
 
-#: ../src/core/control/Control.cpp:1539
+#: ../src/core/control/Control.cpp:1545
 msgid "file: {1}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1582
+#: ../src/core/control/Control.cpp:1588
 msgid "<i>Above error repeated {1} times</i>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1594
+#: ../src/core/control/Control.cpp:1600
 msgid "<i>&lt;{1} more lines of error messages&gt;</i>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1633
+#: ../src/core/control/Control.cpp:1639
 msgid "Error opening file \"{1}\".\n\n"
 "<tt>{2}</tt>\n"
 "<b>{3}</b>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1647
+#: ../src/core/control/Control.cpp:1653
 msgid "There were some errors while loading the file. Some information might have been lost. Do not overwrite your old file unless you are sure everything you need was loaded correctly.\n\n"
 "Error messages:\n"
 "<tt>{1}</tt>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1665
+#: ../src/core/control/Control.cpp:1671
 msgid "File version mismatch"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1666
+#: ../src/core/control/Control.cpp:1672
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1689
+#: ../src/core/control/Control.cpp:1695
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1710
+#: ../src/core/control/Control.cpp:1716
 msgid "Error reading PNG file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1745
+#: ../src/core/control/Control.cpp:1751
 msgid "Error reading template file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1764
+#: ../src/core/control/Control.cpp:1770
 msgid "Failed to determine if path exists \"{1}\": {2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1765
+#: ../src/core/control/Control.cpp:1771
 msgid "That file does not exist:\n"
 "\"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1877
+#: ../src/core/control/Control.cpp:1883
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1880
+#: ../src/core/control/Control.cpp:1886
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1890
+#: ../src/core/control/Control.cpp:1896
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1895
+#: ../src/core/control/Control.cpp:1901
 msgid "Select another PDF"
 msgstr "एक और PDF का चयन करें"
 
-#: ../src/core/control/Control.cpp:1896
+#: ../src/core/control/Control.cpp:1902
 msgid "Remove PDF Background"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1900
+#: ../src/core/control/Control.cpp:1906
 msgid "Use proposed PDF"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1903
+#: ../src/core/control/Control.cpp:1909
 msgid "Missing PDF background file"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2032
+#: ../src/core/control/Control.cpp:2038
 msgid "Select font"
 msgstr "फॉन्ट चुनें"
 
-#: ../src/core/control/Control.cpp:2051
+#: ../src/core/control/Control.cpp:2057
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "रंग चुनें"
 
-#: ../src/core/control/Control.cpp:2076
+#: ../src/core/control/Control.cpp:2082
 msgid "Unsaved Document"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2218
+#: ../src/core/control/Control.cpp:2224
 msgid "Document file was removed."
 msgstr "दस्तावेज़ फ़ाइल को हटा दिया गया था।."
 
-#: ../src/core/control/Control.cpp:2218
+#: ../src/core/control/Control.cpp:2224
 msgid "This document is not saved yet."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2220
+#: ../src/core/control/Control.cpp:2226
 msgid "Save As..."
 msgstr "के रूप में सहेजें..."
 
-#: ../src/core/control/Control.cpp:2220 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2226 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
 msgid "Save"
 msgstr "सहेजें"
 
-#: ../src/core/control/Control.cpp:2223
+#: ../src/core/control/Control.cpp:2229
 msgid "Discard"
 msgstr "रद्द करें"
 
-#: ../src/core/control/Control.cpp:2312
+#: ../src/core/control/Control.cpp:2318
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -296,7 +296,7 @@ msgid "Could not load LaTeX PDF file"
 msgstr "LaTeX PDF फाइल को लोड नहीं कर सका"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:111
-#: ../src/core/control/XournalMain.cpp:227
+#: ../src/core/control/XournalMain.cpp:231
 #: ../src/core/control/xojfile/LoadHandler.cpp:262
 #: ../src/core/control/xojfile/LoadHandler.cpp:281
 msgid "Error reading PDF: {1}"
@@ -316,51 +316,51 @@ msgstr ""
 msgid "Running print operation failed with {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:120
+#: ../src/core/control/XournalMain.cpp:124
 msgid "Failed to delete file: {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:122
+#: ../src/core/control/XournalMain.cpp:126
 msgid "Please delete the file manually"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:134
+#: ../src/core/control/XournalMain.cpp:138
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "पिछले समय Xournal++ दुर्घटनाग्रस्त हो गया। क्या आप पिछले संपादित फ़ाइल को पुनर्स्थापित करना चाहते हैं?"
 
-#: ../src/core/control/XournalMain.cpp:137
+#: ../src/core/control/XournalMain.cpp:141
 msgid "Recovery file detected"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:138
+#: ../src/core/control/XournalMain.cpp:142
 msgid "Delete file"
 msgstr "फ़ाइल हटाएँ"
 
-#: ../src/core/control/XournalMain.cpp:138
+#: ../src/core/control/XournalMain.cpp:142
 msgid "Restore file"
 msgstr "फाइल से रीस्टोर"
 
-#: ../src/core/control/XournalMain.cpp:158
+#: ../src/core/control/XournalMain.cpp:162
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:173
+#: ../src/core/control/XournalMain.cpp:177
 msgid "Error loading document: {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:206
+#: ../src/core/control/XournalMain.cpp:210
 msgid "Error exporting image: {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:235
+#: ../src/core/control/XournalMain.cpp:239
 msgid "Error saving document: {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:265
+#: ../src/core/control/XournalMain.cpp:269
 msgid "Error exporting PDF: {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:371
+#: ../src/core/control/XournalMain.cpp:375
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -374,78 +374,78 @@ msgstr "<span foreground='red' size='x-large'>ui  की एक महेत्�
 "वर्किंग पाठ मेइन नहीं \n"
 "{2} मैं नहीं"
 
-#: ../src/core/control/XournalMain.cpp:376
+#: ../src/core/control/XournalMain.cpp:380
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "अभी यह फाइल के बिना चलाने की कोशिस करेंगे ।"
 
-#: ../src/core/control/XournalMain.cpp:398
-#: ../src/core/control/XournalMain.cpp:459
+#: ../src/core/control/XournalMain.cpp:402
+#: ../src/core/control/XournalMain.cpp:463
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Sorry, Xournal++ केवल एक ही बार में एक फ़ाइल खोल सकते हैं।\n"
 "अन्य लोगों को नजरअंदाज कर दिया जाता है।"
 
-#: ../src/core/control/XournalMain.cpp:409
+#: ../src/core/control/XournalMain.cpp:413
 msgid "File {1} does not exist."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:413
+#: ../src/core/control/XournalMain.cpp:417
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:616
+#: ../src/core/control/XournalMain.cpp:619
 msgid "Jump to Page (first Page: 1)"
 msgstr "पृष्ठ पर कूदो (पहली पृष्ठ: 1)"
 
-#: ../src/core/control/XournalMain.cpp:620
+#: ../src/core/control/XournalMain.cpp:623
 msgid "Get version of xournalpp"
 msgstr "xournalpp का संस्करण प्राप्त करें"
 
-#: ../src/core/control/XournalMain.cpp:622
+#: ../src/core/control/XournalMain.cpp:625
 msgid "Disable audio for this session"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:624
+#: ../src/core/control/XournalMain.cpp:627
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:628
+#: ../src/core/control/XournalMain.cpp:631
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:633
+#: ../src/core/control/XournalMain.cpp:636
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:642
+#: ../src/core/control/XournalMain.cpp:645
 msgid "Export FILE as PDF"
 msgstr "वहनीय दस्तावेज़ फ़ाइल के रूप में फ़ाइल निर्यात करें"
 
-#: ../src/core/control/XournalMain.cpp:645
+#: ../src/core/control/XournalMain.cpp:648
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:651
+#: ../src/core/control/XournalMain.cpp:654
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:656
+#: ../src/core/control/XournalMain.cpp:659
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:661
+#: ../src/core/control/XournalMain.cpp:664
 msgid "Export layers progressively\n"
 "                                       In PDF export, Render layers progressively one by one.\n"
 "                                       This results in N export pages per page with N layers,\n"
@@ -453,38 +453,38 @@ msgid "Export layers progressively\n"
 "                                       The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:670
+#: ../src/core/control/XournalMain.cpp:673
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:675
+#: ../src/core/control/XournalMain.cpp:678
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:682
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:683
+#: ../src/core/control/XournalMain.cpp:686
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:688
+#: ../src/core/control/XournalMain.cpp:691
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:696
+#: ../src/core/control/XournalMain.cpp:699
 msgid "Advanced export options"
 msgstr "उन्नत निर्यात विकल्प"
 
-#: ../src/core/control/XournalMain.cpp:697
+#: ../src/core/control/XournalMain.cpp:700
 msgid "Display advanced export options"
 msgstr "उन्नत निर्यात विकल्प प्रदर्शित करें"
 
@@ -638,11 +638,11 @@ msgstr "सममितीय ग्राफ़"
 msgid "Image"
 msgstr "चित्र"
 
-#: ../src/core/control/settings/Settings.cpp:155
+#: ../src/core/control/settings/Settings.cpp:159
 msgid "%F-Note-%H-%M"
 msgstr "लेख"
 
-#: ../src/core/control/settings/Settings.cpp:156
+#: ../src/core/control/settings/Settings.cpp:160
 msgid "%{name}_annotated"
 msgstr ""
 
@@ -1889,8 +1889,8 @@ msgctxt "as a noun: a copy of"
 msgid "Copy"
 msgstr "प्रतिलिपि बनाएँ"
 
-#: ../src/core/model/Document.cpp:330 ../src/core/model/Document.cpp:339
-#: ../src/core/model/Document.cpp:342
+#: ../src/core/model/Document.cpp:331 ../src/core/model/Document.cpp:340
+#: ../src/core/model/Document.cpp:343
 msgid "Document not loaded! ({1}), {2}"
 msgstr ""
 
@@ -2156,11 +2156,11 @@ msgid "Error reading \"{1}\":\n"
 "{2}"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:408
+#: ../src/util/PathUtil.cpp:449
 msgid "xournalpp-{1}"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:417
+#: ../src/util/PathUtil.cpp:458
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "{1} फ़ोल्डर नहीं बना सकता\n"
@@ -2192,35 +2192,35 @@ msgid "Error opening file \"{1}\" in zip archive:\n"
 "{2}"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:127
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:134
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:140
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:138
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:144
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:142
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:148
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:147
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:153
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:187
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:193
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:205
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:211
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:212
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:218
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr ""
 
