@@ -273,6 +273,14 @@ public:
     void setToolSize(ToolSize size);
 
     /**
+     * Mirrors the selection symmetrically, horizontally or vertically
+     * depending on the action calling the function and/or its parameters
+     * @param fx: Scaling factor on X axis
+     * @param fy: Scaling factor on Y axis
+     */
+    void mirrorSelection(double fx, double fy);
+
+    /**
      * Change the line style of the PEN if select, or of selected elements if any
      * Otherwise, select the PEN tool and set its linestyle
      */
