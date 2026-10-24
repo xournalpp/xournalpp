@@ -16,8 +16,9 @@
 
 #include <gdk/gdk.h>  // for GdkEventSequence
 
-#include "util/DispatchPool.h"  // for xoj::util::Listener
-#include "util/Point.h"         // for Point
+#include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHandler
+#include "util/DispatchPool.h"                     // for xoj::util::Listener
+#include "util/Point.h"                            // for Point
 
 #include "InputContext.h"  // for InputContext::DeviceType, InputContext
 
@@ -102,6 +103,19 @@ protected:
     bool handScrolling{false};
 
     /**
+     * @brief unsnapped tool origin for grid snapping during drags
+     *
+     * Synced by sequenceStart(), cleared when the gesture ends.
+     */
+    xoj::util::Point<double> unsnappedOrigin{};
+    bool hasUnsnappedOrigin{false};
+
+    /**
+     * @brief grid snapping handler reused across drag motions
+     */
+    SnapToGridInputHandler snappingHandler;
+
+    /**
      * @brief the line segments (strokes with two points) of the current layer, that are used for rotation snapping the
      * geometry tool
      */
@@ -119,6 +133,12 @@ protected:
      * @param event the current input event
      */
     void scrollMotion(InputEvent const& event);
+
+    /**
+     * @brief translates the tool by the given offset, snapping the accumulated origin to the grid
+     * @param offset the translation vector (in document coordinates)
+     */
+    void translateSnapped(const xoj::util::Point<double>& offset);
 
     /**
      * @brief start rotating and zooming (after the second finger is put onto the screen)
