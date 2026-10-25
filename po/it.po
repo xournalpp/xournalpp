@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-09-25 06:14+0000\n"
-"PO-Revision-Date: 2026-09-27 04:31\n"
+"PO-Revision-Date: 2026-10-25 04:30\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -20,8 +20,8 @@ msgstr ""
 #: ../src/core/control/AudioController.cpp:120
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr "Cartella dell'audio non impostata o non valida! La registrazione non funzionerà!\n"
-"Impostare la cartella di registrazione in “Preferenze > Registrazione audio”"
+msgstr "Cartella audio non impostata o non valida! La registrazione non funzionerà!\n"
+"Si prega di impostare la cartella di registrazione in \"Preferenze > Registrazione audio\""
 
 #: ../src/core/control/Control.cpp:234
 msgid "Filesystem error: {1}"
@@ -389,7 +389,9 @@ msgstr "Salva il file xopp con lo sfondo PDF specificato come FILE"
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
-msgstr ""
+msgstr "Usa il backend fornito per le esportazioni PDF.\n"
+"                                       Backend disponibili: {1}\n"
+"                                       Nessun effetto senza -p/--create-pdf=foo.pdf"
 
 #: ../src/core/control/XournalMain.cpp:646
 msgid "Export FILE as PDF"
@@ -399,18 +401,23 @@ msgstr "Esporta FILE come PDF"
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
-msgstr ""
+msgstr "Esporta FILE come file immagine (uno per pagina)\n"
+"                                 Stima il formato di uscita dall'estensione di IMGFILE\n"
+"                                 Formati supportati: .png, .svg"
 
 #: ../src/core/control/XournalMain.cpp:655
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
-msgstr ""
+msgstr "Esporta senza sfondo\n"
+"                                 Il file esportato ha sfondo trasparente o bianco,\n"
+"                                 a seconda di ciò che il suo formato supporta\n"
 
 #: ../src/core/control/XournalMain.cpp:660
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
-msgstr ""
+msgstr "Esporta senza rigatura\n"
+"                                 Il file esportato non presenta la rigatura del foglio\n"
 
 #: ../src/core/control/XournalMain.cpp:665
 msgid "Export layers progressively\n"
@@ -418,34 +425,45 @@ msgid "Export layers progressively\n"
 "                                       This results in N export pages per page with N layers,\n"
 "                                       building up the layer stack progressively.\n"
 "                                       The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "Esporta progressivamente i livelli\n"
+"                                 Nell'esportazione PDF, Renderizza i livelli progressivamente uno per uno.\n"
+"                                 Questo risulta in N pagine di esportazione per pagina con N strati,\n"
+"                                 costruire progressivamente la pila dei livelli.\n"
+"                                 Il file PDF risultante può essere utilizzato per una presentazione.\n"
 
 #: ../src/core/control/XournalMain.cpp:674
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Esporta solo le pagine specificate dall'intervallo (ad esempio \"2-3,5,7-\")\n"
+"                                 Nessun effetto senza -p/--create-pdf o -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:679
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Esporta solo i livelli specificati dall'intervallo (ad esempio \"2-3,5,7-\")\n"
+"                                 Nessun effetto senza -p/--create-pdf o -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:683
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "Imposta DPI per le esportazioni PNG. Il valore predefinito è 300\n"
+"                                 Nessun effetto senza -i/--create-img=foo.png"
 
 #: ../src/core/control/XournalMain.cpp:687
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "Imposta l'altezza della pagina per le esportazioni PNG\n"
+"                                 Nessun effetto senza -i/--create-img=foo.png\n"
+"                                 Ignorato se si usa --export-png-dpi"
 
 #: ../src/core/control/XournalMain.cpp:692
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "Imposta l'altezza della pagina per le esportazioni PNG\n"
+"                                       Nessun effetto senza -i/--create-img=foo.png\n"
+"                                       Ignorato se si usa --export-png-dpi o --export-png-width"
 
 #: ../src/core/control/XournalMain.cpp:700
 msgid "Advanced export options"
@@ -943,11 +961,11 @@ msgstr "Inserisci immagine"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 msgid "Laser Pointer - Pen"
-msgstr ""
+msgstr "Puntatore Laser - Penna"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 msgid "Laser Pointer - Highlighter"
-msgstr ""
+msgstr "Puntatore Laser - Evidenziatore"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 msgid "Vertical space"
@@ -1043,23 +1061,23 @@ msgstr "Disegna Spline"
 
 #: ../src/core/gui/dialog/DeviceTestingArea.cpp:162
 msgid "Export Logs"
-msgstr ""
+msgstr "Esporta Logs"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:115
 msgid "Failed to parse external editor command: {1}"
-msgstr ""
+msgstr "Analisi del comando esterno editor non riuscita: {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:131
 msgid "Could not spawn editor: {1}"
-msgstr ""
+msgstr "Impossibile generare l'editor: {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:162
 msgid "Could not wait for editor: {1}"
-msgstr ""
+msgstr "Impossibile attendere l'editor: {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:171
 msgid "Editor exited with bad status {1}"
-msgstr ""
+msgstr "Editor uscito con stato errato {1}"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:15
 msgid "All files"
@@ -1657,7 +1675,7 @@ msgstr "Compasso"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Toggle Touch Drawing"
-msgstr ""
+msgstr "Abilita disegno con touch"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
@@ -1711,7 +1729,7 @@ msgstr "Avanti"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:493
 msgid "Laser pointer"
-msgstr ""
+msgstr "Puntatore laser"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:499
 msgid "Fill"
@@ -1889,19 +1907,19 @@ msgstr "Impossibile inizializzare la superficie Cairo PDF"
 
 #: ../src/core/pdf/base/HybridPdfExport.cpp:110
 msgid "PDF page number is out of range"
-msgstr ""
+msgstr "Il numero di pagina PDF è fuori dall'intervallo"
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:21
 msgid "Unknown pdf backend: {1}. Available backends are: {2}. Using default backend."
-msgstr ""
+msgstr "Backend pdf sconosciuto: {1}. I backend disponibili sono: {2}. Usare il backend predefinito."
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:39
 msgid "Default"
-msgstr ""
+msgstr "Predefinito"
 
 #: ../src/core/pdf/base/QPdfExport.cpp:173
 msgid "Error with overlay or final export:"
-msgstr ""
+msgstr "Errore con sovrapposizione o esportazione finale:"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:128
 msgid "Error while finalizing the PDF Cairo surface"
@@ -2124,7 +2142,7 @@ msgstr "Errore {1} elaborando il comando di sistema: {2}"
 
 #: ../src/util/XojMsgBox.cpp:186
 msgid "The file {1} already exists! Do you want to replace it?"
-msgstr ""
+msgstr "Il file {1} esiste già! Vuoi sostituirlo?"
 
 #: ../src/util/XojMsgBox.cpp:190
 msgid "Select another name"
@@ -2228,36 +2246,36 @@ msgstr "Ok"
 
 #: ../ui/crashDialog.glade:7
 msgid "Crash report"
-msgstr ""
+msgstr "Segnalazione crash"
 
 #: ../ui/crashDialog.glade:23
 msgid "Oops... Xournal++ encountered a fatal error"
-msgstr ""
+msgstr "Oops... Xournal++ ha riscontrato un errore fatale"
 
 #: ../ui/crashDialog.glade:39
 msgid "Please consider filling a bug report (see button below). Attach the following log to your report."
-msgstr ""
+msgstr "Si prega di considerare di compilare una segnalazione di bug (consultare il pulsante sottostante). Collegare il seguente registro alla segnalazione."
 
 #: ../ui/crashDialog.glade:56
 msgid "Your document has been saved in:"
-msgstr ""
+msgstr "Il tuo documento è stato salvato in:"
 
 #: ../ui/crashDialog.glade:92
 msgid "Execution log:"
-msgstr ""
+msgstr "Log di esecuzione:"
 
 #: ../ui/crashDialog.glade:140
 msgid "Open your web browser with a partially pre-filled bug report"
-msgstr ""
+msgstr "Apri il tuo browser web con una segnalazione di bug parzialmente pre-riempita"
 
 #: ../ui/crashDialog.glade:145
 msgid "Create a bug report"
-msgstr ""
+msgstr "Crea una segnalazione di bug"
 
 #: ../ui/crashDialog.glade:164
 msgctxt "github is a name - do not try to translate it"
 msgid "(this will open github in your browser)"
-msgstr ""
+msgstr "(questo aprirà github nel tuo browser)"
 
 #: ../ui/deviceList.glade:7
 msgid "Known devices"
@@ -2269,7 +2287,7 @@ msgstr "<i>Assegna classi di dispositivo a ogni dispositivo di immissione del si
 
 #: ../ui/deviceTestingArea.glade:42
 msgid "Try out your devices in the area below"
-msgstr ""
+msgstr "Prova i tuoi dispositivi nell'area sottostante"
 
 #: ../ui/deviceTestingArea.glade:70 ../ui/settings.glade:1630
 #: ../ui/settingsDeviceClassConfig.glade:35
@@ -2279,17 +2297,17 @@ msgstr "Mouse"
 #: ../ui/deviceTestingArea.glade:82
 msgctxt "mouse button"
 msgid "Left"
-msgstr ""
+msgstr "Sinistra"
 
 #: ../ui/deviceTestingArea.glade:96
 msgctxt "mouse button"
 msgid "Middle"
-msgstr ""
+msgstr "Centrale"
 
 #: ../ui/deviceTestingArea.glade:110
 msgctxt "mouse button"
 msgid "Right"
-msgstr ""
+msgstr "Destra"
 
 #: ../ui/deviceTestingArea.glade:124 ../ui/settings.glade:2170
 msgid "Stylus"
@@ -2298,7 +2316,7 @@ msgstr "Penna"
 #: ../ui/deviceTestingArea.glade:136 ../ui/deviceTestingArea.glade:190
 msgctxt "the tip of the stylus"
 msgid "Tip"
-msgstr ""
+msgstr "Suggerimento"
 
 #: ../ui/deviceTestingArea.glade:150 ../ui/settings.glade:1987
 msgid "Button 1"
@@ -2315,37 +2333,38 @@ msgstr "touchscreen"
 
 #: ../ui/deviceTestingArea.glade:374
 msgid "In use"
-msgstr ""
+msgstr "In uso"
 
 #: ../ui/deviceTestingArea.glade:388 ../ui/deviceTestingArea.glade:402
 msgctxt "stylus hover"
 msgid "Hover"
-msgstr ""
+msgstr "Passa sopra"
 
 #: ../ui/deviceTestingArea.glade:443
 msgid "Show logs"
-msgstr ""
+msgstr "Mostra log"
 
 #: ../ui/deviceTestingArea.glade:455
 msgid "Export debug info"
-msgstr ""
+msgstr "Esporta info di debug"
 
 #: ../ui/deviceTestingArea.glade:477
 msgid "To clear the logs, simply close and reopen the settings dialog"
-msgstr ""
+msgstr "Per cancellare i registri, basta chiudere e riaprire la finestra delle impostazioni"
 
 #: ../ui/deviceTestingArea.glade:491
 msgid "Select this option if the \"Tip\" sign does not light up when using the stylus and pressing one of its buttons.\n\n"
 "Unselect this option if the \"Tip\" sign is on while the stylus is hovering (but not touching the screen or tablet)."
-msgstr ""
+msgstr "Selezionare questa opzione se il segno \"Suggerimento\" non si accende quando si utilizza lo stilo e premendo uno dei suoi pulsanti.\n\n"
+"Deseleziona questa opzione se il segno \"Suggerimento\" è acceso mentre lo stilo si sta muovendo (ma non tocca lo schermo o il tablet)."
 
 #: ../ui/deviceTestingArea.glade:500
 msgid "Emulate stylus tip contact on button press"
-msgstr ""
+msgstr "Emula il contatto di punta dello stilo alla pressione del pulsante"
 
 #: ../ui/deviceTestingArea.glade:547
 msgid "<i>Change the device class below if your device is not correctly recognized (e.g. your active stylus shows up as touchscreen)</i>"
-msgstr ""
+msgstr "<i>Cambia la classe di dispositivo qui sotto se il tuo dispositivo non è correttamente riconosciuto (ad esempio il tuo stilo attivo appare come touchscreen)</i>"
 
 #: ../ui/deviceTestingArea.glade:568
 msgid "Last device used:"
@@ -2429,7 +2448,7 @@ msgstr "Se abilitata, i livelli di ogni pagina verranno aggiunti uno per uno. Il
 
 #: ../ui/exportSettings.glade:379
 msgid "Backend"
-msgstr ""
+msgstr "Backend"
 
 #: ../ui/extEdTexDialog.glade:23 ../ui/intEdTexDialog.glade:18
 msgid "Insert Latex"
@@ -2437,7 +2456,7 @@ msgstr "Inserisci LaTeX"
 
 #: ../ui/extEdTexDialog.glade:42
 msgid "Enter / edit LaTeX Text in external Editor"
-msgstr ""
+msgstr "Inserisci / modifica testo LaTeX nell'editor esterno"
 
 #: ../ui/extEdTexDialog.glade:86 ../ui/intEdTexDialog.glade:116
 msgid "Output generated by the LaTeX command."
@@ -2561,7 +2580,7 @@ msgstr "Scegli il carattere dell'editor"
 
 #: ../ui/latexSettings.glade:516
 msgid "You can optionally use an external editor program instead of the built-in editor. If you enable the option below, the provided editor command (defaulting to $EDITOR) will start with a popup that only shows a preview and potential error message instead of the normal one with a built-in editor. The environment variable XPP_TEXT_COLOR is set to the current Text Tool color in hex RGB format."
-msgstr ""
+msgstr "È possibile utilizzare un programma di editor esterno invece dell'editor integrato. Se abiliti l'opzione qui sotto, il comando dell'editor fornito (predefinito di $EDITOR) inizierà con un popup che mostra solo un'anteprima e un potenziale messaggio di errore invece di quello normale con un editor incorporato. La variabile di ambiente XPP_TEXT_COLOR è impostata al colore attuale dello strumento testo in formato esadecimale RGB."
 
 #: ../ui/latexSettings.glade:532
 msgid "Use external Editor"
@@ -3596,7 +3615,7 @@ msgstr "Velocità zoom"
 
 #: ../ui/settings.glade:4412
 msgid "<i>To make sure on 100% zoom the size of elements is natural.</i>"
-msgstr ""
+msgstr "<i>Per assicurarti che lo zoom al 100% la dimensione degli elementi sia naturale.</i>"
 
 #: ../ui/settings.glade:4432
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
@@ -3604,7 +3623,7 @@ msgstr "<i>Appoggia un righello sullo schermo e muovi lo slider finchè non corr
 
 #: ../ui/settings.glade:4448
 msgid "Automatic"
-msgstr ""
+msgstr "Auto"
 
 #: ../ui/settings.glade:4505
 msgid "The unit of the ruler is cm"
@@ -3840,19 +3859,19 @@ msgstr "<i>Seleziona lo strumento e le impostazioni se premi il pulsante predefi
 
 #: ../ui/settings.glade:5692
 msgid "<b>Default tool</b>"
-msgstr ""
+msgstr "<b>Strumento predefinito</b>"
 
 #: ../ui/settings.glade:5728
 msgid "<i>The laser pointer allows to write strokes that will fade out after a short while.</i>"
-msgstr ""
+msgstr "<i>Il puntatore laser permette di scrivere tratti che svaniranno dopo poco tempo.</i>"
 
 #: ../ui/settings.glade:5749
 msgid "Fade out delay (in ms)"
-msgstr ""
+msgstr "Ritardo dissolvenza (in ms)"
 
 #: ../ui/settings.glade:5801
 msgid "<b>Laser pointer</b>"
-msgstr ""
+msgstr "<b>Puntatore laser</b>"
 
 #: ../ui/settings.glade:5841
 msgid "Tools"
@@ -4486,7 +4505,7 @@ msgstr "A quadretti con bordi"
 
 #: ../resources-templates/pagetemplates.ini.in:47
 msgid "Graph with border (bold every 5th)"
-msgstr ""
+msgstr "Grafico con bordo (grassetto ogni 5°)"
 
 #: ../resources-templates/toolbar.ini.in:50
 msgid "All Tools"
