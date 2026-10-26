@@ -82,5 +82,6 @@ private:
     std::unique_ptr<MetadataEntry> metadata;
 
     friend class Metadata_testRead_Test;
+    friend class Metadata_testReadNaNZoom_Test;
     friend class Metadata_testWriteReadCycle_Test;
 };
