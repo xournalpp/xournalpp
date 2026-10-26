@@ -24,6 +24,16 @@ TEST(Metadata, testRead) {
     EXPECT_EQ(entry->zoom, 3.42);
     EXPECT_EQ(entry->path, fs::path(u8"/test/my/metadata.xopp"));
 }
+TEST(Metadata, testReadNaNZoom) {
+    for (const auto& file: {u8"metadata/3.metadata", u8"metadata/4.metadata"}) {
+        auto entry = MetadataManager::loadMetadataFile(GET_TESTFILE(file));
+        ASSERT_TRUE(entry);
+        EXPECT_EQ(entry->zoom, MetadataEntry().zoom);
+        EXPECT_EQ(entry->page, 54);
+        EXPECT_EQ(entry->path, fs::path(u8"/test/my/metadata.xopp"));
+    }
+}
+
 TEST(Metadata, testWriteReadCycle) {
     auto entry = MetadataManager::loadMetadataFile(GET_TESTFILE(u8"metadata/aωkward ⒫ath/2.metadata"));
     EXPECT_TRUE(entry);
