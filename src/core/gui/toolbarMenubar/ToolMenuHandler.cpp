@@ -307,6 +307,7 @@ void ToolMenuHandler::initToolItems() {
     emplaceCustomItemTgl("ROTATION_SNAPPING", Cat::MISC, Action::ROTATION_SNAPPING, "snapping-rotation",
                          _("Rotation Snapping"));
     emplaceCustomItemTgl("GRID_SNAPPING", Cat::MISC, Action::GRID_SNAPPING, "snapping-grid", _("Grid Snapping"));
+    emplaceCustomItemTgl("DARK_MODE", Cat::MISC, Action::TOGGLE_DARK_MODE, "dark-mode", _("Toggle Dark Mode"));
 
     /*
      * Menu View
