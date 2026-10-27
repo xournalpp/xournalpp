@@ -80,6 +80,8 @@ auto SetsquareInputHandler::handlePointer(InputEvent const& event) -> bool {
                 return true;
             } else if (event.type == BUTTON_RELEASE_EVENT && this->handScrolling) {
                 this->handScrolling = false;
+                // Reset snap origin (gesture ended)
+                this->hasUnsnappedOrigin = false;
             }
         default:
             return false;
