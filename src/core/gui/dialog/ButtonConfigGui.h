@@ -52,6 +52,7 @@ private:
     GtkWidget* cbEraserType;
     GtkWidget* cbDrawingType;
     GtkWidget* cbStrokeType;
+    GtkWidget* cbZoomScaling;
 
     std::vector<InputDevice> deviceList;
 

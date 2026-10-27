@@ -21,11 +21,26 @@ auto ButtonConfig::getDrawingType() const -> DrawingType { return this->drawingT
 
 auto ButtonConfig::getAction() const -> ToolType { return this->action; }
 
+auto ButtonConfig::getZoomScalingMode() const -> ZoomScalingMode { return this->zoomScalingMode; }
+
+void ButtonConfig::setZoomScalingMode(ZoomScalingMode mode) { this->zoomScalingMode = mode; }
+
 void ButtonConfig::initButton(ToolHandler* toolHandler, Button button) const {
     toolHandler->resetButtonTool(this->action, button);
 
     if (this->action == TOOL_NONE) {
         return;
+    }
+
+    Tool* bt = toolHandler->getButtonTool(button);
+    if (bt) {
+        if (this->zoomScalingMode == ZoomScalingMode::ENABLED) {
+            bt->setZoomScaling(true);
+        } else if (this->zoomScalingMode == ZoomScalingMode::DISABLED) {
+            bt->setZoomScaling(false);
+        } else {
+            bt->setZoomScaling(toolHandler->getTool(this->action).isZoomScaling());
+        }
     }
 
     const Tool& t = toolHandler->getTool(this->action);
@@ -100,6 +115,13 @@ auto ButtonConfig::applyNoChangeSettings(ToolHandler* toolHandler, Button button
     }
     if (this->action == TOOL_ERASER && this->eraserMode == ERASER_TYPE_NONE) {
         toolHandler->setButtonEraserType(t.getEraserType(), button);
+    }
+
+    if (this->zoomScalingMode == ZoomScalingMode::DONT_CHANGE) {
+        Tool* bt = toolHandler->getButtonTool(button);
+        if (bt) {
+            bt->setZoomScaling(t.isZoomScaling());
+        }
     }
 
     return true;
