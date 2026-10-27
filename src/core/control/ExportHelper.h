@@ -12,7 +12,7 @@
 #pragma once
 
 
-#include "control/jobs/BaseExportJob.h"  // for ExportBackgroundType
+#include "control/jobs/ExportParameters.h"  // for ExportBackgroundType
 #include "pdf/base/PdfExportBackend.h"
 
 #include "filesystem.h"
@@ -52,7 +52,7 @@ void exportImg(Document* doc, fs::path output, const char* range, const char* la
  */
 void exportPdf(Document* doc, const fs::path& output, const char* range, const char* layerRange,
                ExportBackgroundType exportBackground, bool progressiveMode,
-               ExportBackend backend = ExportBackend::DEFAULT);
+               PdfExportBackend backend = PdfExportBackend::DEFAULT);
 
 
 }  // namespace ExportHelper

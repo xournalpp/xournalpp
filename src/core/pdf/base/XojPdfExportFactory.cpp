@@ -11,16 +11,16 @@ XojPdfExportFactory::XojPdfExportFactory() = default;
 
 XojPdfExportFactory::~XojPdfExportFactory() = default;
 
-auto XojPdfExportFactory::createExport(const Document* doc, ProgressListener* listener, ExportBackend backend)
+auto XojPdfExportFactory::createExport(const Document* doc, ProgressListener* listener, PdfExportBackend backend)
         -> std::unique_ptr<XojPdfExport> {
     if (!doc->getPdfFilepath().empty()) {
         switch (backend) {
-            case ExportBackend::DEFAULT:  // fallback to qpdf/podofo/mupdf/cairo in that order
+            case PdfExportBackend::DEFAULT:  // fallback to qpdf/podofo/mupdf/cairo in that order
 #ifdef ENABLE_QPDF
-            case ExportBackend::QPDF:
+            case PdfExportBackend::QPDF:
                 return std::make_unique<QPdfExport>(doc, listener);
 #endif
-            case ExportBackend::CAIRO:
+            case PdfExportBackend::CAIRO:
             default:  // The requested backend has not been included in this build
                 return std::make_unique<XojCairoPdfExport>(doc, listener);
         }
