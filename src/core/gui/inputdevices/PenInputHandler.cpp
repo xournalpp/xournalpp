@@ -99,12 +99,6 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
 
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
 
-    // If the input starts outside a page, we make it act as hand tool instead.
-    if (currentPage == nullptr && toolHandler->pointActiveToolToToolType(TOOL_HAND)) {
-        this->inputStartedOutsidePageArea = true;
-        toolHandler->fireToolChanged();
-    }
-
     ToolType toolType = toolHandler->getToolType();
 
     if (toolType != TOOL_IMAGE) {
@@ -115,19 +109,9 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     }
 
     this->penInWidget = true;
+    this->sequenceStartPage = currentPage;
 
     GtkXournal* xournal = this->inputContext->getXournal();
-
-    XournalppCursor* cursor = xournal->view->getCursor();
-    cursor->setMouseDown(true);
-
-
-    // Save the starting offset when hand-tool is selected to get a reference for the scroll-offset
-    if (toolType == TOOL_HAND) {
-        this->scrollStartPosition = event.absolute;
-    }
-
-    this->sequenceStartPage = currentPage;
 
     // hand tool don't change the selection, so you can scroll e.g. with your touchscreen without remove the selection
     bool changeSelection = xournal->selection && toolType != TOOL_HAND;
@@ -159,14 +143,32 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
             xournal->selection->mouseDown(selType, selectionPos.x, selectionPos.y);
             return true;
         }
-
-        xournal->view->clearSelection();
-        changeTool(event);
-        // stop early to prevent drawing when clicking outside of the selection with the intention of deselecting
-        if (toolHandler->isDrawingTool()) {
-            return true;
+        if (currentPage) {
+            xournal->view->clearSelection();
+            changeTool(event);
+            // stop early to prevent drawing when clicking outside of the selection with the intention of deselecting
+            if (toolHandler->isDrawingTool()) {
+                return true;
+            }
         }
     }
+
+    if (!currentPage && toolHandler->pointActiveToolToToolType(TOOL_HAND)) {
+        // If the input starts outside a page, we make it act as hand tool instead.
+        this->inputStartedOutsidePageArea = true;
+        toolHandler->fireToolChanged();
+    }
+
+    // By this point the tool may have changed due either `changeTool` or `pointActiveToolToToolType` above.
+    toolType = toolHandler->getToolType();
+
+    // Save the starting offset when hand-tool is selected to get a reference for the scroll-offset
+    if (toolType == TOOL_HAND) {
+        this->scrollStartPosition = event.absolute;
+    }
+
+    XournalppCursor* cursor = xournal->view->getCursor();
+    cursor->setMouseDown(true);
 
     // Forward event to page
     if (currentPage) {
