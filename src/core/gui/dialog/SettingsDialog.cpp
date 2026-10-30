@@ -30,11 +30,11 @@
 #include "util/safe_casts.h"                        // for round_cast
 #include "util/utf8_view.h"                         // for utf8
 
-#include "ButtonConfigGui.h"       // for ButtonConfigGui
-#include "DeviceTestingArea.h"     // for DeviceTestingArea
-#include "LanguageConfigGui.h"     // for LanguageConfigGui
-#include "LatexSettingsPanel.h"    // for LatexSettingsPanel
-#include "filesystem.h"            // for is_directory
+#include "ButtonConfigGui.h"     // for ButtonConfigGui
+#include "DeviceTestingArea.h"   // for DeviceTestingArea
+#include "LanguageConfigGui.h"   // for LanguageConfigGui
+#include "LatexSettingsPanel.h"  // for LatexSettingsPanel
+#include "filesystem.h"          // for is_directory
 
 class GladeSearchpath;
 
@@ -194,6 +194,18 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      }),
                      this);
 
+    g_signal_connect_swapped(builder.get("cbScribbleToEraseEnabled"), "toggled", G_CALLBACK(+[](SettingsDialog* self) {
+                                 self->enableWithCheckbox("cbScribbleToEraseEnabled", "exScribbleAdvanced");
+                             }),
+                             this);
+    g_signal_connect_swapped(builder.get("btScribbleDefaults"), "clicked", G_CALLBACK(+[](SettingsDialog* self) {
+                                 gtk_spin_button_set_value(GTK_SPIN_BUTTON(self->builder.get("spScribbleSensitivity")),
+                                                           ScribbleSettings::DEFAULT_SENSITIVITY);
+                                 gtk_spin_button_set_value(
+                                         GTK_SPIN_BUTTON(self->builder.get("spScribbleMinimumPasses")),
+                                         ScribbleSettings::DEFAULT_MINIMUM_PASSES);
+                             }),
+                             this);
     load();
 }
 
@@ -348,6 +360,11 @@ void SettingsDialog::load() {
     loadCheckbox("cbStrokeFilterEnabled", settings->getStrokeFilterEnabled());
     loadCheckbox("cbDoActionOnStrokeFiltered", settings->getDoActionOnStrokeFiltered());
     loadCheckbox("cbTrySelectOnStrokeFiltered", settings->getTrySelectOnStrokeFiltered());
+    loadCheckbox("cbScribbleToEraseEnabled", settings->getScribbleToEraseEnabled());
+    const auto scribble = settings->getScribbleSettings();
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(builder.get("spScribbleSensitivity")), scribble.sensitivity);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(builder.get("spScribbleMinimumPasses")), scribble.minimumPasses);
+    enableWithCheckbox("cbScribbleToEraseEnabled", "exScribbleAdvanced");
     loadCheckbox("cbSnapRecognizedShapesEnabled", settings->getSnapRecognizedShapesEnabled());
     loadCheckbox("cbRestoreLineWidthEnabled", settings->getRestoreLineWidthEnabled());
     loadCheckbox("cbStockIcons", settings->areStockIconsUsed());
@@ -754,6 +771,11 @@ void SettingsDialog::save() {
     settings->setStrokeFilterEnabled(getCheckbox("cbStrokeFilterEnabled"));
     settings->setDoActionOnStrokeFiltered(getCheckbox("cbDoActionOnStrokeFiltered"));
     settings->setTrySelectOnStrokeFiltered(getCheckbox("cbTrySelectOnStrokeFiltered"));
+    settings->setScribbleToEraseEnabled(getCheckbox("cbScribbleToEraseEnabled"));
+    settings->setScribbleSensitivity(
+            gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(builder.get("spScribbleSensitivity"))));
+    settings->setScribbleMinimumPasses(
+            gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(builder.get("spScribbleMinimumPasses"))));
     settings->setSnapRecognizedShapesEnabled(getCheckbox("cbSnapRecognizedShapesEnabled"));
     settings->setRestoreLineWidthEnabled(getCheckbox("cbRestoreLineWidthEnabled"));
     settings->setAreStockIconsUsed(getCheckbox("cbStockIcons"));
