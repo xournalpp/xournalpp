@@ -24,6 +24,8 @@
 
 #define GET_UI_FOLDER std::u8string(PROJECT_SOURCE_DIR) + u8"/ui/"
 
+#define GET_TEST_LOCALE_FOLDER "@PROJECT_BINARY_DIR@/test/locale"
+
 /**
  * Show speed benchmarks of tests
  */
