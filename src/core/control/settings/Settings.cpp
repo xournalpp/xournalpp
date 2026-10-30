@@ -1,6 +1,7 @@
 #include "Settings.h"
 
-#include <algorithm>    // for max
+#include <algorithm>  // for max
+#include <charconv>
 #include <cstdint>      // for uint32_t, int32_t
 #include <cstdio>       // for sscanf, size_t
 #include <cstdlib>      // for atoi
@@ -245,6 +246,9 @@ void Settings::loadDefault() {
     this->doActionOnStrokeFiltered = false;
     this->trySelectOnStrokeFiltered = false;
 
+    this->scribbleToEraseEnabled = false;
+    this->scribbleSensitivity = ScribbleSettings::DEFAULT_SENSITIVITY;
+    this->scribbleMinimumPasses = ScribbleSettings::DEFAULT_MINIMUM_PASSES;
     this->snapRecognizedShapesEnabled = false;
     this->restoreLineWidthEnabled = false;
 
@@ -708,6 +712,20 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->latexSettings.externalEditorCmd = std::string{reinterpret_cast<char*>(value)};
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.temporaryFileExt")) == 0) {
         this->latexSettings.temporaryFileExt = std::string{reinterpret_cast<char*>(value)};
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("scribbleToEraseEnabled")) == 0) {
+        this->scribbleToEraseEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("scribbleSensitivity")) == 0 ||
+               xmlStrcmp(name, reinterpret_cast<const xmlChar*>("scribbleMinimumPasses")) == 0) {
+        const char* text = reinterpret_cast<const char*>(value);
+        int parsed = 0;
+        const auto [end, error] = std::from_chars(text, text + std::strlen(text), parsed);
+        if (error == std::errc{} && *end == '\0') {
+            if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("scribbleSensitivity")) == 0) {
+                setScribbleSensitivity(parsed);
+            } else {
+                setScribbleMinimumPasses(parsed);
+            }
+        }
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapRecognizedShapesEnabled")) == 0) {
         this->snapRecognizedShapesEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("restoreLineWidthEnabled")) == 0) {
@@ -1193,6 +1211,9 @@ void Settings::save() {
     SAVE_BOOL_PROP(doActionOnStrokeFiltered);
     SAVE_BOOL_PROP(trySelectOnStrokeFiltered);
 
+    SAVE_BOOL_PROP(scribbleToEraseEnabled);
+    SAVE_INT_PROP(scribbleSensitivity);
+    SAVE_INT_PROP(scribbleMinimumPasses);
     SAVE_BOOL_PROP(snapRecognizedShapesEnabled);
     SAVE_BOOL_PROP(restoreLineWidthEnabled);
 
@@ -2360,6 +2381,10 @@ void Settings::setTrySelectOnStrokeFiltered(bool enabled) { this->trySelectOnStr
 
 auto Settings::getTrySelectOnStrokeFiltered() const -> bool { return this->trySelectOnStrokeFiltered; }
 
+void Settings::setScribbleToEraseEnabled(bool enabled) { this->scribbleToEraseEnabled = enabled; }
+
+auto Settings::getScribbleToEraseEnabled() const -> bool { return this->scribbleToEraseEnabled; }
+
 void Settings::setSnapRecognizedShapesEnabled(bool enabled) { this->snapRecognizedShapesEnabled = enabled; }
 
 auto Settings::getSnapRecognizedShapesEnabled() const -> bool { return this->snapRecognizedShapesEnabled; }
@@ -2738,3 +2763,9 @@ void Settings::setLaserPointerFadeOutTime(unsigned int timeInMs) {
 }
 
 unsigned int Settings::getLaserPointerFadeOutTime() const { return this->laserPointerFadeOutTime; }
+
+auto Settings::getScribbleSettings() const -> ScribbleSettings { return {scribbleSensitivity, scribbleMinimumPasses}; }
+
+void Settings::setScribbleSensitivity(int value) { scribbleSensitivity = std::clamp(value, 0, 100); }
+
+void Settings::setScribbleMinimumPasses(int value) { scribbleMinimumPasses = std::clamp(value, 2, 8); }
