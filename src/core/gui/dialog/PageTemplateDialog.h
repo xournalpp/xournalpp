@@ -40,7 +40,7 @@ public:
      */
     bool isSaved() const;
 
-    void changeCurrentPageBackground(const PageTypeInfo* info);
+    void changeCurrentPageBackground(const PageTypeInfo& info);
 
     inline GtkWindow* getWindow() const { return window.get(); }
 
