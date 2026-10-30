@@ -15,6 +15,7 @@
 #include <string>  // for string
 
 #include "model/Element.h"  // for Element, Element::Index
+#include "model/ElementInsertionPosition.h"
 #include "model/PageRef.h"  // for PageRef
 
 #include "PageLayerPosEntry.h"  // for PageLayerPosEntry
@@ -30,6 +31,10 @@ public:
 public:
     bool undo(Control* control) override;
     bool redo(Control* control) override;
+
+    // Caller holds the document's exclusive lock. Invalid or duplicate positions leave the layer unchanged.
+    static auto deleteElements(const PageRef& page, Layer* layer, const InsertionOrderRef& targets)
+            -> std::unique_ptr<DeleteUndoAction>;
 
     void addElement(Layer* layer, ElementPtr e, Element::Index pos);
 

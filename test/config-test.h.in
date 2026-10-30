@@ -20,6 +20,8 @@
 
 #define GET_TESTFILE(relative) std::u8string(PROJECT_SOURCE_DIR) + u8"/test/files/" + relative
 
+#define GET_RESOURCE_TEMPLATE_FOLDER u8"@PROJECT_BINARY_DIR@/resources-templates/"
+
 #define GET_UI_FOLDER std::u8string(PROJECT_SOURCE_DIR) + u8"/ui/"
 
 /**

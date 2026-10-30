@@ -1,20 +1,54 @@
 #include "DeleteUndoAction.h"
 
+#include <algorithm>
 #include <memory>  // for __shared_ptr_access, __shared_pt...
 
 #include <glib.h>  // for g_warning
 
 #include "control/Control.h"
 #include "model/Document.h"
-#include "model/Element.h"           // for Element, ELEMENT_IMAGE, ELEMENT_...
-#include "model/Layer.h"             // for Layer
-#include "model/XojPage.h"           // for XojPage
-#include "undo/UndoAction.h"         // for UndoAction
-#include "util/i18n.h"               // for _
+#include "model/Element.h"    // for Element, ELEMENT_IMAGE, ELEMENT_...
+#include "model/Layer.h"      // for Layer
+#include "model/XojPage.h"    // for XojPage
+#include "undo/UndoAction.h"  // for UndoAction
+#include "util/i18n.h"        // for _
 
 
 DeleteUndoAction::DeleteUndoAction(const PageRef& page, bool eraser): UndoAction("DeleteUndoAction"), eraser(eraser) {
     this->page = page;
+}
+
+auto DeleteUndoAction::deleteElements(const PageRef& page, Layer* layer, const InsertionOrderRef& targets)
+        -> std::unique_ptr<DeleteUndoAction> {
+    if (!page || !layer || targets.empty() ||
+        std::find(page->getLayers().begin(), page->getLayers().end(), layer) == page->getLayers().end()) {
+        return nullptr;
+    }
+    InsertionOrderRef ordered = targets;
+    std::sort(ordered.begin(), ordered.end());
+    const auto& contents = layer->getElements();
+    Element::Index previous = Element::InvalidIndex;
+    for (const auto& entry: ordered) {
+        if (entry.pos < 0 || static_cast<size_t>(entry.pos) >= contents.size() || entry.pos == previous ||
+            contents[static_cast<size_t>(entry.pos)].get() != entry.e) {
+            return nullptr;
+        }
+        previous = entry.pos;
+    }
+
+    // Allocate history entries before moving any owners out of the layer. The batch removal reserves its
+    // result before mutation and preserves original indices, unlike successive forward vector erases.
+    auto action = std::make_unique<DeleteUndoAction>(page, true);
+    for (const auto& entry: ordered) {
+        action->elements.emplace(layer, contents[static_cast<size_t>(entry.pos)].get(), entry.pos);
+    }
+    auto removed = layer->removeElementsAt(ordered);
+    auto destination = action->elements.begin();
+    for (auto& entry: removed) {
+        destination->elementOwn = std::move(entry.e);
+        ++destination;
+    }
+    return action;
 }
 
 void DeleteUndoAction::addElement(Layer* layer, ElementPtr e, Element::Index pos) {
