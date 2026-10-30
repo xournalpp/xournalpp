@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <cstdint>
 #include <deque>   // for deque
 #include <string>  // for string
 #include <vector>  // for vector
@@ -40,6 +41,9 @@ public:
     bool canUndo();
     bool canRedo();
 
+    // Input sequences can detect intervening document edits without scanning the layer on pen-down.
+    auto getRevision() const -> uint64_t;
+
     void addUndoAction(UndoActionPtr action);
 
     std::string undoDescription();
@@ -67,6 +71,8 @@ private:
     UndoAction* autosavedUndo = nullptr;
 
     std::vector<UndoRedoListener*> listener;
+
+    uint64_t revision = 0;
 
     Control* control = nullptr;
 };

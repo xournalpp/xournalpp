@@ -2,6 +2,19 @@
 <!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
+  <object class="GtkAdjustment" id="adjustmentScribbleSensitivity">
+    <property name="lower">0</property>
+    <property name="upper">100</property>
+    <property name="value">50</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentScribbleMinimumPasses">
+    <property name="lower">2</property>
+    <property name="upper">8</property>
+    <property name="value">4</property>
+    <property name="step-increment">1</property>
+  </object>
   <object class="GtkAdjustment" id="adjustmentAudioGain">
     <property name="upper">10</property>
     <property name="value">1</property>
@@ -5402,6 +5415,133 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
                                 <property name="position">5</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkFrame" id="scribbleToEraseFrame">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label-xalign">0.01</property>
+                                <child>
+                                  <object class="GtkBox" id="boxScribbleSettings">
+                                    <property name="visible">True</property>
+                                    <property name="orientation">vertical</property>
+                                    <property name="spacing">8</property>
+                                    <property name="margin-start">12</property>
+                                    <property name="margin-end">12</property>
+                                    <property name="margin-bottom">8</property>
+                                    <child>
+                                      <object class="GtkCheckButton" id="cbScribbleToEraseEnabled">
+                                        <property name="label" translatable="yes">Enable scribble to erase</property>
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="receives-default">False</property>
+                                        <property name="tooltip-text" translatable="yes">Erase entire strokes on the current layer by scribbling over them with the Pen tool. Undo restores the erased strokes.</property>
+                                        <property name="draw-indicator">True</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkExpander" id="exScribbleAdvanced">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="label" translatable="yes">Advanced settings</property>
+                                        <child>
+                                          <object class="GtkBox" id="boxScribbleAdvanced">
+                                            <property name="visible">True</property>
+                                            <property name="orientation">vertical</property>
+                                            <property name="spacing">6</property>
+                                            <property name="margin-start">12</property>
+                                            <property name="margin-top">8</property>
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="visible">True</property>
+                                                <property name="spacing">12</property>
+                                                <child>
+                                                  <object class="GtkLabel" id="lbScribbleSensitivity">
+                                                    <property name="visible">True</property>
+                                                    <property name="label" translatable="yes">Recognition sensitivity (0-100)</property>
+                                                    <property name="xalign">0</property>
+                                                    <property name="wrap">True</property>
+                                                    <property name="max-width-chars">58</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkSpinButton" id="spScribbleSensitivity">
+                                                    <property name="visible">True</property>
+                                                    <property name="can-focus">True</property>
+                                                    <property name="numeric">True</property>
+                                                    <property name="adjustment">adjustmentScribbleSensitivity</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel" id="lbScribbleSensitivityHelp">
+                                                <property name="visible">True</property>
+                                                <property name="label" translatable="yes">Higher values accept less regular scribbles, but can erase ordinary drawing by mistake. Default: 50.</property>
+                                                <property name="xalign">0</property>
+                                                <property name="wrap">True</property>
+                                                <property name="max-width-chars">58</property>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="visible">True</property>
+                                                <property name="spacing">12</property>
+                                                <property name="margin-top">6</property>
+                                                <child>
+                                                  <object class="GtkLabel" id="lbScribbleMinimumPasses">
+                                                    <property name="visible">True</property>
+                                                    <property name="label" translatable="yes">Minimum passes</property>
+                                                    <property name="xalign">0</property>
+                                                    <property name="wrap">True</property>
+                                                    <property name="max-width-chars">58</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkSpinButton" id="spScribbleMinimumPasses">
+                                                    <property name="visible">True</property>
+                                                    <property name="can-focus">True</property>
+                                                    <property name="numeric">True</property>
+                                                    <property name="adjustment">adjustmentScribbleMinimumPasses</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel" id="lbScribbleMinimumPassesHelp">
+                                                <property name="visible">True</property>
+                                                <property name="label" translatable="yes">Each movement in one direction counts as one pass. Lower values need fewer movements, but can erase ordinary drawing by mistake. Moving across several targets may need extra passes. Default: 4.</property>
+                                                <property name="xalign">0</property>
+                                                <property name="wrap">True</property>
+                                                <property name="max-width-chars">58</property>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="GtkButton" id="btScribbleDefaults">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">True</property>
+                                                <property name="halign">start</property>
+                                                <property name="label" translatable="yes">Restore defaults</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkLabel" id="labelScribbleToErase">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Scribble to Erase</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
                               </packing>
                             </child>
                             <child>

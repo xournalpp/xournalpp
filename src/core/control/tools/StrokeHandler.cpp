@@ -4,27 +4,29 @@
 #include <cmath>      // for ceil, pow, abs
 #include <limits>     // for numeric_limits
 #include <memory>     // for unique_ptr, mak...
-#include <utility>    // for move
-#include <vector>     // for vector
+#include <mutex>
+#include <utility>  // for move
+#include <vector>   // for vector
 
 #include <gdk/gdk.h>  // for GdkEventKey
 
-#include "control/Control.h"                                // for Control
-#include "control/ToolEnums.h"                              // for DRAWING_TYPE_ST...
-#include "control/ToolHandler.h"                            // for ToolHandler
-#include "control/layer/LayerController.h"                  // for LayerController
-#include "control/settings/Settings.h"                      // for Settings
-#include "control/settings/SettingsEnums.h"                 // for EmptyLastPageAppendType
-#include "control/shaperecognizer/ShapeRecognizer.h"        // for ShapeRecognizer
-#include "control/tools/InputHandler.h"                     // for InputHandler::P...
-#include "control/tools/SnapToGridInputHandler.h"           // for SnapToGridInput...
-#include "gui/inputdevices/PositionInputData.h"             // for PositionInputData
-#include "model/Document.h"                                 // for Document
+#include "control/Control.h"                          // for Control
+#include "control/ToolEnums.h"                        // for DRAWING_TYPE_ST...
+#include "control/ToolHandler.h"                      // for ToolHandler
+#include "control/layer/LayerController.h"            // for LayerController
+#include "control/settings/Settings.h"                // for Settings
+#include "control/settings/SettingsEnums.h"           // for EmptyLastPageAppendType
+#include "control/shaperecognizer/ShapeRecognizer.h"  // for ShapeRecognizer
+#include "control/tools/InputHandler.h"               // for InputHandler::P...
+#include "control/tools/SnapToGridInputHandler.h"     // for SnapToGridInput...
+#include "gui/inputdevices/PositionInputData.h"       // for PositionInputData
+#include "model/Document.h"                           // for Document
 #include "model/Element.h"
-#include "model/Layer.h"                                    // for Layer
-#include "model/LineStyle.h"                                // for LineStyle
-#include "model/Stroke.h"                                   // for Stroke, STROKE_...
-#include "model/XojPage.h"                                  // for XojPage
+#include "model/Layer.h"      // for Layer
+#include "model/LineStyle.h"  // for LineStyle
+#include "model/Stroke.h"     // for Stroke, STROKE_...
+#include "model/XojPage.h"    // for XojPage
+#include "undo/DeleteUndoAction.h"
 #include "undo/InsertUndoAction.h"                          // for InsertUndoAction
 #include "undo/RecognizerUndoAction.h"                      // for RecognizerUndoA...
 #include "undo/UndoRedoHandler.h"                           // for UndoRedoHandler
@@ -36,6 +38,7 @@
 #include "view/overlays/StrokeToolFilledView.h"             // for StrokeToolFilledView
 #include "view/overlays/StrokeToolView.h"                   // for StrokeToolView
 
+#include "ScribbleEraser.h"
 #include "StrokeStabilizer.h"  // for Base, get
 
 using xoj::util::Rectangle;
@@ -56,6 +59,9 @@ auto StrokeHandler::onKeyReleaseEvent(const KeyEvent&) -> bool { return false; }
 auto StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos, double zoom) -> bool {
     if (!stroke) {
         return false;
+    }
+    if (zoom != scribbleZoom) {
+        scribbleEligible = false;
     }
 
     if (pos.pressure == 0) {
@@ -93,7 +99,7 @@ void StrokeHandler::paintTo(Point point) {
              * Both device and tool are pressure sensitive
              */
             if (const double widthDelta = point.z - endPoint.z;
-                - widthDelta > MAX_WIDTH_VARIATION || widthDelta > MAX_WIDTH_VARIATION) {
+                -widthDelta > MAX_WIDTH_VARIATION || widthDelta > MAX_WIDTH_VARIATION) {
                 /**
                  * If the width variation is to big, decompose into shorter segments.
                  * Those segments can not be shorter than PIXEL_MOTION_THRESHOLD
@@ -125,6 +131,8 @@ void StrokeHandler::drawSegmentTo(const Point& point) {
 }
 
 void StrokeHandler::onSequenceCancelEvent() {
+    scribbleEligible = false;
+    scribbleLayer = nullptr;
     if (this->stroke) {
         this->viewPool->dispatchAndClear(xoj::view::StrokeToolView::CANCELLATION_REQUEST,
                                          Range(this->stroke->getBoundingBox()));
@@ -166,12 +174,28 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
     }
     finalizeStroke(pos.pressure);
 
-    Layer* layer = page->getSelectedLayer();
-
+    Settings* settings = control->getSettings();
+    ToolHandler* h = control->getToolHandler();
     UndoRedoHandler* undo = control->getUndoRedoHandler();
+    if (scribbleEligible && settings->getScribbleToEraseEnabled() && zoom == scribbleZoom &&
+        undo->getRevision() == scribbleRevision && h->getToolType() == TOOL_PEN &&
+        h->getDrawingType() == scribbleDrawingType && settings->getScribbleSettings() == scribbleSettings &&
+        page->getSelectedLayerId() > 0 && page->getSelectedLayerId() <= page->getLayerCount() &&
+        page->getSelectedLayer() == scribbleLayer) {
+        Range changedRange;
+        if (auto action =
+                    ScribbleEraser::erase(*control->getDocument(), page, *stroke, changedRange, scribbleSettings)) {
+            this->viewPool->dispatchAndClear(xoj::view::StrokeToolView::CANCELLATION_REQUEST, changedRange);
+            stroke.reset();
+            undo->addUndoAction(std::move(action));
+            page->fireRangeChanged(changedRange);
+            return;
+        }
+    }
+
+    Layer* layer = page->getSelectedLayer();
     undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke.get()));
 
-    Settings* settings = control->getSettings();
     if (settings->getEmptyLastPageAppend() == EmptyLastPageAppendType::OnDrawOfLastPage) {
         auto* doc = control->getDocument();
         doc->lock_shared();
@@ -186,7 +210,6 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
         }
     }
 
-    ToolHandler* h = control->getToolHandler();
     if (h->getDrawingType() == DRAWING_TYPE_SHAPE_RECOGNIZER) {
         ShapeRecognizer reco;
 
@@ -257,6 +280,23 @@ void StrokeHandler::strokeRecognizerDetected(std::unique_ptr<Stroke> recognized,
 
 void StrokeHandler::onButtonPressEvent(const PositionInputData& pos, double zoom) {
     xoj_assert(!stroke);
+
+    scribbleEligible = false;
+    scribbleLayer = nullptr;
+    scribbleZoom = zoom;
+    const auto* tools = control->getToolHandler();
+    if (control->getSettings()->getScribbleToEraseEnabled() && tools->getToolType() == TOOL_PEN &&
+        (tools->getDrawingType() == DRAWING_TYPE_DEFAULT || tools->getDrawingType() == DRAWING_TYPE_SHAPE_RECOGNIZER)) {
+        std::unique_lock lock(*control->getDocument());
+        const auto layerId = page->getSelectedLayerId();
+        if (layerId > 0 && layerId <= page->getLayerCount() && page->isLayerVisible(layerId)) {
+            scribbleLayer = page->getSelectedLayer();
+            scribbleRevision = control->getUndoRedoHandler()->getRevision();
+            scribbleDrawingType = tools->getDrawingType();
+            scribbleSettings = control->getSettings()->getScribbleSettings();
+            scribbleEligible = true;
+        }
+    }
 
     this->buttonDownPoint.x = pos.x / zoom;
     this->buttonDownPoint.y = pos.y / zoom;
