@@ -88,16 +88,17 @@ void PageTemplateDialog::updateDataFromModel() {
     updatePageSize();
 
     pageTypeSelectionMenu->setSelectedPT(model.getBackgroundType());
-    changeCurrentPageBackground(types->getInfoOn(model.getBackgroundType()));
+    const auto* info = types->getInfoOn(model.getBackgroundType());
+    changeCurrentPageBackground(info ? *info : PageTypeInfo{model.getBackgroundType(), _("Nameless page type")});
 
     gtk_toggle_button_set_active(copyLastPageButton, model.isCopyLastPageSettings());
     gtk_toggle_button_set_active(copyLastPageSizeButton, model.isCopyLastPageSize());
 }
 
-void PageTemplateDialog::changeCurrentPageBackground(const PageTypeInfo* info) {
-    model.setBackgroundType(info->page);
+void PageTemplateDialog::changeCurrentPageBackground(const PageTypeInfo& info) {
+    model.setBackgroundType(info.page);
 
-    gtk_label_set_text(backgroundTypeLabel, info->name.c_str());
+    gtk_label_set_text(backgroundTypeLabel, info.name.c_str());
 }
 
 void PageTemplateDialog::saveToModel() {
