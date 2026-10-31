@@ -39,6 +39,12 @@ constexpr auto const* DEFAULT_FONT = "Sans";
 constexpr auto DEFAULT_FONT_SIZE = 12;
 constexpr auto DEFAULT_TOOLBAR = "Portrait";
 
+/// Zoomstep value for Ctrl - and Zoom In and Out Button. Effect depends on dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
+constexpr auto DEFAULT_ZOOM_STEP{10.};
+
+/// Zoomstep value for Ctrl-Scroll zooming. Effect depends on dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
+constexpr auto DEFAULT_ZOOM_STEP_SCROLL{1.};
+
 #define SAVE_BOOL_PROP(var) xmlNode = saveProperty((const char*)#var, (var) ? "true" : "false", root)
 #define SAVE_STRING_PROP(var) xmlNode = saveProperty((const char*)#var, (var).empty() ? "" : (var).data(), root)
 #define SAVE_FONT_PROP(var) xmlNode = saveProperty((const char*)#var, var.asString().c_str(), root)
@@ -84,8 +90,8 @@ void Settings::loadDefault() {
     this->edgePanSpeed = 20.0;
     this->edgePanMaxMult = 5.0;
 
-    this->zoomStep = 10.0;
-    this->zoomStepScroll = 2.0;
+    this->zoomStep = DEFAULT_ZOOM_STEP;
+    this->zoomStepScroll = DEFAULT_ZOOM_STEP_SCROLL;
 
     this->displayDpi = -1;  // Automatic detection
 
