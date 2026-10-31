@@ -92,7 +92,7 @@ void ZoomControl::zoomOneStep(ZoomDirection direction, xoj::util::Point<double> 
     }
     this->setZoomFitMode(false);
 
-    double newZoom = this->withZoomStep(direction, this->zoomStep);
+    double newZoom = this->withZoomStep(direction, this->control->getSettings()->getZoomStep() / 100.);
 
     startZoomSequence(zoomCenter);
     this->zoomSequenceChange(newZoom, false);
@@ -114,7 +114,7 @@ void ZoomControl::zoomScroll(ZoomDirection direction, xoj::util::Point<double> z
         this->setZoomFitMode(false);
     }
 
-    double newZoom = this->withZoomStep(direction, this->zoomStepScroll);
+    double newZoom = this->withZoomStep(direction, this->control->getSettings()->getZoomStepScroll() / 100.);
     startZoomSequence(zoomCenter);
     this->zoomSequenceChange(newZoom, false);
     endZoomSequence();
@@ -390,10 +390,6 @@ void ZoomControl::setZoomPresentationMode(bool isZoomPresentationMode) {
 }
 
 auto ZoomControl::isZoomPresentationMode() const -> bool { return this->zoomPresentationMode; }
-
-void ZoomControl::setZoomStep(double zoomStep) { this->zoomStep = zoomStep; }
-
-void ZoomControl::setZoomStepScroll(double zoomStep) { this->zoomStepScroll = zoomStep; }
 
 void ZoomControl::pageSizeChanged(size_t page) {
     updateZoomPresentationValue(page);

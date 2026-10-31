@@ -23,8 +23,6 @@
 
 constexpr auto DEFAULT_ZOOM_MAX{7};
 constexpr auto DEFAULT_ZOOM_MIN{0.3};
-constexpr auto DEFAULT_ZOOM_STEP{0.1};
-constexpr auto DEFAULT_ZOOM_STEP_SCROLL{0.01};
 
 enum ZoomDirection : bool { ZOOM_OUT = false, ZOOM_IN = true };
 
@@ -173,10 +171,6 @@ public:
     /// Get visible rect on xournal view, for Zoom Gesture
     xoj::util::Rectangle<double> getVisibleRect();
 
-    void setZoomStep(double zoomStep);
-
-    void setZoomStepScroll(double zoomStep);
-
 protected:
     void fireZoomChanged();
     void fireZoomRangeValueChanged();
@@ -231,18 +225,6 @@ private:
     /// Size {x, y} of the pixels before the current page that
     /// do not scale.
     xoj::util::Point<double> unscaledPixels;
-
-    /**
-     * Zoomstep value for Ctrl - and Zoom In and Out Button
-     * depends on dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
-     */
-    double zoomStep = DEFAULT_ZOOM_STEP;
-
-    /**
-     * Zoomstep value for Ctrl-Scroll zooming
-     * depends on dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
-     */
-    double zoomStepScroll = DEFAULT_ZOOM_STEP_SCROLL;
 
     /**
      * Zoom maximal value
