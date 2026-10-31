@@ -339,12 +339,6 @@ public:
 
     void selectAlpha(OpacityFeature feature);
 
-    /**
-     * @brief Initialize the all button tools based on the respective ButtonConfigs
-     *
-     */
-    void initButtonTool();
-
 
 public:
     // UndoRedoListener interface

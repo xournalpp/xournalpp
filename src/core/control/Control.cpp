@@ -161,8 +161,8 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
     this->zoom->setZoomStepScroll(this->settings->getZoomStepScroll() / 100.0);
 
     this->toolHandler = new ToolHandler(this, this->actionDB.get(), this->settings);
-    this->toolHandler->loadSettings();
-    this->initButtonTool();
+    this->toolHandler->loadState();
+    this->toolHandler->loadButtonSettings();
 
     /**
      * This is needed to update the previews
@@ -274,7 +274,7 @@ auto Control::checkChangedDocument(Control* control) -> bool {
 }
 
 void Control::saveSettings() {
-    this->toolHandler->saveSettings();
+    this->toolHandler->saveState();
 
     gint width = 0;
     gint height = 0;
@@ -2317,17 +2317,6 @@ void Control::closeDocument() {
     }
 
     this->undoRedoChanged();
-}
-
-void Control::initButtonTool() {
-    std::vector<Button> buttons{Button::BUTTON_ERASER,     Button::BUTTON_STYLUS_ONE,   Button::BUTTON_STYLUS_TWO,
-                                Button::BUTTON_MOUSE_LEFT, Button::BUTTON_MOUSE_MIDDLE, Button::BUTTON_MOUSE_RIGHT,
-                                Button::BUTTON_MOUSE_4,    Button::BUTTON_MOUSE_5,      Button::BUTTON_TOUCH};
-    ButtonConfig* cfg;
-    for (auto b: buttons) {
-        cfg = settings->getButtonConfig(b);
-        cfg->initButton(this->toolHandler, b);
-    }
 }
 
 void Control::showAbout() {
