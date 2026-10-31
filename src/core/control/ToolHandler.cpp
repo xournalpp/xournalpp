@@ -11,6 +11,7 @@
 
 #include "control/Tool.h"  // for Tool, Tool::toolSizes
 #include "control/actions/ActionDatabase.h"
+#include "control/settings/ButtonConfig.h"
 #include "control/settings/Settings.h"  // for SElement, Settings
 #include "model/StrokeStyle.h"          // for StrokeStyle
 #include "model/TextAlignment.h"
@@ -430,7 +431,7 @@ void ToolHandler::setButtonStrokeType(const LineStyle& lineStyle, Button button)
 
 auto ToolHandler::getTools() const -> std::array<std::unique_ptr<Tool>, TOOL_COUNT> const& { return tools; }
 
-void ToolHandler::saveSettings() const {
+void ToolHandler::saveState() const {
     SElement& s = settings->getCustomElement("tools");
     s.clear();
 
@@ -506,7 +507,7 @@ void ToolHandler::saveSettings() const {
     settings->customSettingsChanged();
 }
 
-void ToolHandler::loadSettings() {
+void ToolHandler::loadState() {
     SElement& s = settings->getCustomElement("tools");
 
     std::string selectedTool;
@@ -586,6 +587,17 @@ void ToolHandler::loadSettings() {
                 tool->setTextJustify(justify);
             }
         }
+    }
+}
+
+void ToolHandler::loadButtonSettings() {
+    std::vector<Button> buttons{Button::BUTTON_ERASER,     Button::BUTTON_STYLUS_ONE,   Button::BUTTON_STYLUS_TWO,
+                                Button::BUTTON_MOUSE_LEFT, Button::BUTTON_MOUSE_MIDDLE, Button::BUTTON_MOUSE_RIGHT,
+                                Button::BUTTON_MOUSE_4,    Button::BUTTON_MOUSE_5,      Button::BUTTON_TOUCH};
+    ButtonConfig* cfg;
+    for (auto b: buttons) {
+        cfg = settings->getButtonConfig(b);
+        cfg->initButton(this, b);
     }
 }
 

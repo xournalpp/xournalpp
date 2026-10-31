@@ -1114,7 +1114,7 @@ void SettingsDialog::save() {
 
     this->control->getWindow()->setGtkTouchscreenScrollingForDeviceMapping();
 
-    this->control->initButtonTool();
+    this->control->getToolHandler()->loadButtonSettings();
     this->control->getWindow()->getXournal()->onSettingsChanged();
 }
 

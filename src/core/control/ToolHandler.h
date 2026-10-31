@@ -331,8 +331,10 @@ public:
      */
     bool isDrawingTool() const;
 
-    void saveSettings() const;
-    void loadSettings();
+    void saveState() const;
+    void loadState();
+
+    void loadButtonSettings();
 
     /**
      * @brief Point the active tool to the corresponding button tool if it is not already pointing to it
