@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-10-23 14:56+0000\n"
-"PO-Revision-Date: 2026-10-25 04:30\n"
+"PO-Revision-Date: 2026-11-01 04:20\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -33,7 +33,7 @@ msgstr "Ezin izan da \"{1}\" automatikoki gordetzeko fitxategi zaharra kendu: {2
 
 #: ../src/core/control/Control.cpp:299
 msgid "Initialization of audio devices failed. You can disable audio support in Settings->Audio"
-msgstr ""
+msgstr "Huts egin du audio-gailuen abiatzeak. Audio-laguntza desgaitu dezakezu Ezarpenak->Audioa atalean"
 
 #: ../src/core/control/Control.cpp:601
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
@@ -1027,11 +1027,11 @@ msgstr "Hautatu eremuko testua pdf-an"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Color - don't change"
-msgstr ""
+msgstr "Kolorea - ez aldatu"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
 msgid "Custom color"
-msgstr ""
+msgstr "Kolore pertsonalizatua"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 msgid "Drawing Type - don't change"
@@ -4452,11 +4452,11 @@ msgstr "Bikoiztu orria"
 
 #: ../ui/mainmenubar.xml:461
 msgid "Move Page _Up"
-msgstr ""
+msgstr "Mugitu orria gora"
 
 #: ../ui/mainmenubar.xml:465
 msgid "Move Page _Down"
-msgstr ""
+msgstr "Mugitu orria behera"
 
 #: ../ui/mainmenubar.xml:469
 msgid "Append New PDF Pages"
