@@ -333,6 +333,7 @@ void Control::initWindow(MainWindow* win, bool disableAudio) {
     toolLineStyleChanged();
 
     this->clipboardHandler = new ClipboardHandler(this, win->getXournal()->getWidget());
+    this->clipboardHandler->setListener(this);
 
     this->enableAutosave(settings->isAutosaveEnabled());
 }
@@ -2556,6 +2557,8 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
     }
 }
 
+auto Control::clipboardGetSelection() const -> EditSelection* { return getWindow()->getXournal()->getSelection(); }
+
 void Control::moveSelectionToLayer(size_t layerNo) {
     PageRef currentP = getCurrentPage();
     if (layerNo >= currentP->getLayerCount()) {
@@ -2588,12 +2591,6 @@ void Control::clearSelection() {
     if (this->win) {
         this->win->getXournal()->clearSelection();
         this->win->getPdfToolbox()->userCancelSelection();
-    }
-}
-
-void Control::setClipboardHandlerSelection(EditSelection* selection) {
-    if (this->clipboardHandler) {
-        this->clipboardHandler->setSelection(selection);
     }
 }
 

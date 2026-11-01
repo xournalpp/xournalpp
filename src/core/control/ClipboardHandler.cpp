@@ -25,21 +25,23 @@
 
 using std::string;
 
-ClipboardListener::~ClipboardListener() = default;
-
-ClipboardHandler::ClipboardHandler(ClipboardListener* listener, GtkWidget* widget) {
-    this->listener = listener;
+ClipboardHandler::ClipboardHandler(ClipboardActionStatusListener* actions, GtkWidget* widget): actions(actions) {
     this->clipboard = gtk_widget_get_clipboard(widget);
 
     this->handlerId = g_signal_connect(this->clipboard, "owner-change", G_CALLBACK(&ownerChangedCallback), this);
-
-    this->listener->clipboardCutCopyEnabled(false);
 
     gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("TARGETS"),
                                    reinterpret_cast<GtkClipboardReceivedFunc>(receivedClipboardContents), this);
 }
 
 ClipboardHandler::~ClipboardHandler() { g_signal_handler_disconnect(this->clipboard, this->handlerId); }
+
+void ClipboardHandler::setListener(ClipboardListener* listener) {
+    if (this->listener != listener) {
+        this->listener = listener;
+        this->actions->clipboardCutCopyEnabled(listener && listener->clipboardGetSelection() != nullptr);
+    }
+}
 
 static GdkAtom atomXournal = gdk_atom_intern_static_string("application/xournal");
 
@@ -121,7 +123,8 @@ static auto svgWriteFunction(GString* string, const unsigned char* data, unsigne
 }
 
 auto ClipboardHandler::copy() -> bool {
-    if (!this->selection) {
+    auto* selection = this->listener ? this->listener->clipboardGetSelection() : nullptr;
+    if (!selection) {
         return false;
     }
 
@@ -133,7 +136,7 @@ auto ClipboardHandler::copy() -> bool {
 
     out.writeString(PROJECT_STRING);
 
-    this->selection->serialize(out);
+    selection->serialize(out);
 
     /////////////////////////////////////////////////////////////////
     // prepare text contents
@@ -141,7 +144,7 @@ auto ClipboardHandler::copy() -> bool {
 
     std::multiset<const Text*, decltype(&ElementCompareFunc)> textElements(ElementCompareFunc);
 
-    for (const Element* e: this->selection->getElementsView()) {
+    for (const Element* e: selection->getElementsView()) {
         if (e->getType() == ELEMENT_TEXT) {
             textElements.insert(dynamic_cast<const Text*>(e));
         }
@@ -169,7 +172,7 @@ auto ClipboardHandler::copy() -> bool {
 
     cairo_translate(crPng, -selection->getOriginalXOnView(), -selection->getOriginalYOnView());
 
-    xoj::view::ElementContainerView view(this->selection);
+    xoj::view::ElementContainerView view(selection);
     view.draw(xoj::view::Context::createDefault(crPng));
 
     cairo_destroy(crPng);
@@ -231,16 +234,14 @@ auto ClipboardHandler::copy() -> bool {
 }
 
 void ClipboardHandler::setSelection(EditSelection* selection) {
-    this->selection = selection;
-
-    this->listener->clipboardCutCopyEnabled(selection != nullptr);
+    this->actions->clipboardCutCopyEnabled(selection != nullptr);
 }
 
 void ClipboardHandler::setCopyCutEnabled(bool enabled) {
     if (enabled) {
-        listener->clipboardCutCopyEnabled(true);
-    } else if (!selection) {
-        listener->clipboardCutCopyEnabled(false);
+        actions->clipboardCutCopyEnabled(true);
+    } else if (!listener || listener->clipboardGetSelection() == nullptr) {
+        actions->clipboardCutCopyEnabled(false);
     }
 }
 
@@ -303,8 +304,8 @@ void ClipboardHandler::receivedClipboardContents(GtkClipboard* clipboard, GtkSel
     handler->containsXournal = gtk_selection_data_targets_include_xournal(selectionData);
     handler->containsImage = gtk_selection_data_targets_include_image(selectionData, false);
 
-    handler->listener->clipboardPasteEnabled(handler->containsText || handler->containsXournal ||
-                                             handler->containsImage);
+    handler->actions->clipboardPasteEnabled(handler->containsText || handler->containsXournal ||
+                                            handler->containsImage);
 
     if (handler->pastePending) {
         handler->pastePending = false;
