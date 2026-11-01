@@ -45,6 +45,7 @@
 #include "gui/PageView.h"                                        // for XojP...
 #include "gui/PdfFloatingToolbox.h"                              // for PdfF...
 #include "gui/SearchBar.h"                                       // for Sear...
+#include "gui/StatusBar.h"                                       // for StatusBar
 #include "gui/XournalView.h"                                     // for Xour...
 #include "gui/XournalppCursor.h"                                 // for Xour...
 #include "gui/dialog/AboutDialog.h"                              // for Abou...
@@ -2007,14 +2008,12 @@ void Control::block(const string& name) {
     getCursor()->setCursorBusy(true);
     disableSidebarTmp(true);
 
-    this->statusbar = this->win->get("statusbar");
-    this->lbState = GTK_LABEL(this->win->get("lbState"));
-    this->pgState = GTK_PROGRESS_BAR(this->win->get("pgState"));
+    auto* bar = win->getStatusBar();
+    bar->setStateLabel(name);
+    bar->setCurrentState(0);
+    bar->setMaximumState(100);
+    bar->setVisible(true);
 
-    gtk_label_set_text(this->lbState, name.c_str());
-    gtk_widget_show(this->statusbar);
-
-    this->maxState = 100;
     this->isBlocking = true;
 }
 
@@ -2028,19 +2027,12 @@ void Control::unblock() {
     getCursor()->setCursorBusy(false);
     disableSidebarTmp(false);
 
-    gtk_widget_hide(this->statusbar);
+    this->win->getStatusBar()->setVisible(false);
 
     this->isBlocking = false;
 }
 
-void Control::setMaximumState(size_t max) { this->maxState = max; }
-
-void Control::setCurrentState(size_t state) {
-    Util::execInUiThread([state, this]() {
-        gtk_progress_bar_set_fraction(this->pgState,
-                                      static_cast<gdouble>(state) / static_cast<gdouble>(this->maxState));
-    });
-}
+auto Control::getProgressListener() const -> ProgressListener* { return win->getStatusBar(); }
 
 void Control::showFontDialog() {
     this->actionDB->enableAction(Action::SELECT_FONT, false);  // Only one dialog

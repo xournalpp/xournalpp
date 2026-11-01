@@ -23,7 +23,6 @@
 #include <gtk/gtk.h>                // for GtkLabel
 
 #include "control/ToolEnums.h"                      // for ToolSize, ToolType
-#include "control/jobs/ProgressListener.h"          // for ProgressListener
 #include "control/settings/ViewModes.h"             // for ViewModeId
 #include "control/tools/EditSelection.h"            // for OrderChange
 #include "enums/Action.enum.h"                      // for Action
@@ -71,14 +70,14 @@ class XojFont;
 class XojPdfRectangle;
 class ActionDatabase;
 class NavigationHistory;
+class ProgressListener;
 
 class Control:
         public ToolListener,
         public DocumentHandler,
         public UndoRedoListener,
         public ClipboardListener,
-        public ClipboardActionStatusListener,
-        public ProgressListener {
+        public ClipboardActionStatusListener {
 public:
     Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath);
     Control(Control const&) = delete;
@@ -309,6 +308,7 @@ public:
     Document* getDocument() const;
     UndoRedoHandler* getUndoRedoHandler() const;
     MainWindow* getWindow() const;
+    ProgressListener* getProgressListener() const;
     GtkWindow* getGtkWindow() const;
     ScrollHandler* getScrollHandler() const;
     PageRef getCurrentPage();
@@ -343,11 +343,6 @@ public:
     // UndoRedoListener interface
     void undoRedoChanged() override;
     void undoRedoPageChanged(PageRef page) override;
-
-public:
-    // ProgressListener interface
-    void setMaximumState(size_t max) override;
-    void setCurrentState(size_t state) override;
 
 public:
     // ClipboardActionStatusListener interface
@@ -531,13 +526,6 @@ private:
 
     XournalScheduler* scheduler;
 
-    /**
-     * State / Blocking attributes
-     */
-    GtkWidget* statusbar = nullptr;
-    GtkLabel* lbState = nullptr;
-    GtkProgressBar* pgState = nullptr;
-    size_t maxState = 0;
     bool isBlocking;
 
     GladeSearchpath* gladeSearchPath;

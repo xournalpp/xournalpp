@@ -22,7 +22,7 @@ void PdfExportJob::run() {
     Document* doc = control->getDocument();
 
     doc->lock_shared();
-    std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, control);
+    std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, control->getProgressListener());
     doc->unlock_shared();
 
     if (testFilepath(this->filepath) && !pdfe->createPdf(this->filepath, false)) {

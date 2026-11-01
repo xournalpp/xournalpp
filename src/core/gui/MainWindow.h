@@ -39,6 +39,7 @@ class XournalView;
 class PdfFloatingToolbox;
 class FloatingToolbox;
 class GladeSearchpath;
+class StatusBar;
 
 class Menubar;
 
@@ -122,6 +123,8 @@ public:
     /// Infer the window's DPI from available monitor info and use it to set the default zoom value.
     void setDPI() const;
 
+    StatusBar* getStatusBar() const { return statusbar.get(); }
+
 private:
     void initXournalWidget();
 
@@ -188,4 +191,5 @@ private:
     xoj::util::WidgetSPtr panedContainerWidget;
     xoj::util::WidgetSPtr mainContentWidget;
     xoj::util::WidgetSPtr sidebarWidget;
+    std::unique_ptr<StatusBar> statusbar;
 };
