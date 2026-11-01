@@ -22,11 +22,11 @@
 using std::string;
 using std::vector;
 
-AudioController::AudioController(Settings* settings, Control* control):
-        settings(*settings),
-        control(*control),
-        audioRecorder(std::make_unique<AudioRecorder>(*settings)),
-        audioPlayer(std::make_unique<AudioPlayer>(*control, *settings)) {}
+AudioController::AudioController(const Settings& settings, Control& control):
+        settings(settings),
+        control(control),
+        audioRecorder(std::make_unique<AudioRecorder>(settings)),
+        audioPlayer(std::make_unique<AudioPlayer>(control, settings)) {}
 
 AudioController::~AudioController() = default;
 

@@ -31,7 +31,7 @@ class Settings;
 class AudioController final {
 public:
     // Todo convert Pointers to reference (changes to control.cpp are necessary)
-    AudioController(Settings* settings, Control* control);
+    AudioController(const Settings& settings, Control& control);
     ~AudioController();
 
     bool startRecording();
@@ -53,7 +53,7 @@ public:
     std::vector<DeviceInfo> getInputDevices() const;
 
 private:
-    Settings& settings;
+    const Settings& settings;
     Control& control;
 
     /**
