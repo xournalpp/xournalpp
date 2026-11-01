@@ -22,7 +22,7 @@ class AudioQueue;
 
 class VorbisConsumer final {
 public:
-    explicit VorbisConsumer(Settings& settings, AudioQueue<float>& audioQueue):
+    explicit VorbisConsumer(const Settings& settings, AudioQueue<float>& audioQueue):
             settings(settings), audioQueue(audioQueue) {}
 
 public:
@@ -31,7 +31,7 @@ public:
     void stop();
 
 private:
-    Settings& settings;
+    const Settings& settings;
     AudioQueue<float>& audioQueue;
 
     std::thread consumerThread{};

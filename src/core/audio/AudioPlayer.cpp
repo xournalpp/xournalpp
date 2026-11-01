@@ -10,7 +10,7 @@
 
 class Settings;
 
-AudioPlayer::AudioPlayer(Control& control, Settings& settings):
+AudioPlayer::AudioPlayer(Control& control, const Settings& settings):
         control(control),
         settings(settings),
         audioQueue(std::make_unique<AudioQueue<float>>()),
@@ -82,4 +82,4 @@ void AudioPlayer::seek(int seconds) {
 
 auto AudioPlayer::getOutputDevices() -> std::vector<DeviceInfo> { return this->portAudioConsumer->getOutputDevices(); }
 
-auto AudioPlayer::getSettings() -> Settings& { return this->settings; }
+auto AudioPlayer::getSettings() const -> const Settings& { return this->settings; }

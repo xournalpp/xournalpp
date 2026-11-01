@@ -27,7 +27,7 @@ class VorbisProducer;
 
 class AudioPlayer final {
 public:
-    explicit AudioPlayer(Control& control, Settings& settings);
+    explicit AudioPlayer(Control& control, const Settings& settings);
     AudioPlayer(AudioPlayer const&) = delete;
     AudioPlayer(AudioPlayer&&) = delete;
     auto operator=(AudioPlayer const&) -> AudioPlayer& = delete;
@@ -43,12 +43,12 @@ public:
 
     std::vector<DeviceInfo> getOutputDevices();
 
-    Settings& getSettings();
+    const Settings& getSettings() const;
     void disableAudioPlaybackButtons();
 
 private:
     Control& control;
-    Settings& settings;
+    const Settings& settings;
 
     std::unique_ptr<AudioQueue<float>> audioQueue;
     std::unique_ptr<PortAudioConsumer> portAudioConsumer;

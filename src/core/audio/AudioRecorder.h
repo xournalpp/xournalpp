@@ -25,7 +25,7 @@ class VorbisConsumer;
 
 class AudioRecorder final {
 public:
-    explicit AudioRecorder(Settings& settings);
+    explicit AudioRecorder(const Settings& settings);
     AudioRecorder(AudioRecorder const&) = delete;
     AudioRecorder(AudioRecorder&&) = delete;
     auto operator=(AudioRecorder const&) -> AudioRecorder& = delete;

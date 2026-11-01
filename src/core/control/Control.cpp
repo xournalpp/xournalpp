@@ -294,7 +294,7 @@ void Control::initWindow(MainWindow* win, bool disableAudio) {
 #ifdef ENABLE_AUDIO
     if (!(disableAudio || this->settings->isAudioDisabled())) {
         try {
-            this->audioController = std::make_unique<AudioController>(this->settings, this);
+            this->audioController = std::make_unique<AudioController>(*this->settings, *this);
         } catch (const std::exception& e) {
             XojMsgBox::showErrorToUser(
                     GTK_WINDOW(win->getWindow()),
