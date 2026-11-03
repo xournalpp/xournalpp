@@ -79,5 +79,5 @@ xoj::util::WidgetSPtr PageTypeSelectionPopoverGridOnly::createPopover() {
 
 void PageTypeSelectionPopoverGridOnly::entrySelected(const PageTypeInfo* info) {
     xoj_assert(info);
-    parent->changeCurrentPageBackground(info);
+    parent->changeCurrentPageBackground(*info);
 }
