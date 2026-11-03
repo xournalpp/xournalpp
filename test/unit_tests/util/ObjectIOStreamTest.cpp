@@ -196,7 +196,11 @@ TEST(UtilObjectIOStream, testReadString) {
 }
 
 TEST(UtilObjectIOStream, testReadSizeT) {
-    std::vector<size_t> sizeTToTest{0, 1, 42, 1337, 10000000, 10000000000};
+    std::vector<size_t> sizeTToTest{0, 1, 42, 1337, 10000000};
+#if SIZE_MAX > UINT32_MAX
+    // Only representable with a 64-bit size_t
+    sizeTToTest.push_back(10000000000);
+#endif
 
     std::vector<std::pair<std::string, size_t>> testData;
     testData.reserve(sizeTToTest.size());
