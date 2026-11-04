@@ -31,10 +31,11 @@
 #include "LatexSettings.h"         // for LatexSettings
 #include "PageTemplateSettings.h"  // for PageTemplateSettings
 #include "RecolorParameters.h"     // for RecolorParameters
-#include "SettingsEnums.h"         // for InputDeviceTypeOption
-#include "ViewModes.h"             // for ViewModes
-#include "config-features.h"       // for ENABLE_AUDIO
-#include "filesystem.h"            // for path
+#include "ScribbleSettings.h"
+#include "SettingsEnums.h"    // for InputDeviceTypeOption
+#include "ViewModes.h"        // for ViewModes
+#include "config-features.h"  // for ENABLE_AUDIO
+#include "filesystem.h"       // for path
 
 #ifdef ENABLE_AUDIO
 #include <portaudiocpp/PortAudioCpp.hxx>  // for PaDeviceIndex
@@ -536,6 +537,12 @@ public:
      * Get TrySelectOnStrokeFilter enabled
      */
     bool getTrySelectOnStrokeFiltered() const;
+
+    void setScribbleToEraseEnabled(bool enabled);
+    bool getScribbleToEraseEnabled() const;
+    auto getScribbleSettings() const -> ScribbleSettings;
+    void setScribbleSensitivity(int value);
+    void setScribbleMinimumPasses(int value);
 
     /**
      * Set snap recognized shapes enabled
@@ -1136,6 +1143,10 @@ private:
     bool strokeFilterEnabled{};
     bool doActionOnStrokeFiltered{};
     bool trySelectOnStrokeFiltered{};
+
+    bool scribbleToEraseEnabled{};
+    int scribbleSensitivity{};
+    int scribbleMinimumPasses{};
 
     /**
      * Whether snapping for recognized shapes is enabled

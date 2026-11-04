@@ -77,6 +77,22 @@ target_link_libraries (test-gtk-integration xoj::core xoj::util gtest_main gtest
 target_compile_features(test-gtk-integration PRIVATE cxx_std_20)
 target_include_directories(test-gtk-integration PRIVATE "${PROJECT_BINARY_DIR}/test")
 
+# Use a test-only catalog so new strings do not depend on the Crowdin merge schedule.
+set(test_locale_dir "${PROJECT_BINARY_DIR}/test/locale")
+set(test_po_file "${PROJECT_SOURCE_DIR}/test/files/locale/scribble.po")
+set(test_catalog "${test_locale_dir}/pt_BR/LC_MESSAGES/${PROJECT_NAME}.mo")
+add_custom_command(
+  OUTPUT "${test_catalog}"
+  COMMAND "${CMAKE_COMMAND}" -E make_directory "${test_locale_dir}/pt_BR/LC_MESSAGES"
+  COMMAND "${GETTEXT_MSGFMT_EXECUTABLE}" --check --check-format
+          -o "${test_catalog}" "${test_po_file}"
+  DEPENDS "${test_po_file}"
+  VERBATIM
+)
+add_custom_target(test-translations DEPENDS "${test_catalog}")
+add_dependencies(test-gtk-integration test-translations)
+
+
 ###############################################################################
 # Discover and Register Tests
 ###############################################################################

@@ -11,10 +11,13 @@
 
 #pragma once
 
+#include <cstdint>
 #include <memory>  // for unique_ptr
 
 #include <gdk/gdk.h>  // for GdkEventKey
 
+#include "control/ToolEnums.h"
+#include "control/settings/ScribbleSettings.h"
 #include "model/PageRef.h"  // for PageRef
 #include "model/Point.h"    // for Point
 
@@ -101,6 +104,13 @@ private:
     std::unique_ptr<StrokeStabilizer::Base> stabilizer;
 
     std::shared_ptr<xoj::util::DispatchPool<xoj::view::StrokeToolView>> viewPool;
+
+    bool scribbleEligible = false;
+    Layer* scribbleLayer = nullptr;
+    uint64_t scribbleRevision = 0;
+    double scribbleZoom = 0;
+    DrawingType scribbleDrawingType = DRAWING_TYPE_DEFAULT;
+    ScribbleSettings scribbleSettings;
 
     friend class StrokeStabilizer::Active;
 

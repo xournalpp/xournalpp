@@ -63,7 +63,7 @@ void UndoRedoHandler::printContents() {
         if (this->savedUndo)               // NOLINT
         {                                  // NOLINT
             printAction(this->savedUndo);  // NOLINT
-        }                                  // NOLINT
+        }  // NOLINT
     }
 }
 
@@ -72,6 +72,7 @@ UndoRedoHandler::UndoRedoHandler(Control* control): control(control) {}
 UndoRedoHandler::~UndoRedoHandler() { clearContents(); }
 
 void UndoRedoHandler::clearContents() {
+    ++revision;
 #ifdef UNDO_TRACE
     for (auto const& undoAction: this->undoList) {
         g_message("clearContents()::Delete UndoAction: %p / %s", undoAction.get(), undoAction->getClassName().c_str());
@@ -108,6 +109,7 @@ void UndoRedoHandler::undo() {
     this->redoList.emplace_back(std::move(this->undoList.back()));
     this->undoList.pop_back();
 
+    ++revision;
     bool undoResult = undoAction.undo(this->control);
 
     if (!undoResult) {
@@ -134,6 +136,7 @@ void UndoRedoHandler::redo() {
     this->undoList.emplace_back(std::move(this->redoList.back()));
     this->redoList.pop_back();
 
+    ++revision;
     bool redoResult = redoAction.redo(this->control);
 
     if (!redoResult) {
@@ -148,6 +151,8 @@ void UndoRedoHandler::redo() {
     printContents();
 }
 
+auto UndoRedoHandler::getRevision() const -> uint64_t { return revision; }
+
 auto UndoRedoHandler::canUndo() -> bool { return !this->undoList.empty(); }
 
 auto UndoRedoHandler::canRedo() -> bool { return !this->redoList.empty(); }
@@ -160,6 +165,7 @@ void UndoRedoHandler::addUndoAction(UndoActionPtr action) {
         return;
     }
 
+    ++revision;
     this->undoList.emplace_back(std::move(action));
     clearRedo();
     fireUpdateUndoRedoButtons(this->undoList.back()->getPages());
@@ -192,14 +198,18 @@ auto UndoRedoHandler::redoDescription() -> string {
 }
 
 void UndoRedoHandler::fireUpdateUndoRedoButtons(const std::vector<PageRef>& pages) {
-    for (auto&& undoRedoListener: this->listener) { undoRedoListener->undoRedoChanged(); }
+    for (auto&& undoRedoListener: this->listener) {
+        undoRedoListener->undoRedoChanged();
+    }
 
     for (PageRef page: pages) {
         if (!page) {
             continue;
         }
 
-        for (auto&& undoRedoListener: this->listener) { undoRedoListener->undoRedoPageChanged(page); }
+        for (auto&& undoRedoListener: this->listener) {
+            undoRedoListener->undoRedoPageChanged(page);
+        }
     }
 }
 

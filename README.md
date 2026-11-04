@@ -38,6 +38,7 @@ Xournal++ features:
 - Text tool for adding text in different fonts, colors, and sizes
 - Enhanced support for image insertion
 - Eraser with multiple configurations
+- Optional [scribble to erase](readme/ScribbleToErase.md) with adjustable recognition settings
 - LaTeX support (requires a working LaTeX installation) with customizable template and a resizable editor with syntax highlighting
 - Sidebar containing page previews with advanced page sorting, PDF bookmarks and layers (can be individually hidden/edited)
 - Allows mapping different tools/colors etc. to stylus/mouse buttons

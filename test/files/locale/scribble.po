@@ -1,0 +1,39 @@
+# Test catalog for the settings dialog; not installed with the application.
+msgid ""
+msgstr ""
+"Project-Id-Version: Xournal++ tests\n"
+"PO-Revision-Date: 2026-10-29 20:10-0800\n"
+"Last-Translator: Xournal++ Team\n"
+"Language-Team: Test fixtures\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Scribble to Erase"
+msgstr "Apagar com rabiscos"
+
+msgid "Enable scribble to erase"
+msgstr "Ativar apagamento por rabiscos"
+
+msgid "Erase entire strokes on the current layer by scribbling over them with the Pen tool. Undo restores the erased strokes."
+msgstr "Apaga traços inteiros da camada atual ao rabiscar sobre eles com a ferramenta Caneta. Desfazer restaura os traços apagados."
+
+msgid "Advanced settings"
+msgstr "Configurações avançadas"
+
+msgid "Recognition sensitivity (0-100)"
+msgstr "Sensibilidade do reconhecimento (0–100)"
+
+msgid "Higher values accept less regular scribbles, but can erase ordinary drawing by mistake. Default: 50."
+msgstr "Valores maiores aceitam rabiscos menos regulares, mas podem apagar desenhos comuns por engano. Padrão: 50."
+
+msgid "Minimum passes"
+msgstr "Passagens mínimas"
+
+msgid "Each movement in one direction counts as one pass. Lower values need fewer movements, but can erase ordinary drawing by mistake. Moving across several targets may need extra passes. Default: 4."
+msgstr "Cada movimento em uma direção conta como uma passagem. Valores menores exigem menos movimentos, mas podem apagar desenhos comuns por engano. Ao percorrer vários alvos, podem ser necessárias passagens extras. Padrão: 4."
+
+msgid "Restore defaults"
+msgstr "Restaurar padrões"
