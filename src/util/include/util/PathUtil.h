@@ -153,7 +153,7 @@ auto system_single_byte_filename(const fs::path& path) -> std::string;
 [[maybe_unused]] [[nodiscard]] fs::path getConfigFile(const fs::path& relativeFileName = "");
 [[maybe_unused]] [[nodiscard]] fs::path getConfigFileWithFallback(const fs::path& relativeFileName = "");
 [[maybe_unused]] [[nodiscard]] fs::path getCacheFile(const fs::path& relativeFileName = "");
-[[maybe_unused]] [[nodiscard]] fs::path getTmpDirSubfolder(const fs::path& subfolder = "");
+[[maybe_unused]] [[nodiscard]] fs::path getTmpDirSubfolder(const fs::path& subfolder = "", int jobNo = 0);
 [[maybe_unused]] [[nodiscard]] fs::path getAutosaveFilepath();
 [[maybe_unused]] [[nodiscard]] fs::path getGettextFilepath(fs::path const& localeDir);
 [[maybe_unused]] [[nodiscard]] fs::path getDataPath();
