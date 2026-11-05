@@ -681,9 +681,17 @@ void EditSelection::mouseMove(double mouseX, double mouseY, bool alt) {
 
 // scales with scale factors fx and fy fixing the corner of the reduced bounding box defined by changeLeft and
 // changeTop
-void EditSelection::scaleShift(double fx, double fy, bool changeLeft, bool changeTop) {
+void EditSelection::scaleShift(double fx, double fy, bool changeLeft, bool changeTop, bool symmetricalMirror) {
+
     double dx = (changeLeft) ? this->snappedBounds.width * (1 - fx) : 0;
     double dy = (changeTop) ? this->snappedBounds.height * (1 - fy) : 0;
+
+    // If scaleShift call comes from a symmetrical mirroring, pivot point will be set in the center of the selection
+    if (symmetricalMirror) {
+        dx = this->snappedBounds.width * (1 - fx) / 2;
+        dy = this->snappedBounds.height * (1 - fy) / 2;
+    }
+
     this->width *= fx;
     this->height *= fy;
     this->snappedBounds.width *= fx;
@@ -1197,4 +1205,28 @@ void EditSelection::readSerialized(ObjectInputStream& in) {
     this->contents->readSerialized(in);
 
     in.endObject();
+}
+
+void EditSelection::mirror(double fx, double fy) {
+
+    // Saves the initial absolute position before mirroring it in scaleShift()
+    double zoom = this->view->getZoom();
+    double absX = (this->snappedBounds.x + this->relMousePosX) * zoom;
+    double absY = (this->snappedBounds.y + this->relMousePosY) * zoom;
+
+    // Add to the undo/redo queue any current action before doing it for mirroring
+    if (this->mouseDownType != CURSOR_SELECTION_NONE) {  
+        this->contents->updateContent(this->getRect(), this->snappedBounds, this->rotation,  
+                                      this->view->getPage()->getSelectedLayer(), this->view->getPage(),  
+                                      this->undo, this->mouseDownType);  
+    }  
+
+    scaleShift(fx, fy, false, false, true);
+
+    // Calculate new relative position for the mirrored selection based on pre-mirror one
+    mouseDown(this->mouseDownType, absX, absY);
+
+    this->contents->updateContent(this->getRect(), this->snappedBounds, this->rotation, this->view->getPage()->getSelectedLayer(), this->view->getPage(), this->undo, CURSOR_SELECTION_MIRROR);
+    this->contents->mirror();
+    this->view->getXournal()->repaintSelection();
 }
