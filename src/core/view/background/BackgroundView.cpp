@@ -2,6 +2,7 @@
 
 #include <glib.h>  // for g_warning
 
+#include "model/BackgroundConfig.h"                 // for BackgroundConfig
 #include "model/PageType.h"                          // for PageType, PageTy...
 #include "model/XojPage.h"                           // for XojPage
 #include "view/background/OneColorBackgroundView.h"  // for OneColorBackgrou...
@@ -12,6 +13,7 @@
 #include "IsoDottedBackgroundView.h"                // for IsoDottedBackgro...
 #include "IsoGraphBackgroundView.h"                 // for IsoGraphBackgrou...
 #include "LinedBackgroundView.h"                    // for LinedBackgroundView
+#include "LinedGraphBackgroundView.h"               // for LinedGraphBackgr...
 #include "PdfBackgroundView.h"                      // for PdfBackgroundView
 #include "PlainBackgroundView.h"                    // for PlainBackgroundView
 #include "RuledBackgroundView.h"                    // for RuledBackgroundView
@@ -34,6 +36,9 @@ auto BackgroundView::createRuled(double width, double height, Color backgroundCo
             break;
         case PageTypeFormat::Graph:
             res = std::make_unique<GraphBackgroundView>(width, height, backgroundColor, pt.config);
+            break;
+        case PageTypeFormat::LinedGraph:
+            res = std::make_unique<LinedGraphBackgroundView>(width, height, backgroundColor, pt.config);
             break;
         case PageTypeFormat::Staves:
             res = std::make_unique<StavesBackgroundView>(width, height, backgroundColor, pt.config);

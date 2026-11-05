@@ -37,6 +37,7 @@ PageTypeHandler::PageTypeHandler(GladeSearchpath* gladeSearchPath) {
         addPageTypeInfo(_("Dotted"), PageTypeFormat::Dotted, "", types);
         addPageTypeInfo(_("Isometric Dotted"), PageTypeFormat::IsoDotted, "", types);
         addPageTypeInfo(_("Isometric Graph"), PageTypeFormat::IsoGraph, "", types);
+        addPageTypeInfo(_("Graph with vertical line"), PageTypeFormat::LinedGraph, "", types);
     }
 
     // Special types
@@ -125,6 +126,9 @@ auto PageTypeHandler::getPageTypeFormatForString(std::string_view format) -> Pag
     if (format == "isograph") {
         return PageTypeFormat::IsoGraph;
     }
+    if (format == "linedgraph") {
+        return PageTypeFormat::LinedGraph;
+    }
     if (format == ":pdf") {
         return PageTypeFormat::Pdf;
     }
@@ -155,6 +159,8 @@ auto PageTypeHandler::getStringForPageTypeFormat(const PageTypeFormat& format) -
             return "isodotted";
         case PageTypeFormat::IsoGraph:
             return "isograph";
+        case PageTypeFormat::LinedGraph:
+            return "linedgraph";
         case PageTypeFormat::Pdf:
             return ":pdf";
         case PageTypeFormat::Image:
