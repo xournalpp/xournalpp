@@ -786,6 +786,19 @@ void Settings::loadButtonConfig() {
             ToolType type = toolTypeFromString(sType);
             cfg->action = type;
 
+            string sZoomScaling;
+            if (e.getString("zoomScalingMode", sZoomScaling)) {
+                if (sZoomScaling == "enabled") {
+                    cfg->zoomScalingMode = ZoomScalingMode::ENABLED;
+                } else if (sZoomScaling == "disabled") {
+                    cfg->zoomScalingMode = ZoomScalingMode::DISABLED;
+                } else {
+                    cfg->zoomScalingMode = ZoomScalingMode::DONT_CHANGE;
+                }
+            } else {
+                cfg->zoomScalingMode = ZoomScalingMode::DONT_CHANGE;
+            }
+
             if (type != TOOL_NONE) {
                 if (type == TOOL_PEN) {
                     string strokeType;
@@ -953,6 +966,19 @@ void Settings::saveButtonConfig() {
 
         ToolType const type = cfg->action;
         e.setString("tool", toolTypeToString(type).data());
+
+        switch (cfg->zoomScalingMode) {
+            case ZoomScalingMode::ENABLED:
+                e.setString("zoomScalingMode", "enabled");
+                break;
+            case ZoomScalingMode::DISABLED:
+                e.setString("zoomScalingMode", "disabled");
+                break;
+            case ZoomScalingMode::DONT_CHANGE:
+            default:
+                e.setString("zoomScalingMode", "dontChange");
+                break;
+        }
 
         if (type != TOOL_NONE) {
             if (type == TOOL_PEN) {

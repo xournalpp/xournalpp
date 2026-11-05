@@ -151,6 +151,8 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkBox* box, 
     // Possible values are defined in the .glade file
     this->cbStrokeType = builder.get("cbStrokeType");
 
+    this->cbZoomScaling = builder.get("cbZoomScaling");
+
     loadSettings();
 }
 
@@ -209,6 +211,19 @@ void ButtonConfigGui::loadSettings() {
     }
 
     gtk_combo_box_set_active(GTK_COMBO_BOX(cbStrokeType), cfg->strokeType);
+
+    switch (cfg->getZoomScalingMode()) {
+        case ZoomScalingMode::ENABLED:
+            gtk_combo_box_set_active(GTK_COMBO_BOX(cbZoomScaling), 1);
+            break;
+        case ZoomScalingMode::DISABLED:
+            gtk_combo_box_set_active(GTK_COMBO_BOX(cbZoomScaling), 2);
+            break;
+        case ZoomScalingMode::DONT_CHANGE:
+        default:
+            gtk_combo_box_set_active(GTK_COMBO_BOX(cbZoomScaling), 0);
+            break;
+    }
 
     if (withDevice) {
         gtk_combo_box_set_active(GTK_COMBO_BOX(cbDevice), 0);
@@ -272,6 +287,15 @@ void ButtonConfigGui::saveSettings() {
 
     cfg->strokeType = static_cast<StrokeType>(gtk_combo_box_get_active(GTK_COMBO_BOX(this->cbStrokeType)));
 
+    int zoomScalingIdx = gtk_combo_box_get_active(GTK_COMBO_BOX(this->cbZoomScaling));
+    if (zoomScalingIdx == 1) {
+        cfg->setZoomScalingMode(ZoomScalingMode::ENABLED);
+    } else if (zoomScalingIdx == 2) {
+        cfg->setZoomScalingMode(ZoomScalingMode::DISABLED);
+    } else {
+        cfg->setZoomScalingMode(ZoomScalingMode::DONT_CHANGE);
+    }
+
     if (this->withDevice) {
         size_t dev = static_cast<size_t>(gtk_combo_box_get_active(GTK_COMBO_BOX(cbDevice)) - 1);
         cfg->device = (dev < 0 || this->deviceList.size() <= dev) ? "" : this->deviceList[dev].getName();
@@ -304,4 +328,6 @@ void ButtonConfigGui::enableDisableTools() {
     gtk_widget_set_visible(cbDrawingType, action != TOOL_NONE && xoj::tool::hasCapability(action, TOOL_CAP_RECTANGLE));
     gtk_widget_set_visible(cbEraserType, action == TOOL_ERASER);
     gtk_widget_set_visible(cbStrokeType, action == TOOL_PEN);
+    gtk_widget_set_visible(cbZoomScaling,
+                           action == TOOL_PEN || action == TOOL_ERASER || action == TOOL_HIGHLIGHTER);
 }

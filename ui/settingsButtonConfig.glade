@@ -165,6 +165,23 @@
             <property name="top-attach">2</property>
           </packing>
         </child>
+        <child>
+          <object class="GtkComboBoxText" id="cbZoomScaling">
+            <property name="name">cbZoomScaling</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="hexpand">True</property>
+            <items>
+              <item translatable="yes">Scale with Zoom - don't change</item>
+              <item translatable="yes">Scale with Zoom - enabled</item>
+              <item translatable="yes">Scale with Zoom - disabled</item>
+            </items>
+          </object>
+          <packing>
+            <property name="left-attach">1</property>
+            <property name="top-attach">2</property>
+          </packing>
+        </child>
       </object>
       <packing>
         <property name="expand">False</property>

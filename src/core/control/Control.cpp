@@ -159,6 +159,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
     this->zoom->setZoomStepScroll(this->settings->getZoomStepScroll() / 100.0);
 
     this->toolHandler = new ToolHandler(this, this->actionDB.get(), this->settings);
+    this->toolHandler->setZoomControl(this->zoom);
     this->toolHandler->loadSettings();
     this->initButtonTool();
 

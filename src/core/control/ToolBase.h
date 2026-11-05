@@ -109,6 +109,16 @@ public:
     inline bool getTextJustify() const { return textJustify; }
     inline void setTextJustify(bool j) { textJustify = j; }
 
+    /**
+     * @return Whether the tool scales with zoom
+     */
+    bool isZoomScaling() const;
+
+    /**
+     * @param enabled Whether the tool scales with zoom
+     */
+    void setZoomScaling(bool enabled);
+
 private:
     /**
      * Color of the tool for all drawing tools
@@ -147,4 +157,5 @@ private:
 
     TextAlignment textAlignment = TextAlignment::LEFT;
     bool textJustify = false;
+    bool zoomScaling = false;
 };

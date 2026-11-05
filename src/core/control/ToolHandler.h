@@ -26,6 +26,8 @@ class LineStyle;
 class Settings;
 class ActionDatabase;
 class TextAlignment;
+class ZoomControl;
+
 
 
 // enum for ptrs that are dynamically pointing to different tools
@@ -193,6 +195,13 @@ public:
     void setButtonSize(ToolSize size, Button button);
 
     /**
+     * @brief Set the Zoom Control for zoom-aware tool sizing
+     *
+     * @param zoomControl
+     */
+    void setZoomControl(ZoomControl* zoomControl);
+
+    /**
      * @brief Get the Thickness of the active tool
      *
      * @return double
@@ -266,6 +275,14 @@ public:
      * @return Tool&
      */
     Tool& getTool(ToolType type) const;
+
+    /**
+     * @brief Get the Button Tool pointer based on enum
+     *
+     * @param button
+     * @return Tool*
+     */
+    Tool* getButtonTool(Button button) const;
 
     /**
      * @brief Get the active Tool, returns nullptr if no tool is active
@@ -393,14 +410,6 @@ private:
     std::array<std::unique_ptr<Tool>, TOOL_COUNT> tools;
 
     /**
-     * @brief Get the Button Tool pointer based on enum
-     *
-     * @param button
-     * @return Tool*
-     */
-    Tool* getButtonTool(Button button) const;
-
-    /**
      * @brief Get the Selected Tool pointer based on enum
      *
      * @param selectedTool
@@ -430,4 +439,5 @@ private:
     ToolListener* stateChangeListener = nullptr;
     ActionDatabase* actionDB = nullptr;
     Settings* settings = nullptr;
+    ZoomControl* zoomControl = nullptr;
 };

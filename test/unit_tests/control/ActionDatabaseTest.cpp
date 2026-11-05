@@ -117,3 +117,18 @@ TEST(ActionDatabaseTest, testActionTargetMatch) {
 
     exploreMenu(menu);
 }
+
+TEST(ActionDatabaseTest, zoomScalingActionsExist) {
+    EXPECT_NE(Action_toString(Action::TOOL_PEN_ZOOM_SCALING), nullptr);
+    EXPECT_STREQ(Action_toString(Action::TOOL_PEN_ZOOM_SCALING), "tool-pen-zoom-scaling");
+    EXPECT_STREQ(Action_toString(Action::TOOL_ERASER_ZOOM_SCALING), "tool-eraser-zoom-scaling");
+    EXPECT_STREQ(Action_toString(Action::TOOL_HIGHLIGHTER_ZOOM_SCALING), "tool-highlighter-zoom-scaling");
+
+    EXPECT_EQ(Action_fromString("tool-pen-zoom-scaling"), Action::TOOL_PEN_ZOOM_SCALING);
+    EXPECT_EQ(Action_fromString("tool-eraser-zoom-scaling"), Action::TOOL_ERASER_ZOOM_SCALING);
+    EXPECT_EQ(Action_fromString("tool-highlighter-zoom-scaling"), Action::TOOL_HIGHLIGHTER_ZOOM_SCALING);
+
+    EXPECT_EQ(expectedTypes[Action::TOOL_PEN_ZOOM_SCALING], nullptr);
+    EXPECT_EQ(expectedTypes[Action::TOOL_ERASER_ZOOM_SCALING], nullptr);
+    EXPECT_EQ(expectedTypes[Action::TOOL_HIGHLIGHTER_ZOOM_SCALING], nullptr);
+}

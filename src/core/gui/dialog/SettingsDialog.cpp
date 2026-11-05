@@ -9,12 +9,15 @@
 
 #include "control/AudioController.h"             // for AudioController
 #include "control/Control.h"                     // for Control
+#include "control/actions/ActionDatabase.h"      // for ActionDatabase
 #include "control/settings/Settings.h"           // for Settings, SElement
 #include "control/settings/SettingsEnums.h"      // for STYLUS_CURSOR_ARROW
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
+#include "control/ToolHandler.h"                 // for ToolHandler
 #include "gui/CreatePreviewImage.h"              // for createPreviewImage
 #include "gui/MainWindow.h"                      // for MainWindow
 #include "gui/XournalView.h"                     // for XournalView
+#include "gui/XournalppCursor.h"                 // for XournalppCursor
 #include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
 #include "gui/toolbarMenubar/icon/ColorIcon.h"
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
@@ -194,6 +197,57 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      }),
                      this);
 
+    g_signal_connect_swapped(
+            builder.get("cbPenZoomScaling"), "toggled",
+            G_CALLBACK(+[](SettingsDialog* self) {
+                if (auto* th = self->control->getToolHandler()) {
+                    bool enabled = self->getCheckbox("cbPenZoomScaling");
+                    th->getTool(TOOL_PEN).setZoomScaling(enabled);
+                    if (auto* actionDB = self->control->getActionDatabase()) {
+                        actionDB->setActionState(Action::TOOL_PEN_ZOOM_SCALING, enabled);
+                    }
+                    if (auto* cursor = self->control->getCursor()) {
+                        cursor->updateCursor();
+                    }
+                    th->saveSettings();
+                }
+            }),
+            this);
+
+    g_signal_connect_swapped(
+            builder.get("cbEraserZoomScaling"), "toggled",
+            G_CALLBACK(+[](SettingsDialog* self) {
+                if (auto* th = self->control->getToolHandler()) {
+                    bool enabled = self->getCheckbox("cbEraserZoomScaling");
+                    th->getTool(TOOL_ERASER).setZoomScaling(enabled);
+                    if (auto* actionDB = self->control->getActionDatabase()) {
+                        actionDB->setActionState(Action::TOOL_ERASER_ZOOM_SCALING, enabled);
+                    }
+                    if (auto* cursor = self->control->getCursor()) {
+                        cursor->updateCursor();
+                    }
+                    th->saveSettings();
+                }
+            }),
+            this);
+
+    g_signal_connect_swapped(
+            builder.get("cbHighlighterZoomScaling"), "toggled",
+            G_CALLBACK(+[](SettingsDialog* self) {
+                if (auto* th = self->control->getToolHandler()) {
+                    bool enabled = self->getCheckbox("cbHighlighterZoomScaling");
+                    th->getTool(TOOL_HIGHLIGHTER).setZoomScaling(enabled);
+                    if (auto* actionDB = self->control->getActionDatabase()) {
+                        actionDB->setActionState(Action::TOOL_HIGHLIGHTER_ZOOM_SCALING, enabled);
+                    }
+                    if (auto* cursor = self->control->getCursor()) {
+                        cursor->updateCursor();
+                    }
+                    th->saveSettings();
+                }
+            }),
+            this);
+
     load();
 }
 
@@ -362,6 +416,12 @@ void SettingsDialog::load() {
     const bool ignoreStylusEventsEnabled = settings->getIgnoredStylusEvents() != 0;  // 0 means disabled, >0 enabled
     loadCheckbox("cbIgnoreFirstStylusEvents", ignoreStylusEventsEnabled);
     loadCheckbox("cbInputSystemDrawOutsideWindow", settings->getInputSystemDrawOutsideWindowEnabled());
+
+    if (auto* toolHandler = this->control->getToolHandler()) {
+        loadCheckbox("cbPenZoomScaling", toolHandler->getTool(TOOL_PEN).isZoomScaling());
+        loadCheckbox("cbEraserZoomScaling", toolHandler->getTool(TOOL_ERASER).isZoomScaling());
+        loadCheckbox("cbHighlighterZoomScaling", toolHandler->getTool(TOOL_HIGHLIGHTER).isZoomScaling());
+    }
 
     /**
      * Tab size related settings
@@ -764,6 +824,28 @@ void SettingsDialog::save() {
     settings->setInputSystemDrawOutsideWindowEnabled(getCheckbox("cbInputSystemDrawOutsideWindow"));
     settings->setScrollbarFadeoutDisabled(getCheckbox("cbDisableScrollbarFadeout"));
     settings->setAudioDisabled(getCheckbox("cbDisableAudio"));
+
+    if (auto* toolHandler = this->control->getToolHandler()) {
+        bool penZoomScaling = getCheckbox("cbPenZoomScaling");
+        bool eraserZoomScaling = getCheckbox("cbEraserZoomScaling");
+        bool highlighterZoomScaling = getCheckbox("cbHighlighterZoomScaling");
+
+        toolHandler->getTool(TOOL_PEN).setZoomScaling(penZoomScaling);
+        toolHandler->getTool(TOOL_ERASER).setZoomScaling(eraserZoomScaling);
+        toolHandler->getTool(TOOL_HIGHLIGHTER).setZoomScaling(highlighterZoomScaling);
+
+        if (auto* actionDB = this->control->getActionDatabase()) {
+            actionDB->setActionState(Action::TOOL_PEN_ZOOM_SCALING, penZoomScaling);
+            actionDB->setActionState(Action::TOOL_ERASER_ZOOM_SCALING, eraserZoomScaling);
+            actionDB->setActionState(Action::TOOL_HIGHLIGHTER_ZOOM_SCALING, highlighterZoomScaling);
+        }
+
+        if (auto* cursor = this->control->getCursor()) {
+            cursor->updateCursor();
+        }
+
+        toolHandler->saveSettings();
+    }
 
     /**
      * Tab size relate settings
