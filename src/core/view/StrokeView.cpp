@@ -119,7 +119,7 @@ void StrokeView::draw(const Context& ctx) const {
          * Highlighter without filling.
          */
         Util::cairo_set_source_rgbi(cr, s->getColor(), OPACITY_HIGHLIGHTER);
-        cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
+        cairo_set_operator(cr, ctx.highlighterOperator);
     } else {
         /**
          * Normal pen
@@ -160,7 +160,7 @@ void StrokeView::draw(const Context& ctx) const {
         }
 
         // Blit the mask onto the given cairo context
-        cairo_set_operator(ctx.cr, highlighter ? CAIRO_OPERATOR_MULTIPLY : CAIRO_OPERATOR_OVER);
+        cairo_set_operator(ctx.cr, highlighter ? ctx.highlighterOperator : CAIRO_OPERATOR_OVER);
 
         Util::cairo_set_source_rgbi(ctx.cr, s->getColor(), groupAlpha);
 

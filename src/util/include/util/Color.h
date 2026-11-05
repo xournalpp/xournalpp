@@ -65,6 +65,19 @@ struct ColorU8 {
     };
 
     constexpr auto isLight() const -> bool { return uint32_t(red) + uint32_t(green) + uint32_t(blue) > 0x180U; }
+
+    constexpr auto getRelativeLuminance() const -> double {
+        // The ITU-R BT.709 luminance formula, colors belong [0,255] the formula expects [0,1], so divide result by 255.
+        return (0.2126 * red + 0.7152 * green + 0.0722 * blue) / 255.0;
+    }
+
+    constexpr auto isDark() const -> bool {
+        return getRelativeLuminance() <= 0.5;
+    }
+
+    constexpr auto getHighlighterOperator() const -> cairo_operator_t {
+        return isDark() ? CAIRO_OPERATOR_SCREEN : CAIRO_OPERATOR_MULTIPLY;
+    }
 };
 
 static_assert(sizeof(ColorU8) == sizeof(uint32_t), "Color is not 32 bit");
