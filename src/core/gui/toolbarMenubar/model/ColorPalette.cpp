@@ -50,7 +50,7 @@ auto Palette::load_default() -> void {
 
     getline(defaultFile, line);
     if (!parseFirstGimpPaletteLine(line))
-        g_error("The default file was mallformed. This should never happen!");
+        g_error("The default file was malformed. This should never happen!");
     while (getline(defaultFile, line)) {
         parseHeaderLine(line) || parseColorLine(line);
     }
