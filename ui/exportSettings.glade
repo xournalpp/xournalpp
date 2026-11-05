@@ -100,7 +100,7 @@ Set export parameters</property>
               </packing>
             </child>
             <child>
-              <!-- n-columns=3 n-rows=6 -->
+              <!-- n-columns=3 n-rows=7 -->
               <object class="GtkGrid" id="grid">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
@@ -119,7 +119,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
-                    <property name="top-attach">0</property>
+                    <property name="top-attach">1</property>
                   </packing>
                 </child>
                 <child>
@@ -135,7 +135,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
-                    <property name="top-attach">2</property>
+                    <property name="top-attach">3</property>
                   </packing>
                 </child>
                 <child>
@@ -151,7 +151,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
-                    <property name="top-attach">2</property>
+                    <property name="top-attach">3</property>
                   </packing>
                 </child>
                 <child>
@@ -167,7 +167,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
-                    <property name="top-attach">3</property>
+                    <property name="top-attach">4</property>
                   </packing>
                 </child>
                 <child>
@@ -183,7 +183,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
-                    <property name="top-attach">4</property>
+                    <property name="top-attach">5</property>
                   </packing>
                 </child>
                 <child>
@@ -199,7 +199,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">2</property>
-                    <property name="top-attach">4</property>
+                    <property name="top-attach">5</property>
                   </packing>
                 </child>
                 <child>
@@ -212,7 +212,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">2</property>
-                    <property name="top-attach">5</property>
+                    <property name="top-attach">6</property>
                   </packing>
                 </child>
                 <child>
@@ -228,7 +228,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">2</property>
-                    <property name="top-attach">2</property>
+                    <property name="top-attach">3</property>
                   </packing>
                 </child>
                 <child>
@@ -244,7 +244,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">2</property>
-                    <property name="top-attach">3</property>
+                    <property name="top-attach">4</property>
                   </packing>
                 </child>
                 <child>
@@ -290,7 +290,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">2</property>
-                    <property name="top-attach">0</property>
+                    <property name="top-attach">1</property>
                   </packing>
                 </child>
                 <child>
@@ -311,7 +311,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
-                    <property name="top-attach">0</property>
+                    <property name="top-attach">1</property>
                   </packing>
                 </child>
                 <child>
@@ -328,7 +328,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
-                    <property name="top-attach">1</property>
+                    <property name="top-attach">2</property>
                   </packing>
                 </child>
                 <child>
@@ -342,7 +342,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
-                    <property name="top-attach">0</property>
+                    <property name="top-attach">1</property>
                     <property name="width">3</property>
                   </packing>
                 </child>
@@ -364,7 +364,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
-                    <property name="top-attach">1</property>
+                    <property name="top-attach">2</property>
                   </packing>
                 </child>
                 <child>
@@ -399,8 +399,43 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">2</property>
-                    <property name="top-attach">1</property>
+                    <property name="top-attach">2</property>
                   </packing>
+                </child>
+                <child>
+                  <object class="GtkComboBoxText" id="cbtExportFormat">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="active">0</property>
+                    <items>
+                      <item id="pdf" translatable="yes">PDF</item>
+                      <item id="png" translatable="yes">PNG</item>
+                      <item id="svg" translatable="yes">SVG</item>
+                      <item id="xoj" translatable="yes">XOJ</item>
+                    </items>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">Export format</property>
+                    <property name="xalign">0</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
                 <child>
                   <placeholder/>

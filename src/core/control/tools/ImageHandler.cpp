@@ -32,7 +32,7 @@ ImageHandler::~ImageHandler() = default;
 
 
 void ImageHandler::chooseAndCreateImage(std::function<void(std::unique_ptr<Image>)> callback) {
-    xoj::OpenDlg::showOpenImageDialog(control->getGtkWindow(), control->getSettings(),
+    xoj::OpenDlg::showOpenImageDialog(control->getGtkWindow(), control->getSettings(), false,
                                       [cb = std::move(callback), ctrl = control](fs::path p, bool) {
                                           auto img = ImageHandler::createImageFromFile(p);
 

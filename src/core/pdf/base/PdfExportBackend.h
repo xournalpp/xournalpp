@@ -16,7 +16,7 @@
 
 #include "util/i18n.h"
 
-class ExportBackend {  // Must match the order in ui/exportSettings.glade:listPdfExportBackend
+class PdfExportBackend {  // Must match the order in ui/exportSettings.glade:listPdfExportBackend
 public:
     enum Value {
         DEFAULT,
@@ -26,15 +26,15 @@ public:
         ENUM_END
     };
 
-    ExportBackend() = default;
-    constexpr ExportBackend(Value v): v(v) {}
+    PdfExportBackend() = default;
+    constexpr PdfExportBackend(Value v): v(v) {}
     constexpr operator Value() const { return v; }
     explicit operator bool() const = delete;
 
     static constexpr auto DEFAULT_ID_STRING = "default";
 
-    static ExportBackend fromString(std::string_view str);
-    static ExportBackend fromString(const char* str);
+    static PdfExportBackend fromString(std::string_view str);
+    static PdfExportBackend fromString(const char* str);
     static const char* listAvailableBackends();
     static std::vector<std::pair<const char*, const char*>> getPrettyNamesOfAvailableBackends();
 

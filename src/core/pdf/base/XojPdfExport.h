@@ -13,7 +13,7 @@
 
 #include <string>
 
-#include "control/jobs/BaseExportJob.h"
+#include "control/jobs/ExportParameters.h"
 #include "util/ElementRange.h"
 
 #include "filesystem.h"
