@@ -175,7 +175,8 @@ auto XojMsgBox::askPluginQuestion(const std::string& pluginName, const std::stri
 }
 
 void XojMsgBox::replaceFileQuestion(GtkWindow* win, fs::path file,
-                                    xoj::util::move_only_function<void(const fs::path&)> writeTofile) {
+                                    xoj::util::move_only_function<void(const fs::path&)> writeTofile,
+                                    xoj::util::move_only_function<void()> onCancel) {
     if (!fs::exists(file)) {
         writeTofile(file);
         return;
@@ -190,12 +191,15 @@ void XojMsgBox::replaceFileQuestion(GtkWindow* win, fs::path file,
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another name"), GTK_RESPONSE_CANCEL);
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Replace"), GTK_RESPONSE_OK);
 
-    xoj::popup::PopupWindowWrapper<XojMsgBox> popup(
-            GTK_DIALOG(dialog), [overwrite = std::move(writeTofile), file = std::move(file)](int response) mutable {
-                if (response == GTK_RESPONSE_OK) {
-                    overwrite(file);
-                }
-            });
+    xoj::popup::PopupWindowWrapper<XojMsgBox> popup(GTK_DIALOG(dialog),
+                                                    [overwrite = std::move(writeTofile), cancel = std::move(onCancel),
+                                                     file = std::move(file)](int response) mutable {
+                                                        if (response == GTK_RESPONSE_OK) {
+                                                            overwrite(file);
+                                                        } else {
+                                                            cancel();
+                                                        }
+                                                    });
     popup.show(win);
 }
 

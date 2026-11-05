@@ -26,6 +26,14 @@ namespace xoj {
 /// Helper class, for a single dialog
 class SaveExportDialog {
 public:
+    using ConfigureCallback = std::function<void(GtkFileChooser*)>;
+    using PathValidationCallback = std::function<bool(fs::path&, const char* filterName)>;
+    using FileSelectedCallback = std::function<void(std::optional<fs::path>)>;
+
+    static void showSaveDialog(GtkWindow* parent, Settings* settings, fs::path suggestedPath, const char* windowTitle,
+                               const char* buttonLabel, ConfigureCallback configure,
+                               PathValidationCallback pathValidation, FileSelectedCallback callback);
+
     /**
      * Shows a save file dialog. The callback is called with std::nullopt if no path were selected
      */
