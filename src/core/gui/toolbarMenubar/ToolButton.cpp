@@ -47,29 +47,13 @@ auto ToolButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
         GtkMenuButton* menubutton = GTK_MENU_BUTTON(gtk_menu_button_new());
         gtk_widget_set_can_focus(GTK_WIDGET(menubutton), false);  // todo(gtk4) not necessary anymore
         gtk_menu_button_set_popover(menubutton, popoverFactory->createPopover());
-        gtk_menu_button_set_direction(menubutton, GTK_ARROW_DOWN);
+        gtk_menu_button_set_direction(menubutton, horizontal ? GTK_ARROW_DOWN : GTK_ARROW_RIGHT);
 
-        GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0));
+        GtkBox* box = GTK_BOX(gtk_box_new(horizontal ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL, 0));
         gtk_box_append(box, btn);
         gtk_box_append(box, GTK_WIDGET(menubutton));
 
         gtk_container_add(GTK_CONTAINER(it), GTK_WIDGET(box));
-
-        g_signal_connect_object(it, "toolbar-reconfigured", G_CALLBACK(+[](GtkToolItem* it, gpointer box) {
-                                    gtk_orientable_set_orientation(GTK_ORIENTABLE(box),
-                                                                   gtk_tool_item_get_orientation(it));
-                                }),
-                                box, GConnectFlags(0));
-        g_signal_connect_object(it, "toolbar-reconfigured", G_CALLBACK(+[](GtkToolItem* it, gpointer btn) {
-                                    const bool h = gtk_tool_item_get_orientation(it) == GTK_ORIENTATION_HORIZONTAL;
-                                    gtk_menu_button_set_direction(GTK_MENU_BUTTON(btn),
-                                                                  h ? GTK_ARROW_DOWN : GTK_ARROW_RIGHT);
-                                    if (!gtk_menu_button_get_popover(GTK_MENU_BUTTON(btn))) {
-                                        printf("no popover in callback\n");
-                                    }
-                                }),
-                                menubutton, GConnectFlags(0));
-
     } else {
         gtk_container_add(GTK_CONTAINER(it), GTK_WIDGET(btn));
     }
