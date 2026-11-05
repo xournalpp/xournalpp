@@ -376,16 +376,7 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
         this->updateWindowTitle();
     }
 
-    auto current = getCurrentPageNo();
-    auto count = this->doc->getPageCount();
-
-    this->actionDB->enableAction(Action::GOTO_FIRST, current != 0);
-    this->actionDB->enableAction(Action::GOTO_PREVIOUS, current != 0);
-    this->actionDB->enableAction(Action::GOTO_PREVIOUS_ANNOTATED_PAGE, current != 0);
-    this->actionDB->enableAction(Action::GOTO_PAGE, count > 1);
-    this->actionDB->enableAction(Action::GOTO_NEXT, current < count - 1);
-    this->actionDB->enableAction(Action::GOTO_LAST, current < count - 1);
-    this->actionDB->enableAction(Action::GOTO_NEXT_ANNOTATED_PAGE, current < count - 1);
+    updatePageActions();
 
     if (navHistory) {
         navHistory->prune();
@@ -711,10 +702,18 @@ void Control::addDefaultPage(const std::optional<PageTemplateSettings>& pageTemp
 
 void Control::updatePageActions() {
     auto currentPage = getCurrentPageNo();
-    auto nbPages = this->doc->getPageCount();
-    this->actionDB->enableAction(Action::DELETE_PAGE, nbPages > 1);
+    auto pageCount = this->doc->getPageCount();
+    this->actionDB->enableAction(Action::DELETE_PAGE, pageCount > 1);
     this->actionDB->enableAction(Action::MOVE_PAGE_TOWARDS_BEGINNING, currentPage != 0);
-    this->actionDB->enableAction(Action::MOVE_PAGE_TOWARDS_END, currentPage < nbPages - 1);
+    this->actionDB->enableAction(Action::MOVE_PAGE_TOWARDS_END, currentPage < pageCount - 1);
+
+    this->actionDB->enableAction(Action::GOTO_FIRST, currentPage != 0);
+    this->actionDB->enableAction(Action::GOTO_PREVIOUS, currentPage != 0);
+    this->actionDB->enableAction(Action::GOTO_PREVIOUS_ANNOTATED_PAGE, currentPage != 0);
+    this->actionDB->enableAction(Action::GOTO_PAGE, pageCount > 1);
+    this->actionDB->enableAction(Action::GOTO_NEXT, currentPage < pageCount - 1);
+    this->actionDB->enableAction(Action::GOTO_LAST, currentPage < pageCount - 1);
+    this->actionDB->enableAction(Action::GOTO_NEXT_ANNOTATED_PAGE, currentPage < pageCount - 1);
 }
 
 void Control::deletePage() {
@@ -2703,8 +2702,6 @@ auto Control::getGladeSearchPath() const -> GladeSearchpath* { return this->glad
 auto Control::getSettings() const -> Settings* { return settings; }
 
 auto Control::getScrollHandler() const -> ScrollHandler* { return this->scrollHandler; }
-
-auto Control::getMetadataManager() const -> MetadataManager* { return this->metadata; }
 
 auto Control::getSidebar() const -> Sidebar* { return this->sidebar; }
 
