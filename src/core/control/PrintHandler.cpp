@@ -9,18 +9,19 @@
 #include <glib-object.h>  // for g_object_unref, G_CALLBACK, g_signa...
 #include <glib.h>         // for GError, g_error_free, g_warning
 
-#include "model/Document.h"       // for Document
-#include "model/PageRef.h"        // for PageRef
-#include "model/PageType.h"       // for PageType
-#include "model/XojPage.h"        // for XojPage
-#include "pdf/base/XojPdfPage.h"  // for XojPdfPageSPtr, XojPdfPage
-#include "util/Assert.h"          // for xoj_assert
-#include "util/PathUtil.h"        // for getConfigFile
-#include "util/StringUtils.h"     // for char_cast
-#include "util/XojMsgBox.h"       // for XojMsgBox
-#include "util/i18n.h"            // for _
-#include "util/safe_casts.h"      // for strict_cast
-#include "view/DocumentView.h"    // for DocumentView
+#include "model/Document.h"              // for Document
+#include "model/PageRef.h"               // for PageRef
+#include "model/PageType.h"              // for PageType
+#include "model/XojPage.h"               // for XojPage
+#include "pdf/base/XojPdfPage.h"         // for XojPdfPageSPtr, XojPdfPage
+#include "util/Assert.h"                 // for xoj_assert
+#include "util/PathUtil.h"               // for getConfigFile
+#include "util/StringUtils.h"            // for char_cast
+#include "util/XojMsgBox.h"              // for XojMsgBox
+#include "util/i18n.h"                   // for _
+#include "util/safe_casts.h"             // for strict_cast
+#include "view/DocumentView.h"           // for DocumentView
+#include "view/PageOrientationHelper.h"  // for cairoRotatePage
 
 #include "filesystem.h"  // for exists, remove, path
 
@@ -41,22 +42,12 @@ void drawPage(GtkPrintOperation* /*operation*/, GtkPrintContext* context, int pa
         cairo_translate(cr, 0, -height);
     }
 
-    auto pageOrient = page->getPdfPageOrientation();
-
     // For better quality printing, we use a dedicated pdf-renderer in this case
     if (page->getBackgroundType().isPdfPage()) {
         XojPdfPageSPtr popplerPage = doc->getPdfPage(page->getPdfPageNr());
         if (popplerPage) {
-            if (pageOrient != PageOrientation::UP) {
-                cairo_save(cr);
-                cairo_translate(cr, width / 2, height / 2);
-                cairo_rotate(cr, static_cast<int>(pageOrient) * M_PI_2);
-                if (pageOrient == PageOrientation::DOWN) {
-                    cairo_translate(cr, -width / 2, -height / 2);
-                } else {
-                    cairo_translate(cr, -height / 2, -width / 2);
-                }
-            }
+            auto pageOrient = page->getPdfPageOrientation();
+            xoj::view::cairoRotatePage(cr, pageOrient, width, height);
 
             popplerPage->renderForPrinting(cr);
 

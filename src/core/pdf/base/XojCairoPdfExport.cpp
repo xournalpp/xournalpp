@@ -26,6 +26,7 @@
 #include "util/i18n.h"                      // for _
 #include "util/serdesstream.h"              // for serdes_stream
 #include "view/DocumentView.h"              // for DocumentView
+#include "view/PageOrientationHelper.h"     // for cairoRotatePage
 
 #include "config.h"      // for PROJECT_STRING
 #include "filesystem.h"  // for path
@@ -155,16 +156,7 @@ void XojCairoPdfExport::exportPage(size_t page, bool exportPdfBackground) {
         auto pgOrient = p->getPdfPageOrientation();
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
-        if (pgOrient != PageOrientation::UP) {
-            cairo_save(cr);
-            cairo_translate(cr, width / 2, height / 2);
-            cairo_rotate(cr, static_cast<int>(pgOrient) * M_PI_2);
-            if (pgOrient == PageOrientation::DOWN) {
-                cairo_translate(cr, -width / 2, -height / 2);
-            } else {
-                cairo_translate(cr, -height / 2, -width / 2);
-            }
-        }
+        xoj::view::cairoRotatePage(cr, pgOrient, width, height);
 
         popplerPage->renderForPrinting(cr);
 

@@ -18,6 +18,7 @@
 #include <string_view>
 #include <vector>
 
+#include "model/XojPage.h"
 #include "util/Color.h"
 
 #include "filesystem.h"
@@ -49,7 +50,7 @@ public:
     virtual void setBgSolid(const PageType& bg, Color color) = 0;
     virtual void setBgPixmap(bool attach, const fs::path& filename) = 0;
     virtual void setBgPixmapCloned(size_t pageNr) = 0;
-    virtual void setBgPdf(size_t pageno, int pageorient) = 0;
+    virtual void setBgPdf(size_t pageno, PageOrientation pageorient) = 0;
     virtual void loadBgPdf(bool attach, const fs::path& filename) = 0;
     virtual void addLayer(const std::optional<std::string_view>& name) = 0;
     virtual void finalizeLayer() = 0;

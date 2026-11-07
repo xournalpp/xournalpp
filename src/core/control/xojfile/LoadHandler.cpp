@@ -247,9 +247,9 @@ void LoadHandler::setBgPixmapCloned(size_t pageNr) {
     this->page->setBackgroundType(PageType{PageTypeFormat::Image});
 }
 
-void LoadHandler::setBgPdf(size_t pageno, int pageorient) { 
+void LoadHandler::setBgPdf(size_t pageno, PageOrientation pageorient) {
     this->page->setBackgroundPdfPageNr(pageno);
-    this->page->setPdfPageOrientation(static_cast<PageOrientation>(pageorient));
+    this->page->setPdfPageOrientation(pageorient);
 }
 
 void LoadHandler::loadBgPdf(bool attach, const fs::path& filename) {

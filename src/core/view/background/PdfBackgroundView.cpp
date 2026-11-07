@@ -6,6 +6,7 @@
 
 #include "control/PdfCache.h"                // for PdfCache
 #include "util/Assert.h"                     // for xoj_assert
+#include "view/PageOrientationHelper.h"      // for cairoRotatePage
 #include "view/background/BackgroundView.h"  // for BackgroundView, view
 
 using namespace xoj::view;
@@ -27,16 +28,7 @@ void PdfBackgroundView::draw(cairo_t* cr) const {
         double pixelsPerPageUnit = matrix.xx * scaleX;
 
         // rotate page if necessary
-        if (pageOrient != PageOrientation::UP) {
-            cairo_save(cr);
-            cairo_translate(cr, pageWidth / 2, pageHeight / 2);
-            cairo_rotate(cr, static_cast<int>(pageOrient) * M_PI_2);
-            if (pageOrient == PageOrientation::DOWN) {
-                cairo_translate(cr, -pageWidth / 2, -pageHeight / 2);
-            } else {
-                cairo_translate(cr, -pageHeight / 2, -pageWidth / 2);
-            }
-        }
+        cairoRotatePage(cr, pageOrient, pageWidth, pageHeight);
 
         pdfCache->render(cr, pageNo, pixelsPerPageUnit, pageWidth, pageHeight);
 

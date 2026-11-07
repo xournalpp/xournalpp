@@ -832,17 +832,18 @@ void Control::movePageTowardsEnd() {
 void Control::rotatePageClockwise(const int n) {
     /* TODO for another time: rotate layer elements */
     auto pNr = getCurrentPageNo();
-    this->doc->lock_shared();
+    this->doc->lock();
     auto const& p = this->doc->getPage(pNr);
-    this->doc->unlock_shared();
 
     if (!p) {
+        this->doc->unlock();
         return;
     }
 
     PageOrientation orient = p->getPdfPageOrientation();
     PageOrientation newOrient = static_cast<PageOrientation>((static_cast<int>(orient) + n + 4) % 4);
     p->setPdfPageOrientation(newOrient);
+    this->doc->unlock();
 
     pageBackgroundChangeController->togglePageSizeRatio(p, pNr);
 
