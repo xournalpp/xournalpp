@@ -834,15 +834,16 @@ void Control::rotatePageClockwise(const int n) {
     auto pNr = getCurrentPageNo();
     this->doc->lock_shared();
     auto const& p = this->doc->getPage(pNr);
-    this->doc->unlock_shared();
 
     if (!p) {
+        this->doc->unlock_shared();
         return;
     }
 
     PageOrientation orient = p->getPdfPageOrientation();
     PageOrientation newOrient = static_cast<PageOrientation>((static_cast<int>(orient) + n + 4) % 4);
     p->setPdfPageOrientation(newOrient);
+    this->doc->unlock_shared();
 
     pageBackgroundChangeController->togglePageSizeRatio(p, pNr);
 

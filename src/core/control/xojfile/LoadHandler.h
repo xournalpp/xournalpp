@@ -26,6 +26,7 @@
 #include "model/DocumentHandler.h"                     // for DocumentHandler
 #include "model/PageRef.h"                             // for PageRef
 #include "model/Stroke.h"                              // for Stroke, StrokeTool,...
+#include "model/XojPage.h"                             // for PageOrientation
 #include "util/Color.h"                                // for Color
 #include "util/Rectangle.h"                            // for Rectangle
 #include "util/Size.h"                                 // for Size
@@ -94,7 +95,7 @@ private:
     void setBgSolid(const PageType& bg, Color color) override;
     void setBgPixmap(bool attach, const fs::path& filename) override;
     void setBgPixmapCloned(size_t pageNr) override;
-    void setBgPdf(size_t pageno, int pageorient) override;
+    void setBgPdf(size_t pageno, PageOrientation pageorient) override;
     void loadBgPdf(bool attach, const fs::path& filename) override;
     void addLayer(const std::optional<std::string_view>& name) override;
     void finalizeLayer() override;
