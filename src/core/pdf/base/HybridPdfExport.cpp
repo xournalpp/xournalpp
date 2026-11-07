@@ -78,9 +78,9 @@ auto HybridPdfExport::createPdf(fs::path const& file, const PageRangeVector& ran
             if (p->isAnnotated() || p->getPdfPageNr() == npos) {
                 // Pages with only a PDF background and no annotations will be copied directly
                 exportPage(i, false /* omit background if PDF */);
-                overlayToBackgroundIndex.push_back({true, doc->getPage(i)->getPdfPageNr()});
+                overlayToBackgroundIndex.push_back({true, p->getPdfPageNr(), p->getPdfPageOrientation()});
             } else {
-                overlayToBackgroundIndex.push_back({false, doc->getPage(i)->getPdfPageNr()});
+                overlayToBackgroundIndex.push_back({false, p->getPdfPageNr(), p->getPdfPageOrientation()});
             }
 
             if (this->progressListener) {
@@ -104,7 +104,7 @@ auto HybridPdfExport::createPdf(fs::path const& file, bool progressiveMode) -> b
 auto HybridPdfExport::countOccurrences(size_t backgroundPageCount, const std::vector<OutputPageInfo>& outputPageInfos)
         -> std::vector<Occurrences> {
     std::vector<Occurrences> occurrences(backgroundPageCount);
-    for (auto [hasOverlay, n]: outputPageInfos) {
+    for (auto [hasOverlay, n, pgOrient]: outputPageInfos) {
         if (n != npos) {
             if (n >= backgroundPageCount) {
                 throw std::out_of_range(_("PDF page number is out of range"));

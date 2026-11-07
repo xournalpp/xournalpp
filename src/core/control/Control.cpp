@@ -91,6 +91,7 @@
 #include "undo/InsertDeletePageUndoAction.h"                     // for Inse...
 #include "undo/InsertUndoAction.h"                               // for Inse...
 #include "undo/MoveSelectionToLayerUndoAction.h"                 // for Move...
+#include "undo/PageRotationUndoAction.h"                         // for PageRotationUndoAction
 #include "undo/PageSizeChangeUndoAction.h"                       // for PageSizeChangeUndoAction
 #include "undo/SwapUndoAction.h"                                 // for SwapUndoAction
 #include "undo/UndoAction.h"                                     // for Undo...
@@ -840,6 +841,28 @@ void Control::movePageTowardsEnd() {
 
     this->getScrollHandler()->scrollToPage(currentPageNo + 1);
 }
+
+void Control::rotatePageClockwise(const int n) {
+    /* TODO for another time: rotate layer elements */
+    auto pNr = getCurrentPageNo();
+    this->doc->lock_shared();
+    auto const& p = this->doc->getPage(pNr);
+
+    if (!p) {
+        this->doc->unlock_shared();
+        return;
+    }
+
+    PageOrientation orient = p->getPdfPageOrientation();
+    PageOrientation newOrient = static_cast<PageOrientation>((static_cast<int>(orient) + n + 4) % 4);
+    p->setPdfPageOrientation(newOrient);
+    this->doc->unlock_shared();
+
+    pageBackgroundChangeController->togglePageSizeRatio(p, pNr);
+
+    this->undoRedo->addUndoAction(std::make_unique<PageRotationUndoAction>(p, orient, newOrient));
+    this->firePageSizeChanged(pNr);
+};
 
 /// Remove mnemonic indicators in menu labels
 static std::string removeMnemonics(std::string orig) {
