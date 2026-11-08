@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 14:56+0000\n"
-"PO-Revision-Date: 2026-10-25 04:30\n"
+"POT-Creation-Date: 2026-11-03 09:45+0000\n"
+"PO-Revision-Date: 2026-11-08 04:21\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1100,7 +1100,7 @@ msgid "Xournal++ files"
 msgstr "Xournal++ 파일"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:120
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:121
 msgid "Xournal++ template"
 msgstr "Xournal++ 템플릿"
 
@@ -1109,6 +1109,7 @@ msgid "Image files"
 msgstr "이미지 파일"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:50
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:92
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:163
 msgid "Custom"
 msgstr "사용자 정의"
@@ -1145,18 +1146,18 @@ msgstr "오류: {1}. {2} 의 내용을 확인 하십시오."
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "오류: {1} 는 정상적인 파일이 아닙니다. LaTeX 템플릿 파일 설정을 확인 하십시오. "
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:84
 msgid "Save File"
 msgstr "파일 저장"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:80
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:19
 msgid "_Cancel"
 msgstr "_취소"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:118
 msgid "_Save"
 msgstr "_저장"
 

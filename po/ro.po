@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 14:56+0000\n"
-"PO-Revision-Date: 2026-10-25 04:30\n"
+"POT-Creation-Date: 2026-11-03 09:45+0000\n"
+"PO-Revision-Date: 2026-11-08 04:21\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1122,7 +1122,7 @@ msgid "Xournal++ files"
 msgstr "Fișier Xournal++"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:120
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:121
 msgid "Xournal++ template"
 msgstr "Model Xournal++"
 
@@ -1131,6 +1131,7 @@ msgid "Image files"
 msgstr "Fișiere imagine"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:50
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:92
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:163
 msgid "Custom"
 msgstr "Personalizată"
@@ -1167,18 +1168,18 @@ msgstr "Eroare: {1}. Te rugăm să verifici conținutul {2}"
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Eroare: {1} nu este un fișier obișnuit. Controlează configurarea modelului tău LaTeX. "
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:84
 msgid "Save File"
 msgstr "Salvează fișierul"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:80
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:19
 msgid "_Cancel"
 msgstr "_Renunță"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:118
 msgid "_Save"
 msgstr "_Salvează"
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 14:56+0000\n"
-"PO-Revision-Date: 2026-11-01 04:20\n"
+"POT-Creation-Date: 2026-11-03 09:45+0000\n"
+"PO-Revision-Date: 2026-11-08 04:21\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -1126,7 +1126,7 @@ msgid "Xournal++ files"
 msgstr "Xournal++ fitxategiak"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:120
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:121
 msgid "Xournal++ template"
 msgstr "Xournal++ txantiloia"
 
@@ -1135,6 +1135,7 @@ msgid "Image files"
 msgstr "Irudi fitxategiak"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:50
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:92
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:163
 msgid "Custom"
 msgstr "Pertsonalizatu"
@@ -1171,18 +1172,18 @@ msgstr "Errorea: {1}. Aztertu {2}-ren edukiak"
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Errorea: {1} ez da ohiko fitxategia. Aztertu zure LaTex txantiloi fitxategiaren ezarpenak. "
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:84
 msgid "Save File"
 msgstr "Gorde fitxategia"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:80
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:19
 msgid "_Cancel"
 msgstr "_Utzi"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:118
 msgid "_Save"
 msgstr "_Gorde"
 

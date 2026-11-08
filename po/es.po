@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 14:56+0000\n"
-"PO-Revision-Date: 2026-10-25 04:30\n"
+"POT-Creation-Date: 2026-11-03 09:45+0000\n"
+"PO-Revision-Date: 2026-11-08 04:21\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1121,7 +1121,7 @@ msgid "Xournal++ files"
 msgstr "Archivos de Xournal++"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:120
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:121
 msgid "Xournal++ template"
 msgstr "Plantilla de Xournal++"
 
@@ -1130,6 +1130,7 @@ msgid "Image files"
 msgstr "Archivos de imagen"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:50
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:92
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:163
 msgid "Custom"
 msgstr "Personalizado"
@@ -1166,18 +1167,18 @@ msgstr "Error: {1}. Por favor, compruebe los contenidos de {2}"
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Error: {1} no es un archivo regular. Por favor, compruebe la configuración de la plantilla de archivo LaTeX. "
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:84
 msgid "Save File"
 msgstr "Guardar archivo"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:80
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:19
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:118
 msgid "_Save"
 msgstr "_Guardar"
 

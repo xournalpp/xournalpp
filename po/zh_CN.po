@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 14:56+0000\n"
-"PO-Revision-Date: 2026-10-25 04:30\n"
+"POT-Creation-Date: 2026-11-03 09:45+0000\n"
+"PO-Revision-Date: 2026-11-08 04:21\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -33,7 +33,7 @@ msgstr "无法删除旧的自动保存文件“{1}”：{2}"
 
 #: ../src/core/control/Control.cpp:299
 msgid "Initialization of audio devices failed. You can disable audio support in Settings->Audio"
-msgstr ""
+msgstr "音频设备初始化失败，你可以在`设置→音频`中禁用音频支持"
 
 #: ../src/core/control/Control.cpp:601
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
@@ -216,7 +216,7 @@ msgstr "此文档尚未保存。"
 
 #: ../src/core/control/Control.cpp:2233
 msgid "Save As..."
-msgstr "另存为..."
+msgstr "另存为……"
 
 #: ../src/core/control/Control.cpp:2233 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:85
@@ -872,12 +872,12 @@ msgstr "添加缺失页面"
 
 #: ../src/core/gui/SearchBar.cpp:90
 msgid "Text found once on this page"
-msgstr "在这个页面找到一次文本"
+msgstr "在此页面中找到 1 处符合的文字"
 
 #: ../src/core/gui/SearchBar.cpp:92
 #, c-format
 msgid "Text found %zu times on this page"
-msgstr "此页面找到的 %zu 次文本"
+msgstr "在此页面中找到 %zu 处符合的文字"
 
 #: ../src/core/gui/SearchBar.cpp:97
 msgid "Text not found"
@@ -1126,7 +1126,7 @@ msgid "Xournal++ files"
 msgstr "Xournal++ 文件"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:120
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:121
 msgid "Xournal++ template"
 msgstr "Xournal++ 模板"
 
@@ -1135,6 +1135,7 @@ msgid "Image files"
 msgstr "图像文件"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:50
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:92
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:163
 msgid "Custom"
 msgstr "设置"
@@ -1171,18 +1172,18 @@ msgstr "错误： {1}。请检查 {2} 的内容"
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "错误： {1} 不是常规文件。请检查您的 LaTeX 模板文件设置。 "
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:84
 msgid "Save File"
 msgstr "保存文件"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:80
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:19
 msgid "_Cancel"
 msgstr "取消 (_C)"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:118
 msgid "_Save"
 msgstr "保存(_S)"
 

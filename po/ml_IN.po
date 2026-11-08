@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 14:56+0000\n"
-"PO-Revision-Date: 2026-10-25 04:30\n"
+"POT-Creation-Date: 2026-11-03 09:45+0000\n"
+"PO-Revision-Date: 2026-11-08 04:21\n"
 "Last-Translator: \n"
 "Language-Team: Malayalam\n"
 "Language: ml_IN\n"
@@ -1091,7 +1091,7 @@ msgid "Xournal++ files"
 msgstr "Xournal++ ഫയലുകൾ"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:120
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:121
 msgid "Xournal++ template"
 msgstr "Xournal++ ടെമ്പ്ലേറ്റ്"
 
@@ -1100,6 +1100,7 @@ msgid "Image files"
 msgstr ""
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:50
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:92
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:163
 msgid "Custom"
 msgstr "ഇഷ്ടാനുസൃതം"
@@ -1136,18 +1137,18 @@ msgstr "പിശക്: {1}. ദയവായി {2}-ന്റെ ഉള്ള�
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "പിശക്: {1} ശരിയായ ഫയൽ അല്ല. ദയവായി നിങ്ങളുടെ ലാറ്റെക് (LaTeX) ടെമ്പ്ലേറ്റ് ഫയൽ ക്രമീകരങ്ങൾ പരിശോധിക്കുക. "
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:84
 msgid "Save File"
 msgstr "ഫയൽ സേവ്"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:80
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:19
 msgid "_Cancel"
 msgstr "_ഉപേക്ഷിക്കുക"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:118
 msgid "_Save"
 msgstr "_സേവ്"
 
