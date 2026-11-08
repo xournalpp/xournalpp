@@ -35,7 +35,7 @@ class ZoomListener;
 class ZoomControl: public DocumentListener {
 public:
     ZoomControl() = default;
-    ~ZoomControl() override = default;
+    ~ZoomControl() override;
 
     /**
      * Zoom one step
@@ -259,4 +259,11 @@ private:
     size_t current_page = static_cast<size_t>(-1);
     size_t last_page = static_cast<size_t>(-1);
     bool isZoomFittingNow = false;
+
+    /**
+     * @brief Recompute the zoom-fit/presentation values 
+     * once all widget allocations done cycle is over.
+     */
+    void scheduleZoomFitUpdate();
+    guint zoomFitUpdateIdleId = 0;
 };

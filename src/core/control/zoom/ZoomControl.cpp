@@ -220,17 +220,37 @@ void ZoomControl::initZoomHandler(GtkWidget* window, GtkWidget* widget, XournalV
     g_signal_connect(widget, "event", xoj::util::wrap_for_g_callback_v<onTouchpadPinchEvent>, this);
     g_signal_connect(v->getScrollHandling()->getHorizontal(), "notify::page-size",
                      G_CALLBACK(+[](GObject*, GParamSpec*, gpointer self) {
-                         static_cast<ZoomControl*>(self)->updateZoomFitValue();
-                         static_cast<ZoomControl*>(self)->updateZoomPresentationValue();
+                         static_cast<ZoomControl*>(self)->scheduleZoomFitUpdate();
                      }),
                      this);
     g_signal_connect(v->getScrollHandling()->getVertical(), "notify::page-size",
                      G_CALLBACK(+[](GObject*, GParamSpec*, gpointer self) {
-                         static_cast<ZoomControl*>(self)->updateZoomPresentationValue();
+                         static_cast<ZoomControl*>(self)->scheduleZoomFitUpdate();
                      }),
                      this);
 
     registerListener(this->control);
+}
+
+ZoomControl::~ZoomControl() {
+    if (zoomFitUpdateIdleId != 0) {
+        g_source_remove(zoomFitUpdateIdleId);
+    }
+}
+
+void ZoomControl::scheduleZoomFitUpdate() {
+    if (zoomFitUpdateIdleId == 0) {
+       zoomFitUpdateIdleId = g_idle_add_full(
+            G_PRIORITY_DEFAULT_IDLE,
+            +[](gpointer data) -> gboolean {
+                auto* self = static_cast<ZoomControl*>(data);
+                self->zoomFitUpdateIdleId = 0;
+                self->updateZoomFitValue();
+                self->updateZoomPresentationValue();
+                return G_SOURCE_REMOVE;
+            },
+            this, nullptr);
+    }
 }
 
 void ZoomControl::fireZoomChanged() {
@@ -288,8 +308,10 @@ auto ZoomControl::updateZoomFitValue(size_t pageNo) -> bool {
 
     Rectangle widget_rect = getVisibleRect();
     double zoom_fit_width = widget_rect.width / (page->getWidth() + 20.0);
+    double zoom_fit_height = widget_rect.height / (page->getHeight() + 20.0);
+    auto zoom_fit = std::min(zoom_fit_width, zoom_fit_height);
 
-    this->zoomFitValue = std::clamp(zoom_fit_width, this->zoomMin, this->zoomMax);
+    this->zoomFitValue = std::clamp(zoom_fit, this->zoomMin, this->zoomMax);
     fireZoomRangeValueChanged();
     if (this->isZoomFitMode() && !this->zoomPresentationMode) {
         this->zoomFit();

@@ -560,7 +560,7 @@ void XournalView::zoomChanged() {
     ZoomControl* zoom = control->getZoomControl();
     this->getLayout()->recomputeCenteringPadding();
 
-    if (zoom->isZoomPresentationMode()) {
+    if (zoom->isZoomPresentationMode() || zoom->isZoomFitMode()) {
         scrollTo(this->getCurrentPage());
     } else if (zoom->isZoomSequenceActive()) {
         auto pos = zoom->getScrollPositionAfterZoom();
