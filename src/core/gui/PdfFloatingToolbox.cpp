@@ -45,37 +45,20 @@ PdfFloatingToolbox::PdfFloatingToolbox(MainWindow* theMainWindow, GtkOverlay* ov
     g_signal_connect(theMainWindow->get("pdfTbCopyText"), "clicked", G_CALLBACK(this->copyTextCb), this);
     g_signal_connect(theMainWindow->get("pdfTbUnderline"), "clicked", G_CALLBACK(this->underlineCb), this);
     g_signal_connect(theMainWindow->get("pdfTbStrikethrough"), "clicked", G_CALLBACK(this->strikethroughCb), this);
-    g_signal_connect(theMainWindow->get("pdfTbChangeType"), "clicked", G_CALLBACK(this->switchSelectTypeCb), this);
 
-    this->clearSelection();
     this->hide();
 }
 
 PdfFloatingToolbox::~PdfFloatingToolbox() = default;
 
-PdfElemSelection* PdfFloatingToolbox::getSelection() const { return this->pdfElemSelection.get(); }
-bool PdfFloatingToolbox::hasSelection() const { return this->getSelection() != nullptr; }
-
-void PdfFloatingToolbox::clearSelection() { this->pdfElemSelection.reset(); }
-
-auto PdfFloatingToolbox::newSelection(double x, double y) -> const PdfElemSelection* {
-    this->pdfElemSelection = std::make_unique<PdfElemSelection>(x, y, this->theMainWindow->getControl());
-    return this->pdfElemSelection.get();
-}
-
-void PdfFloatingToolbox::show(int x, int y) {
-    xoj_assert(this->getSelection());
+void PdfFloatingToolbox::show(int x, int y, PdfElemSelection* selection) {
+    this->selection = selection;
     this->position = {x, y};
     this->show();
-
-    // Record the color now: the active tool may change while the toolbox is up (e.g. if the tool is linked to a button)
-    this->color = theMainWindow->getXournal()->getControl()->getToolHandler()->getColor();
 }
 
 void PdfFloatingToolbox::hide() {
-    if (isHidden())
-        return;
-
+    this->selection = nullptr;
     gtk_widget_hide(this->floatingToolbox);
 }
 
@@ -112,127 +95,27 @@ auto PdfFloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widg
     return false;
 }
 
-void PdfFloatingToolbox::userCancelSelection() {
-    this->pdfElemSelection.reset();
+template <auto fun>
+void PdfFloatingToolbox::cb() {
+    if (!this->selection) {
+        g_warning("PdfFloatingToolbox: Callback without selection");
+        return;
+    }
+    (this->selection->*fun)();
     this->hide();
 }
 
-void PdfFloatingToolbox::highlightCb(GtkButton* button, PdfFloatingToolbox* pft) {
-    int markerOpacity = pft->theMainWindow->getControl()->getToolHandler()->getSelectPDFTextMarkerOpacity();
-    pft->createStrokes(PdfMarkerStyle::POS_TEXT_MIDDLE, PdfMarkerStyle::WIDTH_TEXT_HEIGHT, markerOpacity);
-    pft->userCancelSelection();
+void PdfFloatingToolbox::highlightCb(GtkButton*, PdfFloatingToolbox* self) { self->cb<&PdfElemSelection::highlight>(); }
+
+void PdfFloatingToolbox::underlineCb(GtkButton*, PdfFloatingToolbox* self) { self->cb<&PdfElemSelection::underline>(); }
+
+void PdfFloatingToolbox::strikethroughCb(GtkButton*, PdfFloatingToolbox* self) {
+    self->cb<&PdfElemSelection::strikethrough>();
 }
 
-void PdfFloatingToolbox::copyTextCb(GtkButton* button, PdfFloatingToolbox* pft) {
-    pft->copyTextToClipboard();
-    pft->userCancelSelection();
-}
-
-void PdfFloatingToolbox::underlineCb(GtkButton* button, PdfFloatingToolbox* pft) {
-    pft->createStrokes(PdfMarkerStyle::POS_TEXT_BOTTOM, PdfMarkerStyle::WIDTH_TEXT_LINE, 230);
-    pft->userCancelSelection();
-}
-
-void PdfFloatingToolbox::strikethroughCb(GtkButton* button, PdfFloatingToolbox* pft) {
-    pft->createStrokes(PdfMarkerStyle::POS_TEXT_MIDDLE, PdfMarkerStyle::WIDTH_TEXT_LINE, 230);
-    pft->userCancelSelection();
-}
+void PdfFloatingToolbox::copyTextCb(GtkButton*, PdfFloatingToolbox* self) { self->cb<&PdfElemSelection::copy>(); }
 
 void PdfFloatingToolbox::show() {
     gtk_widget_hide(this->floatingToolbox);  // force showing in new position
     gtk_widget_show_all(this->floatingToolbox);
 }
-
-void PdfFloatingToolbox::copyTextToClipboard() {
-    GtkClipboard* clipboard = gtk_widget_get_clipboard(this->theMainWindow->getWindow());
-    if (const std::string& text = this->pdfElemSelection->getSelectedText(); !text.empty()) {
-        gtk_clipboard_set_text(clipboard, text.c_str(), -1);
-    }
-}
-
-void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle width, int markerOpacity) {
-    const size_t pdfPageNo = this->pdfElemSelection->getSelectionPageNr();
-    const size_t currentPage = theMainWindow->getXournal()->getCurrentPage();
-
-    // Get the PDF page that the current page corresponds to.
-    // It should be the same as the PDF page of the selection.
-    auto doc = this->theMainWindow->getControl()->getDocument();
-    doc->lock_shared();
-    const size_t pdfPageOfCurrentPage = doc->getPage(currentPage)->getPdfPageNr();
-    doc->unlock_shared();
-
-    if (pdfPageOfCurrentPage != pdfPageNo) {
-        // There's probably a bug that violates our assumptions, so no-op.
-        g_warning("The current page's PDF page is not the same as the PDF page of the selection!");
-        return;
-    }
-
-    const auto textRects = this->pdfElemSelection->getSelectedTextRects();
-    if (textRects.empty()) {
-        return;
-    }
-
-    auto* control = this->theMainWindow->getControl();
-    PageRef page = control->getCurrentPage();
-    Layer* layer = page->getSelectedLayer();
-
-    Range dirtyRange;
-    std::vector<ElementPtr> strokes;
-    for (XojPdfRectangle rect: textRects) {
-        const double topOfLine = std::min(rect.y1, rect.y2);
-        const double middleOfLine = (rect.y1 + rect.y2) / 2;
-        const double bottomOfLine = std::max(rect.y1, rect.y2);
-        const double rectWidth = std::abs(rect.y2 - rect.y1);
-
-        // the center line position of stroke
-        const double h = position == PdfMarkerStyle::POS_TEXT_BOTTOM ? bottomOfLine :
-                         position == PdfMarkerStyle::POS_TEXT_MIDDLE ? middleOfLine :
-                                                                       topOfLine;
-        // the width of stroke
-        const double w = width == PdfMarkerStyle::WIDTH_TEXT_LINE ? 1 : rectWidth;
-
-        auto stroke = std::make_unique<Stroke>();
-        stroke->setColor(this->color);
-        stroke->setFill(markerOpacity);
-        stroke->setToolType(StrokeTool::HIGHLIGHTER);
-        stroke->setWidth(w);
-        stroke->addPoint(Point(rect.x1, h, -1));
-        stroke->addPoint(Point(rect.x2, h, -1));
-        stroke->setStrokeCapStyle(StrokeCapStyle::BUTT);
-
-        dirtyRange.addPoint(rect.x1, h - 0.5 * w);
-        dirtyRange.addPoint(rect.x2, h + 0.5 * w);
-
-        strokes.push_back(std::move(stroke));
-    }
-
-    std::vector<const Element*> strokePtrs(strokes.size());
-    std::transform(strokes.begin(), strokes.end(), strokePtrs.begin(), [](auto& e) { return e.get(); });
-
-    doc->lock();
-    for (auto&& s: strokes) {
-        layer->addElement(std::move(s));
-    }
-    doc->unlock();
-    page->fireElementsChanged(strokePtrs, dirtyRange);
-
-    auto undoAct = std::make_unique<GroupUndoAction>();
-    for (auto* stroke: strokePtrs) {
-        undoAct->addAction(std::make_unique<InsertUndoAction>(page, layer, stroke));
-    }
-    control->getUndoRedoHandler()->addUndoAction(std::move(undoAct));
-}
-
-void PdfFloatingToolbox::switchSelectTypeCb(GtkButton* button, PdfFloatingToolbox* pft) {
-    ToolType type = pft->theMainWindow->getControl()->getToolHandler()->getToolType();
-
-    type = type == ToolType::TOOL_SELECT_PDF_TEXT_LINEAR ? ToolType::TOOL_SELECT_PDF_TEXT_RECT :
-                                                           ToolType::TOOL_SELECT_PDF_TEXT_LINEAR;
-
-    pft->theMainWindow->getControl()->selectTool(type);
-
-    pft->pdfElemSelection->setToolType(type);
-    pft->pdfElemSelection->finalizeSelection(PdfElemSelection::selectionStyleForToolType(type));
-}
-
-bool PdfFloatingToolbox::isHidden() const { return !gtk_widget_is_visible(this->floatingToolbox); }
