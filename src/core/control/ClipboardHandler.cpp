@@ -230,6 +230,10 @@ auto ClipboardHandler::copy() -> bool {
     return true;
 }
 
+void ClipboardHandler::copyTextToClipboard(const std::string_view text) {
+    gtk_clipboard_set_text(clipboard, text.data(), strict_cast<int>(text.length()));
+}
+
 void ClipboardHandler::setSelection(EditSelection* selection) {
     this->selection = selection;
 
