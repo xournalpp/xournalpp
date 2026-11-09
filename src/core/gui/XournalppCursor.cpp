@@ -243,8 +243,6 @@ void XournalppCursor::updateCursor() {
             } else {
                 setCursor(CRSR_GRAB);
             }
-        } else if (!this->insidePage) {
-            setCursor(CRSR_DEFAULT);
         } else if (this->selectionType) {
             switch (this->selectionType) {
                 case CURSOR_SELECTION_MOVE:
@@ -283,6 +281,8 @@ void XournalppCursor::updateCursor() {
                 default:
                     break;
             }
+        } else if (!this->insidePage) {
+            setCursor(CRSR_DEFAULT);
         } else if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER || type == TOOL_LASER_POINTER_PEN ||
                    type == TOOL_LASER_POINTER_HIGHLIGHTER) {
             if (this->inputDevice == INPUT_DEVICE_MOUSE && !this->mouseDown) {
