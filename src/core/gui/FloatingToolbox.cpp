@@ -182,11 +182,54 @@ auto FloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget,
 
 
 bool FloatingToolbox::handleLeaveFloatingToolbox(GtkWidget* floatingToolbox, GdkEvent* event, FloatingToolbox* self) {
-    if (floatingToolbox == self->floatingToolbox) {
-        if (self->floatingToolboxState != configuration) {
-            self->hide();
+    if (floatingToolbox != self->floatingToolbox) {
+        return false;
+    }
+
+    // Check Pointer position for tablet stylus checking
+    GdkDisplay* display = gtk_widget_get_display(self->floatingToolbox);
+    GdkSeat* seat = gdk_display_get_default_seat(display);
+    GdkDevice* pointer = seat ? gdk_seat_get_pointer(seat) : nullptr;
+
+    gint pointerX = 0;
+    gint pointerY = 0;
+    GdkWindow* pointerWindow = nullptr;
+    gpointer pointerOwner = nullptr;
+
+    // Get Pointer position
+    if (pointer) {
+        pointerWindow = gdk_device_get_window_at_position(pointer, &pointerX, &pointerY);
+    }
+
+    // Get pointerOwner
+    if (pointerWindow) {
+        gdk_window_get_user_data(pointerWindow, &pointerOwner);
+    }
+
+    bool pointerInsideToolbox = false;
+
+    // Check if Pointer is inside floatingToolbox
+    if (pointerOwner && GTK_IS_WIDGET(pointerOwner)) {
+
+        // Checks all parents of current widget until it has no parents if it's not the
+        // floating toolbox pointerInsideToolbox will be false when ending the loop.
+        for (GtkWidget* current = GTK_WIDGET(pointerOwner); current != nullptr;
+             current = gtk_widget_get_parent(current)) {
+
+            if (current == self->floatingToolbox) {
+                pointerInsideToolbox = true;
+                break;
+            }
         }
+    }
+
+    if (pointerInsideToolbox) {
         return true;
     }
-    return false;
+
+    if (self->floatingToolboxState != configuration) {
+        self->hide();
+    }
+
+    return true;
 }
