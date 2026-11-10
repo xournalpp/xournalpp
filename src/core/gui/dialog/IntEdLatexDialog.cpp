@@ -36,7 +36,7 @@
 
 class GladeSearchpath;
 
-constexpr auto UI_FILE_NAME = "intEdTexDialog.glade";
+constexpr auto UI_FILE_NAME = "intEdTexDialog.ui";
 constexpr auto UI_DIALOG_ID = "intEdTexDialog";
 
 constexpr auto TEX_BOX_WIDGET_NAME = "texBox";
@@ -69,11 +69,6 @@ IntEdLatexDialog::IntEdLatexDialog(GladeSearchpath* gladeSearchPath, std::unique
     } else {
         gtk_text_buffer_set_text(this->textBuffer, texCtrl->initialTex.c_str(), -1);
     }
-
-#if GTK_MAJOR_VERSION == 3
-    // Widgets are visible by default in gtk4
-    gtk_widget_show_all(GTK_WIDGET(texBox));
-#endif
 
     gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(builder.get("texBoxContainer")), this->texBox);
 
@@ -125,7 +120,7 @@ IntEdLatexDialog::IntEdLatexDialog(GladeSearchpath* gladeSearchPath, std::unique
         texBoxCssBuilder << "  font-family: '" << fontName << "';";
         texBoxCssBuilder << " } ";
 
-        gtk_css_provider_load_from_data(this->cssProvider.get(), texBoxCssBuilder.str().c_str(), -1, nullptr);
+        gtk_css_provider_load_from_data(this->cssProvider.get(), texBoxCssBuilder.str().c_str(), -1);
 
         // Apply the CSS to both the texBox and the drawing area.
         gtk_style_context_add_provider(gtk_widget_get_style_context(GTK_WIDGET(this->previewDrawingArea)),
@@ -146,7 +141,7 @@ IntEdLatexDialog::IntEdLatexDialog(GladeSearchpath* gladeSearchPath, std::unique
                      }),
                      texCtrl.get());
 
-    g_signal_connect(this->getWindow(), "delete-event", G_CALLBACK(+[](GtkWidget*, GdkEvent*, gpointer d) -> gboolean {
+    g_signal_connect(this->getWindow(), "close-request", G_CALLBACK(+[](GtkWidget*, gpointer d) -> gboolean {
                          auto self = static_cast<IntEdLatexDialog*>(d);
                          /**
                           * dlg->getTextBuffer() may survive the dialog. When copying all of its content, the

@@ -13,7 +13,7 @@
 class GladeSearchpath;
 class Plugin;
 
-constexpr auto UI_FILE = "plugin.glade";
+constexpr auto UI_FILE = "plugin.ui";
 constexpr auto UI_DIALOG_NAME = "pluginDialog";
 
 PluginDialog::PluginDialog(GladeSearchpath* gladeSearchPath, Settings* settings,

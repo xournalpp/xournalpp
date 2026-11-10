@@ -23,7 +23,6 @@
 #include "util/PathUtil.h"           // for fromGFile, getTmpDir...
 #include "util/PlaceholderString.h"  // for PlaceholderString
 #include "util/XojMsgBox.h"
-#include "util/gtk4_helper.h"
 #include "util/i18n.h"  // for FS, _F, _
 #include "util/raii/CStringWrapper.h"
 #include "util/raii/GObjectSPtr.h"
@@ -32,7 +31,7 @@
 
 class GladeSearchpath;
 
-constexpr auto UI_FILE = "latexSettings.glade";
+constexpr auto UI_FILE = "latexSettings.ui";
 constexpr auto UI_PANEL_NAME = "latexSettingsPanel";
 
 LatexSettingsPanel::LatexSettingsPanel(GladeSearchpath* gladeSearchPath):
@@ -63,11 +62,6 @@ LatexSettingsPanel::LatexSettingsPanel(GladeSearchpath* gladeSearchPath):
     gtk_box_append(themeSelectionBox, sourceViewThemeSelector);
 
     gtk_label_set_text(GTK_LABEL(builder.get("lbSourceviewSettingsDescription")), _("LaTeX editor theme:"));
-
-#if GTK_MAJOR_VERSION == 3
-    // Widgets are visible by default in gtk4
-    gtk_widget_show(sourceViewThemeSelector);
-#endif
 #else
     this->sourceViewThemeSelector = nullptr;
 

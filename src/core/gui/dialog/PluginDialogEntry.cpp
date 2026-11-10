@@ -4,14 +4,13 @@
 
 #include "gui/Builder.h"
 #include "plugin/Plugin.h"
-#include "util/gtk4_helper.h"
 #include "util/i18n.h"
 
 #include "filesystem.h"  // for path
 
 class GladeSearchpath;
 
-constexpr auto UI_FILE = "pluginEntry.glade";
+constexpr auto UI_FILE = "pluginEntry.ui";
 constexpr auto UI_WIDGET_NAME = "pluginMainBox";
 
 PluginDialogEntry::PluginDialogEntry(Plugin* plugin, GladeSearchpath* gladeSearchPath, GtkBox* box): plugin(plugin) {

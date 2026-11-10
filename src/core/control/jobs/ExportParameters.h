@@ -26,13 +26,13 @@ enum ExportFormat {
 
 /**
  * @brief List of available criterion for determining a PNG export quality.
- * The order must agree with the corresponding listAvailableCriterion in ui/exportSettings.glade
+ * The order must agree with the corresponding listAvailableCriterion in ui/exportSettings.ui
  */
 enum ExportQualityCriterion { EXPORT_QUALITY_DPI, EXPORT_QUALITY_WIDTH, EXPORT_QUALITY_HEIGHT };
 
 /**
  *  @brief List of types for the export of background components.
- *  The order must agree with the corresponding listBackgroundType in ui/exportSettings.glade.
+ *  The order must agree with the corresponding listBackgroundType in ui/exportSettings.ui.
  *  It is constructed so that one can check for intermediate types using comparison.
  */
 enum ExportBackgroundType { EXPORT_BACKGROUND_NONE, EXPORT_BACKGROUND_UNRULED, EXPORT_BACKGROUND_ALL };

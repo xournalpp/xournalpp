@@ -40,8 +40,12 @@ constexpr auto const XOURNAL_PADDING_BETWEEN = 15;
 Layout::Layout(XournalView* view, ScrollHandling* scrollHandling): view(view), scrollHandling(scrollHandling) {
     g_signal_connect(scrollHandling->getHorizontal(), "value-changed",
                      xoj::util::wrap_for_g_callback_v<horizontalScrollChanged>, this);
+    g_signal_connect(scrollHandling->getHorizontal(), "changed",
+                     xoj::util::wrap_for_g_callback_v<horizontalScrollChanged>, this);
     g_signal_connect(scrollHandling->getVertical(), "value-changed",
                      xoj::util::wrap_for_g_callback_v<verticalScrollChanged>, this);
+    g_signal_connect(scrollHandling->getVertical(), "changed", xoj::util::wrap_for_g_callback_v<verticalScrollChanged>,
+                     this);
 }
 
 static inline void afterMove(Layout* layout, GtkWidget* w) {
