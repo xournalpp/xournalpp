@@ -53,12 +53,31 @@
 #define Point Point_CF
 #include <CoreFoundation/CoreFoundation.h>
 #undef Point
+#elif defined(_WIN32)
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <gdk/gdkwin32.h>
+#include <windows.h>
 #endif
 
 using std::string;
 
 
 static void themeCallback(GObject*, GParamSpec*, gpointer data) { static_cast<MainWindow*>(data)->updateColorscheme(); }
+
+#ifdef _WIN32
+static GdkFilterReturn win32ThemeChangeFilter(GdkXEvent* xevent, GdkEvent*, gpointer data) {
+    auto* msg = static_cast<MSG*>(xevent);
+    if (msg && msg->message == WM_SETTINGCHANGE) {
+        if (msg->lParam && wcscmp(reinterpret_cast<LPCWSTR>(msg->lParam), L"ImmersiveColorSet") == 0) {
+            auto* win = static_cast<MainWindow*>(data);
+            win->updateColorscheme();
+        }
+    }
+    return GDK_FILTER_CONTINUE;
+}
+#endif
 
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkApplication* parent):
         GladeGui(gladeSearchPath, "main.glade", "mainWindow"),
@@ -120,6 +139,16 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     g_signal_connect(this->window, "key-press-event", G_CALLBACK(keyPropagate), nullptr);
     g_signal_connect(this->window, "key-release-event", G_CALLBACK(keyPropagate), nullptr);
 
+#ifdef _WIN32
+    g_signal_connect(this->window, "realize", G_CALLBACK(+[](GtkWidget* widget, gpointer self) {
+                         GdkWindow* gdkWin = gtk_widget_get_window(widget);
+                         if (gdkWin) {
+                             gdk_window_add_filter(gdkWin, win32ThemeChangeFilter, self);
+                         }
+                     }),
+                     this);
+#endif
+
     updateScrollbarSidebarPosition();
 
     gtk_window_set_default_size(GTK_WINDOW(this->window), control->getSettings()->getMainWndWidth(),
@@ -166,7 +195,16 @@ void MainWindow::populate(GladeSearchpath* gladeSearchPath) {
 
 GMenuModel* MainWindow::getMenuModel() const { return menubar->getModel(); }
 
-MainWindow::~MainWindow() = default;
+MainWindow::~MainWindow() {
+#ifdef _WIN32
+    if (this->window && gtk_widget_get_realized(this->window)) {
+        GdkWindow* gdkWin = gtk_widget_get_window(this->window);
+        if (gdkWin) {
+            gdk_window_remove_filter(gdkWin, win32ThemeChangeFilter, this);
+        }
+    }
+#endif
+}
 
 struct ThemeProperties {
     bool dark;
@@ -217,7 +255,28 @@ static ThemeProperties getThemeProperties(GtkWidget* w) {
         }
     }
 #else
+#if defined(_WIN32)
+    // On Windows, query AppsUseLightTheme from the registry to match system dark theme
+    if (!useEnv) {
+        HKEY hKey = nullptr;
+        if (RegOpenKeyExW(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", 0,
+                          KEY_READ, &hKey) == ERROR_SUCCESS) {
+            DWORD appsUseLightTheme = 1;
+            DWORD dataSize = sizeof(appsUseLightTheme);
+            if (RegQueryValueExW(hKey, L"AppsUseLightTheme", nullptr, nullptr,
+                                 reinterpret_cast<LPBYTE>(&appsUseLightTheme), &dataSize) == ERROR_SUCCESS) {
+                dark = (appsUseLightTheme == 0);
+            }
+            RegCloseKey(hKey);
+        } else {
+            g_object_get(gtk_widget_get_settings(w), "gtk-application-prefer-dark-theme", &dark, nullptr);
+        }
+    } else {
+        g_object_get(gtk_widget_get_settings(w), "gtk-application-prefer-dark-theme", &dark, nullptr);
+    }
+#else
     g_object_get(gtk_widget_get_settings(w), "gtk-application-prefer-dark-theme", &dark, nullptr);
+#endif
 #endif
 
     g_debug("Extracted theme info: Name = %s, rootname = %s, dark = %s", name.get(), props.rootname.c_str(),
@@ -243,6 +302,9 @@ void MainWindow::updateColorscheme() {
     auto props = getThemeProperties(this->window);
 
     this->darkMode = (props.dark && variant != THEME_VARIANT_FORCE_LIGHT) || variant == THEME_VARIANT_FORCE_DARK;
+
+    // Set workspace background to pure black in dark mode
+    control->getSettings()->setBackgroundColor(this->darkMode ? Colors::black : Colors::xopp_gainsboro02);
 
     // Set up icons
     {
@@ -282,9 +344,57 @@ void MainWindow::updateColorscheme() {
     if (this->darkMode) {
         gtk_style_context_add_class(context, "darkMode");
         g_object_set(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme", true, nullptr);
+        if (!this->darkModeCssProvider) {
+            this->darkModeCssProvider.reset(gtk_css_provider_new(), xoj::util::adopt);
+            const char* darkMenuCss = "menu, .menu {\n"
+                                      "    background-color: #1e1e24;\n"
+                                      "    color: #f4f4f5;\n"
+                                      "    border: 1px solid rgba(255, 255, 255, 0.12);\n"
+                                      "    border-radius: 8px;\n"
+                                      "    padding: 4px;\n"
+                                      "}\n"
+                                      "menuitem {\n"
+                                      "    color: #e4e4e7;\n"
+                                      "    padding: 5px 12px;\n"
+                                      "    border-radius: 6px;\n"
+                                      "}\n"
+                                      "menuitem label {\n"
+                                      "    color: #e4e4e7;\n"
+                                      "}\n"
+                                      "menuitem:hover, menuitem:selected {\n"
+                                      "    background-color: #0284c7;\n"
+                                      "    color: #ffffff;\n"
+                                      "}\n"
+                                      "menuitem:hover label, menuitem:selected label {\n"
+                                      "    color: #ffffff;\n"
+                                      "}\n"
+                                      "menuitem:disabled, menuitem:disabled label {\n"
+                                      "    color: rgba(255, 255, 255, 0.35);\n"
+                                      "}\n"
+                                      "menuitem accelerator {\n"
+                                      "    color: rgba(255, 255, 255, 0.5);\n"
+                                      "}\n"
+                                      "menuitem:hover accelerator, menuitem:selected accelerator {\n"
+                                      "    color: #ffffff;\n"
+                                      "}\n"
+                                      "menu separator {\n"
+                                      "    min-height: 1px;\n"
+                                      "    background-color: rgba(255, 255, 255, 0.1);\n"
+                                      "    margin: 4px 6px;\n"
+                                      "}\n";
+            gtk_css_provider_load_from_data(this->darkModeCssProvider.get(), darkMenuCss, -1, nullptr);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(),
+                                                      GTK_STYLE_PROVIDER(this->darkModeCssProvider.get()),
+                                                      GTK_STYLE_PROVIDER_PRIORITY_APPLICATION + 2);
+        }
     } else {
         gtk_style_context_remove_class(context, "darkMode");
         g_object_set(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme", false, nullptr);
+        if (this->darkModeCssProvider) {
+            gtk_style_context_remove_provider_for_screen(gdk_screen_get_default(),
+                                                         GTK_STYLE_PROVIDER(this->darkModeCssProvider.get()));
+            this->darkModeCssProvider.reset();
+        }
         if (props.darkSuffix) {  // The active theme is all dark. Remove the trailing "-dark"
             g_object_set(gtk_widget_get_settings(this->window), "gtk-theme-name", props.rootname.c_str(), nullptr);
             modifiedGtkSettingsTheme = true;
@@ -301,6 +411,13 @@ void MainWindow::updateColorscheme() {
         g_object_get(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme", &gtkdark, nullptr);
         g_debug("Theme variant: %s", gtkdark ? "dark" : "light");
         g_debug("Icon theme: %s", iconThemeToString(control->getSettings()->getIconTheme()));
+    }
+    if (control->getActionDatabase()) {
+        // Update toggle dark mode action state and trigger redraw
+        control->getActionDatabase()->setActionState(Action::TOGGLE_DARK_MODE, this->darkMode);
+    }
+    if (this->window) {
+        gtk_widget_queue_draw(GTK_WIDGET(this->window));
     }
     g_signal_handlers_unblock_by_func(gtk_widget_get_settings(this->window), reinterpret_cast<gpointer>(themeCallback),
                                       this);
@@ -630,6 +747,11 @@ auto MainWindow::setFullscreen(bool enabled) const -> void {
 }
 
 auto MainWindow::isDarkTheme() const -> bool { return this->darkMode; }
+
+void MainWindow::setDarkMode(bool dark) {
+    control->getSettings()->setThemeVariant(dark ? THEME_VARIANT_FORCE_DARK : THEME_VARIANT_FORCE_LIGHT);
+    updateColorscheme();
+}
 
 auto MainWindow::getXournal() const -> XournalView* { return xournal.get(); }
 
