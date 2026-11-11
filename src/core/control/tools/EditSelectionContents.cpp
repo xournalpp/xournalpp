@@ -108,8 +108,8 @@ auto EditSelectionContents::getInsertionOrder() const -> const InsertionOrder& {
  * Sets the tool size for pen or eraser, returs an undo action
  * (or nullptr if nothing is done)
  */
-auto EditSelectionContents::setSize(ToolSize size, const double* thicknessPen, const double* thicknessHighlighter,
-                                    const double* thicknessEraser) -> UndoActionPtr {
+auto EditSelectionContents::setSize(double thicknessPen, double thicknessHighlighter, double thicknessEraser)
+        -> UndoActionPtr {
     auto undo = std::make_unique<SizeUndoAction>(this->sourcePage, this->sourceLayer);
 
     bool found = false;
@@ -125,11 +125,11 @@ auto EditSelectionContents::setSize(ToolSize size, const double* thicknessPen, c
             vector<double> originalPressure = SizeUndoAction::getPressure(s);
 
             if (tool == StrokeTool::PEN) {
-                s->setWidth(thicknessPen[size]);
+                s->setWidth(thicknessPen);
             } else if (tool == StrokeTool::HIGHLIGHTER) {
-                s->setWidth(thicknessHighlighter[size]);
+                s->setWidth(thicknessHighlighter);
             } else if (tool == StrokeTool::ERASER) {
-                s->setWidth(thicknessEraser[size]);
+                s->setWidth(thicknessEraser);
             }
 
             // scale the stroke

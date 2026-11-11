@@ -20,7 +20,6 @@
 
 #include <cairo.h>  // for cairo_t, cairo_matrix_t
 
-#include "control/ToolEnums.h"               // for ToolSize
 #include "model/Element.h"                   // for Element, Element::Index
 #include "model/ElementContainer.h"          // for ElementContainer
 #include "model/ElementInsertionPosition.h"  // for InsertionOrder
@@ -155,8 +154,7 @@ public:
      * Sets the tool size for pen or eraser, returns an undo action
      * (or nullptr if nothing is done)
      */
-    UndoActionPtr setSize(ToolSize size, const double* thicknessPen, const double* thicknessHighlighter,
-                          const double* thicknessEraser);
+    UndoActionPtr setSize(double thicknessPen, double thicknessHighlighter, double thicknessEraser);
 
     /**
      * Set the line style of all strokes, return an undo action
