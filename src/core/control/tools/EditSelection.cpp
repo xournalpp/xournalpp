@@ -379,9 +379,8 @@ auto EditSelection::getSourceLayer() const -> Layer* { return this->sourceLayer;
  * Sets the tool size for pen or eraser, returs an undo action
  * (or nullptr if nothing is done)
  */
-auto EditSelection::setSize(ToolSize size, const double* thicknessPen, const double* thicknessHighlighter,
-                            const double* thicknessEraser) -> UndoActionPtr {
-    return this->contents->setSize(size, thicknessPen, thicknessHighlighter, thicknessEraser);
+auto EditSelection::setSize(double thicknessPen, double thicknessHighlighter, double thicknessEraser) -> UndoActionPtr {
+    return this->contents->setSize(thicknessPen, thicknessHighlighter, thicknessEraser);
 }
 
 /**
