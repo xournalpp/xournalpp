@@ -1,0 +1,3 @@
+version=@PROJECT_VERSION@
+arch=@PACKAGE_ARCH@
+release_id=@RELEASE_IDENTIFIER@

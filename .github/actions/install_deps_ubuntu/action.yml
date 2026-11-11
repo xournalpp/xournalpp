@@ -24,24 +24,12 @@ runs:
         # Those packages are required for building. To add extra packages (e.g. for packaging purposes), use inputs.extra_packages
         packages: >-
           ${{inputs.extra_packages}}
-          librsvg2-dev
           gcc${{ steps.gcc.outputs.gcc_postfix }}
           g++${{ steps.gcc.outputs.gcc_postfix }}
-          cmake ninja-build
-          libgtk-3-dev
-          libpoppler-glib-dev
-          portaudio19-dev
-          libsndfile1-dev
-          liblua5.4-dev
-          libzip-dev
-          gettext
-          help2man
-          libgtest-dev
-          libgtksourceview-4-dev
-          libqpdf-dev
       run: |
         sudo apt-get update
         sudo apt-get install -y ${{env.packages}}
+        sudo apt-get build-dep .  # install deps from debian/control
     - name: 'Set environment variables'
       shell: bash
       run: |
