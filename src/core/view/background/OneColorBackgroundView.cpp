@@ -25,6 +25,30 @@ OneColorBackgroundView::OneColorBackgroundView(double pageWidth, double pageHeig
 
 void xoj::view::OneColorBackgroundView::multiplyLineWidth(double factor) { lineWidth *= factor; }
 
+void xoj::view::OneColorBackgroundView::loadVLineColor(const BackgroundConfig& config, Color defaultLightColor,
+                                                       Color defaultDarkColor) {
+    if (backgroundColor.isLight()) {
+        vLineColor = getColorOr(config, CFG_FOREGROUND_COLOR_2, defaultLightColor);
+    } else {
+        vLineColor = getColorOr(config, CFG_ALT_FOREGROUND_COLOR_2, defaultDarkColor);
+    }
+}
+
+void xoj::view::OneColorBackgroundView::drawVerticalMarginLine(cairo_t* cr, double margin, double lineWidth) const {
+    if (margin < 0) {
+        // A negative value puts the margin line on the right hand side
+        margin += pageWidth;
+    }
+    cairo_save(cr);
+    Util::cairo_set_source_rgbi(cr, vLineColor);
+    cairo_set_line_width(cr, lineWidth);
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP_BUTT);
+    cairo_move_to(cr, margin, 0);
+    cairo_line_to(cr, margin, pageHeight);
+    cairo_stroke(cr);
+    cairo_restore(cr);
+}
+
 Color OneColorBackgroundView::getColorOr(const BackgroundConfig& config, const std::string& str,
                                          const Color& defaultColor) {
     if (uint32_t hexColor; config.loadValueHex(str, hexColor)) {
