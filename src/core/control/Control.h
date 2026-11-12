@@ -166,6 +166,7 @@ public:
     void toolSizeChanged() override;
     void toolFillChanged() override;
     void toolLineStyleChanged() override;
+    void eraserTypeChanged() override;
 
     void selectTool(ToolType type);
     void selectDefaultTool();

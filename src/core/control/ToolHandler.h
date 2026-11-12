@@ -24,7 +24,6 @@
 
 class LineStyle;
 class Settings;
-class ActionDatabase;
 class TextAlignment;
 
 
@@ -55,6 +54,7 @@ public:
     virtual void toolSizeChanged() = 0;
     virtual void toolFillChanged() = 0;
     virtual void toolLineStyleChanged() = 0;
+    virtual void eraserTypeChanged() = 0;
     virtual void toolChanged() = 0;
 
     virtual ~ToolListener();
@@ -63,7 +63,7 @@ public:
 class ToolHandler {
 public:
     using ToolChangedCallback = std::function<void(ToolType)>;
-    ToolHandler(ToolListener* stateChangedListener, ActionDatabase* actionDB, Settings* settings);
+    ToolHandler(ToolListener* stateChangedListener, Settings* settings);
     virtual ~ToolHandler();
 
     /**
@@ -303,12 +303,6 @@ public:
     EraserType getEraserType() const;
 
     /**
-     * @brief Update the toolbar based on the Eraser type of the active tool
-     *
-     */
-    void eraserTypeChanged();
-
-    /**
      * @brief Check whether the selectedTool has a certain capability
      *
      * @param cap
@@ -430,6 +424,5 @@ private:
     std::vector<ToolChangedCallback> toolChangeListeners;
 
     ToolListener* stateChangeListener = nullptr;
-    ActionDatabase* actionDB = nullptr;
     Settings* settings = nullptr;
 };
