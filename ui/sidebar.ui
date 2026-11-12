@@ -62,6 +62,16 @@
         </section>
         <section>
             <item>
+                <attribute name="label" translatable="yes">Rotate Clockwise</attribute>
+                <attribute name="action">win.rotate-page-clockwise</attribute>
+            </item>
+            <item>
+                <attribute name="label" translatable="yes">Rotate Counterclockwise</attribute>
+                <attribute name="action">win.rotate-page-counter-clockwise</attribute>
+            </item>
+        </section>
+        <section>
+            <item>
                 <attribute name="label" translatable="yes">Delete</attribute>
                 <attribute name="action">win.delete-page</attribute>
             </item>

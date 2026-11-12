@@ -1,6 +1,7 @@
 #include "XojCairoPdfExport.h"
 
 #include <algorithm>  // for copy, min
+#include <cmath>      // for M_PI_2
 #include <map>        // for map
 #include <memory>     // for __shared_ptr_access
 #include <sstream>    // for ostringstream, operator<<
@@ -25,6 +26,7 @@
 #include "util/i18n.h"                      // for _
 #include "util/serdesstream.h"              // for serdes_stream
 #include "view/DocumentView.h"              // for DocumentView
+#include "view/PageOrientationHelper.h"     // for cairoRotatePage
 
 #include "config.h"      // for PROJECT_STRING
 #include "filesystem.h"  // for path
@@ -139,7 +141,10 @@ bool XojCairoPdfExport::endPdf() {
 void XojCairoPdfExport::exportPage(size_t page, bool exportPdfBackground) {
     PageRef p = doc->getPage(page);
 
-    cairo_pdf_surface_set_size(this->surface, p->getWidth(), p->getHeight());
+    auto width = p->getWidth();
+    auto height = p->getHeight();
+
+    cairo_pdf_surface_set_size(this->surface, width, height);
 
     DocumentView view;
 
@@ -148,9 +153,16 @@ void XojCairoPdfExport::exportPage(size_t page, bool exportPdfBackground) {
     // For a better pdf quality, we use a dedicated pdf rendering
     if (exportPdfBackground && p->getBackgroundType().isPdfPage() && (exportBackground != EXPORT_BACKGROUND_NONE)) {
         auto pgNo = p->getPdfPageNr();
+        auto pgOrient = p->getPdfPageOrientation();
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
+        xoj::view::cairoRotatePage(cr, pgOrient, width, height);
+
         popplerPage->renderForPrinting(cr);
+
+        if (pgOrient != PageOrientation::UP) {
+            cairo_restore(cr);
+        }
     }
 
     xoj::view::BackgroundFlags flags;
