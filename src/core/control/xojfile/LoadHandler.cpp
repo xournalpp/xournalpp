@@ -87,7 +87,7 @@ void LoadHandler::addDocument(std::u8string creator, int fileVersion) {
         this->fileVersion = fileVersion;
     }
 
-    this->doc = std::make_unique<Document>(&this->dHandler);
+    this->doc = std::make_unique<Document>();
 }
 
 void LoadHandler::finalizeDocument() {

@@ -44,6 +44,8 @@ public:
     bool cut();
     bool copy();
 
+    void copyTextToClipboard(const std::string_view text);
+
     void setSelection(EditSelection* selection);
 
     void setCopyCutEnabled(bool enabled);

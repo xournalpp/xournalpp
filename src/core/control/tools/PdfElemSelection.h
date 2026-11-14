@@ -16,15 +16,17 @@
 
 #include <cairo.h>  // for cairo_region_t, cairo_t
 
-#include "control/ToolEnums.h"  // for ToolType
 #include "model/OverlayBase.h"
+#include "model/PageRef.h"
 #include "pdf/base/XojPdfPage.h"  // for XojPdfPageSelectionStyle, XojPdfRec...
+#include "util/Color.h"
 #include "util/DispatchPool.h"
 #include "util/Util.h"                // for npos
 #include "util/raii/CairoWrappers.h"  // for CairoRegionSPtr
 
 class Range;
 class Control;
+class ToolHandler;
 
 namespace xoj::view {
 class PdfElementSelectionView;
@@ -33,7 +35,7 @@ class PdfElementSelectionView;
 /// Represents elements selected from a PDF page, such as text.
 class PdfElemSelection: public OverlayBase {
 public:
-    PdfElemSelection(double x, double y, Control* control);
+    PdfElemSelection(double x, double y, ToolHandler& th, PageRef page, Control* control);
     PdfElemSelection& operator=(const PdfElemSelection&) = delete;
     PdfElemSelection(const PdfElemSelection&) = delete;
     PdfElemSelection& operator=(PdfElemSelection&&) = default;
@@ -42,15 +44,16 @@ public:
 
 public:
     /// Calls finalizeSelection() and then repaints the page.
-    bool finalizeSelectionAndRepaint(XojPdfPageSelectionStyle style);
+    bool finalizeSelectionAndRepaint();
 
-    /// Sets the final selection bounds using the provided selection style.
+    /// Sets the final selection bounds.
     /// Returns true iff there is text contained within the selection bounds.
-    bool finalizeSelection(XojPdfPageSelectionStyle style);
+    bool finalizeSelection();
 
-    /// Update the (unfinalized) selection bounds with the given
-    /// style.
-    void currentPos(double x, double y, XojPdfPageSelectionStyle style);
+    void changeStyle(XojPdfPageSelectionStyle style);
+
+    /// Update the (unfinalized) selection bounds
+    void currentPos(double x, double y);
 
     /// If the selection is a rectangle, returns true iff the given point is
     /// contained in the selection. Returns false on text selection.
@@ -64,25 +67,35 @@ public:
     /// Returns true iff the final selections bounds are known.
     bool isFinalized() const;
 
-    size_t getSelectionPageNr() const;
-    void setToolType(ToolType toolType);
-
     const cairo_region_t* getSelectedRegion() const { return selectedTextRegion.get(); }
-
-    /// Returns the selection style corresponding to the given tool type.
-    static XojPdfPageSelectionStyle selectionStyleForToolType(ToolType type);
 
     inline const std::shared_ptr<xoj::util::DispatchPool<xoj::view::PdfElementSelectionView>>& getViewPool() const {
         return viewPool;
     }
 
-private:
-    /// Assigns the selected text region to the current selection bounds.
-    void selectTextRegion(XojPdfPageSelectionStyle style);
+    void strikethrough();  ///< Draw a stroke striking through the selected text
+    void underline();      ///< Draw a stroke underlining the selected text
+    void highlight();      ///< Draw a stroke highlighting the selected text
+    bool copy();           ///< Copy the selected text to the clipboard. Returns true if some text was selected
 
+
+    enum class MarkerStyle : uint8_t {
+        POS_TEXT_BOTTOM = 0,
+        POS_TEXT_MIDDLE,
+        POS_TEXT_TOP,
+
+        WIDTH_TEXT_LINE,
+        WIDTH_TEXT_HEIGHT
+    };
+
+    void createStrokes(MarkerStyle position, MarkerStyle width, int markerOpacity);
+
+private:
     Range getRegionBbox() const;
 
     XojPdfPageSPtr pdf;
+    PageRef xoppPage;
+    Control* control;
 
     /// The rectangles corresponding to the lines of selected text.
     std::vector<XojPdfRectangle> selectedTextRects;
@@ -93,15 +106,16 @@ private:
     /// The area containing the selected text. Used for rendering.
     xoj::util::CairoRegionSPtr selectedTextRegion;
 
-    /// The PDF selection tool used for the selection.
-    ToolType toolType;
-
     size_t selectionPageNr = npos;
 
-    /// The selection bounds. Note that this does not necessarily correspond to
-    /// a rectangle--it may also indicate start and end positions of a linear
-    /// text selection.
+    /// The selection bounds. Note that this does not necessarily correspond to a rectangle--it may also indicate start
+    /// and end positions of a linear text selection.
     XojPdfRectangle bounds;
+
+    XojPdfPageSelectionStyle style;
+
+    Color color;  ///< Used for strokes/highlighting
+    uint8_t highlighterAlpha;
 
     bool finalized;
 

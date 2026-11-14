@@ -45,8 +45,7 @@ TEST(FileLoadBenchmark, benchmarkLatex) { benchLoadFile(GET_TESTFILE(u8"benchmar
 
 static auto createTemporaryFile(void (*buildDoc)(Document&), const fs::path& filename) -> fs::path {
     // Build file
-    DocumentHandler dh;
-    Document doc{&dh};
+    Document doc;
     buildDoc(doc);
 
     // Save it to a temporary path

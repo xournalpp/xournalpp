@@ -34,10 +34,10 @@
 #include "XojPage.h"          // for XojPage
 #include "filesystem.h"       // for path
 
-Document::Document(DocumentHandler* handler): handler(handler) {}
+Document::Document() {}
 
 Document::~Document() {
-    clearDocument(true);
+    clearDocument();
     freeTreeContentModel();
 }
 
@@ -72,19 +72,8 @@ void Document::lock_shared() { this->documentLock.lock_shared(); }
 void Document::unlock_shared() { this->documentLock.unlock_shared(); }
 auto Document::try_lock_shared() -> bool { return this->documentLock.try_lock_shared(); }
 
-void Document::clearDocument(bool destroy) {
+void Document::clearDocument() {
     this->preview.reset();
-
-    if (!destroy) {
-        // release lock
-        bool lastLock = try_lock();
-        unlock();
-        this->handler->fireDocumentChanged(DOCUMENT_CHANGE_CLEARED);
-        if (!lastLock)  // document was locked before
-        {
-            lock();
-        }
-    }
 
     this->pages.clear();
     this->pageIndex.reset();
@@ -370,8 +359,6 @@ auto Document::readPdf(const fs::path& filename, bool initPages, bool attachToDo
 
     unlock();
 
-    this->handler->fireDocumentChanged(DOCUMENT_CHANGE_PDF_BOOKMARKS);
-
     return true;
 }
 
@@ -456,15 +443,6 @@ auto Document::operator=(const Document& doc) -> Document& {
     indexPdfPages();
     buildContentsModel();
     updateIndexPageNumbers();
-
-    bool lastLock = try_lock();
-    xoj_assert(!lastLock);
-    unlock();
-    this->handler->fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
-    if (!lastLock)  // document was locked before
-    {
-        lock();
-    }
     return *this;
 }
 

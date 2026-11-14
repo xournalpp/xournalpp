@@ -160,13 +160,6 @@ auto XournalView::onKeyPressEvent(const KeyEvent& event) -> bool {
 
     auto keyval = event.keyval;
     auto state = event.state;
-    if (auto* tool = getControl()->getWindow()->getPdfToolbox(); tool->hasSelection()) {
-        if ((keyval == GDK_KEY_c && state == GDK_CONTROL_MASK) || keyval == GDK_KEY_Copy) {
-            // Shortcut to get selected PDF text.
-            tool->copyTextToClipboard();
-            return true;
-        }
-    }
 
     if (auto* selection = getSelection(); selection) {
         if (keyval == GDK_KEY_Escape) {
@@ -391,13 +384,11 @@ void XournalView::pageSelected(size_t page) {
         return;
     }
 
-    control->getWindow()->getPdfToolbox()->userCancelSelection();
+    control->getWindow()->getPdfToolbox()->hide();
 
     if (this->lastSelectedPage != npos && this->lastSelectedPage < this->viewPages.size()) {
         this->viewPages[this->lastSelectedPage]->setSelected(false);
     }
-
-    endTextAllPages();
 
     this->currentPage = page;
 

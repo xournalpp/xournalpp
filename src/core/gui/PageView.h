@@ -51,6 +51,7 @@ class Range;
 class TexImage;
 class XojPdfRectangle;
 class XojPdfPage;
+class PdfElemSelection;
 
 namespace xoj::view {
 class OverlayView;
@@ -225,6 +226,7 @@ private:
      * Shows the PDF toolbox at the location of an input event
      */
     void showPdfToolbox(const PositionInputData& pos);
+    void hidePdfToolbox() const;
 
     void deleteView(xoj::view::OverlayView* v);
 
@@ -241,6 +243,9 @@ private:
      * The selected (while selection)
      */
     std::unique_ptr<Selector> selector;
+
+    /// To select text in the PDF background
+    std::unique_ptr<PdfElemSelection> pdfSelector;
 
     /**
      * The text editor
