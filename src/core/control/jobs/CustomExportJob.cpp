@@ -33,7 +33,7 @@ void CustomExportJob::exportGraphics() {
     if (parameters->format == EXPORT_GRAPHICS_PNG) {
         imgExport.setQualityParameter(parameters->qualityParameter);
     }
-    imgExport.exportGraphics(control);
+    imgExport.exportGraphics(control->getProgressListener());  // Will lock the doc's mutex for each page
     errorMsg = imgExport.getLastErrorMsg();
 }
 
@@ -45,8 +45,9 @@ void CustomExportJob::run() {
         XojExportHandler h;
         doc->lock_shared();
         h.prepareSave(doc, filepath);
-        h.saveTo(filepath, this->control);
         doc->unlock_shared();
+
+        h.saveTo(filepath, this->control->getProgressListener());
 
         if (!h.getErrorMessage().empty()) {
             this->lastError = FS(_F("Save file error: {1}") % h.getErrorMessage());
@@ -59,7 +60,7 @@ void CustomExportJob::run() {
         Document* doc = control->getDocument();
 
         std::unique_ptr<XojPdfExport> pdfe =
-                XojPdfExportFactory::createExport(doc, control, parameters->pdfExportBackend);
+                XojPdfExportFactory::createExport(doc, control->getProgressListener(), parameters->pdfExportBackend);
 
         pdfe->setExportBackground(parameters->backgroundType);
 

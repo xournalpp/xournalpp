@@ -23,7 +23,6 @@
 #include <gtk/gtk.h>                // for GtkLabel
 
 #include "control/ToolEnums.h"                      // for ToolSize, ToolType
-#include "control/jobs/ProgressListener.h"          // for ProgressListener
 #include "control/settings/ViewModes.h"             // for ViewModeId
 #include "control/tools/EditSelection.h"            // for OrderChange
 #include "enums/Action.enum.h"                      // for Action
@@ -71,13 +70,14 @@ class XojFont;
 class XojPdfRectangle;
 class ActionDatabase;
 class NavigationHistory;
+class ProgressListener;
 
 class Control:
         public ToolListener,
         public DocumentHandler,
         public UndoRedoListener,
         public ClipboardListener,
-        public ProgressListener {
+        public ClipboardActionStatusListener {
 public:
     Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath);
     Control(Control const&) = delete;
@@ -298,7 +298,6 @@ public:
 
     void setLastAutosaveFile(fs::path newAutosaveFile);
     void deleteLastAutosaveFile();
-    void setClipboardHandlerSelection(EditSelection* selection);
 
     void addChangedDocumentListener(DocumentListener* dl);
     void removeChangedDocumentListener(DocumentListener* dl);
@@ -309,6 +308,7 @@ public:
     Document* getDocument() const;
     UndoRedoHandler* getUndoRedoHandler() const;
     MainWindow* getWindow() const;
+    ProgressListener* getProgressListener() const;
     GtkWindow* getGtkWindow() const;
     ScrollHandler* getScrollHandler() const;
     PageRef getCurrentPage();
@@ -345,17 +345,14 @@ public:
     void undoRedoPageChanged(PageRef page) override;
 
 public:
-    // ProgressListener interface
-    void setMaximumState(size_t max) override;
-    void setCurrentState(size_t state) override;
-
-public:
-    // ClipboardListener interface
+    // ClipboardActionStatusListener interface
     void clipboardCutCopyEnabled(bool enabled) override;
     void clipboardPasteEnabled(bool enabled) override;
+    // ClipboardListener interface
     void clipboardPasteText(std::string text) override;
     void clipboardPasteImage(GdkPixbuf* img) override;
     void clipboardPasteXournal(ObjectInputStream& in) override;
+    EditSelection* clipboardGetSelection() const override;
     void deleteSelection() override;
 
     void clipboardPaste(ElementPtr e);
@@ -529,13 +526,6 @@ private:
 
     XournalScheduler* scheduler;
 
-    /**
-     * State / Blocking attributes
-     */
-    GtkWidget* statusbar = nullptr;
-    GtkLabel* lbState = nullptr;
-    GtkProgressBar* pgState = nullptr;
-    size_t maxState = 0;
     bool isBlocking;
 
     GladeSearchpath* gladeSearchPath;

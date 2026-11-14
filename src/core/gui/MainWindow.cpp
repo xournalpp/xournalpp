@@ -21,6 +21,7 @@
 #include "gui/GladeGui.h"                               // for GladeGui
 #include "gui/PdfFloatingToolbox.h"                     // for PdfFloatingToolbox
 #include "gui/SearchBar.h"                              // for SearchBar
+#include "gui/StatusBar.h"                              // for StatusBar
 #include "gui/inputdevices/InputEvents.h"               // for INPUT_DEVICE_TOUC...
 #include "gui/menus/menubar/Menubar.h"                  // for Menubar
 #include "gui/menus/menubar/ToolbarSelectionSubmenu.h"  // for ToolbarSelectionSubmenu
@@ -64,7 +65,8 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
         GladeGui(gladeSearchPath, "main.glade", "mainWindow"),
         control(control),
         toolbar(std::make_unique<ToolMenuHandler>(control, this)),
-        menubar(std::make_unique<Menubar>()) {
+        menubar(std::make_unique<Menubar>()),
+        statusbar(std::make_unique<StatusBar>(*this)) {
     gtk_window_set_application(GTK_WINDOW(getWindow()), parent);
 
     panedContainerWidget.reset(get("panelMainContents"), xoj::util::ref);
