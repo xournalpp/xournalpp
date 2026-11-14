@@ -42,28 +42,45 @@ PageBackgroundChangeController::PageBackgroundChangeController(Control* control)
     registerListener(control);
 }
 
+
+/// Nothing, a BackgroundImage or the number of a pdf page
+using CommitParameter = std::variant<std::nullopt_t, BackgroundImage, size_t>;
+
+/**
+ * Applies pageType to page number pageNum.
+ *      If pageType.isImage(), a BackgroundImage must be provided
+ *      If pageType.isPdf(), a pdf page number must be provided in the std::variant
+ */
+auto commitPageTypeChange(Document* doc, size_t pageNum, const PageType& pageType, CommitParameter param = std::nullopt)
+        -> std::unique_ptr<UndoAction>;
+
+static std::unique_ptr<UndoAction> commitBackgroundToAllPages(Document* doc, const PageType& pt,
+                                                              CommitParameter param) {
+    auto groupUndoAction = std::make_unique<GroupUndoAction>();
+
+    doc->lock();
+    auto nbPages = doc->getPageCount();
+    for (size_t p = 0; p < nbPages; p++) {
+        auto undoAction = commitPageTypeChange(doc, p, pt, param);
+        if (undoAction) {
+            groupUndoAction->addAction(std::move(undoAction));
+        }
+    }
+    doc->unlock();
+
+    return groupUndoAction;
+}
+
 void PageBackgroundChangeController::applyBackgroundToAllPages(const PageType& pt) {
     control->clearSelectionEndText();
 
     auto apply = [pt, this](CommitParameter param = std::nullopt) {
-        auto groupUndoAction = std::make_unique<GroupUndoAction>();
-
         Document* doc = control->getDocument();
-        doc->lock();
-        auto nbPages = doc->getPageCount();
-        for (size_t p = 0; p < nbPages; p++) {
-            auto undoAction = commitPageTypeChange(p, pt, param);
-            if (undoAction) {
-                groupUndoAction->addAction(std::move(undoAction));
-            }
-        }
-        doc->unlock();
-
-        control->getUndoRedoHandler()->addUndoAction(std::move(groupUndoAction));
+        control->getUndoRedoHandler()->addUndoAction(commitBackgroundToAllPages(doc, pt, param));
 
         // Special background types may alter the page sizes as well
         auto fire = pt.isSpecial() ? &Control::firePageSizeChanged : &Control::firePageChanged;
-        for (size_t n = 0; n < nbPages; n++) {
+        for (size_t n = 0; n < doc->getPageCount(); n++) {
             (control->*fire)(n);
         }
         control->updateBackgroundSizeButton();
@@ -101,23 +118,22 @@ void PageBackgroundChangeController::applyCurrentPageBackgroundToAll() {
     applyBackgroundToAllPages(pt);
 }
 
-void PageBackgroundChangeController::changePdfPagesBackground(const fs::path& filepath, bool attachPdf) {
-    Document* doc = this->control->getDocument();
-
-    const fs::path oldFilepath = doc->getPdfFilepath();
-    const bool oldAttachPdf = doc->isAttachPdf();
-
-    if (!doc->readPdf(filepath, false, attachPdf)) {
-        std::string msg = FS(_F("Error reading PDF: {1}") % doc->getLastErrorMsg());
-        XojMsgBox::showErrorToUser(this->control->getGtkWindow(), msg);
-        return;
+std::unique_ptr<UndoAction> PageBackgroundChangeController::changeDocumentPdfBackground(Document* doc,
+                                                                                        const fs::path& filepath,
+                                                                                        bool attachPdf, Control* ctrl) {
+    if (!filepath.empty()) {
+        const fs::path oldFilepath = doc->getPdfFilepath();
+        const bool oldAttachPdf = doc->isAttachPdf();
+        if (!doc->readPdf(filepath, false, attachPdf)) {
+            std::string msg = FS(_F("Error reading PDF: {1}") % doc->getLastErrorMsg());
+            XojMsgBox::showErrorToUser(ctrl->getGtkWindow(), msg);
+            return nullptr;
+        }
+        return std::make_unique<MissingPdfUndoAction>(oldFilepath, oldAttachPdf);
+    } else {
+        // No file mean we clear the PDF pages backgrounds
+        return commitBackgroundToAllPages(doc, PageType(PageTypeFormat::Plain), std::nullopt);
     }
-    this->control->getWindow()->getXournal()->recreatePdfCache();
-
-    this->control->fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
-
-    auto undoAction = std::make_unique<MissingPdfUndoAction>(oldFilepath, oldAttachPdf);
-    this->control->getUndoRedoHandler()->addUndoAction(std::move(undoAction));
 }
 
 void PageBackgroundChangeController::changeCurrentPageBackground(const PageType& pt) {
@@ -129,7 +145,7 @@ void PageBackgroundChangeController::changeCurrentPageBackground(const PageType&
     auto apply = [this, pt, pageNr](CommitParameter param = std::nullopt) {
         Document* doc = control->getDocument();
         doc->lock();
-        auto undoAction = commitPageTypeChange(pageNr, pt, std::move(param));
+        auto undoAction = commitPageTypeChange(doc, pageNr, pt, std::move(param));
         doc->unlock();
         if (undoAction) {
             control->getUndoRedoHandler()->addUndoAction(std::move(undoAction));
@@ -196,18 +212,16 @@ static void setPagePdfBackground(const PageRef& page, size_t pdfPageNr, Document
     }
 }
 
-auto PageBackgroundChangeController::commitPageTypeChange(size_t pageNum, const PageType& pageType,
-                                                          CommitParameter param) -> std::unique_ptr<UndoAction> {
+auto commitPageTypeChange(Document* doc, size_t pageNum, const PageType& pageType, CommitParameter param)
+        -> std::unique_ptr<UndoAction> {
     xoj_assert(pageType.isImagePage() == std::holds_alternative<BackgroundImage>(param));
     xoj_assert(pageType.isPdfPage() == std::holds_alternative<size_t>(param));
 
-    PageRef page = control->getDocument()->getPage(pageNum);
+    PageRef page = doc->getPage(pageNum);
     if (!page) {
         g_warning("PageBackgroundChangeController::commitPageTypeChange() could not fetch page %zu", pageNum);
         return {};
     }
-
-    Document* doc = control->getDocument();
 
     // Get values for Undo / Redo
     const double origW = page->getWidth();
@@ -283,7 +297,7 @@ void PageBackgroundChangeController::askForPdfBackground(std::function<void(size
 /**
  * Copy the background from source to target
  */
-void PageBackgroundChangeController::copyBackgroundFromOtherPage(PageRef target, PageRef source) {
+void copyBackgroundFromOtherPage(PageRef target, PageRef source) {
     // Copy page background type
     PageType bg = source->getBackgroundType();
     target->setBackgroundType(bg);

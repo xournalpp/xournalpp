@@ -115,6 +115,7 @@
 #include "view/overlays/OverlayView.h"                           // for Over...
 
 #include "CrashHandler.h"                    // for emer...
+#include "FileOpener.h"                      // for FileOpener
 #include "PageBackgroundChangeController.h"  // for Page...
 #include "PrintHandler.h"                    // for print
 #include "UndoRedoController.h"              // for Undo...
@@ -219,11 +220,6 @@ Control::~Control() {
     delete this->layerController;
     this->layerController = nullptr;
 }
-
-struct Control::MissingPdfData {
-    bool wasPdfAttached;
-    fs::path missingFileName;
-};
 
 void Control::setLastAutosaveFile(fs::path newAutosaveFile) {
     try {
@@ -682,23 +678,6 @@ void Control::setShowMenubar(bool enabled) {
 }
 
 void Control::disableSidebarTmp(bool disabled) { this->sidebar->setTmpDisabled(disabled); }
-
-void Control::addDefaultPage(const std::optional<PageTemplateSettings>& pageTemplate, Document* doc) {
-    const auto& model = pageTemplate.value_or(this->settings->getPageTemplateSettings());
-
-    auto page = std::make_shared<XojPage>(model.getPageWidth(), model.getPageHeight());
-    page->setBackgroundColor(model.getBackgroundColor());
-    page->setBackgroundType(model.getBackgroundType());
-
-    if (doc == nullptr || doc == this->doc) {
-        // Apply to the curent document
-        this->doc->lock();
-        this->doc->addPage(std::move(page));
-        this->doc->unlock();
-    } else {
-        doc->addPage(std::move(page));
-    }
-}
 
 void Control::updatePageActions() {
     auto currentPage = getCurrentPageNo();
@@ -1503,21 +1482,12 @@ void Control::showSettings() {
     dlg.show(GTK_WINDOW(this->win->getWindow()));
 }
 
-static std::unique_ptr<Document> createNewDocument(Control* ctrl, fs::path filepath,
-                                                   const std::optional<PageTemplateSettings>& pageTemplate) {
-    auto newDoc = std::make_unique<Document>(ctrl);
-    if (!filepath.empty()) {
-        newDoc->setFilepath(std::move(filepath));
-    }
-    ctrl->addDefaultPage(pageTemplate, newDoc.get());
-    return newDoc;
-}
-
 void Control::newFile(fs::path filepath) {
     this->close(
             [ctrl = this, filepath = std::move(filepath)](bool closed) {
                 if (closed) {
-                    ctrl->replaceDocument(createNewDocument(ctrl, std::move(filepath), std::nullopt), -1);
+                    ctrl->replaceDocument(
+                            FileOpener::createNewDocument(ctrl->getSettings(), std::move(filepath), std::nullopt), -1);
                 }
             },
             true);
@@ -1551,7 +1521,7 @@ void Control::askToOpenFile() {
         if (closed) {
             xoj::OpenDlg::showOpenFileDialog(ctrl->getGtkWindow(), ctrl->settings, [ctrl](fs::path path) {
                 g_message("%s", (_F("file: {1}") % path.string()).c_str());
-                ctrl->openFileWithoutSavingTheCurrentDocument(std::move(path), false, -1, [](bool) {});
+                ctrl->openFileWithoutSavingTheCurrentDocument(std::move(path), false, -1);
             });
         }
     });
@@ -1569,262 +1539,38 @@ void Control::replaceDocument(std::unique_ptr<Document> doc, int scrollToPage) {
     setEmergencyDocument(this->doc);
 
     // Set folder as last save path, so the next save will be at the current document location
-    // This is important because of the new .xopp format, where Xournal .xoj handled as import,
-    // not as file to load
+    // This is important because of the new .xopp format, where Xournal .xoj handled as import, not as file to load
     if (!filepath.empty()) {
-        settings->setLastSavePath(filepath.parent_path());
+        getSettings()->setLastSavePath(filepath.parent_path());
     }
 
     fileLoaded(scrollToPage);
 }
 
-static auto formatErrorMessages(const std::vector<std::string>& errorMessages) -> std::string {
-    // Deduplicate identical repeated messages
-    std::vector<std::string> deduplicated;
-
-    for (std::size_t i = 0; i < errorMessages.size();) {
-        std::size_t j = i + 1;
-        while (j < errorMessages.size() && errorMessages[j] == errorMessages[i]) {
-            ++j;
-        }
-        const std::size_t count = j - i;
-
-        deduplicated.emplace_back(StringUtils::markup_escape(errorMessages[i]));
-        if (count == 2) {
-            deduplicated.emplace_back(deduplicated.back());
-        } else if (count > 2) {
-            deduplicated.emplace_back(FS(_F("<i>Above error repeated {1} times</i>") % (count - 1)));
-        }
-
-        i = j;
-    }
-
-    // Remove middle messages if the list is still too long
-    constexpr std::size_t MAX_MESSAGE_COUNT = 12;
-    if (deduplicated.size() > MAX_MESSAGE_COUNT) {
-        constexpr std::size_t BEFORE = MAX_MESSAGE_COUNT / 2;
-        constexpr std::size_t AFTER = MAX_MESSAGE_COUNT - BEFORE - 1;  // reserve one line for the overflow indication
-        deduplicated[BEFORE] =
-                FS(_F("<i>&lt;{1} more lines of error messages&gt;</i>") % (deduplicated.size() - (BEFORE + AFTER)));
-        deduplicated.erase(deduplicated.begin() + BEFORE + 1, deduplicated.end() - AFTER);
-    }
-
-    if (deduplicated.empty()) {
-        return "";
-    }
-
-    // Todo(C++23): use std::views::join_with
-    std::size_t totalSize = deduplicated.size() - 1;  // for '\n' characters
-    for (auto& str: deduplicated) {
-        totalSize += str.size();
-    }
-    std::string result;
-    result.reserve(totalSize);
-    result.append(deduplicated.front());
-    for (auto it = deduplicated.begin() + 1; it != deduplicated.end(); ++it) {
-        result.append('\n' + *it);
-    }
-    return result;
-}
-
-void Control::openXoppFile(fs::path filepath, int scrollToPage, std::function<void(bool)> callback) {
-    std::unique_ptr<Document> doc{};
-    std::optional<MissingPdfData> missingPdf{};
-    int fileVersion{};
-    std::vector<std::string> errorMessages{};
-
-    try {
-        LoadHandler loadHandler(&errorMessages);
-        doc = loadHandler.loadDocument(filepath);
-
-        if (!loadHandler.getMissingPdfFilename().empty() || loadHandler.isAttachedPdfMissing()) {
-            missingPdf = {loadHandler.isAttachedPdfMissing(), loadHandler.getMissingPdfFilename()};
-        }
-        fileVersion = loadHandler.getFileVersion();
-    } catch (std::exception& e) {
-        g_warning("LoadHandler failed to load document: %s", e.what());
-
-        std::string msg = FS(_F("Error opening file \"{1}\".\n\n"
-                                "<tt>{2}</tt>\n<b>{3}</b>") %
-                             filepath.u8string() % formatErrorMessages(errorMessages) % e.what());
-        XojMsgBox::showMarkupMessageToUser(this->getGtkWindow(), msg, "", GTK_MESSAGE_ERROR);
-        callback(false);
+void Control::finishedOpeningFileCallback(std::unique_ptr<Document> doc, int scrollToPage,
+                                          UndoActionPtr recoveryAction) {
+    xoj_assert(this->fileOpener);
+    this->fileOpener.reset();
+    if (!doc) {
+        // Something went wrong. Errors have already been show to the user
         return;
     }
-
-    auto afterOpen = [ctrl = this, missingPdf = std::move(missingPdf), errorMessages = std::move(errorMessages),
-                      doc = std::move(doc), filepath, scrollToPage]() mutable {
-        ctrl->replaceDocument(std::move(doc), scrollToPage);
-
-        if (!errorMessages.empty()) {
-            std::string msg =
-                    FS(_F("There were some errors while loading the file. Some information might have been lost. "
-                          "Do not overwrite your old file unless you are sure everything you need was loaded "
-                          "correctly.\n\n"
-                          "Error messages:\n<tt>{1}</tt>") %
-                       formatErrorMessages(errorMessages));
-            XojMsgBox::showMarkupMessageToUser(ctrl->getGtkWindow(), msg, "", GTK_MESSAGE_WARNING);
-        }
-
-        if (missingPdf && (missingPdf->wasPdfAttached || !missingPdf->missingFileName.empty())) {
-            // give the user a second chance to select a new PDF filepath, or to discard the PDF
-            ctrl->promptMissingPdf(missingPdf.value(), filepath);
-        }
-    };
-
-    if (fileVersion > FILE_FORMAT_VERSION) {
-        enum { YES = 1, NO };
-        std::vector<XojMsgBox::Button> buttons = {{_("Yes"), YES}, {_("No"), NO}};
-        XojMsgBox::askQuestion(
-                this->getGtkWindow(), _("File version mismatch"),
-                _("The file being loaded has a file format version newer than the one currently supported by this "
-                  "version of Xournal++, so it may not load properly. Open anyways?"),
-                buttons, [afterOpen = std::move(afterOpen), callback = std::move(callback)](int response) mutable {
-                    if (response == YES) {
-                        afterOpen();
-                        callback(true);
-                    } else {
-                        callback(false);
-                    }
-                });
-    } else {
-        afterOpen();
-        callback(true);
+    this->replaceDocument(std::move(doc), scrollToPage);
+    if (recoveryAction) {
+        this->getUndoRedoHandler()->addUndoAction(std::move(recoveryAction));
     }
 }
 
-bool Control::openPdfFile(fs::path filepath, bool attachToDocument, int scrollToPage) {
-    this->getCursor()->setCursorBusy(true);
-    auto doc = std::make_unique<Document>(this);
-    bool success = doc->readPdf(filepath, /*initPages=*/true, attachToDocument);
-    if (success) {
-        this->replaceDocument(std::move(doc), scrollToPage);
-    } else {
-        std::string msg = FS(_F("Error reading PDF file \"{1}\"\n{2}") % filepath.u8string() % doc->getLastErrorMsg());
-        XojMsgBox::showErrorToUser(this->getGtkWindow(), msg);
-    }
-    this->getCursor()->setCursorBusy(false);
-    return success;
-}
-
-bool Control::openPngFile(fs::path filepath, bool attachToDocument, int scrollToPage) {
-    fs::path imagePath(filepath);
-    this->getCursor()->setCursorBusy(true);
-    this->replaceDocument(createNewDocument(this, std::move(filepath), std::nullopt), -1);
-
-    // Put a png file directly in the page
-    this->doc->lock();
-    const size_t pageNr = this->getCurrentPageNo();
-    PageRef page = this->doc->getPage(pageNr);
-    BackgroundImage img;
-    GError* error = nullptr;
-    img.loadFile(imagePath, &error);
-
-    if (error) {
-        std::string msg = FS(_F("Error reading PNG file \"{1}\"") % imagePath.u8string());
-        XojMsgBox::showErrorToUser(this->getGtkWindow(), msg);
-        g_error_free(error);
-        this->doc->unlock();
-        this->getCursor()->setCursorBusy(false);
-        return false;
-    }
-
-    page->setBackgroundImage(std::move(img));
-    page->setBackgroundType(PageType(PageTypeFormat::Image));
-
-    // Apply correct page size
-    GdkPixbuf* pixbuf = page->getBackgroundImage().getPixbuf();
-    if (pixbuf) {
-        page->setSize(gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf));
-    } else {
-        g_warning("PageBackgroundChangeController::setPageImageBackground(): Page with image background but nullptr "
-                  "pixbuf");
-    }
-
-    this->doc->unlock();
-    this->getCursor()->setCursorBusy(false);
-    return true;
-}
-
-bool Control::openXoptFile(fs::path filepath) {
-    auto pageTemplate = Util::readString(filepath);
-    if (!pageTemplate) {
-        // Unable to read the template from the file
-        // Error message has already been displayed
-        return false;
-    }
-
-    PageTemplateSettings model;
-    if (!model.parse(*pageTemplate)) {
-        const auto msg = FS(_F("Error reading template file \"{1}\"") % filepath.u8string());
-        XojMsgBox::showErrorToUser(this->getGtkWindow(), msg);
-        return false;
-    }
-
-    this->replaceDocument(createNewDocument(this, std::move(filepath), model), -1);
-    return true;
-}
-
-void Control::openFileWithoutSavingTheCurrentDocument(fs::path filepath, bool attachToDocument, int scrollToPage,
-                                                      std::function<void(bool)> callback) {
-    if (filepath.empty()) {
-        this->replaceDocument(createNewDocument(this, fs::path(), std::nullopt), -1);
-        callback(true);
-        return;
-    }
-
-    if (std::error_code err; !fs::exists(filepath, err)) {
-        std::string message =
-                err ? FS(_F("Failed to determine if path exists \"{1}\": {2}") % filepath.u8string() % err.message()) :
-                      FS(_F("That file does not exist:\n\"{1}\"") % filepath.u8string());
-        XojMsgBox::showErrorToUser(getGtkWindow(), message);
-        // We create an empty document to avoid ever being in a "no document" state.
-        this->replaceDocument(createNewDocument(this, fs::path(), std::nullopt), -1);
-        callback(false);
-        return;
-    }
-
-    if (filepath.extension() == ".xopt") {
-        callback(this->openXoptFile(std::move(filepath)));
-        return;
-    }
-
-    if (Util::hasPngFileExt(filepath)) {
-        callback(this->openPngFile(std::move(filepath), attachToDocument, scrollToPage));
-        return;
-    }
-
-    if (Util::hasPdfFileExt(filepath)) {
-        if (!attachToDocument && this->settings->isAutoloadPdfXoj()) {
-            const std::vector<std::string> exts = {".xopp", ".xoj", ".pdf.xopp", ".pdf.xoj"};
-            fs::path root = filepath;
-            Util::clearExtensions(root, ".pdf");
-            for (const std::string& ext: exts) {
-                fs::path f = root;
-                f += ext;
-                if (fs::exists(f)) {
-                    this->openXoppFile(std::move(f), scrollToPage, std::move(callback));
-                    return;
-                }
-            }
-        }
-        callback(this->openPdfFile(std::move(filepath), attachToDocument, scrollToPage));
-        return;
-    }
-
-    this->openXoppFile(std::move(filepath), scrollToPage, std::move(callback));
-}
-
-void Control::openFile(fs::path filepath, std::function<void(bool)> callback, int scrollToPage, bool forceOpen) {
+void Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) {
     if (filepath.empty() || (!forceOpen && !shouldFileOpen(filepath, getGtkWindow()))) {
         return;
     }
 
     this->close(
-            [ctrl = this, filepath = std::move(filepath), cb = std::move(callback), scrollToPage](bool closed) mutable {
+            [ctrl = this, filepath = std::move(filepath), scrollToPage](bool closed) mutable {
                 if (closed) {
-                    ctrl->openFileWithoutSavingTheCurrentDocument(std::move(filepath), false, scrollToPage,
-                                                                  std::move(cb));
+                    ctrl->fileOpener = std::make_unique<FileOpener>(ctrl);
+                    ctrl->fileOpener->openFile(std::move(filepath), false, scrollToPage);
                 }
             },
             false, true, forceOpen);
@@ -1859,87 +1605,6 @@ void Control::fileLoaded(int scrollToPage) {
     win->getXournal()->forceUpdatePagenumbers();
     getCursor()->updateCursor();
     updatePageActions();
-}
-
-enum class MissingPdfDialogOptions : gint { USE_PROPOSED, SELECT_OTHER, REMOVE, CANCEL };
-
-void Control::promptMissingPdf(Control::MissingPdfData& missingPdf, const fs::path& filepath) {
-    const fs::path& missingFilePath = missingPdf.missingFileName;
-
-    // create error message
-    std::string parentFolderPath;
-    std::string filename;
-#if defined(WIN32)
-    parentFolderPath = missingFilePath.parent_path().string();
-    filename = missingFilePath.filename().string();
-#else
-    // since POSIX systems detect the whole Windows path as a filename, this checks whether missingFilePath
-    // contains a Windows path
-    std::regex regex(R"([A-Z]:\\(?:.*\\)*(.*))");
-    std::cmatch matchInfo;
-
-    if (std::regex_match(missingFilePath.filename().string().c_str(), matchInfo, regex) && matchInfo[1].matched) {
-        parentFolderPath = missingFilePath.filename().string();
-        filename = matchInfo[1].str();
-    } else {
-        parentFolderPath = missingFilePath.parent_path().string();
-        filename = missingFilePath.filename().string();
-    }
-#endif
-    std::string msg;
-    if (missingPdf.wasPdfAttached) {
-        msg = FS(_F("The attached background file could not be found. It might have been moved, "
-                    "renamed or deleted."));
-    } else {
-        msg = FS(_F("The background file \"{1}\" could not be found. It might have been moved, renamed or "
-                    "deleted.\nIt was last seen at: \"{2}\"") %
-                 filename % parentFolderPath);
-    }
-
-    // try to find file in current directory
-    auto proposedPdfFilepath = filepath.parent_path() / filename;
-    bool proposePdfFile = !missingPdf.wasPdfAttached && !filename.empty() && fs::exists(proposedPdfFilepath) &&
-                          !fs::is_directory(proposedPdfFilepath);
-    if (proposePdfFile) {
-        msg += FS(_F("\nProposed replacement file: \"{1}\"") % proposedPdfFilepath.u8string());
-    }
-
-    // show the dialog
-    std::vector<XojMsgBox::Button> buttons = {
-            {_("Select another PDF"), static_cast<int>(MissingPdfDialogOptions::SELECT_OTHER)},
-            {_("Remove PDF Background"), static_cast<int>(MissingPdfDialogOptions::REMOVE)},
-            {_("Cancel"), static_cast<int>(MissingPdfDialogOptions::CANCEL)}};
-    if (proposePdfFile) {
-        buttons.insert(buttons.begin(),
-                       {_("Use proposed PDF"), static_cast<int>(MissingPdfDialogOptions::USE_PROPOSED)});
-    }
-    XojMsgBox::askQuestion(
-            this->getGtkWindow(), _("Missing PDF background file"), msg, buttons,
-            std::bind(&Control::missingPdfDialogResponseHandler, this, proposedPdfFilepath, std::placeholders::_1));
-}
-
-void Control::missingPdfDialogResponseHandler(fs::path proposedPdfFilepath, int responseId) {
-    switch (static_cast<MissingPdfDialogOptions>(responseId)) {
-        case MissingPdfDialogOptions::USE_PROPOSED:
-            if (!proposedPdfFilepath.empty()) {
-                this->pageBackgroundChangeController->changePdfPagesBackground(proposedPdfFilepath, false);
-            }
-            break;
-        case MissingPdfDialogOptions::SELECT_OTHER:
-            Util::execInUiThread([this]() {
-                xoj::OpenDlg::showAnnotatePdfDialog(getGtkWindow(), settings, [this](fs::path path, bool attachPdf) {
-                    if (!path.empty()) {
-                        this->pageBackgroundChangeController->changePdfPagesBackground(path, attachPdf);
-                    }
-                });
-            });
-            break;
-        case MissingPdfDialogOptions::REMOVE:
-            this->pageBackgroundChangeController->applyBackgroundToAllPages(PageType(PageTypeFormat::Plain));
-            break;
-        default:
-            break;
-    }
 }
 
 class MetadataCallbackData {
@@ -1982,11 +1647,22 @@ void Control::askToAnnotatePdf() {
             xoj::OpenDlg::showAnnotatePdfDialog(ctrl->getGtkWindow(), ctrl->settings,
                                                 [ctrl](fs::path path, bool attachPdf) {
                                                     if (!path.empty()) {
-                                                        ctrl->openPdfFile(std::move(path), attachPdf, -1);
+                                                        ctrl->fileOpener = std::make_unique<FileOpener>(ctrl);
+                                                        ctrl->fileOpener->openPdfFile(std::move(path), attachPdf, -1);
                                                     }
                                                 });
         }
     });
+}
+
+void Control::openFileWithoutSavingTheCurrentDocument(fs::path filepath, bool attachToDocument, int scrollToPage) {
+    this->fileOpener = std::make_unique<FileOpener>(this);
+    this->fileOpener->openFile(std::move(filepath), attachToDocument, scrollToPage);
+}
+
+void Control::openEmergencyFile(fs::path filepath) {
+    this->fileOpener = std::make_unique<FileOpener>(this);
+    this->fileOpener->openXoppFile(std::move(filepath), -1, true);
 }
 
 void Control::print() {

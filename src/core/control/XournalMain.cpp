@@ -113,33 +113,6 @@ void deleteFile(const fs::path& file, GtkWindow* win) {
     }
 }
 
-void checkForEmergencySave(Control* control) {
-    auto file = Util::getConfigFile("emergencysave.xopp");
-
-    if (!fs::exists(file)) {
-        return;
-    }
-
-    const std::string msg = _("Xournal++ crashed last time. Would you like to restore the last edited file?");
-    enum { DELETE_FILE = 1, RESTORE_FILE };
-    XojMsgBox::askQuestion(
-            control->getGtkWindow(), _("Recovery file detected"), msg,
-            {{_("Delete file"), DELETE_FILE}, {_("Restore file"), RESTORE_FILE}},
-            [file = std::move(file), ctrl = control](int response) mutable {
-                if (response == DELETE_FILE) {
-                    deleteFile(file, ctrl->getGtkWindow());
-                } else if (response == RESTORE_FILE) {
-                    ctrl->openFileWithoutSavingTheCurrentDocument(file, false, -1, [ctrl, file](bool) {
-                        ctrl->getDocument()->setFilepath("");
-
-                        // Todo Make sure the document is changed + ask for saving
-                        ctrl->getUndoRedoHandler()->addUndoAction(std::make_unique<EmergencySaveRestore>());
-                        deleteFile(file, ctrl->getGtkWindow());
-                    });
-                }
-            });
-}
-
 void throwIfMissingPdfFileName(const LoadHandler& loader) {
     if (!loader.getMissingPdfFilename().empty()) {
         throw std::runtime_error{
@@ -431,9 +404,34 @@ void tryOpeningFile(XMPtr app_data, fs::path p) {
 
 /// The first time we open a file
 void openFirstFile(XMPtr app_data, fs::path p) {
-    app_data->control->openFileWithoutSavingTheCurrentDocument(
-            std::move(p), app_data->attachMode, app_data->openAtPageNumber - 1,
-            [ctrl = app_data->control.get()](bool) { checkForEmergencySave(ctrl); });
+    /// Opens the originally given file. May not be called if an emergency doc is loaded instead
+    auto openFile = [p = std::move(p), app_data]() {
+        app_data->control->openFileWithoutSavingTheCurrentDocument(std::move(p), app_data->attachMode,
+                                                                   app_data->openAtPageNumber - 1);
+    };
+
+    // First check for emergency save
+    auto file = Util::getConfigFile("emergencysave.xopp");
+
+    if (!fs::exists(file)) {
+        openFile();
+        return;
+    }
+
+    auto* control = app_data->control.get();
+    const std::string msg = _("Xournal++ crashed last time. Would you like to restore the last edited file?");
+    enum { DELETE_FILE = 1, RESTORE_FILE };
+    XojMsgBox::askQuestion(control->getGtkWindow(), _("Recovery file detected"), msg,
+                           {{_("Delete file"), DELETE_FILE}, {_("Restore file"), RESTORE_FILE}},
+                           [emergencyfile = std::move(file), ctrl = control,
+                            openOriginalFile = std::move(openFile)](int response) mutable {
+                               if (response == DELETE_FILE) {
+                                   deleteFile(emergencyfile, ctrl->getGtkWindow());
+                                   openOriginalFile();
+                               } else if (response == RESTORE_FILE) {
+                                   ctrl->openEmergencyFile(emergencyfile);
+                               }
+                           });
 }
 
 void on_activate(GApplication* application, XMPtr app_data) {

@@ -71,6 +71,7 @@ class XojFont;
 class XojPdfRectangle;
 class ActionDatabase;
 class NavigationHistory;
+class FileOpener;
 
 class Control:
         public ToolListener,
@@ -99,9 +100,7 @@ public:
      * newly parsed file. Calls callback afterwards, with boolean parameter true on success. Does nothing to this->doc
      * in case of failure at any point.
      */
-    void openFile(
-            fs::path filepath, std::function<void(bool)> callback = [](bool) {}, int scrollToPage = -1,
-            bool forceOpen = false);
+    void openFile(fs::path filepath, int scrollToPage = -1, bool forceOpen = false);
     /// Shows an open file dialog and opens the selected file
     void askToAnnotatePdf();
 
@@ -110,8 +109,16 @@ public:
      * afterwards, with boolean parameter true if success. WARNING: may lead to data loss if the current Document has
      * not been saved yet.
      */
-    void openFileWithoutSavingTheCurrentDocument(fs::path filepath, bool attachToDocument, int scrollToPage,
-                                                 std::function<void(bool)> callback);
+    void openFileWithoutSavingTheCurrentDocument(fs::path filepath, bool attachToDocument, int scrollToPage);
+
+    /**
+     * (Potentially asynchronously) Opens the given file without saving any previously opened Document. Treat the file
+     * as the result of an emergency save: the file is then deleted and the document marked as unsaved.
+     */
+    void openEmergencyFile(fs::path filepath);
+
+    /// A document has finished opening. Takes over `doc` and clears `this->fileOpener`
+    void finishedOpeningFileCallback(std::unique_ptr<Document> doc, int scrollToPage, UndoActionPtr recoveryAction);
 
     void print();
     void exportAsPdf();
@@ -412,17 +419,6 @@ private:
      */
     bool toggleSetsquare();
 
-    struct MissingPdfData;
-    /**
-     * Prompt the user that the PDF background is missing and offer solution options
-     */
-    void promptMissingPdf(MissingPdfData& missingPdf, const fs::path& filepath);
-
-    /**
-     * Handle the response from the missing PDF dialog
-     */
-    void missingPdfDialogResponseHandler(fs::path proposedPdfFilepath, int responseId);
-
     /**
      * "Closes" the document, preparing the editor for a new document.
      */
@@ -433,41 +429,6 @@ private:
      * WARNING: Be sure the active document has been saved (or discarded) before calling replaceDocument()
      */
     void replaceDocument(std::unique_ptr<Document> doc, int scrollToPage);
-
-    /**
-     * Asynchronously opens the provided path and parse it as a .xopp or .xoj file. Then forcibly replaces the currently
-     * opened document with the new one. Asks the user in case of doubts (e.g. wrong file version) and aborts if the
-     * document was not correctly and entirely parsed. Calls callback afterwards, with boolean parameter true on
-     * success. WARNING: Be sure the active document has been saved (or discarded) before calling openXoppFile()
-     */
-    void openXoppFile(fs::path filepath, int scrollToPage, std::function<void(bool)> callback);
-
-    /**
-     * Opens the provided path and parse it as a PDF file. Then forcibly replaces the currently opened document with a
-     * new one based on the PDF. WARNING: Be sure the active document has been saved (or discarded) before calling
-     * openPdfFile()
-     *
-     * @return true on success
-     */
-    bool openPdfFile(fs::path filepath, bool attachToDocument, int scrollToPage);
-
-    /**
-     * Opens the provided path and parse it as a PNG file. Then forcibly replaces the currently opened document with a
-     * new one based on the PNG. WARNING: Be sure the active document has been saved (or discarded) before calling
-     * openPngFile()
-     *
-     * @return true on success
-     */
-    bool openPngFile(fs::path filepath, bool attachToDocument, int scrollToPage);
-
-    /**
-     * Opens the provided path and parse it as a .xopt template  file. Then forcibly replaces the currently opened
-     * document with a new one based on the template. WARNING: Be sure the active document has been saved (or discarded)
-     * before calling openXoptFile()
-     *
-     * @return true on success
-     */
-    bool openXoptFile(fs::path filepath);
 
     /**
      * @brief Get the pen line style to select in the toolbar
@@ -565,4 +526,6 @@ private:
 
     // Keep after the ActionDatabase so it is destroyed first: ~AudioController refers to the ActionDatabase
     std::unique_ptr<AudioController> audioController;
+
+    std::unique_ptr<FileOpener> fileOpener;
 };
