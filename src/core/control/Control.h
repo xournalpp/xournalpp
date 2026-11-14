@@ -77,6 +77,7 @@ class Control:
         public DocumentHandler,
         public UndoRedoListener,
         public ClipboardListener,
+        public ClipboardActionStatusListener,
         public ProgressListener {
 public:
     Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath);
@@ -298,7 +299,6 @@ public:
 
     void setLastAutosaveFile(fs::path newAutosaveFile);
     void deleteLastAutosaveFile();
-    void setClipboardHandlerSelection(EditSelection* selection);
 
     void addChangedDocumentListener(DocumentListener* dl);
     void removeChangedDocumentListener(DocumentListener* dl);
@@ -350,12 +350,14 @@ public:
     void setCurrentState(size_t state) override;
 
 public:
-    // ClipboardListener interface
+    // ClipboardActionStatusListener interface
     void clipboardCutCopyEnabled(bool enabled) override;
     void clipboardPasteEnabled(bool enabled) override;
+    // ClipboardListener interface
     void clipboardPasteText(std::string text) override;
     void clipboardPasteImage(GdkPixbuf* img) override;
     void clipboardPasteXournal(ObjectInputStream& in) override;
+    EditSelection* clipboardGetSelection() const override;
     void deleteSelection() override;
 
     void clipboardPaste(ElementPtr e);

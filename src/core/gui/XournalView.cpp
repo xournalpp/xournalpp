@@ -641,7 +641,7 @@ void XournalView::clearSelection() {
     GTK_XOURNAL(widget)->selection = nullptr;
     delete sel;
 
-    control->setClipboardHandlerSelection(getSelection());
+    control->clipboardCutCopyEnabled(false);
 
     getCursor()->setMouseSelectionType(CURSOR_SELECTION_NONE);
     control->getToolHandler()->setSelectionEditTools(false, false, false, false);
@@ -665,9 +665,12 @@ void XournalView::deleteSelection(EditSelection* sel) {
 
 void XournalView::setSelection(EditSelection* selection) {
     clearSelection();
-    GTK_XOURNAL(this->widget)->selection = selection;
+    if (!selection) {
+        return;
+    }
 
-    control->setClipboardHandlerSelection(getSelection());
+    GTK_XOURNAL(this->widget)->selection = selection;
+    control->clipboardCutCopyEnabled(true);
 
     bool canChangeSize = false;
     bool canChangeColor = false;
