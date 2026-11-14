@@ -32,12 +32,11 @@
 #include "PageRef.h"     // for PageRef
 #include "filesystem.h"  // for path
 
-class DocumentHandler;
 class XojPdfBookmarkIterator;
 
 class Document {
 public:
-    Document(DocumentHandler* handler);
+    Document();
     virtual ~Document();
 
 public:
@@ -89,7 +88,7 @@ public:
     void setCreateBackupOnSave(bool backup);
     bool shouldCreateBackupOnSave() const;
 
-    void clearDocument(bool destroy = false);
+    void clearDocument();
 
     bool isAttachPdf() const;
 
@@ -116,8 +115,6 @@ private:
     static bool fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc);
 
 private:
-    DocumentHandler* handler = nullptr;
-
     XojPdfDocument pdfDocument;
 
     fs::path filepath;

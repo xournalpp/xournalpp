@@ -179,8 +179,7 @@ auto exportImg(fs::path infile, fs::path outfile, const char* range, const char*
  */
 auto saveDoc(fs::path infile, fs::path outfile) -> int {
     SaveHandler saver;
-    auto handler = std::make_unique<DocumentHandler>();
-    auto newDoc = std::make_unique<Document>(handler.get());
+    auto newDoc = std::make_unique<Document>();
     const bool res = newDoc->readPdf(infile, /*initPages=*/true, false);
     if (!res) {
         std::cerr << FS(_F("Error reading PDF: {1}") % newDoc->getLastErrorMsg()) << std::endl;

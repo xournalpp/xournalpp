@@ -164,7 +164,7 @@ void FileOpener::openXoppFile(fs::path filepath, int scrollToPage, bool isEmerge
 
 bool FileOpener::openPdfFile(fs::path filepath, bool attachToDocument, int scrollToPage) {
     this->ctrl->getCursor()->setCursorBusy(true);
-    auto doc = std::make_unique<Document>(nullptr);
+    auto doc = std::make_unique<Document>();
     bool success = doc->readPdf(filepath, /*initPages=*/true, attachToDocument);
     if (success) {
         this->doc = std::move(doc);
@@ -187,7 +187,7 @@ static void addDefaultPage(const PageTemplateSettings& model, Document* doc) {
 
 std::unique_ptr<Document> FileOpener::createNewDocument(Settings* settings, fs::path filepath,
                                                         const std::optional<PageTemplateSettings>& pageTemplate) {
-    auto newDoc = std::make_unique<Document>(nullptr);
+    auto newDoc = std::make_unique<Document>();
     if (!filepath.empty()) {
         newDoc->setFilepath(std::move(filepath));
     }

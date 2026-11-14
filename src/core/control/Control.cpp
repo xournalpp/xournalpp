@@ -151,7 +151,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
 
     this->scheduler = new XournalScheduler();
 
-    this->doc = new Document(this);
+    this->doc = new Document();
 
     // for crashhandling
     setEmergencyDocument(this->doc);
@@ -163,9 +163,6 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
     this->toolHandler->loadState();
     this->toolHandler->loadButtonSettings();
 
-    /**
-     * This is needed to update the previews
-     */
     this->changeTimout = g_timeout_add_seconds(5, xoj::util::wrap_v<checkChangedDocument>, this);
 
     this->pageBackgroundChangeController = std::make_unique<PageBackgroundChangeController>(this);
@@ -1533,8 +1530,10 @@ void Control::replaceDocument(std::unique_ptr<Document> doc, int scrollToPage) {
     fs::path filepath = doc->getFilepath();
 
     this->doc->lock();
-    *this->doc = *doc;  // This calls fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE). No need to fire it again
+    *this->doc = *doc;
     this->doc->unlock();
+
+    this->fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
 
     setEmergencyDocument(this->doc);
 
@@ -1984,8 +1983,10 @@ void Control::closeDocument() {
 
     this->doc->lock();
     // FIXME: there could potentially be a data race if a job requires the old document but runs after it is closed
-    this->doc->clearDocument(true);
+    this->doc->clearDocument();
     this->doc->unlock();
+
+    this->fireDocumentChanged(DOCUMENT_CHANGE_CLEARED);
 
     if (navHistory) {
         navHistory->reset();
