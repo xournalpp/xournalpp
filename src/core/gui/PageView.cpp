@@ -375,24 +375,21 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         } else if (h->getToolType() == TOOL_SELECT_PDF_TEXT_LINEAR || h->getToolType() == TOOL_SELECT_PDF_TEXT_RECT) {
             // so if we selected something && the pdf selection toolbox is hidden && we hit within the selection
             // we could call the pdf floating toolbox again
-            auto* pdfToolbox = control->getWindow()->getPdfToolbox();
 
-            if (pdfToolbox->hasSelection()) {
-                bool isPdfToolboxHidden = pdfToolbox->isHidden();
-                bool keepOldSelection = isPdfToolboxHidden && pdfToolbox->getSelection()->contains(x, y);
-                if (!keepOldSelection) {
-                    pdfToolbox->userCancelSelection();
-                    repaintPage();
-                } else {
+            if (this->pdfSelector) {
+                if (this->pdfSelector->isFinalized() && this->pdfSelector->contains(x, y)) {
                     showPdfToolbox(pos);
+                } else {
+                    hidePdfToolbox();
+                    this->pdfSelector.reset();
                 }
             }
 
-            if (this->page->getPdfPageNr() != npos && !pdfToolbox->hasSelection()) {
-                pdfToolbox->selectionStyle = PdfElemSelection::selectionStyleForToolType(h->getToolType());
-                auto sel = pdfToolbox->newSelection(x, y);
-                this->overlayViews.emplace_back(
-                        std::make_unique<xoj::view::PdfElementSelectionView>(sel, this, settings->getSelectionColor()));
+            if (this->page->getPdfPageNr() != npos && !this->pdfSelector) {
+                this->pdfSelector =
+                        std::make_unique<PdfElemSelection>(x, y, *h, this->page, this->getXournal()->getControl());
+                this->overlayViews.emplace_back(std::make_unique<xoj::view::PdfElementSelectionView>(
+                        this->pdfSelector.get(), this, settings->getSelectionColor()));
             }
         } else if (h->getToolType() == TOOL_SELECT_OBJECT) {
             SelectObject select(this);
@@ -498,10 +495,9 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
         this->startText(x, y);
         this->textEditor->selectAtCursor(TextEditor::SelectType::WORD);
     } else if (toolType == TOOL_SELECT_PDF_TEXT_LINEAR || toolType == TOOL_SELECT_PDF_TEXT_RECT) {
-        auto* pdfToolbox = this->xournal->getControl()->getWindow()->getPdfToolbox();
-        if (auto* selection = pdfToolbox->getSelection()) {
-            pdfToolbox->selectionStyle = XojPdfPageSelectionStyle::Word;
-            selection->currentPos(x, y, pdfToolbox->selectionStyle);
+        if (this->pdfSelector) {
+            this->pdfSelector->changeStyle(XojPdfPageSelectionStyle::Word);
+            this->pdfSelector->currentPos(x, y);
         }
     } else if (drawingType == DRAWING_TYPE_SPLINE) {
         if (this->inputHandler) {
@@ -533,10 +529,9 @@ auto XojPageView::onButtonTriplePressEvent(const PositionInputData& pos) -> bool
         this->startText(x, y);
         this->textEditor->selectAtCursor(TextEditor::SelectType::PARAGRAPH);
     } else if (toolType == TOOL_SELECT_PDF_TEXT_LINEAR || toolType == TOOL_SELECT_PDF_TEXT_RECT) {
-        auto* pdfToolbox = this->xournal->getControl()->getWindow()->getPdfToolbox();
-        if (auto* selection = pdfToolbox->getSelection()) {
-            pdfToolbox->selectionStyle = XojPdfPageSelectionStyle::Line;
-            selection->currentPos(x, y, pdfToolbox->selectionStyle);
+        if (this->pdfSelector) {
+            this->pdfSelector->changeStyle(XojPdfPageSelectionStyle::Line);
+            this->pdfSelector->currentPos(x, y);
         }
     }
     return true;
@@ -553,7 +548,6 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
     double y = pos.y / zoom;
 
     ToolHandler* h = xournal->getControl()->getToolHandler();
-    auto* pdfToolbox = this->xournal->getControl()->getWindow()->getPdfToolbox();
 
     if (this->inputHandler && this->inputHandler->onMotionNotifyEvent(pos, zoom)) {
         // input handler used this event
@@ -561,8 +555,8 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
         this->imageSizeSelection->updatePosition(x, y);
     } else if (this->selector) {
         this->selector->currentPos(x, y);
-    } else if (auto* selection = pdfToolbox->getSelection(); selection && !selection->isFinalized()) {
-        selection->currentPos(x, y, pdfToolbox->selectionStyle);
+    } else if (this->pdfSelector && !this->pdfSelector->isFinalized()) {
+        this->pdfSelector->currentPos(x, y);
     } else if (this->verticalSpace) {
         this->verticalSpace->currentPos(x, y);
     } else if (this->textEditor) {
@@ -648,12 +642,14 @@ void XojPageView::onTapEvent(const PositionInputData& pos) {
 }
 
 auto XojPageView::showPdfToolbox(const PositionInputData& pos) -> void {
+    xoj_assert(this->pdfSelector);
     // Convert to the widget-coordinate system
     auto p = xoj::util::Point{pos.x, pos.y} - this->xournal->getScrollHandling()->getPosition();
     auto q = xoj::util::Point{round_cast<int>(p.x), round_cast<int>(p.y)} + this->getPixelPosition();
 
-    this->getXournal()->getControl()->getWindow()->getPdfToolbox()->show(q.x, q.y);
+    this->getXournal()->getControl()->getWindow()->getPdfToolbox()->show(q.x, q.y, this->pdfSelector.get());
 }
+void XojPageView::hidePdfToolbox() const { this->getXournal()->getControl()->getWindow()->getPdfToolbox()->hide(); }
 
 void XojPageView::deleteView(xoj::view::OverlayView* view) {
     auto it = std::find_if(this->overlayViews.begin(), this->overlayViews.end(),
@@ -733,9 +729,8 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         this->verticalSpace.reset();
     }
 
-    auto* pdfToolbox = control->getWindow()->getPdfToolbox();
-    if (auto* selection = pdfToolbox->getSelection()) {
-        if (!selection->isFinalized() && selection->finalizeSelectionAndRepaint(pdfToolbox->selectionStyle)) {
+    if (this->pdfSelector) {
+        if (!this->pdfSelector->isFinalized() && this->pdfSelector->finalizeSelectionAndRepaint()) {
             // Selection was created, so reposition the toolbox and display.
             showPdfToolbox(pos);
         }
@@ -952,6 +947,8 @@ void XojPageView::setSelected(bool selected) {
         this->xournal->getRepaintHandler()->repaintPageBorder(this);
     } else {
         this->endSpline();
+        this->endText();
+        this->pdfSelector.reset();
     }
 }
 
@@ -967,6 +964,9 @@ auto XojPageView::copy() -> bool {
     if (this->textEditor) {
         this->textEditor->copyToClipboard();
         return true;
+    }
+    if (this->pdfSelector) {
+        return this->pdfSelector->copy();
     }
     return false;
 }

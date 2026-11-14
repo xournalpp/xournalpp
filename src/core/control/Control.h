@@ -305,6 +305,7 @@ public:
 
     Settings* getSettings() const;
     ToolHandler* getToolHandler() const;
+    ClipboardHandler& getClipboardHandler() const;
     ZoomControl* getZoomControl() const;
     Document* getDocument() const;
     UndoRedoHandler* getUndoRedoHandler() const;

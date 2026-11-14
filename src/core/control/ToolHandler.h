@@ -219,7 +219,7 @@ public:
     int getHighlighterFill() const;
 
     void setSelectPDFTextMarkerOpacity(int alpha);
-    int getSelectPDFTextMarkerOpacity() const;
+    uint8_t getSelectPDFTextMarkerOpacity() const;
 
     TextAlignment getTextAlignment() const;
     void setTextAlignment(TextAlignment a);

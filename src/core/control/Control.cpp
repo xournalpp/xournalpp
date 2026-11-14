@@ -2587,7 +2587,7 @@ void Control::deleteSelection() {
 void Control::clearSelection() {
     if (this->win) {
         this->win->getXournal()->clearSelection();
-        this->win->getPdfToolbox()->userCancelSelection();
+        this->win->getPdfToolbox()->hide();
     }
 }
 
@@ -2724,6 +2724,8 @@ auto Control::getLayerController() const -> LayerController* { return this->laye
 auto Control::getPluginController() const -> PluginController* { return this->pluginController; }
 
 auto Control::getPalette() const -> const Palette& { return *(this->palette); }
+
+auto Control::getClipboardHandler() const -> ClipboardHandler& { return *clipboardHandler; }
 
 auto Control::loadPaletteFromSettings() -> void {
     const auto palettePath = this->settings->getColorPaletteSetting();
