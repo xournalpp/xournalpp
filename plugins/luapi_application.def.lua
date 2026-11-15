@@ -386,6 +386,64 @@ function app.addStrokes(opts) end
 --- }
 function app.addTexts(opts) end
 
+--- Asynchronously adds rendered LaTeX elements as specified to the current layer.
+--- 
+--- Global parameters:
+---   - texItems table: array of TeX-parameter-tables
+---   - cb function: Callback function run after a TexImage has been added
+---   - allowUndoRedoAction string: Decides how the change gets introduced into the undoRedo action list "individual",
+--- "grouped" or "none"
+--- 
+--- @param opts {texItems:{formula:string, color:integer, x:number, y:number, width:number|nil, height:number|nil}[],
+--- cb:function, allowUndoRedoAction:string}
+--- 
+--- Parameters per texImage:
+---   - formula string: the tex formula (required)
+---   - color integer: RGB hex code for the text-color (default: color of latex tool)
+---   - x number: x-position of the box (upper left corner) (required)
+---   - y number: y-position of the box (upper left corner) (required)
+---   - width number: the width (default: auto)
+---   - height number: the height (default: auto)
+--- 
+--- cb: callback function({userdata|string}[]) to call when all TexImages have been added
+---     The argument passed to the callback function is an array of the same size (and order)
+---     as texItems, consisting of references to the TexImages and error messages/Tex generator outputs
+--- 
+--- Example:
+--- 
+---   local texItems = {
+---       {
+---        formula = [[\int_a^b f(x)\ dx]],
+---        x=100,
+---        y=50,
+---        color=0x990000
+---       },
+---       {
+---        formula = [[\mathrm{e}^{i\pi} + 1 = 0]],
+---        x=100,
+---        y=100,
+---        color=0x006600,
+---        height=50,
+---       },
+---   }
+--- 
+---   app.addTexImages{
+---       texItems=texItems,
+---       cb=function(tbl)
+---              for no, ref_or_msg in ipairs(tbl) do
+---                  if type(ref_or_msg) == "userdata" then
+---                      print("Added TexImage: ", no)
+---                      print("Address: ", ref_or_msg)
+---                  else
+---                      print("An error occured with item: ", no)
+---                      print("TeX generator output: ", ref_or_msg)
+---                  end
+---              end
+---              app.refreshPage()
+---          end
+---   }
+function app.addTexImages(opts) end
+
 --- Returns a list of lua table of the texts (from current selection / current layer / current page / all pages).
 --- When called with "page" to retrieve all elements on the current page, it also adds a field "layer" for the
 --- layer containing the element, and when called with "all" it additionally adds a field "page" containing its page
