@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-03 09:45+0000\n"
-"PO-Revision-Date: 2026-11-08 04:21\n"
+"POT-Creation-Date: 2026-11-14 13:20+0000\n"
+"PO-Revision-Date: 2026-11-15 04:21\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -35,49 +35,49 @@ msgstr "لا يمكن إزالة ملف الحفظ التلقائي القديم
 msgid "Initialization of audio devices failed. You can disable audio support in Settings->Audio"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:601
+#: ../src/core/control/Control.cpp:592
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "قمت بحذف شريط الأدوات النشط. سنعود إلى شريط الأدوات الافتراضي."
 
-#: ../src/core/control/Control.cpp:621
+#: ../src/core/control/Control.cpp:612
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "مجموعة أشرطة الأدوات «{1}» هي مسبقة التعريف، هل تحب إنشاء نسخة للتعديل؟"
 
-#: ../src/core/control/Control.cpp:624 ../src/core/control/Control.cpp:1676
+#: ../src/core/control/Control.cpp:615 ../src/core/control/Control.cpp:1677
 msgid "Yes"
 msgstr "نعم"
 
-#: ../src/core/control/Control.cpp:624 ../src/core/control/Control.cpp:1676
+#: ../src/core/control/Control.cpp:615 ../src/core/control/Control.cpp:1677
 msgid "No"
 msgstr "لا"
 
-#: ../src/core/control/Control.cpp:852 ../src/core/control/Control.cpp:1910
-#: ../src/core/control/Control.cpp:2238
+#: ../src/core/control/Control.cpp:851 ../src/core/control/Control.cpp:1911
+#: ../src/core/control/Control.cpp:2281
 msgid "Cancel"
 msgstr "إلغاء الأمر"
 
-#: ../src/core/control/Control.cpp:853
+#: ../src/core/control/Control.cpp:852
 msgid "Insert after current page"
 msgstr "إدراج بعد الصفحة الحالية"
 
-#: ../src/core/control/Control.cpp:854
+#: ../src/core/control/Control.cpp:853
 msgid "Insert at end"
 msgstr "إدراج في النهاية"
 
-#: ../src/core/control/Control.cpp:857
+#: ../src/core/control/Control.cpp:856
 msgid "_Journal"
 msgstr "_جورنال"
 
-#: ../src/core/control/Control.cpp:857
+#: ../src/core/control/Control.cpp:856
 msgid "Paper B_ackground"
 msgstr "_خلفية الورق"
 
-#: ../src/core/control/Control.cpp:858
+#: ../src/core/control/Control.cpp:857
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:43
 msgid "With PDF background"
 msgstr "بخلفية PDF"
 
-#: ../src/core/control/Control.cpp:861
+#: ../src/core/control/Control.cpp:860
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
@@ -85,15 +85,15 @@ msgstr "المستند الحالي لا يحتوي على صفحة PDF رقم {
 "هل تحب إدراج هذه الصفحة؟\n\n"
 "نصيحة: يمكنك اختيار {2} لإضافة صفحة PDF."
 
-#: ../src/core/control/Control.cpp:904
+#: ../src/core/control/Control.cpp:903
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "لا توجد صفحات PDF متاحة لإضافتها. قد تحتاج إلى إعادة فتح المسند أولا."
 
-#: ../src/core/control/Control.cpp:918
+#: ../src/core/control/Control.cpp:917
 msgid "Unable to retrieve pdf page."
 msgstr "تعذر الحصول على صفحة الـPDF."
 
-#: ../src/core/control/Control.cpp:1532
+#: ../src/core/control/Control.cpp:1533
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -101,129 +101,130 @@ msgstr "لا تفتح الملفات المحفوظة تلقائيا؛ قد يت
 "انسخ الملفات إلى مجلد آخر.\n"
 "لا يمكن فتح ملفات من المجلد «{1}»."
 
-#: ../src/core/control/Control.cpp:1552
+#: ../src/core/control/Control.cpp:1553
 msgid "file: {1}"
 msgstr "ملف: {1}"
 
-#: ../src/core/control/Control.cpp:1595
+#: ../src/core/control/Control.cpp:1596
 msgid "<i>Above error repeated {1} times</i>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1607
+#: ../src/core/control/Control.cpp:1608
 msgid "<i>&lt;{1} more lines of error messages&gt;</i>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1646
+#: ../src/core/control/Control.cpp:1647
 msgid "Error opening file \"{1}\".\n\n"
 "<tt>{2}</tt>\n"
 "<b>{3}</b>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1660
+#: ../src/core/control/Control.cpp:1661
 msgid "There were some errors while loading the file. Some information might have been lost. Do not overwrite your old file unless you are sure everything you need was loaded correctly.\n\n"
 "Error messages:\n"
 "<tt>{1}</tt>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1678
+#: ../src/core/control/Control.cpp:1679
 msgid "File version mismatch"
 msgstr "إصدار الملف مخالف"
 
-#: ../src/core/control/Control.cpp:1679
+#: ../src/core/control/Control.cpp:1680
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "الملف الذي يتم تحميله يستخدم نسخة صيغة ملفات أحدث من التي يدعمها هذا الإصدار من Xournal++‎، لذلك قد لا يتم تحميله بشكل صحيح. فتح على أيّة حال؟"
 
-#: ../src/core/control/Control.cpp:1702
+#: ../src/core/control/Control.cpp:1703
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr "خطأ في قراءة ملف الـPDF المسمى «{1}»\n"
 "{2}"
 
-#: ../src/core/control/Control.cpp:1723
+#: ../src/core/control/Control.cpp:1724
 msgid "Error reading PNG file \"{1}\""
 msgstr "خطأ بقراءة ملف PNG {1}"
 
-#: ../src/core/control/Control.cpp:1758
+#: ../src/core/control/Control.cpp:1759
 msgid "Error reading template file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1777
+#: ../src/core/control/Control.cpp:1778
 msgid "Failed to determine if path exists \"{1}\": {2}"
 msgstr "أخفق في تحديد وجود المكان {2}:\"{1}\""
 
-#: ../src/core/control/Control.cpp:1778
+#: ../src/core/control/Control.cpp:1779
 msgid "That file does not exist:\n"
 "\"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1890
+#: ../src/core/control/Control.cpp:1891
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "تعذر العثور على ملف الخلفية المرفق. ربما تم نقله أو إعادة تسميته أو حذفه."
 
-#: ../src/core/control/Control.cpp:1893
+#: ../src/core/control/Control.cpp:1894
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "تعذر العثور على ملف الخلفية \"{1}\". ربما تم نقله أو إعادة تسميته أو حذفه.\n"
 "آخر مرة شوهد في: \"{2}\""
 
-#: ../src/core/control/Control.cpp:1903
+#: ../src/core/control/Control.cpp:1904
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "ملف الاستبدال المقترح: \"{1}\""
 
-#: ../src/core/control/Control.cpp:1908
+#: ../src/core/control/Control.cpp:1909
 msgid "Select another PDF"
 msgstr "اختيار ملف PDF آخر"
 
-#: ../src/core/control/Control.cpp:1909
+#: ../src/core/control/Control.cpp:1910
 msgid "Remove PDF Background"
 msgstr "إزالة خلفية PDF"
 
-#: ../src/core/control/Control.cpp:1913
+#: ../src/core/control/Control.cpp:1914
 msgid "Use proposed PDF"
 msgstr "استخدم ملف PDF المقترح"
 
-#: ../src/core/control/Control.cpp:1916
+#: ../src/core/control/Control.cpp:1917
 msgid "Missing PDF background file"
 msgstr "ملف خلفية PDF مفقود"
 
-#: ../src/core/control/Control.cpp:2045
+#: ../src/core/control/Control.cpp:2046
 msgid "Select font"
 msgstr "اختيار الخط"
 
-#: ../src/core/control/Control.cpp:2064
+#: ../src/core/control/Control.cpp:2065
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "تحديد لون"
 
-#: ../src/core/control/Control.cpp:2089
+#: ../src/core/control/Control.cpp:2090
 msgid "Unsaved Document"
 msgstr "مستند غير محفوظ"
 
-#: ../src/core/control/Control.cpp:2231
+#: ../src/core/control/Control.cpp:2274
 msgid "Document file was removed."
 msgstr "تمت إزالة المستند."
 
-#: ../src/core/control/Control.cpp:2231
+#: ../src/core/control/Control.cpp:2274
 msgid "This document is not saved yet."
 msgstr "لم يتم حفظ هذا المستند بعد."
 
-#: ../src/core/control/Control.cpp:2233
+#: ../src/core/control/Control.cpp:2276
 msgid "Save As..."
 msgstr "حفظ كـ..."
 
-#: ../src/core/control/Control.cpp:2233 ../src/core/control/jobs/SaveJob.cpp:25
-#: ../src/core/gui/dialog/XojSaveDlg.cpp:85
+#: ../src/core/control/Control.cpp:2276 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:136
+#: ../src/core/gui/dialog/XojSaveDlg.cpp:73
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
 msgid "Save"
 msgstr "حفظ"
 
-#: ../src/core/control/Control.cpp:2236
+#: ../src/core/control/Control.cpp:2279
 msgid "Discard"
 msgstr "إغلاق بغير حفظ"
 
-#: ../src/core/control/Control.cpp:2325
+#: ../src/core/control/Control.cpp:2357
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -263,20 +264,20 @@ msgstr "تراك بوينت"
 msgid "tablet pad"
 msgstr "حاسوب لوحي"
 
-#: ../src/core/control/ExportHelper.cpp:63
+#: ../src/core/control/ExportHelper.cpp:64
 msgid "Image file successfully created"
 msgstr "تم إنشاء ملف الصورة بنجاح"
 
-#: ../src/core/control/ExportHelper.cpp:76
-#: ../src/core/control/jobs/BaseExportJob.cpp:40
+#: ../src/core/control/ExportHelper.cpp:77
+#: ../src/core/control/jobs/BaseExportJob.cpp:25
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "لا تستبدل خلفية الـPDF؛ سيتسبب هذا في أخطاء!"
 
-#: ../src/core/control/ExportHelper.cpp:80
+#: ../src/core/control/ExportHelper.cpp:81
 msgid "The check for overwriting the background failed with: {1}"
 msgstr ""
 
-#: ../src/core/control/ExportHelper.cpp:100
+#: ../src/core/control/ExportHelper.cpp:101
 msgid "PDF file successfully created"
 msgstr "تم إنشاء ملف الـPDF بنجاح"
 
@@ -512,51 +513,22 @@ msgstr "حفظ تلقائي إلى {1}"
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "تعذرت إعادة تسمية الملف المحفوظ تلقائيًّا من \"{1}\" إلى \"{2}\": {3}"
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:46
+#: ../src/core/control/jobs/BaseExportJob.cpp:31
 msgid "The check for overwriting the background failed with:\n"
 msgstr "فشل فحص استبدال الخلفية بالخطأ:\n"
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:78
-msgid "Export File"
-msgstr "تصدير ملف"
-
-#: ../src/core/control/jobs/BaseExportJob.cpp:78
-#: ../src/core/gui/dialog/DeviceTestingArea.cpp:181
-msgid "Export"
-msgstr "تصدير"
-
-#: ../src/core/control/jobs/BaseExportJob.cpp:94
+#: ../src/core/control/jobs/BaseExportJob.cpp:44
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
 msgstr "تعذر إيجاد المسار بالخطأ التالي:\n"
 "{1}"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:27
+#: ../src/core/control/jobs/CustomExportJob.cpp:21
 msgid "Custom Export"
 msgstr "تصدير مخصص"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:29
-#: ../src/core/control/jobs/PdfExportJob.cpp:20
-#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:31
-msgid "PDF files"
-msgstr "ملفات PDF"
-
-#: ../src/core/control/jobs/CustomExportJob.cpp:30
-#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:36
-msgid "PNG graphics"
-msgstr "رسومات PNG"
-
-#: ../src/core/control/jobs/CustomExportJob.cpp:31
-#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:35
-msgid "SVG graphics"
-msgstr "رسومات SVG"
-
-#: ../src/core/control/jobs/CustomExportJob.cpp:32
-msgid "Xournal (Compatibility)"
-msgstr "Xournal (للتوافق)"
-
-#: ../src/core/control/jobs/CustomExportJob.cpp:132
-#: ../src/core/control/jobs/SaveJob.cpp:139
+#: ../src/core/control/jobs/CustomExportJob.cpp:52
+#: ../src/core/control/jobs/SaveJob.cpp:138
 msgid "Save file error: {1}"
 msgstr "خطأ في حفظ الملف: {1}"
 
@@ -564,15 +536,15 @@ msgstr "خطأ في حفظ الملف: {1}"
 msgid "Unsupported graphics format: "
 msgstr "صيغة رسوميات غير مدعومة: "
 
-#: ../src/core/control/jobs/ImageExport.cpp:169
+#: ../src/core/control/jobs/ImageExport.cpp:168
 msgid "Error save image #1"
 msgstr "خطأ في حفظ الصورة رقم ١"
 
-#: ../src/core/control/jobs/ImageExport.cpp:178
+#: ../src/core/control/jobs/ImageExport.cpp:177
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
 msgstr "حدث خطأ أثناء تصدير خلفية PDF: تعذر إيجاد صفحة PDF التي رقمها "
 
-#: ../src/core/control/jobs/ImageExport.cpp:202
+#: ../src/core/control/jobs/ImageExport.cpp:201
 msgid "Error save image #2"
 msgstr "خطأ في حفظ الصورة رقم ٢"
 
@@ -580,7 +552,7 @@ msgstr "خطأ في حفظ الصورة رقم ٢"
 msgid "PDF Export"
 msgstr "تصدير PDF"
 
-#: ../src/core/control/jobs/SaveJob.cpp:123
+#: ../src/core/control/jobs/SaveJob.cpp:122
 msgid "Save file error, can't backup: {1}"
 msgstr "خطأ في حفظ الملف، لا يمكن عمل نسخة احتياطية: {1}"
 
@@ -653,27 +625,27 @@ msgstr "رسم بياني أيزومتري"
 msgid "Image"
 msgstr "صورة"
 
-#: ../src/core/control/settings/Settings.cpp:159
+#: ../src/core/control/settings/Settings.cpp:165
 msgid "%F-Note-%H-%M"
 msgstr "%F-ملاحظة-%H-%M"
 
-#: ../src/core/control/settings/Settings.cpp:160
+#: ../src/core/control/settings/Settings.cpp:166
 msgid "%{name}_annotated"
 msgstr "%{name}_مشروح"
 
-#: ../src/core/control/tools/EditSelection.cpp:446
+#: ../src/core/control/tools/EditSelection.cpp:445
 msgid "Arrange"
 msgstr "ترتيب"
 
-#: ../src/core/control/tools/EditSelection.cpp:461
+#: ../src/core/control/tools/EditSelection.cpp:460
 msgid "Bring forward"
 msgstr "خطوة إلى الأمام"
 
-#: ../src/core/control/tools/EditSelection.cpp:472
+#: ../src/core/control/tools/EditSelection.cpp:471
 msgid "Send backward"
 msgstr "خطوة إلى الخلف"
 
-#: ../src/core/control/tools/EditSelection.cpp:479
+#: ../src/core/control/tools/EditSelection.cpp:478
 msgid "Send to back"
 msgstr "إرسال إلى المؤخرة"
 
@@ -1065,9 +1037,14 @@ msgstr "متعرف الأشكال"
 msgid "Draw Spline"
 msgstr "رسم خط مُنحنِي"
 
-#: ../src/core/gui/dialog/DeviceTestingArea.cpp:181
+#: ../src/core/gui/dialog/DeviceTestingArea.cpp:175
 msgid "Export Logs"
 msgstr ""
+
+#: ../src/core/gui/dialog/DeviceTestingArea.cpp:175
+#: ../src/core/gui/dialog/XojSaveDlg.cpp:81
+msgid "Export"
+msgstr "تصدير"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:115
 msgid "Failed to parse external editor command: {1}"
@@ -1085,34 +1062,25 @@ msgstr ""
 msgid "Editor exited with bad status {1}"
 msgstr ""
 
-#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:15
+#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:8
 msgid "All files"
 msgstr "كل الملفات"
 
-#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:22
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:203
+#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:15
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:200
 msgid "Supported files"
 msgstr "الملفات المدعومة"
 
-#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:32
-msgid "Xournal files"
-msgstr "ملفات Xournal"
-
-#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:33
-msgid "Xournal++ files"
-msgstr "ملفات Xournal++‎"
-
-#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:121
-msgid "Xournal++ template"
-msgstr "قالب Xournal++‎"
-
-#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:40
+#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:44
 msgid "Image files"
 msgstr "ملفات الصور"
 
+#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:51
+msgid "Latex files"
+msgstr ""
+
 #: ../src/core/gui/dialog/FormatDialog.cpp:50
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:92
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:94
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:163
 msgid "Custom"
 msgstr "مخصص"
@@ -1125,44 +1093,34 @@ msgstr "لغة النظام"
 msgid "Previously selected language not available anymore!"
 msgstr "اللغة المختارة سابقا لم تعد متاحة!"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:56
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "LaTeX editor theme:"
 msgstr "سمة محرر LaTeX:"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:66
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:75
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "تم تعطيل GtkSourceView عندما تم بناء Xournal++‎؛ لن تتوفر بعض الخيارات."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:158
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "تعذر فتح ملف القالب العام في {1}. هل هو موجود؟"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:169
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:175
 msgid "Sample LaTeX file generated successfully."
 msgstr "تم توليد ملف عينة LaTeX بنجاح."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:171
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:177
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "خطأ: {1}. برجاء التحقق من محتويات {2}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:182
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:188
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "خطأ: {1} ليس ملفا عاديا. الرجاء مراجعة إعدادات ملف قالب LaTeX. "
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
-#: ../src/core/gui/dialog/XojSaveDlg.cpp:84
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:135
+#: ../src/core/gui/dialog/XojSaveDlg.cpp:72
 msgid "Save File"
 msgstr "حفظ الملف"
-
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:80
-#: ../src/core/gui/dialog/XojSaveDlg.cpp:19
-msgid "_Cancel"
-msgstr "إل_غاء"
-
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:118
-msgid "_Save"
-msgstr "_حفظ"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:28
 msgid "default enabled"
@@ -1207,13 +1165,21 @@ msgid "<b>{1}</b>\n"
 msgstr "<b>{1}</b>\n"
 "{2}{3}"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:277
+#: ../src/core/gui/dialog/SettingsDialog.cpp:204
+msgid "Select folder for audio recordings"
+msgstr ""
+
+#: ../src/core/gui/dialog/SettingsDialog.cpp:290
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "قم بتفعيل الإحساس بالضغط أو استنتاج الضغط لتغيير هذا الإعداد!"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:281
+#: ../src/core/gui/dialog/SettingsDialog.cpp:294
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "ترشيح ضغط الإدخال. اضرب الضغط في قيمة «مضاعف الضغط». وإذا كان أقل من الحد الأدنى، استخدم «الحد الأدنى للضغط»."
+
+#: ../src/core/gui/dialog/SettingsDialog.cpp:1125
+msgid "Folder not set - Select a folder to enable recording"
+msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:31
 msgid "Built-in palettes"
@@ -1260,31 +1226,48 @@ msgstr "أشرطة الأدوات"
 msgid "New"
 msgstr "جديد"
 
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:49
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:65
 msgid "Attach file to the journal"
 msgstr "أرفق ملف إلى الجريدة"
 
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:81
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:82
 msgid "_Open"
 msgstr "_فتح"
 
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:123
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:82
+msgid "Select folder"
+msgstr ""
+
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:82
+#: ../src/core/gui/dialog/XojSaveDlg.cpp:20
+msgid "_Cancel"
+msgstr "إل_غاء"
+
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:118
 msgid "Open template file"
 msgstr "فتح ملف قالب"
 
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:136
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:197
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:131
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:194
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:281
 msgid "Open file"
 msgstr "فتح ملف"
 
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:155
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:150
 msgid "Annotate Pdf file"
 msgstr "تعليق على ملف PDF"
 
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:173
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:168
 msgid "Choose image file"
 msgstr "تحديد ملف صورة"
+
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:212
+msgid "Choose Latex template file"
+msgstr ""
+
+#: ../src/core/gui/dialog/XojSaveDlg.cpp:80
+msgid "Export File"
+msgstr "تصدير ملف"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:30
 msgid "Select Image"
@@ -2288,12 +2271,12 @@ msgid "Close"
 msgstr "إغلاق"
 
 #: ../ui/backgroundSelection.glade:49 ../ui/deviceList.glade:94
-#: ../ui/exportSettings.glade:457 ../ui/extEdTexDialog.glade:168
+#: ../ui/exportSettings.glade:492 ../ui/extEdTexDialog.glade:168
 #: ../ui/goto.glade:108 ../ui/intEdTexDialog.glade:203
 #: ../ui/linkDialog.glade:275 ../ui/pageFormat.glade:346
 #: ../ui/pageTemplate.glade:278 ../ui/plugin.glade:114
 #: ../ui/renameLayerDialog.glade:71 ../ui/selectOpacity.glade:134
-#: ../ui/settings.glade:6645
+#: ../ui/settings.glade:6643
 msgid "Ok"
 msgstr "موافق"
 
@@ -2512,6 +2495,10 @@ msgstr "لو مفعلة، طبقات كل صفحة ستُضاف طبقة طبق�
 msgid "Backend"
 msgstr ""
 
+#: ../ui/exportSettings.glade:426
+msgid "Export format"
+msgstr ""
+
 #: ../ui/extEdTexDialog.glade:23 ../ui/intEdTexDialog.glade:18
 msgid "Insert Latex"
 msgstr "إدراج LaTeX"
@@ -2544,135 +2531,131 @@ msgstr "مصدر TeX"
 msgid "Command Output"
 msgstr "ناتج الأمر"
 
-#: ../ui/latexSettings.glade:36
+#: ../ui/latexSettings.glade:30
 msgid "Always check LaTeX dependencies before running"
 msgstr "تحقق دائمًا من اعتماديات LaTeX قبل التشغيل"
 
-#: ../ui/latexSettings.glade:40
+#: ../ui/latexSettings.glade:34
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
 msgstr "في حالة التفعيل، تأكد من أن حزم LaTeX المطلوبة مثبتة وأن أوامر LaTeX متاحة قبل تشغيل أداة LaTeX."
 
-#: ../ui/latexSettings.glade:48
+#: ../ui/latexSettings.glade:42
 msgid "General LaTeX tool settings"
 msgstr "إعدادات أداة LaTeX العامة"
 
-#: ../ui/latexSettings.glade:76
+#: ../ui/latexSettings.glade:70
 msgid "Default LaTeX Text"
 msgstr "نص LaTeX المبدئي"
 
-#: ../ui/latexSettings.glade:105
+#: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
 msgstr "ملف الـLaTeX لاستخدامه كقالب لأداة LaTeX."
 
-#: ../ui/latexSettings.glade:107
+#: ../ui/latexSettings.glade:101
 msgid "Global template file path"
 msgstr "مسار ملف القالب العام"
 
-#: ../ui/latexSettings.glade:119
+#: ../ui/latexSettings.glade:113
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
 msgstr "سيتم استبدال النصوص التالية في ملف القالب العام عند تشغيل أداة LaTeX:"
 
-#: ../ui/latexSettings.glade:133
+#: ../ui/latexSettings.glade:127
 msgid "%%XPP_TOOL_INPUT%%"
 msgstr "%%XPP_TOOL_INPUT%%"
 
-#: ../ui/latexSettings.glade:145
+#: ../ui/latexSettings.glade:139
 msgid "The math mode formula typed in the LaTeX tool."
 msgstr "الصيغة الرياضية المدخلة في أداة LaTeX."
 
-#: ../ui/latexSettings.glade:158
-msgid "Choose a global LaTeX template file"
-msgstr "اختر ملف قالب LaTeX العام"
-
-#: ../ui/latexSettings.glade:170
+#: ../ui/latexSettings.glade:162
 msgid "%%XPP_TEXT_COLOR%%"
 msgstr "%%XPP_TEXT_COLOR%%"
 
-#: ../ui/latexSettings.glade:182
+#: ../ui/latexSettings.glade:174
 msgid "The current color of the Text Tool, in hex RGB format."
 msgstr "اللون الحالي لأداة النص, بصيغة RGB الستعشرية."
 
-#: ../ui/latexSettings.glade:194
+#: ../ui/latexSettings.glade:186
 msgid "%%XPP_VARNAME%%"
 msgstr ""
 
-#: ../ui/latexSettings.glade:206
+#: ../ui/latexSettings.glade:198
 msgid "Any custom variable defined with a %xpp:varname=value directive in the formula input."
 msgstr ""
 
-#: ../ui/latexSettings.glade:219
+#: ../ui/latexSettings.glade:211
 msgid "Template file settings"
 msgstr "إعدادات ملف القالب"
 
-#: ../ui/latexSettings.glade:248
+#: ../ui/latexSettings.glade:240
 msgid "LaTeX generation command"
 msgstr "أمر توليد LaTeX"
 
-#: ../ui/latexSettings.glade:269
+#: ../ui/latexSettings.glade:261
 msgid "Test configuration"
 msgstr "اختبار الإعدادات"
 
-#: ../ui/latexSettings.glade:273
+#: ../ui/latexSettings.glade:265
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr "اختبار إذا كانت الإعدادات الحالية صالحة، بتشغيل أمر توليد LaTeX على ملف القالب العام مع صيغة اختبارية."
 
-#: ../ui/latexSettings.glade:289
+#: ../ui/latexSettings.glade:281
 msgid "LaTeX executable settings"
 msgstr "إعدادات تطبيق LaTeX"
 
-#: ../ui/latexSettings.glade:364
+#: ../ui/latexSettings.glade:356
 msgid "Line numbers"
 msgstr "ترقيم السطور"
 
-#: ../ui/latexSettings.glade:378
+#: ../ui/latexSettings.glade:370
 msgid "Auto-indent"
 msgstr "مسافة بادئة تلقائية"
 
-#: ../ui/latexSettings.glade:392
+#: ../ui/latexSettings.glade:384
 msgid "Syntax highlighting"
 msgstr "تلوين الأكواد"
 
-#: ../ui/latexSettings.glade:424
+#: ../ui/latexSettings.glade:416
 msgid "Wrap text"
 msgstr "التفاف النص"
 
-#: ../ui/latexSettings.glade:458
+#: ../ui/latexSettings.glade:450
 msgid "Use font from system theme."
 msgstr "استخدام خط سمة النظام."
 
-#: ../ui/latexSettings.glade:478
+#: ../ui/latexSettings.glade:470
 msgid "Font: "
 msgstr "الخط: "
 
-#: ../ui/latexSettings.glade:493
+#: ../ui/latexSettings.glade:485
 msgid "Pick the Editor's Font"
 msgstr "اختر خط المحرر"
 
-#: ../ui/latexSettings.glade:540
+#: ../ui/latexSettings.glade:532
 msgid "You can optionally use an external editor program instead of the built-in editor. If you enable the option below, the provided editor command (defaulting to $EDITOR) will start with a popup that only shows a preview and potential error message instead of the normal one with a built-in editor. The environment variable XPP_TEXT_COLOR is set to the current Text Tool color in hex RGB format."
 msgstr ""
 
-#: ../ui/latexSettings.glade:556
+#: ../ui/latexSettings.glade:548
 msgid "Use external Editor"
 msgstr ""
 
-#: ../ui/latexSettings.glade:573
+#: ../ui/latexSettings.glade:565
 msgid "Editor command"
 msgstr ""
 
-#: ../ui/latexSettings.glade:598
+#: ../ui/latexSettings.glade:590
 msgid "Extension of temporary file"
 msgstr ""
 
-#: ../ui/latexSettings.glade:619
+#: ../ui/latexSettings.glade:611
 msgid "Automatically confirm on editor exit"
 msgstr ""
 
-#: ../ui/latexSettings.glade:649
+#: ../ui/latexSettings.glade:641
 msgid "External Editor (Expert user only)"
 msgstr ""
 
-#: ../ui/latexSettings.glade:665
+#: ../ui/latexSettings.glade:657
 msgid "Editor settings"
 msgstr "إعدادات المحرر"
 
@@ -3987,77 +3970,73 @@ msgstr "تفعيل أو تعطيل الصوت"
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr "<i>التسجيلات الصوتية تُخزّن حاليا في مجلد منفصل ويُشار إليها في الجورنال.</i>"
 
-#: ../ui/settings.glade:6101 ../ui/settings.glade:6137
+#: ../ui/settings.glade:6101 ../ui/settings.glade:6135
 msgid "Storage Folder"
 msgstr "مجلد التخزين"
 
-#: ../ui/settings.glade:6116
-msgid "Select Folder"
-msgstr "تحديد المجلد"
-
-#: ../ui/settings.glade:6164
+#: ../ui/settings.glade:6162
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr "<i>حدد أجهزة الصوت لاستخدامها لتسجيل وتشغيل المرفقات الصوتية.\n"
 "اختر <small><tt>pulse</tt></small> كجهاز إدخال وإخراج إذا كان متاحا.</i>"
 
-#: ../ui/settings.glade:6188
+#: ../ui/settings.glade:6186
 msgid "Input Device"
 msgstr "جهاز الإدخال"
 
-#: ../ui/settings.glade:6210
+#: ../ui/settings.glade:6208
 msgid "Output Device"
 msgstr "جهاز الإخراج"
 
-#: ../ui/settings.glade:6241
+#: ../ui/settings.glade:6239
 msgid "Audio Devices"
 msgstr "أجهزة الصوت"
 
-#: ../ui/settings.glade:6270
+#: ../ui/settings.glade:6268
 msgid "Sample Rate"
 msgstr "معدل العينات"
 
-#: ../ui/settings.glade:6281
+#: ../ui/settings.glade:6279
 msgid "Gain"
 msgstr "التضخيم"
 
-#: ../ui/settings.glade:6328
+#: ../ui/settings.glade:6326
 msgid "Recording Quality"
 msgstr "جودة التسجيل"
 
-#: ../ui/settings.glade:6354
+#: ../ui/settings.glade:6352
 msgid "Default Seek Time (in seconds)"
 msgstr "الزمن المبدئي للتحريك (بالثواني)"
 
-#: ../ui/settings.glade:6367
+#: ../ui/settings.glade:6365
 msgid "1,00"
 msgstr "1,00"
 
-#: ../ui/settings.glade:6386
+#: ../ui/settings.glade:6384
 msgid "Playback Settings"
 msgstr "إعدادات التشغيل"
 
-#: ../ui/settings.glade:6400
+#: ../ui/settings.glade:6398
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr "<i>التغييرات ستؤثر فقط على التسجيلات والتشغيلات الجديدة.</i>"
 
-#: ../ui/settings.glade:6431
+#: ../ui/settings.glade:6429
 msgid "Audio Recording"
 msgstr "تسجيل الصوتيات"
 
-#: ../ui/settings.glade:6504
+#: ../ui/settings.glade:6502
 msgid "<i>Select language (requires restart)</i>"
 msgstr "<i>تحديد اللغة (يحتاج إعادة التشغيل)</i>"
 
-#: ../ui/settings.glade:6536 ../ui/settings.glade:6582
+#: ../ui/settings.glade:6534 ../ui/settings.glade:6580
 msgid "Language"
 msgstr "اللغة"
 
-#: ../ui/settings.glade:6552
+#: ../ui/settings.glade:6550
 msgid "Language Settings"
 msgstr "إعدادات اللغة"
 
-#: ../ui/settings.glade:6606
+#: ../ui/settings.glade:6604
 msgid "Palette"
 msgstr ""
 
