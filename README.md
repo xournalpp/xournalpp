@@ -42,6 +42,8 @@ Xournal++ features:
 - Sidebar containing page previews with advanced page sorting, PDF bookmarks and layers (can be individually hidden/edited)
 - Allows mapping different tools/colors etc. to stylus/mouse buttons
 - Customizable toolbar with multiple configurations, e.g. to optimize toolbar for portrait/landscape
+- Modernized UI with smooth rounded controls, soft shadows, and clean dark/light themes
+- Dark mode toggle button on the toolbar with dynamic UI and workspace styling, plus automatic system theme detection
 - Custom color palette support using the .gpl format
 - Page template definitions
 - Bug reporting, auto-save, and auto backup tools

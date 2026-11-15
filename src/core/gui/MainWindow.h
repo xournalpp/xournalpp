@@ -81,6 +81,11 @@ public:
 
     bool isDarkTheme() const;
 
+    /**
+     * Toggles dark mode and synchronizes both UI and workspace background
+     */
+    void setDarkMode(bool dark);
+
     XournalView* getXournal() const;
 
     void setMenubarVisible(bool visible);
@@ -180,6 +185,8 @@ private:
     ToolbarWidgetArray toolbarWidgets;
 
     bool sidebarVisible = true;
+
+    xoj::util::GObjectSPtr<GtkCssProvider> darkModeCssProvider;
 
     /// The last monitor the window has been moved to -- used for setting dpi
     GdkMonitor* lastMonitor = nullptr;
