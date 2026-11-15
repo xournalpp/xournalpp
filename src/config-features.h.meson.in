@@ -1,0 +1,31 @@
+/*
+ * Xournal++
+ *
+ * Additional features of Xournal++
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#pragma once
+
+/* --- Stable features --- */
+
+#mesondefine ENABLE_X11
+
+#mesondefine ENABLE_PLUGINS
+
+#mesondefine ENABLE_GTK_SOURCEVIEW
+
+#mesondefine ENABLE_AUDIO
+
+#mesondefine ENABLE_FLOAT_FROM_CHARS
+
+/* --- Testing features --- */
+
+#mesondefine ENABLE_QPDF
+
+#mesondefine ENABLE_CPPTRACE
+

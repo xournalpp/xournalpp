@@ -1,0 +1,45 @@
+xournalpp_util_sources = files(
+    'logger/Logger.cpp',
+    'raii/CStringWrapper.cpp',
+    'serializing/BinObjectEncoding.cpp',
+    'serializing/HexObjectEncoding.cpp',
+    'serializing/InputStreamException.cpp',
+    'serializing/ObjectEncoding.cpp',
+    'serializing/ObjectInputStream.cpp',
+    'serializing/ObjectOutputStream.cpp',
+    'Assert.cpp',
+    'Color.cpp',
+    'ElementRange.cpp',
+    'gdk4_helper.cpp',
+    'gtk4_helper.cpp',
+    'GtkUtil.cpp',
+    'GzInputStream.cpp',
+    'GzUtil.cpp',
+    'Matrix.cpp',
+    'NamedColor.cpp',
+    'OutputStream.cpp',
+    'PathUtil.cpp',
+    'PlaceholderString.cpp',
+    'Range.cpp',
+    'Recolor.cpp',
+    'SaveNameUtils.cpp',
+    'Stacktrace.cpp',
+    'StringUtils.cpp',
+    'Util.cpp',
+    'VersionInfo.cpp',
+    'XojMsgBox.cpp',
+    'XojPreviewExtractor.cpp',
+    'ZipInputStream.cpp',
+)
+
+xournalpp_util_lib = static_library(
+    'util',
+    sources: xournalpp_util_sources,
+    dependencies: [xournalpp_defaults, xournalpp_external_modules],
+    include_directories: 'include',
+)
+
+xournalpp_util = declare_dependency(
+    link_with: xournalpp_util_lib,
+    include_directories: 'include',
+)
