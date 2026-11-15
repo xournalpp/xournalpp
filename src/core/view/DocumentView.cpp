@@ -74,6 +74,7 @@ void DocumentView::drawPage(ConstPageRef page, cairo_t* cr, bool dontRenderEditi
 
     xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
                                (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
+    context.highlighterOperator = page->getBackgroundColor().getHighlighterOperator();
     for (const Layer* layer: page->getLayersView()) {
         if (layer->isVisible()) {
             xoj::view::LayerView layerView(layer);

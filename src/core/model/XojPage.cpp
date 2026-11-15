@@ -150,6 +150,9 @@ void XojPage::setBackgroundType(const PageType& bgType) {
     if (!bgType.isImagePage()) {
         this->backgroundImage.free();
     }
+    if (bgType.isSpecial()) {
+        this->backgroundColor = Colors::white;
+    }
 }
 
 auto XojPage::getBackgroundType() const -> PageType { return this->bgType; }

@@ -55,3 +55,29 @@ TEST(UtilColor, testColorToRGBAndBack) {
         EXPECT_EQ(color2, Util::GdkRGBA_to_argb(Util::argb_to_GdkRGBA(color2)));
     }
 }
+
+TEST(UtilColor, RelativeLuminanceAndHighlighterOperator) {
+    EXPECT_NEAR(Colors::black.getRelativeLuminance(), 0.0, 1e-4);
+    EXPECT_NEAR(Colors::white.getRelativeLuminance(), 1.0, 1e-4);
+
+    // Individual BT.709 channel weight verification
+    constexpr Color pureRed{0xffff0000U};
+    constexpr Color pureGreen{0xff00ff00U};
+    constexpr Color pureBlue{0xff0000ffU};
+    EXPECT_NEAR(pureRed.getRelativeLuminance(), 0.2126, 1e-4);
+    EXPECT_NEAR(pureGreen.getRelativeLuminance(), 0.7152, 1e-4);
+    EXPECT_NEAR(pureBlue.getRelativeLuminance(), 0.0722, 1e-4);
+
+    EXPECT_TRUE(Colors::black.isDark());
+    EXPECT_FALSE(Colors::white.isDark());
+
+    constexpr Color justAboveHalf{0xff808080U}; // RGB(128,128,128) -> Luminance ≈ 0.5019
+    constexpr Color justBelowHalf{0xff787878U}; // RGB(120,120,120) -> Luminance ≈ 0.4705
+    EXPECT_FALSE(justAboveHalf.isDark());
+    EXPECT_TRUE(justBelowHalf.isDark());
+
+    EXPECT_EQ(Colors::white.getHighlighterOperator(), CAIRO_OPERATOR_MULTIPLY);
+    EXPECT_EQ(Colors::black.getHighlighterOperator(), CAIRO_OPERATOR_SCREEN);
+    EXPECT_EQ(justAboveHalf.getHighlighterOperator(), CAIRO_OPERATOR_MULTIPLY);
+    EXPECT_EQ(justBelowHalf.getHighlighterOperator(), CAIRO_OPERATOR_SCREEN);
+}
