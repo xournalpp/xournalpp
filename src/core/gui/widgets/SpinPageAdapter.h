@@ -13,6 +13,8 @@
 
 #include <cstddef>  // for size_t
 #include <list>     // for list
+#include <string>   // for string
+#include <vector>   // for vector
 
 #include <glib.h>     // for guint, gulong
 #include <gtk/gtk.h>  // for GtkWidget, GtkSpinButton
@@ -40,15 +42,25 @@ public:
     void addListener(SpinPageListener* listener);
     void removeListener(SpinPageListener* listener);
 
+    void setLabels(std::vector<std::string> labels);
+    void insertLabel(size_t pos, std::string label);
+    void deleteLabel(size_t pos);
+    void swapLabels(size_t a, size_t b);
+    bool hasAnyLabels() const;
+
 private:
     static bool pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter);
     static void pageNrSpinChangedCallback(GtkSpinButton* spinbutton, SpinPageAdapter* adapter);
+    static gboolean spinOutputCallback(GtkSpinButton* spin, SpinPageAdapter* adapter);
+    static gint spinInputCallback(GtkSpinButton* spin, gdouble* newValue, SpinPageAdapter* adapter);
 
     void firePageChanged();
 
 private:
     xoj::util::WidgetSPtr widget;
     gulong pageNrSpinChangedHandlerId = 0;
+    gulong outputHandlerId = 0;
+    gulong inputHandlerId = 0;
     size_t page = 0;
 
     xoj::util::GSourceURef timeout;
@@ -56,6 +68,8 @@ private:
 
     size_t min = 0;
     size_t max = 0;
+
+    std::vector<std::string> labels;
 };
 
 class SpinPageListener {
