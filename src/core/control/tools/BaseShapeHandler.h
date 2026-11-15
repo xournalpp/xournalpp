@@ -76,6 +76,7 @@ private:
      *      Also warns the listeners about the change, usually triggering a redraw during the next screen update.
      */
     void updateShape(bool isAltDown, bool isShiftDown, bool isControlDown);
+    void translateShape(double dx, double dy);
 
     /**
      * @brief Cancel the current shape creation: clears all data and wipes any drawing made
@@ -106,6 +107,8 @@ protected:
     bool flipControl = false;  // use to reverse Control key modifier action.
     bool modShift = false;
     bool modControl = false;
+    /** When true (Space held), pointer motion translates the shape without resizing. */
+    bool modSpace = false;
     SnapToGridInputHandler snappingHandler;
 
     Point currPoint;
