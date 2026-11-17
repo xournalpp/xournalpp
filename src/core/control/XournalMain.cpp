@@ -356,6 +356,11 @@ auto findResourcePath(const fs::path& searchFile) -> fs::path {
 void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFile, bool failIfNotFound) {
     auto uiPath = findResourcePath(relativePathAndFile);  // i.e.  relativePathAndFile = "ui/about.glade"
 
+    if (uiPath.empty()) {
+        const fs::path resourceFile = fs::path{"resources-templates"} / fs::path{relativePathAndFile}.filename();
+        uiPath = findResourcePath(resourceFile);
+    }
+
     if (!uiPath.empty()) {
         gladePath->addSearchDirectory(uiPath);
         return;
@@ -432,6 +437,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
     initResourcePath(app_data->gladePath.get(), "ui/about.glade");
     initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
     initResourcePath(app_data->gladePath.get(), "ui/toolbar.ini", false);
+    initResourcePath(app_data->gladePath.get(), "resources-templates/pagetemplates.ini", false);
 
     app_data->control = std::make_unique<Control>(application, app_data->gladePath.get());
 
