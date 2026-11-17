@@ -61,7 +61,8 @@ auto RulerInputHandler::handlePointer(InputEvent const& event) -> bool {
     const auto p = ruler->posRelToRuler(coords.x, coords.y);
     switch (event.type) {
         case BUTTON_PRESS_EVENT:
-            if (ruler->isInsideGeometryTool(coords.x, coords.y, 0.5)) {
+            // Strokes must start at the marked edge, not on the numbered side.
+            if (ruler->isInsideGeometryTool(coords.x, coords.y) && p.y >= -0.5 && p.y <= 0.5) {
                 ruler->createStroke(p.x);
                 return true;
             }
