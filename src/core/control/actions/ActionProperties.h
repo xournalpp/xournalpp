@@ -667,6 +667,7 @@ struct ActionProperties<Action::COMPASS> {
 template <>
 struct ActionProperties<Action::TRAD_RULER> {
     using state_type = bool;
+    static constexpr const char* accelerators[] = {"R", nullptr};
     static constexpr state_type initialState(Control*) { return false; }
     static void callback(GSimpleAction* ga, GVariant*, Control* ctrl) {
         ctrl->getActionDatabase()->setActionState(Action::COMPASS, false);
