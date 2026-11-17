@@ -346,7 +346,7 @@ auto findResourcePath(const fs::path& searchFile) -> fs::path {
             return *path;
         }*/
     /// real execution path
-    if (auto path = search_for(Util::getExePath().parent_path()); path) {
+    if (auto path = search_for(Util::getExePath()); path) {
         return *path;
     }
     // Not found
@@ -359,6 +359,13 @@ void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFi
     if (uiPath.empty()) {
         const fs::path resourceFile = fs::path{"resources-templates"} / fs::path{relativePathAndFile}.filename();
         uiPath = findResourcePath(resourceFile);
+        if (uiPath.empty()) {
+            const auto executableDirectory = Util::getExePath().parent_path();
+            const auto buildResourceDirectory = executableDirectory / "resources-templates";
+            if (fs::exists(buildResourceDirectory / resourceFile.filename())) {
+                uiPath = buildResourceDirectory;
+            }
+        }
     }
 
     if (!uiPath.empty()) {
