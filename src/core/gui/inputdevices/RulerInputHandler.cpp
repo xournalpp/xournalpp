@@ -5,6 +5,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "control/Control.h"
+#include "control/actions/ActionDatabase.h"
 #include "control/RulerController.h"
 #include "control/ToolHandler.h"
 #include "gui/XournalView.h"
@@ -17,6 +18,10 @@ RulerInputHandler::~RulerInputHandler() noexcept = default;
 
 auto RulerInputHandler::keyPressed(KeyEvent const& event) -> bool {
     switch (event.keyval) {
+        case GDK_KEY_r:
+        case GDK_KEY_R:
+            xournal->getControl()->getActionDatabase()->fireActivateAction(Action::TRAD_RULER);
+            return true;
         case GDK_KEY_bracketleft:
             controller->rotate(-M_PI / 180.);
             return true;
@@ -56,7 +61,7 @@ auto RulerInputHandler::handlePointer(InputEvent const& event) -> bool {
     const auto p = ruler->posRelToRuler(coords.x, coords.y);
     switch (event.type) {
         case BUTTON_PRESS_EVENT:
-            if (ruler->isInsideGeometryTool(coords.x, coords.y) && p.y >= -0.5 && p.y <= 0.5) {
+            if (ruler->isInsideGeometryTool(coords.x, coords.y, 0.5)) {
                 ruler->createStroke(p.x);
                 return true;
             }

@@ -1,8 +1,6 @@
 #include "RulerView.h"
 
 #include <cmath>
-#include <iomanip>
-#include <sstream>
 
 #include "util/raii/CairoWrappers.h"
 #include "view/Repaintable.h"
@@ -60,25 +58,30 @@ void RulerView::drawDisplays(cairo_t* cr) const {
     cairo_transform(cr, &matrix);
     cairo_set_source_rgba(cr, 0.08, 0.22, 0.55, 0.9);
     cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+    constexpr double displayY = 1.0;
+    constexpr double badgeX = 1.5;
+    constexpr double badgeRadius = 0.55;
+
     cairo_set_font_size(cr, 0.35);
-    const std::string brand = "TRAD";
-    std::ostringstream text;
-    text << std::fixed << std::setprecision(1) << std::abs(std::remainder(deg(rotation), 180.)) << " deg";
-    const std::string angle = text.str();
     cairo_text_extents_t brandExtents;
-    cairo_text_extents(cr, brand.c_str(), &brandExtents);
+    cairo_text_extents(cr, "TRAD", &brandExtents);
+    cairo_move_to(cr, -2.0, displayY + brandExtents.height / 2.);
+    cairo_show_text(cr, "TRAD");
+
+    const int angleDegrees = static_cast<int>(std::lround(std::abs(std::remainder(deg(rotation), 180.))));
+    const std::string angle = std::to_string(angleDegrees) + "\xC2\xB0";
+
+    cairo_set_source_rgba(cr, 0.08, 0.22, 0.55, 0.12);
+    cairo_arc(cr, badgeX, displayY, badgeRadius, 0., 2. * M_PI);
+    cairo_fill_preserve(cr);
+    cairo_set_source_rgba(cr, 0.08, 0.22, 0.55, 0.9);
+    cairo_set_line_width(cr, 0.04);
+    cairo_stroke(cr);
+
     cairo_set_font_size(cr, 0.25);
     cairo_text_extents_t angleExtents;
     cairo_text_extents(cr, angle.c_str(), &angleExtents);
-    constexpr double gap = 0.35;
-    const double totalWidth = brandExtents.width + gap + angleExtents.width;
-    const double startX = -totalWidth / 2.;
-
-    cairo_set_font_size(cr, 0.35);
-    cairo_move_to(cr, startX, 1.35);
-    cairo_show_text(cr, "TRAD");
-
-    cairo_set_font_size(cr, 0.25);
-    cairo_move_to(cr, startX + brandExtents.width + gap, 1.35);
+    cairo_move_to(cr, badgeX - angleExtents.x_bearing - angleExtents.width / 2.,
+                  displayY - angleExtents.y_bearing - angleExtents.height / 2.);
     cairo_show_text(cr, angle.c_str());
 }
