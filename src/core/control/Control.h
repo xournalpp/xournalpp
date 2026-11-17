@@ -410,6 +410,10 @@ private:
      * @return true if a setsquare was created
      */
     bool toggleSetsquare();
+    /**
+     * @brief Creates a physical ruler if it's not on the current page yet. Deletes it if it already exists.
+     */
+    bool toggleTradRuler();
 
     struct MissingPdfData;
     /**
