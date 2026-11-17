@@ -77,6 +77,7 @@ void RulerView::drawDisplays(cairo_t* cr) const {
     const std::string angle = std::to_string(angleDegrees) + "\xC2\xB0";
 
     cairo_set_source_rgba(cr, 0.96, 0.93, 0.78, 1.0);
+    cairo_new_path(cr);
     cairo_arc(cr, badgeX, displayY, badgeRadius, 0., 2. * M_PI);
     cairo_fill_preserve(cr);
     cairo_set_source_rgba(cr, 0.08, 0.22, 0.55, 0.9);
@@ -86,6 +87,7 @@ void RulerView::drawDisplays(cairo_t* cr) const {
     cairo_set_font_size(cr, 0.38);
     cairo_text_extents_t angleExtents;
     cairo_text_extents(cr, angle.c_str(), &angleExtents);
+    cairo_new_path(cr);
     cairo_move_to(cr, badgeX - angleExtents.x_bearing - angleExtents.width / 2.,
                   displayY - angleExtents.y_bearing - angleExtents.height / 2.);
     cairo_show_text(cr, angle.c_str());
