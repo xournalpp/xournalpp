@@ -1,5 +1,9 @@
 #include "RulerInputHandler.h"
 
+#include <cmath>
+
+#include <gdk/gdkkeysyms.h>
+
 #include "control/Control.h"
 #include "control/RulerController.h"
 #include "control/ToolHandler.h"
@@ -10,6 +14,19 @@
 RulerInputHandler::RulerInputHandler(XournalView* xournalView, GeometryToolController* controller):
         GeometryToolInputHandler(xournalView, controller) {}
 RulerInputHandler::~RulerInputHandler() noexcept = default;
+
+auto RulerInputHandler::keyPressed(KeyEvent const& event) -> bool {
+    switch (event.keyval) {
+        case GDK_KEY_bracketleft:
+            controller->rotate(-M_PI / 180.);
+            return true;
+        case GDK_KEY_bracketright:
+            controller->rotate(M_PI / 180.);
+            return true;
+        default:
+            return GeometryToolInputHandler::keyPressed(event);
+    }
+}
 
 auto RulerInputHandler::handlePointer(InputEvent const& event) -> bool {
     const auto coords = getCoords(event);
