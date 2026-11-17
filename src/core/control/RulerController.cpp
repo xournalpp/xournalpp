@@ -6,6 +6,10 @@
 #include "model/Ruler.h"
 #include "model/Stroke.h"
 
+namespace {
+constexpr double SNAP_EDGE_Y = 0.;
+}
+
 RulerController::RulerController(XojPageView* view, Ruler* ruler): GeometryToolController(view, ruler) {}
 RulerController::~RulerController() = default;
 
@@ -29,7 +33,7 @@ void RulerController::createStroke(double x) {
     initializeStroke();
     const auto matrix = geometryTool->getMatrix();
     double sx = x * CM;
-    double sy = 0.;
+    double sy = SNAP_EDGE_Y;
     cairo_matrix_t m = matrix;
     cairo_matrix_transform_point(&m, &sx, &sy);
     stroke->addPoint(Point(sx, sy));
@@ -44,8 +48,8 @@ void RulerController::updateStroke(double x) {
     auto matrix = geometryTool->getMatrix();
     double x1 = strokeMin * CM;
     double x2 = strokeMax * CM;
-    double y1 = 0.;
-    double y2 = 0.;
+    double y1 = SNAP_EDGE_Y;
+    double y2 = SNAP_EDGE_Y;
     cairo_matrix_transform_point(&matrix, &x1, &y1);
     cairo_matrix_transform_point(&matrix, &x2, &y2);
     stroke->addPoint(Point(x1, y1));

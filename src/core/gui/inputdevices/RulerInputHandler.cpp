@@ -12,6 +12,10 @@
 #include "gui/inputdevices/InputEvents.h"
 #include "model/Ruler.h"
 
+namespace {
+constexpr double SNAP_EDGE_TOLERANCE = 0.5;
+}
+
 RulerInputHandler::RulerInputHandler(XournalView* xournalView, GeometryToolController* controller):
         GeometryToolInputHandler(xournalView, controller) {}
 RulerInputHandler::~RulerInputHandler() noexcept = default;
@@ -62,7 +66,7 @@ auto RulerInputHandler::handlePointer(InputEvent const& event) -> bool {
     switch (event.type) {
         case BUTTON_PRESS_EVENT:
             // Strokes must start at the marked edge, not on the numbered side.
-            if (ruler->isInsideGeometryTool(coords.x, coords.y) && p.y >= -0.5 && p.y <= 0.5) {
+            if (ruler->isInsideGeometryTool(coords.x, coords.y) && std::abs(p.y) <= SNAP_EDGE_TOLERANCE) {
                 ruler->createStroke(p.x);
                 return true;
             }

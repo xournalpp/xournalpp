@@ -59,26 +59,31 @@ void RulerView::drawDisplays(cairo_t* cr) const {
     cairo_set_source_rgba(cr, 0.08, 0.22, 0.55, 0.9);
     cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
     constexpr double displayY = 1.0;
-    constexpr double badgeX = 1.5;
-    constexpr double badgeRadius = 0.55;
+    constexpr double brandX = -1.45;
+    constexpr double badgeX = 1.0;
+    constexpr double badgeRadius = 0.7;
 
-    cairo_set_font_size(cr, 0.35);
+    cairo_set_font_size(cr, 0.38);
     cairo_text_extents_t brandExtents;
     cairo_text_extents(cr, "TRAD", &brandExtents);
-    cairo_move_to(cr, -2.0, displayY + brandExtents.height / 2.);
+    cairo_set_source_rgba(cr, 0.96, 0.93, 0.78, 1.0);
+    cairo_rectangle(cr, brandX - 0.15, displayY - 0.45, brandExtents.width + 0.3, 0.9);
+    cairo_fill(cr);
+    cairo_set_source_rgba(cr, 0.08, 0.22, 0.55, 1.0);
+    cairo_move_to(cr, brandX, displayY - brandExtents.y_bearing - brandExtents.height / 2.);
     cairo_show_text(cr, "TRAD");
 
     const int angleDegrees = static_cast<int>(std::lround(std::abs(std::remainder(deg(rotation), 180.))));
     const std::string angle = std::to_string(angleDegrees) + "\xC2\xB0";
 
-    cairo_set_source_rgba(cr, 0.08, 0.22, 0.55, 0.12);
+    cairo_set_source_rgba(cr, 0.96, 0.93, 0.78, 1.0);
     cairo_arc(cr, badgeX, displayY, badgeRadius, 0., 2. * M_PI);
     cairo_fill_preserve(cr);
     cairo_set_source_rgba(cr, 0.08, 0.22, 0.55, 0.9);
     cairo_set_line_width(cr, 0.04);
     cairo_stroke(cr);
 
-    cairo_set_font_size(cr, 0.25);
+    cairo_set_font_size(cr, 0.38);
     cairo_text_extents_t angleExtents;
     cairo_text_extents(cr, angle.c_str(), &angleExtents);
     cairo_move_to(cr, badgeX - angleExtents.x_bearing - angleExtents.width / 2.,
