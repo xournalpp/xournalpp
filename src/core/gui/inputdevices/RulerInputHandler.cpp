@@ -77,13 +77,6 @@ auto RulerInputHandler::handlePointer(InputEvent const& event) -> bool {
                 ruler->updateStroke(p.x);
                 return true;
             }
-            if (((event.state & GDK_BUTTON1_MASK) || (event.pressure > 0. && event.pressure != Point::NO_PRESSURE)) &&
-                ruler->isNearRulerEdge(coords.x, coords.y, SNAP_EDGE_TOLERANCE_PIXELS, xournal->getZoom())) {
-                controller->getView()->onSequenceCancelEvent(event.deviceId);
-                strokeStartedOnMotion = true;
-                ruler->createStroke(p.x);
-                return true;
-            }
             break;
         case BUTTON_RELEASE_EVENT:
             if (ruler->existsStroke()) {
