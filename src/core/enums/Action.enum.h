@@ -115,6 +115,7 @@ enum class Action : size_t {
     TOOL_DRAW_SPLINE,
     SETSQUARE,
     COMPASS,
+    TRAD_RULER,
 
     TOOL_PEN_SIZE,
     TOOL_PEN_LINE_STYLE,

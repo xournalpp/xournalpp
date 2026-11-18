@@ -159,6 +159,6 @@ public:
     void blockDevice(InputContext::DeviceType deviceType);
     void unblockDevice(InputContext::DeviceType deviceType);
 
-    bool keyPressed(KeyEvent const& event);
+    virtual bool keyPressed(KeyEvent const& event);
     // bool keyReleased(KeyEvent const& event); // Implement if needed
 };

@@ -346,7 +346,7 @@ auto findResourcePath(const fs::path& searchFile) -> fs::path {
             return *path;
         }*/
     /// real execution path
-    if (auto path = search_for(Util::getExePath().parent_path()); path) {
+    if (auto path = search_for(Util::getExePath()); path) {
         return *path;
     }
     // Not found
@@ -355,6 +355,18 @@ auto findResourcePath(const fs::path& searchFile) -> fs::path {
 
 void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFile, bool failIfNotFound) {
     auto uiPath = findResourcePath(relativePathAndFile);  // i.e.  relativePathAndFile = "ui/about.glade"
+
+    if (uiPath.empty()) {
+        const fs::path resourceFile = fs::path{"resources-templates"} / fs::path{relativePathAndFile}.filename();
+        uiPath = findResourcePath(resourceFile);
+        if (uiPath.empty()) {
+            const auto executableDirectory = Util::getExePath().parent_path();
+            const auto buildResourceDirectory = executableDirectory / "resources-templates";
+            if (fs::exists(buildResourceDirectory / resourceFile.filename())) {
+                uiPath = buildResourceDirectory;
+            }
+        }
+    }
 
     if (!uiPath.empty()) {
         gladePath->addSearchDirectory(uiPath);
@@ -432,6 +444,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
     initResourcePath(app_data->gladePath.get(), "ui/about.glade");
     initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
     initResourcePath(app_data->gladePath.get(), "ui/toolbar.ini", false);
+    initResourcePath(app_data->gladePath.get(), "resources-templates/pagetemplates.ini", false);
 
     app_data->control = std::make_unique<Control>(application, app_data->gladePath.get());
 
