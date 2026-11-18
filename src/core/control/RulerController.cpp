@@ -28,7 +28,17 @@ auto RulerController::isInsideGeometryTool(double x, double y, double border) co
            p.y >= -border && p.y <= Ruler::THICKNESS + border;
 }
 
+auto RulerController::isNearRulerEdge(double x, double y, double tolerancePixels, double zoom) const -> bool {
+    const auto p = posRelToRuler(x, y);
+    if (p.x < -geometryTool->getHeight() / 2. || p.x > geometryTool->getHeight() / 2.) {
+        return false;
+    }
+    const double edgeDistancePixels = std::abs(p.y) * CM * zoom;
+    return edgeDistancePixels <= tolerancePixels / 2.;
+}
+
 void RulerController::createStroke(double x) {
+    x = std::clamp(x, -geometryTool->getHeight() / 2., geometryTool->getHeight() / 2.);
     strokeMin = strokeMax = x;
     initializeStroke();
     const auto matrix = geometryTool->getMatrix();
@@ -42,6 +52,7 @@ void RulerController::createStroke(double x) {
 }
 
 void RulerController::updateStroke(double x) {
+    x = std::clamp(x, -geometryTool->getHeight() / 2., geometryTool->getHeight() / 2.);
     strokeMin = std::min(strokeMin, x);
     strokeMax = std::max(strokeMax, x);
     stroke->deletePointsFrom(0);

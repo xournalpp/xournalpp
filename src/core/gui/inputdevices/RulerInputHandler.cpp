@@ -13,7 +13,7 @@
 #include "model/Ruler.h"
 
 namespace {
-constexpr double SNAP_ZONE_HEIGHT_PIXELS = 3.0;
+constexpr double SNAP_EDGE_TOLERANCE_PIXELS = 3.0;
 }
 
 RulerInputHandler::RulerInputHandler(XournalView* xournalView, GeometryToolController* controller):
@@ -63,13 +63,10 @@ auto RulerInputHandler::handlePointer(InputEvent const& event) -> bool {
     }
 
     const auto p = ruler->posRelToRuler(coords.x, coords.y);
-    const double snapZoneHeight = SNAP_ZONE_HEIGHT_PIXELS / xournal->getZoom() / CM;
-    const bool withinRulerLength = p.x >= -ruler->getGeometryTool()->getHeight() / 2. &&
-                                    p.x <= ruler->getGeometryTool()->getHeight() / 2.;
     switch (event.type) {
         case BUTTON_PRESS_EVENT:
-            // Only the strip above the marked edge starts a snapped stroke.
-            if (withinRulerLength && p.y <= 0. && p.y >= -snapZoneHeight) {
+            // Match the original TRAD edge-snap logic: 3 screen pixels on the ruler edge.
+            if (ruler->isNearRulerEdge(coords.x, coords.y, SNAP_EDGE_TOLERANCE_PIXELS, xournal->getZoom())) {
                 ruler->createStroke(p.x);
                 return true;
             }
