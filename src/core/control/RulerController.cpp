@@ -8,6 +8,7 @@
 
 namespace {
 constexpr double SNAP_EDGE_Y = 0.;
+constexpr double SNAP_TICK_MARK_DEPTH_CM = 0.7;
 constexpr double SNAP_EPSILON = 1e-6;
 }
 
@@ -35,7 +36,11 @@ auto RulerController::isNearRulerEdge(double x, double y, double tolerancePixels
     if (p.x < -halfLength || p.x > halfLength) {
         return false;
     }
-    const double edgeDistancePixels = std::abs(p.y) * CM * zoom;
+    if (p.y >= 0.) {
+        const double insideToleranceCm = std::max(SNAP_TICK_MARK_DEPTH_CM, tolerancePixels / (CM * zoom));
+        return p.y <= insideToleranceCm + SNAP_EPSILON;
+    }
+    const double edgeDistancePixels = -p.y * CM * zoom;
     return edgeDistancePixels <= tolerancePixels + SNAP_EPSILON;
 }
 

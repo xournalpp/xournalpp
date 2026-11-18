@@ -8,12 +8,13 @@
 #include "control/actions/ActionDatabase.h"
 #include "control/RulerController.h"
 #include "control/ToolHandler.h"
+#include "gui/PageView.h"
 #include "gui/XournalView.h"
 #include "gui/inputdevices/InputEvents.h"
 #include "model/Ruler.h"
 
 namespace {
-constexpr double SNAP_EDGE_TOLERANCE_PIXELS = 3.0;
+constexpr double SNAP_EDGE_TOLERANCE_PIXELS = 12.0;
 }
 
 RulerInputHandler::RulerInputHandler(XournalView* xournalView, GeometryToolController* controller):
@@ -65,8 +66,8 @@ auto RulerInputHandler::handlePointer(InputEvent const& event) -> bool {
     const auto p = ruler->posRelToRuler(coords.x, coords.y);
     switch (event.type) {
         case BUTTON_PRESS_EVENT:
-            // Match the original TRAD edge-snap logic: 3 screen pixels on the ruler edge.
             if (ruler->isNearRulerEdge(coords.x, coords.y, SNAP_EDGE_TOLERANCE_PIXELS, xournal->getZoom())) {
+                strokeStartedOnMotion = false;
                 ruler->createStroke(p.x);
                 return true;
             }
@@ -76,11 +77,20 @@ auto RulerInputHandler::handlePointer(InputEvent const& event) -> bool {
                 ruler->updateStroke(p.x);
                 return true;
             }
+            if (((event.state & GDK_BUTTON1_MASK) || (event.pressure > 0. && event.pressure != Point::NO_PRESSURE)) &&
+                ruler->isNearRulerEdge(coords.x, coords.y, SNAP_EDGE_TOLERANCE_PIXELS, xournal->getZoom())) {
+                controller->getView()->onSequenceCancelEvent(event.deviceId);
+                strokeStartedOnMotion = true;
+                ruler->createStroke(p.x);
+                return true;
+            }
             break;
         case BUTTON_RELEASE_EVENT:
             if (ruler->existsStroke()) {
+                const bool propagateRelease = strokeStartedOnMotion;
+                strokeStartedOnMotion = false;
                 ruler->finalizeStroke();
-                return true;
+                return !propagateRelease;
             }
             break;
         default:

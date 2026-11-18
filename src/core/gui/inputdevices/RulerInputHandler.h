@@ -12,4 +12,6 @@ private:
     bool handlePointer(InputEvent const& event) override;
     double getMinHeight() const override;
     double getMaxHeight() const override;
+
+    bool strokeStartedOnMotion = false;
 };
