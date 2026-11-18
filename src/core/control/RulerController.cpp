@@ -33,8 +33,8 @@ auto RulerController::isNearRulerEdge(double x, double y, double tolerancePixels
     if (p.x < -geometryTool->getHeight() / 2. || p.x > geometryTool->getHeight() / 2.) {
         return false;
     }
-    const double edgeDistancePixels = std::abs(p.y) * CM * zoom;
-    return edgeDistancePixels <= tolerancePixels / 2.;
+    const double pixelsAboveEdge = -p.y * CM * zoom;
+    return p.y <= 0. && pixelsAboveEdge <= tolerancePixels;
 }
 
 void RulerController::createStroke(double x) {
