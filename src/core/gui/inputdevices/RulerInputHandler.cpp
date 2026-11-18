@@ -13,7 +13,7 @@
 #include "model/Ruler.h"
 
 namespace {
-constexpr double SNAP_ZONE_HEIGHT_PIXELS = 16.0;
+constexpr double SNAP_ZONE_HEIGHT_PIXELS = 3.0;
 }
 
 RulerInputHandler::RulerInputHandler(XournalView* xournalView, GeometryToolController* controller):
