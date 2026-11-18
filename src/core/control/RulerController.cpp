@@ -8,6 +8,7 @@
 
 namespace {
 constexpr double SNAP_EDGE_Y = 0.;
+constexpr double SNAP_EPSILON = 1e-6;
 }
 
 RulerController::RulerController(XojPageView* view, Ruler* ruler): GeometryToolController(view, ruler) {}
@@ -19,7 +20,7 @@ auto RulerController::posRelToRuler(double x, double y) const -> xoj::util::Poin
     auto matrix = geometryTool->getMatrix();
     cairo_matrix_invert(&matrix);
     cairo_matrix_transform_point(&matrix, &x, &y);
-    return {x / CM, y / CM};
+    return {x, y};
 }
 
 auto RulerController::isInsideGeometryTool(double x, double y, double border) const -> bool {
@@ -30,22 +31,22 @@ auto RulerController::isInsideGeometryTool(double x, double y, double border) co
 
 auto RulerController::isNearRulerEdge(double x, double y, double tolerancePixels, double zoom) const -> bool {
     const auto p = posRelToRuler(x, y);
-    if (p.x < -geometryTool->getHeight() / 2. || p.x > geometryTool->getHeight() / 2.) {
+    const double halfLength = geometryTool->getHeight() / 2. + SNAP_EPSILON;
+    if (p.x < -halfLength || p.x > halfLength) {
         return false;
     }
-    const double pixelsAboveEdge = -p.y * CM * zoom;
-    return p.y <= 0. && pixelsAboveEdge <= tolerancePixels;
+    const double edgeDistancePixels = std::abs(p.y) * CM * zoom;
+    return edgeDistancePixels <= tolerancePixels + SNAP_EPSILON;
 }
 
 void RulerController::createStroke(double x) {
     x = std::clamp(x, -geometryTool->getHeight() / 2., geometryTool->getHeight() / 2.);
     strokeMin = strokeMax = x;
     initializeStroke();
-    const auto matrix = geometryTool->getMatrix();
-    double sx = x * CM;
+    auto matrix = geometryTool->getMatrix();
+    double sx = x;
     double sy = SNAP_EDGE_Y;
-    cairo_matrix_t m = matrix;
-    cairo_matrix_transform_point(&m, &sx, &sy);
+    cairo_matrix_transform_point(&matrix, &sx, &sy);
     stroke->addPoint(Point(sx, sy));
     stroke->addPoint(Point(sx, sy));
     geometryTool->notify();
@@ -57,8 +58,8 @@ void RulerController::updateStroke(double x) {
     strokeMax = std::max(strokeMax, x);
     stroke->deletePointsFrom(0);
     auto matrix = geometryTool->getMatrix();
-    double x1 = strokeMin * CM;
-    double x2 = strokeMax * CM;
+    double x1 = strokeMin;
+    double x2 = strokeMax;
     double y1 = SNAP_EDGE_Y;
     double y2 = SNAP_EDGE_Y;
     cairo_matrix_transform_point(&matrix, &x1, &y1);
