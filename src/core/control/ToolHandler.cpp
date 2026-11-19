@@ -322,6 +322,12 @@ void ToolHandler::setZoomScaling(ToolType type, bool enabled) {
     this->stateChangeListener->toolZoomScalingChanged();
 }
 
+void ToolHandler::setButtonZoomScaling(bool enabled, Button button) {
+    Tool* tool = getButtonTool(button);
+    xoj_assert(tool);
+    tool->setZoomScaling(enabled);
+}
+
 auto ToolHandler::getThickness() const -> double {
     Tool* tool = this->activeTool;
     if (tool->thickness) {
