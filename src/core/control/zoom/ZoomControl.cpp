@@ -255,7 +255,9 @@ void ZoomControl::setZoom(double zoomI) {
         return;
     }
     this->zoom = zoomI;
-    this->control->getActionDatabase()->setActionState(Action::ZOOM, getZoomReal());
+    if (this->control) {
+        this->control->getActionDatabase()->setActionState(Action::ZOOM, getZoomReal());
+    }
     fireZoomChanged();
 }
 

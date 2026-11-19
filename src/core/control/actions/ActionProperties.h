@@ -662,6 +662,17 @@ struct ActionProperties<Action::COMPASS> {
     }
 };
 
+/// Common implementation of the "Scale with zoom" toggle actions of the tools submenus
+template <ToolType tool>
+struct ZoomScalingActionProperties {
+    using state_type = bool;
+    static state_type initialState(Control* ctrl) { return ctrl->getToolHandler()->getTool(tool).isZoomScaling(); }
+    static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
+        g_simple_action_set_state(ga, p);
+        ctrl->getToolHandler()->setZoomScaling(tool, g_variant_get_boolean(p));
+    }
+};
+
 // Pen submenu
 template <>
 struct ActionProperties<Action::TOOL_PEN_SIZE> {
@@ -704,6 +715,10 @@ template <>
 struct ActionProperties<Action::TOOL_PEN_FILL_OPACITY> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->selectAlpha(OPACITY_FILL_PEN); }
 };
+
+template <>
+struct ActionProperties<Action::TOOL_PEN_ZOOM_SCALING>: ZoomScalingActionProperties<TOOL_PEN> {};
+
 // Eraser submenu
 template <>
 struct ActionProperties<Action::TOOL_ERASER_SIZE> {
@@ -730,6 +745,9 @@ struct ActionProperties<Action::TOOL_ERASER_TYPE> {
         ctrl->setEraserType(type);
     }
 };
+
+template <>
+struct ActionProperties<Action::TOOL_ERASER_ZOOM_SCALING>: ZoomScalingActionProperties<TOOL_ERASER> {};
 
 // Highlighter submenu
 template <>
@@ -763,6 +781,9 @@ template <>
 struct ActionProperties<Action::TOOL_HIGHLIGHTER_FILL_OPACITY> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->selectAlpha(OPACITY_FILL_HIGHLIGHTER); }
 };
+
+template <>
+struct ActionProperties<Action::TOOL_HIGHLIGHTER_ZOOM_SCALING>: ZoomScalingActionProperties<TOOL_HIGHLIGHTER> {};
 
 template <>
 struct ActionProperties<Action::TOOL_SELECT_PDF_TEXT_MARKER_OPACITY> {

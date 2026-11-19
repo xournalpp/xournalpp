@@ -151,6 +151,8 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkBox* box, 
     // Possible values are defined in the .glade file
     this->cbStrokeType = builder.get("cbStrokeType");
 
+    this->cbZoomScaling = builder.get("cbZoomScaling");
+
     loadSettings();
 }
 
@@ -209,6 +211,9 @@ void ButtonConfigGui::loadSettings() {
     }
 
     gtk_combo_box_set_active(GTK_COMBO_BOX(cbStrokeType), cfg->strokeType);
+
+    // The combo box entries are in the same order as the ZoomScalingMode values
+    gtk_combo_box_set_active(GTK_COMBO_BOX(cbZoomScaling), static_cast<int>(cfg->getZoomScalingMode()));
 
     if (withDevice) {
         gtk_combo_box_set_active(GTK_COMBO_BOX(cbDevice), 0);
@@ -272,6 +277,10 @@ void ButtonConfigGui::saveSettings() {
 
     cfg->strokeType = static_cast<StrokeType>(gtk_combo_box_get_active(GTK_COMBO_BOX(this->cbStrokeType)));
 
+    int zoomScalingIdx = gtk_combo_box_get_active(GTK_COMBO_BOX(this->cbZoomScaling));
+    cfg->setZoomScalingMode(zoomScalingIdx < 0 ? ZoomScalingMode::DONT_CHANGE :
+                                                 static_cast<ZoomScalingMode>(zoomScalingIdx));
+
     if (this->withDevice) {
         size_t dev = static_cast<size_t>(gtk_combo_box_get_active(GTK_COMBO_BOX(cbDevice)) - 1);
         cfg->device = (dev < 0 || this->deviceList.size() <= dev) ? "" : this->deviceList[dev].getName();
@@ -304,4 +313,5 @@ void ButtonConfigGui::enableDisableTools() {
     gtk_widget_set_visible(cbDrawingType, action != TOOL_NONE && xoj::tool::hasCapability(action, TOOL_CAP_RECTANGLE));
     gtk_widget_set_visible(cbEraserType, action == TOOL_ERASER);
     gtk_widget_set_visible(cbStrokeType, action == TOOL_PEN);
+    gtk_widget_set_visible(cbZoomScaling, action != TOOL_NONE && xoj::tool::hasCapability(action, TOOL_CAP_SIZE));
 }

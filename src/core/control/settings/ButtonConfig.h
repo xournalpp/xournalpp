@@ -21,6 +21,9 @@
 
 class ToolHandler;
 
+/// Whether a button tool scales with zoom. The values match the entries of the button config combo box.
+enum class ZoomScalingMode { DONT_CHANGE = 0, ENABLED = 1, DISABLED = 2 };
+
 class ButtonConfig {
 public:
     ButtonConfig(ToolType action, std::optional<Color> color, ToolSize size, DrawingType drawingType,
@@ -63,6 +66,8 @@ public:
     ToolType getAction() const;
     bool getDisableDrawing() const;
     DrawingType getDrawingType() const;
+    ZoomScalingMode getZoomScalingMode() const;
+    void setZoomScalingMode(ZoomScalingMode mode);
 
 private:
     ToolType action;
@@ -71,6 +76,7 @@ private:
     EraserType eraserMode;
     DrawingType drawingType;
     StrokeType strokeType;
+    ZoomScalingMode zoomScalingMode = ZoomScalingMode::DONT_CHANGE;
 
     bool disableDrawing;
 
