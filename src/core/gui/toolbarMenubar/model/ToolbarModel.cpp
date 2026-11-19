@@ -1,7 +1,7 @@
 #include "ToolbarModel.h"
 
 #include <algorithm>  // for find_if
-#include <cstddef>  // for size_t
+#include <cstddef>    // for size_t
 
 #include "util/StringUtils.h"
 #include "util/XojMsgBox.h"   // for XojMsgBox
@@ -99,7 +99,7 @@ const char* TOOLBAR_INI_HEADER =
         " Available buttons:\n"
         " File: NEW,OPEN,SAVE,SAVEPDF,PRINT\n"
         "\n"
-        " Edit: UNDO,REDO,CUT,COPY,PASTE,SEARCH,DELETE,ROTATION_SNAPPING,GRID_SNAPPING\n"
+        " Edit: UNDO,REDO,CUT,COPY,PASTE,SEARCH,DELETE,ROTATION_SNAPPING,GRID_SNAPPING,TOGGLE_DARK_MODE\n"
         "\n"
         " View: "
         "PAIRED_PAGES,PRESENTATION_MODE,FULLSCREEN,MANAGE_TOOLBAR,CUSTOMIZE_TOOLBAR,ZOOM_OUT,ZOOM_IN,ZOOM_FIT,ZOOM_"

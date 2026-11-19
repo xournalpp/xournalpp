@@ -61,6 +61,20 @@ auto themeVariantFromString(const std::string& themeVariantStr) -> ThemeVariant 
     return THEME_VARIANT_USE_SYSTEM;
 }
 
+auto darkModeTargetFromString(const std::string& str) -> DarkModeTarget {
+    if (str == "themeOnly") {
+        return DarkModeTarget::THEME_ONLY;
+    }
+    if (str == "canvasOnly") {
+        return DarkModeTarget::CANVAS_ONLY;
+    }
+    if (str == "both") {
+        return DarkModeTarget::BOTH;
+    }
+    g_warning("Settings::Unknown dark mode target: %s\n", str.c_str());
+    return DarkModeTarget::BOTH;
+}
+
 auto emptyLastPageAppendFromString(const std::string& str) -> EmptyLastPageAppendType {
     if (str == "disabled") {
         return EmptyLastPageAppendType::Disabled;

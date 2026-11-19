@@ -257,6 +257,24 @@ struct ActionProperties<Action::GRID_SNAPPING> {
 };
 
 template <>
+struct ActionProperties<Action::TOGGLE_DARK_MODE> {
+    using state_type = bool;
+    static state_type initialState(Control* ctrl) { return ctrl->isDarkModeActive(); }
+    static void callback(GSimpleAction*, GVariant* p, Control* ctrl) { ctrl->setDarkMode(g_variant_get_boolean(p)); }
+};
+
+template <>
+struct ActionProperties<Action::DARK_MODE_TARGET> {
+    using state_type = DarkModeTarget;
+    using parameter_type = state_type;
+    static state_type initialState(Control* ctrl) { return ctrl->getSettings()->getDarkModeTarget(); }
+    static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
+        g_simple_action_set_state(ga, p);
+        ctrl->setDarkModeTarget(getGVariantValue<DarkModeTarget>(p));
+    }
+};
+
+template <>
 struct ActionProperties<Action::PREFERENCES> {
     using app_namespace = std::true_type;
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->showSettings(); }

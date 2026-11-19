@@ -350,6 +350,9 @@ public:
     void setThemeVariant(ThemeVariant theme);
     ThemeVariant getThemeVariant() const;
 
+    void setDarkModeTarget(DarkModeTarget target);
+    DarkModeTarget getDarkModeTarget() const;
+
     SidebarNumberingStyle getSidebarNumberingStyle() const;
     void setSidebarNumberingStyle(SidebarNumberingStyle numberingStyle);
 
@@ -703,6 +706,8 @@ private:
      * Follow system's default theme variant or force one or the other
      */
     ThemeVariant themeVariant;
+
+    DarkModeTarget darkModeTarget;
 
     /**
      * Sidebar page number style

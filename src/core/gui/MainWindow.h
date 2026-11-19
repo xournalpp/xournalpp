@@ -104,6 +104,7 @@ public:
 
     void updateToolbarMenu();
     void updateColorscheme();
+    bool isDarkMode() const { return this->darkMode; }
 
     const ToolbarWidgetArray& getToolbarWidgets() const;
     const char* getToolbarName(GtkToolbar* toolbar) const;

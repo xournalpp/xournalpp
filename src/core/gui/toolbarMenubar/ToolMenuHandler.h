@@ -137,6 +137,7 @@ private:
     std::unique_ptr<PageTypeSelectionPopover> pageTypeSelectionPopup;
     std::unique_ptr<StylePopoverFactory> penLineStylePopover;
     std::unique_ptr<StylePopoverFactory> eraserTypePopover;
+    std::unique_ptr<StylePopoverFactory> darkModePopover;
 
     xoj::util::GObjectSPtr<GSimpleAction> gAction;
 };
