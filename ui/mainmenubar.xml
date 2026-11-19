@@ -715,6 +715,12 @@
      </section>
      <section>
       <item>
+        <attribute name="label" translatable="yes">Scale with Zoom</attribute>
+        <attribute name="action">win.tool-pen-zoom-scaling</attribute>
+      </item>
+     </section>
+     <section>
+      <item>
        <attribute name="label" translatable="yes">standard</attribute>
        <attribute name="action">win.tool-pen-line-style</attribute>
        <attribute name="target">plain</attribute>
@@ -777,6 +783,12 @@
      </section>
      <section>
       <item>
+        <attribute name="label" translatable="yes">Scale with Zoom</attribute>
+        <attribute name="action">win.tool-eraser-zoom-scaling</attribute>
+      </item>
+     </section>
+     <section>
+      <item>
        <attribute name="label" translatable="yes">_standard</attribute>
        <attribute name="action">win.tool-eraser-type</attribute>
        <attribute name="target" type="t">1</attribute> <!-- ERASER_TYPE_DEFAULT -->
@@ -821,6 +833,12 @@
              <attribute name="action">win.tool-highlighter-size</attribute>
              <attribute name="target" type="t">4</attribute> <!-- TOOL_SIZE_VERY_THICK -->
         </item>
+     </section>
+     <section>
+       <item>
+         <attribute name="label" translatable="yes">Scale with Zoom</attribute>
+         <attribute name="action">win.tool-highlighter-zoom-scaling</attribute>
+       </item>
      </section>
      <section>
          <item>

@@ -1308,7 +1308,13 @@ void Control::eraserTypeChanged() {
     this->actionDB->setActionState(Action::TOOL_ERASER_TYPE, this->toolHandler->getEraserType());
 }
 
-void Control::toolZoomScalingChanged() { getCursor()->updateCursor(); }
+void Control::toolZoomScalingChanged() {
+    this->actionDB->setActionState(Action::TOOL_PEN_ZOOM_SCALING, toolHandler->getTool(TOOL_PEN).isZoomScaling());
+    this->actionDB->setActionState(Action::TOOL_ERASER_ZOOM_SCALING, toolHandler->getTool(TOOL_ERASER).isZoomScaling());
+    this->actionDB->setActionState(Action::TOOL_HIGHLIGHTER_ZOOM_SCALING,
+                                   toolHandler->getTool(TOOL_HIGHLIGHTER).isZoomScaling());
+    getCursor()->updateCursor();
+}
 
 auto Control::getLineStyleToSelect() -> std::optional<string> const {
     std::optional<std::string> style;
