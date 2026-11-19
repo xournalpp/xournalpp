@@ -171,7 +171,7 @@ public:
     void selectTool(ToolType type);
     void selectDefaultTool();
 
-    void fontChanged(const XojFont& font);      ///< Set the font after the user selected a font
+    void fontChanged(const XojFont& font);  ///< Set the font after the user selected a font
 
     void updatePageNumbers(size_t page, size_t pdfPage);
 
@@ -368,6 +368,11 @@ public:
 protected:
     void setRotationSnapping(bool enable);
     void setGridSnapping(bool enable);
+
+    bool isDarkModeActive() const;
+    void setDarkMode(bool dark);
+    void setDarkModeTarget(DarkModeTarget target);
+    ThemeVariant previousLightThemeVariant = THEME_VARIANT_USE_SYSTEM;
 
     void showFontDialog();
     void showColorChooserDialog();

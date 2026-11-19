@@ -123,6 +123,7 @@ void Settings::loadDefault() {
     this->eraserVisibility = ERASER_VISIBILITY_ALWAYS;
     this->iconTheme = ICON_THEME_COLOR;
     this->themeVariant = THEME_VARIANT_USE_SYSTEM;
+    this->darkModeTarget = DarkModeTarget::BOTH;
     this->highlightPosition = false;
     this->cursorHighlightColor = 0x80FFFF00;  // Yellow with 50% opacity
     this->cursorHighlightRadius = 30.0;
@@ -513,6 +514,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->iconTheme = iconThemeFromString(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("themeVariant")) == 0) {
         this->themeVariant = themeVariantFromString(reinterpret_cast<const char*>(value));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("darkModeTarget")) == 0) {
+        this->darkModeTarget = darkModeTargetFromString(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("highlightPosition")) == 0) {
         this->highlightPosition = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("cursorHighlightColor")) == 0) {
@@ -1099,6 +1102,9 @@ void Settings::save() {
     xmlNode = saveProperty("themeVariant", themeVariantToString(this->themeVariant), root);
     ATTACH_COMMENT("Dark/light mode, allowed values are \"useSystem\", \"forceLight\", \"forceDark\"");
 
+    xmlNode = saveProperty("darkModeTarget", darkModeTargetToString(this->darkModeTarget), root);
+    ATTACH_COMMENT("Dark mode toggle target, allowed values are \"both\", \"themeOnly\", \"canvasOnly\"");
+
     SAVE_BOOL_PROP(highlightPosition);
     xmlNode = savePropertyUnsigned("cursorHighlightColor", uint32_t(cursorHighlightColor), root);
     xmlNode = savePropertyUnsigned("cursorHighlightBorderColor", uint32_t(cursorHighlightBorderColor), root);
@@ -1549,6 +1555,16 @@ void Settings::setThemeVariant(ThemeVariant theme) {
         return;
     }
     this->themeVariant = theme;
+    save();
+}
+
+auto Settings::getDarkModeTarget() const -> DarkModeTarget { return this->darkModeTarget; }
+
+void Settings::setDarkModeTarget(DarkModeTarget target) {
+    if (this->darkModeTarget == target) {
+        return;
+    }
+    this->darkModeTarget = target;
     save();
 }
 
@@ -2438,8 +2454,8 @@ auto Settings::getDeviceClassForDevice(GdkDevice* device) const -> InputDeviceTy
     return this->getDeviceClassForDevice(gdk_device_get_name(device), gdk_device_get_source(device));
 }
 
-auto Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource) const
-        -> InputDeviceTypeOption {
+auto Settings::getDeviceClassForDevice(const string& deviceName,
+                                       GdkInputSource deviceSource) const -> InputDeviceTypeOption {
     auto search = inputDeviceClasses.find(deviceName);
     if (search != inputDeviceClasses.end()) {
         return search->second.first;

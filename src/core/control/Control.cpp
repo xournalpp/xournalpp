@@ -1,8 +1,8 @@
 #include "Control.h"
 
-#include <algorithm>  // for max
-#include <cstdlib>    // for size_t
-#include <exception>  // for exce...
+#include <algorithm>   // for max
+#include <cstdlib>     // for size_t
+#include <exception>   // for exce...
 #include <functional>  // for bind
 #include <iterator>    // for end
 #include <memory>      // for make...
@@ -1499,6 +1499,7 @@ void Control::showSettings() {
 
                 ctrl->getActionDatabase()->setActionState(Action::TOGGLE_TOUCH_DRAWING,
                                                           settings->getTouchDrawingEnabled());
+                ctrl->getActionDatabase()->setActionState(Action::TOGGLE_DARK_MODE, ctrl->isDarkModeActive());
             });
     dlg.show(GTK_WINDOW(this->win->getWindow()));
 }
@@ -2692,6 +2693,69 @@ void Control::setRotationSnapping(bool enable) {
 void Control::setGridSnapping(bool enable) {
     settings->setSnapGrid(enable);
     this->actionDB->setActionState(Action::GRID_SNAPPING, enable);
+}
+
+auto Control::isDarkModeActive() const -> bool {
+    const bool themeDark =
+            this->win ? this->win->isDarkMode() : (settings->getThemeVariant() == THEME_VARIANT_FORCE_DARK);
+    const bool canvasDark = settings->getRecolorParameters().recolorizeMainView;
+
+    switch (settings->getDarkModeTarget()) {
+        case DarkModeTarget::THEME_ONLY:
+            return themeDark;
+        case DarkModeTarget::CANVAS_ONLY:
+            return canvasDark;
+        case DarkModeTarget::BOTH:
+        default:
+            return themeDark && canvasDark;
+    }
+}
+
+void Control::setDarkMode(bool dark) {
+    const auto target = settings->getDarkModeTarget();
+
+    if (target == DarkModeTarget::BOTH || target == DarkModeTarget::THEME_ONLY) {
+        if (dark) {
+            const auto currentVariant = settings->getThemeVariant();
+            if (currentVariant != THEME_VARIANT_FORCE_DARK) {
+                this->previousLightThemeVariant = currentVariant;
+            }
+            settings->setThemeVariant(THEME_VARIANT_FORCE_DARK);
+            if (this->win) {
+                this->win->updateColorscheme();
+            }
+        } else {
+            settings->setThemeVariant(this->previousLightThemeVariant);
+            if (this->win) {
+                this->win->updateColorscheme();
+                if (this->win->isDarkMode()) {
+                    settings->setThemeVariant(THEME_VARIANT_FORCE_LIGHT);
+                    this->win->updateColorscheme();
+                }
+            }
+        }
+    }
+
+    if (target == DarkModeTarget::BOTH || target == DarkModeTarget::CANVAS_ONLY) {
+        auto recolorParams = settings->getRecolorParameters();
+        recolorParams.recolorizeMainView = dark;
+        settings->setRecolorParameters(std::move(recolorParams));
+
+        if (this->win) {
+            this->win->getToolMenuHandler()->updateColorToolItemsRecoloring(
+                    dark ? std::make_optional(settings->getRecolorParameters().recolor) : std::nullopt);
+            this->win->reloadToolbars();
+            gtk_widget_queue_draw(this->win->getXournal()->getWidget());
+        }
+    }
+
+    this->actionDB->setActionState(Action::TOGGLE_DARK_MODE, isDarkModeActive());
+}
+
+void Control::setDarkModeTarget(DarkModeTarget target) {
+    settings->setDarkModeTarget(target);
+    this->actionDB->setActionState(Action::DARK_MODE_TARGET, target);
+    this->actionDB->setActionState(Action::TOGGLE_DARK_MODE, isDarkModeActive());
 }
 
 auto Control::getTextEditor() -> TextEditor* {
