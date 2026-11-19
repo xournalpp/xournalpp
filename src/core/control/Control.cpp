@@ -159,6 +159,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
     this->zoom = new ZoomControl();
 
     this->toolHandler = new ToolHandler(this, this->settings);
+    this->toolHandler->setZoomControl(this->zoom);
     this->toolHandler->loadState();
     this->toolHandler->loadButtonSettings();
 
@@ -1306,6 +1307,8 @@ void Control::toolLineStyleChanged() {
 void Control::eraserTypeChanged() {
     this->actionDB->setActionState(Action::TOOL_ERASER_TYPE, this->toolHandler->getEraserType());
 }
+
+void Control::toolZoomScalingChanged() { getCursor()->updateCursor(); }
 
 auto Control::getLineStyleToSelect() -> std::optional<string> const {
     std::optional<std::string> style;

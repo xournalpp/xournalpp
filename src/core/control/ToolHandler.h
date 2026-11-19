@@ -25,6 +25,7 @@
 class LineStyle;
 class Settings;
 class TextAlignment;
+class ZoomControl;
 
 
 // enum for ptrs that are dynamically pointing to different tools
@@ -55,6 +56,10 @@ public:
     virtual void toolFillChanged() = 0;
     virtual void toolLineStyleChanged() = 0;
     virtual void eraserTypeChanged() = 0;
+    /**
+     * @brief Called when the zoom-scaling flag of one of the (non-button) tools changed
+     */
+    virtual void toolZoomScalingChanged() = 0;
     virtual void toolChanged() = 0;
 
     virtual ~ToolListener();
@@ -191,6 +196,21 @@ public:
      * @param button size will be applied to
      */
     void setButtonSize(ToolSize size, Button button);
+
+    /**
+     * @brief Set the Zoom Control for zoom-aware tool sizing
+     *
+     * @param zoomControl
+     */
+    void setZoomControl(ZoomControl* zoomControl);
+
+    /**
+     * @brief Enable or disable zoom-scaling for a tool and notify the listener.
+     *
+     * When enabled, the tool's thickness is divided by the current zoom level,
+     * so it keeps a constant size on screen.
+     */
+    void setZoomScaling(ToolType type, bool enabled);
 
     /**
      * @brief Get the Thickness of the active tool
@@ -425,4 +445,5 @@ private:
 
     ToolListener* stateChangeListener = nullptr;
     Settings* settings = nullptr;
+    ZoomControl* zoomControl = nullptr;
 };

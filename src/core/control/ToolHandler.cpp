@@ -12,6 +12,7 @@
 #include "control/Tool.h"  // for Tool, Tool::toolSizes
 #include "control/settings/ButtonConfig.h"
 #include "control/settings/Settings.h"  // for SElement, Settings
+#include "control/zoom/ZoomControl.h"
 #include "model/StrokeStyle.h"          // for StrokeStyle
 #include "model/TextAlignment.h"
 #include "util/Assert.h"
@@ -310,10 +311,30 @@ void ToolHandler::setTextJustify(bool j) { this->getTool(TOOL_TEXT).setTextJusti
 
 auto ToolHandler::getTextJustify() const -> bool { return this->getTool(TOOL_TEXT).getTextJustify(); }
 
+void ToolHandler::setZoomControl(ZoomControl* zoomControl) { this->zoomControl = zoomControl; }
+
+void ToolHandler::setZoomScaling(ToolType type, bool enabled) {
+    Tool& tool = this->getTool(type);
+    if (tool.isZoomScaling() == enabled) {
+        return;
+    }
+    tool.setZoomScaling(enabled);
+    this->stateChangeListener->toolZoomScalingChanged();
+}
+
 auto ToolHandler::getThickness() const -> double {
     Tool* tool = this->activeTool;
     if (tool->thickness) {
-        return tool->thickness.value()[tool->getSize()];
+        double thickness = tool->thickness.value()[tool->getSize()];
+        if (tool->isZoomScaling() && this->zoomControl) {
+            // Keep the on-screen size constant: divide by the zoom (100% == 1.0)
+            constexpr double MIN_ZOOM = 0.001;
+            constexpr double MIN_THICKNESS = 0.01;
+            if (double zoom = this->zoomControl->getZoomReal(); zoom > MIN_ZOOM) {
+                return std::max(MIN_THICKNESS, thickness / zoom);
+            }
+        }
+        return thickness;
     }
 
     g_warning("Request size of \"%s\"", tool->getName().c_str());
