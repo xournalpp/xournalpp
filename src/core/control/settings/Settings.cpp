@@ -311,12 +311,24 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem) {
     for (xmlNodePtr x = cur->children; x != nullptr; x = x->next) {
         if (!xmlStrcmp(x->name, reinterpret_cast<const xmlChar*>("data"))) {
             xmlChar* name = xmlGetProp(x, reinterpret_cast<const xmlChar*>("name"));
+            if (name == nullptr) {
+                g_warning("Settings::parseData: <data> node without name property, skipping\n");
+                continue;
+            }
             parseData(x, elem.child(reinterpret_cast<const char*>(name)));
             xmlFree(name);
         } else if (!xmlStrcmp(x->name, reinterpret_cast<const xmlChar*>("attribute"))) {
             xmlChar* name = xmlGetProp(x, reinterpret_cast<const xmlChar*>("name"));
             xmlChar* value = xmlGetProp(x, reinterpret_cast<const xmlChar*>("value"));
             xmlChar* type = xmlGetProp(x, reinterpret_cast<const xmlChar*>("type"));
+
+            if (name == nullptr || value == nullptr || type == nullptr) {
+                g_warning("Settings::parseData: <attribute> node missing name, value or type property, skipping\n");
+                xmlFree(name);
+                xmlFree(value);
+                xmlFree(type);
+                continue;
+            }
 
             string sType = reinterpret_cast<const char*>(type);
 
