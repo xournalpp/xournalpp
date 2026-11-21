@@ -11,6 +11,9 @@
 
 #pragma once
 
+#include <string>       // for string
+#include <string_view>  // for string_view
+
 #include <cairo.h>  // for cairo_surface_t, cairo_status_t
 
 #include "XmlNode.h"  // for XmlNode
@@ -25,12 +28,16 @@ public:
 public:
     void setImage(cairo_surface_t* img);
 
+    void setImageData(std::string_view data);
+
     static cairo_status_t pngWriteFunction(XmlImageNode* image, const unsigned char* data, unsigned int length);
 
     void writeOut(OutputStream* out) override;
 
 private:
     cairo_surface_t* img;
+
+    std::string imageData;
 
     OutputStream* out;
     unsigned int pos;
