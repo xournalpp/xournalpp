@@ -1,5 +1,6 @@
 #include "RulerView.h"
 
+#include <algorithm>
 #include <cmath>
 
 #include "util/raii/CairoWrappers.h"
@@ -44,9 +45,15 @@ void RulerView::drawGeometryTool(cairo_t* cr) const {
         cairo_move_to(cr, x, 0.);
         cairo_line_to(cr, x, tick);
         if (millimeter % 10 == 0) {
-            cairo_set_font_size(cr, 0.35);
-            cairo_move_to(cr, x + 0.08, width - 0.25);
-            cairo_show_text(cr, std::to_string(millimeter / 10).c_str());
+            const std::string label = std::to_string(millimeter / 10);
+            cairo_set_font_size(cr, 0.32);
+            cairo_text_extents_t labelExtents;
+            cairo_text_extents(cr, label.c_str(), &labelExtents);
+            const double minLabelX = -length / 2. + 0.06 - labelExtents.x_bearing;
+            const double maxLabelX = length / 2. - 0.06 - (labelExtents.x_bearing + labelExtents.width);
+            const double labelX = std::clamp(x + 0.08, minLabelX, std::max(minLabelX, maxLabelX));
+            cairo_move_to(cr, labelX, width - 0.15);
+            cairo_show_text(cr, label.c_str());
         }
     }
     cairo_set_line_width(cr, 0.02);
@@ -58,16 +65,16 @@ void RulerView::drawDisplays(cairo_t* cr) const {
     cairo_transform(cr, &matrix);
     cairo_set_source_rgba(cr, 0.08, 0.22, 0.55, 0.9);
     cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
-    constexpr double displayY = 1.0;
+    constexpr double displayY = 1.15;
     constexpr double brandX = -1.45;
-    constexpr double badgeX = 1.0;
-    constexpr double badgeRadius = 0.7;
+    constexpr double badgeX = 0.5;
+    constexpr double badgeRadius = 0.36;
 
-    cairo_set_font_size(cr, 0.38);
+    cairo_set_font_size(cr, 0.28);
     cairo_text_extents_t brandExtents;
     cairo_text_extents(cr, "TRAD", &brandExtents);
     cairo_set_source_rgba(cr, 0.96, 0.93, 0.78, 1.0);
-    cairo_rectangle(cr, brandX - 0.15, displayY - 0.45, brandExtents.width + 0.3, 0.9);
+    cairo_rectangle(cr, brandX - 0.1, displayY - 0.28, brandExtents.width + 0.2, 0.56);
     cairo_fill(cr);
     cairo_set_source_rgba(cr, 0.08, 0.22, 0.55, 1.0);
     cairo_move_to(cr, brandX, displayY - brandExtents.y_bearing - brandExtents.height / 2.);
@@ -81,10 +88,10 @@ void RulerView::drawDisplays(cairo_t* cr) const {
     cairo_arc(cr, badgeX, displayY, badgeRadius, 0., 2. * M_PI);
     cairo_fill_preserve(cr);
     cairo_set_source_rgba(cr, 0.08, 0.22, 0.55, 0.9);
-    cairo_set_line_width(cr, 0.04);
+    cairo_set_line_width(cr, 0.03);
     cairo_stroke(cr);
 
-    cairo_set_font_size(cr, 0.38);
+    cairo_set_font_size(cr, 0.26);
     cairo_text_extents_t angleExtents;
     cairo_text_extents(cr, angle.c_str(), &angleExtents);
     cairo_new_path(cr);

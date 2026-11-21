@@ -80,6 +80,14 @@ void RulerController::finalizeStroke() {
     addStrokeToLayer();
 }
 
+void RulerController::cancelStroke() {
+    strokeMin = std::numeric_limits<double>::max();
+    strokeMax = std::numeric_limits<double>::lowest();
+    stroke.reset();
+    geometryTool->setStroke(nullptr);
+    geometryTool->notify();
+}
+
 auto RulerController::existsStroke() const -> bool {
     return strokeMin != std::numeric_limits<double>::max();
 }

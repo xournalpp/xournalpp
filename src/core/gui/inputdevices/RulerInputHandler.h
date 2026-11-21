@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GeometryToolInputHandler.h"
+#include "gui/inputdevices/PositionInputData.h"
 
 class RulerInputHandler: public GeometryToolInputHandler {
 public:
@@ -12,6 +13,9 @@ private:
     bool handlePointer(InputEvent const& event) override;
     double getMinHeight() const override;
     double getMaxHeight() const override;
+    void resetPointerSequence();
 
-    bool strokeStartedOnMotion = false;
+    DeviceId activeDeviceId{};
+    guint activeButton = 0;
+    bool buttonToolApplied = false;
 };

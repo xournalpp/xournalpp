@@ -444,7 +444,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
     initResourcePath(app_data->gladePath.get(), "ui/about.glade");
     initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
     initResourcePath(app_data->gladePath.get(), "ui/toolbar.ini", false);
-    initResourcePath(app_data->gladePath.get(), "resources-templates/pagetemplates.ini", false);
+    initResourcePath(app_data->gladePath.get(), "ui/pagetemplates.ini", false);
 
     app_data->control = std::make_unique<Control>(application, app_data->gladePath.get());
 

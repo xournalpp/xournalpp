@@ -25,6 +25,7 @@ public:
     void createStroke(double x);
     void updateStroke(double x);
     void finalizeStroke();
+    void cancelStroke();
     bool existsStroke() const;
 
 private:
