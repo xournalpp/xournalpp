@@ -17,7 +17,9 @@
 #include "SaveHandler.h"  // for SaveHandler
 
 class AudioContent;
+class Image;
 class Stroke;
+class XmlImageNode;
 class XmlNode;
 class XmlPointNode;
 
@@ -28,6 +30,8 @@ public:
     ~XojExportHandler() override;
 
 protected:
+    void visitImage(XmlImageNode* image, const Image* i) override;
+
     /**
      * Export the fill attributes
      */
