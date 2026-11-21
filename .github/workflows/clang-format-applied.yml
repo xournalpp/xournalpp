@@ -11,7 +11,7 @@ jobs:
   clang-format-checking:
     runs-on: ubuntu-latest
     env:
-      CLANG_FORMAT_VERSIONS: "22 21 20 19"
+      CLANG_FORMAT_VERSIONS: "23 22 21"
     steps:
       - uses: actions/checkout@v6
         with:
@@ -19,9 +19,9 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Setup APT repository
         env:
-          codename: noble
+          codename: resolute
         run: |
-          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+          wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key | sudo tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
           for VERSION in $CLANG_FORMAT_VERSIONS; do
             sudo apt-add-repository "deb http://apt.llvm.org/${{env.codename}}/ llvm-toolchain-${{env.codename}}-$VERSION main"
           done
