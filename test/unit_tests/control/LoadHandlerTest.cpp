@@ -25,6 +25,7 @@
 
 #include "control/xojfile/LoadHandler.h"
 #include "control/xojfile/SaveHandler.h"
+#include "control/xojfile/XojExportHandler.h"
 #include "model/Element.h"
 #include "model/Image.h"
 #include "model/Link.h"
@@ -267,6 +268,12 @@ static void compareMatrices(const xoj::util::Matrix& m1, const xoj::util::Matrix
     EXPECT_NEAR(m1.shift.y, m2.shift.y, DOUBLE_COMPARE_ERROR);
 }
 
+struct DeleteFileUponReturn {
+    explicit DeleteFileUponReturn(fs::path file): file(std::move(file)) {}
+    ~DeleteFileUponReturn() { EXPECT_NO_THROW(fs::remove(file)) << "Failed to remove the temporary file"; }
+    fs::path file;
+};
+
 /// Saves the document to a temporary location, reloads it and compares with the original
 static void checkSaveAndReload(const std::unique_ptr<Document>& doc) {
     const fs::path outPath = fs::temp_directory_path() / "xournalpp-test-units.xopp";
@@ -278,10 +285,7 @@ static void checkSaveAndReload(const std::unique_ptr<Document>& doc) {
         saver.saveTo(outPath);
     }
     // Ensure the file we just created gets deleted even if an assertion fails
-    struct DeleteFileUponReturn {
-        ~DeleteFileUponReturn() { EXPECT_NO_THROW(fs::remove(file)) << "Failed to remove the temporary file"; }
-        fs::path file;
-    } safeguard(outPath);
+    DeleteFileUponReturn safeguard(outPath);
 
     auto reloadedDoc = loadTestDocument(outPath);
     ASSERT_TRUE(reloadedDoc) << "Failed to reload Document \"" << char_cast(doc->getFilepath().u8string()) << "\"";
@@ -795,26 +799,60 @@ TEST(ControlLoadHandler, imageLoadJpeg) {
     checkImageFormat(img, "jpeg");
 }
 
-// FIXME: create a SaveHandlerTest.cpp and move this test here
-TEST(ControlLoadHandler, imageSaveJpegBackwardCompat) {
-    // File format version <= 4 requires images to be encoded as PNG in base64, but the version has not been bumped yet.
-    // For backward compatibility, check that loaded JPEG images are saved in PNG format.
-
+// FIXME: create a SaveHandlerTest.cpp and move these tests here
+TEST(ControlLoadHandler, imageSavePreservesFormat) {
     // FIXME: use a path in CMAKE_BINARY_DIR or CMAKE_CURRENT_BINARY_DIR
-    const fs::path outPath = fs::temp_directory_path() / "xournalpp-test-units_ControlLoaderHandler_imageLoadJpeg.xopp";
+    const fs::path outPath =
+            fs::temp_directory_path() / "xournalpp-test-units_ControlLoaderHandler_imageSavePreservesFormat.xopp";
     ASSERT_TRUE(!fs::exists(outPath));
+    DeleteFileUponReturn safeguard(outPath);
 
-    // save journal containing JPEG image
+    auto doc = loadTestDocument(GET_TESTFILE(u8"packaged_xopp/imgAttachment/doc_with_jpg.xopp"));
+    ASSERT_TRUE(doc) << "doc with jpeg should not be null";
+    ASSERT_EQ(1U, doc->getPageCount());
+    ConstPageRef originalPage = doc->getPage(0);
+    ASSERT_EQ(1U, originalPage->getLayerCount());
+    const Layer* originalLayer = originalPage->getLayersView()[0];
+    ASSERT_EQ(originalLayer->getElementsView().size(), 1);
+    const Image* originalImg = dynamic_cast<const Image*>(originalLayer->getElementsView()[0]);
+    ASSERT_TRUE(originalImg) << "element should be an image";
+    const std::string originalData = originalImg->getBinaryData();
+    ASSERT_FALSE(originalData.empty());
+
     {
-        auto doc = loadTestDocument(GET_TESTFILE(u8"packaged_xopp/imgAttachment/doc_with_jpg.xopp"));
-        ASSERT_TRUE(doc) << "doc with jpeg should not be null";
-
         SaveHandler saver;
         saver.prepareSave(doc.get(), outPath);
         saver.saveTo(outPath);
     }
 
-    // check that the image is saved as PNG
+    auto reloadedDoc = loadTestDocument(outPath);
+    ASSERT_TRUE(reloadedDoc) << "saved doc should not be null";
+    ASSERT_EQ(1U, reloadedDoc->getPageCount());
+    ConstPageRef reloadedPage = reloadedDoc->getPage(0);
+    ASSERT_EQ(1U, reloadedPage->getLayerCount());
+    const Layer* reloadedLayer = reloadedPage->getLayersView()[0];
+    ASSERT_EQ(reloadedLayer->getElementsView().size(), 1);
+
+    const Image* reloadedImg = dynamic_cast<const Image*>(reloadedLayer->getElementsView()[0]);
+    ASSERT_TRUE(reloadedImg) << "element should be an image";
+    checkImageFormat(reloadedImg, "jpeg");
+    EXPECT_EQ(reloadedImg->getBinaryData(), originalData) << "image data should not be re-encoded";
+}
+
+TEST(ControlLoadHandler, xojExportEncodesImagesAsPng) {
+    const fs::path outPath = fs::temp_directory_path() / "xournalpp-test-units_ControlLoaderHandler_xojExport.xoj";
+    ASSERT_TRUE(!fs::exists(outPath));
+    DeleteFileUponReturn safeguard(outPath);
+
+    {
+        auto doc = loadTestDocument(GET_TESTFILE(u8"packaged_xopp/imgAttachment/doc_with_jpg.xopp"));
+        ASSERT_TRUE(doc) << "doc with jpeg should not be null";
+
+        XojExportHandler saver;
+        saver.prepareSave(doc.get(), outPath);
+        saver.saveTo(outPath);
+    }
+
     auto doc = loadTestDocument(outPath);
     ASSERT_TRUE(doc) << "saved doc should not be null";
     ASSERT_EQ(1U, doc->getPageCount());
@@ -826,8 +864,6 @@ TEST(ControlLoadHandler, imageSaveJpegBackwardCompat) {
     const Image* img = dynamic_cast<const Image*>(layer->getElementsView()[0]);
     ASSERT_TRUE(img) << "element should be an image";
     checkImageFormat(img, "png");
-
-    fs::remove(outPath);
 }
 
 TEST(ControlLoadHandler, testLatex_v4) {

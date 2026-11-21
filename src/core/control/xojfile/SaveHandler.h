@@ -24,9 +24,11 @@
 #include "filesystem.h"  // for path
 
 class XmlPointNode;
+class XmlImageNode;
 class ProgressListener;
 class AudioContent;
 class Document;
+class Image;
 class Layer;
 class OutputStream;
 class Stroke;
@@ -57,6 +59,7 @@ protected:
 
     virtual void visitPage(XmlNode* root, ConstPageRef p, const Document* doc, int id, const fs::path& target);
     virtual void visitLayer(XmlNode* page, const Layer* l);
+    virtual void visitImage(XmlImageNode* image, const Image* i);
     virtual void visitStroke(XmlPointNode* stroke, const Stroke* s);
 
     /**
