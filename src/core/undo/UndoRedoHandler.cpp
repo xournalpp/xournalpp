@@ -16,33 +16,14 @@
 #include "util/XojMsgBox.h"   // for XojMsgBox
 #include "util/i18n.h"        // for _, FS, _F
 
-using std::string;
-
-
-template <typename T>
-T* GetPtr(T* ptr) {
-    return ptr;
-}
-
-template <typename T>
-T* GetPtr(const std::unique_ptr<T>& ptr) {
-    return ptr.get();
-}
+static constexpr size_t UNDO_STACK_MAX_SIZE = 128;
 
 template <typename PtrType>
 inline void printAction(PtrType& action, size_t n = 666) {
     if (action) {
-        g_message("%3zu -- %p / %s", n, GetPtr(action), action->getClassName().c_str());
+        g_message("%3zu -- %p / %s", n, std::to_address(action), action->getClassName().c_str());
     } else {
         g_message("%3zu -- (null)", n);
-    }
-}
-
-template <typename PtrType>
-inline void printUndoList(const std::deque<PtrType>& list) {
-    size_t n = 1;
-    for (const auto& action: list) {
-        printAction(action, n++);
     }
 }
 
@@ -52,18 +33,44 @@ constexpr bool UNDO_TRACE_BOOL = true;
 constexpr bool UNDO_TRACE_BOOL = false;
 #endif
 
+auto UndoRedoHandler::UndoStack::next(iterator it) -> iterator {
+    ++it;
+    if (it == operations.end()) {
+        it = operations.begin();
+    }
+    return it;
+}
+
+auto UndoRedoHandler::UndoStack::prev(iterator it) -> iterator {
+    if (it == operations.begin()) {
+        it = operations.end();
+    }
+    return std::prev(it);
+}
+
+UndoRedoHandler::UndoStack::UndoStack():
+        operations(std::vector<UndoActionPtr>(UNDO_STACK_MAX_SIZE)),
+        start(operations.begin()),
+        head(operations.begin()),
+        end(operations.begin()) {}
+
+
 void UndoRedoHandler::printContents() {
-    if constexpr (UNDO_TRACE_BOOL)  // NOLINT
-    {
-        g_message("redoList");             // NOLINT
-        printUndoList(this->redoList);     // NOLINT
-        g_message("undoList");             // NOLINT
-        printUndoList(this->undoList);     // NOLINT
-        g_message("savedUndo");            // NOLINT
-        if (this->savedUndo)               // NOLINT
-        {                                  // NOLINT
-            printAction(this->savedUndo);  // NOLINT
-        }                                  // NOLINT
+    if constexpr (UNDO_TRACE_BOOL) {
+        size_t n = 0;
+        g_message("undoList");
+        for (auto it = stack.start; it != stack.head; it = stack.next(it)) {
+            printAction(*it, ++n);
+        }
+        n = 0;
+        g_message("redoList");
+        for (auto it = stack.head; it != stack.end; it = stack.next(it)) {
+            printAction(*it, ++n);
+        }
+        g_message("savedUndo");
+        if (this->savedUndo) {
+            printAction(this->savedUndo);
+        }
     }
 }
 
@@ -73,13 +80,12 @@ UndoRedoHandler::~UndoRedoHandler() { clearContents(); }
 
 void UndoRedoHandler::clearContents() {
 #ifdef UNDO_TRACE
-    for (auto const& undoAction: this->undoList) {
-        g_message("clearContents()::Delete UndoAction: %p / %s", undoAction.get(), undoAction->getClassName().c_str());
+    for (auto it = stack.start; it != stack.end; it = stack.next(it)) {
+        g_message("clearContents()::Delete UndoAction: %p / %s", it->get(), (*it)->getClassName().c_str());
     }
 #endif  // UNDO_TRACE
 
-    undoList.clear();
-    clearRedo();
+    stack = UndoStack();
 
     this->savedUndo = nullptr;
     this->autosavedUndo = nullptr;
@@ -88,32 +94,33 @@ void UndoRedoHandler::clearContents() {
 }
 
 void UndoRedoHandler::clearRedo() {
+    for (auto it = stack.head; it != stack.end; it = stack.next(it)) {
 #ifdef UNDO_TRACE
-    for (auto const& undoAction: this->redoList) {
-        g_message("clearRedo()::Delete UndoAction: %p / %s", undoAction.get(), undoAction->getClassName().c_str());
-    }
+        g_message("clearRedo()::Delete UndoAction: %p / %s", it->get(), (*it)->getClassName().c_str());
 #endif
-    redoList.clear();
+        it->reset();
+    }
+    stack.end = stack.head;
+
     printContents();
 }
 
 void UndoRedoHandler::undo() {
-    if (this->undoList.empty()) {
+    if (stack.start == stack.head) {
+        g_warning("UndoRedoHandler::undo() but nothing to undo");
         return;
     }
 
-    xoj_assert(this->undoList.back());
-
-    auto& undoAction = *this->undoList.back();
-    this->redoList.emplace_back(std::move(this->undoList.back()));
-    this->undoList.pop_back();
+    stack.head = stack.prev(stack.head);
+    xoj_assert(*stack.head);
+    auto& undoAction = *(*stack.head);
 
     bool undoResult = undoAction.undo(this->control);
 
     if (!undoResult) {
-        string msg = FS(_F("Could not undo \"{1}\"\n"
-                           "Something went wrong… Please write a bug report…") %
-                        undoAction.getText());
+        std::string msg = FS(_F("Could not undo \"{1}\"\n"
+                                "Something went wrong… Please write a bug report…") %
+                             undoAction.getText());
         XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
     }
 
@@ -123,23 +130,21 @@ void UndoRedoHandler::undo() {
 }
 
 void UndoRedoHandler::redo() {
-    if (this->redoList.empty()) {
+    if (stack.head == stack.end) {
+        g_warning("UndoRedoHandler::redo() but nothing to redo");
         return;
     }
 
-    xoj_assert(this->redoList.back());
-
-    UndoAction& redoAction = *this->redoList.back();
-
-    this->undoList.emplace_back(std::move(this->redoList.back()));
-    this->redoList.pop_back();
+    xoj_assert(*stack.head);
+    auto& redoAction = *(*stack.head);
+    stack.head = stack.next(stack.head);
 
     bool redoResult = redoAction.redo(this->control);
 
     if (!redoResult) {
-        string msg = FS(_F("Could not redo \"{1}\"\n"
-                           "Something went wrong… Please write a bug report…") %
-                        redoAction.getText());
+        std::string msg = FS(_F("Could not redo \"{1}\"\n"
+                                "Something went wrong… Please write a bug report…") %
+                             redoAction.getText());
         XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
     }
 
@@ -148,9 +153,9 @@ void UndoRedoHandler::redo() {
     printContents();
 }
 
-auto UndoRedoHandler::canUndo() -> bool { return !this->undoList.empty(); }
+auto UndoRedoHandler::canUndo() -> bool { return stack.head != stack.start; }
 
-auto UndoRedoHandler::canRedo() -> bool { return !this->redoList.empty(); }
+auto UndoRedoHandler::canRedo() -> bool { return stack.head != stack.end; }
 
 /**
  * Adds an undo Action to the list, or if nullptr does nothing
@@ -160,18 +165,34 @@ void UndoRedoHandler::addUndoAction(UndoActionPtr action) {
         return;
     }
 
-    this->undoList.emplace_back(std::move(action));
     clearRedo();
-    fireUpdateUndoRedoButtons(this->undoList.back()->getPages());
+
+    auto& a = *action;
+    *stack.head = std::move(action);
+    stack.head = stack.next(stack.head);
+    stack.end = stack.head;
+
+    if (stack.head == stack.start) {
+        // The stack is full, we drop the oldest entry to make place for next time
+        stack.start = stack.next(stack.start);
+#ifdef UNDO_TRACE
+        // the stack is full, we will overwrite this entry
+        g_message("addUndoAction()::Delete UndoAction: %p / %s", stack.head->get(),
+                  (*stack.head)->getClassName().c_str());
+#endif  // UNDO_TRACE
+        stack.head->reset();
+    }
+
+    fireUpdateUndoRedoButtons(a.getPages());
 
     printContents();
 }
 
-auto UndoRedoHandler::undoDescription() -> string {
-    if (!this->undoList.empty()) {
-        UndoAction& a = *this->undoList.back();
+auto UndoRedoHandler::undoDescription() -> std::string {
+    if (canUndo()) {
+        UndoAction& a = **stack.prev(stack.head);
         if (!a.getText().empty()) {
-            string txt = _("Undo: ");
+            std::string txt = _("Undo: ");
             txt += a.getText();
             return txt;
         }
@@ -179,11 +200,11 @@ auto UndoRedoHandler::undoDescription() -> string {
     return _("Undo");
 }
 
-auto UndoRedoHandler::redoDescription() -> string {
-    if (!this->redoList.empty()) {
-        UndoAction& a = *this->redoList.back();
+auto UndoRedoHandler::redoDescription() -> std::string {
+    if (canRedo()) {
+        UndoAction& a = **stack.head;
         if (!a.getText().empty()) {
-            string txt = _("Redo: ");
+            std::string txt = _("Redo: ");
             txt += a.getText();
             return txt;
         }
@@ -206,24 +227,20 @@ void UndoRedoHandler::fireUpdateUndoRedoButtons(const std::vector<PageRef>& page
 void UndoRedoHandler::addUndoRedoListener(UndoRedoListener* listener) { this->listener.emplace_back(listener); }
 
 auto UndoRedoHandler::isChanged() -> bool {
-    if (this->undoList.empty()) {
+    if (!canUndo()) {
         return this->savedUndo;
     }
 
-    return this->savedUndo != this->undoList.back().get();
+    return this->savedUndo != stack.prev(stack.head)->get();
 }
 
 auto UndoRedoHandler::isChangedAutosave() -> bool {
-    if (this->undoList.empty()) {
+    if (!canUndo()) {
         return this->autosavedUndo;
     }
-    return this->autosavedUndo != this->undoList.back().get();
+    return this->autosavedUndo != stack.prev(stack.head)->get();
 }
 
-void UndoRedoHandler::documentAutosaved() {
-    this->autosavedUndo = this->undoList.empty() ? nullptr : this->undoList.back().get();
-}
+void UndoRedoHandler::documentAutosaved() { this->autosavedUndo = stack.prev(stack.head)->get(); }
 
-void UndoRedoHandler::documentSaved() {
-    this->savedUndo = this->undoList.empty() ? nullptr : this->undoList.back().get();
-}
+void UndoRedoHandler::documentSaved() { this->savedUndo = stack.prev(stack.head)->get(); }

@@ -11,7 +11,6 @@
 
 #pragma once
 
-#include <deque>   // for deque
 #include <string>  // for string
 #include <vector>  // for vector
 
@@ -60,8 +59,25 @@ private:
     void printContents();
 
 private:
-    std::deque<UndoActionPtr> undoList;
-    std::deque<UndoActionPtr> redoList;
+    /// A circular buffer, with an extra head indicating undone operations
+    struct UndoStack {
+        UndoStack();
+
+    private:
+        std::vector<UndoActionPtr> operations;
+
+    public:
+        using iterator = decltype(operations)::iterator;
+
+        // the undo part is [start, head), the redo part is [head, end)
+        iterator start;  ///< oldest operation in the stack. Will get overriden upon overflow
+        iterator head;   ///< either end or first undone operation. == next(most recent not-undone operation)
+        iterator end;    ///< past the last operation (done or undone alike)
+
+        iterator next(iterator it);  ///< next, going back to operations.begin() if end() is reached
+        iterator prev(iterator it);  ///< prev, going back to std::prev(operations.end()) if at begin()
+    };
+    UndoStack stack;
 
     UndoAction* savedUndo = nullptr;
     UndoAction* autosavedUndo = nullptr;
