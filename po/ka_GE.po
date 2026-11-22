@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 13:20+0000\n"
-"PO-Revision-Date: 2026-11-15 04:21\n"
+"POT-Creation-Date: 2026-11-21 14:59+0000\n"
+"PO-Revision-Date: 2026-11-22 04:22\n"
 "Last-Translator: \n"
 "Language-Team: Georgian\n"
 "Language: ka_GE\n"
@@ -23,10 +23,12 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 msgstr ""
 
 #: ../src/core/control/Control.cpp:235
+#, c++-format
 msgid "Filesystem error: {1}"
 msgstr ""
 
 #: ../src/core/control/Control.cpp:247
+#, c++-format
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr ""
 
@@ -39,6 +41,7 @@ msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr ""
 
 #: ../src/core/control/Control.cpp:612
+#, c++-format
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr ""
 
@@ -77,6 +80,7 @@ msgid "With PDF background"
 msgstr "ინვერსიული ორმხრივი ბეჭედი"
 
 #: ../src/core/control/Control.cpp:860
+#, c++-format
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
@@ -91,30 +95,36 @@ msgid "Unable to retrieve pdf page."
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1533
+#, c++-format
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1553
+#, c++-format
 msgid "file: {1}"
 msgstr "ფაილი: {1}"
 
 #: ../src/core/control/Control.cpp:1596
+#, c++-format
 msgid "<i>Above error repeated {1} times</i>"
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1608
+#, c++-format
 msgid "<i>&lt;{1} more lines of error messages&gt;</i>"
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1647
+#, c++-format
 msgid "Error opening file \"{1}\".\n\n"
 "<tt>{2}</tt>\n"
 "<b>{3}</b>"
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1661
+#, c++-format
 msgid "There were some errors while loading the file. Some information might have been lost. Do not overwrite your old file unless you are sure everything you need was loaded correctly.\n\n"
 "Error messages:\n"
 "<tt>{1}</tt>"
@@ -129,23 +139,28 @@ msgid "The file being loaded has a file format version newer than the one curren
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1703
+#, c++-format
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1724
+#, c++-format
 msgid "Error reading PNG file \"{1}\""
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1759
+#, c++-format
 msgid "Error reading template file \"{1}\""
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1778
+#, c++-format
 msgid "Failed to determine if path exists \"{1}\": {2}"
 msgstr "ბილიკის არსებობის დადგენის შეცდომა \"{1}\": {2}"
 
 #: ../src/core/control/Control.cpp:1779
+#, c++-format
 msgid "That file does not exist:\n"
 "\"{1}\""
 msgstr "ის ფაილი არ არსებობს:\n"
@@ -156,11 +171,13 @@ msgid "The attached background file could not be found. It might have been moved
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1894
+#, c++-format
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1904
+#, c++-format
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr ""
@@ -218,6 +235,7 @@ msgid "Discard"
 msgstr "მოცილება"
 
 #: ../src/core/control/Control.cpp:2357
+#, c++-format
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -267,6 +285,7 @@ msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
 #: ../src/core/control/ExportHelper.cpp:81
+#, c++-format
 msgid "The check for overwriting the background failed with: {1}"
 msgstr ""
 
@@ -287,10 +306,12 @@ msgid "Global template file is not a regular file. Please check your settings. "
 msgstr ""
 
 #: ../src/core/control/LatexController.cpp:183
+#, c++-format
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr ""
 
 #: ../src/core/control/LatexController.cpp:244
+#, c++-format
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr ""
 
@@ -302,6 +323,7 @@ msgstr ""
 #: ../src/core/control/XournalMain.cpp:231
 #: ../src/core/control/xojfile/LoadHandler.cpp:262
 #: ../src/core/control/xojfile/LoadHandler.cpp:281
+#, c++-format
 msgid "Error reading PDF: {1}"
 msgstr ""
 
@@ -315,10 +337,12 @@ msgid "PDF background missing"
 msgstr ""
 
 #: ../src/core/control/PrintHandler.cpp:122
+#, c++-format
 msgid "Running print operation failed with {1}"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:124
+#, c++-format
 msgid "Failed to delete file: {1}"
 msgstr ""
 
@@ -343,26 +367,32 @@ msgid "Restore file"
 msgstr "ფაილის აღდგენა"
 
 #: ../src/core/control/XournalMain.cpp:162
+#, c++-format
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:177
+#, c++-format
 msgid "Error loading document: {1}"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:210
+#, c++-format
 msgid "Error exporting image: {1}"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:239
+#, c++-format
 msgid "Error saving document: {1}"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:269
+#, c++-format
 msgid "Error exporting PDF: {1}"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:375
+#, c++-format
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -383,10 +413,12 @@ msgid "Sorry, Xournal++ can only open one file at once.\n"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:413
+#, c++-format
 msgid "File {1} does not exist."
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:417
+#, c++-format
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -414,6 +446,7 @@ msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:636
+#, c++-format
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
@@ -484,14 +517,17 @@ msgid "Display advanced export options"
 msgstr ""
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:21
+#, c++-format
 msgid "Error while autosaving: {1}"
 msgstr ""
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:46
+#, c++-format
 msgid "Autosaving to {1}"
 msgstr "ავტოშენახვა ფაილში {1}"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:73
+#, c++-format
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr ""
 
@@ -500,6 +536,7 @@ msgid "The check for overwriting the background failed with:\n"
 msgstr ""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:44
+#, c++-format
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
 msgstr ""
@@ -510,6 +547,7 @@ msgstr "მორგებული გატანა"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:52
 #: ../src/core/control/jobs/SaveJob.cpp:138
+#, c++-format
 msgid "Save file error: {1}"
 msgstr ""
 
@@ -534,32 +572,39 @@ msgid "PDF Export"
 msgstr "PDF-ში გატანა"
 
 #: ../src/core/control/jobs/SaveJob.cpp:122
+#, c++-format
 msgid "Save file error, can't backup: {1}"
 msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:108
+#, c++-format
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:114
+#, c++-format
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:119
+#, c++-format
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:127
+#, c++-format
 msgid "Could not save .tex file: {1}"
 msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:142
+#, c++-format
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr ""
 
 #: ../src/core/control/layer/LayerController.cpp:424
+#, c++-format
 msgid "Layer {1}"
 msgstr "ფენა {1}"
 
@@ -641,12 +686,14 @@ msgstr ""
 #: ../src/core/control/xojfile/LoadHandler.cpp:141
 #: ../src/core/control/xojfile/LoadHandler.cpp:734
 #: ../src/core/control/xojfile/LoadHandler.cpp:748
+#, c++-format
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:133
 #: ../src/core/control/xojfile/LoadHandler.cpp:740
 #: ../src/core/control/xojfile/LoadHandler.cpp:758
+#, c++-format
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr ""
 
@@ -655,43 +702,53 @@ msgid "Unable to create temporary file for audio attachment"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:163
+#, c++-format
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:170
+#, c++-format
 msgid "Could not open attachment: {1}. Error message: Could not write temporary file"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:203
 #: ../src/core/control/xojfile/LoadHandler.cpp:228
+#, c++-format
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:238
+#, c++-format
 msgid "Cloned pixmap page background on page {1} references inexistent page {2}"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:555
+#, c++-format
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:562
+#, c++-format
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\""
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:570
+#, c++-format
 msgid "The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:583
+#, c++-format
 msgid "The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\""
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:592
+#, c++-format
 msgid "Could not open file: \"{1}\""
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:608
+#, c++-format
 msgid "XML Parser error: {1}"
 msgstr ""
 
@@ -717,26 +774,32 @@ msgid "Document is corrupted (no pages found in file)"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:791
+#, c++-format
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:327
+#, c++-format
 msgid "Could not write background \"{1}\", {2}"
 msgstr ""
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:434
+#, c++-format
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:126
+#, c++-format
 msgid "Ignoring unexpected {1} tag inside unrecognized document structure"
 msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:131
+#, c++-format
 msgid "Ignoring unexpected {1} tag under {2}"
 msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:180
+#, c++-format
 msgid "Unexpected text in {1} node: \"{2}\""
 msgstr ""
 
@@ -753,6 +816,7 @@ msgid "PDF background filename is empty"
 msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:347
+#, c++-format
 msgid "Discarding unused audio timestamp element. Filename: {1}"
 msgstr ""
 
@@ -761,18 +825,22 @@ msgid "Found stroke that contains an odd number of valid coordinates. Discarding
 msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:435
+#, c++-format
 msgid "Found stroke with more coordinates than pressure points: {1}, expected {2}. Shrinking stroke to match pressure point count"
 msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:441
+#, c++-format
 msgid "Found stroke with too many pressure points: {1}, expected {2}. Discarding remaining pressure points"
 msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:576
+#, c++-format
 msgid "Ignoring attachment tag under {1}"
 msgstr ""
 
 #: ../src/core/gui/GladeGui.cpp:25
+#, c++-format
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr ""
 
@@ -781,6 +849,7 @@ msgid "Double click to edit. CTRL + click to open."
 msgstr ""
 
 #: ../src/core/gui/PageView.cpp:410
+#, c++-format
 msgid "Unable to play audio recording {1}"
 msgstr ""
 
@@ -791,6 +860,7 @@ msgid "Loading..."
 msgstr "იტვირთება..."
 
 #: ../src/core/gui/PageView.cpp:1048
+#, c++-format
 msgid "Scroll to page {1}"
 msgstr "გადახვევა გვერდზე {1}"
 
@@ -812,10 +882,12 @@ msgid "Text not found"
 msgstr "ტექსტი ვერ მოიძებნა"
 
 #: ../src/core/gui/SearchBar.cpp:144
+#, c++-format
 msgid "Text found once on page {1}"
 msgstr ""
 
 #: ../src/core/gui/SearchBar.cpp:145
+#, c++-format
 msgid "Text found {1} times on page {2} ({3} of {1})"
 msgstr ""
 
@@ -1026,18 +1098,22 @@ msgid "Export"
 msgstr "გატანა"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:115
+#, c++-format
 msgid "Failed to parse external editor command: {1}"
 msgstr ""
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:131
+#, c++-format
 msgid "Could not spawn editor: {1}"
 msgstr ""
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:162
+#, c++-format
 msgid "Could not wait for editor: {1}"
 msgstr ""
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:171
+#, c++-format
 msgid "Editor exited with bad status {1}"
 msgstr ""
 
@@ -1081,6 +1157,7 @@ msgid "GtkSourceView was disabled when building Xournal++! Some options will not
 msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
+#, c++-format
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr ""
 
@@ -1089,10 +1166,12 @@ msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:177
+#, c++-format
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:188
+#, c++-format
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr ""
 
@@ -1139,6 +1218,7 @@ msgid "PDF Text Marker"
 msgstr "PDF ტექსტის მარკერი"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:49
+#, c++-format
 msgid "<b>{1}</b>\n"
 "{2}{3}"
 msgstr "<b>{1}</b>\n"
@@ -1169,6 +1249,7 @@ msgid "User palettes"
 msgstr "მომხმარებლის პალიტრები"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:99
+#, c++-format
 msgid "<i>The palettes shown below are obtained from the <a href=\"{1}\">Built-in palettes</a> and <a href=\"{2}\">User palettes</a> directories:</i>\n"
 msgstr "<i>ნაჩვენები პალიტრები აღებულია <a href=\"{1}\">ჩაშენებული პალიტრებიდან</a> და <a href=\"{2}\">მომხმარებლის პალიტრის</a> საქაღალდეებიდან:</i>\n"
 
@@ -1261,6 +1342,7 @@ msgid "Load file"
 msgstr "ფაილის ჩატვირთვა"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:107
+#, c++-format
 msgid "This image could not be loaded. Error message: {1}"
 msgstr ""
 
@@ -1277,22 +1359,27 @@ msgid "Show only not used pages (one unused page)"
 msgstr ""
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:57
+#, c++-format
 msgid "Show only not used pages ({1} unused pages)"
 msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:162
+#, c++-format
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:164
+#, c++-format
 msgid "Removed tool item from Toolbar {1} ID {2}"
 msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:168
+#, c++-format
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:173
+#, c++-format
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
 msgstr ""
 
@@ -1342,6 +1429,7 @@ msgid "Plugins"
 msgstr "დამატებები"
 
 #: ../src/core/gui/menus/menubar/Menubar.cpp:54
+#, c++-format
 msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr ""
 
@@ -1439,11 +1527,13 @@ msgid "Spacer"
 msgstr "გამყოფი"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:71
+#, c++-format
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:80
+#, c++-format
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr ""
@@ -1774,15 +1864,18 @@ msgid "Page"
 msgstr "გვერდი"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:82
+#, c++-format
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr " {1}-დან"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:85
+#, c++-format
 msgid "PDF Page {1}"
 msgstr "PDF გვერდი {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:87
+#, c++-format
 msgid "PDF {1}"
 msgstr "PDF {1}"
 
@@ -1868,6 +1961,7 @@ msgstr "კოპირება"
 
 #: ../src/core/model/Document.cpp:331 ../src/core/model/Document.cpp:340
 #: ../src/core/model/Document.cpp:343
+#, c++-format
 msgid "Document not loaded! ({1}), {2}"
 msgstr ""
 
@@ -1904,6 +1998,7 @@ msgid "PDF page number is out of range"
 msgstr ""
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:21
+#, c++-format
 msgid "Unknown pdf backend: {1}. Available backends are: {2}. Using default backend."
 msgstr ""
 
@@ -2060,11 +2155,13 @@ msgid "Edit text"
 msgstr "ტექსტის ჩასწორება"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:114
+#, c++-format
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr ""
 
 #: ../src/core/undo/UndoRedoHandler.cpp:140
+#, c++-format
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr ""
@@ -2094,59 +2191,72 @@ msgid "ElementRange::parse(): element indices start with 1"
 msgstr ""
 
 #: ../src/util/GzInputStream.cpp:48
+#, c++-format
 msgid "Error opening file \"{1}\":\n"
 "{2}"
 msgstr ""
 
 #: ../src/util/GzInputStream.cpp:62 ../src/util/ZipInputStream.cpp:52
+#, c++-format
 msgid "Error occurred while closing file\n"
 "Error code {1}"
 msgstr ""
 
 #: ../src/util/OutputStream.cpp:30
+#, c++-format
 msgid "Error opening file: \"{1}\""
 msgstr ""
 
 #: ../src/util/OutputStream.cpp:51
+#, c++-format
 msgid "Error writing data to file: \"{1}\""
 msgstr ""
 
 #: ../src/util/OutputStream.cpp:52
+#, c++-format
 msgid "Error code {1}. Message:"
 msgstr ""
 
 #: ../src/util/OutputStream.cpp:72
+#, c++-format
 msgid "Error occurred while closing file: \"{1}\""
 msgstr ""
 
 #: ../src/util/OutputStream.cpp:73
+#, c++-format
 msgid "Error code {1}"
 msgstr "შეცდომის კოდი {1}"
 
 #: ../src/util/PathUtil.cpp:124
+#, c++-format
 msgid "Could not open file: {1}"
 msgstr "ფაილის გახსნის შედომა: {1}"
 
 #: ../src/util/PathUtil.cpp:131
+#, c++-format
 msgid "Error reading \"{1}\":\n"
 "{2}"
 msgstr "\"{1}\"-ის წაკითხვის შეცდომა:\n"
 "{2}"
 
 #: ../src/util/PathUtil.cpp:449
+#, c++-format
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
 #: ../src/util/PathUtil.cpp:458
+#, c++-format
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr ""
 
 #: ../src/util/Util.cpp:66
+#, c++-format
 msgid "Error {1} executing system command: {2}"
 msgstr ""
 
 #: ../src/util/XojMsgBox.cpp:186
+#, c++-format
 msgid "The file {1} already exists! Do you want to replace it?"
 msgstr ""
 
@@ -2159,11 +2269,13 @@ msgid "Replace"
 msgstr "ჩანაცვლება"
 
 #: ../src/util/XojMsgBox.cpp:216
+#, c++-format
 msgid "Unable to open the link: {1}\n"
 "{2}"
 msgstr ""
 
 #: ../src/util/ZipInputStream.cpp:38
+#, c++-format
 msgid "Error opening file \"{1}\" in zip archive:\n"
 "{2}"
 msgstr ""
@@ -2173,14 +2285,17 @@ msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
 msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:140
+#, c++-format
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
 msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:144
+#, c++-format
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
 msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:148
+#, c++-format
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
 msgstr ""
 
@@ -2189,10 +2304,12 @@ msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:193
+#, c++-format
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
 msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:211
+#, c++-format
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
 msgstr ""
 
@@ -4518,67 +4635,67 @@ msgstr "GTK3 დემოს გაშვება"
 msgid "About"
 msgstr "შესახებ"
 
-#: ../resources-templates/pagetemplates.ini.in:17
+#: ../resources-templates/pagetemplates.ini.in:16
 msgid "Ruled with vertical line on the right"
 msgstr ""
 
-#: ../resources-templates/pagetemplates.ini.in:42
+#: ../resources-templates/pagetemplates.ini.in:41
 msgid "Graph with border"
 msgstr "გრაფიკი საზღვრით"
 
-#: ../resources-templates/pagetemplates.ini.in:47
+#: ../resources-templates/pagetemplates.ini.in:46
 msgid "Graph with border (bold every 5th)"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:51
+#: ../resources-templates/toolbar.ini.in:50
 msgid "All Tools"
 msgstr "ყველა ხელსაწყო"
 
-#: ../resources-templates/toolbar.ini.in:56
+#: ../resources-templates/toolbar.ini.in:55
 msgid "Portrait"
 msgstr "პორტრეტი"
 
-#: ../resources-templates/toolbar.ini.in:62
+#: ../resources-templates/toolbar.ini.in:61
 msgid "Minimal Left"
 msgstr "მინიმალურად მარცხნივ"
 
-#: ../resources-templates/toolbar.ini.in:66
+#: ../resources-templates/toolbar.ini.in:65
 msgid "Minimal Top"
 msgstr "მინიმალურად ზემოთ"
 
-#: ../resources-templates/toolbar.ini.in:70
+#: ../resources-templates/toolbar.ini.in:69
 msgid "Xournal++"
 msgstr "Xournal++"
 
-#: ../resources-templates/toolbar.ini.in:78
+#: ../resources-templates/toolbar.ini.in:77
 msgid "Tablet mode"
 msgstr "ტაბლეტის რეჟიმი"
 
-#: ../resources-templates/toolbar.ini.in:84
+#: ../resources-templates/toolbar.ini.in:83
 msgid "Right hand Note Taking"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:87
+#: ../resources-templates/toolbar.ini.in:86
 msgid "Toolbar Left"
 msgstr "მარცხენა პანელი"
 
-#: ../resources-templates/toolbar.ini.in:93
+#: ../resources-templates/toolbar.ini.in:92
 msgid "Toolbar Right"
 msgstr "ხელსაწყოთა პანელი მარჯვნივ"
 
-#: ../resources-templates/toolbar.ini.in:108
+#: ../resources-templates/toolbar.ini.in:107
 msgid "Empty Toolbar"
 msgstr "ცარიელი ხელსაწყოთა პანელი"
 
-#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:6
+#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:5
 msgid "Note-taking application"
 msgstr ""
 
-#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:7
+#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:6
 msgid "Take handwritten notes"
 msgstr ""
 
-#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:8
+#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:7
 msgid "tablet;Wacom;pen input;PDF Annotation;markup;journal;handwriting;diary;notes;"
 msgstr ""
 

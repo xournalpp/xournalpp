@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 13:20+0000\n"
-"PO-Revision-Date: 2026-11-15 04:21\n"
+"POT-Creation-Date: 2026-11-21 14:59+0000\n"
+"PO-Revision-Date: 2026-11-22 04:22\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -24,10 +24,12 @@ msgstr "オーディオフォルダーが未設定か正しくないため録音
 "\"環境設定 > 録音\"でオーディオフォルダーを設定してください"
 
 #: ../src/core/control/Control.cpp:235
+#, c++-format
 msgid "Filesystem error: {1}"
 msgstr "ファイルシステムエラー: {1}"
 
 #: ../src/core/control/Control.cpp:247
+#, c++-format
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "古い自動保存ファイル\"{1}\"を削除できませんでした： {2}"
 
@@ -40,6 +42,7 @@ msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "アクティブなツールバーを削除しました。デフォルトのツールバーに戻ります。"
 
 #: ../src/core/control/Control.cpp:612
+#, c++-format
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "ツールバー設定 \"{1}\" が定義されています。コピーを作成して編集しますか？"
 
@@ -78,6 +81,7 @@ msgid "With PDF background"
 msgstr "PDF背景あり"
 
 #: ../src/core/control/Control.cpp:860
+#, c++-format
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
@@ -92,6 +96,7 @@ msgid "Unable to retrieve pdf page."
 msgstr "PDFページを取得できません。"
 
 #: ../src/core/control/Control.cpp:1533
+#, c++-format
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -100,24 +105,29 @@ msgstr "Autosaveファイルを開かないでください。上書きされて�
 "フォルダ {1} からのファイルは開けません。"
 
 #: ../src/core/control/Control.cpp:1553
+#, c++-format
 msgid "file: {1}"
 msgstr "ファイル: {1}"
 
 #: ../src/core/control/Control.cpp:1596
+#, c++-format
 msgid "<i>Above error repeated {1} times</i>"
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1608
+#, c++-format
 msgid "<i>&lt;{1} more lines of error messages&gt;</i>"
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1647
+#, c++-format
 msgid "Error opening file \"{1}\".\n\n"
 "<tt>{2}</tt>\n"
 "<b>{3}</b>"
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1661
+#, c++-format
 msgid "There were some errors while loading the file. Some information might have been lost. Do not overwrite your old file unless you are sure everything you need was loaded correctly.\n\n"
 "Error messages:\n"
 "<tt>{1}</tt>"
@@ -132,24 +142,29 @@ msgid "The file being loaded has a file format version newer than the one curren
 msgstr "読み込まれるファイルにはこのバージョンの Xournal++で現在サポートされているものよりも新しいファイル形式のバージョンがあり、 正しくロードされない可能性があります それでも開きますか？"
 
 #: ../src/core/control/Control.cpp:1703
+#, c++-format
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr "PDF ファイルの読み込みエラー \"{1}\"\n"
 "{2}"
 
 #: ../src/core/control/Control.cpp:1724
+#, c++-format
 msgid "Error reading PNG file \"{1}\""
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1759
+#, c++-format
 msgid "Error reading template file \"{1}\""
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1778
+#, c++-format
 msgid "Failed to determine if path exists \"{1}\": {2}"
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1779
+#, c++-format
 msgid "That file does not exist:\n"
 "\"{1}\""
 msgstr ""
@@ -159,11 +174,13 @@ msgid "The attached background file could not be found. It might have been moved
 msgstr "背景に設定されていたファイルが見つかりませんでした。ファイルが移動、名前の変更または削除された可能性があります。"
 
 #: ../src/core/control/Control.cpp:1894
+#, c++-format
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "背景ファイル \"{1}\" が見つかりませんでした。ファイルの移動、名前の変更または削除された可能性があります。最後に確認された場所: \"{2}\""
 
 #: ../src/core/control/Control.cpp:1904
+#, c++-format
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
@@ -222,6 +239,7 @@ msgid "Discard"
 msgstr "破棄"
 
 #: ../src/core/control/Control.cpp:2357
+#, c++-format
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -271,6 +289,7 @@ msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "背景のPDFを上書きしないでください。エラーの原因になります。"
 
 #: ../src/core/control/ExportHelper.cpp:81
+#, c++-format
 msgid "The check for overwriting the background failed with: {1}"
 msgstr ""
 
@@ -291,10 +310,12 @@ msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "グローバルテンプレートファイルは通常のファイルではありません。設定を確認してください。 "
 
 #: ../src/core/control/LatexController.cpp:183
+#, c++-format
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "LaTeX生成中にエラーが発生しました: {1} (終了コード: {2})"
 
 #: ../src/core/control/LatexController.cpp:244
+#, c++-format
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "LaTeX PDFファイルを読み込めませんでした: {1}"
 
@@ -306,6 +327,7 @@ msgstr "LaTeX PDFファイルを読み込めませんでした"
 #: ../src/core/control/XournalMain.cpp:231
 #: ../src/core/control/xojfile/LoadHandler.cpp:262
 #: ../src/core/control/xojfile/LoadHandler.cpp:281
+#, c++-format
 msgid "Error reading PDF: {1}"
 msgstr "PDF読み込みエラー: {1}"
 
@@ -320,10 +342,12 @@ msgid "PDF background missing"
 msgstr "PDFの背景がありません"
 
 #: ../src/core/control/PrintHandler.cpp:122
+#, c++-format
 msgid "Running print operation failed with {1}"
 msgstr "{1} でプリント操作を実行できませんでした"
 
 #: ../src/core/control/XournalMain.cpp:124
+#, c++-format
 msgid "Failed to delete file: {1}"
 msgstr "ファイルの削除に失敗しました: {1}"
 
@@ -348,26 +372,32 @@ msgid "Restore file"
 msgstr "ファイルを復元"
 
 #: ../src/core/control/XournalMain.cpp:162
+#, c++-format
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "背景ファイル \"{1}\" が見つかりませんでした。ファイルの移動、名前の変更または削除された可能性があります。"
 
 #: ../src/core/control/XournalMain.cpp:177
+#, c++-format
 msgid "Error loading document: {1}"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:210
+#, c++-format
 msgid "Error exporting image: {1}"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:239
+#, c++-format
 msgid "Error saving document: {1}"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:269
+#, c++-format
 msgid "Error exporting PDF: {1}"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:375
+#, c++-format
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -395,10 +425,12 @@ msgstr "申し訳ありません、Xournal++ は一度に 1 つのファイル�
 "他のファイルは無視されます。"
 
 #: ../src/core/control/XournalMain.cpp:413
+#, c++-format
 msgid "File {1} does not exist."
 msgstr "ファイル {1} は存在しません。"
 
 #: ../src/core/control/XournalMain.cpp:417
+#, c++-format
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -428,6 +460,7 @@ msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr "xopp-fileを指定した背景PDF付きでファイルとして保存する"
 
 #: ../src/core/control/XournalMain.cpp:636
+#, c++-format
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
@@ -498,14 +531,17 @@ msgid "Display advanced export options"
 msgstr "高度なエクスポートオプションを表示"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:21
+#, c++-format
 msgid "Error while autosaving: {1}"
 msgstr "自動保存中にエラーが発生しました: {1}"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:46
+#, c++-format
 msgid "Autosaving to {1}"
 msgstr "{1} にオートセーブ中"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:73
+#, c++-format
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "自動保存するファイルの名前を「{1}」から「{2}」に変更できませんでした：{3}"
 
@@ -514,6 +550,7 @@ msgid "The check for overwriting the background failed with:\n"
 msgstr "背景上書きの確認に失敗しました:\n"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:44
+#, c++-format
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
 msgstr "以下のエラーでパスを解決できませんでした:\n"
@@ -525,6 +562,7 @@ msgstr "カスタムエクスポート"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:52
 #: ../src/core/control/jobs/SaveJob.cpp:138
+#, c++-format
 msgid "Save file error: {1}"
 msgstr "ファイルの保存エラー: {1}"
 
@@ -549,14 +587,17 @@ msgid "PDF Export"
 msgstr "PDFエクスポート"
 
 #: ../src/core/control/jobs/SaveJob.cpp:122
+#, c++-format
 msgid "Save file error, can't backup: {1}"
 msgstr "ファイルの保存エラーが発生しました。バックアップできません： {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:108
+#, c++-format
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "LaTeX生成コマンドの解析に失敗しました: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:114
+#, c++-format
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
@@ -565,18 +606,22 @@ msgstr "PATH 内に LaTeX ジェネレーター・プログラムが見つかり
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:119
+#, c++-format
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "PATHにLaTeX出力用プログラムが見つかりませんでした: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:127
+#, c++-format
 msgid "Could not save .tex file: {1}"
 msgstr ".tex ファイルを保存できませんでした: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:142
+#, c++-format
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "{1} を開始できませんでした：{2} (終了コード: {3})"
 
 #: ../src/core/control/layer/LayerController.cpp:424
+#, c++-format
 msgid "Layer {1}"
 msgstr "レイヤー {1}"
 
@@ -658,12 +703,14 @@ msgstr "画像ファイルを開く際にエラーが発生しました: "
 #: ../src/core/control/xojfile/LoadHandler.cpp:141
 #: ../src/core/control/xojfile/LoadHandler.cpp:734
 #: ../src/core/control/xojfile/LoadHandler.cpp:748
+#, c++-format
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "添付ファイルを開くことができませんでした：{1}。エラーメッセージ：{2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:133
 #: ../src/core/control/xojfile/LoadHandler.cpp:740
 #: ../src/core/control/xojfile/LoadHandler.cpp:758
+#, c++-format
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "添付ファイルを開けませんでした: {1}. エラーメッセージ: 有効なファイルサイズが指定されていません"
 
@@ -672,43 +719,53 @@ msgid "Unable to create temporary file for audio attachment"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:163
+#, c++-format
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "添付ファイルを開くことができませんでした: {1}. エラーメッセージ: ファイルを読み込めませんでした"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:170
+#, c++-format
 msgid "Could not open attachment: {1}. Error message: Could not write temporary file"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:203
 #: ../src/core/control/xojfile/LoadHandler.cpp:228
+#, c++-format
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "画像を読み込めませんでした: {1}。エラーメッセージ: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:238
+#, c++-format
 msgid "Cloned pixmap page background on page {1} references inexistent page {2}"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:555
+#, c++-format
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:562
+#, c++-format
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\""
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:570
+#, c++-format
 msgid "The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:583
+#, c++-format
 msgid "The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\""
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:592
+#, c++-format
 msgid "Could not open file: \"{1}\""
 msgstr "\"{1}\" を開けませんでした"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:608
+#, c++-format
 msgid "XML Parser error: {1}"
 msgstr "XML構文解析エラー: {1}"
 
@@ -734,26 +791,32 @@ msgid "Document is corrupted (no pages found in file)"
 msgstr "ドキュメントが破損しています(ファイルにページが見つかりません)"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:791
+#, c++-format
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "リクエストされた一時ファイルが添付ファイル {1} に見つかりませんでした"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:327
+#, c++-format
 msgid "Could not write background \"{1}\", {2}"
 msgstr "背景\"{1}\"を書き込めませんでした、 {2}"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:434
+#, c++-format
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "背景\"{1}\"を書き込めませんでした。とにかく続行します。"
 
 #: ../src/core/control/xojfile/XmlParser.cpp:126
+#, c++-format
 msgid "Ignoring unexpected {1} tag inside unrecognized document structure"
 msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:131
+#, c++-format
 msgid "Ignoring unexpected {1} tag under {2}"
 msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:180
+#, c++-format
 msgid "Unexpected text in {1} node: \"{2}\""
 msgstr ""
 
@@ -770,6 +833,7 @@ msgid "PDF background filename is empty"
 msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:347
+#, c++-format
 msgid "Discarding unused audio timestamp element. Filename: {1}"
 msgstr ""
 
@@ -778,18 +842,22 @@ msgid "Found stroke that contains an odd number of valid coordinates. Discarding
 msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:435
+#, c++-format
 msgid "Found stroke with more coordinates than pressure points: {1}, expected {2}. Shrinking stroke to match pressure point count"
 msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:441
+#, c++-format
 msgid "Found stroke with too many pressure points: {1}, expected {2}. Discarding remaining pressure points"
 msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:576
+#, c++-format
 msgid "Ignoring attachment tag under {1}"
 msgstr ""
 
 #: ../src/core/gui/GladeGui.cpp:25
+#, c++-format
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Gladeファイル\"{1}\" の読み込みエラー (\"{2}\" を読み込んでみてください)"
 
@@ -798,6 +866,7 @@ msgid "Double click to edit. CTRL + click to open."
 msgstr ""
 
 #: ../src/core/gui/PageView.cpp:410
+#, c++-format
 msgid "Unable to play audio recording {1}"
 msgstr "録音した音声 {1} を再生できません"
 
@@ -808,6 +877,7 @@ msgid "Loading..."
 msgstr "読み込み中…"
 
 #: ../src/core/gui/PageView.cpp:1048
+#, c++-format
 msgid "Scroll to page {1}"
 msgstr "ページ {1} までスクロール"
 
@@ -829,10 +899,12 @@ msgid "Text not found"
 msgstr "テキストが見つかりません"
 
 #: ../src/core/gui/SearchBar.cpp:144
+#, c++-format
 msgid "Text found once on page {1}"
 msgstr "ページ {1} でテキストが 1 件見つかりました"
 
 #: ../src/core/gui/SearchBar.cpp:145
+#, c++-format
 msgid "Text found {1} times on page {2} ({3} of {1})"
 msgstr "{2} ページで {1} 件のテキストが見つかりました ({1} 件中{3} 件目)"
 
@@ -1043,18 +1115,22 @@ msgid "Export"
 msgstr "エクスポート"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:115
+#, c++-format
 msgid "Failed to parse external editor command: {1}"
 msgstr "外部エディターのコマンドを解釈できませんでした: {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:131
+#, c++-format
 msgid "Could not spawn editor: {1}"
 msgstr "エディターを起動できませんでした: {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:162
+#, c++-format
 msgid "Could not wait for editor: {1}"
 msgstr "エディターの終了を確認できませんでした: {1}"
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:171
+#, c++-format
 msgid "Editor exited with bad status {1}"
 msgstr "エディターが異常終了しました。ステータスコード: {1}"
 
@@ -1098,6 +1174,7 @@ msgid "GtkSourceView was disabled when building Xournal++! Some options will not
 msgstr "Xournal++をビルドした際にGtkSourceViewが無効になりました！いくつかのオプションは利用できません。"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
+#, c++-format
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "{1} でグローバルテンプレートファイルを開くことができません。存在していますか？"
 
@@ -1106,10 +1183,12 @@ msgid "Sample LaTeX file generated successfully."
 msgstr "サンプルのLaTeXファイルが作成されました。"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:177
+#, c++-format
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "エラー： {1}。{2} の内容を確認してください。"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:188
+#, c++-format
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "エラー： {1} は通常のファイルではありません。LaTeXテンプレートファイルの設定を確認してください。 "
 
@@ -1156,6 +1235,7 @@ msgid "PDF Text Marker"
 msgstr "PDF テキストマーカー"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:49
+#, c++-format
 msgid "<b>{1}</b>\n"
 "{2}{3}"
 msgstr "<b>{1}</b>\n"
@@ -1186,6 +1266,7 @@ msgid "User palettes"
 msgstr "ユーザーパレット"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:99
+#, c++-format
 msgid "<i>The palettes shown below are obtained from the <a href=\"{1}\">Built-in palettes</a> and <a href=\"{2}\">User palettes</a> directories:</i>\n"
 msgstr ""
 
@@ -1278,6 +1359,7 @@ msgid "Load file"
 msgstr "ファイルを読み込む"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:107
+#, c++-format
 msgid "This image could not be loaded. Error message: {1}"
 msgstr "この画像を読み込めませんでした。エラーメッセージ: {1}"
 
@@ -1294,22 +1376,27 @@ msgid "Show only not used pages (one unused page)"
 msgstr "未使用のページのみを表示 (1つの未使用ページ)"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:57
+#, c++-format
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "未使用のページのみを表示 ({1} 枚の未使用ページ)"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:162
+#, c++-format
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr "ツールバー {1} ID {2} からツールアイテム {3} を削除しました"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:164
+#, c++-format
 msgid "Removed tool item from Toolbar {1} ID {2}"
 msgstr "ツールバー {1} ID {2} からツールアイテムを削除しました"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:168
+#, c++-format
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr "{3} にあるツールバー{2} から{1} を削除できませんでした。"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:173
+#, c++-format
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
 msgstr "{2} にあるツールバー{1} からツールを削除することができませんでした。"
 
@@ -1359,6 +1446,7 @@ msgid "Plugins"
 msgstr ""
 
 #: ../src/core/gui/menus/menubar/Menubar.cpp:54
+#, c++-format
 msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr ""
 
@@ -1456,12 +1544,14 @@ msgid "Spacer"
 msgstr "間隔"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:71
+#, c++-format
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "カスタム toolbar.ini ファイルを解析できませんでした: {1}\n"
 "ツールバーは利用できなくなります"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:80
+#, c++-format
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "カスタム toolbar.ini ファイルを解析できませんでした: {1}\n"
@@ -1793,15 +1883,18 @@ msgid "Page"
 msgstr "ページ"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:82
+#, c++-format
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr " / {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:85
+#, c++-format
 msgid "PDF Page {1}"
 msgstr "PDF ページ {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:87
+#, c++-format
 msgid "PDF {1}"
 msgstr "PDF {1}"
 
@@ -1887,6 +1980,7 @@ msgstr "コピー"
 
 #: ../src/core/model/Document.cpp:331 ../src/core/model/Document.cpp:340
 #: ../src/core/model/Document.cpp:343
+#, c++-format
 msgid "Document not loaded! ({1}), {2}"
 msgstr ""
 
@@ -1923,6 +2017,7 @@ msgid "PDF page number is out of range"
 msgstr ""
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:21
+#, c++-format
 msgid "Unknown pdf backend: {1}. Available backends are: {2}. Using default backend."
 msgstr ""
 
@@ -2079,12 +2174,14 @@ msgid "Edit text"
 msgstr "テキストを編集"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:114
+#, c++-format
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "\"{1}\"をもとに戻せませんでした。\n"
 "うまく行かなかったようです… バグレポートを書いてください..."
 
 #: ../src/core/undo/UndoRedoHandler.cpp:140
+#, c++-format
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "\"{1}\"を再度実行することができませんでした。\n"
@@ -2115,59 +2212,72 @@ msgid "ElementRange::parse(): element indices start with 1"
 msgstr ""
 
 #: ../src/util/GzInputStream.cpp:48
+#, c++-format
 msgid "Error opening file \"{1}\":\n"
 "{2}"
 msgstr ""
 
 #: ../src/util/GzInputStream.cpp:62 ../src/util/ZipInputStream.cpp:52
+#, c++-format
 msgid "Error occurred while closing file\n"
 "Error code {1}"
 msgstr ""
 
 #: ../src/util/OutputStream.cpp:30
+#, c++-format
 msgid "Error opening file: \"{1}\""
 msgstr "ファイルの展開中のエラー: \"{1}\""
 
 #: ../src/util/OutputStream.cpp:51
+#, c++-format
 msgid "Error writing data to file: \"{1}\""
 msgstr ""
 
 #: ../src/util/OutputStream.cpp:52
+#, c++-format
 msgid "Error code {1}. Message:"
 msgstr ""
 
 #: ../src/util/OutputStream.cpp:72
+#, c++-format
 msgid "Error occurred while closing file: \"{1}\""
 msgstr ""
 
 #: ../src/util/OutputStream.cpp:73
+#, c++-format
 msgid "Error code {1}"
 msgstr ""
 
 #: ../src/util/PathUtil.cpp:124
+#, c++-format
 msgid "Could not open file: {1}"
 msgstr ""
 
 #: ../src/util/PathUtil.cpp:131
+#, c++-format
 msgid "Error reading \"{1}\":\n"
 "{2}"
 msgstr ""
 
 #: ../src/util/PathUtil.cpp:449
+#, c++-format
 msgid "xournalpp-{1}"
 msgstr ""
 
 #: ../src/util/PathUtil.cpp:458
+#, c++-format
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "フォルダーを作成できませんでした: {1}\n"
 "エラーで失敗しました: {2}"
 
 #: ../src/util/Util.cpp:66
+#, c++-format
 msgid "Error {1} executing system command: {2}"
 msgstr "システムコマンド{1} 実行時のエラー： {2}"
 
 #: ../src/util/XojMsgBox.cpp:186
+#, c++-format
 msgid "The file {1} already exists! Do you want to replace it?"
 msgstr ""
 
@@ -2180,11 +2290,13 @@ msgid "Replace"
 msgstr "置換"
 
 #: ../src/util/XojMsgBox.cpp:216
+#, c++-format
 msgid "Unable to open the link: {1}\n"
 "{2}"
 msgstr ""
 
 #: ../src/util/ZipInputStream.cpp:38
+#, c++-format
 msgid "Error opening file \"{1}\" in zip archive:\n"
 "{2}"
 msgstr ""
@@ -2194,14 +2306,17 @@ msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
 msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:140
+#, c++-format
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
 msgstr "xoj-preview-extractor: ファイル \"{1}\" は .xoj ファイルではありません"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:144
+#, c++-format
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
 msgstr "xoj-preview-extractor: 入力ファイル \"{1}\" を開けませんでした"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:148
+#, c++-format
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
 msgstr "xoj-preview-extractor: ファイル \"{1}\" にプレビューが含まれていません"
 
@@ -2210,10 +2325,12 @@ msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr "xoj-preview-extractor: プレビューとページが見つかりません、おそらく無効なファイルの可能性があります"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:193
+#, c++-format
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
 msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:211
+#, c++-format
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
 msgstr "xoj-preview-extractor: 出力ファイル \"{1}\" を開けませんでした"
 
@@ -4542,67 +4659,67 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: ../resources-templates/pagetemplates.ini.in:17
+#: ../resources-templates/pagetemplates.ini.in:16
 msgid "Ruled with vertical line on the right"
 msgstr ""
 
-#: ../resources-templates/pagetemplates.ini.in:42
+#: ../resources-templates/pagetemplates.ini.in:41
 msgid "Graph with border"
 msgstr "外枠付きのグラフ"
 
-#: ../resources-templates/pagetemplates.ini.in:47
+#: ../resources-templates/pagetemplates.ini.in:46
 msgid "Graph with border (bold every 5th)"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:51
+#: ../resources-templates/toolbar.ini.in:50
 msgid "All Tools"
 msgstr "すべてのツール"
 
-#: ../resources-templates/toolbar.ini.in:56
+#: ../resources-templates/toolbar.ini.in:55
 msgid "Portrait"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:62
+#: ../resources-templates/toolbar.ini.in:61
 msgid "Minimal Left"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:66
+#: ../resources-templates/toolbar.ini.in:65
 msgid "Minimal Top"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:70
+#: ../resources-templates/toolbar.ini.in:69
 msgid "Xournal++"
 msgstr "Xournal++"
 
-#: ../resources-templates/toolbar.ini.in:78
+#: ../resources-templates/toolbar.ini.in:77
 msgid "Tablet mode"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:84
+#: ../resources-templates/toolbar.ini.in:83
 msgid "Right hand Note Taking"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:87
+#: ../resources-templates/toolbar.ini.in:86
 msgid "Toolbar Left"
 msgstr "ツールバー左"
 
-#: ../resources-templates/toolbar.ini.in:93
+#: ../resources-templates/toolbar.ini.in:92
 msgid "Toolbar Right"
 msgstr "ツールバー右"
 
-#: ../resources-templates/toolbar.ini.in:108
+#: ../resources-templates/toolbar.ini.in:107
 msgid "Empty Toolbar"
 msgstr "ツールバーを空にする"
 
-#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:6
+#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:5
 msgid "Note-taking application"
 msgstr ""
 
-#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:7
+#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:6
 msgid "Take handwritten notes"
 msgstr ""
 
-#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:8
+#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:7
 msgid "tablet;Wacom;pen input;PDF Annotation;markup;journal;handwriting;diary;notes;"
 msgstr ""
 
