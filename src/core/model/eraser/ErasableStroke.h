@@ -88,7 +88,7 @@ public:
      * The bounding box is either pulled from cache or computed and added to cache
      * @return The bounding box.
      */
-    const Range& getSubSectionBoundingBox(const SubSection& section) const;
+    Range getSubSectionBoundingBox(const SubSection& section) const;
 
 protected:
     /**

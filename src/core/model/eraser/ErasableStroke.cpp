@@ -265,7 +265,7 @@ std::vector<ErasableStroke::SubSection> ErasableStroke::getRemainingSubSectionsV
 
 bool ErasableStroke::isClosedStroke() const { return this->closedStroke; }
 
-auto ErasableStroke::getSubSectionBoundingBox(const ErasableStroke::SubSection& section) const -> const Range& {
+Range ErasableStroke::getSubSectionBoundingBox(const ErasableStroke::SubSection& section) const {
 
     std::lock_guard<std::mutex> lock(this->boxesMutex);
 
