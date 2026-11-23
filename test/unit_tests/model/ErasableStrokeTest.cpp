@@ -180,18 +180,18 @@ TEST(ErasableStroke, testGetStrokes) {
  */
 TEST(ErasableStroke, testBeginErasureHighlighterSplitBoundingBoxCache) {
     Stroke stroke;
-    stroke.addPoint({0, 0});    // 0
-    stroke.addPoint({2, 2});    // 1
-    stroke.addPoint({5, 2});    // 2
-    stroke.addPoint({7, 4});    // 3
-    stroke.addPoint({3, 6});    // 4
-    stroke.addPoint({2, 8});    // 5
-    stroke.addPoint({5, 11});   // 6
-    stroke.addPoint({7, 10});   // 7
-    stroke.addPoint({7, 6});    // 8
-    stroke.addPoint({6, 7});    // 9
-    stroke.addPoint({4, 4});    // 10
-    stroke.addPoint({1, 3});    // 11
+    stroke.addPoint({0, 0});   // 0
+    stroke.addPoint({2, 2});   // 1
+    stroke.addPoint({5, 2});   // 2
+    stroke.addPoint({7, 4});   // 3
+    stroke.addPoint({3, 6});   // 4
+    stroke.addPoint({2, 8});   // 5
+    stroke.addPoint({5, 11});  // 6
+    stroke.addPoint({7, 10});  // 7
+    stroke.addPoint({7, 6});   // 8
+    stroke.addPoint({6, 7});   // 9
+    stroke.addPoint({4, 4});   // 10
+    stroke.addPoint({1, 3});   // 11
     stroke.setWidth(2);
     stroke.setFill(-1);
     stroke.setToolType(StrokeTool::HIGHLIGHTER);
