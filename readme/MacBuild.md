@@ -64,7 +64,7 @@ sudo luarocks install LuaGObject
 ```
 In order that LuaGObject can load dynamic libraries you should set the `DYLD_LIBRARY_PATH`:
 ```sh
-export DYLD_LIBRARY_PATH = $(brew --prefix)/lib:$DYLD_LIBRARY_PATH
+export DYLD_LIBRARY_PATH="$(brew --prefix)/lib${DYLD_LIBRARY_PATH:+:$DYLD_LIBRARY_PATH}"
 ```
 To make it permanent add that line to ~/.zshenv
 
