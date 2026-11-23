@@ -171,6 +171,55 @@ TEST(ErasableStroke, testGetStrokes) {
     }
 }
 
+/**
+ * Regression test for https://github.com/xournalpp/xournalpp/issues/7941
+ * Erasing the middle of a highlighter stroke splits it in two subsections. beginErasure() then looks for overlaps
+ * between those subsections, which fetches their bounding boxes from the cache. The cache is a std::vector: adding the
+ * second box may reallocate it, so a reference to the first box must not be kept (use-after-free).
+ * FYI: this will be reproducible with ASan
+ */
+TEST(ErasableStroke, testBeginErasureHighlighterSplitBoundingBoxCache) {
+    Stroke stroke;
+    stroke.addPoint({0, 0});   // 0
+    stroke.addPoint({2, 2});   // 1
+    stroke.addPoint({5, 2});   // 2
+    stroke.addPoint({7, 4});   // 3
+    stroke.addPoint({3, 6});   // 4
+    stroke.addPoint({2, 8});   // 5
+    stroke.addPoint({5, 11});  // 6
+    stroke.addPoint({7, 10});  // 7
+    stroke.addPoint({7, 6});   // 8
+    stroke.addPoint({6, 7});   // 9
+    stroke.addPoint({4, 4});   // 10
+    stroke.addPoint({1, 3});   // 11
+    stroke.setWidth(2);
+    stroke.setFill(-1);
+    stroke.setToolType(StrokeTool::HIGHLIGHTER);
+
+    // A fresh ErasableStroke has an empty bounding box cache
+    ErasableStroke erasable(stroke);
+
+    // Erase the middle of the stroke: two subsections remain
+    IntersectionParametersContainer erased = {{5U, 0.5}, {6U, 0.5}};
+    Range range(0, 0);
+    erasable.beginErasure(erased, range);
+
+    auto sections = erasable.getRemainingSubSectionsVector();
+    ASSERT_EQ(sections.size(), 2U);
+
+    for (const auto& section: sections) {
+        // Bounding boxes must be valid and contain the end points of their subsection
+        const Range box = erasable.getSubSectionBoundingBox(section);
+        ASSERT_TRUE(box.isValid());
+        for (const auto& param: {section.min, section.max}) {
+            const Point p = stroke.getPoint(param);
+            ASSERT_LE(box.minX, p.x);
+            ASSERT_LE(box.minY, p.y);
+            ASSERT_GE(box.maxX, p.x);
+            ASSERT_GE(box.maxY, p.y);
+        }
+    }
+}
 
 TEST(ErasableStroke, testIntersectWithPaddedBox) {
     Stroke stroke;
