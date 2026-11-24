@@ -17,7 +17,8 @@ BaseStrokeToolView::BaseStrokeToolView(Repaintable* parent, const Stroke& stroke
         cairoOp(stroke.getToolType() == StrokeTool::HIGHLIGHTER ? CAIRO_OPERATOR_MULTIPLY : CAIRO_OPERATOR_OVER),
         strokeColor(strokeColorWithAlpha(stroke)),
         lineStyle(stroke.getLineStyle()),
-        strokeWidth(stroke.getWidth()) {}
+        strokeWidth(stroke.getWidth()),
+        isHighlighter(stroke.getToolType() == StrokeTool::HIGHLIGHTER) {}
 
 BaseStrokeToolView::~BaseStrokeToolView() noexcept = default;
 

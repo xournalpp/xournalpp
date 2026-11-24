@@ -147,7 +147,7 @@ std::vector<Point> StrokeToolView::flushBuffer() const {
 }
 
 cairo_operator_t StrokeToolView::getHighlighterOperator() const {
-    if (this->cairoOp == CAIRO_OPERATOR_MULTIPLY && this->strokeHandler) {
+    if (this->isHighlighter && this->strokeHandler) {
         return this->strokeHandler->getPageHighlighterOperator();
     }
     return this->cairoOp;
