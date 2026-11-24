@@ -175,3 +175,15 @@ auto XojPage::getBackgroundName() const -> std::string { return backgroundName.v
 auto XojPage::backgroundHasName() const -> bool { return backgroundName.has_value(); }
 
 void XojPage::setBackgroundName(const std::string& newName) { backgroundName = newName; }
+
+cairo_operator_t XojPage::getPageHighlighterOperator() const {
+    const auto& bgType = this->getBackgroundType();
+
+    // PDF and Image backgrounds default to light-canvas blending
+    if (bgType.isPdfPage() || bgType.isImagePage()) {
+        return CAIRO_OPERATOR_MULTIPLY;
+    }
+
+    // Standard backgrounds (plain, lined, graph, dotted, etc.) evaluate their color luminance
+    return this->getBackgroundColor().getHighlighterOperator();
+}

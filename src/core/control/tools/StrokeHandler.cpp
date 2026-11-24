@@ -294,3 +294,7 @@ auto StrokeHandler::createView(xoj::view::Repaintable* parent) const -> std::uni
 auto StrokeHandler::getViewPool() const -> const std::shared_ptr<xoj::util::DispatchPool<xoj::view::StrokeToolView>>& {
     return viewPool;
 }
+
+cairo_operator_t StrokeHandler::getPageHighlighterOperator() const {
+    return this->page->getPageHighlighterOperator();
+}

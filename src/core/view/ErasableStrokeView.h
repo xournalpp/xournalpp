@@ -44,7 +44,7 @@ public:
      * the highlighter tool
      * @param cr The cairo context
      */
-    void paintFilledHighlighter(cairo_t* cr) const;
+    void paintFilledHighlighter(cairo_t* cr, cairo_operator_t op = CAIRO_OPERATOR_MULTIPLY) const;
 
 private:
     /**

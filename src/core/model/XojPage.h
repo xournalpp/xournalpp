@@ -61,6 +61,7 @@ public:
 
     void setBackgroundColor(Color color);
     Color getBackgroundColor() const;
+    [[nodiscard("Operator not Used")]] cairo_operator_t getPageHighlighterOperator() const;
 
     std::vector<Layer*>& getLayers();
     xoj::util::PointerContainerView<std::vector<Layer*>> getLayersView() const;

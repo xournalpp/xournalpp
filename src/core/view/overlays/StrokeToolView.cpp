@@ -49,7 +49,7 @@ void StrokeToolView::draw(cairo_t* cr) const {
     }
 
     xoj::util::CairoSaveGuard saveGuard(cr);
-    cairo_set_operator(cr, this->cairoOp);
+    cairo_set_operator(cr, this->getHighlighterOperator());
 
     this->drawFilling(cr, pts);  // Noop in the base class.
 
@@ -113,7 +113,7 @@ void StrokeToolView::on(StrokeToolView::StrokeReplacementRequest, const Stroke& 
     xoj_assert(this->strokeColor == strokeColorWithAlpha(newStroke));
     xoj_assert(this->lineStyle == newStroke.getLineStyle());
     xoj_assert(this->cairoOp ==
-               (newStroke.getToolType() == StrokeTool::HIGHLIGHTER ? CAIRO_OPERATOR_MULTIPLY : CAIRO_OPERATOR_OVER));
+               (newStroke.getToolType() == StrokeTool::HIGHLIGHTER ? this->getHighlighterOperator() : CAIRO_OPERATOR_OVER));
 }
 
 void StrokeToolView::deleteOn(StrokeToolView::FinalizationRequest, const Range& rg) {
@@ -144,4 +144,11 @@ std::vector<Point> StrokeToolView::flushBuffer() const {
         this->pointBuffer.emplace_back(pts.back());
     }
     return pts;
+}
+
+cairo_operator_t StrokeToolView::getHighlighterOperator() const {
+    if (this->cairoOp == CAIRO_OPERATOR_MULTIPLY && this->strokeHandler) {
+        return this->strokeHandler->getPageHighlighterOperator();
+    }
+    return this->cairoOp;
 }
