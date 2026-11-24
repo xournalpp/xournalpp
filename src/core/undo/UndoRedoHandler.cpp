@@ -16,6 +16,8 @@
 #include "util/XojMsgBox.h"   // for XojMsgBox
 #include "util/i18n.h"        // for _, FS, _F
 
+#include "config-debug.h"  // for DEBUG_UNDO_TRACE
+
 static constexpr size_t UNDO_STACK_MAX_SIZE = 128;
 
 template <typename PtrType>
@@ -26,12 +28,6 @@ inline void printAction(PtrType& action, size_t n = 666) {
         g_message("%3zu -- (null)", n);
     }
 }
-
-#ifdef UNDO_TRACE
-constexpr bool UNDO_TRACE_BOOL = true;
-#else
-constexpr bool UNDO_TRACE_BOOL = false;
-#endif
 
 auto UndoRedoHandler::UndoStack::next(iterator it) -> iterator {
     ++it;
@@ -56,22 +52,22 @@ UndoRedoHandler::UndoStack::UndoStack():
 
 
 void UndoRedoHandler::printContents() {
-    if constexpr (UNDO_TRACE_BOOL) {
-        size_t n = 0;
-        g_message("undoList");
-        for (auto it = stack.start; it != stack.head; it = stack.next(it)) {
-            printAction(*it, ++n);
-        }
-        n = 0;
-        g_message("redoList");
-        for (auto it = stack.head; it != stack.end; it = stack.next(it)) {
-            printAction(*it, ++n);
-        }
-        g_message("savedUndo");
-        if (this->savedUndo) {
-            printAction(this->savedUndo);
-        }
+#ifdef DEBUG_UNDO_TRACE
+    size_t n = 0;
+    g_message("undoList");
+    for (auto it = stack.start; it != stack.head; it = stack.next(it)) {
+        printAction(*it, ++n);
     }
+    n = 0;
+    g_message("redoList");
+    for (auto it = stack.head; it != stack.end; it = stack.next(it)) {
+        printAction(*it, ++n);
+    }
+    g_message("savedUndo");
+    if (this->savedUndo) {
+        printAction(this->savedUndo);
+    }
+#endif
 }
 
 UndoRedoHandler::UndoRedoHandler(Control* control): control(control) {}
@@ -79,11 +75,11 @@ UndoRedoHandler::UndoRedoHandler(Control* control): control(control) {}
 UndoRedoHandler::~UndoRedoHandler() { clearContents(); }
 
 void UndoRedoHandler::clearContents() {
-#ifdef UNDO_TRACE
+#ifdef DEBUG_UNDO_TRACE
     for (auto it = stack.start; it != stack.end; it = stack.next(it)) {
         g_message("clearContents()::Delete UndoAction: %p / %s", it->get(), (*it)->getClassName().c_str());
     }
-#endif  // UNDO_TRACE
+#endif  // DEBUG_UNDO_TRACE
 
     stack = UndoStack();
 
@@ -95,7 +91,7 @@ void UndoRedoHandler::clearContents() {
 
 void UndoRedoHandler::clearRedo() {
     for (auto it = stack.head; it != stack.end; it = stack.next(it)) {
-#ifdef UNDO_TRACE
+#ifdef DEBUG_UNDO_TRACE
         g_message("clearRedo()::Delete UndoAction: %p / %s", it->get(), (*it)->getClassName().c_str());
 #endif
         it->reset();
@@ -175,11 +171,11 @@ void UndoRedoHandler::addUndoAction(UndoActionPtr action) {
     if (stack.head == stack.start) {
         // The stack is full, we drop the oldest entry to make place for next time
         stack.start = stack.next(stack.start);
-#ifdef UNDO_TRACE
+#ifdef DEBUG_UNDO_TRACE
         // the stack is full, we will overwrite this entry
         g_message("addUndoAction()::Delete UndoAction: %p / %s", stack.head->get(),
                   (*stack.head)->getClassName().c_str());
-#endif  // UNDO_TRACE
+#endif  // DEBUG_UNDO_TRACE
         stack.head->reset();
     }
 

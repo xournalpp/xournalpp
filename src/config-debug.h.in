@@ -67,3 +67,8 @@
  * Enable some debugging output around the action database
  */
 #cmakedefine DEBUG_ACTION_DB
+
+/**
+ * Enable printing the content of the undo stack
+ */
+#cmakedefine DEBUG_UNDO_TRACE
