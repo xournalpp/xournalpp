@@ -682,6 +682,10 @@
      <attribute name="label" translatable="yes">Compass</attribute>
      <attribute name="action">win.compass</attribute>
     </item>
+    <item>
+     <attribute name="label" translatable="yes">Ruler</attribute>
+     <attribute name="action">win.trad-ruler</attribute>
+    </item>
    </section>
    <section>
     <submenu>

@@ -407,6 +407,7 @@ void ToolMenuHandler::initToolItems() {
 
     emplaceCustomItemTgl("SETSQUARE", Cat::MISC, Action::SETSQUARE, "setsquare", _("Setsquare"));
     emplaceCustomItemTgl("COMPASS", Cat::MISC, Action::COMPASS, "compass", _("Compass"));
+    emplaceCustomItemTgl("TRAD_RULER", Cat::MISC, Action::TRAD_RULER, "trad-ruler", _("TRAD ruler"));
 
     emplaceCustomItemTgl("TOGGLE_TOUCH_DRAWING", Cat::MISC, Action::TOGGLE_TOUCH_DRAWING, "touch-drawing",
                          _("Toggle Touch Drawing"));

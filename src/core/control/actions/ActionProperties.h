@@ -647,6 +647,7 @@ struct ActionProperties<Action::SETSQUARE> {
     static void callback(GSimpleAction* ga, GVariant*, Control* ctrl) {
         // Only one GeometryTool is activated at a time
         ctrl->getActionDatabase()->setActionState(Action::COMPASS, false);
+        ctrl->getActionDatabase()->setActionState(Action::TRAD_RULER, false);
         g_simple_action_set_state(ga, makeGVariant(ctrl->toggleSetsquare()));
     }
 };
@@ -658,7 +659,20 @@ struct ActionProperties<Action::COMPASS> {
     static void callback(GSimpleAction* ga, GVariant*, Control* ctrl) {
         // Only one GeometryTool is activated at a time
         ctrl->getActionDatabase()->setActionState(Action::SETSQUARE, false);
+        ctrl->getActionDatabase()->setActionState(Action::TRAD_RULER, false);
         g_simple_action_set_state(ga, makeGVariant(ctrl->toggleCompass()));
+    }
+};
+
+template <>
+struct ActionProperties<Action::TRAD_RULER> {
+    using state_type = bool;
+    static constexpr const char* accelerators[] = {"R", nullptr};
+    static constexpr state_type initialState(Control*) { return false; }
+    static void callback(GSimpleAction* ga, GVariant*, Control* ctrl) {
+        ctrl->getActionDatabase()->setActionState(Action::COMPASS, false);
+        ctrl->getActionDatabase()->setActionState(Action::SETSQUARE, false);
+        g_simple_action_set_state(ga, makeGVariant(ctrl->toggleTradRuler()));
     }
 };
 
