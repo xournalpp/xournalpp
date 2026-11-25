@@ -86,6 +86,7 @@ TEST(SettingsTest, testReadWrite) {
 // used to pass a nullptr to std::string, which threw std::logic_error and crashed on startup.
 TEST(SettingsTest, testLoadCorruptAttributesDoesNotThrow) {
     const fs::path outPath = fs::temp_directory_path() / "xournalpp-test-units_Settings_corruptAttributes.xml";
+    ASSERT_TRUE(!fs::exists(outPath));
     {
         std::ofstream out(outPath);
         out << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"

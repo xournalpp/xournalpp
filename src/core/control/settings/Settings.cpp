@@ -312,7 +312,7 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem) {
         if (!xmlStrcmp(x->name, reinterpret_cast<const xmlChar*>("data"))) {
             xmlChar* name = xmlGetProp(x, reinterpret_cast<const xmlChar*>("name"));
             if (name == nullptr) {
-                g_warning("Settings::parseData: <data> node without name property, skipping\n");
+                g_warning("Settings::parseData: <data> node without name property, skipping");
                 continue;
             }
             parseData(x, elem.child(reinterpret_cast<const char*>(name)));
@@ -323,7 +323,7 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem) {
             xmlChar* type = xmlGetProp(x, reinterpret_cast<const xmlChar*>("type"));
 
             if (name == nullptr || value == nullptr || type == nullptr) {
-                g_warning("Settings::parseData: <attribute> node missing name, value or type property, skipping\n");
+                g_warning("Settings::parseData: <attribute> node missing name, value or type property, skipping");
                 xmlFree(name);
                 xmlFree(value);
                 xmlFree(type);
