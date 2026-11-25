@@ -12,17 +12,8 @@
 #include "util/raii/GObjectSPtr.h"  // for GObjectSPtr
 
 class MainWindow;
+class XojPageView;
 class PdfElemSelection;
-
-enum class PdfMarkerStyle : uint8_t {
-    POS_TEXT_BOTTOM = 0,
-    POS_TEXT_MIDDLE,
-    POS_TEXT_TOP,
-
-    WIDTH_TEXT_LINE,
-    WIDTH_TEXT_HEIGHT
-};
-
 
 class PdfFloatingToolbox {
 public:
@@ -35,32 +26,10 @@ public:
 
 public:
     /// Show the toolbox at the provided coordinates (in widget-coordinates).
-    /// Must have an active selection.
-    void show(int x, int y);
+    void show(int x, int y, PdfElemSelection* selection);
 
-    /// Hide the floating toolbox widget (keeping the current selection).
+    /// Hide the floating toolbox widget.
     void hide();
-
-    /// Returns true if the toolbox is currently hidden.
-    bool isHidden() const;
-
-    /// Returns the selection, or nullptr if no PDF element is selected.
-    PdfElemSelection* getSelection() const;
-
-    /// Clears the current selection (without any visual effects).
-    void clearSelection();
-
-    /// Create a new selection (without any visual effects)
-    const PdfElemSelection* newSelection(double x, double y);
-
-    /// Returns true iff a PDF element is selected;
-    bool hasSelection() const;
-
-    /// Cancel the selection, rerender the page, and hide the toolbox.
-    void userCancelSelection();
-
-    /// Track selection style used for unfinalized selections
-    XojPdfPageSelectionStyle selectionStyle = XojPdfPageSelectionStyle::Linear;
 
     /// Copy Selection to the Clipboard.
     void copyTextToClipboard();
@@ -71,26 +40,26 @@ private:
     static gboolean getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget, GdkRectangle* allocation,
                                        PdfFloatingToolbox* self);
 
-    static void switchSelectTypeCb(GtkButton* button, PdfFloatingToolbox* pft);
+
+    /// Generic callback for the next 3 functions
+    template <auto fun>
+    void cb();
+
     static void strikethroughCb(GtkButton* button, PdfFloatingToolbox* pft);
     static void underlineCb(GtkButton* button, PdfFloatingToolbox* pft);
-    static void copyTextCb(GtkButton* button, PdfFloatingToolbox* pft);
     static void highlightCb(GtkButton* button, PdfFloatingToolbox* pft);
-
-    void createStrokes(PdfMarkerStyle position, PdfMarkerStyle width, int markerOpacity);
+    static void copyTextCb(GtkButton* button, PdfFloatingToolbox* pft);
 
 private:
     GtkWidget* floatingToolbox;
     MainWindow* theMainWindow;
-    Color color;  ///< Used for strokes/highlighting
 
     /// The overlay that the toolbox should be displayed in.
     xoj::util::GObjectSPtr<GtkOverlay> overlay;
-
-    std::unique_ptr<PdfElemSelection> pdfElemSelection;
 
     struct {
         int x;
         int y;
     } position;
+    PdfElemSelection* selection = nullptr;  ///< The selected text the toolbox is shown for
 };
