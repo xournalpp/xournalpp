@@ -53,4 +53,4 @@ TEST(XojPageHighlighterOperatorTest, SwitchingBackgroundTypesUpdatesOperator) {
     EXPECT_EQ(page.getHighlighterOperator(), CAIRO_OPERATOR_SCREEN);
 }
 
-} //namespace
+}  // namespace
