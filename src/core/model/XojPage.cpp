@@ -155,7 +155,7 @@ void XojPage::setBackgroundType(const PageType& bgType) {
     }
 }
 
-auto XojPage::getBackgroundType() const -> PageType { return this->bgType; }
+auto XojPage::getBackgroundType() const -> const PageType& { return this->bgType; }
 
 auto XojPage::getBackgroundImage() -> BackgroundImage& { return this->backgroundImage; }
 auto XojPage::getBackgroundImage() const -> const BackgroundImage& { return this->backgroundImage; }
@@ -179,14 +179,9 @@ auto XojPage::backgroundHasName() const -> bool { return backgroundName.has_valu
 
 void XojPage::setBackgroundName(const std::string& newName) { backgroundName = newName; }
 
-cairo_operator_t XojPage::getPageHighlighterOperator() const {
+auto XojPage::getHighlighterOperator() const -> cairo_operator_t {
     const auto& bgType = this->getBackgroundType();
 
     // PDF and Image backgrounds default to light-canvas blending
-    if (bgType.isPdfPage() || bgType.isImagePage()) {
-        return CAIRO_OPERATOR_MULTIPLY;
-    }
-
-    // Standard backgrounds (plain, lined, graph, dotted, etc.) evaluate their color luminance
-    return this->getBackgroundColor().getHighlighterOperator();
+    return bgType.isSpecial() ? CAIRO_OPERATOR_MULTIPLY : this->getBackgroundColor().getHighlighterOperator();
 }

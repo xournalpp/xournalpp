@@ -82,8 +82,6 @@ protected:
 protected:
     const StrokeHandler* strokeHandler;
 
-    cairo_operator_t getHighlighterOperator() const;
-
 protected:
     bool singleDot = true;
 

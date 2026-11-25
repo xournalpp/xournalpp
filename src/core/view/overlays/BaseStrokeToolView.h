@@ -47,6 +47,5 @@ protected:
     const Color strokeColor;
     const LineStyle lineStyle;
     double strokeWidth;
-    bool isHighlighter;
 };
 };  // namespace xoj::view

@@ -67,7 +67,7 @@ void StrokeToolFilledHighlighterView::draw(cairo_t* cr) const {
 
     xoj::util::CairoSaveGuard saveGuard(cr);
     Util::cairo_set_source_argb(cr, this->strokeColor);
-    cairo_set_operator(cr, this->getHighlighterOperator());
+    cairo_set_operator(cr, this->cairoOp);
 
     this->mask.blitTo(cr);
 }

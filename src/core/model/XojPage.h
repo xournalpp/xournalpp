@@ -45,7 +45,7 @@ public:
     void setBackgroundPdfPageNr(size_t page);
 
     void setBackgroundType(const PageType& bgType);
-    PageType getBackgroundType() const;
+    const PageType& getBackgroundType() const;
 
     /**
      * Do not call this, cal doc->setPageSize(Page * p, double width, double height);
@@ -61,7 +61,6 @@ public:
 
     void setBackgroundColor(Color color);
     Color getBackgroundColor() const;
-    [[nodiscard("Operator not Used")]] cairo_operator_t getPageHighlighterOperator() const;
 
     std::vector<Layer*>& getLayers();
     xoj::util::PointerContainerView<std::vector<Layer*>> getLayersView() const;
@@ -80,6 +79,8 @@ public:
     std::string getBackgroundName() const;
     bool backgroundHasName() const;
     void setBackgroundName(const std::string& newName);
+
+    auto getHighlighterOperator() const -> cairo_operator_t;
 
     /**
      * Copies this page an all it's contents to a new page
