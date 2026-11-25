@@ -10,6 +10,8 @@
  */
 #pragma once
 
+#include <cairo.h>
+
 class Range;
 class ZoomControl;
 
@@ -68,5 +70,7 @@ public:
      * the display
      */
     virtual void deleteOverlayView(OverlayView* v, const Range& rg) = 0;
+
+    virtual cairo_operator_t getHighlighterOperator() const = 0;
 };
 };  // namespace xoj::view

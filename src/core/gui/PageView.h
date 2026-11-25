@@ -89,6 +89,8 @@ public:
 
     double getWidth() const override;
     double getHeight() const override;
+
+    cairo_operator_t getHighlighterOperator() const override;
     // End of Repaintable interface
 
     xoj::util::Point<double> toWidgetCoordinates(const xoj::util::Point<double>& p) const override;

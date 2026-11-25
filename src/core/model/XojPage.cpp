@@ -11,7 +11,8 @@
 
 #include "BackgroundImage.h"  // for BackgroundImage
 
-XojPage::XojPage(double width, double height, bool suppressLayerCreation): width(width), height(height), bgType(PageTypeFormat::Lined) {
+XojPage::XojPage(double width, double height, bool suppressLayerCreation):
+        width(width), height(height), bgType(PageTypeFormat::Lined) {
     if (!suppressLayerCreation) {
         // ensure at least one valid layer exists
         this->addLayer(new Layer());
@@ -20,7 +21,9 @@ XojPage::XojPage(double width, double height, bool suppressLayerCreation): width
 }
 
 XojPage::~XojPage() {
-    for (Layer* l: this->layer) { delete l; }
+    for (Layer* l: this->layer) {
+        delete l;
+    }
     this->layer.clear();
 }
 
@@ -152,7 +155,7 @@ void XojPage::setBackgroundType(const PageType& bgType) {
     }
 }
 
-auto XojPage::getBackgroundType() const -> PageType { return this->bgType; }
+auto XojPage::getBackgroundType() const -> const PageType& { return this->bgType; }
 
 auto XojPage::getBackgroundImage() -> BackgroundImage& { return this->backgroundImage; }
 auto XojPage::getBackgroundImage() const -> const BackgroundImage& { return this->backgroundImage; }
@@ -175,3 +178,10 @@ auto XojPage::getBackgroundName() const -> std::string { return backgroundName.v
 auto XojPage::backgroundHasName() const -> bool { return backgroundName.has_value(); }
 
 void XojPage::setBackgroundName(const std::string& newName) { backgroundName = newName; }
+
+auto XojPage::getHighlighterOperator() const -> cairo_operator_t {
+    const auto& bgType = this->getBackgroundType();
+
+    // PDF and Image backgrounds default to light-canvas blending
+    return bgType.isSpecial() ? CAIRO_OPERATOR_MULTIPLY : this->getBackgroundColor().getHighlighterOperator();
+}

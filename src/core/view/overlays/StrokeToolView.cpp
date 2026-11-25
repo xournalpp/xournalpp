@@ -112,8 +112,6 @@ void StrokeToolView::on(StrokeToolView::StrokeReplacementRequest, const Stroke& 
     this->strokeWidth = newStroke.getWidth();
     xoj_assert(this->strokeColor == strokeColorWithAlpha(newStroke));
     xoj_assert(this->lineStyle == newStroke.getLineStyle());
-    xoj_assert(this->cairoOp ==
-               (newStroke.getToolType() == StrokeTool::HIGHLIGHTER ? CAIRO_OPERATOR_MULTIPLY : CAIRO_OPERATOR_OVER));
 }
 
 void StrokeToolView::deleteOn(StrokeToolView::FinalizationRequest, const Range& rg) {

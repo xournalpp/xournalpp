@@ -73,7 +73,8 @@ void DocumentView::drawPage(ConstPageRef page, cairo_t* cr, bool dontRenderEditi
     drawBackground(flags);
 
     xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
-                               (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
+                               (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR,
+                               page->getHighlighterOperator()};
     for (const Layer* layer: page->getLayersView()) {
         if (layer->isVisible()) {
             xoj::view::LayerView layerView(layer);
@@ -105,7 +106,8 @@ void DocumentView::drawLayersOfPage(const LayerRangeVector& layerRange, ConstPag
     }
 
     xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
-                               (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
+                               (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR,
+                               page->getHighlighterOperator()};
     for (auto&& [_, l]: visibleLayers) {
         xoj::view::LayerView layerView(l);
         layerView.draw(context);

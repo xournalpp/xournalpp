@@ -14,7 +14,8 @@ using namespace xoj::view;
 
 BaseStrokeToolView::BaseStrokeToolView(Repaintable* parent, const Stroke& stroke):
         ToolView(parent),
-        cairoOp(stroke.getToolType() == StrokeTool::HIGHLIGHTER ? CAIRO_OPERATOR_MULTIPLY : CAIRO_OPERATOR_OVER),
+        cairoOp(stroke.getToolType() == StrokeTool::HIGHLIGHTER ? parent->getHighlighterOperator() :
+                                                                  CAIRO_OPERATOR_OVER),
         strokeColor(strokeColorWithAlpha(stroke)),
         lineStyle(stroke.getLineStyle()),
         strokeWidth(stroke.getWidth()) {}

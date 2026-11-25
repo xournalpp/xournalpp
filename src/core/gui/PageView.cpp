@@ -905,6 +905,8 @@ double XojPageView::getWidth() const { return page->getWidth(); }
 
 double XojPageView::getHeight() const { return page->getHeight(); }
 
+cairo_operator_t XojPageView::getHighlighterOperator() const { return page->getHighlighterOperator(); }
+
 auto XojPageView::toWidgetCoordinates(const xoj::util::Point<double>& q) const -> xoj::util::Point<double> {
     double zoom = this->getZoom();
     auto p = this->getPixelPosition();

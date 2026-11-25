@@ -97,7 +97,9 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
                 cairo_line_to(cr, it->x, it->y);
             }
             endIt = std::next(data.cbegin(), (std::ptrdiff_t)first.max.index + 1);
-            for (auto it = data.cbegin(); it != endIt; ++it) { cairo_line_to(cr, it->x, it->y); }
+            for (auto it = data.cbegin(); it != endIt; ++it) {
+                cairo_line_to(cr, it->x, it->y);
+            }
 
             Point q = stroke.getPoint(first.max);
             cairo_line_to(cr, q.x, q.y);
@@ -170,7 +172,9 @@ void ErasableStrokeView::drawFilling(cairo_t* cr) const {
             cairo_line_to(cr, it->x, it->y);
         }
         endIt = std::next(data.cbegin(), (std::ptrdiff_t)first.max.index + 1);
-        for (auto it = data.cbegin(); it != endIt; ++it) { cairo_line_to(cr, it->x, it->y); }
+        for (auto it = data.cbegin(); it != endIt; ++it) {
+            cairo_line_to(cr, it->x, it->y);
+        }
 
         Point q = stroke.getPoint(first.max);
         cairo_line_to(cr, q.x, q.y);
@@ -196,7 +200,7 @@ void ErasableStrokeView::drawFilling(cairo_t* cr) const {
     }
 }
 
-void ErasableStrokeView::paintFilledHighlighter(cairo_t* cr) const {
+void ErasableStrokeView::paintFilledHighlighter(cairo_t* cr, cairo_operator_t op) const {
     const Stroke& stroke = erasableStroke.stroke;
     std::vector<ErasableStroke::SubSection> sections = erasableStroke.getRemainingSubSectionsVector();
 
@@ -219,7 +223,7 @@ void ErasableStrokeView::paintFilledHighlighter(cairo_t* cr) const {
     xoj_assert(matrix.xx == matrix.yy && matrix.xy == 0 && matrix.yx == 0);
 
     // Initialise the cairo context
-    cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
+    cairo_set_operator(cr, op);
     Util::cairo_set_source_rgbi(cr, stroke.getColor(), static_cast<double>(stroke.getFill()) / 255.0);
 
     const std::vector<Point>& data = stroke.getPointVector();
@@ -256,7 +260,9 @@ void ErasableStrokeView::paintFilledHighlighter(cairo_t* cr) const {
             cairo_line_to(crMask, it->x, it->y);
         }
         endIt = std::next(data.cbegin(), (std::ptrdiff_t)first.max.index + 1);
-        for (auto it = data.cbegin(); it != endIt; ++it) { cairo_line_to(crMask, it->x, it->y); }
+        for (auto it = data.cbegin(); it != endIt; ++it) {
+            cairo_line_to(crMask, it->x, it->y);
+        }
 
         Point q = stroke.getPoint(first.max);
         cairo_line_to(crMask, q.x, q.y);
