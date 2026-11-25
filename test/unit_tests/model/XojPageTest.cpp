@@ -9,48 +9,48 @@ namespace {
 
 TEST(XojPageHighlighterOperatorTest, DefaultPageUsesLightBackgroundOperator) {
     // XojPage defaults bgType to Lined and backgroundColor to Colors::white
-    const XojPage page(500.0, 700.0);  //[cite: 5, 6]
-    EXPECT_EQ(page.getPageHighlighterOperator(), CAIRO_OPERATOR_MULTIPLY);  //[cite: 5, 6]
+    const XojPage page(500.0, 700.0);
+    EXPECT_EQ(page.getPageHighlighterOperator(), CAIRO_OPERATOR_MULTIPLY);
 }
 
 TEST(XojPageHighlighterOperatorTest, StandardBackgroundColorSelectsOperatorByLuminance) {
-    XojPage page(500.0, 700.0);  //[cite: 5, 6]
-    page.setBackgroundType(PageType(PageTypeFormat::Plain));  //[cite: 5, 6]
+    XojPage page(500.0, 700.0);
+    page.setBackgroundType(PageType(PageTypeFormat::Plain));
 
-    page.setBackgroundColor(Colors::black);  //[cite: 4, 6]
-    EXPECT_EQ(page.getPageHighlighterOperator(), CAIRO_OPERATOR_SCREEN);  //[cite: 4, 6]
+    page.setBackgroundColor(Colors::black);
+    EXPECT_EQ(page.getPageHighlighterOperator(), CAIRO_OPERATOR_SCREEN);
 
-    page.setBackgroundColor(Colors::white);  //[cite: 4, 6]
-    EXPECT_EQ(page.getPageHighlighterOperator(), CAIRO_OPERATOR_MULTIPLY);  //[cite: 4, 6]
+    page.setBackgroundColor(Colors::white);
+    EXPECT_EQ(page.getPageHighlighterOperator(), CAIRO_OPERATOR_MULTIPLY);
 }
 
 TEST(XojPageHighlighterOperatorTest, PdfBackgroundForcesMultiplyEvenWithDarkColor) {
-    XojPage page(500.0, 700.0);  //[cite: 5, 6]
-    page.setBackgroundColor(Colors::black);  //[cite: 4, 6]
-    page.setBackgroundPdfPageNr(0);  // sets format to PageTypeFormat::Pdf[cite: 6]
+    XojPage page(500.0, 700.0);
+    page.setBackgroundColor(Colors::black);
+    page.setBackgroundPdfPageNr(0);
 
-    EXPECT_EQ(page.getPageHighlighterOperator(), CAIRO_OPERATOR_MULTIPLY);  //[cite: 5, 6]
+    EXPECT_EQ(page.getPageHighlighterOperator(), CAIRO_OPERATOR_MULTIPLY);
 }
 
 TEST(XojPageHighlighterOperatorTest, ImageBackgroundForcesMultiplyEvenWithDarkColor) {
-    XojPage page(500.0, 700.0);  //[cite: 5, 6]
-    page.setBackgroundColor(Colors::black);  //[cite: 4, 6]
-    page.setBackgroundType(PageType(PageTypeFormat::Image));  //[cite: 5, 6]
+    XojPage page(500.0, 700.0);
+    page.setBackgroundColor(Colors::black);
+    page.setBackgroundType(PageType(PageTypeFormat::Image));
 
-    EXPECT_EQ(page.getPageHighlighterOperator(), CAIRO_OPERATOR_MULTIPLY);  //[cite: 5, 6]
+    EXPECT_EQ(page.getPageHighlighterOperator(), CAIRO_OPERATOR_MULTIPLY);
 }
 
 TEST(XojPageHighlighterOperatorTest, SwitchingBackgroundTypesUpdatesOperator) {
-    XojPage page(500.0, 700.0);  //[cite: 5, 6]
-    page.setBackgroundColor(Colors::black);  //[cite: 4, 6]
-    page.setBackgroundType(PageType(PageTypeFormat::Plain));  //[cite: 5, 6]
-    EXPECT_EQ(page.getPageHighlighterOperator(), CAIRO_OPERATOR_SCREEN);  //[cite: 4, 6]
+    XojPage page(500.0, 700.0);
+    page.setBackgroundColor(Colors::black);
+    page.setBackgroundType(PageType(PageTypeFormat::Plain));
+    EXPECT_EQ(page.getPageHighlighterOperator(), CAIRO_OPERATOR_SCREEN);
 
-    page.setBackgroundType(PageType(PageTypeFormat::Image));  //[cite: 5, 6]
-    EXPECT_EQ(page.getPageHighlighterOperator(), CAIRO_OPERATOR_MULTIPLY);  //[cite: 5, 6]
+    page.setBackgroundType(PageType(PageTypeFormat::Image));
+    EXPECT_EQ(page.getPageHighlighterOperator(), CAIRO_OPERATOR_MULTIPLY);
 
-    page.setBackgroundType(PageType(PageTypeFormat::Graph));  //[cite: 5, 6]
-    EXPECT_EQ(page.getPageHighlighterOperator(), CAIRO_OPERATOR_SCREEN);  //[cite: 4, 6]
+    page.setBackgroundType(PageType(PageTypeFormat::Graph));
+    EXPECT_EQ(page.getPageHighlighterOperator(), CAIRO_OPERATOR_SCREEN);
 }
 
 } //namespace

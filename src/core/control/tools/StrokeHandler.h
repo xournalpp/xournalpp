@@ -64,7 +64,7 @@ public:
     bool onKeyPressEvent(const KeyEvent& event) override;
     bool onKeyReleaseEvent(const KeyEvent& event) override;
     [[nodiscard]] cairo_operator_t getPageHighlighterOperator() const;
-    
+
     /**
      * @brief Add a straight line to the stroke (if the movement is valid).
      * The line may be subdivided into smaller segments if the pressure variation is too big.

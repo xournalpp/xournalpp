@@ -97,7 +97,9 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
                 cairo_line_to(cr, it->x, it->y);
             }
             endIt = std::next(data.cbegin(), (std::ptrdiff_t)first.max.index + 1);
-            for (auto it = data.cbegin(); it != endIt; ++it) { cairo_line_to(cr, it->x, it->y); }
+            for (auto it = data.cbegin(); it != endIt; ++it) {
+                cairo_line_to(cr, it->x, it->y);
+            }
 
             Point q = stroke.getPoint(first.max);
             cairo_line_to(cr, q.x, q.y);
@@ -170,7 +172,9 @@ void ErasableStrokeView::drawFilling(cairo_t* cr) const {
             cairo_line_to(cr, it->x, it->y);
         }
         endIt = std::next(data.cbegin(), (std::ptrdiff_t)first.max.index + 1);
-        for (auto it = data.cbegin(); it != endIt; ++it) { cairo_line_to(cr, it->x, it->y); }
+        for (auto it = data.cbegin(); it != endIt; ++it) {
+            cairo_line_to(cr, it->x, it->y);
+        }
 
         Point q = stroke.getPoint(first.max);
         cairo_line_to(cr, q.x, q.y);
@@ -256,7 +260,9 @@ void ErasableStrokeView::paintFilledHighlighter(cairo_t* cr, cairo_operator_t op
             cairo_line_to(crMask, it->x, it->y);
         }
         endIt = std::next(data.cbegin(), (std::ptrdiff_t)first.max.index + 1);
-        for (auto it = data.cbegin(); it != endIt; ++it) { cairo_line_to(crMask, it->x, it->y); }
+        for (auto it = data.cbegin(); it != endIt; ++it) {
+            cairo_line_to(crMask, it->x, it->y);
+        }
 
         Point q = stroke.getPoint(first.max);
         cairo_line_to(crMask, q.x, q.y);
