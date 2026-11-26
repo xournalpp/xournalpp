@@ -228,6 +228,12 @@ void ToolMenuHandler::initToolItems() {
         emplaceItem<ToolButton>(name, c, action, iconName(icon), description, true);
     };
 
+    auto emplaceCustomItemTglWithPopover = [this](const char* name, Cat c, Action action, const char* icon,
+                                                  std::string description, const PopoverFactory* popover) {
+        auto&& tb = emplaceItem<ToolButton>(name, c, action, iconName(icon), description, true);
+        tb.setPopoverFactory(popover);
+    };
+
     /**
      * @brief Toggle button linked to others sharing the same action (with a custom loaded icon)
      *      The corresponding action in ActionDatabase[action] should have a state and a parameter. The button is "on"
@@ -307,7 +313,13 @@ void ToolMenuHandler::initToolItems() {
     emplaceCustomItemTgl("ROTATION_SNAPPING", Cat::MISC, Action::ROTATION_SNAPPING, "snapping-rotation",
                          _("Rotation Snapping"));
     emplaceCustomItemTgl("GRID_SNAPPING", Cat::MISC, Action::GRID_SNAPPING, "snapping-grid", _("Grid Snapping"));
-
+    this->darkModePopover = std::make_unique<StylePopoverFactory>(
+            Action::DARK_MODE_TARGET,
+            std::vector<StylePopoverFactory::Entry>{{_("Theme & Canvas"), DarkModeTarget::BOTH},
+                                                    {_("UI Theme Only"), DarkModeTarget::THEME_ONLY},
+                                                    {_("Canvas Only"), DarkModeTarget::CANVAS_ONLY}});
+    emplaceCustomItemTglWithPopover("TOGGLE_DARK_MODE", Cat::MISC, Action::TOGGLE_DARK_MODE, "dark-mode",
+                                    _("Toggle Dark Mode"), this->darkModePopover.get());
     /*
      * Menu View
      * ------------------------------------------------------------------------

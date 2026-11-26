@@ -176,6 +176,8 @@ enum class Action : size_t {
 
     // Miscellaneous
     POSITION_HIGHLIGHTING,
+    TOGGLE_DARK_MODE,
+    DARK_MODE_TARGET,
 
     // Keep this last value
     ENUMERATOR_COUNT

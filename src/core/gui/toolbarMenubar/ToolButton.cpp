@@ -32,9 +32,21 @@ ToolButton::ToolButton(std::string id, Category cat, Action action, GVariant* ta
 auto ToolButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
     GtkWidget* btn = toggle ? gtk_toggle_button_new() : gtk_button_new();
     gtk_widget_set_can_focus(btn, false);  // todo(gtk4) not necessary anymore
-    gtk_button_set_child(GTK_BUTTON(btn), getNewToolIcon());
+    GtkWidget* iconWidget = getNewToolIcon();
+    gtk_button_set_child(GTK_BUTTON(btn), iconWidget);
     gtk_widget_set_tooltip_text(btn, getToolDisplayName().c_str());
     gtk_actionable_set_action_name(GTK_ACTIONABLE(btn), (std::string("win.") + Action_toString(action)).c_str());
+    if (action == Action::TOGGLE_DARK_MODE) {
+        auto updateDarkModeIcon = +[](GtkToggleButton* toggleBtn, gpointer userData) {
+            if (GTK_IS_IMAGE(userData)) {
+                const bool isDark = gtk_toggle_button_get_active(toggleBtn);
+                gtk_image_set_from_icon_name(GTK_IMAGE(userData), isDark ? "xopp-light-mode" : "xopp-dark-mode",
+                                             GTK_ICON_SIZE_LARGE_TOOLBAR);
+            }
+        };
+        g_signal_connect(btn, "toggled", G_CALLBACK(updateDarkModeIcon), iconWidget);
+        updateDarkModeIcon(GTK_TOGGLE_BUTTON(btn), iconWidget);
+    }
     if (target) {
         gtk_actionable_set_action_target_value(GTK_ACTIONABLE(btn), target.get());
         xoj::util::gtk::setToggleButtonUnreleasable(GTK_TOGGLE_BUTTON(btn));

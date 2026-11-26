@@ -211,6 +211,10 @@
      <attribute name="action">win.show-sidebar</attribute>
      <attribute name="accel">F12</attribute>
     </item>
+    <item>
+     <attribute name="label" translatable="yes">_Dark Mode</attribute>
+     <attribute name="action">win.toggle-dark-mode</attribute>
+    </item>
    </section>
    <section>
     <submenu>
