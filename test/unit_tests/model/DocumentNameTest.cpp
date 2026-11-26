@@ -19,8 +19,7 @@
 #include "util/StringUtils.h"
 
 TEST(DocumentName, testUTF8) {
-    DocumentHandler dh;
-    Document doc(&dh);
+    Document doc;
     fs::path p;
     bool failed = false;
     auto trything = [&](Document::DocumentType t) {

@@ -28,6 +28,7 @@
 
 class Control;
 class UndoAction;
+class Document;
 
 class PageBackgroundChangeController: public DocumentListener {
 public:
@@ -54,8 +55,11 @@ public:
     void applyCurrentPageBackgroundToAll();
     void applyBackgroundToAllPages(const PageType& pt);
     void applyPageSizeToAllPages(const PaperSize& paperSize);
-    void changePdfPagesBackground(const fs::path& filepath, bool attachPdf);
     void insertNewPage(size_t position, bool automatedInsertion = false);
+
+    /// @param ctrl is only used to display putative errors
+    static std::unique_ptr<UndoAction> changeDocumentPdfBackground(Document* doc, const fs::path& newPdf, bool attach,
+                                                                   Control* ctrl);
 
     // DocumentListener
 public:
@@ -67,26 +71,11 @@ public:
     void pageSelected(size_t page) override;
 
 private:
-    /**
-     * Copy the background from source to target
-     */
-    static void copyBackgroundFromOtherPage(PageRef target, PageRef source);
-
     /// Asks the user to choose a pdf page, and calls callback
     void askForPdfBackground(std::function<void(size_t)> callback);
 
     /// Asks the user to choose an image background, and calls callback
     void askForImageBackground(std::function<void(BackgroundImage)> callback);
-
-    /// Nothing, a BackgroundImage or the number of a pdf page
-    using CommitParameter = std::variant<std::nullopt_t, BackgroundImage, size_t>;
-    /**
-     * Applies pageType to page number pageNum.
-     *      If pageType.isImage(), a BackgroundImage must be provided
-     *      If pageType.isPdf(), a pdf page number must be provided in the std::variant
-     */
-    auto commitPageTypeChange(size_t pageNum, const PageType& pageType, CommitParameter param = std::nullopt)
-            -> std::unique_ptr<UndoAction>;
 
     /**
      * Perform page size change.
