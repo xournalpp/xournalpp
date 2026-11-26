@@ -11,6 +11,7 @@
 #define POINTERHOLDER_TRANSITION 4  // Only used for QPDF 11
 #endif
 #include <qpdf/QPDF.hh>
+#include <qpdf/QPDFOutlineDocumentHelper.hh>
 #include <qpdf/QPDFPageDocumentHelper.hh>
 #include <qpdf/QPDFPageObjectHelper.hh>
 #include <qpdf/QPDFWriter.hh>
@@ -74,8 +75,17 @@ static void reorderBackgrounds(QPDF& background, const std::vector<HybridPdfExpo
 
     // The backgrounds are in place. Remove the unused backgrounds.
     auto pages = pageHelper.getAllPages();  // Makes a copy of the vector, so the iterators don't get invalidated
-    for (auto it = std::next(pages.begin(), as_signed(nbValidPages)); it != pages.end(); it++) {
-        pageHelper.removePage(*it);
+    const auto firstUnusedPage = std::next(pages.begin(), as_signed(nbValidPages));
+    if (firstUnusedPage != pages.end()) {
+        QPDFOutlineDocumentHelper outlines(background);
+        for (auto it = firstUnusedPage; it != pages.end(); it++) {
+            for (auto& outline: outlines.getOutlinesForPage(it->getObjectHandle().getObjGen())) {
+                auto item = outline.getObjectHandle();
+                item.removeKey("/Dest");
+                item.removeKey("/A");
+            }
+            pageHelper.removePage(*it);
+        }
     }
     xoj_assert(as_signed(background.getAllPages().size()) ==
                std::count_if(outputPageInfos.begin(), outputPageInfos.end(),
