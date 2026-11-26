@@ -110,6 +110,18 @@
     </item>
    </section>
    <section>
+    <item>
+      <attribute name="label" translatable="yes">Mirror horizontally</attribute>
+      <attribute name="action">win.mirror-horizontally</attribute>
+      <attribute name="accel">m</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Mirror vertically</attribute>
+      <attribute name="action">win.mirror-vertically</attribute>
+      <attribute name="accel">&lt;Shift&gt;m</attribute>
+    </item>
+   </section>
+   <section>
      <submenu>
        <attribute name="label" translatable="yes">Arrange Selection</attribute>
        <section>

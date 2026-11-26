@@ -2664,6 +2664,12 @@ void Control::fontChanged(const XojFont& font) {
     }
 }
 
+void Control::mirrorSelection(double fx, double fy) {
+    EditSelection* sel = nullptr;
+    if (this->win) sel = this->win->getXournal()->getSelection();
+    if (sel) sel->mirror(fx, fy);
+}
+
 /**
  * GETTER / SETTER
  */

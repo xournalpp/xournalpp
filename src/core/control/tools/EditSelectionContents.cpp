@@ -394,6 +394,9 @@ void EditSelectionContents::updateContent(Rectangle<double> bounds, Rectangle<do
         double py = this->lastSnappedBounds.y;
 
         switch (type) {
+            case CURSOR_SELECTION_MIRROR:
+                px += this->lastSnappedBounds.width / 2;
+                break;
             case CURSOR_SELECTION_TOP_LEFT:
                 [[fallthrough]];
             case CURSOR_SELECTION_BOTTOM_LEFT:
@@ -406,6 +409,9 @@ void EditSelectionContents::updateContent(Rectangle<double> bounds, Rectangle<do
         }
 
         switch (type) {
+            case CURSOR_SELECTION_MIRROR:
+                py += this->lastSnappedBounds.height / 2;
+                break;
             case CURSOR_SELECTION_TOP_LEFT:
                 [[fallthrough]];
             case CURSOR_SELECTION_TOP_RIGHT:
@@ -542,4 +548,8 @@ void EditSelectionContents::readSerialized(ObjectInputStream& in) {
     this->relativeY = in.readDouble();
 
     in.endObject();
+}
+
+void EditSelectionContents::mirror() {
+    this->deleteViewBuffer();
 }

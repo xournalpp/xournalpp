@@ -205,6 +205,16 @@ struct ActionProperties<Action::DELETE> {
 };
 
 template <>
+struct ActionProperties<Action::MIRROR_HORIZONTALLY> {
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->mirrorSelection(-1.0, 1.0); }
+};
+
+template <>
+struct ActionProperties<Action::MIRROR_VERTICALLY> {
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->mirrorSelection(1.0, -1.0); }
+};
+
+template <>
 struct ActionProperties<Action::ARRANGE_SELECTION_ORDER> {
     using parameter_type = EditSelection::OrderChange;
     static void callback(GSimpleAction*, GVariant* p, Control* ctrl) {
