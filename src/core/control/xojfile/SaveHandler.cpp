@@ -181,11 +181,15 @@ static inline bool isMatrixPositiveScaling(const RectangularElement& e) {
     return nearEnough(m.yx, 0.) && nearEnough(m.xy, 0.) && m.xx > 0.;
 }
 
+static bool isBmp(const Image& i) {
+    const auto* data = i.getRawData();
+    return i.getRawDataLength() >= 2 && data[0] == 'B' && data[1] == 'M';
+}
+
 void SaveHandler::visitImage(XmlImageNode* image, const Image* i) {
-    if (i->hasData()) {
+    if (i->hasData() && !isBmp(*i)) {
         image->setImageData(i->getBinaryData());
     } else {
-        g_warning("SaveHandler::visitImage(): image has no encoded data, re-encoding its surface as PNG");
         image->setImage(i->getImage());
     }
 }
