@@ -22,22 +22,29 @@
 class ObjectInputStream;
 class EditSelection;
 
-class ClipboardListener {
+class ClipboardActionStatusListener {
 public:
     virtual void clipboardCutCopyEnabled(bool enabled) = 0;
     virtual void clipboardPasteEnabled(bool enabled) = 0;
+
+    virtual ~ClipboardActionStatusListener() = default;
+};
+
+class ClipboardListener {
+public:
     virtual void clipboardPasteText(std::string text) = 0;
     virtual void clipboardPasteImage(GdkPixbuf* img) = 0;
     virtual void clipboardPasteXournal(ObjectInputStream& in) = 0;
+    virtual EditSelection* clipboardGetSelection() const = 0;
     virtual void deleteSelection() = 0;
 
-    virtual ~ClipboardListener();
+    virtual ~ClipboardListener() = default;
 };
 
-class ClipboardHandler {
+class ClipboardHandler final {
 public:
-    ClipboardHandler(ClipboardListener* listener, GtkWidget* widget);
-    virtual ~ClipboardHandler();
+    ClipboardHandler(ClipboardActionStatusListener* actions, GtkWidget* widget);
+    ~ClipboardHandler();
 
 public:
     bool paste();
@@ -47,6 +54,8 @@ public:
     void setSelection(EditSelection* selection);
 
     void setCopyCutEnabled(bool enabled);
+
+    void setListener(ClipboardListener* listener);
 
 private:
     static void ownerChangedCallback(GtkClipboard* clip, GdkEvent* event, ClipboardHandler* handler);
@@ -64,10 +73,9 @@ private:
 
 private:
     ClipboardListener* listener = nullptr;
+    ClipboardActionStatusListener* actions = nullptr;
     GtkClipboard* clipboard = nullptr;
-    gulong handlerId = std::numeric_limits<gulong>::max();
-
-    EditSelection* selection = nullptr;
+    gulong handlerId = 0;
 
     bool containsText = false;
     bool containsXournal = false;
