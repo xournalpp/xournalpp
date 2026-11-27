@@ -4,8 +4,8 @@
 #include <cmath>      // for atan2, abs, cos, remainder
 #include <memory>     // for __shared_ptr_access, shar...
 
-#include <gdk/gdkkeysyms.h>  // for GDK_KEY_Down, GDK_KEY_Left
-#include <glib.h>            // for g_warning
+#include <gdk/gdk.h>  // for GDK_MOD1_MASK, GDK_KEY_*
+#include <glib.h>     // for g_warning
 
 #include "control/Control.h"                 // for Control
 #include "control/GeometryToolController.h"  // for GeometryToolController
@@ -19,9 +19,11 @@
 #include "model/Element.h"                   // for Element, ELEMENT_STROKE
 #include "model/GeometryTool.h"              // for HALF_CM
 #include "model/Layer.h"                     // for Layer
+#include "model/Point.h"                     // for Point
 #include "model/Snapping.h"                  // for distanceLine
 #include "model/Stroke.h"                    // for Stroke
 #include "model/XojPage.h"                   // for XojPage
+#include "util/Assert.h"                     // for xoj_assert
 
 constexpr double MOVE_AMOUNT = HALF_CM / 2.0;
 constexpr double MOVE_AMOUNT_SMALL = HALF_CM / 20.0;
@@ -34,7 +36,7 @@ constexpr double SNAPPING_ROTATION_TOLERANCE = 3.0 * M_PI / 180.0;  // rad
 constexpr double ZOOM_DISTANCE_MIN = 0.01;
 
 GeometryToolInputHandler::GeometryToolInputHandler(XournalView* xournal, GeometryToolController* controller):
-        xournal(xournal), controller(controller) {}
+        xournal(xournal), controller(controller), snappingHandler(xournal->getControl()->getSettings()) {}
 
 GeometryToolInputHandler::~GeometryToolInputHandler() = default;
 
@@ -111,6 +113,10 @@ auto GeometryToolInputHandler::handleTouchscreen(InputEvent const& event) -> boo
             // to nullptr. If it isn't, then it is now the primary sequence!
             this->primarySequence = std::exchange(this->secondarySequence, nullptr);
             this->priLastPageRel = this->secLastPageRel;
+            if (!this->primarySequence) {
+                // Reset snap origin (gesture ended)
+                this->hasUnsnappedOrigin = false;
+            }
             return true;
         } else if (event.sequence == this->secondarySequence) {
             this->secondarySequence = nullptr;
@@ -157,7 +163,8 @@ auto GeometryToolInputHandler::keyPressed(KeyEvent const& event) -> bool {
 
     if (xdir != 0 || ydir != 0) {
         xoj::util::Point<double> offset;
-        const double amount = (event.state & GDK_MOD1_MASK) ? MOVE_AMOUNT_SMALL : MOVE_AMOUNT;
+        const bool alt = (event.state & GDK_MOD1_MASK) != 0;
+        const double amount = alt ? MOVE_AMOUNT_SMALL : MOVE_AMOUNT;
         if (event.state & GDK_SHIFT_MASK) {
             double angle = controller->getGeometryTool()->getRotation();
             const double c = std::cos(angle);
@@ -166,7 +173,13 @@ auto GeometryToolInputHandler::keyPressed(KeyEvent const& event) -> bool {
         } else {
             offset = {amount * xdir, amount * ydir};
         }
-        controller->translate(offset);
+        if (alt) {
+            controller->translate(offset);
+            unsnappedOrigin = controller->getGeometryTool()->getOrigin();
+            hasUnsnappedOrigin = true;
+        } else {
+            translateSnapped(offset);
+        }
         return true;
     }
 
@@ -190,7 +203,10 @@ void GeometryToolInputHandler::sequenceStart(InputEvent const& event) {
     } else {
         this->secLastPageRel = this->getCoords(event);
     }
+    this->unsnappedOrigin = controller->getGeometryTool()->getOrigin();
+    this->hasUnsnappedOrigin = true;
     const auto page = controller->getPage();
+    this->snappingHandler.setPageRef(page);
 
     const Layer* layer = page->getSelectedLayer();
     this->lines.clear();
@@ -223,8 +239,10 @@ void GeometryToolInputHandler::scrollMotion(InputEvent const& event) {
             return offset;
         }
     }();
-    const auto& origin = controller->getGeometryTool()->getOrigin();
-    const auto pos = Point(origin.x + offset.x, origin.y + offset.y);
+    // unsnappedOrigin is set by sequenceStart() before every scrollMotion()
+    xoj_assert(hasUnsnappedOrigin);
+    const auto pending = unsnappedOrigin + offset;
+    const auto pos = Point(pending.x, pending.y);
     double minDist = SNAPPING_DISTANCE_TOLERANCE;
     double diffAngle{NAN};
     for (const auto& l: lines) {
@@ -241,7 +259,20 @@ void GeometryToolInputHandler::scrollMotion(InputEvent const& event) {
     if (!std::isnan(diffAngle)) {
         controller->rotate(diffAngle, xoj::util::Point<double>(pos.x, pos.y));
     }
-    controller->translate(offset);
+    translateSnapped(offset);
+}
+
+void GeometryToolInputHandler::translateSnapped(const xoj::util::Point<double>& offset) {
+    if (!hasUnsnappedOrigin) {
+        // Keyboard input has no sequenceStart(), init on first use
+        unsnappedOrigin = controller->getGeometryTool()->getOrigin();
+        snappingHandler.setPageRef(controller->getPage());
+        hasUnsnappedOrigin = true;
+    }
+    unsnappedOrigin = unsnappedOrigin + offset;
+    const Point snapped = snappingHandler.snapToGrid(Point(unsnappedOrigin.x, unsnappedOrigin.y), false);
+    const auto& origin = controller->getGeometryTool()->getOrigin();
+    controller->translate(xoj::util::Point<double>(snapped.x, snapped.y) - origin);
 }
 
 void GeometryToolInputHandler::rotateAndZoomStart() {
@@ -296,6 +327,8 @@ void GeometryToolInputHandler::rotateAndZoomMotion(InputEvent const& event) {
     this->lastZoomScrollCenter = center;
     this->lastAngle = angle;
     this->lastDist = dist;
+    this->unsnappedOrigin = controller->getGeometryTool()->getOrigin();
+    this->hasUnsnappedOrigin = true;
 }
 
 auto GeometryToolInputHandler::getCoords(InputEvent const& event) -> xoj::util::Point<double> {
