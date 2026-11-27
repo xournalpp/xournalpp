@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-22 11:55+0000\n"
-"PO-Revision-Date: 2026-09-23 09:43\n"
+"POT-Creation-Date: 2026-11-21 14:59+0000\n"
+"PO-Revision-Date: 2026-11-22 04:22\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional, Hong Kong\n"
 "Language: zh_HK\n"
@@ -24,70 +24,79 @@ msgstr "音效資料夾未設置！錄音無法使用！\n"
 "請於 \"偏好設定 > 錄製音效\" 下設定錄音資料夾"
 
 #: ../src/core/control/Control.cpp:235
+#, c++-format
 msgid "Filesystem error: {1}"
 msgstr ""
 
 #: ../src/core/control/Control.cpp:247
+#, c++-format
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:588
+#: ../src/core/control/Control.cpp:299
+msgid "Initialization of audio devices failed. You can disable audio support in Settings->Audio"
+msgstr ""
+
+#: ../src/core/control/Control.cpp:592
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "你刪咗用緊嘅工具列。會用返預設工具列。"
 
-#: ../src/core/control/Control.cpp:608
+#: ../src/core/control/Control.cpp:612
+#, c++-format
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "工具條配置\"{1}\"是預置的，要產生一個拷貝到編輯?"
 
-#: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1663
+#: ../src/core/control/Control.cpp:615 ../src/core/control/Control.cpp:1677
 msgid "Yes"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:611 ../src/core/control/Control.cpp:1663
+#: ../src/core/control/Control.cpp:615 ../src/core/control/Control.cpp:1677
 msgid "No"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:839 ../src/core/control/Control.cpp:1897
-#: ../src/core/control/Control.cpp:2225
+#: ../src/core/control/Control.cpp:851 ../src/core/control/Control.cpp:1911
+#: ../src/core/control/Control.cpp:2281
 msgid "Cancel"
 msgstr "取消"
 
-#: ../src/core/control/Control.cpp:840
+#: ../src/core/control/Control.cpp:852
 msgid "Insert after current page"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:841
+#: ../src/core/control/Control.cpp:853
 msgid "Insert at end"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:844
+#: ../src/core/control/Control.cpp:856
 msgid "_Journal"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:844
+#: ../src/core/control/Control.cpp:856
 msgid "Paper B_ackground"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:845
+#: ../src/core/control/Control.cpp:857
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:43
 msgid "With PDF background"
 msgstr "使用PDF背景"
 
-#: ../src/core/control/Control.cpp:848
+#: ../src/core/control/Control.cpp:860
+#, c++-format
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:891
+#: ../src/core/control/Control.cpp:903
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:905
+#: ../src/core/control/Control.cpp:917
 msgid "Unable to retrieve pdf page."
 msgstr "無法獲取PDF頁面。"
 
-#: ../src/core/control/Control.cpp:1519
+#: ../src/core/control/Control.cpp:1533
+#, c++-format
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -95,126 +104,140 @@ msgstr "不要打開自動儲存檔案。它們有機會被覆寫！\n"
 "複製檔案至另一個資料夾。\n"
 "資料夾 {1} 中的檔案無法被打開。"
 
-#: ../src/core/control/Control.cpp:1539
+#: ../src/core/control/Control.cpp:1553
+#, c++-format
 msgid "file: {1}"
 msgstr "檔案: {1}"
 
-#: ../src/core/control/Control.cpp:1582
+#: ../src/core/control/Control.cpp:1596
+#, c++-format
 msgid "<i>Above error repeated {1} times</i>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1594
+#: ../src/core/control/Control.cpp:1608
+#, c++-format
 msgid "<i>&lt;{1} more lines of error messages&gt;</i>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1633
+#: ../src/core/control/Control.cpp:1647
+#, c++-format
 msgid "Error opening file \"{1}\".\n\n"
 "<tt>{2}</tt>\n"
 "<b>{3}</b>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1647
+#: ../src/core/control/Control.cpp:1661
+#, c++-format
 msgid "There were some errors while loading the file. Some information might have been lost. Do not overwrite your old file unless you are sure everything you need was loaded correctly.\n\n"
 "Error messages:\n"
 "<tt>{1}</tt>"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1665
+#: ../src/core/control/Control.cpp:1679
 msgid "File version mismatch"
 msgstr "檔案版本不符"
 
-#: ../src/core/control/Control.cpp:1666
+#: ../src/core/control/Control.cpp:1680
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1689
+#: ../src/core/control/Control.cpp:1703
+#, c++-format
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1710
+#: ../src/core/control/Control.cpp:1724
+#, c++-format
 msgid "Error reading PNG file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1745
+#: ../src/core/control/Control.cpp:1759
+#, c++-format
 msgid "Error reading template file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1764
+#: ../src/core/control/Control.cpp:1778
+#, c++-format
 msgid "Failed to determine if path exists \"{1}\": {2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1765
+#: ../src/core/control/Control.cpp:1779
+#, c++-format
 msgid "That file does not exist:\n"
 "\"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1877
+#: ../src/core/control/Control.cpp:1891
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1880
+#: ../src/core/control/Control.cpp:1894
+#, c++-format
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1890
+#: ../src/core/control/Control.cpp:1904
+#, c++-format
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1895
+#: ../src/core/control/Control.cpp:1909
 msgid "Select another PDF"
 msgstr "選擇其他PDF"
 
-#: ../src/core/control/Control.cpp:1896
+#: ../src/core/control/Control.cpp:1910
 msgid "Remove PDF Background"
 msgstr "去掉PDF背景"
 
-#: ../src/core/control/Control.cpp:1900
+#: ../src/core/control/Control.cpp:1914
 msgid "Use proposed PDF"
 msgstr "使用建議的PDF"
 
-#: ../src/core/control/Control.cpp:1903
+#: ../src/core/control/Control.cpp:1917
 msgid "Missing PDF background file"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2032
+#: ../src/core/control/Control.cpp:2046
 msgid "Select font"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2051
+#: ../src/core/control/Control.cpp:2065
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "選色"
 
-#: ../src/core/control/Control.cpp:2076
+#: ../src/core/control/Control.cpp:2090
 msgid "Unsaved Document"
 msgstr "未保存文檔"
 
-#: ../src/core/control/Control.cpp:2218
+#: ../src/core/control/Control.cpp:2274
 msgid "Document file was removed."
 msgstr "文檔已刪除。"
 
-#: ../src/core/control/Control.cpp:2218
+#: ../src/core/control/Control.cpp:2274
 msgid "This document is not saved yet."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2220
+#: ../src/core/control/Control.cpp:2276
 msgid "Save As..."
 msgstr "另存新檔..."
 
-#: ../src/core/control/Control.cpp:2220 ../src/core/control/jobs/SaveJob.cpp:25
-#: ../src/core/gui/dialog/XojSaveDlg.cpp:85
+#: ../src/core/control/Control.cpp:2276 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:136
+#: ../src/core/gui/dialog/XojSaveDlg.cpp:73
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
 msgid "Save"
 msgstr "保存"
 
-#: ../src/core/control/Control.cpp:2223
+#: ../src/core/control/Control.cpp:2279
 msgid "Discard"
 msgstr "丟棄"
 
-#: ../src/core/control/Control.cpp:2312
+#: ../src/core/control/Control.cpp:2357
+#, c++-format
 msgid "Creating Gtk demo subprocess failed: {1} (exit code: {2})"
 msgstr ""
 
@@ -254,20 +277,21 @@ msgstr ""
 msgid "tablet pad"
 msgstr ""
 
-#: ../src/core/control/ExportHelper.cpp:63
+#: ../src/core/control/ExportHelper.cpp:64
 msgid "Image file successfully created"
 msgstr "圖片檔案成功建立"
 
-#: ../src/core/control/ExportHelper.cpp:76
-#: ../src/core/control/jobs/BaseExportJob.cpp:40
+#: ../src/core/control/ExportHelper.cpp:77
+#: ../src/core/control/jobs/BaseExportJob.cpp:25
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "不要覆寫背景 PDF！這樣會導致錯誤！"
 
-#: ../src/core/control/ExportHelper.cpp:80
+#: ../src/core/control/ExportHelper.cpp:81
+#, c++-format
 msgid "The check for overwriting the background failed with: {1}"
 msgstr ""
 
-#: ../src/core/control/ExportHelper.cpp:100
+#: ../src/core/control/ExportHelper.cpp:101
 msgid "PDF file successfully created"
 msgstr "PDF檔案成功建立"
 
@@ -284,10 +308,12 @@ msgid "Global template file is not a regular file. Please check your settings. "
 msgstr ""
 
 #: ../src/core/control/LatexController.cpp:183
+#, c++-format
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr ""
 
 #: ../src/core/control/LatexController.cpp:244
+#, c++-format
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "無法載入 LaTeX PDF 檔案：{1}"
 
@@ -296,9 +322,10 @@ msgid "Could not load LaTeX PDF file"
 msgstr "無法載入 LaTeX PDF 檔案"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:111
-#: ../src/core/control/XournalMain.cpp:227
+#: ../src/core/control/XournalMain.cpp:231
 #: ../src/core/control/xojfile/LoadHandler.cpp:262
 #: ../src/core/control/xojfile/LoadHandler.cpp:281
+#, c++-format
 msgid "Error reading PDF: {1}"
 msgstr "讀入PDF出錯：{1}"
 
@@ -312,54 +339,62 @@ msgid "PDF background missing"
 msgstr "PDF背景丟失"
 
 #: ../src/core/control/PrintHandler.cpp:122
+#, c++-format
 msgid "Running print operation failed with {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:120
+#: ../src/core/control/XournalMain.cpp:124
+#, c++-format
 msgid "Failed to delete file: {1}"
 msgstr "刪除檔案失敗: {1}"
 
-#: ../src/core/control/XournalMain.cpp:122
+#: ../src/core/control/XournalMain.cpp:126
 msgid "Please delete the file manually"
 msgstr "請手動刪除檔案"
 
-#: ../src/core/control/XournalMain.cpp:134
+#: ../src/core/control/XournalMain.cpp:138
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++上次死咗機。你要恢復上次編輯過嘅檔案嗎?"
 
-#: ../src/core/control/XournalMain.cpp:137
+#: ../src/core/control/XournalMain.cpp:141
 msgid "Recovery file detected"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:138
+#: ../src/core/control/XournalMain.cpp:142
 msgid "Delete file"
 msgstr "刪除檔案"
 
-#: ../src/core/control/XournalMain.cpp:138
+#: ../src/core/control/XournalMain.cpp:142
 msgid "Restore file"
 msgstr "還原檔案"
 
-#: ../src/core/control/XournalMain.cpp:158
+#: ../src/core/control/XournalMain.cpp:162
+#, c++-format
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:173
+#: ../src/core/control/XournalMain.cpp:177
+#, c++-format
 msgid "Error loading document: {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:206
+#: ../src/core/control/XournalMain.cpp:210
+#, c++-format
 msgid "Error exporting image: {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:235
+#: ../src/core/control/XournalMain.cpp:239
+#, c++-format
 msgid "Error saving document: {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:265
+#: ../src/core/control/XournalMain.cpp:269
+#, c++-format
 msgid "Error exporting PDF: {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:371
+#: ../src/core/control/XournalMain.cpp:375
+#, c++-format
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -373,78 +408,81 @@ msgstr "<span foreground='red' size='x-large'>遺失必須的使用者界面檔�
 "  不在工作目錄\n"
 "  不在 {2}"
 
-#: ../src/core/control/XournalMain.cpp:376
+#: ../src/core/control/XournalMain.cpp:380
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "現在將嘗試在沒有此檔案的情況下執行。"
 
-#: ../src/core/control/XournalMain.cpp:398
-#: ../src/core/control/XournalMain.cpp:459
+#: ../src/core/control/XournalMain.cpp:402
+#: ../src/core/control/XournalMain.cpp:463
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "對唔住，Xournal++每次只能開啓一個檔案。\n"
 "其餘嘅已被忽略。"
 
-#: ../src/core/control/XournalMain.cpp:409
+#: ../src/core/control/XournalMain.cpp:413
+#, c++-format
 msgid "File {1} does not exist."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:413
+#: ../src/core/control/XournalMain.cpp:417
+#, c++-format
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:616
+#: ../src/core/control/XournalMain.cpp:619
 msgid "Jump to Page (first Page: 1)"
 msgstr "跳到頁面(第一頁:1)"
 
-#: ../src/core/control/XournalMain.cpp:620
+#: ../src/core/control/XournalMain.cpp:623
 msgid "Get version of xournalpp"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:622
+#: ../src/core/control/XournalMain.cpp:625
 msgid "Disable audio for this session"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:624
+#: ../src/core/control/XournalMain.cpp:627
 msgid "Open PDF in attach mode\n"
 "                                       Ignored if no PDF file is specified."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:628
+#: ../src/core/control/XournalMain.cpp:631
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:633
+#: ../src/core/control/XournalMain.cpp:636
+#, c++-format
 msgid "Use the provided backend for PDF exports.\n"
 "                                       Available backends: {1}\n"
 "                                       No effect without -p/--create-pdf=foo.pdf"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:642
+#: ../src/core/control/XournalMain.cpp:645
 msgid "Export FILE as PDF"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:645
+#: ../src/core/control/XournalMain.cpp:648
 msgid "Export FILE as image files (one per page)\n"
 "                                       Guess the output format from the extension of IMGFILE\n"
 "                                       Supported formats: .png, .svg"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:651
+#: ../src/core/control/XournalMain.cpp:654
 msgid "Export without background\n"
 "                                       The exported file has transparent or white background,\n"
 "                                       depending on what its format supports\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:656
+#: ../src/core/control/XournalMain.cpp:659
 msgid "Export without ruling\n"
 "                                       The exported file has no paper ruling\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:661
+#: ../src/core/control/XournalMain.cpp:664
 msgid "Export layers progressively\n"
 "                                       In PDF export, Render layers progressively one by one.\n"
 "                                       This results in N export pages per page with N layers,\n"
@@ -452,97 +490,73 @@ msgid "Export layers progressively\n"
 "                                       The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:670
+#: ../src/core/control/XournalMain.cpp:673
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:675
+#: ../src/core/control/XournalMain.cpp:678
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                       No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:682
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                       No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:683
+#: ../src/core/control/XournalMain.cpp:686
 msgid "Set page width for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:688
+#: ../src/core/control/XournalMain.cpp:691
 msgid "Set page height for PNG exports\n"
 "                                       No effect without -i/--create-img=foo.png\n"
 "                                       Ignored if --export-png-dpi or --export-png-width is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:696
+#: ../src/core/control/XournalMain.cpp:699
 msgid "Advanced export options"
 msgstr "進階輸出選項"
 
-#: ../src/core/control/XournalMain.cpp:697
+#: ../src/core/control/XournalMain.cpp:700
 msgid "Display advanced export options"
 msgstr "展示進階輸出選項"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:21
+#, c++-format
 msgid "Error while autosaving: {1}"
 msgstr "自動儲存時發生錯誤：{1}"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:46
+#, c++-format
 msgid "Autosaving to {1}"
 msgstr "自動儲存到 {1}"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:73
+#, c++-format
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "無法將自動儲存檔案 \"{1}\" 重新命名至 \"{2}\"： {3}"
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:46
+#: ../src/core/control/jobs/BaseExportJob.cpp:31
 msgid "The check for overwriting the background failed with:\n"
 msgstr ""
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:78
-msgid "Export File"
-msgstr ""
-
-#: ../src/core/control/jobs/BaseExportJob.cpp:78
-#: ../src/core/gui/dialog/DeviceTestingArea.cpp:181
-msgid "Export"
-msgstr "輸出"
-
-#: ../src/core/control/jobs/BaseExportJob.cpp:94
+#: ../src/core/control/jobs/BaseExportJob.cpp:44
+#, c++-format
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
 msgstr ""
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:27
+#: ../src/core/control/jobs/CustomExportJob.cpp:21
 msgid "Custom Export"
 msgstr "自訂匯出"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:29
-#: ../src/core/control/jobs/PdfExportJob.cpp:20
-#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:31
-msgid "PDF files"
-msgstr "PDF檔案"
-
-#: ../src/core/control/jobs/CustomExportJob.cpp:30
-#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:36
-msgid "PNG graphics"
-msgstr "PNG 圖片"
-
-#: ../src/core/control/jobs/CustomExportJob.cpp:31
-#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:35
-msgid "SVG graphics"
-msgstr "SVG 圖片"
-
-#: ../src/core/control/jobs/CustomExportJob.cpp:32
-msgid "Xournal (Compatibility)"
-msgstr ""
-
-#: ../src/core/control/jobs/CustomExportJob.cpp:132
-#: ../src/core/control/jobs/SaveJob.cpp:139
+#: ../src/core/control/jobs/CustomExportJob.cpp:52
+#: ../src/core/control/jobs/SaveJob.cpp:138
+#, c++-format
 msgid "Save file error: {1}"
 msgstr ""
 
@@ -550,15 +564,15 @@ msgstr ""
 msgid "Unsupported graphics format: "
 msgstr "不支持的圖片格式: "
 
-#: ../src/core/control/jobs/ImageExport.cpp:169
+#: ../src/core/control/jobs/ImageExport.cpp:168
 msgid "Error save image #1"
 msgstr "錯誤儲存圖片 #1"
 
-#: ../src/core/control/jobs/ImageExport.cpp:178
+#: ../src/core/control/jobs/ImageExport.cpp:177
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
 msgstr ""
 
-#: ../src/core/control/jobs/ImageExport.cpp:202
+#: ../src/core/control/jobs/ImageExport.cpp:201
 msgid "Error save image #2"
 msgstr "錯誤儲存圖片 #2"
 
@@ -566,33 +580,40 @@ msgstr "錯誤儲存圖片 #2"
 msgid "PDF Export"
 msgstr "輸出為PDF"
 
-#: ../src/core/control/jobs/SaveJob.cpp:123
+#: ../src/core/control/jobs/SaveJob.cpp:122
+#, c++-format
 msgid "Save file error, can't backup: {1}"
 msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:108
+#, c++-format
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:114
+#, c++-format
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:119
+#, c++-format
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:127
+#, c++-format
 msgid "Could not save .tex file: {1}"
 msgstr "無法儲存 .tex 檔案： {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:142
+#, c++-format
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr ""
 
 #: ../src/core/control/layer/LayerController.cpp:424
+#, c++-format
 msgid "Layer {1}"
 msgstr "{1}圖層"
 
@@ -637,27 +658,27 @@ msgstr ""
 msgid "Image"
 msgstr "圖片"
 
-#: ../src/core/control/settings/Settings.cpp:155
+#: ../src/core/control/settings/Settings.cpp:165
 msgid "%F-Note-%H-%M"
 msgstr "%F-筆記-%H-%M"
 
-#: ../src/core/control/settings/Settings.cpp:156
+#: ../src/core/control/settings/Settings.cpp:166
 msgid "%{name}_annotated"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:446
+#: ../src/core/control/tools/EditSelection.cpp:445
 msgid "Arrange"
 msgstr "排列"
 
-#: ../src/core/control/tools/EditSelection.cpp:461
+#: ../src/core/control/tools/EditSelection.cpp:460
 msgid "Bring forward"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:472
+#: ../src/core/control/tools/EditSelection.cpp:471
 msgid "Send backward"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:479
+#: ../src/core/control/tools/EditSelection.cpp:478
 msgid "Send to back"
 msgstr ""
 
@@ -674,12 +695,14 @@ msgstr ""
 #: ../src/core/control/xojfile/LoadHandler.cpp:141
 #: ../src/core/control/xojfile/LoadHandler.cpp:734
 #: ../src/core/control/xojfile/LoadHandler.cpp:748
+#, c++-format
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "未能打開圖像：{1}。錯誤訊息：{2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:133
 #: ../src/core/control/xojfile/LoadHandler.cpp:740
 #: ../src/core/control/xojfile/LoadHandler.cpp:758
+#, c++-format
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "無法打開附件：{1} 。錯誤信息：未有提供有效文件大小"
 
@@ -688,43 +711,53 @@ msgid "Unable to create temporary file for audio attachment"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:163
+#, c++-format
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "無法打開附件：{1} 。錯誤信息：無法讀取文件"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:170
+#, c++-format
 msgid "Could not open attachment: {1}. Error message: Could not write temporary file"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:203
 #: ../src/core/control/xojfile/LoadHandler.cpp:228
+#, c++-format
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "未能讀入圖像：{1}。錯誤提示為：{2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:238
+#, c++-format
 msgid "Cloned pixmap page background on page {1} references inexistent page {2}"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:555
+#, c++-format
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:562
+#, c++-format
 msgid "The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\""
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:570
+#, c++-format
 msgid "The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:583
+#, c++-format
 msgid "The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\""
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:592
+#, c++-format
 msgid "Could not open file: \"{1}\""
 msgstr "不能打開檔案\"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:608
+#, c++-format
 msgid "XML Parser error: {1}"
 msgstr ""
 
@@ -750,26 +783,32 @@ msgid "Document is corrupted (no pages found in file)"
 msgstr "文件損毀 (檔案中找不到頁面)"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:791
+#, c++-format
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:327
+#, c++-format
 msgid "Could not write background \"{1}\", {2}"
 msgstr "未能寫上背景\"{1}\", {2}"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:434
+#, c++-format
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "未能寫上背景\"{1}\"，不管啦繼續哦..."
 
 #: ../src/core/control/xojfile/XmlParser.cpp:126
+#, c++-format
 msgid "Ignoring unexpected {1} tag inside unrecognized document structure"
 msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:131
+#, c++-format
 msgid "Ignoring unexpected {1} tag under {2}"
 msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:180
+#, c++-format
 msgid "Unexpected text in {1} node: \"{2}\""
 msgstr ""
 
@@ -786,6 +825,7 @@ msgid "PDF background filename is empty"
 msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:347
+#, c++-format
 msgid "Discarding unused audio timestamp element. Filename: {1}"
 msgstr ""
 
@@ -794,18 +834,22 @@ msgid "Found stroke that contains an odd number of valid coordinates. Discarding
 msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:435
+#, c++-format
 msgid "Found stroke with more coordinates than pressure points: {1}, expected {2}. Shrinking stroke to match pressure point count"
 msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:441
+#, c++-format
 msgid "Found stroke with too many pressure points: {1}, expected {2}. Discarding remaining pressure points"
 msgstr ""
 
 #: ../src/core/control/xojfile/XmlParser.cpp:576
+#, c++-format
 msgid "Ignoring attachment tag under {1}"
 msgstr ""
 
 #: ../src/core/gui/GladeGui.cpp:25
+#, c++-format
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "加載glade檔案\"{1}\"出錯(嘗試加載\"{2}\")"
 
@@ -814,6 +858,7 @@ msgid "Double click to edit. CTRL + click to open."
 msgstr ""
 
 #: ../src/core/gui/PageView.cpp:410
+#, c++-format
 msgid "Unable to play audio recording {1}"
 msgstr "無法播放錄音{1}"
 
@@ -824,6 +869,7 @@ msgid "Loading..."
 msgstr "加載中..."
 
 #: ../src/core/gui/PageView.cpp:1048
+#, c++-format
 msgid "Scroll to page {1}"
 msgstr ""
 
@@ -845,10 +891,12 @@ msgid "Text not found"
 msgstr "文本未找到"
 
 #: ../src/core/gui/SearchBar.cpp:144
+#, c++-format
 msgid "Text found once on page {1}"
 msgstr "文本在第{1}頁上找到"
 
 #: ../src/core/gui/SearchBar.cpp:145
+#, c++-format
 msgid "Text found {1} times on page {2} ({3} of {1})"
 msgstr ""
 
@@ -1049,53 +1097,54 @@ msgstr "識別形狀"
 msgid "Draw Spline"
 msgstr "繪製曲線"
 
-#: ../src/core/gui/dialog/DeviceTestingArea.cpp:181
+#: ../src/core/gui/dialog/DeviceTestingArea.cpp:175
 msgid "Export Logs"
 msgstr ""
 
+#: ../src/core/gui/dialog/DeviceTestingArea.cpp:175
+#: ../src/core/gui/dialog/XojSaveDlg.cpp:81
+msgid "Export"
+msgstr "輸出"
+
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:115
+#, c++-format
 msgid "Failed to parse external editor command: {1}"
 msgstr ""
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:131
+#, c++-format
 msgid "Could not spawn editor: {1}"
 msgstr ""
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:162
+#, c++-format
 msgid "Could not wait for editor: {1}"
 msgstr ""
 
 #: ../src/core/gui/dialog/ExtEdLatexDialog.cpp:171
+#, c++-format
 msgid "Editor exited with bad status {1}"
 msgstr ""
 
-#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:15
+#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:8
 msgid "All files"
 msgstr "所有檔案"
 
-#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:22
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:203
+#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:15
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:200
 msgid "Supported files"
 msgstr "支撐檔案"
 
-#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:32
-msgid "Xournal files"
-msgstr "Xournal檔案"
-
-#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:33
-msgid "Xournal++ files"
-msgstr "Xournal++檔案"
-
-#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:120
-msgid "Xournal++ template"
-msgstr ""
-
-#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:40
+#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:44
 msgid "Image files"
 msgstr ""
 
+#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:51
+msgid "Latex files"
+msgstr ""
+
 #: ../src/core/gui/dialog/FormatDialog.cpp:50
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:94
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:163
 msgid "Custom"
 msgstr "設置"
@@ -1108,44 +1157,37 @@ msgstr ""
 msgid "Previously selected language not available anymore!"
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:56
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "LaTeX editor theme:"
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:66
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:75
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:158
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
+#, c++-format
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:169
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:175
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:171
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:177
+#, c++-format
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:182
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:188
+#, c++-format
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr ""
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
-#: ../src/core/gui/dialog/XojSaveDlg.cpp:84
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:135
+#: ../src/core/gui/dialog/XojSaveDlg.cpp:72
 msgid "Save File"
 msgstr "保存檔案"
-
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:80
-#: ../src/core/gui/dialog/XojSaveDlg.cpp:19
-msgid "_Cancel"
-msgstr "_取消"
-
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
-msgid "_Save"
-msgstr "儲存 (_S)"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:28
 msgid "default enabled"
@@ -1185,16 +1227,25 @@ msgid "PDF Text Marker"
 msgstr ""
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:49
+#, c++-format
 msgid "<b>{1}</b>\n"
 "{2}{3}"
 msgstr ""
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:277
+#: ../src/core/gui/dialog/SettingsDialog.cpp:204
+msgid "Select folder for audio recordings"
+msgstr ""
+
+#: ../src/core/gui/dialog/SettingsDialog.cpp:290
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr ""
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:281
+#: ../src/core/gui/dialog/SettingsDialog.cpp:294
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
+msgstr ""
+
+#: ../src/core/gui/dialog/SettingsDialog.cpp:1125
+msgid "Folder not set - Select a folder to enable recording"
 msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:31
@@ -1206,6 +1257,7 @@ msgid "User palettes"
 msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:99
+#, c++-format
 msgid "<i>The palettes shown below are obtained from the <a href=\"{1}\">Built-in palettes</a> and <a href=\"{2}\">User palettes</a> directories:</i>\n"
 msgstr ""
 
@@ -1242,30 +1294,47 @@ msgstr "工具條"
 msgid "New"
 msgstr "新建"
 
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:49
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:65
 msgid "Attach file to the journal"
 msgstr "將檔案附加到日記"
 
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:81
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:82
 msgid "_Open"
 msgstr "開啟 (_O)"
 
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:123
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:82
+msgid "Select folder"
+msgstr ""
+
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:82
+#: ../src/core/gui/dialog/XojSaveDlg.cpp:20
+msgid "_Cancel"
+msgstr "_取消"
+
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:118
 msgid "Open template file"
 msgstr ""
 
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:136
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:197
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:131
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:194
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:281
 msgid "Open file"
 msgstr "打開檔案"
 
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:155
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:150
 msgid "Annotate Pdf file"
 msgstr ""
 
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:173
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:168
 msgid "Choose image file"
+msgstr ""
+
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:212
+msgid "Choose Latex template file"
+msgstr ""
+
+#: ../src/core/gui/dialog/XojSaveDlg.cpp:80
+msgid "Export File"
 msgstr ""
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:30
@@ -1281,6 +1350,7 @@ msgid "Load file"
 msgstr "加載檔案"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:107
+#, c++-format
 msgid "This image could not be loaded. Error message: {1}"
 msgstr ""
 
@@ -1297,22 +1367,27 @@ msgid "Show only not used pages (one unused page)"
 msgstr "只顯示未使用頁面(一個未使用頁面)"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:57
+#, c++-format
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "只顯示未使用頁面({1}個未使用頁面)"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:162
+#, c++-format
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:164
+#, c++-format
 msgid "Removed tool item from Toolbar {1} ID {2}"
 msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:168
+#, c++-format
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr "無法從 {2} 工具列移除位置爲 {3} 的 {1} 工具項目"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:173
+#, c++-format
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
 msgstr "無法從 {1} 工具列移除位置爲 {2} 的工具項目"
 
@@ -1362,6 +1437,7 @@ msgid "Plugins"
 msgstr ""
 
 #: ../src/core/gui/menus/menubar/Menubar.cpp:54
+#, c++-format
 msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr ""
 
@@ -1459,12 +1535,14 @@ msgid "Spacer"
 msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:71
+#, c++-format
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "未能解析一般檔案toolbar.ini: {1}\n"
 "工具條將不可用"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:80
+#, c++-format
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "未能解析配置檔案toolbar.ini: {1}\n"
@@ -1796,15 +1874,18 @@ msgid "Page"
 msgstr "頁面"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:82
+#, c++-format
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:85
+#, c++-format
 msgid "PDF Page {1}"
 msgstr "PDF頁碼{1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:87
+#, c++-format
 msgid "PDF {1}"
 msgstr ""
 
@@ -1888,8 +1969,9 @@ msgctxt "as a noun: a copy of"
 msgid "Copy"
 msgstr "拷貝"
 
-#: ../src/core/model/Document.cpp:330 ../src/core/model/Document.cpp:339
-#: ../src/core/model/Document.cpp:342
+#: ../src/core/model/Document.cpp:331 ../src/core/model/Document.cpp:340
+#: ../src/core/model/Document.cpp:343
+#, c++-format
 msgid "Document not loaded! ({1}), {2}"
 msgstr "文檔未加載！({1}), {2}"
 
@@ -1926,6 +2008,7 @@ msgid "PDF page number is out of range"
 msgstr ""
 
 #: ../src/core/pdf/base/PdfExportBackend.cpp:21
+#, c++-format
 msgid "Unknown pdf backend: {1}. Available backends are: {2}. Using default backend."
 msgstr ""
 
@@ -2082,12 +2165,14 @@ msgid "Edit text"
 msgstr "編輯文本"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:114
+#, c++-format
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "未能撤銷操作\"{1}\"\n"
 "有錯誤發生***請提交一個錯誤報告***"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:140
+#, c++-format
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "未能重複操作\"{1}\"\n"
@@ -2118,58 +2203,71 @@ msgid "ElementRange::parse(): element indices start with 1"
 msgstr ""
 
 #: ../src/util/GzInputStream.cpp:48
+#, c++-format
 msgid "Error opening file \"{1}\":\n"
 "{2}"
 msgstr ""
 
 #: ../src/util/GzInputStream.cpp:62 ../src/util/ZipInputStream.cpp:52
+#, c++-format
 msgid "Error occurred while closing file\n"
 "Error code {1}"
 msgstr ""
 
 #: ../src/util/OutputStream.cpp:30
+#, c++-format
 msgid "Error opening file: \"{1}\""
 msgstr "打開檔案\"{1}\"出錯"
 
 #: ../src/util/OutputStream.cpp:51
+#, c++-format
 msgid "Error writing data to file: \"{1}\""
 msgstr ""
 
 #: ../src/util/OutputStream.cpp:52
+#, c++-format
 msgid "Error code {1}. Message:"
 msgstr ""
 
 #: ../src/util/OutputStream.cpp:72
+#, c++-format
 msgid "Error occurred while closing file: \"{1}\""
 msgstr ""
 
 #: ../src/util/OutputStream.cpp:73
+#, c++-format
 msgid "Error code {1}"
 msgstr ""
 
 #: ../src/util/PathUtil.cpp:124
+#, c++-format
 msgid "Could not open file: {1}"
 msgstr ""
 
 #: ../src/util/PathUtil.cpp:131
+#, c++-format
 msgid "Error reading \"{1}\":\n"
 "{2}"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:408
+#: ../src/util/PathUtil.cpp:449
+#, c++-format
 msgid "xournalpp-{1}"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:417
+#: ../src/util/PathUtil.cpp:458
+#, c++-format
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr ""
 
 #: ../src/util/Util.cpp:66
+#, c++-format
 msgid "Error {1} executing system command: {2}"
 msgstr ""
 
 #: ../src/util/XojMsgBox.cpp:186
+#, c++-format
 msgid "The file {1} already exists! Do you want to replace it?"
 msgstr ""
 
@@ -2182,44 +2280,51 @@ msgid "Replace"
 msgstr "置換"
 
 #: ../src/util/XojMsgBox.cpp:216
+#, c++-format
 msgid "Unable to open the link: {1}\n"
 "{2}"
 msgstr ""
 
 #: ../src/util/ZipInputStream.cpp:38
+#, c++-format
 msgid "Error opening file \"{1}\" in zip archive:\n"
 "{2}"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:127
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:134
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:140
+#, c++-format
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:138
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:144
+#, c++-format
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:142
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:148
+#, c++-format
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:147
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:153
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:187
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:193
+#, c++-format
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:205
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:211
+#, c++-format
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:212
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:218
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr ""
 
@@ -2268,12 +2373,12 @@ msgid "Close"
 msgstr ""
 
 #: ../ui/backgroundSelection.glade:49 ../ui/deviceList.glade:94
-#: ../ui/exportSettings.glade:457 ../ui/extEdTexDialog.glade:168
+#: ../ui/exportSettings.glade:492 ../ui/extEdTexDialog.glade:168
 #: ../ui/goto.glade:108 ../ui/intEdTexDialog.glade:203
 #: ../ui/linkDialog.glade:275 ../ui/pageFormat.glade:346
 #: ../ui/pageTemplate.glade:278 ../ui/plugin.glade:114
 #: ../ui/renameLayerDialog.glade:71 ../ui/selectOpacity.glade:134
-#: ../ui/settings.glade:6645
+#: ../ui/settings.glade:6643
 msgid "Ok"
 msgstr ""
 
@@ -2492,6 +2597,10 @@ msgstr ""
 msgid "Backend"
 msgstr ""
 
+#: ../ui/exportSettings.glade:426
+msgid "Export format"
+msgstr ""
+
 #: ../ui/extEdTexDialog.glade:23 ../ui/intEdTexDialog.glade:18
 msgid "Insert Latex"
 msgstr "插入LaTeX"
@@ -2524,135 +2633,131 @@ msgstr ""
 msgid "Command Output"
 msgstr ""
 
-#: ../ui/latexSettings.glade:36
+#: ../ui/latexSettings.glade:30
 msgid "Always check LaTeX dependencies before running"
 msgstr ""
 
-#: ../ui/latexSettings.glade:40
+#: ../ui/latexSettings.glade:34
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
 msgstr ""
 
-#: ../ui/latexSettings.glade:48
+#: ../ui/latexSettings.glade:42
 msgid "General LaTeX tool settings"
 msgstr ""
 
-#: ../ui/latexSettings.glade:76
+#: ../ui/latexSettings.glade:70
 msgid "Default LaTeX Text"
 msgstr ""
 
-#: ../ui/latexSettings.glade:105
+#: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
 msgstr ""
 
-#: ../ui/latexSettings.glade:107
+#: ../ui/latexSettings.glade:101
 msgid "Global template file path"
 msgstr ""
 
-#: ../ui/latexSettings.glade:119
+#: ../ui/latexSettings.glade:113
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
 msgstr ""
 
-#: ../ui/latexSettings.glade:133
+#: ../ui/latexSettings.glade:127
 msgid "%%XPP_TOOL_INPUT%%"
 msgstr ""
 
-#: ../ui/latexSettings.glade:145
+#: ../ui/latexSettings.glade:139
 msgid "The math mode formula typed in the LaTeX tool."
 msgstr ""
 
-#: ../ui/latexSettings.glade:158
-msgid "Choose a global LaTeX template file"
-msgstr ""
-
-#: ../ui/latexSettings.glade:170
+#: ../ui/latexSettings.glade:162
 msgid "%%XPP_TEXT_COLOR%%"
 msgstr ""
 
-#: ../ui/latexSettings.glade:182
+#: ../ui/latexSettings.glade:174
 msgid "The current color of the Text Tool, in hex RGB format."
 msgstr ""
 
-#: ../ui/latexSettings.glade:194
+#: ../ui/latexSettings.glade:186
 msgid "%%XPP_VARNAME%%"
 msgstr ""
 
-#: ../ui/latexSettings.glade:206
+#: ../ui/latexSettings.glade:198
 msgid "Any custom variable defined with a %xpp:varname=value directive in the formula input."
 msgstr ""
 
-#: ../ui/latexSettings.glade:219
+#: ../ui/latexSettings.glade:211
 msgid "Template file settings"
 msgstr ""
 
-#: ../ui/latexSettings.glade:248
+#: ../ui/latexSettings.glade:240
 msgid "LaTeX generation command"
 msgstr ""
 
-#: ../ui/latexSettings.glade:269
+#: ../ui/latexSettings.glade:261
 msgid "Test configuration"
 msgstr ""
 
-#: ../ui/latexSettings.glade:273
+#: ../ui/latexSettings.glade:265
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr ""
 
-#: ../ui/latexSettings.glade:289
+#: ../ui/latexSettings.glade:281
 msgid "LaTeX executable settings"
 msgstr ""
 
-#: ../ui/latexSettings.glade:364
+#: ../ui/latexSettings.glade:356
 msgid "Line numbers"
 msgstr ""
 
-#: ../ui/latexSettings.glade:378
+#: ../ui/latexSettings.glade:370
 msgid "Auto-indent"
 msgstr ""
 
-#: ../ui/latexSettings.glade:392
+#: ../ui/latexSettings.glade:384
 msgid "Syntax highlighting"
 msgstr ""
 
-#: ../ui/latexSettings.glade:424
+#: ../ui/latexSettings.glade:416
 msgid "Wrap text"
 msgstr ""
 
-#: ../ui/latexSettings.glade:458
+#: ../ui/latexSettings.glade:450
 msgid "Use font from system theme."
 msgstr ""
 
-#: ../ui/latexSettings.glade:478
+#: ../ui/latexSettings.glade:470
 msgid "Font: "
 msgstr ""
 
-#: ../ui/latexSettings.glade:493
+#: ../ui/latexSettings.glade:485
 msgid "Pick the Editor's Font"
 msgstr ""
 
-#: ../ui/latexSettings.glade:540
+#: ../ui/latexSettings.glade:532
 msgid "You can optionally use an external editor program instead of the built-in editor. If you enable the option below, the provided editor command (defaulting to $EDITOR) will start with a popup that only shows a preview and potential error message instead of the normal one with a built-in editor. The environment variable XPP_TEXT_COLOR is set to the current Text Tool color in hex RGB format."
 msgstr ""
 
-#: ../ui/latexSettings.glade:556
+#: ../ui/latexSettings.glade:548
 msgid "Use external Editor"
 msgstr ""
 
-#: ../ui/latexSettings.glade:573
+#: ../ui/latexSettings.glade:565
 msgid "Editor command"
 msgstr ""
 
-#: ../ui/latexSettings.glade:598
+#: ../ui/latexSettings.glade:590
 msgid "Extension of temporary file"
 msgstr ""
 
-#: ../ui/latexSettings.glade:619
+#: ../ui/latexSettings.glade:611
 msgid "Automatically confirm on editor exit"
 msgstr ""
 
-#: ../ui/latexSettings.glade:649
+#: ../ui/latexSettings.glade:641
 msgid "External Editor (Expert user only)"
 msgstr ""
 
-#: ../ui/latexSettings.glade:665
+#: ../ui/latexSettings.glade:657
 msgid "Editor settings"
 msgstr ""
 
@@ -3927,76 +4032,72 @@ msgstr ""
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr "<i>錄音現在儲存在獨立的資料夾裏, 並可以在您的日記中引用.</i>"
 
-#: ../ui/settings.glade:6101 ../ui/settings.glade:6137
+#: ../ui/settings.glade:6101 ../ui/settings.glade:6135
 msgid "Storage Folder"
 msgstr ""
 
-#: ../ui/settings.glade:6116
-msgid "Select Folder"
-msgstr ""
-
-#: ../ui/settings.glade:6164
+#: ../ui/settings.glade:6162
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:6188
+#: ../ui/settings.glade:6186
 msgid "Input Device"
 msgstr "輸入設備"
 
-#: ../ui/settings.glade:6210
+#: ../ui/settings.glade:6208
 msgid "Output Device"
 msgstr ""
 
-#: ../ui/settings.glade:6241
+#: ../ui/settings.glade:6239
 msgid "Audio Devices"
 msgstr ""
 
-#: ../ui/settings.glade:6270
+#: ../ui/settings.glade:6268
 msgid "Sample Rate"
 msgstr ""
 
-#: ../ui/settings.glade:6281
+#: ../ui/settings.glade:6279
 msgid "Gain"
 msgstr ""
 
-#: ../ui/settings.glade:6328
+#: ../ui/settings.glade:6326
 msgid "Recording Quality"
 msgstr ""
 
-#: ../ui/settings.glade:6354
+#: ../ui/settings.glade:6352
 msgid "Default Seek Time (in seconds)"
 msgstr ""
 
-#: ../ui/settings.glade:6367
+#: ../ui/settings.glade:6365
 msgid "1,00"
 msgstr ""
 
-#: ../ui/settings.glade:6386
+#: ../ui/settings.glade:6384
 msgid "Playback Settings"
 msgstr ""
 
-#: ../ui/settings.glade:6400
+#: ../ui/settings.glade:6398
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr "<i>更改只會在新的錄製和播放時生效。</i>"
 
-#: ../ui/settings.glade:6431
+#: ../ui/settings.glade:6429
 msgid "Audio Recording"
 msgstr ""
 
-#: ../ui/settings.glade:6504
+#: ../ui/settings.glade:6502
 msgid "<i>Select language (requires restart)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:6536 ../ui/settings.glade:6582
+#: ../ui/settings.glade:6534 ../ui/settings.glade:6580
 msgid "Language"
 msgstr ""
 
-#: ../ui/settings.glade:6552
+#: ../ui/settings.glade:6550
 msgid "Language Settings"
 msgstr ""
 
-#: ../ui/settings.glade:6606
+#: ../ui/settings.glade:6604
 msgid "Palette"
 msgstr ""
 
@@ -4546,67 +4647,67 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: ../resources-templates/pagetemplates.ini.in:17
+#: ../resources-templates/pagetemplates.ini.in:16
 msgid "Ruled with vertical line on the right"
 msgstr ""
 
-#: ../resources-templates/pagetemplates.ini.in:42
+#: ../resources-templates/pagetemplates.ini.in:41
 msgid "Graph with border"
 msgstr ""
 
-#: ../resources-templates/pagetemplates.ini.in:47
+#: ../resources-templates/pagetemplates.ini.in:46
 msgid "Graph with border (bold every 5th)"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:51
+#: ../resources-templates/toolbar.ini.in:50
 msgid "All Tools"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:56
+#: ../resources-templates/toolbar.ini.in:55
 msgid "Portrait"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:62
+#: ../resources-templates/toolbar.ini.in:61
 msgid "Minimal Left"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:66
+#: ../resources-templates/toolbar.ini.in:65
 msgid "Minimal Top"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:70
+#: ../resources-templates/toolbar.ini.in:69
 msgid "Xournal++"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:78
+#: ../resources-templates/toolbar.ini.in:77
 msgid "Tablet mode"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:84
+#: ../resources-templates/toolbar.ini.in:83
 msgid "Right hand Note Taking"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:87
+#: ../resources-templates/toolbar.ini.in:86
 msgid "Toolbar Left"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:93
+#: ../resources-templates/toolbar.ini.in:92
 msgid "Toolbar Right"
 msgstr ""
 
-#: ../resources-templates/toolbar.ini.in:108
+#: ../resources-templates/toolbar.ini.in:107
 msgid "Empty Toolbar"
 msgstr ""
 
-#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:6
+#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:5
 msgid "Note-taking application"
 msgstr ""
 
-#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:7
+#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:6
 msgid "Take handwritten notes"
 msgstr ""
 
-#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:8
+#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:7
 msgid "tablet;Wacom;pen input;PDF Annotation;markup;journal;handwriting;diary;notes;"
 msgstr ""
 
