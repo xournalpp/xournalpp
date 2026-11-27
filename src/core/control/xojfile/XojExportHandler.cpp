@@ -4,10 +4,12 @@
 #include <string>  // for string, allocator, ope...
 
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeHandler
+#include "control/xml/XmlImageNode.h"          // for XmlImageNode
 #include "control/xml/XmlNode.h"               // for XmlNode
 #include "control/xml/XmlTextNode.h"           // for XmlTextNode
 #include "control/xojfile/XmlAttrs.h"          // for xml_attrs
 #include "control/xojfile/XmlTags.h"           // for xml_tags
+#include "model/Image.h"                       // for Image
 #include "model/PageType.h"                    // for PageTypeFormat, PageType
 #include "model/XojPage.h"                     // for XojPage
 
@@ -21,6 +23,8 @@ class XmlPointNode;
 XojExportHandler::XojExportHandler() = default;
 
 XojExportHandler::~XojExportHandler() = default;
+
+void XojExportHandler::visitImage(XmlImageNode* image, const Image* i) { image->setImage(i->getImage()); }
 
 /**
  * Export the fill attributes

@@ -181,6 +181,19 @@ static inline bool isMatrixPositiveScaling(const RectangularElement& e) {
     return nearEnough(m.yx, 0.) && nearEnough(m.xy, 0.) && m.xx > 0.;
 }
 
+static bool isBmp(const Image& i) {
+    const auto* data = i.getRawData();
+    return i.getRawDataLength() >= 2 && data[0] == 'B' && data[1] == 'M';
+}
+
+void SaveHandler::visitImage(XmlImageNode* image, const Image* i) {
+    if (i->hasData() && !isBmp(*i)) {
+        image->setImageData(std::string(i->getBinaryData()));
+    } else {
+        image->setImage(i->getImage());
+    }
+}
+
 void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
     auto* layer = new XmlNode(TAG_NAMES[TagType::LAYER]);
     page->addChild(layer);
@@ -233,7 +246,7 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
             auto* image = new XmlImageNode(TAG_NAMES[TagType::IMAGE]);
             layer->addChild(image);
 
-            image->setImage(i->getImage());
+            visitImage(image, i);
             if (isMatrixPositiveScaling(*i)) {
                 // Save as file version 4 for backward compatibility
                 Range r(i->getBoundingBox());

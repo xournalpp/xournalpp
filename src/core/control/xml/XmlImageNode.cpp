@@ -1,16 +1,13 @@
 #include "XmlImageNode.h"
 
-#include <glib.h>  // for g_base64_encode, g_free, gchar, g_e...
+#include <utility>  // for move
 
-#include "control/xml/XmlNode.h"  // for XmlNode
-#include "util/OutputStream.h"    // for OutputStream
-#include "util/StringUtils.h"     // for StaticStringView
+#include "control/xml/XmlBase64Writer.h"  // for XmlBase64Writer
+#include "control/xml/XmlNode.h"          // for XmlNode
+#include "util/OutputStream.h"            // for OutputStream
+#include "util/StringUtils.h"             // for StaticStringView
 
-XmlImageNode::XmlImageNode(StringUtils::StaticStringView tag): XmlNode(tag) {
-    this->img = nullptr;
-    this->out = nullptr;
-    this->pos = 0;
-}
+XmlImageNode::XmlImageNode(StringUtils::StaticStringView tag): XmlNode(tag) {}
 
 XmlImageNode::~XmlImageNode() {
     if (this->img) {
@@ -23,22 +20,10 @@ void XmlImageNode::setImage(cairo_surface_t* img) {
         cairo_surface_destroy(this->img);
     }
     this->img = cairo_surface_reference(img);
+    this->imageData.clear();
 }
 
-auto XmlImageNode::pngWriteFunction(XmlImageNode* image, const unsigned char* data, unsigned int length)
-        -> cairo_status_t {
-    for (unsigned int i = 0; i < length; i++, image->pos++) {
-        if (image->pos == 30) {
-            gchar* base64_str = g_base64_encode(image->buffer, image->pos);
-            image->out->write(base64_str);
-            g_free(base64_str);
-            image->pos = 0;
-        }
-        image->buffer[image->pos] = data[i];
-    }
-
-    return CAIRO_STATUS_SUCCESS;
-}
+void XmlImageNode::setImageData(std::string data) { this->imageData = std::move(data); }
 
 void XmlImageNode::writeOut(OutputStream* out) {
     out->write("<");
@@ -47,18 +32,21 @@ void XmlImageNode::writeOut(OutputStream* out) {
 
     out->write(">");
 
-    if (this->img == nullptr) {
-        g_error("XmlImageNode::writeOut(); this->img == nullptr");
+    XmlBase64Writer b64(out);
+    if (!this->imageData.empty()) {
+        b64.write(reinterpret_cast<const unsigned char*>(this->imageData.data()), this->imageData.size());
+    } else if (this->img != nullptr) {
+        cairo_surface_write_to_png_stream(
+                this->img,
+                [](void* closure, const unsigned char* data, unsigned int length) -> cairo_status_t {
+                    static_cast<XmlBase64Writer*>(closure)->write(data, length);
+                    return CAIRO_STATUS_SUCCESS;
+                },
+                &b64);
     } else {
-        this->out = out;
-        this->pos = 0;
-        cairo_surface_write_to_png_stream(this->img, reinterpret_cast<cairo_write_func_t>(&pngWriteFunction), this);
-        gchar* base64_str = g_base64_encode(this->buffer, this->pos);
-        out->write(base64_str);
-        g_free(base64_str);
-
-        this->out = nullptr;
+        g_error("XmlImageNode::writeOut(); neither an image surface nor image data was set");
     }
+    b64.finish();
 
     out->write("</");
     out->write(tag);
