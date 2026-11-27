@@ -55,6 +55,7 @@ void SwapUndoAction::swap(Control* control) {
     control->firePageSelected(insertPos);
 
     control->getScrollHandler()->scrollToPage(insertPos);
+    control->notifyPagesSwapped(insertPos, deletePos);
 }
 
 auto SwapUndoAction::getPages() -> std::vector<PageRef> {
