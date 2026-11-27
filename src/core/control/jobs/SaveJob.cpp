@@ -127,7 +127,7 @@ auto SaveJob::save() -> bool {
         }
     }
 
-    h.saveTo(target, this->control);
+    h.saveTo(target, this->control->getProgressListener());
 
     doc->lock();
     h.updateDocumentInfo(doc);

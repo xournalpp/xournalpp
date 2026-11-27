@@ -46,7 +46,7 @@ public:
      * @brief Create one Graphics file per page
      * @param stateListener A listener to track the progress
      */
-    void exportGraphics(ProgressListener* stateListener);
+    void exportGraphics(ProgressListener* stateListener = nullptr);
 
     /**
      * @brief Set a quality level for PNG exports

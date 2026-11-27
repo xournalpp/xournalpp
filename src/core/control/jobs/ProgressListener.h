@@ -16,13 +16,5 @@ public:
     virtual void setMaximumState(size_t max) = 0;
     virtual void setCurrentState(size_t state) = 0;
 
-    virtual ~ProgressListener(){};
-};
-
-class DummyProgressListener: public ProgressListener {
-public:
-    void setMaximumState(size_t max) override{};
-    void setCurrentState(size_t state) override{};
-
-    ~DummyProgressListener() override{};
+    virtual ~ProgressListener() = default;
 };

@@ -223,7 +223,9 @@ void ImageExport::exportGraphics(ProgressListener* stateListener) {
         }
     }
 
-    stateListener->setMaximumState(selectedCount);
+    if (stateListener) {
+        stateListener->setMaximumState(selectedCount);
+    }
 
     /*
      * Compute the zoomRatio only once if using DPI as a PNG quality criterion
@@ -244,7 +246,9 @@ void ImageExport::exportGraphics(ProgressListener* stateListener) {
 
         if (selectedPages[i]) {
             exportImagePage(i, id, zoomRatio, format, view);
-            stateListener->setCurrentState(++current);
+            if (stateListener) {
+                stateListener->setCurrentState(++current);
+            }
         }
     }
 }

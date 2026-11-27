@@ -38,8 +38,6 @@ void exportImg(Document* doc, fs::path outfile, const char* range, const char* l
         exportRange.emplace_back(0, doc->getPageCount() - 1);
     }
 
-    DummyProgressListener progress;
-
     ImageExport imgExport(doc, std::move(outfile), format, exportBackground, exportRange);
 
     if (format == EXPORT_GRAPHICS_PNG) {
@@ -54,7 +52,7 @@ void exportImg(Document* doc, fs::path outfile, const char* range, const char* l
 
     imgExport.setLayerRange(layerRange);
 
-    imgExport.exportGraphics(&progress);
+    imgExport.exportGraphics();
 
     std::string errorMsg = imgExport.getLastErrorMsg();
     if (!errorMsg.empty()) {
