@@ -39,6 +39,8 @@
 
 #include "EditSelectionContents.h"  // for EditSelectionConte...
 
+#include "filesystem.h"  // for path
+
 class XojFont;
 
 using std::vector;
@@ -389,6 +391,10 @@ auto EditSelection::setSize(double thicknessPen, double thicknessHighlighter, do
  */
 auto EditSelection::setFill(int alphaPen, int alphaHighligther) -> UndoActionPtr {
     return this->contents->setFill(alphaPen, alphaHighligther);
+}
+
+void EditSelection::setAudioFilename(const fs::path& audioFile, unsigned int timestamp) {
+    this->contents->setAudioFilename(audioFile, timestamp);
 }
 
 /**
