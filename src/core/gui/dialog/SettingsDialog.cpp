@@ -1,14 +1,17 @@
 #include "SettingsDialog.h"
 
 #include <algorithm>    // for max
+#include <array>        // for array
 #include <cstddef>      // for NULL, size_t
 #include <type_traits>  // for __underlying_type_im...
+#include <utility>      // for pair
 
 #include <gdk/gdk.h>      // for GdkRGBA, GdkRectangle
 #include <glib-object.h>  // for G_CALLBACK, g_signal...
 
 #include "control/AudioController.h"             // for AudioController
 #include "control/Control.h"                     // for Control
+#include "control/ToolHandler.h"                 // for ToolHandler
 #include "control/settings/Settings.h"           // for Settings, SElement
 #include "control/settings/SettingsEnums.h"      // for STYLUS_CURSOR_ARROW
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
@@ -45,6 +48,12 @@ using std::vector;
 
 constexpr auto UI_FILE = "settings.glade";
 constexpr auto UI_DIALOG_NAME = "settingsDialog";
+
+/// Tools that can scale with the zoom level, and their checkbox in the dialog
+constexpr std::array<std::pair<ToolType, const char*>, 3> ZOOM_SCALING_CHECKBOXES{
+        {{TOOL_PEN, "cbPenZoomScaling"},
+         {TOOL_ERASER, "cbEraserZoomScaling"},
+         {TOOL_HIGHLIGHTER, "cbHighlighterZoomScaling"}}};
 
 SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control,
                                const std::vector<fs::path>& paletteDirectories, std::function<void()> callback):
@@ -375,6 +384,10 @@ void SettingsDialog::load() {
     const bool ignoreStylusEventsEnabled = settings->getIgnoredStylusEvents() != 0;  // 0 means disabled, >0 enabled
     loadCheckbox("cbIgnoreFirstStylusEvents", ignoreStylusEventsEnabled);
     loadCheckbox("cbInputSystemDrawOutsideWindow", settings->getInputSystemDrawOutsideWindowEnabled());
+
+    for (auto [type, checkbox]: ZOOM_SCALING_CHECKBOXES) {
+        loadCheckbox(checkbox, control->getToolHandler()->getTool(type).isZoomScaling());
+    }
 
     /**
      * Tab size related settings
@@ -776,6 +789,10 @@ void SettingsDialog::save() {
     settings->setInputSystemDrawOutsideWindowEnabled(getCheckbox("cbInputSystemDrawOutsideWindow"));
     settings->setScrollbarFadeoutDisabled(getCheckbox("cbDisableScrollbarFadeout"));
     settings->setAudioDisabled(getCheckbox("cbDisableAudio"));
+
+    for (auto [type, checkbox]: ZOOM_SCALING_CHECKBOXES) {
+        control->getToolHandler()->setZoomScaling(type, getCheckbox(checkbox));
+    }
 
     /**
      * Tab size relate settings

@@ -13,6 +13,7 @@ Tool::Tool(std::string name, ToolType type, Color color, std::optional<std::arra
 
 Tool::Tool(const Tool& t): name{t.name}, type{t.type}, thickness{t.thickness}, capabilities{t.capabilities} {
     setColor(t.getColor());
+    this->setZoomScaling(t.isZoomScaling());
 }
 
 Tool::~Tool() {}
