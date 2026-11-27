@@ -2242,11 +2242,8 @@ void Control::quit(bool allowCancel) {
                 audioController->stopRecording();
             }
 #endif
-            this->scheduler->lock();
-            this->scheduler->removeAllJobs();
-            this->scheduler->unlock();
-            this->scheduler->stop();  // Finish current task. Must be called to finish pending saves.
-            this->closeDocument();    // Must be done after all jobs has finished (Segfault on save/export)
+            this->closeDocument();
+            this->scheduler->stop();
             settings->save();
             g_application_quit(G_APPLICATION(gtkApp));
         }
@@ -2306,8 +2303,10 @@ void Control::close(std::function<void(bool)> callback, const bool allowDestroy,
 void Control::closeDocument() {
     this->undoRedo->clearContents();
 
+    this->scheduler->removeAllJobs();
+    this->scheduler->finishTask();  // Finish current task. Must be called to finish pending saves.
+
     this->doc->lock();
-    // FIXME: there could potentially be a data race if a job requires the old document but runs after it is closed
     this->doc->clearDocument(true);
     this->doc->unlock();
 
