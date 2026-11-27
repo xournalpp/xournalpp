@@ -188,7 +188,7 @@ static bool isBmp(const Image& i) {
 
 void SaveHandler::visitImage(XmlImageNode* image, const Image* i) {
     if (i->hasData() && !isBmp(*i)) {
-        image->setImageData(i->getBinaryData());
+        image->setImageData(std::string(i->getBinaryData()));
     } else {
         image->setImage(i->getImage());
     }
