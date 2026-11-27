@@ -1,6 +1,5 @@
 #include "Plugin.h"
 
-#include <algorithm>  // for max
 #include <array>      // for array
 
 #include <gdk/gdk.h>      // for GdkModifierType
@@ -9,7 +8,6 @@
 
 #include "util/Assert.h"     // for xoj_assert
 #include "util/PathUtil.h"   // for toGFilename
-#include "util/XojMsgBox.h"  // for XojMsgBox
 
 #include "config-features.h"  // for ENABLE_PLUGINS
 
@@ -335,44 +333,7 @@ void Plugin::loadScript() {
     }
 }
 
-auto Plugin::callFunction(const std::string& fnc, ptrdiff_t mode) -> bool {
-    lua_getglobal(lua.get(), fnc.c_str());
-
-    int numArgs = 0;
-
-    if (mode != std::numeric_limits<ptrdiff_t>::max()) {
-        lua_pushinteger(lua.get(), mode);
-        numArgs = 1;
-    }
-
-    // Run the function
-    if (lua_pcall(lua.get(), numArgs, 0, 0)) {
-        const char* errMsg = lua_tostring(lua.get(), -1);
-        XojMsgBox::showPluginMessage(name, errMsg, true);
-
-        g_warning("Error in Plugin: \"%s\", error: \"%s\"", name.c_str(), errMsg);
-        return false;
-    }
-
-    return true;
-}
-
-auto Plugin::callFunction(const std::string& fnc, const char* s) -> bool {
-    lua_getglobal(lua.get(), fnc.c_str());
-
-    lua_pushstring(lua.get(), s);
-
-    // Run the function
-    if (lua_pcall(lua.get(), 1, 0, 0)) {
-        const char* errMsg = lua_tostring(lua.get(), -1);
-        XojMsgBox::showPluginMessage(name, errMsg, true);
-
-        g_warning("Error in Plugin: \"%s\", error: \"%s\"", name.c_str(), errMsg);
-        return false;
-    }
-
-    return true;
-}
+void Plugin::unrefFunction(int callbackRef) { luaL_unref(lua.get(), LUA_REGISTRYINDEX, callbackRef); }
 
 auto Plugin::getName() const -> std::string const& { return name; }
 auto Plugin::getDescription() const -> std::string const& { return description; }
