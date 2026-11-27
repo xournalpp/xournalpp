@@ -3364,6 +3364,21 @@ This setting can make it easier to draw with touch.</property>
                                       </packing>
                                     </child>
                                     <child>
+                                      <object class="GtkCheckButton" id="cbKeepHues">
+                                        <property name="label" translatable="yes">Preserve Hues</property>
+                                        <property name="name">cbKeepHues</property>
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="receives-default">False</property>
+                                        <property name="tooltip-text" translatable="no">Keeps hues (relatively) the same when recoloring, inverting only lightness.</property>
+                                        <property name="draw-indicator">True</property>
+                                      </object>
+                                      <packing>
+                                        <property name="left-attach">0</property>
+                                        <property name="top-attach">2</property>
+                                      </packing>
+                                    </child>
+                                    <child>
                                       <object class="GtkColorButton" id="recolorLight">
                                         <property name="name">recolorLight</property>
                                         <property name="visible">True</property>
