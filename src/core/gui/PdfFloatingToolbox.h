@@ -65,6 +65,9 @@ public:
     /// Copy Selection to the Clipboard.
     void copyTextToClipboard();
 
+    /// Set the color used for highlighting, e.g. when the user picks a new color while the toolbox is shown.
+    void setColor(Color color);
+
 private:
     void show();
 

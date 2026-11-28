@@ -1354,6 +1354,11 @@ void Control::toolColorChanged() {
 }
 
 void Control::changeColorOfSelection() {
+    if (this->win) {
+        // A color picked while the PDF text toolbox is shown is the one its highlight should use
+        this->win->getPdfToolbox()->setColor(toolHandler->getColor());
+    }
+
     if (this->win && toolHandler->hasCapability(TOOL_CAP_COLOR)) {
         EditSelection* sel = this->win->getXournal()->getSelection();
         if (sel) {

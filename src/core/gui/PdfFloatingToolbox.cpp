@@ -72,6 +72,8 @@ void PdfFloatingToolbox::show(int x, int y) {
     this->color = theMainWindow->getXournal()->getControl()->getToolHandler()->getColor();
 }
 
+void PdfFloatingToolbox::setColor(Color color) { this->color = color; }
+
 void PdfFloatingToolbox::hide() {
     if (isHidden())
         return;
