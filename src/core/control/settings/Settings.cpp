@@ -370,7 +370,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     if (!xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("data"))) {
         xmlChar* name = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("name"));
         if (name == nullptr) {
-            g_warning("Settings::%s:No name property!\n", cur->name);
+            g_warning("Settings::parseData: <data> node without name property, skipping");
             return;
         }
 
