@@ -9,6 +9,8 @@
  * @license GNU GPLv2 or later
  */
 
+#include <fstream>
+
 #include <gtest/gtest.h>
 
 #include "control/settings/Settings.h"
@@ -78,4 +80,35 @@ TEST(SettingsTest, testReadWrite) {
         fs::remove(outPath);
     };
     saveReloadTest(fs::temp_directory_path());
+}
+
+// Regression test for #7051: <attribute> / <data> nodes missing required properties
+// used to pass a nullptr to std::string, which threw std::logic_error and crashed on startup.
+TEST(SettingsTest, testLoadCorruptAttributesDoesNotThrow) {
+    const fs::path outPath = fs::temp_directory_path() / "xournalpp-test-units_Settings_corruptAttributes.xml";
+    ASSERT_TRUE(!fs::exists(outPath));
+    {
+        std::ofstream out(outPath);
+        out << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            << "<settings>\n"
+            << "  <data name=\"custom\">\n"
+            << "    <attribute name=\"missingType\" value=\"1\"/>\n"
+            << "    <attribute name=\"missingName\" value=\"2\" type=\"int\"/>\n"
+            << "    <attribute name=\"missingValue\" type=\"int\"/>\n"
+            << "    <attribute name=\"valid\" value=\"42\" type=\"int\"/>\n"
+            << "    <data>\n"
+            << "      <attribute name=\"nested\" value=\"3\" type=\"int\"/>\n"
+            << "    </data>\n"
+            << "  </data>\n"
+            << "</settings>\n";
+    }
+
+    Settings settings(outPath);
+    EXPECT_NO_THROW(settings.load());
+
+    int valid = 0;
+    EXPECT_TRUE(settings.getCustomElement("custom").getInt("valid", valid));
+    EXPECT_EQ(valid, 42);
+
+    fs::remove(outPath);
 }
