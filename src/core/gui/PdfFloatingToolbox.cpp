@@ -67,9 +67,6 @@ void PdfFloatingToolbox::show(int x, int y) {
     xoj_assert(this->getSelection());
     this->position = {x, y};
     this->show();
-
-    // Record the color now: the active tool may change while the toolbox is up (e.g. if the tool is linked to a button)
-    this->color = theMainWindow->getXournal()->getControl()->getToolHandler()->getColor();
 }
 
 void PdfFloatingToolbox::hide() {
@@ -176,6 +173,10 @@ void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle w
     PageRef page = control->getCurrentPage();
     Layer* layer = page->getSelectedLayer();
 
+    // Read the color now rather than when the toolbox was shown, so that a color change made while the toolbox is up
+    // is respected.
+    const Color color = control->getToolHandler()->getColor();
+
     Range dirtyRange;
     std::vector<ElementPtr> strokes;
     for (XojPdfRectangle rect: textRects) {
@@ -192,7 +193,7 @@ void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle w
         const double w = width == PdfMarkerStyle::WIDTH_TEXT_LINE ? 1 : rectWidth;
 
         auto stroke = std::make_unique<Stroke>();
-        stroke->setColor(this->color);
+        stroke->setColor(color);
         stroke->setFill(markerOpacity);
         stroke->setToolType(StrokeTool::HIGHLIGHTER);
         stroke->setWidth(w);
